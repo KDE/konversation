@@ -51,6 +51,13 @@ QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColo
   int urlLen;
   QString href;
   QString link;
+  QString insertText;
+
+  if(useCustomColor) {
+    link = "<font color=\"#"+linkColor+"\"><a href=\"#%1\">%2</a></font>";
+  } else {
+    link = "<a href=\"#%1\">%2</a>";
+  }
 
   if(filteredLine.contains("#")) {
     QRegExp chanExp("(?:^|\\s)#[^\007\015\012,\\s]{2,}");
@@ -59,15 +66,15 @@ QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColo
         urlLen = chanExp.matchedLength();
         href = filteredLine.mid( pos, urlLen );
 
-        if(useCustomColor) {
-          link = "<font color=\"#"+linkColor+"\">%1</font>";
-        } else {
-          link = "%1";
+        if(href.startsWith(" ")) {
+          pos++;
+          urlLen--;
+          href = href.mid(1);
         }
 
-        link = link.arg("<a href=\"#" + href.stripWhiteSpace() + "\">" + href + "</a>");
-        filteredLine.replace( pos, urlLen, link );
-        pos += link.length()-1;
+        insertText = link.arg(href, href);
+        filteredLine.replace(pos, urlLen, insertText);
+        pos += insertText.length() - 1;
     }
   }
 
@@ -77,6 +84,13 @@ QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColo
   QRegExp urlPattern("((www\\.(?!\\.)|(fish|(f|ht)tp(|s))://)([\\d\\w\\./,\\':~\\?=;#@\\-\\+\\%\\*\\{\\}\\!]|&amp;)+)|"
     "([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
   urlPattern.setCaseSensitive(false);
+  QString protocol;
+
+  if(useCustomColor) {
+    link = "<font color=\"#" + linkColor + "\"><u><a href=\"%1%2\">%3</a></u></font>";
+  } else {
+    link = "<u><a href=\"%1%2\">%3</a></u>";
+  }
 
   while((pos = urlPattern.search(filteredLine, pos)) >= 0) {
     urlLen = urlPattern.matchedLength();
@@ -88,23 +102,15 @@ QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColo
       continue;
     }
 
-    QString protocol;
-
     if(urlPattern.cap(1).startsWith("www.", false)) {
       protocol = "http://";
     } else if(urlPattern.cap(1).isEmpty()) {
       protocol = "mailto:";
     }
 
-    if(useCustomColor) {
-      link = "<font color=\"#"+linkColor+"\">%1</font>";
-    } else {
-      link = "%1";
-    }
-
-    link = link.arg("<u><a href=\"" + protocol + href + "\">" + href + "</a></u>");
-    filteredLine.replace( pos, urlLen, link );
-    pos += link.length();
+    insertText = link.arg(protocol, href, href);
+    filteredLine.replace(pos, urlLen, insertText);
+    pos += insertText.length();
     KonversationApplication::instance()->storeUrl(fromNick, href);
   }
 
