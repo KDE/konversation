@@ -315,7 +315,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       {
         if(!isIgnore(prefix,Ignore::Channel)) {
 	  Channel* channel = server->getChannelByName(parameterList[0]);
-	  channel->append(sourceNick, trailing);
+	  if(channel) channel->append(sourceNick, trailing);
 
 #ifdef USE_KNOTIFY
           // KNotify events...

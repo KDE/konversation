@@ -61,9 +61,9 @@ using namespace KNetwork;
 #include "scriptlauncher.h"
 #include "konvidebug.h"
 #include "servergroupsettings.h"
-
 #include "addressbook.h"
 #include "serverison.h"
+#include "common.h"
 
 #include <config.h>
 
@@ -1007,7 +1007,9 @@ void Server::incoming()
 
   while(!qcsBufferLines.isEmpty())
   {
-    bool isUtf8 = KStringHandler::isUtf8(qcsBufferLines.front());
+    QString testString = qcsBufferLines.front();
+    bool isUtf8 = KStringHandler::isUtf8((Konversation::removeIrcMarkup(testString)).ascii());
+
     if(isUtf8)
       inputBuffer << KStringHandler::from8Bit(qcsBufferLines.front());
     else
