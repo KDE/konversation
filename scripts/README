@@ -44,3 +44,6 @@ media		Plays the currently played media.
 mail		Print the number of unread emails in your inbox folder in
 		kmail.  Kmail or kontact must be running.
 		Usage: /mail [folder-substring]
+
+google		Do a google search.
+		Usage: /google <query>
