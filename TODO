@@ -7,7 +7,6 @@ SHORT-TERM (URGENT):
 
 MID-TERM:
 - Doxify the source
-- Per nick coloring in channel discussion
 - In Watched Nicks panel, show stats like "last spoken" "last seen"
 - Compute md5sum over DCCs and send / display the hash after transfer
 - Make separate Highlight lists for each identity
