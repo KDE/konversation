@@ -18,6 +18,8 @@
 #include <qlabel.h>
 #include <qcheckbox.h>
 
+#include <kcombobox.h>
+
 #include "prefspageidentity.h"
 
 PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferences) :
@@ -25,6 +27,13 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
 {
   // Add a Layout to the identity pane
   QGridLayout* identityLayout=new QGridLayout(parentFrame,4,4,marginHint(),spacingHint());
+
+  QLabel* identityLabel=new QLabel(i18n("Identity:"),parentFrame);
+  KComboBox* identityCombo=new KComboBox(parentFrame);
+
+  QPtrList<Identity> identities=preferences->getIdentityList();
+  for(unsigned int index=0;index<identities.count();index++)
+    identityCombo->insertItem(identities.at(index)->getName());
 
   QLabel* realNameLabel=new QLabel(i18n("Real name:"),parentFrame);
   KLineEdit* realNameInput=new KLineEdit(preferences->getRealName(),parentFrame);
@@ -55,6 +64,9 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   KLineEdit* unAwayInput=new KLineEdit(preferences->getUnAwayMessage(),parentFrame);
 
   int row=0;
+  identityLayout->addWidget(identityLabel,row,0);
+  identityLayout->addMultiCellWidget(identityCombo,row,row,1,3);
+  row++;
   identityLayout->addWidget(realNameLabel,row,0);
   identityLayout->addMultiCellWidget(realNameInput,row,row,1,3);
   row++;

@@ -215,6 +215,7 @@ void KonversationApplication::readOptions()
       config->setGroup(identityList[index]);
 
       Identity* newIdentity=new Identity();
+      newIdentity->setName(config->readEntry("Name"));
 
       newIdentity->setIdent(config->readEntry("Ident"));
       newIdentity->setRealName(config->readEntry("Realname"));
@@ -424,6 +425,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     Identity* identity=identityList.at(index);
     config->setGroup(QString("Identity %1").arg(index));
 
+    config->writeEntry("Name",identity->getName());
     config->writeEntry("Ident",identity->getIdent());
     config->writeEntry("Realname",identity->getRealName());
     config->writeEntry("Nicknames",identity->getNicknameList());

@@ -31,11 +31,25 @@ Preferences::Preferences()
   serverWindowStatusBarStatus=true;
   serverList.setAutoDelete(true);
 
-  // create default identity for pre 0.10 settings import
-  addIdentity(new Identity());
+  // create default identity
+  Identity* identity=new Identity();
+  identity->setName(i18n("Default identity"));
+  addIdentity(identity);
 
   setIdent("konversation");
   setRealName("Konversation User");
+
+  setNickname(0,"KonvIRC");
+  setNickname(1,"_KonvIRC");
+  setNickname(2,"KonvIRC_");
+  setNickname(3,"_KonvIRC_");
+
+  setPartReason("Konversation terminated!");
+  setKickReason("User terminated!");
+
+  setShowAwayMessage(false);
+  setAwayMessage("/me is away: %s");
+  setUnAwayMessage("/me is back.");
 
   setChannelMessageColor("000000");
   setQueryMessageColor("0000ff");
@@ -48,15 +62,6 @@ Preferences::Preferences()
   setTextViewBackground("");        // will be set on the first run of an ircview
   setNickCompleteSuffixStart(": ");
   setNickCompleteSuffixMiddle(" ");
-
-  setShowAwayMessage(false);
-  setAwayMessage("/me is away: %s");
-  setUnAwayMessage("/me is back.");
-
-  setNickname(0,"KonvIRC");
-  setNickname(1,"_KonvIRC");
-  setNickname(2,"KonvIRC_");
-  setNickname(3,"_KonvIRC_");
 
   addServer("IRCNet,irc.kde.org,6667,,#kde-users,,0");
 
@@ -76,11 +81,6 @@ Preferences::Preferences()
   channelSplitter.append(10);
   channelSplitter.append(1);
   
-  setPartReason("Konversation terminated!");
-  setKickReason("User terminated!");
-
-  KStandardDirs kstddir;
-
   setAutoReconnect(true);
   setAutoRejoin(true);
 
@@ -93,7 +93,9 @@ Preferences::Preferences()
   setDccBufferSize(1024);
   setDccRollback(1024);
 
+  KStandardDirs kstddir;
   setLogPath(kstddir.saveLocation("data","konversation/logs"));
+
   setLog(true);
   setLowerLog(true);
   setLogFollowsNick(true);
