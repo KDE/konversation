@@ -16,7 +16,10 @@
 
 #include <kdebug.h>
 
+#include <qtextcodec.h>
+
 #include "topiccombobox.h"
+#include "konversationapplication.h"
 
 TopicComboBox::TopicComboBox(QWidget* parent) :
                    KComboBox(parent)
@@ -45,8 +48,10 @@ void TopicComboBox::topicActivated(int index)
 
 void TopicComboBox::insertStringList(const QStringList& list)
 {
+  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
+
   KComboBox::insertStringList(list);
-  setEditText(list[0].section(' ',1));
+  setEditText(codec->toUnicode(list[0]).section(' ',1));
 }
 
 #include "topiccombobox.moc"

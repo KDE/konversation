@@ -18,7 +18,6 @@
 #define PREFSPAGEAPPEARANCE_H
 
 #include <qlabel.h>
-#include <qcombobox.h>
 #include <qcheckbox.h>
 
 #include "prefspage.h"
@@ -42,9 +41,11 @@ class PrefsPageAppearance : public PrefsPage
     void showQuickButtonsChanged(int state);
     void showModeButtonsChanged(int state);
     void formatChanged(const QString& newFormat);
+    void encodingChanged(const QString& newEncoding);
 
   protected:
     void updateFonts();
+    QStringList getEncodings();
 
     QLabel* textPreviewLabel;
     QLabel* listPreviewLabel;

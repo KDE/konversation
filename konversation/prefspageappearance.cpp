@@ -17,6 +17,7 @@
 #include <qlayout.h>
 #include <qpushbutton.h>
 #include <qhbox.h>
+#include <qcombobox.h>
 
 #include <kfontdialog.h>
 #include <kdebug.h>
@@ -41,6 +42,11 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   QPushButton* textFontButton=new QPushButton(i18n("Choose..."),parentFrame,"text_font_button");
   QPushButton* listFontButton=new QPushButton(i18n("Choose..."),parentFrame,"list_font_button");
+
+  QLabel* codecLabel=new QLabel(i18n("Encoding"),parentFrame);
+  QComboBox* codecList=new QComboBox(parentFrame);
+  codecList->insertItem(preferences->getCodec()+" "+i18n("(Current)"));
+  codecList->insertStringList(getEncodings());
 
   updateFonts();
 
@@ -83,6 +89,9 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   appearanceLayout->addWidget(listPreviewLabel,row,1);
   appearanceLayout->addWidget(listFontButton,row,2);
   row++;
+  appearanceLayout->addWidget(codecLabel,row,0);
+  appearanceLayout->addMultiCellWidget(codecList,row,row,1,2);
+  row++;
   appearanceLayout->addMultiCellWidget(timestampBox,row,row,0,2);
   row++;
   appearanceLayout->addMultiCellWidget(showButtonsBox,row,row,0,2);
@@ -94,6 +103,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   connect(textFontButton,SIGNAL (clicked()),this,SLOT (textFontClicked()) );
   connect(listFontButton,SIGNAL (clicked()),this,SLOT (listFontClicked()) );
+  connect(codecList,SIGNAL (highlighted(const QString&)),this,SLOT (encodingChanged(const QString&)));
   connect(doTimestamping,SIGNAL (stateChanged(int)),this,SLOT (timestampingChanged(int)) );
   connect(showQuickButtons,SIGNAL (stateChanged(int)),this,SLOT (showQuickButtonsChanged(int)) );
   connect(showModeButtons,SIGNAL (stateChanged(int)),this,SLOT (showModeButtonsChanged(int)) );
@@ -154,6 +164,58 @@ void PrefsPageAppearance::showQuickButtonsChanged(int state)
 void PrefsPageAppearance::showModeButtonsChanged(int state)
 {
   preferences->setShowModeButtons(state==2);
+}
+
+void PrefsPageAppearance::encodingChanged(const QString& newEncoding)
+{
+  preferences->setCodec(newEncoding.section('(',0,0).stripWhiteSpace());
+}
+
+QStringList PrefsPageAppearance::getEncodings()
+{
+  QString codecString=
+    ("ISO 8859-1 (Western)#"
+     "ISO 8859-2 (Central European)#"
+     "ISO 8859-3 (Central European)#"
+     "ISO 8859-4 (Baltic)#"
+     "ISO 8859-5 (Cyrillic)#"
+     "ISO 8859-6 (Arabic)#"
+     "ISO 8859-7 (Greek)#"
+     "ISO 8859-8 (Hebrew, visually ordered)#"
+     "ISO 8859-8-i (Hebrew, logically ordered)#"
+     "ISO 8859-9 (Turkish)#"
+     "ISO 8859-10#"
+     "ISO 8859-11 (Thai)#"
+     "ISO 8859-13#"
+     "ISO 8859-14#"
+     "ISO 8859-15 (Western, with Euro)#"
+     "utf8 (Unicode, 8-bit)#"
+     "utf16 (Unicode 16-bit)#"
+     "eucJP (Japanese)#"
+     "JIS7 (Japanese)#"
+     "Shift-JIS (Japanese)#"
+     "eucKR (Korean)#"
+     "Big5 (Chinese)#"
+     "GBK (Chinese)#"
+     "TSCII (Tamil)#"
+     "KOI8-R (Russian)#"
+     "KOI8-U (Ukrainian)#"
+     "CP 850#"
+     "CP 874#"
+     "CP 1250 (Central European)#"
+     "CP 1251 (Cyrillic)#"
+     "CP 1252 (Western)#"
+     "CP 1253 (Greek)#"
+     "CP 1254 (Turkish)#"
+     "CP 1255 (Hebrew-)#"
+     "CP 1256 (Arabic)#"
+     "CP 1257 (Baltic)#"
+     "CP 1258#"
+     "TIS-620 (Thai)#"
+     "Apple Roman");
+
+  QStringList encodings=QStringList::split('#',codecString);
+  return encodings;
 }
 
 #include "prefspageappearance.moc"

@@ -52,7 +52,7 @@ class PrefsDialog : public KDialogBase
 
   protected:
     Preferences* preferences;
-		PrefsPage*   scriptsPage;
+//    PrefsPage*   scriptsPage;
 
     void setPreferences(Preferences* newPrefs);
 };

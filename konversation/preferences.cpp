@@ -19,6 +19,7 @@
 #include <kdebug.h>
 
 #include <qpalette.h>
+#include <qtextcodec.h>
 
 #include "preferences.h"
 #include "prefsdialog.h"
@@ -107,6 +108,8 @@ Preferences::Preferences()
 
   setTimestamping(true);
   setTimestampFormat("hh:mm");
+
+  setCodec(QTextCodec::codecForLocale()->name());
 
   setCommandChar("/");
 }
@@ -389,4 +392,6 @@ bool Preferences::getShowServerList() { return showServerList; }
 void Preferences::setChannelSplitter(QValueList<int> sizes) { channelSplitter=sizes; }
 QValueList<int> Preferences::getChannelSplitter() { return channelSplitter; }
 
+void Preferences::setCodec(QString newCodec) { codec=newCodec; }
+QString Preferences::getCodec() { return codec; }
 #include "preferences.moc"

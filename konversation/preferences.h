@@ -198,6 +198,9 @@ class Preferences : public QObject
     void setCommandChar(QString newCommandChar);
     QString getCommandChar();
 
+    void setCodec(QString newCodec);
+    QString getCodec();
+
     QFont getTextFont();
     QFont getListFont();
     void setTextFont(QFont newFont);
@@ -311,6 +314,8 @@ class Preferences : public QObject
 
     QString partReason;
     QString kickReason;
+
+    QString codec;
 };
 
 #endif

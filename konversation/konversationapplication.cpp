@@ -182,6 +182,7 @@ void KonversationApplication::readOptions()
   preferences.setTimestampFormat(config->readEntry("TimestampFormat",preferences.getTimestampFormat()));
   preferences.setShowQuickButtons(config->readBoolEntry("ShowQuickButtons",preferences.getShowQuickButtons()));
   preferences.setShowModeButtons(config->readBoolEntry("ShowModeButtons",preferences.getShowModeButtons()));
+  preferences.setCodec(config->readEntry("Codec",preferences.getCodec()));
 
   QValueList<int> sizes;
   QString sizesString=config->readEntry("ChannelSplitter","10,1");
@@ -353,6 +354,7 @@ void KonversationApplication::saveOptions()
   config->writeEntry("TimestampFormat",preferences.getTimestampFormat());
   config->writeEntry("ShowQuickButtons",preferences.getShowQuickButtons());
   config->writeEntry("ShowModeButtons",preferences.getShowModeButtons());
+  config->writeEntry("Codec",preferences.getCodec());
 
   QString sizesString(QString::number(preferences.getChannelSplitter()[0])+","+QString::number(preferences.getChannelSplitter()[1]));
   config->writeEntry("ChannelSplitter",sizesString);

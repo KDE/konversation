@@ -417,6 +417,8 @@ void IRCView::appendBacklogMessage(const char* firstColumn,const char* rawMessag
 #endif
 #endif
 
+  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
+  line=codec->fromUnicode(line);
   // no additional time stamps on backlog messages
   doAppend(line,true);
 }
@@ -438,6 +440,9 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps)
 
   buffer+=line;
   emit newText();
+
+  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
+  line=codec->toUnicode(line);
 
   // scroll view only if the scroll bar is already at the bottom
 #if QT_VERSION == 303

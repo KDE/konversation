@@ -232,7 +232,8 @@ void Channel::requestNewTopic(const QString& newTopic)
 {
   kdDebug() << "requestNewTopic(" << newTopic << ")" << endl;
 
-  topicLine->setCurrentText(topic);
+  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
+  topicLine->setCurrentText(codec->toUnicode(topic));
 
   if(newTopic!=topic) sendChannelText("/TOPIC "+newTopic);
 
@@ -455,7 +456,7 @@ void Channel::channelTextEntered()
 
 void Channel::sendChannelText(const QString& sendLine)
 {
-  QTextCodec* codec=QTextCodec::codecForLocale();
+  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
   QCString line=codec->fromUnicode(sendLine);
 
   // Is there something we need to display for ourselves?
@@ -690,7 +691,6 @@ void Channel::updateNicksOps()
 
 void Channel::setTopic(QString& newTopic)
 {
-  /* TODO: Somehow we need the nickname to the corresponding topic displayed */
   appendCommandMessage(i18n("Topic"),i18n("The channel topic is \"%1\".").arg(newTopic));
   if(topic!=newTopic)
   {
@@ -714,7 +714,6 @@ void Channel::setTopic(QString& newTopic)
 
 void Channel::setTopic(QString& nickname,QString& newTopic) // Overloaded
 {
-  /* TODO: Somehow we need the nickname to the corresponding topic displayed */
   if(nickname==server->getNickname())
     appendCommandMessage(i18n("Topic"),i18n("You set the channel topic to \"%1\".").arg(newTopic));
   else

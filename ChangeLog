@@ -1,5 +1,3 @@
-Testzeile
-
 Changes from 0.8 to 0.9
 - Added strikeout support (untested yet)
 - Added Swedish translation, done by Karolina Lindqvist (thanks!)
@@ -11,6 +9,7 @@ Changes from 0.8 to 0.9
 - Inserted a QSplitter between channel text and nick list
 - Added support for background colors
 - Reduced flickering on blinking tabs
+- Added experimental support for foreign language characters
 
 Changes from 0.7 to 0.8:
 - DCCs can now be opened (started) using the 'open' button
@@ -40,4 +39,3 @@ Changes from 0.7 to 0.8:
 - Added first support for custom colors in nick list
 - Added application dsescription for the 'About' dialog
 - Major restructuring of the server status panel
-

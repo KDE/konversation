@@ -41,3 +41,4 @@ Fix multiserver behaviour
 *nobs* noch ein Wunsch: die Reiter auf Wunsch an die Seite
 Automatically gzip files before DCC SEND
 Compute md5sum over DCCs and send / display the hash after transfer
+Application Icon (KApplication::iconName()/icon()/miniIcon()/miniIconName())
