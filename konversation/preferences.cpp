@@ -300,6 +300,17 @@ void Preferences::setUseNotify(bool use) { useNotify=use; }
 void Preferences::setNotifyList(const QStringList &newList) { notifyList=newList; }
 QStringList Preferences::getNotifyList() { return notifyList; }
 QString Preferences::getNotifyString() { return notifyList.join(" "); }
+bool Preferences::addNotify(const QString& newPattern)
+{
+  // don't add duplicates
+  if(notifyList.findIndex(newPattern)==-1)
+  {
+    notifyList.append(newPattern);
+    return true;
+  }
+  return false;
+}
+bool Preferences::removeNotify(const QString& pattern) { return (notifyList.remove(pattern)); }
 
 QStringList Preferences::getButtonList() { return buttonList; }
 

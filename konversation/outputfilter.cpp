@@ -102,6 +102,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("invite "))  parseInvite(parameter);
     else if(line.startsWith("exec "))    parseExec(parameter);
     else if(line.startsWith("raw "))     parseRaw(parameter);
+    else if(line.startsWith("notify "))  parseNotify(parameter);
 
     else if(line=="join")                parseJoin(QString::null);
     else if(line=="part")                parsePart(QString::null);
@@ -116,6 +117,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="invite")              parseInvite(QString::null);
     else if(line=="exec")                parseExec(QString::null);
     else if(line=="raw")                 parseRaw(QString::null);
+    else if(line=="notify")              parseNotify(QString::null);
 
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
@@ -586,6 +588,36 @@ void OutputFilter::parseRaw(const QString& parameter)
     output=i18n("Usage: RAW [OPEN | CLOSE]");
     program=true;
   }
+}
+
+void OutputFilter::parseNotify(const QString& parameter)
+{
+  if(!parameter.isEmpty())
+  {
+    QStringList list=QStringList::split(' ',parameter);
+
+    for(unsigned int index=0;index<list.count();index++)
+    {
+      // Try to remove current pattern
+      if(!KonversationApplication::preferences.removeNotify(list[index]))
+      {
+        // If remove failed, try to add it instead
+        if(!KonversationApplication::preferences.addNotify(list[index]))
+          kdDebug() << "OutputFilter::parseNotify(): Adding failed!" << endl;
+      }
+    } // endfor
+  }
+
+  // show (new) notify list to user
+  QString list=KonversationApplication::preferences.getNotifyString();
+  type=i18n("Notify");
+
+  if(list.isEmpty())
+    output=i18n("Current notify list is empty.");
+  else
+    output=i18n("Current notify list: %1").arg(list);
+
+  program=true;
 }
 
 // Accessors

@@ -131,7 +131,9 @@ class Preferences : public QObject
     void setUseNotify(bool use);
     QStringList getNotifyList();
     QString getNotifyString();
-    void setNotifyList(const QStringList &newList);
+    void setNotifyList(const QStringList& newList);
+    bool addNotify(const QString& newPattern);
+    bool removeNotify(const QString& pattern);
 
     QPtrList<Highlight> getHilightList();
     void setHilightList(QPtrList<Highlight> newList);
