@@ -65,7 +65,6 @@
 #include "urlcatcher.h"
 #include "irccolorchooser.h"
 #include "trayicon.h"
-#include "tabaction.h"
 #include "dccchat.h"
 #include "serverlistdialog.h"
 #include "insertchardialog.h"
@@ -152,18 +151,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
       tabSelectionMapper, SLOT(map()), actionCollection(), QString("go_to_tab_%1").arg(i).local8Bit());
     tabSelectionMapper->setMapping( tabSelectionAction, i);
   }
-/*  
-  new TabAction(i18n("Go to Tab Number %1").arg( 1),0,KShortcut("Alt+1"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_1");
-  new TabAction(i18n("Go to Tab Number %1").arg( 2),1,KShortcut("Alt+2"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_2");
-  new TabAction(i18n("Go to Tab Number %1").arg( 3),2,KShortcut("Alt+3"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_3");
-  new TabAction(i18n("Go to Tab Number %1").arg( 4),3,KShortcut("Alt+4"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_4");
-  new TabAction(i18n("Go to Tab Number %1").arg( 5),4,KShortcut("Alt+5"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_5");
-  new TabAction(i18n("Go to Tab Number %1").arg( 6),5,KShortcut("Alt+6"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_6");
-  new TabAction(i18n("Go to Tab Number %1").arg( 7),6,KShortcut("Alt+7"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_7");
-  new TabAction(i18n("Go to Tab Number %1").arg( 8),7,KShortcut("Alt+8"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_8");
-  new TabAction(i18n("Go to Tab Number %1").arg( 9),8,KShortcut("Alt+9"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_9");
-  new TabAction(i18n("Go to Tab Number %1").arg(10),9,KShortcut("Alt+0"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_0");
-*/
+  
   new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
   KAction* awayAction = new KAction(i18n("Set &Away Globally"), "konversationaway", KShortcut("Alt+A"),
     static_cast<KonversationApplication *>(kapp), SLOT(toggleAway()), actionCollection(),"toggle_away");  //string must be the same as that used in server.cpp
