@@ -116,15 +116,19 @@ void NickListView::insertAssociationSubMenu() {
   bool any_existing_associations=false;
   bool any_not_having_associations=false;
   addressbook->clear();
+  bool any_email_address=false;
   ChannelNickList nickList=channel->getSelectedChannelNicks();
   for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it)
   {
-    if((*it)->getNickInfo()->getAddressee().isEmpty()) {
+    KABC::Addressee addr = (*it)->getNickInfo()->getAddressee();
+    if(addr.isEmpty()) {
       any_not_having_associations=true;
-      if(any_existing_associations) break;
+      if(any_existing_associations && any_email_address) break;
     } else {
+      if(!any_email_address && !addr.preferredEmail().isEmpty())
+        any_email_address = true;
       any_existing_associations=true;
-      if(any_not_having_associations) break;
+      if(any_not_having_associations && any_email_address) break;
     }
   }
 
@@ -144,6 +148,15 @@ void NickListView::insertAssociationSubMenu() {
 
   if(any_existing_associations)
     addressbook->insertItem(SmallIcon("editdelete"), i18n("Delete Association"), AddressbookDelete);
+
+  if(!any_email_address) {
+      popup->setItemEnabled(SendEmail, false);
+      popup->setWhatsThis(SendEmail, "Sends an email to this contact using the preferred email address set in the contact's addressbook association.  This is currently disabled because the associated contact does not have any preferred email address set.");
+    } else { 
+      popup->setItemEnabled(SendEmail, true);
+      popup->setWhatsThis(SendEmail, i18n("Sends an email to this contact using the preferred email address set in the contact's addressbook association"));
+    }
+
 }
 #include "nicklistview.moc"
 
