@@ -278,7 +278,7 @@ void Server::connectToIRCServer()
     setPrefixes("ov","@+");
 
     // (re)connect. Autojoin will be done by the input filter
-    statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1...").arg(serverSocket.host()));
+    statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...").arg(serverSocket.host()).arg(serverSocket.port()));
     // QDns is broken, so don't use async lookup, use own threaded class instead
     resolver.setSocket(&serverSocket);
     resolver.start();
