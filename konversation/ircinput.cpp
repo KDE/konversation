@@ -94,7 +94,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
             cursorWordBackward(true);
             cut();
           }
-          else kdDebug() << keyEvent->ascii() << endl;
+//          else kdDebug() << keyEvent->ascii() << endl;
       }
     }
     // To prevent compiler warnings about unhandled case values

@@ -15,6 +15,7 @@ Implement sophisticated sorting options for nicklist
 Border changes on-the-fly using some kind of "redraw-pointer-list"
 Conflict in Highlighting own lines and own nick
 CHECK: Replace "0.0.0.0" with QString::null in dccTransfer to allow other than IPv4
+Session management
 
 <mETz[]> Eisfuchs: And why have the "Mitschnitt" button there? having it in the menubar is enough, no?
 

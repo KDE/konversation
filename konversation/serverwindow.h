@@ -132,6 +132,18 @@ class ServerWindow : public KMainWindow
                                  QString serverTextColor, QString timeColor, QString backgroundColor);
     void closeColorConfiguration(QSize windowSize);
 
+    // I hope we find a better way soon!
+    void goToTab0();
+    void goToTab1();
+    void goToTab2();
+    void goToTab3();
+    void goToTab4();
+    void goToTab5();
+    void goToTab6();
+    void goToTab7();
+    void goToTab8();
+    void goToTab9();
+
   protected:
     int spacing();
     int margin();
@@ -139,6 +151,8 @@ class ServerWindow : public KMainWindow
     void readOptions();
     void saveOptions();
     bool queryExit();
+
+    void goToTab(int page);
 
     enum StatusID
     {

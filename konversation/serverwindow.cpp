@@ -62,8 +62,18 @@ ServerWindow::ServerWindow(Server* newServer) : KMainWindow()
 
   // Keyboard accelerators to navigate through the different pages
   KAccel* accelerator=accel();
-  accelerator->insert("Next Tab",i18n("Next Tab"),"Jump to next tab",KShortcut("Alt+Right"),this,SLOT(nextTab()));
-  accelerator->insert("Previous Tab",i18n("Previous Tab"),"Jump to previous tab",KShortcut("Alt+Left"),this,SLOT(previousTab()));
+  accelerator->insert("Next Tab",i18n("Next Tab"),i18n("Go to next tab"),KShortcut("Alt+Right"),this,SLOT(nextTab()));
+  accelerator->insert("Previous Tab",i18n("Previous Tab"),i18n("Go to previous tab"),KShortcut("Alt+Left"),this,SLOT(previousTab()));
+  accelerator->insert("Go to Tab 1",i18n("Tab %1").arg(1),i18n("Go to tab number %1").arg(1),KShortcut("Alt+1"),this,SLOT(goToTab0()));
+  accelerator->insert("Go to Tab 2",i18n("Tab %1").arg(2),i18n("Go to tab number %1").arg(2),KShortcut("Alt+2"),this,SLOT(goToTab1()));
+  accelerator->insert("Go to Tab 3",i18n("Tab %1").arg(3),i18n("Go to tab number %1").arg(3),KShortcut("Alt+3"),this,SLOT(goToTab2()));
+  accelerator->insert("Go to Tab 4",i18n("Tab %1").arg(4),i18n("Go to tab number %1").arg(4),KShortcut("Alt+4"),this,SLOT(goToTab3()));
+  accelerator->insert("Go to Tab 5",i18n("Tab %1").arg(5),i18n("Go to tab number %1").arg(5),KShortcut("Alt+5"),this,SLOT(goToTab4()));
+  accelerator->insert("Go to Tab 6",i18n("Tab %1").arg(6),i18n("Go to tab number %1").arg(6),KShortcut("Alt+6"),this,SLOT(goToTab5()));
+  accelerator->insert("Go to Tab 7",i18n("Tab %1").arg(7),i18n("Go to tab number %1").arg(7),KShortcut("Alt+7"),this,SLOT(goToTab6()));
+  accelerator->insert("Go to Tab 8",i18n("Tab %1").arg(8),i18n("Go to tab number %1").arg(8),KShortcut("Alt+8"),this,SLOT(goToTab7()));
+  accelerator->insert("Go to Tab 9",i18n("Tab %1").arg(9),i18n("Go to tab number %1").arg(9),KShortcut("Alt+9"),this,SLOT(goToTab8()));
+  accelerator->insert("Go to Tab 0",i18n("Tab %1").arg(0),i18n("Go to tab number %1").arg(0),KShortcut("Alt+0"),this,SLOT(goToTab9()));
 
   // Initialize KMainWindow->statusBar()
   statusBar();
@@ -194,32 +204,6 @@ void ServerWindow::showView(QWidget* pane)
   {
     // TODO: add adjustFocus() here?
     windowContainer->showPage(pane);
-  }
-}
-
-void ServerWindow::nextTab()
-{
-  kdDebug() << "ServerWindow::nextTab()" << endl;
-
-  int page=windowContainer->currentPageIndex()+1;
-  if(page<windowContainer->count())
-  {
-    windowContainer->setCurrentPage(page);
-    ChatWindow* newPage=(ChatWindow*) windowContainer->page(page);
-    newPage->adjustFocus();
-  }
-}
-
-void ServerWindow::previousTab()
-{
-  kdDebug() << "ServerWindow::previousTab()" << endl;
-
-  int page=windowContainer->currentPageIndex()-1;
-  if(page!=-1)
-  {
-    windowContainer->setCurrentPage(page);
-    ChatWindow* newPage=(ChatWindow*) windowContainer->page(page);
-    newPage->adjustFocus();
   }
 }
 
@@ -656,5 +640,37 @@ bool ServerWindow::isFrontView(const ChatWindow* view)
 {
   return(frontView==view);
 }
+
+void ServerWindow::nextTab()
+{
+  goToTab(windowContainer->currentPageIndex()+1);
+}
+
+void ServerWindow::previousTab()
+{
+  goToTab(windowContainer->currentPageIndex()-1);
+}
+
+void ServerWindow::goToTab(int page)
+{
+  if(page>=0 && page<windowContainer->count())
+  {
+    windowContainer->setCurrentPage(page);
+    ChatWindow* newPage=(ChatWindow*) windowContainer->page(page);
+    newPage->adjustFocus();
+  }
+}
+
+// I hope we can find a better way soon ... this is ridiculous"
+void ServerWindow::goToTab0() { goToTab(0); }
+void ServerWindow::goToTab1() { goToTab(1); }
+void ServerWindow::goToTab2() { goToTab(2); }
+void ServerWindow::goToTab3() { goToTab(3); }
+void ServerWindow::goToTab4() { goToTab(4); }
+void ServerWindow::goToTab5() { goToTab(5); }
+void ServerWindow::goToTab6() { goToTab(6); }
+void ServerWindow::goToTab7() { goToTab(7); }
+void ServerWindow::goToTab8() { goToTab(8); }
+void ServerWindow::goToTab9() { goToTab(9); }
 
 #include "serverwindow.moc"
