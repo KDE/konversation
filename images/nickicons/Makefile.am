@@ -1,1 +1,1 @@
-SUBDIRS = alternative classic default smiling
+SUBDIRS = alternative christmas classic default smiling
