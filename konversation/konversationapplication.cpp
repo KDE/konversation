@@ -578,7 +578,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   int index=0;
   QString serverEntry=preferences.getServerByIndex(0);
 
-  while(serverEntry)
+  while(!serverEntry.isEmpty())
   {
     config->writeEntry(QString("Server%1").arg(index),serverEntry);
     serverEntry=preferences.getServerByIndex(++index);

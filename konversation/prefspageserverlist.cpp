@@ -54,7 +54,7 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
   int index=0;
 
   QString serverString=preferences->getServerByIndex(index);
-  while(serverString)
+  while(!serverString.isEmpty())
   {
     int id=preferences->getServerIdByIndex(index);
     QStringList serverEntry=QStringList::split(',',serverString,true);
@@ -183,7 +183,7 @@ void PrefsPageServerList::editServer()
   if(item)
   {
     QString server=preferences->getServerById(item->getId());
-    if(server)
+    if(!server.isEmpty())
     {
       QStringList properties=QStringList::split(',',server,true);
       EditServerDialog editServerDialog(parentFrame,properties[0],properties[1],properties[2],properties[3],properties[4],properties[5],properties[7]);

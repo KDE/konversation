@@ -65,13 +65,13 @@ class ChatWindow : public QVBox
     void setType(WindowType newType);
     WindowType getType();
 
-    void append(const char* nickname,const char* message);
-    void appendRaw(const char* message);
-    void appendQuery(const char* nickname,const char* message);
-    void appendAction(const char* nickname,const char* message);
-    void appendServerMessage(const char* type,const char* message);
-    void appendCommandMessage(const char* command,const char* message);
-    void appendBacklogMessage(const char* firstColumn,const char* message);
+    void append(const QString& nickname,const QString& message);
+    void appendRaw(const QString& message);
+    void appendQuery(const QString& nickname,const QString& message);
+    void appendAction(const QString& nickname,const QString& message);
+    void appendServerMessage(const QString& type,const QString& message);
+    void appendCommandMessage(const QString& command,const QString& message);
+    void appendBacklogMessage(const QString& firstColumn,const QString& message);
 
     QWidget* parentWidget;
 

@@ -86,11 +86,11 @@ class Server : public QObject
 
     void joinChannel(const QString& name, const QString& hostmask, const QString& key);
     void removeChannel(Channel* channel);
-    void appendToChannel(const char* channel,const char* nickname, const char* message);
-    void appendActionToChannel(const char* channel, const char* nickname, const char* message);
-    void appendServerMessageToChannel(const char* channel, const char* type, const char* message);
-    void appendCommandMessageToChannel(const char* channel, const char* command, const char* message);
-    void appendStatusMessage(const char* type,const char* message);
+    void appendToChannel(const QString& channel,const QString& nickname, const QString& message);
+    void appendActionToChannel(const QString& channel, const QString& nickname, const QString& message);
+    void appendServerMessageToChannel(const QString& channel, const QString& type, const QString& message);
+    void appendCommandMessageToChannel(const QString& channel, const QString& command, const QString& message);
+    void appendStatusMessage(const QString& type,const QString& message);
 
     void dcopSay(const QString& target,const QString& command);
     void dcopInfo(const QString& string);
@@ -105,13 +105,13 @@ class Server : public QObject
     void setShowModeButtons(bool state);
 
     QString getNextQueryName();
-    void appendToQuery(const char* queryName,const char* message);
-    void appendActionToQuery(const char* queryName,const char* message);
-    void appendServerMessageToQuery(const char* queryName, const char* type, const char* message);
-    void appendCommandMessageToQuery(const char* queryName, const char* command, const char* message);
+    void appendToQuery(const QString& queryName,const QString& message);
+    void appendActionToQuery(const QString& queryName,const QString& message);
+    void appendServerMessageToQuery(const QString& queryName,const QString& type,const QString& message);
+    void appendCommandMessageToQuery(const QString& queryName,const QString& command,const QString& message);
 
-    Channel* getChannelByName(const char* name);
-    Query* getQueryByName(const char* name);
+    Channel* getChannelByName(const QString& name);
+    Query* getQueryByName(const QString& name);
     QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QStringList& nickList, const QString& queryName, const QString& parameter);
     QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& queryName, const QString& parameter);
 

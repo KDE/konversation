@@ -129,37 +129,37 @@ void ChatWindow::setTextView(IRCView* newView)
   connect(textView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
 }
 
-void ChatWindow::appendRaw(const char* message)
+void ChatWindow::appendRaw(const QString& message)
 {
   textView->appendRaw(message);
 }
 
-void ChatWindow::append(const char* nickname,const char* message)
+void ChatWindow::append(const QString& nickname,const QString& message)
 {
   textView->append(nickname,message);
 }
 
-void ChatWindow::appendQuery(const char* nickname,const char* message)
+void ChatWindow::appendQuery(const QString& nickname,const QString& message)
 {
   textView->appendQuery(nickname,message);
 }
 
-void ChatWindow::appendAction(const char* nickname,const char* message)
+void ChatWindow::appendAction(const QString& nickname,const QString& message)
 {
   textView->appendAction(nickname,message);
 }
 
-void ChatWindow::appendServerMessage(const char* type,const char* message)
+void ChatWindow::appendServerMessage(const QString& type,const QString& message)
 {
   textView->appendServerMessage(type,message);
 }
 
-void ChatWindow::appendCommandMessage(const char* command,const char* message)
+void ChatWindow::appendCommandMessage(const QString& command,const QString& message)
 {
   textView->appendCommandMessage(command,message);
 }
 
-void ChatWindow::appendBacklogMessage(const char* firstColumn,const char* message)
+void ChatWindow::appendBacklogMessage(const QString& firstColumn,const QString& message)
 {
   textView->appendBacklogMessage(firstColumn,message);
 }
@@ -240,16 +240,24 @@ void ChatWindow::logText(const QString& text)
 
     if(logfile.open(IO_WriteOnly | IO_Append))
     {
+      // wrap the file into a stream
+      QTextStream logStream(&logfile);
+
       if(firstLog)
       {
         QString intro(i18n("\n*** Logfile started\n*** on %1\n\n").arg(QDateTime::currentDateTime().toString()));
-        logfile.writeBlock(intro,intro.length());
+        logStream << intro;
         firstLog=false;
       }
 
       QTime time=QTime::currentTime();
       QString logLine(QString("[%1] %2\n").arg(time.toString("hh:mm:ss")).arg(text));
-      logfile.writeBlock(logLine,logLine.length());
+      logStream << logLine;
+
+      // detach stream from file
+      logStream.unsetDevice();
+
+      // close file
       logfile.close();
     }
     else kdWarning() << "ChatWindow::logText(): open(IO_Append) for " << logfile.name() << " failed!" << endl;

@@ -292,13 +292,13 @@ void KonversationMainWindow::deleteDccPanel()
 StatusPanel* KonversationMainWindow::addStatusView(Server* server)
 {
   StatusPanel* statusView=new StatusPanel(getViewContainer());
-  
+
   // first set up internal data ...
   statusView->setServer(server);
   statusView->setIdentity(server->getIdentity());
 
   // ... then put it into the tab widget, otherwise we'd have a race with server member
-  addView(statusView,2,i18n(server->getServerName()),false);
+  addView(statusView,2,server->getServerName(),false);
 
   connect(statusView,SIGNAL (newText(QWidget*)),this,SLOT (newText(QWidget*)) );
   connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );

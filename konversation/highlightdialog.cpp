@@ -26,7 +26,8 @@
 #include "highlightdialog.h"
 #include "konversationapplication.h"
 
-HighlightDialog::HighlightDialog(QWidget* parent, QPtrList<Highlight> passed_HighlightList, QSize passed_windowSize) : KDialogBase(parent, 0, false, "HighlightEdit", Ok|Cancel, Default, false)
+HighlightDialog::HighlightDialog(QWidget* parent, QPtrList<Highlight> passed_HighlightList, QSize passed_windowSize) :
+                     KDialogBase(parent,"highlight_edit", false, i18n("Edit highlight patterns"), Ok|Cancel, Default, false)
 {
 	highlightList = passed_HighlightList;
 	windowSize = passed_windowSize;

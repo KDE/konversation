@@ -92,7 +92,7 @@ IRCEvent::IRCEvent (const QString &a_type, const QString &a_criteria, const QStr
     type = ON_NICK_CHANGE;
   } else if (l_type == "mode") {
     type = ON_MODE;
-  } else if (l_type = "numeric") {
+  } else if (l_type == "numeric") {
     type = ON_NUMERIC;
   } else {
     type = ON_ANY;

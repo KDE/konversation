@@ -52,7 +52,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
   setIdentity(KonversationApplication::preferences.getIdentityByName(serverEntry[7]));
 
-  setName("server_"+serverEntry[1]);
+  setName(QString("server_"+serverEntry[1]).ascii());
 
   setMainWindow(newMainWindow);
 
@@ -73,7 +73,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   serverSocket.setAddress(serverName,serverPort);
 
-  if(serverEntry[4] && !serverEntry[4].isEmpty())
+  if(!serverEntry[4].isEmpty())
   {
     setAutoJoin(true);
     setAutoJoinChannel(serverEntry[4]);
@@ -235,7 +235,7 @@ void Server::ircServerConnectionSuccess()
                         " 8 * :" +  // 8 = +i; 4 = +w
                         identity->getRealName();
 
-  if (serverKey) queue("PASS "+serverKey);
+  if(!serverKey.isEmpty()) queue("PASS "+serverKey);
   queue("NICK "+getNickname());
   queue(connectString);
 
@@ -492,7 +492,11 @@ void Server::send()
     else if(outputBuffer.startsWith("QUIT")) setDeliberateQuit(true);
 
     // TODO: Implement Flood-Protection here
-    write(serverSocket.fd(),outputBuffer,outputBuffer.length());
+
+    // wrap socket into a stream
+    QTextStream stream(&serverSocket);
+    stream << outputBuffer;
+
     serverSocket.enableWrite(false);
   }
 
@@ -639,7 +643,7 @@ void Server::requestDccSend(const QString &a_recipient)
 {
   QString recipient(a_recipient);
   // if we don't have a recipient yet, let the user select one
-  if(!recipient)
+  if(recipient.isEmpty())
   {
     QStringList nickList;
     Channel* lookChannel=channelList.first();
@@ -647,7 +651,7 @@ void Server::requestDccSend(const QString &a_recipient)
     // fill nickList with all nicks we know about
     while(lookChannel)
     {
-      QList<Nick> nicks=lookChannel->getNickList();
+      QPtrList<Nick> nicks=lookChannel->getNickList();
       Nick* lookNick=nicks.first();
       while(lookNick)
       {
@@ -668,7 +672,7 @@ void Server::requestDccSend(const QString &a_recipient)
     recipient=DccRecipientDialog::getNickname(getMainWindow(),nickList);
   }
   // do we have a recipient *now*?
-  if(recipient && !recipient.isEmpty())
+  if(!recipient.isEmpty())
   {
     QString fileName=KFileDialog::getOpenFileName(
                                                    lastDccDir,
@@ -972,7 +976,7 @@ void Server::setShowModeButtons(bool state)
   }
 }
 
-Channel* Server::getChannelByName(const char* name)
+Channel* Server::getChannelByName(const QString& name)
 {
   // Convert wanted channel name to lowercase
   QString wanted=name;
@@ -989,7 +993,7 @@ Channel* Server::getChannelByName(const char* name)
   return 0;
 }
 
-Query* Server::getQueryByName(const char* name)
+Query* Server::getQueryByName(const QString& name)
 {
   // Convert wanted query name to lowercase
   QString wanted=name;
@@ -1089,59 +1093,59 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool /* away *
   addHostmaskToNick(nick,hostmask);
 }
 
-void Server::appendToChannel(const char* channel,const char* nickname,const char* message)
+void Server::appendToChannel(const QString& channel,const QString& nickname,const QString& message)
 {
   Channel* outChannel=getChannelByName(channel);
   if(outChannel) outChannel->append(nickname,message);
 }
 
-void Server::appendActionToChannel(const char* channel,const char* nickname,const char* message)
+void Server::appendActionToChannel(const QString& channel,const QString& nickname,const QString& message)
 {
   Channel* outChannel=getChannelByName(channel);
   if(outChannel) outChannel->appendAction(nickname,message);
 }
 
-void Server::appendServerMessageToChannel(const char* channel,const char* type,const char* message)
+void Server::appendServerMessageToChannel(const QString& channel,const QString& type,const QString& message)
 {
   Channel* outChannel=getChannelByName(channel);
   if(outChannel) outChannel->appendServerMessage(type,message);
 }
 
-void Server::appendCommandMessageToChannel(const char* channel,const char* command,const char* message)
+void Server::appendCommandMessageToChannel(const QString& channel,const QString& command,const QString& message)
 {
   Channel* outChannel=getChannelByName(channel);
   if(outChannel) outChannel->appendCommandMessage(command,message);
 }
 
-void Server::appendToQuery(const char* queryName,const char* message)
+void Server::appendToQuery(const QString& queryName,const QString& message)
 {
   Query* outQuery=getQueryByName(queryName);
   if(outQuery) outQuery->appendQuery(queryName,message);
   else kdWarning() << "Server::appendToQuery(" << queryName << "): Query not found!" << endl;
 }
 
-void Server::appendActionToQuery(const char* queryName,const char* message)
+void Server::appendActionToQuery(const QString& queryName,const QString& message)
 {
   Query* outQuery=getQueryByName(queryName);
   if(outQuery) outQuery->appendAction(queryName,message);
   else kdWarning() << "Server::appendActionToQuery(" << queryName << "): Query not found!" << endl;
 }
 
-void Server::appendServerMessageToQuery(const char* queryName,const char* type,const char* message)
+void Server::appendServerMessageToQuery(const QString& queryName,const QString& type,const QString& message)
 {
   Query* outQuery=getQueryByName(queryName);
   if(outQuery) outQuery->appendServerMessage(type,message);
   else kdWarning() << "Server::appendServerMessageToQuery(" << queryName << "): Query not found!" << endl;
 }
 
-void Server::appendCommandMessageToQuery(const char* queryName,const char* command,const char* message)
+void Server::appendCommandMessageToQuery(const QString& queryName,const QString& command,const QString& message)
 {
   Query* outQuery=getQueryByName(queryName);
   if(outQuery) outQuery->appendCommandMessage(command,message);
   else kdWarning() << "Server::appendCommandMessageToQuery(" << queryName << "): Query not found!" << endl;
 }
 
-void Server::appendStatusMessage(const char* type,const char* message)
+void Server::appendStatusMessage(const QString& type,const QString& message)
 {
   getMainWindow()->appendToFrontmost(type,message,statusView);
 }
@@ -1157,8 +1161,8 @@ void Server::setChannelTopic(const QString &channel, const QString &newTopic)
   Channel* outChannel=getChannelByName(channel);
   if(outChannel)
   {
-    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
-    QString topic=codec->toUnicode(newTopic);
+    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
+    QString topic=codec->toUnicode(newTopic.ascii());
     outChannel->setTopic(topic);
   }
 }
@@ -1168,8 +1172,8 @@ void Server::setChannelTopic(const QString& nickname, const QString &channel, co
   Channel* outChannel=getChannelByName(channel);
   if(outChannel)
   {
-    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
-    QString topic=codec->toUnicode(newTopic);
+    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
+    QString topic=codec->toUnicode(newTopic.ascii());
     outChannel->setTopic(nickname,newTopic);
   }
 }
@@ -1223,14 +1227,14 @@ QString Server::parseWildcards(const QString &toParse, const QString &nickname, 
   }
 
   out.replace(QRegExp("%u"),nickList.join(separator));
-  if(channelName) out.replace(QRegExp("%c"),channelName);
+  if(!channelName.isEmpty()) out.replace(QRegExp("%c"),channelName);
   out.replace(QRegExp("%o"),nickname);
   out.replace(QRegExp("%k"),channelKey);
   out.replace(QRegExp("%K"),serverKey);
   out.replace(QRegExp("%n"),"\n");
 //  out.replace(QRegExp("%f"),getFortuneCookie());
 //  out.replace(QRegExp("%p"),parameter);
-  if(queryName) out.replace(QRegExp("%q"),queryName);
+  if(!queryName.isEmpty()) out.replace(QRegExp("%q"),queryName);
 
   // finally replace all "%p" with "%"
   out.replace(QRegExp("%p"),"%");

@@ -957,10 +957,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           {
             QString message;
           
-            if(parameterList[2]=="1") message="%1 (%2 user): %3";
-            else message="%1 (%2 users): %3";
+            if(parameterList[2]=="1") message=i18n("%1 (%2 user): %3");
+            else message=i18n("%1 (%2 users): %3");
           
-            server->appendStatusMessage(i18n("List"),i18n(message).arg(parameterList[1]).arg(parameterList[2]).arg(trailing));
+            server->appendStatusMessage(i18n("List"),message.arg(parameterList[1]).arg(parameterList[2]).arg(trailing));
           }
           else // send them to /LIST window
             emit addToChannelList(parameterList[1],parameterList[2].toInt(),trailing);

@@ -74,7 +74,7 @@ void StatusPanel::adjustFocus()
 
 void StatusPanel::sendStatusText(QString sendLine)
 {
-  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
+  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
   QCString line=codec->fromUnicode(sendLine);
 
   QString output=filter.parse(server->getNickname(),line, QString::null);

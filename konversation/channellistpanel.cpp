@@ -152,16 +152,19 @@ void ChannelListPanel::saveList()
       item=channelListView->itemAtIndex(++index);
     }
 
-    // now save the list to disk    
+    // now save the list to disk
     QFile listFile(fileName);
     listFile.open(IO_WriteOnly);
-    
+    // wrap the file into a stream
+    QTextStream stream(&listFile);
+
     QString header(i18n("Konversation Channel List: %1 - %2\n\n")
                          .arg(server->getServerName())
                          .arg(QDateTime::currentDateTime().toString()));
-    
-    listFile.writeBlock(header,header.length());
-    
+
+    // send header to stream
+    stream << header;
+
     index=0;
     item=channelListView->itemAtIndex(0);
     while(item)
@@ -176,9 +179,11 @@ void ChannelListPanel::saveList()
         nicksPad.fill(' ',maxNicksWidth);
         QString nicksNum(nicksPad+item->text(1));
         nicksNum=nicksNum.right(maxNicksWidth);
-                
+
         QString line(channelName+" "+nicksNum+" "+item->text(2)+"\n");
-        listFile.writeBlock(line,line.length());
+
+        // send final line to stream
+        stream << line;
       }
       item=channelListView->itemAtIndex(++index);
     }

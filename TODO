@@ -52,3 +52,8 @@ PgUp / Pg/Dn scrolls text
 Notify with more than 500 characters
 Logrotate with timer or at shutdown, compress rotated logs
 Stats for server lag, words per session per person / channel, quits etc.
+
+*nobs* feature request: Fenster die beim Schliessen offen waren, sollten beim Starten auch wieder offen sein (nicks online)
+*Eisfuchs* Wie wäre es mit einem [X] öffne Nicks Online Fenster beim Start ?
+*nobs* hm, oder so
+*nobs* andockbar wäre vielleicht nett, so als Reiter wie die channels; vielleicht könnte man sich auch zusätzliche Infos merken, wie "last spoken" "last seen"

@@ -54,13 +54,13 @@ class IRCView : public KTextBrowser
     void sendFile();
 
   public slots:
-    void append(const char* nick,const char* message);
-    void appendRaw(const char* message);
-    void appendQuery(const char* nick,const char* message);
-    void appendAction(const char* nick,const char* message);
-    void appendServerMessage(const char* type,const char* message);
-    void appendCommandMessage(const char* command,const char* message);
-    void appendBacklogMessage(const char* firstColumn,const char* message);
+    void append(const QString& nick,const QString& message);
+    void appendRaw(const QString& message);
+    void appendQuery(const QString& nick,const QString& message);
+    void appendAction(const QString& nick,const QString& message);
+    void appendServerMessage(const QString& type,const QString& message);
+    void appendCommandMessage(const QString& command,const QString& message);
+    void appendBacklogMessage(const QString& firstColumn,const QString& message);
     void search();
 
   protected slots:

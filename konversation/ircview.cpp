@@ -322,7 +322,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   return filteredLine;
 }
 
-void IRCView::append(const char* nick,const char* message)
+void IRCView::append(const QString& nick,const QString& message)
 {
   QString channelMessageColor = KonversationApplication::preferences.getChannelMessageColor();
 
@@ -342,7 +342,7 @@ void IRCView::append(const char* nick,const char* message)
   doAppend(line);
 }
 
-void IRCView::appendRaw(const char* message)
+void IRCView::appendRaw(const QString& message)
 {
   QString channelMessageColor = KonversationApplication::preferences.getChannelMessageColor();
 
@@ -360,7 +360,7 @@ void IRCView::appendRaw(const char* message)
   doAppend(line);
 }
 
-void IRCView::appendQuery(const char* nick,const char* message)
+void IRCView::appendQuery(const QString& nick,const QString& message)
 {
   QString queryMessageColor = KonversationApplication::preferences.getQueryMessageColor();
 
@@ -380,7 +380,7 @@ void IRCView::appendQuery(const char* nick,const char* message)
   doAppend(line);
 }
 
-void IRCView::appendAction(const char* nick,const char* message)
+void IRCView::appendAction(const QString& nick,const QString& message)
 {
   QString actionMessageColor = KonversationApplication::preferences.getActionMessageColor();
 
@@ -400,7 +400,7 @@ void IRCView::appendAction(const char* nick,const char* message)
   doAppend(line);
 }
 
-void IRCView::appendServerMessage(const char* type,const char* message)
+void IRCView::appendServerMessage(const QString& type,const QString& message)
 {
   QString serverMessageColor=KonversationApplication::preferences.getServerMessageColor();
 
@@ -426,7 +426,7 @@ void IRCView::appendServerMessage(const char* type,const char* message)
   doAppend(line);
 }
 
-void IRCView::appendCommandMessage(const char* type,const char* message)
+void IRCView::appendCommandMessage(const QString& type,const QString& message)
 {
   QString commandMessageColor = KonversationApplication::preferences.getCommandMessageColor();
 
@@ -445,7 +445,7 @@ void IRCView::appendCommandMessage(const char* type,const char* message)
   doAppend(line);
 }
 
-void IRCView::appendBacklogMessage(const char* firstColumn,const char* rawMessage)
+void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& rawMessage)
 {
   QString time;
   QString message(rawMessage);
@@ -474,7 +474,7 @@ void IRCView::appendBacklogMessage(const char* firstColumn,const char* rawMessag
 #endif
 #endif
 
-  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
+  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
   line=codec->fromUnicode(line);
   // no additional time stamps on backlog messages
   doAppend(line,true);
@@ -504,8 +504,8 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps)
   buffer+=line;
   emit newText();
 
-  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
-  line=codec->toUnicode(line);
+  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
+  line=codec->toUnicode(line.ascii());
 
   // scroll view only if the scroll bar is already at the bottom
 #if QT_VERSION == 303

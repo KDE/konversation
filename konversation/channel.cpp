@@ -239,8 +239,8 @@ void Channel::requestNewTopic(const QString& newTopic)
 {
   kdDebug() << "requestNewTopic(" << newTopic << ")" << endl;
 
-  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
-  topicLine->setCurrentText(codec->toUnicode(topic));
+  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
+  topicLine->setCurrentText(codec->toUnicode(topic.ascii()));
 
   if(newTopic!=topic) sendChannelText(KonversationApplication::preferences.getCommandChar()+"TOPIC "+newTopic);
 
@@ -353,17 +353,17 @@ void Channel::popupCommand(int id)
       break;
   } // switch
 
-  if(pattern.length())
+  if(!pattern.isEmpty())
   {
     pattern.replace(QRegExp("%c"),getName());
-    
+
     QStringList nickList=getSelectedNicksList();
 
     QString command;
     for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator)
     {
       QStringList patternList=QStringList::split('\n',pattern);
-      
+
       for(unsigned int index=0;index<patternList.count();index++)
       {
         command=patternList[index];
@@ -395,101 +395,101 @@ void Channel::completeNick()
 
   QString line=channelInput->text();
   QString newLine;
-  /* Check if completion position is out of range */
+  // Check if completion position is out of range
   if(completionPosition>=nicknameList.count()) completionPosition=0;
-  /* Check, which completion mode is active */
+  // Check, which completion mode is active
   char mode=channelInput->getCompletionMode();
-  /* Are we in query mode? */
+  // Are we in query mode?
   if(mode=='q')
   {
-    /* Remove /msg <nick> part from string */
+    // Remove /msg <nick> part from string
     line=line.mid(pos);
-    /* Set cursor to beginning to restart query completion */
+    // Set cursor to beginning to restart query completion
     pos=0;
   }
-  /* Or maybe in channel mode? */
+  // Or maybe in channel mode?
   else if(mode=='c')
   {
     line.remove(oldPos,pos-oldPos);
     pos=oldPos;
   }
-  /* If the cursor is at beginning of line, insert /msq <query> */
+  // If the cursor is at beginning of line, insert /msq <query>
   if(pos==0)
   {
-    /* Find next query in list */
+    // Find next query in list
     QString queryName=server->getNextQueryName();
-    /* Sis we find any queries? */
-    if(queryName)
+    // Did we find any queries?
+    if(!queryName.isEmpty())
     {
-      /* Prepend /msg name */
+      // Prepend /msg name
       newLine="/msg "+queryName+" ";
-      /* New cursor position is behind nickname */
+      // New cursor position is behind nickname
       pos=newLine.length();
-      /* Add rest of the line */
+      // Add rest of the line
       newLine+=line;
-      /* Set query completion mode */
+      // Set query completion mode
       channelInput->setCompletionMode('q');
     }
-    /* No queries at all, so ignore this TAB */
+    // No queries at all, so ignore this TAB
     else newLine=line;
   }
   else
   {
-    /* Set channel nicks completion mode */
+    // set channel nicks completion mode
     channelInput->setCompletionMode('c');
-    /* Remember old cursor position in input field */
+    // remember old cursor position in input field
     channelInput->setOldCursorPosition(pos);
-    /* remember old cursor position locally */
+    // remember old cursor position locally
     oldPos=pos;
-    /* remember old nick completion position */
+    // remember old nick completion position
     unsigned int oldCompletionPosition=completionPosition;
-    /* step back to last space or start of line */
+    // step back to last space or start of line
     while(pos && line[pos-1]!=' ') pos--;
-    /* copy search pattern (lowercase) */
+    // copy search pattern (lowercase)
     QString pattern=line.mid(pos,oldPos-pos).lower();
-    /* copy line to newLine-buffer */
+    // copy line to newLine-buffer
     newLine=line;
-    /* did we find any pattern? */
-    if(pattern && pattern.length())
+    // did we find any pattern?
+    if(!pattern.isEmpty())
     {
       QString foundNick(QString::null);
-      /* Try to find matching nickname in list of names */
+      // try to find matching nickname in list of names
       do
       {
         QString lookNick=nicknameList.at(completionPosition)->getNickname();
         if(lookNick.lower().startsWith(pattern)) foundNick=lookNick;
-        /* increment search position */
+        // increment search position
         completionPosition++;
-        /* wrap around */
+        // wrap around
         if(completionPosition==nicknameList.count()) completionPosition=0;
-        /* the search ends when we either find a suitable nick or we end up at the
-           first search position */
-      } while(completionPosition!=oldCompletionPosition && foundNick.length()==0);
-      /* Did we find a suitable nick? */
-      if(foundNick.length())
+        // the search ends when we either find a suitable nick or we end up at the
+        // first search position
+      } while(completionPosition!=oldCompletionPosition && foundNick.isEmpty());
+      // did we find a suitable nick?
+      if(!foundNick.isEmpty())
       {
         QString addStart(KonversationApplication::preferences.getNickCompleteSuffixStart());
         QString addMiddle(KonversationApplication::preferences.getNickCompleteSuffixMiddle());
-        /* remove pattern from line */
+        // remove pattern from line
         newLine.remove(pos,pattern.length());
-        /* did we find the nick in the middle of the line? */
+        // did we find the nick in the middle of the line?
         if(pos)
         {
           newLine.insert(pos,foundNick+addMiddle);
           pos=pos+foundNick.length()+addMiddle.length();
         }
-        /* No, it was at the beginning, so insert "Nick: " */
+        // no, it was at the beginning
         else
         {
           newLine.insert(pos,foundNick+addStart);
           pos=pos+foundNick.length()+addStart.length();
         }
       }
-      /* No pattern found, so restore old cursor position */
+      // no pattern found, so restore old cursor position
       else pos=oldPos;
     }
   }
-  /* Set new text and cursor position */
+  // Set new text and cursor position
   channelInput->setText(newLine);
   channelInput->setCursorPosition(pos);
 }
@@ -523,14 +523,14 @@ void Channel::channelTextEntered()
   if(line.lower()=="/clear")
     textView->clear();
   else
-    if(line.length()) sendChannelText(line);
+    if(!line.isEmpty()) sendChannelText(line);
 
   channelInput->clear();
 }
 
 void Channel::sendChannelText(const QString& sendLine)
 {
-  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
+  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
   QCString line=codec->fromUnicode(sendLine);
 
   // Is there something we need to display for ourselves?
@@ -1255,7 +1255,7 @@ void Channel::closeNickChangeDialog(QSize newSize)
   nickChangeDialog=0;
 }
 
-QList<Nick> Channel::getNickList()
+QPtrList<Nick> Channel::getNickList()
 {
   return nicknameList;
 }
@@ -1270,7 +1270,7 @@ void Channel::autoUserhost()
   int limit=5;
 
   QString nickString;
-  QList<Nick> nicks=getNickList();
+  QPtrList<Nick> nicks=getNickList();
 
   for(unsigned int index=0;index<nicks.count();index++)
   {
