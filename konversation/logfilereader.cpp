@@ -104,11 +104,20 @@ void LogfileReader::updateView()
 
 void LogfileReader::clearLog()
 {
+#if !KDE_IS_VERSION(3,3,0)
+  if(KMessageBox::questionYesNo(this,
+                                i18n("Do you really want to permanently discard all log information of this file?"),
+                                i18n("Clear Logfile"),
+                                KStdGuiItem::yes(),
+                                KStdGuiItem::no(),
+                                "ClearLogfileQuestion")==KMessageBox::Yes)
+#else
   if(KMessageBox::warningContinueCancel(this,
                                 i18n("Do you really want to permanently discard all log information of this file?"),
                                 i18n("Clear Logfile"),
                                 KStdGuiItem::del(),
                                 "ClearLogfileQuestion")==KMessageBox::Continue)
+#endif
   {
     QFile::remove(fileName);
     updateView();
