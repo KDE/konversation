@@ -99,10 +99,10 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   QHBox* statsBox=new QHBox(this);
   statsBox->setSpacing(spacing());
 
-  QLabel* usersLabel=new QLabel(QString::null,statsBox);
   QLabel* channelsLabel=new QLabel(QString::null,statsBox);
+  QLabel* usersLabel=new QLabel(QString::null,statsBox);
 
-  statsBox->setStretchFactor(channelsLabel,10);
+  statsBox->setStretchFactor(usersLabel,10);
 
   QHBox* actionBox=new QHBox(this);
   actionBox->setSpacing(spacing());
@@ -399,7 +399,7 @@ void ChannelListPanel::applyFilterClicked()
 void ChannelListPanel::updateUsersChannels()
 {
   emit updateNumChannels(i18n("Channels: %1 (%2 shown)").arg(getNumChannels()).arg(getVisibleChannels()));
-  emit updateNumUsers(i18n("Users: %1 (%2 shown)").arg(getNumUsers()).arg(getVisibleUsers()));
+  emit updateNumUsers(i18n("Non-unique users: %1 (%2 shown)").arg(getNumUsers()).arg(getVisibleUsers()));
 }
 
 void ChannelListPanel::closeYourself()
