@@ -507,7 +507,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     server->removeNickFromChannel(parameterList[0],sourceNick,trailing);
 #ifdef USE_KNOTIFY
     // KNotify events...
-    if(sourceNick != server->getNickname() && server->getChannelByName(parameterList[0])->notificationsEnabled()) {
+    Channel* channel = server->getChannelByName(parameterList[0]);
+
+    if(channel && sourceNick != server->getNickname() && channel->notificationsEnabled()) {
       KNotifyClient::event(mainWindow->winId(), "part");
     }
 #endif
@@ -593,7 +595,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     parseModes(sourceNick,parameterList);
 #ifdef USE_KNOTIFY
     // KNotify events...
-    if(sourceNick != server->getNickname() && server->getChannelByName(parameterList[0])->notificationsEnabled()) {
+    Channel* channel = server->getChannelByName(parameterList[0]);
+
+    if(channel && sourceNick != server->getNickname() && channel->notificationsEnabled()) {
       KNotifyClient::event(mainWindow->winId(), "mode");
     }
 #endif
