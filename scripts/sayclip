@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Prints the contents of the clipbaord into Konversation with flood protection.
 # Klipper must be running.
