@@ -112,7 +112,7 @@ DccPanel::~DccPanel()
   kdDebug() << "DccPanel::~DccPanel()" << endl;
 }
 
-void DccPanel::dccStatusChanged(const DccTransfer *item)
+void DccPanel::dccStatusChanged(const DccTransfer* /* item */)
 {
   selectionChanged();
 }

@@ -39,7 +39,6 @@ class DccTransferRecv : public DccTransfer
     void startResume(unsigned long _position);
     
   protected slots:
-    void lookupFinished(int numOfResults);
     void connectionSuccess();
     void connectionFailed(int errorCode);
     void readData();

@@ -165,7 +165,7 @@ void DccTransferRecv::connectToSender()
 {
   kdDebug() << "DccTransferRecv::connectToSender()" << endl;
   
-  setStatus(LookingUp);
+  setStatus(Connecting);
   
   recvSocket=new KExtendedSocket(partnerIp,partnerPort.toUInt(),KExtendedSocket::inetSocket |
                                                                 KExtendedSocket::noResolve);
@@ -174,7 +174,6 @@ void DccTransferRecv::connectToSender()
   recvSocket->enableWrite(false);
   recvSocket->setTimeout(5);
   
-  connect(recvSocket,SIGNAL (lookupFinished(int))  ,this,SLOT (lookupFinished(int)) );
   connect(recvSocket,SIGNAL (connectionSuccess())  ,this,SLOT (connectionSuccess()) );
   connect(recvSocket,SIGNAL (connectionFailed(int)),this,SLOT (connectionFailed(int)));
   
@@ -182,11 +181,6 @@ void DccTransferRecv::connectToSender()
   connect(recvSocket,SIGNAL (readyWrite()),this,SLOT (sendAck()) );
   
   recvSocket->startAsyncConnect();
-}
-
-void DccTransferRecv::lookupFinished(int /* numOfResults */)  // slot
-{
-  setStatus(Connecting);
 }
 
 void DccTransferRecv::connectionSuccess()  // slot

@@ -47,7 +47,6 @@ class DccTransfer : public QObject, public KListViewItem
     {
       Queued=0,      // Newly added DCC, RECV: Waiting for local user's response
       WaitingRemote, // SEND: Waiting for remote host's response
-      LookingUp,     // RECV: looking up the server
       Connecting,    // RECV: trying to connect to the server
       Sending,       // Sending
       Receiving,     // Receiving

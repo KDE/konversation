@@ -61,7 +61,6 @@ DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _p
   
   StatusText[Queued]        = i18n("Queued");
   StatusText[WaitingRemote] = i18n("Offering");
-  StatusText[LookingUp]     = i18n("Lookup");
   StatusText[Connecting]    = i18n("Connecting");
   StatusText[Sending]       = i18n("Sending");
   StatusText[Receiving]     = i18n("Receiving");
@@ -187,7 +186,6 @@ QPixmap DccTransfer::getStatusIcon() const
     case Queued:
       icon = "player_stop";
       break;
-    case LookingUp:
     case WaitingRemote:
       icon = "goto";
       break;
