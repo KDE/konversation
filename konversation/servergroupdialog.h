@@ -39,10 +39,14 @@ class ServerGroupDialog : public KDialogBase
     void addServer();
     void editServer();
     void deleteServer();
+    void moveServerUp();
+    void moveServerDown();
 
     void addChannel();
     void editChannel();
     void deleteChannel();
+    void moveChannelUp();
+    void moveChannelDown();
 
   private:
     QLineEdit* m_nameEdit;

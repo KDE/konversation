@@ -53,6 +53,8 @@ ServerDialog::ServerDialog(const QString& title, QWidget *parent, const char *na
   mainLayout->addWidget(passwordLbl, 1, 0);
   mainLayout->addMultiCellWidget(m_passwordEdit, 1, 1, 1, 3);
   mainLayout->addMultiCellWidget(m_sslChBox, 2, 2, 0, 3);
+  
+  m_serverEdit->setFocus();
 }
 
 ServerDialog::~ServerDialog()

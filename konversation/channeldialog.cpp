@@ -41,6 +41,8 @@ ChannelDialog::ChannelDialog(const QString& title, QWidget *parent, const char *
   mainLayout->addWidget(m_channelEdit, 0, 1);
   mainLayout->addWidget(passwordLbl, 1, 0);
   mainLayout->addWidget(m_passwordEdit, 1, 1);
+  
+  m_channelEdit->setFocus();
 }
 
 ChannelDialog::~ChannelDialog()
