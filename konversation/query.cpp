@@ -21,6 +21,7 @@
 #include <qhbox.h>
 #include <qtooltip.h>
 #include <qtextstream.h>
+#include <qwhatsthis.h>
 
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -54,9 +55,19 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   addresseeimage = new QLabel(box, "query_image");
   addresseeimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
   addresseeimage->hide();
+  addresseelogoimage = new QLabel(box, "query_logo_image");
+  addresseelogoimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  addresseelogoimage->hide();
+
+  
   queryHostmask=new QLabel(box, "query_hostmask"); 
   queryHostmask->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 //  queryHostmask->installEventFilter(this);
+
+  QString whatsthis = i18n("<qt>Some details of the person you are talking to in this query is shown in this bar.  The full name and hostmask is shown, along with any image or logo this person has associated with them in the KDE Addressbook.<p>See the <i>Konversation Handbook</i> for information on associating a nick with a contact in the Addressbook, and for an explanation of what the hostmask is.</qt>");
+  QWhatsThis::add(addresseeimage, whatsthis); 
+  QWhatsThis::add(addresseelogoimage, whatsthis);
+  QWhatsThis::add(queryHostmask, whatsthis);
 
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer();
 
@@ -288,9 +299,7 @@ void Query::nickInfoChanged() {
     queryHostmask->setText(text);
  
     KABC::Picture pic = m_nickInfo->getAddressee().photo();
-    if(!pic.isIntern())
-      pic = m_nickInfo->getAddressee().logo();
-    if(pic.isIntern()) //logo or photo now
+    if(pic.isIntern())
     {
       QPixmap qpixmap(pic.data().scaleHeight(queryHostmask->height()));
       if(!qpixmap.isNull()) {
@@ -302,7 +311,20 @@ void Query::nickInfoChanged() {
     } else {
       addresseeimage->hide();
     }
-  
+    KABC::Picture logo = m_nickInfo->getAddressee().logo();
+    if(logo.isIntern())
+    {
+      QPixmap qpixmap(logo.data().scaleHeight(queryHostmask->height()));
+      if(!qpixmap.isNull()) {
+        addresseelogoimage->setPixmap(qpixmap);    
+        addresseelogoimage->show();
+      } else {
+        addresseelogoimage->hide();
+      }
+    } else {
+      addresseelogoimage->hide();
+    }
+
     QString strTooltip;
     QTextStream tooltip( &strTooltip, IO_WriteOnly );
 
@@ -314,11 +336,13 @@ void Query::nickInfoChanged() {
     
 
     tooltip << "</table></qt>";
-    QToolTip::add(addresseeimage, strTooltip);
     QToolTip::add(queryHostmask, strTooltip);
+    QToolTip::add(addresseeimage, strTooltip);
+    QToolTip::add(addresseelogoimage, strTooltip);
 
   } else {
     addresseeimage->hide();
+    addresseelogoimage->hide();
   }
   emitUpdateInfo();
 }

@@ -103,6 +103,7 @@ class Query : public ChatWindow
 
     QLabel* queryHostmask;
     QLabel* addresseeimage;
+    QLabel* addresseelogoimage;
     QLabel* awayLabel;
     IRCInput* queryInput;
     NickInfoPtr m_nickInfo;
