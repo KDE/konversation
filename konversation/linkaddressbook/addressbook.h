@@ -36,7 +36,11 @@ class Addressbook : public QObject,public KIMIface
     void unassociateNick(KABC::Addressee &addressee, const QString &ircnick);
     void associateNick(KABC::Addressee &addressee, const QString &ircnick);
     bool associateNickAndUnassociateFromEveryoneElse(KABC::Addressee &addressee, const QString &ircnick);
-    QString getMainNick(const KABC::Addressee &addressee);
+    /** If this user is online, return one of the nicks that they are
+      * using.  Otherwise return the first nick listed.
+      * @return online nick, first nick, or QString::null if they don't have a nick.
+    */
+    QString getBestNick(const KABC::Addressee &addressee);
     bool hasAnyNicks(const KABC::Addressee &addresse, const QString &server);
     int presenceStatus(const KABC::Addressee &addressee);
     int presenceStatusByNick(const QString &ircnick, const QString &server);

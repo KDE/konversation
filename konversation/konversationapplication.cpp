@@ -1133,4 +1133,23 @@ Konversation::Sound* KonversationApplication::sound()
 // Returns list of pointers to Servers.
 const QPtrList<Server> KonversationApplication::getServerList() { return serverList; }
 
+
+#ifdef USE_NICKINFO
+NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const QString &serverOrGroup) {
+	NickInfoPtr nickInfo;
+	QString lserverOrGroup = serverOrGroup.lower();
+	for(Server* lookServer = serverList.first(); lookServer; lookServer = serverList.next()) {
+		if(lserverOrGroup.isEmpty()
+		 || lookServer->getServerName().lower()==lserverOrGroup
+		 || lookServer->getServerGroup().lower()==lserverOrGroup)
+		{
+			nickInfo = lookServer->getNickInfo(ircnick);
+			if(nickInfo) return nickInfo; //If we found one
+		}
+	}
+	//This shouldn't really happen
+	return 0;
+}
+#endif
+
 #include "konversationapplication.moc"

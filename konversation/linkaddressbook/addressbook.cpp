@@ -65,11 +65,18 @@ bool Addressbook::hasNick(const KABC::Addressee &addressee, const QString &ircni
 }
 
 	
-QString Addressbook::getMainNick(const KABC::Addressee &addressee) {
+QString Addressbook::getBestNick(const KABC::Addressee &addressee) {
 	//Get the first nick
 	//TODO: Strip off server part
+	/*NickInfoPtr *nickInfo = getNickInfo(addressee);
+	
 	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
-	return addresses.first();
+	QStringList::iterator end = addresses.end();
+	for ( QStringList::iterator it = addresses.begin(); it != end; ++it ) {
+		
+	{
+	return addresses.first();*/
+	return "";
 }
 bool Addressbook::hasAnyNicks(const KABC::Addressee &addressee, const QString &/*server*/) {
 	return !addressee.custom("messaging/irc", "All").isEmpty();
@@ -236,6 +243,7 @@ int Addressbook::presenceStatus(const KABC::Addressee &addressee) {
 	return presenceStat;
 }
 
+
 /**
  * Indicate the presence as a number.
  * @param ircnick of the person we want to know if they are online.
@@ -316,7 +324,7 @@ bool Addressbook::isPresent(const QString &uid) {
 	return hasAnyNicks(addressBook->findByUid(uid), "");
 }
 QString Addressbook::displayName(const QString &uid) {
-	return getMainNick(addressBook->findByUid(uid));
+	return getBestNick(addressBook->findByUid(uid));
 }
 QString Addressbook::presenceString(const QString &uid) {
 	if(uid.isEmpty()) {
@@ -418,10 +426,12 @@ QStringList Addressbook::protocols() {
  * @param message the message to send them.
  */
 void Addressbook::messageContact( const QString &uid, const QString& message ) {
-	 if(uid.isEmpty() || message.isEmpty()) {
-	         kdDebug() << "Addressbook::messageContact called with empty uid or message" << endl;
-	         return;
-	 }
+	if(uid.isEmpty() || message.isEmpty()) {
+	        kdDebug() << "Addressbook::messageContact called with empty uid or message" << endl;
+		return;
+	}
+	
+	
 }
 
 /**
