@@ -2619,7 +2619,13 @@ void Server::appendCommandMessageToQuery(const QString& queryName,const QString&
 
 void Server::appendStatusMessage(const QString& type,const QString& message)
 {
-  getMainWindow()->appendToFrontmost(type,message,statusView);
+  statusView->appendServerMessage(type,message);
+}
+
+void Server::appendStatusMessageAndToFrontmost(const QString& type,const QString& message)
+{
+  statusView->appendServerMessage(type,message);
+  getMainWindow()->appendToFrontmostIfDifferent(type,message, statusView);
 }
 
 void Server::setNickname(const QString &newNickname)
