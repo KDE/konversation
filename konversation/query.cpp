@@ -17,7 +17,6 @@
 #include <qhbox.h>
 #include <qtextcodec.h>
 
-#include <kdialog.h>
 #include <klocale.h>
 #include <kstddirs.h>
 #include <kdebug.h>
@@ -67,7 +66,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   connect(queryInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
 
   connect(textView,SIGNAL (newText()),this,SLOT (newTextInView()) );
-  connect(textView,SIGNAL (gotFocus()),queryInput,SLOT (setFocus()) );
+  connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
 
   setLog(KonversationApplication::preferences.getLog());
 }
@@ -95,13 +94,13 @@ void Query::setName(const QString& newName)
                     ? getName().lower()
                     : getName())+".log");
 }
-
+/*
 void Query::setServer(Server* newServer)
 {
   getTextView()->setServer(newServer);
   ChatWindow::setServer(newServer);
 }
-
+*/
 void Query::queryTextEntered()
 {
   QString line=queryInput->text();
@@ -141,16 +140,6 @@ void Query::setHostmask(const QString& newHostmask)
   queryHostmask->setText(newHostmask);
 }
 
-int Query::spacing()
-{
-  return KDialog::spacingHint();
-}
-
-int Query::margin()
-{
-  return KDialog::marginHint();
-}
-
 void Query::updateFonts()
 {
   kdDebug() << "Query::updateFonts()" << endl;
@@ -165,4 +154,9 @@ void Query::textPasted(QString text)
     QStringList multiline=QStringList::split('\n',text);
     for(unsigned int index=0;index<multiline.count();index++) sendQueryText(multiline[index]);
   }
+}
+
+void Query::adjustFocus()
+{
+  queryInput->setFocus();
 }

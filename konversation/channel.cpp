@@ -186,7 +186,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   
   connect(textView,SIGNAL (newText()),this,SLOT (newTextInView()) );
   connect(textView,SIGNAL (newURL(QString)),this, SLOT (urlCatcher(QString)) );
-  connect(textView,SIGNAL (gotFocus()),channelInput,SLOT (setFocus()) );
+  connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
 
   connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
   connect(nicknameButton,SIGNAL (clicked()),this,SLOT (openNickChangeDialog()) );
@@ -215,13 +215,13 @@ Channel::~Channel()
   /* Unlink this channel from channel list */
   server->removeChannel(this);
 }
-
+/*
 void Channel::setServer(Server* newServer)
 {
   getTextView()->setServer(newServer);
   ChatWindow::setServer(newServer);
 }
-
+*/
 void Channel::requestNewTopic(const QString& newTopic)
 {
   kdDebug() << "requestNewTopic(" << newTopic << ")" << endl;
@@ -1071,4 +1071,9 @@ void Channel::closeNickChangeDialog(QSize newSize)
 QList<Nick> Channel::getNickList()
 {
   return nicknameList;
+}
+
+void Channel::adjustFocus()
+{
+  channelInput->setFocus();
 }

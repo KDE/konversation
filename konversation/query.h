@@ -42,12 +42,15 @@ class Query : public ChatWindow
 
     void setName(const QString& newName);
     void setHostmask(const QString& newHostmask);
-    void setServer(Server* setServer);
+//    void setServer(Server* setServer);
     void updateFonts();
 
   signals:
     void newText(QWidget* query);
     void closed(Query* query);
+
+  public slots:
+    void adjustFocus();
 
   protected slots:
     void queryTextEntered();
@@ -57,8 +60,6 @@ class Query : public ChatWindow
     void textPasted(QString text);
 
   protected:
-    int spacing();
-    int margin();
     void sendQueryText(QString line);
 
     QString queryName;

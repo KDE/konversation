@@ -204,7 +204,9 @@ DccTransfer* DccPanel::getTransferByName(QString name,DccTransfer::DccType type)
   return 0;
 }
 
-int DccPanel::spacing() { return KDialog::spacingHint(); }
-int DccPanel::margin()  { return KDialog::marginHint(); }
+// virtual
+void DccPanel::adjustFocus()
+{
+}
 
 KListView* DccPanel::getListView() { return dccListView; }

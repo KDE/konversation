@@ -87,7 +87,12 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
 
   // make sure that own lines don't always get highlight
   QString who;
-  if(whoSent!=server->getNickname() || KonversationApplication::preferences.getHilightOwnLines()) who=whoSent;
+
+  // FIXME: We got to get rid of server dependance here
+  if(server)
+  {
+    if(whoSent!=server->getNickname() || KonversationApplication::preferences.getHilightOwnLines()) who=whoSent;
+  }
 
   // Replace all & with &amp;
   filteredLine.replace(QRegExp("&"),"&amp;");
@@ -233,7 +238,8 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   // Hilight
   if(doHilight)
   {
-    if(KonversationApplication::preferences.getHilightNick() &&
+    // FIXME: We got to get rid of server dependance here
+    if(server && KonversationApplication::preferences.getHilightNick() &&
        filteredLine.lower().find(server->getNickname().lower())!=-1)
     {
       QColor hilightNickColor=KonversationApplication::preferences.getHilightNickColor();
@@ -330,7 +336,7 @@ void IRCView::appendAction(const char* nick,const char* message)
 
 void IRCView::appendServerMessage(const char* type,const char* message)
 {
-  QString serverMessageColor = KonversationApplication::preferences.getServerMessageColor();
+  QString serverMessageColor=KonversationApplication::preferences.getServerMessageColor();
 
   // Fixed width font option for MOTD
   QString fixed;

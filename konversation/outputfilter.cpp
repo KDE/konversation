@@ -87,6 +87,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& inputLine,cons
     else if(line.startsWith("topic "))   parseTopic(parameter);
     else if(line.startsWith("away "))    parseAway(parameter);
     else if(line.startsWith("dcc "))     parseDcc(parameter);
+    else if(line.startsWith("invite "))  parseInvite(parameter);
 
     else if(line=="join")                parseJoin("");
     else if(line=="part")                parsePart("");
@@ -97,6 +98,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& inputLine,cons
     else if(line=="topic")               parseTopic("");
     else if(line=="away")                parseAway("");
     else if(line=="dcc")                 parseDcc("");
+    else if(line=="invite")              parseInvite("");
 
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
@@ -464,6 +466,43 @@ void OutputFilter::resumeRequest(QString sender,QString fileName,QString port,in
   output=i18n("Sending DCC Resume request to \"%1\" for file \"%2\".").arg(sender).arg(fileName);
   type=i18n("DCC");
   program=true;
+}
+
+void OutputFilter::parseInvite(QString parameter)
+{
+  if(parameter=="")
+  {
+    type=i18n("Usage");
+    output=i18n("Usage: INVITE <nick> [channel]");
+    program=true;
+  }
+  else
+  {
+    QString nick=parameter.section(' ',0,0);
+    QString channel=parameter.section(' ',1,1);
+
+    if(channel=="")
+    {
+      if(isAChannel(destination)) channel=destination;
+      else
+      {
+        type=i18n("Error");
+        output=i18n("Error: INVITE without channel name works only from within channels.");
+        program=true;
+      }
+    }
+
+    if(channel!="")
+    {
+      if(isAChannel(channel)) toServer="INVITE "+nick+" "+channel;
+      else
+      {
+        type=i18n("Error");
+        output=i18n("Error: %1 is not a channel.").arg(channel);
+        program=true;
+      }
+    }
+  }
 }
 
 // Accessors

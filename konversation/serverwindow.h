@@ -50,6 +50,7 @@
 #include "ledtabwidget.h"
 #include "colorconfiguration.h"
 #include "chatwindow.h"
+#include "statuspanel.h"
 #include "nicksonline.h"
 #include "dccpanel.h"
 
@@ -63,13 +64,16 @@ class ServerWindow : public KMainWindow
 
     void appendToStatus(const QString& type,const QString& message);
     void appendToFrontmost(const QString& type,const QString& message);
-    void setServer(Server* server);
-    Server* getServer();
-    void setLog(bool activated);
-    LedTabWidget* getWindowContainer();
+
     void addView(QWidget* pane,int color,const QString& name);
     void showView(QWidget* pane);
+
+    LedTabWidget* getWindowContainer();
+
     DccPanel* getDccPanel();
+
+    void setServer(Server* server);
+    Server* getServer();
 
   signals:
     void prefsChanged();
@@ -79,7 +83,6 @@ class ServerWindow : public KMainWindow
     void setNickname(const QString&);
     void newText(QWidget* view);
     void changedView(QWidget* view);
-    void logText(const QString& text);
     void channelPrefsChanged();
     void resetLag();
     void updateLag(int msec);
@@ -87,7 +90,6 @@ class ServerWindow : public KMainWindow
     void tooLongLag(int msec);
 
   protected slots:
-    void statusTextEntered();
     void addStatusView();
     void nextTab();
     void previousTab();
@@ -123,15 +125,10 @@ class ServerWindow : public KMainWindow
                                  QString commandTextColor, QString linkTextColor, QString queryTextColor,
                                  QString serverTextColor);
     void closeColorConfiguration(QSize windowSize);
-    // connected to IRCInput::textPasted() - used for large/multiline pastes
-    void textPasted(QString text);
 
   protected:
     int spacing();
     int margin();
-
-    void setLogfileName(const QString& name);
-    void sendStatusText(QString line);
 
     void readOptions();
     void saveOptions();
@@ -142,18 +139,14 @@ class ServerWindow : public KMainWindow
       StatusText,LagOMeter
     };
 
+    // TODO: get rid of this filter. It's only used to pass the quit message on client close
     OutputFilter filter;
     LedTabWidget* windowContainer;
-    QVBox* statusPane;
-    IRCView* statusView;
+    StatusPanel* statusPanel;   // TODO: to be moved into Server class?
     ChatWindow* frontView;
 
     DccPanel* dccPanel; // the adress of the dcc panel
     bool dccPanelOpen;  // to track if a dcc panel is already open
-
-    QPushButton* nicknameButton;
-    IRCInput* statusInput;
-    QCheckBox* logCheckBox;
 
     Server* server;
     KToggleAction* showToolBarAction;
@@ -164,10 +157,6 @@ class ServerWindow : public KMainWindow
     QuickButtonsDialog* buttonsDialog;
     ColorConfiguration* colorConfigurationDialog;
     NicksOnline* nicksOnlineWindow;
-
-    QFile logfile;
-    bool log;
-    bool firstLog;
 };
 
 #endif

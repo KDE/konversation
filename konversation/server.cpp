@@ -742,6 +742,7 @@ void Server::updateFonts()
     query=queryList.next();
   }
 
+  // TODO: To be revised
   if(serverWindow) serverWindow->updateFonts();
 }
 

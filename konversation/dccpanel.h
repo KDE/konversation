@@ -40,6 +40,9 @@ class DccPanel : public ChatWindow
     DccTransfer* getTransferByPort(QString port,DccTransfer::DccType type);
     DccTransfer* getTransferByName(QString name,DccTransfer::DccType type);
 
+  public slots:
+    void adjustFocus();
+    
   protected slots:
     void acceptDcc();
     void runDcc();
@@ -49,9 +52,6 @@ class DccPanel : public ChatWindow
 
   protected:
     void setButtons(bool accept,bool abort,bool remove,bool open,bool info);
-
-    int spacing();
-    int margin();
 
     KListView* dccListView;
 

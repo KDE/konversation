@@ -48,8 +48,8 @@ class ChatWindow : public QVBox
 
     void setServer(Server* newServer);
     void setTextView(IRCView* newView);
-    IRCView* getTextView() { return textView; };
-    void setLog(bool activate) { log=activate; };
+    IRCView* getTextView();
+    void setLog(bool activate);
 
     void setName(QString newName);
     QString& getName();
@@ -68,12 +68,16 @@ class ChatWindow : public QVBox
 
   public slots:
     void logText(const QString& text);
+    virtual void adjustFocus() = 0;
 
   protected:
     bool log;
     bool firstLog;
+
     void setLogfileName(const QString& name);
     void cdIntoLogPath();
+    int spacing();
+    int margin();
 
     QString name;
     QString logName;

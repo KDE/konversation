@@ -112,9 +112,8 @@ void ServerWindow::setServer(Server* newServer)
     delete nicksOnlineWindow;
     nicksOnlineWindow=0;
   }
+
   server=newServer;
-  connect(&filter,SIGNAL (openQuery(const QString&,const QString&)),
-           server,SLOT   (addQuery(const QString&,const QString&)) );
 }
 
 Server* ServerWindow::getServer()
@@ -124,42 +123,20 @@ Server* ServerWindow::getServer()
 
 void ServerWindow::appendToStatus(const QString& type,const QString& message)
 {
-  statusView->appendServerMessage(type,message);
-  // Show activity indicator
-  newText(statusPane);
+  statusPanel->appendServerMessage(type,message);
 }
 
 void ServerWindow::appendToFrontmost(const QString& type,const QString& message)
 {
-  // FIXME: Make Status Pane a Chat Window to get rid of exceptions
-  // TODO: Make it an option to direct all status stuff intu the status window
-  if(frontView==0)
+  // TODO: Make it an option to direct all status stuff into the status panel
+
+  if(frontView==0) // Check if the frontView can actually display text
   {
-    statusView->appendServerMessage(type,message);
-    // Show activity indicator
-    newText(statusPane);
+    statusPanel->appendServerMessage(type,message);
+    newText(statusPanel);
   }
   else
     frontView->appendServerMessage(type,message);
-}
-
-void ServerWindow::statusTextEntered()
-{
-  QString line=statusInput->text();
-
-  if(line.lower()=="/clear") statusView->clear();  // FIXME: to get rid of too wide lines
-  else sendStatusText(line);
-
-  statusInput->clear();
-}
-
-void ServerWindow::sendStatusText(QString line)
-{
-  QString output=filter.parse(server->getNickname(),line,"");
-
-  if(output!="") appendToStatus(filter.getType(),output);
-
-  server->queue(filter.getServerOutput());
 }
 
 void ServerWindow::addView(QWidget* pane,int color,const QString& label)
@@ -171,16 +148,19 @@ void ServerWindow::addView(QWidget* pane,int color,const QString& label)
   // TODO: Check, if user was typing in old input line
   if(KonversationApplication::preferences.getBringToFront())
   {
-    // Don't bring Tab to front if TabWidget is hidden. Otherwise QT gets confused
-    // and shows the Tab as active but will display the wrong pane
-    if(windowContainer->isVisible())
-      showView(pane);
+    showView(pane);
   }
 }
 
 void ServerWindow::showView(QWidget* pane)
 {
-  windowContainer->showPage(pane);
+  // Don't bring Tab to front if TabWidget is hidden. Otherwise QT gets confused
+  // and shows the Tab as active but will display the wrong pane
+  if(windowContainer->isVisible())
+  {
+    // TODO: add adjustFocus() here?
+    windowContainer->showPage(pane);
+  }
 }
 
 void ServerWindow::nextTab()
@@ -189,6 +169,9 @@ void ServerWindow::nextTab()
 
   int page=windowContainer->currentPageIndex()+1;
   if(page<windowContainer->count()) windowContainer->setCurrentPage(page);
+
+  ChatWindow* newPage=(ChatWindow*) windowContainer->page(page);
+  newPage->adjustFocus();
 }
 
 void ServerWindow::previousTab()
@@ -197,6 +180,9 @@ void ServerWindow::previousTab()
 
   int page=windowContainer->currentPageIndex()-1;
   if(page!=-1) windowContainer->setCurrentPage(page);
+
+  ChatWindow* newPage=(ChatWindow*) windowContainer->page(page);
+  newPage->adjustFocus();
 }
 
 void ServerWindow::addDccPanel()
@@ -249,74 +235,23 @@ void ServerWindow::deleteDccPanel()
 
 void ServerWindow::addStatusView()
 {
-  statusPane=new QVBox(windowContainer);
-  statusPane->setSpacing(spacing());
-  statusPane->setMargin(margin());
+  statusPanel=new StatusPanel(getWindowContainer());
+  addView(statusPanel,2,i18n("Status"));
+  statusPanel->setServer(getServer());
 
-  statusView=new IRCView(statusPane,getServer());
-
-  QHBox* commandLineBox=new QHBox(statusPane);
-  commandLineBox->setSpacing(spacing());
-  commandLineBox->setMargin(0);
-
-  nicknameButton=new QPushButton(i18n("Nickname"),commandLineBox);
-  statusInput=new IRCInput(commandLineBox);
-  logCheckBox=new QCheckBox(i18n("Log"),commandLineBox);
-  logCheckBox->setChecked(KonversationApplication::preferences.getLog());
-
-  windowContainer->addTab(statusPane,i18n("Status"),2,false);
-
-  connect(statusInput,SIGNAL (returnPressed()),this,SLOT(statusTextEntered()) );
-  connect(statusInput,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
-  connect(statusInput,SIGNAL (nextTab()),this,SLOT(nextTab()) );
-  connect(statusInput,SIGNAL (previousTab()),this,SLOT(previousTab()) );
-
-  connect(statusView,SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
-  connect(statusView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
-
-  setLog(KonversationApplication::preferences.getLog());
-}
-
-void ServerWindow::logText(const QString& text)
-{
-  QDir logPath=QDir::home();
-
-  // Try to "cd" into the logfile path
-  if(!logPath.cd(KonversationApplication::preferences.getLogPath(),true))
-  {
-    // Try to create the logfile path and "cd" into it again
-    logPath.mkdir(KonversationApplication::preferences.getLogPath(),true);
-    logPath.cd(KonversationApplication::preferences.getLogPath(),true);
-  }
-
-  // add the logfile name to the path
-  logfile.setName(logPath.path()+"/konversation.log");
-
-  if(logfile.open(IO_WriteOnly | IO_Append))
-  {
-    if(firstLog)
-    {
-      QString intro(i18n("\n*** Logfile started\n*** on %1\n\n").arg(QDateTime::currentDateTime().toString()));
-      logfile.writeBlock(intro,intro.length());
-      firstLog=false;
-    }
-
-    QTime time=QTime::currentTime();
-    QString logLine(QString("[%1] %2\n").arg(time.toString("hh:mm:ss")).arg(text));
-    logfile.writeBlock(logLine,logLine.length());
-    logfile.close();
-  }
-  else kdWarning() << "ServerWindow::logText(): open(IO_Append) for " << logfile.name() << " failed!" << endl;
+  connect(statusPanel,SIGNAL (newText(QWidget*)),this,SLOT (newText(QWidget*)) );
 }
 
 void ServerWindow::setNickname(const QString& newNickname)
 {
-  nicknameButton->setText(newNickname);
+  // TODO: connect this to the appropriate server's nickname signal
+  statusPanel->setNickname(newNickname);
 }
 
 void ServerWindow::newText(QWidget* view)
 {
   // FIXME: Should be compared to ChatWindow* but the status Window currently is something else
+  // Now that the status Window is a ChatWindow* we can start cleaning up here
   if(view!=(QWidget*) windowContainer->currentPage())
   {
     windowContainer->changeTabState(view,true);
@@ -326,12 +261,10 @@ void ServerWindow::newText(QWidget* view)
 void ServerWindow::changedView(QWidget* view)
 {
   frontView=0;
-  if(view!=statusPane)
-  {
-    // FIXME: Make status window a Chat Window to get rid of those exceptions
-    ChatWindow* pane=(ChatWindow*) view;
-    if(pane->getType()==ChatWindow::Channel || pane->getType()==ChatWindow::Query) frontView=pane;
-  }
+  
+  ChatWindow* pane=(ChatWindow*) view;
+  // Make sure that only text-capable views get to be the frontView
+  if(pane->getType()!=ChatWindow::DccPanel) frontView=pane;
 
   windowContainer->changeTabState(view,false);
 }
@@ -571,11 +504,6 @@ void ServerWindow::channelPrefsChanged()
   emit prefsChanged();
 }
 
-void ServerWindow::setLog(bool activated)
-{
-  log=activated;
-}
-
 LedTabWidget* ServerWindow::getWindowContainer()
 {
   return windowContainer;
@@ -595,7 +523,7 @@ void ServerWindow::updateFonts()
 {
   kdDebug() << "ServerWindow::updateFonts()" << endl;
 
-  statusView->setFont(KonversationApplication::preferences.getTextFont());
+  statusPanel->updateFonts();  // FIXME: should be done by the respective server, no?
 }
 
 void ServerWindow::updateLag(int msec)
@@ -621,13 +549,4 @@ void ServerWindow::tooLongLag(int msec)
 void ServerWindow::resetLag()
 {
   statusBar()->changeItem(i18n("Lag: not known"),LagOMeter);
-}
-
-void ServerWindow::textPasted(QString text)
-{
-  if(getServer())
-  {
-    QStringList multiline=QStringList::split('\n',text);
-    for(unsigned int index=0;index<multiline.count();index++) sendStatusText(multiline[index]);
-  }
 }

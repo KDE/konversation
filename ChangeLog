@@ -25,3 +25,5 @@ Changes from 0.7 to 0.8:
 - Code cleanup in nick list
 - Added first support for custom colors in nick list
 - Added application dsescription for the 'About' dialog
+- Major restructuring of the server status panel
+

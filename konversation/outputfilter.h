@@ -96,6 +96,7 @@ class OutputFilter : public QObject
     void parseServer(QString parameter);
     void parseConnect(QString parameter);
     void parseDcc(QString parameter);
+    void parseInvite(QString parameter);
 
     void changeMode(QString parameter,char mode,char giveTake);
     bool isAChannel(QString check);

@@ -18,6 +18,7 @@
 #include <qdir.h>
 
 #include <klocale.h>
+#include <kdialog.h>
 #include <kdebug.h>
 
 #include "chatwindow.h"
@@ -27,12 +28,6 @@ ChatWindow::ChatWindow(QWidget* parent)
 {
   parentWidget=parent;
   firstLog=true;
-
-  // FIXME: Make this configurable!
-//  font.setFamily("Arial");
-//  font.setPointSize(24);
-  
-//  setFont(font);
 }
 
 ChatWindow::~ChatWindow()
@@ -61,7 +56,13 @@ ChatWindow::WindowType ChatWindow::getType()
 
 void ChatWindow::setServer(Server* newServer)
 {
+  if(server==0) kdDebug("ChatWindow::setServer(0)!") << endl;
+  else
+  {
   server=newServer;
+
+  if(textView) textView->setServer(newServer);
+  
   connect(&filter,SIGNAL (openQuery(const QString&,const QString&)),
            server,SLOT   (addQuery(const QString&,const QString&)) );
   connect(&filter,SIGNAL (openDccPanel()),
@@ -72,6 +73,7 @@ void ChatWindow::setServer(Server* newServer)
            server,SLOT   (addDccSend(QString,QString)) );
   connect(&filter,SIGNAL (requestDccSend(QString)),
            server,SLOT   (requestDccSend(QString)) );
+  }
 }
 
 void ChatWindow::setTextView(IRCView* newView)
@@ -138,7 +140,8 @@ void ChatWindow::setLogfileName(const QString& name)
     // "cd" into log path or create path, if it's not there
     cdIntoLogPath();
     // Show last log lines. This idea was stole ... um ... inspired by PMP :)
-    if(logfile.open(IO_ReadOnly))
+    // Don't do this for the server status windows, though
+    if(getType()!=Status && logfile.open(IO_ReadOnly))
     {
       unsigned long filePosition;
 
@@ -178,22 +181,40 @@ void ChatWindow::setLogfileName(const QString& name)
 
 void ChatWindow::logText(const QString& text)
 {
-  // "cd" into log path or create path, if it's not there
-  cdIntoLogPath();
-
-  if(logfile.open(IO_WriteOnly | IO_Append))
+  if(log)
   {
-    if(firstLog)
-    {
-      QString intro(i18n("\n*** Logfile started\n*** on %1\n\n").arg(QDateTime::currentDateTime().toString()));
-      logfile.writeBlock(intro,intro.length());
-      firstLog=false;
-    }
+    // "cd" into log path or create path, if it's not there
+    cdIntoLogPath();
 
-    QTime time=QTime::currentTime();
-    QString logLine(QString("[%1] %2\n").arg(time.toString("hh:mm:ss")).arg(text));
-    logfile.writeBlock(logLine,logLine.length());
-    logfile.close();
+    if(logfile.open(IO_WriteOnly | IO_Append))
+    {
+      if(firstLog)
+      {
+        QString intro(i18n("\n*** Logfile started\n*** on %1\n\n").arg(QDateTime::currentDateTime().toString()));
+        logfile.writeBlock(intro,intro.length());
+        firstLog=false;
+      }
+
+      QTime time=QTime::currentTime();
+      QString logLine(QString("[%1] %2\n").arg(time.toString("hh:mm:ss")).arg(text));
+      logfile.writeBlock(logLine,logLine.length());
+      logfile.close();
+    }
+    else kdWarning() << "ChatWindow::logText(): open(IO_Append) for " << logfile.name() << " failed!" << endl;
   }
-  else kdWarning() << "ChatWindow::logText(): open(IO_Append) for " << logfile.name() << " failed!" << endl;
 }
+
+int ChatWindow::spacing()
+{
+  return KDialog::spacingHint();
+}
+
+int ChatWindow::margin()
+{
+  return KDialog::marginHint();
+}
+
+// Accessors
+
+IRCView* ChatWindow::getTextView()     { return textView; }
+void ChatWindow::setLog(bool activate) { log=activate; }
