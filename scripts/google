@@ -1,8 +1,11 @@
 #!/usr/bin/env perl
 # Copyright (C) 2005 by İsmail Dönmez
 # Licensed under GPL v2 or later at your option
+#
+# A simple google search script using Google's SOAP api
 
 use warnings;
+use strict;
 use Getopt::Long;
 use CGI qw(:standard);
 use HTML::Entities;
@@ -15,7 +18,14 @@ my $googleSearch;
 my $result;
 my $print;
 my $spell;
+my $search;
+my $search_escape;
+my $spellcheck;
+my $browser;
 my $error;
+my $url;
+my $info;
+my $query;
 my $limit=5;
 
 eval { require SOAP::Lite; };
@@ -93,7 +103,7 @@ else
 	    $print = $result->{URL}." (".$result->{title}.")";
 	    $print =~ s/\<b\>/\x02/g;
 	    $print =~ s/\<\/b\>/\x02/g;
-	    $print =~ s/\&amp\;/\&/g;
+	    decode_entities($print);
 	    system 'dcop', $PORT, 'Konversation', 'info', $print;
 	}
     }
