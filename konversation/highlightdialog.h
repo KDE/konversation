@@ -29,6 +29,7 @@
 #include <qlabel.h>
 #include <qptrlist.h>
 #include <qstring.h>
+#include <qcheckbox.h>
 
 #include "highlight.h"
 #include "highlightview.h"
@@ -48,6 +49,7 @@ class HighlightDialog : public KDialogBase
 
 	private:
 		QVGroupBox				*HighlightBrowserBox;
+    QCheckBox*        highlightNickCheck;
 		QVBox							*MainBox;
 		QHBox							*InputLineBox;
 		QLabel						*InputLineLabel;
@@ -76,7 +78,9 @@ class HighlightDialog : public KDialogBase
 		void addHighlight();
 		void removeHighlight();
     void noEmptyPatterns();
-		void changeHighlightColor(const QColor& passed_itemColor);
+    void highlightNickChanged(int state);
+    void nickColorChanged(const QColor& newColor);
+    void changeHighlightColor(const QColor& passed_itemColor);
 		void changeColorSelectionColor(QListViewItem* passed_selectedHighlightViewItem);
 		void changeHighlightText();
 		void unselectHighlight(QListViewItem* passed_selectedHighlightViewItem);

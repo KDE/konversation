@@ -131,6 +131,12 @@ class Preferences : public QObject
     void setHilightList(QPtrList<Highlight> newList);
     void addHilight(QString newHilight,QColor color);
 
+    void setHilightNickColor(QString color);
+    QColor getHilightNickColor();
+
+    void setHilightNick(bool state);    // shall we hilight the current nick?
+    bool getHilightNick();
+
     QStringList getButtonList();
     void setButtonList(QStringList newList);
 
@@ -172,9 +178,6 @@ class Preferences : public QObject
     void setBacklogMessageColor(QString color);
     void setLinkMessageColor(QString color);
     void setCommandMessageColor(QString color);
-
-    void setHilightNickColor(QString color);
-    QColor getHilightNickColor();
 
     void setNickCompleteSuffixStart(QString suffix);
     void setNickCompleteSuffixMiddle(QString suffix);
@@ -246,6 +249,8 @@ class Preferences : public QObject
 
     QList<ServerEntry> serverList;
     QPtrList<Highlight> hilightList;
+
+    bool hilightNick;
     QColor hilightNickColor;
 
     QStringList buttonList;

@@ -86,6 +86,7 @@ Preferences::Preferences()
   setNotifyDelay(20);
   setUseNotify(true);
 
+  setHilightNick(true);
   setHilightNickColor("#ff0000");
 
   setOpLedColor(1);
@@ -321,3 +322,6 @@ void Preferences::setColorConfigurationSize(QSize newSize) {colorConfigurationSi
 
 void Preferences::setHilightNickColor(QString newColor)    { hilightNickColor.setNamedColor(newColor); }
 QColor Preferences::getHilightNickColor() { return hilightNickColor; }
+
+void Preferences::setHilightNick(bool state) { hilightNick=state; }
+bool Preferences::getHilightNick() { return hilightNick; }

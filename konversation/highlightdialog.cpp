@@ -20,10 +20,12 @@
 #include <kdebug.h>
 
 #include <qstring.h>
+
 #include <iostream.h>
 #include <stdlib.h>
 
 #include "highlightdialog.h"
+#include "konversationapplication.h"
 
 HighlightDialog::HighlightDialog(QWidget* parent, QPtrList<Highlight> passed_HighlightList, QSize passed_windowSize) : KDialogBase(parent, 0, false, "HighlightEdit", Ok|Cancel, Default, false)
 {
@@ -31,8 +33,9 @@ HighlightDialog::HighlightDialog(QWidget* parent, QPtrList<Highlight> passed_Hig
 	windowSize = passed_windowSize;
 
 	MainBox = makeVBoxMainWidget();
+
 	HighlightBrowserBox = new QVGroupBox(i18n("Highlight list"), MainBox);
-	
+
   HighlightBrowser = new HighlightView(HighlightBrowserBox);
   HighlightBrowser->setFullWidth();
 	HighlightBrowser->addColumn(i18n ("Highlights"));
@@ -43,7 +46,6 @@ HighlightDialog::HighlightDialog(QWidget* parent, QPtrList<Highlight> passed_Hig
 
 	InputLineLabel = new QLabel(i18n("Pattern:"), InputLineBox);
 	InputLine = new KLineEdit(InputLineBox);
-	InputLine->setFocus();
 
 	ColorSelection = new KColorCombo(InputLineBox);
 	ColorSelection->setMinimumWidth(50);
@@ -51,6 +53,18 @@ HighlightDialog::HighlightDialog(QWidget* parent, QPtrList<Highlight> passed_Hig
 
 	RemoveButton = new KPushButton(i18n("Remove"), InputLineBox);
 
+  QHBox* hilightNickBox=new QHBox(HighlightBrowserBox);
+
+  highlightNickCheck=new QCheckBox(i18n("Always highlight current nick"),hilightNickBox,"highlight_nick_check");
+  highlightNickCheck->setChecked(KonversationApplication::preferences.getHilightNick());
+
+  KColorCombo* nickColor=new KColorCombo(hilightNickBox);
+  nickColor->setMinimumWidth(50);
+  nickColor->setMaximumWidth(50);
+  nickColor->setColor(KonversationApplication::preferences.getHilightNickColor());
+
+  connect(highlightNickCheck,SIGNAL(stateChanged(int)),this,SLOT(highlightNickChanged(int)));
+	connect(nickColor,SIGNAL(activated(const QColor&)),this,SLOT(nickColorChanged(const QColor&)));
   connect(InputLine, SIGNAL(returnPressed()), this, SLOT(addHighlight()));
 	connect(InputLine, SIGNAL(returnPressed()), this, SLOT(changeHighlightText()));
 	connect(InputLine, SIGNAL(textChanged(const QString&)), this, SLOT(updateHighlight(const QString&)));
@@ -63,12 +77,23 @@ HighlightDialog::HighlightDialog(QWidget* parent, QPtrList<Highlight> passed_Hig
 	connect(this, SIGNAL(highlightChanged(QListViewItem*)), this, SLOT(unselectHighlight(QListViewItem*)));
 
 	highlightEdited = false;
+	InputLine->setFocus();
 	this->show();
 	this->addHighlightList();
 }
 
 HighlightDialog::~HighlightDialog()
 {
+}
+
+void HighlightDialog::highlightNickChanged(int state)
+{
+  KonversationApplication::preferences.setHilightNick(state==2);
+}
+
+void HighlightDialog::nickColorChanged(const QColor& newColor)
+{
+  KonversationApplication::preferences.setHilightNickColor(newColor.name());
 }
 
 void HighlightDialog::addHighlightList()

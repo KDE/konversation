@@ -231,10 +231,10 @@ QString IRCView::filter(const QString& line,bool doHilight)
   // Hilight
   if(doHilight)
   {
-    QColor hilightNickColor=KonversationApplication::preferences.getHilightNickColor();
-
-    if(filteredLine.lower().find(server->getNickname().lower())!=-1)
+    if(KonversationApplication::preferences.getHilightNick() &&
+       filteredLine.lower().find(server->getNickname().lower())!=-1)
     {
+      QColor hilightNickColor=KonversationApplication::preferences.getHilightNickColor();
       filteredLine=QString("<font color=\""+hilightNickColor.name()+"\">")+filteredLine+QString("</font>");
     }
     else

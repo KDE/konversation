@@ -213,6 +213,7 @@ void KonversationApplication::readOptions()
     preferences.addHilight(hiList[hiIndex],"#"+hiList[hiIndex+1]);
   }
 
+  preferences.setHilightNick(config->readBoolEntry("HilightNick",preferences.getHilightNick()));
   hilight=config->readEntry("HilightNickColor");
   if(hilight=="")
     preferences.setHilightNickColor(preferences.getHilightNickColor().name());
@@ -351,6 +352,7 @@ void KonversationApplication::saveOptions()
   hilight=hilight.stripWhiteSpace();
   // write hilight string
   config->writeEntry("Hilight",hilight);
+  config->writeEntry("HilightNick",preferences.getHilightNick());
   config->writeEntry("HilightNickColor",preferences.getHilightNickColor().name().mid(1));
 
   // Ignore List
