@@ -2021,7 +2021,7 @@ void Channel::setShowNicknameBox(bool show)
 
 int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
 {
-  return QString::localeAwareCompare(static_cast<Nick*>(item1)->getNickname(),
+  return QString::compare(static_cast<Nick*>(item1)->getNickname(),
     static_cast<Nick*>(item2)->getNickname());
 }
 
