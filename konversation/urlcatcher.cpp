@@ -16,6 +16,7 @@
 #include <qpushbutton.h>
 #include <qregexp.h>
 #include <qclipboard.h>
+#include <qwhatsthis.h>
 
 #include <kapp.h>
 #include <klocale.h>
@@ -44,15 +45,37 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
   urlListView->addColumn(i18n("URL"));
   urlListView->setFullWidth(true);
   urlListView->setAllColumnsShowFocus(true);
+  QString urlListViewWT = i18n(
+      "List of Uniform Resource Locators mentioned in any of the Konversation windows "
+      "during this session.");
+  QWhatsThis::add(urlListView, urlListViewWT);
 
   QHBox* buttonBox=new QHBox(this);
   buttonBox->setSpacing(spacing());
 
   openUrlButton=new QPushButton(i18n("&Open URL"),buttonBox,"open_url_button");
+  QString openUrlButtonWT = i18n(
+      "<p>Select a <b>URL</b> above, then click this button to launch the "
+      "application associated with the mimetype of the URL.</p>"
+      "<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, "
+      "you can specify a custom web browser for web URLs.</p>");
+  QWhatsThis::add(openUrlButton, openUrlButtonWT);
   copyUrlButton=new QPushButton(i18n("&Copy URL"),buttonBox,"copy_url_button");
+  QString copyUrlButtonWT = i18n(
+      "Select a <b>URL</b> above, then click this button to copy the URL to the clipboard.");
+  QWhatsThis::add(copyUrlButton, copyUrlButtonWT);
   deleteUrlButton=new QPushButton(i18n("&Delete URL"),buttonBox,"delete_url_button");
+  QString deleteUrlButtonWT = i18n(
+      "Select a <b>URL</b> above, then click this button to delete the URL from the list.");
+  QWhatsThis::add(deleteUrlButton, deleteUrlButtonWT);
   saveListButton=new QPushButton(i18n("Sa&ve List..."),buttonBox,"save_list_button");
+  QString saveListButtonWT = i18n(
+      "Click to save the entire list to a file.");
+  QWhatsThis::add(saveListButton, saveListButtonWT);
   clearListButton=new QPushButton(i18n("C&lear List"),buttonBox,"clear_list_button");
+  QString clearListButtonWT = i18n(
+      "Click to erase the entire list.");
+  QWhatsThis::add(clearListButton, clearListButtonWT);
 
   connect(urlListView,SIGNAL (executed(QListViewItem*)),this,SLOT (openUrl(QListViewItem*)) );
   connect(urlListView,SIGNAL (selectionChanged()),this,SLOT (urlSelected()) );
