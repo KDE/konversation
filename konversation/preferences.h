@@ -59,7 +59,14 @@ class Preferences : public QObject
     void setBlinkingTabs(bool blink);
     bool getBlinkingTabs();
 
-    /* Geometry functions */
+		QString channelMessageColor, queryMessageColor, serverMessageColor, actionMessageColor,
+				 		backlogMessageColor, linkMessageColor, commandMessageColor;
+
+		QString defaultChannelMessageColor, defaultQueryMessageColor, defaultServerMessageColor,
+						defaultActionMessageColor, defaultBacklogMessageColor, defaultLinkMessageColor,
+						defaultCommandMessageColor;
+
+        /* Geometry functions */
     QSize getServerWindowSize();
     QSize& getHilightSize();
     QSize& getButtonsSize();
@@ -105,6 +112,22 @@ class Preferences : public QObject
     QStringList getNicknameList();
     void setNickname(int index,QString newName);
     void setNicknameList(QStringList newList);
+
+		QString getChannelMessageColor();
+		QString getQueryMessageColor();
+		QString getServerMessageColor();
+		QString getActionMessageColor();
+		QString getBacklogMessageColor();
+		QString getLinkMessageColor();
+		QString getCommandMessageColor();
+		
+		void setChannelMessageColor(QString color);
+		void setQueryMessageColor(QString color);
+		void setServerMessageColor(QString color);
+		void setActionMessageColor(QString color);
+		void setBacklogMessageColor(QString color);
+		void setLinkMessageColor(QString color);
+		void setCommandMessageColor(QString color);
 
     QString ident;
     QString realname;

@@ -30,6 +30,14 @@ Preferences::Preferences()
   ident="konversation";
   realname="Konversation User";
 
+	defaultChannelMessageColor = "000000";
+  defaultQueryMessageColor = "0000ff";
+	defaultServerMessageColor = "91640a";
+	defaultActionMessageColor = "0000ff";
+	defaultBacklogMessageColor = "aaaaaa";
+	defaultLinkMessageColor = "0000ff";
+	defaultCommandMessageColor = "960096";
+
   nicknameList.append("KonvIRC");
   nicknameList.append("_KonvIRC");
   nicknameList.append("KonvIRC_");
@@ -210,6 +218,23 @@ void Preferences::setNicknameList(QStringList newList) { nicknameList=newList; }
 
 void Preferences::setBlinkingTabs(bool blink) { blinkingTabs=blink; }
 bool Preferences::getBlinkingTabs() { return blinkingTabs; }
+
+// get/set message font colors
+
+QString Preferences::getChannelMessageColor() {return channelMessageColor;}
+void Preferences::setChannelMessageColor(QString passed_channelMessageColor) {channelMessageColor = passed_channelMessageColor;}
+QString Preferences::getQueryMessageColor() {return queryMessageColor;}
+void Preferences::setQueryMessageColor(QString passed_queryMessageColor) {queryMessageColor = passed_queryMessageColor;}
+QString Preferences::getServerMessageColor() {return serverMessageColor;}
+void Preferences::setServerMessageColor(QString passed_serverMessageColor) {serverMessageColor = passed_serverMessageColor;}
+QString Preferences::getActionMessageColor() {return actionMessageColor;}
+void Preferences::setActionMessageColor(QString passed_actionMessageColor) {actionMessageColor = passed_actionMessageColor;}
+QString Preferences::getBacklogMessageColor() {return backlogMessageColor;}
+void Preferences::setBacklogMessageColor(QString passed_backlogMessageColor) {backlogMessageColor = passed_backlogMessageColor;}
+QString Preferences::getLinkMessageColor() {return linkMessageColor;}
+void Preferences::setLinkMessageColor(QString passed_linkMessageColor) {linkMessageColor = passed_linkMessageColor;}
+QString Preferences::getCommandMessageColor() {return commandMessageColor;}
+void Preferences::setCommandMessageColor(QString passed_commandMessageColor) {commandMessageColor = passed_commandMessageColor;}
 
 /* Geometry functions */
 QSize Preferences::getServerWindowSize() { return serverWindowSize; };

@@ -21,7 +21,7 @@
 #include <qevent.h>
 
 #include <ktextbrowser.h>
-
+//#include "preferences.h"
 #ifndef IRCVIEW_H
 #define IRCVIEW_H
 

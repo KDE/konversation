@@ -108,7 +108,17 @@ void KonversationApplication::readOptions()
   reason=config->readEntry("KickReason","");
   if(reason!="") preferences.setKickReason(reason);
 
-  /* User identity */
+  // Colors
+	config->setGroup("Message Text Colors");
+	preferences.setChannelMessageColor(config->readEntry("ChannelMessage", preferences.defaultChannelMessageColor));
+	preferences.setQueryMessageColor(config->readEntry("QueryMessage", preferences.defaultQueryMessageColor));
+	preferences.setServerMessageColor(config->readEntry("ServerMessage", preferences.defaultServerMessageColor));
+	preferences.setActionMessageColor(config->readEntry("ActionMessage", preferences.defaultActionMessageColor));
+	preferences.setBacklogMessageColor(config->readEntry("BacklogMessage", preferences.defaultBacklogMessageColor));
+	preferences.setLinkMessageColor(config->readEntry("LinkMessage", preferences.defaultLinkMessageColor));
+	preferences.setCommandMessageColor(config->readEntry("CommandMessage", preferences.defaultCommandMessageColor));
+
+	/* User identity */
   config->setGroup("User Identity");
   preferences.ident=config->readEntry("Ident",preferences.ident);
   preferences.realname=config->readEntry("Realname",preferences.realname);
@@ -207,7 +217,17 @@ void KonversationApplication::saveOptions()
   config->writeEntry("PartReason",preferences.getPartReason());
   config->writeEntry("KickReason",preferences.getKickReason());
 
-  config->setGroup("User Identity");
+  config->setGroup("Message Text Colors");
+
+	config->writeEntry("ChannelMessage", preferences.getChannelMessageColor());
+	config->writeEntry("QueryMessage", preferences.getQueryMessageColor());
+	config->writeEntry("ServerMessage", preferences.getServerMessageColor());
+	config->writeEntry("ActionMessage", preferences.getActionMessageColor());
+	config->writeEntry("BacklogMessage", preferences.getBacklogMessageColor());
+  config->writeEntry("LinkMessage", preferences.getLinkMessageColor());
+	config->writeEntry("CommandMessageColor", preferences.getCommandMessageColor());
+
+	config->setGroup("User Identity");
 
   config->writeEntry("Ident",preferences.ident);
   config->writeEntry("Realname",preferences.realname);
@@ -221,7 +241,7 @@ void KonversationApplication::saveOptions()
   config->deleteGroup("Server List");
   config->setGroup("Server List");
 
-  int index=0;
+	int index=0;
   QString serverEntry=preferences.getServerByIndex(0);
 
   while(serverEntry)
