@@ -12,7 +12,7 @@
   email:     eisfuchs@tigress.com
 */
 
-#include "qobject.h"
+#include <qobject.h>
 
 #ifndef PREFSPAGE_H
 #define PREFSPAGE_H

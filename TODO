@@ -46,7 +46,6 @@ IDEAS:
 
 DISCUSSING:
 
-- There seems to be some speed problems like konversation eats %99 of CPU sometimes . Need to profile konversation ( I cannot seem to connect while running konversation under valgrind )
 - The text-search could offer a button "any highlight"
 - Check for channel or user parameter in mode changes to take care of duplicate mode chars
 - Click on notify messages opens query

@@ -40,28 +40,33 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   setShowIconsInTreeList(true);
 
   serverListPane = addPage(i18n("Server List"));
-  QFrame* identityPane = addPage(i18n("Identity"));
+  QFrame* identityPane = addPage(i18n("Identity"),QString::null,SmallIcon("identity"));
   
-  QFrame* chatWinAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")));
+  setFolderIcon(QStringList::split(',', i18n("Appearance")), SmallIcon("looknfeel"));
+  QFrame* chatWinAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("window_new"));
   QFrame* colorsAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Colors")),
     QString::null, SmallIcon("colorize"));
   
   setFolderIcon(QStringList::split(',', i18n("Behavior")), SmallIcon("configure"));
   QFrame* generalBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("General")));
   QFrame* chatWinBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Chat Window")));
-  QFrame* tabBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Tab Bar")));
+  QFrame* tabBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Tab Bar")),
+    QString::null, SmallIcon("tab_new"));
   QFrame* ignorePane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Ignored Nicknames")));
   QFrame* aliasesPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Aliases")));
   QFrame* buttonsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Quick Buttons")));
-  QFrame* logSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Logging")));
+  QFrame* logSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Logging")),
+    QString::null, SmallIcon("log"));
   QFrame* dccSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("DCC")));
 
   setFolderIcon(QStringList::split(',', i18n("Notification")), SmallIcon("knotify"));
   notifyPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Watched Nicknames")));
   QFrame* highlightPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Highlighting")));
-  QFrame* OSDPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("On Screen Display")));
+  QFrame* OSDPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("On Screen Display")),
+    QString::null, SmallIcon("tv"));
   
-  QFrame* dialogsPane = addPage(i18n("Dialogs"));
+  QFrame* dialogsPane = addPage(i18n("Warning Dialogs"), QString::null, SmallIcon("messagebox_warning"));
+
   
   // TODO: Uncomment this again when it's ready to go
   // QFrame* scriptsPane        =addPage(i18n("Scripting"));
