@@ -74,5 +74,9 @@ void Identity::setNicknameList(const QStringList& newList)
 }
 QStringList Identity::getNicknameList() const           { return nicknameList; }
 
-void Identity::setCodec(const QString &newCodec)        { codec=newCodec; }
 QString Identity::getCodec() const                      { return codec; }
+void Identity::setCodec(const QString &newCodec)
+{
+  // never set an empty codec!
+  if(!newCodec.isEmpty()) codec=newCodec;
+}
