@@ -101,7 +101,8 @@ class Query : public ChatWindow
     QString queryName;
     QString buffer;
 
-    QLineEdit* queryHostmask;
+    QLabel* queryHostmask;
+    QLabel* addresseeimage;
     QLabel* awayLabel;
     IRCInput* queryInput;
     NickInfoPtr m_nickInfo;

@@ -18,6 +18,7 @@
 #include <qpopupmenu.h>
 #include <qlineedit.h>
 #include <qtextcodec.h>
+#include <qhbox.h>
 
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -47,10 +48,13 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
   awayChanged=false;
   awayState=false;
-
-  queryHostmask=new QLineEdit(this, "query_hostmask");
-  queryHostmask->setReadOnly(true);
-  queryHostmask->installEventFilter(this);
+  QHBox *box = new QHBox(this);
+  addresseeimage = new QLabel(box, "query_image");
+  addresseeimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  addresseeimage->hide();
+  queryHostmask=new QLabel(box, "query_hostmask"); 
+  queryHostmask->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+//  queryHostmask->installEventFilter(this);
 
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer();
 
@@ -173,9 +177,9 @@ void Query::updateFonts()
   queryInput->setPaletteBackgroundColor(bg);
   queryInput->setFont(KonversationApplication::preferences.getTextFont());
 
-  queryHostmask->setPaletteForegroundColor(fg);
-  queryHostmask->setPaletteBackgroundColor(bg);
-  queryHostmask->setFont(KonversationApplication::preferences.getTextFont());
+//  queryHostmask->setPaletteForegroundColor(fg);
+//  queryHostmask->setPaletteBackgroundColor(bg);
+//  queryHostmask->setFont(KonversationApplication::preferences.getTextFont());
 
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
 
@@ -270,10 +274,35 @@ void Query::setNickInfo(const NickInfoPtr & nickInfo) {
   Q_ASSERT(m_nickInfo); if(!m_nickInfo) return;
   setName(m_nickInfo->getNickname());
   connect(m_nickInfo, SIGNAL(nickInfoChanged()), this, SLOT(nickInfoChanged()));
+  nickInfoChanged();
 }
 void Query::nickInfoChanged() {
-  if(m_nickInfo)
+  if(m_nickInfo) {
     setName(m_nickInfo->getNickname());
+    QString text = m_nickInfo->getBestAddresseeName();
+    if(!m_nickInfo->getHostmask().isEmpty() && !text.isEmpty())
+      text += " - ";
+    text += m_nickInfo->getHostmask();
+    queryHostmask->setText(text);
+ 
+    KABC::Picture pic = m_nickInfo->getAddressee().photo();
+    if(!pic.isIntern())
+      pic = m_nickInfo->getAddressee().logo();
+    if(pic.isIntern()) //logo or photo now
+    {
+      QPixmap qpixmap(pic.data().scaleHeight(queryHostmask->height()));
+      if(!qpixmap.isNull()) {
+        addresseeimage->setPixmap(qpixmap);    
+        addresseeimage->show();
+      } else {
+        addresseeimage->hide();
+      }
+    } else {
+      addresseeimage->hide();
+    }
+  } else {
+    addresseeimage->hide();
+  }
   emitUpdateInfo();
 }
 NickInfoPtr Query::getNickInfo() {
