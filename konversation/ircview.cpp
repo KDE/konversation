@@ -490,7 +490,7 @@ void IRCView::append(const QString& nick,const QString& message)
       nickLine = "<a href=\"#" + nick + "\">%2</a>";
 
   if(KonversationApplication::preferences.getUseBoldNicks())
-    nickLine = "<b>%2</b>";
+    nickLine = "<b>"+nickLine+"</b>";
   
   if(KonversationApplication::preferences.getUseColoredNicks()) {
     
@@ -542,7 +542,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
     nickLine = "<a href=\"#" + nick + "\">%2</a>";
 
   if(KonversationApplication::preferences.getUseBoldNicks())
-    nickLine = "<b>%2</b>";
+    nickLine = "<b>"+nickLine+"</b>";
 
   if(KonversationApplication::preferences.getUseColoredNicks()) {
     
@@ -580,7 +580,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
     nickLine = "<a href=\"#" + nick + "\">%2</a>";
 
   if(KonversationApplication::preferences.getUseBoldNicks())
-    nickLine = "<b>%2</b>";
+    nickLine = "<b>"+nickLine+"</b>";
 
   if(KonversationApplication::preferences.getUseColoredNicks()) {
     
