@@ -90,6 +90,10 @@ void DccTransferSend::start()  // public slot
   }
   else  // user doesn't specify ports
   {
+
+    // Let the operating system choose a port
+    serverSocket->setAddress("0");
+
     if(!serverSocket->listen())
     {
       kdDebug() << this << "DccTransferSend::start(): listen() failed!" << endl;
