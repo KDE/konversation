@@ -79,9 +79,10 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   PrefsPageHighlight*       highlightPage      =new PrefsPageHighlight(highlightPane,preferences);
   PrefsPageIgnore*          ignorePage         =new PrefsPageIgnore(ignorePane,preferences);
 
-  new PrefsPageLog(logSettingsPane,preferences);
-  new PrefsPageDccSettings(dccSettingsPane,preferences);
-  new PrefsPageDialogs(dialogsPane,preferences);
+  PrefsPageLog*             logSettingsPage    =new PrefsPageLog(logSettingsPane,preferences);
+  PrefsPageDccSettings*     dccSettingsPage    =new PrefsPageDccSettings(dccSettingsPane,preferences);
+  PrefsPageDialogs*         dialogsPage        =new PrefsPageDialogs(dialogsPane,preferences);
+
   // TODO: Uncomment this again when it's ready to go
   // new PrefsPageScripts(scriptsPane, preferences);
 
@@ -110,6 +111,8 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   connect(this,SIGNAL (applyPreferences()),notifyPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),highlightPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),ignorePage,SLOT (applyPreferences()) );
+
+  connect(this,SIGNAL (applyPreferences()),logSettingsPage,SLOT (applyPreferences()) );
 
   // connect all individual signals and slots
   connect(serverListPage,SIGNAL(connectToServer(int)),this,SLOT(connectRequest(int)) );

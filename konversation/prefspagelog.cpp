@@ -63,9 +63,6 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
 
   // Set up signals / slots for Log Setup page
   connect(useLog,SIGNAL (stateChanged(int)),this,SLOT (useLogChanged(int)) );
-  connect(lowerLog,SIGNAL (stateChanged(int)),this,SLOT (lowerLogChanged(int)) );
-  connect(logFollowsNick,SIGNAL (stateChanged(int)),this,SLOT (logFollowsNickChanged(int)) );
-  connect(logPathInput,SIGNAL (textChanged(const QString&)),this,SLOT (logPathInputChanged(const QString&)) );
 }
 
 PrefsPageLog::~PrefsPageLog()
@@ -74,7 +71,6 @@ PrefsPageLog::~PrefsPageLog()
 
 void PrefsPageLog::useLogChanged(int state)
 {
-  preferences->setLog(state==2);
   updateLogWidgets(state==2);
 }
 
@@ -86,19 +82,12 @@ void PrefsPageLog::updateLogWidgets(bool enable)
   logPathInput->setEnabled(enable);
 }
 
-void PrefsPageLog::lowerLogChanged(int state)
+void PrefsPageLog::applyPreferences()
 {
-  preferences->setLowerLog(state==2);
-}
-
-void PrefsPageLog::logFollowsNickChanged(int state)
-{
-  preferences->setLogFollowsNick(state==2);
-}
-
-void PrefsPageLog::logPathInputChanged(const QString& path)
-{
-  preferences->setLogPath(path);
+  preferences->setLog(useLog->isChecked());
+  preferences->setLowerLog(lowerLog->isChecked());
+  preferences->setLogFollowsNick(logFollowsNick->isChecked());
+  preferences->setLogPath(logPathInput->text());
 }
 
 #include "prefspagelog.moc"

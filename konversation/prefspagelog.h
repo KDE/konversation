@@ -35,11 +35,11 @@ class PrefsPageLog : public PrefsPage
     PrefsPageLog(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageLog();
 
+  public slots:
+    void applyPreferences();
+
   protected slots:
     void useLogChanged(int state);
-    void lowerLogChanged(int state);
-    void logFollowsNickChanged(int state);
-    void logPathInputChanged(const QString& path);
 
   protected:
     void updateLogWidgets(bool state);
