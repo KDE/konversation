@@ -24,38 +24,12 @@ foreach $station (@stations) {
   $detail = `dcop KWeatherService WeatherService weather $station`;
   $detail2 = `dcop KWeatherService WeatherService cover $station`;
 
-  # Fix details
-  
-  $i = 0;
   chomp $detail;
+  $details = join ", ", split(/\n/,$detail);
   
-  foreach $det (split(/\n/,$detail)) {
-      chomp $det;
-      if( $i==0 ) {
-	  $details = $det;
-	  $i = 1;
-      }
-      else {
-	  $details = $details.", ".$det;
-      }
-  }
-
-  # Fix detail2
-
-  $i = 0;
   chomp $detail2;
-  
-  foreach $det (split(/\n/,$detail2)) {
-    chomp $det;
-    if( $i==0 ) {
-      $details2 = $det;
-      $i = 1;
-    }
-    else {
-      $details2 = $details2.", ".$det;
-    }
-  }
-  
+  $details2 = join ", ", split(/\n/,$detail2);
+
   
   $pressure =~ s/\"/\\\"/g; # Escape double quote
 
