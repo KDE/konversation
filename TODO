@@ -20,6 +20,7 @@ Don't trigger events when we did highlight ourselves
 Limit backlog to x lines or KB
 Click on notify messages opens query
 Make URLs like http://user@somedomain.com/ work
+Make [x] on tabs harder to click (1 second hover delay or similar)
 
 Channel List Panel:
 and a "channel or topic" checkbox would be nice, or better, make the current checkboxes work as "or" not as "and"

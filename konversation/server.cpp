@@ -78,8 +78,6 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   setMainWindow(newMainWindow);
 
-  kdDebug() << "Server Group " << serverGroup << endl;
-
   serverGroup=serverEntry[0];
   serverName=serverEntry[1];
   serverPort=serverEntry[2].toInt();
@@ -1134,25 +1132,21 @@ void Server::sendJoinCommand(const QString& name)
 
 void Server::joinChannel(const QString &name, const QString &hostmask, const QString &/*key*/)
 {
-  // Make sure to delete stale Channel on rejoin.
-  // FIXME: Hm ... Do we really have to? Wouldn't it be enough to just
-  // keep the channel and set channel->setServer(server)?
+  // (re-)join channel, open a new panel if needded
   Channel* channel=getChannelByName(name);
-  if(channel)
+  if(!channel)
   {
-    removeChannel(channel);
-    delete channel;
-  }
-
-  channel=getMainWindow()->addChannel(this,name);
-  channel->setIdentity(getIdentity());
-  channel->setNickname(getNickname());
+    channel=getMainWindow()->addChannel(this,name);
+    channel->setIdentity(getIdentity());
+    channel->setNickname(getNickname());
   //channel->setKey(key);
 
-  channelList.append(channel);
-  channel->joinNickname(getNickname(),hostmask);
+    channelList.append(channel);
 
-  connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
+    connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
+  }
+  // if channel creation has worked, join it
+  if(channel) channel->joinNickname(getNickname(),hostmask);
 }
 
 void Server::removeChannel(Channel* channel)
