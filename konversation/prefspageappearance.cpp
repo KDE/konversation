@@ -20,6 +20,7 @@
 #include <qcombobox.h>
 #include <qtextcodec.h>
 #include <qheader.h>
+#include <qvgroupbox.h>
 
 #include <kfontdialog.h>
 #include <kdebug.h>
@@ -150,19 +151,24 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   closeButtonsCheck->setChecked(preferences->getCloseButtonsOnTabs());
 
   // Sorting
-  QCheckBox* sortByStatusCheck=new QCheckBox(i18n("Sort by user status"),parentFrame,"sort_by_status_check");
-  QCheckBox* sortCaseInsensitiveCheck=new QCheckBox(i18n("Sort case insensitive"),parentFrame,"sort_case_insensitive_check");
+  QVGroupBox* sortOptionsGroup=new QVGroupBox(i18n("Sort options"),parentFrame,"sort_options_group");
+  QVGroupBox* sortOrderGroup=new QVGroupBox(i18n("Sorting order"),parentFrame,"sort_order_group");
+
+  QCheckBox* sortByStatusCheck=new QCheckBox(i18n("Sort by user status"),sortOptionsGroup,"sort_by_status_check");
+  QCheckBox* sortCaseInsensitiveCheck=new QCheckBox(i18n("Sort case insensitive"),sortOptionsGroup,"sort_case_insensitive_check");
 
   sortByStatusCheck->setChecked(preferences->getSortByStatus());
   sortCaseInsensitiveCheck->setChecked(preferences->getSortCaseInsensitive());
 
-  sortingOrder=new KListView(parentFrame,"sorting_order_view");
+  sortingOrder=new KListView(sortOrderGroup,"sorting_order_view");
   sortingOrder->addColumn("");
   sortingOrder->setFullWidth(true);
   sortingOrder->header()->hide();
   sortingOrder->setSorting(-1);
   sortingOrder->setDragEnabled(true);
   sortingOrder->setAcceptDrops(true);
+
+  sortingOrder->setMaximumHeight(sortingOrder->fontMetrics().height()*4);
 
   for(int index=4;index!=0;index>>=1)
   {
@@ -196,11 +202,10 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   row++;
   appearanceLayout->addMultiCellWidget(closeButtonsCheck,row,row,0,2);
   row++;
-  appearanceLayout->addWidget(sortByStatusCheck,row,0);
-  appearanceLayout->addMultiCellWidget(sortingOrder,row,row+1,1,1);
+  appearanceLayout->addWidget(sortOptionsGroup,row,0);
+  appearanceLayout->addMultiCellWidget(sortOrderGroup,row,row,1,2);
   row++;
-  appearanceLayout->addWidget(sortCaseInsensitiveCheck,row,0);
-  row++;
+  appearanceLayout->addMultiCellWidget(new QHBox(parentFrame),row,row,0,2);
   appearanceLayout->setRowStretch(row,10);
   appearanceLayout->setColStretch(1,10);
 
