@@ -35,7 +35,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   commandCharInput->setMaxLength(1);
 
   QVBox* suffixBox=new QVBox(parentFrame);
-  QLabel* suffixLabel=new QLabel(i18n("Characters to add on nick completion:"),suffixBox);
+/*  QLabel* suffixLabel= */ new QLabel(i18n("Characters to add on nick completion:"),suffixBox);
 
   QHBox* suffixEditBox=new QHBox(suffixBox);
   suffixEditBox->setSpacing(spacingHint());
