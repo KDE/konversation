@@ -136,7 +136,17 @@ void Query::updateFonts()
   kdDebug() << "Query::updateFonts()" << endl;
 
   queryHostmask->setFont(KonversationApplication::preferences.getTextFont());
+  queryHostmask->setBackgroundColor(QColor("#"+KonversationApplication::preferences.getColor("TextViewBackground")));
+
+  const QColor fg("#"+KonversationApplication::preferences.getColor("ChannelMessage"));
+  const QColor bg("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
+
+  QPalette palette=queryInput->palette();
+  palette.setColor(QColorGroup::Text,fg);
+  queryInput->setPalette(palette);
+  queryInput->setBackgroundColor(bg);
   queryInput->setFont(KonversationApplication::preferences.getTextFont());
+
   logCheckBox->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),

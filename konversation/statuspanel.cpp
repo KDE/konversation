@@ -133,7 +133,15 @@ void StatusPanel::updateFonts()
 {
   kdDebug() << "StatusPanel::updateFonts()" << endl;
 
+  const QColor fg("#"+KonversationApplication::preferences.getColor("ChannelMessage"));
+  const QColor bg("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
+
+  QPalette palette=statusInput->palette();
+  palette.setColor(QColorGroup::Text,fg);
+  statusInput->setPalette(palette);
+  statusInput->setBackgroundColor(bg);
   statusInput->setFont(KonversationApplication::preferences.getTextFont());
+
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
                                    KonversationApplication::preferences.getBackgroundImageName());

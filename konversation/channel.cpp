@@ -1300,7 +1300,16 @@ void Channel::updateFonts()
   topicLine->setFont(KonversationApplication::preferences.getTextFont());
   limit->setFont(KonversationApplication::preferences.getTextFont());
   nicknameButton->setFont(KonversationApplication::preferences.getTextFont());
+
+  const QColor fg("#"+KonversationApplication::preferences.getColor("ChannelMessage"));
+  const QColor bg("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
+
+  QPalette palette=channelInput->palette();
+  palette.setColor(QColorGroup::Text,fg);
+  channelInput->setPalette(palette);
+  channelInput->setBackgroundColor(bg);
   channelInput->setFont(KonversationApplication::preferences.getTextFont());
+
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
                                    KonversationApplication::preferences.getBackgroundImageName());
