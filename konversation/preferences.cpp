@@ -31,13 +31,14 @@ Preferences::Preferences()
   ident="konversation";
   realname="Konversation User";
 
-  defaultChannelMessageColor = "000000";
-  defaultQueryMessageColor = "0000ff";
-  defaultServerMessageColor = "91640a";
-  defaultActionMessageColor = "0000ff";
-  defaultBacklogMessageColor = "aaaaaa";
-  defaultLinkMessageColor = "0000ff";
-  defaultCommandMessageColor = "960096";
+  setChannelMessageColor("000000");
+  setQueryMessageColor("0000ff");
+  setServerMessageColor("91640a");
+  setActionMessageColor("0000ff");
+  setBacklogMessageColor("aaaaaa");
+  setLinkMessageColor("0000ff");
+  setCommandMessageColor("960096");
+  setTimeColor("709070");
 
   setNickCompleteSuffixStart(": ");
   setNickCompleteSuffixMiddle(" ");
@@ -94,7 +95,10 @@ Preferences::Preferences()
   setOpLedColor(1);
   setVoiceLedColor(2);
   setNoRightsLedColor(3);
- 
+
+  setTimestamping(true);
+  setTimestampFormat("hh:mm");
+
   setCommandChar("/");
 }
 
@@ -281,6 +285,7 @@ QString Preferences::getCommandMessageColor() {return commandMessageColor;}
 QString Preferences::getLinkMessageColor() {return linkMessageColor;}
 QString Preferences::getQueryMessageColor() {return queryMessageColor;}
 QString Preferences::getServerMessageColor() {return serverMessageColor;}
+QString Preferences::getTimeColor() {return timeColor;}
 
 void Preferences::setActionMessageColor(QString passed_actionMessageColor) {actionMessageColor = passed_actionMessageColor;}
 void Preferences::setBacklogMessageColor(QString passed_backlogMessageColor) {backlogMessageColor = passed_backlogMessageColor;}
@@ -289,6 +294,7 @@ void Preferences::setCommandMessageColor(QString passed_commandMessageColor) {co
 void Preferences::setLinkMessageColor(QString passed_linkMessageColor) {linkMessageColor = passed_linkMessageColor;}
 void Preferences::setQueryMessageColor(QString passed_queryMessageColor) {queryMessageColor = passed_queryMessageColor;}
 void Preferences::setServerMessageColor(QString passed_serverMessageColor) {serverMessageColor = passed_serverMessageColor;}
+void Preferences::setTimeColor(QString passed_timeColor) { timeColor = passed_timeColor; }
 
 QString Preferences::getNickCompleteSuffixStart() {return nickCompleteSuffixStart; }
 QString Preferences::getNickCompleteSuffixMiddle() {return nickCompleteSuffixMiddle; }
@@ -340,3 +346,8 @@ void Preferences::setTextFont(QFont newFont) { textFont=newFont; }
 void Preferences::setListFont(QFont newFont) { listFont=newFont; }
 void Preferences::setTextFontRaw(QString rawFont) { textFont.setRawName(rawFont); }
 void Preferences::setListFontRaw(QString rawFont) { listFont.setRawName(rawFont); }
+
+void Preferences::setTimestamping(bool state) { timestamping=state; }
+bool Preferences::getTimestamping() { return timestamping; }
+void Preferences::setTimestampFormat(const QString& newFormat) { timestampFormat=newFormat; }
+const QString& Preferences::getTimestampFormat() { return timestampFormat; }

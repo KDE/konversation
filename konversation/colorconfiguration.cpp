@@ -22,8 +22,9 @@
 ColorConfiguration::ColorConfiguration(QString passed_actionTextColor, QString passed_backlogTextColor,
 																			 QString passed_channelTextColor, QString passed_commandTextColor,
 																			 QString passed_linkTextColor, QString passed_queryTextColor,
-																			 QString passed_serverTextColor,QSize passed_windowSize)
-									 : KDialogBase(0, 0, false, i18n("Color Configuration"), Ok|Apply|Cancel, Default, true)
+																			 QString passed_serverTextColor, QString passed_timeColor,
+                                       QSize passed_windowSize)
+                   : KDialogBase(0, 0, false, i18n("Color Configuration"), Ok|Apply|Cancel, Default, true)
 {
 	kdDebug() << "ColorConfiguration::ColorConfiguration()" << endl;
 
@@ -78,11 +79,17 @@ ColorConfiguration::ColorConfiguration(QString passed_actionTextColor, QString p
 	queryMessageColorSelection->setMinimumWidth(50);
 	queryMessageColorSelection->setMaximumWidth(50);
 
-	serverBox = new QHBox(centerBox);	
+	serverBox = new QHBox(centerBox);
 	serverLabel = new QLabel(i18n("Server message text color"), serverBox);
 	serverMessageColorSelection = new MyColorCombo(serverBox);
 	serverMessageColorSelection->setMinimumWidth(50);
 	serverMessageColorSelection->setMaximumWidth(50);
+
+	timeBox = new QHBox(centerBox);
+	timeLabel = new QLabel(i18n("Timestamp color"), timeBox);
+	timeColorSelection = new MyColorCombo(timeBox);
+	timeColorSelection->setMinimumWidth(50);
+	timeColorSelection->setMaximumWidth(50);
 
 	setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
   setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
@@ -102,6 +109,8 @@ ColorConfiguration::ColorConfiguration(QString passed_actionTextColor, QString p
 	commandMessageColorSelection->setColor(commandTextColor);
 	linkTextColor = QColor(passed_linkTextColor.prepend("#"));
 	linkMessageColorSelection->setColor(linkTextColor);
+	timeColor = QColor(passed_timeColor.prepend("#"));
+	timeColorSelection->setColor(timeColor);
 
 	connect(actionMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setActionTextColor(const QColor&)));
 	connect(backlogMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setBacklogTextColor(const QColor&)));
@@ -110,6 +119,7 @@ ColorConfiguration::ColorConfiguration(QString passed_actionTextColor, QString p
 	connect(linkMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setLinkTextColor(const QColor&)));
 	connect(queryMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setQueryTextColor(const QColor&)));
 	connect(serverMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setServerTextColor(const QColor&)));
+	connect(timeColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setTimeColor(const QColor&)));
 
 	this->resize(windowSize);
 }
@@ -146,25 +156,8 @@ void ColorConfiguration::closeEvent(QCloseEvent *ev)
 
 void ColorConfiguration::slotOk()
 {
-	actionTextColorString = actionTextColor.name();
-	actionTextColorString = actionTextColorString.right(6);
-	backlogTextColorString = backlogTextColor.name();
-	backlogTextColorString = backlogTextColorString.right(6);
-	channelTextColorString = channelTextColor.name();
-	channelTextColorString = channelTextColorString.right(6);
-	commandTextColorString = commandTextColor.name();
-	commandTextColorString = commandTextColorString.right(6);
-	linkTextColorString = linkTextColor.name();
-	linkTextColorString = linkTextColorString.right(6);
-	queryTextColorString = queryTextColor.name();
-	queryTextColorString = queryTextColorString.right(6);
-	serverTextColorString = serverTextColor.name();
-	serverTextColorString = serverTextColorString.right(6);
-
-	emit saveFontColorSettings(actionTextColorString, backlogTextColorString, channelTextColorString,
-														 commandTextColorString, linkTextColorString, queryTextColorString,
-														 serverTextColorString);
-	emit closeFontColorConfiguration(this->size());
+  slotApply();
+  emit closeFontColorConfiguration(this->size());
 }
 
 void ColorConfiguration::slotApply()
@@ -183,10 +176,12 @@ void ColorConfiguration::slotApply()
 	queryTextColorString = queryTextColorString.right(6);
 	serverTextColorString = serverTextColor.name();
 	serverTextColorString = serverTextColorString.right(6);
+	timeColorString = timeColor.name();
+	timeColorString = timeColorString.right(6);
 
 	emit saveFontColorSettings(actionTextColorString, backlogTextColorString, channelTextColorString,
 														 commandTextColorString, linkTextColorString, queryTextColorString,
-														 serverTextColorString);
+														 serverTextColorString, timeColorString);
 }
 
 void ColorConfiguration::slotCancel()

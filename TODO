@@ -9,7 +9,10 @@ Make colors for nick list configurable via GUI
 <lizard> ich will nen sortcut haben das wenn ich irgendwo ssh eingebe das mit ne shell aufgeht ;)
 Let the user decide how many quick buttons they want.
 Double click actions for nick list and notify list.
+Think about another way to get rid of the cut off "Custom" text in color combos ...
+* mETz hands Eisfuchs #include "srcfile.moc" for all his sourcefiles
 
+-privmsg (/msg) should be logged to the specific log file (if i do /msg foo bar i want to have this in konversation-foo.log)
 
 Hurga: ^G shall beep
 

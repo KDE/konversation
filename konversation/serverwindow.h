@@ -123,7 +123,7 @@ class ServerWindow : public KMainWindow
     void openColorConfiguration();
     void applyColorConfiguration(QString actionTextColor, QString backlogTextColor, QString channelTextColor,
                                  QString commandTextColor, QString linkTextColor, QString queryTextColor,
-                                 QString serverTextColor);
+                                 QString serverTextColor, QString timeColor);
     void closeColorConfiguration(QSize windowSize);
 
   protected:

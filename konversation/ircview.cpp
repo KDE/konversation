@@ -408,13 +408,25 @@ void IRCView::appendBacklogMessage(const char* firstColumn,const char* rawMessag
 #endif
 #endif
 
-  doAppend(line);
+  // no additional time stamps on backlog messages
+  doAppend(line,true);
 }
 
-void IRCView::doAppend(QString line)
+void IRCView::doAppend(QString newLine,bool suppressTimestamps)
 {
   //  kdDebug() << "IRCView::doAppend("<< line << ")" << endl;
   // Add line to buffer
+
+  QString line(newLine);
+
+  if(!suppressTimestamps && KonversationApplication::preferences.getTimestamping())
+  {
+    QTime time=QTime::currentTime();
+    QString timeColor=KonversationApplication::preferences.getTimeColor();
+    QString timeFormat=KonversationApplication::preferences.getTimestampFormat();
+    line.prepend(QString("<font color=\"#"+timeColor+"\">[%1]</font> ").arg(time.toString(timeFormat)));
+  }
+
   buffer+=line;
   emit newText();
 

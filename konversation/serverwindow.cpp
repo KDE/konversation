@@ -468,9 +468,11 @@ void ServerWindow::openColorConfiguration()
 																										KonversationApplication::preferences.getLinkMessageColor(),
 																										KonversationApplication::preferences.getQueryMessageColor(),
 																										KonversationApplication::preferences.getServerMessageColor(),
+																										KonversationApplication::preferences.getTimeColor(),
 																										KonversationApplication::preferences.getColorConfigurationSize());
-	connect(colorConfigurationDialog, SIGNAL(saveFontColorSettings(QString, QString, QString, QString, QString, QString, QString)),
-					this, SLOT(applyColorConfiguration(QString, QString, QString, QString, QString, QString, QString)));
+
+  connect(colorConfigurationDialog, SIGNAL(saveFontColorSettings(QString, QString, QString, QString, QString, QString, QString, QString)),
+					this, SLOT(applyColorConfiguration(QString, QString, QString, QString, QString, QString, QString, QString)));
 	connect(colorConfigurationDialog, SIGNAL(closeFontColorConfiguration(QSize)),
 					this, SLOT(closeColorConfiguration(QSize)));
 
@@ -479,7 +481,7 @@ void ServerWindow::openColorConfiguration()
 
 void ServerWindow::applyColorConfiguration(QString actionTextColor, QString backlogTextColor, QString channelTextColor,
 														 							 QString commandTextColor, QString linkTextColor, QString queryTextColor,
-																					 QString serverTextColor)
+																					 QString serverTextColor, QString timeColor)
 {
 	KonversationApplication::preferences.setActionMessageColor(actionTextColor);
 	KonversationApplication::preferences.setBacklogMessageColor(backlogTextColor);
@@ -488,6 +490,7 @@ void ServerWindow::applyColorConfiguration(QString actionTextColor, QString back
 	KonversationApplication::preferences.setLinkMessageColor(linkTextColor);
 	KonversationApplication::preferences.setQueryMessageColor(queryTextColor);
 	KonversationApplication::preferences.setServerMessageColor(serverTextColor);
+	KonversationApplication::preferences.setTimeColor(timeColor);
 	emit prefsChanged();
 }
 
@@ -495,8 +498,8 @@ void ServerWindow::closeColorConfiguration(QSize windowSize)
 {
 	KonversationApplication::preferences.setColorConfigurationSize(windowSize);
 	emit prefsChanged();
-	disconnect(colorConfigurationDialog, SIGNAL(saveFontColorSettings(QString, QString, QString, QString, QString, QString, QString)),
-				 		 this, SLOT(applyColorConfiguration(QString, QString, QString, QString, QString, QString, QString)));
+	disconnect(colorConfigurationDialog, SIGNAL(saveFontColorSettings(QString, QString, QString, QString, QString, QString, QString, QString)),
+				 		 this, SLOT(applyColorConfiguration(QString, QString, QString, QString, QString, QString, QString, QString)));
 	disconnect(colorConfigurationDialog, SIGNAL(closeFontColorConfiguration(QSize)),
 						 this, SLOT(closeColorConfiguration(QSize)));
 	delete colorConfigurationDialog;

@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspageappearance.cpp  -  description
+  prefspageappearance.cpp  -  The preferences panel that holds the appearance settings
   begin:     Son Dez 22 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -16,8 +16,10 @@
 
 #include <qlayout.h>
 #include <qpushbutton.h>
+#include <qhbox.h>
 
 #include <kfontdialog.h>
+#include <kdebug.h>
 
 #include "prefspageappearance.h"
 
@@ -27,6 +29,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   // Add a Layout to the appearance pane
   QGridLayout* appearanceLayout=new QGridLayout(parentFrame,3,3,marginHint(),spacingHint());
 
+  // Font settings
   QLabel* textFontLabel=new QLabel(i18n("Text Font:"),parentFrame);
   QLabel* listFontLabel=new QLabel(i18n("Nickname List Font:"),parentFrame);
 
@@ -36,11 +39,33 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   textPreviewLabel->setFrameStyle(QFrame::Panel | QFrame::Sunken);
   listPreviewLabel->setFrameStyle(QFrame::Panel | QFrame::Sunken);
 
-  updateFonts();
-
   QPushButton* textFontButton=new QPushButton(i18n("Choose..."),parentFrame,"text_font_button");
   QPushButton* listFontButton=new QPushButton(i18n("Choose..."),parentFrame,"list_font_button");
 
+  updateFonts();
+
+  // Timestamp settings
+  QHBox* timestampBox=new QHBox(parentFrame);
+  timestampBox->setSpacing(spacingHint());
+
+  doTimestamping=new QCheckBox(i18n("Show Timestamps"),timestampBox,"show_timestamps_checkbox");
+
+  formatLabel=new QLabel(i18n("Format:"),timestampBox);
+  formatLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
+  timestampFormat=new QComboBox(false,timestampBox,"timestamp_format_combo");
+  timestampFormat->insertItem("hh");
+  timestampFormat->insertItem("hh:mm");
+  timestampFormat->insertItem("hh:mm:ss");
+
+  // find actual timestamp format
+  for(int index=0;index<timestampFormat->count();index++)
+    if(timestampFormat->text(index)==preferences->getTimestampFormat()) timestampFormat->setCurrentItem(index);
+
+  // Take care of ghosting / unghosting format widget
+  timestampingChanged(preferences->getTimestamping() ? 2 : 0);
+
+  // Layout
   int row=0;
   appearanceLayout->addWidget(textFontLabel,row,0);
   appearanceLayout->addWidget(textPreviewLabel,row,1);
@@ -50,6 +75,8 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   appearanceLayout->addWidget(listPreviewLabel,row,1);
   appearanceLayout->addWidget(listFontButton,row,2);
   row++;
+  appearanceLayout->addMultiCellWidget(timestampBox,row,row,0,2);
+  row++;
   appearanceLayout->setRowStretch(row,10);
   appearanceLayout->setColStretch(1,10);
 
@@ -57,6 +84,8 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   connect(textFontButton,SIGNAL (clicked()),this,SLOT (textFontClicked()) );
   connect(listFontButton,SIGNAL (clicked()),this,SLOT (listFontClicked()) );
+  connect(doTimestamping,SIGNAL (stateChanged(int)),this,SLOT (timestampingChanged(int)) );
+  connect(timestampFormat,SIGNAL(activated(const QString&)),this,SLOT(formatChanged(const QString&)));
 }
 
 PrefsPageAppearance::~PrefsPageAppearance()
@@ -89,4 +118,18 @@ void PrefsPageAppearance::updateFonts()
 
   textPreviewLabel->setFont(textFont);
   listPreviewLabel->setFont(listFont);
+}
+
+void PrefsPageAppearance::timestampingChanged(int state)
+{
+  preferences->setTimestamping(state==2);
+  doTimestamping->setChecked(state==2);
+  timestampFormat->setEnabled(state==2);
+  formatLabel->setEnabled(state==2);
+}
+
+void PrefsPageAppearance::formatChanged(const QString& newFormat)
+{
+  kdDebug() << newFormat << endl;
+  preferences->setTimestampFormat(newFormat);
 }

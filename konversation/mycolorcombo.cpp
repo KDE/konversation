@@ -198,7 +198,7 @@ void MyColorCombo::slotActivated( int index )
 			QBrush brush( customColor );
 			painter.fillRect( rect, brush );
 			painter.setPen( pen );
-			painter.drawText( 2, QFontMetrics(painter.font()).ascent()+2, "" );
+			painter.drawText( 2, QFontMetrics(painter.font()).ascent()+2, "Custom" );
 			painter.end();
 
 			changeItem( pixmap, 0 );
@@ -251,7 +251,7 @@ void MyColorCombo::addColors()
 	QBrush brush( customColor );
 	painter.fillRect( rect, brush );
 	painter.setPen( pen );
-	painter.drawText( 2, QFontMetrics(painter.font()).ascent()+2, "" );
+	painter.drawText( 2, QFontMetrics(painter.font()).ascent()+2, "Custom" );
 	painter.end();
 
 	insertItem( pixmap );

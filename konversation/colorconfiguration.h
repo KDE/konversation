@@ -19,6 +19,7 @@
 #define COLORCONFIGURATION_H
 
 #include <kdialogbase.h>
+
 #include <qvbox.h>
 #include <qhbox.h>
 #include <qlabel.h>
@@ -26,6 +27,7 @@
 #include <qcolor.h>
 #include <qsize.h>
 #include <qstring.h>
+
 #include "mycolorcombo.h"
 
 /**
@@ -40,23 +42,25 @@ class ColorConfiguration : public KDialogBase
 		ColorConfiguration(QString passed_actionTextColor, QString passed_backlogTextColor,
 											 QString passed_channelTextColor, QString passed_commandTextColor,
 											 QString passed_linkTextColor, QString passed_queryTextColor,
-											 QString passed_serverTextColor, QSize passed_windowSize);
-		~ColorConfiguration();
+											 QString passed_serverTextColor, QString passed_timeColor,
+                       QSize passed_windowSize);
+
+    ~ColorConfiguration();
 
 	private:
 		QVBox					*MainBox, *centerBox, *rightPadBox, *lowerPadBox;
 		QHBox					*channelBox, *queryBox, *serverBox, *actionBox, *backlogBox, *commandBox, *linkBox,
-									*widgetBox;
+									*timeBox, *widgetBox;
 		QLabel				*channelLabel, *queryLabel, *serverLabel, *actionLabel, *backlogLabel, *commandLabel,
-									*linkLabel;
+									*linkLabel, *timeLabel;
 		QColor				channelTextColor, queryTextColor, serverTextColor, actionTextColor, backlogTextColor,
-									commandTextColor, linkTextColor;
+									commandTextColor, linkTextColor, timeColor;
 		QString				channelTextColorString, queryTextColorString, serverTextColorString, actionTextColorString,
-									backlogTextColorString, commandTextColorString, linkTextColorString;
+									backlogTextColorString, commandTextColorString, linkTextColorString, timeColorString;
 		QSize					windowSize;
 		MyColorCombo  *channelMessageColorSelection, *queryMessageColorSelection, *serverMessageColorSelection,
 									*actionMessageColorSelection, *backlogMessageColorSelection, *commandMessageColorSelection,
-									*linkMessageColorSelection;
+									*linkMessageColorSelection, *timeColorSelection;
 			
 	protected:
 /*		void setColors(QString passed_channelTextColor, QString passed_queryTextColor, QString passed_serverTextColor,
@@ -68,7 +72,7 @@ class ColorConfiguration : public KDialogBase
 		void closeFontColorConfiguration(QSize windowSize);
 		void saveFontColorSettings(QString channelTextColor, QString queryTextColor, QString serverTextColor,
 															 QString actionTextColor, QString backlogTextColor, QString commandTextColor,
-															 QString linkTextColor);
+															 QString linkTextColor, QString timeColor);
 	
 	protected slots:
 		void closeEvent(QCloseEvent *ev);
@@ -79,6 +83,7 @@ class ColorConfiguration : public KDialogBase
 		void setBacklogTextColor(const QColor& passed_color) {backlogTextColor = passed_color;}
 		void setCommandTextColor(const QColor& passed_color) {commandTextColor = passed_color;}
 		void setLinkTextColor(const QColor& passed_color) {linkTextColor = passed_color;}
+		void setTimeColor(const QColor& passed_color) { timeColor = passed_color;}
     void slotOk();
 		void slotApply();
 		void slotCancel();

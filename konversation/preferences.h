@@ -159,11 +159,7 @@ class Preferences : public QObject
     void setNicknameList(QStringList newList);
 
     QString channelMessageColor, queryMessageColor, serverMessageColor, actionMessageColor,
-            backlogMessageColor, linkMessageColor, commandMessageColor;
-
-    QString defaultChannelMessageColor, defaultQueryMessageColor, defaultServerMessageColor,
-            defaultActionMessageColor, defaultBacklogMessageColor, defaultLinkMessageColor,
-            defaultCommandMessageColor;
+            backlogMessageColor, linkMessageColor, commandMessageColor,timeColor;
 
     QString getChannelMessageColor();
     QString getQueryMessageColor();
@@ -172,6 +168,7 @@ class Preferences : public QObject
     QString getBacklogMessageColor();
     QString getLinkMessageColor();
     QString getCommandMessageColor();
+    QString getTimeColor();
 
     void setChannelMessageColor(QString color);
     void setQueryMessageColor(QString color);
@@ -180,6 +177,7 @@ class Preferences : public QObject
     void setBacklogMessageColor(QString color);
     void setLinkMessageColor(QString color);
     void setCommandMessageColor(QString color);
+    void setTimeColor(QString color);
 
     void setNickCompleteSuffixStart(QString suffix);
     void setNickCompleteSuffixMiddle(QString suffix);
@@ -205,7 +203,12 @@ class Preferences : public QObject
     void setListFont(QFont newFont);
     void setTextFontRaw(QString rawFont);
     void setListFontRaw(QString newFont);
-    
+
+    void setTimestamping(bool state);
+    bool getTimestamping();
+    void setTimestampFormat(const QString& newFormat);
+    const QString& getTimestampFormat();
+
     QString ident;
     QString realname;
 
@@ -239,6 +242,9 @@ class Preferences : public QObject
     int voiceLedColor;
     int noRightsLedColor;
     bool useNotify;
+
+    bool timestamping;
+    QString timestampFormat;
 
     QStringList notifyList;
     QString commandChar;

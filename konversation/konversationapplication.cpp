@@ -156,17 +156,20 @@ void KonversationApplication::readOptions()
   // Fonts
   preferences.setTextFontRaw(config->readEntry("TextFont",preferences.getTextFont().rawName()));
   preferences.setListFontRaw(config->readEntry("ListFont",preferences.getListFont().rawName()));
+  preferences.setTimestamping(config->readBoolEntry("Timestamping",preferences.getTimestamping()));
+  preferences.setTimestampFormat(config->readEntry("TimestampFormat",preferences.getTimestampFormat()));
 
   // Colors
   config->setGroup("Message Text Colors");
 
-  preferences.setActionMessageColor(config->readEntry("ActionMessage", preferences.defaultActionMessageColor));
-  preferences.setBacklogMessageColor(config->readEntry("BacklogMessage", preferences.defaultBacklogMessageColor));
-  preferences.setChannelMessageColor(config->readEntry("ChannelMessage", preferences.defaultChannelMessageColor));
-  preferences.setCommandMessageColor(config->readEntry("CommandMessage", preferences.defaultCommandMessageColor));
-  preferences.setLinkMessageColor(config->readEntry("LinkMessage", preferences.defaultLinkMessageColor));
-  preferences.setQueryMessageColor(config->readEntry("QueryMessage", preferences.defaultQueryMessageColor));
-  preferences.setServerMessageColor(config->readEntry("ServerMessage", preferences.defaultServerMessageColor));
+  preferences.setActionMessageColor(config->readEntry("ActionMessage", preferences.getActionMessageColor()));
+  preferences.setBacklogMessageColor(config->readEntry("BacklogMessage", preferences.getBacklogMessageColor()));
+  preferences.setChannelMessageColor(config->readEntry("ChannelMessage", preferences.getChannelMessageColor()));
+  preferences.setCommandMessageColor(config->readEntry("CommandMessage", preferences.getCommandMessageColor()));
+  preferences.setLinkMessageColor(config->readEntry("LinkMessage", preferences.getLinkMessageColor()));
+  preferences.setQueryMessageColor(config->readEntry("QueryMessage", preferences.getQueryMessageColor()));
+  preferences.setServerMessageColor(config->readEntry("ServerMessage", preferences.getServerMessageColor()));
+  preferences.setTimeColor(config->readEntry("Time", preferences.getTimeColor()));
 
   // Led Colors
   config->setGroup("Led Colors");
@@ -314,6 +317,8 @@ void KonversationApplication::saveOptions()
   config->setGroup("Appearance");
   config->writeEntry("TextFont",preferences.getTextFont().rawName());
   config->writeEntry("ListFont",preferences.getListFont().rawName());
+  config->writeEntry("Timestamping",preferences.getTimestamping());
+  config->writeEntry("TimestampFormat",preferences.getTimestampFormat());
 
   config->setGroup("Message Text Colors");
 
@@ -324,6 +329,7 @@ void KonversationApplication::saveOptions()
   config->writeEntry("LinkMessage", preferences.getLinkMessageColor());
   config->writeEntry("QueryMessage", preferences.getQueryMessageColor());
   config->writeEntry("ServerMessage", preferences.getServerMessageColor());
+  config->writeEntry("Time", preferences.getTimeColor());
 
   config->setGroup("Led Colors");
   config->writeEntry("OperatorColor", preferences.getOpLedColor());

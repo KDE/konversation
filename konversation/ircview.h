@@ -54,7 +54,7 @@ class IRCView : public KTextBrowser
 
   protected:
     QString filter(const QString& line,const QString& who=NULL,bool doHilight=true);
-    void doAppend(QString line);
+    void doAppend(QString line,bool suppressTimestamps=false);
     void replaceDecoration(QString& line,char decoration,char replacement);
 
     void showEvent(QShowEvent* event);
