@@ -82,7 +82,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   channelFilter=new QCheckBox(i18n("&Channel"),targetBox,"filter_target_channel_check");
   topicFilter=new QCheckBox(i18n("&Topic"),targetBox,"filter_target_topic_check");
   regexpCheck=new QCheckBox(i18n("&Regular expression"),targetBox,"regexp_check");
-  QPushButton* applyFilter=new QPushButton(i18n("Appl&y Filter"),targetBox,"apply_filter_button");
+  applyFilter=new QPushButton(i18n("Appl&y Filter"),targetBox,"apply_filter_button");
 
   channelFilter->setChecked(getChannelTarget());
   topicFilter->setChecked(getTopicTarget());
@@ -107,7 +107,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   QHBox* actionBox=new QHBox(this);
   actionBox->setSpacing(spacing());
 
-  QPushButton* refreshListButton=new QPushButton(i18n("Re&fresh List"),actionBox,"refresh_list_button");
+  refreshListButton=new QPushButton(i18n("Re&fresh List"),actionBox,"refresh_list_button");
   QPushButton* saveListButton=new QPushButton(i18n("&Save List..."),actionBox,"save_list_button");
   QPushButton* joinChannelButton=new QPushButton(i18n("&Join Channel"),actionBox,"join_channel_button");
 
@@ -164,8 +164,8 @@ void ChannelListPanel::refreshList()
 
   updateUsersChannels();
 
-  // update list view every 0.5 seconds
-  updateTimer.start(500);
+  applyFilter->setEnabled(false);
+  refreshListButton->setEnabled(false);
 
   emit refreshChannelList();
 }
@@ -253,6 +253,11 @@ void ChannelListPanel::addToChannelList(const QString& channel,int users,const Q
   // set internal numbers of channels and users, display will be updated by a timer
   setNumChannels(getNumChannels()+1);
   setNumUsers(getNumUsers()+users);
+  
+  if (!updateTimer.isActive())
+  {
+    updateTimer.start(500);
+  }
 }
 
 void ChannelListPanel::updateDisplay()
@@ -273,14 +278,13 @@ void ChannelListPanel::updateDisplay()
       QString users=channelLine.section(' ',1,1);
       QString topic=channelLine.section(' ',2);
       // add channel line to list view
-      ChannelListViewItem* item=new ChannelListViewItem(channelListView,channel,users,topic);
-      applyFilterToItem(item);
-      // if it's the last one of this batch, update the widget
       if(index==pendingChannels.count()-1)
       {
          channelListView->setUpdatesEnabled(true);
-         channelListView->update();
       }
+      ChannelListViewItem* item=new ChannelListViewItem(channelListView,channel,users,topic);
+      applyFilterToItem(item);
+      // if it's the last one of this batch, update the widget
     }
     // clear list of pending inserts
     pendingChannels.clear();
@@ -290,6 +294,8 @@ void ChannelListPanel::updateDisplay()
   else
   {
     updateTimer.stop();
+    applyFilter->setEnabled(true);
+    refreshListButton->setEnabled(true);
   }
 }
 

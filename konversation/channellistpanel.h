@@ -116,6 +116,9 @@ class ChannelListPanel : public ChatWindow
     QCheckBox* topicFilter;
     QCheckBox* regexpCheck;
 
+    QPushButton* applyFilter;
+    QPushButton* refreshListButton;
+    
     KListView* channelListView;
 
     QString filterText;
