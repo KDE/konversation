@@ -167,16 +167,20 @@ QString ChannelNick::tooltip() {
     dirty=true;
     isimage=true;
   }
-  
+  tooltip << "<b>" << (isimage?"":"<center>");
   if(!addressee.formattedName().isEmpty()) {
-    tooltip << "<b>" << (isimage?"":"<center>") << addressee.formattedName() << (isimage?"":"</center>") << "</b>";
+    tooltip << addressee.formattedName();
+    dirty = true;
+  } else if(!nickInfo->getRealName().isEmpty() && nickInfo->getRealName().lower() != nickInfo->getNickname().lower()) {
+    tooltip << nickInfo->getRealName();
     dirty = true;
   }
   else {
-    tooltip << "<b>" << (isimage?"":"<center>") << getNickname() << (isimage?"":"</center>") << "</b>";
+    tooltip << getNickname();
     //Don't set dirty if all we have is their nickname
   }
-
+  tooltip << (isimage?"":"</center>") << "</b>";
+  
 
   
   tooltip << "</td></tr>";
