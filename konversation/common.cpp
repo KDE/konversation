@@ -40,8 +40,8 @@ QString tagURLs(const QString& text, const QString& fromNick)
   QString linkColor = KonversationApplication::preferences.getColor("LinkMessage");
   int pos = 0;
 
-  QRegExp channelPattern("^#([a-z]|[0-9])+$|"
-			 "\\s#([a-z]|[0-9])+"
+  QRegExp channelPattern("^#(\\S)+$|"
+			 "\\s#(\\S)+"
 			 );
 
   channelPattern.setCaseSensitive(false);
