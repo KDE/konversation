@@ -86,48 +86,48 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
           if(keyEvent->text()!="") setCompletionMode('\0');
       }
     }
-    /* To prevent compiler warnings about unhandled case values */
+    // To prevent compiler warnings about unhandled case values
     default:
     {
     }
   }
-  /* reset completion mode */
+  // reset completion mode
   return QLineEdit::eventFilter(object,event);
 }
 
 void IRCInput::addHistory(const QString& line)
 {
-  /* Only add line if it's not the same as the last was */
+  // Only add line if it's not the same as the last was
   if(historyList[1]!=line)
   {
-    /* Replace empty first entry with line */
+    // Replace empty first entry with line
     historyList[0]=line;
-    /* Add new empty entry to history */
+    // Add new empty entry to history
     historyList.prepend("");
-    /* Remove oldest line in history, if the list grows beyond MAXHISTORY */
+    // Remove oldest line in history, if the list grows beyond MAXHISTORY
     if(historyList.count()>MAXHISTORY) historyList.remove(historyList.last());
   }
-  /* Reset history counter */
+  // Reset history counter
   lineNum=0;
 }
 
 void IRCInput::getHistory(bool up)
 {
-  /* Did the user press cursor up? */
+  // Did the user press cursor up?
   if(up)
   {
-    /* increment the line counter */
+    // increment the line counter
     lineNum++;
-    /* if we are past the end of the list, go to the last entry */
+    // if we are past the end of the list, go to the last entry
     if(lineNum==historyList.count()) lineNum--;
   }
-  /* no, it was cursor down */
+  // no, it was cursor down
   else
   {
-    /* If we aren't at the top of the list, decrement the line counter */
+    // If we aren't at the top of the list, decrement the line counter
     if(lineNum!=0) lineNum--;
   }
-  /* replace the text in the input field with history */
+  // replace the text in the input field with history
   setText(historyList[lineNum]);
 }
 

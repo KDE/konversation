@@ -19,6 +19,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kdialog.h>
+#include <kaccel.h>
 
 #include "serverwindow.h"
 #include "konversationapplication.h"
@@ -53,11 +54,16 @@ ServerWindow::ServerWindow(Server* newServer) : KMainWindow()
 /*  KAction* open_colors_action=       */ new KAction(i18n("Configure Colors"), 0, 0, this, SLOT(openColorConfiguration()), actionCollection(), "open_colors_window");
   setCentralWidget(windowContainer);
 
-  /* Initialize KMainWindow->statusBar() */
+  // Keyboard accelerators to navigate through the different pages
+  KAccel* accelerator=accel();
+  accelerator->insert("Next Tab",i18n("Next Tab"),"Jump to next tab",KShortcut("Alt+Right"),this,SLOT(nextTab()));
+  accelerator->insert("Previous Tab",i18n("Previous Tab"),"Jump to previous tab",KShortcut("Alt+Left"),this,SLOT(previousTab()));
+
+  // Initialize KMainWindow->statusBar()
   statusBar();
   statusBar()->insertItem(i18n("Ready."),StatusText,1);
   statusBar()->insertItem("lagometer",LagOMeter,0,true);
-  /* Show "Lag unknown" */
+  // Show "Lag unknown"
   resetLag();
   statusBar()->setItemAlignment(StatusText,QLabel::AlignLeft);
 
@@ -119,17 +125,18 @@ Server* ServerWindow::getServer()
 void ServerWindow::appendToStatus(const QString& type,const QString& message)
 {
   statusView->appendServerMessage(type,message);
-  /* Show activity indicator */
+  // Show activity indicator
   newText(statusPane);
 }
 
 void ServerWindow::appendToFrontmost(const QString& type,const QString& message)
 {
-  /* FIXME: Make Status Pane a Chat Window to get rid of exceptions */
+  // FIXME: Make Status Pane a Chat Window to get rid of exceptions
+  // TODO: Make it an option to direct all status stuff intu the status window
   if(frontView==0)
   {
     statusView->appendServerMessage(type,message);
-    /* Show activity indicator */
+    // Show activity indicator
     newText(statusPane);
   }
   else
@@ -157,9 +164,9 @@ void ServerWindow::sendStatusText(QString line)
 
 void ServerWindow::addView(QWidget* pane,int color,const QString& label)
 {
-  /* TODO: Make sure to add DCC status tab at the end of the list and all others */
-  /* before the DCC tab. Maybe we should also make sure to order Channels */
-  /* Queries and DCC chats in groups */
+  // TODO: Make sure to add DCC status tab at the end of the list and all others
+  // before the DCC tab. Maybe we should also make sure to order Channels
+  // Queries and DCC chats in groups
   windowContainer->addTab(pane,label,color,true);
   // TODO: Check, if user was typing in old input line
   if(KonversationApplication::preferences.getBringToFront())
@@ -174,6 +181,22 @@ void ServerWindow::addView(QWidget* pane,int color,const QString& label)
 void ServerWindow::showView(QWidget* pane)
 {
   windowContainer->showPage(pane);
+}
+
+void ServerWindow::nextTab()
+{
+  kdDebug() << "ServerWindow::nextTab()" << endl;
+
+  int page=windowContainer->currentPageIndex()+1;
+  if(page<windowContainer->count()) windowContainer->setCurrentPage(page);
+}
+
+void ServerWindow::previousTab()
+{
+  kdDebug() << "ServerWindow::previousTab()" << endl;
+
+  int page=windowContainer->currentPageIndex()-1;
+  if(page!=-1) windowContainer->setCurrentPage(page);
 }
 
 void ServerWindow::addDccPanel()
@@ -245,6 +268,8 @@ void ServerWindow::addStatusView()
 
   connect(statusInput,SIGNAL (returnPressed()),this,SLOT(statusTextEntered()) );
   connect(statusInput,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
+  connect(statusInput,SIGNAL (nextTab()),this,SLOT(nextTab()) );
+  connect(statusInput,SIGNAL (previousTab()),this,SLOT(previousTab()) );
 
   connect(statusView,SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
   connect(statusView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
@@ -256,15 +281,15 @@ void ServerWindow::logText(const QString& text)
 {
   QDir logPath=QDir::home();
 
-  /* Try to "cd" into the logfile path */
+  // Try to "cd" into the logfile path
   if(!logPath.cd(KonversationApplication::preferences.getLogPath(),true))
   {
-    /* Try to create the logfile path and "cd" into it again */
+    // Try to create the logfile path and "cd" into it again
     logPath.mkdir(KonversationApplication::preferences.getLogPath(),true);
     logPath.cd(KonversationApplication::preferences.getLogPath(),true);
   }
 
-  /* add the logfile name to the path */
+  // add the logfile name to the path
   logfile.setName(logPath.path()+"/konversation.log");
 
   if(logfile.open(IO_WriteOnly | IO_Append))
@@ -291,7 +316,7 @@ void ServerWindow::setNickname(const QString& newNickname)
 
 void ServerWindow::newText(QWidget* view)
 {
-  /* FIXME: Should be compared to ChatWindow* but the status Window currently is something else */
+  // FIXME: Should be compared to ChatWindow* but the status Window currently is something else
   if(view!=(QWidget*) windowContainer->currentPage())
   {
     windowContainer->changeTabState(view,true);
@@ -303,7 +328,7 @@ void ServerWindow::changedView(QWidget* view)
   frontView=0;
   if(view!=statusPane)
   {
-    /* FIXME: Make status window a Chat Window to get rid of those exceptions */
+    // FIXME: Make status window a Chat Window to get rid of those exceptions
     ChatWindow* pane=(ChatWindow*) view;
     if(pane->getType()==ChatWindow::Channel || pane->getType()==ChatWindow::Query) frontView=pane;
   }
@@ -313,14 +338,14 @@ void ServerWindow::changedView(QWidget* view)
 
 void ServerWindow::readOptions()
 {
-  /* Tool bar settings */
+  // Tool bar settings
   showToolBarAction->setChecked(KonversationApplication::preferences.serverWindowToolBarStatus);
   toolBar("mainToolBar")->setBarPos((KToolBar::BarPosition) KonversationApplication::preferences.serverWindowToolBarPos);
   toolBar("mainToolBar")->setIconText((KToolBar::IconText) KonversationApplication::preferences.serverWindowToolBarIconText);
   toolBar("mainToolBar")->setIconSize(KonversationApplication::preferences.serverWindowToolBarIconSize);
   showToolbar();
 
-  /* Status bar settings */
+  // Status bar settings
   showStatusBarAction->setChecked(KonversationApplication::preferences.serverWindowStatusBarStatus);
   showStatusbar();
 
@@ -330,7 +355,8 @@ void ServerWindow::readOptions()
     resize(size);
   }
 }
-/* Will not actually save the options but write them into the prefs structure */
+
+// Will not actually save the options but write them into the prefs structure
 void ServerWindow::saveOptions()
 {
   KonversationApplication::preferences.setServerWindowSize(size());
@@ -460,7 +486,7 @@ void ServerWindow::applyNotify(QStringList newList,bool use,int delay)
   KonversationApplication::preferences.setNotifyDelay(delay);
   KonversationApplication::preferences.setUseNotify(use);
 
-  /* Restart notify timer if desired */
+  // Restart notify timer if desired
   if(use) server->startNotifyTimer();
 
   emit prefsChanged();

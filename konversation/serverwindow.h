@@ -89,6 +89,8 @@ class ServerWindow : public KMainWindow
   protected slots:
     void statusTextEntered();
     void addStatusView();
+    void nextTab();
+    void previousTab();
     void addDccPanel();
     void closeDccPanel();      // remove dcc panel from view, but does not delete it
     void deleteDccPanel();     // deletes dcc panel from memory
