@@ -91,7 +91,7 @@ if($amarok)
     if(!is_empty($title))
     {
 	my $string=pretty_print($title,$artist,$album);
-	exec("dcop $port Konversation say $server \"$target\" \"$string\"");
+	exec 'dcop', $port, 'Konversation', 'say', $server, $target, $string;
     }
     else
     {
@@ -106,7 +106,7 @@ if($juk)
 
     if(!is_empty($string))
     {
-	exec("dcop $port Konversation say $server \"$target\" \"/me is playing $string\"");
+        exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing $string";
     }
     else
     {
@@ -121,7 +121,7 @@ if($kaffeine)
     
     if(!is_empty($string))
     {
-	exec("dcop $port Konversation say $server \"$target\" \"/me is playing $string\"");
+	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing $string";
     }
     else
     {
@@ -136,7 +136,7 @@ if($noatun)
 
     if(!is_empty($string))
     {
-        exec("dcop $port Konversation say $server \"$target\" \"/me is playing $string\"");
+	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing $string";
     }
     else
     {
@@ -146,10 +146,10 @@ if($noatun)
 
 if(!$amarok && !$juk && !$noatun)
 {
-    exec("dcop $port Konversation error \"No supported media player is running\"");
+	exec 'dcop', $port, 'Konversation', 'error', 'No supported media player is running';
 }
 
 if($error)
 {
-    exec("dcop $port Konversation error \"Nothing is playing in $error\"");
+	exec 'dcop', $port, 'Konversation', 'error', "Nothing is playing in $error";
 }

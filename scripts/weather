@@ -10,7 +10,7 @@ $OPTION = shift;
 @stations = `dcop KWeatherService WeatherService listStations`;
 
 if( ! @stations ) {
-  exec ("dcop $PORT Konversation error \"KWeather is not installed or not running!\" ");
+  exec 'dcop', $PORT, 'Konversation', 'error', 'KWeather is not installed or not running!';
 } 
 
 if( $OPTION && $stations[$OPTION-1] ) {
@@ -58,6 +58,6 @@ foreach $station (@stations) {
   $MESSAGE = "Current Weather for %B$city%B : Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
   }
   
-  system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$MESSAGE\" ");
+  system 'dcop', $PORT, 'Konversation', 'say', $SERVER, $TARGET, $MESSAGE;
   
 }

@@ -9,7 +9,7 @@ $TARGET= shift;
 my $i;
 
 if( $ARGV[0] eq "yes" ){
-    exec ("dcop $PORT Konversation error \"Requested command is not executed!\" ");
+    exec 'dcop', $PORT, 'Konversation', 'error', 'Requested command is not executed!';
 }
 
 $ARG_MESSAGE = `@ARGV`;
@@ -18,9 +18,9 @@ foreach $entry (split(/\n/, $ARG_MESSAGE)) {
     chomp $entry;
     $i=1;
     $entry =~ s/^\//\/\//;
-    system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$entry\" ");
+    system 'dcop', $PORT, 'Konversation', 'say', $SERVER, $TARGET, $entry;
 }
 
 unless($i) {
-    exec("dcop $PORT Konversation error \"Command @ARGV doesn't exist\!\"");
+    exec 'dcop', $PORT, 'Konversation', 'error', 'Command @ARGV doesn\'t exist!';
 }

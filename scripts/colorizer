@@ -12,7 +12,7 @@ my $TARGET= shift;
 my $i = 0;
 
 if(!@ARGV){
-    exec ("dcop $PORT Konversation error \"Colorizer script needs a message argument!\" ");
+    exec 'dcop', $port, 'Konversation', 'error', 'Colorizer script needs a message argument!';
 }
 
 my $input = join " ", @ARGV;
@@ -26,5 +26,5 @@ my @chars = split //, $arguments;
 @chars = map { "%C" . ((($i++)%15)+1) . $_ } @chars;
 $arguments = join "", @chars;
 
-system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$command$arguments\" ");
+system 'dcop', $PORT, 'Konversation', 'say', $SERVER, $TARGET, $command . $arguments;
 
