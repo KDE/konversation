@@ -750,6 +750,8 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
   statusView->setIdentity(server->getIdentity());
   statusView->setName(server->getServerName());
 
+  // SSL icon stuff
+  QObject::connect(server,SIGNAL(sslInitFailure()),this,SLOT(removeSSLIcon()));
   updateSSLInfo(server);
 
   // ... then put it into the tab widget, otherwise we'd have a race with server member
@@ -1133,7 +1135,6 @@ void KonversationMainWindow::updateSSLInfo(Server* server)
     {
       QObject::disconnect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
       QObject::connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
-      QObject::connect(server,SIGNAL(sslInitFailure()),this,SLOT(removeSSLIcon()));
       QToolTip::add(m_sslLabel,server->getSSLInfo());
       m_sslLabel->show();
     }
