@@ -22,13 +22,16 @@
 #include <ksock.h>
 
 #include <qdatetime.h>
+#include <qstringlist.h>
 
 /*
   @author Dario Abatianni
 */
 
-class DccTransfer : public KListViewItem
+class DccTransfer : public QObject, public KListViewItem
 {
+  Q_OBJECT
+
   public:
     enum DccType
     {
@@ -40,7 +43,7 @@ class DccTransfer : public KListViewItem
     {
       Queued=0,    /* Newly added DCC */
       Connecting,  /* DCC-GET, trying to connect to sender */
-      Waiting,     /* DCC-SEND, waiting for receiver to connect to us */
+      Offering,    /* DCC-SEND, waiting for receiver to connect to us */
       Running,     /* Transferring data */
       Stalled,     /* Transfer stalls */
       Failed,      /* Transfer failed */
@@ -50,6 +53,10 @@ class DccTransfer : public KListViewItem
     DccTransfer(KListView* parent,DccType type,QString partner,QString name);
     ~DccTransfer();
 
+  protected slots:
+    void updateCPS();
+    void increase();
+
   protected:
     void setType(DccType type);
     DccType getType();
@@ -57,15 +64,25 @@ class DccTransfer : public KListViewItem
     void setStatus(DccStatus status);
     DccStatus getStatus();
 
+    void setSize(unsigned long size);
+    unsigned long getSize();
+
+    void setPosition(unsigned long pos);
+    unsigned long getPosition();
+
+    void setPartner(QString partner);
+    void setFile(QString file);
+
     DccType dccType;
     DccStatus dccStatus;
+    QStringList statusText;
+    QString dccPartner;
+    QString dccFile;
 
-    QString fileName;
+    unsigned long fileSize;
+    unsigned long transferred;
 
-    long fileSize;
-    long transferred;
-
-    KSocket* dccPartner;
+    KSocket* dccSocket;
     int port;
 
     QDateTime transferStarted;

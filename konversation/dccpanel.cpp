@@ -21,6 +21,7 @@
 #include <klocale.h>
 
 #include "dccpanel.h"
+#include "dcctransfer.h"
 
 DccPanel::DccPanel(QWidget* parent) :
           ChatWindow(parent)
@@ -34,13 +35,16 @@ DccPanel::DccPanel(QWidget* parent) :
 
   dccListView->addColumn(i18n("Partner"));
   dccListView->addColumn(i18n("File"));
-  dccListView->addColumn(i18n("Position"));
   dccListView->addColumn(i18n("Size"));
+  dccListView->addColumn(i18n("Position"));
   dccListView->addColumn(i18n("% done"));
   dccListView->addColumn(i18n("CPS"));
   dccListView->addColumn(i18n("Status"));
 
   dccListView->setDragEnabled(true);
+  dccListView->setAcceptDrops(true);
+  dccListView->setSorting(-1,false);
+  dccListView->setAllColumnsShowFocus(true);
 
   QHBox* buttonsBox=new QHBox(this);
   buttonsBox->setSpacing(spacing());
@@ -50,6 +54,9 @@ DccPanel::DccPanel(QWidget* parent) :
   new QPushButton(i18n("Remove"),buttonsBox,"remove_dcc");
   new QPushButton(i18n("Open"),buttonsBox,"open_dcc_file");
   new QPushButton(i18n("Information"),buttonsBox,"info_on_dcc_file");
+
+  new DccTransfer(dccListView,DccTransfer::Get,"GetPartner","get/file/name.html");
+  new DccTransfer(dccListView,DccTransfer::Send,"SendPartner","send/file/name.html");
 }
 
 DccPanel::~DccPanel()
