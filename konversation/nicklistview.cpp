@@ -108,8 +108,8 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
   setShowToolTips(false);
   m_tooltip = new Konversation::KonversationNickListViewToolTip(viewport(), this);
 
-  m_resortTimer = new QTimer( this);
-  connect(m_resortTimer, SIGNAL( timeout()), SLOT(resort()));
+  m_resortTimer = new QTimer(this);
+  connect(m_resortTimer, SIGNAL(timeout()), SLOT(resort()));
 }
 
 NickListView::~NickListView()
