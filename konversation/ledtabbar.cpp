@@ -93,7 +93,7 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
     popupEncoding->insertSeparator();
     popupEncoding->insertItem(i18n("Default"),POPUPID_ENCODING_OFFSET+0);
     // }
-    
+
     popup->insertTitle(i18n("Tab"),Label);
     popup->insertItem(i18n("Move Left"),MoveLeft);
     popup->insertItem(i18n("Move Right"),MoveRight);
@@ -104,11 +104,15 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
     popup->insertSeparator();
     popup->insertItem(SmallIcon("tab_remove"),i18n("Close Tab"),CloseTab);
   }
+
   else kdWarning() << "LedTabBar::LedTabBar(): Could not create popup!" << endl;
+
+  close_pixmap = new QPixmap(remove_xpm);
 }
 
 LedTabBar::~LedTabBar()
 {
+    delete close_pixmap;
 }
 
 LedTab* LedTabBar::tab(QWidget* widget)
@@ -227,10 +231,10 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
       if ( mode == QIconSet::Normal && has_focus )
           mode = QIconSet::Active;
       QPixmap pixmap = t->iconSet()->pixmap( QIconSet::Small, mode );
-      QPixmap close_pixmap(remove_xpm);
+
       int pixw = pixmap.width();
       int pixh = pixmap.height();
-      int close_pixh = close_pixmap.height();
+      int close_pixh = close_pixmap->height();
 
       r.setLeft( r.left() + pixw);
       r.setRight( r.right() + 2);
@@ -252,7 +256,7 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
           // Draw close button on the left side
           p->drawPixmap( br.left(),
                          br.center().y() - close_pixh/2,
-                         close_pixmap );
+                         *close_pixmap );
         }
         else
         {
@@ -267,7 +271,7 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
           // Draw close button on the right side
           p->drawPixmap( br.right() - 7,
                          br.center().y() - close_pixh/2,
-                         close_pixmap );
+                         *close_pixmap );
         }
       }
       else

@@ -66,7 +66,9 @@ class LedTabBar : public QTabBar
     // these two come from the original QT source
     virtual void paint( QPainter *, QTab *, bool ) const; // ### not const
     virtual void paintLabel( QPainter*, const QRect&, QTab*, bool ) const;
-
+    
+    QPixmap* close_pixmap;
+    
     void contextMenuEvent(QContextMenuEvent* ce);
     void mouseReleaseEvent(QMouseEvent* e);
 
