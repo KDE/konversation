@@ -597,7 +597,8 @@ QStringList Channel::getSelectedNicksList()
 void Channel::modeButtonClicked(int id,bool on)
 {
   char mode[]={'t','n','s','i','p','m','k','l'};
-  QString command("MODE "+getName()+" ");
+  QString command("MODE %1 %2%3 %4");
+  QString args;
 
   if(mode[id]=='k')
   {
@@ -609,12 +610,11 @@ void Channel::modeButtonClicked(int id,bool on)
 
       if(result==KPasswordDialog::Accepted && !key.isEmpty()) setKey(key);
     }
-    command+=((on) ? "+" : "-")+QString("k "+getKey());
+    args=getKey();
     if(!on) setKey(QString::null);
   }
-  else command+=((on) ? "+" : "-")+mode[id];
 
-  server->queue(command);
+  server->queue(command.arg(getName()).arg((on) ? "+" : "-").arg(mode[id]).arg(args));
 }
 
 void Channel::quickButtonClicked(const QString &buttonText)
