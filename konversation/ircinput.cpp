@@ -151,7 +151,11 @@ void IRCInput::paste()
   QClipboard *cb=KApplication::kApplication()->clipboard();
 
   // Copy text from the clipboard (paste)
+#if QT_VERSION >= 0x030100
   QString text=cb->text(QClipboard::Selection);
+#else
+  QString text=cb->text();
+#endif
   // is there any text in the clipboard?
   if(!text.isEmpty())
   {
