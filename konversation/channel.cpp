@@ -169,8 +169,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(modeL,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
 
   limit=new KLineEdit(modeBox);
-  QWhatsThis::add(limit, i18n("<qt>This is the channel user limit - the maximum number of users that can be in the channel at a time.  If you are an operator, you can set this by putting the channel in mode <T>opic (button to right) and entering the number you want to be the maximum number that can join.</qt>"));
+  QWhatsThis::add(limit, i18n("<qt>This is the channel user limit - the maximum number of users that can be in the channel at a time.  If you are an operator, you can set this.  The channel mode <b>T</b>opic (button to left) will automatically be set if set this.</qt>"));
   connect(limit,SIGNAL (returnPressed()),this,SLOT (channelLimitChanged()) );
+  connect(limit,SIGNAL (lostFocus()), this, SLOT(channelLimitChanged()) );
   limit->installEventFilter(this);
 
   topicLayout->addWidget(modeBox, 0, 2);
