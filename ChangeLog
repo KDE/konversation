@@ -5,3 +5,4 @@ Changes from 0.7 to 0.8:
 - Added /smsg for "silent messages"
 - Text and Nicklist-Fonts can now be selected via GUI
 - Changed server ping response again to make dalnet ircd happy
+- Fixed nicklist sorting in channels
