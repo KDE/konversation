@@ -86,7 +86,7 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
   connectButton=new QPushButton(i18n("Connect"),buttonBox);
   connectButton->setDisabled(true);
   newServerButton=new QPushButton(i18n("New Server..."),buttonBox);
-  editServerButton=new QPushButton(i18n("Edit"),buttonBox);
+  editServerButton=new QPushButton(i18n("Edit..."),buttonBox);
   editServerButton->setDisabled(true);
   removeServerButton=new QPushButton(i18n("Remove"),buttonBox);
   removeServerButton->setDisabled(true);

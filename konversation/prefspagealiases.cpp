@@ -56,7 +56,7 @@ PrefsPageAliases::PrefsPageAliases(QFrame* newParent,Preferences* newPreferences
   // Set up the buttons to the right of the list
   QGrid* buttonBox=new QGrid(3,QGrid::Vertical,parentFrame);
   buttonBox->setSpacing(spacingHint());
-  QPushButton* newButton=new QPushButton(i18n("New"),buttonBox);
+  QPushButton* newButton=new QPushButton(i18n("New..."),buttonBox);
   QPushButton* removeButton=new QPushButton(i18n("Remove"),buttonBox);
 
   aliasesLayout->addWidget(aliasesListView);
@@ -74,7 +74,7 @@ PrefsPageAliases::~PrefsPageAliases()
 void PrefsPageAliases::newAlias()
 {
   bool ok=false;
-  QString newPattern=KLineEditDlg::getText(i18n("Add alias"),i18n("New"),&ok,parentFrame);
+  QString newPattern=KLineEditDlg::getText(i18n("Add alias:"),i18n("New"),&ok,parentFrame);
   if(ok)
   {
     KListViewItem* newItem=new KListViewItem(aliasesListView,newPattern);
