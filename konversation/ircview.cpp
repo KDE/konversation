@@ -587,9 +587,9 @@ void IRCView::appendAction(const QString& nick,const QString& message)
   if(KonversationApplication::preferences.getUseColoredNicks()) {
     
     if(nick != m_server->getNickname())
-      QString color = m_server->obtainNickInfo(nick)->getNickColor();
+      color = m_server->obtainNickInfo(nick)->getNickColor();
     else
-      QString color = KonversationApplication::preferences.getNickColorList()[8];
+      color = KonversationApplication::preferences.getNickColorList()[8];
     
     nickLine = "<a href=\"#" + nick + "\"><font color=\"" + color + "\">"+nickLine+"</font></a>";
   }
