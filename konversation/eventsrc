@@ -397,6 +397,7 @@ default_presentation=0
 
 [kick]
 Name=Kick
+Name[cy]=Lluchio
 Comment=Someone kicked you out of a channel
 Comment[pt]=Alguém o expulsou de um canal
 Comment[pt_BR]=Alguém o expulsou de um canal
