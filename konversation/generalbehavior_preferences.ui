@@ -284,7 +284,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>autojoinOnInviteCheck</cstring>
             </property>
             <property name="text">
-                <string>Automaticaly &amp;join channel on invite</string>
+                <string>Automatically &amp;join channel on invite</string>
             </property>
         </widget>
     </grid>

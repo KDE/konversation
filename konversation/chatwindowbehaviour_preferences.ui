@@ -35,10 +35,10 @@
                         <cstring>kcfg_DisableExpansions</cstring>
                     </property>
                     <property name="text">
-                        <string>Disable variable (eg %C, %B, %G...) e&amp;xpansion</string>
+                        <string>Disable variable (e.g. %C, %B, %G...) e&amp;xpansion</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>Do not expand variables when sending text to the server. A variable starts with '%'. Eg %B will expand to the characters needed to make a text bold.</string>
+                        <string>Do not expand variables when sending text to the server. A variable starts with '%'; for example, %B will expand to the characters needed to make a text bold.</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="3">
@@ -145,7 +145,7 @@
                         <cstring>textLabel2</cstring>
                     </property>
                     <property name="text">
-                        <string>Max amount of users in a channel:</string>
+                        <string>Max. number of users in a channel:</string>
                     </property>
                     <property name="buddy" stdset="0">
                         <cstring>kcfg_AutoWhoLimit</cstring>
