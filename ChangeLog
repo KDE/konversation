@@ -2,7 +2,6 @@ Changes from 0.15 to 0.16
 - Dropping URLs onto nick on nicklist or onto query initiates DCC send
 - You can now do SSL connections from Quick Connect Dialog
 - Nicklist Icon Themes
-- Fix unicode detection for strings containing color markup
 - New topic widget
 - Added a channel dialog
 - Made the nickname box optional
@@ -10,15 +9,19 @@ Changes from 0.15 to 0.16
 - Calculate DCC CPS more accurately
 - Colored nicks support
 - Added dcop functions to set away and added alt+a shortcut to toggle away
-- Clicking nicks in channel text will now open a query and similarly, clicking #foo
-will now join channel #foo
+- Clicking nicks in channel text will now open a query and similarly, 
+  clicking #foo will now join channel #foo
 - Nicks in channel view now have a context menu as in nicklistview
 - /cycle command
 - Tab at begining of line inserts last completed nick
-- A media script added to replace amarok,juk,noatun,kaffeine scripts. Use /media instead
-of using /amarok,/juk etc.
+- A media script added to replace amarok,juk,noatun,kaffeine scripts. 
+  Use /media instead of using /amarok,/juk etc.
 - Links can now be dragged & dropped from channels
 - Midde clicking urls now opens them in new tab in konqueror ( if konqueror is used for links )
+- Improved unicode detection
+- Fix unicode detection for strings containing color markup
+- /omsg,/onotice support
+- Added an option to use an IPv4 interface for IPv6 dcc sends
 
 Changes from 0.14 to 0.15
 - Ported socket code to KNetwork. Weird connection problems should be gone now
