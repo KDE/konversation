@@ -623,7 +623,8 @@ void Channel::completeNick()
         KonversationApplication::preferences.getNickCompletionMode() == 2)
       { // Shell like completion
         QStringList found;
-        foundNick = nicknameList.completeNick(pattern, complete, found);
+        foundNick = nicknameList.completeNick(pattern, complete, found,
+          (KonversationApplication::preferences.getNickCompletionMode() == 2));
 
         if(!complete && !found.isEmpty()) {
           if(KonversationApplication::preferences.getNickCompletionMode() == 1) {
@@ -2041,7 +2042,7 @@ int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item
     static_cast<Nick*>(item2)->getNickname());
 }
 
-QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found)
+QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found, bool skipNonAlfaNum)
 {
   found.clear();
   QString prefix = "^";
@@ -2049,7 +2050,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
   QString prefixCharacter = KonversationApplication::preferences.getPrefixCharacter();
 
 
-  if(pattern.find(QRegExp("^(\\d|\\w)")) != -1) {
+  if((pattern.find(QRegExp("^(\\d|\\w)")) != -1) && skipNonAlfaNum) {
     prefix = "^([^\\d\\w]|[\\_]){0,}";
   }
 
