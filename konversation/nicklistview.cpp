@@ -12,8 +12,7 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <qpopupmenu.h>
-
+#include <kpopupmenu.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <qtooltip.h>
@@ -27,10 +26,10 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
               KListView(parent)
 {
   channel=chan;
-  popup=new QPopupMenu(this,"nicklist_context_menu");
-  modes=new QPopupMenu(this,"nicklist_modes_context_submenu");
-  kickban=new QPopupMenu(this,"nicklist_kick_ban_context_submenu");
-  addressbook= new QPopupMenu(this,"nicklist_addressbook_context_submenu");
+  popup=new KPopupMenu(this,"nicklist_context_menu");
+  modes=new KPopupMenu(this,"nicklist_modes_context_submenu");
+  kickban=new KPopupMenu(this,"nicklist_kick_ban_context_submenu");
+  addressbook= new KPopupMenu(this,"nicklist_addressbook_context_submenu");
 
   if(popup)
   {
@@ -52,7 +51,7 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
     popup->insertItem(i18n("&Ping"),Ping);
     popup->insertSeparator();
     popup->insertItem(i18n("Open Query"),Query);
-    popup->insertItem(SmallIcon("fork"),i18n("Send &File..."),DccSend); //action-fork isn't my ideal icon, but kopete do it..
+    popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),DccSend);
     popup->insertItem(SmallIcon("mail_generic"),i18n("&Send Email..."), SendEmail);
     if(addressbook) {
       popup->insertSeparator();
@@ -152,7 +151,7 @@ void NickListView::insertAssociationSubMenu() {
   if(!any_email_address) {
       popup->setItemEnabled(SendEmail, false);
       popup->setWhatsThis(SendEmail, "Sends an email to this contact using the preferred email address set in the contact's addressbook association.  This is currently disabled because the associated contact does not have any preferred email address set.");
-    } else { 
+    } else {
       popup->setItemEnabled(SendEmail, true);
       popup->setWhatsThis(SendEmail, i18n("Sends an email to this contact using the preferred email address set in the contact's addressbook association"));
     }
