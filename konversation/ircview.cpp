@@ -26,6 +26,7 @@
 #include <qwhatsthis.h>
 #include <qmap.h>
 #include <qcolor.h>
+#include <qfont.h>
 
 #include <dcopref.h>
 #include <dcopclient.h>
@@ -43,6 +44,7 @@
 #include <kshell.h>
 #include <kpopupmenu.h>
 #include <kaction.h>
+#include <kglobalsettings.h>
 
 #include "channel.h"
 #include "konvidebug.h"
@@ -616,7 +618,7 @@ void IRCView::appendServerMessage(const QString& type,const QString& message)
   QString fixed;
   if(KonversationApplication::preferences.getFixedMOTD())
   {
-    if(QString("MOTD")==type) fixed=" face=\"courier\"";
+    if(QString("MOTD")==type) fixed=" face=\"" + KGlobalSettings::fixedFont().family() + "\"";
   }
 
   QString line;
