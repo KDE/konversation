@@ -265,7 +265,7 @@
                         <enum>Sunken</enum>
                     </property>
                     <property name="text">
-                        <string>OSD Font:</string>
+                        <string>OSD font:</string>
                     </property>
                     <property name="buddy" stdset="0">
                         <cstring>kFontRequester1</cstring>
