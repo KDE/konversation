@@ -4,6 +4,7 @@
 
 use warnings;
 use Getopt::Long;
+use CGI qw(:standard);
 
 my $PORT=shift;
 my $SERVER=shift;
@@ -50,16 +51,15 @@ else
     elsif($browser)
     {
 	$query = join(" ",@ARGV);
-	$query =~ s/\&/\%26/g;
+	$query = CGI::escape($query);
 	$url="http://www.google.com/search?q=$query";
 	exec 'kfmclient','openURL',$url;
     }
     elsif($search || !$spellcheck)
     {
 	$search = join(" ",$search,@ARGV);
-	
 	system 'dcop', $PORT, 'Konversation', 'info',  "Searching Google for \x02$search\x02 ...";
-	
+
 	$googleSearch = SOAP::Lite->service("http://api.google.com/GoogleSearch.wsdl"); 
 	$result = $googleSearch->doGoogleSearch($key, $search, 0, 10, "false", "", "false", "", "UTF-8", "UTF-8"); 
 
@@ -83,6 +83,7 @@ else
     elsif($spellcheck)
     {
 	$spellcheck = join(" ",$spellcheck,@ARGV);
+
 	system 'dcop', $PORT, 'Konversation', 'info', "Spellchecking \x02$spellcheck\x02 ...";
 	$googleSearch = SOAP::Lite->service("http://api.google.com/GoogleSearch.wsdl"); 
 	$spell = $googleSearch->doSpellingSuggestion($key, $spellcheck);
