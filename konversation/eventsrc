@@ -370,9 +370,11 @@ default_presentation=0
 
 [query]
 Name=Query
+Name[it]=Conversazione privata
 Name[pt]=Procura
 Name[pt_BR]=Procura
 Comment=Someone started a conversation (query) with you
+Comment[it]=Qualcuno ha avviato una conversazione privata (query) con te
 Comment[pt]=Alguém iniciou uma conversa (procura) consigo
 Comment[pt_BR]=Alguém iniciou uma conversa (procura) consigo
 default_presentation=0
