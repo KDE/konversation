@@ -192,11 +192,14 @@ class Server : public QObject
      *  @return            Pointer to the found or created NickInfo object. 
      */
     NickInfoPtr obtainNickInfo(const QString& nickname);
-    /**
-     * Returns a list of all the NickInfos known to the server.  A nick in this
-     * list may be assumed to be online.  A nick not in this list may or may not be
-     * online.  Caller should not modify the list.
-     * Returns a QMap of KSharedPtrs to NickInfos indexed by lowercase nickname.
+    /** Returns a list of all the NickInfos that are online and known to the server.
+     * Caller should not modify the list.
+     * A nick will be known if:
+     *  - It is in one of the server's channels user has joined.
+     *  - It is on the notify list and is known to be online.
+     *  - The nick initiated a query with the user.
+     *
+     * @return A QMap of KSharedPtrs to NickInfos indexed by lowercase nickname.
      */
     const NickInfoMap* getAllNicks();
     /** Returns the list of members for a channel in the joinedChannels list.
@@ -474,6 +477,8 @@ class Server : public QObject
      * If the nick is in the watch list, and went offline, emits a signal,
      * posts a Notify message, and posts a KNotify.
      * If the nick is in the addressbook, and went offline, informs addressbook of change.
+     * If the nick goes offline, the NickInfo is deleted.
+     *
      * @param nickname     The nickname.  Case sensitive.
      * @return             True if the nick was online.
      */

@@ -1264,12 +1264,6 @@ NickInfoPtr Server::obtainNickInfo(const QString& nickname)
   return nickInfo;
 }
 
-/**
-* Returns a list of all the NickInfos known to the server.  A nick in this
-* list may be assumed to be online.  A nick not in this list may or may not be
-* online.  Caller should not modify the list.
-* Returns a QMap of KSharedPtrs to NickInfos indexed by lowercase nickname.
-*/
 const NickInfoMap* Server::getAllNicks() { return &m_allNicks; }
 
 // Returns the list of members for a channel in the joinedChannels list.
@@ -2177,16 +2171,6 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
   return nickInfo;
 }
 
-/**
-* If not already offline, changes a nick to the offline state,
-* Removes it from all channels on the joined and unjoined lists.
-* If the nick is in the watch list, and went offline, emits a signal,
-* posts a Notify message, and posts a KNotify.
-* If the nick is in the addressbook, and went offline, informs addressbook of change.
-* @param nickname     The nickname.  Case sensitive.
-* @param watchList    List of nicks on the watch list.
-* @return             True if the nick was online.
-*/
 bool Server::setNickOffline(const QString& nickname)
 {
   QString lcNickname = nickname.lower();
