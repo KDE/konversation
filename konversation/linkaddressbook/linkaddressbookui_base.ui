@@ -13,7 +13,7 @@
         </rect>
     </property>
     <property name="caption">
-        <string>Link IRC Nick To Addressbook Contact</string>
+        <string>Link IRC Nick to Addressbook Contact</string>
     </property>
     <property name="sizeGripEnabled">
         <bool>true</bool>
