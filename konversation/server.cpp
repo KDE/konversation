@@ -969,7 +969,8 @@ void Server::incoming()
   if( len <=0 && m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled() )
     return;
 
-  if(len <= 0 ) { // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
+  if( len <= 0 ) // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
+  {
     statusView->appendServerMessage(i18n("Error"),
                                     i18n("There was an error reading the data from the server: %1").
                                     arg(m_socket->errorString()));
@@ -988,14 +989,14 @@ void Server::incoming()
   for( int nextLFposition ; ( nextLFposition = qcsBuffer.find('\n', lastLFposition+1) ) != -1 ; lastLFposition = nextLFposition )
     qcsBufferLines << qcsBuffer.mid(lastLFposition+1, nextLFposition-lastLFposition-1);
 
-  // remember an incompleted line (split by packets)
+  // remember the incomplete line (split by packets)
   inputBufferIncomplete = qcsBuffer.right(qcsBuffer.length()-lastLFposition-1);
 
-  while(!qcsBufferLines.isEmpty())
+  while( !qcsBufferLines.isEmpty() )
   {
     bool isUtf8 = Konversation::isUtf8(qcsBufferLines.front());
 
-    if(isUtf8)
+    if( isUtf8 )
       inputBuffer << QString::fromUtf8(qcsBufferLines.front());
     else
     {
@@ -1004,26 +1005,27 @@ void Server::incoming()
       bool isServerMessage = false;
       QString channelKey;
       QTextCodec* codec = getIdentity()->getCodec();
-      // pre-parse to know which channel the message belongs to
+      
       QStringList lineSplit = QStringList::split(" ",codec->toUnicode(qcsBufferLines.front()));
       
-      if(lineSplit.count() >= 1)
+      if( lineSplit.count() >= 1 )
       {
-        if(lineSplit[0][0] == ':')
+        if( lineSplit[0][0] == ':' )  // does this message have a prefix?
         {
-          if(!lineSplit[0].contains('!'))
+          if( !lineSplit[0].contains('!') )  // is this a server(global) message?
             isServerMessage = true;
           else
             senderNick = lineSplit[0].mid(1, lineSplit[0].find('!')-1);
+          
           lineSplit.pop_front();  // remove prefix
         }
       }
 
       // BEGIN pre-parse to know where the message belongs to
       QString command = lineSplit[0].lower();
-      if(isServerMessage)
+      if( isServerMessage )
       {
-        if(lineSplit.count() >= 3)
+        if( lineSplit.count() >= 3 )
         {
           if( command == "332" )  // RPL_TOPIC
             channelKey = lineSplit[2];
@@ -1031,9 +1033,9 @@ void Server::incoming()
             channelKey = ":server";
         }
       }
-      else
+      else  // NOT a global message
       {
-        if(lineSplit.count() >= 2)
+        if( lineSplit.count() >= 2 )
         {
           // query
           if( ( command == "privmsg" ||
@@ -1058,13 +1060,13 @@ void Server::incoming()
       
       // check setting
       QString channelEncoding;
-      if(!channelKey.isEmpty())
+      if( !channelKey.isEmpty() )
       {
         channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), channelKey);
       }
       // END set channel encoding if specified
 
-      if(!channelEncoding.isEmpty())
+      if( !channelEncoding.isEmpty() )
         codec = Konversation::IRCCharsets::self()->codecForName(channelEncoding);
       
       // if channel encoding is utf-8 and the string is definitely not utf-8
@@ -1078,11 +1080,11 @@ void Server::incoming()
   }
 
   // refresh lock timer if it was still locked
-  if(!sendUnlocked) lockSending();
+  if( !sendUnlocked )
+    lockSending();
 
-  if(!incomingTimer.isActive()) {
+  if( !incomingTimer.isActive() )
     incomingTimer.start(0);
-  }
 }
 
 void Server::queue(const QString& buffer)
