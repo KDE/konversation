@@ -20,6 +20,7 @@
 
 #include <kcolorbutton.h>
 #include <kdebug.h>
+#include <qcheckbox.h>
 
 #include "prefspageirccolorsui.h"
 #include "preferences.h"
@@ -48,6 +49,7 @@ PrefsPageIRCColors::PrefsPageIRCColors(QFrame* newParent, Preferences* newPrefer
   m_widget->m_purpleCBtn->setColor(QColor(colors[13]));
   m_widget->m_grayCBtn->setColor(QColor(colors[14]));
   m_widget->m_lightGrayCBtn->setColor(QColor(colors[15]));
+  m_widget->m_filterColorsCbx->setChecked(preferences->getFilterColors());
 }
 
 void PrefsPageIRCColors::applyPreferences()
@@ -70,6 +72,7 @@ void PrefsPageIRCColors::applyPreferences()
   colors.append(m_widget->m_grayCBtn->color().name());
   colors.append(m_widget->m_lightGrayCBtn->color().name());
   preferences->setIRCColorList(colors);
+  preferences->setFilterColors(m_widget->m_filterColorsCbx->isChecked());
 }
 
 #include "prefspageirccolors.moc"

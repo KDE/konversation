@@ -179,6 +179,7 @@ Preferences::Preferences()
   ircColorList.append("#ffc0cb");
   ircColorList.append("#a0a0a0");
   ircColorList.append("#c0c0c0");
+  setFilterColors(false);
   
   setNickCompletionMode(0);
   
@@ -734,4 +735,10 @@ void Preferences::setWebBrowserUseKdeDefault(bool state) { webBrowserUseKdeDefau
 QString Preferences::getWebBrowserCmd() { return webBrowserCmd; }
 void Preferences::setWebBrowserCmd(const QString &cmd) { webBrowserCmd=cmd; }
 
+bool Preferences::getFilterColors() { return filterColors; }
+void Preferences::setFilterColors(bool filter) { filterColors = filter; }
+
 #include "preferences.moc"
+
+
+

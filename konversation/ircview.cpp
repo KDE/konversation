@@ -262,6 +262,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
   //       find some way to use it
 //  bool bgColor=false;
   int pos;
+  bool filterColors=KonversationApplication::preferences.getFilterColors();
   bool firstColor=true;
   QString colorString;
   QStringList colorCodes = KonversationApplication::preferences.getIRCColorList();
@@ -292,6 +293,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
       colorString+="<font color=\""+colorCodes[foregroundColor]+"\">";
     }
 
+    if (filterColors == true) colorString = QString::null;
     filteredLine.replace(pos,colorRegExp.cap(0).length(),colorString);
     firstColor=false;
   }

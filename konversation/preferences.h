@@ -255,6 +255,10 @@ class Preferences : public QObject
     QString getColor(const QString& name);
     void setColor(const QString& name,const QString& color);
     
+    bool getFilterColors();
+    void setFilterColors(bool filter);
+
+    
     bool getColorInputFields();
     void setColorInputFields(bool state);
 
@@ -504,6 +508,7 @@ class Preferences : public QObject
 
     // IRC colors
     QStringList ircColorList;
+    bool filterColors;
     // aliases
     QStringList aliasList;
 

@@ -25,6 +25,7 @@ Changes from 0.13 to 0.14
   the close button is clicked.
 - Auto text feature on highlight events
 - DCC resume offers to rename a transfer now
+- Added patch by Ruud Nabben to enable hiding of IRC colors (thanks!)
 - Various small fixes and additions
 
 Changes from 0.12 to 0.13

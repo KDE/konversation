@@ -315,6 +315,8 @@ void KonversationApplication::readOptions()
   if(preferences.getIRCColorList().empty()) {
     preferences.setIRCColorList(ircColorList);
   }
+  
+  preferences.setFilterColors(config->readBoolEntry("FilterColorCodes",preferences.getFilterColors()));  //FIXME
 
 #if QT_VERSION >= 0x030200
   preferences.setShowTabBarCloseButton(config->readBoolEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton()));
@@ -631,7 +633,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
 #endif
   
   config->writeEntry("ShowTopic", preferences.getShowTopic());
-
+  config->writeEntry("FilterColorCodes", preferences.getFilterColors());
+  
   // Colors are now handled in preferences
 
   config->setGroup("Sort Nicknames");
@@ -648,6 +651,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("OperatorColor", preferences.getOpLedColor());
   config->writeEntry("VoiceColor", preferences.getVoiceLedColor());
   config->writeEntry("NoRightsColor", preferences.getNoRightsLedColor());
+  
 
   // Clean up identity list
   QStringList identities=config->groupList().grep(QRegExp("Identity [0-9]+"));
