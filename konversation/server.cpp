@@ -180,7 +180,7 @@ Server::~Server()
   while(queryList.removeFirst());
 
   // kill resolver thread if it's still running
-#if KDE_VERSION >= 310
+#if KDE_IS_VERSION(3,1,0)
   if(resolver.running()) resolver.terminate();
 #else
   if(resolver.running()) resolver.exit();

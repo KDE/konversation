@@ -21,7 +21,11 @@
 #include <kdebug.h>
 #include <kdeversion.h>
 
-#if KDE_VERSION >= 310
+#if KDE_IS_VERSION(3,1,1)
+#define USE_KNOTIFY
+#endif
+
+#ifdef USE_KNOTIFY
 #include <knotifyclient.h>
 #endif
 
@@ -105,7 +109,7 @@ void InputFilter::parseLine(const QString &a_newLine, QWidget *mainWindow)
 }
 
 void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing, QWidget *
-#if KDE_VERSION >= 310
+#if KDE_IS_VERSION(3,1,0)
 mainWindow  // get rid of a compiler warning under KDE 3.0.x
 #endif
 )
@@ -165,7 +169,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
         if(!isIgnore(prefix,Ignore::Channel))
         {
           server->appendActionToChannel(parameterList[0],sourceNick,ctcpArgument);
-#if KDE_VERSION >= 310
+#ifdef USE_KNOTIFY
           // KNotify events...
           if(sourceNick != server->getNickname()) {
             if(ctcpArgument.lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
@@ -191,7 +195,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
           // send action to query
           server->appendActionToQuery(sourceNick,ctcpArgument);
 
-#if KDE_VERSION >= 310
+#ifdef USE_KNOTIFY
           // KNotify events...
           if(sourceNick != server->getNickname()) {
             KNotifyClient::event(mainWindow->winId(), "nick");
@@ -241,7 +245,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
           // Incoming file?
           if(dccType=="send")
           {
-#if KDE_VERSION >= 310
+#ifdef USE_KNOTIFY
             KNotifyClient::event(mainWindow->winId(), "dcc_incoming");
 #endif
             emit addDccGet(sourceNick,dccArgument);
@@ -308,7 +312,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
         if(!isIgnore(prefix,Ignore::Channel))
           server->appendToChannel(parameterList[0],sourceNick,trailing);
 
-#if KDE_VERSION >= 310
+#ifdef USE_KNOTIFY
           // KNotify events...
           if(sourceNick != server->getNickname()) {
             if(trailing.lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
@@ -334,7 +338,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
           // Append this message to the query
           server->appendToQuery(sourceNick,trailing);
 
-#if KDE_VERSION >= 310
+#ifdef USE_KNOTIFY
           // KNotify events...
           if(sourceNick != server->getNickname()) {
 			QString cutup = trailing; cutup.truncate(47);
@@ -457,7 +461,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
     else
     {
       server->nickJoinsChannel(channelName,sourceNick,sourceHostmask);
-#if KDE_VERSION >= 310
+#ifdef USE_KNOTIFY
       KNotifyClient::event(mainWindow->winId(), "join");
 #endif
     }
@@ -506,7 +510,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
     }
     // ******
     server->removeNickFromChannel(parameterList[0],sourceNick,trailing);
-#if KDE_VERSION >= 310
+#ifdef USE_KNOTIFY
     // KNotify events...
     if(sourceNick != server->getNickname()) {
       KNotifyClient::event(mainWindow->winId(), "part");
@@ -533,7 +537,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
     }
     // ******
     server->removeNickFromServer(sourceNick,trailing);
-#if KDE_VERSION >= 310
+#ifdef USE_KNOTIFY
     // KNotify events...
     if(sourceNick != server->getNickname()) {
       KNotifyClient::event(mainWindow->winId(), "part");
@@ -543,7 +547,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
   else if(command=="nick")
   {
     server->renameNick(sourceNick,trailing);
-#if KDE_VERSION >= 310
+#ifdef USE_KNOTIFY
     // KNotify events...
     if(sourceNick != server->getNickname()) {
       KNotifyClient::event(mainWindow->winId(), "nickchange");
@@ -592,7 +596,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
     }
     // ******
     parseModes(sourceNick,parameterList);
-#if KDE_VERSION >= 310
+#ifdef USE_KNOTIFY
     // KNotify events...
     if(sourceNick != server->getNickname()) {
       KNotifyClient::event(mainWindow->winId(), "mode");

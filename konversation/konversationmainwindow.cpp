@@ -24,7 +24,13 @@
 #include <kmenubar.h>
 #include <kkeydialog.h>
 #include <ksystemtray.h>
-#if KDE_VERSION >= 310
+#include <kdeversion.h>
+
+#if KDE_IS_VERSION(3,1,1)
+#define USE_KNOTIFY
+#endif
+
+#ifdef USE_KNOTIFY
 #include <knotifydialog.h>
 #endif
 
@@ -71,7 +77,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); // options_show_toolbar
   showStatusBarAction=KStdAction::showStatusbar(this,SLOT(showStatusbar()),actionCollection()); // options_show_statusbar
   showMenuBarAction=KStdAction::showMenubar(this,SLOT(showMenubar()),actionCollection()); // options_show_menubar
-#if KDE_VERSION >= 310
+#ifdef USE_KNOTIFY
   KStdAction::configureNotifications(this,SLOT(openNotifications()), actionCollection());  // options_configure_notifications
 #endif
 
@@ -686,8 +692,8 @@ void KonversationMainWindow::findTextShortcut()
 
 void KonversationMainWindow::openNotifications()
 {
-#if KDE_VERSION >= 310
-  (void)KNotifyDialog::configure(this);
+#ifdef USE_KNOTIFY
+  (void) KNotifyDialog::configure(this);
 #endif
 }
 

@@ -252,7 +252,7 @@ void DccPanel::showFileInfo()
     // display information list if any available
     if(infoList.count())
     {
-#if KDE_VERSION >= 310
+#if KDE_IS_VERSION(3,1,0)
       KMessageBox::informationList(
         this,
         i18n("Available information for file %1:").arg(path),
