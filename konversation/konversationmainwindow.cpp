@@ -237,9 +237,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
 KonversationMainWindow::~KonversationMainWindow()
 {
-  saveMainWindowSettings(kapp->config());
   deleteDccPanel();
-  if(dccTransferHandler) delete dccTransferHandler;
+  delete dccTransferHandler;
 }
 
 void KonversationMainWindow::switchToTabPageMode()
@@ -1489,7 +1488,7 @@ void KonversationMainWindow::resizeEvent(QResizeEvent* ev)
 #ifdef USE_MDI
   setSysButtonsAtMenuPosition();
 #endif
-  QWidget::resizeEvent(ev);
+  KMainWindow::resizeEvent(ev);
 }
 
 void KonversationMainWindow::insertCharacter()
