@@ -22,8 +22,20 @@
 #include <klistview.h>
 #include <krun.h>
 #include <kfiledialog.h>
-#include <kshell.h>
 #include <kprocess.h>
+#include <kdeversion.h>
+
+#ifndef KDE_MAKE_VERSION
+#define KDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
+#endif
+
+#ifndef KDE_IS_VERSION
+#define KDE_IS_VERSION(a,b,c) ( KDE_VERSION >= KDE_MAKE_VERSION(a,b,c) )
+#endif
+
+#if KDE_IS_VERSION(3,1,94)
+#include <kshell.h>
+#endif
 
 #include "urlcatcher.h"
 #include "konversationapplication.h"
@@ -103,7 +115,11 @@ void UrlCatcher::openUrl(QListViewItem* item)
     QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
     cmd.replace("%u", url);
     KProcess *proc = new KProcess;
+#if KDE_IS_VERSION(3,1,94)
     QStringList cmdAndArgs = KShell::splitArgs(cmd);
+#else
+    QStringList cmdAndArgs = QStringList::split(' ',cmd);
+#endif
     kdDebug() << "UrlCatcher::openUrl(): cmd = " << cmdAndArgs << endl;
     *proc << cmdAndArgs;
 //    This code will also work, but starts an extra shell process.
