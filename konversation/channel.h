@@ -136,6 +136,10 @@ class Channel : public ChatWindow
     QStringList getSelectedNicksList();
     void showEvent(QShowEvent* event);
 
+    // use with caution! does not check for duplicates
+    void fastAddNickname(const QString& nickname,const QString& hostmask,
+                         bool admin,bool owner,bool op,bool halfop,bool voice);
+
     int nicks;
     int ops;
 

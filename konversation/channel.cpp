@@ -166,10 +166,12 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView->addColumn(QString::null);
   nicknameListView->addColumn(QString::null);
   nicknameListView->addColumn(QString::null);
-  nicknameListView->header()->setStretchEnabled( true, 1 );
   nicknameListView->header()->hide();
 //  nicknameListView->setResizeMode(KListView::LastColumn);
-//  nicknameListView->setColumnWidthMode(1,KListView::Maximum);
+
+//  nicknameListView->header()->setStretchEnabled(true,2);
+// Setting only the host mask column to Maximum will squeeze the nick names to "ni..." ...
+  nicknameListView->setColumnWidthMode(1,KListView::Maximum);
   nicknameListView->setColumnWidthMode(2,KListView::Maximum);
 
   // separate LED from Text a little more
@@ -743,10 +745,11 @@ void Channel::addNickname(const QString& nickname,const QString& hostmask,
 
   if(nick==0)
   {
-    Nick* nick=new Nick(nicknameListView,nickname,hostmask,admin,owner,op,halfop,voice);
-    nicknameListView->sort();
+    fastAddNickname(nickname,hostmask,admin,owner,op,halfop,voice);
 
-    nicknameList.inSort(nick);
+    nicknameListView->sort();
+    nicknameList.sort();
+
     adjustNicks(1);
     if(admin || owner || op || halfop) adjustOps(1);
   }
@@ -772,6 +775,16 @@ void Channel::addNickname(const QString& nickname,const QString& hostmask,
       adjustOps(1);
     }
   }
+}
+
+// Use with caution! Does not sort or check for duplicates!
+void Channel::fastAddNickname(const QString& nickname,const QString& hostmask,
+                              bool admin,bool owner,bool op,bool halfop,bool voice)
+{
+  Nick* nick=new Nick(nicknameListView,nickname,hostmask,admin,owner,op,halfop,voice);
+
+  // nicks get sorted later
+  nicknameList.append(nick);
 }
 
 void Channel::renameNick(const QString& nickname,const QString& newNick)
@@ -1484,6 +1497,8 @@ void Channel::addPendingNickList(const QStringList& newNickList)
     setPendingNicks(true);
   }
 
+  int opsToAdd=0;
+
   nicknameListView->setUpdatesEnabled(false);
   unsigned int mode;
   for(unsigned int i=0;i<newNickList.count();i++)
@@ -1495,7 +1510,7 @@ void Channel::addPendingNickList(const QStringList& newNickList)
     if((i % 50==0) || i==newNickList.count()-1) nicknameListView->setUpdatesEnabled(true);
 
     // TODO: make these an enumeration in KApplication or somewhere, we can use them from inputfilter.cpp as well
-    addNickname(nick,QString::null,(mode & 16),(mode & 8),(mode & 4),(mode & 2),(mode & 1));
+    fastAddNickname(nick,QString::null,(mode & 16),(mode & 8),(mode & 4),(mode & 2),(mode & 1));
 
     // stop refresh of visual if index is 50, 100, 150 ...
     if(i % 50==0)
@@ -1504,10 +1519,18 @@ void Channel::addPendingNickList(const QStringList& newNickList)
       qApp->processEvents();
       nicknameListView->setUpdatesEnabled(false);
     }
+
+    if((mode & 16) || (mode & 8) || (mode & 4) || (mode & 2)) opsToAdd++;
   } // endfor
 
   // should have been done already, but you never know ...
   nicknameListView->setUpdatesEnabled(true);
+
+  nicknameListView->sort();
+  nicknameList.sort();
+
+  adjustNicks(newNickList.count());
+  adjustOps(opsToAdd);
 }
 
 void Channel::setPendingNicks(bool state)
