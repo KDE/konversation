@@ -142,7 +142,7 @@ bool AddressbookBase::hasAnyNicks(const KABC::Addressee &addressee) {
  */
 void AddressbookBase::unassociateNick(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup) {
 	
-	kdDebug() << "in unassociatenick for '" << ircnick << "'" << endl;
+	kdDebug() << "in unassociatenick for '" << ircnick << endl;
 	if(ircnick.isEmpty()) return;
 	
 	QString lnick = ircnick.lower();
@@ -169,8 +169,7 @@ void AddressbookBase::unassociateNick(KABC::Addressee &addressee, const QString 
 		lit = (*it).lower();
 		if(lit == lnick || lit == lnick_servername || lit == lnick_servergroup) {
 			changed = true;
-			QStringList::iterator todeleteit = ++it;
-			addresses.remove(todeleteit);
+			it = addresses.remove(it);
 		} else {
 			it++;
 		}
