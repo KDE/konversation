@@ -41,7 +41,6 @@ typedef unsigned long long __u64;
 using namespace KNetwork;
 #include <kstringhandler.h>
 #include <kdeversion.h>
-#include <kssl.h>
 
 #include "server.h"
 #include "query.h"
@@ -117,7 +116,7 @@ Server::Server(KonversationMainWindow* mainWindow, int id)
   initTimers();
   
   if(KonversationApplication::preferences.getPreShellCommand().isEmpty())
-  	connectSignals();
+    connectSignals();
 	
   emit serverOnline(false);
 }
@@ -150,9 +149,8 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   
   if(KonversationApplication::preferences.getPreShellCommand().isEmpty())
     connectSignals();
-    
+
   emit serverOnline(false);
- 
 }
 
 void Server::doPreShellCommand() {
@@ -169,9 +167,7 @@ void Server::doPreShellCommand() {
     }
 
     preShellCommand.start(); // Non blocking
-
 }
-    
 
 Server::~Server()
 {
@@ -244,7 +240,6 @@ void Server::init(KonversationMainWindow* mainWindow)
   rejoinChannels = false;
   connecting = false;
   m_serverISON = 0;
-  m_ssl = 0;
   lastDccDir = QString::null;
 
   // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
@@ -562,21 +557,7 @@ void Server::lookupFinished()
 void Server::ircServerConnectionSuccess()
 {
   reconnectCounter=0;
-/*  
-  if() {
-    if(KSSL::doesSSLWork()) {
-      if(!m_ssl) {
-        m_ssl = new KSSL();
-        m_ssl->connect(serverSocket->socketDevice());
-      } else {
-        m_ssl->reInitialize();
-      }
-    } else {
-      // FIXME show error msg and disconnect here!
-      kdDebug() << k_funcinfo << "SSL doesn't work!" << endl;
-    }
-  }
-*/
+
   connect(this,SIGNAL (nicknameChanged(const QString&)),statusView,SLOT (setNickname(const QString&)) );
   statusView->appendServerMessage(i18n("Info"),i18n("Connected; logging in..."));
 

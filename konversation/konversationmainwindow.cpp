@@ -158,9 +158,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   resetLag();
   statusBar()->setItemAlignment(StatusText,QLabel::AlignLeft);
 
-  // Initialize KMainWindow->menuBar()
-  showMenubar();
-
 #ifdef USE_MDI
   connect(this,SIGNAL (viewActivated(KMdiChildView*)),this,SLOT (changeToView(KMdiChildView*)) );
 #else
@@ -192,7 +189,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   resize(700, 500);  // Give the app a sane default size
   setAutoSaveSettings();
   showMenuBarAction->setChecked(KonversationApplication::preferences.getShowMenuBar());
-  showMenubar();
+  showMenubar(true);
 
   // set up KABC with a nice gui error dialog
   KABC::GuiErrorHandler *m_guiErrorHandler = new KABC::GuiErrorHandler(this);
@@ -281,15 +278,17 @@ void KonversationMainWindow::showToolbar()
 {
 }
 
-void KonversationMainWindow::showMenubar()
+void KonversationMainWindow::showMenubar(bool dontShowWarning)
 {
   if(showMenuBarAction->isChecked()) menuBar()->show();
   else
   {
-    QString accel=showMenuBarAction->shortcut().toString();
-    KMessageBox::information(this,i18n("<qt>This will hide the menu bar completely."
-                                       "You can show it again by typing %1.</qt>").arg(accel),
-                                       "Hide menu bar","HideMenuBarWarning");
+    if(!dontShowWarning) {
+      QString accel=showMenuBarAction->shortcut().toString();
+      KMessageBox::information(this,i18n("<qt>This will hide the menu bar completely."
+                                        "You can show it again by typing %1.</qt>").arg(accel),
+                                        "Hide menu bar","HideMenuBarWarning");
+    }
     menuBar()->hide();
   }
 

@@ -136,7 +136,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     void showToolbar();
     void showStatusbar();
-    void showMenubar();
+    void showMenubar(bool dontShowWarning = false);
 
     void changeView(QWidget* view);
     void closeView(QWidget* view);
