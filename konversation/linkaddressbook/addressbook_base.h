@@ -31,6 +31,8 @@ class AddressbookBase : public QObject, public KIMIface
 {
   Q_OBJECT
   public:
+
+    virtual ~AddressbookBase(); // This needs to be public so it can be deleted by our static pointer
     KABC::Addressee getKABCAddresseeFromNick(const QString &ircnick, const QString &servername, const QString &servergroup);
     KABC::Addressee getKABCAddresseeFromNick(const QString &nick_server);
     bool hasNick(const KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup);
@@ -75,7 +77,6 @@ class AddressbookBase : public QObject, public KIMIface
 
   protected:
     AddressbookBase();
-
     KABC::AddressBook* addressBook;
     KABC::Ticket *m_ticket;
     

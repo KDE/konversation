@@ -30,6 +30,8 @@ Addressbook::Addressbook() : DCOPObject( "KIMIface")
 	addressBook = KABC::StdAddressBook::self(true);
 	m_ticket=NULL;
 }
+Addressbook::~Addressbook() {
+}
 
 Addressbook *Addressbook::self() {
      if (!m_instance) { sd.setObject(m_instance, new Addressbook()); }

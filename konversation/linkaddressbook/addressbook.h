@@ -33,6 +33,8 @@ class Addressbook : public AddressbookBase
 {
   Q_OBJECT
   public:
+    
+    virtual ~Addressbook(); // This needs to be public so it can be deleted by our static pointer
     static Addressbook *self();
     QStringList allContactsNicks();	    
     QStringList allContacts();
@@ -83,10 +85,11 @@ class Addressbook : public AddressbookBase
     void emitContactPresenceChanged(QString uid);
 
     bool addContact( const QString &contactId, const QString &protocolId );
-  protected:
-    
-    static Addressbook *m_instance;
+
+  protected: 
     Addressbook();
+
+    static Addressbook *m_instance;
 };
 
 

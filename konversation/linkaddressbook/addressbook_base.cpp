@@ -29,6 +29,9 @@ AddressbookBase::AddressbookBase()
 	m_ticket=NULL;
 }
 
+AddressbookBase::~AddressbookBase() {
+}
+
 KABC::AddressBook *AddressbookBase::getAddressBook() { return addressBook; }
 
 
