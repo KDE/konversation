@@ -43,7 +43,15 @@ elsif($browser)
 {
     $query = join(" ",@ARGV);
     $query = CGI::escape($query);
-    $url="http://www.google.com/search?q=$query";
+    
+    if(@ARGV)
+    {
+	$url="http://www.google.com/search?q=$query";
+    }
+    else
+    {
+	$url="http://www.google.com/";
+    }
     exec 'kfmclient','openURL',$url;
 }
 
