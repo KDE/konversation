@@ -63,13 +63,13 @@ class DccTransfer : public QObject, public KListViewItem
     
     virtual void paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment);
     
-    DccType getType() const;
-    DccStatus getStatus() const;
-    QString getOwnIp() const;
-    QString getOwnPort() const;
-    QString getPartnerNick() const;
-    QString getFileName() const;
-    KIO::filesize_t getFileSize() const;
+    DccType         getType()           const;
+    DccStatus       getStatus()         const;
+    QString         getOwnIp()          const;
+    QString         getOwnPort()        const;
+    QString         getPartnerNick()    const;
+    QString         getFileName()       const;
+    KIO::filesize_t getFileSize()       const;
 	
     KURL getFileURL() const;
     bool isResumed() const;
@@ -101,14 +101,15 @@ class DccTransfer : public QObject, public KListViewItem
     void setStatus(DccStatus status, const QString& statusDetail = QString::null);
     
     // called from updateView()
-    QString getTypeText() const;
-    QPixmap getTypeIcon() const;
-    QPixmap getStatusIcon() const;
-    QString getStatusText() const;
-    QString getFileSizePrettyText() const;
-    QString getPositionPrettyText() const;
-    QString getTimeRemainingPrettyText() const;
-    QString getCPSPrettyText() const;
+    QString getTypeText()                   const;
+    QPixmap getTypeIcon()                   const;
+    QPixmap getStatusIcon()                 const;
+    QString getStatusText()                 const;
+    QString getFileSizePrettyText()         const;
+    int     getProgress()                   const;
+    QString getPositionPrettyText()         const;
+    QString getTimeRemainingPrettyText()    const;
+    QString getCPSPrettyText()              const;
     
     unsigned long getCPS() const;
     

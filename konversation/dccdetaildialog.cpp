@@ -52,15 +52,12 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   localFileURLBox->setSpacing( spacingHint() );
   m_localFileURL = new KURLRequester( m_item->getFileURL().prettyURL(), localFileURLBox );
   connect( m_localFileURL, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotLocalFileURLChanged( const QString& ) ) );
-  m_localFileURLOpen = new KPushButton( KGlobal::iconLoader()->loadIcon( "exec", KIcon::Small ), QString::null, localFileURLBox );
-  m_localFileURLOpen->setFixedSize( m_localFileURL->button()->size() );
-  connect( m_localFileURLOpen, SIGNAL( clicked() ), this, SLOT( slotOpenFile() ) );
-  m_localFileURLRemove = new KPushButton( KGlobal::iconLoader()->loadIcon( "edittrash", KIcon::Small ), QString::null, localFileURLBox );
-  m_localFileURLRemove->setFixedSize( m_localFileURL->button()->size() );
-  connect( m_localFileURLRemove, SIGNAL( clicked() ), this, SLOT( slotRemoveFile() ) );
-  m_localFileURLViewInfo = new KPushButton( KGlobal::iconLoader()->loadIcon( "messagebox_info", KIcon::Small ), QString::null, localFileURLBox );
-  m_localFileURLViewInfo->setFixedSize( m_localFileURL->button()->size() );
-  connect( m_localFileURLViewInfo, SIGNAL( clicked() ), this, SLOT( slotViewFileInfo() ) );
+  m_buttonOpenFile = new KPushButton( KGlobal::iconLoader()->loadIcon( "exec", KIcon::Small ), QString::null, localFileURLBox );
+  m_buttonOpenFile->setFixedSize( m_localFileURL->button()->size() );
+  connect( m_buttonOpenFile, SIGNAL( clicked() ), this, SLOT( slotOpenFile() ) );
+  m_buttonRemoveFile = new KPushButton( KGlobal::iconLoader()->loadIcon( "edittrash", KIcon::Small ), QString::null, localFileURLBox );
+  m_buttonRemoveFile->setFixedSize( m_localFileURL->button()->size() );
+  connect( m_buttonRemoveFile, SIGNAL( clicked() ), this, SLOT( slotRemoveFile() ) );
   
   // Partner
   QLabel* partnerHeader = new QLabel( infoFrame );
@@ -216,9 +213,8 @@ void DccDetailDialog::updateView()  // public
   m_localFileURL->lineEdit()->setFrame( m_item->dccStatus == DccTransfer::Queued );
   m_localFileURL->lineEdit()->setAlignment( m_item->dccStatus == DccTransfer::Queued ? AlignLeft : AlignHCenter );
   m_localFileURL->button()->setEnabled( m_item->dccStatus == DccTransfer::Queued );
-  m_localFileURLOpen->setEnabled( m_item->dccType == DccTransfer::Send || m_item->dccStatus == DccTransfer::Done );
-  m_localFileURLRemove->setEnabled( m_item->dccType == DccTransfer::Receive && m_item->dccStatus == DccTransfer::Done );
-  m_localFileURLViewInfo->setEnabled( m_item->dccType == DccTransfer::Send || m_item->dccStatus == DccTransfer::Done );
+  m_buttonOpenFile->setEnabled( m_item->dccType == DccTransfer::Send || m_item->dccStatus == DccTransfer::Done );
+  m_buttonRemoveFile->setEnabled( m_item->dccType == DccTransfer::Receive && m_item->dccStatus == DccTransfer::Done );
   
   // Partner
   if ( !m_item->partnerIp.isEmpty() || !m_item->partnerPort.isEmpty() )
@@ -248,7 +244,7 @@ void DccDetailDialog::updateView()  // public
   
   // Progress
   // FIXME: in case filesize is unknown
-  m_progress->setProgress( (int)( 100 * m_item->transferringPosition / m_item->getFileSize() ) );
+  m_progress->setProgress( m_item->getProgress() );
   
   // Position
   m_position->setText( m_item->getPositionPrettyText() );
@@ -281,11 +277,6 @@ void DccDetailDialog::slotOpenFile()
 void DccDetailDialog::slotRemoveFile()
 {
   m_item->removeFile();
-}
-
-void DccDetailDialog::slotViewFileInfo()
-{
-  m_item->openFileInfoDialog();
 }
 
 void DccDetailDialog::slotAccept()

@@ -96,7 +96,7 @@ void DccTransfer::updateView()  // slot
   setText(DccPanel::Column::CPS,           getCPSPrettyText());
   
   if(m_fileSize)
-    progressBar->setProgress((int)(100*transferringPosition/m_fileSize));
+    progressBar->setProgress( getProgress() );
   else  // filesize is unknown
     setText(DccPanel::Column::Progress, i18n("unknown"));
   
@@ -310,6 +310,11 @@ QString DccTransfer::getStatusText() const
 QString DccTransfer::getFileSizePrettyText() const
 {
   return KIO::convertSize(m_fileSize);
+}
+
+int DccTransfer::getProgress() const
+{
+  return (int)( ( (double)transferringPosition / (double)m_fileSize ) * 100 );
 }
 
 QString DccTransfer::getPositionPrettyText() const
