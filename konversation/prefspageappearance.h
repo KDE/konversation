@@ -43,7 +43,7 @@ class PrefsPageAppearance : public PrefsPage
     void showModeButtonsChanged(int state);
     void showCloseButtonsChanged(int state);
     void formatChanged(const QString& newFormat);
-    void encodingChanged(const QString& newEncoding);
+    void encodingChanged(int newEncodingIndex);
     void useSpacingChanged(int state);
     void spacingChanged(int newSpacing);
     void marginChanged(int newMargin);
@@ -59,6 +59,7 @@ class PrefsPageAppearance : public PrefsPage
     QCheckBox* showModeButtons;
     QLabel* formatLabel;
     QComboBox* timestampFormat;
+    QComboBox* codecList;
 
     QCheckBox* useSpacingCheck;
 

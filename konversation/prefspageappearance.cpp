@@ -18,6 +18,7 @@
 #include <qpushbutton.h>
 #include <qhbox.h>
 #include <qcombobox.h>
+#include <qtextcodec.h>
 
 #include <kfontdialog.h>
 #include <kdebug.h>
@@ -45,11 +46,11 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   QPushButton* listFontButton=new QPushButton(i18n("Choose..."),parentFrame,"list_font_button");
 
   QLabel* codecLabel=new QLabel(i18n("Encoding"),parentFrame);
-  QComboBox* codecList=new QComboBox(parentFrame);
-  codecList->insertItem(preferences->getCodec()+" "+i18n("(Current)"));
+  codecList=new QComboBox(parentFrame);
+//  codecList->insertItem(preferences->getCodec()+" "+i18n("(Current)"));
 
   QStringList encodings=KGlobal::charsets()->descriptiveEncodingNames();
-
+  
   // from ksirc: remove utf16/ucs2 as it just doesn't work for IRC
   QStringList::Iterator iterator=encodings.begin();
   while(iterator!=encodings.end())
@@ -62,6 +63,19 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   }
 
   codecList->insertStringList(encodings);
+
+  // find actual encoding and set combo box accordingly
+  QString actualEncoding="( "+preferences->getCodec()+" )";
+  for(unsigned int index=0;index<encodings.count();index++)
+  {
+    if(encodings[index].find(actualEncoding)!=-1)
+    {
+      kdDebug() << actualEncoding << endl;
+      kdDebug() << encodings[index] << endl;
+      codecList->setCurrentItem(index);
+      break;
+    }
+  }
 
   updateFonts();
 
@@ -149,7 +163,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   connect(textFontButton,SIGNAL (clicked()),this,SLOT (textFontClicked()) );
   connect(listFontButton,SIGNAL (clicked()),this,SLOT (listFontClicked()) );
 
-  connect(codecList,SIGNAL (highlighted(const QString&)),this,SLOT (encodingChanged(const QString&)));
+  connect(codecList,SIGNAL (activated(int)),this,SLOT (encodingChanged(int)));
 
   connect(doTimestamping,SIGNAL (stateChanged(int)),this,SLOT (timestampingChanged(int)) );
   connect(timestampFormat,SIGNAL(activated(const QString&)),this,SLOT(formatChanged(const QString&)));
@@ -225,12 +239,19 @@ void PrefsPageAppearance::showCloseButtonsChanged(int state)
   preferences->setCloseButtonsOnTabs(state==2);
 }
 
-void PrefsPageAppearance::encodingChanged(const QString& newEncoding)
+void PrefsPageAppearance::encodingChanged(int newEncodingIndex)
 {
-  if(newEncoding.startsWith("utf 16"))
-    preferences->setCodec(QString::null);
-  else
-    preferences->setCodec(KGlobal::charsets()->encodingForName(newEncoding));
+  if(newEncodingIndex)
+  {
+    QString newEncoding=codecList->text(newEncodingIndex);
+    
+    kdDebug() << newEncoding << endl;
+    
+    if(newEncoding.startsWith("utf 16"))
+      preferences->setCodec(QString::null);
+    else
+      preferences->setCodec(KGlobal::charsets()->encodingForName(newEncoding));
+  }
 }
 
 void PrefsPageAppearance::useSpacingChanged(int state)
