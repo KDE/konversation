@@ -16,7 +16,8 @@
 
 #include <kdebug.h>
 
-#include <qvaluelist.h>
+// #include <qvaluelist.h>
+#include <qregexp.h>
 
 #include "konversationapplication.h"
 #include "serverwindow.h"
@@ -209,7 +210,7 @@ void KonversationApplication::readOptions()
   preferences.setVoiceLedColor(config->readNumEntry("VoiceColor",preferences.getVoiceLedColor()));
   preferences.setNoRightsLedColor(config->readNumEntry("NoRightsColor",preferences.getNoRightsLedColor()));
 
-  // User identity
+  // Default user identity
   config->setGroup("User Identity");
   preferences.ident=config->readEntry("Ident",preferences.ident);
   preferences.realname=config->readEntry("Realname",preferences.realname);
@@ -220,6 +221,13 @@ void KonversationApplication::readOptions()
   preferences.setShowAwayMessage(config->readBoolEntry("ShowAwayMessage",preferences.getShowAwayMessage()));
   preferences.setAwayMessage(config->readEntry("AwayMessage",preferences.getAwayMessage()));
   preferences.setUnAwayMessage(config->readEntry("UnAwayMessage",preferences.getUnAwayMessage()));
+
+  // Identity list
+  QStringList identityList=config->groupList().grep(QRegExp("Identity [0-9]+"));
+  for(unsigned int index=0;index<identityList.count();index++)
+  {
+    kdDebug() << "Reading identity " << identityList[index] << endl;
+  }
 
   // Notify Settings and list
   config->setGroup("Notify List");

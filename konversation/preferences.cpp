@@ -406,4 +406,5 @@ QValueList<int> Preferences::getChannelSplitter() { return channelSplitter; }
 
 void Preferences::setCodec(QString newCodec) { codec=newCodec; }
 QString Preferences::getCodec() { return codec; }
+
 #include "preferences.moc"
