@@ -22,7 +22,7 @@
 
 #include <klocale.h>
 #include <klistview.h>
-#include <klineeditdlg.h>
+#include <kinputdialog.h>
 
 #include "prefspagenotify.h"
 #include "preferences.h"
@@ -93,7 +93,7 @@ PrefsPageNotify::~PrefsPageNotify()
 void PrefsPageNotify::newNotify()
 {
   bool ok=false;
-  QString newPattern=KLineEditDlg::getText(i18n("Add nick to watch for:"),i18n("New"),&ok,parentFrame);
+  QString newPattern=KInputDialog::getText(i18n("Nick Watch Dialog"),i18n("Add nick to watch for:"),i18n("New"),&ok,parentFrame);
   if(ok)
   {
     KListViewItem* newItem=new KListViewItem(notifyListView,newPattern);

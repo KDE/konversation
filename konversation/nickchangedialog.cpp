@@ -44,8 +44,8 @@ NickChangeDialog::NickChangeDialog(QWidget* parent,QString currentNick,const QSt
 
   connect(nicknameInput,SIGNAL (activated(const QString&)),this,SLOT (newNicknameEntered(const QString&)) );
 
-  setButtonOKText(i18n("&OK"),i18n("Set new nickname and close the window"));
-  setButtonCancelText(i18n("&Cancel"),i18n("Close the window without changes"));
+  setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Set new nickname and close the window")));
+  setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Close the window without changes")));
 
   setInitialSize(size);
 }

@@ -79,8 +79,8 @@ SearchDialog::SearchDialog(QWidget* parent,QSize size) :
   connect(forwardCheck,SIGNAL (stateChanged(int)),this,SLOT (forwardChanged(int)));
   connect(fromCursorCheck,SIGNAL (stateChanged(int)),this,SLOT (fromCursorChanged(int)));
 
-  setButtonOKText(i18n("&OK"),i18n("Search for text"));
-  setButtonCancelText(i18n("&Cancel"),i18n("Close the window"));
+  setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Search for text")));
+  setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Close the window")));
 
   setInitialSize(size);
   searchPattern->setFocus();

@@ -46,8 +46,8 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent,QStringList list,QSize si
   connect(nicknameList,SIGNAL (highlighted(QListBoxItem*)),this,SLOT (newNicknameSelected(QListBoxItem*)) );
   connect(nicknameList,SIGNAL (doubleClicked(QListBoxItem*)),this,SLOT (newNicknameSelectedQuit(QListBoxItem*)) );
 
-  setButtonOKText(i18n("&OK"),i18n("Select nickname and close the window"));
-  setButtonCancelText(i18n("&Cancel"),i18n("Close the window without changes"));
+  setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Select nickname and close the window")));
+  setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Close the window without changes")));
 
   setInitialSize(size);
   show();

@@ -20,7 +20,7 @@
 
 #include <klocale.h>
 #include <klistview.h>
-#include <klineeditdlg.h>
+#include <kinputdialog.h>
 
 #include "preferences.h"
 #include "prefspagealiases.h"
@@ -46,9 +46,6 @@ PrefsPageAliases::PrefsPageAliases(QFrame* newParent,Preferences* newPreferences
   aliasesListView->setDragEnabled(true);
   aliasesListView->setAcceptDrops(true);
 
-  QLabel *defaultText=new QLabel(i18n("<qt>Click added alias to edit."
-  									"To pass parameters to alias insert %p in the replacement line.</qt>"),
-                              listLayout);
 
   QStringList aliasList(preferences->getAliasList());
   // Insert alias items backwards to get them sorted properly
@@ -79,7 +76,7 @@ PrefsPageAliases::~PrefsPageAliases()
 void PrefsPageAliases::newAlias()
 {
   bool ok=false;
-  QString newPattern=KLineEditDlg::getText(i18n("Add alias:"),i18n("New"),&ok,parentFrame);
+  QString newPattern=KInputDialog::getText(i18n("New Alias"),i18n("Add alias:"),i18n("New"),&ok,parentFrame);
   if(ok)
   {
     KListViewItem* newItem=new KListViewItem(aliasesListView,newPattern);

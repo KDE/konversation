@@ -25,7 +25,7 @@
 #include <qtimer.h>
 
 #include <klineedit.h>
-#include <klineeditdlg.h>
+#include <kinputdialog.h>
 #include <kpassdlg.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -706,7 +706,7 @@ void Channel::modeButtonClicked(int id,bool on)
     {
       bool ok=false;
       // ask user how many nicks should be the limit
-      args=KLineEditDlg::getText(i18n("Nick Limit"),
+      args=KInputDialog::getText(i18n("Nick Limit"),
                                  i18n("Enter the new nick limit:"),
                                  limit->text(),                      // will be always "" but what the hell ;)
                                  &ok,

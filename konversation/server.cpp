@@ -918,7 +918,7 @@ void Server::queue(const QString& buffer)
   }
 }
 
-void Server::queueAt(int pos,const QString& buffer)
+void Server::queueAt(uint pos,const QString& buffer)
 {
   // Only queue lines if we are connected
   if(buffer.length() && pos < outputBuffer.count())

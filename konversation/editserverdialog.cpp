@@ -171,8 +171,8 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   layout->addWidget(connectCommandsLabel, row, 0);
   layout->addMultiCellWidget(connectCommandsInput, row, row, 1, 3);
 
-  setButtonOKText(i18n("&OK"),i18n("Change server information"));
-  setButtonCancelText(i18n("&Cancel"),i18n("Discards all changes made"));
+  setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Change server information")));
+  setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Discards all changes made")));
 }
 
 EditServerDialog::~EditServerDialog()

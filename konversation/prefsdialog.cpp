@@ -83,17 +83,17 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   // TODO: Uncomment this again when it's ready to go
   // PrefsPageScripts* scriptsPage=new PrefsPageScripts(scriptsPane, preferences);
 
-  setButtonOKText(i18n("&OK"),i18n("Keep changes made to configuration and close the window"));
-  setButtonApplyText(i18n("&Apply"),i18n("Keep changes made to configuration"));
+  setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Keep changes made to configuration and close the window")));
+  setButtonApply(KGuiItem(i18n("&Apply"),"apply",i18n("Keep changes made to configuration")));
 
   if(noServer)
   {
     enableButtonOK(false);
-    setButtonCancelText(i18n("&Quit"),i18n("Quits application"));
+    setButtonCancel(KGuiItem(i18n("&Quit"),"exit",i18n("Quits application")));
   }
   else
   {
-    setButtonCancelText(i18n("&Cancel"),i18n("Discards all changes made"));
+    setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Discards all changes made")));
   }
 
   // connect standard signals and slots

@@ -72,7 +72,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 	layout->addWidget(passwordLabel, 1, 2);
 	layout->addWidget(passwordInput, 1, 3);
 	
-	setButtonOKText(i18n("&Connect"), i18n("Connect to the server"));
+	setButtonOK(KGuiItem(i18n("&Connect"),"connect_creating",i18n("Connect to the server")));
 }
 
 QuickConnectDialog::~QuickConnectDialog()

@@ -785,7 +785,6 @@ void KonversationMainWindow::insertRememberLine()
   if(KonversationApplication::preferences.getShowRememberLineInAllWindows())
   {
     int total = getViewContainer()->count()-1;
-    int operations = 0;
     ChatWindow* nextPage;
     
     for(int i = 0; i <= total; ++i)

@@ -255,7 +255,7 @@ class Server : public QObject
     void connectToIRCServer();
     void queue(const QString &buffer);
     void queueList(const QStringList &buffer);
-    void queueAt(int pos,const QString& buffer);
+    void queueAt(uint pos,const QString& buffer);
     void setNickname(const QString &newNickname);
     void addQuery(const QString &nickname, const QString &hostmask);
     void closeQuery(const QString &name);

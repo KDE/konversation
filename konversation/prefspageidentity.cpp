@@ -22,11 +22,11 @@
 #include <qtextcodec.h>
 #include <qregexp.h>
 
-#include <klineeditdlg.h>
+#include <klineedit.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kcombobox.h>
-#include <klineedit.h>
+#include <kinputdialog.h>
 #include <kcharsets.h>
 #include <kmessagebox.h>
 
@@ -367,7 +367,7 @@ void PrefsPageIdentity::updateIdentity(int number)
 void PrefsPageIdentity::renameIdentity()
 {
   bool ok;
-  QString newName=KLineEditDlg::getText(i18n("Rename Identity"),
+  QString newName=KInputDialog::getText(i18n("Rename Identity"),
                                         i18n("Please enter a new name for this identity:"),
                                         identity->getName(),
                                         &ok,
