@@ -39,6 +39,9 @@ Preferences::Preferences()
   defaultLinkMessageColor = "0000ff";
   defaultCommandMessageColor = "960096";
 
+  setNickCompleteSuffixStart(": ");
+  setNickCompleteSuffixMiddle(" ");
+
   nicknameList.append("KonvIRC");
   nicknameList.append("_KonvIRC");
   nicknameList.append("KonvIRC_");
@@ -261,25 +264,26 @@ QString Preferences::getCommandChar() { return commandChar; }
 //       get/set message font colors
 
 QString Preferences::getActionMessageColor() {return actionMessageColor;}
-void Preferences::setActionMessageColor(QString passed_actionMessageColor) {actionMessageColor = passed_actionMessageColor;}
-
 QString Preferences::getBacklogMessageColor() {return backlogMessageColor;}
-void Preferences::setBacklogMessageColor(QString passed_backlogMessageColor) {backlogMessageColor = passed_backlogMessageColor;}
-
 QString Preferences::getChannelMessageColor() {return channelMessageColor;}
-void Preferences::setChannelMessageColor(QString passed_channelMessageColor) {channelMessageColor = passed_channelMessageColor;}
-
 QString Preferences::getCommandMessageColor() {return commandMessageColor;}
-void Preferences::setCommandMessageColor(QString passed_commandMessageColor) {commandMessageColor = passed_commandMessageColor;}
-
 QString Preferences::getLinkMessageColor() {return linkMessageColor;}
-void Preferences::setLinkMessageColor(QString passed_linkMessageColor) {linkMessageColor = passed_linkMessageColor;}
-
 QString Preferences::getQueryMessageColor() {return queryMessageColor;}
-void Preferences::setQueryMessageColor(QString passed_queryMessageColor) {queryMessageColor = passed_queryMessageColor;}
-
 QString Preferences::getServerMessageColor() {return serverMessageColor;}
+
+void Preferences::setActionMessageColor(QString passed_actionMessageColor) {actionMessageColor = passed_actionMessageColor;}
+void Preferences::setBacklogMessageColor(QString passed_backlogMessageColor) {backlogMessageColor = passed_backlogMessageColor;}
+void Preferences::setChannelMessageColor(QString passed_channelMessageColor) {channelMessageColor = passed_channelMessageColor;}
+void Preferences::setCommandMessageColor(QString passed_commandMessageColor) {commandMessageColor = passed_commandMessageColor;}
+void Preferences::setLinkMessageColor(QString passed_linkMessageColor) {linkMessageColor = passed_linkMessageColor;}
+void Preferences::setQueryMessageColor(QString passed_queryMessageColor) {queryMessageColor = passed_queryMessageColor;}
 void Preferences::setServerMessageColor(QString passed_serverMessageColor) {serverMessageColor = passed_serverMessageColor;}
+
+QString Preferences::getNickCompleteSuffixStart() {return nickCompleteSuffixStart; }
+QString Preferences::getNickCompleteSuffixMiddle() {return nickCompleteSuffixMiddle; }
+
+void Preferences::setNickCompleteSuffixStart(QString suffix) { nickCompleteSuffixStart=suffix; }
+void Preferences::setNickCompleteSuffixMiddle(QString suffix) { nickCompleteSuffixMiddle=suffix; }
 
 int Preferences::getOpLedColor()       { return opLedColor; }
 int Preferences::getVoiceLedColor()    { return voiceLedColor; }

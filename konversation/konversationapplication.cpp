@@ -224,9 +224,15 @@ void KonversationApplication::readOptions()
     preferences.addIgnore(config->readEntry(QString("Ignore%1").arg(index++)));
   }
 
+  // Nick Completion
+  config->setGroup("Nick Completion");
+  preferences.setNickCompleteSuffixStart(config->readEntry("SuffixStart",preferences.getNickCompleteSuffixStart()));
+  preferences.setNickCompleteSuffixMiddle(config->readEntry("SuffixMiddle",preferences.getNickCompleteSuffixMiddle()));
+
   // DCC Settings
   config->setGroup("DCC Settings");
   preferences.setDccBufferSize(config->readNumEntry("BufferSize",preferences.getDccBufferSize()));
+  preferences.setDccRollback(config->readNumEntry("Rollback",preferences.getDccRollback()));
   preferences.setDccAddPartner(config->readBoolEntry("AddPartner",preferences.getDccAddPartner()));
   preferences.setDccCreateFolder(config->readBoolEntry("CreateFolder",preferences.getDccCreateFolder()));
   preferences.setDccAutoGet(config->readBoolEntry("AutoGet",preferences.getDccAutoGet()));
@@ -347,16 +353,25 @@ void KonversationApplication::saveOptions()
     index++;
   }
 
+  // Nick Completion
+  config->setGroup("Nick Completion");
+  config->writeEntry("SuffixStart",preferences.getNickCompleteSuffixStart());
+  config->writeEntry("SuffixMiddle",preferences.getNickCompleteSuffixMiddle());
+
+  // DCC Settings
   config->setGroup("DCC Settings");
   config->writeEntry("AddPartner",preferences.getDccAddPartner());
   config->writeEntry("CreateFolder",preferences.getDccCreateFolder());
   config->writeEntry("BufferSize",preferences.getDccBufferSize());
+  config->writeEntry("Rollback",preferences.getDccRollback());
   config->writeEntry("AutoGet",preferences.getDccAutoGet());
 
+ // Path Settings
   config->setGroup("Path Settings");
   config->writeEntry("DccPath",preferences.getDccPath());
   config->writeEntry("LogfilePath",preferences.getLogPath());
 
+  // Flags
   config->setGroup("Flags");
   config->writeEntry("Log",preferences.getLog());
   config->writeEntry("LowerLog",preferences.getLowerLog());

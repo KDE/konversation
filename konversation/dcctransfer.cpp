@@ -119,7 +119,7 @@ void DccTransfer::startGet()
       // TODO: Ask user if they want to resume
       setType(Resume);
       setStatus(Resuming);
-      // Rollback
+      // Rollback for Resume
       fileSize-=KonversationApplication::preferences.getDccRollback();
       if(fileSize<0) fileSize=0;
       setPosition(fileSize);
@@ -136,14 +136,13 @@ void DccTransfer::startSend()
 {
   // Set up server socket
   dccSocket=new KExtendedSocket();
+  // Listen on all available interfaces
   dccSocket->setHost("0.0.0.0");
   dccSocket->setSocketFlags(KExtendedSocket::passiveSocket |
                             KExtendedSocket::inetSocket |
                             KExtendedSocket::streamSocket);
 
-  int listenRc;
-  listenRc=dccSocket->listen(5);
-  if(listenRc==0)
+  if(dccSocket->listen(5)==0)
   {
     // FIXME: This seems to be a laugh but it works ...
     setPort(dccSocket->localAddress()->pretty().section(' ',1,1));
@@ -212,7 +211,7 @@ void DccTransfer::dccGetConnectionSuccess()
   kdDebug() << "Connected! Starting transfer ..." << endl;
   setStatus(Running);
   dccSocket->enableRead(true);
-  // Rollback for Resume
+
   file.open(IO_WriteOnly);
   // Set position
   file.at(getPosition());

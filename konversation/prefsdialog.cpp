@@ -23,6 +23,7 @@
 
 #include "prefsdialog.h"
 #include "prefspageserverlist.h"
+#include "prefspagegeneralsettings.h"
 #include "prefspageidentity.h"
 #include "prefspagelog.h"
 #include "prefspagedccsettings.h"
@@ -39,15 +40,18 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   kdDebug() << "PrefsDialog::PrefsDialog()" << endl;
   setPreferences(preferences);
 
-  QFrame* serverListPane =addPage(i18n("Server List"));
-  QFrame* identityPane   =addPage(i18n("Identity"));
-  QFrame* logSettingsPane=addPage(i18n("Log Settings"));
-  QFrame* dccSettingsPane=addPage(i18n("DCC Settings"));
-  QFrame* scriptsPane    =addPage(i18n("Scripting"));
+  QFrame* serverListPane     =addPage(i18n("Server List"));
+  QFrame* generalSettingsPane=addPage(i18n("General Settings"));
+  QFrame* identityPane       =addPage(i18n("Identity"));
+  QFrame* logSettingsPane    =addPage(i18n("Log Settings"));
+  QFrame* dccSettingsPane    =addPage(i18n("DCC Settings"));
+  QFrame* scriptsPane        =addPage(i18n("Scripting"));
 
   // Add Server List page
   PrefsPage* serverListPage=new PrefsPageServerList(serverListPane,preferences);
   connect(serverListPage,SIGNAL(connectToServer(int)),this,SLOT(connectRequest(int)) );
+  // Add General Settings page
+/*  PrefsPage* generalSettingsPage= */ new PrefsPageGeneralSettings(generalSettingsPane,preferences);
   // Add Identity page
 /*  PrefsPage* identityPage= */ new PrefsPageIdentity(identityPane,preferences);
   // Add Log Settings page

@@ -367,19 +367,21 @@ void Channel::completeNick()
       /* Did we find a suitable nick? */
       if(foundNick.length())
       {
+        QString addStart(KonversationApplication::preferences.getNickCompleteSuffixStart());
+        QString addMiddle(KonversationApplication::preferences.getNickCompleteSuffixMiddle());
         /* remove pattern from line */
         newLine.remove(pos,pattern.length());
         /* did we find the nick in the middle of the line? */
         if(pos)
         {
-          newLine.insert(pos,foundNick+" ");
-          pos=pos+foundNick.length()+1;
+          newLine.insert(pos,foundNick+addMiddle);
+          pos=pos+foundNick.length()+addMiddle.length();
         }
         /* No, it was at the beginning, so insert "Nick: " */
         else
         {
-          newLine.insert(pos,foundNick+": ");
-          pos=pos+foundNick.length()+2;
+          newLine.insert(pos,foundNick+addStart);
+          pos=pos+foundNick.length()+addStart.length();
         }
       }
       /* No pattern found, so restore old cursor position */

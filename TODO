@@ -4,8 +4,10 @@ Write Application Description in main()
 Add option to highlight current nick independantly
 Implement different identities so user can choose which identity to use on which server
 Add Dcc Rollback Option to Preferences and Panel
+Move Part / Kick Reasons into the Identity section in Preferences File
 
 nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  das markieren des letzten Zeitpunkts wo das Fenster aktiv war  und  die Text-Suche "
-nobs: "set cmdchar"
 
 :nifelan!~muehltom@194-208-040-061.TELE.NET INVITE Eisfuchs :#pantherchatquiz
+Nick Complete Suffixes in Preferences Dialog
+Cmdchar(s) in Pereferences Dialog

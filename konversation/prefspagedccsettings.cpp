@@ -19,6 +19,7 @@
 #include <qlabel.h>
 #include <qcheckbox.h>
 #include <qhbox.h>
+#include <qspinbox.h>
 
 #include <klineedit.h>
 
@@ -36,9 +37,21 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   KLineEdit* dccFolderInput=new KLineEdit(preferences->getDccPath(),parentFrame);
   QPushButton* dccFolderButton=new QPushButton(i18n("Browse"),parentFrame,"dcc_folder_button");
 
-  QLabel* dccBufferLabel=new QLabel(i18n("Buffer Size:"),parentFrame);
-  KLineEdit* dccBufferInput=new KLineEdit(QString::number(preferences->getDccBufferSize()),parentFrame,"dcc_buffer_size_input");
-  QLabel* dccBufferUnit=new QLabel(i18n("bytes"),parentFrame);
+  QHBox* dccSpinBoxes=new QHBox(parentFrame);
+  dccSpinBoxes->setSpacing(spacingHint());
+
+  new QLabel(i18n("Buffer Size:"),dccSpinBoxes);
+  QSpinBox* dccBufferSpin=new QSpinBox(512,16384,128,dccSpinBoxes,"dcc_buffer_spin");
+  dccBufferSpin->setSuffix(" "+i18n("bytes"));
+  dccBufferSpin->setValue(preferences->getDccBufferSize());
+
+  QLabel* dccRollbackLabel=new QLabel(i18n("Rollback:"),dccSpinBoxes);
+  dccRollbackLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  QSpinBox* dccRollbackSpin=new QSpinBox(0,65536,512,dccSpinBoxes,"dcc_rollback_spin");
+  dccRollbackSpin->setSuffix(" "+i18n("bytes"));
+  dccRollbackSpin->setValue(preferences->getDccRollback());
+
+  dccSpinBoxes->setStretchFactor(dccRollbackLabel,10);
 
   QCheckBox* dccAutoGet=new QCheckBox(i18n("Automatically accept DCC download"),parentFrame,"dcc_autoget_checkbox");
   QCheckBox* dccAddSender=new QCheckBox(i18n("Add sender to file name"),parentFrame,"dcc_sender_checkbox");
@@ -57,9 +70,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSettingsLayout->addWidget(dccFolderButton,row,2);
   row++;
 
-  dccSettingsLayout->addWidget(dccBufferLabel,row,0);
-  dccSettingsLayout->addWidget(dccBufferInput,row,1);
-  dccSettingsLayout->addWidget(dccBufferUnit,row,2);
+  dccSettingsLayout->addMultiCellWidget(dccSpinBoxes,row,row,0,2);
   row++;
 
   dccSettingsLayout->addMultiCellWidget(dccAutoGet,row,row,0,2);
@@ -73,7 +84,8 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
 
   // Set up signals / slots for DCC Setup page
   connect(dccFolderInput,SIGNAL (textChanged(const QString&)),this,SLOT (folderInputChanged(const QString&)) );
-  connect(dccBufferInput,SIGNAL (textChanged(const QString&)),this,SLOT (bufferInputChanged(const QString&)) );
+  connect(dccBufferSpin,SIGNAL (valueChanged(int)),this,SLOT (bufferValueChanged(int)) );
+  connect(dccRollbackSpin,SIGNAL (valueChanged(int)),this,SLOT (rollbackValueChanged(int)));
   connect(dccAutoGet,SIGNAL (stateChanged(int)),this,SLOT (autoGetChanged(int)) );
   connect(dccAddSender,SIGNAL (stateChanged(int)),this,SLOT (addSenderChanged(int)) );
   connect(dccCreateFolder,SIGNAL (stateChanged(int)),this,SLOT (createFolderChanged(int)) );
@@ -88,9 +100,14 @@ void PrefsPageDccSettings::folderInputChanged(const QString& newFolder)
   preferences->setDccPath(newFolder);
 }
 
-void PrefsPageDccSettings::bufferInputChanged(const QString& newBuffer)
+void PrefsPageDccSettings::bufferValueChanged(int newBuffer)
 {
-  preferences->setDccBufferSize(newBuffer.toUInt());
+  preferences->setDccBufferSize(newBuffer);
+}
+
+void PrefsPageDccSettings::rollbackValueChanged(int newRollback)
+{
+  preferences->setDccRollback(newRollback);
 }
 
 void PrefsPageDccSettings::autoGetChanged(int state)

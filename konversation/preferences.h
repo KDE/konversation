@@ -171,6 +171,11 @@ class Preferences : public QObject
     void setLinkMessageColor(QString color);
     void setCommandMessageColor(QString color);
 
+    void setNickCompleteSuffixStart(QString suffix);
+    void setNickCompleteSuffixMiddle(QString suffix);
+    QString getNickCompleteSuffixStart();
+    QString getNickCompleteSuffixMiddle();
+
     int getOpLedColor();
     int getVoiceLedColor();
     int getNoRightsLedColor();
@@ -218,6 +223,9 @@ class Preferences : public QObject
 
     QStringList notifyList;
     QString commandChar;
+
+    QString nickCompleteSuffixStart;
+    QString nickCompleteSuffixMiddle;
 
     // Geometries
     QSize serverWindowSize;

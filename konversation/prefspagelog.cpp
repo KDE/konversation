@@ -31,7 +31,7 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   logFollowsNick=new QCheckBox(i18n("Follow nickchanges"),parentFrame,"follow_nickchanges_checkbox");
 
   QHBox* logPathBox=new QHBox(parentFrame);
-/*  QLabel* logPathLabel= */ new QLabel("Logfile Path",logPathBox);
+/*  QLabel* logPathLabel= */ new QLabel("Logfile Path:",logPathBox);
   logPathInput=new KLineEdit(preferences->getLogPath(),logPathBox,"log_path_input");
 
   useLog->setChecked(preferences->getLog());
