@@ -40,7 +40,6 @@ CHECK: Replace "0.0.0.0" with QString::null in dccTransfer to allow other than I
 Session management
 Make font for quick buttons configurable
 Fortunes
-Queries should get a Whois menu item
 "notices" tab for all notices that are no channel notices
 "snotices" tab for all server notices (prefix without "!" )
 DCC port range

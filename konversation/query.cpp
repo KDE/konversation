@@ -27,6 +27,7 @@
 #include "ircinput.h"
 #include "ircview.h"
 
+const int POPUP_WHOIS =0xfe;
 const int POPUP_IGNORE=0xff;
 
 Query::Query(QWidget* parent) : ChatWindow(parent)
@@ -46,7 +47,8 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
   // link "Ignore" menu item into ircview popup
   QPopupMenu* popup=textView->getPopup();
-  popup->insertItem(i18n("Ignore"),POPUP_IGNORE);  // TODO: let the ircview give the id back?
+  popup->insertItem(i18n("Whois"),POPUP_WHOIS);  // TODO: let the ircview give the id back rather than specifying it ourselves?
+  popup->insertItem(i18n("Ignore"),POPUP_IGNORE);
 
   // This box holds the input line
   QHBox* inputBox=new QHBox(this, "input_log_box");
@@ -200,7 +202,9 @@ void Query::showEvent(QShowEvent*)
 
 void Query::popup(int id)
 {
-  if(id==POPUP_IGNORE)
+  if(id==POPUP_WHOIS)
+    sendQueryText(KonversationApplication::preferences.getCommandChar()+"WHOIS "+getName());
+  else if(id==POPUP_IGNORE)
     sendQueryText(KonversationApplication::preferences.getCommandChar()+"IGNORE -ALL "+getName()+"!*");
   else
     kdDebug() << "Query::popup(): Popup id " << id << " does not belong to me!" << endl;
