@@ -14,6 +14,7 @@ Implement sophisticated sorting options for nicklist
 Context menu entry "Send DCC file" in queries
 Make "Send File" on DCC pane work
 Border changes on-the-fly using some kind of "redraw-pointer-list"
+Conflict in Highlighting own lines and own nick
 
 <mETz[]> Eisfuchs: And why have the "Mitschnitt" button there? having it in the menubar is enough, no?
 

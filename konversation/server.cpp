@@ -40,6 +40,7 @@ Server::Server(int id)
 
   tryNickNumber=0;
   checkTime=0;
+  reconnectCounter=0;
 
   lastDccDir="";
 
@@ -158,40 +159,49 @@ void Server::connectToIRCServer()
   else
   {
     // (re)connect. Autojoin will be done by the input filter
-    serverWindow->appendToStatus(i18n("Info"),i18n("Connecting ..."));
-
+    serverWindow->appendToStatus(i18n("Info"),i18n("Looking for server ..."));
     serverSocket=new IRCServerSocket(getServerName(),getPort());
-    serverSocket->connect();
 
-    if(serverSocket->fd()<=-1)
-    {
-      broken(0);
-    }
-    else
-    {
-      connect(serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
-      connect(serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
-      connect(serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
-//      connect(serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
+    connect(serverSocket,SIGNAL (lookupFinished(int))  ,this,SLOT (lookupFinished(int)) );
+    connect(serverSocket,SIGNAL (connectionSuccess())  ,this,SLOT (ircServerConnectionSuccess()) );
+    connect(serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
 
-      connect(this,SIGNAL (nicknameChanged(const QString&)),serverWindow,SLOT (setNickname(const QString&)) );
-
-      serverWindow->appendToStatus(i18n("Info"),i18n("Connected! Logging in ..."));
-
-      QString connectString="USER " +
-                            identity.getIdent() +
-                            " 8 * :" +  // 8 = +i; 4 = +w
-                            identity.getRealName();
-
-      if(serverKey) queue("PASS "+serverKey);
-      queue("NICK "+getNickname());
-      queue(connectString);
-
-      emit nicknameChanged(getNickname());
-
-      serverSocket->enableRead(true);
-    }
+    serverSocket->startAsyncConnect();
   }
+}
+
+void Server::lookupFinished(int number)
+{
+  // suppress compiler warning
+  number=number;
+
+  serverWindow->appendToStatus(i18n("Info"),i18n("Server found, connecting ..."));
+}
+
+void Server::ircServerConnectionSuccess()
+{
+  reconnectCounter=0;
+
+  connect(serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
+  connect(serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
+  connect(serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
+
+  connect(this,SIGNAL (nicknameChanged(const QString&)),serverWindow,SLOT (setNickname(const QString&)) );
+
+  serverWindow->appendToStatus(i18n("Info"),i18n("Connected! Logging in ..."));
+
+  QString connectString="USER " +
+                        identity.getIdent() +
+                        " 8 * :" +  // 8 = +i; 4 = +w
+                        identity.getRealName();
+
+  if(serverKey) queue("PASS "+serverKey);
+  queue("NICK "+getNickname());
+  queue(connectString);
+
+  emit nicknameChanged(getNickname());
+
+  serverSocket->enableRead(true);
 }
 
 // Will be called from InputFilter as soon as the Welcome message was received
@@ -200,6 +210,7 @@ void Server::connectionEstablished()
   // get first notify very early
   startNotifyTimer(1000);
 
+  // register with services
   if(!botPassword.isEmpty() && !bot.isEmpty())
     queue("PRIVMSG "+bot+" :identify "+botPassword);
 }
@@ -250,6 +261,8 @@ void Server::notifyResponse(QString nicksOnline)
 
 void Server::startNotifyTimer(int msec)
 {
+  // make sure the timer gets started properly in case we have reconnected
+  notifyTimer.stop();
   if(msec==0) msec=KonversationApplication::preferences.getNotifyDelay()*1000; // msec!
   // start the timer in one shot mode
   notifyTimer.start(msec,true);
@@ -327,8 +340,6 @@ void Server::processIncomingData()
 
     inputBuffer=inputBuffer.mid(pos+1);
 
-    kdDebug() << line << endl;
-
     inputFilter.parseLine(line);
   }
 }
@@ -398,12 +409,19 @@ void Server::setDeliberateQuit(bool on)
 
 void Server::broken(int state)
 {
+  serverSocket->enableRead(false);
+  serverSocket->enableWrite(false);
+  serverSocket->blockSignals(true);
+
   kdDebug() << "Connection broken (Socket fd " << serverSocket->fd() << ") " << state << "!" << endl;
 
   serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost.").arg(serverName));
   // TODO: Close all queries and channels!
   //       Or at least make sure that all gets reconnected properly
-  disconnect(serverSocket,0,0,0);
+
+  // This seems to crash randomly. So we just rely on QT disconnecting all on delete
+  // disconnect(serverSocket,0,0,0);
+
   delete serverSocket;
   serverSocket=0;
   kdDebug() << "Socket deleted" << endl;
@@ -411,7 +429,16 @@ void Server::broken(int state)
   if(autoReconnect && !getDeliberateQuit())
   {
     serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName));
-    connectToIRCServer();
+
+    // TODO: Make this configurable
+    if(++reconnectCounter==10)
+    {
+      serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 failed.").arg(serverName));
+      reconnectCounter=0;
+    }
+    else
+      // TODO: Make timeout configurable
+      QTimer::singleShot(5000,this,SLOT(connectToIRCServer()));
   }
   else
   {

@@ -72,7 +72,6 @@ class Server : public QObject
     QString& getNickname();
     OutputFilter& getOutputFilter();
 
-    void connectToIRCServer();
     void joinChannel(QString& name,QString& hostmask,QString& key);
     void removeChannel(Channel* channel);
     void appendToChannel(const char* channel,const char* nickname,const char* message);
@@ -118,6 +117,7 @@ class Server : public QObject
     void closeDccPanel(); // will be connected to ServerWindow->closeDccPanel()
 
   public slots:
+    void connectToIRCServer();
     void queue(const QString& buffer);
     void setNickname(const QString& newNickname);
     void addQuery(const QString& nickname,const QString& hostmask);
@@ -130,6 +130,8 @@ class Server : public QObject
     void startNotifyTimer(int msec=0);
 
   protected slots:
+    void lookupFinished(int);
+    void ircServerConnectionSuccess();
     void incoming();
     void processIncomingData();
     void send();
@@ -156,6 +158,7 @@ class Server : public QObject
 
     unsigned int completeQueryPosition;
     unsigned int tryNickNumber;
+    unsigned int reconnectCounter;
 
     QString serverName;
     QString bot;
@@ -175,6 +178,7 @@ class Server : public QObject
     ServerWindow* serverWindow;
     IRCServerSocket* serverSocket;
 
+    QTimer reconnectTimer;
     QTimer incomingTimer;
 
     QTimer notifyTimer;
