@@ -26,6 +26,9 @@
 
 #include <qmap.h>
 
+#ifdef USE_SOLARIS
+# include <sys/filio.h>
+#endif
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/time.h>
@@ -53,6 +56,7 @@
 #include "ksocketaddress.h"
 #include "ksocketbase.h"
 #include "ksocketdevice.h"
+#include "ksockssocketdevice.h"
 
 using namespace KNetwork;
 
@@ -811,6 +815,8 @@ namespace
     KSocketDevice* device = dynamic_cast<KSocketDevice*>(parent);
     if (device != 0L)
       return device;
+
+    KSocksSocketDevice::initSocks();
 
     if (defaultImplFactory)
       return defaultImplFactory->create(parent);

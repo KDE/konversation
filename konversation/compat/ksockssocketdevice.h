@@ -118,6 +118,10 @@ public:
    */
   virtual bool poll(bool* input, bool* output, bool* exception = 0L,
 		    int timeout = -1, bool* timedout = 0L);
+
+private:
+  static void initSocks();
+  friend class KSocketDevice;
 };
 
 }				// namespace KNetwork

@@ -27,6 +27,8 @@
 #include <unistd.h>
 #endif
 
+#include <kapplication.h>
+
 #include "ksocks.h"
 #include "ksocketaddress.h"
 #include "kresolver.h"
@@ -436,3 +438,29 @@ bool KSocksSocketDevice::poll(bool *input, bool *output, bool *exception,
 
   return true;
 }
+
+void KSocksSocketDevice::initSocks()
+{
+  static bool init = false;
+
+  if (init)
+    return;
+
+  if (kapp == 0L)
+    return;			// no KApplication, so don't initialise
+                                // this should, however, test for KInstance
+
+  init = true;
+
+  if (KSocks::self()->hasSocks())
+    delete KSocketDevice::setDefaultImpl(new KSocketDeviceFactory<KSocksSocketDevice>);
+}
+
+#if 0
+static bool register()
+{
+  KSocketDevice::addNewImpl(new KSocketDeviceFactory<KSocksSocketDevice>, 0);
+}
+
+static bool register = registered();
+#endif
