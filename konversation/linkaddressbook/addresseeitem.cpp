@@ -28,7 +28,7 @@
 #include "addresseeitem.h"
 
 AddresseeItem::AddresseeItem( QListView *parent, const KABC::Addressee &addressee) :
-  QListViewItem( parent ),
+  KListViewItem( parent ),
   mAddressee( addressee )
 {
   //We can't save showphoto because we don't have a d pointer

@@ -32,7 +32,7 @@
 /**
   @short Special ListViewItem
 */
-class AddresseeItem : public QListViewItem
+class AddresseeItem : public KListViewItem
 {
   public:
 
