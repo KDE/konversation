@@ -194,7 +194,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 
 #ifdef USE_KNOTIFY
           // KNotify events...
-          if(sourceNick != server->getNickname() && server->getQueryByName(parameterList[0])->notificationsEnabled()) {
+          if(sourceNick != server->getNickname() && server->getQueryByName(sourceNick)->notificationsEnabled()) {
             KNotifyClient::event(mainWindow->winId(), "nick");
           }
 #endif
