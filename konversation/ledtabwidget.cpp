@@ -16,6 +16,7 @@
 #include <kpushbutton.h>
 #include <kglobal.h>
 #include <kiconloader.h>
+#include <qevent.h>
 
 #include "ledtabwidget.h"
 #include "ledtab.h"
@@ -147,4 +148,26 @@ void LedTabWidget::changeName(ChatWindow* view,const QString& newName)
   changeTab(view,newName);
 }
 
+#ifndef QT_NO_WHEELEVENT
+void LedTabWidget::wheelEvent( QWheelEvent *e )
+{
+	if (e->delta() > 0)
+	{
+		if ( currentPageIndex()+1 >= count() )
+			setCurrentPage(0);
+		else
+			setCurrentPage(currentPageIndex()+1);
+	}
+	else
+	{
+		if ( currentPageIndex() == 0 )
+			setCurrentPage(count()-1);
+		else
+			setCurrentPage(currentPageIndex()-1);
+	}
+}
+#endif
+
 #include "ledtabwidget.moc"
+
+

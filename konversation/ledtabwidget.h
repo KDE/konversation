@@ -54,6 +54,11 @@ class LedTabWidget : public QTabWidget
     LedTabBar* tabBar();
 
     Images images;
+
+#ifndef QT_NO_WHEELEVENT
+    void wheelEvent( QWheelEvent *e );
+#endif
+
 };
 
 #endif
