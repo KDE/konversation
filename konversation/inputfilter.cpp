@@ -1310,14 +1310,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_LISTSTART: //FIXME This reply is obsolete!!!
         {
-          if(getAutomaticRequest("LIST",parameterList[1])==0) {
+          if(getAutomaticRequest("LIST",QString::null)==0) {
             server->appendStatusMessage(i18n("List"),i18n("List of channels:"));
           }
           break;
         }
       case RPL_LIST:
         {
-          if(getAutomaticRequest("LIST",parameterList[1])==0)
+          if(getAutomaticRequest("LIST",QString::null)==0)
           {
             QString message;
 
@@ -1333,10 +1333,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       case RPL_LISTEND:
         {
           // was this an automatic request?
-          if(getAutomaticRequest("LIST",parameterList[1])==0) {
+          if(getAutomaticRequest("LIST",QString::null)==0) {
             server->appendStatusMessage(i18n("List"),i18n("End of channel list."));
           } else {
-            setAutomaticRequest("LIST",parameterList[1],false);
+            setAutomaticRequest("LIST",QString::null,false);
           }
 
           break;
