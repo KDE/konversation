@@ -71,6 +71,8 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 	layout->addWidget(nickInput, 1, 1);
 	layout->addWidget(passwordLabel, 1, 2);
 	layout->addWidget(passwordInput, 1, 3);
+        
+	hostNameInput->setFocus();
 
 	setButtonOK(KGuiItem(i18n("C&onnect"),"connect_creating",i18n("Connect to the server")));
 }
