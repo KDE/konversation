@@ -50,6 +50,7 @@ class HighlightDialog : public KDialogBase
 	private:
 		QVGroupBox				*HighlightBrowserBox;
     QCheckBox*        highlightNickCheck;
+    QCheckBox*        highlightOwnLinesCheck;
 		QVBox							*MainBox;
 		QHBox							*InputLineBox;
 		QLabel						*InputLineLabel;
@@ -79,7 +80,9 @@ class HighlightDialog : public KDialogBase
 		void removeHighlight();
     void noEmptyPatterns();
     void highlightNickChanged(int state);
+    void highlightOwnLinesChanged(int state);
     void nickColorChanged(const QColor& newColor);
+    void ownLinesColorChanged(const QColor& newColor);
     void changeHighlightColor(const QColor& passed_itemColor);
 		void changeColorSelectionColor(QListViewItem* passed_selectedHighlightViewItem);
 		void changeHighlightText();

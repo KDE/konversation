@@ -231,6 +231,14 @@ void KonversationApplication::readOptions()
   else
     preferences.setHilightNickColor("#"+hilight);
 
+  preferences.setHilightOwnLines(config->readBoolEntry("HilightOwnLines",preferences.getHilightOwnLines()));
+  hilight=config->readEntry("HilightOwnLinesColor");
+  if(hilight=="")
+    preferences.setHilightOwnLinesColor(preferences.getHilightOwnLinesColor().name());
+  else
+    preferences.setHilightOwnLinesColor("#"+hilight);
+
+    
   // Ignore List
   config->setGroup("Ignore List");
   // Remove all default entries if there is at least one Ignore in the preferences file
@@ -367,8 +375,11 @@ void KonversationApplication::saveOptions()
   hilight=hilight.stripWhiteSpace();
   // write hilight string
   config->writeEntry("Hilight",hilight);
+
   config->writeEntry("HilightNick",preferences.getHilightNick());
   config->writeEntry("HilightNickColor",preferences.getHilightNickColor().name().mid(1));
+  config->writeEntry("HilightOwnLines",preferences.getHilightOwnLines());
+  config->writeEntry("HilightOwnLinesColor",preferences.getHilightOwnLinesColor().name().mid(1));
 
   // Ignore List
   config->setGroup("Ignore List");

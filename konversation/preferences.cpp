@@ -87,7 +87,9 @@ Preferences::Preferences()
   setUseNotify(true);
 
   setHilightNick(true);
+  setHilightOwnLines(false);
   setHilightNickColor("#ff0000");
+  setHilightOwnLinesColor("#ff0000");
 
   setOpLedColor(1);
   setVoiceLedColor(2);
@@ -320,11 +322,17 @@ void Preferences::setNicksOnlineSize(QSize newSize)        { nicksOnlineSize=new
 void Preferences::setNicknameSize(QSize newSize)           { nicknameSize=newSize; };
 void Preferences::setColorConfigurationSize(QSize newSize) {colorConfigurationSize = newSize;}
 
-void Preferences::setHilightNickColor(QString newColor)    { hilightNickColor.setNamedColor(newColor); }
-QColor Preferences::getHilightNickColor() { return hilightNickColor; }
-
 void Preferences::setHilightNick(bool state) { hilightNick=state; }
 bool Preferences::getHilightNick() { return hilightNick; }
+
+void Preferences::setHilightNickColor(QString newColor) { hilightNickColor.setNamedColor(newColor); }
+QColor Preferences::getHilightNickColor() { return hilightNickColor; }
+
+void Preferences::setHilightOwnLines(bool state) { hilightOwnLines=state; }
+bool Preferences::getHilightOwnLines() { return hilightOwnLines; }
+
+void Preferences::setHilightOwnLinesColor(QString newColor) { hilightOwnLinesColor.setNamedColor(newColor); }
+QColor Preferences::getHilightOwnLinesColor() { return hilightOwnLinesColor; }
 
 QFont Preferences::getTextFont() { return textFont; }
 QFont Preferences::getListFont() { return listFont; }

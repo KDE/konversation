@@ -53,7 +53,7 @@ class IRCView : public KTextBrowser
     void appendBacklogMessage(const char* firstColumn,const char* message);
 
   protected:
-    QString filter(const QString& line,bool doHilight=true);
+    QString filter(const QString& line,const QString& who=NULL,bool doHilight=true);
     void doAppend(QString line);
     void replaceDecoration(QString& line,char decoration,char replacement);
 

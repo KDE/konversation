@@ -127,11 +127,17 @@ class Preferences : public QObject
     void setHilightList(QPtrList<Highlight> newList);
     void addHilight(QString newHilight,QColor color);
 
+    void setHilightNick(bool state);      // shall we hilight the current nick?
+    bool getHilightNick();
+
     void setHilightNickColor(QString color);
     QColor getHilightNickColor();
 
-    void setHilightNick(bool state);    // shall we hilight the current nick?
-    bool getHilightNick();
+    void setHilightOwnLines(bool state);  // shall we hilight all our own lines?
+    bool getHilightOwnLines();
+
+    void setHilightOwnLinesColor(QString color);
+    QColor getHilightOwnLinesColor();
 
     QStringList getButtonList();
     void setButtonList(QStringList newList);
@@ -257,7 +263,9 @@ class Preferences : public QObject
     QPtrList<Highlight> hilightList;
 
     bool hilightNick;
+    bool hilightOwnLines;
     QColor hilightNickColor;
+    QColor hilightOwnLinesColor;
 
     QStringList buttonList;
 

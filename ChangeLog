@@ -14,3 +14,5 @@ Changes from 0.7 to 0.8:
 - Made text widget not scroll when scroll bar isn't completely down
 - Parsed WHOIS messages into human readable form
 - Pasting multiline text into input lines now behaves as expected
+- Hilights now honor the sending nick, too (patch by Suran. Thanks!)
+- You can now hilight all your own lines independantly

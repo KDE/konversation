@@ -63,8 +63,20 @@ HighlightDialog::HighlightDialog(QWidget* parent, QPtrList<Highlight> passed_Hig
   nickColor->setMaximumWidth(50);
   nickColor->setColor(KonversationApplication::preferences.getHilightNickColor());
 
+  QHBox* hilightOwnLinesBox=new QHBox(HighlightBrowserBox);
+
+  highlightOwnLinesCheck=new QCheckBox(i18n("Always highlight own lines"),hilightOwnLinesBox,"highlight_own_lines_check");
+  highlightOwnLinesCheck->setChecked(KonversationApplication::preferences.getHilightOwnLines());
+
+  MyColorCombo* ownLinesColor=new MyColorCombo(hilightOwnLinesBox);
+  ownLinesColor->setMinimumWidth(50);
+  ownLinesColor->setMaximumWidth(50);
+  ownLinesColor->setColor(KonversationApplication::preferences.getHilightOwnLinesColor());
+
   connect(highlightNickCheck,SIGNAL(stateChanged(int)),this,SLOT(highlightNickChanged(int)));
-	connect(nickColor,SIGNAL(activated(const QColor&)),this,SLOT(nickColorChanged(const QColor&)));
+  connect(highlightOwnLinesCheck,SIGNAL(stateChanged(int)),this,SLOT(highlightOwnLinesChanged(int)));
+  connect(nickColor,SIGNAL(activated(const QColor&)),this,SLOT(nickColorChanged(const QColor&)));
+  connect(ownLinesColor,SIGNAL(activated(const QColor&)),this,SLOT(ownLinesColorChanged(const QColor&)));
   connect(InputLine, SIGNAL(returnPressed()), this, SLOT(addHighlight()));
 	connect(InputLine, SIGNAL(returnPressed()), this, SLOT(changeHighlightText()));
 	connect(InputLine, SIGNAL(textChanged(const QString&)), this, SLOT(updateHighlight(const QString&)));
@@ -91,9 +103,19 @@ void HighlightDialog::highlightNickChanged(int state)
   KonversationApplication::preferences.setHilightNick(state==2);
 }
 
+void HighlightDialog::highlightOwnLinesChanged(int state)
+{
+  KonversationApplication::preferences.setHilightOwnLines(state==2);
+}
+
 void HighlightDialog::nickColorChanged(const QColor& newColor)
 {
   KonversationApplication::preferences.setHilightNickColor(newColor.name());
+}
+
+void HighlightDialog::ownLinesColorChanged(const QColor& newColor)
+{
+  KonversationApplication::preferences.setHilightOwnLinesColor(newColor.name());
 }
 
 void HighlightDialog::addHighlightList()
