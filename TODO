@@ -28,12 +28,15 @@ LONG-TERM:
 - Detect shell commands and warn the user
 - Ban List. A window in which the user can see the bans of a channel(and remove them).
 - Usernames/channels are not clickable. Like you double click #foo on channel view and you join #foo channel
-- Detachable queries
 
 
 IDEAS:
 - Automatically gzip files before DCC SEND
 - Multi line behaviour in input line with "little enter"
+
+TODO That Will Be Fixed When Kmdi interface is stable :
+- Tabs on left / right (?)
+- Detachable queries
 
 
 DISCUSSING:
@@ -52,12 +55,8 @@ DISCUSSING:
 - Session management ( cartman: This works for me. Whats wrong with it? )
 - Make font for quick buttons configurable
 - cycle command
-- privmsg (/msg) should be logged to the specific log file (if i do "/msg foo bar"
-  i want to have this in konversation-foo.log)
-- Mark the last point where the panel was active
 - Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated
 - Show away messages only once per nick
-- Tabs on left / right (?)
 - Different tab sortings
 - Import notify list from .ircrc ( cartman: Need a sample ircrc for this )
 - Notify with more than 500 characters
