@@ -25,26 +25,26 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
                   PrefsPage(newParent,newPreferences)
 {
   QStringList dialogDefinitions;
-  flagNames = "HideMenuBarWarning,LargePaste,ResumeTransfer,Invitation,ChannelListWarning,ChannelListNoServerSelected,QuitServerTab,CloseQueryAfterIgnore,ClearLogfileQuestion,SaveLogfileNote";
+  flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,QuitServerTab,ChannelListNoServerSelected,HideMenuBarWarning,ChannelListWarning,LargePaste";
 
-  dialogDefinitions.append(i18n("Warning on hiding the main window menu"));
-  dialogDefinitions.append(i18n("Warning on pasting large portions of text"));
-  dialogDefinitions.append(i18n("Question on what to do on DCC resume"));
   dialogDefinitions.append(i18n("Automatically join channel on invite"));
-  dialogDefinitions.append(i18n("Warning on high traffic with channel list"));
-  dialogDefinitions.append(i18n("The channel list can only be opened from server-aware tabs"));
-  dialogDefinitions.append(i18n("Quit server when you hit the tab's close button"));
-  dialogDefinitions.append(i18n("Question on closing queries after ignoring the nickname"));
-  dialogDefinitions.append(i18n("Question before deleting logfile contents"));
   dialogDefinitions.append(i18n("Notice that saving logfiles will save whole file"));
-
+  dialogDefinitions.append(i18n("Question before deleting logfile contents"));
+  dialogDefinitions.append(i18n("Question on closing queries after ignoring the nickname"));
+  dialogDefinitions.append(i18n("Question on what to do on DCC resume"));
+  dialogDefinitions.append(i18n("Quit server when you hit the tab's close button"));
+  dialogDefinitions.append(i18n("The channel list can only be opened from server-aware tabs"));
+  dialogDefinitions.append(i18n("Warning on hiding the main window menu"));
+  dialogDefinitions.append(i18n("Warning on high traffic with channel list"));
+  dialogDefinitions.append(i18n("Warning on pasting large portions of text"));
+  
   QVBoxLayout* dialogsLayout=new QVBoxLayout(parentFrame,marginHint(),spacingHint(),"dialogs_layout");
 
   dialogListView=new KListView(parentFrame,"dialog_list_view");
   dialogListView->addColumn(i18n("Select warning dialogs to show"));
   dialogListView->setAllColumnsShowFocus(true);
 
-  for(unsigned int index=0;index<dialogDefinitions.count();index++)
+  for(unsigned int index=0; index<10 ;index++)
   {
     item=new QCheckListItem(dialogListView,dialogDefinitions[index],QCheckListItem::CheckBox);
     item->setText(1,dialogDefinitions[index]);

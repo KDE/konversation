@@ -55,7 +55,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
     QString::null, SmallIcon("tab_new"));
   QFrame* ignorePane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Ignored Nicknames")),
     QString::null, SmallIcon("editdelete"));
-  QFrame* aliasesPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Aliases")),
+  QFrame* aliasesPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Command Aliases")),
     QString::null,SmallIcon("editcopy"));
   QFrame* buttonsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Quick Buttons")),
     QString::null, SmallIcon("keyboard"));

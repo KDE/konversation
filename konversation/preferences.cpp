@@ -792,7 +792,7 @@ void Preferences::setDialogFlag(const QString& flagName,bool state)
     config->deleteEntry(flagName);
   else
   {
-    if ( config->readEntry(flagName) == QString::null )
+    if ( config->readEntry(flagName).isEmpty() )
       config->writeEntry(flagName,"no");
   }
 
