@@ -88,3 +88,5 @@ void OSDWidget::paintEvent(QPaintEvent*)
   paint.end();
   setMask(bm);
 }
+
+#include "osd.moc"

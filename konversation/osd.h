@@ -13,6 +13,9 @@
 
 */
 
+#ifndef OSD_H
+#define OSD_H
+
 #include <qtimer.h>
 #include <qpainter.h>
 #include <qapplication.h>
@@ -39,3 +42,5 @@ class OSDWidget : public QWidget
         QTimer *timer;
         QFont font;
 };
+
+#endif
