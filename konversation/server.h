@@ -97,6 +97,9 @@ class Server : public QObject
     void removeNickFromServer(const QString &nickname, const QString &reason);
     void noMorePendingNicks(const QString& channel);
 
+    void setChannelTypes(const QString &types);
+    QString getChannelTypes();
+    
     // extended user modes support
     void setPrefixes(const QString &modes, const QString& prefixes);
     void mangleNicknameWithModes(QString &nickname,bool& isAdmin,bool& isOwner,bool &isOp,
@@ -454,8 +457,10 @@ class Server : public QObject
     QString botPassword;
     int serverPort;
 
+    // TODO roll these into a QMap.
     QString serverNickPrefixes;     // Prefixes used by the server to indicate a mode
     QString serverNickPrefixModes;  // if supplied: modes related to those prefixes
+    QString channelPrefixes;        // prefixes that indicate channel names. defaults to RFC1459 "@&"
 
     Identity* identity;
 

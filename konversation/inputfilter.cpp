@@ -757,7 +757,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           // The following behavoiur is neither documented in RFC 1459 nor in 2810-2813
           // Nowadays, most ircds send server capabilities out via 005 (BOUNCE).
           // refer to http://www.irc.org/tech_docs/005.html for a kind of documentation.
-          // More on http://www.irc.org/tech_docs/draft-brocklesby-irc-isupport-02.txt
+          // More on http://www.irc.org/tech_docs/draft-brocklesby-irc-isupport-03.txt
 
           QStringList::const_iterator it = parameterList.begin();
           // don't want the user name
@@ -782,12 +782,16 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
               if(pos==-1)
               {
                 server->setPrefixes (QString::null, value);
+                if (value.length() || property.length()) // XXX if ) isn't in the string, NOTHING should be there. anyone got a server
+                 server->appendStatusMessage("","XXX Server sent bad PREFIX in RPL_ISUPPORT, please report.");
               }
               else
               {
                 server->setPrefixes (value.mid(1, pos-1), value.mid(pos+1));
               }
             }
+            else if (property=="CHANTYPES")
+              server->setChannelTypes(value);
             else
             {
 //              kdDebug() << "Ignored server-capability: " << property << " with value '" << value << "'" << endl;

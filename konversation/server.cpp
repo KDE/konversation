@@ -82,6 +82,10 @@ Server::Server(KonversationMainWindow* mainWindow,int id)
   connecting=false;
   isAway = false;
   
+  serverNickPrefixModes = "ov"; // XXX fold these into a QMAP
+  serverNickPrefixes = "@+";
+  channelPrefixes = "@&";
+  
   serverSocket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
 
   timerInterval=1;  // flood protection
@@ -169,6 +173,10 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   rejoinChannels=false;
   connecting=false;
 
+  serverNickPrefixModes = "ov"; // XXX fold these into a QMAP
+  serverNickPrefixes = "@+";
+  channelPrefixes = "@&";
+  
   timerInterval=1;  // flood protection
   
   serverSocket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
@@ -458,6 +466,17 @@ void Server::connectToIRCServer()
     setPrefixes("ov","@+");
     statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...").arg(serverName).arg(serverPort));
   }
+}
+
+// set available channel types according to 005 RPL_ISUPPORT
+void Server::setChannelTypes(const QString &pre)
+{
+  channelPrefixes=pre;
+}
+
+QString Server::getChannelTypes()
+{
+  return channelPrefixes;
 }
 
 // set user mode prefixes according to non-standard 005-Reply (see inputfilter.cpp)
