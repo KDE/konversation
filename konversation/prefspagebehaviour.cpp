@@ -42,7 +42,7 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   trayNotifyOwnNickOnlyCheck->setEnabled(trayIconCheck->isChecked() && trayNotifyCheck->isChecked());
   trayNotifyOwnNickOnlyCheck->setChecked(preferences->trayNotifyOnlyOwnNick());
 
-  trayOnlyCheck = new QCheckBox(i18n("Do not show a &taskbar entry"), parentFrame,"tray_only");
+  trayOnlyCheck = new QCheckBox(i18n("Skip creating &taskbar entry"), parentFrame,"tray_only");
   trayOnlyCheck->setChecked(preferences->getSystrayOnly());
   trayOnlyCheck->setEnabled(trayIconCheck->isChecked());
   QWhatsThis::add(trayOnlyCheck,i18n("If you enable this option Konversation will not show up in taskbar"));
