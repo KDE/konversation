@@ -720,6 +720,7 @@ void Server::updateChannelQuickButtons(QStringList newButtons)
   }
 }
 
+// TODO: Maybe use a Signal / Slot mechanism for these things?
 void Server::updateFonts()
 {
   kdDebug() << "Server::updateFonts()" << endl;
@@ -740,6 +741,17 @@ void Server::updateFonts()
 
   // TODO: To be revised
   if(serverWindow) serverWindow->updateFonts();
+}
+
+// TODO: Maybe use a Signal / Slot mechanism for these things?
+void Server::setShowQuickButtons(bool state)
+{
+  Channel* channel=channelList.first();
+  while(channel)
+  {
+    channel->showQuickButtons(state);
+    channel=channelList.next();
+  }
 }
 
 Channel* Server::getChannelByName(const char* name)

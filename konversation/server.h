@@ -86,6 +86,7 @@ class Server : public QObject
     void updateChannelModeWidgets(QString& channel,char mode,QString& parameter);
     void updateChannelQuickButtons(QStringList newButtons);
     void updateFonts();
+    void setShowQuickButtons(bool state);
 
     QString getNextQueryName();
     ServerWindow* getServerWindow();

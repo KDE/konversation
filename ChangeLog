@@ -2,6 +2,7 @@ Changes from 0.8 to 0.9
 - Added strikeout support (untested yet)
 - Added Swedish translation, done by Karolina Lindqvist (thanks!)
 - Added optional timestamps to chat windows
+- Quick Butons can now be hidden
 
 Changes from 0.7 to 0.8:
 - DCCs can now be opened (started) using the 'open' button

@@ -83,6 +83,7 @@ class Channel : public ChatWindow
     void newTextInView();
     void urlCatcher(QString url);
     void adjustFocus();
+    void showQuickButtons(bool show);
 
   protected slots:
     void completeNick();
@@ -101,12 +102,16 @@ class Channel : public ChatWindow
 
   protected:
     QStringList* getSelectedNicksList();
+    void showEvent(QShowEvent* event);
 
     int spacing() {  return KDialog::spacingHint(); };
     int margin() {  return KDialog::marginHint(); };
 
     int nicks;
     int ops;
+
+    bool quickButtonsChanged;  // to take care of redraw problem if hidden
+    bool quickButtonsState;
 
     unsigned int completionPosition;
 
@@ -130,6 +135,7 @@ class Channel : public ChatWindow
     QLabel* nicksOps;
     NickListView* nicknameListView;
     QPushButton* nicknameButton;
+    QGrid* buttonsGrid;
     IRCInput* channelInput;
     QCheckBox* logCheckBox;
 

@@ -20,7 +20,8 @@ nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  d
       des letzten Zeitpunkts wo das Fenster aktiv war  und  die Text-Suche "
 *nobs* noch ein Feature-Request: alle "technischen" Meldungen aus # und query ausblenden können;
        entweder ins Status-Fenster umleiten oder ganz verwerfen optional 
-Consistency check in Preferences:nob
+
+Consistency check in Preferences:
 - Command Char must be present
 
 /part may close Queries, too.

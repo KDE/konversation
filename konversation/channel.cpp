@@ -37,6 +37,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   completionPosition=0;
   nickChangeDialog=0;
   topic="";
+  quickButtonsChanged=false;
+  quickButtonsState=false;
 
   setType(ChatWindow::Channel);
 
@@ -119,7 +121,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView->setFont(KonversationApplication::preferences.getListFont());
 
   // The grid that holds the quick action buttons
-  QGrid* buttonsGrid=new QGrid(2,nickListButtons);
+  buttonsGrid=new QGrid(2,nickListButtons);
   for(int index=0;index<8;index++)
   {
     // Get the button definition
@@ -141,6 +143,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
     connect(newQuickButton,SIGNAL (clicked(QString)),this,SLOT (quickButtonClicked(QString)) );
   }
+  showQuickButtons(KonversationApplication::preferences.getShowQuickButtons());
 
   // The box holding the Nickname button, Channel input and Log Checkbox
   QHBox* commandLineBox=new QHBox(this);
@@ -1030,6 +1033,37 @@ void Channel::updateQuickButtons(QStringList newButtonList)
                                   replace(QRegExp(">",false,true),"&gt;");
 
     QToolTip::add(quickButton,toolTip);
+  }
+}
+
+void Channel::showQuickButtons(bool show)
+{
+  // QT does not redraw the buttons properly when they are not on screen
+  // while getting hidden, so we remember the "soon  to be" state here.
+  if(isHidden())
+  {
+    quickButtonsChanged=true;
+    quickButtonsState=show;
+  }
+  else
+  {
+    if(show)
+      buttonsGrid->show();
+    else
+      buttonsGrid->hide();
+  }
+}
+
+void Channel::showEvent(QShowEvent* event)
+{
+  // Suppress Compiler Warning
+  event->type();
+
+  // If the show quick button settings have changed, apply the changes now
+  if(quickButtonsChanged)
+  {
+    quickButtonsChanged=false;
+    showQuickButtons(quickButtonsState);
   }
 }
 

@@ -209,6 +209,9 @@ class Preferences : public QObject
     void setTimestampFormat(const QString& newFormat);
     const QString& getTimestampFormat();
 
+    void setShowQuickButtons(bool state);
+    bool getShowQuickButtons();
+
     QString ident;
     QString realname;
 
@@ -245,6 +248,8 @@ class Preferences : public QObject
 
     bool timestamping;
     QString timestampFormat;
+
+    bool showQuickButtons;
 
     QStringList notifyList;
     QString commandChar;

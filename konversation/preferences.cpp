@@ -59,6 +59,8 @@ Preferences::Preferences()
   buttonList.append("Part,/PART %c KDE Rules!%n");
   buttonList.append("Quit,/QUIT KDE Rules!%n");
 
+  setShowQuickButtons(true);
+
   setPartReason("Konversation terminated!");
   setKickReason("User terminated!");
 
@@ -351,3 +353,6 @@ void Preferences::setTimestamping(bool state) { timestamping=state; }
 bool Preferences::getTimestamping() { return timestamping; }
 void Preferences::setTimestampFormat(const QString& newFormat) { timestampFormat=newFormat; }
 const QString& Preferences::getTimestampFormat() { return timestampFormat; }
+
+void Preferences::setShowQuickButtons(bool state) { showQuickButtons=state; }
+bool Preferences::getShowQuickButtons() { return showQuickButtons; }

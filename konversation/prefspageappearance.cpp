@@ -65,6 +65,9 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   // Take care of ghosting / unghosting format widget
   timestampingChanged(preferences->getTimestamping() ? 2 : 0);
 
+  showQuickButtons=new QCheckBox(i18n("Show Quick Buttons"),parentFrame,"show_quickbuttons_checkbox");
+  showQuickButtons->setChecked(preferences->getShowQuickButtons());
+
   // Layout
   int row=0;
   appearanceLayout->addWidget(textFontLabel,row,0);
@@ -77,6 +80,8 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   row++;
   appearanceLayout->addMultiCellWidget(timestampBox,row,row,0,2);
   row++;
+  appearanceLayout->addMultiCellWidget(showQuickButtons,row,row,0,2);
+  row++;
   appearanceLayout->setRowStretch(row,10);
   appearanceLayout->setColStretch(1,10);
 
@@ -85,6 +90,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   connect(textFontButton,SIGNAL (clicked()),this,SLOT (textFontClicked()) );
   connect(listFontButton,SIGNAL (clicked()),this,SLOT (listFontClicked()) );
   connect(doTimestamping,SIGNAL (stateChanged(int)),this,SLOT (timestampingChanged(int)) );
+  connect(showQuickButtons,SIGNAL (stateChanged(int)),this,SLOT (showQuickButtonsChanged(int)) );
   connect(timestampFormat,SIGNAL(activated(const QString&)),this,SLOT(formatChanged(const QString&)));
 }
 
@@ -132,4 +138,9 @@ void PrefsPageAppearance::formatChanged(const QString& newFormat)
 {
   kdDebug() << newFormat << endl;
   preferences->setTimestampFormat(newFormat);
+}
+
+void PrefsPageAppearance::showQuickButtonsChanged(int state)
+{
+  preferences->setShowQuickButtons(state==2);
 }
