@@ -174,14 +174,21 @@ void ChatWindow::setServer(Server* newServer)
 #ifdef USE_MDI
     connect(m_server,SIGNAL(serverQuit(const QString&)),this,SLOT(serverQuit(const QString&)));
 #endif
+    
+    connect(m_server,SIGNAL (serverOnline(bool)),this,SLOT (serverOnline(bool)) );
+    
     // check if we need to set up the signals
     if(getType()!=ChannelList)
     {
       if(textView) textView->setServer(newServer);
       else kdDebug() << "ChatWindow::setServer(): textView==0!" << endl;
     }
+
+    emit serverOnline(m_server->isConnected());
   }
 }
+
+
 void ChatWindow::setMainWindow(KonversationMainWindow *mainWindow) {
   m_mainWindow = mainWindow;
   //setMainWindow may be called in a constructor, so make sure we call adjust

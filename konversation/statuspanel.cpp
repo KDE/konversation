@@ -296,4 +296,9 @@ QString StatusPanel::getChannelEncodingDefaultDesc()  // virtual
   return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodecName());
 }
 
+//Used to disable functions when not connected
+void StatusPanel::serverOnline(bool online)
+{
+  nicknameCombobox->setEnabled(online);
+}
 #include "statuspanel.moc"

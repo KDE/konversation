@@ -318,6 +318,8 @@ class Server : public QObject
     void deleted(Server* myself); /// will be connected to KonversationApplication::removeServer()
     void awayState(bool away); /// will be connected to any user input panel;
     void multiServerCommand(const QString& command, const QString& parameter);
+    
+    /// Emitted when the server gains/loses connection.
     void serverOnline(bool state); /// will be connected to all server dependant tabs
     void serverQuit(const QString& reason);  // USE_MDI
 

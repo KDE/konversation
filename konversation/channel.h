@@ -175,6 +175,7 @@ class Channel : public ChatWindow
     void serverQuit(const QString& reason); // USE_MDI
     
     void processPendingNicks();
+    virtual void serverOnline(bool online);
 
   protected:
     void showEvent(QShowEvent* event);

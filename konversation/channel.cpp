@@ -1857,6 +1857,12 @@ void Channel::serverQuit(const QString& reason)
 #endif
 }
 
+//Used to disable functions when not connected
+void Channel::serverOnline(bool online)
+{
+  nicknameCombobox->setEnabled(online);
+}
+
 void Channel::showTopic(bool show)
 {
   if(show) {
@@ -2004,5 +2010,6 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
   return QString::null;
 }
+
 
 #include "channel.moc"

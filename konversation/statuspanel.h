@@ -53,7 +53,7 @@ class StatusPanel : public ChatWindow
     virtual QString getChannelEncodingDefaultDesc();
     virtual void setName(const QString& newName) { ChatWindow::setName(newName); }
     virtual void emitUpdateInfo();
-
+    
   signals:
     void newText(QWidget* widget,const QString& highlightColor,bool important);
     void sendFile();
@@ -75,6 +75,9 @@ class StatusPanel : public ChatWindow
     void textPasted(const QString& text);
     void changeNickname(const QString& newNickname);
     void nicknameComboboxChanged();
+    //Used to disable functions when not connected
+    virtual void serverOnline(bool online);
+
 
   protected:
 

@@ -171,7 +171,6 @@ class ChatWindow : public BASE_CLASS
     
   public slots:
     void logText(const QString& text);
-    void serverOnline(bool state);
 
     /** 
      * This is called when a chat window gains focus.
@@ -195,6 +194,9 @@ class ChatWindow : public BASE_CLASS
     /** Emitted when the users nickname is seen in the channel.
      *  Lets the chatwindow use OSD to tell the user this. */
     void nickWasSeenInView(const QString &whoSent, const QString &filteredLine);
+
+    ///Used to disable functions when not connected
+    virtual void serverOnline(bool online);
 
   protected:
     
