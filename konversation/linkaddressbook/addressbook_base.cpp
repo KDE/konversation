@@ -198,6 +198,10 @@ void AddressbookBase::associateNick(KABC::Addressee &addressee, const QString &i
 	else if(!servername.isEmpty())
 		nick_server += QChar(0xE120) + servername;
 	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
+	//For sanity reasons, don't let the number of irc nicks go above 10.
+	//To do this, just remove the irc nick at the end of the list.
+	if(addresses.count() >= 10)
+		addresses.pop_back();
 	addresses.append(nick_server);
 	addressee.insertCustom("messaging/irc", "All", addresses.join( QChar( 0xE000 )));
 	
