@@ -445,7 +445,6 @@ void DccTransferRecv::readData()  // slot
 
 void DccTransferRecv::sendAck()  // slot
 {
-
   //kdDebug() << "sendAck()" << endl;
   KIO::fileoffset_t pos = intel( m_transferringPosition );
 
@@ -473,22 +472,23 @@ void DccTransferRecv::slotLocalGotWriteError( const QString& errorString )  // s
   
   Q_ASSERT(m_recvSocket); if(!m_recvSocket) return;
   
-  KMessageBox::sorry( listView(), i18n("KIO Error: %1").arg( errorString ), i18n("DCC Error") );
   setStatus( Failed, i18n("KIO Error: %1").arg( errorString ) );
   cleanUp();
   updateView();
+  
+  KMessageBox::sorry( listView(), i18n("KIO Error: %1").arg( errorString ), i18n("DCC Error") );
 }
 
 void DccTransferRecv::startConnectionTimer( int sec )
 {
   stopConnectionTimer();
-  SHOW;
+  kdDebug() << "DccTransferRecv::startConnectionTimer()" << endl;
   m_connectionTimer->start( sec*1000, TRUE );
 }
 
 void DccTransferRecv::stopConnectionTimer()
 {
-  SHOW;
+  kdDebug() << "DccTransferRecv::stopConnectionTimer()" << endl;
   Q_ASSERT( m_connectionTimer );
   m_connectionTimer->stop();
 }
@@ -523,7 +523,7 @@ DccTransferRecvWriteCacheHandler::DccTransferRecvWriteCacheHandler( KIO::Transfe
   
   connect( this,          SIGNAL( dataFinished() ),                    m_transferJob, SLOT( slotFinished() )                           );
   connect( m_transferJob, SIGNAL( dataReq( KIO::Job*, QByteArray& ) ), this,          SLOT( slotKIODataReq( KIO::Job*, QByteArray& ) ) );
-  connect( m_transferJob, SIGNAL( result( KIO::Job* ) ),               this,          SLOT( slotKIOResult() )                          );
+  connect( m_transferJob, SIGNAL( result( KIO::Job* ) ),               this,          SLOT( slotKIOResult( KIO::Job* ) )                          );
   
   m_transferJob->setAsyncDataEnabled( m_writeAsyncMode = true );
 }
@@ -635,12 +635,16 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
   }
 }
 
-void DccTransferRecvWriteCacheHandler::slotKIOResult()
+void DccTransferRecvWriteCacheHandler::slotKIOResult( KIO::Job* job )
 {
-  Q_ASSERT(m_transferJob);
-  if( m_transferJob->error() )
+  Q_ASSERT( m_transferJob );
+  
+  disconnect( m_transferJob, 0, 0, 0 );
+  m_transferJob = 0;
+    
+  if( job->error() )
   {
-    QString errorString = m_transferJob->errorString();
+    QString errorString = job->errorString();
     closeNow();
     emit gotError( errorString );
   }

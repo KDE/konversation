@@ -152,8 +152,8 @@ class DccTransferRecvWriteCacheHandler : public QObject
     void gotError( const QString& errorString );  // ->  DccTransferRecv::slotWriteError()
     
   protected slots:
-    void slotKIODataReq( KIO::Job*, QByteArray& data );  // <-  m_transferJob->dataReq()
-    void slotKIOResult();                                // <-  m_transferJob->result()
+    void slotKIODataReq( KIO::Job* job, QByteArray& data );  // <-  m_transferJob->dataReq()
+    void slotKIOResult( KIO::Job* job );                     // <-  m_transferJob->result()
     
   protected:
     QByteArray popCache();
