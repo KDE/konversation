@@ -24,7 +24,6 @@
 #include <ksharedptr.h>
 
 #include <kabc/addressbook.h>
-#include "addressbook.h"
 
 class Server;
 

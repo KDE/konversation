@@ -17,6 +17,7 @@
 #include <qtooltip.h>
 #include "server.h"
 #include <klocale.h>
+#include "linkaddressbook/addressbook.h"
 /*
   @author Gary Cramblitt
 */

@@ -64,20 +64,49 @@ bool Addressbook::hasNick(const KABC::Addressee &addressee, const QString &ircni
 
 }
 
-	
 QString Addressbook::getBestNick(const KABC::Addressee &addressee) {
-	//Get the first nick
-	//TODO: Strip off server part
-	/*NickInfoPtr *nickInfo = getNickInfo(addressee);
+	//Look for a nickinfo for this nick, and use that.  That way we turn a nick that is online.
+	NickInfoPtr nickInfo = getNickInfo(addressee, true);
+	if(nickInfo)
+		return nickInfo->getNickname();
+	//No online nickinfo - not connected to server maybe.  just return the first nick.
 	
+	
+	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
+	if(!addresses.empty())
+		return addresses.first();
+	//No irc nicks- nothing left to try - return null
+	return QString::null;
+}
+
+NickInfoPtr Addressbook::getNickInfo(const KABC::Addressee &addressee, bool onlineOnlyNicks)
+{
+	NickInfoPtr lastNickInfo;
 	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
 	QStringList::iterator end = addresses.end();
 	for ( QStringList::iterator it = addresses.begin(); it != end; ++it ) {
+		QString ircnick;
+		QString serverOrGroup;
+		KonversationApplication::splitNick_Server(*it, ircnick, serverOrGroup);
+		NickInfoPtr nickInfo;
 		
-	{
-	return addresses.first();*/
-	return "";
+		if(onlineOnlyNicks) {
+			nickInfo = dynamic_cast<KonversationApplication*>(kapp)->getOnlineNickInfo(ircnick, serverOrGroup);
+			if(nickInfo) {
+				if(!nickInfo->isAway())
+					return nickInfo;
+				//This nick is away.  Keep looking, but use it if we can't find one that's on
+				lastNickInfo = nickInfo;
+			}
+		} else {
+			nickInfo = dynamic_cast<KonversationApplication*>(kapp)->getNickInfo(ircnick, serverOrGroup);
+			if(nickInfo) return nickInfo;
+		}
+	}
+	//Use a nick that's either away, or non-existant.
+	return lastNickInfo;
 }
+
 bool Addressbook::hasAnyNicks(const KABC::Addressee &addressee, const QString &/*server*/) {
 	return !addressee.custom("messaging/irc", "All").isEmpty();
 }

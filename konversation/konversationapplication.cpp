@@ -1133,23 +1133,44 @@ Konversation::Sound* KonversationApplication::sound()
 // Returns list of pointers to Servers.
 const QPtrList<Server> KonversationApplication::getServerList() { return serverList; }
 
+void KonversationApplication::splitNick_Server(QString nick_server, QString &ircnick, QString &serverOrGroup) {
+  //kaddresbook uses the utf seperator 0xE120, so treat that as a seperator as well
+  nick_server = nick_server.replace(QChar(0xE120), "@");
+  ircnick = nick_server.section("@",0,0);
+  serverOrGroup = nick_server.section("@",1);
+}
 
 #ifdef USE_NICKINFO
 NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const QString &serverOrGroup) {
-	NickInfoPtr nickInfo;
-	QString lserverOrGroup = serverOrGroup.lower();
-	for(Server* lookServer = serverList.first(); lookServer; lookServer = serverList.next()) {
-		if(lserverOrGroup.isEmpty()
-		 || lookServer->getServerName().lower()==lserverOrGroup
-		 || lookServer->getServerGroup().lower()==lserverOrGroup)
-		{
-			nickInfo = lookServer->getNickInfo(ircnick);
-			if(nickInfo) return nickInfo; //If we found one
-		}
-	}
-	//This shouldn't really happen
-	return 0;
+  NickInfoPtr nickInfo;
+  QString lserverOrGroup = serverOrGroup.lower();
+  for(Server* lookServer = serverList.first(); lookServer; lookServer = serverList.next()) {
+    if(lserverOrGroup.isEmpty()
+       || lookServer->getServerName().lower()==lserverOrGroup
+       || lookServer->getServerGroup().lower()==lserverOrGroup)
+    {
+      nickInfo = lookServer->getNickInfo(ircnick);
+      if(nickInfo) return nickInfo; //If we found one
+    }
+  }
+  return 0;
 }
+
+NickInfoPtr KonversationApplication::getOnlineNickInfo(const QString &ircnick, const QString &serverOrGroup) {
+  NickInfoPtr nickInfo;
+  QString lserverOrGroup = serverOrGroup.lower();
+  for(Server* lookServer = serverList.first(); lookServer; lookServer = serverList.next()) {
+    if(lserverOrGroup.isEmpty()
+       || lookServer->getServerName().lower()==lserverOrGroup
+       || lookServer->getServerGroup().lower()==lserverOrGroup)
+    {
+      nickInfo = lookServer->getOnlineNickInfo(ircnick);
+      if(nickInfo) return nickInfo; //If we found one
+    }
+  }
+  return 0;
+}
+
 #endif
 
 #include "konversationapplication.moc"

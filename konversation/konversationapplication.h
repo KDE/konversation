@@ -59,19 +59,35 @@ class KonversationApplication : public KApplication
 
     void syncPrefs();
     Server* getServerByName(const QString& name);
+    
+    /** For dcop and addressbook, a user can be specified as user@irc.server.net
+     *  or user@servergroup or using the unicode seperator symbol 0xE120 instead
+     *  of the "@".  This function takes a string like the above examples, and
+     *  modifies ircnick and serverOrGroup to contain the split up string.  If
+     *  the string doesn't have an @ or 0xE120, ircnick is set to the
+     *  nick_server, and serverOrGroup is set to empty.
+     *  Behaviour is undefined for serverOrGroup if multiple @ or 0xE120 are found.
+     *  @param nick_server A string containting ircnick and possibly servername or server group
+     *  @param ircnick This is modified to contain the ircnick
+     *  @param serverOrGroup This is modified to contain the servername, servergroup or an empty string.
+     */
+    static void splitNick_Server(QString nick_server, QString &ircnick, QString &serverOrGroup);
+    
     /** Tries to find a nickinfo for a given ircnick on a given ircserver.
-     * @param ircnick The case-insensitive ircnick of the person you want to find.  e.g. "johnflux"
-     * @param serverOrGroup The case-insensitive server name (e.g. "irc.kde.org") or server group name (e.g. "freenode"), or null to search all servers
-     * @return A nickinfo for this user and server if one is found.
+     *  @param ircnick The case-insensitive ircnick of the person you want to find.  e.g. "johnflux"
+     *  @param serverOrGroup The case-insensitive server name (e.g. "irc.kde.org") or server group name (e.g. "freenode"), or null to search all servers
+     *  @return A nickinfo for this user and server if one is found.
      */
     NickInfoPtr getNickInfo(const QString &ircnick, const QString &serverOrGroup);
+    NickInfoPtr getOnlineNickInfo(const QString &ircnick, const QString &serverOrGroup);
+    
     OSDWidget* osd;
     
     Konversation::Sound* sound();
     
     // Returns list of pointers to Servers.
     const QPtrList<Server> getServerList();
-
+    
   signals:
     void catchUrl(const QString& who,const QString& url);
 
@@ -79,7 +95,8 @@ class KonversationApplication : public KApplication
     void connectToServer(int number);
     bool connectToAnotherServer(int number);
     void quickConnectToServer(const QString& hostName, const QString& port = "6667", 
-    						const QString& nick = KonversationApplication::preferences.getNickname(0), const QString& password="");
+    						const QString& nick = KonversationApplication::preferences.getNickname(0),
+						const QString& password="");
     void readOptions();
     void saveOptions(bool updateGUI=true);
     void quitKonversation();

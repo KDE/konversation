@@ -25,6 +25,7 @@
 #include "kimiface.h"
 
 #include "../images.h"
+#include "../nickinfo.h"
 
 namespace Konversation {
 class Addressbook : public QObject,public KIMIface
@@ -38,7 +39,8 @@ class Addressbook : public QObject,public KIMIface
     bool associateNickAndUnassociateFromEveryoneElse(KABC::Addressee &addressee, const QString &ircnick);
     /** If this user is online, return one of the nicks that they are
       * using.  Otherwise return the first nick listed.
-      * @return online nick, first nick, or QString::null if they don't have a nick.
+      * If there are multiple matches, it will prefer ones that are not set to away.
+      * @return online nick, first nick, or QString::null if they aren't known at all.
     */
     QString getBestNick(const KABC::Addressee &addressee);
     bool hasAnyNicks(const KABC::Addressee &addresse, const QString &server);
@@ -95,7 +97,13 @@ class Addressbook : public QObject,public KIMIface
 
     void emitContactPresenceChanged( QString uid, int presence);
     void emitContactPresenceChanged(QString uid);
-	
+    /** Return a NickInfo for this addressee.
+      *  If there are multiple matches, it tries to pick one that is not away.
+      *  @param addressee The addressee to get a nickInfo for
+      *  @param onlineOnlyNicks If true, then return only a nick that is online, otherwise return 0
+      *  @return A nickInfo.  It tries hard to return a nickInfo that is not away if one exists.
+      */
+    static NickInfoPtr getNickInfo(const KABC::Addressee &addressee, bool onlineOnlyNicks);
 
 // MUTATORS
 // Contact list

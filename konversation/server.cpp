@@ -1123,6 +1123,20 @@ NickInfoPtr Server::getNickInfo(const QString& nickname)
     return 0;
 }
 
+// Given a nickname, returns NickInfo object.   0 if not found.
+NickInfoPtr Server::getOnlineNickInfo(const QString& nickname)
+{
+  QString lcNickname(nickname.lower());
+  if (nicknamesOnline.contains(lcNickname))
+  {
+    NickInfoPtr nickinfo = nicknamesOnline[lcNickname];
+    Q_ASSERT(nickinfo);
+    return nickinfo;
+  }
+  else
+    return 0;
+}
+
 // Given a nickname, returns an existing NickInfo object, or creates a new NickInfo object.
 // Returns pointer to the found or created NickInfo object.
 NickInfoPtr Server::obtainNickInfo(const QString& nickname)

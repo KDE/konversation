@@ -164,8 +164,16 @@ class Server : public QObject
      *  - It is no longer in any of the server's joined channels.
      *  - It is not listed in kaddressbook or watch list.
      *  - There are no active queries involving the nick.
+     *
+     *  FIXME - So does this mean nickinfo's created from WHOIS are destroyed almost immediately?
      */
     NickInfoPtr getNickInfo(const QString& nickname);
+    /** Given a nickname, returns NickInfo object if the person is online.
+     *  @param nickname   The desired nickname.  Case sensitive.
+     *  @return            Pointer to online nickInfo, or 0 if offline or no nickinfo exists for them.
+     *  @see getNickInfo(const QString& nickname)
+     */
+    NickInfoPtr getOnlineNickInfo(const QString& nickname);
     /** Given a nickname, returns an existing NickInfo object, or creates a new NickInfo object.
      *  Guaranteed to return a nickinfo.
      *  @param nickname    The desired nickname.  Case sensitive.
@@ -238,6 +246,7 @@ class Server : public QObject
     void emitNickInfoChanged(const NickInfoPtr nickInfo);
 	    
     QString Server::getNotifyString();
+    
   signals:
     void nicknameChanged(const QString&);
     void serverLag(Server* server,int msec); /// will be connected to KonversationMainWindow::updateLag()

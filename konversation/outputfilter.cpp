@@ -41,6 +41,7 @@
 #include "konversationapplication.h"
 #include "ignore.h"
 #include "server.h"
+#include "linkaddressbook/addressbook.h"
 
 namespace Konversation {
     OutputFilter::OutputFilter(Server* server)
