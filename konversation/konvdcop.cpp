@@ -579,6 +579,7 @@ void KonvPrefsDCOP::setOSDUsage(bool state)
 {
 	KonversationApplication::preferences.setOSDUsage(state);
 	static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+	static_cast<KonversationApplication *>(kapp)->osd->setEnabled(state);
 }
 
 bool KonvPrefsDCOP::getOSDUsage()
