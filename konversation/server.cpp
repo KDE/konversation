@@ -36,13 +36,9 @@ typedef unsigned long long __u64;
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
-#if KDE_IS_VERSION(3,2,90)
 #include <kresolver.h>
 #include <ksocketdevice.h> 
 using namespace KNetwork;
-#endif
-#include <kextendedsocket.h>
-#include <ksockaddr.h>
 #include <kstringhandler.h>
 #include <kdeversion.h>
 
@@ -2330,15 +2326,9 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
   if(ownIpByServer.isEmpty() && sourceNick==nickname)  // myself
   {
     QString myhost = sourceHostmask.section('@', 1);
-#if KDE_IS_VERSION(3,2,90)
     KNetwork::KResolverResults res = KNetwork::KResolver::resolve(myhost, "");
     if(res.size() > 0)
       ownIpByServer = res.first().address().nodeName();
-#else
-    QPtrList<KAddressInfo> res = KExtendedSocket::lookup(myhost, "");
-    if(res.count() > 0)
-      ownIpByServer = res.first()->address()->nodeName();
-#endif
   }
 
 
