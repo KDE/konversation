@@ -1000,7 +1000,7 @@ void Server::incoming()
 
   buffer[len] = 0;
 
-  QCString qcsBuffer = inputBufferIncompleted + QCString(buffer);
+  QCString qcsBuffer = inputBufferIncomplete + QCString(buffer);
 
   // split buffer to lines
   QValueList<QCString> qcsBufferLines;
@@ -1009,7 +1009,7 @@ void Server::incoming()
     qcsBufferLines << qcsBuffer.mid(lastLFposition+1, nextLFposition-lastLFposition-1);
 
   // remember an incompleted line (split by packets)
-  inputBufferIncompleted = qcsBuffer.right(qcsBuffer.length()-lastLFposition-1);
+  inputBufferIncomplete = qcsBuffer.right(qcsBuffer.length()-lastLFposition-1);
 
   while(!qcsBufferLines.isEmpty())
   {
@@ -1063,7 +1063,7 @@ void Server::incoming()
                    command == "kick"    ||
                    command == "part"    ||
                    command == "topic"   )
-          channelKey = lineSplit[1];
+            channelKey = lineSplit[1];
         }
       }
       // check setting
