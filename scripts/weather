@@ -18,6 +18,11 @@ chomp $pressure;
 chomp $wind;
 chomp $detail;
 
+if( $detail ) {
 $MESSAGE = "Current Weather for %B$city%B : %B$detail%B, Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
+}
+else {
+$MESSAGE = "Current Weather for %B$city%B : Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
+}
 
 exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$MESSAGE\" ");
