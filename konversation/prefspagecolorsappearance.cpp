@@ -34,6 +34,8 @@ PrefsPageColorsAppearance::PrefsPageColorsAppearance(QFrame* newParent,Preferenc
   colorList.append(i18n("&Query message:")+",QueryMessage");
   colorList.append(i18n("&Server message:")+",ServerMessage");
   colorList.append(i18n("&Timestamp:")+",Time");
+  colorList.append(i18n("&Background:")+",TextViewBackground");
+  colorList.append(i18n("A&lternate background:")+",AlternateBackground");
 
   int row = 0;
   int col = 0;
