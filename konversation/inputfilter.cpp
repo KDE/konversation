@@ -10,8 +10,6 @@
   begin:     Fri Jan 25 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
- 
-  $Id$
 */
 
 #include <qdatastream.h>
@@ -1013,15 +1011,15 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           if(getAutomaticRequest()==0)
           {
             QString message;
-          
+
             if(parameterList[2]=="1") message=i18n("%1 (%2 user): %3");
             else message=i18n("%1 (%2 users): %3");
-          
+
             server->appendStatusMessage(i18n("List"),message.arg(parameterList[1]).arg(parameterList[2]).arg(trailing));
           }
           else // send them to /LIST window
             emit addToChannelList(parameterList[1],parameterList[2].toInt(),trailing);
-          
+
           break;
         }
       case RPL_LISTEND:
@@ -1031,7 +1029,21 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             server->appendStatusMessage(i18n("List"),i18n("End of channel list."));
           else
             setAutomaticRequest(false);
-          
+
+          break;
+        }
+      case RPL_NOWAWAY:
+        {
+          server->appendStatusMessage(i18n("Away"),i18n("You are now marked as being away."));
+          emit away();
+
+          break;
+        }
+      case RPL_UNAWAY:
+        {
+          server->appendStatusMessage(i18n("Away"),i18n("You are no longer marked as being away."));
+          emit unAway();
+
           break;
         }
       default:

@@ -10,8 +10,6 @@
   begin:     Sam Jan 18 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include <qpushbutton.h>
@@ -34,6 +32,9 @@ StatusPanel::StatusPanel(QWidget* parent) :
 
   setType(ChatWindow::Status);
 
+  awayChanged=false;
+  awayState=false;
+
   // set up text view, will automatically take care of logging
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer()
 
@@ -42,10 +43,12 @@ StatusPanel::StatusPanel(QWidget* parent) :
   commandLineBox->setMargin(0);
 
   nicknameButton=new QPushButton(i18n("Nickname"),commandLineBox);
+  awayLabel=new QLabel(i18n("(away)"),commandLineBox);
+  awayLabel->hide();
   statusInput=new IRCInput(commandLineBox);
 
   lagOMeter=new QLabel(i18n("Lag: not known"),commandLineBox,"status_panel_lagometer");
-  
+
   setLog(KonversationApplication::preferences.getLog());
   setLogfileName("konversation.log");
 
@@ -148,6 +151,34 @@ void StatusPanel::updateLag(int msec)
 {
   lagOMeter->setText(i18n("Lag: %1 ms").arg(msec));
   emit lag(getServer(),msec);
+}
+
+void StatusPanel::indicateAway(bool show)
+{
+  // QT does not redraw the label properly when they are not on screen
+  // while getting hidden, so we remember the "soon to be" state here.
+  if(isHidden())
+  {
+    awayChanged=true;
+    awayState=show;
+  }
+  else
+  {
+    if(show)
+      awayLabel->show();
+    else
+      awayLabel->hide();
+  }
+}
+
+// fix QTs broken behavior on hidden QListView pages
+void StatusPanel::showEvent(QShowEvent*)
+{
+  if(awayChanged)
+  {
+    awayChanged=false;
+    indicateAway(awayState);
+  }
 }
 
 QString StatusPanel::getTextInLine() { return statusInput->text(); }

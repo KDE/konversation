@@ -10,8 +10,6 @@
   begin:     Sun Jan 20 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include <unistd.h>
@@ -141,6 +139,9 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
                   this,SLOT  (addChannelListPanel()) );
   connect(&inputFilter,SIGNAL(invitation(const QString&,const QString&)),
                   this,SLOT  (invitation(const QString&,const QString&)) );
+
+  connect(&inputFilter,SIGNAL (away()),this,SLOT (away()) );
+  connect(&inputFilter,SIGNAL (unAway()),this,SLOT (unAway()) );
 
   connect(this,SIGNAL(serverLag(int)),statusView,SLOT(updateLag(int)) );
   connect(this,SIGNAL(serverLag(Server*,int)),getMainWindow(),SLOT(updateLag(Server*,int)) );
@@ -1323,11 +1324,6 @@ OutputFilter& Server::getOutputFilter()
   return outputFilter;
 }
 
-void Server::away()
-{
-  isAway=true;
-}
-
 void Server::sendToAllChannels(const QString &text)
 {
   // Send a message to all channels we are in
@@ -1365,9 +1361,16 @@ void Server::scriptExecutionError(const QString& name)
   appendStatusMessage(i18n("DCOP"),i18n("Error: Could not execute script \"%1\". Check file permissions.").arg(name));
 }
 
+void Server::away()
+{
+  isAway=true;
+  emit awayState(isAway);
+}
+
 void Server::unAway()
 {
   isAway=false;
+  emit awayState(isAway);
 }
 
 bool Server::isAChannel(const QString &check)

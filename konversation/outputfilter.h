@@ -59,8 +59,6 @@ class OutputFilter : public QObject
     void openRawLog(bool show);
     void closeRawLog();
     void openKonsolePanel();
-    void away();
-    void unAway();
     void sendToAllChannels(const QString& text);
     void launchScript(const QString& parameter);
     void banUsers(const QStringList& userList,const QString& channel,const QString& option);

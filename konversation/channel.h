@@ -28,6 +28,7 @@ class QCheckBox;
 class QLabel;
 class QTimer;
 class QListViewItem;
+class QHBox;
 
 class KLineEdit;
 
@@ -72,7 +73,6 @@ class Channel : public ChatWindow
     void updateFonts();
 
     virtual QString getTextInLine();
-    virtual void indicateAway(bool away);
     virtual void closeYourself();
     virtual bool frontView();
     virtual bool searchView();
@@ -91,6 +91,7 @@ class Channel : public ChatWindow
     void showQuickButtons(bool show);
     void showModeButtons(bool show);
     void appendInputText(const QString& s);
+    virtual void indicateAway(bool show);
 
   protected slots:
     void completeNick();
@@ -121,11 +122,14 @@ class Channel : public ChatWindow
     int nicks;
     int ops;
 
-    bool quickButtonsChanged;  // to take care of redraw problem if hidden
+    // to take care of redraw problem if hidden
+    bool quickButtonsChanged;
     bool quickButtonsState;
-    bool modeButtonsChanged;  // to take care of redraw problem if hidden
+    bool modeButtonsChanged;
     bool modeButtonsState;
     bool splitterChanged;
+    bool awayChanged;
+    bool awayState;
 
     bool topicAuthorUnknown;
 
@@ -152,7 +156,9 @@ class Channel : public ChatWindow
 
     QLabel* nicksOps;
     NickListView* nicknameListView;
+    QHBox* commandLineBox;
     QPushButton* nicknameButton;
+    QLabel* awayLabel;
     QGrid* buttonsGrid;
     IRCInput* channelInput;
     QCheckBox* logCheckBox;

@@ -96,11 +96,6 @@ void ChatWindow::setServer(Server* newServer)
       connect(&filter,SIGNAL (openKonsolePanel()),
                server,SLOT   (requestKonsolePanel()) );
 
-      connect(&filter,SIGNAL (away()),
-               server,SLOT   (away()) );
-      connect(&filter,SIGNAL (unAway()),
-               server,SLOT   (unAway()) );
-
       connect(&filter,SIGNAL (sendToAllChannels(const QString&)),
                server,SLOT   (sendToAllChannels(const QString&)) );
       connect(&filter,SIGNAL (banUsers(const QStringList&,const QString&,const QString&)),
@@ -310,7 +305,7 @@ bool ChatWindow::frontView()           { return false; }
 bool ChatWindow::searchView()          { return false; }
 
 // reimplement this in all panels that have user input
-void ChatWindow::indicateAway(bool away)
+void ChatWindow::indicateAway(bool)
 {
 }
 

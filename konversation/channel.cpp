@@ -62,6 +62,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   modeButtonsChanged=false;
   modeButtonsState=false;
 
+  awayChanged=false;
+  awayState=false;
+
   // flag for first seen topic
   topicAuthorUnknown=true;
 
@@ -167,10 +170,12 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   updateQuickButtons(KonversationApplication::preferences.getButtonList());
 
   // The box holding the Nickname button, Channel input and Log Checkbox
-  QHBox* commandLineBox=new QHBox(this);
+  commandLineBox=new QHBox(this);
   commandLineBox->setSpacing(spacing());
 
   nicknameButton=new QPushButton(i18n("Nickname"),commandLineBox);
+  awayLabel=new QLabel(i18n("(away)"),commandLineBox);
+  awayLabel->hide();
   channelInput=new IRCInput(commandLineBox);
   logCheckBox=new QCheckBox(i18n("Log"),commandLineBox);
   logCheckBox->setChecked(KonversationApplication::preferences.getLog());
@@ -1247,11 +1252,26 @@ void Channel::showModeButtons(bool show)
   }
 }
 
-void Channel::showEvent(QShowEvent* event)
+void Channel::indicateAway(bool show)
 {
-  // Suppress Compiler Warning
-  event->type();
+  // QT does not redraw the label properly when they are not on screen
+  // while getting hidden, so we remember the "soon to be" state here.
+  if(isHidden())
+  {
+    awayChanged=true;
+    awayState=show;
+  }
+  else
+  {
+    if(show)
+      awayLabel->show();
+    else
+      awayLabel->hide();
+  }
+}
 
+void Channel::showEvent(QShowEvent*)
+{
   // If the show quick/mode button settings have changed, apply the changes now
   if(quickButtonsChanged)
   {
@@ -1267,6 +1287,11 @@ void Channel::showEvent(QShowEvent* event)
   {
     splitterChanged=false;
     splitter->setSizes(KonversationApplication::preferences.getChannelSplitter());
+  }
+  if(awayChanged)
+  {
+    awayChanged=false;
+    indicateAway(awayState);
   }
 }
 
@@ -1379,10 +1404,6 @@ QString Channel::getTextInLine() { return channelInput->text(); }
 
 bool Channel::frontView()        { return true; }
 bool Channel::searchView()       { return true; }
-
-void Channel::indicateAway(bool away)
-{
-}
 
 void Channel::appendInputText(const QString& s)
 {

@@ -78,7 +78,6 @@ class ChatWindow : public QVBox
     QWidget* parentWidget;
 
     virtual QString getTextInLine();
-    virtual void indicateAway(bool away);
     virtual void closeYourself();
     virtual bool frontView();
     virtual bool searchView();
@@ -90,6 +89,7 @@ class ChatWindow : public QVBox
     void logText(const QString& text);
     virtual void adjustFocus()=0;
     virtual void appendInputText(const QString&);
+    virtual void indicateAway(bool away);
 
   protected:
     bool log;

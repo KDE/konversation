@@ -10,8 +10,6 @@
   begin:     Sun Jan 20 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef SERVER_H
@@ -127,6 +125,7 @@ class Server : public QObject
     void addKonsolePanel(); // will be connected to MainWindow::addKonsolePanel()
     void closeDccPanel(); // will be connected to MainWindow::closeDccPanel()
     void deleted(Server* myself); // will be connected to KonversationApplication::removeServer()
+    void awayState(bool away); // will be connected to any user input panel;
 
   public slots:
     void connectToIRCServer();

@@ -10,12 +10,11 @@
   begin:     Mon Jan 28 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include <qhbox.h>
 #include <qcheckbox.h>
+#include <qlabel.h>
 
 #include <klocale.h>
 #include <kstddirs.h>
@@ -34,6 +33,9 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
   setType(ChatWindow::Query);
 
+  awayChanged=false;
+  awayState=false;
+
   queryHostmask=new QLineEdit(this, "query_hostmask");
   queryHostmask->setReadOnly(true);
 
@@ -43,6 +45,8 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   QHBox* inputLogBox=new QHBox(this, "input_log_box");
   inputLogBox->setSpacing(spacing());
 
+  awayLabel=new QLabel(i18n("(away)"),inputLogBox);
+  awayLabel->hide();
   queryInput=new IRCInput(inputLogBox);
 
   logCheckBox=new QCheckBox(i18n("Log"),inputLogBox);
@@ -152,6 +156,34 @@ void Query::textPasted(QString text)
       if(line.startsWith(cChar)) line=cChar+line;
       sendQueryText(line);
     }
+  }
+}
+
+void Query::indicateAway(bool show)
+{
+  // QT does not redraw the label properly when they are not on screen
+  // while getting hidden, so we remember the "soon to be" state here.
+  if(isHidden())
+  {
+    awayChanged=true;
+    awayState=show;
+  }
+  else
+  {
+    if(show)
+      awayLabel->show();
+    else
+      awayLabel->hide();
+  }
+}
+
+// fix QTs broken behavior on hidden QListView pages
+void Query::showEvent(QShowEvent*)
+{
+  if(awayChanged)
+  {
+    awayChanged=false;
+    indicateAway(awayState);
   }
 }
 

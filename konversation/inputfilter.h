@@ -10,8 +10,6 @@
   begin:     Fri Jan 25 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef INPUTFILTER_H
@@ -55,6 +53,8 @@ class InputFilter : public QObject
     void addChannelListPanel();
     void addToChannelList(const QString& channel,int users,const QString& topic);
     void invitation(const QString& nick,const QString& channel);
+    void away();
+    void unAway();
 
   protected:
     void parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);

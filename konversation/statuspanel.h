@@ -10,8 +10,6 @@
   begin:     Sam Jan 18 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef STATUSPANEL_H
@@ -54,7 +52,8 @@ class StatusPanel : public ChatWindow
     void newTextInView(const QString& highlightColor);
     void updateFonts();
     void updateLag(int msec);
-  
+    virtual void indicateAway(bool show);
+
   protected slots:
     void sendFileMenu();
     void statusTextEntered();
@@ -62,9 +61,14 @@ class StatusPanel : public ChatWindow
     void textPasted(QString text);
 
   protected:
+    bool awayChanged;
+    bool awayState;
+
+    void showEvent(QShowEvent* event);
     void sendStatusText(QString line);
 
     QPushButton* nicknameButton;
+    QLabel* awayLabel;
     IRCInput* statusInput;
     QCheckBox* logCheckBox;
     QLabel* lagOMeter;

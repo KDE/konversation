@@ -385,6 +385,7 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
 
   connect(statusView,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
   connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );
+  connect(server,SIGNAL (awayState(bool)),statusView,SLOT (indicateAway(bool)) );
 
   return statusView;
 }
@@ -399,6 +400,7 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
 
   connect(channel,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
   connect(channel,SIGNAL (prefsChanged()),this,SLOT (channelPrefsChanged()) );
+  connect(server,SIGNAL (awayState(bool)),channel,SLOT (indicateAway(bool)) );
 
   return channel;
 }
@@ -412,6 +414,7 @@ Query* KonversationMainWindow::addQuery(Server* server, const QString& name)
   addView(query,0,name);
 
   connect(query,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
+  connect(server,SIGNAL (awayState(bool)),query,SLOT (indicateAway(bool)) );
 
   return query;
 }

@@ -10,8 +10,6 @@
   begin:     Mon Jan 28 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef QUERY_H
@@ -30,6 +28,7 @@
 
 class QLineEdit;
 class QCheckBox;
+class QLabel;
 
 class IRCInput;
 
@@ -57,7 +56,7 @@ class Query : public ChatWindow
     void adjustFocus();
     void sendQueryText(const QString& text);
     void appendInputText(const QString& s);
-
+    virtual void indicateAway(bool show);
 
   protected slots:
     void queryTextEntered();
@@ -67,11 +66,17 @@ class Query : public ChatWindow
     void textPasted(QString text);
 
   protected:
+    void showEvent(QShowEvent* event);
+
+    bool awayChanged;
+    bool awayState;
+
     QString queryName;
     QString hostmask;
     QString buffer;
 
     QLineEdit* queryHostmask;
+    QLabel* awayLabel;
     IRCInput* queryInput;
     QCheckBox* logCheckBox;
 };
