@@ -3,9 +3,3 @@ if test "$build_arts" = "yes"; then
 	LIB_ARTS="-lartskde"
 	AC_SUBST(LIB_ARTS)
 fi
-
-KDE_CHECK_HEADER(kimiface.h,
-	[
-	AC_DEFINE(HAVE_KIMIFACE, 1, [Define if you have Kimiface headers] )
-	])
-
