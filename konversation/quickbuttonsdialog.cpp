@@ -31,13 +31,13 @@ QuickButtonsDialog::QuickButtonsDialog(QStringList buttonList,QSize size):
 {
   kdDebug() << "QuickButtonsDialog::QuickButtonsDialog()" << endl;
 
-  /* Create the top level widget */
+  // Create the top level widget
   QWidget* page=new QWidget(this);
   setMainWidget(page);
-  /* Add the layout to the widget */
+  // Add the layout to the widget
   QVBoxLayout* dialogLayout=new QVBoxLayout(page);
   dialogLayout->setSpacing(spacingHint());
-  /* Set up the button list */
+  // Set up the button list
   buttonListView=new KListView(page);
 
   buttonListView->addColumn(i18n("Button Name"));
@@ -51,7 +51,7 @@ QuickButtonsDialog::QuickButtonsDialog(QStringList buttonList,QSize size):
   buttonListView->setDragEnabled(true);
   buttonListView->setAcceptDrops(true);
 
-  /* Insert buttons in reverse order to make them appear sorted correctly */
+  // Insert buttons in reverse order to make them appear sorted correctly
   int index;
   for(index=8;index!=0;index--)
   {
@@ -104,10 +104,12 @@ QStringList QuickButtonsDialog::getButtonList()
   while(item!=0)
   {
     QString title(item->text(0));
-    /* Make sure we don't have any "," in the title that would confuse Preferences */
+    // Make sure we don't have any "," in the title that would confuse Preferences
     title.replace(QRegExp(","),"_");
     newList.append(title+","+item->text(1));
     item=item->itemBelow();
   }
   return newList;
 }
+
+#include "quickbuttonsdialog.moc"

@@ -33,7 +33,7 @@ LedTab* LedTabBar::tab(QWidget* widget)
 {
   QPtrList<QTab>* list=tabList();
 
-  /* This casts can't be helped, templates don't like casting */
+  // These casts can't be helped, templates don't like casting
   LedTab* tab=(LedTab*) list->first();
   while(tab)
   {
@@ -44,8 +44,10 @@ LedTab* LedTabBar::tab(QWidget* widget)
   return 0;
 }
 
-/* reimplemented to avoid casts in active code */
+// reimplemented to avoid casts in active code
 LedTab* LedTabBar::tab(int id)
 {
   return (LedTab*) QTabBar::tab(id);
 }
+
+#include "ledtabbar.moc"

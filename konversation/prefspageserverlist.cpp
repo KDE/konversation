@@ -14,6 +14,8 @@
   $Id$
 */
 
+#include <kdebug.h>
+
 #include <qlayout.h>
 #include <qhbox.h>
 
@@ -31,16 +33,19 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
   serverListView=new KListView(parentFrame);
 
   serverListView->setItemsRenameable(true);
+  serverListView->addColumn(i18n("Auto"));
   serverListView->addColumn(i18n("Group"));
   serverListView->addColumn(i18n("Server"));
   serverListView->addColumn(i18n("Port"));
   serverListView->addColumn(i18n("Keyword"));
   serverListView->addColumn(i18n("Channel"));
   serverListView->addColumn(i18n("Keyword"));
-  serverListView->setRenameable(0,true);
+
+  serverListView->setRenameable(0,false);
   serverListView->setRenameable(1,true);
   serverListView->setRenameable(2,true);
-  serverListView->setRenameable(4,true);
+  serverListView->setRenameable(3,true);
+  serverListView->setRenameable(5,true);
 
   serverListView->setAllColumnsShowFocus(true);
 
@@ -52,12 +57,18 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
   {
     int id=preferences->getServerIdByIndex(index);
     QStringList serverEntry=QStringList::split(',',serverString,true);
-    new ServerListItem(serverListView,id,serverEntry[0],
-                                         serverEntry[1],
-                                         serverEntry[2],
-                                         (serverEntry[3]) ? "********" : "",
-                                         serverEntry[4],
-                                         (serverEntry[5]) ? "********" : "");
+    ServerListItem* item=new ServerListItem(serverListView,id,
+                                            serverEntry[0],
+                                            serverEntry[1],
+                                            serverEntry[2],
+                                            (serverEntry[3]) ? "********" : "",
+                                            serverEntry[4],
+                                            (serverEntry[5]) ? "********" : "");
+
+    item->setOn(serverEntry[6]=="1");
+
+    connect(item,SIGNAL(autoStateChanged(ServerListItem*,bool)),
+            this,SLOT  (updateAutoState(ServerListItem*,bool)) );
 
     serverString=preferences->getServerByIndex(++index);
   }
@@ -197,12 +208,12 @@ void PrefsPageServerList::updateServer(const QString& groupName,
   ServerListItem* serverItem=(ServerListItem*) item;
   int id=serverItem->getId();
 
-  serverItem->setText(0,groupName);
-  serverItem->setText(1,serverName);
-  serverItem->setText(2,serverPort);
-  serverItem->setText(3,(!serverKey || serverKey=="") ? "" : "********");
-  serverItem->setText(4,channelName);
-  serverItem->setText(5,(!channelKey || channelKey=="") ? "" : "********");
+  serverItem->setText(1,groupName);
+  serverItem->setText(2,serverName);
+  serverItem->setText(3,serverPort);
+  serverItem->setText(4,(!serverKey || serverKey=="") ? "" : "********");
+  serverItem->setText(5,channelName);
+  serverItem->setText(6,(!channelKey || channelKey=="") ? "" : "********");
 
   preferences->updateServer(id,groupName+","+
                                serverName+","+
@@ -218,7 +229,15 @@ void PrefsPageServerList::updateServerProperty(QListViewItem* item,const QString
   ServerListItem* serverItem=(ServerListItem*) item;
   int id=serverItem->getId();
 
+  if(property==0) property=6;  // to keep old preferences working with auto connect checkbox
+  else property--;             // -1 because the first is the checkbox
+
   preferences->changeServerProperty(id,property,value);
+}
+
+void PrefsPageServerList::updateAutoState(ServerListItem* item,bool state)
+{
+  updateServerProperty(item,(state ? "1" : "0"),0);
 }
 
 void PrefsPageServerList::serverDoubleClicked(QListViewItem* item)
@@ -227,3 +246,5 @@ void PrefsPageServerList::serverDoubleClicked(QListViewItem* item)
   item->height();
   connectClicked();
 }
+
+#include "prefspageserverlist.moc"

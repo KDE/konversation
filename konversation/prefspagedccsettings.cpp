@@ -124,3 +124,5 @@ void PrefsPageDccSettings::createFolderChanged(int state)
 {
   preferences->setDccCreateFolder(state==2);
 }
+
+#include "prefspagedccsettings.moc"

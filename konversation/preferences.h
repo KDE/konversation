@@ -60,6 +60,7 @@ class Preferences : public QObject
     QString getServerById(int);
     ServerEntry* getServerEntryById(int id);
     int getServerIdByIndex(unsigned int);
+    QValueList<int> getAutoConnectServerIDs();
 
     bool getAutoReconnect();
     bool getAutoRejoin();

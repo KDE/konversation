@@ -16,6 +16,8 @@
 
 #include <kdebug.h>
 
+#include <qvaluelist.h>
+
 #include "konversationapplication.h"
 #include "serverwindow.h"
 
@@ -27,24 +29,37 @@ KonversationApplication::KonversationApplication()
 {
   kdDebug() << "KonversationApplication::KonversationApplication()" << endl;
 
+  prefsDialog=0;
+  
   preferences.setTextFont(font());
   preferences.setListFont(font());
 
   config=new KSimpleConfig("konversationrc");
   readOptions();
-  prefsDialog=new PrefsDialog(&preferences,true);
 
-  connect(prefsDialog,SIGNAL (connectToServer(int)),this,SLOT (connectToServer(int)) );
-  connect(prefsDialog,SIGNAL (cancelClicked()),this,SLOT (quitKonversation()) );
-  connect(prefsDialog,SIGNAL (prefsChanged()),this,SLOT (saveOptions()) );
+  // handle autoconnect on startup
+  QValueList<int> list=preferences.getAutoConnectServerIDs();
+  // if there is at least one autoconnect server, start connecting right away
+  if(list.count())
+  {
+    for(unsigned int index=0;index<list.count();index++) connectToServer(list[index]);
+  }
+  else
+  {
+    prefsDialog=new PrefsDialog(&preferences,true);
 
-  /* TODO: Check if this serverList is needed anyway */
-  serverList.setAutoDelete(true);     // delete items when they are removed
+    connect(prefsDialog,SIGNAL (connectToServer(int)),this,SLOT (connectToServer(int)) );
+    connect(prefsDialog,SIGNAL (cancelClicked()),this,SLOT (quitKonversation()) );
+    connect(prefsDialog,SIGNAL (prefsChanged()),this,SLOT (saveOptions()) );
 
-  prefsDialog->show();
+    // TODO: Check if this serverList is needed at all
+    serverList.setAutoDelete(true);     // delete items when they are removed
 
-  connect(&preferences,SIGNAL (requestServerConnection(int)),this,SLOT (connectToAnotherServer(int)) );
-  connect(&preferences,SIGNAL (requestSaveOptions()),this,SLOT (saveOptions()) );
+    prefsDialog->show();
+
+    connect(&preferences,SIGNAL (requestServerConnection(int)),this,SLOT (connectToAnotherServer(int)) );
+    connect(&preferences,SIGNAL (requestSaveOptions()),this,SLOT (saveOptions()) );
+  }
 }
 
 KonversationApplication::~KonversationApplication()
@@ -67,9 +82,10 @@ void KonversationApplication::connectToServer(int id)
   kdDebug() << "KonversationApplication::connectToServer(" << id << ")" << endl;
 
   connectToAnotherServer(id);
-  /* to prevent doubleClicked() to crash the dialog */
-  /* FIXME: Seems to have a race, though */
-  prefsDialog->delayedDestruct();
+  // to prevent doubleClicked() to crash the dialog
+  // FIXME: Seems to have a race, though
+  // only close the dialog when we didn't use autoconnect
+  if(prefsDialog) prefsDialog->delayedDestruct();
   prefsDialog=0;
 }
 
@@ -478,3 +494,6 @@ void KonversationApplication::closePrefsDialog()
   delete prefsDialog;
   prefsDialog=0;
 }
+
+#include "konversationapplication.moc"
+

@@ -6,7 +6,7 @@
 */
 
 /*
-  nicklistview.cpp  -  description
+  nicklistview.cpp  -  This is the class that shows the channel nick list
   begin:     Fre Jun 7 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -73,7 +73,9 @@ void NickListView::contextMenuEvent(QContextMenuEvent *ce)
   if(selectedItems().count())
   {
     int r=popup->exec(ce->globalPos());
-    /* Will be connected to Channel::popupCommand(int) */
+    // Will be connected to Channel::popupCommand(int)
     emit popupCommand(r);
   }
 }
+
+#include "nicklistview.moc"

@@ -35,3 +35,5 @@ int PrefsPage::spacingHint()
 {
   return KDialog::spacingHint();
 }
+
+#include "prefspage.moc"

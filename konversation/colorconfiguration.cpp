@@ -188,3 +188,5 @@ void ColorConfiguration::slotCancel()
 {
 	emit closeFontColorConfiguration(this->size());
 }
+
+#include "colorconfiguration.moc"

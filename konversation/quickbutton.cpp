@@ -36,3 +36,5 @@ void QuickButton::setDefinition(QString newDefinition)
 {
   definition=newDefinition;
 }
+
+#include "quickbutton.moc"

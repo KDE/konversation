@@ -271,3 +271,5 @@ QPtrList<Highlight> HighlightDialog::getHighlightList()
 
   return newList;
 }
+
+#include "highlightdialog.moc"

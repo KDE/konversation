@@ -155,3 +155,5 @@ void PrefsPageAppearance::showModeButtonsChanged(int state)
 {
   preferences->setShowModeButtons(state==2);
 }
+
+#include "prefspageappearance.moc"

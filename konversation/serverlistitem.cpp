@@ -25,12 +25,25 @@ ServerListItem::ServerListItem(QListView* parent,int newId,
                                QString arg3,
                                QString arg4,
                                QString arg5) :
-                 KListViewItem(parent,arg0,arg1,arg2,arg3,arg4,arg5)
+                QCheckListItem(parent,QString::null,QCheckListItem::CheckBox)
 {
   id=newId;
+  setText(1,arg0);
+  setText(2,arg1);
+  setText(3,arg2);
+  setText(4,arg3);
+  setText(5,arg4);
+  setText(6,arg5);
 }
 
 ServerListItem::~ServerListItem()
 {
   kdDebug() << "ServerListItem::~ServerListItem(" << text(0) << ")" << endl;
 }
+
+void ServerListItem::stateChange(bool state)
+{
+  emit autoStateChanged(this,state);
+}
+
+#include "serverlistitem.moc"

@@ -485,3 +485,5 @@ unsigned long DccTransfer::getBufferSize() { return bufferSize; }
 
 void DccTransfer::setFolder(QString folder) { dccFolder=folder; }
 QString DccTransfer::getFolder() { return dccFolder; }
+
+#include "dcctransfer.moc"

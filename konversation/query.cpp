@@ -160,3 +160,5 @@ void Query::adjustFocus()
 {
   queryInput->setFocus();
 }
+
+#include "query.moc"

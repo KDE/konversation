@@ -83,3 +83,5 @@ QWidget* LedTab::getWidget()
 {
   return widget;
 }
+
+#include "ledtab.moc"

@@ -210,3 +210,5 @@ void DccPanel::adjustFocus()
 }
 
 KListView* DccPanel::getListView() { return dccListView; }
+
+#include "dccpanel.moc"

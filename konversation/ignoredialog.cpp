@@ -189,3 +189,5 @@ void IgnoreDialog::select(QListViewItem* item)
     }
   }
 }
+
+#include "ignoredialog.moc"

@@ -88,3 +88,5 @@ QString DccRecipientDialog::getNickname(QWidget* parent,QStringList list)
 
   return dlg.getSelectedNickname();
 }
+
+#include "dccrecipientdialog.moc"

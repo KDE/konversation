@@ -275,4 +275,4 @@ void MyColorCombo::addColors()
 void MyColorCombo::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-//#include "mycolorcombo.moc"
+#include "mycolorcombo.moc"

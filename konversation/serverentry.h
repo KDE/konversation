@@ -32,6 +32,7 @@ class ServerEntry
     int getPort();
     QString getChannelName();
     QString getChannelKey();
+    bool getAutoConnect();
     QString getDefinition() { return definition; };
 
     void setDefinition(const QString& newDefinition) { definition=newDefinition; };

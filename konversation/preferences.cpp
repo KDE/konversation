@@ -48,7 +48,7 @@ Preferences::Preferences()
   nicknameList.append("KonvIRC_");
   nicknameList.append("_KonvIRC_");
 
-  addServer("IRCNet,irc.kde.org,6667,,#kde-users,");
+  addServer("IRCNet,irc.kde.org,6667,,#kde-users,,0");
 
   buttonList.append("Op,/OP %u%n");
   buttonList.append("DeOp,/DEOP %u%n");
@@ -143,6 +143,20 @@ int Preferences::getServerIdByIndex(unsigned int index)
   ServerEntry* entry=serverList.at(index);
 
   return entry->getId();
+}
+
+QValueList<int> Preferences::getAutoConnectServerIDs()
+{
+  QValueList<int> list;
+
+  ServerEntry* lookServer=serverList.first();
+  while(lookServer)
+  {
+    if(lookServer->getAutoConnect()) list.append(lookServer->getId());
+    lookServer=serverList.next();
+  }
+
+  return list;
 }
 
 int Preferences::addServer(const QString& serverString)
@@ -360,3 +374,5 @@ bool Preferences::getShowQuickButtons() { return showQuickButtons; }
 
 void Preferences::setShowModeButtons(bool state) { showModeButtons=state; }
 bool Preferences::getShowModeButtons() { return showModeButtons; }
+
+#include "preferences.moc"

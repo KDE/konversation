@@ -241,7 +241,6 @@ void Server::notifyResponse(QString nicksOnline)
 
 void Server::startNotifyTimer(int msec)
 {
-  kdDebug() << "Server::startNotifyTimer()" << endl;
   if(msec==0) msec=KonversationApplication::preferences.getNotifyDelay()*1000; // msec!
   // start the timer in one shot mode
   notifyTimer.start(msec,true);
@@ -1029,3 +1028,5 @@ void Server::setServerWindow(ServerWindow* newWindow)
 {
   serverWindow=newWindow;
 }
+
+#include "server.moc"

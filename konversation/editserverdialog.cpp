@@ -95,3 +95,5 @@ void EditServerDialog::slotOk()
                      channelKeyInput->text());
   delayedDestruct();
 }
+
+#include "editserverdialog.moc"

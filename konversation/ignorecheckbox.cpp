@@ -33,3 +33,5 @@ void IgnoreCheckBox::wasClicked()
 {
   emit flagChanged(id,isChecked());
 }
+
+#include "ignorecheckbox.moc"

@@ -114,3 +114,5 @@ void PrefsDialog::setPreferences(Preferences* newPrefs)
 {
   preferences=newPrefs;
 }
+
+#include "prefsdialog.moc"

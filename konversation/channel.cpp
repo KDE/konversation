@@ -1140,3 +1140,5 @@ void Channel::adjustFocus()
 {
   channelInput->setFocus();
 }
+
+#include "channel.moc"

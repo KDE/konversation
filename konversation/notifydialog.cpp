@@ -145,3 +145,5 @@ QStringList NotifyDialog::getNotifyList()
 
   return newList;
 }
+
+#include "notifydialog.moc"

@@ -110,3 +110,5 @@ void StatusPanel::updateFonts()
 
   textView->setFont(KonversationApplication::preferences.getTextFont());
 }
+
+#include "statuspanel.moc"

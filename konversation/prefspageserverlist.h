@@ -21,6 +21,7 @@
 
 #include "prefspage.h"
 #include "preferences.h"
+#include "serverlistitem.h"
 
 #ifndef PREFSPAGESERVERLIST_H
 #define PREFSPAGESERVERLIST_H
@@ -47,6 +48,7 @@ class PrefsPageServerList : public PrefsPage
     void serverSelected(QListViewItem* item);
     void updateServer(const QString&,const QString&,const QString&,const QString&,const QString&,const QString&);
     void updateServerProperty(QListViewItem*,const QString&,int);
+    void updateAutoState(ServerListItem* item,bool state);
     void connectClicked();
     void serverDoubleClicked(QListViewItem* item);
 
@@ -58,7 +60,7 @@ class PrefsPageServerList : public PrefsPage
 
     KListView* serverListView;
 
-		int itemId;
+    int itemId;
 };
 
 #endif

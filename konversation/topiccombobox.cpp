@@ -48,3 +48,5 @@ void TopicComboBox::insertStringList(const QStringList& list)
   KComboBox::insertStringList(list);
   setEditText(list[0].section(' ',1));
 }
+
+#include "topiccombobox.moc"

@@ -71,3 +71,5 @@ void NickChangeDialog::newNicknameEntered(const QString& newNick)
   emit newNickname(newNick);
   emit closeDialog(size());
 }
+
+#include "nickchangedialog.moc"

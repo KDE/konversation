@@ -47,7 +47,7 @@ ServerWindow::ServerWindow(Server* newServer) : KMainWindow()
   showStatusBarAction=KStdAction::showStatusbar(this,SLOT(showStatusbar()),actionCollection()); /* options_show_statusbar */
 /*  KAction* prefsAction= */ KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); /* options_configure */
 /*  KAction* open_quickbuttons_action= */ new KAction(i18n("Buttons"),0,0,this,SLOT (openButtons()),actionCollection(),"open_buttons_window");
-/*  KAction* open_hilight_action=      */ new KAction(i18n("Hilight List"),0,0,this,SLOT (openHilight()),actionCollection(),"open_hilight_window");
+/*  KAction* open_hilight_action=      */ new KAction(i18n("Highlight List"),0,0,this,SLOT (openHilight()),actionCollection(),"open_hilight_window");
 /*  KAction* open_notify_action=       */ new KAction(i18n("Notify List"),0,0,this,SLOT (openNotify()),actionCollection(),"open_notify_window");
 /*  KAction* open_nicksonline_action=  */ new KAction(i18n("Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
 /*  KAction* open_ignore_action=       */ new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
@@ -557,3 +557,5 @@ void ServerWindow::resetLag()
 {
   statusBar()->changeItem(i18n("Lag: not known"),LagOMeter);
 }
+
+#include "serverwindow.moc"

@@ -28,3 +28,5 @@ IRCServerSocket::~IRCServerSocket()
 {
   kdDebug() << "IRCServerSocket::~IRCServerSocket()" << endl;
 }
+
+#include "ircserversocket.moc"

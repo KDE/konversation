@@ -219,3 +219,5 @@ int ChatWindow::margin()
 
 IRCView* ChatWindow::getTextView()     { return textView; }
 void ChatWindow::setLog(bool activate) { log=activate; }
+
+#include "chatwindow.moc"

@@ -578,3 +578,5 @@ bool InputFilter::isAChannel(QString check)
 
   return (initial=='#' || initial=='&' || initial=='+' || initial=='!');
 }
+
+#include "inputfilter.moc"

@@ -33,6 +33,8 @@
 
 class PrefsPageScripts : public PrefsPage
 {
+  Q_OBJECT
+
   public:
 	  PrefsPageScripts(QFrame *passedParent, Preferences *passedPreferences);
 	  ~PrefsPageScripts();

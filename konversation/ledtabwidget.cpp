@@ -67,3 +67,5 @@ LedTabBar* LedTabWidget::tabBar()
 {
   return (LedTabBar*) QTabWidget::tabBar();
 }
+
+#include "ledtabwidget.moc"

@@ -18,14 +18,16 @@
 #ifndef SERVERLISTITEM_H
 #define SERVERLISTITEM_H
 
-#include <klistview.h>
+#include <qlistview.h>
 
 /*
   @author Dario Abatianni
 */
 
-class ServerListItem : public KListViewItem
+class ServerListItem : public QObject, public QCheckListItem
 {
+  Q_OBJECT
+
   public:
     ServerListItem(QListView* parent,int newId,QString arg0,
                    QString arg1=QString::null,
@@ -36,7 +38,11 @@ class ServerListItem : public KListViewItem
     ~ServerListItem();
     int getId() { return id; };
 
+  signals:
+    void autoStateChanged(ServerListItem* myself,bool state);
+
   protected:
+    void stateChange(bool state);
     int id;
 };
 

@@ -91,3 +91,5 @@ void PrefsPageLog::logPathInputChanged(const QString& path)
 {
   preferences->setLogPath(path);
 }
+
+#include "prefspagelog.moc"

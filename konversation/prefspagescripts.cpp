@@ -57,3 +57,5 @@ PrefsPageScripts::PrefsPageScripts(QFrame *passedParent, Preferences *passedPref
 PrefsPageScripts::~PrefsPageScripts()
 {
 }
+
+#include "prefspagescripts.moc"

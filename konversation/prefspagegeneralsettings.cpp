@@ -133,3 +133,4 @@ void PrefsPageGeneralSettings::fixedMOTDChanged(int state)
   preferences->setFixedMOTD(state==2);
 }
 
+#include "prefspagegeneralsettings.moc"

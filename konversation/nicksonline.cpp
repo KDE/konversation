@@ -69,3 +69,5 @@ void NicksOnline::closeButton()
 {
   emit closeClicked(size());
 }
+
+#include "nicksonline.moc"

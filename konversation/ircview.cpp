@@ -480,3 +480,5 @@ bool IRCView::eventFilter(QObject* object,QEvent* event)
 
   return KTextBrowser::eventFilter(object,event);
 }
+
+#include "ircview.moc"

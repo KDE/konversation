@@ -17,7 +17,6 @@
 
 #include "notagaindialog.h"
 
-// EIS: Hier hab ich den void* ersetzt und den Cast rausgenommen. Funzt prima.
 NotAgainDialog::NotAgainDialog(QWidget* parent, QString passed_itemText) : KDialogBase(parent, 0, false, i18n("Warning"), Ok, Ok, true)
 {
 
@@ -43,3 +42,5 @@ void NotAgainDialog::slotOk()
 {
 	emit duplicateWarningClose(SwitchWarning->isChecked());
 }
+
+#include "notagaindialog.moc"

@@ -27,12 +27,10 @@ ServerEntry::ServerEntry(const QString newDefinition)
   /* Every entry gets a unique ID */
   id=newId++;
   definition=newDefinition;
-  kdDebug() << "definition(" << id << ") = " << definition << endl;
 }
 
 ServerEntry::~ServerEntry()
 {
-  kdDebug() << "ServerEntry::~ServerEntry(" << definition << ")" << endl;
 }
 
 void ServerEntry::updateProperty(int property,const QString& value)
@@ -64,5 +62,11 @@ QString ServerEntry::getChannelKey()
 {
   QStringList definition(QStringList::split(',',getDefinition(),true));
   return definition[5];
+}
+
+bool ServerEntry::getAutoConnect()
+{
+  QStringList definition(QStringList::split(',',getDefinition(),true));
+  return (definition[6]=="1") ? true : false;
 }
 

@@ -132,3 +132,5 @@ void PrefsPageIdentity::kickReasonChanged(const QString& newReason)
 {
   preferences->setKickReason(newReason);
 }
+
+#include "prefspageidentity.moc"
