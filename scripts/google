@@ -27,6 +27,27 @@ my $info;
 my $query;
 my $limit=5;
 
+
+GetOptions('search=s' => \$search,
+	   'spell=s' => \$spellcheck,
+	   'browser' => \$browser,
+	   'limit|max|maxresults=i' => \$limit);
+
+if(!$browser && !$search && !$spellcheck && !@ARGV)
+{
+    system 'dcop', $port, 'Konversation', 'info', "\x02Google Search Script Usage:\x02";
+    system 'dcop', $port, 'Konversation', 'info', '/google (--max <number>) (--search) <keyword> : Search for keyword at Google';
+    system 'dcop', $port, 'Konversation', 'info', '/google --spell <word> : Spellcheck word using Google';
+    exec   'dcop', $port, 'Konversation', 'info', '/google -b <keyword> : Show results in konqueror';
+}
+elsif($browser)
+{
+    $query = join(" ",@ARGV);
+    $query = CGI::escape($query);
+    $url="http://www.google.com/search?q=$query";
+    exec 'kfmclient','openURL',$url;
+}
+
 eval { require SOAP::Lite; };
    
 if($@)
@@ -59,27 +80,8 @@ else
     }
 
     close(KEY);
-
-    GetOptions('search=s' => \$search,
-	       'spell=s' => \$spellcheck,
-	       'browser' => \$browser,
-	       'limit|max|maxresults=i' => \$limit);
     
-    if(!$browser && !$search && !$spellcheck && !@ARGV)
-    {
-	system 'dcop', $port, 'Konversation', 'info', "\x02Google Search Script Usage:\x02";
-	system 'dcop', $port, 'Konversation', 'info', '/google (--max <number>) (--search) <keyword> : Search for keyword at Google';
-	system 'dcop', $port, 'Konversation', 'info', '/google --spell <word> : Spellcheck word using Google';
-	exec   'dcop', $port, 'Konversation', 'info', '/google -b <keyword> : Show results in konqueror';
-    }
-    elsif($browser)
-    {
-	$query = join(" ",@ARGV);
-	$query = CGI::escape($query);
-	$url="http://www.google.com/search?q=$query";
-	exec 'kfmclient','openURL',$url;
-    }
-    elsif($search || !$spellcheck)
+    if($search || !$spellcheck)
     {
 	$search = join(" ",$search,@ARGV);
 	system 'dcop', $port, 'Konversation', 'info',  "Searching Google for \x02$search\x02 ...";
