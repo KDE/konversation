@@ -57,7 +57,8 @@ void ChannelOptionsDialog::setTopicHistory(const QStringList& history)
 
 void ChannelOptionsDialog::topicHistoryItemClicked(QListViewItem* item)
 {
-  m_widget->topicEdit->setText(item->text(1));
+  if(m_widget && m_widget->topiEdit)
+    m_widget->topicEdit->setText(item->text(1));
 }
 
 void ChannelOptionsDialog::setAllowedChannelModes(const QString& modes)
