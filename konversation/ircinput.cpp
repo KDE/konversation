@@ -33,7 +33,7 @@
 #include "ircview.h"
 
 #define MAXHISTORY 100
-#define RICHTEXT 1
+#define RICHTEXT 0
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
