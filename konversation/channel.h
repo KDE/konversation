@@ -91,6 +91,8 @@ class Channel : public ChatWindow
     virtual void closeYourself();
     virtual bool frontView();
     virtual bool searchView();
+    
+    bool allowNotifications() { return m_allowNotifications; }
 
   signals:
     void newText(QWidget* channel,const QString& highlightColor, bool important);
@@ -108,6 +110,8 @@ class Channel : public ChatWindow
     void appendInputText(const QString& s);
     virtual void indicateAway(bool show);
     void showTopic(bool show);
+    
+    void setAllowNotifications(bool allow) { m_allowNotifications = allow; }
 
   protected slots:
     void purgeNicks();
@@ -193,6 +197,8 @@ class Channel : public ChatWindow
     QStringList selectedNicksList;
     QPtrList<QuickButton> buttonList;
     QTimer userhostTimer;
+    
+    bool m_allowNotifications;
 };
 
 #endif
