@@ -12,25 +12,29 @@ bin_PROGRAMS = konversation
 bin_SCRIPTS = konversationircprotocolhandler
 
 konversation_SOURCES = konviface.skel konversationmainwindow.cpp \
-			valuelistviewitem.cpp	urlcatcher.cpp searchdialog.cpp prefspagehighlight.cpp scriptlauncher.cpp \
-			rawlog.cpp	prefspagenotify.cpp prefspagedialogs.cpp prefspagebuttons.cpp konvdcop.cpp \
-			channellistpanel.cpp	konsolepanel.cpp dcctransferhandler.cpp prefspageignore.cpp identity.cpp \
-			statuspanel.cpp	dccrecipientdialog.cpp topiccombobox.cpp prefspagelog.cpp \
-			prefspagedccsettings.cpp	prefspagescripts.cpp nicksonline.cpp prefspageidentity.cpp prefspage.cpp 		dccpanel.cpp \
-	dcctransfer.cpp ledlistviewitem.cpp highlight.cpp \
-			highlightviewitem.cpp	modebutton.cpp ignorelistviewitem.cpp ignorecheckbox.cpp ignore.cpp \
-			nicklistview.cpp	ircinput.cpp ledtabbar.cpp ledtab.cpp ledtabwidget.cpp images.cpp 		prefsdialog.cpp \
-	quickbutton.cpp 		preferences.cpp	chatwindow.cpp outputfilter.cpp query.cpp \
-	konversationapplication.cpp nick.cpp 		inputfilter.cpp	channel.cpp ircview.cpp server.cpp main.cpp \
-			irccolorchooserui.ui	irccolorchooser.cpp prefspagealiases.cpp channellistviewitem.cpp osd.cpp \
-			prefspageosd.cpp	ircevent.cpp trayicon.cpp tabaction.cpp prefspagetabbehavior.cpp dccchat.cpp \
-			logfilereader.cpp	multilineedit.cpp nickinfo.cpp dccresumedialog.cpp konversationsound.cpp \
-			quickconnectdialog.cpp	prefspagebehaviour.cpp prefspagechatwinbehavior.cpp \
-			prefspagechatwinappearance.cpp	prefspagecolorsappearance.cpp serverlistdialog.cpp dcctransfersend.cpp \
-			dcctransferrecv.cpp	channelnick.cpp dccdetaildialog.cpp insertchardialog.cpp irccharsets.cpp \
-			editnotifydialog.cpp common.cpp serverison.cpp sslsocket.cpp servergroupsettings.cpp \
-			serversettings.cpp servergroupdialog.cpp ssllabel.cpp serverdialog.cpp channeldialog.cpp \
-	identitydialog.cpp
+		       valuelistviewitem.cpp urlcatcher.cpp searchdialog.cpp prefspagehighlight.cpp\
+		       scriptlauncher.cpp rawlog.cpp prefspagenotify.cpp prefspagedialogs.cpp\
+		       prefspagebuttons.cpp konvdcop.cpp channellistpanel.cpp konsolepanel.cpp\
+		       dcctransferhandler.cpp prefspageignore.cpp identity.cpp \
+		       statuspanel.cpp	dccrecipientdialog.cpp topiccombobox.cpp prefspagelog.cpp \
+		       prefspagedccsettings.cpp prefspagescripts.cpp nicksonline.cpp prefspageidentity.cpp\
+		       prefspage.cpp dccpanel.cpp dcctransfer.cpp ledlistviewitem.cpp highlight.cpp \
+		       highlightviewitem.cpp modebutton.cpp ignorelistviewitem.cpp ignorecheckbox.cpp\
+		       ignore.cpp nicklistview.cpp ircinput.cpp ledtabbar.cpp ledtab.cpp ledtabwidget.cpp\
+		       images.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp chatwindow.cpp\
+		       outputfilter.cpp query.cpp konversationapplication.cpp nick.cpp inputfilter.cpp\
+		       channel.cpp ircview.cpp server.cpp main.cpp irccolorchooserui.ui	irccolorchooser.cpp\
+		       prefspagealiases.cpp channellistviewitem.cpp osd.cpp prefspageosd.cpp ircevent.cpp\
+		       trayicon.cpp tabaction.cpp prefspagetabbehavior.cpp dccchat.cpp \
+		       logfilereader.cpp multilineedit.cpp nickinfo.cpp dccresumedialog.cpp\
+                       konversationsound.cpp quickconnectdialog.cpp prefspagebehaviour.cpp\
+		       prefspagechatwinbehavior.cpp prefspagechatwinappearance.cpp\
+	               prefspagecolorsappearance.cpp serverlistdialog.cpp dcctransfersend.cpp \
+		       dcctransferrecv.cpp channelnick.cpp dccdetaildialog.cpp insertchardialog.cpp\
+		       irccharsets.cpp editnotifydialog.cpp common.cpp serverison.cpp sslsocket.cpp\
+                       servergroupsettings.cpp serversettings.cpp servergroupdialog.cpp ssllabel.cpp\
+                       serverdialog.cpp channeldialog.cpp identitydialog.cpp
+
 konversation_LDADD   = $(COMPAT_LIBS) $(LIB_KIO) -lkmdi -lm $(LIB_ARTS) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la
 
 xdg_apps_DATA = konversation.desktop
@@ -44,7 +48,7 @@ rcdir = $(kde_datadir)/konversation
 rc_DATA = konversationui.rc eventsrc
 KDE_ICON = AUTO
 
-kdelnk_DATA = irc.protocol irc6.protocol
+kdelnk_DATA = konvirc.protocol konvirc6.protocol
 kdelnkdir = $(kde_servicesdir)
 
 updatedir = $(kde_datadir)/kconf_update
@@ -56,9 +60,11 @@ messages: rc.cpp
 	if test -n "$$LIST"; then \
 	 $(XGETTEXT) $$LIST -o $(podir)/konversation.pot; \
 	fi
+
 noinst_HEADERS = prefspagebehaviour.h prefspagechatwinbehavior.h \
-					prefspagechatwinappearance.h	 prefspagecolorsappearance.h serverlistdialog.h dcctransfersend.h \
-					dcctransferrecv.h	 dccdetaildialog.h insertchardialog.h editnotifydialog.h serverison.h \
-					servergroupsettings.h serversettings.h servergroupdialog.h serverdialog.h channeldialog.h \
-	identitydialog.h
+	         prefspagechatwinappearance.h	 prefspagecolorsappearance.h serverlistdialog.h\
+                 dcctransfersend.h dcctransferrecv.h dccdetaildialog.h insertchardialog.h\
+                 editnotifydialog.h serverison.h servergroupsettings.h serversettings.h\
+		 servergroupdialog.h serverdialog.h channeldialog.h identitydialog.h
+
 
