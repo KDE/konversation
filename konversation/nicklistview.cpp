@@ -128,8 +128,6 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
 
 NickListView::~NickListView()
 {
-  delete modes;
-  delete popup;
 }
 
 void NickListView::contextMenuEvent(QContextMenuEvent* ce)
