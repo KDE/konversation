@@ -69,6 +69,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 {
   // init variables
   m_processingTimer = 0;
+  m_pendingChannelNickLists.clear();
+  m_currentIndex = 0;
+  m_opsToAdd = 0;
   nicks=0;
   ops=0;
   completionPosition=0;
@@ -1865,8 +1868,6 @@ void Channel::addPendingNickList(const QStringList& newNickList)
     setPendingNicks(true);
   }
 
-  m_opsToAdd = 0;
-  
   if(!m_processingTimer) {
     m_processingTimer = new QTimer(this);
     connect(m_processingTimer, SIGNAL(timeout()), this, SLOT(processPendingNicks()));
@@ -1891,8 +1892,7 @@ void Channel::addPendingNickList(const QStringList& newNickList)
 
   adjustNicks(pendingChannelNickList.count());
 */
-  m_pendingChannelNickList = pendingChannelNickList;
-  m_listIterator = m_pendingChannelNickList.begin();
+  m_pendingChannelNickLists.append(pendingChannelNickList);
 #else
 
   unsigned int mode;
@@ -1928,7 +1928,7 @@ void Channel::addPendingNickList(const QStringList& newNickList)
   nicknameList.sort();
   adjustOps(opsToAdd);
 */
-  if(m_listIterator != m_pendingChannelNickList.end()) {
+  if(!m_processingTimer->isActive()) {
     m_processingTimer->start(0);
   }
 }
@@ -2064,23 +2064,30 @@ void Channel::showTopic(bool show)
 
 void Channel::processPendingNicks()
 {
-  fastAddNickname(*m_listIterator);
+  ChannelNickPtr nick = m_pendingChannelNickLists.first()[m_currentIndex];
   
-  if((*m_listIterator)->isAdmin() || (*m_listIterator)->isOwner() ||
-    (*m_listIterator)->isOp() || (*m_listIterator)->isHalfOp())
+  fastAddNickname(nick);
+  
+  if(nick->isAdmin() || nick->isOwner() ||
+    nick->isOp() || nick->isHalfOp())
   {
     m_opsToAdd++;
   }
   
-  ++m_listIterator;
+  m_currentIndex++;
+  
+  if(m_pendingChannelNickLists.first().count() == m_currentIndex) {
+    adjustNicks(m_pendingChannelNickLists.first().count());
+    adjustOps(m_opsToAdd);
+    m_pendingChannelNickLists.pop_front();
+    m_currentIndex = 0;
+    m_opsToAdd = 0;
+  }
 
-  if(m_listIterator == m_pendingChannelNickList.end()) {
+  if(m_pendingChannelNickLists.isEmpty()) {
     m_processingTimer->stop();
     nicknameListView->sort();
     nicknameList.sort();
-    adjustOps(m_opsToAdd);
-    adjustNicks(m_pendingChannelNickList.count());
-    m_pendingChannelNickList.clear();
   }
 }
 

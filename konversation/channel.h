@@ -231,9 +231,9 @@ class Channel : public ChatWindow
 
     bool m_allowNotifications;
     
-    ChannelNickList::iterator m_listIterator;
-    ChannelNickList m_pendingChannelNickList;
+    QValueList<ChannelNickList> m_pendingChannelNickLists;
     int m_opsToAdd;
+    int m_currentIndex;
     
     QTimer* m_processingTimer;
 };
