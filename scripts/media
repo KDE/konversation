@@ -1,0 +1,140 @@
+#!/usr/bin/env perl
+# Copyright 2005 İsmail Dönmez (Resistence is futile, turn on unicode!)
+#
+# One media command to rule them all, inspired from Kopete's now listening plugin
+
+use strict;
+use warnings;
+
+my $port=shift;
+my $server=shift;
+my $target=shift;
+
+# Variables
+my $amarok;
+my $kaffeine;
+my $juk;
+my $noatun;
+my $title;
+my $artist;
+my $album;
+my $error;
+
+sub check_running 
+{
+    our $application=shift;
+    
+    if (`dcop $application`)
+    {
+	return 1;
+    }
+    else
+    {
+	return 0;
+    }
+}
+
+sub pretty_print
+{
+    our $title=shift;
+    our $artist=shift;
+    our $album=shift;
+
+    if($artist =~ /\w+/ && $album =~ /\w+/)
+    {
+	return "/me is playing $title by $artist on $album";
+    }
+    elsif($artist =~ /\w+/)
+    {
+	return "/me is playing $title by $artist";
+    }
+    elsif($album =~ /\w+/)
+    {
+	return "/me is playing $title\" on $album";
+    }
+    else
+    {
+	return "/me is playing $title";
+    }
+}
+
+$amarok=check_running("amarok");
+$juk=check_running("juk");
+$kaffeine=check_running("kaffeine");
+$noatun=check_running("noatun");
+
+if($amarok)
+{
+    $title=`dcop amarok player title`;
+    $artist=`dcop amarok player artist`;
+    $album=`dcop amarok player album`;
+    
+    chomp $title;
+    chomp $artist;
+    chomp $album;
+
+    if($title =~ /\w+/)
+    {
+	our $string=pretty_print($title,$artist,$album);
+	exec("dcop $port Konversation say $server \"$target\" \"$string\"");
+    }
+    else
+    {
+	$error="amaroK";
+    }
+}
+
+if($juk)
+{
+    our $string=`dcop juk Player playingString`;
+    chomp $string;
+
+    if($string =~ /\w+/)
+    {
+	exec("dcop $port Konversation say $server \"$target\" \"/me is playing $string\"");
+    }
+    else
+    {
+	$error=join(',',$error,"JuK");
+    }
+}
+
+if($kaffeine)
+{
+    our $string=`dcop kaffeine Kaffeine getTitle`;
+    chomp $string;
+    
+    if($string =~ /\w+/)
+    {
+	exec("dcop $port Konversation say $server \"$target\" \"/me is playing $string\"");
+    }
+    else
+    {
+	$error=join(',',$error,"Kaffeine");
+    }
+}
+
+if($noatun)
+{
+    our $string=`dcop Noatun title`;
+    chomp $string;
+
+    if($string =~ /\w+/)
+    {
+        exec("dcop $port Konversation say $server \"$target\" \"/me is playing $string\"");
+    }
+    else
+    {
+        $error=join(',',$error,"Noatun");
+    }
+}
+
+if(!$amarok && !$juk && !$noatun)
+{
+    exec("dcop $port Konversation error \"No supported media player is running\"");
+}
+
+if($error)
+{
+    exec("dcop $port Konversation error \"Nothing is playing in $error\"");
+}
