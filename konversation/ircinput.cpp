@@ -27,7 +27,7 @@
 #include "multilineedit.h"
 
 #define MAXHISTORY 100
-#define RICHTEXT 1
+#define RICHTEXT 0
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
@@ -46,8 +46,10 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 
   // widget may not resize vertically
   setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
-#ifdef RICHTEXT
+#if RICHTEXT == 1
   setTextFormat(RichText);
+#else
+  setTextFormat(PlainText);
 #endif
 }
 
@@ -68,7 +70,7 @@ QSize IRCInput::sizeHint() const
 
 QString IRCInput::text() const
 {
-#ifdef RICHTEXT
+#if RICHTEXT == 1
   QString content=KTextEdit::text();
 
   QDomDocument document;
