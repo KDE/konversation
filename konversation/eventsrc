@@ -401,9 +401,11 @@ default_presentation=0
 [kick]
 Name=Kick
 Name[cy]=Lluchio
+Name[es]=Expulsar
 Name[it]=Espulsione
 Name[xx]=xxKickxx
 Comment=Someone kicked you out of a channel
+Comment[es]=Un usuario le ha expulsado de un canal
 Comment[it]=Qualcuno ti ha espulso da un canale
 Comment[nl]=Iemand heeft u van het kanaal gekicked
 Comment[pt]=Alguém o expulsou de um canal
@@ -416,6 +418,7 @@ default_presentation=0
 [dccChat]
 Name=Dcc Chat
 Name[br]=Flapañ Dcc
+Name[es]=Charla Dcc
 Name[it]=Chat DCC
 Name[nl]=DCC-gesprek
 Name[pt]=Conversa DCC
@@ -424,6 +427,7 @@ Name[ru]=Разговор DCC
 Name[sv]=DCC-chatt
 Name[xx]=xxDcc Chatxx
 Comment=Some started a dcc chat with you
+Comment[es]=Alguien empezó una charla tipo dcc con usted
 Comment[it]=Qualcuno ha avviato una conversazione DCC con te
 Comment[nl]=Iemand begon een DCC-gesprek met u
 Comment[pt]=Alguém iniciou uma conversa DCC consigo
