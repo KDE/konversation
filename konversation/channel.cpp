@@ -1807,14 +1807,17 @@ void Channel::refreshModeButtons() {
     enable=getOwnChannelNick()->isAnyTypeOfOp();
   }  //if not channel nick, then enable is true - fall back to assuming they are op
     
-  modeT->setEnabled(enable);
+  //don't disable the mode buttons since you can't then tell if they are enabled or not.
+  //needs to be fixed somehow
+
+/*  modeT->setEnabled(enable);
   modeN->setEnabled(enable);
   modeS->setEnabled(enable);
   modeI->setEnabled(enable); 
   modeP->setEnabled(enable);
   modeM->setEnabled(enable);
   modeK->setEnabled(enable);
-  modeL->setEnabled(enable);
+  modeL->setEnabled(enable);*/
   limit->setEnabled(enable);
  
   // Tooltips for the ModeButtons
