@@ -13,135 +13,119 @@
         </rect>
     </property>
     <property name="caption">
-        <string></string>
+        <string>PrefsPageIRCColorsUI</string>
     </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLabel" row="7" column="0">
-            <property name="name">
-                <cstring>m_orangeLbl</cstring>
-            </property>
-            <property name="text">
-                <string>Orange:</string>
-            </property>
-        </widget>
-        <widget class="QLabel" row="6" column="0">
-            <property name="name">
-                <cstring>m_magentaLbl</cstring>
-            </property>
-            <property name="text">
-                <string>Magenta:</string>
-            </property>
-        </widget>
-        <widget class="QLabel" row="5" column="0">
-            <property name="name">
-                <cstring>m_brownLbl</cstring>
-            </property>
-            <property name="text">
-                <string>Brown:</string>
-            </property>
-        </widget>
-        <widget class="QLabel" row="0" column="0">
-            <property name="name">
-                <cstring>m_whiteLbl</cstring>
-            </property>
-            <property name="text">
-                <string>White:</string>
-            </property>
-        </widget>
-        <widget class="QLabel" row="2" column="0">
-            <property name="name">
-                <cstring>m_darkBlueLbl</cstring>
-            </property>
-            <property name="text">
-                <string>Dark blue:</string>
-            </property>
-        </widget>
-        <widget class="QLabel" row="1" column="0">
-            <property name="name">
-                <cstring>m_blackLbl</cstring>
-            </property>
-            <property name="text">
-                <string>Black:</string>
-            </property>
-        </widget>
-        <widget class="QLabel" row="4" column="0">
-            <property name="name">
-                <cstring>m_redLbl</cstring>
-            </property>
-            <property name="text">
-                <string>Red:</string>
-            </property>
-        </widget>
-        <widget class="QLabel" row="3" column="0">
-            <property name="name">
-                <cstring>m_darkGreenLbl</cstring>
-            </property>
-            <property name="text">
-                <string>Dark green:</string>
-            </property>
-        </widget>
-        <widget class="QLabel" row="5" column="2">
+        <widget class="QLabel" row="5" column="3">
             <property name="name">
                 <cstring>m_PurpleLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
             <property name="text">
                 <string>Purple:</string>
             </property>
         </widget>
-        <widget class="QLabel" row="6" column="2">
+        <widget class="QLabel" row="6" column="3">
             <property name="name">
                 <cstring>m_grayLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
             <property name="text">
                 <string>Gray:</string>
             </property>
         </widget>
-        <widget class="QLabel" row="1" column="2">
+        <widget class="QLabel" row="1" column="3">
             <property name="name">
                 <cstring>m_GreenLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
             <property name="text">
                 <string>Green:</string>
             </property>
         </widget>
-        <widget class="QLabel" row="4" column="2">
+        <widget class="QLabel" row="4" column="3">
             <property name="name">
                 <cstring>m_blueLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
             <property name="text">
                 <string>Blue:</string>
             </property>
         </widget>
-        <widget class="QLabel" row="7" column="2">
+        <widget class="QLabel" row="7" column="3">
             <property name="name">
                 <cstring>m_lightGrayLbl_16</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
             <property name="text">
                 <string>Light gray:</string>
             </property>
         </widget>
-        <widget class="QLabel" row="0" column="2">
-            <property name="name">
-                <cstring>m_yellowLbl</cstring>
-            </property>
-            <property name="text">
-                <string>Yellow:</string>
-            </property>
-        </widget>
-        <widget class="QLabel" row="3" column="2">
+        <widget class="QLabel" row="3" column="3">
             <property name="name">
                 <cstring>m_cyanLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
             <property name="text">
                 <string>Cyan:</string>
             </property>
         </widget>
-        <widget class="QLabel" row="2" column="2">
+        <widget class="QLabel" row="2" column="3">
             <property name="name">
                 <cstring>m_darkCyanLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
             <property name="text">
                 <string>Dark cyan:</string>
@@ -174,21 +158,6 @@
                     <red>0</red>
                     <green>0</green>
                     <blue>0</blue>
-                </color>
-            </property>
-        </widget>
-        <widget class="KColorButton" row="2" column="1">
-            <property name="name">
-                <cstring>m_darkBlueCBtn</cstring>
-            </property>
-            <property name="text">
-                <string></string>
-            </property>
-            <property name="color">
-                <color>
-                    <red>0</red>
-                    <green>0</green>
-                    <blue>255</blue>
                 </color>
             </property>
         </widget>
@@ -267,7 +236,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="0" column="3">
+        <widget class="KColorButton" row="0" column="4">
             <property name="name">
                 <cstring>m_yellowCBtn</cstring>
             </property>
@@ -282,7 +251,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="1" column="3">
+        <widget class="KColorButton" row="1" column="4">
             <property name="name">
                 <cstring>m_greenCBtn</cstring>
             </property>
@@ -297,7 +266,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="2" column="3">
+        <widget class="KColorButton" row="2" column="4">
             <property name="name">
                 <cstring>m_darkCyanCBtn</cstring>
             </property>
@@ -312,7 +281,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="3" column="3">
+        <widget class="KColorButton" row="3" column="4">
             <property name="name">
                 <cstring>m_cyanCBtn</cstring>
             </property>
@@ -327,7 +296,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="4" column="3">
+        <widget class="KColorButton" row="4" column="4">
             <property name="name">
                 <cstring>m_blueCBtn</cstring>
             </property>
@@ -342,7 +311,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="5" column="3">
+        <widget class="KColorButton" row="5" column="4">
             <property name="name">
                 <cstring>m_purpleCBtn</cstring>
             </property>
@@ -357,7 +326,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="6" column="3">
+        <widget class="KColorButton" row="6" column="4">
             <property name="name">
                 <cstring>m_grayCBtn</cstring>
             </property>
@@ -372,7 +341,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="7" column="3">
+        <widget class="KColorButton" row="7" column="4">
             <property name="name">
                 <cstring>m_lightGrayCBtn</cstring>
             </property>
@@ -387,6 +356,199 @@
                 </color>
             </property>
         </widget>
+        <spacer row="8" column="1">
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QLabel" row="0" column="3">
+            <property name="name">
+                <cstring>m_yellowLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>Yellow:</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="7" column="0">
+            <property name="name">
+                <cstring>m_orangeLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>Orange:</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="6" column="0">
+            <property name="name">
+                <cstring>m_magentaLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>Magenta:</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="5" column="0">
+            <property name="name">
+                <cstring>m_brownLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>Brown:</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="4" column="0">
+            <property name="name">
+                <cstring>m_redLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>Red:</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="3" column="0">
+            <property name="name">
+                <cstring>m_darkGreenLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>Dark green:</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="2" column="0">
+            <property name="name">
+                <cstring>m_darkBlueLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>Dark blue:</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="1" column="0">
+            <property name="name">
+                <cstring>m_blackLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>Black:</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="0" column="0">
+            <property name="name">
+                <cstring>m_whiteLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>White:</string>
+            </property>
+        </widget>
+        <widget class="KColorButton" row="2" column="1">
+            <property name="name">
+                <cstring>m_darkBlueCBtn</cstring>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+            <property name="color">
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>255</blue>
+                </color>
+            </property>
+        </widget>
+        <spacer row="3" column="2" rowspan="2" colspan="1">
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Maximum</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
     </grid>
 </widget>
 <layoutdefaults spacing="6" margin="11"/>
