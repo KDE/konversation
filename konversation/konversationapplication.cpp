@@ -437,6 +437,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("HilightOwnLinesColor",preferences.getHilightOwnLinesColor().name().mid(1));
 
   // Ignore List
+  config->deleteGroup("Ignore List");
   config->setGroup("Ignore List");
   QPtrList<Ignore> ignoreList=preferences.getIgnoreList();
   Ignore* item=ignoreList.first();
