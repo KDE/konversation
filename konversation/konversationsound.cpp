@@ -12,6 +12,9 @@
 */
 
 #include "konversationsound.h"
+#include <config.h>
+
+#ifdef USE_ARTS
 
 #include <kurl.h>
 
@@ -50,5 +53,7 @@ namespace Konversation {
     }
   }
 }
+#endif
 
 #include "konversationsound.moc"
+
