@@ -44,8 +44,13 @@ OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name 
 }
 
 
-void OSDWidget::renderOSDText( const QString &text )
+void OSDWidget::renderOSDText( const QString &txt )
 {
+    QString text = txt; // Escaped text
+    QRegExp colorRegExp("((\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)|\x02|\x09|\x13|\x16|\x1f)");
+    // Escape text decoration
+    text.replace(colorRegExp,"");
+
     static QBitmap mask;
 
     // Set a sensible maximum size, don't cover the whole desktop or cross the screen
