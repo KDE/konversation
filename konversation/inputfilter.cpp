@@ -135,7 +135,15 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
             server->ctcpReply(sourceNick,QString("PING %1").arg(ctcpArgument));
           }
         }
-
+        // Maybe it was a version request, so act appropriately
+        else if(ctcpCommand=="version")
+        {
+          if(!isIgnore(prefix,Ignore::CTCP))
+          {
+            server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1 to channel %2.").arg(sourceNick).arg(parameterList[0]));
+            server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002-2003 Dario Abatianni and Matthias Gierlings").arg(VERSION));
+          }
+        }
         // No known CTCP request, give a general message
         else
         {
