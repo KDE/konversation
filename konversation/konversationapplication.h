@@ -20,9 +20,14 @@
 #include <kapp.h>
 #include <ksimpleconfig.h>
 
+#include <qcstring.h>
+
 #include "preferences.h"
 #include "prefsdialog.h"
 #include "server.h"
+#include "event.h"
+
+class KonvDCOP;
 
 /*
   @author Dario Abatianni
@@ -32,12 +37,16 @@ class KonversationApplication : public KApplication
 {
   Q_OBJECT
   public:
+
     static Preferences preferences;
 
     // URL-Catcher
     // TODO: Provide a list of seen URLs
     static QStringList urlList;
     static void storeURL(const QString &url);
+
+    // Returns a list of signals we should emit
+    void processHooks (EVENT_TYPE type, const QString &criteria, const QString &sender, const QString &target, const QString &data);
 
     KonversationApplication();
     ~KonversationApplication();
@@ -54,12 +63,15 @@ class KonversationApplication : public KApplication
     void openPrefsDialog();
     void closePrefsDialog();
 
+    void emitDCOPSig(const QCString &signal, QByteArray &data);
+
   protected slots:
     void removeServer(Server* server);
 
   protected:
     QPtrList<Server> serverList;
     PrefsDialog* prefsDialog;
+    KonvDCOP* dcop_object;
 };
 
 #endif

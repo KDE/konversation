@@ -30,7 +30,7 @@ class NicksOnline : public QVBox
   Q_OBJECT
 
   public: 
-    NicksOnline(QSize& newSize);
+    NicksOnline(const QSize& newSize);
     ~NicksOnline();
 
   signals:

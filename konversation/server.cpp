@@ -166,7 +166,7 @@ void Server::connectToIRCServer()
   if(serverSocket.socketStatus()==KExtendedSocket::connected)
   {
     // just join our autojoin-channel if desired
-    if(getAutoJoin()) queue(getAutoJoinCommand());
+    if (getAutoJoin()) queue(getAutoJoinCommand());
     // TODO: move autojoin here and use signals / slots
   }
   else
@@ -209,7 +209,7 @@ void Server::ircServerConnectionSuccess()
                         " 8 * :" +  // 8 = +i; 4 = +w
                         identity.getRealName();
 
-  if(serverKey) queue("PASS "+serverKey);
+  if (serverKey) queue("PASS "+serverKey);
   queue("NICK "+getNickname());
   queue(connectString);
 
@@ -368,7 +368,7 @@ QString Server::getNextNickname()
   if(tryNickNumber!=4)
   {
     tryNickNumber++;
-    if(tryNickNumber==4) newNick=getNickname()+"_";
+    if (tryNickNumber==4) newNick=getNickname()+"_";
     else newNick=identity.getNickname(tryNickNumber);
   }
   return newNick;
@@ -727,7 +727,7 @@ void Server::removeQuery(Query* query)
   delete query;
 }
 
-void Server::joinChannel(const QString& name,const QString& hostmask,const QString& /* key */)
+void Server::joinChannel(const QString &name, const QString &hostmask, const QString &key)
 {
   // Make sure to delete stale Channel on rejoin.
   // FIXME: Hm ... Do we really have to? Wouldn't it be enough to just
@@ -1066,7 +1066,7 @@ QString Server::parseWildcards(const QString &toParse, const QString &nickname, 
     // copy out all text to the next "%" as new separator
     separator=out.mid(pos,out.find("%",pos+1)-pos);
     // remove separator definition from string
-    out.replace(separatorRegExp,QString::null);
+    out.replace(separatorRegExp, QString::null);
   }
 
   kdDebug() << "Replacing placeholders in: " << out << endl;

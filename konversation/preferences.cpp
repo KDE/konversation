@@ -60,7 +60,7 @@ Preferences::Preferences()
   setLinkMessageColor("0000ff");
   setCommandMessageColor("960096");
   setTimeColor("709070");
-  setTextViewBackground("");        // will be set on the first run of an ircview
+  setTextViewBackground(QString::null);        // will be set on the first run of an ircview
   setNickCompleteSuffixStart(": ");
   setNickCompleteSuffixMiddle(" ");
 
@@ -92,7 +92,7 @@ Preferences::Preferences()
   setFixedMOTD(true);
   setBeep(false);
 
-  setDccPath("");
+  setDccPath(QString::null);
   setDccAddPartner(true);
   setDccCreateFolder(false);
   setDccAutoGet(false);

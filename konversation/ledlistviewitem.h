@@ -32,7 +32,7 @@
 class LedListViewItem : public KListViewItem
 {
   public:
-    LedListViewItem(KListView* parent,QString passed_label,bool passed_state,bool passed_voiceState);
+    LedListViewItem(KListView* parent,const QString &passed_label,bool passed_state,bool passed_voiceState);
     ~LedListViewItem();
 
     bool getOpState();

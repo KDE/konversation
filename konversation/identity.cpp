@@ -18,10 +18,10 @@
 
 Identity::Identity()
 {
-  nicknameList.append("");
-  nicknameList.append("");
-  nicknameList.append("");
-  nicknameList.append("");
+  nicknameList.append(QString::null);
+  nicknameList.append(QString::null);
+  nicknameList.append(QString::null);
+  nicknameList.append(QString::null);
 }
 
 Identity::~Identity()
@@ -63,6 +63,6 @@ void Identity::setNicknameList(const QStringList& newList)
   nicknameList.clear();
   nicknameList=newList;
   // make sure that there are always 4 nicks in the list
-  while(nicknameList.count()!=4) nicknameList.append("");
+  while(nicknameList.count()!=4) nicknameList.append(QString::null);
 }
 const QStringList& Identity::getNicknameList()          { return nicknameList; }

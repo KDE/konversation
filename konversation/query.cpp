@@ -26,24 +26,25 @@
 
 Query::Query(QWidget* parent) : ChatWindow(parent)
 {
+  setName("QueryWidget");
   kdDebug() << "Query::Query()" << endl;
 
   setType(ChatWindow::Query);
 
-  queryHostmask=new QLineEdit(this);
+  queryHostmask=new QLineEdit(this, "query_hostmask");
   queryHostmask->setReadOnly(true);
 
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer();
 
   // This box holds the input line and the log checkbox
-  QHBox* inputLogBox=new QHBox(this);
+  QHBox* inputLogBox=new QHBox(this, "input_log_box");
   inputLogBox->setSpacing(spacing());
 
   queryInput=new IRCInput(inputLogBox);
 
   logCheckBox=new QCheckBox(i18n("Log"),inputLogBox);
   logCheckBox->setChecked(KonversationApplication::preferences.getLog());
-  setLogfileName("");
+  setLogfileName(QString::null);
 
   // connect the signals and slots
   connect(queryInput,SIGNAL (returnPressed()),this,SLOT (queryTextEntered()) );
@@ -73,7 +74,7 @@ void Query::setName(const QString& newName)
   // This will prevent Nick-Changers to create more than one log file,
   // unless we want this by turning the option Log Follows Nick off.
 
-  if((logName=="") || (KonversationApplication::preferences.getLogFollowsNick()==false))
+  if((logName.isEmpty()) || (KonversationApplication::preferences.getLogFollowsNick()==false))
     setLogfileName("konversation_"+
                   ((KonversationApplication::preferences.getLowerLog())
                     ? getName().lower()
@@ -98,7 +99,7 @@ void Query::sendQueryText(QString sendLine)
 
   QString output=filter.parse(server->getNickname(),line,getName());
 
-  if(output!="")
+  if(!output.isEmpty())
   {
     if(filter.isAction()) appendAction(server->getNickname(),output);
     else if(filter.isCommand()) appendCommandMessage(filter.getType(),output);

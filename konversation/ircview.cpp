@@ -61,7 +61,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   setFont(KonversationApplication::preferences.getTextFont());
 
   QString bgColor=KonversationApplication::preferences.getTextViewBackground();
-  if(bgColor=="")
+  if(bgColor.isEmpty())
   {
     bgColor=palette().color(QPalette::Active,QColorGroup::Base).name().mid(1);
     KonversationApplication::preferences.setTextViewBackground(bgColor);
@@ -91,7 +91,7 @@ void IRCView::setServer(Server* newServer)
 
 void IRCView::clear()
 {
-  buffer="";
+  buffer=QString::null;
   KTextBrowser::clear();
 }
 
@@ -152,7 +152,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
     const char* colorCodes[]={"ffffff","000000","000080","008000","ff0000","a52a2a","800080","ff8000",
                               "808000","00ff00","008080","00ffff","0000ff","ffc0cb","a0a0a0","c0c0c0"};
 
-    colorString=(firstColor) ? "" : "</font>";
+    colorString=(firstColor) ? QString::null : QString("</font>");
 
     int foregroundColor=colorRegExp.cap(1).toInt();
 /*

@@ -30,18 +30,18 @@
 class Highlight
 {
 	public:
-		Highlight(QString passed_itemText, QColor passed_itemColor);
+		Highlight(const QString &passed_itemText, const QColor &passed_itemColor);
 		~Highlight();
 
 		QString getText() {return itemText;};
 		QColor getColor() {return itemColor;};
 		int getID() {return itemID;};
 
-		void setText(QString passed_itemText) {itemText = passed_itemText;};
-		void setColor(QColor passed_itemColor) {itemColor = passed_itemColor;};
+		void setText(const QString &passed_itemText) {itemText = passed_itemText;};
+		void setColor(const QColor &passed_itemColor) {itemColor = passed_itemColor;};
 
   protected:
-    static int id;
+		static unsigned int id;
 
   private:
 		QString		itemText;

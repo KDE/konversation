@@ -225,7 +225,7 @@ void ServerWindow::closeTab(QWidget* viewToClose)
 
     if(result==KMessageBox::Yes)
     {
-      QString command=filter.parse(server->getNickname(),KonversationApplication::preferences.getCommandChar()+"quit","");
+      QString command=filter.parse(server->getNickname(),KonversationApplication::preferences.getCommandChar()+"quit",QString::null);
       server->queue(filter.getServerOutput());
     }
   }
@@ -359,7 +359,7 @@ void ServerWindow::saveOptions()
 bool ServerWindow::queryExit()
 {
   kdDebug() << "ServerWindow::queryExit()" << endl;
-  QString command=filter.parse(server->getNickname(),KonversationApplication::preferences.getCommandChar()+"quit","");
+  QString command=filter.parse(server->getNickname(),KonversationApplication::preferences.getCommandChar()+"quit",QString::null);
   server->queue(filter.getServerOutput());
 
   saveOptions();

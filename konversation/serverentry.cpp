@@ -31,7 +31,7 @@ ServerEntry::ServerEntry(const QString newDefinition)
   while(properties.count()<8)
   {
     definition=definition+",";
-    properties.append("");
+    properties.append(QString::null);
   }
 }
 

@@ -76,7 +76,7 @@ void DccRecipientDialog::newNicknameSelectedQuit(QListBoxItem* item)
 
 void DccRecipientDialog::slotCancel()
 {
-  selectedNickname="";
+  selectedNickname=QString::null;
   KDialogBase::slotCancel();
 }
 

@@ -159,7 +159,7 @@ class Server : public QObject
     // constants
     static const int BUFFER_LEN=513;
 
-    bool eventFilter(QObject* parent,QEvent* event);
+    bool eventFilter(QObject* parent, QEvent *event);
 
     void lookupFinished();
     void startNotifyCheckTimer();

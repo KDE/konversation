@@ -110,7 +110,7 @@ void PrefsPageDccSettings::folderButtonClicked()
                                                         0,
                                                         i18n("Select DCC download folder")
                                                       );
-  if(folderName!="")
+  if(!folderName.isEmpty())
   {
     QFileInfo folderInfo(folderName);
 

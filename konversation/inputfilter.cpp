@@ -24,7 +24,7 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #else
-#define VERSION $Id$
+#define VERSION "$Id$"
 #endif
 
 #include "inputfilter.h"
@@ -54,7 +54,7 @@ void InputFilter::setServer(Server* newServer)
 
 void InputFilter::parseLine(const QString &a_newLine)
 {
-  QString trailing=QString::null;
+  QString trailing(QString::null);
   QString newLine(a_newLine);
   // Remove white spaces at the end and beginning
   newLine=newLine.stripWhiteSpace();
@@ -71,7 +71,7 @@ void InputFilter::parseLine(const QString &a_newLine)
   // Remove all unneccessary white spaces to make parsing easier
   QString incomingLine=newLine.simplifyWhiteSpace();
 
-  QString prefix=QString::null;
+  QString prefix(QString::null);
   // Do we have a prefix?
   if(incomingLine[0]==':')
   {
@@ -452,16 +452,15 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       {
         const QString modeString=parameterList[2];
         // This is the string the user will see
-        QString modesAre=QString::null;
+        QString modesAre(QString::null);
 
         for(unsigned int index=0;index<modeString.length();index++)
         {
-          QString parameter;
+          QString parameter(QString::null);
           int parameterCount=3;
           char mode=modeString[index];
           if(mode!='+')
           {
-            parameter=QString::null;
             if(!modesAre.isEmpty()) modesAre+=", ";
             if(mode=='t') modesAre+=i18n("topic protection");
             else if(mode=='n') modesAre+=i18n("no messages from outside");
@@ -512,7 +511,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           if(nick[0]=='+') voice=true;
 
           QString nickname=(op || voice) ? nick.mid(1) : nick;
-          QString hostmask=QString::null;
+          QString hostmask(QString::null);
 
           server->addNickToChannel(parameterList[2],nickname,hostmask,op,voice);
         }

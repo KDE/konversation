@@ -396,7 +396,7 @@ void Channel::completeNick()
     /* did we find any pattern? */
     if(pattern && pattern.length())
     {
-      QString foundNick=QString::null;
+      QString foundNick(QString::null);
       /* Try to find matching nickname in list of names */
       do
       {
@@ -757,7 +757,7 @@ void Channel::setTopic(const QString &nickname, const QString &newTopic) // Over
 
 void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const QString &parameter)
 {
-  QString message=QString::null;
+  QString message(QString::null);
   Nick* nick;
 
   bool fromMe=false;

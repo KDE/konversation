@@ -454,7 +454,7 @@ void DccTransfer::setPort(QString port)
 
 QString DccTransfer::getErrorString(int code)
 {
-  QString errorString="";
+  QString errorString(QString::null);
 
   switch(code)
   {

@@ -19,6 +19,7 @@
 #include <qregexp.h>
 
 #include "konversationapplication.h"
+#include "konvdcop.h"
 #include "serverwindow.h"
 
 // include static variables
@@ -64,6 +65,8 @@ KonversationApplication::KonversationApplication()
     connect(&preferences,SIGNAL (requestServerConnection(int)),this,SLOT (connectToAnotherServer(int)) );
     connect(&preferences,SIGNAL (requestSaveOptions()),this,SLOT (saveOptions()) );
   }
+  // prepare dcop interface
+  dcop_object=new KonvDCOP;
 }
 
 KonversationApplication::~KonversationApplication()
@@ -98,7 +101,7 @@ void KonversationApplication::connectToAnotherServer(int id)
        chosenServer->getPort()==newServer->getPort())
     {
       QString autoJoinChannel=chosenServer->getChannelName();
-      if(autoJoinChannel!="")
+      if(!autoJoinChannel.isEmpty())
       {
         newServer->setAutoJoin(true);
         newServer->setAutoJoinChannel(autoJoinChannel);
@@ -280,7 +283,7 @@ void KonversationApplication::readOptions()
   config->setGroup("Notify List");
   preferences.setNotifyDelay(config->readNumEntry("NotifyDelay",20));
   preferences.setUseNotify(config->readBoolEntry("UseNotify",true));
-  QString notifyList=config->readEntry("NotifyList","");
+  QString notifyList=config->readEntry("NotifyList",QString::null);
   preferences.setNotifyList(QStringList::split(' ',notifyList));
 
   // Server List
@@ -320,14 +323,14 @@ void KonversationApplication::readOptions()
 
   preferences.setHilightNick(config->readBoolEntry("HilightNick",preferences.getHilightNick()));
   hilight=config->readEntry("HilightNickColor");
-  if(hilight=="")
+  if(hilight.isEmpty())
     preferences.setHilightNickColor(preferences.getHilightNickColor().name());
   else
     preferences.setHilightNickColor("#"+hilight);
 
   preferences.setHilightOwnLines(config->readBoolEntry("HilightOwnLines",preferences.getHilightOwnLines()));
   hilight=config->readEntry("HilightOwnLinesColor");
-  if(hilight=="")
+  if(hilight.isEmpty())
     preferences.setHilightOwnLinesColor(preferences.getHilightOwnLinesColor().name());
   else
     preferences.setHilightOwnLinesColor("#"+hilight);
@@ -623,6 +626,38 @@ void KonversationApplication::closePrefsDialog()
 {
   delete prefsDialog;
   prefsDialog=0;
+}
+
+void KonversationApplication::emitDCOPSig(const QCString &signal, QByteArray &data)
+{
+  dcop_object->emitDCOPSignal(signal, data);
+}
+
+void KonversationApplication::processHooks (EVENT_TYPE a_type, const QString &a_criteria, const QString &a_sender, const QString &a_target, const QString &a_data)
+{
+  QStringList dsig_list;
+
+  kdDebug() << "KonversationApplication::processHooks(): "<< a_criteria << a_sender << a_target << endl;
+
+  // And here we scan the list of events in dcop_object and for every one matching type,
+  // then check to see if the sender:target:data tuple matches
+  // criteria (use regexp matching) and for each one that matches, append the appropriate
+  // signal to dsig_list.  For each signal in dsig_list, emit emitDCOPSig(sig, data)
+  IRCEvent *ev;
+  for (ev = dcop_object->registered_events.first(); ev; dcop_object->registered_events.next())
+  {
+    if (ev->type == a_type)
+    {
+      // TODO: Match the criteria and go from here
+      // if match
+      {
+        QByteArray data;
+        QDataStream arg(data, IO_WriteOnly);
+        arg << a_data;
+        emitDCOPSig(QString(ev->signal + "(QString)").ascii(), data);
+      }
+    }
+  } // endfor
 }
 
 #include "konversationapplication.moc"

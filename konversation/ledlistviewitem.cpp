@@ -18,7 +18,7 @@
 #include "ledlistviewitem.h"
 #include "konversationapplication.h"
 
-LedListViewItem::LedListViewItem(KListView* parent,QString passed_label,bool passed_opState,bool passed_voiceState) :
+LedListViewItem::LedListViewItem(KListView* parent,const QString &passed_label,bool passed_opState,bool passed_voiceState) :
                    KListViewItem(parent, passed_label)
 {
   opState=passed_opState;
@@ -39,7 +39,7 @@ LedListViewItem::LedListViewItem(KListView* parent,QString passed_label,bool pas
   listView()->setColumnAlignment(0,Qt::AlignHCenter);
   listView()->setColumnAlignment(1,Qt::AlignLeft);
 
-  setText(0,"");
+  setText(0,QString::null);
   setState(opState,voiceState);
 }
 

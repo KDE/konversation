@@ -62,9 +62,9 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
                                             serverEntry[0],
                                             serverEntry[1],
                                             serverEntry[2],
-                                            (serverEntry[3]) ? "********" : "",
+                                            (!serverEntry[3].isEmpty()) ? QString("********") : QString::null,
                                             serverEntry[4],
-                                            (serverEntry[5]) ? "********" : "",
+                                            (!serverEntry[5].isEmpty()) ? QString("********") : QString::null,
                                             serverEntry[7]);
 
     item->setOn(serverEntry[6]=="1");
@@ -144,7 +144,7 @@ void PrefsPageServerList::newServer()
 {
   int newId=preferences->addServer("New,new.server.com,6667,,,,,");
 
-  ServerListItem* newItem=new ServerListItem(serverListView,newId,"");
+  ServerListItem* newItem=new ServerListItem(serverListView,newId,QString::null);
 
   serverListView->setSelected(newItem,true);
   editServer();
@@ -223,9 +223,9 @@ void PrefsPageServerList::updateServer(const QString& groupName,
   serverItem->setText(1,groupName);
   serverItem->setText(2,serverName);
   serverItem->setText(3,serverPort);
-  serverItem->setText(4,(!serverKey || serverKey=="") ? "" : "********");
+  serverItem->setText(4,(!serverKey || serverKey.isEmpty()) ? QString::null : QString("********"));
   serverItem->setText(5,channelName);
-  serverItem->setText(6,(!channelKey || channelKey=="") ? "" : "********");
+  serverItem->setText(6,(!channelKey || channelKey.isEmpty()) ? QString::null : QString("********"));
   serverItem->setText(7,identity);
 
   preferences->updateServer(id,groupName+","+

@@ -73,9 +73,9 @@ void StatusPanel::sendStatusText(QString sendLine)
   QTextCodec* codec=QTextCodec::codecForLocale();
   QCString line=codec->fromUnicode(sendLine);
 
-  QString output=filter.parse(server->getNickname(),line,"");
+  QString output=filter.parse(server->getNickname(),line, QString::null);
 
-  if(output!="") appendServerMessage(filter.getType(),output);
+  if(!output.isEmpty()) appendServerMessage(filter.getType(),output);
 
   server->queue(filter.getServerOutput());
 }

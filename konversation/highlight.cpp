@@ -20,9 +20,9 @@
 #include "highlight.h"
 
 /* Eisfuchs: include static variable */
-int Highlight::id;
+unsigned int Highlight::id;
 
-Highlight::Highlight(QString passed_itemText, QColor passed_itemColor)
+Highlight::Highlight(const QString &passed_itemText, const QColor &passed_itemColor)
 {
 	itemText = passed_itemText;
 	itemColor = passed_itemColor;

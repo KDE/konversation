@@ -25,7 +25,7 @@
 
 #include "nicksonline.h"
 
-NicksOnline::NicksOnline(QSize& newSize)
+NicksOnline::NicksOnline(const QSize& newSize)
 {
   kdDebug() << "NicksOnline::NicksOnline()" << endl;
   nickListView=new KListView(this);

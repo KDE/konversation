@@ -32,7 +32,7 @@ IRCInput::IRCInput(QWidget* parent) : QLineEdit(parent)
   // connect history signal
   connect(this,SIGNAL (history(bool)) ,this,SLOT (getHistory(bool)) );
   // add one empty line to the history (will be overwritten with newest entry)
-  historyList.prepend("");
+  historyList.prepend(QString::null);
   // reset history line counter
   lineNum=0;
   // reset completion mode
@@ -85,7 +85,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
 
         default:
           // Check if the keystroke actually produced text. If not it was just a qualifier.
-          if(keyEvent->text()!="") setCompletionMode('\0');
+          if(!keyEvent->text().isEmpty()) setCompletionMode('\0');
           // support ASCII BEL
           if(keyEvent->ascii()==7) insert("%G");
           // support ^W (delete word)
@@ -114,7 +114,7 @@ void IRCInput::addHistory(const QString& line)
     // Replace empty first entry with line
     historyList[0]=line;
     // Add new empty entry to history
-    historyList.prepend("");
+    historyList.prepend(QString::null);
     // Remove oldest line in history, if the list grows beyond MAXHISTORY
     if(historyList.count()>MAXHISTORY) historyList.remove(historyList.last());
   }

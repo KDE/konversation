@@ -41,9 +41,9 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
 {
   setCommandChar();
 
-  toServer="";
-  output="";
-  type="";
+  toServer=QString::null;
+  output=QString::null;
+  type=QString::null;
   destination=name;
 
   action=false;
@@ -61,20 +61,20 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
   QString line=inputLine.lower();
 
   // Action?
-  if(line.startsWith(commandChar+"me ") && destination!="")
+  if(line.startsWith(commandChar+"me ") && !destination.isEmpty())
   {
     toServer="PRIVMSG "+name+" :"+'\x01'+"ACTION "+inputLine.mid(4)+'\x01';
     output=inputLine.mid(4);
     action=true;
   }
   // Convert double command chars at the beginning to single ones
-  else if(line.startsWith(commandChar+commandChar) && destination!="")
+  else if(line.startsWith(commandChar+commandChar) && !destination.isEmpty())
   {
     toServer="PRIVMSG "+name+" :"+inputLine.mid(1);
     output=inputLine.mid(1);
   }
   // Server command?
-  else if(line[0]==commandChar[0])
+  else if(line.at(0)==commandChar.at(0))
   {
     QString parameter=inputLine.mid(inputLine.find(" ")+1);
     parameter=parameter.stripWhiteSpace();
@@ -101,23 +101,23 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("dcc "))     parseDcc(parameter);
     else if(line.startsWith("invite "))  parseInvite(parameter);
 
-    else if(line=="join")                parseJoin("");
-    else if(line=="part")                parsePart("");
-    else if(line=="leave")               parsePart("");
-    else if(line=="quit")                parseQuit("");
-    else if(line=="notice")              parseNotice("");
-    else if(line=="kick")                parseKick("");
-    else if(line=="topic")               parseTopic("");
-    else if(line=="away")                parseAway("");
-    else if(line=="unaway")              parseAway("");
-    else if(line=="dcc")                 parseDcc("");
-    else if(line=="invite")              parseInvite("");
+    else if(line=="join")                parseJoin(QString::null);
+    else if(line=="part")                parsePart(QString::null);
+    else if(line=="leave")               parsePart(QString::null);
+    else if(line=="quit")                parseQuit(QString::null);
+    else if(line=="notice")              parseNotice(QString::null);
+    else if(line=="kick")                parseKick(QString::null);
+    else if(line=="topic")               parseTopic(QString::null);
+    else if(line=="away")                parseAway(QString::null);
+    else if(line=="unaway")              parseAway(QString::null);
+    else if(line=="dcc")                 parseDcc(QString::null);
+    else if(line=="invite")              parseInvite(QString::null);
 
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
   }
   // Ordinary message to channel/query?
-  else if(destination!="")
+  else if(!destination.isEmpty())
   {
     toServer="PRIVMSG "+destination+" :"+inputLine;
     output=inputLine;
@@ -134,29 +134,29 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
   return output;
 }
 
-void OutputFilter::parseOp(QString parameter)
+void OutputFilter::parseOp(const QString &parameter)
 {
   changeMode(parameter,'o','+');
 }
 
-void OutputFilter::parseDeop(QString parameter)
+void OutputFilter::parseDeop(const QString &parameter)
 {
   changeMode(parameter,'o','-');
 }
 
-void OutputFilter::parseVoice(QString parameter)
+void OutputFilter::parseVoice(const QString &parameter)
 {
   changeMode(parameter,'v','+');
 }
 
-void OutputFilter::parseUnvoice(QString parameter)
+void OutputFilter::parseUnvoice(const QString &parameter)
 {
   changeMode(parameter,'v','-');
 }
 
-void OutputFilter::parseJoin(QString channelName)
+void OutputFilter::parseJoin(const QString &channelName)
 {
-  if(channelName=="")
+  if(!channelName.isEmpty())
   {
     type=i18n("Usage");
     output=i18n("Usage: %1JOIN <channel> [key]").arg(commandChar);
@@ -166,13 +166,13 @@ void OutputFilter::parseJoin(QString channelName)
     toServer="JOIN "+channelName;
 }
 
-void OutputFilter::parseKick(QString parameter)
+void OutputFilter::parseKick(const QString &parameter)
 {
   if(isAChannel(destination))
   {
     // get nick to kick
     QString victim=parameter.left(parameter.find(" "));
-    if(victim=="")
+    if(victim.isEmpty())
     {
       type=i18n("Usage");
       output=i18n("Usage: %1KICK <nick> [reason]").arg(commandChar);
@@ -183,29 +183,29 @@ void OutputFilter::parseKick(QString parameter)
       // get kick reason (if any)
       QString reason=parameter.mid(victim.length()+1);
       // if no reason given, take default reason
-      if(reason=="") reason=identity.getKickReason();
+      if(reason.isEmpty()) reason=identity.getKickReason();
       toServer="KICK "+destination+" "+victim+" :"+reason;
     }
   }
   else
   {
     type=i18n("Error");
-    output=i18n("%1KICK does only work from within channels.").arg(commandChar);
+    output=i18n("%1KICK only works from within channels.").arg(commandChar);
     program=true;
   }
 }
 
-void OutputFilter::parsePart(QString parameter)
+void OutputFilter::parsePart(const QString &parameter)
 {
   // No parameter, try default part message
-  if(parameter=="")
+  if(parameter.isEmpty())
   {
     // But only if we actually are in a channel
     if(isAChannel(destination)) toServer="PART "+destination+" :"+identity.getPartReason();
     else
     {
       type=i18n("Error");
-      output=i18n("%1PART without parameters works only from within a channel.").arg(commandChar);
+      output=i18n("%1PART without parameters only works from within a channel.").arg(commandChar);
       program=true;
     }
   }
@@ -219,7 +219,7 @@ void OutputFilter::parsePart(QString parameter)
       // get part reason (if any)
       QString reason=parameter.mid(channel.length()+1);
       // if no reason given, take default reason
-      if(reason=="") reason=identity.getPartReason();
+      if(reason.isEmpty()) reason=identity.getPartReason();
       toServer="PART "+channel+" :"+reason;
     }
     // part this channel with a given reason
@@ -229,24 +229,24 @@ void OutputFilter::parsePart(QString parameter)
       else
       {
         type=i18n("Error");
-        output=i18n("%1PART without channel name works only from within a channel.").arg(commandChar);
+        output=i18n("%1PART without channel name only works from within a channel.").arg(commandChar);
         program=true;
       }
     }
   }
 }
 
-void OutputFilter::parseTopic(QString parameter)
+void OutputFilter::parseTopic(const QString &parameter)
 {
   // No parameter, try to get current topic
-  if(parameter=="")
+  if(parameter.isEmpty())
   {
     // But only if we actually are in a channel
     if(isAChannel(destination)) toServer="TOPIC "+destination;
     else
     {
       type=i18n("Error");
-      output=i18n("%1TOPIC without parameters works only from within a channel.").arg(commandChar);
+      output=i18n("%1TOPIC without parameters only works from within a channel.").arg(commandChar);
       program=true;
     }
   }
@@ -260,7 +260,7 @@ void OutputFilter::parseTopic(QString parameter)
       // get topic (if any)
       QString topic=parameter.mid(channel.length()+1);
       // if no topic given, retrieve topic
-      if(topic=="") toServer="TOPIC "+channel;
+      if(topic.isEmpty()) toServer="TOPIC "+channel;
       // otherwise set topic there
       else toServer="TOPIC "+channel+" :"+topic;
     }
@@ -271,16 +271,16 @@ void OutputFilter::parseTopic(QString parameter)
       else
       {
         type=i18n("Error");
-        output=i18n("%1TOPIC without channel name works only from within a channel.").arg(commandChar);
+        output=i18n("%1TOPIC without channel name only works from within a channel.").arg(commandChar);
         program=true;
       }
     }
   }
 }
 
-void OutputFilter::parseAway(QString reason)
+void OutputFilter::parseAway(const QString &reason)
 {
-  if(reason=="")
+  if(reason.isEmpty())
   {
     if(identity.getShowAwayMessage())
       sendToAllChannels(identity.getReturnMessage());
@@ -300,22 +300,25 @@ void OutputFilter::parseAway(QString reason)
     toServer="AWAY :"+reason;
   }
   // remove lines in output to prevent them sent twice in sending channel
-  output="";
+  output=QString::null;
 }
 
-void OutputFilter::parseQuit(QString reason)
+void OutputFilter::parseQuit(const QString &reason)
 {
+  toServer = "QUIT :";
   // if no reason given, take default reason
-  if(reason=="") reason=identity.getPartReason();
-  toServer="QUIT :"+reason;
+  if(reason.isEmpty())
+    toServer += identity.getPartReason();
+  else
+    toServer += reason;
 }
 
-void OutputFilter::parseNotice(QString parameter)
+void OutputFilter::parseNotice(const QString &parameter)
 {
   QString recipient=parameter.left(parameter.find(" "));
   QString message=parameter.mid(recipient.length()+1);
 
-  if(parameter=="" || message=="")
+  if(parameter.isEmpty() || message.isEmpty())
   {
     type=i18n("Usage");
     output=i18n("Usage: %1NOTICE <recipient> <message>").arg(commandChar);
@@ -330,7 +333,7 @@ void OutputFilter::parseNotice(QString parameter)
   }
 }
 
-void OutputFilter::parseMsg(QString myNick,QString parameter)
+void OutputFilter::parseMsg(const QString &myNick, const QString &parameter)
 {
   QString recipient=parameter.left(parameter.find(" "));
   QString message=parameter.mid(recipient.length()+1);
@@ -349,7 +352,7 @@ void OutputFilter::parseMsg(QString myNick,QString parameter)
   query=true;
 }
 
-void OutputFilter::parseSMsg(QString parameter)
+void OutputFilter::parseSMsg(const QString &parameter)
 {
   QString recipient=parameter.left(parameter.find(" "));
   QString message=parameter.mid(recipient.length()+1);
@@ -364,7 +367,7 @@ void OutputFilter::parseSMsg(QString parameter)
   }
 }
 
-void OutputFilter::parseCtcp(QString parameter)
+void OutputFilter::parseCtcp(const QString &parameter)
 {
   QString recipient=parameter.section(' ',0,0);  // who is the recipient?
   QString request=parameter.section(' ',1,1);    // what is the first word of the ctcp?
@@ -377,8 +380,8 @@ void OutputFilter::parseCtcp(QString parameter)
 #else
     unsigned int time_t=QDateTime::currentDateTime().toTime_t();
 #endif
-    toServer=QString("PRIVMSG "+recipient+" :\x01PING %1\x01").arg(time_t);
-    output=i18n("Sending CTCP-PING request to %1").arg(recipient);
+    toServer=QString("PRIVMSG %1 :\x01PING %2\x01").arg(recipient).arg(time_t);
+    output=i18n("Sending CTCP-%1 request to %1").arg("PING").arg(recipient);
   }
   else
   {
@@ -389,14 +392,14 @@ void OutputFilter::parseCtcp(QString parameter)
   program=true;
 }
 
-void OutputFilter::parseQuery(QString parameter)
+void OutputFilter::parseQuery(const QString &parameter)
 {
   QStringList queryList=QStringList::split(' ',parameter);
 
-  for(unsigned int index=0;index<queryList.count();index++) emit openQuery(queryList[index],"");
+  for(unsigned int index=0;index<queryList.count();index++) emit openQuery(queryList[index],QString::null);
 }
 
-void OutputFilter::changeMode(QString parameter,char mode,char giveTake)
+void OutputFilter::changeMode(const QString &parameter,char mode,char giveTake)
 {
   // TODO: Make sure this works with +l <limit> and +k <keyword> also!
   QStringList nickList=QStringList::split(' ',parameter);
@@ -434,10 +437,10 @@ void OutputFilter::changeMode(QString parameter,char mode,char giveTake)
   }
 }
 
-void OutputFilter::parseDcc(QString parameter)
+void OutputFilter::parseDcc(const QString &parameter)
 {
   // No parameter, just open DCC panel
-  if(parameter=="") emit openDccPanel();
+  if(parameter.isEmpty()) emit openDccPanel();
   else
   {
     QStringList parameterList=QStringList::split(' ',parameter);
@@ -487,7 +490,7 @@ void OutputFilter::parseDcc(QString parameter)
   }
 }
 
-void OutputFilter::sendRequest(QString recipient,QString fileName,QString address,QString port,unsigned long size)
+void OutputFilter::sendRequest(const QString &recipient,const QString &fileName,const QString &address,const QString &port,unsigned long size)
 {
   QFile file(fileName);
   QFileInfo info(file);
@@ -499,7 +502,7 @@ void OutputFilter::sendRequest(QString recipient,QString fileName,QString addres
 }
 
 // Accepting Resume Request
-void OutputFilter::acceptRequest(QString recipient,QString fileName,QString port,int startAt)
+void OutputFilter::acceptRequest(const QString &recipient,const QString &fileName,const QString &port,int startAt)
 {
   toServer="PRIVMSG "+recipient+" :"+'\x01'+"DCC ACCEPT "+fileName+" "+port+" "+QString::number(startAt)+'\x01';
   output=i18n("Accepting DCC Resume request from \"%1\" for file \"%2\".").arg(recipient).arg(fileName);
@@ -507,7 +510,7 @@ void OutputFilter::acceptRequest(QString recipient,QString fileName,QString port
   program=true;
 }
 
-void OutputFilter::resumeRequest(QString sender,QString fileName,QString port,int startAt)
+void OutputFilter::resumeRequest(const QString &sender,const QString &fileName,const QString &port,int startAt)
 {
   toServer="PRIVMSG "+sender+" :"+'\x01'+"DCC RESUME "+fileName+" "+port+" "+QString::number(startAt)+'\x01';
   output=i18n("Sending DCC Resume request to \"%1\" for file \"%2\".").arg(sender).arg(fileName);
@@ -515,9 +518,9 @@ void OutputFilter::resumeRequest(QString sender,QString fileName,QString port,in
   program=true;
 }
 
-void OutputFilter::parseInvite(QString parameter)
+void OutputFilter::parseInvite(const QString &parameter)
 {
-  if(parameter=="")
+  if(parameter.isEmpty())
   {
     type=i18n("Usage");
     output=i18n("Usage: INVITE <nick> [channel]");
@@ -528,7 +531,7 @@ void OutputFilter::parseInvite(QString parameter)
     QString nick=parameter.section(' ',0,0);
     QString channel=parameter.section(' ',1,1);
 
-    if(channel=="")
+    if(channel.isEmpty())
     {
       if(isAChannel(destination)) channel=destination;
       else
@@ -539,7 +542,7 @@ void OutputFilter::parseInvite(QString parameter)
       }
     }
 
-    if(channel!="")
+    if(!channel.isEmpty())
     {
       if(isAChannel(channel)) toServer="INVITE "+nick+" "+channel;
       else
@@ -568,7 +571,7 @@ QString& OutputFilter::getServerOutput() { return toServer; };
 QString& OutputFilter::getType() { return type; };
 
 //     # & + and ! are Channel identifiers
-bool OutputFilter::isAChannel(QString check)
+bool OutputFilter::isAChannel(const QString &check)
 {
   QChar initial=check.at(0);
 

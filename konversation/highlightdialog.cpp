@@ -219,20 +219,19 @@ void HighlightDialog::updateHighlight(const QString& passed_InputLineText)
 
 void HighlightDialog::changeHighlightText()
 {
-// EIS: if-Bedingung für beide Abfragen schachteln, um den Segfault zu beheben
   if((selectedHighlightViewItem = HighlightBrowser->selectedItem()) != 0)
   {
-		if(!selectedHighlightViewItem->getText().isEmpty())
-  	{
-  		highlightEdited = false;
-	  	InputLine->setText("");
-		  emit highlightChanged((QListViewItem*) selectedHighlightViewItem);
-  	}
-  	else noEmptyPatterns();
+    if(!selectedHighlightViewItem->getText().isEmpty())
+    {
+      highlightEdited = false;
+      InputLine->setText(QString::null);
+      emit highlightChanged((QListViewItem*) selectedHighlightViewItem);
+    }
+    else noEmptyPatterns();
   }
 }
 
-void HighlightDialog::undoHighlightTextChange(QListViewItem* /* passed_selectedHighlightViewItem */)
+void HighlightDialog::undoHighlightTextChange(QListViewItem */*passed_selectedHighlightViewItem*/)
 {
 	if(highlightEdited == true)
 	{
