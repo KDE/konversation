@@ -315,7 +315,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
 
       // FIXME: We got to get rid of server dependance here
       if(server && KonversationApplication::preferences.getHilightNick() &&
-         filteredLine.lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
+         filteredLine.lower().find(QRegExp("\\b"+QRegExp::escape(server->getNickname().lower())+"\\b"))!=-1)
       {
         // hilight current nickname
         highlightColor=KonversationApplication::preferences.getHilightNickColor().name();

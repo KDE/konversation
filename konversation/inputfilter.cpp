@@ -174,7 +174,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 #ifdef USE_KNOTIFY
           // KNotify events...
           if(sourceNick != server->getNickname()) {
-            if(ctcpArgument.lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
+            if(ctcpArgument.lower().find(QRegExp("\\b"+QRegExp::escape(server->getNickname().lower())+"\\b"))!=-1)
             {
               KNotifyClient::event(mainWindow->winId(), "nick");
             }
@@ -318,7 +318,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 #ifdef USE_KNOTIFY
           // KNotify events...
           if(sourceNick != server->getNickname()) {
-            if(trailing.lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
+            if(trailing.lower().find(QRegExp("\\b"+QRegExp::escape(server->getNickname().lower())+"\\b"))!=-1)
             {
 			  QString cutup = trailing; cutup.truncate(47);
 			  if(cutup.length() == 47)
