@@ -33,7 +33,7 @@ foreach $station (@stations) {
     ++$i;
   }
   
-  $pressure = s/\"/\\\"/g; # Escape double quote
+  $pressure =~ s/\"/\\\"/g; # Escape double quote
 
   chomp $station;
   chomp $city;
