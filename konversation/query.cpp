@@ -328,7 +328,7 @@ NickInfoPtr Query::getNickInfo() {
 
 QString Query::getTextInLine() { return queryInput->text(); }
 
-bool Query::frontView()        { return true; }
+bool Query::canBeFrontView()        { return true; }
 bool Query::searchView()       { return true; }
 
 void Query::appendInputText(const QString& s)

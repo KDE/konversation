@@ -427,9 +427,7 @@ void ChatWindow::setLog(bool activate) { log=activate; }
 // reimplement this in all panels that have user input
 QString ChatWindow::getTextInLine()    { return QString::null; }
 
-// reimplement this to return true in all classes that can become front view
-bool ChatWindow::frontView()           { return false; }
-// reimplement this to return true in all classes that can become search view
+bool ChatWindow::canBeFrontView()           { return false; }
 bool ChatWindow::searchView()          { return false; }
 
 // reimplement this in all panels that have user input

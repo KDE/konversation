@@ -944,7 +944,7 @@ void KonversationMainWindow::updateFrontView()
       disconnect(frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
     }
 
-    if(view->frontView()) {
+    if(view->canBeFrontView()) {
       frontView = view;
 
       connect(view, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
@@ -963,8 +963,10 @@ void KonversationMainWindow::updateFrontView()
 void KonversationMainWindow::changeToView(KMdiChildView* viewToChange) // USE_MDI
 {
   ChatWindow* view=static_cast<ChatWindow*>(viewToChange);
-  if(frontView)
+  if(frontView) {
     previousFrontView = frontView;
+    disconnect(frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
+  }
   frontView=0;
   searchView=0;
 
@@ -991,6 +993,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
   
   if(frontView) {
     previousFrontView = frontView;
+    disconnect(frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
   }
   
   frontView = 0;

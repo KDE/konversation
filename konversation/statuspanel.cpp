@@ -215,7 +215,7 @@ void StatusPanel::showEvent(QShowEvent*)
 
 QString StatusPanel::getTextInLine() { return statusInput->text(); }
 
-bool StatusPanel::frontView()        { return true; }
+bool StatusPanel::canBeFrontView()        { return true; }
 bool StatusPanel::searchView()       { return true; }
 
 bool StatusPanel::closeYourself()

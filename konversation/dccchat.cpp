@@ -345,7 +345,7 @@ void DccChat::childAdjustFocus()
   dccChatInput->setFocus();
 }
 
-bool DccChat::frontView()        { return true; }
+bool DccChat::canBeFrontView()        { return true; }
 bool DccChat::searchView()       { return true; }
 
 int DccChat::getPort()           { return port; }

@@ -45,7 +45,7 @@ class StatusPanel : public ChatWindow
 
     virtual QString getTextInLine();
     virtual bool closeYourself();
-    virtual bool frontView();
+    virtual bool canBeFrontView();
     virtual bool searchView();
     
     virtual void setChannelEncoding(const QString& encoding);

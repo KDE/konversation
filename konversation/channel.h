@@ -113,7 +113,7 @@ class Channel : public ChatWindow
 
     virtual QString getTextInLine();
     virtual bool closeYourself();
-    virtual bool frontView();
+    virtual bool canBeFrontView();
     virtual bool searchView();
 	
     bool allowNotifications() { return m_allowNotifications; }

@@ -1805,7 +1805,7 @@ void Channel::autoWho()
 
 QString Channel::getTextInLine() { return channelInput->text(); }
 
-bool Channel::frontView()        { return true; }
+bool Channel::canBeFrontView()        { return true; }
 bool Channel::searchView()       { return true; }
 
 void Channel::appendInputText(const QString& s)

@@ -130,8 +130,15 @@ class ChatWindow : public BASE_CLASS
     /** Clean up and close this tab.  Return false if you want to cancel the close. */
     virtual bool closeYourself();
     /** Are we focused?
-     *  @return true if we are currently focused*/
-    virtual bool frontView();
+     *  @return true if we are currently focused
+     */
+
+    /** Reimplement this to return true in all classes that /can/ become front view.
+     */
+    virtual bool canBeFrontView();
+
+    /** Reimplement this to return true in all classes that you can search in - i.e. use "Edit->Find Text" in.
+     */
     virtual bool searchView();
 
     virtual bool notificationsEnabled() { return m_notificationsEnabled; }
