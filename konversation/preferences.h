@@ -328,13 +328,6 @@ class Preferences : public QObject
     const QString getNickCompleteSuffixStart();
     const QString getNickCompleteSuffixMiddle();
 
-    const int getOpLedColor();
-    const int getVoiceLedColor();
-    const int getNoRightsLedColor();
-    void setOpLedColor(int color);
-    void setVoiceLedColor(int color);
-    void setNoRightsLedColor(int color);
-
     const bool getFixedMOTD();
     void setFixedMOTD(bool fixed);
 
@@ -528,9 +521,6 @@ class Preferences : public QObject
     int maximumLag;     // ask for reconnect
 
     int notifyDelay;
-    int opLedColor;
-    int voiceLedColor;
-    int noRightsLedColor;
     bool useNotify;
 
     bool timestamping;

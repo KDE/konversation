@@ -167,10 +167,6 @@ Preferences::Preferences()
   setColorInputFields(true);
   setBackgroundImageName(QString::null);
 
-  setOpLedColor(1);
-  setVoiceLedColor(2);
-  setNoRightsLedColor(3);
-
   setTimestamping(true);
   setShowDate(false);
   setTimestampFormat("hh:mm");
@@ -670,13 +666,6 @@ const QString Preferences::getNickCompleteSuffixMiddle() {return nickCompleteSuf
 
 void Preferences::setNickCompleteSuffixStart(const QString &suffix) { nickCompleteSuffixStart=suffix; }
 void Preferences::setNickCompleteSuffixMiddle(const QString &suffix) { nickCompleteSuffixMiddle=suffix; }
-
-const int Preferences::getOpLedColor()       { return opLedColor; }
-const int Preferences::getVoiceLedColor()    { return voiceLedColor; }
-const int Preferences::getNoRightsLedColor() { return noRightsLedColor; }
-void Preferences::setOpLedColor(int passed_color)       { opLedColor=passed_color; }
-void Preferences::setVoiceLedColor(int passed_color)    { voiceLedColor=passed_color; }
-void Preferences::setNoRightsLedColor(int passed_color) { noRightsLedColor=passed_color; }
 
 const int Preferences::getLogfileBufferSize()             { return logfileBufferSize; }
 void Preferences::setLogfileBufferSize(int newSize) { logfileBufferSize=newSize; }

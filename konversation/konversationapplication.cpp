@@ -403,14 +403,6 @@ void KonversationApplication::readOptions()
   preferences.setShowRememberLineInAllWindows(config->readBoolEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows()));
   preferences.setFocusNewQueries(config->readBoolEntry("FocusNewQueries", preferences.getFocusNewQueries()));
 
-  // Colors are now handled in preferences
-
-  // Led Colors
-  config->setGroup("Led Colors");
-  preferences.setOpLedColor(config->readNumEntry("OperatorColor",preferences.getOpLedColor()));
-  preferences.setVoiceLedColor(config->readNumEntry("VoiceColor",preferences.getVoiceLedColor()));
-  preferences.setNoRightsLedColor(config->readNumEntry("NoRightsColor",preferences.getNoRightsLedColor()));
-
   // Sorting
   config->setGroup("Sort Nicknames");
   if(config->readNumEntry("AdminValue",-1)!=-1)
@@ -908,12 +900,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("NoRightsValue",preferences.getNoRightsValue());
   config->writeEntry("SortByStatus",preferences.getSortByStatus());
   config->writeEntry("SortCaseInsensitive",preferences.getSortCaseInsensitive());
-
-  config->setGroup("Led Colors");
-  config->writeEntry("OperatorColor", preferences.getOpLedColor());
-  config->writeEntry("VoiceColor", preferences.getVoiceLedColor());
-  config->writeEntry("NoRightsColor", preferences.getNoRightsLedColor());
-
 
   // Clean up identity list
   QStringList identities=config->groupList().grep(QRegExp("Identity [0-9]+"));
