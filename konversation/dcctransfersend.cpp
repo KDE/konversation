@@ -219,7 +219,7 @@ bool DccTransferSend::setResume( unsigned long position )  // public
   }
   else
   {
-    kdDebug() << "DccTransferSend::setResume(): Invalid position. (greater than filesize=" << m_fileSize << ")" << endl;
+    kdDebug() << "DccTransferSend::setResume(): Invalid position. (greater than filesize=" << QString::number( m_fileSize ) << ")" << endl;
     updateView();
     return false;  
   }
