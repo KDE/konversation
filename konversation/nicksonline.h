@@ -16,7 +16,9 @@
 #define NICKSONLINE_H
 
 #include <qvbox.h>
+#include <qiconset.h>
 
+#include "nickinfo.h"
 #include "chatwindow.h"
 
 /*
@@ -30,6 +32,13 @@ class NicksOnline : public ChatWindow
   Q_OBJECT
 
   public:
+    // Columns of the NickListView when using NickInfo.
+    enum NickListViewColumn {
+      nlvcServerNickChannel = 0,
+      nlvcKabc = 1,
+      nlvcAdditionalInfo = 2
+    };
+    
 #ifdef USE_MDI
     NicksOnline(QString caption);
 #else
@@ -52,14 +61,16 @@ class NicksOnline : public ChatWindow
   protected:
     void updateServerOnlineList(Server* server, bool changed);
     void refreshAllServerOnlineLists();
+    QString getNickAdditionalInfo(NickInfoPtr nickInfo);
 #ifdef USE_MDI
     virtual void closeYourself(ChatWindow*);
 #endif
     // Returns the named child of parent item in KListView.
     QListViewItem* findItemChild(const QListViewItem* parent, const QString& name);
 
-    KListView* nickListView;
-    QTimer* timer;
+    KListView* m_nickListView;
+    QTimer* m_timer;
+    QIconSet m_kabcIconSet;
 };
 
 #endif

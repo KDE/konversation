@@ -21,6 +21,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <klistview.h>
+#include <kiconloader.h>
 
 #include "nicksonline.h"
 #include "server.h"
@@ -39,20 +40,22 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
   setName(i18n("Watched Nicks Online"));
   setType(ChatWindow::NicksOnline);
 
-  nickListView=new KListView(this);
+  m_nickListView=new KListView(this);
 
   // TODO: Need to derive from KListView and override sort() method in order to sort in
   // locale-aware order.
 
 #ifdef USE_NICKINFO
-  nickListView->addColumn(i18n("Server/Nickname/Channel"));
-  nickListView->addColumn(i18n("Additional Information"));
-  nickListView->setFullWidth(false);
-  nickListView->setRootIsDecorated(true);
+  m_nickListView->addColumn(i18n("Server/Nickname/Channel"));
+  m_kabcIconSet = KGlobal::iconLoader()->loadIconSet("kaddressbook",KIcon::Small);
+  m_nickListView->addColumn(m_kabcIconSet, QString::null);
+  m_nickListView->addColumn(i18n("Additional Information"));
+  m_nickListView->setFullWidth(false);
+  m_nickListView->setRootIsDecorated(true);
 #else
-  nickListView->addColumn(i18n("Server/Nickname"));
-  nickListView->setFullWidth(true);
-  nickListView->setRootIsDecorated(false);
+  m_nickListView->addColumn(i18n("Server/Nickname"));
+  m_nickListView->setFullWidth(true);
+  m_nickListView->setRootIsDecorated(false);
 #endif
 
 #ifndef USE_MDI
@@ -67,26 +70,26 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
   editButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed));
 
   connect(editButton,SIGNAL (clicked()),SIGNAL (editClicked()) );
-  connect(nickListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT(processDoubleClick(QListViewItem*)));
+  connect(m_nickListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT(processDoubleClick(QListViewItem*)));
 
 #ifdef USE_NICKINFO
   // Display info for all currently-connected servers.
   refreshAllServerOnlineLists();
   // Connect and start refresh timer.
-  timer = new QTimer(this, "nicksOnlineTimer");
-  connect(timer, SIGNAL (timeout()), this, SLOT(timerFired()));
+  m_timer = new QTimer(this, "nicksOnlineTimer");
+  connect(m_timer, SIGNAL (timeout()), this, SLOT(timerFired()));
   // TODO: User preference for refresh interval.
-  timer->start(8000);
+  m_timer->start(8000);
 #endif
 }
 
 NicksOnline::~NicksOnline()
 {
 #ifdef USE_NICKINFO
-  timer->stop();
-  delete timer;
+  m_timer->stop();
+  delete m_timer;
 #endif
-  delete nickListView;
+  delete m_nickListView;
 }
 
 // Returns the named child of parent item in KListView.
@@ -101,6 +104,35 @@ QListViewItem* NicksOnline::findItemChild(const QListViewItem* parent, const QSt
   return 0;
 }
 
+// Return a string contained formatted additional information about a nick.
+#ifdef USE_NICKINFO
+QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo)
+{
+  QString nickAdditionalInfo;
+  if (nickInfo->isAway())
+  {
+    nickAdditionalInfo = nickAdditionalInfo + i18n("Away");
+    if (!nickInfo->getAwayMessage().isEmpty())
+      nickAdditionalInfo = nickAdditionalInfo + "(" + nickInfo->getAwayMessage() + ")";
+  }
+  if (!nickInfo->getHostmask().isEmpty())
+    nickAdditionalInfo = nickAdditionalInfo + " " + nickInfo->getHostmask();
+  if (!nickInfo->getRealName().isEmpty())
+    nickAdditionalInfo = nickAdditionalInfo + " (" + nickInfo->getRealName() + ")";
+  if (!nickInfo->getNetServer().isEmpty())
+  {
+    nickAdditionalInfo = nickAdditionalInfo + " online via " + nickInfo->getNetServer();
+    if (!nickInfo->getNetServerInfo().isEmpty())
+      nickAdditionalInfo = nickAdditionalInfo + " (" + nickInfo->getNetServerInfo() + ")";
+  }
+  if (!nickInfo->getOnlineSince().isNull())
+    nickAdditionalInfo = nickAdditionalInfo + " since " + nickInfo->getOnlineSince().toString(Qt::LocalDate);
+  return nickAdditionalInfo;
+}
+#else
+QString NicksOnline::getNickAdditionalInfo(NickInfoPtr /*nickInfo*/) { return QString::null; }
+#endif
+
 #ifdef USE_NICKINFO
 void NicksOnline::updateServerOnlineList(Server* server, bool)
 {
@@ -110,13 +142,13 @@ void NicksOnline::updateServerOnlineList(Server* server, bool)
   QListViewItem* child;
   QListViewItem* nextChild;
   QString serverName = server->getServerName();
-  QListViewItem* serverRoot = nickListView->findItem(serverName,0);
+  QListViewItem* serverRoot = m_nickListView->findItem(serverName,nlvcServerNickChannel);
   // If server is not in our list, or if the list changed, then display the new list.
   if ( true )
   {
     if (!serverRoot)
     {
-      serverRoot = new KListViewItem(nickListView,serverName);
+      serverRoot = new KListViewItem(m_nickListView,serverName);
       newServerRoot = true;
     }
     // Get a green LED for flagging of joined channels.
@@ -127,30 +159,15 @@ void NicksOnline::updateServerOnlineList(Server* server, bool)
     const NickInfoMap* nickInfoList = server->getNicksOnline();
     NickInfoMap::ConstIterator itOnline;
     NickInfoPtr nickInfo;
+    QListViewItem* nickRoot;
     for ( itOnline = nickInfoList->begin(); itOnline != nickInfoList->end() ; ++itOnline)
     {
       QString lcNickName = itOnline.key();
       nickInfo = itOnline.data();
       nickname = nickInfo->getNickname();
       // Construct additional information string for nick.
-      QString nickAdditionalInfo;
-      if (nickInfo->isAway())
-      {
-        nickAdditionalInfo = nickAdditionalInfo + i18n("Away");
-        if (!nickInfo->getAwayMessage().isEmpty())
-          nickAdditionalInfo = nickAdditionalInfo + "(" + nickInfo->getAwayMessage() + ")";
-      }
-      if (!nickInfo->getHostmask().isEmpty())
-        nickAdditionalInfo = nickAdditionalInfo + " " + nickInfo->getHostmask();
-      if (!nickInfo->getRealName().isEmpty())
-        nickAdditionalInfo = nickAdditionalInfo + " (" + nickInfo->getRealName() + ")";
-      if (!nickInfo->getNetServer().isEmpty())
-      {
-        nickAdditionalInfo = nickAdditionalInfo + " online via " + nickInfo->getNetServer();
-        if (!nickInfo->getNetServerInfo().isEmpty())
-          nickAdditionalInfo = nickAdditionalInfo + " (" + nickInfo->getNetServerInfo() + ")";
-      }
-      else
+      QString nickAdditionalInfo = getNickAdditionalInfo(nickInfo);
+      if (nickInfo->getNetServer().isEmpty())
       {
         // Request additional info on the nick, but only one at a time.
         if (!whoisRequested)
@@ -159,12 +176,18 @@ void NicksOnline::updateServerOnlineList(Server* server, bool)
           whoisRequested = true;
         }
       }
-      if (!nickInfo->getOnlineSince().isNull())
-        nickAdditionalInfo = nickAdditionalInfo + " since " + nickInfo->getOnlineSince().toString(Qt::LocalDate);
-
-      QListViewItem* nickRoot = findItemChild(serverRoot, nickname);
+        
+      nickRoot = findItemChild(serverRoot, nickname);
       if (!nickRoot) nickRoot = new KListViewItem(serverRoot, nickname, nickAdditionalInfo);
-      nickRoot->setText(1, nickAdditionalInfo);
+      nickRoot->setText(nlvcAdditionalInfo, nickAdditionalInfo);
+      
+      // Set Kabc icon if the nick is associated with an addressbook entry.
+      if (!nickInfo->getAddressee().isEmpty())
+        nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
+          QIconSet::Small, QIconSet::Normal, QIconSet::On));
+      else
+        nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
+          QIconSet::Small, QIconSet::Disabled, QIconSet::Off));
 
       QStringList channelList = server->getNickChannels(nickname);
       for ( unsigned int index=0; index<channelList.count(); index++ )
@@ -180,15 +203,15 @@ void NicksOnline::updateServerOnlineList(Server* server, bool)
         if (channelNick->isAdmin()) nickMode = nickMode + i18n(" Admin");
         QListViewItem* channelItem = findItemChild(nickRoot, channelName);
         if (!channelItem) channelItem = new KListViewItem(nickRoot, channelName, nickMode);
-        channelItem->setText(1, nickMode);
+        channelItem->setText(nlvcAdditionalInfo, nickMode);
 
         if (server->getJoinedChannelMembers(channelName) != 0)
         {
-          channelItem->setPixmap(0, joinedLed);
+          channelItem->setPixmap(nlvcServerNickChannel, joinedLed);
         }
         else
         {
-          channelItem->setPixmap(0, 0);
+          channelItem->setPixmap(nlvcServerNickChannel, 0);
         }
       }
       // Remove channel if nick no longer in it.
@@ -196,7 +219,8 @@ void NicksOnline::updateServerOnlineList(Server* server, bool)
       while (child)
       {
         nextChild = child->nextSibling();
-        if (channelList.find(child->text(0)) == channelList.end()) delete child;
+        if (channelList.find(child->text(nlvcServerNickChannel)) == channelList.end())
+          delete child;
         child = nextChild;
       }
     }
@@ -206,8 +230,9 @@ void NicksOnline::updateServerOnlineList(Server* server, bool)
     while (child)
     {
       nextChild = child->nextSibling();
-      if (!nickInfoList->contains(child->text(0).lower()) && (child->text(0) != i18nOffline))
-        delete child;
+      if (!nickInfoList->contains(child->text(nlvcServerNickChannel).lower()) &&
+        (child->text(nlvcServerNickChannel) != i18nOffline))
+          delete child;
       child = nextChild;
     }
     // List offline nicknames.
@@ -219,23 +244,34 @@ void NicksOnline::updateServerOnlineList(Server* server, bool)
     {
       nickInfo = itOffline.data();
       nickname = nickInfo->getNickname();
-      if (!findItemChild(offlineRoot, nickname))
+      nickRoot = findItemChild(offlineRoot, nickname);
+      if (!nickRoot)
       {
-        new KListViewItem(offlineRoot, nickname);
+        nickRoot = new KListViewItem(offlineRoot, nickname);
       }
+      QString nickAdditionalInfo = getNickAdditionalInfo(nickInfo);
+      nickRoot->setText(nlvcAdditionalInfo, nickAdditionalInfo);
+      // Set Kabc icon if the nick is associated with an addressbook entry.
+      if (!nickInfo->getAddressee().isEmpty())
+        nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
+          QIconSet::Small, QIconSet::Normal, QIconSet::On));
+      else
+        nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
+          QIconSet::Small, QIconSet::Disabled, QIconSet::Off));
     }
     // Remove nick from list if no longer in offline list.
     child = offlineRoot->firstChild();
     while (child)
     {
       nextChild = child->nextSibling();
-      if (!nickInfoList->contains(child->text(0).lower())) delete child;
+      if (!nickInfoList->contains(child->text(nlvcServerNickChannel).lower())) delete child;
       child = nextChild;
     }
     // Expand server if newly added to list.
     if (newServerRoot) serverRoot->setOpen(true);
-    nickListView->adjustColumn(0);
-    nickListView->adjustColumn(1);
+    m_nickListView->adjustColumn(nlvcServerNickChannel);
+    m_nickListView->adjustColumn(nlvcKabc);
+    m_nickListView->adjustColumn(nlvcAdditionalInfo);
   }
 }
 #else
@@ -253,7 +289,7 @@ void NicksOnline::refreshAllServerOnlineLists()
     updateServerOnlineList(server, true);
   }
   // Remove servers no longer connected.
-  QListViewItem* child = nickListView->firstChild();
+  QListViewItem* child = m_nickListView->firstChild();
   while (child)
   {
     QListViewItem* nextChild = child->nextSibling();
@@ -278,14 +314,14 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList&,boo
 #else
 void NicksOnline::setOnlineList(const QString& serverName,const QStringList& list,bool changed)
 {
-  QListViewItem* serverRoot=nickListView->findItem(serverName,0);
+  QListViewItem* serverRoot=m_nickListView->findItem(serverName,0);
   // If server is not in our list, or if the list changed, then display the new list.
   if ( (serverRoot == 0) || changed)
   {
     delete serverRoot;
     if(list.count())
     {
-      KListViewItem* newServerRoot=new KListViewItem(nickListView,serverName);
+      KListViewItem* newServerRoot=new KListViewItem(m_nickListView,serverName);
       for(unsigned int i=list.count();i!=0;i--)
       {
         new KListViewItem(newServerRoot,list[i-1]);
