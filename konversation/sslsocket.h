@@ -33,7 +33,7 @@ class SSLSocket : public KStreamSocket
   ~SSLSocket();
 
   void showInfoDialog();
-  QString details();
+  const QString details();
   
   Q_LONG writeBlock (const char *data, Q_ULONG len);
   Q_LONG readBlock  (char *data, Q_ULONG maxlen);
