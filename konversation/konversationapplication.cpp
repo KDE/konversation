@@ -384,6 +384,7 @@ void KonversationApplication::readOptions()
   }
 
   preferences.setFilterColors(config->readBoolEntry("FilterColorCodes",preferences.getFilterColors()));  //FIXME
+  preferences.setUseColoredNicks(config->readBoolEntry("UseColoredNicks",preferences.getUseColoredNicks()));
 
   preferences.setShowTabBarCloseButton(config->readBoolEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton()));
 
@@ -883,6 +884,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows());
   config->writeEntry("FocusNewQueries", preferences.getFocusNewQueries());
   config->writeEntry("FilterColorCodes", preferences.getFilterColors());
+  config->writeEntry("UseColoredNicks", preferences.getUseColoredNicks());
 
   // Colors are now handled in preferences
 

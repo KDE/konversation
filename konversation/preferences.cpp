@@ -209,6 +209,7 @@ Preferences::Preferences()
   ircColorList.append("#a0a0a0");
   ircColorList.append("#c0c0c0");
   setFilterColors(false);
+  setUseColoredNicks(false);
 
   setNickCompletionMode(2);
   setNickCompletionCaseSensitive(false);
@@ -927,6 +928,9 @@ void Preferences::setWebBrowserCmd(const QString &cmd) { webBrowserCmd=cmd; }
 
 const bool Preferences::getFilterColors() { return filterColors; }
 void Preferences::setFilterColors(bool filter) { filterColors = filter; }
+
+const bool Preferences::getUseColoredNicks() { return useColoredNicks; }
+void Preferences::setUseColoredNicks(bool useColor) { useColoredNicks=useColor; }
 
 const bool Preferences::getRedirectToStatusPane() { return redirectToStatusPane; }
 void Preferences::setRedirectToStatusPane(bool redirect) { redirectToStatusPane = redirect; }

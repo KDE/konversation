@@ -69,6 +69,12 @@ PrefsPageColorsAppearance::PrefsPageColorsAppearance(QFrame* newParent,Preferenc
     }
   }
 
+  row++;
+  useColoredNicksCheck = new QCheckBox(i18n("&Use colored nicks"), parentFrame, "use_color_nicks");
+  useColoredNicksCheck->setChecked(preferences->getUseColoredNicks());
+  colorLayout->addMultiCellWidget(useColoredNicksCheck, row, row, 0, 3);
+
+  row++;
   colorInputFieldsCheck = new QCheckBox(
     i18n("&Input fields and nick list use custom colors"), parentFrame, "input_fields_color_check");
   colorInputFieldsCheck->setChecked(preferences->getColorInputFields());
@@ -129,6 +135,7 @@ void PrefsPageColorsAppearance::applyPreferences()
     preferences->setColor(button->name(), button->color().name().mid(1));
   }
 
+  preferences->setUseColoredNicks(useColoredNicksCheck->isChecked());
   preferences->setColorInputFields(colorInputFieldsCheck->isChecked());
 
   QStringList colorList;

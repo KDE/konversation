@@ -15,6 +15,8 @@
 #ifndef IRCVIEW_H
 #define IRCVIEW_H
 
+#include <qmap.h>
+
 #include <ktextbrowser.h>
 
 /*
@@ -129,6 +131,9 @@ class IRCView : public KTextBrowser
     bool forward;
     bool fromCursor;
     QString pattern;
+
+    QStringList colorList;
+    QMap<QString,QString> colorMap;
 };
 
 #endif

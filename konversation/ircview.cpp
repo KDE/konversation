@@ -22,6 +22,8 @@
 #include <qbrush.h>
 #include <qpopupmenu.h>
 #include <qwhatsthis.h>
+#include <qmap.h>
+#include <qcolor.h>
 
 #include "konvidebug.h"
 #include <kmessagebox.h>
@@ -44,6 +46,8 @@
 #include "konversationsound.h"
 #include "chatwindow.h"
 #include "common.h"
+
+#include <time.h>
 
 IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 {
@@ -85,6 +89,8 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 
   QString bgColor=KonversationApplication::preferences.getColor("TextViewBackground");
   setViewBackground(bgColor,QString::null);
+
+  colorList << "red" << "green" << "blue" << "pink" << "magenta" << "yellow" ;
 
   setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
 
@@ -403,13 +409,31 @@ void IRCView::append(const QString& nick,const QString& message)
 {
   QString channelColor=KonversationApplication::preferences.getColor("ChannelMessage");
   QString line;
+  QString nickLine="%2";
+  
+  if(KonversationApplication::preferences.getUseColoredNicks() && nick != m_server->getNickname())
+    {
+      if(!colorMap.contains(nick))
+	{
+	  QColor nickColor;
+	  QString backgroundColor=KonversationApplication::preferences.getColor("TextViewBackground");
+	  srandom(time(NULL));
+	  int i = random()%6;
+	  
+	  if(backgroundColor==colorList[i])
+	    i = (i+1)%6;
 
+	  colorMap[nick] = colorList[i];
+	}
+      nickLine = "<font color=\""+colorMap[nick]+"\"><b>%2</b></font>";
+    }
+  
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
-    line += "<p><font color=\"#" + channelColor + "\"><b>&lt;</b>%2<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
+    line += "<p><font color=\"#" + channelColor + "\"><b>&lt;</b>"+nickLine+"<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
   } else {
-    line = "<p><font color=\"#" + channelColor + "\">%1 <b>&lt;</b>%2<b>&gt;</b> %3</font></p>\n";
+    line = "<p><font color=\"#" + channelColor + "\">%1 <b>&lt;</b>"+nickLine+"<b>&gt;</b> %3</font></p>\n";
   }
 
   line = line.arg(timeStamp(), nick, filter(message,channelColor,nick,true));
