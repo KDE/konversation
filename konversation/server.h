@@ -252,6 +252,7 @@ class Server : public QObject
     void connectToIRCServer();
     void queue(const QString &buffer);
     void queueList(const QStringList &buffer);
+    void queueAt(int pos,const QString& buffer);
     void setNickname(const QString &newNickname);
     void addQuery(const QString &nickname, const QString &hostmask);
     void closeQuery(const QString &name);
@@ -316,8 +317,6 @@ class Server : public QObject
 
     KonversationMainWindow* getMainWindow() const;
     void setMainWindow(KonversationMainWindow* newMainWindow);
-
-    void queueAt(int pos,const QString& buffer);
 
     bool eventFilter(QObject* parent, QEvent *event);
 
