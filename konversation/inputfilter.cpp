@@ -1056,8 +1056,30 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_WHOISIDLE:
         {
-          server->appendStatusMessage(i18n("Whois"),i18n("%1 is idle since %2 seconds.").arg(parameterList[1])
-                                      .arg(parameterList[2]));
+          // get idle time in seconds
+          long seconds=parameterList[2].toLong();
+          long minutes=seconds/60;
+          long hours  =minutes/60;
+          long days   =hours/24;
+
+          // TODO: replace QString()s with i18n()s after i18n-freeze!
+          // if idle time is longer than a day
+          if(days)
+            server->appendStatusMessage(i18n("Whois"),QString("%1 is idle since %2 days, %3 hours, %4 minutes and %5 seconds.").arg(parameterList[1])
+                                        .arg(days).arg(hours % 24).arg(minutes % 60).arg(seconds % 60));
+          // or longer than an hour
+          else if(hours)
+            server->appendStatusMessage(i18n("Whois"),QString("%1 is idle since %2 hours, %3 minutes and %4 seconds.").arg(parameterList[1])
+                                        .arg(hours).arg(minutes % 60).arg(seconds % 60));
+          // or longer than a minute
+          else if(minutes)
+            server->appendStatusMessage(i18n("Whois"),QString("%1 is idle since %2 minutes and %3 seconds.").arg(parameterList[1])
+                                        .arg(minutes).arg(seconds % 60));
+          // or just some seconds
+          else
+            server->appendStatusMessage(i18n("Whois"),i18n("%1 is idle since %2 seconds.").arg(parameterList[1])
+                                        .arg(seconds));
+
           if(parameterList.count()==4)
           {
             QDateTime when;

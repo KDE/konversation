@@ -18,7 +18,6 @@ DCC RESUME should start counting cps from the beginning
 Joining large channels is very slow
 Close query on RMB Ignore ([x] don't ask again)
 Make coloring of list view and input lines an option
-Convert idle time in hours, minutes and seconds
 "Select All" for ignore page so you can delete them all at once
 Context menu on nick in nick should contain hostmask, realname, etc. infos (in a sub-menu)
 
