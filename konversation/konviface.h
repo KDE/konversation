@@ -115,6 +115,8 @@ class KonvPreferencesIface : virtual public DCOPObject
     virtual unsigned long getDccRollback() = 0;
     virtual void setDccFastSend(bool state) = 0;
     virtual bool getDccFastSend() = 0;
+    virtual void setDccSendTimeout(int sec) = 0;
+    virtual int getDccSendTimeout() = 0;
     virtual void setBlinkingTabs(bool blink) = 0;
     virtual bool getBlinkingTabs() = 0;
     virtual void setBringToFront(bool state) = 0;

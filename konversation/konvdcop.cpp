@@ -564,6 +564,17 @@ bool KonvPrefsDCOP::getDccFastSend()
   return KonversationApplication::preferences.getDccFastSend();
 }
 
+void KonvPrefsDCOP::setDccSendTimeout(int sec)
+{
+  KonversationApplication::preferences.setDccSendTimeout(sec);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+int KonvPrefsDCOP::getDccSendTimeout()
+{
+  return KonversationApplication::preferences.getDccSendTimeout();
+}
+
 void KonvPrefsDCOP::setBlinkingTabs(bool blink)
 {
   KonversationApplication::preferences.setBlinkingTabs(blink);

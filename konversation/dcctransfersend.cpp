@@ -164,7 +164,7 @@ void DccTransferSend::start()  // public slot
   setStatus( WaitingRemote, i18n("Waiting remote user's acceptance") );
   updateView();
   
-  startConnectionTimer( 90 );  // wait for 90 sec
+  startConnectionTimer( KonversationApplication::preferences.getDccSendTimeout() );
   
   emit sendReady( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_ownPort, m_fileSize );
 }

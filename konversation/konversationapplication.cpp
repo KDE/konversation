@@ -692,6 +692,7 @@ void KonversationApplication::readOptions()
   preferences.setDccAutoGet(config->readBoolEntry("AutoGet",preferences.getDccAutoGet()));
   preferences.setDccAutoResume(config->readBoolEntry("AutoResume",preferences.getDccAutoResume()));
   preferences.setDccFastSend(config->readBoolEntry("FastSend",preferences.getDccFastSend()));
+  preferences.setDccSendTimeout(config->readNumEntry("SendTimeout",preferences.getDccSendTimeout()));
 
   // Path settings
   config->setGroup("Path Settings");
@@ -974,6 +975,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("AutoGet",preferences.getDccAutoGet());
   config->writeEntry("AutoResume",preferences.getDccAutoResume());
   config->writeEntry("FastSend",preferences.getDccFastSend());
+  config->writeEntry("SendTimeout",preferences.getDccSendTimeout());
 
  // Path Settings
   config->setGroup("Path Settings");

@@ -116,6 +116,7 @@ Preferences::Preferences()
   setDccBufferSize(1024);
   setDccRollback(1024);
   setDccFastSend(false);
+  setDccSendTimeout(120);
 
   KStandardDirs kstddir;
   setLogPath(kstddir.saveLocation("data","konversation/logs"));
@@ -440,6 +441,9 @@ QString Preferences::getDccPath() { return dccPath; }
 
 void Preferences::setDccFastSend(bool state) { dccFastSend=state; }
 bool Preferences::getDccFastSend() { return dccFastSend; }
+
+void Preferences::setDccSendTimeout(int sec) { dccSendTimeout=sec; }
+int Preferences::getDccSendTimeout() { return dccSendTimeout; }
 
 void Preferences::setFixedMOTD(bool state) { fixedMOTD=state; }
 bool Preferences::getFixedMOTD() { return fixedMOTD; }

@@ -67,6 +67,7 @@ class PrefsPageDccSettings : public PrefsPage
     QSpinBox* dccChatPortsFirstSpin;
     QSpinBox* dccChatPortsLastSpin;
     QCheckBox* dccFastSend;
+    QSpinBox* dccSendTimeoutSpin;
 };
 
 #endif

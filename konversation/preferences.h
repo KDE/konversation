@@ -138,6 +138,8 @@ class Preferences : public QObject
     unsigned int getDccChatPortsLast();
     void setDccFastSend(bool state);
     bool getDccFastSend();
+    void setDccSendTimeout(int sec);
+    int getDccSendTimeout();
     
     TabPlacement getTabPlacement();
     void setTabPlacement(TabPlacement where);
@@ -479,6 +481,7 @@ class Preferences : public QObject
     unsigned long dccRollback;  // Rollback for Resume
     QString dccPath;
     bool dccFastSend;
+    int dccSendTimeout;
 
     bool autoReconnect;
     bool autoRejoin;

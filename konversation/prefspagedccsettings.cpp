@@ -56,30 +56,21 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccAutoGet->setChecked(preferences->getDccAutoGet());
   dccAutoResume->setChecked(preferences->getDccAutoResume());
 
-  // buffer size & rollback {
-  QHBox* dccSpinBoxes=new QHBox(parentFrame);
-  dccSpinBoxes->setSpacing(spacingHint());
-
-  QLabel* dccBufferLabel=new QLabel(i18n("B&uffer size:"),dccSpinBoxes);
-  dccBufferSpin=new QSpinBox(512,16384,128,dccSpinBoxes,"dcc_buffer_spin");
-  dccBufferSpin->setSuffix(" "+i18n("bytes"));
-  dccBufferSpin->setValue(preferences->getDccBufferSize());
-
-  dccBufferLabel->setBuddy(dccBufferSpin);
-
-  QLabel* dccRollbackLabel=new QLabel(i18n("&Rollback:"),dccSpinBoxes);
-  dccRollbackLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  dccRollbackSpin=new QSpinBox(0,65536,512,dccSpinBoxes,"dcc_rollback_spin");
-  dccRollbackSpin->setSuffix(" "+i18n("bytes"));
-  dccRollbackSpin->setValue(preferences->getDccRollback());
-
-  dccRollbackLabel->setBuddy(dccRollbackSpin);
-
-  dccSpinBoxes->setStretchFactor(dccRollbackLabel,10);
-  // }
-
+  // Dcc send timeout
+  QFrame* dccSendTimeoutFrame=new QFrame(parentFrame);
+  QHBoxLayout* dccSendTimeoutLayout=new QHBoxLayout(dccSendTimeoutFrame);
+  dccSendTimeoutLayout->setSpacing(spacingHint());
+  QLabel* dccSendTimeoutLabel=new QLabel(i18n("DCC send t&imeout:"),dccSendTimeoutFrame);
+  dccSendTimeoutSpin=new QSpinBox(1,300,1,dccSendTimeoutFrame,"dcc_send_timeout");
+  dccSendTimeoutSpin->setSuffix(" "+i18n("sec"));
+  dccSendTimeoutSpin->setValue(preferences->getDccSendTimeout());
+  dccSendTimeoutLabel->setBuddy(dccSendTimeoutSpin);
+  dccSendTimeoutLayout->addWidget(dccSendTimeoutLabel);
+  dccSendTimeoutLayout->addWidget(dccSendTimeoutSpin);
+  dccSendTimeoutLayout->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+  
   // own IP
-  QVGroupBox* dccOwnIpGroup = new QVGroupBox(i18n("Own IP"), parentFrame, "dcc_own_ip_group");
+  QVGroupBox* dccOwnIpGroup = new QVGroupBox(i18n("IP"), parentFrame, "dcc_own_ip_group");
 
   QHBox* dccMethodToGetOwnIpBox = new QHBox(dccOwnIpGroup);
   QLabel* dccMethodToGetOwnIpLabel = new QLabel(i18n("&Method to get own IP:"), dccMethodToGetOwnIpBox);
@@ -164,7 +155,29 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccChatPortsFirstSpin->setValue(preferences->getDccChatPortsFirst());
   dccChatPortsLastSpin->setValue(preferences->getDccChatPortsLast());
   // }
+  
+  // buffer size & rollback {
+  QHBox* dccSpinBoxes=new QHBox(parentFrame);
+  dccSpinBoxes->setSpacing(spacingHint());
 
+  QLabel* dccBufferLabel=new QLabel(i18n("Buffer si&ze:"),dccSpinBoxes);
+  dccBufferSpin=new QSpinBox(512,16384,128,dccSpinBoxes,"dcc_buffer_spin");
+  dccBufferSpin->setSuffix(" "+i18n("bytes"));
+  dccBufferSpin->setValue(preferences->getDccBufferSize());
+
+  dccBufferLabel->setBuddy(dccBufferSpin);
+
+  QLabel* dccRollbackLabel=new QLabel(i18n("&Rollback:"),dccSpinBoxes);
+  dccRollbackLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  dccRollbackSpin=new QSpinBox(0,65536,512,dccSpinBoxes,"dcc_rollback_spin");
+  dccRollbackSpin->setSuffix(" "+i18n("bytes"));
+  dccRollbackSpin->setValue(preferences->getDccRollback());
+
+  dccRollbackLabel->setBuddy(dccRollbackSpin);
+
+  dccSpinBoxes->setStretchFactor(dccRollbackLabel,10);
+  // }
+  
   dccFastSend=new QCheckBox(i18n("&Use fast DCC send"),parentFrame,"dcc_fast_dcc_sending");
   dccFastSend->setChecked(preferences->getDccFastSend());
 
@@ -185,8 +198,8 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   row++;
   dccSettingsLayout->addMultiCellWidget(dccAutoResume,row,row,0,2);
   row++;
-
-  dccSettingsLayout->addMultiCellWidget(dccSpinBoxes,row,row,0,2);
+  
+  dccSettingsLayout->addMultiCellWidget(dccSendTimeoutFrame,row,row,0,2);
   row++;
 
   dccSettingsLayout->addMultiCellWidget(dccOwnIpGroup,row,row,0,2);
@@ -195,6 +208,9 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSettingsLayout->addMultiCellWidget(dccPortsGroup,row,row,0,2);
   row++;
 
+  dccSettingsLayout->addMultiCellWidget(dccSpinBoxes,row,row,0,2);
+  row++;
+  
   dccSettingsLayout->addMultiCellWidget(dccFastSend,row,row,0,2);
   row++;
 
