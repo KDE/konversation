@@ -585,7 +585,6 @@ class Server : public QObject
     /// List of nicks in Queries.
     NickInfoMap m_queryNicks;
     
-    Konversation::ServerSettings m_serverSettings;
     Konversation::ServerGroupSettings m_serverGroup;
     unsigned int m_currentServerIndex;
 };

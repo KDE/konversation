@@ -88,8 +88,8 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
 
   Konversation::ServerSettings serverSettings;
   serverSettings.setServer(hostName);
-  m_serverSettings.setPort(port.toInt());
-  m_serverSettings.setPassword(password);
+  serverSettings.setPort(port.toInt());
+  serverSettings.setPassword(password);
   m_serverGroup.addServer(serverSettings);
 
   if(nick.isEmpty()) // Happens when we are invoked from an irc:/ url
