@@ -32,6 +32,7 @@
 #include "serverlistitem.h"
 #include "editserverdialog.h"
 #include "konversationapplication.h"
+#include "prefspagedialogs.h"
 
 PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
              KDialogBase (KDialogBase::TreeList,i18n("Edit preferences"),
@@ -47,25 +48,28 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   QFrame* appearancePane     =addPage(i18n("Appearance"));
   QFrame* logSettingsPane    =addPage(i18n("Log settings"));
   QFrame* dccSettingsPane    =addPage(i18n("DCC settings"));
-// TODO: Uncomment this again when it's ready to go
-//  QFrame* scriptsPane        =addPage(i18n("Scripting"));
+  QFrame* dialogsPane        =addPage(i18n("Dialogs"));
+  // TODO: Uncomment this again when it's ready to go
+  //  QFrame* scriptsPane        =addPage(i18n("Scripting"));
 
   // Add Server List page
   PrefsPage* serverListPage=new PrefsPageServerList(serverListPane,preferences);
   connect(serverListPage,SIGNAL(connectToServer(int)),this,SLOT(connectRequest(int)) );
   // Add General Settings page
-/*  PrefsPage* generalSettingsPage= */ new PrefsPageGeneralSettings(generalSettingsPane,preferences);
+  new PrefsPageGeneralSettings(generalSettingsPane,preferences);
   // Add Identity page
-/*  PrefsPage* identityPage= */ new PrefsPageIdentity(identityPane,preferences);
+  new PrefsPageIdentity(identityPane,preferences);
   // Add Appearance page
-/*  PrefsPage* identityPage= */ new PrefsPageAppearance(appearancePane,preferences);
+  new PrefsPageAppearance(appearancePane,preferences);
   // Add Log Settings page
-/*  PrefsPage* logSettingsPage= */ new PrefsPageLog(logSettingsPane, preferences);
+  new PrefsPageLog(logSettingsPane,preferences);
   // Add Dcc Settings page
-/*  PrefsPage* dccSettingsPage= */ new PrefsPageDccSettings(dccSettingsPane, preferences);
+  new PrefsPageDccSettings(dccSettingsPane,preferences);
+  // Add Dialogs page
+  new PrefsPageDialogs(dialogsPane,preferences);
   // Add scripts page
   // TODO: Uncomment this again when it's ready to go
-//    PrefsPage* scriptsPage= new PrefsPageScripts(scriptsPane, preferences);
+  // new PrefsPageScripts(scriptsPane, preferences);
 
   setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
   setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));

@@ -17,6 +17,8 @@
 #include <ktoolbar.h>
 #include <kstddirs.h>
 #include <kdebug.h>
+#include <kapp.h>
+#include <kconfig.h>
 
 #include <qpalette.h>
 #include <qtextcodec.h>
@@ -539,6 +541,24 @@ void Preferences::setAutoUserhost(bool state)
 {
   autoUserhost=state;
   emit autoUserhostChanged(state);
+}
+
+bool Preferences::getDialogFlag(const QString& flagName)
+{
+  KConfig* config=KApplication::kApplication()->config();
+
+  config->setGroup("Notification Messages");
+  return config->readBoolEntry(flagName,true);
+}
+
+void Preferences::setDialogFlag(const QString& flagName,bool state)
+{
+  KConfig* config=KApplication::kApplication()->config();
+
+  config->setGroup("Notification Messages");
+
+  config->writeEntry(flagName,state);
+  config->sync();
 }
 
 #include "preferences.moc"

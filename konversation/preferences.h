@@ -291,6 +291,9 @@ class Preferences : public QObject
     void setAutoUserhost(bool state);
     bool getAutoUserhost();
 
+    bool getDialogFlag(const QString& flagName);
+    void setDialogFlag(const QString& flagName,bool state);
+
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();

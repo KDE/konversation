@@ -69,7 +69,7 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
 
     item->setOn(serverEntry[6]=="1");
 
-    connect(item,SIGNAL(autoStateChanged(ServerListItem*,bool)),
+    connect(item,SIGNAL(stateChanged(ServerListItem*,bool)),
             this,SLOT  (updateAutoState(ServerListItem*,bool)) );
 
     serverString=preferences->getServerByIndex(++index);

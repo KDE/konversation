@@ -40,7 +40,7 @@ class ServerListItem : public QObject, public QCheckListItem
     int getId() { return id; };
 
   signals:
-    void autoStateChanged(ServerListItem* myself,bool state);
+    void stateChanged(ServerListItem* myself,bool state);
 
   protected:
     void stateChange(bool state);

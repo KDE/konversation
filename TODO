@@ -4,8 +4,7 @@ berkus: Logfile reader
 berkus: Move Encoding into identity
 berkus: Logrotate with timer or at shutdown, compress rotated logs
 
-Eisfuchs: User interface for dialog options (don't show again dialogs)
-
+Try to keep open views on server disconnects, kicks and stuff
 Remember server group in logfiles, make same channel names on different servers possible
 Nick completion should remember last position
 Reverse-I-Search

@@ -45,7 +45,7 @@ ServerListItem::~ServerListItem()
 
 void ServerListItem::stateChange(bool state)
 {
-  emit autoStateChanged(this,state);
+  emit stateChanged(this,state);
 }
 
 #include "serverlistitem.moc"
