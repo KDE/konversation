@@ -513,6 +513,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     // ******
     server->removeNickFromServer(sourceNick,trailing);
+    // KNotify events...
+    if(sourceNick != server->getNickname()) {
+      KNotifyClient::event("part");
+    }
   }
   else if(command=="nick")
   {
@@ -564,6 +568,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     // ******
     parseModes(sourceNick,parameterList);
+    // KNotify events...
+    if(sourceNick != server->getNickname()) {
+      KNotifyClient::event("mode");
+    }
   }
   else if(command=="invite")
   {

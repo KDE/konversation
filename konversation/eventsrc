@@ -51,3 +51,10 @@ Name[de]=Nick verläßt Kanal
 Comment=A nick left a channel
 Comment[de]=Ein Nick verläßt einen Kanal
 defalt_presentation=0
+
+[mode]
+Name=Mode change
+Name[de]=Moduswechsel
+Comment=A user or channel mode was changed
+Comment[de]=Ein Benutzer- oder Kanalmodus wurde geändert
+defalt_presentation=0
