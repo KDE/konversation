@@ -19,12 +19,12 @@
 #include <qapplication.h>
 #include <qregexp.h>
 
-#include <kcharsets.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kpopupmenu.h>
 #include <kiconloader.h>
 
+#include "irccharsets.h"
 #include "ledtabbar.h"
 #include "ledtab.h"
 #include "konversationapplication.h"
@@ -81,23 +81,15 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
   if(popup)
   {
     // Encoding {
-    QStringList encodingsListDesc=KGlobal::charsets()->descriptiveEncodingNames();
-    QStringList::Iterator it=encodingsListDesc.begin();
-    while(it != encodingsListDesc.end())
-    {
-      QString encodingName=KGlobal::charsets()->encodingForName(*it);
-      if( encodingName == "utf16" || encodingName.startsWith("iso-10646") )
-        it=encodingsListDesc.remove(it);
-      else
-      {
-        encodingsList.append(encodingName);
-        ++it;
-      }
-    }
     popupEncoding=new KPopupMenu(this,"ledtabbar_context_menu_encoding");
     popupEncoding->setCheckable(true);
-    for(unsigned int j=0; j<encodingsList.count(); ++j)
-      popupEncoding->insertItem(encodingsListDesc[j],POPUPID_ENCODING_OFFSET+j+1);
+    QStringList encodingDescs=IRCCharsets::availableEncodingDescriptiveNames();
+    unsigned int j=0;
+    for(QStringList::Iterator it=encodingDescs.begin(); it!=encodingDescs.end(); ++it)
+    {
+      popupEncoding->insertItem(*it,POPUPID_ENCODING_OFFSET+j+1);
+      ++j;
+    }
     popupEncoding->insertSeparator();
     popupEncoding->insertItem(i18n("Default"),POPUPID_ENCODING_OFFSET+0);
     // }
@@ -401,9 +393,10 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
           popup->setItemEnabled(EncodingSub, true);
           popupEncoding->changeItem(POPUPID_ENCODING_OFFSET+0,win->getChannelEncodingDefaultDesc());
           QString encoding=win->getChannelEncoding();
+          int encodingIndex=IRCCharsets::shortNameToIndex(encoding);
           popupEncoding->setItemChecked(POPUPID_ENCODING_OFFSET+0, (encoding == QString::null)); // identity default
-          for(unsigned int i=0; i<encodingsList.count(); ++i)
-            popupEncoding->setItemChecked(POPUPID_ENCODING_OFFSET+i+1, (encoding == encodingsList[i]));
+          for(int i=0; i<IRCCharsets::availableEncodingsCount(); ++i)
+            popupEncoding->setItemChecked(POPUPID_ENCODING_OFFSET+i+1, (encodingIndex == i));
         }
       } else {
         popup->setItemVisible(EnableNotifications, false);
@@ -428,14 +421,14 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
           win->setNotificationsEnabled(!win->notificationsEnabled());
         }
       }
-      else if(POPUPID_ENCODING_OFFSET <= r && (unsigned int)r <= POPUPID_ENCODING_OFFSET+encodingsList.count()+1)
+      else if(POPUPID_ENCODING_OFFSET <= r && r <= POPUPID_ENCODING_OFFSET+IRCCharsets::availableEncodingsCount()+1)
       {
         if(win)
         {
           if(POPUPID_ENCODING_OFFSET == r)
             win->setChannelEncoding(QString::null);
           else
-            win->setChannelEncoding(encodingsList[r-POPUPID_ENCODING_OFFSET-1]);
+            win->setChannelEncoding(IRCCharsets::availableEncodingShortNames()[r-POPUPID_ENCODING_OFFSET-1]);
         }
       }
     }

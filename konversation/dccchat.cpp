@@ -29,7 +29,7 @@
 #include <ksocketaddress.h>
 #include <kstreamsocket.h>
 
-#include "ircdefaultcodec.h"
+#include "irccharsets.h"
 #include "ircview.h"
 #include "ircinput.h"
 #include "dccchat.h"
@@ -208,7 +208,7 @@ void DccChat::readData()
   int actual=0;
   char* buffer=0;
   QString line;
-  QTextCodec* codec = QTextCodec::codecForName(m_encoding.isEmpty() ? IRCDefaultCodec::getDefaultLocaleCodec().ascii() : m_encoding.ascii());
+  QTextCodec* codec = QTextCodec::codecForName(m_encoding.isEmpty() ? IRCCharsets::encodingForLocale().ascii() : m_encoding.ascii());
   
   available = m_dccSocket->bytesAvailable();
   if( available > 0 )
@@ -269,7 +269,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
     // wrap socket into a stream
     QTextStream stream(m_dccSocket);
     // init stream props
-    stream.setCodec(QTextCodec::codecForName(m_encoding.isEmpty() ? IRCDefaultCodec::getDefaultLocaleCodec().ascii() : m_encoding.ascii()));
+    stream.setCodec(QTextCodec::codecForName(m_encoding.isEmpty() ? IRCCharsets::encodingForLocale().ascii() : m_encoding.ascii()));
     //stream.setEncoding(QTextStream::Locale);
 
 /*
@@ -375,7 +375,7 @@ QString DccChat::getChannelEncoding()  // virtual
 
 QString DccChat::getChannelEncodingDefaultDesc()  // virtual
 {
-  return i18n("Default ( %1 )").arg(IRCDefaultCodec::getDefaultLocaleCodec());
+  return i18n("Default ( %1 )").arg(IRCCharsets::encodingForLocale());
 }
 
 #ifdef USE_MDI

@@ -28,7 +28,7 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp valuelistviewit
 	multilineedit.cpp nickinfo.cpp dccresumedialog.cpp konversationsound.cpp quickconnectdialog.cpp\
 	prefspagebehaviour.cpp prefspagechatwinbehavior.cpp prefspagechatwinappearance.cpp\
 	prefspagecolorsappearance.cpp serverlistdialog.cpp dcctransfersend.cpp dcctransferrecv.cpp\
-	channelnick.cpp dccdetaildialog.cpp insertchardialog.cpp ircdefaultcodec.cpp\
+	channelnick.cpp dccdetaildialog.cpp insertchardialog.cpp irccharsets.cpp\
         editnotifydialog.cpp common.cpp serverison.cpp sslsocket.cpp
 konversation_LDADD   = $(COMPAT_LIBS) $(LIB_KIO) -lkmdi -lm $(LIB_ARTS) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la
 

@@ -23,16 +23,16 @@
 #include <qregexp.h>
 
 #include <klineedit.h>
-#include <kdebug.h>
 #include <klocale.h>
+#include <kdebug.h>
 #include <kcombobox.h>
 #include <kinputdialog.h>
-#include <kcharsets.h>
 #include <kmessagebox.h>
 
 #include "prefspageidentity.h"
 #include "preferences.h"
 #include "identity.h"
+#include "irccharsets.h"
 
 PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferences) :
                    PrefsPage(newParent,newPreferences)
@@ -66,22 +66,8 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   codecComboBox=new QComboBox(parentFrame,"codec_combo_box");
   codecLabel->setBuddy(codecComboBox);
 
-  // get list of all encodings available
-  encodings=KGlobal::charsets()->descriptiveEncodingNames();
-
-  // from ksirc: remove utf16/ucs2 as it just doesn't work for IRC
-  QStringList::Iterator it=encodings.begin();
-  while(it != encodings.end())
-  {
-    QString encoding=KGlobal::charsets()->encodingForName(*it);
-    if( encoding=="utf16" || encoding.startsWith("iso-10646") )
-      it=encodings.remove(it);
-    else
-      ++it;
-  }
-
   // add encodings to combo box
-  codecComboBox->insertStringList(encodings);
+  codecComboBox->insertStringList(IRCCharsets::availableEncodingDescriptiveNames());
 
   // nickname alternatives
   QLabel* nick0Label=new QLabel(i18n("Nickname &%1:").arg(1),parentFrame);
@@ -240,7 +226,7 @@ PrefsPageIdentity::~PrefsPageIdentity()
 
 void PrefsPageIdentity::encodingChanged(int newEncodingIndex)
 {
-  if(newEncodingIndex) identity->setCodecName(KGlobal::charsets()->encodingForName(codecComboBox->text(newEncodingIndex)));
+  if(newEncodingIndex) identity->setCodecName(IRCCharsets::availableEncodingShortNames()[newEncodingIndex]);
 }
 
 void PrefsPageIdentity::realNameChanged(const QString& newRealName)
@@ -337,18 +323,8 @@ void PrefsPageIdentity::updateIdentity(int number)
   realNameInput->setText(identity->getRealName());
 
   // find encoding and set combo box accordingly
-
-  QRegExp encoding("\\b" + identity->getCodecName().lower() + "\\b");
-
-  for(unsigned int index=0;index<encodings.count();index++)
-  {
-    if(encoding.search(encodings[index].lower())!=-1)
-    {
-      codecComboBox->setCurrentItem(index);
-      break;
-    }
-  }
-
+  codecComboBox->setCurrentItem(IRCCharsets::shortNameToIndex(identity->getCodecName()));
+  
   nick0->setText(identity->getNickname(0));
   nick1->setText(identity->getNickname(1));
   nick2->setText(identity->getNickname(2));
