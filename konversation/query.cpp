@@ -47,6 +47,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
   queryHostmask=new QLineEdit(this, "query_hostmask");
   queryHostmask->setReadOnly(true);
+  queryHostmask->installEventFilter(this);
 
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer();
 
@@ -62,6 +63,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   awayLabel=new QLabel(i18n("(away)"),inputBox);
   awayLabel->hide();
   queryInput=new IRCInput(inputBox);
+  queryInput->installEventFilter(this);
 
   setLogfileName(QString::null);
 

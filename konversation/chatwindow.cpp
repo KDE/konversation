@@ -418,4 +418,33 @@ void ChatWindow::closeRequest(KMdiChildView* view) // USE_MDI
 #endif
 }
 
+bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
+{
+  if(e->type() == QEvent::KeyPress) {
+    QKeyEvent* ke = static_cast<QKeyEvent*>(e);
+    
+    if(ke->key() == Qt::Key_Up && ke->state() == Qt::ShiftButton) {
+      if(textView) {
+        QScrollBar* sbar = textView->verticalScrollBar();
+        sbar->setValue(sbar->value() - sbar->lineStep());
+      }
+      
+      return true;
+    } else if(ke->key() == Qt::Key_Down && ke->state() == Qt::ShiftButton) {
+      if(textView) {
+        QScrollBar* sbar = textView->verticalScrollBar();
+        sbar->setValue(sbar->value() + sbar->lineStep());
+      }
+      
+      return true;
+    }
+  }
+  
+#ifdef USE_MDI
+  return KMdiChildView::eventFilter(watched, e);
+#else
+  return QVBox::eventFilter(watched, e);
+#endif
+}
+
 #include "chatwindow.moc"

@@ -48,10 +48,12 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
   nicknameCombobox=new QComboBox(commandLineBox);
   nicknameCombobox->setEditable(true);
   nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
+  nicknameCombobox->installEventFilter(this);
   oldNick=nicknameCombobox->currentText();
   awayLabel=new QLabel(i18n("(away)"),commandLineBox);
   awayLabel->hide();
   statusInput=new IRCInput(commandLineBox);
+  statusInput->installEventFilter(this);
 
   setLog(KonversationApplication::preferences.getLog());
   setLogfileName("konversation");

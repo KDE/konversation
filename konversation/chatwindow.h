@@ -114,6 +114,8 @@ class ChatWindow : public BASE_CLASS
     virtual bool searchView();
 
     virtual bool notificationsEnabled() { return m_notificationsEnabled; }
+    
+    virtual bool eventFilter(QObject* watched, QEvent* e);
 
   signals:
     void nameChanged(ChatWindow* view,const QString& newName);

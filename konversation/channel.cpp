@@ -127,6 +127,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   topicLine->setEditable(true);
   topicLine->setAutoCompletion(false);
   topicLine->setInsertionPolicy(QComboBox::NoInsertion);
+  topicLine->installEventFilter(this);
 
   // link topic label shortcut to topic line
   topicLabel->setBuddy(topicLine);
@@ -164,6 +165,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   limit=new KLineEdit(modeBox);
   connect(limit,SIGNAL (returnPressed()),this,SLOT (channelLimitChanged()) );
+  limit->installEventFilter(this);
 
   showModeButtons(KonversationApplication::preferences.getShowModeButtons());
 
@@ -197,6 +199,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   // separate LED from Text a little more
   nicknameListView->setColumnWidth(0,10);
   nicknameListView->setColumnAlignment(0,Qt::AlignHCenter);
+  nicknameListView->installEventFilter(this);
 
   // the grid that holds the quick action buttons
   buttonsGrid=new QGrid(2,nickListButtons);
@@ -221,10 +224,12 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameCombobox=new QComboBox(commandLineBox);
   nicknameCombobox->setEditable(true);
   nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
+  nicknameCombobox->installEventFilter(this);
   oldNick = nicknameCombobox->currentText();
   awayLabel=new QLabel(i18n("(away)"),commandLineBox);
   awayLabel->hide();
   channelInput=new IRCInput(commandLineBox);
+  channelInput->installEventFilter(this);
 
   // Set the widgets size policies
   topicBox->setSizePolicy(vmodest);
