@@ -128,7 +128,10 @@ void DccPanel::runDcc()
   DccTransfer* item=(DccTransfer*) getListView()->selectedItem();
   if(item)
   {
-    new KRun(item->getFile());
+    if(item->getType()==DccTransfer::Send || item->getType()==DccTransfer::ResumeSend)
+      new KRun(item->getFile());
+    else if(item->getType()==DccTransfer::Get || item->getType()==DccTransfer::ResumeGet)
+      new KRun(item->getFolder()+"/"+item->getFile());
   }
 }
 
