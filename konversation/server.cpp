@@ -933,7 +933,7 @@ void Server::incoming()
 { 
   //kdDebug() << "readyRead signal emitted socket has " << serverSocket->bytesAvailable() << " bytes!" << endl;
   int max_bytes = serverSocket->bytesAvailable();
-  
+  Q_ASSERT(max_bytes>0);  //Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
   char buffer[max_bytes];
   int len = 0;
   

@@ -1188,7 +1188,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       case RPL_ENDOFWHOIS:
         {
 #ifdef USE_NICKINFO
-          NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
+//          NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
 #endif
           server->appendStatusMessage(i18n("Whois"),i18n("End of WHOIS list."));
           break;
