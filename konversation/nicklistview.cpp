@@ -100,7 +100,7 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
   }
 
 #if KDE_IS_VERSION(3,3,90)
-  setsetShadeSortColumn(false);
+  setShadeSortColumn(false);
 #endif
 
   // We have our own tooltips, don't use the default QListView ones
