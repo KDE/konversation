@@ -16,6 +16,7 @@
 #define INPUTFILTER_H
 
 #include <qobject.h>
+#include <qstringlist.h>
 
 #include "ignore.h"
 

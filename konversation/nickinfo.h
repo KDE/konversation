@@ -23,6 +23,11 @@
 #include <qdatetime.h>
 #include <ksharedptr.h>
 
+#include <kabc/addressbook.h>
+#include "addressbook.h"
+
+#include "localestring.h"
+
 class Server;
 
 /*
@@ -39,8 +44,8 @@ class NickInfo : public KShared
     ~NickInfo();
      
     // Get properties of NickInfo object.
-    QString getNickname();
-    QString getHostmask();
+    QString getNickname() const;
+    QString getHostmask() const;
     bool isAway();
     QString getAwayMessage();
     QString getIdentdInfo();
@@ -50,10 +55,13 @@ class NickInfo : public KShared
     QString getNetServer();
     QString getNetServerInfo();
     QDateTime getOnlineSince();
-     
+    QString tooltip();
     // Return the Server object that owns this NickInfo object.
     Server* getServer();
      
+    // Return the kabc (kaddressbook) contact for this nick
+    KABC::Addressee getAddressee();
+    
     // Set properties of NickInfo object.
     // If any of these are called, call Server::nickInfoUpdated to let Server know about the change.
     void setNickname(const QString& newNickname);
@@ -67,7 +75,8 @@ class NickInfo : public KShared
     void setNetServer(const QString& newNetServer);
     void setNetServerInfo(const QString& newNetServerInfo);
     void setOnlineSince(const QDateTime& datetime);
-
+    void refreshAddressee();
+    
   protected:
     QString nickname;
     Server* owningServer;
@@ -81,6 +90,16 @@ class NickInfo : public KShared
     QString netServer;
     QString netServerInfo;
     QDateTime onlineSince;
+    KABC::Addressee addressee;
 };
 
+/** A NickInfoPtr is a pointer to a NickInfo object.  Since it is a KSharedPtr, the NickInfo
+ * object is automatically destroyed when all references are destroyed.
+ */
+typedef KSharedPtr<NickInfo> NickInfoPtr;
+/** A NickInfoMap is a list of NickInfo objects, indexed and sorted by lowercase nickname.
+ */
+typedef QMap<LocaleString,NickInfoPtr> NickInfoMap;
+
 #endif
+

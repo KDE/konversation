@@ -14,6 +14,8 @@
 
 #include "nickinfo.h"
 
+#include <qtooltip.h>
+
 /*
   @author Gary Cramblitt
 */
@@ -27,19 +29,25 @@
 
 NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 {
+  addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nick);
   nickname = nick;
   owningServer = server;
   away = false;
   notified = false;
+
+  if(!addressee.isEmpty())
+    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 4);
 }
 NickInfo::~NickInfo()
 {
+  if(!addressee.isEmpty())
+    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
 }
 
 
 // Get properties of NickInfo object.
-QString NickInfo::getNickname() { return nickname; }
-QString NickInfo::getHostmask() { return hostmask; }
+QString NickInfo::getNickname() const { return nickname; }
+QString NickInfo::getHostmask() const { return hostmask; }
 bool NickInfo::isAway() { return away; }
 QString NickInfo::getAwayMessage() { return awayMessage; }
 QString NickInfo::getIdentdInfo() { return identdInfo; }
@@ -52,10 +60,28 @@ QDateTime NickInfo::getOnlineSince() { return onlineSince; }
      
 // Return the Server object that owns this NickInfo object.
 Server* NickInfo::getServer() { return owningServer; }
-     
+ 
 // Set properties of NickInfo object.
 // If any of these are called, call Server::nickInfoUpdated to let Server know about the change.
-void NickInfo::setNickname(const QString& newNickname) { nickname = newNickname; }
+void NickInfo::setNickname(const QString& newNickname) {
+
+  KABC::Addressee newaddressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(newNickname);
+
+  if(addressee.isEmpty() && !newaddressee.isEmpty()) { //We now know who this person is
+    Konversation::Addressbook::self()->associateNick(newaddressee,nickname);  //Associate the old nickname with new contact
+    Konversation::Addressbook::self()->saveAddressee(newaddressee);
+  } else if(!addressee.isEmpty() && newaddressee.isEmpty()) {
+    Konversation::Addressbook::self()->associateNick(addressee, newNickname);
+    Konversation::Addressbook::self()->saveAddressee(newaddressee);	
+    newaddressee = addressee;
+  }
+
+  addressee = newaddressee;
+  nickname = newNickname; 
+  
+  QString realname = addressee.realName();
+
+}
 void NickInfo::setHostmask(const QString& newMask) { if (!newMask.isEmpty()) hostmask = newMask; }
 void NickInfo::setAway(bool state) { away = state; }
 void NickInfo::setAwayMessage(const QString& newMessage) { awayMessage = newMessage; }
@@ -66,3 +92,65 @@ void NickInfo::setRealName(const QString& newRealName) { if (!newRealName.isEmpt
 void NickInfo::setNetServer(const QString& newNetServer) { if (!newNetServer.isEmpty()) netServer = newNetServer; }
 void NickInfo::setNetServerInfo(const QString& newNetServerInfo) { if (!newNetServerInfo.isEmpty()) netServerInfo = newNetServerInfo; }
 void NickInfo::setOnlineSince(const QDateTime& datetime) { if (!datetime.isNull()) onlineSince = datetime; }
+KABC::Addressee NickInfo::getAddressee() { return addressee;}
+
+void NickInfo::refreshAddressee() {
+/*  addressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname);
+  QString realname = addressee.realName();
+
+  kdDebug() << "refreshing addressee nick '" << nickname << "' and found realname '" << realname << "'" << endl;
+  if(!realname.isEmpty() && realname.lower() != nickname.lower())
+    listViewItem->setText(1,nickname + " (" + realname + ")");
+  else
+    listViewItem->setText(1,nickname);*/
+}
+QString NickInfo::tooltip() {
+  if(addressee.isEmpty()) return QString::null;
+
+  QString strTooltip;
+  QTextStream tooltip( &strTooltip, IO_WriteOnly );
+
+  tooltip << "<qt>";
+  if(!addressee.formattedName().isEmpty())
+    tooltip << "<b><center>" << addressee.formattedName() << "</center></b>";
+
+  bool isdirty = false;
+  tooltip << "%1";
+ 
+  if(!addressee.emails().isEmpty()) {
+    tooltip << "<tr><td><b>" << addressee.emailLabel() << ": </b></td><td>";
+    tooltip << addressee.emails().join(", ");
+    tooltip << "</td></tr>";
+    isdirty = true;
+  }
+  
+  if(!addressee.organization().isEmpty()) {
+    tooltip << "<tr><td><b>" << addressee.organizationLabel() << ": </b></td><td>" << addressee.organization() << "</td></tr>";
+    isdirty = true;
+  }
+  if(!addressee.role().isEmpty()) {
+    tooltip << "<tr><td><b>" << addressee.roleLabel() << ": </b></td><td>" << addressee.role() << "</td></tr>";
+    isdirty = true;
+  }
+  KABC::PhoneNumber::List numbers = addressee.phoneNumbers();
+  for( KABC::PhoneNumber::List::Iterator it = numbers.begin(); it != numbers.end(); ++it) {
+    tooltip << "<tr><td><b>" << (*it).label() << ": </b></td><td>" << (*it).number() << "</td></tr>";
+    isdirty = true;
+  }
+
+  if(!addressee.birthday().toString().isEmpty() ) {
+    tooltip << "<tr><td><b>" << addressee.birthdayLabel() << ": </b></td><td>" << addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
+    isdirty = true;
+  }
+  if(isdirty)
+    tooltip << "</table></qt>";
+
+  if(isdirty)
+    strTooltip = strTooltip.arg("<br/><table>");
+  else
+    strTooltip = strTooltip.arg("");
+
+  return strTooltip;
+}
+
+

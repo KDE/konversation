@@ -43,9 +43,7 @@ class LedListViewItem : public KListViewItem
                     bool halfop,
                     bool voice,
 		    Nick *n);
-
     ~LedListViewItem();
-
     bool getAdminState();
     bool getOwnerState();
     bool getOpState();

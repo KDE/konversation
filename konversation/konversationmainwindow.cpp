@@ -840,10 +840,9 @@ void KonversationMainWindow::updateFrontView()
     if(view->searchView()) searchView=view;
   }
 }
-
+#ifdef USE_MDI
 void KonversationMainWindow::changeToView(KMdiChildView* viewToChange) // USE_MDI
 {
-#ifdef USE_MDI
   ChatWindow* view=static_cast<ChatWindow*>(viewToChange);
   if(frontView)
     previousFrontView = frontView;
@@ -859,9 +858,12 @@ void KonversationMainWindow::changeToView(KMdiChildView* viewToChange) // USE_MD
   view->setOn(false);
   view->setLabelColor(QString::null);
   emit endNotification(viewToChange);
-#endif
 }
-
+#else
+void KonversationMainWindow::changeToView(KMdiChildView* /*viewToChange*/)
+{
+}
+#endif
 // this function will not be used in USE_MDI mode but moc will complain if it's not there
 void KonversationMainWindow::changeView(QWidget* viewToChange)
 {

@@ -19,8 +19,7 @@
   @author Dario Abatianni
 */
 
-#include <kabc/addressbook.h>
-
+#include "channelnick.h"
 
 class KListView;
 class LedListViewItem;
@@ -28,6 +27,10 @@ class LedListViewItem;
 class Nick
 {
   public:
+#ifdef USE_NICKINFO
+    Nick(KListView *listView,
+	 ChannelNickPtr channelnick);
+#else
     Nick(KListView* listView,
          const QString &nickname,
          const QString &hostmask,
@@ -36,7 +39,7 @@ class Nick
          bool op,
          bool halfop,
          bool voice);
-
+#endif
     ~Nick();
 
     bool isAdmin();
@@ -49,18 +52,20 @@ class Nick
     void setOwner(bool state);
     void setOp(bool state);
     void setHalfop(bool state);
-    void setVoice(bool state);
-    void refreshAddressee();
-    KABC::Addressee getAddressee();
+    void setVoice(bool state);    
     bool isSelected();
 
     QString getNickname();
     QString getHostmask();
-
+#ifdef USE_NICKINFO
+    NickInfoPtr getNickInfo();
+    ChannelNickPtr getChannelNick();
+#else
+    
     void setHostmask(const QString& newMask);
     void setNickname(const QString& newName);
-    QString tooltip();
-
+#endif
+    
   protected:
     bool admin;
     bool owner;
@@ -69,9 +74,10 @@ class Nick
     bool voice;
 
     QString nickname;
-    KABC::Addressee addressee;
     QString hostmask;
-
+#ifdef USE_NICKINFO
+    ChannelNickPtr channelnickptr;
+#endif
     LedListViewItem* listViewItem;
 };
 

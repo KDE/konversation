@@ -17,8 +17,9 @@
 
 #include <qtimer.h>
 #include <qstring.h>
-
+#include "server.h"
 #include "chatwindow.h"
+#include "channelnick.h"
 
 /*
   @author Dario Abatianni
@@ -69,15 +70,24 @@ class Channel : public ChatWindow
     void setKey(const QString& newKey);
     QString getKey();
 
+#ifdef USE_NICKINFO
+    void joinNickname(ChannelNickPtr channelNick);
+    void removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit);
+    void kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, const QString &reason);
+    void addNickname(ChannelNickPtr channelNick);
+    void nickRenamed(const QString &oldNick, const NickInfo& channelnick);	    
+    void addPendingNickList(ChannelNickList pendingChannelNickList);
+#else
     void joinNickname(const QString& nickname,const QString& hostname);
-    void renameNick(const QString& nickname,const QString& newName);
     void addNickname(const QString& nickname,const QString& hostmask,
                      bool admin,bool owner,bool op,bool halfop,bool voice);
     void removeNick(const QString& nickname, const QString& reason, bool quit);
     void kickNick(const QString& nickname, const QString& kicker, const QString& reason);
+    void renameNick(const QString& nickname,const QString& newName);
+    void addPendingNickList(const QStringList& nickList);
+#endif
     Nick *getNickByName(const QString& lookname);
     QPtrList<Nick> getNickList();
-    void addPendingNickList(const QStringList& nickList);
 
     void setPendingNicks(bool state);
     bool getPendingNicks();
@@ -89,7 +99,11 @@ class Channel : public ChatWindow
     void setTopic(const QString& topic);
     void setTopic(const QString& nickname,const QString& topic); // Overloaded
     void setTopicAuthor(const QString& author);
+#ifdef USE_NICKINFO
+    void updateMode(ChannelNickPtr sourceChannelNick, char mode, bool plus, const QString &parameter);
+#else   
     void updateMode(const QString &nick,char mode,bool plus, const QString &parameter);
+#endif
     void updateModeWidgets(char mode, bool plus, const QString &parameter);
     void updateQuickButtons(QStringList newButtonList);
     void updateFonts();
@@ -147,14 +161,16 @@ class Channel : public ChatWindow
     void closeYourself(ChatWindow* view); // USE_MDI
     void serverQuit(const QString& reason); // USE_MDI
 
-    void slotLoadAddressees();
   protected:
     void showEvent(QShowEvent* event);
-
+#ifdef USE_NICKINFO
+    // use with caution! does not check for duplicates
+    void fastAddNickname(ChannelNickPtr channelnick);
+#else
     // use with caution! does not check for duplicates
     void fastAddNickname(const QString& nickname,const QString& hostmask,
                          bool admin,bool owner,bool op,bool halfop,bool voice);
-
+#endif
     int nicks;
     int ops;
 

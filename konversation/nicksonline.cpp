@@ -172,17 +172,12 @@ void NicksOnline::updateServerOnlineList(Server* server, bool)
         // Known channels where nickname is online and mode in each channel.
         QString channelName = channelList[index];
         ChannelNickPtr channelNick = server->getChannelNick(channelName, lcNickName);
-        unsigned int nickModeWord = channelNick->mode;
-        QString nickMode;
-        if (nickModeWord & 1) nickMode = nickMode + i18n(" Voice");
-        nickModeWord >>= 1;
-        if (nickModeWord & 1) nickMode = nickMode + i18n(" HalfOp");
-        nickModeWord >>= 1;
-        if (nickModeWord & 1) nickMode = nickMode + i18n(" Operator");
-        nickModeWord >>= 1;
-        if (nickModeWord & 1) nickMode = nickMode + i18n(" Owner");
-        nickModeWord >>= 1;
-        if (nickModeWord & 1) nickMode = nickMode + i18n(" Admin");
+	QString nickMode;
+        if (channelNick->hasVoice()) nickMode = nickMode + i18n(" Voice");
+        if (channelNick->isHalfOp()) nickMode = nickMode + i18n(" HalfOp");
+        if (channelNick->isOp()) nickMode = nickMode + i18n(" Operator");
+        if (channelNick->isOwner()) nickMode = nickMode + i18n(" Owner");
+        if (channelNick->isAdmin()) nickMode = nickMode + i18n(" Admin");
         QListViewItem* channelItem = findItemChild(nickRoot, channelName);
         if (!channelItem) channelItem = new KListViewItem(nickRoot, channelName, nickMode);
         channelItem->setText(1, nickMode);

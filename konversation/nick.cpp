@@ -18,11 +18,26 @@
 #include "ledlistviewitem.h"
 #include "nick.h"
 #include "addressbook.h"
-#include <qtooltip.h>
 #include <klocale.h>
 #include <qtextstream.h>
 #include <kabc/phonenumber.h>
 
+
+#ifdef USE_NICKINFO
+Nick::Nick(KListView *listView,
+           ChannelNickPtr channelnick)
+{
+  listViewItem=new LedListViewItem(listView,channelnick->getNickname(),channelnick->getHostmask(),
+		  channelnick->isAdmin(),channelnick->isOwner(),channelnick->isOp(),
+		  channelnick->isHalfOp(),channelnick->hasVoice(), this);
+  setAdmin(channelnick->isAdmin());
+  setOwner(channelnick->isOwner());
+  setOp(channelnick->isOp());
+  setHalfop(channelnick->isHalfOp());
+  setVoice(channelnick->hasVoice());
+  channelnickptr = channelnick;
+}
+#else
 Nick::Nick(KListView* listView,
            const QString& newName,
            const QString& newMask,
@@ -32,12 +47,7 @@ Nick::Nick(KListView* listView,
            bool halfop,
            bool voice)
 {
-  addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(newName);
-  QString realname = addressee.realName();
-  if(!realname.isEmpty() && realname.lower() != newName.lower())
-  	listViewItem=new LedListViewItem(listView,newName + " (" + realname + ")",newMask,admin,owner,op,halfop,voice, this);
-  else
-	listViewItem=new LedListViewItem(listView,newName,newMask,admin,owner,op,halfop,voice, this);
+  listViewItem=new LedListViewItem(listView,newName,newMask,admin,owner,op,halfop,voice, this);
   nickname=newName;
   hostmask=newMask;
 
@@ -46,57 +56,13 @@ Nick::Nick(KListView* listView,
   setOp(op);
   setHalfop(halfop);
   setVoice(voice);
-//  QToolTip::add(listView->viewport(), i18n("<qt>This person is %1</qt>").arg(realname));
-  if(!addressee.isEmpty())
-    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 4);
 }
-
+#endif
 Nick::~Nick()
 {
-  if(!addressee.isEmpty())
-    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
   delete listViewItem;
 }
 
-void Nick::setNickname(const QString& newName)
-{
-  KABC::Addressee newaddressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(newName);
-
-  if(addressee.isEmpty() && !newaddressee.isEmpty()) { //We now know who this person is
-    Konversation::Addressbook::self()->associateNick(newaddressee,nickname);  //Associate the old nickname with new contact
-    Konversation::Addressbook::self()->saveAddressee(newaddressee);
-  } else if(!addressee.isEmpty() && newaddressee.isEmpty()) {
-    Konversation::Addressbook::self()->associateNick(addressee, newName);
-    Konversation::Addressbook::self()->saveAddressee(newaddressee);	
-    newaddressee = addressee;
-  }
-
-  addressee = newaddressee;
-  nickname = newName;
-
-  QString realname = addressee.realName();
-  if(!realname.isEmpty() && realname.lower() != newName.lower())
-    listViewItem->setText(1,newName + " (" + realname + ")");
-  else
-    listViewItem->setText(1,newName);
-}
-
-void Nick::refreshAddressee() {
-  addressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname);
-  QString realname = addressee.realName();
-
-  kdDebug() << "refreshing addressee nick '" << nickname << "' and found realname '" << realname << "'" << endl;
-  if(!realname.isEmpty() && realname.lower() != nickname.lower())
-    listViewItem->setText(1,nickname + " (" + realname + ")");
-  else
-    listViewItem->setText(1,nickname);
-}
-
-void Nick::setHostmask(const QString& newMask)
-{
-  hostmask=newMask;
-  listViewItem->setText(2,hostmask);
-}
 
 void Nick::setAdmin(bool state)
 {
@@ -128,54 +94,7 @@ void Nick::setVoice(bool state)
   listViewItem->setState(admin,owner,op,halfop,voice);
 }
 
-QString Nick::tooltip() {
-  if(addressee.isEmpty()) return QString::null;
 
-  QString strTooltip;
-  QTextStream tooltip( &strTooltip, IO_WriteOnly );
-
-  tooltip << "<qt>";
-  if(!addressee.formattedName().isEmpty())
-    tooltip << "<b><center>" << addressee.formattedName() << "</center></b>";
-
-  bool isdirty = false;
-  tooltip << "%1";
- 
-  if(!addressee.emails().isEmpty()) {
-    tooltip << "<tr><td><b>" << addressee.emailLabel() << ": </b></td><td>";
-    tooltip << addressee.emails().join(", ");
-    tooltip << "</td></tr>";
-    isdirty = true;
-  }
-  
-  if(!addressee.organization().isEmpty()) {
-    tooltip << "<tr><td><b>" << addressee.organizationLabel() << ": </b></td><td>" << addressee.organization() << "</td></tr>";
-    isdirty = true;
-  }
-  if(!addressee.role().isEmpty()) {
-    tooltip << "<tr><td><b>" << addressee.roleLabel() << ": </b></td><td>" << addressee.role() << "</td></tr>";
-    isdirty = true;
-  }
-  KABC::PhoneNumber::List numbers = addressee.phoneNumbers();
-  for( KABC::PhoneNumber::List::Iterator it = numbers.begin(); it != numbers.end(); ++it) {
-    tooltip << "<tr><td><b>" << (*it).label() << ": </b></td><td>" << (*it).number() << "</td></tr>";
-    isdirty = true;
-  }
-
-  if(!addressee.birthday().toString().isEmpty() ) {
-    tooltip << "<tr><td><b>" << addressee.birthdayLabel() << ": </b></td><td>" << addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
-    isdirty = true;
-  }
-  if(isdirty)
-    tooltip << "</table></qt>";
-
-  if(isdirty)
-    strTooltip = strTooltip.arg("<br/><table>");
-  else
-    strTooltip = strTooltip.arg("");
-
-  return strTooltip;
-}
 
 
 bool Nick::isAdmin()  { return admin; }
@@ -184,10 +103,32 @@ bool Nick::isOp()     { return op; }
 bool Nick::isHalfop() { return halfop; }
 bool Nick::hasVoice() { return voice; }
 
+#ifdef USE_NICKINFO
+
+NickInfoPtr Nick::getNickInfo() {
+  return channelnickptr->getNickInfo();
+}
+
+QString Nick::getNickname() { return channelnickptr->getNickname(); }
+QString Nick::getHostmask() { return channelnickptr->getHostmask(); }
+
+#else 
+
 QString Nick::getNickname() { return nickname; }
 QString Nick::getHostmask() { return hostmask; }
-KABC::Addressee Nick::getAddressee() { return addressee; }
     
+void Nick::setNickname(const QString& newName)
+{
+  listViewItem->setText(1,newName);
+}
+
+void Nick::setHostmask(const QString& newMask)
+{
+  hostmask=newMask;
+  listViewItem->setText(2,hostmask);
+}
+
+#endif
 
 bool Nick::isSelected() { return listViewItem->isSelected(); }
 
