@@ -194,6 +194,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void addIRCColor();
     void clearWindow();
     void closeQueries();
+    void clearTabs();
 
     void insertCharacter();
     void insertChar(const QChar& chr);

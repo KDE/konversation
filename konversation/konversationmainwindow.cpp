@@ -169,7 +169,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     tabSelectionMapper->setMapping( tabSelectionAction, i);
   }
   
-  new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
+  (new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window"))->setToolTip(i18n("Clear content of current window"));
+  (new KAction(i18n("Clear &All Windows"),0,KShortcut("CTRL+SHIFT+L"),this,SLOT(clearTabs()),actionCollection(),"clear_tabs"))->setToolTip(i18n("Clear contents of all windows"));
+
   KAction* awayAction = new KAction(i18n("Set &Away Globally")/*, "konversationaway"*/, KShortcut("Alt+A"),
     static_cast<KonversationApplication *>(kapp), SLOT(toggleAway()), actionCollection(),"toggle_away");  //string must be the same as that used in server.cpp
   new KAction(i18n("&Join Channel..."), 0, KShortcut("Ctrl+J"), this, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
@@ -182,6 +184,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   (new KAction(i18n("Special &Character..."), "fonts", KShortcut("Alt+Shift+C"), this, SLOT(insertCharacter()), actionCollection(), "insert_character"))->setToolTip(i18n("Insert any character into your current IRC message. "));
 
   new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
+  
 
 #ifdef USE_MDI
   new KAction(i18n("Tabpage Mode"),"tabpage",0,this,SLOT (switchToTabPageMode()),actionCollection(),"mdi_tabpage_mode");
@@ -1529,6 +1532,20 @@ void KonversationMainWindow::closeQueries()
     ++operations;
   }
 #endif
+}
+
+void KonversationMainWindow::clearTabs()
+{
+  int total=getViewContainer()->count()-1;
+  ChatWindow* nextPage;
+
+  for(int i=0;i<=total;i++)
+    {
+      nextPage=static_cast<ChatWindow*>(getViewContainer()->page(i));
+
+      if(nextPage && nextPage->getTextView())
+	nextPage->getTextView()->clear();
+    }
 }
 
 bool KonversationMainWindow::event(QEvent* e)

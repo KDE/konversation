@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="27">
+<kpartgui name="konversation" version="29">
 
   <MenuBar>
     <Menu name="file">
@@ -16,6 +16,7 @@
     </Menu>
     <Menu name="edit">
       <Action name="clear_window" />
+      <Action name="clear_tabs" />
     </Menu>
     <Menu name="insert">
       <Text>&amp;Insert</Text>
