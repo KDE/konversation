@@ -14,12 +14,15 @@
 
 #include "addressbook.h"
 #include <qstringlist.h>
+#include "../konversationmainwindow.h"
+#include "qwidget.h"
 #include <klocale.h>
 #include <kmessagebox.h>
 #include "../server.h"
 #include "../konversationapplication.h"
 #include <kapplication.h>
 #include <dcopclient.h>
+#include <kwin.h>
 
 namespace Konversation {
 
@@ -184,7 +187,9 @@ void Addressbook::messageContact( const QString &uid, const QString& message ) {
 		return;
 	}
 	nickInfo->getServer()->dcopSay(nickInfo->getNickname(), message);
-	
+	QWidget *widget = nickInfo->getServer()->getMainWindow();
+	KWin::demandAttention(widget->winId());
+	KWin::activateWindow(widget->winId());
 	
 }
 
