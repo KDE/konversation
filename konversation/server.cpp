@@ -263,6 +263,7 @@ void Server::broken(int state)
   serverSocket.enableRead(false);
   serverSocket.enableWrite(false);
   serverSocket.blockSignals(true);
+  serverSocket.reset();
 
   kdDebug() << "Connection broken (Socket fd " << serverSocket.fd() << ") " << state << "!" << endl;
 
@@ -405,7 +406,7 @@ void Server::notifyTimeout()
     QString list=KonversationApplication::preferences.getNotifyString();
     if(!list.isEmpty())
     {
-      queue("ISON "+list);
+      queue("ISiON "+list);
       // remember that we already sent out ISON
       sent=true;
     }
@@ -427,6 +428,11 @@ void Server::notifyCheckTimeout()
   {
     currentLag=checkTime;
     emit tooLongLag(this,checkTime);
+    if(KonversationApplication::preferences.getAutoReconnect() &&
+      (checkTime/1000)==KonversationApplication::preferences.getMaximumLagTime())
+    {
+      serverSocket.close();
+    }
   }
 }
 
