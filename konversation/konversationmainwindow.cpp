@@ -1087,7 +1087,7 @@ void KonversationMainWindow::tooLongLag(Server* lagServer,int msec)
     }
     Q_ASSERT(!timeString.empty()); if(timeString.empty()) return;
     QString timestring = timeString.last();
-//    timeString.pop_last();
+    timeString.pop_back();
     if(!timeString.empty()) {
 	    timestring = timeString.join(", ") + " and " + timestring;
     }
