@@ -1,6 +1,12 @@
 // dccdetaildialog.cpp
 // Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
-// See COPYING file for licensing information
+
+/*
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+*/
 
 #include <qframe.h>
 #include <qlabel.h>
@@ -10,6 +16,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <klineedit.h>
+#include <kmessagebox.h>
 #include <kprogress.h>
 #include <kpushbutton.h>
 #include <kurlrequester.h>
@@ -276,7 +283,15 @@ void DccDetailDialog::slotOpenFile()
 
 void DccDetailDialog::slotRemoveFile()
 {
-  m_item->removeFile();
+  int ret = KMessageBox::warningContinueCancel( this,
+                                                i18n( "Do you really want to remove the received file?" ),
+                                                i18n( "Delete Confirmation" ),
+                                                i18n( "&Delete" ),
+                                                "RemoveDCCReceivedFile",
+                                                KMessageBox::Dangerous
+                                              );
+  if ( ret == KMessageBox::Continue )
+    m_item->removeFile();
 }
 
 void DccDetailDialog::slotAccept()

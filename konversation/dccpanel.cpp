@@ -93,10 +93,10 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   
   m_buttonAccept = new QPushButton(icon("player_play"), i18n("Accept"), buttonsBox, "start_dcc");
   m_buttonAbort  = new QPushButton(icon("stop"),        i18n("Abort"),  buttonsBox, "abort_dcc");
-  m_buttonClear  = new QPushButton(icon("editdelete"),  i18n("Clear"),  buttonsBox, "clear_dcc");
-  m_buttonOpen   = new QPushButton(icon("exec"),        i18n("Open"),   buttonsBox, "open_dcc_file");
-  m_buttonRemove = new QPushButton(icon("edittrash"),   i18n("Remove"), buttonsBox, "remove_dcc_file");
-  m_buttonDetail = new QPushButton(icon("view_text"),   i18n("Detail"), buttonsBox, "detail_dcc");
+  m_buttonClear  = new QPushButton(icon("editdelete"),  i18n("Clear Item"),  buttonsBox, "clear_dcc");
+  m_buttonOpen   = new QPushButton(icon("exec"),        i18n("Open File"),   buttonsBox, "open_dcc_file");
+  m_buttonRemove = new QPushButton(icon("edittrash"),   i18n("Remove File"), buttonsBox, "remove_dcc_file");
+  m_buttonDetail = new QPushButton(icon("view_text"),   i18n("DCC Detail"), buttonsBox, "detail_dcc");
   
   QToolTip::add( m_buttonAccept, i18n( "Start receiving" ) );
   QToolTip::add( m_buttonAbort,  i18n( "Abort the transfer(s)" ) );
@@ -118,7 +118,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   m_popup->insertItem(icon("player_play"),     i18n("Accept"),                    Popup::Accept);
   m_popup->insertItem(icon("stop"),            i18n("Abort"),                     Popup::Abort);
   m_popup->insertSeparator();
-  m_popup->insertItem(icon("editdelete"),      i18n("Clear"),                     Popup::Clear);
+  m_popup->insertItem(icon("editdelete"),      i18n("Clear Item"),                     Popup::Clear);
   m_popup->insertItem(                         i18n("Clear All Completed Items"), Popup::ClearAllCompleted);
   m_popup->insertItem(                         i18n("Remove && Clear"),          Popup::RemoveAndClear);
   m_popup->insertSeparator();
@@ -126,7 +126,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   m_popup->insertItem(icon("edittrash"),       i18n("Remove File"),               Popup::Remove);
   m_popup->insertItem(icon("messagebox_info"), i18n("File Information"),          Popup::Info);
   m_popup->insertSeparator();
-  m_popup->insertItem(icon("view_text"),       i18n("Detail"),                    Popup::Detail);
+  m_popup->insertItem(icon("view_text"),       i18n("DCC Detail Information"),    Popup::Detail);
     
   connect(m_listView, SIGNAL(contextMenuRequested(QListViewItem*,const QPoint&,int)), this, SLOT(popupRequested(QListViewItem*,const QPoint&,int)));
   connect(m_popup, SIGNAL(activated(int)), this, SLOT(popupActivated(int)));
@@ -294,16 +294,40 @@ void DccPanel::runDcc()
 
 void DccPanel::removeFile()
 {
+  // count deletable files first
+  int deletableFiles = 0;
   QListViewItemIterator it( m_listView );
-  while( it.current() )
+  while ( it.current() )
   {
-    if( it.current()->isSelected() )
+    if ( it.current()->isSelected() )
     {
-      DccTransfer* item=static_cast<DccTransfer*>( it.current() );
+      DccTransfer* item = static_cast<DccTransfer*>( it.current() );
       if( item->getType() == DccTransfer::Receive && item->getStatus() == DccTransfer::Done )
-        item->removeFile();
+        ++deletableFiles;
     }
     ++it;
+  }
+  
+  int ret = KMessageBox::warningContinueCancel( this,
+                                                i18n( "Do you really want to remove the selected %1 file(s)?" ).arg( deletableFiles ),
+                                                i18n( "Delete Confirmation" ),
+                                                i18n( "&Delete" ),
+                                                "RemoveDCCReceivedFile",
+                                                KMessageBox::Dangerous
+                                              );
+  if ( ret == KMessageBox::Continue )
+  {  
+    QListViewItemIterator it = QListViewItemIterator( m_listView );
+    while( it.current() )
+    {
+      if( it.current()->isSelected() )
+      {
+        DccTransfer* item=static_cast<DccTransfer*>( it.current() );
+        if( item->getType() == DccTransfer::Receive && item->getStatus() == DccTransfer::Done )
+          item->removeFile();
+      }
+      ++it;
+    }
   } 
 }
 

@@ -25,7 +25,7 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
                   PrefsPage(newParent,newPreferences)
 {
   QStringList dialogDefinitions;
-  flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,QuitServerTab,ChannelListNoServerSelected,HideMenuBarWarning,ChannelListWarning,LargePaste";
+  flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,QuitServerTab,ChannelListNoServerSelected,HideMenuBarWarning,ChannelListWarning,LargePaste,RemoveDCCReceivedFile";
 
   dialogDefinitions.append(i18n("Automatically join channel on invite"));
   dialogDefinitions.append(i18n("Notice that saving logfiles will save whole file"));
@@ -37,6 +37,7 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
   dialogDefinitions.append(i18n("Warning on hiding the main window menu"));
   dialogDefinitions.append(i18n("Warning on high traffic with channel list"));
   dialogDefinitions.append(i18n("Warning on pasting large portions of text"));
+  dialogDefinitions.append(i18n("Warning on deleting file received on DCC"));
 
   QVBoxLayout* dialogsLayout=new QVBoxLayout(parentFrame,marginHint(),spacingHint(),"dialogs_layout");
 
@@ -44,7 +45,7 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
   dialogListView->addColumn(i18n("Select Warning Dialogs to Show"));
   dialogListView->setAllColumnsShowFocus(true);
 
-  for(unsigned int index=0; index<10 ;index++)
+  for(unsigned int index=0; index<11 ;index++)
   {
     item=new QCheckListItem(dialogListView,dialogDefinitions[index],QCheckListItem::CheckBox);
     item->setText(1,dialogDefinitions[index]);
