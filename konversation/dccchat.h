@@ -15,7 +15,7 @@
 #ifndef DCCCHAT_H
 #define DCCCHAT_H
 
-#include <chatwindow.h>
+#include "chatwindow.h"
 
 /*
  @author Dario Abatianni

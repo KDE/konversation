@@ -12,7 +12,7 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <kstddirs.h>
+#include <kstandarddirs.h>
 #include <kdebug.h>
 
 #include "images.h"

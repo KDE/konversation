@@ -15,7 +15,7 @@
 #ifndef PREFSPAGEALIASES_H
 #define PREFSPAGEALIASES_H
 
-#include <prefspage.h>
+#include "prefspage.h"
 
 /*
   @author Dario Abatianni

@@ -18,7 +18,7 @@
 #include <qfileinfo.h>
 
 #include <kdebug.h>
-#include <kstddirs.h>
+#include <kstandarddirs.h>
 #include <kprocess.h>
 #include <dcopclient.h>
 

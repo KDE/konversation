@@ -12,7 +12,7 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <kapp.h>
+#include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <klocale.h>

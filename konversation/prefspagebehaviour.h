@@ -13,7 +13,7 @@
 #ifndef PREFSPAGEBEHAVIOUR_H
 #define PREFSPAGEBEHAVIOUR_H
 
-#include <prefspage.h>
+#include "prefspage.h"
 
 class QCheckBox;
 class KListView;

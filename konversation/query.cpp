@@ -20,7 +20,7 @@
 #include <qtextcodec.h>
 
 #include <klocale.h>
-#include <kstddirs.h>
+#include <kstandarddirs.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 

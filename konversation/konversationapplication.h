@@ -15,7 +15,7 @@
 #ifndef KONVERSATIONAPPLICATION_H
 #define KONVERSATIONAPPLICATION_H
 
-#include <kapp.h>
+#include <kapplication.h>
 
 #include "preferences.h"
 #include "ircevent.h"

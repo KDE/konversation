@@ -21,7 +21,7 @@
 #include <qtextcodec.h>
 
 #include <klineedit.h>
-#include <konversationapplication.h>
+#include "konversationapplication.h"
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>

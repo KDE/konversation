@@ -28,7 +28,6 @@
 
 #include <kdeversion.h>
 #include <kinputdialog.h>
-#include <kinputdialog.h>
 
 #include <kpushbutton.h>
 #include <kactivelabel.h>

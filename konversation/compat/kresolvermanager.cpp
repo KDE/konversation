@@ -45,7 +45,7 @@
 #include <qwaitcondition.h>
 #include <qsemaphore.h>
 
-#include <kde_file.h>
+#include "kde_file.h"
 #include "kresolver.h"
 #include "kresolver_p.h"
 #include "kresolverworkerbase.h"

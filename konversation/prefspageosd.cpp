@@ -14,7 +14,6 @@
 
 #include <qlayout.h>
 #include <qhbox.h>
-#include <qhbox.h>
 #include <qvgroupbox.h>
 #include <qgrid.h>
 #include <qlabel.h>

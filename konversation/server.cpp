@@ -31,7 +31,7 @@ typedef unsigned long long __u64;
 #include <qtextcodec.h>
 #include <qdatetime.h>
 
-#include <kapp.h>
+#include <kapplication.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kfiledialog.h>

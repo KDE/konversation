@@ -18,7 +18,7 @@
 #include <qclipboard.h>
 #include <qwhatsthis.h>
 
-#include <kapp.h>
+#include <kapplication.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <klistview.h>

@@ -13,7 +13,7 @@
 #ifndef PREFSPAGECHATWINBEHAVIOR_H
 #define PREFSPAGECHATWINBEHAVIOR_H
 
-#include <prefspage.h>
+#include "prefspage.h"
 
 class QCheckBox;
 class QSpinBox;
