@@ -821,7 +821,7 @@ void NicksOnline::slotNickListView_RightButtonClicked(QListViewItem* item, const
             m_popupMenu->insertItem(i18n("Edit C&ontact..."), ciAddressbookEdit);
             m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("&Change Association..."), ciAddressbookChange);
-            m_popupMenu->insertItem(i18n("&Delete Association"), ciAddressbookDelete);
+            m_popupMenu->insertItem(SmallIcon("editdelete"), i18n("&Delete Association"), ciAddressbookDelete);
             m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("&Whois"), ciWhois);
             if (item->text(nlvcServerName).isEmpty())

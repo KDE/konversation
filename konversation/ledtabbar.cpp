@@ -132,7 +132,7 @@ void LedTabBar::insertAssociationSubMenu(const NickInfoPtr &nickinfo) {
     m_popupAddressbook->insertItem(i18n("Edit Contact..."), AddressbookEdit);
     m_popupAddressbook->insertSeparator();
     m_popupAddressbook->insertItem(i18n("Change Association..."), AddressbookChange);
-    m_popupAddressbook->insertItem(i18n("Delete Association"), AddressbookDelete);
+    m_popupAddressbook->insertItem(SmallIcon("editdelete"), i18n("Delete Association"), AddressbookDelete);
   } else {
     m_popupAddressbook->insertItem(i18n("Choose Contact..."), AddressbookChange);
     m_popupAddressbook->insertItem(i18n("Create New Contact..."), AddressbookNew);
