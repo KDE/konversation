@@ -128,7 +128,23 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
     connectCommands = QStringList::split(";", serverEntry[8]);
   }
 
-  connectToIRCServer();
+  if(KonversationApplication::preferences.getPreShellCommand() != QString::null) {
+    statusView->appendServerMessage("Info","Running preconfigured command...");
+    
+    connect( &preShellCommand,SIGNAL(processExited(KProcess*)),this,SLOT(preShellCommandExited(KProcess*)));
+
+    QString command = KonversationApplication::preferences.getPreShellCommand();
+    QStringList commandList = QStringList::split(" ",command);
+    
+    for (QStringList::Iterator it = commandList.begin(); it != commandList.end(); ++it){
+      preShellCommand << *it;
+    }
+
+    preShellCommand.start(); // Non blocking
+  
+  }
+  else
+    connectToIRCServer();
 
   // don't delete items when they are removed
   channelList.setAutoDelete(false);
@@ -147,7 +163,8 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   m_scriptLauncher = new ScriptLauncher(this);
 
-  connectSignals();
+  if(KonversationApplication::preferences.getPreShellCommand() == QString::null)
+    connectSignals();
 
   emit serverOnline(false);
 }
@@ -187,7 +204,23 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   if(KonversationApplication::preferences.getRawLog()) addRawLog(false);
   setNickname(nick);
 
-  connectToIRCServer();
+  if(KonversationApplication::preferences.getPreShellCommand() != QString::null) {
+    statusView->appendServerMessage("Info","Running preconfigured command...");
+
+    connect( &preShellCommand,SIGNAL(processExited(KProcess*)),this,SLOT(preShellCommandExited(KProcess*)));
+
+    QString command = KonversationApplication::preferences.getPreShellCommand();
+    QStringList commandList = QStringList::split(" ",command);
+
+    for ( QStringList::Iterator it = commandList.begin(); it != commandList.end(); ++it ) {
+      preShellCommand << *it;
+    }
+
+    preShellCommand.start(); // Non blocking
+  
+  }
+  else
+    connectToIRCServer();
 
    // don't delete items when they are removed
   channelList.setAutoDelete(false);
@@ -206,9 +239,11 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
 
   m_scriptLauncher = new ScriptLauncher(this);
 
-  connectSignals();
+  if(KonversationApplication::preferences.getPreShellCommand() == QString::null)
+    connectSignals();
 
   emit serverOnline(false);
+ 
 }
 
 Server::~Server()
@@ -372,6 +407,8 @@ void Server::connectSignals()
 
   connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
   connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
+  
+
 }
 
 QString Server::getServerName()  const { return serverName; }
@@ -392,6 +429,17 @@ void Server::setAutoJoinChannelKey(const QString &key) { autoJoinChannelKey=key;
 
 bool Server::isConnected()  const { return serverSocket.socketStatus()==KExtendedSocket::connected; }
 bool Server::isConnecting() const { return connecting; }
+
+void Server::preShellCommandExited(KProcess* proc)
+{
+  if (proc->normalExit())
+    statusView->appendServerMessage("Info","Process executed successfully!");
+  else
+    statusView->appendServerMessage("Warning","There was a problem while executing the command!");
+
+  connectToIRCServer();
+  connectSignals();
+}
 
 void Server::connectToIRCServer()
 {

@@ -316,6 +316,8 @@ class Preferences : public QObject
 
     void setCommandChar(const QString &newCommandChar);
     QString getCommandChar();
+    void setPreShellCommand(const QString &command);
+    QString getPreShellCommand();
 
     QFont getTextFont();
     QFont getListFont();
@@ -505,6 +507,7 @@ class Preferences : public QObject
 
     QStringList notifyList;
     QString commandChar;
+    QString preShellCommandStr;
 
     QString nickCompleteSuffixStart;
     QString nickCompleteSuffixMiddle;

@@ -333,8 +333,11 @@ void KonversationApplication::readOptions()
   // Read configuration and provide the default values
   config->setGroup("General Options");
 
-  // Command char settings
+  // Command char setting
   preferences.setCommandChar(config->readEntry("CommandChar",preferences.getCommandChar()));
+
+  // Pre shell command setting
+  preferences.setPreShellCommand(config->readEntry("PreShellCommand",preferences.getPreShellCommand()));
 
   // Tray icon settings
   preferences.setShowTrayIcon(config->readBoolEntry("ShowTrayIcon",preferences.getShowTrayIcon()));

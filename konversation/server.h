@@ -22,6 +22,7 @@
 #include <qdeepcopy.h>
 
 #include <ksharedptr.h>
+#include <kprocess.h>
 
 #include "channelnick.h"
 #include "inputfilter.h"
@@ -215,6 +216,7 @@ class Server : public QObject
     void awayInsertRememberLine();
 
   public slots:
+    void preShellCommandExited(KProcess*);
     void connectToIRCServer();
     void queue(const QString &buffer);
     void queueList(const QStringList &buffer);
@@ -421,6 +423,8 @@ class Server : public QObject
     int m_awayTime;
     
     ScriptLauncher* m_scriptLauncher;
+
+    KProcess preShellCommand;
 };
 
 #endif
