@@ -96,15 +96,15 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
         ChannelNick* channelNick = server->getChannelNick(channelList[index].lower(), lcNickName);
         unsigned int nickModeWord = channelNick->mode;
         QString nickMode = "";
-        if (nickModeWord & 1) nickMode = nickMode + " Voice";
+        if (nickModeWord & 1) nickMode = nickMode + i18n(" Voice");
         nickModeWord >>= 1;
-        if (nickModeWord & 1) nickMode = nickMode + " HalfOp";
+        if (nickModeWord & 1) nickMode = nickMode + i18n(" HalfOp");
         nickModeWord >>= 1;
-        if (nickModeWord & 1) nickMode = nickMode + " Operator";
+        if (nickModeWord & 1) nickMode = nickMode + i18n(" Operator");
         nickModeWord >>= 1;
-        if (nickModeWord & 1) nickMode = nickMode + " Owner";
+        if (nickModeWord & 1) nickMode = nickMode + i18n(" Owner");
         nickModeWord >>= 1;
-        if (nickModeWord & 1) nickMode = nickMode + " Admin";
+        if (nickModeWord & 1) nickMode = nickMode + i18n(" Admin");
         new KListViewItem(nickRoot, channelList[index], nickMode);
       }
       nickRoot->setOpen(true);
