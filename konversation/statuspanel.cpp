@@ -118,6 +118,7 @@ void StatusPanel::updateFonts()
   statusInput->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setPaper(QColor("#"+KonversationApplication::preferences.getTextViewBackground()));
+  nicknameButton->setFont(KonversationApplication::preferences.getTextFont());
 }
 
 void StatusPanel::sendFileMenu()

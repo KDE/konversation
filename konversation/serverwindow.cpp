@@ -647,7 +647,8 @@ void ServerWindow::updateFonts()
 {
   kdDebug() << "ServerWindow::updateFonts()" << endl;
 
-  statusPanel->updateFonts();  // FIXME: should be done by the respective server, no?
+  statusPanel->updateFonts();       // FIXME: should be done by the respective server, no?
+  if(rawLog) rawLog->updateFonts(); // FIXME: should be done by the respective server, no?
 }
 
 void ServerWindow::updateLag(int msec)

@@ -33,6 +33,7 @@ class RawLog : public ChatWindow
   
   public slots:
     virtual void adjustFocus();
+    void updateFonts();
 };
 
 #endif

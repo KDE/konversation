@@ -17,6 +17,7 @@
 #include <klocale.h>
 
 #include "rawlog.h"
+#include "konversationapplication.h"
 
 RawLog::RawLog(QWidget* parent) : ChatWindow(parent)
 {
@@ -32,6 +33,12 @@ RawLog::~RawLog()
 void RawLog::adjustFocus()
 {
   // do nothing, just implement this to make abstract functions work
+}
+
+void RawLog::updateFonts()
+{
+  getTextView()->setFont(KonversationApplication::preferences.getTextFont());
+  getTextView()->setPaper(QColor("#"+KonversationApplication::preferences.getTextViewBackground()));
 }
 
 #include "rawlog.moc"

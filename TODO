@@ -25,7 +25,9 @@ Indicate hilight on tab LED / label
 DCC port range
 /cycle command
 Move Encoding into identity
-
+Font update does not affect Raw Log and nick button in status pane
+Nick button in status pane does nothing
+Measure away time and make it available via placeholder
 
 <mETz[]> Eisfuchs: And why have the "Mitschnitt" button there? having it in the menubar is enough, no?
 
@@ -52,3 +54,5 @@ Automatically gzip files before DCC SEND
 Compute md5sum over DCCs and send / display the hash after transfer
 Import notify list from .ircrc
 /oper <user> <pass> requires password typed in. We need a popup and type <user> only
+PgUp / Pg/Dn scrolls text
+Search function needs Shortcuts.
