@@ -64,49 +64,62 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSpinBoxes->setStretchFactor(dccRollbackLabel,10);
   
   // Ports specification for DCC sending
-  dccSpecificSendPortsBox = new QVGroupBox(i18n("Use specific &ports for DCC Sending"), parentFrame, "dcc_specific_send_ports_box");
-  dccSpecificSendPortsBox->setCheckable(TRUE);
+  dccSpecificSendPortsGroupBox = new QVGroupBox(i18n("Use specific &ports for DCC Send"), parentFrame, "dcc_specific_send_ports_box");
+  dccSpecificSendPortsGroupBox->setCheckable(TRUE);
   
-  QHBox *dccSendPortsFirstBox = new QHBox(dccSpecificSendPortsBox);
-  dccSendPortsFirstLabel=new QLabel(i18n("&First DCC send port:"),dccSendPortsFirstBox);
-  dccSendPortsFirstSpin=new QSpinBox(0,65535,1,dccSendPortsFirstBox,"dcc_send_ports_first_spin");
+  QFrame* dccSpecificSendPortsFrame = new QFrame(dccSpecificSendPortsGroupBox);
+  QHBoxLayout* dccSpecificSendPortsLayout = new QHBoxLayout(dccSpecificSendPortsFrame);
+  dccSpecificSendPortsLayout->setSpacing(spacingHint());
+  
+  QLabel* dccSendPortsLabel=new QLabel(i18n("DCC Se&nd ports:"),dccSpecificSendPortsFrame);
+  dccSendPortsFirstSpin=new QSpinBox(0,65535,1,dccSpecificSendPortsFrame,"dcc_send_ports_first_spin");
   connect(dccSendPortsFirstSpin, SIGNAL(valueChanged(int)), this, SLOT(sendPortsFirstSpinValueChanged(int)));
-  dccSendPortsFirstSpin->setMaximumWidth(100);
-  dccSendPortsFirstLabel->setBuddy(dccSendPortsFirstSpin);
-  
-  QHBox *dccSendPortsLastBox = new QHBox(dccSpecificSendPortsBox);
-  dccSendPortsLastLabel=new QLabel(i18n("&Last DCC send port:"),dccSendPortsLastBox);
-  dccSendPortsLastSpin=new QSpinBox(0,65535,1,dccSendPortsLastBox,"dcc_send_ports_last_spin");
+  dccSendPortsFirstSpin->setFixedWidth(100);
+  QLabel* dccSendPortsCenterLabel=new QLabel(i18n(" to "),dccSpecificSendPortsFrame);
+  dccSendPortsLastSpin=new QSpinBox(0,65535,1,dccSpecificSendPortsFrame,"dcc_send_ports_last_spin");
   connect(dccSendPortsLastSpin, SIGNAL(valueChanged(int)), this, SLOT(sendPortsLastSpinValueChanged(int)));
-  dccSendPortsLastSpin->setMaximumWidth(100);
-  dccSendPortsLastLabel->setBuddy(dccSendPortsLastSpin);
+  dccSendPortsLastSpin->setFixedWidth(100);
   
-  dccSpecificSendPortsBox->setChecked(preferences->getDccSpecificSendPorts());
+  dccSendPortsLabel->setBuddy(dccSendPortsFirstSpin);
+  dccSpecificSendPortsLayout->addWidget(dccSendPortsLabel);
+  dccSpecificSendPortsLayout->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+  dccSpecificSendPortsLayout->addWidget(dccSendPortsFirstSpin);
+  dccSpecificSendPortsLayout->addWidget(dccSendPortsCenterLabel);
+  dccSpecificSendPortsLayout->addWidget(dccSendPortsLastSpin);
+  
+  dccSpecificSendPortsGroupBox->setChecked(preferences->getDccSpecificSendPorts());
   dccSendPortsFirstSpin->setValue(preferences->getDccSendPortsFirst());
   dccSendPortsLastSpin->setValue(preferences->getDccSendPortsLast());
   
   // Ports specification for DCC chat
-  dccSpecificChatPortsBox = new QVGroupBox(i18n("Use specific &ports for DCC Chat"), parentFrame, "dcc_specific_chat_ports_box");
-  dccSpecificChatPortsBox->setCheckable(TRUE);
+  dccSpecificChatPortsGroupBox = new QVGroupBox(i18n("Use specific p&orts for DCC Chat"), parentFrame, "dcc_specific_chat_ports_box");
+  dccSpecificChatPortsGroupBox->setCheckable(TRUE);
   
-  QHBox *dccChatPortsFirstBox = new QHBox(dccSpecificChatPortsBox);
-  dccChatPortsFirstLabel=new QLabel(i18n("&First DCC chat port:"),dccChatPortsFirstBox);
-  dccChatPortsFirstSpin=new QSpinBox(0,65535,1,dccChatPortsFirstBox,"dcc_chat_ports_first_spin");
+  QFrame* dccSpecificChatPortsFrame = new QFrame(dccSpecificChatPortsGroupBox);
+  QHBoxLayout* dccSpecificChatPortsLayout = new QHBoxLayout(dccSpecificChatPortsFrame);
+  dccSpecificChatPortsLayout->setSpacing(spacingHint());
+  
+  QLabel* dccChatPortsLabel=new QLabel(i18n("DCC &Chat ports:"),dccSpecificChatPortsFrame);
+  dccChatPortsFirstSpin=new QSpinBox(0,65535,1,dccSpecificChatPortsFrame,"dcc_chat_ports_first_spin");
   connect(dccChatPortsFirstSpin, SIGNAL(valueChanged(int)), this, SLOT(chatPortsFirstSpinValueChanged(int)));
-  dccChatPortsFirstSpin->setMaximumWidth(100);
-  dccChatPortsFirstLabel->setBuddy(dccChatPortsFirstSpin);
-  
-  QHBox *dccChatPortsLastBox = new QHBox(dccSpecificChatPortsBox);
-  dccChatPortsLastLabel=new QLabel(i18n("&Last DCC chat port:"),dccChatPortsLastBox);
-  dccChatPortsLastSpin=new QSpinBox(0,65535,1,dccChatPortsLastBox,"dcc_chat_ports_last_spin");
+  dccChatPortsFirstSpin->setFixedWidth(100);
+  QLabel* dccChatPortsCenterLabel=new QLabel(i18n(" to "),dccSpecificChatPortsFrame);
+  dccChatPortsLastSpin=new QSpinBox(0,65535,1,dccSpecificChatPortsFrame,"dcc_chat_ports_last_spin");
   connect(dccChatPortsLastSpin, SIGNAL(valueChanged(int)), this, SLOT(chatPortsLastSpinValueChanged(int)));
-  dccChatPortsLastSpin->setMaximumWidth(100);
-  dccChatPortsLastLabel->setBuddy(dccChatPortsLastSpin);
+  dccChatPortsLastSpin->setFixedWidth(100);
   
-  dccSpecificChatPortsBox->setChecked(preferences->getDccSpecificChatPorts());
+  dccChatPortsLabel->setBuddy(dccChatPortsFirstSpin);
+  dccSpecificChatPortsLayout->addWidget(dccChatPortsLabel);
+  dccSpecificChatPortsLayout->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+  dccSpecificChatPortsLayout->addWidget(dccChatPortsFirstSpin);
+  dccSpecificChatPortsLayout->addWidget(dccChatPortsCenterLabel);
+  dccSpecificChatPortsLayout->addWidget(dccChatPortsLastSpin);
+  
+  dccSpecificChatPortsGroupBox->setChecked(preferences->getDccSpecificChatPorts());
   dccChatPortsFirstSpin->setValue(preferences->getDccChatPortsFirst());
   dccChatPortsLastSpin->setValue(preferences->getDccChatPortsLast());
   
+  // misc
   dccGetIpFromServer=new QCheckBox(i18n("&Get own IP from IRC server"),parentFrame,"dcc_get_ip_from_server_checkbox");
   dccAutoGet=new QCheckBox(i18n("Automatically accept &DCC download"),parentFrame,"dcc_autoget_checkbox");
   connect(dccAutoGet, SIGNAL(stateChanged(int)), this, SLOT(autoGetStateChanged(int)));
@@ -133,10 +146,10 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSettingsLayout->addMultiCellWidget(dccSpinBoxes,row,row,0,2);
   row++;
 
-  dccSettingsLayout->addMultiCellWidget(dccSpecificSendPortsBox,row,row,0,2);
+  dccSettingsLayout->addMultiCellWidget(dccSpecificSendPortsGroupBox,row,row,0,2);
   row++;
   
-  dccSettingsLayout->addMultiCellWidget(dccSpecificChatPortsBox,row,row,0,2);
+  dccSettingsLayout->addMultiCellWidget(dccSpecificChatPortsGroupBox,row,row,0,2);
   row++;
   
   dccSettingsLayout->addMultiCellWidget(dccGetIpFromServer,row,row,0,2);
@@ -221,10 +234,10 @@ void PrefsPageDccSettings::applyPreferences()
   preferences->setDccPath(dccFolderInput->text());
   preferences->setDccBufferSize(dccBufferSpin->value());
   preferences->setDccRollback(dccRollbackSpin->value());
-  preferences->setDccSpecificSendPorts(dccSpecificSendPortsBox->isChecked());
+  preferences->setDccSpecificSendPorts(dccSpecificSendPortsGroupBox->isChecked());
   preferences->setDccSendPortsFirst(dccSendPortsFirstSpin->value());
   preferences->setDccSendPortsLast(dccSendPortsLastSpin->value());
-  preferences->setDccSpecificChatPorts(dccSpecificChatPortsBox->isChecked());
+  preferences->setDccSpecificChatPorts(dccSpecificChatPortsGroupBox->isChecked());
   preferences->setDccChatPortsFirst(dccChatPortsFirstSpin->value());
   preferences->setDccChatPortsLast(dccChatPortsLastSpin->value());
   preferences->setDccGetIpFromServer(dccGetIpFromServer->isChecked());

@@ -36,11 +36,11 @@ DccTransferRecv::DccTransferRecv(KListView* _parent, const QString& _partnerNick
   
   fileName=_fileName;
   
-  // set default filename
+  // determine default filename
   // Append partner's name to file name if wanted
   QString localFileName;
   if(KonversationApplication::preferences.getDccAddPartner())
-    localFileName=_partnerNick.lower().lower()+"."+_fileName;
+    localFileName=_partnerNick.lower()+"."+_fileName;
   else
     localFileName=_fileName;
   

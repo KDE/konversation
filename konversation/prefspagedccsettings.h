@@ -51,14 +51,10 @@ class PrefsPageDccSettings : public PrefsPage
     KLineEdit* dccFolderInput;
     QSpinBox* dccBufferSpin;
     QSpinBox* dccRollbackSpin;
-    QVGroupBox* dccSpecificSendPortsBox;
-    QLabel* dccSendPortsFirstLabel;
-    QLabel* dccSendPortsLastLabel;
+    QVGroupBox* dccSpecificSendPortsGroupBox;
     QSpinBox* dccSendPortsFirstSpin;
     QSpinBox* dccSendPortsLastSpin;
-    QVGroupBox* dccSpecificChatPortsBox;
-    QLabel* dccChatPortsFirstLabel;
-    QLabel* dccChatPortsLastLabel;
+    QVGroupBox* dccSpecificChatPortsGroupBox;
     QSpinBox* dccChatPortsFirstSpin;
     QSpinBox* dccChatPortsLastSpin;
     QCheckBox* dccGetIpFromServer;

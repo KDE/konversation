@@ -54,11 +54,8 @@ class DccTransferRecv : public DccTransfer
     
   protected:
     QString fileTmpPath;
-    
     QTimer* connectionTimer;
-    
     KExtendedSocket* recvSocket;
-
 };
 
 #endif // DCCTRANSFERRECV_H
