@@ -657,7 +657,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       text=(trailing.length()) ? trailing : parameterList.join(" ");
       if(trailing.length()) text=prefix+" :"+text;
       // queue the reply to send it as soon as possible
-      server->queueAt(0,"PONG"+text);
+      server->queueAt(0,"PONG "+text);
     }
     else if(command=="error :closing link:")
     {
