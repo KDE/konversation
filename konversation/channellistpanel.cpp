@@ -272,26 +272,22 @@ void ChannelListPanel::updateDisplay()
   {
     // stop list view from updating
     channelListView->setUpdatesEnabled(false);
+    QStringList::iterator it;
 
-    // list view changes are done inside the loop, since QT can't update the
-    // widget afterwards ...
-    for(unsigned int index=0;index<pendingChannels.count();index++)
+    for(it = pendingChannels.begin(); it != pendingChannels.end(); ++it)
     {
       // fetch next channel line
-      QString channelLine=pendingChannels[index];
+      QString channelLine = (*it);
       // split it up into the single parts we need
       QString channel=channelLine.section(' ',0,0);
       QString users=channelLine.section(' ',1,1);
       QString topic=channelLine.section(' ',2);
-      // add channel line to list view
-      if(index==pendingChannels.count()-1)
-      {
-         channelListView->setUpdatesEnabled(true);
-      }
       ChannelListViewItem* item=new ChannelListViewItem(channelListView,channel,users,topic);
       applyFilterToItem(item);
-      // if it's the last one of this batch, update the widget
     }
+
+    channelListView->setUpdatesEnabled(true);
+    channelListView->triggerUpdate();
     // clear list of pending inserts
     pendingChannels.clear();
     // update display
