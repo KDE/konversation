@@ -214,6 +214,9 @@ void DccTransferSend::heard()  // slot
   connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() )    );
   connect( m_sendSocket, SIGNAL( readyWrite() ), this, SLOT( writeData() ) );
   
+  // we don't need ServerSocket anymore
+  m_serverSocket->close();
+  
   m_timeTransferStarted = QDateTime::currentDateTime();
   
   if( m_file.open( IO_ReadOnly ) )
