@@ -1561,6 +1561,7 @@ NickInfo* Server::addNickToJoinedChannelsList(const QString& channelName, const 
   {
     channelNick = new ChannelNick;
     channelNick->nickInfo = nickInfo;
+    channelNick->mode = 0;
     members->insert(lcNickname, channelNick);
   }
   // Move from the Offline to Online lists.
@@ -1618,6 +1619,7 @@ NickInfo* Server::addNickToUnjoinedChannelsList(const QString& channelName, cons
   {
     ChannelNick* channelNick = new ChannelNick;
     channelNick->nickInfo = nickInfo;
+    channelNick->mode = 0;
     members->insert(lcNickname, channelNick);
   }
   // Move from the Offline to Online lists.
