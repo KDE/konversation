@@ -158,22 +158,12 @@ void DccTransfer::removeFile()  // public
     return;
   KIO::SimpleJob* deleteJob = KIO::file_delete( m_fileURL, false );  // is it better to show the progress dialog?
   connect( deleteJob, SIGNAL( result( KIO::Job* ) ), this, SLOT( slotRemoveFileDone( KIO::Job* ) ) );
-  /*
-  if( !QFile( m_fileURL.path() ).remove() )
-  {
-    KMessageBox::sorry( 0, i18n("Cannot remove file '%1'.").arg( m_fileURL.url() ), i18n("DCC Error") );
-    return false;
-  }
-  setStatus( Removed );
-  updateView();
-  return true;
-  */
 }
 
 void DccTransfer::slotRemoveFileDone( KIO::Job* job )
 {
   if( job->error() )
-    KMessageBox::sorry( 0, i18n("Cannot remove file '%1'.").arg( m_fileURL.url() ), i18n("DCC Error") );
+    KMessageBox::sorry( listView(), i18n("Cannot remove file '%1'.").arg( m_fileURL.url() ), i18n("DCC Error") );
   else
   {
     setStatus( Removed );
@@ -270,7 +260,7 @@ void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )
   m_dccStatus = status;
   m_dccStatusDetail = statusDetail;
   if( changed )
-    emit statusChanged(this);
+    emit statusChanged( this );
 }
 
 QString DccTransfer::getTypeText() const
@@ -363,7 +353,7 @@ QString DccTransfer::getTimeRemainingPrettyText() const
   if( remMin )
     text += QString::number( remMin ) + ":";
   if( text.isEmpty() )
-    text = QString::number( remTime ) + i18n(" sec");
+    text = i18n("%1 sec").arg( QString::number( remTime ) );
   else
     text += QString::number( remTime );
   return text;

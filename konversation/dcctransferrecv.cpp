@@ -10,8 +10,6 @@
   (at your option) any later version.
 */
 
-#include <qdir.h>
-
 #include <kdebug.h>
 #include <kfileitem.h>
 #include <klocale.h>
