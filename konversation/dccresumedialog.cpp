@@ -100,6 +100,7 @@ DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item)  // p
   {
     item->filePath = dlg.urlreqFilePath->url().stripWhiteSpace();
     item->fileTmpPath = item->filePath + ".part";
+    item->file.setName(item->fileTmpPath);
   }
   
   return ra;

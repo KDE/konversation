@@ -75,15 +75,6 @@ void DccTransferRecv::start()  // public slot
 {
   kdDebug() << "DccTransferRecv::start()" << endl;
   
-  if(!QDir(filePath.section("/",0,-2)).exists())
-    if(!KStandardDirs::makeDir(filePath.section("/",0,-2)))
-    {
-      KMessageBox::sorry(static_cast<QWidget*>(0),i18n("Cannot create received files directory '%1'.").arg(filePath.section("/",0,-2)),i18n("DCC Error"));
-      setStatus(Failed);
-      cleanUp();
-      updateView();
-    }
-  
   // check whether the file exists
   // if exists, ask user to rename/overwrite/abort
   bCompletedFileExists = QFile::exists(filePath);
@@ -144,11 +135,8 @@ void DccTransferRecv::cleanUp()
   stopAutoUpdateView();
   if(recvSocket)
   {
-    recvSocket->enableRead(false);
-    recvSocket->enableWrite(false);
-    recvSocket->cancelAsyncConnect();
     recvSocket->closeNow();
-    disconnect(recvSocket, 0, 0, 0);
+    recvSocket->cancelAsyncConnect();
     delete recvSocket;
     recvSocket = 0;
   }
@@ -212,6 +200,15 @@ void DccTransferRecv::connectionSuccess()  // slot
   
   if(file.open(IO_ReadWrite))
   {
+    if(!QDir(filePath.section("/",0,-2)).exists())
+      if(!KStandardDirs::makeDir(filePath.section("/",0,-2)))
+      {
+        KMessageBox::sorry(static_cast<QWidget*>(0),i18n("Cannot create received files directory '%1'.").arg(filePath.section("/",0,-2)),i18n("DCC Error"));
+        setStatus(Failed);
+        cleanUp();
+        updateView();
+      }
+    
     // Set position for DCC Resume Get
     file.at(transferringPosition);
     transferStartPosition = transferringPosition;
