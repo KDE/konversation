@@ -80,9 +80,21 @@ $noatun=check_running("noatun");
 
 if($amarok)
 {
+    # Old amaroK interface
     $title=`dcop amarok player title`;
-    $artist=`dcop amarok player artist`;
-    $album=`dcop amarok player album`;
+    
+    if(is_empty($title))
+    {
+	# New amaroK interface
+	$title=`dcop amarok playlist title`;
+	$artist=`dcop amarok playlist artist`;
+        $album=`dcop amarok playlist album`;
+    }
+    else
+    {	
+	$artist=`dcop amarok player artist`;
+	$album=`dcop amarok player album`;
+    }
     
     chomp $title;
     chomp $artist;
