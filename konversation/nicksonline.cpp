@@ -24,10 +24,11 @@
 
 #include "nicksonline.h"
 
-NicksOnline::NicksOnline(const QSize& newSize)
+NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 {  
-  setCaption(i18n("Watched Nicks Online"));
-  
+  setName(i18n("Watched Nicks Online"));
+  setType(ChatWindow::NicksOnline);
+
   nickListView=new KListView(this);
   
   nickListView->addColumn(i18n("Nickname"));
@@ -46,8 +47,6 @@ NicksOnline::NicksOnline(const QSize& newSize)
   connect(editButton,SIGNAL (clicked()),SIGNAL (editClicked()) );
   connect(closeButton,SIGNAL (clicked()),this,SLOT (closeButton()) );
   connect(nickListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT(processDoubleClick(QListViewItem*)));
-
-  resize(newSize);
 }
 
 NicksOnline::~NicksOnline()
@@ -55,19 +54,22 @@ NicksOnline::~NicksOnline()
   delete nickListView;
 }
 
-void NicksOnline::setOnlineList(const QString& serverName,const QStringList& list)
+void NicksOnline::setOnlineList(const QString& serverName,const QStringList& list,bool changed)
 {
   QListViewItem* serverRoot=nickListView->findItem(serverName,0);
-  delete serverRoot;  
-
-  if(list.count())
+  // If server is not in our list, or if the list changed, then display the new list.
+  if ( (serverRoot == 0) || changed)
   {
-    KListViewItem* newServerRoot=new KListViewItem(nickListView,serverName);
-    for(unsigned int i=list.count();i!=0;i--)
+    delete serverRoot;  
+    if(list.count())
     {
-      new KListViewItem(newServerRoot,list[i-1]);
+      KListViewItem* newServerRoot=new KListViewItem(nickListView,serverName);
+      for(unsigned int i=list.count();i!=0;i--)
+      {
+        new KListViewItem(newServerRoot,list[i-1]);
+      }
+      newServerRoot->setOpen(true);
     }
-    newServerRoot->setOpen(true);
   }
 }
 
@@ -87,6 +89,10 @@ void NicksOnline::processDoubleClick(QListViewItem* item)
   // only emit signal when the user double clicked a nickname rather than a server name
   if(item->parent())
     emit doubleClicked(item->parent()->text(0),item->text(0));
+}
+
+void NicksOnline::adjustFocus()
+{
 }
 
 #include "nicksonline.moc"

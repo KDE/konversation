@@ -72,7 +72,7 @@ class KonversationMainWindow : public KMainWindow
     void openPrefsDialog();
     void openPrefsDialog(Preferences::Pages page);
     void quitServer();
-    void nicksNowOnline(const QString& serverName,const QStringList& list);
+    void nicksNowOnline(const QString& serverName,const QStringList& list,bool changed);
     void closeTab(int id);
     void startNotification(QWidget*);
     void endNotification(QWidget*);
@@ -87,7 +87,7 @@ class KonversationMainWindow : public KMainWindow
     void updateLag(Server* lagServer,int msec);
     void tooLongLag(Server* lagServer,int msec);
     void channelPrefsChanged();
-    void setOnlineList(Server* notifyServer,const QStringList& list);
+    void setOnlineList(Server* notifyServer,const QStringList& list, bool changed);
     void updateTrayIcon();
     void serverQuit(Server* server);
     void setShowTabBarCloseButton(bool s);
@@ -99,8 +99,8 @@ class KonversationMainWindow : public KMainWindow
     void openChannelList();
     void openNotify();
     void openLogfile();
-    void openNicksOnlineWindow();
-    void closeNicksOnlineWindow(QSize newSize);
+    void openNicksOnlinePanel();
+    void closeNicksOnlinePanel();
     // it seems that moc does not honor #ifs in compile so we create an
     // empty slot in our .cpp file rather than #if this slot out
     void openNotifications();
@@ -163,7 +163,7 @@ class KonversationMainWindow : public KMainWindow
     KToggleAction* showStatusBarAction;
     KToggleAction* showMenuBarAction;
 
-    NicksOnline* nicksOnlineWindow;
+    NicksOnline* nicksOnlinePanel;
     QStringList nicksOnlineList;
 
     DccTransferHandler* dccTransferHandler;

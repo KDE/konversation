@@ -191,8 +191,8 @@ void KonversationApplication::connectToAnotherServer(int id)
   connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
   connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
 
-  connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&)) );
-
+  connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&,bool)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&,bool)) );
+  
   connect(newServer,SIGNAL (deleted(Server*)),this,SLOT (removeServer(Server*)) );
   
   connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),

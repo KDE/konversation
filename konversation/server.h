@@ -137,7 +137,7 @@ class Server : public QObject
     void serverLag(Server* server,int msec); // will be connected to KonversationMainWindow::updateLag()
     void tooLongLag(Server* server, int msec); // will be connected to KonversationMainWindow::updateLag()
     void resetLag();
-    void nicksNowOnline(Server* server,const QStringList& list); // Will be emitted when new 303 came in
+    void nicksNowOnline(Server* server,const QStringList& list,bool changed); // Will be emitted when new 303 came in
     void addDccPanel(); // will be connected to MainWindow::addDccPanel()
     void addKonsolePanel(); // will be connected to MainWindow::addKonsolePanel()
     void closeDccPanel(); // will be connected to MainWindow::closeDccPanel()

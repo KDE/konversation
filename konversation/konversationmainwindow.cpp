@@ -71,7 +71,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
   dccTransferHandler=new DccTransferHandler(this);
 
-  nicksOnlineWindow=0;
+  nicksOnlinePanel=0;
 
   viewContainer=new LedTabWidget(this,"main_window_tab_widget");
   updateTabPlacement();
@@ -101,7 +101,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
   new KAction(i18n("Server List"), 0, 0, this, SLOT(openServerList()), actionCollection(), "open_server_list");
 
-  new KAction(i18n("Watched Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
+  new KAction(i18n("Watched Nicks Online"), 0, 0, this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
   new KAction(i18n("Open Logfile"), 0, 0, this, SLOT(openLogfile()), actionCollection(), "open_logfile");
 
   new KAction(i18n("Channel List"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
@@ -170,8 +170,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
 KonversationMainWindow::~KonversationMainWindow()
 {
-  if(nicksOnlineWindow) nicksOnlineWindow->closeButton();
-
   deleteDccPanel();
   if(dccTransferHandler) delete dccTransferHandler;
 }
@@ -303,6 +301,7 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     else if(viewType==ChatWindow::DccPanel)     closeDccPanel();
     else if(viewType==ChatWindow::Konsole)      closeKonsolePanel(view);
     else if(viewType==ChatWindow::UrlCatcher)   closeUrlCatcher();
+    else if(viewType==ChatWindow::NicksOnline)  closeNicksOnlinePanel();
 
 /*
     else if(viewType==ChatWindow::Notice);
@@ -600,30 +599,30 @@ void KonversationMainWindow::quitProgram()
   close();
 }
 
-void KonversationMainWindow::openNicksOnlineWindow()
+void KonversationMainWindow::openNicksOnlinePanel()
 {
-  if(!nicksOnlineWindow)
+  if(!nicksOnlinePanel)
   {
-    nicksOnlineWindow=new NicksOnline(KonversationApplication::preferences.getNicksOnlineSize());
+    
+    nicksOnlinePanel=new NicksOnline(getViewContainer());
+    addView(nicksOnlinePanel, 2, i18n("Nicks Online"), true);
 
-    connect(nicksOnlineWindow,SIGNAL (editClicked()),this,SLOT (openNotify()) );
-    connect(nicksOnlineWindow,SIGNAL (closeClicked(QSize)),this,SLOT (closeNicksOnlineWindow(QSize)) );
+    connect(nicksOnlinePanel,SIGNAL (editClicked()),this,SLOT (openNotify()) );
+    connect(nicksOnlinePanel,SIGNAL (closeClicked(QSize)),this,SLOT (closeNicksOnlinePanel()) );
 
-    connect(nicksOnlineWindow,SIGNAL (doubleClicked(const QString&,const QString&)),this,SLOT (notifyAction(const QString&,const QString&)) );
+    connect(nicksOnlinePanel,SIGNAL (doubleClicked(const QString&,const QString&)),this,SLOT (notifyAction(const QString&,const QString&)) );
 
-    connect(this,SIGNAL (nicksNowOnline(const QString&,const QStringList&)),nicksOnlineWindow,SLOT (setOnlineList(const QString&,const QStringList&)) );
-
-    nicksOnlineWindow->show();
+    connect(this,SIGNAL (nicksNowOnline(const QString&,const QStringList&,bool)),nicksOnlinePanel,SLOT (setOnlineList(const QString&,const QStringList&,bool)) );
   }
 }
 
-void KonversationMainWindow::closeNicksOnlineWindow(QSize newSize)
+void KonversationMainWindow::closeNicksOnlinePanel()
 {
-  KonversationApplication::preferences.setNicksOnlineSize(newSize);
-  emit prefsChanged();
-
-  delete nicksOnlineWindow;
-  nicksOnlineWindow=0;
+  if ( nicksOnlinePanel )
+  {
+    delete nicksOnlinePanel;
+    nicksOnlinePanel=0;
+  }
 }
 
 void KonversationMainWindow::openServerList()
@@ -637,9 +636,10 @@ void KonversationMainWindow::openNotify()
 }
 
 // TODO: Let an own class handle notify things
-void KonversationMainWindow::setOnlineList(Server* notifyServer,const QStringList& list)
+void KonversationMainWindow::setOnlineList(Server* notifyServer,const QStringList& list, bool changed)
 {
-  emit nicksNowOnline(notifyServer->getServerName(),list);
+  emit nicksNowOnline(notifyServer->getServerName(),list,changed);
+  if (changed && nicksOnlinePanel) newText(nicksOnlinePanel, QString::null, true);
 }
 
 void KonversationMainWindow::notifyAction(const QString& serverName,const QString& nick)

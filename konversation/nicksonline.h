@@ -17,18 +17,20 @@
 
 #include <qvbox.h>
 
+#include "chatwindow.h"
+
 /*
   @author Dario Abatianni
 */
 
 class KListView;
 
-class NicksOnline : public QVBox
+class NicksOnline : public ChatWindow
 {
   Q_OBJECT
 
   public: 
-    NicksOnline(const QSize& newSize);
+    NicksOnline(QWidget* parent);
     ~NicksOnline();
 
   signals:
@@ -37,8 +39,9 @@ class NicksOnline : public QVBox
     void closeClicked(QSize size);
 
   public slots:
-    void setOnlineList(const QString& serverName,const QStringList& list);
+    void setOnlineList(const QString& serverName,const QStringList& list,bool changed);
     void closeButton();
+    virtual void adjustFocus();
     
   protected slots:
     void processDoubleClick(QListViewItem* item);

@@ -70,5 +70,5 @@ Compute md5sum over DCCs and send / display the hash after transfer
 Import notify list from .ircrc
 Notify with more than 500 characters
 Stats for server lag, words per session per person / channel, quits etc.
-"Open Nicks online window on startup" option
-Make nicks online a panel, show stats like "last spoken" "last seen"
+"Open Nicks online panel on startup" option
+In Nicks Online panel, show stats like "last spoken" "last seen"

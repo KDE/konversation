@@ -18,6 +18,7 @@ Changes from 0.13 to 0.14
 - Added patch by Gary Cramblitt to select custom web browser command (thanks!)
 - When the server goes offline, now all associated tabs get crossed out
 - Added a multi line pasting editor
+- Nicks Online is now a tabbed panel, rather than separate window.
 
 Changes from 0.12 to 0.13
 - Added an option to hide hostmasks in channel nick lists

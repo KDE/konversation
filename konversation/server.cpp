@@ -184,7 +184,7 @@ Server::~Server()
 {
 
   // clear nicks online
-  emit nicksNowOnline(this,QStringList());
+  emit nicksNowOnline(this,QStringList(),true);
   // Make sure no signals get sent to a soon to be dying Server Window
   serverSocket.blockSignals(true);
   // Send out the last messages (usually the /QUIT)
@@ -399,7 +399,7 @@ void Server::broken(int state)
   kdDebug() << "Connection broken (Socket fd " << serverSocket.fd() << ") " << state << "!" << endl;
 
   // clear nicks online
-  emit nicksNowOnline(this,QStringList());
+  emit nicksNowOnline(this,QStringList(),true);
 
   // TODO: Close all queries and channels!
   //       Or at least make sure that all gets reconnected properly
@@ -504,12 +504,14 @@ void Server::notifyResponse(const QString& nicksOnline)
     QStringList nickList=QStringList::split(' ',nicksOnline);
     // Create a lower case nick list from the notification reply
     QStringList nickLowerList=QStringList::split(' ',nicksOnline.lower());
+    bool nicksOnlineChanged = false;
 
     // Did some new nicks appear in our notify?
     for(unsigned int index=0;index<nickLowerList.count();index++)
     {
       if(notifyLowerCache.find(nickLowerList[index])==notifyLowerCache.end())
       {
+        nicksOnlineChanged = true;
         getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 is online (%2).").arg(nickList[index]).arg(getServerName()),statusView);
 
 #ifdef USE_KNOTIFY
@@ -524,6 +526,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     {
       if(nickLowerList.find(notifyLowerCache[index])==nickLowerList.end())
       {
+        nicksOnlineChanged = true;
         getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 went offline. (%2)").arg(notifyCache[index]).arg(getServerName()),statusView);
 
 #ifdef USE_KNOTIFY
@@ -535,7 +538,7 @@ void Server::notifyResponse(const QString& nicksOnline)
 
     // Finally copy the new ISON list with correct case to our notify cache
     notifyCache=nickList;
-    emit nicksNowOnline(this,nickList);
+    emit nicksNowOnline(this,nickList,nicksOnlineChanged);
   }
   // Next round
   startNotifyTimer();
