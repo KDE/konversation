@@ -5,6 +5,7 @@ Changes from 0.16 to 0.17
 - Fix whois replies for normal users on safe channels ( IRCNet alike )
 - Fix whois replies from ircd-hybrid ( Efnet alike )
 - Better handling of quiet bans ( especially Freenode )
+- KDE color scheme is now honered in topic widget
 - Enable clickable nicks even if colored nicks are off
 - Per identity pre-shell command support with a GUI
 - Bookmarking support
