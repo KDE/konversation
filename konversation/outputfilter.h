@@ -84,7 +84,6 @@ namespace Konversation
       QStringList toServerList;
       QString type;
       QString destination;
-      QString unknownCommand;
   
       QString commandChar;
   

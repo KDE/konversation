@@ -185,7 +185,7 @@ namespace Konversation {
       // Forward unknown commands to server
       else {
         toServer = inputLine.mid(1);
-        unknownCommand = toServer;
+        m_server->setLastUnknownCommand(destination, toServer);
       }
     }
     // Ordinary message to channel/query?
@@ -932,8 +932,6 @@ namespace Konversation {
   }
   
   QString& OutputFilter::getType() { return type; }
-  
-  QString& OutputFilter::getUnknownCommand() { return unknownCommand; }
   
   //     # & + and ! are Channel identifiers
   bool OutputFilter::isAChannel(const QString &check)

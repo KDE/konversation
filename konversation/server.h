@@ -224,6 +224,9 @@ class Server : public QObject
     const NickInfoMap* getNicksOffline();
 
     QString awayTime();
+    
+    QString lastUnknownCommand();
+    QString lastUnknownCommandDestination();
 
   signals:
     void nicknameChanged(const QString&);
@@ -294,6 +297,8 @@ class Server : public QObject
 
     void startAwayTimer();
     void sendToAllChannels(const QString& text);
+    
+    void setLastUnknownCommand(const QString& destination, const QString& cmd);
 
   protected slots:
     void ircServerConnectionSuccess();
@@ -464,6 +469,9 @@ class Server : public QObject
     int m_awayTime;
     
     ScriptLauncher* m_scriptLauncher;
+    
+    QString m_lastUnknownCommand;
+    QString m_lastUnknownCommandDestination;
 };
 
 #endif

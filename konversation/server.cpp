@@ -2749,4 +2749,20 @@ void Server::startAwayTimer()
   m_awayTime = QDateTime::currentDateTime().toTime_t();
 }
 
+void Server::setLastUnknownCommand(const QString& destination, const QString& cmd)
+{
+  m_lastUnknownCommand = cmd;
+  m_lastUnknownCommandDestination = destination;
+}
+
+QString Server::lastUnknownCommand()
+{
+  return m_lastUnknownCommand;
+}
+
+QString Server::lastUnknownCommandDestination()
+{
+  return m_lastUnknownCommandDestination;
+}
+
 #include "server.moc"
