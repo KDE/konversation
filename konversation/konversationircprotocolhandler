@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# A script for Konversation to call connectToServer for each instance of Konversation.
+
+server=`echo $1 | sed "s/irc:\/\///g"` 
+dcop "konversation*" | while read line; do dcop $line Konversation connectToServer $server; done
+
