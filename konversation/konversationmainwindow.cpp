@@ -919,6 +919,14 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
 
 Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
 {
+  // Some IRC channels begin with ampersands (server local channels)
+  // Accelerators don't belong in channel names, filter ampersands
+
+  // Copy the name first
+  QString newname = name;
+  for (int index = newname.find('&'); index != -1; index = newname.find('&', index+2))
+    newname.insert(index, '&');
+
 #ifdef USE_MDI
   Channel* channel=new Channel(name);
 #else
@@ -931,7 +939,7 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
 #ifdef USE_MDI
   addMdiView(channel,1);
 #else
-  addView(channel,1,name);
+  addView(channel,1,newname);
 #endif
 
   connect(channel,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
