@@ -99,26 +99,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   QSizePolicy modest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
   QSizePolicy greedy=QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
 
-  // (this) The main Box, holding the channel view/topic and the input line
-  splitter=new QSplitter(this);
-#ifdef USE_MDI
-  mainLayout->setStretchFactor(splitter,10);
-#else
-  setStretchFactor(splitter,10);
-#endif
-
-#ifdef OPAQUE_CONF
-  splitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
-#else
-  splitter->setOpaqueResize(true);
-#endif
-
-  // The grid for the topic line and Channel View
-  QVBox* topicViewNicksGrid=new QVBox(splitter);
-  topicViewNicksGrid->setSpacing(spacing());
-
   // The box holding the Topic label/line, and the channel modes
-  QHBox* topicBox=new QHBox(topicViewNicksGrid);
+  QHBox* topicBox=new QHBox(this);
   topicBox->setSpacing(spacing());
 
   topicLabel=new QLabel(i18n("&Topic:"),topicBox);
@@ -170,13 +152,24 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   showModeButtons(KonversationApplication::preferences.getShowModeButtons());
 
-  setTextView(new IRCView(topicViewNicksGrid,NULL));  // Server will be set later in setServer()
+  // (this) The main Box, holding the channel view/topic and the input line
+  splitter=new QSplitter(this);
+#ifdef USE_MDI
+  mainLayout->setStretchFactor(splitter,10);
+#else
+  setStretchFactor(splitter,10);
+#endif
+
+#ifdef OPAQUE_CONF
+  splitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
+#else
+  splitter->setOpaqueResize(true);
+#endif
+
+  setTextView(new IRCView(splitter,NULL));  // Server will be set later in setServer()
   // The box that holds the Nick List and the quick action buttons
   QVBox* nickListButtons=new QVBox(splitter);
   nickListButtons->setSpacing(spacing());
-
-  nicksOps=new QLabel(i18n("Nicks"),nickListButtons);
-  nicksOps->setAlignment(AlignVCenter | AlignHCenter);
 
   nicknameListView=new NickListView(nickListButtons, this);
   nicknameListView->setSelectionModeExt(KListView::Extended);
@@ -201,6 +194,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView->setColumnWidth(0,10);
   nicknameListView->setColumnAlignment(0,Qt::AlignHCenter);
   nicknameListView->installEventFilter(this);
+
+  nicksOps=new QLabel(i18n("nicks"),nickListButtons);
+  nicksOps->setAlignment(AlignVCenter | AlignHCenter);
 
   // the grid that holds the quick action buttons
   buttonsGrid=new QGrid(2,nickListButtons);
@@ -1003,8 +999,9 @@ void Channel::adjustOps(int value)
 
 void Channel::updateNicksOps()
 {
-  /* %1 %2 / %3 %4 = 5 Nicks / 3 Ops */
-  nicksOps->setText(i18n("%1 %2 / %3 %4").arg(nicks).arg((nicks==1) ? i18n("Nick") : i18n("Nicks")).arg(ops).arg((ops==1) ? i18n("Op") : i18n("Ops")));
+  QString txt = i18n("%1  nick", "%1 nicks", nicks).arg(nicks);
+  txt += i18n(" (%1 op)", " (%1 ops)", ops).arg(ops);
+  nicksOps->setText(txt);
 }
 
 void Channel::setTopic(const QString &newTopic)

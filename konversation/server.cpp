@@ -274,7 +274,6 @@ void Server::initTimers()
   notifyTimer.setName("notify_timer");
 
   incomingTimer.setName("incoming_timer");
-  incomingTimer.start(10);
 
   outgoingTimer.setName("outgoing_timer");
   outgoingTimer.start(timerInterval);
@@ -842,6 +841,10 @@ void Server::processIncomingData()
     inputFilter.parseLine(inputBuffer.front(), mainWindow);
     inputBuffer.pop_front();
   }
+  
+  if(!inputBuffer.count()) {
+    incomingTimer.stop();
+  }
 }
 
 void Server::unlockSending()
@@ -960,6 +963,9 @@ void Server::incoming()
   // refresh lock timer if it was still locked
   if(!sendUnlocked) lockSending();
 
+  if(!incomingTimer.isActive()) {
+    incomingTimer.start(0);
+  }
 }
 
 void Server::queue(const QString& buffer)
