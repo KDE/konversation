@@ -235,18 +235,18 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
 
   // TODO: Use QStyleSheet::escape() here
 
-  // Replace all & with &amp;
-  filteredLine.replace('&',"&amp;");
+  // Replace all & with &amp;   We use QRegExp here because of pre 3.1 compatibility!
+  filteredLine.replace(QRegExp("&"),"&amp;");
   // Replace all < with &lt;
-  filteredLine.replace('<',"&lt;");
+  filteredLine.replace(QRegExp("<"),"&lt;");
   // Replace all > with &gt;
-  filteredLine.replace('>',"&gt;");
+  filteredLine.replace(QRegExp(">"),"&gt;");
   // Replace all 0x0f (reset to defaults) with \0x031,0 (should be extended to reset all text decorations as well)
-  filteredLine.replace('\017',"\0031,0");
+  filteredLine.replace(QRegExp("\017"),"\0031,0");
   // Replace all 0x03 without color number (reset color) with \0x031,0
   filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0031,0\\1");
   // Hack to allow for whois info hostmask info to not be parsed as email
-  filteredLine.replace("&amp;#64;", "&#64;");
+  filteredLine.replace(QRegExp("&amp;#64;"),"&#64;");
 
   if(filteredLine.find("\x07")!=-1)
   {
@@ -337,7 +337,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
       // Fix &amp; back to & in href ... kludgy but I don't know a better way.
       href.replace(QRegExp("&amp;"),"&");
       // Replace all spaces with %20 in href
-      href.replace(' ',"%20");
+      href.replace(QRegExp(" "),"%20");
       // Build rich text link
       QString link("<font color=\"#"+linkColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
 
@@ -543,8 +543,8 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
   QString backlogColor=KonversationApplication::preferences.getColor("BacklogMessage");
 
   // Nicks are in "<nick>" format so replace the "<>"
-  first.replace(QRegExp("\\<"),"&lt;");
-  first.replace(QRegExp("\\>"),"&gt;");
+  first.replace(QRegExp("<"),"&lt;");
+  first.replace(QRegExp(">"),"&gt;");
 
   // extract timestamp from message string
   if(message.startsWith("["))
