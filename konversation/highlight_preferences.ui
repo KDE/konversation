@@ -24,7 +24,7 @@
                 <cstring>enableSoundCheck</cstring>
             </property>
             <property name="text">
-                <string>&amp;Enable sound for higlight list items</string>
+                <string>&amp;Enable sound for highlighted list items</string>
             </property>
         </widget>
         <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
@@ -40,7 +40,7 @@
                 <cstring>ownLinesCheck</cstring>
             </property>
             <property name="text">
-                <string>Always highligt own &amp;lines:</string>
+                <string>Always highlight own &amp;lines:</string>
             </property>
         </widget>
         <widget class="QGroupBox" row="0" column="0" rowspan="1" colspan="4">

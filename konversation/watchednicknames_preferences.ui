@@ -29,7 +29,7 @@
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;
 &lt;p&gt;
-When the nickname watcher is turned on, you will be notified when the nicknamesappearing in the &lt;b&gt;Watched Networkss/Nicknames&lt;/b&gt; list come online or go offline.&lt;/p&gt;
+When the nickname watcher is turned on, you will be notified when the nicknames appearing in the &lt;b&gt;Watched Networks/Nicknames&lt;/b&gt; list come online or go offline.&lt;/p&gt;
 &lt;p&gt;You can also open the &lt;b&gt;Nicks Online&lt;/b&gt; window to see the status of all the watched nicknames.&lt;/p&gt;
 )
 &lt;/qt&gt;</string>
@@ -115,7 +115,7 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;
 &lt;p&gt;
-When the nickname watcher is turned on, you will be notified when the nicknames appearing in the &lt;b&gt;Watched Networkss/Nicknames&lt;/b&gt; list come online or go offline.&lt;/p&gt;
+When the nickname watcher is turned on, you will be notified when the nicknames appearing in the &lt;b&gt;Watched Networks/Nicknames&lt;/b&gt; list come online or go offline.&lt;/p&gt;
 &lt;p&gt;You can also open the &lt;b&gt;Nicks Online&lt;/b&gt; window to see the status of all the watched nicknames.&lt;/p&gt;
 )
 &lt;/qt&gt;</string>
