@@ -24,6 +24,7 @@
 #include <klistview.h>
 
 #include "preferences.h"
+#include "prefspage.h"
 
 /*
  *@author Dario Abatianni
@@ -51,6 +52,7 @@ class PrefsDialog : public KDialogBase
 
   protected:
     Preferences* preferences;
+		PrefsPage*   scriptsPage;
 
     void setPreferences(Preferences* newPrefs);
 };

@@ -64,8 +64,16 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   // Add Dcc Settings page
 /*  PrefsPage* dccSettingsPage= */ new PrefsPageDccSettings(dccSettingsPane, preferences);
   // Add scripts page
+<<<<<<< prefsdialog.cpp
+
+	// I had to uncomment the assignment of the address to a pointer variable because i need to connect
+	// the prefsChanged signal with the saveChanges Slot of the PrefPageScripts Class
+
+	PrefsPage* scriptsPage = new PrefsPageScripts(scriptsPane, preferences);
+=======
   // TODO: Uncomment this again when it's ready to go
   //  PrefsPage* scriptsPage= new PrefsPageScripts(scriptsPane, preferences);
+>>>>>>> 1.13
 
   setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
   setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
@@ -79,6 +87,8 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   {
     setButtonCancelText(i18n("Cancel"),i18n("Discards all changes made"));
   }
+
+	connect(this, SIGNAL(prefsChanged()), scriptsPage, SLOT(saveChanges()));
 }
 
 PrefsDialog::~PrefsDialog()
