@@ -379,7 +379,6 @@ void Server::connectSignals()
   connect(serverSocket,SIGNAL (gotError(int)),this,SLOT (broken(int)) );
   connect(serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
   connect(serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
-  connect(serverSocket,SIGNAL (closed()),this,SLOT(broken(0)));
 
 
   connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
@@ -548,7 +547,6 @@ bool Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwn
  */
 void Server::lookupFinished()
 {
-  getIp();
   // error during lookup
   if(serverSocket->status())
   {
