@@ -863,34 +863,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_NAMREPLY:
         {
-          QStringList nickList=QStringList::split(" ",trailing);
-          QStringList newNickList;
-
-          for(unsigned int index=0;index<nickList.count();index++)
-          {
-            bool admin=false;
-            bool owner=false;
-            bool op=false;
-            bool halfop=false;
-            bool voice=false;
-
-            QString nickname=nickList[index];
-
-            // remove possible mode characters from nickname and store the resulting mode
-            server->mangleNicknameWithModes(nickname,admin,owner,op,halfop,voice);
-
-            // TODO: make these an enumeration in KApplication or somewhere, we can use them from channel.cpp as well
-            int mode=(admin  ? 16 : 0)+
-                     (owner  ?  8 : 0)+
-                     (op     ?  4 : 0)+
-                     (halfop ?  2 : 0)+
-                     (voice  ?  1 : 0);
-
-            // store nicks in list
-            newNickList.append(nickname+" "+QString::number(mode));
-          }
+          QStringList nickList = QStringList::split(" ", trailing);
           // send list to channel
-          server->addPendingNickList(parameterList[2],newNickList);
+          server->addPendingNickList(parameterList[2], nickList);
           break;
         }
       case RPL_ENDOFNAMES:

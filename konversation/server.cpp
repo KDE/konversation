@@ -1868,23 +1868,6 @@ Query* Server::getQueryByName(const QString& name)
 void Server::addPendingNickList(const QString& channelName,const QStringList& nickList)
 {
   Channel* outChannel=getChannelByName(channelName);
-/*  ChannelNickList pendingChannelNickList;
-  // Update NickInfo.
-  if (outChannel)
-  {
-    for(unsigned int i=0;i<nickList.count();i++)
-    {
-      QString nickname = nickList[i].section(" ",0,0);
-      unsigned int mode = nickList[i].section(" ",1,1).toInt();
-      if (!nickname.isEmpty()) {
-	      ChannelNickPtr channelNick = addNickToJoinedChannelsList(channelName, nickname);
-	      Q_ASSERT(channelNick);
-	      //KX << _S(channelName) << _S(nickname) << _S(mode) << endl;
-	      channelNick->setMode(mode);
-	      pendingChannelNickList.append(channelNick);
-      }
-    }
-  }*/
   if(outChannel) outChannel->addPendingNickList(nickList);
 }
 

@@ -1771,9 +1771,23 @@ void Channel::showTopic(bool show)
 
 void Channel::processPendingNicks()
 {
-  QString nickStr = m_pendingChannelNickLists.first()[m_currentIndex];
-  QString nickname = nickStr.section(" ",0,0);
-  unsigned int mode = nickStr.section(" ",1,1).toInt();
+  bool admin = false;
+  bool owner = false;
+  bool op = false;
+  bool halfop = false;
+  bool voice = false;
+  QString nickname = m_pendingChannelNickLists.first()[m_currentIndex];
+
+  // remove possible mode characters from nickname and store the resulting mode
+  server->mangleNicknameWithModes(nickname,admin,owner,op,halfop,voice);
+
+  // TODO: make these an enumeration in KApplication or somewhere, we can use them from channel.cpp as well
+  unsigned int mode=(admin  ? 16 : 0)+
+                    (owner  ?  8 : 0)+
+                    (op     ?  4 : 0)+
+                    (halfop ?  2 : 0)+
+                    (voice  ?  1 : 0);
+
   ChannelNickPtr nick = server->addNickToJoinedChannelsList(getName(), nickname);
   Q_ASSERT(nick);
   nick->setMode(mode);
