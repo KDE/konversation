@@ -132,6 +132,7 @@ class Server : public QObject
   public slots:
     void connectToIRCServer();
     void queue(const QString &buffer);
+    void queueList(const QStringList &buffer);
     void setNickname(const QString &newNickname);
     void addQuery(const QString &nickname, const QString &hostmask);
     void closeQuery(const QString &name);

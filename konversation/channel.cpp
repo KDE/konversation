@@ -577,7 +577,7 @@ void Channel::sendChannelText(const QString& sendLine)
     else append(server->getNickname(),output);
   }
   // Send anything else to the server
-  server->queue(filter.getServerOutput());
+  server->queueList(filter.getServerOutputList());
 }
 
 void Channel::newTextInView(const QString& highlightColor)

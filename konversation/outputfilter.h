@@ -47,6 +47,7 @@ class OutputFilter : public QObject
 
     QString& getOutput();
     QString& getServerOutput();
+    QStringList& getServerOutputList();
     QString& getType();
 
   signals:
@@ -71,6 +72,7 @@ class OutputFilter : public QObject
   protected:
     QString output;
     QString toServer;
+    QStringList toServerList;
     QString type;
     QString destination;
 

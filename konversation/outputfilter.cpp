@@ -75,6 +75,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
   setCommandChar();
 
   toServer=QString::null;
+  toServerList=QStringList::QStringList();
   output=QString::null;
   type=QString::null;
   destination=name;
@@ -457,37 +458,49 @@ void OutputFilter::parseQuery(const QString &parameter)
 void OutputFilter::changeMode(const QString &parameter,char mode,char giveTake)
 {
   // TODO: Make sure this works with +l <limit> and +k <password> also!
+  QString token=QString::QString();
+  QString tmpToken=QString::null;
   QStringList nickList=QStringList::split(' ',parameter);
   if(nickList.count())
   {
     // Check if the user specified a channel
     if(isAChannel(nickList[0]))
     {
-      toServer="MODE "+nickList[0];
+      token="MODE "+nickList[0];
       // remove the first element
       nickList.remove(nickList.begin());
     }
     // Add default destination if it is a channel
-    else if(isAChannel(destination)) toServer="MODE "+destination;
+    else if(isAChannel(destination)) token="MODE "+destination;
     // Only continue if there was no error
-    if(toServer.length())
+    if(token.length())
     {
       unsigned int modeCount=nickList.count();
-      if(modeCount>3)
+/*      if(modeCount>3)
       {
         modeCount=3;
         output=i18n("Modes can only take a certain number of nick names at the same time."
                     "The server may truncate your mode list.");
         type=i18n("Warning");
         program=true;
-      }
+      } */
 
       QString modes;
       modes.fill(mode,modeCount);
 
-      toServer+=QString(" ")+giveTake+modes;
+      token+=QString(" ")+giveTake+modes;
+      tmpToken=token;
 
-      for(unsigned int index=0;index<modeCount;index++) toServer+=" "+nickList[index];
+      for(unsigned int index=0;index<modeCount;index++)
+      {
+        if ((index % 3) == 0)
+        {
+          toServerList.append(token);
+          token=tmpToken;
+        }
+        token+=" "+nickList[index];
+      }
+      if (token!=tmpToken) toServerList.append(token);
     }
   }
 }
@@ -675,7 +688,7 @@ void OutputFilter::parseNotify(const QString& parameter)
 void OutputFilter::parseOper(const QString& myNick,const QString& parameter)
 {
   QStringList parameterList=QStringList::split(' ',parameter);
-  
+
   if(parameter.isEmpty() || parameterList.count()==1)
   {
     QString nick((parameterList.count()==1) ? parameterList[0] : myNick);
@@ -793,6 +806,14 @@ void OutputFilter::setIdentity(const Identity *newIdentity)
 
 QString& OutputFilter::getOutput() { return output; }
 QString& OutputFilter::getServerOutput() { return toServer; }
+
+QStringList& OutputFilter::getServerOutputList()
+{
+  if (!toServer.isEmpty()) toServerList.append(toServer);
+
+  return toServerList;
+}
+
 QString& OutputFilter::getType() { return type; }
 
 //     # & + and ! are Channel identifiers

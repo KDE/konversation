@@ -302,7 +302,7 @@ void KonversationMainWindow::openChannelList()
                                   "query, channel or status window to find out, "
                                   "which server this list belongs to."
                                  ),
-                             i18n("Channel list"),
+                             i18n("Channel List"),
                              "ChannelListNoServerSelected");
   }
 }
@@ -460,7 +460,7 @@ ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
   ChannelListPanel* channelListPanel=new ChannelListPanel(getViewContainer());
   channelListPanel->setServer(server);
 
-  addView(channelListPanel,2,i18n("Channel list"));
+  addView(channelListPanel,2,i18n("Channel List"));
 
   return channelListPanel;
 }

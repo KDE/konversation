@@ -521,6 +521,24 @@ void Server::queue(const QString& buffer)
   }
 }
 
+void Server::queueList(const QStringList& buffer)
+{
+  // Only queue lines if we are connected
+  const QStringList it;
+  if(isConnected() && buffer.count())
+  {
+    for (int i=0;i<buffer.count();i++)
+    {
+      if(rawLog) rawLog->appendRaw(*buffer.at(i));
+
+      outputBuffer+=*buffer.at(i);
+      outputBuffer+="\n";
+
+      serverSocket.enableWrite(true);
+    }
+  }
+}
+
 void Server::send()
 {
   // Check if we are still online
