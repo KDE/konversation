@@ -1215,7 +1215,7 @@ void Server::dcopSay(const QString& target,const QString& command)
   }
   else
   {
-    Query* query=getQueryByName(target);
+    class Query* query=getQueryByName(target);
     if(query==0)
     {
       NickInfoPtr nickinfo = obtainNickInfo(target);
@@ -1458,11 +1458,11 @@ QString Server::getIp(bool followDccSetting)
   return ip;
 }
 
-Query *Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
+class Query *Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
 {
   QString nickname = nickInfo->getNickname();
   // Only create new query object if there isn't already one with the same name
-  Query* query=getQueryByName(nickname);
+  class Query* query=getQueryByName(nickname);
   if(!query)
   {
     QString lcNickname = nickname.lower();
@@ -1490,7 +1490,7 @@ Query *Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
 
 void Server::closeQuery(const QString &name)
 {
-  Query* query=getQueryByName(name);
+  class Query* query=getQueryByName(name);
   removeQuery(query);
 
   // Update NickInfo.  If no longer on any lists, delete it altogether, but
@@ -1616,7 +1616,7 @@ void Server::requestDccSend(const QString &a_recipient)
     }
 
     // add Queries as well, but don't insert duplicates
-    Query* lookQuery=queryList.first();
+    class Query* lookQuery=queryList.first();
     while(lookQuery)
     {
       if(!nickList.contains(lookQuery->getName())) nickList.append(lookQuery->getName());
@@ -1822,10 +1822,10 @@ QString Server::getNextQueryName()
   return QString::null;
 }
 
-void Server::removeQuery(Query* query)
+void Server::removeQuery(class Query* query)
 {
   // Traverse through list to find the query
-  Query* lookQuery=queryList.first();
+  class Query* lookQuery=queryList.first();
   while(lookQuery)
   {
     // Did we find our query?
@@ -1952,7 +1952,7 @@ void Server::updateFonts()
     channel=channelList.next();
   }
 
-  Query* query=queryList.first();
+  class Query* query=queryList.first();
   while(query)
   {
     query->updateFonts();
@@ -2028,14 +2028,14 @@ Channel* Server::getChannelByName(const QString& name)
   return 0;
 }
 
-Query* Server::getQueryByName(const QString& name)
+class Query* Server::getQueryByName(const QString& name)
 {
   // Convert wanted query name to lowercase
   QString wanted=name;
   wanted=wanted.lower();
 
   // Traverse through list to find the query with "name"
-  Query* lookQuery=queryList.first();
+  class Query* lookQuery=queryList.first();
   while(lookQuery)
   {
     if(lookQuery->getName().lower()==wanted) return lookQuery;
@@ -2625,14 +2625,14 @@ void Server::appendCommandMessageToChannel(const QString& channel,const QString&
 
 void Server::appendServerMessageToQuery(const QString& queryName,const QString& type,const QString& message)
 {
-  Query* outQuery=getQueryByName(queryName);
+  class Query* outQuery=getQueryByName(queryName);
   if(outQuery) outQuery->appendServerMessage(type,message);
   else kdWarning() << "Server::appendServerMessageToQuery(" << queryName << "): Query not found!" << endl;
 }
 
 void Server::appendCommandMessageToQuery(const QString& queryName,const QString& command,const QString& message)
 {
-  Query* outQuery=getQueryByName(queryName);
+  class Query* outQuery=getQueryByName(queryName);
   if(outQuery) outQuery->appendCommandMessage(command,message);
   else kdWarning() << "Server::appendCommandMessageToQuery(" << queryName << "): Query not found!" << endl;
 }
@@ -2996,7 +2996,7 @@ void Server::sendToAllChannelsAndQueries(const QString& text)
   }
 
   // Send a message to all queries we are in
-  Query* query=queryList.first();
+  class Query* query=queryList.first();
 
   while(query)
   {

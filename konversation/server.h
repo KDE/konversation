@@ -155,7 +155,7 @@ class Server : public QObject
     void appendCommandMessageToQuery(const QString& queryName,const QString& command,const QString& message);
 
     Channel* getChannelByName(const QString& name);
-    Query* getQueryByName(const QString& name);
+    class Query* getQueryByName(const QString& name);
     QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QStringList &nickList, const QString& parameter);
     QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& parameter);
     
@@ -380,7 +380,7 @@ class Server : public QObject
      *  @param weinitiated This is whether we initiated this - did we do /query, or somebody else sending us a message.
      *  @return A pointer to a new or already-existing query.  Guaranteed to be non-null
      */
-    Query *addQuery(const NickInfoPtr & nickInfo, bool weinitiated);
+    class Query *addQuery(const NickInfoPtr & nickInfo, bool weinitiated);
     void closeQuery(const QString &name);
     void closeChannel(const QString &name);
     void quitServer();
@@ -392,7 +392,7 @@ class Server : public QObject
     void requestUnban(const QString& mask,const QString& channel);
 
     void addDccSend(const QString &recipient,KURL fileURL, const QString &altFileName = QString::null, uint fileSize = 0);
-    void removeQuery(Query *query);
+    void removeQuery(class Query *query);
     void startNotifyTimer(int msec=0);
     void sendJoinCommand(const QString& channelName, const QString& password = QString::null);
     void requestChannelList();
