@@ -43,8 +43,6 @@ class IRCView : public KTextBrowser
     
     // Returns the current nick under context menu.
     const QString& getContextNick() const;
-    // Resets context nick
-    void clearContextNick();
 
     void updateStyleSheet();
 
@@ -95,6 +93,9 @@ class IRCView : public KTextBrowser
     virtual void removeSelectedText( int selNum = 0 );
 
     virtual void scrollToBottom(); // Overwritten for internal reasons
+
+    // Resets context nick
+    void clearContextNick();
 
   protected slots:
     void highlightedSlot(const QString& link);

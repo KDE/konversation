@@ -841,6 +841,7 @@ void IRCView::setupNickPopupMenu()
   nickPopup->insertItem(i18n("Ignore"),Ignore);
   
   connect (nickPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+  connect(nickPopup, SIGNAL(aboutToHide()), this, SLOT(clearContextNick()));
   connect (modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
   connect (kickban, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
 }
