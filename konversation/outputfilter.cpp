@@ -41,18 +41,31 @@ OutputFilter::~OutputFilter()
 QString OutputFilter::replaceAliases(const QString& line)
 {
   QStringList aliasList=KonversationApplication::preferences.getAliasList();
-  QString newLine(line);
 
+  // check if the line starts with a defined alias
   for(unsigned int index=0;index<aliasList.count();index++)
   {
-    // split up alias definition in pattern and replacement
+    // cut alias pattern from definition
     QString aliasPattern(aliasList[index].section(' ',0,0));
-    QString aliasReplace(aliasList[index].section(' ',1));
 
-    // replace all /pattern at the beginning of the line with replacement
-    newLine.replace(QRegExp("^/"+aliasPattern+"\\b"),aliasReplace);
-  }
-  return newLine;
+    // pattern found?
+    if(line.find(QRegExp("^/"+aliasPattern+"\\b"))!=-1)
+    {
+      // cut alias replacement from definition
+      QString aliasReplace(aliasList[index].section(' ',1));
+
+      // protect "%%"
+      aliasReplace.replace(QRegExp("%%"),"%\x01");
+      // replace %p placeholder with rest of line
+      aliasReplace.replace(QRegExp("%p"),line.section(' ',1));
+      // restore "%%" as "%"
+      aliasReplace.replace(QRegExp("%\x01"),"%");
+      // return new line
+      return aliasReplace;
+    }
+  } // for
+
+  return line;
 }
 
 QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,const QString& name)
