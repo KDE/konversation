@@ -43,17 +43,18 @@ void NotificationHandler::message(ChatWindow* chatWin, const QString& fromNick, 
   if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
     return;
   }
-  
+
   QString cutup = KStringHandler::rsqueeze(Konversation::removeIrcMarkup(message), 50);
   KNotifyClient::event(winId(), "message", QString("<%1> %2").arg(fromNick).arg(cutup));
-  
+
   if(!KonversationApplication::preferences.trayNotifyOnlyOwnNick()) {
     startTrayNotification(chatWin);
   }
 
-  KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-  
-  if(KonversationApplication::preferences.getOSDShowChannel()) {
+  if(KonversationApplication::preferences.getOSDShowChannel() &&
+     (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
+  {
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
     konvApp->osd->showOSD("(" + chatWin->getName() + ") <" + fromNick + "> " + message);
   }
 }
@@ -76,13 +77,16 @@ void NotificationHandler::nick(ChatWindow* chatWin, const QString& fromNick, con
   KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
   
   if(chatWin->getType() == ChatWindow::Channel) {
-    if(KonversationApplication::preferences.getOSDShowChannel() ||
-      KonversationApplication::preferences.getOSDShowOwnNick())
+    if((KonversationApplication::preferences.getOSDShowChannel() ||
+       KonversationApplication::preferences.getOSDShowOwnNick()) &&
+       (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
     {
       konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(message));
     }
   } else if(chatWin->getType() == ChatWindow::Query) {
-    if(KonversationApplication::preferences.getOSDShowQuery()) {
+    if(KonversationApplication::preferences.getOSDShowQuery() &&
+       (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
+    {
       konvApp->osd->showOSD(i18n("(Query) <%1> %2").arg(fromNick).arg(message));
     }
   }
@@ -116,10 +120,11 @@ void NotificationHandler::join(ChatWindow* chatWin, const QString& nick)
   
   KNotifyClient::event(winId(), "join", i18n("%1 joined %2").arg(nick, chatWin->getName()));
 
-  KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-
   // OnScreen Message
-  if(KonversationApplication::preferences.getOSDShowChannelEvent()) {
+  if(KonversationApplication::preferences.getOSDShowChannelEvent() &&
+     (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
+  {
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
     konvApp->osd->showOSD(i18n("%1 joined %2").arg(nick, chatWin->getName()));
   }
 }
@@ -136,10 +141,11 @@ void NotificationHandler::part(ChatWindow* chatWin, const QString& nick)
   
   KNotifyClient::event(winId(), "part", i18n("%1 parted %2").arg(nick, chatWin->getName()));
 
-  KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-
   // OnScreen Message
-  if(KonversationApplication::preferences.getOSDShowChannelEvent()) {
+  if(KonversationApplication::preferences.getOSDShowChannelEvent() &&
+     (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
+  {
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
     konvApp->osd->showOSD(i18n("%1 parted %2").arg(nick, chatWin->getName()));
   }
 }
@@ -273,7 +279,8 @@ void NotificationHandler::highlight(ChatWindow* chatWin, const QString& fromNick
     return;
   }
 
-  if(KonversationApplication::preferences.getOSDShowOwnNick())
+  if(KonversationApplication::preferences.getOSDShowOwnNick() &&
+     (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
   {
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
     konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(message));

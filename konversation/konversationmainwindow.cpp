@@ -86,7 +86,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 #endif
 {
   // Init variables before anything else can happen
-  frontView=0;
+  m_frontView=0;
   previousFrontView=0;
   searchView=0;
   frontServer=0;
@@ -324,9 +324,9 @@ void KonversationMainWindow::runScript( int mIId )
   QStringList arguments;
   arguments << kapp->dcopClient()->appId();
   arguments << frontServer->getServerName();
-  arguments << frontView->getName();
+  arguments << m_frontView->getName();
   
-  kdDebug() << "with parameters " <<  frontServer->getServerName() << " and " << frontView->getName() << endl;
+  kdDebug() << "with parameters " <<  frontServer->getServerName() << " and " << m_frontView->getName() << endl;
   
   m_kscript->runScript( m_scriptMenu->popupMenu()->text( mIId ), 0, arguments );
 }
@@ -434,22 +434,22 @@ void KonversationMainWindow::appendToFrontmostIfDifferent(const QString& type,co
 {
   Q_ASSERT(serverView); if(!serverView) return;
   updateFrontView();
-  if(frontView && (ChatWindow *)frontView != serverView && 
-		  frontView->getServer()==serverView->getServer() && 
+  if(m_frontView && (ChatWindow *)m_frontView != serverView &&
+		  m_frontView->getServer()==serverView->getServer() &&
 		  !KonversationApplication::preferences.getRedirectToStatusPane()
 		  )
-    frontView->appendServerMessage(type,message);
+    m_frontView->appendServerMessage(type,message);
 }
 void KonversationMainWindow::appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView)
 {
-  if( !serverView) serverView = frontView->getServer()->getStatusView();
+  if( !serverView) serverView = m_frontView->getServer()->getStatusView();
 
-  Q_ASSERT(frontView && frontView->getServer() == frontServer);  //if this fails, we need to fix frontServer
+  Q_ASSERT(m_frontView && m_frontView->getServer() == frontServer);  //if this fails, we need to fix frontServer
 
   Q_ASSERT(serverView); if(!serverView) return;
   updateFrontView();
-  if(!frontView ||                                                  // Check if the frontView can actually display text or ...
-     serverView->getServer()!=frontView->getServer() ||             // if it does not belong to this server or...
+  if(!m_frontView ||                                                  // Check if the m_frontView can actually display text or ...
+     serverView->getServer()!=m_frontView->getServer() ||             // if it does not belong to this server or...
      KonversationApplication::preferences.getRedirectToStatusPane())// if the user decided to force it.
   {
     // if not, take server specified fallback view instead
@@ -460,7 +460,7 @@ void KonversationMainWindow::appendToFrontmost(const QString& type,const QString
     newText(serverView,QString::null,true);
   }
   else
-    frontView->appendServerMessage(type,message);
+    m_frontView->appendServerMessage(type,message);
 }
 
 #ifdef USE_MDI
@@ -487,10 +487,10 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
   bool doBringToFront=true;
 
   // make sure that bring to front only works when the user wasn't typing something
-  if(frontView && view->getType() != ChatWindow::UrlCatcher && 
+  if(m_frontView && view->getType() != ChatWindow::UrlCatcher &&
 		  view->getType() != ChatWindow::Konsole)
   {
-    if(!frontView->getTextInLine().isEmpty()) doBringToFront=false;
+    if(!m_frontView->getTextInLine().isEmpty()) doBringToFront=false;
   }
   
   if(!KonversationApplication::preferences.getFocusNewQueries() && view->getType()==ChatWindow::Query && !weinitiated)
@@ -573,7 +573,7 @@ void KonversationMainWindow::closeWindow(ChatWindow*) // USE_MDI
     // if this view was the front view, delete the pointer
     // JOHNFLUX - move to previous view
     if(view==previousFrontView) previousFrontView=0;
-    if(view==frontView) frontView=previousFrontView;
+    if(view==m_frontView) m_frontView=previousFrontView;
 
     ChatWindow::WindowType viewType=view->getType();
 
@@ -650,7 +650,7 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
 
     // if this view was the front view, delete the pointer
     if(view==previousFrontView) previousFrontView=0;
-    if(view==frontView) frontView=previousFrontView;
+    if(view==m_frontView) m_frontView=previousFrontView;
 
     viewContainer->removePage(view);
 
@@ -663,9 +663,9 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
 
 void KonversationMainWindow::openLogfile()
 {
-  if(frontView)
+  if(m_frontView)
   {
-    ChatWindow* view=static_cast<ChatWindow*>(frontView);
+    ChatWindow* view=static_cast<ChatWindow*>(m_frontView);
     ChatWindow::WindowType viewType=view->getType();
     if(viewType==ChatWindow::Channel ||
        viewType==ChatWindow::Query ||
@@ -777,7 +777,7 @@ void KonversationMainWindow::addUrlCatcher()
       urlCatcherPanel->addUrl(urlItem.section(' ',0,0),urlItem.section(' ',1,1));
     } // for
     (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(true);
-  } else if((ChatWindow *)frontView != (ChatWindow *)urlCatcherPanel){
+  } else if((ChatWindow *)m_frontView != (ChatWindow *)urlCatcherPanel){
     showView(urlCatcherPanel);
     (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(true);
   } else {
@@ -861,7 +861,7 @@ void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nic
   if(!listen) // Someone else initiated dcc chat
     {
       KonversationApplication* konv_app=static_cast<KonversationApplication*>(KApplication::kApplication());
-      konv_app->notificationHandler()->dccChat(frontView,nick);
+      konv_app->notificationHandler()->dccChat(m_frontView,nick);
     }
     
   if(frontServer)
@@ -1033,14 +1033,14 @@ void KonversationMainWindow::updateFrontView()
   ChatWindow* view = static_cast<ChatWindow*>(getViewContainer()->currentPage());
 #endif
   if(view) {
-    // Make sure that only views with info output get to be the frontView
-    if(frontView) {
-      previousFrontView = frontView;
-      disconnect(frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
+    // Make sure that only views with info output get to be the m_frontView
+    if(m_frontView) {
+      previousFrontView = m_frontView;
+      disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
     }
 
     if(view->canBeFrontView()) {
-      frontView = view;
+      m_frontView = view;
 
       connect(view, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
       view->emitUpdateInfo();
@@ -1061,11 +1061,11 @@ void KonversationMainWindow::updateFrontView()
 void KonversationMainWindow::changeToView(KMdiChildView* viewToChange) // USE_MDI
 {
   ChatWindow* view=static_cast<ChatWindow*>(viewToChange);
-  if(frontView) {
-    previousFrontView = frontView;
-    disconnect(frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
+  if(m_frontView) {
+    previousFrontView = m_frontView;
+    disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
   }
-  frontView=0;
+  m_frontView=0;
   searchView=0;
 
 
@@ -1088,12 +1088,12 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 #ifndef USE_MDI
   ChatWindow* view = static_cast<ChatWindow*>(viewToChange);
   
-  if(frontView) {
-    previousFrontView = frontView;
-    disconnect(frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
+  if(m_frontView) {
+    previousFrontView = m_frontView;
+    disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
   }
   
-  frontView = 0;
+  m_frontView = 0;
   searchView = 0;
 
   frontServer = view->getServer();
@@ -1190,7 +1190,7 @@ void KonversationMainWindow::openNicksOnlinePanel()
 
     connect(this,SIGNAL (nicksNowOnline(const QString&,const QStringList&,bool)),nicksOnlinePanel,SLOT (setOnlineList(const QString&,const QStringList&,bool)) );
     (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(true);
-  } else if((ChatWindow *)frontView != (ChatWindow *)nicksOnlinePanel){
+  } else if((ChatWindow *)m_frontView != (ChatWindow *)nicksOnlinePanel){
     showView(nicksOnlinePanel);
     (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(true);
   } else {
@@ -1430,8 +1430,8 @@ void KonversationMainWindow::findNextText()
 }
 void KonversationMainWindow::clearWindow()
 {
-  if (frontView)
-    frontView->getTextView()->clear();
+  if (m_frontView)
+    m_frontView->getTextView()->clear();
 }
 
 void KonversationMainWindow::openNotifications()
@@ -1466,7 +1466,7 @@ void KonversationMainWindow::addIRCColor()
   IRCColorChooser dlg(this, &(KonversationApplication::preferences));
 
   if(dlg.exec() == QDialog::Accepted) {
-    frontView->appendInputText(dlg.color());
+    m_frontView->appendInputText(dlg.color());
   }
 }
 
@@ -1492,10 +1492,10 @@ void KonversationMainWindow::insertRememberLine()
 
   else
   {
-    if(frontView->getType() == ChatWindow::Channel ||
-        frontView->getType() == ChatWindow::Query)
+    if(m_frontView->getType() == ChatWindow::Channel ||
+        m_frontView->getType() == ChatWindow::Query)
     {
-      frontView->insertRememberLine();
+      m_frontView->insertRememberLine();
     }
   }
 #endif
@@ -1541,8 +1541,8 @@ void KonversationMainWindow::serverQuit(Server* server)
     frontServer = 0;
   }
 
-  if(frontView && frontView->getServer() == server) {
-    frontView = 0;
+  if(m_frontView && m_frontView->getServer() == server) {
+    m_frontView = 0;
   }
 
   delete server->getStatusView();

@@ -104,6 +104,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     Konversation::TrayIcon* systemTrayIcon() const { return tray; }
 
+    ChatWindow* frontView() { return m_frontView; }
+
   signals:
     void prefsChanged();
     void startNotifyTimer(int msec);
@@ -235,7 +237,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 #endif
 
     Server* frontServer;
-    QGuardedPtr<ChatWindow> frontView;
+    QGuardedPtr<ChatWindow> m_frontView;
     QGuardedPtr<ChatWindow> previousFrontView;
     ChatWindow* searchView;
 
