@@ -68,7 +68,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   splitter->setOpaqueResize(true);
   
   // The grid for the topic line, Nicks/Ops label, Channel View and Nick list
-//  QGrid* topicViewNicksGrid=new QGrid(2,this);
   QVBox* topicViewNicksGrid=new QVBox(splitter);
   topicViewNicksGrid->setSpacing(spacing());
 
@@ -132,7 +131,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView->addColumn(QString::null);
   nicknameListView->addColumn(QString::null);
   nicknameListView->addColumn(QString::null);
-//  nicknameListView->header()->hide();
+  nicknameListView->header()->hide();
 //  nicknameListView->setResizeMode(KListView::LastColumn);
   nicknameListView->setColumnWidthMode(1,KListView::Maximum);
   nicknameListView->setColumnWidthMode(2,KListView::Maximum);
@@ -617,6 +616,7 @@ void Channel::addNickname(const QString& nickname,const QString& hostmask,bool o
   if(nick==0)
   {
     Nick* nick=new Nick(nicknameListView,nickname,hostmask,op,voice);
+    nicknameListView->sort();
 
     nicknameList.append(nick);
     adjustNicks(1);
@@ -655,6 +655,8 @@ void Channel::renameNick(const QString& nickname,const QString& newNick)
   Nick* nick=getNickByName(nickname);
   if(nick==0) kdWarning() << "Channel::renameNick(): Nickname " << nickname << " not found!" << endl;
   else nick->setNickname(newNick);
+
+  nicknameListView->sort();
 }
 
 void Channel::joinNickname(const QString& nickname,const QString& hostmask)
@@ -670,6 +672,7 @@ void Channel::joinNickname(const QString& nickname,const QString& hostmask)
     appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel. (%2)").arg(nickname).arg(hostmask));
     addNickname(nickname,hostmask,false,false);
   }
+  nicknameListView->sort();
 }
 
 void Channel::removeNick(const QString &nickname, const QString &reason, bool quit)
@@ -883,6 +886,7 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
         else if(!plus && nick->isOp()) adjustOps(-1);
         nick->setOp(plus);
         updateNicksOps();
+        nicknameListView->sort();
       }
     break;
 
@@ -916,7 +920,11 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
         }
       }
       nick=getNickByName(parameter);
-      if(nick) nick->setVoice(plus);
+      if(nick)
+      {
+        nick->setVoice(plus);
+        nicknameListView->sort();
+      }
     break;
 
     case 'c':
@@ -1215,6 +1223,7 @@ void Channel::updateFonts()
 
   nicksOps->setFont(KonversationApplication::preferences.getListFont());
   nicknameListView->setFont(KonversationApplication::preferences.getListFont());
+  nicknameListView->sort();
 }
 
 void Channel::openNickChangeDialog()

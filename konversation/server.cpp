@@ -156,7 +156,9 @@ Server::~Server()
   closeRawLog();
   channelList.setAutoDelete(true);
   while(channelList.removeFirst());
-  
+  queryList.setAutoDelete(true);
+  while(queryList.removeFirst());
+
   // notify KonversationApplication that this server is gone
   emit deleted(this);
 }
