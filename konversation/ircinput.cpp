@@ -272,8 +272,8 @@ void IRCInput::insertHtml(const QString& htmlTextToInsert)
   text.replace("</b>","%B", false);
   text.replace("<i>","%I", false);
   text.replace("</i>","%I", false);
-  text.replace("<ul>","%U", false);
-  text.replace("</ul>","%U", false);
+  text.replace("<u>","%U", false);
+  text.replace("</u>","%U", false);
 
   text.replace(QRegExp("<font [^>]*color *= *[\"']black[^>]*>", false), "%C1");
   text.replace(QRegExp("<font [^>]*color *= *[\"']#000000[^>]*>", false), "%C1");
