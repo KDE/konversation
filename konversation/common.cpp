@@ -39,95 +39,54 @@ QString removeIrcMarkup(const QString& text)
 
 QString tagURLs(const QString& text, const QString& fromNick)
 {
+  //QTime timer;
+  //timer.start();
+
   QString filteredLine = text;
   QString linkColor = KonversationApplication::preferences.getColor("LinkMessage");
   int pos = 0;
+  int urlLen;
 
-  if(text.contains("#"))
+  if(filteredLine.contains("#"))
     {
-      QRegExp channelPattern("^#(\\S)+|"
-			     "\\s#(\\S)+"
-			     );
+      QRegExp chanExp("\\s#\\S+");
+
+      while((pos = chanExp.search(filteredLine, pos)) >= 0)
+	{
+	  urlLen = chanExp.matchedLength();
+	  QString href = filteredLine.mid( pos, urlLen );
+	  
+	  QString link = "<font color=\"#"+linkColor+"\"><u><a href=\"#"+href+"\">"+href+"</a></u></font>";
+	  filteredLine.replace( pos, urlLen, link );
+	  pos += link.length();
+	}
+    }
+ 
+  pos = 0;
+  urlLen =0;  
+ 
+  QRegExp urlPattern("(www\\.(?!\\.)|(fish|(f|ht)tp(|s))://)[\\d\\w\\./,:_~\\?=&;#@\\-\\+\\%]+[\\d\\w/]");
+  urlPattern.setCaseSensitive(false);
+
+  while((pos = urlPattern.search(filteredLine, pos)) >= 0) 
+    {
+      urlLen = urlPattern.matchedLength();
+      QString href = filteredLine.mid( pos, urlLen );
+
+      // Qt doesn't support (?<=pattern) so we do it here
+      if((pos > 0) && filteredLine[pos-1].isLetterOrNumber())
+	{
+	  pos++;
+	  continue;
+	}
       
-      channelPattern.setCaseSensitive(false);
-      
-      // See http://bugs.kde.org/show_bug.cgi?id=97350
-      QRegExp colorRegex=QRegExp("#<font color=\"#\\S+\">(.*)</font>");
-      colorRegex.setMinimal(true);
-      colorRegex.setCaseSensitive(false);
-      colorRegex.search(filteredLine);
-      filteredLine.replace(colorRegex,"#"+colorRegex.cap(1));
-      
-      while(channelPattern.search(filteredLine, pos) != -1) {
-	
-	// Remember where we found the url
-	pos = channelPattern.pos();
-	
-	// Extract channel
-	QString channel = channelPattern.capturedTexts()[0];
-	QString space;
-	
-	QString href(channel.stripWhiteSpace());
-	if(href.length() != channel.length())
-	  space=" "; // We eated some space so we will put it before channel link
-	
-	href = "#" + href;
-	QString link = "<font color=\"#" + linkColor + "\">"+space+"<a href=\"" + href + "\">" + channel.stripWhiteSpace() + "</a></font>";
-	
-	filteredLine.replace(pos,channel.length(),link);
-	pos += link.length();
-      }
+      QString link = "<font color=\"#"+linkColor+"\"><u><a href=\""+href+"\">"+href+"</a></u></font>";
+      filteredLine.replace( pos, urlLen, link );
+      pos += link.length();
+      KonversationApplication::instance()->storeUrl(fromNick, href);
     }
 
-  pos = 0;
-    
-  QRegExp urlPattern("(((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
-                  "(([-_.%\\d\\w]*(:[-_.%\\d\\w]*)?@)|)"
-                  // IP Address
-                  "([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|"
-                  // Decimal IP address
-                  "[0-9]{1,12}|"
-                  // Standard host name
-                  "[a-z0-9][\\.%a-z0-9_-]+\\.[a-z]{2,}"
-                  // Port number, path to document
-                  ")(:[0-9]{1,5})?((:|)(/[^>\"\\s]*))?|"
-                  // eDonkey2000 links need special treatment
-                  "ed2k://\\|([^|]+\\|){4})|"
-		  "(mailto:|)((([a-z]|\\d)+[\\w\\x2E\\x2D]+)\\x40([\\w\\x2E\\x2D]{2,})\\x2E(\\w{2,})))"
-		  );
-
-  urlPattern.setCaseSensitive(false);
-  KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-
-  while(urlPattern.search(filteredLine, pos) != -1) {
-      // Remember where we found the url
-      pos = urlPattern.pos();
-
-      // Extract url
-      QString url = urlPattern.capturedTexts()[0];
-      QString href(url);
-
-      // clean up href for browser
-      if(href.startsWith("www.")) href = "http://" + href;
-      else if(href.startsWith("ftp.")) href = "ftp://" + href;
-      else if(href.find(QRegExp("(([a-z]+[\\w\\x2E\\x2D]+)\\x40)")) == 0) href = "mailto:" + href;
-  
-      // Fix &amp; back to & in href ... kludgy but I don't know a better way.
-      href.replace("&amp;", "&");
-      // Replace all spaces with %20 in href
-      href.replace(" ", "%20");
-      // Build rich text link
-      QString link = "<font color=\"#" + linkColor + "\"><u><a href=\"" + href + "\">" + url + "</a></u></font>";
-
-      // replace found url with built link
-      filteredLine.replace(pos, url.length(), link);
-      // next search begins right after the link
-      pos += link.length();
-      // tell the program that we have found a new url
-
-      konvApp->storeUrl(fromNick, href);
-  }
-
+  //  kdDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine << endl;
   return filteredLine;
 }
 
