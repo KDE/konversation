@@ -18,7 +18,7 @@
 #include "ledtab.h"
 
 LedTab::LedTab(QWidget* newWidget,const QString& label,int newColor,bool on) :
-        QTab(label)
+          QTab(label)
 {
   // First of all set up the icons
   iconOn=images.getLed(newColor,true);
@@ -32,6 +32,7 @@ LedTab::LedTab(QWidget* newWidget,const QString& label,int newColor,bool on) :
   labelColor=QString::null;
 
   setOn(on);
+  setOnline(true);
 
   connect(&blinkTimer,SIGNAL(timeout()),this,SLOT(blinkTimeout()));
 
@@ -108,6 +109,17 @@ QWidget* LedTab::getWidget()
 int LedTab::getColor()
 {
   return color;
+}
+
+void LedTab::setOnline(bool state)
+{
+  online=state;
+  emit repaintTab(this);
+}
+
+bool LedTab::getOnline()
+{
+  return online;
 }
 
 #include "ledtab.moc"

@@ -41,6 +41,9 @@ class LedTab : public QObject,public QTab
     QWidget* getWidget();
     int getColor();
 
+    bool getOnline();
+    void setOnline(bool state);
+
     QIconSet iconOn;
     QIconSet iconOff;
     QTimer blinkTimer;
@@ -64,6 +67,7 @@ class LedTab : public QObject,public QTab
     int color;      // color of the LED
     StateType state;// if and how fast the LED should blink
     bool blinkOn;   // true, if blinking LED is on at this moment
+    bool online;    // if false label should be crossed out
 
     QWidget* widget;
     Images images;

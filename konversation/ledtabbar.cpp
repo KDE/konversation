@@ -116,6 +116,14 @@ void LedTabBar::repaintLED(LedTab* tab)
 // original code by Trolltech, adapted for close pixmap
 void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
 {
+  QRect r( t->rect() );
+  int iw = 0;
+  int ih = 0;
+  if ( t->iconSet() != 0 ) {
+      iw = t->iconSet()->pixmap( QIconSet::Small, QIconSet::Normal ).width() + 4;
+      ih = t->iconSet()->pixmap( QIconSet::Small, QIconSet::Normal ).height();
+  }
+  
   // do we want close widgets on the tabs?
   if(KonversationApplication::preferences.getCloseButtonsOnTabs())
   {
@@ -134,15 +142,7 @@ void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
     style().drawControl( QStyle::CE_TabBarTab, p, this, t->rect(),
                          colorGroup(), flags, QStyleOption(t) );
 
-    QRect r( t->rect() );
     p->setFont( font() );
-
-    int iw = 0;
-    int ih = 0;
-    if ( t->iconSet() != 0 ) {
-        iw = t->iconSet()->pixmap( QIconSet::Small, QIconSet::Normal ).width() + 4;
-        ih = t->iconSet()->pixmap( QIconSet::Small, QIconSet::Normal ).height();
-    }
 
     // add size of close pixmap
     iw+=LABEL_OFFSET;
@@ -160,6 +160,32 @@ void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
   }
   // otherwise call original code
   else QTabBar::paint( p, t, selected );
+
+  // cross out offline tabs
+  if(!static_cast<LedTab*>(t)->getOnline())
+  {
+    // set default values
+    int x=r.left()+6+iw;
+    int y=r.top()+r.height()/2;
+    int x2=r.right()-4-iw;
+
+    if(KonversationApplication::preferences.getCloseButtonsOnTabs())
+    {
+      if(KonversationApplication::preferences.getCloseButtonsAlignRight())
+      {
+        x-=(LABEL_OFFSET/2+2);
+        x2+=(LABEL_OFFSET/2-2);
+      }
+      else
+      {
+        x+=LABEL_OFFSET/2;
+        x2=r.right()-LABEL_OFFSET/2;
+      }
+    }
+
+    p->setPen(foregroundColor());
+    p->drawLine(x,y,x2,y);
+  }
 }
 
 // original code by Trolltech, adapted for close pixmap
@@ -187,7 +213,7 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
       // do we want close widgets on the tabs?
       if(KonversationApplication::preferences.getCloseButtonsOnTabs())
       {
-        if (!KonversationApplication::preferences.getCloseButtonsAlignRight())
+        if(!KonversationApplication::preferences.getCloseButtonsAlignRight())
         {
           // Shift the text to the right
           r.setLeft( r.left() + LABEL_OFFSET);

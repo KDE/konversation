@@ -174,6 +174,10 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
   connect(getMainWindow(),SIGNAL(openPrefsDialog()),KonversationApplication::kApplication(),SLOT(openPrefsDialog()));
+
+  connect(this,SIGNAL (serverOnline(bool)),statusView,SLOT (serverOnline(bool)) );
+
+  emit serverOnline(false);
 }
 
 Server::~Server()
@@ -427,11 +431,15 @@ void Server::broken(int state)
     statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 closed.").arg(serverName));
     getMainWindow()->appendToFrontmost(i18n("Error"),i18n("Connection to Server %1 closed.").arg(serverName),statusView);
   }
+
+  emit serverOnline(false);
 }
 
 // Will be called from InputFilter as soon as the Welcome message was received
 void Server::connectionEstablished()
 {
+  emit serverOnline(true);
+
   if(!alreadyConnected)
   {
     alreadyConnected=true;
@@ -790,6 +798,8 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
     query->setIdentity(getIdentity());
 
     connect(query,SIGNAL (sendFile(const QString&)),this,SLOT (requestDccSend(const QString &)) );
+    connect(this,SIGNAL (serverOnline(bool)),query,SLOT (serverOnline(bool)) );
+    
     // Append query to internal list
     queryList.append(query);
   }
@@ -1147,6 +1157,7 @@ void Server::joinChannel(const QString &name, const QString &hostmask, const QSt
     channelList.append(channel);
 
     connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
+    connect(this,SIGNAL (serverOnline(bool)),channel,SLOT (serverOnline(bool)) );
   }
   // if channel creation has worked, join it
   if(channel) channel->joinNickname(getNickname(),hostmask);
@@ -1640,6 +1651,9 @@ bool Server::isAChannel(const QString &check)
 void Server::addRawLog(bool show)
 {
   if(!rawLog) rawLog=getMainWindow()->addRawLog(this);
+  
+  connect(this,SIGNAL (serverOnline(bool)),rawLog,SLOT (serverOnline(bool)) );
+  
   // bring raw log to front since the main window does not do this for us
   if(show) getMainWindow()->showView(rawLog);
 }
@@ -1661,6 +1675,7 @@ void Server::addChannelListPanel()
 
     connect(channelListPanel,SIGNAL (refreshChannelList()),this,SLOT (requestChannelList()) );
     connect(channelListPanel,SIGNAL (joinChannel(const QString&)),this,SLOT (sendJoinCommand(const QString&)) );
+    connect(this,SIGNAL (serverOnline(bool)),channelListPanel,SLOT (serverOnline(bool)) );
 
     connect(&inputFilter,SIGNAL (addToChannelList(const QString&,int,const QString&)),
           channelListPanel,SLOT (addToChannelList(const QString&,int,const QString&)) );

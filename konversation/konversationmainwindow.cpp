@@ -268,6 +268,8 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
   {
     showView(view);
   }
+
+  connect(view,SIGNAL (online(ChatWindow*,bool)),viewContainer,SLOT (setTabOnline(ChatWindow*,bool)) );
 }
 
 void KonversationMainWindow::showView(ChatWindow* view)

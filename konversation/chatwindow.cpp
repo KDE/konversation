@@ -126,6 +126,11 @@ Server* ChatWindow::getServer()
   return server;
 }
 
+void ChatWindow::serverOnline(bool state)
+{
+  emit online(this,state);
+}
+
 void ChatWindow::setIdentity(const Identity *newIdentity)
 {
   identity=*newIdentity;

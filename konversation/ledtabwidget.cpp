@@ -63,6 +63,21 @@ void LedTabWidget::addTab(ChatWindow* child,const QString& label,int color,bool 
               this,SLOT (changeName(ChatWindow*,const QString&)) );
 }
 
+void LedTabWidget::setTabOnline(ChatWindow* child,bool state)
+{
+  LedTabBar* bar=tabBar();
+  if(bar==0) kdWarning() << "LedTabWidget::setTabOnline(): bar==0!" << endl;
+  else
+  {
+    LedTab* tab=bar->tab(child);
+    if(tab==0) kdWarning() << "LedTabWidget::setTabOnline(): tab==0!" << endl;
+    else
+    {
+      tab->setOnline(state);
+    }
+  }
+}
+
 void LedTabWidget::changeTabState(QWidget* child,bool state,bool important,const QString& labelColor)
 {
   LedTabBar* bar=tabBar();

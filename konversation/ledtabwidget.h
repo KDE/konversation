@@ -41,6 +41,9 @@ class LedTabWidget : public QTabWidget
   signals:
     void closeTab(QWidget* view);
 
+  public slots:
+    void setTabOnline(ChatWindow* child,bool state);
+  
   protected slots:
     void moveTabLeft(int id);
     void moveTabRight(int id);

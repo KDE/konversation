@@ -84,10 +84,13 @@ class ChatWindow : public QVBox
 
   signals:
     void nameChanged(ChatWindow* view,const QString& newName);
+    void online(ChatWindow* myself,bool state);
 
   public slots:
     void logText(const QString& text);
     void openLogfile();
+    void serverOnline(bool state);
+    
     virtual void adjustFocus()=0;
     virtual void appendInputText(const QString&);
     virtual void indicateAway(bool away);

@@ -144,6 +144,7 @@ class Server : public QObject
     void deleted(Server* myself); // will be connected to KonversationApplication::removeServer()
     void awayState(bool away); // will be connected to any user input panel;
     void multiServerCommand(const QString& command, const QString& parameter);
+    void serverOnline(bool state); // will be connected to all server dependant tabs
 
   public slots:
     void connectToIRCServer();
