@@ -153,11 +153,20 @@ void OutputFilter::parseKick(QString parameter)
   {
     // get nick to kick
     QString victim=parameter.left(parameter.find(" "));
-    // get kick reason (if any)
-    QString reason=parameter.mid(victim.length()+1);
-    // if no reason given, take default reason
-    if(reason=="") reason=KonversationApplication::preferences.getKickReason();
-    toServer="KICK "+destination+" "+victim+" :"+reason;
+    if(victim=="")
+    {
+      type=i18n("Usage");
+      output=i18n("Usage: %1KICK <nick> [reason]").arg(commandChar);
+      program=true;
+    }
+    else
+    {
+      // get kick reason (if any)
+      QString reason=parameter.mid(victim.length()+1);
+      // if no reason given, take default reason
+      if(reason=="") reason=KonversationApplication::preferences.getKickReason();
+      toServer="KICK "+destination+" "+victim+" :"+reason;
+    }
   }
   else
   {

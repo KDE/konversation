@@ -10,3 +10,8 @@ nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  d
 
 Consistency check in Preferences:
 - Command Char must be present
+
+/part may close Queries, too.
+/msg should be shown, like in
+/msg Nick Hello
+*to Nick* Hello
