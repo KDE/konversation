@@ -443,7 +443,7 @@ namespace Konversation {
         OutputFilterResult result;
 //        QString recipient = parameter.left(parameter.find(" "));
 //        QString message = parameter.mid(recipient.length() + 1);
-        QString recipient = parameter.section(" ", 0, 0);
+        QString recipient = parameter.section(" ", 0, 0, QString::SectionSkipEmpty);
 	QString message = parameter.section(" ", 1);
 
 	QString output;
@@ -696,8 +696,8 @@ namespace Konversation {
         }
         else
         {
-            QString nick = parameter.section(' ', 0, 0);
-            QString channel = parameter.section(' ', 1, 1);
+            QString nick = parameter.section(' ', 0, 0, QString::SectionSkipEmpty);
+            QString channel = parameter.section(' ', 1, 1, QString::SectionSkipEmpty);
 
             if(channel.isEmpty())
             {
