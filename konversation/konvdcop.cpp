@@ -575,4 +575,15 @@ QString KonvPrefsDCOP::getNickCompleteSuffixMiddle()
   return KonversationApplication::preferences.getNickCompleteSuffixMiddle();
 }
 
+void KonvPrefsDCOP::setOSDUsage(bool state)
+{
+	KonversationApplication::preferences.setOSDUsage(state);
+	static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+bool KonvPrefsDCOP::getOSDUsage()
+{
+	return KonversationApplication::preferences.getOSDUsage();
+}
+
 #include "konvdcop.moc"

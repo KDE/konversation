@@ -120,6 +120,8 @@ class KonvPreferencesIface : virtual public DCOPObject
     virtual void setNickCompleteSuffixMiddle(QString suffix) = 0;
     virtual QString getNickCompleteSuffixStart() = 0;
     virtual QString getNickCompleteSuffixMiddle() = 0;
+    virtual void setOSDUsage(bool state) =0;
+    virtual bool getOSDUsage() = 0;
 
 };
 

@@ -1,4 +1,5 @@
 Changes from 0.13 to 0.14
+- Make OSD switchable on/off via DCOP. Thanks to Michael Goettsche! (BR 75870)
 - Dates can now be shown, next to the timestamp. Patch by Michael Goettsche
   (BR 82785) (thanks!)
 - Added DCC auto-resume feature by Michael Goettsche (BR 81740) (thanks!)

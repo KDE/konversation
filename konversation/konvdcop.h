@@ -137,7 +137,8 @@ class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
   void setNickCompleteSuffixMiddle(QString suffix);
   QString getNickCompleteSuffixStart();
   QString getNickCompleteSuffixMiddle();
-
+  void setOSDUsage(bool state);
+  bool getOSDUsage();
 };
 
 #endif
