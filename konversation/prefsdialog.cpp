@@ -136,6 +136,10 @@ PrefsDialog::PrefsDialog(Preferences* preferences) :
   QSize newSize = size();
   newSize = config->readSizeEntry("Size", &newSize);
   resize(newSize);
+
+  int lastActiveModule = config->readNumEntry("LastActiveModule",0);
+  showPage(lastActiveModule);
+  unfoldTreeList(true);
 }
 
 PrefsDialog::~PrefsDialog()
@@ -143,6 +147,7 @@ PrefsDialog::~PrefsDialog()
   KConfig* config = kapp->config();
   config->setGroup("PreferencesDialog");
   config->writeEntry("Size", size());
+  config->writeEntry("LastActiveModule",activePageIndex());
 }
 
 void PrefsDialog::slotOk()
