@@ -848,16 +848,6 @@ void IRCView::searchAgain()
   }
 }
 
-void IRCView::pageUp()
-{
-  moveCursor(MovePgUp,false);
-}
-
-void IRCView::pageDown()
-{
-  moveCursor(MovePgDown,false);
-}
-
 // other windows can link own menu entries here
 QPopupMenu* IRCView::getPopup()
 {

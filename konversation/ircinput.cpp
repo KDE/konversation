@@ -123,17 +123,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
           emit history(false);
           return true;
         break;
-
-        case Key_PageUp:
-          emit pageUp();
-          return true;
-        break;
-
-        case Key_PageDown:
-          emit pageDown();
-          return true;
-        break;
-
+        // page up / down keys are now handled in chatwindow.cpp
         case Key_Enter:
         case Key_Return:
         {

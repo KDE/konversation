@@ -64,9 +64,6 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
   connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
   connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendStatusText(const QString&)) );
 
-  connect(statusInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );
-  connect(statusInput,SIGNAL (pageDown()),getTextView(),SLOT (pageDown()) );
-
   connect(statusInput,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
   connect(statusInput,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
 

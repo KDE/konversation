@@ -437,7 +437,23 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
       }
       
       return true;
+    } else if(ke->key() == Qt::Key_Prior) {
+      if(textView) {
+        QScrollBar* sbar = textView->verticalScrollBar();
+        sbar->setValue(sbar->value() - sbar->pageStep());
+      }
+      
+      return true;
+    } else if(ke->key() == Qt::Key_Next) {
+      if(textView) {
+        QScrollBar* sbar = textView->verticalScrollBar();
+        sbar->setValue(sbar->value() + sbar->pageStep());
+      }
+      
+      return true;
     }
+
+
   }
   
 #ifdef USE_MDI

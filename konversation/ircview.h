@@ -69,9 +69,6 @@ class IRCView : public KTextBrowser
     void search();
     void searchAgain();
 
-    void pageUp();
-    void pageDown();
-    
     virtual void scrollToBottom();
     virtual void removeSelectedText( int selNum = 0 );
 
