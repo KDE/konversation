@@ -39,10 +39,8 @@ PrefsDialog::PrefsDialog(Preferences* preferences) :
   
   lastPane = 0;
 
-  identityPane = addPage(i18n("Identity"),QString::null,SmallIcon("identity"));
-
   setFolderIcon(QStringList::split(',', i18n("Appearance")), SmallIcon("looknfeel"));
-  QFrame* chatWinAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("window_new"));
+  chatWinAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("window_new"));
   QFrame* colorsAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Colors")),
     QString::null, SmallIcon("colorize"));
 
@@ -77,8 +75,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences) :
   // QFrame* scriptsPane        =addPage(i18n("Scripting"));
 
   // Add pages to preferences dialog
-  identityPage = new PrefsPageIdentity(identityPane, preferences); // FIXME: see class::applyPreferences()
-
   PrefsPageChatWinAppearance* chatWinAppearancePage = new PrefsPageChatWinAppearance(chatWinAppearancePane, preferences);
   PrefsPageColorsAppearance* colorsAppearancePage = new PrefsPageColorsAppearance(colorsAppearancePane, preferences);
 
@@ -105,8 +101,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences) :
   setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Discards all changes made")));
 
   // connect standard signals and slots
-  connect(this, SIGNAL(applyPreferences()), identityPage, SLOT(applyPreferences()));
-
   connect(this, SIGNAL(applyPreferences()), chatWinAppearancePage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), colorsAppearancePage, SLOT(applyPreferences()));
 
@@ -176,8 +170,11 @@ void PrefsDialog::setPreferences(Preferences* newPrefs)
 
 void PrefsDialog::openPage(Preferences::Pages page)
 {
-  if(page==Preferences::NotifyPage)     showPage(pageIndex(notifyPane));
-  else if(page==Preferences::IdentityPage)   showPage(pageIndex(identityPane));
+  if(page==Preferences::NotifyPage) {
+    showPage(pageIndex(notifyPane));
+  } else {
+    showPage(pageIndex(chatWinAppearancePane));
+  }
 }
 
 void PrefsDialog::slotAboutToShowPage(QWidget* page)

@@ -44,8 +44,9 @@ class ServerGroupSettings
     ServerList serverList() const { return m_serverList; }
     ServerSettings serverByIndex(unsigned int index) const;
 
-    void setIdentity(IdentityPtr identity) { m_identity = identity; }
-    IdentityPtr identity() const { return m_identity; }
+    void setIdentityId(int identityId) { m_identityId = identityId; }
+    int identityId() const { return m_identityId; }
+    IdentityPtr identity() const;
 
     void setChannelList(const ChannelList& list);
     void addChannel(const ChannelSettings& channel) { m_channelList.append(channel); }
@@ -66,7 +67,7 @@ class ServerGroupSettings
   private:
     QString m_name;
     ServerList m_serverList;
-    IdentityPtr m_identity;
+    int m_identityId;
     ChannelList m_channelList;
     QString m_connectCommands;
     bool m_autoConnect;

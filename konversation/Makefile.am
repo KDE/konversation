@@ -17,7 +17,7 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp \
 		       prefspagebuttons.cpp konvdcop.cpp channellistpanel.cpp konsolepanel.cpp\
 		       dcctransferhandler.cpp prefspageignore.cpp identity.cpp \
 		       statuspanel.cpp	dccrecipientdialog.cpp topiccombobox.cpp prefspagelog.cpp \
-		       prefspagedccsettings.cpp prefspagescripts.cpp nicksonline.cpp prefspageidentity.cpp\
+		       prefspagedccsettings.cpp prefspagescripts.cpp nicksonline.cpp \
 		       prefspage.cpp dccpanel.cpp dcctransfer.cpp ledlistviewitem.cpp highlight.cpp \
 		       highlightviewitem.cpp modebutton.cpp ignorelistviewitem.cpp ignorecheckbox.cpp\
 		       ignore.cpp nicklistview.cpp ircinput.cpp ledtabbar.cpp ledtab.cpp ledtabwidget.cpp\

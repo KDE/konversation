@@ -184,7 +184,7 @@ ServerGroupSettings ServerGroupDialog::serverGroupSettings()
   settings.setName(m_nameEdit->text());
   settings.setGroup(m_groupCBox->currentText());
   QValueList<IdentityPtr> identities = KonversationApplication::preferences.getIdentityList();
-  settings.setIdentity(identities[m_identityCBox->currentItem()]);
+  settings.setIdentityId(identities[m_identityCBox->currentItem()]->id());
   settings.setConnectCommands(m_commandEdit->text());
   settings.setAutoConnectEnabled(m_autoConnectCBox->isChecked());
   settings.setServerList(m_serverList);

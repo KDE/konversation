@@ -61,7 +61,7 @@ class Preferences : public QObject
     enum Pages
     {
       NotifyPage,
-      IdentityPage
+      ChatWinAppearancePage
     };
 
     Preferences();
@@ -264,6 +264,7 @@ class Preferences : public QObject
     void removeIdentity(IdentityPtr identity);
     void clearIdentityList();
     QValueList<IdentityPtr> getIdentityList();
+    void setIdentityList(const QValueList<IdentityPtr>& list);
     IdentityPtr getIdentityByName(const QString& name);
     IdentityPtr identity;
 

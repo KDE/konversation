@@ -28,6 +28,8 @@ class Identity : public KShared
 {
   public: 
     Identity();
+    Identity(int id);
+    Identity(const Identity& original);
     ~Identity();
 
     void setName(const QString& name);   // the name of this identity
@@ -55,7 +57,7 @@ class Identity : public KShared
     QString getKickReason() const;
 
     void setInsertRememberLineOnAway(bool state);
-    bool getInsertRememberLineOnAway();
+    bool getInsertRememberLineOnAway() const;
     void setShowAwayMessage(bool state);
     bool getShowAwayMessage() const;
 
@@ -67,9 +69,11 @@ class Identity : public KShared
     void setCodecName(const QString &newCodecName);
     QString getCodecName() const;
     QTextCodec* getCodec() const;
-    
+
     QString getAwayNick();
     void setAwayNick(const QString& n);
+
+    int id() const { return m_id; }
 
   protected:
     QString name;
@@ -91,8 +95,12 @@ class Identity : public KShared
     QString returnMessage;
     QString m_codecName;
     QTextCodec* m_codec;
-    
+
     QString awayNick;
+
+  private:
+    int m_id;
+    static int s_availableId;
 };
 
 typedef KSharedPtr<Identity> IdentityPtr;

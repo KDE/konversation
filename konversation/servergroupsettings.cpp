@@ -11,6 +11,8 @@
 */
 #include "servergroupsettings.h"
 
+#include "konversationapplication.h"
+
 namespace Konversation {
 
 int ServerGroupSettings::s_availableId = 0;
@@ -20,7 +22,7 @@ ServerGroupSettings::ServerGroupSettings()
   m_id = s_availableId;
   s_availableId++;
   m_autoConnect = false;
-  m_identity = 0;
+  m_identityId = 0;
 }
 
 ServerGroupSettings::ServerGroupSettings(int id)
@@ -33,7 +35,7 @@ ServerGroupSettings::ServerGroupSettings(int id)
   }
 
   m_autoConnect = false;
-  m_identity = 0;
+  m_identityId = 0;
 }
 
 ServerGroupSettings::ServerGroupSettings(const ServerGroupSettings& settings)
@@ -41,7 +43,7 @@ ServerGroupSettings::ServerGroupSettings(const ServerGroupSettings& settings)
   setName(settings.name());
   setGroup(settings.group());
   setServerList(settings.serverList());
-  setIdentity(settings.identity());
+  setIdentityId(settings.identityId());
   setChannelList(settings.channelList());
   setConnectCommands(settings.connectCommands());
   setAutoConnectEnabled(settings.autoConnectEnabled());
@@ -54,7 +56,7 @@ ServerGroupSettings::ServerGroupSettings(const QString& name)
   m_id = s_availableId;
   s_availableId++;
   m_autoConnect = false;
-  m_identity = 0;
+  m_identityId = 0;
 }
 
 ServerGroupSettings::~ServerGroupSettings()
@@ -89,6 +91,18 @@ ChannelSettings ServerGroupSettings::channelByIndex(unsigned int index) const
   }
 
   return ChannelSettings();
+}
+
+IdentityPtr ServerGroupSettings::identity() const
+{
+  QValueList<IdentityPtr> identityList = KonversationApplication::preferences.getIdentityList();
+  for(QValueList<IdentityPtr>::iterator it = identityList.begin(); it != identityList.end(); ++it) {
+    if((*it)->id() == m_identityId) {
+      return (*it);
+    }
+  }
+
+  return identityList.first();
 }
 
 //

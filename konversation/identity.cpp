@@ -21,14 +21,41 @@
 
 #include "identity.h"
 
+int Identity::s_availableId = 0;
+
 Identity::Identity() : KShared()
 {
-  nicknameList.append(QString::null);
-  nicknameList.append(QString::null);
-  nicknameList.append(QString::null);
-  nicknameList.append(QString::null);
-
+  m_id = s_availableId;
+  s_availableId++;
   setCodecName(IRCCharsets::encodingForLocale());
+}
+
+Identity::Identity(int id) : KShared()
+{
+  if(id < 0) {
+    m_id = s_availableId;
+    s_availableId++;
+  } else {
+    m_id = id;
+  }
+}
+
+Identity::Identity(const Identity& original) : KShared()
+{
+  setName(original.getName());
+  setRealName(original.getRealName());
+  setIdent(original.getIdent());
+  setNicknameList(original.getNicknameList());
+  setBot(original.getBot());
+  setPassword(original.getPassword());
+  setPartReason(original.getPartReason());
+  setKickReason(original.getKickReason());
+  setInsertRememberLineOnAway(original.getInsertRememberLineOnAway());
+  setShowAwayMessage(original.getShowAwayMessage());
+  setAwayMessage(original.getAwayMessage());
+  setReturnMessage(original.getReturnMessage());
+  setCodecName(original.getCodecName());
+  m_id = original.id();
 }
 
 Identity::~Identity()
@@ -58,7 +85,7 @@ void Identity::setKickReason(const QString& reason)     { kickReason=reason; }
 QString Identity::getKickReason() const                 { return kickReason; }
 
 void Identity::setInsertRememberLineOnAway(bool state) { insertRememberLineOnAway = state; }
-bool Identity::getInsertRememberLineOnAway() { return insertRememberLineOnAway; }
+bool Identity::getInsertRememberLineOnAway() const { return insertRememberLineOnAway; }
 void Identity::setShowAwayMessage(bool state)           { showAwayMessages=state; }
 bool Identity::getShowAwayMessage() const               { return showAwayMessages; }
 
@@ -70,10 +97,9 @@ QString Identity::getReturnMessage() const              { return returnMessage; 
 void Identity::setNicknameList(const QStringList& newList)
 {
   nicknameList.clear();
-  nicknameList=newList;
-  // make sure that there are always 4 nicks in the list
-  while(nicknameList.count()!=4) nicknameList.append(QString::null);
+  nicknameList = newList;
 }
+
 QStringList Identity::getNicknameList() const           { return nicknameList; }
 
 QTextCodec* Identity::getCodec() const                  { return m_codec; }

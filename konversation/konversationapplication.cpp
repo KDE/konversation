@@ -209,9 +209,9 @@ bool KonversationApplication::connectToAnotherServer(int id)
                                   .arg(check),i18n("Check Identity Settings")
                             );
     if(prefsDialog)
-      prefsDialog->openPage(Preferences::IdentityPage);
+      prefsDialog->openPage(Preferences::ChatWinAppearancePage);
     else
-      openPrefsDialog(Preferences::IdentityPage);
+      openPrefsDialog(Preferences::ChatWinAppearancePage);
 
     return false;
   }
@@ -567,7 +567,7 @@ void KonversationApplication::readOptions()
       server.setPort(tmp[2].toInt());
       server.setPassword(tmp[3]);
       serverGroup.addServer(server);
-      serverGroup.setIdentity(preferences.getIdentityByName(tmp[7]));
+      serverGroup.setIdentityId(preferences.getIdentityByName(tmp[7])->id());
       serverGroup.setAutoConnectEnabled(tmp[6].toInt());
       serverGroup.setConnectCommands(tmp[8]);
 
@@ -603,7 +603,7 @@ void KonversationApplication::readOptions()
       Konversation::ServerGroupSettings serverGroup;
       serverGroup.setName(config->readEntry("Name"));
       serverGroup.setGroup(config->readEntry("Group"));
-      serverGroup.setIdentity(preferences.getIdentityByName(config->readEntry("Identity")));
+      serverGroup.setIdentityId(preferences.getIdentityByName(config->readEntry("Identity"))->id());
       serverGroup.setConnectCommands(config->readEntry("ConnectCommands"));
       serverGroup.setAutoConnectEnabled(config->readBoolEntry("AutoConnect"));
       tmp1 = config->readListEntry("ServerList");

@@ -26,6 +26,7 @@ class QLabel;
 class KURLRequester;
 class QSpinBox;
 class QGroupBox;
+class KLineEdit;
 
 class PrefsPageLog : public PrefsPage
 {

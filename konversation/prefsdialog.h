@@ -19,7 +19,6 @@
 
 #include "preferences.h"
 #include "prefsdialog.h"
-#include "prefspageidentity.h"
 #include "prefspagebuttons.h"
 #include "prefspagelog.h"
 #include "prefspagedccsettings.h"
@@ -65,7 +64,6 @@ class PrefsDialog : public KDialogBase
   protected:
     Preferences* preferences;
 
-    PrefsPageIdentity*        identityPage;
     PrefsPageTabBehavior*     tabBehaviorPage;
     PrefsPageButtons*         buttonsPage;
     PrefsPageNotify*          notifyPage;
@@ -79,7 +77,7 @@ class PrefsDialog : public KDialogBase
 
     // for openPage();
     QFrame* notifyPane;
-    QFrame* identityPane;
+    QFrame* chatWinAppearancePane;
     
     // for slotAboutToShowPage()
     QFrame* OSDPane;

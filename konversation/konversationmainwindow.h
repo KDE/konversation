@@ -131,6 +131,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void openKeyBindings();
     void openQuickConnectDialog();
     void openChannelList();
+    void openIdentitiesDialog();
     void openNotify();
     void openLogfile();
     void openNicksOnlinePanel();

@@ -83,7 +83,7 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
 	       const QString& channel,const QString& password, QString nick)
 {
   m_serverGroup.setName(hostName);
-  m_serverGroup.setIdentity(KonversationApplication::preferences.getIdentityByName("Default"));
+  m_serverGroup.setIdentityId(KonversationApplication::preferences.getIdentityByName("Default")->id());
 
   Konversation::ServerSettings serverSettings;
   serverSettings.setServer(hostName);

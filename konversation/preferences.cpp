@@ -43,10 +43,12 @@ Preferences::Preferences()
   setIdent(user.loginName());
   setRealName(user.fullName());
 
-  setNickname(0,user.loginName());
-  setNickname(1,"_" + user.loginName());
-  setNickname(2,user.loginName() + "_");
-  setNickname(3,"_" + user.loginName() + "_");
+  QStringList nickList;
+  nickList.append(user.loginName());
+  nickList.append("_" + user.loginName());
+  nickList.append(user.loginName() + "_");
+  nickList.append("_" + user.loginName() + "_");
+  identity->setNicknameList(nickList);
 
   setPartReason("Konversation terminated!");
   setKickReason("User terminated!");
@@ -478,6 +480,12 @@ void Preferences::clearIdentityList()
 }
 
 QValueList<IdentityPtr> Preferences::getIdentityList() { return identityList; }
+
+void Preferences::setIdentityList(const QValueList<IdentityPtr>& list)
+{
+  identityList.clear();
+  identityList = list;
+}
 
 IdentityPtr Preferences::getIdentityByName(const QString& name)
 {
