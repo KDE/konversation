@@ -18,6 +18,10 @@ bug		Opens up konqueror with kde bugzilla on specified bug number.
 juk		Displays on the current channel what you are playing
                 in JuK right now.
                 usage: /exec juk
+                
+kaffeine  Displays on the current channel what you are playing
+                in Kaffeine right now.
+                usage /exec kaffeine
 
 gauge		Displays funny "beer load" meter. Author: Eisfuchs, Idea: berkus.
                 usage: /exec gauge 55

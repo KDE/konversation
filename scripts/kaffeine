@@ -1,0 +1,32 @@
+#!/bin/bash
+
+PORT=$1
+SERVER=$2
+TARGET=$3
+
+if [ ! `dcop kaffeine` ];
+then
+  dcop $PORT Konversation error "Kaffeine not running."
+  exit;
+fi
+
+if [ ! $TARGET ]
+then
+  dcop $PORT Konversation error "Can't write into status view."
+else
+  PLAYING=`dcop kaffeine Kaffeine getTitle`
+  
+  if [ "$PLAYING" = "Kaffeine" ]
+  then
+    dcop $PORT Konversation error "Nothing's playing in Kaffeine."
+  else  
+    TEXT=`dcop kaffeine Kaffeine getTitle`
+
+    if [ ! $TEXT ]
+    then
+	dcop $PORT Konversation error "Nothing's playing in Kaffeine."
+    else
+	dcop $PORT Konversation say $SERVER "$TARGET" "/me plays $TEXT in Kaffeine"
+    fi
+  fi
+fi
