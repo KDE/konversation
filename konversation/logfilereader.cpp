@@ -23,6 +23,7 @@
 #include <kdialog.h>
 #include <ktoolbar.h>
 #include <ktextbrowser.h>
+#include <kmessagebox.h>
 #include <klocale.h>
 #include <kdebug.h>
 
@@ -34,12 +35,12 @@ LogfileReader::LogfileReader(QString caption,QString log) :
 {
   setCaption(i18n("Logfile of %1").arg(caption));
 
-  QGridLayout* mainLayout=new QGridLayout(this,2,4,0,spacing());
+  QGridLayout* mainLayout=new QGridLayout(this,2,1,0,0);
   fileName=log;
   QDockArea* toolBarDock=new QDockArea(Qt::Horizontal,QDockArea::Normal,this,"logfile_toolbar_dock"); 
   toolBar=new KToolBar(toolBarDock,"logfile_toolbar",true,true);
   
-  toolBar->insertButton("filesaveas",0,SIGNAL(clicked()),this,SLOT(saveLog()),true,i18n("Save as..."));
+  toolBar->insertButton("filesaveas",0,SIGNAL(clicked()),this,SLOT(saveLog()),true,i18n("Save As..."));
   
   new QLabel(i18n("Show last"),toolBar,"logfile_size_label");
   sizeSpin=new QSpinBox(10,1000,10,toolBar,"logfile_size_spinbox");
@@ -47,6 +48,7 @@ LogfileReader::LogfileReader(QString caption,QString log) :
   sizeSpin->setSuffix(i18n(" KB"));
 
   toolBar->insertButton("reload",0,SIGNAL(clicked()),this,SLOT(updateView()),true,i18n("Reload"));
+  toolBar->insertButton("editdelete",0,SIGNAL(clicked()),this,SLOT(clearLog()),true,i18n("Clear Logfile"));
   toolBar->insertButton("fileclose",0,SIGNAL(clicked()),this,SLOT(closeLog()),true,i18n("Close"));
   
   view=new KTextBrowser(this);
@@ -96,6 +98,16 @@ void LogfileReader::updateView()
     stream.unsetDevice();
     file.close();
   }
+}
+
+void LogfileReader::clearLog()
+{
+  KMessageBox::sorry(this,"Not implemented yet.");
+}
+
+void LogfileReader::saveLog()
+{
+  KMessageBox::sorry(this,"Not implemented yet.");
 }
 
 // make sure that the widget gets closed when user presses the window manager's [x] button

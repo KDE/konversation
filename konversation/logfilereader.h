@@ -37,6 +37,8 @@ class LogfileReader : public QFrame
   
   protected slots:
     void updateView();
+    void clearLog();
+    void saveLog();
     void closeLog();
 
   protected:
