@@ -106,6 +106,8 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
     if(whoSent!=server->getNickname() || KonversationApplication::preferences.getHilightOwnLines()) who=whoSent;
   }
 
+  // TODO: Use QStyleSheet::escape() here
+
   // Replace all & with &amp;
   filteredLine.replace(QRegExp("&"),"&amp;");
   // Replace all < with &lt;
@@ -121,87 +123,52 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   }
 
   // replace \003 codes with rich text color codes
-  // TODO: use QRegExp for this
+  QRegExp colorRegExp("\003([0-9]|1[0-5])(,([0-9]|1[0-5])|)");
 
-  // How many chars to replace?
-  int replace;
+  // TODO: Make Background colors work somehow. The code is in comments until we
+  //       find some way to use it
+//  bool bgColor=false;
   bool firstColor=true;
-  QChar colChar;
   QString colorString;
-
   int pos;
-  while((pos=filteredLine.find('\003'))!=-1)
-  {
-    int digitPos=pos;
-    int foregroundColor=1;
-    int backgroundColor=0;
 
+  while((pos=colorRegExp.search(filteredLine))!=-1)
+  {
     // TODO: make these configurable
     const char* colorCodes[]={"ffffff","000000","000080","008000","ff0000","a52a2a","800080","ff8000",
                               "808000","00ff00","008080","00ffff","0000ff","ffc0cb","a0a0a0","c0c0c0"};
 
-    // remove leading \003
-    filteredLine.replace(pos,1,"");
-    replace=0;
-    colorString="";
-
-    colChar=filteredLine[digitPos];          // get first char
-    if(colChar.isDigit())                    // is this a digit?
-    {
-      foregroundColor=colChar.digitValue();  // take this digit as color
-      replace++;
-
-      colChar=filteredLine[++digitPos];      // get next char
-      if(foregroundColor<2)                  // maybe a two digit color?
-      {
-        if(colChar.isDigit())                // is this a digit?
-        {
-          if(colChar.digitValue()<6)         // would this be a color from 10 to 15?
-          {
-            foregroundColor=foregroundColor*10+colChar.digitValue();
-            replace++;
-            colChar=filteredLine[++digitPos];  // get next char
-          }
-        }
-      }
-    }
-    if(colChar==',')
-    {
-      replace++;
-      colChar=filteredLine[++digitPos];        // get first char
-      if(colChar.isDigit())                    // is this a digit?
-      {
-        backgroundColor=colChar.digitValue();  // take this digit as color
-        replace++;
-
-        if(backgroundColor<2)                  // maybe a two digit color?
-        {
-          colChar=filteredLine[++digitPos];    // get next char
-          if(colChar.isDigit())                // is this a digit?
-          {
-            if(colChar.digitValue()<6)         // would this be a color from 10 to 15?
-            {
-              backgroundColor=backgroundColor*10+colChar.digitValue();
-              replace++;
-            }
-          }
-        }
-      }
-    }
-
     colorString=(firstColor) ? "" : "</font>";
+
+    int foregroundColor=colorRegExp.cap(1).toInt();
+/*
+    int backgroundColor=colorRegExp.cap(3).toInt();
+
+    if(bgColor) colorString+="</td></tr></table>";
+
+    if(colorRegExp.cap(3).length())
+    {
+      colorString+="<table cellpadding=0 cellspacing=0 bgcolor=\"#"+QString(colorCodes[backgroundColor])+"\"><tr><td>";
+      bgColor=true;
+    }
+    else
+      bgColor=false;
+*/
     colorString+="<font color=\"#"+QString(colorCodes[foregroundColor])+"\">";
 
-    filteredLine.replace(pos,replace,colorString);
+    filteredLine.replace(pos,colorRegExp.cap(0).length(),colorString);
     firstColor=false;
-  } // while
+  }
 
   if(!firstColor) filteredLine+="</font>";
+//  if(bgColor) colorString+="</td></tr></table>";
 
+  kdDebug() << filteredLine << endl;
+  
   // Replace all text decorations
   replaceDecoration(filteredLine,'\x02','b');
   replaceDecoration(filteredLine,'\x09','i');
-  replaceDecoration(filteredLine,'\x13','s'); // should be strikethru
+  replaceDecoration(filteredLine,'\x13','s');
   replaceDecoration(filteredLine,'\x15','u');
   replaceDecoration(filteredLine,'\x16','b'); // should be reverse
   replaceDecoration(filteredLine,'\x1f','u');
