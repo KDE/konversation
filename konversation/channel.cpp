@@ -297,7 +297,11 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
   connect(nicknameListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT (doubleClickCommand(QListViewItem*)) );
-  connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged(int)));
+  connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
+ 
+  Q_ASSERT(nicknameCombobox->lineEdit());  //it should be editedable.  if we design it so it isn't, remove these lines.
+  if(nicknameCombobox->lineEdit())
+    connect(nicknameCombobox->lineEdit(), SIGNAL (lostFocus()),this,SLOT(nicknameComboboxChanged()));
 
   nicknameList.setAutoDelete(true);     // delete items when they are removed
 
@@ -1668,10 +1672,12 @@ void Channel::updateStyleSheet()
   getTextView()->updateStyleSheet();
 }
 
-void Channel::nicknameComboboxChanged(int /*index*/)
+void Channel::nicknameComboboxChanged()
 {
   QString newNick=nicknameCombobox->currentText();
   oldNick=m_server->getNickname();
+  if(oldNick == newNick) return; //nothing changed
+  
   nicknameCombobox->setCurrentText(oldNick);
   m_server->queue("NICK "+newNick);
 }

@@ -169,7 +169,7 @@ class Channel : public ChatWindow
     void autoUserhost();
     void autoUserhostChanged(bool state);
     void autoWho();
-    void nicknameComboboxChanged(int index);
+    void nicknameComboboxChanged();
 
     void closeYourself(ChatWindow* view); // USE_MDI
     void serverQuit(const QString& reason); // USE_MDI

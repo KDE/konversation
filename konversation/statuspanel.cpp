@@ -17,6 +17,7 @@
 #include <qlabel.h>
 #include <qhbox.h>
 #include <qtextcodec.h>
+#include <qlineedit.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -73,7 +74,11 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
   connect(statusInput,SIGNAL (textPasted(const QString&)),this,SLOT(textPasted(const QString&)) );
   connect(getTextView(), SIGNAL(textPasted()), statusInput, SLOT(paste()));
 
-  connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged(int)));
+  connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
+  Q_ASSERT(nicknameCombobox->lineEdit());  //it should be editedable.  if we design it so it isn't, remove these lines.
+  if(nicknameCombobox->lineEdit())
+    connect(nicknameCombobox->lineEdit(), SIGNAL (lostFocus()),this,SLOT(nicknameComboboxChanged()));
+
 
   updateFonts();
 }
@@ -250,10 +255,11 @@ void StatusPanel::closeYourself(ChatWindow*)
   return false;
 }
 
-void StatusPanel::nicknameComboboxChanged(int /*index*/)
+void StatusPanel::nicknameComboboxChanged()
 {
   QString newNick=nicknameCombobox->currentText();
   oldNick=m_server->getNickname();
+  if(oldNick == newNick) return;
   nicknameCombobox->setCurrentText(oldNick);
   m_server->queue("NICK "+newNick);
 }
