@@ -6,7 +6,6 @@ Pasting into text views should trigger the paste mechanism
 Make colors for nick list configurable via GUI
 <lizard> ich will nen sortcut haben das wenn ich irgendwo ssh eingebe das mit ne shell aufgeht ;)
 Let the user decide how many quick buttons they want.
-Double click actions for nick list and notify list.
 Think about another way to get rid of the cut off "Custom" text in color combos ...
 Autojoin/User interaction on /invite
 

@@ -36,8 +36,27 @@ class LedTabBar : public QTabBar
     LedTab* tab(int id);
     LedTab* tab(QWidget* widget);
 
+
+
+    virtual void layoutTabs();
+
+
+
   public slots:
     void repaintLED(LedTab* tab);
+
+
+
+
+
+
+
+
+
+
+  protected:
+    virtual void paint( QPainter *, QTab *, bool ) const; // ### not const
+    virtual void paintLabel( QPainter*, const QRect&, QTab*, bool ) const;
 };
 
 #endif
