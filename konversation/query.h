@@ -78,7 +78,6 @@ class Query : public ChatWindow
     QLineEdit* queryHostmask;
     QLabel* awayLabel;
     IRCInput* queryInput;
-    QCheckBox* logCheckBox;
 };
 
 #endif

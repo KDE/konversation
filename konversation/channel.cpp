@@ -169,7 +169,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   updateQuickButtons(KonversationApplication::preferences.getButtonList());
 
-  // The box holding the Nickname button, Channel input and Log Checkbox
+  // The box holding the Nickname button and Channel input
   commandLineBox=new QHBox(this);
   commandLineBox->setSpacing(spacing());
 

@@ -41,16 +41,14 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer();
 
-  // This box holds the input line and the log checkbox
-  QHBox* inputLogBox=new QHBox(this, "input_log_box");
-  inputLogBox->setSpacing(spacing());
+  // This box holds the input line
+  QHBox* inputBox=new QHBox(this, "input_log_box");
+  inputBox->setSpacing(spacing());
 
-  awayLabel=new QLabel(i18n("(away)"),inputLogBox);
+  awayLabel=new QLabel(i18n("(away)"),inputBox);
   awayLabel->hide();
-  queryInput=new IRCInput(inputLogBox);
+  queryInput=new IRCInput(inputBox);
 
-  logCheckBox=new QCheckBox(i18n("Log"),inputLogBox);
-  logCheckBox->setChecked(KonversationApplication::preferences.getLog());
   setLogfileName(QString::null);
 
   // connect the signals and slots
@@ -63,7 +61,6 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   connect(textView,SIGNAL (newText(const QString&)),this,SLOT (newTextInView(const QString&)) );
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
-
 
   updateFonts();
 
@@ -146,8 +143,6 @@ void Query::updateFonts()
   queryInput->setPalette(palette);
   queryInput->setBackgroundColor(bg);
   queryInput->setFont(KonversationApplication::preferences.getTextFont());
-
-  logCheckBox->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
                                    KonversationApplication::preferences.getBackgroundImageName());
