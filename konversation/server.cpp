@@ -870,7 +870,7 @@ void Server::notifyTimeout()
     // But only if there actually are nicks in the notify list
     QString list=getNotifyString();
     
-    if(list != QString::null)
+    if(!list.isEmpty())
     {
       queue("ISON "+list);
       // remember that we already sent out ISON
