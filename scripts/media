@@ -23,7 +23,7 @@ my $error;
 
 sub check_running 
 {
-    our $application=shift;
+    my $application=shift;
     
     if (`dcop $application`)
     {
@@ -37,9 +37,9 @@ sub check_running
 
 sub pretty_print
 {
-    our $title=shift;
-    our $artist=shift;
-    our $album=shift;
+    my $title=shift;
+    my $artist=shift;
+    my $album=shift;
 
     if(!is_empty($artist) && !is_empty($album))
     {
@@ -61,7 +61,7 @@ sub pretty_print
 
 sub is_empty
 {
-    our $string=shift;
+    my $string=shift;
     
     if($string =~ /\S/)
     {
@@ -90,7 +90,7 @@ if($amarok)
 
     if(!is_empty($title))
     {
-	our $string=pretty_print($title,$artist,$album);
+	my $string=pretty_print($title,$artist,$album);
 	exec("dcop $port Konversation say $server \"$target\" \"$string\"");
     }
     else
@@ -101,7 +101,7 @@ if($amarok)
 
 if($juk)
 {
-    our $string=`dcop juk Player playingString`;
+    my $string=`dcop juk Player playingString`;
     chomp $string;
 
     if(!is_empty($string))
@@ -116,7 +116,7 @@ if($juk)
 
 if($kaffeine)
 {
-    our $string=`dcop kaffeine Kaffeine getTitle`;
+    my $string=`dcop kaffeine Kaffeine getTitle`;
     chomp $string;
     
     if(!is_empty($string))
@@ -131,7 +131,7 @@ if($kaffeine)
 
 if($noatun)
 {
-    our $string=`dcop Noatun title`;
+    my $string=`dcop Noatun title`;
     chomp $string;
 
     if(!is_empty($string))
