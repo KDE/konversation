@@ -297,7 +297,13 @@ bool AddressbookBase::saveAddressee(KABC::Addressee &addressee) {
 int AddressbookBase::presenceStatusByAddressee(const KABC::Addressee &addressee) {
 	Q_ASSERT(&addressee);
 	NickInfoPtr nickInfo = getNickInfo(addressee);
-	if(!nickInfo) return 1; //either offline, or we aren't on the same server.  returning 0 not supported at the moment.  FIXME
+	
+	if(!nickInfo) {
+		if(hasAnyNicks(addressee))
+			return 1; //either offline, or we aren't on the same server.
+		else
+			return 0; //Not known to us
+	}
 	if(nickInfo->isAway()) return 3;
 	return 4;
 
