@@ -92,7 +92,7 @@ AC_CHECK_TYPES([struct sockaddr_in6],
 
 # -- Check for KDE version < 3.3.89 and enable the compat dir --------------------
 
-AC_MSG_CHECKING([for kdelibs with non-buggy KNetwork classes])
+AC_MSG_CHECKING([if compat dir should be compiled])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
@@ -109,11 +109,11 @@ AC_TRY_COMPILE([
 ],
 [
 ],
-	AC_MSG_RESULT(yes),	
+	AC_MSG_RESULT(no),	
 	KONVERSATION_COMPAT_INCLUDES='-I$(top_srcdir)/konversation/konversation/compat'
 	KONVERSATION_INCLUDES=$KONVERSATION_INCLUDES' $(KONVERSATION_COMPAT_INCLUDES)'
 	LIB_KONVERSATIONCOMPAT='$(top_builddir)/konversation/konversation/compat/libkonversationcompat.la'
-	AC_MSG_RESULT(no)
+	AC_MSG_RESULT(yes)
 )
 CXXFLAGS="$kcompat_save_CXXFLAGS"
 LIBS="$kcompat_safe_LIBS"
