@@ -15,6 +15,8 @@
 #ifndef PREFSPAGESCRIPTS_H
 #define PREFSPAGESCRIPTS_H
 
+#include "qfile.h"
+
 #include "prefspage.h"
 
 /*
@@ -23,6 +25,7 @@
 
 class QBoxLayout;
 class QListViewItem;
+class QDir;
 
 class KListView;
 class KListViewItem;
