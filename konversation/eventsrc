@@ -1,9 +1,3 @@
-[!Global!]
-IconName=konversation
-Comment=Konversation
-Comment[pt_BR]=Konversação
-Comment[xx]=xxKonversationxx
-
 [message]
 Name=New message
 Name[da]=Ny besked
@@ -74,7 +68,7 @@ Comment[pt]=Um novo utilizador juntou-se ao canal
 Comment[pt_BR]=Um novo apelido entrou em um canal
 Comment[sv]=Någon med ett nytt smeknamn gick med i en kanal
 Comment[xx]=xxNew nick joined a channelxx
-defalt_presentation=0
+default_presentation=0
 
 [part]
 Name=Nick left channel
@@ -88,7 +82,7 @@ Comment[da]=Et alias forlod en kanal
 Comment[pt_BR]=Alguém deixou um canal
 Comment[sv]=Någon med ett smeknamn lämnade en kanal
 Comment[xx]=xxA nick left a channelxx
-defalt_presentation=0
+default_presentation=0
 
 [mode]
 Name=Mode change
@@ -101,4 +95,4 @@ Comment[pt]=O modo de um utilizador ou canal foi alterado
 Comment[pt_BR]=Um usuário ou modo de canal foi modificado
 Comment[sv]=Tillståndet för en användare eller kanal ändrades
 Comment[xx]=xxA user or channel mode was changedxx
-defalt_presentation=0
+default_presentation=0
