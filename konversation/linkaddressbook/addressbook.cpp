@@ -82,7 +82,7 @@ QString Addressbook::presenceString(const QString &uid) {
 	}
 	switch( presenceStatus(uid)) {
 	  case 0:
-		return i18n("On different servers to us");
+		return "";
 	  case 1:
 		return i18n("Offline");
 	  case 2:
