@@ -43,39 +43,42 @@ QString tagURLs(const QString& text, const QString& fromNick)
   QString linkColor = KonversationApplication::preferences.getColor("LinkMessage");
   int pos = 0;
 
-  QRegExp channelPattern("^#(\\S)+|"
-			 "\\s#(\\S)+"
-			 );
-  
-  channelPattern.setCaseSensitive(false);
+  if(text.contains("#"))
+    {
+      QRegExp channelPattern("^#(\\S)+|"
+			     "\\s#(\\S)+"
+			     );
+      
+      channelPattern.setCaseSensitive(false);
+      
+      // See http://bugs.kde.org/show_bug.cgi?id=97350
+      QRegExp colorRegex=QRegExp("#<font color=\"#\\S+\">(.*)</font>");
+      colorRegex.setMinimal(true);
+      colorRegex.setCaseSensitive(false);
+      colorRegex.search(filteredLine);
+      filteredLine.replace(colorRegex,"#"+colorRegex.cap(1));
+      
+      while(channelPattern.search(filteredLine, pos) != -1) {
+	
+	// Remember where we found the url
+	pos = channelPattern.pos();
+	
+	// Extract channel
+	QString channel = channelPattern.capturedTexts()[0];
+	QString space;
+	
+	QString href(channel.stripWhiteSpace());
+	if(href.length() != channel.length())
+	  space=" "; // We eated some space so we will put it before channel link
+	
+	href = "#" + href;
+	QString link = "<font color=\"#" + linkColor + "\">"+space+"<a href=\"" + href + "\">" + channel.stripWhiteSpace() + "</a></font>";
+	
+	filteredLine.replace(pos,channel.length(),link);
+	pos += link.length();
+      }
+    }
 
-  // See http://bugs.kde.org/show_bug.cgi?id=97350
-  QRegExp colorRegex=QRegExp("#<font color=\"#\\S+\">(.*)</font>");
-  colorRegex.setMinimal(true);
-  colorRegex.setCaseSensitive(false);
-  colorRegex.search(filteredLine);
-  filteredLine.replace(colorRegex,"#"+colorRegex.cap(1));
-
-  while(channelPattern.search(filteredLine, pos) != -1) {
-    
-    // Remember where we found the url
-    pos = channelPattern.pos();
-    
-    // Extract channel
-    QString channel = channelPattern.capturedTexts()[0];
-    QString space;
-    
-    QString href(channel.stripWhiteSpace());
-    if(href.length() != channel.length())
-      space=" "; // We eated some space so we will put it before channel link
-    
-    href = "#" + href;
-    QString link = "<font color=\"#" + linkColor + "\">"+space+"<a href=\"" + href + "\">" + channel.stripWhiteSpace() + "</a></font>";
-    
-    filteredLine.replace(pos,channel.length(),link);
-    pos += link.length();
-    
-  }
   pos = 0;
     
   QRegExp urlPattern("(((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
