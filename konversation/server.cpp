@@ -381,6 +381,7 @@ void Server::processIncomingData()
 
     inputBuffer=inputBuffer.mid(pos+1);
 
+    serverWindow->appendToRaw(line);
     inputFilter.parseLine(line);
   }
 }

@@ -298,6 +298,23 @@ void IRCView::append(const char* nick,const char* message)
   doAppend(line);
 }
 
+void IRCView::appendRaw(const char* message)
+{
+  QString channelMessageColor = KonversationApplication::preferences.getChannelMessageColor();
+
+#ifdef TABLE_VERSION
+  QString line=QString("<tr><td colspan=2><font color=\"#"+channelMessageColor()+"\">"+message+"</font></td></tr>\n");
+#else
+#ifdef ADD_LINE_BREAKS
+  QString line=QString("<font color=\"#"+channelMessageColor+"\">"+message+"</font><br>\n");
+#else
+  QString line=QString("<font color=\"#"+channelMessageColor+"\">"+message+"</font>\n");
+#endif
+#endif
+
+  doAppend(line);
+}
+
 void IRCView::appendQuery(const char* nick,const char* message)
 {
   QString queryMessageColor = KonversationApplication::preferences.getQueryMessageColor();

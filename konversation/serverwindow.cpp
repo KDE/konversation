@@ -39,6 +39,7 @@ ServerWindow::ServerWindow(Server* newServer) : KMainWindow()
   nicksOnlineWindow=0;
   dccPanel=0;
   dccPanelOpen=false;
+  rawLog=0;
 
   setServer(newServer);
 
@@ -88,6 +89,7 @@ ServerWindow::ServerWindow(Server* newServer) : KMainWindow()
   showMenubar();
 
   addStatusView();
+  addRawLog();
 
   connect( windowContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changedView(QWidget*)) );
   connect( windowContainer,SIGNAL (closeTab(QWidget*)),this,SLOT (closeTab(QWidget*)) );
@@ -165,6 +167,11 @@ void ServerWindow::setIdentity(const Identity *identity)
   filter.setIdentity(identity);
 }
 
+void ServerWindow::appendToRaw(const QString& message)
+{
+  if(rawLog) rawLog->appendRaw(message);
+}
+
 void ServerWindow::appendToStatus(const QString& type,const QString& message)
 {
   statusPanel->appendServerMessage(type,message);
@@ -183,12 +190,12 @@ void ServerWindow::appendToFrontmost(const QString& type,const QString& message)
     frontView->appendServerMessage(type,message);
 }
 
-void ServerWindow::addView(QWidget* pane,int color,const QString& label)
+void ServerWindow::addView(QWidget* pane,int color,const QString& label,bool on)
 {
   // TODO: Make sure to add DCC status tab at the end of the list and all others
   // before the DCC tab. Maybe we should also make sure to order Channels
   // Queries and DCC chats in groups
-  windowContainer->addTab(pane,label,color,true);
+  windowContainer->addTab(pane,label,color,on);
   // TODO: Check, if user was typing in old input line
   if(KonversationApplication::preferences.getBringToFront())
   {
@@ -231,8 +238,11 @@ void ServerWindow::closeTab(QWidget* viewToClose)
   }
   else if(viewType==ChatWindow::Channel)  emit closeChannel(viewName);
   else if(viewType==ChatWindow::Query)    emit closeQuery(viewName);
-  else if(viewType==ChatWindow::DccChat);
   else if(viewType==ChatWindow::DccPanel) closeDccPanel();
+  else if(viewType==ChatWindow::DccChat);
+  else if(viewType==ChatWindow::RawLog);
+  else if(viewType==ChatWindow::Notice);
+  else if(viewType==ChatWindow::SNotice);
 }
 
 void ServerWindow::addDccPanel()
@@ -295,6 +305,26 @@ void ServerWindow::addStatusView()
   connect(statusPanel,SIGNAL (sendFile()),getServer(),SLOT (requestDccSend()) );
 }
 
+void ServerWindow::addRawLog()
+{
+  if(rawLog==0)
+  {
+    rawLog=new RawLog(getWindowContainer());
+    addView(rawLog,2,i18n("Raw Log"),false);
+    
+    rawLog->setLog(false);
+  }
+}
+
+void ServerWindow::closeRawLog()
+{
+  if(rawLog)
+  {
+    getWindowContainer()->removePage(rawLog);
+    rawLog=0;
+  }
+}
+
 void ServerWindow::setNickname(const QString& newNickname)
 {
   // TODO: connect this to the appropriate server's nickname signal
@@ -317,7 +347,8 @@ void ServerWindow::changedView(QWidget* view)
   
   ChatWindow* pane=(ChatWindow*) view;
   // Make sure that only text-capable views get to be the frontView
-  if(pane->getType()!=ChatWindow::DccPanel) frontView=pane;
+  if(pane->getType()!=ChatWindow::DccPanel &&
+     pane->getType()!=ChatWindow::RawLog) frontView=pane;
 
   windowContainer->changeTabState(view,false);
 }

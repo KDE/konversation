@@ -50,6 +50,7 @@
 #include "colorconfiguration.h"
 #include "chatwindow.h"
 #include "statuspanel.h"
+#include "rawlog.h"
 #include "nicksonline.h"
 #include "dccpanel.h"
 #include "identity.h"
@@ -63,9 +64,10 @@ class ServerWindow : public KMainWindow
     ~ServerWindow();
 
     void appendToStatus(const QString& type,const QString& message);
+    void appendToRaw(const QString& message);
     void appendToFrontmost(const QString& type,const QString& message);
 
-    void addView(QWidget* pane,int color,const QString& name);
+    void addView(QWidget* pane,int color,const QString& name,bool on=true);
     void showView(QWidget* pane);
 
     LedTabWidget* getWindowContainer();
@@ -95,6 +97,8 @@ class ServerWindow : public KMainWindow
 
   protected slots:
     void addStatusView();
+    void addRawLog();
+    void closeRawLog();
     void nextTab();
     void previousTab();
     void closeTab(QWidget* tab);
@@ -164,6 +168,7 @@ class ServerWindow : public KMainWindow
     StatusPanel* statusPanel;   // TODO: to be moved into Server class?
     ChatWindow* frontView;
 
+    RawLog* rawLog;     // the address of the raw log panel
     DccPanel* dccPanel; // the adress of the dcc panel
     bool dccPanelOpen;  // to track if a dcc panel is already open
 

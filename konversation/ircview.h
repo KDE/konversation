@@ -55,6 +55,7 @@ class IRCView : public KTextBrowser
 
   public slots:
     void append(const char* nick,const char* message);
+    void appendRaw(const char* message);
     void appendQuery(const char* nick,const char* message);
     void appendAction(const char* nick,const char* message);
     void appendServerMessage(const char* type,const char* message);

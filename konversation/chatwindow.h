@@ -45,7 +45,10 @@ class ChatWindow : public QVBox
       Channel,
       Query,
       DccChat,
-      DccPanel
+      DccPanel,
+      RawLog,
+      Notice,
+      SNotice
     };
 
     void setServer(Server* newServer);
@@ -61,6 +64,7 @@ class ChatWindow : public QVBox
     WindowType getType();
 
     void append(const char* nickname,const char* message);
+    void appendRaw(const char* message);
     void appendQuery(const char* nickname,const char* message);
     void appendAction(const char* nickname,const char* message);
     void appendServerMessage(const char* type,const char* message);
