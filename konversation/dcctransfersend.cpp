@@ -94,9 +94,10 @@ DccTransferSend::~DccTransferSend()
 
 void DccTransferSend::start()  // public slot
 {
-  if(getStatus() != Queued) return; //setStatus(Failed) or something has been called.
 
   kdDebug() << "DccTransferSend::start()" << endl;
+  if(getStatus() != Queued) return; //setStatus(Failed) or something has been called.
+
      // Set up server socket
   m_serverSocket = new KNetwork::KServerSocket();
   m_serverSocket->setFamily(KNetwork::KResolver::InetFamily);
@@ -236,6 +237,7 @@ void DccTransferSend::heard()  // slot
 
 void DccTransferSend::writeData()  // slot
 {
+  kdDebug() << "writeData()" << endl;
   int actual = m_file.readBlock( m_buffer, m_bufferSize );
   if( actual > 0 )
   {
@@ -246,6 +248,7 @@ void DccTransferSend::writeData()  // slot
 
 void DccTransferSend::getAck()  // slot
 {
+  kdDebug() << "getAck()" << endl;
   unsigned long pos;
   while( m_sendSocket->bytesAvailable() >= 4 )
   {
@@ -266,8 +269,7 @@ void DccTransferSend::getAck()  // slot
 
 void DccTransferSend::socketError( int errorCode )
 {
-  kdDebug() << "DccTransferSend::socketError(): code =  " << errorCode << endl;
-  kdDebug() << "DccTransferSend::socketError(): string = " << m_serverSocket->errorString() << endl;
+  kdDebug() << "DccTransferSend::socketError(): code =  " << errorCode << " string = " << m_serverSocket->errorString() << endl;
 
   setStatus( Failed, i18n("Socket error: %1").arg( m_serverSocket->errorString() ));
   updateView();
@@ -276,6 +278,7 @@ void DccTransferSend::socketError( int errorCode )
 
 void DccTransferSend::startConnectionTimer( int sec )
 {
+  kdDebug() << "startConnectionTimer"<< endl;
   Q_ASSERT(m_connectionTimer);
   stopConnectionTimer();
   m_connectionTimer->start( sec*1000, TRUE );
@@ -283,6 +286,7 @@ void DccTransferSend::startConnectionTimer( int sec )
 
 void DccTransferSend::stopConnectionTimer()
 {
+  kdDebug() << "stopConnectionTimer"<< endl;
   Q_ASSERT(m_connectionTimer);
   m_connectionTimer->stop();
 }

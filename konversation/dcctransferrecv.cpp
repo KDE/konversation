@@ -18,6 +18,7 @@
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kstreamsocket.h>
+#include <kdirselectdialog.h> 
 
 #include <kio/job.h>
 #include <kio/jobclasses.h>
@@ -27,6 +28,8 @@
 #include "dccresumedialog.h"
 #include "dcctransferrecv.h"
 #include "konversationapplication.h"
+
+#include "konvidebug.h"
 
 /*
  *flow chart*
@@ -60,10 +63,18 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
             << "DccTransferRecv::DccTransferRecv(): Sanitised Filename=" << sanitised_filename << endl
             << "DccTransferRecv::DccTransferRecv(): FileSize=" << fileSize << endl
             << "DccTransferRecv::DccTransferRecv(): Partner Address=" << partnerIp << ":" << partnerPort << endl;
-  
+  KURL saveToFileURL;
+  if(defaultFolderURL.isEmpty()) {
+    saveToFileURL = KDirSelectDialog::selectDirectory(QString::null, false, listView(), "Select directory to save to");
+    if(saveToFileURL.isEmpty()) {
+      setStatus(Failed);
+      return;
+    }
+  } else {
+    saveToFileURL = defaultFolderURL;
+  }
   // set default path
   // Append folder with partner's name if wanted
-  KURL saveToFileURL( defaultFolderURL );
   saveToFileURL.adjustPath( 1 );  // add a slash if there is none
   if( KonversationApplication::preferences.getDccCreateFolder() )
     saveToFileURL.addPath( partnerNick.lower() + "/" );
@@ -100,7 +111,7 @@ DccTransferRecv::~DccTransferRecv()
 
 void DccTransferRecv::start()  // public slot
 {
-  Q_ASSERT(getStatus() == Queued);
+  if(getStatus() != Queued) return;
   kdDebug() << "DccTransferRecv::start()" << endl;
   
   // check whether the file exists
@@ -203,7 +214,7 @@ void DccTransferRecv::requestResume()
   
   // Rollback for Resume
   // disabled temporarily
-  // hey, can we rallback a file via KIO?
+  // hey, can we rollback a file via KIO?
   /*
   KIO::filesize_t rb = KonversationApplication::preferences.getDccRollback();
   if( m_fileSize < rb )
@@ -215,7 +226,7 @@ void DccTransferRecv::requestResume()
   
   updateView();
   
-  startConnectionTimer( 5 );
+  startConnectionTimer( 30 ); //Was only 5 seconds?
   
   emit resumeRequest( m_partnerNick, m_fileName, m_partnerPort, m_transferringPosition );
 }
@@ -242,7 +253,7 @@ void DccTransferRecv::connectToSender()
   m_recvSocket->setBlocking( false );  // asynchronous mode
   m_recvSocket->setFamily( KNetwork::KResolver::InetFamily );
   m_recvSocket->setResolutionEnabled( false );
-  m_recvSocket->setTimeout( 5000 );
+  m_recvSocket->setTimeout( 50000 ); //Was only 5 secs.  Made 50 secs
   
   m_recvSocket->enableRead( false );
   m_recvSocket->enableWrite( false );
@@ -252,8 +263,10 @@ void DccTransferRecv::connectToSender()
   
   connect( m_recvSocket, SIGNAL( readyRead() ),  this, SLOT( readData() ) );
   connect( m_recvSocket, SIGNAL( readyWrite() ), this, SLOT( sendAck() )  );
-  
-  m_recvSocket->connect();
+  kdDebug() << "In connectToSender - attempting to connect to " << m_partnerIp << ":" << m_partnerPort << endl;
+  if(!m_recvSocket->connect()) {
+    kdDebug() << "connect failed immediately!! - " << m_recvSocket->errorString() << endl;
+  }
 }
 
 void DccTransferRecv::connectionSuccess()  // slot
@@ -271,16 +284,17 @@ void DccTransferRecv::connectionSuccess()  // slot
 
 void DccTransferRecv::connectionFailed( int errorCode )  // slot
 {
-  kdDebug() << "DccTransferRecv::connectionFailed(): code = " << errorCode << endl;
-  kdDebug() << "DccTransferRecv::connectionFailed(): string = " << m_recvSocket->errorString() << endl;
+  kdDebug() << "DccTransferRecv::connectionFailed(): code = " << errorCode << ", string = " << m_recvSocket->errorString() << endl;
   
-  setStatus( Failed );
+  KMessageBox::sorry( 0, i18n("Connection failure: %1").arg( m_recvSocket->errorString() ),i18n("DCC Error") );
+  setStatus( Failed, i18n("Connection failure: %1").arg( m_recvSocket->errorString() ) );
   cleanUp();
   updateView();
 }
 
 void DccTransferRecv::readData()  // slot
 {
+  kdDebug() << "readData()" << endl;
   int actual = m_recvSocket->readBlock( m_buffer, m_bufferSize );
   if( actual > 0 )
   {
@@ -295,6 +309,8 @@ void DccTransferRecv::readData()  // slot
 
 void DccTransferRecv::sendAck()  // slot
 {
+
+  kdDebug() << "sendAck()" << endl;
   KIO::fileoffset_t pos = intel( m_transferringPosition );
 
   m_recvSocket->enableWrite( false );
@@ -309,6 +325,8 @@ void DccTransferRecv::sendAck()  // slot
 
 void DccTransferRecv::writeDone()  // slot
 {
+
+  kdDebug() << "writeDone()" << endl;
   cleanUp();
   setStatus( Done );
   updateView();
@@ -317,8 +335,8 @@ void DccTransferRecv::writeDone()  // slot
 
 void DccTransferRecv::gotWriteError( int errorCode )  // slot
 {
-  KMessageBox::sorry( 0, i18n("KIO Error. code %1").arg( QString::number( errorCode ) ),i18n("DCC Error") );
-  setStatus( Failed, i18n("KIO Error. code %1").arg( QString::number( errorCode ) ) );
+  KMessageBox::sorry( 0, i18n("KIO Error: %1").arg( m_recvSocket->errorString() ),i18n("DCC Error") );
+  setStatus( Failed, i18n("KIO Error: %1").arg( m_recvSocket->errorString() ) );
   cleanUp();
   updateView();
 }
@@ -332,15 +350,15 @@ void DccTransferRecv::setSaveToFileURL( const KURL& url )
 void DccTransferRecv::startConnectionTimer( int sec )
 {
   stopConnectionTimer();
+  SHOW;
   m_connectionTimer->start( sec*1000, TRUE );
 }
 
 void DccTransferRecv::stopConnectionTimer()
 {
-  if( m_connectionTimer )
-  {
-    m_connectionTimer->stop();
-  }
+  SHOW;
+  Q_ASSERT( m_connectionTimer );
+  m_connectionTimer->stop();
 }
 
 void DccTransferRecv::connectionTimeout()  // slot
