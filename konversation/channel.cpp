@@ -890,7 +890,7 @@ void Channel::quickButtonClicked(const QString &buttonText)
 void Channel::addNickname(ChannelNickPtr channelnick)
 {
 
-  QString nickname = channelnick->getNickname().lower();
+  QString nickname = channelnick->loweredNickname();
 
   Nick* nick=0;
   Nick* lookNick;
@@ -1039,7 +1039,8 @@ Nick* Channel::getNickByName(const QString &lookname)
   Nick* nick=nicknameList.first();
   while(nick)
   {
-    if(nick->getNickname().lower()==lcLookname) return nick;
+    if(nick->loweredNickname() == lcLookname) 
+      return nick;
     nick=nicknameList.next();
   }
   return 0;
@@ -1139,8 +1140,10 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
   bool fromMe=false;
   bool toMe=false;
 
-  if(sourceNick.lower()==m_server->getNickname().lower()) fromMe=true;
-  if(parameter.lower()==m_server->getNickname().lower()) toMe=true;
+  if(sourceNick.lower()==m_server->getNickname().lower()) 
+    fromMe=true;
+  if(parameter.lower()==m_server->getNickname().lower()) 
+    toMe=true;
 
   switch(mode)
   {
