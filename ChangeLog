@@ -8,6 +8,7 @@ Changes from 0.16 to 0.17
 - Enable clickable nicks even if colored nicks are off
 - Per identity pre-shell command support with a GUI
 - Bookmarking support
+- Detect Japanese encoding correctly while trying to auto-detect Unicode
 	
 Changes from 0.15 to 0.16
 - Dropping URLs onto nick on nicklist or onto query initiates DCC send
