@@ -203,6 +203,7 @@ void DccPanel::removeDcc()
   }
   lst.setAutoDelete( true );
   while( lst.remove() );
+  selectionChanged();
 }
 
 void DccPanel::runDcc()
