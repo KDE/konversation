@@ -1,37 +1,40 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="14">
+<kpartgui name="konversation" version="15">
 
   <MenuBar>
     <Menu name="file">
       <Action name="open_server_list" />
       <Action name="quick_connect_dialog" />
     </Menu>
-    <Menu name="actions">
-      <Text>&amp;Actions</Text>
+    <Menu name="edit">
+      <Action name="clear_window" />
+    </Menu>
+    <Menu name="insert">
+      <Text>&amp;Insert</Text>
       <Action name="irc_colors" />
       <Action name="insert_remember_line" />
-      <Separator />
-      <Action name="clear_window" />
+    </Menu>
+    <Menu name="windows">
+      <Text>&amp;Window</Text>
       <Action name="previous_tab" />
       <Action name="next_tab" />
       <Action name="close_tab" />
       <Action name="close_queries" />
-    </Menu>
-    <Menu name="windows">
-      <Text>&amp;Window</Text>
+      <Separator />
+      <Menu name="mdi_subwindow_mode">
+        <Text>Child Window Mode</Text>
+        <Action name="mdi_tabpage_mode" />
+        <Action name="mdi_toplevel_mode" />
+        <Action name="mdi_childframe_mode" />
+        <Action name="mdi_ideal_mode" />
+      </Menu>
+      <Separator />
       <Action name="open_nicksonline_window" />
       <Action name="open_channel_list" />
       <Action name="open_url_catcher" />
       <Separator />
       <Action name="open_konsole" />
       <Action name="open_logfile" />
-      <Menu name="mdi_subwindow_mode">
-      <Text>Subwindow Mode</Text>
-        <Action name="mdi_tabpage_mode" />
-        <Action name="mdi_toplevel_mode" />
-        <Action name="mdi_childframe_mode" />
-        <Action name="mdi_ideal_mode" />
-      </Menu>
     </Menu>
   </MenuBar>
 

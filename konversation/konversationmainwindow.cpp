@@ -149,10 +149,13 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new TabAction(i18n("Go to Tab Number %1").arg(10),9,KShortcut("Alt+0"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_0");
 
   new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
+  
   KStdAction::find(this, SLOT(findText()), actionCollection());
   KStdAction::findNext(this, SLOT(findNextText()), actionCollection());
-  new KAction(i18n("&Insert IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors");
-  new KAction(i18n("Insert &Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line");
+  
+  new KAction(i18n("&IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors");
+  new KAction(i18n("&Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line");
+  
   new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
 
   new KAction(i18n("Tabpage Mode"),"tabpage",0,this,SLOT (switchToTabPageMode()),actionCollection(),"mdi_tabpage_mode");
