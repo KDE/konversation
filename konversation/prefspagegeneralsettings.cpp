@@ -70,6 +70,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   rawLogCheck=new QCheckBox(i18n("Show ra&w log window on startup"),parentFrame,"raw_log_check");
   trayIconCheck=new QCheckBox(i18n("Show icon in s&ystem tray"),parentFrame,"tray_icon_check");
   trayNotifyCheck=new QCheckBox(i18n("Use sys&tem tray for new message notification"),parentFrame,"tray_notify_check");
+  trayNotifyCheck->setEnabled(trayIconCheck->isChecked());
   hideUnimportantCheck=new QCheckBox(i18n("&Hide Join/Part/Nick events"),parentFrame,"hide_unimportant_check");
 
   connect(trayIconCheck, SIGNAL(toggled(bool)), trayNotifyCheck, SLOT(setEnabled(bool)));

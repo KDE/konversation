@@ -146,6 +146,7 @@ class KonversationMainWindow : public KMainWindow
     void deleteDccPanel();
     
     virtual bool event(QEvent* e);
+    virtual void closeEvent(QCloseEvent* e);
 
     LedTabWidget* getViewContainer();
 
@@ -169,6 +170,8 @@ class KonversationMainWindow : public KMainWindow
     DccTransferHandler* dccTransferHandler;
 
     TrayIcon* tray;
+    
+    bool m_closeApp;
 };
 
 #endif

@@ -21,6 +21,8 @@ Changes from 0.13 to 0.14
 - Nicks Online is now a tabbed panel, rather than separate window.
 - Added sound support to the highlight list
 - Added regular expression support to the highlight list^
+- Follow the style guide when the tray icon is enabled by minimizing to tray when
+  the close button is clicked.
 
 Changes from 0.12 to 0.13
 - Added an option to hide hostmasks in channel nick lists

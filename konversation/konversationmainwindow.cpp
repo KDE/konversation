@@ -68,6 +68,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   urlCatcherPanel=0;
   dccPanel=0;
   dccPanelOpen=false;
+  m_closeApp = false;
 
   dccTransferHandler=new DccTransferHandler(this);
 
@@ -596,6 +597,7 @@ bool KonversationMainWindow::queryClose()
 void KonversationMainWindow::quitProgram()
 {
   // will call queryClose()
+  m_closeApp = true;
   close();
 }
 
@@ -832,5 +834,21 @@ void KonversationMainWindow::setShowTabBarCloseButton(bool s)
 #else
 void KonversationMainWindow::setShowTabBarCloseButton(bool) {}
 #endif
+
+void KonversationMainWindow::closeEvent(QCloseEvent* e)
+{
+  if(KonversationApplication::preferences.getShowTrayIcon() && !m_closeApp) {
+    // Message copied from kopete...
+    KMessageBox::information(this,
+      i18n( "<qt>Closing the main window will keep Konversation running in the "
+      "system tray. Use 'Quit' from the 'File' menu to quit the application.</qt>" ),
+      i18n( "Docking in System Tray" ), "hideOnCloseInfo");
+  
+    hide();
+    e->ignore();
+  } else {
+    KMainWindow::closeEvent(e);
+  }
+}
 
 #include "konversationmainwindow.moc"
