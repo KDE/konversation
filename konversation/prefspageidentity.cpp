@@ -95,10 +95,10 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   identityLayout->addWidget(new QLabel(i18n("Nickname %1:").arg(1),parentFrame),row,0);
   identityLayout->addWidget(nick0,row,1);
   identityLayout->addWidget(new QLabel(i18n("Nickname %1:").arg(2),parentFrame),row,2);
-  identityLayout->addWidget(nick2,row,3);
+  identityLayout->addWidget(nick1,row,3);
   row++;
   identityLayout->addWidget(new QLabel(i18n("Nickname %1:").arg(3),parentFrame),row,0);
-  identityLayout->addWidget(nick1,row,1);
+  identityLayout->addWidget(nick2,row,1);
   identityLayout->addWidget(new QLabel(i18n("Nickname %1:").arg(4),parentFrame),row,2);
   identityLayout->addWidget(nick3,row,3);
   row++;
