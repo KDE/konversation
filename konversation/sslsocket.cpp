@@ -25,6 +25,7 @@
 #include <ksslcertificatecache.h>
 #include <kmessagebox.h>
 #include <ksocketdevice.h>
+#include <unistd.h>
 
 #include "sslsocket.h"
 
@@ -59,7 +60,16 @@ Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
 Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
 {
   //kdDebug() << "SSLSocket::readBlock : " << QCString(data) << endl;
-  return kssl->read( data, maxlen );
+  int err;
+  
+  do {
+    err = kssl->read( data, maxlen );
+    if (err == 0) {
+      ::sleep(1);
+    }
+  } while( err == 0 );
+
+  return err;
 }
 
 void SSLSocket::slotConnected()
