@@ -29,6 +29,7 @@ class QCheckBox;
 class KListView;
 class KColorCombo;
 class KLineEdit;
+class KURLRequester;
 
 class PrefsPageHighlight : public PrefsPage
 {
@@ -48,6 +49,7 @@ class PrefsPageHighlight : public PrefsPage
 
     void highlightTextChanged(const QString& newPattern);
     void highlightColorChanged(const QColor& newColor);
+    void soundURLChanged(const QString& newURL);
 
     void addHighlight();
     void removeHighlight();
@@ -64,6 +66,8 @@ class PrefsPageHighlight : public PrefsPage
     KColorCombo* currentNickColor;
     QCheckBox* ownLinesCheck;
     KColorCombo* ownLinesColor;
+    KURLRequester* soundURL;
+    QLabel* soundLabel;
 };
 
 #endif

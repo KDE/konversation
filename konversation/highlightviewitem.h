@@ -28,28 +28,32 @@
   *@author Matthias Gierlings
   */
 
+class KURL;
+
 class HighlightViewItem : public KListViewItem
 {
-	public:
-		HighlightViewItem(KListView* parent, Highlight* passed_Highlight);
-		~HighlightViewItem();
+  public:
+    HighlightViewItem(KListView* parent, Highlight* passed_Highlight);
+    ~HighlightViewItem();
 
-  	QString	getText()		{return text(0);};
-		QColor	getColor()	{return itemColor;};
-		int			getID()			{return itemID;};
+    QString getText() { return text(0); }
+    QColor getColor() { return itemColor; }
+    int getID() { return itemID; }
+    KURL getSoundURL() { return soundURL; }
 
-//	void	setText(QString passed_itemText)	{itemText = passed_itemText;};
-		void	setColor(QColor passed_itemColor)	{itemColor = passed_itemColor;};
-		void	setID(int passed_itemID)					{itemID = passed_itemID;};
+    void setColor(QColor passed_itemColor) { itemColor = passed_itemColor; }
+    void setID(int passed_itemID) { itemID = passed_itemID; }
+    void setSoundURL(const KURL& url);
 
     HighlightViewItem* itemBelow();
 
-	private:
-		QColor			itemColor;
-		QColorGroup itemColorGroup;
-		int					itemID;
+  private:
+    QColor itemColor;
+    QColorGroup itemColorGroup;
+    int itemID;
+    KURL soundURL;
 
-		void paintCell(QPainter* p, const QColorGroup &cg, int column, int width, int alignment);
+    void paintCell(QPainter* p, const QColorGroup &cg, int column, int width, int alignment);
 };
 
 #endif

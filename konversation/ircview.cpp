@@ -57,6 +57,7 @@
 #include "highlight.h"
 #include "server.h"
 #include "searchdialog.h"
+#include "konversationsound.h"
 
 IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 {
@@ -399,6 +400,8 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
              who.lower().find(needle)!=-1 )             // hilight patterns in nickname
           {
             highlightColor=hilightList.at(index)->getColor().name();
+            KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+            konvApp->sound()->play(hilightList.at(index)->getSoundURL());
             break;
           }
         } // endfor

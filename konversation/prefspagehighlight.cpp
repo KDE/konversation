@@ -25,6 +25,7 @@
 #include <klineedit.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kurlrequester.h>
 
 #include "prefspagehighlight.h"
 #include "preferences.h"
@@ -44,6 +45,8 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   highlightListView=new KListView(highlightListBox,"highlight_list_view");
 
   highlightListView->addColumn(i18n("Highlights"));
+  highlightListView->addColumn(i18n("Sound"));
+  highlightListView->setAllColumnsShowFocus(true);
   highlightListView->setFullWidth(true);
   highlightListView->setDragEnabled(true);
   highlightListView->setAcceptDrops(true);
@@ -64,10 +67,19 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   patternInput=new KLineEdit(highlightEditBox,"highlight_pattern_input");
   patternColor=new KColorCombo(highlightEditBox,"highlight_pattern_color");
   patternLabel->setBuddy(patternInput);
+  
+  QHBox* highlightSoundBox=new QHBox(highlightListBox);
+  highlightSoundBox->setSpacing(spacingHint());
+  
+  soundLabel = new QLabel(i18n("&Sound:"), highlightSoundBox);
+  soundURL = new KURLRequester(highlightSoundBox, "highlight_pattern_sound_url");
+  soundLabel->setBuddy(soundURL);
 
   patternLabel->setEnabled(false);
   patternInput->setEnabled(false);
   patternColor->setEnabled(false);
+  soundURL->setEnabled(false);
+  soundLabel->setEnabled(false);
 
   currentNickCheck=new QCheckBox(i18n("Always highlight &current nick:"),parentFrame,"highlight_current_nick_check");
   currentNickCheck->setChecked(preferences->getHilightNick());
@@ -104,6 +116,7 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
 
   connect(patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (highlightTextChanged(const QString&)) );
   connect(patternColor,SIGNAL (activated(const QColor&)),this,SLOT (highlightColorChanged(const QColor&)) );
+  connect(soundURL, SIGNAL(textChanged(const QString&)), this, SLOT(soundURLChanged(const QString&)));
 
   connect(newButton,SIGNAL (clicked()),this,SLOT (addHighlight()) );
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeHighlight()) );
@@ -125,15 +138,20 @@ void PrefsPageHighlight::highlightSelected(QListViewItem* item)
     patternLabel->setEnabled(true);
     patternInput->setEnabled(true);
     patternColor->setEnabled(true);
+    soundURL->setEnabled(true);
+    soundLabel->setEnabled(true);
 
     patternColor->setColor(highlightItem->getColor());
     patternInput->setText(highlightItem->getText());
+    soundURL->setURL(highlightItem->getSoundURL().prettyURL());
   }
   else
   {
     patternLabel->setEnabled(false);
     patternInput->setEnabled(false);
     patternColor->setEnabled(false);
+    soundURL->setEnabled(false);
+    soundLabel->setEnabled(false);
   }
 }
 
@@ -155,9 +173,19 @@ void PrefsPageHighlight::highlightColorChanged(const QColor& newColor)
   }
 }
 
+void PrefsPageHighlight::soundURLChanged(const QString& newURL)
+{
+  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
+
+  if(item)
+  {
+    item->setSoundURL(KURL(newURL));
+  }
+}
+
 void PrefsPageHighlight::addHighlight()
 {
-  Highlight* newHighlight=new Highlight(i18n("New"),QColor("#ff0000"));
+  Highlight* newHighlight=new Highlight(i18n("New"),QColor("#ff0000"), KURL());
 
   HighlightViewItem* item=new HighlightViewItem(highlightListView,newHighlight);
   highlightListView->setSelected(item,true);
@@ -180,6 +208,8 @@ void PrefsPageHighlight::removeHighlight()
       patternLabel->setEnabled(false);
       patternInput->setEnabled(false);
       patternColor->setEnabled(false);
+      soundURL->setEnabled(false);
+      soundLabel->setEnabled(false);
     }
   }
 }
@@ -191,7 +221,7 @@ QPtrList<Highlight> PrefsPageHighlight::getHighlightList()
   HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->firstChild());
   while(item)
   {
-    newList.append(new Highlight(item->getText(),item->getColor()));
+    newList.append(new Highlight(item->getText(),item->getColor(), item->getSoundURL()));
     item=item->itemBelow();
   }
 

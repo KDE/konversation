@@ -30,6 +30,10 @@ class KonvDCOP;
 class Server;
 class PrefsDialog;
 
+namespace Konversation {
+  class Sound;
+};
+
 /*
   @author Dario Abatianni
 */
@@ -54,6 +58,8 @@ class KonversationApplication : public KApplication
     void syncPrefs();
     Server* getServerByName(const QString& name);
     OSDWidget* osd;
+    
+    Konversation::Sound* sound();
 
   signals:
     void catchUrl(const QString& who,const QString& url);
@@ -89,6 +95,7 @@ class KonversationApplication : public KApplication
     KonvPrefsDCOP* prefsDCOP;
     KonvIdentDCOP* identDCOP;
     KonversationMainWindow* mainWindow;
+    Konversation::Sound* m_sound;
 };
 
 #endif

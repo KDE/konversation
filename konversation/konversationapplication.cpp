@@ -26,6 +26,7 @@
 #include "highlight.h"
 #include "server.h"
 #include "serverentry.h"
+#include "konversationsound.h"
 
 // include static variables
 Preferences KonversationApplication::preferences;
@@ -96,6 +97,9 @@ KonversationApplication::KonversationApplication()
                     this,SLOT (dcopInfo(const QString&)) );
   }
 
+  // Sound object used to play sound...
+  m_sound = new Konversation::Sound(this);
+  
   // take care of user style changes, setting back colors and stuff
   connect(KApplication::kApplication(),SIGNAL (appearanceChanged()),this,SLOT (appearanceChanged()) );
 }
@@ -457,17 +461,8 @@ void KonversationApplication::readOptions()
 
   // Hilight List
   config->setGroup("Hilight List");
-  QString hilight=config->readEntry("Hilight");
-  QStringList hiList=QStringList::split(' ',hilight);
-
-  unsigned int hiIndex;
-  for(hiIndex=0;hiIndex<hiList.count();hiIndex+=2)
-  {
-    preferences.addHilight(hiList[hiIndex],"#"+hiList[hiIndex+1]);
-  }
-
   preferences.setHilightNick(config->readBoolEntry("HilightNick",preferences.getHilightNick()));
-  hilight=config->readEntry("HilightNickColor");
+  QString hilight=config->readEntry("HilightNickColor");
   if(hilight.isEmpty())
     preferences.setHilightNickColor(preferences.getHilightNickColor().name());
   else
@@ -479,6 +474,27 @@ void KonversationApplication::readOptions()
     preferences.setHilightOwnLinesColor(preferences.getHilightOwnLinesColor().name());
   else
     preferences.setHilightOwnLinesColor("#"+hilight);
+  
+  if(config->hasKey("Hilight")) { // Stay compatible with versions < 0.14
+    hilight=config->readEntry("Hilight");
+    QStringList hiList=QStringList::split(' ',hilight);
+  
+    unsigned int hiIndex;
+    for(hiIndex=0;hiIndex<hiList.count();hiIndex+=2)
+    {
+      preferences.addHilight(hiList[hiIndex],"#"+hiList[hiIndex+1], "");
+    }
+    
+    config->deleteEntry("Hilight");
+  } else {
+    int i = 0;
+    
+    while(config->hasGroup(QString("Highlight%1").arg(i))) {
+      config->setGroup(QString("Highlight%1").arg(i));
+      preferences.addHilight(config->readEntry("Pattern"), config->readColorEntry("Color"), config->readPathEntry("Sound"));
+      i++;
+    }
+  }
 
   // Ignore List
   config->setGroup("Ignore List");
@@ -686,22 +702,27 @@ void KonversationApplication::saveOptions(bool updateGUI)
   // Write all hilight entries
   config->setGroup("Hilight List");
 
-  QPtrList<Highlight> hiList=preferences.getHilightList();
-
-  // Put all hilight patterns and colors after another, separated with a space
-  QString hilight;
-  for(unsigned int index=0;index<hiList.count();index++)
-    hilight+=hiList.at(index)->getText()+" "+hiList.at(index)->getColor().name().mid(1)+" ";
-
-  // remove extra spaces
-  hilight=hilight.stripWhiteSpace();
-  // write hilight string
-  config->writeEntry("Hilight",hilight);
-
   config->writeEntry("HilightNick",preferences.getHilightNick());
   config->writeEntry("HilightNickColor",preferences.getHilightNickColor().name().mid(1));
   config->writeEntry("HilightOwnLines",preferences.getHilightOwnLines());
   config->writeEntry("HilightOwnLinesColor",preferences.getHilightOwnLinesColor().name().mid(1));
+  
+  QPtrList<Highlight> hiList=preferences.getHilightList();
+  int i = 0;
+  
+  for(Highlight* hl = hiList.first(); hl; hl = hiList.next()) {
+    config->setGroup(QString("Highlight%1").arg(i));
+    config->writeEntry("Pattern", hl->getText());
+    config->writeEntry("Color", hl->getColor());
+    config->writePathEntry("Sound", hl->getSoundURL().prettyURL());
+    i++;
+  }
+  
+  // Remove unused entries...
+  while(config->hasGroup(QString("Highlight%1").arg(i))) {
+    config->deleteGroup(QString("Highlight%1").arg(i));
+    i++;
+  }
 
   // OnScreen Display
   config->setGroup("OSD");
@@ -913,6 +934,11 @@ void KonversationApplication::sendMultiServerCommand(const QString& command, con
   for(Server* server = serverList.first(); server; server = serverList.next()) {
     server->executeMultiServerCommand(command, parameter);
   }
+}
+
+Konversation::Sound* KonversationApplication::sound()
+{
+  return m_sound;
 }
 
 #include "konversationapplication.moc"

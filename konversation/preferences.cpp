@@ -18,6 +18,7 @@
 #include <kapp.h>
 #include <kconfig.h>
 #include <klocale.h>
+#include <kurl.h>
 
 #include <qpalette.h>
 
@@ -288,9 +289,9 @@ void Preferences::setHilightList(QPtrList<Highlight> newList)
   hilightList=newList;
 }
 
-void Preferences::addHilight(const QString &newHilight, QColor newColor)
+void Preferences::addHilight(const QString &newHilight, QColor newColor, const QString& sound)
 {
-  hilightList.append(new Highlight(newHilight,newColor));
+  hilightList.append(new Highlight(newHilight,newColor, KURL(sound)));
 }
 
 void Preferences::setButtonList(QStringList newList)

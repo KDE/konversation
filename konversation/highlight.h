@@ -21,29 +21,35 @@
 #include <qstring.h>
 #include <qcolor.h>
 
+#include <kurl.h>
+
 /**
   *@author Matthias Gierlings
   */
 
+
 class Highlight
 {
   public:
-    Highlight(const QString& passed_itemText,const QColor& passed_itemColor);
+    Highlight(const QString& itemText,const QColor& itemColor, const KURL& soundURL);
     ~Highlight();
 
     QString getText();
     QColor getColor();
     int getID();
+    KURL getSoundURL();
 
-    void setText(const QString& passed_itemText);
-    void setColor(const QColor& passed_itemColor);
+    void setText(const QString& itemText);
+    void setColor(const QColor& itemColor);
+    void setSoundURL(const KURL& url);
 
   protected:
-    static unsigned int id;
+    static unsigned int s_id;
     
-    int itemID;
-    QString itemText;
-    QColor itemColor;
+    int m_itemID;
+    QString m_itemText;
+    QColor m_itemColor;
+    KURL m_soundURL;
 };
 
 #endif

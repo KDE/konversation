@@ -174,7 +174,7 @@ class Preferences : public QObject
 
     QPtrList<Highlight> getHilightList();
     void setHilightList(QPtrList<Highlight> newList);
-    void addHilight(const QString &newHilight, QColor color);
+    void addHilight(const QString &newHilight, QColor color, const QString& sound);
 
     void setHilightNick(bool state);      // shall we hilight the current nick?
     bool getHilightNick();

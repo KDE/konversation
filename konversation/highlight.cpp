@@ -17,25 +17,27 @@
 
 #include "highlight.h"
 
-unsigned int Highlight::id;  // static
+unsigned int Highlight::s_id = 0;  // static
 
-Highlight::Highlight(const QString& passed_itemText,const QColor& passed_itemColor)
+Highlight::Highlight(const QString& itemText,const QColor& itemColor, const KURL& soundURL)
 {
-  itemText=passed_itemText;
-  itemColor=passed_itemColor;
+  m_itemText = itemText;
+  m_itemColor = itemColor;
+  m_soundURL = soundURL;
   
   // unique ID for every Highlight
-  itemID=id++;
+  m_itemID = s_id++;
 }
 
 Highlight::~Highlight()
 {
 }
 
-int Highlight::getID()       { return itemID; }
+int Highlight::getID() { return m_itemID; }
+QString Highlight::getText() { return m_itemText; }
+QColor Highlight::getColor() { return m_itemColor; }
+KURL Highlight::getSoundURL() { return m_soundURL; }
 
-QString Highlight::getText() { return itemText; }
-QColor Highlight::getColor() { return itemColor; }
-
-void Highlight::setText(const QString& passed_itemText)  { itemText=passed_itemText; }
-void Highlight::setColor(const QColor& passed_itemColor) { itemColor=passed_itemColor; }
+void Highlight::setText(const QString& itemText) { m_itemText = itemText; }
+void Highlight::setColor(const QColor& itemColor) { m_itemColor = itemColor; }
+void Highlight::setSoundURL(const KURL& url) { m_soundURL = url; }
