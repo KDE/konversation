@@ -48,7 +48,7 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
 {
 
 	m_addressBook = Konversation::Addressbook::self()->getAddressBook();
-	
+
 	// Addressee validation connections
 	connect( addAddresseeButton, SIGNAL( clicked() ), SLOT( slotAddAddresseeClicked() ) );
 	connect( addresseeListView, SIGNAL( clicked(QListViewItem * ) ),
@@ -89,7 +89,7 @@ void LinkAddressbookUI::slotLoadAddressees()
 		} else
 			/*KABC::AddresseeItem *item =*/ new KABC::AddresseeItem( addresseeListView, (*it) );
 	if(num_contacts_with_nick == 0)
-		lblHeader->setText(i18n("<qt><h1>Select Addressbook Entry</h1><p>From the list of contacts below, chose the person who '%2' is.</p></qt>").arg(m_ircnick));
+		lblHeader->setText(i18n("<qt><h1>Select Addressbook Entry</h1><p>From the list of contacts below, choose the person who '%2' is.</p></qt>").arg(m_ircnick));
 	else if(num_contacts_with_nick == 1 && realname.isEmpty())
 		lblHeader->setText(i18n("<qt><h1>Select Addressbook Entry</h1><p>'%2' is currently being listed as being a contact with no given name.</p></qt>").arg(m_ircnick));
 	else if(num_contacts_with_nick == 1 && !realname.isEmpty())
@@ -139,11 +139,11 @@ void LinkAddressbookUI::accept()
 		if(!Konversation::Addressbook::self()->saveTicket()) {
 			return;
 		}
-		
+
 	}
     disconnect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
 	deleteLater();
-	
+
 }
 
 void LinkAddressbookUI::reject()

@@ -29,7 +29,7 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
   modes=new QPopupMenu(this,"nicklist_modes_context_submenu");
   kickban=new QPopupMenu(this,"nicklist_kick_ban_context_submenu");
   addressbook= new QPopupMenu(this,"nicklist_addressbook_context_submenu");
-  
+
   if(popup)
   {
     if(modes)
@@ -105,7 +105,7 @@ void NickListView::contextMenuEvent(QContextMenuEvent* ce)
   }
 }
 void NickListView::insertAssociationSubMenu() {
-	
+
   bool any_existing_associations=false;
   bool any_not_having_associations=false;
   addressbook->clear();
@@ -123,19 +123,19 @@ void NickListView::insertAssociationSubMenu() {
 
   if(!any_not_having_associations && any_existing_associations) {
     addressbook->insertItem(i18n("Edit contact..."), AddressbookEdit);
-    addressbook->insertSeparator();	  
+    addressbook->insertSeparator();
   }
-  
+
   if(any_not_having_associations && any_existing_associations)
-    addressbook->insertItem(i18n("Chose/change associations..."), AddressbookChange);
+    addressbook->insertItem(i18n("Choose/Change Associations..."), AddressbookChange);
   else if(any_not_having_associations)
-    addressbook->insertItem(i18n("Chose contact..."), AddressbookChange);
+    addressbook->insertItem(i18n("Choose Contact..."), AddressbookChange);
   else
-    addressbook->insertItem(i18n("Change association..."), AddressbookChange);
+    addressbook->insertItem(i18n("Change Association..."), AddressbookChange);
   if(any_not_having_associations && !any_existing_associations)
-    addressbook->insertItem(i18n("Create new contact..."), AddressbookNew);
-  
+    addressbook->insertItem(i18n("Create New Contact..."), AddressbookNew);
+
     if(any_existing_associations)
-    addressbook->insertItem(i18n("Delete association"), AddressbookDelete);
+    addressbook->insertItem(i18n("Delete Association"), AddressbookDelete);
 }
 #include "nicklistview.moc"
