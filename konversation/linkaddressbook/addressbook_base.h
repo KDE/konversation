@@ -88,7 +88,13 @@ class AddressbookBase : public QObject, public KIMIface
      *  Run kaddressbook to edit the addressee passed in.
      */
     bool editAddressee(const QString &uid);
-    
+    /**
+     *  Run the users email program (e.g. kmail) passing "mailto:" + mailtoaddress.
+     *  Note that mailto:  will be prepended for you.
+     *  @param mailtoaddress A comma delimited set of email address topass as "mailto:"
+     *  @return True if there were no problems running the email program.  An error will be shown to the user if there was.
+     */
+    bool runEmailProgram(const QString &mailtoaddress);
   signals:
     void addresseesChanged();
 

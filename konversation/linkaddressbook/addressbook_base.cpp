@@ -20,6 +20,7 @@
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <kmessagebox.h>
+#include <krun.h>
 #include "../channel.h"
 
 namespace Konversation {
@@ -318,27 +319,29 @@ bool AddressbookBase::sendEmail(const KABC::Addressee &addressee) {
     KMessageBox::sorry(0, i18n("The contact that you have selected does not have an email address associated with them. "), i18n("Cannot send email"));
     return false;
   }
-  KProcess *proc = new KProcess;
-  *proc << "kmail";
-  *proc << addressee.fullEmail();
-  if(!proc->start()) {
-	  KMessageBox::error(0, "Could not run your email program (kmail).  This is possibly because it isn't installed.  Please install the 'kdepim' packages.");
+  return runEmailProgram(addressee.fullEmail());
+}
+
+bool AddressbookBase::runEmailProgram(const QString &mailtoaddress) {
+  KRun *proc = new KRun(KURL(QString("mailto:") + mailtoaddress));
+  kdDebug() << "Sending email to " << mailtoaddress << endl;
+  if(proc->hasError()) {
+	  KMessageBox::error(0, "Could not run your email program.  This is possibly because one isn't installed.  To install the KDE email program (kmail) please install the 'kdepim' packages.");
 	  return false;
   }
   return true;
-
+ 
 }
-
 bool AddressbookBase::sendEmail(const ChannelNickList &nickList) {
   if(nickList.isEmpty()) return false;
-  KProcess *proc = new KProcess;
-  *proc << "kmail";
+  QString mailto;
+  
   QStringList nicksWithoutAddressee;
   QStringList nicksWithoutEmails;
   QStringList nicksWithEmails;
   for(ChannelNickList::ConstIterator it=nickList.begin();it!=nickList.end();++it) {
     NickInfoPtr nickInfo = (*it)->getNickInfo();
-    Q_ASSERT(nickInfo);  if(!nickInfo) { delete proc; return false; }
+    Q_ASSERT(nickInfo);  if(!nickInfo) return false; 
     KABC::Addressee addr = nickInfo->getAddressee();
     if(addr.isEmpty()) {
       nicksWithoutAddressee.append(nickInfo->getNickname());
@@ -346,7 +349,10 @@ bool AddressbookBase::sendEmail(const ChannelNickList &nickList) {
       nicksWithoutEmails.append(nickInfo->getNickname());
     } else {
       nicksWithEmails.append(nickInfo->getNickname());
-      *proc << addr.fullEmail();
+      if(!mailto.isEmpty()) 
+        mailto += ", ";
+      mailto += addr.fullEmail();
+      
     }
   }
   if(!nicksWithoutAddressee.isEmpty() || !nicksWithoutEmails.isEmpty()) {
@@ -383,23 +389,18 @@ bool AddressbookBase::sendEmail(const ChannelNickList &nickList) {
     }
     if(nicksWithEmails.isEmpty()) {
       KMessageBox::sorry(0, message, i18n("Cannot send email"));
-      delete proc;  //Can we do this?
       return false;
     } else {
       message += i18n("\nDo you want to send an email anyway to the nicks that do have an email address?");
       int result = KMessageBox::questionYesNo(0, message, i18n("Send Email"), KGuiItem(i18n("&Send email...")), KGuiItem(i18n("&Cancel")));
       if(result == KMessageBox::No) {
-        delete proc;
         return false;
       }     
     }
   }
-  if(!proc->start()) {
-	  KMessageBox::error(0, "Could not run your email program (kmail).  This is possibly because it isn't installed.  Please install the 'kdepim' packages.");
-	  return false;
-  }
-  return true;
-  
+
+
+  return runEmailProgram(mailto);
 }
 
 }  // NAMESPACE 

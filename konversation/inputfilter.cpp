@@ -637,7 +637,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
   bool isNumeric;
   int numeric;
   numeric=command.toInt(&isNumeric);
-
+  Q_ASSERT(server); if(!server) return;
   if(!isNumeric)
   {
     if(command=="ping")
@@ -1318,7 +1318,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case ERR_NOCHANMODES:
         {
-          server->getChannelByName(parameterList[1])->appendServerMessage(i18n("Channel"), trailing);
+	  ChatWindow *chatwindow = server->getChannelByName(parameterList[1]);
+          if(chatwindow) chatwindow->appendServerMessage(i18n("Channel"), trailing);
           break;
         }
       case ERR_UNKNOWNCOMMAND:

@@ -236,6 +236,7 @@ void ChatWindow::appendAction(const QString& nickname,const QString& message)
 
 void ChatWindow::appendServerMessage(const QString& type,const QString& message)
 {
+  Q_ASSERT(this); if(!this) return; //I think there are still cases where chatwindow is being called even after it's deleted.
   Q_ASSERT(textView);  if(!textView) return ;
   textView->appendServerMessage(type,message);
 }
