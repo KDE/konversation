@@ -157,7 +157,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
   new KAction(i18n("&IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors");
   new KAction(i18n("&Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line");
-  new KAction(i18n("&Character..."), 0, 0, this, SLOT(insertCharacter()), actionCollection(), "insert_character");
+  new KAction(i18n("&Character..."), "fonts", 0, this, SLOT(insertCharacter()), actionCollection(), "insert_character");
 
   new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
 
