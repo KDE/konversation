@@ -21,6 +21,7 @@
 #include <kfilemetainfo.h>
 #include <kglobal.h>
 #include <kiconloader.h>
+#include <kio/job.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprogress.h>
@@ -149,10 +150,13 @@ void DccTransfer::runFile()  // public
     new KRun( m_fileURL );
 }
 
-bool DccTransfer::removeFile()  // public
+void DccTransfer::removeFile()  // public
 {
   if( m_dccType != Receive || m_dccStatus != Done )
-    return false;
+    return;
+  KIO::SimpleJob* deleteJob = KIO::file_delete( m_fileURL, false );  // is it better to show the progress dialog?
+  connect( deleteJob, SIGNAL( result( KIO::Job* ) ), this, SLOT( slotRemoveFileDone( KIO::Job* ) ) );
+  /*
   if( !QFile( m_fileURL.path() ).remove() )
   {
     KMessageBox::sorry( 0, i18n("Cannot remove file '%1'.").arg( m_fileURL.url() ), i18n("DCC Error") );
@@ -161,6 +165,18 @@ bool DccTransfer::removeFile()  // public
   setStatus( Removed );
   updateView();
   return true;
+  */
+}
+
+void DccTransfer::slotRemoveFileDone( KIO::Job* job )
+{
+  if( job->error() )
+    KMessageBox::sorry( 0, i18n("Cannot remove file '%1'.").arg( m_fileURL.url() ), i18n("DCC Error") );
+  else
+  {
+    setStatus( Removed );
+    updateView();
+  }
 }
 
 void DccTransfer::openFileInfoDialog()

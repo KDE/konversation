@@ -27,6 +27,11 @@ class QTimer;
 
 class KProgress;
 
+namespace KIO
+{
+  class Job;
+}
+
 class DccDetailDialog;
 class DccPanel;
 
@@ -78,7 +83,7 @@ class DccTransfer : public QObject, public KListViewItem
     bool isResumed() const;
     
     void runFile();
-    bool removeFile();
+    void removeFile();
     void openFileInfoDialog();
     
     void openDetailDialog();
@@ -94,6 +99,8 @@ class DccTransfer : public QObject, public KListViewItem
     
   protected slots:
     void updateView();
+    
+    void slotRemoveFileDone( KIO::Job* job );
     
   protected:
     void showProgressBar();  // called from printCell()
