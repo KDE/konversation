@@ -45,7 +45,8 @@ class LedListViewItem : public QObject, public KListViewItem
     virtual int compare(QListViewItem* item,int col,bool ascending) const;
     Nick *getNick();
 	    
-#ifndef USE_NICKINFO
+#ifdef USE_NICKINFO
+#else
     void refresh();
 #endif
   protected:
