@@ -226,26 +226,27 @@ void IRCView::urlClickSlot(const QString &url, bool newTab)
     // Always use KDE default mailer.
     if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.lower().startsWith("mailto:"))
     {
-      QCString konqueror_id;
+      QCString konquerorId;
       
       if(newTab)
 	{
 	  QCStringList appList = kapp->dcopClient()->registeredApplications();
 	  QCStringList::iterator it;
 	  
+	  // Find in reverse to work around konqueror preloading
 	  for(it=appList.end(); it != appList.begin(); --it)
 	    {
 	      if((*it).contains("konqueror"))
 		{
-		  konqueror_id = *it;
+		  konquerorId = *it;
 		  break;
 		}
 	    }
 	}
       
-      if(!konqueror_id.isEmpty())
+      if(!konquerorId.isEmpty())
 	{ 
-	  DCOPRef konqueror( konqueror_id,"konqueror-mainwindow#1");
+	  DCOPRef konqueror( konquerorId,"konqueror-mainwindow#1");
 	  konqueror.call( "newTab", url );
 	}
       else
