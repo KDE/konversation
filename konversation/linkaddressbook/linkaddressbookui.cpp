@@ -45,8 +45,8 @@
 LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick )
 : LinkAddressbookUI_Base( parent, name )
 {
-	m_addressBook = KABC::StdAddressBook::self( true );
-	KABC::StdAddressBook::setAutomaticSave( false );
+
+	m_addressBook = Konversation::Addressbook::self()->getAddressBook();
 	
 	// Addressee validation connections
 	connect( addAddresseeButton, SIGNAL( clicked() ), SLOT( slotAddAddresseeClicked() ) );
@@ -58,6 +58,9 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
 			SLOT( slotAddresseeListClicked( QListViewItem * ) ) );
 
 	connect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
+    connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
+  
+	
 	m_ircnick = ircnick;
 	m_lower_ircnick = m_ircnick.lower();
 	Q_ASSERT(!ircnick.isEmpty());
@@ -79,7 +82,7 @@ void LinkAddressbookUI::slotLoadAddressees()
 
 	KABC::AddressBook::Iterator it;
 	for( it = m_addressBook->begin(); it != m_addressBook->end(); ++it )
-		if(Konversation::Addressbook::hasNick(*it, m_lower_ircnick)) {
+		if(Konversation::Addressbook::self()->hasNick(*it, m_lower_ircnick)) {
 			realname = (*it).realName();
 			num_contacts_with_nick++;
 			(new KABC::AddresseeItem( addresseeListView, (*it) ))->setSelected(true);
@@ -106,7 +109,7 @@ void LinkAddressbookUI::slotAddAddresseeClicked()
 	{
 		KABC::Addressee addr;
 		addr.setNameFromString( addresseeName );
-		Konversation::Addressbook::saveAddressee(addr);
+		Konversation::Addressbook::self()->saveAddressee(addr);
 	}
 //this shouldn't be needed - why is it?
 	slotLoadAddressees();
@@ -123,8 +126,12 @@ void LinkAddressbookUI::accept()
 	//// set the KABC uid in the metacontact
 	KABC::AddresseeItem *item = 0L;
 	item = static_cast<KABC::AddresseeItem *>( addresseeListView->selectedItem() );
+
+	KABC::Addressee addr;
 	if ( item ) {
-		Konversation::Addressbook::associateNickAndUnassociateFromEveryoneElseAndSave(item->addressee(), m_ircnick);
+
+	    addr = item->addressee();
+		Konversation::Addressbook::self()->associateNickAndUnassociateFromEveryoneElseAndSave(addr, m_ircnick);
 	}
     disconnect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
 	deleteLater();

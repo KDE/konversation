@@ -52,7 +52,7 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
     popup->insertItem(i18n("Send File..."),DccSend);
 
     if(addressbook) {
-          popup->insertSeparator();
+      popup->insertSeparator();
       popup->insertItem(i18n("Addressbook associations"), addressbook, AddressbookSub);
     }
     popup->insertSeparator();
@@ -107,7 +107,7 @@ void NickListView::insertAssociationSubMenu() {
   QStringList nickList=channel->getSelectedNicksList();
   for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator)
   {
-    if(Konversation::Addressbook::getKABCAddresseeFromNick(*nickIterator).isEmpty()) {
+    if(Konversation::Addressbook::self()->getKABCAddresseeFromNick(*nickIterator).isEmpty()) {
       any_not_having_associations=true;
       if(any_existing_associations) break;
     } else {

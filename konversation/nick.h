@@ -19,6 +19,9 @@
   @author Dario Abatianni
 */
 
+#include <kabc/addressbook.h>
+
+
 class KListView;
 class LedListViewItem;
 
@@ -47,7 +50,8 @@ class Nick
     void setOp(bool state);
     void setHalfop(bool state);
     void setVoice(bool state);
-
+    void refreshAddressee();
+	
     bool isSelected();
 
     QString getNickname();
@@ -64,6 +68,7 @@ class Nick
     bool voice;
 
     QString nickname;
+    KABC::Addressee addressee;
     QString hostmask;
 
     LedListViewItem* listViewItem;

@@ -28,7 +28,8 @@ Nick::Nick(KListView* listView,
            bool halfop,
            bool voice)
 {
-  QString realname = Konversation::Addressbook::getKABCAddresseeFromNick(newName).realName();
+  addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(newName);
+  QString realname = addressee.realName();
   if(!realname.isEmpty() && realname.lower() != newName.lower())
   	listViewItem=new LedListViewItem(listView,newName + " (" + realname + ")",newMask,admin,owner,op,halfop,voice);
   else
@@ -50,8 +51,34 @@ Nick::~Nick()
 
 void Nick::setNickname(const QString& newName)
 {
-  nickname=newName;
-  listViewItem->setText(1,newName);
+  KABC::Addressee newaddressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(newName);
+  
+  if(addressee.isEmpty() && !newaddressee.isEmpty()) //We now know who this person is
+    Konversation::Addressbook::self()->associateNick(newaddressee,nickname);  //Associate the old nickname with new contact
+  else if(!addressee.isEmpty() && newaddressee.isEmpty()) {
+    Konversation::Addressbook::self()->associateNick(addressee, newName);
+    newaddressee = addressee;
+  }
+
+  addressee = newaddressee;
+  nickname = newName;
+  
+  QString realname = addressee.realName();
+  if(!realname.isEmpty() && realname.lower() != newName.lower())
+    listViewItem->setText(1,newName + " (" + realname + ")");
+  else 
+    listViewItem->setText(1,newName);
+}
+
+void Nick::refreshAddressee() {
+  addressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname); 
+  QString realname = addressee.realName();
+
+  kdDebug() << "refreshing addressee nick '" << nickname << "' and found realname '" << realname << "'" << endl;
+  if(!realname.isEmpty() && realname.lower() != nickname.lower())
+    listViewItem->setText(1,nickname + " (" + realname + ")");
+  else
+    listViewItem->setText(1,nickname);     
 }
 
 void Nick::setHostmask(const QString& newMask)

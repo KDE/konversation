@@ -147,6 +147,7 @@ class Channel : public ChatWindow
     void closeYourself(ChatWindow* view); // USE_MDI
     void serverQuit(const QString& reason); // USE_MDI
 
+    void slotLoadAddressees();
   protected:
     void showEvent(QShowEvent* event);
 

@@ -288,6 +288,11 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   userhostTimer.start(10000);
 
   m_allowNotifications = true;
+
+
+  connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
+  connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
+  
 }
 
 Channel::~Channel()
@@ -358,19 +363,26 @@ void Channel::popupCommand(int id)
   {
     case NickListView::AddressbookDelete:
       {
-        KABC::AddressBook* addressBook = KABC::StdAddressBook::self( true );
+	Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
         QStringList nickList=getSelectedNicksList();
-        for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator)
-  	      Konversation::Addressbook::unassociateNick(Konversation::Addressbook::getKABCAddresseeFromNick(*nickIterator), *nickIterator, addressBook);
-        Konversation::Addressbook::saveAddressbook(addressBook);
+        for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
+	  KABC::Addressee addr = addressbook->getKABCAddresseeFromNick(*nickIterator);
+  	  addressbook->unassociateNick(addr, *nickIterator);
+//        addressbook->saveAddressbook();
+	  getNickByName(*nickIterator)->refreshAddressee();
+	}
+        //addressbook->saveAddressbook();
         break;
       }
     case NickListView::AddressbookNew:
     case NickListView::AddressbookChange:
       {
         QStringList nickList=getSelectedNicksList();
-        for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator)
-	          (new LinkAddressbookUI(this, NULL, *nickIterator))->show();
+        for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
+	  LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, *nickIterator);
+	  linkaddressbookui->show();
+	  getNickByName(*nickIterator)->refreshAddressee();
+	}
         break;
       }
     case NickListView::AddressbookSub:
@@ -1766,6 +1778,17 @@ void Channel::showTopic(bool show)
     topicLabel->hide();
   }
 }
+
+void Channel::slotLoadAddressees() {
+  kdDebug() << "slotLoadAddressess" << endl;
+
+  for(Nick* nick=nicknameList.first(); nick; nick = nicknameList.next())
+  {
+    nick->refreshAddressee();
+  }
+}
+    
+
 
 //
 // NickList

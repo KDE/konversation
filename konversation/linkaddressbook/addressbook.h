@@ -6,7 +6,7 @@
 */
 
 /*
-  addressbook.cpp  - This class gives function that interact with kaddressbook.
+  addressbook.cpp  - This class contains functions that interact with kaddressbook.
   begin:     Fri 2004-07-23
   copyright: (C) 2004 by John Tapsell
   email:     john@geola.co.uk
@@ -18,22 +18,42 @@
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
 
-namespace Konversation {
-class Addressbook
-{
-  public:
-    static KABC::Addressee getKABCAddresseeFromNick(const QString &ircnick);
-    static bool hasNick(const KABC::Addressee &addressee, const QString &ircnick);
-    static void unassociateNick(KABC::Addressee addressee, const QString &ircnick, KABC::AddressBook* addressBook);
-    static void associateNick(KABC::Addressee addressee, const QString &ircnick, KABC::AddressBook* addressBook);
-    static bool associateNickAndUnassociateFromEveryoneElseAndSave(KABC::Addressee addressee, const QString &ircnick);
+#include <kstaticdeleter.h> 
+#include <qobject.h>
 
-    static bool saveAddressee(KABC::Addressee addressee);
-    static bool saveAddressbook(KABC::AddressBook* addressBook);
-	    
+namespace Konversation {
+class Addressbook : public QObject
+{
+  Q_OBJECT
+  public:
+    KABC::Addressee getKABCAddresseeFromNick(const QString &ircnick);
+    bool hasNick(const KABC::Addressee &addressee, const QString &ircnick);
+    void unassociateNick(KABC::Addressee &addressee, const QString &ircnick);
+    void associateNick(KABC::Addressee &addressee, const QString &ircnick);
+    bool associateNickAndUnassociateFromEveryoneElseAndSave(KABC::Addressee &addressee, const QString &ircnick);
+    bool getAndCheckTicket();
+    bool saveTicket();	
+    void releaseTicket();
+    bool saveAddressee(KABC::Addressee &addressee);
+    bool saveAddressbook();
+    KABC::AddressBook *getAddressBook();
+    
+    static Addressbook *self();
   private:
     Addressbook();
+    static Addressbook *m_instance;
+
+    KABC::AddressBook* addressBook;
+    KABC::Ticket *m_ticket;
+    
+  signals:
+    void addresseesChanged();
 };
+
+
+static KStaticDeleter<Addressbook> sd;
+
 }
 
 #endif
+
