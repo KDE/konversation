@@ -24,9 +24,11 @@ int ServerEntry::newId=0;
 
 ServerEntry::ServerEntry(const QString newDefinition)
 {
-  /* Every entry gets a unique ID */
+  // Every entry gets a unique ID
   id=newId++;
   definition=newDefinition;
+  QStringList properties=QStringList::split(',',getDefinition(),true);
+  if(properties.count()!=7) definition=definition+",";
 }
 
 ServerEntry::~ServerEntry()
