@@ -27,7 +27,7 @@ class Nick
 {
   public:
     Nick(KListView *listView,
-	 ChannelNickPtr channelnick);
+	 const ChannelNickPtr& channelnick);
     ~Nick();
 
     bool isAdmin();

@@ -23,7 +23,7 @@
 
 
 Nick::Nick(KListView *listView,
-           ChannelNickPtr channelnick)
+           const ChannelNickPtr& channelnick)
 {
   Q_ASSERT(channelnick);
   if(!channelnick) return;
