@@ -1297,26 +1297,34 @@ void Channel::updateFonts()
 {
   kdDebug() << "Channel::updateFonts()" << endl;
 
-  topicLine->setFont(KonversationApplication::preferences.getTextFont());
-  limit->setFont(KonversationApplication::preferences.getTextFont());
   nicknameButton->setFont(KonversationApplication::preferences.getTextFont());
 
   const QColor fg("#"+KonversationApplication::preferences.getColor("ChannelMessage"));
   const QColor bg("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
 
-  QPalette palette=channelInput->palette();
-  palette.setColor(QColorGroup::Text,fg);
-  channelInput->setPalette(palette);
-  channelInput->setBackgroundColor(bg);
+  channelInput->setPaletteForegroundColor(fg);
+  channelInput->setPaletteBackgroundColor(bg);
   channelInput->setFont(KonversationApplication::preferences.getTextFont());
+
+  limit->setPaletteForegroundColor(fg);
+  limit->setPaletteBackgroundColor(bg);
+  limit->setFont(KonversationApplication::preferences.getTextFont());
+
+  topicLine->lineEdit()->setPaletteForegroundColor(fg);
+  topicLine->lineEdit()->setPaletteBackgroundColor(bg);
+  topicLine->setFont(KonversationApplication::preferences.getTextFont());
 
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
                                    KonversationApplication::preferences.getBackgroundImageName());
 
   nicksOps->setFont(KonversationApplication::preferences.getListFont());
-  nicknameListView->setFont(KonversationApplication::preferences.getListFont());
+
   nicknameListView->sort();
+
+  nicknameListView->setPaletteForegroundColor(fg);
+  nicknameListView->setPaletteBackgroundColor(bg);
+  nicknameListView->setFont(KonversationApplication::preferences.getListFont());
 }
 
 void Channel::openNickChangeDialog()
