@@ -37,13 +37,17 @@ class NicksOnline : public ChatWindow
   Q_OBJECT
 
   public:
-    // Columns of the NickListView when using NickInfo.
+    // Columns of the NickListView.
     enum NickListViewColumn {
-      nlvcServerNickChannel = 0,
+      nlvcGroupNickChannel = 0,
+      nlvcGroup = 0,
+      nlvcNick = 0,
+      nlvcChannel = 0,
       nlvcKabc = 1,
-      nlvcAdditionalInfo = 1
+      nlvcAdditionalInfo = 1,
+      nlvcServerName = 2            // hidden
     };
-    // Ids associated with addressbook commands.
+    // Ids associated with menu/button commands.
     enum CommandIDs
     {
       ciAddressbookChange, ciAddressbookNew, ciAddressbookDelete, ciAddressbookEdit
@@ -136,11 +140,7 @@ class NicksOnline : public ChatWindow
     */
     void refreshAllServerOnlineLists();
     /**
-    * Update the Offline list in the Nick ListView.
-    */
-    void updateOfflineList(Server* server);
-    /**
-    * Return a string contained formatted additional information about a nick.
+    * Return a string containing formatted additional information about a nick.
     * @param nickInfo          A pointer to NickInfo structure for the nick.
     * @return                  A string formatted for display containing the information
     *                          about the nick.
@@ -197,12 +197,27 @@ class NicksOnline : public ChatWindow
     *                          2 = associated with addressbook.  @ref getNickAddressbookState.
     */
     void setupAddressbookButtons(int nickState);
+    /**
+    * Determines if a nick is online in any of the servers in a group.
+    * @param groupName          Server group name.
+    * @param nickname           Nick name.
+    * @return                   True if the nick is online in any of the servers in the group.
+    */
+    bool isNickOnline(QString& groupName, QString& nickname);
+    /**
+    * Requests a WHOIS in all servers for a specified server group and nickname.
+    * @param groupName          Server group name.
+    * @param nickname           Nick name.
+    */
+    void requestWhois(QString& groupName, QString& nickname);
     
     QPushButton* m_editContactButton;
     QPushButton* m_changeAssociationButton;
     QPushButton* m_deleteAssociationButton;
     QPopupMenu* m_popupMenu;
     Konversation::KonversationNicksOnlineToolTip *m_tooltip;
+    // A string containing internationalized "Offline".
+    QString c_i18nOffline;
     
     /* Set to False every 8 seconds so that we generate a WHOIS on watch nicks that
        lack information.*/
