@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="8">
+<kpartgui name="konversation" version="9">
 
   <MenuBar>
     <Menu name="file">
@@ -8,7 +8,9 @@
     <Menu name="actions">
       <Text>&amp;Actions</Text>
       <Action name="find_text" />
+      <Separator />
       <Action name="irc_colors" />
+      <Separator />
       <Action name="clear_window" />
       <Action name="previous_tab" />
       <Action name="next_tab" />
@@ -19,8 +21,9 @@
       <Text>&amp;Windows</Text>
       <Action name="open_nicksonline_window" />
       <Action name="open_channel_list" />
-      <Action name="open_konsole" />
       <Action name="open_url_catcher" />
+      <Separator />
+      <Action name="open_konsole" />
       <Action name="open_logfile" />
     </Menu>
   </MenuBar>
