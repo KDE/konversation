@@ -21,6 +21,7 @@
   @author Dario Abatianni
 */
 
+class KToolBar;
 class KTextBrowser;
 class QSpinBox;
 
@@ -32,12 +33,17 @@ class LogfileReader : public QFrame
     LogfileReader(QString caption,QString log);
     ~LogfileReader();
 
-  protected:
+    void hide();
+  
+  protected slots:
     void updateView();
+    void closeLog();
 
+  protected:
     int margin();
     int spacing();
 
+    KToolBar* toolBar;
     KTextBrowser* view;
     QSpinBox* sizeSpin;
     QString fileName;

@@ -15,11 +15,13 @@
 #include <qlayout.h>
 #include <qfile.h>
 #include <qtextstream.h>
+#include <qdockarea.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <qspinbox.h>
 
 #include <kdialog.h>
+#include <ktoolbar.h>
 #include <ktextbrowser.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -34,33 +36,45 @@ LogfileReader::LogfileReader(QString caption,QString log) :
 
   QGridLayout* mainLayout=new QGridLayout(this,2,4,0,spacing());
   fileName=log;
-
-  view=new KTextBrowser(this);
-  QPushButton* saveButton=new QPushButton(i18n("Save Logfile..."),this,"logfile_save_button");
-
-  QLabel* sizeLabel=new QLabel(i18n("Show last"),this,"logfile_size_label");
-
-  sizeSpin=new QSpinBox(10,1000,10,this,"logfile_size_spinbox");
-  sizeSpin->setValue(102400/1024);  // KonversationApplication.preferences.getLogfileBufferSize();
+  QDockArea* toolBarDock=new QDockArea(Qt::Horizontal,QDockArea::Normal,this,"logfile_toolbar_dock"); 
+  toolBar=new KToolBar(toolBarDock,"logfile_toolbar",true,true);
+  
+  toolBar->insertButton("filesaveas",0,SIGNAL(clicked()),this,SLOT(saveLog()),true,i18n("Save as..."));
+  
+  new QLabel(i18n("Show last"),toolBar,"logfile_size_label");
+  sizeSpin=new QSpinBox(10,1000,10,toolBar,"logfile_size_spinbox");
+  sizeSpin->setValue(KonversationApplication::preferences.getLogfileBufferSize());
   sizeSpin->setSuffix(i18n(" KB"));
 
-  QPushButton* reloadButton=new QPushButton(i18n("Reload"),this,"logfile_reload_button");
-
+  toolBar->insertButton("reload",0,SIGNAL(clicked()),this,SLOT(updateView()),true,i18n("Reload"));
+  toolBar->insertButton("fileclose",0,SIGNAL(clicked()),this,SLOT(closeLog()),true,i18n("Close"));
+  
+  view=new KTextBrowser(this);
+  
   updateView();
 
   int row=0;
 
+  mainLayout->addMultiCellWidget(toolBarDock,row,row,0,3);
+  
+  row++;
   mainLayout->addMultiCellWidget(view,row,row,0,3);
 
-  row++;
-  mainLayout->addWidget(saveButton,row,0);
-  mainLayout->addWidget(sizeLabel,row,1);
-  mainLayout->addWidget(sizeSpin,row,2);
-  mainLayout->addWidget(reloadButton,row,3);
+  resize(KonversationApplication::preferences.getLogfileReaderSize());
+}
+
+LogfileReader::~LogfileReader()
+{
+  KonversationApplication::preferences.setLogfileReaderSize(size());
+  KonversationApplication::preferences.setLogfileBufferSize(sizeSpin->value());
+  
+  delete view;
+  delete toolBar;
 }
 
 void LogfileReader::updateView()
 {
+  // get maximum size of logfile to display
   unsigned long pos=sizeSpin->value()*1024;
   view->clear();
 
@@ -84,9 +98,15 @@ void LogfileReader::updateView()
   }
 }
 
-LogfileReader::~LogfileReader()
+// make sure that the widget gets closed when user presses the window manager's [x] button
+void LogfileReader::hide()
 {
-  delete view;
+  closeLog();
+}
+
+void LogfileReader::closeLog()
+{
+  delete this;
 }
 
 int LogfileReader::margin() { return KDialog::marginHint(); }

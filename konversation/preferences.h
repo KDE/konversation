@@ -155,12 +155,18 @@ class Preferences : public QObject
     QSize getNotifySize();
     QSize getNicksOnlineSize();
     QSize getNicknameSize();
+    QSize getLogfileReaderSize();
+    
     void setHilightSize(QSize newSize);
     void setButtonsSize(QSize newSize);
     void setIgnoreSize(QSize newSize);
     void setNotifySize(QSize newSize);
     void setNicksOnlineSize(QSize newSize);
     void setNicknameSize(QSize newSize);
+    void setLogfileReaderSize(QSize newSize);
+
+    int getLogfileBufferSize();
+    void setLogfileBufferSize(int newSize);
 
     int getNotifyDelay();
     void setNotifyDelay(int delay);
@@ -438,8 +444,11 @@ class Preferences : public QObject
     QSize notifySize;
     QSize nicksOnlineSize;
     QSize nicknameSize;
+    QSize logfileReaderSize;
     QSize colorConfigurationSize;
 
+    int logfileBufferSize;
+    
     bool useSpacing;
     int spacing;
     int margin;

@@ -236,13 +236,18 @@ void KonversationApplication::readOptions()
   preferences.setTrayNotify(config->readBoolEntry("TrayNotify",preferences.getTrayNotify()));
 
   // Window geometries
+  QSize* logfileReaderSize=new QSize(500,300);
   preferences.setHilightSize(config->readSizeEntry("HilightGeometry"));
   preferences.setButtonsSize(config->readSizeEntry("ButtonsGeometry"));
   preferences.setIgnoreSize(config->readSizeEntry("IgnoreGeometry"));
   preferences.setNotifySize(config->readSizeEntry("NotifyGeometry"));
   preferences.setNicksOnlineSize(config->readSizeEntry("NicksOnlineGeometry"));
   preferences.setNicknameSize(config->readSizeEntry("NicknameGeometry"));
+  preferences.setLogfileReaderSize(config->readSizeEntry("LogfileReaderGeometry",logfileReaderSize));
+  delete logfileReaderSize;
 
+  preferences.setLogfileBufferSize(config->readNumEntry("LogfileBufferSize",preferences.getLogfileBufferSize()));  
+  
   // Double click actions
   preferences.setChannelDoubleClickAction(config->readEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction()));
   preferences.setNotifyDoubleClickAction(config->readEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction()));
@@ -541,7 +546,10 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("NotifyGeometry",preferences.getNotifySize());
   config->writeEntry("NicksOnlineGeometry",preferences.getNicksOnlineSize());
   config->writeEntry("NicknameGeometry",preferences.getNicknameSize());
+  config->writeEntry("LogfileReaderGeometry",preferences.getLogfileReaderSize());
 
+  config->writeEntry("LogfileBufferSize",preferences.getLogfileBufferSize());
+  
   config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon());
   config->writeEntry("TrayNotify",preferences.getTrayNotify());
 

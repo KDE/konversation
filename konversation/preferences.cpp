@@ -111,6 +111,9 @@ Preferences::Preferences()
   setLowerLog(true);
   setLogFollowsNick(true);
 
+  setLogfileBufferSize(100);
+  setLogfileReaderSize(QSize(400,200));
+  
   setTabPlacement(Bottom);
   setBlinkingTabs(true);
   setCloseButtonsOnTabs(true);
@@ -515,6 +518,9 @@ void Preferences::setOpLedColor(int passed_color)       { opLedColor=passed_colo
 void Preferences::setVoiceLedColor(int passed_color)    { voiceLedColor=passed_color; }
 void Preferences::setNoRightsLedColor(int passed_color) { noRightsLedColor=passed_color; }
 
+int Preferences::getLogfileBufferSize()             { return logfileBufferSize; }
+void Preferences::setLogfileBufferSize(int newSize) { logfileBufferSize=newSize; }
+
 // Geometry functions
 QSize Preferences::getHilightSize()            { return hilightSize; }
 QSize Preferences::getButtonsSize()            { return buttonsSize; }
@@ -522,6 +528,7 @@ QSize Preferences::getIgnoreSize()             { return ignoreSize; }
 QSize Preferences::getNotifySize()             { return notifySize; }
 QSize Preferences::getNicksOnlineSize()        { return nicksOnlineSize; }
 QSize Preferences::getNicknameSize()           { return nicknameSize; }
+QSize Preferences::getLogfileReaderSize()      { return logfileReaderSize; }
 
 void Preferences::setHilightSize(QSize newSize)            { hilightSize=newSize; }
 void Preferences::setButtonsSize(QSize newSize)            { buttonsSize=newSize; }
@@ -529,6 +536,7 @@ void Preferences::setIgnoreSize(QSize newSize)             { ignoreSize=newSize;
 void Preferences::setNotifySize(QSize newSize)             { notifySize=newSize; }
 void Preferences::setNicksOnlineSize(QSize newSize)        { nicksOnlineSize=newSize; }
 void Preferences::setNicknameSize(QSize newSize)           { nicknameSize=newSize; }
+void Preferences::setLogfileReaderSize(QSize newSize)      { logfileReaderSize=newSize; }
 
 void Preferences::setHilightNick(bool state) { hilightNick=state; }
 bool Preferences::getHilightNick() { return hilightNick; }
