@@ -1740,7 +1740,7 @@ void Channel::updateFonts()
       QString::null);
   }
 
-  nicknameListView->sort();
+  nicknameListView->resort();
 
   nicknameListView->setPaletteForegroundColor(fg);
   nicknameListView->setPaletteBackgroundColor(bg);
