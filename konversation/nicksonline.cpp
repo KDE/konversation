@@ -315,7 +315,6 @@ void NicksOnline::updateServerOnlineList(Server* servr)
                 // mode and led info displayed.
                 
                 QString channelName = channelList[channelIndex];
-                channelName = channelList[channelIndex];
                 
                 ChannelNickPtr channelNick = server->getChannelNick(channelName, nickname);
                 QString nickMode;
