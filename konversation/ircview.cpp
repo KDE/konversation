@@ -583,17 +583,24 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
 {
   QString commandColor=KonversationApplication::preferences.getColor("CommandMessage");
   QString line;
+  QString prefix="***";
+  
+  if(type=="Join")
+    prefix="-->";
+  else if(type=="Part")
+    prefix="<--";
+  prefix = QStyleSheet::escape(prefix);
 
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
-    line += "<p><font color=\"#" + commandColor + "\">*** %1" + PDF + " %2</font></p>\n";
+    line += "<p><font color=\"#" + commandColor + "\">"+prefix+" %1" + PDF + " %2</font></p>\n";
   } else {
-    line = "<p><font color=\"#" + commandColor + "\">%1 *** %2</font></p>\n";
+    line = "<p><font color=\"#" + commandColor + "\">%1 "+prefix+" %2</font></p>\n";
   }
 
   line = line.arg(timeStamp(), filter(message,commandColor,0,true,parseURL));
-
+ 
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
   doAppend(line, important, self);
