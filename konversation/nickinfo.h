@@ -25,7 +25,6 @@
 
 #include <kabc/addressbook.h>
 #include "addressbook.h"
-
 #include "localestring.h"
 
 class Server;
@@ -37,8 +36,10 @@ class Server;
   let Server know that the object has been modified.
 */
 
-class NickInfo : public KShared
+class NickInfo : public QObject, public KShared
 {
+  Q_OBJECT
+
   public:
     NickInfo(const QString& nick, Server* server);
     ~NickInfo();
@@ -91,6 +92,8 @@ class NickInfo : public KShared
     QString netServerInfo;
     QDateTime onlineSince;
     KABC::Addressee addressee;
+  signals:
+    void nickInfoChanged(void);
 };
 
 /** A NickInfoPtr is a pointer to a NickInfo object.  Since it is a KSharedPtr, the NickInfo

@@ -15,7 +15,7 @@
 #include "nickinfo.h"
 
 #include <qtooltip.h>
-
+#include "server.h"
 /*
   @author Gary Cramblitt
 */
@@ -62,8 +62,9 @@ QDateTime NickInfo::getOnlineSince() { return onlineSince; }
 Server* NickInfo::getServer() { return owningServer; }
  
 // Set properties of NickInfo object.
-// If any of these are called, call Server::nickInfoUpdated to let Server know about the change.
 void NickInfo::setNickname(const QString& newNickname) {
+  Q_ASSERT(!newNickname.isEmpty());
+  if(newNickname == nickname) return;
 
   KABC::Addressee newaddressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(newNickname);
 
@@ -80,18 +81,71 @@ void NickInfo::setNickname(const QString& newNickname) {
   nickname = newNickname; 
   
   QString realname = addressee.realName();
+  owningServer->emitNickInfoChanged(this);
+  emit nickInfoChanged();
 
 }
-void NickInfo::setHostmask(const QString& newMask) { if (!newMask.isEmpty()) hostmask = newMask; }
-void NickInfo::setAway(bool state) { away = state; }
-void NickInfo::setAwayMessage(const QString& newMessage) { awayMessage = newMessage; }
-void NickInfo::setIdentdInfo(const QString& newIdentdInfo) {identdInfo = newIdentdInfo; }
-void NickInfo::setVersionInfo(const QString& newVersionInfo) { versionInfo = newVersionInfo; }
-void NickInfo::setNotified(bool state) { notified = state; }
-void NickInfo::setRealName(const QString& newRealName) { if (!newRealName.isEmpty()) realName = newRealName; }
-void NickInfo::setNetServer(const QString& newNetServer) { if (!newNetServer.isEmpty()) netServer = newNetServer; }
-void NickInfo::setNetServerInfo(const QString& newNetServerInfo) { if (!newNetServerInfo.isEmpty()) netServerInfo = newNetServerInfo; }
-void NickInfo::setOnlineSince(const QDateTime& datetime) { if (!datetime.isNull()) onlineSince = datetime; }
+void NickInfo::setHostmask(const QString& newMask) { 
+  if (newMask.isEmpty() || newMask == hostmask) return;
+  hostmask = newMask;
+  owningServer->emitNickInfoChanged(this);
+  emit nickInfoChanged();
+}
+void NickInfo::setAway(bool state) { 
+  if(state == away) return;
+  away = state; 
+  owningServer->emitNickInfoChanged(this);
+  emit nickInfoChanged();
+}
+void NickInfo::setAwayMessage(const QString& newMessage) { 
+  if(awayMessage == newMessage) return;
+  awayMessage = newMessage; 
+  owningServer->emitNickInfoChanged(this);
+  emit nickInfoChanged();
+}
+void NickInfo::setIdentdInfo(const QString& newIdentdInfo) {
+  if(identdInfo == newIdentdInfo) return;
+  identdInfo = newIdentdInfo;
+  owningServer->emitNickInfoChanged(this);
+  emit nickInfoChanged();
+}
+void NickInfo::setVersionInfo(const QString& newVersionInfo) {
+  if(versionInfo == newVersionInfo) return;
+  versionInfo = newVersionInfo; 
+  owningServer->emitNickInfoChanged(this);
+  emit nickInfoChanged();
+}
+void NickInfo::setNotified(bool state) { 
+  if(state == notified) return;
+  notified = state; 
+  owningServer->emitNickInfoChanged(this);
+  emit nickInfoChanged();
+}
+void NickInfo::setRealName(const QString& newRealName) { 
+  if (newRealName.isEmpty() || realName == newRealName) return;
+  realName = newRealName; 
+  owningServer->emitNickInfoChanged(this);
+  emit nickInfoChanged();
+}
+void NickInfo::setNetServer(const QString& newNetServer) { 
+  if (newNetServer.isEmpty() || netServer == newNetServer) return;
+  netServer = newNetServer; 
+  owningServer->emitNickInfoChanged(this);
+  emit nickInfoChanged();
+}
+void NickInfo::setNetServerInfo(const QString& newNetServerInfo) {
+  if (newNetServerInfo.isEmpty() || newNetServerInfo == netServerInfo) return;
+  netServerInfo = newNetServerInfo;
+  owningServer->emitNickInfoChanged(this);
+  emit nickInfoChanged();
+}
+void NickInfo::setOnlineSince(const QDateTime& datetime) {
+  if (datetime.isNull() || datetime == onlineSince) return;
+  onlineSince = datetime; 
+  owningServer->emitNickInfoChanged(this);
+  emit nickInfoChanged();
+}
+
 KABC::Addressee NickInfo::getAddressee() { return addressee;}
 
 void NickInfo::refreshAddressee() {

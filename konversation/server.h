@@ -44,6 +44,7 @@ class KonversationMainWindow;
 class RawLog;
 class ChannelListPanel;
 class ScriptLauncher;
+class LocaleString;
 
 typedef QMap<LocaleString,ChannelNickPtr> ChannelNickMap;
 
@@ -149,9 +150,6 @@ class Server : public QObject
     // Given a nickname, returns an existing NickInfo object, or creates a new NickInfo object.
     // Returns pointer to the found or created NickInfo object.
     NickInfoPtr obtainNickInfo(const QString& nickname);
-    // Anyone who changes the contents of a NickInfo should call this method to let server
-    // know that it has changed.
-    void nickInfoUpdated(const NickInfoPtr nickInfo);
     // Returns the list of members for a channel in the joinedChannels list.
     // 0 if channel is not in the joinedChannels list.
     // Using code must not alter the list.
@@ -182,6 +180,8 @@ class Server : public QObject
     QString awayTime();
 
     void emitChannelNickChanged(const ChannelNickPtr channelNick);
+    void emitNickInfoChanged(const NickInfoPtr nickInfo);
+	    
     
   signals:
     void nicknameChanged(const QString&);

@@ -1075,13 +1075,6 @@ NickInfoPtr Server::getNickInfo(const QString& nickname)
     return 0;
 }
 
-// Anyone who changes the contents of a NickInfo should call this method to let server
-// know that it has changed.
-void Server::nickInfoUpdated(const NickInfoPtr nickInfo)
-{
-  if (nickInfo) emit nickInfoChanged(this, nickInfo);
-}
-
 // Given a nickname, returns an existing NickInfo object, or creates a new NickInfo object.
 // Returns pointer to the found or created NickInfo object.
 NickInfoPtr Server::obtainNickInfo(const QString& nickname)
@@ -1260,7 +1253,6 @@ void Server::addQuery(const QString& nickname,const QString& hostmask, bool wein
     if ((nickInfo->getHostmask() != hostmask) && !hostmask.isEmpty())
     {
       nickInfo->setHostmask(hostmask);
-      emit nickInfoChanged(this, nickInfo);
     }
     queryNicks.insert(lcNickname, nickInfo);
 #endif
@@ -1642,7 +1634,6 @@ void Server::joinChannel(const QString &name, const QString &hostmask, const QSt
   {
     NickInfoPtr nickInfo = channelNick->getNickInfo();
     nickInfo->setHostmask(hostmask);
-    emit nickInfoChanged(this, nickInfo);
   }
   channel->joinNickname(channelNick);
 #else 
@@ -1819,6 +1810,7 @@ void Server::addPendingNickList(const QString& channelName,const QStringList& ni
       unsigned int mode = nickList[i].section(" ",1,1).toInt();
       if (!nickname.isEmpty()) {
 	      ChannelNickPtr channelNick = addNickToJoinedChannelsList(channelName, nickname);
+	      Q_ASSERT(channelNick);
 	      channelNick->setMode(mode);
 	      pendingChannelNickList.append(channelNick);
       }
@@ -1870,10 +1862,12 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
   if (!channel->contains(lcNickname))
   {
     channelNick = ChannelNickPtr(new ChannelNick(nickInfo, false, false, false, false, false));
+    Q_ASSERT(channelNick);
     channel->insert(lcNickname, channelNick);
     doChannelMembersChangedSignal = true;
   }
   channelNick = (*channel)[lcNickname];
+  Q_ASSERT(channelNick); //Since we just added it if it didn't exist, it should be guaranteed to exist now
   // Move from the Offline to Online lists.
   if (nicknamesOffline.contains(lcNickname))
   {
@@ -1889,11 +1883,28 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
 #else
 ChannelNickPtr Server::addNickToJoinedChannelsList(const QString&, const QString&) { return 0; }
 #endif
+
+/** This function should _only_ be called from the ChannelNick class.
+ *  This function should also be the only one to emit this signal.
+ *  In this class, when channelNick is changed, it emits its own signal, and
+ *  calls this function itself.
+ */
 void Server::emitChannelNickChanged(const ChannelNickPtr channelNick) {
 #ifdef USE_NICKINFO
-	emit channelNickChanged(this, channelNick);
+  emit channelNickChanged(this, channelNick);
 #endif
 }
+/** This function should _only_ be called from the NickInfo class.
+ *  This function should also be the only one to emit this signal.
+ *  In this class, when nickInfo is changed, it emits its own signal, and
+ *  calls this function itself.
+ */
+void Server::emitNickInfoChanged(const NickInfoPtr nickInfo) {
+#ifdef USE_NICKINFO
+  emit nickInfoChanged(this, nickInfo);
+#endif
+}
+
 // Adds a nickname to the unjoinedChannels list.
 // Creates new NickInfo if necessary.
 // If needed, moves the channel from the joined list to the unjoined list.
@@ -2159,8 +2170,6 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
       queryNicks.remove(lcNickname);
       queryNicks.insert(lcNewname, nickInfo);
     }
-    nickInfo = getNickInfo(nickname);
-    emit nickInfoChanged(this, nickInfo);
   } else {
     kdDebug() << "server::renameNickInfo() was called for newname='" << newname << "' but nickInfo is null" << endl;
   }
@@ -2189,7 +2198,6 @@ void Server::addNickToChannel(const QString &channelName,const QString &nickname
   if ((nickInfo->getHostmask() != hostmask) && !hostmask.isEmpty())
   {
     nickInfo->setHostmask(hostmask);
-    emit nickInfoChanged(this, nickInfo);
   }
 #else
   
@@ -2219,7 +2227,6 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
     if ((nickInfo->getHostmask() != hostmask) && !hostmask.isEmpty())
     {
       nickInfo->setHostmask(hostmask);
-      emit nickInfoChanged(this, nickInfo);
     }
 #else
 
@@ -2255,7 +2262,6 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
     if ((nickInfo->getHostmask() != sourceHostmask) && !sourceHostmask.isEmpty())
     {
       nickInfo->setHostmask(sourceHostmask);
-      emit nickInfoChanged(this, nickInfo);
     }
   }
 #else
@@ -2391,7 +2397,6 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool
     if (nickInfo->isAway() != away)
     {
       nickInfo->setAway(away);
-      emit nickInfoChanged(this, nickInfo);
     }
   }
 }

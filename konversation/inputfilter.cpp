@@ -1179,7 +1179,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         {
 #ifdef USE_NICKINFO
           NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
-          if (nickInfo) server->nickInfoUpdated(nickInfo);
 #endif
           server->appendStatusMessage(i18n("Whois"),i18n("End of WHOIS list."));
           break;
