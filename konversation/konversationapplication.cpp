@@ -14,8 +14,10 @@
   $Id$
 */
 
-#include <kdebug.h>
+#include <qtextcodec.h>
 #include <qregexp.h>
+
+#include <kdebug.h>
 #include <dcopclient.h>
 
 #include "konversationapplication.h"
@@ -37,6 +39,10 @@ KonversationApplication::KonversationApplication()
 
   readOptions();
 
+  // Setup system codec
+  // FIXME: change this to use per-identity codecs!
+  QTextCodec::setCodecForCStrings(QTextCodec::codecForName(preferences.getCodec().ascii()));
+  
   // open main window
   mainWindow=new KonversationMainWindow();
 
@@ -97,10 +103,9 @@ void KonversationApplication::dcopSay(const QString& server,const QString& targe
     if(lookServer->getServerName()==server)
     {
       lookServer->dcopSay(target,command);
-      // break out of while loop
-      lookServer=0;
+      break; // leave while loop
     }
-    else lookServer=serverList.next();
+    lookServer=serverList.next();
   }
 }
 
@@ -170,7 +175,7 @@ void KonversationApplication::connectToAnotherServer(int id)
   connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
 
   connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&)) );
-  
+
   connect(newServer,SIGNAL (deleted(Server*)),this,SLOT (removeServer(Server*)) );
 
   serverList.append(newServer);
@@ -182,7 +187,7 @@ Server* KonversationApplication::getServerByName(const QString& name)
   while(lookServer)
   {
     if(lookServer->getServerName()==name) return lookServer;
-    else lookServer=serverList.next();
+    lookServer=serverList.next();
   }
   return 0;
 }
@@ -202,7 +207,7 @@ void KonversationApplication::quitKonversation()
 
   if(prefsDialog) delete prefsDialog;
   prefsDialog=0;
-  
+
   this->exit();
 }
 
@@ -212,7 +217,7 @@ void KonversationApplication::readOptions()
 
   // get standard config file
   KConfig* config=kapp->config();
-  
+
   // Read configuration and provide the default values
   config->setGroup("General Options");
 
@@ -410,7 +415,6 @@ void KonversationApplication::readOptions()
   else
     preferences.setHilightOwnLinesColor("#"+hilight);
 
-    
   // Ignore List
   config->setGroup("Ignore List");
   // Remove all default entries if there is at least one Ignore in the preferences file
@@ -505,10 +509,10 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("UseSpacing",preferences.getUseSpacing());
   config->writeEntry("Spacing",preferences.getSpacing());
   config->writeEntry("Margin",preferences.getMargin());
-  
+
   config->writeEntry("UseParagraphSpacing",preferences.getUseParagraphSpacing());
   config->writeEntry("ParagraphSpacing",preferences.getParagraphSpacing());
-  
+
   QString sizesString(QString::number(preferences.getChannelSplitter()[0])+","+QString::number(preferences.getChannelSplitter()[1]));
   config->writeEntry("ChannelSplitter",sizesString);
 
@@ -679,6 +683,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
 void KonversationApplication::storeURL(const QString &url)
 {
+  // FIXME: use KURL, check that we don't add the same URL twice
   urlList.append(url);
 }
 

@@ -158,7 +158,7 @@ Server::~Server()
   // Send out the last messages (usually the /QUIT)
   serverSocket.enableWrite(true);
   send();
-  
+
   closeRawLog();
   closeChannelListPanel();
   channelList.setAutoDelete(true);
@@ -417,7 +417,7 @@ QString Server::getAutoJoinCommand()
   // Multichannel joins
   QStringList channels=QStringList::split(' ',autoJoinChannel);
   QStringList keys=QStringList::split(' ',autoJoinChannelKey);
-  
+
   QString autoString("JOIN "+channels.join(",")+" "+keys.join(","));
 
   return autoString;
@@ -744,10 +744,10 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
   ip.setAddress(dccArguments[1].toULong());
 
   appendStatusMessage(i18n("DCC"),
-                      QString("%1 offers the file \"%2\" (%3 bytes) for download (%4:%5).")
+                      i18n("%1 offers the file \"%2\" (%3 bytes) for download (%4:%5).")
                               .arg(sourceNick)               // name
                               .arg(dccArguments[0])          // file
-                              .arg((dccArguments[3].isEmpty()) ? i18n("unknown") : dccArguments[3] )  // size
+                              .arg((dccArguments[3].isEmpty()) ? i18n("unknown number of") : dccArguments[3] ) // size
                               .arg(ip.toString())            // ip
                               .arg(dccArguments[2])          // port
                              );

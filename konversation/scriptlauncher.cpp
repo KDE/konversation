@@ -48,13 +48,13 @@ void ScriptLauncher::setTargetName(const QString& newName)
 void ScriptLauncher::launchScript(const QString &parameter)
 {
   KStandardDirs kstddir;
-  QString scriptPath(kstddir.saveLocation("data","konversation/scripts"));
+  QString scriptPath(kstddir.saveLocation("data",QString("konversation/scripts")));
   KProcess process;
 
   // send the script all the information it will need
   QStringList parameterList=QStringList::split(' ',parameter);
 
-  process << scriptPath+"/"+parameterList[0]  // script path / name
+  process << scriptPath+QString("/")+parameterList[0]  // script path / name
           << kapp->dcopClient()->appId()      // our dcop port
           << server                           // the server we are connected to
           << target;                          // the target where the call came from
@@ -66,7 +66,7 @@ void ScriptLauncher::launchScript(const QString &parameter)
   process.setWorkingDirectory(scriptPath);
   if(process.start()==false)
   {
-    QFile file(scriptPath+"/"+parameterList[0]);
+    QFile file(scriptPath+QString("/")+parameterList[0]);
     if(!file.exists()) emit scriptNotFound(file.name());
     else emit scriptExecutionError(file.name());
   }

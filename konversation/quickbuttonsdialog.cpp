@@ -25,7 +25,7 @@
 #include "quickbuttonsdialog.h"
 
 QuickButtonsDialog::QuickButtonsDialog(QStringList buttonList,QSize size):
-                    KDialogBase(0,"quickbuttonsdialog",false,i18n("Edit quick buttons"),
+                    KDialogBase(static_cast<QWidget*>(0),"quickbuttonsdialog",false,i18n("Edit quick buttons"),
                                 KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                                 KDialogBase::Ok,true)
 {

@@ -88,7 +88,7 @@ Preferences::Preferences()
 
   channelSplitter.append(10);
   channelSplitter.append(1);
-  
+
   setAutoReconnect(true);
   setAutoRejoin(true);
 
@@ -371,6 +371,10 @@ QStringList Preferences::getNicknameList() { return identityList.at(0)->getNickn
 void Preferences::setNickname(int index,const QString &newName) { identityList.at(0)->setNickname(index,newName); }
 void Preferences::setNicknameList(const QStringList &newList) { identityList.at(0)->setNicknameList(newList); }
 
+// FIXME: use per-identity codec setting
+void Preferences::setCodec(const QString &newCodec) { codec=newCodec; }
+QString Preferences::getCodec() { return codec; }
+
 void Preferences::setBlinkingTabs(bool blink) { blinkingTabs=blink; }
 bool Preferences::getBlinkingTabs() { return blinkingTabs; }
 
@@ -490,9 +494,6 @@ bool Preferences::getShowServerList() { return showServerList; }
 
 void Preferences::setChannelSplitter(QValueList<int> sizes) { channelSplitter=sizes; }
 QValueList<int> Preferences::getChannelSplitter() { return channelSplitter; }
-
-void Preferences::setCodec(const QString &newCodec) { codec=newCodec; }
-QString Preferences::getCodec() { return codec; }
 
 void Preferences::setChannelDoubleClickAction(const QString &action) { channelDoubleClickAction=action; }
 QString Preferences::getChannelDoubleClickAction() { return channelDoubleClickAction; }

@@ -30,7 +30,7 @@
 ChatWindow::ChatWindow(QWidget* parent)
 {
   setName("ChatWindowObject");
-  
+
   parentWidget=parent;
   firstLog=true;
   server=0;
@@ -251,6 +251,8 @@ void ChatWindow::logText(const QString& text)
     {
       // wrap the file into a stream
       QTextStream logStream(&logfile);
+      // write log in utf8 to help i18n
+      logStream.setEncoding(QTextStream::UnicodeUTF8);
 
       if(firstLog)
       {

@@ -572,12 +572,12 @@ void KonversationMainWindow::openNicksOnlineWindow()
   if(!nicksOnlineWindow)
   {
     nicksOnlineWindow=new NicksOnline(KonversationApplication::preferences.getNicksOnlineSize());
-    
+
     connect(nicksOnlineWindow,SIGNAL (editClicked()),this,SLOT (openNotify()) );
     connect(nicksOnlineWindow,SIGNAL (closeClicked(QSize)),this,SLOT (closeNicksOnlineWindow(QSize)) );
-    
+
     connect(nicksOnlineWindow,SIGNAL (doubleClicked(const QString&,const QString&)),this,SLOT (notifyAction(const QString&,const QString&)) );
-    
+
     connect(this,SIGNAL (nicksNowOnline(const QString&,const QStringList&)),nicksOnlineWindow,SLOT (setOnlineList(const QString&,const QStringList&)) );
 
     nicksOnlineWindow->show();

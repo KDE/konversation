@@ -32,7 +32,13 @@ ColorConfiguration::ColorConfiguration(QString passed_actionTextColor, QString p
                                        QString passed_serverTextColor, QString passed_timeColor,
                                        QString passed_backgroundColor,
                                        QSize passed_windowSize)
-                   : KDialogBase(0, 0, false, i18n("Color Configuration"), Ok|Apply|Cancel, Default, true)
+                   : KDialogBase(static_cast<QWidget*>(0),
+                                 static_cast<const char*>(0),
+                                 false,
+                                 i18n("Color Configuration"),
+                                 Ok | Apply | Cancel,
+                                 Default,
+                                 true)
 {
   kdDebug() << "ColorConfiguration::ColorConfiguration()" << endl;
 

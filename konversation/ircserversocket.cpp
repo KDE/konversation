@@ -28,7 +28,7 @@ IRCServerSocket::IRCServerSocket(const char *server,unsigned short int port,int 
                  KExtendedSocket(server,port,KExtendedSocket::inetSocket)
 {
   setTimeout(timeout);
-  kdDebug() << "IRCServerSocket::IRCServerSocket(" << server << "," << port << ")" << endl;
+  kdDebug() << "IRCServerSocket::IRCServerSocket(" << server << "," << port << "," << timeout << ")" << endl;
 }
 
 IRCServerSocket::~IRCServerSocket()

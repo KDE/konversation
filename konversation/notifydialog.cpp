@@ -26,7 +26,7 @@
 #include "notifydialog.h"
 
 NotifyDialog::NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int delay):
-               KDialogBase(0,"notifydialog",false,i18n("Edit notify list"),
+               KDialogBase(static_cast<QWidget*>(0),"notifydialog",false,i18n("Edit notify list"),
                            KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                            KDialogBase::Ok,true)
 {

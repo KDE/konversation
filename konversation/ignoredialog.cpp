@@ -28,7 +28,7 @@
 #include "ignoredialog.h"
 
 IgnoreDialog::IgnoreDialog(QPtrList<Ignore> newIgnoreList,QSize newSize):
-               KDialogBase(0,"ignoredialog",false,i18n("Edit ignore list"),
+               KDialogBase(static_cast<QWidget*>(0),"ignoredialog",false,i18n("Edit ignore list"),
                            KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                            KDialogBase::Ok,true)
 {
