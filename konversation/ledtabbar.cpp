@@ -295,11 +295,7 @@ void LedTabBar::layoutTabs()
       r.setWidth(r.width()+LABEL_OFFSET);
 
 #if QT_VERSION >= 0x030300
-      if(index)
-        r.moveLeft(offset);
-      else
-        r.moveLeft(0);
-
+      r.moveLeft(offset);
       offset+=r.width();
 #else
       r.moveBy(offset,0);
