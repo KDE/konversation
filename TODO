@@ -12,17 +12,17 @@ MID-TERM:
 - Compute md5sum over DCCs and send / display the hash after transfer
 - Make separate Highlight lists for each identity
 - Text substitution list (aliases, dangerous commands) with ability to pop up messageboxes
-- Use QCA for SSL when KNetwork natively supports it
 
 LONG-TERM:
 - Treeview with servers, list of channels / queries in a detachable window that also indicates new text
-- Logrotate with timer or at shutdown, compress rotated logs
+- Log rotation & maintainance ( Like copying log files to new location )
 - Context menu on nick in nick list should contain hostmask, realname, etc. infos (in a sub-menu)
 - "notices" tab for all notices that are no channel notices, snotices go to server status tab
 - Make LED colors for nick list configurable via GUI
 - Ban List. A window in which the user can see the bans of a channel(and remove them).
 - Usernames/channels are not clickable. Like you double click #foo on channel view and you join #foo channel.
-  Click on notify messages opens query
+- Click on notify messages opens query
+- Use QCA for SSL when KNetwork natively supports it
 
 IDEAS:
 - Automatically gzip files before DCC SEND
@@ -36,7 +36,7 @@ DISCUSSING:
 - The text-search could offer a button "any highlight"
 - Events for Queries and DCC Chat
 - Channel List: A "channel or topic" checkbox would be nice, or make the current checkboxes work as "or" not as "and"
-- Optionally copy log files to new location
+
 - Try to keep open views on kicks and stuff
 - Reverse-I-Search
 - Pasting into text views should trigger the paste mechanism (Partly implemented, MMB works. psn)
@@ -46,7 +46,7 @@ DISCUSSING:
 - Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated
 - Show away messages only once per nick
 - Different tab sortings
-- Import watched nicks list from .ircrc ( cartman: Need a sample ircrc for this )
+- Import watched nicks list from .ircrc ( cartman: Got sample.Will do after 0.15 )
 - Notify with more than 500 characters
 - Watched nicks editor should sort alphabetically, manual sorting makes no sense there
 - Watched nicks panel should have a "last seen" column so you can sort them
