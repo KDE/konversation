@@ -12,8 +12,6 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <qiconset.h>
-
 #include <kpopupmenu.h>
 #include <klocale.h>
 #include <kdebug.h>
