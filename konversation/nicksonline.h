@@ -143,6 +143,11 @@ class NicksOnline : public ChatWindow
     */
     void refreshAllServerOnlineLists();
     /**
+    * Refreshes the information for the given item in the list.
+    * @param item               Pointer to listview item.
+    */
+    void refreshItem(QListViewItem* item);
+    /**
     * Return a string containing formatted additional information about a nick.
     * @param nickInfo          A pointer to NickInfo structure for the nick.
     * @return                  A string formatted for display containing the information

@@ -637,7 +637,7 @@ void NicksOnline::doCommand(int id)
             break;
         }
     }
-    slotNickInfoChanged(server, nickInfo);
+    refreshItem(item);
 }
 
 /**
@@ -793,22 +793,48 @@ void NicksOnline::slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo
     if (!server) return;
     QString serverName = server->getServerName();
     QListViewItem* item = getServerAndNickItem(serverName, nickname);
-    if (!item) return;
-    int nickState = 2;
-    NickInfoPtr nickyInfo = nickInfo;
-    if (nickyInfo->getAddressee().isEmpty()) nickState = 1;
-    switch (nickState)
-    {
-        case 0: break;
-        case 1: { item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
-                QIconSet::Small, QIconSet::Disabled, QIconSet::Off)); break; }
-        case 2: { item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
-                QIconSet::Small, QIconSet::Normal, QIconSet::On)); break; }
-    }
-    QString nickAdditionalInfo = getNickAdditionalInfo(nickInfo);
-    item->setText(nlvcAdditionalInfo, nickAdditionalInfo);
-    if (item == m_nickListView->selectedItem()) setupAddressbookButtons(nickState);
+    refreshItem(item);
 }
+
+/**
+* Refreshes the information for the given item in the list.
+* @param item               Pointer to listview item.
+*/
+void NicksOnline::refreshItem(QListViewItem* item)
+{
+    if (!item) return;
+    QString serverName;
+    QString nickname;
+    if (getItemServerAndNick(item, serverName, nickname))
+    {
+        Server *server = 
+            static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
+        if (server)
+        {
+            NickInfoPtr nickInfo = server->getNickInfo(nickname);
+            KABC::Addressee addressee;
+            if (nickInfo)
+                addressee = nickInfo->getAddressee();
+            else
+                addressee = server->getOfflineNickAddressee(nickname);
+            int nickState = 2;
+            if (addressee.isEmpty()) nickState = 1;
+            switch (nickState)
+            {
+                case 0: break;
+                case 1: { item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
+                        QIconSet::Small, QIconSet::Disabled, QIconSet::Off)); break; }
+                case 2: { item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
+                        QIconSet::Small, QIconSet::Normal, QIconSet::On)); break; }
+            }
+            QString nickAdditionalInfo;
+            if (nickInfo) nickAdditionalInfo = getNickAdditionalInfo(nickInfo);
+            item->setText(nlvcAdditionalInfo, nickAdditionalInfo);
+            if (item == m_nickListView->selectedItem()) setupAddressbookButtons(nickState);
+        }
+    }
+}
+
 void NicksOnline::childAdjustFocus()
 {
 }
