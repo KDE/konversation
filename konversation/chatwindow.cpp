@@ -417,7 +417,7 @@ int ChatWindow::margin()
 }
 
 // Accessors
-IRCView* ChatWindow::getTextView()     { return textView; }
+IRCView* ChatWindow::getTextView() const { return textView; }
 void ChatWindow::setLog(bool activate) { log=activate; }
 
 // reimplement this in all panels that have user input

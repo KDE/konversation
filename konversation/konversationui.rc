@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="23">
+<kpartgui name="konversation" version="24">
 
   <MenuBar>
     <Menu name="file">
@@ -20,7 +20,7 @@
       <Action name="insert_character" />
     </Menu>
     <Menu name="settings">
-      <Action name="identities_dialog" />
+      <Action name="identities_dialog" append="configure_merge" />
     </Menu>
     <Menu name="windows" append="settings_merge">
       <Text>&amp;Window</Text>

@@ -24,7 +24,6 @@
 */
 
 class KToolBar;
-class KTextBrowser;
 class QSpinBox;
 
 class LogfileReader : public ChatWindow
@@ -40,6 +39,7 @@ class LogfileReader : public ChatWindow
     ~LogfileReader();
 
     virtual bool closeYourself() { closeLog(); return true; }
+    virtual bool searchView();
   
   protected slots:
     void updateView();
@@ -56,7 +56,6 @@ class LogfileReader : public ChatWindow
     virtual void childAdjustFocus();
 
     KToolBar* toolBar;
-    KTextBrowser* view;
     QSpinBox* sizeSpin;
     QString fileName;
 };

@@ -100,7 +100,7 @@ class ChatWindow : public BASE_CLASS
     Server* getServer();
     void setIdentity(const Identity *newIdentity);
     void setTextView(IRCView* newView);
-    IRCView* getTextView();
+    IRCView* getTextView() const;
     void setLog(bool activate);
 
     QString getName();

@@ -23,7 +23,6 @@
 
 #include <kdialog.h>
 #include <ktoolbar.h>
-#include <ktextbrowser.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -33,6 +32,7 @@
 
 #include "logfilereader.h"
 #include "konversationapplication.h"
+#include "ircview.h"
 
 #ifdef USE_MDI
 LogfileReader::LogfileReader(QString caption, QString log) : ChatWindow(caption)
@@ -57,7 +57,7 @@ LogfileReader::LogfileReader(QWidget* parent, QString log) : ChatWindow(parent)
   toolBar->insertButton("reload",0,SIGNAL(clicked()),this,SLOT(updateView()),true,i18n("Reload"));
   toolBar->insertButton("editdelete",0,SIGNAL(clicked()),this,SLOT(clearLog()),true,i18n("Clear Logfile"));
 
-  view = new KTextBrowser(this);
+  setTextView(new IRCView(this, 0));
 
   updateView();
   resize(KonversationApplication::preferences.getLogfileReaderSize());
@@ -68,7 +68,6 @@ LogfileReader::~LogfileReader()
   KonversationApplication::preferences.setLogfileReaderSize(size());
   KonversationApplication::preferences.setLogfileBufferSize(sizeSpin->value());
 
-  delete view;
   delete toolBar;
 }
 
@@ -76,7 +75,7 @@ void LogfileReader::updateView()
 {
   // get maximum size of logfile to display
   unsigned long pos=sizeSpin->value()*1024;
-  view->clear();
+  getTextView()->clear();
 
   QFile file(fileName);
 
@@ -91,7 +90,7 @@ void LogfileReader::updateView()
     // Skip first line, since it may be incomplete
     stream.readLine();
 
-    view->setText(stream.read());
+    getTextView()->setText(stream.read());
 
     stream.unsetDevice();
     file.close();
@@ -152,5 +151,7 @@ void LogfileReader::childAdjustFocus()
 
 int LogfileReader::margin() { return KDialog::marginHint(); }
 int LogfileReader::spacing() { return KDialog::spacingHint(); }
+bool LogfileReader::searchView() { return true; }
+
 
 #include "logfilereader.moc"
