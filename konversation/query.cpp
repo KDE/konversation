@@ -54,6 +54,8 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
 
+  updateFonts();
+
   setLog(KonversationApplication::preferences.getLog());
 }
 

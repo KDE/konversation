@@ -204,6 +204,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   nicknameList.setAutoDelete(true);     // delete items when they are removed
 
+  updateFonts();
   setLog(KonversationApplication::preferences.getLog());
 }
 
