@@ -831,7 +831,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
               else if(mode=='l')
               {
                 parameter=parameterList[parameterCount++];
-                modesAre+=i18n("limited to %1 users").arg(parameter);
+                modesAre+=i18n("limited to %n user", "limited to %n users", parameter.toInt());
               }
               else
                 modesAre+=mode;
@@ -1228,10 +1228,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           {
             QString message;
 
-            if(parameterList[2]=="1") message=i18n("%1 (%2 user): %3");
-            else message=i18n("%1 (%2 users): %3");
+            message=i18n("%1 (%n user): %2", "%1 (%n users): %2", parameterList[2].toInt());
 
-            server->appendStatusMessage(i18n("List"),message.arg(parameterList[1]).arg(parameterList[2]).arg(trailing));
+            server->appendStatusMessage(i18n("List"),message.arg(parameterList[1]).arg(trailing));
           }
           else // send them to /LIST window
             emit addToChannelList(parameterList[1],parameterList[2].toInt(),trailing);
