@@ -65,6 +65,7 @@ class OutputFilter : public QObject
     void launchScript(const QString& parameter);
     void banUsers(const QStringList& userList,const QString& channel,const QString& option);
     void unbanUsers(const QString& mask,const QString& channel);
+    void multiServerCommand(const QString& command, const QString& parameter);
 
   public slots:
     void setCommandChar();
@@ -123,6 +124,7 @@ class OutputFilter : public QObject
     void parseQuote(const QString& parameter);    // works
     void parseSay(const QString& parameter);      // works
     void parseKonsole();                          // works
+    void parseAaway(const QString& parameter);
 
     void changeMode(const QString& parameter,char mode,char giveTake);
     bool isAChannel(const QString& check);

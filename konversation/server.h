@@ -195,6 +195,7 @@ class Server : public QObject
     void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
     void setTopicAuthor(const QString& channel,const QString& author);
     void invitation(const QString& nick,const QString& channel);
+    void tmp_multiServerCommand(const QString& command, const QString& parameter);
 
   protected:
     // constants

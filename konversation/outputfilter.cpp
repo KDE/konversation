@@ -155,6 +155,8 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("raw "))     parseRaw(parameter);
     else if(line.startsWith("dcc "))     parseDcc(parameter);
     else if(line.startsWith("konsole ")) parseKonsole();
+    
+    else if(line.startsWith("aaway ")) parseAaway(parameter);
 
     else if(line=="join")                parseJoin(QString::null);
     else if(line=="part")                parsePart(QString::null);
@@ -179,6 +181,8 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="raw")                 parseRaw(QString::null);
     else if(line=="konsole")             parseKonsole();
 
+    else if(line=="aaway") parseAaway(QString::null);
+    
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
   }
@@ -953,6 +957,12 @@ void OutputFilter::error(const QString& string)
   type=i18n("Error");
   output=string;
   program=true;
+}
+
+void OutputFilter::parseAaway(const QString& parameter)
+{
+  kdDebug() << "AAWAY: " << parameter << endl;
+  emit multiServerCommand(QString("aaway"), parameter);
 }
 
 #include "outputfilter.moc"

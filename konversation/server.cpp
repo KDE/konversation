@@ -1677,4 +1677,9 @@ KonversationMainWindow* Server::getMainWindow() const { return mainWindow; }
 
 bool Server::connected() { return alreadyConnected; }
 
+void Server::tmp_multiServerCommand(const QString& command, const QString& parameter)
+{
+  kdDebug() << "Multi Server Command: " << command << ": " << parameter << endl;
+}
+
 #include "server.moc"
