@@ -267,7 +267,11 @@ class Server : public QObject
      */
     KABC::Addressee getOfflineNickAddressee(QString& nickname);
     
-    QString awayTime();
+    /** Returns the time we have been away for.
+     *  If we are not away, returns 00:00:00
+     */
+    QString awayTime() const;
+    bool isAway() const;
 
     void emitChannelNickChanged(const ChannelNickPtr channelNick);
     void emitNickInfoChanged(const NickInfoPtr nickInfo);
@@ -554,7 +558,7 @@ class Server : public QObject
     RawLog* rawLog;
     ChannelListPanel* channelListPanel;
 
-    bool isAway;
+    bool m_isAway;
     bool alreadyConnected;
     bool rejoinChannels;
     bool sendUnlocked;

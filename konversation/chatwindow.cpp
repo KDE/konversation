@@ -508,7 +508,14 @@ void ChatWindow::adjustFocus() {
     action = m_mainWindow->actionCollection()->action("open_channel_list");
     if(action) action->setEnabled(server!=NULL); else Q_ASSERT(action);
     action = m_mainWindow->actionCollection()->action("open_logfile");
-    if(action) action->setEnabled(!logName.isEmpty()); else Q_ASSERT(action);
+    if(action) {
+	    action->setEnabled(!logName.isEmpty()); 
+	    if(logName.isEmpty())
+		    action->setText(i18n("&Open Logfile"));
+	    else
+		    action->setText(i18n("&Open Logfile for %1").arg(getName()));
+    } else
+	    Q_ASSERT(action);
   }
   childAdjustFocus();
 }

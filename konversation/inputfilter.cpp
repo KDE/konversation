@@ -1347,11 +1347,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           NickInfo* nickInfo = server->getNickInfo(parameterList[0]);
           if(nickInfo)
             nickInfo->setAway(true);
+	  if(!server->isAway()) {
+            server->startAwayTimer();
+            server->appendStatusMessage(i18n("Away"),i18n("You are now marked as being away."));
+            emit away();
+	  } else {
+            server->appendStatusMessage(i18n("Away"),i18n("You are marked as being away."));
+	  }
           
-          server->startAwayTimer();
-          server->appendStatusMessage(i18n("Away"),i18n("You are now marked as being away."));
-          emit away();
-
           break;
         }
       case RPL_UNAWAY:
@@ -1365,13 +1368,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           
           Identity identity = *(server->getIdentity());
 
-          if(identity.getShowAwayMessage()) {
+          if(identity.getShowAwayMessage() && server->isAway()) {
             QString message = identity.getReturnMessage();
             server->sendToAllChannels(message.replace(QRegExp("%t", false), server->awayTime()));
-          }
-
-          server->appendStatusMessage(i18n("Away"),i18n("You are no longer marked as being away."));
-          emit unAway();
+            server->appendStatusMessage(i18n("Away"),i18n("You are no longer marked as being away."));
+            emit unAway();
+          } else {
+	    server->appendStatusMessage(i18n("Away"),i18n("You are not marked as being away."));
+	  }
 
           break;
         }

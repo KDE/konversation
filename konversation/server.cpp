@@ -193,7 +193,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
   connecting = false;
   m_serverISON = 0;
   lastDccDir = QString::null;
-  isAway = false;
+  m_isAway = false;
   m_socket = 0;
 
   // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
@@ -2831,7 +2831,7 @@ void Server::scriptExecutionError(const QString& name)
 
 void Server::away()
 {
-  isAway=true;
+  m_isAway=true;
   emit awayState(true);
 
   if(!getIdentity()->getAwayNick().isEmpty() &&
@@ -2849,8 +2849,8 @@ void Server::away()
 
 void Server::unAway()
 {
-  isAway=false;
-  emit awayState(isAway);
+  m_isAway=false;
+  emit awayState(false);
 
   if(!getIdentity()->getAwayNick().isEmpty() && !nonAwayNick.isEmpty()) {
     queue("NICK " + nonAwayNick);
@@ -3007,12 +3007,14 @@ void Server::connectToNewServer(const QString& server, const QString& port, cons
   KonversationApplication *konvApp = static_cast<KonversationApplication*>(KApplication::kApplication());
   konvApp->quickConnectToServer(server, port,"", password);
 }
-
-QString Server::awayTime()
+bool Server::isAway() const {
+  return m_isAway;
+}
+QString Server::awayTime() const
 {
   QString retVal;
 
-  if(isAway) {
+  if(m_isAway) {
     int diff = QDateTime::currentDateTime().toTime_t() - m_awayTime;
     int num = diff / 3600;
 
