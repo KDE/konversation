@@ -14,19 +14,22 @@ if [ ! $TARGET ]
 then
   dcop $PORT Konversation error "Can't write into status view."
 else
-  PLAYING=`dcop amarok player isPlaying`
+  STATUS=`dcop amarok player isPlaying`
   
-  if [ "$PLAYING" = "false" ]
+  if [ $STATUS == "false" ]
   then
     dcop $PORT Konversation error "Nothing's playing in Amarok."
   else  
     TEXT=`dcop amarok player nowPlaying`
 
-    if [ ! $TEXT ]
-    then
-	dcop $PORT Konversation error "Nothing's playing in Amarok."
-    else
-	dcop $PORT Konversation say $SERVER "$TARGET" "/me plays $TEXT"
-    fi
+    TOTAL=`dcop amarok player trackTotalTime`
+    let TMIN=$TOTAL/60
+    let TSEC=$TOTAL%60
+
+    CURR=`dcop amarok player trackCurrentTime`
+    let CMIN=$CURR/60
+    let CSEC=$CURR%60
+
+    dcop $PORT Konversation say $SERVER "$TARGET" "/me plays $TEXT [$CMIN:$CSEC/$TMIN:$TSEC]"
   fi
 fi
