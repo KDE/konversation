@@ -20,6 +20,8 @@
 #include "preferences.h"
 #include "ircevent.h"
 #include "osd.h"
+#include "konvdcop.h"
+#include "identity.h"
 
 class QCString;
 
@@ -84,6 +86,8 @@ class KonversationApplication : public KApplication
     QStringList urlList;
     PrefsDialog* prefsDialog;
     KonvDCOP* dcopObject;
+    KonvPrefsDCOP* prefsDCOP;
+    KonvIdentDCOP* identDCOP;
     KonversationMainWindow* mainWindow;
 };
 

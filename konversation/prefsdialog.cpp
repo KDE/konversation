@@ -20,28 +20,10 @@
 #include <kdebug.h>
 
 #include "prefsdialog.h"
-#include "prefspageserverlist.h"
-#include "prefspagegeneralsettings.h"
-#include "prefspageidentity.h"
-#include "prefspageappearance.h"
-#include "prefspagecolorsimages.h"
-#include "prefspageirccolors.h"
-#include "prefspagebuttons.h"
-#include "prefspagelog.h"
-#include "prefspagedccsettings.h"
-// TODO: uncomment this when it's ready to go
-// #include "prefspagescripts.h"
+
 #include "serverlistitem.h"
 #include "editserverdialog.h"
 #include "konversationapplication.h"
-#include "prefspagedialogs.h"
-#include "prefspagehighlight.h"
-#include "prefspagenotify.h"
-#include "prefspageosd.h"
-#include "prefspageignore.h"
-#include "prefspagealiases.h"
-#include "prefspagenickcompletion.h"
-#include "prefspagetabbehavior.h"
 
 PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
              KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
@@ -74,27 +56,27 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   // QFrame* scriptsPane        =addPage(i18n("Scripting"));
 
   // Add pages to preferences dialog
-  PrefsPage* serverListPage=new PrefsPageServerList(serverListPane,preferences);
+  serverListPage=new PrefsPageServerList(serverListPane,preferences);
 
-  PrefsPageGeneralSettings* generalSettingsPage=new PrefsPageGeneralSettings(generalSettingsPane,preferences);
-  PrefsPageIdentity*        identityPage       =new PrefsPageIdentity(identityPane,preferences); // FIXME: see class::applyPreferences()
+  generalSettingsPage=new PrefsPageGeneralSettings(generalSettingsPane,preferences);
+  identityPage       =new PrefsPageIdentity(identityPane,preferences); // FIXME: see class::applyPreferences()
 
-  PrefsPageAppearance*      appearancePage     =new PrefsPageAppearance(appearancePane,preferences);
-  PrefsPageTabBehavior*     tabBehaviorPage    =new PrefsPageTabBehavior(tabBehaviorPane,preferences);
-  PrefsPageColorsImages*    colorsImagesPage   =new PrefsPageColorsImages(colorsImagesPane,preferences);
-  PrefsPageIRCColors*       ircColorsPage      =new PrefsPageIRCColors(ircColorsPane,preferences);
-  PrefsPageButtons*         buttonsPage        =new PrefsPageButtons(buttonsPane,preferences);
+  appearancePage     =new PrefsPageAppearance(appearancePane,preferences);
+  tabBehaviorPage    =new PrefsPageTabBehavior(tabBehaviorPane,preferences);
+  colorsImagesPage   =new PrefsPageColorsImages(colorsImagesPane,preferences);
+  ircColorsPage      =new PrefsPageIRCColors(ircColorsPane,preferences);
+  buttonsPage        =new PrefsPageButtons(buttonsPane,preferences);
 
-  PrefsPageNickCompletion*  nickCompletionPage =new PrefsPageNickCompletion(nickCompletionPane,preferences);
-  PrefsPageNotify*          notifyPage         =new PrefsPageNotify(notifyPane,preferences);
-  PrefsPageHighlight*       highlightPage      =new PrefsPageHighlight(highlightPane,preferences);
-  PrefsPageOSD*             OSDPage            =new PrefsPageOSD(OSDPane,preferences);
-  PrefsPageIgnore*          ignorePage         =new PrefsPageIgnore(ignorePane,preferences);
-  PrefsPageAliases*         aliasesPage        =new PrefsPageAliases(aliasesPane,preferences);
+  nickCompletionPage =new PrefsPageNickCompletion(nickCompletionPane,preferences);
+  notifyPage         =new PrefsPageNotify(notifyPane,preferences);
+  highlightPage      =new PrefsPageHighlight(highlightPane,preferences);
+  OSDPage            =new PrefsPageOSD(OSDPane,preferences);
+  ignorePage         =new PrefsPageIgnore(ignorePane,preferences);
+  aliasesPage        =new PrefsPageAliases(aliasesPane,preferences);
 
-  PrefsPageLog*             logSettingsPage    =new PrefsPageLog(logSettingsPane,preferences);
-  PrefsPageDccSettings*     dccSettingsPage    =new PrefsPageDccSettings(dccSettingsPane,preferences);
-  PrefsPageDialogs*         dialogsPage        =new PrefsPageDialogs(dialogsPane,preferences);
+  logSettingsPage    =new PrefsPageLog(logSettingsPane,preferences);
+  dccSettingsPage    =new PrefsPageDccSettings(dccSettingsPane,preferences);
+  dialogsPage        =new PrefsPageDialogs(dialogsPane,preferences);
 
   // TODO: Uncomment this again when it's ready to go
   // PrefsPageScripts* scriptsPage=new PrefsPageScripts(scriptsPane, preferences);
@@ -144,6 +126,23 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
 PrefsDialog::~PrefsDialog()
 {
+  delete serverListPage;
+  delete generalSettingsPage;
+  delete identityPage;
+  delete appearancePage;
+  delete tabBehaviorPage;
+  delete colorsImagesPage;
+  delete ircColorsPage;
+  delete buttonsPage;
+  delete nickCompletionPage;
+  delete notifyPage;
+  delete highlightPage;
+  delete OSDPage;
+  delete ignorePage;
+  delete aliasesPage;
+  delete logSettingsPage;
+  delete dccSettingsPage;
+  delete dialogsPage;
 }
 
 void PrefsDialog::connectRequest(int id)

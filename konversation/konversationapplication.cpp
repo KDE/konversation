@@ -21,7 +21,6 @@
 #include <kdeversion.h>
 
 #include "konversationapplication.h"
-#include "konvdcop.h"
 #include "konversationmainwindow.h"
 #include "prefsdialog.h"
 #include "highlight.h"
@@ -87,8 +86,8 @@ KonversationApplication::KonversationApplication()
 
   // prepare dcop interface
   dcopObject=new KonvDCOP;
-  (void)new KonvIdentDCOP;
-  (void)new KonvPrefsDCOP;
+  identDCOP=new KonvIdentDCOP;
+  prefsDCOP=new KonvPrefsDCOP;
   if(dcopObject)
   {
     connect(dcopObject,SIGNAL (dcopSay(const QString&,const QString&,const QString&)),
@@ -105,7 +104,9 @@ KonversationApplication::~KonversationApplication()
 {
   saveOptions(false);
 
-  if(dcopObject) delete dcopObject;
+  delete dcopObject;
+  delete prefsDCOP;
+  delete identDCOP;
 }
 
 void KonversationApplication::dcopSay(const QString& server,const QString& target,const QString& command)
@@ -336,12 +337,13 @@ void KonversationApplication::readOptions()
   if(identityList.count())
   {
     preferences.clearIdentityList();
-
+    
     for(unsigned int index=0;index<identityList.count();index++)
     {
+      Identity* newIdentity=new Identity();
+
       config->setGroup(identityList[index]);
 
-      Identity* newIdentity=new Identity();
       QString n=config->readEntry("Name");
 
       newIdentity->setName(config->readEntry("Name"));
@@ -364,7 +366,9 @@ void KonversationApplication::readOptions()
       newIdentity->setCodec(config->readEntry("Codec"));
 
       preferences.addIdentity(newIdentity);
+
     } // endfor
+
   }
   else
   {

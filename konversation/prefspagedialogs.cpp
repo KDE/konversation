@@ -19,7 +19,7 @@
 
 #include "prefspagedialogs.h"
 #include "preferences.h"
-#include "serverlistitem.h"
+
 
 PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences) :
                   PrefsPage(newParent,newPreferences)
@@ -46,7 +46,7 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
   for(unsigned int index=0;index<dialogDefinitions.count();index++)
   {
     QString flagName(dialogDefinitions[index].section(' ',0,0));
-    ServerListItem* item=new ServerListItem(dialogListView,index,flagName,dialogDefinitions[index].section(' ',1));
+    item=new ServerListItem(dialogListView,index,flagName,dialogDefinitions[index].section(' ',1));
 
     if(preferences->getDialogFlag(flagName)) item->setOn(true);
   } // for
@@ -56,6 +56,7 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
 
 PrefsPageDialogs::~PrefsPageDialogs()
 {
+  delete item;
 }
 
 void PrefsPageDialogs::applyPreferences()

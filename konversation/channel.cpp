@@ -1478,10 +1478,11 @@ void Channel::addPendingNickList(const QStringList& newNickList)
   }
 
   nicknameListView->setUpdatesEnabled(false);
+  unsigned int mode;
   for(unsigned int i=0;i<newNickList.count();i++)
   {
     QString nick=newNickList[i].section(" ",0,0);
-    unsigned int mode=newNickList[i].section(" ",1,1).toInt();
+    mode=newNickList[i].section(" ",1,1).toInt();
 
     // refresh visual if index is 50, 100, 150 ... or if it's the last nick in the list
     if((i % 50==0) || i==newNickList.count()-1) nicknameListView->setUpdatesEnabled(true);

@@ -34,7 +34,7 @@ Preferences::Preferences()
   serverList.setAutoDelete(true);
 
   // create default identity
-  Identity* identity=new Identity();
+  identity=new Identity();
   identity->setName(i18n("Default Identity"));
   addIdentity(identity);
 
@@ -188,6 +188,7 @@ Preferences::Preferences()
 
 Preferences::~Preferences()
 {
+  delete identity;
 }
 
 QString Preferences::getServerByIndex(unsigned int index)

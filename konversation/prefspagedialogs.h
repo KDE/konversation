@@ -16,6 +16,7 @@
 #define PREFSPAGEDIALOGS_H
 
 #include "prefspage.h"
+#include "serverlistitem.h"
 
 /*
   @author Dario Abatianni
@@ -36,6 +37,7 @@ class PrefsPageDialogs : public PrefsPage
 
   protected:
     KListView* dialogListView;
+    ServerListItem* item;
 };
 
 #endif
