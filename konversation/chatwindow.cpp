@@ -210,7 +210,8 @@ void ChatWindow::setLogfileName(const QString& name)
       QTextStream backlog(&logfile);
       backlog.setEncoding(QTextStream::UnicodeUTF8);
       // Set file pointer to 1 kB from the end
-      backlog.device()->at(backlog.device()->size()-1024);
+      if(backlog.device()->size()>1024)
+        backlog.device()->at(backlog.device()->size()-1024);
       // Skip first line, since it may be incomplete
       backlog.readLine();
 
