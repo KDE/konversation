@@ -29,7 +29,7 @@
 #include <qcstring.h>
 #include <qvaluelist.h>
 #include "kstreamsocket.h"
-#include <kdelibs_export.h>
+#include "kdelibs_export.h"
 
 class KIOBufferBase;
 

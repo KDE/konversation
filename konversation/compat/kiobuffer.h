@@ -27,7 +27,7 @@
 
 #include <qglobal.h>
 
-#include <kdelibs_export.h>
+#include "kdelibs_export.h"
 
 class QIODevice;
 

@@ -60,7 +60,7 @@
 #include <qstring.h>
 
 #include "ksocketaddress.h"
-#include <kdelibs_export.h>
+#include "kdelibs_export.h"
 
 /*
  * This is extending QIODevice's error codes

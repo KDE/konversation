@@ -30,7 +30,7 @@
 
 #include "ksocketbase.h"
 #include "kresolver.h"
-#include <kdelibs_export.h>
+#include "kdelibs_export.h"
 
 namespace KNetwork {
 

@@ -21,7 +21,7 @@
 #define _KDELIBS_EXPORT_H
 
 /* needed for KDE_EXPORT macros */
-#include <kdemacros.h>
+#include "kdemacros.h"
 
 /* needed, because e.g. Q_OS_UNIX is so frequently used */
 #include <qglobal.h>
