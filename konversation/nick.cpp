@@ -21,7 +21,7 @@
 #include <qtooltip.h>
 #include <klocale.h>
 #include <qtextstream.h>
-#include <kabc/phonenumber.h> 
+#include <kabc/phonenumber.h>
 
 Nick::Nick(KListView* listView,
            const QString& newName,
@@ -57,7 +57,7 @@ Nick::~Nick()
 void Nick::setNickname(const QString& newName)
 {
   KABC::Addressee newaddressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(newName);
-  
+
   if(addressee.isEmpty() && !newaddressee.isEmpty()) //We now know who this person is
     Konversation::Addressbook::self()->associateNick(newaddressee,nickname);  //Associate the old nickname with new contact
   else if(!addressee.isEmpty() && newaddressee.isEmpty()) {
@@ -67,23 +67,23 @@ void Nick::setNickname(const QString& newName)
 
   addressee = newaddressee;
   nickname = newName;
-  
+
   QString realname = addressee.realName();
   if(!realname.isEmpty() && realname.lower() != newName.lower())
     listViewItem->setText(1,newName + " (" + realname + ")");
-  else 
+  else
     listViewItem->setText(1,newName);
 }
 
 void Nick::refreshAddressee() {
-  addressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname); 
+  addressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname);
   QString realname = addressee.realName();
 
   kdDebug() << "refreshing addressee nick '" << nickname << "' and found realname '" << realname << "'" << endl;
   if(!realname.isEmpty() && realname.lower() != nickname.lower())
     listViewItem->setText(1,nickname + " (" + realname + ")");
   else
-    listViewItem->setText(1,nickname);     
+    listViewItem->setText(1,nickname);
 }
 
 void Nick::setHostmask(const QString& newMask)
@@ -127,46 +127,51 @@ QString Nick::tooltip() {
 
   QString strTooltip;
   QTextStream tooltip( &strTooltip, IO_WriteOnly );
-  
+
   tooltip << "<qt>";
   if(!addressee.formattedName().isEmpty())
-    tooltip << "<tr><td><b>" << addressee.formattedName() << "</b>";
+    tooltip << "<b><center>" << addressee.formattedName() << "</center></b>";
 
   QStringList emails = addressee.emails();
+  tooltip << "<tr><td><b>Email(s) :</b> ";
   for( QStringList::Iterator it = emails.begin(); it != emails.end(); ++it) {
-    tooltip << "<br/>" << *it;
+    tooltip << *it;
+    if ( ++it != emails.end() )
+        tooltip << " , ";
+    --it;
   }
+  tooltip << "</td></tr>";
   bool isdirty = false;
   tooltip << "%1";
   if(!addressee.organization().isEmpty()) {
-    tooltip << "<tr><td>" << addressee.organizationLabel() << "</td><td>" << addressee.organization() << "</td></tr>";
+    tooltip << "<tr><td><b>" << addressee.organizationLabel() << ": </b></td><td>" << addressee.organization() << "</td></tr>";
     isdirty = true;
   }
   if(!addressee.role().isEmpty()) {
-    tooltip << "<tr><td>" << addressee.roleLabel() << "</td><td>" << addressee.role() << "</td></tr>";
+    tooltip << "<tr><td><b>" << addressee.roleLabel() << ": </b></td><td>" << addressee.role() << "</td></tr>";
     isdirty = true;
   }
   KABC::PhoneNumber::List numbers = addressee.phoneNumbers();
   for( KABC::PhoneNumber::List::Iterator it = numbers.begin(); it != numbers.end(); ++it) {
-    tooltip << "<tr><td>" << (*it).label() << "</td><td>" << (*it).number() << "</td></tr>";
+    tooltip << "<tr><td><b>" << (*it).label() << ": </b></td><td>" << (*it).number() << "</td></tr>";
     isdirty = true;
-  } 
+  }
 
   if(!addressee.birthday().toString().isEmpty() ) {
-    tooltip << "<tr><td>" << addressee.birthdayLabel() << "</td><td>" << addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
+    tooltip << "<tr><td><b>" << addressee.birthdayLabel() << ": </b></td><td>" << addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
     isdirty = true;
   }
   if(isdirty)
     tooltip << "</table></qt>";
-  
+
   if(isdirty)
     strTooltip = strTooltip.arg("<br/><table>");
   else
     strTooltip = strTooltip.arg("");
-  
+
   return strTooltip;
 }
-    
+
 
 bool Nick::isAdmin()  { return admin; }
 bool Nick::isOwner()  { return owner; }
