@@ -231,7 +231,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   awayLabel->hide();
   channelInput=new IRCInput(commandLineBox);
   channelInput->installEventFilter(this);
-
+  nicknameListView->installEventFilter(channelInput);
+  
   // Set the widgets size policies
   topicBox->setSizePolicy(vmodest);
   topicLabel->setSizePolicy(hfixed);  // This should prevent the widget from growing too wide

@@ -196,7 +196,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
       }
     }
   }
-  else if (object->isA("IRCView")) {
+  else if (object->isA("IRCView") || object->isA("NickListView")) {
     if (event->type() == QEvent::KeyPress) {
       QKeyEvent* ke = static_cast<QKeyEvent*>(event);
       if (QChar(ke->ascii()).isPrint()) {
@@ -206,7 +206,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
       }
     }
   }
-  return KTextEdit::eventFilter(object,event);
+  return KTextEdit::eventFilter(object,event); //XXX any reason to skip KTextEdit?
 }
 
 void IRCInput::addHistory(const QString& line)
