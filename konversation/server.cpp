@@ -425,7 +425,7 @@ void Server::addDccTransfer(QString sourceNick,QStringList dccArguments)
                             .arg(ip.toString())            // ip
                             .arg(dccArguments[2]) );       // port
 
-/*  DccTransfer* newDcc= */ new DccTransfer(serverWindow->getDccPanel()->getListView(),
+  DccTransfer* newDcc=new DccTransfer(serverWindow->getDccPanel()->getListView(),
                   DccTransfer::Get,
                   KonversationApplication::preferences.getDccPath(),
                   sourceNick,
@@ -433,6 +433,18 @@ void Server::addDccTransfer(QString sourceNick,QStringList dccArguments)
                   dccArguments[3],     // size
                   ip.toString(),       // ip
                   dccArguments[2]);    // port
+
+  connect(newDcc,SIGNAL (resume(QString,QString,QString,int)),this,SLOT (sendResumeRequest(QString,QString,QString,int)) );
+
+  if(KonversationApplication::preferences.getDccAutoGet()) newDcc->startGet();
+}
+
+void Server::sendResumeRequest(QString sender,QString fileName,QString port,int startAt)
+{
+  kdDebug() << "Server::sendResumeRequest()" << endl;
+  outputFilter.resumeRequest(sender,fileName,port,startAt);
+  queue(outputFilter.getServerOutput());
+  appendStatusMessage(outputFilter.getType(),outputFilter.getOutput());
 }
 
 QString Server::getNextQueryName()

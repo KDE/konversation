@@ -30,6 +30,13 @@ OutputFilter::~OutputFilter()
 {
 }
 
+void OutputFilter::resumeRequest(QString sender,QString fileName,QString port,int startAt)
+{
+  toServer="PRIVMSG "+sender+" :"+'\x01'+"DCC RESUME "+fileName+" "+port+" "+QString::number(startAt)+'\x01';
+  output="Sending DCC Resume request for file \""+fileName+"\"";
+  type=i18n("Resume");
+}
+
 QString& OutputFilter::parse(const QString& inputLine,const QString& name)
 {
   QString line=inputLine.lower();
@@ -101,7 +108,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
   {
     toServer=inputLine;
     output=inputLine;
-    type="Raw";
+    type=i18n("Raw");
     command=true;
   }
 
@@ -291,7 +298,7 @@ void OutputFilter::parseCtcp(QString parameter)
   toServer=QString("PRIVMSG "+recipient+" :"+'\x01'+message+'\x01');
   
   output=i18n("Sending CTCP-%1 request to %2").arg(message).arg(recipient);
-  type="CTCP";
+  type=i18n("CTCP");
   command=true;
 }
 
@@ -326,7 +333,7 @@ void OutputFilter::changeMode(QString parameter,char mode,char giveTake)
         modeCount=3;
         output=i18n("Modes can only take a certain number of nick names at the same time."
                     "The server may truncate your mode list.");
-        type="Warning";
+        type=i18n("Warning");
         /* TODO: Issue a warning here */
       }
 

@@ -33,6 +33,7 @@ class OutputFilter : public QObject
     ~OutputFilter();
 
     QString& parse(const QString& line,const QString& name);
+    void resumeRequest(QString sender,QString fileName,QString port,int startAt);
 
     bool isAction();
     bool isCommand();
@@ -40,6 +41,9 @@ class OutputFilter : public QObject
     QString& getOutput();
     QString& getServerOutput();
     QString& getType();
+
+  signals:
+    void openQuery(const QString& nick,const QString& hostmask); // hostmask currently unused
 
   protected:
     QString output;
@@ -78,9 +82,6 @@ class OutputFilter : public QObject
 
     void changeMode(QString parameter,char mode,char giveTake);
     bool isAChannel(QString check);
-
-  signals:
-    void openQuery(const QString& nick,const QString& hostmask); // hostmask currently unused
 };
 
 #endif

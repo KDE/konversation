@@ -64,7 +64,7 @@ class DccTransfer : public QObject, public KListViewItem
     ~DccTransfer();
 
   signals:
-    void resume(QString fileName,QString port,int startAt);
+    void resume(QString partner,QString fileName,QString port,int startAt);
 
   public slots:
     void startGet();

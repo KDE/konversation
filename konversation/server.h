@@ -127,6 +127,7 @@ class Server : public QObject
     void connectionEstablished();
     void notifyResponse(QString nicksOnline);
     void addDccTransfer(QString sourceNick,QStringList dccArguments);
+    void sendResumeRequest(QString sender,QString fileName,QString port,int startAt);
 
   protected:
     void startNotifyCheckTimer();

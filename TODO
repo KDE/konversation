@@ -5,3 +5,5 @@ Add option to highlight current nick independantly
 Implement different identities so user can choose which identity to use on which server
 
 nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  das markieren des letzten Zeitpunkts wo das Fenster aktiv war  und  die Text-Suche "
+nobs: "set cmdchar"
+

@@ -64,8 +64,6 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString p
   {
     setText(6,getIp());
     setText(7,getPort());
-
-    if(KonversationApplication::preferences.getDccAutoGet()) startGet();
   }
   else
   {
@@ -88,14 +86,14 @@ DccTransfer::~DccTransfer()
 
 void DccTransfer::startGet()
 {
-  kdDebug() << dccFolder << endl;
+//  kdDebug() << dccFolder << endl;
 
   if(KonversationApplication::preferences.getDccAddPartner())
     dir.setPath(dccFolder+"/"+dccPartner.lower());
   else
     dir.setPath(dccFolder);
-  
-  kdDebug() << dir.path() << endl;
+
+//  kdDebug() << dir.path() << endl;
 
   if(!dir.exists())
   {
@@ -110,14 +108,17 @@ void DccTransfer::startGet()
 
   if(file.exists())
   {
+    kdDebug() << "File exists ... Resuming." << endl;
     // TODO: Ask user if they want to resume
     setType(Resume);
+    setStatus(Resuming);
 
     file.open(IO_ReadOnly);
     int fileSize=file.size();
     file.close();
-
-    emit resume(getFile(),getPort(),fileSize);
+    setPosition(fileSize);
+    emit resume(getPartner(),getFile(),getPort(),fileSize);
+    kdDebug() << "Sent resume signal" << endl;
   }
   else connectToSender();
 }
@@ -125,7 +126,6 @@ void DccTransfer::startGet()
 void DccTransfer::startResume()
 {
   kdDebug() << "startResume(): calling connectToSender()" << endl;
-  setStatus(Resuming);
   connectToSender();
 }
 
