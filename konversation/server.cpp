@@ -1010,7 +1010,7 @@ void Server::queueList(const QStringList& buffer)
 void Server::send()
 {
   // Check if we are still online
-  if(!isConnected()) return;
+  if(!isConnected() && !outputBuffer[0]) return;
 
   if(outputBuffer.count() && sendUnlocked)
   {
