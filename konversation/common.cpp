@@ -53,7 +53,7 @@ QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColo
   QString link;
 
   if(filteredLine.contains("#")) {
-    QRegExp chanExp("(^|\\s)#[^\007\015\012,\\s]{2,}");
+    QRegExp chanExp("(?:^|\\s)#[^\007\015\012,\\s]{2,}");
 
     while((pos = chanExp.search(filteredLine, pos)) >= 0) {
         urlLen = chanExp.matchedLength();
