@@ -58,6 +58,7 @@ class PrefsPageChatWinAppearance : public PrefsPage
     QCheckBox* showQuickButtons;
     QCheckBox* showModeButtons;
     QCheckBox* showTopic;
+    QCheckBox* m_showNicknameBoxCheck;
     QCheckBox* showBackgroundImage;
     KURLRequester* backgroundURL;
 };

@@ -142,6 +142,7 @@ class Server : public QObject
     void setShowQuickButtons(bool state);
     void setShowModeButtons(bool state);
     void setShowTopic(bool state);
+    void setShowNicknameBox(bool state);
 
     QString getNextQueryName();
     void appendToQuery(const QString& queryName,const QString& message);

@@ -116,6 +116,9 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QFrame* newParent,Prefere
   autoUserhostCheck=new QCheckBox(i18n("Show hostmasks &in nickname list"), layoutGroup, "auto_userhost_check");
   autoUserhostCheck->setChecked(preferences->getAutoUserhost());
 
+  m_showNicknameBoxCheck = new QCheckBox(i18n("Show nickname box in channel and status windows"), layoutGroup);
+  m_showNicknameBoxCheck->setChecked(preferences->showNicknameBox());
+
   QGroupBox* backgroundImageBox = new QGroupBox(i18n("Use Back&ground Image"), parentFrame);
   backgroundImageBox->setColumnLayout(0, Qt::Horizontal);
   backgroundImageBox->setMargin(marginHint());
@@ -216,6 +219,7 @@ void PrefsPageChatWinAppearance::applyPreferences()
   preferences->setShowModeButtons(showModeButtons->isChecked());
   preferences->setAutoUserhost(autoUserhostCheck->isChecked());
   preferences->setShowTopic(showTopic->isChecked());
+  preferences->setShowNicknameBox(m_showNicknameBoxCheck->isChecked());
 }
 
 #include "prefspagechatwinappearance.moc"

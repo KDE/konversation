@@ -388,6 +388,7 @@ void KonversationApplication::readOptions()
   preferences.setShowTabBarCloseButton(config->readBoolEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton()));
 
   preferences.setShowTopic(config->readBoolEntry("ShowTopic", preferences.getShowTopic()));
+  preferences.setShowNicknameBox(config->readBoolEntry("ShowNicknameBox", preferences.showNicknameBox()));
 
   preferences.setShowRememberLineInAllWindows(config->readBoolEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows()));
   preferences.setFocusNewQueries(config->readBoolEntry("FocusNewQueries", preferences.getFocusNewQueries()));
@@ -877,6 +878,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton());
 
   config->writeEntry("ShowTopic", preferences.getShowTopic());
+  config->writeEntry("ShowNicknameBox", preferences.showNicknameBox());
 
   config->writeEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows());
   config->writeEntry("FocusNewQueries", preferences.getFocusNewQueries());
@@ -1202,6 +1204,7 @@ void KonversationApplication::appearanceChanged()
     lookServer->setShowQuickButtons(preferences.getShowQuickButtons());
     lookServer->setShowModeButtons(preferences.getShowModeButtons());
     lookServer->setShowTopic(preferences.getShowTopic());
+    lookServer->setShowNicknameBox(preferences.showNicknameBox());
 
     lookServer=serverList.next();
   }

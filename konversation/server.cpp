@@ -1988,12 +1988,26 @@ void Server::setShowModeButtons(bool state)
 
 void Server::setShowTopic(bool state)
 {
-  Channel* channel=channelList.first();
+  Channel* channel = channelList.first();
+  
   while(channel)
   {
     channel->showTopic(state);
-    channel=channelList.next();
+    channel = channelList.next();
   }
+}
+
+void Server::setShowNicknameBox(bool state)
+{
+  Channel* channel = channelList.first();
+  
+  while(channel)
+  {
+    channel->setShowNicknameBox(state);
+    channel = channelList.next();
+  }
+
+  getStatusView()->setShowNicknameBox(state);
 }
 
 Channel* Server::getChannelByName(const QString& name)

@@ -247,6 +247,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameCombobox->installEventFilter(this);
   QWhatsThis::add(nicknameCombobox, i18n("<qt>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the irc server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.<p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</qt>"));
   oldNick = nicknameCombobox->currentText();
+  
+  setShowNicknameBox(KonversationApplication::preferences.showNicknameBox());
+  
   awayLabel = new QLabel(i18n("(away)"), commandLineBox);
   awayLabel->hide();
   channelInput = new IRCInput(commandLineBox);
@@ -2009,6 +2012,15 @@ QString Channel::getChannelEncodingDefaultDesc()  // virtual
   return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodecName());
 }
 
+void Channel::setShowNicknameBox(bool show)
+{
+  if(show) {
+    nicknameCombobox->show();
+  } else {
+    nicknameCombobox->hide();
+  }
+}
+
 //
 // NickList
 //
@@ -2075,6 +2087,5 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
   return QString::null;
 }
-
 
 #include "channel.moc"

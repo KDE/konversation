@@ -218,6 +218,7 @@ Preferences::Preferences()
 
   setHideUnimportantEvents(false);
   setShowTopic(true);
+  setShowNicknameBox(true);
 
   setShowRememberLineInAllWindows(false);
   setFocusNewQueries(true);
@@ -966,5 +967,8 @@ const QStringList Preferences::getChannelEncodingsChannelList(const QString& ser
 
 void Preferences::setIconTheme(const QString& name) { iconTheme=name; }
 const QString Preferences::getIconTheme() { return iconTheme; }
+
+bool Preferences::showNicknameBox() const { return m_showNicknameBox; }
+void Preferences::setShowNicknameBox(bool show) { m_showNicknameBox = show; }
 
 #include "preferences.moc"

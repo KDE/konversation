@@ -55,6 +55,9 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
   nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
   nicknameCombobox->installEventFilter(this);
   oldNick=nicknameCombobox->currentText();
+  
+  setShowNicknameBox(KonversationApplication::preferences.showNicknameBox());
+  
   awayLabel=new QLabel(i18n("(away)"),commandLineBox);
   awayLabel->hide();
   statusInput=new IRCInput(commandLineBox);
@@ -301,4 +304,14 @@ void StatusPanel::serverOnline(bool online)
 {
   nicknameCombobox->setEnabled(online);
 }
+
+void StatusPanel::setShowNicknameBox(bool show)
+{
+  if(show) {
+    nicknameCombobox->show();
+  } else {
+    nicknameCombobox->hide();
+  }
+}
+
 #include "statuspanel.moc"

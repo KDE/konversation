@@ -461,6 +461,9 @@ class Preferences : public QObject
     void setIconTheme(const QString& name);
     const QString getIconTheme();
 
+    bool showNicknameBox() const;
+    void setShowNicknameBox(bool show);
+
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();
@@ -632,6 +635,7 @@ class Preferences : public QObject
     //User interface
     bool showMenuBar;
     bool showTabBarCloseButton;
+    bool m_showNicknameBox;
 
     bool showTopic;
     bool showRememberLineInAllWindows;

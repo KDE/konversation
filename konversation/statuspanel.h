@@ -64,6 +64,7 @@ class StatusPanel : public ChatWindow
     void newTextInView(const QString& highlightColor,bool important);
     void updateFonts();
     virtual void indicateAway(bool show);
+    void setShowNicknameBox(bool show);
 
     virtual void appendInputText(const QString&);
     
