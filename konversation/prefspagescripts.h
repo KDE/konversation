@@ -39,17 +39,17 @@ class PrefsPageScripts : public PrefsPage
 	  ~PrefsPageScripts();
 
 	protected:
-    QBoxLayout      *mainBox;
+		QBoxLayout      *mainBox;
 		KListView       *scriptsList;
 		KListViewItem   *scriptsListEntry;
 		KEdit           *scriptEditor;
-    QDir						*scriptsDirectory;
-		QFile						openedScriptFile;
-		QString					scriptFilePath, oldScriptFileName;
-		QStringList			scriptFiles;
-		QTextStream			*script;
-		Preferences			*myPreferences;
-		char						streamBuffer[512];
+		QDir    	*scriptsDirectory;
+		QFile		openedScriptFile;
+		QString		scriptFilePath, oldScriptFileName;
+		QStringList	scriptFiles;
+		QTextStream	*script;
+		Preferences	*myPreferences;
+		char		streamBuffer[512];
 
 	signals:
 		void fileRenamed(QListViewItem *passedItem);

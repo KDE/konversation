@@ -29,6 +29,7 @@
 #include "prefspagebuttons.h"
 #include "prefspagelog.h"
 #include "prefspagedccsettings.h"
+// TODO: uncomment this when it's ready to go
 // #include "prefspagescripts.h"
 #include "serverlistitem.h"
 #include "editserverdialog.h"
@@ -67,7 +68,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   QFrame* dccSettingsPane    =addPage(i18n("DCC Settings"));
   QFrame* dialogsPane        =addPage(i18n("Dialogs"));
   // TODO: Uncomment this again when it's ready to go
-  //  QFrame* scriptsPane        =addPage(i18n("Scripting"));
+  // QFrame* scriptsPane        =addPage(i18n("Scripting"));
 
   // Add pages to preferences dialog
   PrefsPage* serverListPage=new PrefsPageServerList(serverListPane,preferences);
@@ -91,7 +92,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   PrefsPageDialogs*         dialogsPage        =new PrefsPageDialogs(dialogsPane,preferences);
 
   // TODO: Uncomment this again when it's ready to go
-  // new PrefsPageScripts(scriptsPane, preferences);
+  // PrefsPageScripts* scriptsPage=new PrefsPageScripts(scriptsPane, preferences);
 
   setButtonOKText(i18n("&OK"),i18n("Keep changes made to configuration and close the window"));
   setButtonApplyText(i18n("&Apply"),i18n("Keep changes made to configuration"));
