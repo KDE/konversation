@@ -128,23 +128,11 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
     connectCommands = QStringList::split(";", serverEntry[8]);
   }
 
-  if(KonversationApplication::preferences.getPreShellCommand() != QString::null) {
-    statusView->appendServerMessage("Info","Running preconfigured command...");
-    
-    connect( &preShellCommand,SIGNAL(processExited(KProcess*)),this,SLOT(preShellCommandExited(KProcess*)));
-
-    QString command = KonversationApplication::preferences.getPreShellCommand();
-    QStringList commandList = QStringList::split(" ",command);
-    
-    for (QStringList::Iterator it = commandList.begin(); it != commandList.end(); ++it){
-      preShellCommand << *it;
-    }
-
-    preShellCommand.start(); // Non blocking
-  
+  if(!KonversationApplication::preferences.getPreShellCommand().isEmpty()) {
+    doPreShellCommand();
   }
   else 
-  	connectToIRCServer();
+    connectToIRCServer();
 
   // don't delete items when they are removed
   channelList.setAutoDelete(false);
@@ -163,7 +151,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   m_scriptLauncher = new ScriptLauncher(this);
 
-  if(KonversationApplication::preferences.getPreShellCommand() == QString::null)
+  if(KonversationApplication::preferences.getPreShellCommand().isEmpty())
   	connectSignals();
 	
   emit serverOnline(false);
@@ -204,20 +192,8 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   if(KonversationApplication::preferences.getRawLog()) addRawLog(false);
   setNickname(nick);
 
-  if(KonversationApplication::preferences.getPreShellCommand() != QString::null) {
-    statusView->appendServerMessage("Info","Running preconfigured command...");
-
-    connect( &preShellCommand,SIGNAL(processExited(KProcess*)),this,SLOT(preShellCommandExited(KProcess*)));
-
-    QString command = KonversationApplication::preferences.getPreShellCommand();
-    QStringList commandList = QStringList::split(" ",command);
-
-    for ( QStringList::Iterator it = commandList.begin(); it != commandList.end(); ++it ) {
-      preShellCommand << *it;
-    }
-
-    preShellCommand.start(); // Non blocking
-  
+  if(!KonversationApplication::preferences.getPreShellCommand().isEmpty()) {
+    doPreShellCommand();
   }
   else
     connectToIRCServer();
@@ -239,12 +215,30 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
 
   m_scriptLauncher = new ScriptLauncher(this);
 
-  if(KonversationApplication::preferences.getPreShellCommand() == QString::null)
+  if(KonversationApplication::preferences.getPreShellCommand().isEmpty())
     connectSignals();
     
   emit serverOnline(false);
  
 }
+
+void Server::doPreShellCommand() {
+
+    QString command = KonversationApplication::preferences.getPreShellCommand();
+    statusView->appendServerMessage("Info","Running preconfigured command...");
+
+    connect( &preShellCommand,SIGNAL(processExited(KProcess*)),this,SLOT(preShellCommandExited(KProcess*)));
+
+    QStringList commandList = QStringList::split(" ",command);
+
+    for ( QStringList::Iterator it = commandList.begin(); it != commandList.end(); ++it ) {
+      preShellCommand << *it;
+    }
+
+    preShellCommand.start(); // Non blocking
+
+}
+    
 
 Server::~Server()
 {

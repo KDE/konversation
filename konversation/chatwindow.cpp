@@ -180,6 +180,7 @@ void ChatWindow::serverOnline(bool state)
 
 void ChatWindow::setIdentity(const Identity *newIdentity)
 {
+  Q_ASSERT(newIdentity);  if(!newIdentity) return;
   identity=*newIdentity;
 }
 

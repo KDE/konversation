@@ -53,6 +53,7 @@ class Server : public QObject
   public:
     Server(KonversationMainWindow* mainWindow,int number);
     Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,const QString& nick,const QString& password);
+    Server(KonversationMainWindow* mainWindow,const QString &name, const QString &servergroup,const QString &servername, const QString& port,const QString& nick,const QString& password);
     ~Server();
 
     QString getServerName() const;
@@ -216,7 +217,6 @@ class Server : public QObject
     void awayInsertRememberLine();
 
   public slots:
-    void preShellCommandExited(KProcess*);
     void lookupFinished();
     void connectToIRCServer();
     void queue(const QString &buffer);
@@ -256,6 +256,8 @@ class Server : public QObject
     void notifyTimeout();
     
   protected slots:
+
+    void preShellCommandExited(KProcess*);
     void ircServerConnectionSuccess();
     void lockSending();
     void unlockSending();
@@ -335,6 +337,10 @@ class Server : public QObject
     /// Returns pointer to the NickInfo object or 0 if nick not found.
     void renameNickInfo(NickInfoPtr nickInfo, const QString& newname);
 
+    /** Called in the server constructor if the preferences are set to run a command on a new server instance.
+     *  This sets up the kprocess, runs it, and connects the signals to call preShellCommandExited when done. */
+    void doPreShellCommand();
+    
     unsigned int completeQueryPosition;
     unsigned int tryNickNumber;
     unsigned int reconnectCounter;
