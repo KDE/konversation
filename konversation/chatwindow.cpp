@@ -56,12 +56,13 @@ ChatWindow::WindowType ChatWindow::getType()
 
 void ChatWindow::setServer(Server* newServer)
 {
-  if(server==0) kdDebug("ChatWindow::setServer(0)!") << endl;
+  if(newServer==0) kdDebug("ChatWindow::setServer(0)!") << endl;
   else
   {
   server=newServer;
 
   if(textView) textView->setServer(newServer);
+  else kdDebug() << "ChatWindow::setServer(): textView==0!" << endl;
   
   connect(&filter,SIGNAL (openQuery(const QString&,const QString&)),
            server,SLOT   (addQuery(const QString&,const QString&)) );

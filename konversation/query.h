@@ -23,7 +23,6 @@
 #define QUERY_H
 
 #include "chatwindow.h"
-#include "server.h"
 #include "ircinput.h"
 
 /*
@@ -42,7 +41,6 @@ class Query : public ChatWindow
 
     void setName(const QString& newName);
     void setHostmask(const QString& newHostmask);
-//    void setServer(Server* setServer);
     void updateFonts();
 
   signals:
