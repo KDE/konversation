@@ -454,8 +454,6 @@ namespace Konversation {
     OutputFilterResult OutputFilter::parseMsg(const QString &myNick, const QString &parameter, bool isQuery)
     {
         OutputFilterResult result;
-//        QString recipient = parameter.left(parameter.find(" "));
-//        QString message = parameter.mid(recipient.length() + 1);
         QString recipient = parameter.section(" ", 0, 0, QString::SectionSkipEmpty);
 	QString message = parameter.section(" ", 1);
 	QString output;
