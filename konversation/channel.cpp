@@ -295,7 +295,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
   connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
-  
+
 }
 
 Channel::~Channel()
@@ -398,7 +398,7 @@ void Channel::popupCommand(int id)
 	    if(id == NickListView::AddressbookDelete) {
               KABC::Addressee addr = addressbook->getKABCAddresseeFromNick(*nickIterator);
    	      addressbook->unassociateNick(addr, *nickIterator);
-	    } else { 
+	    } else {
               KABC::Addressee addr;
 	      addr.setGivenName(*nickIterator);
 	      addr.setNickName(*nickIterator);
@@ -1834,7 +1834,7 @@ void Channel::slotLoadAddressees() {
     nick->refreshAddressee();
   }
 }
-    
+
 
 
 //
@@ -1851,6 +1851,9 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 {
   found.clear();
   QString prefix = "^";
+  QString newNick;
+  QString prefixCharacter = KonversationApplication::preferences.getPrefixCharacter();
+
 
   if(pattern.find(QRegExp("^(\\d|\\w)")) != -1) {
     prefix = "(^|[^\\d\\w]|[\\_])";
@@ -1859,8 +1862,13 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
   QRegExp regexp(prefix + QRegExp::escape(pattern.lower()));
 
   for(Nick* n = first(); n; n = next()) {
-    if(n->getNickname().lower().find(regexp) != -1) {
-      found.append(n->getNickname());
+    newNick = n->getNickname();
+
+    if ( prefix != QString::null && newNick.contains(prefixCharacter) )
+       newNick = n->getNickname().section( prefixCharacter,1 );
+
+    if(newNick.lower().find(regexp) != -1) {
+      found.append(newNick);
     }
   }
 

@@ -587,6 +587,7 @@ void KonversationApplication::readOptions()
   preferences.setNickCompletionMode(config->readNumEntry("Mode", preferences.getNickCompletionMode()));
   preferences.setNickCompleteSuffixStart(config->readEntry("SuffixStart",preferences.getNickCompleteSuffixStart()));
   preferences.setNickCompleteSuffixMiddle(config->readEntry("SuffixMiddle",preferences.getNickCompleteSuffixMiddle()));
+  preferences.setPrefixCharacter(config->readEntry("PrefixCharacter",preferences.getPrefixCharacter()));
 
   // DCC Settings
   config->setGroup("DCC Settings");

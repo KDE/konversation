@@ -383,6 +383,8 @@ class Preferences : public QObject
     // Nick completion
     int getNickCompletionMode();
     void setNickCompletionMode(int mode);
+    QString getPrefixCharacter();
+    void  setPrefixCharacter(QString prefix);
 
     //User interface
     bool getShowMenuBar();
@@ -571,6 +573,7 @@ class Preferences : public QObject
 
     //Nick completion
     int nickCompletionMode;
+    QString prefixCharacter;
 
     //User interface
 #if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)

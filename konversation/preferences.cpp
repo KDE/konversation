@@ -208,7 +208,7 @@ Preferences::Preferences()
 
   setShowRememberLineInAllWindows(false);
   setFocusNewQueries(true);
-  
+
   // Web Browser
   setWebBrowserUseKdeDefault(true);
   setWebBrowserCmd("mozilla \'%u\'");
@@ -772,6 +772,8 @@ QStringList Preferences::getAliasList()             { return aliasList; }
 
 int Preferences::getNickCompletionMode() { return nickCompletionMode; }
 void Preferences::setNickCompletionMode(int mode) { nickCompletionMode = mode; }
+QString Preferences::getPrefixCharacter() { return prefixCharacter; }
+void  Preferences::setPrefixCharacter(QString prefix) { prefixCharacter = prefix; }
 
 bool Preferences::getShowMenuBar() { return showMenuBar; }
 void Preferences::setShowMenuBar(bool s) { showMenuBar = s; }
