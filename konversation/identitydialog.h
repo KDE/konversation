@@ -55,6 +55,7 @@ class IdentityDialog : public KDialogBase
   private:
     KComboBox* m_identityCBox;
     KLineEdit* m_realNameEdit;
+    KLineEdit* m_sCommandEdit;
     KLineEdit* m_loginEdit;
     KComboBox* m_codecCBox;
     KLineEdit* m_botEdit;

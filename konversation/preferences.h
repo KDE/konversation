@@ -346,8 +346,6 @@ class Preferences : public QObject
 
     void setCommandChar(const QString &newCommandChar);
     const QString getCommandChar();
-    void setPreShellCommand(const QString &command);
-    const QString getPreShellCommand();
 
     const QFont getTextFont();
     const QFont getListFont();

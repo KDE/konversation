@@ -198,6 +198,11 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   tabWidget->addTab(advancedWidget, i18n("Advanced"));
   QGridLayout* advancedLayout = new QGridLayout(advancedWidget, 1, 2, marginHint(), spacingHint());
 
+  QLabel* commandLabel = new QLabel(i18n("&Pre-Shell Command:"), advancedWidget);
+  QWhatsThis::add(commandLabel,i18n("Here you can enter a command to be executed before connection to server starts<br>If you have multiple servers in this identity this command will be executed for each server"));
+  m_sCommandEdit = new KLineEdit(advancedWidget);
+  commandLabel->setBuddy(m_sCommandEdit);
+
   QLabel* loginLabel = new QLabel(i18n("I&dent:"), advancedWidget);
   m_loginEdit = new KLineEdit(advancedWidget);
   loginLabel->setBuddy(m_loginEdit);
@@ -219,6 +224,9 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   kickLabel->setBuddy(m_kickEdit);
 
   row = 0;
+  advancedLayout->addWidget(commandLabel,row,0);
+  advancedLayout->addWidget(m_sCommandEdit, row, 1);
+  row++;
   advancedLayout->addWidget(codecLabel,row,0);
   advancedLayout->addWidget(m_codecCBox, row, 1);
   row++;
@@ -282,6 +290,7 @@ void IdentityDialog::updateIdentity(int index)
   m_awayEdit->setText(m_currentIdentity->getAwayMessage());
   m_unAwayEdit->setText(m_currentIdentity->getReturnMessage());
 
+  m_sCommandEdit->setText(m_currentIdentity->getShellCommand());
   m_codecCBox->setCurrentItem(Konversation::IRCCharsets::self()->shortNameToIndex(m_currentIdentity->getCodecName()));
   m_loginEdit->setText(m_currentIdentity->getIdent());
   m_partEdit->setText(m_currentIdentity->getPartReason());
@@ -382,6 +391,7 @@ void IdentityDialog::refreshCurrentIdentity()
   m_currentIdentity->setAwayMessage(m_awayEdit->text());
   m_currentIdentity->setReturnMessage(m_unAwayEdit->text());
 
+  m_currentIdentity->setShellCommand(m_sCommandEdit->text());
   m_currentIdentity->setCodecName(Konversation::IRCCharsets::self()->availableEncodingShortNames()[m_codecCBox->currentItem()]);
   m_currentIdentity->setIdent(m_loginEdit->text());
   m_currentIdentity->setPartReason(m_partEdit->text());

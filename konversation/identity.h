@@ -72,6 +72,9 @@ class Identity : public KShared
     void setReturnMessage(const QString& message);
     QString getReturnMessage() const;
 
+    void setShellCommand(const QString &command);
+    QString getShellCommand() const;
+
     void setCodecName(const QString &newCodecName);
     QString getCodecName() const;
     QTextCodec* getCodec() const;
@@ -101,6 +104,8 @@ class Identity : public KShared
     QString returnMessage;
     QString m_codecName;
     QTextCodec* m_codec;
+
+    QString m_shellCommand;
 
     QString awayNick;
 

@@ -391,9 +391,6 @@ void KonversationApplication::readOptions()
   // Command char setting
   preferences.setCommandChar(config->readEntry("CommandChar",preferences.getCommandChar()));
 
-  // Pre shell command setting
-  preferences.setPreShellCommand(config->readEntry("PreShellCommand",preferences.getPreShellCommand()));
-
   // Tray icon settings
   preferences.setShowTrayIcon(config->readBoolEntry("ShowTrayIcon",preferences.getShowTrayIcon()));
   preferences.setSystrayOnly(config->readBoolEntry("SystrayOnly",preferences.getSystrayOnly()));
@@ -558,6 +555,8 @@ void KonversationApplication::readOptions()
 
       newIdentity->setPartReason(config->readEntry("PartReason"));
       newIdentity->setKickReason(config->readEntry("KickReason"));
+
+      newIdentity->setShellCommand(config->readEntry("PreShellCommand"));
 
       newIdentity->setCodecName(config->readEntry("Codec"));
 
@@ -1043,6 +1042,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->writeEntry("ReturnMessage",identity->getReturnMessage());
     config->writeEntry("PartReason",identity->getPartReason());
     config->writeEntry("KickReason",identity->getKickReason());
+    config->writeEntry("PreShellCommand",identity->getShellCommand());
     config->writeEntry("Codec",identity->getCodecName());
     config->writeEntry("AwayNick", identity->getAwayNick());
     index++;

@@ -623,8 +623,6 @@ const bool Preferences::getBringToFront() { return bringToFront; }
 
 void Preferences::setCommandChar(const QString &newCommandChar) { commandChar=newCommandChar; }
 const QString Preferences::getCommandChar() { return commandChar; }
-void Preferences::setPreShellCommand(const QString& command) { preShellCommandStr=command; }
-const QString Preferences::getPreShellCommand() { return preShellCommandStr; }
 
 // TODO: Make this a little simpler (use an array and enum)
 //       get/set message font colors

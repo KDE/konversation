@@ -92,18 +92,21 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
 
 void Server::doPreShellCommand() {
 
-    QString command = KonversationApplication::preferences.getPreShellCommand();
-    statusView->appendServerMessage("Info","Running preconfigured command...");
+  QString command = getIdentity()->getShellCommand();
+  statusView->appendServerMessage("Info","Running preconfigured command...");
+  
+  connect( &preShellCommand,SIGNAL(processExited(KProcess*)),this,SLOT(preShellCommandExited(KProcess*)));
+  
+  QStringList commandList = QStringList::split(" ",command);
 
-    connect( &preShellCommand,SIGNAL(processExited(KProcess*)),this,SLOT(preShellCommandExited(KProcess*)));
-
-    QStringList commandList = QStringList::split(" ",command);
-
-    for ( QStringList::ConstIterator it = commandList.begin(); it != commandList.end(); ++it ) {
-      preShellCommand << *it;
+  for ( QStringList::ConstIterator it = commandList.begin(); it != commandList.end(); ++it ) {
+    preShellCommand << *it;
+  }
+  
+  if(!preShellCommand.start()) // Non blocking
+    {
+      preShellCommandExited(NULL);
     }
-
-    preShellCommand.start(); // Non blocking
 }
 
 Server::~Server()
@@ -247,7 +250,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
     connectCommands = QStringList::split(";", m_serverGroup.connectCommands());
   }
 
-  if(!KonversationApplication::preferences.getPreShellCommand().isEmpty()) {
+  if(!getIdentity()->getShellCommand().isEmpty()) {
     doPreShellCommand();
   } else {
     connectToIRCServer();
@@ -255,7 +258,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
 
   initTimers();
 
-  if(KonversationApplication::preferences.getPreShellCommand().isEmpty())
+  if(getIdentity()->getShellCommand().isEmpty())
     connectSignals();
 
   emit serverOnline(false);
@@ -398,7 +401,8 @@ bool Server::isConnecting() const { return connecting; }
 
 void Server::preShellCommandExited(KProcess* proc)
 {
-  if (proc->normalExit())
+  
+  if (proc && proc->normalExit())
     statusView->appendServerMessage("Info","Process executed successfully!");
   else
     statusView->appendServerMessage("Warning","There was a problem while executing the command!");

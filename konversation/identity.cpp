@@ -64,6 +64,7 @@ void Identity::copy(const Identity& original)
   setShowAwayMessage(original.getShowAwayMessage());
   setAwayMessage(original.getAwayMessage());
   setReturnMessage(original.getReturnMessage());
+  setShellCommand(original.getShellCommand());
   setCodecName(original.getCodecName());
 }
 
@@ -106,6 +107,10 @@ void Identity::setNicknameList(const QStringList& newList)
 }
 
 QStringList Identity::getNicknameList() const           { return nicknameList; }
+
+
+QString Identity::getShellCommand() const { return m_shellCommand;}
+void Identity::setShellCommand(const QString& command) { m_shellCommand=command;}
 
 QTextCodec* Identity::getCodec() const                  { return m_codec; }
 QString Identity::getCodecName() const                  { return m_codecName; }
