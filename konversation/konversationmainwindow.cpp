@@ -40,7 +40,6 @@
 #include "ignoredialog.h"
 #include "notifydialog.h"
 #include "nicksonline.h"
-#include "colorconfiguration.h"
 #include "konsolepanel.h"
 #include "urlcatcher.h"
 
