@@ -88,7 +88,8 @@ class ServerWindow : public KMainWindow
     void statusTextEntered();
     void addStatusView();
     void addDccPanel();
-    void closeDccPanel();
+    void closeDccPanel();      // remove dcc panel from view, but does not delete it
+    void deleteDccPanel();     // deletes dcc panel from memory
     void showToolbar();
     void showStatusbar();
     void openPreferences();
@@ -139,7 +140,9 @@ class ServerWindow : public KMainWindow
     QVBox* statusPane;
     IRCView* statusView;
     ChatWindow* frontView;
-    DccPanel* dccPanel;  // to track if a dcc panel is already open
+
+    DccPanel* dccPanel; // the adress of the dcc panel
+    bool dccPanelOpen;  // to track if a dcc panel is already open
 
     QPushButton* nicknameButton;
     IRCInput* statusInput;

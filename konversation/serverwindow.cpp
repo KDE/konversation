@@ -34,6 +34,7 @@ ServerWindow::ServerWindow(Server* newServer) : KMainWindow()
   frontView=0;
   nicksOnlineWindow=0;
   dccPanel=0;
+  dccPanelOpen=false;
 
   setServer(newServer);
 
@@ -72,8 +73,8 @@ ServerWindow::~ServerWindow()
 {
   kdDebug() << "ServerWindow::~ServerWindow()" << endl;
 
-  if(nicksOnlineWindow) closeNicksOnlineWindow(nicksOnlineWindow->size());
-  if(dccPanel) closeDccPanel();
+  if(nicksOnlineWindow) nicksOnlineWindow->closeButton();
+  deleteDccPanel();
 }
 
 void ServerWindow::openPreferences()
@@ -169,13 +170,24 @@ void ServerWindow::showView(QWidget* pane)
 
 void ServerWindow::addDccPanel()
 {
+  // if the panel wasn't open yet
   if(dccPanel==0)
   {
     dccPanel=new DccPanel(getWindowContainer());
     addView(dccPanel,3,i18n("DCC Status"));
+    dccPanelOpen=true;
     kdDebug() << "ServerWindow::addDccPanel(): " << dccPanel << endl;
   }
-  else newText(dccPanel);
+  // show already opened panel
+  else
+  {
+    if(!dccPanelOpen)
+    {
+      addView(dccPanel,3,i18n("DCC Status"));
+      dccPanelOpen=true;
+    }
+    newText(dccPanel);
+  }
 }
 
 DccPanel* ServerWindow::getDccPanel()
@@ -185,11 +197,23 @@ DccPanel* ServerWindow::getDccPanel()
 
 void ServerWindow::closeDccPanel()
 {
-// TODO: Make sure to keep the running DCCs alive ...
-/*
-  delete dccPanel;
-  dccPanel=0;
-*/
+  // if there actually is a dcc panel
+  if(dccPanel)
+  {
+     // hide it from view, does not delete it
+    windowContainer->removePage(dccPanel);
+    dccPanelOpen=false;
+  }
+}
+
+void ServerWindow::deleteDccPanel()
+{
+  if(dccPanel)
+  {
+    closeDccPanel();
+    delete dccPanel;
+    dccPanel=0;
+  }
 }
 
 void ServerWindow::addStatusView()

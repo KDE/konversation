@@ -42,7 +42,7 @@ NicksOnline::NicksOnline(QSize& newSize)
   connect(editButton,SIGNAL (clicked()),SIGNAL (editClicked()) );
   connect(closeButton,SIGNAL (clicked()),this,SLOT (closeButton()) );
 
-  setBaseSize(newSize);
+  resize(newSize);
 }
 
 NicksOnline::~NicksOnline()
