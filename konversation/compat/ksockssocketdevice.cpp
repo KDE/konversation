@@ -36,6 +36,8 @@
 
 using namespace KNetwork;
 
+#define kde_socklen_t socklen_t
+
 // constructor
 // nothing to do
 KSocksSocketDevice::KSocksSocketDevice(const KSocketBase* obj)
