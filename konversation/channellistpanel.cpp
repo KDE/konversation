@@ -25,6 +25,7 @@
 #include <klineedit.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <kfiledialog.h>
 
 #include "channellistpanel.h"
 #include "server.h"
@@ -117,7 +118,6 @@ ChannelListPanel::~ChannelListPanel()
 void ChannelListPanel::refreshList()
 {
   channelListView->clear();
-  channelList.clear();
 
   setNumChannels(0);
   setNumUsers(0);
@@ -127,6 +127,64 @@ void ChannelListPanel::refreshList()
 
 void ChannelListPanel::saveList()
 {
+  // Ask user for file name
+  QString fileName=KFileDialog::getSaveFileName(
+                                                 QString::null,
+                                                 QString::null,
+                                                 this,
+                                                 i18n("Save channel list"));
+  
+  if(!fileName.isEmpty())
+  {
+    // first find the longest channel name and nick number for clean table layouting
+    unsigned int index=0;
+    unsigned int maxChannelWidth=0;
+    unsigned int maxNicksWidth=0;
+    
+    QListViewItem* item=channelListView->itemAtIndex(0);
+    while(item)
+    {
+      if(item->isVisible())
+      {
+        if(item->text(0).length()>maxChannelWidth) maxChannelWidth=item->text(0).length();
+        if(item->text(1).length()>maxNicksWidth) maxNicksWidth=item->text(1).length();
+      }
+      item=channelListView->itemAtIndex(++index);
+    }
+
+    // now save the list to disk    
+    QFile listFile(fileName);
+    listFile.open(IO_WriteOnly);
+    
+    QString header(i18n("Konversation Channel List: %1 - %2\n\n")
+                         .arg(server->getServerName())
+                         .arg(QDateTime::currentDateTime().toString()));
+    
+    listFile.writeBlock(header,header.length());
+    
+    index=0;
+    item=channelListView->itemAtIndex(0);
+    while(item)
+    {
+      if(item->isVisible())
+      {
+        QString channelName;
+        channelName.fill(' ',maxChannelWidth);
+        channelName.replace(0,item->text(0).length(),item->text(0));
+
+        QString nicksPad;
+        nicksPad.fill(' ',maxNicksWidth);
+        QString nicksNum(nicksPad+item->text(1));
+        nicksNum=nicksNum.right(maxNicksWidth);
+                
+        QString line(channelName+" "+nicksNum+" "+item->text(2)+"\n");
+        listFile.writeBlock(line,line.length());
+      }
+      item=channelListView->itemAtIndex(++index);
+    }
+    
+    listFile.close();
+  }
 }
 
 void ChannelListPanel::joinChannelClicked()
@@ -141,7 +199,6 @@ void ChannelListPanel::joinChannelClicked()
 void ChannelListPanel::addToChannelList(const QString& channel,int users,const QString& topic)
 {
   new KListViewItem(channelListView,channel,QString::number(users),topic);
-  channelList.append(channel+" "+QString::number(users)+" "+topic);
 
   setNumChannels(getNumChannels()+1);
   setNumUsers(getNumUsers()+users);
