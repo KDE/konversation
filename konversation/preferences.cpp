@@ -467,7 +467,7 @@ void Preferences::setVersionReply(const QString &reply) { versionReply = reply; 
 const QString Preferences::getVersionReply(bool forRC) const
 {
   if (!forRC || versionReply.isEmpty())
-    return QString("Konversation %1 Build %2 (C)2002-2004 by the Konversation team.").arg(VERSION).arg(COMMIT);
+    return QString("Konversation %1 Build %2 (C) 2002-2004 by the Konversation team.").arg(VERSION).arg(COMMIT);
   return versionReply;
 }
 
