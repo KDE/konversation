@@ -40,9 +40,9 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   KLineEdit* dccBufferInput=new KLineEdit(QString::number(preferences->getDccBufferSize()),parentFrame,"dcc_buffer_size_input");
   QLabel* dccBufferUnit=new QLabel(i18n("bytes"),parentFrame);
 
+  QCheckBox* dccAutoGet=new QCheckBox(i18n("Automatically accept DCC download"),parentFrame,"dcc_autoget_checkbox");
   QCheckBox* dccAddSender=new QCheckBox(i18n("Add sender to file name"),parentFrame,"dcc_sender_checkbox");
   QCheckBox* dccCreateFolder=new QCheckBox(i18n("Create folder for Sender"),parentFrame,"dcc_create_folder_checkbox");
-  QCheckBox* dccAutoGet=new QCheckBox(i18n("Automatically accept DCC download"),parentFrame,"dcc_autoget_checkbox");
 
   dccAddSender->setChecked(preferences->getDccAddPartner());
   dccCreateFolder->setChecked(preferences->getDccCreateFolder());

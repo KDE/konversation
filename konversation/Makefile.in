@@ -315,7 +315,7 @@ konversation_nofinal_OBJECTS = prefspagedccsettings.$(OBJEXT) \
 	inputfilter.$(OBJEXT) channel.$(OBJEXT) ircview.$(OBJEXT) \
 	server.$(OBJEXT) serverwindow.$(OBJEXT) \
 	ircserversocket.$(OBJEXT) main.$(OBJEXT)\
-	ledtab.moc.o ircview.moc.o ircinput.moc.o query.moc.o preferences.moc.o chatwindow.moc.o dcctransfer.moc.o prefspageserverlist.moc.o dccpanel.moc.o quickbutton.moc.o ignoredialog.moc.o channel.moc.o ledtabwidget.moc.o modebutton.moc.o nicksonline.moc.o notifydialog.moc.o colorconfiguration.moc.o nickchangedialog.moc.o server.moc.o konversationapplication.moc.o prefspagedccsettings.moc.o outputfilter.moc.o ledtabbar.moc.o editserverdialog.moc.o prefspageidentity.moc.o inputfilter.moc.o quickbuttonsdialog.moc.o serverwindow.moc.o mycolorcombo.moc.o prefspage.moc.o ignorecheckbox.moc.o notagaindialog.moc.o prefsdialog.moc.o nicklistview.moc.o highlightdialog.moc.o  \
+	ledtab.moc.o ircview.moc.o ircinput.moc.o query.moc.o preferences.moc.o chatwindow.moc.o dcctransfer.moc.o prefspageserverlist.moc.o dccpanel.moc.o quickbutton.moc.o ignoredialog.moc.o channel.moc.o ledtabwidget.moc.o modebutton.moc.o nicksonline.moc.o notifydialog.moc.o colorconfiguration.moc.o nickchangedialog.moc.o konversationapplication.moc.o server.moc.o prefspagedccsettings.moc.o outputfilter.moc.o ledtabbar.moc.o editserverdialog.moc.o prefspageidentity.moc.o inputfilter.moc.o quickbuttonsdialog.moc.o serverwindow.moc.o mycolorcombo.moc.o prefspage.moc.o ignorecheckbox.moc.o notagaindialog.moc.o prefsdialog.moc.o highlightdialog.moc.o nicklistview.moc.o  \
 	konversation_meta_unload.o 
 @KDE_USE_FINAL_FALSE@konversation_OBJECTS = $(konversation_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@konversation_OBJECTS = $(konversation_final_OBJECTS)
@@ -567,7 +567,7 @@ distclean-tags:
 
 #>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 #>+ 4
-KDE_DIST=Eisfuchs.franken.jpg Eisfuchs.cum.jpg 
+KDE_DIST=konversation 
 
 DISTFILES= $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST) $(KDE_DIST)
 
@@ -872,12 +872,12 @@ nickchangedialog.moc.cpp: $(srcdir)/nickchangedialog.h
 	$(MOC) $(srcdir)/nickchangedialog.h -o nickchangedialog.moc.cpp
 
 #>+ 3
-server.moc.cpp: $(srcdir)/server.h
-	$(MOC) $(srcdir)/server.h -o server.moc.cpp
-
-#>+ 3
 konversationapplication.moc.cpp: $(srcdir)/konversationapplication.h
 	$(MOC) $(srcdir)/konversationapplication.h -o konversationapplication.moc.cpp
+
+#>+ 3
+server.moc.cpp: $(srcdir)/server.h
+	$(MOC) $(srcdir)/server.h -o server.moc.cpp
 
 #>+ 3
 prefspagedccsettings.moc.cpp: $(srcdir)/prefspagedccsettings.h
@@ -932,16 +932,16 @@ prefsdialog.moc.cpp: $(srcdir)/prefsdialog.h
 	$(MOC) $(srcdir)/prefsdialog.h -o prefsdialog.moc.cpp
 
 #>+ 3
-nicklistview.moc.cpp: $(srcdir)/nicklistview.h
-	$(MOC) $(srcdir)/nicklistview.h -o nicklistview.moc.cpp
-
-#>+ 3
 highlightdialog.moc.cpp: $(srcdir)/highlightdialog.h
 	$(MOC) $(srcdir)/highlightdialog.h -o highlightdialog.moc.cpp
 
 #>+ 3
+nicklistview.moc.cpp: $(srcdir)/nicklistview.h
+	$(MOC) $(srcdir)/nicklistview.h -o nicklistview.moc.cpp
+
+#>+ 3
 clean-metasources:
-	-rm -f  ledtab.moc.cpp ircview.moc.cpp ircinput.moc.cpp query.moc.cpp preferences.moc.cpp chatwindow.moc.cpp dcctransfer.moc.cpp prefspageserverlist.moc.cpp dccpanel.moc.cpp quickbutton.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp nicksonline.moc.cpp notifydialog.moc.cpp colorconfiguration.moc.cpp nickchangedialog.moc.cpp server.moc.cpp konversationapplication.moc.cpp prefspagedccsettings.moc.cpp outputfilter.moc.cpp ledtabbar.moc.cpp editserverdialog.moc.cpp prefspageidentity.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp mycolorcombo.moc.cpp prefspage.moc.cpp ignorecheckbox.moc.cpp notagaindialog.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp highlightdialog.moc.cpp
+	-rm -f  ledtab.moc.cpp ircview.moc.cpp ircinput.moc.cpp query.moc.cpp preferences.moc.cpp chatwindow.moc.cpp dcctransfer.moc.cpp prefspageserverlist.moc.cpp dccpanel.moc.cpp quickbutton.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp nicksonline.moc.cpp notifydialog.moc.cpp colorconfiguration.moc.cpp nickchangedialog.moc.cpp konversationapplication.moc.cpp server.moc.cpp prefspagedccsettings.moc.cpp outputfilter.moc.cpp ledtabbar.moc.cpp editserverdialog.moc.cpp prefspageidentity.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp mycolorcombo.moc.cpp prefspage.moc.cpp ignorecheckbox.moc.cpp notagaindialog.moc.cpp prefsdialog.moc.cpp highlightdialog.moc.cpp nicklistview.moc.cpp
 
 #>+ 2
 docs-am:
@@ -954,12 +954,12 @@ force-reedit:
 
 
 #>+ 12
-konversation_meta_unload.cpp:  ledtab.moc.cpp ircview.moc.cpp query.moc.cpp ircinput.moc.cpp preferences.moc.cpp chatwindow.moc.cpp dcctransfer.moc.cpp prefspageserverlist.moc.cpp dccpanel.moc.cpp quickbutton.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp nicksonline.moc.cpp notifydialog.moc.cpp colorconfiguration.moc.cpp nickchangedialog.moc.cpp server.moc.cpp konversationapplication.moc.cpp prefspagedccsettings.moc.cpp outputfilter.moc.cpp ledtabbar.moc.cpp editserverdialog.moc.cpp prefspageidentity.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp mycolorcombo.moc.cpp prefspage.moc.cpp ignorecheckbox.moc.cpp notagaindialog.moc.cpp prefsdialog.moc.cpp highlightdialog.moc.cpp nicklistview.moc.cpp
+konversation_meta_unload.cpp:  ledtab.moc.cpp ircview.moc.cpp query.moc.cpp ircinput.moc.cpp preferences.moc.cpp chatwindow.moc.cpp dcctransfer.moc.cpp prefspageserverlist.moc.cpp dccpanel.moc.cpp quickbutton.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp nicksonline.moc.cpp notifydialog.moc.cpp colorconfiguration.moc.cpp nickchangedialog.moc.cpp konversationapplication.moc.cpp server.moc.cpp prefspagedccsettings.moc.cpp outputfilter.moc.cpp ledtabbar.moc.cpp editserverdialog.moc.cpp prefspageidentity.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp mycolorcombo.moc.cpp prefspage.moc.cpp ignorecheckbox.moc.cpp notagaindialog.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp highlightdialog.moc.cpp
 	@echo 'creating konversation_meta_unload.cpp'
 	@-rm -f konversation_meta_unload.cpp
 	@if test ${kde_qtver} = 2; then \
 		echo 'static const char * _metalist_konversation[] = {' > konversation_meta_unload.cpp ;\
-		cat  ledtab.moc.cpp ircview.moc.cpp query.moc.cpp ircinput.moc.cpp preferences.moc.cpp chatwindow.moc.cpp dcctransfer.moc.cpp prefspageserverlist.moc.cpp dccpanel.moc.cpp quickbutton.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp nicksonline.moc.cpp notifydialog.moc.cpp colorconfiguration.moc.cpp nickchangedialog.moc.cpp server.moc.cpp konversationapplication.moc.cpp prefspagedccsettings.moc.cpp outputfilter.moc.cpp ledtabbar.moc.cpp editserverdialog.moc.cpp prefspageidentity.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp mycolorcombo.moc.cpp prefspage.moc.cpp ignorecheckbox.moc.cpp notagaindialog.moc.cpp prefsdialog.moc.cpp highlightdialog.moc.cpp nicklistview.moc.cpp | grep 'char.*className' | sed -e 's/.*[^A-Za-z0-9_:]\([A-Za-z0-9_:]*\)::className.*$$/\"\1\",/' | sort | uniq >> konversation_meta_unload.cpp ;\
+		cat  ledtab.moc.cpp ircview.moc.cpp query.moc.cpp ircinput.moc.cpp preferences.moc.cpp chatwindow.moc.cpp dcctransfer.moc.cpp prefspageserverlist.moc.cpp dccpanel.moc.cpp quickbutton.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp nicksonline.moc.cpp notifydialog.moc.cpp colorconfiguration.moc.cpp nickchangedialog.moc.cpp konversationapplication.moc.cpp server.moc.cpp prefspagedccsettings.moc.cpp outputfilter.moc.cpp ledtabbar.moc.cpp editserverdialog.moc.cpp prefspageidentity.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp mycolorcombo.moc.cpp prefspage.moc.cpp ignorecheckbox.moc.cpp notagaindialog.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp highlightdialog.moc.cpp | grep 'char.*className' | sed -e 's/.*[^A-Za-z0-9_:]\([A-Za-z0-9_:]*\)::className.*$$/\"\1\",/' | sort | uniq >> konversation_meta_unload.cpp ;\
 		echo '0};' >> konversation_meta_unload.cpp ;\
 		echo '#include <kunload.h>' >> konversation_meta_unload.cpp ;\
 		echo '_UNLOAD(konversation)' >> konversation_meta_unload.cpp ;\
@@ -971,11 +971,11 @@ clean-moc-classes:
 	-rm -f  konversation_meta_unload.cpp
 
 #>+ 11
-konversation.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/prefspagedccsettings.cpp $(srcdir)/prefspagescripts.cpp $(srcdir)/mycolorcombo.cpp $(srcdir)/nicksonline.cpp $(srcdir)/prefspageidentity.cpp $(srcdir)/prefspage.cpp $(srcdir)/prefspageserverlist.cpp $(srcdir)/dccpanel.cpp $(srcdir)/dcctransfer.cpp $(srcdir)/ledlistviewitem.cpp $(srcdir)/notagaindialog.cpp $(srcdir)/highlight.cpp $(srcdir)/highlightviewitem.cpp $(srcdir)/highlightview.cpp $(srcdir)/highlightdialog.cpp $(srcdir)/colorconfiguration.cpp $(srcdir)/notifydialog.cpp $(srcdir)/nickchangedialog.cpp $(srcdir)/modebutton.cpp $(srcdir)/ignorelistviewitem.cpp $(srcdir)/ignorecheckbox.cpp $(srcdir)/ignore.cpp $(srcdir)/ignoredialog.cpp $(srcdir)/quickbuttonsdialog.cpp $(srcdir)/nicklistview.cpp $(srcdir)/ircinput.cpp $(srcdir)/ledtabbar.cpp $(srcdir)/ledtab.cpp $(srcdir)/ledtabwidget.cpp $(srcdir)/images.cpp $(srcdir)/editserverdialog.cpp $(srcdir)/serverlistitem.cpp $(srcdir)/serverentry.cpp $(srcdir)/prefsdialog.cpp $(srcdir)/quickbutton.cpp $(srcdir)/preferences.cpp $(srcdir)/chatwindow.cpp $(srcdir)/outputfilter.cpp $(srcdir)/query.cpp $(srcdir)/konversationapplication.cpp $(srcdir)/nick.cpp $(srcdir)/inputfilter.cpp $(srcdir)/channel.cpp $(srcdir)/ircview.cpp $(srcdir)/server.cpp $(srcdir)/serverwindow.cpp $(srcdir)/ircserversocket.cpp $(srcdir)/main.cpp $(srcdir)/konversation_meta_unload.cpp  ledtab.moc.cpp ircview.moc.cpp ircinput.moc.cpp query.moc.cpp preferences.moc.cpp chatwindow.moc.cpp dcctransfer.moc.cpp prefspageserverlist.moc.cpp dccpanel.moc.cpp quickbutton.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp nicksonline.moc.cpp notifydialog.moc.cpp colorconfiguration.moc.cpp nickchangedialog.moc.cpp server.moc.cpp konversationapplication.moc.cpp prefspagedccsettings.moc.cpp outputfilter.moc.cpp ledtabbar.moc.cpp editserverdialog.moc.cpp prefspageidentity.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp mycolorcombo.moc.cpp prefspage.moc.cpp ignorecheckbox.moc.cpp notagaindialog.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp highlightdialog.moc.cpp
+konversation.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/prefspagedccsettings.cpp $(srcdir)/prefspagescripts.cpp $(srcdir)/mycolorcombo.cpp $(srcdir)/nicksonline.cpp $(srcdir)/prefspageidentity.cpp $(srcdir)/prefspage.cpp $(srcdir)/prefspageserverlist.cpp $(srcdir)/dccpanel.cpp $(srcdir)/dcctransfer.cpp $(srcdir)/ledlistviewitem.cpp $(srcdir)/notagaindialog.cpp $(srcdir)/highlight.cpp $(srcdir)/highlightviewitem.cpp $(srcdir)/highlightview.cpp $(srcdir)/highlightdialog.cpp $(srcdir)/colorconfiguration.cpp $(srcdir)/notifydialog.cpp $(srcdir)/nickchangedialog.cpp $(srcdir)/modebutton.cpp $(srcdir)/ignorelistviewitem.cpp $(srcdir)/ignorecheckbox.cpp $(srcdir)/ignore.cpp $(srcdir)/ignoredialog.cpp $(srcdir)/quickbuttonsdialog.cpp $(srcdir)/nicklistview.cpp $(srcdir)/ircinput.cpp $(srcdir)/ledtabbar.cpp $(srcdir)/ledtab.cpp $(srcdir)/ledtabwidget.cpp $(srcdir)/images.cpp $(srcdir)/editserverdialog.cpp $(srcdir)/serverlistitem.cpp $(srcdir)/serverentry.cpp $(srcdir)/prefsdialog.cpp $(srcdir)/quickbutton.cpp $(srcdir)/preferences.cpp $(srcdir)/chatwindow.cpp $(srcdir)/outputfilter.cpp $(srcdir)/query.cpp $(srcdir)/konversationapplication.cpp $(srcdir)/nick.cpp $(srcdir)/inputfilter.cpp $(srcdir)/channel.cpp $(srcdir)/ircview.cpp $(srcdir)/server.cpp $(srcdir)/serverwindow.cpp $(srcdir)/ircserversocket.cpp $(srcdir)/main.cpp $(srcdir)/konversation_meta_unload.cpp  ledtab.moc.cpp ircview.moc.cpp ircinput.moc.cpp query.moc.cpp preferences.moc.cpp chatwindow.moc.cpp dcctransfer.moc.cpp prefspageserverlist.moc.cpp dccpanel.moc.cpp quickbutton.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp nicksonline.moc.cpp notifydialog.moc.cpp colorconfiguration.moc.cpp nickchangedialog.moc.cpp konversationapplication.moc.cpp server.moc.cpp prefspagedccsettings.moc.cpp outputfilter.moc.cpp ledtabbar.moc.cpp editserverdialog.moc.cpp prefspageidentity.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp mycolorcombo.moc.cpp prefspage.moc.cpp ignorecheckbox.moc.cpp notagaindialog.moc.cpp prefsdialog.moc.cpp highlightdialog.moc.cpp nicklistview.moc.cpp
 	@echo 'creating konversation.all_cpp.cpp ...'; \
 	rm -f konversation.all_cpp.files konversation.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> konversation.all_cpp.final; \
-	for file in prefspagedccsettings.cpp prefspagescripts.cpp mycolorcombo.cpp nicksonline.cpp prefspageidentity.cpp prefspage.cpp prefspageserverlist.cpp dccpanel.cpp dcctransfer.cpp ledlistviewitem.cpp notagaindialog.cpp highlight.cpp highlightviewitem.cpp highlightview.cpp highlightdialog.cpp colorconfiguration.cpp notifydialog.cpp nickchangedialog.cpp modebutton.cpp ignorelistviewitem.cpp ignorecheckbox.cpp ignore.cpp ignoredialog.cpp quickbuttonsdialog.cpp nicklistview.cpp ircinput.cpp ledtabbar.cpp ledtab.cpp ledtabwidget.cpp images.cpp editserverdialog.cpp serverlistitem.cpp serverentry.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp chatwindow.cpp outputfilter.cpp query.cpp konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp ircview.cpp server.cpp serverwindow.cpp ircserversocket.cpp main.cpp konversation_meta_unload.cpp  ledtab.moc.cpp ircview.moc.cpp ircinput.moc.cpp query.moc.cpp preferences.moc.cpp chatwindow.moc.cpp dcctransfer.moc.cpp prefspageserverlist.moc.cpp dccpanel.moc.cpp quickbutton.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp nicksonline.moc.cpp notifydialog.moc.cpp colorconfiguration.moc.cpp nickchangedialog.moc.cpp server.moc.cpp konversationapplication.moc.cpp prefspagedccsettings.moc.cpp outputfilter.moc.cpp ledtabbar.moc.cpp editserverdialog.moc.cpp prefspageidentity.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp mycolorcombo.moc.cpp prefspage.moc.cpp ignorecheckbox.moc.cpp notagaindialog.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp highlightdialog.moc.cpp; do \
+	for file in prefspagedccsettings.cpp prefspagescripts.cpp mycolorcombo.cpp nicksonline.cpp prefspageidentity.cpp prefspage.cpp prefspageserverlist.cpp dccpanel.cpp dcctransfer.cpp ledlistviewitem.cpp notagaindialog.cpp highlight.cpp highlightviewitem.cpp highlightview.cpp highlightdialog.cpp colorconfiguration.cpp notifydialog.cpp nickchangedialog.cpp modebutton.cpp ignorelistviewitem.cpp ignorecheckbox.cpp ignore.cpp ignoredialog.cpp quickbuttonsdialog.cpp nicklistview.cpp ircinput.cpp ledtabbar.cpp ledtab.cpp ledtabwidget.cpp images.cpp editserverdialog.cpp serverlistitem.cpp serverentry.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp chatwindow.cpp outputfilter.cpp query.cpp konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp ircview.cpp server.cpp serverwindow.cpp ircserversocket.cpp main.cpp konversation_meta_unload.cpp  ledtab.moc.cpp ircview.moc.cpp ircinput.moc.cpp query.moc.cpp preferences.moc.cpp chatwindow.moc.cpp dcctransfer.moc.cpp prefspageserverlist.moc.cpp dccpanel.moc.cpp quickbutton.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp nicksonline.moc.cpp notifydialog.moc.cpp colorconfiguration.moc.cpp nickchangedialog.moc.cpp konversationapplication.moc.cpp server.moc.cpp prefspagedccsettings.moc.cpp outputfilter.moc.cpp ledtabbar.moc.cpp editserverdialog.moc.cpp prefspageidentity.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp mycolorcombo.moc.cpp prefspage.moc.cpp ignorecheckbox.moc.cpp notagaindialog.moc.cpp prefsdialog.moc.cpp highlightdialog.moc.cpp nicklistview.moc.cpp; do \
 	  echo "#include \"$$file\"" >> konversation.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> konversation.all_cpp.final; \
 	done; \

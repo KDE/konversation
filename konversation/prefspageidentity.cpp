@@ -40,12 +40,13 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   KLineEdit* nick2=new KLineEdit(nicknameList[2],parentFrame);
   KLineEdit* nick3=new KLineEdit(nicknameList[3],parentFrame);
 
+  QLabel* partLabel=new QLabel(i18n("Part Reason:"),parentFrame);
+  KLineEdit* partInput=new KLineEdit(preferences->getPartReason(),parentFrame);
+
+  QLabel* kickLabel=new QLabel(i18n("Kick Reason:"),parentFrame);
+  KLineEdit* kickInput=new KLineEdit(preferences->getKickReason(),parentFrame);
+
   int row=0;
-  identityLayout->addMultiCellWidget(new QLabel(i18n(
-                                     "<qt>This is the default identity used for all servers "
-                                     "where no separate identity was selected.</qt>"),
-                                     parentFrame),row,row,0,3);
-  row++;
   identityLayout->addWidget(realNameLabel,row,0);
   identityLayout->addMultiCellWidget(realNameInput,row,row,1,3);
   row++;
@@ -62,6 +63,17 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   identityLayout->addWidget(new QLabel("Nickname 4:",parentFrame),row,2);
   identityLayout->addWidget(nick3,row,3);
   row++;
+  identityLayout->addWidget(partLabel,row,0);
+  identityLayout->addMultiCellWidget(partInput,row,row,1,3);
+  row++;
+  identityLayout->addWidget(kickLabel,row,0);
+  identityLayout->addMultiCellWidget(kickInput,row,row,1,3);
+  row++;
+  identityLayout->addMultiCellWidget(new QLabel(i18n(
+                                     "<qt>This is the default identity used for all servers "
+                                     "where no separate identity was selected.</qt>"),
+                                     parentFrame),row,row,0,3);
+  row++;
   identityLayout->setRowStretch(row,10);
 
   // Set up signals / slots for identity page
@@ -71,6 +83,8 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   connect(nick1,SIGNAL (textChanged(const QString&)),this,SLOT (nick1Changed(const QString&)) );
   connect(nick2,SIGNAL (textChanged(const QString&)),this,SLOT (nick2Changed(const QString&)) );
   connect(nick3,SIGNAL (textChanged(const QString&)),this,SLOT (nick3Changed(const QString&)) );
+  connect(partInput,SIGNAL (textChanged(const QString&)),this,SLOT (partReasonChanged(const QString&)) );
+  connect(kickInput,SIGNAL (textChanged(const QString&)),this,SLOT (kickReasonChanged(const QString&)) );
 }
 
 PrefsPageIdentity::~PrefsPageIdentity()
@@ -107,4 +121,14 @@ void PrefsPageIdentity::nick2Changed(const QString& newNick)
 void PrefsPageIdentity::nick3Changed(const QString& newNick)
 {
   preferences->setNickname(3,newNick);
+}
+
+void PrefsPageIdentity::partReasonChanged(const QString& newReason)
+{
+  preferences->setPartReason(newReason);
+}
+
+void PrefsPageIdentity::kickReasonChanged(const QString& newReason)
+{
+  preferences->setKickReason(newReason);
 }

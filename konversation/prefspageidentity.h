@@ -38,6 +38,8 @@ class PrefsPageIdentity : public PrefsPage
     void nick1Changed(const QString& newNick);
     void nick2Changed(const QString& newNick);
     void nick3Changed(const QString& newNick);
+    void partReasonChanged(const QString& newReason);
+    void kickReasonChanged(const QString& newReason);
 };
 
 #endif
