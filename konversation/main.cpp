@@ -69,6 +69,11 @@ int main(int argc, char* argv[])
   aboutData.addCredit("Ruud Nabben",I18N_NOOP("Option to enable IRC color filtering"),"r.nabben@gawab.com");
 
   KCmdLineArgs::init(argc,argv,&aboutData);
+  KonversationApplication::addCmdLineOptions();
+
+  if(!KUniqueApplication::start()) {
+    exit(0);
+  }
 
   KonversationApplication app;
 
