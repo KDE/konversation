@@ -29,9 +29,7 @@ class KonvDCOP : public QObject, virtual public KonvIface
     KonvDCOP();
     QPtrList<IRCEvent> registered_events;
 
-    bool isIgnore (int serverid, const QString &hostmask, Ignore::Type type);
-    bool isIgnore (int serverid, const QString &hostmask, int type);
-    QString getNickname (int serverid);
+    QString getNickname (const QString &server);
 
   signals:
     void dcopSay(const QString& server,const QString& target,const QString& command);

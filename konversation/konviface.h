@@ -28,8 +28,7 @@ class KonvIface : virtual public DCOPObject
     virtual void connectToServer(const QString& url, int port, const QString& channel, const QString& password) = 0;
     virtual int registerEventHook (const QString &type, const QString &criteria, const QString &app, const QString &object, const QString &signal) = 0;
     virtual void unregisterEventHook (int id) = 0;
-    virtual bool isIgnore (int serverid, const QString &hostmask, int type) = 0;
-    virtual QString getNickname (int serverid) = 0;
+    virtual QString getNickname (const QString &serverid) = 0;
     virtual QStringList listServers() = 0;
     virtual QStringList listConnectedServers() = 0;
 };

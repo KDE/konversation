@@ -173,19 +173,9 @@ void KonvDCOP::unregisterEventHook(int hookId)
   kdDebug() << "KonvDCOP::unregisterEventHook(): hook id " << hookId << " not found!" << endl;
 }
 
-bool KonvDCOP::isIgnore (int serverid, const QString &hostmask, Ignore::Type type)
+QString KonvDCOP::getNickname (const QString &server)
 {
-  return isIgnore(serverid, hostmask, static_cast<int>(type));
-}
-
-bool KonvDCOP::isIgnore (int /*serverid*/, const QString &/*hostmask*/, int /*type*/)
-{
-  return false;
-}
-
-QString KonvDCOP::getNickname (int /*serverid*/)
-{
-  return QString::null;
+  return static_cast<KonversationApplication *>(kapp)->getServerByName(server)->getNickname();
 }
 
 // Identity stuff
@@ -195,8 +185,20 @@ KonvIdentDCOP::KonvIdentDCOP()
 {
 }
 
-void KonvIdentDCOP::setrealName(const QString &/*identity*/, const QString& /*name*/)
+void KonvIdentDCOP::setrealName(const QString &id_name, const QString& name)
 {
+  QValueList<IdentityPtr> ids = KonversationApplication::preferences.getIdentityList();
+
+  for(QValueList<IdentityPtr>::iterator it = ids.begin(); it != ids.end(); ++it)
+  {
+    if ((*it)->getName() == id_name)
+    {
+      (*it)->setRealName(name);
+      return;
+    }
+  }
+
+
 }
 
 QString KonvIdentDCOP::getrealName(const QString &id_name)
