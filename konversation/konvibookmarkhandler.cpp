@@ -15,15 +15,16 @@
 
 */
 
+#include "konvibookmarkhandler.h"
 
-#include <kbookmarkimporter.h>
-#include <kbookmarkdombuilder.h>
+#include <qstring.h>
+
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 
 #include "konversationapplication.h"
+#include "konversationmainwindow.h"
 #include "konvibookmarkmenu.h"
-#include "konvibookmarkhandler.h"
 
 KonviBookmarkHandler::KonviBookmarkHandler(KonversationMainWindow* mainWindow)
     : QObject( mainWindow, "KonviBookmarkHandler" ),
@@ -41,8 +42,7 @@ KonviBookmarkHandler::KonviBookmarkHandler(KonversationMainWindow* mainWindow)
   manager->setUpdate( true );
   manager->setShowNSBookmarks( false );
   
-  connect( manager, SIGNAL( changed(const QString &, const QString &) ),
-	   SLOT( slotBookmarksChanged(const QString &, const QString &) ) );
+  connect( manager, SIGNAL(changed(const QString &,const QString &)), SLOT(slotBookmarksChanged(const QString &,const QString &)));
   
   m_bookmarkMenu = new KonviBookmarkMenu( manager, this, m_menu,  mainWindow->actionCollection(), true );
 }

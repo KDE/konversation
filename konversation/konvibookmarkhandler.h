@@ -18,14 +18,12 @@
 
 */
 
-
 #include <kbookmarkmanager.h>
-#include "konversationmainwindow.h"
-#include "konvibookmarkmenu.h"
 
+class QString;
 class KPopupMenu;
+class KonversationMainWindow;
 class KonviBookmarkMenu;
-class KBookmarkManager;
 
 class KonviBookmarkHandler : public QObject, public KBookmarkOwner
 {
@@ -35,7 +33,7 @@ public:
   KonviBookmarkHandler(KonversationMainWindow *mainWindow);
   ~KonviBookmarkHandler();
 
-  QPopupMenu * popupMenu();
+  KPopupMenu* popupMenu();
 
   // KBookmarkOwner interface:
   virtual void openBookmarkURL(const QString& url, const QString& title);

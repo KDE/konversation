@@ -19,11 +19,7 @@
 */
 
 #include <qobject.h>
-#include <kbookmark.h>
 #include <kbookmarkmenu.h>
-
-#include "konvibookmarkhandler.h"
-
 
 class QString;
 class KBookmark;
@@ -33,6 +29,7 @@ class KActionCollection;
 class KBookmarkOwner;
 class KBookmarkMenu;
 class KPopupMenu;
+class KonviBookmarkHandler;
 class KonviBookmarkMenu;
 class KonviBookmarkMenuPrivate;
 

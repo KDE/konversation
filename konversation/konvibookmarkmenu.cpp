@@ -15,14 +15,13 @@
 
 */
 
-#include <qfile.h>
+#include "konvibookmarkmenu.h"
+
 #include <qregexp.h>
 
 #include <kpopupmenu.h>
-#include <kstandarddirs.h>
 #include <kaction.h>
 
-#include "konvibookmarkmenu.h"
 #include "konvibookmarkhandler.h"
 
 KonviBookmarkMenu::KonviBookmarkMenu( KBookmarkManager* mgr,
@@ -39,10 +38,8 @@ KonviBookmarkMenu::KonviBookmarkMenu( KBookmarkManager* mgr,
    * KonviBookmarkMenu::KBookmarkMenu::slotAboutToShow()
    * Could this be solved if slotAboutToShow() is virtual in KBookmarMenu?
    */
-  disconnect( _parentMenu, SIGNAL( aboutToShow() ), this,
-	      SLOT( slotAboutToShow() ) );
-  connect( _parentMenu, SIGNAL( aboutToShow() ),
-	   SLOT( slotAboutToShow2() ) );
+  disconnect(_parentMenu, SIGNAL(aboutToShow()), this, SLOT(slotAboutToShow()));
+  connect(_parentMenu, SIGNAL(aboutToShow()), SLOT(slotAboutToShow2()));
 }
 
 /*
