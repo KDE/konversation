@@ -1469,3 +1469,6 @@ bool InputFilter::getLagMeasuring()           { return lagMeasuring; }
 
 #include "inputfilter.moc"
 
+// kate: space-indent on; tab-width 4; indent-width 4
+// vim: set et sw=4 ts=4:
+
