@@ -237,6 +237,11 @@
       <!-- konversationapplication.cpp:965 -->
       <!--   config->writeEntry("ShowNicknameBox", preferences.showNicknameBox()); -->
     </entry>
+    <entry key="UseBoldNicks" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="ShowRememberLineInAllWindows" type="Bool">
       <default>false</default>
       <label></label>
