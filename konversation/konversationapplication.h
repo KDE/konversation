@@ -111,7 +111,9 @@ class KonversationApplication : public KApplication
 			      const QString& port = "6667", 
 			      const QString& channel="",
     			      const QString& nick = KonversationApplication::preferences.getNickname(0),
-			      const QString& password="");
+			      const QString& password="",
+			      const bool& useSSL=FALSE
+			      );
     void readOptions();
     void saveOptions(bool updateGUI=true);
     void quitKonversation();

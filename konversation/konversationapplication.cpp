@@ -238,11 +238,11 @@ void KonversationApplication::connectToServer(int id)
   serverList.append(newServer);
 }
 
-void KonversationApplication::quickConnectToServer(const QString& hostName, const QString& port, const QString& channel, const QString& nick, const QString& password)
+void KonversationApplication::quickConnectToServer(const QString& hostName, const QString& port, const QString& channel, const QString& nick, const QString& password, const bool& useSSL)
 {
   //used for the quick connect dialog and /server command
 
-  Server* newServer = new Server(mainWindow, hostName, port, channel, nick, password);
+  Server* newServer = new Server(mainWindow, hostName, port, channel, nick, password, useSSL);
 
   connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
   connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
@@ -1261,7 +1261,7 @@ void KonversationApplication::openPrefsDialog(Preferences::Pages page)
 void KonversationApplication::openQuickConnectDialog()
 {
 	quickConnectDialog = new QuickConnectDialog(mainWindow);
-	connect(quickConnectDialog, SIGNAL(connectClicked(const QString&, const QString&, const QString&, const QString&, const QString&)),this, SLOT(quickConnectToServer(const QString&, const QString&, const QString&, const QString&, const QString&)));
+	connect(quickConnectDialog, SIGNAL(connectClicked(const QString&, const QString&, const QString&, const QString&, const QString&, const bool&)),this, SLOT(quickConnectToServer(const QString&, const QString&, const QString&, const QString&, const QString&,const bool&)));
 	quickConnectDialog->show();
 }
 

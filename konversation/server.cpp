@@ -82,7 +82,7 @@ Server::Server(KonversationMainWindow* mainWindow, int id)
 }
 
 Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
-	       const QString& channel,const QString& password, QString nick)
+	       const QString& channel,const QString& password, QString nick,const bool& useSSL)
 {
   m_serverGroup.setName(hostName);
   m_serverGroup.setIdentityId(KonversationApplication::preferences.getIdentityByName("Default")->id());
@@ -91,6 +91,7 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   serverSettings.setServer(hostName);
   serverSettings.setPort(port.toInt());
   serverSettings.setPassword(password);
+  serverSettings.setSSLEnabled(useSSL);
   m_serverGroup.addServer(serverSettings);
 
   if(nick.isEmpty()) // Happens when we are invoked from an irc:/ url

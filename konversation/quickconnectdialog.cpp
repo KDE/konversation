@@ -6,7 +6,7 @@
 */
 
 /*
-  quickconnectdialog.h  -  Dialog for quick connection to an IRC network without adding a server in the Server List.
+  quickconnectdialog.cpp - Dialog for quick connection to an IRC network without adding a server in the Server List.
   begin:     Sat June 05 2004
   copyright: (C) 2004 by Michael Goettsche
   email:     mail@tuxipuxi.de
@@ -15,6 +15,7 @@
 #include <qlayout.h>
 #include <qwhatsthis.h>
 #include <qlabel.h>
+#include <qcheckbox.h>
 
 #include <klineedit.h>
 #include <klocale.h>
@@ -25,7 +26,7 @@
 
 QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 				:KDialogBase(parent, "quickconnect", true, i18n("Quick Connect"),
-							KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Ok, true)
+					     KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Ok, true)
 {
 	QWidget* page = new QWidget(this);
 	setMainWidget(page);
@@ -62,6 +63,9 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 	QWhatsThis::add(passwordInput, passwordWT);
 	passwordLabel->setBuddy(passwordInput);
 
+        sslCheckBox = new QCheckBox(page, "sslCheckBox");
+	sslCheckBox->setText(i18n("&Use SSL"));
+
 	layout->addWidget(hostNameLabel, 0, 0);
 	layout->addWidget(hostNameInput, 0, 1);
 	layout->addWidget(portLabel, 0, 2);
@@ -71,6 +75,8 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 	layout->addWidget(nickInput, 1, 1);
 	layout->addWidget(passwordLabel, 1, 2);
 	layout->addWidget(passwordInput, 1, 3);
+	
+	layout->addWidget(sslCheckBox, 2, 0);
         
 	hostNameInput->setFocus();
 
@@ -91,7 +97,8 @@ void QuickConnectDialog::slotOk()
 				    portInput->text(),
 				    "",
 				    nickInput->text(),
-				    passwordInput->text());
+				    passwordInput->text(),
+				    sslCheckBox->isChecked() ? TRUE : FALSE);
 		delayedDestruct();
 	}
 }

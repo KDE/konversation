@@ -36,7 +36,9 @@ class QuickConnectDialog : public KDialogBase
 				    const QString& port,
 				    const QString& channel,
 				    const QString& nick,
-				    const QString& password);
+				    const QString& password,
+				    const bool& useSSL
+				    );
 				
 	protected slots:
 		void slotOk();
@@ -46,6 +48,7 @@ class QuickConnectDialog : public KDialogBase
 		KLineEdit*	portInput;
 		KLineEdit*	passwordInput;
 		KLineEdit*	nickInput;
+		QCheckBox*      sslCheckBox; 
 };
 
 #endif 
