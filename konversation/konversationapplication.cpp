@@ -969,6 +969,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("FocusNewQueries", preferences.getFocusNewQueries());
   config->writeEntry("FilterColorCodes", preferences.getFilterColors());
   config->writeEntry("UseColoredNicks", preferences.getUseColoredNicks());
+  config->writeEntry("UseBoldNicks", preferences.getUseBoldNicks());
 
   // Colors are now handled in preferences
 
