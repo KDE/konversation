@@ -75,7 +75,12 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
       popup->insertItem(i18n("Kick / Ban"),kickban,KickBanSub);
     }
     popup->insertItem(i18n("Ignore"),Ignore);
+
     connect (popup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+    connect (modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+    connect (kickban, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+    connect (addressbook, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+
   }
   else
   {
