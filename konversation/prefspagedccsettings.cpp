@@ -79,6 +79,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSpecificSendPorts->setChecked(preferences->getDccSpecificSendPorts());
   dccSendPortsFirstSpin->setValue(preferences->getDccSendPortsFirst());
   dccSendPortsLastSpin->setValue(preferences->getDccSendPortsLast());
+  updateSendPortsWidgets(preferences->getDccSpecificSendPorts());
   
   dccGetIpFromServer=new QCheckBox(i18n("Get my IP from IRC server"),parentFrame,"dcc_get_ip_from_server_checkbox");
   dccAutoGet=new QCheckBox(i18n("Automatically accept &DCC download"),parentFrame,"dcc_autoget_checkbox");
