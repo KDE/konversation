@@ -12,6 +12,8 @@ additionally do some kind of marker to the lines that came in while being away; 
 Make a command that makes you goto away mode on all servers
 /amsg and /ame for sending messages/actions to all open channels/queries
 Per nick coloring
+Shortcut for /clear
+Ignore entry for RMB menu in queries
 
 Tab completion should work on an alphabetic list
 /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
