@@ -1,0 +1,22 @@
+#!/usr/bin/env perl
+#
+# Copyright (C) 2004 by İsmail Dönmez
+# Licensed under GPL v2 or later at your option
+
+use warnings;
+use strict;
+
+my $PORT= shift;
+shift;
+shift;
+my $url="http://www.google.com/search?q=";
+
+if(!@ARGV)
+{
+    exec 'dcop', $PORT, 'Konversation', 'error', 'Please provide a query, e.g /google linux';
+}
+else
+{
+    $url="$url@ARGV";
+    exec 'kfmclient','openURL',$url;
+}
