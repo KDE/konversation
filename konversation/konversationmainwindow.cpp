@@ -608,7 +608,6 @@ void KonversationMainWindow::openNicksOnlinePanel()
     addView(nicksOnlinePanel, 2, i18n("Nicks Online"), true);
 
     connect(nicksOnlinePanel,SIGNAL (editClicked()),this,SLOT (openNotify()) );
-    connect(nicksOnlinePanel,SIGNAL (closeClicked(QSize)),this,SLOT (closeNicksOnlinePanel()) );
 
     connect(nicksOnlinePanel,SIGNAL (doubleClicked(const QString&,const QString&)),this,SLOT (notifyAction(const QString&,const QString&)) );
 

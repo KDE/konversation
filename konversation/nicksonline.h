@@ -36,19 +36,15 @@ class NicksOnline : public ChatWindow
   signals:
     void editClicked();
     void doubleClicked(const QString& server,const QString& nick);
-    void closeClicked(QSize size);
 
   public slots:
     void setOnlineList(const QString& serverName,const QStringList& list,bool changed);
-    void closeButton();
     virtual void adjustFocus();
     
   protected slots:
     void processDoubleClick(QListViewItem* item);
 
   protected:
-    void closeEvent(QCloseEvent* ce);
-
     KListView* nickListView;
 };
 

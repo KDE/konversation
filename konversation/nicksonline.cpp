@@ -38,14 +38,13 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
   setMargin(KDialog::marginHint());
   setSpacing(KDialog::spacingHint());
 
-  QHBox* buttonBox=new QHBox(this);
-  buttonBox->setSpacing(KDialog::spacingHint());
+//  QHBox* buttonBox=new QHBox(this);
+//  buttonBox->setSpacing(KDialog::spacingHint());
 
-  QPushButton* editButton=new QPushButton(i18n("&Edit..."),buttonBox,"edit_notify_button");
-  QPushButton* closeButton=new QPushButton(i18n("&Close"),buttonBox,"close_nicksonline_window");
+  QPushButton* editButton=new QPushButton(i18n("&Edit..."),this,"edit_notify_button");
+  editButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
   connect(editButton,SIGNAL (clicked()),SIGNAL (editClicked()) );
-  connect(closeButton,SIGNAL (clicked()),this,SLOT (closeButton()) );
   connect(nickListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT(processDoubleClick(QListViewItem*)));
 }
 
@@ -71,17 +70,6 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
       newServerRoot->setOpen(true);
     }
   }
-}
-
-void NicksOnline::closeEvent(QCloseEvent* ce)
-{
-  ce->accept();
-  closeButton();
-}
-
-void NicksOnline::closeButton()
-{
-  emit closeClicked(size());
 }
 
 void NicksOnline::processDoubleClick(QListViewItem* item)
