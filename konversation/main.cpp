@@ -25,6 +25,10 @@
 
 #include "konversationapplication.h"
 
+#if QT_VERSION < 0x030100
+#include <time.h>
+#endif
+
 /*
   Don't use i18n() here, use I18N_NOOP() instead!
   i18n() will only work as soon as a kapplication object was made.
@@ -56,3 +60,27 @@ int main(int argc, char* argv[])
  
   return app.exec();
 }  
+
+#if QT_VERSION < 0x030100
+// copied from Trolltech QT 3.1
+unsigned int toTime_t(QDateTime dt)
+{
+    tm brokenDown;
+
+    QDate d=dt.date();
+    QTime t=dt.time();
+
+    brokenDown.tm_sec = t.second();
+    brokenDown.tm_min = t.minute();
+    brokenDown.tm_hour = t.hour();
+    brokenDown.tm_mday = d.day();
+    brokenDown.tm_mon = d.month() - 1;
+    brokenDown.tm_year = d.year() - 1900;
+    brokenDown.tm_isdst = -1;
+    int secsSince1Jan1970UTC = (int) mktime( &brokenDown );
+    if ( secsSince1Jan1970UTC < -1 )
+        secsSince1Jan1970UTC = -1;
+
+    return (unsigned int) secsSince1Jan1970UTC;
+}
+#endif

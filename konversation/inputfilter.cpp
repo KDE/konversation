@@ -33,7 +33,7 @@
 #include "konversationapplication.h"
 
 #if QT_VERSION < 0x030100
-#include <time.h>
+#include "main.h"
 #endif
 
 InputFilter::InputFilter()
@@ -46,30 +46,6 @@ InputFilter::~InputFilter()
 {
   kdDebug() << "InputFilter::~InputFilter()" << endl;
 }
-
-#if QT_VERSION < 0x030100
-// copied from Trolltech QT 3.1
-unsigned int toTime_t(QDateTime dt)
-{
-    tm brokenDown;
-
-    QDate d=dt.date();
-    QTime t=dt.time();
-
-    brokenDown.tm_sec = t.second();
-    brokenDown.tm_min = t.minute();
-    brokenDown.tm_hour = t.hour();
-    brokenDown.tm_mday = d.day();
-    brokenDown.tm_mon = d.month() - 1;
-    brokenDown.tm_year = d.year() - 1900;
-    brokenDown.tm_isdst = -1;
-    int secsSince1Jan1970UTC = (int) mktime( &brokenDown );
-    if ( secsSince1Jan1970UTC < -1 )
-        secsSince1Jan1970UTC = -1;
-
-    return (unsigned int) secsSince1Jan1970UTC;
-}
-#endif
 
 void InputFilter::setServer(Server* newServer)
 {
