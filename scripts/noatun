@@ -1,0 +1,33 @@
+#!/bin/bash
+
+PORT=$1
+SERVER=$2
+TARGET=$3
+
+NOATUN=`dcop noatun-*`
+
+if [ ! $NOATUN ];
+then
+  NOATUN=`dcop noatun`
+fi
+
+if [ ! $NOATUN ];
+then
+  dcop $PORT Konversation error "Noatun not running."
+  exit;
+fi
+
+if [ ! $TARGET ]
+then
+  dcop $PORT Konversation error "Can't write into status view."
+else
+  TITLE=`dcop $NOATUN Noatun title`
+  LENGTH=`dcop $NOATUN Noatun lengthString`
+
+  if [ ! $TITLE ]
+  then
+    dcop $PORT Konversation error "Nothing's playing in Noatun."
+  else
+    dcop $PORT Konversation say $SERVER "$TARGET" "/me plays $TITLE ($LENGTH)"
+  fi
+fi
