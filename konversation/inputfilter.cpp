@@ -41,7 +41,6 @@
 InputFilter::InputFilter()
 {
   kdDebug() << "InputFilter::InputFilter()" << endl;
-  welcomeSent=false;
   automaticRequest=0;
 }
 
@@ -640,11 +639,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             // Remember server's insternal name
             server->setIrcName(prefix);
             // Send the welcome signal, so the server class knows we are connected properly
-            if(!welcomeSent)
-            {
-              emit welcome();
-              welcomeSent=true;
-            }
+            emit welcome();
           }
           server->appendStatusMessage(i18n("Welcome"),trailing);
           break;

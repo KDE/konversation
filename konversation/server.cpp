@@ -59,6 +59,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   currentLag=0;
   rawLog=0;
   channelListPanel=0;
+  alreadyConnected=false;
 
   QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
   setIdentity(KonversationApplication::preferences.getIdentityByName(serverEntry[7]));
@@ -103,8 +104,8 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   inputFilter.setServer(this);
   outputFilter.setIdentity(getIdentity());
 
-  notifyTimer.setName("notifyTimer");
-  incomingTimer.setName("incomingTimer");
+  notifyTimer.setName("notify_timer");
+  incomingTimer.setName("incoming_timer");
   incomingTimer.start(10);
 
   connect(&incomingTimer,SIGNAL(timeout()),
@@ -140,7 +141,6 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
                   this,SLOT  (addChannelListPanel()) );
   connect(&inputFilter,SIGNAL(invitation(const QString&,const QString&)),
                   this,SLOT  (invitation(const QString&,const QString&)) );
-
 
   connect(this,SIGNAL(serverLag(int)),statusView,SLOT(updateLag(int)) );
   connect(this,SIGNAL(serverLag(Server*,int)),getMainWindow(),SLOT(updateLag(Server*,int)) );
@@ -269,6 +269,8 @@ void Server::broken(int state)
   serverSocket.enableWrite(false);
   serverSocket.blockSignals(true);
 
+  alreadyConnected=false;
+
   kdDebug() << "Connection broken (Socket fd " << serverSocket.fd() << ") " << state << "!" << endl;
 
   // clear nicks online
@@ -298,11 +300,18 @@ void Server::broken(int state)
 // Will be called from InputFilter as soon as the Welcome message was received
 void Server::connectionEstablished()
 {
+  if(!alreadyConnected)
+  {
+  alreadyConnected=true;
+  kdDebug() << "connectionEstablished()" << endl;
   // get first notify very early
   startNotifyTimer(1000);
   // register with services
   if(!botPassword.isEmpty() && !bot.isEmpty())
     queue("PRIVMSG "+bot+" :identify "+botPassword);
+  }
+  else
+    kdDebug() << "alreadyConnected==true! How did that happen?" << endl;
 }
 
 void Server::quitServer()

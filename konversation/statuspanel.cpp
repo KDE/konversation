@@ -51,6 +51,7 @@ StatusPanel::StatusPanel(QWidget* parent) :
 
   connect(getTextView(),SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
 
+  connect(getTextView(),SIGNAL (newText(const QString&)),this,SLOT (newTextInView(const QString&)) );
   connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
 
   connect(statusInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );

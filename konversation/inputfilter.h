@@ -65,7 +65,6 @@ class InputFilter : public QObject
     bool isIgnore(const QString &pattern, Ignore::Type type);
 
     Server* server;
-    bool welcomeSent;
     int automaticRequest;
     int lagMeasuring;
 };

@@ -246,6 +246,7 @@ class Server : public QObject
 
     QDateTime awayTime;
     bool isAway;
+    bool alreadyConnected;
 };
 
 #endif
