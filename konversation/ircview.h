@@ -1,3 +1,6 @@
+#ifndef IRCVIEW_H
+#define IRCVIEW_H
+
 /*
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -12,8 +15,6 @@
   email:     eisfuchs@tigress.com
 */
 
-#ifndef IRCVIEW_H
-#define IRCVIEW_H
 
 #include <qmap.h>
 
@@ -21,15 +22,13 @@
 
 #include "common.h"
 
-/*
-  @author Dario Abatianni
-*/
 
 class QPixmap;
 class QStrList;
 class QDropEvent;
 class QDragEnterEvent;
 class QEvent;
+
 class KPopupMenu;
 
 class Server;
@@ -44,7 +43,7 @@ class IRCView : public KTextBrowser
     ~IRCView();
 
     void clear();
-    void setViewBackground(const QString& color,const QString& pixmapName);
+    void setViewBackground(const QString& color, const QString& pixmapName);
     void setServer(Server* server);
     
     // Returns the current nick under context menu.
@@ -52,7 +51,8 @@ class IRCView : public KTextBrowser
 
     void updateStyleSheet();
 
-    QPopupMenu* getPopup();
+    QPopupMenu* getPopup() const;
+
     enum PopupIDs
     {
       Copy,CopyUrl,SelectAll,
@@ -76,22 +76,22 @@ class IRCView : public KTextBrowser
     void filesDropped(const QStrList&);
 
   public slots:
-    void append(const QString& nick,const QString& message);
+    void append(const QString& nick, const QString& message);
     void appendRaw(const QString& message, bool suppressTimestamps=false);
-    void appendQuery(const QString& nick,const QString& message);
-    void appendAction(const QString& nick,const QString& message);
-    void appendServerMessage(const QString& type,const QString& message);
+    void appendQuery(const QString& nick, const QString& message);
+    void appendAction(const QString& nick, const QString& message);
+    void appendServerMessage(const QString& type, const QString& message);
     void appendCommandMessage(const QString& command, const QString& message, bool important,
-      bool parseURL = true, bool self = false);
-    void appendBacklogMessage(const QString& firstColumn,const QString& message);
+      bool parseURL=true, bool self=false);
+    void appendBacklogMessage(const QString& firstColumn, const QString& message);
     void search();
     void searchAgain();
 
-    virtual void removeSelectedText( int selNum = 0 );
+    virtual void removeSelectedText(int selNum=0);
 
     virtual void scrollToBottom(); // Overwritten for internal reasons
 
-    // Resets context nick
+    // Clears context nick
     void clearContextNick();
 
   protected slots:
@@ -100,8 +100,9 @@ class IRCView : public KTextBrowser
     
   protected:
     void urlClickSlot(const QString &url, bool newTab);
-    QString filter(const QString& line,const QString& defaultColor,const QString& who=NULL,bool doHighlight=true, bool parseURL = true, bool self = false);
-    void doAppend(QString line, bool important = true, bool self = false);
+    QString filter(const QString& line, const QString& defaultColor, const QString& who=NULL,
+		   bool doHighlight=true, bool parseURL=true, bool self=false);
+    void doAppend(QString line, bool important=true, bool self=false);
     void replaceDecoration(QString& line,char decoration,char replacement);
     virtual void contentsDragMoveEvent(QDragMoveEvent* e);
     virtual void contentsDropEvent(QDropEvent* e);
@@ -113,6 +114,7 @@ class IRCView : public KTextBrowser
     bool eventFilter(QObject* object,QEvent* event);
 
     bool contextMenu(QContextMenuEvent* ce);
+    
     void setupNickPopupMenu();
 
     QChar::Direction basicDirection(const QString &string);
@@ -121,24 +123,24 @@ class IRCView : public KTextBrowser
     QString timeStamp();
     
     // used by search function
-    int findParagraph;
-    int findIndex;
+    int m_findParagraph;
+    int m_findIndex;
 
     // decide if we should place the scrollbar at the bottom on show()
-    bool resetScrollbar;
+    bool m_resetScrollbar;
 
-    QString autoTextToSend;
+    QString m_autoTextToSend;
     QString m_highlightColor;
-    bool copyUrlMenu;
-    QString urlToCopy;
+    bool m_copyUrlMenu;
+    QString m_urlToCopy;
 
-    QString buffer;
+    QString m_buffer;
     Server* m_server;
-    QPopupMenu* popup;
+    QPopupMenu* m_popup;
 
-    KPopupMenu* nickPopup;
-    KPopupMenu* modes;
-    KPopupMenu* kickban;
+    KPopupMenu* m_nickPopup;
+    KPopupMenu* m_modes;
+    KPopupMenu* m_kickban;
     
     static QChar LRM;
     static QChar RLM;
@@ -148,22 +150,22 @@ class IRCView : public KTextBrowser
     static QChar LRO;
     static QChar PDF;
 
-    bool caseSensitive;
-    bool wholeWords;
-    bool forward;
-    bool fromCursor;
-    QString pattern;
+    bool m_caseSensitive;
+    bool m_wholeWords;
+    bool m_forward;
+    bool m_fromCursor;
+    QString m_pattern;
     
-    uint offset;
-    QStringList colorList;
-    QMap<QString,QString> colorMap;
+    uint m_offset;
+    QStringList m_colorList;
+    QMap<QString,QString> m_colorMap;
     
     QString m_currentNick;
     bool m_isOnNick;
-    bool mousePressed;
-    QString urlToDrag;
-    QPoint pressPosition;
-    int popupId;
+    bool m_mousePressed;
+    QString m_urlToDrag;
+    QPoint m_pressPosition;
+    int m_popupId;
 
     ChatWindow* m_chatWin;
 };
