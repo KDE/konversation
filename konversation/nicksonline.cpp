@@ -228,7 +228,7 @@ QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo, KABC::Addressee
                 niInfo += " (" + nickInfo->getNetServerInfo() + ")";
         }
         if (!nickInfo->getOnlineSince().isNull())
-            niInfo += " since " + nickInfo->getOnlineSince().toString(Qt::LocalDate);
+            niInfo += " since " + nickInfo->getPrettyOnlineSince();
     }
     needWhois = niInfo.isEmpty();
     if (!info.isEmpty() && !needWhois) info += " ";
