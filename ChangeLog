@@ -8,6 +8,8 @@ Changes from 0.15 to 0.16
 - Fix DCC resume when its set to auto-accept
 - Calculate DCC CPS more accurately
 - Colored nicks support
+- Added dcop functions to set away and added alt+a shortcut to toggle away
+
 
 
 Changes from 0.14 to 0.15
