@@ -3,24 +3,22 @@ TODO-list for Konversation
 
 SHORT-TERM (URGENT):
 - Show / Hide tab types (status tabs ect.)
+- Full session management support
 
 MID-TERM:
-- Doxify the source
 - In Watched Nicks panel, show stats like "last spoken" "last seen" [Maybe something like Kopete statistics]
-- Compute md5sum over DCCs and send / display the hash after transfer [cartman]
+- Compute md5sum over DCCs and send / display the hash after transfer
 - Make separate Highlight lists for each identity 
-- Text substitution list (aliases, dangerous commands) with ability to pop up messageboxes [JohnFlux]
-- Ability define multiple commands (bug#88533) [argonel]
-- Full session management support [cartman & JohnFlux]
-- Support "CTCP-DCC reply from <nickname>: REJECT SEND <filename> <reason>" [cartman]
+- Text substitution list (aliases, dangerous commands) with ability to pop up messageboxes
+- Ability define multiple commands (bug#88533)
+- Support "CTCP-DCC reply from <nickname>: REJECT SEND <filename> <reason>"
+- Context menu on nick in nick list should contain hostmask, realname, etc. infos (in a sub-menu)
+- Ban List. A window in which the user can see the bans of a channel(and remove them).
 
 LONG-TERM:
 - Treeview with servers, list of channels / queries in a detachable window that also indicates new text
 - Log rotation & maintainance ( Like copying log files to new location )
-- Context menu on nick in nick list should contain hostmask, realname, etc. infos (in a sub-menu)
 - "notices" tab for all notices that are no channel notices, snotices go to server status tab
-- Ban List. A window in which the user can see the bans of a channel(and remove them).
-- Use QCA for SSL when KNetwork natively supports it
 
 IDEAS:
 - Automatically gzip files before DCC SEND
