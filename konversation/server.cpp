@@ -702,7 +702,10 @@ void Server::sslError()
 void Server::connectionEstablished(const QString& ownHost)
 {
   if(!ownHost.isEmpty())
+  {
+    kdDebug() << "Server::connectionEstablished(): start resolving the hostname by RPL_WELCOME: " << ownHost << endl;
     KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByWelcome(KResolverResults)),ownHost,"0");
+  }
 
   emit serverOnline(true);
 
@@ -2526,6 +2529,7 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool
   if(ownIpByUserhost.isEmpty() && nick==nickname)  // myself
   {
     QString myhost = hostmask.section('@', 1);
+    kdDebug() << "Server::userhost(): start resolving the hostname by RPL_USERHOST: " << myhost << endl;
     // Use async lookup else you will be blocking GUI badly
     KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByUserhost(KResolverResults)),myhost,"0");
   }
