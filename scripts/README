@@ -8,27 +8,12 @@ This is most easily achieved by running chmod +x <scriptname>
 
 Please add descriptions here as new scripts appear:
 
-amarok		Displays on the current channel what you are playing
-                in amaroK right now.
-		usage: /amarok
-		
 bug		Opens up konqueror with kde bugzilla on specified bug number.
 		usage: /bug 65090
-
-juk		Displays on the current channel what you are playing
-                in JuK right now.
-                usage: /juk
-                
-kaffeine  Displays on the current channel what you are playing
-                in Kaffeine right now.
-                usage /kaffeine
 
 gauge		Displays funny "beer load" meter. Author: Eisfuchs, Idea: berkus.
                 usage: /gauge 55
 
-noatun		Displays on the current channel what you are playing
-		in noatun right now.
-		usage: /noatun
 
 uptime          Displays the system uptime on the current channel.
                 usage: /uptime
@@ -51,3 +36,7 @@ weather         Displays current weather using KWeather applet.
 
 colorizer       Randomly colorizes the message.
 		usage: /colorize message
+
+media		Plays the currently played media.
+		Supports amaroK,JuK,Noatun,Kaffeine
+		Usage: /media
