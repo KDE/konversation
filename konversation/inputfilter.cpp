@@ -899,19 +899,19 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
     case ERR_ERRONEUSNICKNAME:
     {
-        NickInfo* nickInfo = server->getNickInfo( server->getNickname() );
-
-        if ( !nickInfo ) { // We can't get our current nick ( happens with Dalnet Nick Enforcer )
-            QString newNick = server->getNextNickname();
-            server->obtainNickInfo( server->getNickname() ); // Add our nick to m_allNicks
-            server->renameNick( server->getNickname(), newNick );
-            server->appendMessageToFrontmost(i18n("Nick"), i18n("Erroneus nickname. Trying %1." ).arg(newNick)) ;
-            server->queue( "NICK "+newNick );
-        }
-        else // We did /nick foo . But foo is on hold. So print server message
-            server->appendMessageToFrontmost( i18n( "Nick" ), trailing );
-
-        break;
+      if(server->connected()) // We are already connected. Just print the error message
+	{
+	  server->appendMessageToFrontmost(i18n("Nick"), trailing);
+	}
+      else // Find a new nick as in ERR_NICKNAMEINUSE
+	{
+	  QString newNick = server->getNextNickname();
+	  server->obtainNickInfo(server->getNickname()) ;
+	  server->renameNick(server->getNickname(), newNick);
+	  server->appendMessageToFrontmost(i18n("Nick"), i18n("Erroneus nickname. Changing nick to %1." ).arg(newNick)) ;
+	  server->queue("NICK "+newNick);
+	}
+      break;
     }
     case RPL_MOTDSTART:
     {
