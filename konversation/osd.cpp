@@ -192,7 +192,7 @@ void OSDWidget::setAlignment( Alignment a )
 
 void OSDWidget::setScreen( uint screen )
 {
-    const int n = QApplication::desktop()->numScreens();
+    const uint n = QApplication::desktop()->numScreens();
     m_screen = (screen >= n) ? n-1 : (int)screen;
     reposition();
 }
