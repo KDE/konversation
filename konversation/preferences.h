@@ -266,6 +266,7 @@ class Preferences : public QObject
     QValueList<IdentityPtr> getIdentityList();
     void setIdentityList(const QValueList<IdentityPtr>& list);
     IdentityPtr getIdentityByName(const QString& name);
+    IdentityPtr getIdentityById(int id);
     IdentityPtr identity;
 
     QString getIdent();

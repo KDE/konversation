@@ -437,6 +437,16 @@ void IdentityDialog::copyIdentity()
   }
 }
 
+void IdentityDialog::setCurrentIdentity(int index)
+{
+  if(index >= m_identityCBox->count()) {
+    index = 0;
+  }
+  
+  m_identityCBox->setCurrentItem(index);
+  updateIdentity(index);
+}
+
 };
 
 #include "identitydialog.moc"

@@ -31,6 +31,7 @@ class IdentityDialog : public KDialogBase
   public:
     IdentityDialog(QWidget *parent = 0, const char *name = 0);
     ~IdentityDialog();
+    void setCurrentIdentity(int index);
 
   protected slots:
     void updateIdentity(int index);

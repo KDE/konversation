@@ -505,6 +505,18 @@ IdentityPtr Preferences::getIdentityByName(const QString& name)
   return identities.first();
 }
 
+IdentityPtr Preferences::getIdentityById(int id)
+{
+  QValueList<IdentityPtr> identityList = getIdentityList();
+  for(QValueList<IdentityPtr>::iterator it = identityList.begin(); it != identityList.end(); ++it) {
+    if((*it)->id() == id) {
+      return (*it);
+    }
+  }
+
+  return identityList.first();
+}
+
 QString Preferences::getRealName() { return identityList[0]->getRealName(); }
 void Preferences::setRealName(const QString &name) { identityList[0]->setRealName(name); }
 

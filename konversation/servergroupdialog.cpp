@@ -31,6 +31,7 @@
 #include "serversettings.h"
 #include "serverdialog.h"
 #include "channeldialog.h"
+#include "identitydialog.h"
 
 namespace Konversation {
 
@@ -54,6 +55,8 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   QLabel* identityLbl = new QLabel(i18n("&Identity:"), mainWidget);
   m_identityCBox = new QComboBox(mainWidget);
   identityLbl->setBuddy(m_identityCBox);
+  QPushButton* editIdentityBtn = new QPushButton(i18n("Edit..."), mainWidget);
+  connect(editIdentityBtn, SIGNAL(clicked()), this, SLOT(editIdentity()));
   
   QValueList<IdentityPtr> identities = KonversationApplication::preferences.getIdentityList();
 
@@ -132,15 +135,17 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   channelLayout->addWidget(downChannelBtn, 3, 3);
   
   mainLayout->addWidget(nameLbl, 0, 0);
-  mainLayout->addWidget(m_nameEdit, 0, 1);
+  mainLayout->addMultiCellWidget(m_nameEdit, 0, 0, 1, 2);
   mainLayout->addWidget(groupLbl, 1, 0);
-  mainLayout->addWidget(m_groupCBox, 1, 1);
+  mainLayout->addMultiCellWidget(m_groupCBox, 1, 1, 1, 2);
   mainLayout->addWidget(identityLbl, 2, 0);
   mainLayout->addWidget(m_identityCBox, 2, 1);
+  mainLayout->addWidget(editIdentityBtn, 2, 2);
   mainLayout->addWidget(commandLbl, 3, 0);
-  mainLayout->addWidget(m_commandEdit, 3, 1);
-  mainLayout->addMultiCellWidget(m_autoConnectCBox, 4, 4, 0, 1);
-  mainLayout->addMultiCellWidget(groupWidget, 5, 5, 0, 1);
+  mainLayout->addMultiCellWidget(m_commandEdit, 3, 3, 1, 2);
+  mainLayout->addMultiCellWidget(m_autoConnectCBox, 4, 4, 0, 2);
+  mainLayout->addMultiCellWidget(groupWidget, 5, 5, 0, 2);
+  mainLayout->setColStretch(1, 10);
   groupLayout->addWidget(serverGBox, 0, 0);
   groupLayout->addWidget(channelGBox, 0, 1);
 
@@ -330,6 +335,26 @@ void ServerGroupDialog::moveChannelDown()
     ChannelList::iterator it = m_channelList.remove(m_channelList.at(current));
     ++it;
     m_channelList.insert(it, channel);
+  }
+}
+
+void ServerGroupDialog::editIdentity()
+{
+  IdentityDialog dlg(this);
+  dlg.setCurrentIdentity(m_identityCBox->currentItem());
+  QValueList<IdentityPtr> identities = KonversationApplication::preferences.getIdentityList();
+  int identityId = identities[m_identityCBox->currentItem()]->id();
+
+  if(dlg.exec() == KDialog::Accepted) {
+    QValueList<IdentityPtr> identities = KonversationApplication::preferences.getIdentityList();
+    m_identityCBox->clear();
+
+    for(QValueList<IdentityPtr>::iterator it = identities.begin(); it != identities.end(); ++it)
+    {
+      m_identityCBox->insertItem((*it)->getName());
+    }
+
+    m_identityCBox->setCurrentText(KonversationApplication::preferences.getIdentityById(identityId)->getName());
   }
 }
 

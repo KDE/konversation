@@ -95,14 +95,7 @@ ChannelSettings ServerGroupSettings::channelByIndex(unsigned int index) const
 
 IdentityPtr ServerGroupSettings::identity() const
 {
-  QValueList<IdentityPtr> identityList = KonversationApplication::preferences.getIdentityList();
-  for(QValueList<IdentityPtr>::iterator it = identityList.begin(); it != identityList.end(); ++it) {
-    if((*it)->id() == m_identityId) {
-      return (*it);
-    }
-  }
-
-  return identityList.first();
+  return KonversationApplication::preferences.getIdentityById(m_identityId);
 }
 
 //

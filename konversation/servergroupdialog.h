@@ -48,6 +48,8 @@ class ServerGroupDialog : public KDialogBase
     void moveChannelUp();
     void moveChannelDown();
 
+    void editIdentity();
+
   private:
     QLineEdit* m_nameEdit;
     QComboBox* m_groupCBox;
