@@ -51,6 +51,8 @@ class IRCInput : public KTextEdit
 
   public slots:
     void paste();
+
+    void insertHtml(const QString& htmlTextToInsert);
     void insert(const QString& text);
     void showCompletionList(const QStringList& nicks);
     void setText(const QString& text);

@@ -161,7 +161,13 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
           case Key_V:
           {
               if ( keyEvent->state() & ControlButton ) {
-                  insert( kapp->clipboard()->text( QClipboard::Clipboard ) );
+		QCString subtype("html");
+                QString html =  kapp->clipboard()->text(subtype, QClipboard::Clipboard );
+		if(!html.isEmpty() && subtype == "html")
+		  insertHtml(html);
+		else
+		  insert( kapp->clipboard()->text(QClipboard::Clipboard));
+		
                 return true;
               }
           }
@@ -249,6 +255,65 @@ void IRCInput::getHistory(bool up)
   setText(historyList[lineNum]);
 }
 
+void IRCInput::insertHtml(const QString& htmlTextToInsert)
+{
+  QString text(htmlTextToInsert);
+  // replace \r with \n to make xterm pastes happy
+  text.replace("\r","\n");
+  text.replace("<p>","\n", false);
+  text.replace("<br>","\n", false);
+  text.replace("<h1>","%B", false);
+  text.replace("</h1>","%B", false);
+  text.replace("<h2>","%B", false);
+  text.replace("</h2>","%B", false);
+  text.replace("<h3>","%B", false);
+  text.replace("</h3>","%B", false);
+  text.replace("<b>","%B", false);
+  text.replace("</b>","%B", false);
+  text.replace("<i>","%I", false);
+  text.replace("</i>","%I", false);
+  text.replace("<ul>","%U", false);
+  text.replace("</ul>","%U", false);
+
+  text.replace(QRegExp("<font [^>]*color *= *[\"']black[^>]*>", false), "%C1");
+  text.replace(QRegExp("<font [^>]*color *= *[\"']#000000[^>]*>", false), "%C1");
+  
+  text.replace(QRegExp("<font [^>]*color *= *[\"']orange[^>]*>", false), "%C7");
+  text.replace(QRegExp("<font [^>]*color *= *[\"']#ffa500[^>]*>", false), "%C7");
+  
+  text.replace(QRegExp("<font [^>]*color *= *[\"']pink[^>]*>", false), "%C13");
+  text.replace(QRegExp("<font [^>]*color *= *[\"']#ffc0cb[^>]*>", false), "%C13");
+ 
+  text.replace(QRegExp("<font [^>]*color *= *[\"']aqua[^>]*>", false), "%C12");
+  text.replace(QRegExp("<font [^>]*color *= *[\"']#00ffff[^>]*>", false), "%C12");
+  
+  text.replace(QRegExp("<font [^>]*color *= *[\"']red[^>]*>", false), "%C4");
+  text.replace(QRegExp("<font [^>]*color *= *[\"']#ff0000[^>]*>", false), "%C4");
+  
+  text.replace(QRegExp("<font [^>]*color *= *[\"']green[^>]*>", false), "%C9");
+  text.replace(QRegExp("<font [^>]*color *= *[\"']#00ff00[^>]*>", false), "%C9");
+  
+  text.replace(QRegExp("<font [^>]*color *= *[\"']blue[^>]*>", false), "%C2");
+  text.replace(QRegExp("<font [^>]*color *= *[\"']#0000ff[^>]*>", false), "%C2");
+  
+  text.replace(QRegExp("</ *font *>",false), "%C1");
+  
+  text.replace(QRegExp("<[^>]*>"), "");
+
+
+  text.replace("&amp;", "&");
+  text.replace("&lt;", "<");
+  text.replace("&gt;", ">");
+
+  // is there a newline in the pasted/inserted text?
+  if(text.find('\n')!=-1)
+  {
+    if(checkPaste(text)) emit textPasted(text); //TODO this should not be synchronous
+  }
+  // otherwise let KLineEdit handle the new text
+  else KTextEdit::insert(text);
+}
+
 void IRCInput::insert(const QString& textToInsert)
 {
   QString text(textToInsert);
@@ -277,16 +342,26 @@ void IRCInput::contentsMouseReleaseEvent( QMouseEvent *ev) {
 
 void IRCInput::paste()
 {
+
+  kdDebug() << "paste()" << endl;
   QClipboard *cb = KApplication::kApplication()->clipboard();
 
   // Copy text from the clipboard (paste)
   QString text;
-
-  if(useSelection)
-    text = cb->text(QClipboard::Selection);
-  else
-    text = cb->text(QClipboard::Clipboard);
-
+  QString html;
+  QCString subtype("html");
+  if(useSelection) { 
+    html = cb->text(subtype, QClipboard::Selection);
+    if(html.isEmpty())
+      text = cb->text( QClipboard::Selection);
+  }
+  else {
+    html = cb->text(subtype, QClipboard::Clipboard);
+    if(html.isEmpty())
+      text = cb->text( QClipboard::Clipboard);
+  }
+  kdDebug() << "subtype " << subtype << ", html is " << html << endl;
+  if(!html.isEmpty()) text = html;
   // is there any text in the clipboard?
   if(!text.isEmpty())
   {
