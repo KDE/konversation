@@ -83,7 +83,7 @@ class KonversationMainWindow : public KMainWindow
     void addDccPanel();     // connected in server class
     void addKonsolePanel(); // connected in server class
     void addUrlCatcher();
-    void addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen);
+    void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
 
     void resetLag();
     void updateLag(Server* lagServer,int msec);

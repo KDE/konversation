@@ -61,6 +61,7 @@ typedef unsigned long long __u64;
 
 Server::Server(KonversationMainWindow* newMainWindow,int id)
 {
+  kdDebug() << this << "Server::Server()" << endl;
   identity=0;
   tryNickNumber=0;
   checkTime=0;
@@ -153,8 +154,8 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   connect(&inputFilter,SIGNAL (away()),this,SLOT (away()) );
   connect(&inputFilter,SIGNAL (unAway()),this,SLOT (unAway()) );
-  connect(&inputFilter,SIGNAL (addDccChat(const QString&,const QString&,const QStringList&,bool)),
-         getMainWindow(),SLOT (addDccChat(const QString&,const QString&,const QStringList&,bool)) );
+  connect(&inputFilter,SIGNAL (addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)),
+         getMainWindow(),SLOT (addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)) );
 
   connect(this,SIGNAL(serverLag(Server*,int)),getMainWindow(),SLOT(updateLag(Server*,int)) );
   connect(this,SIGNAL(tooLongLag(Server*,int)),getMainWindow(),SLOT(tooLongLag(Server*,int)) );
@@ -751,13 +752,18 @@ QString Server::getIp()
 {
   // Get our own IP address.
   KSocketAddress* ipAddr=KExtendedSocket::localAddress(serverSocket.fd());
-  KInetSocketAddress inetSocket((const sockaddr_in*)ipAddr->address(),ipAddr->size());
 
-  struct in_addr in_addr=inetSocket.hostV4();
-  QString ip(KInetSocketAddress::addrToString(inetSocket.family(),&in_addr));
-  // remove temporary object
-  delete ipAddr;
-  return ip;
+  if(ipAddr)
+  {
+    KInetSocketAddress inetSocket((const sockaddr_in*)ipAddr->address(),ipAddr->size());
+
+    struct in_addr in_addr=inetSocket.hostV4();
+    QString ip(KInetSocketAddress::addrToString(inetSocket.family(),&in_addr));
+    // remove temporary object
+    delete ipAddr;
+    return ip;
+  }
+  return QString::null;
 }
 
 void Server::addQuery(const QString& nickname,const QString& hostmask)
@@ -994,7 +1000,7 @@ void Server::requestCloseDccPanel()
 
 void Server::requestDccChat(const QString& nickname)
 {
-  getMainWindow()->addDccChat(getNickname(),nickname,QStringList(),true);
+  getMainWindow()->addDccChat(getNickname(),nickname,getNumericalIp(),QStringList(),true);
 }
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)

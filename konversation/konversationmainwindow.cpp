@@ -406,7 +406,7 @@ void KonversationMainWindow::deleteDccPanel()
   }
 }
 
-void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen)
+void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen)
 {
   kdDebug() << "KonversationMainWindow::addDccChat(" << nick << " " << arguments.join(" ") << " " << listen << ")" << endl;
 
@@ -417,7 +417,7 @@ void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nic
 
     connect(dccChatPanel,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
 
-    frontServer->queue(QString("PRIVMSG %1 :\x01%2 CHAT chat %3 %4\x01").arg(nick).arg("DCC").arg(frontServer->getNumericalIp()).arg(dccChatPanel->getPort()));
+    if(listen) frontServer->queue(QString("PRIVMSG %1 :\x01%2 CHAT chat %3 %4\x01").arg(nick).arg("DCC").arg(numericalIp).arg(dccChatPanel->getPort()));
   }
 }
 

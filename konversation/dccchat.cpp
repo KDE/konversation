@@ -56,11 +56,12 @@ DccChat::DccChat(QWidget* parent,const QString& myNickname,const QString& nickna
   mainBox->setSpacing(spacing());
 
   sourceLine=new KLineEdit(mainBox);
-  sourceLine->setReadOnly(true);
-
   setTextView(new IRCView(mainBox,NULL));
 
   dccChatInput=new IRCInput(mainBox);
+
+  sourceLine->setReadOnly(true);
+  dccChatInput->setEnabled(false);
 
   // connect the signals and slots
   connect(dccChatInput,SIGNAL (returnPressed()),this,SLOT (dccChatTextEntered()) );
@@ -103,6 +104,9 @@ void DccChat::listenForPartner()
     delete ipAddr;
 
     connect(listenSocket,SIGNAL (readyAccept()),this,SLOT(heardPartner()) );
+
+    getTextView()->append(i18n("Info"),i18n("Offering DCC Chat connection to %1 on port %2 ...").arg(nick).arg(port));
+    sourceLine->setText(i18n("DCC chat with %1 on port %2").arg(nick).arg(port));
   }
   else kdDebug() << this << "DccChat::listenForPartner(): listenSocket->listen() failed!" << endl;
 }
@@ -119,7 +123,7 @@ void DccChat::connectToPartner()
   ip.setAddress(host.toUInt());
   host=ip.toString();
 
-  getTextView()->append(i18n("Info"),i18n("Establishing DCC Chat connection to %1 (%2:%3)").arg(nick).arg(host).arg(port));
+  getTextView()->append(i18n("Info"),i18n("Establishing DCC Chat connection to %1 (%2:%3) ...").arg(nick).arg(host).arg(port));
   sourceLine->setText(i18n("DCC chat with %1 on %2:%3").arg(nick).arg(host).arg(port));
 
   dccSocket=new KExtendedSocket(host,port,KExtendedSocket::inetSocket);
@@ -152,6 +156,7 @@ void DccChat::dccChatConnectionSuccess()
   getTextView()->append(i18n("Info"),i18n("Connection established!"));
 
   dccSocket->enableRead(true);
+  dccChatInput->setEnabled(true);
 }
 
 void DccChat::dccChatBroken(int error)
@@ -171,12 +176,21 @@ void DccChat::readData()
     if(buffer)
     {
       actual=dccSocket->readBlock(buffer,1024);
-      if(actual>0)
+      if(actual==-1)
+        kdDebug() << "Error while reading from DCC chat connection: " << dccSocket->systemError() << endl;
+      else if(actual>0)
       {
         buffer[actual]=0;
         line.append(buffer);
       }
-      else kdDebug() << "Read 0 bytes from DCC Chat." << endl;
+      else
+      {
+        kdDebug() << "Read 0 bytes from DCC Chat: " << dccSocket->systemError() << endl;
+        getTextView()->appendServerMessage(i18n("Info"),"Connection closed.");
+        dccChatInput->setEnabled(false);
+        dccSocket->closeNow();
+        dccSocket->enableRead(false);
+      }
       free(buffer);
     }
     else kdDebug() << "DCC Chat input buffer broken." << endl;
@@ -203,7 +217,7 @@ void DccChat::readData()
           getTextView()->append(i18n("CTCP"),i18n("Received unknown CTCP-%1 request from %2").arg(ctcp).arg(nick));
       }
       else getTextView()->append(nick,lines[index]);
-    }
+    } // endfor
   }
 }
 
@@ -273,12 +287,17 @@ void DccChat::heardPartner()
   else
   {
     connect(dccSocket,SIGNAL (readyRead()),this,SLOT (readData()) );
+
     dccSocket->enableRead(true);
+    dccChatInput->setEnabled(true);
+
+    getTextView()->append(i18n("Info"),i18n("Connection established!"));
   }
 }
 
-void DccChat::textPasted(QString /* text */ )
+void DccChat::textPasted(QString text)
 {
+  sendDccChatText(text);
 }
 
 void DccChat::adjustFocus()
