@@ -508,6 +508,16 @@ void KonvPrefsDCOP::setNotifyList(QStringList newList)
   static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
+bool KonvPrefsDCOP::addNotify(QString newPattern)
+{
+  return KonversationApplication::preferences.addNotify(newPattern);
+}
+
+bool KonvPrefsDCOP::removeNotify(QString pattern)
+{
+  return KonversationApplication::preferences.removeNotify(pattern);
+}
+
 void KonvPrefsDCOP::addIgnore(QString newIgnore)
 {
   KonversationApplication::preferences.addIgnore(newIgnore);

@@ -122,6 +122,8 @@ class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
   QStringList getNotifyList();
   QString getNotifyString();
   void setNotifyList(QStringList newList);
+  bool addNotify(QString newPattern);
+  bool removeNotify(QString pattern);
   void addIgnore(QString newIgnore);
   void clearIgnoreList();
   //QPtrList<Ignore> getIgnoreList();

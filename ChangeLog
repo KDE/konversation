@@ -2,7 +2,7 @@ $Id$
 
 Changes from 0.11 to 0.12
 - Fixed the wrong Ops counter
-- Added /notify command
+- Added /notify command and respective dcop calls
 
 Changes from 0.10 to 0.11
 - Added a patch by Bart Verwilst to provide automatic service registration (thanks!)

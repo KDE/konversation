@@ -106,6 +106,8 @@ class KonvPreferencesIface : virtual public DCOPObject
     virtual QStringList getNotifyList() = 0;
     virtual QString getNotifyString() = 0;
     virtual void setNotifyList(QStringList newList) = 0;
+    virtual bool addNotify(QString newPattern) = 0;
+    virtual bool removeNotify(QString pattern) = 0;
     virtual void addIgnore(QString newIgnore) = 0;
     virtual void clearIgnoreList() = 0;
     //QPtrList<Ignore> getIgnoreList() = 0;
