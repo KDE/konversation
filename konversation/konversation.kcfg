@@ -242,6 +242,11 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="UseLiteralModes" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="ShowRememberLineInAllWindows" type="Bool">
       <default>false</default>
       <label></label>

@@ -1237,6 +1237,7 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
         if(plus && !parameterChannelNick->isOp()) adjustOps(1);
         else if(!plus && parameterChannelNick->isOp()) adjustOps(-1);
         parameterChannelNick->setOp(plus);
+
         emitUpdateInfo();
         nicknameListView->sort();
       }
@@ -1497,7 +1498,7 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
     break;
   }
   
-  if(!message.isEmpty()) {
+  if(!message.isEmpty() && !KonversationApplication::preferences.getUseLiteralModes()) {
     appendCommandMessage(i18n("Mode"),message);
   }
 

@@ -781,6 +781,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           const QString modeString=parameterList[2];
           // This is the string the user will see
           QString modesAre(QString::null);
+	  QString message = i18n("Channel Modes: ") + modeString;
 
           for(unsigned int index=0;index<modeString.length();index++)
           {
@@ -806,6 +807,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
               else if(mode=='k')
               {
                 parameter=parameterList[parameterCount++];
+                message += " " + parameter;
                 modesAre+=i18n("password protected");
               }
               else if(mode=='a')
@@ -817,6 +819,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
               else if(mode=='l')
               {
                 parameter=parameterList[parameterCount++];
+                message += " " + parameter;
                 modesAre+=i18n("limited to %n user", "limited to %n users", parameter.toInt());
               }
               else
@@ -826,7 +829,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
           } // endfor
           if(!modesAre.isEmpty())
-            server->appendCommandMessageToChannel(parameterList[1],i18n("Mode"),i18n("Channel modes: ")+modesAre);
+            if (KonversationApplication::preferences.getUseLiteralModes())
+              server->appendCommandMessageToChannel(parameterList[1],i18n("Mode"),message);
+            else
+              server->appendCommandMessageToChannel(parameterList[1],i18n("Mode"),i18n("Channel modes: ")+modesAre);
           break;
         }
       case RPL_CHANNELCREATED:
@@ -1396,8 +1402,12 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
   bool plus=false;
   int parameterIndex=0;
   // List of modes that need a parameter (note exception with -k and -l)
-  QString parameterModes="aAoOvhkbleI";
 
+  // Mode q is quiet on freenode and acts like b... if this is a channel mode on other
+  //  networks then more logic is needed here. - MrGrim
+  QString parameterModes="aAoOvhkbleIq";
+  QString message = sourceNick + i18n(" sets mode: ") + modestring;
+  
   for(unsigned int index=0;index<modestring.length();index++)
   {
     unsigned char mode=modestring[index];
@@ -1416,6 +1426,9 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
         {
           // Remember the mode parameter
           parameter=parameterList[2+parameterIndex];
+	  
+	  message += " " + parameter;
+	  
           // Switch to next parameter
           parameterIndex++;
         }
@@ -1427,6 +1440,11 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
       server->updateChannelMode(sourceNick,parameterList[0],mode,plus,parameter);
     }
   } // endfor
+  
+  if (KonversationApplication::preferences.getUseLiteralModes())
+  {
+    server->appendCommandMessageToChannel(parameterList[0],i18n("Mode"),message);
+  }
 }
 
 // # & + and ! are *often*, but not necessarily, Channel identifiers. + and ! are non-RFC, so if a server doesn't offer 005 and

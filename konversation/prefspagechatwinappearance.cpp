@@ -54,6 +54,7 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QFrame* newParent,Prefere
   kcfg_AutoUserhost->setChecked(preferences->getAutoUserhost());
   kcfg_ShowNicknameBox->setChecked(preferences->showNicknameBox());
   kcfg_UseBoldNicks->setChecked(preferences->getUseBoldNicks());
+  kcfg_UseLiteralModes->setChecked(preferences->getUseLiteralModes());
 
   kcfg_ShowBackgroundImage->setChecked(preferences->getShowBackgroundImage());
 
@@ -95,6 +96,7 @@ void PrefsPageChatWinAppearance::applyPreferences()
   preferences->setShowTopic(kcfg_ShowTopic->isChecked());
   preferences->setShowNicknameBox(kcfg_ShowNicknameBox->isChecked());
   preferences->setUseBoldNicks(kcfg_UseBoldNicks->isChecked());
+  preferences->setUseLiteralModes(kcfg_UseLiteralModes->isChecked());
 }
 
 #include "prefspagechatwinappearance.moc"

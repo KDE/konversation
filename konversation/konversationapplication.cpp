@@ -474,6 +474,8 @@ void KonversationApplication::readOptions()
 
   preferences.setUseBoldNicks(config->readBoolEntry("UseBoldNicks",preferences.getUseBoldNicks()));
 
+  preferences.setUseLiteralModes(config->readBoolEntry("UseLiteralModes",preferences.getUseLiteralModes()));
+  
   preferences.setShowTabBarCloseButton(config->readBoolEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton()));
 
   preferences.setShowTopic(config->readBoolEntry("ShowTopic", preferences.getShowTopic()));
@@ -971,6 +973,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("FilterColorCodes", preferences.getFilterColors());
   config->writeEntry("UseColoredNicks", preferences.getUseColoredNicks());
   config->writeEntry("UseBoldNicks", preferences.getUseBoldNicks());
+  config->writeEntry("UseLiteralModes", preferences.getUseLiteralModes());
 
   // Colors are now handled in preferences
 

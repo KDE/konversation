@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>ChatWindowAppearance_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@ the Free Software Foundation; either version 2 of the License, or
             <x>0</x>
             <y>0</y>
             <width>525</width>
-            <height>504</height>
+            <height>526</height>
         </rect>
     </property>
     <vbox>
@@ -164,6 +164,14 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="text">
                         <string>Use &amp;bold nicknames</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_UseLiteralModes</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use &amp;raw modes for mode changes</string>
                     </property>
                 </widget>
             </vbox>
