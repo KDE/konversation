@@ -69,28 +69,6 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
   QLabel* labelMessage = new QLabel(page);
   labelMessage->setText(message);
   
-  /*
-  if(item->m_saveToFileExists)
-    topMessage->setText( i18n("<qt>A file with the name <b>%1</b> already exists.<br>")
-                         .arg(item->getFileURL().fileName())
-                       );
-  *
-    topMessage->setText( i18n("<qt>A file with the name <b>%1</b> already exists.<br>"
-                              "%2<br>"  // full path (local)
-                              "Local file size: %3 bytes<br>"
-                              "Receiving file size: %4 bytes</qt>")
-                         .arg(item->filePath.section("/", -1))
-                         .arg(item->filePath)
-                         .arg(QFile(item->filePath).size())
-                         .arg(item->fileSize)
-                       );
-  *
-  else
-    topMessage->setText( i18n("<qt>A part of the file <b>%1</b> exists.<br>")
-                         .arg(item->getFileURL().fileName())
-                       );
-  */
-  
   m_urlreqFileURL = new KURLRequester(m_item->getFileURL().prettyURL(), page);
   connect(m_urlreqFileURL, SIGNAL(textChanged(const QString&)), this, SLOT(updateDialogButtons()));
   
