@@ -9,6 +9,7 @@ Comment[xx]=xxKonversationxx
 [message]
 Name=New message
 Name[br]=Kemennad nevez
+Name[bs]=Nova poruka
 Name[ca]=Nou missatge
 Name[da]=Ny besked
 Name[de]=Neue Nachricht
@@ -32,6 +33,7 @@ Name[uz]=Янги хабар
 Name[xx]=xxNew messagexx
 Name[zh_CN]=新消息
 Comment=New message arrived in a channel
+Comment[bs]=Nova poruka pristigla na kanal
 Comment[ca]=Ha arribat un nou missatge a un canal
 Comment[da]=Ny besked ankom i kanal
 Comment[de]=Neue Nachricht in einem Kanal
@@ -56,6 +58,7 @@ default_presentation=0
 
 [nick]
 Name=Nick written
+Name[bs]=Nick zapisan
 Name[ca]=Escriure sobrenom
 Name[da]=Alias skrevet
 Name[de]=Nick erwähnt
@@ -77,6 +80,7 @@ Name[tr]=Rumuz yazıldı
 Name[xx]=xxNick writtenxx
 Name[zh_CN]=昵称写入
 Comment=Someone wrote your nick in a message
+Comment[bs]=Neko je spomenuo vaš nick u poruci
 Comment[ca]=Algú ha escrit el vostre sobrenom en un missatge
 Comment[da]=Nogen skrev dit alias i en besked
 Comment[de]=Jemand hat deinen Nick in einer Nachricht erwähnt
@@ -100,6 +104,7 @@ default_presentation=0
 
 [nickchange]
 Name=Nick changed
+Name[bs]=Nick promijenjen
 Name[ca]=Sobrenom canviat
 Name[da]=Alias ændret
 Name[de]=Nick gewechselt
@@ -122,6 +127,7 @@ Name[tr]=Rumuz değiştirildi
 Name[xx]=xxNick changedxx
 Name[zh_CN]=昵称改变
 Comment=Someone changed their nick
+Comment[bs]=Neko je promijenio svoj nick
 Comment[ca]=Algú ha canviat el seu sobrenom
 Comment[da]=Nogen ændrede deres alias
 Comment[de]=Jemand hat seinen Nick gewechselt
@@ -146,6 +152,7 @@ default_presentation=0
 
 [dcc_incoming]
 Name=Incoming file
+Name[bs]=Dolazeća datoteka
 Name[ca]=Fitxer entrant
 Name[da]=Indkommende fil
 Name[de]=Datei angeboten
@@ -167,6 +174,7 @@ Name[tr]=Gelen dosya
 Name[xx]=xxIncoming filexx
 Name[zh_CN]=收到的文件
 Comment=Someone wants to transmit a file to you over DCC
+Comment[bs]=Neko želi da vam pošalje datoteku koristeći DCC
 Comment[ca]=Algú desitja enviar-vos un fitxer sobre DCC
 Comment[da]=Nogen ønsker at transmittere en fil til dig over DCC
 Comment[de]=Jemand bietet dir eine Datei zum DCC Download an
@@ -191,6 +199,7 @@ default_prentation=0
 
 [join]
 Name=Nick joined channel
+Name[bs]=Nick se pridružio kanalu
 Name[ca]=El sobrenom ha accedit al canal
 Name[da]=Alias gik med i kanal
 Name[de]=Nick betritt Kanal
@@ -212,6 +221,7 @@ Name[tr]=Rumuz kanala girdi
 Name[xx]=xxNick joined channelxx
 Name[zh_CN]=昵称加入频道
 Comment=New nick joined a channel
+Comment[bs]=Novi nick se pridružio kanalu
 Comment[ca]=Un nou sobrenom ha accedit a un canal
 Comment[da]=Nyt alias gik med i en kanal
 Comment[de]=Ein neuer Nick betritt einen Kanal
@@ -236,6 +246,7 @@ default_presentation=0
 
 [part]
 Name=Nick left channel
+Name[bs]=Nick napustio kanal
 Name[ca]=El sobrenom ha abandonat el canal
 Name[da]=Alias forlod kanal
 Name[de]=Nick verläßt Kanal
@@ -257,6 +268,7 @@ Name[tr]=Rumuz kanaldan ayrıldı
 Name[xx]=xxNick left channelxx
 Name[zh_CN]=昵称离开频道
 Comment=A nick left a channel
+Comment[bs]=Nick je napustio kanal
 Comment[ca]=Un sobrenom ha deixat un canal
 Comment[da]=Et alias forlod en kanal
 Comment[de]=Ein Nick verläßt einen Kanal
@@ -280,6 +292,7 @@ default_presentation=0
 
 [mode]
 Name=Mode change
+Name[bs]=Promjena režima
 Name[ca]=Mode canviat
 Name[da]=Tilstadn ændret
 Name[de]=Moduswechsel
@@ -301,6 +314,7 @@ Name[tr]=Biçim değiştir
 Name[xx]=xxMode changexx
 Name[zh_CN]=模式改变
 Comment=A user or channel mode was changed
+Comment[bs]=Mod korisnika ili kanala je promijenjen
 Comment[ca]=A mode d'usuari o de canal ha estat canviat
 Comment[da]=En bruger- eller kanaltilstand blev ændret
 Comment[de]=Ein Benutzer- oder Kanalmodus wurde geändert
@@ -325,6 +339,7 @@ default_presentation=0
 
 [notify]
 Name=Notify
+Name[bs]=Obavijesti
 Name[ca]=Notificació
 Name[da]=Bekendtgør
 Name[de]=Benachrichtigen
