@@ -9,7 +9,7 @@ after being away a summary of lines with highlighting in its own window would be
 additionally the text-search could offer a button "any highlight" 
 show the away-status somewhere; maybe with a gray background in the input line 
 additionally do some kind of marker to the lines that came in while being away; maybe with a special colour of the timestamp 
-
+Make a command that makes you goto away mode on all servers
 
 Tab completion should work on an alphabetic list
 /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
