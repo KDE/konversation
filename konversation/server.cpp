@@ -917,11 +917,13 @@ void Server::queue(const QString& buffer)
 void Server::queueAt(int pos,const QString& buffer)
 {
   // Only queue lines if we are connected
-  if(buffer.length())
+  if(buffer.length() && pos < outputBuffer.count())
   {
     outputBuffer.insert(outputBuffer.at(pos),buffer);
 
     timerInterval*=2;
+  } else {
+    queue(buffer);
   }
 }
 
