@@ -24,6 +24,8 @@
 */
 
 class KCompletionBox;
+class QMouseEvent;
+
 class IRCInput : public KTextEdit
 {
   Q_OBJECT
@@ -61,12 +63,14 @@ class IRCInput : public KTextEdit
     bool eventFilter(QObject *object,QEvent *event);
     void addHistory(const QString& text);
     bool checkPaste(QString& text);
+    void contentsMouseReleaseEvent(QMouseEvent *);
 
     QStringList historyList;
     unsigned int lineNum;
     unsigned int oldPos;
     char completionMode;
     KCompletionBox* completionBox;
+    bool useSelection;
 };
 
 #endif

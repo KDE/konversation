@@ -255,10 +255,22 @@ void IRCInput::insert(const QString& textToInsert)
   // is there a newline in the pasted/inserted text?
   if(text.find('\n')!=-1)
   {
-    if(checkPaste(text)) emit textPasted(text);
+    if(checkPaste(text)) emit textPasted(text); //TODO this should not be synchronous
   }
   // otherwise let KLineEdit handle the new text
   else KTextEdit::insert(text);
+}
+
+/**
+* Work around the fact that while QTextEdit::paste() is virtual, whether we are
+* pasting from middle button or control-V is PRIVATE and NO ACCESSOR is given.
+*/
+void IRCInput::contentsMouseReleaseEvent( QMouseEvent *ev) {
+  if (ev->button() == Qt::MidButton) {
+    useSelection=TRUE;
+  }
+  KTextEdit::contentsMouseReleaseEvent(ev);
+  useSelection=FALSE;
 }
 
 void IRCInput::paste()
@@ -268,11 +280,10 @@ void IRCInput::paste()
   // Copy text from the clipboard (paste)
   QString text;
 
-  if(cb->ownsSelection()) {
+  if(useSelection)
     text = cb->text(QClipboard::Selection);
-  } else {
+  else
     text = cb->text(QClipboard::Clipboard);
-  }
 
   // is there any text in the clipboard?
   if(!text.isEmpty())
