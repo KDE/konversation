@@ -1171,7 +1171,7 @@ void KonversationMainWindow::slotPrefsChanged()
 
 void KonversationMainWindow::removeSSLIcon()
 {
-  m_sslLabel->disconnect();
+  disconnect(m_sslLabel,0,0,0);
   m_sslLabel->hide();
 }
 
@@ -1218,8 +1218,8 @@ void KonversationMainWindow::updateSSLInfo(Server* server)
 {
   if(server == frontServer && server->getUseSSL() && server->isConnected())
     {
-      QObject::disconnect(m_sslLabel);
-      QObject::connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
+      disconnect(m_sslLabel,0,0,0);
+      connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
       QToolTip::add(m_sslLabel,server->getSSLInfo());
       m_sslLabel->show();
     }
