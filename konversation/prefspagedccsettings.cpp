@@ -114,6 +114,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   connect(dccSendPortsLastSpin, SIGNAL(valueChanged(int)), this, SLOT(sendPortsLastSpinValueChanged(int)));
   dccSendPortsLastSpin->setFixedWidth(80);
 
+  dccSpecificSendPortsFrame->setEnabled(dccSpecificSendPortsCheckBox->isChecked());
   connect(dccSpecificSendPortsCheckBox, SIGNAL(toggled(bool)), dccSpecificSendPortsFrame, SLOT(setEnabled(bool)));
 
   dccSendPortsLabel->setBuddy(dccSendPortsFirstSpin);
@@ -142,6 +143,9 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccChatPortsLastSpin=new QSpinBox(0,65535,1,dccSpecificChatPortsFrame,"dcc_chat_ports_last_spin");
   connect(dccChatPortsLastSpin, SIGNAL(valueChanged(int)), this, SLOT(chatPortsLastSpinValueChanged(int)));
   dccChatPortsLastSpin->setFixedWidth(80);
+
+  dccSpecificChatPortsFrame->setEnabled(dccSpecificChatPortsCheckBox->isChecked());
+  connect(dccSpecificChatPortsCheckBox, SIGNAL(toggled(bool)), dccSpecificChatPortsFrame, SLOT(setEnabled(bool)));
 
   dccChatPortsLabel->setBuddy(dccChatPortsFirstSpin);
   dccSpecificChatPortsLayout->addWidget(dccChatPortsLabel);
