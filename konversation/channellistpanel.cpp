@@ -99,6 +99,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
   channelListView->addColumn(i18n("Users"));
   channelListView->addColumn(i18n("Channel Topic"));
   channelListView->setAllColumnsShowFocus(true);
+  channelListView->setResizeMode( KListView::LastColumn );
 
   QHBox* statsBox=new QHBox(this);
   statsBox->setSpacing(spacing());
