@@ -165,15 +165,18 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
   }
   else if(command=="join")
   {
+    QString channelName(trailing);
+    /* Sometimes JOIN comes without ":" in front of the channel name */
+    if(channelName=="") channelName=parameterList[parameterList.count()-1];
     /* Did we join the channel, or was it someone else? */
     if(server->isNickname(sourceNick))
     {
       /* Join the channel */
-      server->joinChannel(trailing,sourceHostmask);
+      server->joinChannel(channelName,sourceHostmask);
       /* Request modes for the channel */
-      server->queue("MODE "+trailing);
+      server->queue("MODE "+channelName);
     }
-    else server->nickJoinsChannel(trailing,sourceNick,sourceHostmask);
+    else server->nickJoinsChannel(channelName,sourceNick,sourceHostmask);
   }
   else if(command=="kick")
   {
