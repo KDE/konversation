@@ -548,7 +548,7 @@ void IRCView::appendServerMessage(const QString& type,const QString& message)
   doAppend(line);
 }
 
-void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important, bool parseURL)
+void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important, bool parseURL, bool self)
 {
   QString commandColor=KonversationApplication::preferences.getColor("CommandMessage");
   QString line;
@@ -565,7 +565,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
 
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
-  doAppend(line, important);
+  doAppend(line, important, self);
 }
 
 void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& rawMessage)
@@ -621,14 +621,16 @@ void IRCView::scrollToBottom()
     setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
 }
 
-void IRCView::doAppend(QString newLine, bool important)
+void IRCView::doAppend(QString newLine, bool important, bool self)
 {
   // Add line to buffer
   QString line(newLine);
 
   if(important || !KonversationApplication::preferences.getHideUnimportantEvents())
   {
-    emit newText(highlightColor,important);
+    if(!self) {
+      emit newText(highlightColor,important);
+    }
 
     // scroll view only if the scroll bar is already at the bottom
     bool doScroll=KTextBrowser::verticalScrollBar()->value()==KTextBrowser::verticalScrollBar()->maxValue();

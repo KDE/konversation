@@ -95,7 +95,8 @@ class ChatWindow : public BASE_CLASS
     void appendQuery(const QString& nickname,const QString& message);
     void appendAction(const QString& nickname,const QString& message);
     void appendServerMessage(const QString& type,const QString& message);
-    void appendCommandMessage(const QString& command,const QString& message,bool important=true, bool parseURL = true);
+    void appendCommandMessage(const QString& command, const QString& message, bool important = true,
+      bool parseURL = true, bool self = false);
     void appendBacklogMessage(const QString& firstColumn,const QString& message);
 
 #ifdef USE_MDI

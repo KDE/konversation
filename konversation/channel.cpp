@@ -958,7 +958,7 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo) {
   if(oldNick==server->getNickname())
   {
     setNickname(newNick);
-    appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.").arg(newNick),false);
+    appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.").arg(newNick), false, true, true);
   }
   /* No, must've been someone else */
    else appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.").arg(oldNick).arg(newNick),false);
@@ -971,10 +971,10 @@ void Channel::renameNick(const QString& nickname,const QString& newNick)
   if(nickname==server->getNickname())
   {
     setNickname(newNick);
-    appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.").arg(newNick),false);
+    appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.").arg(newNick), false, true, true);
   }
   /* No, must've been someone else */
-  else appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.").arg(nickname).arg(newNick),false);
+  else appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.").arg(nickname).arg(newNick), false);
 
   /* Update the nick list */
   Nick* nick=getNickByName(nickname);

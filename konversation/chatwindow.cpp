@@ -220,9 +220,9 @@ void ChatWindow::appendServerMessage(const QString& type,const QString& message)
   textView->appendServerMessage(type,message);
 }
 
-void ChatWindow::appendCommandMessage(const QString& command,const QString& message, bool important, bool parseURL)
+void ChatWindow::appendCommandMessage(const QString& command,const QString& message, bool important, bool parseURL, bool self)
 {
-  textView->appendCommandMessage(command,message,important, parseURL);
+  textView->appendCommandMessage(command,message,important, parseURL, self);
 }
 
 void ChatWindow::appendBacklogMessage(const QString& firstColumn,const QString& message)
