@@ -391,7 +391,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
         if (KonversationApplication::preferences.getOSDShowOwnNick() && !KonversationApplication::preferences.getOSDShowChannel() && chatWin->notificationsEnabled())
         {
           KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-          konvApp->osd->showOSD("(HIGHLIGHT) <" + whoSent + "> " + filteredLine);
+          konvApp->osd->showOSD( i18n("(HIGHLIGHT)") + " <" + whoSent + "> " + filteredLine);
         }
       }
       else
