@@ -52,7 +52,7 @@ class NicksOnline : public ChatWindow
     enum CommandIDs
     {
       ciAddressbookChange, ciAddressbookNew, ciAddressbookDelete, ciAddressbookEdit,
-      ciSendEmail, ciWhois
+      ciSendEmail, ciWhois, ciJoinChannel
     };
 
     

@@ -313,7 +313,10 @@ void NicksOnline::updateServerOnlineList(Server* servr)
                 // FIXME: If user connects to multiple servers in same network, the
                 // channel info will differ between the servers, resulting in inaccurate
                 // mode and led info displayed.
+                
                 QString channelName = channelList[channelIndex];
+                channelName = channelList[channelIndex];
+                
                 ChannelNickPtr channelNick = server->getChannelNick(channelName, nickname);
                 QString nickMode;
                 if (channelNick->hasVoice()) nickMode = nickMode + i18n(" Voice");
@@ -590,6 +593,7 @@ void NicksOnline::doCommand(int id)
     QString serverName;
     QString nickname;
     QListViewItem* item = m_nickListView->selectedItem();
+    QString channelName = m_nickListView->selectedItem()->text(0);
     if (!getItemServerAndNick(item, serverName, nickname)) return;
     // Get the server object corresponding to the server name.
     KonversationApplication *konvApp = 
@@ -649,6 +653,17 @@ void NicksOnline::doCommand(int id)
             if (addressee.isEmpty()) return;
             Konversation::Addressbook::self()->sendEmail(addressee);
             return;
+        }
+        case ciJoinChannel:
+        {
+            // Channels have no nlvcServerName entry. 
+            // We test if it is empty to see if we really have a channel name. 
+            if (!m_nickListView->selectedItem()->text(nlvcServerName))
+            {
+                QString contactChannel = m_nickListView->selectedItem()->text(0);
+                
+                server->queue( "JOIN "+contactChannel );
+            }
         }
         case ciWhois:
             server->queue("WHOIS "+nickname);
@@ -780,6 +795,7 @@ void NicksOnline::slotNickListView_RightButtonClicked(QListViewItem* item, const
             m_popupMenu->insertItem(i18n("New C&ontact..."), ciAddressbookNew);
             m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("&Whois"), ciWhois);
+            m_popupMenu->insertItem(i18n("&Join Channel"), ciJoinChannel);
             break;
         }
         case 2:
@@ -792,6 +808,7 @@ void NicksOnline::slotNickListView_RightButtonClicked(QListViewItem* item, const
             m_popupMenu->insertItem(i18n("&Delete Association"), ciAddressbookDelete);
             m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("&Whois"), ciWhois);
+            m_popupMenu->insertItem(i18n("&Join Channel"), ciJoinChannel);
             break;
         }
     }
