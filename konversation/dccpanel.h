@@ -31,6 +31,8 @@ class DccPanel : public ChatWindow
     DccPanel(QWidget* parent);
     ~DccPanel();
 
+    KListView* getListView();
+
   protected:
     KListView* dccListView;
 

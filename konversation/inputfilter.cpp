@@ -108,51 +108,66 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
       /* CTCP message? */
       if(trailing[0]==1)
       {
-        /* cut out the CTCP command */
+        // cut out the CTCP command
         QString ctcp=trailing.mid(1,trailing.find(1,1)-1);
 
-        QString ctcpCommand=ctcp.left(ctcp.find(" "));
+        QString ctcpCommand=ctcp.left(ctcp.find(" ")).lower();
         QString ctcpArgument=ctcp.mid(ctcp.find(" ")+1);
 
-        /* If it was a ctcp action, build an action string */
-        if(ctcpCommand.lower()=="action") server->appendActionToChannel(parameterList[0],sourceNick,ctcpArgument);
-        /* No known CTCP request, give a general message */
+        // If it was a ctcp action, build an action string
+        if(ctcpCommand=="action")
+          server->appendActionToChannel(parameterList[0],sourceNick,ctcpArgument);
+        // No known CTCP request, give a general message
         else server->appendServerMessageToChannel(parameterList[0],"CTCP",i18n("Received unknown CTCP-%1 request from %2 to Channel %3").arg(ctcp).arg(sourceNick).arg(parameterList[0]));
       }
-      /* No CTCP, so it's an ordinary channel message */
+      // No CTCP, so it's an ordinary channel message
       else server->appendToChannel(parameterList[0],sourceNick,trailing);
     }
-    /* No channel message */
+    // No channel message
     else
     {
       /* CTCP message? */
       if(trailing[0]==1)
       {
-        /* cut out the CTCP command */
+        // cut out the CTCP command
         QString ctcp=trailing.mid(1,trailing.find(1,1)-1);
 
-        QString ctcpCommand=ctcp.left(ctcp.find(" "));
+        QString ctcpCommand=ctcp.left(ctcp.find(" ")).lower();
         QString ctcpArgument=ctcp.mid(ctcp.find(" ")+1);
 
-        /* If it was a ctcp action, build an action string */
-        if(ctcpCommand.lower()=="action")
+        // If it was a ctcp action, build an action string
+        if(ctcpCommand=="action")
         {
-          /* Check if this nick is already in a query with us */
+          // Check if this nick is already in a query with us
           Query* query=server->getQueryByName(sourceNick);
-          /* If not, create a new one */
+          // If not, create a new one
           if(!query) server->addQuery(sourceNick,sourceHostmask);
-          /* else remember hostmask for this nick, it could have changed */
+          // else remember hostmask for this nick, it could have changed
           else server->addHostmaskToNick(sourceNick,sourceHostmask);
 
           server->appendActionToQuery(sourceNick,ctcpArgument);
         }
-        /* Maybe it was a version request, so act appropriately */
-        else if(ctcpCommand.lower()=="version")
+        // Maybe it was a version request, so act appropriately
+        else if(ctcpCommand=="version")
         {
           server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1.").arg(sourceNick));
           server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002 Dario Abatianni and Matthias Gierlings").arg(VERSION));
         }
-        /* No known CTCP request, give a general message */
+        // DCC request?
+        else if(ctcpCommand=="dcc")
+        {
+          // Extract DCC type and argument list
+          QString dccType=ctcpArgument.left(ctcpArgument.find(" ")).lower();
+          QStringList dccArgument=QStringList::split(' ',ctcpArgument.mid(ctcpArgument.find(" ")+1).lower());
+
+          if(dccType=="send")
+          {
+            emit addDccTransfer(sourceNick,dccArgument);
+          }
+
+          server->appendStatusMessage("DCC",QString("Incoming DCC %1 %2").arg(dccType).arg(dccArgument.join(" ")));
+        }
+        // No known CTCP request, give a general message
         else server->appendStatusMessage(i18n("CTCP"),i18n("Received unknown CTCP-%1 request from %2").arg(ctcp).arg(sourceNick));
       }
       /* No CTCP, so it's an ordinary query message */
@@ -166,6 +181,15 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
         server->appendToQuery(sourceNick,trailing);
       }
     }
+  }
+  else if(command=="notice")
+  {
+    // Channel notice?
+    if(isAChannel(parameterList[0]))
+      server->appendServerMessageToChannel(parameterList[0],i18n("Notice"),i18n("from %1 to %2: %3").arg(sourceNick).arg(parameterList[0]).arg(trailing));
+    // Private notice
+    else
+      server->appendStatusMessage(i18n("Notice"),i18n("from %1 to %2: %3").arg(sourceNick).arg(parameterList[0]).arg(trailing));
   }
   else if(command=="join")
   {
@@ -368,6 +392,10 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   else if(command=="mode")
   {
     parseModes(prefix,parameterList);
+  }
+  else if(command=="notice")
+  {
+    server->appendStatusMessage(i18n("Notice"),i18n("from %1: %2").arg(prefix).arg(trailing));
   }
   /* All yet unknown messages go into the frontmost window unaltered */
   else

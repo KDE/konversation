@@ -46,8 +46,15 @@ KonversationApplication::KonversationApplication()
 
 KonversationApplication::~KonversationApplication()
 {
-  saveOptions();
   kdDebug() << "KonversationApplication::~KonversationApplication()" << endl;
+  saveOptions();
+
+/*  kdDebug() << "Deleting Server list ..." << endl;
+  while(serverList.count())
+  {
+    kdDebug() << "deleted" << endl;
+    delete serverList.first();
+  } */
 }
 
 void KonversationApplication::connectToServer(int id)
@@ -119,15 +126,17 @@ void KonversationApplication::readOptions()
   /* Status bar settings */
   preferences.serverWindowStatusBarStatus=config->readBoolEntry("ServerWindowStatusBarStatus",true);
 
-  /* Window geometries */
+  // Window geometries
   preferences.setServerWindowSize(config->readSizeEntry("Geometry"));
   preferences.setHilightSize(config->readSizeEntry("HilightGeometry"));
   preferences.setButtonsSize(config->readSizeEntry("ButtonsGeometry"));
   preferences.setIgnoreSize(config->readSizeEntry("IgnoreGeometry"));
+  preferences.setNotifySize(config->readSizeEntry("NotifyGeometry"));
+  preferences.setNicksOnlineSize(config->readSizeEntry("NicksOnlineGeometry"));
   preferences.setNicknameSize(config->readSizeEntry("NicknameGeometry"));
   preferences.setColorConfigurationSize(config->readSizeEntry("ColorConfigurationGeometry"));
 
-  /* Reasons */
+  // Reasons
   QString reason;
   reason=config->readEntry("PartReason","");
   if(reason!="") preferences.setPartReason(reason);
@@ -234,6 +243,8 @@ void KonversationApplication::saveOptions()
   config->writeEntry("HilightGeometry",preferences.getHilightSize());
   config->writeEntry("ButtonsGeometry",preferences.getButtonsSize());
   config->writeEntry("IgnoreGeometry",preferences.getIgnoreSize());
+  config->writeEntry("NotifyGeometry",preferences.getNotifySize());
+  config->writeEntry("NicksOnlineGeometry",preferences.getNicksOnlineSize());
   config->writeEntry("NicknameGeometry",preferences.getNicknameSize());
   config->writeEntry("ColorConfigurationGeometry", preferences.getColorConfigurationSize());
 

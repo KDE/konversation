@@ -20,7 +20,7 @@
 
 #include "dcctransfer.h"
 
-DccTransfer::DccTransfer(KListView* parent,DccType type,QString partner,QString name) :
+DccTransfer::DccTransfer(KListView* parent,DccType type,QString partner,QString name,QString size,QString ipString,QString portString) :
              KListViewItem(parent)
 {
   setType(type);
@@ -38,23 +38,18 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString partner,QString 
 
   setPartner(partner);
   setFile(name);
-  setSize(67588);
+  setSize(size.toUInt());
   setPosition(0);
-
-  setText(6,"123.123.123.123");
 
   updateCPS();
 
-  if(type==Get) setStatus(Queued);
+  if(type==Get)
+  {
+    setStatus(Queued);
+    setText(6,ipString);
+    dccSocket=new KSocket(ipString,portString.toUInt());
+  }
   else setStatus(Offering);
-
-  QTimer* dummyTimer=new QTimer();
-  QTimer* dummyTimer2=new QTimer();
-  connect(dummyTimer,SIGNAL(timeout()),this,SLOT(updateCPS()));
-  connect(dummyTimer2,SIGNAL(timeout()),this,SLOT(increase()));
-
-  dummyTimer->start(1000);
-  dummyTimer2->start(200);
 }
 
 DccTransfer::~DccTransfer()

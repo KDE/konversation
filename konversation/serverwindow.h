@@ -50,6 +50,8 @@
 #include "ledtabwidget.h"
 #include "colorconfiguration.h"
 #include "chatwindow.h"
+#include "nicksonline.h"
+#include "dccpanel.h"
 
 class ServerWindow : public KMainWindow
 {
@@ -66,6 +68,7 @@ class ServerWindow : public KMainWindow
     LedTabWidget* getWindowContainer();
     void addView(QWidget* pane,int color,const QString& name);
     void showView(QWidget* pane);
+    DccPanel* getDccPanel();
 
   signals:
     void prefsChanged();
@@ -85,6 +88,7 @@ class ServerWindow : public KMainWindow
     void statusTextEntered();
     void addStatusView();
     void addDccPanel();
+    void closeDccPanel();
     void showToolbar();
     void showStatusbar();
     void openPreferences();
@@ -101,6 +105,9 @@ class ServerWindow : public KMainWindow
     void openNotify();
     void applyNotify(QStringList newList,bool use,int delay);
     void closeNotify(QSize newSize);
+
+    void openNicksOnlineWindow();
+    void closeNicksOnlineWindow(QSize newSize);
 
     void openButtons();
     void applyButtons(QStringList newList);
@@ -132,6 +139,7 @@ class ServerWindow : public KMainWindow
     QVBox* statusPane;
     IRCView* statusView;
     ChatWindow* frontView;
+    DccPanel* dccPanel;  // to track if a dcc panel is already open
 
     QPushButton* nicknameButton;
     IRCInput* statusInput;
@@ -145,6 +153,7 @@ class ServerWindow : public KMainWindow
     IgnoreDialog* ignoreDialog;
     QuickButtonsDialog* buttonsDialog;
     ColorConfiguration* colorConfigurationDialog;
+    NicksOnline* nicksOnlineWindow;
 
     QFile logfile;
     bool log;

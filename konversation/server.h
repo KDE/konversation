@@ -105,8 +105,10 @@ class Server : public QObject
   signals:
     void nicknameChanged(const QString&);
     void serverLag(int msec);
-    void tooLongLag(int msec); /* waiting too long for 303 response */
+    void tooLongLag(int msec); // waiting too long for 303 response
     void resetLag();
+    void nicksNowOnline(QStringList list); // Will be emitted when new 303 came in
+    void addDccPanel(); // will be connected to ServerWindow->addDccPanel()
 
   public slots:
     void queue(const QString& buffer);
@@ -124,6 +126,7 @@ class Server : public QObject
     void notifyCheckTimeout();
     void connectionEstablished();
     void notifyResponse(QString nicksOnline);
+    void addDccTransfer(QString sourceNick,QStringList dccArguments);
 
   protected:
     void startNotifyCheckTimer();
@@ -157,6 +160,7 @@ class Server : public QObject
     QString inputBuffer;
     QString outputBuffer;
     QString nickname;
+    QString serverKey;
 
     QList<Channel> channelList;
     QList<Query> queryList;

@@ -56,8 +56,8 @@ DccPanel::DccPanel(QWidget* parent) :
   new QPushButton(i18n("Open"),buttonsBox,"open_dcc_file");
   new QPushButton(i18n("Information"),buttonsBox,"info_on_dcc_file");
 
-  new DccTransfer(dccListView,DccTransfer::Get,"GetPartner","get/file/name.html");
-  new DccTransfer(dccListView,DccTransfer::Send,"SendPartner","send/file/name.html");
+//  new DccTransfer(dccListView,DccTransfer::Get,"GetPartner","get/file/name.html");
+//  new DccTransfer(dccListView,DccTransfer::Send,"SendPartner","send/file/name.html");
 }
 
 DccPanel::~DccPanel()
@@ -66,3 +66,5 @@ DccPanel::~DccPanel()
 
 int DccPanel::spacing() { return KDialog::spacingHint(); }
 int DccPanel::margin()  { return KDialog::marginHint(); }
+
+KListView* DccPanel::getListView() { return dccListView; }

@@ -17,6 +17,7 @@
 #include <unistd.h>
 
 #include <qregexp.h>
+#include <qhostaddress.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -27,6 +28,7 @@
 #include "serverwindow.h"
 #include "ircserversocket.h"
 #include "konversationapplication.h"
+#include "dcctransfer.h"
 
 Server::Server(int id)
 {
@@ -41,6 +43,7 @@ Server::Server(int id)
 
   serverName=serverEntry[1];
   serverPort=serverEntry[2].toInt();
+  serverKey=serverEntry[3];
 
   if(serverEntry[4] && serverEntry[4]!="")
   {
@@ -80,17 +83,24 @@ Server::Server(int id)
                   this,SLOT  (connectionEstablished()) );
   connect(&inputFilter,SIGNAL(notifyResponse(QString)),
                   this,SLOT  (notifyResponse(QString)) );
-
+  connect(&inputFilter,SIGNAL(addDccTransfer(QString,QStringList)),
+                  this,SLOT  (addDccTransfer(QString,QStringList)) );
+          
   connect(this,SIGNAL(serverLag(int)),serverWindow,SLOT(updateLag(int)) );
   connect(this,SIGNAL(tooLongLag(int)),serverWindow,SLOT(tooLongLag(int)) );
   connect(this,SIGNAL(resetLag()),serverWindow,SLOT(resetLag()) );
+  connect(this,SIGNAL(addDccPanel()),serverWindow,SLOT(addDccPanel()) );
 }
 
 Server::~Server()
 {
   kdDebug() << "Server::~Server()" << endl;
+
   if(serverSocket)
   {
+    // Make sure no signals get sent to a soon dying Server Window
+    serverSocket->blockSignals(true);
+    // Send out the last messages (usually the /QUIT)
     serverSocket->enableWrite(true);
     send(serverSocket);
     delete serverSocket;
@@ -103,6 +113,7 @@ QString Server::getServerName()
 {
   return serverName;
 }
+
 
 int Server::getPort()
 {
@@ -150,10 +161,12 @@ void Server::connectToIRCServer()
 
       QString connectString="USER " +
                             KonversationApplication::preferences.ident +
-                            " 8 * :" +  /* 8 = +i; 4 = +w*/
+                            " 8 * :" +  // 8 = +i; 4 = +w
                             KonversationApplication::preferences.realname;
-      queue(connectString);
+
+      if(serverKey) queue("PASS "+serverKey);
       queue("NICK "+getNickname());
+      queue(connectString);
 
       emit nicknameChanged(getNickname());
 
@@ -204,6 +217,7 @@ void Server::notifyResponse(QString nicksOnline)
 
   /* Finally copy the new ISON list with correct case to our notify cache */
   notifyCache=nickList;
+  emit nicksNowOnline(nickList);
 
   startNotifyTimer();
 }
@@ -382,6 +396,25 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
   }
   // Always set hostmask
   query->setHostmask(hostmask);
+}
+
+void Server::addDccTransfer(QString sourceNick,QStringList dccArguments)
+{
+  emit addDccPanel();
+
+  QHostAddress ip;
+
+  ip.setAddress(dccArguments[1].toULong());
+
+  appendStatusMessage("DCC",QString("%1 offers the file \"%2\" (%3 bytes) for download (%4:%5).").arg(sourceNick).arg(dccArguments[0]).arg(dccArguments[3]).arg(ip.toString()).arg(dccArguments[2]) );
+
+  new DccTransfer(serverWindow->getDccPanel()->getListView(),
+                  DccTransfer::Get,
+                  sourceNick,
+                  dccArguments[0],     // name
+                  dccArguments[3],     // size
+                  ip.toString(),       // ip
+                  dccArguments[2]);    // port
 }
 
 QString Server::getNextQueryName()

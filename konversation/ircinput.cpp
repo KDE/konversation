@@ -14,6 +14,8 @@
   $Id$
 */
 
+#include <kdebug.h>
+
 #include "ircinput.h"
 
 #define MAXHISTORY 100
@@ -77,7 +79,8 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
         break;
 
         default:
-          setCompletionMode('\0');
+          // Check if the keystroke actually produced text. If not it was just a qualifier.
+          if(keyEvent->text()!="") setCompletionMode('\0');
       }
     }
     /* To prevent compiler warnings about unhandled case values */

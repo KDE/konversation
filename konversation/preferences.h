@@ -72,6 +72,7 @@ class Preferences : public QObject
     QSize& getButtonsSize();
     QSize& getIgnoreSize();
     QSize& getNotifySize();
+    QSize& getNicksOnlineSize();
     QSize& getNicknameSize();
     QSize& getColorConfigurationSize();
     void setServerWindowSize(QSize newSize);
@@ -79,6 +80,7 @@ class Preferences : public QObject
     void setButtonsSize(QSize newSize);
     void setIgnoreSize(QSize newSize);
     void setNotifySize(QSize newSize);
+    void setNicksOnlineSize(QSize newSize);
     void setNicknameSize(QSize newSize);
     void setColorConfigurationSize(QSize newSize);
 
@@ -175,6 +177,7 @@ class Preferences : public QObject
     QSize hilightSize;
     QSize ignoreSize;
     QSize notifySize;
+    QSize nicksOnlineSize;
     QSize nicknameSize;
     QSize colorConfigurationSize;
 

@@ -65,6 +65,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
     else if(line.startsWith("/part "))    parsePart(parameter);
     else if(line.startsWith("/leave "))   parsePart(parameter);
     else if(line.startsWith("/quit "))    parseQuit(parameter);
+    else if(line.startsWith("/notice "))  parseNotice(parameter);
     else if(line.startsWith("/j "))       parseJoin(parameter);
     else if(line.startsWith("/msg "))     parseMsg(parameter);
     else if(line.startsWith("/query "))   parseQuery(parameter);
@@ -80,6 +81,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
     else if(line=="/part")                parsePart("");
     else if(line=="/leave")               parsePart("");
     else if(line=="/quit")                parseQuit("");
+    else if(line=="/notice")              parseNotice("");
     else if(line=="/kick")                parseKick("");
     else if(line=="/topic")               parseTopic("");
 
@@ -129,7 +131,7 @@ void OutputFilter::parseJoin(QString channelName)
   if(channelName=="")
   {
     type=i18n("Usage");
-    output=i18n("/JOIN <channel>");
+    output=i18n("Usage: /JOIN <channel>");
     command=true;
   }
   else
@@ -246,6 +248,25 @@ void OutputFilter::parseQuit(QString reason)
   toServer="QUIT :"+reason;
 }
 
+void OutputFilter::parseNotice(QString parameter)
+{
+  QString recipient=parameter.left(parameter.find(" "));
+  QString message=parameter.mid(recipient.length()+1);
+
+  if(parameter=="" || message=="")
+  {
+    type=i18n("Usage");
+    output=i18n("Usage: /NOTICE <recipient> <message>");
+    command=true;
+  }
+  else
+  {
+    toServer="NOTICE "+recipient+" :"+message;
+    output=i18n("Sending notice \"%1\" to %2.").arg(message).arg(recipient);
+    command=true;
+  }
+}
+
 void OutputFilter::parseMsg(QString parameter)
 {
   QString recipient=parameter.left(parameter.find(" "));
@@ -296,7 +317,8 @@ void OutputFilter::changeMode(QString parameter,char mode,char giveTake)
       if(modeCount>3)
       {
         modeCount=3;
-        output=i18n("Modes can only take three nick names at the same time.");
+        output=i18n("Modes can only take a certain number of nick names at the same time."
+                    "The server may truncate your mode list.");
         type="Warning";
         /* TODO: Issue a warning here */
       }

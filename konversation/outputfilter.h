@@ -54,6 +54,7 @@ class OutputFilter : public QObject
     void parseMsg(QString parameter);
     void parseQuery(QString parameter);
     void parseDescribe(QString parameter);
+    void parseNotice(QString parameter);
     void parseJoin(QString parameter);
     void parsePart(QString parameter);
     void parseQuit(QString parameter);

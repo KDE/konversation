@@ -39,6 +39,7 @@ class InputFilter : public QObject
   signals:
     void welcome();
     void notifyResponse(QString nicksOnline);
+    void addDccTransfer(QString sourceNick,QStringList dccArgument); // will be connected to Server->addDccTransfer()
 
   protected:
     void parseClientCommand(QString& prefix,QString& command,QStringList& parameterList,QString& trailing);

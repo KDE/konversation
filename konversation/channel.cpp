@@ -31,7 +31,7 @@
 
 Channel::Channel(QWidget* parent) : ChatWindow(parent)
 {
-  /* init variables */
+  // init variables
   nicks=0;
   ops=0;
   completionPosition=0;
@@ -40,19 +40,19 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   setType(ChatWindow::Channel);
 
-  /* Build some size policies for the widgets */
+  // Build some size policies for the widgets
   QSizePolicy hfixed=QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
   QSizePolicy hmodest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
   QSizePolicy modest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-  QSizePolicy onlyHorizontal=QSizePolicy(QSizePolicy::Minimum,QSizePolicy::Preferred);
+//  QSizePolicy onlyHorizontal=QSizePolicy(QSizePolicy::Minimum,QSizePolicy::Preferred);
 //  QSizePolicy onlyVertical=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::MinimumExpanding);
   QSizePolicy greedy=QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
 
-  /* (this) The main Box, holding the channel view/topic and the input line */
+  // (this) The main Box, holding the channel view/topic and the input line
   setSpacing(spacing());
   setMargin(margin());
 
-  /* The grid for the topic line, Nicks/Ops label, Channel View and Nick list */
+  // The grid for the topic line, Nicks/Ops label, Channel View and Nick list
   QGrid* topicViewNicksGrid=new QGrid(2,this);
   topicViewNicksGrid->setSpacing(spacing());
 

@@ -50,7 +50,7 @@ class DccTransfer : public QObject, public KListViewItem
       Done         /* Transfer done */
     };
 
-    DccTransfer(KListView* parent,DccType type,QString partner,QString name);
+    DccTransfer(KListView* parent,DccType type,QString partner,QString name,QString size,QString ipString,QString portString);
     ~DccTransfer();
 
   protected slots:
@@ -83,7 +83,6 @@ class DccTransfer : public QObject, public KListViewItem
     unsigned long transferred;
 
     KSocket* dccSocket;
-    int port;
 
     QDateTime transferStarted;
     QDateTime lastActive;         /* To find out if the transfer stalled */
