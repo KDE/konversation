@@ -6,6 +6,8 @@ $PORT= shift;
 $SERVER= shift;
 $TARGET= shift;
 
+my $i;
+
 if( $ARGV[0] eq "yes" ){
     exec ("dcop $PORT Konversation error \"Requested command is not executed!\" ");
 }
@@ -14,11 +16,8 @@ $ARG_MESSAGE = `@ARGV`;
 
 foreach $entry (split(/\n/, $ARG_MESSAGE)) {
     chomp $entry;
+    $i=1;
     $entry =~ s/^\//\/\//;
-    unless($i) { 
-	system("dcop $PORT Konversation say $SERVER \"$TARGET\" \"Output Of Command : %B @ARGV %B\" ");
-	$i=1;
-    }
     system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$entry\" ");
 }
 
