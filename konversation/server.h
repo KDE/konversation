@@ -45,6 +45,7 @@ class KonversationMainWindow;
 class RawLog;
 class ChannelListPanel;
 class ScriptLauncher;
+class ServerISON;
 
 class Server : public QObject
 {
@@ -328,11 +329,6 @@ class Server : public QObject
 
     void startAwayTimer();
     void sendToAllChannels(const QString& text);
-    /** Intended to be called when the addressbook changes by us, or by another
-      *  app.  Cycles through all the nicks and calls 'refreshAddressee' on all of
-      *  them.
-      */
-    void slotLoadAddressees(); 
     void notifyTimeout();
     
   protected slots:
@@ -370,7 +366,6 @@ class Server : public QObject
     void setTopicAuthor(const QString& channel,const QString& author);
     void invitation(const QString& nick,const QString& channel);
     void sendToAllChannelsAndQueries(const QString& text);
-    void slotPrefsChanged();
 
   protected:
     // constants
@@ -534,15 +529,9 @@ class Server : public QObject
     KProcess preShellCommand;
     
   private:
-    // List of nicks in the Nick Watch List (from preferences).
-    QStringList m_prefsWatchList;
-    // List of nicks in the addressbook for this server group.
-    QStringList m_addressbookWatchList;
-    // Merged list of the two above.
-    QStringList m_notifyList;
-    // State of UseNotify preference.
-    bool m_useNotify;
-
+    /// Helper object to construct ISON (notify) list and map offline nicks to
+    /// addressbook.
+    ServerISON* m_serverISON;
     /// All nicks known to this server.  Note this is NOT a list of all nicks on the server.
     /// Any nick appearing in this list is online, but may not necessarily appear in
     /// any of the joined or unjoined channel lists because a WHOIS has not yet been

@@ -65,26 +65,24 @@ class ServerISON : public QObject
     /**
     * Given the nickname of nick that is offline (or at least not known to be online),
     * returns the addressbook entry (if any) for the nick.
-    * @param nickname       Desired nickname.  Case sensitive.
+    * @param nickname       Desired nickname.  Case insensitive.
     * @return               Addressbook entry of the nick or empty if not found.
     */
-    KABC::Addressee getOfflineNickAddresse(QString& nickname);
+    KABC::Addressee getOfflineNickAddressee(QString& nickname);
 
   
   public slots:
     void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);
     void slotPrefsChanged();
-       
-  private:
     /**
     * Rebuilds list of nicks to watch whenever an addressbook change occurs
     * or whenever user turns on nick watching.
     */
     void recalculateAddressees();
     
+  private:
     /// Map of all offline nicks in the addressbook associated with this server
-    /// or server group and their addressbook entry, indexed by nickname.
-    /// TODO: Lowercase nickname?
+    /// or server group and their addressbook entry, indexed by lowercase nickname.
     OfflineNickToAddresseeMap m_offlineNickToAddresseeMap;
     
     /// A pointer to the server we are a member of.

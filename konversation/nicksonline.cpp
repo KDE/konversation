@@ -358,7 +358,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     {
         groupRoot->setOpen(true);
         // Connect server NickInfo updates.
-        connect (server, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
+        connect (servr, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
             this, SLOT(slotNickInfoChanged(Server*, const NickInfoPtr)));
     }
 }

@@ -212,7 +212,6 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     KToggleAction* showMenuBarAction;
 
     NicksOnline* nicksOnlinePanel;
-    QStringList nicksOnlineList;
 
     DccTransferHandler* dccTransferHandler;
 

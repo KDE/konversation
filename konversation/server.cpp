@@ -60,6 +60,7 @@ using namespace KNetwork;
 #include "konvidebug.h"
 
 #include "addressbook.h"
+#include "serverison.h"
 
 #include <config.h>
 
@@ -81,6 +82,7 @@ Server::Server(KonversationMainWindow* mainWindow,int id)
   rejoinChannels=false;
   connecting=false;
   isAway = false;
+  m_serverISON = 0;
   
   serverNickPrefixModes = "ov"; // XXX fold these into a QMAP
   serverNickPrefixes = "@+";
@@ -172,6 +174,7 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   alreadyConnected=false;
   rejoinChannels=false;
   connecting=false;
+  m_serverISON = 0;
 
   serverNickPrefixModes = "ov"; // XXX fold these into a QMAP
   serverNickPrefixes = "@+";
@@ -249,6 +252,8 @@ Server::~Server()
 {
   kdDebug() << "Server::~Server(" << getServerName() << ")" << endl;
 
+  // Delete helper object.
+  delete m_serverISON;
   // clear nicks online
   emit nicksNowOnline(this,QStringList(),true);
   // Make sure no signals get sent to a soon to be dying Server Window
@@ -393,7 +398,6 @@ void Server::connectSignals()
   // signal KonversationApplication::prefsChanged -> KonversationMainWindow::slotPrefsChanged ->
   // signal KonversationMainWindow::prefsChanged -> rest of program.
 //  connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
-  connect(getMainWindow(),SIGNAL(prefsChanged()),this,SLOT(slotPrefsChanged()));
   connect(getMainWindow(),SIGNAL(openPrefsDialog()),KonversationApplication::kApplication(),SLOT(openPrefsDialog()));
 
   connect(this,SIGNAL (serverOnline(bool)),statusView,SLOT (serverOnline(bool)) );
@@ -406,9 +410,6 @@ void Server::connectSignals()
   connect(m_scriptLauncher, SIGNAL(scriptExecutionError(const QString&)),
                       this, SLOT(scriptExecutionError(const QString&)));
 
-  connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
-  connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
-  
 }
 
 QString Server::getServerName()  const { return serverName; }
@@ -676,9 +677,9 @@ void Server::connectionEstablished(const QString& ownHost)
   if(!alreadyConnected)
   {
     alreadyConnected=true;
-    // Prepare notify list.
-    m_useNotify = false;
-    slotPrefsChanged();
+    // Make a helper object to build ISON (notify) list and map offline nicks to addressbook.
+    // TODO: Give the object a kick to get it started?
+    m_serverISON = new ServerISON(this);
      // get first notify very early
     startNotifyTimer(1000);
     // register with services
@@ -2162,7 +2163,13 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
   if (doSignal) emit channelMembersChanged(this, channelName, joined, true, nickname);
 }
 
-QStringList Server::getNotifyList() { return m_notifyList; }
+QStringList Server::getNotifyList()
+{
+  if (m_serverISON)
+    return m_serverISON->getISONList(); 
+  else
+    return QStringList();
+}
 
 QString Server::getNotifyString() { return getNotifyList().join(" "); }
 
@@ -2433,6 +2440,8 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
     }
     query=queryList.next();
   }
+  // Re-calculate ISON (notify) list.
+  m_serverISON->recalculateAddressees();
 
 }
 
@@ -2885,68 +2894,6 @@ QString Server::awayTime()
 void Server::startAwayTimer()
 {
   m_awayTime = QDateTime::currentDateTime().toTime_t();
-}
-
-
-void Server::slotLoadAddressees() {
- 
-  kdDebug() << "server::slotLoadAddressees " << endl;
-  // Build a list of all nicks in the addressbook for this server's server group.
-  if (m_useNotify)
-  {
-    m_addressbookWatchList.clear();
-    QString groupName = getServerGroup();
-    QStringList allContacts = Konversation::Addressbook::self()->allContactsNicks();
-    for (unsigned int index=0; index<allContacts.count(); index++)
-    {
-      // Separate nickname from server or group.
-      QStringList nicknameAndGroup = QStringList::split(QChar(0xE120), allContacts[index]);
-      // Only add nick in addressbook if in the same group as server.
-      if (nicknameAndGroup.count() == 2)
-      {
-        if (nicknameAndGroup[1] == groupName)
-        {
-          QString nickname = nicknameAndGroup[0];
-          // If nickname not already in the list, add it.
-          if (!m_addressbookWatchList.contains(nickname)) m_addressbookWatchList.append(nickname);
-        }
-      }
-    }
-    // Merge with watch list from prefs.
-    m_notifyList = m_prefsWatchList;
-    for (unsigned int index=0; index<m_addressbookWatchList.count(); index++)
-    {
-      QString nickname = m_addressbookWatchList[index];
-      if (!m_notifyList.contains(nickname)) m_notifyList.append(nickname);
-    }
-  }
-}
-
-// When user changes preferences and has nick watching turned on, rebuild notify list.
-void Server::slotPrefsChanged()
-{
-  kdDebug() << "Server::slotPrefsChanged()" << endl;
-  bool useNotify = KonversationApplication::preferences.getUseNotify();
-  if (useNotify)
-  {
-    // If user turned on nick watching, build addressbook watch list.
-    bool turnedOn = !m_useNotify;
-    m_useNotify = true;
-    if (turnedOn) slotLoadAddressees();
-    // Get Nick Watch List from preferences.
-    QString groupName = getServerGroup();
-    m_prefsWatchList =
-      KonversationApplication::preferences.getNotifyListByGroup(groupName);
-    // Merge with list of nicks in the addressbook with this server's server group.
-    m_notifyList = m_prefsWatchList;
-    for (unsigned int index=0; index<m_addressbookWatchList.count(); index++)
-    {
-      QString nickname = m_addressbookWatchList[index];
-      if (!m_notifyList.contains(nickname)) m_notifyList.append(nickname);
-    }
-  }
-  else m_notifyList.clear();
-  m_useNotify = useNotify;
 }
 
 #include "server.moc"

@@ -29,7 +29,7 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp valuelistviewit
 	prefspagebehaviour.cpp prefspagechatwinbehavior.cpp prefspagechatwinappearance.cpp\
 	prefspagecolorsappearance.cpp serverlistdialog.cpp dcctransfersend.cpp dcctransferrecv.cpp\
 	channelnick.cpp dccdetaildialog.cpp insertchardialog.cpp ircdefaultcodec.cpp\
-        editnotifydialog.cpp common.cpp
+        editnotifydialog.cpp common.cpp serverison.cpp
 konversation_LDADD   = $(COMPAT_LIBS) $(LIB_KIO) -lkmdi -lm $(LIB_ARTS) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la
 
 xdg_apps_DATA = konversation.desktop
@@ -57,5 +57,5 @@ messages: rc.cpp
 	fi
 noinst_HEADERS =  prefspagebehaviour.h prefspagechatwinbehavior.h prefspagechatwinappearance.h\
 	 prefspagecolorsappearance.h serverlistdialog.h dcctransfersend.h dcctransferrecv.h\
-	 dccdetaildialog.h insertchardialog.h editnotifydialog.h
+	 dccdetaildialog.h insertchardialog.h editnotifydialog.h serverison.h
 

@@ -31,22 +31,24 @@
 #include "konversationmainwindow.h"
 
 ServerISON::ServerISON(Server* server) : m_server(server) {
+  m_useNotify = false;
+  slotPrefsChanged();
   connect( Konversation::Addressbook::self()->getAddressBook(),
     SIGNAL( addressBookChanged( AddressBook * ) ),
     this, SLOT( recalculateAddressees() ) );
   connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()),
     this, SLOT(recalculateAddressees()));
-  connect( m_server, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
-    this, SLOT(nickInfoChanged(Server*, const NickInfoPtr)));
-  connect(m_server->getMainWindow(),SIGNAL(prefsChanged()),
-    this,SLOT(slotPrefsChanged()));
+  // connect( m_server, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
+  //  this, SLOT(nickInfoChanged(Server*, const NickInfoPtr)));
+  connect(m_server->getMainWindow(), SIGNAL(prefsChanged()),
+    this, SLOT(slotPrefsChanged()));
 }
     
 QStringList ServerISON::getISONList() { return m_ISONList; }
 
 QStringList ServerISON::getAddressees() { return m_addresseesISON; }
 
-KABC::Addressee ServerISON::getOfflineNickAddresse(QString& nickname)
+KABC::Addressee ServerISON::getOfflineNickAddressee(QString& nickname)
 {
   if (m_offlineNickToAddresseeMap.contains(nickname))
     return m_offlineNickToAddresseeMap[nickname];
@@ -66,8 +68,8 @@ void ServerISON::recalculateAddressees()
     // indexed by KABC::Addressee uid.
     // Note that there can be more than one nick associated with an addressee.
     QMap<QString,QStringList> addresseeToOnlineNickMap;
-    NickInfoMap::ConstIterator nickInfoItEnd = allNicks->end();
-    for(NickInfoMap::ConstIterator nickInfoIt=allNicks->begin();
+    NickInfoMap::ConstIterator nickInfoItEnd = allNicks->constEnd();
+    for(NickInfoMap::ConstIterator nickInfoIt=allNicks->constBegin();
       nickInfoIt != nickInfoItEnd; ++nickInfoIt)
     {
       NickInfoPtr nickInfo = nickInfoIt.data();
@@ -113,15 +115,17 @@ void ServerISON::recalculateAddressees()
           // KABC::Addressee, indexed by nickname.
           QStringList nicks = QStringList::split( QChar( 0xE000 ),
             (*it).custom("messaging/irc", "All") );
-          for( QStringList::Iterator nicksIt = nicks.begin(); nicksIt != nicks.end(); ++nicksIt )
+          QStringList::ConstIterator nicksItEnd = nicks.constEnd();
+          for( QStringList::ConstIterator nicksIt = nicks.constBegin();
+            nicksIt != nicksItEnd; ++nicksIt )
           {
             QString lserverOrGroup = (*nicksIt).section(QChar(0xE120),1).lower();
             if(lserverOrGroup == lserverName || lserverOrGroup == lserverGroup ||
               lserverOrGroup.isEmpty())
             {
-              QString nickname = (*nicksIt).section(QChar(0xE120),0,0).lower();
+              QString nickname = (*nicksIt).section(QChar(0xE120),0,0);
               m_addresseesISON.append(nickname);
-              m_offlineNickToAddresseeMap.insert(nickname, *it, true);
+              m_offlineNickToAddresseeMap.insert(nickname.lower(), *it, true);
             }
           }
         }
