@@ -520,9 +520,11 @@ void Server::lookupFinished()
   if(serverSocket.status())
   {
     // inform user about the error
-    statusView->appendServerMessage(i18n("Error"),i18n("Server %1 not found.").arg(serverName));
+    statusView->appendServerMessage(i18n("Error"),i18n("Server %1 not found.  %2").arg(serverName).arg(serverSocket.strError(serverSocket.status(), serverSocket.systemError())));
+
+    serverSocket.resetStatus();
     // prevent retrying to connect
-    autoReconnect=0;
+//    autoReconnect=0;
     // broken connection
     broken(0);
   }
@@ -1065,7 +1067,9 @@ NickInfoPtr Server::getNickInfo(const QString& nickname)
   LocaleString lcNickname(nickname.lower());
   if (allNicks.contains(lcNickname))
   {
-    return allNicks[lcNickname];
+    NickInfoPtr nickinfo = allNicks[lcNickname];
+    Q_ASSERT(nickinfo);
+    return nickinfo;
   }
   else
     return 0;
@@ -2157,6 +2161,8 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
     }
     nickInfo = getNickInfo(nickname);
     emit nickInfoChanged(this, nickInfo);
+  } else {
+    kdDebug() << "server::renameNickInfo() was called for newname='" << newname << "' but nickInfo is null" << endl;
   }
 }
 #else
@@ -2339,9 +2345,10 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
   //Actually do the rename.
   NickInfoPtr nickInfo = getNickInfo(nickname);
   if(!nickInfo) {
-    kdDebug() << "server::renameNick called for nickname '" << nickname << "' to '" << newNick << " but getNickInfo(" << nickname << ") returned no results." << endl;
+    kdDebug() << "server::renameNick called for nickname '" << nickname << "' to '" << newNick << "' but getNickInfo('" << nickname << "') returned no results." << endl;
     return;
   }
+  kdDebug() << "server::renameNick - renaming " << nickname << "' to '" << newNick << "'" << endl;
   renameNickInfo(nickInfo, newNick);
   //The rest of the code below allows the channels to echo to the user to tell them that the nick has changed.
 #endif

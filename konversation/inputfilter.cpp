@@ -106,7 +106,7 @@ void InputFilter::parseLine(const QString &a_newLine, QWidget *mainWindow)
     // The rest of the string will be the parameter list
     parameterList=QStringList::split(" ",incomingLine);
   }
-
+  Q_ASSERT(server);
   // Server command, if no "!" was found in prefix
   if(prefix.find('!')==-1 && prefix!=server->getNickname())
     parseServerCommand(prefix,command,parameterList,trailing);
@@ -120,10 +120,11 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 #endif
 )
 {
+
+  Q_ASSERT(server);
   // Extract nickname fron prefix
   QString sourceNick=prefix.left(prefix.find("!"));
   QString sourceHostmask=prefix.mid(prefix.find("!")+1);
-
   // remember hostmask for this nick, it could have changed
   server->addHostmaskToNick(sourceNick,sourceHostmask);
 
@@ -141,6 +142,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 
       // ******
       KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+      Q_ASSERT(konv_app);
       QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_CTCP);
       IRCEvent *e;
       for (e = ctcp_events.first(); e; e = ctcp_events.next())

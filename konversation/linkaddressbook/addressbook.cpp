@@ -202,6 +202,7 @@ bool Addressbook::saveAddressbook(){
 }
 
 bool Addressbook::saveAddressee(KABC::Addressee &addressee) {
+	Q_ASSERT(&addressee);
 	addressBook->insertAddressee(addressee);
 	bool success = saveAddressbook();
 	if(success)
@@ -219,6 +220,7 @@ bool Addressbook::saveAddressee(KABC::Addressee &addressee) {
  * @return 0 (unknown), 1 (offline), 3 (away), 4 (online)
  */
 int Addressbook::presenceStatus(const KABC::Addressee &addressee) {
+	Q_ASSERT(&addressee);
 	int presenceStat = 0;
 	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
 	QStringList::iterator end = addresses.end();
@@ -243,7 +245,10 @@ int Addressbook::presenceStatus(const KABC::Addressee &addressee) {
  * @return 0 (we aren't connected to the server), 1 (offline), 3 (away), 4 (online)
  */
 int Addressbook::presenceStatusByNick(const QString &ircnick, const QString &server) {
-
+	if(ircnick.isEmpty() || server.isEmpty()) {
+		kdDebug() << "presenceStatusByNick called, but ircnick or server was empty/null" << endl;
+		return 0;
+	}
 	bool foundaserver = false;
 	QPtrList<Server> serverlist;
 	serverlist =dynamic_cast<KonversationApplication*>(kapp)->getServerList();
@@ -328,14 +333,27 @@ int Addressbook::presenceStatus(const QString &uid) {
 }
 
 bool Addressbook::canReceiveFiles(const QString &uid) {
+	if(uid.isEmpty()) {
+		kdDebug() << "Addressbook::canReceiveFiles() called with empty uid" << endl;
+		return false;
+	}
 	int presence = presenceStatus(uid);
+
 	return (presence == 4) || (presence == 3);
 }
 bool Addressbook::canRespond(const QString &uid) {
+	if(uid.isEmpty()) {
+		kdDebug() << "Addressbook::canRespond called with empty uid" << endl;
+		return false;
+	}
 	//FIXME:  Check with bille what to do when contact is offline
 	return true;
 }
-QString Addressbook::locate(const QString &contactId, const QString &protocol) {
+QString Addressbook::locate(const QString &contactId, const QString &/*protocol*/) {
+	if(contactId.isEmpty()) {
+		kdDebug() << "Addressbook::locate called with empty contactId" << endl;
+		return QString::null;
+	}
 	//if(protocol != "IRCProtocol")
 		//return false;
 	return Addressbook::getKABCAddresseeFromNick(contactId).uid();
@@ -368,6 +386,10 @@ QPixmap Addressbook::icon(const QString &uid) {
 	return joinedLed;
 }
 QString Addressbook::context(const QString &uid) {
+	if(uid.isEmpty()) {
+	       kdDebug() << "Addressbook::contact called with empty uid" << endl;
+	       return QString::null;
+	}
 	QString context;
 	return context;
 }
@@ -386,12 +408,20 @@ QStringList Addressbook::protocols() {
  * @param message the message to send them.
  */
 void Addressbook::messageContact( const QString &uid, const QString& message ) {
+	 if(uid.isEmpty() || message.isEmpty()) {
+	         kdDebug() << "Addressbook::messageContact called with empty uid or message" << endl;
+	         return;
+	 }
 }
 
 /**
  * Open a chat to a contact, and optionally set some initial text
  */
-void Addressbook::messageNewContact( const QString &contactId, const QString &protocol ) {
+void Addressbook::messageNewContact( const QString &contactId, const QString &/*protocol*/ ) {
+	if(contactId.isEmpty() ) {
+	        kdDebug() << "Addressbook::messageNewContact called with empty contactid" << endl;
+		return;
+	}
 }
 
 /**
@@ -399,6 +429,10 @@ void Addressbook::messageNewContact( const QString &contactId, const QString &pr
  * @param uid the KABC uid you want to chat with.
  */
 void Addressbook::chatWithContact( const QString &uid ) {
+	if(uid.isEmpty()) {
+		kdDebug() << "Addressbook::chatWithContact called with empty uid" << endl;
+		return;
+	}
 }
 
 /**
@@ -408,7 +442,11 @@ void Addressbook::chatWithContact( const QString &uid ) {
  * @param altFileName an alternate filename describing the file
  * @param fileSize file size in bytes
  */
-void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QString &altFileName, uint fileSize) {
+void Addressbook::sendFile(const QString &uid, const KURL &/*sourceURL*/, const QString &/*altFileName*/, uint /*fileSize*/) {
+	if(uid.isEmpty()) {
+		 kdDebug() << "Addressbook::sendFile called with empty uid" << endl;
+		 return;
+	}
 }
 
 // MUTATORS
@@ -419,19 +457,34 @@ void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QStr
  * @param protocol the protocol, eg one of "AIMProtocol", "MSNProtocol", "ICQProtocol", ...
  * @return whether the add succeeded.  False may signal already present, protocol not supported, or add operation not supported.
  */
-bool Addressbook::addContact( const QString &contactId, const QString &protocol ) {
+bool Addressbook::addContact( const QString &/*contactId*/, const QString &/*protocol*/ ) {
 	return false;
+	//Nicks are auto added if they are put in the addressbook/
 }
 
-void Addressbook::emitContactPresenceChanged( QString uid, int presence) {
+void Addressbook::emitContactPresenceChanged(QString uid, int presence) {
+	Q_ASSERT(!uid.isEmpty());
+	if(uid.isEmpty()) {
+		kdDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
+		return;
+	}
+	Q_ASSERT(kapp);
+	Q_ASSERT(kapp->dcopClient());
 	contactPresenceChanged(uid, kapp->dcopClient()->appId(), presence);
 	kdDebug() << "Presence changed for uid " << uid << " to " << presence << endl;
 }
 
 void Addressbook::emitContactPresenceChanged(QString uid) {
+	Q_ASSERT(!uid.isEmpty());
+	if(uid.isEmpty()) {
+		kdDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
+		return;
+	};
+	
 	emitContactPresenceChanged(uid, presenceStatus(uid));
 }
 
 }
 
 #include "addressbook.moc"
+
