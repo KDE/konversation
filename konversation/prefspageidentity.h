@@ -57,7 +57,8 @@ class PrefsPageIdentity : public PrefsPage
     void unAwayMessageChanged(const QString& newMessage);
 
     void updateIdentity(int number);
-    void renameIdentity(const QString& newName);
+//    void renameIdentity(const QString& newName);
+    void renameIdentity();
 
     void addIdentity();
 

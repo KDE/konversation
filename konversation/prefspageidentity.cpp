@@ -18,6 +18,7 @@
 #include <qhbox.h>
 #include <qpushbutton.h>
 
+#include <klineeditdlg.h>
 #include <kdebug.h>
 
 #include "prefspageidentity.h"
@@ -30,9 +31,11 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
 
   QLabel* identityLabel=new QLabel(i18n("Identity:"),parentFrame);
   identityCombo=new KComboBox(parentFrame);
-  identityCombo->setEditable(true);
-  identityCombo->setInsertionPolicy(QComboBox::NoInsertion);
+  identityCombo->setEditable(false);
+//  identityCombo->setInsertionPolicy(QComboBox::NoInsertion);
 
+  QPushButton* renameButton=new QPushButton(i18n("Rename"),parentFrame,"rename_identity_button");
+  
   identities=preferences->getIdentityList();
 
   for(unsigned int index=0;index<identities.count();index++)
@@ -84,7 +87,8 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
 
   int row=0;
   identityLayout->addWidget(identityLabel,row,0);
-  identityLayout->addMultiCellWidget(identityCombo,row,row,1,3);
+  identityLayout->addMultiCellWidget(identityCombo,row,row,1,2);
+  identityLayout->addWidget(renameButton,row,3);
   row++;
   identityLayout->addWidget(realNameLabel,row,0);
   identityLayout->addMultiCellWidget(realNameInput,row,row,1,3);
@@ -129,21 +133,30 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   identityLayout->setRowStretch(row,10);
 
   // Set up signals / slots for identity page
+  connect(identityCombo,SIGNAL (activated(int)),this,SLOT (updateIdentity(int)) );
+//  connect(identityCombo,SIGNAL (textChanged(const QString&)),this,SLOT (renameIdentity(const QString&)) );
+  
+  connect(renameButton,SIGNAL (clicked()),this,SLOT (renameIdentity()) );
+  
   connect(realNameInput,SIGNAL (textChanged(const QString&)),this,SLOT (realNameChanged(const QString&)) );
+  
   connect(loginInput,SIGNAL (textChanged(const QString&)),this,SLOT (loginChanged(const QString&)) );
+  
   connect(nick0,SIGNAL (textChanged(const QString&)),this,SLOT (nick0Changed(const QString&)) );
   connect(nick1,SIGNAL (textChanged(const QString&)),this,SLOT (nick1Changed(const QString&)) );
   connect(nick2,SIGNAL (textChanged(const QString&)),this,SLOT (nick2Changed(const QString&)) );
   connect(nick3,SIGNAL (textChanged(const QString&)),this,SLOT (nick3Changed(const QString&)) );
+  
   connect(bot,SIGNAL (textChanged(const QString&)), this,SLOT (botChanged(const QString&)) );
   connect(password,SIGNAL (textChanged(const QString&)), this,SLOT (passwordChanged(const QString&)) );
+  
   connect(partInput,SIGNAL (textChanged(const QString&)),this,SLOT (partReasonChanged(const QString&)) );
   connect(kickInput,SIGNAL (textChanged(const QString&)),this,SLOT (kickReasonChanged(const QString&)) );
+  
   connect(showAwayMessageCheck,SIGNAL (stateChanged(int)),this,SLOT (showAwayMessageChanged(int)) );
   connect(awayInput,SIGNAL (textChanged(const QString&)),this,SLOT (awayMessageChanged(const QString&)) );
   connect(unAwayInput,SIGNAL (textChanged(const QString&)),this,SLOT (unAwayMessageChanged(const QString&)) );
-  connect(identityCombo,SIGNAL (activated(int)),this,SLOT (updateIdentity(int)) );
-  connect(identityCombo,SIGNAL (returnPressed(const QString&)),this,SLOT (renameIdentity(const QString&)) );
+  
   connect(addIdentityButton,SIGNAL (clicked()),this,SLOT(addIdentity()) );
 }
 
@@ -244,10 +257,20 @@ void PrefsPageIdentity::updateIdentity(int number)
   unAwayInput->setText(identity->getReturnMessage());
 }
 
-void PrefsPageIdentity::renameIdentity(const QString& newName)
+// void PrefsPageIdentity::renameIdentity(const QString& newName)
+void PrefsPageIdentity::renameIdentity()
 {
-  identity->setName(newName);
-  identityCombo->changeItem(newName,identityCombo->currentItem());
+  bool ok;
+  QString newName=KLineEditDlg::getText(i18n("Rename identity"),
+                                        i18n("Please enter a new name for this identity:"),
+                                        identity->getName(),
+                                        &ok,
+                                        parentFrame);
+  if(ok)
+  {
+    identity->setName(newName);
+    identityCombo->changeItem(newName,identityCombo->currentItem());
+  }
 }
 
 void PrefsPageIdentity::addIdentity()
