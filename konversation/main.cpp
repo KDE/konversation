@@ -64,6 +64,7 @@ int main(int argc, char* argv[])
   aboutData.addCredit("Michael Goettsche",I18N_NOOP("Quick connect, Ported new OSD, other features and bugfixes"),"michael.goettsche@kdemail.net");
   aboutData.addCredit("İsmail Dönmez",I18N_NOOP("Bugfixes and features"),"kde@myrealbox.com");
   aboutData.addCredit("Luciash d' being",I18N_NOOP("Application icons"),"luci@sh.ground.cz");
+  aboutData.addCredit("John Tapsell",I18N_NOOP("Refactoring and linking to kadddressbook"), "john@geola.co.uk");
   KCmdLineArgs::init(argc,argv,&aboutData);
 
   KonversationApplication app;

@@ -1078,7 +1078,11 @@ void Channel::removeNick(const QString &nickname, const QString &reason, bool qu
     if(nick==0) kdWarning() << "Channel::removeNick(): Nickname " << nickname << " not found!" << endl;
     else
     {
+#ifdef USE_NICKINFO
       if(nick->isOp() || nick->isOwner() || nick->isAdmin() || nick->isHalfOp()) adjustOps(-1);
+#else
+      if(nick->isOp() || nick->isOwner() || nick->isAdmin() || nick->isHalfop()) adjustOps(-1); 
+#endif
       adjustNicks(-1);
 
       nicknameList.removeRef(nick);
@@ -1403,8 +1407,8 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
       if(nick)
       {
         // Only update counter if something has actually changed
-        if(plus && !nick->isHalfOp()) adjustOps(1);
-        else if(!plus && nick->isHalfOp()) adjustOps(-1);
+        if(plus && !nick->isHalfop()) adjustOps(1);
+        else if(!plus && nick->isHalfop()) adjustOps(-1);
         nick->setHalfop(plus);
         updateNicksOps();
         nicknameListView->sort();
@@ -1451,7 +1455,7 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
       nick=getNickByName(parameter);
       if(nick)
       {
-        parameterChannelNick->setVoice(plus);
+        nick->setVoice(plus);
         nicknameListView->sort();
       }
 #endif

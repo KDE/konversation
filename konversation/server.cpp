@@ -1689,7 +1689,7 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
     addNickToJoinedChannelsList(channelName, parameter);
   }
 #else 
-  if(channel) channel->updateMode(nick,mode,plus,parameter);
+  if(channel) channel->updateMode(updater,mode,plus,parameter);
 #endif
 
 }
@@ -1883,13 +1883,13 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
   return channelNick;
 }
 #else
-NickInfoPtr Server::addNickToJoinedChannelsList(const QString&, const QString&, unsigned int) { return 0; }
+ChannelNickPtr Server::addNickToJoinedChannelsList(const QString&, const QString&) { return 0; }
 #endif
-#ifdef USE_NICKINFO
 void Server::emitChannelNickChanged(const ChannelNickPtr channelNick) {
-  emit channelNickChanged(this, channelNick);
-}
+#ifdef USE_NICKINFO
+	emit channelNickChanged(this, channelNick);
 #endif
+}
 // Adds a nickname to the unjoinedChannels list.
 // Creates new NickInfo if necessary.
 // If needed, moves the channel from the joined list to the unjoined list.
@@ -1951,7 +1951,7 @@ ChannelNickPtr Server::addNickToUnjoinedChannelsList(const QString& channelName,
   return channelNick;
 }
 #else
-NickInfoPtr Server::addNickToUnjoinedChannelsList(const QString&, const QString&, unsigned int) { return 0; }
+ChannelNickPtr Server::addNickToUnjoinedChannelsList(const QString&, const QString&) { return 0; }
 #endif
 
 // Adds a nickname to the Online list, removing it from the Offline list, if present.
@@ -2160,7 +2160,7 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
   }
 }
 #else
-NickInfoPtr Server::renameNickInfo(const QString&, const QString&) { return 0; }
+void Server::renameNickInfo(NickInfoPtr, const QString&) { return; }
 #endif
 
 void Server::noMorePendingNicks(const QString& channelName)
