@@ -224,7 +224,7 @@ void DccTransferSend::heard()  // slot
   m_sendSocket = static_cast<KNetwork::KStreamSocket*>( m_serverSocket->accept() );
   if( !m_sendSocket )
   {
-    setStatus( Failed, i18n("Couldn't accept the connection. (Socket Error)") );
+    setStatus( Failed, i18n("Could not accept the connection. (Socket Error)") );
     cleanUp();
     openDetailDialog();
     return;
