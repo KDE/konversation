@@ -26,35 +26,13 @@
 
 #include "../images.h"
 #include "../nickinfo.h"
+#include "addressbook_base.h"
 
 namespace Konversation {
-class Addressbook : public QObject,public KIMIface
+class Addressbook : public AddressbookBase
 {
   Q_OBJECT
   public:
-    KABC::Addressee getKABCAddresseeFromNick(const QString &ircnick, const QString &servername, const QString &servergroup);
-    KABC::Addressee getKABCAddresseeFromNick(const QString &nick_server);
-    bool hasNick(const KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup);
-    bool hasNick(const KABC::Addressee &addressee, const QString &nick_server);
-    void unassociateNick(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup);
-    void associateNick(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup);
-    bool associateNickAndUnassociateFromEveryoneElse(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup);
-    /** If this user is online, return one of the nicks that they are
-      * using.  Otherwise return the first nick listed.
-      * If there are multiple matches, it will prefer ones that are not set to away.
-      * @return online nick, first nick, or QString::null if they aren't known at all.
-    */
-    QString getBestNick(const KABC::Addressee &addressee);
-    bool hasAnyNicks(const KABC::Addressee &addresse);
-    int presenceStatus(const KABC::Addressee &addressee);
-    bool isOnline(KABC::Addressee &addressee);
-    bool getAndCheckTicket();
-    bool saveTicket();	
-    void releaseTicket();
-    bool saveAddressee(KABC::Addressee &addressee);
-    bool saveAddressbook();
-    KABC::AddressBook *getAddressBook();
-    
     static Addressbook *self();
     QStringList allContactsNicks();	    
     QStringList allContacts();
@@ -70,7 +48,7 @@ class Addressbook : public QObject,public KIMIface
 // metadata
     QPixmap icon( const QString &uid );
     QString context( const QString &uid );
-    int presenceStatus(const QString &uid);
+    virtual int presenceStatus(const QString &uid);
 // App capabilities
     QStringList protocols();
     
@@ -95,30 +73,20 @@ class Addressbook : public QObject,public KIMIface
     void sendFile(const QString &uid, const KURL &sourceURL,
     const QString &altFileName = QString::null, uint fileSize = 0);
 
+    /**
+     * Lets outsiders tell us to emit presenceChanged signal.
+     */
     void emitContactPresenceChanged( QString uid, int presence);
+    /**
+     * Lets outsiders tell us to emit presenceChanged signal.
+     */
     void emitContactPresenceChanged(QString uid);
-    /** Return a NickInfo for this addressee.
-      *  If there are multiple matches, it tries to pick one that is not away.
-      *  @param addressee The addressee to get a nickInfo for
-      *  @param onlineOnlyNicks If true, then return only a nick that is online, otherwise return 0
-      *  @return A nickInfo.  It tries hard to return a nickInfo that is not away if one exists.
-      */
-    static NickInfoPtr getNickInfo(const KABC::Addressee &addressee, bool onlineOnlyNicks);
 
-// MUTATORS
-// Contact list
     bool addContact( const QString &contactId, const QString &protocolId );
+  protected:
     
-  private:
-    Addressbook();
     static Addressbook *m_instance;
-
-    KABC::AddressBook* addressBook;
-    KABC::Ticket *m_ticket;
-    
-  signals:
-    void addresseesChanged();
-    
+    Addressbook();
 };
 
 
