@@ -6,6 +6,8 @@ $TARGET= shift;
 
 $ARG_MESSAGE = `@ARGV`;
 
+system("dcop $PORT Konversation say $SERVER \"$TARGET\" \"%BOutput Of Command : @ARGV %B\" ");
+
 foreach $entry (split(/\n/, $ARG_MESSAGE)) {
   chomp $entry;
   system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$entry\" ");
