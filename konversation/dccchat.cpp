@@ -176,7 +176,7 @@ void DccChat::connectToPartner()
   m_dccSocket->setFamily(KNetwork::KResolver::InetFamily);
   m_dccSocket->enableRead(false);
   m_dccSocket->enableWrite(false);
-  m_dccSocket->setTimeout(5000);
+  m_dccSocket->setTimeout(10000);
 
   connect( m_dccSocket, SIGNAL( hostFound() ),                        this, SLOT( lookupFinished() )           );
   connect( m_dccSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( dccChatConnectionSuccess() ) );
@@ -276,16 +276,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
     QTextStream stream(m_dccSocket);
     // init stream props
     stream.setCodec(QTextCodec::codecForName(m_encoding.isEmpty() ? IRCCharsets::encodingForLocale().ascii() : m_encoding.ascii()));
-    //stream.setEncoding(QTextStream::Locale);
 
-/*
-      QString codecName=identity->getCodec();
-      // convert encoded data to IRC ascii only when we don't have the same codec locally
-      if(QString(QTextCodec::codecForLocale()->name()).lower()!=codecName.lower())
-      {
-        stream.setCodec(QTextCodec::codecForName(codecName.ascii()));
-      }
-*/
     for(unsigned int index=0;index<lines.count();index++)
     {
       QString line(lines[index]);
@@ -326,6 +317,7 @@ void DccChat::heardPartner()
   connect( m_dccSocket, SIGNAL( closed() ),        this, SLOT( socketClosed() )       );
   connect( m_dccSocket, SIGNAL( gotError( int ) ), this, SLOT( dccChatBroken( int ) ) );
   
+  // the listen socket isn't needed anymore
   m_listenSocket->close();
   m_listenSocket = 0;
     
