@@ -61,7 +61,7 @@
 #include "emoticon.h"
 #include "notificationhandler.h"
 
-IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
+IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
 {
   m_copyUrlMenu = false;
   m_resetScrollbar = true;
