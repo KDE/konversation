@@ -34,6 +34,8 @@ class PrefsPageGeneralSettings : public PrefsPage
 
   protected slots:
     void commandCharChanged(const QString& newChar);
+    void suffixStartChanged(const QString& newSuffix);
+    void suffixMiddleChanged(const QString& newSuffix);
     void autoReconnectChanged(int state);
     void autoRejoinChanged(int state);
     void blinkingTabsChanged(int state);

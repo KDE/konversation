@@ -15,6 +15,7 @@
 */
 
 #include <qlayout.h>
+#include <qvbox.h>
 #include <qhbox.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
@@ -31,6 +32,20 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
 
   QLabel* commandCharLabel=new QLabel(i18n("Command Char:"),parentFrame);
   KLineEdit* commandCharInput=new KLineEdit(preferences->getCommandChar(),parentFrame);
+  commandCharInput->setMaxLength(1);
+
+  QVBox* suffixBox=new QVBox(parentFrame);
+  QLabel* suffixLabel=new QLabel(i18n("Characters to add on nick completion:"),suffixBox);
+
+  QHBox* suffixEditBox=new QHBox(suffixBox);
+  suffixEditBox->setSpacing(spacingHint());
+  new QLabel(i18n("at start of line:"),suffixEditBox);
+  KLineEdit* suffixStartInput=new KLineEdit(preferences->getNickCompleteSuffixStart(),suffixEditBox);
+
+  QLabel* middleLabel=new QLabel(i18n("Elsewhere:"),suffixEditBox);
+  middleLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  KLineEdit* suffixMiddleInput=new KLineEdit(preferences->getNickCompleteSuffixMiddle(),suffixEditBox);
+
   QCheckBox* autoReconnectCheck=new QCheckBox(i18n("Auto Reconnect"),parentFrame,"auto_reconnect_check");
   QCheckBox* autoRejoinCheck=new QCheckBox(i18n("Auto Rejoin"),parentFrame,"auto_rejoin_check");
   QCheckBox* blinkingTabsCheck=new QCheckBox(i18n("Blinking Tabs"),parentFrame,"blinking_tabs_check");
@@ -46,7 +61,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   int row=0;
   generalSettingsLayout->addWidget(commandCharLabel,row,0);
   generalSettingsLayout->addWidget(commandCharInput,row,1);
-
+  row++;
+  generalSettingsLayout->addMultiCellWidget(suffixBox,row,row,0,1);
   row++;
   generalSettingsLayout->addMultiCellWidget(autoReconnectCheck,row,row,0,1);
   row++;
@@ -60,6 +76,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   generalSettingsLayout->setRowStretch(row,10);
 
   connect(commandCharInput,SIGNAL (textChanged(const QString&)),this,SLOT (commandCharChanged(const QString&)) );
+  connect(suffixStartInput,SIGNAL (textChanged(const QString&)),this,SLOT (suffixStartChanged(const QString&)) );
+  connect(suffixMiddleInput,SIGNAL (textChanged(const QString&)),this,SLOT (suffixMiddleChanged(const QString&)) );
   connect(autoReconnectCheck,SIGNAL (stateChanged(int)),this,SLOT (autoReconnectChanged(int)) );
   connect(autoRejoinCheck,SIGNAL (stateChanged(int)),this,SLOT (autoRejoinChanged(int)) );
   connect(blinkingTabsCheck,SIGNAL (stateChanged(int)),this,SLOT (blinkingTabsChanged(int)) );
@@ -73,6 +91,16 @@ PrefsPageGeneralSettings::~PrefsPageGeneralSettings()
 void PrefsPageGeneralSettings::commandCharChanged(const QString& newChar)
 {
   preferences->setCommandChar(newChar);
+}
+
+void PrefsPageGeneralSettings::suffixStartChanged(const QString& newSuffix)
+{
+  preferences->setNickCompleteSuffixStart(newSuffix);
+}
+
+void PrefsPageGeneralSettings::suffixMiddleChanged(const QString& newSuffix)
+{
+  preferences->setNickCompleteSuffixMiddle(newSuffix);
 }
 
 void PrefsPageGeneralSettings::autoReconnectChanged(int state)

@@ -10,4 +10,6 @@ nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  d
 
 :nifelan!~muehltom@194-208-040-061.TELE.NET INVITE Eisfuchs :#pantherchatquiz
 Nick Complete Suffixes in Preferences Dialog
-Cmdchar(s) in Pereferences Dialog
+
+Consistency check in Preferences:
+- Command Char must be present
