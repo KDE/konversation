@@ -1051,7 +1051,7 @@ namespace Konversation {
               break;
             }
           }
-          if (validGroup and splitted.count() > 1)
+          if (validGroup && splitted.count() > 1)
           {
             QString option = splitted[1];
             QMap<QString,QString> options = config->entryMap(group);
