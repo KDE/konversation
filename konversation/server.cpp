@@ -869,7 +869,8 @@ void Server::notifyTimeout()
   {
     // But only if there actually are nicks in the notify list
     QString list=getNotifyString();
-    if(!list.isEmpty())
+    kdDebug() << "List is " << list << endl;
+    if(list != QString::null)
     {
       queue("ISON "+list);
       // remember that we already sent out ISON
@@ -2147,7 +2148,10 @@ void Server::removeChannelNick(const QString&, const QString&) { }
 #endif
 
 QString Server::getNotifyString() {
-  return KonversationApplication::preferences.getNotifyString() +" " + Konversation::Addressbook::self()->allContactsNicks().join(" ");
+  if( KonversationApplication::preferences.getNotifyString() != QString::null ) 
+    return KonversationApplication::preferences.getNotifyString() +" " + Konversation::Addressbook::self()->allContactsNicks().join(" ");
+  else
+    return Konversation::Addressbook::self()->allContactsNicks().join(" ");
 }
 
 // Remove channel from the joined list.
