@@ -16,6 +16,9 @@ KonvDCOP::KonvDCOP()
       : DCOPObject("Konversation"),
         QObject(0,"Konversation")
 {
+  // reset hook counter
+  hookId=0;
+
   if(!kapp->dcopClient()->isRegistered())
   {
     kapp->dcopClient()->registerAs("konversation");
@@ -62,17 +65,43 @@ void KonvDCOP::error(const QString& string)
  type when matching code is done.
 */
 
-void KonvDCOP::registerEventHook (const QString &type, const QString &criteria, const QString &app, const QString &object, const QString &signal)
+int KonvDCOP::registerEventHook(const QString& type,
+                                const QString& criteria,
+                                const QString& app,
+                                const QString& object,
+                                const QString& signal)
 {
-  // append
-  registered_events.append(new IRCEvent(type, criteria, app, object, signal));
+  hookId++; // FIXME: remember that this could wrap around sometimes! Find a better way!
+
+  // add new event to registered list of event hooks. the id is needed to help unregistering
+  registered_events.append(new IRCEvent(type,criteria,app,object,signal,hookId));
+
+  return hookId;
 }
 
-void KonvDCOP::unregisterEventHook (int /*id*/)
+void KonvDCOP::unregisterEventHook(int hookId)
 {
+  // go through the list of registered events
+  for(unsigned int index=0;index<registered_events.count();index++)
+  {
+    // if we found the id we were looking for ...
+    if(registered_events.at(index)->hookId()==hookId)
+    {
+      // ... remove it and return
+      registered_events.remove(index);
+      kdDebug() << "KonvDCOP::unregisterEventHook(): hook id " << hookId << " removed. Remaining hooks: " << registered_events.count() << endl;
+      return;
+    }
+  } // endfor
+  kdDebug() << "KonvDCOP::unregisterEventHook(): hook id " << hookId << " not found!" << endl;
 }
 
-IRCEvent::IRCEvent (const QString &a_type, const QString &a_criteria, const QString &a_app, const QString &a_obj, const QString &a_signal)
+IRCEvent::IRCEvent (const QString &a_type,
+                    const QString &a_criteria,
+                    const QString &a_app,
+                    const QString &a_obj,
+                    const QString &a_signal,
+                    int a_id)
 {
   QString l_type = a_type.lower();
 
@@ -110,13 +139,20 @@ IRCEvent::IRCEvent (const QString &a_type, const QString &a_criteria, const QStr
   objectId = a_obj;
   criteria = a_criteria;
   signal = a_signal;
+  id = a_id;
 /*
   kdDebug() << "IRCEvent(): type=" << type  << endl
             << "            criteria=" << criteria << endl
             << "            app=" << a_app << endl
             << "            object=" << a_obj << endl
-            << "            signal=" << a_signal << endl;
+            << "            signal=" << a_signal << endl
+            << "            id=" << id << endl;
 */
+}
+
+int IRCEvent::hookId()
+{
+  return id;
 }
 
 bool KonvDCOP::isIgnore (int serverid, const QString &hostmask, Ignore::Type type)

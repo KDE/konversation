@@ -13,19 +13,19 @@ class KonvDCOP : public QObject, virtual public KonvIface
   Q_OBJECT
 
   public:
-  KonvDCOP ();
+    KonvDCOP();
     QPtrList<IRCEvent> registered_events;
 
-  bool isIgnore (int serverid, const QString &hostmask, Ignore::Type type);
-  bool isIgnore (int serverid, const QString &hostmask, int type);
-  QString getNickname (int serverid);
+    bool isIgnore (int serverid, const QString &hostmask, Ignore::Type type);
+    bool isIgnore (int serverid, const QString &hostmask, int type);
+    QString getNickname (int serverid);
 
   signals:
     void dcopSay(const QString& server,const QString& target,const QString& command);
     void dcopInfo(const QString& string);
 
   public slots:
-    void registerEventHook (const QString &type, const QString &criteria, const QString &app, const QString &object, const QString &signal);
+    int registerEventHook(const QString& type,const QString& criteria,const QString& app,const QString& object,const QString& signal);
     void unregisterEventHook (int id);
 
     void raw(const QString& server,const QString& command);
@@ -33,6 +33,9 @@ class KonvDCOP : public QObject, virtual public KonvIface
     void info(const QString& string);
     void debug(const QString& string);
     void error(const QString& string);
+
+  protected:
+    int hookId;
 };
 
 class KonvIdentDCOP : public QObject, virtual public KonvIdentityIface
@@ -40,7 +43,7 @@ class KonvIdentDCOP : public QObject, virtual public KonvIdentityIface
   Q_OBJECT
 
   public:
-  KonvIdentDCOP ();
+  KonvIdentDCOP();
 
   void setrealName(const QString &identity, const QString& name);
   QString getrealName(const QString &identity);
@@ -70,7 +73,7 @@ class KonvIdentDCOP : public QObject, virtual public KonvIdentityIface
   QString getAwayMessage(const QString &identity);
   void setReturnMessage(const QString &identity, const QString& message);
   QString getReturnMessage(const QString &identity);
-  
+
 };
 
 class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
@@ -114,7 +117,7 @@ class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
   void setBringToFront(bool state);
   bool getBringToFront();
   void setCloseButtonsOnTabs(bool state);
-  bool getCloseButtonsOnTabs();  
+  bool getCloseButtonsOnTabs();
   int getNotifyDelay();
   void setNotifyDelay(int delay);
   bool getUseNotify();
