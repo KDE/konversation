@@ -7,25 +7,27 @@
 
 /*
   prefspagebehaviour.h  -  The preferences panel that holds the behaviour settings
-  copyright: (C) 2002 by Dario Abatianni
-             (C) 2004 by Peter Simonsson
+  copyright: (C) 2005 by Peter Simonsson
 */
-#ifndef PREFSPAGECHATWINBEHAVIOR_H
-#define PREFSPAGECHATWINBEHAVIOR_H
+#ifndef PREFSPAGENICKLISTBEHAVIOR_H
+#define PREFSPAGENICKLISTBEHAVIOR_H
 
-#include "chatwindowbehaviour_preferences.h"
+#include <nicklistbehavior_preferences.h>
 
-class QWidget;
 class Preferences;
 
-class PrefsPageChatWinBehavior : public ChatwindowBehaviour_Config
+class PrefsPageNicklistBehavior : public NicklistBehavior_Config
 {
   Q_OBJECT
   public:
-    PrefsPageChatWinBehavior(QWidget* newParent, Preferences* newPreferences);
-    ~PrefsPageChatWinBehavior();
+    PrefsPageNicklistBehavior(QWidget* newParent, Preferences* newPreferences);
+
   public slots:
     void applyPreferences();
+
+  protected slots:
+    void moveUp();
+    void moveDown();
 
   private:
     Preferences* preferences;

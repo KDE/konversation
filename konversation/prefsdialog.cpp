@@ -31,6 +31,7 @@
 #include "prefspagecolorsappearance.h"
 #include "prefspageconnectionbehavior.h"
 #include "prefspagefontsappearance.h"
+#include "prefspagenicklistbehavior.h"
 
 PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
              KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
@@ -39,11 +40,11 @@ PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
 {
   setPreferences(preferences);
   setShowIconsInTreeList(true);
-  
+
   lastPane = 0;
 
   setFolderIcon(QStringList::split(',', i18n("Appearance")), SmallIcon("looknfeel"));
-  chatWinAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("window_new"));
+  chatWinAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("view_text"));
   QWidget* fontsAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Fonts")), QString::null, SmallIcon("fonts"));
   QWidget* colorsAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Colors")),
     QString::null, SmallIcon("colorize"));
@@ -55,7 +56,8 @@ PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
     QString::null,SmallIcon("exec"));
   QWidget* connectionBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Connection")),
     QString::null,SmallIcon("connect_creating"));
-  QWidget* chatWinBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Chat Window")),QString::null, SmallIcon("window_new"));
+  QWidget* chatWinBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Chat Window")),QString::null, SmallIcon("view_text"));
+  QWidget* nicklistBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Nickname List")),QString::null, SmallIcon("player_playlist"));
   QWidget* tabBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Tab Bar")),
     QString::null, SmallIcon("tab_new"));
   QWidget* ignorePane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Ignored Nicknames")),
@@ -90,6 +92,7 @@ PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
   PrefsPageBehaviour* generalBehaviorPage = new PrefsPageBehaviour(generalBehaviorPane, preferences);
   PrefsPageConnectionBehavior* connectionBehaviorPage = new PrefsPageConnectionBehavior(connectionBehaviorPane, preferences);
   PrefsPageChatWinBehavior* chatWinBehaviorPage = new PrefsPageChatWinBehavior(chatWinBehaviorPane, preferences);
+  PrefsPageNicklistBehavior* nicklistBehaviorPage = new PrefsPageNicklistBehavior(nicklistBehaviorPane, preferences);
   tabBehaviorPage = new PrefsPageTabBehavior(tabBehaviorPane, preferences);
   ignorePage = new PrefsPageIgnore(ignorePane, preferences);
   aliasesPage = new PrefsPageAliases(aliasesPane, preferences);
@@ -121,6 +124,7 @@ PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
   connect(this, SIGNAL(applyPreferences()), generalBehaviorPage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), connectionBehaviorPage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), chatWinBehaviorPage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), nicklistBehaviorPage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), tabBehaviorPage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), buttonsPage, SLOT(applyPreferences()));
 
