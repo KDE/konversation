@@ -2793,7 +2793,7 @@ void Server::sendToAllChannels(const QString &text)
 void Server::invitation(const QString& nick,const QString& channel)
 {
   if(KonversationApplication::preferences.getAutojoinOnInvite() &&
-     KMessageBox::questionYesNo(static_cast<QWidget*>(0),
+     KMessageBox::questionYesNo(mainWindow,
                                 i18n("You were invited by %1 to join channel %2. "
                                      "Do you accept the invitation?").arg(nick).arg(channel),
                                 i18n("Invitation"),
