@@ -407,9 +407,9 @@ void IRCView::append(const QString& nick,const QString& message)
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
-    line += "<p><font color=\"#" + channelColor + "\"><b>&lt;%2&gt;</b> %1" + PDF + " %3</font></p>\n";
+    line += "<p><font color=\"#" + channelColor + "\"><b>&lt;</b>%2<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
   } else {
-    line = "<p><font color=\"#" + channelColor + "\">%1 <b>&lt;%2&gt;</b> %3</font></p>\n";
+    line = "<p><font color=\"#" + channelColor + "\">%1 <b>&lt;</b>%2<b>&gt;</b> %3</font></p>\n";
   }
 
   line = line.arg(timeStamp(), nick, filter(message,channelColor,nick,true));
@@ -441,9 +441,9 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
-    line += "<p><font color=\"#" + queryColor + "\"><b>*%2*</b> %1" + PDF + " %3</font></p>\n";
+    line += "<p><font color=\"#" + queryColor + "\"><b>*</b>%2<b>*</b> %1" + PDF + " %3</font></p>\n";
   } else {
-    line = "<p><font color=\"#" + queryColor + "\">%1 <b>*%2*</b> %3</font></p>\n";
+    line = "<p><font color=\"#" + queryColor + "\">%1 <b>*</b>%2<b>*</b> %3</font></p>\n";
   }
 
   line = line.arg(timeStamp(), nick, filter(message,queryColor,nick,true));
@@ -489,9 +489,9 @@ void IRCView::appendServerMessage(const QString& type,const QString& message)
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
-    line += "<p><font color=\"#" + m_serverColor + "\"" + fixed + "><b>[%2]</b> %1" + PDF + " %3</font></p>\n";
+    line += "<p><font color=\"#" + m_serverColor + "\"" + fixed + "><b>[</b>%2<b>]</b> %1" + PDF + " %3</font></p>\n";
   } else {
-    line = "<p><font color=\"#" + m_serverColor + "\"" + fixed + ">%1 <b>[%2]</b> %3</font></p>\n";
+    line = "<p><font color=\"#" + m_serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font></p>\n";
   }
 
   line = line.arg(timeStamp(), type, filter(message,m_serverColor));
