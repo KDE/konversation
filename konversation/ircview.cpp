@@ -37,6 +37,7 @@
 #include <kbookmarkmanager.h>
 #include <kdeversion.h>
 #include <kstandarddirs.h>
+#include <krun.h>
 #include <kprocess.h>
 #include <kshell.h>
 
@@ -187,18 +188,26 @@ void IRCView::urlClickSlot(const QString &url)
 {
   if (!url.isEmpty())
   {
-    QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
-    cmd.replace("%u", url);
-    KProcess *proc = new KProcess;
-    QStringList cmdAndArgs = KShell::splitArgs(cmd);
-    kdDebug() << "IRCView::urlClickSlot(): cmd = " << cmdAndArgs << endl;
-    *proc << cmdAndArgs;
-//    This code will also work, but starts an extra shell process.
-//    kdDebug() << "IRCView::urlClickSlot(): cmd = " << cmd << endl;
-//    *proc << cmd;
-//    proc->setUseShell(true);
-    proc->start(KProcess::DontCare);
-    delete proc;
+    // Always use KDE default mailer.
+    if (url.startsWith("mailto:", false))
+    {
+      new KRun(url);
+    }
+    else
+    {
+      QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
+      cmd.replace("%u", url);
+      KProcess *proc = new KProcess;
+      QStringList cmdAndArgs = KShell::splitArgs(cmd);
+      kdDebug() << "IRCView::urlClickSlot(): cmd = " << cmdAndArgs << endl;
+      *proc << cmdAndArgs;
+//      This code will also work, but starts an extra shell process.
+//      kdDebug() << "IRCView::urlClickSlot(): cmd = " << cmd << endl;
+//      *proc << cmd;
+//      proc->setUseShell(true);
+      proc->start(KProcess::DontCare);
+      delete proc;
+    }
   }
 }
 

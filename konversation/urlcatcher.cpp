@@ -93,11 +93,13 @@ void UrlCatcher::addUrl(const QString& who,const QString& url)
 
 void UrlCatcher::openUrl(QListViewItem* item)
 {
-  if (KonversationApplication::preferences.getWebBrowserUseKdeDefault())
-    new KRun(item->text(1));
+  QString url = item->text(1);
+  if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.startsWith("mailto:", false) )
+  {
+    new KRun(url);
+  }
   else
   {
-    QString url = item->text(1);
     QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
     cmd.replace("%u", url);
     KProcess *proc = new KProcess;
