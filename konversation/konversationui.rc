@@ -13,6 +13,7 @@
       <Text>&amp;Insert</Text>
       <Action name="irc_colors" />
       <Action name="insert_remember_line" />
+      <Action name="insert_character" />
     </Menu>
     <Menu name="windows">
       <Text>&amp;Window</Text>
