@@ -25,7 +25,7 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
                   PrefsPage(newParent,newPreferences)
 {
   QStringList dialogDefinitions;
-  flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,QuitServerTab,ChannelListNoServerSelected,HideMenuBarWarning,ChannelListWarning,LargePaste,RemoveDCCReceivedFile";
+  flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,QuitServerTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste";
 
   dialogDefinitions.append(i18n("Automatically join channel on invite"));
   dialogDefinitions.append(i18n("Notice that saving logfiles will save whole file"));
@@ -34,10 +34,10 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
   dialogDefinitions.append(i18n("Question on what to do on DCC resume"));
   dialogDefinitions.append(i18n("Quit server when you hit the tab's close button"));
   dialogDefinitions.append(i18n("The channel list can only be opened from server-aware tabs"));
+  dialogDefinitions.append(i18n("Warning on deleting file received on DCC"));
   dialogDefinitions.append(i18n("Warning on hiding the main window menu"));
   dialogDefinitions.append(i18n("Warning on high traffic with channel list"));
   dialogDefinitions.append(i18n("Warning on pasting large portions of text"));
-  dialogDefinitions.append(i18n("Warning on deleting file received on DCC"));
 
   QVBoxLayout* dialogsLayout=new QVBoxLayout(parentFrame,marginHint(),spacingHint(),"dialogs_layout");
 

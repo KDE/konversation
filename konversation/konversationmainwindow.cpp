@@ -1053,7 +1053,7 @@ bool KonversationMainWindow::queryClose()
       i18n( "<p>Closing the main window will keep Konversation running in the system tray. "
             "Use <b>Quit</b> from the <b>Konversation</b> menu to quit the application.</p>"
             "<p><center><img source=\"systray_shot\"></center></p>" ),
-      i18n( "Docking in System Tray" ),  "HideMenuBarWarning" );
+      i18n( "Docking in System Tray" ),  "HideOnCloseInfo" );
       hide();
 
       return false;
