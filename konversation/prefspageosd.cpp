@@ -105,6 +105,7 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   QLabel *osdScreenLabel = new QLabel(i18n("&Screen:"), screenBox);
   osdScreenCombo = new KComboBox(screenBox);
   osdScreenLabel->setBuddy(osdScreenCombo);
+  osdScreenCombo->setCurrentText(QString::number(preferences->getOSDScreen()));
   
   const int numScreens = QApplication::desktop()->numScreens();
     for( int i = 0; i < numScreens; i++ )
