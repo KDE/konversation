@@ -75,7 +75,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   bringToFrontCheck->setChecked(preferences->getBringToFront());
   fixedMOTDCheck->setChecked(preferences->getFixedMOTD());
   beepCheck->setChecked(preferences->getBeep());
-  beepCheck->setChecked(preferences->getRawLog());
+  rawLogCheck->setChecked(preferences->getRawLog());
 
   QHBox* generalSpacer=new QHBox(parentFrame);
 
