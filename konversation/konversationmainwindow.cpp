@@ -34,6 +34,8 @@
 #ifdef USE_KNOTIFY
 #include <knotifydialog.h>
 #endif
+#else
+#define KDE_IS_VERSION(a,b,c) (0)
 #endif
 
 #include "ledtabwidget.h"
