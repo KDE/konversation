@@ -176,6 +176,14 @@ void DccTransfer::startSend()
   dccSocket=new KExtendedSocket();
   // Listen on all available interfaces
   dccSocket->setHost("0.0.0.0");
+
+  /*
+reset()
+setPort(x)
+listen()
+until port found
+*/
+
   dccSocket->setSocketFlags(KExtendedSocket::passiveSocket |
                             KExtendedSocket::inetSocket |
                             KExtendedSocket::streamSocket);
