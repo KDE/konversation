@@ -1,22 +1,59 @@
 #!/usr/bin/env perl
-#
-# Copyright (C) 2004 by İsmail Dönmez
-# Licensed under GPL v2 or later at your option
 
 use warnings;
-use strict;
+use SOAP::Lite;
+use Getopt::Long;
+ 
+my $PORT=shift;
+my $SERVER=shift;
+my $TARGET=shift;
+my $key=`cat ~/.googlekey`;
+my $googleSearch;
+my $result;
+my $print;
+my $spell;
 
-my $PORT= shift;
-shift;
-shift;
-my $url="http://www.google.com/search?q=";
+GetOptions('search=s' => \$search,
+	   'spell=s' => \$spellcheck,
+	   'browser' => \$browser);
 
-if(!@ARGV)
+if(!$browser && !$search && !$spellcheck && !@ARGV)
 {
-    exec 'dcop', $PORT, 'Konversation', 'error', 'Please provide a query, e.g /google linux';
+    $info = "/google (-s) <keyword> : Search for keyword at Google, /google -s|--spell <word> : Spellcheck word using Google, /google -b <keyword> : Show results in konqueror";
+    exec 'dcop', $PORT, 'Konversation', 'info', $info;
 }
-else
+elsif($browser)
 {
-    $url="$url@ARGV";
+    $query = join(" ",@ARGV);
+    $query =~ s/\&/\%26/g;
+    $url="http://www.google.com/search?q=$query";
     exec 'kfmclient','openURL',$url;
+}
+elsif($search || !$spellcheck)
+{
+    $search = join(" ",$search,@ARGV);
+    
+    system 'dcop', $PORT, 'Konversation', 'say', $SERVER, $TARGET, "Searching Google for %B$search%B ...";
+    
+    $googleSearch = SOAP::Lite->service("http://api.google.com/GoogleSearch.wsdl"); 
+    $result = $googleSearch->doGoogleSearch($key, $search, 0, 10, "false", "", "false", "", "UTF-8", "UTF-8"); 
+
+    system 'dcop', $PORT, 'Konversation', 'say', $SERVER, $TARGET, "Results %B1-10%B of about %B$result->{estimatedTotalResultsCount}%B for %B$search%B (%B$result->{searchTime}%B seconds)";
+    
+    foreach $result (@{$result->{resultElements}})
+    {
+	$print = $result->{URL}." (".$result->{title}.")";
+	$print =~ s/\<b\>/\%B/g;
+	$print =~ s/\<\/b\>/\%B/g;
+	system 'dcop', $PORT, 'Konversation', 'say', $SERVER, $TARGET, $print;
+    }
+}
+elsif($spellcheck)
+{
+    $spellcheck = join(" ",$spellcheck,@ARGV);
+    system 'dcop', $PORT, 'Konversation', 'say', $SERVER, $TARGET,"Spellchecking %B$spellcheck%B ...";
+    $googleSearch = SOAP::Lite->service("http://api.google.com/GoogleSearch.wsdl"); 
+    $spell = $googleSearch->doSpellingSuggestion($key, $spellcheck);
+    $spell = "Spelling suggestion: ".$spell;
+    system 'dcop', $PORT, 'Konversation', 'say', $SERVER, $TARGET,$spell;
 }
