@@ -47,47 +47,53 @@ SSLSocket::~SSLSocket()
 
     delete kssl;
     delete cc;
+    delete sslInfoDlg;
 }
 
 Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
 {
+  kdDebug() << "SSLSocket::writeBlock : " << data << endl;
   return kssl->write( data,len );
 }
 
 Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
 {
+  kdDebug() << "SSLSocket::readBlock : " << QCString(data) << endl;
   return kssl->read( data, maxlen );
 }
 
 void SSLSocket::slotConnected()
 {
-	if( KSSL::doesSSLWork() )
+  
+  if( KSSL::doesSSLWork() )
+    {
+      kdDebug() << k_funcinfo << "Trying SSL connection..." << endl;
+      if( !kssl )
 	{
-		kdDebug() << k_funcinfo << "Trying SSL connection..." << endl;
-		if( !kssl )
-		{
-			kssl = new KSSL();
-			kssl->connect( socketDevice()->socket() );
-		}
-		else
-		{
-			kssl->reInitialize();
-		}
-
-		if( verifyCertificate() != 1 )
-		{
-		  kdDebug() << "Closing socket!" << endl;
-                    close();
-		}
+	  kssl = new KSSL();
+	  if( kssl->connect( socketDevice()->socket() ) )
+	    {
+	      emit sslInitDone();
+	    }
 	}
-	else
+      else
 	{
-		kdError() << k_funcinfo << "SSL not functional!" << endl;
-
-		kssl = 0L;
-		emit sslFailure();
-		close();
+	  kssl->reInitialize();
 	}
+
+      if( verifyCertificate() != 1 )
+	{
+	  kdDebug() << "Closing socket!" << endl;
+	  close();
+	}
+    }
+  else
+    {
+      kdError() << k_funcinfo << "SSL not functional!" << endl;
+      kssl = 0L;
+      emit sslFailure();
+      close();
+    }
 }
 
 void SSLSocket::showInfoDialog()
@@ -106,7 +112,7 @@ void SSLSocket::showSSLInfoDialog()
     // Copyright ( C ) David Faure <faure@kde.org>
     // Copyright ( C ) 2001 George Staikos <staikos@kde.org>
 
-    KSSLInfoDlg *sslInfoDlg = new KSSLInfoDlg(true, 0L, 0L, true);
+  if( !sslInfoDlg ) sslInfoDlg = new KSSLInfoDlg(true, 0L, 0L, true);
     KSSLCertificate *sslCert = KSSLCertificate::fromString(m_sslPeerCertificate.local8Bit());
 
     if ( sslCert ) {
@@ -136,7 +142,6 @@ void SSLSocket::showSSLInfoDialog()
             );
 
         sslInfoDlg->exec();
-	//        delete sslInfoDlg;
     }
     else
         KMessageBox::information(0L,

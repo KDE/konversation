@@ -25,6 +25,7 @@ using namespace KNetwork;
 
 class KSSL;
 class KSSLCertificateCache;
+class KSSLInfoDlg;
 
 class SSLSocket : public KStreamSocket
 {
@@ -41,6 +42,7 @@ class SSLSocket : public KStreamSocket
 
 	signals:
 		void sslFailure();
+		void sslInitDone();
 
 	private slots:
 		void slotConnected();
@@ -57,8 +59,9 @@ class SSLSocket : public KStreamSocket
 		QString m_sslPeerChain;
 		QString m_sslCertErrors;
 
-		KSSLCertificateCache* cc;
 		KSSL* kssl;
+		KSSLCertificateCache* cc;
+		KSSLInfoDlg *sslInfoDlg;
 
 };
 
