@@ -56,6 +56,20 @@ void LedTabWidget::addTab(ChatWindow* child,const QString& label,int color,bool 
 
   QTabWidget::insertTab(child,tab,index);
 
+  Server *server= child->getServer();
+  if(server) {
+    
+    QString tooltip = server->getServerGroup();
+    if(tooltip.lower() != server->getServerName().lower()) {
+      if( !tooltip.isEmpty() )
+        tooltip += " - ";
+      tooltip += server->getServerName();
+    }
+    if(!tooltip.isEmpty())
+	    setTabToolTip(child, tooltip);
+    
+  } 
+
   // This signal will be emitted when the tab is blinking
   connect(tab,SIGNAL(repaintTab(LedTab*)),tabBar(),SLOT(repaintLED(LedTab*)));
   // This signal will be emitted when the chat window changes its name
