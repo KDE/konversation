@@ -60,6 +60,8 @@ class StatusPanel : public ChatWindow
     void updateFonts();
     virtual void indicateAway(bool show);
 
+    virtual void appendInputText(const QString&);
+    
   protected slots:
     void sendFileMenu();
     void statusTextEntered();

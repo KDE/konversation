@@ -250,5 +250,9 @@ void StatusPanel::changeNickname(const QString& newNickname)
   server->queue("NICK "+newNickname);
 }
 
+void StatusPanel::appendInputText(const QString& text)
+{
+  statusInput->setText(statusInput->text() + text);
+}
 
 #include "statuspanel.moc"
