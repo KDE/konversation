@@ -62,7 +62,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   ignoreDialog=0;
   notifyDialog=0;
   buttonsDialog=0;
-  colorConfigurationDialog=0;
   nicksOnlineWindow=0;
 
   viewContainer=new LedTabWidget(this,"main_window_tab_widget");
@@ -84,7 +83,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Notify List"),0,0,this,SLOT (openNotify()),actionCollection(),"open_notify_window");
   new KAction(i18n("Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
   new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
-  new KAction(i18n("Configure Colors"), 0, 0, this, SLOT(openColorConfiguration()), actionCollection(), "open_colors_window");
   new KAction(i18n("Channel list"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
   new KAction(i18n("Open a Konsole"), 0, 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
   new KAction(i18n("Open URL catcher"), 0, 0, this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
@@ -683,56 +681,6 @@ void KonversationMainWindow::notifyAction(const QString& serverName,const QStrin
   KonversationApplication* konv_app=static_cast<KonversationApplication*>(KApplication::kApplication());
   Server* server=konv_app->getServerByName(serverName);
   server->notifyAction(nick);
-}
-
-void KonversationMainWindow::openColorConfiguration()
-{
-  colorConfigurationDialog = new ColorConfiguration(KonversationApplication::preferences.getActionMessageColor(),
-                                                    KonversationApplication::preferences.getBacklogMessageColor(),
-                                                    KonversationApplication::preferences.getChannelMessageColor(),
-                                                    KonversationApplication::preferences.getCommandMessageColor(),
-                                                    KonversationApplication::preferences.getLinkMessageColor(),
-                                                    KonversationApplication::preferences.getQueryMessageColor(),
-                                                    KonversationApplication::preferences.getServerMessageColor(),
-                                                    KonversationApplication::preferences.getTimeColor(),
-                                                    KonversationApplication::preferences.getTextViewBackground(),
-                                                    KonversationApplication::preferences.getColorConfigurationSize());
-
-  connect(colorConfigurationDialog, SIGNAL(saveFontColorSettings(QString, QString, QString, QString, QString, QString, QString, QString, QString)),
-          this, SLOT(applyColorConfiguration(QString, QString, QString, QString, QString, QString, QString, QString, QString)));
-  connect(colorConfigurationDialog, SIGNAL(closeFontColorConfiguration(QSize)),
-          this, SLOT(closeColorConfiguration(QSize)));
-
-  colorConfigurationDialog->show();
-}
-
-void KonversationMainWindow::applyColorConfiguration(QString actionTextColor, QString backlogTextColor, QString channelTextColor,
-                                           QString commandTextColor, QString linkTextColor, QString queryTextColor,
-                                           QString serverTextColor, QString timeColor, QString backgroundColor)
-{
-  KonversationApplication::preferences.setActionMessageColor(actionTextColor);
-  KonversationApplication::preferences.setBacklogMessageColor(backlogTextColor);
-  KonversationApplication::preferences.setChannelMessageColor(channelTextColor);
-  KonversationApplication::preferences.setCommandMessageColor(commandTextColor);
-  KonversationApplication::preferences.setLinkMessageColor(linkTextColor);
-  KonversationApplication::preferences.setQueryMessageColor(queryTextColor);
-  KonversationApplication::preferences.setServerMessageColor(serverTextColor);
-  KonversationApplication::preferences.setTimeColor(timeColor);
-  KonversationApplication::preferences.setTextViewBackground(backgroundColor);
-
-  emit prefsChanged();
-}
-
-void KonversationMainWindow::closeColorConfiguration(QSize windowSize)
-{
-  KonversationApplication::preferences.setColorConfigurationSize(windowSize);
-
-  disconnect(colorConfigurationDialog, SIGNAL(saveFontColorSettings(QString, QString, QString, QString, QString, QString, QString, QString, QString)),
-              this, SLOT(applyColorConfiguration(QString, QString, QString, QString, QString, QString, QString, QString, QString)));
-  disconnect(colorConfigurationDialog, SIGNAL(closeFontColorConfiguration(QSize)),
-             this, SLOT(closeColorConfiguration(QSize)));
-  delete colorConfigurationDialog;
-  colorConfigurationDialog=0;
 }
 
 void KonversationMainWindow::channelPrefsChanged()

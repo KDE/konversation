@@ -244,7 +244,6 @@ void KonversationApplication::readOptions()
   preferences.setNotifySize(config->readSizeEntry("NotifyGeometry"));
   preferences.setNicksOnlineSize(config->readSizeEntry("NicksOnlineGeometry"));
   preferences.setNicknameSize(config->readSizeEntry("NicknameGeometry"));
-  preferences.setColorConfigurationSize(config->readSizeEntry("ColorConfigurationGeometry"));
 
   // Double click actions
   preferences.setChannelDoubleClickAction(config->readEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction()));
@@ -283,18 +282,9 @@ void KonversationApplication::readOptions()
   sizes.append(sizesString.section(',',1,1).toInt());
   preferences.setChannelSplitter(sizes);
 
-  // Colors
-  config->setGroup("Message Text Colors");
+  preferences.setBackgroundImageName(config->readEntry("BackgroundImage",preferences.getBackgroundImageName()));
 
-  preferences.setActionMessageColor(config->readEntry("ActionMessage", preferences.getActionMessageColor()));
-  preferences.setBacklogMessageColor(config->readEntry("BacklogMessage", preferences.getBacklogMessageColor()));
-  preferences.setChannelMessageColor(config->readEntry("ChannelMessage", preferences.getChannelMessageColor()));
-  preferences.setCommandMessageColor(config->readEntry("CommandMessage", preferences.getCommandMessageColor()));
-  preferences.setLinkMessageColor(config->readEntry("LinkMessage", preferences.getLinkMessageColor()));
-  preferences.setQueryMessageColor(config->readEntry("QueryMessage", preferences.getQueryMessageColor()));
-  preferences.setServerMessageColor(config->readEntry("ServerMessage", preferences.getServerMessageColor()));
-  preferences.setTimeColor(config->readEntry("Time", preferences.getTimeColor()));
-  preferences.setTextViewBackground(config->readEntry("TextViewBackground", preferences.getTextViewBackground()));
+  // Colors are now handled in preferences
 
   // Led Colors
   config->setGroup("Led Colors");
@@ -482,7 +472,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("NotifyGeometry",preferences.getNotifySize());
   config->writeEntry("NicksOnlineGeometry",preferences.getNicksOnlineSize());
   config->writeEntry("NicknameGeometry",preferences.getNicknameSize());
-  config->writeEntry("ColorConfigurationGeometry", preferences.getColorConfigurationSize());
 
   config->writeEntry("ServerWindowToolBarPos",preferences.mainWindowToolBarPos);
   config->writeEntry("ServerWindowToolBarStatus",preferences.mainWindowToolBarStatus);
@@ -521,18 +510,9 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   QString sizesString(QString::number(preferences.getChannelSplitter()[0])+","+QString::number(preferences.getChannelSplitter()[1]));
   config->writeEntry("ChannelSplitter",sizesString);
+  config->writeEntry("BackgroundImage",preferences.getBackgroundImageName());
 
-  config->setGroup("Message Text Colors");
-
-  config->writeEntry("ActionMessage",preferences.getActionMessageColor());
-  config->writeEntry("BacklogMessage",preferences.getBacklogMessageColor());
-  config->writeEntry("ChannelMessage",preferences.getChannelMessageColor());
-  config->writeEntry("CommandMessage",preferences.getCommandMessageColor());
-  config->writeEntry("LinkMessage",preferences.getLinkMessageColor());
-  config->writeEntry("QueryMessage",preferences.getQueryMessageColor());
-  config->writeEntry("ServerMessage",preferences.getServerMessageColor());
-  config->writeEntry("Time",preferences.getTimeColor());
-  config->writeEntry("TextViewBackground",preferences.getTextViewBackground());
+  // colors are now handled in preferences
 
   config->setGroup("Sort Nicknames");
   config->writeEntry("OperatorValue",preferences.getOpValue());

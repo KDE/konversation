@@ -87,12 +87,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   setServer(newServer);
   setFont(KonversationApplication::preferences.getTextFont());
 
-  QString bgColor=KonversationApplication::preferences.getTextViewBackground();
-  if(bgColor.isEmpty())
-  {
-    bgColor=palette().color(QPalette::Active,QColorGroup::Base).name().mid(1);
-    KonversationApplication::preferences.setTextViewBackground(bgColor);
-  }
+  QString bgColor=KonversationApplication::preferences.getColor("TextViewBackground");
   setViewBackground(bgColor,QString::null);
 
 #if QT_VERSION >= 0x030100
@@ -238,7 +233,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   replaceDecoration(filteredLine,'\x1f','u');
 
   // URL Catcher
-  QString linkMessageColor = KonversationApplication::preferences.getLinkMessageColor();
+  QString linkColor=KonversationApplication::preferences.getColor("LinkMessage");
 
   QRegExp pattern("((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
                   // IP Address
@@ -273,7 +268,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
     // Replace all spaces with %20 in href
     href.replace(QRegExp(" "),"%20");
     // Build rich text link
-    QString link("<font color=\"#"+linkMessageColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
+    QString link("<font color=\"#"+linkColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
 
     // replace found url with built link
     filteredLine.replace(pos,url.length(),link);
@@ -344,16 +339,15 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
 
 void IRCView::append(const QString& nick,const QString& message)
 {
-  QString channelMessageColor = KonversationApplication::preferences.getChannelMessageColor();
+  QString channelColor=KonversationApplication::preferences.getColor("ChannelMessage");
 
 #ifdef TABLE_VERSION
-  QString line=QString("<tr><td><font color=\"#"+channelMessageColor()+"\">%1:</font></td><td><font color=\"#"+channelMessageColor()+"\">%2</font></td></tr>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick));
+  QString line=QString("<tr><td><font color=\"#"+channelColor()+"\">%1:</font></td><td><font color=\"#"+channelColor()+"\">%2</font></td></tr>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick));
 #else
 #ifdef ADD_LINE_BREAKS
-  QString line=QString("<font color=\"#"+channelMessageColor+"\"><b>&lt;%1&gt;</b> %2</font><br>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick));
+  QString line=QString("<font color=\"#"+channelColor+"\"><b>&lt;%1&gt;</b> %2</font><br>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick));
 #else
-//  QString line=QString("<font color=\"#"+channelMessageColor+"\"><b>&lt;%1&gt;</b> %2</font>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
-  QString line=QString("<p><font color=\"#"+channelMessageColor+"\"><b>&lt;%1&gt;</b> %2</font></p>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
+  QString line=QString("<p><font color=\"#"+channelColor+"\"><b>&lt;%1&gt;</b> %2</font></p>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
 #endif
 #endif
 
@@ -364,16 +358,15 @@ void IRCView::append(const QString& nick,const QString& message)
 
 void IRCView::appendRaw(const QString& message)
 {
-  QString channelMessageColor = KonversationApplication::preferences.getChannelMessageColor();
+  QString channelColor=KonversationApplication::preferences.getColor("ChannelMessage");
 
 #ifdef TABLE_VERSION
-  QString line=QString("<tr><td colspan=2><font color=\"#"+channelMessageColor()+"\">"+message+"</font></td></tr>\n");
+  QString line=QString("<tr><td colspan=2><font color=\"#"+channelColor()+"\">"+message+"</font></td></tr>\n");
 #else
 #ifdef ADD_LINE_BREAKS
-  QString line=QString("<font color=\"#"+channelMessageColor+"\">"+message+"</font><br>\n");
+  QString line=QString("<font color=\"#"+channelColor+"\">"+message+"</font><br>\n");
 #else
-//  QString line=QString("<font color=\"#"+channelMessageColor+"\">"+message+"</font>\n");
-  QString line=QString("<p><font color=\"#"+channelMessageColor+"\">"+message+"</font></p>\n");
+  QString line=QString("<p><font color=\"#"+channelColor+"\">"+message+"</font></p>\n");
 #endif
 #endif
 
@@ -382,16 +375,15 @@ void IRCView::appendRaw(const QString& message)
 
 void IRCView::appendQuery(const QString& nick,const QString& message)
 {
-  QString queryMessageColor = KonversationApplication::preferences.getQueryMessageColor();
+  QString queryColor=KonversationApplication::preferences.getColor("QueryMessage");
 
 #ifdef TABLE_VERSION
-  QString line=QString("<tr><td><font color=\"#"+queryMessageColor+"\">*%1*</font></td><td><font color=\"#"+queryMessageColor+"\">%2</font></td></tr>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
+  QString line=QString("<tr><td><font color=\"#"+queryColor+"\">*%1*</font></td><td><font color=\"#"+queryColor+"\">%2</font></td></tr>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
 #else
 #ifdef ADD_LINE_BREAKS
-  QString line=QString("<font color=\"#"+queryMessageColor+"\"><b>*%1*</b> %2</font><br>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
+  QString line=QString("<font color=\"#"+queryColor+"\"><b>*%1*</b> %2</font><br>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
 #else
-//  QString line=QString("<font color=\"#"+queryMessageColor+"\"><b>*%1*</b> %2</font>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
-  QString line=QString("<p><font color=\"#"+queryMessageColor+"\"><b>*%1*</b> %2</font></p>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
+  QString line=QString("<p><font color=\"#"+queryColor+"\"><b>*%1*</b> %2</font></p>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
 #endif
 #endif
 
@@ -402,16 +394,15 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 
 void IRCView::appendAction(const QString& nick,const QString& message)
 {
-  QString actionMessageColor = KonversationApplication::preferences.getActionMessageColor();
+  QString actionColor=KonversationApplication::preferences.getColor("ActionMessage");
 
 #ifdef TABLE_VERSION
-  QString line=QString("<tr><td>&nbsp;</td><td><font color=\"#"+actionMessageColor+"\">* %1 %2</font></td></tr>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
+  QString line=QString("<tr><td>&nbsp;</td><td><font color=\"#"+actionColor+"\">* %1 %2</font></td></tr>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
 #else
 #ifdef ADD_LINE_BREAKS
-  QString line=QString("<font color=\"#"+actionMessageColor+"\">* %1 %2</font><br>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
+  QString line=QString("<font color=\"#"+actionColor+"\">* %1 %2</font><br>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
 #else
-//  QString line=QString("<font color=\"#"+actionMessageColor+"\">* %1 %2</font>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
-  QString line=QString("<p><font color=\"#"+actionMessageColor+"\">* %1 %2</font></p>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
+  QString line=QString("<p><font color=\"#"+actionColor+"\">* %1 %2</font></p>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
 #endif
 #endif
 
@@ -422,7 +413,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
 
 void IRCView::appendServerMessage(const QString& type,const QString& message)
 {
-  QString serverMessageColor=KonversationApplication::preferences.getServerMessageColor();
+  QString serverColor=KonversationApplication::preferences.getColor("ServerMessage");
 
   // Fixed width font option for MOTD
   QString fixed;
@@ -432,13 +423,12 @@ void IRCView::appendServerMessage(const QString& type,const QString& message)
   }
 
 #ifdef TABLE_VERSION
-  QString line=QString("<tr><td><font color=\"#"+serverMessageColor+"\">%1</font></td><td><font color=\"#"+serverMessageColor+"\""+fixed+">%2</font></td></tr>\n").arg(type).arg(filter(message));
+  QString line=QString("<tr><td><font color=\"#"+serverColor+"\">%1</font></td><td><font color=\"#"+serverColor+"\""+fixed+">%2</font></td></tr>\n").arg(type).arg(filter(message));
 #else
 #ifdef ADD_LINE_BREAKS
-  QString line=QString("<font color=\"#"+serverMessageColor+"\""+fixed+"><b>[%1]</b> %2</font><br>\n").arg(type).arg(filter(message));
+  QString line=QString("<font color=\"#"+serverColor+"\""+fixed+"><b>[%1]</b> %2</font><br>\n").arg(type).arg(filter(message));
 #else
-//  QString line=QString("<font color=\"#"+serverMessageColor+"\""+fixed+"><b>[%1]</b> %2</font>\n").arg(type).arg(filter(message));
-  QString line=QString("<p><font color=\"#"+serverMessageColor+"\""+fixed+"><b>[%1]</b> %2</font></p>\n").arg(type).arg(filter(message));
+  QString line=QString("<p><font color=\"#"+serverColor+"\""+fixed+"><b>[%1]</b> %2</font></p>\n").arg(type).arg(filter(message));
 #endif
 #endif
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
@@ -448,16 +438,15 @@ void IRCView::appendServerMessage(const QString& type,const QString& message)
 
 void IRCView::appendCommandMessage(const QString& type,const QString& message)
 {
-  QString commandMessageColor = KonversationApplication::preferences.getCommandMessageColor();
+  QString commandColor=KonversationApplication::preferences.getColor("CommandMessage");
 
 #ifdef TABLE_VERSION
-  QString line=QString("<tr><td><font color=\"#"+commandMessageColor+"\">%1</font></td><td><font color=\"#"+commandMessageColor+"\">%2</font></td></tr>\n").arg(type).arg(filter(message));
+  QString line=QString("<tr><td><font color=\"#"+commandColor+"\">%1</font></td><td><font color=\"#"+commandColor+"\">%2</font></td></tr>\n").arg(type).arg(filter(message));
 #else
 #ifdef ADD_LINE_BREAKS
-  QString line=QString("<font color=\"#"+commandMessageColor+"\">*** %2</font><br>\n").arg(filter(message));
+  QString line=QString("<font color=\"#"+commandColor+"\">*** %2</font><br>\n").arg(filter(message));
 #else
-//  QString line=QString("<font color=\"#"+commandMessageColor+"\">*** %2</font>\n").arg(filter(message));
-  QString line=QString("<p><font color=\"#"+commandMessageColor+"\">*** %2</font></p>\n").arg(filter(message));
+  QString line=QString("<p><font color=\"#"+commandColor+"\">*** %2</font></p>\n").arg(filter(message));
 #endif
 #endif
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
@@ -470,7 +459,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
   QString time;
   QString message(rawMessage);
   QString first(firstColumn);
-  QString backlogMessageColor = KonversationApplication::preferences.getBacklogMessageColor();
+  QString backlogColor=KonversationApplication::preferences.getColor("BacklogMessage");
 
   // Nicks are in "<nick>" format so replace the "<>"
   first.replace(QRegExp("\\<"),"&lt;");
@@ -484,13 +473,12 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
   }
 
 #ifdef TABLE_VERSION
-  QString line=QString("<tr><td><font color=\"#"+backlogMessageColor+"\">%1</font></td><td><font color=\"#"+backlogMessageColor+"\">%2 %3</font></td></tr>\n").arg(time).arg(first).arg(filter(message,NULL,false));
+  QString line=QString("<tr><td><font color=\"#"+backlogColor+"\">%1</font></td><td><font color=\"#"+backlogColor+"\">%2 %3</font></td></tr>\n").arg(time).arg(first).arg(filter(message,NULL,false));
 #else
 #ifdef ADD_LINE_BREAKS
-  QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2 %3</font><br>\n").arg(time).arg(first).arg(filter(message,NULL,false));
+  QString line=QString("<font color=\"#"+backlogColor+"\">%1 %2 %3</font><br>\n").arg(time).arg(first).arg(filter(message,NULL,false));
 #else
-//  QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2 %3</font>\n").arg(time).arg(first).arg(filter(message,NULL,false));
-  QString line=QString("<p><font color=\"#"+backlogMessageColor+"\">%1 %2 %3</font></p>\n").arg(time).arg(first).arg(filter(message,NULL,false));
+  QString line=QString("<p><font color=\"#"+backlogColor+"\">%1 %2 %3</font></p>\n").arg(time).arg(first).arg(filter(message,NULL,false));
 #endif
 #endif
 
@@ -506,7 +494,7 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps)
   if(!suppressTimestamps && KonversationApplication::preferences.getTimestamping())
   {
     QTime time=QTime::currentTime();
-    QString timeColor=KonversationApplication::preferences.getTimeColor();
+    QString timeColor=KonversationApplication::preferences.getColor("Time");
     QString timeFormat=KonversationApplication::preferences.getTimestampFormat();
     QString timeString(QString("<font color=\"#"+timeColor+"\">[%1]</font> ").arg(time.toString(timeFormat)));
 

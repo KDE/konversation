@@ -54,15 +54,6 @@ Preferences::Preferences()
   setAwayMessage("/me is away: %s");
   setUnAwayMessage("/me is back.");
 
-  setChannelMessageColor("000000");
-  setQueryMessageColor("0000ff");
-  setServerMessageColor("91640a");
-  setActionMessageColor("0000ff");
-  setBacklogMessageColor("aaaaaa");
-  setLinkMessageColor("0000ff");
-  setCommandMessageColor("960096");
-  setTimeColor("709070");
-  setTextViewBackground(QString::null);        // will be set on the first run of an ircview
   setNickCompleteSuffixStart(": ");
   setNickCompleteSuffixMiddle(" ");
 
@@ -125,6 +116,8 @@ Preferences::Preferences()
   setHilightOwnLines(false);
   setHilightNickColor("#ff0000");
   setHilightOwnLinesColor("#ff0000");
+
+  setBackgroundImageName(QString::null);
 
   setOpLedColor(1);
   setVoiceLedColor(2);
@@ -212,7 +205,7 @@ int Preferences::addServer(const QString& serverString)
 
 void Preferences::removeServer(int id)
 {
-  /* Deletes the object, too */
+  // Deletes the object, too
   serverList.remove(getServerEntryById(id));
 }
 
@@ -407,55 +400,49 @@ QString Preferences::getColor(const QString& name)
   KConfig* config=KApplication::kApplication()->config();
 
   config->setGroup("Message Text Colors");
-  return config->readEntry(name,"000000");
+  QString color=config->readEntry(name,getDefaultColor(name));
+
+  if(color.isEmpty())
+  {
+    kdDebug() << "Color name " << name << " requested but does not exist!" << endl;
+    color="000000";
+  }
+
+  return color;
 }
 
 void Preferences::setColor(const QString& name,const QString& color)
 {
-  KConfig* config=KApplication::kApplication()->config();
+  // if we get called from the KonversationApplication constructor kApplication is NULL
+  KApplication* app=KApplication::kApplication();
+  if(app)
+  {
+    KConfig* config=app->config();
 
-  config->setGroup("Message Text Colors");
+    config->setGroup("Message Text Colors");
 
-  config->writeEntry(name,color);
-  config->sync();
+    config->writeEntry(name,color);
+    config->sync();
+  }
 }
 
-QString Preferences::getActionMessageColor()  { return actionMessageColor; }
-QString Preferences::getBacklogMessageColor() { return backlogMessageColor; }
-QString Preferences::getChannelMessageColor() { return channelMessageColor; }
-QString Preferences::getCommandMessageColor() { return commandMessageColor; }
-QString Preferences::getLinkMessageColor()    { return linkMessageColor; }
-QString Preferences::getQueryMessageColor()   { return queryMessageColor; }
-QString Preferences::getServerMessageColor()  { return serverMessageColor; }
-QString Preferences::getTimeColor()           { return timeColor; }
-QString Preferences::getTextViewBackground()  { return textViewBackground; }
+QString Preferences::getDefaultColor(const QString& name)
+{
+  if(name=="ChannelMessage")     return "000000";
+  if(name=="QueryMessage")       return "0000ff";
+  if(name=="ServerMessage")      return "91640a";
+  if(name=="ActionMessage")      return "0000ff";
+  if(name=="BacklogMessage")     return "aaaaaa";
+  if(name=="LinkMessage")        return "0000ff";
+  if(name=="CommandMessage")     return "960096";
+  if(name=="Time")               return "709070";
+  if(name=="TextViewBackground") return "#";        // will be set on the first run of an ircview
 
-void Preferences::setActionMessageColor(const QString &passed_actionMessageColor)
-	{ actionMessageColor = passed_actionMessageColor;}
+  return QString::null;
+}
 
-void Preferences::setBacklogMessageColor(const QString &passed_backlogMessageColor)
-	{ backlogMessageColor = passed_backlogMessageColor;}
-
-void Preferences::setChannelMessageColor(const QString &passed_channelMessageColor)
-	{ channelMessageColor = passed_channelMessageColor;}
-
-void Preferences::setCommandMessageColor(const QString &passed_commandMessageColor)
-	{ commandMessageColor = passed_commandMessageColor;}
-
-void Preferences::setLinkMessageColor(const QString &passed_linkMessageColor)
-	{ linkMessageColor = passed_linkMessageColor;}
-
-void Preferences::setQueryMessageColor(const QString &passed_queryMessageColor)
-	{ queryMessageColor = passed_queryMessageColor;}
-
-void Preferences::setServerMessageColor(const QString &passed_serverMessageColor)
-	{ serverMessageColor = passed_serverMessageColor;}
-
-void Preferences::setTimeColor(const QString &passed_timeColor)
-	{ timeColor = passed_timeColor; }
-
-void Preferences::setTextViewBackground(const QString &passed_background)
-	{ textViewBackground = passed_background; }
+void Preferences::setBackgroundImageName(const QString& name) { backgroundImage=name; }
+const QString& Preferences::getBackgroundImageName() { return backgroundImage; }
 
 QString Preferences::getNickCompleteSuffixStart() {return nickCompleteSuffixStart; }
 QString Preferences::getNickCompleteSuffixMiddle() {return nickCompleteSuffixMiddle; }
@@ -478,7 +465,6 @@ QSize Preferences::getIgnoreSize()             { return ignoreSize; };
 QSize Preferences::getNotifySize()             { return notifySize; };
 QSize Preferences::getNicksOnlineSize()        { return nicksOnlineSize; };
 QSize Preferences::getNicknameSize()           { return nicknameSize; };
-QSize Preferences::getColorConfigurationSize() { return colorConfigurationSize; }
 
 void Preferences::setMainWindowSize(QSize newSize)         { mainWindowSize=newSize; };
 void Preferences::setHilightSize(QSize newSize)            { hilightSize=newSize; };
@@ -487,7 +473,6 @@ void Preferences::setIgnoreSize(QSize newSize)             { ignoreSize=newSize;
 void Preferences::setNotifySize(QSize newSize)             { notifySize=newSize; };
 void Preferences::setNicksOnlineSize(QSize newSize)        { nicksOnlineSize=newSize; };
 void Preferences::setNicknameSize(QSize newSize)           { nicknameSize=newSize; };
-void Preferences::setColorConfigurationSize(QSize newSize) { colorConfigurationSize = newSize; }
 
 void Preferences::setHilightNick(bool state) { hilightNick=state; }
 bool Preferences::getHilightNick() { return hilightNick; }

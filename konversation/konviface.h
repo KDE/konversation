@@ -112,15 +112,8 @@ class KonvPreferencesIface : virtual public DCOPObject
     virtual void clearIgnoreList() = 0;
     //QPtrList<Ignore> getIgnoreList() = 0;
     virtual void setIgnoreList(QPtrList<Ignore> newList) = 0;
-    virtual void setChannelMessageColor(QString color) = 0;
-    virtual void setQueryMessageColor(QString color) = 0;
-    virtual void setServerMessageColor(QString color) = 0;
-    virtual void setActionMessageColor(QString color) = 0;
-    virtual void setBacklogMessageColor(QString color) = 0;
-    virtual void setLinkMessageColor(QString color) = 0;
-    virtual void setCommandMessageColor(QString color) = 0;
-    virtual void setTimeColor(QString color) = 0;
-    virtual void setTextViewBackground(QString color) = 0;
+    virtual void setColor(QString colorName,QString color) = 0;
+
     virtual void setNickCompleteSuffixStart(QString suffix) = 0;
     virtual void setNickCompleteSuffixMiddle(QString suffix) = 0;
     virtual QString getNickCompleteSuffixStart() = 0;

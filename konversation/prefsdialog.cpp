@@ -47,8 +47,8 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   QFrame* generalSettingsPane=addPage(i18n("General settings"));
   QFrame* identityPane       =addPage(i18n("Identity"));
   // TODO: maybe we can make this a hierachy (use addPage(QStringList...)
-  QFrame* appearancePane     =addPage(i18n("Appearance"));
-  QFrame* colorsImagesPane   =addPage(i18n("Colors and images"));
+  QFrame* appearancePane     =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("General")));
+  QFrame* colorsImagesPane   =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Colors and images")));
 
   QFrame* logSettingsPane    =addPage(i18n("Log settings"));
   QFrame* dccSettingsPane    =addPage(i18n("DCC settings"));

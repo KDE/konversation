@@ -45,7 +45,6 @@ class IgnoreDialog;
 class NicksOnline;
 class NotifyDialog;
 class QuickButtonsDialog;
-class ColorConfiguration;
 class UrlCatcher;
 
 class KonversationMainWindow : public KMainWindow
@@ -122,12 +121,6 @@ class KonversationMainWindow : public KMainWindow
     void applyButtons(QStringList newList);
     void closeButtons(QSize newSize);
 
-    void openColorConfiguration();
-    void applyColorConfiguration(QString actionTextColor, QString backlogTextColor, QString channelTextColor,
-                                 QString commandTextColor, QString linkTextColor, QString queryTextColor,
-                                 QString serverTextColor, QString timeColor, QString backgroundColor);
-    void closeColorConfiguration(QSize windowSize);
-
     void openChannelList();
 
     void nextTab();
@@ -186,7 +179,6 @@ class KonversationMainWindow : public KMainWindow
     NotifyDialog* notifyDialog;
     IgnoreDialog* ignoreDialog;
     QuickButtonsDialog* buttonsDialog;
-    ColorConfiguration* colorConfigurationDialog;
     NicksOnline* nicksOnlineWindow;
     QStringList nicksOnlineList;
 

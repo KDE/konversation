@@ -26,6 +26,7 @@
 */
 
 class QColor;
+class KLineEdit;
 
 class PrefsPageColorsImages : public PrefsPage
 {
@@ -37,9 +38,12 @@ class PrefsPageColorsImages : public PrefsPage
 
   protected slots:
     void colorChanged(const QColor& color);
+    void backgroundNameChanged(const QString& newName);
+    void selectBackground();
 
   protected:
     QStringList colorList;
+    KLineEdit* backgroundName;
 };
 
 #endif

@@ -539,57 +539,9 @@ void KonvPrefsDCOP::setIgnoreList(QPtrList<Ignore> newList)
   static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
-void KonvPrefsDCOP::setChannelMessageColor(QString color)
+void KonvPrefsDCOP::setColor(QString colorName,QString color)
 {
-  KonversationApplication::preferences.setChannelMessageColor(color);
-  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
-}
-
-void KonvPrefsDCOP::setQueryMessageColor(QString color)
-{
-  KonversationApplication::preferences.setQueryMessageColor(color);
-  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
-}
-
-void KonvPrefsDCOP::setServerMessageColor(QString color)
-{
-  KonversationApplication::preferences.setServerMessageColor(color);
-  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
-}
-
-void KonvPrefsDCOP::setActionMessageColor(QString color)
-{
-  KonversationApplication::preferences.setActionMessageColor(color);
-  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
-}
-
-void KonvPrefsDCOP::setBacklogMessageColor(QString color)
-{
-  KonversationApplication::preferences.setBacklogMessageColor(color);
-  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
-}
-
-void KonvPrefsDCOP::setLinkMessageColor(QString color)
-{
-  KonversationApplication::preferences.setLinkMessageColor(color);
-  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
-}
-
-void KonvPrefsDCOP::setCommandMessageColor(QString color)
-{
-  KonversationApplication::preferences.setCommandMessageColor(color); 
-  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
-}
-
-void KonvPrefsDCOP::setTimeColor(QString color)
-{
-  KonversationApplication::preferences.setTimeColor(color);
-  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
-}
-
-void KonvPrefsDCOP::setTextViewBackground(QString color)
-{
-  KonversationApplication::preferences.setTextViewBackground(color);
+  KonversationApplication::preferences.setColor(colorName,color);
   static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 

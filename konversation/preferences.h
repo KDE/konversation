@@ -141,7 +141,6 @@ class Preferences : public QObject
     QSize getNotifySize();
     QSize getNicksOnlineSize();
     QSize getNicknameSize();
-    QSize getColorConfigurationSize();
     void setMainWindowSize(QSize newSize);
     void setHilightSize(QSize newSize);
     void setButtonsSize(QSize newSize);
@@ -149,7 +148,6 @@ class Preferences : public QObject
     void setNotifySize(QSize newSize);
     void setNicksOnlineSize(QSize newSize);
     void setNicknameSize(QSize newSize);
-    void setColorConfigurationSize(QSize newSize);
 
     int getNotifyDelay();
     void setNotifyDelay(int delay);
@@ -218,25 +216,8 @@ class Preferences : public QObject
     QString getColor(const QString& name);
     void setColor(const QString& name,const QString& color);
 
-    QString getChannelMessageColor();
-    QString getQueryMessageColor();
-    QString getServerMessageColor();
-    QString getActionMessageColor();
-    QString getBacklogMessageColor();
-    QString getLinkMessageColor();
-    QString getCommandMessageColor();
-    QString getTimeColor();
-    QString getTextViewBackground();
-
-    void setChannelMessageColor(const QString &color);
-    void setQueryMessageColor(const QString &color);
-    void setServerMessageColor(const QString &color);
-    void setActionMessageColor(const QString &color);
-    void setBacklogMessageColor(const QString &color);
-    void setLinkMessageColor(const QString &color);
-    void setCommandMessageColor(const QString &color);
-    void setTimeColor(const QString &color);
-    void setTextViewBackground(const QString &color);
+    const QString& getBackgroundImageName();
+    void setBackgroundImageName(const QString& name);
 
     void setNickCompleteSuffixStart(const QString &suffix);
     void setNickCompleteSuffixMiddle(const QString &suffix);
@@ -313,6 +294,8 @@ class Preferences : public QObject
     void autoUserhostChanged(bool state);
 
   protected:
+    QString getDefaultColor(const QString& name);
+
     bool log;
     bool lowerLog;
     bool logFollowsNick;
@@ -352,7 +335,7 @@ class Preferences : public QObject
     bool showServerList;
 
     QValueList<int> channelSplitter;
-    
+
     QStringList notifyList;
     QString commandChar;
 
@@ -361,17 +344,6 @@ class Preferences : public QObject
 
     QString channelDoubleClickAction;
     QString notifyDoubleClickAction;
-
-    // rewrite these to use an array or list of some sort
-    QString channelMessageColor;
-    QString queryMessageColor;
-    QString serverMessageColor;
-    QString actionMessageColor;
-    QString backlogMessageColor;
-    QString linkMessageColor;
-    QString commandMessageColor;
-    QString timeColor;
-    QString textViewBackground;
 
     // Geometries
     QSize mainWindowSize;
@@ -412,6 +384,8 @@ class Preferences : public QObject
     bool hilightOwnLines;
     QColor hilightNickColor;
     QColor hilightOwnLinesColor;
+
+    QString backgroundImage;
 
     QStringList buttonList;
 

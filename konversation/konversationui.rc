@@ -12,7 +12,6 @@
       <Action name="open_notify_window" />
       <Action name="open_nicksonline_window" />
       <Action name="open_ignore_window" />
-      <Action name="open_colors_window" />
       <Action name="open_channel_list" />
       <Action name="open_konsole" />
       <Action name="open_url_catcher" />

@@ -127,16 +127,8 @@ class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
   void addIgnore(QString newIgnore);
   void clearIgnoreList();
   //QPtrList<Ignore> getIgnoreList();
+  void setColor(QString colorName,QString color);
   void setIgnoreList(QPtrList<Ignore> newList);
-  void setChannelMessageColor(QString color);
-  void setQueryMessageColor(QString color);
-  void setServerMessageColor(QString color);
-  void setActionMessageColor(QString color);
-  void setBacklogMessageColor(QString color);
-  void setLinkMessageColor(QString color);
-  void setCommandMessageColor(QString color);
-  void setTimeColor(QString color);
-  void setTextViewBackground(QString color);
   void setNickCompleteSuffixStart(QString suffix);
   void setNickCompleteSuffixMiddle(QString suffix);
   QString getNickCompleteSuffixStart();

@@ -39,7 +39,8 @@ void RawLog::adjustFocus()
 void RawLog::updateFonts()
 {
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
-  getTextView()->setViewBackground(KonversationApplication::preferences.getTextViewBackground(),QString::null);
+  getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
+                                   KonversationApplication::preferences.getBackgroundImageName());
 }
 
 void RawLog::closeYourself()

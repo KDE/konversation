@@ -14,12 +14,15 @@
   $Id$
 */
 
-#include <kcolorcombo.h>
-#include <kdebug.h>
-
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qhbox.h>
+#include <qpushbutton.h>
+
+#include <kcolorcombo.h>
+#include <kdebug.h>
+#include <klineedit.h>
+#include <kfiledialog.h>
 
 #include "prefspagecolorsimages.h"
 
@@ -36,7 +39,7 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
   colorList.append(i18n("Timestamp color")+",Time");
   colorList.append(i18n("Background color")+",TextViewBackground");
 
-  QGridLayout* colorSettingsLayout=new QGridLayout(parentFrame,4,2,marginHint(),spacingHint(),"log_settings_layout");
+  QGridLayout* colorSettingsLayout=new QGridLayout(parentFrame,4,3,marginHint(),spacingHint(),"log_settings_layout");
 
   int row=0;
   for(unsigned int index=0;index<colorList.count();index++)
@@ -47,19 +50,45 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
     QLabel* colorLabel=new QLabel(label,parentFrame);
 
     KColorCombo* colorCombo=new KColorCombo(parentFrame);
-    colorCombo->setColor(preferences->getColor(name).prepend('#'));
+
+    QString color=preferences->getColor(name);
+    // check if we found an undefined TextViewBackground color
+    if(color=="#")
+    {
+      // get default base color for text widgets and put it in preferences
+      color=colorCombo->palette().color(QPalette::Active,QColorGroup::Base).name().mid(1);
+      preferences->setColor(name,color);
+    }
+
+    colorCombo->setColor(color.prepend('#'));
+    // give this color combo a name so we can see what color has changed in the signal
     colorCombo->setName(name.latin1());
 
     colorSettingsLayout->addWidget(colorLabel,row,0);
-    colorSettingsLayout->addWidget(colorCombo,row,1);
+    colorSettingsLayout->addMultiCellWidget(colorCombo,row,row,1,2);
 
     connect(colorCombo,SIGNAL (activated(const QColor&)),this,SLOT (colorChanged(const QColor&)) );
     row++;
   }
 
+  QLabel* backgroundLabel=new QLabel(i18n("Background image"),parentFrame);
+  backgroundName=new KLineEdit(parentFrame,"background_image_name");
+  QPushButton* backgroundSelect=new QPushButton(i18n("Choose..."),parentFrame,"background_image_choose_button");
+
+  backgroundName->setText(preferences->getBackgroundImageName());
+
+  colorSettingsLayout->addWidget(backgroundLabel,row,0);
+  colorSettingsLayout->addWidget(backgroundName,row,1);
+  colorSettingsLayout->addWidget(backgroundSelect,row,2);
+
+  row++;
+
   QHBox* spacer=new QHBox(parentFrame);
   colorSettingsLayout->addWidget(spacer,row,0);
   colorSettingsLayout->setRowStretch(row,10);
+
+  connect(backgroundName,SIGNAL (textChanged(const QString&)),this,SLOT (backgroundNameChanged(const QString&)) );
+  connect(backgroundSelect,SIGNAL (clicked()),this,SLOT (selectBackground()) );
 }
 
 PrefsPageColorsImages::~PrefsPageColorsImages()
@@ -72,6 +101,26 @@ void PrefsPageColorsImages::colorChanged(const QColor& color)
   QString name(static_cast<const QWidget*>(sender())->name());
   preferences->setColor(name,color.name().mid(1));
   kdDebug() << name << " " << color.name().mid(1) << endl;
+}
+
+void PrefsPageColorsImages::backgroundNameChanged(const QString& newName)
+{
+  preferences->setBackgroundImageName(newName);
+}
+
+void PrefsPageColorsImages::selectBackground()
+{
+  QString fileName=KFileDialog::getOpenFileName(
+                                                 backgroundName->text(),
+                                                 QString::null,
+                                                 parentFrame,
+                                                 i18n("Select background image")
+                                               );
+  if(!fileName.isEmpty())
+  {
+    backgroundName->setText(fileName);
+//    backgroundNameChanged(fileName);
+  }
 }
 
 #include "prefspagecolorsimages.moc"
