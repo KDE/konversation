@@ -16,6 +16,7 @@ my $result;
 my $print;
 my $spell;
 my $error;
+my $limit=5;
 
 eval { require SOAP::Lite; };
    
@@ -44,7 +45,8 @@ else
 
     GetOptions('search=s' => \$search,
 	       'spell=s' => \$spellcheck,
-	       'browser' => \$browser);
+	       'browser' => \$browser,
+	       'limit|max|maxresults=i' => \$limit);
     
     if(!$browser && !$search && !$spellcheck && !@ARGV)
     {
@@ -66,18 +68,20 @@ else
 	$googleSearch = SOAP::Lite->service("http://api.google.com/GoogleSearch.wsdl")->
 	    on_fault(sub {
 		my $res = $_[0]; 
-		$error = join ', ', $res->call->faultcode, $res->call->faultstring, $res->call->faultdetail;
-		exec 'dcop', $PORT, 'Konversation', 'error', "Error happened: $error";
+		#$error = join ', ', $res->call->faultcode, $res->call->faultstring, $res->call->faultdetail;
+		$error = $res->call->faultstring;
+		exec 'dcop', $PORT, 'Konversation', 'error', "$error";
 	    });
 		
 	# Encode "&", "<", ">", and "'" . See http://groups.yahoo.com/group/soaplite/message/3037
 	$search_escape = $search;
 	encode_entities($search_escape, "&<>'");
-	$result = $googleSearch->doGoogleSearch($key, $search_escape, 0, 10, "false", "", "false", "", "UTF-8", "UTF-8"); 
+	if($limit > 10) { $limit=10; }
+	$result = $googleSearch->doGoogleSearch($key, $search_escape, 0, $limit, "false", "", "false", "", "UTF-8", "UTF-8"); 
 	
 	if($result->{estimatedTotalResultsCount} > 0)
 	{
-	    system 'dcop', $PORT, 'Konversation', 'info', "Results \x021-10\x02 of about \x02$result->{estimatedTotalResultsCount}\x02 for \x02$search\x02 (\x02$result->{searchTime}\x02 seconds)";
+	    system 'dcop', $PORT, 'Konversation', 'info', "Results \x021-$limit\x02 of about \x02$result->{estimatedTotalResultsCount}\x02 for \x02$search\x02 (\x02$result->{searchTime}\x02 seconds)";
 	}
 	else
 	{
