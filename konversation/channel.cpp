@@ -429,12 +429,13 @@ void Channel::channelTextEntered()
 void Channel::sendChannelText(const QString& line)
 {
   /* Is there something we need to display for ourselves? */
-  QString output=filter.parse(line,getName());
+  QString output=filter.parse(server->getNickname(),line,getName());
   if(output!="")
   {
     if(filter.isAction()) appendAction(server->getNickname(),output);
     else if(filter.isCommand()) appendCommandMessage(filter.getType(),output);
     else if(filter.isProgram()) appendServerMessage(filter.getType(),output);
+    else if(filter.isQuery()) appendQuery(filter.getType(),output);
     else append(server->getNickname(),output);
   }
   /* Send anything else to the server */

@@ -100,7 +100,7 @@ void Query::queryTextEntered()
 {
   if(line.length())
   {
-    QString output=filter.parse(line,getName());
+    QString output=filter.parse(server->getNickname(),line,getName());
 
     if(output!="")
     {

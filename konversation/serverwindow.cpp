@@ -136,7 +136,7 @@ void ServerWindow::statusTextEntered()
   if(line.lower()=="/clear") statusView->clear();  // FIXME: to get rid of too wide lines
   else
   {
-    QString output=filter.parse(line,"");
+    QString output=filter.parse(server->getNickname(),line,"");
 
     if(output!="") appendToStatus(filter.getType(),output);
 
@@ -306,7 +306,7 @@ void ServerWindow::saveOptions()
 bool ServerWindow::queryExit()
 {
   kdDebug() << "ServerWindow::queryExit()" << endl;
-  QString command=filter.parse("/quit","");
+  QString command=filter.parse(server->getNickname(),"/quit","");
   server->queue(filter.getServerOutput());
   saveOptions();
   return true;

@@ -32,7 +32,7 @@ OutputFilter::~OutputFilter()
 {
 }
 
-QString& OutputFilter::parse(const QString& inputLine,const QString& name)
+QString& OutputFilter::parse(const QString& myNick,const QString& inputLine,const QString& name)
 {
   setCommandChar();
 
@@ -74,7 +74,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
     else if(line.startsWith("quit "))    parseQuit(parameter);
     else if(line.startsWith("notice "))  parseNotice(parameter);
     else if(line.startsWith("j "))       parseJoin(parameter);
-    else if(line.startsWith("msg "))     parseMsg(parameter);
+    else if(line.startsWith("msg "))     parseMsg(myNick,parameter);
     else if(line.startsWith("query "))   parseQuery(parameter);
     else if(line.startsWith("op "))      parseOp(parameter);
     else if(line.startsWith("deop "))    parseDeop(parameter);
@@ -292,13 +292,23 @@ void OutputFilter::parseNotice(QString parameter)
   }
 }
 
-void OutputFilter::parseMsg(QString parameter)
+void OutputFilter::parseMsg(QString myNick,QString parameter)
 {
   QString recipient=parameter.left(parameter.find(" "));
   QString message=parameter.mid(recipient.length()+1);
 
-  if(message.startsWith(commandChar+"me")) toServer="PRIVMSG "+recipient+" :"+'\x01'+"ACTION "+message.mid(4)+'\x01';
-  else toServer="PRIVMSG "+recipient+" :"+message;
+  if(message.startsWith(commandChar+"me"))
+  {
+    toServer="PRIVMSG "+recipient+" :"+'\x01'+"ACTION "+message.mid(4)+'\x01';
+    output=QString("* %1 %2").arg(myNick).arg(message.mid(4));
+  }
+  else
+  {
+    toServer="PRIVMSG "+recipient+" :"+message;
+    output=message;
+  }
+  type=QString("-> %1").arg(recipient);
+  query=true;
 }
 
 void OutputFilter::parseCtcp(QString parameter)
@@ -439,9 +449,11 @@ void OutputFilter::resumeRequest(QString sender,QString fileName,QString port,in
 
 // Accessors
 
+// Maybe we should switch to values instead of flags
 bool OutputFilter::isAction() { return action; };
 bool OutputFilter::isCommand() { return command; };
 bool OutputFilter::isProgram() { return program; };
+bool OutputFilter::isQuery() { return query; };
 
 void OutputFilter::setCommandChar() { commandChar=KonversationApplication::preferences.getCommandChar(); }
 

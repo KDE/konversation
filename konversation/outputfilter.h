@@ -32,7 +32,7 @@ class OutputFilter : public QObject
     OutputFilter();
     ~OutputFilter();
 
-    QString& parse(const QString& line,const QString& name);
+    QString& parse(const QString& myNick,const QString& line,const QString& name);
     void sendRequest(QString recipient,QString fileName,QString address,QString port,unsigned long size);
     void resumeRequest(QString sender,QString fileName,QString port,int startAt);
     void acceptRequest(QString recipient,QString fileName,QString port,int startAt);
@@ -40,6 +40,7 @@ class OutputFilter : public QObject
     bool isAction();
     bool isCommand();
     bool isProgram();
+    bool isQuery();
 
     QString& getOutput();
     QString& getServerOutput();
@@ -66,8 +67,9 @@ class OutputFilter : public QObject
     bool action;
     bool command;
     bool program;
+    bool query;
 
-    void parseMsg(QString parameter);      // works
+    void parseMsg(QString myNick,QString parameter);      // works
     void parseQuery(QString parameter);    // works
     void parseDescribe(QString parameter);
     void parseNotice(QString parameter);   // works
