@@ -467,9 +467,13 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
   int selected = showURLmenu->exec(p);  
   if (selected!=-1) {
     QMenuItem* item = showURLmenu->findItem( selected );
+#if QT_VERSION >= 0x030100
     new KRun(item->text().replace("&&","&"));
+#else
+    new KRun(item->text().replace(QRegExp("&&"),"&"));
+#endif
   }
-  
+
   delete showURLmenu;
 }
 
