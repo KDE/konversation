@@ -169,6 +169,7 @@ void DccTransferRecv::abort()  // public slot
 {
   kdDebug() << "DccTransferRecv::abort()" << endl;
   
+  m_writeCacheHandler->write( true ); // flush
   setStatus( Aborted );
   updateView();
   cleanUp();
