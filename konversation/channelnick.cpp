@@ -152,7 +152,7 @@ QString ChannelNick::tooltip() {
     dirty=true;
   }
   if(logo.isIntern()) {
-    QMimeSourceFactory::defaultFactory()->setImage( "logo", photo.data() );
+    QMimeSourceFactory::defaultFactory()->setImage( "logo", logo.data() );
     tooltip << "<img src=\"logo\">";
     dirty=true;
   } else if(!logo.url().isEmpty()) {
