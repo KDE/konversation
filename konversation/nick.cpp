@@ -132,17 +132,16 @@ QString Nick::tooltip() {
   if(!addressee.formattedName().isEmpty())
     tooltip << "<b><center>" << addressee.formattedName() << "</center></b>";
 
-  QStringList emails = addressee.emails();
-  tooltip << "<tr><td><b>Email(s) :</b> ";
-  for( QStringList::Iterator it = emails.begin(); it != emails.end(); ++it) {
-    tooltip << *it;
-    if ( ++it != emails.end() )
-        tooltip << " , ";
-    --it;
-  }
-  tooltip << "</td></tr>";
   bool isdirty = false;
   tooltip << "%1";
+ 
+  if(!addressee.emails().isEmpty()) {
+    tooltip << "<tr><td><b>" << addressee.emailLabel() << ": </b></td><td>";
+    tooltip << addressee.emails().join(", ");
+    tooltip << "</td></tr>";
+    isdirty = true;
+  }
+  
   if(!addressee.organization().isEmpty()) {
     tooltip << "<tr><td><b>" << addressee.organizationLabel() << ": </b></td><td>" << addressee.organization() << "</td></tr>";
     isdirty = true;
