@@ -458,7 +458,8 @@ void Server::connectToIRCServer()
     statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...")
         .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
         .arg(m_serverGroup.serverByIndex(m_currentServerIndex).port()));
-    
+    // Flash taskbar
+    KWin::demandAttention(KonversationApplication::instance()->getMainWindow()->winId());
     // reset InputFilter (auto request info, /WHO request info)
     inputFilter.reset();
   }
