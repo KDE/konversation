@@ -6,6 +6,7 @@ berkus: Logrotate with timer or at shutdown, compress rotated logs
 
 Eisfuchs: User interface for dialog options (don't show again dialogs)
 
+Remember server group in logfiles, make same channel names on different servers possible
 Nick completion should remember last position
 Reverse-I-Search
 Large pastes: Let the user decide if they want an Editor or paste immediately
