@@ -14,6 +14,7 @@
 
 #include <unistd.h>
 #include <sys/socket.h>
+#include <errno.h>
 
 #ifdef __linux__
 #include <linux/version.h>
@@ -957,7 +958,11 @@ void Server::incoming()
   int len = 0;
 
   len = read(serverSocket.fd(),buffer,BUFFER_LEN-1);
-
+  if(len==-1) {
+        statusView->appendServerMessage(i18n("Error"),i18n("There was an error reading the data from the server: %1").arg(strerror(errno)));
+	broken(0);
+	return;
+  }
   buffer[len] = 0;
 
   // convert IRC ascii data to selected encoding
