@@ -52,11 +52,6 @@ default_presentation=0
 
 [dcc_incoming]
 Name=Incoming file
-Name[da]=Indkommende fil
-Name[pt]=Ficheiro recebido
-Name[pt_BR]=Arquivo de entrada
-Name[sv]=Inkommande fil
-Name[xx]=xxIncoming filexx
 Comment=Someone wants to transmit a file to you over DCC
 Comment[da]=Nogen ønsker at transmittere en fil til dig over DCC
 Comment[pt]=Alguém quer transmitir um ficheiro através de DCC
