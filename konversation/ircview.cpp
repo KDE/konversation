@@ -734,7 +734,7 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
 {
   if(m_isOnNick)
     {
-      nickPopup->exec(ce->pos());
+      nickPopup->exec(ce->globalPos());
     }
   else {
       
