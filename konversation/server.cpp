@@ -339,7 +339,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     {
       if(nickLowerList.find(notifyLowerCache[index])==nickLowerList.end())
       {
-        getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 went offline.").arg(notifyCache[index]),statusView);
+        getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 went offline. (%2)").arg(notifyCache[index]).arg(getServerName()),statusView);
       }
     }
 
