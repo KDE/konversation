@@ -20,6 +20,7 @@
 #include <klocale.h>
 #include <kcombobox.h>
 #include <kdebug.h>
+#include <kguiitem.h>
 
 #include "searchdialog.h"
 
@@ -33,6 +34,8 @@ SearchDialog::SearchDialog(QWidget* parent,QSize size) :
                KDialogBase(parent,"search_dialog",true,i18n("Find Text"),
                            KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
 {
+  setButtonOK(KGuiItem(i18n("&Find"),"find"));
+
   // Create the top level widget
   QWidget* page=new QWidget(this);
   setMainWidget(page);
