@@ -149,7 +149,7 @@ namespace Konversation {
             else if(command == "kick")    result = parseKick(parameter);
             else if(command == "topic")   result = parseTopic(parameter);
             else if(command == "away")    result = parseAway(parameter);
-	    else if(command == "back")    result = parseAway(QString::null);
+            else if(command == "back")    result = parseAway(QString::null);
             else if(command == "invite")  result = parseInvite(parameter);
             else if(command == "exec")    result = parseExec(parameter);
             else if(command == "notify")  result = parseNotify(parameter);
@@ -160,6 +160,7 @@ namespace Konversation {
             else if(command == "quote")   result = parseQuote(parameter);
             else if(command == "say")     result = parseSay(parameter);
 
+            else if(command == "names")   result = parseNames(parameter);
             else if(command == "raw")     result = parseRaw(parameter);
             else if(command == "dcc")     result = parseDcc(parameter);
             else if(command == "konsole") parseKonsole();
@@ -379,6 +380,18 @@ namespace Konversation {
             result.toServer = "AWAY :" + reason;
         }
 
+        return result;
+    }
+
+    OutputFilterResult OutputFilter::parseNames(const QString &parameter) {
+        OutputFilterResult result;
+        result.toServer = "NAMES ";
+        if (parameter.isNull()) {
+            return error(i18n("NAMES with no target may disconnect you from the server. Specify '*' if you really want this."));
+        }
+        else if (parameter != QChar('*')) {
+            result.toServer.append(parameter);
+        }
         return result;
     }
 

@@ -2927,6 +2927,9 @@ void Server::closeChannelListPanel()
 
 void Server::autoRejoinChannels()
 {
+  if (channelList.isEmpty()) {
+    return;
+  }
   QStringList channels;
   QStringList keys;
 
