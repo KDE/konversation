@@ -843,7 +843,9 @@ void IRCView::setupNickPopupMenu() {
     m_nickPopup->insertItem(i18n("&Ping"),Konversation::Ping);
     m_nickPopup->insertSeparator();
     m_nickPopup->insertItem(i18n("Open Query"),Konversation::OpenQuery);
-    m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
+    if (kapp->authorize("dcc_send_file")) {
+      m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
+    }
     m_nickPopup->insertSeparator();
     m_kickban->insertItem(i18n("Kick"),Konversation::Kick);
     m_kickban->insertItem(i18n("Kickban"),Konversation::KickBan);

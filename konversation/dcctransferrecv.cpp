@@ -63,6 +63,7 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
             << "DccTransferRecv::DccTransferRecv(): FileSize: " << fileSize << endl
             << "DccTransferRecv::DccTransferRecv(): Partner Address: " << partnerIp << ":" << partnerPort << endl;
   
+
   m_recvSocket = 0;
   m_writeCacheHandler = 0;
   
@@ -88,6 +89,13 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
   if ( KonversationApplication::preferences.getDccCreateFolder() )
     m_fileURL.addPath( m_partnerNick.lower() + "/" );
   
+  if (!kapp->authorize("dcc_recv_file")) {
+    //note we have this after the initialisations so that item looks okay
+    //Do not have the rights to send the file.  Shouldn't have gotten this far anyway
+    failed(i18n("The admin has restricted the right to recieve files"));
+    return;
+  }
+
   // set default filename
   // note: Don't edit m_fileName. (i.e. leave it as it is)
   // because we need the original file name to resume its transfer.

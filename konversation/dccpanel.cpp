@@ -27,6 +27,7 @@
 #include <kmessagebox.h>
 #include <kpopupmenu.h>
 #include <krun.h>
+#include <kapplication.h>
 
 #include "dccpanel.h"
 #include "dcctransfer.h"
@@ -211,6 +212,10 @@ void DccPanel::updateButton()
     open = false;
     remove = false;
   }
+  if (!kapp->authorize("dcc_recv_file")) {
+    accept = false;
+  }
+
   
   m_buttonAccept->setEnabled( accept );
   m_buttonAbort->setEnabled( abort );

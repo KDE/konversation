@@ -80,6 +80,14 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   kdDebug() << "DccTransferSend::DccTransferSend(): Fast DCC send: " << m_fastSend << endl;
   
   m_connectionTimer = new QTimer( this );
+
+  if (!kapp->authorize("dcc_send_file")) {
+    //Do not have the rights to send the file.  Shouldn't have gotten this far anyway
+    //Note this is after the initialisation so the view looks correct still
+    failed(i18n("The admin has restricted the right to send files"));
+    return;
+  }
+
   connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
   //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
 
