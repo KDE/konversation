@@ -21,6 +21,7 @@
 #include <qlistbox.h>
 #include <qgroupbox.h>
 #include <qpushbutton.h>
+#include <qwhatsthis.h>
 
 #include <kcombobox.h>
 #include <klocale.h>
@@ -116,6 +117,7 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   QGridLayout* autoIdentifyLayout = new QGridLayout(autoIdentifyGBox->layout(), 1, 2, spacingHint());
 
   QLabel* botLabel=new QLabel(i18n("Ser&vice:"), autoIdentifyGBox);
+  QWhatsThis::add(botLabel,i18n("Service name can be <b><i>nickserv</i></b> or a network dependant name like  <b><i>nickserv@services.dal.net</i></b>"));
   m_botEdit = new KLineEdit(autoIdentifyGBox);
   botLabel->setBuddy(m_botEdit);
 
