@@ -289,6 +289,7 @@ void KonversationApplication::readOptions()
   delete logfileReaderSize;
 
   preferences.setLogfileBufferSize(config->readNumEntry("LogfileBufferSize",preferences.getLogfileBufferSize()));  
+  preferences.setScrollbackMax(config->readUnsignedNumEntry("ScrollbackMax",preferences.getScrollbackMax()));
   
   // Double click actions
   preferences.setChannelDoubleClickAction(config->readEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction()));
@@ -641,6 +642,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("MultilineEditGeometry",preferences.getMultilineEditSize());
 
   config->writeEntry("LogfileBufferSize",preferences.getLogfileBufferSize());
+  config->writeEntry("ScrollbackMax",preferences.getScrollbackMax());
   
   config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon());
   config->writeEntry("TrayNotify",preferences.getTrayNotify());

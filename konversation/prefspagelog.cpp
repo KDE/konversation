@@ -16,6 +16,9 @@
 #include <qlayout.h>
 #include <qhbox.h>
 #include <qcheckbox.h>
+#include <qgroupbox.h>
+#include <qwhatsthis.h>
+#include <qspinbox.h>
 #include <klineedit.h>
 #include <klocale.h>
 
@@ -25,31 +28,50 @@
 PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
               PrefsPage(newParent,newPreferences)
 {
+
+  QSpacerItem *spacey=0;
+
   // Add a Layout to the Log Settings pane
-  QGridLayout* logSettingsLayout=new QGridLayout(parentFrame,4,2,marginHint(),spacingHint(),"log_settings_layout");
+  QVBoxLayout *outer=new QVBoxLayout(parentFrame);
+  outer->setSpacing(spacingHint());
 
-  useLog=new QCheckBox(i18n("&Enable logging"),parentFrame,"use_log_checkbox");
-  lowerLog=new QCheckBox(i18n("&Use lower case logfile names"),parentFrame,"lower_log_checkbox");
-  logFollowsNick=new QCheckBox(i18n("&Follow nick changes"),parentFrame,"follow_nickchanges_checkbox");
+  loggingBox=new QGroupBox("&Enable logging",parentFrame);
+  loggingBox->setCheckable(TRUE);
+  loggingBox->setChecked(preferences->getLog());
+  loggingBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
 
-  QHBox* logPathBox=new QHBox(parentFrame);
+  QGridLayout* logSettingsLayout=new QGridLayout(loggingBox,4,2,marginHint(),spacingHint(),"log_settings_layout");
+
+  lowerLog=new QCheckBox(i18n("&Use lower case logfile names"),loggingBox,"lower_log_checkbox");
+  logFollowsNick=new QCheckBox(i18n("&Follow nick changes"),loggingBox,"follow_nickchanges_checkbox");
+
+  QHBox* logPathBox=new QHBox(loggingBox);
+  logPathBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
   logPathBox->setSpacing(spacingHint());
   logPathLabel=new QLabel(i18n("Logfile &path:"),logPathBox);
   logPathInput=new KLineEdit(preferences->getLogPath(),logPathBox,"log_path_input");
   logPathLabel->setBuddy(logPathInput);
+  
+  QHBox* scrollbackMaxBox=new QHBox(parentFrame);
+  scrollbackMaxBox->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+  scrollbackMaxBox->setSpacing(spacingHint());
+  scrollbackMaxLabel=new QLabel(i18n("&Scrollback limit:"), scrollbackMaxBox);
+  scrollbackMaxSpin=new QSpinBox(0,100000,50,scrollbackMaxBox,"scrollback_max_spin");
+  scrollbackMaxSpin->setValue(preferences->getScrollbackMax());
+  scrollbackMaxSpin->setSuffix(" "+i18n("lines"));
+  scrollbackMaxSpin->setSpecialValueText(i18n("Unlimited"));
+  scrollbackMaxLabel->setBuddy(scrollbackMaxSpin);
+  QWhatsThis::add(scrollbackMaxSpin,i18n("How many lines to keep in buffers"));
 
-  useLog->setChecked(preferences->getLog());
   lowerLog->setChecked(preferences->getLowerLog());
   logFollowsNick->setChecked(preferences->getLogFollowsNick());
 
-  updateLogWidgets(preferences->getLog());
-
-  QHBox* logSpacer=new QHBox(parentFrame);
-
   int row=0;
 
-  logSettingsLayout->addMultiCellWidget(useLog,row,row,0,1);
-  row++;
+  //FIXME Irritating little hack to stop the first control from sitting on top of the groupbox title
+  spacey=new QSpacerItem(spacingHint(),spacingHint());
+  logSettingsLayout->addMultiCell(spacey,row,row+1,0,1);
+  row+=2;
 
   logSettingsLayout->addWidget(lowerLog,row,0);
   logSettingsLayout->addWidget(logFollowsNick,row,1);
@@ -58,36 +80,24 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   logSettingsLayout->addMultiCellWidget(logPathBox,row,row,0,1);
   row++;
 
-  logSettingsLayout->addMultiCellWidget(logSpacer,row,row,0,1);
-  logSettingsLayout->setRowStretch(row,10);
-
-  // Set up signals / slots for Log Setup page
-  connect(useLog,SIGNAL (stateChanged(int)),this,SLOT (useLogChanged(int)) );
+  outer->addWidget(loggingBox);
+  outer->addWidget(scrollbackMaxBox);
+  spacey=new QSpacerItem(spacingHint(),spacingHint());
+  outer->addItem(spacey);
+  
 }
 
 PrefsPageLog::~PrefsPageLog()
 {
 }
 
-void PrefsPageLog::useLogChanged(int state)
-{
-  updateLogWidgets(state==2);
-}
-
-void PrefsPageLog::updateLogWidgets(bool enable)
-{
-  lowerLog->setEnabled(enable);
-  logFollowsNick->setEnabled(enable);
-  logPathLabel->setEnabled(enable);
-  logPathInput->setEnabled(enable);
-}
-
 void PrefsPageLog::applyPreferences()
 {
-  preferences->setLog(useLog->isChecked());
+  preferences->setLog(loggingBox->isChecked());
   preferences->setLowerLog(lowerLog->isChecked());
   preferences->setLogFollowsNick(logFollowsNick->isChecked());
   preferences->setLogPath(logPathInput->text());
+  preferences->setScrollbackMax(scrollbackMaxSpin->value());
 }
 
 #include "prefspagelog.moc"

@@ -24,6 +24,8 @@
 class QCheckBox;
 class QLabel;
 class KLineEdit;
+class QSpinBox;
+class QGroupBox;
 
 class PrefsPageLog : public PrefsPage
 {
@@ -36,17 +38,15 @@ class PrefsPageLog : public PrefsPage
   public slots:
     void applyPreferences();
 
-  protected slots:
-    void useLogChanged(int state);
-
   protected:
-    void updateLogWidgets(bool state);
 
-    QCheckBox* useLog;
+    QGroupBox* loggingBox;
     QCheckBox* lowerLog;
     QCheckBox* logFollowsNick;
     QLabel* logPathLabel;
     KLineEdit* logPathInput;
+    QLabel* scrollbackMaxLabel;
+    QSpinBox* scrollbackMaxSpin;
 
 };
 

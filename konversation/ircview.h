@@ -70,6 +70,9 @@ class IRCView : public KTextBrowser
 
     void pageUp();
     void pageDown();
+    
+    virtual void scrollToBottom();
+    virtual void removeSelectedText( int selNum = 0 );
 
   protected slots:
     void highlightedSlot(const QString& link);

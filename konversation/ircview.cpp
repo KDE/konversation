@@ -15,6 +15,8 @@
 // Comment this #define to try a different text widget
 // #define TABLE_VERSION
 
+#include <private/qrichtext_p.h>
+
 #include <qstylesheet.h>
 #include <qstringlist.h>
 #include <qregexp.h>
@@ -68,6 +70,9 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   urlToCopy=QString::null;
   resetScrollbar=false;
   autoTextToSend=QString::null;
+
+  setAutoFormatting(0);
+  setUndoRedoEnabled(0);
 
   popup=new QPopupMenu(this,"ircview_context_menu");
 
@@ -602,6 +607,28 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
   doAppend(line,true);
 }
 
+//without any display update stuff that freaks out the scrollview
+void IRCView::removeSelectedText( int selNum )
+{
+    QTextDocument* doc=document();
+    for ( int i = 0; i < (int)doc->numSelections(); ++i ) {
+      if ( i == selNum )
+        continue;
+      doc->removeSelection( i );
+    }
+    // ...snip...
+
+    doc->removeSelectedText( selNum, QTextEdit::textCursor() );
+
+    // ...snip...
+}
+
+void IRCView::scrollToBottom()
+{
+    //sync(); //sync freaks out the scrollview too
+    setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
+}
+
 void IRCView::doAppend(QString newLine,bool suppressTimestamps,bool important)
 {
   // Add line to buffer
@@ -629,30 +656,36 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps,bool important)
       line.insert(3,timeString);
 #endif
   }
-
   if(important || !KonversationApplication::preferences.getHideUnimportantEvents())
   {
-    buffer+=line;
     emit newText(highlightColor,important);
 
     // scroll view only if the scroll bar is already at the bottom
-#if QT_VERSION == 303
-    // Does not seem to work very well with QT 3.0.3
-    bool doScroll=true;
-#else
-    bool doScroll=((contentsHeight()-visibleHeight())==contentsY());
-#endif
-
-#ifdef TABLE_VERSION
-    setText("<qt><table cellpadding=\"0\" cellspacing=\"0\">"+buffer+"</table></qt>");
-#else
-    KTextBrowser::append(line);
-#endif
-
-    if(doScroll)
+    bool doScroll=KTextBrowser::verticalScrollBar()->value()==KTextBrowser::verticalScrollBar()->maxValue();
+    
+    line.remove('\n');// TODO why have newlines? we get <p>, so the \n are unnecessary...
+    
+    bool up=KTextBrowser::isUpdatesEnabled();
+    KTextBrowser::setUpdatesEnabled(FALSE);
+    
+    //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not at an end,
+    //             so the scrollbar wets its pants and forgets who it is for ten minutes
+    
+    if (doScroll) // TODO: make this eat multiple lines at once when the preference is changed so it doesn't take so long
     {
-      moveCursor(MoveEnd,false);
-      ensureVisible(0,contentsHeight());
+      int sbm=KonversationApplication::preferences.getScrollbackMax();
+      if (sbm)
+        for(sbm=paragraphs()-sbm;sbm>0;sbm--) //loop for two reasons: 1) preference changed 2) lines added while scrolled up
+          removeParagraph(0);
+    }
+    KTextBrowser::append(line);
+    document()->lastParagraph()->format();
+    resizeContents(contentsWidth(), document()->height());
+    KTextBrowser::setUpdatesEnabled(up);
+    if (doScroll)
+    {
+      setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
+      repaintChanged();
     }
   }
   if(!autoTextToSend.isEmpty())

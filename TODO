@@ -7,7 +7,6 @@ TODO-list for Konversation
 
 
 SHORT-TERM (URGENT):
-- Limit backlog to x lines or KB
 - /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
 - Add ETA counter for DCC transfers
 - Show / Hide tab types (status tabs ect.)
