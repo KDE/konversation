@@ -123,7 +123,6 @@ void DccTransferRecv::validateSaveToFileURL() {
 
 void DccTransferRecv::start()  // public slot
 {
-  return;  // DCCRECV is disabled temporarily
   if(getStatus() != Queued) return;
   kdDebug() << "DccTransferRecv::start()" << endl;
   //Check that we are saving it somewhere valid, and set up the directories.
