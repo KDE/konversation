@@ -105,14 +105,21 @@ void OSDWidget::showOSD( const QString &text, bool preemptive )
 {
     if ( isEnabled() && !text.isEmpty() )
     {
+        // Strip HTML tags, expand basic HTML entities
+        QString plainText = text.copy();
+        plainText.replace(QRegExp("</?(?:font|a|b|i)\\b[^>]*>"), QString(""));
+        plainText.replace(QString("&lt;"), QString("<"));
+        plainText.replace(QString("&gt;"), QString(">"));
+        plainText.replace(QString("&amp;"), QString("&"));
+
         if ( preemptive == false && timerMin->isActive() )
         {
-            textBuffer.append( text ); // queue
+            textBuffer.append( plainText ); // queue
         }
         else
         {
             if ( timer->isActive() ) timer->stop();
-            renderOSDText( text );
+            renderOSDText( plainText );
             if( !isVisible() )
             {
                 raise();
