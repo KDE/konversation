@@ -131,10 +131,19 @@ PrefsDialog::PrefsDialog(Preferences* preferences) :
 //  connect(this, SIGNAL(prefsChanged()), scriptsPage, SLOT(saveChanges()));
 
   connect(this, SIGNAL(aboutToShowPage(QWidget*)), this, SLOT(slotAboutToShowPage(QWidget*)));
+
+  KConfig* config = kapp->config();
+  config->setGroup("PreferencesDialog");
+  QSize newSize = size();
+  newSize = config->readSizeEntry("Size", &newSize);
+  resize(newSize);
 }
 
 PrefsDialog::~PrefsDialog()
 {
+  KConfig* config = kapp->config();
+  config->setGroup("PreferencesDialog");
+  config->writeEntry("Size", size());
 }
 
 void PrefsDialog::slotOk()

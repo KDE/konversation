@@ -30,6 +30,7 @@ ChannelDialog::ChannelDialog(const QString& title, QWidget *parent, const char *
 
   QLabel* channelLbl = new QLabel(i18n("&Channel:"), mainWidget);
   m_channelEdit = new QLineEdit(mainWidget);
+  m_channelEdit->setMaxLength(50);
   channelLbl->setBuddy(m_channelEdit);
   
   QLabel* passwordLbl = new QLabel(i18n("Pass&word:"), mainWidget);

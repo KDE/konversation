@@ -218,7 +218,8 @@ namespace Konversation {
   
     KConfig* config = kapp->config();
     config->setGroup("ServerListDialog");
-    QSize newSize = config->readSizeEntry("Size", &size());
+    QSize newSize = size();
+    newSize = config->readSizeEntry("Size", &newSize);
     resize(newSize);
   }
   
