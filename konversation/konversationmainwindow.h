@@ -100,7 +100,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void updateFonts();
     void updateTabPlacement();
     
-    void runScript( const QString &scriptname);
+    void runScript(const QString &destination, const QString &scriptname );
 
     Konversation::TrayIcon* systemTrayIcon() const { return tray; }
 

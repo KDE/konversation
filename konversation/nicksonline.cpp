@@ -40,6 +40,7 @@
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
+#include "konversationmainwindow.h"
 
 #ifdef USE_MDI
 NicksOnline::NicksOnline(QString caption): ChatWindow(caption)
@@ -624,13 +625,18 @@ void NicksOnline::doCommand(int id)
     switch(id)
     {
 	case(ciSendEmail):
-	  nickInfo->sendEmail();
+          Konversation::Addressbook::self()->sendEmail(addressee);
 	  return; //no need to refresh item
 	case(ciAddressbookEdit):
-          nickInfo->editAddressee();
+          Konversation::Addressbook::self()->editAddressee(addressee.uid());
 	  return; //no need to refresh item - nickinfo changed will be called anyway.
 	case(ciAddressbookChange):
-	  nickInfo->showLinkAddressbookUI();
+	  if(nickInfo)
+            nickInfo->showLinkAddressbookUI();
+	  else {
+            LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(server->getMainWindow(), NULL, nickname, server->getServerName(), server->getServerGroup(), addressee.realName());
+            linkaddressbookui->show();
+	  }
 	  break;
 
 	case ciAddressbookNew:

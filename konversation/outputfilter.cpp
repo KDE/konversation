@@ -733,7 +733,7 @@ namespace Konversation {
         else
         {
             KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
-            konv_app->getMainWindow()->runScript(parameter);
+            konv_app->getMainWindow()->runScript(destination, parameter);
         }
 
         return result;

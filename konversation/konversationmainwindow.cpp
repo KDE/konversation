@@ -30,6 +30,7 @@
 #include <kwin.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
+#include <dcopclient.h>
 #include <scriptmanager.h>
 
 #include <qpainter.h>
@@ -285,16 +286,31 @@ void KonversationMainWindow::setupScripts()
 //  KonversationApplication::preferences.setAliasList(aliasList);
 }
 
-void KonversationMainWindow::runScript( const QString &scriptname )
+void KonversationMainWindow::runScript(const QString &destination, const QString &scriptname )
 {
-  m_kscript->runScript( scriptname );
+  if(!frontServer) return; 
+
+  QStringList arguments;
+  arguments << frontServer->getServerName();
+  arguments << destination;
+  
+  m_kscript->runScript( scriptname, 0, arguments );
+  
 }
 
 void KonversationMainWindow::runScript( int mIId )
 {
+  if(!frontServer) return;
   kdDebug() << "Starting script engine..." << endl;
   kdDebug()<<"runScript( "<<mIId<<" ) ["<<m_scriptMenu->popupMenu()->text( mIId )<<"]"<<endl;
-  m_kscript->runScript( m_scriptMenu->popupMenu()->text( mIId ) );
+  QStringList arguments;
+  arguments << kapp->dcopClient()->appId();
+  arguments << frontServer->getServerName();
+  arguments << frontView->getName();
+  
+  kdDebug() << "with parameters " <<  frontServer->getServerName() << " and " << frontView->getName() << endl;
+  
+  m_kscript->runScript( m_scriptMenu->popupMenu()->text( mIId ), 0, arguments );
 }
 
 void KonversationMainWindow::switchToTabPageMode()
