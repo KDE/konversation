@@ -86,7 +86,7 @@ void DccPanel::dccSelected()
       case DccTransfer::Queued:
       case DccTransfer::Lookup:
       case DccTransfer::Connecting:
-        setButtons(true,false,true,false,false);
+        setButtons(true,true,true,false,false);
         break;
       case DccTransfer::Offering:
       case DccTransfer::Resuming:
