@@ -30,6 +30,7 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QWidget* newParent, Preferenc
   kcfg_DisableExpansions->setChecked(preferences->getDisableExpansion());
   kcfg_ShowRememberLine->setChecked(preferences->getShowRememberLineInAllWindows());
   kcfg_RedirectStatusMessages->setChecked(preferences->getRedirectToStatusPane());
+  kcfg_UseLiteralModes->setChecked(preferences->getUseLiteralModes());
 
   kcfg_ScrollBackLimit->setValue(preferences->getScrollbackMax());
   kcfg_AutoWhoLimit->setValue(preferences->getAutoWhoNicksLimit());
@@ -49,6 +50,7 @@ void PrefsPageChatWinBehavior::applyPreferences()
   preferences->setDisableExpansion(kcfg_DisableExpansions->isChecked());
   preferences->setShowRememberLineInAllWindows(kcfg_ShowRememberLine->isChecked());
   preferences->setRedirectToStatusPane(kcfg_RedirectStatusMessages->isChecked());
+  preferences->setUseLiteralModes(kcfg_UseLiteralModes->isChecked());
   preferences->setScrollbackMax(kcfg_ScrollBackLimit->value());
   preferences->setAutoWhoNicksLimit(kcfg_AutoWhoLimit->value());
   preferences->setAutoWhoContinuousEnabled(kcfg_autoWhoContinuous->isChecked());

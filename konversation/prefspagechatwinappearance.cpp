@@ -50,7 +50,6 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QWidget* newParent,Prefer
   kcfg_ShowQuickButtons->setChecked(preferences->getShowQuickButtons());
   kcfg_AutoUserhost->setChecked(preferences->getAutoUserhost());
   kcfg_ShowNicknameBox->setChecked(preferences->showNicknameBox());
-  kcfg_UseLiteralModes->setChecked(preferences->getUseLiteralModes());
 
   kcfg_ShowBackgroundImage->setChecked(preferences->getShowBackgroundImage());
 
@@ -88,7 +87,6 @@ void PrefsPageChatWinAppearance::applyPreferences()
   preferences->setAutoUserhost(kcfg_AutoUserhost->isChecked());
   preferences->setShowTopic(kcfg_ShowTopic->isChecked());
   preferences->setShowNicknameBox(kcfg_ShowNicknameBox->isChecked());
-  preferences->setUseLiteralModes(kcfg_UseLiteralModes->isChecked());
 }
 
 #include "prefspagechatwinappearance.moc"

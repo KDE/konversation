@@ -112,6 +112,9 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>Completion &amp;mode:</string>
                     </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>completionModeCBox</cstring>
+                    </property>
                 </widget>
                 <widget class="QComboBox" row="0" column="1" rowspan="1" colspan="3">
                     <item>

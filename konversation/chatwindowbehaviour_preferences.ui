@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>ChatwindowBehaviour_Config</class>
 <widget class="QWidget">
     <property name="name">
@@ -12,6 +12,12 @@
             <height>494</height>
         </rect>
     </property>
+    <property name="caption">
+        <string>ChatwindowBehaviour_Config</string>
+    </property>
+    <property name="whatsThis" stdset="0">
+        <string>Keep channel mode string as a combination of characters instead of translating them into human readable words. E.g. '*** Channel modes: no messages from outside' will become '*** Channel modes: n'</string>
+    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -19,110 +25,23 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QGroupBox" row="0" column="0">
+        <spacer row="2" column="0">
             <property name="name">
-                <cstring>groupBox3</cstring>
+                <cstring>spacer98</cstring>
             </property>
-            <property name="title">
-                <string>&amp;General</string>
+            <property name="orientation">
+                <enum>Vertical</enum>
             </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>kcfg_DisableExpansions</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Disable variable (e.g. %C, %B, %G...) e&amp;xpansion</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>Do not expand variables when sending text to the server. A variable starts with '%'; for example, %B will expand to the characters needed to make a text bold.</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>kcfg_BeepOnAsciiBel</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Bee&amp;p on incoming ASCII BEL</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>kcfg_RedirectStatusMessages</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Redirect all status messages to the server status window</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>kcfg_HideJoinPart</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Hide &amp;Join/Part/Nick events</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>kcfg_ShowRememberLine</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show remember line in all channels/&amp;&amp;&amp;queries</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="5" column="0">
-                    <property name="name">
-                        <cstring>textLabel1</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Scroll&amp;back limit:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_ScrollBackLimit</cstring>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>How many lines to keep in buffers, 0 = unlimitied</string>
-                    </property>
-                </widget>
-                <widget class="QSpinBox" row="5" column="1">
-                    <property name="name">
-                        <cstring>kcfg_ScrollBackLimit</cstring>
-                    </property>
-                    <property name="suffix">
-                        <string> lines</string>
-                    </property>
-                    <property name="specialValueText">
-                        <string>Unlimited</string>
-                    </property>
-                    <property name="maxValue">
-                        <number>1000</number>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>How many lines to keep in buffers, 0 = unlimitied</string>
-                    </property>
-                </widget>
-                <spacer row="5" column="2">
-                    <property name="name">
-                        <cstring>spacer1</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>230</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-            </grid>
-        </widget>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>160</height>
+                </size>
+            </property>
+        </spacer>
         <widget class="QGroupBox" row="1" column="0">
             <property name="name">
                 <cstring>kcfg_autoWhoContinuous</cstring>
@@ -207,7 +126,7 @@
                         <cstring>kcfg_WhoInterval</cstring>
                     </property>
                     <property name="enabled">
-                        <bool>true</bool>
+                        <bool>false</bool>
                     </property>
                     <property name="prefix">
                         <string>Every </string>
@@ -232,23 +151,124 @@
                 </widget>
             </grid>
         </widget>
-        <spacer row="2" column="0">
+        <widget class="QGroupBox" row="0" column="0">
             <property name="name">
-                <cstring>spacer98</cstring>
+                <cstring>groupBox3</cstring>
             </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
+            <property name="title">
+                <string>&amp;General</string>
             </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>131</height>
-                </size>
-            </property>
-        </spacer>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>kcfg_DisableExpansions</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Disable variable (e.g. %C, %B, %G...) e&amp;xpansion</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+X</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Do not expand variables when sending text to the server. A variable starts with '%'; for example, %B will expand to the characters needed to make a text bold.</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>kcfg_BeepOnAsciiBel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Bee&amp;p on incoming ASCII BEL</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>kcfg_RedirectStatusMessages</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Redirect all status messages to the server status window</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>kcfg_HideJoinPart</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Hide &amp;Join/Part/Nick events</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>kcfg_ShowRememberLine</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show remember line in all channels/&amp;&amp;&amp;queries</string>
+                    </property>
+                </widget>
+                <spacer row="6" column="2">
+                    <property name="name">
+                        <cstring>spacer1</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>230</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QLabel" row="6" column="0">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Scroll&amp;back limit:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kcfg_ScrollBackLimit</cstring>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>How many lines to keep in buffers, 0 = unlimitied</string>
+                    </property>
+                </widget>
+                <widget class="QSpinBox" row="6" column="1">
+                    <property name="name">
+                        <cstring>kcfg_ScrollBackLimit</cstring>
+                    </property>
+                    <property name="suffix">
+                        <string> lines</string>
+                    </property>
+                    <property name="specialValueText">
+                        <string>Unlimited</string>
+                    </property>
+                    <property name="maxValue">
+                        <number>1000</number>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>How many lines to keep in buffers, 0 = unlimitied</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>kcfg_UseLiteralModes</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use &amp;raw modes for mode changes</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+R</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
     </grid>
 </widget>
 <layoutdefaults spacing="6" margin="11"/>
