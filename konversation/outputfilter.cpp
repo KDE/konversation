@@ -222,8 +222,7 @@ namespace Konversation {
         {
             result = usage(i18n("Usage: %1JOIN <channel> [password]").arg(commandChar));
         } else {
-	  if(!channelName.startsWith("#") && !channelName.startsWith("!") && 
-	     !channelName.startsWith("&") && !channelName.startsWith("+"))
+	  if(!isAChannel(channelName))
 	    result.toServer = "JOIN #" + channelName.stripWhiteSpace();
 	  else
 	    result.toServer = "JOIN " + channelName;
