@@ -48,3 +48,6 @@ sayclip         Prints the contents of the clipboard on the current channel
 
 weather         Displays current weather using KWeather applet.
 		usage: /weather
+
+colorizer       Randomly colorizes the message.
+		usage: /colorize message

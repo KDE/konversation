@@ -1,4 +1,6 @@
 #!/bin/sh
+# Copyright (C) 2004 by İsmail Dönmez
+# Licensed under GPL v2 or later at your option
 
 PORT=$1
 SERVER=$2
