@@ -22,7 +22,7 @@ using namespace KNetwork;
 
 class Connection : public QObject
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
 
