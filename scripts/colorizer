@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# Copyright (C) 2004 by İsmail Dönmez
+# Copyright (C) 2004 by İsmail Dönmez, Wouter Coekaerts
 # Licensed under GPL v2 or later at your option
 
 use warnings;
@@ -9,36 +9,22 @@ my $PORT= shift;
 my $SERVER= shift;
 my $TARGET= shift;
 
-my $message = "";
-my $random;
-my $input;
-my @chars;
 my $i = 0;
-my $me = "";
 
 if(!@ARGV){
     exec ("dcop $PORT Konversation error \"Colorizer script needs a message argument!\" ");
 }
 
-$input = join " ", @ARGV;
+my $input = join " ", @ARGV;
 
 if( utf8::valid($input) ) {
     utf8::decode($input);
 }
 
-if($input =~ /^(\/[^ ]* )(.*)$/)
-{
-    $me=$1;
-    $input =$2;
-}
+my ($command, $arguments) = ($input =~ /^(\/\S*\s|)(.*)/);
+my @chars = split //, $arguments;
+@chars = map { "%C" . ((($i++)%15)+1) . $_ } @chars;
+$arguments = join "", @chars;
 
-@chars = split //, $input;
+system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$command$arguments\" ");
 
-foreach (@chars) {
-  # Rainbow colors. Code courtesy of boren
-  $i = ($i+1)%16;
-  $i++ if $i == 1;
-  $message = $message."%C".$i.$_;
-}
-
-system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$me $message\" ");
