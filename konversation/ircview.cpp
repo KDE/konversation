@@ -56,7 +56,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   resetScrollbar=TRUE;
   offset=0;
 
-  setAutoFormatting(0);
+  setAutoFormatting(QTextEdit::AutoNone);
   setUndoRedoEnabled(0);
 
   popup=new QPopupMenu(this,"ircview_context_menu");
