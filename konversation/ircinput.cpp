@@ -149,9 +149,9 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
         case Key_V:
         {
             if ( keyEvent->state() & ControlButton ) {
-                paste();
+                insert( kapp->clipboard()->text( QClipboard::Clipboard ) );
+                return true;
             }
-            return true;
         }
         break;
 
