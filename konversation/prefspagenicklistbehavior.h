@@ -26,6 +26,7 @@ class PrefsPageNicklistBehavior : public NicklistBehavior_Config
     void applyPreferences();
 
   protected slots:
+    void updateArrows();
     void moveUp();
     void moveDown();
 

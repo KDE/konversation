@@ -48,6 +48,7 @@ PrefsPageNicklistBehavior::PrefsPageNicklistBehavior(QWidget* newParent, Prefere
   kcfg_UpButton->setIconSet(SmallIconSet("up"));
   kcfg_DownButton->setIconSet(SmallIconSet("down"));
 
+  connect(kcfg_SortOrder,SIGNAL (selectionChanged()),this,SLOT (updateArrows()) );
   connect(kcfg_UpButton,SIGNAL (clicked()),this,SLOT (moveUp()) );
   connect(kcfg_DownButton,SIGNAL (clicked()),this,SLOT (moveDown()) );
 }
@@ -77,6 +78,13 @@ void PrefsPageNicklistBehavior::applyPreferences()
   }
 }
 
+void PrefsPageNicklistBehavior::updateArrows()
+{
+  kcfg_UpButton->setEnabled( kcfg_SortOrder->childCount()>1 && kcfg_SortOrder->selectedItem()!=kcfg_SortOrder->firstChild() );
+
+  kcfg_DownButton->setEnabled( kcfg_SortOrder->childCount()>1 && kcfg_SortOrder->selectedItem()!=kcfg_SortOrder->lastItem() );
+}
+
 void PrefsPageNicklistBehavior::moveUp()
 {
   QListViewItem* item = kcfg_SortOrder->selectedItem();
@@ -89,6 +97,8 @@ void PrefsPageNicklistBehavior::moveUp()
       item->itemAbove()->moveItem(item);
     }
   }
+
+  updateArrows();
 }
 
 void PrefsPageNicklistBehavior::moveDown()
@@ -98,6 +108,8 @@ void PrefsPageNicklistBehavior::moveDown()
   if(item && item != kcfg_SortOrder->lastItem()) {
     item->moveItem(item->itemBelow());
   }
+
+  updateArrows();
 }
 
 #include "prefspagenicklistbehavior.moc"
