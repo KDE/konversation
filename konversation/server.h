@@ -521,7 +521,7 @@ class Server : public QObject
     int currentLag;
 
     QString ircName;
-    QString inputBuffer;
+    QStringList inputBuffer;
     QStringList outputBuffer;
     QString nickname;
     QString ownIpByWHOIS;

@@ -836,17 +836,11 @@ QString Server::getNextNickname()
 
 void Server::processIncomingData()
 {
-  int pos;
-
-  pos=inputBuffer.find('\n');
-  if(pos!=-1)
+  if(inputBuffer.count())
   {
-    QString line=inputBuffer.left(pos);
-
-    inputBuffer=inputBuffer.mid(pos+1);
-
-    if(rawLog) rawLog->appendRaw(line);
-    inputFilter.parseLine(line, mainWindow);
+    if(rawLog) rawLog->appendRaw(inputBuffer.front());
+    inputFilter.parseLine(inputBuffer.front(), mainWindow);
+    inputBuffer.pop_front();
   }
 }
 
@@ -883,10 +877,6 @@ void Server::incoming()
   static QCString qcsRemainBuffer;
   QCString qcsBuffer = qcsRemainBuffer + QCString(buffer);
 
-  // remove CR (\r)
-  while(qcsBuffer.contains('\r'))
-    qcsBuffer.remove(qcsBuffer.find('\r'),1);
-
   // split buffer to lines
   QValueList<QCString> qcsBufferLines;
   int lastLFposition = -1;
@@ -900,7 +890,7 @@ void Server::incoming()
   {
     bool isUtf8 = KStringHandler::isUtf8(qcsBufferLines.front());
     if(isUtf8)
-      inputBuffer += KStringHandler::from8Bit(qcsBufferLines.front()) + "\n";
+      inputBuffer << KStringHandler::from8Bit(qcsBufferLines.front());
     else
     {
       // set channel encoding if specified
@@ -962,7 +952,7 @@ void Server::incoming()
         codec=QTextCodec::codecForName(channelEncoding.ascii());
       else
         codec=QTextCodec::codecForName(identity->getCodec().ascii());
-      inputBuffer += codec->toUnicode(qcsBufferLines.front()) + "\n";
+      inputBuffer << codec->toUnicode(qcsBufferLines.front());
     }
     qcsBufferLines.pop_front();
   }
