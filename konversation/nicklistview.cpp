@@ -146,7 +146,7 @@ void NickListView::setWhatsThis()
 			  "<tr><th><img src=\"normal\"></th><td>This person does not have any special privileges.</td></tr>"
 			  "<tr><th><img src=\"normalaway\"></th><td>This indicates that this person is currently away.</td></tr>"
 			  "</table><p>"
-			  "The meaning of admin, owner and halfop varies between different irc servers.<p>"
+			  "The meaning of admin, owner and halfop varies between different IRC servers.<p>"
 			  "Hovering over any nick shows their current status, as well as any information in the addressbook for this person.  See the Konversation Handbook for more information."
 			  "</qt>"
 			  ));
