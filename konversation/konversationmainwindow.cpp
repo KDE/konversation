@@ -535,14 +535,17 @@ ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
   return channelListPanel;
 }
 
-void KonversationMainWindow::newText(QWidget* view,const QString& highlightColor,bool important)
+void KonversationMainWindow::newText(QWidget* widget,const QString& highlightColor,bool important)
 {
+  ChatWindow* view=static_cast<ChatWindow*>(view);
+
   if(view!=getViewContainer()->currentPage())
   {
     getViewContainer()->changeTabState(view,true,important,highlightColor);
 
     emit startNotification(view);
-  } else if(!isActiveWindow() && static_cast<ChatWindow*>(view)->getServer()->connected())
+  }
+  else if(!isActiveWindow() && view->getServer() && view->getServer()->connected())
   {
     emit startNotification(view);
   }
