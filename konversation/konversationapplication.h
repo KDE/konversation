@@ -60,6 +60,9 @@ class KonversationApplication : public KApplication
     OSDWidget* osd;
     
     Konversation::Sound* sound();
+    
+    // Returns list of pointers to Servers.
+    const QPtrList<Server> getServerList();
 
   signals:
     void catchUrl(const QString& who,const QString& url);

@@ -948,4 +948,7 @@ Konversation::Sound* KonversationApplication::sound()
   return m_sound;
 }
 
+// Returns list of pointers to Servers.
+const QPtrList<Server> KonversationApplication::getServerList() { return serverList; }
+
 #include "konversationapplication.moc"

@@ -36,10 +36,16 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
   setType(ChatWindow::NicksOnline);
 
   nickListView=new KListView(this);
-  
+
+#ifdef USE_NICKINFO
+  nickListView->addColumn(i18n("Server/Nickname/Channel"));
+  nickListView->addColumn(i18n("Additional Information"));
+  nickListView->setFullWidth(false);
+#else
   nickListView->addColumn(i18n("Server/Nickname"));
-  nickListView->setRootIsDecorated(false);
   nickListView->setFullWidth(true);
+#endif
+  nickListView->setRootIsDecorated(false);
   
   setMargin(KDialog::marginHint());
   setSpacing(KDialog::spacingHint());
@@ -52,34 +58,41 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
   connect(editButton,SIGNAL (clicked()),SIGNAL (editClicked()) );
   connect(nickListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT(processDoubleClick(QListViewItem*)));
+  
+#ifdef USE_NICKINFO
+  // Display info for all currently-connected servers.
+  refreshAllServerOnlineLists();
+  // Connect and start refresh timer.
+  timer = new QTimer(this, "nicksOnlineTimer");
+  connect(timer, SIGNAL (timeout()), this, SLOT(timerFired()));
+  // TODO: User preference for refresh interval.
+  timer->start(8000);
+#endif
 }
 
 NicksOnline::~NicksOnline()
 {
+#ifdef USE_NICKINFO
+  timer->stop();
+  delete timer;
+#endif
   delete nickListView;
 }
 
-void NicksOnline::setOnlineList(const QString& serverName,const QStringList& list,bool changed)
-{
 #ifdef USE_NICKINFO
+void NicksOnline::updateServerOnlineList(Server* server, bool changed)
+{
+  QString serverName = server->getServerName();
   QListViewItem* serverRoot=nickListView->findItem(serverName,0);
   // If server is not in our list, or if the list changed, then display the new list.
   if ( true )
   {
     delete serverRoot;
-    if (nickListView->columns() == 1)
-    {
-      nickListView->addColumn(i18n("Additional Information"));
-      nickListView->setColumnText(0, i18n("Server/Nickname/Channel"));
-    }
     KListViewItem* newServerRoot=new KListViewItem(nickListView,serverName);
     // Get a green LED for flagging of joined channels.
     Images leds;
     QIconSet currentLeds = leds.getGreenLed(false);
     QPixmap joinedLed = currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
-    // Get the server object corresponding to the server name.
-    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-    Server* server = konvApp->getServerByName(serverName);
     // List online nicknames.
     const NickInfoList* nickInfoList = server->getNicksOnline();
     NickInfoListIterator itOnline(*nickInfoList);
@@ -148,7 +161,36 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
     nickListView->adjustColumn(0);
     nickListView->adjustColumn(1);
   }
+}
+#else
+void NicksOnline::updateServerOnlineList(Server*, bool) {}
+#endif
 
+void NicksOnline::refreshAllServerOnlineLists()
+{
+  // Display info for all currently-connected servers.
+  nickListView->clear();
+  KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+  QPtrList<Server> serverList = konvApp->getServerList();
+  Server* server;
+  for ( server = serverList.first(); server; server = serverList.next() )
+  {
+    updateServerOnlineList(server, true);
+  }
+}
+
+void NicksOnline::timerFired()
+{
+  refreshAllServerOnlineLists();
+}
+
+void NicksOnline::setOnlineList(const QString& serverName,const QStringList& list,bool changed)
+{
+#ifdef USE_NICKINFO
+  // Get the server object corresponding to the server name.
+  KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+  Server* server = konvApp->getServerByName(serverName);
+  updateServerOnlineList(server, changed);
 #else
 
   QListViewItem* serverRoot=nickListView->findItem(serverName,0);

@@ -43,9 +43,14 @@ class NicksOnline : public ChatWindow
     
   protected slots:
     void processDoubleClick(QListViewItem* item);
+    void timerFired();
 
   protected:
+    void updateServerOnlineList(Server* server, bool changed);
+    void refreshAllServerOnlineLists();
+
     KListView* nickListView;
+    QTimer* timer;
 };
 
 #endif
