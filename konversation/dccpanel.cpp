@@ -83,7 +83,6 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   dccListView->setColumnAlignment(Column::TimeRemaining, AlignRight);
   dccListView->setColumnAlignment(Column::CPS,           AlignRight);
   
-  connect(dccListView,SIGNAL (itemAdded(QListViewItem*)),this,SLOT (slotItemAdded(QListViewItem*)) );
   connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (selectionChanged()) );
   
   // button
