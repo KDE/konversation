@@ -16,6 +16,7 @@
 
 #include <qtooltip.h>
 #include "server.h"
+#include <klocale.h>
 /*
   @author Gary Cramblitt
 */
@@ -168,5 +169,107 @@ void NickInfo::refreshAddressee() {
     Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 4);
 }
 
+QString NickInfo::tooltip() {
+
+  QString strTooltip;
+  QTextStream tooltip( &strTooltip, IO_WriteOnly );
+  tooltip << "<qt>";
+  
+  tooltip << "<table cellspacing=\"0\" cellpadding=\"0\">";
+  tooltipTableData(tooltip);
+  tooltip << "</table></qt>";
+  return strTooltip;
+}
+    
+void NickInfo::tooltipTableData(QTextStream &tooltip) {
+
+  tooltip << "<tr><td colspan=\"2\" valign=\"top\">";
+
+  bool dirty = false;
+  KABC::Picture photo = addressee.photo();
+  KABC::Picture logo = addressee.logo();
+  bool isimage=false;
+   if(photo.isIntern()) {
+    QMimeSourceFactory::defaultFactory()->setImage( "photo", photo.data() );
+    tooltip << "<img src=\"photo\">";
+    dirty=true;
+    isimage=true;
+  } else if(!photo.url().isEmpty()) {
+    //JOHNFLUX FIXME TODO:
+    //Are there security problems with this?  loading from an external refrence?
+    //Assuming not. 
+    tooltip << "<img src=\"" << photo.url() << "\">";
+    dirty=true;
+    isimage=true;
+  }
+  if(logo.isIntern()) {
+    QMimeSourceFactory::defaultFactory()->setImage( "logo", logo.data() );
+    tooltip << "<img src=\"logo\">";
+    dirty=true;
+    isimage=true;
+  } else if(!logo.url().isEmpty()) {
+    //JOHNFLUX FIXME TODO:
+    //Are there security problems with this?  loading from an external refrence?
+    //Assuming not. 
+    tooltip << "<img src=\"" << logo.url() << "\">";
+    dirty=true;
+    isimage=true;
+  }
+  tooltip << "<b>" << (isimage?"":"<center>");
+  if(!addressee.formattedName().isEmpty()) {
+    tooltip << addressee.formattedName();
+    dirty = true;
+  } else if(!getRealName().isEmpty() && getRealName().lower() != getNickname().lower()) {
+    tooltip << getRealName();
+    dirty = true;
+  }
+  else {
+    tooltip << getNickname();
+    //Don't set dirty if all we have is their nickname
+  }
+  tooltip << (isimage?"":"</center>") << "</b>";
+  
+
+  
+  tooltip << "</td></tr>";
+  if(!addressee.emails().isEmpty()) {
+    tooltip << "<tr><td><b>" << i18n("Email") << ": </b></td><td>";
+    tooltip << addressee.emails().join(", ");
+    tooltip << "</td></tr>";
+    dirty=true;
+  }
+
+  if(!addressee.organization().isEmpty()) {
+    tooltip << "<tr><td><b>" << addressee.organizationLabel() << ": </b></td><td>" << addressee.organization() << "</td></tr>";
+    dirty=true;
+  }
+  if(!addressee.role().isEmpty()) {
+    tooltip << "<tr><td><b>" << addressee.roleLabel() << ": </b></td><td>" << addressee.role() << "</td></tr>";
+    dirty=true;
+  }
+  KABC::PhoneNumber::List numbers = addressee.phoneNumbers();
+  for( KABC::PhoneNumber::List::Iterator it = numbers.begin(); it != numbers.end(); ++it) {
+    tooltip << "<tr><td><b>" << (*it).label() << ": </b></td><td>" << (*it).number() << "</td></tr>";
+    dirty=true;
+  }
+  if(!addressee.birthday().toString().isEmpty() ) {
+    tooltip << "<tr><td><b>" << addressee.birthdayLabel() << ": </b></td><td>" << addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
+    dirty=true;
+  }
+  if(!getHostmask().isEmpty()) {
+    tooltip << "<tr><td><b>" << i18n("Hostmask") << ": </b></td><td>" << getHostmask() << "</td></tr>";
+    dirty=true;
+  }
+  if(isAway() && !getAwayMessage().isEmpty()) {
+    tooltip << "<tr><td><b>" << i18n("Away Message") << ": </b></td><td>" << getAwayMessage() << "</td></tr>";
+    dirty=true;
+  }
+  if(!getOnlineSince().toString().isEmpty()) {
+    tooltip << "<tr><td><b>" << i18n("Online Since") << ": </b></td><td>" << getPrettyOnlineSince() << "</td></tr>";
+    dirty=true;
+  }
+				
+}
+    
 
 #include "nickinfo.moc"

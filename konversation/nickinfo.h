@@ -85,7 +85,13 @@ class NickInfo : public QObject, public KShared
      */
     void setOnlineSince(const QDateTime& datetime);
     void refreshAddressee();
-    
+    /** Returns html describing this nickInfo - useful for tooltips when hovering over this nick.
+     */
+    QString tooltip();
+    /** Returns just the <tr><td>..   data for a tooltip.
+     *  Used so that channelNick->tooltip()  can call this, then append on its own information.
+     */
+    void tooltipTableData(QTextStream &tooltip);
   protected:
     QString nickname;
     Server* owningServer;

@@ -34,6 +34,7 @@
 #include "konversationapplication.h"
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
+#include "linkaddressbook/nicksonlinetooltip.h"
 
 #ifdef USE_NICKINFO
 #include "images.h"
@@ -59,6 +60,10 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
   m_nickListView->addColumn(i18n("Additional Information"));
   m_nickListView->setFullWidth(false);
   m_nickListView->setRootIsDecorated(true);
+  m_nickListView->setShowToolTips(false);
+    
+  m_tooltip = new Konversation::KonversationNicksOnlineToolTip(m_nickListView->viewport(), this);
+    
 #else
   m_nickListView->addColumn(i18n("Server/Nickname"));
   m_nickListView->setFullWidth(true);
@@ -127,6 +132,11 @@ NicksOnline::~NicksOnline()
 #endif
   delete m_nickListView;
 }
+
+KListView* NicksOnline::getNickListView() {
+  return m_nickListView;
+}
+    
 
 /**
 * Returns the named child of parent item in a KListView.
@@ -435,6 +445,15 @@ bool NicksOnline::getItemServerAndNick(const QListViewItem* item, QString& serve
     nickname = item->text(nlvcServerNickChannel);
     if (nickname == i18n("Offline")) return false;
     return true;
+}
+
+NickInfoPtr NicksOnline::getNickInfo(const QListViewItem* item) {
+    QString serverName;
+    QString nickname;
+    getItemServerAndNick(item, serverName, nickname);
+    if(!serverName || !nickname) return NULL;
+    Server *server = static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
+    return server->getNickInfo(nickname);
 }
 
 /**

@@ -23,7 +23,7 @@
 // Konversation includes.
 #include "nickinfo.h"
 #include "chatwindow.h"
-
+#include "linkaddressbook/nicksonlinetooltip.h"
 /*
   @author Dario Abatianni
 */
@@ -55,6 +55,9 @@ class NicksOnline : public ChatWindow
     NicksOnline(QWidget* parent);
 #endif
     ~NicksOnline();
+    KListView* getNickListView();
+	
+    NickInfoPtr NicksOnline::getNickInfo(const QListViewItem* item);
 
   signals:
     void editClicked();
@@ -129,6 +132,8 @@ class NicksOnline : public ChatWindow
     *                          about the nick.
     */
     QString getNickAdditionalInfo(NickInfoPtr nickInfo);
+
+	
     /**
     * Invokes the KAddressBook contact editor for the specified contact id.
     * @param uid               Id of the contact.
@@ -172,6 +177,8 @@ class NicksOnline : public ChatWindow
     QPushButton* m_editContactButton;
     QPushButton* m_changeAssociationButton;
     QPushButton* m_deleteAssociationButton;
+    Konversation::KonversationNicksOnlineToolTip *m_tooltip;
+	
 };
 
 #endif
