@@ -14,33 +14,39 @@
 #include "konversationsound.h"
 #include <config.h>
 
-#ifdef USE_ARTS
 
 #include <kurl.h>
 
+#ifdef USE_ARTS
 #include <arts/kartsserver.h>
 #include <arts/kartsdispatcher.h>
 #include <arts/kplayobject.h>
 #include <arts/kplayobjectfactory.h>
+#endif
 
 namespace Konversation {
   Sound::Sound(QObject *parent, const char *name)
     : QObject(parent, name)
   {
+#ifdef USE_ARTS
     soundServer = new KArtsServer;
     dispatcher = new KArtsDispatcher;
+#endif
   }
   
   Sound::~Sound()
   {
+#ifdef USE_ARTS
     delete soundServer;
     soundServer = 0;
     delete dispatcher;
     dispatcher = 0;
+#endif
   }
 
   void Sound::play(const KURL& url)
   {
+#ifdef USE_ARTS
     if(url.isEmpty() || !dispatcher || !soundServer) {
       return;
     }
@@ -51,9 +57,9 @@ namespace Konversation {
     if(playObj) {
       playObj->play();
     }
+#endif
   }
 }
-#endif
 
 #include "konversationsound.moc"
 

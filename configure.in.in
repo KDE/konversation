@@ -1,0 +1,5 @@
+if test "$build_arts" = "yes"; then
+	AC_DEFINE(USE_ARTS, 1, [If we want to use aRts])
+	LIB_ARTS="-lartskde"
+	AC_SUBST(LIB_ARTS)
+fi
