@@ -173,8 +173,9 @@ void ChannelListPanel::refreshList()
 
   updateUsersChannels();
 
+/* No good idea: If the server is "temporary loaded" they stay disabled :-(
   applyFilter->setEnabled(false);
-  refreshListButton->setEnabled(false);
+  refreshListButton->setEnabled(false); */
 
   emit refreshChannelList();
 }
