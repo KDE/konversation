@@ -50,7 +50,7 @@ EditNotifyDialog::EditNotifyDialog(QWidget* parent,
   QWhatsThis::add(m_networkNameCombo, networkNameWT);
   networkNameLabel->setBuddy(m_networkNameCombo);
   
-  QLabel* nicknameLabel=new QLabel(i18n("&Nickname:"),page);
+  QLabel* nicknameLabel=new QLabel(i18n("N&ickname:"),page);
   QString nicknameWT = i18n(
       "<qt>The nickname to watch for when connected to a server in the network.</qt>");
   QWhatsThis::add(nicknameLabel, nicknameWT);
