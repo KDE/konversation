@@ -28,6 +28,12 @@ class InsertCharDialog : public KDialogBase
     
     QChar chr();
   
+  protected slots:
+    virtual void slotOk();
+  
+  signals:
+    void insertChar(const QChar&);
+  
   private:
     KCharSelect* m_charTable;
 };

@@ -54,6 +54,10 @@ class TrayIcon;
 class LedTabWidget;
 #endif
 
+namespace Konversation
+{
+  class InsertCharDialog;
+}
 
 class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 {
@@ -157,7 +161,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void clearWindow();
     void closeQueries();
     
-    void insertCharacter();    
+    void insertCharacter();
+    void insertChar(const QChar& chr);
 
   protected:
     enum StatusID
@@ -209,6 +214,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     TrayIcon* tray;
 
     bool m_closeApp;
+    
+    Konversation::InsertCharDialog* m_insertCharDialog;
 };
 
 #endif

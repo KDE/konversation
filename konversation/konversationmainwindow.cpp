@@ -1319,11 +1319,17 @@ void KonversationMainWindow::resizeEvent(QResizeEvent* ev)
 
 void KonversationMainWindow::insertCharacter()
 {
-  Konversation::InsertCharDialog dlg(frontView->getTextView()->font().family(), this);
-  
-  if(dlg.exec() == QDialog::Accepted) {
-    frontView->appendInputText(dlg.chr());
+  if(!m_insertCharDialog) {
+    m_insertCharDialog = new Konversation::InsertCharDialog(frontView->getTextView()->font().family(), this);
+    connect(m_insertCharDialog, SIGNAL(insertChar(const QChar&)), this, SLOT(insertChar(const QChar&)));
   }
+  
+  m_insertCharDialog->show();
+}
+
+void KonversationMainWindow::insertChar(const QChar& chr)
+{
+  frontView->appendInputText(chr);
 }
 
 #include "konversationmainwindow.moc"

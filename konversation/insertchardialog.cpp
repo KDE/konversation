@@ -19,8 +19,8 @@ namespace Konversation {
 
 InsertCharDialog::InsertCharDialog(const QString& font, QWidget *parent, const char *name)
   : KDialogBase(parent, name, true, i18n("Insert Character"), 
-  KDialogBase::Ok | KDialogBase::Cancel,
-  KDialogBase::Ok, true)
+  KDialogBase::Ok | KDialogBase::Close,
+  KDialogBase::Ok, false)
 {
   setButtonOK(KGuiItem(i18n("&Insert"), "ok", i18n("Insert a character")));
   
@@ -36,6 +36,11 @@ InsertCharDialog::~InsertCharDialog()
 QChar InsertCharDialog::chr()
 {
   return m_charTable->chr();
+}
+
+void InsertCharDialog::slotOk()
+{
+  emit insertChar(m_charTable->chr());
 }
 
 };
