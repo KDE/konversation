@@ -114,6 +114,8 @@ KonversationApplication::KonversationApplication()
 
   // prepare dcop interface
   dcopObject=new KonvDCOP;
+  kapp->dcopClient()->registerAs("konversation");
+  kapp->dcopClient()->setDefaultObject(dcopObject->objId());
   identDCOP=new KonvIdentDCOP;
   prefsDCOP=new KonvPrefsDCOP;
   if(dcopObject)

@@ -32,11 +32,6 @@ KonvDCOP::KonvDCOP()
   // reset hook counter
   hookId=0;
 
-  if(!kapp->dcopClient()->isRegistered())
-  {
-    kapp->dcopClient()->registerAs("konversation");
-    kapp->dcopClient()->setDefaultObject(objId());
-  }
   KConfig *config = KGlobal::config();
   config->setGroup("AutoAway");  //TODO - add this to preferences somewhere
 
@@ -198,10 +193,6 @@ KonvIdentDCOP::KonvIdentDCOP()
              : DCOPObject("KonvDCOPIdentity"),
                QObject(0, "KonvDCOPIdentity")
 {
-  if (!kapp->dcopClient()->isRegistered()) {
-    kapp->dcopClient()->registerAs("konversation");
-    kapp->dcopClient()->setDefaultObject(objId());
-  }
 }
 
 void KonvIdentDCOP::setrealName(const QString &/*identity*/, const QString& /*name*/)
@@ -347,10 +338,6 @@ KonvPrefsDCOP::KonvPrefsDCOP ()
              : DCOPObject("KonvDCOPPreferences"),
                QObject(0, "KonvDCOPPreferences")
 {
-  if (!kapp->dcopClient()->isRegistered()) {
-    kapp->dcopClient()->registerAs("konversation");
-    kapp->dcopClient()->setDefaultObject(objId());
-  }
 }
 
 bool KonvPrefsDCOP::getAutoReconnect()
