@@ -53,3 +53,4 @@ Automatically gzip files before DCC SEND
 Compute md5sum over DCCs and send / display the hash after transfer
 Import notify list from .ircrc
 PgUp / Pg/Dn scrolls text
+Notify with more than 500 characters

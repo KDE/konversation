@@ -175,7 +175,7 @@ void IRCInput::paste()
     {
       int doPaste=KMessageBox::Yes;
 
-      if(text.length()>512)
+      if(text.length()>256 || text.contains('\n')>2)
       {
         doPaste=KMessageBox::warningYesNo
                 (

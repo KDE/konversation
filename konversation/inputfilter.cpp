@@ -905,8 +905,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       default:
         {
-          // All yet unknown messages go into the frontmost window unaltered
-          server->appendStatusMessage(command,parameterList.join(" ")+" "+trailing);
+          // All yet unknown messages go into the frontmost window without the
+          // preceeding nickname
+          server->appendStatusMessage(command,parameterList.join(" ").section(' ',1)+" "+trailing);
         }
     }
   }

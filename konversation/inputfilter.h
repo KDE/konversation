@@ -24,6 +24,7 @@
 /*
   @author Dario Abatianni
 */
+
 class Server;
 
 class InputFilter : public QObject
