@@ -1073,11 +1073,14 @@ void Channel::setTopicAuthor(const QString& newAuthor)
     topicAuthorUnknown=false;
   }
 }
-void Channel::updateMode(ChannelNickPtr sourceChannelNick, char mode, bool plus, const QString &parameter)
+void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString &parameter)
 {
+  //Note for future expansion: doing server->getChannelNick(getName(), sourceNick);  may not return a valid channelNickPtr if the
+  //mode is updated by the server.
+  
+
   QString message(QString::null);
   ChannelNickPtr parameterChannelNick;
-  QString sourceNick = sourceChannelNick->getNickname();
 
   bool fromMe=false;
   bool toMe=false;

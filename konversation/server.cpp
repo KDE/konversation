@@ -1729,13 +1729,8 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
 
   Channel* channel=getChannelByName(channelName);
 
-  ChannelNickPtr updaterNick = getChannelNick(channelName, updater);
-  if(!updaterNick) {
-	  kdDebug() << "in updateChannelMode, could not find updater nick " << updater << " for channel " << channelName << endl;
-	  return;
-  }
   if(channel) //Let the channel be verbose to the screen about the change, and update channelNick
-	  channel->updateMode(updaterNick, mode, plus, parameter);
+	  channel->updateMode(updater, mode, plus, parameter);
   // TODO: What is mode character for owner?
   // Answer from JOHNFLUX - I think that admin is the same as owner.  Channel.h has owner as "a"
   QString userModes="vho?a";    // voice halfop op owner admin
@@ -1743,7 +1738,7 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
   if (modePos > 0)
   {
     ChannelNickPtr updateeNick = getChannelNick(channelName, parameter);
-    if(!updaterNick) {
+    if(!updateeNick) {
 	  kdDebug() << "in updateChannelMode, could not find updatee nick " << parameter << " for channel " << channelName << endl;
 	  kdDebug() << "This could indicate an obscure race condition that is safely being handled (like the mode of someone changed and they quit almost simulatanously, or it could indicate an internal error.";
 	  //TODO Do we need to add this nick?
