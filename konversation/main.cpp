@@ -26,7 +26,7 @@
 #endif
 
 /*
-  Don't use i18n() here, use I18N_NOOP() instetime.h>ad!
+  Don't use i18n() here, use I18N_NOOP() instead!
   i18n() will only work as soon as a kapplication object was made.
 */
 
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
   aboutData.addAuthor("Alex Zepeda",I18N_NOOP("DCOP interface"),"garbanzo@hooked.net");
   aboutData.addAuthor("Stanislav Karchebny",I18N_NOOP("Non-Latin1-Encodings"),"berkus@users.sourceforge.net");
   aboutData.addAuthor("Mickael Marchand",I18N_NOOP("Konsole part view"),"marchand@kde.org");
-  aboutData.addAuthor("Peter Simonsson",I18N_NOOP("Color picker, IRC color preferences, KNotify events"),"psn@linux.se");
+  aboutData.addAuthor("Peter Simonsson",I18N_NOOP("Color picker, IRC color preferences, KNotify events, Systray notification, Shell style completion"),"psn@linux.se");
   aboutData.addAuthor("Christian Muehlhaeuser",I18N_NOOP("Multiple modes extension, Close widget placement, OSD functionality"),"chris@chris.de");
 
   aboutData.addCredit("Frauke Oster",I18N_NOOP("System tray patch"),"frauke@frsv.de");
