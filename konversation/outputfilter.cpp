@@ -421,7 +421,7 @@ void OutputFilter::parseMsg(const QString &myNick, const QString &parameter)
     toServer="PRIVMSG "+recipient+" :"+message;
     output=message;
   }
-  type=recipient;
+  type="-> "+recipient;
   query=true;
 }
 

@@ -156,12 +156,7 @@ void ChatWindow::append(const QString& nickname,const QString& message)
 
 void ChatWindow::appendQuery(const QString& nickname,const QString& message)
 {
-  kdDebug() << nickname << " " << getName() << endl;
-
-  if(nickname.lower()==getName().lower())
-    textView->appendQuery(nickname,message);
-  else
-    textView->appendQuery("-> "+nickname,message);
+  textView->appendQuery(nickname,message);
 }
 
 void ChatWindow::appendAction(const QString& nickname,const QString& message)
