@@ -1,4 +1,8 @@
 Changes from 0.14 to 0.15
+- Get default username/ident information from system
+- Support for bouncer prefixes in nick completion
+- Dcc port range support
+- Scripts now works with /script or /exec script
 - Improved bidi support.
 - Cleaned up settings dialog
 
