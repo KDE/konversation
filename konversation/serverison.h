@@ -36,8 +36,7 @@ class ServerISON : public QObject
     ServerISON(Server* server);
     /**
      * Returns a list of nicks that we want to know whether they are online
-     * of offline.  This function is called, and the result sent to the
-     * server as an /ISON command.
+     * of offline.  
      * 
      * Calls getAddressees() and merges with the Watch List from preferences.
      * The resulting nicks don't have the servername/servergroup attached.
@@ -45,6 +44,13 @@ class ServerISON : public QObject
      * @returns              A list of nicks that we want to know if they are on or not.
      * 
      * @see getAddressees()
+     */
+    QStringList getWatchList();
+    /**
+     * The same list as getWatchList, but with nicks in joined channels eliminated.
+     * There is no point in performing an ISON on such nicks because we already
+     * know they are online.  This function is called, and the result sent to the
+     * server as an /ISON command.
      */
     QStringList getISONList();
     
@@ -75,6 +81,8 @@ class ServerISON : public QObject
     void addressbookChanged();
     void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);
     void slotPrefsChanged();
+    void slotChannelMembersChanged(Server* server, const QString& channelName, bool joined, bool parted, const QString& nickname);
+    void slotChannelJoinedOrUnjoined(Server* server, const QString& channelName, bool joined);
        
   private:
     /** Map of all offline nicks in the addressbook associated with this server
@@ -87,6 +95,10 @@ class ServerISON : public QObject
     /// List of nicks to watch that come from addressbook.
     QStringList m_addresseesISON;
     /// List from above merged with Watch List from preferences.
+    QStringList m_watchList;
+    /// List from above but with nicks that are in joined channels eliminated.
+    /// There is no point in doing an ISON on such nicks because we know they are
+    /// online in one of the channels the user is in.
     QStringList m_ISONList;
     /// If this is true, then we need to call recalculateAddressee before returning m_ISONList
     bool m_ISONList_invalid;

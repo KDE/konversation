@@ -741,8 +741,8 @@ void Server::notifyResponse(const QString& nicksOnline)
     QStringList nickList=QStringList::split(' ',nicksOnline);
     // Create a lower case nick list from the notification reply
     QStringList nickLowerList=QStringList::split(' ',nicksOnline.lower());
-    // Get watch list from preferences.
-    QString watchlist=getNotifyString();
+    // Get ISON list from preferences and addressbook.
+    QString watchlist=getISONListString();
     // Create a case correct nick list from the watch list.
     QStringList watchList=QStringList::split(' ',watchlist); 
     // Create a lower case nick list from the watch list.
@@ -765,9 +765,10 @@ void Server::notifyResponse(const QString& nicksOnline)
       if (nickLowerList.find(lcNickName) == nickLowerList.end())
       {
         QString nickname = watchList[index];
-        if (setNickOffline(nickname, watchLowerList)) nicksOnlineChanged = true;
+        if (setNickOffline(nickname)) nicksOnlineChanged = true;
       }
     }
+    // Note: The list emitted in this signal does not include nicks in joined channels.
     emit nicksNowOnline(this,nickList,nicksOnlineChanged);
   }
   // Next round
@@ -800,7 +801,7 @@ void Server::notifyTimeout()
   if(KonversationApplication::preferences.getUseNotify())
   {
     // But only if there actually are nicks in the notify list
-    QString list=getNotifyString();
+    QString list=getISONListString();
     
     if(!list.isEmpty())
     {
@@ -1251,7 +1252,7 @@ ChannelNickPtr Server::setChannelNick(const QString& channelName, const QString&
   if (!channelNick)
   {
     // Get watch list from preferences.
-    QString watchlist=getNotifyString();
+    QString watchlist=getWatchListString();
     // Create a lower case nick list from the watch list.
     QStringList watchLowerList=QStringList::split(' ',watchlist.lower());
     // If on the watch list, add channel and nick to unjoinedChannels list.
@@ -1265,6 +1266,19 @@ ChannelNickPtr Server::setChannelNick(const QString& channelName, const QString&
 
     if (mode != 99) channelNick->setMode(mode);
     return channelNick;
+}
+
+// Returns a list of all the joined channels that a nick is in.
+QStringList Server::getNickJoinedChannels(const QString& nickname)
+{
+  QString lcNickname = nickname.lower();
+  QStringList channellist;
+  ChannelMembershipMap::Iterator channel;
+  for( channel = m_joinedChannels.begin(); channel != m_joinedChannels.end(); ++channel )
+  {
+    if (channel.data()->contains(lcNickname)) channellist.append(channel.key());
+  }
+  return channellist;
 }
 
 // Returns a list of all the channels (joined or unjoined) that a nick is in.
@@ -1899,7 +1913,6 @@ void Server::addPendingNickList(const QString& channelName,const QStringList& ni
 // Adds a nickname to the joinedChannels list.
 // Creates new NickInfo if necessary.
 // If needed, moves the channel from the unjoined list to the joined list.
-// If needed, adds the nick to the Online list.
 // Returns the NickInfo for the nickname.
 ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, const QString& nickname)
 {
@@ -1923,6 +1936,7 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
     channel = m_unjoinedChannels[lcChannelName];
     m_unjoinedChannels.remove(lcChannelName);
     m_joinedChannels.insert(lcChannelName, channel);
+    doChannelJoinedSignal = true;
   }
   else
   {
@@ -2065,7 +2079,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
 * @param watchList    List of nicks on the watch list.
 * @return             True if the nick was online.
 */
-bool Server::setNickOffline(const QString& nickname, const QStringList& watchList)
+bool Server::setNickOffline(const QString& nickname)
 {
   QString lcNickname = nickname.lower();
   NickInfoPtr nickInfo = getNickInfo(lcNickname);
@@ -2084,7 +2098,7 @@ bool Server::setNickOffline(const QString& nickname, const QStringList& watchLis
     // Delete NickInfo.
     if (m_allNicks.contains(lcNickname)) m_allNicks.remove(lcNickname);
     // If the nick was in the watch list, emit various signals and messages.
-    if (watchList.find(lcNickname) != watchList.end())
+    if (isWatchedNick(nickname))
     {
       emit watchedNickChanged(this, nickname, false);
       if (!addressee.isEmpty())
@@ -2165,22 +2179,30 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
   if (doSignal) emit channelMembersChanged(this, channelName, joined, true, nickname);
 }
 
-QStringList Server::getNotifyList()
+QStringList Server::getWatchList()
+{
+  if (m_serverISON)
+    return m_serverISON->getWatchList(); 
+  else
+    return QStringList();
+}
+QString Server::getWatchListString() { return getWatchList().join(" "); }
+
+QStringList Server::getISONList()
 {
   if (m_serverISON)
     return m_serverISON->getISONList(); 
   else
     return QStringList();
 }
-
-QString Server::getNotifyString() { return getNotifyList().join(" "); }
+QString Server::getISONListString() { return getISONList().join(" "); }
 
 /**
 * Return true if the given nickname is on the watch list.
 */
 bool Server::isWatchedNick(const QString& nickname)
 {
-    QStringList watchList = getNotifyList();
+    QStringList watchList = getWatchList();
     return (watchList.contains(nickname.lower()));
 }
 
@@ -2193,12 +2215,13 @@ bool Server::isWatchedNick(const QString& nickname)
 void Server::removeJoinedChannel(const QString& channelName)
 {
   bool doSignal = false;
-  QString watchList = getNotifyString();
+  QString watchList = getWatchListString();
   QStringList watchListLower = QStringList::split(' ', watchList.lower());
   QString lcChannelName = channelName.lower();
   // Move the channel nick list from the joined to unjoined lists.
   if (m_joinedChannels.contains(lcChannelName))
   {
+    doSignal = true;
     ChannelNickMap* channel = m_joinedChannels[lcChannelName];
     m_joinedChannels.remove(lcChannelName);
     m_unjoinedChannels.insert(lcChannelName, channel);
@@ -2400,9 +2423,7 @@ void Server::removeNickFromServer(const QString &nickname,const QString &reason)
 
   // Delete the nick from all channels and then delete the nickinfo,
   // emitting signal if on the watch list.
-  QString watchList = getNotifyString();
-  QStringList watchListLower = QStringList::split(' ', watchList.lower());
-  setNickOffline(nickname, watchListLower);
+  setNickOffline(nickname);
 }
 
 void Server::renameNick(const QString &nickname, const QString &newNick)

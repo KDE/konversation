@@ -250,7 +250,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     if (!offlineRoot) offlineRoot = new KListViewItem(groupRoot, c_i18nOffline);
     offlineRoot->setText(nlvcServerName, serverName);
     // Get watch list.
-    QStringList watchList = servr->getNotifyList();
+    QStringList watchList = servr->getWatchList();
     for (unsigned int nickIndex = 0; nickIndex<watchList.count(); nickIndex++)
     {
         QString nickname = watchList[nickIndex];

@@ -215,6 +215,11 @@ class Server : public QObject
      *  @see getUnjoinedChannelMembers(const QString& channelName)
      */
     const ChannelNickMap *getChannelMembers(const QString& channelName) const;
+    /** Returns a list of all the joined channels that a nick is in.
+     *  @param nickname    The desired nickname.  Case insensitive.
+     *  @return            A list of joined channels the nick is in.  Empty if none.
+     */
+    QStringList getNickJoinedChannels(const QString& nickname);
     /** Returns a list of all the channels (joined or unjoined) that a nick is in.
      *  @param nickname    The desired nickname.  Case insensitive.
      *  @return            A list of channels the nick is in.  Empty if none.
@@ -248,14 +253,20 @@ class Server : public QObject
     void emitNickInfoChanged(const NickInfoPtr nickInfo);
     
     /**
-    * Returns a list of all the nicks on the watch list plus nicks in the addressbook.
+    * Returns a list of all the nicks on the user watch list plus nicks in the addressbook.
     */
-    QStringList getNotifyList();
-    QString getNotifyString();
+    QStringList getWatchList();
+    QString getWatchListString();
     /**
     * Return true if the given nickname is on the watch list.
     */
     bool isWatchedNick(const QString& nickname);
+    /**
+    * Returns a list of all the nicks on the watch list that are not in joined
+    * channels.  ISON command is sent for these nicks.
+    */
+    QStringList getISONList();
+    QString getISONListString();
     
     KonversationMainWindow* getMainWindow() const;
     
@@ -427,10 +438,9 @@ class Server : public QObject
      * posts a Notify message, and posts a KNotify.
      * If the nick is in the addressbook, and went offline, informs addressbook of change.
      * @param nickname     The nickname.  Case sensitive.
-     * @param watchList    List of nicks on the watch list.
      * @return             True if the nick was online.
      */
-    bool setNickOffline(const QString& nickname, const QStringList& watchList);
+    bool setNickOffline(const QString& nickname);
     /** Remove nickname from a channel (on joined or unjoined lists).
      *  @param channelName The channel name.  Case insensitive.
      *  @param nickname    The nickname.  Case insensitive.

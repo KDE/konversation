@@ -40,8 +40,22 @@ ServerISON::ServerISON(Server* server) : m_server(server) {
     this, SLOT(addressbookChanged()));
   connect( m_server, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
     this, SLOT(nickInfoChanged(Server*, const NickInfoPtr)));
+  connect( m_server, 
+    SIGNAL(channelMembersChanged(Server*, const QString&, bool, bool, const QString& )),
+    this,
+    SLOT(slotChannelMembersChanged(Server*, const QString&, bool, bool, const QString& )));
+  connect( m_server,
+    SIGNAL(channelJoinedOrUnjoined(Server*, const QString&, bool )),
+    this,
+    SLOT(slotChannelJoinedOrUnjoined(Server*, const QString&, bool )));
   connect(m_server->getMainWindow(), SIGNAL(prefsChanged()),
     this, SLOT(slotPrefsChanged()));
+}
+
+QStringList ServerISON::getWatchList() {
+  if(m_ISONList_invalid)
+    recalculateAddressees();
+  return m_watchList; 
 }
     
 QStringList ServerISON::getISONList() {  
@@ -89,7 +103,6 @@ void ServerISON::recalculateAddressees()
         QString uid = addressee.uid();
         QStringList nicknames = addresseeToOnlineNickMap[uid];
         nicknames.append(nickInfo->getNickname());
-	//TODO: Check if this nick is in any channel, and if it is, don't add, since we know they are online if they are in the channel with us.
         addresseeToOnlineNickMap[uid] = nicknames;
       }
     }
@@ -146,12 +159,20 @@ void ServerISON::recalculateAddressees()
     // The part of the ISON list due to the addressbook.
     m_addresseesISON = ISONMap.values();
     // Merge with watch list from prefs, eliminating dups (case insensitive).
+    // TODO: Don't add nick on user watch list if nick is known to be online
+    // under a different nickname?
     QStringList prefsWatchList =
       KonversationApplication::preferences.getNotifyListByGroup(m_server->getServerGroup());
     for (unsigned int index=0; index<prefsWatchList.count(); index++)
       ISONMap.insert(prefsWatchList[index].lower(), prefsWatchList[index], true);
-    // Build final ISON list.
-    m_ISONList = ISONMap.values();
+    // Build final watch list.
+    m_watchList = ISONMap.values();
+    // Eliminate nicks that are online in a joined channel, since there is no point
+    // in doing an ISON on such nicks.
+    m_ISONList.clear();
+    for (unsigned int index=0; index<m_watchList.count(); index++)
+      if (m_server->getNickJoinedChannels(m_watchList[index]).isEmpty())
+        m_ISONList.append(m_watchList[index]);
   }
   else
   {
@@ -168,15 +189,33 @@ void ServerISON::slotPrefsChanged()
   m_ISONList_invalid = true;
 }
 
-void ServerISON::nickInfoChanged(Server* /*server*/, const NickInfoPtr nickInfo) {
+void ServerISON::nickInfoChanged(Server* /*server*/, const NickInfoPtr /*nickInfo*/) {
   //We need to call recalculateAddressees before returning m_ISONList
   
   //Maybe we could do something like:
   //if(m_ISONList.contains(nickInfo->getNickName())) return;
   m_ISONList_invalid = true;
 }
+
 void ServerISON::addressbookChanged() {	
   //We need to call recalculateAddressees before returning m_ISONList
+  m_ISONList_invalid = true;
+}
+
+void ServerISON::slotChannelMembersChanged(Server* /*server*/, const QString& /*channelName*/,
+  bool joined, bool parted, const QString& nickname)
+{
+  // Whenever a nick on the watch list leaves the last joined channel, must recalculate lists.
+  // The nick will be added to the ISON list.
+  if (joined && parted && m_watchList.contains(nickname))
+    if (m_server->getNickJoinedChannels(nickname).isEmpty()) m_ISONList_invalid = true;
+}
+
+void ServerISON::slotChannelJoinedOrUnjoined(Server* /*server*/,
+  const QString& /*channelName*/, bool /*joined*/)
+{
+  // If user left or joined a channel, need to recalculate lists, since watched nicks
+  // may need to be moved from/to ISON list.
   m_ISONList_invalid = true;
 }
 
