@@ -31,143 +31,50 @@
 #include "valuelistviewitem.h"
 
 PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preferences* newPreferences)
- : PrefsPage(newParent, newPreferences)
+  : ChatwindowBehaviour_Config( newParent )
 {
-  QGridLayout* chatLayout = new QGridLayout(parentFrame, 4, 3, marginHint(), spacingHint());
+  preferences = newPreferences;
 
-  beepCheck = new QCheckBox(i18n("Bee&p on incoming ASCII BEL"), parentFrame, "beep_check");
-  beepCheck->setChecked(preferences->getBeep());
-
-  hideUnimportantCheck = new QCheckBox(i18n("&Hide Join/Part/Nick events"), parentFrame, "hide_unimportant_check");
-  hideUnimportantCheck->setChecked(preferences->getHideUnimportantEvents());
-
-  disableExpansionCheck = new QCheckBox(i18n("&Disable %C, %B, %G, etc. expansion"), parentFrame, "disable_expansion_check");
-  disableExpansionCheck->setChecked(preferences->getDisableExpansion());
-
-  showRememberLineInAllWindows = new QCheckBox(i18n("Show remember &line in all channels/queries"), parentFrame,
-   "show_remember_line_in_all_windows");
-  showRememberLineInAllWindows->setChecked(preferences->getShowRememberLineInAllWindows());
+  kcfg_BeepOnAsciiBel->setChecked(preferences->getBeep());
+  kcfg_HideJoinPart->setChecked(preferences->getHideUnimportantEvents());
+  kcfg_DisableExpansions->setChecked(preferences->getDisableExpansion());
+  kcfg_ShowRememberLine->setChecked(preferences->getShowRememberLineInAllWindows());
+  kcfg_RedirectStatusMessages->setChecked(preferences->getRedirectToStatusPane());
 
 
-  redirectToStatusPaneCheck = new QCheckBox(i18n("&Redirect all status messages to the server status window"), parentFrame,
-    "redirect_to_status_page_check");
-  redirectToStatusPaneCheck->setChecked(preferences->getRedirectToStatusPane());
+  kcfg_ScrollBackLimit->setValue(preferences->getScrollbackMax());
+  kcfg_AutoWhoLimit->setValue(preferences->getAutoWhoNicksLimit());
 
-  QLabel* scrollbackMaxLabel = new QLabel(i18n("&Scrollback limit:"), parentFrame);
-  scrollbackMaxSpin = new QSpinBox(0, 100000, 50, parentFrame, "scrollback_max_spin");
-  scrollbackMaxSpin->setValue(preferences->getScrollbackMax());
-  scrollbackMaxSpin->setSuffix(" " + i18n("lines"));
-  scrollbackMaxSpin->setSpecialValueText(i18n("Unlimited"));
-  scrollbackMaxLabel->setBuddy(scrollbackMaxSpin);
-  QWhatsThis::add(scrollbackMaxSpin,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
-  QToolTip::add(scrollbackMaxSpin,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
-  QToolTip::add(scrollbackMaxLabel,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
+  kcfg_autoWhoContinuous->setChecked(preferences->getAutoWhoContinuousEnabled());
+  kcfg_WhoInterval->setValue(preferences->getAutoWhoContinuousInterval());
 
-  QVGroupBox* autoWhoGroup = new QVGroupBox(i18n("Au&to /WHO"), parentFrame, "auto_who_group");
+  kcfg_DoubleClickCommand->setText(preferences->getChannelDoubleClickAction());
+  kcfg_SortUserStatus->setChecked(preferences->getSortByStatus());
+  kcfg_SortCaseInsensitive->setChecked(preferences->getSortCaseInsensitive());
 
-  QFrame* autoWhoNicksLimitFrame = new QFrame(autoWhoGroup);
-  QHBoxLayout* autoWhoNicksLimitLayout = new QHBoxLayout(autoWhoNicksLimitFrame);
-  autoWhoNicksLimitLayout->setSpacing(spacingHint());
-  QLabel* autoWhoNicksLimitLabel = new QLabel(i18n("Nicks limit for auto /&WHO:"), autoWhoNicksLimitFrame);
-  autoWhoNicksLimitSpin = new QSpinBox(0, 1000, 1, autoWhoNicksLimitFrame, "auto_who_nicks_limit_spin");
-  autoWhoNicksLimitSpin->setValue(preferences->getAutoWhoNicksLimit());
-  autoWhoNicksLimitLabel->setBuddy(autoWhoNicksLimitSpin);
-  autoWhoNicksLimitLayout->addWidget(autoWhoNicksLimitLabel);
-  autoWhoNicksLimitLayout->addWidget(autoWhoNicksLimitSpin);
-  autoWhoNicksLimitLayout->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
-
-  autoWhoContinuousEnabledCheck = new QCheckBox(i18n("Re&quest /WHO continually"), autoWhoGroup);
-  autoWhoContinuousEnabledCheck->setChecked(preferences->getAutoWhoContinuousEnabled());
-  QFrame* autoWhoContinuousIntervalFrame = new QFrame(autoWhoGroup);
-  QHBoxLayout* autoWhoContinuousIntervalLayout = new QHBoxLayout(autoWhoContinuousIntervalFrame);
-  autoWhoContinuousIntervalLayout->setSpacing(spacingHint());
-  QLabel* autoWhoContinuousIntervalLabel = new QLabel(i18n("Inter&val:"), autoWhoContinuousIntervalFrame);
-  autoWhoContinuousIntervalSpin = new QSpinBox(30, 10000, 10, autoWhoContinuousIntervalFrame, "auto_who_continuous_interval_spin");
-  autoWhoContinuousIntervalSpin->setSuffix(" "+i18n("sec"));
-  autoWhoContinuousIntervalSpin->setValue(preferences->getAutoWhoContinuousInterval());
-  autoWhoContinuousIntervalLabel->setBuddy(autoWhoContinuousIntervalSpin);
-  autoWhoContinuousIntervalLayout->addWidget(autoWhoContinuousIntervalLabel);
-  autoWhoContinuousIntervalLayout->addWidget(autoWhoContinuousIntervalSpin);
-  autoWhoContinuousIntervalLayout->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
-  autoWhoContinuousIntervalSpin->setEnabled(preferences->getAutoWhoContinuousEnabled());
-  connect(autoWhoContinuousEnabledCheck, SIGNAL(toggled(bool)), autoWhoContinuousIntervalSpin, SLOT(setEnabled(bool)));
-  connect(autoWhoContinuousEnabledCheck, SIGNAL(toggled(bool)), autoWhoContinuousIntervalLabel, SLOT(setEnabled(bool)));
-  new QLabel(i18n("Continuous auto /WHO can cause a heavy traffic, so be careful not to get banned."),autoWhoGroup);
-
-  QVGroupBox* sortOptionsGroup = new QVGroupBox(i18n("&Nickname List"), parentFrame, "sort_options_group");
-
-  QHBox* actionEditBox = new QHBox(sortOptionsGroup);
-  actionEditBox->setSpacing(spacingHint());
-  QLabel* channelActionLabel = new QLabel(i18n("Command executed on double click:"), actionEditBox);
-  channelActionInput = new KLineEdit(preferences->getChannelDoubleClickAction(), actionEditBox);
-
-  sortCaseInsensitiveCheck = new QCheckBox(i18n("Sort case ins&ensitive"),sortOptionsGroup,"sort_case_insensitive_check");
-  sortByStatusCheck = new QCheckBox(i18n("Sort b&y user status"),sortOptionsGroup,"sort_by_status_check");
-
-  sortByStatusCheck->setChecked(preferences->getSortByStatus());
-  sortCaseInsensitiveCheck->setChecked(preferences->getSortCaseInsensitive());
-
-  sortOrderGroup = new QWidget(sortOptionsGroup, "sorting_order_widget");
-  sortOrderGroup->setEnabled(preferences->getSortByStatus());
-
-  sortingOrder = new KListView(sortOrderGroup,"sorting_order_view");
-  sortingOrder->addColumn("");
-  sortingOrder->setFullWidth(true);
-  sortingOrder->header()->hide();
-  sortingOrder->setSorting(-1);
-  sortingOrder->setDragEnabled(true);
-  sortingOrder->setAcceptDrops(true);
-  sortingOrder->setMaximumHeight(sortingOrder->fontMetrics().height()*7);
+  kcfg_SortOrder->addColumn("");
+  kcfg_SortOrder->header()->hide();
+  kcfg_SortOrder->setSorting(-1);
+  kcfg_SortOrder->setMaximumHeight(kcfg_SortOrder->fontMetrics().height()*7);
 
   for(int index = 64; index != 0; index >>= 1)
   {
-    if(preferences->getNoRightsValue() == index) new ValueListViewItem(0, sortingOrder, i18n("Normal Users"));
-    if(preferences->getAwayValue() == index)     new ValueListViewItem(1, sortingOrder, i18n("Away Users"));
-    if(preferences->getVoiceValue() == index)    new ValueListViewItem(2, sortingOrder, i18n("Voice (+v)"));
-    if(preferences->getHalfopValue() == index)   new ValueListViewItem(3, sortingOrder, i18n("Halfops (+h)"));
-    if(preferences->getOpValue() == index)       new ValueListViewItem(4, sortingOrder, i18n("Operators (+o)"));
-    if(preferences->getOwnerValue() == index)    new ValueListViewItem(5, sortingOrder, i18n("Channel Owners"));
-    if(preferences->getAdminValue() == index)    new ValueListViewItem(6, sortingOrder, i18n("Channel Admins"));
+    if(preferences->getNoRightsValue() == index) new ValueListViewItem(0, kcfg_SortOrder, i18n("Normal Users"));
+    if(preferences->getAwayValue() == index)     new ValueListViewItem(1, kcfg_SortOrder, i18n("Away Users"));
+    if(preferences->getVoiceValue() == index)    new ValueListViewItem(2, kcfg_SortOrder, i18n("Voice (+v)"));
+    if(preferences->getHalfopValue() == index)   new ValueListViewItem(3, kcfg_SortOrder, i18n("Halfops (+h)"));
+    if(preferences->getOpValue() == index)       new ValueListViewItem(4, kcfg_SortOrder, i18n("Operators (+o)"));
+    if(preferences->getOwnerValue() == index)    new ValueListViewItem(5, kcfg_SortOrder, i18n("Channel Owners"));
+    if(preferences->getAdminValue() == index)    new ValueListViewItem(6, kcfg_SortOrder, i18n("Channel Admins"));
   }
 
-  QToolButton* sortMoveUp=new QToolButton(sortOrderGroup,"sort_move_up_button");
-  sortMoveUp->setIconSet(SmallIconSet("up"));
-  sortMoveUp->setAutoRepeat(true);
-  QToolButton* sortMoveDown=new QToolButton(sortOrderGroup,"sort_move_up_button");
-  sortMoveDown->setIconSet(SmallIconSet("down"));
-  sortMoveDown->setAutoRepeat(true);
+  kcfg_UpButton->setIconSet(SmallIconSet("up"));
+  kcfg_DownButton->setIconSet(SmallIconSet("down"));
 
-  connect(sortByStatusCheck,SIGNAL (stateChanged(int)),this,SLOT (sortByStatusChanged(int)) );
-  connect(sortMoveUp,SIGNAL (clicked()),this,SLOT (moveUp()) );
-  connect(sortMoveDown,SIGNAL (clicked()),this,SLOT (moveDown()) );
+  connect(kcfg_SortUserStatus,SIGNAL (stateChanged(int)),this,SLOT (sortByStatusChanged(int)) );
+  connect(kcfg_UpButton,SIGNAL (clicked()),this,SLOT (moveUp()) );
+  connect(kcfg_DownButton,SIGNAL (clicked()),this,SLOT (moveDown()) );
 
-  QGridLayout* sortOrderLayout = new QGridLayout(sortOrderGroup,4,2,0,spacingHint());
-  sortOrderLayout->addMultiCellWidget(sortingOrder, 0, 3, 0, 0);
-  sortOrderLayout->addWidget(sortMoveUp, 1, 1);
-  sortOrderLayout->addWidget(sortMoveDown, 2, 1);
-  sortOrderLayout->setRowStretch(0, 10);
-  sortOrderLayout->setRowStretch(3, 10);
-
-  int row = 0;
-  chatLayout->addMultiCellWidget(beepCheck, row, row, 0, 2);
-  row++;
-  chatLayout->addMultiCellWidget(hideUnimportantCheck, row, row, 0, 2);
-  row++;
-  chatLayout->addMultiCellWidget(disableExpansionCheck, row, row, 0, 2);
-  row++;
-  chatLayout->addMultiCellWidget(showRememberLineInAllWindows, row, row, 0, 2);
-  row++;
-  chatLayout->addMultiCellWidget(redirectToStatusPaneCheck, row, row, 0, 2);
-  row++;
-  chatLayout->addWidget(scrollbackMaxLabel, row, 0);
-  chatLayout->addWidget(scrollbackMaxSpin, row, 1);
-  row++;
-  chatLayout->addMultiCellWidget(autoWhoGroup, row, row, 0, 2);
-  row++;
-  chatLayout->addMultiCellWidget(sortOptionsGroup, row, row, 0, 2);
-  row++;
-  chatLayout->setRowStretch(row, 10);
-  chatLayout->setColStretch(2, 10);
 }
 
 PrefsPageChatWinBehavior::~PrefsPageChatWinBehavior()
@@ -176,47 +83,47 @@ PrefsPageChatWinBehavior::~PrefsPageChatWinBehavior()
 
 void PrefsPageChatWinBehavior::sortByStatusChanged(int state)
 {
-  sortOrderGroup->setEnabled(state == 2);
+  kcfg_SortOrder->setEnabled(state == 2);
 }
 
 void PrefsPageChatWinBehavior::moveUp()
 {
-  QListViewItem* item = sortingOrder->selectedItem();
+  QListViewItem* item = kcfg_SortOrder->selectedItem();
 
   if(item)
   {
-    int pos = sortingOrder->itemIndex(item);
+    int pos = kcfg_SortOrder->itemIndex(item);
     if(pos) item->itemAbove()->moveItem(item);
   }
 }
 
 void PrefsPageChatWinBehavior::moveDown()
 {
-  QListViewItem* item = sortingOrder->selectedItem();
+  QListViewItem* item = kcfg_SortOrder->selectedItem();
 
-  if(item && item != sortingOrder->lastItem()) item->moveItem(item->itemBelow());
+  if(item && item != kcfg_SortOrder->lastItem()) item->moveItem(item->itemBelow());
 }
 
 void PrefsPageChatWinBehavior::applyPreferences()
 {
-  preferences->setBeep(beepCheck->isChecked());
-  preferences->setHideUnimportantEvents(hideUnimportantCheck->isChecked());
-  preferences->setDisableExpansion(disableExpansionCheck->isChecked());
-  preferences->setShowRememberLineInAllWindows(showRememberLineInAllWindows->isChecked());
-  preferences->setRedirectToStatusPane(redirectToStatusPaneCheck->isChecked());
-  preferences->setScrollbackMax(scrollbackMaxSpin->value());
-  preferences->setAutoWhoNicksLimit(autoWhoNicksLimitSpin->value());
-  preferences->setAutoWhoContinuousEnabled(autoWhoContinuousEnabledCheck->isChecked());
-  preferences->setAutoWhoContinuousInterval(autoWhoContinuousIntervalSpin->value());
-  preferences->setChannelDoubleClickAction(channelActionInput->text());
-  preferences->setSortByStatus(sortByStatusCheck->isChecked());
-  preferences->setSortCaseInsensitive(sortCaseInsensitiveCheck->isChecked());
+  preferences->setBeep(kcfg_BeepOnAsciiBel->isChecked());
+  preferences->setHideUnimportantEvents(kcfg_HideJoinPart->isChecked());
+  preferences->setDisableExpansion(kcfg_DisableExpansions->isChecked());
+  preferences->setShowRememberLineInAllWindows(kcfg_ShowRememberLine->isChecked());
+  preferences->setRedirectToStatusPane(kcfg_RedirectStatusMessages->isChecked());
+  preferences->setScrollbackMax(kcfg_ScrollBackLimit->value());
+  preferences->setAutoWhoNicksLimit(kcfg_AutoWhoLimit->value());
+  preferences->setAutoWhoContinuousEnabled(kcfg_autoWhoContinuous->isChecked());
+  preferences->setAutoWhoContinuousInterval(kcfg_WhoInterval->value());
+  preferences->setChannelDoubleClickAction(kcfg_DoubleClickCommand->text());
+  preferences->setSortByStatus(kcfg_SortUserStatus->isChecked());
+  preferences->setSortCaseInsensitive(kcfg_SortCaseInsensitive->isChecked());
 
   int flag = 1;
 
   for(int index = 0; index < 7; index++)
   {
-    ValueListViewItem* item = static_cast<ValueListViewItem*>(sortingOrder->itemAtIndex(index));
+    ValueListViewItem* item = static_cast<ValueListViewItem*>(kcfg_SortOrder->itemAtIndex(index));
     int value = item->getValue();
 
     if(value == 0) preferences->setNoRightsValue(flag);

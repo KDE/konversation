@@ -19,12 +19,12 @@
     *************************************************************************
 */
 
-#include <kstreamsocket.h>
+#include <kbufferedsocket.h>
 using namespace KNetwork;
 
 struct SSLSocketPrivate;
 
-class SSLSocket : public KStreamSocket
+class SSLSocket : public KBufferedSocket
 {
   Q_OBJECT
 

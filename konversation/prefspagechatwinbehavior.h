@@ -13,14 +13,12 @@
 #ifndef PREFSPAGECHATWINBEHAVIOR_H
 #define PREFSPAGECHATWINBEHAVIOR_H
 
-#include "prefspage.h"
+#include "chatwindowbehaviour_preferences.h"
 
-class QCheckBox;
-class QSpinBox;
-class KListView;
-class KLineEdit;
+class QFrame;
+class Preferences;
 
-class PrefsPageChatWinBehavior : public PrefsPage
+class PrefsPageChatWinBehavior : public ChatwindowBehaviour_Config
 {
   Q_OBJECT
   public:
@@ -35,21 +33,7 @@ class PrefsPageChatWinBehavior : public PrefsPage
     void moveDown();
       
   private:
-    QCheckBox* beepCheck;
-    QCheckBox* hideUnimportantCheck;
-    QCheckBox* disableExpansionCheck;
-    QCheckBox* showRememberLineInAllWindows;
-    QCheckBox* redirectToStatusPaneCheck;
-    QSpinBox* scrollbackMaxSpin;
-    
-    QSpinBox* autoWhoNicksLimitSpin;
-    QCheckBox* autoWhoContinuousEnabledCheck;
-    QSpinBox* autoWhoContinuousIntervalSpin;
-    KLineEdit* channelActionInput;
-    QCheckBox* sortByStatusCheck;
-    QCheckBox* sortCaseInsensitiveCheck;
-    QWidget* sortOrderGroup;
-    KListView* sortingOrder;
+    Preferences* preferences;
 };
 
 #endif

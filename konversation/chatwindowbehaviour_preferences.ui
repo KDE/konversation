@@ -1,0 +1,489 @@
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<class>ChatwindowBehaviour_Config</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>ChatwindowBehaviour_Config</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>602</width>
+            <height>586</height>
+        </rect>
+    </property>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>30</x>
+                <y>210</y>
+                <width>530</width>
+                <height>80</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>Au&amp;to /WHO</string>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>textLabel2</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>11</x>
+                    <y>21</y>
+                    <width>158</width>
+                    <height>23</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Nicks limit for auto /&amp;WHO:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_AutoWhoLimit</cstring>
+            </property>
+        </widget>
+        <widget class="QSpinBox">
+            <property name="name">
+                <cstring>kcfg_AutoWhoLimit</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>175</x>
+                    <y>21</y>
+                    <width>114</width>
+                    <height>23</height>
+                </rect>
+            </property>
+            <property name="suffix">
+                <string> nicks</string>
+            </property>
+            <property name="maxValue">
+                <number>1000</number>
+            </property>
+            <property name="minValue">
+                <number>0</number>
+            </property>
+            <property name="value">
+                <number>300</number>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_autoWhoContinuous</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>11</x>
+                    <y>52</y>
+                    <width>187</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Re&amp;quest /WHO continually</string>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>textLabel3</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>204</x>
+                    <y>51</y>
+                    <width>68</width>
+                    <height>23</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Interval:</string>
+            </property>
+        </widget>
+        <widget class="QSpinBox">
+            <property name="name">
+                <cstring>kcfg_WhoInterval</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>278</x>
+                    <y>51</y>
+                    <width>81</width>
+                    <height>23</height>
+                </rect>
+            </property>
+            <property name="suffix">
+                <string> sec</string>
+            </property>
+            <property name="maxValue">
+                <number>1000</number>
+            </property>
+            <property name="minValue">
+                <number>30</number>
+            </property>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>240</width>
+                    <height>20</height>
+                </size>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>290</x>
+                    <y>20</y>
+                    <width>240</width>
+                    <height>20</height>
+                </rect>
+            </property>
+        </spacer>
+        <spacer>
+            <property name="name">
+                <cstring>spacer3</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>170</width>
+                    <height>20</height>
+                </size>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>360</x>
+                    <y>50</y>
+                    <width>170</width>
+                    <height>20</height>
+                </rect>
+            </property>
+        </spacer>
+    </widget>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>30</x>
+                <y>300</y>
+                <width>530</width>
+                <height>210</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>&amp;Nickname list</string>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>textLabel1_2</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>20</y>
+                    <width>270</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&amp;Command to be executed on double click:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_DoubleClickCommand</cstring>
+            </property>
+        </widget>
+        <widget class="KLineEdit">
+            <property name="name">
+                <cstring>kcfg_DoubleClickCommand</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>310</x>
+                    <y>20</y>
+                    <width>131</width>
+                    <height>22</height>
+                </rect>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_SortUserStatus</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>70</y>
+                    <width>140</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Sort by user &amp;status</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_SortCaseInsensitive</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>50</y>
+                    <width>150</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Sort &amp;case insensitive</string>
+            </property>
+        </widget>
+        <widget class="KListView">
+            <property name="name">
+                <cstring>kcfg_SortOrder</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>100</y>
+                    <width>460</width>
+                    <height>100</height>
+                </rect>
+            </property>
+            <property name="acceptDrops">
+                <bool>true</bool>
+            </property>
+            <property name="fullWidth">
+                <bool>true</bool>
+            </property>
+            <property name="dragEnabled">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="QToolButton">
+            <property name="name">
+                <cstring>kcfg_UpButton</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>491</x>
+                    <y>111</y>
+                    <width>18</width>
+                    <height>26</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>...</string>
+            </property>
+            <property name="autoRepeat">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="QToolButton">
+            <property name="name">
+                <cstring>kcfg_DownButton</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>491</x>
+                    <y>143</y>
+                    <width>18</width>
+                    <height>26</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>...</string>
+            </property>
+        </widget>
+    </widget>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox3</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>30</x>
+                <y>10</y>
+                <width>530</width>
+                <height>200</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>&amp;General</string>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout3</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>20</y>
+                    <width>500</width>
+                    <height>140</height>
+                </rect>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="2" column="0">
+                    <property name="name">
+                        <cstring>kcfg_DisableExpansions</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Disable %C,%B,%G, etc. expansions</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>kcfg_BeepOnAsciiBel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Bee&amp;p on incoming ASCII BEL</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="4" column="0">
+                    <property name="name">
+                        <cstring>kcfg_RedirectStatusMessages</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Redirect all status messages to the server status window</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="1" column="0">
+                    <property name="name">
+                        <cstring>kcfg_HideJoinPart</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Hide Join/Part/Nick Events</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="3" column="0">
+                    <property name="name">
+                        <cstring>kcfg_ShowRememberLine</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Show remember &amp;line in all channels/queries</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>textLabel1</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>170</y>
+                    <width>111</width>
+                    <height>23</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&amp;Scrollback Limit</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_ScrollBackLimit</cstring>
+            </property>
+            <property name="whatsThis" stdset="0">
+                <string>How many lines to keep in buffers, 0 = unlimitied</string>
+            </property>
+        </widget>
+        <widget class="QSpinBox">
+            <property name="name">
+                <cstring>kcfg_ScrollBackLimit</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>120</x>
+                    <y>170</y>
+                    <width>111</width>
+                    <height>23</height>
+                </rect>
+            </property>
+            <property name="suffix">
+                <string> lines</string>
+            </property>
+            <property name="specialValueText">
+                <string>Unlimited</string>
+            </property>
+            <property name="maxValue">
+                <number>1000</number>
+            </property>
+            <property name="whatsThis" stdset="0">
+                <string>How many lines to keep in buffers, 0 = unlimitied</string>
+            </property>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>300</width>
+                    <height>20</height>
+                </size>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>230</x>
+                    <y>170</y>
+                    <width>300</width>
+                    <height>20</height>
+                </rect>
+            </property>
+        </spacer>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>kcfg_autoWhoContinuous</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_WhoInterval</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_autoWhoContinuous</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>textLabel3</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<includehints>
+    <includehint>klineedit.h</includehint>
+    <includehint>klistview.h</includehint>
+</includehints>
+</UI>

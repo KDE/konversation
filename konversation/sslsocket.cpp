@@ -39,12 +39,15 @@ struct SSLSocketPrivate
 };
 
 SSLSocket::SSLSocket(QWidget* serverParent, QObject* parent, const char* name)
-  : KStreamSocket(0L,0L,parent,name), m_serverParent(serverParent) 
+  : KBufferedSocket(0L,0L,parent,name), m_serverParent(serverParent) 
 {
   d = new SSLSocketPrivate;
   d->kssl = 0L;
   d->cc = new KSSLCertificateCache;
   d->cc->reload();
+
+  enableRead(true);
+  enableWrite(true);
 }
 
 SSLSocket::~SSLSocket()
@@ -62,14 +65,14 @@ SSLSocket::~SSLSocket()
 
 Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
 {
-  //kdDebug() << "SSLSocket::writeBlock : " << data << endl;
+  kdDebug() << "SSLSocket::writeBlock : " << data << endl;
   return d->kssl->write( data,len );
 }
 
 Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
 {
-  //kdDebug() << "SSLSocket::readBlock : " << QCString(data) << endl;
   int err = d->kssl->read( data, maxlen );
+  kdDebug() << "SSLSocket::readBlock : " << QCString(data) << endl;
   return err;
 }
 
@@ -82,7 +85,10 @@ void SSLSocket::stateChanging(KClientSocketBase::SocketState newState)
       connected();
     }
   else
-    KClientSocketBase::stateChanging(newState);
+    {
+      kdDebug() << "New state " << (int)newState << endl;
+      KClientSocketBase::stateChanging(newState);
+    }
 }
 
 const QString SSLSocket::details()

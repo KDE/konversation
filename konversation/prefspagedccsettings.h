@@ -44,7 +44,7 @@ class PrefsPageDccSettings : public DCC_Settings
     void autoGetStateChanged(int state);
 
 protected:
-		Preferences* preferences;
+    Preferences* preferences;
 };
 
 #endif

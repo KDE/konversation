@@ -33,7 +33,7 @@ class PrefsPageLog : public Log_Config
     void applyPreferences();
     
 protected:
-		Preferences* preferences;
+    Preferences* preferences;
 
 };
 
