@@ -128,7 +128,7 @@ if($juk)
 
 if($kaffeine)
 {
-    my $string=`dcop kaffeine Kaffeine getTitle`;
+    my $string=`dcop kaffeine KaffeineIface title`;
     chomp $string;
     
     if(!is_empty($string))
@@ -156,7 +156,7 @@ if($noatun)
     }
 }
 
-if(!$amarok && !$juk && !$noatun)
+if(!$amarok && !$juk && !$kaffeine && !$noatun)
 {
 	exec 'dcop', $port, 'Konversation', 'error', 'No supported media player is running';
 }
