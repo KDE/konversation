@@ -199,7 +199,7 @@ void IRCView::urlClickSlot(const QString &url)
     else
     {
       QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
-      cmd.replace("%u", url);
+      cmd.replace(QRegExp("%u"),url);
       KProcess *proc = new KProcess;
 #if KDE_IS_VERSION(3,1,94)
       QStringList cmdAndArgs = KShell::splitArgs(cmd);
