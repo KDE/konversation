@@ -114,7 +114,7 @@ Preferences::Preferences()
 
   setLogfileBufferSize(100);
   setLogfileReaderSize(QSize(400,200));
-  
+
   setTabPlacement(Bottom);
   setBlinkingTabs(true);
   setCloseButtonsOnTabs(false);
@@ -149,7 +149,7 @@ Preferences::Preferences()
   setTimestampFormat("hh:mm");
 
   setCommandChar("/");
-  setChannelDoubleClickAction("/WHOIS %u%n");
+  setChannelDoubleClickAction("/QUERY %u%n");
   setNotifyDoubleClickAction("/WHOIS %u%n");
 
   setAdminValue(1);
@@ -181,9 +181,9 @@ Preferences::Preferences()
   ircColorList.append("#a0a0a0");
   ircColorList.append("#c0c0c0");
   setFilterColors(false);
-  
+
   setNickCompletionMode(0);
-  
+
 #if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
   setShowToolBar(true);
 #endif
@@ -197,11 +197,11 @@ Preferences::Preferences()
 
   setHideUnimportantEvents(false);
   setShowTopic(true);
-  
+
   // Web Browser
   setWebBrowserUseKdeDefault(true);
   setWebBrowserCmd("mozilla \'%u\'");
-  
+
   setRedirectToStatusPane(false);
 }
 
@@ -724,7 +724,7 @@ void Preferences::setDialogFlag(const QString& flagName,bool state)
   if(state)
     config->deleteEntry(flagName);
   else
-  { 
+  {
     if ( config->readEntry(flagName) == QString::null )
       config->writeEntry(flagName,"no");
   }
@@ -747,7 +747,7 @@ void Preferences::setNickCompletionMode(int mode) { nickCompletionMode = mode; }
 bool Preferences::getShowMenuBar() { return showMenuBar; }
 void Preferences::setShowMenuBar(bool s) { showMenuBar = s; }
 
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)  
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
 bool Preferences::getShowToolBar() { return showToolBar; }
 void Preferences::setShowToolBar(bool s) { showToolBar = s; }
 #endif
