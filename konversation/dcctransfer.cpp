@@ -317,9 +317,12 @@ int DccTransfer::getProgress() const
   return (int)( ( (double)m_transferringPosition / (double)m_fileSize ) * 100 );
 }
 
-QString DccTransfer::getPositionPrettyText() const
+QString DccTransfer::getPositionPrettyText( bool detailed ) const
 {
-  return KIO::convertSize( m_transferringPosition ) + " / " + KIO::convertSize( m_fileSize );
+  if ( detailed )
+    return getPrettyNumberText( QString::number( m_transferringPosition ) ) + " / " + getPrettyNumberText( QString::number( m_fileSize ) );
+  else
+    return KIO::convertSize( m_transferringPosition ) + " / " + KIO::convertSize( m_fileSize );
 }
 
 QString DccTransfer::getTimeRemainingPrettyText() const
@@ -424,6 +427,15 @@ unsigned long DccTransfer::intel( unsigned long value )  // static
           ( (value & 0xff) << 24 );
 
   return value;
+}
+
+QString DccTransfer::getPrettyNumberText( const QString& numberText )  // static
+{
+  QString prettyNumberText = numberText;
+  int commas = (int)( ( numberText.length() - 1 ) / 3 );
+  for ( int i=0 ; i < commas ; ++i )
+    prettyNumberText.insert( numberText.length() - ( ( i + 1 ) * 3 ), "," );
+  return prettyNumberText;  
 }
 
 // public functions

@@ -240,14 +240,17 @@ void DccDetailDialog::updateView()  // public
   }
   
   // Status
-  m_status->setText( m_item->m_dccStatusDetail.isEmpty() ? m_item->getStatusText() : m_item->getStatusText() + " (" + m_item->m_dccStatusDetail + ")" );
+  if ( m_item->m_dccStatus == DccTransfer::Sending || m_item->m_dccStatus == DccTransfer::Receiving )
+    m_status->setText( m_item->getStatusText() + " ( " + m_item->getCPSPrettyText() + " )" );
+  else
+    m_status->setText( m_item->m_dccStatusDetail.isEmpty() ? m_item->getStatusText() : m_item->getStatusText() + " (" + m_item->m_dccStatusDetail + ")" );
   
   // Progress
   // FIXME: in case filesize is unknown
   m_progress->setProgress( m_item->getProgress() );
   
   // Position
-  m_position->setText( m_item->getPositionPrettyText() );
+  m_position->setText( m_item->getPositionPrettyText( true ) );
   
   // buttons
   

@@ -104,21 +104,21 @@ class DccTransfer : public QObject, public KListViewItem
     void setStatus( DccStatus status, const QString& statusDetail = QString::null );
     
     // called from updateView()
-    QString getTypeText()                   const;
-    QPixmap getTypeIcon()                   const;
-    QPixmap getStatusIcon()                 const;
-    QString getStatusText()                 const;
-    QString getFileSizePrettyText()         const;
-    int     getProgress()                   const;
-    QString getPositionPrettyText()         const;
-    QString getTimeRemainingPrettyText()    const;
-    QString getCPSPrettyText()              const;
-    
-    unsigned long getCPS() const;
+    QString         getTypeText()                                   const;
+    QPixmap         getTypeIcon()                                   const;
+    QPixmap         getStatusIcon()                                 const;
+    QString         getStatusText()                                 const;
+    QString         getFileSizePrettyText()                         const;
+    int             getProgress()                                   const;
+    QString         getPositionPrettyText( bool detailed = false )  const;
+    QString         getTimeRemainingPrettyText()                    const;
+    QString         getCPSPrettyText()                              const;
+    unsigned long   getCPS()                                        const;
     
     static QString getNumericalIpText( const QString& ipString );
     static QString getErrorString( int code );
     static unsigned long intel( unsigned long value );
+    static QString getPrettyNumberText( const QString& numberText );
     
     // transfer information
     DccType m_dccType;
