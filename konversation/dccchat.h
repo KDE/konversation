@@ -23,8 +23,13 @@
 
 class IRCInput;
 class KLineEdit;
-class KExtendedSocket;
 class Server;
+
+namespace KNetwork
+{
+  class KServerSocket;
+  class KStreamSocket;
+}
 
 class DccChat : public ChatWindow
 {
@@ -53,7 +58,7 @@ class DccChat : public ChatWindow
     void newText(QWidget* query,const QString& highlightColor,bool important);
 
   protected slots:
-    void lookupFinished(int numberOfResults);
+    void lookupFinished();
     void dccChatConnectionSuccess();
     void dccChatBroken(int error);
     void readData();
@@ -79,8 +84,8 @@ class DccChat : public ChatWindow
 
     KLineEdit* sourceLine;
     IRCInput* dccChatInput;
-    KExtendedSocket* dccSocket;
-    KExtendedSocket* listenSocket;
+    KNetwork::KStreamSocket* dccSocket;
+    KNetwork::KServerSocket* listenSocket;
 };
 
 #endif

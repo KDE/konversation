@@ -20,11 +20,13 @@
 #include <qhostaddress.h>
 
 #include <klineedit.h>
-#include <kextsock.h>
 #include <konversationapplication.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <kserversocket.h>
+#include <ksocketaddress.h>
+#include <kstreamsocket.h>
 
 #include "ircview.h"
 #include "ircinput.h"
@@ -91,51 +93,48 @@ DccChat::~DccChat()
 void DccChat::listenForPartner()
 {
   // Set up server socket
-  listenSocket=new KExtendedSocket();
+  listenSocket = new KNetwork::KServerSocket();
+  listenSocket->setFamily(KNetwork::KResolver::InetFamily);
   
   if(KonversationApplication::preferences.getDccSpecificChatPorts())  // user specifies ports
   {
     // set port
     bool found = false;  // wheter succeeded to set port
-    unsigned long port = KonversationApplication::preferences.getDccChatPortsFirst();
-    for( ; port <= KonversationApplication::preferences.getDccChatPortsLast(); ++port )
+    unsigned long port = KonversationApplication::preferences.getDccSendPortsFirst();
+    for( ; port <= KonversationApplication::preferences.getDccChatPortsLast() ; ++port )
     {
-      listenSocket->setHost("0.0.0.0");
-      listenSocket->setSocketFlags(KExtendedSocket::passiveSocket |
-                                   KExtendedSocket::inetSocket |
-                                   KExtendedSocket::streamSocket);
-      listenSocket->setPort(port);
-      if(found = (listenSocket->listen(5) == 0))
+      kdDebug() << "DccChat::listenForPartner(): trying port " << port << endl;
+      listenSocket->setAddress("0", QString::number(port));
+      bool success = listenSocket->listen();
+      if( found = ( success && listenSocket->error() == KNetwork::KSocketBase::NoError ) )
         break;
-      listenSocket->reset();
+      listenSocket->close();
     }
     if(!found)
     {
-      KMessageBox::sorry(static_cast<QWidget*>(0),i18n("There is no vacant port for DCC chat."));
+      KMessageBox::sorry(0, i18n("There is no vacant port for DCC chat."));
       return;
     }
   }
   else  // user doesn't specify ports
   {
-    listenSocket->setHost("0.0.0.0");
-    listenSocket->setSocketFlags(KExtendedSocket::passiveSocket |
-                                 KExtendedSocket::inetSocket |
-                                 KExtendedSocket::streamSocket);
-    if(listenSocket->listen(5) != 0)
+    // Let the operating system choose a port
+    listenSocket->setAddress("0");
+    if(!listenSocket->listen())
     {
-      kdDebug() << this << "DccChat::listenForPartner(): listenSocket->listen() failed!" << endl;
+      kdDebug() << this << "DccChat::listenForPartner(): listen() failed!" << endl;
       return;
     }
   }
   
+  connect( listenSocket, SIGNAL(readyAccept()), this, SLOT(heardPartner()) );
+  
   // Get our own port number
-  const KSocketAddress* ipAddr=listenSocket->localAddress();
-  const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr->address();
+  const KNetwork::KSocketAddress ipAddr=listenSocket->localAddress();
+  const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr.address();
   port=ntohs(socketAddress->sin_port);
   // remove temporary object
   delete ipAddr;
-  
-  connect(listenSocket,SIGNAL (readyAccept()),this,SLOT(heardPartner()) );
   
   getTextView()->append(i18n("Info"),i18n("Offering DCC Chat connection to %1 on port %2...").arg(nick).arg(port));
   sourceLine->setText(i18n("DCC chat with %1 on port %2").arg(nick).arg(port));
@@ -157,29 +156,28 @@ void DccChat::connectToPartner()
   getTextView()->append(i18n("Info"),i18n("Establishing DCC Chat connection to %1 (%2:%3)...").arg(nick).arg(host).arg(port));
   sourceLine->setText(i18n("DCC chat with %1 on %2:%3").arg(nick).arg(host).arg(port));
 
-  dccSocket=new KExtendedSocket(host,port,KExtendedSocket::inetSocket);
+  dccSocket = new KNetwork::KStreamSocket(host, QString::number(port));
 
+  dccSocket->setBlocking(false);
+  dccSocket->setFamily(KNetwork::KResolver::InetFamily);
   dccSocket->enableRead(false);
   dccSocket->enableWrite(false);
-  dccSocket->setTimeout(5);
+  dccSocket->setTimeout(5000);
 
-  connect(dccSocket,SIGNAL (lookupFinished(int))  ,this,SLOT (lookupFinished(int)) );
-  connect(dccSocket,SIGNAL (connectionSuccess())  ,this,SLOT (dccChatConnectionSuccess()) );
-  connect(dccSocket,SIGNAL (connectionFailed(int)),this,SLOT (dccChatBroken(int)) );
+  connect( dccSocket, SIGNAL( hostFound() ),                        this, SLOT( lookupFinished() ) );
+  connect( dccSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( dccChatConnectionSuccess() ) );
+  connect( dccSocket, SIGNAL( gotError( int ) ),                    this, SLOT( dccChatBroken( int ) ) );
 
   connect(dccSocket,SIGNAL (readyRead()),this,SLOT (readData()) );
 
-  dccSocket->startAsyncConnect();
+  dccSocket->connect();
 
   getTextView()->append(i18n("Info"),i18n("Looking for host %1...").arg(host));
 }
 
-void DccChat::lookupFinished(int numOfResults)
+void DccChat::lookupFinished()
 {
-  if(numOfResults)
-    getTextView()->append(i18n("Info"),i18n("Host found, connecting..."));
-  else
-    getTextView()->append(i18n("Error"),i18n("Host %1 not found. Connection aborted.").arg(host));
+  getTextView()->append(i18n("Info"),i18n("Host found, connecting..."));
 }
 
 void DccChat::dccChatConnectionSuccess()
@@ -208,7 +206,7 @@ void DccChat::readData()
     {
       actual=dccSocket->readBlock(buffer,1024);
       if(actual==-1)
-        kdDebug() << "Error while reading from DCC chat connection: " << dccSocket->systemError() << endl;
+        kdDebug() << "Error while reading from DCC chat connection: " << dccSocket->errorString() << endl;
       else if(actual>0)
       {
         buffer[actual]=0;
@@ -216,10 +214,10 @@ void DccChat::readData()
       }
       else
       {
-        kdDebug() << "Read 0 bytes from DCC Chat: " << dccSocket->systemError() << endl;
+        kdDebug() << "Read 0 bytes from DCC Chat: " << dccSocket->errorString() << endl;
         getTextView()->appendServerMessage(i18n("Info"),"Connection closed.");
         dccChatInput->setEnabled(false);
-        dccSocket->closeNow();
+        dccSocket->close();
         dccSocket->enableRead(false);
       }
       free(buffer);
@@ -312,8 +310,8 @@ void DccChat::sendDccChatText(const QString& sendLine)
 
 void DccChat::heardPartner()
 {
-  int fail=listenSocket->accept(dccSocket);
-  if(fail)
+  dccSocket = static_cast<KNetwork::KStreamSocket*>(listenSocket->accept());
+  if(!dccSocket)
     delete this;
   else
   {
