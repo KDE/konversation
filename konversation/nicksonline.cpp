@@ -36,6 +36,9 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
   setType(ChatWindow::NicksOnline);
 
   nickListView=new KListView(this);
+  
+  // TODO: Need to derive from KListView and override sort() method in order to sort in
+  // locale-aware order.
 
 #ifdef USE_NICKINFO
   nickListView->addColumn(i18n("Server/Nickname/Channel"));
@@ -47,7 +50,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
   nickListView->setFullWidth(true);
   nickListView->setRootIsDecorated(false);
 #endif
-  
+
   setMargin(KDialog::marginHint());
   setSpacing(KDialog::spacingHint());
 
@@ -93,7 +96,7 @@ QListViewItem* NicksOnline::findItemChild(const QListViewItem* parent, const QSt
 }
 
 #ifdef USE_NICKINFO
-void NicksOnline::updateServerOnlineList(Server* server, bool changed)
+void NicksOnline::updateServerOnlineList(Server* server, bool)
 {
   bool whoisRequested = false;
   bool newServerRoot = false;
@@ -115,12 +118,13 @@ void NicksOnline::updateServerOnlineList(Server* server, bool changed)
     QIconSet currentLeds = leds.getGreenLed(false);
     QPixmap joinedLed = currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
     // List online nicknames.
-    const NickInfoList* nickInfoList = server->getNicksOnline();
-    NickInfoListIterator itOnline(*nickInfoList);
-    NickInfo* nickInfo;
-    for ( ; (nickInfo=itOnline.current()) ; ++itOnline)
+    const NickInfoMap* nickInfoList = server->getNicksOnline();
+    NickInfoMap::ConstIterator itOnline;
+    NickInfoPtr nickInfo;
+    for ( itOnline = nickInfoList->begin(); itOnline != nickInfoList->end() ; ++itOnline)
     {
-      QString lcNickName = itOnline.currentKey();
+      QString lcNickName = itOnline.key();
+      nickInfo = itOnline.data();
       nickname = nickInfo->getNickname();
       // Construct additional information string for nick.
       QString nickAdditionalInfo;
@@ -161,7 +165,7 @@ void NicksOnline::updateServerOnlineList(Server* server, bool changed)
       {
         // Known channels where nickname is online and mode in each channel.
         QString channelName = channelList[index];
-        ChannelNick* channelNick = server->getChannelNick(channelName, lcNickName);
+        ChannelNickPtr channelNick = server->getChannelNick(channelName, lcNickName);
         unsigned int nickModeWord = channelNick->mode;
         QString nickMode;
         if (nickModeWord & 1) nickMode = nickMode + i18n(" Voice");
@@ -200,16 +204,17 @@ void NicksOnline::updateServerOnlineList(Server* server, bool changed)
     while (child)
     {
       nextChild = child->nextSibling();
-      if (!nickInfoList->find(child->text(0))) delete child;
+      if (!nickInfoList->contains(LocaleString(child->text(0).lower()))) delete child;
       child = nextChild;
     }
     // List offline nicknames.
     QListViewItem* offlineRoot = findItemChild(serverRoot, i18n("Offline"));
     if (!offlineRoot) offlineRoot = new KListViewItem(serverRoot, i18n("Offline"));
     nickInfoList = server->getNicksOffline();
-    NickInfoListIterator itOffline(*nickInfoList);
-    for ( ; (nickInfo=itOffline.current()) ; ++itOffline)
+    NickInfoMap::ConstIterator itOffline;
+    for ( itOffline = nickInfoList->begin(); itOffline != nickInfoList->end() ; ++itOffline)
     {
+      nickInfo = itOffline.data();
       nickname = nickInfo->getNickname();
       if (!findItemChild(offlineRoot, nickname))
       {
@@ -221,7 +226,7 @@ void NicksOnline::updateServerOnlineList(Server* server, bool changed)
     while (child)
     {
       nextChild = child->nextSibling();
-      if (!nickInfoList->find(child->text(0))) delete child;
+      if (!nickInfoList->contains(LocaleString(child->text(0).lower()))) delete child;
       child = nextChild;
     }
     // Expand server if newly added to list.
@@ -259,15 +264,17 @@ void NicksOnline::timerFired()
   refreshAllServerOnlineLists();
 }
 
-void NicksOnline::setOnlineList(const QString& serverName,const QStringList& list,bool changed)
-{
 #ifdef USE_NICKINFO
+void NicksOnline::setOnlineList(const QString& serverName,const QStringList&,bool changed)
+{
   // Get the server object corresponding to the server name.
   KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
   Server* server = konvApp->getServerByName(serverName);
   updateServerOnlineList(server, changed);
+}
 #else
-
+void NicksOnline::setOnlineList(const QString& serverName,const QStringList& list,bool changed)
+{
   QListViewItem* serverRoot=nickListView->findItem(serverName,0);
   // If server is not in our list, or if the list changed, then display the new list.
   if ( (serverRoot == 0) || changed)
@@ -283,8 +290,8 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
       newServerRoot->setOpen(true);
     }
   }
-#endif
 }
+#endif
 
 void NicksOnline::processDoubleClick(QListViewItem* item)
 {

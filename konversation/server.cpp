@@ -215,23 +215,16 @@ Server::~Server()
   if(resolver.running()) resolver.exit();
 #endif
 
-  // Delete all the NickInfos.
-  allNicks.setAutoDelete(TRUE);
+  // Delete all the NickInfos and ChannelNick structures.
   allNicks.clear();
-  // Delete all the ChannelNick structures.
-  ChannelNickList* members;
-  ChannelMembershipListIterator joinedChannelIterator(joinedChannels);
-  for( ; (members=joinedChannelIterator.current()); ++joinedChannelIterator )
-  {
-    members->setAutoDelete(TRUE);
-    members->clear();
-  }
-  ChannelMembershipListIterator unjoinedChannelIterator(joinedChannels);
-  for( ; (members=unjoinedChannelIterator.current()); ++unjoinedChannelIterator )
-  {
-    members->setAutoDelete(TRUE);
-    members->clear();
-  }
+  ChannelMembershipMap::Iterator it;
+  for ( it = joinedChannels.begin(); it != joinedChannels.end(); ++it ) delete it.data();
+  joinedChannels.clear();
+  for ( it = unjoinedChannels.begin(); it != unjoinedChannels.end(); ++it ) delete it.data();
+  unjoinedChannels.clear();
+  nicknamesOnline.clear();
+  nicknamesOffline.clear();
+  queryNicks.clear();
 
   // notify KonversationApplication that this server is gone
   emit deleted(this);
@@ -549,7 +542,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     unsigned int index;
     for(index=0;index<nickLowerList.count();index++)
     {
-      if (nicknamesOnline.find(nickLowerList[index]) == 0)
+      if (!nicknamesOnline.contains(nickLowerList[index]))
       {
         addNickToOnlineList(nickList[index]);
         nicksOnlineChanged = true;
@@ -562,11 +555,11 @@ void Server::notifyResponse(const QString& nicksOnline)
       }
     }
     // Any watched nicks now offline?
-    NickInfoListIterator it(nicknamesOnline);
-    NickInfo* nickInfo;
-    for( ; (nickInfo=it.current()); ++it )
+    NickInfoMap::Iterator it;
+    NickInfoPtr nickInfo;
+    for( it = nicknamesOnline.begin() ; it != nicknamesOnline.end(); ++it )
     {
-      if (nickLowerList.find(it.currentKey()) == nickLowerList.end())
+      if (nickLowerList.find(it.key()) == nickLowerList.end())
       {
         nicksOnlineChanged = true;
         addNickToOfflineList(nickInfo->getNickname(), watchLowerList);
@@ -582,7 +575,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     // TODO: It would be better to do this on startup and whenever user changes preferences.
     for(index=0;index<watchLowerList.count();index++)
     {
-      if (nicknamesOnline.find(watchLowerList[index]) == 0) addNickToOfflineList(watchList[index], watchLowerList);
+      if (nicknamesOnline.find(watchLowerList[index]) == nicknamesOnline.end()) addNickToOfflineList(watchList[index], watchLowerList);
     }
 
 #else
@@ -885,68 +878,84 @@ QString Server::getNumericalIp()
 }
 
 // Given a nickname, returns NickInfo object.   0 if not found.
-NickInfo* Server::getNickInfo(const QString& nickname)
+NickInfoPtr Server::getNickInfo(const QString& nickname)
 {
-  QString lcNickname = nickname.lower();
-  return allNicks.find(lcNickname);
+  LocaleString lcNickname = nickname.lower();
+  if (allNicks.contains(lcNickname))
+    return allNicks[lcNickname];
+  else
+    return 0;
 }
 
 // Anyone who changes the contents of a NickInfo should call this method to let server
 // know that it has changed.
-void Server::nickInfoUpdated(const NickInfo* nickInfo)
+void Server::nickInfoUpdated(const NickInfoPtr nickInfo)
 {
   if (nickInfo) emit nickInfoChanged(this, nickInfo);
 }
 
 // Given a nickname, returns an existing NickInfo object, or creates a new NickInfo object.
 // Returns pointer to the found or created NickInfo object.
-NickInfo* Server::obtainNickInfo(const QString& nickname)
+NickInfoPtr Server::obtainNickInfo(const QString& nickname)
 {
-  NickInfo* nickInfo = getNickInfo(nickname);
-  if (!nickInfo)
+  NickInfoPtr nickInfoPtr = getNickInfo(nickname);
+  if (!nickInfoPtr)
   {
-    nickInfo = new NickInfo(nickname, this);
-    allNicks.insert(nickname.lower(), nickInfo);
+    nickInfoPtr = new NickInfo(nickname, this);
+    allNicks.insert(LocaleString(nickname.lower()), nickInfoPtr);
   }
-  return nickInfo;
+  return nickInfoPtr;
 }
 
 // Returns the list of members for a channel in the joinedChannels list.
 // 0 if channel is not in the joinedChannels list.
 // Using code must not alter the list.
-const ChannelNickList* Server::getJoinedChannelMembers(const QString& channelName) const
+const ChannelNickMapPtr Server::getJoinedChannelMembers(const QString& channelName) const
 {
-  return joinedChannels.find(channelName);
+  LocaleString lcChannelName = channelName.lower();
+  if (joinedChannels.contains(lcChannelName))
+    return joinedChannels[lcChannelName];
+  else
+    return 0;
 }
 
 // Returns the list of members for a channel in the unjoinedChannels list.
 // 0 if channel is not in the unjoinedChannels list.
 // Using code must not alter the list.
-const ChannelNickList* Server::getUnjoinedChannelMembers(const QString& channelName) const
+const ChannelNickMapPtr Server::getUnjoinedChannelMembers(const QString& channelName) const
 {
-  return unjoinedChannels.find(channelName);
+  LocaleString lcChannelName = channelName.lower();
+  if (unjoinedChannels.contains(lcChannelName))
+    return unjoinedChannels[lcChannelName];
+  else
+    return 0;
 }
 
 // Searches the Joined and Unjoined lists for the given channel and returns the member list.
 // 0 if channel is not in either list.
 // Using code must not alter the list.
-const ChannelNickList* Server::getChannelMembers(const QString& channelName) const
+const ChannelNickMapPtr Server::getChannelMembers(const QString& channelName) const
 {
-  const ChannelNickList* members = getJoinedChannelMembers(channelName);
-  if (!members) members = getUnjoinedChannelMembers(channelName);
-  return members;
+  const ChannelNickMapPtr members = getJoinedChannelMembers(channelName);
+  if (members)
+    return members;
+  else
+    return getUnjoinedChannelMembers(channelName);
 }
 
 // Returns pointer to the ChannelNick (mode and pointer to NickInfo) for a given channel and nickname.
 // 0 if not found.
-ChannelNick* Server::getChannelNick(const QString& channelName, const QString& nickname)
+ChannelNickPtr Server::getChannelNick(const QString& channelName, const QString& nickname)
 {
-  QString lcChannelName=channelName.lower();
-  QString lcNickname=nickname.lower();
-  const ChannelNickList* channelNickList=getChannelMembers(lcChannelName);
-  if (channelNickList)
+  QString lcChannelName = channelName.lower();
+  LocaleString lcNickname = nickname.lower();
+  const ChannelNickMapPtr channelNickMap = getChannelMembers(lcChannelName);
+  if (channelNickMap)
   {
-    return channelNickList->find(lcNickname);
+    if (channelNickMap->contains(lcNickname))
+      return (*channelNickMap)[lcNickname];
+    else
+      return 0;
   }
   else
   {
@@ -958,11 +967,11 @@ ChannelNick* Server::getChannelNick(const QString& channelName, const QString& n
 // is in the watch list, adds the channel and nick to the unjoinedChannels list.
 // If mode != 99, sets the mode for the nick in the channel.
 // Returns the NickInfo object if nick is on any lists, otherwise 0.
-NickInfo* Server::setChannelNick(const QString& channelName, const QString& nickname, unsigned int mode)
+NickInfoPtr Server::setChannelNick(const QString& channelName, const QString& nickname, unsigned int mode)
 {
   QString lcNickname = nickname.lower();
   // If already on a list, update mode.
-  ChannelNick* channelNick = getChannelNick(channelName, lcNickname);
+  ChannelNickPtr channelNick = getChannelNick(channelName, lcNickname);
   if (channelNick)
   {
     if (mode != 99) channelNick->mode = mode;
@@ -986,27 +995,25 @@ NickInfo* Server::setChannelNick(const QString& channelName, const QString& nick
 // Returns a list of all the channels (joined or unjoined) that a nick is in.
 QStringList Server::getNickChannels(QString& nickname)
 {
-  QString lcNickname = nickname.lower();
+  LocaleString lcNickname = nickname.lower();
   QStringList channellist;
-  ChannelNickList* members;
-  ChannelMembershipListIterator joinedChannelIterator(joinedChannels);
-  for( ; (members=joinedChannelIterator.current()); ++joinedChannelIterator )
+  ChannelMembershipMap::Iterator channel;
+  for( channel = joinedChannels.begin(); channel != joinedChannels.end(); ++channel )
   {
-    if (members->find(lcNickname)) channellist.append(joinedChannelIterator.currentKey());
+    if (channel.data()->contains(lcNickname)) channellist.append(channel.key());
   }
-  ChannelMembershipListIterator unjoinedChannelIterator(unjoinedChannels);
-  for( ; (members=unjoinedChannelIterator.current()); ++unjoinedChannelIterator )
+  for( channel = unjoinedChannels.begin(); channel != unjoinedChannels.end(); ++channel )
   {
-    if (members->find(lcNickname)) channellist.append(unjoinedChannelIterator.currentKey());
+    if (channel.data()->contains(lcNickname)) channellist.append(channel.key());
   }
   return channellist;
 }
 
 // Returns a list of the nicks on the watch list that are online.
-const NickInfoList* Server::getNicksOnline() { return &nicknamesOnline; }
+const NickInfoMap* Server::getNicksOnline() { return &nicknamesOnline; }
 
 // Returns a list of the nicks on the watch list that are offline.
-const NickInfoList* Server::getNicksOffline() { return &nicknamesOffline; }
+const NickInfoMap* Server::getNicksOffline() { return &nicknamesOffline; }
 
 QString Server::getIp()
 {
@@ -1043,13 +1050,8 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
 
 #ifdef USE_NICKINFO
     // Update NickInfo.
-    QString lcNickname = nickname.lower();
-    NickInfo* nickInfo = getNickInfo(nickname);
-    if (!nickInfo)
-    {
-      nickInfo = new NickInfo(nickname, this);
-      allNicks.insert(lcNickname, nickInfo);
-    }
+    LocaleString lcNickname = nickname.lower();
+    NickInfoPtr nickInfo = obtainNickInfo(nickname);
     if ((nickInfo->getHostmask() != hostmask) && !hostmask.isEmpty())
     {
       nickInfo->setHostmask(hostmask);
@@ -1073,7 +1075,7 @@ void Server::closeQuery(const QString &name)
 
 #ifdef USE_NICKINFO
   // Update NickInfo.
-  queryNicks.remove(name.lower());
+  queryNicks.remove(LocaleString(name.lower()));
 #endif
 }
 
@@ -1430,7 +1432,7 @@ void Server::joinChannel(const QString &name, const QString &hostmask, const QSt
 
 #ifdef USE_NICKINFO
   // Move channel from unjoined (if present) to joined list and add our own nickname to the joined list.
-  NickInfo* nickInfo = addNickToJoinedChannelsList(name, getNickname(),  99);
+  NickInfoPtr nickInfo = addNickToJoinedChannelsList(name, getNickname(),  99);
   if ((nickInfo->getHostmask() != hostmask) && !hostmask.isEmpty())
   {
     nickInfo->setHostmask(hostmask);
@@ -1457,8 +1459,8 @@ void Server::updateChannelMode(const QString &nick, const QString &channelName, 
 #ifdef USE_NICKINFO
   // Compute new mode for the recipient.
   unsigned int nickMode = 0;
-  ChannelNick* channelNick=getChannelNick(channelName, parameter);
-  if (channelNick) nickMode=channelNick->mode;
+  ChannelNickPtr channelNick = getChannelNick(channelName, parameter);
+  if (channelNick) nickMode = channelNick->mode;
   // TODO: What is mode character for owner?
   QString userModes="vho?a";    // voice halfop op owner admin
   int modePos = userModes.find(mode);
@@ -1588,8 +1590,8 @@ void Server::addPendingNickList(const QString& channelName,const QStringList& ni
   {
     for(unsigned int i=0;i<nickList.count();i++)
     {
-      QString nickname=nickList[i].section(" ",0,0);
-      unsigned int mode=nickList[i].section(" ",1,1).toInt();
+      QString nickname = nickList[i].section(" ",0,0);
+      unsigned int mode = nickList[i].section(" ",1,1).toInt();
       if (!nickname.isEmpty()) addNickToJoinedChannelsList(channelName, nickname, mode);
     }
   }
@@ -1603,55 +1605,52 @@ void Server::addPendingNickList(const QString& channelName,const QStringList& ni
 // If mode != 99 sets the mode for this nick in this channel.
 // Returns the NickInfo for the nickname.
 #ifdef USE_NICKINFO
-NickInfo* Server::addNickToJoinedChannelsList(const QString& channelName, const QString& nickname, unsigned int mode)
+NickInfoPtr Server::addNickToJoinedChannelsList(const QString& channelName, const QString& nickname, unsigned int mode)
 {
   bool doChannelJoinedSignal = false;
   bool doWatchedNickChangedSignal = false;
   bool doChannelMembersChangedSignal = false;
   bool doChannelNickChangedSignal = false;
-  QString lcNickname = nickname.lower();
+  LocaleString lcNickname = nickname.lower();
   // Create NickInfo if not already created.
-  NickInfo* nickInfo = getNickInfo(lcNickname);
-  if (!nickInfo)
-  {
-    nickInfo = new NickInfo(nickname, this);
-    allNicks.insert(lcNickname, nickInfo);
-  }
+  NickInfoPtr nickInfo = obtainNickInfo(nickname);
   // Move the channel from unjoined list (if present) to joined list.
-  QString lcChannelName = channelName.lower();
-  ChannelNickList* members=unjoinedChannels.find(lcChannelName);
-  if (members)
+  LocaleString lcChannelName = channelName.lower();
+  ChannelNickMapPtr channel;
+  if (unjoinedChannels.contains(lcChannelName))
   {
+    channel = unjoinedChannels[lcChannelName];
     unjoinedChannels.remove(lcChannelName);
-    joinedChannels.insert(lcChannelName, members);
-    doChannelJoinedSignal = true;
+    joinedChannels.insert(lcChannelName, channel);
   }
   else
   {
     // Create a new list in the joined channels if not already present.
-    members=joinedChannels.find(lcChannelName);
-    if (!members)
+    if (!joinedChannels.contains(lcChannelName))
     {
-      members = new ChannelNickList;
-      joinedChannels.insert(lcChannelName, members);
+      channel = new ChannelNickMap;
+      joinedChannels.insert(lcChannelName, channel);
       doChannelJoinedSignal = true;
     }
+    else
+      channel = joinedChannels[lcChannelName];
   }
-  // Add NickInfo to joinedChannels list if not already in the list.
-  ChannelNick* channelNick=members->find(lcNickname);
-  if (!channelNick)
+  // Add NickInfo to channel list if not already in the list.
+  ChannelNickPtr channelNick;
+  if (!channel->contains(lcNickname))
   {
-    channelNick = new ChannelNick;
+    channelNick = ChannelNickPtr(new ChannelNick);
     channelNick->nickInfo = nickInfo;
     channelNick->mode = 0;
-    members->insert(lcNickname, channelNick);
+    channel->insert(lcNickname, channelNick);
     doChannelMembersChangedSignal = true;
   }
+  channelNick = (*channel)[lcNickname];
   // Move from the Offline to Online lists.
-  if (nicknamesOffline.find(lcNickname) != 0)
+  if (nicknamesOffline.contains(lcNickname))
   {
-    nicknamesOffline.remove(lcNickname);
     nicknamesOnline.insert(lcNickname, nickInfo);
+    nicknamesOffline.remove(lcNickname);
     doWatchedNickChangedSignal = true;
   }
   // Set the mode for the nick in this channel.
@@ -1670,7 +1669,7 @@ NickInfo* Server::addNickToJoinedChannelsList(const QString& channelName, const 
   return nickInfo;
 }
 #else
-NickInfo* Server::addNickToJoinedChannelsList(const QString&, const QString&, unsigned int) { return 0; }
+NickInfoPtr Server::addNickToJoinedChannelsList(const QString&, const QString&, unsigned int) { return 0; }
 #endif
 
 // Adds a nickname to the unjoinedChannels list.
@@ -1680,53 +1679,52 @@ NickInfo* Server::addNickToJoinedChannelsList(const QString&, const QString&, un
 // If mode != 99 sets the mode for this nick in this channel.
 // Returns the NickInfo for the nickname.
 #ifdef USE_NICKINFO
-NickInfo* Server::addNickToUnjoinedChannelsList(const QString& channelName, const QString& nickname, unsigned int mode)
+NickInfoPtr Server::addNickToUnjoinedChannelsList(const QString& channelName, const QString& nickname, unsigned int mode)
 {
   bool doChannelUnjoinedSignal = false;
   bool doWatchedNickChangedSignal = false;
   bool doChannelMembersChangedSignal = false;
   bool doChannelNickChangedSignal = false;
-  QString lcNickname = nickname.lower();
+  LocaleString lcNickname = nickname.lower();
   // Create NickInfo if not already created.
-  NickInfo* nickInfo = getNickInfo(lcNickname);
-  if (!nickInfo)
-  {
-    nickInfo = new NickInfo(nickname, this);
-    allNicks.insert(lcNickname, nickInfo);
-  }
+  NickInfoPtr nickInfo = obtainNickInfo(nickname);
   // Move the channel from joined list (if present) to unjoined list.
-  QString lcChannelName = channelName.lower();
-  ChannelNickList* members = joinedChannels.find(lcChannelName);
-  if (members)
+  LocaleString lcChannelName = channelName.lower();
+  ChannelNickMapPtr channel;
+  if (joinedChannels.contains(lcChannelName))
   {
+    channel = joinedChannels[lcChannelName];
     joinedChannels.remove(lcChannelName);
-    unjoinedChannels.insert(lcChannelName, members);
+    unjoinedChannels.insert(lcChannelName, channel);
     doChannelUnjoinedSignal = true;
   }
   else
   {
     // Create a new list in the unjoined channels if not already present.
-    members = unjoinedChannels.find(lcChannelName);
-    if (!members)
+    if (!unjoinedChannels.contains(lcChannelName))
     {
-      members = new ChannelNickList;
-      unjoinedChannels.insert(lcChannelName, members);
+      channel = new ChannelNickMap;
+      unjoinedChannels.insert(lcChannelName, channel);
       doChannelUnjoinedSignal = true;
     }
+    else
+      channel = unjoinedChannels[lcChannelName];
   }
   // Add NickInfo to unjoinedChannels list if not already in the list.
-  ChannelNick* channelNick = members->find(lcNickname);
-  if (!channelNick)
+  ChannelNickPtr channelNick;
+  if (!channel->contains(lcNickname))
   {
-    channelNick = new ChannelNick;
+    channelNick = ChannelNickPtr(new ChannelNick);
     channelNick->nickInfo = nickInfo;
     channelNick->mode = 0;
-    members->insert(lcNickname, channelNick);
+    channel->insert(lcNickname, channelNick);
     doChannelMembersChangedSignal = true;
   }
+  channelNick = (*channel)[lcNickname];
   // Move from the Offline to Online lists.
-  if (nicknamesOffline.find(lcNickname) != 0)
+  if (nicknamesOffline.contains(lcNickname))
   {
+    nickInfo = nicknamesOffline[lcNickname];
     nicknamesOffline.remove(lcNickname);
     nicknamesOnline.insert(lcNickname, nickInfo);
     doWatchedNickChangedSignal = true;
@@ -1747,26 +1745,21 @@ NickInfo* Server::addNickToUnjoinedChannelsList(const QString& channelName, cons
   return nickInfo;
 }
 #else
-NickInfo* Server::addNickToUnjoinedChannelsList(const QString&, const QString&, unsigned int) { return 0; }
+NickInfoPtr Server::addNickToUnjoinedChannelsList(const QString&, const QString&, unsigned int) { return 0; }
 #endif
 
 // Adds a nickname to the Online list, removing it from the Offline list, if present.
 // Returns the NickInfo of the nickname.
 // Creates new NickInfo if necessary.
 #ifdef USE_NICKINFO
-NickInfo* Server::addNickToOnlineList(const QString& nickname)
+NickInfoPtr Server::addNickToOnlineList(const QString& nickname)
 {
   bool doSignal = false;
-  QString lcNickname = nickname.lower();
+  LocaleString lcNickname = nickname.lower();
   nicknamesOffline.remove(lcNickname);
-  NickInfo* nickInfo = getNickInfo(lcNickname);
-  if (nicknamesOnline.find(lcNickname) == 0)
+  NickInfoPtr nickInfo = obtainNickInfo(nickname);
+  if (!nicknamesOnline.contains(lcNickname))
   {
-    if (!nickInfo)
-    {
-      nickInfo = new NickInfo(nickname, this);
-      allNicks.insert(lcNickname, nickInfo);
-    }
     nicknamesOnline.insert(lcNickname, nickInfo);
     doSignal = true;
   }
@@ -1774,7 +1767,7 @@ NickInfo* Server::addNickToOnlineList(const QString& nickname)
   if (doSignal) emit watchedNickChanged(this, nickInfo, true);
 }
 #else
-NickInfo* Server::addNickToOnlineList(const QString&) { return 0; }
+NickInfoPtr Server::addNickToOnlineList(const QString&) { return 0; }
 #endif
 
 // Adds a nickname to the Offline list provided it is on the watch list,
@@ -1783,21 +1776,17 @@ NickInfo* Server::addNickToOnlineList(const QString&) { return 0; }
 // Returns the NickInfo of the nickname or 0 if deleted altogether.
 // Creates new NickInfo if necessary.
 #ifdef USE_NICKINFO
-NickInfo* Server::addNickToOfflineList(const QString& nickname, const QStringList& watchList)
+NickInfoPtr Server::addNickToOfflineList(const QString& nickname, const QStringList& watchList)
 {
   bool doSignal = false;
-  QString lcNickname = nickname.lower();
+  LocaleString lcNickname = nickname.lower();
   nicknamesOnline.remove(lcNickname);
-  NickInfo* nickInfo = getNickInfo(lcNickname);
+  NickInfoPtr nickInfo;
   if (watchList.find(lcNickname) != watchList.end())
   {
-    if (nicknamesOffline.find(lcNickname) == 0)
+    nickInfo = obtainNickInfo(nickname);
+    if (!nicknamesOffline.contains(lcNickname))
     {
-      if (!nickInfo)
-      {
-        nickInfo = new NickInfo(nickname, this);
-        allNicks.insert(lcNickname, nickInfo);
-      }
       nicknamesOffline.insert(lcNickname, nickInfo);
       doSignal = true;
     }
@@ -1818,7 +1807,7 @@ NickInfo* Server::addNickToOfflineList(const QString& nickname, const QStringLis
   return nickInfo;
 }
 #else
-NickInfo* Server::addNickToOfflineList(const QString&, const QStringList&) { return 0; }
+NickInfoPtr Server::addNickToOfflineList(const QString&, const QStringList&) { return 0; }
 #endif
 
 // Remove nickname from a channel (on joined or unjoined lists).
@@ -1828,40 +1817,40 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
 {
   bool doSignal = false;
   bool joined = false;
-  QString lcChannelName = channelName.lower();
-  QString lcNickname = nickname.lower();
-  ChannelNick* channelNick;
-  ChannelNickList* channelNickList = joinedChannels.find(lcChannelName);
-  if (channelNickList)
+  LocaleString lcChannelName = channelName.lower();
+  LocaleString lcNickname = nickname.lower();
+  ChannelNickMapPtr channel;
+  if (joinedChannels.contains(lcChannelName))
   {
-    channelNick = channelNickList->find(lcNickname);
-    delete channelNick;
-    channelNickList->remove(lcNickname);
-    doSignal = true;
-    joined = true;
-    // TODO: If channel is now empty, delete it?
+    channel = joinedChannels[lcChannelName];
+    if (channel->contains(lcNickname))
+    {
+      channel->remove(lcNickname);
+      doSignal = true;
+      joined = true;
+      // TODO: If channel is now empty, delete it?
+    }
   }
   else
   {
-    channelNickList = unjoinedChannels.find(lcChannelName);
-    if (channelNickList)
+    if (unjoinedChannels.contains(lcChannelName))
     {
-      channelNick = channelNickList->find(lcNickname);
-      delete channelNick;
-      channelNickList->remove(lcNickname);
-      doSignal = true;
-      joined = false;
-      // TODO: If channel is now empty, delete it?
+      channel = unjoinedChannels[lcChannelName];
+      if (channel->contains(lcNickname))
+      {
+        channel->remove(lcNickname);
+        doSignal = true;
+        joined = false;
+        // TODO: If channel is now empty, delete it?
+      }
     }
     // If nickname is no longer on any list, delete it altogether.
     QStringList nickChannels = getNickChannels(lcNickname);
     if (nickChannels.isEmpty())
     {
-      if ((nicknamesOnline.find(lcNickname) == 0) && (nicknamesOffline.find(lcNickname) == 0) && (queryNicks.find(lcNickname) == 0))
+      if (!nicknamesOnline.contains(lcNickname) && !nicknamesOffline.contains(lcNickname) && !queryNicks.contains(lcNickname))
       {
-        NickInfo* nickInfo = getNickInfo(lcNickname);
         allNicks.remove(lcNickname);
-        delete nickInfo;
       }
     }
   }
@@ -1879,18 +1868,20 @@ void Server::removeJoinedChannel(const QString& channelName)
   bool doSignal = false;
   QString watchList = KonversationApplication::preferences.getNotifyString();
   QStringList watchListLower = QStringList::split(' ', watchList.lower());
-  QString lcChannelName = channelName.lower();
+  LocaleString lcChannelName = channelName.lower();
   // Move the channel nick list from the joined to unjoined lists.
-  ChannelNickList* channelNickList = joinedChannels.take(lcChannelName);
-  if (channelNickList)
+  ChannelNickMapPtr channel;
+  ChannelNickMap::Iterator member;
+  if (joinedChannels.contains(lcChannelName))
   {
-    unjoinedChannels.insert(lcChannelName, channelNickList);
+    channel = joinedChannels[lcChannelName];
+    joinedChannels.remove(lcChannelName);
+    unjoinedChannels.insert(lcChannelName, channel);
     // Remove nicks not on the watch list.
-    ChannelNickListIterator it(*channelNickList);
     bool allDeleted = true;
-    for ( ; (it.current()) ;++it )
+    for ( member = channel->begin(); member != channel->end() ;++member )
     {
-      QString lcNickname = it.currentKey();
+      LocaleString lcNickname = member.key();
       if (watchListLower.find(lcNickname) == watchListLower.end())
       {
         // Remove the nickname from the unjoined channel.  If nickname is no longer
@@ -1903,8 +1894,12 @@ void Server::removeJoinedChannel(const QString& channelName)
       }
     }
     // If all were deleted, remove the channel from the unjoined list.
-    // TODO: Remove this if removeChannelNick is changed to take care of this.
-    if (allDeleted) unjoinedChannels.remove(lcChannelName);
+    if (allDeleted)
+    {
+      channel = unjoinedChannels[lcChannelName];
+      unjoinedChannels.remove(lcChannelName);
+      delete channel;  // recover memory!
+    }
   }
   if (doSignal) emit channelJoinedOrUnjoined(this, channelName, false);
 }
@@ -1916,40 +1911,41 @@ void Server::removeJoinedChannel(const QString&) {}
 // Renames a nickname in all NickInfo lists.
 // Returns pointer to the NickInfo object or 0 if nick not found.
 #ifdef USE_NICKINFO
-NickInfo* Server::renameNickInfo(const QString& nickname, const QString& newname)
+NickInfoPtr Server::renameNickInfo(const QString& nickname, const QString& newname)
 {
-  NickInfo* nickInfo = getNickInfo(nickname);
+  NickInfoPtr nickInfo = getNickInfo(nickname);
   if (nickInfo)
   {
     // Rename nickname in the NickInfo object.
     nickInfo->setNickname(newname);
     // Rename key in the joined and unjoined lists.
-    QString lcNickname = nickname.lower();
-    QString lcNewname = newname.lower();
+    LocaleString lcNickname = nickname.lower();
+    LocaleString lcNewname = newname.lower();
     QStringList nickChannels = getNickChannels(lcNickname);
     for (unsigned int index=0;index<nickChannels.count();index++)
     {
-      const ChannelNickList* channelNickList = getChannelMembers(nickChannels[index]);
-      ChannelNick* channelNick = const_cast<ChannelNickList*>(channelNickList)->take(lcNickname);
-      const_cast<ChannelNickList*>(channelNickList)->remove(lcNickname);
-      const_cast<ChannelNickList*>(channelNickList)->insert(lcNewname, channelNick);
+      const ChannelNickMapPtr channel = getChannelMembers(nickChannels[index]);
+      ChannelNickPtr member = (*channel)[lcNickname];
+      const_cast<ChannelNickMapPtr>(channel)->remove(lcNickname);
+      const_cast<ChannelNickMapPtr>(channel)->insert(lcNewname, member);
     }
     // Rename key in the Online, Offline, and Query lists.
-    NickInfo* nickInfo = nicknamesOnline.find(lcNickname);
-    if (nickInfo)
+    NickInfoPtr nickInfo;
+    if (nicknamesOnline.contains(lcNickname))
     {
+      nickInfo = nicknamesOnline[lcNickname];
       nicknamesOnline.remove(lcNickname);
       nicknamesOnline.insert(lcNewname, nickInfo);
     }
-    nickInfo = nicknamesOffline.find(lcNickname);
-    if (nickInfo)
+    if (nicknamesOffline.contains(lcNickname))
     {
+      nickInfo = nicknamesOffline[lcNickname];
       nicknamesOffline.remove(lcNickname);
       nicknamesOffline.insert(lcNewname, nickInfo);
     }
-    nickInfo = queryNicks.find(lcNickname);
-    if (nickInfo)
+    if (queryNicks.contains(lcNickname))
     {
+      nickInfo = queryNicks[lcNickname];
       queryNicks.remove(lcNickname);
       queryNicks.insert(lcNewname, nickInfo);
     }
@@ -1959,7 +1955,7 @@ NickInfo* Server::renameNickInfo(const QString& nickname, const QString& newname
   return nickInfo;
 }
 #else
-NickInfo* Server::renameNickInfo(const QString&, const QString&) { return 0; }
+NickInfoPtr Server::renameNickInfo(const QString&, const QString&) { return 0; }
 #endif
 
 void Server::noMorePendingNicks(const QString& channelName)
@@ -1981,7 +1977,7 @@ void Server::addNickToChannel(const QString &channelName,const QString &nickname
                       (op     ?  4 : 0)+
                       (halfop ?  2 : 0)+
                       (voice  ?  1 : 0);
-  NickInfo* nickInfo = addNickToJoinedChannelsList(channelName, nickname, mode);
+  NickInfoPtr nickInfo = addNickToJoinedChannelsList(channelName, nickname, mode);
   if ((nickInfo->getHostmask() != hostmask) && !hostmask.isEmpty())
   {
     nickInfo->setHostmask(hostmask);
@@ -2007,7 +2003,7 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
 
 #ifdef USE_NICKINFO
     // Update NickInfo.
-    NickInfo* nickInfo = addNickToJoinedChannelsList(channelName, nickname, 99);
+    NickInfoPtr nickInfo = addNickToJoinedChannelsList(channelName, nickname, 99);
     if ((nickInfo->getHostmask() != hostmask) && !hostmask.isEmpty())
     {
       nickInfo->setHostmask(hostmask);
@@ -2033,7 +2029,7 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
 
 #ifdef USE_NICKINFO
   // Update NickInfo.
-  NickInfo* nickInfo=getNickInfo(sourceNick);
+  NickInfoPtr nickInfo=getNickInfo(sourceNick);
   if (nickInfo)
   {
     if ((nickInfo->getHostmask() != sourceHostmask) && !sourceHostmask.isEmpty())
@@ -2126,7 +2122,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
 void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool /* ircOp */)
 {
   addHostmaskToNick(nick,hostmask);
-  NickInfo* nickInfo = getNickInfo(nick);
+  NickInfoPtr nickInfo = getNickInfo(nick);
   if (nickInfo)
   {
     if (nickInfo->isAway() != away)

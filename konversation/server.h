@@ -18,6 +18,7 @@
 #include <qtimer.h>
 #include <qdatetime.h>
 #include <qdict.h>
+#include <ksharedptr.h>
 
 #include "inputfilter.h"
 #include "outputfilter.h"
@@ -42,20 +43,49 @@ class KonversationMainWindow;
 class RawLog;
 class ChannelListPanel;
 
-// A NickInfoList is a list of NickInfo objects, indexed by lowercase nickname.
-typedef QDict<NickInfo> NickInfoList;
+// A LocaleString is used as a key to a QMap.  Unlike QString, it sorts the QMap
+// in localeAware order.
+class LocaleString : public QString
+{
+  public:
+    LocaleString() : QString() {};
+    LocaleString(const QString& s) : QString(s) {}
+    LocaleString(const LocaleString& s) : QString(s) {}
+    LocaleString& operator=(const QString& s) {
+      QString::operator=(s);
+      return *this; }
+    LocaleString& operator=(const LocaleString& s) { 
+      QString::operator=(s); 
+      return *this; }
+    inline bool operator<( const QString &s1) { return (localeAwareCompare(s1) < 0); }
+    inline bool operator<( const char *s1) { return (localeAwareCompare(s1) < 0); }
+    inline bool operator<( QChar c) { return (localeAwareCompare(c) < 0); }
+    inline bool operator<( char ch) { return (localeAwareCompare(&ch) < 0); }
+};
+// A NickInfoPtr is a pointer to a NickInfo object.  Since it is a KSharedPtr, the NickInfo
+// object is automatically destroyed when all references are destroyed.
+typedef KSharedPtr<NickInfo> NickInfoPtr;
+// A NickInfoMap is a list of NickInfo objects, indexed and sorted by lowercase nickname.
+typedef QMap<LocaleString,NickInfoPtr> NickInfoMap;
 // A ChannelNick is a user mode and pointer to a NickInfo.
-typedef struct ChannelNick { unsigned int mode; NickInfo* nickInfo; } ChannelNick;
-// A ChannelNickList is a list of ChannelNicks, indexed by lowercase nickname.
-typedef QDict<ChannelNick> ChannelNickList;
-// A ChannelMembershipList is a list of ChannelNickLists, indexed by lowercase channel name.
-typedef QDict<ChannelNickList> ChannelMembershipList;
-// An iterator for a NickInfoList.
-typedef QDictIterator<NickInfo> NickInfoListIterator;
-// An interator for a ChannelNickList.
-typedef QDictIterator<ChannelNick> ChannelNickListIterator;
-// An iterator for a ChannelMembershipList.
-typedef QDictIterator<ChannelNickList> ChannelMembershipListIterator;
+class ChannelNick : public KShared 
+{
+  public:
+    ChannelNick() : mode(0), nickInfo(0) {}
+    ChannelNick(unsigned int m, NickInfoPtr ni) : mode(m), nickInfo(ni) {}
+    unsigned int mode;
+    NickInfoPtr nickInfo;
+};
+// A ChannelNickPtr is a pointer to a ChannelNick.  Since it is a KSharedPtr, the ChannelNick
+// object is automatically destroyed when all references are destroyed.
+typedef KSharedPtr<ChannelNick> ChannelNickPtr;
+// A ChannelNickMap is a list of ChannelNick pointers, indexed and sorted by lowercase nickname.
+typedef QMap<LocaleString,ChannelNickPtr> ChannelNickMap;
+// A ChannelNickMapPtr is a pointer to a ChannelNickMap.  Since the combination of a channel and a nick
+// is unique, don't bother with KSharedPtr.
+typedef ChannelNickMap* ChannelNickMapPtr;
+// A ChannelMembershipMap is a list of ChannelNickMap pointers, indexed and sorted by lowercase channel name.
+typedef QMap<LocaleString,ChannelNickMapPtr> ChannelMembershipMap;
 
 class Server : public QObject
 {
@@ -153,39 +183,39 @@ class Server : public QObject
     QString getNumericalIp();
     
     // Given a nickname, returns NickInfo object.  0 if not found.
-    NickInfo* getNickInfo(const QString& nickname);
+    NickInfoPtr getNickInfo(const QString& nickname);
     // Given a nickname, returns an existing NickInfo object, or creates a new NickInfo object.
     // Returns pointer to the found or created NickInfo object.
-    NickInfo* obtainNickInfo(const QString& nickname);
+    NickInfoPtr obtainNickInfo(const QString& nickname);
     // Anyone who changes the contents of a NickInfo should call this method to let server
     // know that it has changed.
-    void nickInfoUpdated(const NickInfo* nickInfo);
+    void nickInfoUpdated(const NickInfoPtr nickInfo);
     // Returns the list of members for a channel in the joinedChannels list.
     // 0 if channel is not in the joinedChannels list.
     // Using code must not alter the list.
-    const ChannelNickList* getJoinedChannelMembers(const QString& channelName) const;
+    const ChannelNickMapPtr getJoinedChannelMembers(const QString& channelName) const;
     // Returns the list of members for a channel in the unjoinedChannels list.
     // 0 if channel is not in the unjoinedChannels list.
     // Using code must not alter the list.
-    const ChannelNickList* getUnjoinedChannelMembers(const QString& channelName) const;
+    const ChannelNickMapPtr getUnjoinedChannelMembers(const QString& channelName) const;
     // Searches the Joined and Unjoined lists for the given channel and returns the member list.
     // 0 if channel is not in either list.
     // Using code must not alter the list.
-    const ChannelNickList* getChannelMembers(const QString& channelName) const;
+    const ChannelNickMapPtr getChannelMembers(const QString& channelName) const;
     // Returns a list of all the channels (joined or unjoined) that a nick is in.
     QStringList getNickChannels(QString& nickname);
     // Returns pointer to the ChannelNick (mode and pointer to NickInfo) for a given channel and nickname.
     // 0 if not found.
-    ChannelNick* getChannelNick(const QString& channelName, const QString& nickname);
+    ChannelNickPtr getChannelNick(const QString& channelName, const QString& nickname);
     // Updates a nickname in a channel.  If not on the joined or unjoined lists, and nick
     // is in the watch list, adds the channel and nick to the unjoinedChannels list.
     // If mode != 99, sets the mode for the nick in the channel.
     // Returns the NickInfo object if nick is on any lists, otherwise 0.
-    NickInfo* setChannelNick(const QString& channelName, const QString& nickname, unsigned int mode = 99);
+    NickInfoPtr setChannelNick(const QString& channelName, const QString& nickname, unsigned int mode = 99);
     // Returns a list of the nicks on the watch list that are online.
-    const NickInfoList* getNicksOnline();
+    const NickInfoMap* getNicksOnline();
     // Returns a list of the nicks on the watch list that are offline.
-    const NickInfoList* getNicksOffline();
+    const NickInfoMap* getNicksOffline();
 
   signals:
     void nicknameChanged(const QString&);
@@ -202,9 +232,9 @@ class Server : public QObject
     void serverOnline(bool state); // will be connected to all server dependant tabs
     // Note that these signals haven't been implemented yet.
     // Fires when the information in a NickInfo object changes.
-    void nickInfoChanged(Server* server, const NickInfo* nickInfo);
+    void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);
     // Fires when the mode of a nick in a channel changes.
-    void channelNickChanged(Server* server, const ChannelNick* channelNick);
+    void channelNickChanged(Server* server, const ChannelNickPtr channelNick);
     // Fires when a nick leaves or joins a channel.  Based on joined flag, receiver could
     // call getJoinedChannelMembers or getUnjoinedChannelMembers, or just
     // getChannelMembers to get a list of all the nicks now in the channel.
@@ -215,7 +245,7 @@ class Server : public QObject
     // possible the channel does not exist in any list anymore.
     void channelJoinedOrUnjoined(Server* server, const QString& channelName, bool joined);
     // Fires when a nick on the watch list goes online or offline.
-    void watchedNickChanged(Server* server, const NickInfo* nickInfo, bool online);
+    void watchedNickChanged(Server* server, const NickInfoPtr nickInfo, bool online);
 
   public slots:
     void connectToIRCServer();
@@ -301,23 +331,23 @@ class Server : public QObject
     // If needed, moves the nickname from the Offline to Online lists.
     // If mode != 99 sets the mode for this nick in this channel.
     // Returns the NickInfo for the nickname.
-    NickInfo* addNickToJoinedChannelsList(const QString& channelName, const QString& nickname, unsigned int mode = 99);
+    NickInfoPtr addNickToJoinedChannelsList(const QString& channelName, const QString& nickname, unsigned int mode = 99);
     // Adds a nickname to the unjoinedChannels list.
     // Creates new NickInfo if necessary.
     // If needed, moves the channel from the joined list to the unjoined list.
     // If needed, moves the nickname from the Offline to the Online list.
     // If mode != 99 sets the mode for this nick in this channel.
     // Returns the NickInfo for the nickname.
-    NickInfo* addNickToUnjoinedChannelsList(const QString& channelName, const QString& nickname, unsigned int mode = 99);
+    NickInfoPtr addNickToUnjoinedChannelsList(const QString& channelName, const QString& nickname, unsigned int mode = 99);
     // Adds a nickname to the Online list, removing it from the Offline list, if present.
     // Returns the NickInfo of the nickname.
     // Creates new NickInfo if necessary.
-    NickInfo* addNickToOnlineList(const QString& nickname);
+    NickInfoPtr addNickToOnlineList(const QString& nickname);
     // Adds a nickname to the Offline list provided it is on the watch list,
     // removing it from the Online list, if present.
     // Returns the NickInfo of the nickname or 0 if deleted altogether.
     // Creates new NickInfo if necessary.
-    NickInfo* addNickToOfflineList(const QString& nickname, const QStringList& watchList);
+    NickInfoPtr addNickToOfflineList(const QString& nickname, const QStringList& watchList);
     // Remove nickname from a channel (on joined or unjoined lists).
     // Delete the nickname altogether if no longer on any lists.
     void removeChannelNick(const QString& channelName, const QString& nickname);
@@ -326,7 +356,7 @@ class Server : public QObject
     void removeJoinedChannel(const QString& channelName);
     // Renames a nickname in all NickInfo lists.
     // Returns pointer to the NickInfo object or 0 if nick not found.
-    NickInfo* renameNickInfo(const QString& nickname, const QString& newname);
+    NickInfoPtr renameNickInfo(const QString& nickname, const QString& newname);
 
     unsigned int completeQueryPosition;
     unsigned int tryNickNumber;
@@ -395,19 +425,19 @@ class Server : public QObject
     QString nonAwayNick;
     
     // All nicks known to this server.  Note this is NOT a list of all nicks on the server.
-    NickInfoList allNicks;
+    NickInfoMap allNicks;
     // List of membership lists for joined channels.  A "joined" channel is a channel that user has joined, i.e.,
     // a tab appears for the channel in the main window.
-    ChannelMembershipList joinedChannels;
+    ChannelMembershipMap joinedChannels;
     // List of membership lists for unjoined channels.  These come from WHOIS responses.  Note that this is NOT
     // a list of all channels on the server, just those we are interested in because of nicks in the Nick Watch List.
-    ChannelMembershipList unjoinedChannels;
+    ChannelMembershipMap unjoinedChannels;
     // List of nicks in the Nick Watch List that are online.
-    NickInfoList nicknamesOnline;
+    NickInfoMap nicknamesOnline;
     // List of nicks in the Nick Watch List that are not online.
-    NickInfoList nicknamesOffline;
+    NickInfoMap nicknamesOffline;
     // List of nicks in Queries.
-    NickInfoList queryNicks;
+    NickInfoMap queryNicks;
 };
 
 #endif

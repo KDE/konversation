@@ -21,6 +21,7 @@
 
 #include <qstringlist.h>
 #include <qdatetime.h>
+#include <ksharedptr.h>
 
 class Server;
 
@@ -31,7 +32,7 @@ class Server;
   let Server know that the object has been modified.
 */
 
-class NickInfo
+class NickInfo : public KShared
 {
   public:
     NickInfo(const QString& nick, Server* server);
