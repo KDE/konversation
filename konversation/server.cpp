@@ -469,6 +469,9 @@ void Server::connectToIRCServer()
     statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...")
         .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
         .arg(m_serverGroup.serverByIndex(m_currentServerIndex).port()));
+    
+    // reset InputFilter (auto request info, /WHO request info)
+    inputFilter.reset();
   }
 }
 
@@ -1113,7 +1116,7 @@ void Server::send()
     if(outputLine.startsWith("ISON") ||
        outputLine.startsWith("PING LAG")) notifySent.start();
     
-    // remember the arg for /WHO to identify the responses
+    // remember the first arg of /WHO to identify responses
     else if(outputLine.upper().startsWith("WHO "))
       inputFilter.addWhoRequest(outputLine.section(" ",1,1,QString::SectionSkipEmpty).stripWhiteSpace());
 

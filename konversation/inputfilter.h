@@ -37,6 +37,8 @@ class InputFilter : public QObject
 
     void setServer(Server* newServer);
     void parseLine(const QString &line, QWidget *mainWindow);
+    
+    void reset();  // reset AutomaticRequest, WhoRequestList
 
     // use this when the client does automatics, like userhost for finding hostmasks
     void setAutomaticRequest(const QString& command, const QString& name, bool yes);

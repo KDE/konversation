@@ -1472,6 +1472,12 @@ bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)
   return doIgnore;
 }
 
+void InputFilter::reset()
+{
+  automaticRequest.clear();
+  whoRequestList.clear();
+}
+
 void InputFilter::setAutomaticRequest(const QString& command, const QString& name, bool yes)
 {
   automaticRequest[command][name.lower()] += (yes) ? 1 : -1;
