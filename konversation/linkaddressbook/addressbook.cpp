@@ -118,14 +118,13 @@ bool Addressbook::canRespond(const QString &uid) {
 	if(result == 3 || result == 4) return true;
 	return false;
 }
-QString Addressbook::locate(const QString &contactId, const QString &/*protocol*/) {
+QString Addressbook::locate(const QString &contactId, const QString &protocol) {
 	if(contactId.isEmpty()) {
 		kdDebug() << "Addressbook::locate called with empty contactId" << endl;
 		return QString::null;
 	}
-	//FIXME the below lines - what protocol are we using for irc?
-	//if(protocol != "IRCProtocol")
-		//return false;
+	if(protocol != "messaging/irc")
+		return false;
 	
 	return getKABCAddresseeFromNick(contactId).uid();
 }
