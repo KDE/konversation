@@ -25,6 +25,8 @@ IRCServerSocket::IRCServerSocket(const char *server,unsigned short int port,int 
                  KExtendedSocket(server,port,KExtendedSocket::inetSocket)
 {
   setTimeout(timeout);
+  setBufferSize(-1, -1); /* Unlimited Buffer */
+  setBlockingMode(false);
 }
 
 IRCServerSocket::~IRCServerSocket()
