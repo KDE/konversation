@@ -262,6 +262,12 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
           {
             emit resumeDccSendTransfer(sourceNick,dccArgument);
           }
+          else if(dccType=="chat")
+          {
+            // will be connected via Server to KonversationMainWindow::addDccChat()
+            emit addDccChat(sourceNick,dccArgument,false);
+          }
+          else server->appendStatusMessage(i18n("DCC"),i18n("Unknown DCC command %1 received from %2.").arg(ctcpArgument).arg(sourceNick));
         }
       }
       else if (ctcpCommand=="clientinfo" && !isChan)

@@ -53,6 +53,7 @@
 #include "irccolorchooser.h"
 #include "trayicon.h"
 #include "tabaction.h"
+#include "dccchat.h"
 
 KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 {
@@ -268,13 +269,13 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     else if(viewType==ChatWindow::ChannelList)  view->closeYourself();
     else if(viewType==ChatWindow::Query)        view->closeYourself();
     else if(viewType==ChatWindow::RawLog)       view->closeYourself();
+    else if(viewType==ChatWindow::DccChat)      view->closeYourself();
 
     else if(viewType==ChatWindow::DccPanel)     closeDccPanel();
     else if(viewType==ChatWindow::Konsole)      closeKonsolePanel(view);
     else if(viewType==ChatWindow::UrlCatcher)   closeUrlCatcher();
 
 /*
-    else if(viewType==ChatWindow::DccChat);
     else if(viewType==ChatWindow::Notice);
     else if(viewType==ChatWindow::SNotice);
 */
@@ -401,6 +402,14 @@ void KonversationMainWindow::deleteDccPanel()
     delete dccPanel;
     dccPanel=0;
   }
+}
+
+void KonversationMainWindow::addDccChat(const QString& nick,const QStringList& arguments,bool listen)
+{
+  kdDebug() << "KonversationMainWindow::addDccChat(" << nick << " " << arguments.join(" ") << " " << listen << ")" << endl;
+
+  DccChat* dccChatPanel=new DccChat(getViewContainer(),nick,arguments,listen);
+  addView(dccChatPanel,3,dccChatPanel->getName());
 }
 
 StatusPanel* KonversationMainWindow::addStatusView(Server* server)
