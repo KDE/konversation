@@ -14,6 +14,7 @@ my $random;
 my $input;
 my @chars;
 my $i = 0;
+my $me = 0;
 
 if(!@ARGV){
     exec ("dcop $PORT Konversation error \"Colorizer script needs a message argument!\" ");
@@ -25,6 +26,12 @@ if( utf8::valid($input) ) {
     utf8::decode($input);
 }
 
+if($input =~ /^\/me/)
+{
+    $input =~ s/^\/me//;
+    $me=1;
+}
+
 @chars = split //, $input;
 
 foreach (@chars) {
@@ -34,5 +41,11 @@ foreach (@chars) {
   $message = $message."%C".$i.$_;
 }
 
-system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$message\" ");
-
+if($me)
+{
+    system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"/me $message\" ");
+}
+else
+{
+    system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$message\" ");
+}
