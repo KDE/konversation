@@ -8,12 +8,12 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>398</width>
+            <width>246</width>
             <height>100</height>
         </rect>
     </property>
     <property name="caption">
-        <string></string>
+        <string>IRCColorChooserUI</string>
     </property>
     <grid>
         <property name="name">
@@ -22,6 +22,14 @@
         <widget class="QCheckBox" row="1" column="0">
             <property name="name">
                 <cstring>m_bgColorChBox</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
             <property name="text">
                 <string>Background color:</string>
@@ -43,6 +51,14 @@
         <widget class="QLabel" row="0" column="0">
             <property name="name">
                 <cstring>m_fgColorLbl</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
             <property name="text">
                 <string>Foreground Color:</string>
