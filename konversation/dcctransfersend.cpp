@@ -143,7 +143,8 @@ void DccTransferSend::start()  // public slot
   }
     
   connect( m_serverSocket, SIGNAL( readyAccept() ),   this, SLOT( heard() )            );
-  connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( socketError( int ) ) );
+  connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( socketError( int ) ) ); 
+  connect( m_serverSocket, SIGNAL( closed() ),     this, SLOT( slotServerSocketClosed() ) );
   
   // Get our own port number
   KNetwork::KSocketAddress ipAddr = m_serverSocket->localAddress();
@@ -305,9 +306,12 @@ void DccTransferSend::connectionTimeout()  // slot
   updateView();
   cleanUp();
 }
-
+void DccTransferSend::slotServerSocketClosed() {
+  kdDebug() << "Server socket closed, status: "<< m_dccStatus << endl;
+}
 void DccTransferSend::slotSendSocketClosed()
 {
+  kdDebug() << "Socket closed, status: "<< m_dccStatus << endl;
   if( m_dccStatus == Sending )
   {
     setStatus( Failed, i18n("Remote user disconnected") );

@@ -357,6 +357,8 @@ void DccTransferRecv::writeDone()  // slot
 
 void DccTransferRecv::gotWriteError( int /* errorCode */ )  // slot
 {
+  Q_ASSERT(m_recvSocket); if(!m_recvSocket) return;
+  
   KMessageBox::sorry( 0, i18n("KIO Error: %1").arg( m_recvSocket->errorString() ), i18n("DCC Error") );
   setStatus( Failed, i18n("KIO Error: %1").arg( m_recvSocket->errorString() ) );
   cleanUp();
@@ -522,6 +524,7 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
 
 void DccTransferRecvWriteCacheHandler::slotKIOResult()
 {
+  Q_ASSERT(m_transferJob);
   if( m_transferJob->error() )
   {
     m_transferJob->showErrorDialog(0);
@@ -531,3 +534,4 @@ void DccTransferRecvWriteCacheHandler::slotKIOResult()
 }
 
 #include "dcctransferrecv.moc"
+

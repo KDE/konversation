@@ -1079,17 +1079,17 @@ void KonversationMainWindow::tooLongLag(Server* lagServer,int msec)
 	    secsleft -= secsleft%360;
     }
     if(secsleft % (360*24)) {
-            timeString.push_front(i18n("1 hour", "%n hours", (secsleft%360*24)/360));
+            timeString.push_front(i18n("1 hour", "%n hours", (secsleft%(360*24))/360));
             secsleft -= secsleft%(360*24);
     }
     if(secsleft) {
             timeString.push_front(i18n("1 day", "%n days", secsleft/(360*24)));
     }
     Q_ASSERT(!timeString.empty()); if(timeString.empty()) return;
-    QString timestring = timeString.first();
-    timeString.pop_front();
+    QString timestring = timeString.last();
+//    timeString.pop_last();
     if(!timeString.empty()) {
-	    timestring += " and " + timeString.join(", ");
+	    timestring = timeString.join(", ") + " and " + timestring;
     }
     QString lagString(i18n("No answer from server %1 for more than %2").arg(lagServer->getServerName(), timestring));
     statusBar()->changeItem(lagString,StatusText);

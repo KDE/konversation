@@ -54,7 +54,7 @@ class DccTransferSend : public DccTransfer
     void socketError( int errorCode );
     void connectionTimeout();
     void slotSendSocketClosed();
-    
+    void slotServerSocketClosed();
   protected:
     void cleanUp();
     void startConnectionTimer( int sec );
