@@ -58,7 +58,18 @@ QString NickInfo::getRealName() { return realName; }
 QString NickInfo::getNetServer() { return netServer; }
 QString NickInfo::getNetServerInfo() { return netServerInfo; }
 QDateTime NickInfo::getOnlineSince() { return onlineSince; }
-QString NickInfo::getPrettyOnlineSince() { return prettyOnlineSince; }
+QString NickInfo::getPrettyOnlineSince() { 
+  QString prettyOnlineSince;
+  int daysto = onlineSince.date().daysTo( QDate::currentDate());
+  if(daysto == 0) prettyOnlineSince = "Today";
+  else if(daysto == 1) prettyOnlineSince = "Yesterday";
+  else prettyOnlineSince = onlineSince.toString("ddd d MMMM yyyy");
+  
+  prettyOnlineSince += " " + onlineSince.toString("h:mm ap");
+  
+
+	return prettyOnlineSince; 
+}
      
 // Return the Server object that owns this NickInfo object.
 Server* NickInfo::getServer() { return owningServer; }
@@ -148,13 +159,6 @@ void NickInfo::setOnlineSince(const QDateTime& datetime) {
   onlineSince = datetime; 
 
 
-  int daysto = onlineSince.date().daysTo( QDate::currentDate());
-  if(daysto == 0) prettyOnlineSince = "Today";
-  else if(daysto == 1) prettyOnlineSince = "Yesterday";
-  else prettyOnlineSince = onlineSince.toString("ddd d MMMM yyyy");
-  
-  prettyOnlineSince += " " + onlineSince.toString("h:mm ap");
-  
   owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
 }

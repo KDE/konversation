@@ -105,7 +105,6 @@ class NickInfo : public QObject, public KShared
     QString netServer;
     QString netServerInfo;
     QDateTime onlineSince;
-    QString prettyOnlineSince;
     KABC::Addressee addressee;
   signals:
     void nickInfoChanged(void);
