@@ -73,3 +73,6 @@ DISCUSSING:
 - Import notify list from .ircrc
 - Notify with more than 500 characters
 - "Open Nicks online panel on startup" option
+- Make Kick and Kill-Reasons available via popup so they don't disappear with the closing tab
+- Watched nicks editor should sort alphabetically, manual sorting makes no sense there
+- Watched nicks panel should have a "last seen" column so you can sort them
