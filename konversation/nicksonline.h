@@ -72,6 +72,8 @@ class NicksOnline : public ChatWindow
     KListView* getNickListView();
     NickInfoPtr getNickInfo(const QListViewItem* item);
   
+    virtual bool canBeFrontView()   { return true; }
+
   signals:
     /**
     * Emitted when user clicks Edit Watch List button.

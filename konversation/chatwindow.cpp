@@ -529,8 +529,6 @@ void ChatWindow::adjustFocus() {
     action = m_mainWindow->actionCollection()->action("edit_find");
     if(action) action->setEnabled(textView!=NULL); else Q_ASSERT(action);
     action = m_mainWindow->actionCollection()->action("edit_find_next");
-    if(action) action->setEnabled(textView!=NULL); else Q_ASSERT(action);
-    action = m_mainWindow->actionCollection()->action("open_channel_list");
     if(action) action->setEnabled(m_server!=NULL); else Q_ASSERT(action);
     action = m_mainWindow->actionCollection()->action("open_logfile");
     if(action) {
@@ -540,6 +538,18 @@ void ChatWindow::adjustFocus() {
 	    else
 		    action->setText(i18n("&Open Logfile for %1").arg(getName()));
     } else
+	    Q_ASSERT(action);
+    action = m_mainWindow->actionCollection()->action("open_channel_list");
+    if(action) { 
+	    action->setEnabled(m_server);
+            if(m_server)
+	      action->setText(i18n("&Channel List for %1").arg(m_server->getServerName())); 
+	    else {
+	      action->setText(i18n("&Channel List")); 
+	    }
+		    
+    }
+    else 
 	    Q_ASSERT(action);
   }
   childAdjustFocus();

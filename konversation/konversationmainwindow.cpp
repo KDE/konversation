@@ -120,7 +120,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
   new KAction(i18n("&Identities..."), "identity", 0, this, SLOT(openIdentitiesDialog()), actionCollection(), "identities_dialog");
 
-  new KAction(i18n("&Watched Nicks Online"), 0, 0, this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
+  new KToggleAction(i18n("&Watched Nicks Online"), 0, 0, this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
   new KAction(i18n("&Open Logfile"), "history", 0, this, SLOT(openLogfile()), actionCollection(), "open_logfile");
 
   new KAction(i18n("&Channel List"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
@@ -427,10 +427,9 @@ void KonversationMainWindow::showView(ChatWindow* view)
   if(viewContainer->isVisible())
   {
     // TODO: add adjustFocus() here?
-    viewContainer->showPage(view);  //This does not appear to call changeView
+    viewContainer->showPage(view);  //This does will changeView(view) via slots
   }
 #endif
-//  changeView(view);
 }
 
 #ifdef USE_MDI
@@ -1108,7 +1107,15 @@ void KonversationMainWindow::openNicksOnlinePanel()
     connect(nicksOnlinePanel,SIGNAL (doubleClicked(const QString&,const QString&)),this,SLOT (notifyAction(const QString&,const QString&)) );
 
     connect(this,SIGNAL (nicksNowOnline(const QString&,const QStringList&,bool)),nicksOnlinePanel,SLOT (setOnlineList(const QString&,const QStringList&,bool)) );
+    (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(true);
+  } else if((ChatWindow *)frontView != (ChatWindow *)nicksOnlinePanel){
+    showView(nicksOnlinePanel);
+    (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(true);
+  } else {
+    closeNicksOnlinePanel();
+    (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(false);
   }
+
 }
 
 void KonversationMainWindow::closeNicksOnlinePanel()
@@ -1118,6 +1125,7 @@ void KonversationMainWindow::closeNicksOnlinePanel()
     delete nicksOnlinePanel;
     nicksOnlinePanel=0;
   }
+  (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(false);
 }
 
 void KonversationMainWindow::openServerList()
