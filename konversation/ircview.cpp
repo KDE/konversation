@@ -153,15 +153,6 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
 {
   QString filteredLine(line);
 
-  // make sure that own lines don't always get highlight
-  QString who;
-
-  // FIXME: We got to get rid of server dependance here
-  if(server)
-  {
-    if(whoSent!=server->getNickname() || KonversationApplication::preferences.getHilightOwnLines()) who=whoSent;
-  }
-
   // TODO: Use QStyleSheet::escape() here
 
   // Replace all & with &amp;
@@ -277,31 +268,47 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   if(doHilight)
   {
     // FIXME: We got to get rid of server dependance here
-    if(server && KonversationApplication::preferences.getHilightNick() &&
-       filteredLine.lower().find(server->getNickname().lower())!=-1)
+    if(server && whoSent==server->getNickname() && KonversationApplication::preferences.getHilightOwnLines())
     {
-      QColor hilightNickColor=KonversationApplication::preferences.getHilightNickColor();
-      filteredLine=QString("<font color=\""+hilightNickColor.name()+"\">")+filteredLine+QString("</font>");
+      // hilight own lines
+      filteredLine=QString("<font color=\""+KonversationApplication::preferences.getHilightOwnLinesColor().name()+"\">")+filteredLine+QString("</font>");
     }
     else
     {
-      QPtrList<Highlight> hilightList=KonversationApplication::preferences.getHilightList();
-      unsigned int index;
-
-      for(index=0;index<hilightList.count();index++)
+      QString who(QString::null);
+      // only copy sender name if it was not our own line
+      if(server && whoSent!=server->getNickname()) who=whoSent;
+      
+      // FIXME: We got to get rid of server dependance here
+      if(server && KonversationApplication::preferences.getHilightNick() &&
+         filteredLine.lower().find(server->getNickname().lower())!=-1)
       {
-        QString needle=hilightList.at(index)->getText().lower();
-        if(filteredLine.lower().find(needle)!=-1)
+        // hilight current nickname
+        QColor hilightNickColor=KonversationApplication::preferences.getHilightNickColor();
+        filteredLine=QString("<font color=\""+hilightNickColor.name()+"\">")+filteredLine+QString("</font>");
+      }
+      else
+      {
+        QPtrList<Highlight> hilightList=KonversationApplication::preferences.getHilightList();
+        unsigned int index;
+
+        for(index=0;index<hilightList.count();index++)
         {
-          filteredLine=QString("<font color=\""+hilightList.at(index)->getColor().name()+"\">")+filteredLine+QString("</font>");
-          break;
-        }
-        if(who!=NULL && who.lower().find(needle)!=-1)
-        {
-          filteredLine=QString("<font color=\""+hilightList.at(index)->getColor().name()+"\">")+filteredLine+QString("</font>");
-          break;
-        }
-     } // endfor
+          QString needle=hilightList.at(index)->getText().lower();
+          if(filteredLine.lower().find(needle)!=-1)
+          {
+            // hilight patterns in text
+            filteredLine=QString("<font color=\""+hilightList.at(index)->getColor().name()+"\">")+filteredLine+QString("</font>");
+            break;
+          }
+          if(who.lower().find(needle)!=-1)
+          {
+            // hilight patterns in nickname
+            filteredLine=QString("<font color=\""+hilightList.at(index)->getColor().name()+"\">")+filteredLine+QString("</font>");
+            break;
+          }
+        } // endfor
+      }
     }
   }
 
