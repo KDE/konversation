@@ -28,13 +28,14 @@
 #include <qvaluelist.h>
 #include <qmap.h>
 
+#include <kdialogbase.h>
 #include <kdebug.h>
 #include <kabc/addressbook.h>
-#include "linkaddressbookui_base.h"
 
 class QCheckListItem;
+class LinkAddressbookUI_Base;
 
-class LinkAddressbookUI : public LinkAddressbookUI_Base
+class LinkAddressbookUI : public KDialogBase
 {
 	Q_OBJECT
 
@@ -49,13 +50,12 @@ private:
 	QString m_servername;
 	QString m_servergroup;
 	QString m_suggested_realname;
-public slots:
-	virtual void accept();
-	virtual void reject();
-    virtual void buttonHelp_clicked();
+  LinkAddressbookUI_Base* m_mainWidget;
 
 protected slots:
-	void slotAddAddresseeClicked();
+  virtual void slotOk();
+  virtual void slotCancel();
+  void slotAddAddresseeClicked();
 	void slotAddresseeListClicked( QListViewItem *addressee );
 	/**
 	 * Utility function, populates the addressee list
