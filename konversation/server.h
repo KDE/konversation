@@ -329,7 +329,6 @@ class Server : public QObject
   public slots:
     void lookupFinished();
     void connectToIRCServer();
-    void gotOwnUserhostReply(KResolverResults res);
     void queue(const QString &buffer);
     void queueList(const QStringList &buffer);
     void queueAt(uint pos,const QString& buffer);
@@ -401,6 +400,8 @@ class Server : public QObject
     void setTopicAuthor(const QString& channel,const QString& author);
     void invitation(const QString& nick,const QString& channel);
     void sendToAllChannelsAndQueries(const QString& text);
+    void gotOwnResolvedHostByWelcome(KResolverResults res);
+    void gotOwnResolvedHostByUserhost(KResolverResults res);
 
   protected:
     // constants
