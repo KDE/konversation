@@ -354,8 +354,13 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
       ChatWindow* win = dynamic_cast<ChatWindow*>(static_cast<LedTab*>(lookTab)->getWidget());
       
       if(win) {
-        popup->setItemVisible(EnableNotifications, true);
-        popup->setItemChecked(EnableNotifications, win->notificationsEnabled());
+        ChatWindow::WindowType viewType = win->getType();
+        if(viewType == ChatWindow::Channel || viewType == ChatWindow::Query || viewType == ChatWindow::Status) {
+          popup->setItemVisible(EnableNotifications, true);
+          popup->setItemChecked(EnableNotifications, win->notificationsEnabled());
+        } else {
+          popup->setItemVisible(EnableNotifications, false);
+        }
       } else {
         popup->setItemVisible(EnableNotifications, false);
       }
