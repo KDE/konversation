@@ -285,7 +285,5 @@ class Channel : public ChatWindow
 
     QStringList m_modeList;
     ChannelNickPtr m_ownChannelNick;
-
-    QString m_lastCompletion;
 };
 #endif

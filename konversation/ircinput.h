@@ -38,6 +38,7 @@ class IRCInput : public KTextEdit
     char getCompletionMode();
     void setOldCursorPosition(int pos);
     int getOldCursorPosition();
+    QString lastCompletion() const { return m_lastCompletion; }
 
     virtual QSize sizeHint() const;
     QString text() const;
@@ -56,6 +57,7 @@ class IRCInput : public KTextEdit
     void insert(const QString& text);
     void showCompletionList(const QStringList& nicks);
     void setText(const QString& text);
+    void setLastCompletion(const QString& completion);
 
   protected slots:
     void getHistory(bool up);
@@ -72,6 +74,7 @@ class IRCInput : public KTextEdit
     unsigned int oldPos;
     char completionMode;
     KCompletionBox* completionBox;
+    QString m_lastCompletion;
     bool useSelection;
 };
 

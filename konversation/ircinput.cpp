@@ -484,6 +484,7 @@ void IRCInput::insertCompletion(const QString& nick)
   // no, it was at the beginning
   else
   {
+    setLastCompletion(nick);
     QString addStart(KonversationApplication::preferences.getNickCompleteSuffixStart());
     line.insert(pos, nick + addStart);
     pos += nick.length() + addStart.length();
@@ -491,6 +492,11 @@ void IRCInput::insertCompletion(const QString& nick)
 
   setText(line);
   setCursorPosition(0,pos);
+}
+
+void IRCInput::setLastCompletion(const QString& completion)
+{
+  m_lastCompletion = completion;
 }
 
 // Accessor methods

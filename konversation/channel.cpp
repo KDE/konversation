@@ -603,10 +603,10 @@ void Channel::completeNick()
   }
 
   // If the cursor is at beginning of line, insert last completion
-  if(pos == 0 && !m_lastCompletion.isEmpty())
+  if(pos == 0 && !channelInput->lastCompletion().isEmpty())
   {
     QString addStart(KonversationApplication::preferences.getNickCompleteSuffixStart());
-    newLine = m_lastCompletion + addStart;
+    newLine = channelInput->lastCompletion() + addStart;
     // New cursor position is behind nickname
     pos = newLine.length();
     // Add rest of the line
@@ -684,11 +684,11 @@ void Channel::completeNick()
       {
         // remove pattern from line
         newLine.remove(pos,pattern.length());
-        m_lastCompletion = foundNick;
 
         // did we find the nick in the middle of the line?
         if(pos && complete)
         {
+          channelInput->setLastCompletion(foundNick);
           QString addMiddle(KonversationApplication::preferences.getNickCompleteSuffixMiddle());
           newLine.insert(pos,foundNick+addMiddle);
           pos=pos+foundNick.length()+addMiddle.length();
@@ -696,6 +696,7 @@ void Channel::completeNick()
         // no, it was at the beginning
         else if(complete)
         {
+          channelInput->setLastCompletion(foundNick);
           QString addStart(KonversationApplication::preferences.getNickCompleteSuffixStart());
           newLine.insert(pos,foundNick+addStart);
           pos=pos+foundNick.length()+addStart.length();
