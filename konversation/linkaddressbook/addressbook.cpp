@@ -139,7 +139,7 @@ NickInfoPtr Addressbook::getNickInfo(const KABC::Addressee &addressee, bool onli
 	return lastNickInfo;
 }
 
-bool Addressbook::hasAnyNicks(const KABC::Addressee &addressee, const QString &/*server*/) {
+bool Addressbook::hasAnyNicks(const KABC::Addressee &addressee) {
 	return !addressee.custom("messaging/irc", "All").isEmpty();
 }
 /** For a given contact, remove the ircnick if they have it. If you
@@ -300,63 +300,17 @@ bool Addressbook::saveAddressee(KABC::Addressee &addressee) {
  */
 int Addressbook::presenceStatus(const KABC::Addressee &addressee) {
 	Q_ASSERT(&addressee);
-	int presenceStat = 0;
-	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
-	QStringList::iterator end = addresses.end();
-	for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
-	{
-		int presence = presenceStatusByNick(*it, "");
-		if(presence == 4) 
-			return 4; //The ultimate goal - online and not away.
-		if(presence == 3)
-			return 3; //Be happy with away as well.  Or should we keep searching for an online? hmm
-		if(presence == 1)
-			presenceStat = 1; //well.. at least we are connected to their server. But lets try the other nicks
-		//Otherwise unknown - keep going, might find better.
-	}
-	return presenceStat;
+	NickInfoPtr nickInfo = getNickInfo(addressee, true /*online only*/);
+	if(!nickInfo) return 1; //either offline, or we aren't on the same server.  returning 0 not supported at the moment.
+	if(nickInfo->isAway()) return 3;
+	return 4;
+
 }
-
-
-/**
- * Indicate the presence as a number.
- * @param ircnick of the person we want to know if they are online.
- * @param server name of the person that the ircnick is for.  Set to null or empty for all servers
- * @return 0 (we aren't connected to the server), 1 (offline), 3 (away), 4 (online)
- */
-int Addressbook::presenceStatusByNick(const QString &ircnick, const QString &server) {
-	if(ircnick.isEmpty() /* || server.isEmpty()*/) {  //server stuff not implemented yet.  we need to hurry up on this. FIXME
-		kdDebug() << "presenceStatusByNick called, but ircnick or server was empty/null" << endl;
-		return 0;
-	}
-	bool foundaserver = false;
-	QPtrList<Server> serverlist;
-	serverlist =dynamic_cast<KonversationApplication*>(kapp)->getServerList();
-	Server* lookServer=serverlist.first();
-	while(lookServer)
-	{
-		if(lookServer->getServerName()==server || server.isEmpty())
-		{
-			if(lookServer->isNickOnline(ircnick)) {
-				//Found nick..  are they online?
-				if(ircnick.find( QRegExp( "[^a-zA-Z]away[^a-zA-Z]", FALSE)) >= 0)
-					return 3; //AWAY
-				return 4; //ONLINE
-			}
-			foundaserver = true;
-		}
-		lookServer = serverlist.next();
-	}
-	if(foundaserver) return 1;
-	return 0;
-}
-
-
 
 QStringList Addressbook::allContacts() {
 	QStringList contactUIDS;
 	for( KABC::AddressBook::Iterator it = addressBook->begin(); it != addressBook->end(); ++it )
-		if(hasAnyNicks(*it,"")) contactUIDS.append((*it).uid());
+		if(hasAnyNicks(*it)) contactUIDS.append((*it).uid());
 	return contactUIDS;
 }
 //Produces a string list of all the irc nicks that are known.
@@ -368,17 +322,7 @@ QStringList Addressbook::allContactsNicks() {
 }
 
 bool Addressbook::isOnline(KABC::Addressee &addressee) {
-	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
-	QStringList::iterator end = addresses.end();
-	for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
-		if(isOnline(*it, "")) return true;
-	return false;
-}
-
-bool Addressbook::isOnline(const QString &ircnick, const QString &server) {
-	if(presenceStatusByNick(ircnick, server) >=3)
-		return true;
-	return false;
+	return !!getNickInfo(addressee, true);
 }
 
 QStringList Addressbook::onlineContacts() {
@@ -395,7 +339,7 @@ QStringList Addressbook::fileTransferContacts() {
 	return onlineContacts();
 }
 bool Addressbook::isPresent(const QString &uid) {
-	return hasAnyNicks(addressBook->findByUid(uid), "");
+	return hasAnyNicks(addressBook->findByUid(uid));
 }
 QString Addressbook::displayName(const QString &uid) {
 	return getBestNick(addressBook->findByUid(uid));

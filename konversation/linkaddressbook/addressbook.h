@@ -45,11 +45,9 @@ class Addressbook : public QObject,public KIMIface
       * @return online nick, first nick, or QString::null if they aren't known at all.
     */
     QString getBestNick(const KABC::Addressee &addressee);
-    bool hasAnyNicks(const KABC::Addressee &addresse, const QString &server);
+    bool hasAnyNicks(const KABC::Addressee &addresse);
     int presenceStatus(const KABC::Addressee &addressee);
-    int presenceStatusByNick(const QString &ircnick, const QString &server);
     bool isOnline(KABC::Addressee &addressee);
-    bool isOnline(const QString &ircnick, const QString &server);
     bool getAndCheckTicket();
     bool saveTicket();	
     void releaseTicket();
