@@ -281,9 +281,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   emailPattern.setCaseSensitive(false);
 
   pos=0;
-  while(static_cast<unsigned int>(pos) < filteredLine.length())
-  {
-    if(pattern.search(filteredLine,pos)!=-1) {
+  while(pattern.search(filteredLine,pos)!=-1) {
       // Remember where we found the url
       pos=pattern.pos();
 
@@ -310,7 +308,10 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
 
       KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
       konvApp->storeUrl(whoSent,url);
-    } else if(emailPattern.search(filteredLine,pos)!=-1) {
+  }
+
+  pos = 0;
+  while (emailPattern.search(filteredLine,pos)!=-1) {
       // Remember where we found the url
       pos=emailPattern.pos();
       // Extract url
@@ -327,9 +328,6 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
       filteredLine.replace(pos,url.length(),link);
       // next search begins right after the link
       pos+=link.length();
-    } else {
-      pos++;
-    }
   }
 
   // Hilight
