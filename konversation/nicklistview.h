@@ -51,8 +51,8 @@ class NickListView : public KListView
     };
 
   public slots:
-    /** Starts a 1 second timer to call resort.
-     *  If this is called again, the timer is reset.  This prevents lots of calls to resort.
+    /** When this is called, resort is guaranteed to be called within a hard-coded time (a few seconds).
+     *  This prevents lots of calls to resort.
      */
     void startResortTimer();
   protected slots:

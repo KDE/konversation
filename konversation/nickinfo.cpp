@@ -46,6 +46,9 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 
   connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( refreshAddressee() ) );
   connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(refreshAddressee()));
+
+  m_changedTimer = new QTimer( this);
+  connect(m_changedTimer, SIGNAL( timeout()), SLOT(emitNickInfoChanged()));
 }
 NickInfo::~NickInfo()
 {
@@ -127,79 +130,80 @@ void NickInfo::setNickname(const QString& newNickname) {
   m_nickname = newNickname; 
   
   QString realname = m_addressee.realName();
+  startNickInfoChangedTimer();
+}
+
+void NickInfo::emitNickInfoChanged() {
   m_owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
-
 }
+
+void NickInfo::startNickInfoChangedTimer() {
+  if(!m_changedTimer->isActive());
+    m_changedTimer->start(3000, TRUE /*single shot*/); 
+}
+
 void NickInfo::setHostmask(const QString& newMask) { 
   if (newMask.isEmpty() || newMask == m_hostmask) return;
   m_hostmask = newMask;
-  m_owningServer->emitNickInfoChanged(this);
-  emit nickInfoChanged();
+
+  startNickInfoChangedTimer();
 }
 void NickInfo::setAway(bool state) { 
   if(state == m_away) return;
-  m_away = state; 
-  m_owningServer->emitNickInfoChanged(this);
-  emit nickInfoChanged();
+  m_away = state;
+
+  startNickInfoChangedTimer();
   if(!m_addressee.isEmpty())
     Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid());
 }
 void NickInfo::setIdentified(bool identified) {
   if(identified == m_identified) return;
   m_identified = identified;
-  m_owningServer->emitNickInfoChanged(this);
-  emit nickInfoChanged();
+  startNickInfoChangedTimer();
 }
 void NickInfo::setAwayMessage(const QString& newMessage) { 
   if(m_awayMessage == newMessage) return;
   m_awayMessage = newMessage; 
-  m_owningServer->emitNickInfoChanged(this);
-  emit nickInfoChanged();
+  
+  startNickInfoChangedTimer();
 }
 void NickInfo::setIdentdInfo(const QString& newIdentdInfo) {
   if(m_identdInfo == newIdentdInfo) return;
   m_identdInfo = newIdentdInfo;
-  m_owningServer->emitNickInfoChanged(this);
-  emit nickInfoChanged();
+  startNickInfoChangedTimer();
 }
 void NickInfo::setVersionInfo(const QString& newVersionInfo) {
   if(m_versionInfo == newVersionInfo) return;
   m_versionInfo = newVersionInfo; 
-  m_owningServer->emitNickInfoChanged(this);
-  emit nickInfoChanged();
+
+  startNickInfoChangedTimer();
 }
 void NickInfo::setNotified(bool state) { 
   if(state == m_notified) return;
   m_notified = state; 
-  m_owningServer->emitNickInfoChanged(this);
-  emit nickInfoChanged();
+  startNickInfoChangedTimer();
 }
 void NickInfo::setRealName(const QString& newRealName) { 
   if (newRealName.isEmpty() || m_realName == newRealName) return;
   m_realName = newRealName; 
-  m_owningServer->emitNickInfoChanged(this);
-  emit nickInfoChanged();
+  startNickInfoChangedTimer();
 }
 void NickInfo::setNetServer(const QString& newNetServer) { 
   if (newNetServer.isEmpty() || m_netServer == newNetServer) return;
   m_netServer = newNetServer; 
-  m_owningServer->emitNickInfoChanged(this);
-  emit nickInfoChanged();
+  startNickInfoChangedTimer();
 }
 void NickInfo::setNetServerInfo(const QString& newNetServerInfo) {
   if (newNetServerInfo.isEmpty() || newNetServerInfo == m_netServerInfo) return;
   m_netServerInfo = newNetServerInfo;
-  m_owningServer->emitNickInfoChanged(this);
-  emit nickInfoChanged();
+  startNickInfoChangedTimer();
 }
 void NickInfo::setOnlineSince(const QDateTime& datetime) {
   if (datetime.isNull() || datetime == m_onlineSince) return;
   m_onlineSince = datetime; 
-
-
-  m_owningServer->emitNickInfoChanged(this);
-  emit nickInfoChanged();
+  
+  startNickInfoChangedTimer();
 }
 
 KABC::Addressee NickInfo::getAddressee() const { return m_addressee;}
@@ -213,8 +217,7 @@ void NickInfo::refreshAddressee() {
   }
   m_addressee = addressee;
 
-  emit nickInfoChanged();
-  m_owningServer->emitNickInfoChanged(this);
+  startNickInfoChangedTimer();
   
   if(!m_addressee.isEmpty())
     Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid());

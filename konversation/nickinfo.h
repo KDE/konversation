@@ -26,6 +26,7 @@
 #include <kabc/addressbook.h>
 
 class Server;
+class QTimer;
 
 /**
   The NickInfo object is a data container for information about a single nickname.
@@ -118,7 +119,7 @@ class NickInfo : public QObject, public KShared
      *
      *  @return A string to show the user for the name of this contact
      */
-    QString NickInfo::getBestAddresseeName();
+    QString getBestAddresseeName();
 
     /** Open this contact up in a "edit addresee association" window
      */
@@ -131,6 +132,10 @@ class NickInfo : public QObject, public KShared
     bool sendEmail() const; 
 
   private:
+    /** After calling, emitNickInfoChanged is guaranteed to be called _within_ 1 second.
+     *  Used to consolidate changed signals.
+     */
+    void startNickInfoChangedTimer();
     QString m_nickname;
     Server* m_owningServer;
     QString m_hostmask;
@@ -149,8 +154,13 @@ class NickInfo : public QObject, public KShared
      *  Found only by doing /whois nick
      */
     bool m_identified;
+    QTimer *m_changedTimer;
   private slots:
     void refreshAddressee();
+    /** emits NickInfoChanged for this object, and calls the server emitNickInfoChanged.
+     *  Called when the m_changedTimer activates.
+     */
+    void emitNickInfoChanged();
   signals:
     void nickInfoChanged(void);
 };
