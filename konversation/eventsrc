@@ -201,6 +201,7 @@ default_presentation=0
 
 [notify]
 Name=Notify
+Name[ca]=Notificació
 Name[da]=Bekendtgør
 Name[de]=Benachrichtigen
 Name[es]=Notificar
@@ -209,6 +210,7 @@ Name[pt]=Notificação
 Name[pt_BR]=Notificar
 Name[sv]=Underrättelse
 Comment=A user on your notification list went online
+Comment[ca]=Ara és connectat un usuari de la vostra llista de notificacions
 Comment[da]=En bruger på din bekendtgørelsesliste gik online
 Comment[de]=Ein Benutzer aus Ihrer Benachrichtigungsliste ist online.
 Comment[es]=Un usuario de su lista de notificación se ha desconectado
