@@ -721,7 +721,7 @@ void Server::broken(int state)
 
 void Server::sslError(QString reason)
 {
-  QString error = i18n("<qt>Could not connect to %1:%2 using SSL encryption.  Maybe the server does not support SSL, or perhaps you have the wrong port?<p>%s</qt>")
+  QString error = i18n("Could not connect to %1:%2 using SSL encryption.  Maybe the server does not support SSL, or perhaps you have the wrong port? %3")
 	             .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
 		     .arg(m_serverGroup.serverByIndex(m_currentServerIndex).port())
 		     .arg(reason);
