@@ -77,7 +77,7 @@ class Channel : public ChatWindow
     void kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, const QString &reason);
     void addNickname(ChannelNickPtr channelNick);
     void nickRenamed(const QString &oldNick, const NickInfo& channelnick);	    
-    void addPendingNickList(ChannelNickList pendingChannelNickList);
+    void addPendingNickList(const ChannelNickList& pendingChannelNickList);
 #else
     void joinNickname(const QString& nickname,const QString& hostname);
     void addNickname(const QString& nickname,const QString& hostmask,
@@ -161,6 +161,8 @@ class Channel : public ChatWindow
 
     void closeYourself(ChatWindow* view); // USE_MDI
     void serverQuit(const QString& reason); // USE_MDI
+    
+    void processPendingNicks();
 
   protected:
     void showEvent(QShowEvent* event);
@@ -228,6 +230,11 @@ class Channel : public ChatWindow
     QTimer userhostTimer;
 
     bool m_allowNotifications;
+    
+    ChannelNickList::iterator m_listIterator;
+    ChannelNickList m_pendingChannelNickList;
+    int m_opsToAdd;
+    
+    QTimer* m_processingTimer;
 };
-
 #endif
