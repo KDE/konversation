@@ -126,7 +126,6 @@ class ServerWindow : public KMainWindow
 
     void openNicksOnlineWindow();
     void closeNicksOnlineWindow(QSize newSize);
-    void notifyAction(QListViewItem* item);
     void openButtons();
     void applyButtons(QStringList newList);
     void closeButtons(QSize newSize);

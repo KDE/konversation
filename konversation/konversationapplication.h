@@ -74,6 +74,8 @@ class KonversationApplication : public KApplication
     QPtrList<Server> serverList;
     PrefsDialog* prefsDialog;
     KonvDCOP* dcopObject;
+
+    ServerWindow* mainWindow;
 };
 
 #endif

@@ -22,6 +22,7 @@
 #include <qlist.h>
 #include <qtimer.h>
 #include <qdatetime.h>
+#include <qlistview.h>
 
 #include "inputfilter.h"
 #include "outputfilter.h"
@@ -152,6 +153,7 @@ class Server : public QObject
     void notifyTimeout();
     void notifyCheckTimeout();
     void connectionEstablished();
+    void notifyAction(QListViewItem* item);
     void notifyResponse(const QString &nicksOnline);
     void addDccGet(const QString &sourceNick, const QStringList &dccArguments);
     void requestDccSend();                                               // -> to outputFilter, dccPanel

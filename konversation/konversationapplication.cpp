@@ -37,6 +37,10 @@ KonversationApplication::KonversationApplication()
 
   readOptions();
 
+  // open main window
+//  mainWindow=new ServerWindow();
+  mainWindow=0;
+  
   // handle autoconnect on startup
   QValueList<int> list=preferences.getAutoConnectServerIDs();
   // if there is at least one autoconnect server, start connecting right away
@@ -82,7 +86,9 @@ KonversationApplication::~KonversationApplication()
 {
   kdDebug() << "KonversationApplication::~KonversationApplication()" << endl;
   saveOptions(false);
-  delete dcopObject;
+
+  if(dcopObject) delete dcopObject;
+  if(mainWindow) delete mainWindow;
 }
 
 void KonversationApplication::dcopSay(const QString& server,const QString& target,const QString& command)

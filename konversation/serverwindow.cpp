@@ -344,7 +344,7 @@ void ServerWindow::newText(QWidget* view)
 {
   // FIXME: Should be compared to ChatWindow* but the status Window currently is something else
   // Now that the status Window is a ChatWindow* we can start cleaning up here
-  if(view!=(QWidget*) windowContainer->currentPage())
+  if(view!=static_cast<QWidget*>(windowContainer->currentPage()))
   {
     windowContainer->changeTabState(view,true);
   }
@@ -540,7 +540,7 @@ void ServerWindow::openNicksOnlineWindow()
   {
     nicksOnlineWindow=new NicksOnline(KonversationApplication::preferences.getNicksOnlineSize());
     connect(nicksOnlineWindow,SIGNAL (editClicked()),this,SLOT (openNotify()) );
-    connect(nicksOnlineWindow,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT (notifyAction(QListViewItem*)) );
+    connect(nicksOnlineWindow,SIGNAL (doubleClicked(QListViewItem*)),getServer(),SLOT (notifyAction(QListViewItem*)) );
     connect(nicksOnlineWindow,SIGNAL (closeClicked(QSize)),this,SLOT (closeNicksOnlineWindow(QSize)) );
     connect(getServer(),SIGNAL (nicksNowOnline(const QStringList&)),nicksOnlineWindow,SLOT (setOnlineList(const QStringList&)) );
     nicksOnlineWindow->show();
@@ -554,28 +554,6 @@ void ServerWindow::closeNicksOnlineWindow(QSize newSize)
 
   delete nicksOnlineWindow;
   nicksOnlineWindow=0;
-}
-
-void ServerWindow::notifyAction(QListViewItem* item)
-{
-  if(item)
-  {
-    // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
-    QString out=getServer()->parseWildcards(KonversationApplication::preferences.getNotifyDoubleClickAction(),
-                                       getServer()->getNickname(),
-                                       QString::null,
-                                       QString::null,
-                                       item->text(0),
-                                       QString::null,
-                                       QString::null);
-    // Send all strings, one after another
-    QStringList outList=QStringList::split('\n',out);
-    for(unsigned int index=0;index<outList.count();index++)
-    {
-      filter.parse(getServer()->getNickname(),outList[index],QString::null);
-      getServer()->queue(filter.getServerOutput());
-    } // endfor
-  }
 }
 
 void ServerWindow::openColorConfiguration()
@@ -700,7 +678,7 @@ void ServerWindow::goToTab(int page)
   if(page>=0 && page<windowContainer->count())
   {
     windowContainer->setCurrentPage(page);
-    ChatWindow* newPage=(ChatWindow*) windowContainer->page(page);
+    ChatWindow* newPage=static_cast<ChatWindow*>(windowContainer->page(page));
     newPage->adjustFocus();
   }
 }

@@ -257,6 +257,28 @@ void Server::connectionEstablished()
     queue("PRIVMSG "+bot+" :identify "+botPassword);
 }
 
+void Server::notifyAction(QListViewItem* item)
+{
+  if(item)
+  {
+    // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
+    QString out=parseWildcards(KonversationApplication::preferences.getNotifyDoubleClickAction(),
+                               getNickname(),
+                               QString::null,
+                               QString::null,
+                               item->text(0),
+                               QString::null,
+                               QString::null);
+    // Send all strings, one after another
+    QStringList outList=QStringList::split('\n',out);
+    for(unsigned int index=0;index<outList.count();index++)
+    {
+      outputFilter.parse(getNickname(),outList[index],QString::null);
+      queue(outputFilter.getServerOutput());
+    } // endfor
+  }
+}
+
 void Server::notifyResponse(const QString& nicksOnline)
 {
   // We received a 303 or "PONG :LAG" notify message, so calculate server lag
