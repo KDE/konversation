@@ -168,7 +168,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccBufferSizeLayout->addWidget(dccBufferSpin);
   dccBufferSizeLayout->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
   
-  dccFastSend=new QCheckBox(i18n("&Use fast DCC send"),parentFrame,"dcc_fast_dcc_sending");
+  dccFastSend=new QCheckBox(i18n("&Use fast DCC send (POSSIBLY UNFUNCTIONAL)"),parentFrame,"dcc_fast_dcc_sending");
   dccFastSend->setChecked(preferences->getDccFastSend());
 
   QHBox* dccSpacer=new QHBox(parentFrame);
