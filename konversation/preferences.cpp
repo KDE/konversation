@@ -132,11 +132,12 @@ Preferences::Preferences()
   setHilightSoundEnabled(true);
 
   // On Screen Display
-  setOSDUsage(false);
-  setOSDShowOwnNick(false);
-  setOSDShowQuery(false);
+  setOSDUsage(true);
+  setOSDShowOwnNick(true);
+  setOSDShowQuery(true);
   setOSDShowChannelEvent(false);
   setOSDTextColor("#ffffff");
+  setOSDDuration(3000);
 
   setColorInputFields(true);
   setBackgroundImageName(QString::null);
