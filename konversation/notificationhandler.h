@@ -26,7 +26,7 @@ class NotificationHandler : public QObject
   public:
     NotificationHandler(KonversationApplication* parent = 0, const char* name = 0);
     ~NotificationHandler();
-  
+
   public slots:
     void message(ChatWindow* chatWin, const QString& fromNick, const QString& message);
     void nick(ChatWindow* chatWin, const QString& fromNick, const QString& message);
@@ -41,11 +41,12 @@ class NotificationHandler : public QObject
     void nickOffline(ChatWindow* chatWin, const QString& nick);
     void kick(ChatWindow* chatWin, const QString& channel,const QString& nick);
     void dccChat(ChatWindow* chatWin, const QString& nick);
-		    
+    void highlight(ChatWindow* chatWin, const QString& fromNick, const QString& message);
+
   protected:
     void startTrayNotification(ChatWindow* chatWin);
     int winId() const;
-  
+
   private:
     KonversationMainWindow* m_mainWindow;
 };

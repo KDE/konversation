@@ -267,6 +267,19 @@ void NotificationHandler::dccChat(ChatWindow* chatWin, const QString& nick)
     i18n("%1 started a dcc chat with you").arg(nick));
 }
 
+void NotificationHandler::highlight(ChatWindow* chatWin, const QString& fromNick, const QString& message)
+{
+  if(!chatWin || !chatWin->notificationsEnabled()) {
+    return;
+  }
+
+  if(KonversationApplication::preferences.getOSDShowOwnNick())
+  {
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(message));
+  }
+}
+
 }
 
 #include "notificationhandler.moc"

@@ -32,7 +32,7 @@
                 <cstring>currentNickCheck</cstring>
             </property>
             <property name="text">
-                <string>Alwa&amp;ys highlight my current nick:</string>
+                <string>Alwa&amp;ys highlight own current nick:</string>
             </property>
         </widget>
         <widget class="QCheckBox" row="3" column="0">

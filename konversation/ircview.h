@@ -33,6 +33,7 @@ class QEvent;
 class KPopupMenu;
 
 class Server;
+class ChatWindow;
 
 class IRCView : public KTextBrowser
 {
@@ -59,6 +60,8 @@ class IRCView : public KTextBrowser
       SendFile,
       Bookmark
     };
+
+    void setChatWin(ChatWindow* chatWin);
 
   signals:
     // Notify container of new text and highlight state
@@ -161,6 +164,8 @@ class IRCView : public KTextBrowser
     QString urlToDrag;
     QPoint pressPosition;
     int popupId;
+
+    ChatWindow* m_chatWin;
 };
 
 #endif

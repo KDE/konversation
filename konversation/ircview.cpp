@@ -57,6 +57,7 @@
 #include "common.h"
 #include "images.h"
 #include "emoticon.h"
+#include "notificationhandler.h"
 
 IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 {
@@ -67,6 +68,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   mousePressed=false;
   m_currentNick=QString::null;
   m_isOnNick=false;
+  m_chatWin = 0;
 
   setAutoFormatting(QTextEdit::AutoNone);
   setUndoRedoEnabled(0);
@@ -449,6 +451,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
           konvApp->sound()->play(highlight->getSoundURL());
         }
 
+        konvApp->notificationHandler()->highlight(m_chatWin, whoSent, line);
         autoTextToSend = highlight->getAutoText();
       }
     }
@@ -1079,5 +1082,7 @@ QString IRCView::timeStamp()
 
   return QString::null;
 }
+
+void IRCView::setChatWin(ChatWindow* chatWin) { m_chatWin = chatWin; }
 
 #include "ircview.moc"

@@ -217,7 +217,8 @@ void ChatWindow::setIdentity(const Identity *newIdentity)
 
 void ChatWindow::setTextView(IRCView* newView)
 {
-  textView=newView;
+  textView = newView;
+  textView->setChatWin(this);
   connect(textView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
 }
 
