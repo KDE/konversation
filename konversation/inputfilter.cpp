@@ -1026,6 +1026,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                                       .arg(parameterList[2])                             // to avoid parsing as email
                                       .arg(parameterList[3])
                                       .arg(trailing));
+	  break;
         }
 /* Sample WHO response
 /WHO #lounge
