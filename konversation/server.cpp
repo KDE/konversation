@@ -497,7 +497,7 @@ void Server::notifyResponse(const QString& nicksOnline)
       if(notifyLowerCache.find(nickLowerList[index])==notifyLowerCache.end())
       {
         getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 is online (%2).").arg(nickList[index]).arg(getServerName()),statusView);
-        
+
 #ifdef USE_KNOTIFY
         KNotifyClient::event(mainWindow->winId(), "notify",
           i18n("%1 is online (%2).").arg(nickList[index]).arg(getServerName()));
@@ -511,7 +511,7 @@ void Server::notifyResponse(const QString& nicksOnline)
       if(nickLowerList.find(notifyLowerCache[index])==nickLowerList.end())
       {
         getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 went offline. (%2)").arg(notifyCache[index]).arg(getServerName()),statusView);
-      
+
 #ifdef USE_KNOTIFY
         KNotifyClient::event(mainWindow->winId(), "notify",
           i18n("%1 went offline. (%2)").arg(notifyCache[index]).arg(getServerName()));
@@ -1290,7 +1290,8 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
     if(KonversationApplication::preferences.getOSDShowChannelEvent())
     {
       KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-      konvApp->osd->showOSD("(" + channelName + ") " + nickname + " has joined this channel. (" + hostmask + ")");
+      konvApp->osd->showOSD(i18n( "(%1) %2 has joined this channel. (%3)" )
+                            .arg(channelName).arg(nickname).arg(hostmask));
     }
   }
 }
@@ -1321,7 +1322,8 @@ void Server::removeNickFromChannel(const QString &channelName, const QString &ni
     if(KonversationApplication::preferences.getOSDShowChannelEvent())
     {
       KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-      konvApp->osd->showOSD("(" + channelName + ") " + nickname + " has left this channel. (" + reason + ")");
+      konvApp->osd->showOSD(i18n( "(%1) %2 has left this channel. (%3)" )
+                            .arg(channelName).arg(nickname).arg(reason));
     }
   }
 }
@@ -1414,7 +1416,7 @@ void Server::appendToQuery(const QString& queryName,const QString& message)
     if(KonversationApplication::preferences.getOSDShowQuery())
     {
       KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-      konvApp->osd->showOSD("(Query) <" + queryName + "> " + message);
+      konvApp->osd->showOSD(i18n( "(Query) <%1> %2" ).arg(queryName).arg(message));
     }
   }
   else kdWarning() << "Server::appendToQuery(" << queryName << "): Query not found!" << endl;

@@ -68,15 +68,8 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   encodings=KGlobal::charsets()->descriptiveEncodingNames();
 
   // from ksirc: remove utf16/ucs2 as it just doesn't work for IRC
-  QStringList::Iterator iterator=encodings.begin();
-  while(iterator!=encodings.end())
-  {
-    if((*iterator).find("utf16")!=-1 ||
-       (*iterator).find("iso-10646")!=-1)
-      iterator=encodings.remove(iterator);
-    else
-      ++iterator;
-  }
+  encodings.remove( "utf16" );
+  encodings.remove( "iso-10646" );
 
   // add encodings to combo box
   codecComboBox->insertStringList(encodings);
@@ -379,7 +372,7 @@ void PrefsPageIdentity::removeIdentity()
 {
   // TODO: are you sure here
   int current=identityCombo->currentItem();
-  
+
   if(current)
   {
     preferences->removeIdentity(identity);
