@@ -16,7 +16,7 @@
 */
 
 /* See http://lxr.mozilla.org/mozilla/source/modules/rdf/src/utils.c#540 */
-/* Modified by İsmail Dönmez <ismail@kde.org.tr> (C) 2005 */
+/* Modified by İsmail Dönmez <ismail@kde.org.tr> (C) 2005 for Konversation */
 
 #define kLeft1BitMask  0x80
 #define kLeft2BitsMask 0xC0
