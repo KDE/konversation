@@ -24,7 +24,7 @@
 
 #define MAXHISTORY 100
 
-IRCInput::IRCInput(QWidget* parent) : QLineEdit(parent)
+IRCInput::IRCInput(QWidget* parent) : KLineEdit(parent)
 {
   // install eventFilter() function to trap TAB and cursor keys
   installEventFilter(this);
@@ -151,6 +151,20 @@ void IRCInput::getHistory(bool up)
   setText(historyList[lineNum]);
 }
 
+void IRCInput::insert(const QString& textToInsert)
+{
+  QString text(textToInsert);
+  // replace \r with \n to make xterm pastes happy
+  text.replace(QRegExp("\r"),"\n");
+  // is there a newline in the pasted/inserted text?
+  if(text.find('\n')!=-1)
+  {
+    if(checkPaste(text)) emit textPasted(text);
+  }
+  // otherwise let KLineEdit handle the new text
+  else KLineEdit::insert(text);
+}
+
 void IRCInput::paste()
 {
   QClipboard *cb=KApplication::kApplication()->clipboard();
@@ -180,31 +194,38 @@ void IRCInput::paste()
       if(pos!=rpos) signal=true;
     }
 
+    // should we signal the application due to newlines in the paste?
     if(signal)
     {
-      int doPaste=KMessageBox::Yes;
-
-      if(text.length()>256 || text.contains('\n')>2)
-      {
-        doPaste=KMessageBox::warningYesNo
-                (
-                  0,
-                  i18n("<qt>You are attempting to paste a large portion of text into "
-                       "the chat. This can cause connection resets or flood kills. "
-                       "Do you really want to continue?</qt>"),
-                  i18n("Large Paste Warning"),
-                  KStdGuiItem::yes(),
-                  KStdGuiItem::no(),
-                  "LargePaste"
-                );
-      }
-
-      if(doPaste==KMessageBox::Yes) emit textPasted(text);
+      // ask the user on long pastes
+      if(checkPaste(text)) emit textPasted(text);
     }
-    else
-      QLineEdit::paste();
+    // otherwise let the KLineEdit handle the pasting
+    else KLineEdit::paste();
   }
 }
+
+bool IRCInput::checkPaste(const QString& text)
+{
+  int doPaste=KMessageBox::Yes;
+
+  if(text.length()>256 || text.contains('\n')>2)
+  {
+    doPaste=KMessageBox::warningYesNo
+            (
+              0,
+              i18n("<qt>You are attempting to paste a large portion of text into "
+                   "the chat. This can cause connection resets or flood kills. "
+                   "Do you really want to continue?</qt>"),
+              i18n("Large Paste Warning"),
+              KStdGuiItem::yes(),
+              KStdGuiItem::no(),
+              "LargePaste"
+            );
+  }
+  return(doPaste==KMessageBox::Yes);
+}
+
 
 // Accessor methods
 

@@ -15,14 +15,15 @@
 #ifndef IRCINPUT_H
 #define IRCINPUT_H
 
-#include <qlineedit.h>
 #include <qstringlist.h>
+
+#include <klineedit.h>
 
 /*
   @author Dario Abatianni
 */
 
-class IRCInput : public QLineEdit
+class IRCInput : public KLineEdit
 {
   Q_OBJECT
 
@@ -45,13 +46,15 @@ class IRCInput : public QLineEdit
 
   public slots:
     void paste();
-  
+    void insert(const QString& text);
+
   protected slots:
     void getHistory(bool up);
 
   protected:
     bool eventFilter(QObject *object,QEvent *event);
     void addHistory(const QString& text);
+    bool checkPaste(const QString& text);
 
     QStringList historyList;
     unsigned int lineNum;
