@@ -58,8 +58,8 @@ bool OutputFilter::replaceAliases(QString& line)
       aliasReplace.replace(QRegExp("%%"),"%\x01");
       // replace %p placeholder with rest of line
       aliasReplace.replace(QRegExp("%p"),line.section(' ',1));
-      // restore "%%" as "%"
-      aliasReplace.replace(QRegExp("%\x01"),"%");
+      // restore "%<1>" as "%%"
+      aliasReplace.replace(QRegExp("%\x01"),"%%");
       // modify line
       line=aliasReplace;
       // return "replaced"
