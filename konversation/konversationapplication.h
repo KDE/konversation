@@ -121,6 +121,8 @@ class KonversationApplication : public KUniqueApplication
     QStringList& getColorList();
     QMap<QString,QString>& getColorMap();
 
+    int newInstance();
+
   signals:
     void catchUrl(const QString& who,const QString& url);
     void prefsChanged();

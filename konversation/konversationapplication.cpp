@@ -44,102 +44,10 @@ Preferences KonversationApplication::preferences;
 KonversationApplication::KonversationApplication()
     : KUniqueApplication(true, true, true)
 {
-  // make sure all vars are initialized properly
-  prefsDialog=0;
-  quickConnectDialog=0;
-  colorOffSet=0;
-
-  // Sound object used to play sound...
-  m_sound = new Konversation::Sound(this);
-  
-  // initialize OSD display here, so we can read the preferences properly
-  osd = new OSDWidget( "Konversation" );
-
-  preferences.setOSDFont(font());
-  preferences.setTextFont(font());
-  preferences.setListFont(font());
-
-  readOptions();
-  colorList = KonversationApplication::preferences.getNickColorList();
-
-  // Images object providing LEDs, NickIcons
-  m_images = new Images();
-
-  // Auto-alias scripts
-  QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
-  QFileInfo* fileInfo = new QFileInfo();
-  QStringList aliasList(KonversationApplication::preferences.getAliasList());
-  QString newAlias;
-
-  for ( QStringList::ConstIterator it = scripts.begin(); it != scripts.end(); ++it ) {
-      fileInfo->setFile( *it );
-      if ( fileInfo->isExecutable() ) {
-          newAlias = (*it).section('/',-1)+" "+"/exec "+(*it).section('/', -1 );
-
-          if(!aliasList.contains(newAlias))
-              aliasList.append(newAlias);
-      }
-  }
-
-  KonversationApplication::preferences.setAliasList(aliasList);
-
-  // Setup system codec
-  // TODO: check if this works now as intended
-  QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
-
-  // open main window
-  mainWindow = new KonversationMainWindow();
-  connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
-  connect(mainWindow,SIGNAL (openPrefsDialog(Preferences::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
-  connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
-  connect(&preferences,SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
-  connect(this, SIGNAL(prefsChanged()), mainWindow, SLOT(slotPrefsChanged()));
-  // apply GUI settings
-  appearanceChanged();
-  mainWindow->show();
-
-  if(preferences.getShowServerList())
-  {
-    mainWindow->openServerList();
-  }
-
-  // handle autoconnect on startup
-  Konversation::ServerGroupList serverGroups = preferences.serverGroupList();
-
-  for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it) {
-    if((*it).autoConnectEnabled()) {
-      connectToServer((*it).id());
-    }
-  }
-
-  // prepare dcop interface
-  dcopObject=new KonvDCOP;
-  kapp->dcopClient()->setDefaultObject(dcopObject->objId());
-  identDCOP = new KonvIdentDCOP;
-  prefsDCOP = new KonvPrefsDCOP;
-  if(dcopObject)
-  {
-
-    connect(dcopObject,SIGNAL (dcopMultiServerRaw(const QString&)),
-                    this,SLOT (dcopMultiServerRaw(const QString&)) );
-    connect(dcopObject,SIGNAL (dcopRaw(const QString&,const QString&)),
-                    this,SLOT (dcopRaw(const QString&,const QString&)) );
-    connect(dcopObject,SIGNAL (dcopSay(const QString&,const QString&,const QString&)),
-                    this,SLOT (dcopSay(const QString&,const QString&,const QString&)) );
-    connect(dcopObject,SIGNAL (dcopInfo(const QString&)),
-                    this,SLOT (dcopInfo(const QString&)) );
-    connect(dcopObject,SIGNAL (dcopInsertRememberLine()),
-                    this,SLOT (insertRememberLine()));
-    connect(dcopObject,SIGNAL (dcopSetAutoAway()),
-                    this,SLOT (setAutoAway()));
-    connect(dcopObject,SIGNAL(dcopConnectToServer(const QString&, int,const QString&, const QString&)),
-	    this,SLOT(dcopConnectToServer(const QString&, int,const QString&, const QString&)));
-  }
-
-  // take care of user style changes, setting back colors and stuff
-  connect(KApplication::kApplication(),SIGNAL (appearanceChanged()),this,SLOT (appearanceChanged()) );
-  
-  m_notificationHandler = new Konversation::NotificationHandler(this);
+  mainWindow = 0;
+  prefsDialog = 0;
+  quickConnectDialog = 0;
+  colorOffSet = 0;
 }
 
 KonversationApplication::~KonversationApplication()
@@ -150,6 +58,110 @@ KonversationApplication::~KonversationApplication()
   delete dcopObject;
   delete prefsDCOP;
   delete identDCOP;
+}
+
+int KonversationApplication::newInstance()
+{
+  if(!mainWindow) {
+    // make sure all vars are initialized properly
+    prefsDialog = 0;
+    quickConnectDialog = 0;
+    colorOffSet = 0;
+
+    // Sound object used to play sound...
+    m_sound = new Konversation::Sound(this);
+
+    // initialize OSD display here, so we can read the preferences properly
+    osd = new OSDWidget( "Konversation" );
+
+    preferences.setOSDFont(font());
+    preferences.setTextFont(font());
+    preferences.setListFont(font());
+
+    readOptions();
+    colorList = KonversationApplication::preferences.getNickColorList();
+
+    // Images object providing LEDs, NickIcons
+    m_images = new Images();
+
+    // Auto-alias scripts
+    QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
+    QFileInfo* fileInfo = new QFileInfo();
+    QStringList aliasList(KonversationApplication::preferences.getAliasList());
+    QString newAlias;
+
+    for ( QStringList::ConstIterator it = scripts.begin(); it != scripts.end(); ++it ) {
+      fileInfo->setFile( *it );
+      if ( fileInfo->isExecutable() ) {
+        newAlias = (*it).section('/',-1)+" "+"/exec "+(*it).section('/', -1 );
+
+        if(!aliasList.contains(newAlias))
+          aliasList.append(newAlias);
+      }
+    }
+
+    KonversationApplication::preferences.setAliasList(aliasList);
+
+    // Setup system codec
+    // TODO: check if this works now as intended
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
+
+    // open main window
+    mainWindow = new KonversationMainWindow();
+    setMainWidget(mainWindow);
+    connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
+    connect(mainWindow,SIGNAL (openPrefsDialog(Preferences::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
+    connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
+    connect(&preferences,SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
+    connect(this, SIGNAL(prefsChanged()), mainWindow, SLOT(slotPrefsChanged()));
+    // apply GUI settings
+    appearanceChanged();
+    mainWindow->show();
+
+    if(preferences.getShowServerList())
+    {
+      mainWindow->openServerList();
+    }
+
+    // handle autoconnect on startup
+    Konversation::ServerGroupList serverGroups = preferences.serverGroupList();
+
+    for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it) {
+      if((*it).autoConnectEnabled()) {
+        connectToServer((*it).id());
+      }
+    }
+
+    // prepare dcop interface
+    dcopObject = new KonvDCOP;
+    kapp->dcopClient()->setDefaultObject(dcopObject->objId());
+    identDCOP = new KonvIdentDCOP;
+    prefsDCOP = new KonvPrefsDCOP;
+
+    if(dcopObject) {
+      connect(dcopObject,SIGNAL (dcopMultiServerRaw(const QString&)),
+              this,SLOT (dcopMultiServerRaw(const QString&)) );
+      connect(dcopObject,SIGNAL (dcopRaw(const QString&,const QString&)),
+              this,SLOT (dcopRaw(const QString&,const QString&)) );
+      connect(dcopObject,SIGNAL (dcopSay(const QString&,const QString&,const QString&)),
+              this,SLOT (dcopSay(const QString&,const QString&,const QString&)) );
+      connect(dcopObject,SIGNAL (dcopInfo(const QString&)),
+              this,SLOT (dcopInfo(const QString&)) );
+      connect(dcopObject,SIGNAL (dcopInsertRememberLine()),
+              this,SLOT (insertRememberLine()));
+      connect(dcopObject,SIGNAL (dcopSetAutoAway()),
+              this,SLOT (setAutoAway()));
+      connect(dcopObject,SIGNAL(dcopConnectToServer(const QString&, int,const QString&, const QString&)),
+              this,SLOT(dcopConnectToServer(const QString&, int,const QString&, const QString&)));
+    }
+
+    // take care of user style changes, setting back colors and stuff
+    connect(KApplication::kApplication(),SIGNAL (appearanceChanged()),this,SLOT (appearanceChanged()) );
+
+    m_notificationHandler = new Konversation::NotificationHandler(this);
+  }
+
+  return KUniqueApplication::newInstance();
 }
 
 KonversationApplication* KonversationApplication::instance()  // static

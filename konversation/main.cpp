@@ -16,6 +16,9 @@
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <klocale.h>
+#include <dcopclient.h>
+#include <dcopref.h>
+#include <kdebug.h>
 
 #include "konversationapplication.h"
 #include "version.h"
@@ -70,9 +73,10 @@ int main(int argc, char* argv[])
 
   KCmdLineArgs::init(argc,argv,&aboutData);
   KonversationApplication::addCmdLineOptions();
+  KApplication::addCmdLineOptions();
 
   if(!KUniqueApplication::start()) {
-    exit(0);
+    return 0;
   }
 
   KonversationApplication app;
