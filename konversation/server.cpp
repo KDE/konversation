@@ -970,7 +970,7 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
   if(outChannel) outChannel->joinNickname(nickname,hostmask);
 }
 
-void Server::addHostmaskToNick(const QString &sourceNick, const QString &sourceHostmask)
+void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceHostmask)
 {
   Channel* channel=channelList.first();
 

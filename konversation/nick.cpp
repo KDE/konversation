@@ -18,11 +18,9 @@
 
 #include "nick.h"
 
-Nick::Nick(KListView* listView,const QString &nickname, const QString &hostmask, bool op, bool voice)
+Nick::Nick(KListView* listView,const QString& nickname, const QString& hostmask, bool op, bool voice)
 {
-  kdDebug() << "Nick::Nick(" << nickname << "," << hostmask << ")" << endl;
-
-  listViewItem = new LedListViewItem(listView, nickname,op,voice);
+  listViewItem=new LedListViewItem(listView,nickname,hostmask,op,voice);
   setNickname(nickname);
   setHostmask(hostmask);
 
@@ -32,14 +30,19 @@ Nick::Nick(KListView* listView,const QString &nickname, const QString &hostmask,
 
 Nick::~Nick()
 {
-  kdDebug() << "Nick::~Nick(" << getNickname() << ")" << endl;
   delete listViewItem;
 }
 
-void Nick::setNickname(const QString &newName)
+void Nick::setNickname(const QString& newName)
 {
   nickname=newName;
   listViewItem->setText(1,newName);
+}
+
+void Nick::setHostmask(const QString& newMask)
+{
+  hostmask=newMask;
+  listViewItem->setText(2,hostmask);
 }
 
 void Nick::setOp(bool setop)
@@ -53,3 +56,11 @@ void Nick::setVoice(bool setvoice)
   voice=setvoice;
   listViewItem->setState(op,voice);
 }
+
+bool Nick::isOp() { return op; }
+bool Nick::hasVoice() { return voice; }
+
+QString Nick::getNickname() { return nickname; }
+QString Nick::getHostmask() { return hostmask; }
+
+bool Nick::isSelected() { return listViewItem->isSelected(); }

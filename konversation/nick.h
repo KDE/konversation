@@ -32,15 +32,15 @@ class Nick
     Nick(KListView* listView, const QString &nickname, const QString &hostmask, bool op, bool voice);
     ~Nick();
 
-    bool isOp() { return op; };
-    bool hasVoice() { return voice; };
+    bool isOp();
+    bool hasVoice();
     void setOp(bool setop);
     void setVoice(bool setvoice);
-    bool isSelected() { return listViewItem->isSelected(); } ;
+    bool isSelected();
 
-    QString getNickname() { return nickname; };
-    QString getHostmask() { return hostmask; };
-    void setHostmask(const QString& newMask) { hostmask=newMask; };
+    QString getNickname();
+    QString getHostmask();
+    void setHostmask(const QString& newMask);
     void setNickname(const QString& newName);
 
   protected:

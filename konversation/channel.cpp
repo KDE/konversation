@@ -126,11 +126,14 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView->setSelectionModeExt(KListView::Extended);
   nicknameListView->setAllColumnsShowFocus(true);
   nicknameListView->setSorting(1,true);
-  nicknameListView->addColumn(QString::null,2);
+  nicknameListView->addColumn(QString::null);
   nicknameListView->addColumn(QString::null);
   nicknameListView->addColumn(QString::null);
   nicknameListView->header()->hide();
   nicknameListView->setFont(KonversationApplication::preferences.getListFont());
+//  nicknameListView->setResizeMode(KListView::LastColumn);
+  nicknameListView->setColumnWidthMode(1,KListView::Maximum);
+  nicknameListView->setColumnWidthMode(2,KListView::Maximum);
 
   // the grid that holds the quick action buttons
   buttonsGrid=new QGrid(2,nickListButtons);

@@ -18,8 +18,12 @@
 #include "ledlistviewitem.h"
 #include "konversationapplication.h"
 
-LedListViewItem::LedListViewItem(KListView* parent,const QString &passed_label,bool passed_opState,bool passed_voiceState) :
-                   KListViewItem(parent, passed_label)
+LedListViewItem::LedListViewItem(KListView* parent,
+                                 const QString& passed_label,
+                                 const QString& passed_label2,
+                                 bool passed_opState,
+                                 bool passed_voiceState) :
+                   KListViewItem(parent,passed_label,passed_label2)
 {
   opState=passed_opState;
   voiceState=passed_voiceState;
@@ -34,10 +38,10 @@ LedListViewItem::LedListViewItem(KListView* parent,const QString &passed_label,b
   voiceLedOn =currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
 
   // separate LED from Text a little more
-  // TODO: Find out if we can align pixmaps vertically centered
   listView()->setColumnWidth(0,opLedOn.width()+2);
   listView()->setColumnAlignment(0,Qt::AlignHCenter);
   listView()->setColumnAlignment(1,Qt::AlignLeft);
+  listView()->setColumnAlignment(2,Qt::AlignLeft);
 
   setText(0,QString::null);
   setState(opState,voiceState);
