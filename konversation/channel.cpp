@@ -30,6 +30,10 @@
 #include "konversationapplication.h"
 #include "channel.h"
 
+#if QT_VERSION < 0x030100
+#include <time.h>
+#endif
+
 Channel::Channel(QWidget* parent) : ChatWindow(parent)
 {
   // init variables
@@ -222,6 +226,30 @@ Channel::~Channel()
   server->removeChannel(this);
 }
 
+#if QT_VERSION < 0x030100
+// copied from Trolltech QT 3.1
+unsigned int toTime_t(QDateTime dt)
+{
+    tm brokenDown;
+
+    QDate d=dt.date();
+    QTime t=dt.time();
+
+    brokenDown.tm_sec = t.second();
+    brokenDown.tm_min = t.minute();
+    brokenDown.tm_hour = t.hour();
+    brokenDown.tm_mday = d.day();
+    brokenDown.tm_mon = d.month() - 1;
+    brokenDown.tm_year = d.year() - 1900;
+    brokenDown.tm_isdst = -1;
+    int secsSince1Jan1970UTC = (int) mktime( &brokenDown );
+    if ( secsSince1Jan1970UTC < -1 )
+        secsSince1Jan1970UTC = -1;
+
+    return (unsigned int) secsSince1Jan1970UTC;
+}
+#endif
+
 void Channel::requestNewTopic(const QString& newTopic)
 {
   kdDebug() << "requestNewTopic(" << newTopic << ")" << endl;
@@ -276,7 +304,14 @@ void Channel::popupCommand(int id)
       raw=true;
       break;
     case NickListView::Ping:
-      pattern=QString(KonversationApplication::preferences.getCommandChar()+"CTCP %u PING %1").arg(QDateTime::currentDateTime().toTime_t());
+      {
+#if QT_VERSION < 0x030100
+        unsigned int time_t=toTime_t(QDateTime::currentDateTime());
+#else
+        unsigned int time_t=QDateTime::currentDateTime().toTime_t();
+#endif
+        pattern=QString(KonversationApplication::preferences.getCommandChar()+"CTCP %u PING %1").arg(time_t);
+      }
       break;
     case NickListView::Kick:
       pattern="KICK %c %u";
