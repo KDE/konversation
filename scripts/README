@@ -40,3 +40,7 @@ colorizer       Randomly colorizes the message.
 media		Plays the currently played media.
 		Supports amaroK,JuK,Noatun,Kaffeine
 		Usage: /media
+
+mail		Print the number of unread emails in your inbox folder in
+		kmail.  Kmail or kontact must be running.
+		Usage: /mail [folder-substring]
