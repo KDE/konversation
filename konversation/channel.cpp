@@ -43,8 +43,10 @@
 #include <kdeversion.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
+#include <kwin.h>
 
 #include "konversationapplication.h"
+#include "konversationmainwindow.h"
 #include "channel.h"
 #include "server.h"
 #include "nick.h"
@@ -968,6 +970,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick) {
     m_ownChannelNick = channelNick;
     connect(m_ownChannelNick, SIGNAL(channelNickChanged()), SLOT(refreshModeButtons()));
     refreshModeButtons();
+    KWin::demandAttention(KonversationApplication::instance()->getMainWindow()->winId());
 
   } else {
     appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel. (%2)").arg(channelNick->getNickname()).arg(channelNick->getHostmask()),false, false);
