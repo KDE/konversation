@@ -12,8 +12,14 @@
 class DefaultCodec
 {
   public:
-    static QString getCodecForLang( const QString& lang = KLocale::defaultLanguage() );
+    static QString getDefaultLocaleCodec();
+    static QString getCodecForLang( const QString& lang );
 };
+
+QString DefaultCodec::getDefaultLocaleCodec()
+{
+  return getCodecForLang( KLocale::defaultLanguage() );
+}
 
 QString DefaultCodec::getCodecForLang( const QString& lang )  // static
 {

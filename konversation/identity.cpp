@@ -25,7 +25,7 @@ Identity::Identity()
   nicknameList.append(QString::null);
   nicknameList.append(QString::null);
 
-  setCodec(DefaultCodec::getCodecForLang());
+  setCodec(DefaultCodec::getDefaultLocaleCodec());
 }
 
 Identity::~Identity()
