@@ -398,4 +398,6 @@ default_presentation=0
 [kick]
 Name=Kick
 Comment=Someone kicked you out of a channel
+Comment[ru]=Кто-то выпнул вас с канала
+Comment[sv]=Någon sparkade ut dig från en kanal
 default_presentation=0
