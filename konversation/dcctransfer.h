@@ -146,13 +146,20 @@ class DccTransfer : public QObject, public KListViewItem
     unsigned long m_bufferSize;
     char* m_buffer;
     
-    // file information
+    /** The filename.  This is santized to remove any "/"'s in it. 
+     *  For receiving, it doesn't include the partner's nick if that
+     *  preference is on.
+     *  This won't ever be null.  For receiving, if a blank filename is used,
+     *  this is set to "unknown".
+     */
     QString m_fileName;
-    /* The file size of the complete file sending/recieving. */
+    
+    /** The file size of the complete file sending/recieving. */
     KIO::filesize_t  m_fileSize;
-    /* If we are sending a file, this is the url of the file we are sending.
-     * If we are recieving a file, this is the url of the file we are saving
-     * to in the end (Temporararily it will be filename+".part" ).
+    
+    /** If we are sending a file, this is the url of the file we are sending.
+     *  If we are recieving a file, this is the url of the file we are saving
+     *  to in the end (Temporararily it will be filename+".part" ).
      */
     KURL m_fileURL;
     

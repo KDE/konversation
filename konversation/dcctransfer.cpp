@@ -37,7 +37,9 @@ DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partn
 {
   m_dccType = dccType;
   m_partnerNick = partnerNick;
-  m_fileName = fileName;
+  
+  m_fileName = QFileInfo(fileName).fileName();  //Just incase anyone tries to do anything nasty
+  if(m_fileName.isEmpty()) m_fileName= "unnamed";
   
   m_dccStatus = Queued;
   m_resumed = false;

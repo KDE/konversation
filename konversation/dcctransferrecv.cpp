@@ -51,68 +51,81 @@
 DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort )
   : DccTransfer( panel, DccTransfer::Receive, partnerNick, fileName )
 {
-   m_connectionTimer = new QTimer(this);
+  m_connectionTimer = new QTimer(this);
   connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
   //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
  
-  QString sanitised_filename = QFileInfo(fileName).fileName();  //Just incase anyone tries to do anything nasty
-  if(sanitised_filename.isEmpty()) sanitised_filename= "unnamed";
   kdDebug() << "DccTransferRecv::DccTransferRecv()" << endl
             << "DccTransferRecv::DccTransferRecv(): Partner=" << partnerNick << endl
             << "DccTransferRecv::DccTransferRecv(): File=" << fileName << endl
             << "DccTransferRecv::DccTransferRecv(): Sanitised Filename=" << sanitised_filename << endl
             << "DccTransferRecv::DccTransferRecv(): FileSize=" << fileSize << endl
             << "DccTransferRecv::DccTransferRecv(): Partner Address=" << partnerIp << ":" << partnerPort << endl;
-  KURL saveToFileURL;
-  if(defaultFolderURL.isEmpty()) {
-    saveToFileURL = KDirSelectDialog::selectDirectory(QString::null, false, listView(), "Select directory to save to");
-    if(saveToFileURL.isEmpty()) {
-      setStatus(Failed);
-      return;
-    }
-  } else {
-    saveToFileURL = defaultFolderURL;
-  }
-  // set default path
-  // Append folder with partner's name if wanted
-  saveToFileURL.adjustPath( 1 );  // add a slash if there is none
-  if( KonversationApplication::preferences.getDccCreateFolder() )
-    saveToFileURL.addPath( partnerNick.lower() + "/" );
-  
-  // determine default filename
-  // Append partner's name to file name if wanted
-  if( KonversationApplication::preferences.getDccAddPartner() )
-    saveToFileURL.addPath( partnerNick.lower() + "." + sanitised_filename );
-  else
-    saveToFileURL.addPath( sanitised_filename );
-  
-  setSaveToFileURL( saveToFileURL );
- 
-  kdDebug() << "DccTransferRecv::DccTransferRecv(): saving to: '" << saveToFileURL.prettyURL() << "'" << endl;
-  
+    
   m_fileSize = fileSize;
-  
+  m_defaultFolderURL = defaultFolderURL;
   m_partnerIp = partnerIp;
   m_partnerPort = partnerPort;
   
   m_writeCacheHandler = 0;
   
   m_recvSocket = 0;
-  
+  //The below function may not be valid, and may be empty.  Not checked until this user selects accept, and start() is called
+  calculateSaveToFileURL();
   updateView();
   panel->selectMe( this );
 
 }
+
 
 DccTransferRecv::~DccTransferRecv()
 {
   cleanUp();
 }
 
+void DccTransferRecv::calculateSaveToFileURL() {
+
+  if(m_defaultFolderURL.isEmpty() || !m_defaultFolderURL.isValid()) {
+    return;  // don't do anything - we'll prompt the user about this in start()
+  }
+  KURL saveToFileURL = m_defaultFolderURL;
+   // set default path
+  // Append folder with partner's name if wanted
+  saveToFileURL.adjustPath( 1 );  // add a slash if there is none
+  if( KonversationApplication::preferences.getDccCreateFolder() )
+    saveToFileURL.addPath( m_partnerNick.lower() + "/" );
+  
+  // determine default filename
+  // Append partner's name to file name if wanted
+  if( KonversationApplication::preferences.getDccAddPartner() )
+    saveToFileURL.addPath( m_partnerNick.lower() + "." + m_fileName );
+  else
+    saveToFileURL.addPath( m_fileName );
+  
+  setSaveToFileURL( saveToFileURL );
+ 
+  kdDebug() << "DccTransferRecv::DccTransferRecv(): saving to: '" << saveToFileURL.prettyURL() << "'" << endl;
+}
+
+void DccTransferRecv::validateSaveToFileURL() {
+  KURL saveToFileURL;
+  if(m_defaultFolderURL.isEmpty() || !m_defaultFolderURL.isValid()) {
+    saveToFileURL = KDirSelectDialog::selectDirectory(QString::null, false, listView(), "Select directory to save to");
+    if(saveToFileURL.isEmpty()) {
+      setStatus(Failed);
+      return;
+    }
+    calculateSaveToFileURL(saveToFileURL);
+  }
+}
+
 void DccTransferRecv::start()  // public slot
 {
   if(getStatus() != Queued) return;
   kdDebug() << "DccTransferRecv::start()" << endl;
+  //Check that we are saving it somewhere valid, and set up the directories.
+  validateSaveToFileURL();
+  if(getStatus() != Queued) return;  //We might not have been able to find somewhere to save to.
   
   // check whether the file exists
   // if exists, ask user to rename/overwrite/abort

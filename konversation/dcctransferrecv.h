@@ -42,14 +42,45 @@ class DccTransferRecv : public DccTransfer
   friend class DccResumeDialog;
   
   public:
+    /** Constructor.  This sets up the variables and updates the view, so the
+     * user can see the filename, filesize etc, and can accept it. */
     DccTransferRecv( DccPanel* panel, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort );
     virtual ~DccTransferRecv();
     
+    /** 
+     * This function reads the member variables set in the constructor, and
+     * calls saveToFileURL() based on these, and konversation's preferences.
+     * It may not call saveToFileURL(), may not give it a valid url,
+     * and may set it to empty.
+     * Checking saveToFileURL isn't done until the user accepts the dcc
+     * and start() is called, which calls validateSaveToFileURL.
+     * @see validateSaveToFileURL()
+     */
+    void calculateSaveToFileURL();
+    /**
+     * This checks saveToFileURL, and if it's empty, asks the user for a new
+     * directory to save to.
+     * If the directory doesn't exist, it attempts to create it.
+     * This function will either return with saveToFileURL set to a valid,
+     * existing directory, or will call abort() and return
+     * @see abort()
+     */
+    void validateSaveToFileURL();
+	
   signals:
     void resumeRequest( const QString& partnerNick, const QString& fileName, const QString& partnerPort, KIO::filesize_t filePosition);  // emitted by requestResume()
     
   public slots:
+    /** The user has accepted the download.
+     *  Check we are saving it somewhere valid, create any directories needed, and
+     *  connect to remote host.
+     */
     virtual void start();
+    /** The user has chosen to abort.
+     *  Either by chosen to abort directly, or by chosing cancel when
+     *  prompted for information on where to save etc.
+     *  Not called when it fails due to another problem.
+     */
     virtual void abort();
     void startResume( unsigned long position );
     
@@ -80,7 +111,7 @@ class DccTransferRecv : public DccTransfer
     DccTransferRecvWriteCacheHandler* m_writeCacheHandler;
     bool m_saveToFileExists;
     bool m_partialFileExists;
-    
+    KURL m_defaultFolderURL;
     QTimer* m_connectionTimer;
     KNetwork::KStreamSocket* m_recvSocket;
 };
