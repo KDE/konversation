@@ -41,6 +41,8 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
   m_away = false;
   m_notified = false;
   m_identified = false;
+  m_printedOnline = false;
+
   if(!m_addressee.isEmpty())
     Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid(), 4);
 
@@ -360,10 +362,23 @@ bool NickInfo::editAddressee() const {
   Konversation::Addressbook::self()->editAddressee(m_addressee.uid());
   return true;
 }
+
 bool NickInfo::sendEmail() const { 
   return Konversation::Addressbook::self()->sendEmail(m_addressee);
 }
-   
+
+void NickInfo::setPrintedOnline(bool printed)
+{
+  m_printedOnline=printed;
+}
+
+bool NickInfo::getPrintedOnline()
+{
+  if(this) 
+    return m_printedOnline;
+  else
+    return false;
+}
 
 #include "nickinfo.moc"
 

@@ -2204,6 +2204,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
 
     static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOnline(getStatusView(), nickname);
   }
+  nickInfo->setPrintedOnline(true);
   return nickInfo;
 }
 
@@ -2211,7 +2212,9 @@ bool Server::setNickOffline(const QString& nickname)
 {
   QString lcNickname = nickname.lower();
   NickInfoPtr nickInfo = getNickInfo(lcNickname);
-  if (nickInfo)
+  bool wasOnline = nickInfo->getPrintedOnline();
+
+  if (nickInfo && wasOnline)
   {
     KABC::Addressee addressee = nickInfo->getAddressee();
     // Delete from query list, if present.
@@ -2235,6 +2238,7 @@ bool Server::setNickOffline(const QString& nickname)
         i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()),statusView);
       
       static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOffline(getStatusView(), nickname);
+      nickInfo->setPrintedOnline(false);
     }
   }
   return (nickInfo != 0);

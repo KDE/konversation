@@ -131,6 +131,9 @@ class NickInfo : public QObject, public KShared
      */
     bool sendEmail() const; 
 
+    void setPrintedOnline(bool printed);
+    bool getPrintedOnline();
+
   private:
     /** After calling, emitNickInfoChanged is guaranteed to be called _within_ 1 second.
      *  Used to consolidate changed signals.
@@ -155,6 +158,9 @@ class NickInfo : public QObject, public KShared
      */
     bool m_identified;
     QTimer *m_changedTimer;
+    /* True if "foo is online" message is printed */
+    bool m_printedOnline;
+
   private slots:
     void refreshAddressee();
     /** emits NickInfoChanged for this object, and calls the server emitNickInfoChanged.
