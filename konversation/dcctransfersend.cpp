@@ -45,7 +45,7 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   
   m_fileURL = fileURL;
   m_ownIp = ownIp;
-  if( altFileName.isEmpty() )
+  if ( altFileName.isEmpty() )
     m_fileName = m_fileURL.filename();
   else
     m_fileName = altFileName;
@@ -60,42 +60,34 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
 
   //Check the file exists 
-  if( !KIO::NetAccess::exists( m_fileURL, true, listView() ) )
+  if ( !KIO::NetAccess::exists( m_fileURL, true, listView() ) )
   {
-    setStatus( Failed, i18n("The url \"%1\" does not exist").arg( m_fileURL.prettyURL() ) );
-    updateView();
-    cleanUp();
-    openDetailDialog();
+    failed( i18n( "The url \"%1\" does not exist" ).arg( m_fileURL.prettyURL() ) );
     return;
   }
   
   //Download the file.  Does nothing if it's local (file:/)
-  if( !KIO::NetAccess::download( m_fileURL, m_tmpFile, listView() ) )
+  if ( !KIO::NetAccess::download( m_fileURL, m_tmpFile, listView() ) )
   {
-    setStatus( Failed, i18n("Could not retrieve \"%1\"").arg( m_fileURL.prettyURL() ) );
-    updateView();
-    cleanUp();
-    openDetailDialog();
+    failed( i18n( "Could not retrieve \"%1\"" ).arg( m_fileURL.prettyURL() ) );
     return;
   }
 
   //Some protocols, like http, maybe not return a filename, and altFileName may be empty, So prompt the user for one.
-  if( m_fileName.isEmpty() )
+  if ( m_fileName.isEmpty() )
   {
     bool pressedOk;
-    m_fileName = KInputDialog::getText( i18n("Enter filename"), i18n("<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>").arg( getPartnerNick() ), "unknown", &pressedOk, listView() );
+    m_fileName = KInputDialog::getText( i18n( "Enter filename" ), i18n( "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>" ).arg( getPartnerNick() ), "unknown", &pressedOk, listView() );
     if( !pressedOk )
     {
-      setStatus( Failed, i18n("No filename was given") );
-      updateView();
-      cleanUp();
-      openDetailDialog();
+      failed( i18n( "No filename was given" ) );
       return;
     }
   }
+  
   m_file.setName( m_tmpFile );
   
-  if(fileSize > 0)
+  if ( fileSize > 0 )
     m_fileSize = fileSize;
   else
     m_fileSize = m_file.size();
@@ -110,57 +102,62 @@ DccTransferSend::~DccTransferSend()
   cleanUp();
 }
 
+// just for convenience
+void DccTransferSend::failed( const QString& errorMessage )
+{
+  setStatus( Failed, errorMessage );
+  updateView();
+  cleanUp();
+  openDetailDialog();
+}
+
 void DccTransferSend::start()  // public slot
 {
   kdDebug() << "DccTransferSend::start()" << endl;
-  if( getStatus() != Queued )
-    return; //setStatus(Failed) or something has been called.
+  
+  if ( getStatus() != Queued )
+    return;
   
   // Set up server socket
   m_serverSocket = new KNetwork::KServerSocket( this );
   m_serverSocket->setFamily( KNetwork::KResolver::InetFamily );
   
-  if( KonversationApplication::preferences.getDccSpecificSendPorts() )  // user specifies ports
+  if ( KonversationApplication::preferences.getDccSpecificSendPorts() )  // user is specifing ports
   {
     // set port
     bool found = false;  // wheter succeeded to set port
     unsigned long port = KonversationApplication::preferences.getDccSendPortsFirst();
-    for( ; port <= KonversationApplication::preferences.getDccSendPortsLast(); ++port )
+    for ( ; port <= KonversationApplication::preferences.getDccSendPortsLast() ; ++port )
     {
       kdDebug() << "DccTransferSend::start(): trying port " << port << endl;
       m_serverSocket->setAddress( QString::number( port ) );
       bool success = m_serverSocket->listen();
-      if( found = ( success && m_serverSocket->error() == KNetwork::KSocketBase::NoError ) )
+      if ( found = ( success && m_serverSocket->error() == KNetwork::KSocketBase::NoError ) )
         break;
       m_serverSocket->close();
     }
-    if( !found )
+    if ( !found )
     {
-      setStatus( Failed, i18n("No vacant port") );
-      updateView();
-      cleanUp();
-      openDetailDialog();
+      failed( i18n( "No vacant port" ) );
       return;
     }
   }
-  else  // user doesn't specify ports
+  else  // user isn't specifing ports
   {
     // Let the operating system choose a port
-    m_serverSocket->setAddress("0");
+    m_serverSocket->setAddress( "0" );
     
-    if( !m_serverSocket->listen() )
+    if ( !m_serverSocket->listen() )
     {
-      kdDebug() << this << "DccTransferSend::start(): listen() failed!" << endl;
-      setStatus( Failed );
-      updateView();
-      cleanUp();
+      kdDebug() << "DccTransferSend::start(): listen() failed!" << endl;
+      failed( i18n( "Could not open a socket" ) );
       return;
     }
   }
     
   connect( m_serverSocket, SIGNAL( readyAccept() ),   this, SLOT( heard() )            );
   connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( socketError( int ) ) ); 
-  connect( m_serverSocket, SIGNAL( closed() ),     this, SLOT( slotServerSocketClosed() ) );
+  connect( m_serverSocket, SIGNAL( closed() ),        this, SLOT( slotServerSocketClosed() ) );
   
   // Get our own port number
   KNetwork::KSocketAddress ipAddr = m_serverSocket->localAddress();
@@ -169,7 +166,7 @@ void DccTransferSend::start()  // public slot
   
   kdDebug() << "DccTransferSend::start(): own Address=" << m_ownIp << ":" << m_ownPort << endl;
   
-  setStatus( WaitingRemote, i18n("Waiting remote user's acceptance") );
+  setStatus( WaitingRemote, i18n( "Waiting remote user's acceptance" ) );
   updateView();
   
   startConnectionTimer( KonversationApplication::preferences.getDccSendTimeout() );
@@ -184,7 +181,6 @@ void DccTransferSend::abort()  // public slot
   setStatus( Aborted );
   updateView();
   cleanUp();
-  m_file.close();
 }
 
 void DccTransferSend::setResume( unsigned long position )  // public
@@ -202,15 +198,16 @@ void DccTransferSend::cleanUp()
   kdDebug() << "DccTransferSend::cleanUp()" << endl;
   stopConnectionTimer();
   finishTransferMeter();
-  if( !m_tmpFile.isEmpty() )
+  if ( !m_tmpFile.isEmpty() )
     KIO::NetAccess::removeTempFile( m_tmpFile );
   m_tmpFile = QString::null;
-  if( m_sendSocket )
+  m_file.close();
+  if ( m_sendSocket )
   {
     m_sendSocket->close();
     m_sendSocket = 0;  // the instance will be deleted automatically by its parent
   }
-  if( m_serverSocket )
+  if ( m_serverSocket )
   {
     m_serverSocket->close();
     m_serverSocket = 0;  // the instance will be deleted automatically by its parent
@@ -224,19 +221,17 @@ void DccTransferSend::heard()  // slot
   stopConnectionTimer();
   
   m_sendSocket = static_cast<KNetwork::KStreamSocket*>( m_serverSocket->accept() );
-  if( !m_sendSocket )
+  if ( !m_sendSocket )
   {
-    setStatus( Failed, i18n("Could not accept the connection. (Socket Error)") );
-    updateView();
-    cleanUp();
-    openDetailDialog();
+    failed( i18n( "Could not accept the connection. (Socket Error)" ) );
     return;
   }
-  connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() )               );
+  
   connect( m_sendSocket, SIGNAL( readyWrite() ), this, SLOT( writeData() )            );
+  connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() )               );
   connect( m_sendSocket, SIGNAL( closed() ),     this, SLOT( slotSendSocketClosed() ) );
   
-  if( m_sendSocket->peerAddress().asInet().ipAddress().isV4Mapped() )
+  if ( m_sendSocket->peerAddress().asInet().ipAddress().isV4Mapped() )
     m_partnerIp = KNetwork::KIpAddress( m_sendSocket->peerAddress().asInet().ipAddress().IPv4Addr() ).toString();
   else
     m_partnerIp = m_sendSocket->peerAddress().asInet().ipAddress().toString();
@@ -245,37 +240,31 @@ void DccTransferSend::heard()  // slot
   // we don't need ServerSocket anymore
   m_serverSocket->close();
   
-  if( m_file.open( IO_ReadOnly ) )
+  if ( m_file.open( IO_ReadOnly ) )
   {
     // seek to file position to make resume work
     m_file.at( m_transferringPosition );
     m_transferStartPosition = m_transferringPosition;
     
     setStatus( Sending );
-    m_sendSocket->enableRead( m_fastSend ? true : false );
-    m_sendSocket->enableWrite( true );
+    m_sendSocket->enableWrite( m_fastSend );
+    m_sendSocket->enableRead( true );
     initTransferMeter();  // initialize CPS counter, ETA counter, etc...
     updateView();
+    
+    if ( !m_fastSend )
+      writeData();
   }
   else
-  {
-    setStatus( Failed, i18n("File open failure: %1").arg( getErrorString( m_file.status() ) ) );
-    updateView();
-    cleanUp();
-    openDetailDialog();
-  }
+    failed( i18n( "Could not open the file: %1" ).arg( getQFileErrorString( m_file.status() ) ) );
 }
 
+// this function is a slot when Fast DCC Send is enabled
 void DccTransferSend::writeData()  // slot
 {
   //kdDebug() << "DccTransferSend::writeData()" << endl;
-  if( !m_fastSend )
-  {
-    m_sendSocket->enableRead( true );
-    m_sendSocket->enableWrite( false );
-  }
   int actual = m_file.readBlock( m_buffer, m_bufferSize );
-  if( actual > 0 )
+  if ( actual > 0 )
   {
     m_sendSocket->writeBlock( m_buffer, actual );
     m_transferringPosition += actual;
@@ -285,37 +274,29 @@ void DccTransferSend::writeData()  // slot
 void DccTransferSend::getAck()  // slot
 {
   //kdDebug() << "DccTransferSend::getAck()" << endl;
-  if( !m_fastSend )
-  {
-    m_sendSocket->enableRead( false );
-    m_sendSocket->enableWrite( true );
-  }
   unsigned long pos;
-  while( m_sendSocket->bytesAvailable() >= 4 )
+  while ( m_sendSocket->bytesAvailable() >= 4 )
   {
     m_sendSocket->readBlock( (char*)&pos, 4 );
     pos = intel( pos );
-    if( pos == m_fileSize )
+    if ( pos == m_fileSize )
     {
       kdDebug() << "DccTransferSend::getAck(): Done." << endl;
-      
       setStatus( Done );
       updateView();
       cleanUp();
       emit done( m_fileURL.path() );
       break;  // for safe
     }
+    else if ( !m_fastSend )
+      writeData();
   }
 }
 
 void DccTransferSend::socketError( int errorCode )
 {
   kdDebug() << "DccTransferSend::socketError(): code =  " << errorCode << " string = " << m_serverSocket->errorString() << endl;
-
-  setStatus( Failed, i18n("Socket error: %1").arg( m_serverSocket->errorString() ));
-  updateView();
-  cleanUp();
-  openDetailDialog();
+  failed( i18n( "Socket error: %1" ).arg( m_serverSocket->errorString() ) );
 }
 
 void DccTransferSend::startConnectionTimer( int sec )
@@ -327,7 +308,7 @@ void DccTransferSend::startConnectionTimer( int sec )
 
 void DccTransferSend::stopConnectionTimer()
 {
-  if( m_connectionTimer->isActive() )
+  if ( m_connectionTimer->isActive() )
   {
     kdDebug() << "DccTransferSend::stopConnectionTimer(): stop" << endl;
     m_connectionTimer->stop();
@@ -337,11 +318,7 @@ void DccTransferSend::stopConnectionTimer()
 void DccTransferSend::connectionTimeout()  // slot
 {
   kdDebug() << "DccTransferSend::connectionTimeout()" << endl;
-  
-  setStatus( Failed, i18n("Timed out") );
-  updateView();
-  cleanUp();
-  openDetailDialog();
+  failed( i18n( "Timed out" ) );
 }
 
 void DccTransferSend::slotServerSocketClosed()
@@ -352,13 +329,52 @@ void DccTransferSend::slotServerSocketClosed()
 void DccTransferSend::slotSendSocketClosed()
 {
   kdDebug() << "DccTransferSend::slotSendSocketClosed()" << endl;
-  if( m_dccStatus == Sending )
+  if ( m_dccStatus == Sending )
+    failed( i18n( "Remote user disconnected" ) );
+}
+
+QString DccTransferSend::getQFileErrorString( int code )  // protected, static
+{
+  QString errorString;
+
+  switch(code)
   {
-    setStatus( Failed, i18n("Remote user disconnected") );
-    updateView();
-    cleanUp();
-    openDetailDialog();
+    case IO_Ok:
+      errorString=i18n("The operation was successful. Should never happen in an error dialog.");
+    break;
+    case IO_ReadError:
+      errorString=i18n("Could not read from file \"%1\".");
+    break;
+    case IO_WriteError:
+      errorString=i18n("Could not write to file \"%1\".");
+    break;
+    case IO_FatalError:
+      errorString=i18n("A fatal unrecoverable error occurred.");
+    break;
+    case IO_OpenError:
+      errorString=i18n("Could not open file \"%1\".");
+    break;
+
+        // Same case value? Damn!
+//        case IO_ConnectError:
+//          errorString="Could not connect to the device.";
+//        break;
+
+    case IO_AbortError:
+      errorString=i18n("The operation was unexpectedly aborted.");
+    break;
+    case IO_TimeOutError:
+      errorString=i18n("The operation timed out.");
+    break;
+    case IO_UnspecifiedError:
+      errorString=i18n("An unspecified error happened on close.");
+    break;
+    default:
+      errorString=i18n("Unknown error. Code %1").arg(code);
+    break;
   }
+
+  return errorString;
 }
 
 #include "dcctransfersend.moc"

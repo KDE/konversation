@@ -55,16 +55,16 @@ class DccPanel : public ChatWindow
       public:
         enum Object
         {
-         Accept,
-         Abort,
-         Clear,
-         ClearAllCompleted,
-         RemoveAndClear,
-         Open,
-         Remove,
-         Info,
-         Detail
-       };
+          Accept,
+          Abort,
+          Clear,
+          ClearAllCompleted,
+          RemoveAndClear,
+          Open,
+          Remove,
+          Info,
+          Detail
+        };
     };
     
 #ifdef USE_MDI

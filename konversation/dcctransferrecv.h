@@ -87,16 +87,9 @@ class DccTransferRecv : public DccTransfer
     void slotSocketClosed();
     
   protected:
-     /** 
-     * This function reads the member variables set in the constructor, and
-     * calls @ref saveToFileURL() based on these, and konversation's preferences.
-     * It may not call @ref saveToFileURL(), may not give it a valid url,
-     * and may set it to empty.
-     * Checking @ref saveToFileURL isn't done until the user accepts the dcc
-     * and @ref start() is called, which calls validateSaveToFileURL.
-     * @param folderURL The directory url to save in.  The ircnick is added if needed.
-     * @see validateSaveToFileURL()
-     */
+    void cleanUp();
+    void failed(const QString& errorMessage = QString::null );
+    
     void calculateSaveToFileURL( const KURL& defaultFolderURL );
     
     void prepareLocalKio( bool overwrite, bool resume, KIO::fileoffset_t startPosition = 0 );  // (startPosition == 0) means "don't resume"
@@ -116,8 +109,6 @@ class DccTransferRecv : public DccTransfer
     
     void requestResume();
     void connectToSender();
-    
-    void cleanUp();
     
     void startConnectionTimer( int sec );
     void stopConnectionTimer();
@@ -167,4 +158,3 @@ class DccTransferRecvWriteCacheHandler : public QObject
 };
 
 #endif // DCCTRANSFERRECV_H
-

@@ -55,10 +55,15 @@ class DccTransferSend : public DccTransfer
     void connectionTimeout();
     void slotSendSocketClosed();
     void slotServerSocketClosed();
+    
   protected:
     void cleanUp();
+    void failed(const QString& errorMessage = QString::null );
     void startConnectionTimer( int sec );
     void stopConnectionTimer();
+    
+    static QString getQFileErrorString( int code );
+    
     QFile m_file;
 
     /*The filename of the temporary file that we downloaded.  So if send a file ftp://somewhere/file.txt
@@ -74,4 +79,3 @@ class DccTransferSend : public DccTransfer
 };
 
 #endif // DCCTRANSFERSEND_H
-

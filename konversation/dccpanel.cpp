@@ -54,7 +54,6 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   for(unsigned int i=0 ; i < Column::COUNT ; ++i)
     m_listView->addColumn("");
   
-  //m_listView->setColumnText(Column::StatusIcon,    "");
   //m_listView->setColumnText(Column::TypeIcon,      "");
   m_listView->setColumnText(Column::OfferDate,     i18n("Date"));
   m_listView->setColumnText(Column::Status,        i18n("Status"));
@@ -99,12 +98,12 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   m_buttonRemove = new QPushButton(icon("edittrash"),   i18n("Remove"), buttonsBox, "remove_dcc_file");
   m_buttonDetail = new QPushButton(icon("view_text"),   i18n("Detail"), buttonsBox, "detail_dcc");
   
-  QToolTip::add(m_buttonAccept, i18n("Start receiving"));
-  QToolTip::add(m_buttonAbort,  i18n("Abort the transfer"));
-  QToolTip::add(m_buttonClear,  i18n("Remove the item from panel"));
-  QToolTip::add(m_buttonOpen,   i18n("Run the file"));
-  QToolTip::add(m_buttonRemove, i18n("Remove the file"));
-  QToolTip::add(m_buttonDetail, i18n("View DCC detail information"));
+  QToolTip::add( m_buttonAccept, i18n( "Start receiving" ) );
+  QToolTip::add( m_buttonAbort,  i18n( "Abort the transfer(s)" ) );
+  QToolTip::add( m_buttonClear,  i18n( "Remove from this panel" ) );
+  QToolTip::add( m_buttonOpen,   i18n( "Run the file" ) );
+  QToolTip::add( m_buttonRemove, i18n( "Remove the received file(s)" ) );
+  QToolTip::add( m_buttonDetail, i18n( "View DCC detail information" ) );
   
   connect( m_buttonAccept, SIGNAL(clicked()), this, SLOT(acceptDcc()) );
   connect( m_buttonAbort,  SIGNAL(clicked()), this, SLOT(abortDcc()) );

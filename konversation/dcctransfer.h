@@ -107,7 +107,6 @@ class DccTransfer : public QObject, public KListViewItem
     void finishTransferMeter();
     
     static QString getNumericalIpText( const QString& ipString );
-    static QString getErrorString( int code );
     static unsigned long intel( unsigned long value );
     static QString getPrettyNumberText( const QString& numberText );
     

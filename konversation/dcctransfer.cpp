@@ -12,14 +12,6 @@
   email:     eisfuchs@tigress.com
 */
 
-/*
-DCC TODOs (URGENT):
-  d Add an option to switch fast dcc sending
-  - Integrate error messages (we should use modal dialogs as less as possible)
-  - Reconsider the file-naming process at dcc receiving
-  - Check if the refactored dcc receiving function works well at all situations
-*/
-
 #include <qheader.h>
 #include <qhostaddress.h>
 #include <qstyle.h>
@@ -48,7 +40,7 @@ DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partn
   m_partnerNick = partnerNick;
   
   m_fileName = QFileInfo( fileName ).fileName();  //Just incase anyone tries to do anything nasty
-  if( m_fileName.isEmpty() )
+  if ( m_fileName.isEmpty() )
     m_fileName= "unnamed";
   
   m_dccStatus = Queued;
@@ -101,7 +93,7 @@ void DccTransfer::updateView()  // slot, protected
   setPixmap( DccPanel::Column::TypeIcon, getTypeIcon() );
   setPixmap( DccPanel::Column::Status,   getStatusIcon() );
   
-  setText( DccPanel::Column::OfferDate,     m_timeOffer.toString("hh:mm:ss") );
+  setText( DccPanel::Column::OfferDate,     m_timeOffer.toString( "hh:mm:ss" ) );
   setText( DccPanel::Column::Status,        getStatusText() );
   setText( DccPanel::Column::FileName,      m_fileName );
   setText( DccPanel::Column::PartnerNick,   m_partnerNick );
@@ -110,12 +102,12 @@ void DccTransfer::updateView()  // slot, protected
   setText( DccPanel::Column::CPS,           getCPSPrettyText() );
   setText( DccPanel::Column::SenderAddress, getSenderAddressPrettyText() );
   
-  if( m_fileSize )
+  if ( m_fileSize )
     m_progressBar->setProgress( getProgress() );
   else  // filesize is unknown
-    setText( DccPanel::Column::Progress, i18n("unknown") );
+    setText( DccPanel::Column::Progress, i18n( "unknown" ) );
   
-  if( m_detailDialog )
+  if ( m_detailDialog )
     m_detailDialog->updateView();
 }
 
@@ -142,7 +134,7 @@ void DccTransfer::startAutoUpdateView()
 
 void DccTransfer::stopAutoUpdateView()
 {
-  if( m_autoUpdateViewTimer )
+  if ( m_autoUpdateViewTimer )
   {
     m_autoUpdateViewTimer->stop();
     delete m_autoUpdateViewTimer;
@@ -153,14 +145,14 @@ void DccTransfer::stopAutoUpdateView()
 void DccTransfer::paintCell( QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment )  // public virtual
 {
   KListViewItem::paintCell( painter, colorgroup, column, width, alignment );
-  if( column == DccPanel::Column::Progress )
+  if ( column == DccPanel::Column::Progress )
     showProgressBar();
 }
 
 void DccTransfer::showProgressBar()
 {  
   // I referenced Apollon's code for the progressbar. Thank you the Apollon team! (shin)
-  if( m_fileSize )
+  if ( m_fileSize )
   {
     QRect rect = listView()->itemRect( this );
     QHeader *head = listView()->header();
@@ -173,13 +165,13 @@ void DccTransfer::showProgressBar()
 
 void DccTransfer::runFile()  // public
 {
-  if( m_dccType == Send || m_dccStatus == Done )
+  if ( m_dccType == Send || m_dccStatus == Done )
     new KRun( m_fileURL, listView() );
 }
 
 void DccTransfer::removeFile()  // public
 {
-  if( m_dccType != Receive || m_dccStatus != Done )
+  if ( m_dccType != Receive || m_dccStatus != Done )
     return;
   KIO::SimpleJob* deleteJob = KIO::file_delete( m_fileURL, false );  // is it better to show the progress dialog?
   connect( deleteJob, SIGNAL( result( KIO::Job* ) ), this, SLOT( slotRemoveFileDone( KIO::Job* ) ) );
@@ -187,7 +179,7 @@ void DccTransfer::removeFile()  // public
 
 void DccTransfer::slotRemoveFileDone( KIO::Job* job )
 {
-  if( job->error() )
+  if ( job->error() )
     KMessageBox::sorry( listView(), i18n("Cannot remove file '%1'.").arg( m_fileURL.url() ), i18n("DCC Error") );
   else
   {
@@ -198,7 +190,7 @@ void DccTransfer::slotRemoveFileDone( KIO::Job* job )
 
 void DccTransfer::openFileInfoDialog()  // public
 {
-  if( m_dccType == Send || m_dccStatus == Done )
+  if ( m_dccType == Send || m_dccStatus == Done )
   {
     QStringList infoList;
     
@@ -265,14 +257,14 @@ void DccTransfer::openFileInfoDialog()  // public
 
 void DccTransfer::openDetailDialog()  // public
 {
-  if( !m_detailDialog )
+  if ( !m_detailDialog )
     m_detailDialog = new DccDetailDialog( this );
   m_detailDialog->show();
 }
 
 void DccTransfer::closeDetailDialog()  // public
 {
-  if( m_detailDialog )
+  if ( m_detailDialog )
   {
     delete m_detailDialog;
     m_detailDialog = 0;
@@ -284,7 +276,7 @@ void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )  //
   bool changed = ( status != m_dccStatus );
   m_dccStatus = status;
   m_dccStatusDetail = statusDetail;
-  if( changed )
+  if ( changed )
     emit statusChanged( this );
 }
 
@@ -296,9 +288,9 @@ QString DccTransfer::getTypeText() const
 QPixmap DccTransfer::getTypeIcon() const
 {
   QString icon;
-  if( m_dccType == Send )
+  if ( m_dccType == Send )
     icon = "up";
-  else if( m_dccType == Receive )
+  else if ( m_dccType == Receive )
     icon = "down";
   return KGlobal::iconLoader()->loadIcon( icon, KIcon::Small );
 }
@@ -306,7 +298,7 @@ QPixmap DccTransfer::getTypeIcon() const
 QPixmap DccTransfer::getStatusIcon() const
 {
   QString icon;
-  switch( m_dccStatus )
+  switch ( m_dccStatus )
   {
     case Queued:
       icon = "player_stop";
@@ -362,7 +354,7 @@ QString DccTransfer::getTimeRemainingPrettyText() const
 {
   if ( m_dccStatus != Sending && m_dccStatus != Receiving )
     return QString::null;
-  if( !m_fileSize )
+  if ( !m_fileSize )
     return i18n("unknown");
   // not use getCPS() for exact result
   int trnsfdTime = m_timeTransferStarted.secsTo( m_timeTransferFinished.isNull() ? QDateTime::currentDateTime() : m_timeTransferFinished );
@@ -374,11 +366,11 @@ QString DccTransfer::getTimeRemainingPrettyText() const
   int remHour = remTime / 3600; remTime -= remHour * 3600;
   int remMin = remTime / 60; remTime -= remMin * 60;
   QString text;
-  if( remHour )
+  if ( remHour )
     text += QString::number( remHour ) + ":";
-  if( remMin )
+  if ( remMin )
     text += QString::number( remMin ) + ":";
-  if( text.isEmpty() )
+  if ( text.isEmpty() )
     text = i18n("%1 sec").arg( QString::number( remTime ) );
   else
     text += QString::number( remTime );
@@ -393,7 +385,7 @@ QString DccTransfer::getCPSPrettyText() const
 unsigned long DccTransfer::getCPS() const
 {
   int elapsed = m_timeTransferStarted.secsTo( m_timeTransferFinished.isNull() ? QDateTime::currentDateTime() : m_timeTransferFinished );
-  if( elapsed == 0 && m_transferringPosition - m_transferStartPosition > 0 )
+  if ( elapsed == 0 && m_transferringPosition - m_transferStartPosition > 0 )
     elapsed = 1;
   // prevent division by zero
   return elapsed ? ( m_transferringPosition - m_transferStartPosition ) / elapsed : 0;
@@ -401,7 +393,7 @@ unsigned long DccTransfer::getCPS() const
 
 QString DccTransfer::getSenderAddressPrettyText() const
 {
-  if( m_dccType == Send )
+  if ( m_dccType == Send )
     return QString( "%1:%2" ).arg( m_ownIp ).arg( m_ownPort );
   else
     return QString( "%1:%2" ).arg( m_partnerIp ).arg( m_partnerPort );
@@ -414,50 +406,6 @@ QString DccTransfer::getNumericalIpText( const QString& ipString )  // protected
   ip.setAddress( ipString );
   
   return QString::number( ip.ip4Addr() );
-}
-
-QString DccTransfer::getErrorString( int code )  // protected, static
-{
-  QString errorString(QString::null);
-
-  switch(code)
-  {
-    case IO_Ok:
-      errorString=i18n("The operation was successful. Should never happen in an error dialog.");
-    break;
-    case IO_ReadError:
-      errorString=i18n("Could not read from file \"%1\".");
-    break;
-    case IO_WriteError:
-      errorString=i18n("Could not write to file \"%1\".");
-    break;
-    case IO_FatalError:
-      errorString=i18n("A fatal unrecoverable error occurred.");
-    break;
-    case IO_OpenError:
-      errorString=i18n("Could not open file \"%1\".");
-    break;
-
-        // Same case value? Damn!
-//        case IO_ConnectError:
-//          errorString="Could not connect to the device.";
-//        break;
-
-    case IO_AbortError:
-      errorString=i18n("The operation was unexpectedly aborted.");
-    break;
-    case IO_TimeOutError:
-      errorString=i18n("The operation timed out.");
-    break;
-    case IO_UnspecifiedError:
-      errorString=i18n("An unspecified error happened on close.");
-    break;
-    default:
-      errorString=i18n("Unknown error. Code %1").arg(code);
-    break;
-  }
-
-  return errorString;
 }
 
 unsigned long DccTransfer::intel( unsigned long value )  // protected, static
