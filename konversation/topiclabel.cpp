@@ -11,6 +11,7 @@
 #include "topiclabel.h"
 
 #include <qsimplerichtext.h>
+#include <qtooltip.h>
 
 #include <krun.h>
 #include <kprocess.h>
@@ -84,13 +85,20 @@ void TopicLabel::updateSqueezedText()
       replace(">", "&gt;");
   text = tagURLs(text, "");
 
+  QToolTip::remove(this);
+
   if(height() < (fm.lineSpacing() * 2)) {
     text = rPixelSqueeze(text, visibleWidth() - 10);
     setWordWrap(NoWrap);
+    QToolTip::add(this, "<qt>" + m_fullText + "</qt>");
   } else {
     setWordWrap(WidgetWidth);
+
+    if(height() < contentsHeight()) {
+      QToolTip::add(this, "<qt>" + m_fullText + "</qt>");
+    }
   }
-  
+
   KActiveLabel::setText("<qt>" + text + "</qt>");
 }
 

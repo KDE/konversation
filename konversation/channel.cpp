@@ -1081,13 +1081,7 @@ void Channel::setTopic(const QString &newTopic)
     m_topicHistory.prepend(i18n("<unknown> %1").arg(newTopic));
     QString topic = Konversation::removeIrcMarkup(newTopic);
     topicLine->setText(topic);
-    // Add a tool tip to the topic line if it gets too long
-    QToolTip::remove(topicLine);
 
-    if(topicLine->fontMetrics().width(newTopic) > topicLine->width())
-    {
-      QToolTip::add(topicLine,"<qt>" + topic + "</qt>");
-    }
     emit topicHistoryChanged();
   }
 }
@@ -1103,13 +1097,7 @@ void Channel::setTopic(const QString &nickname, const QString &newTopic) // Over
   m_topicHistory.prepend("<" + nickname + "> " + newTopic);
   QString topic = Konversation::removeIrcMarkup(newTopic);
   topicLine->setText(topic);
-  // Add a tool tip to the topic line if it gets too long
-  QToolTip::remove(topicLine);
 
-  if(topicLine->fontMetrics().width(newTopic) > topicLine->width())
-  {
-    QToolTip::add(topicLine, "<qt>" + topic + "</qt>");
-  }
   emit topicHistoryChanged();
 }
 
