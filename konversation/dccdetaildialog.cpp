@@ -213,30 +213,26 @@ void DccDetailDialog::updateView()  // public
   m_localPathOpen->setEnabled( m_item->dccType == DccTransfer::Send || m_item->dccStatus == DccTransfer::Done );
   
   // Partner
-  QString partner( m_item->partnerNick );
   if ( !m_item->partnerIp.isEmpty() || !m_item->partnerPort.isEmpty() )
-  {
-    partner += " (";
-    partner += !m_item->partnerIp.isEmpty() ? m_item->partnerIp : i18n("unknown");
-    partner += ":";
-    partner += !m_item->partnerPort.isEmpty() ? m_item->partnerPort : i18n("unknown");
-    partner += ")";
-  }
-  m_partner->setText( partner );
+    m_partner->setText( QString( "%1 (%2:%3)" )
+                       .arg( m_item->partnerNick )
+                       .arg( !m_item->partnerIp.isEmpty() ? m_item->partnerIp : i18n("unknown") )
+                       .arg( !m_item->partnerPort.isEmpty() ? m_item->partnerPort : i18n("unknown") )
+                      );
+  else
+    m_partner->setText( m_item->partnerNick );
   
   // Self
   if ( m_self )
   {
     QString self;
     if ( !m_item->ownIp.isEmpty() || !m_item->ownPort.isEmpty() )
-    {
-      self += !m_item->ownIp.isEmpty() ? m_item->ownIp : "* ";
-      self += ":";
-      self += !m_item->ownPort.isEmpty() ? m_item->ownPort : i18n("unknown");
-    }
+      m_self->setText( QString( "%1:%2" )
+                      .arg( self += !m_item->ownIp.isEmpty() ? m_item->ownIp : "* " )
+                      .arg( self += !m_item->ownPort.isEmpty() ? m_item->ownPort : i18n("unknown") )
+                     );
     else
-      self = i18n("unknown");
-    m_self->setText( self );
+      m_self->setText( i18n("unknown") );
   }
   
   // Status
@@ -285,7 +281,7 @@ void DccDetailDialog::slotAbort()
 
 void DccDetailDialog::slotClose()
 {
-  accept();  // *not* mean accepting the DCC, but close this dialog
+  accept();  // *not* mean accepting DCC, but close this dialog
 }
 
 #include "dccdetaildialog.moc"
