@@ -18,7 +18,6 @@
 // #define TABLE_VERSION
 
 #include <qstylesheet.h>
-#include <qtextcodec.h>
 #include <qstringlist.h>
 #include <qregexp.h>
 #include <qtextbrowser.h>
@@ -476,9 +475,6 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
 #endif
 #endif
 
-  // convert logfile ascii data to selected encoding
-  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-  line=codec->toUnicode(line.ascii());
   // no additional time stamps on backlog messages
   doAppend(line,true);
 }

@@ -498,9 +498,14 @@ void Server::send()
     // wrap socket into a stream
     QTextStream stream(&serverSocket);
 
-    // convert encoded data to IRC ascii
-    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-    QCString line=codec->fromUnicode(outputBuffer);
+    QString line(outputBuffer);
+
+    // convert encoded data to IRC ascii only when we don£t have the same codec locally
+    if(QString(QTextCodec::codecForLocale()->name()).lower()!=KonversationApplication::preferences.getCodec().lower())
+    {
+      QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
+      line=codec->fromUnicode(outputBuffer);
+    }
 
     stream << line;
 

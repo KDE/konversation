@@ -16,6 +16,7 @@
 
 #include <qdatetime.h>
 #include <qdir.h>
+#include <qtextcodec.h>
 
 #include <klocale.h>
 #include <kdialog.h>
@@ -225,6 +226,12 @@ void ChatWindow::setLogfileName(const QString& name)
           // cut first column from line
           backlogLine=backlogLine.mid(backlogLine.find('\t')+1);
           // append backlog with time and first column to text view
+
+          // convert logfile ascii data to selected encoding, here we must
+          // encode always, if the local encoding matches or not
+          QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
+          backlogLine=codec->toUnicode(backlogLine.ascii());
+
           appendBacklogMessage(backlogFirst,backlogTime+' '+backlogLine);
         }
       } // while
@@ -254,6 +261,14 @@ void ChatWindow::logText(const QString& text)
 
       QTime time=QTime::currentTime();
       QString logLine(QString("[%1] %2\n").arg(time.toString("hh:mm:ss")).arg(text));
+
+      // convert logfile ascii data to selected encoding only when local encoding differs
+      if(QString(QTextCodec::codecForLocale()->name()).lower()!=KonversationApplication::preferences.getCodec().lower())
+      {
+        QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
+        logLine=codec->fromUnicode(logLine);
+      }
+
       logStream << logLine;
 
       // detach stream from file
