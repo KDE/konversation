@@ -258,10 +258,14 @@ void IRCInput::getHistory(bool up)
 void IRCInput::insertHtml(const QString& htmlTextToInsert)
 {
   QString text(htmlTextToInsert);
-  // replace \r with \n to make xterm pastes happy
+   //We will treat \n as a \n in the paste, despite it usually being ignored
+  //This is so <pre> etc work fine.  It's works fairly well, as this is only for pasting
+  //a few lines, and those few lines will probably not have many arbituary \n's in it.
+  
+// replace \r with \n to make xterm pastes happy
   text.replace("\r","\n");
   text.replace("<p>","\n", false);
-  text.replace("<br>","\n", false);
+  text.replace("<br>","\n", false); 
   text.replace("<h1>","%B", false);
   text.replace("</h1>","%B", false);
   text.replace("<h2>","%B", false);
@@ -275,36 +279,43 @@ void IRCInput::insertHtml(const QString& htmlTextToInsert)
   text.replace("<u>","%U", false);
   text.replace("</u>","%U", false);
 
-  text.replace(QRegExp("<font [^>]*color *= *[\"']black[^>]*>", false), "%C1");
-  text.replace(QRegExp("<font [^>]*color *= *[\"']#000000[^>]*>", false), "%C1");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']black[^>]*>", false), "%C1");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']#000000[^>]*>", false), "%C1");
   
-  text.replace(QRegExp("<font [^>]*color *= *[\"']orange[^>]*>", false), "%C7");
-  text.replace(QRegExp("<font [^>]*color *= *[\"']#ffa500[^>]*>", false), "%C7");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']orange[^>]*>", false), "%C7");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']#ffa500[^>]*>", false), "%C7");
   
-  text.replace(QRegExp("<font [^>]*color *= *[\"']pink[^>]*>", false), "%C13");
-  text.replace(QRegExp("<font [^>]*color *= *[\"']#ffc0cb[^>]*>", false), "%C13");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']pink[^>]*>", false), "%C13");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']#ffc0cb[^>]*>", false), "%C13");
  
-  text.replace(QRegExp("<font [^>]*color *= *[\"']aqua[^>]*>", false), "%C12");
-  text.replace(QRegExp("<font [^>]*color *= *[\"']#00ffff[^>]*>", false), "%C12");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']aqua[^>]*>", false), "%C12");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']#00ffff[^>]*>", false), "%C12");
   
-  text.replace(QRegExp("<font [^>]*color *= *[\"']red[^>]*>", false), "%C4");
-  text.replace(QRegExp("<font [^>]*color *= *[\"']#ff0000[^>]*>", false), "%C4");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']red[^>]*>", false), "%C4");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']#ff0000[^>]*>", false), "%C4");
   
-  text.replace(QRegExp("<font [^>]*color *= *[\"']green[^>]*>", false), "%C9");
-  text.replace(QRegExp("<font [^>]*color *= *[\"']#00ff00[^>]*>", false), "%C9");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']green[^>]*>", false), "%C9");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']#00ff00[^>]*>", false), "%C9");
   
-  text.replace(QRegExp("<font [^>]*color *= *[\"']blue[^>]*>", false), "%C2");
-  text.replace(QRegExp("<font [^>]*color *= *[\"']#0000ff[^>]*>", false), "%C2");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']blue[^>]*>", false), "%C2");
+  text.replace(QRegExp("< *font [^>]*color *= *[\"']#0000ff[^>]*>", false), "%C2");
   
   text.replace(QRegExp("</ *font *>",false), "%C1");
   
+  //get rid of anything else not recognised
   text.replace(QRegExp("<[^>]*>"), "");
 
+  //strip multiple empty newlines
+  text.replace(QRegExp("\n[ <t]*\n"), "");
+  
 
   text.replace("&amp;", "&");
   text.replace("&lt;", "<");
   text.replace("&gt;", ">");
 
+  //strip newlines at the start and end.
+  text = text.stripWhiteSpace();
+  
   // is there a newline in the pasted/inserted text?
   if(text.find('\n')!=-1)
   {
