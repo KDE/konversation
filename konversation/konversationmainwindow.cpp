@@ -690,7 +690,6 @@ void KonversationMainWindow::addUrlCatcher()
     (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(true);
   } else {
     closeUrlCatcher();
-    (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(false);
   }
 }
 
@@ -700,7 +699,8 @@ void KonversationMainWindow::closeUrlCatcher()
   if(urlCatcherPanel)
   {
     delete urlCatcherPanel;
-    urlCatcherPanel=0;
+    urlCatcherPanel=0;    
+    (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(false);
   }
 }
 
