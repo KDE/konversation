@@ -273,7 +273,7 @@ void Channel::requestNewTopic(const QString& newTopic)
 {
   topicLine->setCurrentText(topic);
 
-  if(newTopic!=topic) sendChannelText(KonversationApplication::preferences.getCommandChar()+"TOPIC "+newTopic);
+  if(newTopic!=topic) sendChannelText(KonversationApplication::preferences.getCommandChar()+"TOPIC "+getName()+" "+newTopic);
 
   channelInput->setFocus();
 }
