@@ -1,8 +1,4 @@
-if include_addressbook
-ADDRESSBOOK = linkaddressbook
-endif
-
-SUBDIRS = $(ADDRESSBOOK)
+SUBDIRS = linkaddressbook
 
 METASOURCES = AUTO
 
