@@ -60,6 +60,7 @@ Preferences::Preferences()
   buttonList.append("Quit,/QUIT KDE Rules!%n");
 
   setShowQuickButtons(true);
+  setShowModeButtons(true);
 
   setPartReason("Konversation terminated!");
   setKickReason("User terminated!");
@@ -356,3 +357,6 @@ const QString& Preferences::getTimestampFormat() { return timestampFormat; }
 
 void Preferences::setShowQuickButtons(bool state) { showQuickButtons=state; }
 bool Preferences::getShowQuickButtons() { return showQuickButtons; }
+
+void Preferences::setShowModeButtons(bool state) { showModeButtons=state; }
+bool Preferences::getShowModeButtons() { return showModeButtons; }

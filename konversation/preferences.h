@@ -212,6 +212,9 @@ class Preferences : public QObject
     void setShowQuickButtons(bool state);
     bool getShowQuickButtons();
 
+    void setShowModeButtons(bool state);
+    bool getShowModeButtons();
+
     QString ident;
     QString realname;
 
@@ -250,6 +253,7 @@ class Preferences : public QObject
     QString timestampFormat;
 
     bool showQuickButtons;
+    bool showModeButtons;
 
     QStringList notifyList;
     QString commandChar;

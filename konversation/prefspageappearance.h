@@ -40,6 +40,7 @@ class PrefsPageAppearance : public PrefsPage
     void listFontClicked();
     void timestampingChanged(int state);
     void showQuickButtonsChanged(int state);
+    void showModeButtonsChanged(int state);
     void formatChanged(const QString& newFormat);
 
   protected:
@@ -50,6 +51,7 @@ class PrefsPageAppearance : public PrefsPage
 
     QCheckBox* doTimestamping;
     QCheckBox* showQuickButtons;
+    QCheckBox* showModeButtons;
     QLabel* formatLabel;
     QComboBox* timestampFormat;
 };

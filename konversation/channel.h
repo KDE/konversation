@@ -84,6 +84,7 @@ class Channel : public ChatWindow
     void urlCatcher(QString url);
     void adjustFocus();
     void showQuickButtons(bool show);
+    void showModeButtons(bool show);
 
   protected slots:
     void completeNick();
@@ -112,12 +113,15 @@ class Channel : public ChatWindow
 
     bool quickButtonsChanged;  // to take care of redraw problem if hidden
     bool quickButtonsState;
+    bool modeButtonsChanged;  // to take care of redraw problem if hidden
+    bool modeButtonsState;
 
     unsigned int completionPosition;
 
     QString topic; // Caches current topic
     TopicComboBox* topicLine;
     QStringList topicHistory;
+    QHBox* modeBox;
 
     QString key;
 

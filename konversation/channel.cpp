@@ -37,17 +37,20 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   completionPosition=0;
   nickChangeDialog=0;
   topic="";
+
   quickButtonsChanged=false;
   quickButtonsState=false;
+
+  modeButtonsChanged=false;
+  modeButtonsState=false;
 
   setType(ChatWindow::Channel);
 
   // Build some size policies for the widgets
   QSizePolicy hfixed=QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
   QSizePolicy hmodest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
+  QSizePolicy vfixed=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
   QSizePolicy modest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-//  QSizePolicy onlyHorizontal=QSizePolicy(QSizePolicy::Minimum,QSizePolicy::Preferred);
-//  QSizePolicy onlyVertical=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::MinimumExpanding);
   QSizePolicy greedy=QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
 
   // (this) The main Box, holding the channel view/topic and the input line
@@ -69,7 +72,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   topicLine->setInsertionPolicy(QComboBox::NoInsertion);
 
   /* The box holding the channel modes*/
-  QHBox* modeBox=new QHBox(topicBox);
+  modeBox=new QHBox(topicBox);
   modeBox->setSizePolicy(hfixed);
   modeT=new ModeButton("T",modeBox,0);
   modeN=new ModeButton("N",modeBox,1);
@@ -100,6 +103,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(modeL,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
 
   limit=new QLineEdit(modeBox);
+
+  showModeButtons(KonversationApplication::preferences.getShowModeButtons());
 
   nicksOps=new QLabel(i18n("Nicks"),topicViewNicksGrid);
   nicksOps->setAlignment(AlignVCenter | AlignHCenter);
@@ -154,10 +159,11 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   logCheckBox=new QCheckBox(i18n("Log"),commandLineBox);
   logCheckBox->setChecked(KonversationApplication::preferences.getLog());
 
-  /* Set the widgets size policies */
+  // Set the widgets size policies
   topicBox->setSizePolicy(greedy);
   topicLabel->setSizePolicy(hfixed);
-  topicLine->setSizePolicy(modest);  // This should prevent the widget from growing too wide
+   // was hmodest
+  topicLine->setSizePolicy(vfixed);  // This should prevent the widget from growing too wide
 
   limit->setMaximumSize(40,100);
   limit->setSizePolicy(hfixed);
@@ -1039,7 +1045,7 @@ void Channel::updateQuickButtons(QStringList newButtonList)
 void Channel::showQuickButtons(bool show)
 {
   // QT does not redraw the buttons properly when they are not on screen
-  // while getting hidden, so we remember the "soon  to be" state here.
+  // while getting hidden, so we remember the "soon to be" state here.
   if(isHidden())
   {
     quickButtonsChanged=true;
@@ -1054,16 +1060,39 @@ void Channel::showQuickButtons(bool show)
   }
 }
 
+void Channel::showModeButtons(bool show)
+{
+  // QT does not redraw the buttons properly when they are not on screen
+  // while getting hidden, so we remember the "soon to be" state here.
+  if(isHidden())
+  {
+    modeButtonsChanged=true;
+    modeButtonsState=show;
+  }
+  else
+  {
+    if(show)
+      modeBox->show();
+    else
+      modeBox->hide();
+  }
+}
+
 void Channel::showEvent(QShowEvent* event)
 {
   // Suppress Compiler Warning
   event->type();
 
-  // If the show quick button settings have changed, apply the changes now
+  // If the show quick/mode button settings have changed, apply the changes now
   if(quickButtonsChanged)
   {
     quickButtonsChanged=false;
     showQuickButtons(quickButtonsState);
+  }
+  if(modeButtonsChanged)
+  {
+    modeButtonsChanged=false;
+    showModeButtons(modeButtonsState);
   }
 }
 

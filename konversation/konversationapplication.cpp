@@ -159,6 +159,7 @@ void KonversationApplication::readOptions()
   preferences.setTimestamping(config->readBoolEntry("Timestamping",preferences.getTimestamping()));
   preferences.setTimestampFormat(config->readEntry("TimestampFormat",preferences.getTimestampFormat()));
   preferences.setShowQuickButtons(config->readBoolEntry("ShowQuickButtons",preferences.getShowQuickButtons()));
+  preferences.setShowModeButtons(config->readBoolEntry("ShowModeButtons",preferences.getShowModeButtons()));
 
   // Colors
   config->setGroup("Message Text Colors");
@@ -321,6 +322,7 @@ void KonversationApplication::saveOptions()
   config->writeEntry("Timestamping",preferences.getTimestamping());
   config->writeEntry("TimestampFormat",preferences.getTimestampFormat());
   config->writeEntry("ShowQuickButtons",preferences.getShowQuickButtons());
+  config->writeEntry("ShowModeButtons",preferences.getShowModeButtons());
 
   config->setGroup("Message Text Colors");
 
@@ -441,6 +443,7 @@ void KonversationApplication::saveOptions()
   {
     lookServer->updateFonts();
     lookServer->setShowQuickButtons(preferences.getShowQuickButtons());
+    lookServer->setShowModeButtons(preferences.getShowModeButtons());
     lookServer=serverList.next();
   }
 }

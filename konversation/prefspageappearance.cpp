@@ -65,8 +65,13 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   // Take care of ghosting / unghosting format widget
   timestampingChanged(preferences->getTimestamping() ? 2 : 0);
 
-  showQuickButtons=new QCheckBox(i18n("Show Quick Buttons"),parentFrame,"show_quickbuttons_checkbox");
+  QHBox* showButtonsBox=new QHBox(parentFrame);
+
+  showQuickButtons=new QCheckBox(i18n("Show Quick Buttons"),showButtonsBox,"show_quickbuttons_checkbox");
   showQuickButtons->setChecked(preferences->getShowQuickButtons());
+
+  showModeButtons=new QCheckBox(i18n("Show Channel Mode Buttons"),showButtonsBox,"show_modebuttons_checkbox");
+  showModeButtons->setChecked(preferences->getShowModeButtons());
 
   // Layout
   int row=0;
@@ -80,7 +85,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   row++;
   appearanceLayout->addMultiCellWidget(timestampBox,row,row,0,2);
   row++;
-  appearanceLayout->addMultiCellWidget(showQuickButtons,row,row,0,2);
+  appearanceLayout->addMultiCellWidget(showButtonsBox,row,row,0,2);
   row++;
   appearanceLayout->setRowStretch(row,10);
   appearanceLayout->setColStretch(1,10);
@@ -91,6 +96,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   connect(listFontButton,SIGNAL (clicked()),this,SLOT (listFontClicked()) );
   connect(doTimestamping,SIGNAL (stateChanged(int)),this,SLOT (timestampingChanged(int)) );
   connect(showQuickButtons,SIGNAL (stateChanged(int)),this,SLOT (showQuickButtonsChanged(int)) );
+  connect(showModeButtons,SIGNAL (stateChanged(int)),this,SLOT (showModeButtonsChanged(int)) );
   connect(timestampFormat,SIGNAL(activated(const QString&)),this,SLOT(formatChanged(const QString&)));
 }
 
@@ -143,4 +149,9 @@ void PrefsPageAppearance::formatChanged(const QString& newFormat)
 void PrefsPageAppearance::showQuickButtonsChanged(int state)
 {
   preferences->setShowQuickButtons(state==2);
+}
+
+void PrefsPageAppearance::showModeButtonsChanged(int state)
+{
+  preferences->setShowModeButtons(state==2);
 }

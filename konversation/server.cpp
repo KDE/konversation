@@ -754,6 +754,17 @@ void Server::setShowQuickButtons(bool state)
   }
 }
 
+// TODO: Maybe use a Signal / Slot mechanism for these things?
+void Server::setShowModeButtons(bool state)
+{
+  Channel* channel=channelList.first();
+  while(channel)
+  {
+    channel->showModeButtons(state);
+    channel=channelList.next();
+  }
+}
+
 Channel* Server::getChannelByName(const char* name)
 {
   // Convert wanted channel name to lowercase
