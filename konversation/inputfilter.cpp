@@ -1446,6 +1446,9 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
         }
       }
       // Let the channel update its modes
+      if(parameter.isEmpty())
+        kdDebug() << "in updateChannelMode.  sourceNick: '" << sourcenick << "'  parameterlist: '" << parameterList.join(", ") << "'" << endl;
+    
       server->updateChannelMode(sourceNick,parameterList[0],mode,plus,parameter);
     }
   } // endfor
@@ -1456,7 +1459,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
 bool InputFilter::isAChannel(const QString &check)
 {
     Q_ASSERT(server);
-    return server? server->isAChannel(check) : QString("#&").contains(check.at(0)); // XXX if we ever see the assert, we need the ternary
+    return server? server->isAChannel(check) : QString("#&").contains(check.at(0)); // if we ever see the assert, we need the ternary
 }
 
 bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)
