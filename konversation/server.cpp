@@ -15,13 +15,6 @@
 #include <sys/socket.h>
 #include <errno.h>
 
-#ifdef __linux__
-#include <linux/version.h>
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,50)
-typedef unsigned long long __u64;
-#endif
-#endif
-
 #include <netinet/in.h>
 #include <stdlib.h>
 
