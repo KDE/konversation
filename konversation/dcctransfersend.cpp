@@ -37,12 +37,13 @@
 #include "konversationapplication.h"
 
 DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName, uint fileSize  )
-  : DccTransfer( panel, DccTransfer::Send, partnerNick, fileURL.filename() )
+  : DccTransfer( panel, DccTransfer::Send, partnerNick )
 {
   kdDebug() << "DccTransferSend::DccTransferSend()" << endl
             << "DccTransferSend::DccTransferSend(): Partner: " << partnerNick << endl
             << "DccTransferSend::DccTransferSend(): File: " << fileURL.prettyURL() << endl;
   
+  m_fileName = fileURL.filename();
   m_fileURL = fileURL;
   m_ownIp = ownIp;
   if ( altFileName.isEmpty() )

@@ -1797,7 +1797,7 @@ void Server::dccGetDone(const QString &fileName, DccTransfer::DccStatus status, 
   if(status==DccTransfer::Done)
     appendStatusMessage(i18n("DCC"),i18n("DCC download of file \"%1\" finished.").arg(fileName));
   else if(status==DccTransfer::Failed)
-    appendStatusMessage(i18n("DCC"),i18n("DCC download of file \"%1\" failed. Reason: %2").arg(fileName).arg(errorMessage));
+    appendStatusMessage(i18n("DCC"),i18n("DCC download of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
 }
 
 void Server::dccSendDone(const QString &fileName, DccTransfer::DccStatus status, const QString &errorMessage)
@@ -1805,7 +1805,7 @@ void Server::dccSendDone(const QString &fileName, DccTransfer::DccStatus status,
   if(status==DccTransfer::Done)
     appendStatusMessage(i18n("DCC"),i18n("DCC upload of file \"%1\" finished.").arg(fileName));
   else if(status==DccTransfer::Failed)
-    appendStatusMessage(i18n("DCC"),i18n("DCC upload of file \"%1\" failed. Reason: %2").arg(fileName).arg(errorMessage));
+    appendStatusMessage(i18n("DCC"),i18n("DCC upload of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
 }
 
 void Server::dccStatusChanged(const DccTransfer *item)

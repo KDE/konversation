@@ -16,7 +16,6 @@
 #include <qhostaddress.h>
 #include <qstyle.h>
 #include <qtimer.h>
-#include <qfileinfo.h>
 
 #include <kdebug.h>
 #include <kfilemetainfo.h>
@@ -33,17 +32,11 @@
 #include "dcctransfer.h"
 #include "konversationapplication.h"
 
-DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partnerNick, const QString& fileName )
+DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partnerNick )
   : KListViewItem( panel->getListView() )
 {
   m_dccType = dccType;
   m_partnerNick = partnerNick;
-  
-  m_fileName = QFileInfo( fileName ).fileName();  //Just incase anyone tries to do anything nasty
-  if ( m_fileName.startsWith(".") )
-    m_fileName.replace(0, 1, '_'); // Don't create hidden files
-  if ( m_fileName.isEmpty() )
-    m_fileName= "unnamed";
   
   m_dccStatus = Queued;
   m_resumed = false;

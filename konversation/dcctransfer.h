@@ -67,7 +67,7 @@ class DccTransfer : public QObject, public KListViewItem
       DccStatusCount
     };
     
-    DccTransfer( DccPanel* panel, DccType dccType, const QString& partnerNick, const QString& fileName );
+    DccTransfer( DccPanel* panel, DccType dccType, const QString& partnerNick );
     virtual ~DccTransfer();
     
     virtual void paintCell( QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment );
@@ -131,20 +131,20 @@ class DccTransfer : public QObject, public KListViewItem
     unsigned long m_bufferSize;
     char* m_buffer;
     
-    /** The filename.  This is santized to remove any "/"'s in it. 
-     *  For receiving, it doesn't include the partner's nick if that
-     *  preference is on.
-     *  This won't ever be null.  For receiving, if a blank filename is used,
-     *  this is set to "unknown".
+    /**
+     * The filename.
+     * For receiving, it holds the filename as the sender said.
+     * So be careful, it can contain "../" and so on.
      */
     QString m_fileName;
     
     /** The file size of the complete file sending/recieving. */
     KIO::filesize_t  m_fileSize;
     
-    /** If we are sending a file, this is the url of the file we are sending.
-     *  If we are recieving a file, this is the url of the file we are saving
-     *  to in the end (Temporararily it will be filename+".part" ).
+    /** 
+     * If we are sending a file, this is the url of the file we are sending.
+     * If we are recieving a file, this is the url of the file we are saving
+     * to in the end (Temporararily it will be filename+".part" ).
      */
     KURL m_fileURL;
     

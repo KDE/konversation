@@ -90,8 +90,6 @@ class DccTransferRecv : public DccTransfer
     void cleanUp();
     void failed(const QString& errorMessage = QString::null );
     
-    void calculateSaveToFileURL( const KURL& defaultFolderURL );
-    
     void prepareLocalKio( bool overwrite, bool resume, KIO::fileoffset_t startPosition = 0 );  // (startPosition == 0) means "don't resume"
     void askAndPrepareLocalKio( const QString& message, int enabledActions, DccResumeDialog::ReceiveAction defaultAction, KIO::fileoffset_t startPosition = 0 );
     

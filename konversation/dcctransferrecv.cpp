@@ -15,6 +15,8 @@
   (at your option) any later version.
 */
 
+#include <qfileinfo.h>
+
 #include <kdebug.h>
 #include <kfileitem.h>
 #include <klocale.h>
@@ -53,7 +55,7 @@
 */
 
 DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort )
-  : DccTransfer( panel, DccTransfer::Receive, partnerNick, fileName )
+  : DccTransfer( panel, DccTransfer::Receive, partnerNick )
 {
   kdDebug() << "DccTransferRecv::DccTransferRecv() [BEGIN]" << endl
             << "DccTransferRecv::DccTransferRecv(): Partner: " << partnerNick << endl
@@ -65,6 +67,7 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
   m_recvSocket = 0;
   m_writeCacheHandler = 0;
   
+  m_fileName = fileName;
   m_fileSize = fileSize;
   m_partnerIp = partnerIp;
   m_partnerPort = partnerPort;
@@ -74,7 +77,34 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
   //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
   
   // determine default incoming file URL
-  calculateSaveToFileURL( defaultFolderURL );
+  
+  // set default folder
+  if ( !defaultFolderURL.isEmpty() )
+    m_fileURL = defaultFolderURL;
+  else
+    m_fileURL.setPath( KUser( KUser::UseRealUserID ).homeDir() );  // default folder is *not* specified
+  // add a slash if there is none
+  m_fileURL.adjustPath( 1 );
+  // Append folder with partner's name if wanted
+  if ( KonversationApplication::preferences.getDccCreateFolder() )
+    m_fileURL.addPath( m_partnerNick.lower() + "/" );
+  
+  // set default filename
+  // note: Don't edit m_fileName. (i.e. leave it as it is)
+  // because we need the original file name to resume its translation.
+  QString fileNameTmp = QFileInfo( m_fileName ).fileName();  //Just incase anyone tries to do anything nasty
+  if ( fileNameTmp.startsWith( "." ) )
+    fileNameTmp.replace( 0, 1, '_' ); // Don't create hidden files
+  if ( fileNameTmp.isEmpty() )
+    fileNameTmp = "unnamed";
+  
+  // Append partner's name to file name if wanted
+  if ( KonversationApplication::preferences.getDccAddPartner() )
+    m_fileURL.addPath( m_partnerNick.lower() + "." + fileNameTmp );
+  else
+    m_fileURL.addPath( fileNameTmp );
+  
+  kdDebug() << "DccTransferRecv::calculateSaveToFileURL(): Default URL: " << m_fileURL.prettyURL() << endl;
   
   setStatus( Queued );
   updateView();
@@ -89,29 +119,6 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
   }
   
   kdDebug() << "DccTransferRecv::DccTransferRecv() [END]" << endl;
-}
-
-void DccTransferRecv::calculateSaveToFileURL( const KURL& defaultFolderURL )
-{
-  // set default folder
-  if ( !defaultFolderURL.isEmpty() )
-    m_fileURL = defaultFolderURL;
-  else
-    m_fileURL.setPath( KUser( KUser::UseRealUserID ).homeDir() );  // default folder is *not* specified
-  // add a slash if there is none
-  m_fileURL.adjustPath( 1 );
-  // Append folder with partner's name if wanted
-  if ( KonversationApplication::preferences.getDccCreateFolder() )
-    m_fileURL.addPath( m_partnerNick.lower() + "/" );
-  
-  // set default filename
-  // Append partner's name to file name if wanted
-  if ( KonversationApplication::preferences.getDccAddPartner() )
-    m_fileURL.addPath( m_partnerNick.lower() + "." + m_fileName );
-  else
-    m_fileURL.addPath( m_fileName );
-  
-  kdDebug() << "DccTransferRecv::calculateSaveToFileURL(): Default URL: " << m_fileURL.prettyURL() << endl;
 }
 
 DccTransferRecv::~DccTransferRecv()
