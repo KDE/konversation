@@ -636,10 +636,14 @@ void Channel::completeNick()
         }
       } else if(KonversationApplication::preferences.getNickCompletionMode() == 0) { // Cycle completion
         complete = true;
-
+        QString prefixCharacter = KonversationApplication::preferences.getPrefixCharacter();
         do
         {
           QString lookNick=nicknameList.at(completionPosition)->getNickname();
+
+          if ( lookNick.contains(prefixCharacter) )
+             lookNick = lookNick.section( prefixCharacter,1 );
+
           if(lookNick.lower().startsWith(pattern)) foundNick=lookNick;
           // increment search position
           completionPosition++;
