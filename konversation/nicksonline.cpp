@@ -35,11 +35,10 @@
 #include "nicksonline.h"
 #include "server.h"
 #include "konversationapplication.h"
+#include "images.h"
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
-
-#include "images.h"
 
 #ifdef USE_MDI
 NicksOnline::NicksOnline(QString caption): ChatWindow(caption)
@@ -317,9 +316,9 @@ void NicksOnline::updateServerOnlineList(Server* servr)
                 // FIXME: If user connects to multiple servers in same network, the
                 // channel info will differ between the servers, resulting in inaccurate
                 // mode and led info displayed.
-                
+
                 QString channelName = channelList[channelIndex];
-                
+
                 ChannelNickPtr channelNick = server->getChannelNick(channelName, nickname);
                 QString nickMode;
                 if (channelNick->hasVoice()) nickMode = nickMode + i18n(" Voice");
@@ -331,11 +330,20 @@ void NicksOnline::updateServerOnlineList(Server* servr)
                 if (!channelItem) channelItem = new KListViewItem(nickRoot,
                     channelName, nickMode);
                 channelItem->setText(nlvcAdditionalInfo, nickMode);
-            
+
+                // Icon for mode of nick in each channel.
+                Images::NickPrivilege nickPrivilege = Images::Normal;
+                if (channelNick->hasVoice()) nickPrivilege = Images::Voice;
+                if (channelNick->isHalfOp()) nickPrivilege = Images::HalfOp;
+                if (channelNick->isOp()) nickPrivilege = Images::Op;
+                if (channelNick->isOwner()) nickPrivilege = Images::Owner;
+                if (channelNick->isAdmin()) nickPrivilege = Images::Admin;
                 if (server->getJoinedChannelMembers(channelName) != 0)
-                    channelItem->setPixmap(nlvcChannel, joinedLed);
+                    channelItem->setPixmap(nlvcChannel,
+                        KonversationApplication::instance()->images()->getNickIcon(nickPrivilege, false));
                 else
-                    channelItem->setPixmap(nlvcChannel, 0);
+                    channelItem->setPixmap(nlvcChannel,
+                        KonversationApplication::instance()->images()->getNickIcon(nickPrivilege, true));
             }
             // Remove channel if nick no longer in it.
             QListViewItem* child = nickRoot->firstChild();
