@@ -149,7 +149,7 @@ void DccPanel::dccStatusChanged(const DccTransfer* /* item */)
 void DccPanel::selectionChanged()
 {
   bool accept         = true,
-       abort          = true,
+       abort          = false,
        clear          = true,
        open           = true,
        remove         = true,
