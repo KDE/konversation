@@ -58,7 +58,7 @@ void InputFilter::parseLine(const QString &a_newLine, QWidget *mainWindow)
 {
   QString trailing(QString::null);
   QString newLine(a_newLine);
-  
+
   // Remove white spaces at the end and beginning
   newLine=newLine.stripWhiteSpace();
   // Find end of middle parameter list
@@ -68,7 +68,7 @@ void InputFilter::parseLine(const QString &a_newLine, QWidget *mainWindow)
   {
     // Copy trailing parameter
     trailing=newLine.mid(pos+2);
-    
+
     // Cut trailing parameter from string
     newLine=newLine.left(pos);
   }
@@ -162,7 +162,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           server->appendActionToChannel(parameterList[0],sourceNick,ctcpArgument);
 #ifdef USE_KNOTIFY
           // KNotify events...
-          if(sourceNick != server->getNickname() && server->getChannelByName(parameterList[0])->notificationsEnabled()) {
+          Channel* channel = server->getChannelByName( parameterList[0] );
+          if(channel && sourceNick != server->getNickname() && channel->notificationsEnabled()) {
             if(ctcpArgument.lower().find(QRegExp("(^|[^\\d\\w])"+QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
             {
               KNotifyClient::event(mainWindow->winId(), "nick");
@@ -456,7 +457,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       server->nickJoinsChannel(channelName,sourceNick,sourceHostmask);
 #ifdef USE_KNOTIFY
       Channel* channel = server->getChannelByName(channelName);
-      
+
       if(channel && channel->notificationsEnabled()) {
         KNotifyClient::event(mainWindow->winId(), "join");
       }
@@ -1003,13 +1004,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           break;
         }
 /* Sample WHOIS response
-/WHOIS psn 
-[19:11] :zahn.freenode.net 311 PhantomsDad psn ~psn h106n2fls23o1068.bredband.comhem.se * :Peter Simonsson 
-[19:11] :zahn.freenode.net 319 PhantomsDad psn :#kde-devel #koffice 
-[19:11] :zahn.freenode.net 312 PhantomsDad psn irc.freenode.net :http://freenode.net/ 
-[19:11] :zahn.freenode.net 301 PhantomsDad psn :away 
-[19:11] :zahn.freenode.net 320 PhantomsDad psn :is an identified user 
-[19:11] :zahn.freenode.net 317 PhantomsDad psn 4921 1074973024 :seconds idle, signon time 
+/WHOIS psn
+[19:11] :zahn.freenode.net 311 PhantomsDad psn ~psn h106n2fls23o1068.bredband.comhem.se * :Peter Simonsson
+[19:11] :zahn.freenode.net 319 PhantomsDad psn :#kde-devel #koffice
+[19:11] :zahn.freenode.net 312 PhantomsDad psn irc.freenode.net :http://freenode.net/
+[19:11] :zahn.freenode.net 301 PhantomsDad psn :away
+[19:11] :zahn.freenode.net 320 PhantomsDad psn :is an identified user
+[19:11] :zahn.freenode.net 317 PhantomsDad psn 4921 1074973024 :seconds idle, signon time
 [19:11] :zahn.freenode.net 318 PhantomsDad psn :End of /WHOIS list.
 */
       case RPL_WHOISUSER:
@@ -1048,8 +1049,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 				        .arg(parameterList[2])
 				        .arg(parameterList[3])
 				        .arg(trailing.section(" ", 1)));
-	  break; 
-	  
+	  break;
+
 	}
       case RPL_ENDOFWHO:
 	{
@@ -1076,7 +1077,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             else if(lookChannel.startsWith("!"))
             {
               ownerChannels.append(lookChannel.mid(1));
-              server->setChannelNick(lookChannel.mid(1), parameterList[1], 8); 
+              server->setChannelNick(lookChannel.mid(1), parameterList[1], 8);
             }
             else if(lookChannel.startsWith("@"))
             {
@@ -1086,17 +1087,17 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             else if(lookChannel.startsWith("%"))
             {
               halfopChannels.append(lookChannel.mid(1));
-              server->setChannelNick(lookChannel.mid(1), parameterList[1], 2); 
+              server->setChannelNick(lookChannel.mid(1), parameterList[1], 2);
             }
             else if(lookChannel.startsWith("+"))
             {
               voiceChannels.append(lookChannel.mid(1));
-              server->setChannelNick(lookChannel.mid(1), parameterList[1], 1); 
+              server->setChannelNick(lookChannel.mid(1), parameterList[1], 1);
             }
             else
             {
               userChannels.append(lookChannel);
-              server->setChannelNick(lookChannel, parameterList[1], 0); 
+              server->setChannelNick(lookChannel, parameterList[1], 0);
             }
           } // endfor
           // Display message only if this was not an automatic request.
@@ -1179,7 +1180,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           // if idle time is longer than a day
           // Display message only if this was not an automatic request.
           if(getAutomaticRequest()==0)
-          {         
+          {
             if(days)
               server->appendStatusMessage(i18n("Whois"),QString("%1 has been idle for %2 days, %3 hours, %4 minutes and %5 seconds.").arg(parameterList[1])
                                         .arg(days).arg(hours % 24).arg(minutes % 60).arg(seconds % 60));
@@ -1196,7 +1197,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
               server->appendStatusMessage(i18n("Whois"),i18n("%1 has been idle for %2 seconds.").arg(parameterList[1])
                                         .arg(seconds));
           }
-          
+
           if(parameterList.count()==4)
           {
             QDateTime when;
@@ -1305,12 +1306,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       case RPL_UNAWAY:
         {
           Identity identity = *(server->getIdentity());
-          
+
           if(identity.getShowAwayMessage()) {
             QString message = identity.getReturnMessage();
             server->sendToAllChannels(message.replace(QRegExp("%t", false), server->awayTime()));
           }
-          
+
           server->appendStatusMessage(i18n("Away"),i18n("You are no longer marked as being away."));
           emit unAway();
 
@@ -1325,7 +1326,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       case ERR_UNKNOWNCOMMAND:
         {
           server->appendStatusMessage(command,parameterList.join(" ").section(' ',1) + " " + trailing);
-          break; 
+          break;
         }
       default:
         {
