@@ -17,7 +17,7 @@ dnl --------
 
 kde_safe_LIBS="$LIBS"
 LIBS="$LIBS $all_libraries $X_EXTRA_LIBS"
-AC_CHECK_FUNCS(inet_ntop inet_pton getpeername getsockname getsockopt gethostbyname2_r gethostbyname_r gethostbyname2)
+AC_CHECK_FUNCS([inet_ntop inet_pton getpeername getsockname getsockopt gethostbyname2_r gethostbyname_r gethostbyname2 if_nametoindex getprotobyname_r getservbyname_r])
 LIBS="$kde_safe_LIBS"
 AC_CHECK_HEADERS([netinet/in.h net/if.h],,,
 [#include <sys/types.h>
