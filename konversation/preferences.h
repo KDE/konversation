@@ -149,18 +149,10 @@ class Preferences : public QObject
     void setNoRightsValue(int value);
 
     // Geometry functions
-    QSize getHilightSize();
-    QSize getButtonsSize();
-    QSize getIgnoreSize();
-    QSize getNotifySize();
     QSize getNicksOnlineSize();
     QSize getNicknameSize();
     QSize getLogfileReaderSize();
     
-    void setHilightSize(QSize newSize);
-    void setButtonsSize(QSize newSize);
-    void setIgnoreSize(QSize newSize);
-    void setNotifySize(QSize newSize);
     void setNicksOnlineSize(QSize newSize);
     void setNicknameSize(QSize newSize);
     void setLogfileReaderSize(QSize newSize);
@@ -438,10 +430,6 @@ class Preferences : public QObject
 
     // Geometries
     QSize mainWindowSize;
-    QSize buttonsSize;
-    QSize hilightSize;
-    QSize ignoreSize;
-    QSize notifySize;
     QSize nicksOnlineSize;
     QSize nicknameSize;
     QSize logfileReaderSize;

@@ -237,10 +237,6 @@ void KonversationApplication::readOptions()
 
   // Window geometries
   QSize* logfileReaderSize=new QSize(500,300);
-  preferences.setHilightSize(config->readSizeEntry("HilightGeometry"));
-  preferences.setButtonsSize(config->readSizeEntry("ButtonsGeometry"));
-  preferences.setIgnoreSize(config->readSizeEntry("IgnoreGeometry"));
-  preferences.setNotifySize(config->readSizeEntry("NotifyGeometry"));
   preferences.setNicksOnlineSize(config->readSizeEntry("NicksOnlineGeometry"));
   preferences.setNicknameSize(config->readSizeEntry("NicknameGeometry"));
   preferences.setLogfileReaderSize(config->readSizeEntry("LogfileReaderGeometry",logfileReaderSize));
@@ -540,10 +536,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->writeEntry("CommandChar",preferences.getCommandChar());
 
-  config->writeEntry("HilightGeometry",preferences.getHilightSize());
-  config->writeEntry("ButtonsGeometry",preferences.getButtonsSize());
-  config->writeEntry("IgnoreGeometry",preferences.getIgnoreSize());
-  config->writeEntry("NotifyGeometry",preferences.getNotifySize());
   config->writeEntry("NicksOnlineGeometry",preferences.getNicksOnlineSize());
   config->writeEntry("NicknameGeometry",preferences.getNicknameSize());
   config->writeEntry("LogfileReaderGeometry",preferences.getLogfileReaderSize());

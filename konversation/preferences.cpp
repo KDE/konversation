@@ -522,18 +522,10 @@ int Preferences::getLogfileBufferSize()             { return logfileBufferSize; 
 void Preferences::setLogfileBufferSize(int newSize) { logfileBufferSize=newSize; }
 
 // Geometry functions
-QSize Preferences::getHilightSize()            { return hilightSize; }
-QSize Preferences::getButtonsSize()            { return buttonsSize; }
-QSize Preferences::getIgnoreSize()             { return ignoreSize; }
-QSize Preferences::getNotifySize()             { return notifySize; }
 QSize Preferences::getNicksOnlineSize()        { return nicksOnlineSize; }
 QSize Preferences::getNicknameSize()           { return nicknameSize; }
 QSize Preferences::getLogfileReaderSize()      { return logfileReaderSize; }
 
-void Preferences::setHilightSize(QSize newSize)            { hilightSize=newSize; }
-void Preferences::setButtonsSize(QSize newSize)            { buttonsSize=newSize; }
-void Preferences::setIgnoreSize(QSize newSize)             { ignoreSize=newSize; }
-void Preferences::setNotifySize(QSize newSize)             { notifySize=newSize; }
 void Preferences::setNicksOnlineSize(QSize newSize)        { nicksOnlineSize=newSize; }
 void Preferences::setNicknameSize(QSize newSize)           { nicknameSize=newSize; }
 void Preferences::setLogfileReaderSize(QSize newSize)      { logfileReaderSize=newSize; }
