@@ -52,28 +52,28 @@ PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
   m_themeList->setSelectionMode(QListBox::Single);
   QLabel* previewLabel = new QLabel(newParent);
   previewLabel->setText("Preview :");
-  
-  
+
+
   QFrame* previewFrame = new QFrame(newParent);
   QHBoxLayout *previewLayout=new QHBoxLayout(previewFrame);
 
   QFrame* buttonFrame = new QFrame(newParent);
   QHBoxLayout *buttonLayout=new QHBoxLayout(buttonFrame,spacingHint());
-  
+
   QPushButton* installButton = new QPushButton(buttonFrame,"installButton");
   m_removeButton = new QPushButton(buttonFrame,"removeButton");
-  
+
   installButton->setText(i18n("I&nstall Theme"));
   m_removeButton->setText(i18n("&Remove Theme"));
   m_removeButton->setEnabled(false);
-  
+
   buttonLayout->addWidget(installButton);
   buttonLayout->addWidget(m_removeButton);
-  
-  previewLayout->addStretch(9); 
-  
+
+  previewLayout->addStretch(9);
+
   for(int i=0; i <= 5; ++i) {
-    
+
     previewLayout->addStretch(1);
 
     m_label[i] = new QLabel(previewFrame);
@@ -88,10 +88,10 @@ PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
   gridLayout->addWidget(previewLabel, 3, 0);
   gridLayout->addWidget(previewFrame, 4, 0);
   gridLayout->addWidget(buttonFrame, 5, 0);
-  
+
   updateList();
   updateButtons();
-  
+
   connect(m_themeList,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
   connect(m_themeList,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
   connect(installButton,SIGNAL(clicked()),this,SLOT(installTheme()));
@@ -116,12 +116,12 @@ void PrefsPageThemes::applyPreferences()
 
 void PrefsPageThemes::installTheme()
 {
-  KURL themeURL = KFileDialog::getOpenURL(QString::null, 
+  KURL themeURL = KFileDialog::getOpenURL(QString::null,
 					  i18n("*.tar.gz *.tar.bz2 *.tar *.zip|Konversation Themes"),
                                            NULL,
 					  i18n("Select Theme Package")
 					   );
-  
+
   QString themesDir(locateLocal("data", "konversation/themes/"));
   QString tmpThemeFile;
 
@@ -134,7 +134,7 @@ void PrefsPageThemes::installTheme()
 			 );
       return;
     }
-  
+
   QDir themeInstallDir(tmpThemeFile);
 
   if(themeInstallDir.exists()) // We got a directory not a file
@@ -144,7 +144,7 @@ void PrefsPageThemes::installTheme()
       else
 	{
 	  KMessageBox::error(0L,
-                             i18n("Invalid Theme Archieve"),
+                             i18n("Invalid Theme Archive"),
                              i18n("Cannot install theme"),
                              KMessageBox::Notify
                              );
@@ -152,29 +152,29 @@ void PrefsPageThemes::installTheme()
     }
   else // we got a file
     {
-       
-      KTar themeArchieve(tmpThemeFile);
-      themeArchieve.open(IO_ReadOnly);
+
+      KTar themeArchive(tmpThemeFile);
+      themeArchive.open(IO_ReadOnly);
       kapp->processEvents();
-      
-      const KArchiveDirectory* themeDir = themeArchieve.directory();;
+
+      const KArchiveDirectory* themeDir = themeArchive.directory();;
       QStringList allEntries = themeDir->entries();
-      
+
       for(QStringList::Iterator it=allEntries.begin(); it != allEntries.end(); ++it)
 	{
 	  if(themeDir->entry(*it+"/themerc") == NULL)
 	    {
 	      KMessageBox::error(0L,
-				 i18n("Invalid Theme Archieve"),
+				 i18n("Invalid Theme Archive"),
 				 i18n("Cannot install theme"),
 				 KMessageBox::Notify
 				 );
 	    }
 	  else
 	    themeDir->copyTo(themesDir);
-	  
+
 	}
-      themeArchieve.close();
+      themeArchive.close();
     }
 
   updateList();
@@ -197,7 +197,7 @@ void PrefsPageThemes::removeTheme()
 						  "warningRemoveTheme"
 						  );
 
-  if(remove == KMessageBox::Continue) 
+  if(remove == KMessageBox::Continue)
     {
       unlink(QFile::encodeName(dir));
       KIO::del(KURL(dir.remove("themerc")));
@@ -264,7 +264,7 @@ void PrefsPageThemes::updateList()
 
       themeComment = stream.readLine();
       themeComment = themeComment.section('=',1,1);
-      
+
       if(!themeComment.isEmpty())
 	themeName = themeName+" ( "+themeComment+" )";
 
