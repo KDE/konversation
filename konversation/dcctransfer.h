@@ -19,6 +19,7 @@
 
 #include <klistview.h>
 #include <kurl.h>
+#include <kio/global.h>
 
 class QDateTime;
 class QStringList;
@@ -62,14 +63,16 @@ class DccTransfer : public QObject, public KListViewItem
     
     virtual void paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment);
     
-    DccType getType() const { return dccType; }
-    DccStatus getStatus() const { return dccStatus; }
-    QString getOwnIp() const { return ownIp; }
-    QString getOwnPort() const { return ownPort; }
-    QString getPartnerNick() const { return partnerNick; }
-    QString getFileName() const { return fileName; }
-    KURL getLocalFileURL() const { return localFileURL; }
-    bool isResumed() const { return bResumed; }
+    DccType getType() const;
+    DccStatus getStatus() const;
+    QString getOwnIp() const;
+    QString getOwnPort() const;
+    QString getPartnerNick() const;
+    QString getFileName() const;
+    KIO::filesize_t getFileSize() const;
+	
+    KURL getFileURL() const;
+    bool isResumed() const;
     
     void runFile();
     bool removeFile();
@@ -118,8 +121,8 @@ class DccTransfer : public QObject, public KListViewItem
     DccStatus dccStatus;
     QString dccStatusDetail;
     bool bResumed;
-    unsigned long transferringPosition;
-    unsigned long transferStartPosition;
+    KIO::fileoffset_t transferringPosition;
+    KIO::fileoffset_t transferStartPosition;
     QString partnerNick;
     QString partnerIp;  // null when unknown
     QString partnerPort;
@@ -134,9 +137,13 @@ class DccTransfer : public QObject, public KListViewItem
     
     // file information
     QString fileName;
-    unsigned long fileSize;
-    KURL localFileURL;
-    
+    /* The file size of the complete file sending/recieving. */
+    KIO::filesize_t  m_fileSize;
+    /* If we are sending a file, this is the url of the file we are sending.
+     * If we are recieving a file, this is the url of the file we are saving
+     * to in the end (Temporararily it will be filename+".part" ).
+     */
+    KURL m_fileURL;  
     // UI
     QTimer* autoUpdateViewTimer;
     KProgress* progressBar;

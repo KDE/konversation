@@ -400,7 +400,7 @@ void DccPanel::doubleClicked(QListViewItem* _item, const QPoint& /* _pos */, int
   DccTransfer* item = static_cast<DccTransfer*>(_item);
   if(item)
     if(item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done)
-      new KRun( item->getLocalFileURL() );
+      new KRun( item->getFileURL() );
 }
 
 DccTransfer* DccPanel::getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed)

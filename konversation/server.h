@@ -135,9 +135,9 @@ class Server : public QObject
 
     Channel* getChannelByName(const QString& name);
     Query* getQueryByName(const QString& name);
-    QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QStringList& nickList, const QString& parameter);
+    QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QStringList &nickList, const QString& parameter);
     QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& parameter);
-
+    
     QString getAutoJoinCommand() const;
 
     void notifyAction(const QString& nick);
@@ -298,7 +298,7 @@ class Server : public QObject
     void requestCloseDccPanel();
     void requestBan(const QStringList& users,const QString& channel,const QString& option);
     void requestUnban(const QString& mask,const QString& channel);
-    void addDccSend(const QString &recipient,const QString &file);
+    void addDccSend(const QString &recipient,KURL fileURL);
     void removeQuery(Query *query);
     void startNotifyTimer(int msec=0);
     void sendJoinCommand(const QString& channelName);
@@ -343,7 +343,7 @@ class Server : public QObject
     void resumeDccGetTransfer(const QString& sourceNick,const QStringList& dccArguments);  // -> to inputFilter
     void resumeDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments); // -> to inputFilter
     void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,const QString& port,unsigned long size);
-    void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,int startAt);
+    void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,KIO::filesize_t startAt);
     void dccGetDone(const QString& fileName);
     void dccSendDone(const QString& fileName);
     void dccStatusChanged(const DccTransfer* item);

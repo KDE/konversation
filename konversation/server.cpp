@@ -319,8 +319,8 @@ void Server::connectSignals()
             this,SLOT   (requestDccPanel()) );
   connect(outputFilter,SIGNAL (closeDccPanel()),
             this,SLOT   (requestCloseDccPanel()) );
-  connect(outputFilter,SIGNAL (openDccSend(const QString &, const QString &)),
-            this,SLOT   (addDccSend(const QString &, const QString &)) );
+  connect(outputFilter,SIGNAL (openDccSend(const QString &, KURL)),
+            this,SLOT   (addDccSend(const QString &, KURL)) );
   connect(outputFilter,SIGNAL (requestDccChat(const QString &)),
             this,SLOT   (requestDccChat(const QString &)) );
   connect(outputFilter,SIGNAL (connectToServer(const QString&, const QString&, const QString&)),
@@ -1459,27 +1459,21 @@ void Server::requestDccSend(const QString &a_recipient)
   // do we have a recipient *now*?
   if(!recipient.isEmpty())
   {
-    QString fileName=KFileDialog::getOpenFileName(
+    KURL fileURL=KFileDialog::getOpenURL(
                                                    lastDccDir,
                                                    QString::null,
                                                    getMainWindow(),
                                                    i18n("Select File to Send to %1").arg(recipient)
                                                  );
-    if(!fileName.isEmpty())
+    if(!fileURL.isEmpty())
     {
-      QFileInfo fileInfo(fileName);
-
-      lastDccDir=fileInfo.dirPath();
-
-      if(fileInfo.isDir())
-        appendStatusMessage(i18n("DCC"),i18n("Error: \"%1\" is not a regular file.").arg(fileName));
-      else
-        addDccSend(recipient,fileName);
+      lastDccDir=fileURL.directory();
+      addDccSend(recipient,fileURL);
     }
   }
 }
 
-void Server::addDccSend(const QString &recipient,const QString &fileName)
+void Server::addDccSend(const QString &recipient,KURL fileURL)
 {
   emit addDccPanel();
 
@@ -1488,7 +1482,7 @@ void Server::addDccSend(const QString &recipient,const QString &fileName)
   // We already checked that the file exists in output filter / requestDccSend() resp.
   DccTransferSend* newDcc=new DccTransferSend(getMainWindow()->getDccPanel()->getListView(),
                                               recipient,
-                                              KURL(fileName),  // path to the sending file
+                                              fileURL,  // url to the sending file
                                               ownIp);          // ip
 
   connect(newDcc,SIGNAL (sendReady(const QString&,const QString&,const QString&,const QString&,unsigned long)),
@@ -1522,8 +1516,8 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
                       ip.toString(),       // ip
                       dccArguments[2]);    // port
 
-  connect(newDcc,SIGNAL (resumeRequest(const QString&,const QString&,const QString&,int)),this,
-         SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,int)) );
+  connect(newDcc,SIGNAL (resumeRequest(const QString&,const QString&,const QString&,KIO::filesize_t)),this,
+         SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,KIO::filesize_t)) );
   connect(newDcc,SIGNAL (done(const QString&)),
               this,SLOT (dccGetDone(const QString&)) );
   connect(newDcc,SIGNAL (statusChanged(const DccTransfer* )), this,
@@ -1559,7 +1553,7 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
   appendStatusMessage(result.typeString, result.output);
 }
 
-void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, int startAt)
+void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, KIO::filesize_t startAt)
 {
   Konversation::OutputFilterResult result = outputFilter->resumeRequest(sender,fileName,port,startAt);
   queue(result.toServer);
@@ -2091,7 +2085,8 @@ NickInfoPtr Server::addNickToOfflineList(const QString& nickname, const QStringL
     removeChannelNick(channel, lcNickname);
   }
   if (doSignal) emit watchedNickChanged(this, nickInfo, false);
-  Konversation::Addressbook::self()->emitContactPresenceChanged(Konversation::Addressbook::self()->getKABCAddresseeFromNick(lcNickname).uid(), 1);
+  if(nickInfo && !nickInfo->getAddressee().isEmpty())
+    Konversation::Addressbook::self()->emitContactPresenceChanged(nickInfo->getAddressee().uid(), 1);
   return nickInfo;
 }
 #else
@@ -2925,8 +2920,8 @@ void Server::startAwayTimer()
  *  calls 'refreshAddressee' on all of them.
  */
 void Server::slotLoadAddressees() {
-  kdDebug() << "server::slotLoadAddressess " << endl;
-  for(NickInfoMap::Iterator it=nicknamesOnline.begin(); it != nicknamesOnline.end(); ++it)
+  kdDebug() << "server::slotLoadAddressees " << endl;
+  for(NickInfoMap::Iterator it=allNicks.begin(); it != allNicks.end(); ++it)
   {
     NickInfoPtr addressee = it.data();
     addressee->refreshAddressee();

@@ -54,9 +54,12 @@ class DccTransferSend : public DccTransfer
     void cleanUp();
     void startConnectionTimer(int sec);
     void stopConnectionTimer();
-    
     QFile file;
-    
+
+    /*The filename of the temporary file that we downloaded.  So if send a file ftp://somewhere/file.txt
+     * Then this will be downloaded to /tmp.
+     */
+    QString tmpFile;
     KNetwork::KServerSocket* serverSocket;
     KNetwork::KStreamSocket* sendSocket;
     QTimer* connectionTimer;

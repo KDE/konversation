@@ -95,8 +95,8 @@ void DccTransfer::updateView()  // slot
   setText(DccPanel::Column::TimeRemaining, getTimeRemainingPrettyText());
   setText(DccPanel::Column::CPS,           getCPSPrettyText());
   
-  if(fileSize)
-    progressBar->setProgress((int)(100*transferringPosition/fileSize));
+  if(m_fileSize)
+    progressBar->setProgress((int)(100*transferringPosition/m_fileSize));
   else  // filesize is unknown
     setText(DccPanel::Column::Progress, i18n("unknown"));
   
@@ -132,7 +132,7 @@ void DccTransfer::paintCell(QPainter* painter, const QColorGroup& colorgroup, in
 void DccTransfer::showProgressBar()
 {  
   // I've referenced the Apollon's code for progressbar things. Thank you, the Apollon team! (shin)
-  if(fileSize)
+  if(m_fileSize)
   {
     QRect rect = listView()->itemRect(this);
     QHeader *head = listView()->header();
@@ -147,16 +147,16 @@ void DccTransfer::showProgressBar()
 void DccTransfer::runFile()  // public
 {
   if ( dccType == Send || dccStatus == Done )
-    new KRun( localFileURL );
+    new KRun( m_fileURL );
 }
 
 bool DccTransfer::removeFile()  // public
 {
   if ( dccType != Receive || dccStatus != Done )
     return false;
-  if ( !QFile( localFileURL.path() ).remove() )
+  if ( !QFile( m_fileURL.path() ).remove() )
   {
-    KMessageBox::sorry( 0, i18n("Cannot remove file '%1'.").arg( localFileURL.url() ), i18n("DCC Error") );
+    KMessageBox::sorry( 0, i18n("Cannot remove file '%1'.").arg( m_fileURL.url() ), i18n("DCC Error") );
     return false;
   }
   setStatus( Removed );
@@ -170,7 +170,7 @@ void DccTransfer::openFileInfoDialog()
   {
     QStringList infoList;
     
-    QString path=localFileURL.path();
+    QString path=m_fileURL.path();
     
     // get meta info object
     KFileMetaInfo* fileInfo=new KFileMetaInfo(path,QString::null,KFileMetaInfo::Everything);
@@ -309,28 +309,26 @@ QString DccTransfer::getStatusText() const
 
 QString DccTransfer::getFileSizePrettyText() const
 {
-  // TODO: make it pretty!
-  return QString::number(fileSize) + "bytes";
+  return KIO::convertSize(m_fileSize);
 }
 
 QString DccTransfer::getPositionPrettyText() const
 {
   // TODO: make it pretty!
-  return QString::number(transferringPosition) + " / " + QString::number(fileSize);
+  return KIO::convertSize(transferringPosition) + " / " + KIO::convertSize(m_fileSize);
 }
-
 QString DccTransfer::getTimeRemainingPrettyText() const
 {
   if(dccStatus != Sending && dccStatus != Receiving )
     return QString::null;
-  if(!fileSize)
+  if(!m_fileSize)
     return i18n("unknown");
   // not use getCPS() for exact result
   int trnsfdTime = timeTransferStarted.secsTo(QDateTime::currentDateTime());
-  unsigned long trnsfdBytes = transferringPosition - transferStartPosition;
+  KIO::fileoffset_t trnsfdBytes = transferringPosition - transferStartPosition;
   if(trnsfdBytes == 0)
     return QString::null;
-  unsigned long remBytes = fileSize - transferringPosition;
+  KIO::fileoffset_t remBytes = m_fileSize - transferringPosition;
   int remTime = (int)((double)remBytes / (double)trnsfdBytes * trnsfdTime);
   int remHour = remTime / 3600; remTime -= remHour * 3600;
   int remMin = remTime / 60; remTime -= remMin * 60;
@@ -423,7 +421,20 @@ unsigned long DccTransfer::intel(unsigned long value)  // static
   return value;
 }
 
+
+DccTransfer::DccType DccTransfer::getType() const { return dccType; }
+DccTransfer::DccStatus DccTransfer::getStatus() const { return dccStatus; }
+QString DccTransfer::getOwnIp() const { return ownIp; }
+QString DccTransfer::getOwnPort() const { return ownPort; }
+QString DccTransfer::getPartnerNick() const { return partnerNick; }
+QString DccTransfer::getFileName() const { return fileName; }
+KIO::filesize_t DccTransfer::getFileSize() const { return m_fileSize; }
+KURL DccTransfer::getFileURL() const { return m_fileURL; }
+bool DccTransfer::isResumed() const { return bResumed; }
+
 QString DccTransfer::TypeText[DccTransfer::DccTypeCount];
 QString DccTransfer::StatusText[DccTransfer::DccStatusCount];
+
+
 
 #include "dcctransfer.moc"

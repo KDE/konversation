@@ -27,8 +27,8 @@
 DccResumeDialog::DccResumeDialog(DccTransferRecv* parentItem)
   : KDialogBase(0, "dcc_resume_dialog", true, 
                 i18n("DCC Receive Question"),
-                parentItem->bCompletedFileExists ? KDialogBase::Ok | KDialogBase::Cancel : KDialogBase::User1 | KDialogBase::Ok | KDialogBase::Cancel,
-                parentItem->bCompletedFileExists ? KDialogBase::Ok : KDialogBase::User1,
+                parentItem->m_saveToFileExists ? KDialogBase::Ok | KDialogBase::Cancel : KDialogBase::User1 | KDialogBase::Ok | KDialogBase::Cancel,
+                parentItem->m_saveToFileExists ? KDialogBase::Ok : KDialogBase::User1,
                 true)
   , item(parentItem)
 {
@@ -38,9 +38,9 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* parentItem)
   setMainWidget(page);
   
   QLabel* topMessage = new QLabel(page);
-  if(item->bCompletedFileExists)
+  if(item->m_saveToFileExists)
     topMessage->setText( i18n("<qt>A file with the name <b>%1</b> already exists.<br>")
-                         .arg(item->localFileURL.fileName())
+                         .arg(item->getFileURL().fileName())
                        );
   /*
     topMessage->setText( i18n("<qt>A file with the name <b>%1</b> already exists.<br>"
@@ -55,10 +55,10 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* parentItem)
   */
   else
     topMessage->setText( i18n("<qt>A part of the file <b>%1</b> exists.<br>")
-                         .arg(item->localFileURL.fileName())
+                         .arg(item->getFileURL().fileName())
                        );
   
-  urlreqFilePath = new KURLRequester(item->localFileURL.prettyURL(), page);
+  urlreqFilePath = new KURLRequester(item->getFileURL().prettyURL(), page);
   
   QFrame* filePathToolsFrame = new QFrame(page);
   QHBoxLayout* filePathToolsLayout = new QHBoxLayout(filePathToolsFrame);
@@ -97,14 +97,14 @@ DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item)  // p
     ra = Cancel;
   
   if(ra == Rename)
-    item->setLocalFileURL(dlg.urlreqFilePath->url());
+    item->setSaveToFileURL(dlg.urlreqFilePath->url());
   
   return ra;
 }
 
 void DccResumeDialog::slotOkClicked()  // slot
 {
-  if(item->localFileURL == urlreqFilePath->url())
+  if(item->getFileURL() == urlreqFilePath->url())
     action = Overwrite;
   else
     action = Rename;
@@ -118,16 +118,16 @@ void DccResumeDialog::slotUser1Clicked()  // slot
 
 void DccResumeDialog::updateDialogButtons()  // slot
 {
-  if(item->localFileURL == urlreqFilePath->url())
+  if(item->getFileURL() == urlreqFilePath->url())
   {
     setButtonText(KDialogBase::Ok, i18n("Overwrite"));
-    if(!item->bCompletedFileExists)
+    if(!item->m_saveToFileExists)
       enableButton(KDialogBase::User1, true);
   }
   else
   {
     setButtonText(KDialogBase::Ok, i18n("Rename"));
-    if(!item->bCompletedFileExists)
+    if(!item->m_saveToFileExists)
       enableButton(KDialogBase::User1, false);
   }
 }
@@ -178,7 +178,7 @@ void DccResumeDialog::suggestNewName()  // slot
 
 void DccResumeDialog::setDefaultName()  // slot
 {
-  urlreqFilePath->setURL(item->localFileURL.prettyURL());
+  urlreqFilePath->setURL(item->getFileURL().prettyURL());
 }
 
 #include "dccresumedialog.moc"

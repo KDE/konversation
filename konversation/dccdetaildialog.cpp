@@ -50,7 +50,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
     localFileURLHeader->setText( i18n("Save to") );
   QHBox* localFileURLBox = new QHBox( infoFrame );
   localFileURLBox->setSpacing( spacingHint() );
-  m_localFileURL = new KURLRequester( m_item->localFileURL.prettyURL(), localFileURLBox );
+  m_localFileURL = new KURLRequester( m_item->getFileURL().prettyURL(), localFileURLBox );
   connect( m_localFileURL, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotLocalFileURLChanged( const QString& ) ) );
   m_localFileURLOpen = new KPushButton( KGlobal::iconLoader()->loadIcon( "exec", KIcon::Small ), QString::null, localFileURLBox );
   m_localFileURLOpen->setFixedSize( m_localFileURL->button()->size() );
@@ -210,7 +210,7 @@ void DccDetailDialog::updateView()  // public
   // information
   
   // Local path
-  m_localFileURL->setURL( m_item->localFileURL.prettyURL() );
+  m_localFileURL->setURL( m_item->getFileURL().prettyURL() );
   m_localFileURL->lineEdit()->setFocusPolicy( m_item->dccStatus == DccTransfer::Queued ? StrongFocus : ClickFocus );
   m_localFileURL->lineEdit()->setReadOnly( m_item->dccStatus != DccTransfer::Queued );
   m_localFileURL->lineEdit()->setFrame( m_item->dccStatus == DccTransfer::Queued );
@@ -248,7 +248,7 @@ void DccDetailDialog::updateView()  // public
   
   // Progress
   // FIXME: in case filesize is unknown
-  m_progress->setProgress( (int)( 100 * m_item->transferringPosition / m_item->fileSize ) );
+  m_progress->setProgress( (int)( 100 * m_item->transferringPosition / m_item->getFileSize() ) );
   
   // Position
   m_position->setText( m_item->getPositionPrettyText() );
@@ -268,8 +268,8 @@ void DccDetailDialog::slotLocalFileURLChanged( const QString& newURL )
   DccTransferRecv* item = static_cast<DccTransferRecv*>( m_item );
   if ( item )
   {
-    item->setLocalFileURL( KURL::fromPathOrURL( newURL ) );
-    m_localFileURL->setURL( item->localFileURL.prettyURL() );
+    item->setSaveToFileURL( KURL::fromPathOrURL( newURL ) );
+    m_localFileURL->setURL( item->getFileURL().prettyURL() );
   }
 }
 

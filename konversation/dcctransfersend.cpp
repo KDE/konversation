@@ -26,6 +26,9 @@
 #include <kserversocket.h>
 #include <ksocketaddress.h>
 #include <kstreamsocket.h>
+#include <kio/netaccess.h>
+#include <kfileitem.h>
+#include <kinputdialog.h>
 
 #include "dcctransfersend.h"
 #include "konversationapplication.h"
@@ -37,13 +40,42 @@ DccTransferSend::DccTransferSend(KListView* _parent, const QString& _partnerNick
             << "DccTransferSend::DccTransferSend(): Partner=" << _partnerNick << endl
             << "DccTransferSend::DccTransferSend(): File=" << _fileURL.prettyURL() << endl;
   
-  localFileURL = _fileURL;
+  m_fileURL = _fileURL;
   ownIp=_ownIp;
   
-  file.setName(localFileURL.path());
-  fileName = localFileURL.filename();
-  fileSize = file.size();
-  
+  fileName = m_fileURL.filename();
+ 
+  //Check the file exists 
+  if( !KIO::NetAccess::exists(m_fileURL, true, listView()))  {
+    KMessageBox::sorry(listView(), i18n("The url \"%1\" does not exist").arg(m_fileURL.prettyURL()));
+    setStatus(Failed);
+    updateView();
+    cleanUp();
+    return;
+  }
+  //Download the file.  Does nothing if it's local (file:/)
+  if(! KIO::NetAccess::download(m_fileURL, tmpFile, listView())) {
+    KMessageBox::sorry(listView(), i18n("Could not retrieve \"%1\".").arg(m_fileURL.prettyURL()));
+    setStatus(Failed);
+    updateView();
+    cleanUp();
+    return;
+  }
+
+  //Some protocols, like http, maybe not return a filename.  So prompt the user for one.
+  if(fileName.isEmpty()) {
+    bool pressedOk;
+    fileName = KInputDialog::getText(i18n("Enter filename"), i18n("<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>").arg(getPartnerNick()), "unknown", &pressedOk, listView());
+    if(!pressedOk) {
+      setStatus(Failed);
+      updateView();
+      cleanUp();
+      return;    
+    }
+  }
+  file.setName(tmpFile);
+  m_fileSize = file.size();
+
   connectionTimer=0;
   
   serverSocket=0;
@@ -60,8 +92,7 @@ DccTransferSend::~DccTransferSend()
 void DccTransferSend::start()  // public slot
 {
   kdDebug() << "DccTransferSend::start()" << endl;
-
-  // Set up server socket
+     // Set up server socket
   serverSocket = new KNetwork::KServerSocket();
   serverSocket->setFamily(KNetwork::KResolver::InetFamily);
   
@@ -81,7 +112,7 @@ void DccTransferSend::start()  // public slot
     }
     if(!found)
     {
-      KMessageBox::sorry(0, i18n("There is no vacant port for DCC sending."));
+      KMessageBox::sorry(listView(), i18n("There is no vacant port for DCC sending."));
       setStatus(Failed);
       updateView();
       cleanUp();
@@ -119,7 +150,7 @@ void DccTransferSend::start()  // public slot
   
   startConnectionTimer(90);  // wait for 90 sec
   
-  emit sendReady(partnerNick,fileName,getNumericalIpText(ownIp),ownPort,fileSize);
+  emit sendReady(partnerNick,fileName,getNumericalIpText(ownIp),ownPort,m_fileSize);
 }
 
 void DccTransferSend::abort()  // public slot
@@ -129,6 +160,7 @@ void DccTransferSend::abort()  // public slot
   setStatus(Aborted);
   cleanUp();
   updateView();
+  file.close();
 }
 
 void DccTransferSend::setResume(unsigned long _position)  // public
@@ -144,7 +176,9 @@ void DccTransferSend::setResume(unsigned long _position)  // public
 void DccTransferSend::cleanUp()
 {
   kdDebug() << "DccTransferSend::cleanUp()" << endl;
-  
+  if(!tmpFile.isEmpty())
+    KIO::NetAccess::removeTempFile(tmpFile);
+  tmpFile=QString::null;
   stopConnectionTimer();
   stopAutoUpdateView();
   if(sendSocket)
@@ -159,7 +193,7 @@ void DccTransferSend::cleanUp()
     serverSocket->deleteLater();
     serverSocket = 0;
   }
-  file.close();
+  
 }
 
 void DccTransferSend::heard()  // slot
@@ -213,14 +247,14 @@ void DccTransferSend::getAck()  // slot
   {
     sendSocket->readBlock((char *) &pos,4);
     pos=intel(pos);
-    if(pos == fileSize)
+    if(pos == m_fileSize)
     {
       kdDebug() << "DccTransferSend::getAck(): Done." << endl;
       
       setStatus(Done);
       cleanUp();
       updateView();
-      emit done(localFileURL.path());
+      emit done(m_fileURL.path());
       break;  // for safe
     }
   }

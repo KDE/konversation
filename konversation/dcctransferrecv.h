@@ -16,15 +16,25 @@
 #ifndef DCCTRANSFERRECV_H
 #define DCCTRANSFERRECV_H
 
+#include <qptrlist.h>
+
 #include "dcctransfer.h"
 
 class QFile;
 class QTimer;
 
+namespace KIO
+{
+  class Job;
+  class TransferJob;
+}
+
 namespace KNetwork
 {
   class KStreamSocket;
 }
+
+class DccTransferRecvWriteCacheHandler;
 
 class DccTransferRecv : public DccTransfer
 {
@@ -37,7 +47,7 @@ class DccTransferRecv : public DccTransfer
     virtual ~DccTransferRecv();
     
   signals:
-    void resumeRequest(const QString&,const QString&,const QString&,int);  // emitted by requestResume()
+    void resumeRequest(const QString&,const QString&,const QString&,KIO::filesize_t);  // emitted by requestResume()
     
   public slots:
     virtual void start();
@@ -50,6 +60,8 @@ class DccTransferRecv : public DccTransfer
     void readData();
     void sendAck();
     void connectionTimeout();
+    void writeDone();
+    void gotWriteError(int errorCode);
     
   protected:
     void requestResume();
@@ -58,17 +70,53 @@ class DccTransferRecv : public DccTransfer
     void startConnectionTimer(int sec);
     void stopConnectionTimer();
     
-    void setLocalFileURL(const KURL& _url);
+    void setSaveToFileURL(const KURL& _url);
     
   protected:
-    QFile file;
-    KURL localTmpFileURL;
+    KURL m_saveToTmpFileURL;
+    ///Current filesize of the file saved on the disk.
+    KIO::filesize_t m_saveToFileSize;
+    ///Current filesize of the file+".part" saved on the disk.
+    KIO::filesize_t m_partialFileSize;
+    DccTransferRecvWriteCacheHandler* m_writeCacheHandler;
+    bool m_saveToFileExists;
+    bool m_partialFileExists;
     
-    QTimer* connectionTimer;
-    KNetwork::KStreamSocket* recvSocket;
+    QTimer* m_connectionTimer;
+    KNetwork::KStreamSocket* m_recvSocket;
+};
+
+class DccTransferRecvWriteCacheHandler : public QObject
+{
+  Q_OBJECT
+  
+  public:
+    DccTransferRecvWriteCacheHandler(KIO::TransferJob* transferJob);
+    virtual ~DccTransferRecvWriteCacheHandler();
     
-    bool bTemporaryFileExists;
-    bool bCompletedFileExists;
+    void append( QByteArray* cache );
+    bool write( bool force = false );
+    void close();
+    void closeNow();
+    
+  signals:
+    void dataFinished();           // will connect with transferJob->slotFinished()
+    void done();                   // will connect with DccTransferRecv::writeDone()
+    void gotError(int errorCode);  // will connect with DccTransferRecv::slotWriteError()
+    
+  protected slots:
+    void slotKIODataReq( KIO::Job*, QByteArray& data );  // will connect with transferJob->dataReq()
+    void slotKIOResult();      // will connect with transferJob->result()
+    
+  protected:
+    unsigned long allCacheSize();
+    QByteArray* popCache();
+    
+    KIO::TransferJob* m_transferJob;
+    bool m_writeAsyncMode;
+    bool m_writeReady;
+    
+    QPtrList<QByteArray> m_cacheList;
 };
 
 #endif // DCCTRANSFERRECV_H
