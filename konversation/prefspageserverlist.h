@@ -16,6 +16,7 @@
 
 #include <qpushbutton.h>
 #include <qframe.h>
+#include <qcheckbox.h>
 
 #include <klistview.h>
 
@@ -51,6 +52,7 @@ class PrefsPageServerList : public PrefsPage
     void updateAutoState(ServerListItem* item,bool state);
     void connectClicked();
     void serverDoubleClicked(QListViewItem* item);
+    void showServerListChanged(int state);
 
   protected:
     QPushButton* connectButton;
@@ -59,6 +61,7 @@ class PrefsPageServerList : public PrefsPage
     QPushButton* removeServerButton;
 
     KListView* serverListView;
+    QCheckBox* showServerList;
 
     int itemId;
 };

@@ -216,6 +216,9 @@ class Preferences : public QObject
     void setShowModeButtons(bool state);
     bool getShowModeButtons();
 
+    void setShowServerList(bool state);
+    bool getShowServerList();
+
     QString ident;
     QString realname;
 
@@ -255,6 +258,7 @@ class Preferences : public QObject
 
     bool showQuickButtons;
     bool showModeButtons;
+    bool showServerList;
 
     QStringList notifyList;
     QString commandChar;

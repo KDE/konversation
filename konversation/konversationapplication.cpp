@@ -43,7 +43,13 @@ KonversationApplication::KonversationApplication()
   if(list.count())
   {
     for(unsigned int index=0;index<list.count();index++) connectToServer(list[index]);
+    // maybe the user wants to see the prefs dialog anyway
+    if(preferences.getShowServerList())
+    {
+      openPrefsDialog();
+    }
   }
+  // no autoconnect server, so show the prefs dialog (with exit functionality)
   else
   {
     prefsDialog=new PrefsDialog(&preferences,true);
@@ -303,6 +309,7 @@ void KonversationApplication::readOptions()
   preferences.setAutoRejoin(config->readBoolEntry("AutoRejoin",preferences.getAutoRejoin()));
 
   preferences.setFixedMOTD(config->readBoolEntry("FixedMOTD",preferences.getFixedMOTD()));
+  preferences.setShowServerList(config->readBoolEntry("ShowServerList",preferences.getShowServerList()));
 }
 
 void KonversationApplication::saveOptions()
@@ -451,6 +458,7 @@ void KonversationApplication::saveOptions()
   config->writeEntry("AutoRejoin",preferences.getAutoRejoin());
 
   config->writeEntry("FixedMOTD",preferences.getFixedMOTD());
+  config->writeEntry("ShowServerList",preferences.getShowServerList());
 
   config->sync();
 

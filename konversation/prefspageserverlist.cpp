@@ -84,8 +84,12 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
   removeServerButton=new QPushButton(i18n("Remove"),buttonBox);
   removeServerButton->setDisabled(true);
 
+  showServerList=new QCheckBox(i18n("Show server list while autoconnecting"),parentFrame,"show_serverlist_check");
+  showServerList->setChecked(preferences->getShowServerList());
+  
   serverListLayout->addWidget(serverListView);
   serverListLayout->addWidget(buttonBox);
+  serverListLayout->addWidget(showServerList);
 
   // Set up signals / slots for server list
   connect(connectButton,SIGNAL(clicked()),
@@ -106,6 +110,9 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
   // this is not allowed. Delayed Destruct fixes this, but seems to have a race.
   connect(serverListView,SIGNAL(doubleClicked(QListViewItem*)),
                     this,SLOT  (serverDoubleClicked(QListViewItem*)) );
+
+  connect(showServerList,SIGNAL (stateChanged(int)),
+                    this,SLOT (showServerListChanged(int)) );
 }
 
 PrefsPageServerList::~PrefsPageServerList()
@@ -245,6 +252,11 @@ void PrefsPageServerList::serverDoubleClicked(QListViewItem* item)
   // Suppress a compiler warning
   item->height();
   connectClicked();
+}
+
+void PrefsPageServerList::showServerListChanged(int state)
+{
+  preferences->setShowServerList(state==2);
 }
 
 #include "prefspageserverlist.moc"

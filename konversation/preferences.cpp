@@ -61,6 +61,7 @@ Preferences::Preferences()
 
   setShowQuickButtons(true);
   setShowModeButtons(true);
+  setShowServerList(true);
 
   setPartReason("Konversation terminated!");
   setKickReason("User terminated!");
@@ -374,5 +375,8 @@ bool Preferences::getShowQuickButtons() { return showQuickButtons; }
 
 void Preferences::setShowModeButtons(bool state) { showModeButtons=state; }
 bool Preferences::getShowModeButtons() { return showModeButtons; }
+
+void Preferences::setShowServerList(bool state) { showServerList=state; }
+bool Preferences::getShowServerList() { return showServerList; }
 
 #include "preferences.moc"
