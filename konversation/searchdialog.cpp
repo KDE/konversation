@@ -44,7 +44,7 @@ SearchDialog::SearchDialog(QWidget* parent,QSize size) :
   QHBox* searchBox=new QHBox(page);
 
   new QLabel(i18n("Text to find:"),searchBox,"search_label");
-  searchPattern=new KComboBox(searchBox);
+  searchPattern=new KComboBox(searchBox,"search_pattern_combo");
   searchPattern->setEditable(true);
   searchPattern->insertStringList(lastSearchPatterns);
 

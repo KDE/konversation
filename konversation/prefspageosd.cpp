@@ -46,8 +46,8 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdBox->setSpacing(spacingHint());
 
   useOSDCheck = new QCheckBox(i18n("&Use On Screen Display"), osdBox, "use_osd_checkbox");
- 
-  
+
+
   // Set up osd widgets
   osdActionsBox = new QVGroupBox(i18n("Show OSD Message"), parentFrame, "osd_actions_group");
   osdShowOwnNick = new QCheckBox(i18n("If &own nick appears in channel message"), osdActionsBox, "osd_show_ownnick");
@@ -68,10 +68,10 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdPreviewLabel->setFrameStyle(QFrame::Panel | QFrame::Sunken);
   osdFontButton = new QPushButton(i18n("C&hoose..."), parentFrame, "osd_font_button");
   connect(osdFontButton, SIGNAL(clicked()), this, SLOT(osdFontClicked()));
-  
+
   drawShadowsCheck = new QCheckBox(i18n("&Draw shadows"), parentFrame, "draw_shadows_checkbox");
   drawShadowsCheck->setChecked(preferences->getOSDDrawShadow());
-  
+
   //color box
   osdColorsBox = new QVGroupBox(i18n("Colors"), parentFrame, "osd_colors_group");
   useCustomColorsCheck = new QCheckBox(i18n("&Use custom colors"), osdColorsBox, "use_custom_colors_checkbox");
@@ -82,13 +82,13 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdTextColorChooser = new KColorCombo(osdTextColorBox, "osd_text_color");
   osdTextColorChooser->setColor(preferences->getOSDTextColor());
   osdTextColorLabel->setBuddy(osdTextColorChooser);
-  
+
   QHBox *osdBackgroundColorBox = new QHBox(osdColorsBox);
   osdBackgroundColorLabel = new QLabel(i18n("&Background color:"), osdBackgroundColorBox);
   osdBackgroundColorChooser = new KColorCombo(osdBackgroundColorBox, "osd_background_color");
   osdBackgroundColorChooser->setColor(preferences->getOSDBackgroundColor());
   osdBackgroundColorLabel->setBuddy(osdBackgroundColorChooser);
-   
+
    //others box
   osdOthersBox = new QVGroupBox("Other settings", parentFrame, "osd_others_group");
   QHBox* durationBox = new QHBox(osdOthersBox);
@@ -100,13 +100,13 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdDurationSpin->setLineStep( 1000 );
   osdDurationSpin->setValue(preferences->getOSDDuration());
   osdDurationLabel->setBuddy(osdDurationSpin);
-  
+
   QHBox* screenBox = new QHBox(osdOthersBox);
   QLabel *osdScreenLabel = new QLabel(i18n("&Screen:"), screenBox);
-  osdScreenCombo = new KComboBox(screenBox);
+  osdScreenCombo = new KComboBox(screenBox,"osd_screen_combo");
   osdScreenLabel->setBuddy(osdScreenCombo);
   osdScreenCombo->setCurrentText(QString::number(preferences->getOSDScreen()));
-  
+
   const int numScreens = QApplication::desktop()->numScreens();
     for( int i = 0; i < numScreens; i++ )
       osdScreenCombo->insertItem( QString::number( i ) );
@@ -136,10 +136,10 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdLayout->addMultiCellWidget(spacer, ++row, row + 1, 0, 2);
   osdLayout->setRowStretch(row, 2);
   osdLayout->setColStretch(1, 2);
-  
+
   connect(useOSDCheck, SIGNAL(stateChanged(int)), this, SLOT(osdUsageChanged(int))); //this connect must be placed after the osdUsageChanged call.
   connect(useCustomColorsCheck, SIGNAL(stateChanged(int)), this, SLOT(customColorsCheckStateChanged(int)));
- 
+
 }
 
 PrefsPageOSD::~PrefsPageOSD()

@@ -65,7 +65,7 @@ EditServerDialog::EditServerDialog(QWidget* parent,
                             "Setting your identity</a> in the manual for more "
                             "information).</qt>");
   QWhatsThis::add(identityLabel, identityWT);
-  identityCombo=new KComboBox(page);
+  identityCombo=new KComboBox(page,"server_identity_combo");
   QWhatsThis::add(identityCombo, identityWT);
   identityLabel->setBuddy(identityCombo);
 
@@ -122,7 +122,7 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   channelNameInput=new KLineEdit(channelName,page);
   QWhatsThis::add(channelNameInput, channelNameWT);
   channelNameLabel->setBuddy(channelNameInput);
-  
+
   QLabel* connectCommandsLabel = new QLabel(i18n("C&onnect command(s):"), page);
   QString connectCommandsWT = i18n("Enter the command(s) you want to execute on "
                                                                 "connection to the server (separated by semicolons).");
@@ -166,7 +166,7 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   row++;
   layout->addMultiCellWidget(spacer,row,row,0,3);
   layout->setRowStretch(row,10);
-  
+
   row++;
   layout->addWidget(connectCommandsLabel, row, 0);
   layout->addMultiCellWidget(connectCommandsInput, row, row, 1, 3);

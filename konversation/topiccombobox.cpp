@@ -17,7 +17,7 @@
 #include "topiccombobox.h"
 
 TopicComboBox::TopicComboBox(QWidget* parent) :
-                   KComboBox(parent)
+                   KComboBox(parent,"topic_combo_box")
 {
   connect(this,SIGNAL(activated(int)),this,SLOT(topicActivated(int)));
   connect(this,SIGNAL(returnPressed(const QString&)),this,SLOT(topicActivated(const QString&)));

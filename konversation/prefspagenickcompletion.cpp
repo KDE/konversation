@@ -33,7 +33,7 @@ PrefsPageNickCompletion::PrefsPageNickCompletion(QFrame* newParent, Preferences*
 
   // nick completion mode
   QLabel* modeLbl = new QLabel(i18n("Completion &mode:"), parentFrame);
-  completionModeCBox = new QComboBox(parentFrame);
+  completionModeCBox = new QComboBox(parentFrame,"completion_mode_combo_box");
   completionModeCBox->insertItem(i18n("Cycle Nicklist"));
   completionModeCBox->insertItem(i18n("Shell-Like"));
   completionModeCBox->insertItem(i18n("Shell-Like with Completion Box"));

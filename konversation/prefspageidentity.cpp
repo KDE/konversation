@@ -41,7 +41,7 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   QGridLayout* identityLayout=new QGridLayout(parentFrame,4,4,marginHint(),spacingHint());
 
   QLabel* identityLabel=new QLabel(i18n("&Identity:"),parentFrame);
-  identityCombo=new KComboBox(parentFrame);
+  identityCombo=new KComboBox(parentFrame,"identity_combo");
   identityCombo->setEditable(false);
   identityLabel->setBuddy(identityCombo);
 //  identityCombo->setInsertionPolicy(QComboBox::NoInsertion);
@@ -63,7 +63,7 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
 
   // encoding combo box
   QLabel* codecLabel=new QLabel(i18n("&Encoding:"),parentFrame);
-  codecComboBox=new QComboBox(parentFrame);
+  codecComboBox=new QComboBox(parentFrame,"codec_combo_box");
   codecLabel->setBuddy(codecComboBox);
 
   // get list of all encodings available
