@@ -63,7 +63,8 @@ class Identity
     void setReturnMessage(const QString& message);
     QString getReturnMessage() const;
 
-    void setCodec(const QString &newCodec);
+    void setCodecName(const QString &newCodecName);
+    QString getCodecName() const;
     QTextCodec* getCodec() const;
     
     QString getAwayNick();
@@ -87,6 +88,7 @@ class Identity
     bool showAwayMessages;
     QString awayMessage;
     QString returnMessage;
+    QString m_codecName;
     QTextCodec* m_codec;
     
     QString awayNick;

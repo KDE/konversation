@@ -233,7 +233,7 @@ PrefsPageIdentity::~PrefsPageIdentity()
 
 void PrefsPageIdentity::encodingChanged(int newEncodingIndex)
 {
-  if(newEncodingIndex) identity->setCodec(KGlobal::charsets()->encodingForName(codecComboBox->text(newEncodingIndex)));
+  if(newEncodingIndex) identity->setCodecName(KGlobal::charsets()->encodingForName(codecComboBox->text(newEncodingIndex)));
 }
 
 void PrefsPageIdentity::realNameChanged(const QString& newRealName)
@@ -331,7 +331,7 @@ void PrefsPageIdentity::updateIdentity(int number)
 
   // find encoding and set combo box accordingly
 
-  QRegExp encoding("\\b" + QString(identity->getCodec()->name()).lower() + "\\b");
+  QRegExp encoding("\\b" + identity->getCodecName().lower() + "\\b");
 
   for(unsigned int index=0;index<encodings.count();index++)
   {

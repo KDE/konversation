@@ -479,7 +479,7 @@ void KonversationApplication::readOptions()
       newIdentity->setPartReason(config->readEntry("PartReason"));
       newIdentity->setKickReason(config->readEntry("KickReason"));
 
-      newIdentity->setCodec(config->readEntry("Codec"));
+      newIdentity->setCodecName(config->readEntry("Codec"));
 
       newIdentity->setAwayNick(config->readEntry("AwayNick"));
 
@@ -853,7 +853,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->writeEntry("ReturnMessage",identity->getReturnMessage());
     config->writeEntry("PartReason",identity->getPartReason());
     config->writeEntry("KickReason",identity->getKickReason());
-    config->writeEntry("Codec",identity->getCodec()->name());
+    config->writeEntry("Codec",identity->getCodecName());
     config->writeEntry("AwayNick", identity->getAwayNick());
   } // endfor
 

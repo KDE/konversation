@@ -27,7 +27,7 @@ Identity::Identity()
   nicknameList.append(QString::null);
   nicknameList.append(QString::null);
 
-  setCodec(IRCDefaultCodec::getDefaultLocaleCodec());
+  setCodecName(IRCDefaultCodec::getDefaultLocaleCodec());
 }
 
 Identity::~Identity()
@@ -75,12 +75,17 @@ void Identity::setNicknameList(const QStringList& newList)
 }
 QStringList Identity::getNicknameList() const           { return nicknameList; }
 
-QTextCodec* Identity::getCodec() const                      { return m_codec; }
-void Identity::setCodec(const QString &newCodec)
+QTextCodec* Identity::getCodec() const                  { return m_codec; }
+QString Identity::getCodecName() const                  { return m_codecName; }
+void Identity::setCodecName(const QString &newCodecName)
 {
+  // NOTE: codecName should be based on KCharsets::availableEncodingNames() / descriptiveEncodingNames()
+  // We can get a QTextCodec from QString based on them, but can't do the reverse of that.
+  
   // never set an empty codec!
-  if(!newCodec.isEmpty()){
-    m_codec = QTextCodec::codecForName(newCodec.ascii());
+  if(!newCodecName.isEmpty()){
+    m_codecName = newCodecName;
+    m_codec = QTextCodec::codecForName(newCodecName.ascii());
   }
 }
 
