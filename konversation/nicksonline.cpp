@@ -323,35 +323,44 @@ void NicksOnline::updateServerOnlineList(Server* servr)
         }
         else
         {
-          // Nick is offline.
-          // Remove from online nicks, if present.
-          QListViewItem* item = findItemChild(groupRoot, nickname);
-          if (item) delete item;
-          // Add to offline list if not already listed.
-          QListViewItem* nickRoot = findItemChild(offlineRoot, nickname);
-          if (!nickRoot) nickRoot = new KListViewItem(offlineRoot, nickname);
-          nickRoot->setText(nlvcServerName, serverName);
+            // Nick is offline.
+            // Remove from online nicks, if present.
+            QListViewItem* item = findItemChild(groupRoot, nickname);
+            if (item) delete item;
+            // Add to offline list if not already listed.
+            QListViewItem* nickRoot = findItemChild(offlineRoot, nickname);
+            if (!nickRoot) nickRoot = new KListViewItem(offlineRoot, nickname);
+            nickRoot->setText(nlvcServerName, serverName);
+            // Set Kabc icon if the nick is associated with an addressbook entry.
+            if (!servr->getOfflineNickAddressee(nickname).isEmpty())
+            nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
+                QIconSet::Small, QIconSet::Normal, QIconSet::On));
+            else
+            nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
+                QIconSet::Small, QIconSet::Disabled, QIconSet::Off));
         }
     }
     // Erase nicks no longer being watched.
     QListViewItem* item = groupRoot->firstChild();
     while (item)
     {
-      QListViewItem* nextItem = item->nextSibling();
-      QString nickname = item->text(nlvcNick);
-      if (nickname != c_i18nOffline)
-      {
-        if (watchList.find(nickname) == watchList.end()) delete item;
-      }
-      item = nextItem;
+        QListViewItem* nextItem = item->nextSibling();
+        QString nickname = item->text(nlvcNick);
+        if (nickname != c_i18nOffline)
+        {
+            if ((watchList.find(nickname) == watchList.end()) && 
+            (serverName == item->text(nlvcServerName))) delete item;
+        }
+        item = nextItem;
     }
     item = offlineRoot->firstChild();
     while (item)
     {
-      QListViewItem* nextItem = item->nextSibling();
-      QString nickname = item->text(nlvcNick);
-      if (watchList.find(nickname) == watchList.end()) delete item;
-      item = nextItem;
+        QListViewItem* nextItem = item->nextSibling();
+        QString nickname = item->text(nlvcNick);
+        if ((watchList.find(nickname) == watchList.end()) && 
+            (serverName == item->text(nlvcServerName))) delete item;
+        item = nextItem;
     }
     // Expand server if newly added to list.
     if (newGroupRoot) 
@@ -492,14 +501,17 @@ void NicksOnline::closeYourself(ChatWindow*)
 bool NicksOnline::getItemServerAndNick(const QListViewItem* item, QString& serverName, QString& nickname)
 {
     if (!item) return false;
+    // If on a group, return false;
+    if (!item->parent()) return false;
     serverName = item->text(nlvcServerName);
     // If on a channel, move up to the nickname.
     if (serverName.isEmpty())
     {
-      item = item->parent();
-      serverName = item->text(nlvcServerName);
+        item = item->parent();
+        serverName = item->text(nlvcServerName);
     }
     nickname = item->text(nlvcNick);
+    if (nickname == c_i18nOffline) return false;
     return true;
 }
 
@@ -578,13 +590,19 @@ void NicksOnline::doCommand(int id)
     if (!server) return;
     // Get NickInfo object corresponding to the nickname.
     NickInfoPtr nickInfo = server->getNickInfo(nickname);
-    if (!nickInfo) return;
+    // Get addressbook entry for the nick.
+    KABC::Addressee addressee;
+    if (nickInfo)
+        addressee = nickInfo->getAddressee();
+    else
+        addressee = server->getOfflineNickAddressee(nickname);
     
     switch(id)
     {
         case ciAddressbookEdit:
         {
-            editAddressee(nickInfo->getAddressee().uid());
+            if (addressee.isEmpty()) return;
+            editAddressee(addressee.uid());
             break;
         }
         case ciAddressbookNew:
@@ -593,27 +611,28 @@ void NicksOnline::doCommand(int id)
             Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
             if(addressbook->getAndCheckTicket())
             {
-            if(id == ciAddressbookDelete) {
-                KABC::Addressee addr = nickInfo->getAddressee();
-                addressbook->unassociateNick(addr, nickname, server->getServerName(), server->getServerGroup());
-            } else {
-                KABC::Addressee addr;
-                addr.setGivenName(nickname);
-                addr.setNickName(nickname);
-                addressbook->associateNickAndUnassociateFromEveryoneElse(addr, nickname, server->getServerName(), server->getServerGroup());
-            }
-            if(addressbook->saveTicket())
-            {
-                //saveTicket will refresh the addressees for us.
-                if(id == ciAddressbookNew)
-                if(!editAddressee(nickInfo->getAddressee().uid())) break;
-            }
+                if(id == ciAddressbookDelete) {
+                    if (addressee.isEmpty()) return;
+                    addressbook->unassociateNick(addressee, nickname, server->getServerName(), server->getServerGroup());
+                } else {
+                    addressee.setGivenName(nickname);
+                    addressee.setNickName(nickname);
+                    addressbook->associateNickAndUnassociateFromEveryoneElse(addressee, nickname, server->getServerName(), server->getServerGroup());
+                }
+                if(addressbook->saveTicket())
+                {
+                    //saveTicket will refresh the addressees for us.
+                    if(id == ciAddressbookNew)
+                        if(!editAddressee(addressee.uid())) break;
+                }
             }
             break;
         }
         case ciAddressbookChange:
         {
-            LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, nickname, server->getServerName(), server->getServerGroup(), nickInfo->getRealName());
+            QString realName;
+            if (nickInfo) realName = nickInfo->getRealName();
+            LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, nickname, server->getServerName(), server->getServerGroup(), realName);
             linkaddressbookui->show();
             break;
         }
@@ -634,14 +653,24 @@ int NicksOnline::getNickAddressbookState(QListViewItem* item)
     QString nickname;
     if (getItemServerAndNick(item, serverName, nickname))
     {
-        Server *server = static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
+        Server *server = 
+            static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
         if (!server) return 0;
         NickInfoPtr nickInfo = server->getNickInfo(nickname);
-        if (!nickInfo) return 0;
-        if (nickInfo->getAddressee().isEmpty())
-        nickState = 1;
+        if (nickInfo)
+        {
+            if (nickInfo->getAddressee().isEmpty())
+                nickState = 1;
+            else
+                nickState = 2;
+        }
         else
-        nickState =2;
+        {
+            if (server->getOfflineNickAddressee(nickname).isEmpty())
+                nickState = 1;
+            else
+                nickState = 2;
+        }
     }
     return nickState;
 }

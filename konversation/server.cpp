@@ -2917,5 +2917,20 @@ void Server::startAwayTimer()
   m_awayTime = QDateTime::currentDateTime().toTime_t();
 }
 
+/**
+* Given the nickname of nick that is offline (or at least not known to be online),
+* returns the addressbook entry (if any) for the nick.
+* @param nickname       Desired nickname.  Case insensitive.
+* @return               Addressbook entry of the nick or empty if not found.
+*/
+KABC::Addressee Server::getOfflineNickAddressee(QString& nickname)
+{
+  if (m_serverISON)
+    return m_serverISON->getOfflineNickAddressee(nickname);
+  else
+    return KABC::Addressee();
+}
+
+
 #include "server.moc"
 

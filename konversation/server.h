@@ -247,6 +247,14 @@ class Server : public QObject
      *                     or 99 if not known.  See channelnick.cpp for bit definitions.
      */
     ChannelNickPtr setChannelNick(const QString& channelName, const QString& nickname, unsigned int mode = 99);
+    /**
+     * Given the nickname of nick that is offline (or at least not known to be online),
+     * returns the addressbook entry (if any) for the nick.
+     * @param nickname       Desired nickname.  Case insensitive.
+     * @return               Addressbook entry of the nick or empty if not found.
+     */
+    KABC::Addressee getOfflineNickAddressee(QString& nickname);
+    
     QString awayTime();
 
     void emitChannelNickChanged(const ChannelNickPtr channelNick);
