@@ -68,6 +68,7 @@ Name[ca]=Fitxer entrant
 Name[de]=Datei angeboten
 Name[pt]=Ficheiro recebido
 Name[pt_BR]=Arquivo de entrada
+Name[sv]=Inkommande fil
 Name[xx]=xxIncoming filexx
 Comment=Someone wants to transmit a file to you over DCC
 Comment[ca]=Algú desitja enviar-vos un fitxer sobre DCC
