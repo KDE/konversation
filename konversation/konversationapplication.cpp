@@ -1441,7 +1441,12 @@ void KonversationApplication::sendMultiServerCommand(const QString& command, con
 void KonversationApplication::dcopConnectToServer(const QString& url, int port, const QString& channel, 
 						  const QString& password)
 {
-  quickConnectToServer(url, QString::number(port), channel, password);
+  Server* server = getServerByName(url);
+
+  if(server)
+    server->sendJoinCommand(channel);
+  else
+    quickConnectToServer(url, QString::number(port), channel, password);
 }
 
 Konversation::Sound* KonversationApplication::sound()
