@@ -73,6 +73,7 @@ class IRCView : public KTextBrowser
     void doAppend(QString line,bool suppressTimestamps=false);
     void replaceDecoration(QString& line,char decoration,char replacement);
 
+    void hideEvent(QHideEvent* event);
     void showEvent(QShowEvent* event);
     void focusInEvent(QFocusEvent* event);
 
@@ -83,6 +84,9 @@ class IRCView : public KTextBrowser
     // used by search function
     int findParagraph;
     int findIndex;
+
+    // decide if we should place the scrollbar at the bottom on show()
+    bool resetScrollbar;
 
     QString highlightColor;
     bool copyUrlMenu;

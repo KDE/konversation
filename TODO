@@ -16,6 +16,7 @@ Per nick coloring
 Shortcut for /clear
 Ignore entry for RMB menu in queries
 Use checkForUtf8 to make non-UTF8-users able to at least read UTF8.
+Remember scrollbar position when changing tabs
 
 Tab completion should work on an alphabetic list
 /WHOWAS after /WHOIS if /WHOIS returns unknown nickname

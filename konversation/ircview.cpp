@@ -46,6 +46,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   highlightColor=QString::null;
   copyUrlMenu=false;
   urlToCopy=QString::null;
+  resetScrollbar=false;
 
   popup=new QPopupMenu(this,"ircview_context_menu");
 
@@ -531,17 +532,32 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps)
   }
 }
 
-// Workaround to scroll to the end of the TextView when it's shown
-void IRCView::showEvent(QShowEvent* event)
+// remember if scrollbar was positioned at the end of the text or not
+void IRCView::hideEvent(QHideEvent* /* event */)
 {
-  // Suppress Compiler Warning
-  event->type();
+  kdDebug() << "hide" << endl;
 
+#if QT_VERSION == 303
+  // Does not seem to work very well with QT 3.0.3
+  bool doScroll=true;
+#else
+  resetScrollbar=((contentsHeight()-visibleHeight())==contentsY());
+#endif
+}
+
+// Workaround to scroll to the end of the TextView when it's shown
+void IRCView::showEvent(QShowEvent* /* event */)
+{
 #ifdef TABLE_VERSION
   setText("<qt><table cellpadding=\"0\" cellspacing=\"0\">"+buffer+"</table></qt>");
 #endif
-  moveCursor(MoveEnd,false);
-  ensureVisible(0,contentsHeight());
+
+  // did the user scroll the view to the end of the text before hiding?
+  if(resetScrollbar)
+  {
+    moveCursor(MoveEnd,false);
+    ensureVisible(0,contentsHeight());
+  }
   // Set focus to input line (must be connected)
   emit gotFocus();
 }
