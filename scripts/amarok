@@ -16,7 +16,7 @@ then
 else
   PLAYING=`dcop amarok player isPlaying`
   
-  if [ $PLAYING == "false" ]
+  if [ "$PLAYING" = "false" ]
   then
     dcop $PORT Konversation error "Nothing's playing in Amarok."
   else  

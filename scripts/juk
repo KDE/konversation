@@ -1,0 +1,32 @@
+#!/bin/bash
+
+PORT=$1
+SERVER=$2
+TARGET=$3
+
+if [ ! `dcop juk` ];
+then
+  dcop $PORT Konversation error "JuK not running."
+  exit;
+fi
+
+if [ ! $TARGET ]
+then
+  dcop $PORT Konversation error "Can't write into status view."
+else
+  PLAYING=`dcop juk Player playingString`
+  
+  if [ "$PLAYING" = "No song playing" ]
+  then
+    dcop $PORT Konversation error "Nothing's playing in JuK."
+  else  
+    TEXT=`dcop juk Player playingString`
+
+    if [ ! $TEXT ]
+    then
+	dcop $PORT Konversation error "Nothing's playing in JuK."
+    else
+	dcop $PORT Konversation say $SERVER "$TARGET" "/me plays $TEXT"
+    fi
+  fi
+fi
