@@ -20,6 +20,8 @@
 #include <qpixmap.h>
 #include <qbitmap.h>
 
+#include <kcolorcombo.h>
+
 OSDWidget::OSDWidget() : QWidget(NULL, "osd",
                                  WType_TopLevel | WStyle_StaysOnTop |
                                  WStyle_Customize | WStyle_NoBorder |
@@ -61,6 +63,11 @@ void OSDWidget::setFont(QFont newfont)
   font = newfont;
 }
 
+void OSDWidget::setColor(QColor newcolor)
+{
+  color = newcolor;
+}
+
 void OSDWidget::removeOSD()
 {
   // hide() and show() prevents flickering
@@ -71,22 +78,46 @@ void OSDWidget::removeOSD()
 void OSDWidget::paintEvent(QPaintEvent*)
 {
   QPainter paint;
+  QPixmap *buffer = new QPixmap(width(), height());
   QColor bg(0, 0, 0);
   QColor fg(255, 255, 255);
 
   qApp->syncX();
+
+  // Draw the OnScreenMessage
+  QPainter paintBuffer(buffer, this);
+  paintBuffer.setFont(font);
+
+  // Draw the border around the text
+  paintBuffer.setPen(black);
+  paintBuffer.drawText(0, 0, width()-1, height()-1, AlignLeft | WordBreak, this->text);
+  paintBuffer.drawText(2, 0, width()-1, height()-1, AlignLeft | WordBreak, this->text);
+  paintBuffer.drawText(0, 2, width()-1, height()-1, AlignLeft | WordBreak, this->text);
+  paintBuffer.drawText(2, 2, width()-1, height()-1, AlignLeft | WordBreak, this->text);
+
+  // Draw the text
+  paintBuffer.setPen(color);
+  paintBuffer.drawText(1, 1, width()-1, height()-1, AlignLeft | WordBreak, this->text);
+  paintBuffer.end();
+
+  // Masking for transparency
   QBitmap bm(size());
   bm.fill(bg);
   paint.begin(&bm, this);
-
-  // Draw the text. Coloring doesn't work right now. It's on my TODO
-  paint.setBrush(fg);
-  paint.setPen(fg);
+  paint.setPen(Qt::color0);
   paint.setFont(font);
-  paint.drawText(rect(), AlignLeft | WordBreak, this->text);
-
+  paint.drawText(0, 0, width()-1, height()-1, AlignLeft | WordBreak, this->text);
+  paint.drawText(1, 1, width()-1, height()-1, AlignLeft | WordBreak, this->text);
+  paint.drawText(2, 0, width()-1, height()-1, AlignLeft | WordBreak, this->text);
+  paint.drawText(0, 2, width()-1, height()-1, AlignLeft | WordBreak, this->text);
+  paint.drawText(2, 2, width()-1, height()-1, AlignLeft | WordBreak, this->text);
   paint.end();
+
+  // Let's make it real, flush the buffers
+  bitBlt(this, 0, 0, buffer);
   setMask(bm);
+
+  delete buffer;
 }
 
 #include "osd.moc"

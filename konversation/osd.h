@@ -32,6 +32,7 @@ class OSDWidget : public QWidget
         OSDWidget();
         void showOSD(const QString &text);
         void setFont(QFont newfont);
+        void setColor(QColor newcolor);
       protected slots:
         void removeOSD();
 //        void dblClick();
@@ -41,6 +42,7 @@ class OSDWidget : public QWidget
         QString text;
         QTimer *timer;
         QFont font;
+        QColor color;
 };
 
 #endif

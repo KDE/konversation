@@ -398,6 +398,14 @@ void KonversationApplication::readOptions()
   {
     osd->setEnabled(true);
     osd->setFont(preferences.getOSDFont());
+
+    QString osdColor = config->readEntry("OSDColor");
+    if(osdColor.isEmpty())
+      preferences.setOSDColor(preferences.getOSDColor().name());
+    else
+      preferences.setOSDColor("#" + osdColor);
+
+    osd->setColor(preferences.getOSDColor());
   }
 
   // Server List
@@ -662,6 +670,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ShowQuery",preferences.getOSDShowQuery());
   config->writeEntry("ShowChannelEvent",preferences.getOSDShowChannelEvent());
   config->writeEntry("OSDFont",preferences.getOSDFont().toString());
+  config->writeEntry("OSDColor",preferences.getOSDColor().name().mid(1));
 
   // Ignore List
   config->deleteGroup("Ignore List");

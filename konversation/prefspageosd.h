@@ -17,6 +17,7 @@
 
 #include "prefspage.h"
 #include <qvgroupbox.h>
+#include <kcolorcombo.h>
 
 /*
   @author Christian Muehlhaeuser
@@ -53,6 +54,9 @@ class PrefsPageOSD : public PrefsPage
     QPushButton* osdFontButton;
     QLabel* osdFontLabel;
     QLabel* osdPreviewLabel;
+    QLabel* osdColorLabel;
+
+    KColorCombo* osdColorChooser;
 
     QVGroupBox* osdActionsBox;
 };

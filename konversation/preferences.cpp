@@ -128,6 +128,7 @@ Preferences::Preferences()
   setOSDShowOwnNick(false);
   setOSDShowQuery(false);
   setOSDShowChannelEvent(false);
+  setOSDColor("#ffffff");
 
   setBackgroundImageName(QString::null);
 
@@ -536,6 +537,9 @@ bool Preferences::getOSDShowChannelEvent() { return OSDShowChannelEvent; }
 QFont Preferences::getOSDFont() { return osdFont; }
 void Preferences::setOSDFont(QFont newFont) { osdFont=newFont; }
 void Preferences::setOSDFontRaw(const QString &rawFont) { osdFont.fromString(rawFont); }
+
+void Preferences::setOSDColor(const QString &newColor) { osdColor.setNamedColor(newColor); }
+QColor Preferences::getOSDColor() { return osdColor; }
 
 QFont Preferences::getTextFont() { return textFont; }
 QFont Preferences::getListFont() { return listFont; }

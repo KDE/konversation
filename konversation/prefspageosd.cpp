@@ -63,6 +63,10 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdPreviewLabel->setFrameStyle(QFrame::Panel | QFrame::Sunken);
   osdFontButton = new QPushButton(i18n("Choose..."), parentFrame, "osd_font_button");
 
+  osdColorLabel = new QLabel(i18n("Color:"), parentFrame);
+  osdColorChooser = new KColorCombo(parentFrame, "osd_color");
+  osdColorChooser->setColor(preferences->getOSDColor());
+
   // Take care of ghosting / unghosting close button checkboxes
   osdUsageChanged(preferences->getOSDUsage() ? 2 : 0);
 
@@ -75,7 +79,9 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdLayout->addWidget(osdFontLabel, ++row, 0);
   osdLayout->addWidget(osdPreviewLabel, row, 1);
   osdLayout->addWidget(osdFontButton, row, 2);
-  osdLayout->addMultiCellWidget(osdActionsBox, ++row, row + 2, 0, 1);
+  osdLayout->addWidget(osdColorLabel, ++row, 0);
+  osdLayout->addWidget(osdColorChooser, row, 1);
+  osdLayout->addMultiCellWidget(osdActionsBox, ++row, row + 2, 0, 2);
 
   row = row + 2;
   QHBox* spacer = new QHBox(parentFrame);
@@ -114,12 +120,14 @@ void PrefsPageOSD::applyPreferences()
   preferences->setOSDShowQuery(osdShowQuery->isChecked());
   preferences->setOSDShowChannelEvent(osdShowChannelEvent->isChecked());
   preferences->setOSDFont(osdFont);
+  preferences->setOSDColor(osdColorChooser->color().name());
 
   KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
   konvApp->osd->setEnabled(useOSDCheck->isChecked());
   if (preferences->getOSDUsage())
   {
     konvApp->osd->setFont(osdFont);
+    konvApp->osd->setColor(osdColorChooser->color());
   }
 
 }

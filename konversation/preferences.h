@@ -202,6 +202,9 @@ class Preferences : public QObject
     void setOSDFont(QFont newFont);
     void setOSDFontRaw(const QString &rawFont);
 
+    void setOSDColor(const QString &color);
+    QColor getOSDColor();
+
     QStringList getButtonList();
     void setButtonList(QStringList newList);
 
@@ -432,6 +435,7 @@ class Preferences : public QObject
     bool OSDShowQuery;        // Message on query acticity
     bool OSDShowChannelEvent; // Message on channel join/part events
     QFont osdFont;            // Which font to use
+    QColor osdColor;
 
     QString backgroundImage;
 
