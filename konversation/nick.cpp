@@ -19,17 +19,17 @@
 #include "nick.h"
 
 Nick::Nick(KListView* listView,
-           const QString& nickname,
-           const QString& hostmask,
+           const QString& newName,
+           const QString& newMask,
            bool admin,
            bool owner,
            bool op,
            bool halfop,
            bool voice)
 {
-  listViewItem=new LedListViewItem(listView,nickname,hostmask,admin,owner,op,halfop,voice);
-  setNickname(nickname);
-  setHostmask(hostmask);
+  listViewItem=new LedListViewItem(listView,newName,newMask,admin,owner,op,halfop,voice);
+  nickname=newName;
+  hostmask=newMask;
 
   setAdmin(admin);
   setOwner(owner);

@@ -172,6 +172,12 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 //  nicknameListView->setColumnWidthMode(1,KListView::Maximum);
   nicknameListView->setColumnWidthMode(2,KListView::Maximum);
 
+  // separate LED from Text a little more
+  nicknameListView->setColumnWidth(0,10);
+  nicknameListView->setColumnAlignment(0,Qt::AlignHCenter);
+  nicknameListView->setColumnAlignment(1,Qt::AlignLeft);
+  nicknameListView->setColumnAlignment(2,Qt::AlignLeft);
+
   // the grid that holds the quick action buttons
   buttonsGrid=new QGrid(2,nickListButtons);
   // set hide() or show() on grid

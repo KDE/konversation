@@ -28,7 +28,7 @@ LedListViewItem::LedListViewItem(KListView* parent,
                                  bool op,
                                  bool halfop,
                                  bool voice) :
-                   KListViewItem(parent,passed_label,passed_label2)
+                   KListViewItem(parent,QString::null,passed_label,passed_label2)
 {
   adminState=admin;
   ownerState=owner;
@@ -54,13 +54,6 @@ LedListViewItem::LedListViewItem(KListView* parent,
   currentLeds=leds.getLed(KonversationApplication::preferences.getVoiceLedColor(),true);
   voiceLedOn =currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
 
-  // separate LED from Text a little more
-  listView()->setColumnWidth(0,opLedOn.width()+2);
-  listView()->setColumnAlignment(0,Qt::AlignHCenter);
-  listView()->setColumnAlignment(1,Qt::AlignLeft);
-  listView()->setColumnAlignment(2,Qt::AlignLeft);
-
-  setText(0,QString::null);
   setState(admin,owner,op,halfop,voice);
 }
 
