@@ -114,7 +114,7 @@ void Query::queryTextEntered()
 
 void Query::sendQueryText(QString sendLine)
 {
-  QTextCodec* codec=QTextCodec::codecForName("ISO8859-15");
+  QTextCodec* codec=QTextCodec::codecForLocale();
   QCString line=codec->fromUnicode(sendLine);
 
   QString output=filter.parse(server->getNickname(),line,getName());

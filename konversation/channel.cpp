@@ -455,10 +455,10 @@ void Channel::channelTextEntered()
 
 void Channel::sendChannelText(const QString& sendLine)
 {
-  QTextCodec *codec=QTextCodec::codecForName("ISO8859-15");
+  QTextCodec* codec=QTextCodec::codecForLocale();
   QCString line=codec->fromUnicode(sendLine);
 
-  /* Is there something we need to display for ourselves? */
+  // Is there something we need to display for ourselves?
   QString output=filter.parse(server->getNickname(),line,getName());
   if(output!="")
   {
@@ -468,7 +468,7 @@ void Channel::sendChannelText(const QString& sendLine)
     else if(filter.isQuery()) appendQuery(filter.getType(),output);
     else append(server->getNickname(),output);
   }
-  /* Send anything else to the server */
+  // Send anything else to the server
   server->queue(filter.getServerOutput());
 }
 

@@ -17,6 +17,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <qtextcodec.h>
+
 #include "statuspanel.h"
 #include "konversationapplication.h"
 
@@ -67,8 +69,11 @@ void StatusPanel::adjustFocus()
   statusInput->setFocus();
 }
 
-void StatusPanel::sendStatusText(QString line)
+void StatusPanel::sendStatusText(QString sendLine)
 {
+  QTextCodec* codec=QTextCodec::codecForLocale();
+  QCString line=codec->fromUnicode(sendLine);
+
   QString output=filter.parse(server->getNickname(),line,"");
 
   if(output!="") appendServerMessage(filter.getType(),output);
