@@ -589,21 +589,14 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
   QString commandColor=KonversationApplication::preferences.getColor("CommandMessage");
   QString line;
   QString prefix="***";
-  //QString height = QString::number(fontMetrics().height());
 
   if(type=="Join")
-    {/*
-      QString image = KGlobal::dirs()->findResource("data","konversation/images/join.png");
-      prefix="<img width=\""+height+"\" height=\""+height+"\" src=\""+image+"\"></img>";
-     */
+    {
       prefix="-->";
       parseURL=false;
     }
   else if(type=="Part" || type=="Quit")
-    {/*
-      QString image = KGlobal::dirs()->findResource("data","konversation/images/part.png");
-      prefix="<img width=\""+height+"\" height=\""+height+"\" src=\""+image+"\"></img>";
-     */
+    {
       prefix="<--";
     }
 
