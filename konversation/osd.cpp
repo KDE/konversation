@@ -45,7 +45,14 @@ void OSDWidget::showOSD(const QString &text)
   {
     if (timer->isActive()) timer->stop();
 
-    this->text = text;
+    // Strip HTML tags, expand basic HTML entities
+    QString plaintext = text.copy();
+    plaintext.replace(QRegExp("</?(?:font|a|b|i)\\b[^>]*>"), QString(""));
+    plaintext.replace(QString("&lt;"), QString("<"));
+    plaintext.replace(QString("&gt;"), QString(">"));
+    plaintext.replace(QString("&amp;"), QString("&"));
+
+    this->text = plaintext;
 
     // Repaint the QWidget and get it on top
     QWidget::show();
