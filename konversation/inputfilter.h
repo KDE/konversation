@@ -45,6 +45,8 @@ class InputFilter : public QObject
     void parseServerCommand(QString& prefix,QString& command,QStringList& parameterList,QString& trailing);
     void parseModes(QString sourceNick,QStringList parameterList);
 
+    bool isAChannel(QString check);
+
     Server* server;
     bool welcomeSent;
 };

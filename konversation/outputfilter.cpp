@@ -17,6 +17,7 @@
 #include <qstringlist.h>
 
 #include <klocale.h>
+#include <kdebug.h>
 
 #include "konversationapplication.h"
 #include "outputfilter.h"
@@ -137,7 +138,7 @@ void OutputFilter::parseJoin(QString channelName)
 
 void OutputFilter::parseKick(QString parameter)
 {
-  if(destination.startsWith("#"))
+  if(isAChannel(destination))
   {
     /* get nick to kick */
     QString victim=parameter.left(parameter.find(" "));
@@ -161,7 +162,7 @@ void OutputFilter::parsePart(QString parameter)
   if(parameter=="")
   {
     /* But only if we actually are in a channel */
-    if(destination.startsWith("#")) toServer="PART "+destination+" :"+KonversationApplication::preferences.getPartReason();
+    if(isAChannel(destination)) toServer="PART "+destination+" :"+KonversationApplication::preferences.getPartReason();
     else
     {
       type=i18n("Error");
@@ -172,7 +173,7 @@ void OutputFilter::parsePart(QString parameter)
   else
   {
     /* part a given channel */
-    if(parameter.startsWith("#"))
+    if(isAChannel(parameter))
     {
       /* get channel name */
       QString channel=parameter.left(parameter.find(" "));
@@ -185,7 +186,7 @@ void OutputFilter::parsePart(QString parameter)
     /* part this channel with a given reason */
     else
     {
-      if(destination.startsWith("#")) toServer="PART "+destination+" :"+parameter;
+      if(isAChannel(destination)) toServer="PART "+destination+" :"+parameter;
       else
       {
         type=i18n("Error");
@@ -202,8 +203,7 @@ void OutputFilter::parseTopic(QString parameter)
   if(parameter=="")
   {
     /* But only if we actually are in a channel */
-    if(destination.startsWith("#"))
-      toServer="TOPIC "+destination;
+    if(isAChannel(destination)) toServer="TOPIC "+destination;
     else
     {
       type=i18n("Error");
@@ -214,7 +214,7 @@ void OutputFilter::parseTopic(QString parameter)
   else
   {
     /* retrieve or set topic of a given channel */
-    if(parameter.startsWith("#"))
+    if(isAChannel(parameter))
     {
       /* get channel name */
       QString channel=parameter.left(parameter.find(" "));
@@ -228,7 +228,7 @@ void OutputFilter::parseTopic(QString parameter)
     /* set this channel's topic */
     else
     {
-      if(destination.startsWith("#")) toServer="TOPIC "+destination+" :"+parameter;
+      if(isAChannel(destination)) toServer="TOPIC "+destination+" :"+parameter;
       else
       {
         type=i18n("Error");
@@ -281,14 +281,14 @@ void OutputFilter::changeMode(QString parameter,char mode,char giveTake)
   if(nickList.count())
   {
     /* Check if the user specified a channel */
-    if(nickList[0].startsWith("#"))
+    if(isAChannel(nickList[0]))
     {
       toServer="MODE "+nickList[0];
       /* remove the first element */
       nickList.remove(nickList.begin());
     }
     /* Add default destination if it is a channel*/
-    else if(destination.startsWith("#")) toServer="MODE "+destination;
+    else if(isAChannel(destination)) toServer="MODE "+destination;
     /* Only continue if there was no error */
     if(toServer.length())
     {
@@ -296,6 +296,8 @@ void OutputFilter::changeMode(QString parameter,char mode,char giveTake)
       if(modeCount>3)
       {
         modeCount=3;
+        output=i18n("Modes can only take three nick names at the same time.");
+        type="Warning";
         /* TODO: Issue a warning here */
       }
 
@@ -317,3 +319,11 @@ bool OutputFilter::isCommand() { return command; };
 QString& OutputFilter::getOutput() { return output; };
 QString& OutputFilter::getServerOutput() { return toServer; };
 QString& OutputFilter::getType() { return type; };
+
+/* # & + and ! are Channel identifiers */
+bool OutputFilter::isAChannel(QString check)
+{
+  QChar initial=check.at(0);
+
+  return (initial=='#' || initial=='&' || initial=='+' || initial=='!');
+}

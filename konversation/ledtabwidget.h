@@ -19,6 +19,7 @@
 
 #include <qtabwidget.h>
 
+#include "ledtabbar.h"
 #include "chatwindow.h"
 #include "images.h"
 
@@ -44,6 +45,8 @@ class LedTabWidget : public QTabWidget
     void tabSelected(int id);
 
   protected:
+    LedTabBar* tabBar();
+
     Images images;
 };
 

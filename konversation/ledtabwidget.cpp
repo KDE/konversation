@@ -14,14 +14,15 @@
   $Id$
 */
 
+#include <kdebug.h>
+
 #include "ledtabwidget.h"
 #include "ledtab.h"
-#include "ledtabbar.h"
 
 LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :
               QTabWidget(parent,name)
 {
-  setTabBar(new LedTabBar(this,"led_tab_control"));
+  setTabBar(new LedTabBar(this,"led_tab_bar"));
   connect(tabBar(),SIGNAL (selected(int)) ,this,SLOT (tabSelected(int)) );
 }
 
@@ -29,7 +30,6 @@ LedTabWidget::~LedTabWidget()
 {
 }
 
-/* Overloaded */
 void LedTabWidget::addTab(QWidget* child,const QString& label,int color,bool on,bool blink)
 {
   LedTab* tab=new LedTab(child,label,color,on);
@@ -42,17 +42,29 @@ void LedTabWidget::addTab(QWidget* child,const QString& label,int color,bool on,
 
 void LedTabWidget::changeTabState(QWidget* child,bool state)
 {
-  /* Casting terror ... */
-  LedTabBar* bar=(LedTabBar*) tabBar();
-  LedTab* tab=bar->tab(child);
-  tab->setOn(state);
+  LedTabBar* bar=tabBar();
+  if(bar==0) kdWarning() << "LedTabWidget::changeTabState(): bar==0!" << endl;
+  else
+  {
+    LedTab* tab=bar->tab(child);
+    if(tab==0) kdWarning() << "LedTabWidget::changeTabState(): tab==0!" << endl;
+    else tab->setOn(state);
+  }
 }
 
 void LedTabWidget::tabSelected(int id)
 {
-  /* Why do I always have to cast? I hate that! */
-  LedTab* tab=(LedTab *) tabBar()->tab(id);
+  LedTab* tab=tabBar()->tab(id);
+  if(tab==0) kdWarning() << "LedTabWidget::tabSelected: tab==0!" << endl;
+  else
+  {
+    emit currentChanged(currentPage());
+    tab->setOn(false);
+  }
+}
 
-  emit currentChanged(currentPage());
-  tab->setOn(false);
+/* reimplemented to avoid casts in active code */
+LedTabBar* LedTabWidget::tabBar()
+{
+  return (LedTabBar*) QTabWidget::tabBar();
 }

@@ -385,6 +385,7 @@ void Channel::sendChannelText(const QString& line)
 
 void Channel::newTextInView()
 {
+  // kdDebug() << "Channel::newTextInView(): this=" << this << endl;
   emit newText(this);
 }
 

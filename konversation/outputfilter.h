@@ -75,6 +75,7 @@ class OutputFilter : public QObject
     void parseConnect(QString parameter);
 
     void changeMode(QString parameter,char mode,char giveTake);
+    bool isAChannel(QString check);
 
   signals:
     void openQuery(const QString& nick,const QString& hostmask); // hostmask currently unused

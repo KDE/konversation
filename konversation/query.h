@@ -31,7 +31,7 @@
 */
 
 /* TODO: Idle counter to close query after XXX minutes of inactivity */
-
+/* TODO: Use /USERHOST to check if queries are still valid */
 class Query : public ChatWindow
 {
   Q_OBJECT

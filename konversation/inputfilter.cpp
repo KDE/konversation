@@ -102,7 +102,7 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
   if(command=="privmsg")
   {
     /* Channel message */
-    if(parameterList[0][0]=='#')
+    if(isAChannel(parameterList[0]))
     {
       /* CTCP message? */
       if(trailing[0]==1)
@@ -217,9 +217,9 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   {
     server->queue("PONG "+trailing);
   }
-  else if(command=="001" || command=="002" || command=="003")
+  else if(command==RPL_WELCOME || command==RPL_YOURHOST || command==RPL_CREATED)
   {
-    if(command=="001")
+    if(command==RPL_WELCOME)
     {
       /* Remember server's insternal name (don't know if I will need this, though) */
       server->setIrcName(prefix);
@@ -232,12 +232,17 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
     }
     server->appendStatusMessage(i18n("Welcome"),trailing);
   }
-  else if(command=="004") server->appendStatusMessage(i18n("Welcome"),
+  else if(command==RPL_MYINFO) server->appendStatusMessage(i18n("Welcome"),
                           i18n("Server %1 (Version %2), User modes: %3, Channel modes: %4").
                           arg(parameterList[1]).
                           arg(parameterList[2]).
                           arg(parameterList[3]).
                           arg(parameterList[4]) );
+  /* FIXME: Untested */
+  else if(command==RPL_BOUNCE)
+  {
+    server->appendStatusMessage(i18n("Bounce"),parameterList.join(" "));
+  }
 
   else if(command==RPL_CHANNELMODEIS)
   {
@@ -375,4 +380,12 @@ void InputFilter::parseModes(QString sourceNick,QStringList parameterList)
       server->updateChannelMode(sourceNick,parameterList[0],mode,plus,parameter);
     }
   }
+}
+
+/* # & + and ! are Channel identifiers */
+bool InputFilter::isAChannel(QString check)
+{
+  QChar initial=check.at(0);
+
+  return (initial=='#' || initial=='&' || initial=='+' || initial=='!');
 }

@@ -14,6 +14,10 @@
   $Id$
 */
 
+#include <qpainter.h>
+
+#include <kdebug.h>
+
 #include "ledtabbar.h"
 
 LedTabBar::LedTabBar(QWidget* parent,const char* name) :
@@ -28,15 +32,20 @@ LedTabBar::~LedTabBar()
 LedTab* LedTabBar::tab(QWidget* widget)
 {
   QPtrList<QTab>* list=tabList();
-  /* Again cast ... Grrrr */
-  LedTab* tab=(LedTab*) list->first();
 
+  /* This casts can't be helped, templates don't like casting */
+  LedTab* tab=(LedTab*) list->first();
   while(tab)
   {
     if(tab->getWidget()==widget) return tab;
-    /* Again cast ... Grrrr */
     tab=(LedTab*) list->next();
   }
 
   return 0;
+}
+
+/* reimplemented to avoid casts in active code */
+LedTab* LedTabBar::tab(int id)
+{
+  return (LedTab*) QTabBar::tab(id);
 }

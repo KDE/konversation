@@ -78,7 +78,6 @@ QString IRCView::filter(const QString& line,bool doHilight)
   filteredLine.replace(QRegExp("\\>"),"&gt;");
   /* Replace all 0x0f (reset color) with \0x031,0 */
   filteredLine.replace(QRegExp("\017"),"\0031,0;");
-//  while((pos=filteredLine.find('\017'))!=-1) filteredLine.replace(pos,1,"\0031,0");
 
   /* replace \003 codes with rich text color codes */
   /* TODO: use QRegExp for this */
@@ -161,8 +160,9 @@ QString IRCView::filter(const QString& line,bool doHilight)
   /* Replace all text decorations */
   replaceDecoration(filteredLine,'\x02','b');
   replaceDecoration(filteredLine,'\x09','i');
-//  replaceDecoration(filteredLine,'\x13',"strikethrough");
+  replaceDecoration(filteredLine,'\x13','u'); // should be strikethru
   replaceDecoration(filteredLine,'\x15','u');
+  replaceDecoration(filteredLine,'\x16','b'); // should be reverse
   replaceDecoration(filteredLine,'\x1f','u');
 
   /* Hilight */
@@ -187,9 +187,11 @@ QString IRCView::filter(const QString& line,bool doHilight)
   QString linkMessageColor = KonversationApplication::preferences.getLinkMessageColor();
 
   QRegExp pattern("((http://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
-                  "([\\.@%a-z_-])+\\.[a-z]{2,}(/[^)>\"'!\\s]*)?|"
+                  "([\\.@%a-z0-9_-])+\\.[a-z]{2,}(:[0-9]{1,5})?(/[^)>\"'!\\s]*)?|"
                   /* eDonkey2000 links need special treatment */
                   "ed2k://\\|([^|]+\\|){4})");
+
+  pattern.setCaseSensitive(false);
 
   pos=0;
   while(pattern.search(filteredLine,pos)!=-1)

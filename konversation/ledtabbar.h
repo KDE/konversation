@@ -27,9 +27,13 @@
 
 class LedTabBar : public QTabBar
 {
+  Q_OBJECT
+
   public:
     LedTabBar(QWidget* parent,const char* name);
     ~LedTabBar();
+
+    LedTab* tab(int id);
     LedTab* tab(QWidget* widget);
 };
 
