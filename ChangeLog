@@ -1,5 +1,9 @@
+Changes from 0.14 to 0.15
+- Improved bidi support.
+- Cleaned up settings dialog
+
 Changes from 0.13 to 0.14
-_ Added irc "pseudo" command /prefs for changing settings without settings dialog.
+- Added irc "pseudo" command /prefs for changing settings without settings dialog.
 - Measure away time and make it available via placeholder (%t)
 - (Very much) Improved OSD.
 - New application icons by luciash d' being <luci@sh.ground.cz>. Thanks!
