@@ -6,14 +6,11 @@
 */
 
 /*
-    nicklisttooltip.h  -  The class that controls what the tooltip looks like when you hover over a person in the nicklistview.  This is used to show contact information about the person from the addressbook.
+    nicksonlinetooltip.cpp  -  The class that controls what the tooltip looks like when you hover over a person in the nicklistview.  This is used to show contact information about the person from the addressbook.
     begin:     Sun 25 July 2004
     copyright: (C) 2004 by John Tapsell
     email:     john@geola.co.uk
 */
-
-#ifndef NICKLISTTOOLTIP_H
-#define NICKLISTTOOLTIP_H
 
 #include <klocale.h>
 #include <qtooltip.h>
@@ -66,4 +63,3 @@ void KonversationNicksOnlineToolTip::maybeTip( const QPoint &pos )
 
 } // namespace Konversation
 
-#endif
