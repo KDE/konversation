@@ -88,9 +88,10 @@ void QuickConnectDialog::slotOk()
 	    !nickInput->text().isEmpty())
 	{
 		emit connectClicked(hostNameInput->text(),
-						  portInput->text(),
-						  nickInput->text(),
-						  passwordInput->text());
+				    portInput->text(),
+				    "",
+				    nickInput->text(),
+				    passwordInput->text());
 		delayedDestruct();
 	}
 }

@@ -224,7 +224,9 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
   completeQueryPosition=0;
 
   Konversation::ChannelList tmpList = m_serverGroup.channelList();
-  tmpList.push_front(channel);
+
+  if(!channel.isEmpty())
+    tmpList.push_front(channel);
 
   if(!tmpList.isEmpty()) {
     setAutoJoin(true);
@@ -2957,7 +2959,7 @@ void Server::reconnect() {
 void Server::connectToNewServer(const QString& server, const QString& port, const QString& password)
 {
   KonversationApplication *konvApp = static_cast<KonversationApplication*>(KApplication::kApplication());
-  konvApp->quickConnectToServer(server, port, KonversationApplication::preferences.getNickname(0), password);
+  konvApp->quickConnectToServer(server, port,"", password);
 }
 
 QString Server::awayTime()

@@ -94,9 +94,10 @@ class KonversationApplication : public KApplication
   public slots:
     void connectToServer(int number);
     bool connectToAnotherServer(int number);
-    void quickConnectToServer(const QString& hostName, const QString& port = "6667", 
-    			      const QString& nick = KonversationApplication::preferences.getNickname(0),
+    void quickConnectToServer(const QString& hostName, 
+			      const QString& port = "6667", 
 			      const QString& channel="",
+    			      const QString& nick = KonversationApplication::preferences.getNickname(0),
 			      const QString& password="");
     void readOptions();
     void saveOptions(bool updateGUI=true);

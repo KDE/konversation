@@ -33,9 +33,10 @@ class QuickConnectDialog : public KDialogBase
 		
 	signals:
 		void connectClicked(const QString& hostName, 
-						 const QString& port,
-						 const QString& nick,
-						 const QString& password);
+				    const QString& port,
+				    const QString& channel,
+				    const QString& nick,
+				    const QString& password);
 				
 	protected slots:
 		void slotOk();
