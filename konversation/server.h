@@ -25,6 +25,7 @@
 #include <kprocess.h>
 #include <ksocketbase.h>
 #include <kbufferedsocket.h>
+#include <kstreamsocket.h>
 
 #include "channelnick.h"
 #include "inputfilter.h"
@@ -513,8 +514,7 @@ class Server : public QObject
 
     KonversationMainWindow* mainWindow;
 
-    KNetwork::KBufferedSocket* serverSocket;
-    SSLSocket*   m_serverSSLSocket;
+    KNetwork::KStreamSocket* m_socket;
     bool         m_tryReconnect;
 
     QTimer reconnectTimer;

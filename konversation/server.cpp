@@ -121,14 +121,11 @@ Server::~Server()
   // clear nicks online
   emit nicksNowOnline(this,QStringList(),true);
   // Make sure no signals get sent to a soon to be dying Server Window
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-    serverSocket->blockSignals(true);
-  else
-    m_serverSSLSocket->blockSignals(true);
+  m_socket->blockSignals(true);
 
   // Close socket but don't delete it. QObject will take care of delete
   if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-    serverSocket->close();
+    m_socket->close();
   
   // For SSL socket we autoclose socket when the Server object is deleted
   
@@ -194,6 +191,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick)
   m_serverISON = 0;
   lastDccDir = QString::null;
   isAway = false;
+  m_socket = 0;
 
   // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
   serverNickPrefixModes = "ov";
@@ -203,11 +201,6 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick)
   timerInterval = 1;  // flood protection
   autoRejoin = KonversationApplication::preferences.getAutoRejoin();
   autoReconnect = KonversationApplication::preferences.getAutoReconnect();
-
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-    serverSocket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
-  else
-    m_serverSSLSocket = new SSLSocket(mainWindow, this, "serverSSLSocket");
 
   setMainWindow(mainWindow);
   statusView = getMainWindow()->addStatusView(this);
@@ -362,26 +355,6 @@ void Server::connectSignals()
   connect(this,SIGNAL(addDccPanel()),getMainWindow(),SLOT(addDccPanel()) );
   connect(this,SIGNAL(addKonsolePanel()),getMainWindow(),SLOT(addKonsolePanel()) );
 
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled()) {
-    connect(serverSocket,SIGNAL (hostFound()),this,SLOT(lookupFinished()));
-    connect(serverSocket,SIGNAL (connected(const KResolverEntry&)),this,SLOT (ircServerConnectionSuccess()));
-    connect(serverSocket,SIGNAL (gotError(int)),this,SLOT (broken(int)) );
-    connect(serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
-    connect(serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
-    connect(serverSocket,SIGNAL (closed()),this,SLOT(closed()));
-  }
-  else {
-    connect(m_serverSSLSocket,SIGNAL (hostFound()),this,SLOT(lookupFinished()));
-    connect(m_serverSSLSocket,SIGNAL (sslInitDone()),this,SLOT (ircServerConnectionSuccess()));
-    connect(m_serverSSLSocket,SIGNAL (gotError(int)),this,SLOT (broken(int)) );
-    connect(m_serverSSLSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
-    connect(m_serverSSLSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
-    connect(m_serverSSLSocket,SIGNAL (closed()),this,SLOT(closed()));
-    connect(m_serverSSLSocket,SIGNAL (sslFailure()),this,SIGNAL(sslInitFailure()));
-    connect(m_serverSSLSocket,SIGNAL (sslFailure()),this,SLOT(sslError()));
-  }
-
-
   // Don't uncomment this.  You'll create an infinite loop.  The current sequence is:
   // signal PrefDialog::prefsChanged -> KonversationApplication::saveOptions ->
   // signal KonversationApplication::prefsChanged -> KonversationMainWindow::slotPrefsChanged ->
@@ -418,15 +391,11 @@ QString Server::getAutoJoinChannelKey() const { return autoJoinChannelKey; }
 void Server::setAutoJoinChannelKey(const QString &key) { autoJoinChannelKey=key; }
 
 bool Server::isConnected()  const { 
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled()) {
-    return serverSocket->state()==KNetwork::KClientSocketBase::Connected; 
-  } else {
-    if(m_serverSSLSocket) {
-      return m_serverSSLSocket->state() == KNetwork::KClientSocketBase::Connected;
-    } else {
-      return false;
-    }
+  if(!m_socket) {
+    return false;
   }
+
+  return m_socket->state() == KNetwork::KClientSocketBase::Connected;
 }
 
 bool Server::isConnecting() const { return connecting; }
@@ -447,10 +416,9 @@ void Server::connectToIRCServer()
   outputBuffer.clear();
   deliberateQuit=false;
   
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-    serverSocket->blockSignals(false);
-  else
-    m_serverSSLSocket->blockSignals(false);
+  if(m_socket) {
+    m_socket->blockSignals(false);
+  }
 
   connecting=true;
 
@@ -466,22 +434,28 @@ void Server::connectToIRCServer()
   }
   else
   {
-    // clean up everything
-    if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled()) {
-      serverSocket->reset();
-      serverSocket->resetStatus();
-    } else {
-      m_serverSSLSocket->reset();
-      m_serverSSLSocket->resetStatus();
-    }
+    // This is needed to support server groups with mixed SSL and nonSSL servers
+    delete m_socket;
 
     // connect() will do a async lookup too
-    if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-      serverSocket->connect(m_serverGroup.serverByIndex(m_currentServerIndex).server(),
-                            QString::number(m_serverGroup.serverByIndex(m_currentServerIndex).port()));
-    else
-      m_serverSSLSocket->connect(m_serverGroup.serverByIndex(m_currentServerIndex).server(),
-                                 QString::number(m_serverGroup.serverByIndex(m_currentServerIndex).port()));
+    if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled()) {
+      m_socket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
+      connect(m_socket,SIGNAL (connected(const KResolverEntry&)),this,SLOT (ircServerConnectionSuccess()));
+    } else {
+      m_socket = new SSLSocket(mainWindow, this, "serverSSLSocket");
+      connect(m_socket,SIGNAL (sslInitDone()),this,SLOT (ircServerConnectionSuccess()));
+      connect(m_socket,SIGNAL (sslFailure()),this,SIGNAL(sslInitFailure()));
+      connect(m_socket,SIGNAL (sslFailure()),this,SLOT(sslError()));
+    }
+
+    connect(m_socket,SIGNAL (hostFound()),this,SLOT(lookupFinished()));
+    connect(m_socket,SIGNAL (gotError(int)),this,SLOT (broken(int)) );
+    connect(m_socket,SIGNAL (readyRead()),this,SLOT (incoming()) );
+    connect(m_socket,SIGNAL (readyWrite()),this,SLOT (send()) );
+    connect(m_socket,SIGNAL (closed()),this,SLOT(closed()));
+
+    m_socket->connect(m_serverGroup.serverByIndex(m_currentServerIndex).server(),
+                      QString::number(m_serverGroup.serverByIndex(m_currentServerIndex).port()));
 
     // set up the connection details
     setPrefixes("ov","@+");
@@ -493,7 +467,7 @@ void Server::connectToIRCServer()
 
 void Server::showSSLDialog()
 {
-  m_serverSSLSocket->showInfoDialog();
+  static_cast<SSLSocket*>(m_socket)->showInfoDialog();
 }
 
 // set available channel types according to 005 RPL_ISUPPORT
@@ -585,36 +559,21 @@ void Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwn
 void Server::lookupFinished()
 {
   // error during lookup
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled() && serverSocket->status())
-    {
-      // inform user about the error
-      statusView->appendServerMessage(i18n("Error"),i18n("Server %1 not found.  %2")
-          .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
-          .arg(serverSocket->errorString(serverSocket->error())));
+  if(m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled() && m_socket->status())
+  {
+    // inform user about the error
+    statusView->appendServerMessage(i18n("Error"),i18n("Server %1 not found.  %2")
+        .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
+        .arg(m_socket->errorString(m_socket->error())));
 
-      serverSocket->resetStatus();
-      // prevent retrying to connect
-      autoReconnect=0;
-      // broken connection
-      broken(0);
-    }
-    else if(m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled() && m_serverSSLSocket->status())
-    {
-      // inform user about the error
-      statusView->appendServerMessage(i18n("Error"),i18n("Server %1 not found.  %2")
-          .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
-          .arg(m_serverSSLSocket->errorString(m_serverSSLSocket->error())));
-      m_serverSSLSocket->resetStatus();
-      // prevent retrying to connect
-      autoReconnect=0;
-      // broken connection
-      broken(0);
-      
-    }
-  else
-    {
-      statusView->appendServerMessage(i18n("Info"),i18n("Server found, connecting..."));
-    }
+    m_socket->resetStatus();
+    // prevent retrying to connect
+    m_tryReconnect = false;
+    // broken connection
+    broken(0);
+  } else {
+    statusView->appendServerMessage(i18n("Info"),i18n("Server found, connecting..."));
+  }
 }
 
 void Server::ircServerConnectionSuccess()
@@ -650,10 +609,7 @@ void Server::ircServerConnectionSuccess()
 
   emit nicknameChanged(getNickname());
 
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-    serverSocket->enableRead(true);
-  else
-    m_serverSSLSocket->enableRead(true);
+  m_socket->enableRead(true);
 
   // wait at most 2 seconds for server to send something before sending the queue ourselves
   unlockTimer.start(2000);
@@ -661,16 +617,9 @@ void Server::ircServerConnectionSuccess()
 
 void Server::broken(int state)
 {
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled()) {
-    serverSocket->enableRead(false);
-    serverSocket->enableWrite(false);
-    serverSocket->blockSignals(true);
-  }
-  else {
-    m_serverSSLSocket->enableRead(false);
-    m_serverSSLSocket->enableWrite(false);
-    m_serverSSLSocket->blockSignals(true);
-  }
+  m_socket->enableRead(false);
+  m_socket->enableWrite(false);
+  m_socket->blockSignals(true);
 
   alreadyConnected=false;
   connecting=false;
@@ -682,12 +631,8 @@ void Server::broken(int state)
   currentLag = -1; // XXX will this make it server independent now?
   emit resetLag();
 
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-    kdDebug() << "Connection broken (Socket fd " << serverSocket->socketDevice()->socket() << ") " 
-	      << state << "!" << endl;
-  else
-    kdDebug() << "Connection broken (Socket fd " << m_serverSSLSocket->socketDevice()->socket() << ") " 
-	      << state << "!" << endl;
+  kdDebug() << "Connection broken (Socket fd " << m_socket->socketDevice()->socket() << ") "
+    << state << "!" << endl;
 
 
   // clear nicks online
@@ -706,7 +651,7 @@ void Server::broken(int state)
           .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()));
       getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 failed.")
           .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()),statusView);
-      reconnectCounter=0;
+      reconnectCounter = 0;
       rejoinChannels = false;
 
       if(m_currentServerIndex < (m_serverGroup.serverList().count() - 1)) {
@@ -930,11 +875,7 @@ void Server::notifyCheckTimeout()
     if(KonversationApplication::preferences.getAutoReconnect() &&
       (checkTime/1000)==KonversationApplication::preferences.getMaximumLagTime())
     {
-      if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled()) {
-        serverSocket->close();
-      } else {
-        m_serverSSLSocket->close();
-      }
+      m_socket->close();
     }
   }
 }
@@ -997,7 +938,7 @@ void Server::incoming()
   int max_bytes;
 
   if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-    max_bytes = serverSocket->bytesAvailable();
+    max_bytes = m_socket->bytesAvailable();
   else
     max_bytes = 512;
 
@@ -1005,21 +946,12 @@ void Server::incoming()
   int len = 0;
 
   // Read at max "max_bytes" bytes into "buffer"
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-    len = serverSocket->readBlock(buffer.data(),max_bytes);
-  else
-    len = m_serverSSLSocket->readBlock(buffer.data(),max_bytes);
+  len = m_socket->readBlock(buffer.data(),max_bytes);
 
   if(len <= 0 ) { // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
-
-    if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-      statusView->appendServerMessage(i18n("Error"),
-				      i18n("There was an error reading the data from the server: %1").
-				      arg(serverSocket->errorString()));
-    else
-      statusView->appendServerMessage(i18n("Error"),
-                                      i18n("There was an error reading the data from the server: %1").
-                                      arg(m_serverSSLSocket->errorString()));
+    statusView->appendServerMessage(i18n("Error"),
+                                    i18n("There was an error reading the data from the server: %1").
+                                    arg(m_socket->errorString()));
 
     broken(0);
     return;
@@ -1177,10 +1109,7 @@ void Server::send()
     // wrap server socket into a stream
     QTextStream serverStream;
     
-    if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-      serverStream.setDevice(serverSocket);
-    else
-      serverStream.setDevice(m_serverSSLSocket);
+    serverStream.setDevice(m_socket);
 
     // set channel encoding if specified
     QStringList outputLineSplit=QStringList::split(" ",outputLine);
@@ -1474,10 +1403,7 @@ QString Server::getIp(bool followDccSetting)
     kdDebug() << "Server::getIp(): using the network interface" << endl;
     
     // Return our ip using serverSocket
-    if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-      ip = serverSocket->localAddress().nodeName(); 
-    else
-      ip = m_serverSSLSocket->localAddress().nodeName();
+    ip = m_socket->localAddress().nodeName();
   }
   
   kdDebug() << "Server::getIp(): returned: " << ip << endl;
@@ -2963,7 +2889,7 @@ bool Server::getUseSSL() const
 
 QString Server::getSSLInfo() const
 {
-  return m_serverSSLSocket->details();
+  return static_cast<SSLSocket*>(m_socket)->details();
 }
 
 bool Server::connected() { return alreadyConnected; }
