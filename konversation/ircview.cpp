@@ -201,7 +201,13 @@ void IRCView::urlClickSlot(const QString &url)
       delete proc;
     }
   }
-  else if(url.startsWith("#"))
+  else if(url.startsWith("##")) // Channel
+    {
+      QString channel(url);
+      channel.replace("##","#");
+      m_server->sendJoinCommand(channel);
+    }
+  else if(url.startsWith("#")) // Nick
     {
       QString recepient(url);
       recepient.remove("#");

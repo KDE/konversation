@@ -50,11 +50,14 @@ QString tagURLs(const QString& text, const QString& fromNick)
                   ")(:[0-9]{1,5})?((:|)(/[^>\"\\s]*))?|"
                   // eDonkey2000 links need special treatment
                   "ed2k://\\|([^|]+\\|){4})|"
-                  "(mailto:|)((([a-z]|\\d)+[\\w\\x2E\\x2D]+)\\x40([\\w\\x2E\\x2D]{2,})\\x2E(\\w{2,})))");
+		  "#(\\S)+|"
+                  "(mailto:|)((([a-z]|\\d)+[\\w\\x2E\\x2D]+)\\x40([\\w\\x2E\\x2D]{2,})\\x2E(\\w{2,})))"
+		  );
 
   pattern.setCaseSensitive(false);
   KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
   int pos = 0;
+  bool channelLink = false;
 
   while(pattern.search(filteredLine, pos) != -1) {
       // Remember where we found the url
@@ -68,13 +71,22 @@ QString tagURLs(const QString& text, const QString& fromNick)
       if(href.startsWith("www.")) href = "http://" + href;
       else if(href.startsWith("ftp.")) href = "ftp://" + href;
       else if(href.find(QRegExp("(([a-z]+[\\w\\x2E\\x2D]+)\\x40)")) == 0) href = "mailto:" + href;
+      else if(href.startsWith("#")) {
+	href = "#" + href;
+	channelLink = true;
+      }
 
       // Fix &amp; back to & in href ... kludgy but I don't know a better way.
       href.replace("&amp;", "&");
       // Replace all spaces with %20 in href
       href.replace(" ", "%20");
       // Build rich text link
-      QString link("<font color=\"#" + linkColor + "\"><u><a href=\"" + href + "\">" + url + "</a></u></font>");
+      QString link;
+
+      if(!channelLink)
+	link = "<font color=\"#" + linkColor + "\"><u><a href=\"" + href + "\">" + url + "</a></u></font>";
+      else // Don't underline channel links
+	link = "<font color=\"#" + linkColor + "\"><a href=\"" + href + "\">" + url + "</a></font>";
 
       // replace found url with built link
       filteredLine.replace(pos, url.length(), link);
