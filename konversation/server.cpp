@@ -1604,7 +1604,8 @@ void Server::away()
   isAway=true;
   emit awayState(isAway);
   
-  if(!getIdentity()->getAwayNick().isEmpty()) {
+  if(!getIdentity()->getAwayNick().isEmpty() &&
+     getIdentity()->getAwayNick() != getNickname()) {
     nonAwayNick = getNickname();
     queue("NICK " + getIdentity()->getAwayNick());
   }
