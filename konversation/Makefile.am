@@ -33,7 +33,7 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp \
 		serverison.cpp sslsocket.cpp servergroupsettings.cpp serversettings.cpp \
 		servergroupdialog.cpp ssllabel.cpp serverdialog.cpp channeldialog.cpp identitydialog.cpp \
 		topiclabel.cpp channeloptionsui.ui channeloptionsdialog.cpp prefspagethemes.cpp notificationhandler.cpp \
-		joinchannelui.ui joinchanneldialog.cpp
+		joinchannelui.ui joinchanneldialog.cpp konversation_settings.kcfgc
 
 konversation_LDADD = $(COMPAT_LIBS) $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la
 
@@ -54,6 +54,8 @@ kdelnkdir = $(kde_servicesdir)
 updatedir = $(kde_datadir)/kconf_update
 update_DATA = konversation.upd
 update_SCRIPTS = konversation-0.14-mainwindow.pl
+
+kde_kcfg_DATA = konversation.kcfg
 
 messages: rc.cpp
 	LIST=`find . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name \*.cxx -o -name \*.ecpp -o -name \*.C`; \
