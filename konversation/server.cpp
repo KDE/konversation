@@ -111,12 +111,14 @@ Server::Server(int id)
   connect(this,SIGNAL(addDccPanel()),serverWindow,SLOT(addDccPanel()) );
   connect(this,SIGNAL(closeDccPanel()),serverWindow,SLOT(closeDccPanel()) );
 
-  connect(&serverSocket,SIGNAL (lookupFinished(int))  ,this,SLOT (lookupFinished(int)) );
+//  connect(&serverSocket,SIGNAL (lookupFinished(int))  ,this,SLOT (lookupFinished(int)) );
   connect(&serverSocket,SIGNAL (connectionSuccess())  ,this,SLOT (ircServerConnectionSuccess()) );
   connect(&serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
   connect(&serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
   connect(&serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
   connect(&serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
+
+  connect(&resolver,SIGNAL(lookupFinished(int)),this,SLOT(lookupFinished(int)));
 }
 
 Server::~Server()
@@ -169,9 +171,13 @@ void Server::connectToIRCServer()
     serverWindow->appendToStatus(i18n("Info"),i18n("Looking for server %1 ...").arg(serverSocket.host()));
 //    serverSocket=new IRCServerSocket(getServerName(),getPort());
 
-    // QDns is broken, so don't use async lookup
+    // QDns is broken, so don't use async lookup, use own threaded class instead
+    resolver.setSocket(&serverSocket);
+    resolver.start();
+/*
     serverSocket.lookup();
     serverSocket.startAsyncConnect();
+    */
   }
 }
 
@@ -181,6 +187,8 @@ void Server::lookupFinished(int number)
   number=number;
 
   serverWindow->appendToStatus(i18n("Info"),i18n("Server found, connecting ..."));
+
+  serverSocket.startAsyncConnect();
 }
 
 void Server::ircServerConnectionSuccess()

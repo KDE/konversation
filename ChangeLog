@@ -3,6 +3,7 @@ Changes from 0.10 to 0.11
 - Added "Hide Menu" function
 - Improved server connection code to stop konversation freezes at startup
 - Server lag calculation after reconnect fixed
+- Implemented own async lookup class to throw out broken QDns
 
 Changes from 0.9 to 0.10
 - Font encodings are now set via KCharsets

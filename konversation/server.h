@@ -27,6 +27,7 @@
 #include "outputfilter.h"
 #include "ircserversocket.h"
 #include "identity.h"
+#include "resolver.h"
 
 /*
   @author Dario Abatianni
@@ -165,6 +166,7 @@ class Server : public QObject
     QString botPassword;
     int serverPort;
 
+    Resolver resolver;
     Identity identity;
 
     bool autoJoin;
