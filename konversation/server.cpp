@@ -922,8 +922,8 @@ void Server::processIncomingData()
   {
     QString front(inputBuffer.front());
     inputBuffer.pop_front();
-    if(rawLog) rawLog->appendRaw(front.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
     inputFilter.parseLine(front, mainWindow);
+    if(rawLog) rawLog->appendRaw(front.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
   }
 
   if(inputBuffer.isEmpty()) {
