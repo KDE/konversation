@@ -41,53 +41,53 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
   {
     if(modes)
     {
-      modes->insertItem(i18n("Give Op"),GiveOp);
-      modes->insertItem(i18n("Take Op"),TakeOp);
-      modes->insertItem(i18n("Give Voice"),GiveVoice);
-      modes->insertItem(i18n("Take Voice"),TakeVoice);
-      popup->insertItem(i18n("Modes"),modes,ModesSub);
+      modes->insertItem(i18n("Give Op"),Konversation::GiveOp);
+      modes->insertItem(i18n("Take Op"),Konversation::TakeOp);
+      modes->insertItem(i18n("Give Voice"),Konversation::GiveVoice);
+      modes->insertItem(i18n("Take Voice"),Konversation::TakeVoice);
+      popup->insertItem(i18n("Modes"),modes,Konversation::ModesSub);
     }
     else
     {
       kdWarning() << "NickListView::NickListView(): Could not create modes popup!" << endl;
     }
     popup->insertSeparator();
-    popup->insertItem(i18n("&Whois"),Whois);
-    popup->insertItem(i18n("W&hois With Idle Time"), WhoisServer);
-    popup->insertItem(i18n("&Version"),Version);
-    popup->insertItem(i18n("&Ping"),Ping);
+    popup->insertItem(i18n("&Whois"),Konversation::Whois);
+    popup->insertItem(i18n("W&hois With Idle Time"), Konversation::WhoisServer);
+    popup->insertItem(i18n("&Version"),Konversation::Version);
+    popup->insertItem(i18n("&Ping"),Konversation::Ping);
     popup->insertSeparator();
     int newitem;
-    newitem = popup->insertItem(i18n("Open &Query"),Query);
+    newitem = popup->insertItem(i18n("Open &Query"),Konversation::OpenQuery);
     popup->setWhatsThis(newitem, "<qt>Start a private chat between you and this person.<p/><em>Technical note:</em><br>The conversation between you and this person will be sent via the server.  This means that the conversation will be affected by server lag, server stability, and will be terminated when you disconnect from the server.</qt>");
-    newitem = popup->insertItem(i18n("Open DCC &Chat"),DccChat);
+    newitem = popup->insertItem(i18n("Open DCC &Chat"),Konversation::StartDccChat);
     popup->setWhatsThis(newitem, "<qt>Start a private <em>D</em>irect <em>C</em>lient <em>C</em>onnection chat between you and this person.<p/><em>Technical note:</em><br />The conversation between you and this person will be sent directly.  This means it is independent from the server - so if the server connection fails, or use disconnect, your DCC Chat will be unaffected.  It also means that no irc server admin can view or spy on this chat.</qt>");
-    newitem = popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),DccSend);
+    newitem = popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
     popup->setWhatsThis(newitem, "<qt>Send a file to this person.  If you are having problem sending files, or they are sending slowly, see the Konversation Handbook and DCC preferences page.</qt>");
-    popup->insertItem(SmallIconSet("mail_generic"),i18n("&Send Email..."), SendEmail);
+    popup->insertItem(SmallIconSet("mail_generic"),i18n("&Send Email..."), Konversation::SendEmail);
     if(addressbook) {
       popup->insertSeparator();
-      popup->insertItem(i18n("Addressbook Associations"), addressbook, AddressbookSub);
+      popup->insertItem(i18n("Addressbook Associations"), addressbook, Konversation::AddressbookSub);
     }
     popup->insertSeparator();
     if(kickban)
     {
-      kickban->insertItem(i18n("Kick"),Kick);
-      kickban->insertItem(i18n("Kickban"),KickBan);
-      kickban->insertItem(i18n("Ban Nickname"),BanNick);
+      kickban->insertItem(i18n("Kick"),Konversation::Kick);
+      kickban->insertItem(i18n("Kickban"),Konversation::KickBan);
+      kickban->insertItem(i18n("Ban Nickname"),Konversation::BanNick);
       kickban->insertSeparator();
-      kickban->insertItem(i18n("Ban *!*@*.host"),BanHost);
-      kickban->insertItem(i18n("Ban *!*@domain"),BanDomain);
-      kickban->insertItem(i18n("Ban *!user@*.host"),BanUserHost);
-      kickban->insertItem(i18n("Ban *!user@domain"),BanUserDomain);
+      kickban->insertItem(i18n("Ban *!*@*.host"),Konversation::BanHost);
+      kickban->insertItem(i18n("Ban *!*@domain"),Konversation::BanDomain);
+      kickban->insertItem(i18n("Ban *!user@*.host"),Konversation::BanUserHost);
+      kickban->insertItem(i18n("Ban *!user@domain"),Konversation::BanUserDomain);
       kickban->insertSeparator();
-      kickban->insertItem(i18n("Kickban *!*@*.host"),KickBanHost);
-      kickban->insertItem(i18n("Kickban *!*@domain"),KickBanDomain);
-      kickban->insertItem(i18n("Kickban *!user@*.host"),KickBanUserHost);
-      kickban->insertItem(i18n("Kickban *!user@domain"),KickBanUserDomain);
-      popup->insertItem(i18n("Kick / Ban"),kickban,KickBanSub);
+      kickban->insertItem(i18n("Kickban *!*@*.host"),Konversation::KickBanHost);
+      kickban->insertItem(i18n("Kickban *!*@domain"),Konversation::KickBanDomain);
+      kickban->insertItem(i18n("Kickban *!user@*.host"),Konversation::KickBanUserHost);
+      kickban->insertItem(i18n("Kickban *!user@domain"),Konversation::KickBanUserDomain);
+      popup->insertItem(i18n("Kick / Ban"),kickban,Konversation::KickBanSub);
     }
-    popup->insertItem(i18n("Ignore"),Ignore);
+    popup->insertItem(i18n("Ignore"),Konversation::IgnoreNick);
 
     connect (popup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
     connect (modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
@@ -209,27 +209,27 @@ void NickListView::insertAssociationSubMenu() {
   }
 
   if(!noAssociation && existingAssociation) {
-      addressbook->insertItem(SmallIcon("contents"), i18n("Edit Contact..."), AddressbookEdit);
+    addressbook->insertItem(SmallIcon("contents"), i18n("Edit Contact..."), Konversation::AddressbookEdit);
       addressbook->insertSeparator();
   }
 
   if(noAssociation && existingAssociation)
-      addressbook->insertItem(i18n("Choose/Change Associations..."), AddressbookChange);
+    addressbook->insertItem(i18n("Choose/Change Associations..."), Konversation::AddressbookChange);
   else if(noAssociation)
-      addressbook->insertItem(i18n("Choose Contact..."), AddressbookChange);
+    addressbook->insertItem(i18n("Choose Contact..."), Konversation::AddressbookChange);
   else
-      addressbook->insertItem(i18n("Change Association..."), AddressbookChange);
+    addressbook->insertItem(i18n("Change Association..."), Konversation::AddressbookChange);
 
   if(noAssociation && !existingAssociation)
-      addressbook->insertItem(i18n("Create New Contact..."), AddressbookNew);
+    addressbook->insertItem(i18n("Create New Contact..."), Konversation::AddressbookNew);
 
   if(existingAssociation)
-      addressbook->insertItem(SmallIcon("editdelete"), i18n("Delete Association"), AddressbookDelete);
+    addressbook->insertItem(SmallIcon("editdelete"), i18n("Delete Association"), Konversation::AddressbookDelete);
 
   if(!emailAddress)
-      popup->setItemEnabled(SendEmail, false);
+    popup->setItemEnabled(Konversation::SendEmail, false);
   else
-      popup->setItemEnabled(SendEmail, true);
+    popup->setItemEnabled(Konversation::SendEmail, true);
 
 }
 #include "nicklistview.moc"

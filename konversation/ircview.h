@@ -19,6 +19,8 @@
 
 #include <ktextbrowser.h>
 
+#include "common.h"
+
 /*
   @author Dario Abatianni
 */
@@ -54,18 +56,6 @@ class IRCView : public KTextBrowser
       SendFile,
       Bookmark
     };
-
-    enum NickPopupIDs
-      {
-	ModesSub,GiveOp,TakeOp,GiveVoice,TakeVoice,
-	KickBanSub,Ignore,
-	Kick,KickBan,BanNick,BanHost,BanDomain,BanUserHost,BanUserDomain,
-	KickBanHost,KickBanDomain,KickBanUserHost,KickBanUserDomain,
-	Whois,WhoisServer,Version,Ping,Query,DccSend,
-	CustomID, AddressbookSub, AddressbookChange, AddressbookNew, AddressbookDelete,
-	AddressbookEdit, SendEmail
-      };
-
 
   signals:
     // Notify container of new text and highlight state

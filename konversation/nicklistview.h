@@ -20,6 +20,7 @@
 #include "channel.h"
 #include "nicklisttooltip.h"
 #include "images.h"
+#include "common.h"
 
 /*
   @author Dario Abatianni
@@ -41,17 +42,6 @@ class NickListView : public KListView
      */
     void refresh();
     void setWhatsThis();
-
-    enum PopupIDs
-    {
-      ModesSub,GiveOp,TakeOp,GiveVoice,TakeVoice,
-      KickBanSub,Ignore,
-      Kick,KickBan,BanNick,BanHost,BanDomain,BanUserHost,BanUserDomain,
-      KickBanHost,KickBanDomain,KickBanUserHost,KickBanUserDomain,
-      Whois,WhoisServer,Version,Ping,Query,DccSend,
-      CustomID, AddressbookSub, AddressbookChange, AddressbookNew, AddressbookDelete,
-      AddressbookEdit, SendEmail, DccChat
-    };
 
   public slots:
     /** When this is called, resort is guaranteed to be called within a hard-coded time (a few seconds).

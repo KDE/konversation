@@ -36,11 +36,20 @@ class Images;
 namespace Konversation {
   class Sound;
   class NotificationHandler;
-}
 
-/*
-  @author Dario Abatianni
-*/
+// Shared between NickListView and IRCView
+enum PopupIDs
+  {
+    ModesSub,GiveOp,TakeOp,GiveVoice,TakeVoice,
+    KickBanSub,IgnoreNick,
+    Kick,KickBan,BanNick,BanHost,BanDomain,BanUserHost,BanUserDomain,
+    KickBanHost,KickBanDomain,KickBanUserHost,KickBanUserDomain,
+    Whois,WhoisServer,Version,Ping,OpenQuery,DccSend,
+    CustomID, AddressbookSub, AddressbookChange, AddressbookNew, AddressbookDelete,
+    AddressbookEdit, SendEmail, StartDccChat
+  };
+
+}
 
 class KonversationApplication : public KApplication
 {

@@ -414,7 +414,7 @@ void Channel::popupCommand(int id)
 
   switch(id)
   {
-    case NickListView::AddressbookEdit:
+  case Konversation::AddressbookEdit:
       {
         ChannelNickList nickList=getSelectedChannelNicks();
 	for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
@@ -422,15 +422,15 @@ void Channel::popupCommand(int id)
 	}
 	break;
       }
-    case NickListView::AddressbookNew:
-    case NickListView::AddressbookDelete:
+  case Konversation::AddressbookNew:
+  case Konversation::AddressbookDelete:
       {
 	Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
         ChannelNickList nickList=getSelectedChannelNicks();
 	//Handle all the selected nicks in one go.  Either they all save, or none do.
 	if(addressbook->getAndCheckTicket()) {
           for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
-	    if(id == NickListView::AddressbookDelete) {
+	    if(id == Konversation::AddressbookDelete) {
               KABC::Addressee addr = (*it)->getNickInfo()->getAddressee();
    	      addressbook->unassociateNick(addr, (*it)->getNickname(), m_server->getServerName(), m_server->getServerGroup());
 	    } else {
@@ -449,7 +449,7 @@ void Channel::popupCommand(int id)
         }
         break;
       }
-    case NickListView::AddressbookChange:
+  case Konversation::AddressbookChange:
       {
         ChannelNickList nickList=getSelectedChannelNicks();
         for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
@@ -457,96 +457,96 @@ void Channel::popupCommand(int id)
 	}
         break;
       }
-    case NickListView::SendEmail:
+  case Konversation::SendEmail:
       {
         Konversation::Addressbook::self()->sendEmail(getSelectedChannelNicks());
         break;
       }
-    case NickListView::AddressbookSub:
+  case Konversation::AddressbookSub:
       kdDebug() << "sub called" << endl;
       break;
-    case NickListView::GiveOp:
+  case Konversation::GiveOp:
       pattern="MODE %c +o %u";
       raw=true;
       break;
-    case NickListView::TakeOp:
+  case Konversation::TakeOp:
       pattern="MODE %c -o %u";
       raw=true;
       break;
-    case NickListView::GiveVoice:
+  case Konversation::GiveVoice:
       pattern="MODE %c +v %u";
       raw=true;
       break;
-    case NickListView::TakeVoice:
+  case Konversation::TakeVoice:
       pattern="MODE %c -v %u";
       raw=true;
       break;
-    case NickListView::Version:
+  case Konversation::Version:
       pattern="PRIVMSG %u :\x01VERSION\x01";
       raw=true;
       break;
-    case NickListView::Whois:
+  case Konversation::Whois:
       pattern="WHOIS %u";
       raw=true;
       break;
-    case NickListView::WhoisServer:
+  case Konversation::WhoisServer:
       pattern="WHOIS %u %u";
       raw=true;
       break;
-    case NickListView::Ping:
+  case Konversation::Ping:
       {
         unsigned int time_t = QDateTime::currentDateTime().toTime_t();
         pattern=QString(KonversationApplication::preferences.getCommandChar()+"CTCP %u PING %1").arg(time_t);
       }
       break;
-    case NickListView::Kick:
+  case Konversation::Kick:
       pattern=cc+"KICK %u";
       break;
-    case NickListView::KickBan:
+  case Konversation::KickBan:
       pattern=cc+"BAN %u\n"+
               cc+"KICK %u";
       break;
-    case NickListView::BanNick:
+  case Konversation::BanNick:
       pattern=cc+"BAN %u";
       break;
-    case NickListView::BanHost:
+  case Konversation::BanHost:
       pattern=cc+"BAN -HOST %u";
       break;
-    case NickListView::BanDomain:
+  case Konversation::BanDomain:
       pattern=cc+"BAN -DOMAIN %u";
       break;
-    case NickListView::BanUserHost:
+  case Konversation::BanUserHost:
       pattern=cc+"BAN -USERHOST %u";
       break;
-    case NickListView::BanUserDomain:
+  case Konversation::BanUserDomain:
       pattern=cc+"BAN -USERDOMAIN %u";
       break;
-    case NickListView::KickBanHost:
+  case Konversation::KickBanHost:
       pattern=cc+"BAN -HOST %u\n"+
               cc+"KICK %u";
       break;
-    case NickListView::KickBanDomain:
+  case Konversation::KickBanDomain:
       pattern=cc+"BAN -DOMAIN %u\n"+
               cc+"KICK %u";
       break;
-    case NickListView::KickBanUserHost:
+  case Konversation::KickBanUserHost:
       pattern=cc+"BAN -USERHOST %u\n"+
               cc+"KICK %u";
       break;
-    case NickListView::KickBanUserDomain:
+  case Konversation::KickBanUserDomain:
       pattern=cc+"BAN -USERDOMAIN %u\n"+
               cc+"KICK %u";
       break;
-    case NickListView::Query:
+  case Konversation::OpenQuery:
       pattern=cc+"QUERY %u";
       break;
-    case NickListView::DccChat:
+  case Konversation::StartDccChat:
       pattern=cc+"DCC CHAT %u";
       break;
-    case NickListView::DccSend:
+  case Konversation::DccSend:
       pattern=cc+"DCC SEND %u";
       break;
-    case NickListView::Ignore:
+  case Konversation::IgnoreNick:
       pattern=cc+"IGNORE -ALL %u!*";
       break;
   } // switch
