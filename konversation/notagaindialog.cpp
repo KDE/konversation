@@ -24,9 +24,7 @@ NotAgainDialog::NotAgainDialog(QWidget* parent, QString passed_itemText) : KDial
 //  connect(this, SIGNAL(okClicked()), this, SLOT(closeEvent()));
 
 	MainBox = makeVBoxMainWidget();
-  warningMessage = i18n("There already exists an item called \"");
-	warningMessage.append(passed_itemText);
-	warningMessage.append(i18n("\" in your Highlight list.\nThe second entry will be ignored for highlighting.\n"));
+	warningMessage=i18n("There already exists an item called \"%1\" in your Highlight list.\nThe second entry will be ignored for highlighting.\n").arg(passed_itemText);
 	MessageLabel = new QLabel(warningMessage, MainBox);
 	SwitchWarning = new QCheckBox(i18n("Don't show this message again."), MainBox);
 }

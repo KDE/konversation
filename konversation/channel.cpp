@@ -531,7 +531,7 @@ void Channel::removeNick(QString& nickname,QString& reason,bool quit)
 {
   if(nickname==server->getNickname())
   {
-    if(quit) appendCommandMessage(i18n("Quit"),i18n("You have left this server. (%2)").arg(nickname).arg(reason));
+    if(quit) appendCommandMessage(i18n("Quit"),i18n("You have left this server. (%1)").arg(reason));
     else appendCommandMessage(i18n("Part"),i18n("You have left channel %1. (%2)").arg(getName()).arg(reason));
 
     delete this;
@@ -709,7 +709,7 @@ void Channel::updateMode(QString& sourceNick,char mode,bool plus,QString& parame
           if(toMe)
             message=i18n("You take the permission to talk from yourself.");
           else
-            message=i18n("You take the permission to talk from %2.").arg(parameter);
+            message=i18n("You take the permission to talk from %1.").arg(parameter);
         }
         else
         {
@@ -846,7 +846,7 @@ void Channel::updateMode(QString& sourceNick,char mode,bool plus,QString& parame
     case 'b':
       if(plus)
       {
-        if(fromMe) message=i18n("You set a ban on %2.").arg(parameter);
+        if(fromMe) message=i18n("You set a ban on %1.").arg(parameter);
         else message=i18n("%1 sets a ban on %2.").arg(sourceNick).arg(parameter);
       }
       else
@@ -859,7 +859,7 @@ void Channel::updateMode(QString& sourceNick,char mode,bool plus,QString& parame
     case 'e':
       if(plus)
       {
-        if(fromMe) message=i18n("You set a ban exception on %2.").arg(parameter);
+        if(fromMe) message=i18n("You set a ban exception on %1.").arg(parameter);
         else message=i18n("%1 sets a ban exception on %2.").arg(sourceNick).arg(parameter);
       }
       else
@@ -872,7 +872,7 @@ void Channel::updateMode(QString& sourceNick,char mode,bool plus,QString& parame
     case 'I':
       if(plus)
       {
-        if(fromMe) message=i18n("You set invitation mask %2.").arg(parameter);
+        if(fromMe) message=i18n("You set invitation mask %1.").arg(parameter);
         else message=i18n("%1 sets invitation mask %2.").arg(sourceNick).arg(parameter);
       }
       else

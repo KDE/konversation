@@ -165,24 +165,6 @@ QString IRCView::filter(const QString& line,bool doHilight)
   replaceDecoration(filteredLine,'\x16','b'); // should be reverse
   replaceDecoration(filteredLine,'\x1f','u');
 
-  /* Hilight */
-  if(doHilight)
-  {
-    QPtrList<Highlight> hilightList=KonversationApplication::preferences.getHilightList();
-    
-    unsigned int index;
-
-    for(index=0;index<hilightList.count();index++)
-    {
-      QString needle=hilightList.at(index)->getText().lower();
-      if(filteredLine.lower().find(needle)!=-1)
-      {
-        filteredLine=QString("<font color=\""+hilightList.at(index)->getColor().name()+"\">")+filteredLine+QString("</font>");
-        break;
-      }
-    }
-  }
-
   /* URL Catcher */
   QString linkMessageColor = KonversationApplication::preferences.getLinkMessageColor();
 
@@ -284,6 +266,25 @@ QString IRCView::filter(const QString& line,bool doHilight)
     }
   } while(foundSomething);
 */
+
+  /* Hilight */
+  if(doHilight)
+  {
+    QPtrList<Highlight> hilightList=KonversationApplication::preferences.getHilightList();
+
+    unsigned int index;
+
+    for(index=0;index<hilightList.count();index++)
+    {
+      QString needle=hilightList.at(index)->getText().lower();
+      if(filteredLine.lower().find(needle)!=-1)
+      {
+        filteredLine=QString("<font color=\""+hilightList.at(index)->getColor().name()+"\">")+filteredLine+QString("</font>");
+        break;
+      }
+    }
+  }
+
   /* Replace multiple Spaces with "<space>&nbsp;" */
   do
   {
@@ -291,6 +292,7 @@ QString IRCView::filter(const QString& line,bool doHilight)
     if(pos!=-1) filteredLine.replace(pos+1,1,"&nbsp;");
   } while(pos!=-1);
 
+//  kdDebug() << filteredLine << endl;
   return filteredLine;
 }
 

@@ -25,7 +25,12 @@
 
 #include "konversationapplication.h"
 
-static const char* description=I18N_NOOP("Konversation");
+/*
+  Don't use i18n() here, use I18N_NOOP() instead!
+  i18n() will only work as soon as a kapplication object was made.
+*/
+
+static const char* description=I18N_NOOP("A user friendly IRC client");
 // INSERT A DESCRIPTION FOR YOUR APPLICATION HERE
 
 int main(int argc, char* argv[])
@@ -36,8 +41,8 @@ int main(int argc, char* argv[])
                        description,
                        KAboutData::License_GPL,
                        "(C)2002, Dario Abatianni",
-                       0,
-                       0,
+                       I18N_NOOP("Description for the 'About' dialog here."),
+                       "http://konversation.sourceforge.net/",
                        "eisfuchs@tigress.com");
 
   aboutData.addAuthor("Dario Abatianni",0,"eisfuchs@tigress.com");
