@@ -5,6 +5,12 @@ berkus: Logrotate with timer or at shutdown, compress rotated logs
 
 Eisfuchs: Check KStringHandler::tagURLs for URL highlighting
 
+after beeing away a summary of lines with highlighting in its own window would be nice; a click on one line might jump to the according line in the channel/query-window 
+additionally the text-search could offer a button "any highlight" 
+show the away-status somewhere; maybe with a gray background in the input line 
+additionally do some kind of marker to the lines that came in while being away; maybe with a special colour of the timestamp 
+
+
 Tab completion should work on an alphabetic list
 /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
 List of channels / queries in a new window that indicate new text
