@@ -4,7 +4,7 @@
     begin                : Sat Jun 15 2002
     copyright            : (C) 2002 by Matthias Gierlings
     email                : gismore@users.sourceforge.net
-
+ 
     $Id$
  ***************************************************************************/
 
@@ -19,17 +19,25 @@
 
 #include "highlight.h"
 
-/* Eisfuchs: include static variable */
-unsigned int Highlight::id;
+unsigned int Highlight::id;  // static
 
-Highlight::Highlight(const QString &passed_itemText, const QColor &passed_itemColor)
+Highlight::Highlight(const QString& passed_itemText,const QColor& passed_itemColor)
 {
-	itemText = passed_itemText;
-	itemColor = passed_itemColor;
-  /* Eisfuchs: Unique ID for every Highlight */
-	itemID = id++;
+  itemText=passed_itemText;
+  itemColor=passed_itemColor;
+  
+  // unique ID for every Highlight
+  itemID=id++;
 }
 
 Highlight::~Highlight()
 {
 }
+
+int Highlight::getID()       { return itemID; }
+
+QString Highlight::getText() { return itemText; }
+QColor Highlight::getColor() { return itemColor; }
+
+void Highlight::setText(const QString& passed_itemText)  { itemText=passed_itemText; }
+void Highlight::setColor(const QColor& passed_itemColor) { itemColor=passed_itemColor; }

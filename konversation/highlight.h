@@ -4,7 +4,7 @@
     begin                : Sat Jun 15 2002
     copyright            : (C) 2002 by Matthias Gierlings
     email                : gismore@users.sourceforge.net
-
+ 
     $Id$
  ***************************************************************************/
 
@@ -29,26 +29,23 @@
 
 class Highlight
 {
-	public:
-		Highlight(const QString &passed_itemText, const QColor &passed_itemColor);
-		~Highlight();
+  public:
+    Highlight(const QString& passed_itemText,const QColor& passed_itemColor);
+    ~Highlight();
 
-		QString getText() {return itemText;};
-		QColor getColor() {return itemColor;};
-		int getID() {return itemID;};
+    QString getText();
+    QColor getColor();
+    int getID();
 
-		void setText(const QString &passed_itemText) {itemText = passed_itemText;};
-		void setColor(const QColor &passed_itemColor) {itemColor = passed_itemColor;};
+    void setText(const QString& passed_itemText);
+    void setColor(const QColor& passed_itemColor);
 
   protected:
-		static unsigned int id;
-
-  private:
-		QString		itemText;
-		QColor		itemColor;
-		int				itemID;
-
+    static unsigned int id;
+    
+    int itemID;
+    QString itemText;
+    QColor itemColor;
 };
-
 
 #endif
