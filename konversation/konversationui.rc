@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="24">
+<kpartgui name="konversation" version="26">
 
   <MenuBar>
     <Menu name="file">
@@ -8,7 +8,9 @@
       <Separator />
       <Action name="join_channel" />
       <Separator />
-      <Action name="toggle_away" />
+      <Action name="toggle_away" /> 
+      <Separator />
+      <Action name="scripts"/>
     </Menu>
     <Menu name="edit">
       <Action name="clear_window" />

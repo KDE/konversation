@@ -18,6 +18,7 @@
 
 #include <qstringlist.h>
 
+
 #ifdef USE_MDI
 #define protected public
 #include <kmdimainfrm.h>
@@ -40,6 +41,8 @@
 
 class KToggleAction;
 class KMdiChildView; // USE_MDI
+class KActionMenu;
+class KScriptManager;
 
 class Server;
 class StatusPanel;
@@ -194,6 +197,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void updateChannelInfo(const QString& info);
 
     void showJoinChannelDialog();
+    
+    void runScript( int menuItemId);
 
   protected:
     enum StatusID
@@ -216,7 +221,9 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     virtual bool event(QEvent* e);
     virtual void resizeEvent(QResizeEvent* ev);
-
+    
+    void setupScripts();
+    
 #ifdef USE_MDI
 #else
     LedTabWidget* getViewContainer();
@@ -244,6 +251,9 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     bool m_closeApp;
     
+    KActionMenu *m_scriptMenu;
+    KScriptManager* m_kscript;
+		
     SSLLabel* m_sslLabel;
     QLabel* m_channelInfoLabel;
 

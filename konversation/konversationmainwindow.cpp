@@ -28,6 +28,10 @@
 #include <kpopupmenu.h>
 #include <kiconloader.h>
 #include <kwin.h>
+#include <kglobal.h>
+#include <kstandarddirs.h>
+#include <scriptmanager.h>
+
 #include <qpainter.h>
 #include <qnamespace.h>
 #include <qwhatsthis.h>
@@ -131,6 +135,12 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
   new KAction(i18n("&New Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
 
+  m_kscript = new KScriptManager(this, "scriptmanager");
+  m_scriptMenu = new KActionMenu( i18n("&KDE Scripts"), actionCollection(), "scripts");
+  m_scriptMenu->setWhatsThis(i18n("This shows all available scripts and allows them to be executed."));
+  setupScripts();
+  connect( m_scriptMenu->popupMenu(), SIGNAL(activated( int)), this, SLOT(runScript( int )) );  
+  
   // Actions to navigate through the different pages
   KShortcut nextShortcut = KStdAccel::tabNext();
   nextShortcut.setSeq(1, KKeySequence("Alt+Right"));
@@ -244,6 +254,25 @@ KonversationMainWindow::~KonversationMainWindow()
 {
   deleteDccPanel();
   delete dccTransferHandler;
+}
+
+void KonversationMainWindow::setupScripts()
+{
+  // locate all scripts, local as well as global.
+  // The script manager will do the nessecary sanity checking
+  QStringList scripts = KGlobal::dirs()->findAllResources("data", QString(kapp->name())+"/scripts/*.desktop", false, true );
+  for (QStringList::Iterator it = scripts.begin(); it != scripts.end(); ++it )
+    m_kscript->addScript( *it );
+  QStringList l ( m_kscript->scripts() );
+  for (QStringList::Iterator it=l.begin(); it != l.end(); ++it )
+    m_scriptMenu->popupMenu()->insertItem( *it );
+}
+
+void KonversationMainWindow::runScript( int mIId )
+{
+  kdDebug() << "Starting script engine..." << endl;
+  kdDebug()<<"runScript( "<<mIId<<" ) ["<<m_scriptMenu->popupMenu()->text( mIId )<<"]"<<endl;
+  m_kscript->runScript( m_scriptMenu->popupMenu()->text( mIId ) );
 }
 
 void KonversationMainWindow::switchToTabPageMode()

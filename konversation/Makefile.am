@@ -35,7 +35,7 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp \
 		topiclabel.cpp channeloptionsui.ui channeloptionsdialog.cpp prefspagethemes.cpp notificationhandler.cpp \
 		joinchannelui.ui joinchanneldialog.cpp konversation_settings.kcfgc emoticon.cpp
 
-konversation_LDADD = $(COMPAT_LIBS) $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la
+konversation_LDADD = $(COMPAT_LIBS) $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la -lkscript
 
 xdg_apps_DATA = konversation.desktop
 
