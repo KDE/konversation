@@ -58,6 +58,10 @@ class AddressbookBase : public QObject, public KIMIface
     void releaseTicket();
     bool saveAddressee(KABC::Addressee &addressee);
     bool saveAddressbook();
+
+    QStringList allContactsNicksForServer(const QString &servername, const QString &servergroup);
+    QStringList getNicks(const KABC::Addressee &addressee, const QString &servername, const QString &servergroup);
+    
     KABC::AddressBook *getAddressBook();
     
     /**  Return an online NickInfo for this addressee.

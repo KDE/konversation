@@ -61,6 +61,7 @@ KABC::Addressee AddressbookBase::getKABCAddresseeFromNick(const QString &nick_se
 	}
 	return KABC::Addressee();
 }
+
 bool AddressbookBase::hasNick(const KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup) {
 	
 	QString lnick = ircnick.lower();
@@ -84,12 +85,43 @@ bool AddressbookBase::hasNick(const KABC::Addressee &addressee, const QString &i
 
 }
 
-bool AddressbookBase::hasNick(const KABC::Addressee &addressee, const QString &nick_server) {
+QStringList AddressbookBase::allContactsNicksForServer(const QString &servername, const QString &servergroup) {
+	QStringList contacts;
+	for( KABC::AddressBook::Iterator it = addressBook->begin(); it != addressBook->end(); ++it )
+		contacts += getNicks(*it, servername, servergroup);
+	return contacts;
+
+}
+
+QStringList AddressbookBase::getNicks(const KABC::Addressee &addressee, const QString &servername, const QString &servergroup) {
+	QStringList nicks;
+	
+	QString lservername = servername.lower();
+	QString lservergroup = servergroup.lower();
+	
 	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
 	QStringList::iterator end = addresses.end();
 	for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
 	{
-		if((*it).lower() ==nick_server)
+		if(!(*it).contains(QChar( 0xE120)))
+			nicks.append(*it);
+		else {
+			QString it_server = (*it).section(QChar( 0xE120), 0,0).lower();
+			if(it_server == lservername || it_server == lservergroup)
+				nicks.append((*it).section(QChar( 0xE120 ), 1,1));
+		}
+	}
+	return nicks;
+}
+
+bool AddressbookBase::hasNick(const KABC::Addressee &addressee, const QString &nick_server) {
+	QString lnick_server = nick_server.lower();
+	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
+	QStringList::iterator end = addresses.end();
+	for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
+	{
+		QString it_server = (*it).section(QChar( 0xE120), 0,0).lower();
+		if(it_server ==lnick_server)
 			return true;
 	}
 	return false;
