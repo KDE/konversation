@@ -1,3 +1,5 @@
+// -*- Mode: C++; c-basic-offset: 4; indent-tabs-mode: nil; -*-
+
 #ifndef CONNECTION_H
 #define CONNECTION_H
 /*
@@ -18,40 +20,42 @@ using namespace KNetwork;
 
 class Connection : public QObject
 {
-  Q_OBJECT;
-  
- public:
-  
-  Connection(const QString& server, const QString& port, const QString& password, const QString& interface);
-  ~Connection();
+    Q_OBJECT;
 
-  void connect();
-  void reconnect();
-  void disconnect();
-  void readData();
-  void writeData();
+public:
 
- protected slots:
-  
-  void connected(const KResolverEntry &remote,bool& /*skip*/);
-  void error(int error);
+    Connection(const QString& server,
+               const QString& port,
+               const QString& password,
+               const QString& interface);
+    ~Connection();
 
- signals:
-  
+    void connect();
+    void reconnect();
+    void disconnect();
+    void readData();
+    void writeData();
+
+protected slots:
+
+    void connected(const KResolverEntry &remote,bool& /*skip*/);
+    void error(int error);
+
+signals:
+
   void disconnected();
 
- private:
+private:
 
-  QString m_server;
-  QString m_port;
-  QString m_password;
-  QString m_interface;
-  QString m_lastError;
-  bool m_fatalError;
-  
-  KBufferedSocket* m_socket;
-  QString m_serverIp;
+    QString m_server;
+    QString m_port;
+    QString m_password;
+    QString m_interface;
+    QString m_lastError;
+    bool m_fatalError;
 
+    KBufferedSocket* m_socket;
+    QString m_serverIp;
 };
 
 #endif // CONNECTION_H
