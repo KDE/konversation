@@ -51,7 +51,8 @@ class NicksOnline : public ChatWindow
     // Ids associated with menu/button commands.
     enum CommandIDs
     {
-      ciAddressbookChange, ciAddressbookNew, ciAddressbookDelete, ciAddressbookEdit
+      ciAddressbookChange, ciAddressbookNew, ciAddressbookDelete, ciAddressbookEdit,
+      ciSendEmail, ciWhois
     };
 
     

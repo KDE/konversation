@@ -617,6 +617,15 @@ void NicksOnline::doCommand(int id)
             linkaddressbookui->show();
             break;
         }
+        case ciSendEmail:
+        {
+            if (addressee.isEmpty()) return;
+            Konversation::Addressbook::self()->sendEmail(addressee);
+            return;
+        }
+        case ciWhois:
+            server->queue("WHOIS "+nickname);
+            return;
     }
     refreshItem(item);
 }
@@ -742,14 +751,20 @@ void NicksOnline::slotNickListView_RightButtonClicked(QListViewItem* item, const
         {
             m_popupMenu->insertItem(i18n("&Choose Association..."), ciAddressbookChange);
             m_popupMenu->insertItem(i18n("New C&ontact..."), ciAddressbookNew);
+            m_popupMenu->insertSeparator();
+            m_popupMenu->insertItem(i18n("&Whois"), ciWhois);
             break;
         }
         case 2:
         {
+            m_popupMenu->insertItem(i18n("&Send Email..."), ciSendEmail);
+            m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("Edit C&ontact..."), ciAddressbookEdit);
             m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("&Change Association..."), ciAddressbookChange);
             m_popupMenu->insertItem(i18n("&Delete Association"), ciAddressbookDelete);
+            m_popupMenu->insertSeparator();
+            m_popupMenu->insertItem(i18n("&Whois"), ciWhois);
             break;
         }
     }
