@@ -133,9 +133,9 @@ QString ChannelNick::tooltip() {
   tooltip << "<qt>";
 
   if(!addressee.formattedName().isEmpty())
-    tooltip << "<b><centre>" << addressee.formattedName() << "</centre></b>";
+    tooltip << "<b><centre>" << addressee.formattedName() << "</centre></b><br>";
   else
-    tooltip << "<b><centre>" << getNickname() << "</centre></b>";
+    tooltip << "<b><centre>" << getNickname() << "</centre></b><br>";
 
   KABC::Picture photo = addressee.photo();
   KABC::Picture logo = addressee.logo();
