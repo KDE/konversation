@@ -327,7 +327,7 @@ void KonversationApplication::readOptions()
 
       Identity* newIdentity=new Identity();
       QString n=config->readEntry("Name");
-      kdDebug() << "|" << n << "|" << endl;
+
       newIdentity->setName(config->readEntry("Name"));
 
       newIdentity->setIdent(config->readEntry("Ident"));
