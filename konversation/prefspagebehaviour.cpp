@@ -45,6 +45,7 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   trayOnlyCheck = new QCheckBox(i18n("Stay in system &tray all the time"), parentFrame,"tray_only");
   trayOnlyCheck->setChecked(preferences->getSystrayOnly());
   trayOnlyCheck->setEnabled(trayIconCheck->isChecked());
+  QWhatsThis::add(trayOnlyCheck,i18n("If you enable this option Konversation will not show up in taskbar"));
 
   connect(trayIconCheck, SIGNAL(toggled(bool)), trayNotifyCheck, SLOT(setEnabled(bool)));
   connect(trayIconCheck, SIGNAL(toggled(bool)), trayOnlyCheck, SLOT(setEnabled(bool)));
