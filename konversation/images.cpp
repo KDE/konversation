@@ -121,6 +121,7 @@ void Images::initializeNickIcons()
     icons = KGlobal::dirs()->findAllResources("data","konversation/themes/default/*.png");
 
   QStringList::Iterator it = icons.begin();
+  it.sort();
 
   /* The list is sorted alphabetically. */
 
