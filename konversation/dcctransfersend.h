@@ -19,7 +19,12 @@
 #include "dcctransfer.h"
 
 class QTimer;
-class KExtendedSocket;
+
+namespace KNetwork
+{
+  class KServerSocket;
+  class KStreamSocket;
+}
 
 class DccTransferSend : public DccTransfer
 {
@@ -42,6 +47,7 @@ class DccTransferSend : public DccTransfer
     void heard();
     void writeData();
     void getAck();
+    void socketError(int errorCode);
     void connectionTimeout();
     
   protected:
@@ -53,8 +59,8 @@ class DccTransferSend : public DccTransfer
     
     QTimer* connectionTimer;
     
-    KExtendedSocket* serverSocket;
-    KExtendedSocket* sendSocket;
+    KNetwork::KServerSocket* serverSocket;
+    KNetwork::KStreamSocket* sendSocket;
     
 };
 

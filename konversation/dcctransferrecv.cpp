@@ -176,11 +176,12 @@ void DccTransferRecv::connectToSender()
   connect( recvSocket, SIGNAL(readyWrite()), this, SLOT(sendAck()) );
   
   recvSocket->setBlocking(false);  // asynchronous mode
+  recvSocket->setFamily(KNetwork::KResolver::InetFamily);
+  recvSocket->setResolutionEnabled(false);
+  recvSocket->setTimeout(5000);
   
   recvSocket->enableRead(false);
   recvSocket->enableWrite(false);
-  
-  recvSocket->setTimeout(5000);
   
   recvSocket->connect();
 }

@@ -20,9 +20,11 @@
 #include <qtimer.h>
 
 #include <kdebug.h>
-#include <kextsock.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kserversocket.h>
+#include <ksocketaddress.h>
+#include <kstreamsocket.h>
 
 #include "dcctransfersend.h"
 #include "konversationapplication.h"
@@ -59,8 +61,8 @@ void DccTransferSend::start()  // public slot
   kdDebug() << "DccTransferSend::start()" << endl;
 
   // Set up server socket
-  serverSocket=new KExtendedSocket();
-  connect(serverSocket,SIGNAL(readyAccept()),this,SLOT(heard()));
+  serverSocket = new KNetwork::KServerSocket();
+  serverSocket->setFamily(KNetwork::KResolver::InetFamily);
   
   if(KonversationApplication::preferences.getDccSpecificSendPorts())  // user specifies ports
   {
@@ -69,41 +71,40 @@ void DccTransferSend::start()  // public slot
     unsigned long port = KonversationApplication::preferences.getDccSendPortsFirst();
     for( ; port <= KonversationApplication::preferences.getDccSendPortsLast(); ++port )
     {
-      serverSocket->setHost("0.0.0.0");
-      serverSocket->setSocketFlags(KExtendedSocket::passiveSocket |
-                                   KExtendedSocket::inetSocket |
-                                   KExtendedSocket::streamSocket);
-      serverSocket->setPort(port);
-      if(found = (serverSocket->listen(5) == 0))
+      kdDebug() << "DccTransferSend::start(): trying port " << port << endl;
+      serverSocket->setAddress("0.0.0.0", QString::number(port));
+      bool success = serverSocket->listen();
+      if( found = ( success && serverSocket->error() == KNetwork::KSocketBase::NoError ) )
         break;
-      serverSocket->reset();
+      serverSocket->close();
     }
     if(!found)
     {
-      KMessageBox::sorry(static_cast<QWidget*>(0),i18n("There is no vacant port for DCC sending."));
+      KMessageBox::sorry(0, i18n("There is no vacant port for DCC sending."));
       setStatus(Failed);
       updateView();
+      cleanUp();
       return;
     }
   }
   else  // user doesn't specify ports
   {
-    serverSocket->setHost("0.0.0.0");
-    serverSocket->setSocketFlags(KExtendedSocket::passiveSocket |
-                                 KExtendedSocket::inetSocket |
-                                 KExtendedSocket::streamSocket);
-    if(serverSocket->listen(5) != 0)
+    if(!serverSocket->listen())
     {
       kdDebug() << this << "DccTransferSend::start(): listen() failed!" << endl;
       setStatus(Failed);
       updateView();
+      cleanUp();
       return;
     }
   }
+    
+  connect( serverSocket, SIGNAL(readyAccept()), this, SLOT(heard()) );
+  connect( serverSocket, SIGNAL(gotError(int)), this, SLOT(socketError(int)) );
   
   // Get our own port number
-  const KSocketAddress* ipAddr=serverSocket->localAddress();
-  const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr->address();
+  KNetwork::KSocketAddress ipAddr=serverSocket->localAddress();
+  const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr.address();
   ownPort = QString::number(ntohs(socketAddress->sin_port));
   
   kdDebug() << "DccTransferSend::start(): own Address=" << ownIp << ":" << ownPort << endl;
@@ -143,12 +144,14 @@ void DccTransferSend::cleanUp()
   stopAutoUpdateView();
   if(sendSocket)
   {
+    sendSocket->close();
     sendSocket->deleteLater();
     sendSocket = 0;
   }
   if(serverSocket)
   {
-    delete serverSocket;
+    serverSocket->close();
+    serverSocket->deleteLater();
     serverSocket = 0;
   }
   file.close();
@@ -160,37 +163,28 @@ void DccTransferSend::heard()  // slot
   
   stopConnectionTimer();
   
-  int fail=serverSocket->accept(sendSocket);
+  sendSocket = static_cast<KNetwork::KStreamSocket*>(serverSocket->accept());
   
-  connect(sendSocket,SIGNAL (readyRead()), this,SLOT (getAck()) );
-  connect(sendSocket,SIGNAL (readyWrite()),this,SLOT (writeData()) );
+  connect( sendSocket, SIGNAL(readyRead()),  this, SLOT(getAck()) );
+  connect( sendSocket, SIGNAL(readyWrite()), this, SLOT(writeData()) );
   
   timeTransferStarted = QDateTime::currentDateTime();
   
-  if(!fail)
+  if(file.open(IO_ReadOnly))
   {
-    if(file.open(IO_ReadOnly))
-    {
-      // seek to file position to make resume work
-      file.at(transferringPosition);
-      transferStartPosition = transferringPosition;
-      
-      setStatus(Sending);
-      sendSocket->enableRead(true);
-      sendSocket->enableWrite(true);
-      startAutoUpdateView();
-    }
-    else
-    {
-      QString errorString=getErrorString(file.status());
-
-      KMessageBox::sorry(0,QString(errorString).arg(file.name()),i18n("DCC Send Error"));
-      setStatus(Failed);
-      cleanUp();
-    }
+    // seek to file position to make resume work
+    file.at(transferringPosition);
+    transferStartPosition = transferringPosition;
+    
+    setStatus(Sending);
+    sendSocket->enableRead(true);
+    sendSocket->enableWrite(true);
+    startAutoUpdateView();
   }
   else
   {
+    QString errorString=getErrorString(file.status());
+    KMessageBox::sorry(0, QString(errorString).arg(file.name()), i18n("DCC Send Error"));
     setStatus(Failed);
     cleanUp();
   }
@@ -202,7 +196,6 @@ void DccTransferSend::writeData()  // slot
   int actual=file.readBlock(buffer,bufferSize);
   if(actual>0)
   {
-    sendSocket->enableWrite(true);
     sendSocket->writeBlock(buffer,actual);
     transferringPosition += actual;
   }
@@ -211,18 +204,31 @@ void DccTransferSend::writeData()  // slot
 void DccTransferSend::getAck()  // slot
 {
   unsigned long pos;
-  sendSocket->readBlock((char *) &pos,4);
-  pos=intel(pos);
-
-  if(pos==fileSize)
+  while(sendSocket->bytesAvailable() >= 4)
   {
-    kdDebug() << "DccTransferSend::getAck(): Done." << endl;
-    
-    setStatus(Done);
-    cleanUp();
-    updateView();
-    emit done(filePath);
+    sendSocket->readBlock((char *) &pos,4);
+    pos=intel(pos);
+    if(pos == fileSize)
+    {
+      kdDebug() << "DccTransferSend::getAck(): Done." << endl;
+      
+      setStatus(Done);
+      cleanUp();
+      updateView();
+      emit done(filePath);
+      break;  // for safe
+    }
   }
+}
+
+void DccTransferSend::socketError(int errorCode)
+{
+  kdDebug() << "DccTransferSend::socketError(): code =  " << errorCode << endl;
+  kdDebug() << "DccTransferSend::socketError(): string = " << serverSocket->errorString() << endl;
+
+  setStatus(Failed);
+  updateView();
+  cleanUp();
 }
 
 void DccTransferSend::startConnectionTimer(int sec)
