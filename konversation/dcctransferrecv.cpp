@@ -266,7 +266,7 @@ void DccTransferRecv::requestResume()
   kdDebug() << "DccTransferRecv::requestResume()" << endl;
   
   m_resumed = true;
-  setStatus( WaitingRemote, i18n("Requesting to accept resuming") );
+//  setStatus( WaitingRemote, i18n("Requesting to accept resuming") );
   
   // Rollback for Resume
   // disabled temporarily
@@ -284,7 +284,9 @@ void DccTransferRecv::requestResume()
   
   startConnectionTimer( 30 ); //Was only 5 seconds?
   // <shin> john: because senders don't need to "accept" transfer. but, yes, it was too short.
-  
+  kdDebug() <<" requesting resume for " << m_partnerNick << " file " << m_fileName << " partner " << m_partnerPort << endl;
+
+  //TODO   m_filename could have been sanitized - will this effect this?
   emit resumeRequest( m_partnerNick, m_fileName, m_partnerPort, m_transferringPosition );
 }
 
@@ -367,7 +369,7 @@ void DccTransferRecv::readData()  // slot
     QByteArray ba;
     ba.duplicate( m_buffer, actual );
     m_writeCacheHandler->append( ba );
-    if(!m_writeCacheHandler->write()) {  //FIXME This will always fail.  Why do you do this shin?
+    if(!m_writeCacheHandler->write()) {
       kdDebug() << "m_writeCacheHandler->write() failed in readData()" << endl;
     }
     m_recvSocket->enableWrite( true );
@@ -490,6 +492,8 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )  // public
     return false;
   
   // do write
+
+  kdDebug() << "cachehandler::write(" << force << ")" << endl;
   m_writeReady = false;
   QByteArray cache = popCache();
   m_transferJob->sendAsyncData( cache );
@@ -523,10 +527,10 @@ QByteArray DccTransferRecvWriteCacheHandler::popCache()
   
   QByteArray buffer;
   int number_written = 0; //purely for debug info
+  int sizeSum = 0;
   if ( !m_cacheList.isEmpty() )
   {
     QDataStream out( buffer, IO_WriteOnly );
-    int sizeSum = 0;
     QValueList<QByteArray>::iterator it = m_cacheList.begin();
     do { //It is guaranteed that at least one bytearray is written since m_cacheList is not empty
       Q_ASSERT((*it).size() > 0);
@@ -537,15 +541,17 @@ QByteArray DccTransferRecvWriteCacheHandler::popCache()
     } while( it != m_cacheList.end() && maxWritePacketSize >= sizeSum + (*it).size() );
     m_wholeCacheSize -= sizeSum;
   }
-  kdDebug() << "DTRWriteCacheHandler::popCache(): caches in the packet: " << number_written << ", remaining caches: " << m_cacheList.count() << endl;
+  kdDebug() << "DTRWriteCacheHandler::popCache(): caches in the packet: " << number_written << ", remaining caches: " << m_cacheList.count() << ".  Size just written now: " << sizeSum << endl;
   return buffer;
 }
 
 void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& data )
 {
   //We are in writeAsyncMode if there is more data to be read in from dcc
-  if ( m_writeAsyncMode )
+  if ( m_writeAsyncMode ) {
     m_writeReady = true;  
+    kdDebug()<< "slotKIODataReq - in async mode" << endl;
+  }
   else
   {
     //No more data left to read from incomming dcctransfer
@@ -553,6 +559,7 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
     {
       //once we write everything in cache, the file is complete.
       //This function will be called once more after this last data is written.
+      kdDebug() << "slotKIODataReq - sending data." << endl;
       data = popCache();
     }
     else
