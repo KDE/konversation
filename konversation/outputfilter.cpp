@@ -606,7 +606,7 @@ namespace Konversation {
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
                           + info.fileName().replace(" ","_")
                           + " " + address + " " + port + " " + QString::number(size) + '\x01';
-        result.output = i18n("Offering \"%1\" to %2 for upload.").arg(fileName).arg(recipient);
+        result.output = i18n("Offering \"%1\" to %2 for upload...").arg(fileName).arg(recipient);
         result.typeString = i18n("DCC");
         result.type = Program;
 
