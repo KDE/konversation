@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>ChatwindowBehaviour_Config</class>
 <widget class="QWidget">
     <property name="name">
@@ -11,9 +11,6 @@
             <width>496</width>
             <height>494</height>
         </rect>
-    </property>
-    <property name="caption">
-        <string>ChatwindowBehaviour_Config</string>
     </property>
     <property name="whatsThis" stdset="0">
         <string>Keep channel mode string as a combination of characters instead of translating them into human readable words. E.g. '*** Channel modes: no messages from outside' will become '*** Channel modes: n'</string>
@@ -169,9 +166,6 @@
                     <property name="text">
                         <string>Disable variable (e.g. %C, %B, %G...) e&amp;xpansion</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+X</string>
-                    </property>
                     <property name="whatsThis" stdset="0">
                         <string>Do not expand variables when sending text to the server. A variable starts with '%'; for example, %B will expand to the characters needed to make a text bold.</string>
                     </property>
@@ -262,9 +256,6 @@
                     </property>
                     <property name="text">
                         <string>Use &amp;raw modes for mode changes</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+R</string>
                     </property>
                 </widget>
             </grid>
