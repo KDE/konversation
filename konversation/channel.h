@@ -36,6 +36,7 @@ class QStringList;
 class QSplitter;
 class QGrid;
 class QComboBox;
+class QDropEvent;
 class QToolButton;
 
 class KLineEdit;
@@ -178,6 +179,7 @@ class Channel : public ChatWindow
   protected slots:
     void purgeNicks();
     void completeNick();
+    void filesDropped(QDropEvent* e);
     void endCompleteNick();
     void quickButtonClicked(const QString& definition);
     void modeButtonClicked(int id,bool on);

@@ -70,6 +70,8 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   QWhatsThis::add(queryHostmask, whatsthis);
 
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer();
+  textView->setAcceptDrops(true);
+  connect(textView,SIGNAL(filesDropped(const QStrList&)),this,SLOT(filesDropped(const QStrList&)));
 
   // link "Whois" and "Ignore" menu items into ircview popup
   QPopupMenu* popup=textView->getPopup();
@@ -395,6 +397,11 @@ void Query::serverQuit(const QString&)
   closeYourself(this);
 }
 #endif
+
+void Query::filesDropped(const QStrList& files)
+{
+  m_server->sendURIs(files,getName());
+}
 
 void Query::emitUpdateInfo()
 {

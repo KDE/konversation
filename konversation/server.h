@@ -51,6 +51,7 @@ class RawLog;
 class ChannelListPanel;
 class ScriptLauncher;
 class ServerISON;
+class QStrList;
 
 using namespace KNetwork;
 
@@ -161,6 +162,8 @@ class Server : public QObject
     QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& parameter);
     
     QString getAutoJoinCommand() const;
+    
+    void sendURIs(const QStrList& uris, const QString& nick);
 
     void notifyAction(const QString& nick);
     ChannelListPanel* getChannelListPanel() const;

@@ -20,6 +20,8 @@
 #include <qtextbrowser.h>
 #include <qclipboard.h>
 #include <qbrush.h>
+#include <qevent.h>
+#include <qdragobject.h>
 #include <qpopupmenu.h>
 #include <qwhatsthis.h>
 #include <qmap.h>
@@ -958,6 +960,17 @@ QChar::Direction IRCView::basicDirection(const QString &string)
   }
 
   return QChar::DirL;
+}
+
+void IRCView::contentsDragMoveEvent(QDragMoveEvent *e)
+{
+  if (acceptDrops() && QUriDrag::canDecode(e)) e->accept();
+}
+
+void IRCView::contentsDropEvent(QDropEvent *e)
+{
+  QStrList s;
+  if (QUriDrag::decode(e,s)) emit filesDropped(s);
 }
 
 QString IRCView::timeStamp()

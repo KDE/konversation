@@ -29,6 +29,7 @@
 class QLineEdit;
 class QCheckBox;
 class QLabel;
+class QStrList;
 
 class IRCInput;
 
@@ -77,6 +78,7 @@ class Query : public ChatWindow
     void queryTextEntered();
     void sendFileMenu();
     void newTextInView(const QString& highlightColor,bool important);
+    void filesDropped(const QStrList& files);
     // connected to IRCInput::textPasted() - used to handle large/multiline pastes
     void textPasted(const QString& text);
     void popup(int id);

@@ -15,8 +15,10 @@
 
 #include <qlabel.h>
 #include <qvbox.h>
+#include <qevent.h>
 #include <qhbox.h>
 #include <qgrid.h>
+#include <qdragobject.h>
 #include <qsizepolicy.h>
 #include <qheader.h>
 #include <qregexp.h>
@@ -47,6 +49,7 @@
 #include "server.h"
 #include "nick.h"
 #include "nicklistview.h"
+#include "nicklistviewitem.h"
 #include "quickbutton.h"
 #include "modebutton.h"
 #include "ircinput.h"
@@ -291,6 +294,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
   connect(nicknameListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT (doubleClickCommand(QListViewItem*)) );
+  connect(nicknameListView,SIGNAL (dropped(QDropEvent*,QListViewItem*)),this,SLOT (filesDropped(QDropEvent*)) );
   connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
  
   Q_ASSERT(nicknameCombobox->lineEdit());  //it should be editedable.  if we design it so it isn't, remove these lines.
@@ -368,6 +372,15 @@ void Channel::purgeNicks()
 void Channel::showOptionsDialog()
 {
   (new Konversation::ChannelOptionsDialog(this))->show();
+}
+
+void Channel::filesDropped(QDropEvent* e)
+{
+  QPoint p(nicknameListView->contentsToViewport(e->pos()));
+  NickListViewItem* it = dynamic_cast<NickListViewItem*>(nicknameListView->itemAt(p));
+  if (!it) return;
+  QStrList uris;
+  if (QUriDrag::decode(e,uris)) m_server->sendURIs(uris, it->getNick()->getNickname());
 }
 
 

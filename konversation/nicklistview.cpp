@@ -37,6 +37,9 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
   modes=new KPopupMenu(this,"nicklist_modes_context_submenu");
   kickban=new KPopupMenu(this,"nicklist_kick_ban_context_submenu");
   addressbook= new KPopupMenu(this,"nicklist_addressbook_context_submenu");
+  setAcceptDrops(true);
+  setDropHighlighter(true);
+  setDropVisualizer(false);
 
   if(popup)
   {
@@ -241,6 +244,12 @@ void NickListView::setSorting(int column, bool ascending)
   m_column = column;
   m_ascending = ascending;
 }
+
+bool NickListView::acceptDrag (QDropEvent* event) const 
+{
+  return (event->provides("text/uri-list"));
+}
+
 
 #include "nicklistview.moc"
 

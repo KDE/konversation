@@ -26,6 +26,9 @@
 */
 
 class QPixmap;
+class QStrList;
+class QDropEvent;
+class QDragEnterEvent;
 class QEvent;
 class KPopupMenu;
 
@@ -67,6 +70,7 @@ class IRCView : public KTextBrowser
     void autoText(const QString& text);
     void textPasted();
     void popupCommand(int);
+    void filesDropped(const QStrList&);
 
   public slots:
     void append(const QString& nick,const QString& message);
@@ -97,6 +101,8 @@ class IRCView : public KTextBrowser
     QString filter(const QString& line,const QString& defaultColor,const QString& who=NULL,bool doHighlight=true, bool parseURL = true);
     void doAppend(QString line, bool important = true, bool self = false);
     void replaceDecoration(QString& line,char decoration,char replacement);
+    virtual void contentsDragMoveEvent(QDragMoveEvent* e);
+    virtual void contentsDropEvent(QDropEvent* e);
 
     void hideEvent(QHideEvent* event);
     void showEvent(QShowEvent* event);

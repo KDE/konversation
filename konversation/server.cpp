@@ -1599,6 +1599,11 @@ void Server::requestDccSend()
   requestDccSend(QString::null);
 }
 
+void Server::sendURIs(const QStrList& uris, const QString& nick)
+{
+  for (QStrListIterator it(uris) ; *it; ++it) addDccSend(nick,KURL(*it));
+}
+
 void Server::requestDccSend(const QString &a_recipient)
 {
   QString recipient(a_recipient);
@@ -1651,6 +1656,8 @@ void Server::requestDccSend(const QString &a_recipient)
 void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &altFileName, uint fileSize)
 {
   emit addDccPanel();
+
+
 
   QString ownIp = getIp(true);
 

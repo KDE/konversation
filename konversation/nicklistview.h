@@ -63,6 +63,7 @@ class NickListView : public KListView
 
   protected:
     void contextMenuEvent(QContextMenuEvent* ce);
+    virtual bool acceptDrag (QDropEvent* event) const;
     void insertAssociationSubMenu();
     Konversation::KonversationNickListViewToolTip *m_tooltip;
     QPopupMenu* popup;
