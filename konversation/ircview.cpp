@@ -55,6 +55,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   QWhatsThis::add(this, i18n("<qt>The text for the channel, server or query is shown here.  You can view the history by choosing <em>Open logfile</em> from the Window menu.</qt>"));
   copyUrlMenu=false;
   resetScrollbar=TRUE;
+  offset=0;
 
   setAutoFormatting(0);
   setUndoRedoEnabled(0);
@@ -84,9 +85,6 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   QStyleSheet* sheet=new QStyleSheet(this,"ircview_style_sheet");
   new QStyleSheetItem(sheet,"p");
   setStyleSheet(sheet);
-
-  /* Initialise lastColor */
-  lastColor=8;
 
   setServer(newServer);
   setFont(KonversationApplication::preferences.getTextFont());
@@ -417,16 +415,16 @@ void IRCView::append(const QString& nick,const QString& message)
     {
       if(!colorMap.contains(nick))
 	{
+	  if(offset >= 8)
+	    offset=0;
 	  colorList = KonversationApplication::preferences.getNickColorList();
 	  QString backgroundColor=KonversationApplication::preferences.getColor("TextViewBackground");
-	  KRandomSequence sq;
-	  uint i = (uint) sq.getLong(7);
 	  
-	  if(lastColor==i && backgroundColor==colorList[i])
-	    i = (i+1)%8;
+	  if(backgroundColor==colorList[offset])
+	    offset = (offset+1)%8;
 
-	  lastColor=i;
-	  colorMap[nick] = colorList[i];
+	  colorMap[nick] = colorList[offset];
+	  ++offset;
 	}
       nickLine = "<font color=\""+colorMap[nick]+"\"><b>%2</b></font>";
     }
