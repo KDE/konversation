@@ -12,9 +12,6 @@
             <height>310</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>Form1</string>
-    </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -48,9 +45,6 @@
                     <property name="text">
                         <string>&amp;Use lower case logfile names</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+U</string>
-                    </property>
                 </widget>
                 <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
@@ -58,9 +52,6 @@
                     </property>
                     <property name="text">
                         <string>&amp;Follow nick changes</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+F</string>
                     </property>
                 </widget>
                 <widget class="KURLRequester" row="2" column="1">

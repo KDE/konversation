@@ -1,0 +1,95 @@
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<class>TabBar_Config</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>TabBar_Config</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>409</width>
+            <height>412</height>
+        </rect>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_CloseButtonsOnTabs</cstring>
+            </property>
+            <property name="text">
+                <string>Show close b&amp;utton on tabs</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_CloseButtonsAlignRight</cstring>
+            </property>
+            <property name="text">
+                <string>Place close button on the &amp;right side of the tab</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_TabPlacement</cstring>
+            </property>
+            <property name="text">
+                <string>Place tab labels on &amp;top</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_BlinkingTabs</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Blinking tabs</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_BringToFront</cstring>
+            </property>
+            <property name="text">
+                <string>Bring new tabs to &amp;front</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_FocusNewQueries</cstring>
+            </property>
+            <property name="text">
+                <string>When someone queries you, focus new &amp;query</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_ShowTabBarCloseButton</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Show a close tab button to the right in the tab bar</string>
+            </property>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>121</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

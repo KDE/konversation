@@ -14,84 +14,52 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-
+#include <qcheckbox.h>
 #include <klocale.h>
 
 #include "prefspagetabbehavior.h"
 #include "preferences.h"
 
 PrefsPageTabBehavior::PrefsPageTabBehavior(QFrame* newParent,Preferences* newPreferences) :
-                      PrefsPage(newParent,newPreferences)
+                      TabBar_Config(newParent)
 {
-  QGridLayout* tabsLayout = new QGridLayout(parentFrame, 4, 2, marginHint(), spacingHint());
+	preferences = newPreferences;
 
-  closeButtonsCheck = new QCheckBox(i18n("Show close b&utton on tabs"), parentFrame, "tab_close_widgets_check");
-  closeButtonsCheck->setChecked(preferences->getCloseButtonsOnTabs());
-  closeButtonsAlignRight = new QCheckBox(i18n("Place close button on the &right side of the tab"),
-    parentFrame, "tab_close_widgets_align_right");
-  closeButtonsAlignRight->setChecked(preferences->getCloseButtonsAlignRight());
-  connect(closeButtonsCheck, SIGNAL(stateChanged(int)), this, SLOT(closeButtonsChanged(int)));
+  kcfg_CloseButtonsOnTabs->setChecked(preferences->getCloseButtonsOnTabs());
+  kcfg_CloseButtonsAlignRight->setChecked(preferences->getCloseButtonsAlignRight());
+  connect(kcfg_CloseButtonsOnTabs, SIGNAL(stateChanged(int)), this, SLOT(closeButtonsChanged(int)));
   closeButtonsChanged(preferences->getCloseButtonsOnTabs() ? 2 : 0);
 
-  tabPlacementCheck = new QCheckBox(i18n("Place tab labels on &top"), parentFrame, "tab_placement_check");
-  tabPlacementCheck->setChecked(preferences->getTabPlacement() == Preferences::Top);
-  blinkingTabsCheck = new QCheckBox(i18n("&Blinking tabs"), parentFrame, "blinking_tabs_check");
-  blinkingTabsCheck->setChecked(preferences->getBlinkingTabs());
-  bringToFrontCheck = new QCheckBox(i18n("Bring new tabs to &front"), parentFrame, "bring_to_front_check");
-  bringToFrontCheck->setChecked(preferences->getBringToFront());
+  kcfg_TabPlacement->setChecked(preferences->getTabPlacement() == Preferences::Top);
+  kcfg_BlinkingTabs->setChecked(preferences->getBlinkingTabs());
+  kcfg_BringToFront->setChecked(preferences->getBringToFront());
+  kcfg_FocusNewQueries->setChecked(preferences->getFocusNewQueries());
+  connect(kcfg_BringToFront, SIGNAL(stateChanged(int)), this, SLOT(bringToFrontCheckChanged(int)));
 
-  focusNewQueries = new QCheckBox(i18n("When someone queries you, focus new &query"), parentFrame, "focus_new_queries");
-  focusNewQueries->setChecked(preferences->getFocusNewQueries());
-  connect(bringToFrontCheck, SIGNAL(stateChanged(int)), this, SLOT(bringToFrontCheckChanged(int)));
-
-  
-  tabBarCloseButtonCheck = new QCheckBox(i18n("&Show a close tab button to the right in the tab bar"),
-    parentFrame, "tab_bar_close_button");
-  tabBarCloseButtonCheck->setChecked(preferences->getShowTabBarCloseButton());
-
-  int row = 0;
-  tabsLayout->addMultiCellWidget(closeButtonsCheck, row, row, 0, 1);
-  row++;
-  tabsLayout->addMultiCellWidget(closeButtonsAlignRight, row, row, 0, 1);
-  row++;
-  tabsLayout->addMultiCellWidget(tabPlacementCheck, row, row, 0, 1);
-  row++;
-  tabsLayout->addMultiCellWidget(blinkingTabsCheck, row, row, 0, 1);
-  row++;
-  tabsLayout->addMultiCellWidget(bringToFrontCheck, row, row, 0, 1);
-  row++;
-  tabsLayout->addMultiCellWidget(focusNewQueries, row, row, 0, 2);
-  row++;
-  tabsLayout->addMultiCellWidget(tabBarCloseButtonCheck, row, row, 0, 1);
-  row++;
-  tabsLayout->setRowStretch(row, 10);
-}
-
-PrefsPageTabBehavior::~PrefsPageTabBehavior()
-{
+  kcfg_ShowTabBarCloseButton->setChecked(preferences->getShowTabBarCloseButton());
 }
 
 void PrefsPageTabBehavior::closeButtonsChanged(int state)
 {
-  closeButtonsCheck->setChecked(state);
-  closeButtonsAlignRight->setEnabled(state==2);
+  kcfg_CloseButtonsOnTabs->setChecked(state);
+  kcfg_CloseButtonsAlignRight->setEnabled(state==2);
 }
 
 void PrefsPageTabBehavior::bringToFrontCheckChanged(int state)
 {
-  bringToFrontCheck->setChecked(state);
-  focusNewQueries->setEnabled(state==2);
+  kcfg_BringToFront->setChecked(state);
+  kcfg_FocusNewQueries->setEnabled(state==2);
 }
 
 void PrefsPageTabBehavior::applyPreferences()
 {
-  preferences->setTabPlacement(tabPlacementCheck->isChecked() ? Preferences::Top : Preferences::Bottom);
-  preferences->setBlinkingTabs(blinkingTabsCheck->isChecked());
-  preferences->setBringToFront(bringToFrontCheck->isChecked());
-  preferences->setFocusNewQueries(focusNewQueries->isChecked());
-  preferences->setCloseButtonsOnTabs(closeButtonsCheck->isChecked());
-  preferences->setCloseButtonsAlignRight(closeButtonsAlignRight->isChecked());
-  preferences->setShowTabBarCloseButton(tabBarCloseButtonCheck->isChecked());
+  preferences->setTabPlacement(kcfg_TabPlacement->isChecked() ? Preferences::Top : Preferences::Bottom);
+  preferences->setBlinkingTabs(kcfg_BlinkingTabs->isChecked());
+  preferences->setBringToFront(kcfg_BringToFront->isChecked());
+  preferences->setFocusNewQueries(kcfg_FocusNewQueries->isChecked());
+  preferences->setCloseButtonsOnTabs(kcfg_CloseButtonsOnTabs->isChecked());
+  preferences->setCloseButtonsAlignRight(kcfg_CloseButtonsAlignRight->isChecked());
+  preferences->setShowTabBarCloseButton(kcfg_ShowTabBarCloseButton->isChecked());
 }
 
 #include "prefspagetabbehavior.moc"

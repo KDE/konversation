@@ -15,21 +15,19 @@
 #ifndef PREFSPAGETABBEHAVIOR_H
 #define PREFSPAGETABBEHAVIOR_H
 
-#include <qcheckbox.h>
-
-#include "prefspage.h"
+#include "tabbar_preferences.h"
+class Preferences;
 
 /*
   @author Dario Abatianni
 */
 
-class PrefsPageTabBehavior : public PrefsPage
+class PrefsPageTabBehavior : public TabBar_Config
 {
   Q_OBJECT
 
   public:
     PrefsPageTabBehavior(QFrame* newParent,Preferences* newPreferences);
-    ~PrefsPageTabBehavior();
 
   public slots:
     void applyPreferences();
@@ -38,14 +36,9 @@ class PrefsPageTabBehavior : public PrefsPage
     void closeButtonsChanged(int state);
     void bringToFrontCheckChanged(int state);
 
-  protected:
-    QCheckBox* tabPlacementCheck;
-    QCheckBox* blinkingTabsCheck;
-    QCheckBox* bringToFrontCheck;
-    QCheckBox* focusNewQueries;
-    QCheckBox* closeButtonsCheck;
-    QCheckBox* closeButtonsAlignRight;
-    QCheckBox* tabBarCloseButtonCheck;
+	protected:
+		Preferences* preferences;
+		
 };
 
 #endif
