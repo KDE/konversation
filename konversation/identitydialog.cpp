@@ -94,9 +94,11 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   m_upNicknameBtn = new QToolButton(nicknameGBox);
   m_upNicknameBtn->setIconSet(SmallIconSet("up"));
   m_upNicknameBtn->setAutoRepeat(true);
+  m_upNicknameBtn->setEnabled(false);
   m_downNicknameBtn = new QToolButton(nicknameGBox);
   m_downNicknameBtn->setIconSet(SmallIconSet("down"));
   m_downNicknameBtn->setAutoRepeat(true);
+  m_downNicknameBtn->setEnabled(false);
 
   connect(addNicknameBtn, SIGNAL(clicked()), this, SLOT(addNickname()));
   connect(changeNicknameBtn, SIGNAL(clicked()), this, SLOT(editNickname()));
@@ -301,6 +303,7 @@ void IdentityDialog::addNickname()
 
   if(ok && !txt.isEmpty()) {
     m_nicknameLBox->insertItem(txt);
+    updateArrows();
   }
 }
 
@@ -317,6 +320,7 @@ void IdentityDialog::editNickname()
 void IdentityDialog::deleteNickname()
 {
   m_nicknameLBox->removeItem(m_nicknameLBox->currentItem());
+  updateArrows();
 }
 
 void IdentityDialog::updateArrows()
