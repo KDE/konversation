@@ -32,7 +32,7 @@ class SSLSocket : public KStreamSocket
 	Q_OBJECT
 
 	public:
-		SSLSocket();
+                SSLSocket(QObject* parent = 0L, const char* name = 0L);
 		~SSLSocket();
 
 		void showInfoDialog();

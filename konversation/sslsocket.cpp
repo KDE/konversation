@@ -28,7 +28,8 @@
 
 #include "sslsocket.h"
 
-SSLSocket::SSLSocket()
+SSLSocket::SSLSocket(QObject* parent,const char* name)
+  : KStreamSocket("","",parent,name)
 {
 	kssl = 0L;
 	cc = new KSSLCertificateCache;

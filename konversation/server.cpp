@@ -261,7 +261,7 @@ void Server::init(KonversationMainWindow* mainWindow)
   if(!m_useSSL)
     serverSocket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
   else
-    m_serverSSLSocket = new SSLSocket();
+    m_serverSSLSocket = new SSLSocket(this, "serverSSLSocket");
 
   setMainWindow(mainWindow);
 
