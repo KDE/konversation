@@ -45,7 +45,14 @@ class NickInfo : public QObject, public KShared
     // Get properties of NickInfo object.
     QString getNickname() const;
     QString getHostmask() const;
+    /** Currently return whether the user has set themselves to away with /away.
+     *  May be changed in the future to parse the nick string and see if it contains
+     *  "|away" or "|afk"  or something.
+     */
     bool isAway();
+    /** A helper function.  Searches the server it is on to see if it's online.
+      */
+    bool isOnline();
     QString getAwayMessage();
     QString getIdentdInfo();
     QString getVersionInfo();

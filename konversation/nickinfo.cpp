@@ -50,6 +50,12 @@ NickInfo::~NickInfo()
 // Get properties of NickInfo object.
 QString NickInfo::getNickname() const { return nickname; }
 QString NickInfo::getHostmask() const { return hostmask; }
+
+bool NickInfo::isOnline() {
+	if(!owningServer) return false;
+	if(!owningServer->getNicksOnline()) return false;
+	return owningServer->getNicksOnline()->contains(nickname.lower());
+}
 bool NickInfo::isAway() { return away; }
 QString NickInfo::getAwayMessage() { return awayMessage; }
 QString NickInfo::getIdentdInfo() { return identdInfo; }
