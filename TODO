@@ -14,7 +14,6 @@ SHORT-TERM (URGENT):
 - Don't trigger events when we did highlight ourselves
 - Add ETA counter for DCC transfers
 - Show / Hide tab types (status tabs ect.)
-- "/part" may close Queries, too.
 - Hide all "technical" messages from channels and queries or redirect them into the status view
 - Measure away time and make it available via placeholder
 - Support "CTCP-DCC reply from <nickname>: REJECT SEND <filename> <reason>"
