@@ -199,7 +199,7 @@ public:
   // on the original data
   inline void dup(KResolverResultsPrivate*& d)
   {
-    if (!d->count > 1)
+    if (!(d->count > 1))
       {
 	d->deref();
 	KResolverResultsPrivate *e = new KResolverResultsPrivate(*d);
