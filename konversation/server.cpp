@@ -892,7 +892,7 @@ void Server::incoming()
   for( int nextLFposition ; ( nextLFposition = qcsBuffer.find('\n', lastLFposition+1) ) != -1 ; lastLFposition = nextLFposition )
     qcsBufferLines << qcsBuffer.mid(lastLFposition+1, nextLFposition-lastLFposition-1);
 
-  // remember an incompleted line (splitted by a packet)
+  // remember an incompleted line (split by a packet)
   qcsRemainBuffer = qcsBuffer.right(qcsBuffer.length()-lastLFposition-1);
 
   while(qcsBufferLines.count())
@@ -909,36 +909,36 @@ void Server::incoming()
       QString channelKey;
       QTextCodec* tmpCodec = QTextCodec::codecForName(identity->getCodec().ascii());
       // pre-parse to know which channel the message belongs to
-      QStringList lineSplitted = QStringList::split(" ",tmpCodec->toUnicode(qcsBufferLines.front()));
-      if(1 <= lineSplitted.count())  // for safe
-        if(lineSplitted[0][0] == ':')
+      QStringList lineSplit = QStringList::split(" ",tmpCodec->toUnicode(qcsBufferLines.front()));
+      if(1 <= lineSplit.count())  // for safe
+        if(lineSplit[0][0] == ':')
         {
-          if(!lineSplitted[0].contains('!'))
+          if(!lineSplit[0].contains('!'))
             isServerMessage = true;
           else
-            senderNick = lineSplitted[0].mid(1, lineSplitted[0].find('!')-1);
-          lineSplitted.pop_front();  // remove prefix
+            senderNick = lineSplit[0].mid(1, lineSplit[0].find('!')-1);
+          lineSplit.pop_front();  // remove prefix
         }
       // set channel key
-      QString command = lineSplitted[0].lower();
+      QString command = lineSplit[0].lower();
       if(isServerMessage)
       {
-        if(3 <= lineSplitted.count())
+        if(3 <= lineSplit.count())
         {
           if( command == "332" )  // RPL_TOPIC
-            channelKey = lineSplitted[2];
+            channelKey = lineSplit[2];
           if( command == "372" )  // RPL_MOTD
             channelKey = "!status";
         }
       }
       else
       {
-        if(2 <= lineSplitted.count())
+        if(2 <= lineSplit.count())
         {
           // query
           if( ( command == "privmsg" ||
                 command == "notice"  ) &&
-              lineSplitted[1] == getNickname() )
+              lineSplit[1] == getNickname() )
             channelKey = senderNick;
           // channel message
           else if( command == "privmsg" ||
@@ -947,7 +947,7 @@ void Server::incoming()
                    command == "kick"    ||
                    command == "part"    ||
                    command == "topic"   )
-          channelKey = lineSplitted[1];
+          channelKey = lineSplit[1];
         }
       }
       // check setting
