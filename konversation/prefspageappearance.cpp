@@ -84,8 +84,8 @@ void PrefsPageAppearance::updateFonts()
   QFont textFont=preferences->getTextFont();
   QFont listFont=preferences->getListFont();
 
-  textPreviewLabel->setText(QString("%1 %2").arg(textFont.family()).arg(textFont.pointSize()));
-  listPreviewLabel->setText(QString("%1 %2").arg(listFont.family()).arg(listFont.pointSize()));
+  textPreviewLabel->setText(QString("%1 %2").arg(textFont.family().section(':',0,0)).arg(textFont.pointSize()));
+  listPreviewLabel->setText(QString("%1 %2").arg(listFont.family().section(':',0,0)).arg(listFont.pointSize()));
 
   textPreviewLabel->setFont(textFont);
   listPreviewLabel->setFont(listFont);
