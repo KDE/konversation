@@ -108,7 +108,7 @@ Preferences::Preferences()
   setBeep(false);
   setRawLog(false);
 
-  setVersionReply(i18n("Konversation %1 Build %2 (C)2002-2004 by the Konversation team").arg(VERSION).arg(COMMIT));
+  setVersionReply(QString("Konversation %1 Build %2 (C)2002-2004 by the Konversation team").arg(VERSION).arg(COMMIT));
   setDccPath(user.homeDir()+"/dccrecv");
   setDccAddPartner(false);
   setDccCreateFolder(false);
