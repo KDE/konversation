@@ -344,7 +344,7 @@ void OutputFilter::parseAway(const QString &reason)
   if(reason.isEmpty())
   {
     if(identity.getShowAwayMessage())
-      sendToAllChannels(identity.getReturnMessage());
+      emit sendToAllChannels(identity.getReturnMessage());
 
     toServer="AWAY";
   }
@@ -353,7 +353,7 @@ void OutputFilter::parseAway(const QString &reason)
     if(identity.getShowAwayMessage())
     {
       QString message=identity.getAwayMessage();
-      sendToAllChannels(message.replace(QRegExp("%s",false),reason));
+      emit sendToAllChannels(message.replace(QRegExp("%s",false),reason));
     }
 
     toServer="AWAY :"+reason;
