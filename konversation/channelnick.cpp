@@ -214,12 +214,12 @@ QString ChannelNick::tooltip() {
     dirty=true;
   }
   if(nickInfo->isAway() && !nickInfo->getAwayMessage().isEmpty()) {
-     tooltip << "<tr><td><b>" << i18n("Away Message") << ": </b></td><td>" << nickInfo->getAwayMessage() << "</td></tr>";
-     dirty=true;
+    tooltip << "<tr><td><b>" << i18n("Away Message") << ": </b></td><td>" << nickInfo->getAwayMessage() << "</td></tr>";
+    dirty=true;
   }
   if(!nickInfo->getOnlineSince().toString().isEmpty()) {
-     tooltip << "<tr><td><b>" << i18n("Online Since") << ": </b></td><td>" << nickInfo->getOnlineSince().toString("ddd d MMMM yyyy h:mm ap") << "</td></tr>";
-     dirty=true;
+    tooltip << "<tr><td><b>" << i18n("Online Since") << ": </b></td><td>" << nickInfo->getPrettyOnlineSince() << "</td></tr>";
+    dirty=true;
   }
   QStringList modes;
   if(isOp()) modes << i18n("Operator");

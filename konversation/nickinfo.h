@@ -55,6 +55,11 @@ class NickInfo : public QObject, public KShared
     QString getNetServer();
     QString getNetServerInfo();
     QDateTime getOnlineSince();
+    /** This returns a string of the date and time that the user has been online since.
+     *  It will return null if a /whois hasn't been issued yet for this nickinfo
+     *  @return a date-string in the form of "Today 4:23pm", "Yesteerday 12:32pm" or "Mon 3 Mar 2004 8:02am"
+     */
+    QString getPrettyOnlineSince();
     // Return the Server object that owns this NickInfo object.
     Server* getServer();
      
@@ -73,6 +78,11 @@ class NickInfo : public QObject, public KShared
     void setRealName(const QString& newRealName);
     void setNetServer(const QString& newNetServer);
     void setNetServerInfo(const QString& newNetServerInfo);
+    /** Updates the time online since.
+     *  This will be called from the results of a /whois
+     *  This function also calculates and sets prettyOnlineSince
+     *  @see getPrettyOnlineSince()
+     */
     void setOnlineSince(const QDateTime& datetime);
     void refreshAddressee();
     
@@ -89,6 +99,7 @@ class NickInfo : public QObject, public KShared
     QString netServer;
     QString netServerInfo;
     QDateTime onlineSince;
+    QString prettyOnlineSince;
     KABC::Addressee addressee;
   signals:
     void nickInfoChanged(void);
