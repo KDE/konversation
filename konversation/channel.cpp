@@ -1900,9 +1900,10 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
   }
 
   QRegExp regexp(prefix + QRegExp::escape(pattern.lower()));
+  QPtrListIterator<Nick> it(*this);
 
-  for(Nick* n = first(); n; n = next()) {
-    newNick = n->getNickname();
+  while(it.current() != 0) {
+    newNick = it.current()->getNickname();
 
     if ( !prefix.isEmpty() && newNick.contains(prefixCharacter) )
        newNick = newNick.section( prefixCharacter,1 );
@@ -1910,23 +1911,29 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     if(newNick.lower().find(regexp) != -1) {
       found.append(newNick);
     }
+
+    ++it;
   }
 
   if(found.count() > 1) {
     bool ok = true;
-    int i = 0;
+    unsigned int patternLength = pattern.length();
+    QString firstNick = found[0];
+    unsigned int firstNickLength = firstNick.length();
+    unsigned int foundCount = found.count();
 
-    while(ok && ((pattern.length() + i) < found[0].length())) {
-      i++;
-      QStringList tmp = found.grep(found[0].left(pattern.length() + i), false);
-      if(tmp.count() != found.count()) {
+    while(ok && ((patternLength) < firstNickLength)) {
+      ++patternLength;
+      QStringList tmp = found.grep(firstNick.left(patternLength), false);
+
+      if(tmp.count() != foundCount) {
         ok = false;
-        i -= 1;
+        --patternLength;
       }
     }
 
     complete = false;
-    return found[0].left(pattern.length() + i);
+    return firstNick.left(patternLength);
   } else if(found.count() == 1) {
     complete = true;
     return found[0];
