@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="13">
+<kpartgui name="konversation" version="14">
 
   <MenuBar>
     <Menu name="file">
@@ -8,8 +8,6 @@
     </Menu>
     <Menu name="actions">
       <Text>&amp;Actions</Text>
-      <Action name="find_text" />
-      <Separator />
       <Action name="irc_colors" />
       <Action name="insert_remember_line" />
       <Separator />

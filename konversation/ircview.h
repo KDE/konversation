@@ -67,6 +67,7 @@ class IRCView : public KTextBrowser
     void appendCommandMessage(const QString& command,const QString& message,bool important, bool parseURL = true);
     void appendBacklogMessage(const QString& firstColumn,const QString& message);
     void search();
+    void searchAgain();
 
     void pageUp();
     void pageDown();
@@ -121,6 +122,12 @@ class IRCView : public KTextBrowser
     static QChar RLO;
     static QChar LRO;
     static QChar PDF;
+
+    bool caseSensitive;
+    bool wholeWords;
+    bool forward;
+    bool fromCursor;
+    QString pattern;
 };
 
 #endif

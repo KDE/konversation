@@ -144,7 +144,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     void goToTab(int page);
 
-    void findTextShortcut();
+    void findText();
+    void findNextText();
     void addIRCColor();
     void clearWindow();
     void closeQueries();

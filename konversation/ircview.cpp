@@ -791,55 +791,56 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
 
 void IRCView::search()
 {
-  bool caseSensitive=false;
-  bool wholeWords=false;
-  bool forward=false;
-  bool fromCursor=false;
+  caseSensitive = false;
+  wholeWords = false;
+  forward = false;
+  fromCursor = false;
 
-  QString pattern=SearchDialog::search(this,&caseSensitive,&wholeWords,&forward,&fromCursor);
-  if(!pattern.isEmpty())
+  pattern = SearchDialog::search(this, &caseSensitive, &wholeWords, &forward, &fromCursor);
+
+  if(!fromCursor)
   {
-    // don't change search variables if fromCursor
-    if(fromCursor)
+    if(forward)
     {
-      // next search must begin one index before / after the last search
-      // depending on the search direction.
-      if(forward)
-      {
-        findIndex++;
-        if(findIndex==paragraphLength(findParagraph))
-        {
-          findIndex=0;
-          findParagraph++;
-        }
-      }
-      else
-      {
-        if(findIndex) findIndex--;
-        else
-        {
-          findParagraph--;
-          findIndex=paragraphLength(findParagraph);
-        }
-      }
+      findParagraph = 1;
+      findIndex = 1;
     }
-    // start over from beginning / end
     else
     {
-      if(forward)
+      findParagraph = paragraphs();
+      findIndex = paragraphLength(paragraphs());
+    }
+  }
+  
+  searchAgain();
+}
+
+void IRCView::searchAgain()
+{
+  if(!pattern.isEmpty())
+  {
+    // next search must begin one index before / after the last search
+    // depending on the search direction.
+    if(forward)
+    {
+      findIndex++;
+      if(findIndex == paragraphLength(findParagraph))
       {
-        findParagraph=1;
-        findIndex=1;
+        findIndex = 0;
+        findParagraph++;
       }
-      else
-      {
-        findParagraph=paragraphs();
-        findIndex=paragraphLength(paragraphs());
+    } else {
+      if(findIndex) {
+        findIndex--;
+      } else {
+        findParagraph--;
+        findIndex = paragraphLength(findParagraph);
       }
     }
 
-    if(!find(pattern,caseSensitive,wholeWords,forward,&findParagraph,&findIndex))
+    if(!find(pattern, caseSensitive, wholeWords, forward, &findParagraph, &findIndex)) {
       KMessageBox::information(this,i18n("No matches found for \"%1\".").arg(pattern),i18n("Information"));
+    }
   }
 }
 

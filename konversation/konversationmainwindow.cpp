@@ -152,7 +152,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new TabAction(i18n("Go to Tab Number %1").arg(10),9,KShortcut("Alt+0"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_0");
 
   new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
-  new KAction(i18n("&Find Text..."),"find",KShortcut("F3"),this,SLOT(findTextShortcut()),actionCollection(),"find_text");
+  KStdAction::find(this, SLOT(findText()), actionCollection());
+  KStdAction::findNext(this, SLOT(findNextText()), actionCollection());
   new KAction(i18n("&Insert IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors");
   new KAction(i18n("Insert &Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line");
   new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
@@ -1046,7 +1047,7 @@ void KonversationMainWindow::goToTab(int page)
 #endif
 }
 
-void KonversationMainWindow::findTextShortcut()
+void KonversationMainWindow::findText()
 {
   if(searchView==0)
   {
@@ -1057,6 +1058,14 @@ void KonversationMainWindow::findTextShortcut()
   else
   {
     searchView->getTextView()->search();
+  }
+}
+
+void KonversationMainWindow::findNextText()
+{
+  if(searchView)
+  {
+    searchView->getTextView()->searchAgain();
   }
 }
 
