@@ -27,13 +27,16 @@
 Nick::Nick(KListView *listView,
            ChannelNickPtr channelnick)
 {
-  listViewItem=new LedListViewItem(listView,channelnick->getNickname(),channelnick->getHostmask(),this);
+  Q_ASSERT(channelnick);
+  if(!channelnick) return;
+  
   setAdmin(channelnick->isAdmin());
   setOwner(channelnick->isOwner());
   setOp(channelnick->isOp());
   setHalfop(channelnick->isHalfOp());
   setVoice(channelnick->hasVoice());
   channelnickptr = channelnick;
+  listViewItem=new LedListViewItem(listView,channelnick->getNickname(),channelnick->getHostmask(),this);
 }
 #else
 Nick::Nick(KListView* listView,
