@@ -45,8 +45,8 @@ KonversationApplication::KonversationApplication()
 
 #if QT_VERSION >= 0x030100
   // Setup system codec
-  // FIXME: change this to use per-identity codecs!
-  QTextCodec::setCodecForCStrings(QTextCodec::codecForName(preferences.getCodec().ascii()));
+  // TODO: check if this works now as intended
+  QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
 #endif
 
   // open main window
@@ -273,7 +273,6 @@ void KonversationApplication::readOptions()
   preferences.setShowQuickButtons(config->readBoolEntry("ShowQuickButtons",preferences.getShowQuickButtons()));
   preferences.setShowModeButtons(config->readBoolEntry("ShowModeButtons",preferences.getShowModeButtons()));
   preferences.setCloseButtonsOnTabs(config->readBoolEntry("CloseButtonsOnTabs",preferences.getCloseButtonsOnTabs()));
-  preferences.setCodec(config->readEntry("Codec",preferences.getCodec()));
 
   preferences.setAutoUserhost(config->readBoolEntry("AutoUserhost",preferences.getAutoUserhost()));
 
@@ -343,6 +342,8 @@ void KonversationApplication::readOptions()
 
       newIdentity->setPartReason(config->readEntry("PartReason"));
       newIdentity->setKickReason(config->readEntry("KickReason"));
+
+      newIdentity->setCodec(config->readEntry("Codec"));
 
       preferences.addIdentity(newIdentity);
     } // endfor
@@ -518,7 +519,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ShowQuickButtons",preferences.getShowQuickButtons());
   config->writeEntry("ShowModeButtons",preferences.getShowModeButtons());
   config->writeEntry("CloseButtonsOnTabs",preferences.getCloseButtonsOnTabs());
-  config->writeEntry("Codec",preferences.getCodec().stripWhiteSpace());
 
   config->writeEntry("AutoUserhost",preferences.getAutoUserhost());
 
@@ -576,6 +576,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->writeEntry("ReturnMessage",identity->getReturnMessage());
     config->writeEntry("PartReason",identity->getPartReason());
     config->writeEntry("KickReason",identity->getKickReason());
+    config->writeEntry("Codec",identity->getCodec().stripWhiteSpace());
   } // endfor
 
   config->setGroup("Notify List");

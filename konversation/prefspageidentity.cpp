@@ -19,12 +19,16 @@
 #include <qhbox.h>
 #include <qpushbutton.h>
 #include <qcheckbox.h>
+#include <qcombobox.h>
+#include <qstringlist.h>
+#include <qtextcodec.h>
 
 #include <klineeditdlg.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kcombobox.h>
 #include <klineedit.h>
+#include <kcharsets.h>
 
 #include "prefspageidentity.h"
 #include "preferences.h"
@@ -54,6 +58,28 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   QLabel* loginLabel=new QLabel(i18n("Ident:"),parentFrame);
   loginInput=new KLineEdit(parentFrame);
 
+  // encoding combo box
+  QLabel* codecLabel=new QLabel(i18n("Encoding:"),parentFrame);
+  codecComboBox=new QComboBox(parentFrame);
+
+  // get list of all encodings available
+  encodings=KGlobal::charsets()->descriptiveEncodingNames();
+
+  // from ksirc: remove utf16/ucs2 as it just doesn't work for IRC
+  QStringList::Iterator iterator=encodings.begin();
+  while(iterator!=encodings.end())
+  {
+    if((*iterator).find("utf16")!=-1 ||
+       (*iterator).find("iso-10646")!=-1)
+      iterator=encodings.remove(iterator);
+    else
+      ++iterator;
+  }
+
+  // add encodings to combo box
+  codecComboBox->insertStringList(encodings);
+
+  // nickname alternatives
   nick0=new KLineEdit(parentFrame);
   nick1=new KLineEdit(parentFrame);
   nick2=new KLineEdit(parentFrame);
@@ -62,7 +88,7 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   bot=new KLineEdit(parentFrame);
   password=new KLineEdit(parentFrame);
   password->setEchoMode(QLineEdit::Password);
-  
+
   QLabel* partLabel=new QLabel(i18n("Part reason:"),parentFrame);
   partInput=new KLineEdit(parentFrame);
 
@@ -97,11 +123,13 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   identityLayout->addMultiCellWidget(identityCombo,row,row,1,2);
   identityLayout->addWidget(renameButton,row,3);
   row++;
-  identityLayout->addWidget(realNameLabel,row,0);
-  identityLayout->addMultiCellWidget(realNameInput,row,row,1,3);
+  identityLayout->addWidget(codecLabel,row,0);
+  identityLayout->addMultiCellWidget(codecComboBox,row,row,1,3);
   row++;
-  identityLayout->addWidget(loginLabel,row,0);
-  identityLayout->addMultiCellWidget(loginInput,row,row,1,3);
+  identityLayout->addWidget(realNameLabel,row,0);
+  identityLayout->addWidget(realNameInput,row,1);
+  identityLayout->addWidget(loginLabel,row,2);
+  identityLayout->addWidget(loginInput,row,3);
   row++;
   identityLayout->addWidget(new QLabel(i18n("Nickname %1:").arg(1),parentFrame),row,0);
   identityLayout->addWidget(nick0,row,1);
@@ -142,34 +170,41 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   // Set up signals / slots for identity page
   connect(identityCombo,SIGNAL (activated(int)),this,SLOT (updateIdentity(int)) );
 //  connect(identityCombo,SIGNAL (textChanged(const QString&)),this,SLOT (renameIdentity(const QString&)) );
-  
+
+  connect(codecComboBox,SIGNAL (activated(int)),this,SLOT (encodingChanged(int)));
+
   connect(renameButton,SIGNAL (clicked()),this,SLOT (renameIdentity()) );
-  
+
   connect(realNameInput,SIGNAL (textChanged(const QString&)),this,SLOT (realNameChanged(const QString&)) );
-  
+
   connect(loginInput,SIGNAL (textChanged(const QString&)),this,SLOT (loginChanged(const QString&)) );
-  
+
   connect(nick0,SIGNAL (textChanged(const QString&)),this,SLOT (nick0Changed(const QString&)) );
   connect(nick1,SIGNAL (textChanged(const QString&)),this,SLOT (nick1Changed(const QString&)) );
   connect(nick2,SIGNAL (textChanged(const QString&)),this,SLOT (nick2Changed(const QString&)) );
   connect(nick3,SIGNAL (textChanged(const QString&)),this,SLOT (nick3Changed(const QString&)) );
-  
+
   connect(bot,SIGNAL (textChanged(const QString&)), this,SLOT (botChanged(const QString&)) );
   connect(password,SIGNAL (textChanged(const QString&)), this,SLOT (passwordChanged(const QString&)) );
-  
+
   connect(partInput,SIGNAL (textChanged(const QString&)),this,SLOT (partReasonChanged(const QString&)) );
   connect(kickInput,SIGNAL (textChanged(const QString&)),this,SLOT (kickReasonChanged(const QString&)) );
-  
+
   connect(showAwayMessageCheck,SIGNAL (stateChanged(int)),this,SLOT (showAwayMessageChanged(int)) );
   connect(awayInput,SIGNAL (textChanged(const QString&)),this,SLOT (awayMessageChanged(const QString&)) );
   connect(unAwayInput,SIGNAL (textChanged(const QString&)),this,SLOT (unAwayMessageChanged(const QString&)) );
-  
+
   connect(addIdentityButton,SIGNAL (clicked()),this,SLOT(addIdentity()) );
   connect(removeIdentityButton,SIGNAL (clicked()),this,SLOT(removeIdentity()) );
 }
 
 PrefsPageIdentity::~PrefsPageIdentity()
 {
+}
+
+void PrefsPageIdentity::encodingChanged(int newEncodingIndex)
+{
+  if(newEncodingIndex) identity->setCodec(KGlobal::charsets()->encodingForName(codecComboBox->text(newEncodingIndex)));
 }
 
 void PrefsPageIdentity::realNameChanged(const QString& newRealName)
@@ -255,12 +290,21 @@ void PrefsPageIdentity::updateIdentity(int number)
   if(number==0) defaultText->show();
   else defaultText->hide();
 
-  // TODO: Enable the button when all's fine
   removeIdentityButton->setEnabled((number!=0));
-//  removeIdentityButton->setEnabled(false);
 
   loginInput->setText(identity->getIdent());
   realNameInput->setText(identity->getRealName());
+
+  // find encoding and set combo box accordingly
+  QString encoding="( "+identity->getCodec().lower()+" )";
+  for(unsigned int index=0;index<encodings.count();index++)
+  {
+    if(encodings[index].lower().find(encoding)!=-1)
+    {
+      codecComboBox->setCurrentItem(index);
+      break;
+    }
+  }
 
   nick0->setText(identity->getNickname(0));
   nick1->setText(identity->getNickname(1));

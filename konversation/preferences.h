@@ -244,9 +244,6 @@ class Preferences : public QObject
     void setCommandChar(const QString &newCommandChar);
     QString getCommandChar();
 
-    void setCodec(const QString &newCodec);
-    QString getCodec();
-
     QFont getTextFont();
     QFont getListFont();
     void setTextFont(QFont newFont);
@@ -410,8 +407,6 @@ class Preferences : public QObject
     QPtrList<Ignore> ignoreList;
     QPtrList<Identity> identityList;
     QPtrList<Highlight> hilightList;
-
-    QString codec;
 
     // IRC colors
     QStringList ircColorList;

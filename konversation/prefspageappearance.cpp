@@ -19,7 +19,6 @@
 #include <qhbox.h>
 #include <qpushbutton.h>
 #include <qcombobox.h>
-#include <qtextcodec.h>
 #include <qheader.h>
 #include <qhgroupbox.h>
 #include <qvgroupbox.h>
@@ -59,35 +58,6 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   QPushButton* textFontButton=new QPushButton(i18n("Choose..."),parentFrame,"text_font_button");
   QPushButton* listFontButton=new QPushButton(i18n("Choose..."),parentFrame,"list_font_button");
-
-  QLabel* codecLabel=new QLabel(i18n("Encoding:"),parentFrame);
-  codecList=new QComboBox(parentFrame);
-
-  QStringList encodings=KGlobal::charsets()->descriptiveEncodingNames();
-
-  // from ksirc: remove utf16/ucs2 as it just doesn't work for IRC
-  QStringList::Iterator iterator=encodings.begin();
-  while(iterator!=encodings.end())
-  {
-    if((*iterator).find("utf16")!=-1 ||
-       (*iterator).find("iso-10646")!=-1)
-      iterator=encodings.remove(iterator);
-    else
-      ++iterator;
-  }
-
-  codecList->insertStringList(encodings);
-
-  // find actual encoding and set combo box accordingly
-  encoding="( "+preferences->getCodec().lower()+" )";
-  for(unsigned int index=0;index<encodings.count();index++)
-  {
-    if(encodings[index].lower().find(encoding)!=-1)
-    {
-      codecList->setCurrentItem(index);
-      break;
-    }
-  }
 
   updateFonts();
 
@@ -209,9 +179,6 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   appearanceLayout->addWidget(listPreviewLabel,row,1);
   appearanceLayout->addWidget(listFontButton,row,2);
   row++;
-  appearanceLayout->addWidget(codecLabel,row,0);
-  appearanceLayout->addMultiCellWidget(codecList,row,row,1,2);
-  row++;
   appearanceLayout->addMultiCellWidget(timestampBox,row,row,0,2);
   row++;
   appearanceLayout->addMultiCellWidget(showButtonsBox,row,row,0,2);
@@ -237,8 +204,6 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   connect(textFontButton,SIGNAL (clicked()),this,SLOT (textFontClicked()) );
   connect(listFontButton,SIGNAL (clicked()),this,SLOT (listFontClicked()) );
-
-  connect(codecList,SIGNAL (activated(int)),this,SLOT (encodingChanged(int)));
 
   connect(doTimestamping,SIGNAL (stateChanged(int)),this,SLOT (timestampingChanged(int)) );
 
@@ -282,11 +247,6 @@ void PrefsPageAppearance::timestampingChanged(int state)
   doTimestamping->setChecked(state==2);
   timestampFormat->setEnabled(state==2);
   formatLabel->setEnabled(state==2);
-}
-
-void PrefsPageAppearance::encodingChanged(int newEncodingIndex)
-{
-  if(newEncodingIndex) encoding=codecList->text(newEncodingIndex);
 }
 
 void PrefsPageAppearance::useSpacingChanged(int state)
@@ -338,12 +298,6 @@ void PrefsPageAppearance::applyPreferences()
   preferences->setShowQuickButtons(showQuickButtons->isChecked());
   preferences->setShowModeButtons(showModeButtons->isChecked());
   preferences->setCloseButtonsOnTabs(closeButtonsCheck->isChecked());
-
-  if(encoding.startsWith("utf 16"))
-    preferences->setCodec(QString::null);
-  else
-    preferences->setCodec(KGlobal::charsets()->encodingForName(encoding));
-
   preferences->setAutoUserhost(autoUserhostCheck->isChecked());
   preferences->setUseSpacing(useSpacingCheck->isChecked());
   preferences->setSpacing(spacingSpin->value());

@@ -1,7 +1,6 @@
 berkus: Doxify the source
 berkus: Docufy the app
 berkus: Logfile reader
-berkus: Move Encoding into identity
 berkus: Logrotate with timer or at shutdown, compress rotated logs
 
 Eisfuchs: Automatic/Manual reconnect on long lag times

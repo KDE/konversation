@@ -61,6 +61,9 @@ class Identity
     void setReturnMessage(const QString& message);
     QString getReturnMessage() const;
 
+    void setCodec(const QString &newCodec);
+    QString getCodec() const;
+
   protected:
     QString name;
 
@@ -78,6 +81,7 @@ class Identity
     bool showAwayMessages;
     QString awayMessage;
     QString returnMessage;
+    QString codec;
 };
 
 #endif

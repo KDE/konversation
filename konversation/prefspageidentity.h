@@ -25,6 +25,7 @@
 
 class QLabel;
 class QCheckBox;
+class QComboBox;
 class QPushButton;
 
 class KLineEdit;
@@ -46,6 +47,8 @@ class PrefsPageIdentity : public PrefsPage
   protected slots:
     void realNameChanged(const QString& newRealName);
     void loginChanged(const QString& newlogin);
+
+    void encodingChanged(int newEncodingIndex);
 
     void nick0Changed(const QString& newNick);
     void nick1Changed(const QString& newNick);
@@ -76,10 +79,14 @@ class PrefsPageIdentity : public PrefsPage
 
     KComboBox* identityCombo;
 
+    QStringList encodings;
+
     QLabel* defaultText;
 
     KLineEdit* realNameInput;
     KLineEdit* loginInput;
+
+    QComboBox* codecComboBox;
 
     KLineEdit* nick0;
     KLineEdit* nick1;

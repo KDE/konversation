@@ -19,6 +19,7 @@ Changes from 0.12 to 0.13
 - Applied a patch by Peter Simonsson (thanks!)
 - Patch added Color picker, IRC colors and KNotify events
 - Added support for command aliases
+- Encodings are now on per-identity basis
 
 Changes from 0.11 to 0.12
 - Now handles multi server mode in one single window

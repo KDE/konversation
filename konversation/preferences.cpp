@@ -22,7 +22,6 @@
 #include <klocale.h>
 
 #include <qpalette.h>
-#include <qtextcodec.h>
 
 #include "preferences.h"
 #include "prefsdialog.h"
@@ -132,8 +131,6 @@ Preferences::Preferences()
 
   setTimestamping(true);
   setTimestampFormat("hh:mm");
-
-  setCodec(QTextCodec::codecForLocale()->name());
 
   setCommandChar("/");
   setChannelDoubleClickAction("/WHOIS %u%n");
@@ -396,10 +393,6 @@ QString Preferences::getNickname(int index) { return identityList.at(0)->getNick
 QStringList Preferences::getNicknameList() { return identityList.at(0)->getNicknameList(); }
 void Preferences::setNickname(int index,const QString &newName) { identityList.at(0)->setNickname(index,newName); }
 void Preferences::setNicknameList(const QStringList &newList) { identityList.at(0)->setNicknameList(newList); }
-
-// FIXME: use per-identity codec setting
-void Preferences::setCodec(const QString &newCodec) { codec=newCodec; }
-QString Preferences::getCodec() { return codec; }
 
 void Preferences::setTabPlacement(TabPlacement where) { tabPlacement=where; }
 Preferences::TabPlacement Preferences::getTabPlacement() { return tabPlacement; }

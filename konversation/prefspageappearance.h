@@ -47,7 +47,6 @@ class PrefsPageAppearance : public PrefsPage
     void textFontClicked();
     void listFontClicked();
     void timestampingChanged(int state);
-    void encodingChanged(int newEncodingIndex);
 
     void useSpacingChanged(int state);
 
@@ -66,8 +65,6 @@ class PrefsPageAppearance : public PrefsPage
 
     QFont textFont;
     QFont listFont;
-
-    QString encoding;
 
     QCheckBox* doTimestamping;
     QCheckBox* showQuickButtons;

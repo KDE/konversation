@@ -14,6 +14,8 @@
   $Id$
 */
 
+#include <qtextcodec.h>
+
 #include <kdebug.h>
 
 #include "identity.h"
@@ -24,6 +26,8 @@ Identity::Identity()
   nicknameList.append(QString::null);
   nicknameList.append(QString::null);
   nicknameList.append(QString::null);
+
+  setCodec(QTextCodec::codecForLocale()->name());
 }
 
 Identity::~Identity()
@@ -54,7 +58,7 @@ void Identity::setKickReason(const QString& reason)     { kickReason=reason; }
 QString Identity::getKickReason() const                 { return kickReason; }
 
 void Identity::setShowAwayMessage(bool state)           { showAwayMessages=state; }
-bool Identity::getShowAwayMessage() const                    { return showAwayMessages; }
+bool Identity::getShowAwayMessage() const               { return showAwayMessages; }
 
 void Identity::setAwayMessage(const QString& message)   { awayMessage=message; }
 QString Identity::getAwayMessage() const                { return awayMessage; }
@@ -69,3 +73,6 @@ void Identity::setNicknameList(const QStringList& newList)
   while(nicknameList.count()!=4) nicknameList.append(QString::null);
 }
 QStringList Identity::getNicknameList() const           { return nicknameList; }
+
+void Identity::setCodec(const QString &newCodec)        { codec=newCodec; }
+QString Identity::getCodec() const                      { return codec; }
