@@ -59,7 +59,7 @@ ServerWindow::ServerWindow(Server* server) : KMainWindow()
 
   addStatusView();
 
-  addDccPanel();
+//  addDccPanel();
   connect( windowContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changedView(QWidget*)) );
 
   createGUI();
