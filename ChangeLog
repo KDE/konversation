@@ -23,6 +23,7 @@ Changes from 0.11 to 0.12
 - Tabs now blink in the last highlight color to indicate important text
 - Tabs don't get to front anymore while the user is typing in an input line
 - Added shortcut editor dialog
+- Added konsole panel (thanks to Mickael Marchand)
 
 Changes from 0.10 to 0.11
 - Added a patch by Bart Verwilst to provide automatic service registration (thanks!)

@@ -123,6 +123,7 @@ class KonversationMainWindow : public KMainWindow
     void closeColorConfiguration(QSize windowSize);
 
     void openChannelList();
+    void openKonsole();
 
     void nextTab();
     void previousTab();
@@ -156,6 +157,7 @@ class KonversationMainWindow : public KMainWindow
 
     void goToTab(int page);
 
+    void closeKonsoleView(ChatWindow* w);
     void closeDccPanel();
     void deleteDccPanel();
 

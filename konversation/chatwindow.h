@@ -49,7 +49,8 @@ class ChatWindow : public QVBox
       RawLog,
       Notice,
       SNotice,
-      ChannelList
+      ChannelList,
+      Konsole
     };
 
     void setServer(Server* newServer);

@@ -55,6 +55,7 @@ int main(int argc, char* argv[])
   aboutData.addAuthor("Matthias Gierlings",0 /* I18N_NOOP("Color configurator, Highlight dialog") */,"gismore@users.sourceforge.net");
   aboutData.addAuthor("Alex Zepeda",0 /* I18N_NOOP("DCOP interface") */,"garbanzo@hooked.net");
   aboutData.addAuthor("Stanislav Karchebny",0 /* I18N_NOOP("Non-Latin1-Encodings, russian translation") */,"berk@inbox.ru");
+  aboutData.addAuthor("Mickael Marchand",0 /* I18N_NOOP("Konsole part view") */,"marchand@kde.org");
 
   KCmdLineArgs::init(argc,argv,&aboutData);
 

@@ -41,6 +41,7 @@
 #include "notifydialog.h"
 #include "nicksonline.h"
 #include "colorconfiguration.h"
+#include "konsolepanel.h"
 
 KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 {
@@ -72,7 +73,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); // options_show_toolbar
   showStatusBarAction=KStdAction::showStatusbar(this,SLOT(showStatusbar()),actionCollection()); // options_show_statusbar
   showMenuBarAction=KStdAction::showMenubar(this,SLOT(showMenubar()),actionCollection()); // options_show_menubar
-  
+
   KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
   KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
@@ -83,6 +84,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
   new KAction(i18n("Configure Colors"), 0, 0, this, SLOT(openColorConfiguration()), actionCollection(), "open_colors_window");
   new KAction(i18n("Channel list"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
+// TODO: Switch to 18n() after i18n-Freeze has ended
+  new KAction(QString("Konsole"), 0, 0, this, SLOT(openKonsole()), actionCollection(), "open_konsole");
+//  new KAction(i18n("Open a Konsole"), 0, 0, this, SLOT(openKonsole()), actionCollection(), "open_konsole");
 
   // Actions to navigate through the different pages
   new KAction(i18n("Next Tab"),0,KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
@@ -238,14 +242,29 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     else if(viewType==ChatWindow::Channel)      view->closeYourself();
     else if(viewType==ChatWindow::ChannelList)  view->closeYourself();
     else if(viewType==ChatWindow::Query)        view->closeYourself();
-    else if(viewType==ChatWindow::DccPanel)     closeDccPanel();
     else if(viewType==ChatWindow::RawLog)       view->closeYourself();
+
+    else if(viewType==ChatWindow::DccPanel)     closeDccPanel();
+    else if(viewType==ChatWindow::Konsole)      closeKonsoleView(view);
+
 /*
     else if(viewType==ChatWindow::DccChat);
     else if(viewType==ChatWindow::Notice);
     else if(viewType==ChatWindow::SNotice);
 */
   }
+}
+
+void KonversationMainWindow::openKonsole()
+{
+  KonsolePanel* panel=new KonsolePanel(getViewContainer());
+  addView(panel,3,i18n("Konsole"));
+}
+
+void KonversationMainWindow::closeKonsoleView(ChatWindow* w)
+{
+  getViewContainer()->removePage(w);
+  delete w;
 }
 
 void KonversationMainWindow::openChannelList()

@@ -14,6 +14,7 @@
       <Action name="open_ignore_window" />
       <Action name="open_colors_window" />
       <Action name="open_channel_list" />
+      <Action name="open_konsole" />
     </Menu>
   </MenuBar>
 
