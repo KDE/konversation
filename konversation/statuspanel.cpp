@@ -36,7 +36,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 #endif
 {
   setType(ChatWindow::Status);
-  
+
   setChannelEncodingSupported(true);
 
   awayChanged=false;
@@ -59,7 +59,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
   statusInput=new IRCInput(commandLineBox);
   statusInput->installEventFilter(this);
 
-  
+
   setLog(KonversationApplication::preferences.getLog());
   setLogfileName("konversation");
 
@@ -229,7 +229,7 @@ void StatusPanel::closeYourself(ChatWindow*)
   int result=KMessageBox::warningYesNo(
                 this,
                 i18n("Do you want to disconnect from '%1'?").arg(server->getServerName()),
-                i18n("Disconnect from server"),
+                i18n("Disconnect From Server"),
                 KStdGuiItem::yes(),
                 KStdGuiItem::cancel(),
                 "QuitServerTab");
