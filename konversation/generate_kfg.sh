@@ -2,7 +2,7 @@
 
 
 GROUP=""
-while read line; do {
+cat konversationapplication.cpp | while read line; do {
   NEWGROUP2=$(echo "$line" | sed -n -e 's/^ *[^/].*setGroup.*\"\([^\"]*\)\".*/\1/p' )
   ENTRY=$(echo "$line" | sed -n -e 's/^ *[^/].*writeEntry.*\"\([^\"]*\)\".*/\1/p' )
 
