@@ -71,8 +71,9 @@ Server::Server(KonversationMainWindow* mainWindow, int id)
 }
 
 Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
-	       const QString& channel,const QString& password, QString nick,const bool& useSSL)
+	       const QString& channel,const QString& _nick, QString password,const bool& useSSL)
 {
+  QString nick( _nick );
   m_serverGroup.setName(hostName);
   m_serverGroup.setIdentityId(KonversationApplication::preferences.getIdentityByName("Default")->id());
 
