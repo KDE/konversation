@@ -57,7 +57,8 @@ void ChannelOptionsDialog::setTopicHistory(const QStringList& history)
 
 void ChannelOptionsDialog::topicHistoryItemClicked(QListViewItem* item)
 {
-  if(m_widget && m_widget->topicEdit)
+  //if they didn't click on anything, item is null
+  if(item && m_widget && m_widget->topicEdit)
     m_widget->topicEdit->setText(item->text(1));
 }
 

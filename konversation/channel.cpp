@@ -142,16 +142,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   modeK = new ModeButton("K",modeBox,6);
   modeL = new ModeButton("L",modeBox,7);
 
-  // Tooltips for the ModeButtons
-  QToolTip::add(modeT, i18n("Topic can be changed by channel operator only."));
-  QToolTip::add(modeN, i18n("No messages to channel from clients on the outside."));
-  QToolTip::add(modeS, i18n("Secret channel."));
-  QToolTip::add(modeI, i18n("Invite only channel."));
-  QToolTip::add(modeP, i18n("Private channel."));
-  QToolTip::add(modeM, i18n("Moderated channel."));
-  QToolTip::add(modeK, i18n("Protect channel with a password."));
-  QToolTip::add(modeL, i18n("Set user limit to channel."));
-
   QWhatsThis::add(modeT, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>The <b>T</b>opic mode means that only the channel operator can change the topic for the channel.</qt>"));
   QWhatsThis::add(modeN, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p><b>N</b>o messages from outside means that users that are not in the channel cannot sends messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.</qt>"));
   QWhatsThis::add(modeS, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>S</b>ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the <em>WHOIS</em> command or anything similar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.</qt>"));
@@ -1826,7 +1816,20 @@ void Channel::refreshModeButtons() {
   modeK->setEnabled(enable);
   modeL->setEnabled(enable);
   limit->setEnabled(enable);
+ 
+  // Tooltips for the ModeButtons
+  QString opOnly;
+  if(!enable) opOnly = i18n("You have to be an operator to change this.");
   
+  QToolTip::add(modeT, i18n("Topic can be changed by channel operator only.  %1").arg(opOnly));
+  QToolTip::add(modeN, i18n("No messages to channel from clients on the outside.  %1").arg(opOnly));
+  QToolTip::add(modeS, i18n("Secret channel.  %1").arg(opOnly));
+  QToolTip::add(modeI, i18n("Invite only channel.  %1").arg(opOnly));
+  QToolTip::add(modeP, i18n("Private channel.  %1").arg(opOnly));
+  QToolTip::add(modeM, i18n("Moderated channel.  %1").arg(opOnly));
+  QToolTip::add(modeK, i18n("Protect channel with a password."));
+  QToolTip::add(modeL, i18n("Set user limit to channel."));
+
 }
 
 void Channel::autoUserhost()
