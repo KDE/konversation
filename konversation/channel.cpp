@@ -309,11 +309,9 @@ Channel::~Channel()
   server->removeChannel(this);
 }
 
-#ifdef USE_NICKINFO
 ChannelNickPtr Channel::getChannelNick(const QString &ircnick) {
   return server->getChannelNick(getName(), ircnick);
 }
-#endif
 void Channel::purgeNicks()
 {
   // Purge nickname list
@@ -381,7 +379,6 @@ void Channel::popupCommand(int id)
 
   switch(id)
   {
-#ifdef USE_NICKINFO
     case NickListView::AddressbookEdit:
       {
         ChannelNickList nickList=getSelectedChannelNicks();
@@ -428,7 +425,6 @@ void Channel::popupCommand(int id)
 	}
         break;
       }
-#endif
     case NickListView::AddressbookSub:
       kdDebug() << "sub called" << endl;
       break;
@@ -859,18 +855,11 @@ void Channel::quickButtonClicked(const QString &buttonText)
   // single line without newline needs to be copied into input line
   else channelInput->setText(out);
 }
-#ifdef USE_NICKINFO
 void Channel::addNickname(ChannelNickPtr channelnick)
-#else
-void Channel::addNickname(const QString& nickname,const QString& hostmask,
-                          bool admin,bool owner,bool op,bool halfop,bool voice)
-#endif
 {
 
-#ifdef USE_NICKINFO
   QString nickname = channelnick->getNickname();
 
-#endif
   Nick* nick=0;
   Nick* lookNick=nicknameList.first();
   while(lookNick && (nick==0))
@@ -881,47 +870,19 @@ void Channel::addNickname(const QString& nickname,const QString& hostmask,
 
   if(nick==0)
   {
-#ifdef USE_NICKINFO
     fastAddNickname(channelnick);
     if(channelnick->isAdmin() || channelnick->isOwner() || channelnick->isOp() || channelnick->isHalfOp())
       adjustOps(1);
-#else
-    fastAddNickname(nickname,hostmask,admin,owner,op,halfop,voice);
-    if(admin || owner || op || halfop) adjustOps(1);
-#endif
     nicknameList.sort();
 
     adjustNicks(1);
   }
   else
   {
-#ifdef USE_NICKINFO
     Q_ASSERT(false); //We shouldn't be adding someone that is already in the channel.
-#else
-    nick->setHostmask(hostmask);
-    nick->setVoice(voice);
-
-    if(nick->isOp() && (op==false))
-    {
-      adjustOps(-1);
-    }
-
-    nick->setAdmin(admin);
-    nick->setOwner(owner);
-    nick->setOp(op);
-    nick->setHalfop(halfop);
-    nick->setVoice(voice);
-
-    // add all modes higher than voice to ops
-    if((nick->isOp()==false) && (admin || owner || op || halfop))
-    {
-      adjustOps(1);
-    }
-#endif
   }
 }
 
-#ifdef USE_NICKINFO
 // Use with caution! Does not sort or check for duplicates!
 void Channel::fastAddNickname(ChannelNickPtr channelnick) {
   Q_ASSERT(channelnick);
@@ -930,19 +891,7 @@ void Channel::fastAddNickname(ChannelNickPtr channelnick) {
   // nicks get sorted later
   nicknameList.append(nick);
 }
-#else
-// Use with caution! Does not sort or check for duplicates!
-void Channel::fastAddNickname(const QString& nickname,const QString& hostmask,
-                              bool admin,bool owner,bool op,bool halfop,bool voice)
-{
-  Nick* nick=new Nick(nicknameListView,nickname,hostmask,admin,owner,op,halfop,voice);
 
-  // nicks get sorted later
-  nicknameList.append(nick);
-}
-#endif
-
-#ifdef USE_NICKINFO
 void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo) {
   Q_ASSERT(&nickInfo);
   Q_ASSERT(!oldNick.isEmpty());
@@ -957,30 +906,6 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo) {
    else appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.").arg(oldNick).arg(newNick),false);
 
 }
-#else
-void Channel::renameNick(const QString& nickname,const QString& newNick)
-{
-  /* Did we change our nick name? */
-  if(nickname==server->getNickname())
-  {
-    setNickname(newNick);
-    appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.").arg(newNick), false, true, true);
-  }
-  /* No, must've been someone else */
-  else appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.").arg(nickname).arg(newNick), false);
-
-  /* Update the nick list */
-  Nick* nick=getNickByName(nickname);
-  if(nick==0) kdWarning() << "Channel::renameNick(): Nickname " << nickname << " not found!" << endl;
-  else nick->setNickname(newNick);
-
-  nicknameListView->sort();
-  nicknameList.sort();
-
-
-}
-#endif
-#ifdef USE_NICKINFO
 void Channel::joinNickname(ChannelNickPtr channelNick) {
   if(channelNick->getNickname() == server->getNickname())
   {
@@ -1057,97 +982,6 @@ void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, co
 
 
 }
-#else //was USE_NICKINFO
-
-void Channel::joinNickname(const QString& nickname,const QString& hostmask)
-{
-  /* Did we join this channel ourselves? */
-  if(nickname==server->getNickname())
-  {
-    appendCommandMessage(i18n("Join"),i18n("You have joined channel %1. (%2)").arg(getName()).arg(hostmask),false, false);
-  }
-  /* No, it was somebody else */
-  else
-  {
-    appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel. (%2)").arg(nickname).arg(hostmask),false, false);
-    addNickname(nickname,hostmask,false,false,false,false,false);
-  }
-}
-
-void Channel::removeNick(const QString &nickname, const QString &reason, bool quit)
-{
-  if(nickname==server->getNickname())
-  {
-    if(quit) appendCommandMessage(i18n("Quit"),i18n("You have left this server. (%1)").arg(reason),false);
-    else appendCommandMessage(i18n("Part"),i18n("You have left channel %1. (%2)").arg(getName()).arg(reason),false);
-
-#ifdef USE_MDI
-    emit chatWindowCloseRequest(this);
-#else
-    delete this;
-#endif
-  }
-  else
-  {
-    if(quit) appendCommandMessage(i18n("Quit"),i18n("%1 has left this server. (%2)").arg(nickname).arg(reason),false);
-    else appendCommandMessage(i18n("Part"),i18n("%1 has left this channel. (%2)").arg(nickname).arg(reason),false);
-
-    Nick* nick=getNickByName(nickname);
-    if(nick==0) kdWarning() << "Channel::removeNick(): Nickname " << nickname << " not found!" << endl;
-    else
-    {
-      if(nick->isOp() || nick->isOwner() || nick->isAdmin() || nick->isHalfop()) adjustOps(-1);
-      adjustNicks(-1);
-
-      nicknameList.removeRef(nick);
-    }
-
-  }
-}
-
-void Channel::kickNick(const QString &nickname, const QString &kicker, const QString &reason)
-{
-  if(nickname==server->getNickname())
-  {
-    if(kicker==server->getNickname())
-    {
-      appendCommandMessage(i18n("Kick"),i18n("You have kicked yourself from the channel. (%1)").arg(reason));
-      /* This message lets the user see what he has done after the channel window went away */
-      server->appendStatusMessage(i18n("Kick"),i18n("You have kicked yourself from channel %1. (%2)").arg(getName()).arg(reason));
-    }
-    else
-    {
-      appendCommandMessage(i18n("Kick"),i18n("You have been kicked from the channel by %1. (%2)").arg(kicker).arg(reason));
-      /* This message lets the user see what had happened after the channel window went away */
-      server->appendStatusMessage(i18n("Kick"),i18n("You have been kicked from channel %1 by %2. (%3)").arg(getName()).arg(kicker).arg(reason));
-    }
-#ifdef USE_MDI
-    emit chatWindowCloseRequest(this);
-#else
-    delete this;
-#endif
-  }
-  else
-  {
-    if(kicker==server->getNickname())
-      appendCommandMessage(i18n("Kick"),i18n("You have kicked %1 from the channel. (%2)").arg(nickname).arg(reason));
-    else
-      appendCommandMessage(i18n("Kick"),i18n("%1 has been kicked from the channel by %2. (%3)").arg(nickname).arg(kicker).arg(reason));
-
-    Nick* nick=getNickByName(nickname);
-    if(nick==0) kdWarning() << "Channel::kickNick(): Nickname " << nickname << " not found!" << endl;
-    else
-    {
-      if(nick->isOp()) adjustOps(-1);
-      adjustNicks(-1);
-
-      nicknameList.removeRef(nick);
-    }
-  }
-
-}
-
-#endif //USE_NICKINFO
 Nick* Channel::getNickByName(const QString &lookname)
 {
 //FIXME I don't think this works
@@ -1236,19 +1070,11 @@ void Channel::setTopicAuthor(const QString& newAuthor)
     topicAuthorUnknown=false;
   }
 }
-#ifdef USE_NICKINFO
 void Channel::updateMode(ChannelNickPtr sourceChannelNick, char mode, bool plus, const QString &parameter)
-#else
-void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const QString &parameter)
-#endif
 {
   QString message(QString::null);
-#ifdef USE_NICKINFO
   ChannelNickPtr parameterChannelNick;
   QString sourceNick = sourceChannelNick->getNickname();
-#else
-  Nick* nick;
-#endif
 
   bool fromMe=false;
   bool toMe=false;
@@ -1293,7 +1119,6 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
             message=i18n("%1 takes channel owner privileges from %2.").arg(sourceNick).arg(parameter);
         }
       }
-#ifdef USE_NICKINFO
       parameterChannelNick=server->getChannelNick(getName(), parameter);
       if(parameterChannelNick) {
         if(plus && !parameterChannelNick->isOwner() && !parameterChannelNick->isOp()) adjustOps(1);
@@ -1302,18 +1127,6 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
         updateNicksOps();
         nicknameListView->sort();
       }
-#else
-      nick=getNickByName(parameter);
-      if(nick)
-      {
-        // Only update counter if something has actually changed
-        if(plus && !nick->isOwner() && !nick->isOp()) adjustOps(1);
-        else if(!plus && nick->isOwner() && !nick->isOp()) adjustOps(-1);
-        nick->setOwner(plus);
-        updateNicksOps();
-        nicknameListView->sort();
-      }
-#endif
     break;
 
     case 'o':
@@ -1351,7 +1164,6 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
             message=i18n("%1 takes channel operator privileges from %2.").arg(sourceNick).arg(parameter);
         }
       }
-#ifdef USE_NICKINFO
       parameterChannelNick=server->getChannelNick(getName(), parameter);
       if(parameterChannelNick) {
         if(plus && !parameterChannelNick->isOp()) adjustOps(1);
@@ -1360,18 +1172,6 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
         updateNicksOps();
         nicknameListView->sort();
       }
-#else
-      nick=getNickByName(parameter);
-      if(nick)
-      {
-        // Only update counter if something has actually changed
-        if(plus && !nick->isOp()) adjustOps(1);
-        else if(!plus && nick->isOp()) adjustOps(-1);
-        nick->setOp(plus);
-        updateNicksOps();
-        nicknameListView->sort();
-      }
-#endif
     break;
 
     case 'h':
@@ -1409,7 +1209,6 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
             message=i18n("%1 takes channel halfop privileges from %2.").arg(sourceNick).arg(parameter);
         }
       }
-#ifdef USE_NICKINFO
       parameterChannelNick=server->getChannelNick(getName(), parameter);
       if(parameterChannelNick) {
         if(plus && !parameterChannelNick->isHalfOp()) adjustOps(1);
@@ -1418,18 +1217,6 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
         updateNicksOps();
         nicknameListView->sort();
       }
-#else
-      nick=getNickByName(parameter);
-      if(nick)
-      {
-        // Only update counter if something has actually changed
-        if(plus && !nick->isHalfop()) adjustOps(1);
-        else if(!plus && nick->isHalfop()) adjustOps(-1);
-        nick->setHalfop(plus);
-        updateNicksOps();
-        nicknameListView->sort();
-      }
-#endif
     break;
 
     case 'O': break;
@@ -1461,20 +1248,11 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
           else     message=i18n("%1 takes the permission to talk from %2.").arg(sourceNick).arg(parameter);
         }
       }
-#ifdef USE_NICKINFO
       parameterChannelNick=server->getChannelNick(getName(), parameter);
       if(parameterChannelNick) {
 	parameterChannelNick->setVoice(plus);
 	nicknameListView->sort();
       }
-#else
-      nick=getNickByName(parameter);
-      if(nick)
-      {
-        nick->setVoice(plus);
-        nicknameListView->sort();
-      }
-#endif
     break;
 
     case 'c':
@@ -1851,11 +1629,7 @@ void Channel::changeNickname(const QString& newNickname)
   server->queue("NICK "+newNickname);
 }
 
-#ifdef USE_NICKINFO
 void Channel::addPendingNickList(const ChannelNickList& pendingChannelNickList)
-#else
-void Channel::addPendingNickList(const QStringList& newNickList)
-#endif
 {
   if(!getPendingNicks())
   {
@@ -1869,7 +1643,6 @@ void Channel::addPendingNickList(const QStringList& newNickList)
   }
 
 //  nicknameListView->setUpdatesEnabled(false);
-#ifdef USE_NICKINFO
 /*  
   ChannelNickList::iterator it;
   int count = 0;
@@ -1888,33 +1661,6 @@ void Channel::addPendingNickList(const QStringList& newNickList)
   adjustNicks(pendingChannelNickList.count());
 */
   m_pendingChannelNickLists.append(pendingChannelNickList);
-#else
-
-  unsigned int mode;
-  for(unsigned int i=0;i<newNickList.count();i++)
-  {
-    QString nick=newNickList[i].section(" ",0,0);
-    mode=newNickList[i].section(" ",1,1).toInt();
-
-    // refresh visual if index is 50, 100, 150 ... or if it's the last nick in the list
-    if((i % 50==0) || i==newNickList.count()-1) nicknameListView->setUpdatesEnabled(true);
-
-    // TODO: make these an enumeration in KApplication or somewhere, we can use them from inputfilter.cpp as well
-    fastAddNickname(nick,QString::null,(mode & 16),(mode & 8),(mode & 4),(mode & 2),(mode & 1));
-
-    // stop refresh of visual if index is 50, 100, 150 ...
-    if(i % 50==0)
-    {
-      // care about pending events befor continuing
-      qApp->processEvents();
-      nicknameListView->setUpdatesEnabled(false);
-    }
-
-    if((mode & 16) || (mode & 8) || (mode & 4) || (mode & 2)) opsToAdd++;
-  } // endfor
-
-  adjustNicks(newNickList.count());
-#endif
 /*  
   // should have been done already, but you never know ...
   nicknameListView->setUpdatesEnabled(true);
@@ -2037,12 +1783,8 @@ void Channel::closeYourself(ChatWindow* /* view */)
 void Channel::serverQuit(const QString& reason)
 {
 #ifdef USE_MDI
-#ifdef USE_NICKINFO
   ChannelNickPtr channelNick=server->getChannelNick(getName(),server->getNickname());
   if(channelNick)  removeNick(channelNick,reason,true);
-#else
-  removeNick(server->getNickname(),reason,true);
-#endif
 #endif
 }
 

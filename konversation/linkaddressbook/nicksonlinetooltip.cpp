@@ -39,7 +39,6 @@ KonversationNicksOnlineToolTip::~KonversationNicksOnlineToolTip() {
 
 void KonversationNicksOnlineToolTip::maybeTip( const QPoint &pos )
 {
-#ifdef USE_NICKINFO
     if( !parentWidget() || !m_nicksOnline || !m_nicksOnline->getNickListView() )
         return;
     KListView *m_listView = m_nicksOnline->getNickListView();
@@ -63,7 +62,6 @@ void KonversationNicksOnlineToolTip::maybeTip( const QPoint &pos )
     toolTip = nickInfo->tooltip();
     if(!toolTip.isEmpty()) 
         tip(itemRect, toolTip);
-#endif
 }
 
 } // namespace Konversation

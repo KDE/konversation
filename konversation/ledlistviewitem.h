@@ -45,10 +45,6 @@ class LedListViewItem : public QObject, public KListViewItem
     virtual int compare(QListViewItem* item,int col,bool ascending) const;
     Nick *getNick();
 	    
-#ifdef USE_NICKINFO
-#else
-    void refresh();
-#endif
   protected:
     Nick *nick;
     QPixmap adminLedOn;
@@ -65,12 +61,10 @@ class LedListViewItem : public QObject, public KListViewItem
 
     QString calculateLabel1();
     QString calculateLabel2();
-#ifdef USE_NICKINFO
   protected slots:
     //We will refresh ourselves, so make it protected.
     void refresh();
 
-#endif
     
 };
 

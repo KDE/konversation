@@ -37,9 +37,7 @@
 #include "linkaddressbook/addressbook.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
 
-#ifdef USE_NICKINFO
 #include "images.h"
-#endif
 
 #ifdef USE_MDI
 NicksOnline::NicksOnline(QString caption): ChatWindow(caption)
@@ -55,7 +53,6 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
   // TODO: Need to derive from KListView and override sort() method in order to sort in
   // locale-aware order.
 
-#ifdef USE_NICKINFO
   m_nickListView->addColumn(i18n("Server/Nickname/Channel"));
   m_kabcIconSet = KGlobal::iconLoader()->loadIconSet("kaddressbook",KIcon::Small);
   m_nickListView->addColumn(i18n("Additional Information"));
@@ -65,32 +62,21 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     
   m_tooltip = new Konversation::KonversationNicksOnlineToolTip(m_nickListView->viewport(), this);
     
-#else
-  m_nickListView->addColumn(i18n("Server/Nickname"));
-  m_nickListView->setFullWidth(true);
-  m_nickListView->setRootIsDecorated(false);
-#endif
 
 #ifndef USE_MDI
   setMargin(KDialog::marginHint());
   setSpacing(KDialog::spacingHint());
 #endif
 
-#if USE_NICKINFO
   QHBox* buttonBox=new QHBox(this);
   buttonBox->setSpacing(KDialog::spacingHint());
   QPushButton* editButton=new QPushButton(i18n("&Edit Watch List..."),
     buttonBox,"edit_notify_button");
-#else
-  QPushButton* editButton=new QPushButton(i18n("&Edit..."),this,"edit_notify_button");
-  editButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed));
-#endif
 
   connect(editButton, SIGNAL(clicked()), SIGNAL(editClicked()) );
   connect(m_nickListView, SIGNAL(doubleClicked(QListViewItem*)),
     this,SLOT(processDoubleClick(QListViewItem*)));
 
-#ifdef USE_NICKINFO
   QLabel* addressbookLabel = new QLabel(i18n("Address Book:"),
     buttonBox, "nicksonline_addressbook_label");
   addressbookLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -127,15 +113,12 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
   connect(m_timer, SIGNAL (timeout()), this, SLOT(timerFired()));
   // TODO: User preference for refresh interval.
   m_timer->start(8000);
-#endif
 }
 
 NicksOnline::~NicksOnline()
 {
-#ifdef USE_NICKINFO
   m_timer->stop();
   delete m_timer;
-#endif
   delete m_nickListView;
 }
 
@@ -168,7 +151,6 @@ QListViewItem* NicksOnline::findItemChild(const QListViewItem* parent, const QSt
 * @return                  A string formatted for display containing the information
 *                          about the nick.
 */
-#ifdef USE_NICKINFO
 QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo)
 {
   QString nickAdditionalInfo;
@@ -192,15 +174,11 @@ QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo)
     nickAdditionalInfo = nickAdditionalInfo + " since " + nickInfo->getOnlineSince().toString(Qt::LocalDate);
   return nickAdditionalInfo;
 }
-#else
-QString NicksOnline::getNickAdditionalInfo(NickInfoPtr /*nickInfo*/) { return QString::null; }
-#endif
 
 /**
 * Refresh the nicklistview for a single server.
 * @param server            The server to be refreshed.
 */
-#ifdef USE_NICKINFO
 void NicksOnline::updateServerOnlineList(Server* server)
 {
   bool whoisRequested = false;
@@ -341,9 +319,6 @@ void NicksOnline::updateServerOnlineList(Server* server)
     m_nickListView->adjustColumn(nlvcAdditionalInfo);
   }
 }
-#else
-void NicksOnline::updateServerOnlineList(Server*) {}
-#endif
 
 /**
 * Refresh the nicklistview for all servers.
@@ -379,7 +354,6 @@ void NicksOnline::timerFired()
 * This signal is received when a server has updated its nick online/offline lists.
 * We update the display.
 */
-#ifdef USE_NICKINFO
 void NicksOnline::setOnlineList(const QString& serverName, const QStringList&, bool /*changed*/)
 {
   // Get the server object corresponding to the server name.
@@ -387,26 +361,6 @@ void NicksOnline::setOnlineList(const QString& serverName, const QStringList&, b
   Server* server = konvApp->getServerByName(serverName);
   updateServerOnlineList(server);
 }
-#else
-void NicksOnline::setOnlineList(const QString& serverName,const QStringList& list,bool changed)
-{
-  QListViewItem* serverRoot=m_nickListView->findItem(serverName,0);
-  // If server is not in our list, or if the list changed, then display the new list.
-  if ( (serverRoot == 0) || changed)
-  {
-    delete serverRoot;
-    if(list.count())
-    {
-      KListViewItem* newServerRoot=new KListViewItem(m_nickListView,serverName);
-      for(unsigned int i=list.count();i!=0;i--)
-      {
-        new KListViewItem(newServerRoot,list[i-1]);
-      }
-      newServerRoot->setOpen(true);
-    }
-  }
-}
-#endif
 
 /**
 * When a user double-clicks a nickname in the nicklistview, let server know so that
@@ -492,7 +446,6 @@ bool NicksOnline::editAddressee(const QString &uid)
 * Also refreshes the nicklistview display to reflect the new addressbook state
 * for the nick.
 */
-#ifdef USE_NICKINFO
 void NicksOnline::doCommand(int id)
 {
   if (id < 0) return;
@@ -558,9 +511,6 @@ void NicksOnline::doCommand(int id)
   }
   setupAddressbookButtons(nickState);
 }
-#else
-void NicksOnline::doCommand(int /*id*/) { };
-#endif
 
 /**
 * Get the addressbook state of the nickname at the specified nicklistview item.

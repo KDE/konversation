@@ -48,10 +48,8 @@ LedListViewItem::LedListViewItem(KListView* parent,
   currentLeds=leds.getLed(KonversationApplication::preferences.getVoiceLedColor(),true);
   voiceLedOn =currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
 
-#ifdef USE_NICKINFO
   connect(nick->getChannelNick(), SIGNAL(channelNickChanged()), SLOT(refresh()));
   connect(nick->getNickInfo(), SIGNAL(nickInfoChanged()), SLOT(refresh()));
-#endif
   refresh();
 }
 
@@ -76,7 +74,6 @@ void LedListViewItem::refresh() {
   setText(2,calculateLabel2());
   repaint();
 }
-#ifdef USE_NICKINFO
 QString LedListViewItem::calculateLabel1() {
   NickInfoPtr nickinfo = nick->getNickInfo();
   KABC::Addressee addressee = nickinfo->getAddressee();
@@ -87,10 +84,6 @@ QString LedListViewItem::calculateLabel1() {
 QString LedListViewItem::calculateLabel2() {
   return nick->getNickInfo()->getHostmask();
 }
-#else
-QString LedListViewItem::calculateLabel1() { return nick->getNickname();}
-QString LedListViewItem::calculateLabel2() { return nick->getHostmask();}
-#endif
 int LedListViewItem::compare(QListViewItem* item,int col,bool ascending) const
 {
   LedListViewItem* otherItem=static_cast<LedListViewItem*>(item);

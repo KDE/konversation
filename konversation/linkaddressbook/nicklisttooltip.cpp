@@ -37,7 +37,6 @@ KonversationNickListViewToolTip::~KonversationNickListViewToolTip() {
 
 void KonversationNickListViewToolTip::maybeTip( const QPoint &pos )
 {
-#ifdef USE_NICKINFO
     if( !parentWidget() || !m_listView )
         return;
 
@@ -64,7 +63,6 @@ void KonversationNickListViewToolTip::maybeTip( const QPoint &pos )
     toolTip = nick->getChannelNick()->tooltip();
     if(!toolTip.isEmpty()) 
         tip(itemRect, toolTip);
-#endif
 }
 
 } // namespace Konversation

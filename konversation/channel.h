@@ -70,7 +70,6 @@ class Channel : public ChatWindow
     void setKey(const QString& newKey);
     QString getKey();
 
-#ifdef USE_NICKINFO
     ChannelNickPtr getChannelNick(const QString &ircnick);
     void joinNickname(ChannelNickPtr channelNick);
     void removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit);
@@ -78,15 +77,6 @@ class Channel : public ChatWindow
     void addNickname(ChannelNickPtr channelNick);
     void nickRenamed(const QString &oldNick, const NickInfo& channelnick);	    
     void addPendingNickList(const ChannelNickList& pendingChannelNickList);
-#else
-    void joinNickname(const QString& nickname,const QString& hostname);
-    void addNickname(const QString& nickname,const QString& hostmask,
-                     bool admin,bool owner,bool op,bool halfop,bool voice);
-    void removeNick(const QString& nickname, const QString& reason, bool quit);
-    void kickNick(const QString& nickname, const QString& kicker, const QString& reason);
-    void renameNick(const QString& nickname,const QString& newName);
-    void addPendingNickList(const QStringList& nickList);
-#endif
     Nick *getNickByName(const QString& lookname);
     QPtrList<Nick> getNickList();
 
@@ -100,11 +90,7 @@ class Channel : public ChatWindow
     void setTopic(const QString& topic);
     void setTopic(const QString& nickname,const QString& topic); // Overloaded
     void setTopicAuthor(const QString& author);
-#ifdef USE_NICKINFO
     void updateMode(ChannelNickPtr sourceChannelNick, char mode, bool plus, const QString &parameter);
-#else   
-    void updateMode(const QString &nick,char mode,bool plus, const QString &parameter);
-#endif
     void updateModeWidgets(char mode, bool plus, const QString &parameter);
     void updateQuickButtons(QStringList newButtonList);
     void updateFonts();
@@ -167,14 +153,8 @@ class Channel : public ChatWindow
 
   protected:
     void showEvent(QShowEvent* event);
-#ifdef USE_NICKINFO
     // use with caution! does not check for duplicates
     void fastAddNickname(ChannelNickPtr channelnick);
-#else
-    // use with caution! does not check for duplicates
-    void fastAddNickname(const QString& nickname,const QString& hostmask,
-                         bool admin,bool owner,bool op,bool halfop,bool voice);
-#endif
     int nicks;
     int ops;
 

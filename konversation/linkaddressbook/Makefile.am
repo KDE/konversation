@@ -4,7 +4,7 @@ endif
 
 METASOURCES = AUTO
 
-AM_CPPFLAGS = $(COMPAT_INCLUDE) $(all_includes) -DUSE_NICKINFO
+AM_CPPFLAGS = $(COMPAT_INCLUDE) $(all_includes)
 
 noinst_LTLIBRARIES = liblinkaddressbookui.la
 noinst_HEADERS = linkaddressbookui.h kimiface.h

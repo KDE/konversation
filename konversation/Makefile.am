@@ -34,7 +34,7 @@ konversation_LDADD   = $(COMPAT_LIBS) $(LIB_KIO) -lkmdi -lm $(LIB_ARTS) $(LIB_KA
 xdg_apps_DATA = konversation.desktop
 
 # set the include path for X, qt and KDE
-INCLUDES= $(COMPAT_INCLUDE) -Ilinkaddressbook -I$(srcdir)/linkaddressbook $(all_includes) -DUSE_NICKINFO 
+INCLUDES= $(COMPAT_INCLUDE) -Ilinkaddressbook -I$(srcdir)/linkaddressbook $(all_includes)
 # the library search path.
 konversation_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 

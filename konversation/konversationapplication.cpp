@@ -1120,7 +1120,6 @@ void KonversationApplication::splitNick_Server(QString nick_server, QString &irc
   serverOrGroup = nick_server.section("@",1);
 }
 
-#ifdef USE_NICKINFO
 NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const QString &serverOrGroup) {
   NickInfoPtr nickInfo;
   QString lserverOrGroup = serverOrGroup.lower();
@@ -1151,6 +1150,5 @@ NickInfoPtr KonversationApplication::getOnlineNickInfo(const QString &ircnick, c
   return 0;
 }
 
-#endif
 
 #include "konversationapplication.moc"
