@@ -1846,6 +1846,7 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
   ChannelNickMap *channel;
   if (unjoinedChannels.contains(lcChannelName))
   {
+  SHOW;
     channel = unjoinedChannels[lcChannelName];
     unjoinedChannels.remove(lcChannelName);
     joinedChannels.insert(lcChannelName, channel);
@@ -1854,18 +1855,18 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
   {
     // Create a new list in the joined channels if not already present.
     if (!joinedChannels.contains(lcChannelName))
-    {
+    { SHOW;
       channel = new ChannelNickMap;
       joinedChannels.insert(lcChannelName, channel);
       doChannelJoinedSignal = true;
     }
-    else
-      channel = joinedChannels[lcChannelName];
+    else { SHOW;
+      channel = joinedChannels[lcChannelName]; }
   }
   // Add NickInfo to channel list if not already in the list.
   ChannelNickPtr channelNick;
   if (!channel->contains(lcNickname))
-  {
+  { SHOW;
     channelNick = ChannelNickPtr(new ChannelNick(nickInfo, false, false, false, false, false));
     Q_ASSERT(channelNick);
     channel->insert(lcNickname, channelNick);
