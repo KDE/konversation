@@ -293,9 +293,14 @@ void KonversationMainWindow::runScript(const QString &destination, const QString
   QStringList arguments;
   arguments << frontServer->getServerName();
   arguments << destination;
-  
+
+#if KDE_IS_VERSION(3,3,92)  
   m_kscript->runScript( scriptname, 0, arguments );
-  
+#else // Don't crash for kdelibs < 3.3.92
+  if( m_kscript->scripts().contains( scriptname ) )
+    m_kscript->runScript( scriptname, 0, arguments );
+#endif
+
 }
 
 void KonversationMainWindow::runScript( int mIId )
