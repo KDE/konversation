@@ -39,5 +39,15 @@ getmails()
 
 }
 
+if [[ -z "$3" ]] ; then 
+  echo "Scripts are not meant to be called from the command line."
+  echo "This script should be installed to  $KDEDIR/share/apps/konversation/scripts"
+  echo "Then executed with /script   from the konversation"
+  echo
+  echo The output is:
+  getmails
+  exit
+fi
+
 getmails | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" "$line"; done
 
