@@ -70,18 +70,23 @@ class DccTransfer : public QObject, public KListViewItem
     DccTransfer( DccPanel* panel, DccType dccType, const QString& partnerNick, const QString& fileName );
     virtual ~DccTransfer();
     
-    virtual void paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment);
+    virtual void paintCell( QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment );
     
-    DccType         getType()           const;
-    DccStatus       getStatus()         const;
-    QString         getOwnIp()          const;
-    QString         getOwnPort()        const;
-    QString         getPartnerNick()    const;
-    QString         getFileName()       const;
-    KIO::filesize_t getFileSize()       const;
-	
-    KURL getFileURL() const;
-    bool isResumed() const;
+    virtual int compare( QListViewItem* i, int col, bool ascending ) const;
+    
+    DccType            getType()                  const;
+    DccStatus          getStatus()                const;
+    QDateTime          getTimeOffer()             const;
+    QString            getOwnIp()                 const;
+    QString            getOwnPort()               const;
+    QString            getPartnerNick()           const;
+    QString            getFileName()              const;
+    KIO::filesize_t    getFileSize()              const;
+    KIO::fileoffset_t  getTransferringPosition()  const;
+    KURL               getFileURL()               const;
+    bool               isResumed()                const;
+    unsigned long      getCPS()                   const;
+    int                getTimeRemaining()         const;
     
     void runFile();
     void removeFile();
@@ -162,7 +167,6 @@ class DccTransfer : public QObject, public KListViewItem
     QString         getPositionPrettyText( bool detailed = false ) const;
     QString         getTimeRemainingPrettyText()                   const;
     QString         getCPSPrettyText()                             const;
-    unsigned long   getCPS()                                       const;
     QString         getSenderAddressPrettyText()                   const;
     
     QDateTime m_timeOffer;

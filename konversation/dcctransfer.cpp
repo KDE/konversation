@@ -111,6 +111,47 @@ void DccTransfer::updateView()  // slot, protected
     m_detailDialog->updateView();
 }
 
+int DccTransfer::compare( QListViewItem* i, int col, bool ascending ) const  // virtual
+{
+  DccTransfer* item = static_cast<DccTransfer*>( i );
+  
+  switch ( col )
+  {
+    case DccPanel::Column::TypeIcon:
+      if ( m_dccType > item->getType() ) return 1;
+      if ( m_dccType < item->getType() ) return -1;
+      return 0;
+      break;
+    case DccPanel::Column::OfferDate:
+      if ( m_timeOffer > item->getTimeOffer() ) return 1;
+      if ( m_timeOffer < item->getTimeOffer() ) return -1;
+      return 0;
+      break;
+    case DccPanel::Column::Status:
+      if ( m_dccStatus > item->getStatus() ) return 1;
+      if ( m_dccStatus < item->getStatus() ) return -1;
+      return 0;
+      break;
+    case DccPanel::Column::Position:
+      if ( m_transferringPosition > item->getTransferringPosition() ) return 1;
+      if ( m_transferringPosition < item->getTransferringPosition() ) return -1;
+      return 0;
+      break;
+    case DccPanel::Column::TimeRemaining:
+      if ( getTimeRemaining() > item->getTimeRemaining() ) return 1;
+      if ( getTimeRemaining() < item->getTimeRemaining() ) return -1;
+      return 0;
+      break;
+    case DccPanel::Column::CPS:
+      if ( getCPS() > item->getCPS() ) return 1;
+      if ( getCPS() < item->getCPS() ) return -1;
+      return 0;
+      break;
+    default:
+      return QListViewItem::compare( i, col, ascending );
+  }
+}
+
 void DccTransfer::initTransferMeter()  // protected
 {
   m_timeTransferStarted = QDateTime::currentDateTime();
@@ -352,17 +393,9 @@ QString DccTransfer::getPositionPrettyText( bool detailed ) const
 
 QString DccTransfer::getTimeRemainingPrettyText() const
 {
-  if ( m_dccStatus != Sending && m_dccStatus != Receiving )
+  int remTime = getTimeRemaining();
+  if ( remTime < 0 )
     return QString::null;
-  if ( !m_fileSize )
-    return i18n("unknown");
-  // not use getCPS() for exact result
-  int trnsfdTime = m_timeTransferStarted.secsTo( m_timeTransferFinished.isNull() ? QDateTime::currentDateTime() : m_timeTransferFinished );
-  KIO::fileoffset_t trnsfdBytes = m_transferringPosition - m_transferStartPosition;
-  if( trnsfdBytes == 0 )
-    return QString::null;
-  KIO::fileoffset_t remBytes = m_fileSize - m_transferringPosition;
-  int remTime = (int)( (double)remBytes / (double)trnsfdBytes * trnsfdTime );
   int remHour = remTime / 3600; remTime -= remHour * 3600;
   int remMin = remTime / 60; remTime -= remMin * 60;
   QString text;
@@ -380,15 +413,6 @@ QString DccTransfer::getTimeRemainingPrettyText() const
 QString DccTransfer::getCPSPrettyText() const
 {
   return QString( i18n("%1/sec") ).arg( KIO::convertSize( getCPS() ) );
-}
-
-unsigned long DccTransfer::getCPS() const
-{
-  int elapsed = m_timeTransferStarted.secsTo( m_timeTransferFinished.isNull() ? QDateTime::currentDateTime() : m_timeTransferFinished );
-  if ( elapsed == 0 && m_transferringPosition - m_transferStartPosition > 0 )
-    elapsed = 1;
-  // prevent division by zero
-  return elapsed ? ( m_transferringPosition - m_transferStartPosition ) / elapsed : 0;
 }
 
 QString DccTransfer::getSenderAddressPrettyText() const
@@ -428,16 +452,37 @@ QString DccTransfer::getPrettyNumberText( const QString& numberText )  // protec
 }
 
 // public functions
-DccTransfer::DccType    DccTransfer::getType()          const { return m_dccType; }
-DccTransfer::DccStatus  DccTransfer::getStatus()        const { return m_dccStatus; }
-QString                 DccTransfer::getOwnIp()         const { return m_ownIp; }
-QString                 DccTransfer::getOwnPort()       const { return m_ownPort; }
-QString                 DccTransfer::getPartnerNick()   const { return m_partnerNick; }
-QString                 DccTransfer::getFileName()      const { return m_fileName; }
-KIO::filesize_t         DccTransfer::getFileSize()      const { return m_fileSize; }
-KURL                    DccTransfer::getFileURL()       const { return m_fileURL; }
-bool                    DccTransfer::isResumed()        const { return m_resumed; }
-
+DccTransfer::DccType    DccTransfer::getType()                  const { return m_dccType; }
+DccTransfer::DccStatus  DccTransfer::getStatus()                const { return m_dccStatus; }
+QDateTime               DccTransfer::getTimeOffer()             const { return m_timeOffer; }
+QString                 DccTransfer::getOwnIp()                 const { return m_ownIp; }
+QString                 DccTransfer::getOwnPort()               const { return m_ownPort; }
+QString                 DccTransfer::getPartnerNick()           const { return m_partnerNick; }
+QString                 DccTransfer::getFileName()              const { return m_fileName; }
+KIO::filesize_t         DccTransfer::getFileSize()              const { return m_fileSize; }
+KIO::fileoffset_t       DccTransfer::getTransferringPosition()  const { return m_transferringPosition; }
+KURL                    DccTransfer::getFileURL()               const { return m_fileURL; }
+bool                    DccTransfer::isResumed()                const { return m_resumed; }
+unsigned long           DccTransfer::getCPS()                   const
+{
+  int elapsed = m_timeTransferStarted.secsTo( m_timeTransferFinished.isNull() ? QDateTime::currentDateTime() : m_timeTransferFinished );
+  if ( elapsed == 0 && m_transferringPosition - m_transferStartPosition > 0 )
+    elapsed = 1;
+  // prevent division by zero
+  return elapsed ? ( m_transferringPosition - m_transferStartPosition ) / elapsed : 0;
+}
+int                     DccTransfer::getTimeRemaining()         const
+{
+  if ( m_dccStatus != Sending && m_dccStatus != Receiving )
+    return -1;
+  // not use getCPS() for exact result
+  int trnsfdTime = m_timeTransferStarted.secsTo( m_timeTransferFinished.isNull() ? QDateTime::currentDateTime() : m_timeTransferFinished );
+  KIO::fileoffset_t trnsfdBytes = m_transferringPosition - m_transferStartPosition;
+  if( trnsfdBytes == 0 )
+    return -2;
+  KIO::fileoffset_t remBytes = m_fileSize - m_transferringPosition;
+  return (int)( (double)remBytes / (double)trnsfdBytes * trnsfdTime );
+}
 
 QString DccTransfer::s_dccTypeText[ DccTransfer::DccTypeCount ];
 QString DccTransfer::s_dccStatusText[ DccTransfer::DccStatusCount ];
