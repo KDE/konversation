@@ -331,7 +331,7 @@ void PrefsPageIdentity::updateIdentity(int number)
 
   // find encoding and set combo box accordingly
 
-  QRegExp encoding("\\b"+identity->getCodec().lower()+"\\b");
+  QRegExp encoding("\\b" + QString(identity->getCodec()->name()).lower() + "\\b");
 
   for(unsigned int index=0;index<encodings.count();index++)
   {

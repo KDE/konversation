@@ -12,6 +12,8 @@
   email: eisfuchs@tigress.com
 */
 
+#include <qtextcodec.h>
+
 #include <kdebug.h>
 
 #include "ircdefaultcodec.h"
@@ -73,11 +75,13 @@ void Identity::setNicknameList(const QStringList& newList)
 }
 QStringList Identity::getNicknameList() const           { return nicknameList; }
 
-QString Identity::getCodec() const                      { return codec; }
+QTextCodec* Identity::getCodec() const                      { return m_codec; }
 void Identity::setCodec(const QString &newCodec)
 {
   // never set an empty codec!
-  if(!newCodec.isEmpty()) codec=newCodec;
+  if(!newCodec.isEmpty()){
+    m_codec = QTextCodec::codecForName(newCodec.ascii());
+  }
 }
 
 QString Identity::getAwayNick() { return awayNick; }

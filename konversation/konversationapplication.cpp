@@ -853,7 +853,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->writeEntry("ReturnMessage",identity->getReturnMessage());
     config->writeEntry("PartReason",identity->getPartReason());
     config->writeEntry("KickReason",identity->getKickReason());
-    config->writeEntry("Codec",identity->getCodec().stripWhiteSpace());
+    config->writeEntry("Codec",identity->getCodec()->name());
     config->writeEntry("AwayNick", identity->getAwayNick());
   } // endfor
 

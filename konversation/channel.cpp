@@ -24,6 +24,7 @@
 #include <qcheckbox.h>
 #include <qtimer.h>
 #include <qcombobox.h>
+#include <qtextcodec.h>
 
 #include <kprocess.h>
 
@@ -1832,7 +1833,7 @@ QString Channel::getChannelEncoding()  // virtual
 
 QString Channel::getChannelEncodingDefaultDesc()  // virtual
 {
-  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodec());
+  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodec()->name());
 }
 
 //

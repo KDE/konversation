@@ -17,6 +17,7 @@
 #include <qlabel.h>
 #include <qpopupmenu.h>
 #include <qlineedit.h>
+#include <qtextcodec.h>
 
 #include <klocale.h>
 #include <kstddirs.h>
@@ -282,7 +283,7 @@ QString Query::getChannelEncoding()  // virtual
 
 QString Query::getChannelEncodingDefaultDesc()  // virtual
 {
-  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodec());
+  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodec()->name());
 }
 
 void Query::closeYourself()

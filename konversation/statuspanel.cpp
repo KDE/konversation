@@ -16,6 +16,7 @@
 #include <qcombobox.h>
 #include <qlabel.h>
 #include <qhbox.h>
+#include <qtextcodec.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -271,7 +272,7 @@ QString StatusPanel::getChannelEncoding()  // virtual
 
 QString StatusPanel::getChannelEncodingDefaultDesc()  // virtual
 {
-  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodec());
+  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodec()->name());
 }
 
 #include "statuspanel.moc"

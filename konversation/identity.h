@@ -17,6 +17,8 @@
 
 #include <qstringlist.h>
 
+class QTextCodec;
+
 /*
  *@author Dario Abatianni
  */
@@ -62,7 +64,7 @@ class Identity
     QString getReturnMessage() const;
 
     void setCodec(const QString &newCodec);
-    QString getCodec() const;
+    QTextCodec* getCodec() const;
     
     QString getAwayNick();
     void setAwayNick(const QString& n);
@@ -85,7 +87,7 @@ class Identity
     bool showAwayMessages;
     QString awayMessage;
     QString returnMessage;
-    QString codec;
+    QTextCodec* m_codec;
     
     QString awayNick;
 };

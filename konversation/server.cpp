@@ -877,10 +877,12 @@ void Server::incoming()
   len = serverSocket->readBlock(buffer.data(),max_bytes);
 
   if(len <= 0 ) { // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
-        statusView->appendServerMessage(i18n("Error"),i18n("There was an error reading the data from the server: %1").arg(serverSocket->errorString()));
-	broken(0);
-	return;
+    statusView->appendServerMessage(i18n("Error"),
+      i18n("There was an error reading the data from the server: %1").arg(serverSocket->errorString()));
+    broken(0);
+    return;
   }
+
   buffer[len] = 0;
 
   static QCString qcsRemainBuffer;
@@ -907,7 +909,7 @@ void Server::incoming()
       QString senderNick;
       bool isServerMessage = false;
       QString channelKey;
-      QTextCodec* tmpCodec = QTextCodec::codecForName(identity->getCodec().ascii());
+      QTextCodec* tmpCodec = identity->getCodec();
       // pre-parse to know which channel the message belongs to
       QStringList lineSplit = QStringList::split(" ",tmpCodec->toUnicode(qcsBufferLines.front()));
       if(1 <= lineSplit.count())  // for safe
@@ -952,15 +954,16 @@ void Server::incoming()
       }
       // check setting
       QString channelEncoding;
-      if(!channelKey.isEmpty())
+      if(!channelKey.isEmpty()) {
         channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), channelKey);
+      }
       // }
 
       QTextCodec* codec;
       if(!channelEncoding.isEmpty())
-        codec=QTextCodec::codecForName(channelEncoding.ascii());
+        codec = QTextCodec::codecForName(channelEncoding.ascii());
       else
-        codec=QTextCodec::codecForName(identity->getCodec().ascii());
+        codec = identity->getCodec();
       inputBuffer << codec->toUnicode(qcsBufferLines.front());
     }
     qcsBufferLines.pop_front();
@@ -1046,7 +1049,7 @@ void Server::send()
 
     // init stream props
     serverStream.setEncoding(QTextStream::Locale);
-    QString codecName=channelCodecName.isEmpty() ? identity->getCodec() : channelCodecName;
+    QString codecName=channelCodecName.isEmpty() ? identity->getCodec()->name() : channelCodecName;
     // convert encoded data to IRC ascii only when we don't have the same codec locally
     if(QString(QTextCodec::codecForLocale()->name()).lower()!=codecName.lower())
     {
