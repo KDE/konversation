@@ -40,22 +40,20 @@ namespace Konversation {
   // ServerListItem
   //
   
-  ServerListItem::ServerListItem(QListViewItem* parent, int serverId, const QString& group, const QString& serverGroup, 
-    const QString& identity, bool autoConnect)
-    : KListViewItem(parent, serverGroup, identity)
+  ServerListItem::ServerListItem(QListViewItem* parent, int serverId, const QString& serverGroup, 
+                                 const QString& identity, const QString& channels, bool autoConnect)
+    : KListViewItem(parent, serverGroup, identity, channels)
   {
     m_serverId = serverId;
     m_autoConnect = autoConnect;
-    m_group = group;
   }
 
-  ServerListItem::ServerListItem(QListView* parent, int serverId, const QString& group, const QString& serverGroup, 
-    const QString& identity, bool autoConnect)
-    : KListViewItem(parent, serverGroup, identity)
+  ServerListItem::ServerListItem(QListView* parent, int serverId, const QString& serverGroup, 
+                                 const QString& identity, const QString& channels, bool autoConnect)
+    : KListViewItem(parent, serverGroup, identity, channels)
   {
     m_serverId = serverId;
     m_autoConnect = autoConnect;
-    m_group = group;
   }
 
   void ServerListItem::setAutoConnect(bool ac)
@@ -88,7 +86,7 @@ namespace Konversation {
     setAutoConnect(!autoConnect());
   }
 
-  void ServerListItem::paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int align)
+/*  void ServerListItem::paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int align)
   {
     if(column != 2) {
       KListViewItem::paintCell(p, cg, column, width, align);
@@ -146,8 +144,8 @@ namespace Konversation {
 
     int x = ((width - boxsize) / 2) + marg;
     
-/*    lv->style().drawPrimitive(QStyle::PE_CheckListIndicator, p,
-      QRect(x, y, boxsize, fm.height() + 2 + marg), _cg, styleflags, QStyleOption(this));*/
+//    lv->style().drawPrimitive(QStyle::PE_CheckListIndicator, p,
+//      QRect(x, y, boxsize, fm.height() + 2 + marg), _cg, styleflags, QStyleOption(this));
     p->drawRect(x, y, boxsize, boxsize);
   
     if(autoConnect()) {
@@ -155,6 +153,7 @@ namespace Konversation {
       p->drawLine(x, y + boxsize, x + boxsize, y);
     }
   }
+*/
   
   //
   // ServerListDialog
@@ -174,6 +173,7 @@ namespace Konversation {
     m_serverList->setResizeMode(QListView::AllColumns);
     m_serverList->addColumn(i18n("Network"));
     m_serverList->addColumn(i18n("Identity"));
+    m_serverList->addColumn(i18n("Channels"));
     m_serverList->setSelectionMode(QListView::Multi);
     //m_serverList->addColumn(i18n("Auto Connect"));
     
@@ -305,7 +305,7 @@ namespace Konversation {
 
         if(dlg.exec() == KDialog::Accepted) {
           // find branch the old item resides in
-          QListViewItem* branch = findBranch(item->group());
+          QListViewItem* branch = item->parent();
           // remove item from the list
           delete item;
 
@@ -339,7 +339,7 @@ namespace Konversation {
 
     while(server) {
       // find branch this item belongs to
-      QListViewItem* branch = findBranch(server->group());
+      QListViewItem* branch = server->parent();
       // remove server from preferences
       m_preferences->removeServerGroup(server->serverId());
       // remove item from view
@@ -368,24 +368,7 @@ namespace Konversation {
   void ServerListDialog::addServerGroup(const ServerGroupSettings& serverGroup)
   {
     m_preferences->addServerGroup(serverGroup);
-
-    QListViewItem* branch = findBranch(serverGroup.group());
-    ServerListItem* item;
-
-    if(branch) {
-      item = new ServerListItem(branch, serverGroup.id(),
-                                serverGroup.group(),
-                                serverGroup.name(),
-                                serverGroup.identity()->getName(),
-                                serverGroup.autoConnectEnabled());
-    } else {
-      item = new ServerListItem(m_serverList, serverGroup.id(),
-                                serverGroup.group(),
-                                serverGroup.name(),
-                                serverGroup.identity()->getName(),
-                                serverGroup.autoConnectEnabled());
-    }
-
+    QListViewItem* item = addListItem(serverGroup);
     m_serverList->clearSelection();
     m_serverList->setSelected(item, true);
     m_serverList->ensureItemVisible(item);
@@ -412,25 +395,47 @@ namespace Konversation {
     m_serverList->clear();
     Konversation::ServerGroupList serverGroups = m_preferences->serverGroupList();
     Konversation::ServerGroupList::iterator it;
-    
-    for(it = serverGroups.begin(); it != serverGroups.end(); ++it) {
-      QListViewItem* branch = findBranch((*it).group());
 
-      if(branch) {
-        new ServerListItem(branch, (*it).id(),
-                        (*it).group(),
-                        (*it).name(),
-                        (*it).identity()->getName(),
-                        (*it).autoConnectEnabled());
-      } else {
-        new ServerListItem(m_serverList, (*it).id(),
-                        (*it).group(),
-                        (*it).name(),
-                        (*it).identity()->getName(),
-                        (*it).autoConnectEnabled());
-      }
+    for(it = serverGroups.begin(); it != serverGroups.end(); ++it) {
+      addListItem((*it));
     }
   }
+
+  QListViewItem* ServerListDialog::addListItem(const ServerGroupSettings& serverGroup)
+  {
+    QListViewItem* branch = findBranch(serverGroup.group());
+    Konversation::ChannelList tmpList = serverGroup.channelList();
+    Konversation::ChannelList::iterator it;
+    Konversation::ChannelList::iterator begin = tmpList.begin();
+    QString channels;
+
+    for(it = begin; it != tmpList.end(); ++it) {
+      if(it != begin) {
+        channels += ',';
+      }
+
+      channels += (*it).name();
+    }
+
+    QListViewItem* item = 0;
+
+    if(branch) {
+      item = new ServerListItem(branch, serverGroup.id(),
+                         serverGroup.name(),
+                         serverGroup.identity()->getName(),
+                         channels,
+                         serverGroup.autoConnectEnabled());
+    } else {
+      item = new ServerListItem(m_serverList, serverGroup.id(),
+                         serverGroup.name(),
+                         serverGroup.identity()->getName(),
+                         channels,
+                         serverGroup.autoConnectEnabled());
+    }
+    
+    return item;
+  }
+
 }
 
 #include "serverlistdialog.moc"

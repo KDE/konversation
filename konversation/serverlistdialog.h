@@ -25,16 +25,15 @@ namespace Konversation {
   class ServerListItem : public KListViewItem
   {
     public:
-      ServerListItem(QListViewItem* parent, int serverId, const QString& group, const QString& serverGroup, 
-        const QString& identity, bool autoConnect);
-      ServerListItem(QListView* parent, int serverId, const QString& group, const QString& serverGroup, 
-        const QString& identity, bool autoConnect);
+      ServerListItem(QListViewItem* parent, int serverId, const QString& serverGroup, 
+                     const QString& identity, const QString& channels, bool autoConnect);
+      ServerListItem(QListView* parent, int serverId, const QString& serverGroup, 
+                     const QString& identity, const QString& channels, bool autoConnect);
 
       int serverId() const { return m_serverId; }
-      QString group() const { return m_group; }
       bool autoConnect() const { return m_autoConnect; }
       void setAutoConnect(bool ac);
-      virtual void paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int align);
+//      virtual void paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int align);
       
       virtual int rtti() const { return 10001; }
       
@@ -44,7 +43,6 @@ namespace Konversation {
     private:
       int m_serverId;
       bool m_autoConnect;
-      QString m_group;
   };
   
   class ServerListDialog : public KDialogBase
@@ -73,6 +71,7 @@ namespace Konversation {
     protected:
       QListViewItem* findBranch(QString name, bool generate = true);
       QStringList createGroupList();
+      QListViewItem* addListItem(const ServerGroupSettings& serverGroup); /// Adds a list item to the list view
 
       void addServerGroup(const ServerGroupSettings& serverGroup);
 
