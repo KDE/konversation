@@ -7,7 +7,6 @@ berkus: Logrotate with timer or at shutdown, compress rotated logs
 Eisfuchs: User interface for dialog options (don't show again dialogs)
 Eisfuchs: Autojoin/User interaction on invite
 Eisfuchs: URL catcher user interface
-Eisfuchs: make hostnames in nick list optional
 
 Reverse-I-Search
 Large pastes: Let the user decide if they want an Editor or paste immediately

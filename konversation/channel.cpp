@@ -1301,7 +1301,7 @@ void Channel::autoUserhostChanged(bool state)
         Nick* lookNick=getNickByName(item->text(1));
         if(lookNick) item->setText(2,lookNick->getHostmask());
         item=item->itemBelow();
-      }
+      } // while
     }
   }
   else
