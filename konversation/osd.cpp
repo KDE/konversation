@@ -17,6 +17,7 @@ the Free Software Foundation; either version 2 of the License, or
 #include <qapplication.h>
 #include <qbitmap.h>
 #include <qpainter.h>
+#include <qregexp.h>
 
 #include <kdebug.h>
 #include <kglobalsettings.h> //unsetColors()
@@ -113,13 +114,20 @@ void OSDWidget::renderOSDText( const QString &text )
 void OSDWidget::showOSD( const QString &text, bool preemptive )
 {
     if ( isEnabled() && !text.isEmpty() ) {
+
+        QString plaintext = text.copy();
+        plaintext.replace(QRegExp("</?(?:font|a|b|i)\\b[^>]*>"), QString(""));
+        plaintext.replace(QString("&lt;"), QString("<"));
+        plaintext.replace(QString("&gt;"), QString(">"));
+        plaintext.replace(QString("&amp;"), QString("&"));
+
         if ( preemptive || !timerMin.isActive() ) {
-            m_currentText = text;
+            m_currentText = plaintext;
             m_dirty = true;
 
             show();
         }
-        else textBuffer.append( text ); //queue
+        else textBuffer.append( plaintext ); //queue
     }
 }
 
