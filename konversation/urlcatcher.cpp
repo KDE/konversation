@@ -27,7 +27,7 @@
 
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
 {
-  setName(i18n("Url catcher"));
+  setName(i18n("URL catcher"));
   setType(ChatWindow::UrlCatcher);
 
   urlListView=new KListView(this,"url_list_view");
