@@ -74,7 +74,7 @@
 #ifdef USE_MDI
 KonversationMainWindow::KonversationMainWindow() : KMdiMainFrm(0,"mdi_main_form")
 #else
-KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", WStyle_ContextHelp | WType_TopLevel)
+KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", WStyle_ContextHelp | WType_TopLevel | WDestructiveClose)
 #endif
 {
   // Init variables before anything else can happen
@@ -237,6 +237,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
 KonversationMainWindow::~KonversationMainWindow()
 {
+  saveMainWindowSettings(kapp->config());
   deleteDccPanel();
   if(dccTransferHandler) delete dccTransferHandler;
 }
