@@ -688,7 +688,11 @@ bool Preferences::getDialogFlag(const QString& flagName)
   KConfig* config=KApplication::kApplication()->config();
 
   config->setGroup("Notification Messages");
-  return config->readBoolEntry(flagName,true);
+
+  if( config->readEntry(flagName) != QString::null )
+    return false;
+  else
+    return true;
 }
 
 void Preferences::setDialogFlag(const QString& flagName,bool state)
@@ -697,8 +701,11 @@ void Preferences::setDialogFlag(const QString& flagName,bool state)
 
   config->setGroup("Notification Messages");
 
-  config->writeEntry(flagName,state);
-  config->sync();
+  if(state)
+  {
+      config->deleteEntry(flagName);
+      config->sync();
+  }
 }
 
 void Preferences::setMaximumLagTime(int lag) { maximumLag=lag; }
