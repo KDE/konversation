@@ -1,11 +1,11 @@
 Make Config Dialogs fit into one Tab-Dialog and throw out single windows
 Write Application Description in main()
-Add option to highlight current nick independantly
+Add option to highlight current nick independantly via GUI
 Implement different identities so user can choose which identity to use on which server
 Move Part / Kick Reasons into the Identity section in Preferences File
 Make sure, that lines don't get cleared while viewing the history
 Background color of Channel window / Nicklist View
-Add a possibility to close the dcc panel
+Add a possibility to close the dcc panel via GUI
 
 nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  das markieren
 des letzten Zeitpunkts wo das Fenster aktiv war  und  die Text-Suche "
@@ -16,8 +16,5 @@ Consistency check in Preferences:
 - Command Char must be present
 
 /part may close Queries, too.
-/msg should be shown, like in
-/msg Nick Hello
-*to Nick* Hello
 
 Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated

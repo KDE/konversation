@@ -48,6 +48,7 @@ class Channel : public ChatWindow
     Channel(QWidget* parent);
     ~Channel();
 
+    void setServer(Server* server);
     void setName(const QString& newName);
     void setKey(const QString& newKey);
     const QString& getKey();

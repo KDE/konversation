@@ -30,12 +30,16 @@
 #endif
 
 #include <kdebug.h>
+#include "server.h"
+#include "server.h"
+#include "server.h"
+#include "server.h"
 
 #include "konversationapplication.h"
 #include "ircview.h"
 #include "highlight.h"
 
-IRCView::IRCView(QWidget* parent) : KTextBrowser(parent)
+IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
 {
   kdDebug() << "IRCView::IRCView()" << endl;
 
@@ -43,6 +47,8 @@ IRCView::IRCView(QWidget* parent) : KTextBrowser(parent)
   setHScrollBarMode(AlwaysOff);
 
   installEventFilter(this);
+
+  setServer(newServer);
 
 #ifndef TABLE_VERSION
   setText("<qt>\n");
@@ -52,6 +58,11 @@ IRCView::IRCView(QWidget* parent) : KTextBrowser(parent)
 IRCView::~IRCView()
 {
   kdDebug() << "IRCView::~IRCView()" << endl;
+}
+
+void IRCView::setServer(Server* newServer)
+{
+  server=newServer;
 }
 
 void IRCView::clear()
@@ -220,18 +231,26 @@ QString IRCView::filter(const QString& line,bool doHilight)
   // Hilight
   if(doHilight)
   {
-    QPtrList<Highlight> hilightList=KonversationApplication::preferences.getHilightList();
+    QColor hilightNickColor=KonversationApplication::preferences.getHilightNickColor();
 
-    unsigned int index;
-
-    for(index=0;index<hilightList.count();index++)
+    if(filteredLine.lower().find(server->getNickname().lower())!=-1)
     {
-      QString needle=hilightList.at(index)->getText().lower();
-      if(filteredLine.lower().find(needle)!=-1)
+      filteredLine=QString("<font color=\""+hilightNickColor.name()+"\">")+filteredLine+QString("</font>");
+    }
+    else
+    {
+      QPtrList<Highlight> hilightList=KonversationApplication::preferences.getHilightList();
+      unsigned int index;
+
+      for(index=0;index<hilightList.count();index++)
       {
-        filteredLine=QString("<font color=\""+hilightList.at(index)->getColor().name()+"\">")+filteredLine+QString("</font>");
-        break;
-      }
+        QString needle=hilightList.at(index)->getText().lower();
+        if(filteredLine.lower().find(needle)!=-1)
+        {
+          filteredLine=QString("<font color=\""+hilightList.at(index)->getColor().name()+"\">")+filteredLine+QString("</font>");
+          break;
+        }
+     } // endfor
     }
   }
 

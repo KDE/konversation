@@ -111,6 +111,11 @@ void ServerWindow::setServer(Server* newServer)
            server,SLOT   (addQuery(const QString&,const QString&)) );
 }
 
+Server* ServerWindow::getServer()
+{
+  return server;
+}
+
 void ServerWindow::appendToStatus(const QString& type,const QString& message)
 {
   statusView->appendServerMessage(type,message);
@@ -222,7 +227,7 @@ void ServerWindow::addStatusView()
   statusPane->setSpacing(spacing());
   statusPane->setMargin(margin());
 
-  statusView=new IRCView(statusPane);
+  statusView=new IRCView(statusPane,getServer());
 
   QHBox* commandLineBox=new QHBox(statusPane);
   commandLineBox->setSpacing(spacing());

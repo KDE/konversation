@@ -64,6 +64,7 @@ class ServerWindow : public KMainWindow
     void appendToStatus(const QString& type,const QString& message);
     void appendToFrontmost(const QString& type,const QString& message);
     void setServer(Server* server);
+    Server* getServer();
     void setLog(bool activated);
     LedTabWidget* getWindowContainer();
     void addView(QWidget* pane,int color,const QString& name);

@@ -42,6 +42,7 @@ class Query : public ChatWindow
 
     void setName(const QString& newName);
     void setHostmask(const QString& newHostmask);
+    void setServer(Server* setServer);
 
   signals:
     void newText(QWidget* query);

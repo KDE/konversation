@@ -102,7 +102,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicksOps=new QLabel(i18n("Nicks"),topicViewNicksGrid);
   nicksOps->setAlignment(AlignVCenter | AlignHCenter);
 
-  setTextView(new IRCView(topicViewNicksGrid));
+  setTextView(new IRCView(topicViewNicksGrid,NULL));  // Server will be set later in setServer()
 
   // The box that holds the Nick List and the quick action buttons
   QVBox* nickListButtons=new QVBox(topicViewNicksGrid);
@@ -209,6 +209,12 @@ Channel::~Channel()
   }
   /* Unlink this channel from channel list */
   server->removeChannel(this);
+}
+
+void Channel::setServer(Server* newServer)
+{
+  getTextView()->setServer(newServer);
+  ChatWindow::setServer(newServer);
 }
 
 void Channel::requestNewTopic(const QString& newTopic)

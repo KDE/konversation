@@ -86,6 +86,8 @@ Preferences::Preferences()
   setNotifyDelay(20);
   setUseNotify(true);
 
+  setHilightNickColor("#ff0000");
+
   setOpLedColor(1);
   setVoiceLedColor(2);
   setNoRightsLedColor(3);
@@ -316,3 +318,6 @@ void Preferences::setNotifySize(QSize newSize)             { notifySize=newSize;
 void Preferences::setNicksOnlineSize(QSize newSize)        { nicksOnlineSize=newSize; };
 void Preferences::setNicknameSize(QSize newSize)           { nicknameSize=newSize; };
 void Preferences::setColorConfigurationSize(QSize newSize) {colorConfigurationSize = newSize;}
+
+void Preferences::setHilightNickColor(QString newColor)    { hilightNickColor.setNamedColor(newColor); }
+QColor Preferences::getHilightNickColor() { return hilightNickColor; }

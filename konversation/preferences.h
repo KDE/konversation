@@ -173,6 +173,9 @@ class Preferences : public QObject
     void setLinkMessageColor(QString color);
     void setCommandMessageColor(QString color);
 
+    void setHilightNickColor(QString color);
+    QColor getHilightNickColor();
+
     void setNickCompleteSuffixStart(QString suffix);
     void setNickCompleteSuffixMiddle(QString suffix);
     QString getNickCompleteSuffixStart();
@@ -243,6 +246,7 @@ class Preferences : public QObject
 
     QList<ServerEntry> serverList;
     QPtrList<Highlight> hilightList;
+    QColor hilightNickColor;
 
     QStringList buttonList;
 

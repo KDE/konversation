@@ -18,6 +18,8 @@
 
 #include <ktextbrowser.h>
 
+#include "server.h"
+
 #ifndef IRCVIEW_H
 #define IRCVIEW_H
 
@@ -30,10 +32,11 @@ class IRCView : public KTextBrowser
   Q_OBJECT
 
   public:
-    IRCView(QWidget* parent);
+    IRCView(QWidget* parent,Server* newServer);
     ~IRCView();
 
     void clear();
+    void setServer(Server* server);
 
   signals:
     void newText();      // Notify container of new text
@@ -60,6 +63,7 @@ class IRCView : public KTextBrowser
     bool eventFilter(QObject* object,QEvent* event);
 
     QString buffer;
+    Server *server;
 };
 
 #endif

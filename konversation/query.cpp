@@ -47,7 +47,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   closeButton->setPixmap(prefix+"close_pane.png");
   closeButton->setMaximumWidth(20);
 
-  setTextView(new IRCView(this));
+  setTextView(new IRCView(this,NULL));  // Server will be set later in setServer();
 
   /* This box holds the input line and the log checkbox */
   QHBox* inputLogBox=new QHBox(this);
@@ -90,6 +90,12 @@ void Query::setName(const QString& newName)
                   ((KonversationApplication::preferences.getLowerLog())
                     ? getName().lower()
                     : getName())+".log");
+}
+
+void Query::setServer(Server* newServer)
+{
+  getTextView()->setServer(newServer);
+  ChatWindow::setServer(newServer);
 }
 
 void Query::queryTextEntered()
