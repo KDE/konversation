@@ -10,6 +10,8 @@
 */
 #include "joinchanneldialog.h"
 
+#include <qlabel.h>
+
 #include <klocale.h>
 #include <kcombobox.h>
 #include <klineedit.h>
@@ -23,6 +25,8 @@ JoinChannelDialog::JoinChannelDialog(const QString& network, QWidget *parent, co
 {
   m_widget = new JoinChannelUI(this);
   setMainWidget(m_widget);
+
+  m_widget->serverLbl->setText(network);
 }
 
 JoinChannelDialog::~JoinChannelDialog()
