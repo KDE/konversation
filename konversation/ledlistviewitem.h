@@ -37,25 +37,12 @@ class LedListViewItem : public KListViewItem
     LedListViewItem(KListView* parent,
                     const QString &passed_label,
                     const QString &passed_label2,
-                    bool admin,
-                    bool owner,
-                    bool op,
-                    bool halfop,
-                    bool voice,
-		    Nick *n);
+                    Nick *n);
     ~LedListViewItem();
-    bool getAdminState();
-    bool getOwnerState();
-    bool getOpState();
-    bool getHalfopState();
-    bool getVoiceState();
     int getFlags() const;
-    void setState(bool admin,bool owner,bool op,bool halfop,bool voice);
-    void toggleOpState();
-    void toggleVoiceState();
     virtual int compare(QListViewItem* item,int col,bool ascending) const;
     Nick *getNick();
-
+    void refresh();
   protected:
     Nick *nick;
     QPixmap adminLedOn;
@@ -70,11 +57,6 @@ class LedListViewItem : public KListViewItem
 
     Images leds;
 
-    bool adminState;
-    bool ownerState;
-    bool opState;
-    bool halfopState;
-    bool voiceState;
 };
 
 #endif

@@ -27,9 +27,7 @@
 Nick::Nick(KListView *listView,
            ChannelNickPtr channelnick)
 {
-  listViewItem=new LedListViewItem(listView,channelnick->getNickname(),channelnick->getHostmask(),
-		  channelnick->isAdmin(),channelnick->isOwner(),channelnick->isOp(),
-		  channelnick->isHalfOp(),channelnick->hasVoice(), this);
+  listViewItem=new LedListViewItem(listView,channelnick->getNickname(),channelnick->getHostmask(),this);
   setAdmin(channelnick->isAdmin());
   setOwner(channelnick->isOwner());
   setOp(channelnick->isOp());
@@ -67,31 +65,31 @@ Nick::~Nick()
 void Nick::setAdmin(bool state)
 {
   admin=state;
-  listViewItem->setState(admin,owner,op,halfop,voice);
+  listViewItem->refresh();
 }
 
 void Nick::setOwner(bool state)
 {
   owner=state;
-  listViewItem->setState(admin,owner,op,halfop,voice);
+  listViewItem->refresh();
 }
 
 void Nick::setOp(bool state)
 {
   op=state;
-  listViewItem->setState(admin,owner,op,halfop,voice);
+  listViewItem->refresh();
 }
 
 void Nick::setHalfop(bool state)
 {
   halfop=state;
-  listViewItem->setState(admin,owner,op,halfop,voice);
+  listViewItem->refresh();
 }
 
 void Nick::setVoice(bool state)
 {
   voice=state;
-  listViewItem->setState(admin,owner,op,halfop,voice);
+  listViewItem->refresh();
 }
 
 

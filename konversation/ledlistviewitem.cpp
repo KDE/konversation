@@ -23,19 +23,9 @@
 LedListViewItem::LedListViewItem(KListView* parent,
                                  const QString& passed_label,
                                  const QString& passed_label2,
-                                 bool admin,
-                                 bool owner,
-                                 bool op,
-                                 bool halfop,
-                                 bool voice,
 				 Nick *n) :
                    KListViewItem(parent,QString::null,passed_label,passed_label2)
 {
-  adminState=admin;
-  ownerState=owner;
-  opState=op;
-  halfopState=halfop;
-  voiceState=voice;
   Q_ASSERT(n);
   nick = n;
 
@@ -57,46 +47,24 @@ LedListViewItem::LedListViewItem(KListView* parent,
   currentLeds=leds.getLed(KonversationApplication::preferences.getVoiceLedColor(),true);
   voiceLedOn =currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
 
-  setState(admin,owner,op,halfop,voice);
 }
 
 LedListViewItem::~LedListViewItem()
 {
 }
-
-void LedListViewItem::setState(bool admin,bool owner,bool op,bool halfop,bool voice)
-{
-  adminState=admin;
-  ownerState=owner;
-  opState=op;
-  halfopState=halfop;
-  voiceState=voice;
-
-  if(admin)
+void LedListViewItem::refresh() {
+  if(nick->isAdmin())
     setPixmap(0,adminLedOn);
-  else if(owner)
+  else if(nick->isOwner())
     setPixmap(0,ownerLedOff);
-  else if(op)
+  else if(nick->isOp())
     setPixmap(0,opLedOn);
-  else if(halfop)
+  else if(nick->isHalfop())
     setPixmap(0,opLedOff);
-  else if(voiceState)
+  else if(nick->hasVoice())
     setPixmap(0,voiceLedOn);
   else
     setPixmap(0,voiceLedOff);
-
-  repaint();
-}
-
-void LedListViewItem::toggleOpState()
-{
-  setState(adminState,ownerState,!opState,halfopState,voiceState);
-  repaint();
-}
-
-void LedListViewItem::toggleVoiceState()
-{
-  setState(adminState,ownerState,opState,halfopState,!voiceState);
   repaint();
 }
 
@@ -125,21 +93,15 @@ int LedListViewItem::compare(QListViewItem* item,int col,bool ascending) const
   return thisKey.compare(otherKey);
 }
 
-bool LedListViewItem::getAdminState()  { return adminState; }
-bool LedListViewItem::getOwnerState()  { return ownerState; }
-bool LedListViewItem::getOpState()     { return opState; }
-bool LedListViewItem::getHalfopState() { return halfopState; }
-bool LedListViewItem::getVoiceState()  { return voiceState; }
-
 int LedListViewItem::getFlags() const
 {
   int flags;
 
-  if(adminState)       flags=KonversationApplication::preferences.getAdminValue();
-  else if(ownerState)  flags=KonversationApplication::preferences.getOwnerValue();
-  else if(opState)     flags=KonversationApplication::preferences.getOpValue();
-  else if(halfopState) flags=KonversationApplication::preferences.getHalfopValue();
-  else if(voiceState)  flags=KonversationApplication::preferences.getVoiceValue();
+  if(nick->isAdmin())       flags=KonversationApplication::preferences.getAdminValue();
+  else if(nick->isOwner())  flags=KonversationApplication::preferences.getOwnerValue();
+  else if(nick->isOp())     flags=KonversationApplication::preferences.getOpValue();
+  else if(nick->isHalfop()) flags=KonversationApplication::preferences.getHalfopValue();
+  else if(nick->hasVoice())  flags=KonversationApplication::preferences.getVoiceValue();
   else                 flags=KonversationApplication::preferences.getNoRightsValue();
 
   return flags;
@@ -148,3 +110,4 @@ int LedListViewItem::getFlags() const
 Nick *LedListViewItem::getNick() {
   return nick;
 }
+
