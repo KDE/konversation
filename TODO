@@ -7,6 +7,8 @@ Make colors for nick list configurable via GUI
 Let the user decide how many quick buttons they want.
 Think about another way to get rid of the cut off "Custom" text in color combos ...
 Autojoin/User interaction on /invite
+URL catcher user interface
+User interface for dialog options (don't show again dialogs)
 
 <mETz[]> Eisfuchs: And why have the "Mitschnitt" button there? having it in the menubar is enough, no?
 

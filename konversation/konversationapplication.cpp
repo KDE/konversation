@@ -16,13 +16,12 @@
 
 #include <kdebug.h>
 
-// #include <qvaluelist.h>
 #include <qregexp.h>
 
 #include "konversationapplication.h"
 #include "serverwindow.h"
 
-/* include static variables */
+// include static variables
 Preferences KonversationApplication::preferences;
 QStringList KonversationApplication::urlList;
 
@@ -31,11 +30,10 @@ KonversationApplication::KonversationApplication()
   kdDebug() << "KonversationApplication::KonversationApplication()" << endl;
 
   prefsDialog=0;
-  
+
   preferences.setTextFont(font());
   preferences.setListFont(font());
 
-  config=new KSimpleConfig("konversationrc");
   readOptions();
 
   // handle autoconnect on startup
@@ -73,15 +71,6 @@ KonversationApplication::~KonversationApplication()
 {
   kdDebug() << "KonversationApplication::~KonversationApplication()" << endl;
   saveOptions(false);
-
-/*
-  kdDebug() << "Deleting Server list ..." << endl;
-  while(serverList.count())
-  {
-    kdDebug() << "deleted" << endl;
-    delete serverList.first();
-  }
-*/
 }
 
 void KonversationApplication::connectToServer(int id)
@@ -124,7 +113,7 @@ void KonversationApplication::connectToAnotherServer(int id)
 
     newServer=serverList.next();
   }
-  /* We came this far, so generate a new server */
+  // We came this far, so generate a new server
   newServer=new Server(id);
   serverList.append(newServer);
   connect(newServer->getServerWindow(),SIGNAL(prefsChanged()),this,SLOT(saveOptions()));
@@ -142,6 +131,7 @@ void KonversationApplication::readOptions()
 {
   kdDebug() << "KonversationApplication::readOptions()" << endl;
 
+  KConfig* config=kapp->config();
   // Read configuration and provide the default values
   config->setGroup("General Options");
 
@@ -369,6 +359,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
 {
   kdDebug() << "KonversationApplication::saveOptions()" << endl;
 
+  KConfig* config=kapp->config();
+
   config->setGroup("General Options");
 
   config->writeEntry("CommandChar",preferences.getCommandChar());
@@ -588,7 +580,7 @@ void KonversationApplication::openPrefsDialog()
 
 void KonversationApplication::syncPrefs()
 {
-  config->sync();
+  kapp->config()->sync();
 }
 
 void KonversationApplication::closePrefsDialog()

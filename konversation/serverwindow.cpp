@@ -20,6 +20,7 @@
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kaccel.h>
+#include <kmessagebox.h>
 
 #include "serverwindow.h"
 #include "konversationapplication.h"
@@ -125,6 +126,11 @@ Server* ServerWindow::getServer()
   return server;
 }
 
+void ServerWindow::setIdentity(const Identity& identity)
+{
+  filter.setIdentity(identity);
+}
+
 void ServerWindow::appendToStatus(const QString& type,const QString& message)
 {
   statusPanel->appendServerMessage(type,message);
@@ -199,9 +205,24 @@ void ServerWindow::closeTab(QWidget* viewToClose)
   QString viewName=view->getName();
   ChatWindow::WindowType viewType=view->getType();
 
-  if(viewType==ChatWindow::Status);
-  else if(viewType==ChatWindow::Channel) emit closeChannel(viewName);
-  else if(viewType==ChatWindow::Query)   emit closeQuery(viewName);
+  if(viewType==ChatWindow::Status)
+  {
+    int result= KMessageBox::warningYesNo(
+                  this,
+                  i18n("Do you really want to disconnect from %1?").arg(server->getIrcName()),
+                  i18n("Quit server"),
+                  KStdGuiItem::yes(),
+                  KStdGuiItem::no(),
+                  "QuitServerOnTabClose");
+
+    if(result==KMessageBox::Yes)
+    {
+      QString command=filter.parse(server->getNickname(),KonversationApplication::preferences.getCommandChar()+"quit","");
+      server->queue(filter.getServerOutput());
+    }
+  }
+  else if(viewType==ChatWindow::Channel)  emit closeChannel(viewName);
+  else if(viewType==ChatWindow::Query)    emit closeQuery(viewName);
   else if(viewType==ChatWindow::DccChat);
   else if(viewType==ChatWindow::DccPanel) closeDccPanel();
 }
@@ -324,7 +345,7 @@ void ServerWindow::saveOptions()
 bool ServerWindow::queryExit()
 {
   kdDebug() << "ServerWindow::queryExit()" << endl;
-  QString command=filter.parse(server->getNickname(),"/quit","");
+  QString command=filter.parse(server->getNickname(),KonversationApplication::preferences.getCommandChar()+"quit","");
   server->queue(filter.getServerOutput());
 
   saveOptions();

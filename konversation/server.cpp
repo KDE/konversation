@@ -45,6 +45,7 @@ Server::Server(int id)
 
   serverWindow=new ServerWindow(this);
   setNickname(identity.getNickname(tryNickNumber));
+  serverWindow->setIdentity(getIdentity());
   serverWindow->show();
 
   serverName=serverEntry[1];
@@ -276,7 +277,7 @@ void Server::notifyTimeout()
   }
 
   // if no ISON was sent, fall back to PING for lag measuring
-  if(!sent) queue("PING LAG :"+ircName);
+  if(!sent) queue("PING LAG :"+getIrcName());
   // start check timer waiting for 303 or PONG response
   startNotifyCheckTimer();
 }
@@ -1043,6 +1044,11 @@ QString Server::parseWildcards(const QString& toParse,const QString& nickname,co
 void Server::setIrcName(QString newIrcName)
 {
   ircName=newIrcName;
+}
+
+const QString& Server::getIrcName()
+{
+  return ircName;
 }
 
 OutputFilter& Server::getOutputFilter()

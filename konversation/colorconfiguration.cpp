@@ -22,6 +22,7 @@
 
 #include <klocale.h>
 #include <kdebug.h>
+#include <kcolorcombo.h>
 
 #include "colorconfiguration.h"
 
@@ -42,31 +43,31 @@ ColorConfiguration::ColorConfiguration(QString passed_actionTextColor, QString p
   QGridLayout* dialogLayout=new QGridLayout(page,9,2);
 
   QLabel* actionLabel = new QLabel(i18n("Action text color"), page);
-  MyColorCombo* actionMessageColorSelection = new MyColorCombo(page);
+  KColorCombo* actionMessageColorSelection = new KColorCombo(page);
 
   QLabel* backlogLabel = new QLabel(i18n("Backlog text color"), page);
-  MyColorCombo* backlogMessageColorSelection = new MyColorCombo(page);
+  KColorCombo* backlogMessageColorSelection = new KColorCombo(page);
 
   QLabel* channelLabel = new QLabel(i18n("Channel message text color"), page);
-  MyColorCombo* channelMessageColorSelection = new MyColorCombo(page);
+  KColorCombo* channelMessageColorSelection = new KColorCombo(page);
 
   QLabel* commandLabel = new QLabel(i18n("Command message text color"), page);
-  MyColorCombo* commandMessageColorSelection = new MyColorCombo(page);
+  KColorCombo* commandMessageColorSelection = new KColorCombo(page);
 
   QLabel* linkLabel = new QLabel(i18n("Hyperlink text color"), page);
-  MyColorCombo* linkMessageColorSelection = new MyColorCombo(page);
+  KColorCombo* linkMessageColorSelection = new KColorCombo(page);
 
   QLabel* queryLabel = new QLabel(i18n("Query messsage text color"), page);
-  MyColorCombo* queryMessageColorSelection = new MyColorCombo(page);
+  KColorCombo* queryMessageColorSelection = new KColorCombo(page);
 
   QLabel* serverLabel = new QLabel(i18n("Server message text color"), page);
-  MyColorCombo* serverMessageColorSelection = new MyColorCombo(page);
+  KColorCombo* serverMessageColorSelection = new KColorCombo(page);
 
   QLabel* timeLabel = new QLabel(i18n("Timestamp color"), page);
-  MyColorCombo* timeColorSelection = new MyColorCombo(page);
+  KColorCombo* timeColorSelection = new KColorCombo(page);
 
   QLabel* backgroundLabel = new QLabel(i18n("Background color"), page);
-  MyColorCombo* backgroundColorSelection = new MyColorCombo(page);
+  KColorCombo* backgroundColorSelection = new KColorCombo(page);
 
   QHBox* pad=new QHBox(page);
 

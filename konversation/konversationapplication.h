@@ -34,7 +34,8 @@ class KonversationApplication : public KApplication
   public:
     static Preferences preferences;
 
-    /* URL-Catcher */
+    // URL-Catcher
+    // TODO: Provide a list of seen URLs
     static QStringList urlList;
     static void storeURL(QString& url);
 
@@ -55,7 +56,6 @@ class KonversationApplication : public KApplication
 
   protected:
     QPtrList<Server> serverList;
-    KSimpleConfig* config;
     PrefsDialog* prefsDialog;
 };
 

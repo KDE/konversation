@@ -28,8 +28,6 @@
 #include <qsize.h>
 #include <qstring.h>
 
-#include "mycolorcombo.h"
-
 /**
   *@author Matthias Gierlings
   */

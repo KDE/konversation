@@ -53,6 +53,7 @@
 #include "statuspanel.h"
 #include "nicksonline.h"
 #include "dccpanel.h"
+#include "identity.h"
 
 class ServerWindow : public KMainWindow
 {
@@ -74,6 +75,7 @@ class ServerWindow : public KMainWindow
 
     void setServer(Server* server);
     Server* getServer();
+    void setIdentity(const Identity& identity);
     bool isFrontView(const ChatWindow* view);
 
   signals:

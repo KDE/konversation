@@ -58,6 +58,7 @@ class Server : public QObject
     QString getNextNickname();
 
     void setIrcName(QString newIrcName);
+    const QString& getIrcName();
 
     void addNickToChannel(QString& channelName,QString& nickname,QString& hostmask,bool op,bool voice);
     void addHostmaskToNick(QString& sourceNick,QString& sourceHostmask);
