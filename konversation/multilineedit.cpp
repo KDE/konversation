@@ -22,7 +22,8 @@ QString MultilineEdit::returnText; // static
 
 MultilineEdit::MultilineEdit(QWidget* parent,QString text) :
                KDialogBase(parent,"multiline_edit_dialog",true,i18n("Edit Multiline Paste"),
-                           KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
+                           KDialogBase::User1 | KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true,
+                           KGuiItem(i18n("Add &quotation indicators")))
 {
   // Create the top level widget
   QWidget* page=new QWidget(this);
@@ -57,6 +58,16 @@ void MultilineEdit::slotOk()
 {
   returnText=textEditor->text();
   KDialogBase::slotOk();
+}
+
+void MultilineEdit::slotUser1()
+{
+  QStringList lines=QStringList::split("\n",textEditor->text(),true);
+  QStringList::iterator it=lines.begin();
+  for( ; it!=lines.end() ; ++it )
+    if(!(*it).isEmpty())
+      (*it) = "> " + (*it);
+  textEditor->setText(lines.join("\n"));
 }
 
 QString MultilineEdit::edit(QWidget* parent,QString text)

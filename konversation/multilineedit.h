@@ -35,6 +35,7 @@ class MultilineEdit : public KDialogBase
   protected slots:
     void slotOk();
     void slotCancel();
+    void slotUser1();
 
   protected:
     QTextEdit* textEditor;
