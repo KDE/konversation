@@ -43,15 +43,15 @@ sub pretty_print
 
     if(!is_empty($artist) && !is_empty($album))
     {
-	return "/me is playing $title by $artist on $album";
+	return "/me is playing \"$title\" by $artist on $album";
     }
     elsif(!is_empty($artist))
     {
-	return "/me is playing $title by $artist";
+	return "/me is playing \"$title\" by $artist";
     }
     elsif(!is_empty($album))
     {
-	return "/me is playing $title\" on $album";
+	return "/me is playing \"$title\" on $album";
     }
     else
     {
