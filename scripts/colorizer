@@ -12,7 +12,7 @@ my $TARGET= shift;
 my $i = 0;
 
 if(!@ARGV){
-    exec 'dcop', $port, 'Konversation', 'error', 'Colorizer script needs a message argument!';
+    exec 'dcop', $PORT, 'Konversation', 'error', 'Colorizer script needs a message argument!';
 }
 
 my $input = join " ", @ARGV;
