@@ -182,6 +182,8 @@ Preferences::Preferences()
 #if QT_VERSION >= 0x030200
   setShowTabBarCloseButton(false);
 #endif
+
+  setShowTopic(true);
 }
 
 Preferences::~Preferences()
@@ -684,5 +686,8 @@ void Preferences::setShowStatusBar(bool s) { showStatusBar = s; }
 bool Preferences::getShowTabBarCloseButton() { return showTabBarCloseButton; }
 void Preferences::setShowTabBarCloseButton(bool s) { showTabBarCloseButton = s; }
 #endif
+
+bool Preferences::getShowTopic() { return showTopic; }
+void Preferences::setShowTopic(bool s) { showTopic = s; }
 
 #include "preferences.moc"

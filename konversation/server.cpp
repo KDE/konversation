@@ -1204,6 +1204,16 @@ void Server::setShowModeButtons(bool state)
   }
 }
 
+void Server::setShowTopic(bool state)
+{
+  Channel* channel=channelList.first();
+  while(channel)
+  {
+    channel->showTopic(state);
+    channel=channelList.next();
+  }
+}
+
 Channel* Server::getChannelByName(const QString& name)
 {
   // Convert wanted channel name to lowercase

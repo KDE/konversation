@@ -90,10 +90,13 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   showModeButtons=new QCheckBox(i18n("Show channel &mode buttons"),showButtonsBox,"show_modebuttons_checkbox");
   showModeButtons->setChecked(preferences->getShowModeButtons());
+  
+  showTopic=new QCheckBox(i18n("Show channel topic"), showButtonsBox, "show_topic");
+  showTopic->setChecked(preferences->getShowTopic());
 
   autoUserhostCheck=new QCheckBox(i18n("Show h&ostmasks in nick list"),parentFrame,"auto_userhost_check");
   autoUserhostCheck->setChecked(preferences->getAutoUserhost());
-
+  
   useSpacingCheck=new QCheckBox(i18n("&Use custom widget spacing"),parentFrame,"use_spacing_check");
 
   QHBox* spacingMarginBox=new QHBox(parentFrame);
@@ -306,6 +309,7 @@ void PrefsPageAppearance::applyPreferences()
   preferences->setParagraphSpacing(paragraphSpacingSpin->value());
   preferences->setSortByStatus(sortByStatusCheck->isChecked());
   preferences->setSortCaseInsensitive(sortCaseInsensitiveCheck->isChecked());
+  preferences->setShowTopic(showTopic->isChecked());
 
   int flag=1;
 

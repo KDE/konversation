@@ -299,6 +299,8 @@ void KonversationApplication::readOptions()
 #if QT_VERSION >= 0x030200
   preferences.setShowTabBarCloseButton(config->readBoolEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton()));
 #endif
+  
+  preferences.setShowTopic(config->readBoolEntry("ShowTopic", preferences.getShowTopic()));
 
   // Colors are now handled in preferences
 
@@ -573,6 +575,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
 #if QT_VERSION >= 0x030200
   config->writeEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton());
 #endif
+  
+  config->writeEntry("ShowTopic", preferences.getShowTopic());
 
   // Colors are now handled in preferences
 
@@ -747,6 +751,7 @@ void KonversationApplication::appearanceChanged()
 
     lookServer->setShowQuickButtons(preferences.getShowQuickButtons());
     lookServer->setShowModeButtons(preferences.getShowModeButtons());
+    lookServer->setShowTopic(preferences.getShowTopic());
 
     lookServer=serverList.next();
   }

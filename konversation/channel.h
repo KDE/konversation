@@ -107,6 +107,7 @@ class Channel : public ChatWindow
     void showModeButtons(bool show);
     void appendInputText(const QString& s);
     virtual void indicateAway(bool show);
+    void showTopic(bool show);
 
   protected slots:
     void purgeNicks();
@@ -157,6 +158,7 @@ class Channel : public ChatWindow
     QSplitter* splitter;
     QString topic; // Caches current topic
     TopicComboBox* topicLine;
+    QLabel* topicLabel;
     QStringList topicHistory;
     QHBox* modeBox;
 

@@ -67,6 +67,7 @@ class PrefsPageAppearance : public PrefsPage
     QCheckBox* doTimestamping;
     QCheckBox* showQuickButtons;
     QCheckBox* showModeButtons;
+    QCheckBox* showTopic;
 
     QLabel* formatLabel;
 

@@ -106,7 +106,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   QHBox* topicBox=new QHBox(topicViewNicksGrid);
   topicBox->setSpacing(spacing());
 
-  QLabel* topicLabel=new QLabel(i18n("&Topic:"),topicBox);
+  topicLabel=new QLabel(i18n("&Topic:"),topicBox);
   topicLine=new TopicComboBox(topicBox);
   topicLine->setEditable(true);
   topicLine->setAutoCompletion(false);
@@ -1585,6 +1585,17 @@ void Channel::appendInputText(const QString& s)
 void Channel::closeYourself()
 {
   server->closeChannel(getName());
+}
+
+void Channel::showTopic(bool show)
+{
+  if(show) {
+    topicLine->show();
+    topicLabel->show();
+  } else {
+    topicLine->hide();
+    topicLabel->hide();
+  }
 }
 
 //

@@ -355,6 +355,9 @@ class Preferences : public QObject
     void setShowTabBarCloseButton(bool s);
 #endif
 
+    bool getShowTopic();
+    void setShowTopic(bool s);
+
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();
@@ -495,6 +498,8 @@ class Preferences : public QObject
 #if QT_VERSION >= 0x030200
     bool showTabBarCloseButton;
 #endif
+  
+    bool showTopic;
 };
 
 #endif
