@@ -14,6 +14,7 @@
 
 #include <qheader.h>
 #include <qhostaddress.h>
+#include <qlocale.h>
 #include <qstyle.h>
 #include <qtimer.h>
 
@@ -52,10 +53,6 @@ DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _p
   progressBar->setCenterIndicator(true);
   progressBar->setPercentageVisible(true);
   
-  adjustGeometry();
-  
-  //progressBar->show();
-  
   // FIXME: we shouldn't do these init in the instance constructer
   TypeText[Send]    = i18n("Send");
   TypeText[Receive] = i18n("Receive");
@@ -86,12 +83,14 @@ void DccTransfer::updateView()  // slot
   setText(DccPanel::Column::Status,        getStatusText());
   setText(DccPanel::Column::FileName,      fileName);
   setText(DccPanel::Column::PartnerNick,   partnerNick);
-  //setText(DccPanel::Column::Progress,      getProgressPrettyText());
   setText(DccPanel::Column::Position,      getPositionPrettyText());
   setText(DccPanel::Column::TimeRemaining, getTimeRemainingPrettyText());
   setText(DccPanel::Column::CPS,           getCPSPrettyText());
   
-  progressBar->setProgress((int)(100*transferringPosition/fileSize));
+  if(fileSize)
+    progressBar->setProgress((int)(100*transferringPosition/fileSize));
+  else  // filesize is unknown
+    setText(DccPanel::Column::Progress, i18n("unknown"));
 }
 
 void DccTransfer::startAutoUpdateView()
@@ -112,56 +111,26 @@ void DccTransfer::stopAutoUpdateView()
   }
 }
 
-
 void DccTransfer::paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment)
 {
   KListViewItem::paintCell(painter, colorgroup, column, width, alignment);
-  if(column==DccPanel::Column::Progress)  // Render progress bar
-  {
-    adjustGeometry();
-    /*
-    progressBar->setProgress((int)(100*transferringPosition/fileSize));
-    
-    progressBar->setFixedWidth(width);
-    progressBar->setFixedHeight(height());
-    QRect rectangle = progressBar->contentsRect();
-    
-    int styleflags = QStyle::Style_Default | QStyle::Style_Enabled;
-    if ( isSelected() )
-      styleflags |= QStyle::Style_Selected;
-  
-    progressBar->style().drawControl( QStyle::CE_ProgressBarGroove,
-                                      painter,
-                                      progressBar,
-                                      rectangle,
-                                      progressBar->colorGroup(),
-                                      styleflags );
-    progressBar->style().drawControl( QStyle::CE_ProgressBarContents,
-                                      painter,
-                                      progressBar,
-                                      rectangle,
-                                      progressBar->colorGroup(),
-                                      styleflags );
-    progressBar->style().drawControl( QStyle::CE_ProgressBarLabel,
-                                      painter,
-                                      progressBar,
-                                      rectangle,
-                                      progressBar->colorGroup(),
-                                      styleflags );
-    */
-  }
+  if(column==DccPanel::Column::Progress)
+    showProgressBar();
 }
 
-
-void DccTransfer::adjustGeometry()  // public
-{  // I've referenced the Apollon's code for progressbar things. Thank you, the Apollon team! (shin)
-  QRect rect = listView()->itemRect(this);
-  QHeader *head = listView()->header();
-  rect.setLeft(head->sectionPos(DccPanel::Column::Progress) - head->offset());
-  rect.setWidth(head->sectionSize(DccPanel::Column::Progress));
-  progressBar->setGeometry(rect);
-  
-  progressBar->show();
+void DccTransfer::showProgressBar()  // public
+{  
+  // I've referenced the Apollon's code for progressbar things. Thank you, the Apollon team! (shin)
+  if(fileSize)
+  {
+    QRect rect = listView()->itemRect(this);
+    QHeader *head = listView()->header();
+    rect.setLeft(head->sectionPos(DccPanel::Column::Progress) - head->offset());
+    rect.setWidth(head->sectionSize(DccPanel::Column::Progress));
+    progressBar->setGeometry(rect);
+    
+    progressBar->show();
+  }
 }
 
 void DccTransfer::setStatus(DccStatus status)
@@ -226,12 +195,9 @@ QString DccTransfer::getFileSizePrettyText() const
 
 QString DccTransfer::getPositionPrettyText() const
 {
-  return QString::number(transferringPosition) + " / " + QString::number(fileSize);
-}
-
-QString DccTransfer::getProgressPrettyText() const
-{
-  return QString::number((int)(100*transferringPosition/fileSize)) + "%";
+  // TODO: make it pretty!
+  QLocale locale(QLocale::C);
+  return locale.toString(transferringPosition) + " / " + locale.toString(fileSize);
 }
 
 QString DccTransfer::getTimeRemainingPrettyText() const

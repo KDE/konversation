@@ -61,12 +61,14 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   
   dccListView->setColumnWidth(Column::OfferDate,      70);
   dccListView->setColumnWidth(Column::Status,         80);
-  dccListView->setColumnWidth(Column::FileName,      120);
+  dccListView->setColumnWidth(Column::FileName,      150);
   dccListView->setColumnWidth(Column::PartnerNick,    70);
   dccListView->setColumnWidth(Column::Progress,       90);
   dccListView->setColumnWidth(Column::Position,      120);
   dccListView->setColumnWidth(Column::TimeRemaining,  80);
   dccListView->setColumnWidth(Column::CPS,            70);
+  
+  dccListView->setColumnWidthMode(Column::FileName, QListView::Manual);
   
   dccListView->setColumnAlignment(Column::OfferDate,     AlignHCenter);
   dccListView->setColumnAlignment(Column::Progress,      AlignHCenter);
@@ -88,11 +90,6 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   infoButton  =new QPushButton(i18n("Information"),buttonsBox,"info_on_dcc_file");
 
   connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (dccSelected()) );
-  
-  connect(dccListView->header(), SIGNAL(sizeChange(int, int, int)), this, SLOT(adjustGeometry()));
-  connect(dccListView->header(), SIGNAL(indexChange(int, int, int)), this, SLOT(adjustGeometry()));
-  connect(dccListView, SIGNAL(expanded(QListViewItem*)), this, SLOT(adjustGeometry()));
-  connect(dccListView, SIGNAL(collapsed(QListViewItem*)), this, SLOT(adjustGeometry()));
   
   connect(acceptButton,SIGNAL (clicked()) ,this,SLOT (acceptDcc()) );
   connect(abortButton,SIGNAL (clicked()) ,this,SLOT (abortDcc()) );
@@ -152,15 +149,6 @@ void DccPanel::dccSelected()
     }
   }
   else setButtons(false,false,false,false,false);
-}
-
-void DccPanel::adjustGeometry()  // public slot
-{
-  for(QListViewItemIterator it(dccListView); it.current(); ++it)
-  {
-    DccTransfer* item=static_cast<DccTransfer*>(it.current());
-    item->adjustGeometry();
-  }
 }
 
 void DccPanel::acceptDcc()

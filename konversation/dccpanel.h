@@ -51,7 +51,6 @@ class DccPanel : public ChatWindow
 
   public slots:
     void adjustFocus();
-    void adjustGeometry();
 
   protected slots:
     void acceptDcc();

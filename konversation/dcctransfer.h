@@ -59,7 +59,7 @@ class DccTransfer : public QObject, public KListViewItem
     virtual ~DccTransfer();
     
     virtual void paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment);
-    void adjustGeometry();  // called by DccPanel
+    void showProgressBar();
     
     DccType getType() const { return dccType; }
     DccStatus getStatus() const { return dccStatus; }
@@ -93,7 +93,6 @@ class DccTransfer : public QObject, public KListViewItem
     QString getStatusText() const;
     QString getFileSizePrettyText() const;
     QString getPositionPrettyText() const;
-    QString getProgressPrettyText() const;
     QString getTimeRemainingPrettyText() const;
     QString getCPSPrettyText() const;
     
