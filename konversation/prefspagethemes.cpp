@@ -31,6 +31,8 @@
 #include <kio/job.h>
 #include <kio/netaccess.h>
 
+#include <unistd.h> // unlink()
+
 #include "preferences.h"
 #include "common.h"
 #include "konversationapplication.h"
@@ -116,7 +118,6 @@ void PrefsPageThemes::removeTheme()
   QString themeName = themeList->currentText();
 
   dir = dirs[themeList->currentItem()];
-  dir.remove("themerc");
 
   int remove = KMessageBox::warningContinueCancel(0L,
 						  QString("Are you sure you want to remove %1 ?").arg(themeName),
@@ -127,7 +128,8 @@ void PrefsPageThemes::removeTheme()
 
   if( remove == KMessageBox::Continue ) 
     {
-      KIO::del(KURL(dir));
+      unlink(QFile::encodeName(dir));
+      KIO::del(KURL(dir.remove("themerc")));
       updateList();
     }
 }
