@@ -54,6 +54,11 @@ class NicksOnline : public ChatWindow
       ciAddressbookChange, ciAddressbookNew, ciAddressbookDelete, ciAddressbookEdit,
       ciSendEmail, ciWhois, ciJoinChannel
     };
+    enum NickState {
+      nsNotANick = 0,           // User didn't click on a nickname.
+      nsNoAddress = 1,          // Nick does not have an addressbook association.
+      nsHasAddress = 2          // Nick has an associated addressbook entry.
+    };
 
     
 #ifdef USE_MDI

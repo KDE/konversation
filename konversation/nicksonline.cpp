@@ -139,7 +139,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     connect(m_nickListView, SIGNAL(selectionChanged()),
         this, SLOT(slotNickListView_SelectionChanged()));
         
-    setupAddressbookButtons(0);
+    setupAddressbookButtons(nsNotANick);
     
     // Create context menu.  Individual menu entries are created in rightButtonClicked slot.
     m_popupMenu = new QPopupMenu(this,"nicksonline_context_menu");
@@ -593,7 +593,7 @@ void NicksOnline::doCommand(int id)
     QString serverName;
     QString nickname;
     QListViewItem* item = m_nickListView->selectedItem();
-    QString channelName = m_nickListView->selectedItem()->text(0);
+    QString channelName = m_nickListView->selectedItem()->text(nlvcChannel);
     if (!getItemServerAndNick(item, serverName, nickname)) return;
     // Get the server object corresponding to the server name.
     KonversationApplication *konvApp = 
@@ -658,9 +658,9 @@ void NicksOnline::doCommand(int id)
         {
             // Channels have no nlvcServerName entry. 
             // We test if it is empty to see if we really have a channel name. 
-            if (!m_nickListView->selectedItem()->text(nlvcServerName))
+            if (m_nickListView->selectedItem()->text(nlvcServerName).isEmpty())
             {
-                QString contactChannel = m_nickListView->selectedItem()->text(0);
+                QString contactChannel = m_nickListView->selectedItem()->text(nlvcChannel);
                 
                 server->queue( "JOIN "+contactChannel );
             }
@@ -680,28 +680,28 @@ void NicksOnline::doCommand(int id)
 */
 int NicksOnline::getNickAddressbookState(QListViewItem* item)
 {
-    int nickState = 0;
+    int nickState = nsNotANick;
     QString serverName;
     QString nickname;
     if (getItemServerAndNick(item, serverName, nickname))
     {
         Server *server = 
             static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
-        if (!server) return 0;
+        if (!server) return nsNotANick;
         NickInfoPtr nickInfo = server->getNickInfo(nickname);
         if (nickInfo)
         {
             if (nickInfo->getAddressee().isEmpty())
-                nickState = 1;
+                nickState = nsNoAddress;
             else
-                nickState = 2;
+                nickState = nsHasAddress;
         }
         else
         {
             if (server->getOfflineNickAddressee(nickname).isEmpty())
-                nickState = 1;
+                nickState = nsNoAddress;
             else
-                nickState = 2;
+                nickState = nsHasAddress;
         }
     }
     return nickState;
@@ -717,14 +717,14 @@ void NicksOnline::setupAddressbookButtons(int nickState)
 {
     switch (nickState)
     {
-        case 0:
+        case nsNotANick:
         {
             m_editContactButton->setEnabled(false);
             m_changeAssociationButton->setEnabled(false);
             m_deleteAssociationButton->setEnabled(false);
             break;
         }
-        case 1:
+        case nsNoAddress:
         {
             m_editContactButton->setText(i18n("New C&ontact..."));
             m_editContactButton->setEnabled(true);
@@ -733,7 +733,7 @@ void NicksOnline::setupAddressbookButtons(int nickState)
             m_deleteAssociationButton->setEnabled(false);
             break;
         }
-        case 2:
+        case nsHasAddress:
         {
             m_editContactButton->setText(i18n("Edit C&ontact..."));
             m_editContactButton->setEnabled(true);
@@ -752,9 +752,9 @@ void NicksOnline::slotEditContactButton_Clicked()
 { 
     switch (getNickAddressbookState(m_nickListView->selectedItem()))
     {
-        case 0: break;
-        case 1: { doCommand(ciAddressbookNew); break; }
-        case 2: { doCommand(ciAddressbookEdit); break; }
+        case nsNotANick:    break;
+        case nsNoAddress:   { doCommand(ciAddressbookNew); break; }
+        case nsHasAddress:  { doCommand(ciAddressbookEdit); break; }
     }
 }
 
@@ -785,20 +785,21 @@ void NicksOnline::slotNickListView_RightButtonClicked(QListViewItem* item, const
     int nickState = getNickAddressbookState(item);
     switch (nickState)
     {
-        case 0:
+        case nsNotANick:
         {
             break;
         }
-        case 1:
+        case nsNoAddress:
         {
             m_popupMenu->insertItem(i18n("&Choose Association..."), ciAddressbookChange);
             m_popupMenu->insertItem(i18n("New C&ontact..."), ciAddressbookNew);
             m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("&Whois"), ciWhois);
-            m_popupMenu->insertItem(i18n("&Join Channel"), ciJoinChannel);
+            if (item->text(nlvcServerName).isEmpty())
+                m_popupMenu->insertItem(i18n("&Join Channel"), ciJoinChannel);
             break;
         }
-        case 2:
+        case nsHasAddress:
         {
             m_popupMenu->insertItem(i18n("&Send Email..."), ciSendEmail);
             m_popupMenu->insertSeparator();
@@ -808,11 +809,12 @@ void NicksOnline::slotNickListView_RightButtonClicked(QListViewItem* item, const
             m_popupMenu->insertItem(i18n("&Delete Association"), ciAddressbookDelete);
             m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("&Whois"), ciWhois);
-            m_popupMenu->insertItem(i18n("&Join Channel"), ciJoinChannel);
+            if (item->text(nlvcServerName).isEmpty())
+                m_popupMenu->insertItem(i18n("&Join Channel"), ciJoinChannel);
             break;
         }
     }
-    if (nickState != 0)
+    if (nickState != nsNotANick)
     {
         // TODO: Does this block the main event loop?
         int r = m_popupMenu->exec(pt);
@@ -861,11 +863,18 @@ void NicksOnline::refreshItem(QListViewItem* item)
             if (addressee.isEmpty()) nickState = 1;
             switch (nickState)
             {
-                case 0: break;
-                case 1: { item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
-                        QIconSet::Small, QIconSet::Disabled, QIconSet::Off)); break; }
-                case 2: { item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
-                        QIconSet::Small, QIconSet::Normal, QIconSet::On)); break; }
+                case nsNotANick:
+                    break;
+                case nsNoAddress:
+                    { 
+                        item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
+                        QIconSet::Small, QIconSet::Disabled, QIconSet::Off)); break;
+                    }
+                case nsHasAddress:
+                    {
+                        item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
+                        QIconSet::Small, QIconSet::Normal, QIconSet::On)); break;
+                    }
             }
             QString nickAdditionalInfo;
             bool needWhois = false;
