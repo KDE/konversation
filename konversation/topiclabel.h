@@ -24,6 +24,9 @@ class TopicLabel : public KActiveLabel
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
+
+  public slots:
+    virtual void openLink(const QString& link);
 };
 
 };

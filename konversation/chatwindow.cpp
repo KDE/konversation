@@ -392,7 +392,7 @@ int ChatWindow::spacing()
   if(KonversationApplication::preferences.getUseSpacing())
     return KonversationApplication::preferences.getSpacing();
   else
-    return 0;
+    return KDialog::spacingHint();
 }
 
 int ChatWindow::margin()

@@ -114,7 +114,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 #endif
   
   QWidget* topicWidget = new QWidget(m_vertSplitter);
-  QGridLayout* topicLayout = new QGridLayout(topicWidget, 2, 3, margin(), spacing());
+  QGridLayout* topicLayout = new QGridLayout(topicWidget, 2, 3, 0, 0);
 
   m_topicButton = new QToolButton(topicWidget);
   m_topicButton->setIconSet(SmallIconSet("edit", 16));
