@@ -144,7 +144,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   tray = new TrayIcon(this);
   connect(this, SIGNAL(startNotification(QWidget*)), tray, SLOT(startNotification(QWidget*)));
   connect(this, SIGNAL(endNotification(QWidget*)), tray, SLOT(endNotification(QWidget*)));
-  
+
   // decide whether to show the tray icon or not
   updateTrayIcon();
 
@@ -349,7 +349,7 @@ void KonversationMainWindow::addUrlCatcher()
   if(urlCatcherPanel==0)
   {
     urlCatcherPanel=new UrlCatcher(getViewContainer());
-    addView(urlCatcherPanel,2,i18n("URL catcher"),true);
+    addView(urlCatcherPanel,2,i18n("URL Catcher"),true);
 
     KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
     connect(konvApp,SIGNAL (catchUrl(const QString&,const QString&)),
@@ -519,7 +519,7 @@ void KonversationMainWindow::newText(QWidget* view,const QString& highlightColor
   if(view!=getViewContainer()->currentPage())
   {
     getViewContainer()->changeTabState(view,true,highlightColor);
-    
+
     emit startNotification(view);
   } else if(!isActiveWindow() && static_cast<ChatWindow*>(view)->getServer()->connected())
   {
@@ -724,7 +724,7 @@ void KonversationMainWindow::updateTrayIcon()
     tray->show();
   else
     tray->hide();
-  
+
   tray->setNotificationEnabled(KonversationApplication::preferences.getTrayNotify());
 }
 
@@ -742,7 +742,7 @@ bool KonversationMainWindow::event(QEvent* e)
   if(e->type() == QEvent::WindowActivate) {
     emit endNotification(getViewContainer()->currentPage());
   }
-  
+
   return KMainWindow::event(e);
 }
 
@@ -751,11 +751,11 @@ void KonversationMainWindow::serverQuit(Server* server)
   if(server == frontServer) {
     frontServer = 0;
   }
-  
+
   if(frontView->getServer() == server) {
     frontView = 0;
   }
-  
+
   tray->removeServer(server);
   delete server->getStatusView();
   delete server;
@@ -764,7 +764,7 @@ void KonversationMainWindow::serverQuit(Server* server)
 void KonversationMainWindow::openToolbars()
 {
   KEditToolbar dlg(actionCollection());
-  
+
   if (dlg.exec())
   {
     createGUI();

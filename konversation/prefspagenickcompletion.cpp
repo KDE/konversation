@@ -34,12 +34,12 @@ PrefsPageNickCompletion::PrefsPageNickCompletion(QFrame* newParent, Preferences*
   // nick completion mode
   QLabel* modeLbl = new QLabel(i18n("Completion &mode:"), parentFrame);
   completionModeCBox = new QComboBox(parentFrame);
-  completionModeCBox->insertItem(i18n("Cycle nicklist"));
-  completionModeCBox->insertItem(i18n("Shell like"));
-  completionModeCBox->insertItem(i18n("Shell like with completionbox"));
+  completionModeCBox->insertItem(i18n("Cycle Nicklist"));
+  completionModeCBox->insertItem(i18n("Shell Like"));
+  completionModeCBox->insertItem(i18n("Shell Like With Completionbox"));
   completionModeCBox->setCurrentItem(preferences->getNickCompletionMode());
   modeLbl->setBuddy(completionModeCBox);
-  
+
   // nick completion special settings
   QVBox* suffixBox=new QVBox(parentFrame);
   new QLabel(i18n("Characters to add on nick completion"),suffixBox);

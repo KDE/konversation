@@ -172,7 +172,7 @@ void IRCView::highlightedSlot(const QString& link)
   else if(!link.isEmpty() && !copyUrlMenu)
   {
     popup->insertItem(i18n("Copy URL to Clipboard"),CopyUrl,1);
-    popup->insertItem(i18n("Add to bookmarks"),Bookmark,2);
+    popup->insertItem(i18n("Add to Bookmarks"),Bookmark,2);
     copyUrlMenu=true;
     urlToCopy=link;
   }
