@@ -44,15 +44,16 @@ EditNotifyDialog::EditNotifyDialog(QWidget* parent,
   layout->setSpacing(spacingHint());
 
   QLabel* groupNameLabel=new QLabel(i18n("&Group name:"),page);
-  QString groupNameWT = i18n("Enter anything you like here. It is used to "
-                             "organize the entries in the Server List.");
+  QString groupNameWT = i18n(
+    "Pick the server group you will connect to here.");
   QWhatsThis::add(groupNameLabel, groupNameWT);
   m_groupNameCombo=new KComboBox(page,"notify_group_combo");
   QWhatsThis::add(m_groupNameCombo, groupNameWT);
   groupNameLabel->setBuddy(m_groupNameCombo);
   
   QLabel* nicknameLabel=new QLabel(i18n("&Nickname:"),page);
-  QString nicknameWT = i18n("<qt>The nickname to watch for.</qt>");
+  QString nicknameWT = i18n(
+      "<qt>The nickname to watch for when connected to a server in the group.</qt>");
   QWhatsThis::add(nicknameLabel, nicknameWT);
   m_nicknameInput = new KLineEdit(nickname, page);
   QWhatsThis::add(m_nicknameInput, nicknameWT);

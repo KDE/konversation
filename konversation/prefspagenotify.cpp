@@ -20,6 +20,7 @@
 #include <qspinbox.h>
 #include <qpushbutton.h>
 #include <qmap.h>
+#include <qwhatsthis.h>
 
 #include <klocale.h>
 #include <klistview.h>
@@ -42,21 +43,37 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   delayBox->setSpacing(spacingHint());
 
   m_useNotifyCheck = new QCheckBox(i18n("&Use nickname watcher"),delayBox,"use_nick_watcher_checkbox");
+  QString useNotifyCheckWT = i18n(
+      "<p>When the nickname watcher is turned on, you will be notified when the "
+      "nicknames appearing in the <b>Watched Groups/Nicknames</b> list come "
+      "online or go offline.</p>"
+      "<p>You can also open the <b>Nicks Online</b> window to see the status of all the "
+      "watched nicknames.</p>");
+  QWhatsThis::add(m_useNotifyCheck, useNotifyCheckWT);
   m_useNotifyCheck->setChecked(preferences->getUseNotify());
   m_notifyDelayLabel = new QLabel(i18n("Check &interval:"),delayBox,"interval_label");
+  QString notifyDelayWT = i18n(
+      "Konversation will check the status of the nicknames listed below at this interval.");
+  QWhatsThis::add(m_notifyDelayLabel, notifyDelayWT);
   m_notifyDelayLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   m_notifyDelaySpin = new QSpinBox(5,1000,1,delayBox,"delay_spin");
+  QWhatsThis::add(m_notifyDelaySpin, notifyDelayWT);
   m_notifyDelaySpin->setValue(preferences->getNotifyDelay());
   m_notifyDelaySpin->setSuffix(i18n(" seconds"));
   m_notifyDelayLabel->setBuddy(m_notifyDelaySpin);
   
   m_showWatchedNicksAtStartup = new QCheckBox(i18n("&Show Watched Nicks Online on startup"), parentFrame);
+  QString showWatchedNicksAtStartupWT = i18n(
+      "When checked, the <b>Nicks Online</b> window will be automatically opened when "
+      "starting Konversation.");
+  QWhatsThis::add(m_showWatchedNicksAtStartup, showWatchedNicksAtStartupWT);
   m_showWatchedNicksAtStartup->setChecked(preferences->getOpenWatchedNicksAtStartup());
 
   // Set up the notify list
   QHBox* listBox=new QHBox(parentFrame);
   listBox->setSpacing(spacingHint());
   m_notifyListView=new KListView(listBox);
+  QWhatsThis::add(m_notifyListView, useNotifyCheckWT);
 
   m_notifyListView->addColumn(i18n("Watched Groups/Nicknames"));
 
@@ -73,7 +90,13 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   QGrid* buttonBox = new QGrid(3, QGrid::Vertical, listBox);
   buttonBox->setSpacing(spacingHint());
   m_newButton = new QPushButton(i18n("&New..."),buttonBox);
+  QString newButtonWT = i18n(
+      "Click to add a nickname to the list.");
+  QWhatsThis::add(m_newButton, newButtonWT);
   m_removeButton = new QPushButton(i18n("&Remove"),buttonBox);
+  QString removeButtonTW = i18n(
+      "Click to remove the selected nickname from the list.");
+  QWhatsThis::add(m_removeButton, removeButtonTW);
 
   QHBox* actionEditBox=new QHBox(parentFrame);
   actionEditBox->setSpacing(spacingHint());
@@ -82,6 +105,17 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   QLabel* notifyActionLabel = new QLabel(i18n("Command &executed when nickname is double clicked:"), actionEditBox);
   m_notifyActionInput = new KLineEdit(preferences->getNotifyDoubleClickAction(), actionEditBox);
   notifyActionLabel->setBuddy(m_notifyActionInput);
+  QString notifyActionWT = i18n(
+      "<p>When you double click a nickname in the <b>Nicks Online</b> window, this "
+      "command is placed in the <b>Input Line</b> on the server window.</p>"
+      "<p>The following symbols can be used in the command:</p><ul>"
+      "<li>%u: The nickname double clicked.</li>"
+      "<li>%K: Server password.</li>"
+      "<li>%n: Send command directly to the server instead of your input line.</li>"
+      "</ul>");
+  QWhatsThis::add(notifyActionLabel, notifyActionWT);
+  QWhatsThis::add(m_notifyActionInput, notifyActionWT);
+  QWhatsThis::add(notifyActionLabel, notifyActionWT);
 
   notifyLayout->addWidget(delayBox);
   notifyLayout->addWidget(m_showWatchedNicksAtStartup);
