@@ -40,15 +40,15 @@ sub pretty_print
     our $artist=shift;
     our $album=shift;
 
-    if($artist =~ /\w+/ && $album =~ /\w+/)
+    if(!is_empty($artist) && !is_empty($album))
     {
 	return "/me is playing $title by $artist on $album";
     }
-    elsif($artist =~ /\w+/)
+    elsif(!is_empty($artist))
     {
 	return "/me is playing $title by $artist";
     }
-    elsif($album =~ /\w+/)
+    elsif(!is_empty($album))
     {
 	return "/me is playing $title\" on $album";
     }
@@ -64,11 +64,11 @@ sub is_empty
     
     if($string =~ /\S/)
     {
-	return 1;
+	return 0;
     }
     else
     {
-	return 0;
+	return 1;
     }
 }
 
@@ -87,7 +87,7 @@ if($amarok)
     chomp $artist;
     chomp $album;
 
-    if(is_empty($title))
+    if(!is_empty($title))
     {
 	our $string=pretty_print($title,$artist,$album);
 	exec("dcop $port Konversation say $server \"$target\" \"$string\"");
@@ -103,7 +103,7 @@ if($juk)
     our $string=`dcop juk Player playingString`;
     chomp $string;
 
-    if(is_empty($string))
+    if(!is_empty($string))
     {
 	exec("dcop $port Konversation say $server \"$target\" \"/me is playing $string\"");
     }
@@ -118,7 +118,7 @@ if($kaffeine)
     our $string=`dcop kaffeine Kaffeine getTitle`;
     chomp $string;
     
-    if(is_empty($string))
+    if(!is_empty($string))
     {
 	exec("dcop $port Konversation say $server \"$target\" \"/me is playing $string\"");
     }
@@ -133,7 +133,7 @@ if($noatun)
     our $string=`dcop Noatun title`;
     chomp $string;
 
-    if(is_empty($string))
+    if(!is_empty($string))
     {
         exec("dcop $port Konversation say $server \"$target\" \"/me is playing $string\"");
     }
