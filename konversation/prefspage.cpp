@@ -28,12 +28,12 @@ PrefsPage::~PrefsPage()
 {
 }
 
-int PrefsPage::marginHint()
+int PrefsPage::marginHint() const
 {
   return KDialog::marginHint();
 }
 
-int PrefsPage::spacingHint()
+int PrefsPage::spacingHint() const
 {
   return KDialog::spacingHint();
 }

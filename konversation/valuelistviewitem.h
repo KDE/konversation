@@ -29,7 +29,7 @@ class ValueListViewItem : public KListViewItem
     ValueListViewItem(int newValue,KListView* parent,QString label);
     ~ValueListViewItem();
 
-    int getValue();
+    int getValue() const;
 
   protected:
     int value;

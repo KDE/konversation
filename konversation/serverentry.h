@@ -11,7 +11,6 @@
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 
-  $Id$
 */
 
 #ifndef SERVERENTRY_H
@@ -26,18 +25,18 @@
 class ServerEntry
 {
   public:
-    ServerEntry(const QString newDefinition);
+    ServerEntry(const QString &newDefinition);
     ~ServerEntry();
-    QString getServerName();
-    int getPort();
-    QString getChannelName();
-    QString getChannelKey();
-    bool getAutoConnect();
-    QString getIdentity();
-    QString getDefinition();
+    QString getServerName() const;
+    int getPort() const;
+    QString getChannelName() const;
+    QString getChannelKey() const;
+    bool getAutoConnect() const;
+    QString getIdentity() const;
+    QString getDefinition() const;
 
     void setDefinition(const QString& newDefinition);
-    int getId();
+    int getId() const;
     void updateProperty(int property,const QString& value);
 
   protected:

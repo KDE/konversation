@@ -22,7 +22,7 @@
 
 int ServerEntry::newId=0;
 
-ServerEntry::ServerEntry(const QString newDefinition)
+ServerEntry::ServerEntry(const QString &newDefinition)
 {
   // Every entry gets a unique ID
   id=newId++;
@@ -46,42 +46,42 @@ void ServerEntry::updateProperty(int property,const QString& value)
   setDefinition(properties.join(","));
 }
 
-QString ServerEntry::getServerName()
+QString ServerEntry::getServerName() const
 {
   QStringList definition(QStringList::split(',',getDefinition(),true));
   return definition[1];
 }
 
-int ServerEntry::getPort()
+int ServerEntry::getPort() const
 {
   QStringList definition(QStringList::split(',',getDefinition(),true));
   return definition[2].toInt();
 }
 
-QString ServerEntry::getChannelName()
+QString ServerEntry::getChannelName() const
 {
   QStringList definition(QStringList::split(',',getDefinition(),true));
   return definition[4];
 }
 
-QString ServerEntry::getChannelKey()
+QString ServerEntry::getChannelKey() const
 {
   QStringList definition(QStringList::split(',',getDefinition(),true));
   return definition[5];
 }
 
-bool ServerEntry::getAutoConnect()
+bool ServerEntry::getAutoConnect() const
 {
   QStringList definition(QStringList::split(',',getDefinition(),true));
   return (definition[6]=="1") ? true : false;
 }
 
-QString ServerEntry::getIdentity()
+QString ServerEntry::getIdentity() const
 {
   QStringList definition(QStringList::split(',',getDefinition(),true));
   return definition[7];
 }
 
-QString ServerEntry::getDefinition() { return definition; }
+QString ServerEntry::getDefinition() const { return definition; }
 void ServerEntry::setDefinition(const QString& newDefinition) { definition=newDefinition; }
-int ServerEntry::getId() { return id; }
+int ServerEntry::getId() const{ return id; }

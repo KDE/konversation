@@ -11,7 +11,6 @@
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
 
-  $Id$
 */
 
 #include "valuelistviewitem.h"
@@ -27,7 +26,7 @@ ValueListViewItem::~ValueListViewItem()
 {
 }
 
-int ValueListViewItem::getValue()
+int ValueListViewItem::getValue() const
 {
   return value;
 }

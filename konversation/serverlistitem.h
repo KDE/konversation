@@ -11,7 +11,6 @@
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 
-  $Id$
 */
 
 
@@ -37,7 +36,7 @@ class ServerListItem : public QObject, public QCheckListItem
                    QString arg5=QString::null,
                    QString arg6=QString::null);
     ~ServerListItem();
-    int getId() { return id; };
+    int getId() const { return id; };
 
   signals:
     void stateChanged(ServerListItem* myself,bool state);

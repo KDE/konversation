@@ -45,28 +45,28 @@ class Server : public QObject
     Server(KonversationMainWindow* mainWindow,int number);
     ~Server();
 
-    QString getServerName();
+    QString getServerName() const;
     const Identity *getIdentity();
-    int getPort();
-    int getLag();
-    bool getAutoJoin();
+    int getPort() const;
+    int getLag() const;
+    bool getAutoJoin() const;
     void setAutoJoin(bool on);
 
-    bool isConnected();
+    bool isConnected() const;
 
-    QString getAutoJoinChannel();
+    QString getAutoJoinChannel() const;
     void setAutoJoinChannel(const QString &channel);
 
-    QString getAutoJoinChannelKey();
+    QString getAutoJoinChannelKey() const;
     void setAutoJoinChannelKey(const QString &key);
 
     void setDeliberateQuit(bool on);
-    bool getDeliberateQuit();
+    bool getDeliberateQuit() const;
 
     QString getNextNickname();
 
     void setIrcName(const QString &newIrcName);
-    QString getIrcName();
+    QString getIrcName() const;
 
     void addNickToChannel(const QString &channelName, const QString &nickname, const QString &hostmask, bool op, bool voice);
     void addHostmaskToNick(const QString &sourceNick, const QString &sourceHostmask);
@@ -77,7 +77,7 @@ class Server : public QObject
     void removeNickFromServer(const QString &nickname, const QString &reason);
 
     bool isNickname(const QString& compare);
-    QString getNickname();
+    QString getNickname() const;
     OutputFilter& getOutputFilter();
 
     void joinChannel(const QString& name, const QString& hostmask, const QString& key);
@@ -111,10 +111,10 @@ class Server : public QObject
     QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QStringList& nickList, const QString& queryName, const QString& parameter);
     QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& queryName, const QString& parameter);
 
-    QString getAutoJoinCommand();
+    QString getAutoJoinCommand() const;
 
     void notifyAction(const QString& nick);
-    ChannelListPanel* getChannelListPanel();
+    ChannelListPanel* getChannelListPanel() const;
 
   signals:
     void nicknameChanged(const QString&);
@@ -184,7 +184,7 @@ class Server : public QObject
     // constants
     static const int BUFFER_LEN=513;
 
-    KonversationMainWindow* getMainWindow();
+    KonversationMainWindow* getMainWindow() const;
     void setMainWindow(KonversationMainWindow* newMainWindow);
 
     bool eventFilter(QObject* parent, QEvent *event);

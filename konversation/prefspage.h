@@ -34,8 +34,8 @@ class PrefsPage : public QObject
     PrefsPage(QFrame* newParent,Preferences* preferences);
     ~PrefsPage();
 
-    int marginHint();
-    int spacingHint();
+    int marginHint() const;
+    int spacingHint() const;
 
   protected:
     QFrame* parentFrame;

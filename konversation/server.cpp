@@ -182,21 +182,21 @@ Server::~Server()
   emit deleted(this);
 }
 
-QString Server::getServerName() { return serverName; }
-int Server::getPort() { return serverPort; }
+QString Server::getServerName()  const { return serverName; }
+int Server::getPort() const { return serverPort; }
 
-int Server::getLag() { return currentLag; }
+int Server::getLag()  const { return currentLag; }
 
-bool Server::getAutoJoin() { return autoJoin; }
+bool Server::getAutoJoin()  const { return autoJoin; }
 void Server::setAutoJoin(bool on) { autoJoin=on; }
 
-QString Server::getAutoJoinChannel() { return autoJoinChannel; }
+QString Server::getAutoJoinChannel() const { return autoJoinChannel; }
 void Server::setAutoJoinChannel(const QString &channel) { autoJoinChannel=channel; }
 
-QString Server::getAutoJoinChannelKey() { return autoJoinChannelKey; }
+QString Server::getAutoJoinChannelKey() const { return autoJoinChannelKey; }
 void Server::setAutoJoinChannelKey(const QString &key) { autoJoinChannelKey=key; }
 
-bool Server::isConnected() { return serverSocket.socketStatus()==KExtendedSocket::connected; }
+bool Server::isConnected() const { return serverSocket.socketStatus()==KExtendedSocket::connected; }
 
 void Server::connectToIRCServer()
 {
@@ -449,7 +449,7 @@ void Server::notifyCheckTimeout()
   }
 }
 
-QString Server::getAutoJoinCommand()
+QString Server::getAutoJoinCommand() const
 {
   // Multichannel joins
   QStringList channels=QStringList::split(' ',autoJoinChannel);
@@ -584,7 +584,7 @@ void Server::ctcpReply(const QString &receiver,const QString &text)
   queue("NOTICE "+receiver+" :"+'\x01'+text+'\x01');
 }
 
-bool Server::getDeliberateQuit()
+bool Server::getDeliberateQuit() const
 {
   return deliberateQuit;
 }
@@ -1250,7 +1250,7 @@ bool Server::isNickname(const QString &compare)
   return (nickname==compare);
 }
 
-QString Server::getNickname()
+QString Server::getNickname() const
 {
   return nickname;
 }
@@ -1305,7 +1305,7 @@ void Server::setIrcName(const QString &newIrcName)
   ircName=newIrcName;
 }
 
-QString Server::getIrcName()
+QString Server::getIrcName() const
 {
   return ircName;
 }
@@ -1399,7 +1399,7 @@ void Server::addChannelListPanel()
   }
 }
 
-ChannelListPanel* Server::getChannelListPanel() { return channelListPanel; }
+ChannelListPanel* Server::getChannelListPanel() const { return channelListPanel; }
 
 void Server::closeChannelListPanel()
 {
@@ -1414,6 +1414,6 @@ void Server::setIdentity(const Identity* newIdentity) { identity=newIdentity; }
 const Identity* Server::getIdentity() { return identity; }
 
 void Server::setMainWindow(KonversationMainWindow* newMainWindow) { mainWindow=newMainWindow; }
-KonversationMainWindow* Server::getMainWindow() { return mainWindow; }
+KonversationMainWindow* Server::getMainWindow() const { return mainWindow; }
 
 #include "server.moc"
