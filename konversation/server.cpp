@@ -1885,7 +1885,7 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
   if (!nickInfo)
   {
     nickInfo = new NickInfo(nickname, this);
-    allNicks.insert(QString(nickname.lower()), nickInfo);
+    allNicks.insert(lcNickname, nickInfo);
     doWatchedNickChangedSignal = isWatchedNick(nickname);
   }
   // Move the channel from unjoined list (if present) to joined list.
@@ -2050,24 +2050,25 @@ bool Server::setNickOffline(const QString& nickname, const QStringList& watchLis
     // Delete the nickname from all channels (joined or unjoined).
     // When deleted from last channel, the nick will be deleted altogether.
     QStringList nickChannels = getNickChannels(lcNickname);
-    for (QStringList::iterator it = nickChannels.begin();it != nickChannels.end();)
+    for (unsigned int index=0; index<nickChannels.count(); index++)
     {
-      QString channel = *it;
-      it++;  //Make sure we iterate before the channel is (possibly) deleted.
+      QString channel = nickChannels[index];
       removeChannelNick(channel, lcNickname);
     }
+    // Make sure NickInfo is deleted.
+    if (allNicks.contains(lcNickname)) allNicks.remove(lcNickname);
     // If the nick was in the watch list, emit various signals and messages.
     if (watchList.find(lcNickname) != watchList.end())
     {
       emit watchedNickChanged(this, nickname, false);
       if (!addressee.isEmpty())
         Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
-/*      getMainWindow()->appendToFrontmost(i18n("Notify"),
-        i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()),statusView);
+//      getMainWindow()->appendToFrontmost(i18n("Notify"),
+//        i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()),statusView);
 #ifdef USE_KNOTIFY
-      KNotifyClient::event(mainWindow->winId(), "notify",
-        i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()));
-#endif*/
+//      KNotifyClient::event(mainWindow->winId(), "notify",
+//        i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()));
+#endif
     }
   }
   return (nickInfo != 0);
