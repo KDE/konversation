@@ -536,6 +536,8 @@ void IRCView::search()
     // don't change search variables if fromCursor
     if(fromCursor)
     {
+      // next search must begin one index before / after the last search
+      // depending on the search direction.
       if(forward)
       {
         findIndex++;
@@ -555,6 +557,7 @@ void IRCView::search()
         }
       }
     }
+    // start over from beginning / end
     else
     {
       if(forward)
