@@ -102,9 +102,18 @@ int Preferences::getServerIdByIndex(unsigned int index)
   return entry->getId();
 }
 
-void Preferences::addServer(const QString& serverString)
+int Preferences::addServer(const QString& serverString)
 {
-  serverList.append(new ServerEntry(serverString));
+  ServerEntry* newEntry=new ServerEntry(serverString);
+  serverList.append(newEntry);
+
+  return newEntry->getId();
+}
+
+void Preferences::removeServer(int id)
+{
+  /* Deletes the object, too */
+  serverList.remove(getServerEntryById(id));
 }
 
 QStringList& Preferences::getHilightList()

@@ -68,6 +68,7 @@ class ServerWindow : public KMainWindow
     void newText(QWidget* view);
     void changedView(QWidget* view);
     void logText(const QString& text);
+    void channelPrefsChanged();
 
   protected slots:
     void statusTextEntered();

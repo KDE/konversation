@@ -30,7 +30,7 @@ Server::Server(int id)
   tryNickNumber=0;
 
   serverWindow=new ServerWindow(this);
-  setNickname(KonversationApplication::preferences.nicknameList[tryNickNumber]);
+  setNickname(KonversationApplication::preferences.getNickname(tryNickNumber));
   serverWindow->show();
 
   serverName=serverEntry[1];
@@ -120,7 +120,7 @@ QString Server::getNextNickname()
   {
     tryNickNumber++;
     if(tryNickNumber==4) newNick=getNickname()+"_";
-    else newNick=KonversationApplication::preferences.nicknameList[tryNickNumber];
+    else newNick=KonversationApplication::preferences.getNickname(tryNickNumber);
   }
   return newNick;
 }
@@ -279,6 +279,7 @@ void Server::joinChannel(QString& name,QString& hostmask)
   // endif
   channelList.append(channel);
   connect(channel,SIGNAL (newText(QWidget*)),serverWindow,SLOT (newText(QWidget*)) );
+  connect(channel,SIGNAL (prefsChanged()),serverWindow,SLOT (channelPrefsChanged()) );
 }
 
 void Server::removeChannel(Channel* channel)

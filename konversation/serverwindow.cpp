@@ -331,3 +331,8 @@ void ServerWindow::closeIgnore(QSize newSize)
   delete ignoreDialog;
   ignoreDialog=0;
 }
+
+void ServerWindow::channelPrefsChanged()
+{
+  emit prefsChanged();
+}

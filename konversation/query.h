@@ -29,6 +29,8 @@
   @author Dario Abatianni
 */
 
+/* TODO: Idle counter to close query after XXX minutes of inactivity */
+
 class Server;
 
 class Query : public ChatWindow

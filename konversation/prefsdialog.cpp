@@ -24,7 +24,7 @@
 #include "prefsdialog.h"
 #include "serverlistitem.h"
 #include "editserverdialog.h"
-
+#include "konversationapplication.h"
 PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
              KDialogBase(0,"editprefs",false,i18n("Edit Preferences"),
                          KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
@@ -87,14 +87,13 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   /* Add the buttons */
   connectButton=new QPushButton(i18n("Connect"),buttonBox);
   connectButton->setDisabled(true);
-/*  QPushButton* newServerButton= */ new QPushButton(i18n("New Server"),buttonBox);
+  newServerButton=new QPushButton(i18n("New Server"),buttonBox);
   editServerButton=new QPushButton(i18n("Edit"),buttonBox);
   editServerButton->setDisabled(true);
   removeServerButton=new QPushButton(i18n("Remove"),buttonBox);
   removeServerButton->setDisabled(true);
 
   /* Identity pane */
-
   QWidget* identityPane=new QWidget(prefsTabs);
 
   QLabel* realNameLabel=new QLabel(i18n("Real name:"),identityPane);
@@ -103,10 +102,12 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   QLabel* loginLabel=new QLabel(i18n("Ident:"),identityPane);
   KLineEdit* loginInput=new KLineEdit(preferences->ident,identityPane);
 
-  KLineEdit* nick0=new KLineEdit(preferences->nicknameList[0],identityPane);
-  KLineEdit* nick1=new KLineEdit(preferences->nicknameList[1],identityPane);
-  KLineEdit* nick2=new KLineEdit(preferences->nicknameList[2],identityPane);
-  KLineEdit* nick3=new KLineEdit(preferences->nicknameList[3],identityPane);
+  QStringList nicknameList=preferences->getNicknameList();
+
+  KLineEdit* nick0=new KLineEdit(nicknameList[0],identityPane);
+  KLineEdit* nick1=new KLineEdit(nicknameList[1],identityPane);
+  KLineEdit* nick2=new KLineEdit(nicknameList[2],identityPane);
+  KLineEdit* nick3=new KLineEdit(nicknameList[3],identityPane);
   /* Add a Layout to the identity pane */
   QGridLayout* identityLayout=new QGridLayout(identityPane,4,4);
   identityLayout->setSpacing(spacingHint());
@@ -131,8 +132,12 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   /* Set up signals / slots for server list */
   connect(connectButton,SIGNAL(clicked()),
                    this,SLOT  (connectClicked()) );
+  connect(newServerButton,SIGNAL(clicked()),
+                     this,SLOT  (newServer()) );
   connect(editServerButton,SIGNAL(clicked()),
                       this,SLOT  (editServer()) );
+  connect(removeServerButton,SIGNAL(clicked()),
+                        this,SLOT  (removeServer()) );
   connect(serverListView,SIGNAL(selectionChanged(QListViewItem*)),
                     this,SLOT  (serverSelected(QListViewItem*)) );
   connect(serverListView,SIGNAL(itemRenamed(QListViewItem*,const QString&,int)),
@@ -174,16 +179,43 @@ PrefsDialog::~PrefsDialog()
 
 void PrefsDialog::connectClicked()
 {
+  /* Save changes before trying to connect */
+  slotApply();
   QListViewItem* lv_item=serverListView->selectedItems().first();
-  /* Do I really need to cast here? Isn't there a better way? */
+  /* FIXME: Do I really need to cast here? Isn't there a better way? */
+  /* Inherit from serverListView to return proper type */
   ServerListItem* item=(ServerListItem*)lv_item;
   if(item) emit connectToServer(item->getId());
+}
+
+void PrefsDialog::newServer()
+{
+  int newId=KonversationApplication::preferences.addServer("New,new.server.com,6667,,,,");
+
+  ServerListItem* newItem=new ServerListItem(serverListView,newId,"");
+
+  serverListView->setSelected(newItem,true);
+  editServer();
+}
+
+void PrefsDialog::removeServer()
+{
+  QListViewItem* lv_item=serverListView->selectedItems().first();
+  /* FIXME: Do I really need to cast here? Isn't there a better way? */
+  /* Yup, there is, I could override the serverListView to return the correct type */
+  ServerListItem* item=(ServerListItem*)lv_item;
+  if(item)
+  {
+    KonversationApplication::preferences.removeServer(item->getId());
+    delete item;
+  }
 }
 
 void PrefsDialog::editServer()
 {
   QListViewItem* lv_item=serverListView->selectedItems().first();
-  /* Do I really need to cast here? Isn't there a better way? */
+  /* FIXME: Do I really need to cast here? Isn't there a better way? */
+  /* Yup, there is, I could override the serverListView to return the correct type */
   ServerListItem* item=(ServerListItem*)lv_item;
   if(item)
   {
@@ -272,24 +304,26 @@ void PrefsDialog::loginChanged(const QString& newLogin)
   preferences->ident=newLogin;
 }
 
+/* TODO: derive from QLineEdit and submit an index in the signal to */
+/*       avoid duplicate code like this */
 void PrefsDialog::nick0Changed(const QString& newNick)
 {
-  preferences->nicknameList[0]=newNick;
+  preferences->setNickname(0,newNick);
 }
 
 void PrefsDialog::nick1Changed(const QString& newNick)
 {
-  preferences->nicknameList[1]=newNick;
+  preferences->setNickname(1,newNick);
 }
 
 void PrefsDialog::nick2Changed(const QString& newNick)
 {
-  preferences->nicknameList[2]=newNick;
+  preferences->setNickname(2,newNick);
 }
 
 void PrefsDialog::nick3Changed(const QString& newNick)
 {
-  preferences->nicknameList[3]=newNick;
+  preferences->setNickname(3,newNick);
 }
 
 void PrefsDialog::slotOk()

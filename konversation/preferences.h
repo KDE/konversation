@@ -41,7 +41,8 @@ class Preferences : public QObject
     int serverWindowToolBarIconText;
     int serverWindowToolBarIconSize;
 
-    void addServer(const QString& serverString);
+    int addServer(const QString& serverString);
+    void removeServer(int id);
     QString getServerByIndex(unsigned int);
     QString getServerById(int);
     ServerEntry* getServerEntryById(int id);
@@ -79,11 +80,17 @@ class Preferences : public QObject
     /* Kick reason */
     QString getKickReason() { return kickReason; };
     void setKickReason(QString newReason) { kickReason=newReason; };
+    /* Nickname List Functions */
+    QString getNickname(int index) { return nicknameList[index]; };
+    void setNickname(int index,QString newName) { nicknameList[index]=newName; };
+    QStringList getNicknameList() { return nicknameList; };
+    void setNicknameList(QStringList newList) { nicknameList=newList; };
+    QSize& getNicknameSize() { return nicknameSize; };
+    void setNicknameSize(QSize newSize) { nicknameSize=newSize; };
 
     QSize serverWindowSize;
     QString ident;
     QString realname;
-    QStringList nicknameList;
     QString logPath;
 
   signals:
@@ -108,6 +115,9 @@ class Preferences : public QObject
 
     QPtrList<Ignore> ignoreList;
     QSize ignoreSize;
+
+    QStringList nicknameList;
+    QSize nicknameSize;
 
     QString partReason;
     QString kickReason;

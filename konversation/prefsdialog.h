@@ -42,7 +42,9 @@ class PrefsDialog : public KDialogBase
 
   protected slots:
     void connectClicked();
+    void newServer();
     void editServer();
+    void removeServer();
     void serverSelected(QListViewItem* item);
     void serverDoubleClicked(QListViewItem* item);
     void updateServer(const QString&,const QString&,const QString&,const QString&,const QString&,const QString&);
@@ -61,6 +63,7 @@ class PrefsDialog : public KDialogBase
   protected:
     QTabWidget* prefsTabs;
     QPushButton* connectButton;
+    QPushButton* newServerButton;
     QPushButton* editServerButton;
     QPushButton* removeServerButton;
     KListView* serverListView;

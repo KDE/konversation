@@ -31,6 +31,7 @@
 #include "quickbutton.h"
 #include "modebutton.h"
 #include "ircinput.h"
+#include "nickchangedialog.h"
 
 /*
   @author Dario Abatianni
@@ -74,6 +75,7 @@ class Channel : public ChatWindow
 
   signals:
     void newText(QWidget* channel);
+    void prefsChanged();
 
   public slots:
     void setNickname(const QString&);
@@ -88,6 +90,10 @@ class Channel : public ChatWindow
     void modeButtonClicked(int id,bool on);
     /* Will be connected to NickListView::popupCommand(int) */
     void popupCommand(int id);
+    /* Dialogs */
+    void openNickChangeDialog();
+    void changeNickname(QString newNickname);
+    void closeNickChangeDialog(QSize newSize);
 
   protected:
     QStringList* getSelectedNicksList();
@@ -124,6 +130,7 @@ class Channel : public ChatWindow
     IRCInput* channelInput;
     QCheckBox* logCheckBox;
 
+    NickChangeDialog* nickChangeDialog;
     QList<Nick> nicknameList;
     QList<QuickButton> buttonList;
 };

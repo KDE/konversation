@@ -51,7 +51,8 @@ void KonversationApplication::connectToServer(int id)
   cerr << "KonversationApplication::connectToServer(" << id << ")" << endl;
 
   connectToAnotherServer(id);
-  // to prevent doubleClicked() to crash the dialog
+  /* to prevent doubleClicked() to crash the dialog */
+  /* FIXME: Seems to have a race, though */
   prefsDialog->delayedDestruct();
   prefsDialog=0;
 }
@@ -107,8 +108,8 @@ void KonversationApplication::readOptions()
   preferences.ident=config->readEntry("Ident",preferences.ident);
   preferences.realname=config->readEntry("Realname",preferences.realname);
 
-  QString nickList=config->readEntry("Nicknames",preferences.nicknameList.join(","));
-  preferences.nicknameList=QStringList::split(",",nickList);
+  QString nickList=config->readEntry("Nicknames",preferences.getNicknameList().join(","));
+  preferences.setNicknameList(QStringList::split(",",nickList));
 
   /* Server List */
   config->setGroup("Server List");
@@ -196,7 +197,7 @@ void KonversationApplication::saveOptions()
 
   config->writeEntry("Ident",preferences.ident);
   config->writeEntry("Realname",preferences.realname);
-  config->writeEntry("Nicknames",preferences.nicknameList);
+  config->writeEntry("Nicknames",preferences.getNicknameList());
 
   config->deleteGroup("Server List");
   config->setGroup("Server List");

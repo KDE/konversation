@@ -103,7 +103,7 @@ IgnoreDialog::IgnoreDialog(QPtrList<Ignore> newIgnoreList,QSize newSize):
   Ignore* item=newIgnoreList.last();
   while(item)
   {
-    IgnoreListViewItem* newItem=new IgnoreListViewItem(ignoreListView,item->getName(),item->getFlags());
+/*    IgnoreListViewItem* newItem= */ new IgnoreListViewItem(ignoreListView,item->getName(),item->getFlags());
     item=newIgnoreList.prev();
   }
 
@@ -116,7 +116,7 @@ IgnoreDialog::~IgnoreDialog()
 
 void IgnoreDialog::newIgnore()
 {
-  IgnoreListViewItem* newItem=new IgnoreListViewItem(ignoreListView,"new!new@new.new",
+/*  IgnoreListViewItem* newItem= */ new IgnoreListViewItem(ignoreListView,"new!new@new.new",
                                                      Ignore::Channel |
                                                      Ignore::Query |
                                                      Ignore::Notice |

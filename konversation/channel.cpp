@@ -29,9 +29,11 @@
 
 Channel::Channel(QWidget* parent) : ChatWindow(parent)
 {
+  /* init variables */
   nicks=0;
   ops=0;
   completionPosition=0;
+  nickChangeDialog=0;
 
   /* Build some size policies for the widgets */
   QSizePolicy hfixed=QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
@@ -152,6 +154,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(textView,SIGNAL (newURL(QString)),this, SLOT (urlCatcher(QString)) );
   connect(textView,SIGNAL (gotFocus()),channelInput,SLOT (setFocus()) );
   connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
+  connect(nicknameButton,SIGNAL (clicked()),this,SLOT (openNickChangeDialog()) );
 
   nicknameList.setAutoDelete(true);     // delete items when they are removed
 
@@ -893,4 +896,31 @@ void Channel::updateQuickButtons(QStringList newButtonList)
     quickButton=buttonList.at(index);
     quickButton->setText(buttonText[0]);
   }
+}
+
+void Channel::openNickChangeDialog()
+{
+  if(!nickChangeDialog)
+  {
+    nickChangeDialog=new NickChangeDialog(channelPane,server->getNickname(),
+                                          KonversationApplication::preferences.getNicknameList(),
+                                          KonversationApplication::preferences.getNicknameSize());
+    connect(nickChangeDialog,SIGNAL (closeDialog(QSize)),this,SLOT (closeNickChangeDialog(QSize)) );
+    connect(nickChangeDialog,SIGNAL (newNickname(QString)),this,SLOT (changeNickname(QString)) );
+    nickChangeDialog->show();
+  }
+}
+
+void Channel::changeNickname(QString newNickname)
+{
+  server->queue("NICK "+newNickname);
+}
+
+void Channel::closeNickChangeDialog(QSize newSize)
+{
+  KonversationApplication::preferences.setNicknameSize(newSize);
+  emit prefsChanged();
+
+  delete nickChangeDialog;
+  nickChangeDialog=0;
 }

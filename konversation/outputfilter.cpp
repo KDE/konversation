@@ -16,8 +16,9 @@
 
 #include <qstringlist.h>
 
-#include "konversationapplication.h"
+#include <klocale.h>
 
+#include "konversationapplication.h"
 #include "outputfilter.h"
 
 OutputFilter::OutputFilter()
@@ -69,9 +70,16 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
     else if(line.startsWith("/deop "))    parseDeop(parameter);
     else if(line.startsWith("/voice "))   parseVoice(parameter);
     else if(line.startsWith("/unvoice ")) parseUnvoice(parameter);
+    else if(line.startsWith("/ctcp "))    parseCtcp(parameter);
+    else if(line.startsWith("/kick "))    parseKick(parameter);
+    else if(line.startsWith("/topic "))   parseTopic(parameter);
 
+    else if(line=="/join")                parseJoin("");
     else if(line=="/part")                parsePart("");
+    else if(line=="/leave")               parsePart("");
     else if(line=="/quit")                parseQuit("");
+    else if(line=="/kick")                parseKick("");
+    else if(line=="/topic")               parseTopic("");
 
     /* Forward unknown commands to server */
     else toServer=inputLine.mid(1);
@@ -115,7 +123,32 @@ void OutputFilter::parseUnvoice(QString parameter)
 
 void OutputFilter::parseJoin(QString channelName)
 {
-  toServer="JOIN "+channelName;
+  if(channelName=="")
+  {
+    type=i18n("Usage");
+    output=i18n("/JOIN <channel>");
+  }
+  else
+    toServer="JOIN "+channelName;
+}
+
+void OutputFilter::parseKick(QString parameter)
+{
+  if(destination.startsWith("#"))
+  {
+    /* get nick to kick */
+    QString victim=parameter.left(parameter.find(" "));
+    /* get kick reason (if any) */
+    QString reason=parameter.mid(victim.length()+1);
+    /* if no reason given, take default reason */
+    if(reason=="") reason=KonversationApplication::preferences.getKickReason();
+    toServer="KICK "+destination+" "+victim+" :"+reason;
+  }
+  else
+  {
+    type=i18n("Error");
+    output=i18n("/KICK does only work from within channels.");
+  }
 }
 
 void OutputFilter::parsePart(QString parameter)
@@ -123,8 +156,13 @@ void OutputFilter::parsePart(QString parameter)
   /* No parameter, try default part message */
   if(parameter=="")
   {
-    /* But only if we actually were in a channel */
+    /* But only if we actually are in a channel */
     if(destination.startsWith("#")) toServer="PART "+destination+" :"+KonversationApplication::preferences.getPartReason();
+    else
+    {
+      type=i18n("Error");
+      output=i18n("/PART without parameters works only from within a channel.");
+    }
   }
   else
   {
@@ -143,6 +181,52 @@ void OutputFilter::parsePart(QString parameter)
     else
     {
       if(destination.startsWith("#")) toServer="PART "+destination+" :"+parameter;
+      else
+      {
+        type=i18n("Error");
+        output=i18n("/PART without channel name works only from within a channel.");
+      }
+    }
+  }
+}
+
+void OutputFilter::parseTopic(QString parameter)
+{
+  /* No parameter, try to get current topic */
+  if(parameter=="")
+  {
+    /* But only if we actually are in a channel */
+    if(destination.startsWith("#"))
+      toServer="TOPIC "+destination;
+    else
+    {
+      type=i18n("Error");
+      output=i18n("/TOPIC without parameters works only from within a channel.");
+    }
+  }
+  else
+  {
+    /* retrieve or set topic of a given channel */
+    if(parameter.startsWith("#"))
+    {
+      /* get channel name */
+      QString channel=parameter.left(parameter.find(" "));
+      /* get topic (if any) */
+      QString topic=parameter.mid(channel.length()+1);
+      /* if no topic given, retrieve topic */
+      if(topic=="") toServer="TOPIC "+channel;
+      /* otherwise set topic there */
+      else toServer="TOPIC "+channel+" :"+topic;
+    }
+    /* set this channel's topic */
+    else
+    {
+      if(destination.startsWith("#")) toServer="TOPIC "+destination+" :"+parameter;
+      else
+      {
+        type=i18n("Error");
+        output=i18n("/TOPIC without channel name works only from within a channel.");
+      }
     }
   }
 }
@@ -163,6 +247,17 @@ void OutputFilter::parseMsg(QString parameter)
   else toServer="PRIVMSG "+recipient+" :"+message;
 }
 
+void OutputFilter::parseCtcp(QString parameter)
+{
+  QString recipient=parameter.left(parameter.find(" "));
+  QString message=parameter.mid(recipient.length()+1);
+
+  toServer=QString("PRIVMSG "+recipient+" :"+0x01+message+0x01);
+  
+  output=i18n("Sending CTCP-%1 request to %2").arg(message).arg(recipient);
+  type="CTCP";
+}
+
 void OutputFilter::parseQuery(QString parameter)
 {
   QStringList queryList=QStringList::split(' ',parameter);
@@ -172,6 +267,7 @@ void OutputFilter::parseQuery(QString parameter)
 
 void OutputFilter::changeMode(QString parameter,char mode,char giveTake)
 {
+  /* TODO: Make sure this works with +l <limit> and +k <keyword> also! */
   QStringList nickList=QStringList::split(' ',parameter);
   if(nickList.count())
   {

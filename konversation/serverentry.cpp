@@ -36,4 +36,5 @@ void ServerEntry::updateProperty(int property,const QString& value)
 
 ServerEntry::~ServerEntry()
 {
+  cerr << "ServerEntry::~ServerEntry(" << definition << ")" << endl;
 }
