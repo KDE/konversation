@@ -219,6 +219,15 @@ QValueList<int> Preferences::getAutoConnectServerIDs()
 int Preferences::addServer(const QString& serverString)
 {
   ServerEntry* newEntry=new ServerEntry(serverString);
+
+  // make sure that a new server entry gets at least the default identity
+  const Identity* defaultIdentity=getIdentityList().at(0);
+  QString defaultName=defaultIdentity->getName();
+
+  if(newEntry->getIdentity().isEmpty())
+    newEntry->setIdentity(defaultName);
+
+  // put server entry into the list of servers
   serverList.append(newEntry);
 
   return newEntry->getId();

@@ -146,7 +146,8 @@ void KonversationApplication::connectToAnotherServer(int id)
   while(newServer)
   {
     if(chosenServer->getServerName()==newServer->getServerName() &&
-       chosenServer->getPort()==newServer->getPort())
+       chosenServer->getPort()==newServer->getPort() &&
+       chosenServer->getIdentity()==newServer->getIdentity()->getName())
     {
       QString autoJoinChannel=chosenServer->getChannelName();
 
@@ -325,6 +326,8 @@ void KonversationApplication::readOptions()
       config->setGroup(identityList[index]);
 
       Identity* newIdentity=new Identity();
+      QString n=config->readEntry("Name");
+      kdDebug() << "|" << n << "|" << endl;
       newIdentity->setName(config->readEntry("Name"));
 
       newIdentity->setIdent(config->readEntry("Ident"));

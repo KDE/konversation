@@ -36,6 +36,7 @@ class ServerEntry
     QString getDefinition() const;
 
     void setDefinition(const QString& newDefinition);
+    void setIdentity(const QString& newIdentity);
     int getId() const;
     void updateProperty(int property,const QString& value);
 

@@ -85,3 +85,10 @@ QString ServerEntry::getIdentity() const
 QString ServerEntry::getDefinition() const { return definition; }
 void ServerEntry::setDefinition(const QString& newDefinition) { definition=newDefinition; }
 int ServerEntry::getId() const{ return id; }
+
+void ServerEntry::setIdentity(const QString& newIdentity)
+{
+  QStringList definition(QStringList::split(',',getDefinition(),true));
+  definition[7]=newIdentity;
+  setDefinition(definition.join(","));
+}
