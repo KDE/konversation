@@ -4,7 +4,7 @@ endif
 
 METASOURCES = AUTO
 
-AM_CPPFLAGS = $(all_includes)
+AM_CPPFLAGS = $(all_includes) -DUSE_NICKINFO -I$(COMPAT_DIR)
 
 noinst_LTLIBRARIES = liblinkaddressbookui.la
 noinst_HEADERS = linkaddressbookui.h kimiface.h
@@ -13,5 +13,4 @@ liblinkaddressbookui_la_SOURCES = linkaddressbookui_base.ui linkaddressbookui.cp
 kimiface_DIR = $(kde_includes)
 liblinkaddressbookui_la_LDFLAGS = $(all_libraries) -no-undefined
 liblinkaddressbookui_la_LIBADD = $(LIB_KDEUI) $(LIB_KABC)
-INCLUDES= -I$(COMPAT_DIR) -DUSE_NICKINFO
 # vim: set noet:
