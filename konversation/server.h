@@ -41,9 +41,9 @@ class ChannelListPanel;
 
 // A NickInfoList is a list of NickInfo objects, indexed by nickname.
 typedef QDict<NickInfo> NickInfoList;
-// A ChannelMembershipList is a list of MemberLists, indexed by channel name.
+// A ChannelMembershipList is a list of NickInfoLists, indexed by channel name.
 typedef QDict<NickInfoList> ChannelMembershipList;
-// An iterator for a MemberList.
+// An iterator for a NickInfoList.
 typedef QDictIterator<NickInfo> NickInfoListIterator;
 // An iterator for a ChannelMembershipList.
 typedef QDictIterator<NickInfoList> ChannelMembershipListIterator;
