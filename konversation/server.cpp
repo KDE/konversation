@@ -34,7 +34,9 @@ typedef unsigned long long __u64;
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
-//#include <kresolver.h> //<-KDE3.3 or later
+#if KDE_IS_VERSION(3,2,90)
+#include <kresolver.h>
+#endif
 #include <kstringhandler.h>
 #include <kdeversion.h>
 
@@ -2223,17 +2225,20 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
 void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceHostmask)
 {
   // remember my IP for DCC sending
-  // FIXME: replace the following lines with ordinaly resolving code
-  /*
   if(ownIpByServer.isEmpty() && sourceNick==nickname)  // myself
   {
-    QString myhost = sourceHostmask.section('@',1);
+    QString myhost = sourceHostmask.section('@', 1);
+#if KDE_IS_VERSION(3,2,90)
     KNetwork::KResolverResults res = KNetwork::KResolver::resolve(myhost, "");
     if(res.size() > 0)
       ownIpByServer = res.first().address().nodeName();
+#else
+    QPtrList<KAddressInfo> res = KExtendedSocket::lookup(myhost, "");
+    if(res.count() > 0)
+      ownIpByServer = res.first()->address()->nodeName();
+#endif
   }
-  */
-
+  
   Channel* channel=channelList.first();
 
   while(channel)
