@@ -501,6 +501,7 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
     {
       //once we write everything in cache, the file is complete.
       //This function will be called once more after this last data is written.
+      // NOTE: data = *( popCache() );  <-- it'll copy the instance. we should delete one from popCache()!
       QByteArray* cache = popCache();
       data = *cache;
       delete cache;
