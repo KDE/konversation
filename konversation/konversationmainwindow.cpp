@@ -942,8 +942,8 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
   frontServer=view->getServer();
   // display this server's lag time
   if(frontServer) {
-    updateLag(frontServer,frontServer->getLag());
     updateSSLInfo(frontServer);
+    updateLag(frontServer,frontServer->getLag());
   }
    
 
@@ -1131,7 +1131,7 @@ void KonversationMainWindow::updateLag(Server* lagServer,int msec)
 
 void KonversationMainWindow::updateSSLInfo(Server* server)
 {
-  if(server && server->getUseSSL() && server->isConnected())
+  if(server == frontServer && server->getUseSSL() && server->isConnected())
     {
       QObject::disconnect(m_sslLabel,0,0,0);
       QObject::connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
