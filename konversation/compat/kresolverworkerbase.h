@@ -204,7 +204,7 @@ protected:
    */
   bool enqueue(KResolverWorkerBase* worker);
 
-  /*
+  /**
    * Checks the resolver subsystem status.
    * @returns true if the resolver subsystem changed, false otherwise.
    *          If this function returns true, it might be necessary to
@@ -212,7 +212,7 @@ protected:
    */
   bool checkResolver();
 
-  /*
+  /**
    * This function has to be called from the resolver workers that require
    * use of the DNS resolver code (i.e., res_* functions, generally in
    * libresolv). It indicates that the function is starting a resolution
@@ -223,11 +223,53 @@ protected:
    */
   void acquireResolver();
 
-  /*
+  /**
    * This function is the counterpart for @ref acquireResolver: the worker
    * thread indicates that it's done with the resolver.
    */
   void releaseResolver();
+
+  /**
+   * Helper class for locking the resolver subsystem. 
+   * Similar to QMutexLocker.
+   * 
+   * @author Luís Pedro Coelho
+   */
+  class ResolverLocker
+  {
+  public:
+    /** 
+     * Constructor. Acquires a lock.
+     */
+    ResolverLocker(KResolverWorkerBase* parent)
+      : parent( parent ) 
+    {
+      parent->acquireResolver();
+    }
+
+    /** 
+     * Destructor. Releases the lock.
+     */
+    ~ResolverLocker() 
+    {
+      parent->releaseResolver();
+    }
+
+    /**
+     * Releases the lock and then reacquires it.
+     * It may be necessary to call this if the resolving function
+     * decides to retry.
+     */
+    void openClose() 
+    {
+      parent->releaseResolver();
+      parent->acquireResolver();
+    }
+
+  private:
+    /// @internal
+    KResolverWorkerBase* parent;
+  };
 };
 
 /** @internal
@@ -240,7 +282,7 @@ class KResolverWorkerFactoryBase
 public:
   virtual KResolverWorkerBase* create() const = 0;
 
-  /*
+  /**
    * Wrapper call to register workers
    *
    * It is NOT thread-safe!

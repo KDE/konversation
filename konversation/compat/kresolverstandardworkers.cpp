@@ -123,7 +123,7 @@ namespace
     // qDebug("ResolveThread::run(): started threaded gethostbyname for %s (af = %d)", 
     //	   m_hostname.data(), m_af);
 
-    acquireResolver();
+    ResolverLocker resLock( this );
     do
       {
 	res = 0;
@@ -176,13 +176,11 @@ namespace
 	if ((res == ERANGE || my_h_errno != 0) && checkResolver())
 	  {
 	    // resolver needs updating, so we might as well do it now
-	    releaseResolver();
-	    acquireResolver();
+	    resLock.openClose();
 	  }
       }
     while (res == ERANGE);
     processResults(resultptr, my_h_errno);
-    releaseResolver();
 
     delete [] buf;
 
@@ -280,7 +278,7 @@ namespace
   {
     do
       {
-	acquireResolver();
+	ResolverLocker resLock( this );
 
 	// process hints
 	addrinfo hint;
@@ -316,8 +314,7 @@ namespace
 	    if (checkResolver())
 	      {
 		// resolver requires reinitialisation
-		releaseResolver();
-		acquireResolver();
+		resLock.openClose();
 		continue;
 	      }
 
