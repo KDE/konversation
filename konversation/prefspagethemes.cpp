@@ -6,7 +6,7 @@
 */
 
 /*
-  (C) 2004 by İsmail Dönmez
+  (C) 2004 by İsmail Dönmez ( Resistence is Futile. Turn god damn unicode on! )
 */
 
 #include <qlabel.h>
@@ -29,6 +29,8 @@
 #include <klocale.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>
+#include <kfiledialog.h>
+#include <ktar.h>
 
 #include <unistd.h> // unlink()
 
@@ -110,6 +112,59 @@ void PrefsPageThemes::applyPreferences()
 
 void PrefsPageThemes::installTheme()
 {
+  KURL themeURL = KFileDialog::getOpenURL(QString::null, 
+					  i18n("*.tar.gz *.tar.bz2 *.tar *.zip|Konversation Themes"),
+                                           NULL,
+					  i18n("Select Theme Package")
+					   );
+  
+  QString tmpThemeFile;
+  if(!KIO::NetAccess::download( themeURL, tmpThemeFile, NULL ))
+    {
+      KMessageBox::error( NULL,
+			  KIO::NetAccess::lastErrorString(),
+			  i18n("Failed to download theme"),
+			  KMessageBox::Notify
+			  );
+      return;
+    }
+  
+  KTar themeArchieve(tmpThemeFile);
+  themeArchieve.open(IO_ReadOnly);
+  kapp->processEvents();
+  
+  const KArchiveDirectory* themeDir = themeArchieve.directory();;
+  QStringList allEntries = themeDir->entries();
+
+  for(QStringList::Iterator it=allEntries.begin(); it != allEntries.end(); ++it)
+    {
+      if(themeDir->entry(*it+"/themerc") == NULL)
+	{
+	  
+	  KMessageBox::error( NULL,
+			      i18n("Invalid Theme Archieve"),
+			      i18n("Cannot install theme"),
+			      KMessageBox::Notify
+			      );
+
+	  KIO::NetAccess::removeTempFile( tmpThemeFile );
+	  themeArchieve.close();
+	  return;
+	}
+      else
+	{
+	  QString themesDir(locateLocal("data", "konversation/themes/"));
+	  
+	  themeDir->copyTo( themesDir );
+	  KIO::NetAccess::removeTempFile( tmpThemeFile );
+	  themeArchieve.close();
+	  
+	  updateList();
+	  updateButtons();
+	  
+	  return;
+	}
+    }
 }
 
 void PrefsPageThemes::removeTheme()
@@ -194,14 +249,10 @@ void PrefsPageThemes::updateList()
 
 void PrefsPageThemes::updateButtons()
 {
+  if(m_themeList->count() == 1)
+    return;
+
   QString dir = m_dirs[m_themeList->currentItem()];
-
-  if(dir.endsWith("default/themerc"))
-    {
-      m_removeButton->setEnabled(false);
-      return;
-    }
-
   QFile themeRC(dir);
 
   if(!themeRC.open(IO_ReadOnly | IO_WriteOnly))
