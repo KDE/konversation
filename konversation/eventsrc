@@ -207,6 +207,7 @@ Name[sv]=Underrättelse
 Comment=A user on your notification list went online
 Comment[da]=En bruger på din bekendtgørelsesliste gik online
 Comment[es]=Un usuario de su lista de notificación se ha desconectado
+Comment[pt]=Um utilizador da sua lista de notificações ligou-se
 Comment[pt_BR]=Um usuário de sua lista de notificações ficou online
 Comment[sv]=En användare i din underrättelselista kopplade upp
 default_presentation=0
