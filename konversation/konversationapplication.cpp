@@ -413,7 +413,7 @@ void KonversationApplication::readOptions()
   // Custom CTCP Version Reply
   QString mv=config->readEntry("VersionReply");
   // Check to see if its the old default version string. this string had been translated and stored :(
-  QRegExp r("Konversation 0\\.\\d* .* \\d* \\(C\\)2002-200[34].*");
+  QRegExp r("Konversation 0\\.\\d* .* \\d* \\(C\\)2002-200[345].*");
   if (r.exactMatch(mv))
     mv=QString::null;
   preferences.setVersionReply(mv);
