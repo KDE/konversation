@@ -196,7 +196,7 @@ void IRCView::urlClickSlot(const QString &url)
     // Always use KDE default mailer.
     if (url.lower().startsWith("mailto:"))
     {
-      new KRun(url);
+      new KRun(KURL(url));
     }
     else
     {

@@ -131,8 +131,8 @@ void LogfileReader::saveLog()
   if(!destination.isEmpty())
   {
     // replace # with %25 to make it URL conforming
-    KIO::Job* job=KIO::copy(fileName.replace(QRegExp("#"),"%23"),
-                            destination,
+    KIO::Job* job=KIO::copy(KURL(fileName.replace(QRegExp("#"),"%23")),
+                            KURL(destination),
                             true);
     
     connect(job,SIGNAL(result(KIO::Job*)),this,SLOT(copyResult(KIO::Job*)));

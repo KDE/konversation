@@ -108,7 +108,7 @@ void UrlCatcher::openUrl(QListViewItem* item)
   QString url = item->text(1);
   if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.lower().startsWith("mailto:") )
   {
-    new KRun(url);
+    new KRun(KURL(url));
   }
   else
   {

@@ -494,9 +494,9 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
   if (selected!=-1) {
     QMenuItem* item = showURLmenu->findItem( selected );
 #if QT_VERSION >= 0x030100
-    new KRun(item->text().replace("&&","&"));
+    new KRun(KURL(item->text().replace("&&","&")));
 #else
-    new KRun(item->text().replace(QRegExp("&&"),"&"));
+    new KRun(KURL(item->text().replace(QRegExp("&&"),"&")));
 #endif
   }
 
