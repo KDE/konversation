@@ -2,8 +2,8 @@ Large pastes: Let the user decide if they want an Editor or paste immediately
 Make Config Dialogs fit into one Tab-Dialog and throw out single windows
 Background color of Nicklist View
 Pasting into text views should trigger the paste mechanism
-Make colors for nick list configurable via GUI
-<lizard> ich will nen shortcut haben das wenn ich irgendwo ssh eingebe das mit ne shell aufgeht ;)
+Make LED colors for nick list configurable via GUI
+Detect shell commands and warn the user
 Let the user decide how many quick buttons they want.
 Think about another way to get rid of the cut off "Custom" text in color combos ...
 Autojoin/User interaction on invite
@@ -18,7 +18,6 @@ Fortunes
 Queries should get a Whois menu item
 "notices" tab for all notices that are no channel notices
 "snotices" tab for all server notices (prefix without "!" )
-Indicate hilight on tab LED / label
 DCC port range
 cycle command
 Move Encoding into identity
