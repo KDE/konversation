@@ -162,7 +162,7 @@ QString ChannelNick::tooltip() {
    tooltip << "<table>";
  
   if(!addressee.emails().isEmpty()) {
-    tooltip << "<tr><td><b>" << addressee.emailLabel() << ": </b></td><td>";
+    tooltip << "<tr><td><b>" << i18n("Email") << ": </b></td><td>";
     tooltip << addressee.emails().join(", ");
     tooltip << "</td></tr>";
   }
@@ -182,7 +182,7 @@ QString ChannelNick::tooltip() {
     tooltip << "<tr><td><b>" << addressee.birthdayLabel() << ": </b></td><td>" << addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
   }
   if(!nickInfo->getHostmask().isEmpty()) {
-    tooltip << "<tr><td><b>" << i18n("IRC Hostmask") << ": </b></td><td>" << nickInfo->getHostmask() << "</td></tr>";
+    tooltip << "<tr><td><b>" << i18n("Hostmask") << ": </b></td><td>" << nickInfo->getHostmask() << "</td></tr>";
   }
   if(nickInfo->isAway() && !nickInfo->getAwayMessage().isEmpty()) {
      tooltip << "<tr><td><b>" << i18n("Away Message") << ": </b></td><td>" << nickInfo->getAwayMessage() << "</td></tr>";
@@ -197,7 +197,7 @@ QString ChannelNick::tooltip() {
   if(isHalfOp()) modes << i18n("Half-operator");
   if(hasVoice()) modes << i18n("Has voice");
   if(modes.empty()) modes << i18n("A normal user");
-  tooltip << "<tr><td><b>" << i18n("Channel Mode") << ": </b></td><td>" << modes.join(", ") << "</td></tr>";
+  tooltip << "<tr><td><b>" << i18n("Mode") << ": </b></td><td>" << modes.join(", ") << "</td></tr>";
   tooltip << "</table></qt>";
   
   kdDebug() << strTooltip << endl;
