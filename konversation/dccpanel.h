@@ -22,9 +22,10 @@
 #include "chatwindow.h"
 #include "dcctransfer.h"
 
+class QContextMenuEvent;
 class QPushButton;
-
 class KListView;
+class KPopupMenu;
 
 class DccPanel : public ChatWindow
 {
@@ -34,7 +35,12 @@ class DccPanel : public ChatWindow
     class Column
     {
       public:
-        enum { TypeIcon, OfferDate, Status, FileName, PartnerNick, Progress, Position, TimeRemaining, CPS, COUNT };
+        enum Object { TypeIcon, OfferDate, Status, FileName, PartnerNick, Progress, Position, TimeRemaining, CPS, COUNT };
+    };
+    class Popup
+    {
+      public:
+        enum Object { Accept, Abort, Clear, ClearAllCompleted, Open, Info, Detail };
     };
     
 #ifdef USE_MDI
@@ -55,10 +61,16 @@ class DccPanel : public ChatWindow
   protected slots:
     void acceptDcc();
     void abortDcc();
-    void removeDcc();
+    void clearDcc();
     void runDcc();
     void showFileInfo();
     void openDetail();
+    void clearAllCompletedDcc();
+        
+    void popupRequested(QListViewItem* item,const QPoint& pos,int col);
+    void popupActivated(int id);
+    
+    void doubleClicked(QListViewItem* _item,const QPoint& _pos,int _col);
     
     void selectionChanged();
 
@@ -66,11 +78,13 @@ class DccPanel : public ChatWindow
 #ifdef USE_MDI
     virtual void closeYourself(ChatWindow*);
 #endif
+    
     KListView* dccListView;
-
+    KPopupMenu* popup;
+    
     QPushButton* acceptButton;
     QPushButton* abortButton;
-    QPushButton* removeButton;
+    QPushButton* clearButton;
     QPushButton* openButton;
     QPushButton* infoButton;
     QPushButton* detailButton;

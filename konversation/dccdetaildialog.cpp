@@ -228,8 +228,8 @@ void DccDetailDialog::updateView()  // public
     QString self;
     if ( !m_item->ownIp.isEmpty() || !m_item->ownPort.isEmpty() )
       m_self->setText( QString( "%1:%2" )
-                      .arg( self += !m_item->ownIp.isEmpty() ? m_item->ownIp : "* " )
-                      .arg( self += !m_item->ownPort.isEmpty() ? m_item->ownPort : i18n("unknown") )
+                      .arg( !m_item->ownIp.isEmpty() ? m_item->ownIp : "* " )
+                      .arg( !m_item->ownPort.isEmpty() ? m_item->ownPort : i18n("unknown") )
                      );
     else
       m_self->setText( i18n("unknown") );
