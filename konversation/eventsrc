@@ -152,6 +152,7 @@ default_presentation=0
 
 [dcc_incoming]
 Name=Incoming file
+Name[br]=Restr resev
 Name[bs]=Dolazeća datoteka
 Name[ca]=Fitxer entrant
 Name[da]=Indkommende fil
