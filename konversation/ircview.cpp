@@ -590,11 +590,7 @@ void IRCView::search()
       }
     }
 
-    kdDebug() << "Looking for " << pattern << " from paragraph " << findParagraph << " line " << findIndex << endl;
-
-    if(find(pattern,caseSensitive,wholeWords,forward,&findParagraph,&findIndex))
-      kdDebug() << "Found " << pattern << " on paragraph " << findParagraph << " line " << findIndex << endl;
-    else
+    if(!find(pattern,caseSensitive,wholeWords,forward,&findParagraph,&findIndex))
       KMessageBox::information(this,i18n("No matches found for \"%1\".").arg(pattern),i18n("Information"));
   }
 }

@@ -76,7 +76,7 @@ SearchDialog::SearchDialog(QWidget* parent,QSize size) :
   dialogLayout->addWidget(forwardCheck,row,0);
   dialogLayout->addWidget(fromCursorCheck,row,1);
 
-  connect(searchPattern,SIGNAL (returnPressed(const QString&)),this,SLOT (newPattern(const QString&)));
+//  connect(searchPattern,SIGNAL (returnPressed(const QString&)),this,SLOT (newPattern(const QString&)));
   connect(caseSensitiveCheck,SIGNAL (stateChanged(int)),this,SLOT (caseSensitiveChanged(int)));
   connect(wholeWordsCheck,SIGNAL (stateChanged(int)),this,SLOT (wholeWordsChanged(int)));
   connect(forwardCheck,SIGNAL (stateChanged(int)),this,SLOT (forwardChanged(int)));
@@ -92,6 +92,7 @@ SearchDialog::SearchDialog(QWidget* parent,QSize size) :
 
 SearchDialog::~SearchDialog()
 {
+  if(lastSearchPatterns[0]!=getSearchText()) lastSearchPatterns.prepend(getSearchText());
 }
 
 QString SearchDialog::getSearchText()
@@ -105,19 +106,22 @@ QString SearchDialog::search(QWidget* parent,bool* cs,bool* wo,bool* fw,bool* fc
 
   QSize size; // TODO: get it from KonversationApplication::preferences
   SearchDialog dlg(parent,size);
-  dlg.exec();
-
+  
+  if(!dlg.getSearchText().isEmpty())
+  {
+    // make subsequent searches easier
+    fromCursor=true;
+    dlg.fromCursorCheck->setChecked(fromCursor);
+  }
+  
+  int returnCode=dlg.exec();
+    
   *cs=caseSensitive;
   *wo=wholeWords;
   *fw=forward;
   *fc=fromCursor;
     
-  return dlg.getSearchText();
-}
-
-void SearchDialog::newPattern(const QString& pattern)
-{
-  lastSearchPatterns.prepend(pattern);
+  return (returnCode==Accepted) ? dlg.getSearchText() : QString::null;
 }
 
 void SearchDialog::caseSensitiveChanged(int state)

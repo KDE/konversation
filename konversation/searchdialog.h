@@ -42,8 +42,6 @@ class SearchDialog : public KDialogBase
     void forwardChanged(int fw);
     void fromCursorChanged(int fw);
     
-    void newPattern(const QString& pattern);
-
   protected:
     QString getSearchText();
 
