@@ -19,7 +19,11 @@
 
 #include <klocale.h>
 #include <kdebug.h>
+#include <kdeversion.h>
+
+#if KDE_VERSION >= 310
 #include <knotifyclient.h>
+#endif
 
 #include "inputfilter.h"
 #include "server.h"
@@ -100,7 +104,11 @@ void InputFilter::parseLine(const QString &a_newLine, QWidget *mainWindow)
     parseClientCommand(prefix,command,parameterList,trailing, mainWindow);
 }
 
-void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing, QWidget *mainWindow)
+void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing, QWidget *
+#if KDE_VERSION >= 310
+mainWindow  // get rid of a compiler warning under KDE 3.0.x
+#endif
+)
 {
   /*
     kdDebug() << "InputFilter::parseClientCommand(): " << prefix << " "
@@ -112,7 +120,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   // Extract nickname fron prefix
   QString sourceNick=prefix.left(prefix.find("!"));
   QString sourceHostmask=prefix.mid(prefix.find("!")+1);
-          
+
   // remember hostmask for this nick, it could have changed
   server->addHostmaskToNick(sourceNick,sourceHostmask);
 
@@ -157,7 +165,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         if(!isIgnore(prefix,Ignore::Channel))
         {
           server->appendActionToChannel(parameterList[0],sourceNick,ctcpArgument);
-
+#if KDE_VERSION >= 310
           // KNotify events...
           if(sourceNick != server->getNickname()) {
             if(ctcpArgument.lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
@@ -169,6 +177,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
               KNotifyClient::event(mainWindow->winId(), "message");
             }
           }
+#endif
         }
       }
       // If it was a ctcp action, build an action string
@@ -182,10 +191,12 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           // send action to query
           server->appendActionToQuery(sourceNick,ctcpArgument);
 
+#if KDE_VERSION >= 310
           // KNotify events...
           if(sourceNick != server->getNickname()) {
             KNotifyClient::event(mainWindow->winId(), "nick");
           }
+#endif
         }
       }
 
@@ -230,7 +241,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           // Incoming file?
           if(dccType=="send")
           {
+#if KDE_VERSION >= 310
             KNotifyClient::event(mainWindow->winId(), "dcc_incoming");
+#endif
             emit addDccGet(sourceNick,dccArgument);
           }
           // Incoming file that shall be resumed?
@@ -295,6 +308,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         if(!isIgnore(prefix,Ignore::Channel))
           server->appendToChannel(parameterList[0],sourceNick,trailing);
 
+#if KDE_VERSION >= 310
           // KNotify events...
           if(sourceNick != server->getNickname()) {
             if(trailing.lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
@@ -309,6 +323,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
               KNotifyClient::event(mainWindow->winId(), "message");
             }
           }
+#endif
       }
       else
       {
@@ -319,6 +334,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           // Append this message to the query
           server->appendToQuery(sourceNick,trailing);
 
+#if KDE_VERSION >= 310
           // KNotify events...
           if(sourceNick != server->getNickname()) {
 			QString cutup = trailing; cutup.truncate(47);
@@ -326,6 +342,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 			 cutup.append("...");
            KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
           }
+#endif
         }
       }
     }
@@ -440,7 +457,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     else
     {
       server->nickJoinsChannel(channelName,sourceNick,sourceHostmask);
+#if KDE_VERSION >= 310
       KNotifyClient::event(mainWindow->winId(), "join");
+#endif
     }
   }
   else if(command=="kick")
@@ -487,10 +506,12 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     // ******
     server->removeNickFromChannel(parameterList[0],sourceNick,trailing);
+#if KDE_VERSION >= 310
     // KNotify events...
     if(sourceNick != server->getNickname()) {
       KNotifyClient::event(mainWindow->winId(), "part");
     }
+#endif
   }
   else if(command=="quit")
   {
@@ -512,18 +533,22 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     // ******
     server->removeNickFromServer(sourceNick,trailing);
+#if KDE_VERSION >= 310
     // KNotify events...
     if(sourceNick != server->getNickname()) {
       KNotifyClient::event(mainWindow->winId(), "part");
     }
+#endif
   }
   else if(command=="nick")
   {
     server->renameNick(sourceNick,trailing);
+#if KDE_VERSION >= 310
     // KNotify events...
     if(sourceNick != server->getNickname()) {
       KNotifyClient::event(mainWindow->winId(), "nickchange");
     }
+#endif
   }
   else if(command=="topic")
   {
@@ -567,10 +592,12 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     // ******
     parseModes(sourceNick,parameterList);
+#if KDE_VERSION >= 310
     // KNotify events...
     if(sourceNick != server->getNickname()) {
       KNotifyClient::event(mainWindow->winId(), "mode");
     }
+#endif
   }
   else if(command=="invite")
   {

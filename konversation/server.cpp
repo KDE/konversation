@@ -33,6 +33,7 @@ typedef unsigned long long __u64;
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
+#include <kdeversion.h>
 
 #include "server.h"
 #include "query.h"
@@ -179,7 +180,11 @@ Server::~Server()
   while(queryList.removeFirst());
 
   // kill resolver thread if it's still running
+#if KDE_VERSION >= 310
   if(resolver.running()) resolver.terminate();
+#else
+  if(resolver.running()) resolver.exit();
+#endif
 
   // notify KonversationApplication that this server is gone
   emit deleted(this);
