@@ -55,6 +55,7 @@
 #include <kabc/stdaddressbook.h>
 #include "common.h"
 #include "topiclabel.h"
+#include "channeloptionsdialog.h"
 
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
@@ -68,6 +69,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 #endif
 {
   // init variables
+  m_optionsDialog = 0;
   m_processingTimer = 0;
   m_pendingChannelNickLists.clear();
   m_currentIndex = 0;
@@ -119,7 +121,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   m_topicButton = new QToolButton(topicWidget);
   m_topicButton->setIconSet(SmallIconSet("edit", 16));
   QToolTip::add(m_topicButton, i18n("Edit Topic"));
-  connect(m_topicButton, SIGNAL(clicked()), this, SLOT(requestNewTopic()));
+  connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
   topicLine = new Konversation::TopicLabel(topicWidget);
   QWhatsThis::add(topicLine, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by changing the text in the topic line, and pressing enter.<p>You can see the previous topics that were entered by dropping down the drop down box.</qt>"));
 
@@ -358,20 +360,24 @@ void Channel::purgeNicks()
   ops=0;
 }
 
-void Channel::requestNewTopic()
+void Channel::changeOptions()
 {
-  bool ok = false;
-  QStringList topics;
-  
-  for(QStringList::iterator it = m_topicHistory.begin(); it != m_topicHistory.end(); ++it) {
-    topics.append((*it).section(' ', 1));
-  }
-  
-  QString newTopic = KInputDialog::getItem(i18n("Change Topic"), i18n("Topic:"), topics, 0, true, &ok, this);
-  
-  if((newTopic != m_topicHistory.first()) && ok) {
+  QString newTopic = m_optionsDialog->topic();
+
+  if(newTopic != m_topicHistory.first().section(' ', 1)) {
     sendChannelText(KonversationApplication::preferences.getCommandChar() + "TOPIC " + getName() + " " + newTopic);
   }
+}
+
+void Channel::showOptionsDialog()
+{
+  if(!m_optionsDialog) {
+    m_optionsDialog = new Konversation::ChannelOptionsDialog(getName(), this);
+    connect(m_optionsDialog, SIGNAL(okClicked()), this, SLOT(changeOptions()));
+  }
+
+  m_optionsDialog->setTopicHistory(m_topicHistory);
+  m_optionsDialog->show();
 }
 
 void Channel::textPasted(const QString& text)

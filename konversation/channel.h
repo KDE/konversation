@@ -50,6 +50,7 @@ class NickChangeDialog;
 namespace Konversation
 {
   class TopicLabel;
+  class ChannelOptionsDialog;
 };
 
 class NickList : public QPtrList<Nick>
@@ -159,7 +160,8 @@ class Channel : public ChatWindow
     // Dialogs
     void changeNickname(const QString& newNickname);
     // will be called when the user types a new topic in the topic line
-    void requestNewTopic();
+    void changeOptions();
+    void showOptionsDialog();
     // connected to IRCInput::textPasted() - used to handle large/multiline pastings
     void textPasted(const QString& text);
     // connected to IRCInput::sendFile()
@@ -246,5 +248,7 @@ class Channel : public ChatWindow
     uint m_currentIndex;
     
     QTimer* m_processingTimer;
+
+    Konversation::ChannelOptionsDialog* m_optionsDialog;
 };
 #endif
