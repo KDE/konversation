@@ -97,9 +97,14 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   nick2Label->setBuddy(nick2);
   nick3Label->setBuddy(nick3);
 
+  QLabel* botLabel=new QLabel(i18n("Ser&vice:"), parentFrame);
   bot=new KLineEdit(parentFrame);
+  botLabel->setBuddy(bot);
+
+  QLabel* passwordLabel=new QLabel(i18n("Pa&ssword:"), parentFrame);
   password=new KLineEdit(parentFrame);
   password->setEchoMode(QLineEdit::Password);
+  passwordLabel->setBuddy(password);
 
   QLabel* partLabel=new QLabel(i18n("&Part reason:"),parentFrame);
   partInput=new KLineEdit(parentFrame);
@@ -157,9 +162,9 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   identityLayout->addWidget(nick3Label,row,2);
   identityLayout->addWidget(nick3,row,3);
   row++;
-  identityLayout->addWidget(new QLabel(i18n("Ser&vice:"), parentFrame),row,0);
+  identityLayout->addWidget(botLabel,row,0);
   identityLayout->addWidget(bot,row,1);
-  identityLayout->addWidget(new QLabel(i18n("Pa&ssword:"), parentFrame),row,2);
+  identityLayout->addWidget(passwordLabel,row,2);
   identityLayout->addWidget(password,row,3);
   row++;
   identityLayout->addWidget(partLabel,row,0);
