@@ -203,7 +203,11 @@ void DccTransferRecv::cleanUp()
   
   stopConnectionTimer();
   stopAutoUpdateView();
-  m_recvSocket->close();  // in case of aborting
+  if( m_recvSocket )
+  {
+    m_recvSocket->close();
+    m_recvSocket = 0;  // the instance will be deleted automatically by its parent
+  }
   if( m_writeCacheHandler )
   {
     m_writeCacheHandler->closeNow();
