@@ -193,7 +193,6 @@ void IRCView::urlClickSlot(const QString &url)
 {
   if (!url.isEmpty())
   {
-    kdDebug() << "URL: " << url << endl;
     // Always use KDE default mailer.
     if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.lower().startsWith("mailto:"))
     {
