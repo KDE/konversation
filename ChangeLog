@@ -8,12 +8,13 @@ Changes from 0.14 to 0.15
 - Cleaned up settings dialog
 - Added an option how to get own IP for DCC send/chat
 - "Open Watched Nicks Online panel on startup" option
-- support encoding settings per channel
+- Support encoding settings per channel
 - SSL Support
 - KIO-fied local I/O on DCC send/receive
 - OSD Positioning Support
 - New network based server settings
-
+- Added an option to stay in systray all the time
+- Full irc:/ url support (channel name & password now supported in url)
 
 Changes from 0.13 to 0.14
 - Added irc "pseudo" command /prefs for changing settings without settings dialog.
