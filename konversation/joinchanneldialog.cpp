@@ -19,7 +19,7 @@
 namespace Konversation {
 
 JoinChannelDialog::JoinChannelDialog(const QString& network, QWidget *parent, const char *name)
-  : KDialogBase(parent, name, true, i18n("Join channel on %1").arg(network), Ok|Cancel, Ok)
+  : KDialogBase(parent, name, true, i18n("Join Channel on %1").arg(network), Ok|Cancel, Ok)
 {
   m_widget = new JoinChannelUI(this);
   setMainWidget(m_widget);
