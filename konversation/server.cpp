@@ -706,11 +706,8 @@ void Server::notifyResponse(const QString& nicksOnline)
   // We received a 303 or "PONG :LAG" notify message, so calculate server lag
   int lag=notifySent.elapsed();
   currentLag=lag;
-
   // inform main window
   emit serverLag(this,lag);
-  // Restart lag timer
-  notifySent.restart();
   // Stop check timer
   notifyCheckTimer.stop();
   // Switch off lag measuring mode
