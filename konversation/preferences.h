@@ -404,6 +404,9 @@ class Preferences : public QObject
     void setWebBrowserUseKdeDefault(bool state);
     QString getWebBrowserCmd();
     void setWebBrowserCmd(const QString &cmd);
+    
+    bool getRedirectToStatusPane();
+    void setRedirectToStatusPane(bool redirect);
 
   signals:
     void requestServerConnection(int number);
@@ -567,6 +570,8 @@ class Preferences : public QObject
     // Web Browser
     bool webBrowserUseKdeDefault;
     QString webBrowserCmd;
+    
+    bool redirectToStatusPane;
 };
 
 #endif

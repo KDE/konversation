@@ -61,6 +61,8 @@ class PrefsPageGeneralSettings : public PrefsPage
 
     QLabel* reconnectTimeoutLabel;
     QSpinBox* reconnectTimeoutSpin;
+    
+    QCheckBox* redirectToStatusPaneCheck;
 };
 
 #endif

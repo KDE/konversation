@@ -82,6 +82,9 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   reconnectTimeoutSpin->setValue(preferences->getMaximumLagTime());
   reconnectTimeoutSpin->setSuffix(i18n(" seconds"));
   reconnectTimeoutLabel->setBuddy(reconnectTimeoutSpin);
+  
+  redirectToStatusPaneCheck = new QCheckBox(i18n("Redirect all status messages to the server status window"), parentFrame,
+    "redirect_to_status_page_check");
 
   autoReconnectCheck->setChecked(preferences->getAutoReconnect());
   // handle ghosting of timeout widget
@@ -96,6 +99,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   trayNotifyCheck->setChecked(preferences->getTrayNotify());
   hideUnimportantCheck->setChecked(preferences->getHideUnimportantEvents());
   disableExpansionCheck->setChecked(preferences->getDisableExpansion());
+  
+  redirectToStatusPaneCheck->setChecked(preferences->getRedirectToStatusPane());
 
   QHBox* generalSpacer=new QHBox(parentFrame);
 
@@ -125,6 +130,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   generalSettingsLayout->addMultiCellWidget(hideUnimportantCheck,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(disableExpansionCheck,row,row,0,2);
+  row++;
+  generalSettingsLayout->addMultiCellWidget(redirectToStatusPaneCheck,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(generalSpacer,row,row,0,2);
   generalSettingsLayout->setRowStretch(row,10);
@@ -161,6 +168,8 @@ void PrefsPageGeneralSettings::applyPreferences()
   preferences->setDisableExpansion(disableExpansionCheck->isChecked());
 
   preferences->setMaximumLagTime(reconnectTimeoutSpin->value());
+  
+  preferences->setRedirectToStatusPane(redirectToStatusPaneCheck->isChecked());
 }
 
 #include "prefspagegeneralsettings.moc"

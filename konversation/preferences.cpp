@@ -201,6 +201,8 @@ Preferences::Preferences()
   // Web Browser
   setWebBrowserUseKdeDefault(true);
   setWebBrowserCmd("mozilla \'%u\'");
+  
+  setRedirectToStatusPane(false);
 }
 
 Preferences::~Preferences()
@@ -778,6 +780,9 @@ void Preferences::setWebBrowserCmd(const QString &cmd) { webBrowserCmd=cmd; }
 
 bool Preferences::getFilterColors() { return filterColors; }
 void Preferences::setFilterColors(bool filter) { filterColors = filter; }
+
+bool Preferences::getRedirectToStatusPane() { return redirectToStatusPane; }
+void Preferences::setRedirectToStatusPane(bool redirect) { redirectToStatusPane = redirect; }
 
 #include "preferences.moc"
 

@@ -303,6 +303,9 @@ void KonversationApplication::readOptions()
 
   // Reconnection timeout
   preferences.setMaximumLagTime(config->readNumEntry("MaximumLag",preferences.getMaximumLagTime()));
+  
+  preferences.setRedirectToStatusPane(config->readBoolEntry("RedirectServerAndAppMsgToStatusPane",
+    preferences.getRedirectToStatusPane()));
 
   //User interface
   preferences.setShowMenuBar(config->readBoolEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar()));
@@ -649,6 +652,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("VersionReply",preferences.getVersionReply());
 
   config->writeEntry("MaximumLag",preferences.getMaximumLagTime());
+  
+  config->writeEntry("RedirectServerAndAppMsgToStatusPane", preferences.getRedirectToStatusPane());
   
   //User interface
   config->writeEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar());
