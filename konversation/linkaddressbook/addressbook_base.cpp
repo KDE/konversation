@@ -314,7 +314,8 @@ bool AddressbookBase::isOnline(KABC::Addressee &addressee) {
 
 bool AddressbookBase::editAddressee(const QString &uid) {
   Q_ASSERT(!uid.isEmpty());
-
+  //FIXME:  This hack can be removed.  I fixed the below mentioned bug in kde 3.4 cvs - 2005-01-02
+  //
   //Because of stupid bugs in kaddressbook, first load kaddressbook using startServiceByDesktopPath
   // then call it on the command line to actually put it in edit mode.  This is stupid :(
   kapp->startServiceByDesktopName( "kaddressbook" );
