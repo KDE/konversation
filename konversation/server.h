@@ -101,6 +101,7 @@ class Server : public QObject
     void setNickname(const QString& newNickname);
     void addQuery(const QString& nickname,const QString& hostmask);
     void removeQuery(Query* query);
+    void startNotifyTimer(int msec=0);
 
   protected slots:
     void incoming(KSocket* socket);
@@ -113,7 +114,6 @@ class Server : public QObject
     void notifyResponse(QString nicksOnline);
 
   protected:
-    void startNotifyTimer(int msec=0);
     void startNotifyCheckTimer();
 
     void connectToIRCServer();

@@ -216,8 +216,7 @@ void KonversationApplication::saveOptions()
   config->setGroup("Notify List");
   config->writeEntry("NotifyDelay",preferences.getNotifyDelay());
   config->writeEntry("UseNotify",preferences.getUseNotify());
-  QStringList notifyList=preferences.getNotifyList();
-  config->writeEntry("NotifyList",notifyList);
+  config->writeEntry("NotifyList",preferences.getNotifyString());
 
   config->deleteGroup("Server List");
   config->setGroup("Server List");

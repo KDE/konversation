@@ -64,18 +64,21 @@ class Preferences : public QObject
     QSize& getHilightSize();
     QSize& getButtonsSize();
     QSize& getIgnoreSize();
+    QSize& getNotifySize();
     QSize& getNicknameSize();
     void setServerWindowSize(QSize newSize);
     void setHilightSize(QSize newSize);
     void setButtonsSize(QSize newSize);
     void setIgnoreSize(QSize newSize);
+    void setNotifySize(QSize newSize);
     void setNicknameSize(QSize newSize);
 
     int getNotifyDelay();
     void setNotifyDelay(int delay);
     bool getUseNotify();
     void setUseNotify(bool use);
-    QString getNotifyList();
+    QStringList getNotifyList();
+    QString getNotifyString();
     void setNotifyList(QStringList newList);
 
     QStringList& getHilightList();
@@ -124,6 +127,7 @@ class Preferences : public QObject
     QSize buttonsSize;
     QSize hilightSize;
     QSize ignoreSize;
+    QSize notifySize;
     QSize nicknameSize;
 
     QList<ServerEntry> serverList;

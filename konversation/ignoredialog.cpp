@@ -22,6 +22,7 @@
 
 #include <klocale.h>
 #include <klistview.h>
+#include <kdebug.h>
 
 #include "ignore.h"
 #include "ignoredialog.h"
@@ -31,7 +32,7 @@ IgnoreDialog::IgnoreDialog(QPtrList<Ignore> newIgnoreList,QSize newSize):
                            KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                            KDialogBase::Ok,true)
 {
-  qDebug("IgnoreDialog::IgnoreDialog()");
+  kdDebug() << "IgnoreDialog::IgnoreDialog()" << endl;
   /* Create the top level widget */
   QWidget* page=new QWidget(this);
   setMainWidget(page);

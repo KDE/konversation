@@ -230,10 +230,10 @@ x_libraries = @x_libraries@
 
 bin_PROGRAMS = konversation
 
-konversation_SOURCES = nickchangedialog.cpp modebutton.cpp ignorelistviewitem.cpp ignorecheckbox.cpp ignore.cpp ignoredialog.cpp quickbuttonsdialog.cpp nicklistview.cpp highlightbox.cpp ircinput.cpp ledtabbar.cpp ledtab.cpp ledtabwidget.cpp images.cpp editserverdialog.cpp serverlistitem.cpp serverentry.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp chatwindow.cpp outputfilter.cpp query.cpp konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp ircview.cpp server.cpp serverwindow.cpp ircserversocket.cpp main.cpp 
+konversation_SOURCES = notifydialog.cpp nickchangedialog.cpp modebutton.cpp ignorelistviewitem.cpp ignorecheckbox.cpp ignore.cpp ignoredialog.cpp quickbuttonsdialog.cpp nicklistview.cpp highlightbox.cpp ircinput.cpp ledtabbar.cpp ledtab.cpp ledtabwidget.cpp images.cpp editserverdialog.cpp serverlistitem.cpp serverentry.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp chatwindow.cpp outputfilter.cpp query.cpp konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp ircview.cpp server.cpp serverwindow.cpp ircserversocket.cpp main.cpp 
 konversation_LDADD = $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) $(LIBSOCKET)
 
-EXTRA_DIST = main.cpp konversationui.rc lo32-app-konversation.png lo16-app-konversation.png ircserversocket.cpp ircserversocket.h serverwindow.cpp serverwindow.h server.cpp server.h ircview.cpp ircview.h channel.cpp channel.h inputfilter.cpp inputfilter.h errorcodes.h nick.cpp nick.h konversationapplication.cpp konversationapplication.h query.cpp query.h outputfilter.cpp outputfilter.h chatwindow.cpp chatwindow.h preferences.cpp preferences.h quickbutton.cpp quickbutton.h prefsdialog.cpp prefsdialog.h serverentry.cpp serverentry.h serverlistitem.cpp serverlistitem.h editserverdialog.cpp editserverdialog.h images.cpp images.h ledtabwidget.cpp ledtabwidget.h ledtab.cpp ledtab.h ledtabbar.cpp ledtabbar.h led_blue_off.png led_blue_on.png led_green_off.png led_green_on.png led_red_off.png led_red_on.png led_yellow_off.png led_yellow_on.png close_pane.png ircinput.cpp ircinput.h highlightbox.cpp highlightbox.h nicklistview.cpp nicklistview.h quickbuttonsdialog.cpp quickbuttonsdialog.h konversation.desktop ignoredialog.cpp ignoredialog.h ignore.cpp ignore.h ignorecheckbox.cpp ignorecheckbox.h ignorelistviewitem.cpp ignorelistviewitem.h modebutton.cpp modebutton.h nickchangedialog.cpp nickchangedialog.h 
+EXTRA_DIST = main.cpp konversationui.rc lo32-app-konversation.png lo16-app-konversation.png ircserversocket.cpp ircserversocket.h serverwindow.cpp serverwindow.h server.cpp server.h ircview.cpp ircview.h channel.cpp channel.h inputfilter.cpp inputfilter.h errorcodes.h nick.cpp nick.h konversationapplication.cpp konversationapplication.h query.cpp query.h outputfilter.cpp outputfilter.h chatwindow.cpp chatwindow.h preferences.cpp preferences.h quickbutton.cpp quickbutton.h prefsdialog.cpp prefsdialog.h serverentry.cpp serverentry.h serverlistitem.cpp serverlistitem.h editserverdialog.cpp editserverdialog.h images.cpp images.h ledtabwidget.cpp ledtabwidget.h ledtab.cpp ledtab.h ledtabbar.cpp ledtabbar.h led_blue_off.png led_blue_on.png led_green_off.png led_green_on.png led_red_off.png led_red_on.png led_yellow_off.png led_yellow_on.png close_pane.png ircinput.cpp ircinput.h highlightbox.cpp highlightbox.h nicklistview.cpp nicklistview.h quickbuttonsdialog.cpp quickbuttonsdialog.h konversation.desktop ignoredialog.cpp ignoredialog.h ignore.cpp ignore.h ignorecheckbox.cpp ignorecheckbox.h ignorelistviewitem.cpp ignorelistviewitem.h modebutton.cpp modebutton.h nickchangedialog.cpp nickchangedialog.h notifydialog.cpp notifydialog.h 
 
 ####### kdevelop will overwrite this part!!! (end)############
 # this 10 paths are KDE specific. Use them:
@@ -266,13 +266,13 @@ CONFIG_CLEAN_FILES =
 bin_PROGRAMS = konversation$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
-am_konversation_OBJECTS = nickchangedialog.$(OBJEXT) \
-	modebutton.$(OBJEXT) ignorelistviewitem.$(OBJEXT) \
-	ignorecheckbox.$(OBJEXT) ignore.$(OBJEXT) \
-	ignoredialog.$(OBJEXT) quickbuttonsdialog.$(OBJEXT) \
-	nicklistview.$(OBJEXT) highlightbox.$(OBJEXT) \
-	ircinput.$(OBJEXT) ledtabbar.$(OBJEXT) ledtab.$(OBJEXT) \
-	ledtabwidget.$(OBJEXT) images.$(OBJEXT) \
+am_konversation_OBJECTS = notifydialog.$(OBJEXT) \
+	nickchangedialog.$(OBJEXT) modebutton.$(OBJEXT) \
+	ignorelistviewitem.$(OBJEXT) ignorecheckbox.$(OBJEXT) \
+	ignore.$(OBJEXT) ignoredialog.$(OBJEXT) \
+	quickbuttonsdialog.$(OBJEXT) nicklistview.$(OBJEXT) \
+	highlightbox.$(OBJEXT) ircinput.$(OBJEXT) ledtabbar.$(OBJEXT) \
+	ledtab.$(OBJEXT) ledtabwidget.$(OBJEXT) images.$(OBJEXT) \
 	editserverdialog.$(OBJEXT) serverlistitem.$(OBJEXT) \
 	serverentry.$(OBJEXT) prefsdialog.$(OBJEXT) \
 	quickbutton.$(OBJEXT) preferences.$(OBJEXT) \
@@ -284,13 +284,13 @@ am_konversation_OBJECTS = nickchangedialog.$(OBJEXT) \
 #>- konversation_OBJECTS = $(am_konversation_OBJECTS)
 #>+ 20
 konversation_final_OBJECTS = konversation.all_cpp.o 
-konversation_nofinal_OBJECTS = nickchangedialog.$(OBJEXT) \
-	modebutton.$(OBJEXT) ignorelistviewitem.$(OBJEXT) \
-	ignorecheckbox.$(OBJEXT) ignore.$(OBJEXT) \
-	ignoredialog.$(OBJEXT) quickbuttonsdialog.$(OBJEXT) \
-	nicklistview.$(OBJEXT) highlightbox.$(OBJEXT) \
-	ircinput.$(OBJEXT) ledtabbar.$(OBJEXT) ledtab.$(OBJEXT) \
-	ledtabwidget.$(OBJEXT) images.$(OBJEXT) \
+konversation_nofinal_OBJECTS = notifydialog.$(OBJEXT) \
+	nickchangedialog.$(OBJEXT) modebutton.$(OBJEXT) \
+	ignorelistviewitem.$(OBJEXT) ignorecheckbox.$(OBJEXT) \
+	ignore.$(OBJEXT) ignoredialog.$(OBJEXT) \
+	quickbuttonsdialog.$(OBJEXT) nicklistview.$(OBJEXT) \
+	highlightbox.$(OBJEXT) ircinput.$(OBJEXT) ledtabbar.$(OBJEXT) \
+	ledtab.$(OBJEXT) ledtabwidget.$(OBJEXT) images.$(OBJEXT) \
 	editserverdialog.$(OBJEXT) serverlistitem.$(OBJEXT) \
 	serverentry.$(OBJEXT) prefsdialog.$(OBJEXT) \
 	quickbutton.$(OBJEXT) preferences.$(OBJEXT) \
@@ -299,7 +299,7 @@ konversation_nofinal_OBJECTS = nickchangedialog.$(OBJEXT) \
 	inputfilter.$(OBJEXT) channel.$(OBJEXT) ircview.$(OBJEXT) \
 	server.$(OBJEXT) serverwindow.$(OBJEXT) \
 	ircserversocket.$(OBJEXT) main.$(OBJEXT)\
-	nickchangedialog.moc.o ledtab.moc.o konversationapplication.moc.o ircview.moc.o server.moc.o ircinput.moc.o query.moc.o outputfilter.moc.o preferences.moc.o chatwindow.moc.o editserverdialog.moc.o inputfilter.moc.o quickbuttonsdialog.moc.o serverwindow.moc.o quickbutton.moc.o highlightbox.moc.o ignoredialog.moc.o channel.moc.o ignorecheckbox.moc.o ledtabwidget.moc.o modebutton.moc.o prefsdialog.moc.o nicklistview.moc.o  \
+	nickchangedialog.moc.o ledtab.moc.o konversationapplication.moc.o ircview.moc.o server.moc.o ircinput.moc.o query.moc.o outputfilter.moc.o preferences.moc.o chatwindow.moc.o editserverdialog.moc.o inputfilter.moc.o quickbuttonsdialog.moc.o serverwindow.moc.o quickbutton.moc.o highlightbox.moc.o ignoredialog.moc.o channel.moc.o ignorecheckbox.moc.o ledtabwidget.moc.o modebutton.moc.o prefsdialog.moc.o nicklistview.moc.o notifydialog.moc.o  \
 	konversation_meta_unload.o 
 @KDE_USE_FINAL_FALSE@konversation_OBJECTS = $(konversation_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@konversation_OBJECTS = $(konversation_final_OBJECTS)
@@ -324,9 +324,10 @@ depcomp = $(SHELL) $(top_srcdir)/admin/depcomp
 	@AMDEP_TRUE@	$(DEPDIR)/ledtabwidget.Po $(DEPDIR)/main.Po \
 	@AMDEP_TRUE@	$(DEPDIR)/modebutton.Po $(DEPDIR)/nick.Po \
 	@AMDEP_TRUE@	$(DEPDIR)/nickchangedialog.Po \
-	@AMDEP_TRUE@	$(DEPDIR)/nicklistview.Po $(DEPDIR)/outputfilter.Po \
-	@AMDEP_TRUE@	$(DEPDIR)/preferences.Po $(DEPDIR)/prefsdialog.Po \
-	@AMDEP_TRUE@	$(DEPDIR)/query.Po $(DEPDIR)/quickbutton.Po \
+	@AMDEP_TRUE@	$(DEPDIR)/nicklistview.Po $(DEPDIR)/notifydialog.Po \
+	@AMDEP_TRUE@	$(DEPDIR)/outputfilter.Po $(DEPDIR)/preferences.Po \
+	@AMDEP_TRUE@	$(DEPDIR)/prefsdialog.Po $(DEPDIR)/query.Po \
+	@AMDEP_TRUE@	$(DEPDIR)/quickbutton.Po \
 	@AMDEP_TRUE@	$(DEPDIR)/quickbuttonsdialog.Po $(DEPDIR)/server.Po \
 	@AMDEP_TRUE@	$(DEPDIR)/serverentry.Po \
 	@AMDEP_TRUE@	$(DEPDIR)/serverlistitem.Po \
@@ -438,6 +439,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/nick.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/nickchangedialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/nicklistview.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/notifydialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/outputfilter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/preferences.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/prefsdialog.Po@am__quote@
@@ -521,7 +523,12 @@ GTAGS:
 distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH
 
-DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+#>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+#>+ 4
+KDE_DIST=konversation 
+
+DISTFILES= $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST) $(KDE_DIST)
+
 
 top_distdir = ..
 distdir = $(top_distdir)/$(PACKAGE)-$(VERSION)
@@ -843,8 +850,12 @@ nicklistview.moc.cpp: $(srcdir)/nicklistview.h
 	$(MOC) $(srcdir)/nicklistview.h -o nicklistview.moc.cpp
 
 #>+ 3
+notifydialog.moc.cpp: $(srcdir)/notifydialog.h
+	$(MOC) $(srcdir)/notifydialog.h -o notifydialog.moc.cpp
+
+#>+ 3
 clean-metasources:
-	-rm -f  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp
+	-rm -f  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp notifydialog.moc.cpp
 
 #>+ 2
 docs-am:
@@ -857,12 +868,12 @@ force-reedit:
 
 
 #>+ 12
-konversation_meta_unload.cpp:  ledtab.moc.cpp nickchangedialog.moc.cpp server.moc.cpp ircview.moc.cpp konversationapplication.moc.cpp query.moc.cpp ircinput.moc.cpp outputfilter.moc.cpp chatwindow.moc.cpp preferences.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp channel.moc.cpp ignoredialog.moc.cpp ledtabwidget.moc.cpp ignorecheckbox.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp
+konversation_meta_unload.cpp:  ledtab.moc.cpp nickchangedialog.moc.cpp server.moc.cpp ircview.moc.cpp konversationapplication.moc.cpp query.moc.cpp ircinput.moc.cpp outputfilter.moc.cpp chatwindow.moc.cpp preferences.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp channel.moc.cpp ignoredialog.moc.cpp ledtabwidget.moc.cpp ignorecheckbox.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp notifydialog.moc.cpp
 	@echo 'creating konversation_meta_unload.cpp'
 	@-rm -f konversation_meta_unload.cpp
 	@if test ${kde_qtver} = 2; then \
 		echo 'static const char * _metalist_konversation[] = {' > konversation_meta_unload.cpp ;\
-		cat  ledtab.moc.cpp nickchangedialog.moc.cpp server.moc.cpp ircview.moc.cpp konversationapplication.moc.cpp query.moc.cpp ircinput.moc.cpp outputfilter.moc.cpp chatwindow.moc.cpp preferences.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp channel.moc.cpp ignoredialog.moc.cpp ledtabwidget.moc.cpp ignorecheckbox.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp | grep 'char.*className' | sed -e 's/.*[^A-Za-z0-9_:]\([A-Za-z0-9_:]*\)::className.*$$/\"\1\",/' | sort | uniq >> konversation_meta_unload.cpp ;\
+		cat  ledtab.moc.cpp nickchangedialog.moc.cpp server.moc.cpp ircview.moc.cpp konversationapplication.moc.cpp query.moc.cpp ircinput.moc.cpp outputfilter.moc.cpp chatwindow.moc.cpp preferences.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp channel.moc.cpp ignoredialog.moc.cpp ledtabwidget.moc.cpp ignorecheckbox.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp notifydialog.moc.cpp | grep 'char.*className' | sed -e 's/.*[^A-Za-z0-9_:]\([A-Za-z0-9_:]*\)::className.*$$/\"\1\",/' | sort | uniq >> konversation_meta_unload.cpp ;\
 		echo '0};' >> konversation_meta_unload.cpp ;\
 		echo '#include <kunload.h>' >> konversation_meta_unload.cpp ;\
 		echo '_UNLOAD(konversation)' >> konversation_meta_unload.cpp ;\
@@ -874,11 +885,11 @@ clean-moc-classes:
 	-rm -f  konversation_meta_unload.cpp
 
 #>+ 11
-konversation.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/nickchangedialog.cpp $(srcdir)/modebutton.cpp $(srcdir)/ignorelistviewitem.cpp $(srcdir)/ignorecheckbox.cpp $(srcdir)/ignore.cpp $(srcdir)/ignoredialog.cpp $(srcdir)/quickbuttonsdialog.cpp $(srcdir)/nicklistview.cpp $(srcdir)/highlightbox.cpp $(srcdir)/ircinput.cpp $(srcdir)/ledtabbar.cpp $(srcdir)/ledtab.cpp $(srcdir)/ledtabwidget.cpp $(srcdir)/images.cpp $(srcdir)/editserverdialog.cpp $(srcdir)/serverlistitem.cpp $(srcdir)/serverentry.cpp $(srcdir)/prefsdialog.cpp $(srcdir)/quickbutton.cpp $(srcdir)/preferences.cpp $(srcdir)/chatwindow.cpp $(srcdir)/outputfilter.cpp $(srcdir)/query.cpp $(srcdir)/konversationapplication.cpp $(srcdir)/nick.cpp $(srcdir)/inputfilter.cpp $(srcdir)/channel.cpp $(srcdir)/ircview.cpp $(srcdir)/server.cpp $(srcdir)/serverwindow.cpp $(srcdir)/ircserversocket.cpp $(srcdir)/main.cpp konversation_meta_unload.cpp  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp
+konversation.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/notifydialog.cpp $(srcdir)/nickchangedialog.cpp $(srcdir)/modebutton.cpp $(srcdir)/ignorelistviewitem.cpp $(srcdir)/ignorecheckbox.cpp $(srcdir)/ignore.cpp $(srcdir)/ignoredialog.cpp $(srcdir)/quickbuttonsdialog.cpp $(srcdir)/nicklistview.cpp $(srcdir)/highlightbox.cpp $(srcdir)/ircinput.cpp $(srcdir)/ledtabbar.cpp $(srcdir)/ledtab.cpp $(srcdir)/ledtabwidget.cpp $(srcdir)/images.cpp $(srcdir)/editserverdialog.cpp $(srcdir)/serverlistitem.cpp $(srcdir)/serverentry.cpp $(srcdir)/prefsdialog.cpp $(srcdir)/quickbutton.cpp $(srcdir)/preferences.cpp $(srcdir)/chatwindow.cpp $(srcdir)/outputfilter.cpp $(srcdir)/query.cpp $(srcdir)/konversationapplication.cpp $(srcdir)/nick.cpp $(srcdir)/inputfilter.cpp $(srcdir)/channel.cpp $(srcdir)/ircview.cpp $(srcdir)/server.cpp $(srcdir)/serverwindow.cpp $(srcdir)/ircserversocket.cpp $(srcdir)/main.cpp $(srcdir)/konversation_meta_unload.cpp  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp notifydialog.moc.cpp
 	@echo 'creating konversation.all_cpp.cpp ...'; \
 	rm -f konversation.all_cpp.files konversation.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> konversation.all_cpp.final; \
-	for file in nickchangedialog.cpp modebutton.cpp ignorelistviewitem.cpp ignorecheckbox.cpp ignore.cpp ignoredialog.cpp quickbuttonsdialog.cpp nicklistview.cpp highlightbox.cpp ircinput.cpp ledtabbar.cpp ledtab.cpp ledtabwidget.cpp images.cpp editserverdialog.cpp serverlistitem.cpp serverentry.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp chatwindow.cpp outputfilter.cpp query.cpp konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp ircview.cpp server.cpp serverwindow.cpp ircserversocket.cpp main.cpp konversation_meta_unload.cpp  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp; do \
+	for file in notifydialog.cpp nickchangedialog.cpp modebutton.cpp ignorelistviewitem.cpp ignorecheckbox.cpp ignore.cpp ignoredialog.cpp quickbuttonsdialog.cpp nicklistview.cpp highlightbox.cpp ircinput.cpp ledtabbar.cpp ledtab.cpp ledtabwidget.cpp images.cpp editserverdialog.cpp serverlistitem.cpp serverentry.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp chatwindow.cpp outputfilter.cpp query.cpp konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp ircview.cpp server.cpp serverwindow.cpp ircserversocket.cpp main.cpp konversation_meta_unload.cpp  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp notifydialog.moc.cpp; do \
 	  echo "#include \"$$file\"" >> konversation.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> konversation.all_cpp.final; \
 	done; \

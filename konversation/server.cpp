@@ -193,7 +193,7 @@ void Server::notifyTimeout()
   if(KonversationApplication::preferences.getUseNotify())
   {
     /* But only if there actually are nicks in the notify list */
-    QString list=KonversationApplication::preferences.getNotifyList();
+    QString list=KonversationApplication::preferences.getNotifyString();
     if(list!="")
     {
       queue("ISON "+list);

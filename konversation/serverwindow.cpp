@@ -32,15 +32,17 @@ ServerWindow::ServerWindow(Server* server) : KMainWindow()
 
   hilightWindow=0;
   ignoreDialog=0;
+  notifyDialog=0;
   buttonsDialog=0;
 
 /*  KAction* quitAction= */ KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); /* file_quit */
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); /* options_show_toolbar */
   showStatusBarAction=KStdAction::showStatusbar(this,SLOT(showStatusbar()),actionCollection()); /* options_show_statusbar */
 /*  KAction* prefsAction= */ KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); /* options_configure */
-/*  KAction* open_quickbuttons_action= */new KAction(i18n("Buttons"),0,0,this,SLOT (openButtons()),actionCollection(),"open_buttons_window");
-/*  KAction* open_hilight_action= */ new KAction(i18n("Hilight List"),0,0,this,SLOT (openHilight()),actionCollection(),"open_hilight_window");
-/*  KAction* open_ignore_action= */ new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
+/*  KAction* open_quickbuttons_action= */ new KAction(i18n("Buttons"),0,0,this,SLOT (openButtons()),actionCollection(),"open_buttons_window");
+/*  KAction* open_hilight_action=      */ new KAction(i18n("Hilight List"),0,0,this,SLOT (openHilight()),actionCollection(),"open_hilight_window");
+/*  KAction* open_notify_action=       */ new KAction(i18n("Notify List"),0,0,this,SLOT (openNotify()),actionCollection(),"open_notify_window");
+/*  KAction* open_ignore_action=       */ new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
 
   setCentralWidget(windowContainer);
 
@@ -327,6 +329,41 @@ void ServerWindow::closeIgnore(QSize newSize)
 
   delete ignoreDialog;
   ignoreDialog=0;
+}
+
+void ServerWindow::openNotify()
+{
+  if(!notifyDialog)
+  {
+    notifyDialog=new NotifyDialog(KonversationApplication::preferences.getNotifyList(),
+                                  KonversationApplication::preferences.getNotifySize(),
+                                  KonversationApplication::preferences.getUseNotify(),
+                                  KonversationApplication::preferences.getNotifyDelay());
+    connect(notifyDialog,SIGNAL (cancelClicked(QSize)),this,SLOT (closeNotify(QSize)) );
+    connect(notifyDialog,SIGNAL (applyClicked(QStringList,bool,int)),this,SLOT (applyNotify(QStringList,bool,int)) );
+    notifyDialog->show();
+  }
+}
+
+void ServerWindow::applyNotify(QStringList newList,bool use,int delay)
+{
+  KonversationApplication::preferences.setNotifyList(newList);
+  KonversationApplication::preferences.setNotifyDelay(delay);
+  KonversationApplication::preferences.setUseNotify(use);
+
+  /* Restart notify timer if desired */
+  if(use) server->startNotifyTimer();
+
+  emit prefsChanged();
+}
+
+void ServerWindow::closeNotify(QSize newSize)
+{
+  KonversationApplication::preferences.setNotifySize(newSize);
+  emit prefsChanged();
+
+  delete notifyDialog;
+  notifyDialog=0;
 }
 
 void ServerWindow::channelPrefsChanged()

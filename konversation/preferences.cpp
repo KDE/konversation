@@ -188,8 +188,9 @@ int Preferences::getNotifyDelay() { return notifyDelay; }
 void Preferences::setNotifyDelay(int delay) { notifyDelay=delay; }
 bool Preferences::getUseNotify() { return useNotify; }
 void Preferences::setUseNotify(bool use) { useNotify=use; }
-QString Preferences::getNotifyList() { return notifyList.join(" "); }
 void Preferences::setNotifyList(QStringList newList) { notifyList=newList; }
+QStringList Preferences::getNotifyList() { return notifyList; }
+QString Preferences::getNotifyString() { return notifyList.join(" "); }
 
 QStringList Preferences::getButtonList() { return buttonList; }
 
@@ -215,10 +216,12 @@ QSize Preferences::getServerWindowSize() { return serverWindowSize; };
 QSize& Preferences::getHilightSize()     { return hilightSize; };
 QSize& Preferences::getButtonsSize()     { return buttonsSize; };
 QSize& Preferences::getIgnoreSize()      { return ignoreSize; };
+QSize& Preferences::getNotifySize()      { return notifySize; };
 QSize& Preferences::getNicknameSize()    { return nicknameSize; };
 
 void Preferences::setServerWindowSize(QSize newSize) { serverWindowSize=newSize; };
 void Preferences::setHilightSize(QSize newSize)      { hilightSize=newSize; };
 void Preferences::setButtonsSize(QSize newSize)      { buttonsSize=newSize; };
 void Preferences::setIgnoreSize(QSize newSize)       { ignoreSize=newSize; };
+void Preferences::setNotifySize(QSize newSize)       { notifySize=newSize; };
 void Preferences::setNicknameSize(QSize newSize)     { nicknameSize=newSize; };

@@ -9,6 +9,7 @@
       <Text>Windows</Text>
       <Action name="open_buttons_window" />
       <Action name="open_hilight_window" />
+      <Action name="open_notify_window" />
       <Action name="open_ignore_window" />
     </Menu>
   </MenuBar>

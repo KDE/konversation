@@ -38,7 +38,6 @@
 #ifndef SERVERWINDOW_H
 #define SERVERWINDOW_H
 
-
 #include <kstatusbar.h>
 
 #include "server.h"
@@ -46,7 +45,9 @@
 #include "ircinput.h"
 #include "highlightbox.h"
 #include "quickbuttonsdialog.h"
+#include "notifydialog.h"
 #include "ignoredialog.h"
+#include "notifydialog.h"
 #include "ledtabwidget.h"
 
 class ServerWindow : public KMainWindow
@@ -94,6 +95,10 @@ class ServerWindow : public KMainWindow
     void applyIgnore(QPtrList<Ignore> newList);
     void closeIgnore(QSize newSize);
 
+    void openNotify();
+    void applyNotify(QStringList newList,bool use,int delay);
+    void closeNotify(QSize newSize);
+
     void openButtons();
     void applyButtons(QStringList newList);
     void closeButtons(QSize newSize);
@@ -126,6 +131,7 @@ class ServerWindow : public KMainWindow
     KToggleAction* showToolBarAction;
     KToggleAction* showStatusBarAction;
     HighLightBox* hilightWindow;
+    NotifyDialog* notifyDialog;
     IgnoreDialog* ignoreDialog;
     QuickButtonsDialog* buttonsDialog;
 
