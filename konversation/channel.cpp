@@ -71,7 +71,7 @@
 #ifdef USE_MDI
 Channel::Channel(const QString &caption) : ChatWindow(caption)
 #else
-Channel::Channel(QWidget* parent) : ChatWindow(parent)
+Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
 #endif
 {
   // init variables
