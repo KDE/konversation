@@ -205,6 +205,12 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   resetLag();
   statusBar()->setItemAlignment(StatusText,QLabel::AlignLeft);
 
+  actionCollection()->setHighlightingEnabled(true);
+  connect(actionCollection(), SIGNAL( actionStatusText( const QString & ) ),
+                 statusBar(), SLOT( message( const QString & ) ) );
+  connect(actionCollection(), SIGNAL( clearStatusText() ),
+                 statusBar(), SLOT( clear() ) );
+
 #ifdef USE_MDI
   connect(this,SIGNAL (viewActivated(KMdiChildView*)),this,SLOT (changeToView(KMdiChildView*)) );
 #else
