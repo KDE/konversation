@@ -227,7 +227,10 @@ void DccTransferSend::heard()  // slot
   connect( m_sendSocket, SIGNAL( readyWrite() ), this, SLOT( writeData() )            );
   connect( m_sendSocket, SIGNAL( closed() ),     this, SLOT( slotSendSocketClosed() ) );
   
-  m_partnerIp = m_sendSocket->peerAddress().nodeName();
+  if( m_sendSocket->peerAddress().asInet().ipAddress().isV4Mapped() )
+    m_partnerIp = KNetwork::KIpAddress( m_sendSocket->peerAddress().asInet().ipAddress().IPv4Addr() ).toString();
+  else
+    m_partnerIp = m_sendSocket->peerAddress().asInet().ipAddress().toString();
   m_partnerPort = m_sendSocket->peerAddress().serviceName();
   
   // we don't need ServerSocket anymore
