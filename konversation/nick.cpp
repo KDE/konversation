@@ -17,6 +17,7 @@
 
 #include "ledlistviewitem.h"
 #include "nick.h"
+#include "addressbook.h"
 
 Nick::Nick(KListView* listView,
            const QString& newName,
@@ -27,7 +28,11 @@ Nick::Nick(KListView* listView,
            bool halfop,
            bool voice)
 {
-  listViewItem=new LedListViewItem(listView,newName,newMask,admin,owner,op,halfop,voice);
+  QString realname = Konversation::Addressbook::getKABCAddresseeFromNick(newName).realName();
+  if(!realname.isEmpty() && realname.lower() != newName.lower())
+  	listViewItem=new LedListViewItem(listView,newName + " (" + realname + ")",newMask,admin,owner,op,halfop,voice);
+  else
+	listViewItem=new LedListViewItem(listView,newName,newMask,admin,owner,op,halfop,voice);
   nickname=newName;
   hostmask=newMask;
 
