@@ -374,11 +374,12 @@ void Server::connectSignals()
   connect(this,SIGNAL(addDccPanel()),getMainWindow(),SLOT(addDccPanel()) );
   connect(this,SIGNAL(addKonsolePanel()),getMainWindow(),SLOT(addKonsolePanel()) );
 
-  connect(serverSocket,SIGNAL(hostFound()),this,SLOT(lookupFinished()));
+  connect(serverSocket,SIGNAL (hostFound()),this,SLOT(lookupFinished()));
   connect(serverSocket,SIGNAL (connected(const KResolverEntry&)),this,SLOT (ircServerConnectionSuccess()));
   connect(serverSocket,SIGNAL (gotError(int)),this,SLOT (broken(int)) );
   connect(serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
   connect(serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
+  connect(serverSocket,SIGNAL (closed()),this,SLOT(broken(0)));
 
 
   connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
@@ -547,7 +548,7 @@ bool Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwn
  */
 void Server::lookupFinished()
 {
-  
+  getIp();
   // error during lookup
   if(serverSocket->status())
   {
@@ -932,7 +933,8 @@ void Server::lockSending()
 
 void Server::incoming()
 { 
-  int max_bytes = BUFFER_LEN-1;
+  //kdDebug() << "readyRead signal emitted socket has " << serverSocket->bytesAvailable() << " bytes!" << endl;
+  int max_bytes = serverSocket->bytesAvailable();
   
   char buffer[max_bytes];
   int len = 0;
@@ -961,6 +963,7 @@ void Server::incoming()
 
   // refresh lock timer if it was still locked
   if(!sendUnlocked) lockSending();
+
 }
 
 void Server::queue(const QString& buffer)
@@ -1261,14 +1264,8 @@ const NickInfoMap* Server::getNicksOffline() { return &nicknamesOffline; }
 QString Server::getIp()
 {
   // Return our ip using serverSocket
-  if( serverSocket->state() != KNetwork::KClientSocketBase::HostLookup ) {
     kdDebug() << "getIp() returned : " << serverSocket->localResults().nodeName() << endl;
     return serverSocket->localResults().nodeName();
-  }
-  else {
-    kdDebug() << "Resolver is not finished yet!" << endl;
-    return QString::null;
-  }
 }
 
 void Server::addQuery(const QString& nickname,const QString& hostmask, bool weinitiated )
