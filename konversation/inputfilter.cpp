@@ -948,7 +948,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
     {
         // Happens in Dalnet when NickEnforcer is currently holding a nick
         QString newNick=server->getNextNickname();
-        server->addToAllNicks( server->getNickname() ); // See Server::addToAllNicks
+        server->addToAllNicks( server->getNickname().lower() ); // See Server::addToAllNicks
         server->renameNick( server->getNickname(), newNick );
         server->appendStatusMessage(i18n( "Nick" ), i18n("Erroneus nickname. Trying %1." ).arg(newNick)) ;
         server->queue( "NICK "+newNick );
