@@ -71,6 +71,8 @@ class Preferences : public QObject
     void setAutoRejoin(bool state);
     bool getBeep();
     void setBeep(bool state);
+    bool getRawLog();
+    void setRawLog(bool state);
 
     void clearServerList();
     void changeServerProperty(int id,int property,const QString& value);
@@ -278,6 +280,7 @@ class Preferences : public QObject
 
     bool fixedMOTD;
     bool beep;
+    bool rawLog;
 
     bool dccAddPartner;
     bool dccCreateFolder;   // create folders for each DCC partner?

@@ -67,6 +67,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   QCheckBox* bringToFrontCheck=new QCheckBox(i18n("Bring new tabs to front"),parentFrame,"bring_to_front_check");
   QCheckBox* fixedMOTDCheck=new QCheckBox(i18n("Show MOTD in fixed font"),parentFrame,"fixed_motd_check");
   QCheckBox* beepCheck=new QCheckBox(i18n("Beep on incoming ASCII BEL"),parentFrame,"beep_check");
+  QCheckBox* rawLogCheck=new QCheckBox(i18n("Show raw log window on startup"),parentFrame,"raw_log_check");
 
   autoReconnectCheck->setChecked(preferences->getAutoReconnect());
   autoRejoinCheck->setChecked(preferences->getAutoRejoin());
@@ -74,6 +75,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   bringToFrontCheck->setChecked(preferences->getBringToFront());
   fixedMOTDCheck->setChecked(preferences->getFixedMOTD());
   beepCheck->setChecked(preferences->getBeep());
+  beepCheck->setChecked(preferences->getRawLog());
 
   QHBox* generalSpacer=new QHBox(parentFrame);
 
@@ -97,6 +99,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   row++;
   generalSettingsLayout->addMultiCellWidget(beepCheck,row,row,0,1);
   row++;
+  generalSettingsLayout->addMultiCellWidget(rawLogCheck,row,row,0,1);
+  row++;
   generalSettingsLayout->addMultiCellWidget(generalSpacer,row,row,0,1);
   generalSettingsLayout->setRowStretch(row,10);
 
@@ -117,6 +121,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   connect(fixedMOTDCheck,SIGNAL (stateChanged(int)),this,SLOT (fixedMOTDChanged(int)) );
 
   connect(beepCheck,SIGNAL (stateChanged(int)),this,SLOT (beepChanged(int)) );
+  
+  connect(rawLogCheck,SIGNAL (stateChanged(int)),this,SLOT (rawLogChanged(int)) );
 }
 
 PrefsPageGeneralSettings::~PrefsPageGeneralSettings()
@@ -176,6 +182,11 @@ void PrefsPageGeneralSettings::fixedMOTDChanged(int state)
 void PrefsPageGeneralSettings::beepChanged(int state)
 {
   preferences->setBeep(state==2);
+}
+
+void PrefsPageGeneralSettings::rawLogChanged(int state)
+{
+  preferences->setRawLog(state==2);
 }
 
 #include "prefspagegeneralsettings.moc"

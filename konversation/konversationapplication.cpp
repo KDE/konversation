@@ -236,6 +236,9 @@ void KonversationApplication::readOptions()
   // Beep
   preferences.setBeep(config->readBoolEntry("Beep",preferences.getBeep()));
   
+  // Raw log window
+  preferences.setRawLog(config->readBoolEntry("RawLog",preferences.getRawLog()));
+  
   // Appearance
   config->setGroup("Appearance");
   // Fonts
@@ -463,6 +466,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction());
 
   config->writeEntry("Beep",preferences.getBeep());
+  config->writeEntry("RawLog",preferences.getRawLog());
   
   config->setGroup("Appearance");
 

@@ -91,6 +91,7 @@ Preferences::Preferences()
 
   setFixedMOTD(true);
   setBeep(false);
+  setRawLog(false);
 
   setDccPath(QString::null);
   setDccAddPartner(true);
@@ -288,6 +289,9 @@ bool Preferences::getAutoRejoin() { return autoRejoin; }
 
 void Preferences::setBeep(bool state) { beep=state; }
 bool Preferences::getBeep() { return beep; }
+
+void Preferences::setRawLog(bool state) { rawLog=state; }
+bool Preferences::getRawLog() { return rawLog; }
 
 int Preferences::getNotifyDelay() { return notifyDelay; }
 void Preferences::setNotifyDelay(int delay) { notifyDelay=delay; }

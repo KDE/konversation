@@ -44,6 +44,7 @@ class PrefsPageGeneralSettings : public PrefsPage
     void bringToFrontChanged(int state);
     void fixedMOTDChanged(int state);
     void beepChanged(int state);
+    void rawLogChanged(int state);
 };
 
 #endif
