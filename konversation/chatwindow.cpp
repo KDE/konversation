@@ -162,7 +162,7 @@ void ChatWindow::setServer(Server* newServer)
   else
   {
     server=newServer;
-    m_mainWindow = server->getMainWindow();
+    setMainWindow(server->getMainWindow());
 #ifdef USE_MDI
     connect(server,SIGNAL(serverQuit(const QString&)),this,SLOT(serverQuit(const QString&)));
 #endif
@@ -176,6 +176,10 @@ void ChatWindow::setServer(Server* newServer)
 }
 void ChatWindow::setMainWindow(KonversationMainWindow *mainWindow) {
   m_mainWindow = mainWindow;
+
+  //setMainWindow may be called in a constructor, so make sure we call adjust
+  //focus after it is set up.
+  QTimer::singleShot(0, this, SLOT(adjustFocus()));  
 }
     
 Server* ChatWindow::getServer()
@@ -198,7 +202,6 @@ void ChatWindow::setTextView(IRCView* newView)
 {
   textView=newView;
   connect(textView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
-  connect(textView,SIGNAL (currentChanged()),this,SLOT (adjustFocus()) );
 }
 
 void ChatWindow::insertRememberLine()
@@ -485,9 +488,10 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 #endif
 }
 
-
 void ChatWindow::adjustFocus() {
+  kdDebug() << "AdjustFocus()" << endl;
   if(m_mainWindow && m_mainWindow->actionCollection()) {
+    kdDebug() << "Adjusting" << endl;
     KAction *action;
     action = m_mainWindow->actionCollection()->action("insert_remember_line");
     if(action) action->setEnabled(textView!=NULL); else Q_ASSERT(action);
@@ -503,6 +507,8 @@ void ChatWindow::adjustFocus() {
     if(action) action->setEnabled(textView!=NULL); else Q_ASSERT(action);
     action = m_mainWindow->actionCollection()->action("open_channel_list");
     if(action) action->setEnabled(server!=NULL); else Q_ASSERT(action);
+    action = m_mainWindow->actionCollection()->action("open_logfile");
+    if(action) action->setEnabled(!logName.isEmpty()); else Q_ASSERT(action);
   }
   childAdjustFocus();
 }

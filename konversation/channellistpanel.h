@@ -80,6 +80,8 @@ class ChannelListPanel : public ChatWindow
     /** Called from ChatWindow adjustFocus */
     virtual void childAdjustFocus();
     
+    virtual bool isInsertCharacterSupported() { return true; }
+
     int getNumChannels();
     int getNumUsers();
     int getVisibleChannels();

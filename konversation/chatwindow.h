@@ -159,6 +159,7 @@ class ChatWindow : public BASE_CLASS
      * then calls childAdjustFocus
      */
     void adjustFocus();
+    
     virtual void appendInputText(const QString&);
     virtual void indicateAway(bool away);
 
@@ -190,7 +191,6 @@ class ChatWindow : public BASE_CLASS
      *  "irc color" item on the menu to be enabled.
      */
     virtual bool areIRCColorsSupported() {return false; }
-
     int spacing();
     int margin();
 
@@ -225,17 +225,21 @@ class ChatWindow : public BASE_CLASS
      *  Not always non-null - e.g. for konsolepanel
      */
     Server* server;
-    /** This should always be non-null.  Used to enable/disable mainWindow
-     *  kactions.
-     */
-    KonversationMainWindow *m_mainWindow;
-    Identity identity;
+        Identity identity;
     QFile logfile;
     WindowType type;
 
     bool m_notificationsEnabled;
     
     bool m_channelEncodingEnabled;
+  private:
+    /** This should always be non-null.  Used to enable/disable mainWindow
+     *  kactions.  Private because this shouldn't be modified directly
+     *  by anything by setMainWindow.
+     *  @see setMainWindow
+     */
+    KonversationMainWindow *m_mainWindow;
+
 };
 
 #endif

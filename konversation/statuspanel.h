@@ -74,7 +74,9 @@ class StatusPanel : public ChatWindow
 
     /** Called from ChatWindow adjustFocus */
     virtual void childAdjustFocus();
-
+    virtual bool areIRCColorsSupported() {return true; }
+    virtual bool isInsertCharacterSupported() { return true; }
+    
     bool awayChanged;
     bool awayState;
 

@@ -550,6 +550,7 @@ void KonversationMainWindow::openLogFile(const QString& caption, const QString& 
     LogfileReader* logReader = new LogfileReader(getViewContainer(), file);
     addView(logReader, 3, i18n("Logfile of %1").arg(caption));
 #endif
+    logReader->setServer(frontServer);
   }
 }
 
@@ -563,6 +564,7 @@ void KonversationMainWindow::addKonsolePanel()
   addView(panel,3,i18n("Konsole"));
   connect(panel,SIGNAL (deleted(ChatWindow*)),this,SLOT (closeKonsolePanel(ChatWindow*)) );
 #endif
+  panel->setMainWindow(this);
 }
 
 void KonversationMainWindow::closeKonsolePanel(ChatWindow* konsolePanel)
@@ -623,7 +625,7 @@ void KonversationMainWindow::addUrlCatcher()
     urlCatcherPanel=new UrlCatcher(getViewContainer());
     addView(urlCatcherPanel,2,i18n("URL Catcher"),true);
 #endif
-
+    urlCatcherPanel->setMainWindow(this);
     KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
     connect(konvApp,SIGNAL (catchUrl(const QString&,const QString&)),
         urlCatcherPanel,SLOT (addUrl(const QString&,const QString&)) );
@@ -663,6 +665,7 @@ void KonversationMainWindow::addDccPanel()
     dccPanel=new DccPanel(getViewContainer());
     addView(dccPanel,3,i18n("DCC Status"));
 #endif
+    dccPanel->setMainWindow(this);
     dccPanelOpen=true;
   }
   // show already opened panel
@@ -723,7 +726,6 @@ void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nic
 #endif
 
     connect(dccChatPanel,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
-
     if(listen) frontServer->queue(QString("PRIVMSG %1 :\x01%2 CHAT chat %3 %4\x01").arg(nick).arg("DCC").arg(numericalIp).arg(dccChatPanel->getPort()));
   }
 }
@@ -977,7 +979,7 @@ void KonversationMainWindow::openNicksOnlinePanel()
     nicksOnlinePanel=new NicksOnline(getViewContainer());
     addView(nicksOnlinePanel, 2, i18n("Nicks Online"), true);
 #endif
-
+    nicksOnlinePanel->setMainWindow(this);
     connect(nicksOnlinePanel,SIGNAL (editClicked()),this,SLOT (openNotify()) );
 
     connect(nicksOnlinePanel,SIGNAL (doubleClicked(const QString&,const QString&)),this,SLOT (notifyAction(const QString&,const QString&)) );
