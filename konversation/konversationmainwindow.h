@@ -93,7 +93,7 @@ class KonversationMainWindow : public KMainWindow
     void showMenubar();
     void changeView(QWidget* view);
     void closeView(QWidget* view);
-    void newText(QWidget* view);
+    void newText(QWidget* view,const QString& highlightColor);
     void quitProgram();
 
     void openHilight();

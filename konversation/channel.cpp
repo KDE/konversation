@@ -197,8 +197,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(channelInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );
   connect(channelInput,SIGNAL (pageDown()),getTextView(),SLOT (pageDown()) );
   
-  connect(textView,SIGNAL (newText()),this,SLOT (newTextInView()) );
-  connect(textView,SIGNAL (newURL(const QString &)),this, SLOT (urlCatcher(const QString &)) );
+  connect(textView,SIGNAL (newText(const QString&)),this,SLOT (newTextInView(const QString&)) );
+  connect(textView,SIGNAL (newURL(const QString&)),this, SLOT (urlCatcher(const QString&)) );
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
 
@@ -545,10 +545,9 @@ void Channel::sendChannelText(const QString& sendLine)
   server->queue(filter.getServerOutput());
 }
 
-void Channel::newTextInView()
+void Channel::newTextInView(const QString& highlightColor)
 {
-  // kdDebug() << "Channel::newTextInView(): this=" << this << endl;
-  emit newText(this);
+  emit newText(this,highlightColor);
 }
 
 void Channel::setNickname(const QString& newNickname)

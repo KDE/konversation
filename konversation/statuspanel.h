@@ -40,15 +40,15 @@ class StatusPanel : public ChatWindow
     void closeYourself();
 
   signals:
-    void newText(QWidget* widget);
+    void newText(QWidget* widget,const QString& highlightColor);
     void sendFile();
     // will be connected to KonversationMainWindow::updateLag()
     void lag(Server* server,int msec);
-    
+
   public slots:
     void adjustFocus();
     void setNickname(const QString& newNickname);
-    void newTextInView();
+    void newTextInView(const QString& highlightColor);
     void updateFonts();
     void updateLag(int msec);
   

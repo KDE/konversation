@@ -178,8 +178,10 @@ void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
 }
 
 // original code by Trolltech, adapted for close pixmap
-void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* t, bool has_focus ) const
+void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_focus ) const
 {
+  LedTab* t=static_cast<LedTab*>(tab);
+
   // do we want close widgets on the tabs?
   if(KonversationApplication::preferences.getCloseButtonsOnTabs())
   {
@@ -215,8 +217,13 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* t, bool has_focu
     if (has_focus)
         flags |= QStyle::Style_HasFocus;
 
+    // set new label color if there is one
+    QColorGroup  myColorGroup(colorGroup());
+    if(!t->getLabelColor().isEmpty())
+      myColorGroup.setColor(QColorGroup::Foreground,t->getLabelColor());
+
     style().drawControl( QStyle::CE_TabBarLabel, p, this, r,
-                         t->isEnabled() ? colorGroup(): palette().disabled(),
+                         t->isEnabled() ? myColorGroup : palette().disabled(),
                          flags, QStyleOption(t) );
   }
   // otherwise call original code

@@ -50,12 +50,12 @@ class Channel : public ChatWindow
     void setKey(const QString& newKey);
     QString getKey();
 
-    void joinNickname(const QString &nickname,const QString &hostname);
-    void renameNick(const QString &nickname,const QString &newName);
-    void addNickname(const QString &nickname,const QString &hostmask, bool op, bool voice);
-    void removeNick(const QString &nickname, const QString &reason, bool quit);
-    void kickNick(const QString &nickname, const QString &kicker, const QString &reason);
-    Nick *getNickByName(const QString &lookname);
+    void joinNickname(const QString& nickname,const QString& hostname);
+    void renameNick(const QString& nickname,const QString& newName);
+    void addNickname(const QString& nickname,const QString& hostmask, bool op, bool voice);
+    void removeNick(const QString& nickname, const QString& reason, bool quit);
+    void kickNick(const QString& nickname, const QString& kicker, const QString& reason);
+    Nick *getNickByName(const QString& lookname);
     QPtrList<Nick> getNickList();
 
     void adjustNicks(int value);
@@ -73,7 +73,7 @@ class Channel : public ChatWindow
     void closeYourself();
 
   signals:
-    void newText(QWidget* channel);
+    void newText(QWidget* channel,const QString& highlightColor);
     void prefsChanged();
     void sendFile();
 
@@ -81,7 +81,7 @@ class Channel : public ChatWindow
     void setNickname(const QString& newNickname);
     void channelTextEntered();
     void sendChannelText(const QString& line);
-    void newTextInView();
+    void newTextInView(const QString& highlightColor);
     void urlCatcher(const QString &url);
     void adjustFocus();
     void showQuickButtons(bool show);

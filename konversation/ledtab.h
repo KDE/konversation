@@ -37,12 +37,20 @@ class LedTab : public QObject,public QTab
     ~LedTab();
 
     void setOn(bool state);
+    void setLabelColor(const QString& newLabelColor);
+    const QString& getLabelColor();
 
     QWidget* getWidget();
 
     QIconSet iconOn;
     QIconSet iconOff;
     QTimer blinkTimer;
+
+  signals:
+    void repaintTab(LedTab* myself);
+
+  protected slots:
+    void blinkTimeout();
 
   protected:
     void setIconSet(const QIconSet& icon);
@@ -53,12 +61,8 @@ class LedTab : public QObject,public QTab
 
     QWidget* widget;
     Images images;
+    QString labelColor;
 
-  signals:
-    void repaintTab(LedTab* myself);
-
-  protected slots:
-    void blinkTimeout();
 };
 
 #endif

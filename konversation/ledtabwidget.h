@@ -37,7 +37,7 @@ class LedTabWidget : public QTabWidget
     ~LedTabWidget();
 
     void addTab(ChatWindow* child,const QString& label,int color,bool on);
-    void changeTabState(QWidget* child,bool state);
+    void changeTabState(QWidget* child,bool state,const QString& labelColor);
     void connectTabUpdate(QObject* object);
     void updateTabs();
 

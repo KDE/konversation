@@ -172,7 +172,10 @@ void KonversationMainWindow::appendToFrontmost(const QString& type,const QString
   {
     // if not, take server specified fallback view instead
     serverView->appendServerMessage(type,message);
-    newText(serverView);
+    // FIXME: this signal should be sent from the status panel instead, so it
+    //        can be using the correct highlight color, would be more consistent
+    //        anyway!
+    newText(serverView,QString::null);
   }
   else
     frontView->appendServerMessage(type,message);
@@ -260,7 +263,8 @@ void KonversationMainWindow::addDccPanel()
       addView(dccPanel,3,i18n("DCC Status"));
       dccPanelOpen=true;
     }
-    newText(dccPanel);
+    // no highlight color for DCC panels
+    newText(dccPanel,QString::null);
   }
 }
 
@@ -301,7 +305,7 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
   // ... then put it into the tab widget, otherwise we'd have a race with server member
   addView(statusView,2,server->getServerName(),false);
 
-  connect(statusView,SIGNAL (newText(QWidget*)),this,SLOT (newText(QWidget*)) );
+  connect(statusView,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
   connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );
 
   return statusView;
@@ -315,7 +319,7 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
 
   addView(channel,1,name);
 
-  connect(channel,SIGNAL (newText(QWidget*)),this,SLOT (newText(QWidget*)) );
+  connect(channel,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
   connect(channel,SIGNAL (prefsChanged()),this,SLOT (channelPrefsChanged()) );
 
   return channel;
@@ -329,7 +333,7 @@ Query* KonversationMainWindow::addQuery(Server* server, const QString& name)
 
   addView(query,0,name);
 
-  connect(query,SIGNAL (newText(QWidget*)),this,SLOT (newText(QWidget*)) );
+  connect(query,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
 
   return query;
 }
@@ -349,7 +353,7 @@ RawLog* KonversationMainWindow::addRawLog(Server* server)
 ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
 {
   kdDebug() << "KonversationMainWindow::addChannelListPanel()" << endl;
-  
+
   ChannelListPanel* channelListPanel=new ChannelListPanel(getViewContainer());
   channelListPanel->setServer(server);
 
@@ -358,11 +362,11 @@ ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
   return channelListPanel;
 }
 
-void KonversationMainWindow::newText(QWidget* view)
+void KonversationMainWindow::newText(QWidget* view,const QString& highlightColor)
 {
   if(view!=getViewContainer()->currentPage())
   {
-    getViewContainer()->changeTabState(view,true);
+    getViewContainer()->changeTabState(view,true,highlightColor);
   }
 }
 
@@ -393,7 +397,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 
   updateFrontView();
 
-  viewContainer->changeTabState(view,false);
+  viewContainer->changeTabState(view,false,QString::null);
 }
 
 void KonversationMainWindow::readOptions()

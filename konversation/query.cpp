@@ -53,10 +53,10 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   connect(queryInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );
   connect(queryInput,SIGNAL (pageDown()),getTextView(),SLOT (pageDown()) );
   
-  connect(textView,SIGNAL (newText()),this,SLOT (newTextInView()) );
+  connect(textView,SIGNAL (newText(const QString&)),this,SLOT (newTextInView(const QString&)) );
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
-  
+
 
   updateFonts();
 
@@ -108,9 +108,9 @@ void Query::sendQueryText(const QString& sendLine)
   server->queue(filter.getServerOutput());
 }
 
-void Query::newTextInView()
+void Query::newTextInView(const QString& highlightColor)
 {
-  emit newText(this);
+  emit newText(this,highlightColor);
 }
 
 void Query::setHostmask(const QString& newHostmask)

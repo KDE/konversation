@@ -95,10 +95,10 @@ void StatusPanel::statusTextEntered()
   statusInput->clear();
 }
 
-void StatusPanel::newTextInView()
+void StatusPanel::newTextInView(const QString& highlightColor)
 {
   // kdDebug() << "StatusPanel::newTextInView(): this=" << this << endl;
-  emit newText(this);
+  emit newText(this,highlightColor);
 }
 
 void StatusPanel::textPasted(QString text)

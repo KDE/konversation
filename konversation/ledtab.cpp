@@ -31,6 +31,7 @@ LedTab::LedTab(QWidget* newWidget,const QString& label,int newColor,bool state) 
   color=newColor;
   blinkOn=true;
   widget=newWidget;
+  labelColor=QString::null;
 
   setOn(state);
 
@@ -72,6 +73,17 @@ void LedTab::setOn(bool state)
 {
   on=state;
   setIconSet((on) ? iconOn : iconOff);
+}
+
+void LedTab::setLabelColor(const QString& newLabelColor)
+{
+  labelColor=newLabelColor;
+  emit repaintTab(this);
+}
+
+const QString& LedTab::getLabelColor()
+{
+  return (blinkOn) ? labelColor : QString::null;
 }
 
 void LedTab::setIconSet(const QIconSet& icon)

@@ -6,7 +6,7 @@ Make colors for nick list configurable via GUI
 <lizard> ich will nen shortcut haben das wenn ich irgendwo ssh eingebe das mit ne shell aufgeht ;)
 Let the user decide how many quick buttons they want.
 Think about another way to get rid of the cut off "Custom" text in color combos ...
-Autojoin/User interaction on /invite
+Autojoin/User interaction on invite
 URL catcher user interface
 User interface for dialog options (don't show again dialogs)
 Border changes on-the-fly using some kind of "redraw-pointer-list"
@@ -17,10 +17,10 @@ Different charsets / encodings for each channel / tab
 Fortunes
 Queries should get a Whois menu item
 "notices" tab for all notices that are no channel notices
-"snotices" tab for all server notices (prefix without "!")
+"snotices" tab for all server notices (prefix without "!" )
 Indicate hilight on tab LED / label
 DCC port range
-/cycle command
+cycle command
 Move Encoding into identity
 Make separate Highlight lists for each identity
 Nick button in status pane does nothing
@@ -28,17 +28,17 @@ Measure away time and make it available via placeholder
 
 <mETz[]> Eisfuchs: And why have the "Mitschnitt" button there? having it in the menubar is enough, no?
 
--privmsg (/msg) should be logged to the specific log file (if i do /msg foo bar i want to have this in konversation-foo.log)
+-privmsg (/msg) should be logged to the specific log file (if i do "/msg foo bar" i want to have this in konversation-foo.log)
 
 nobs: "nette mirc- Features im normalen text-Fenster:  und  das markieren
       des letzten Zeitpunkts wo das Fenster aktiv war"
 *nobs* noch ein Feature-Request: alle "technischen" Meldungen aus # und query ausblenden können;
-       entweder ins Status-Fenster umleiten oder ganz verwerfen optional 
+       entweder ins Status-Fenster umleiten oder ganz verwerfen optional
 
 Consistency check in Preferences:
 - Command Char must be present
 
-/part may close Queries, too.
+"/part" may close Queries, too.
 
 Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated
 

@@ -48,7 +48,7 @@ class Query : public ChatWindow
     void closeYourself();
 
   signals:
-    void newText(QWidget* query);
+    void newText(QWidget* query,const QString& highlightColor);
     void sendFile(const QString& recipient);
 
   public slots:
@@ -58,7 +58,7 @@ class Query : public ChatWindow
   protected slots:
     void queryTextEntered();
     void sendFileMenu();
-    void newTextInView();
+    void newTextInView(const QString& highlightColor);
     // connected to IRCInput::textPasted() - used to handle large/multiline pastes
     void textPasted(QString text);
 
