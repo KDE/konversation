@@ -110,7 +110,7 @@ void DccTransferSend::start()  // public slot
     for( ; port <= KonversationApplication::preferences.getDccSendPortsLast(); ++port )
     {
       kdDebug() << "DccTransferSend::start(): trying port " << port << endl;
-      m_serverSocket->setAddress( "0", QString::number( port ) );
+      m_serverSocket->setAddress( QString::number( port ) );
       bool success = m_serverSocket->listen();
       if( found = ( success && m_serverSocket->error() == KNetwork::KSocketBase::NoError ) )
         break;
