@@ -1278,6 +1278,8 @@ void Channel::autoUserhost()
   if(!nickString.isEmpty()) server->requestUserhost(nickString);
 }
 
+QString Channel::getTextInLine() { return channelInput->text(); }
+
 void Channel::closeYourself()
 {
   server->closeChannel(getName());

@@ -156,6 +156,8 @@ void Query::sendFileMenu()
   emit sendFile(getName());
 }
 
+QString Query::getTextInLine() { return queryInput->text(); }
+
 void Query::closeYourself()
 {
   server->removeQuery(this);

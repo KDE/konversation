@@ -21,6 +21,7 @@ Changes from 0.11 to 0.12
 - Added PgUp/PgDown support to Channels, Queries and Status views
 - Added rename button to identity page to overcome QComboBox limitations
 - Tabs now blink in the last highlight color to indicate important text
+- Tabs don't get to front anymore while the user is typing in an input line
 
 Changes from 0.10 to 0.11
 - Added a patch by Bart Verwilst to provide automatic service registration (thanks!)

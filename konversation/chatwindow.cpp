@@ -304,6 +304,9 @@ int ChatWindow::margin()
 IRCView* ChatWindow::getTextView()     { return textView; }
 void ChatWindow::setLog(bool activate) { log=activate; }
 
+// reimplement this in all panels that have user input
+QString ChatWindow::getTextInLine() { return QString::null; }
+
 // reimplement this if your window needs special close treatment
 void ChatWindow::closeYourself()
 {

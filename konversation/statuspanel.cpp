@@ -138,6 +138,8 @@ void StatusPanel::updateLag(int msec)
   emit lag(getServer(),msec);
 }
 
+QString StatusPanel::getTextInLine() { return statusInput->text(); }
+
 void StatusPanel::closeYourself()
 {
   int result=KMessageBox::warningYesNo(

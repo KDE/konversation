@@ -75,6 +75,7 @@ class ChatWindow : public QVBox
 
     QWidget* parentWidget;
 
+    virtual QString getTextInLine();
     virtual void closeYourself();
 
   signals:

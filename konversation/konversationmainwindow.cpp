@@ -187,10 +187,17 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
   // before the DCC tab. Maybe we should also make sure to order Channels
   // Queries and DCC chats in groups
   viewContainer->addTab(view,label,color,on);
-  // TODO: Check, if user was typing in old input line
+  
+  // Check, if user was typing in old input line
+  bool doBringToFront=true;
+  
+  if(frontView)
+  {
+    if(!frontView->getTextInLine().isEmpty()) doBringToFront=false;
+  }
 
-  // bring view to front unless it's a raw log window
-  if(KonversationApplication::preferences.getBringToFront() &&
+  // bring view to front unless it's a raw log window or the user was typing
+  if(KonversationApplication::preferences.getBringToFront() && doBringToFront &&
     view->getType()!=ChatWindow::RawLog)
   {
     showView(view);

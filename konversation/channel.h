@@ -70,6 +70,7 @@ class Channel : public ChatWindow
     void updateQuickButtons(QStringList newButtonList);
     void updateFonts();
 
+    QString getTextInLine();
     void closeYourself();
 
   signals:

@@ -45,6 +45,7 @@ class Query : public ChatWindow
     void setName(const QString& newName);
     void setHostmask(const QString& newHostmask);
     void updateFonts();
+    QString getTextInLine();
     void closeYourself();
 
   signals:

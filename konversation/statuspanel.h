@@ -37,6 +37,7 @@ class StatusPanel : public ChatWindow
     StatusPanel(QWidget* parent);
     ~StatusPanel();
 
+    QString getTextInLine();
     void closeYourself();
 
   signals:
