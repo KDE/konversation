@@ -112,17 +112,19 @@ class Server : public QObject
     void noMorePendingNicks(const QString& channel);
 
     void setChannelTypes(const QString &types);
-    QString getChannelTypes();
+    QString getChannelTypes() const;
     
     // extended user modes support
     void setPrefixes(const QString &modes, const QString& prefixes);
     void mangleNicknameWithModes(QString &nickname,bool& isAdmin,bool& isOwner,bool &isOp,
                                  bool& isHalfop,bool &hasVoice);
 
-    bool isAChannel(const QString &check);
-    bool isNickname(const QString& compare);
+    bool isAChannel(const QString &channel) const;
+    bool isNickname(const QString& compare) const;
+
     QString getNickname() const;
     QString loweredNickname() const;
+
     InputFilter* getInputFilter();
     Konversation::OutputFilter* getOutputFilter();
 
@@ -165,7 +167,7 @@ class Server : public QObject
 
     /** This returns true when we are 'online' - ready to take commands, join channels and so on.
      */
-    bool connected();
+    bool connected() const;
     QString getIp(bool followDccSetting = false);
     QString getNumericalIp(bool followDccSetting = false);
     /**
