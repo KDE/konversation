@@ -91,6 +91,7 @@ class ChannelListPanel : public ChatWindow
     int getMaxUsers();
 
     const QString& getFilterText();
+    void  applyFilterToItem(QListViewItem* item);
 
     void updateUsersChannels();
 

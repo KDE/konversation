@@ -253,10 +253,6 @@ void ChannelListPanel::addToChannelList(const QString& channel,int users,const Q
   // set internal numbers of channels and users, display will be updated by a timer
   setNumChannels(getNumChannels()+1);
   setNumUsers(getNumUsers()+users);
-
-  // no filter yet, so set visible value to the same value
-  setVisibleChannels(getNumChannels());
-  setVisibleUsers(getNumUsers());
 }
 
 void ChannelListPanel::updateDisplay()
@@ -276,10 +272,15 @@ void ChannelListPanel::updateDisplay()
       QString channel=channelLine.section(' ',0,0);
       QString users=channelLine.section(' ',1,1);
       QString topic=channelLine.section(' ',2);
-      // if it's the last one of this batch, update the widget
-      if(index==pendingChannels.count()-1) channelListView->setUpdatesEnabled(true);
       // add channel line to list view
-      new ChannelListViewItem(channelListView,channel,users,topic);
+      ChannelListViewItem* item=new ChannelListViewItem(channelListView,channel,users,topic);
+      applyFilterToItem(item);
+      // if it's the last one of this batch, update the widget
+      if(index==pendingChannels.count()-1)
+      {
+         channelListView->setUpdatesEnabled(true);
+         channelListView->update();
+      }
     }
     // clear list of pending inserts
     pendingChannels.clear();
@@ -288,8 +289,6 @@ void ChannelListPanel::updateDisplay()
   }
   else
   {
-    // no more channels to insert, so check if we should apply the filter
-    applyFilterClicked();
     updateTimer.stop();
   }
 }
@@ -339,6 +338,38 @@ void ChannelListPanel::channelTargetClicked()        { setChannelTarget(channelF
 void ChannelListPanel::topicTargetClicked()          { setTopicTarget(topicFilter->state()==2); }
 void ChannelListPanel::regExpClicked()               { setRegExp(regexpCheck->state()==2); }
 
+void ChannelListPanel::applyFilterToItem(QListViewItem* item)
+{
+  bool visible=true;
+
+  if(getMinUsers() || getMaxUsers())
+  {
+    if(item->text(1).toInt()<getMinUsers() || (getMaxUsers()>=getMinUsers() &&
+       item->text(1).toInt()>getMaxUsers())) 
+         visible=false;
+  }
+
+  if(!getFilterText().isEmpty())
+  {
+    if(getChannelTarget())
+    {
+      if(item->text(0).find(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
+    }
+        
+    if(getTopicTarget())
+    {
+      if(item->text(2).find(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
+    }
+  }
+
+  item->setVisible(visible);
+  if(visible)
+  {
+    setVisibleUsers(getVisibleUsers()+item->text(1).toInt());
+    setVisibleChannels(getVisibleChannels()+1);
+  }
+}
+
 void ChannelListPanel::applyFilterClicked()
 {
   unsigned int index=0;
@@ -346,6 +377,7 @@ void ChannelListPanel::applyFilterClicked()
   if(!getNumChannels())
   {
     refreshList();
+    return;
   }
   else
   {
@@ -356,35 +388,7 @@ void ChannelListPanel::applyFilterClicked()
 
     while(item)
     {
-      bool visible=true;
-
-      if(getMinUsers() || getMaxUsers())
-      {
-        if(item->text(1).toInt()<getMinUsers() ||
-            (getMaxUsers()>=getMinUsers() &&
-             item->text(1).toInt()>getMaxUsers())) visible=false;
-      }
-
-      if(!getFilterText().isEmpty())
-      {
-        if(getChannelTarget())
-        {
-          if(item->text(0).find(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
-        }
-
-        if(getTopicTarget())
-        {
-          if(item->text(2).find(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
-        }
-      }
-
-      item->setVisible(visible);
-      if(visible)
-      {
-        setVisibleUsers(getVisibleUsers()+item->text(1).toInt());
-        setVisibleChannels(getVisibleChannels()+1);
-      }
-
+      applyFilterToItem(item);  
       item=channelListView->itemAtIndex(++index);
     }
 
