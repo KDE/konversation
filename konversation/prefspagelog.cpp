@@ -20,8 +20,12 @@
 #include <qwhatsthis.h>
 #include <qspinbox.h>
 #include <qtooltip.h>
+#include <qtoolbutton.h>
+
 #include <klineedit.h>
 #include <klocale.h>
+#include <kdirselectdialog.h>
+#include <kiconloader.h>
 
 #include "prefspagelog.h"
 #include "preferences.h"
@@ -48,12 +52,16 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   lowerLog=new QCheckBox(i18n("&Use lower case logfile names"),loggingBox,"lower_log_checkbox");
   logFollowsNick=new QCheckBox(i18n("&Follow nick changes"),loggingBox,"follow_nickchanges_checkbox");
 
-  QHBox* logPathBox=new QHBox(loggingBox);
+  QHBox* logPathBox = new QHBox(loggingBox);
   logPathBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
   logPathBox->setSpacing(spacingHint());
-  logPathLabel=new QLabel(i18n("Logfile &path:"),logPathBox);
-  logPathInput=new KLineEdit(preferences->getLogPath(),logPathBox,"log_path_input");
+  logPathLabel = new QLabel(i18n("Logfile &path:"), logPathBox);
+  logPathInput = new KLineEdit(preferences->getLogPath(), logPathBox, "logPathInput");
   logPathLabel->setBuddy(logPathInput);
+  QToolButton* logPathBtn = new QToolButton(logPathBox, "logPathBtn");
+  logPathBtn->setIconSet(SmallIconSet("folder"));
+  connect(logPathBtn, SIGNAL(clicked()), this, SLOT(selectLogPath()));
+  
   lowerLog->setChecked(preferences->getLowerLog());
   logFollowsNick->setChecked(preferences->getLogFollowsNick());
 
@@ -82,6 +90,15 @@ void PrefsPageLog::applyPreferences()
   preferences->setLowerLog(lowerLog->isChecked());
   preferences->setLogFollowsNick(logFollowsNick->isChecked());
   preferences->setLogPath(logPathInput->text());
+}
+
+void PrefsPageLog::selectLogPath()
+{
+  KURL url = KDirSelectDialog::selectDirectory(logPathInput->text(), false, parentFrame);
+  
+  if(!url.isEmpty()) {
+    logPathInput->setText(url.path());
+  }
 }
 
 #include "prefspagelog.moc"

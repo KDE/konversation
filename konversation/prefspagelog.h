@@ -23,7 +23,7 @@
 
 class QCheckBox;
 class QLabel;
-class KLineEdit;
+class KURLRequester;
 class QSpinBox;
 class QGroupBox;
 
@@ -37,9 +37,11 @@ class PrefsPageLog : public PrefsPage
 
   public slots:
     void applyPreferences();
+    
+  protected slots:
+    void selectLogPath();
 
   protected:
-
     QGroupBox* loggingBox;
     QCheckBox* lowerLog;
     QCheckBox* logFollowsNick;

@@ -51,7 +51,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   QFrame* ignorePane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Ignored Nicknames")));
   QFrame* aliasesPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Aliases")));
   QFrame* buttonsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Quick Buttons")));
-  QFrame* logSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Loging")));
+  QFrame* logSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Logging")));
   QFrame* dccSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("DCC")));
 
   notifyPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Watched Nicknames")));
