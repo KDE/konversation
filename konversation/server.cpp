@@ -1337,7 +1337,7 @@ void Server::closeChannelListPanel()
   }
 }
 
-void Server::setIdentity(const Identity* newIdentity) { identity=newIdentity; }
+void Server::setIdentity(const Identity* newIdentity) { kdDebug() << "Server::setIdentity(): " << newIdentity << endl; identity=newIdentity; }
 const Identity* Server::getIdentity() { return identity; }
 
 void Server::setMainWindow(KonversationMainWindow* newMainWindow) { mainWindow=newMainWindow; }

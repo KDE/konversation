@@ -121,8 +121,9 @@ Server* ChatWindow::getServer()
 
 void ChatWindow::setIdentity(const Identity *newIdentity)
 {
-  identity=newIdentity;
-  filter.setIdentity(identity);
+  kdDebug() << "ChatWindow::setIdentity(): " << newIdentity << endl;
+  identity=*newIdentity;
+  filter.setIdentity(newIdentity);
 }
 
 void ChatWindow::setTextView(IRCView* newView)

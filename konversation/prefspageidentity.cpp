@@ -239,8 +239,8 @@ void PrefsPageIdentity::updateIdentity(int number)
   else defaultText->hide();
   
   // TODO: Enable the button when all's fine
-//  removeIdentityButton->setEnabled((number!=0));
-  removeIdentityButton->setEnabled(false);
+  removeIdentityButton->setEnabled((number!=0));
+//  removeIdentityButton->setEnabled(false);
 
   loginInput->setText(identity->getIdent());
   realNameInput->setText(identity->getRealName());

@@ -1233,10 +1233,8 @@ void Channel::openNickChangeDialog()
 {
   if(!nickChangeDialog)
   {
-    const Identity *identity=server->getIdentity();
-
     nickChangeDialog=new NickChangeDialog(this,server->getNickname(),
-                                          identity->getNicknameList(),
+                                          identity.getNicknameList(),
                                           KonversationApplication::preferences.getNicknameSize());
     connect(nickChangeDialog,SIGNAL (closeDialog(QSize)),this,SLOT (closeNickChangeDialog(QSize)) );
     connect(nickChangeDialog,SIGNAL (newNickname(const QString&)),this,SLOT (changeNickname(const QString&)) );

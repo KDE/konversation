@@ -100,7 +100,7 @@ class ChatWindow : public QVBox
 
     IRCView* textView;
     Server* server;
-    const Identity *identity;
+    Identity identity;
     QFile logfile;
     OutputFilter filter;
     WindowType type;
