@@ -17,6 +17,7 @@
 
 #include <qvbox.h>
 #include <qiconset.h>
+#include <qpair.h>
 
 #include "nickinfo.h"
 #include "chatwindow.h"
@@ -26,6 +27,7 @@
 */
 
 class KListView;
+class QPushButton;
 
 class NicksOnline : public ChatWindow
 {
@@ -38,6 +40,11 @@ class NicksOnline : public ChatWindow
       nlvcKabc = 1,
       nlvcAdditionalInfo = 2
     };
+    enum CommandIDs
+    {
+      ciAddressbookChange, ciAddressbookNew, ciAddressbookDelete, ciAddressbookEdit
+    };
+
     
 #ifdef USE_MDI
     NicksOnline(QString caption);
@@ -57,11 +64,13 @@ class NicksOnline : public ChatWindow
   protected slots:
     void processDoubleClick(QListViewItem* item);
     void timerFired();
+    void slotEditContactButton_Clicked();
+    void slotChangeAssociationButton_Clicked();
+    void slotDeleteAssociationButton_Clicked();
+    void slotNickListView_SelectionChanged();
 
   protected:
     void updateServerOnlineList(Server* server, bool changed);
-    void refreshAllServerOnlineLists();
-    QString getNickAdditionalInfo(NickInfoPtr nickInfo);
 #ifdef USE_MDI
     virtual void closeYourself(ChatWindow*);
 #endif
@@ -71,6 +80,20 @@ class NicksOnline : public ChatWindow
     KListView* m_nickListView;
     QTimer* m_timer;
     QIconSet m_kabcIconSet;
+    
+  private:
+    void refreshAllServerOnlineLists();
+    QString getNickAdditionalInfo(NickInfoPtr nickInfo);
+    bool editAddressee(const QString &uid);
+    // Returns the server name and nickname of the currently-selected item in the nicklistview.
+    bool getItemServerAndNick(const QListViewItem* item, QString& serverName, QString& nickname);
+    void doCommand(int id);
+    int getNickAddressbookState(QListViewItem* item);
+    void setupAddressbookButtons(int nickState);
+    
+    QPushButton* m_editContactButton;
+    QPushButton* m_changeAssociationButton;
+    QPushButton* m_deleteAssociationButton;
 };
 
 #endif
