@@ -59,12 +59,6 @@ void ServerISON::recalculateAddressees()
   kdDebug() << "ServerISON::recalculateAddressees" << endl;
   // Get all nicks known to be online.
   const NickInfoMap* allNicks = m_server->getAllNicks();
-  // Sync all online nicks with addressbook.
-  for(NickInfoMap::ConstIterator it=allNicks->begin(); it != allNicks->end(); ++it)
-  {
-    NickInfoPtr nickInfo = it.data();
-    nickInfo->refreshAddressee();
-  }
   // If not watching nicks, no need to build notify list.
   if (m_useNotify)
   {
