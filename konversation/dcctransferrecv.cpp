@@ -232,12 +232,11 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
   {
     KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>( job );
     
+    disconnect( transferJob, 0, 0, 0 );
+    transferJob->kill();
+    
     if( KonversationApplication::preferences.getDccAutoResume() )
-    {
-      disconnect( transferJob, 0, 0, 0 );
-      transferJob->kill();
       prepareLocalKio( false, size );
-    }
     else
     {
       switch( DccResumeDialog::ask( this,
@@ -246,21 +245,15 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
                                     DccResumeDialog::RA_Resume ) )
       {
         case DccResumeDialog::RA_Resume:
-          disconnect( transferJob, 0, 0, 0 );
-          transferJob->kill();
           prepareLocalKio( false, size );
           break;
         case DccResumeDialog::RA_Overwrite:
-          // throw canResume()
+          prepareLocalKio( true, 0 );
           break;
         case DccResumeDialog::RA_Rename:
-          disconnect( transferJob, 0, 0, 0 );
-          transferJob->kill();
           prepareLocalKio( false, 0 );
         case DccResumeDialog::RA_Cancel:
         default:
-          disconnect( transferJob, 0, 0, 0 );
-          transferJob->kill();
           setStatus( Queued );
           updateView();
       }
