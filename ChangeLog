@@ -18,4 +18,5 @@ Changes from 0.7 to 0.8:
 - You can now hilight all your own lines independantly
 - Fixed the problem in the appearance dialog with font names
 - Added DCC error dialogs
-
+- Quit/Nickchange/Kicks are now only reported in channels where the nick actually is in.
+- Fixed bug with lockups on defective logfiles.

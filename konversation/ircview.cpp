@@ -399,7 +399,7 @@ void IRCView::appendBacklogMessage(const char* firstColumn,const char* rawMessag
 
 void IRCView::doAppend(QString line)
 {
-  kdDebug() << "IRCView::doAppend("<< line << ")" << endl;
+  //  kdDebug() << "IRCView::doAppend("<< line << ")" << endl;
   // Add line to buffer
   buffer+=line;
   emit newText();
@@ -423,7 +423,7 @@ void IRCView::doAppend(QString line)
 // Workaround to scroll to the end of the TextView when it's shown
 void IRCView::showEvent(QShowEvent* event)
 {
-  kdDebug() << "IRCView::showEvent()" << endl;
+  // kdDebug() << "IRCView::showEvent()" << endl;
   // Suppress Compiler Warning
   event->type();
 

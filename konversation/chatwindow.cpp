@@ -140,6 +140,8 @@ void ChatWindow::setLogfileName(const QString& name)
     // Show last log lines. This idea was stole ... um ... inspired by PMP :)
     if(logfile.open(IO_ReadOnly))
     {
+      unsigned long filePosition;
+
       QString backlogLine;
       // Set file pointer to 1 kB from the end
       logfile.at(logfile.size()-1024);
@@ -148,7 +150,12 @@ void ChatWindow::setLogfileName(const QString& name)
       // Loop until end of file reached
       while(!logfile.atEnd())
       {
+        // remember actual file position to check for deadlocks
+        filePosition=logfile.at();
+
         logfile.readLine(backlogLine,1024);
+        // check for deadlocks
+        if(logfile.at()==filePosition) logfile.at(filePosition+1);
         // if a tab character is present in the line
         if(backlogLine.find('\t')!=-1)
         {

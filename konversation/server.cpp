@@ -799,13 +799,19 @@ void Server::addHostmaskToNick(QString& sourceNick,QString& sourceHostmask)
 void Server::removeNickFromChannel(QString& channelName,QString& nickname,QString& reason,bool quit)
 {
   Channel* outChannel=getChannelByName(channelName);
-  if(outChannel) outChannel->removeNick(nickname,reason,quit);
+  if(outChannel)
+  {
+    if(outChannel->getNickByName(nickname)) outChannel->removeNick(nickname,reason,quit);
+  }
 }
 
 void Server::nickWasKickedFromChannel(QString& channelName,QString& nickname,QString& kicker,QString& reason)
 {
   Channel* outChannel=getChannelByName(channelName);
-  if(outChannel) outChannel->kickNick(nickname,kicker,reason);
+  if(outChannel)
+  {
+    if(outChannel->getNickByName(nickname)) outChannel->kickNick(nickname,kicker,reason);
+  }
 }
 
 void Server::removeNickFromServer(QString& nickname,QString& reason)
@@ -824,7 +830,7 @@ void Server::renameNick(QString& nickname,QString& newNick)
   Channel* channel=channelList.first();
   while(channel)
   {
-    channel->renameNick(nickname,newNick);
+    if(channel->getNickByName(nickname)) channel->renameNick(nickname,newNick);
     channel=channelList.next();
   }
   // If this was our own nickchange, tell our server object about it
