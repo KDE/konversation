@@ -6,7 +6,7 @@
 */
 
 /*
-  resolver.cpp  -  A replacement for asyncLookup
+  ircresolver.cpp  -  A replacement for asyncLookup
   begin:     Fre Feb 28 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -14,23 +14,23 @@
   $Id$
 */
 
-#include "resolver.h"
+#include "ircresolver.h"
 
-Resolver::Resolver()
+IRCResolver::IRCResolver()
 {
   socket=0;
 }
 
-Resolver::~Resolver()
+IRCResolver::~IRCResolver()
 {
 }
 
-void Resolver::setSocket(KExtendedSocket* newSocket)
+void IRCResolver::setSocket(KExtendedSocket* newSocket)
 {
   socket=newSocket;
 }
 
-void Resolver::run()
+void IRCResolver::run()
 {
   if(socket)
   {
@@ -40,4 +40,4 @@ void Resolver::run()
   else emit lookupFinished(-1);
 }
 
-#include "resolver.moc"
+#include "ircresolver.moc"

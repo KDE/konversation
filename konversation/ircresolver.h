@@ -6,7 +6,7 @@
 */
 
 /*
-  resolver.h  -  A replacement for asyncLookup
+  ircresolver.h  -  A replacement for asyncLookup
   begin:     Fre Feb 28 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -15,8 +15,8 @@
 */
 
 
-#ifndef RESOLVER_H
-#define RESOLVER_H
+#ifndef IRCRESOLVER_H
+#define IRCRESOLVER_H
 
 #include <qthread.h>
 #include <qobject.h>
@@ -27,13 +27,13 @@
   @author Dario Abatianni
 */
 
-class Resolver : public QObject, public QThread
+class IRCResolver : public QObject, public QThread
 {
   Q_OBJECT
 
   public: 
-    Resolver();
-    ~Resolver();
+    IRCResolver();
+    ~IRCResolver();
 
     void setSocket(KExtendedSocket* newSocket);
     void run();
