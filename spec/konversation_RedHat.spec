@@ -56,7 +56,7 @@ rm -rf %{buildroot}
 %{_datadir}/apps/%{name}/*
 %{_datadir}/applications/%{desktop_vendor}-%{name}.desktop
 %{_datadir}/locale/*/LC_MESSAGES/%{name}*
-%{_datadir}/icons/locolor/*/*/%{name}*
+%{_datadir}/icons/*/*/apps/%{name}*
 
 %changelog
 * Fri Feb 7 2003 Robert Rockers <brockers at dps.state.ok.us> 0.9

@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
   aboutData.addAuthor("Alex Zepeda",I18N_NOOP("DCOP interface"),"garbanzo@hooked.net");
   aboutData.addAuthor("Stanislav Karchebny",I18N_NOOP("Non-Latin1-Encodings, russian translation"),"berkus@users.sourceforge.net");
   aboutData.addAuthor("Mickael Marchand",I18N_NOOP("Konsole part view"),"marchand@kde.org");
-  aboutData.addAuthor("Berko",I18N_NOOP("Slovenian translation"),"barny13@siol.net");
+  aboutData.addAuthor("barko",I18N_NOOP("Slovenian translation"),"barny13@siol.net");
   aboutData.addAuthor("Hye-Shik Chang",I18N_NOOP("Korean translation"),"perky@FreeBSD.org");
 
   KCmdLineArgs::init(argc,argv,&aboutData);
