@@ -35,12 +35,14 @@ class HighlightViewItem : public QCheckListItem
     ~HighlightViewItem();
 
     QString getPattern();
+    QString getAutoText();
     QColor getColor() { return itemColor; }
     int getID() { return itemID; }
     bool getRegExp();
     KURL getSoundURL() { return soundURL; }
 
     void setPattern(const QString& newPattern);
+    void setAutoText(const QString& newAutoText);
     void setColor(QColor passed_itemColor) { itemColor = passed_itemColor; }
     void setID(int passed_itemID) { itemID = passed_itemID; }
     void setSoundURL(const KURL& url);
@@ -52,6 +54,7 @@ class HighlightViewItem : public QCheckListItem
     QColorGroup itemColorGroup;
     int itemID;
     KURL soundURL;
+    QString autoText;
 
     void paintCell(QPainter* p, const QColorGroup &cg, int column, int width, int alignment);
 };

@@ -484,7 +484,7 @@ void KonversationApplication::readOptions()
     unsigned int hiIndex;
     for(hiIndex=0;hiIndex<hiList.count();hiIndex+=2)
     {
-      preferences.addHilight(hiList[hiIndex],false,"#"+hiList[hiIndex+1], "");
+      preferences.addHilight(hiList[hiIndex],false,"#"+hiList[hiIndex+1],QString::null,QString::null);
     }
     
     config->deleteEntry("Hilight");
@@ -496,7 +496,8 @@ void KonversationApplication::readOptions()
       preferences.addHilight(config->readEntry("Pattern"),
                              config->readBoolEntry("RegExp"),
                              config->readColorEntry("Color"),
-                             config->readPathEntry("Sound"));
+                             config->readPathEntry("Sound"),
+                             config->readEntry("AutoText"));
       i++;
     }
   }
@@ -722,6 +723,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->writeEntry("RegExp", hl->getRegExp());
     config->writeEntry("Color", hl->getColor());
     config->writePathEntry("Sound", hl->getSoundURL().prettyURL());
+    config->writeEntry("AutoText", hl->getAutoText());
     i++;
   }
   

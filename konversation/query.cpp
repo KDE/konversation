@@ -72,6 +72,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
   connect(textView,SIGNAL (extendedPopup(int)),this,SLOT (popup(int)) );
+  connect(textView,SIGNAL (autoText(const QString&)),this,SLOT (sendQueryText(const QString&)) );
 
   updateFonts();
 

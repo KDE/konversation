@@ -56,6 +56,7 @@ class IRCView : public KTextBrowser
     void textToLog(const QString& text);
     void sendFile();
     void extendedPopup(int id);
+    void autoText(const QString& text);
 
   public slots:
     void append(const QString& nick,const QString& message);
@@ -94,6 +95,7 @@ class IRCView : public KTextBrowser
     // decide if we should place the scrollbar at the bottom on show()
     bool resetScrollbar;
 
+    QString autoTextToSend;
     QString highlightColor;
     bool copyUrlMenu;
     QString urlToCopy;

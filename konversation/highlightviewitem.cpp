@@ -26,6 +26,7 @@ HighlightViewItem::HighlightViewItem(QListView* parent, Highlight* passed_Highli
   itemColor = passed_Highlight->getColor();
   itemID = passed_Highlight->getID();
   setSoundURL(passed_Highlight->getSoundURL());
+  setAutoText(passed_Highlight->getAutoText());
   setOn(passed_Highlight->getRegExp());
 }
 
@@ -55,7 +56,18 @@ void HighlightViewItem::setSoundURL(const KURL& url)
   setText(2, soundURL.prettyURL());
 }
 
+void HighlightViewItem::setAutoText(const QString& newAutoText)
+{
+  autoText = newAutoText;
+  setText(3,newAutoText);
+}
+
 bool HighlightViewItem::getRegExp()
 {
   return isOn();
+}
+
+QString HighlightViewItem::getAutoText()
+{
+  return autoText;
 }

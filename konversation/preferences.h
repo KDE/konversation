@@ -174,7 +174,7 @@ class Preferences : public QObject
 
     QPtrList<Highlight> getHilightList();
     void setHilightList(QPtrList<Highlight> newList);
-    void addHilight(const QString& newHilight,bool regExp,QColor color,const QString& sound);
+    void addHilight(const QString& newHilight,bool regExp,QColor color,const QString& sound,const QString& autoText);
     void setHilightSoundEnabled(bool enabled);
     bool getHilightSoundEnabled();
 

@@ -53,6 +53,7 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   highlightListView->addColumn(i18n("RE"));
   highlightListView->addColumn(i18n("Highlights"));
   highlightListView->addColumn(i18n("Sound"));
+  highlightListView->addColumn(i18n("Auto Text"));
   highlightListView->setAllColumnsShowFocus(true);
   highlightListView->setFullWidth(true);
   highlightListView->setDragEnabled(true);
@@ -84,12 +85,20 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   soundURL = new KURLRequester(highlightSoundBox, "highlight_sound_url");
   soundLabel->setBuddy(soundURL);
 
+  QHBox* autoTextBox=new QHBox(highlightListBox);
+  autoTextBox->setSpacing(spacingHint());
+  autoTextLabel=new QLabel(i18n("&Auto text:"),autoTextBox);
+  autoTextInput=new KLineEdit(autoTextBox,"auto_text_input");
+  autoTextLabel->setBuddy(autoTextInput);
+
   patternLabel->setEnabled(false);
   patternInput->setEnabled(false);
   patternColor->setEnabled(false);
   soundURL->setEnabled(false);
   soundLabel->setEnabled(false);
   soundPlayBtn->setEnabled(false);
+  autoTextInput->setEnabled(false);
+  autoTextLabel->setEnabled(false);
   
   QString filter = "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm";
   soundURL->setFilter(filter);
@@ -162,6 +171,8 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   connect(soundURL, SIGNAL(textChanged(const QString&)), this, SLOT(soundURLChanged(const QString&)));
   connect(soundPlayBtn, SIGNAL(clicked()), this, SLOT(playSound()));
 
+  connect(autoTextInput, SIGNAL(textChanged(const QString&)), this, SLOT(autoTextChanged(const QString&)));
+  
   connect(newButton,SIGNAL (clicked()),this,SLOT (addHighlight()) );
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeHighlight()) );
 
@@ -185,10 +196,13 @@ void PrefsPageHighlight::highlightSelected(QListViewItem* item)
     soundURL->setEnabled(true);
     soundLabel->setEnabled(true);
     soundPlayBtn->setEnabled(true);
+    autoTextLabel->setEnabled(true);
+    autoTextInput->setEnabled(true);
 
     patternColor->setColor(highlightItem->getColor());
     patternInput->setText(highlightItem->getPattern());
     soundURL->setURL(highlightItem->getSoundURL().prettyURL());
+    autoTextInput->setText(highlightItem->getAutoText());
   }
   else
   {
@@ -229,9 +243,19 @@ void PrefsPageHighlight::soundURLChanged(const QString& newURL)
   }
 }
 
+void PrefsPageHighlight::autoTextChanged(const QString& newAutoText)
+{
+  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
+
+  if(item)
+  {
+    item->setAutoText(newAutoText);
+  }
+}
+
 void PrefsPageHighlight::addHighlight()
 {
-  Highlight* newHighlight=new Highlight(i18n("New"),false,QColor("#ff0000"),KURL());
+  Highlight* newHighlight=new Highlight(i18n("New"),false,QColor("#ff0000"),KURL(),QString::null);
 
   HighlightViewItem* item=new HighlightViewItem(highlightListView,newHighlight);
   highlightListView->setSelected(item,true);
@@ -257,6 +281,8 @@ void PrefsPageHighlight::removeHighlight()
       soundURL->setEnabled(false);
       soundLabel->setEnabled(false);
       soundPlayBtn->setEnabled(false);
+      autoTextLabel->setEnabled(false);
+      autoTextInput->setEnabled(false);
     }
   }
 }
@@ -268,7 +294,11 @@ QPtrList<Highlight> PrefsPageHighlight::getHighlightList()
   HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->firstChild());
   while(item)
   {
-    newList.append(new Highlight(item->getPattern(),item->getRegExp(),item->getColor(),item->getSoundURL()));
+    newList.append(new Highlight(item->getPattern(),
+                                 item->getRegExp(),
+                                 item->getColor(),
+                                 item->getSoundURL(),
+                                 item->getAutoText()));
     item=item->itemBelow();
   }
 

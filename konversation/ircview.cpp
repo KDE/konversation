@@ -65,6 +65,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   copyUrlMenu=false;
   urlToCopy=QString::null;
   resetScrollbar=false;
+  autoTextToSend=QString::null;
 
   popup=new QPopupMenu(this,"ircview_context_menu");
 
@@ -426,7 +427,8 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
               KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
               konvApp->sound()->play(hilightList.at(index)->getSoundURL());
             }
-            
+            // only set auto text if it was someone else but ourselves
+            if(whoSent!=server->getNickname()) autoTextToSend=hilight->getAutoText();
             break;
           }
         } // endfor
@@ -638,6 +640,14 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps,bool important)
       moveCursor(MoveEnd,false);
       ensureVisible(0,contentsHeight());
     }
+  }
+  if(!autoTextToSend.isEmpty())
+  {
+    // avoid recursion due to signalling
+    QString sendText=autoTextToSend;
+    autoTextToSend=QString::null;
+    // send signal only now
+    emit autoText(sendText);
   }
 }
 

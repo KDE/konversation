@@ -31,10 +31,15 @@
 class Highlight
 {
   public:
-    Highlight(const QString& itemPattern,bool regExp,const QColor& itemColor, const KURL& soundURL);
+    Highlight(const QString& itemPattern,
+              bool regExp,
+              const QColor& itemColor,
+              const KURL& soundURL,
+              const QString& autoText);
     ~Highlight();
 
     QString getPattern();
+    QString getAutoText();
     QColor getColor();
     int getID();
     bool getRegExp();
@@ -43,6 +48,7 @@ class Highlight
     void setPattern(const QString& itemPattern);
     void setColor(const QColor& itemColor);
     void setSoundURL(const KURL& url);
+    void setAutoText(const QString& autoText);
     void setRegExp(bool state);
 
   protected:
@@ -52,6 +58,7 @@ class Highlight
     bool m_regExp;
     
     QString m_itemPattern;
+    QString m_autoText;
     QColor m_itemColor;
     KURL m_soundURL;
 };

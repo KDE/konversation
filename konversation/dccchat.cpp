@@ -69,6 +69,7 @@ DccChat::DccChat(QWidget* parent,const QString& myNickname,const QString& nickna
 
   connect(getTextView(),SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(getTextView(),SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
+  connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendDccChatText(const QString&)) );
 
   if(listen)
     listenForPartner();

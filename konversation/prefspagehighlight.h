@@ -51,6 +51,7 @@ class PrefsPageHighlight : public PrefsPage
     void highlightTextChanged(const QString& newPattern);
     void highlightColorChanged(const QColor& newColor);
     void soundURLChanged(const QString& newURL);
+    void autoTextChanged(const QString& newURL);
 
     void addHighlight();
     void removeHighlight();
@@ -73,6 +74,8 @@ class PrefsPageHighlight : public PrefsPage
     QLabel* soundLabel;
     QPushButton* soundPlayBtn;
     QCheckBox* enableSoundCheck;
+    QLabel* autoTextLabel;
+    KLineEdit* autoTextInput;
 };
 
 #endif
