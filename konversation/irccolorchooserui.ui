@@ -61,7 +61,7 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Foreground Color:</string>
+                <string>Foreground color:</string>
             </property>
         </widget>
         <widget class="QLabel" row="2" column="0" rowspan="1" colspan="2">
