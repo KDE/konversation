@@ -117,11 +117,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
 
   if(filteredLine.find("\x07")!=-1)
   {
-    if(KonversationApplication::preferences.getBeep())
-    {
-    kapp->beep();
-    kdDebug() << "beep!" << endl;
-    }
+    if(KonversationApplication::preferences.getBeep()) kapp->beep();
   }
 
   // replace \003 codes with rich text color codes

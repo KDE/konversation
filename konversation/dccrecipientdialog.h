@@ -41,8 +41,8 @@ class DccRecipientDialog : public KDialogBase
 
   protected:
     QString getSelectedNickname();
+    static QString selectedNickname;
 
-    QString selectedNickname;
 };
 
 #endif

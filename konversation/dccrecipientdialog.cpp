@@ -21,6 +21,8 @@
 
 #include "dccrecipientdialog.h"
 
+QString DccRecipientDialog::selectedNickname;  // static
+
 DccRecipientDialog::DccRecipientDialog(QWidget* parent,QStringList list,QSize size) :
                     KDialogBase(parent,"dcc_recipient_dialog",true,i18n("Select Recipient"),
                     KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
@@ -42,7 +44,7 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent,QStringList list,QSize si
   dialogLayout->addWidget(nicknameList);
 
   connect(nicknameList,SIGNAL (highlighted(QListBoxItem*)),this,SLOT (newNicknameSelected(QListBoxItem*)) );
-  connect(nicknameList,SIGNAL (executed(QListBoxItem*)),this,SLOT (newNicknameSelectedQuit(QListBoxItem*)) );
+  connect(nicknameList,SIGNAL (doubleClicked(QListBoxItem*)),this,SLOT (newNicknameSelectedQuit(QListBoxItem*)) );
 
   setButtonOKText(i18n("OK"),i18n("Select nickname and close the window"));
   setButtonCancelText(i18n("Cancel"),i18n("Close the window without changes"));
