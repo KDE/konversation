@@ -384,9 +384,9 @@ void Channel::popupCommand(int id)
 #ifdef USE_NICKINFO
     case NickListView::AddressbookEdit:
       {
-        QStringList nickList=getSelectedNicksList();
-	for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
-          NickInfoPtr nickInfo = server->getNickInfo(*nickIterator);
+        ChannelNickList nickList=getSelectedChannelNicks();
+	for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
+          NickInfoPtr nickInfo = (*it)->getNickInfo();
 	  if(!editAddressee(nickInfo->getAddressee().uid())) break;
 	}
 	break;
@@ -395,29 +395,29 @@ void Channel::popupCommand(int id)
     case NickListView::AddressbookDelete:
       {
 	Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
-        QStringList nickList=getSelectedNicksList();
+        ChannelNickList nickList=getSelectedChannelNicks();
 	//Handle all the selected nicks in one go.  Either they all save, or none do.
 	if(addressbook->getAndCheckTicket()) {
-          for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
+          for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
 	    if(id == NickListView::AddressbookDelete) {
-              KABC::Addressee addr = addressbook->getKABCAddresseeFromNick(*nickIterator, server->getServerName(), server->getServerGroup());
-   	      addressbook->unassociateNick(addr, *nickIterator, server->getServerName(), server->getServerGroup());
+              KABC::Addressee addr = (*it)->getNickInfo()->getAddressee();
+   	      addressbook->unassociateNick(addr, (*it)->getNickname(), server->getServerName(), server->getServerGroup());
 	    } else { 
 	      //make new addressbook contact
               KABC::Addressee addr;
-	      NickInfoPtr nickInfo = server->getNickInfo(*nickIterator);
+	      NickInfoPtr nickInfo = (*it)->getNickInfo();
 	      if(nickInfo->getRealName().isEmpty())
-		addr.setGivenName(*nickIterator);
+		addr.setGivenName(nickInfo->getNickname());
 	      else
 		addr.setGivenName(nickInfo->getRealName());
-	      addr.setNickName(*nickIterator);
-	      addressbook->associateNickAndUnassociateFromEveryoneElse(addr, *nickIterator, server->getServerName(), server->getServerGroup());
+	      addr.setNickName(nickInfo->getNickname());
+	      addressbook->associateNickAndUnassociateFromEveryoneElse(addr, (*it)->getNickname(), server->getServerName(), server->getServerGroup());
 	    }
           }
 	  if(addressbook->saveTicket()) {
             //Nicks have changed.  Refresh.
-	    for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
-	      NickInfoPtr nickInfo = server->getNickInfo(*nickIterator);
+	    for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
+	      NickInfoPtr nickInfo = (*it)->getNickInfo();
 	      nickInfo->refreshAddressee();
 	      if(id == NickListView::AddressbookNew) {
 		if(!editAddressee(nickInfo->getAddressee().uid())) break;
@@ -429,10 +429,10 @@ void Channel::popupCommand(int id)
       }
     case NickListView::AddressbookChange:
       {
-        QStringList nickList=getSelectedNicksList();
-        for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
-	  NickInfoPtr nickInfo = server->getNickInfo(*nickIterator);
-	  LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, *nickIterator, server->getServerName(), server->getServerGroup(), nickInfo->getRealName());
+        ChannelNickList nickList=getSelectedChannelNicks();
+        for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
+	  NickInfoPtr nickInfo = (*it)->getNickInfo();
+	  LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, (*it)->getNickname(), server->getServerName(), server->getServerGroup(), nickInfo->getRealName());
 	  linkaddressbookui->show();
 	  nickInfo->refreshAddressee();
 	}
@@ -525,17 +525,17 @@ void Channel::popupCommand(int id)
   {
     pattern.replace(QRegExp("%c"),getName());
 
-    QStringList nickList=getSelectedNicksList();
+    ChannelNickList nickList=getSelectedChannelNicks();
 
     QString command;
-    for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator)
+    for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it)
     {
       QStringList patternList=QStringList::split('\n',pattern);
 
       for(unsigned int index=0;index<patternList.count();index++)
       {
         command=patternList[index];
-        command.replace(QRegExp("%u"),*nickIterator);
+        command.replace(QRegExp("%u"),(*it)->getNickname());
 
         if(raw)
           server->queue(command);
@@ -744,7 +744,7 @@ void Channel::sendChannelText(const QString& sendLine)
   // replace aliases and wildcards
   if(server->getOutputFilter()->replaceAliases(output)) {
     output = server->parseWildcards(output,server->getNickname(),getName(),getKey(),
-      getSelectedNicksList(),QString::null);
+      getSelectedNickList(),QString::null);
   }
 
   // encoding stuff is done in Server()
@@ -776,19 +776,33 @@ void Channel::setNickname(const QString& newNickname)
 {
   nicknameCombobox->setCurrentText(newNickname);
 }
-
-QStringList Channel::getSelectedNicksList()
-{
-  selectedNicksList.clear();
+QStringList Channel::getSelectedNickList() {
+  QStringList result;
   Nick* nick=nicknameList.first();
 
   while(nick)
   {
-    if(nick->isSelected()) selectedNicksList.append(nick->getNickname());
+    if(nick->isSelected()) result.append(nick->getNickname());
     nick=nicknameList.next();
   }
 
-  return selectedNicksList;
+  return result;
+
+}
+
+ChannelNickList Channel::getSelectedChannelNicks()
+{
+  ChannelNickList result;
+  Nick* nick=nicknameList.first();
+
+  while(nick)
+  {
+    if(nick->isSelected()) result.append(nick->getChannelNick());
+    nick=nicknameList.next();
+  }
+
+  return result;
+ 
 }
 
 void Channel::channelLimitChanged()
@@ -841,7 +855,7 @@ void Channel::modeButtonClicked(int id,bool on)
 void Channel::quickButtonClicked(const QString &buttonText)
 {
   // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
-  QString out=server->parseWildcards(buttonText,server->getNickname(),getName(),getKey(),getSelectedNicksList(),QString::null);
+  QString out=server->parseWildcards(buttonText,server->getNickname(),getName(),getKey(),getSelectedNickList(),QString::null);
   // are there any newlines in the definition?
   if(out.find('\n')!=-1)
   {

@@ -118,7 +118,8 @@ class Channel : public ChatWindow
 	
     bool allowNotifications() { return m_allowNotifications; }
 
-    QStringList getSelectedNicksList();
+    ChannelNickList getSelectedChannelNicks();
+    QStringList getSelectedNickList();
   signals:
     void newText(QWidget* channel,const QString& highlightColor, bool important);
     void prefsChanged();
@@ -225,7 +226,6 @@ class Channel : public ChatWindow
 
     NickChangeDialog* nickChangeDialog;
     NickList nicknameList;
-    QStringList selectedNicksList;
     QPtrList<QuickButton> buttonList;
     QTimer userhostTimer;
 

@@ -117,5 +117,7 @@ typedef KSharedPtr<NickInfo> NickInfoPtr;
  */
 typedef QMap<QString,NickInfoPtr> NickInfoMap;
 
+typedef QValueList<NickInfoPtr> NickInfoList;
+
 #endif
 

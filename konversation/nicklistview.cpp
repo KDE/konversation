@@ -109,10 +109,10 @@ void NickListView::insertAssociationSubMenu() {
   bool any_existing_associations=false;
   bool any_not_having_associations=false;
   addressbook->clear();
-  QStringList nickList=channel->getSelectedNicksList();
-  for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator)
+  ChannelNickList nickList=channel->getSelectedChannelNicks();
+  for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it)
   {
-    if(Konversation::Addressbook::self()->getKABCAddresseeFromNick(*nickIterator).isEmpty()) {
+    if((*it)->getNickInfo()->getAddressee().isEmpty()) {
       any_not_having_associations=true;
       if(any_existing_associations) break;
     } else {
