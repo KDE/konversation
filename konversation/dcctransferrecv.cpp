@@ -442,6 +442,7 @@ void DccTransferRecv::readData()  // slot
   {
     //actual is the size we read in, and is guaranteed to be less than m_bufferSize
     m_transferringPosition += actual;
+    m_transferTimeLog.append( QDateTime::currentDateTime() );
     m_writeCacheHandler->append( m_buffer, actual );
     m_writeCacheHandler->write( false );
     m_recvSocket->enableWrite( true );
@@ -459,6 +460,7 @@ void DccTransferRecv::sendAck()  // slot
   {
     kdDebug() << "DccTransferRecv::sendAck(): Sent final ACK." << endl;
     m_recvSocket->enableRead( false );
+    finishTransferMeter();
     m_writeCacheHandler->close();  // WriteCacheHandler will send the signal done()
   }
   else if ( m_transferringPosition > (KIO::fileoffset_t)m_fileSize )
@@ -507,6 +509,7 @@ void DccTransferRecv::connectionTimeout()  // slot
 
 void DccTransferRecv::slotSocketClosed()
 {
+  finishTransferMeter();
   if ( m_dccStatus == Receiving )
     failed( i18n( "Remote user disconnected" ) );
 }

@@ -284,6 +284,7 @@ void DccTransferSend::writeData()  // slot
   {
     m_sendSocket->writeBlock( m_buffer, actual );
     m_transferringPosition += actual;
+    m_transferTimeLog.append( QDateTime::currentDateTime() );
     if ( (KIO::fileoffset_t)m_fileSize <= m_transferringPosition )
     {
       Q_ASSERT( (KIO::fileoffset_t)m_fileSize == m_transferringPosition );
@@ -309,6 +310,7 @@ void DccTransferSend::getAck()  // slot
     if ( pos == m_fileSize )
     {
       kdDebug() << "DccTransferSend::getAck(): Received final ACK." << endl;
+      finishTransferMeter();
       setStatus( Done );
       updateView();
       cleanUp();
@@ -354,6 +356,7 @@ void DccTransferSend::slotServerSocketClosed()
 void DccTransferSend::slotSendSocketClosed()
 {
   kdDebug() << "DccTransferSend::slotSendSocketClosed()" << endl;
+  finishTransferMeter();
   if ( m_dccStatus == Sending && m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
     failed( i18n( "Remote user disconnected" ) );
 }

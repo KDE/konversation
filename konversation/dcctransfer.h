@@ -21,7 +21,6 @@
 #include <kurl.h>
 #include <kio/global.h>
 
-class QDateTime;
 class QStringList;
 class QTimer;
 
@@ -122,6 +121,7 @@ class DccTransfer : public QObject, public KListViewItem
     bool m_resumed;
     KIO::fileoffset_t m_transferringPosition;
     KIO::fileoffset_t m_transferStartPosition;
+    QValueList<QDateTime> m_transferTimeLog;  // write per packet to calc CPS
     QString m_partnerNick;
     QString m_partnerIp;  // null when unknown
     QString m_partnerPort;
@@ -150,8 +150,10 @@ class DccTransfer : public QObject, public KListViewItem
     
   private slots:
     void slotRemoveFileDone( KIO::Job* job );
-    
+  
   private:
+    void updateTransferMeters();
+    
     void showProgressBar();  // called from printCell()
     
     void startAutoUpdateView();
@@ -173,7 +175,11 @@ class DccTransfer : public QObject, public KListViewItem
     QDateTime m_timeTransferStarted;
     //QDateTime m_timeLastActive;
     QDateTime m_timeTransferFinished;
-        
+    
+    // transfer meters;
+    double m_cps;  // bytes(characters) per second
+    int m_timeRemaining;
+    
     // UI
     QTimer* m_autoUpdateViewTimer;
     KProgress* m_progressBar;

@@ -85,6 +85,8 @@ DccTransfer::~DccTransfer()
 
 void DccTransfer::updateView()  // slot, protected
 {
+  updateTransferMeters();
+  
   setPixmap( DccPanel::Column::TypeIcon, getTypeIcon() );
   setPixmap( DccPanel::Column::Status,   getStatusIcon() );
   
@@ -316,6 +318,37 @@ void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )  //
     emit statusChanged( this );
 }
 
+void DccTransfer::updateTransferMeters()
+{
+  if ( m_dccStatus == Sending || m_dccStatus == Receiving )
+  {
+    // update CPS
+    QValueList<QDateTime>::iterator it = m_transferTimeLog.begin();
+    while ( it != m_transferTimeLog.end() && (*it).secsTo( QDateTime::currentDateTime() ) > 5 )
+      it = m_transferTimeLog.remove( it );
+    m_cps = (double)( m_transferTimeLog.count() * m_bufferSize ) / (double)5;
+    
+    // update the remaining time
+    if ( m_cps <= 0 )
+      m_timeRemaining = -2;
+    else
+      m_timeRemaining = (int)( (double)( m_fileSize - m_transferringPosition ) / m_cps );
+  }
+  else if ( m_dccStatus >= Done )
+  {
+    if ( m_timeTransferStarted.secsTo( m_timeTransferFinished ) <= 0 )
+      m_cps = -1;
+    else
+      m_cps = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
+    m_timeRemaining = -1;
+  }
+  else
+  {
+    m_cps = 0;
+    m_timeRemaining = -1;
+  }
+}
+
 QString DccTransfer::getTypeText() const
 {
   return s_dccTypeText[ m_dccType ];
@@ -388,7 +421,7 @@ QString DccTransfer::getPositionPrettyText( bool detailed ) const
 
 QString DccTransfer::getTimeRemainingPrettyText() const
 {
-  int remTime = getTimeRemaining();
+  int remTime = m_timeRemaining;
   if ( remTime < 0 )
     return QString::null;
   int remHour = remTime / 3600; remTime -= remHour * 3600;
@@ -407,7 +440,10 @@ QString DccTransfer::getTimeRemainingPrettyText() const
 
 QString DccTransfer::getCPSPrettyText() const
 {
-  return QString( i18n("%1/sec") ).arg( KIO::convertSize( getCPS() ) );
+  if ( m_cps >= 0 )
+    return i18n("%1/sec").arg( KIO::convertSize( (KIO::fileoffset_t)m_cps ) );
+  else
+    return QString::null;
 }
 
 QString DccTransfer::getSenderAddressPrettyText() const
@@ -458,27 +494,9 @@ KIO::filesize_t         DccTransfer::getFileSize()              const { return m
 KIO::fileoffset_t       DccTransfer::getTransferringPosition()  const { return m_transferringPosition; }
 KURL                    DccTransfer::getFileURL()               const { return m_fileURL; }
 bool                    DccTransfer::isResumed()                const { return m_resumed; }
-unsigned long           DccTransfer::getCPS()                   const
-{
-  int elapsed = m_timeTransferStarted.secsTo( m_timeTransferFinished.isNull() ? QDateTime::currentDateTime() : m_timeTransferFinished );
-  if ( elapsed == 0 && m_transferringPosition - m_transferStartPosition > 0 )
-    elapsed = 1;
-  // prevent division by zero
-  return elapsed ? ( m_transferringPosition - m_transferStartPosition ) / elapsed : 0;
-}
-int                     DccTransfer::getTimeRemaining()         const
-{
-  if ( m_dccStatus != Sending && m_dccStatus != Receiving )
-    return -1;
-  // not use getCPS() for exact result
-  int trnsfdTime = m_timeTransferStarted.secsTo( m_timeTransferFinished.isNull() ? QDateTime::currentDateTime() : m_timeTransferFinished );
-  KIO::fileoffset_t trnsfdBytes = m_transferringPosition - m_transferStartPosition;
-  if( trnsfdBytes == 0 )
-    return -2;
-  KIO::fileoffset_t remBytes = m_fileSize - m_transferringPosition;
-  return (int)( (double)remBytes / (double)trnsfdBytes * trnsfdTime );
-}
-
+unsigned long           DccTransfer::getCPS()                   const { return (unsigned long)m_cps; }
+int                     DccTransfer::getTimeRemaining()         const { return m_timeRemaining; }
+    
 QString DccTransfer::s_dccTypeText[ DccTransfer::DccTypeCount ];
 QString DccTransfer::s_dccStatusText[ DccTransfer::DccStatusCount ];
 
