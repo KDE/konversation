@@ -446,8 +446,12 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
 
       // Replace all spaces with %20 in href
       href.replace(QRegExp(" "),"%20");
+#if QT_VERSION >= 0x030100
       href.replace("&","&&");
-      
+#else
+      href.replace(QRegExp("&"),"&&");
+#endif
+
       // next search begins right after the link
       pos+=url.length();
       
