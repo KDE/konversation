@@ -1,0 +1,52 @@
+#!/usr/bin/perl -w
+
+$PORT = shift;
+$SERVER = shift;
+$TARGET = shift;
+
+sub RANDOM_INT ($$) {
+    my($min, $max) = @_;
+    return $min if $min == $max;
+    ($min, $max) = ($max, $min)  if  $min > $max;
+    return $min + int rand(1 + $max - $min);
+}
+
+open(FORTUNES,"fortunes.dat") or die("Could not open fortunes file!");
+
+while (<FORTUNES>) {
+    chomp;
+    ++$TOTAL_LINES;
+}
+
+seek(FORTUNES,0,0);
+
+srand;
+$LINE = RANDOM_INT(0,$TOTAL_LINES - 5);
+
+$MESSAGE = "%B%C4Random Fortune:%C%B ";
+
+while (<FORTUNES>) {
+    $LINE_COUNT++;
+
+    if ( !$START && $LINE_COUNT >= $LINE ) {
+	if ( $_ eq "\%\n" ) {
+	    $START = 1;
+	    next;
+	}
+	    next;
+    }
+    
+    elsif ( $START ) {
+	if( $_ eq "\%\n" ) {
+	    last;
+	}
+	else {
+	    chomp;
+	    s/\"/\\\"/g; # Escape double quote
+	    s/(\s)+/$1/g;
+	    $MESSAGE .= $_." ";
+	}
+    }
+}
+close(FORTUNES);
+exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$MESSAGE\" ");
