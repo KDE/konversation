@@ -24,6 +24,7 @@
 #include "prefsdialog.h"
 #include "prefspageserverlist.h"
 #include "prefspageidentity.h"
+#include "prefspagescripts.h"
 #include "serverlistitem.h"
 #include "editserverdialog.h"
 #include "konversationapplication.h"
@@ -38,12 +39,15 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   QFrame* serverListPane=addPage(i18n("Server List"));
   QFrame* identityPane=addPage(i18n("Identity"));
+	QFrame* scriptsPane = addPage(i18n("Scripting"));
 
   // Add Server List page
   PrefsPage* serverListPage=new PrefsPageServerList(serverListPane,preferences);
   connect(serverListPage,SIGNAL(connectToServer(int)),this,SLOT(connectRequest(int)) );
   // Add Identity page
   PrefsPage* identityPage=new PrefsPageIdentity(identityPane,preferences);
+	// Add scripts page
+	PrefsPage* scriptsPage = new PrefsPageScripts(scriptsPane, preferences);
 
   setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
   setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
