@@ -125,7 +125,7 @@ Server::Server(KonversationMainWindow* mainWindow, int id)
 //FIXME: remove code duplicates by introducing some new method
 Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
   const QString& nick,const QString& password)
-  :m_useSSL(false)
+  :m_useSSL(true)
 {
   init(mainWindow);
 
@@ -2820,7 +2820,7 @@ void Server::scriptExecutionError(const QString& name)
 void Server::away()
 {
   isAway=true;
-  emit awayState(isAway);
+  emit awayState(true);
 
   if(!getIdentity()->getAwayNick().isEmpty() &&
      getIdentity()->getAwayNick() != getNickname()) {
