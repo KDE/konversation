@@ -121,7 +121,7 @@ void NickListView::insertAssociationSubMenu() {
     }
   }
 
-  if(any_existing_associations) {
+  if(!any_not_having_associations && any_existing_associations) {
     addressbook->insertItem(i18n("Edit contact..."), AddressbookEdit);
     addressbook->insertSeparator();	  
   }

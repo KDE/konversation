@@ -41,6 +41,7 @@
 
 #include "linkaddressbookui.h"
 #include "addressbook.h"
+#include <kapplication.h>
 
 LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick )
 : LinkAddressbookUI_Base( parent, name )
@@ -150,6 +151,12 @@ void LinkAddressbookUI::reject()
 	disconnect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
 	deleteLater();
 }
+
+void LinkAddressbookUI::buttonHelp_clicked()
+{
+	kapp->invokeHelp("linkaddressbook");
+}
+
 
 #include "linkaddressbookui.moc"
 

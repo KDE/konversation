@@ -50,6 +50,7 @@ private:
 public slots:
 	virtual void accept();
 	virtual void reject();
+    virtual void buttonHelp_clicked();
 
 protected slots:
 	void slotAddAddresseeClicked();
