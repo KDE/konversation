@@ -6,44 +6,27 @@
 */
 
 /*
-  prefspageappearance.h  -  The preferences panel that holds the appearance settings
-  begin:     Son Dez 22 2002
   copyright: (C) 2002 by Dario Abatianni
              (C) 2004 by Peter Simonsson
-  email:     eisfuchs@tigress.com
 */
-
-#ifndef PREFSPAGEAPPEARANCE_H
-#define PREFSPAGEAPPEARANCE_H
+#ifndef PREFSPAGECHATWINAPPERANCE_H
+#define PREFSPAGECHATWINAPPERANCE_H
 
 #include <qfont.h>
-#include <qstringlist.h>
-#include <qptrlist.h>
-
-#include <kcolorbutton.h>
 
 #include "prefspage.h"
 
-/**
-  @author Dario Abatianni
-*/
-
 class QLabel;
+class QComboBox;
 class QCheckBox;
-class QSpinBox;
-class QColor;
 
-class KListView;
-class KURLRequester;
-
-class PrefsPageAppearance : public PrefsPage
+class PrefsPageChatWinAppearance : public PrefsPage
 {
   Q_OBJECT
-
   public:
-    PrefsPageAppearance(QFrame* newParent,Preferences* newPreferences);
-    ~PrefsPageAppearance();
-
+    PrefsPageChatWinAppearance(QFrame* newParent,Preferences* newPreferences);
+    ~PrefsPageChatWinAppearance();
+  
   public slots:
     void applyPreferences();
 
@@ -71,14 +54,6 @@ class PrefsPageAppearance : public PrefsPage
     QCheckBox* showQuickButtons;
     QCheckBox* showModeButtons;
     QCheckBox* showTopic;
-        
-    QStringList colorList;
-    KLineEdit* backgroundName;
-    KURLRequester* backgroundURL;
-    QPtrList<KColorButton> colorComboList;
-    QPtrList<KColorButton> ircColorBtnList;
-    QCheckBox* colorInputFieldsCheck;
-    QCheckBox* parseIrcColorsCheck;
 };
 
 #endif

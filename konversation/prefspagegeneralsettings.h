@@ -51,18 +51,10 @@ class PrefsPageGeneralSettings : public PrefsPage
     QCheckBox* autoReconnectCheck;
     QCheckBox* autoRejoinCheck;
     QCheckBox* autojoinOnInviteCheck;
-    QCheckBox* fixedMOTDCheck;
-    QCheckBox* beepCheck;
-    QCheckBox* rawLogCheck;
-    QCheckBox* trayIconCheck;
-    QCheckBox* trayNotifyCheck;
-    QCheckBox* hideUnimportantCheck;
-    QCheckBox* disableExpansionCheck;
 
     QLabel* reconnectTimeoutLabel;
     QSpinBox* reconnectTimeoutSpin;
     
-    QCheckBox* redirectToStatusPaneCheck;
 };
 
 #endif

@@ -23,51 +23,45 @@
 PrefsPageTabBehavior::PrefsPageTabBehavior(QFrame* newParent,Preferences* newPreferences) :
                       PrefsPage(newParent,newPreferences)
 {
-  QGridLayout* tabBehaviorLayout=new QGridLayout(parentFrame,2,2,marginHint(),spacingHint(),"tabbehavior_layout");
+  QGridLayout* tabsLayout = new QGridLayout(parentFrame, 4, 2, marginHint(), spacingHint());
 
-  // close buttons on tabs
-  closeButtonsCheck=new QCheckBox(i18n("Show close &widgets on tabs"),parentFrame,"tab_close_widgets_check");
+  closeButtonsCheck = new QCheckBox(i18n("Show close b&utton on tabs"), parentFrame, "tab_close_widgets_check");
   closeButtonsCheck->setChecked(preferences->getCloseButtonsOnTabs());
-
-  // general tab options
-  tabPlacementCheck=new QCheckBox(i18n("Place tab labels on &top"),parentFrame,"tab_placement_check");
-  tabPlacementCheck->setChecked(preferences->getTabPlacement()==Preferences::Top);
-  blinkingTabsCheck=new QCheckBox(i18n("&Blinking tabs"),parentFrame,"blinking_tabs_check");
-  blinkingTabsCheck->setChecked(preferences->getBlinkingTabs());
-  bringToFrontCheck=new QCheckBox(i18n("Bring new tabs to &front"),parentFrame,"bring_to_front_check");
-  bringToFrontCheck->setChecked(preferences->getBringToFront());
-
-  // Display close buttons on which side
-  closeButtonsAlignRight=new QCheckBox(i18n("Place close widgets on the &right side"),parentFrame,"tab_close_widgets_align_right");
+  closeButtonsAlignRight = new QCheckBox(i18n("Place close widgets on the &right side"),
+    parentFrame, "tab_close_widgets_align_right");
   closeButtonsAlignRight->setChecked(preferences->getCloseButtonsAlignRight());
-
-#if QT_VERSION >= 0x030200
-  tabBarCloseButtonCheck = new QCheckBox(i18n("Show a close tab button to the right in the tab bar"), parentFrame, "tab_bar_close_button");
-  tabBarCloseButtonCheck->setChecked(preferences->getShowTabBarCloseButton());
-#endif
-
-  // Take care of ghosting / unghosting close button checkboxes
+  connect(closeButtonsCheck, SIGNAL(stateChanged(int)), this, SLOT(closeButtonsChanged(int)));
   closeButtonsChanged(preferences->getCloseButtonsOnTabs() ? 2 : 0);
 
-  QSpacerItem* spacer=new QSpacerItem(0,0,QSizePolicy::Minimum,QSizePolicy::Expanding);
+  tabPlacementCheck = new QCheckBox(i18n("Place tab labels on &top"), parentFrame, "tab_placement_check");
+  tabPlacementCheck->setChecked(preferences->getTabPlacement() == Preferences::Top);
+  blinkingTabsCheck = new QCheckBox(i18n("&Blinking tabs"), parentFrame, "blinking_tabs_check");
+  blinkingTabsCheck->setChecked(preferences->getBlinkingTabs());
+  bringToFrontCheck = new QCheckBox(i18n("Bring new tabs to &front"), parentFrame, "bring_to_front_check");
+  bringToFrontCheck->setChecked(preferences->getBringToFront());
 
-  int row=0;
-  tabBehaviorLayout->addWidget(closeButtonsCheck,row,0);
-  tabBehaviorLayout->addWidget(closeButtonsAlignRight,row,1);
+#if QT_VERSION >= 0x030200
+  tabBarCloseButtonCheck = new QCheckBox(i18n("Show &a close tab button to the right in the tab bar"),
+    parentFrame, "tab_bar_close_button");
+  tabBarCloseButtonCheck->setChecked(preferences->getShowTabBarCloseButton());
+#endif
+    
+  int row = 0;
+  tabsLayout->addMultiCellWidget(closeButtonsCheck, row, row, 0, 1);
   row++;
-  tabBehaviorLayout->addMultiCellWidget(tabPlacementCheck,row,row,0,2);
+  tabsLayout->addMultiCellWidget(closeButtonsAlignRight, row, row, 0, 1);
   row++;
-  tabBehaviorLayout->addMultiCellWidget(blinkingTabsCheck,row,row,0,2);
+  tabsLayout->addMultiCellWidget(tabPlacementCheck, row, row, 0, 1);
   row++;
-  tabBehaviorLayout->addMultiCellWidget(bringToFrontCheck,row,row,0,2);
+  tabsLayout->addMultiCellWidget(blinkingTabsCheck, row, row, 0, 1);
+  row++;
+  tabsLayout->addMultiCellWidget(bringToFrontCheck, row, row, 0, 1);
 #if QT_VERSION >= 0x030200
   row++;
-  tabBehaviorLayout->addMultiCellWidget(tabBarCloseButtonCheck,row,row,0,2);
+  tabsLayout->addMultiCellWidget(tabBarCloseButtonCheck, row, row, 0, 1);
 #endif
   row++;
-  tabBehaviorLayout->addItem(spacer,row,0);
-
-  connect(closeButtonsCheck,SIGNAL (stateChanged(int)),this,SLOT (closeButtonsChanged(int)) );
+  tabsLayout->setRowStretch(row, 10);
 }
 
 PrefsPageTabBehavior::~PrefsPageTabBehavior()

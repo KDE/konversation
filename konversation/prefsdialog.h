@@ -46,6 +46,7 @@
 */
 
 class QFrame;
+class PrefsPageBehaviour;
 
 class PrefsDialog : public KDialogBase
 {
@@ -91,6 +92,7 @@ class PrefsDialog : public KDialogBase
     PrefsPageDccSettings*     dccSettingsPage;
     PrefsPageWebBrowser*    webBrowserPage;
     PrefsPageDialogs*         dialogsPage;
+    PrefsPageBehaviour* behaviourPage;
 
 
     // for openPage();

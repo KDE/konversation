@@ -45,9 +45,6 @@ class PrefsPageLog : public PrefsPage
     QCheckBox* logFollowsNick;
     QLabel* logPathLabel;
     KLineEdit* logPathInput;
-    QLabel* scrollbackMaxLabel;
-    QSpinBox* scrollbackMaxSpin;
-
 };
 
 #endif

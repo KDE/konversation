@@ -9,6 +9,7 @@
   prefsdialog.cpp  -  This class holds the subpages for the preferences dialog
   begin:     Sun Feb 10 2002
   copyright: (C) 2002 by Dario Abatianni
+             (C) 2004 by Peter Simonsson
   email:     eisfuchs@tigress.com
 */
 
@@ -18,12 +19,17 @@
 
 #include <klocale.h>
 #include <kdebug.h>
+#include <kiconloader.h>
 
 #include "prefsdialog.h"
 
 #include "serverlistitem.h"
 #include "editserverdialog.h"
 #include "konversationapplication.h"
+#include "prefspagebehaviour.h"
+#include "prefspagechatwinbehavior.h"
+#include "prefspagechatwinappearance.h"
+#include "prefspagecolorsappearance.h"
 
 PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
              KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
@@ -32,26 +38,26 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 {
   setPreferences(preferences);
 
-          serverListPane     =addPage(i18n("Server List"));
-  QFrame* generalSettingsPane=addPage(i18n("General Settings"));
-  QFrame* identityPane       =addPage(i18n("Identity"));
+  serverListPane = addPage(i18n("Server List"));
+  QFrame* generalSettingsPane = addPage(i18n("General Settings"));
+  QFrame* identityPane = addPage(i18n("Identity"));
+  
+  QFrame* chatWinAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")));
+  QFrame* colorsAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Colors")));
+  
+  QFrame* generalBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("General")));
+  QFrame* chatWinBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Chat Window")));
+  QFrame* tabBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Tab Bar")));
+  QFrame* ignorePane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Ignored Nicknames")));
+  QFrame* aliasesPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Aliases")));
+  QFrame* buttonsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Quick Buttons")));
+  QFrame* logSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Loging")));
+  QFrame* dccSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("DCC")));
 
-  QFrame* appearancePane     =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("General")));
-  QFrame* tabBehaviorPane    =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Tab Behavior")));
-  QFrame* colorsImagesPane   =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Colors & Images")));
-  QFrame* ircColorsPane      =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("IRC Colors")));
-  QFrame* buttonsPane        =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Quick Buttons")));
-
-  QFrame* nickCompletionPane =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Nickname Completion")));
-          notifyPane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Nick Watch List")));
-  QFrame* highlightPane      =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Highlight List")));
-  QFrame* OSDPane            =addPage(QStringList::split(',',i18n("Chat")+","+i18n("On Screen Display")));
-  QFrame* ignorePane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Ignore List")));
-  QFrame* aliasesPane        =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Aliases")));
-
-  QFrame* logSettingsPane    =addPage(i18n("Log Settings"));
-  QFrame* dccSettingsPane    =addPage(i18n("DCC Settings"));
-  QFrame* webBrowserPane   =addPage(i18n("Web Browser"));
+  notifyPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Watched Nicknames")));
+  QFrame* highlightPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Highlighting")));
+  QFrame* OSDPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("On Screen Display")));
+  
   QFrame* dialogsPane        =addPage(i18n("Dialogs"));
   // TODO: Uncomment this again when it's ready to go
   // QFrame* scriptsPane        =addPage(i18n("Scripting"));
@@ -59,26 +65,26 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   // Add pages to preferences dialog
   serverListPage=new PrefsPageServerList(serverListPane,preferences);
 
-  generalSettingsPage=new PrefsPageGeneralSettings(generalSettingsPane,preferences);
-  identityPage       =new PrefsPageIdentity(identityPane,preferences); // FIXME: see class::applyPreferences()
+  generalSettingsPage = new PrefsPageGeneralSettings(generalSettingsPane, preferences);
+  identityPage = new PrefsPageIdentity(identityPane, preferences); // FIXME: see class::applyPreferences()
+  
+  PrefsPageChatWinAppearance* chatWinAppearancePage = new PrefsPageChatWinAppearance(chatWinAppearancePane, preferences);
+  PrefsPageColorsAppearance* colorsAppearancePage = new PrefsPageColorsAppearance(colorsAppearancePane, preferences);
 
-  appearancePage     =new PrefsPageAppearance(appearancePane,preferences);
-  tabBehaviorPage    =new PrefsPageTabBehavior(tabBehaviorPane,preferences);
-  colorsImagesPage   =new PrefsPageColorsImages(colorsImagesPane,preferences);
-  ircColorsPage      =new PrefsPageIRCColors(ircColorsPane,preferences);
-  buttonsPage        =new PrefsPageButtons(buttonsPane,preferences);
+  PrefsPageBehaviour* generalBehaviorPage = new PrefsPageBehaviour(generalBehaviorPane, preferences);
+  PrefsPageChatWinBehavior* chatWinBehaviorPage = new PrefsPageChatWinBehavior(chatWinBehaviorPane, preferences);
+  tabBehaviorPage = new PrefsPageTabBehavior(tabBehaviorPane, preferences);
+  ignorePage = new PrefsPageIgnore(ignorePane, preferences);
+  aliasesPage = new PrefsPageAliases(aliasesPane, preferences);
+  buttonsPage = new PrefsPageButtons(buttonsPane, preferences);
+  logSettingsPage = new PrefsPageLog(logSettingsPane, preferences);
+  dccSettingsPage = new PrefsPageDccSettings(dccSettingsPane, preferences);
 
-  nickCompletionPage =new PrefsPageNickCompletion(nickCompletionPane,preferences);
-  notifyPage         =new PrefsPageNotify(notifyPane,preferences);
-  highlightPage      =new PrefsPageHighlight(highlightPane,preferences);
-  OSDPage            =new PrefsPageOSD(OSDPane,preferences);
-  ignorePage         =new PrefsPageIgnore(ignorePane,preferences);
-  aliasesPage        =new PrefsPageAliases(aliasesPane,preferences);
+  notifyPage = new PrefsPageNotify(notifyPane,preferences);
+  highlightPage = new PrefsPageHighlight(highlightPane,preferences);
+  OSDPage = new PrefsPageOSD(OSDPane,preferences);
 
-  logSettingsPage    =new PrefsPageLog(logSettingsPane,preferences);
-  dccSettingsPage    =new PrefsPageDccSettings(dccSettingsPane,preferences);
-  webBrowserPage   =new PrefsPageWebBrowser(webBrowserPane,preferences);
-  dialogsPage        =new PrefsPageDialogs(dialogsPane,preferences);
+  dialogsPage = new PrefsPageDialogs(dialogsPane,preferences);
 
   // TODO: Uncomment this again when it's ready to go
   // PrefsPageScripts* scriptsPage=new PrefsPageScripts(scriptsPane, preferences);
@@ -97,29 +103,29 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   }
 
   // connect standard signals and slots
-  connect(this,SIGNAL (applyPreferences()),generalSettingsPage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),identityPage,SLOT (applyPreferences()) );
+  connect(this, SIGNAL(applyPreferences()), generalSettingsPage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), identityPage, SLOT(applyPreferences()));
+  
+  connect(this, SIGNAL(applyPreferences()), chatWinAppearancePage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), colorsAppearancePage, SLOT(applyPreferences()));
+  
+  connect(this, SIGNAL(applyPreferences()), generalBehaviorPage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), chatWinBehaviorPage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), tabBehaviorPage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), buttonsPage, SLOT(applyPreferences()));
 
-  connect(this,SIGNAL (applyPreferences()),appearancePage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),tabBehaviorPage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),colorsImagesPage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),ircColorsPage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),buttonsPage,SLOT (applyPreferences()) );
+  connect(this, SIGNAL(applyPreferences()), notifyPage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), highlightPage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), OSDPage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), ignorePage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), aliasesPage, SLOT(applyPreferences()));
 
-  connect(this,SIGNAL (applyPreferences()),nickCompletionPage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),notifyPage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),highlightPage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),OSDPage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),ignorePage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),aliasesPage,SLOT (applyPreferences()) );
-
-  connect(this,SIGNAL (applyPreferences()),logSettingsPage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),dccSettingsPage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),webBrowserPage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),dialogsPage,SLOT (applyPreferences()) );
+  connect(this, SIGNAL(applyPreferences()), logSettingsPage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), dccSettingsPage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), dialogsPage, SLOT(applyPreferences()));
 
   // connect all individual signals and slots
-  connect(serverListPage,SIGNAL(connectToServer(int)),this,SLOT(connectRequest(int)) );
+  connect(serverListPage, SIGNAL(connectToServer(int)), this, SLOT(connectRequest(int)));
 
 // TODO: Uncomment this again when it's ready to go
 // but ... is this really the way it's meant to be done?
@@ -129,23 +135,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
 PrefsDialog::~PrefsDialog()
 {
-  delete serverListPage;
-  delete generalSettingsPage;
-  delete identityPage;
-  delete appearancePage;
-  delete tabBehaviorPage;
-  delete colorsImagesPage;
-  delete ircColorsPage;
-  delete buttonsPage;
-  delete nickCompletionPage;
-  delete notifyPage;
-  delete highlightPage;
-  delete OSDPage;
-  delete ignorePage;
-  delete aliasesPage;
-  delete logSettingsPage;
-  delete dccSettingsPage;
-  delete dialogsPage;
 }
 
 void PrefsDialog::connectRequest(int id)

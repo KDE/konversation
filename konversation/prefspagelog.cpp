@@ -36,12 +36,14 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   QVBoxLayout *outer=new QVBoxLayout(parentFrame);
   outer->setSpacing(spacingHint());
 
-  loggingBox=new QGroupBox("&Enable logging",parentFrame);
+  loggingBox = new QGroupBox("&Enable logging",parentFrame);
+  loggingBox->setColumnLayout(0, Qt::Vertical);
+  loggingBox->setMargin(marginHint());
   loggingBox->setCheckable(TRUE);
   loggingBox->setChecked(preferences->getLog());
   loggingBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
 
-  QGridLayout* logSettingsLayout=new QGridLayout(loggingBox,4,2,marginHint(),spacingHint(),"log_settings_layout");
+  QGridLayout* logSettingsLayout=new QGridLayout(loggingBox->layout(),4,2,spacingHint(),"log_settings_layout");
 
   lowerLog=new QCheckBox(i18n("&Use lower case logfile names"),loggingBox,"lower_log_checkbox");
   logFollowsNick=new QCheckBox(i18n("&Follow nick changes"),loggingBox,"follow_nickchanges_checkbox");
@@ -52,29 +54,10 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   logPathLabel=new QLabel(i18n("Logfile &path:"),logPathBox);
   logPathInput=new KLineEdit(preferences->getLogPath(),logPathBox,"log_path_input");
   logPathLabel->setBuddy(logPathInput);
-
-  QHBox* scrollbackMaxBox=new QHBox(parentFrame);
-
-  scrollbackMaxBox->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-  scrollbackMaxBox->setSpacing(spacingHint());
-  scrollbackMaxLabel=new QLabel(i18n("&Scrollback limit:"), scrollbackMaxBox);
-  scrollbackMaxSpin=new QSpinBox(0,100000,50,scrollbackMaxBox,"scrollback_max_spin");
-  scrollbackMaxSpin->setValue(preferences->getScrollbackMax());
-  scrollbackMaxSpin->setSuffix(" "+i18n("lines"));
-  scrollbackMaxSpin->setSpecialValueText(i18n("Unlimited"));
-  scrollbackMaxLabel->setBuddy(scrollbackMaxSpin);
-  QWhatsThis::add(scrollbackMaxSpin,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
-  QToolTip::add(scrollbackMaxBox,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
-
   lowerLog->setChecked(preferences->getLowerLog());
   logFollowsNick->setChecked(preferences->getLogFollowsNick());
 
   int row=0;
-
-  //FIXME Irritating little hack to stop the first control from sitting on top of the groupbox title
-  spacey=new QSpacerItem(spacingHint(),spacingHint());
-  logSettingsLayout->addMultiCell(spacey,row,row+1,0,1);
-  row+=2;
 
   logSettingsLayout->addWidget(lowerLog,row,0);
   logSettingsLayout->addWidget(logFollowsNick,row,1);
@@ -84,7 +67,6 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   row++;
 
   outer->addWidget(loggingBox);
-  outer->addWidget(scrollbackMaxBox);
   spacey=new QSpacerItem(spacingHint(),spacingHint());
   outer->addItem(spacey);
 
@@ -100,7 +82,6 @@ void PrefsPageLog::applyPreferences()
   preferences->setLowerLog(lowerLog->isChecked());
   preferences->setLogFollowsNick(logFollowsNick->isChecked());
   preferences->setLogPath(logPathInput->text());
-  preferences->setScrollbackMax(scrollbackMaxSpin->value());
 }
 
 #include "prefspagelog.moc"

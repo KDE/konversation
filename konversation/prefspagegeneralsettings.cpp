@@ -65,16 +65,6 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   autoReconnectCheck=new QCheckBox(i18n("A&uto reconnect"),parentFrame,"auto_reconnect_check");
   autoRejoinCheck=new QCheckBox(i18n("Auto re&join"),parentFrame,"auto_rejoin_check");
   autojoinOnInviteCheck=new QCheckBox(i18n("Autojoin channel on &invite"),parentFrame,"autojoin_on_invite_check");
-  fixedMOTDCheck=new QCheckBox(i18n("Show &MOTD in fixed font"),parentFrame,"fixed_motd_check");
-  beepCheck=new QCheckBox(i18n("Bee&p on incoming ASCII BEL"),parentFrame,"beep_check");
-  rawLogCheck=new QCheckBox(i18n("Show ra&w log window on startup"),parentFrame,"raw_log_check");
-  trayIconCheck=new QCheckBox(i18n("Show icon in s&ystem tray"),parentFrame,"tray_icon_check");
-  trayNotifyCheck=new QCheckBox(i18n("Use sys&tem tray for new message notification"),parentFrame,"tray_notify_check");
-  trayNotifyCheck->setEnabled(trayIconCheck->isChecked());
-  hideUnimportantCheck=new QCheckBox(i18n("&Hide Join/Part/Nick events"),parentFrame,"hide_unimportant_check");
-  disableExpansionCheck=new QCheckBox(i18n("&Disable %C, %B, %G, etc. expansion"),parentFrame,"disable_expansion_check");
-
-  connect(trayIconCheck, SIGNAL(toggled(bool)), trayNotifyCheck, SLOT(setEnabled(bool)));
 
   reconnectTimeoutLabel=new QLabel(i18n("&Reconnect timeout:"),parentFrame);
   reconnectTimeoutLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -83,8 +73,6 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   reconnectTimeoutSpin->setSuffix(i18n(" seconds"));
   reconnectTimeoutLabel->setBuddy(reconnectTimeoutSpin);
   
-  redirectToStatusPaneCheck = new QCheckBox(i18n("Redirect all status messages to the server status window"), parentFrame,
-    "redirect_to_status_page_check");
 
   autoReconnectCheck->setChecked(preferences->getAutoReconnect());
   // handle ghosting of timeout widget
@@ -92,15 +80,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
 
   autoRejoinCheck->setChecked(preferences->getAutoRejoin());
   autojoinOnInviteCheck->setChecked(preferences->getAutojoinOnInvite());
-  fixedMOTDCheck->setChecked(preferences->getFixedMOTD());
-  beepCheck->setChecked(preferences->getBeep());
-  rawLogCheck->setChecked(preferences->getRawLog());
-  trayIconCheck->setChecked(preferences->getShowTrayIcon());
-  trayNotifyCheck->setChecked(preferences->getTrayNotify());
-  hideUnimportantCheck->setChecked(preferences->getHideUnimportantEvents());
-  disableExpansionCheck->setChecked(preferences->getDisableExpansion());
   
-  redirectToStatusPaneCheck->setChecked(preferences->getRedirectToStatusPane());
 
   QHBox* generalSpacer=new QHBox(parentFrame);
 
@@ -116,22 +96,6 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   generalSettingsLayout->addMultiCellWidget(autoRejoinCheck,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(autojoinOnInviteCheck,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(fixedMOTDCheck,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(beepCheck,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(rawLogCheck,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(trayIconCheck,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(trayNotifyCheck,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(hideUnimportantCheck,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(disableExpansionCheck,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(redirectToStatusPaneCheck,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(generalSpacer,row,row,0,2);
   generalSettingsLayout->setRowStretch(row,10);
@@ -158,18 +122,10 @@ void PrefsPageGeneralSettings::applyPreferences()
   preferences->setAutoReconnect(autoReconnectCheck->isChecked());
   preferences->setAutoRejoin(autoRejoinCheck->isChecked());
   preferences->setAutojoinOnInvite(autojoinOnInviteCheck->isChecked());
-  preferences->setFixedMOTD(fixedMOTDCheck->isChecked());
-  preferences->setBeep(beepCheck->isChecked());
-  preferences->setRawLog(rawLogCheck->isChecked());
   preferences->setVersionReply(ctcpVersionInput->text());
-  preferences->setShowTrayIcon(trayIconCheck->isChecked());
-  preferences->setTrayNotify(trayNotifyCheck->isChecked());
-  preferences->setHideUnimportantEvents(hideUnimportantCheck->isChecked());
-  preferences->setDisableExpansion(disableExpansionCheck->isChecked());
 
   preferences->setMaximumLagTime(reconnectTimeoutSpin->value());
   
-  preferences->setRedirectToStatusPane(redirectToStatusPaneCheck->isChecked());
 }
 
 #include "prefspagegeneralsettings.moc"
