@@ -510,6 +510,8 @@ void Channel::completeNick()
       if(KonversationApplication::preferences.getNickCompletionMode() == 1) { // Shell like completion
         foundNick = nicknameList.completeNick(pattern, complete);
       } else if(KonversationApplication::preferences.getNickCompletionMode() == 0) { // Cycle completion
+        complete = true;
+        
         do
         {
           QString lookNick=nicknameList.at(completionPosition)->getNickname();
