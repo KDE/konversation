@@ -1696,9 +1696,30 @@ void Server::executeMultiServerCommand(const QString& command, const QString& pa
     outputFilter.parse(getNickname(), str,QString::null);
     queue(outputFilter.getServerOutput());
   } else if(command == "msg") {
-    sendToAllChannels(parameter);
+    sendToAllChannelsAndQueries(parameter);
   } else {
-    sendToAllChannels(KonversationApplication::preferences.getCommandChar() + command + " " + parameter);
+    sendToAllChannelsAndQueries(KonversationApplication::preferences.getCommandChar() + command + " " + parameter);
+  }
+}
+
+void Server::sendToAllChannelsAndQueries(const QString& text)
+{
+  // Send a message to all channels we are in
+  Channel* channel=channelList.first();
+
+  while(channel)
+  {
+    channel->sendChannelText(text);
+    channel=channelList.next();
+  }
+
+  // Send a message to all queries we are in
+  Query* query=queryList.first();
+
+  while(query)
+  {
+    query->sendQueryText(text);
+    query=queryList.next();
   }
 }
 
