@@ -53,7 +53,6 @@ ChannelOptionsDialog::ChannelOptionsDialog(Channel *channel)
   refreshTopicHistory();
   refreshAllowedChannelModes();
   refreshModes();
-  refreshEnableModes();
 }
 
 ChannelOptionsDialog::~ChannelOptionsDialog()
@@ -133,10 +132,10 @@ void ChannelOptionsDialog::topicHistoryItemClicked(QListViewItem* item)
 }
 
 void ChannelOptionsDialog::refreshEnableModes() {
-	
   bool enable = m_channel->getOwnChannelNick()->isAnyTypeOfOp();
   m_widget->otherModesList->setEnabled(enable);
-  m_widget->topicEdit->setEnabled(enable);
+  m_widget->topicEdit->setEnabled(enable || !m_widget->topicModeChBox->isChecked());
+  m_widget->topicHistoryList->setEnabled(enable || !m_widget->topicModeChBox->isChecked());
 
   m_widget->topicModeChBox->setEnabled(enable);
   m_widget->messageModeChBox->setEnabled(enable);
@@ -242,6 +241,8 @@ void ChannelOptionsDialog::refreshModes()
       }
     }
   }
+
+  refreshEnableModes();
 }
 
 QStringList ChannelOptionsDialog::modes()
