@@ -81,15 +81,15 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
   QHBox* buttonBox=new QHBox(parentFrame);
   buttonBox->setSpacing(spacingHint());
   // Add the buttons
-  connectButton=new QPushButton(i18n("Connect"),buttonBox);
+  connectButton=new QPushButton(i18n("&Connect"),buttonBox);
   connectButton->setDisabled(true);
-  newServerButton=new QPushButton(i18n("New Server..."),buttonBox);
-  editServerButton=new QPushButton(i18n("Edit..."),buttonBox);
+  newServerButton=new QPushButton(i18n("&New Server..."),buttonBox);
+  editServerButton=new QPushButton(i18n("&Edit..."),buttonBox);
   editServerButton->setDisabled(true);
-  removeServerButton=new QPushButton(i18n("Remove"),buttonBox);
+  removeServerButton=new QPushButton(i18n("&Remove"),buttonBox);
   removeServerButton->setDisabled(true);
 
-  showServerList=new QCheckBox(i18n("Show server list while autoconnecting"),parentFrame,"show_serverlist_check");
+  showServerList=new QCheckBox(i18n("&Show server list while autoconnecting"),parentFrame,"show_serverlist_check");
   showServerList->setChecked(preferences->getShowServerList());
   
   serverListLayout->addWidget(serverListView);

@@ -48,11 +48,13 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   layout->setSpacing(spacingHint());
   layout->setColStretch(1,10);
 
-  QLabel* groupNameLabel=new QLabel(i18n("Group name:"),page);
+  QLabel* groupNameLabel=new QLabel(i18n("&Group name:"),page);
   groupNameInput=new KLineEdit(group,page);
+  groupNameLabel->setBuddy(groupNameInput);
 
-  QLabel* identityLabel=new QLabel(i18n("Identity:"),page);
+  QLabel* identityLabel=new QLabel(i18n("&Identity:"),page);
   identityCombo=new KComboBox(page);
+  identityLabel->setBuddy(identityCombo);
 
   QPtrList<Identity> identities=KonversationApplication::preferences.getIdentityList();
 
@@ -63,23 +65,29 @@ EditServerDialog::EditServerDialog(QWidget* parent,
     if(name==currentIdentity) identityCombo->setCurrentItem(identityCombo->count()-1);
   }
 
-  QLabel* serverNameLabel=new QLabel(i18n("Server name:"),page);
-
+  QLabel* serverNameLabel=new QLabel(i18n("&Server name:"),page);
   QHBox* serverBox=new QHBox(page);
   serverBox->setSpacing(spacingHint());
   serverNameInput=new KLineEdit(name,serverBox);
-  new QLabel(i18n("Port:"),serverBox);
-  serverPortInput=new KLineEdit(port,serverBox);
+  serverNameLabel->setBuddy(serverNameInput);
 
-  QLabel* serverKeyLabel=new QLabel(i18n("Password:"),page);
+  QLabel* serverPortLabel=new QLabel(i18n("P&ort:"),serverBox);
+  serverPortInput=new KLineEdit(port,serverBox);
+  serverPortLabel->setBuddy(serverPortInput);
+
+  QLabel* serverKeyLabel=new QLabel(i18n("&Password:"),page);
   serverKeyInput=new KLineEdit(serverKey,page);
   serverKeyInput->setEchoMode(QLineEdit::Password);
+  serverKeyLabel->setBuddy(serverKeyInput);
 
-  QLabel* channelNameLabel=new QLabel(i18n("Channel name:"),page);
+  QLabel* channelNameLabel=new QLabel(i18n("C&hannel name:"),page);
   channelNameInput=new KLineEdit(channelName,page);
-  QLabel* channelKeyLabel=new QLabel(i18n("Password:"),page);
+  channelNameLabel->setBuddy(channelNameInput);
+
+  QLabel* channelKeyLabel=new QLabel(i18n("Pass&word:"),page);
   channelKeyInput=new KLineEdit(channelKey,page);
   channelKeyInput->setEchoMode(QLineEdit::Password);
+  channelKeyLabel->setBuddy(channelKeyInput);
 
   QHBox* spacer=new QHBox(page);
 

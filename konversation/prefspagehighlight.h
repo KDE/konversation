@@ -57,6 +57,7 @@ class PrefsPageHighlight : public PrefsPage
 
   protected:
     KListView* highlightListView;
+    QLabel* patternLabel;
     KLineEdit* patternInput;
     KColorCombo* patternColor;
     QCheckBox* currentNickCheck;

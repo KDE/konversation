@@ -28,13 +28,15 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   // Add a Layout to the Log Settings pane
   QGridLayout* logSettingsLayout=new QGridLayout(parentFrame,4,2,marginHint(),spacingHint(),"log_settings_layout");
 
-  useLog=new QCheckBox(i18n("Enable logging"),parentFrame,"use_log_checkbox");
-  lowerLog=new QCheckBox(i18n("Use lower case logfile names"),parentFrame,"lower_log_checkbox");
-  logFollowsNick=new QCheckBox(i18n("Follow nick changes"),parentFrame,"follow_nickchanges_checkbox");
+  useLog=new QCheckBox(i18n("&Enable logging"),parentFrame,"use_log_checkbox");
+  lowerLog=new QCheckBox(i18n("&Use lower case logfile names"),parentFrame,"lower_log_checkbox");
+  logFollowsNick=new QCheckBox(i18n("&Follow nick changes"),parentFrame,"follow_nickchanges_checkbox");
 
   QHBox* logPathBox=new QHBox(parentFrame);
-  logPathLabel=new QLabel(i18n("Logfile path:"),logPathBox);
+  logPathBox->setSpacing(spacingHint());
+  logPathLabel=new QLabel(i18n("Logfile &path:"),logPathBox);
   logPathInput=new KLineEdit(preferences->getLogPath(),logPathBox,"log_path_input");
+  logPathLabel->setBuddy(logPathInput);
 
   useLog->setChecked(preferences->getLog());
   lowerLog->setChecked(preferences->getLowerLog());

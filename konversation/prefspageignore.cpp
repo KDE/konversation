@@ -55,25 +55,25 @@ PrefsPageIgnore::PrefsPageIgnore(QFrame* newParent,Preferences* newPreferences) 
   // Set up the buttons to the right of the list
   QGrid* buttonBox=new QGrid(3,QGrid::Vertical,listBox);
   buttonBox->setSpacing(spacingHint());
-  newButton=new QPushButton(i18n("New"),buttonBox);
-  removeButton=new QPushButton(i18n("Remove"),buttonBox);
+  newButton=new QPushButton(i18n("&New"),buttonBox);
+  removeButton=new QPushButton(i18n("&Remove"),buttonBox);
 
   // Set up the checkboxes
   QHBox* flagBox=new QHBox(parentFrame);
   flagBox->setSpacing(spacingHint());
   IgnoreCheckBox* c;
   // Store the checkbox pointers in a list
-  c=new IgnoreCheckBox(i18n("Channels"),flagBox,Ignore::Channel);
+  c=new IgnoreCheckBox(i18n("&Channels"),flagBox,Ignore::Channel);
   checkList.append(c);
-  c=new IgnoreCheckBox(i18n("Queries"),flagBox,Ignore::Query);
+  c=new IgnoreCheckBox(i18n("&Queries"),flagBox,Ignore::Query);
   checkList.append(c);
-  c=new IgnoreCheckBox(i18n("Notices"),flagBox,Ignore::Notice);
+  c=new IgnoreCheckBox(i18n("N&otices"),flagBox,Ignore::Notice);
   checkList.append(c);
-  c=new IgnoreCheckBox(i18n("CTCPs"),flagBox,Ignore::CTCP);
+  c=new IgnoreCheckBox(i18n("C&TCPs"),flagBox,Ignore::CTCP);
   checkList.append(c);
-  c=new IgnoreCheckBox(i18n("DCCs"),flagBox,Ignore::DCC);
+  c=new IgnoreCheckBox(i18n("&DCCs"),flagBox,Ignore::DCC);
   checkList.append(c);
-  c=new IgnoreCheckBox(i18n("Exception"),flagBox,Ignore::Exception);
+  c=new IgnoreCheckBox(i18n("&Exception"),flagBox,Ignore::Exception);
   checkList.append(c);
 
   dialogLayout->addWidget(listBox);

@@ -57,26 +57,30 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   QGrid* mainGrid=new QGrid(2,Qt::Vertical,filterGroup);
   mainGrid->setSpacing(spacing());
 
-  new QLabel(i18n("Minimum users:"),mainGrid);
-  new QLabel(i18n("Maximum users:"),mainGrid);
+  QLabel* minLabel=new QLabel(i18n("M&inimum users:"),mainGrid);
+  QLabel* maxLabel=new QLabel(i18n("Ma&ximum users:"),mainGrid);
   QSpinBox* minUsersSpin=new QSpinBox(mainGrid,"min_users_spin");
   QSpinBox* maxUsersSpin=new QSpinBox(mainGrid,"max_users_spin");
   minUsersSpin->setValue(getMinUsers());
   maxUsersSpin->setValue(getMaxUsers());
+  minLabel->setBuddy(minUsersSpin);
+  maxLabel->setBuddy(maxUsersSpin);
 
-  new QLabel(i18n("Filter pattern:"),mainGrid);
+  QLabel* patternLabel=new QLabel(i18n("Filter &pattern:"),mainGrid);
   new QLabel(i18n("Filter target:"),mainGrid);
 
   KLineEdit* filterInput=new KLineEdit(mainGrid,"channel_list_filter_input");
   filterInput->setText(getFilterText());
 
+  patternLabel->setBuddy(filterInput);
+
   QHBox* targetBox=new QHBox(mainGrid);
   targetBox->setSpacing(spacing());
 
-  channelFilter=new QCheckBox(i18n("Channel"),targetBox,"filter_target_channel_check");
-  topicFilter=new QCheckBox(i18n("Topic"),targetBox,"filter_target_topic_check");
-  regexpCheck=new QCheckBox(i18n("Regular expression"),targetBox,"regexp_check");
-  QPushButton* applyFilter=new QPushButton(i18n("Apply Filter"),targetBox,"apply_filter_button");
+  channelFilter=new QCheckBox(i18n("&Channel"),targetBox,"filter_target_channel_check");
+  topicFilter=new QCheckBox(i18n("&Topic"),targetBox,"filter_target_topic_check");
+  regexpCheck=new QCheckBox(i18n("&Regular expression"),targetBox,"regexp_check");
+  QPushButton* applyFilter=new QPushButton(i18n("Appl&y Filter"),targetBox,"apply_filter_button");
 
   channelFilter->setChecked(getChannelTarget());
   topicFilter->setChecked(getTopicTarget());
@@ -102,9 +106,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   QHBox* actionBox=new QHBox(this);
   actionBox->setSpacing(spacing());
 
-  QPushButton* refreshListButton=new QPushButton(i18n("Refresh List"),actionBox,"refresh_list_button");
-  QPushButton* saveListButton=new QPushButton(i18n("Save List..."),actionBox,"save_list_button");
-  QPushButton* joinChannelButton=new QPushButton(i18n("Join Channel"),actionBox,"join_channel_button");
+  QPushButton* refreshListButton=new QPushButton(i18n("Re&fresh List"),actionBox,"refresh_list_button");
+  QPushButton* saveListButton=new QPushButton(i18n("&Save List..."),actionBox,"save_list_button");
+  QPushButton* joinChannelButton=new QPushButton(i18n("&Join Channel"),actionBox,"join_channel_button");
 
   // update list view every 0.5 seconds
   updateTimer.start(500);

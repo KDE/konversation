@@ -39,11 +39,11 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
   QHBox* buttonBox=new QHBox(this);
   buttonBox->setSpacing(spacing());
 
-  openUrlButton=new QPushButton(i18n("Open URL"),buttonBox,"open_url_button");
-  copyUrlButton=new QPushButton(i18n("Copy URL"),buttonBox,"copy_url_button");
-  deleteUrlButton=new QPushButton(i18n("Delete URL"),buttonBox,"delete_url_button");
-  saveListButton=new QPushButton(i18n("Save List..."),buttonBox,"save_list_button");
-  clearListButton=new QPushButton(i18n("Clear List"),buttonBox,"clear_list_button");
+  openUrlButton=new QPushButton(i18n("&Open URL"),buttonBox,"open_url_button");
+  copyUrlButton=new QPushButton(i18n("&Copy URL"),buttonBox,"copy_url_button");
+  deleteUrlButton=new QPushButton(i18n("&Delete URL"),buttonBox,"delete_url_button");
+  saveListButton=new QPushButton(i18n("Sa&ve List..."),buttonBox,"save_list_button");
+  clearListButton=new QPushButton(i18n("C&lear List"),buttonBox,"clear_list_button");
 
   connect(urlListView,SIGNAL (executed(QListViewItem*)),this,SLOT (openUrl(QListViewItem*)) );
   connect(urlListView,SIGNAL (selectionChanged()),this,SLOT (urlSelected()) );

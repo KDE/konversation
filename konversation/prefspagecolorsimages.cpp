@@ -16,6 +16,7 @@
 #include <qlayout.h>
 #include <qhbox.h>
 #include <qpushbutton.h>
+#include <qregexp.h>
 
 #include <kdebug.h>
 #include <klineedit.h>
@@ -28,16 +29,16 @@
 PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newPreferences) :
                        PrefsPage(newParent,newPreferences)
 {
-  colorList.append(i18n("Action text color:")+",ActionMessage");
-  colorList.append(i18n("Backlog text color:")+",BacklogMessage");
-  colorList.append(i18n("Channel message text color:")+",ChannelMessage");
-  colorList.append(i18n("Command message text color:")+",CommandMessage");
-  colorList.append(i18n("Hyperlink text color:")+",LinkMessage");
-  colorList.append(i18n("Query message text color:")+",QueryMessage");
-  colorList.append(i18n("Server message text color:")+",ServerMessage");
-  colorList.append(i18n("Timestamp color:")+",Time");
-  colorList.append(i18n("Background color:")+",TextViewBackground");
-  colorList.append(i18n("Alternate background color:")+",AlternateBackground");
+  colorList.append(i18n("&Action text color:")+",ActionMessage");
+  colorList.append(i18n("Bac&klog text color:")+",BacklogMessage");
+  colorList.append(i18n("&Channel message text color:")+",ChannelMessage");
+  colorList.append(i18n("C&ommand message text color:")+",CommandMessage");
+  colorList.append(i18n("&Hyperlink text color:")+",LinkMessage");
+  colorList.append(i18n("&Query message text color:")+",QueryMessage");
+  colorList.append(i18n("&Server message text color:")+",ServerMessage");
+  colorList.append(i18n("&Timestamp color:")+",Time");
+  colorList.append(i18n("&Background color:")+",TextViewBackground");
+  colorList.append(i18n("A&lternate background color:")+",AlternateBackground");
 
   QGridLayout* colorSettingsLayout=new QGridLayout(parentFrame,4,3,marginHint(),spacingHint(),"log_settings_layout");
 
@@ -52,6 +53,8 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
     KColorCombo* colorCombo=new KColorCombo(parentFrame);
     colorComboList.append(colorCombo);
 
+    colorLabel->setBuddy(colorCombo);
+
     QString color=preferences->getColor(name);
     colorCombo->setColor(color.prepend('#'));
     // give this color combo a name so we can save colors with their appropriate name later
@@ -63,9 +66,11 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
     row++;
   }
 
-  QLabel* backgroundLabel=new QLabel(i18n("Background image:"),parentFrame);
+  QLabel* backgroundLabel=new QLabel(i18n("Back&ground image:"),parentFrame);
   backgroundName=new KLineEdit(parentFrame,"background_image_name");
-  QPushButton* backgroundSelect=new QPushButton(i18n("Choose..."),parentFrame,"background_image_choose_button");
+  QPushButton* backgroundSelect=new QPushButton(i18n("Ch&oose..."),parentFrame,"background_image_choose_button");
+
+  backgroundLabel->setBuddy(backgroundName);
 
   backgroundName->setText(preferences->getBackgroundImageName());
 

@@ -60,20 +60,22 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   QHBox* highlightEditBox=new QHBox(highlightListBox);
   highlightEditBox->setSpacing(spacingHint());
 
-  new QLabel(i18n("Pattern:"),highlightEditBox);
+  patternLabel=new QLabel(i18n("&Pattern:"),highlightEditBox);
   patternInput=new KLineEdit(highlightEditBox,"highlight_pattern_input");
   patternColor=new KColorCombo(highlightEditBox,"highlight_pattern_color");
+  patternLabel->setBuddy(patternInput);
 
+  patternLabel->setEnabled(false);
   patternInput->setEnabled(false);
   patternColor->setEnabled(false);
 
-  currentNickCheck=new QCheckBox(i18n("Always highlight current nick:"),parentFrame,"highlight_current_nick_check");
+  currentNickCheck=new QCheckBox(i18n("Always highlight &current nick:"),parentFrame,"highlight_current_nick_check");
   currentNickCheck->setChecked(preferences->getHilightNick());
   currentNickColor=new KColorCombo(parentFrame,"current_nick_color");
   currentNickColor->setColor(preferences->getHilightNickColor());
   currentNickChanged(preferences->getHilightNick() ? 2 : 0);
 
-  ownLinesCheck=new QCheckBox(i18n("Always highlight own lines:"),parentFrame,"highlight_own_lines_check");
+  ownLinesCheck=new QCheckBox(i18n("Always highlight &own lines:"),parentFrame,"highlight_own_lines_check");
   ownLinesColor=new KColorCombo(parentFrame,"own_lines_color");
   ownLinesCheck->setChecked(preferences->getHilightOwnLines());
   ownLinesColor->setColor(preferences->getHilightOwnLinesColor());
@@ -81,8 +83,8 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
 
   QVBox* highlightButtonBox=new QVBox(highlightListGroup);
   highlightButtonBox->setSpacing(spacingHint());
-  QPushButton* newButton=new QPushButton(i18n("New..."),highlightButtonBox);
-  QPushButton* removeButton=new QPushButton(i18n("Remove"),highlightButtonBox);
+  QPushButton* newButton=new QPushButton(i18n("&New"),highlightButtonBox);
+  QPushButton* removeButton=new QPushButton(i18n("&Remove"),highlightButtonBox);
   // add spacer below the two buttons
   new QVBox(highlightButtonBox);
 
@@ -120,6 +122,7 @@ void PrefsPageHighlight::highlightSelected(QListViewItem* item)
   {
     HighlightViewItem* highlightItem=static_cast<HighlightViewItem*>(item);
 
+    patternLabel->setEnabled(true);
     patternInput->setEnabled(true);
     patternColor->setEnabled(true);
 
@@ -128,6 +131,7 @@ void PrefsPageHighlight::highlightSelected(QListViewItem* item)
   }
   else
   {
+    patternLabel->setEnabled(false);
     patternInput->setEnabled(false);
     patternColor->setEnabled(false);
   }
@@ -173,6 +177,7 @@ void PrefsPageHighlight::removeHighlight()
       highlightListView->setSelected(item,true);
     else
     {
+      patternLabel->setEnabled(false);
       patternInput->setEnabled(false);
       patternColor->setEnabled(false);
     }

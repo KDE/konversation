@@ -35,9 +35,10 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   QHBox* commandCharBox=new QHBox(parentFrame);
   commandCharBox->setSpacing(spacingHint());
 
-  new QLabel(i18n("Command char:"),commandCharBox);
+  QLabel* commandCharLabel=new QLabel(i18n("&Command char:"),commandCharBox);
   commandCharInput=new KLineEdit(preferences->getCommandChar(),commandCharBox);
   commandCharInput->setMaxLength(1);
+  commandCharLabel->setBuddy(commandCharInput);
 
   // double click actions
   QVBox* actionBox=new QVBox(parentFrame);
@@ -46,11 +47,13 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   QHBox* actionEditBox=new QHBox(actionBox);
   actionEditBox->setSpacing(spacingHint());
 
-  new QLabel(i18n("Nick list:"),actionEditBox);
+  QLabel* nickListLabel=new QLabel(i18n("&Nick list:"),actionEditBox);
   channelActionInput=new KLineEdit(preferences->getChannelDoubleClickAction(),actionEditBox);
+  nickListLabel->setBuddy(channelActionInput);
 
-  new QLabel(i18n("Notify list:"),actionEditBox);
+  QLabel* notifyListLabel=new QLabel(i18n("N&otify list:"),actionEditBox);
   notifyActionInput=new KLineEdit(preferences->getNotifyDoubleClickAction(),actionEditBox);
+  notifyListLabel->setBuddy(notifyActionInput);
 
   // nick completion special settings
   QVBox* suffixBox=new QVBox(parentFrame);
@@ -58,29 +61,32 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
 
   QHBox* suffixEditBox=new QHBox(suffixBox);
   suffixEditBox->setSpacing(spacingHint());
-  new QLabel(i18n("at start of line:"),suffixEditBox);
+  QLabel* startOfLineLabel=new QLabel(i18n("at &start of line:"),suffixEditBox);
   suffixStartInput=new KLineEdit(preferences->getNickCompleteSuffixStart(),suffixEditBox);
+  startOfLineLabel->setBuddy(suffixStartInput);
 
-  QLabel* middleLabel=new QLabel(i18n("Elsewhere:"),suffixEditBox);
+  QLabel* middleLabel=new QLabel(i18n("&Elsewhere:"),suffixEditBox);
   middleLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   suffixMiddleInput=new KLineEdit(preferences->getNickCompleteSuffixMiddle(),suffixEditBox);
+  middleLabel->setBuddy(suffixMiddleInput);
 
-  autoReconnectCheck=new QCheckBox(i18n("Auto reconnect"),parentFrame,"auto_reconnect_check");
-  autoRejoinCheck=new QCheckBox(i18n("Auto rejoin"),parentFrame,"auto_rejoin_check");
-  autojoinOnInviteCheck=new QCheckBox(i18n("Autojoin channel on invite"),parentFrame,"autojoin_on_invite_check");
-  tabPlacementCheck=new QCheckBox(i18n("Place tab labels on top"),parentFrame,"tab_placement_check");
-  blinkingTabsCheck=new QCheckBox(i18n("Blinking tabs"),parentFrame,"blinking_tabs_check");
-  bringToFrontCheck=new QCheckBox(i18n("Bring new tabs to front"),parentFrame,"bring_to_front_check");
-  fixedMOTDCheck=new QCheckBox(i18n("Show MOTD in fixed font"),parentFrame,"fixed_motd_check");
-  beepCheck=new QCheckBox(i18n("Beep on incoming ASCII BEL"),parentFrame,"beep_check");
-  rawLogCheck=new QCheckBox(i18n("Show raw log window on startup"),parentFrame,"raw_log_check");
-  trayIconCheck=new QCheckBox(i18n("Show icon in system tray"),parentFrame,"tray_icon_check");
+  autoReconnectCheck=new QCheckBox(i18n("A&uto reconnect"),parentFrame,"auto_reconnect_check");
+  autoRejoinCheck=new QCheckBox(i18n("Auto re&join"),parentFrame,"auto_rejoin_check");
+  autojoinOnInviteCheck=new QCheckBox(i18n("Autojoin channel on &invite"),parentFrame,"autojoin_on_invite_check");
+  tabPlacementCheck=new QCheckBox(i18n("Place tab labels on &top"),parentFrame,"tab_placement_check");
+  blinkingTabsCheck=new QCheckBox(i18n("&Blinking tabs"),parentFrame,"blinking_tabs_check");
+  bringToFrontCheck=new QCheckBox(i18n("Bring new tabs to &front"),parentFrame,"bring_to_front_check");
+  fixedMOTDCheck=new QCheckBox(i18n("Show &MOTD in fixed font"),parentFrame,"fixed_motd_check");
+  beepCheck=new QCheckBox(i18n("Bee&p on incoming ASCII BEL"),parentFrame,"beep_check");
+  rawLogCheck=new QCheckBox(i18n("Show ra&w log window on startup"),parentFrame,"raw_log_check");
+  trayIconCheck=new QCheckBox(i18n("Show icon in s&ystem tray"),parentFrame,"tray_icon_check");
 
-  reconnectTimeoutLabel=new QLabel(i18n("Reconnect timeout:"),parentFrame);
+  reconnectTimeoutLabel=new QLabel(i18n("&Reconnect timeout:"),parentFrame);
   reconnectTimeoutLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   reconnectTimeoutSpin=new QSpinBox(1,9999,1,parentFrame,"reconnect_timeout_spin");
   reconnectTimeoutSpin->setValue(preferences->getMaximumLagTime());
   reconnectTimeoutSpin->setSuffix(i18n(" seconds"));
+  reconnectTimeoutLabel->setBuddy(reconnectTimeoutSpin);
 
   autoReconnectCheck->setChecked(preferences->getAutoReconnect());
   // handle ghosing of timeout widget

@@ -41,14 +41,14 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   QHBox* osdBox = new QHBox(parentFrame);
   osdBox->setSpacing(spacingHint());
 
-  useOSDCheck = new QCheckBox(i18n("Use OnScreen Display"), osdBox, "use_osd_checkbox");
+  useOSDCheck = new QCheckBox(i18n("&Use OnScreen Display"), osdBox, "use_osd_checkbox");
 
   // Set up osd widgets
   osdActionsBox = new QVGroupBox(i18n("Show OSD Message"), parentFrame, "osd_actions_group");
-  osdShowOwnNick = new QCheckBox(i18n("If own nick appears in channel message"), osdActionsBox, "osd_show_ownnick");
-  osdShowChannel = new QCheckBox(i18n("On any channel message"), osdActionsBox, "osd_show_channel");
-  osdShowQuery = new QCheckBox(i18n("On query activity"), osdActionsBox, "osd_show_query");
-  osdShowChannelEvent = new QCheckBox(i18n("On Join/Part events"), osdActionsBox, "osd_show_event");
+  osdShowOwnNick = new QCheckBox(i18n("If &own nick appears in channel message"), osdActionsBox, "osd_show_ownnick");
+  osdShowChannel = new QCheckBox(i18n("On any &channel message"), osdActionsBox, "osd_show_channel");
+  osdShowQuery = new QCheckBox(i18n("&On query activity"), osdActionsBox, "osd_show_query");
+  osdShowChannelEvent = new QCheckBox(i18n("On &Join/Part events"), osdActionsBox, "osd_show_event");
 
   useOSDCheck->setChecked(preferences->getOSDUsage());
   osdShowOwnNick->setChecked(preferences->getOSDShowOwnNick());
@@ -61,11 +61,12 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdFont = preferences->getOSDFont();
   osdPreviewLabel = new QLabel(parentFrame);
   osdPreviewLabel->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-  osdFontButton = new QPushButton(i18n("Choose..."), parentFrame, "osd_font_button");
+  osdFontButton = new QPushButton(i18n("C&hoose..."), parentFrame, "osd_font_button");
 
-  osdColorLabel = new QLabel(i18n("Color:"), parentFrame);
+  osdColorLabel = new QLabel(i18n("Co&lor:"), parentFrame);
   osdColorChooser = new KColorCombo(parentFrame, "osd_color");
   osdColorChooser->setColor(preferences->getOSDColor());
+  osdColorLabel->setBuddy(osdColorChooser);
 
   // Take care of ghosting / unghosting close button checkboxes
   osdUsageChanged(preferences->getOSDUsage() ? 2 : 0);

@@ -38,27 +38,31 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   // Add a Layout to the identity pane
   QGridLayout* identityLayout=new QGridLayout(parentFrame,4,4,marginHint(),spacingHint());
 
-  QLabel* identityLabel=new QLabel(i18n("Identity:"),parentFrame);
+  QLabel* identityLabel=new QLabel(i18n("&Identity:"),parentFrame);
   identityCombo=new KComboBox(parentFrame);
   identityCombo->setEditable(false);
+  identityLabel->setBuddy(identityCombo);
 //  identityCombo->setInsertionPolicy(QComboBox::NoInsertion);
 
-  QPushButton* renameButton=new QPushButton(i18n("Rename..."),parentFrame,"rename_identity_button");
-  
+  QPushButton* renameButton=new QPushButton(i18n("Re&name..."),parentFrame,"rename_identity_button");
+
   identities=preferences->getIdentityList();
 
   for(unsigned int index=0;index<identities.count();index++)
     identityCombo->insertItem(identities.at(index)->getName());
 
-  QLabel* realNameLabel=new QLabel(i18n("Real name:"),parentFrame);
+  QLabel* realNameLabel=new QLabel(i18n("&Real name:"),parentFrame);
   realNameInput=new KLineEdit(parentFrame);
+  realNameLabel->setBuddy(realNameInput);
 
-  QLabel* loginLabel=new QLabel(i18n("Ident:"),parentFrame);
+  QLabel* loginLabel=new QLabel(i18n("I&dent:"),parentFrame);
   loginInput=new KLineEdit(parentFrame);
+  loginLabel->setBuddy(loginInput);
 
   // encoding combo box
-  QLabel* codecLabel=new QLabel(i18n("Encoding:"),parentFrame);
+  QLabel* codecLabel=new QLabel(i18n("&Encoding:"),parentFrame);
   codecComboBox=new QComboBox(parentFrame);
+  codecLabel->setBuddy(codecComboBox);
 
   // get list of all encodings available
   encodings=KGlobal::charsets()->descriptiveEncodingNames();
@@ -78,28 +82,42 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   codecComboBox->insertStringList(encodings);
 
   // nickname alternatives
+  QLabel* nick0Label=new QLabel(i18n("Nickname &%1:").arg(1),parentFrame);
+  QLabel* nick1Label=new QLabel(i18n("Nickname &%1:").arg(2),parentFrame);
+  QLabel* nick2Label=new QLabel(i18n("Nickname &%1:").arg(3),parentFrame);
+  QLabel* nick3Label=new QLabel(i18n("Nickname &%1:").arg(4),parentFrame);
+
   nick0=new KLineEdit(parentFrame);
   nick1=new KLineEdit(parentFrame);
   nick2=new KLineEdit(parentFrame);
   nick3=new KLineEdit(parentFrame);
 
+  nick0Label->setBuddy(nick0);
+  nick1Label->setBuddy(nick1);
+  nick2Label->setBuddy(nick2);
+  nick3Label->setBuddy(nick3);
+
   bot=new KLineEdit(parentFrame);
   password=new KLineEdit(parentFrame);
   password->setEchoMode(QLineEdit::Password);
 
-  QLabel* partLabel=new QLabel(i18n("Part reason:"),parentFrame);
+  QLabel* partLabel=new QLabel(i18n("&Part reason:"),parentFrame);
   partInput=new KLineEdit(parentFrame);
+  partLabel->setBuddy(partInput);
 
-  QLabel* kickLabel=new QLabel(i18n("Kick reason:"),parentFrame);
+  QLabel* kickLabel=new QLabel(i18n("&Kick reason:"),parentFrame);
   kickInput=new KLineEdit(parentFrame);
+  kickLabel->setBuddy(kickInput);
 
-  showAwayMessageCheck=new QCheckBox(i18n("Show away messages"),parentFrame,"away_message_check");
+  showAwayMessageCheck=new QCheckBox(i18n("Show a&way messages"),parentFrame,"away_message_check");
 
-  awayLabel=new QLabel(i18n("Away message:"),parentFrame);
+  awayLabel=new QLabel(i18n("Away &message:"),parentFrame);
   awayInput=new KLineEdit(parentFrame);
+  awayLabel->setBuddy(awayInput);
 
-  unAwayLabel=new QLabel(i18n("Return message:"),parentFrame);
+  unAwayLabel=new QLabel(i18n("Re&turn message:"),parentFrame);
   unAwayInput=new KLineEdit(parentFrame);
+  unAwayLabel->setBuddy(unAwayInput);
 
   defaultText=new QLabel(i18n("<qt>This is the default identity used for all servers "
                               "where no separate identity was selected.</qt>"),
@@ -108,9 +126,9 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   QHBox* buttonBox=new QHBox(parentFrame);
   buttonBox->setSpacing(spacingHint());
 
-  QPushButton* addIdentityButton=new QPushButton(i18n("Add New Identity"),buttonBox,"add_identity_button");
-  removeIdentityButton=new QPushButton(i18n("Remove Identity"),buttonBox,"remove_identity_button");
-  
+  QPushButton* addIdentityButton=new QPushButton(i18n("Add New Identit&y"),buttonBox,"add_identity_button");
+  removeIdentityButton=new QPushButton(i18n("Rem&ove Identity"),buttonBox,"remove_identity_button");
+
   QHBox* spacer=new QHBox(parentFrame);
 
   // set values for the widgets
@@ -129,19 +147,19 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   identityLayout->addWidget(loginLabel,row,2);
   identityLayout->addWidget(loginInput,row,3);
   row++;
-  identityLayout->addWidget(new QLabel(i18n("Nickname %1:").arg(1),parentFrame),row,0);
+  identityLayout->addWidget(nick0Label,row,0);
   identityLayout->addWidget(nick0,row,1);
-  identityLayout->addWidget(new QLabel(i18n("Nickname %1:").arg(2),parentFrame),row,2);
+  identityLayout->addWidget(nick1Label,row,2);
   identityLayout->addWidget(nick1,row,3);
   row++;
-  identityLayout->addWidget(new QLabel(i18n("Nickname %1:").arg(3),parentFrame),row,0);
+  identityLayout->addWidget(nick2Label,row,0);
   identityLayout->addWidget(nick2,row,1);
-  identityLayout->addWidget(new QLabel(i18n("Nickname %1:").arg(4),parentFrame),row,2);
+  identityLayout->addWidget(nick3Label,row,2);
   identityLayout->addWidget(nick3,row,3);
   row++;
-  identityLayout->addWidget(new QLabel(i18n("Service:"), parentFrame),row,0);
+  identityLayout->addWidget(new QLabel(i18n("Ser&vice:"), parentFrame),row,0);
   identityLayout->addWidget(bot,row,1);
-  identityLayout->addWidget(new QLabel(i18n("Password:"), parentFrame),row,2);
+  identityLayout->addWidget(new QLabel(i18n("Pa&ssword:"), parentFrame),row,2);
   identityLayout->addWidget(password,row,3);
   row++;
   identityLayout->addWidget(partLabel,row,0);

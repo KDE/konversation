@@ -36,29 +36,35 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   // Add a Layout to the DCC settings pane
   QGridLayout* dccSettingsLayout=new QGridLayout(parentFrame,5,3,marginHint(),spacingHint(),"dcc_settings_layout");
 
-  QLabel* dccFolderLabel=new QLabel(i18n("DCC folder:"),parentFrame);
+  QLabel* dccFolderLabel=new QLabel(i18n("DCC &folder:"),parentFrame);
   dccFolderInput=new KLineEdit(preferences->getDccPath(),parentFrame);
-  QPushButton* dccFolderButton=new QPushButton(i18n("Browse..."),parentFrame,"dcc_folder_button");
+  QPushButton* dccFolderButton=new QPushButton(i18n("&Browse..."),parentFrame,"dcc_folder_button");
+
+  dccFolderLabel->setBuddy(dccFolderInput);
 
   QHBox* dccSpinBoxes=new QHBox(parentFrame);
   dccSpinBoxes->setSpacing(spacingHint());
 
-  new QLabel(i18n("Buffer size:"),dccSpinBoxes);
+  QLabel* dccBufferLabel=new QLabel(i18n("B&uffer size:"),dccSpinBoxes);
   dccBufferSpin=new QSpinBox(512,16384,128,dccSpinBoxes,"dcc_buffer_spin");
   dccBufferSpin->setSuffix(" "+i18n("bytes"));
   dccBufferSpin->setValue(preferences->getDccBufferSize());
 
-  QLabel* dccRollbackLabel=new QLabel(i18n("Rollback:"),dccSpinBoxes);
+  dccBufferLabel->setBuddy(dccBufferSpin);
+
+  QLabel* dccRollbackLabel=new QLabel(i18n("&Rollback:"),dccSpinBoxes);
   dccRollbackLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   dccRollbackSpin=new QSpinBox(0,65536,512,dccSpinBoxes,"dcc_rollback_spin");
   dccRollbackSpin->setSuffix(" "+i18n("bytes"));
   dccRollbackSpin->setValue(preferences->getDccRollback());
 
+  dccRollbackLabel->setBuddy(dccRollbackSpin);
+
   dccSpinBoxes->setStretchFactor(dccRollbackLabel,10);
 
-  dccAutoGet=new QCheckBox(i18n("Automatically accept DCC download"),parentFrame,"dcc_autoget_checkbox");
-  dccAddSender=new QCheckBox(i18n("Add sender to file name"),parentFrame,"dcc_sender_checkbox");
-  dccCreateFolder=new QCheckBox(i18n("Create folder for sender"),parentFrame,"dcc_create_folder_checkbox");
+  dccAutoGet=new QCheckBox(i18n("&Automatically accept DCC download"),parentFrame,"dcc_autoget_checkbox");
+  dccAddSender=new QCheckBox(i18n("Add &sender to file name"),parentFrame,"dcc_sender_checkbox");
+  dccCreateFolder=new QCheckBox(i18n("&Create folder for sender"),parentFrame,"dcc_create_folder_checkbox");
 
   dccAddSender->setChecked(preferences->getDccAddPartner());
   dccCreateFolder->setChecked(preferences->getDccCreateFolder());

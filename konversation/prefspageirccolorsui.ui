@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>PrefsPageIRCColorsUI</class>
 <widget class="QWidget">
     <property name="name">
@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>600</width>
-            <height>480</height>
+            <width>329</width>
+            <height>320</height>
         </rect>
     </property>
     <property name="caption">
@@ -19,7 +19,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLabel" row="5" column="3">
+        <widget class="QLabel" row="5" column="2">
             <property name="name">
                 <cstring>m_PurpleLbl</cstring>
             </property>
@@ -32,10 +32,13 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Purple:</string>
+                <string>&amp;Purple:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_purpleCBtn</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="6" column="3">
+        <widget class="QLabel" row="6" column="2">
             <property name="name">
                 <cstring>m_grayLbl</cstring>
             </property>
@@ -48,10 +51,13 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Gray:</string>
+                <string>Dar&amp;k Gray:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_grayCBtn</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="1" column="3">
+        <widget class="QLabel" row="1" column="2">
             <property name="name">
                 <cstring>m_GreenLbl</cstring>
             </property>
@@ -64,10 +70,13 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Green:</string>
+                <string>&amp;Green:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_greenCBtn</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="4" column="3">
+        <widget class="QLabel" row="4" column="2">
             <property name="name">
                 <cstring>m_blueLbl</cstring>
             </property>
@@ -80,10 +89,13 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Blue:</string>
+                <string>Bl&amp;ue:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_blueCBtn</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="7" column="3">
+        <widget class="QLabel" row="7" column="2">
             <property name="name">
                 <cstring>m_lightGrayLbl_16</cstring>
             </property>
@@ -96,10 +108,13 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Light gray:</string>
+                <string>L&amp;ight gray:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_lightGrayCBtn</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="3" column="3">
+        <widget class="QLabel" row="3" column="2">
             <property name="name">
                 <cstring>m_cyanLbl</cstring>
             </property>
@@ -112,10 +127,13 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Cyan:</string>
+                <string>&amp;Cyan:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_cyanCBtn</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="2" column="3">
+        <widget class="QLabel" row="2" column="2">
             <property name="name">
                 <cstring>m_darkCyanLbl</cstring>
             </property>
@@ -128,7 +146,10 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Dark cyan:</string>
+                <string>&amp;Dark cyan:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_darkCyanCBtn</cstring>
             </property>
         </widget>
         <widget class="KColorButton" row="0" column="1">
@@ -236,7 +257,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="0" column="4">
+        <widget class="KColorButton" row="0" column="3">
             <property name="name">
                 <cstring>m_yellowCBtn</cstring>
             </property>
@@ -251,7 +272,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="1" column="4">
+        <widget class="KColorButton" row="1" column="3">
             <property name="name">
                 <cstring>m_greenCBtn</cstring>
             </property>
@@ -266,7 +287,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="2" column="4">
+        <widget class="KColorButton" row="2" column="3">
             <property name="name">
                 <cstring>m_darkCyanCBtn</cstring>
             </property>
@@ -281,7 +302,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="3" column="4">
+        <widget class="KColorButton" row="3" column="3">
             <property name="name">
                 <cstring>m_cyanCBtn</cstring>
             </property>
@@ -296,7 +317,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="4" column="4">
+        <widget class="KColorButton" row="4" column="3">
             <property name="name">
                 <cstring>m_blueCBtn</cstring>
             </property>
@@ -311,7 +332,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="5" column="4">
+        <widget class="KColorButton" row="5" column="3">
             <property name="name">
                 <cstring>m_purpleCBtn</cstring>
             </property>
@@ -326,7 +347,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="6" column="4">
+        <widget class="KColorButton" row="6" column="3">
             <property name="name">
                 <cstring>m_grayCBtn</cstring>
             </property>
@@ -341,7 +362,7 @@
                 </color>
             </property>
         </widget>
-        <widget class="KColorButton" row="7" column="4">
+        <widget class="KColorButton" row="7" column="3">
             <property name="name">
                 <cstring>m_lightGrayCBtn</cstring>
             </property>
@@ -373,7 +394,7 @@
                 </size>
             </property>
         </spacer>
-        <widget class="QLabel" row="0" column="3">
+        <widget class="QLabel" row="0" column="2">
             <property name="name">
                 <cstring>m_yellowLbl</cstring>
             </property>
@@ -386,7 +407,10 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Yellow:</string>
+                <string>&amp;Yellow:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_yellowCBtn</cstring>
             </property>
         </widget>
         <widget class="QLabel" row="7" column="0">
@@ -402,7 +426,10 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Orange:</string>
+                <string>Ora&amp;nge:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_orangeCBtn</cstring>
             </property>
         </widget>
         <widget class="QLabel" row="6" column="0">
@@ -418,7 +445,10 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Magenta:</string>
+                <string>&amp;Magenta:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_magentaCBtn</cstring>
             </property>
         </widget>
         <widget class="QLabel" row="5" column="0">
@@ -434,7 +464,10 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Brown:</string>
+                <string>Br&amp;own:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_brownCBtn</cstring>
             </property>
         </widget>
         <widget class="QLabel" row="4" column="0">
@@ -450,7 +483,10 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Red:</string>
+                <string>R&amp;ed:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_darkGreenCBtn</cstring>
             </property>
         </widget>
         <widget class="QLabel" row="3" column="0">
@@ -466,7 +502,10 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Dark green:</string>
+                <string>Dark g&amp;reen:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_darkGreenCBtn</cstring>
             </property>
         </widget>
         <widget class="QLabel" row="2" column="0">
@@ -482,7 +521,10 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Dark blue:</string>
+                <string>Dark b&amp;lue:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_darkBlueCBtn</cstring>
             </property>
         </widget>
         <widget class="QLabel" row="1" column="0">
@@ -498,7 +540,10 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Black:</string>
+                <string>&amp;Black:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_blackCBtn</cstring>
             </property>
         </widget>
         <widget class="QLabel" row="0" column="0">
@@ -514,7 +559,10 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>White:</string>
+                <string>&amp;White:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>m_whiteCBtn</cstring>
             </property>
         </widget>
         <widget class="KColorButton" row="2" column="1">
@@ -532,23 +580,6 @@
                 </color>
             </property>
         </widget>
-        <spacer row="3" column="2" rowspan="2" colspan="1">
-            <property name="name">
-                <cstring>spacer2</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Horizontal</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Maximum</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>20</height>
-                </size>
-            </property>
-        </spacer>
     </grid>
 </widget>
 <layoutdefaults spacing="6" margin="11"/>

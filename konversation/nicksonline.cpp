@@ -42,8 +42,8 @@ NicksOnline::NicksOnline(const QSize& newSize)
   QHBox* buttonBox=new QHBox(this);
   buttonBox->setSpacing(KDialog::spacingHint());
 
-  QPushButton* editButton=new QPushButton(i18n("Edit"),buttonBox,"edit_notify_button");
-  QPushButton* closeButton=new QPushButton(i18n("Close"),buttonBox,"close_nicksonline_window");
+  QPushButton* editButton=new QPushButton(i18n("&Edit..."),buttonBox,"edit_notify_button");
+  QPushButton* closeButton=new QPushButton(i18n("&Close"),buttonBox,"close_nicksonline_window");
 
   connect(editButton,SIGNAL (clicked()),SIGNAL (editClicked()) );
   connect(closeButton,SIGNAL (clicked()),this,SLOT (closeButton()) );

@@ -37,12 +37,13 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   QHBox* delayBox=new QHBox(parentFrame);
   delayBox->setSpacing(spacingHint());
 
-  useNotifyCheck=new QCheckBox(i18n("Use notify"),delayBox,"use_notify_checkbox");
-  notifyDelayLabel=new QLabel(i18n("Notify interval:"),delayBox,"interval_label");
+  useNotifyCheck=new QCheckBox(i18n("&Use notify"),delayBox,"use_notify_checkbox");
+  notifyDelayLabel=new QLabel(i18n("Notify &interval:"),delayBox,"interval_label");
   notifyDelayLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   notifyDelaySpin=new QSpinBox(5,1000,1,delayBox,"delay_spin");
   notifyDelaySpin->setValue(preferences->getNotifyDelay());
   notifyDelaySpin->setSuffix(i18n(" seconds"));
+  notifyDelayLabel->setBuddy(notifyDelaySpin);
 
   // Set up the notify list
   QHBox* listBox=new QHBox(parentFrame);
@@ -62,8 +63,8 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   // Set up the buttons to the right of the list
   QGrid* buttonBox=new QGrid(3,QGrid::Vertical,listBox);
   buttonBox->setSpacing(spacingHint());
-  newButton=new QPushButton(i18n("New..."),buttonBox);
-  removeButton=new QPushButton(i18n("Remove"),buttonBox);
+  newButton=new QPushButton(i18n("&New..."),buttonBox);
+  removeButton=new QPushButton(i18n("&Remove"),buttonBox);
 
   notifyLayout->addWidget(delayBox);
   notifyLayout->addWidget(listBox);
