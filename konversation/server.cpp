@@ -658,14 +658,8 @@ void Server::broken(int state)
   {
     // TODO: Make retry counter configurable
     reconnectCounter++;
-    bool cancelReconnect = false;
-    if(state != KNetwork::KSocketBase::LookupFailure &&
-       state != KNetwork::KSocketBase::ConnectionTimedOut &&
-       state != KNetwork::KSocketBase::NetFailure &&
-       state != KNetwork::KSocketBase::Timeout &&
-       state != KNetwork::KSocketBase::UnknownError) cancelReconnect = true;
-
-    if(cancelReconnect || reconnectCounter >= 10 || !m_tryReconnect)
+    
+    if(reconnectCounter >= 10 || !m_tryReconnect)
     {
       QString error = i18n("Connection to Server %1 failed.  %2")
           .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
