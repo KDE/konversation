@@ -194,7 +194,7 @@ void StatusPanel::closeYourself()
                 i18n("Quit Server"),
                 KStdGuiItem::yes(),
                 KStdGuiItem::no(),
-                "QuitServerOnTabClose");
+                "QuitServerTab");
 
   if(result==KMessageBox::Yes)
   {
