@@ -272,7 +272,9 @@ void Query::setNickInfo(const NickInfoPtr & nickInfo) {
   connect(m_nickInfo, SIGNAL(nickInfoChanged()), this, SLOT(nickInfoChanged()));
 }
 void Query::nickInfoChanged() {
-  setName(m_nickInfo->getNickname());
+  if(m_nickInfo)
+    setName(m_nickInfo->getNickname());
+  emitUpdateInfo();
 }
 NickInfoPtr Query::getNickInfo() {
   return m_nickInfo;
@@ -322,5 +324,15 @@ void Query::serverQuit(const QString&)
   closeYourself(this);
 }
 #endif
+
+void Query::emitUpdateInfo()
+{
+  QString info = getName();
+
+  if(m_nickInfo)
+    info = m_nickInfo->getBestAddresseeName();
+  
+  emit updateInfo(info);
+}
 
 #include "query.moc"

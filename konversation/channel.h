@@ -92,7 +92,7 @@ class Channel : public ChatWindow
 
     void adjustNicks(int value);
     void adjustOps(int value);
-    void updateNicksOps();
+    virtual void emitUpdateInfo();
 
     void setTopic(const QString& topic);
     void setTopic(const QString& nickname,const QString& topic); // Overloaded
@@ -129,7 +129,6 @@ class Channel : public ChatWindow
   signals:
     void newText(QWidget* channel,const QString& highlightColor, bool important);
     void sendFile();
-    void updateInfo();
 
   public slots:
     void setNickname(const QString& newNickname);

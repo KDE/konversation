@@ -1032,18 +1032,22 @@ Nick* Channel::getNickByName(const QString &lookname)
 void Channel::adjustNicks(int value)
 {
   nicks+=value;
-  updateNicksOps();
+  emitUpdateInfo();
 }
 
 void Channel::adjustOps(int value)
 {
   ops+=value;
-  updateNicksOps();
+  emitUpdateInfo();
 }
 
-void Channel::updateNicksOps()
+void Channel::emitUpdateInfo()
 {
-  emit updateInfo();
+  QString info = getName() + " - ";
+  info += i18n("%n nick", "%n nicks", numberOfNicks());
+  info += i18n(" (%n op)", " (%n ops)", numberOfOps());
+
+  emit updateInfo(info);
 }
 
 void Channel::setTopic(const QString &newTopic)
@@ -1156,7 +1160,7 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
         if(plus && !parameterChannelNick->isOwner() && !parameterChannelNick->isOp()) adjustOps(1);
         else if(!plus && parameterChannelNick->isOwner() && !parameterChannelNick->isOp()) adjustOps(-1);
         parameterChannelNick->setOwner(plus);
-        updateNicksOps();
+        emitUpdateInfo();
         nicknameListView->sort();
       }
     break;
@@ -1201,7 +1205,7 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
         if(plus && !parameterChannelNick->isOp()) adjustOps(1);
         else if(!plus && parameterChannelNick->isOp()) adjustOps(-1);
         parameterChannelNick->setOp(plus);
-        updateNicksOps();
+        emitUpdateInfo();
         nicknameListView->sort();
       }
     break;
@@ -1246,7 +1250,7 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
         if(plus && !parameterChannelNick->isHalfOp()) adjustOps(1);
         else if(!plus && parameterChannelNick->isHalfOp()) adjustOps(-1);
         parameterChannelNick->setHalfOp(plus);
-        updateNicksOps();
+        emitUpdateInfo();
         nicknameListView->sort();
       }
     break;

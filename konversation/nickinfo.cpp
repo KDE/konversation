@@ -203,7 +203,21 @@ QString NickInfo::tooltip() const {
   tooltip << "</table></qt>";
   return strTooltip;
 }
-    
+   
+QString NickInfo::getBestAddresseeName() {
+   if(!m_addressee.formattedName().isEmpty()) {
+    return m_addressee.formattedName();
+  } else if(!m_addressee.realName().isEmpty()) {
+    return m_addressee.realName();
+  } else if(!getRealName().isEmpty() && getRealName().lower() != getNickname().lower()) {
+    return getRealName();
+  } else {
+    return getNickname();
+  }
+
+}
+
+
 void NickInfo::tooltipTableData(QTextStream &tooltip) const {
   tooltip << "<tr><td colspan=\"2\" valign=\"top\">";
 

@@ -111,6 +111,13 @@ class NickInfo : public QObject, public KShared
      *  Used so that channelNick->tooltip()  can call this, then append on its own information.
      */
     void tooltipTableData(QTextStream &tooltip) const;
+
+    /** Returns a full name for this contact. Tries to use the name out of addressbook.
+     *  If that is empty, uses the real name from whois.  If that fails, use nickname.
+     *
+     *  @return A string to show the user for the name of this contact
+     */
+    QString NickInfo::getBestAddresseeName();
   private:
     QString m_nickname;
     Server* m_owningServer;

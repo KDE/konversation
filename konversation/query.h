@@ -50,6 +50,10 @@ class Query : public ChatWindow
      *  @param nickInfo A nickinfo that must exist.
      */
     void setNickInfo(const NickInfoPtr & nickInfo);
+    /** It seems that this does _not_ guaranttee to return non null.
+     *  The problem is when you open a query to someone, then the go offline.
+     *  This should be fixed maybe?  I don't know.
+     */
     NickInfoPtr getNickInfo();
     void updateFonts();
     virtual QString getTextInLine();
@@ -60,7 +64,7 @@ class Query : public ChatWindow
     virtual void setChannelEncoding(const QString& encoding);
     virtual QString getChannelEncoding();
     virtual QString getChannelEncodingDefaultDesc();
-
+    virtual void emitUpdateInfo();
   signals:
     void newText(QWidget* query,const QString& highlightColor,bool important);
     void sendFile(const QString& recipient);

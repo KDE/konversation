@@ -184,7 +184,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void insertCharacter();
     void insertChar(const QChar& chr);
 
-    void updateChannelInfo();
+    void updateChannelInfo(const QString& info);
 
   protected:
     enum StatusID

@@ -540,6 +540,11 @@ void ChatWindow::adjustFocus() {
   }
   childAdjustFocus();
 }
+void ChatWindow::emitUpdateInfo()
+{
+  QString info = getName();
+  emit updateInfo(info);
+}
 
 
 #include "chatwindow.moc"

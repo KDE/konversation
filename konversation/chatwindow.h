@@ -143,12 +143,21 @@ class ChatWindow : public BASE_CLASS
     virtual QString getChannelEncodingDefaultDesc() { return QString::null; }
     bool isChannelEncodingSupported() const;
     
+    /** Force updateInfo(info) to be emitted.
+     *  Useful for when this tab has just gained focus
+     */
+    virtual void emitUpdateInfo();
+    
   signals:
     void nameChanged(ChatWindow* view,const QString& newName);
     void online(ChatWindow* myself,bool state);
     void chatWindowCloseRequest(ChatWindow* view); // USE_MDI
     void setNotification(ChatWindow* view,const QIconSet& newIconSet,const QString& color);   // USE_MDI - used for blinking tabs
-
+    /** Emit this signal when you want to change the status bar text for this tab.
+     *  It is ignored if this tab isn't focused.
+     */
+    void updateInfo(const QString &info);
+    
   public slots:
     void logText(const QString& text);
     void serverOnline(bool state);

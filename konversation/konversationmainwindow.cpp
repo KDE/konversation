@@ -941,21 +941,14 @@ void KonversationMainWindow::updateFrontView()
     // Make sure that only views with info output get to be the frontView
     if(frontView) {
       previousFrontView = frontView;
-
-      if(frontView->getType() == ChatWindow::Channel) {
-        disconnect(frontView, SIGNAL(updateInfo()), this, SLOT(updateChannelInfo()));
-      }
+      disconnect(frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
     }
 
     if(view->frontView()) {
       frontView = view;
 
-      if(view->getType() == ChatWindow::Channel) {
-        updateChannelInfo();
-        connect(view, SIGNAL(updateInfo()), this, SLOT(updateChannelInfo()));
-      } else {
-        m_channelInfoLabel->setText(view->getName());
-      }
+      connect(view, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
+      view->emitUpdateInfo();
     } else {
       m_channelInfoLabel->setText(view->getName());
     }
@@ -1526,17 +1519,8 @@ void KonversationMainWindow::openIdentitiesDialog()
   }
 }
 
-void KonversationMainWindow::updateChannelInfo()
+void KonversationMainWindow::updateChannelInfo(const QString &info)
 {
-  if(!frontView || frontView->getType() != ChatWindow::Channel) {
-    return;
-  }
-
-  ChatWindow* view = frontView;
-  Channel* channel = static_cast<Channel*>(view);
-  QString info = channel->getName() + " - ";
-  info += i18n("%n nick", "%n nicks", channel->numberOfNicks());
-  info += i18n(" (%n op)", " (%n ops)", channel->numberOfOps());
   m_channelInfoLabel->setText(info);
 }
 
