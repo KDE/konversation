@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# Copyright (C) 2005 by İsmail Dönmez
+# Copyright (C) 2005 by İsmail Dönmez ( Resistence is futile, turn on god damn Unicode! )
 # Licensed under GPL v2 or later at your option
 #
 # A simple google search script using Google's SOAP api
