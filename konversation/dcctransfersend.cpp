@@ -350,7 +350,7 @@ void DccTransferSend::slotServerSocketClosed()
 void DccTransferSend::slotSendSocketClosed()
 {
   kdDebug() << "DccTransferSend::slotSendSocketClosed()" << endl;
-  if ( m_dccStatus == Sending )
+  if ( m_dccStatus == Sending && m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
     failed( i18n( "Remote user disconnected" ) );
 }
 
