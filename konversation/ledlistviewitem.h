@@ -44,6 +44,7 @@ class LedListViewItem : public QObject, public KListViewItem
     int getFlags() const;
     virtual int compare(QListViewItem* item,int col,bool ascending) const;
     Nick *getNick();
+	    
 #ifndef USE_NICKINFO
     void refresh();
 #endif
@@ -60,10 +61,14 @@ class LedListViewItem : public QObject, public KListViewItem
     QString label;
 
     Images leds;
+
+    QString calculateLabel1();
+    QString calculateLabel2();
 #ifdef USE_NICKINFO
   protected slots:
     //We will refresh ourselves, so make it protected.
     void refresh();
+
 #endif
     
 };

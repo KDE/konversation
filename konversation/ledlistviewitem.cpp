@@ -70,9 +70,26 @@ void LedListViewItem::refresh() {
     setPixmap(0,voiceLedOn);
   else
     setPixmap(0,voiceLedOff);
+ 
+  setText(1,calculateLabel1());
+  setText(2,calculateLabel2());
   repaint();
 }
-
+#ifdef USE_NICKINFO
+QString LedListViewItem::calculateLabel1() {
+  NickInfoPtr nickinfo = nick->getNickInfo();
+  KABC::Addressee addressee = nickinfo->getAddressee();
+  if(!addressee.realName().isEmpty()) //if no addressee, realName will be empty
+    return nick->getNickInfo()->getNickname() + " (" + addressee.realName() + ")";
+  return nick->getNickInfo()->getNickname();
+}
+QString LedListViewItem::calculateLabel2() {
+  return nick->getNickInfo()->getHostmask();
+}
+#else
+QString LedListViewItem::calculateLabel1() { return nick->getNickname();}
+QString LedListViewItem::calculateLabel2() { return nick->getHostmas();}
+#endif
 int LedListViewItem::compare(QListViewItem* item,int col,bool ascending) const
 {
   LedListViewItem* otherItem=static_cast<LedListViewItem*>(item);
