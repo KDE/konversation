@@ -243,7 +243,7 @@ void StatusPanel::closeYourself(ChatWindow*)
 #ifdef USE_MDI
     emit chatWindowCloseRequest(this);
 #else
-    this->deleteLater(); //NO NO!  Deleting the server should delete this! FIXME
+    deleteLater(); //NO NO!  Deleting the server should delete this! FIXME
     return true;
 #endif
   }

@@ -310,7 +310,7 @@ void DccChat::heardPartner()
 
   if(!m_dccSocket)
   {
-    this->deleteLater();
+    deleteLater();
     return;
   }
 

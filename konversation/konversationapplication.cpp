@@ -280,10 +280,10 @@ void KonversationApplication::removeServer(Server* server)
 
 void KonversationApplication::quitKonversation()
 {
-  if(prefsDialog) delete prefsDialog;
+  delete prefsDialog;
   prefsDialog=0;
 
-  this->exit();
+  qApp->quit();
 }
 
 void KonversationApplication::readOptions()
