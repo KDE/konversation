@@ -39,8 +39,11 @@ class LedTabBar : public QTabBar
 
     virtual void layoutTabs();
     void updateTabs();
+    LedTab* tabAt(int index) const;
 
   signals:
+    void moveTabLeft(int id);
+    void moveTabRight(int id);
     void closeTab(int id);
 
   public slots:
@@ -50,6 +53,8 @@ class LedTabBar : public QTabBar
     enum PopupIDs
     {
       Label=0,
+      MoveLeft,
+      MoveRight,
       CloseTab
     };
     // these two come from the original QT source

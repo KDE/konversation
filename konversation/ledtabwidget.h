@@ -34,7 +34,7 @@ class LedTabWidget : public QTabWidget
     LedTabWidget(QWidget* parent,const char* name);
     ~LedTabWidget();
 
-    void addTab(ChatWindow* child,const QString& label,int color,bool on);
+    void addTab(ChatWindow* child,const QString& label,int color,bool on,int index=-1);
     void changeTabState(QWidget* child,bool state,const QString& labelColor);
     void updateTabs();
 
@@ -42,12 +42,15 @@ class LedTabWidget : public QTabWidget
     void closeTab(QWidget* view);
 
   protected slots:
+    void moveTabLeft(int id);
+    void moveTabRight(int id);
     void tabSelected(int id);
     void tabClosed(int id);
     void tabClosed();
     void changeName(ChatWindow* view,const QString& newName);
 
   protected:
+    void moveTabToIndex(int oldIndex,int newIndex);
     LedTabBar* tabBar();
 
     Images images;

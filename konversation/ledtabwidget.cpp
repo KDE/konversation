@@ -27,8 +27,10 @@ LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :
 {
   setTabBar(new LedTabBar(this,"led_tab_bar"));
   connect(tabBar(),SIGNAL (selected(int)) ,this,SLOT (tabSelected(int)) );
+  connect(tabBar(),SIGNAL (moveTabLeft(int)), this,SLOT (moveTabLeft(int)) );
+  connect(tabBar(),SIGNAL (moveTabRight(int)), this,SLOT (moveTabRight(int)) );
   connect(tabBar(),SIGNAL (closeTab(int)), this,SLOT (tabClosed(int)) );
-  
+
 #if QT_VERSION >= 0x030200
   KPushButton* closeBtn = new KPushButton(this);
   closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));
@@ -44,11 +46,11 @@ LedTabWidget::~LedTabWidget()
 {
 }
 
-void LedTabWidget::addTab(ChatWindow* child,const QString& label,int color,bool on)
+void LedTabWidget::addTab(ChatWindow* child,const QString& label,int color,bool on,int index)
 {
   LedTab* tab=new LedTab(child,label,color,on);
 
-  QTabWidget::addTab(child,tab);
+  QTabWidget::insertTab(child,tab,index);
   // This signal will be emitted when the tab is blinking
   connect(tab,SIGNAL(repaintTab(LedTab*)),tabBar(),SLOT(repaintLED(LedTab*)));
   // This signal will be emitted when the chat window changes its name
@@ -82,6 +84,33 @@ void LedTabWidget::tabSelected(int id)
     emit currentChanged(currentPage());
     tab->setOn(false);
   }
+}
+
+void LedTabWidget::moveTabLeft(int id)
+{
+  int index=tabBar()->indexOf(id);
+  if(index) moveTabToIndex(index,index-1);
+}
+
+void LedTabWidget::moveTabRight(int id)
+{
+  int index=tabBar()->indexOf(id);
+  if(index<count()-1) moveTabToIndex(index,index+1);
+}
+
+void LedTabWidget::moveTabToIndex(int oldIndex,int newIndex)
+{
+  int color=tabBar()->tabAt(oldIndex)->getColor();
+  // remember page
+  ChatWindow* pagePointer=static_cast<ChatWindow*>(page(oldIndex));
+  // remember page label
+  QString pageLabel=label(oldIndex);
+  // remove old tab
+  removePage(pagePointer);
+  // add new tab at desired position
+  addTab(pagePointer,pageLabel,color,false,newIndex);
+  // make this the current page
+  setCurrentPage(newIndex);
 }
 
 void LedTabWidget::tabClosed(int id)

@@ -74,7 +74,9 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
   if(popup)
   {
     popup->insertTitle(i18n("Tab"),Label);
-//    popup->insertSeparator();
+    popup->insertItem(i18n("Move Left"),MoveLeft);
+    popup->insertItem(i18n("Move Right"),MoveRight);
+    popup->insertSeparator();
     popup->insertItem(i18n("Close Tab"),CloseTab);
   }
   else kdWarning() << "LedTabBar::LedTabBar(): Could not create popup!" << endl;
@@ -320,8 +322,22 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
       {
         emit closeTab(lookTab->identifier());
       }
+      else if(r==MoveLeft)
+      {
+        emit moveTabLeft(lookTab->identifier());
+      }
+      else if(r==MoveRight)
+      {
+        emit moveTabRight(lookTab->identifier());
+      }
     }
   } // endfor
+}
+
+// reimplemented to avoid casts in active code
+LedTab* LedTabBar::tabAt (int index) const
+{
+  return static_cast<LedTab*>(QTabBar::tabAt(index));
 }
 
 #include "ledtabbar.moc"

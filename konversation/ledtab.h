@@ -39,6 +39,7 @@ class LedTab : public QObject,public QTab
     const QString& getLabelColor();
 
     QWidget* getWidget();
+    int getColor();
 
     QIconSet iconOn;
     QIconSet iconOff;

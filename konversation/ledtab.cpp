@@ -96,4 +96,9 @@ QWidget* LedTab::getWidget()
   return widget;
 }
 
+int LedTab::getColor()
+{
+  return color;
+}
+
 #include "ledtab.moc"
