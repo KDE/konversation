@@ -52,43 +52,43 @@ QString tagURLs(const QString& text, const QString& fromNick)
       QRegExp chanExp("(?:^|\\s)#[^\\s\\x0007,]+");
 
       while((pos = chanExp.search(filteredLine, pos)) >= 0)
-	{
-	  urlLen = chanExp.matchedLength();
-	  QString href = filteredLine.mid( pos, urlLen );
-	  QString link = "#" + href.stripWhiteSpace();
+      {
+          urlLen = chanExp.matchedLength();
+          QString href = filteredLine.mid( pos, urlLen );
+          QString link = "#" + href.stripWhiteSpace();
 
-	  link = "<font color=\"#"+linkColor+"\"></u><a href=\""+link+"\">"+href+"</a><u></font>";
-	  filteredLine.replace( pos, urlLen, link );
-	  pos += link.length()-1;
-	}
+          link = "<font color=\"#"+linkColor+"\"></u><a href=\""+link+"\">"+href+"</a><u></font>";
+          filteredLine.replace( pos, urlLen, link );
+          pos += link.length()-1;
+      }
     }
- 
+
   pos = 0;
-  urlLen =0;  
- 
+  urlLen =0;
+
   QRegExp urlPattern("((www\\.(?!\\.)|(fish|(f|ht)tp(|s))://)[\\d\\w\\./,:_~\\?=&;#@\\-\\+\\%]+[\\d\\w/])|"
-      "((mailto:|)[-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
+      "([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
   urlPattern.setCaseSensitive(false);
 
   while((pos = urlPattern.search(filteredLine, pos)) >= 0) 
-    {
-      urlLen = urlPattern.matchedLength();
-      QString href = filteredLine.mid( pos, urlLen );
+  {
+    urlLen = urlPattern.matchedLength();
+    QString href = filteredLine.mid( pos, urlLen );
 
-      // Qt doesn't support (?<=pattern) so we do it here
-      if((pos > 0) && filteredLine[pos-1].isLetterOrNumber())
-	{
-	  pos++;
-	  continue;
-	}
-      
-      QString link = "<font color=\"#"+linkColor+"\"><u><a href=\""+href+"\">"+href+"</a></u></font>";
-      filteredLine.replace( pos, urlLen, link );
-      pos += link.length();
-      KonversationApplication::instance()->storeUrl(fromNick, href);
+    // Qt doesn't support (?<=pattern) so we do it here
+    if((pos > 0) && filteredLine[pos-1].isLetterOrNumber())
+    {
+      pos++;
+      continue;
     }
 
-  //  kdDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine << endl;
+    QString link = "<font color=\"#"+linkColor+"\"><u><a href=\""+href+"\">"+href+"</a></u></font>";
+    filteredLine.replace( pos, urlLen, link );
+    pos += link.length();
+    KonversationApplication::instance()->storeUrl(fromNick, href);
+  }
+
+  //kdDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine << endl;
   return filteredLine;
 }
 
