@@ -1,12 +1,12 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="22">
+<kpartgui name="konversation" version="23">
 
   <MenuBar>
     <Menu name="file">
       <Action name="open_server_list" />
       <Action name="quick_connect_dialog" />
       <Separator />
-      <Action name="identities_dialog" />
+      <Action name="join_channel" />
       <Separator />
       <Action name="toggle_away" />
     </Menu>
@@ -18,6 +18,9 @@
       <Action name="irc_colors" />
       <Action name="insert_remember_line" />
       <Action name="insert_character" />
+    </Menu>
+    <Menu name="settings">
+      <Action name="identities_dialog" />
     </Menu>
     <Menu name="windows" append="settings_merge">
       <Text>&amp;Window</Text>

@@ -1,0 +1,75 @@
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<class>Konversation::JoinChannelUI</class>
+<comment>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+</comment>
+<author>(C) 2004 Peter Simonsson</author>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>Konversation::JoinChannelUI</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>507</width>
+            <height>209</height>
+        </rect>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLabel" row="0" column="0">
+            <property name="name">
+                <cstring>channelLabel</cstring>
+            </property>
+            <property name="text">
+                <string>C&amp;hannel:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>channelCombo</cstring>
+            </property>
+        </widget>
+        <widget class="KHistoryCombo" row="0" column="1">
+            <property name="name">
+                <cstring>channelCombo</cstring>
+            </property>
+            <property name="autoCompletion">
+                <bool>true</bool>
+            </property>
+            <property name="contextMenuEnabled">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="KLineEdit" row="1" column="1">
+            <property name="name">
+                <cstring>passwordEdit</cstring>
+            </property>
+            <property name="echoMode">
+                <enum>Password</enum>
+            </property>
+        </widget>
+        <widget class="QLabel" row="1" column="0">
+            <property name="name">
+                <cstring>passwordLabel</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Password:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>passwordEdit</cstring>
+            </property>
+        </widget>
+    </grid>
+</widget>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<includehints>
+    <includehint>kcombobox.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>klineedit.h</includehint>
+</includehints>
+</UI>

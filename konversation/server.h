@@ -394,7 +394,7 @@ class Server : public QObject
     void addDccSend(const QString &recipient,KURL fileURL, const QString &altFileName = QString::null, uint fileSize = 0);
     void removeQuery(Query *query);
     void startNotifyTimer(int msec=0);
-    void sendJoinCommand(const QString& channelName);
+    void sendJoinCommand(const QString& channelName, const QString& password = QString::null);
     void requestChannelList();
     void requestWhois(const QString& nickname);
     void requestWho(const QString& channel);

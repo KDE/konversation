@@ -1859,10 +1859,10 @@ void Server::removeQuery(Query* query)
 #endif
 }
 
-void Server::sendJoinCommand(const QString& name)
+void Server::sendJoinCommand(const QString& name, const QString& password)
 {
   Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),
-    KonversationApplication::preferences.getCommandChar() + "JOIN " + name, QString::null);
+    KonversationApplication::preferences.getCommandChar() + "JOIN " + name + " " + password, QString::null);
   queue(result.toServer);
 }
 

@@ -70,6 +70,7 @@
 #include "insertchardialog.h"
 #include "logfilereader.h"
 #include "identitydialog.h"
+#include "joinchanneldialog.h"
 
 #ifdef USE_MDI
 KonversationMainWindow::KonversationMainWindow() : KMdiMainFrm(0,"mdi_main_form")
@@ -153,6 +154,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
   new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
   new KAction(i18n("Set &Away Globally"),"konversationaway",KShortcut("Alt+A"),static_cast<KonversationApplication *>(kapp),SLOT(toggleAway()),actionCollection(),"toggle_away");  //string must be the same as that used in server.cpp
+  new KAction(i18n("&Join Channel..."), 0, 0, this, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
 
   KStdAction::find(this, SLOT(findText()), actionCollection());
   KStdAction::findNext(this, SLOT(findNextText()), actionCollection());
@@ -1529,6 +1531,19 @@ void KonversationMainWindow::openIdentitiesDialog()
 void KonversationMainWindow::updateChannelInfo(const QString &info)
 {
   m_channelInfoLabel->setText(info);
+}
+
+void KonversationMainWindow::showJoinChannelDialog()
+{
+  if(!frontServer) {
+    return;
+  }
+
+  Konversation::JoinChannelDialog dlg(frontServer->getServerGroup(), this);
+
+  if(dlg.exec() == QDialog::Accepted) {
+    frontServer->sendJoinCommand(dlg.channel(), dlg.password());
+  }
 }
 
 #include "konversationmainwindow.moc"

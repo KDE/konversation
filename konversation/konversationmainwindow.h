@@ -192,6 +192,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     void updateChannelInfo(const QString& info);
 
+    void showJoinChannelDialog();
+
   protected:
     enum StatusID
     {
