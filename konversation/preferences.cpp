@@ -140,8 +140,8 @@ Preferences::Preferences()
 
   // On Screen Display
   setOSDUsage(false);
-  setOSDShowOwnNick(true);
-  setOSDShowQuery(true);
+  setOSDShowOwnNick(false);
+  setOSDShowQuery(false);
   setOSDShowChannelEvent(false);
   setOSDTextColor("#ffffff");
   setOSDDuration(3000);
