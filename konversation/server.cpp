@@ -1049,11 +1049,16 @@ void Server::send()
 
     // init stream props
     serverStream.setEncoding(QTextStream::Locale);
-    QString codecName=channelCodecName.isEmpty() ? identity->getCodec()->name() : channelCodecName;
+    QTextCodec* codec = identity->getCodec();
+
+    if(!channelCodecName.isEmpty()) {
+       codec = QTextCodec::codecForName(channelCodecName.ascii());
+    }
+
     // convert encoded data to IRC ascii only when we don't have the same codec locally
-    if(QString(QTextCodec::codecForLocale()->name()).lower()!=codecName.lower())
+    if(QString(QTextCodec::codecForLocale()->name()).lower() != QString(codec->name()).lower())
     {
-      serverStream.setCodec(QTextCodec::codecForName(codecName.ascii()));
+      serverStream.setCodec(codec);
     }
 
     serverStream << outputLine;
