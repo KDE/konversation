@@ -172,6 +172,7 @@ void PrefsPageThemes::installTheme()
 				 i18n("Cannot install theme"),
 				 KMessageBox::Notify
 				 );
+	      break;
 	    }
 	  else
 	    themeDir->copyTo(themesDir);
