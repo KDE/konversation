@@ -140,7 +140,6 @@ class DccTransferRecvWriteCacheHandler : public QObject
     void slotKIOResult();  // will connect with transferJob->result()
     
   protected:
-    unsigned long allCacheSize();
     QByteArray popCache();
     
     KIO::TransferJob* m_transferJob;
@@ -148,6 +147,7 @@ class DccTransferRecvWriteCacheHandler : public QObject
     bool m_writeReady;
     
     QValueList<QByteArray> m_cacheList;
+    unsigned long m_wholeCacheSize;
 };
 
 #endif // DCCTRANSFERRECV_H

@@ -384,6 +384,7 @@ DccTransferRecvWriteCacheHandler::DccTransferRecvWriteCacheHandler( KIO::Transfe
   : m_transferJob( transferJob )
 {
   m_writeReady = false;
+  m_wholeCacheSize = 0;
   
   connect( this,          SIGNAL( dataFinished() ),                    m_transferJob, SLOT( slotFinished() )                           );
   connect( m_transferJob, SIGNAL( dataReq( KIO::Job*, QByteArray& ) ), this,          SLOT( slotKIODataReq( KIO::Job*, QByteArray& ) ) );
@@ -400,6 +401,7 @@ DccTransferRecvWriteCacheHandler::~DccTransferRecvWriteCacheHandler()
 void DccTransferRecvWriteCacheHandler::append( QByteArray cache )  // public
 {
   m_cacheList.append( cache );
+  m_wholeCacheSize += cache.size();
 }
 
 bool DccTransferRecvWriteCacheHandler::write( bool force )  // public
@@ -410,7 +412,7 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )  // public
   if ( m_cacheList.isEmpty() || !m_transferJob || !m_writeReady || !m_writeAsyncMode )
     return false;
   
-  if ( !force && allCacheSize() < minWritePacketSize )
+  if ( !force && m_wholeCacheSize < minWritePacketSize )
     return false;
   
   // do write
@@ -439,17 +441,6 @@ void DccTransferRecvWriteCacheHandler::closeNow()  // public
   m_cacheList.clear();
 }
 
-unsigned long DccTransferRecvWriteCacheHandler::allCacheSize()
-{
-  unsigned long sizeSum = 0;
-
-  for( QValueList<QByteArray>::Iterator it = m_cacheList.begin();  it != m_cacheList.end(); it++ )
-  {
-    sizeSum += (*it).size();
-  }
-  return sizeSum;
-}
-
 QByteArray DccTransferRecvWriteCacheHandler::popCache()
 {
   // sendAsyncData() and dataReq() cost a lot of time, so we should pack some caches.
@@ -470,6 +461,7 @@ QByteArray DccTransferRecvWriteCacheHandler::popCache()
       it = m_cacheList.remove(it);
       number_written++; //for debug info
     } while(it != m_cacheList.end() && maxWritePacketSize >= sizeSum + (*it).size());
+    m_wholeCacheSize -= sizeSum;
   }
   kdDebug() << "DccTransferRecvWriteCacheHandler::popCache(): caches in the packet: " << number_written << ", remaining caches: " << m_cacheList.count() << endl;
   return buffer;
@@ -493,6 +485,7 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
     {
       //finally, no data left to write or read.
       kdDebug() << "DccTransferRecvWriteCacheHandler::slotKIODataReq(): flushing done." << endl;
+      Q_ASSERT( m_wholeCacheSize == 0 );
       m_transferJob = 0;
       emit done();  // ->DccTransferRecv
     }
