@@ -28,18 +28,11 @@
 
 #include "sslsocket.h"
 
-struct SSLSocketPrivate
-{
-    mutable KSSL *kssl;
-    KSSLCertificateCache *cc;
-};
-
 SSLSocket::SSLSocket()
 {
-	d = new SSLSocketPrivate;
-	d->kssl = 0L;
-	d->cc = new KSSLCertificateCache;
-	d->cc->reload();
+	kssl = 0L;
+	cc = new KSSLCertificateCache;
+	cc->reload();
 
         m_streamSocket = new KStreamSocket( "", "", this, "ssl_stream_socket" );
 
@@ -53,11 +46,10 @@ SSLSocket::~SSLSocket()
     m_streamSocket->close();
 
     // close ssl socket
-    if( d->kssl ) d->kssl->close();
+    if( kssl ) kssl->close();
 
-    delete d->kssl;
-    delete d->cc;
-    delete d;
+    delete kssl;
+    delete cc;
 }
 
 void SSLSocket::slotConnected()
@@ -65,26 +57,28 @@ void SSLSocket::slotConnected()
 	if( KSSL::doesSSLWork() )
 	{
 		kdDebug() << k_funcinfo << "Trying SSL connection..." << endl;
-		if( !d->kssl )
+		if( !kssl )
 		{
-			d->kssl = new KSSL();
-			d->kssl->connect( m_streamSocket->socketDevice()->socket() );
+			kssl = new KSSL();
+			kssl->connect( m_streamSocket->socketDevice()->socket() );
 		}
 		else
 		{
-			d->kssl->reInitialize();
+			kssl->reInitialize();
 		}
 
 		if( verifyCertificate() != 1 )
 		{
                     m_streamSocket->close();
 		}
+		
+		emit sslSocketConnected();
 	}
 	else
 	{
 		kdError() << k_funcinfo << "SSL not functional!" << endl;
 
-		d->kssl = 0L;
+		kssl = 0L;
 		emit sslFailure();
 		m_streamSocket->close();
 	}
@@ -127,11 +121,11 @@ void SSLSocket::showSSLInfoDialog()
         sslInfoDlg->setup( sslCert,
                            remoteHost,
                            url,
-                           d->kssl->connectionInfo().getCipher(),
-                           d->kssl->connectionInfo().getCipherDescription(),
-                           d->kssl->connectionInfo().getCipherVersion(),
-                           d->kssl->connectionInfo().getCipherUsedBits(),
-                           d->kssl->connectionInfo().getCipherBits(),
+                           kssl->connectionInfo().getCipher(),
+                           kssl->connectionInfo().getCipherDescription(),
+                           kssl->connectionInfo().getCipherVersion(),
+                           kssl->connectionInfo().getCipherUsedBits(),
+                           kssl->connectionInfo().getCipherBits(),
                            KSSLCertificate::KSSLValidation(m_sslCertState)
             );
 
@@ -152,15 +146,15 @@ int SSLSocket::verifyCertificate()
 	int result;
 	bool doAddHost = false;
 
-        remoteHost = m_streamSocket->localAddress().nodeName();
-        url = "irc://"+remoteHost+m_streamSocket->localAddress().serviceName();
+        remoteHost = m_streamSocket->peerAddress().nodeName();
+        url = "irc://"+remoteHost+m_streamSocket->peerAddress().serviceName();
 
-	KSSLCertificate& peerCertificate = d->kssl->peerInfo().getPeerCertificate();
+	KSSLCertificate& peerCertificate = kssl->peerInfo().getPeerCertificate();
 
 	KSSLCertificate::KSSLValidationList validationList
             = peerCertificate.validateVerbose(KSSLCertificate::SSLServer);
 
-	_IPmatchesCN = d->kssl->peerInfo().certMatchesAddress();
+	_IPmatchesCN = kssl->peerInfo().certMatchesAddress();
 
 	if (!_IPmatchesCN)
 	{
@@ -197,7 +191,7 @@ int SSLSocket::verifyCertificate()
             rc = 1;
 
 	//  - Read from cache and see if there is a policy for this
-	KSSLCertificateCache::KSSLCertificatePolicy cp = d->cc->getPolicyByCertificate(peerCertificate);
+	KSSLCertificateCache::KSSLCertificatePolicy cp = cc->getPolicyByCertificate(peerCertificate);
 
 	//  - validation code
 	if (validation != KSSLCertificate::Ok)
@@ -209,7 +203,7 @@ int SSLSocket::verifyCertificate()
 		else
 		{
 			// A policy was already set so let's honor that.
-			permacache = d->cc->isPermanent(peerCertificate);
+			permacache = cc->isPermanent(peerCertificate);
 		}
 
 		if (!_IPmatchesCN && cp == KSSLCertificateCache::Accept)
@@ -297,9 +291,9 @@ int SSLSocket::verifyCertificate()
 	}
 
 	//  - cache the results
-	d->cc->addCertificate(peerCertificate, cp, permacache);
+	cc->addCertificate(peerCertificate, cp, permacache);
 	if (doAddHost)
-		d->cc->addHost(peerCertificate, remoteHost);
+		cc->addHost(peerCertificate, remoteHost);
 
 
 	if (rc == -1)
@@ -308,15 +302,15 @@ int SSLSocket::verifyCertificate()
 
 	kdDebug() << "SSL connection information follows:" << endl
 		<< "+-----------------------------------------------" << endl
-		<< "| Cipher: " << d->kssl->connectionInfo().getCipher() << endl
-		<< "| Description: " << d->kssl->connectionInfo().getCipherDescription() << endl
-		<< "| Version: " << d->kssl->connectionInfo().getCipherVersion() << endl
-		<< "| Strength: " << d->kssl->connectionInfo().getCipherUsedBits()
-		<< " of " << d->kssl->connectionInfo().getCipherBits()
+		<< "| Cipher: " << kssl->connectionInfo().getCipher() << endl
+		<< "| Description: " << kssl->connectionInfo().getCipherDescription() << endl
+		<< "| Version: " << kssl->connectionInfo().getCipherVersion() << endl
+		<< "| Strength: " << kssl->connectionInfo().getCipherUsedBits()
+		<< " of " << kssl->connectionInfo().getCipherBits()
 		<< " bits used." << endl
 		<< "| PEER:" << endl
-		<< "| Subject: " << d->kssl->peerInfo().getPeerCertificate().getSubject() << endl
-		<< "| Issuer: " << d->kssl->peerInfo().getPeerCertificate().getIssuer() << endl
+		<< "| Subject: " << kssl->peerInfo().getPeerCertificate().getSubject() << endl
+		<< "| Issuer: " << kssl->peerInfo().getPeerCertificate().getIssuer() << endl
 		<< "| Validation: " << (int) validation << endl
 		<< "| Certificate matches IP: " << _IPmatchesCN << endl
 		<< "+-----------------------------------------------"
