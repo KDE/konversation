@@ -81,6 +81,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
     popup->insertSeparator();
     popup->insertItem(SmallIcon("find"),i18n("Find Text..."),Search);
     popup->insertSeparator();
+    popup->insertItem(i18n("Send File..."),SendFile);
     if(newServer) {
       KAction *action = newServer->getMainWindow()->actionCollection()->action("open_logfile");
       action->plug(popup);
