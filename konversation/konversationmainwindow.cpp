@@ -93,11 +93,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   nicksOnlinePanel=0;
 
 #ifdef USE_MDI
-//  switchToIDEAlMode();
   switchToTabPageMode();
-//  switchToChildframeMode();
-//  switchToToplevelMode();
-
 #else
   viewContainer=new LedTabWidget(this,"main_window_tab_widget");
   setCentralWidget(viewContainer);
@@ -159,6 +155,11 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Insert &Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line");
   new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
 
+  new KAction(i18n("Tabpage Mode"),"tabpage",0,this,SLOT (switchToTabPageMode()),actionCollection(),"mdi_tabpage_mode");
+  new KAction(i18n("Toplevel Mode"),"toplevel",0,this,SLOT (switchToToplevelMode()),actionCollection(),"mdi_toplevel_mode");
+  new KAction(i18n("Childframe Mode"),"childframe",0,this,SLOT (switchToChildframeMode()),actionCollection(),"mdi_childframe_mode");
+  new KAction(i18n("IDEAl Mode"),"ideal",0,this,SLOT (switchToIDEAlMode()),actionCollection(),"mdi_ideal_mode");
+
   // Initialize KMainWindow->statusBar()
   statusBar();
   statusBar()->insertItem(i18n("Ready."),StatusText,1);
@@ -216,6 +217,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   // set up KABC with a nice gui error dialog
   KABC::GuiErrorHandler *m_guiErrorHandler = new KABC::GuiErrorHandler(this);
   Konversation::Addressbook::self()->getAddressBook()->setErrorHandler(m_guiErrorHandler);
+
+  // demo how to add additional dock windows
+//  QListView* dockList=new QListView(this);
+//  addToolWindow(dockList,KDockWidget::DockLeft,getMainDockWidget());
 }
 
 KonversationMainWindow::~KonversationMainWindow()
@@ -231,6 +236,7 @@ void KonversationMainWindow::switchToTabPageMode()
   tabWidget()->setTabReorderingEnabled(true);
   tabWidget()->setHoverCloseButton(true);
   updateTabPlacement();
+  m_pTaskBar->switchOn(false);
 #if QT_VERSION >= 0x030200
   KPushButton* closeBtn = new KPushButton(this);
   closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));
@@ -240,6 +246,30 @@ void KonversationMainWindow::switchToTabPageMode()
   tabWidget()->setCornerWidget(closeBtn);
   connect(closeBtn, SIGNAL(clicked()), this, SLOT(closeActiveWindow()));
 #endif
+#endif
+}
+
+void KonversationMainWindow::switchToIDEAlMode()
+{
+#ifdef USE_MDI
+  KMdiMainFrm::switchToIDEAlMode();
+  m_pTaskBar->switchOn(true);
+#endif
+}
+
+void KonversationMainWindow::switchToChildframeMode()
+{
+#ifdef USE_MDI
+  KMdiMainFrm::switchToChildframeMode();
+  m_pTaskBar->switchOn(true);
+#endif
+}
+
+void KonversationMainWindow::switchToToplevelMode()
+{
+#ifdef USE_MDI
+  KMdiMainFrm::switchToToplevelMode();
+  m_pTaskBar->switchOn(true);
 #endif
 }
 
@@ -333,6 +363,8 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
   addWindow(view);
   view->setLedColor(color);
   if(tabWidget()) tabWidget()->setTabIconSet(view,images.getLed(color,false,true));
+  KMdiTaskBarButton* button=m_pTaskBar->getButton(view);
+  button->setIconSet(images.getLed(color,false,true));
 #else
   viewContainer->addTab(view,label,color,on);
 #endif
@@ -392,6 +424,21 @@ void KonversationMainWindow::setWindowNotification(ChatWindow*,const QIconSet&,c
     tabWidget()->setTabIconSet(view,iconSet);
     tabWidget()->setTabColor(view,QColor(color));
   }
+  KMdiTaskBarButton* button=m_pTaskBar->getButton(view);
+  button->setIconSet(iconSet);
+  button->setPaletteForegroundColor(QColor(color));
+#endif
+}
+
+void KonversationMainWindow::setTabOnline(ChatWindow* view,bool online)
+{
+#ifdef USE_MDI
+/*
+  // just testing here... ignore this bit for now
+  KMdiTaskBarButton* button=m_pTaskBar->getButton(view);
+  if(tabWidget()) tabWidget()->setTabColor(view,QColor("#eeeeee"));
+  button->setText("<qt><b>fgfg</b></qt>");
+*/
 #endif
 }
 
@@ -431,9 +478,16 @@ void KonversationMainWindow::closeWindow(ChatWindow*) // USE_MDI
 
     // FIXME: don't delete dcc panel until we know how to safely hide
     //        and show it
-    if(viewType!=ChatWindow::DccPanel)
+    if(viewType==ChatWindow::DccPanel)
     {
+      /*
+//    according to the documentation this should remove the panel, but it does not work.
       removeWindowFromMdi(viewToClose);
+      dccPanelOpen=false;
+      */
+    }
+    else
+    {
       KMdiMainFrm::closeWindow(viewToClose);
       viewToClose->deleteLater();
     }
@@ -624,7 +678,9 @@ void KonversationMainWindow::addDccPanel()
   {
     if(!dccPanelOpen)
     {
-#ifndef USE_MDI
+#ifdef USE_MDI
+      addMdiView(dccPanel,3);
+#else
       addView(dccPanel,3,i18n("DCC Status"));
 #endif
       dccPanelOpen=true;
@@ -1243,5 +1299,11 @@ void KonversationMainWindow::setShowTabBarCloseButton(bool s)
 #else
 void KonversationMainWindow::setShowTabBarCloseButton(bool) {}
 #endif
+
+void KonversationMainWindow::resizeEvent(QResizeEvent* ev)
+{
+  setSysButtonsAtMenuPosition();
+  QWidget::resizeEvent(ev);
+}
 
 #include "konversationmainwindow.moc"

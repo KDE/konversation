@@ -866,7 +866,7 @@ void Channel::addNickname(const QString& nickname,const QString& hostmask,
     if(lookNick->getNickname().lower()==nickname.lower()) nick=lookNick;
     lookNick=nicknameList.next();
   }
-  
+
   if(nick==0)
   {
 #ifdef USE_NICKINFO
@@ -1046,7 +1046,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, co
 
 }
 #else //was USE_NICKINFO
-	    
+
 void Channel::joinNickname(const QString& nickname,const QString& hostmask)
 {
   /* Did we join this channel ourselves? */
@@ -1087,7 +1087,7 @@ void Channel::removeNick(const QString &nickname, const QString &reason, bool qu
 #ifdef USE_NICKINFO
       if(nick->isOp() || nick->isOwner() || nick->isAdmin() || nick->isHalfOp()) adjustOps(-1);
 #else
-      if(nick->isOp() || nick->isOwner() || nick->isAdmin() || nick->isHalfop()) adjustOps(-1); 
+      if(nick->isOp() || nick->isOwner() || nick->isAdmin() || nick->isHalfop()) adjustOps(-1);
 #endif
       adjustNicks(-1);
 
@@ -1293,7 +1293,7 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
         updateNicksOps();
         nicknameListView->sort();
       }
-#else      
+#else
       nick=getNickByName(parameter);
       if(nick)
       {
@@ -1351,7 +1351,7 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
         updateNicksOps();
         nicknameListView->sort();
       }
-#else      
+#else
       nick=getNickByName(parameter);
       if(nick)
       {
@@ -1409,7 +1409,7 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
         updateNicksOps();
         nicknameListView->sort();
       }
-#else 
+#else
       nick=getNickByName(parameter);
       if(nick)
       {
@@ -1869,7 +1869,7 @@ void Channel::addPendingNickList(const QStringList& newNickList)
       nicknameListView->setUpdatesEnabled(false);
     }
     if((*it)->isAdmin() || (*it)->isOwner() || (*it)->isOp() || (*it)->isHalfOp())
-      opsToAdd++;	
+      opsToAdd++;
   }
 
   adjustNicks(pendingChannelNickList.count());
@@ -2017,7 +2017,12 @@ void Channel::closeYourself(ChatWindow* /* view */)
 void Channel::serverQuit(const QString& reason)
 {
 #ifdef USE_MDI
+#ifdef USE_NICKINFO
+  ChannelNickPtr channelNick=server->getChannelNick(getName(),server->getNickname());
+  if(channelNick)  removeNick(channelNick,reason,true);
+#else
   removeNick(server->getNickname(),reason,true);
+#endif
 #endif
 }
 

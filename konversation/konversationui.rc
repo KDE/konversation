@@ -25,6 +25,13 @@
       <Separator />
       <Action name="open_konsole" />
       <Action name="open_logfile" />
+      <Menu name="mdi_subwindow_mode">
+      <Text>Subwindow Mode</Text>
+        <Action name="mdi_tabpage_mode" />
+        <Action name="mdi_toplevel_mode" />
+        <Action name="mdi_childframe_mode" />
+        <Action name="mdi_ideal_mode" />
+      </Menu>
     </Menu>
   </MenuBar>
 

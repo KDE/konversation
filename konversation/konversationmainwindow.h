@@ -36,7 +36,6 @@
 class KToggleAction;
 class KMdiChildView; // USE_MDI
 
-class LedTabWidget;
 class Server;
 class StatusPanel;
 class ChatWindow;
@@ -51,6 +50,10 @@ class NicksOnline;
 class QuickButtonsDialog;
 class UrlCatcher;
 class TrayIcon;
+#ifndef USE_MDI
+class LedTabWidget;
+#endif
+
 
 class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 {
@@ -102,7 +105,10 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void serverQuit(Server* server);
     void setShowTabBarCloseButton(bool s);
 
-    virtual void switchToTabPageMode();  // USE_MDI
+    virtual void switchToTabPageMode();    // USE_MDI
+    virtual void switchToIDEAlMode();      // USE_MDI
+    virtual void switchToChildframeMode(); // USE_MDI
+    virtual void switchToToplevelMode();   // USE_MDI
 
   protected slots:
     void openPreferences();
@@ -130,6 +136,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void setWindowNotification(ChatWindow* view,const QIconSet& iconSet,const QString& color); // USE_MDI
     void closeWindow(ChatWindow* view); // USE_MDI
     void closeActiveWindow(); // USE_MDI
+    void setTabOnline(ChatWindow* view,bool online); // USE_MDI
 
     void closeKonsolePanel(ChatWindow* konsolePanel);
 
@@ -170,6 +177,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void deleteDccPanel();
 
     virtual bool event(QEvent* e);
+    virtual void resizeEvent(QResizeEvent* ev);
 
 #ifdef USE_MDI
     Images images;
