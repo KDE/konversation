@@ -869,7 +869,7 @@ void Server::notifyTimeout()
   {
     // But only if there actually are nicks in the notify list
     QString list=getNotifyString();
-    kdDebug() << "List is " << list << endl;
+    
     if(list != QString::null)
     {
       queue("ISON "+list);
