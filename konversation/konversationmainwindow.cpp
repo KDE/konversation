@@ -26,6 +26,11 @@
 #include <kdeversion.h>
 #include <kedittoolbar.h>
 #include <kpopupmenu.h>
+
+#include <kabc/addressbook.h>
+#include <kabc/errorhandler.h> 
+#include "linkaddressbook/addressbook.h"
+
 #ifdef USE_MDI
 #include <ktabwidget.h>
 #include <kpushbutton.h>
@@ -205,6 +210,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 #endif
   showMenuBarAction->setChecked(KonversationApplication::preferences.getShowMenuBar());
   showMenubar();
+ 
+  // set up KABC with a nice gui error dialog
+  KABC::GuiErrorHandler *m_guiErrorHandler = new KABC::GuiErrorHandler(this);
+  Konversation::Addressbook::self()->getAddressBook()->setErrorHandler(m_guiErrorHandler);
 }
 
 KonversationMainWindow::~KonversationMainWindow()

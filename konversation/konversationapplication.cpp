@@ -109,6 +109,7 @@ KonversationApplication::KonversationApplication()
 
   // take care of user style changes, setting back colors and stuff
   connect(KApplication::kApplication(),SIGNAL (appearanceChanged()),this,SLOT (appearanceChanged()) );
+
 }
 
 KonversationApplication::~KonversationApplication()

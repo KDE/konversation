@@ -59,8 +59,7 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
 
 	connect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
     connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
-  
-	
+
 	m_ircnick = ircnick;
 	m_lower_ircnick = m_ircnick.lower();
 	Q_ASSERT(!ircnick.isEmpty());
@@ -101,6 +100,7 @@ void LinkAddressbookUI::slotLoadAddressees()
 void LinkAddressbookUI::slotAddAddresseeClicked()
 {
 	// Pop up add addressee dialog
+	if(!Konversation::Addressbook::self()->getAndCheckTicket()) return;
 	QString addresseeName = KInputDialog::getText( i18n( "New Address Book Entry" ),
 												   i18n( "Name the new entry:" ),
 												   m_ircnick, 0, this );
@@ -109,10 +109,10 @@ void LinkAddressbookUI::slotAddAddresseeClicked()
 	{
 		KABC::Addressee addr;
 		addr.setNameFromString( addresseeName );
-		Konversation::Addressbook::self()->saveAddressee(addr);
+		m_addressBook->insertAddressee(addr);
+		Konversation::Addressbook::self()->saveTicket();
+		slotLoadAddressees();
 	}
-//this shouldn't be needed - why is it?
-	slotLoadAddressees();
 }
 
 void LinkAddressbookUI::slotAddresseeListClicked( QListViewItem *addressee )
@@ -131,7 +131,14 @@ void LinkAddressbookUI::accept()
 	if ( item ) {
 
 	    addr = item->addressee();
-		Konversation::Addressbook::self()->associateNickAndUnassociateFromEveryoneElseAndSave(addr, m_ircnick);
+		if(!Konversation::Addressbook::self()->getAndCheckTicket()) {
+			return;
+		}
+		Konversation::Addressbook::self()->associateNickAndUnassociateFromEveryoneElse(addr, m_ircnick);
+		if(!Konversation::Addressbook::self()->saveTicket()) {
+			return;
+		}
+		
 	}
     disconnect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
 	deleteLater();

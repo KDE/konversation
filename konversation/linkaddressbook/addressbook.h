@@ -30,7 +30,7 @@ class Addressbook : public QObject
     bool hasNick(const KABC::Addressee &addressee, const QString &ircnick);
     void unassociateNick(KABC::Addressee &addressee, const QString &ircnick);
     void associateNick(KABC::Addressee &addressee, const QString &ircnick);
-    bool associateNickAndUnassociateFromEveryoneElseAndSave(KABC::Addressee &addressee, const QString &ircnick);
+    bool associateNickAndUnassociateFromEveryoneElse(KABC::Addressee &addressee, const QString &ircnick);
     bool getAndCheckTicket();
     bool saveTicket();	
     void releaseTicket();

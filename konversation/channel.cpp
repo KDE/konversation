@@ -365,13 +365,18 @@ void Channel::popupCommand(int id)
       {
 	Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
         QStringList nickList=getSelectedNicksList();
-        for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
-	  KABC::Addressee addr = addressbook->getKABCAddresseeFromNick(*nickIterator);
-  	  addressbook->unassociateNick(addr, *nickIterator);
-//        addressbook->saveAddressbook();
-	  getNickByName(*nickIterator)->refreshAddressee();
-	}
-        //addressbook->saveAddressbook();
+	//Handle all the selected nicks in one go.  Either they all save, or none do.
+	if(addressbook->getAndCheckTicket()) {
+          for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
+            KABC::Addressee addr = addressbook->getKABCAddresseeFromNick(*nickIterator);
+  	    addressbook->unassociateNick(addr, *nickIterator);
+          }
+	  if(addressbook->saveTicket()) {
+            //Nicks have changed.  Refresh.
+	    for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator)
+	      getNickByName(*nickIterator)->refreshAddressee();
+	  }
+        }
         break;
       }
     case NickListView::AddressbookNew:

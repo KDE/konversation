@@ -46,7 +46,6 @@ private:
 	KABC::AddressBook* m_addressBook;
 	QString m_ircnick;
 	QString m_lower_ircnick; //Same as above, but in lower case, for comparisons.
-
 	
 public slots:
 	virtual void accept();

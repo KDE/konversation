@@ -23,7 +23,7 @@ Addressbook *Addressbook::m_instance=0L;
 
 Addressbook::Addressbook()
 {
-	KABC::StdAddressBook::setAutomaticSave( true );
+	KABC::StdAddressBook::setAutomaticSave( false );
 	addressBook = KABC::StdAddressBook::self(true);
 	m_ticket=NULL;
 }
@@ -86,8 +86,8 @@ void Addressbook::unassociateNick(KABC::Addressee &addressee, const QString &irc
 	if(!changed)
 		return;
 	
-	if(!getAndCheckTicket())
-		return;
+	//if(!getAndCheckTicket())
+	//	return;
 	QString new_custom = addresses.join( QChar( 0xE000 ));
 	if(new_custom.isEmpty())
 		addressee.removeCustom("messaging/irc", "All");
@@ -96,7 +96,7 @@ void Addressbook::unassociateNick(KABC::Addressee &addressee, const QString &irc
 	kdDebug() << "final irc address is '" << new_custom << "'" << endl;
 
 	addressBook->insertAddressee(addressee);
-	saveTicket();
+	//saveTicket();
 }
 
 /**For a given contact, adds the ircnick if they don't already have it.  If you pass an addressBook, the contact is inserted
@@ -111,15 +111,15 @@ void Addressbook::associateNick(KABC::Addressee &addressee, const QString &ircni
 			return; //It's already there.  No need to do anything.
 		}
 	}
-	if(!getAndCheckTicket()) return;
+	//if(!getAndCheckTicket()) return;
 	addresses.append(ircnick);
 	addressee.insertCustom("messaging/irc", "All", addresses.join( QChar( 0xE000 )));
 	
 	addressBook->insertAddressee(addressee);
-	saveTicket();
+	//saveTicket();
 }
 /** This function associates the nick for a person, then iterates over all the contacts unassociating the nick from everyone else. It saves the addressses that have changed.*/
-bool Addressbook::associateNickAndUnassociateFromEveryoneElseAndSave(KABC::Addressee &addressee, const QString &ircnick) {
+bool Addressbook::associateNickAndUnassociateFromEveryoneElse(KABC::Addressee &addressee, const QString &ircnick) {
         for( KABC::AddressBook::Iterator it = addressBook->begin(); it != addressBook->end(); ++it )
 		if((*it).uid() != addressee.uid())
 			unassociateNick(*it, ircnick);
