@@ -46,7 +46,6 @@ konversation_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 
 rcdir = $(kde_datadir)/konversation
 rc_DATA = konversationui.rc eventsrc
-KDE_ICON = AUTO
 
 kdelnk_DATA = konvirc.protocol konvirc6.protocol
 kdelnkdir = $(kde_servicesdir)
