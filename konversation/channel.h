@@ -181,6 +181,7 @@ class Channel : public ChatWindow
 
     QLabel* nicksOps;
     NickListView* nicknameListView;
+    QString abgCache;                   // caches the alternate background color
     QHBox* commandLineBox;
     QPushButton* nicknameButton;
     QLabel* awayLabel;

@@ -138,8 +138,22 @@ void Query::setHostmask(const QString& newHostmask)
 
 void Query::updateFonts()
 {
-  const QColor fg("#"+KonversationApplication::preferences.getColor("ChannelMessage"));
-  const QColor bg("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
+  QString fgString;
+  QString bgString;
+
+  if(KonversationApplication::preferences.getColorInputFields())
+  {
+    fgString="#"+KonversationApplication::preferences.getColor("ChannelMessage");
+    bgString="#"+KonversationApplication::preferences.getColor("TextViewBackground");
+  }
+  else
+  {
+    fgString=colorGroup().foreground().name();
+    bgString=colorGroup().base().name();
+  }
+
+  const QColor fg(fgString);
+  const QColor bg(bgString);
 
   queryInput->setPaletteForegroundColor(fg);
   queryInput->setPaletteBackgroundColor(bg);

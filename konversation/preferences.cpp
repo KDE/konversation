@@ -135,6 +135,7 @@ Preferences::Preferences()
   setOSDShowChannelEvent(false);
   setOSDColor("#ffffff");
 
+  setColorInputFields(true);
   setBackgroundImageName(QString::null);
 
   setOpLedColor(1);
@@ -501,6 +502,9 @@ QString Preferences::getDefaultColor(const QString& name)
 
   return QString::null;
 }
+
+void Preferences::setColorInputFields(bool state) { colorInputFields=state; }
+bool Preferences::getColorInputFields()           { return colorInputFields; }
 
 void Preferences::setBackgroundImageName(const QString& name) { backgroundImage=name; }
 const QString& Preferences::getBackgroundImageName() { return backgroundImage; }

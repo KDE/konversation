@@ -27,6 +27,7 @@
 */
 
 class QColor;
+class QCheckBox;
 class KLineEdit;
 
 class PrefsPageColorsImages : public PrefsPage
@@ -47,6 +48,7 @@ class PrefsPageColorsImages : public PrefsPage
     QStringList colorList;
     KLineEdit* backgroundName;
     QPtrList<KColorCombo> colorComboList;
+    QCheckBox* colorInputFieldsCheck;
 };
 
 #endif

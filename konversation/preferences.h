@@ -250,6 +250,9 @@ class Preferences : public QObject
 
     QString getColor(const QString& name);
     void setColor(const QString& name,const QString& color);
+    
+    bool getColorInputFields();
+    void setColorInputFields(bool state);
 
     const QString& getBackgroundImageName();
     void setBackgroundImageName(const QString& name);
@@ -476,6 +479,8 @@ class Preferences : public QObject
     QFont osdFont;            // Which font to use
     QColor osdColor;
 
+    bool colorInputFields;
+    
     QString backgroundImage;
 
     QStringList buttonList;

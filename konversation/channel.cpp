@@ -233,6 +233,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   getTextView()->setSizePolicy(greedy);
   nicksOps->setSizePolicy(modest);
   nicknameListView->setSizePolicy(hmodest);
+  // remember alternate background color
+  abgCache=nicknameListView->alternateBackground().name();
 
   connect(channelInput,SIGNAL (submit()),this,SLOT (channelTextEntered()) );
   connect(channelInput,SIGNAL (nickCompletion()),this,SLOT (completeNick()) );
@@ -1425,9 +1427,27 @@ void Channel::updateFonts()
 {
   nicknameButton->setFont(KonversationApplication::preferences.getTextFont());
 
-  const QColor  fg("#"+KonversationApplication::preferences.getColor("ChannelMessage"));
-  const QColor  bg("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
-  const QColor abg("#"+KonversationApplication::preferences.getColor("AlternateBackground"));
+  QString fgString;
+  QString bgString;
+  QString abgString;
+
+  if(KonversationApplication::preferences.getColorInputFields())
+  {
+    fgString="#"+KonversationApplication::preferences.getColor("ChannelMessage");
+    bgString="#"+KonversationApplication::preferences.getColor("TextViewBackground");
+    abgString="#"+KonversationApplication::preferences.getColor("AlternateBackground");
+  }
+  else
+  {
+    fgString=colorGroup().foreground().name();
+    bgString=colorGroup().base().name();
+    // get alternate background color from cache
+    abgString=abgCache;
+  }
+
+  const QColor fg(fgString);
+  const QColor bg(bgString);
+  const QColor abg(abgString);
 
   channelInput->setPaletteForegroundColor(fg);
   channelInput->setPaletteBackgroundColor(bg);

@@ -526,6 +526,8 @@ void KonversationApplication::readOptions()
 
   preferences.setFixedMOTD(config->readBoolEntry("FixedMOTD",preferences.getFixedMOTD()));
   preferences.setShowServerList(config->readBoolEntry("ShowServerList",preferences.getShowServerList()));
+
+  preferences.setColorInputFields(config->readBoolEntry("InputFieldsBackgroundColor",preferences.getColorInputFields()));
 }
 
 void KonversationApplication::saveOptions(bool updateGUI)
@@ -753,6 +755,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("FixedMOTD",preferences.getFixedMOTD());
   config->writeEntry("ShowServerList",preferences.getShowServerList());
 
+  config->writeEntry("InputFieldsBackgroundColor",preferences.getColorInputFields());
+  
   config->sync();
 
   if(updateGUI) appearanceChanged();

@@ -17,6 +17,7 @@
 #include <qhbox.h>
 #include <qpushbutton.h>
 #include <qregexp.h>
+#include <qcheckbox.h>
 
 #include <kdebug.h>
 #include <klineedit.h>
@@ -66,6 +67,12 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
     row++;
   }
 
+  colorInputFieldsCheck=new QCheckBox(i18n("&Input fields and nick list use custom colors"),parentFrame,"input_fields_color_check");
+  colorInputFieldsCheck->setChecked(preferences->getColorInputFields());
+  colorSettingsLayout->addMultiCellWidget(colorInputFieldsCheck,row,row,0,2);
+    
+  row++;
+
   QLabel* backgroundLabel=new QLabel(i18n("Back&ground image:"),parentFrame);
   backgroundName=new KLineEdit(parentFrame,"background_image_name");
   QPushButton* backgroundSelect=new QPushButton(i18n("Ch&oose..."),parentFrame,"background_image_choose_button");
@@ -111,6 +118,7 @@ void PrefsPageColorsImages::applyPreferences()
     preferences->setColor(combo->name(),combo->color().name().mid(1));
   }
 
+  preferences->setColorInputFields(colorInputFieldsCheck->isChecked());
   preferences->setBackgroundImageName(backgroundName->text());
 }
 
