@@ -201,6 +201,7 @@ void DccTransferRecv::askAndPrepareLocalKio( const QString& message, int enabled
       break;
     case DccResumeDialog::RA_Rename:
       prepareLocalKio( false, false );
+      break;
     case DccResumeDialog::RA_Cancel:
     default:
       setStatus( Queued );
