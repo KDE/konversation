@@ -43,6 +43,8 @@ PrefsDialog::PrefsDialog(Preferences* preferences) :
   chatWinAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("window_new"));
   QFrame* colorsAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Colors")),
     QString::null, SmallIcon("colorize"));
+  QFrame* themesPane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Themes")),
+    QString::null, SmallIcon("iconthemes"));
 
   setFolderIcon(QStringList::split(',', i18n("Behavior")), SmallIcon("configure"));
   QFrame* generalBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("General")),
@@ -69,7 +71,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences) :
     QString::null, SmallIcon("tv"));
 
   QFrame* dialogsPane = addPage(i18n("Warning Dialogs"), QString::null, SmallIcon("messagebox_warning"));
-
+  
 
   // TODO: Uncomment this again when it's ready to go
   // QFrame* scriptsPane        =addPage(i18n("Scripting"));
@@ -93,6 +95,8 @@ PrefsDialog::PrefsDialog(Preferences* preferences) :
 
   dialogsPage = new PrefsPageDialogs(dialogsPane,preferences);
 
+  themesPage = new PrefsPageThemes(themesPane,preferences);
+
   // TODO: Uncomment this again when it's ready to go
   // PrefsPageScripts* scriptsPage=new PrefsPageScripts(scriptsPane, preferences);
 
@@ -103,6 +107,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences) :
   // connect standard signals and slots
   connect(this, SIGNAL(applyPreferences()), chatWinAppearancePage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), colorsAppearancePage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), themesPage, SLOT(applyPreferences()));
 
   connect(this, SIGNAL(applyPreferences()), generalBehaviorPage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), chatWinBehaviorPage, SLOT(applyPreferences()));

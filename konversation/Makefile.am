@@ -32,7 +32,7 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp 		 \
 	dccdetaildialog.cpp insertchardialog.cpp		 irccharsets.cpp editnotifydialog.cpp common.cpp \
 	serverison.cpp sslsocket.cpp servergroupsettings.cpp serversettings.cpp \
 	servergroupdialog.cpp ssllabel.cpp serverdialog.cpp channeldialog.cpp identitydialog.cpp \
-	topiclabel.cpp
+	topiclabel.cpp prefspagethemes.cpp
 
 konversation_LDADD   = $(COMPAT_LIBS) $(LIB_KIO) -lkmdi -lm $(LIB_ARTS) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la
 

@@ -29,6 +29,7 @@
 #include "prefspageignore.h"
 #include "prefspagealiases.h"
 #include "prefspagetabbehavior.h"
+#include "prefspagethemes.h"
 // TODO: uncomment this when it's ready to go
 // #include "prefspagescripts.h"
 
@@ -74,6 +75,7 @@ class PrefsDialog : public KDialogBase
     PrefsPageLog*             logSettingsPage;
     PrefsPageDccSettings*     dccSettingsPage;
     PrefsPageDialogs*         dialogsPage;
+    PrefsPageThemes*          themesPage;
 
     // for openPage();
     QFrame* notifyPane;
