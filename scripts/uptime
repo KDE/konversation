@@ -10,40 +10,47 @@
 $PORT = shift;
 $SERVER = shift;
 $TARGET = shift;
-$UPTIME = `cat /proc/uptime`;
-if($UPTIME)
-{
-    @uparray = split(/\./, $UPTIME);
+
+$PLATFORM = `uname -s`;
+chomp($PLATFORM);
+if($PLATFORM eq "FreeBSD") {
+	$BOOTTIME = `sysctl kern.boottime`;
+	$BOOTTIME =~ s/.* sec = ([0-9]+).*/\1/;
+	$TIMENOW = `date +%s`;
+	$seconds = $TIMENOW - $BOOTTIME;
+} else {
+	@UPTIME = `cat /proc/uptime`;
+	if (not $UPTIME) {
+		exec ("dcop $PORT Konversation info \"Could not read uptime. Check that /proc/uptime exists.\"");
+	}
+	@uparray = split(/\./, $UPTIME);
     $seconds = $uparray[0];
-    if($seconds >= 86400)
-    {
+}
+
+if($seconds >= 86400)
+{
 	$days = int($seconds/86400);
 	$seconds = $seconds-($days*86400);
-    }
-    if($seconds >= 3600)
-    {
+}
+if($seconds >= 3600)
+{
 	$hours = int($seconds/3600);
 	$seconds = $seconds-($hours*3600);
-    }
-    if($seconds > 60)
-    {
-	$minutes = int($seconds/60);
-    }
-    if( $days && $hours ) {
-	exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"Uptime: $days days, $hours hours and $minutes minutes\"");
-    }
-    elsif( !$days && $hours ) {
-	exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"Uptime: $hours hours and $minutes minutes\"");
-    }
-    elsif( $days && !$hours ) {
-	exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"Uptime: $days days and $minutes minutes\"");
-    }  
-    elsif( !$days && !$hours ) {
-	exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"Uptime: $minutes minutes\"");
-    }
 }
-else
+if($seconds > 60)
 {
-    exec ("dcop $PORT Konversation info \"Could not read uptime. Check that /proc/uptime exists.\"");
+	$minutes = int($seconds/60);
+}
+if( $days && $hours ) {
+	exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"Uptime: $days days, $hours hours and $minutes minutes\"");
+}
+elsif( !$days && $hours ) {
+	exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"Uptime: $hours hours and $minutes minutes\"");
+}
+elsif( $days && !$hours ) {
+	exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"Uptime: $days days and $minutes minutes\"");
+}
+elsif( !$days && !$hours ) {
+	exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"Uptime: $minutes minutes\"");
 }
 
