@@ -85,12 +85,12 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
 
     #ifndef USE_MDI
-    setMargin(KDialog::marginHint());
-    setSpacing(KDialog::spacingHint());
+    setMargin(margin());
+    setSpacing(spacing());
     #endif
 
     QHBox* buttonBox=new QHBox(this);
-    buttonBox->setSpacing(KDialog::spacingHint());
+    buttonBox->setSpacing(spacing());
     QPushButton* editButton=new QPushButton(i18n("&Edit Watch List..."),
         buttonBox,"edit_notify_button");
     QString editButtonWT = i18n(

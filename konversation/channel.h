@@ -9,6 +9,7 @@
     channel.h  -  The class that controls a channel
     begin:     Wed Jan 23 2002
     copyright: (C) 2002 by Dario Abatianni
+               (C) 2004 by Peter Simonsson <psn@linux.se>
     email:     eisfuchs@tigress.com
 */
 
@@ -35,6 +36,7 @@ class QStringList;
 class QSplitter;
 class QGrid;
 class QComboBox;
+class QToolButton;
 
 class KLineEdit;
 
@@ -44,7 +46,11 @@ class QuickButton;
 class ModeButton;
 class IRCInput;
 class NickChangeDialog;
-class TopicComboBox;
+
+namespace Konversation
+{
+  class TopicLabel;
+};
 
 class NickList : public QPtrList<Nick>
 {
@@ -116,10 +122,14 @@ class Channel : public ChatWindow
     virtual void setChannelEncoding(const QString& encoding);
     virtual QString getChannelEncoding();
     virtual QString getChannelEncodingDefaultDesc();
+
+    int numberOfNicks() const { return nicks; }
+    int numberOfOps() const { return ops; }
     
   signals:
     void newText(QWidget* channel,const QString& highlightColor, bool important);
     void sendFile();
+    void updateInfo();
 
   public slots:
     void setNickname(const QString& newNickname);
@@ -148,7 +158,7 @@ class Channel : public ChatWindow
     // Dialogs
     void changeNickname(const QString& newNickname);
     // will be called when the user types a new topic in the topic line
-    void requestNewTopic(const QString& newTopic);
+    void requestNewTopic();
     // connected to IRCInput::textPasted() - used to handle large/multiline pastings
     void textPasted(const QString& text);
     // connected to IRCInput::sendFile()
@@ -192,10 +202,10 @@ class Channel : public ChatWindow
     unsigned int completionPosition;
 
     QSplitter* splitter;
-    QString topic; // Caches current topic
-    TopicComboBox* topicLine;
-    QLabel* topicLabel;
-    QStringList topicHistory;
+    QSplitter* m_vertSplitter;
+    QToolButton* m_topicButton;
+    Konversation::TopicLabel* topicLine;
+    QStringList m_topicHistory;
     QHBox* modeBox;
 
     QString key;
@@ -211,7 +221,6 @@ class Channel : public ChatWindow
 
     KLineEdit* limit;
 
-    QLabel* nicksOps;
     NickListView* nicknameListView;
     QString abgCache;                   // caches the alternate background color
     QHBox* commandLineBox;

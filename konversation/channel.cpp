@@ -9,6 +9,7 @@
     channel.cpp  -  The class that controls a channel
     begin:     Wed Jan 23 2002
     copyright: (C) 2002 by Dario Abatianni
+               (C) 2004 by Peter Simonsson <psn@linux.se>
     email:     eisfuchs@tigress.com
 */
 
@@ -26,6 +27,8 @@
 #include <qcombobox.h>
 #include <qtextcodec.h>
 #include <qwhatsthis.h>
+#include <qtoolbutton.h>
+#include <qlayout.h>
 
 #include <kprocess.h>
 
@@ -37,6 +40,7 @@
 #include <kglobalsettings.h>
 #include <kdeversion.h>
 #include <kmessagebox.h>
+#include <kiconloader.h>
 
 #include "konversationapplication.h"
 #include "channel.h"
@@ -45,11 +49,12 @@
 #include "nicklistview.h"
 #include "quickbutton.h"
 #include "modebutton.h"
-#include "topiccombobox.h"
 #include "ircinput.h"
 #include "ircview.h"
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
+#include "common.h"
+#include "topiclabel.h"
 
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
@@ -67,69 +72,73 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   m_pendingChannelNickLists.clear();
   m_currentIndex = 0;
   m_opsToAdd = 0;
-  nicks=0;
-  ops=0;
-  completionPosition=0;
-  nickChangeDialog=0;
-  topic=QString::null;
+  nicks = 0;
+  ops = 0;
+  completionPosition = 0;
+  nickChangeDialog = 0;
 
-  quickButtonsChanged=false;
-  quickButtonsState=false;
+  quickButtonsChanged = false;
+  quickButtonsState = false;
 
-  splitterChanged=true;
-  modeButtonsChanged=false;
-  modeButtonsState=false;
+  splitterChanged = true;
+  modeButtonsChanged = false;
+  modeButtonsState = false;
 
-  awayChanged=false;
-  awayState=false;
+  awayChanged = false;
+  awayState = false;
 
   // no nicks pending from /names reply
   setPendingNicks(false);
 
   // flag for first seen topic
-  topicAuthorUnknown=true;
+  topicAuthorUnknown = true;
 
   setType(ChatWindow::Channel);
 
   setChannelEncodingSupported(true);
 
   // Build some size policies for the widgets
-  QSizePolicy hfixed=QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
-  QSizePolicy hmodest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
-  QSizePolicy vmodest=QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-  QSizePolicy vfixed=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
-  QSizePolicy modest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-  QSizePolicy greedy=QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
+  QSizePolicy hfixed = QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+  QSizePolicy hmodest = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+  QSizePolicy vmodest = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+  QSizePolicy vfixed = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+  QSizePolicy modest = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+  QSizePolicy greedy = QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-  // The box holding the Topic label/line, and the channel modes
-  QHBox* topicBox=new QHBox(this);
-  topicBox->setSpacing(spacing());
+  m_vertSplitter = new QSplitter(Qt::Vertical, this);
+  
+#ifdef OPAQUE_CONF
+  m_vertSplitter->setOpaqueResize(KGlobalSettings::opaqueResize());
+#else
+  m_vertSplitter->setOpaqueResize(true);
+#endif
+  
+  QWidget* topicWidget = new QWidget(m_vertSplitter);
+  QGridLayout* topicLayout = new QGridLayout(topicWidget, 2, 3, margin(), spacing());
 
-  topicLabel=new QLabel(i18n("&Topic:"),topicBox);
-  QWhatsThis::add(topicLabel, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by changing the text in the topic line, and pressing enter.<p>You can see the previous topics that were entered by dropping down the drop down box.</qt>"));
-  topicLine=new TopicComboBox(topicBox);
+  m_topicButton = new QToolButton(topicWidget);
+  m_topicButton->setIconSet(SmallIconSet("edit", 16));
+  QToolTip::add(m_topicButton, i18n("Edit Topic"));
+  connect(m_topicButton, SIGNAL(clicked()), this, SLOT(requestNewTopic()));
+  topicLine = new Konversation::TopicLabel(topicWidget);
   QWhatsThis::add(topicLine, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by changing the text in the topic line, and pressing enter.<p>You can see the previous topics that were entered by dropping down the drop down box.</qt>"));
-  topicLine->setEditable(true);
-  topicLine->setAutoCompletion(false);
-  topicLine->setInsertionPolicy(QComboBox::NoInsertion);
-  topicLine->installEventFilter(this);
 
-  // link topic label shortcut to topic line
-  topicLabel->setBuddy(topicLine);
+  topicLayout->addWidget(m_topicButton, 0, 0);
+  topicLayout->addMultiCellWidget(topicLine, 0, 1, 1, 1);
 
   showTopic(KonversationApplication::preferences.getShowTopic());
 
   // The box holding the channel modes
-  modeBox=new QHBox(topicBox);
+  modeBox = new QHBox(topicWidget);
   modeBox->setSizePolicy(hfixed);
-  modeT=new ModeButton("T",modeBox,0);
-  modeN=new ModeButton("N",modeBox,1);
-  modeS=new ModeButton("S",modeBox,2);
-  modeI=new ModeButton("I",modeBox,3);
-  modeP=new ModeButton("P",modeBox,4);
-  modeM=new ModeButton("M",modeBox,5);
-  modeK=new ModeButton("K",modeBox,6);
-  modeL=new ModeButton("L",modeBox,7);
+  modeT = new ModeButton("T",modeBox,0);
+  modeN = new ModeButton("N",modeBox,1);
+  modeS = new ModeButton("S",modeBox,2);
+  modeI = new ModeButton("I",modeBox,3);
+  modeP = new ModeButton("P",modeBox,4);
+  modeM = new ModeButton("M",modeBox,5);
+  modeK = new ModeButton("K",modeBox,6);
+  modeL = new ModeButton("L",modeBox,7);
 
   // Tooltips for the ModeButtons
   QToolTip::add(modeT, i18n("Topic can be changed by channel operator only."));
@@ -164,15 +173,14 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(limit,SIGNAL (returnPressed()),this,SLOT (channelLimitChanged()) );
   limit->installEventFilter(this);
 
+  topicLayout->addWidget(modeBox, 0, 2);
+  topicLayout->setRowStretch(1, 10);
+  topicLayout->setColStretch(1, 10);
+
   showModeButtons(KonversationApplication::preferences.getShowModeButtons());
 
   // (this) The main Box, holding the channel view/topic and the input line
-  splitter=new QSplitter(this);
-#ifdef USE_MDI
-  mainLayout->setStretchFactor(splitter,10);
-#else
-  setStretchFactor(splitter,10);
-#endif
+  splitter = new QSplitter(m_vertSplitter);
 
 #ifdef OPAQUE_CONF
   splitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
@@ -180,9 +188,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   splitter->setOpaqueResize(true);
 #endif
 
-  setTextView(new IRCView(splitter,NULL));  // Server will be set later in setServer()
+  setTextView(new IRCView(splitter, NULL));  // Server will be set later in setServer()
   // The box that holds the Nick List and the quick action buttons
-  QVBox* nickListButtons=new QVBox(splitter);
+  QVBox* nickListButtons = new QVBox(splitter);
   nickListButtons->setSpacing(spacing());
 
   nicknameListView=new NickListView(nickListButtons, this);
@@ -205,49 +213,45 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 //  nicknameListView->header()->setStretchEnabled(true,2);
 
   // separate LED from Text a little more
-  nicknameListView->setColumnWidth(0,10);
-  nicknameListView->setColumnAlignment(0,Qt::AlignHCenter);
+  nicknameListView->setColumnWidth(0, 10);
+  nicknameListView->setColumnAlignment(0, Qt::AlignHCenter);
   nicknameListView->installEventFilter(this);
 
-  nicksOps=new QLabel(i18n("nicks"),nickListButtons);
-  nicksOps->setAlignment(AlignVCenter | AlignHCenter);
-
   // the grid that holds the quick action buttons
-  buttonsGrid=new QGrid(2,nickListButtons);
+  buttonsGrid = new QGrid(2, nickListButtons);
   // set hide() or show() on grid
   showQuickButtons(KonversationApplication::preferences.getShowQuickButtons());
 
-  for(int index=0;index<8;index++)
+  for(int index = 0; index < 8; index++)
   {
     // generate empty buttons first, text will be added by updateQuickButtons() later
-    QuickButton* newQuickButton=new QuickButton(QString::null,QString::null,buttonsGrid);
+    QuickButton* newQuickButton = new QuickButton(QString::null, QString::null, buttonsGrid);
     buttonList.append(newQuickButton);
 
-    connect(newQuickButton,SIGNAL (clicked(const QString &)),this,SLOT (quickButtonClicked(const QString &)) );
+    connect(newQuickButton, SIGNAL(clicked(const QString &)), this, SLOT(quickButtonClicked(const QString &)));
   }
 
   updateQuickButtons(KonversationApplication::preferences.getButtonList());
 
   // The box holding the Nickname button and Channel input
-  commandLineBox=new QHBox(this);
+  commandLineBox = new QHBox(this);
   commandLineBox->setSpacing(spacing());
 
-  nicknameCombobox=new QComboBox(commandLineBox);
+  nicknameCombobox = new QComboBox(commandLineBox);
   nicknameCombobox->setEditable(true);
   nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
   nicknameCombobox->installEventFilter(this);
   QWhatsThis::add(nicknameCombobox, i18n("<qt>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the irc server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.<p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</qt>"));
   oldNick = nicknameCombobox->currentText();
-  awayLabel=new QLabel(i18n("(away)"),commandLineBox);
+  awayLabel = new QLabel(i18n("(away)"), commandLineBox);
   awayLabel->hide();
-  channelInput=new IRCInput(commandLineBox);
+  channelInput = new IRCInput(commandLineBox);
   channelInput->installEventFilter(this);
   nicknameListView->installEventFilter(channelInput);
 
   // Set the widgets size policies
-  topicBox->setSizePolicy(vmodest);
-  topicLabel->setSizePolicy(hfixed);  // This should prevent the widget from growing too wide
-  topicLine->setSizePolicy(vfixed);
+  m_topicButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
+  topicLine->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum));
 
   commandLineBox->setSizePolicy(vfixed);
 
@@ -272,7 +276,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   modeL->setSizePolicy(hfixed);
 
   getTextView()->setSizePolicy(greedy);
-  nicksOps->setSizePolicy(modest);
   nicknameListView->setSizePolicy(hmodest);
   // remember alternate background color
   abgCache=nicknameListView->alternateBackground().name();
@@ -291,8 +294,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
   connect(nicknameListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT (doubleClickCommand(QListViewItem*)) );
   connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged(int)));
-
-  connect(topicLine,SIGNAL (topicChanged(const QString&)),this,SLOT (requestNewTopic(const QString&)) );
 
   nicknameList.setAutoDelete(true);     // delete items when they are removed
 
@@ -323,6 +324,9 @@ Channel::~Channel()
   kdDebug() << "Channel::~Channel(" << getName() << ")" << endl;
 
   KonversationApplication::preferences.setChannelSplitter(splitter->sizes());
+  KConfig* config = kapp->config();
+  config->setGroup("Appearance");
+  config->writeEntry("TopicSplitterSizes", m_vertSplitter->sizes());
 
   // Purge nickname list
   purgeNicks();
@@ -351,13 +355,20 @@ void Channel::purgeNicks()
   ops=0;
 }
 
-void Channel::requestNewTopic(const QString& newTopic)
+void Channel::requestNewTopic()
 {
-  topicLine->setCurrentText(topic);
-
-  if(newTopic!=topic) sendChannelText(KonversationApplication::preferences.getCommandChar()+"TOPIC "+getName()+" "+newTopic);
-
-  channelInput->setFocus();
+  bool ok = false;
+  QStringList topics;
+  
+  for(QStringList::iterator it = m_topicHistory.begin(); it != m_topicHistory.end(); ++it) {
+    topics.append((*it).section(' ', 1));
+  }
+  
+  QString newTopic = KInputDialog::getItem(i18n("Change Topic"), i18n("Topic:"), topics, 0, true, &ok, this);
+  
+  if((newTopic != m_topicHistory.first()) && ok) {
+    sendChannelText(KonversationApplication::preferences.getCommandChar() + "TOPIC " + getName() + " " + newTopic);
+  }
 }
 
 void Channel::textPasted(const QString& text)
@@ -1032,56 +1043,51 @@ void Channel::adjustOps(int value)
 
 void Channel::updateNicksOps()
 {
-  QString txt = i18n("%n nick", "%n nicks", nicks);
-  txt += i18n(" (%n op)", " (%n ops)", ops);
-  nicksOps->setText(txt);
+  emit updateInfo();
 }
 
 void Channel::setTopic(const QString &newTopic)
 {
-  appendCommandMessage(i18n("Topic"),i18n("The channel topic is \"%1\".").arg(newTopic));
-  if(topic!=newTopic)
+  appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".").arg(newTopic));
+
+  if(m_topicHistory.first() != newTopic)
   {
-    topicHistory.prepend(i18n("<unknown> %1").arg(newTopic));
-    topicLine->clear();
-    topicLine->insertStringList(topicHistory);
-    topic=newTopic;
+    m_topicHistory.prepend(i18n("<unknown> %1").arg(newTopic));
+    QString topic = Konversation::removeIrcMarkup(newTopic);
+    topic.replace("&", "&amp;").
+        replace("<", "&lt;").
+        replace(">", "&gt;");
+    topicLine->setText("<qt>" + Konversation::tagURLs(topic, "") + "</qt>");
     // Add a tool tip to the topic line if it gets too long
     QToolTip::remove(topicLine);
 
-    if(newTopic.length()>80)
+    if(topicLine->fontMetrics().width(newTopic) > topicLine->width())
     {
-      QString toolTip=newTopic;
-      toolTip.replace("&","&amp;").
-          replace("<","&lt;").
-          replace(">","&gt;");
-
-      QToolTip::add(topicLine,"<qt>"+toolTip+"</qt>");
+      QToolTip::add(topicLine,"<qt>" + topic + "</qt>");
     }
   }
 }
 
 void Channel::setTopic(const QString &nickname, const QString &newTopic) // Overloaded
 {
-  if(nickname==server->getNickname())
-    appendCommandMessage(i18n("Topic"),i18n("You set the channel topic to \"%1\".").arg(newTopic));
-  else
-    appendCommandMessage(i18n("Topic"),i18n("%1 sets the channel topic to \"%2\".").arg(nickname).arg(newTopic));
+  if(nickname == server->getNickname()) {
+    appendCommandMessage(i18n("Topic"), i18n("You set the channel topic to \"%1\".").arg(newTopic));
+  } else {
+    appendCommandMessage(i18n("Topic"), i18n("%1 sets the channel topic to \"%2\".").arg(nickname).arg(newTopic));
+  }
 
-  topicHistory.prepend("<"+nickname+"> "+newTopic);
-  topicLine->clear();
-  topicLine->insertStringList(topicHistory);
-  topic=newTopic;
+  m_topicHistory.prepend("<" + nickname + "> " + newTopic);
+  QString topic = Konversation::removeIrcMarkup(newTopic);
+  topic.replace("&", "&amp;").
+      replace("<", "&lt;").
+      replace(">", "&gt;");
+  topicLine->setText("<qt>" + Konversation::tagURLs(topic, nickname) + "</qt>");
   // Add a tool tip to the topic line if it gets too long
   QToolTip::remove(topicLine);
-  if(newTopic.length()>80)
-  {
-    QString toolTip=newTopic;
-    toolTip.replace("&","&amp;").
-        replace("<","&lt;").
-        replace(">", "&gt;");
 
-    QToolTip::add(topicLine,"<qt>"+toolTip+"</qt>");
+  if(topicLine->fontMetrics().width(newTopic) > topicLine->width())
+  {
+    QToolTip::add(topicLine, "<qt>" + topic + "</qt>");
   }
 }
 
@@ -1089,10 +1095,8 @@ void Channel::setTopicAuthor(const QString& newAuthor)
 {
   if(topicAuthorUnknown)
   {
-    topicHistory[0]="<"+newAuthor+"> "+topicHistory[0].section(' ',1);
-    topicLine->clear();
-    topicLine->insertStringList(topicHistory);
-    topicAuthorUnknown=false;
+    m_topicHistory[0] = "<" + newAuthor + "> " + m_topicHistory[0].section(' ', 1);
+    topicAuthorUnknown = false;
   }
 }
 void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString &parameter)
@@ -1577,6 +1581,16 @@ void Channel::showEvent(QShowEvent*)
   {
     splitterChanged=false;
     splitter->setSizes(KonversationApplication::preferences.getChannelSplitter());
+    KConfig* config = kapp->config();
+    config->setGroup("Appearance");
+    QValueList<int> sizes = config->readIntListEntry("TopicSplitterSizes");
+
+    if(sizes.isEmpty()) {
+      int topicSize = (topicLine->fontMetrics().height() * 2) + (topicLine->fontMetrics().lineSpacing() * 2);
+      sizes << m_topicButton->height() << (m_vertSplitter->height() - m_topicButton->height());
+    }
+    
+    m_vertSplitter->setSizes(sizes);
   }
   if(awayChanged)
   {
@@ -1619,8 +1633,8 @@ void Channel::updateFonts()
   limit->setPaletteBackgroundColor(bg);
   limit->setFont(KonversationApplication::preferences.getTextFont());
 
-  topicLine->lineEdit()->setPaletteForegroundColor(fg);
-  topicLine->lineEdit()->setPaletteBackgroundColor(bg);
+  //topicLine->lineEdit()->setPaletteForegroundColor(fg);
+  //topicLine->lineEdit()->setPaletteBackgroundColor(bg);
   topicLine->setFont(KonversationApplication::preferences.getTextFont());
 
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
@@ -1632,9 +1646,6 @@ void Channel::updateFonts()
     getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
       QString::null);
   }
-
-  nicksOps->setFont(KonversationApplication::preferences.getListFont());
-  QWhatsThis::add(nicksOps, i18n("<qt>This shows the number of users in the channel, and the number of those that are operators (ops).<p>A channel operator is a user that has special privileges, such as the ability to kick and ban users, change the channel modes, make other users operators</qt>"));
 
   nicknameListView->sort();
 
@@ -1825,10 +1836,10 @@ void Channel::showTopic(bool show)
 {
   if(show) {
     topicLine->show();
-    topicLabel->show();
+    m_topicButton->show();
   } else {
     topicLine->hide();
-    topicLabel->hide();
+    m_topicButton->hide();
   }
 }
 

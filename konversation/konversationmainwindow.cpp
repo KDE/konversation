@@ -174,9 +174,13 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   m_sslLabel->hide();
   QWhatsThis::add(m_sslLabel, i18n("All communication with the server is encrypted.  This makes it harder for someone to listen in on your communications."));
 
-  statusBar()->insertItem(i18n("Ready."),StatusText,1);
-  statusBar()->insertItem("lagometer",LagOMeter,0,true);
-  statusBar()->addWidget(m_sslLabel,0,true);
+  m_channelInfoLabel = new QLabel(statusBar(), "channelInfoLabel");
+  QWhatsThis::add(m_channelInfoLabel, i18n("<qt>This shows the number of users in the channel, and the number of those that are operators (ops).<p>A channel operator is a user that has special privileges, such as the ability to kick and ban users, change the channel modes, make other users operators</qt>"));
+
+  statusBar()->insertItem(i18n("Ready."), StatusText, 1);
+  statusBar()->addWidget(m_channelInfoLabel, 0, true);
+  statusBar()->insertItem("lagometer", LagOMeter, 0, true);
+  statusBar()->addWidget(m_sslLabel, 0, true);
   QWhatsThis::add(statusBar(), i18n("<qt>The status bar shows various messages, including any problems connecting to the server.  On the far right the current delay to the server is shown.  The delay is the time it takes for messages from you to reach the server, and from the server back to you.</qt>"));
 
   // Show "Lag unknown"
@@ -304,10 +308,10 @@ void KonversationMainWindow::showToolbar()
 }
 
 void KonversationMainWindow::focusAndShowErrorMessage(const QString &errorMsg) {
-	show();
-	KWin::demandAttention(winId());
-        KWin::activateWindow(winId());
-	KMessageBox::error(this, errorMsg);
+  show();
+  KWin::demandAttention(winId());
+  KWin::activateWindow(winId());
+  KMessageBox::error(this, errorMsg);
 }
 
 void KonversationMainWindow::showMenubar(bool dontShowWarning)
@@ -928,18 +932,37 @@ void KonversationMainWindow::newText(QWidget* widget,const QString& highlightCol
 void KonversationMainWindow::updateFrontView()
 {
 #ifdef USE_MDI
-  ChatWindow* view=static_cast<ChatWindow*>(activeWindow());
+  ChatWindow* view = static_cast<ChatWindow*>(activeWindow());
 #else
-  ChatWindow* view=static_cast<ChatWindow*>(getViewContainer()->currentPage());
+  ChatWindow* view = static_cast<ChatWindow*>(getViewContainer()->currentPage());
 #endif
-  if(view)
-  {
+  if(view) {
     // Make sure that only views with info output get to be the frontView
-    if(frontView)
-        previousFrontView=frontView;
-    if(view->frontView()) frontView=view;
+    if(frontView) {
+      previousFrontView = frontView;
+
+      if(frontView->getType() == ChatWindow::Channel) {
+        disconnect(frontView, SIGNAL(updateInfo()), this, SLOT(updateChannelInfo()));
+      }
+    }
+
+    if(view->frontView()) {
+      frontView = view;
+
+      if(view->getType() == ChatWindow::Channel) {
+        updateChannelInfo();
+        connect(view, SIGNAL(updateInfo()), this, SLOT(updateChannelInfo()));
+      } else {
+        m_channelInfoLabel->setText(view->getName());
+      }
+    } else {
+      m_channelInfoLabel->setText(view->getName());
+    }
+
     // Make sure that only text views get to be the searchView
-    if(view->searchView()) searchView=view;
+    if(view->searchView()) {
+      searchView = view;
+    }
   }
 }
 #ifdef USE_MDI
@@ -970,13 +993,16 @@ void KonversationMainWindow::changeToView(KMdiChildView* /*viewToChange*/)
 void KonversationMainWindow::changeView(QWidget* viewToChange)
 {
 #ifndef USE_MDI
-  ChatWindow* view=static_cast<ChatWindow*>(viewToChange);
-  if(frontView)
+  ChatWindow* view = static_cast<ChatWindow*>(viewToChange);
+  
+  if(frontView) {
     previousFrontView = frontView;
-  frontView=0;
-  searchView=0;
+  }
+  
+  frontView = 0;
+  searchView = 0;
 
-  frontServer=view->getServer();
+  frontServer = view->getServer();
   // display this server's lag time
   if(frontServer) {
     updateSSLInfo(frontServer);
@@ -986,7 +1012,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 
   updateFrontView();
 
-  viewContainer->changeTabState(view,false,false,QString::null);
+  viewContainer->changeTabState(view, false, false, QString::null);
   emit endNotification(viewToChange);
   view->adjustFocus();
 #endif
@@ -1154,17 +1180,17 @@ void KonversationMainWindow::updateLag(Server* lagServer,int msec)
   if(lagServer==frontServer)
   {
     statusBar()->changeItem(i18n("Ready."),StatusText);
-    QString lagString;
+    QString lagString = lagServer->getServerName() + " - ";
 
     if (msec == -1) {
-      lagString=i18n("Lag: not known");
-    }
-    else if(msec<1000) {
-      lagString = i18n("Lag: %1 ms").arg(msec);
+      lagString += i18n("Lag: not known");
+    } else if(msec < 1000) {
+      lagString += i18n("Lag: %1 ms").arg(msec);
     } else {
-      lagString = i18n("Lag: %1 s").arg(msec/1000);
+      lagString += i18n("Lag: %1 s").arg(msec / 1000);
     }
-    statusBar()->changeItem(lagString,LagOMeter);
+    
+    statusBar()->changeItem(lagString, LagOMeter);
   }
 }
 
@@ -1497,6 +1523,20 @@ void KonversationMainWindow::openIdentitiesDialog()
   if((dlg.exec() == KDialog::Accepted) && m_serverListDialog) {
     m_serverListDialog->updateServerGroupList();
   }
+}
+
+void KonversationMainWindow::updateChannelInfo()
+{
+  if(!frontView || frontView->getType() != ChatWindow::Channel) {
+    return;
+  }
+
+  ChatWindow* view = frontView;
+  Channel* channel = static_cast<Channel*>(view);
+  QString info = channel->getName() + " - ";
+  info += i18n("%n nick", "%n nicks", channel->numberOfNicks());
+  info += i18n(" (%n op)", " (%n ops)", channel->numberOfOps());
+  m_channelInfoLabel->setText(info);
 }
 
 #include "konversationmainwindow.moc"

@@ -18,6 +18,7 @@ class QString;
 namespace Konversation
 {
   QString removeIrcMarkup(const QString& text);
+  QString tagURLs(const QString& text, const QString& fromNick);
 };
 
 #endif

@@ -183,6 +183,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void insertCharacter();
     void insertChar(const QChar& chr);
 
+    void updateChannelInfo();
+
   protected:
     enum StatusID
     {
@@ -233,6 +235,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     bool m_closeApp;
     
     SSLLabel* m_sslLabel;
+    QLabel* m_channelInfoLabel;
 
     Konversation::InsertCharDialog* m_insertCharDialog;
     Konversation::ServerListDialog* m_serverListDialog;

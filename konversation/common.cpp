@@ -15,15 +15,74 @@
 #include <qstring.h>
 #include <qregexp.h>
 
+#include "konversationapplication.h"
+#include "preferences.h"
+
 namespace Konversation
 {
-  QString removeIrcMarkup(const QString& text)
-  {
-    QString escaped = text;
-    QRegExp colorRegExp("((\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)|\x02|\x09|\x13|\x16|\x1f)");
-    // Escape text decoration
-    escaped.remove(colorRegExp);
-    
-    return escaped;
+
+QString removeIrcMarkup(const QString& text)
+{
+  QString escaped = text;
+  QRegExp colorRegExp("((\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)|\x02|\x09|\x13|\x16|\x1f)");
+  // Escape text decoration
+  escaped.remove(colorRegExp);
+
+  return escaped;
+}
+
+QString tagURLs(const QString& text, const QString& fromNick)
+{
+  QString filteredLine = text;
+  QString linkColor = KonversationApplication::preferences.getColor("LinkMessage");
+  QRegExp pattern("(((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
+                  "(([-_.%\\d\\w]*(:[-_.%\\d\\w]*)?@)|)"
+                  // IP Address
+                  "([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|"
+                  // Decimal IP address
+                  "[0-9]{1,12}|"
+                  // Standard host name
+                  "[a-z0-9][\\.%a-z0-9_-]+\\.[a-z]{2,}"
+                  // Port number, path to document
+                  ")(:[0-9]{1,5})?((:|)(/[^>\"\\s]*))?|"
+                  // eDonkey2000 links need special treatment
+                  "ed2k://\\|([^|]+\\|){4})|"
+                  "(mailto:|)((([a-z]|\\d)+[\\w\\x2E\\x2D]+)\\x40([\\w\\x2E\\x2D]{2,})\\x2E(\\w{2,})))");
+
+  pattern.setCaseSensitive(false);
+  KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+  int pos = 0;
+
+  while(pattern.search(filteredLine, pos) != -1) {
+      // Remember where we found the url
+      pos = pattern.pos();
+
+      // Extract url
+      QString url = pattern.capturedTexts()[0];
+      QString href(url);
+
+      // clean up href for browser
+      if(href.startsWith("www.")) href = "http://" + href;
+      else if(href.startsWith("ftp.")) href = "ftp://" + href;
+      else if(href.find(QRegExp("(([a-z]+[\\w\\x2E\\x2D]+)\\x40)")) == 0) href = "mailto:" + href;
+
+      // Fix &amp; back to & in href ... kludgy but I don't know a better way.
+      href.replace("&amp;", "&");
+      // Replace all spaces with %20 in href
+      href.replace(" ", "%20");
+      // Build rich text link
+      QString link("<font color=\"#" + linkColor + "\"><a href=\"" + href + "\">" + url + "</a></font>");
+
+      // replace found url with built link
+      filteredLine.replace(pos, url.length(), link);
+      // next search begins right after the link
+      pos += link.length();
+      // tell the program that we have found a new url
+
+      konvApp->storeUrl(fromNick, href);
   }
+
+  return filteredLine;
+}
+
 }
