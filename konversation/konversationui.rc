@@ -1,0 +1,19 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="konversation" version="0.3">
+
+  <MenuBar>
+    <Menu name="actions">
+      <Text>Actions</Text>
+    </Menu>
+    <Menu name="windows">
+      <Text>Windows</Text>
+      <Action name="open_buttons_window" />
+      <Action name="open_hilight_window" />
+    </Menu>
+  </MenuBar>
+
+  <ToolBar fullWidth="true" name="mainToolBar">
+    <Action name="options_configure" />
+  </ToolBar>
+
+</kpartgui>

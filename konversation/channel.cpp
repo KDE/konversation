@@ -1,0 +1,876 @@
+/*
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+*/
+
+/*
+    channel.cpp  -  description
+    begin:     Wed Jan 23 2002
+    copyright: (C) 2002 by Dario Abatianni
+    email:     eisfuchs@tigress.com
+*/
+
+#include <iostream>
+
+#include <qvbox.h>
+#include <qhbox.h>
+#include <qgrid.h>
+#include <qsizepolicy.h>
+#include <qcombobox.h>
+#include <qheader.h>
+#include <qregexp.h>
+
+#include <klocale.h>
+
+#include "konversationapplication.h"
+#include "channel.h"
+
+Channel::Channel(QWidget* parent) : ChatWindow(parent)
+{
+  nicks=0;
+  ops=0;
+  completionPosition=0;
+
+  /* Build some size policies for the widgets */
+  QSizePolicy hfixed=QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
+  QSizePolicy hmodest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
+  QSizePolicy modest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+  QSizePolicy onlyHorizontal=QSizePolicy(QSizePolicy::Minimum,QSizePolicy::Preferred);
+//  QSizePolicy onlyVertical=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::MinimumExpanding);
+  QSizePolicy greedy=QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
+
+  /* The main Box, holding the channel view/topic and the input line */
+  channelPane=new QVBox(parent);
+  channelPane->setSpacing(spacing());
+  channelPane->setMargin(margin());
+
+  /* The grid for the topic line, Nicks/Ops label, Channel View and Nick list */
+  QGrid* topicViewNicksGrid=new QGrid(2,channelPane);
+  topicViewNicksGrid->setSpacing(spacing());
+
+  /* The box holding the Topic label/line, and the channel modes */
+  QHBox* topicBox=new QHBox(topicViewNicksGrid);
+  topicBox->setSpacing(spacing());
+
+  QLabel* topicLabel=new QLabel(i18n("Topic:"),topicBox);
+  topicLine=new QComboBox(topicBox);
+  topicLine->setEditable(true);
+
+  /* The box holding the channel modes*/
+  QHBox* modeBox=new QHBox(topicBox);
+  modeBox->setSizePolicy(hfixed);
+  modeT=new QPushButton("T",modeBox);
+  modeN=new QPushButton("N",modeBox);
+  modeS=new QPushButton("S",modeBox);
+  modeI=new QPushButton("I",modeBox);
+  modeP=new QPushButton("P",modeBox);
+  modeM=new QPushButton("M",modeBox);
+  modeK=new QPushButton("K",modeBox);
+  modeL=new QPushButton("L",modeBox);
+  limit=new QLineEdit(modeBox);
+
+  nicksOps=new QLabel(i18n("Nicks"),topicViewNicksGrid);
+  nicksOps->setAlignment(AlignVCenter | AlignHCenter);
+
+  setTextView(new IRCView(topicViewNicksGrid));
+
+  /* The box that holds the Nick List and the quick action buttons */
+  QVBox* nickListButtons=new QVBox(topicViewNicksGrid);
+  nickListButtons->setSpacing(spacing());
+
+  nicknameListView=new NickListView(nickListButtons);
+  nicknameListView->setSelectionModeExt(KListView::Extended);
+  nicknameListView->setAllColumnsShowFocus(true);
+  nicknameListView->setSorting(1,false);
+  nicknameListView->addColumn("",16);
+  nicknameListView->addColumn("");
+  nicknameListView->header()->hide();
+
+  /* The grid that holds the quick action buttons */
+  QGrid* buttonsGrid=new QGrid(2,nickListButtons);
+  for(int index=0;index<8;index++)
+  {
+    QuickButton* newQuickButton=new QuickButton("",buttonsGrid,index);
+    buttonList.append(newQuickButton);
+    connect(newQuickButton,SIGNAL (clicked(int)),this,SLOT (quickButtonClicked(int)) );
+  }
+  updateQuickButtons(KonversationApplication::preferences.buttonList);
+
+  /* The box holding the Nickname button, Channel input and Log Checkbox */
+  QHBox* commandLineBox=new QHBox(channelPane);
+  commandLineBox->setSpacing(spacing());
+
+  nicknameButton=new QPushButton(i18n("Nickname"),commandLineBox);
+  channelInput=new IRCInput(commandLineBox);
+  logCheckBox=new QCheckBox(i18n("Log"),commandLineBox);
+  logCheckBox->setChecked(KonversationApplication::preferences.getLog());
+
+  /* Set the widgets size policies */
+  topicBox->setSizePolicy(greedy);
+  topicLabel->setSizePolicy(hfixed);
+  topicLine->setSizePolicy(onlyHorizontal);
+
+  limit->setMaximumSize(40,100);
+  limit->setSizePolicy(hfixed);
+
+  modeT->setMaximumSize(20,100);
+  modeT->setSizePolicy(hfixed);
+  modeN->setMaximumSize(20,100);
+  modeN->setSizePolicy(hfixed);
+  modeS->setMaximumSize(20,100);
+  modeS->setSizePolicy(hfixed);
+  modeI->setMaximumSize(20,100);
+  modeI->setSizePolicy(hfixed);
+  modeP->setMaximumSize(20,100);
+  modeP->setSizePolicy(hfixed);
+  modeM->setMaximumSize(20,100);
+  modeM->setSizePolicy(hfixed);
+  modeK->setMaximumSize(20,100);
+  modeK->setSizePolicy(hfixed);
+  modeL->setMaximumSize(20,100);
+  modeL->setSizePolicy(hfixed);
+
+  getTextView()->setSizePolicy(greedy);
+  nicksOps->setSizePolicy(modest);
+  nicknameListView->setSizePolicy(hmodest);
+
+  connect(channelInput,SIGNAL (returnPressed()),this,SLOT (channelTextEntered()) );
+  connect(channelInput,SIGNAL (nickCompletion()),this,SLOT (completeNick()) );
+  connect(textView,SIGNAL (newText()),this,SLOT (newTextInView()) );
+  connect(textView,SIGNAL (newURL(QString)),this, SLOT (urlCatcher(QString)) );
+  connect(textView,SIGNAL (gotFocus()),channelInput,SLOT (setFocus()) );
+  connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
+
+  nicknameList.setAutoDelete(true);     // delete items when they are removed
+
+  setLog(KonversationApplication::preferences.getLog());
+// if(mode==singleWindows) channelPane->show();
+}
+
+Channel::~Channel()
+{
+  cerr << "Channel::~Channel()" << endl;
+  /* Purge nickname list */
+  Nick* nick=nicknameList.first();
+  while(nick)
+  {
+    /* Remove the first element of the list */
+    nicknameList.removeRef(nick);
+    /* Again, get the first element in the list */
+    nick=nicknameList.first();
+  }
+  /* Unlink this channel from channel list */
+  server->removeChannel(this);
+  delete channelPane;
+}
+
+/* Will be connected to NickListView::popupCommand(int) */
+void Channel::popupCommand(int id)
+{
+  QString pattern;
+  bool raw=false;
+
+  switch(id)
+  {
+    case NickListView::GiveOp:
+      pattern="MODE %c +o %u";
+      raw=true;
+      break;
+    case NickListView::TakeOp:
+      pattern="MODE %c -o %u";
+      raw=true;
+      break;
+    case NickListView::GiveVoice:
+      pattern="MODE %c +v %u";
+      raw=true;
+      break;
+    case NickListView::TakeVoice:
+      pattern="MODE %c -v %u";
+      raw=true;
+      break;
+    case NickListView::Version:
+      pattern="PRIVMSG %u :\x01VERSION\x01";
+      raw=true;
+      break;
+    case NickListView::Whois:
+      pattern="WHOIS %u";
+      raw=true;
+      break;
+    case NickListView::Ping: /* Find out what number has to be put here! */
+      pattern="PRIVMSG %u :\x01PING 2398475\x01";
+      raw=true;
+      break;
+    case NickListView::Kick:
+      pattern="KICK %c %u";
+      raw=true;
+      break;
+    case NickListView::Query:
+      pattern="/QUERY %u";
+      break;
+  } /* switch */
+
+  if(pattern.length())
+  {
+    pattern.replace(QRegExp("%c"),getChannelName());
+
+    QStringList* nickList=getSelectedNicksList();
+
+    QString command;
+    for(QStringList::Iterator index=nickList->begin();index!=nickList->end();++index)
+    {
+      command=pattern;
+      command.replace(QRegExp("%u"),*index);
+
+      if(raw)
+        server->queue(command);
+      else
+        sendChannelText(command);
+    }
+
+    delete nickList;
+  }
+}
+
+void Channel::completeNick()
+{
+  int pos=channelInput->cursorPosition();
+  int oldPos=channelInput->getOldCursorPosition();
+
+  QString line=channelInput->text();
+  QString newLine;
+  /* Check if completion position is out of range */
+  if(completionPosition>=nicknameList.count()) completionPosition=0;
+  /* Check, which completion mode is active */
+  char mode=channelInput->getCompletionMode();
+  /* Are we in query mode? */
+  if(mode=='q')
+  {
+    /* Remove /msg <nick> part from string */
+    line=line.mid(pos);
+    /* Set cursor to beginning to restart query completion */
+    pos=0;
+  }
+  /* Or maybe in channel mode? */
+  else if(mode=='c')
+  {
+    line.remove(oldPos,pos-oldPos);
+    pos=oldPos;
+  }
+  /* If the cursor is at beginning of line, insert /msq <query> */
+  if(pos==0)
+  {
+    /* Find next query in list */
+    QString queryName=server->getNextQueryName();
+    /* Sis we find any queries? */
+    if(queryName)
+    {
+      /* Prepend /msg name */
+      newLine="/msg "+queryName+" ";
+      /* New cursor position is behind nickname */
+      pos=newLine.length();
+      /* Add rest of the line */
+      newLine+=line;
+      /* Set query completion mode */
+      channelInput->setCompletionMode('q');
+    }
+    /* No queries at all, so ignore this TAB */
+    else newLine=line;
+  }
+  else
+  {
+    /* Set channel nicks completion mode */
+    channelInput->setCompletionMode('c');
+    /* Remember old cursor position in input field */
+    channelInput->setOldCursorPosition(pos);
+    /* remember old cursor position locally */
+    oldPos=pos;
+    /* remember old nick completion position */
+    unsigned int oldCompletionPosition=completionPosition;
+    /* step back to last space or start of line */
+    while(pos && line[pos-1]!=' ') pos--;
+    /* copy search pattern (lowercase) */
+    QString pattern=line.mid(pos,oldPos-pos).lower();
+    /* copy line to newLine-buffer */
+    newLine=line;
+    /* did we find any pattern? */
+    if(pattern && pattern.length())
+    {
+      QString foundNick="";
+      /* Try to find matching nickname in list of names */
+      do
+      {
+        QString lookNick=nicknameList.at(completionPosition)->getNickname();
+        if(lookNick.lower().startsWith(pattern)) foundNick=lookNick;
+        /* increment search position */
+        completionPosition++;
+        /* wrap around */
+        if(completionPosition==nicknameList.count()) completionPosition=0;
+        /* the search ends when we either find a suitable nick or we end up at the
+           first search position */
+      } while(completionPosition!=oldCompletionPosition && foundNick.length()==0);
+      /* Did we find a suitable nick? */
+      if(foundNick.length())
+      {
+        /* remove pattern from line */
+        newLine.remove(pos,pattern.length());
+        /* did we find the nick in the middle of the line? */
+        if(pos)
+        {
+          newLine.insert(pos,foundNick+" ");
+          pos=pos+foundNick.length()+1;
+        }
+        /* No, it was at the beginning, so insert "Nick: " */
+        else
+        {
+          newLine.insert(pos,foundNick+": ");
+          pos=pos+foundNick.length()+2;
+        }
+      }
+      /* No pattern found, so restore old cursor position */
+      else pos=oldPos;
+    }
+  }
+  /* Set new text and cursor position */
+  channelInput->setText(newLine);
+  channelInput->setCursorPosition(pos);
+}
+
+void Channel::setChannelName(const QString& newName)
+{
+  channelName=newName;
+  setLogfileName("konversation_"+newName.lower()+".log");
+}
+
+void Channel::channelTextEntered()
+{
+  QString line=channelInput->text();
+  if(line.lower()=="/clear")
+    textView->clear();  // FIXME: to get rid of too wide lines
+  else
+    if(line.length()) sendChannelText(line);
+
+  channelInput->clear();
+}
+
+void Channel::sendChannelText(const QString& line)
+{
+  /* Is there something we need to display for ourselves? */
+  QString output=filter.parse(line,getChannelName());
+  if(output!="")
+  {
+    if(filter.isAction()) appendAction(server->getNickname(),output);
+    else append(server->getNickname(),output);
+  }
+  /* Send anything else to the server */
+  server->queue(filter.getServerOutput());
+}
+
+void Channel::newTextInView()
+{
+  emit newText(getChannelPane());
+}
+
+void Channel::setNickname(const QString& newNickname)
+{
+  nicknameButton->setText(newNickname);
+}
+
+QStringList* Channel::getSelectedNicksList()
+{
+  QStringList* selectedNicksList=new QStringList();
+  Nick* nick=nicknameList.first();
+
+  while(nick)
+  {
+    if(nick->isSelected()) selectedNicksList->append(nick->getNickname());
+    nick=nicknameList.next();
+  }
+
+  return selectedNicksList;
+}
+
+void Channel::quickButtonClicked(int id)
+{
+  /* get button definition */
+  QString buttonText=KonversationApplication::preferences.buttonList[id];
+  /* parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter) */
+  QString out=server->parseWildcards(buttonText,server->getNickname(),getChannelName(),getSelectedNicksList(),0,0);
+  /* does the return string end with a newline? */
+  if(out.find('\n')!=-1)
+  {
+    /* Send all strings, one after another */
+    QStringList outList=QStringList::split('\n',out);
+    for(unsigned int index=0;index<outList.count();index++)
+    {
+      sendChannelText(outList[index]);
+    }
+  }
+  /* single line without newline needs to be copied into input line */
+  else channelInput->setText(out);
+}
+
+void Channel::urlCatcher(QString url)
+{
+  KonversationApplication::storeURL(url);
+}
+
+void Channel::addNickname(QString& nickname,QString& hostmask,bool op,bool voice)
+{
+  Nick* nick=0;
+  Nick* lookNick=nicknameList.first();
+  while(lookNick && (nick==0))
+  {
+    if(lookNick->getNickname().lower()==nickname.lower()) nick=lookNick;
+    lookNick=nicknameList.next();
+  }
+
+  if(nick==0)
+  {
+    Nick* nick=new Nick(nicknameListView,nickname,hostmask,op,voice);
+
+    nicknameList.append(nick);
+    adjustNicks(1);
+    if(op) adjustOps(1);
+  }
+  else
+  {
+    nick->setHostmask(hostmask);
+    nick->setVoice(voice);
+
+    if(nick->isOp() && (op==false))
+    {
+      nick->setOp(false);
+      adjustOps(-1);
+    }
+    if((nick->isOp()==false) && op)
+    {
+      nick->setOp(true);
+      adjustOps(1);
+    }
+  }
+}
+
+void Channel::renameNick(QString& nickname,QString& newNick)
+{
+  /* Did we change our nick name? */
+  if(nickname==server->getNickname())
+  {
+    setNickname(newNick);
+    appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.").arg(newNick));
+  }
+  /* No, must've been someone else */
+  else appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.").arg(nickname).arg(newNick));
+
+  /* Update the nick list */
+  Nick* nick=getNickByName(nickname);
+  if(nick==0) cerr << "Channel::renameNick(): Nickname " << nickname << " not found!" << endl;
+  else nick->setNickname(newNick);
+}
+
+void Channel::joinNickname(QString& nickname,QString& hostmask)
+{
+  /* Did we join this channel ourselves? */
+  if(nickname==server->getNickname())
+  {
+    appendCommandMessage(i18n("Join"),i18n("You have joined channel %1. (%2)").arg(getChannelName()).arg(hostmask));
+  }
+  /* No, it was somebody else */
+  else
+  {
+    appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel. (%2)").arg(nickname).arg(hostmask));
+    addNickname(nickname,hostmask,false,false);
+  }
+}
+
+void Channel::removeNick(QString& nickname,QString& reason,bool quit)
+{
+  if(nickname==server->getNickname())
+  {
+    if(quit) appendCommandMessage(i18n("Quit"),i18n("You have left this server. (%2)").arg(nickname).arg(reason));
+    else appendCommandMessage(i18n("Part"),i18n("You have left channel %1. (%2)").arg(getChannelName()).arg(reason));
+
+    delete this;
+  }
+  else
+  {
+    if(quit) appendCommandMessage(i18n("Quit"),i18n("%1 has left this server. (%2)").arg(nickname).arg(reason));
+    else appendCommandMessage(i18n("Part"),i18n("%1 has left this channel. (%2)").arg(nickname).arg(reason));
+
+    Nick* nick=getNickByName(nickname);
+    if(nick==0) cerr << "Channel::removeNick(): Nickname " << nickname << " not found!" << endl;
+    else
+    {
+      if(nick->isOp()) adjustOps(-1);
+      adjustNicks(-1);
+
+      nicknameList.removeRef(nick);
+    }
+  }
+}
+
+void Channel::kickNick(QString& nickname,QString& kicker,QString& reason)
+{
+  if(nickname==server->getNickname())
+  {
+    if(kicker==server->getNickname())
+    {
+      appendCommandMessage(i18n("Kick"),i18n("You have kicked yourself from the channel. (%1)").arg(reason));
+      /* This message lets the user see what he has done after the channel window went away */
+      server->appendStatusMessage(i18n("Kick"),i18n("You have kicked yourself from channel %1. (%2)").arg(getChannelName()).arg(reason));
+    }
+    else
+    {
+      appendCommandMessage(i18n("Kick"),i18n("You have been kicked from the channel by %1. (%2)").arg(kicker).arg(reason));
+      /* This message lets the user see what had happened after the channel window went away */
+      server->appendStatusMessage(i18n("Kick"),i18n("You have been kicked from channel %1 by %2. (%3)").arg(getChannelName()).arg(kicker).arg(reason));
+    }
+
+    delete this;
+  }
+  else
+  {
+    if(kicker==server->getNickname())
+      appendCommandMessage(i18n("Kick"),i18n("You have kicked %1 from the channel. (%2)").arg(nickname).arg(reason));
+    else
+      appendCommandMessage(i18n("Kick"),i18n("%1 has been kicked from the channel by %2. (%3)").arg(nickname).arg(kicker).arg(reason));
+
+    Nick* nick=getNickByName(nickname);
+    if(nick==0) cerr << "Channel::kickNick(): Nickname " << nickname << " not found!" << endl;
+    else
+    {
+      if(nick->isOp()) adjustOps(-1);
+      adjustNicks(-1);
+
+      nicknameList.removeRef(nick);
+    }
+  }
+}
+
+Nick* Channel::getNickByName(QString& lookname)
+{
+  Nick* nick=nicknameList.first();
+  while(nick)
+  {
+    if(nick->getNickname().lower()==lookname.lower()) return nick;
+    nick=nicknameList.next();
+  }
+  return 0;
+}
+void Channel::adjustNicks(int value)
+{
+  nicks+=value;
+  updateNicksOps();
+}
+
+void Channel::adjustOps(int value)
+{
+  ops+=value;
+  updateNicksOps();
+}
+
+void Channel::updateNicksOps()
+{
+  /* %1 %2 / %3 %4 = 5 Nicks / 3 Ops */
+  nicksOps->setText(i18n("%1 %2 / %3 %4").arg(nicks).arg((nicks==1) ? i18n("Nick") : i18n("Nicks")).arg(ops).arg((ops==1) ? i18n("Op") : i18n("Ops")));
+}
+
+void Channel::setTopic(QString& topic)
+{
+  /* Somehow we need the nickname to the corresponding topic displayed */
+  appendCommandMessage(i18n("Topic"),i18n("The channel topic is \"%1\".").arg(topic));
+  topicHistory.prepend(topic.left(80)); // FIXME! Window gets too big
+  topicLine->clear();
+  topicLine->insertStringList(topicHistory);
+}
+
+void Channel::setTopic(QString& nickname,QString& topic) // Overloaded
+{
+  /* Somehow we need the nickname to the corresponding topic displayed */
+  if(nickname==server->getNickname())
+    appendCommandMessage(i18n("Topic"),i18n("You set the channel topic to \"%1\".").arg(topic));
+  else
+    appendCommandMessage(i18n("Topic"),i18n("%1 sets the channel topic to \"%2\".").arg(nickname).arg(topic));
+
+  topicHistory.prepend(topic.left(80)); // FIXME! Window gets too big
+  topicLine->clear();
+  topicLine->insertStringList(topicHistory);
+}
+
+void Channel::updateMode(QString& sourceNick,char mode,bool plus,QString& parameter)
+{
+  QString message="";
+  Nick* nick;
+
+  bool fromMe=false;
+  bool toMe=false;
+
+  if(sourceNick.lower()==server->getNickname().lower()) fromMe=true;
+  if(parameter.lower()==server->getNickname().lower()) toMe=true;
+
+  switch(mode)
+  {
+    case 'a': break;
+
+    case 'o':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You give channel operator privileges to %1.").arg(parameter);
+        else
+        {
+          if(toMe)
+            message=i18n("%1 gives channel operator privileges to you.").arg(sourceNick);
+          else
+            message=i18n("%1 gives channel operator privileges to %2.").arg(sourceNick).arg(parameter);
+        }
+      }
+      else
+      {
+        if(fromMe)
+        {
+          if(toMe)
+            message=i18n("You take channel operator privileges from yourself.");
+          else
+            message=i18n("You take channel operator privileges from %1.").arg(parameter);
+        }
+        else message=i18n("%1 takes channel operator privileges from %2.").arg(sourceNick).arg(parameter);
+      }
+      nick=getNickByName(parameter);
+      if(nick)
+      {
+        nick->setOp(plus);
+        adjustOps((plus) ? 1 : -1);
+        updateNicksOps();
+      }
+    break;
+
+    case 'O': break;
+
+    case 'v':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You give %1 the permission to talk.").arg(parameter);
+        else
+        {
+          if(toMe)
+            message=i18n("%1 gives you the permission to talk.").arg(sourceNick);
+          else
+            message=i18n("%1 gives %2 the permission to talk.").arg(sourceNick).arg(parameter);
+        }
+      }
+      else
+      {
+        if(fromMe)
+        {
+          if(toMe)
+            message=i18n("You take the permission to talk from yourself.");
+          else
+            message=i18n("You take the permission to talk from %2.").arg(parameter);
+        }
+        else
+        {
+          if(toMe)
+            message=i18n("%1 takes the permission to talk from you.").arg(sourceNick);
+          else
+            message=i18n("%1 takes the permission to talk from %2.").arg(sourceNick).arg(parameter);
+        }
+      }
+      nick=getNickByName(parameter);
+      if(nick) nick->setVoice(plus);
+    break;
+
+    case 'i':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You set the channel mode to 'invite only'.");
+        else message=i18n("%1 sets the channel mode to 'invite only'.").arg(sourceNick);
+      }
+      else
+      {
+        if(fromMe) message=i18n("You remove the 'invite only' mode from the channel.");
+        else message=i18n("%1 removes the 'invite only' mode from the channel.").arg(sourceNick);
+      }
+      modeI->setDown(plus);
+    break;
+
+    case 'm':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You set the channel mode to 'moderated'.");
+        else message=i18n("%1 sets the channel mode to 'moderated'.").arg(sourceNick);
+      }
+      else
+      {
+        if(fromMe) message=i18n("You set the channel mode to 'unmoderated'.");
+        else message=i18n("%1 sets the channel mode to 'unmoderated'.").arg(sourceNick);
+      }
+      modeM->setDown(plus);
+    break;
+
+    case 'n':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You set the channel mode to 'no messages from outside'.");
+        else message=i18n("%1 sets the channel mode to 'no messages from outside'.").arg(sourceNick);
+      }
+      else
+      {
+        if(fromMe) message=i18n("You set the channel mode to 'allow messages from outside'.");
+        else message=i18n("%1 sets the channel mode to 'allow messages from outside'.").arg(sourceNick);
+      }
+      modeN->setDown(plus);
+    break;
+
+    case 'q':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You set the channel mode to 'quiet'.");
+        else message=i18n("%1 sets the channel mode to 'quiet'.").arg(sourceNick);
+      }
+      else
+      {
+        if(fromMe) message=i18n("You remove the 'quiet' channel mode.");
+        else message=i18n("%1 removes the 'quiet' channel mode.").arg(sourceNick);
+      }
+/*      modeQ->setDown(plus); */
+    break;
+
+    case 'p':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You set the channel mode to 'private'.");
+        else message=i18n("%1 sets the channel mode to 'private'.").arg(sourceNick);
+      }
+      else
+      {
+        if(fromMe) message=i18n("You set the channel mode to 'public'.");
+        else message=i18n("%1 sets the channel mode to 'public'.").arg(sourceNick);
+      }
+      modeP->setDown(plus);
+      if(plus) modeS->setDown(false);
+    break;
+
+    case 's':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You set the channel mode to 'secret'.");
+        else message=i18n("%1 sets the channel mode to 'secret'.").arg(sourceNick);
+      }
+      else
+      {
+        if(fromMe) message=i18n("You set the channel mode to 'visible'.");
+        else message=i18n("%1 sets the channel mode to 'visible'.").arg(sourceNick);
+      }
+      modeS->setDown(plus);
+      if(plus) modeP->setDown(false);
+    break;
+
+    case 'r': break;
+
+    case 't':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You switch on 'topic protection'.");
+        else message=i18n("%1 switches on 'topic protection'.").arg(sourceNick);
+      }
+      else
+      {
+        if(fromMe) message=i18n("You switch off 'topic protection'.");
+        else message=i18n("%1 switches off 'topic protection'.").arg(sourceNick);
+      }
+      modeT->setDown(plus);
+    break;
+
+    case 'k': break;
+
+    case 'l':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You set the channel limit to %1 nicks.").arg(parameter);
+        else message=i18n("%1 sets the channel limit to %2 nicks.").arg(sourceNick).arg(parameter);
+      }
+      else
+      {
+        if(fromMe) message=i18n("You remove the channel limit.");
+        else message=i18n("%1 removes the channel limit.").arg(sourceNick);
+      }
+      modeL->setDown(plus);
+      if(plus) limit->setText(parameter);
+      else limit->clear();
+    break;
+
+    case 'b':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You set a ban on %2.").arg(parameter);
+        else message=i18n("%1 sets a ban on %2.").arg(sourceNick).arg(parameter);
+      }
+      else
+      {
+        if(fromMe) message=i18n("You remove the ban on %1.").arg(parameter);
+        else message=i18n("%1 removes the ban on %2.").arg(sourceNick).arg(parameter);
+      }
+    break;
+
+    case 'e':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You set a ban exception on %2.").arg(parameter);
+        else message=i18n("%1 sets a ban exception on %2.").arg(sourceNick).arg(parameter);
+      }
+      else
+      {
+        if(fromMe) message=i18n("You remove the ban exception on %1.").arg(parameter);
+        else message=i18n("%1 removes the ban exception on %2.").arg(sourceNick).arg(parameter);
+      }
+    break;
+
+    case 'I':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You set invitation mask %2.").arg(parameter);
+        else message=i18n("%1 sets invitation mask %2.").arg(sourceNick).arg(parameter);
+      }
+      else
+      {
+        if(fromMe) message=i18n("You remove the invitation mask %1.").arg(parameter);
+        else message=i18n("%1 removes the invitation mask %2.").arg(sourceNick).arg(parameter);
+      }
+    break;
+  }
+  if(message!="") appendCommandMessage(i18n("Mode"),message);
+}
+
+void Channel::updateModeWidgets(char mode,bool plus,QString& parameter)
+{
+  QPushButton* widget=0;
+
+  if(mode=='t') widget=modeT;
+  else if(mode=='n') widget=modeN;
+  else if(mode=='s') widget=modeS;
+  else if(mode=='i') widget=modeI;
+  else if(mode=='p') widget=modeP;
+  else if(mode=='m') widget=modeM;
+  else if(mode=='k') widget=modeK;
+  else if(mode=='l')
+  {
+    widget=modeL;
+    if(plus) limit->setText(parameter);
+    else limit->clear();
+  }
+
+  if(widget) widget->setDown(plus);
+}
+
+void Channel::updateQuickButtons(QStringList newButtonList)
+{
+  for(int index=0;index<8;index++)
+  {
+    QuickButton* quickButton;
+
+    QStringList buttonText=QStringList::split(',',newButtonList[index]);
+    quickButton=buttonList.at(index);
+    quickButton->setText(buttonText[0]);
+  }
+}

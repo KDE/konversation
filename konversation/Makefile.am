@@ -1,0 +1,82 @@
+####### kdevelop will overwrite this part!!! (begin)##########
+bin_PROGRAMS = konversation
+
+## INCLUDES were found outside kdevelop specific part
+
+konversation_SOURCES = quickbuttonsdialog.cpp nicklistview.cpp highlightbox.cpp ircinput.cpp ledtabbar.cpp ledtab.cpp ledtabwidget.cpp images.cpp editserverdialog.cpp serverlistitem.cpp serverentry.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp chatwindow.cpp outputfilter.cpp query.cpp konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp ircview.cpp server.cpp serverwindow.cpp ircserversocket.cpp main.cpp 
+konversation_LDADD   =  $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) $(LIBSOCKET)
+
+
+EXTRA_DIST = main.cpp konversationui.rc lo32-app-konversation.png lo16-app-konversation.png ircserversocket.cpp ircserversocket.h serverwindow.cpp serverwindow.h server.cpp server.h ircview.cpp ircview.h channel.cpp channel.h inputfilter.cpp inputfilter.h errorcodes.h nick.cpp nick.h konversationapplication.cpp konversationapplication.h query.cpp query.h outputfilter.cpp outputfilter.h chatwindow.cpp chatwindow.h preferences.cpp preferences.h quickbutton.cpp quickbutton.h prefsdialog.cpp prefsdialog.h serverentry.cpp serverentry.h serverlistitem.cpp serverlistitem.h editserverdialog.cpp editserverdialog.h images.cpp images.h ledtabwidget.cpp ledtabwidget.h ledtab.cpp ledtab.h ledtabbar.cpp ledtabbar.h led_blue_off.png led_blue_on.png led_green_off.png led_green_on.png led_red_off.png led_red_on.png led_yellow_off.png led_yellow_on.png close_pane.png ircinput.cpp ircinput.h highlightbox.cpp highlightbox.h nicklistview.cpp nicklistview.h quickbuttonsdialog.cpp quickbuttonsdialog.h konversation.desktop 
+
+install-data-local:
+	$(mkinstalldirs) $(kde_icondir)/locolor/32x32/apps/
+	$(INSTALL_DATA) $(srcdir)/lo32-app-konversation.png $(kde_icondir)/locolor/32x32/apps/konversation.png
+	$(mkinstalldirs) $(kde_icondir)/locolor/16x16/apps/
+	$(INSTALL_DATA) $(srcdir)/lo16-app-konversation.png $(kde_icondir)/locolor/16x16/apps/konversation.png
+	$(mkinstalldirs) $(kde_datadir)/konversation/images/
+	$(INSTALL_DATA) $(srcdir)/led_blue_off.png $(kde_datadir)/konversation/images/led_blue_off.png
+	$(mkinstalldirs) $(kde_datadir)/konversation/images/
+	$(INSTALL_DATA) $(srcdir)/led_blue_on.png $(kde_datadir)/konversation/images/led_blue_on.png
+	$(mkinstalldirs) $(kde_datadir)/konversation/images/
+	$(INSTALL_DATA) $(srcdir)/led_green_off.png $(kde_datadir)/konversation/images/led_green_off.png
+	$(mkinstalldirs) $(kde_datadir)/konversation/images/
+	$(INSTALL_DATA) $(srcdir)/led_green_on.png $(kde_datadir)/konversation/images/led_green_on.png
+	$(mkinstalldirs) $(kde_datadir)/konversation/images/
+	$(INSTALL_DATA) $(srcdir)/led_red_off.png $(kde_datadir)/konversation/images/led_red_off.png
+	$(mkinstalldirs) $(kde_datadir)/konversation/images/
+	$(INSTALL_DATA) $(srcdir)/led_red_on.png $(kde_datadir)/konversation/images/led_red_on.png
+	$(mkinstalldirs) $(kde_datadir)/konversation/images/
+	$(INSTALL_DATA) $(srcdir)/led_yellow_off.png $(kde_datadir)/konversation/images/led_yellow_off.png
+	$(mkinstalldirs) $(kde_datadir)/konversation/images/
+	$(INSTALL_DATA) $(srcdir)/led_yellow_on.png $(kde_datadir)/konversation/images/led_yellow_on.png
+	$(mkinstalldirs) $(kde_datadir)/konversation/images/
+	$(INSTALL_DATA) $(srcdir)/close_pane.png $(kde_datadir)/konversation/images/close_pane.png
+	$(mkinstalldirs) $(kde_appsdir)/Internet/
+	$(INSTALL_DATA) $(srcdir)/konversation.desktop $(kde_appsdir)/Internet/konversation.desktop
+
+uninstall-local:
+	-rm -f $(kde_icondir)/locolor/32x32/apps/konversation.png
+	-rm -f $(kde_icondir)/locolor/16x16/apps/konversation.png
+	-rm -f $(kde_datadir)/konversation/images/led_blue_off.png
+	-rm -f $(kde_datadir)/konversation/images/led_blue_on.png
+	-rm -f $(kde_datadir)/konversation/images/led_green_off.png
+	-rm -f $(kde_datadir)/konversation/images/led_green_on.png
+	-rm -f $(kde_datadir)/konversation/images/led_red_off.png
+	-rm -f $(kde_datadir)/konversation/images/led_red_on.png
+	-rm -f $(kde_datadir)/konversation/images/led_yellow_off.png
+	-rm -f $(kde_datadir)/konversation/images/led_yellow_on.png
+	-rm -f $(kde_datadir)/konversation/images/close_pane.png
+	-rm -f $(kde_appsdir)/Internet/konversation.desktop
+
+####### kdevelop will overwrite this part!!! (end)############
+# this 10 paths are KDE specific. Use them:
+# kde_htmldir       Where your docs should go to. (contains lang subdirs)
+# kde_appsdir       Where your application file (.kdelnk) should go to. 
+# kde_icondir       Where your icon should go to.
+# kde_minidir       Where your mini icon should go to.
+# kde_datadir       Where you install application data. (Use a subdir)
+# kde_locale        Where translation files should go to.(contains lang subdirs)
+# kde_cgidir        Where cgi-bin executables should go to.
+# kde_confdir       Where config files should go to.
+# kde_mimedir       Where mimetypes should go to.
+# kde_toolbardir    Where general toolbar icons should go to.
+# kde_wallpaperdir  Where general wallpapers should go to.
+
+# set the include path for X, qt and KDE
+INCLUDES= $(all_includes)
+
+METASOURCES = AUTO
+
+# the library search path. 
+konversation_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+
+rcdir = $(kde_datadir)/konversation
+rc_DATA = konversationui.rc
+
+messages: rc.cpp
+	LIST=`find . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name \*.cxx -o -name \*.ecpp -o -name \*.C`; \
+	if test -n "$$LIST"; then \
+	 $(XGETTEXT) $$LIST -o $(podir)/konversation.pot; \
+	fi
+
