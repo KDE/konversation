@@ -36,7 +36,7 @@ LogfileReader::LogfileReader(QString caption,QString log) :
   fileName=log;
 
   view=new KTextBrowser(this);
-  QPushButton* saveButton=new QPushButton(i18n("Save Logfile ..."),this,"logfile_save_button");
+  QPushButton* saveButton=new QPushButton(i18n("Save Logfile..."),this,"logfile_save_button");
 
   QLabel* sizeLabel=new QLabel(i18n("Show last"),this,"logfile_size_label");
 
