@@ -45,5 +45,9 @@ mail		Print the number of unread emails in your inbox folder in
 		kmail.  Kmail or kontact must be running.
 		Usage: /mail [folder-substring]
 
-google		Do a google search.
-		Usage: /google <query>
+google		Use Google services
+		Usage: /google (--search) <query> # Search <query> in Google
+		       /google --spell <word> # Spellcheck <word> using Google
+		       /google -b|--browser <query> # Launch konqueror with google search for <query>
+
+
