@@ -108,6 +108,7 @@ void DccTransferSend::failed( const QString& errorMessage )
   setStatus( Failed, errorMessage );
   updateView();
   cleanUp();
+  emit done( m_fileURL.path(), Failed, errorMessage );
   openDetailDialog();
 }
 
@@ -181,6 +182,7 @@ void DccTransferSend::abort()  // public slot
   setStatus( Aborted );
   updateView();
   cleanUp();
+  emit done( m_fileURL.path(), Aborted );
 }
 
 void DccTransferSend::setResume( unsigned long position )  // public

@@ -403,8 +403,8 @@ class Server : public QObject
     void resumeDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments); // -> to inputFilter
     void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,const QString& port,unsigned long size);
     void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,KIO::filesize_t startAt);
-    void dccGetDone(const QString& fileName);
-    void dccSendDone(const QString& fileName);
+    void dccGetDone(const QString& fileName, DccTransfer::DccStatus status, const QString &errorMessage);
+    void dccSendDone(const QString& fileName, DccTransfer::DccStatus status, const QString &errorMessage);
     void dccStatusChanged(const DccTransfer* item);
     void away();
     void unAway();

@@ -119,6 +119,7 @@ void DccTransferRecv::failed( const QString& errorMessage )
   setStatus( Failed, errorMessage );
   updateView();
   cleanUp();
+  emit done( m_fileURL.path(), Failed, errorMessage );
   openDetailDialog();
 }
 
@@ -129,6 +130,7 @@ void DccTransferRecv::abort()  // public slot
   setStatus( Aborted );
   updateView();
   cleanUp();
+  emit done( m_fileURL.path(), Aborted );
 }
 
 void DccTransferRecv::cleanUp()
