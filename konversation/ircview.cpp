@@ -662,15 +662,16 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps,bool important)
 
     // scroll view only if the scroll bar is already at the bottom
     bool doScroll=KTextBrowser::verticalScrollBar()->value()==KTextBrowser::verticalScrollBar()->maxValue();
-    
+
     line.remove('\n');// TODO why have newlines? we get <p>, so the \n are unnecessary...
-    
+
     bool up=KTextBrowser::isUpdatesEnabled();
     KTextBrowser::setUpdatesEnabled(FALSE);
-    
+
     //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not at an end,
     //             so the scrollbar wets its pants and forgets who it is for ten minutes
-    
+
+#if 0
     if (doScroll) // TODO: make this eat multiple lines at once when the preference is changed so it doesn't take so long
     {
       int sbm=KonversationApplication::preferences.getScrollbackMax();
@@ -678,6 +679,7 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps,bool important)
         for(sbm=paragraphs()-sbm;sbm>0;sbm--) //loop for two reasons: 1) preference changed 2) lines added while scrolled up
           removeParagraph(0);
     }
+#endif
     KTextBrowser::append(line);
     document()->lastParagraph()->format();
     resizeContents(contentsWidth(), document()->height());

@@ -51,8 +51,9 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   logPathLabel=new QLabel(i18n("Logfile &path:"),logPathBox);
   logPathInput=new KLineEdit(preferences->getLogPath(),logPathBox,"log_path_input");
   logPathLabel->setBuddy(logPathInput);
-  
+
   QHBox* scrollbackMaxBox=new QHBox(parentFrame);
+#if 0
   scrollbackMaxBox->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
   scrollbackMaxBox->setSpacing(spacingHint());
   scrollbackMaxLabel=new QLabel(i18n("&Scrollback limit:"), scrollbackMaxBox);
@@ -62,7 +63,7 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   scrollbackMaxSpin->setSpecialValueText(i18n("Unlimited"));
   scrollbackMaxLabel->setBuddy(scrollbackMaxSpin);
   QWhatsThis::add(scrollbackMaxSpin,i18n("How many lines to keep in buffers"));
-
+#endif
   lowerLog->setChecked(preferences->getLowerLog());
   logFollowsNick->setChecked(preferences->getLogFollowsNick());
 
@@ -84,7 +85,7 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   outer->addWidget(scrollbackMaxBox);
   spacey=new QSpacerItem(spacingHint(),spacingHint());
   outer->addItem(spacey);
-  
+
 }
 
 PrefsPageLog::~PrefsPageLog()
@@ -97,7 +98,9 @@ void PrefsPageLog::applyPreferences()
   preferences->setLowerLog(lowerLog->isChecked());
   preferences->setLogFollowsNick(logFollowsNick->isChecked());
   preferences->setLogPath(logPathInput->text());
+#if 0
   preferences->setScrollbackMax(scrollbackMaxSpin->value());
+#endif
 }
 
 #include "prefspagelog.moc"
