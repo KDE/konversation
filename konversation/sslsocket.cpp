@@ -77,14 +77,18 @@ Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
 
 QString SSLSocket::details()
 {
-  QString details;
-  int strength = kssl->connectionInfo().getCipherUsedBits();
+  if(state() == KNetwork::KClientSocketBase::Connected) {
+    QString details;
+    int strength = kssl->connectionInfo().getCipherUsedBits();
+    
+    details = "Connection is secured with ";
+    details += QString::number(strength);
+    details += " bit SSL";
 
-  details = "Connection is secured with ";
-  details += QString::number(strength);
-  details += " bit SSL";
-
-  return details;
+    return details;
+  }
+  else
+    return "";
 }
 
 void SSLSocket::slotConnected()
