@@ -983,8 +983,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       case RPL_WHOISUSER:
         {
           server->appendStatusMessage(i18n("Whois"),
-                                      i18n("%1 is %2@%3 (%4)").arg(parameterList[1])
-                                      .arg(parameterList[2])
+                                      i18n("%1 is %2&#64;%3 (%4)").arg(parameterList[1]) // Use &#64; instead of @
+                                      .arg(parameterList[2])                             // to avoid parsing as email
                                       .arg(parameterList[3])
                                       .arg(trailing));
           break;
