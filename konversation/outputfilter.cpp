@@ -809,7 +809,9 @@ namespace Konversation {
         }
 
         // show (new) notify list to user
-        QString list = KonversationApplication::preferences.getNotifyStringByGroup(groupName) + " " + Konversation::Addressbook::self()->allContacts().join(" ");
+        QString list = KonversationApplication::preferences.getNotifyStringByGroup(groupName);
+	// This is borked   Konversation::Addressbook::self()->allContacts.join(" ");
+
         result.typeString = i18n("Notify");
 
         if(list.isEmpty())
