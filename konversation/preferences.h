@@ -467,6 +467,11 @@ class Preferences : public QObject
     void setIconTheme(const QString& name);
     const QString getIconTheme();
 
+    void setEmotIconsEnabled(bool enabled) { m_emotIconsEnabled = enabled; }
+    bool emotIconsEnabled() const { return m_emotIconsEnabled; }
+    void setEmotIconsTheme(const QString& theme) { m_emotIconsTheme = theme; }
+    QString emotIconsTheme() const { return m_emotIconsTheme; }
+
     bool showNicknameBox() const;
     void setShowNicknameBox(bool show);
     
@@ -666,6 +671,8 @@ class Preferences : public QObject
 
     // Themes
     QString iconTheme;
+    bool m_emotIconsEnabled;
+    QString m_emotIconsTheme;
 };
 
 #endif

@@ -1182,6 +1182,14 @@
       <!-- konversationapplication.cpp:1268 -->
       <!--   config->writeEntry("IconTheme", preferences.getIconTheme()); -->
     </entry>
+    <entry key="EnableEmotIcons" type="Bool">
+      <default>false</default>
+      <label>Enable emoticons</label>
+    </entry>
+    <entry key="EmotIconTheme" type="String">
+      <default>Default</default>
+      <label>Emoticons theme</label>
+    </entry>
   </group>
   <group name="PreferencesDialog">
     <entry name="PreferencesDialogSize" key="Size" type="Size">

@@ -884,7 +884,8 @@ void KonversationApplication::readOptions()
   // Themes
   config->setGroup("Themes");
   preferences.setIconTheme(config->readEntry("IconTheme",preferences.getIconTheme()));
-
+  preferences.setEmotIconsEnabled(config->readBoolEntry("EnableEmotIcons", false));
+  preferences.setEmotIconsTheme(config->readEntry("EmotIconTheme", "Default"));
 }
 
 void KonversationApplication::saveOptions(bool updateGUI)
@@ -1268,6 +1269,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   // Themes
   config->setGroup("Themes");
   config->writeEntry("IconTheme", preferences.getIconTheme());
+  config->writeEntry("EnableEmotIcons", preferences.emotIconsEnabled());
+  config->writeEntry("EmotIconTheme", preferences.emotIconsTheme());
 
   config->sync();
 

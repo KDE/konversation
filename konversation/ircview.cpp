@@ -48,6 +48,7 @@
 #include "chatwindow.h"
 #include "common.h"
 #include "images.h"
+#include "emoticon.h"
 
 IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 {
@@ -359,6 +360,8 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
   if(parseURL) {
     filteredLine = Konversation::tagURLs(filteredLine, whoSent);
   }
+
+  filteredLine = Konversation::EmotIcon::filter(filteredLine, fontMetrics());
 
   // Highlight
   QString ownNick;
