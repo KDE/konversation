@@ -165,20 +165,22 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView->setSorting(1,true);
   nicknameListView->addColumn(QString::null);
   nicknameListView->addColumn(QString::null);
-  nicknameListView->addColumn(QString::null);
+  nicknameListView->setColumnWidthMode(1,KListView::Maximum);
+  if (KonversationApplication::preferences.getAutoUserhost()) {
+    nicknameListView->addColumn(QString::null);
+    nicknameListView->setColumnWidthMode(2,KListView::Maximum);
+  }
+
   nicknameListView->header()->hide();
-//  nicknameListView->setResizeMode(KListView::LastColumn);
+
+  // setResizeMode must be called after all the columns are added
+  nicknameListView->setResizeMode(KListView::LastColumn);
 
 //  nicknameListView->header()->setStretchEnabled(true,2);
-// Setting only the host mask column to Maximum will squeeze the nick names to "ni..." ...
-  nicknameListView->setColumnWidthMode(1,KListView::Maximum);
-  nicknameListView->setColumnWidthMode(2,KListView::Maximum);
 
   // separate LED from Text a little more
   nicknameListView->setColumnWidth(0,10);
   nicknameListView->setColumnAlignment(0,Qt::AlignHCenter);
-  nicknameListView->setColumnAlignment(1,Qt::AlignLeft);
-  nicknameListView->setColumnAlignment(2,Qt::AlignLeft);
 
   // the grid that holds the quick action buttons
   buttonsGrid=new QGrid(2,nickListButtons);

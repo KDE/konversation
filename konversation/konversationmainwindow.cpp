@@ -95,7 +95,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   showMenuBarAction=KStdAction::showMenubar(this,SLOT(showMenubar()),actionCollection()); // options_show_menubar
   KStdAction::configureToolbars(this, SLOT(openToolbars()), actionCollection());
 #ifdef USE_KNOTIFY
-  KStdAction::configureNotifications(this,SLOT(openNotifications()), actionCollection());  // options_configure_notifications
+  KAction *configureNotificationsAction = KStdAction::configureNotifications(this,SLOT(openNotifications()), actionCollection());  // options_configure_notifications
 #endif
 
   KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
@@ -155,6 +155,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   connect(this, SIGNAL(endNotification(QWidget*)), tray, SLOT(endNotification(QWidget*)));
   connect(tray, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
   KPopupMenu *trayMenu = tray->contextMenu();
+#ifdef USE_KNOTIFY
+  configureNotificationsAction->plug(trayMenu);
+#endif
   preferencesAction->plug(trayMenu);
 
   // decide whether to show the tray icon or not
