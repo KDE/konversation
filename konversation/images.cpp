@@ -25,7 +25,7 @@ Images::Images()
   KStandardDirs kstd;
 
   // Find our own image directory
-  QString prefix=kstd.findResource("appdata","images/");
+  QString prefix=kstd.findResource("data","konversation/images/");
 
   // Setup pixmaps for the LEDs
   redLedOn.setPixmap(prefix+"led_red_on.png",QIconSet::Automatic);
