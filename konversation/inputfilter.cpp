@@ -308,17 +308,18 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 
       if (isChan)
       {
-        if(!isIgnore(prefix,Ignore::Channel))
+        if(!isIgnore(prefix,Ignore::Channel)) {
           server->appendToChannel(parameterList[0],sourceNick,trailing);
 
 #ifdef USE_KNOTIFY
           // KNotify events...
           if(sourceNick != server->getNickname()) {
-            if(trailing.lower().find(QRegExp("(^|[^\\d\\w])"+QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
+            if(trailing.lower().find(QRegExp("(^|[^\\d\\w])"+
+              QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
             {
-			  QString cutup = trailing; cutup.truncate(47);
-			  if(cutup.length() == 47)
-			  	cutup.append("...");
+              QString cutup = trailing; cutup.truncate(47);
+              if(cutup.length() == 47)
+                cutup.append("...");
               KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
             }
             else
@@ -327,6 +328,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
             }
           }
 #endif
+        }
       }
       else
       {
