@@ -23,7 +23,6 @@ Convert idle time in hours, minutes and seconds
 
 Channel List Panel:
 in channel list window the filter is not applied when one refresh the list
-If you click "Apply Filter" and there is no channel list loaded, load one
 long channel topics are cut off, how about a horizontal scrollbar then
 Make URLs in topic clickable or at least selectable
 and a "channel or topic" checkbox would be nice, or better, make the current checkboxes work as "or" not as "and"

@@ -104,6 +104,7 @@ class ChannelListPanel : public ChatWindow
     bool topicTarget;
 
     bool regExp;
+    bool doApply;
 
     // store channels to be inserted in ListView here first
     QStringList pendingChannels;

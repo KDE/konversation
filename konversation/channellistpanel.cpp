@@ -39,6 +39,8 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
 {
   setType(ChatWindow::ChannelList);
 
+  doApply=false;
+
   setNumChannels(0);
   setNumUsers(0);
   setVisibleChannels(0);
@@ -280,6 +282,12 @@ void ChannelListPanel::updateDisplay()
     // update display
     updateUsersChannels();
   }
+  else
+  {
+  kdDebug() << "Else" << endl;
+    // no more channels to insert, so check if we should apply the filter
+    if(doApply) applyFilterClicked();
+  }
 }
 
 void ChannelListPanel::filterTextChanged(const QString& newText)
@@ -331,46 +339,58 @@ void ChannelListPanel::applyFilterClicked()
 {
   unsigned int index=0;
 
-  QListViewItem* item=channelListView->itemAtIndex(0);
-
-  setVisibleChannels(0);
-  setVisibleUsers(0);
-
-  while(item)
+  if(!getNumChannels())
   {
-    bool visible=true;
-
-    if(getMinUsers() || getMaxUsers())
-    {
-      if(item->text(1).toInt()<getMinUsers() ||
-          (getMaxUsers()>=getMinUsers() &&
-           item->text(1).toInt()>getMaxUsers())) visible=false;
-    }
-
-    if(!getFilterText().isEmpty())
-    {
-      if(getChannelTarget())
-      {
-        if(item->text(0).find(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
-      }
-
-      if(getTopicTarget())
-      {
-        if(item->text(2).find(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
-      }
-    }
-
-    item->setVisible(visible);
-    if(visible)
-    {
-      setVisibleUsers(getVisibleUsers()+item->text(1).toInt());
-      setVisibleChannels(getVisibleChannels()+1);
-    }
-
-    item=channelListView->itemAtIndex(++index);
+    // tell refreshList() to apply filter when done
+    doApply=true;
+    refreshList();
   }
+  else
+  {
+    // filter was applied
+    doApply=false;
 
-  updateUsersChannels();
+    QListViewItem* item=channelListView->itemAtIndex(0);
+
+    setVisibleChannels(0);
+    setVisibleUsers(0);
+
+    while(item)
+    {
+      bool visible=true;
+
+      if(getMinUsers() || getMaxUsers())
+      {
+        if(item->text(1).toInt()<getMinUsers() ||
+            (getMaxUsers()>=getMinUsers() &&
+             item->text(1).toInt()>getMaxUsers())) visible=false;
+      }
+
+      if(!getFilterText().isEmpty())
+      {
+        if(getChannelTarget())
+        {
+          if(item->text(0).find(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
+        }
+
+        if(getTopicTarget())
+        {
+          if(item->text(2).find(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
+        }
+      }
+
+      item->setVisible(visible);
+      if(visible)
+      {
+        setVisibleUsers(getVisibleUsers()+item->text(1).toInt());
+        setVisibleChannels(getVisibleChannels()+1);
+      }
+
+      item=channelListView->itemAtIndex(++index);
+    }
+
+    updateUsersChannels();
+  }
 }
 
 void ChannelListPanel::updateUsersChannels()
