@@ -100,7 +100,6 @@ void PrefsPageColorsImages::colorChanged(const QColor& color)
   kdDebug() << "PrefsPageColorsImages::colorChanged()" << endl;
   QString name(static_cast<const QWidget*>(sender())->name());
   preferences->setColor(name,color.name().mid(1));
-  kdDebug() << name << " " << color.name().mid(1) << endl;
 }
 
 void PrefsPageColorsImages::backgroundNameChanged(const QString& newName)
