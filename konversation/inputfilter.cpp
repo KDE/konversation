@@ -827,14 +827,22 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         // Nick already on the server, so try another one
       case ERR_NICKNAMEINUSE:
         {
-          // Get the next nick from the list
-          QString newNick=server->getNextNickname();
-          // Update Server window
-          server->setNickname(newNick);
-          // Show message
-          server->appendStatusMessage(i18n("Nick"),i18n("Nickname already in use. Trying %1.").arg(newNick));
-          // Send nickchange request to the server
-          server->queue("NICK "+newNick);
+          // if we are already connected, don't try tro find another nick ourselves
+          if(server->connected())
+            // Show message
+            server->appendStatusMessage(i18n("Nick"),i18n("Nickname already in use, try another nick."));
+          // not connected yet, so try to find a nick that's not in use
+          else
+          {
+            // Get the next nick from the list
+            QString newNick=server->getNextNickname();
+            // Update Server window
+            server->setNickname(newNick);
+            // Show message
+            server->appendStatusMessage(i18n("Nick"),i18n("Nickname already in use. Trying %1.").arg(newNick));
+            // Send nickchange request to the server
+            server->queue("NICK "+newNick);
+          }
           break;
         }
       case RPL_MOTDSTART:

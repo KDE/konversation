@@ -114,6 +114,8 @@ class Server : public QObject
     void notifyAction(const QString& nick);
     ChannelListPanel* getChannelListPanel() const;
 
+    bool connected();
+
   signals:
     void nicknameChanged(const QString&);
     void serverLag(int msec); // will be connected to StatusPanel::updateLag()

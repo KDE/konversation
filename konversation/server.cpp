@@ -306,13 +306,13 @@ void Server::connectionEstablished()
 {
   if(!alreadyConnected)
   {
-  alreadyConnected=true;
-  kdDebug() << "connectionEstablished()" << endl;
-  // get first notify very early
-  startNotifyTimer(1000);
-  // register with services
-  if(!botPassword.isEmpty() && !bot.isEmpty())
-    queue("PRIVMSG "+bot+" :identify "+botPassword);
+    alreadyConnected=true;
+    kdDebug() << "connectionEstablished()" << endl;
+    // get first notify very early
+    startNotifyTimer(1000);
+    // register with services
+    if(!botPassword.isEmpty() && !bot.isEmpty())
+      queue("PRIVMSG "+bot+" :identify "+botPassword);
   }
   else
     kdDebug() << "alreadyConnected==true! How did that happen?" << endl;
@@ -1429,5 +1429,7 @@ const Identity* Server::getIdentity() { return identity; }
 
 void Server::setMainWindow(KonversationMainWindow* newMainWindow) { mainWindow=newMainWindow; }
 KonversationMainWindow* Server::getMainWindow() const { return mainWindow; }
+
+bool Server::connected() { return alreadyConnected; }
 
 #include "server.moc"
