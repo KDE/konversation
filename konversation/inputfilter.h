@@ -41,6 +41,8 @@ class InputFilter : public QObject
     // use this when the client does automatics, like userhost for finding hostmasks
     void setAutomaticRequest(bool yes);
     int getAutomaticRequest();
+    void setLagMeasuring(bool yes);
+    bool getLagMeasuring();
 
   signals:
     void welcome();
@@ -65,6 +67,7 @@ class InputFilter : public QObject
     Server* server;
     bool welcomeSent;
     int automaticRequest;
+    int lagMeasuring;
 };
 
 #endif

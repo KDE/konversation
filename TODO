@@ -53,6 +53,7 @@ Indicate own away status
 Try to fix the disconnect / no reconnect problem
 Tabs on top / bottom (left / right)
 Show / Hide tab types (status tabs ect.)
+Different tab sortings
 Automatically gzip files before DCC SEND
 Compute md5sum over DCCs and send / display the hash after transfer
 Import notify list from .ircrc

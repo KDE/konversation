@@ -327,6 +327,8 @@ void Server::notifyResponse(const QString& nicksOnline)
   emit serverLag(this,lag);
   // Stop check timer
   notifyCheckTimer.stop();
+  // Switch off lag measuring mode
+  inputFilter.setLagMeasuring(false);
 
   // only update Nicks Online list if we got a 303 response, not a PONG
   if(nicksOnline!="###")
@@ -403,6 +405,8 @@ void Server::notifyTimeout()
   if(!sent) queue("PING LAG :"+getIrcName());
   // start check timer waiting for 303 or PONG response
   startNotifyCheckTimer();
+  // start lag measuring mode
+  inputFilter.setLagMeasuring(true);
 }
 
 // waiting too long for 303 response

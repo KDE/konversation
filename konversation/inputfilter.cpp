@@ -568,7 +568,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       // Since we use PONG replys to measure lag, too, we check, if this PONG was
       // due to Lag measures and tell the notify system about it. We use "###" as
       // response, because this couldn't be a 303 reply, so it must be a PONG reply
-      if (trailing=="LAG")
+
+      // double check if we are in lag measuring mode since some servers fail to send
+      // the LAG cookie back in PONG
+      if(trailing=="LAG" || getLagMeasuring())
       {
         emit notifyResponse("###");
       }
@@ -1067,5 +1070,8 @@ void InputFilter::setAutomaticRequest(bool yes)
   }
 }
 int InputFilter::getAutomaticRequest() { return automaticRequest; }
+
+void InputFilter::setLagMeasuring(bool state) { lagMeasuring=state; kdDebug() << state << endl; }
+bool InputFilter::getLagMeasuring()           { return lagMeasuring; }
 
 #include "inputfilter.moc"
