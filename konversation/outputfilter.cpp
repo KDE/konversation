@@ -162,6 +162,8 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("aaway "))   parseAaway(parameter);
     else if(line.startsWith("ame "))     parseAme(parameter);
     else if(line.startsWith("amsg "))    parseAmsg(parameter);
+    
+    else if(line.startsWith("server "))  parseServer(parameter);
 
     else if(line=="join")                parseJoin(QString::null);
     else if(line=="part")                parsePart(QString::null);
@@ -189,6 +191,8 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="aaway")               parseAaway(QString::null);
     else if(line=="ame")                 parseAme(QString::null);
     else if(line=="amsg")                parseAmsg(QString::null);
+    
+    else if(line == "server")            parseServer(QString::null);
     
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
@@ -995,6 +999,31 @@ void OutputFilter::parseAmsg(const QString& parameter)
   }
   
   emit multiServerCommand("msg", parameter);
+  output=QString::null;
+}
+
+void OutputFilter::parseServer(const QString& parameter)
+{
+  if(parameter.isEmpty()) {
+    emit reconnectServer();
+  } else {
+    QStringList splitted = QStringList::split(" ", parameter);
+    QString password;
+    
+    if(splitted.count() > 1) {
+      password = splitted[1];
+    }
+    
+    splitted = QStringList::split(":", splitted[0]);
+    QString port = "6667";
+    
+    if(splitted.count() > 1) {
+      port = splitted[1];
+    }
+
+    emit connectToServer(splitted[0], port, password);
+  }
+  
   output=QString::null;
 }
 

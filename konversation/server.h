@@ -279,6 +279,8 @@ class Server : public QObject
     void updateChannelQuickButtons();
     void sendMultiServerCommand(const QString& command, const QString& parameter);
     void executeMultiServerCommand(const QString& command, const QString& parameter);
+    void reconnect();
+    void connectToNewServer(const QString& server, const QString& port, const QString& password);
 
   protected slots:
     void ircServerConnectionSuccess();

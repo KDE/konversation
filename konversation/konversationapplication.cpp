@@ -210,7 +210,7 @@ void KonversationApplication::connectToAnotherServer(int id)
 
 void KonversationApplication::quickConnectToServer(const QString& hostName, const QString& port, const QString& nick, const QString& password)
 {
-  //used for the quick connect dialog and maybe later for the /server command
+  //used for the quick connect dialog and /server command
   
   Server* newServer = new Server(mainWindow, hostName, port, nick, password);
   

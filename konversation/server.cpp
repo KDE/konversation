@@ -148,6 +148,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
                    this,SLOT   (requestDccSend(const QString&)) );
   connect(&outputFilter, SIGNAL(multiServerCommand(const QString&, const QString&)),
     this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
+  connect(&outputFilter, SIGNAL(reconnectServer()), this, SLOT(reconnect()));
 
   connect(&notifyTimer,SIGNAL(timeout()),
                   this,SLOT  (notifyTimeout()) );
@@ -267,6 +268,9 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
                    this,SLOT   (requestDccSend(const QString&)) );
   connect(&outputFilter, SIGNAL(multiServerCommand(const QString&, const QString&)),
     this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
+  connect(&outputFilter, SIGNAL(reconnectServer()), this, SLOT(reconnect()));
+  connect(&outputFilter, SIGNAL(connectToServer(const QString&, const QString&, const QString&)),
+    this, SLOT(connectToNewServer(const QString&, const QString&, const QString&)));
 
   connect(&notifyTimer,SIGNAL(timeout()),
                   this,SLOT  (notifyTimeout()) );
@@ -2666,6 +2670,21 @@ void Server::sendToAllChannelsAndQueries(const QString& text)
     query->sendQueryText(text);
     query=queryList.next();
   }
+}
+
+void Server::reconnect() {
+  if(!isConnected()) {
+    reconnectCounter = 0;
+    connectToIRCServer();
+  } else {
+    getStatusView()->appendServerMessage("Error", i18n("Server already connected!"));
+  }
+}
+
+void Server::connectToNewServer(const QString& server, const QString& port, const QString& password)
+{
+  KonversationApplication *konvApp = static_cast<KonversationApplication*>(KApplication::kApplication());
+  konvApp->quickConnectToServer(server, port, KonversationApplication::preferences.getNickname(0), password);
 }
 
 #include "server.moc"

@@ -1,4 +1,5 @@
 Changes from 0.13 to 0.14
+- Added /server command for connecting to a server.
 - After the connection is lost and the old nickname is still in use,
   the nickbutton in the channelwindows is updated to the new nick.
 - Now you can read utf8 encoded messages even if your locale is not unicode

@@ -66,6 +66,8 @@ class OutputFilter : public QObject
     void banUsers(const QStringList& userList,const QString& channel,const QString& option);
     void unbanUsers(const QString& mask,const QString& channel);
     void multiServerCommand(const QString& command, const QString& parameter);
+    void reconnectServer();
+    void connectToServer(const QString& server, const QString& port, const QString& password);
 
   public slots:
     void setCommandChar();
