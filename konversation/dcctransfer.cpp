@@ -12,6 +12,7 @@
   email:     eisfuchs@tigress.com
 */
 
+#include <qheader.h>
 #include <qhostaddress.h>
 #include <qstyle.h>
 #include <qtimer.h>
@@ -47,9 +48,13 @@ DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _p
   
   autoUpdateViewTimer = 0;
   
-  progressBar = new KProgress(100);
+  progressBar = new KProgress(100, listView()->viewport());
   progressBar->setCenterIndicator(true);
   progressBar->setPercentageVisible(true);
+  
+  adjustGeometry();
+  
+  progressBar->show();
   
   // FIXME: we shouldn't do these init in the instance constructer
   TypeText[Send]    = i18n("Send");
@@ -69,7 +74,6 @@ DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _p
 DccTransfer::~DccTransfer()
 {
   delete[] buffer;
-  delete progressBar;
   stopAutoUpdateView();
 }
 
@@ -86,12 +90,31 @@ void DccTransfer::updateView()  // slot
   setText(DccPanel::Column::Position,      getPositionPrettyText());
   setText(DccPanel::Column::TimeRemaining, getTimeRemainingPrettyText());
   setText(DccPanel::Column::CPS,           getCPSPrettyText());
+  
+  progressBar->setProgress((int)(100*transferringPosition/fileSize));
 }
 
+void DccTransfer::startAutoUpdateView()
+{
+  stopAutoUpdateView();
+  autoUpdateViewTimer = new QTimer(this);
+  connect(autoUpdateViewTimer, SIGNAL(timeout()), this, SLOT(updateView()));
+  autoUpdateViewTimer->start(500);
+}
+
+void DccTransfer::stopAutoUpdateView()
+{
+  if(autoUpdateViewTimer)
+  {
+    autoUpdateViewTimer->stop();
+    delete autoUpdateViewTimer;
+    autoUpdateViewTimer = 0;
+  }
+}
+
+/*
 void DccTransfer::paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment)
 {
-  KListViewItem::paintCell(painter, colorgroup, column, width, alignment);
-  
   if(column==DccPanel::Column::Progress)  // Render progress bar
   {
     progressBar->setProgress((int)(100*transferringPosition/fileSize));
@@ -100,7 +123,7 @@ void DccTransfer::paintCell(QPainter* painter, const QColorGroup& colorgroup, in
     progressBar->setFixedHeight(height());
     QRect rectangle = progressBar->contentsRect();
     
-    int styleflags = QStyle::Style_Default;
+    int styleflags = QStyle::Style_Default | QStyle::Style_Enabled;
     if ( isSelected() )
       styleflags |= QStyle::Style_Selected;
   
@@ -123,24 +146,18 @@ void DccTransfer::paintCell(QPainter* painter, const QColorGroup& colorgroup, in
                                       progressBar->colorGroup(),
                                       styleflags );
   }
+  else
+    KListViewItem::paintCell(painter, colorgroup, column, width, alignment);
 }
+*/
 
-void DccTransfer::startAutoUpdateView()
-{
-  stopAutoUpdateView();
-  autoUpdateViewTimer = new QTimer(this);
-  connect(autoUpdateViewTimer, SIGNAL(timeout()), this, SLOT(updateView()));
-  autoUpdateViewTimer->start(500);
-}
-
-void DccTransfer::stopAutoUpdateView()
-{
-  if(autoUpdateViewTimer)
-  {
-    autoUpdateViewTimer->stop();
-    delete autoUpdateViewTimer;
-    autoUpdateViewTimer = 0;
-  }
+void DccTransfer::adjustGeometry()  // public
+{  // I've referenced the Apollon's code for progressbar things. Thank you, the Apollon team! (shin)
+  QRect rect = listView()->itemRect(this);
+  QHeader *head = listView()->header();
+  rect.setLeft(head->sectionPos(DccPanel::Column::Progress) - head->offset());
+  rect.setWidth(head->sectionSize(DccPanel::Column::Progress));
+  progressBar->setGeometry(rect);
 }
 
 void DccTransfer::setStatus(DccStatus status)

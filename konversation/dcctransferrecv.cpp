@@ -278,12 +278,13 @@ void DccTransferRecv::sendAck()  // slot
 
   if(transferringPosition==fileSize)
   {
+    kdDebug() << "DccTransferRecv::sendAck(): Done." << endl;
+    
     cleanUp();
     
-    // replace the file
+    // rename the file
     if(QFile::exists(filePath))
       QFile::remove(filePath);  // already confirmed to overwrite
-    
     QDir().rename(fileTmpPath, filePath);
     
     setStatus(Done);

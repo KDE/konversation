@@ -220,6 +220,8 @@ void DccTransferSend::getAck()  // slot
 
   if(pos==fileSize)
   {
+    kdDebug() << "DccTransferSend::getAck(): Done." << endl;
+    
     setStatus(Done);
     cleanUp();
     updateView();

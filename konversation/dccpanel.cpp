@@ -13,6 +13,7 @@
 */
 
 #include <qhbox.h>
+#include <qheader.h>
 #include <qvbox.h>
 #include <qpushbutton.h>
 
@@ -87,7 +88,12 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   infoButton  =new QPushButton(i18n("Information"),buttonsBox,"info_on_dcc_file");
 
   connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (dccSelected()) );
-
+  
+  connect(dccListView->header(), SIGNAL(sizeChange(int, int, int)), this, SLOT(adjustGeometry()));
+  connect(dccListView->header(), SIGNAL(indexChange(int, int, int)), this, SLOT(adjustGeometry()));
+  connect(dccListView, SIGNAL(expanded(QListViewItem*)), this, SLOT(adjustGeometry()));
+  connect(dccListView, SIGNAL(collapsed(QListViewItem*)), this, SLOT(adjustGeometry()));
+  
   connect(acceptButton,SIGNAL (clicked()) ,this,SLOT (acceptDcc()) );
   connect(abortButton,SIGNAL (clicked()) ,this,SLOT (abortDcc()) );
   connect(removeButton,SIGNAL (clicked()) ,this,SLOT (removeDcc()) );
@@ -146,6 +152,15 @@ void DccPanel::dccSelected()
     }
   }
   else setButtons(false,false,false,false,false);
+}
+
+void DccPanel::adjustGeometry()  // public slot
+{
+  for(QListViewItemIterator it(dccListView); it.current(); ++it)
+  {
+    DccTransfer* item=static_cast<DccTransfer*>(it.current());
+    item->adjustGeometry();
+  }
 }
 
 void DccPanel::acceptDcc()
