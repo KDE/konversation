@@ -44,7 +44,7 @@ cat konversationapplication.cpp | while read line; do {
       elif [[ "$TYPE" == "QPoint" ]] ; then TYPE="Point";
       fi
     
-      echo "$PREFERENCESENTRY" | grep .toString && TYPE="String"
+      echo "$PREFERENCESENTRY" | grep .toString > /dev/null && TYPE="String"
     
       DEFAULT=$( grep -i "[^:]set$ENTRY *(" preferences.cpp | sed -n -e 's/.*set[^(]*[(]\(.*\)[)][^)]*/\1/p' )
       
@@ -64,15 +64,17 @@ cat konversationapplication.cpp | while read line; do {
 	  TYPE="Bool"
 	fi
 
-        echo "$PREFERENCESENTRY" | grep Color && TYPE="Color"
+        echo "$PREFERENCESENTRY" | grep Color > /dev/null && TYPE="Color"
       fi
       
       
       echo "    <entry key=\"$ENTRY\" type=\"$TYPE\">"
       if [[ -n "${DEFAULT2}" ]] ; then 
         echo "      <default>${DEFAULT2}</default>"
-      else 
+      elif [[ -n "$DEFAULT}" ]] ; then
         echo "      <default code=\"true\">${DEFAULT}</default>"
+      else
+        echo "      <default></default>"
       fi
       echo "      <label></label>"
       echo "      <whatsthis></whatsthis>"
