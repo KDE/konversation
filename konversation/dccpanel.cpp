@@ -93,12 +93,12 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   
   #define icon(s) KGlobal::iconLoader()->loadIcon( s, KIcon::Small )
   
-  m_buttonAccept = new QPushButton(icon("player_play"), i18n("Accept"), buttonsBox, "start_dcc");
-  m_buttonAbort  = new QPushButton(icon("stop"),        i18n("Abort"),  buttonsBox, "abort_dcc");
-  m_buttonClear  = new QPushButton(icon("editdelete"),  i18n("Clear Item"),  buttonsBox, "clear_dcc");
-  m_buttonOpen   = new QPushButton(icon("exec"),        i18n("Open File"),   buttonsBox, "open_dcc_file");
-  m_buttonRemove = new QPushButton(icon("edittrash"),   i18n("Remove File"), buttonsBox, "remove_dcc_file");
-  m_buttonDetail = new QPushButton(icon("view_text"),   i18n("DCC Detail"), buttonsBox, "detail_dcc");
+  m_buttonAccept = new QPushButton(icon("player_play"), i18n("&Accept"), buttonsBox, "start_dcc");
+  m_buttonAbort  = new QPushButton(icon("stop"),        i18n("A&bort"),  buttonsBox, "abort_dcc");
+  m_buttonClear  = new QPushButton(icon("editdelete"),  i18n("&Clear Item"),  buttonsBox, "clear_dcc");
+  m_buttonOpen   = new QPushButton(icon("exec"),        i18n("&Open File"),   buttonsBox, "open_dcc_file");
+  m_buttonRemove = new QPushButton(icon("edittrash"),   i18n("&Remove File"), buttonsBox, "remove_dcc_file");
+  m_buttonDetail = new QPushButton(icon("view_text"),   i18n("DCC &Detail"), buttonsBox, "detail_dcc");
   
   QToolTip::add( m_buttonAccept, i18n( "Start receiving" ) );
   QToolTip::add( m_buttonAbort,  i18n( "Abort the transfer(s)" ) );
