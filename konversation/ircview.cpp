@@ -22,6 +22,7 @@
 #include <qstringlist.h>
 #include <qregexp.h>
 #include <qtextbrowser.h>
+#include <qclipboard.h>
 
 // Check if we use special QT versions to keep text widget from displaying
 // all lines after another without line breaks
@@ -42,16 +43,19 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 {
   kdDebug() << "IRCView::IRCView()" << endl;
 
+  copyUrlMenu=false;
+  urlToCopy=QString::null;
+
   popup=new QPopupMenu(this,"ircview_context_menu");
 
   if(popup)
   {
     popup->insertItem(i18n("&Copy"),Copy);
-    popup->insertItem(i18n("Select All"),SelectAll);
+    popup->insertItem(i18n("Select all"),SelectAll);
     popup->insertSeparator();
     popup->insertItem(i18n("Search text"),Search);
     popup->insertSeparator();
-    popup->insertItem(i18n("Send File"),SendFile);
+    popup->insertItem(i18n("Send file"),SendFile);
   }
   else kdWarning() << "IRCView::IRCView(): Could not create popup!" << endl;
 
@@ -81,6 +85,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 #ifndef TABLE_VERSION
   setText("<qt>\n");
 #endif
+  connect(this,SIGNAL (highlighted(const QString&)),this,SLOT (highlightedSlot(const QString&)));
 }
 
 IRCView::~IRCView()
@@ -99,6 +104,25 @@ void IRCView::clear()
 {
   buffer=QString::null;
   KTextBrowser::clear();
+}
+
+void IRCView::highlightedSlot(const QString& link)
+{
+  if(link.isEmpty() && copyUrlMenu)
+  {
+    popup->removeItem(CopyUrl);
+    copyUrlMenu=false;
+    
+  kdDebug() << "cleared" << endl;
+  }
+  else if(!link.isEmpty() && !copyUrlMenu)
+  {
+    popup->insertItem(i18n("Copy URL to clipboard"),CopyUrl,1);
+    copyUrlMenu=true;
+    urlToCopy=link;
+    
+  kdDebug() << link << endl;
+  }
 }
 
 void IRCView::replaceDecoration(QString& line,char decoration,char replacement)
@@ -527,6 +551,13 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
     case Copy:
       copy();
       break;
+    case CopyUrl:
+    {
+      QClipboard *cb=KApplication::kApplication()->clipboard();
+      cb->setText(urlToCopy,QClipboard::Selection);
+      
+      break;
+    }
     case SelectAll:
       selectAll();
       break;

@@ -41,7 +41,7 @@ class IRCView : public KTextBrowser
 
     enum PopupIDs
     {
-      Copy,SelectAll,
+      Copy,CopyUrl,SelectAll,
       Search,
       SendFile
     };
@@ -63,6 +63,9 @@ class IRCView : public KTextBrowser
     void appendBacklogMessage(const char* firstColumn,const char* message);
     void search();
 
+  protected slots:
+    void highlightedSlot(const QString& link);
+    
   protected:
     QString filter(const QString& line,const QString& who=NULL,bool doHilight=true);
     void doAppend(QString line,bool suppressTimestamps=false);
@@ -78,7 +81,10 @@ class IRCView : public KTextBrowser
     // used by search function
     int findParagraph;
     int findIndex;
-    
+
+    bool copyUrlMenu;
+    QString urlToCopy;
+
     QString buffer;
     Server *server;
     QPopupMenu* popup;
