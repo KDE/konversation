@@ -54,8 +54,8 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   textPreviewLabel->setFrameStyle(QFrame::Panel | QFrame::Sunken);
   listPreviewLabel->setFrameStyle(QFrame::Panel | QFrame::Sunken);
 
-  QPushButton* textFontButton=new QPushButton(i18n("Choose..."),parentFrame,"text_font_button");
-  QPushButton* listFontButton=new QPushButton(i18n("Choose..."),parentFrame,"list_font_button");
+  QPushButton* textFontButton=new QPushButton(i18n("&Choose..."),parentFrame,"text_font_button");
+  QPushButton* listFontButton=new QPushButton(i18n("C&hoose..."),parentFrame,"list_font_button");
 
   updateFonts();
 
@@ -63,15 +63,18 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   QHBox* timestampBox=new QHBox(parentFrame);
   timestampBox->setSpacing(spacingHint());
 
-  doTimestamping=new QCheckBox(i18n("Show timestamps"),timestampBox,"show_timestamps_checkbox");
+  doTimestamping=new QCheckBox(i18n("Show &timestamps"),timestampBox,"show_timestamps_checkbox");
 
-  formatLabel=new QLabel(i18n("Format:"),timestampBox);
+  formatLabel=new QLabel(i18n("&Format:"),timestampBox);
   formatLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
   timestampFormat=new QComboBox(false,timestampBox,"timestamp_format_combo");
   timestampFormat->insertItem("hh");
   timestampFormat->insertItem("hh:mm");
   timestampFormat->insertItem("hh:mm:ss");
+
+  // link label shortcut to combo box
+  formatLabel->setBuddy(timestampFormat);
 
   // find actual timestamp format
   for(int index=0;index<timestampFormat->count();index++)
@@ -82,24 +85,27 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   QHBox* showButtonsBox=new QHBox(parentFrame);
 
-  showQuickButtons=new QCheckBox(i18n("Show quick buttons"),showButtonsBox,"show_quickbuttons_checkbox");
+  showQuickButtons=new QCheckBox(i18n("Show quick &buttons"),showButtonsBox,"show_quickbuttons_checkbox");
   showQuickButtons->setChecked(preferences->getShowQuickButtons());
 
-  showModeButtons=new QCheckBox(i18n("Show channel mode buttons"),showButtonsBox,"show_modebuttons_checkbox");
+  showModeButtons=new QCheckBox(i18n("Show channel &mode buttons"),showButtonsBox,"show_modebuttons_checkbox");
   showModeButtons->setChecked(preferences->getShowModeButtons());
 
-  autoUserhostCheck=new QCheckBox(i18n("Show hostmasks in nick list"),parentFrame,"auto_userhost_check");
+  autoUserhostCheck=new QCheckBox(i18n("Show h&ostmasks in nick list"),parentFrame,"auto_userhost_check");
   autoUserhostCheck->setChecked(preferences->getAutoUserhost());
 
-  useSpacingCheck=new QCheckBox(i18n("Use custom widget spacing"),parentFrame,"use_spacing_check");
+  useSpacingCheck=new QCheckBox(i18n("&Use custom widget spacing"),parentFrame,"use_spacing_check");
 
   QHBox* spacingMarginBox=new QHBox(parentFrame);
   spacingMarginBox->setSpacing(spacingHint());
 
-  spacingLabel=new QLabel(i18n("Spacing:"),spacingMarginBox);
+  spacingLabel=new QLabel(i18n("&Spacing:"),spacingMarginBox);
   spacingSpin=new QSpinBox(0,10,1,spacingMarginBox,"spacing_spin_box");
-  marginLabel=new QLabel(i18n("Margin:"),spacingMarginBox);
+  marginLabel=new QLabel(i18n("Mar&gin:"),spacingMarginBox);
   marginSpin=new QSpinBox(0,10,1,spacingMarginBox,"margin_spin_box");
+
+  spacingLabel->setBuddy(spacingSpin);
+  marginLabel->setBuddy(marginSpin);
 
   spacingSpin->setValue(preferences->getSpacing());
   spacingSpin->setSuffix(" "+i18n("Pixel"));
@@ -116,7 +122,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   QHBox* paragraphSpacingBox=new QHBox(parentFrame);
   paragraphSpacingBox->setSpacing(spacingHint());
 
-  useParagraphSpacingCheck=new QCheckBox(i18n("Use paragraph spacing:"),paragraphSpacingBox,"use_paragraph_spacing_check");
+  useParagraphSpacingCheck=new QCheckBox(i18n("Use &paragraph spacing:"),paragraphSpacingBox,"use_paragraph_spacing_check");
 
   paragraphSpacingSpin=new QSpinBox(0,10,1,paragraphSpacingBox,"paragraph_spacing_spin_box");
 
@@ -129,11 +135,11 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   useParagraphSpacingChanged(preferences->getUseParagraphSpacing() ? 2 : 0);
 
   // close buttons on tabs
-  closeButtonsCheck=new QCheckBox(i18n("Show close widgets on tabs"),parentFrame,"tab_close_widgets_check");
+  closeButtonsCheck=new QCheckBox(i18n("Show close &widgets on tabs"),parentFrame,"tab_close_widgets_check");
   closeButtonsCheck->setChecked(preferences->getCloseButtonsOnTabs());
 
   // Display close buttons on which side
-  closeButtonsAlignRight=new QCheckBox(i18n("Place close widgets on the right side"),parentFrame,"tab_close_widgets_align_right");
+  closeButtonsAlignRight=new QCheckBox(i18n("Place close widgets on the &right side"),parentFrame,"tab_close_widgets_align_right");
   closeButtonsAlignRight->setChecked(preferences->getCloseButtonsAlignRight());
 
   // Take care of ghosting / unghosting close button checkboxes
@@ -143,8 +149,8 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   QVGroupBox* sortOptionsGroup=new QVGroupBox(i18n("Sort Options"),parentFrame,"sort_options_group");
   sortOrderGroup=new QHGroupBox(i18n("Sorting Order"),parentFrame,"sort_order_group");
 
-  sortByStatusCheck=new QCheckBox(i18n("Sort by user status"),sortOptionsGroup,"sort_by_status_check");
-  sortCaseInsensitiveCheck=new QCheckBox(i18n("Sort case insensitive"),sortOptionsGroup,"sort_case_insensitive_check");
+  sortByStatusCheck=new QCheckBox(i18n("Sort by us&er status"),sortOptionsGroup,"sort_by_status_check");
+  sortCaseInsensitiveCheck=new QCheckBox(i18n("Sort case &insensitive"),sortOptionsGroup,"sort_case_insensitive_check");
 
   sortByStatusCheck->setChecked(preferences->getSortByStatus());
   sortOrderGroup->setEnabled(preferences->getSortByStatus());

@@ -54,8 +54,8 @@ PrefsPageAliases::PrefsPageAliases(QFrame* newParent,Preferences* newPreferences
   // Set up the buttons to the right of the list
   QGrid* buttonBox=new QGrid(3,QGrid::Vertical,parentFrame);
   buttonBox->setSpacing(spacingHint());
-  QPushButton* newButton=new QPushButton(i18n("New..."),buttonBox);
-  QPushButton* removeButton=new QPushButton(i18n("Remove"),buttonBox);
+  QPushButton* newButton=new QPushButton(i18n("&New..."),buttonBox);
+  QPushButton* removeButton=new QPushButton(i18n("&Remove"),buttonBox);
 
   aliasesLayout->addWidget(aliasesListView);
   aliasesLayout->addWidget(buttonBox);
