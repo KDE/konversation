@@ -32,12 +32,15 @@ class AddressbookBase : public QObject, public KIMIface
 {
   Q_OBJECT
   public:
-
     virtual ~AddressbookBase(); // This needs to be public so it can be deleted by our static pointer
     KABC::Addressee getKABCAddresseeFromNick(const QString &ircnick, const QString &servername, const QString &servergroup);
     KABC::Addressee getKABCAddresseeFromNick(const QString &nick_server);
     bool hasNick(const KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup);
     bool hasNick(const KABC::Addressee &addressee, const QString &nick_server);
+    
+    /** For a given contact, remove the ircnick if they have it. If you
+     *  pass an addressBook, the contact is inserted if it has changed. 
+     */
     void unassociateNick(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup);
     void associateNick(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup);
     bool associateNickAndUnassociateFromEveryoneElse(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup);
@@ -57,8 +60,10 @@ class AddressbookBase : public QObject, public KIMIface
     bool saveAddressbook();
     KABC::AddressBook *getAddressBook();
     
-    /** Return a NickInfo for this addressee.
+    /**  Return an online NickInfo for this addressee.
       *  If there are multiple matches, it tries to pick one that is not away.
+      *  Note: No NickInfo is returned if the addressee is offline.
+      *  NickInfo's are for online and away nicks only.
       *  @param addressee The addressee to get a nickInfo for
       *  @return A nickInfo.  It tries hard to return a nickInfo that is not away if one exists.
       */
@@ -73,14 +78,16 @@ class AddressbookBase : public QObject, public KIMIface
     virtual void emitContactPresenceChanged(QString uid) = 0;
 
     /**
-     *  Run kmail to create a single email addressed to all of the nicks passed in.
+     *  Run kmail (or whatever the users email client is)
+     *  to create a single email addressed to all of the nicks passed in.
      *  Gives an error dialog to the user if any of the contacts don't have an
      *  email address associated, and gives the user the option to continue
      *  with the contacts that did have email addresses.
      */
     bool sendEmail(const ChannelNickList &nicklist); 
     /**
-     *  Run kmail to create a single email addressed to the addressee passed in.
+     *  Run kmail (or whatever the users email client is)
+     *  to create a single email addressed to the addressee passed in.
      *  Gives an error dialog to the user if the addressee doesn't have an email address associated.
      */
     bool sendEmail(const KABC::Addressee &addressee);
@@ -95,6 +102,12 @@ class AddressbookBase : public QObject, public KIMIface
      *  @return True if there were no problems running the email program.  An error will be shown to the user if there was.
      */
     bool runEmailProgram(const QString &mailtoaddress);
+
+    /** Just calls KonversationMainWindow::focusAndShowErrorMessage(const QString *errorMsg)
+     *
+     *  @see KonversationMainWindow::focusAndShowErrorMessage(const QString *errorMsg)
+     */
+    void focusAndShowErrorMessage(const QString &errorMsg);
   signals:
     void addresseesChanged();
 
@@ -102,7 +115,6 @@ class AddressbookBase : public QObject, public KIMIface
     AddressbookBase();
     KABC::AddressBook* addressBook;
     KABC::Ticket *m_ticket;
-    
 };
 
 } //NAMESPACE

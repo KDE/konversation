@@ -27,13 +27,14 @@
 
 class Server;
 
-/*
+/**
   The NickInfo object is a data container for information about a single nickname.
   It is owned by the Server object and should NOT be deleted by anything other than Server.
-  If using code alters the NickInfo object, it should call Server::nickInfoUpdated to
-  let Server know that the object has been modified.
-*/
 
+  A NickInfo is _only_ for online (or away) nicks.  Not for offline nicks.
+  Offline (but watched or in addressbook) nicks are stored in the Server object.
+
+*/
 class NickInfo : public QObject, public KShared
 {
   Q_OBJECT

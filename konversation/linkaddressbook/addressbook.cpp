@@ -178,19 +178,26 @@ QStringList Addressbook::protocols() {
  */
 void Addressbook::messageContact( const QString &uid, const QString& message ) {
 	if(uid.isEmpty()) {
-	        kdDebug() << "Addressbook::messageContact called with empty uid or message" << endl;
+		focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but did not specify any contact to send the message to.  This is probably a bug in the other application."));
 		return;
 	}
-	NickInfoPtr nickInfo = getNickInfo(addressBook->findByUid(uid));
+	KABC::Addressee addressee = addressBook->findByUid(uid);
+        if(addressee.isEmpty()) {
+		focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but Konversation could not find the specified contact in the KDE address book."));
+                return;
+	}
+	NickInfoPtr nickInfo = getNickInfo(addressee);
 	if(!nickInfo) {
-		kdDebug() << "messageContact:  uid %1 not online\n" << endl;
+		QString user = addressee.fullEmail();
+		if(!user.isEmpty()) user = " (" + user + ")";
+		focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but the requested user%1 is not online.").arg(user));
 		return;
 	}
+
 	nickInfo->getServer()->dcopSay(nickInfo->getNickname(), message);
-	QWidget *widget = nickInfo->getServer()->getMainWindow();
-	KWin::demandAttention(widget->winId());
-	KWin::activateWindow(widget->winId());	
 }
+
+
 
 /**
  * Open a chat to a contact, and optionally set some initial text
@@ -198,6 +205,7 @@ void Addressbook::messageContact( const QString &uid, const QString& message ) {
 void Addressbook::messageNewContact( const QString &contactId, const QString &/*protocol*/ ) {
 	if(contactId.isEmpty() ) {
 	        kdDebug() << "Addressbook::messageNewContact called with empty contactid" << endl;
+		focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but did not specify any contact to send the message to.  This is probably a bug in the other application."));
 		return;
 	}
 	messageContact(contactId, QString::null);
@@ -210,6 +218,7 @@ void Addressbook::messageNewContact( const QString &contactId, const QString &/*
 void Addressbook::chatWithContact( const QString &uid ) {
 	if(uid.isEmpty()) {
 		kdDebug() << "Addressbook::chatWithContact called with empty uid" << endl;
+		focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but did not specify any contact to send the message to.  This is probably a bug in the other application."));
 		return;
 	}
 	messageContact(uid, QString::null);
@@ -223,29 +232,20 @@ void Addressbook::chatWithContact( const QString &uid ) {
  * @param fileSize file size in bytes
  */
 void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QString &altFileName, uint fileSize) {
-
-	//FIXME: If there is an error, we won't be focused.  This could be a problem.
-	//But how can we get a QWidget?
-	
 	if(uid.isEmpty()) {
-		KMessageBox::sorry(0, i18n("You have requested to send a file to a contact, but not specified which contact."), i18n("Error Sending File"));
-		kdDebug() << "Addressbook::sendFile called with empty uid" << endl;
+		focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation to send a file to a contact, but did not specify any contact to send the file to.  This is probably a bug in the other application."));
 		return;
 	}
 	KABC::Addressee addressee = addressBook->findByUid(uid);
 	if(addressee.isEmpty()) {
- 		KMessageBox::sorry(0,i18n("You have requested to send a file to a contact, but the contact you specified could not be found."), i18n("Error Sending File"));
-		kdDebug() << "Addressbook::sendFile called with uid '" << uid << "'" << endl;
+		focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation to send a file to a contact, but Konversation could not find the specified contact in the KDE address book."));
 		return;
 	}
 	NickInfoPtr nickInfo = getNickInfo(addressee);
         if(!nickInfo) {
-		QString realname = addressee.realName();
-		if(!realname.isEmpty()) 
-			KMessageBox::sorry(0,i18n("You have requested to send a file to %1, but they do not appear to be online.").arg(realname), i18n("Error sending file"));
-		else
-			KMessageBox::sorry(0,i18n("You have requested to send a file to a contact, but they do not appear to be online."), i18n("Error Sending File"));
-		kdDebug() << "messageContact:  uid " << addressee.uid() << " not online\n" << endl;
+		QString user = addressee.fullEmail();
+                if(!user.isEmpty()) user = " (" + user + ")";
+                focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation to send a file to acontact, but the requested user%1 is not currently online.").arg(user));
         	return;
         }
         nickInfo->getServer()->addDccSend(nickInfo->getNickname(), sourceURL, altFileName, fileSize);
@@ -265,6 +265,7 @@ void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QStr
  * @return whether the add succeeded.  False may signal already present, protocol not supported, or add operation not supported.
  */
 bool Addressbook::addContact( const QString &/*contactId*/, const QString &/*protocol*/ ) {
+	focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation to add contact.  Konversation does support this."));
 	return false;
 	//Nicks are auto added if they are put in the addressbook - I don' think there is anything useful I can do.
 }

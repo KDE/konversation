@@ -41,6 +41,7 @@ typedef unsigned long long __u64;
 using namespace KNetwork;
 #include <kstringhandler.h>
 #include <kdeversion.h>
+#include <kwin.h>
 
 #include "server.h"
 #include "query.h"
@@ -1184,7 +1185,16 @@ void Server::dcopSay(const QString& target,const QString& command)
       addQuery(target,QString::null);
       query=getQueryByName(target);
     }
-    if(query && !command.isEmpty()) query->sendQueryText(command);
+    if(query) {
+      if(!command.isEmpty())
+        query->sendQueryText(command);
+      else {
+	query->adjustFocus();
+        getMainWindow()->show();
+	KWin::demandAttention(getMainWindow()->winId());
+        KWin::activateWindow(getMainWindow()->winId());
+      }
+    }
   }
 }
 

@@ -79,6 +79,12 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     DccPanel* getDccPanel();
     void showView(ChatWindow* view);
 
+    /** Some errors need to be shown, even when konversation is minimized.
+     *  For example, when a kimiface call is recieved to query a person,
+     *  (e.g. the user choses "Chat with X" in kmail) but that person isn't
+     *  recognised, we need to give immediate feedback to the user.
+     */
+    void focusAndShowErrorMessage(const QString &errorMsg);
     void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView);
     void appendToFrontmostIfDifferent(const QString& type,const QString& message,ChatWindow* serverView);
 

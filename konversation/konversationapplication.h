@@ -47,6 +47,15 @@ class KonversationApplication : public KApplication
   public:
     static Preferences preferences;
 
+    /** This function in general shouldn't be called, because in the future there
+     *  may be multiple windows.
+     *  However, in some situations we have messageboxes that aren't targeted for
+     *  any particular main window, such as general errors from dcop calls.
+     *  
+     *  Note to any MDI developer - get this to return any of the windows, or some
+     *  'main' one.
+     */
+    KonversationMainWindow *getMainWindow();
     // URL-Catcher
     void storeUrl(const QString& who,const QString& url);
     const QStringList& getUrlList();

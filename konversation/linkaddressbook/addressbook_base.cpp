@@ -20,6 +20,8 @@
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <kmessagebox.h>
+#include "../konversationmainwindow.h"
+#include <kstringhandler.h>
 #include <krun.h>
 #include "../channel.h"
 
@@ -134,9 +136,6 @@ NickInfoPtr AddressbookBase::getNickInfo(const KABC::Addressee &addressee)
 bool AddressbookBase::hasAnyNicks(const KABC::Addressee &addressee) {
 	return !addressee.custom("messaging/irc", "All").isEmpty();
 }
-/** For a given contact, remove the ircnick if they have it. If you
- *  pass an addressBook, the contact is inserted if it has changed. 
- */
 void AddressbookBase::unassociateNick(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup) {
 	
 	kdDebug() << "in unassociatenick for '" << ircnick << endl;
@@ -185,7 +184,9 @@ void AddressbookBase::unassociateNick(KABC::Addressee &addressee, const QString 
 	addressBook->insertAddressee(addressee);
 	//saveTicket();
 }
-
+void AddressbookBase::focusAndShowErrorMessage(const QString &errorMsg) {
+	static_cast<KonversationApplication *>(kapp)->getMainWindow()->focusAndShowErrorMessage(errorMsg);
+}
 /**For a given contact, adds the ircnick if they don't already have it.  If you pass an addressBook, the contact is inserted
  * if it has changed. */
 void AddressbookBase::associateNick(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup) {
@@ -323,7 +324,7 @@ bool AddressbookBase::sendEmail(const KABC::Addressee &addressee) {
 }
 
 bool AddressbookBase::runEmailProgram(const QString &mailtoaddress) {
-  KRun *proc = new KRun(KURL(QString("mailto:") + mailtoaddress));
+  KRun *proc = new KRun(KURL(QString("mailto:") + KStringHandler::from8Bit(mailtoaddress.ascii())));
   kdDebug() << "Sending email to " << mailtoaddress << endl;
   if(proc->hasError()) {
 	  KMessageBox::error(0, "Could not run your email program.  This is possibly because one isn't installed.  To install the KDE email program (kmail) please install the 'kdepim' packages.");

@@ -133,6 +133,10 @@ KonversationApplication::~KonversationApplication()
   delete identDCOP;
 }
 
+KonversationMainWindow *KonversationApplication::getMainWindow() {
+  return mainWindow;
+}
+
 void KonversationApplication::dcopSay(const QString& server,const QString& target,const QString& command)
 {
   Server* lookServer=serverList.first();

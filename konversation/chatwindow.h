@@ -156,7 +156,8 @@ class ChatWindow : public BASE_CLASS
     /** 
      * This is called when a chat window gains focus.
      * It enables and disables the appropriate menu items,
-     * then calls childAdjustFocus
+     * then calls childAdjustFocus.
+     * You can call this manually to focus this tab.
      */
     void adjustFocus();
     

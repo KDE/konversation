@@ -298,6 +298,13 @@ void KonversationMainWindow::showToolbar()
 {
 }
 
+void KonversationMainWindow::focusAndShowErrorMessage(const QString &errorMsg) {
+	show();
+	KWin::demandAttention(winId());
+        KWin::activateWindow(winId());
+	KMessageBox::error(this, errorMsg);
+}
+
 void KonversationMainWindow::showMenubar(bool dontShowWarning)
 {
   if(showMenuBarAction->isChecked()) menuBar()->show();
