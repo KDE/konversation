@@ -17,6 +17,8 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <qtooltip.h>
+#include <kiconloader.h>
+
 
 #include "nicklistview.h"
 #include "linkaddressbook/addressbook.h"
@@ -45,13 +47,13 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
       kdWarning() << "NickListView::NickListView(): Could not create modes popup!" << endl;
     }
     popup->insertSeparator();
-    popup->insertItem(i18n("Whois"),Whois);
-    popup->insertItem(i18n("Version"),Version);
-    popup->insertItem(i18n("Ping"),Ping);
+    popup->insertItem(i18n("&Whois"),Whois);
+    popup->insertItem(i18n("&Version"),Version);
+    popup->insertItem(i18n("&Ping"),Ping);
     popup->insertSeparator();
     popup->insertItem(i18n("Open Query"),Query);
-    popup->insertItem(i18n("Send File..."),DccSend);
-    popup->insertItem(i18n("Send Email..."), SendEmail);
+    popup->insertItem(SmallIcon("fork"),i18n("Send &File..."),DccSend); //action-fork isn't my ideal icon, but kopete do it..
+    popup->insertItem(SmallIcon("mail_generic"),i18n("&Send Email..."), SendEmail);
     if(addressbook) {
       popup->insertSeparator();
       popup->insertItem(i18n("Addressbook Associations"), addressbook, AddressbookSub);

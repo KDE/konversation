@@ -816,7 +816,7 @@ void NicksOnline::slotNickListView_RightButtonClicked(QListViewItem* item, const
         }
         case nsHasAddress:
         {
-            m_popupMenu->insertItem(i18n("&Send Email..."), ciSendEmail);
+            m_popupMenu->insertItem(SmallIcon("mail_generic"), i18n("&Send Email..."), ciSendEmail);
             m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("Edit C&ontact..."), ciAddressbookEdit);
             m_popupMenu->insertSeparator();
