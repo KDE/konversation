@@ -59,6 +59,7 @@
 #include "server.h"
 #include "searchdialog.h"
 #include "konversationsound.h"
+#include "chatwindow.h"
 
 IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 {
@@ -393,7 +394,8 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
       {
         // hilight current nickname
         highlightColor=KonversationApplication::preferences.getHilightNickColor().name();
-        if (KonversationApplication::preferences.getOSDShowOwnNick() && !KonversationApplication::preferences.getOSDShowChannel())
+        ChatWindow* chatWin = static_cast<ChatWindow*>(parent());
+        if (KonversationApplication::preferences.getOSDShowOwnNick() && !KonversationApplication::preferences.getOSDShowChannel() && chatWin->notificationsEnabled())
         {
           KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
           konvApp->osd->showOSD("(HIGHLIGHT) <" + whoSent + "> " + filteredLine);

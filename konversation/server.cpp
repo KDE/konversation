@@ -2163,7 +2163,7 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
     outChannel->joinNickname(nickname,hostmask);
 
     // OnScreen Message
-    if(KonversationApplication::preferences.getOSDShowChannelEvent())
+    if(KonversationApplication::preferences.getOSDShowChannelEvent() && outChannel->notificationsEnabled())
     {
       KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
       konvApp->osd->showOSD(i18n( "(%1) %2 has joined this channel. (%3)" )
@@ -2218,7 +2218,7 @@ void Server::removeNickFromChannel(const QString &channelName, const QString &ni
     if(outChannel->getNickByName(nickname)) outChannel->removeNick(nickname,reason,quit);
 
     // OnScreen Message
-    if(KonversationApplication::preferences.getOSDShowChannelEvent())
+    if(KonversationApplication::preferences.getOSDShowChannelEvent() && outChannel->notificationsEnabled())
     {
       KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
       konvApp->osd->showOSD(i18n( "(%1) %2 has left this channel. (%3)" )
@@ -2314,7 +2314,7 @@ void Server::appendToChannel(const QString& channel,const QString& nickname,cons
   if(outChannel) outChannel->append(nickname,message);
 
   // OnScreen Message
-  if (KonversationApplication::preferences.getOSDShowChannel())
+  if (KonversationApplication::preferences.getOSDShowChannel() && outChannel->notificationsEnabled())
   {
     KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
     konvApp->osd->showOSD("(" + channel + ") <" + nickname + "> " + message);
@@ -2346,7 +2346,7 @@ void Server::appendToQuery(const QString& queryName,const QString& message)
   {
     outQuery->appendQuery(queryName,message);
     // OnScreen Message
-    if(KonversationApplication::preferences.getOSDShowQuery())
+    if(KonversationApplication::preferences.getOSDShowQuery() && outQuery->notificationsEnabled())
     {
       KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
       konvApp->osd->showOSD(i18n( "(Query) <%1> %2" ).arg(queryName).arg(message));
