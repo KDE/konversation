@@ -30,13 +30,17 @@
 #include "images.h"
 #endif
 
+#ifdef USE_MDI
+NicksOnline::NicksOnline(QString caption): ChatWindow(caption)
+#else
 NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
-{  
+#endif
+{
   setName(i18n("Watched Nicks Online"));
   setType(ChatWindow::NicksOnline);
 
   nickListView=new KListView(this);
-  
+
   // TODO: Need to derive from KListView and override sort() method in order to sort in
   // locale-aware order.
 
@@ -51,8 +55,10 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
   nickListView->setRootIsDecorated(false);
 #endif
 
+#ifndef USE_MDI
   setMargin(KDialog::marginHint());
   setSpacing(KDialog::spacingHint());
+#endif
 
 //  QHBox* buttonBox=new QHBox(this);
 //  buttonBox->setSpacing(KDialog::spacingHint());
@@ -62,7 +68,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
   connect(editButton,SIGNAL (clicked()),SIGNAL (editClicked()) );
   connect(nickListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT(processDoubleClick(QListViewItem*)));
-  
+
 #ifdef USE_NICKINFO
   // Display info for all currently-connected servers.
   refreshAllServerOnlineLists();
@@ -82,7 +88,7 @@ NicksOnline::~NicksOnline()
 #endif
   delete nickListView;
 }
-    
+
 // Returns the named child of parent item in KListView.
 QListViewItem* NicksOnline::findItemChild(const QListViewItem* parent, const QString& name)
 {
@@ -155,11 +161,11 @@ void NicksOnline::updateServerOnlineList(Server* server, bool)
       }
       if (!nickInfo->getOnlineSince().isNull())
         nickAdditionalInfo = nickAdditionalInfo + " since " + nickInfo->getOnlineSince().toString(Qt::LocalDate);
-      
+
       QListViewItem* nickRoot = findItemChild(serverRoot, nickname);
       if (!nickRoot) nickRoot = new KListViewItem(serverRoot, nickname, nickAdditionalInfo);
       nickRoot->setText(1, nickAdditionalInfo);
-      
+
       QStringList channelList = server->getNickChannels(nickname);
       for ( unsigned int index=0; index<channelList.count(); index++ )
       {
@@ -180,7 +186,7 @@ void NicksOnline::updateServerOnlineList(Server* server, bool)
         QListViewItem* channelItem = findItemChild(nickRoot, channelName);
         if (!channelItem) channelItem = new KListViewItem(nickRoot, channelName, nickMode);
         channelItem->setText(1, nickMode);
-        
+
         if (server->getJoinedChannelMembers(channelName) != 0)
         {
           channelItem->setPixmap(0, joinedLed);
@@ -279,7 +285,7 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
   // If server is not in our list, or if the list changed, then display the new list.
   if ( (serverRoot == 0) || changed)
   {
-    delete serverRoot;  
+    delete serverRoot;
     if(list.count())
     {
       KListViewItem* newServerRoot=new KListViewItem(nickListView,serverName);
@@ -305,6 +311,13 @@ void NicksOnline::processDoubleClick(QListViewItem* item)
     }
   }
 }
+
+#ifdef USE_MDI
+void NicksOnline::closeYourself(ChatWindow*)
+{
+  emit chatWindowCloseRequest(this);
+}
+#endif
 
 void NicksOnline::adjustFocus()
 {

@@ -27,7 +27,7 @@ class Images
     Images();
     ~Images();
 
-    QIconSet getLed(int color,bool on);
+    QIconSet getLed(int color,bool on,bool big=false); // big for USE_MDI tab bar
 
     QIconSet getRedLed(bool on);
     QIconSet getGreenLed(bool on);
@@ -43,6 +43,15 @@ class Images
     QIconSet blueLedOff;
     QIconSet yellowLedOn;
     QIconSet yellowLedOff;
+
+    QIconSet bigRedLedOn;
+    QIconSet bigRedLedOff;
+    QIconSet bigGreenLedOn;
+    QIconSet bigGreenLedOff;
+    QIconSet bigBlueLedOn;
+    QIconSet bigBlueLedOff;
+    QIconSet bigYellowLedOn;
+    QIconSet bigYellowLedOff;
 };
 
 #endif

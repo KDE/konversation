@@ -110,7 +110,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   autoRejoin=KonversationApplication::preferences.getAutoRejoin();
   autoReconnect=KonversationApplication::preferences.getAutoReconnect();
-  
+
   if(!serverEntry[8].isEmpty())
   {
     connectCommands = QStringList::split(";", serverEntry[8]);
@@ -217,16 +217,16 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   connecting=false;
 
   timerInterval=1;  // flood protection
-  
+
   setIdentity(KonversationApplication::preferences.getIdentityByName("Default"));
   setName(hostName.ascii());
   setMainWindow(mainWindow);
-  
+
   serverGroup=hostName;
   serverName=hostName;
   serverPort=port.toInt();
   serverKey=password;
-  
+
   resolver.setRecipient(this);
   installEventFilter(this);
 
@@ -235,9 +235,9 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   statusView=getMainWindow()->addStatusView(this);
   if(KonversationApplication::preferences.getRawLog()) addRawLog(false);
   setNickname(nick);
-  
+
   connectToIRCServer();
-  
+
    // don't delete items when they are removed
   channelList.setAutoDelete(false);
   // For /msg query completion
@@ -325,6 +325,7 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
 
 Server::~Server()
 {
+  kdDebug() << "Server::~Server(" << getServerName() << ")" << endl;
 
   // clear nicks online
   emit nicksNowOnline(this,QStringList(),true);
@@ -333,12 +334,32 @@ Server::~Server()
   // Send out the last messages (usually the /QUIT)
   send();
 
+#ifdef USE_MDI
+/*
+  while(channelList.count())
+  {
+    Channel* lookChannel=channelList.at(0);
+    lookChannel->removeNick(getNickname(),getIdentity()->getPartReason(),true);
+  }
+  kdDebug() << "Server::~Server(): channel list count now: " << channelList.count() << endl;
+
+  while(queryList.count())
+  {
+    queryList.at(0)->closeYourself();
+  }
+*/
+
+  emit serverQuit(getIdentity()->getPartReason());
+#else
   closeRawLog();
   closeChannelListPanel();
+
   channelList.setAutoDelete(true);
   channelList.clear();
+
   queryList.setAutoDelete(true);
   queryList.clear();
+#endif
 
   // kill resolver thread if it's still running
 #if KDE_VERSION >= 310
@@ -541,7 +562,7 @@ void Server::ircServerConnectionSuccess()
 
   queueAt(1,"NICK "+getNickname());
   queueAt(2,connectString);
-  
+
   QStringList::iterator iter;
   for(iter = connectCommands.begin(); iter != connectCommands.end(); ++iter)
   {
@@ -554,7 +575,7 @@ void Server::ircServerConnectionSuccess()
     output = outputFilter.getServerOutput();
     queue(output);
   }
-  
+
   emit nicknameChanged(getNickname());
 
   serverSocket.enableRead(true);
@@ -1248,10 +1269,15 @@ void Server::closeQuery(const QString &name)
 #endif
 }
 
-void Server::closeChannel(const QString &name)
+void Server::closeChannel(const QString& name)
 {
-  outputFilter.parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"PART",name);
-  queue(outputFilter.getServerOutput());
+  kdDebug() << "Server::closeChannel(" << name << ")" << endl;
+  Channel* channelToClose=getChannelByName(name);
+  if(channelToClose)
+  {
+    outputFilter.parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"PART",name);
+    queue(outputFilter.getServerOutput());
+  }
 }
 
 void Server::requestChannelList()
@@ -1570,8 +1596,10 @@ void Server::removeQuery(Query* query)
     // else select next query
     else lookQuery=queryList.next();
   }
+#ifndef USE_MDI
   // Free the query object
   delete query;
+#endif
 }
 
 void Server::sendJoinCommand(const QString& name)
@@ -1616,7 +1644,7 @@ void Server::removeChannel(Channel* channel)
   // Update NickInfo.
   removeJoinedChannel(channel->getName());
 #endif
-  
+
   channelList.removeRef(channel);
 }
 
@@ -2578,11 +2606,14 @@ void Server::addRawLog(bool show)
   if(show) getMainWindow()->showView(rawLog);
 }
 
+// in MDI mode thiis function may only be run from the raw log panel itself!
 void Server::closeRawLog()
 {
   if(rawLog)
   {
+#ifndef USE_MDI
     delete rawLog;
+#endif
     rawLog=0;
   }
 }
@@ -2604,11 +2635,14 @@ void Server::addChannelListPanel()
 
 ChannelListPanel* Server::getChannelListPanel() const { return channelListPanel; }
 
+// in MDI mode this function may only be called from the channel list panel itself!
 void Server::closeChannelListPanel()
 {
   if(channelListPanel)
   {
+#ifndef USE_MDI
     delete channelListPanel;
+#endif
     channelListPanel=0;
   }
 }
@@ -2697,36 +2731,36 @@ void Server::connectToNewServer(const QString& server, const QString& port, cons
 QString Server::awayTime()
 {
   QString retVal;
-  
+
   if(isAway) {
     int diff = QDateTime::currentDateTime().toTime_t() - m_awayTime;
     int num = diff / 3600;
-    
+
     if(num < 10) {
       retVal = "0" + QString::number(num) + ":";
     } else {
       retVal = QString::number(num) + ":";
     }
-    
+
     num = (diff % 3600) / 60;
-    
+
     if(num < 10) {
       retVal += "0";
     }
-    
+
     retVal += QString::number(num) + ":";
-    
+
     num = (diff % 3600) % 60;
-    
+
     if(num < 10) {
       retVal += "0";
     }
-    
+
     retVal += QString::number(num);
   } else {
     retVal = "00:00:00";
   }
-  
+
   return retVal;
 }
 

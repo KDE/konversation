@@ -35,7 +35,7 @@ LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :
 #ifndef QT_NO_WHEELEVENT
   connect(tabBar(),SIGNAL (wheel(QWheelEvent*)), this,SLOT (processWheelEvent(QWheelEvent*)) );
 #endif
-  
+
 #if QT_VERSION >= 0x030200
   KPushButton* closeBtn = new KPushButton(this);
   closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));

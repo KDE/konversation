@@ -5,7 +5,12 @@
 #include <kdebug.h>
 #include <klibloader.h>
 
-KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ) {
+#ifdef USE_MDI
+KonsolePanel::KonsolePanel(QString caption) : ChatWindow(caption)
+#else
+KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p )
+#endif
+{
   setType(ChatWindow::Konsole);
   KLibFactory *fact = KLibLoader::self()->factory("libkonsolepart");
   if (!fact) return;
@@ -21,6 +26,7 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ) {
 }
 
 KonsolePanel::~KonsolePanel() {
+        kdDebug() << "KonsolePanel::~KonsolePanel()" << endl;
         if ( k_part ) {
 		// make sure to prevent partDestroyed() signals from being sent
 		disconnect(k_part, SIGNAL(destroyed()), this, SLOT(partDestroyed()));
@@ -34,8 +40,19 @@ void KonsolePanel::adjustFocus() {
 void KonsolePanel::partDestroyed()
 {
   k_part = 0;
+#ifdef USE_MDI
+  emit chatWindowCloseRequest(this);
+#else
   // tell the main window to delete us
   emit deleted(this);
+#endif
 }
+
+#ifdef USE_MDI
+void KonsolePanel::closeYourself(ChatWindow*)
+{
+  emit chatWindowCloseRequest(this);
+}
+#endif
 
 #include "konsolepanel.moc"

@@ -31,14 +31,18 @@ class DccPanel : public ChatWindow
   Q_OBJECT
 
   public:
+#ifdef USE_MDI
+    DccPanel(QString caption);
+#else
     DccPanel(QWidget* parent);
+#endif
     ~DccPanel();
 
     KListView* getListView();
     DccTransfer* getTransferByPort(QString port,DccTransfer::DccType type);
     DccTransfer* getTransferByName(QString name,DccTransfer::DccType type);
     void dccStatusChanged(const DccTransfer* item);
-  
+
   public slots:
     void adjustFocus();
 
@@ -51,6 +55,9 @@ class DccPanel : public ChatWindow
     void showFileInfo();
 
   protected:
+#ifdef USE_MDI
+    virtual void closeYourself(ChatWindow*);
+#endif
     void setButtons(bool accept,bool abort,bool remove,bool open,bool info);
 
     KListView* dccListView;

@@ -29,8 +29,12 @@ class NicksOnline : public ChatWindow
 {
   Q_OBJECT
 
-  public: 
+  public:
+#ifdef USE_MDI
+    NicksOnline(QString caption);
+#else
     NicksOnline(QWidget* parent);
+#endif
     ~NicksOnline();
 
   signals:
@@ -40,7 +44,7 @@ class NicksOnline : public ChatWindow
   public slots:
     void setOnlineList(const QString& serverName,const QStringList& list,bool changed);
     virtual void adjustFocus();
-    
+
   protected slots:
     void processDoubleClick(QListViewItem* item);
     void timerFired();
@@ -48,6 +52,9 @@ class NicksOnline : public ChatWindow
   protected:
     void updateServerOnlineList(Server* server, bool changed);
     void refreshAllServerOnlineLists();
+#ifdef USE_MDI
+    virtual void closeYourself(ChatWindow*);
+#endif
     // Returns the named child of parent item in KListView.
     QListViewItem* findItemChild(const QListViewItem* parent, const QString& name);
 

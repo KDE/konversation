@@ -106,7 +106,7 @@ KonversationApplication::KonversationApplication()
 
   // Sound object used to play sound...
   m_sound = new Konversation::Sound(this);
-  
+
   // take care of user style changes, setting back colors and stuff
   connect(KApplication::kApplication(),SIGNAL (appearanceChanged()),this,SLOT (appearanceChanged()) );
 }
@@ -129,10 +129,10 @@ void KonversationApplication::dcopSay(const QString& server,const QString& targe
     {
       lookServer->dcopSay(target,command);
 //      break; // leave while loop
-//FIXME:   <muesli> there's a reason for not breaking this loop, here (which would spent only some 
+//FIXME:   <muesli> there's a reason for not breaking this loop, here (which would spent only some
 //                  cpu cycles, anyways): i'm connected to two bouncers at the same time, which are
 //                  also named the same (same ip, no dns). if a dcopSay gets emerged, it will always
-//                  get the _same_ server name as its parameter (both are named the same). although 
+//                  get the _same_ server name as its parameter (both are named the same). although
 //                  the channel it gets sent to, is on the second server, it will always try to send
 //                  this information to a channel on the first server, which i didn't even join.
 //                  this is def. a quick-fix, we should probably handle server-id's instead of -names.
@@ -208,9 +208,9 @@ void KonversationApplication::connectToAnotherServer(int id)
   connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
 
   connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&,bool)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&,bool)) );
-  
+
   connect(newServer,SIGNAL (deleted(Server*)),this,SLOT (removeServer(Server*)) );
-  
+
   connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
     this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
   connect(newServer, SIGNAL(awayInsertRememberLine()), this, SLOT(insertRememberLine()));
@@ -221,22 +221,22 @@ void KonversationApplication::connectToAnotherServer(int id)
 void KonversationApplication::quickConnectToServer(const QString& hostName, const QString& port, const QString& nick, const QString& password)
 {
   //used for the quick connect dialog and /server command
-  
+
   Server* newServer = new Server(mainWindow, hostName, port, nick, password);
-  
+
   connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
   connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
 
   connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&,bool)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&,bool)) );
-  
+
   connect(newServer,SIGNAL (deleted(Server*)),this,SLOT (removeServer(Server*)) );
-  
+
   connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
     this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
   connect(newServer, SIGNAL(awayInsertRememberLine()), this, SLOT(insertRememberLine()));
 
   serverList.append(newServer);
-  
+
 }
 
 Server* KonversationApplication::getServerByName(const QString& name)
@@ -285,12 +285,12 @@ void KonversationApplication::readOptions()
   preferences.setNicksOnlineSize(config->readSizeEntry("NicksOnlineGeometry"));
   preferences.setNicknameSize(config->readSizeEntry("NicknameGeometry"));
   preferences.setLogfileReaderSize(config->readSizeEntry("LogfileReaderGeometry",logfileReaderSize));
-  preferences.setMultilineEditSize(config->readSizeEntry("MultilineEditGeometry"));  
+  preferences.setMultilineEditSize(config->readSizeEntry("MultilineEditGeometry"));
   delete logfileReaderSize;
 
-  preferences.setLogfileBufferSize(config->readNumEntry("LogfileBufferSize",preferences.getLogfileBufferSize()));  
+  preferences.setLogfileBufferSize(config->readNumEntry("LogfileBufferSize",preferences.getLogfileBufferSize()));
   preferences.setScrollbackMax(config->readUnsignedNumEntry("ScrollbackMax",preferences.getScrollbackMax()));
-  
+
   // Double click actions
   preferences.setChannelDoubleClickAction(config->readEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction()));
   preferences.setNotifyDoubleClickAction(config->readEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction()));
@@ -306,19 +306,19 @@ void KonversationApplication::readOptions()
 
   // Reconnection timeout
   preferences.setMaximumLagTime(config->readNumEntry("MaximumLag",preferences.getMaximumLagTime()));
-  
+
   preferences.setRedirectToStatusPane(config->readBoolEntry("RedirectServerAndAppMsgToStatusPane",
     preferences.getRedirectToStatusPane()));
 
   //User interface
   preferences.setShowMenuBar(config->readBoolEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar()));
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)  
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
   preferences.setShowToolBar(config->readBoolEntry("ServerWindowToolBarStatus", preferences.getShowToolBar()));
 #endif
 #if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
   preferences.setShowStatusBar(config->readBoolEntry("ServerWindowStatusBarStatus", preferences.getShowStatusBar()));
 #endif
-  
+
   // Appearance
   config->setGroup("Appearance");
   // Fonts
@@ -354,15 +354,15 @@ void KonversationApplication::readOptions()
   if(preferences.getIRCColorList().empty()) {
     preferences.setIRCColorList(ircColorList);
   }
-  
+
   preferences.setFilterColors(config->readBoolEntry("FilterColorCodes",preferences.getFilterColors()));  //FIXME
 
 #if QT_VERSION >= 0x030200
   preferences.setShowTabBarCloseButton(config->readBoolEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton()));
 #endif
-  
+
   preferences.setShowTopic(config->readBoolEntry("ShowTopic", preferences.getShowTopic()));
-  
+
   preferences.setShowRememberLineInAllWindows(config->readBoolEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows()));
 
   // Colors are now handled in preferences
@@ -396,7 +396,7 @@ void KonversationApplication::readOptions()
   if(identityList.count())
   {
     preferences.clearIdentityList();
-    
+
     for(unsigned int index=0;index<identityList.count();index++)
     {
       Identity* newIdentity=new Identity();
@@ -424,7 +424,7 @@ void KonversationApplication::readOptions()
       newIdentity->setKickReason(config->readEntry("KickReason"));
 
       newIdentity->setCodec(config->readEntry("Codec"));
-      
+
       newIdentity->setAwayNick(config->readEntry("AwayNick"));
 
       preferences.addIdentity(newIdentity);
@@ -475,7 +475,7 @@ void KonversationApplication::readOptions()
     osd->setDuration(preferences.getOSDDuration());
     osd->setScreen(preferences.getOSDScreen());
     osd->setShadow(preferences.getOSDDrawShadow());
-    
+
     if(preferences.getOSDUseCustomColors())
     {
       QString osdTextColor = config->readEntry("OSDTextColor");
@@ -485,13 +485,13 @@ void KonversationApplication::readOptions()
         preferences.setOSDTextColor("#" + osdTextColor);
 
       osd->setTextColor(preferences.getOSDTextColor());
-    
+
       QString osdBackgroundColor = config->readEntry("OSDBackgroundColor");
       if(osdBackgroundColor.isEmpty())
         preferences.setOSDBackgroundColor(preferences.getOSDBackgroundColor().name());
       else
         preferences.setOSDBackgroundColor("#" + osdBackgroundColor);
-      
+
       osd->setBackgroundColor(preferences.getOSDBackgroundColor());
     }
   }
@@ -537,21 +537,21 @@ void KonversationApplication::readOptions()
     preferences.setHilightOwnLinesColor(preferences.getHilightOwnLinesColor().name());
   else
     preferences.setHilightOwnLinesColor("#"+hilight);
-  
+
   if(config->hasKey("Hilight")) { // Stay compatible with versions < 0.14
     hilight=config->readEntry("Hilight");
     QStringList hiList=QStringList::split(' ',hilight);
-  
+
     unsigned int hiIndex;
     for(hiIndex=0;hiIndex<hiList.count();hiIndex+=2)
     {
       preferences.addHilight(hiList[hiIndex],false,"#"+hiList[hiIndex+1],QString::null,QString::null);
     }
-    
+
     config->deleteEntry("Hilight");
   } else {
     int i = 0;
-    
+
     while(config->hasGroup(QString("Highlight%1").arg(i))) {
       config->setGroup(QString("Highlight%1").arg(i));
       preferences.addHilight(config->readEntry("Pattern"),
@@ -621,7 +621,7 @@ void KonversationApplication::readOptions()
   preferences.setShowServerList(config->readBoolEntry("ShowServerList",preferences.getShowServerList()));
 
   preferences.setColorInputFields(config->readBoolEntry("InputFieldsBackgroundColor",preferences.getColorInputFields()));
-  
+
   // Web Browser
   config->setGroup("Web Browser Settings");
   preferences.setWebBrowserUseKdeDefault(config->readBoolEntry("UseKdeDefault",preferences.getWebBrowserUseKdeDefault()));
@@ -643,7 +643,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->writeEntry("LogfileBufferSize",preferences.getLogfileBufferSize());
   config->writeEntry("ScrollbackMax",preferences.getScrollbackMax());
-  
+
   config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon());
   config->writeEntry("TrayNotify",preferences.getTrayNotify());
 
@@ -656,15 +656,15 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("VersionReply",preferences.getVersionReply());
 
   config->writeEntry("MaximumLag",preferences.getMaximumLagTime());
-  
+
   config->writeEntry("RedirectServerAndAppMsgToStatusPane", preferences.getRedirectToStatusPane());
-  
+
   //User interface
   config->writeEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar());
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)  
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
   config->writeEntry("ServerWindowToolBarStatus", preferences.getShowToolBar());
 #endif
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)  
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
   config->writeEntry("ServerWindowStatusBarStatus", preferences.getShowStatusBar());
 #endif
 
@@ -696,12 +696,12 @@ void KonversationApplication::saveOptions(bool updateGUI)
 #if QT_VERSION >= 0x030200
   config->writeEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton());
 #endif
-  
+
   config->writeEntry("ShowTopic", preferences.getShowTopic());
-  
+
   config->writeEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows());
   config->writeEntry("FilterColorCodes", preferences.getFilterColors());
-  
+
   // Colors are now handled in preferences
 
   config->setGroup("Sort Nicknames");
@@ -718,7 +718,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("OperatorColor", preferences.getOpLedColor());
   config->writeEntry("VoiceColor", preferences.getVoiceLedColor());
   config->writeEntry("NoRightsColor", preferences.getNoRightsLedColor());
-  
+
 
   // Clean up identity list
   QStringList identities=config->groupList().grep(QRegExp("Identity [0-9]+"));
@@ -785,10 +785,10 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("HilightOwnLines",preferences.getHilightOwnLines());
   config->writeEntry("HilightOwnLinesColor",preferences.getHilightOwnLinesColor().name().mid(1));
   config->writeEntry("HilightSoundsEnabled", preferences.getHilightSoundEnabled());
-  
+
   QPtrList<Highlight> hiList=preferences.getHilightList();
   int i = 0;
-  
+
   for(Highlight* hl = hiList.first(); hl; hl = hiList.next()) {
     config->setGroup(QString("Highlight%1").arg(i));
     config->writeEntry("Pattern", hl->getPattern());
@@ -798,7 +798,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->writeEntry("AutoText", hl->getAutoText());
     i++;
   }
-  
+
   // Remove unused entries...
   while(config->hasGroup(QString("Highlight%1").arg(i))) {
     config->deleteGroup(QString("Highlight%1").arg(i));
@@ -879,12 +879,12 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ShowServerList",preferences.getShowServerList());
 
   config->writeEntry("InputFieldsBackgroundColor",preferences.getColorInputFields());
-  
+
   // Web Browser settings
   config->setGroup("Web Browser Settings");
   config->writeEntry("UseKdeDefault", preferences.getWebBrowserUseKdeDefault());
   config->writeEntry("WebBrowserCmd", preferences.getWebBrowserCmd());
-  
+
   config->sync();
 
   if(updateGUI) appearanceChanged();
@@ -973,7 +973,7 @@ void KonversationApplication::openPrefsDialog(Preferences::Pages page)
 void KonversationApplication::openQuickConnectDialog()
 {
 	quickConnectDialog = new QuickConnectDialog(mainWindow);
-	connect(quickConnectDialog, SIGNAL(connectClicked(const QString&, const QString&, const QString&, const QString&)), 
+	connect(quickConnectDialog, SIGNAL(connectClicked(const QString&, const QString&, const QString&, const QString&)),
 		      this, SLOT(quickConnectToServer(const QString&, const QString&, const QString&, const QString&)));
 	quickConnectDialog->show();
 }

@@ -45,8 +45,11 @@
 #include "channellistviewitem.h"
 #include "server.h"
 
-ChannelListPanel::ChannelListPanel(QWidget* parent) :
-                  ChatWindow(parent)
+#ifdef USE_MDI
+ChannelListPanel::ChannelListPanel(QString caption) : ChatWindow(caption)
+#else
+ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
+#endif
 {
   setType(ChatWindow::ChannelList);
 
@@ -419,6 +422,21 @@ void ChannelListPanel::closeYourself()
   server->closeChannelListPanel();
 }
 
+#ifdef USE_MDI
+void ChannelListPanel::closeYourself(ChatWindow*)
+{
+  server->closeChannelListPanel();
+  emit chatWindowCloseRequest(this);
+}
+#endif
+
+void ChannelListPanel::serverQuit(const QString&)
+{
+#ifdef USE_MDI
+  closeYourself(this);
+#endif
+}
+
 void ChannelListPanel::adjustFocus()
 {
 }
@@ -426,7 +444,7 @@ void ChannelListPanel::adjustFocus()
 void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const QPoint& p)
 {
   if(!i) return;
-  
+
   KPopupMenu* showURLmenu = new KPopupMenu(this);
 #if KDE_IS_VERSION(3,1,94)
   showURLmenu->insertTitle( i18n("Open URL") );

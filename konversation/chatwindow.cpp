@@ -17,6 +17,12 @@
 #include <qregexp.h>
 #include <qtextcodec.h>
 
+#ifdef USE_MDI
+#include <qlayout.h>
+#else
+#include <kmdichildview.h>
+#endif
+
 #include <klocale.h>
 #include <kdialog.h>
 #include <kdebug.h>
@@ -27,24 +33,104 @@
 #include "konversationapplication.h"
 #include "logfilereader.h"
 
-ChatWindow::ChatWindow(QWidget* parent)
+#ifdef USE_MDI
+ChatWindow::ChatWindow(QString caption) : KMdiChildView(caption)
+#else
+ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
+#endif
 {
-  setName("ChatWindowObject");
+#ifdef USE_MDI
+  setName(caption);
 
+  setLedColor(0);
+  setLabelColor(QString::null);
+  setOn(0);
+  state=Off;
+  blinkOn=false;
+#else
+  setName("ChatWindowObject");
   parentWidget=parent;
+#endif
   firstLog=true;
   server=0;
   m_notificationsEnabled = true;
 
+#ifdef USE_MDI
+  mainLayout=new QVBoxLayout(this);
+  mainLayout->setAutoAdd(true);
+  mainLayout->setMargin(margin());
+  mainLayout->setSpacing(spacing());
+#else
   setMargin(margin());
   setSpacing(spacing());
+#endif
 
   connect(&filter,SIGNAL(launchScript(const QString&)),
     &scriptLauncher,SLOT(launchScript(const QString&)) );
+
+#ifdef USE_MDI
+  connect(this,SIGNAL(childWindowCloseRequest(KMdiChildView*)),this,SLOT(closeRequest(KMdiChildView*)));
+  connect(&blinkTimer,SIGNAL(timeout()),this,SLOT(blinkTimeout()));
+  blinkTimer.start(500);
+#endif
 }
 
 ChatWindow::~ChatWindow()
 {
+}
+
+#ifdef USE_MDI
+void ChatWindow::setLedColor(int newColor)
+{
+  ledColor=newColor;
+  iconOn=images.getLed(newColor,true,true);
+  iconOff=images.getLed(newColor,false,true);
+}
+
+void ChatWindow::setLabelColor(const QString& color)
+{
+  labelColor=color;
+}
+
+void ChatWindow::setOn(bool on,bool important)
+{
+  if(on)
+  {
+    if(important)         blinkTimer.changeInterval(500);
+    else if(state!=Fast)  blinkTimer.changeInterval(1000);
+    state=important ? Fast : Slow;
+  }
+  else state=Off;
+
+  emit setNotification(this,(state!=Off) ? iconOn : iconOff,QString::null);
+}
+#endif
+
+void ChatWindow::blinkTimeout() // USE_MDI
+{
+#ifdef USE_MDI
+  if(state!=Off)
+  {
+    // if the user wants us to blink, toggle LED blink status
+    if(KonversationApplication::preferences.getBlinkingTabs())
+    {
+      blinkOn=!blinkOn;
+      // draw the new LED
+      emit setNotification(this,(blinkOn) ? iconOn : iconOff,(blinkOn) ? labelColor : QString::null);
+    }
+    // else LED should be always on
+    else
+    {
+      // only change state when LED was off until now
+      if(!blinkOn)
+      {
+        // switch LED on
+        blinkOn=true;
+        emit setNotification(this,iconOn,labelColor);
+      }
+    }
+  }
+#endif
 }
 
 void ChatWindow::setName(const QString& newName)
@@ -75,7 +161,9 @@ void ChatWindow::setServer(Server* newServer)
   else
   {
     server=newServer;
-
+#ifdef USE_MDI
+    connect(server,SIGNAL(serverQuit(const QString&)),this,SLOT(serverQuit(const QString&)));
+#endif
     // check if we need to set up the signals
     if(getType()!=ChannelList)
     {
@@ -219,7 +307,7 @@ void ChatWindow::setLogfileName(const QString& name)
     else if(server)
       // make sure that no path delimiters are in the name
       logName=server->getServerGroup().lower().replace(QRegExp("/"),"_")+"_"+name+".log";
-    
+
     // "cd" into log path or create path, if it's not there
     cdIntoLogPath();
     // Show last log lines. This idea was stole ... um ... inspired by PMP :)
@@ -324,7 +412,6 @@ int ChatWindow::margin()
 }
 
 // Accessors
-
 IRCView* ChatWindow::getTextView()     { return textView; }
 void ChatWindow::setLog(bool activate) { log=activate; }
 
@@ -358,6 +445,24 @@ void ChatWindow::appendInputText(const QString&)
 // reimplement this if your window needs special close treatment
 void ChatWindow::closeYourself()
 {
+}
+
+#ifdef USE_MDI
+// reimplement this if your window needs special close treatment
+void ChatWindow::closeYourself(ChatWindow*)
+{
+}
+#endif
+
+void ChatWindow::serverQuit(const QString&) // USE_MDI
+{
+}
+
+void ChatWindow::closeRequest(KMdiChildView* view) // USE_MDI
+{
+#ifdef USE_MDI
+  closeYourself(static_cast<ChatWindow*>(view));
+#endif
 }
 
 #include "chatwindow.moc"

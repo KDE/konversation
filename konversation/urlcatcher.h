@@ -30,7 +30,11 @@ class UrlCatcher : public ChatWindow
   Q_OBJECT
 
   public:
+#ifdef USE_MDI
+    UrlCatcher(QString caption);
+#else
     UrlCatcher(QWidget* parent);
+#endif
     ~UrlCatcher();
 
   signals:
@@ -52,6 +56,9 @@ class UrlCatcher : public ChatWindow
     void clearListClicked();
 
   protected:
+#ifdef USE_MDI
+    virtual void closeYourself(ChatWindow*);
+#endif
     KListView* urlListView;
 
     QPushButton* openUrlButton;

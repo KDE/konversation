@@ -37,7 +37,11 @@ class Query : public ChatWindow
   Q_OBJECT
 
   public:
+#ifdef USE_MDI
+    Query(QString caption);
+#else
     Query(QWidget* parent);
+#endif
     ~Query();
 
     void setName(const QString& newName);
@@ -65,12 +69,19 @@ class Query : public ChatWindow
     // connected to IRCInput::textPasted() - used to handle large/multiline pastes
     void textPasted(QString text);
     void popup(int id);
+#ifdef USE_MDI
+    void serverQuit(const QString& reason);
+#endif
 
   protected:
     void showEvent(QShowEvent* event);
 
     bool awayChanged;
     bool awayState;
+
+#ifdef USE_MDI
+    virtual void closeYourself(ChatWindow* view);
+#endif
 
     QString queryName;
     QString hostmask;

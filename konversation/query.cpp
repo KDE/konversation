@@ -32,7 +32,11 @@
 const int POPUP_WHOIS =0xfe;
 const int POPUP_IGNORE=0xff;
 
+#ifdef USE_MDI
+Query::Query(QString caption) : ChatWindow(caption)
+#else
 Query::Query(QWidget* parent) : ChatWindow(parent)
+#endif
 {
   // don't setName here! It will break logfiles!
   //   setName("QueryWidget");
@@ -81,6 +85,9 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
 Query::~Query()
 {
+#ifdef USE_MDI
+  server->removeQuery(this);
+#endif
 }
 
 void Query::setName(const QString& newName)
@@ -258,7 +265,21 @@ void Query::appendInputText(const QString& s)
 
 void Query::closeYourself()
 {
+#ifndef USE_MDI
   server->removeQuery(this);
+#endif
 }
+
+#ifdef USE_MDI
+void Query::closeYourself(ChatWindow*)
+{
+  emit chatWindowCloseRequest(this);
+}
+
+void Query::serverQuit(const QString&)
+{
+  closeYourself(this);
+}
+#endif
 
 #include "query.moc"

@@ -24,9 +24,13 @@
 class RawLog : public ChatWindow
 {
   Q_OBJECT
-  
+
   public:
+#ifdef USE_MDI
+    RawLog(QString caption);
+#else
     RawLog(QWidget* parent);
+#endif
     ~RawLog();
 
     virtual void closeYourself();
@@ -35,6 +39,14 @@ class RawLog : public ChatWindow
   public slots:
     virtual void adjustFocus();
     void updateFonts();
+
+  protected slots:
+    void serverQuit(const QString& reasoon); // USE_MDI
+
+#ifdef USE_MDI
+  protected:
+    virtual void closeYourself(ChatWindow* view);
+#endif
 };
 
 #endif

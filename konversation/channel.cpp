@@ -54,7 +54,11 @@
 #endif
 #endif
 
+#ifdef USE_MDI
+Channel::Channel(QString caption) : ChatWindow(caption)
+#else
 Channel::Channel(QWidget* parent) : ChatWindow(parent)
+#endif
 {
   // init variables
   nicks=0;
@@ -91,7 +95,12 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   // (this) The main Box, holding the channel view/topic and the input line
   splitter=new QSplitter(this);
+#ifdef USE_MDI
+  mainLayout->setStretchFactor(splitter,10);
+#else
   setStretchFactor(splitter,10);
+#endif
+
 #ifdef OPAQUE_CONF
   splitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 #else
@@ -215,6 +224,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   topicLabel->setSizePolicy(hfixed);  // This should prevent the widget from growing too wide
   topicLine->setSizePolicy(vfixed);
 
+  commandLineBox->setSizePolicy(vfixed);
+
   limit->setMaximumSize(40,100);
   limit->setSizePolicy(hfixed);
 
@@ -277,6 +288,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
 Channel::~Channel()
 {
+  kdDebug() << "Channel::~Channel(" << getName() << ")" << endl;
+
   KonversationApplication::preferences.setChannelSplitter(splitter->sizes());
 
   // Purge nickname list
@@ -840,7 +853,11 @@ void Channel::removeNick(const QString &nickname, const QString &reason, bool qu
     if(quit) appendCommandMessage(i18n("Quit"),i18n("You have left this server. (%1)").arg(reason),false);
     else appendCommandMessage(i18n("Part"),i18n("You have left channel %1. (%2)").arg(getName()).arg(reason),false);
 
+#ifdef USE_MDI
+    emit chatWindowCloseRequest(this);
+#else
     delete this;
+#endif
   }
   else
   {
@@ -875,8 +892,11 @@ void Channel::kickNick(const QString &nickname, const QString &kicker, const QSt
       /* This message lets the user see what had happened after the channel window went away */
       server->appendStatusMessage(i18n("Kick"),i18n("You have been kicked from channel %1 by %2. (%3)").arg(getName()).arg(kicker).arg(reason));
     }
-
+#ifdef USE_MDI
+    emit chatWindowCloseRequest(this);
+#else
     delete this;
+#endif
   }
   else
   {
@@ -1685,9 +1705,25 @@ void Channel::appendInputText(const QString& s)
 
 void Channel::closeYourself()
 {
+#ifndef USE_MDI
   server->closeChannel(getName());
   server->removeChannel(this);
   delete this;
+#endif
+}
+
+void Channel::closeYourself(ChatWindow* /* view */)
+{
+#ifdef USE_MDI
+  server->closeChannel(getName());
+#endif
+}
+
+void Channel::serverQuit(const QString& reason)
+{
+#ifdef USE_MDI
+  removeNick(server->getNickname(),reason,true);
+#endif
 }
 
 void Channel::showTopic(bool show)

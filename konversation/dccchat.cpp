@@ -29,8 +29,13 @@
 #include "ircinput.h"
 #include "dccchat.h"
 
+#ifdef USE_MDI
+DccChat::DccChat(QString caption,Server* newServer,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen) :
+      ChatWindow(caption)
+#else
 DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen) :
       ChatWindow(parent)
+#endif
 {
   dccSocket=0;
   listenSocket=0;
@@ -321,5 +326,12 @@ void DccChat::closeYourself()
 {
   delete this;
 }
+
+#ifdef USE_MDI
+void DccChat::closeYourself(ChatWindow*)
+{
+  emit chatWindowCloseRequest(this);
+}
+#endif
 
 #include "dccchat.moc"

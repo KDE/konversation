@@ -15,6 +15,7 @@
 #include <qpushbutton.h>
 #include <qcombobox.h>
 #include <qlabel.h>
+#include <qhbox.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -26,8 +27,11 @@
 #include "ircview.h"
 #include "server.h"
 
-StatusPanel::StatusPanel(QWidget* parent) :
-              ChatWindow(parent)
+#ifdef USE_MDI
+StatusPanel::StatusPanel(QString caption) : ChatWindow(caption)
+#else
+StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
+#endif
 {
   setType(ChatWindow::Status);
 
@@ -199,6 +203,11 @@ bool StatusPanel::frontView()        { return true; }
 bool StatusPanel::searchView()       { return true; }
 
 void StatusPanel::closeYourself()
+#ifdef USE_MDI
+{
+}
+void StatusPanel::closeYourself(ChatWindow*)
+#endif
 {
   int result=KMessageBox::warningYesNo(
                 this,
@@ -212,7 +221,11 @@ void StatusPanel::closeYourself()
   {
     server->quitServer();
     delete server;
+#ifdef USE_MDI
+    emit chatWindowCloseRequest(this);
+#else
     delete this;
+#endif
   }
 }
 

@@ -34,8 +34,11 @@
 #endif
 #endif
 
-DccPanel::DccPanel(QWidget* parent) :
-          ChatWindow(parent)
+#ifdef USE_MDI
+DccPanel::DccPanel(QString caption) : ChatWindow(caption)
+#else
+DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
+#endif
 {
   setType(ChatWindow::DccPanel);
 
@@ -75,6 +78,7 @@ DccPanel::DccPanel(QWidget* parent) :
 
 DccPanel::~DccPanel()
 {
+  kdDebug() << "DccPanel::~DccPanel()" << endl;
 }
 
 void DccPanel::setButtons(bool accept,bool abort,bool remove,bool open,bool info)
@@ -291,6 +295,13 @@ void DccPanel::showFileInfo()
   }
   delete fileInfo;
 }
+
+#ifdef USE_MDI
+void DccPanel::closeYourself(ChatWindow*)
+{
+  emit chatWindowCloseRequest(this);
+}
+#endif
 
 // virtual
 void DccPanel::adjustFocus()

@@ -33,7 +33,11 @@ class ChannelListPanel : public ChatWindow
   Q_OBJECT
 
   public:
+#ifdef USE_MDI
+    ChannelListPanel(QString caption);
+#else
     ChannelListPanel(QWidget* parent);
+#endif
     ~ChannelListPanel();
 
     virtual void closeYourself();
@@ -66,7 +70,9 @@ class ChannelListPanel : public ChatWindow
     void regExpClicked();
 
     void contextMenu (KListView* l, QListViewItem* i, const QPoint& p);
-    
+
+    void serverQuit(const QString& reason); // USE_MDI
+
   protected:
     int getNumChannels();
     int getNumUsers();
@@ -94,6 +100,9 @@ class ChannelListPanel : public ChatWindow
     void  applyFilterToItem(QListViewItem* item);
 
     void updateUsersChannels();
+#ifdef USE_MDI
+    virtual void closeYourself(ChatWindow* view);
+#endif
 
     int numChannels;
     int numUsers;
@@ -118,7 +127,7 @@ class ChannelListPanel : public ChatWindow
 
     QPushButton* applyFilter;
     QPushButton* refreshListButton;
-    
+
     KListView* channelListView;
 
     QString filterText;

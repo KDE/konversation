@@ -58,7 +58,11 @@ class Channel : public ChatWindow
   Q_OBJECT
 
   public:
+#ifdef USE_MDI
+    Channel(QString caption);
+#else
     Channel(QWidget* parent);
+#endif
     ~Channel();
 
     void setName(const QString& newName);
@@ -95,7 +99,7 @@ class Channel : public ChatWindow
     virtual void closeYourself();
     virtual bool frontView();
     virtual bool searchView();
-    
+
     bool allowNotifications() { return m_allowNotifications; }
 
   signals:
@@ -114,7 +118,7 @@ class Channel : public ChatWindow
     void appendInputText(const QString& s);
     virtual void indicateAway(bool show);
     void showTopic(bool show);
-    
+
     void setAllowNotifications(bool allow) { m_allowNotifications = allow; }
 
   protected slots:
@@ -138,6 +142,9 @@ class Channel : public ChatWindow
     void autoUserhost();
     void autoUserhostChanged(bool state);
     void nicknameComboboxChanged(int index);
+
+    void closeYourself(ChatWindow* view); // USE_MDI
+    void serverQuit(const QString& reason); // USE_MDI
 
   protected:
     QStringList getSelectedNicksList();
@@ -201,7 +208,7 @@ class Channel : public ChatWindow
     QStringList selectedNicksList;
     QPtrList<QuickButton> buttonList;
     QTimer userhostTimer;
-    
+
     bool m_allowNotifications;
 };
 

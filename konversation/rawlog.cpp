@@ -20,7 +20,11 @@
 #include "server.h"
 #include "konversationapplication.h"
 
+#ifdef USE_MDI
+RawLog::RawLog(QString caption) : ChatWindow(caption)
+#else
 RawLog::RawLog(QWidget* parent) : ChatWindow(parent)
+#endif
 {
   setName(i18n("Raw Log"));
   setType(ChatWindow::RawLog);
@@ -45,8 +49,26 @@ void RawLog::updateFonts()
 
 void RawLog::closeYourself()
 {
+#ifndef USE_MDI
   // make the server delete us so server can reset the pointer to us
   server->closeRawLog();
+#endif
+}
+
+#ifdef USE_MDI
+void RawLog::closeYourself(ChatWindow*)
+{
+  // make the server delete us so server can reset the pointer to us
+  server->closeRawLog();
+  emit chatWindowCloseRequest(this);
+}
+#endif
+
+void RawLog::serverQuit(const QString&)
+{
+#ifdef USE_MDI
+  closeYourself(this);
+#endif
 }
 
 bool RawLog::searchView() { return true; }

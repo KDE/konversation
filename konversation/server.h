@@ -56,8 +56,8 @@ class LocaleString : public QString
     LocaleString& operator=(const QString& s) {
       QString::operator=(s);
       return *this; }
-    LocaleString& operator=(const LocaleString& s) { 
-      QString::operator=(s); 
+    LocaleString& operator=(const LocaleString& s) {
+      QString::operator=(s);
       return *this; }
     inline bool operator<( const LocaleString &s1) { return (localeAwareCompare(s1) < 0); }
     inline bool operator<( const QString &s1) { return (localeAwareCompare(s1) < 0); }
@@ -71,7 +71,7 @@ typedef KSharedPtr<NickInfo> NickInfoPtr;
 // A NickInfoMap is a list of NickInfo objects, indexed and sorted by lowercase nickname.
 typedef QMap<LocaleString,NickInfoPtr> NickInfoMap;
 // A ChannelNick is a user mode and pointer to a NickInfo.
-class ChannelNick : public KShared 
+class ChannelNick : public KShared
 {
   public:
     ChannelNick() : KShared(), mode(0), nickInfo(0) {}
@@ -180,13 +180,13 @@ class Server : public QObject
 
     void notifyAction(const QString& nick);
     ChannelListPanel* getChannelListPanel() const;
-    
+
     StatusPanel* getStatusView() const { return statusView; }
 
     bool connected();
     QString getIp();
     QString getNumericalIp();
-    
+
     // Given a nickname, returns NickInfo object.  0 if not found.
     NickInfoPtr getNickInfo(const QString& nickname);
     // Given a nickname, returns an existing NickInfo object, or creates a new NickInfo object.
@@ -221,7 +221,7 @@ class Server : public QObject
     const NickInfoMap* getNicksOnline();
     // Returns a list of the nicks on the watch list that are offline.
     const NickInfoMap* getNicksOffline();
-    
+
     QString awayTime();
 
   signals:
@@ -237,6 +237,8 @@ class Server : public QObject
     void awayState(bool away); // will be connected to any user input panel;
     void multiServerCommand(const QString& command, const QString& parameter);
     void serverOnline(bool state); // will be connected to all server dependant tabs
+    void serverQuit(const QString& reason);  // USE_MDI
+
     // Note that these signals haven't been implemented yet.
     // Fires when the information in a NickInfo object changes.
     void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);
@@ -288,7 +290,7 @@ class Server : public QObject
     void executeMultiServerCommand(const QString& command, const QString& parameter);
     void reconnect();
     void connectToNewServer(const QString& server, const QString& port, const QString& password);
-    
+
     void startAwayTimer();
     void sendToAllChannels(const QString& text);
 
@@ -336,9 +338,9 @@ class Server : public QObject
     void startNotifyCheckTimer();
     bool isAChannel(const QString &check);
     void setIdentity(Identity *newIdentity);
-    
+
     void autoRejoinChannels();
-    
+
     // Adds a nickname to the joinedChannels list.
     // Creates new NickInfo if necessary.
     // If needed, moves the channel from the unjoined list to the joined list.
@@ -392,7 +394,7 @@ class Server : public QObject
     bool autoRejoin;
     bool autoReconnect;
     bool deliberateQuit;
-    
+
     QStringList connectCommands;
 
     QString autoJoinChannel;
@@ -407,7 +409,7 @@ class Server : public QObject
     QTimer unlockTimer;      // timeout waiting for server to send initial messages
 
     int timerInterval;       // flood protection
-    
+
     QTimer notifyTimer;
     QTimer notifyCheckTimer; // Checks if the ISON reply needs too long
     QTime notifySent;
@@ -437,9 +439,9 @@ class Server : public QObject
     bool rejoinChannels;
     bool sendUnlocked;
     bool connecting;
-    
+
     QString nonAwayNick;
-    
+
     // All nicks known to this server.  Note this is NOT a list of all nicks on the server.
     NickInfoMap allNicks;
     // List of membership lists for joined channels.  A "joined" channel is a channel that user has joined, i.e.,
@@ -454,7 +456,7 @@ class Server : public QObject
     NickInfoMap nicknamesOffline;
     // List of nicks in Queries.
     NickInfoMap queryNicks;
-    
+
     int m_awayTime;
 };
 

@@ -11,7 +11,11 @@ class KonsolePanel : public ChatWindow {
 	Q_OBJECT
 
 	public:
+#ifdef USE_MDI
+		KonsolePanel(QString caption);
+#else
 		KonsolePanel(QWidget *p);
+#endif
 		~KonsolePanel();
 
 	signals:
@@ -21,6 +25,10 @@ class KonsolePanel : public ChatWindow {
 		void adjustFocus();
 		void partDestroyed();
 
+#ifdef USE_MDI
+        protected:
+                virtual void closeYourself(ChatWindow*);
+#endif
 	private:
 		KParts::ReadOnlyPart *k_part;
 };

@@ -18,7 +18,14 @@
 
 #include <qstringlist.h>
 
+#ifdef USE_MDI
+#include <kmdimainfrm.h>
+#include "images.h"
+#define MAIN_TYPE KMdiMainFrm
+#else
 #include <kmainwindow.h>
+#define MAIN_TYPE KMainWindow
+#endif
 
 #include "preferences.h"
 
@@ -27,6 +34,7 @@
 */
 
 class KToggleAction;
+class KMdiChildView; // USE_MDI
 
 class LedTabWidget;
 class Server;
@@ -44,7 +52,7 @@ class QuickButtonsDialog;
 class UrlCatcher;
 class TrayIcon;
 
-class KonversationMainWindow : public KMainWindow
+class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 {
   Q_OBJECT
 
@@ -94,6 +102,8 @@ class KonversationMainWindow : public KMainWindow
     void serverQuit(Server* server);
     void setShowTabBarCloseButton(bool s);
 
+    virtual void switchToTabPageMode();  // USE_MDI
+
   protected slots:
     void openPreferences();
     void openKeyBindings();
@@ -112,8 +122,14 @@ class KonversationMainWindow : public KMainWindow
     void showToolbar();
     void showStatusbar();
     void showMenubar();
+
     void changeView(QWidget* view);
     void closeView(QWidget* view);
+
+    void changeToView(KMdiChildView* view); // USE_MDI
+    void setWindowNotification(ChatWindow* view,const QIconSet& iconSet,const QString& color); // USE_MDI
+    void closeWindow(ChatWindow* view); // USE_MDI
+    void closeActiveWindow(); // USE_MDI
 
     void closeKonsolePanel(ChatWindow* konsolePanel);
 
@@ -141,19 +157,26 @@ class KonversationMainWindow : public KMainWindow
 
     bool queryClose();
 
+#ifdef USE_MDI
+    void addMdiView(ChatWindow* view,int color,bool on=true);
+#else
     void addView(ChatWindow* view,int color,const QString& label,bool on=true);
+#endif
     void updateFrontView();
 
     void closeUrlCatcher();
     void closeDccPanel();
     void deleteDccPanel();
-    
+
     virtual bool event(QEvent* e);
     virtual void closeEvent(QCloseEvent* e);
 
+#ifdef USE_MDI
+    Images images;
+#else
     LedTabWidget* getViewContainer();
-
     LedTabWidget* viewContainer;
+#endif
 
     Server* frontServer;
     QGuardedPtr<ChatWindow> frontView;
@@ -173,9 +196,8 @@ class KonversationMainWindow : public KMainWindow
     DccTransferHandler* dccTransferHandler;
 
     TrayIcon* tray;
-    
-    bool m_closeApp;
 
+    bool m_closeApp;
 };
 
 #endif

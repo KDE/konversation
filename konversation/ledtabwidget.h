@@ -43,7 +43,7 @@ class LedTabWidget : public QTabWidget
 
   public slots:
     void setTabOnline(ChatWindow* child,bool state);
-  
+
   protected slots:
     void moveTabLeft(int id);
     void moveTabRight(int id);
@@ -51,11 +51,11 @@ class LedTabWidget : public QTabWidget
     void tabClosed(int id);
     void tabClosed();
     void changeName(ChatWindow* view,const QString& newName);
-    
+
 #ifndef QT_NO_WHEELEVENT
     void processWheelEvent(QWheelEvent *e);
 #endif
-    
+
   protected:
     void moveTabToIndex(int oldIndex,int newIndex);
     LedTabBar* tabBar();

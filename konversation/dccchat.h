@@ -31,7 +31,11 @@ class DccChat : public ChatWindow
   Q_OBJECT
 
   public:
+#ifdef USE_MDI
+    DccChat(QString caption,Server* newServer,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen);
+#else
     DccChat(QWidget* parent,Server* newServer,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen);
+#endif
     ~DccChat();
 
     virtual QString getTextInLine();
@@ -62,6 +66,9 @@ class DccChat : public ChatWindow
   protected:
     void listenForPartner();
     void connectToPartner();
+#ifdef USE_MDI
+    virtual void closeYourself(ChatWindow*);
+#endif
 
     QString myNick;
     QString nick;
