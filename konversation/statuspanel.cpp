@@ -39,6 +39,8 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
   awayChanged=false;
   awayState=false;
 
+  // set up text view, will automatically take care of logging
+  setTextView(new IRCView(this,NULL));  // Server will be set later in setServer()
 
   QHBox* commandLineBox=new QHBox(this);
   commandLineBox->setSpacing(spacing());
@@ -54,8 +56,6 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
   statusInput=new IRCInput(commandLineBox);
   statusInput->installEventFilter(this);
 
-  // set up text view, will automatically take care of logging
-  setTextView(new IRCView(this,NULL));  // Server will be set later in setServer()
   
   setLog(KonversationApplication::preferences.getLog());
   setLogfileName("konversation");
