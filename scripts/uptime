@@ -10,7 +10,7 @@
 $PORT = shift;
 $SERVER = shift;
 $TARGET = shift;
-$UPTIME = `cat /proc/uptime2`;
+$UPTIME = `cat /proc/uptime`;
 if($UPTIME)
 	{
 	@uparray = split(/\./, $UPTIME);
