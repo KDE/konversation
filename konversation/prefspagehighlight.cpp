@@ -81,7 +81,7 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
 
   soundLabel = new QLabel(i18n("&Sound:"), highlightSoundBox);
   soundPlayBtn = new QPushButton(highlightSoundBox, "highlight_sound_play_button");
-  soundPlayBtn->setPixmap(SmallIconSet( "player_play" ));
+  soundPlayBtn->setPixmap(SmallIcon( "player_play" ));
   soundURL = new KURLRequester(highlightSoundBox, "highlight_sound_url");
   soundLabel->setBuddy(soundURL);
 
