@@ -23,6 +23,7 @@
 
 #include "ircinput.h"
 #include "konversationapplication.h"
+#include "multilineedit.h"
 
 #define MAXHISTORY 100
 
@@ -220,19 +221,26 @@ void IRCInput::paste()
   }
 }
 
-bool IRCInput::checkPaste(const QString& text)
+bool IRCInput::checkPaste(QString& text)
 {
   int doPaste=KMessageBox::Yes;
 
-  int lines = text.contains('\n');
-  if(text.length()>256 || lines>2)
+  int lines=text.contains('\n');
+  
+  if(lines)
+  {
+    text=MultilineEdit::edit(this,text);
+    lines=text.contains('\n');
+  }
+  
+  if(text.length()>256 || lines)
   {
     doPaste=KMessageBox::warningYesNo
             (
               0,
               i18n("<qt>You are attempting to paste a large portion of text (%1 bytes or %2 lines) into "
                    "the chat. This can cause connection resets or flood kills. "
-                   "Do you really want to continue?</qt>").arg(text.length()).arg(lines),
+                   "Do you really want to continue?</qt>").arg(text.length()).arg(lines+1),
               i18n("Large Paste Warning"),
               KStdGuiItem::yes(),
               KStdGuiItem::no(),

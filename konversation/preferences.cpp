@@ -533,10 +533,12 @@ void Preferences::setLogfileBufferSize(int newSize) { logfileBufferSize=newSize;
 QSize Preferences::getNicksOnlineSize()        { return nicksOnlineSize; }
 QSize Preferences::getNicknameSize()           { return nicknameSize; }
 QSize Preferences::getLogfileReaderSize()      { return logfileReaderSize; }
+QSize Preferences::getMultilineEditSize()      { return multilineEditSize; }
 
 void Preferences::setNicksOnlineSize(QSize newSize)        { nicksOnlineSize=newSize; }
 void Preferences::setNicknameSize(QSize newSize)           { nicknameSize=newSize; }
 void Preferences::setLogfileReaderSize(QSize newSize)      { logfileReaderSize=newSize; }
+void Preferences::setMultilineEditSize(QSize newSize)      { multilineEditSize=newSize; }
 
 void Preferences::setHilightNick(bool state) { hilightNick=state; }
 bool Preferences::getHilightNick() { return hilightNick; }

@@ -59,7 +59,7 @@ class IRCInput : public KLineEdit
   protected:
     bool eventFilter(QObject *object,QEvent *event);
     void addHistory(const QString& text);
-    bool checkPaste(const QString& text);
+    bool checkPaste(QString& text);
 
     QStringList historyList;
     unsigned int lineNum;

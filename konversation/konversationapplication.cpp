@@ -247,6 +247,7 @@ void KonversationApplication::readOptions()
   preferences.setNicksOnlineSize(config->readSizeEntry("NicksOnlineGeometry"));
   preferences.setNicknameSize(config->readSizeEntry("NicknameGeometry"));
   preferences.setLogfileReaderSize(config->readSizeEntry("LogfileReaderGeometry",logfileReaderSize));
+  preferences.setMultilineEditSize(config->readSizeEntry("MultilineEditGeometry"));  
   delete logfileReaderSize;
 
   preferences.setLogfileBufferSize(config->readNumEntry("LogfileBufferSize",preferences.getLogfileBufferSize()));  
@@ -553,6 +554,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("NicksOnlineGeometry",preferences.getNicksOnlineSize());
   config->writeEntry("NicknameGeometry",preferences.getNicknameSize());
   config->writeEntry("LogfileReaderGeometry",preferences.getLogfileReaderSize());
+  config->writeEntry("MultilineEditGeometry",preferences.getMultilineEditSize());
 
   config->writeEntry("LogfileBufferSize",preferences.getLogfileBufferSize());
   

@@ -152,10 +152,12 @@ class Preferences : public QObject
     QSize getNicksOnlineSize();
     QSize getNicknameSize();
     QSize getLogfileReaderSize();
+    QSize getMultilineEditSize();
     
     void setNicksOnlineSize(QSize newSize);
     void setNicknameSize(QSize newSize);
     void setLogfileReaderSize(QSize newSize);
+    void setMultilineEditSize(QSize newSize);
 
     int getLogfileBufferSize();
     void setLogfileBufferSize(int newSize);
@@ -443,6 +445,7 @@ class Preferences : public QObject
     QSize nicknameSize;
     QSize logfileReaderSize;
     QSize colorConfigurationSize;
+    QSize multilineEditSize;
 
     int logfileBufferSize;
     
