@@ -22,6 +22,7 @@ Context menu on nick in nick should contain hostmask, realname, etc. infos (in a
 Check for channel or user parameter in mode changes to take care of duplicate mode chars
 History viewer
 Hilight mailto: links
+Option to disable %G, %C %B... expansion
 
 Channel List Panel:
 Make URLs in topic clickable or at least selectable
