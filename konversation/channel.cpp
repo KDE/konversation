@@ -111,7 +111,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView=new NickListView(nickListButtons);
   nicknameListView->setSelectionModeExt(KListView::Extended);
   nicknameListView->setAllColumnsShowFocus(true);
-  nicknameListView->setSorting(1,false);
+  nicknameListView->setSorting(1,true);
   nicknameListView->addColumn("",2);
   nicknameListView->addColumn("");
   nicknameListView->addColumn("");

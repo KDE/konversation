@@ -95,7 +95,7 @@ QString IRCView::filter(const QString& line,bool doHilight)
   // Replace all > with &gt;
   filteredLine.replace(QRegExp("\\>"),"&gt;");
   // Replace all 0x0f (reset color) with \0x031,0
-  filteredLine.replace(QRegExp("\017"),"\0031,0;");
+  filteredLine.replace(QRegExp("\017"),"\0031,0");
 
   // replace \003 codes with rich text color codes
   // TODO: use QRegExp for this
