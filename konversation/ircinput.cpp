@@ -27,6 +27,7 @@
 #include "multilineedit.h"
 
 #define MAXHISTORY 100
+#define RICHTEXT 1
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
@@ -45,7 +46,9 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 
   // widget may not resize vertically
   setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
-//  setTextFormat(RichText);
+#ifdef RICHTEXT
+  setTextFormat(RichText);
+#endif
 }
 
 IRCInput::~IRCInput()
@@ -65,17 +68,30 @@ QSize IRCInput::sizeHint() const
 
 QString IRCInput::text() const
 {
-  return KTextEdit::text();
-
+#ifdef RICHTEXT
   QString content=KTextEdit::text();
+
   QDomDocument document;
 
   document.setContent(content,false);
   QDomNodeList nodes=document.elementsByTagName("p");
-  
-  kdDebug() << "IRCInput::text(): " << nodes.count() << endl;
+  if(nodes.count())
+  {
+    QDomElement node=nodes.item(0).toElement();
+    return node.text();
+  }
+  return QString::null;
 
-  return nodes.item(0).toText().nodeValue();
+#else
+  return KTextEdit::text();
+#endif
+}
+
+void IRCInput::setText(const QString& text)
+{
+  // reimplemented to  set cursor at the end of the new text
+  KTextEdit::setText(text);
+  setCursorPosition(0,text.length()+1);
 }
 
 // Take care of Tab, Cursor and so on

@@ -24,7 +24,6 @@
 */
 
 class KCompletionBox;
-
 class IRCInput : public KTextEdit
 {
   Q_OBJECT
@@ -54,6 +53,7 @@ class IRCInput : public KTextEdit
     void paste();
     void insert(const QString& text);
     void showCompletionList(const QStringList& nicks);
+    void setText(const QString& text);
 
   protected slots:
     void getHistory(bool up);
