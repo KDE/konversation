@@ -48,7 +48,10 @@
 DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort )
   : DccTransfer( panel, DccTransfer::Receive, partnerNick, fileName )
 {
-  
+   m_connectionTimer = new QTimer(this);
+  connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
+  //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
+ 
   QString sanitised_filename = QFileInfo(fileName).fileName();  //Just incase anyone tries to do anything nasty
   if(sanitised_filename.isEmpty()) sanitised_filename= "unnamed";
   kdDebug() << "DccTransferRecv::DccTransferRecv()" << endl
@@ -87,6 +90,7 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
   
   updateView();
   panel->selectMe( this );
+
 }
 
 DccTransferRecv::~DccTransferRecv()
@@ -96,6 +100,7 @@ DccTransferRecv::~DccTransferRecv()
 
 void DccTransferRecv::start()  // public slot
 {
+  Q_ASSERT(getStatus() == Queued);
   kdDebug() << "DccTransferRecv::start()" << endl;
   
   // check whether the file exists
@@ -327,13 +332,15 @@ void DccTransferRecv::setSaveToFileURL( const KURL& url )
 void DccTransferRecv::startConnectionTimer( int sec )
 {
   stopConnectionTimer();
-  connect( &m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
-  m_connectionTimer.start( sec*1000, TRUE );
+  m_connectionTimer->start( sec*1000, TRUE );
 }
 
 void DccTransferRecv::stopConnectionTimer()
 {
-  m_connectionTimer.stop();
+  if( m_connectionTimer )
+  {
+    m_connectionTimer->stop();
+  }
 }
 
 void DccTransferRecv::connectionTimeout()  // slot

@@ -43,6 +43,12 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   
   m_fileName = m_fileURL.filename();
  
+  m_serverSocket=0;
+  m_sendSocket=0;
+  m_connectionTimer = new QTimer(this);
+  connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
+  //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
+
   //Check the file exists 
   if( !KIO::NetAccess::exists(m_fileURL, true, listView()))  {
     KMessageBox::sorry(listView(), i18n("The url \"%1\" does not exist").arg(m_fileURL.prettyURL()));
@@ -74,11 +80,11 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   m_file.setName(m_tmpFile);
   m_fileSize = m_file.size();
 
-  m_serverSocket=0;
-  m_sendSocket=0;
-  
+ 
   updateView();
   panel->selectMe( this );
+
+
 }
 
 DccTransferSend::~DccTransferSend()
@@ -88,6 +94,8 @@ DccTransferSend::~DccTransferSend()
 
 void DccTransferSend::start()  // public slot
 {
+  if(getStatus() != Queued) return; //setStatus(Failed) or something has been called.
+
   kdDebug() << "DccTransferSend::start()" << endl;
      // Set up server socket
   m_serverSocket = new KNetwork::KServerSocket();
@@ -268,14 +276,15 @@ void DccTransferSend::socketError( int errorCode )
 
 void DccTransferSend::startConnectionTimer( int sec )
 {
+  Q_ASSERT(m_connectionTimer);
   stopConnectionTimer();
-  connect( &m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
-  m_connectionTimer.start( sec*1000, TRUE );
+  m_connectionTimer->start( sec*1000, TRUE );
 }
 
 void DccTransferSend::stopConnectionTimer()
 {
-    m_connectionTimer.stop();
+  Q_ASSERT(m_connectionTimer);
+  m_connectionTimer->stop();
 }
 
 void DccTransferSend::connectionTimeout()  // slot
@@ -288,3 +297,4 @@ void DccTransferSend::connectionTimeout()  // slot
 }
 
 #include "dcctransfersend.moc"
+

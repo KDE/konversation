@@ -14,11 +14,11 @@
 #define DCCTRANSFERRECV_H
 
 #include <qptrlist.h>
-#include <qtimer.h>
 
 #include "dcctransfer.h"
 
 class QFile;
+class QTimer;
 
 namespace KIO
 {
@@ -81,7 +81,7 @@ class DccTransferRecv : public DccTransfer
     bool m_saveToFileExists;
     bool m_partialFileExists;
     
-    QTimer m_connectionTimer;
+    QTimer* m_connectionTimer;
     KNetwork::KStreamSocket* m_recvSocket;
 };
 
