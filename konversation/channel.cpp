@@ -280,6 +280,10 @@ void Channel::purgeNicks()
     // Again, get the first element in the list
     nick=nicknameList.first();
   }
+
+  // clear stats counter
+  nicks=0;
+  ops=0;
 }
 
 void Channel::requestNewTopic(const QString& newTopic)
@@ -1440,10 +1444,10 @@ void Channel::closeNickChangeDialog(QSize newSize)
 
 void Channel::addPendingNickList(const QStringList& newNickList)
 {
-  if(!pendingNicks)
+  if(!getPendingNicks())
   {
     purgeNicks();
-    pendingNicks=true;
+    setPendingNicks(true);
   }
 
   nicknameListView->setUpdatesEnabled(false);
