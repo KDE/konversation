@@ -58,8 +58,6 @@
 
 KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 {
-  kdDebug() << "KonversationMainWindow::KonversationMainWindow()" << endl;
-
   // Init variables before anything else can happen
   frontView=0;
   searchView=0;
@@ -164,8 +162,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
 KonversationMainWindow::~KonversationMainWindow()
 {
-  kdDebug() << "KonversationMainWindow::~KonversationMainWindow()" << endl;
-
   if(nicksOnlineWindow) nicksOnlineWindow->closeButton();
 
   deleteDccPanel();
@@ -279,8 +275,6 @@ void KonversationMainWindow::showView(ChatWindow* view)
 
 void KonversationMainWindow::closeView(QWidget* viewToClose)
 {
-//  kdDebug() << "KonversationMainWindow::closeView(" << viewToClose << ")" << endl;
-
   ChatWindow* view=static_cast<ChatWindow*>(viewToClose);
   if(view)
   {
@@ -509,8 +503,6 @@ RawLog* KonversationMainWindow::addRawLog(Server* server)
 
 ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
 {
-  kdDebug() << "KonversationMainWindow::addChannelListPanel()" << endl;
-
   ChannelListPanel* channelListPanel=new ChannelListPanel(getViewContainer());
   channelListPanel->setServer(server);
 
@@ -564,8 +556,6 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 
 bool KonversationMainWindow::queryClose()
 {
-  kdDebug() << "KonversationMainWindow::queryClose()" << endl;
-
   // send quit to all servers
   emit quitServer();
 
@@ -574,7 +564,6 @@ bool KonversationMainWindow::queryClose()
 
 void KonversationMainWindow::quitProgram()
 {
-  kdDebug() << "KonversationMainWindow::quitProgram()" << endl;
   // will call queryClose()
   close();
 }
@@ -640,8 +629,6 @@ LedTabWidget* KonversationMainWindow::getViewContainer()
 
 void KonversationMainWindow::updateFonts()
 {
-  kdDebug() << "KonversationMainWindow::updateFonts()" << endl;
-
   getViewContainer()->updateTabs();
 }
 

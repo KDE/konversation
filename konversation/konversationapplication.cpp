@@ -34,8 +34,6 @@ Preferences KonversationApplication::preferences;
 KonversationApplication::KonversationApplication()
     : KApplication()
 {
-  kdDebug() << "KonversationApplication::KonversationApplication()" << endl;
-
   // make sure all vars are initialized properly
   prefsDialog=0;
 
@@ -105,7 +103,6 @@ KonversationApplication::KonversationApplication()
 
 KonversationApplication::~KonversationApplication()
 {
-  kdDebug() << "KonversationApplication::~KonversationApplication()" << endl;
   saveOptions(false);
 
   if(dcopObject) delete dcopObject;
@@ -133,8 +130,6 @@ void KonversationApplication::dcopInfo(const QString& string)
 
 void KonversationApplication::connectToServer(int id)
 {
-  kdDebug() << "KonversationApplication::connectToServer(" << id << ")" << endl;
-
   connectToAnotherServer(id);
   // to prevent doubleClicked() to crash the dialog
   // FIXME: Seems to have a race, though
@@ -145,8 +140,6 @@ void KonversationApplication::connectToServer(int id)
 
 void KonversationApplication::connectToAnotherServer(int id)
 {
-  kdDebug() << "KonversationApplication::connectToAnotherServer(" << id << ")" << endl;
-
   mainWindow->show();
 
   ServerEntry* chosenServer=preferences.getServerEntryById(id);
@@ -210,8 +203,6 @@ Server* KonversationApplication::getServerByName(const QString& name)
 
 void KonversationApplication::removeServer(Server* server)
 {
-  kdDebug() << "KonversationApplication::removeServer()" << endl;
-
   serverList.setAutoDelete(false);     // don't delete items when they are removed
   if(!serverList.remove(server))
     kdDebug() << "Could not remove " << server->getServerName() << endl;
@@ -219,8 +210,6 @@ void KonversationApplication::removeServer(Server* server)
 
 void KonversationApplication::quitKonversation()
 {
-  kdDebug() << "KonversationApplication::quitKonversation()" << endl;
-
   if(prefsDialog) delete prefsDialog;
   prefsDialog=0;
 
@@ -229,8 +218,6 @@ void KonversationApplication::quitKonversation()
 
 void KonversationApplication::readOptions()
 {
-  kdDebug() << "KonversationApplication::readOptions()" << endl;
-
   // get standard config file
   KConfig* config=kapp->config();
 
@@ -343,7 +330,6 @@ void KonversationApplication::readOptions()
 
     for(unsigned int index=0;index<identityList.count();index++)
     {
-//      kdDebug() << "Reading identity " << identityList[index] << endl;
       config->setGroup(identityList[index]);
 
       Identity* newIdentity=new Identity();
@@ -373,8 +359,6 @@ void KonversationApplication::readOptions()
   }
   else
   {
-    kdDebug() << "Importing pre 0.10 identity settings ..." << endl;
-
     // Default user identity for pre 0.10 preferences files
     config->setGroup("User Identity");
     preferences.setIdent(config->readEntry("Ident",preferences.getIdent()));
@@ -525,8 +509,6 @@ void KonversationApplication::readOptions()
 
 void KonversationApplication::saveOptions(bool updateGUI)
 {
-  kdDebug() << "KonversationApplication::saveOptions()" << endl;
-
   KConfig* config=kapp->config();
 
   config->setGroup("General Options");
@@ -614,8 +596,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
   QPtrList<Identity> identityList=preferences.getIdentityList();
   for(unsigned int index=0;index<identityList.count();index++)
   {
-//    kdDebug() << "Writing identity " << index << endl;
-
     Identity* identity=identityList.at(index);
     config->setGroup(QString("Identity %1").arg(index));
 

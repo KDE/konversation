@@ -26,8 +26,6 @@ NickChangeDialog::NickChangeDialog(QWidget* parent,QString currentNick,const QSt
                               KDialogBase::Ok | KDialogBase::Cancel,
                               KDialogBase::Ok,true)
 {
-  kdDebug() << "NickChangeDialog::NickChangeDialog()" << endl;
-
   /* Create the top level widget */
   QWidget* page=new QWidget(this);
   setMainWidget(page);
@@ -52,7 +50,6 @@ NickChangeDialog::NickChangeDialog(QWidget* parent,QString currentNick,const QSt
 
 NickChangeDialog::~NickChangeDialog()
 {
-  kdDebug() << "NickChangeDialog::~NickChangeDialog()" << endl;
 }
 
 void NickChangeDialog::slotOk()

@@ -26,8 +26,6 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent,QStringList list,QSize si
                     KDialogBase(parent,"dcc_recipient_dialog",true,i18n("Select Recipient"),
                     KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
 {
-  kdDebug() << "DccRecipientDialog::DccRecipientDialog()" << endl;
-
   // Create the top level widget
   QWidget* page=new QWidget(this);
   setMainWidget(page);
@@ -57,7 +55,6 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent,QStringList list,QSize si
 
 DccRecipientDialog::~DccRecipientDialog()
 {
-  kdDebug() << "DccRecipientDialog::~DccRecipientDialog()" << endl;
 }
 
 QString DccRecipientDialog::getSelectedNickname()
@@ -92,8 +89,6 @@ void DccRecipientDialog::slotOk()
 
 QString DccRecipientDialog::getNickname(QWidget* parent,QStringList list)
 {
-  kdDebug() << "DccRecipientDialog::getNickname()" << endl;
-
   QSize size; // TODO: get it from KonversationApplication::preferences
   DccRecipientDialog dlg(parent,list,size);
   dlg.exec();

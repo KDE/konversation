@@ -19,19 +19,16 @@
 IRCServerSocket::IRCServerSocket() :
                  KExtendedSocket()
 {
-  kdDebug() << "IRCServerSocket::IRCServerSocket()" << endl;
 }
 
 IRCServerSocket::IRCServerSocket(const char *server,unsigned short int port,int timeout) :
                  KExtendedSocket(server,port,KExtendedSocket::inetSocket)
 {
   setTimeout(timeout);
-  kdDebug() << "IRCServerSocket::IRCServerSocket(" << server << "," << port << "," << timeout << ")" << endl;
 }
 
 IRCServerSocket::~IRCServerSocket()
 {
-  kdDebug() << "IRCServerSocket::~IRCServerSocket()" << endl;
 }
 
 #include "ircserversocket.moc"

@@ -28,8 +28,6 @@
 StatusPanel::StatusPanel(QWidget* parent) :
               ChatWindow(parent)
 {
-  kdDebug() << "StatusPanel::StatusPanel()" << endl;
-
   setType(ChatWindow::Status);
 
   awayChanged=false;
@@ -66,7 +64,6 @@ StatusPanel::StatusPanel(QWidget* parent) :
 
 StatusPanel::~StatusPanel()
 {
-  kdDebug() << "StatusPanel::~StatusPanel()" << endl;
 }
 
 void StatusPanel::setNickname(const QString& newNickname)
@@ -109,7 +106,6 @@ void StatusPanel::statusTextEntered()
 
 void StatusPanel::newTextInView(const QString& highlightColor)
 {
-  // kdDebug() << "StatusPanel::newTextInView(): this=" << this << endl;
   emit newText(this,highlightColor);
 }
 
@@ -131,8 +127,6 @@ void StatusPanel::textPasted(QString text)
 
 void StatusPanel::updateFonts()
 {
-  kdDebug() << "StatusPanel::updateFonts()" << endl;
-
   const QColor fg("#"+KonversationApplication::preferences.getColor("ChannelMessage"));
   const QColor bg("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
 

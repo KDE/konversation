@@ -25,9 +25,7 @@
 #include "nicksonline.h"
 
 NicksOnline::NicksOnline(const QSize& newSize)
-{
-  kdDebug() << "NicksOnline::NicksOnline()" << endl;
-  
+{  
   setCaption(i18n("Nicks Online"));
   
   nickListView=new KListView(this);
@@ -54,8 +52,6 @@ NicksOnline::NicksOnline(const QSize& newSize)
 
 NicksOnline::~NicksOnline()
 {
-  kdDebug() << "NicksOnline::~NicksOnline()" << endl;
-
   delete nickListView;
 }
 

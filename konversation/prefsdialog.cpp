@@ -48,7 +48,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
                           KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                           KDialogBase::Ok,0,"edit_prefs",false,true)
 {
-  kdDebug() << "PrefsDialog::PrefsDialog()" << endl;
   setPreferences(preferences);
 
           serverListPane     =addPage(i18n("Server List"));
@@ -145,7 +144,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
 PrefsDialog::~PrefsDialog()
 {
-  kdDebug() << "PrefsDialog::~PrefsDialog()" << endl;
 }
 
 void PrefsDialog::connectRequest(int id)

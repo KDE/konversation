@@ -33,8 +33,6 @@ SearchDialog::SearchDialog(QWidget* parent,QSize size) :
                KDialogBase(parent,"search_dialog",true,i18n("Search Text"),
                            KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
 {
-  kdDebug() << "SearchDialog::SearchDialog()" << endl;
-
   // Create the top level widget
   QWidget* page=new QWidget(this);
   setMainWidget(page);
@@ -101,11 +99,9 @@ QString SearchDialog::getSearchText()
 
 QString SearchDialog::search(QWidget* parent,bool* cs,bool* wo,bool* fw,bool* fc)
 {
-  kdDebug() << "SearchDialog::search()" << endl;
-
   QSize size; // TODO: get it from KonversationApplication::preferences
   SearchDialog dlg(parent,size);
-  
+
   if(!dlg.getSearchText().isEmpty())
   {
     // make subsequent searches easier

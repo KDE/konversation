@@ -33,8 +33,6 @@ const int POPUP_IGNORE=0xff;
 Query::Query(QWidget* parent) : ChatWindow(parent)
 {
   setName("QueryWidget");
-  kdDebug() << "Query::Query()" << endl;
-
   setType(ChatWindow::Query);
 
   awayChanged=false;
@@ -79,7 +77,6 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
 Query::~Query()
 {
-  kdDebug() << "Query::~Query(" << getName() << ")" << endl;
 }
 
 void Query::setName(const QString& newName)

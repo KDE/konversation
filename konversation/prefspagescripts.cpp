@@ -58,8 +58,6 @@ PrefsPageScripts::~PrefsPageScripts()
 
 void PrefsPageScripts::openScriptFile(QListViewItem *passedSelectedItem)
 {
-	kdDebug() << "001\n";
-
 	QListViewItem *selectedItem = passedSelectedItem;
 
 	scriptFilePath = QString(myPreferences->getLogPath() + "/scripts");
@@ -82,8 +80,6 @@ void PrefsPageScripts::renameScriptFile(QListViewItem *passedItem)
 {
 	QListViewItem *renameItem = passedItem;
 	
-	kdDebug() << "002\n";
-
 	openedScriptFile.close();
 	scriptsDirectory->rename(oldScriptFileName, renameItem->text(0));
 	emit fileRenamed(renameItem);

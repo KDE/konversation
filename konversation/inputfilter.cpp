@@ -44,13 +44,11 @@
 
 InputFilter::InputFilter()
 {
-  kdDebug() << "InputFilter::InputFilter()" << endl;
   automaticRequest=0;
 }
 
 InputFilter::~InputFilter()
 {
-  kdDebug() << "InputFilter::~InputFilter()" << endl;
 }
 
 void InputFilter::setServer(Server* newServer)
@@ -116,13 +114,6 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 #endif
 )
 {
-  /*
-    kdDebug() << "InputFilter::parseClientCommand(): " << prefix << " "
-                                                       << command << " "
-                                                       << parameterList.join(" ") << " "
-                                                       << trailing << " "
-                                                       << endl;
-  */
   // Extract nickname fron prefix
   QString sourceNick=prefix.left(prefix.find("!"));
   QString sourceHostmask=prefix.mid(prefix.find("!")+1);
@@ -459,7 +450,6 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
             {
               key=channelName.section(' ',1,1);
               channelName=channelName.section(' ',0,0);
-              kdDebug() << "Found channel key " << key << endl;
             }
       */
       // Join the channel

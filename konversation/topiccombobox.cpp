@@ -29,15 +29,11 @@ TopicComboBox::~TopicComboBox()
 
 void TopicComboBox::topicActivated(const QString& newTopic)
 {
-  kdDebug() << "TopicComboBox::topicActivated(" << newTopic << ")" << endl;
-
   emit topicChanged(newTopic);
 }
 
 void TopicComboBox::topicActivated(int index)
 {
-  kdDebug() << "TopicComboBox::topicActivated(" << index << ")" << endl;
-
   emit topicChanged(text(index).section(' ',1));
 }
 

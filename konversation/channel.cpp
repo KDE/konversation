@@ -258,8 +258,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
 Channel::~Channel()
 {
-  kdDebug() << "Channel::~Channel()" << endl;
-
   KonversationApplication::preferences.setChannelSplitter(splitter->sizes());
 
   // Purge nickname list
@@ -588,7 +586,6 @@ void Channel::setName(const QString& newName)
 
 void Channel::setKey(const QString& newKey)
 {
-//  kdDebug() << "Channel Key set to " << newKey << endl;
   key=newKey;
 }
 
@@ -951,7 +948,6 @@ void Channel::setTopicAuthor(const QString& newAuthor)
 {
   if(topicAuthorUnknown)
   {
-    kdDebug() << "adding unknown topic author " << newAuthor << endl;
     topicHistory[0]="<"+newAuthor+"> "+topicHistory[0].section(' ',1);
     topicLine->clear();
     topicLine->insertStringList(topicHistory);
@@ -1409,8 +1405,6 @@ void Channel::showEvent(QShowEvent*)
 
 void Channel::updateFonts()
 {
-  kdDebug() << "Channel::updateFonts()" << endl;
-
   nicknameButton->setFont(KonversationApplication::preferences.getTextFont());
 
   const QColor  fg("#"+KonversationApplication::preferences.getColor("ChannelMessage"));

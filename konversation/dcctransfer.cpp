@@ -32,11 +32,9 @@
 DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString partner,QString name,QString size,QString ipString,QString portString) :
              KListViewItem(parent)
 {
-  kdDebug() << "DccTransfer::DccTransfer()" << endl;
-
   dccSocket=0;
   sendSocket=0;
-  
+
   setType(type);
   setPartner(partner);
   setFile(name);
@@ -76,8 +74,6 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString p
 
 DccTransfer::~DccTransfer()
 {
-  kdDebug() << "DccTransfer::~DccTransfer(" << getFile() << ")" << endl;
-
   delete[] buffer;
 
   if(dccSocket)
@@ -194,7 +190,6 @@ until port found
     const KSocketAddress* ipAddr=dccSocket->localAddress();
     const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr->address();
 
-//    kdDebug() << ipAddr->pretty() << " " << ntohs(socketAddress->sin_port) << endl;
     setPort(QString::number(ntohs(socketAddress->sin_port)));
 
     connect(dccSocket,SIGNAL (readyAccept()),this,SLOT(heard()) );
@@ -211,22 +206,15 @@ void DccTransfer::startResumeSend(QString position)
   setType(ResumeSend);
   setStatus(Resuming);
   setPosition(position.toULong());
-  kdDebug() << this << "DccTransfer::startResumeSend(" << position << ")" << endl;
 }
 
 void DccTransfer::heard()
 {
-//  kdDebug() << this << "DccTransfer::heard(): accepting ..." << endl;
-
   int fail=dccSocket->accept(sendSocket);
 
   connect(sendSocket,SIGNAL (readyRead()),this,SLOT (getAck()) );
   connect(sendSocket,SIGNAL (readyWrite()),this,SLOT (writeData()) );
-/*
-  kdDebug() << this << "DccTransfer::heard(): accept() returned " << fail << endl;
-  kdDebug() << this << "DccTransfer::heard(): getType() returns " << getType() << endl;
-  kdDebug() << this << "DccTransfer::heard(): getPosition() returns " << getPosition() << endl;
-*/
+
   if(!fail)
   {
     if(file.open(IO_ReadOnly))

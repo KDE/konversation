@@ -47,7 +47,6 @@ void RawLog::closeYourself()
 {
   // make the server delete us so server can reset the pointer to us
   server->closeRawLog();
-  kdDebug() << "RawLog::closeYourself()" << endl;
 }
 
 bool RawLog::searchView() { return true; }

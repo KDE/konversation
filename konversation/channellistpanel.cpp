@@ -283,7 +283,6 @@ void ChannelListPanel::updateDisplay()
   }
   else
   {
-    kdDebug() << "Else" << endl;
     // no more channels to insert, so check if we should apply the filter
     applyFilterClicked();
     updateTimer.stop();
@@ -397,7 +396,6 @@ void ChannelListPanel::updateUsersChannels()
 void ChannelListPanel::closeYourself()
 {
   // make the server delete us so server can reset the pointer to us
-  kdDebug() << "ChannelListPanel::closeYourself()" << endl;
   server->closeChannelListPanel();
 }
 

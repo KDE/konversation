@@ -38,7 +38,6 @@ ServerListItem::ServerListItem(QListView* parent,int newId,
 
 ServerListItem::~ServerListItem()
 {
-  kdDebug() << "ServerListItem::~ServerListItem(" << text(0) << ")" << endl;
 }
 
 void ServerListItem::stateChange(bool state)

@@ -61,7 +61,6 @@ typedef unsigned long long __u64;
 
 Server::Server(KonversationMainWindow* newMainWindow,int id)
 {
-  kdDebug() << this << "Server::Server()" << endl;
   identity=0;
   tryNickNumber=0;
   checkTime=0;
@@ -175,7 +174,6 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
 Server::~Server()
 {
-  kdDebug() << "Server::~Server()" << endl;
 
   // clear nicks online
   emit nicksNowOnline(this,QStringList());
@@ -341,7 +339,6 @@ bool Server::eventFilter(QObject* parent,QEvent* event)
 
 void Server::lookupFinished()
 {
-  kdDebug() << serverSocket.status() << endl;
   // error during lookup
   if(serverSocket.status())
   {
@@ -425,8 +422,7 @@ void Server::connectionEstablished()
   if(!alreadyConnected)
   {
     alreadyConnected=true;
-    kdDebug() << "connectionEstablished()" << endl;
-    // get first notify very early
+     // get first notify very early
     startNotifyTimer(1000);
     // register with services
     if(!botPassword.isEmpty() && !bot.isEmpty())
@@ -1005,7 +1001,6 @@ void Server::requestDccChat(const QString& nickname)
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)
 {
-  kdDebug() << "Server::dccSendRequest()" << endl;
   outputFilter.sendRequest(partner,fileName,address,port,size);
   queue(outputFilter.getServerOutput());
   appendStatusMessage(outputFilter.getType(),outputFilter.getOutput());
@@ -1013,7 +1008,6 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
 
 void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, int startAt)
 {
-  kdDebug() << "Server::dccResumeGetRequest()" << endl;
   outputFilter.resumeRequest(sender,fileName,port,startAt);
   queue(outputFilter.getServerOutput());
   appendStatusMessage(outputFilter.getType(),outputFilter.getOutput());
@@ -1167,8 +1161,6 @@ void Server::updateChannelQuickButtons()
 // TODO: Maybe use a Signal / Slot mechanism for these things?
 void Server::updateFonts()
 {
-  kdDebug() << "Server::updateFonts()" << endl;
-
   Channel* channel=channelList.first();
   while(channel)
   {

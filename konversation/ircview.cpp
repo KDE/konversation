@@ -46,8 +46,6 @@
 
 IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 {
-  kdDebug() << "IRCView::IRCView()" << endl;
-
   highlightColor=QString::null;
   copyUrlMenu=false;
   urlToCopy=QString::null;
@@ -97,8 +95,6 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 
 IRCView::~IRCView()
 {
-  kdDebug() << "IRCView::~IRCView()" << endl;
-
   if(popup) delete popup;
 }
 

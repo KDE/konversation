@@ -29,7 +29,6 @@ IgnoreListViewItem::IgnoreListViewItem(QListView* parent,QString name,int newFla
 
 IgnoreListViewItem::~IgnoreListViewItem()
 {
-  kdDebug() << "IgnoreListViewItem::~IgnoreListViewItem(" << text(0) << ")" << endl;
 }
 
 void IgnoreListViewItem::setFlag(int flag,bool active)

@@ -39,8 +39,6 @@ EditServerDialog::EditServerDialog(QWidget* parent,
                               KDialogBase::Ok,true)
 
 {
-  kdDebug() << "EditServerDialog::EditServerDialog("<< currentIdentity <<")" << endl;
-
   QWidget* page=new QWidget(this);
   setMainWidget(page);
 
@@ -120,7 +118,6 @@ EditServerDialog::EditServerDialog(QWidget* parent,
 
 EditServerDialog::~EditServerDialog()
 {
-  kdDebug() << "EditServerDialog::~EditServerDialog()" << endl;
 }
 
 void EditServerDialog::slotOk()
