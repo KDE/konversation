@@ -15,22 +15,12 @@
 #ifndef PREFSPAGEOSD_H
 #define PREFSPAGEOSD_H
 
-#include "prefspage.h"
-#include <qvgroupbox.h>
-#include <kcolorcombo.h>
-
-/*
-  @author Christian Muehlhaeuser
-*/
-
-class QCheckBox;
-class QLabel;
-class KComboBox;
-class KIntSpinBox;
+#include "osd_preferences.h"
 
 class OSDPreviewWidget;
+class Preferences;
 
-class PrefsPageOSD : public PrefsPage
+class PrefsPageOSD : public OSD_Config
 {
   Q_OBJECT
 
@@ -57,35 +47,10 @@ class PrefsPageOSD : public PrefsPage
     void applyPreferences();
 
   protected:
+    Preferences* preferences;
     void updateFonts();
     QFont osdFont;
-
-    QCheckBox* useOSDCheck;
-    QCheckBox* drawShadowsCheck;
-    QCheckBox* useCustomColorsCheck;
-    QCheckBox* osdShowOwnNick;
-    QCheckBox* osdShowChannel;
-    QCheckBox* osdShowQuery;
-    QCheckBox* osdShowChannelEvent;
-
-    KIntSpinBox* osdDurationSpin;
-    KComboBox* osdScreenCombo;
-    
-    QPushButton* osdFontButton;
-    QLabel* osdFontLabel;
-    QLabel* osdPreviewLabel;
-    QLabel* osdTextColorLabel;
-    QLabel* osdBackgroundColorLabel;
-
-    KColorCombo* osdTextColorChooser;
-    KColorCombo* osdBackgroundColorChooser;
-
-    QVGroupBox* osdColorsBox;
-    QVGroupBox* osdOthersBox;
-    QVGroupBox* osdActionsBox;
-    
     OSDPreviewWidget* m_pOSDPreview;
-    
     bool showingPage;
 };
 

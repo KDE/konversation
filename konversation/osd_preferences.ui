@@ -1,0 +1,456 @@
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<class>OSD_Config</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>OSD_Config</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>624</width>
+            <height>571</height>
+        </rect>
+    </property>
+    <spacer>
+        <property name="name">
+            <cstring>spacer1</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Vertical</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Expanding</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>21</width>
+                <height>81</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>280</x>
+                <y>490</y>
+                <width>21</width>
+                <height>81</height>
+            </rect>
+        </property>
+    </spacer>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox3</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>150</y>
+                <width>591</width>
+                <height>110</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>Show &amp;OSD Message</string>
+        </property>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_OsdNickAppear</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>20</y>
+                    <width>280</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&amp;If own nick appears in channel message</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_OsdChannelMessage</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>40</y>
+                    <width>180</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>On any channel &amp;message</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_OsdQueryActivity</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>60</y>
+                    <width>130</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>On &amp;query activity</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_OsdJoinPart</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>80</y>
+                    <width>150</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>On &amp;Join/Part events</string>
+            </property>
+        </widget>
+    </widget>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox4</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>410</y>
+                <width>591</width>
+                <height>80</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>O&amp;ther Settings</string>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>textLabel1_2</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>20</y>
+                    <width>70</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&amp;Duration:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_OsdDuration</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>textLabel2_2</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>50</y>
+                    <width>70</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>S&amp;creen:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_OsdScreen</cstring>
+            </property>
+        </widget>
+        <widget class="QSpinBox">
+            <property name="name">
+                <cstring>kcfg_OsdDuration</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>320</x>
+                    <y>20</y>
+                    <width>250</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="suffix">
+                <string> ms</string>
+            </property>
+            <property name="maxValue">
+                <number>10000</number>
+            </property>
+            <property name="minValue">
+                <number>500</number>
+            </property>
+            <property name="lineStep">
+                <number>100</number>
+            </property>
+        </widget>
+        <widget class="KComboBox">
+            <property name="name">
+                <cstring>kcfg_OsdScreen</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>320</x>
+                    <y>50</y>
+                    <width>251</width>
+                    <height>21</height>
+                </rect>
+            </property>
+        </widget>
+    </widget>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox1</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>270</y>
+                <width>590</width>
+                <height>120</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>&amp;Colors</string>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>textLabel2</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>60</y>
+                    <width>80</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Text co&amp;lor:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_OsdTextColor</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>textLabel3</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>90</y>
+                    <width>130</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&amp;Background color:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_OsdBackgroundColor</cstring>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_OsdCustomColor</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>30</y>
+                    <width>140</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Us&amp;e custom colors</string>
+            </property>
+        </widget>
+        <widget class="KColorCombo">
+            <property name="name">
+                <cstring>kcfg_OsdTextColor</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>310</x>
+                    <y>60</y>
+                    <width>270</width>
+                    <height>21</height>
+                </rect>
+            </property>
+        </widget>
+        <widget class="KColorCombo">
+            <property name="name">
+                <cstring>kcfg_OsdBackgroundColor</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>310</x>
+                    <y>90</y>
+                    <width>271</width>
+                    <height>20</height>
+                </rect>
+            </property>
+        </widget>
+    </widget>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>20</y>
+                <width>590</width>
+                <height>120</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>On &amp;Screen Display</string>
+        </property>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_OsdDrawShadow</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>40</y>
+                    <width>120</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&amp;Draw shadows</string>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>textLabel1</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>70</y>
+                    <width>70</width>
+                    <height>31</height>
+                </rect>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="text">
+                <string>OSD Font:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kFontRequester1</cstring>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_UseOsdDisplay</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>20</y>
+                    <width>170</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&amp;Use On Screen Display</string>
+            </property>
+        </widget>
+        <widget class="KFontRequester">
+            <property name="name">
+                <cstring>kcfg_OsdFont</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>100</x>
+                    <y>70</y>
+                    <width>480</width>
+                    <height>31</height>
+                </rect>
+            </property>
+        </widget>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>kcfg_UseOsdDisplay</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>groupBox1</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_UseOsdDisplay</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>groupBox3</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_UseOsdDisplay</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>groupBox4</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_UseOsdDisplay</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_OsdDrawShadow</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_UseOsdDisplay</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_OsdFont</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_UseOsdDisplay</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>textLabel1</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<includehints>
+    <includehint>kcombobox.h</includehint>
+    <includehint>kcolorcombo.h</includehint>
+    <includehint>kcolorcombo.h</includehint>
+    <includehint>kfontrequester.h</includehint>
+</includehints>
+</UI>
