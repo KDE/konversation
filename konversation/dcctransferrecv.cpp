@@ -384,7 +384,7 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )  // public
   
   // do write
   m_writeReady = false;
-  QByteArray cache = popCache();
+  QByteArray* cache = popCache();
   m_transferJob->sendAsyncData( *cache );
   delete cache;  //FIXME double check that it's okay to do this :\
   return true;
