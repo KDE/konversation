@@ -6,7 +6,7 @@ $PORT= shift;
 $SERVER= shift;
 $TARGET= shift;
 
-if( $ARGV[0] eq "yes" )
+if( $ARGV[0] eq "yes" ){
     exec ("dcop $PORT Konversation error \"Requested command is not executed!\" ");
 }
 
