@@ -48,6 +48,7 @@ int main(int argc, char* argv[])
   aboutData.addAuthor("Peter Simonsson",I18N_NOOP("Color picker, IRC color preferences, KNotify events, Systray notification, Shell style completion, Sound support for highlights"),"psn@linux.se");
   aboutData.addAuthor("Christian Muehlhaeuser",I18N_NOOP("Multiple modes extension, Close widget placement, OSD functionality"),"chris@chris.de");
   aboutData.addAuthor("John Tapsell",I18N_NOOP("Refactoring, Kadddressbook/Kontact integration"), "john@geola.co.uk");
+  aboutData.addAuthor("İsmail Dönmez",I18N_NOOP("SSL Support,Ported to KNetwork"),"kde@myrealbox.com");
 
   aboutData.addCredit("Frauke Oster",I18N_NOOP("System tray patch"),"frauke@frsv.de");
   aboutData.addCredit("Lucijan Busch",I18N_NOOP("Bug fixes"),"lucijan@kde.org");
@@ -58,7 +59,6 @@ int main(int argc, char* argv[])
   aboutData.addCredit("Tobias Olry",I18N_NOOP("Channel ownership mode patch"),"tobias.olry@web.de");
   aboutData.addCredit("Ruud Nabben",I18N_NOOP("Option to enable IRC color filtering"),"r.nabben@gawab.com");
   aboutData.addCredit("Michael Goettsche",I18N_NOOP("Quick connect, Ported new OSD, other features and bugfixes"),"michael.goettsche@kdemail.net");
-  aboutData.addCredit("İsmail Dönmez",I18N_NOOP("Ported to KNetwork, many bugfixes and features"),"kde@myrealbox.com");
   aboutData.addCredit("Luciash d' being",I18N_NOOP("Application icons"),"luci@sh.ground.cz");
   aboutData.addCredit("Shintaro Matsuoka",I18N_NOOP("DCC transfer"),"shin@shoegazed.org");
 

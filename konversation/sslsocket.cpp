@@ -52,13 +52,13 @@ SSLSocket::~SSLSocket()
 
 Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
 {
-  kdDebug() << "SSLSocket::writeBlock : " << data << endl;
+  //kdDebug() << "SSLSocket::writeBlock : " << data << endl;
   return kssl->write( data,len );
 }
 
 Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
 {
-  kdDebug() << "SSLSocket::readBlock : " << QCString(data) << endl;
+  //kdDebug() << "SSLSocket::readBlock : " << QCString(data) << endl;
   return kssl->read( data, maxlen );
 }
 
@@ -73,18 +73,18 @@ void SSLSocket::slotConnected()
 	  kssl = new KSSL();
 	  if( kssl->connect( socketDevice()->socket() ) )
 	    {
-	      emit sslInitDone();
+	      if( verifyCertificate() != 1 )
+		{
+		  kdDebug() << "Closing socket!" << endl;
+		  close();
+		}
+	      else
+		emit sslInitDone();
 	    }
 	}
       else
 	{
 	  kssl->reInitialize();
-	}
-
-      if( verifyCertificate() != 1 )
-	{
-	  kdDebug() << "Closing socket!" << endl;
-	  close();
 	}
     }
   else

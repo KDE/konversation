@@ -33,6 +33,8 @@
 #include "dcctransfer.h"
 #include "nickinfo.h"
 
+#include "sslsocket.h"
+
 /*
   @author Dario Abatianni
 */
@@ -508,7 +510,10 @@ class Server : public QObject
     QString autoJoinChannelKey;
 
     KonversationMainWindow* mainWindow;
+
     KNetwork::KBufferedSocket* serverSocket;
+    KStreamSocket*   m_serverSSLSocket;
+    bool                       m_useSSL;
     
 
     QTimer reconnectTimer;

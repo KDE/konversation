@@ -70,6 +70,7 @@ using namespace KNetwork;
 
 
 Server::Server(KonversationMainWindow* mainWindow, int id)
+  :m_useSSL(false)
 {
   init(mainWindow);
 
@@ -124,6 +125,7 @@ Server::Server(KonversationMainWindow* mainWindow, int id)
 //FIXME: remove code duplicates by introducing some new method
 Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
   const QString& nick,const QString& password)
+  :m_useSSL(false)
 {
   init(mainWindow);
 
@@ -179,10 +181,16 @@ Server::~Server()
   // clear nicks online
   emit nicksNowOnline(this,QStringList(),true);
   // Make sure no signals get sent to a soon to be dying Server Window
-  serverSocket->blockSignals(true);
+  if(!m_useSSL)
+    serverSocket->blockSignals(true);
+  else
+    m_serverSSLSocket->blockSignals(true);
 
   // Close socket but don't delete it. QObject will take care of delete
-  serverSocket->close();
+  if(!m_useSSL)
+    serverSocket->close();
+  else
+    m_serverSSLSocket->close();
 
   // Send out the last messages (usually the /QUIT)
   send();
@@ -250,7 +258,10 @@ void Server::init(KonversationMainWindow* mainWindow)
 
   timerInterval = 1;  // flood protection
 
-  serverSocket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
+  if(!m_useSSL)
+    serverSocket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
+  else
+    m_serverSSLSocket = new SSLSocket();
 
   setMainWindow(mainWindow);
 
@@ -360,12 +371,22 @@ void Server::connectSignals()
   connect(this,SIGNAL(addDccPanel()),getMainWindow(),SLOT(addDccPanel()) );
   connect(this,SIGNAL(addKonsolePanel()),getMainWindow(),SLOT(addKonsolePanel()) );
 
-  connect(serverSocket,SIGNAL (hostFound()),this,SLOT(lookupFinished()));
-  connect(serverSocket,SIGNAL (connected(const KResolverEntry&)),this,SLOT (ircServerConnectionSuccess()));
-  connect(serverSocket,SIGNAL (gotError(int)),this,SLOT (broken(int)) );
-  connect(serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
-  connect(serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
-  connect(serverSocket,SIGNAL (closed()),this,SLOT(closed()));
+  if(!m_useSSL) {
+    connect(serverSocket,SIGNAL (hostFound()),this,SLOT(lookupFinished()));
+    connect(serverSocket,SIGNAL (connected(const KResolverEntry&)),this,SLOT (ircServerConnectionSuccess()));
+    connect(serverSocket,SIGNAL (gotError(int)),this,SLOT (broken(int)) );
+    connect(serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
+    connect(serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
+    connect(serverSocket,SIGNAL (closed()),this,SLOT(closed()));
+  }
+  else {
+    connect(m_serverSSLSocket,SIGNAL (hostFound()),this,SLOT(lookupFinished()));
+    connect(m_serverSSLSocket,SIGNAL (sslInitDone()),this,SLOT (ircServerConnectionSuccess()));
+    connect(m_serverSSLSocket,SIGNAL (gotError(int)),this,SLOT (broken(int)) );
+    connect(m_serverSSLSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
+    connect(m_serverSSLSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
+    connect(m_serverSSLSocket,SIGNAL (closed()),this,SLOT(closed()));
+  }
 
 
   // Don't uncomment this.  You'll create an infinite loop.  The current sequence is:
@@ -403,7 +424,12 @@ void Server::setAutoJoinChannel(const QString &channel) { autoJoinChannel=channe
 QString Server::getAutoJoinChannelKey() const { return autoJoinChannelKey; }
 void Server::setAutoJoinChannelKey(const QString &key) { autoJoinChannelKey=key; }
 
-bool Server::isConnected()  const { return serverSocket->state()==KNetwork::KClientSocketBase::Connected; }
+bool Server::isConnected()  const { 
+  if(!m_useSSL)
+    return serverSocket->state()==KNetwork::KClientSocketBase::Connected; 
+  else
+    return m_serverSSLSocket->state()==KNetwork::KClientSocketBase::Connected;
+}
 bool Server::isConnecting() const { return connecting; }
 
 void Server::preShellCommandExited(KProcess* proc)
@@ -421,7 +447,12 @@ void Server::connectToIRCServer()
 {
   outputBuffer.clear();
   deliberateQuit=false;
-  serverSocket->blockSignals(false);
+  
+  if(!m_useSSL)
+    serverSocket->blockSignals(false);
+  else
+    m_serverSSLSocket->blockSignals(false);
+
   connecting=true;
 
   // prevent sending queue until server has sent something or the timeout is through
@@ -437,10 +468,16 @@ void Server::connectToIRCServer()
   else
   {
     // clean up everything
-    serverSocket->reset();
+    if(!m_useSSL)
+      serverSocket->reset();
+    else
+      m_serverSSLSocket->reset();
 
     // connect() will do a async lookup too
-    serverSocket->connect(serverName,QString::number(serverPort));
+    if(!m_useSSL)
+      serverSocket->connect(serverName,QString::number(serverPort));
+    else
+      m_serverSSLSocket->connect(serverName,QString::number(serverPort));
 
     // set up the connection details
     setPrefixes("ov","@+");
@@ -537,21 +574,33 @@ void Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwn
 void Server::lookupFinished()
 {
   // error during lookup
-  if(serverSocket->status())
-  {
-    // inform user about the error
-       statusView->appendServerMessage(i18n("Error"),i18n("Server %1 not found.  %2").arg(serverName).arg(serverSocket->errorString(serverSocket->error())));
+  if(!m_useSSL && serverSocket->status())
+    {
+      // inform user about the error
+      statusView->appendServerMessage(i18n("Error"),i18n("Server %1 not found.  %2").arg(serverName).arg(serverSocket->errorString(serverSocket->error())));
 
-    serverSocket->resetStatus();
-    // prevent retrying to connect
-    autoReconnect=0;
-    // broken connection
-    broken(0);
-  }
+      serverSocket->resetStatus();
+      // prevent retrying to connect
+      autoReconnect=0;
+      // broken connection
+      broken(0);
+    }
+  else if(m_useSSL && m_serverSSLSocket->status())
+    {
+      // inform user about the error
+      statusView->appendServerMessage(i18n("Error"),i18n("Server %1 not found.  %2").arg(serverName).
+				      arg(m_serverSSLSocket->errorString(m_serverSSLSocket->error())));
+      m_serverSSLSocket->resetStatus();
+      // prevent retrying to connect
+      autoReconnect=0;
+      // broken connection
+      broken(0);
+      
+    }
   else
-  {
-    statusView->appendServerMessage(i18n("Info"),i18n("Server found, connecting..."));
-  }
+    {
+      statusView->appendServerMessage(i18n("Info"),i18n("Server found, connecting..."));
+    }
 }
 
 void Server::ircServerConnectionSuccess()
@@ -585,7 +634,10 @@ void Server::ircServerConnectionSuccess()
 
   emit nicknameChanged(getNickname());
 
-  serverSocket->enableRead(true);
+  if(!m_useSSL)
+    serverSocket->enableRead(true);
+  else
+    m_serverSSLSocket->enableRead(true);
 
   // wait at most 2 seconds for server to send something before sending the queue ourselves
   unlockTimer.start(2000);
@@ -593,9 +645,16 @@ void Server::ircServerConnectionSuccess()
 
 void Server::broken(int state)
 {
-  serverSocket->enableRead(false);
-  serverSocket->enableWrite(false);
-  serverSocket->blockSignals(true);
+  if(!m_useSSL) {
+    serverSocket->enableRead(false);
+    serverSocket->enableWrite(false);
+    serverSocket->blockSignals(true);
+  }
+  else {
+    m_serverSSLSocket->enableRead(false);
+    m_serverSSLSocket->enableWrite(false);
+    m_serverSSLSocket->blockSignals(true);
+  }
 
   alreadyConnected=false;
   connecting=false;
@@ -607,7 +666,13 @@ void Server::broken(int state)
   currentLag = -1; // XXX will this make it server independent now?
   emit resetLag();
 
-  kdDebug() << "Connection broken (Socket fd " << serverSocket->socketDevice()->socket() << ") " << state << "!" << endl;
+  if(!m_useSSL)
+    kdDebug() << "Connection broken (Socket fd " << serverSocket->socketDevice()->socket() << ") " 
+	      << state << "!" << endl;
+  else
+    kdDebug() << "Connection broken (Socket fd " << m_serverSSLSocket->socketDevice()->socket() << ") " 
+	      << state << "!" << endl;
+
 
   // clear nicks online
   emit nicksNowOnline(this,QStringList(),true);
@@ -822,7 +887,10 @@ void Server::notifyCheckTimeout()
     if(KonversationApplication::preferences.getAutoReconnect() &&
       (checkTime/1000)==KonversationApplication::preferences.getMaximumLagTime())
     {
-      serverSocket->close();
+      if(!m_useSSL)
+	serverSocket->close();
+      else
+	m_serverSSLSocket->close();
     }
   }
 }
@@ -878,18 +946,33 @@ void Server::incoming()
 {
   // We read all available bytes here because readyRead() signal will be emitted when there is new data
   // else we will stall when displaying MOTD etc.
-  int max_bytes = serverSocket->bytesAvailable();
+  int max_bytes;
 
-  Q_ASSERT(max_bytes>0);  //Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
+  if(!m_useSSL)
+    max_bytes = serverSocket->bytesAvailable();
+  else
+    max_bytes = m_serverSSLSocket->bytesAvailable();
+
   QByteArray buffer(max_bytes+1);
   int len = 0;
 
   // Read at max "max_bytes" bytes into "buffer"
-  len = serverSocket->readBlock(buffer.data(),max_bytes);
+  if(!m_useSSL)
+    len = serverSocket->readBlock(buffer.data(),max_bytes);
+  else
+    len = m_serverSSLSocket->readBlock(buffer.data(),max_bytes);
 
   if(len <= 0 ) { // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
-    statusView->appendServerMessage(i18n("Error"),
-      i18n("There was an error reading the data from the server: %1").arg(serverSocket->errorString()));
+
+    if(!m_useSSL)
+      statusView->appendServerMessage(i18n("Error"),
+				      i18n("There was an error reading the data from the server: %1").
+				      arg(serverSocket->errorString()));
+    else
+      statusView->appendServerMessage(i18n("Error"),
+                                      i18n("There was an error reading the data from the server: %1").
+                                      arg(m_serverSSLSocket->errorString()));
+
     broken(0);
     return;
   }
@@ -1045,7 +1128,12 @@ void Server::send()
     else if(outputLine.startsWith("QUIT")) setDeliberateQuit(true);
 
     // wrap server socket into a stream
-    QTextStream serverStream(serverSocket);
+    QTextStream serverStream;
+    
+    if(!m_useSSL)
+      serverStream.setDevice(serverSocket);
+    else
+      serverStream.setDevice(m_serverSSLSocket);
 
     // set channel encoding if specified
     QStringList outputLineSplit=QStringList::split(" ",outputLine);
@@ -1337,7 +1425,12 @@ QString Server::getIp(bool followDccSetting)
   if(ip.isEmpty())
   {
     kdDebug() << "Server::getIp(): using the network interface" << endl;
-    ip = serverSocket->localAddress().nodeName();  // Return our ip using serverSocket
+    
+    // Return our ip using serverSocket
+    if(!m_useSSL)
+      ip = serverSocket->localAddress().nodeName(); 
+    else
+      ip = m_serverSSLSocket->localAddress().nodeName();
   }
   
   kdDebug() << "Server::getIp(): returned: " << ip << endl;
