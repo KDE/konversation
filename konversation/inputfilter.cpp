@@ -38,6 +38,7 @@
 #include "query.h"
 #include "channel.h"
 #include "statuspanel.h"
+#include "common.h"
 
 InputFilter::InputFilter()
 {
@@ -316,12 +317,12 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             if(trailing.lower().find(QRegExp("(^|[^\\d\\w])"+
               QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
             {
-              QString cutup = KStringHandler::rsqueeze(trailing, 50);
+              QString cutup = KStringHandler::rsqueeze(Konversation::removeIrcMarkup(trailing), 50);
               KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
             }
             else
             {
-              QString cutup = KStringHandler::rsqueeze(trailing, 50);
+              QString cutup = KStringHandler::rsqueeze(Konversation::removeIrcMarkup(trailing), 50);
               KNotifyClient::event(mainWindow->winId(), "message", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
             }
           }
@@ -341,7 +342,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 #ifdef USE_KNOTIFY
           // KNotify events...
           if(sourceNick != server->getNickname() && server->getQueryByName(sourceNick)->notificationsEnabled()) {
-            QString cutup = KStringHandler::rsqueeze(trailing, 50);
+            QString cutup = KStringHandler::rsqueeze(Konversation::removeIrcMarkup(trailing), 50);
             KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
           }
 #endif

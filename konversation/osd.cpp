@@ -24,6 +24,8 @@ the Free Software Foundation; either version 2 of the License, or
 
 #include <X11/Xlib.h> //reposition()
 
+#include "common.h"
+
 
 OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name )
         : QWidget( parent, name, WType_TopLevel | WNoAutoErase | WStyle_Customize | WX11BypassWM | WStyle_StaysOnTop )
@@ -46,10 +48,7 @@ OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name 
 
 void OSDWidget::renderOSDText( const QString &txt )
 {
-    QString text = txt; // Escaped text
-    QRegExp colorRegExp("((\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)|\x02|\x09|\x13|\x16|\x1f)");
-    // Escape text decoration
-    text.remove(colorRegExp);
+    QString text = Konversation::removeIrcMarkup(txt); // Escaped text
 
     static QBitmap mask;
 
