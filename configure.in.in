@@ -90,9 +90,9 @@ AC_CHECK_TYPES([struct sockaddr_in6],
   [#include <sys/types.h>
 #include <netinet/in.h>])
 
-# -- Check for KDE 3.2 and enable the compat dir --------------------
+# -- Check for KDE version < 3.3.89 and enable the compat dir --------------------
 
-AC_MSG_CHECKING([for kdelibs newer than 3.2.x])
+AC_MSG_CHECKING([for kdelibs with non-buggy KNetwork classes])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
@@ -103,7 +103,7 @@ CXXFLAGS="$CXXFLAGS $all_includes"
 
 AC_TRY_COMPILE([
 #include <kdeversion.h>
-#if !( KDE_IS_VERSION( 3, 2, 90 ) )
+#if !( KDE_IS_VERSION( 3, 3, 89 ) )
 #error Need to enable compat!
 #endif
 ],
@@ -121,4 +121,4 @@ AC_LANG_RESTORE
 
 AM_CONDITIONAL(compile_LIBKONVERSATION_COMPAT, test -n "$LIB_KONVERSATIONCOMPAT")
 
-# -- End KDE 3.2 check ----------------------------------------------
+# -- End KDE version < 3.3.89 check ----------------------------------------------
