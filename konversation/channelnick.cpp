@@ -218,7 +218,7 @@ QString ChannelNick::tooltip() {
      dirty=true;
   }
   if(!nickInfo->getOnlineSince().toString().isEmpty()) {
-     tooltip << "<tr><td><b>" << i18n("Online Since") << ": </b></td><td>" << nickInfo->getOnlineSince().toString("ddd d MMMM yyyy") << "</td></tr>";
+     tooltip << "<tr><td><b>" << i18n("Online Since") << ": </b></td><td>" << nickInfo->getOnlineSince().toString("ddd d MMMM yyyy h:mm ap") << "</td></tr>";
      dirty=true;
   }
   QStringList modes;

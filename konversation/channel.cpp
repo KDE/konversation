@@ -409,9 +409,14 @@ void Channel::popupCommand(int id)
 	    if(id == NickListView::AddressbookDelete) {
               KABC::Addressee addr = addressbook->getKABCAddresseeFromNick(*nickIterator);
    	      addressbook->unassociateNick(addr, *nickIterator);
-	    } else {
+	    } else { 
+	      //make new addressbook contact
               KABC::Addressee addr;
-	      addr.setGivenName(*nickIterator);
+	      NickInfoPtr nickInfo = server->getNickInfo(*nickIterator);
+	      if(nickInfo->getRealName().isEmpty())
+		addr.setGivenName(*nickIterator);
+	      else
+		addr.setGivenName(nickInfo->getRealName());
 	      addr.setNickName(*nickIterator);
 	      addressbook->associateNickAndUnassociateFromEveryoneElse(addr, *nickIterator);
 	    }
@@ -433,9 +438,10 @@ void Channel::popupCommand(int id)
       {
         QStringList nickList=getSelectedNicksList();
         for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
-	  LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, *nickIterator);
+	  NickInfoPtr nickInfo = server->getNickInfo(*nickIterator);
+	  LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, *nickIterator, nickInfo->getRealName());
 	  linkaddressbookui->show();
-	  server->getNickInfo(*nickIterator)->refreshAddressee();
+	  nickInfo->refreshAddressee();
 	}
         break;
       }

@@ -43,7 +43,7 @@
 #include "addressbook.h"
 #include <kapplication.h>
 
-LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick )
+LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick, const QString &suggested_realname )
 : LinkAddressbookUI_Base( parent, name )
 {
 
@@ -63,6 +63,8 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
 
 	m_ircnick = ircnick;
 	m_lower_ircnick = m_ircnick.lower();
+	m_suggested_realname = suggested_realname;
+	if(m_suggested_realname.isEmpty()) m_suggested_realname = suggested_realname;
 	Q_ASSERT(!ircnick.isEmpty());
 	slotLoadAddressees();
 }
@@ -104,7 +106,7 @@ void LinkAddressbookUI::slotAddAddresseeClicked()
 	if(!Konversation::Addressbook::self()->getAndCheckTicket()) return;
 	QString addresseeName = KInputDialog::getText( i18n( "New Address Book Entry" ),
 												   i18n( "Name the new entry:" ),
-												   m_ircnick, 0, this );
+												   m_suggested_realname, 0, this );
 
 	if ( !addresseeName.isEmpty() )
 	{
@@ -113,6 +115,8 @@ void LinkAddressbookUI::slotAddAddresseeClicked()
 		m_addressBook->insertAddressee(addr);
 		Konversation::Addressbook::self()->saveTicket();
 		slotLoadAddressees();
+	} else {
+		Konversation::Addressbook::self()->releaseTicket();
 	}
 }
 

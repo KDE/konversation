@@ -39,14 +39,14 @@ class LinkAddressbookUI : public LinkAddressbookUI_Base
 	Q_OBJECT
 
 public:
-	LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick);
+	LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick, const QString &suggested_realname);
 	~LinkAddressbookUI();
 
 private:
 	KABC::AddressBook* m_addressBook;
 	QString m_ircnick;
 	QString m_lower_ircnick; //Same as above, but in lower case, for comparisons.
-	
+	QString m_suggested_realname;
 public slots:
 	virtual void accept();
 	virtual void reject();

@@ -518,7 +518,7 @@ void NicksOnline::doCommand(int id)
       }
     case ciAddressbookChange:
       {
-        LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, nickname);
+        LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, nickname, nickInfo->getRealName());
         linkaddressbookui->show();
         nickInfo->refreshAddressee();
         break;
