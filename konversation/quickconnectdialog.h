@@ -13,7 +13,7 @@
 */
 
 #ifndef QUICKCONNECTDIALOG_H
-#define QUCIKCONNECTDIALOG_H
+#define QUICKCONNECTDIALOG_H
 
 #include <kdialogbase.h>
 
