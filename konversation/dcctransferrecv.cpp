@@ -85,13 +85,13 @@ DccTransferRecv::~DccTransferRecv()
   cleanUp();
 }
 
-void DccTransferRecv::calculateSaveToFileURL(const KURL &folderURL) {
-
-  if(folderURL.isEmpty() || !folderURL.isValid()) {
+void DccTransferRecv::calculateSaveToFileURL( const KURL& folderURL )
+{
+  if( folderURL.isEmpty() || !folderURL.isValid() )
     return;  // don't do anything - we'll prompt the user about this in start()
-  }
+  
   KURL saveToFileURL = folderURL;
-   // set default path
+  // set default path
   // Append folder with partner's name if wanted
   saveToFileURL.adjustPath( 1 );  // add a slash if there is none
   if( KonversationApplication::preferences.getDccCreateFolder() )
@@ -106,7 +106,7 @@ void DccTransferRecv::calculateSaveToFileURL(const KURL &folderURL) {
   
   setSaveToFileURL( saveToFileURL );
  
-  kdDebug() << "DccTransferRecv::DccTransferRecv(): saving to: '" << saveToFileURL.prettyURL() << "'" << endl;
+  kdDebug() << "DccTransferRecv::calculateSaveToFileURL(): saving to: '" << saveToFileURL.prettyURL() << "'" << endl;
 }
 
 bool DccTransferRecv::validateSaveToFileURL() {
@@ -115,12 +115,12 @@ bool DccTransferRecv::validateSaveToFileURL() {
     saveToFileURL = KDirSelectDialog::selectDirectory(QString::null, false, listView(), "Select directory to save to");
     if(saveToFileURL.isEmpty())
       return false;
-    calculateSaveToFileURL(saveToFileURL);
+    calculateSaveToFileURL( saveToFileURL );
   }
   return true;
 }
 
-bool DccTransferRecv::createDirs(const KURL &dirURL) const
+bool DccTransferRecv::createDirs( const KURL& dirURL ) const
 {
   KURL kurl(dirURL);
   QString surl = kurl.url();
@@ -139,25 +139,23 @@ bool DccTransferRecv::createDirs(const KURL &dirURL) const
   //Now we create the directories
 
   QStringList::Iterator it;
-  for (it=dirList.begin(); it!=dirList.end();++it)
-  {
-    if (!KIO::NetAccess::exists(*it,true,listView())) {
-      if(!KIO::NetAccess::mkdir(*it,listView(),-1)) {
+  for ( it=dirList.begin() ; it!=dirList.end() ; ++it )
+    if ( !KIO::NetAccess::exists( *it, true, listView() ) )
+      if( !KIO::NetAccess::mkdir( *it, listView(), -1 ) )
+      {
         KMessageBox::error(listView(), i18n("To save the sent file, the folder %1 needed to be created.  This failed, probably because you do not have permission to write there.  You can set where sent files are saved to by default in the Settings menu, under Configure Konversation, and choosing the Behavior->dcc tab.").arg(dirURL.prettyURL()), i18n("Failed to create folder"));
-	return false;
+        return false;
       }
-    }
-  }
   return true;
 }
 
 void DccTransferRecv::start()  // public slot
 {
-  if(getStatus() != Queued) return;
   kdDebug() << "DccTransferRecv::start()" << endl;
-  //Check that we are saving it somewhere valid, and set up the directories.
-  if( !validateSaveToFileURL() ) return;
-  if(getStatus() != Queued) return;  //We might not have been able to find somewhere to save to.
+  if( m_dccStatus != Queued )
+    return;
+  if( !validateSaveToFileURL() )  //Check that we are saving it somewhere valid, and set up the directories.
+    return;
   
   // check whether the file exists
   // if exists, ask user to rename/overwrite/abort
@@ -183,12 +181,13 @@ void DccTransferRecv::start()  // public slot
     KFileItem partialFileInfo( partialFileEntry, m_saveToTmpFileURL );
     m_partialFileSize = partialFileInfo.size();
   }
-  if(!m_saveToFileExists && !m_partialFileExists) {
-    if( !createDirs(m_fileURL.upURL())) {
-      abort();
+  
+  if( !m_saveToFileExists && !m_partialFileExists )
+    if( !createDirs( m_fileURL.upURL() ) )
+    {
+      setStatus( Queued );  // just for removing the detail message
       return;
     }
-  }
   
   m_partialFileExists = m_partialFileExists && 
                         0 < m_partialFileSize &&
@@ -236,7 +235,7 @@ void DccTransferRecv::abort()  // public slot
 {
   kdDebug() << "DccTransferRecv::abort()" << endl;
   
-  setStatus(Aborted);
+  setStatus( Aborted );
   cleanUp();
   updateView();
 }
@@ -265,7 +264,8 @@ void DccTransferRecv::requestResume()
   kdDebug() << "DccTransferRecv::requestResume()" << endl;
   
   m_resumed = true;
-//  setStatus( WaitingRemote, i18n("Requesting to accept resuming") );
+  
+  setStatus( WaitingRemote, i18n("waiting") );
   
   // Rollback for Resume
   // disabled temporarily
@@ -297,7 +297,9 @@ void DccTransferRecv::connectToSender()
   KIO::TransferJob* transferJob = KIO::put( m_fileURL, -1, !m_resumed ? m_saveToFileExists : false, m_resumed, false );
   if(!transferJob) {
     kdDebug() << "KIO::put failed!" << endl;
-    abort();
+    setStatus( Failed, i18n("KIO error") );
+    updateView();
+    cleanUp();
     return;
   }
   connect( transferJob, SIGNAL( canResume( KIO::Job*, KIO::filesize_t ) ), this, SLOT( slotCanResume( KIO::Job*, KIO::filesize_t ) ) );
@@ -448,7 +450,7 @@ void DccTransferRecv::slotSocketClosed()
   }
 }
 
-void DccTransferRecv::slotCanResume( KIO::Job* job, KIO::filesize_t size )
+void DccTransferRecv::slotCanResume( KIO::Job* /* job */, KIO::filesize_t size )
 {
   kdDebug() << "DccTransferRecv::slotCanResume(): size = " << size << endl;
 }
