@@ -34,11 +34,15 @@ class PrefsPageDccSettings : public PrefsPage
 
   protected slots:
     void folderInputChanged(const QString& newPath);
+    void folderButtonClicked();
     void bufferValueChanged(int newBuffer);
     void rollbackValueChanged(int newRollback);
     void autoGetChanged(int state);
     void addSenderChanged(int state);
     void createFolderChanged(int state);
+
+  protected:
+    KLineEdit* dccFolderInput;
 };
 
 #endif

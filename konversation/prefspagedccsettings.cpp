@@ -20,9 +20,11 @@
 #include <qcheckbox.h>
 #include <qhbox.h>
 #include <qspinbox.h>
+#include <qfileinfo.h>
 
 #include <klineedit.h>
-
+#include <kfiledialog.h>
+#include <kmessagebox.h>
 #include <kdebug.h>
 
 #include "prefspagedccsettings.h"
@@ -34,7 +36,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   QGridLayout* dccSettingsLayout=new QGridLayout(parentFrame,5,3,marginHint(),spacingHint(),"dcc_settings_layout");
 
   QLabel* dccFolderLabel=new QLabel(i18n("DCC Folder:"),parentFrame);
-  KLineEdit* dccFolderInput=new KLineEdit(preferences->getDccPath(),parentFrame);
+  dccFolderInput=new KLineEdit(preferences->getDccPath(),parentFrame);
   QPushButton* dccFolderButton=new QPushButton(i18n("Browse"),parentFrame,"dcc_folder_button");
 
   QHBox* dccSpinBoxes=new QHBox(parentFrame);
@@ -84,6 +86,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
 
   // Set up signals / slots for DCC Setup page
   connect(dccFolderInput,SIGNAL (textChanged(const QString&)),this,SLOT (folderInputChanged(const QString&)) );
+  connect(dccFolderButton,SIGNAL (clicked()),this,SLOT (folderButtonClicked()) );
   connect(dccBufferSpin,SIGNAL (valueChanged(int)),this,SLOT (bufferValueChanged(int)) );
   connect(dccRollbackSpin,SIGNAL (valueChanged(int)),this,SLOT (rollbackValueChanged(int)));
   connect(dccAutoGet,SIGNAL (stateChanged(int)),this,SLOT (autoGetChanged(int)) );
@@ -98,6 +101,26 @@ PrefsPageDccSettings::~PrefsPageDccSettings()
 void PrefsPageDccSettings::folderInputChanged(const QString& newFolder)
 {
   preferences->setDccPath(newFolder);
+}
+
+void PrefsPageDccSettings::folderButtonClicked()
+{
+  QString folderName=KFileDialog::getExistingDirectory(
+                                                        preferences->getDccPath(),
+                                                        0,
+                                                        i18n("Select DCC download folder")
+                                                      );
+  if(folderName!="")
+  {
+    QFileInfo folderInfo(folderName);
+
+    if(folderInfo.isDir())
+    {
+      preferences->setDccPath(folderName);
+      dccFolderInput->setText(folderName);
+    }
+    else KMessageBox::sorry(0,i18n("<qt>Error: %1 is not a regular folder!</qt>").arg(folderName),i18n("Incorrect path"));
+  }
 }
 
 void PrefsPageDccSettings::bufferValueChanged(int newBuffer)
