@@ -1,8 +1,13 @@
 
+Make [x] on tabs harder to click (1 second hover delay or similar)
+DCC options on same file name should include "Rename" and maybe "Auto Rename"
+Events for scripting, auto-text and stuff
+
 berkus: Doxify the source
 berkus: Docufy the app
 berkus: Logrotate with timer or at shutdown, compress rotated logs
 
+Fix the /query oneuser, /msg anotheruser problem
 Support "CTCP-DCC reply from <nickname>: REJECT SEND <filename> <reason>"
 Treeview with servers, list of channels / queries in a detachable window that also indicates new text
 after being away a summary of lines with highlighting in its own window would be nice; a click on one line might jump to the according line in the channel/query-window
@@ -11,24 +16,21 @@ additionally do some kind of marker to the lines that came in while being away; 
 Per nick coloring in channel discussion
 Use KStringHandler::from8Bit to make non-UTF8-users able to at least read UTF8.
 DCC RESUME should start counting cps from the beginning
-Context menu on nick in nick should contain hostmask, realname, etc. infos (in a sub-menu)
+Context menu on nick in nick list should contain hostmask, realname, etc. infos (in a sub-menu)
 Check for channel or user parameter in mode changes to take care of duplicate mode chars
 History viewer
 Option to disable %G, %C %B... expansion
-Fix the /query oneuser, /msg anotheruser problem
-Don't trigger events when we did highlight ourselves
 Limit backlog to x lines or KB
+Don't trigger events when we did highlight ourselves
 Click on notify messages opens query
 Make URLs like http://user@somedomain.com/ work
-Make [x] on tabs harder to click (1 second hover delay or similar)
+Add date option to time stamp
 
 Channel List Panel:
 and a "channel or topic" checkbox would be nice, or better, make the current checkboxes work as "or" not as "and"
 
 /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
 Optionally copy log files to new location
-DCC options on same file name should include "Rename" and maybe "Auto Rename"
-Events for scripting, auto-text and stuff
 Try to keep open views on kicks and stuff
 Reverse-I-Search
 Multi line behaviour in input line with "little enter"
