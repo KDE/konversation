@@ -33,22 +33,23 @@
 SSLSocket::SSLSocket(QObject* parent,const char* name)
   : KStreamSocket("","",parent,name), kssl(0L)
 {
-	cc = new KSSLCertificateCache;
-	cc->reload();
+  cc = new KSSLCertificateCache;
+  cc->reload();
 
-	QObject::connect(this,SIGNAL(connected(const KResolverEntry&)),this,SLOT(slotConnected()));
+  QObject::connect(this,SIGNAL(connected(const KResolverEntry&)),this,SLOT(slotConnected()));
 }
 
 SSLSocket::~SSLSocket()
 {
-    // Close stream socket
-    close();
-
-    // close ssl socket
-    if( kssl ) kssl->close();
-
-    delete kssl;
-    delete cc;
+  kdDebug() << "In SSLSocket::~SSLSocket" << endl;
+  // Close stream socket
+  close();
+  
+  // close ssl socket
+  if( kssl ) kssl->close();
+  
+  delete kssl;
+  delete cc;
 }
 
 Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
@@ -60,16 +61,16 @@ Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
 Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
 {
   //kdDebug() << "SSLSocket::readBlock : " << QCString(data) << endl;
-  int err;
+  int err = 0;
 
   /* Default KSSL timeout is 0.2 seconds so we loop here until socket times out */
 
-  do {
-    err = kssl->read( data, maxlen );
-    if (err == 0) {
-      ::sleep(1);
+    while(bytesAvailable() && err == 0) {
+      err = kssl->read( data, maxlen );
+      if (err == 0) {
+	::sleep(1);
+      }
     }
-  } while( err == 0 );
 
   return err;
 }
