@@ -23,7 +23,9 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp \
 		ledtabbar.cpp ledtab.cpp ledtabwidget.cpp images.cpp prefsdialog.cpp \
 		quickbutton.cpp preferences.cpp chatwindow.cpp outputfilter.cpp query.cpp \
 		konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp ircview.cpp server.cpp main.cpp \
-		dcc_preferences.ui log_preferences.ui tabbar_preferences.ui chatwindowappearance_preferences.ui irccolorchooserui.ui colorsappearance_preferences.ui irccolorchooser.cpp prefspagealiases.cpp channellistviewitem.cpp osd.cpp prefspageosd.cpp \
+		dcc_preferences.ui log_preferences.ui tabbar_preferences.ui chatwindowappearance_preferences.ui \
+		irccolorchooserui.ui colorsappearance_preferences.ui irccolorchooser.cpp prefspagealiases.cpp \
+		channellistviewitem.cpp osd.cpp prefspageosd.cpp \
 		ircevent.cpp trayicon.cpp prefspagetabbehavior.cpp dccchat.cpp \
 		logfilereader.cpp multilineedit.cpp nickinfo.cpp dccresumedialog.cpp \
 		konversationsound.cpp quickconnectdialog.cpp prefspagebehaviour.cpp \
@@ -35,7 +37,7 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp \
 		topiclabel.cpp channeloptionsui.ui channeloptionsdialog.cpp prefspagethemes.cpp notificationhandler.cpp \
 		joinchannelui.ui joinchanneldialog.cpp konversation_settings.kcfgc emoticon.cpp \
 		chatwindowbehaviour_preferences.ui alias_preferences.ui osd_preferences.ui \
-		theme_preferences.ui
+		theme_preferences.ui highlight_preferences.ui
 
 konversation_LDADD = $(COMPAT_LIBS) $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la -lkscript
 

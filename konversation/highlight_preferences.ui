@@ -1,0 +1,423 @@
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<class>Highlight_Config</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>Highlight_Config</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>594</width>
+            <height>571</height>
+        </rect>
+    </property>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>enableSoundCheck</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>470</y>
+                <width>230</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>&amp;Enable sound for higlight list items</string>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>currentNickCheck</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>500</y>
+                <width>190</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Al&amp;ways highlight current nick:</string>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>ownLinesCheck</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>530</y>
+                <width>170</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Always highligt own &amp;lines:</string>
+        </property>
+    </widget>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>570</width>
+                <height>450</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>&amp;Highlight List</string>
+        </property>
+        <widget class="KListView">
+            <column>
+                <property name="text">
+                    <string>RE</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>Highlights</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>Sound</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>Auto Text</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>highlightListView</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>20</y>
+                    <width>461</width>
+                    <height>321</height>
+                </rect>
+            </property>
+            <property name="acceptDrops">
+                <bool>true</bool>
+            </property>
+            <property name="allColumnsShowFocus">
+                <bool>true</bool>
+            </property>
+            <property name="fullWidth">
+                <bool>true</bool>
+            </property>
+            <property name="dragEnabled">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>patternLabel</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>350</y>
+                    <width>60</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&amp;Pattern:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>patternInput</cstring>
+            </property>
+        </widget>
+        <widget class="KColorCombo">
+            <property name="name">
+                <cstring>patternColor</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>380</x>
+                    <y>350</y>
+                    <width>91</width>
+                    <height>21</height>
+                </rect>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>soundLabel</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>380</y>
+                    <width>42</width>
+                    <height>26</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&amp;Sound:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>soundURL</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>autoTextLabel</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>420</y>
+                    <width>70</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&amp;Auto text:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>autoTextInput</cstring>
+            </property>
+        </widget>
+        <widget class="KLineEdit">
+            <property name="name">
+                <cstring>autoTextInput</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>80</x>
+                    <y>420</y>
+                    <width>391</width>
+                    <height>21</height>
+                </rect>
+            </property>
+        </widget>
+        <widget class="KURLRequester">
+            <property name="name">
+                <cstring>soundURL</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>90</x>
+                    <y>380</y>
+                    <width>380</width>
+                    <height>26</height>
+                </rect>
+            </property>
+            <property name="filter">
+                <string>audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm</string>
+            </property>
+        </widget>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>soundPlayBtn</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>60</x>
+                    <y>380</y>
+                    <width>20</width>
+                    <height>24</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+        </widget>
+        <widget class="KLineEdit">
+            <property name="name">
+                <cstring>patternInput</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>70</x>
+                    <y>350</y>
+                    <width>300</width>
+                    <height>21</height>
+                </rect>
+            </property>
+        </widget>
+        <widget class="KPushButton">
+            <property name="name">
+                <cstring>newButton</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>481</x>
+                    <y>31</y>
+                    <width>80</width>
+                    <height>24</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&amp;New</string>
+            </property>
+        </widget>
+        <widget class="KPushButton">
+            <property name="name">
+                <cstring>removeButton</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>481</x>
+                    <y>61</y>
+                    <width>80</width>
+                    <height>24</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&amp;Remove</string>
+            </property>
+        </widget>
+    </widget>
+    <widget class="KColorCombo">
+        <property name="name">
+            <cstring>currentNickColor</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>350</x>
+                <y>500</y>
+                <width>230</width>
+                <height>21</height>
+            </rect>
+        </property>
+    </widget>
+    <widget class="KColorCombo">
+        <property name="name">
+            <cstring>ownLinesColor</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>350</x>
+                <y>530</y>
+                <width>230</width>
+                <height>21</height>
+            </rect>
+        </property>
+    </widget>
+    <spacer>
+        <property name="name">
+            <cstring>spacer2</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Horizontal</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Expanding</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>170</width>
+                <height>21</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>180</x>
+                <y>530</y>
+                <width>170</width>
+                <height>21</height>
+            </rect>
+        </property>
+    </spacer>
+    <spacer>
+        <property name="name">
+            <cstring>spacer1</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Horizontal</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Expanding</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>150</width>
+                <height>20</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>200</x>
+                <y>500</y>
+                <width>150</width>
+                <height>20</height>
+            </rect>
+        </property>
+    </spacer>
+</widget>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>klistview.h</includehint>
+    <includehint>kcolorcombo.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kcolorcombo.h</includehint>
+    <includehint>kcolorcombo.h</includehint>
+</includehints>
+</UI>

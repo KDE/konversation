@@ -17,22 +17,12 @@
 
 #include <qptrlist.h>
 
-#include "prefspage.h"
+#include "highlight_preferences.h"
 #include "highlight.h"
 
-/*
-  @author Dario Abatianni
-*/
+class Preferences;
 
-class QCheckBox;
-class QPushButton;
-
-class KListView;
-class KColorCombo;
-class KLineEdit;
-class KURLRequester;
-
-class PrefsPageHighlight : public PrefsPage
+class PrefsPageHighlight : public Highlight_Config
 {
   Q_OBJECT
 
@@ -62,20 +52,7 @@ class PrefsPageHighlight : public PrefsPage
     void playSound();
 
   protected:
-    KListView* highlightListView;
-    QLabel* patternLabel;
-    KLineEdit* patternInput;
-    KColorCombo* patternColor;
-    QCheckBox* currentNickCheck;
-    KColorCombo* currentNickColor;
-    QCheckBox* ownLinesCheck;
-    KColorCombo* ownLinesColor;
-    KURLRequester* soundURL;
-    QLabel* soundLabel;
-    QPushButton* soundPlayBtn;
-    QCheckBox* enableSoundCheck;
-    QLabel* autoTextLabel;
-    KLineEdit* autoTextInput;
+    Preferences* preferences;
 };
 
 #endif

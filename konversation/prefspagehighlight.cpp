@@ -15,7 +15,7 @@
 #include <qlayout.h>
 #include <qhgroupbox.h>
 #include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <qtoolbutton.h>
 #include <qhbox.h>
 #include <qvbox.h>
 #include <qlabel.h>
@@ -30,6 +30,7 @@
 #include <kstandarddirs.h>
 #include <kfiledialog.h>
 #include <kiconloader.h>
+#include <kpushbutton.h>
 
 #include "prefspagehighlight.h"
 #include "preferences.h"
@@ -39,25 +40,10 @@
 #include "konversationsound.h"
 
 PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPreferences) :
-                    PrefsPage(newParent,newPreferences)
+  Highlight_Config(newParent)
 {
-  // Add the layout to the widget
-  QGridLayout* highlightLayout=new QGridLayout(parentFrame,3,2,marginHint(),spacingHint());
-  QHGroupBox* highlightListGroup=new QHGroupBox(i18n("&Highlight List"),parentFrame,"highlight_pattern_group");
+  preferences = newPreferences;
 
-  QVBox* highlightListBox=new QVBox(highlightListGroup);
-  highlightListBox->setSpacing(spacingHint());
-
-  highlightListView=new KListView(highlightListBox,"highlight_list_view");
-
-  highlightListView->addColumn(i18n("RE"));
-  highlightListView->addColumn(i18n("Highlights"));
-  highlightListView->addColumn(i18n("Sound"));
-  highlightListView->addColumn(i18n("Auto Text"));
-  highlightListView->setAllColumnsShowFocus(true);
-  highlightListView->setFullWidth(true);
-  highlightListView->setDragEnabled(true);
-  highlightListView->setAcceptDrops(true);
   highlightListView->setSorting(-1);
 
   QPtrList<Highlight> highlightList=preferences->getHighlightList();
@@ -68,46 +54,12 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
     new HighlightViewItem(highlightListView,currentHighlight);
   }
 
-  QHBox* highlightEditBox=new QHBox(highlightListBox);
-  highlightEditBox->setSpacing(spacingHint());
-
-  patternLabel=new QLabel(i18n("&Pattern:"),highlightEditBox);
-  patternInput=new KLineEdit(highlightEditBox,"highlight_pattern_input");
-  patternColor=new KColorCombo(highlightEditBox,"highlight_pattern_color");
-  patternLabel->setBuddy(patternInput);
-
-  QHBox* highlightSoundBox=new QHBox(highlightListBox);
-  highlightSoundBox->setSpacing(spacingHint());
-
-  soundLabel = new QLabel(i18n("&Sound:"), highlightSoundBox);
-  soundPlayBtn = new QPushButton(highlightSoundBox, "highlight_sound_play_button");
-  soundPlayBtn->setPixmap(SmallIcon( "player_play" ));
-  soundURL = new KURLRequester(highlightSoundBox, "highlight_sound_url");
-  soundLabel->setBuddy(soundURL);
-
-  QHBox* autoTextBox=new QHBox(highlightListBox);
-  autoTextBox->setSpacing(spacingHint());
-  autoTextLabel=new QLabel(i18n("Auto &text:"),autoTextBox);
-  autoTextInput=new KLineEdit(autoTextBox,"auto_text_input");
-  autoTextLabel->setBuddy(autoTextInput);
-
-  patternLabel->setEnabled(false);
-  patternInput->setEnabled(false);
-  patternColor->setEnabled(false);
-  soundURL->setEnabled(false);
-  soundLabel->setEnabled(false);
-  soundPlayBtn->setEnabled(false);
-  autoTextInput->setEnabled(false);
-  autoTextLabel->setEnabled(false);
-
-  QString filter = "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm";
-  soundURL->setFilter(filter);
+  soundPlayBtn->setIconSet(SmallIconSet( "player_play" ));
   soundURL->setCaption(i18n("Select Sound File"));
 
   // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]
   // find the first "sound"-resource that contains files
-  QStringList soundDirs = KGlobal::dirs()->findDirs("data", "konversation/sounds");
-  soundDirs += KGlobal::dirs()->resourceDirs( "sound" );
+  QStringList soundDirs = KGlobal::dirs()->resourceDirs( "sound" );
 
   if ( !soundDirs.isEmpty() ) {
     KURL url;
@@ -126,42 +78,14 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   }
   // End copy
 
-  enableSoundCheck = new QCheckBox(i18n("&Enable sounds for highlight list items"),
-    parentFrame, "highlight_enable_sound_check");
   enableSoundCheck->setChecked(preferences->getHighlightSoundEnabled());
 
-  currentNickCheck=new QCheckBox(i18n("Al&ways highlight current nick:"),parentFrame,"highlight_current_nick_check");
-  currentNickCheck->setChecked(preferences->getHighlightNick());
-  currentNickColor=new KColorCombo(parentFrame,"current_nick_color");
   currentNickColor->setColor(preferences->getHighlightNickColor());
   currentNickChanged(preferences->getHighlightNick() ? 2 : 0);
 
-  ownLinesCheck=new QCheckBox(i18n("Always highlight own &lines:"),parentFrame,"highlight_own_lines_check");
-  ownLinesColor=new KColorCombo(parentFrame,"own_lines_color");
   ownLinesCheck->setChecked(preferences->getHighlightOwnLines());
   ownLinesColor->setColor(preferences->getHighlightOwnLinesColor());
   ownLinesChanged(preferences->getHighlightOwnLines() ? 2 : 0);
-
-  QVBox* highlightButtonBox=new QVBox(highlightListGroup);
-  highlightButtonBox->setSpacing(spacingHint());
-  QPushButton* newButton=new QPushButton(i18n("&New"),highlightButtonBox);
-  QPushButton* removeButton=new QPushButton(i18n("&Remove"),highlightButtonBox);
-  // add spacer below the two buttons
-  new QVBox(highlightButtonBox);
-
-  int row=0;
-  highlightLayout->addMultiCellWidget(highlightListGroup,row,row,0,1);
-
-  row++;
-  highlightLayout->addMultiCellWidget(enableSoundCheck, row, row, 0, 1);
-
-  row++;
-  highlightLayout->addWidget(currentNickCheck,row,0);
-  highlightLayout->addWidget(currentNickColor,row,1);
-
-  row++;
-  highlightLayout->addWidget(ownLinesCheck,row,0);
-  highlightLayout->addWidget(ownLinesColor,row,1);
 
   connect(highlightListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
   connect(highlightListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
