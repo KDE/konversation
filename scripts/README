@@ -31,7 +31,7 @@ noatun		Displays on the current channel what you are playing
 		usage: /noatun
 
 uptime          Displays the system uptime on the current channel.
-                usage: /xuptime
+                usage: /uptime
 
 fortune         Displays a random fortune cookie
 		usage: /fortune
