@@ -968,6 +968,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
 	  if(nickInfo) {
             nickInfo->setAway(true);
+            if ( nickInfo->getAwayMessage() == trailing )
+                break;
             nickInfo->setAwayMessage(trailing);
 	  }
           server->appendMessageToFrontmost(i18n("Away"),i18n("%1 is away: %2").arg(parameterList[1]).arg(trailing));
