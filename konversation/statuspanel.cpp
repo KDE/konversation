@@ -159,8 +159,11 @@ void StatusPanel::updateFonts()
   statusInput->setFont(KonversationApplication::preferences.getTextFont());
 
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
-  getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
+
+  if(KonversationApplication::preferences.getShowBackgroundImage())
+      getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
                                    KonversationApplication::preferences.getBackgroundImageName());
+
   nicknameCombobox->setFont(KonversationApplication::preferences.getTextFont());
 }
 

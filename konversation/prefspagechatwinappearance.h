@@ -13,6 +13,8 @@
 #define PREFSPAGECHATWINAPPERANCE_H
 
 #include <qfont.h>
+#include <kurlrequester.h>
+#include <qhgroupbox.h>
 
 #include "prefspage.h"
 
@@ -33,6 +35,8 @@ class PrefsPageChatWinAppearance : public PrefsPage
   protected slots:
     void textFontClicked();
     void listFontClicked();
+    void setBackgroundImageConfig(bool state);
+    void saveBackgroundImage(const QString&);
 
     void timestampingChanged(int state);
             
@@ -54,6 +58,8 @@ class PrefsPageChatWinAppearance : public PrefsPage
     QCheckBox* showQuickButtons;
     QCheckBox* showModeButtons;
     QCheckBox* showTopic;
+    QCheckBox* showBackgroundImage;
+    KURLRequester* backgroundURL;
 };
 
 #endif

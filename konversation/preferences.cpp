@@ -75,6 +75,7 @@ Preferences::Preferences()
   setShowModeButtons(true);
   setShowServerList(true);
   setShowTrayIcon(true);
+  setShowBackgroundImage(false);
   setTrayNotify(false);
 
   setUseSpacing(false);
@@ -643,6 +644,9 @@ bool Preferences::getShowModeButtons() { return showModeButtons; }
 
 void Preferences::setShowServerList(bool state) { showServerList=state; }
 bool Preferences::getShowServerList() { return showServerList; }
+
+void Preferences::setShowBackgroundImage(bool state) { showBackgroundImage=state; }
+bool Preferences::getShowBackgroundImage() { return showBackgroundImage; }
 
 void Preferences::setShowTrayIcon(bool state)
 {

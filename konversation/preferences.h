@@ -328,6 +328,9 @@ class Preferences : public QObject
     void setShowTrayIcon(bool state);
     bool getShowTrayIcon();
     
+    void setShowBackgroundImage(bool state);
+    bool getShowBackgroundImage();
+    
     void setTrayNotify(bool state);
     bool getTrayNotify();
 
@@ -465,6 +468,7 @@ class Preferences : public QObject
     bool showModeButtons;
     bool showServerList;
     bool showTrayIcon;
+    bool showBackgroundImage;
     bool trayNotify;
 
     QValueList<int> channelSplitter;

@@ -34,8 +34,6 @@ PrefsPageColorsAppearance::PrefsPageColorsAppearance(QFrame* newParent,Preferenc
   colorList.append(i18n("&Query message:")+",QueryMessage");
   colorList.append(i18n("&Server message:")+",ServerMessage");
   colorList.append(i18n("&Timestamp:")+",Time");
-  colorList.append(i18n("&Background:")+",TextViewBackground");
-  colorList.append(i18n("A&lternate background:")+",AlternateBackground");
 
   int row = 0;
   int col = 0;
@@ -74,20 +72,6 @@ PrefsPageColorsAppearance::PrefsPageColorsAppearance(QFrame* newParent,Preferenc
   colorInputFieldsCheck->setChecked(preferences->getColorInputFields());
   colorLayout->addMultiCellWidget(colorInputFieldsCheck, row, row, 0, 3);
     
-  row++;
-  QLabel* backgroundLabel = new QLabel(i18n("Back&ground image:"), parentFrame);
-  backgroundURL = new KURLRequester(parentFrame);
-  backgroundURL->setCaption(i18n("Select Background Image"));
-
-  backgroundLabel->setBuddy(backgroundURL);
-
-  backgroundURL->setURL(preferences->getBackgroundImageName());
-
-  QHBoxLayout* backgroundLayout = new QHBoxLayout(spacingHint());
-  backgroundLayout->addWidget(backgroundLabel);
-  backgroundLayout->addWidget(backgroundURL, 10);
-  
-  colorLayout->addMultiCellLayout(backgroundLayout, row, row, 0, 3);
   
   row++;
   QGroupBox* ircColorGroup = new QGroupBox(i18n("IRC Colors"), parentFrame);
@@ -144,7 +128,6 @@ void PrefsPageColorsAppearance::applyPreferences()
   }
 
   preferences->setColorInputFields(colorInputFieldsCheck->isChecked());
-  preferences->setBackgroundImageName(backgroundURL->url());
   
   QStringList colorList;
   

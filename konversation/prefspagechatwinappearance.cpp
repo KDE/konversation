@@ -116,12 +116,36 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QFrame* newParent,Prefere
   autoUserhostCheck=new QCheckBox(i18n("Show h&ostmasks in nickname list"), layoutGroup, "auto_userhost_check");
   autoUserhostCheck->setChecked(preferences->getAutoUserhost());
   
+  QGroupBox* backgroundImageBox = new QGroupBox("Use a bac&kground image", parentFrame);
+  backgroundImageBox->setColumnLayout(0, Qt::Horizontal);
+  backgroundImageBox->setMargin(marginHint());
+  backgroundImageBox->setCheckable(TRUE);
+  backgroundImageBox->setChecked(preferences->getShowBackgroundImage());
+  backgroundImageBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
+
+  QGridLayout* backgroundImageLayout=new QGridLayout(backgroundImageBox->layout(),4,2,spacingHint(),"background_image_layout");
+
+  QLabel* backgroundLabel = new QLabel(i18n("Path:"), backgroundImageBox );
+  backgroundURL = new KURLRequester(backgroundImageBox, "background_image_url");
+
+  backgroundURL->setCaption(i18n("Select Background Image"));
+  backgroundURL->setURL(preferences->getBackgroundImageName());
+  backgroundLabel->setBuddy(backgroundLabel);
+
+  backgroundImageLayout->addWidget(backgroundLabel,0,0);
+  backgroundImageLayout->addWidget(backgroundURL,0,1);
+
+  connect(backgroundImageBox,SIGNAL(toggled(bool)),this, SLOT(setBackgroundImageConfig(bool)));
+  connect(backgroundURL,SIGNAL(textChanged(const QString&)),this,SLOT(saveBackgroundImage(const QString&)));
+
   row = 0;
   chatLayout->addMultiCellWidget(fontGBox, row, row, 0, 2);
   row++;
   chatLayout->addMultiCellWidget(timestampBox, row, row, 0, 2);
   row++;
   chatLayout->addMultiCellWidget(layoutGroup, row, row, 0, 2);
+  row++;
+  chatLayout->addMultiCellWidget(backgroundImageBox, row, row, 0, 2);
   row++;
   chatLayout->setRowStretch(row, 10);
 }
@@ -140,6 +164,22 @@ void PrefsPageChatWinAppearance::listFontClicked()
 {
   KFontDialog::getFont(listFont);
   updateFonts();
+}
+
+void PrefsPageChatWinAppearance::setBackgroundImageConfig(bool state )
+{
+    if( !state )
+        preferences->setShowBackgroundImage(FALSE );
+    else {
+        preferences->setBackgroundImageName(backgroundURL->url());
+        preferences->setShowBackgroundImage(TRUE);
+    }
+}
+
+void PrefsPageChatWinAppearance::saveBackgroundImage(const QString& url)
+{
+    preferences->setShowBackgroundImage(TRUE);
+    preferences->setBackgroundImageName(url);
 }
 
 void PrefsPageChatWinAppearance::updateFonts()

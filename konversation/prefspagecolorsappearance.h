@@ -34,7 +34,6 @@ class PrefsPageColorsAppearance : public PrefsPage
 
   protected:
     QStringList colorList;
-    KURLRequester* backgroundURL;
     QPtrList<KColorButton> colorBtnList;
     QPtrList<KColorButton> ircColorBtnList;
     QCheckBox* colorInputFieldsCheck;

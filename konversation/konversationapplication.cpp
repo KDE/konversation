@@ -279,6 +279,7 @@ void KonversationApplication::readOptions()
   // Tray icon settings
   preferences.setShowTrayIcon(config->readBoolEntry("ShowTrayIcon",preferences.getShowTrayIcon()));
   preferences.setTrayNotify(config->readBoolEntry("TrayNotify",preferences.getTrayNotify()));
+  preferences.setShowBackgroundImage(config->readBoolEntry("ShowBackgroundImage",preferences.getShowBackgroundImage()));
 
   // Window geometries
   QSize* logfileReaderSize=new QSize(500,300);
@@ -646,6 +647,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon());
   config->writeEntry("TrayNotify",preferences.getTrayNotify());
+
+  config->writeEntry("ShowBackgroundImage",preferences.getShowBackgroundImage());
 
   config->writeEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction());
   config->writeEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction());
