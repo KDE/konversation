@@ -400,8 +400,12 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
              who.lower().find(needle)!=-1 )             // hilight patterns in nickname
           {
             highlightColor=hilightList.at(index)->getColor().name();
-            KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-            konvApp->sound()->play(hilightList.at(index)->getSoundURL());
+            
+            if(KonversationApplication::preferences.getHilightSoundEnabled()) {
+              KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+              konvApp->sound()->play(hilightList.at(index)->getSoundURL());
+            }
+            
             break;
           }
         } // endfor

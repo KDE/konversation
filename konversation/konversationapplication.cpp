@@ -461,6 +461,8 @@ void KonversationApplication::readOptions()
 
   // Hilight List
   config->setGroup("Hilight List");
+  preferences.setHilightSoundEnabled(config->readBoolEntry("HilightSoundsEnabled",
+    preferences.getHilightSoundEnabled()));
   preferences.setHilightNick(config->readBoolEntry("HilightNick",preferences.getHilightNick()));
   QString hilight=config->readEntry("HilightNickColor");
   if(hilight.isEmpty())
@@ -706,6 +708,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("HilightNickColor",preferences.getHilightNickColor().name().mid(1));
   config->writeEntry("HilightOwnLines",preferences.getHilightOwnLines());
   config->writeEntry("HilightOwnLinesColor",preferences.getHilightOwnLinesColor().name().mid(1));
+  config->writeEntry("HilightSoundsEnabled", preferences.getHilightSoundEnabled());
   
   QPtrList<Highlight> hiList=preferences.getHilightList();
   int i = 0;

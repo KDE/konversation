@@ -116,6 +116,10 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   }
   // End copy
 
+  enableSoundCheck = new QCheckBox(i18n("&Enable sounds for highlight list items"),
+    parentFrame, "highlight_enable_sound_check");
+  enableSoundCheck->setChecked(preferences->getHilightSoundEnabled());
+  
   currentNickCheck=new QCheckBox(i18n("Always highlight &current nick:"),parentFrame,"highlight_current_nick_check");
   currentNickCheck->setChecked(preferences->getHilightNick());
   currentNickColor=new KColorCombo(parentFrame,"current_nick_color");
@@ -137,7 +141,10 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
 
   int row=0;
   highlightLayout->addMultiCellWidget(highlightListGroup,row,row,0,1);
-
+  
+  row++;
+  highlightLayout->addMultiCellWidget(enableSoundCheck, row, row, 0, 1);
+  
   row++;
   highlightLayout->addWidget(currentNickCheck,row,0);
   highlightLayout->addWidget(currentNickColor,row,1);
@@ -284,6 +291,7 @@ void PrefsPageHighlight::applyPreferences()
   preferences->setHilightOwnLines(ownLinesCheck->isChecked());
   preferences->setHilightNickColor(currentNickColor->color().name());
   preferences->setHilightOwnLinesColor(ownLinesColor->color().name());
+  preferences->setHilightSoundEnabled(enableSoundCheck->isChecked());
 }
 
 void PrefsPageHighlight::playSound()

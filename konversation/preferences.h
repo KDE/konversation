@@ -175,6 +175,8 @@ class Preferences : public QObject
     QPtrList<Highlight> getHilightList();
     void setHilightList(QPtrList<Highlight> newList);
     void addHilight(const QString &newHilight, QColor color, const QString& sound);
+    void setHilightSoundEnabled(bool enabled);
+    bool getHilightSoundEnabled();
 
     void setHilightNick(bool state);      // shall we hilight the current nick?
     bool getHilightNick();
@@ -478,6 +480,7 @@ class Preferences : public QObject
     bool hilightOwnLines;
     QColor hilightNickColor;
     QColor hilightOwnLinesColor;
+    bool hilightSoundEnabled;
 
     // On Screen Display
     bool OSDUsage;            // Use OSD?

@@ -128,6 +128,7 @@ Preferences::Preferences()
   setHilightOwnLines(false);
   setHilightNickColor("#ff0000");
   setHilightOwnLinesColor("#ff0000");
+  setHilightSoundEnabled(true);
 
   // On Screen Display
   setOSDUsage(false);
@@ -292,6 +293,16 @@ void Preferences::setHilightList(QPtrList<Highlight> newList)
 void Preferences::addHilight(const QString &newHilight, QColor newColor, const QString& sound)
 {
   hilightList.append(new Highlight(newHilight,newColor, KURL(sound)));
+}
+
+void Preferences::setHilightSoundEnabled(bool enabled)
+{
+  hilightSoundEnabled = enabled;
+}
+
+bool Preferences::getHilightSoundEnabled()
+{
+  return hilightSoundEnabled;
 }
 
 void Preferences::setButtonList(QStringList newList)

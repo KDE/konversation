@@ -72,6 +72,7 @@ class PrefsPageHighlight : public PrefsPage
     KURLRequester* soundURL;
     QLabel* soundLabel;
     QPushButton* soundPlayBtn;
+    QCheckBox* enableSoundCheck;
 };
 
 #endif
