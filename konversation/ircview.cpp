@@ -37,6 +37,7 @@
 #include <kprocess.h>
 #include <kiconloader.h>
 #include <kshell.h>
+#include <krandomsequence.h>
 
 #include "konversationapplication.h"
 #include "ircview.h"
@@ -83,6 +84,9 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   QStyleSheet* sheet=new QStyleSheet(this,"ircview_style_sheet");
   new QStyleSheetItem(sheet,"p");
   setStyleSheet(sheet);
+
+  /* Initialise lastColor */
+  lastColor=8;
 
   setServer(newServer);
   setFont(KonversationApplication::preferences.getTextFont());
@@ -416,12 +420,13 @@ void IRCView::append(const QString& nick,const QString& message)
 	  colorList = KonversationApplication::preferences.getNickColorList();
 	  QColor nickColor;
 	  QString backgroundColor=KonversationApplication::preferences.getColor("TextViewBackground");
-	  srandom(time(NULL));
-	  int i = random()%6;
+	  KRandomSequence sq;
+	  uint i = (uint) sq.getLong(7);
 	  
-	  if(backgroundColor==colorList[i])
-	    i = (i+1)%6;
+	  if(lastColor==i && backgroundColor==colorList[i])
+	    i = (i+1)%8;
 
+	  lastColor=i;
 	  colorMap[nick] = colorList[i];
 	}
       nickLine = "<font color=\""+colorMap[nick]+"\"><b>%2</b></font>";

@@ -132,6 +132,7 @@ class IRCView : public KTextBrowser
     bool fromCursor;
     QString pattern;
 
+    uint lastColor;
     QStringList colorList;
     QMap<QString,QString> colorMap;
 };
