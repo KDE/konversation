@@ -72,10 +72,11 @@ QStringList ServerISON::getAddressees() {
 
 KABC::Addressee ServerISON::getOfflineNickAddressee(QString& nickname)
 {
+  QString lcNickname = nickname.lower();
   if(m_ISONList_invalid)
     recalculateAddressees();
-  if (m_offlineNickToAddresseeMap.contains(nickname))
-    return m_offlineNickToAddresseeMap[nickname];
+  if (m_offlineNickToAddresseeMap.contains(lcNickname))
+    return m_offlineNickToAddresseeMap[lcNickname];
   else
     return KABC::Addressee();
 }
