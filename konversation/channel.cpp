@@ -22,6 +22,7 @@
 #include <qregexp.h>
 #include <qtooltip.h>
 #include <qtextcodec.h>
+#include <qsplitter.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -41,6 +42,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   quickButtonsChanged=false;
   quickButtonsState=false;
 
+  splitterChanged=true;
   modeButtonsChanged=false;
   modeButtonsState=false;
 
@@ -57,11 +59,16 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   setSpacing(spacing());
   setMargin(margin());
 
+  splitter=new QSplitter(this);
+  setStretchFactor(splitter,10);
+  splitter->setOpaqueResize(true);
+  
   // The grid for the topic line, Nicks/Ops label, Channel View and Nick list
-  QGrid* topicViewNicksGrid=new QGrid(2,this);
+//  QGrid* topicViewNicksGrid=new QGrid(2,this);
+  QVBox* topicViewNicksGrid=new QVBox(splitter);
   topicViewNicksGrid->setSpacing(spacing());
 
-  /* The box holding the Topic label/line, and the channel modes */
+  // The box holding the Topic label/line, and the channel modes
   QHBox* topicBox=new QHBox(topicViewNicksGrid);
   topicBox->setSpacing(spacing());
 
@@ -71,7 +78,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   topicLine->setAutoCompletion(false);
   topicLine->setInsertionPolicy(QComboBox::NoInsertion);
 
-  /* The box holding the channel modes*/
+  // The box holding the channel modes
   modeBox=new QHBox(topicBox);
   modeBox->setSizePolicy(hfixed);
   modeT=new ModeButton("T",modeBox,0);
@@ -106,14 +113,18 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   showModeButtons(KonversationApplication::preferences.getShowModeButtons());
 
-  nicksOps=new QLabel(i18n("Nicks"),topicViewNicksGrid);
-  nicksOps->setAlignment(AlignVCenter | AlignHCenter);
-
   setTextView(new IRCView(topicViewNicksGrid,NULL));  // Server will be set later in setServer()
 
+//  nicksOps=new QLabel(i18n("Nicks"),topicViewNicksGrid);
+
   // The box that holds the Nick List and the quick action buttons
-  QVBox* nickListButtons=new QVBox(topicViewNicksGrid);
+  QVBox* nickListButtons=new QVBox(splitter);
+
   nickListButtons->setSpacing(spacing());
+
+//  nicksOps=new QLabel(i18n("Nicks"),topicViewNicksGrid);
+  nicksOps=new QLabel(i18n("Nicks"),nickListButtons);
+  nicksOps->setAlignment(AlignVCenter | AlignHCenter);
 
   nicknameListView=new NickListView(nickListButtons);
   nicknameListView->setSelectionModeExt(KListView::Extended);
@@ -162,7 +173,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   // Set the widgets size policies
   topicBox->setSizePolicy(greedy);
   topicLabel->setSizePolicy(hfixed);
-   // was hmodest
+
   topicLine->setSizePolicy(vfixed);  // This should prevent the widget from growing too wide
 
   limit->setMaximumSize(40,100);
@@ -205,32 +216,27 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameList.setAutoDelete(true);     // delete items when they are removed
 
   setLog(KonversationApplication::preferences.getLog());
-// if(mode==singleWindows) show();
 }
 
 Channel::~Channel()
 {
   kdDebug() << "Channel::~Channel()" << endl;
 
-  /* Purge nickname list */
+  KonversationApplication::preferences.setChannelSplitter(splitter->sizes());
+  
+  // Purge nickname list
   Nick* nick=nicknameList.first();
   while(nick)
   {
-    /* Remove the first element of the list */
+    // Remove the first element of the list
     nicknameList.removeRef(nick);
-    /* Again, get the first element in the list */
+    // Again, get the first element in the list
     nick=nicknameList.first();
   }
-  /* Unlink this channel from channel list */
+  // Unlink this channel from channel list
   server->removeChannel(this);
 }
-/*
-void Channel::setServer(Server* newServer)
-{
-  getTextView()->setServer(newServer);
-  ChatWindow::setServer(newServer);
-}
-*/
+
 void Channel::requestNewTopic(const QString& newTopic)
 {
   kdDebug() << "requestNewTopic(" << newTopic << ")" << endl;
@@ -297,7 +303,7 @@ void Channel::popupCommand(int id)
     case NickListView::DccSend:
       pattern=KonversationApplication::preferences.getCommandChar()+"DCC SEND %u";
       break;
-  } /* switch */
+  } // switch
 
   if(pattern.length())
   {
@@ -435,7 +441,7 @@ void Channel::setName(const QString& newName)
 
 void Channel::setKey(const QString& newKey)
 {
-  kdDebug() << "Channel Key set to " << newKey << endl;
+//  kdDebug() << "Channel Key set to " << newKey << endl;
   key=newKey;
 }
 
@@ -1093,6 +1099,11 @@ void Channel::showEvent(QShowEvent* event)
   {
     modeButtonsChanged=false;
     showModeButtons(modeButtonsState);
+  }
+  if(splitterChanged)
+  {
+    splitterChanged=false;
+    splitter->setSizes(KonversationApplication::preferences.getChannelSplitter());
   }
 }
 

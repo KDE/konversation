@@ -183,6 +183,12 @@ void KonversationApplication::readOptions()
   preferences.setShowQuickButtons(config->readBoolEntry("ShowQuickButtons",preferences.getShowQuickButtons()));
   preferences.setShowModeButtons(config->readBoolEntry("ShowModeButtons",preferences.getShowModeButtons()));
 
+  QValueList<int> sizes;
+  QString sizesString=config->readEntry("ChannelSplitter","10,1");
+  sizes.append(sizesString.section(',',0,0).toInt());
+  sizes.append(sizesString.section(',',1,1).toInt());
+  preferences.setChannelSplitter(sizes);
+  
   // Colors
   config->setGroup("Message Text Colors");
 
@@ -346,6 +352,9 @@ void KonversationApplication::saveOptions()
   config->writeEntry("TimestampFormat",preferences.getTimestampFormat());
   config->writeEntry("ShowQuickButtons",preferences.getShowQuickButtons());
   config->writeEntry("ShowModeButtons",preferences.getShowModeButtons());
+
+  QString sizesString(QString::number(preferences.getChannelSplitter()[0])+","+QString::number(preferences.getChannelSplitter()[1]));
+  config->writeEntry("ChannelSplitter",sizesString);
 
   config->setGroup("Message Text Colors");
 

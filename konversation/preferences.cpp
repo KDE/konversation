@@ -63,6 +63,9 @@ Preferences::Preferences()
   setShowModeButtons(true);
   setShowServerList(true);
 
+  channelSplitter.append(10);
+  channelSplitter.append(1);
+  
   setPartReason("Konversation terminated!");
   setKickReason("User terminated!");
 
@@ -378,5 +381,8 @@ bool Preferences::getShowModeButtons() { return showModeButtons; }
 
 void Preferences::setShowServerList(bool state) { showServerList=state; }
 bool Preferences::getShowServerList() { return showServerList; }
+
+void Preferences::setChannelSplitter(QValueList<int> sizes) { channelSplitter=sizes; }
+QValueList<int> Preferences::getChannelSplitter() { return channelSplitter; }
 
 #include "preferences.moc"

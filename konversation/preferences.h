@@ -14,14 +14,15 @@
   $Id$
 */
 
+#ifndef PREFERENCES_H
+#define PREFERENCES_H
+
 #include <qobject.h>
 #include <qlist.h>
 #include <qsize.h>
+#include <qvaluelist.h>
 #include <qstringlist.h>
 #include <qfont.h>
-
-#ifndef PREFERENCES_H
-#define PREFERENCES_H
 
 #include "serverentry.h"
 #include "ignore.h"
@@ -219,6 +220,9 @@ class Preferences : public QObject
     void setShowServerList(bool state);
     bool getShowServerList();
 
+    void setChannelSplitter(QValueList<int> sizes);
+    QValueList<int> getChannelSplitter();
+
     QString ident;
     QString realname;
 
@@ -260,6 +264,8 @@ class Preferences : public QObject
     bool showModeButtons;
     bool showServerList;
 
+    QValueList<int> channelSplitter;
+    
     QStringList notifyList;
     QString commandChar;
 

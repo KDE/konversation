@@ -115,9 +115,11 @@ class Channel : public ChatWindow
     bool quickButtonsState;
     bool modeButtonsChanged;  // to take care of redraw problem if hidden
     bool modeButtonsState;
+    bool splitterChanged;
 
     unsigned int completionPosition;
 
+    QSplitter* splitter;
     QString topic; // Caches current topic
     TopicComboBox* topicLine;
     QStringList topicHistory;

@@ -20,6 +20,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <kdebug.h>
+#include <krootpixmap.h>
 
 #include "chatwindow.h"
 #include "konversationapplication.h"
@@ -81,6 +82,9 @@ void ChatWindow::setTextView(IRCView* newView)
 {
   textView=newView;
   connect(textView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
+  KRootPixmap* map=new KRootPixmap(textView);
+  map->setFadeEffect(0.5,QColor("#000000"));
+  map->start();
 }
 
 void ChatWindow::append(const char* nickname,const char* message)
