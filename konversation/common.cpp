@@ -48,7 +48,14 @@ QString tagURLs(const QString& text, const QString& fromNick)
 			 );
   
   channelPattern.setCaseSensitive(false);
-  
+
+  // See http://bugs.kde.org/show_bug.cgi?id=97350
+  QRegExp colorRegex=QRegExp("#<font color=\"#\\S+\">(.*)</font>");
+  colorRegex.setMinimal(true);
+  colorRegex.setCaseSensitive(false);
+  colorRegex.search(filteredLine);
+  filteredLine.replace(colorRegex,"#"+colorRegex.cap(1));
+
   while(channelPattern.search(filteredLine, pos) != -1) {
     
     // Remember where we found the url
