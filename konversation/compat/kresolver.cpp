@@ -10,7 +10,7 @@
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included 
+ *  The above copyright notice and this permission notice shall be included
  *  in all copies or substantial portions of the Software.
  *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -57,6 +57,11 @@
 #include "kresolver.h"
 #include "kresolver_p.h"
 #include "ksocketaddress.h"
+
+#ifdef NEED_MUTEX
+#warning "mutex"
+QMutex getXXbyYYmutex;
+#endif
 
 using namespace KNetwork;
 using namespace KNetwork::Internal;
@@ -290,7 +295,7 @@ void KResolverResults::setAddress(const QString& node,
   d->node = node;
   d->service = service;
 }
-  
+
 void KResolverResults::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
@@ -567,7 +572,7 @@ QString KResolver::errorString(int errorcode, int syserror)
     I18N_NOOP("requested service not supported for this socket type"), // UnsupportedService
     I18N_NOOP("requested socket type not supported"),	// UnsupportedSocketType
     I18N_NOOP("unknown error"),			// UnknownError
-    I18N_NOOP("system error: %1")		// SystemError
+    I18N_NOOP("system error: %1")              // SystemError
   };
 
   // handle the special value
@@ -607,10 +612,6 @@ bool KResolver::resolveAsync(QObject* userObj, const char *userSlot,
   qres->d->deleteWhenDone = true; // this is the only difference from the example code
   return qres->start();
 }
-
-#ifdef NEED_MUTEX
-QMutex getXXbyYYmutex;
-#endif
 
 QStrList KResolver::protocolName(int protonum)
 {
@@ -884,7 +885,7 @@ QStrList KResolver::serviceName(int port, const char *protoname)
 static QStringList splitLabels(const QString& unicodeDomain);
 static QCString ToASCII(const QString& label);
 static QString ToUnicode(const QString& label);
-  
+
 // implement the ToAscii function, as described by IDN documents
 QCString KResolver::domainToAscii(const QString& unicodeDomain)
 {
@@ -1074,7 +1075,7 @@ static QString ToUnicode(const QString& label)
 
   delete [] ucs4_input;
   delete [] ucs4_output;
-  
+
   return result;
 #else
   return label;

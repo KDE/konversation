@@ -10,7 +10,7 @@
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included 
+ *  The above copyright notice and this permission notice shall be included
  *  in all copies or substantial portions of the Software.
  *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -82,7 +82,7 @@ namespace
 
     KReverseResolverEvent(const QString& _node, const QString& _service,
 			  bool _success)
-      : QEvent((Type)myType), node(_node), 
+      : QEvent((Type)myType), node(_node),
 	service(_service), success(_success)
     { }
   };
@@ -179,7 +179,7 @@ bool KReverseResolver::event(QEvent *e)
   d->worker = 0L;
 
   // emit signal
-  emit finished(*this); 
+  emit finished(*this);
 
   return true;
 }
@@ -224,7 +224,7 @@ bool ReverseThread::run()
 
   {
 #ifdef NEED_MUTEX
-    QMutexLocker locker(&getXXbyYYmutex);
+    QMutexLocker locker(&::getXXbyYYmutex);
 #endif
     err = ::getnameinfo(m_addr, m_addr.length(),
 			h, sizeof(h) - 1, s, sizeof(s) - 1, niflags);
