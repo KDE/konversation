@@ -43,47 +43,46 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
 {
   setType(ChatWindow::DccPanel);
 
-  dccListView=new KListView(this,"dcc_control_panel");
+  m_listView = new KListView(this,"dcc_control_panel");
   
-  dccListView->setSelectionMode(QListView::Extended);
-  dccListView->setDragEnabled(true);
-  dccListView->setAcceptDrops(true);
-  dccListView->setSorting(-1,false);
-  dccListView->setAllColumnsShowFocus(true);
+  m_listView->setSelectionMode(QListView::Extended);
+  m_listView->setDragEnabled(true);
+  m_listView->setAcceptDrops(true);
+  m_listView->setSorting(-1,false);
+  m_listView->setAllColumnsShowFocus(true);
   
   for(unsigned int i=0 ; i < Column::COUNT ; ++i)
+    m_listView->addColumn("");
   
-    dccListView->addColumn("");
+  //m_listView->setColumnText(Column::StatusIcon,    "");
+  //m_listView->setColumnText(Column::TypeIcon,      "");
+  m_listView->setColumnText(Column::OfferDate,     i18n("Date"));
+  m_listView->setColumnText(Column::Status,        i18n("Status"));
+  m_listView->setColumnText(Column::FileName,      i18n("File"));
+  m_listView->setColumnText(Column::PartnerNick,   i18n("Partner"));
+  m_listView->setColumnText(Column::Progress,      i18n("Progress"));
+  m_listView->setColumnText(Column::Position,      i18n("Position"));
+  m_listView->setColumnText(Column::TimeRemaining, i18n("Remain"));
+  m_listView->setColumnText(Column::CPS,           i18n("Speed"));
   
-  //dccListView->setColumnText(Column::StatusIcon,    "");
-  //dccListView->setColumnText(Column::TypeIcon,      "");
-  dccListView->setColumnText(Column::OfferDate,     i18n("Date"));
-  dccListView->setColumnText(Column::Status,        i18n("Status"));
-  dccListView->setColumnText(Column::FileName,      i18n("File"));
-  dccListView->setColumnText(Column::PartnerNick,   i18n("Partner"));
-  dccListView->setColumnText(Column::Progress,      i18n("Progress"));
-  dccListView->setColumnText(Column::Position,      i18n("Position"));
-  dccListView->setColumnText(Column::TimeRemaining, i18n("Remain"));
-  dccListView->setColumnText(Column::CPS,           i18n("Speed"));
+  m_listView->setColumnWidth(Column::OfferDate,      70);
+  m_listView->setColumnWidth(Column::Status,         80);
+  m_listView->setColumnWidth(Column::FileName,      150);
+  m_listView->setColumnWidth(Column::PartnerNick,    70);
+  m_listView->setColumnWidth(Column::Progress,       90);
+  m_listView->setColumnWidth(Column::Position,      120);
+  m_listView->setColumnWidth(Column::TimeRemaining,  80);
+  m_listView->setColumnWidth(Column::CPS,            70);
   
-  dccListView->setColumnWidth(Column::OfferDate,      70);
-  dccListView->setColumnWidth(Column::Status,         80);
-  dccListView->setColumnWidth(Column::FileName,      150);
-  dccListView->setColumnWidth(Column::PartnerNick,    70);
-  dccListView->setColumnWidth(Column::Progress,       90);
-  dccListView->setColumnWidth(Column::Position,      120);
-  dccListView->setColumnWidth(Column::TimeRemaining,  80);
-  dccListView->setColumnWidth(Column::CPS,            70);
+  m_listView->setColumnWidthMode(Column::FileName, QListView::Manual);
   
-  dccListView->setColumnWidthMode(Column::FileName, QListView::Manual);
+  m_listView->setColumnAlignment(Column::OfferDate,     AlignHCenter);
+  m_listView->setColumnAlignment(Column::Progress,      AlignHCenter);
+  m_listView->setColumnAlignment(Column::Position,      AlignHCenter);
+  m_listView->setColumnAlignment(Column::TimeRemaining, AlignRight);
+  m_listView->setColumnAlignment(Column::CPS,           AlignRight);
   
-  dccListView->setColumnAlignment(Column::OfferDate,     AlignHCenter);
-  dccListView->setColumnAlignment(Column::Progress,      AlignHCenter);
-  dccListView->setColumnAlignment(Column::Position,      AlignHCenter);
-  dccListView->setColumnAlignment(Column::TimeRemaining, AlignRight);
-  dccListView->setColumnAlignment(Column::CPS,           AlignRight);
-  
-  connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (selectionChanged()) );
+  connect(m_listView,SIGNAL (selectionChanged()),this,SLOT (selectionChanged()) );
   
   // button
   
@@ -92,50 +91,50 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   
   #define icon(s) KGlobal::iconLoader()->loadIcon( s, KIcon::Small )
   
-  acceptButton = new QPushButton(icon("player_play"),i18n("Accept"),buttonsBox,"start_dcc");
-  abortButton  = new QPushButton(icon("stop"),i18n("Abort"),buttonsBox,"abort_dcc");
-  clearButton  = new QPushButton(icon("editdelete"), i18n("Clear"),buttonsBox,"clear_dcc");
-  openButton   = new QPushButton(icon("exec"), i18n("Open"),buttonsBox,"open_dcc_file");
-  removeButton = new QPushButton(icon("edittrash"), i18n("Remove"),buttonsBox,"remove_dcc_file");
-  detailButton = new QPushButton(icon("view_text"), i18n("Detail"),buttonsBox,"detail_dcc");
+  m_buttonAccept = new QPushButton(icon("player_play"), i18n("Accept"), buttonsBox, "start_dcc");
+  m_buttonAbort  = new QPushButton(icon("stop"),        i18n("Abort"),  buttonsBox, "abort_dcc");
+  m_buttonClear  = new QPushButton(icon("editdelete"),  i18n("Clear"),  buttonsBox, "clear_dcc");
+  m_buttonOpen   = new QPushButton(icon("exec"),        i18n("Open"),   buttonsBox, "open_dcc_file");
+  m_buttonRemove = new QPushButton(icon("edittrash"),   i18n("Remove"), buttonsBox, "remove_dcc_file");
+  m_buttonDetail = new QPushButton(icon("view_text"),   i18n("Detail"), buttonsBox, "detail_dcc");
   
-  QToolTip::add(acceptButton,i18n("Start receiving"));
-  QToolTip::add(abortButton, i18n("Abort the transfer"));
-  QToolTip::add(clearButton,i18n("Remove the item from panel"));
-  QToolTip::add(openButton,  i18n("Run the file"));
-  QToolTip::add(removeButton,  i18n("Remove the file"));
-  QToolTip::add(detailButton,i18n("View DCC detail information"));
+  QToolTip::add(m_buttonAccept, i18n("Start receiving"));
+  QToolTip::add(m_buttonAbort,  i18n("Abort the transfer"));
+  QToolTip::add(m_buttonClear,  i18n("Remove the item from panel"));
+  QToolTip::add(m_buttonOpen,   i18n("Run the file"));
+  QToolTip::add(m_buttonRemove, i18n("Remove the file"));
+  QToolTip::add(m_buttonDetail, i18n("View DCC detail information"));
   
-  connect(acceptButton,SIGNAL (clicked()) ,this,SLOT (acceptDcc()) );
-  connect(abortButton,SIGNAL (clicked()) ,this,SLOT (abortDcc()) );
-  connect(clearButton,SIGNAL (clicked()) ,this,SLOT (clearDcc()) );
-  connect(openButton,SIGNAL (clicked()) ,this,SLOT (runDcc()) );
-  connect(removeButton,SIGNAL (clicked()) ,this,SLOT (removeFile()) );
-  connect(detailButton,SIGNAL (clicked()) ,this,SLOT (openDetail()) );
+  connect( m_buttonAccept, SIGNAL(clicked()), this, SLOT(acceptDcc()) );
+  connect( m_buttonAbort,  SIGNAL(clicked()), this, SLOT(abortDcc()) );
+  connect( m_buttonClear,  SIGNAL(clicked()), this, SLOT(clearDcc()) );
+  connect( m_buttonOpen,   SIGNAL(clicked()), this, SLOT(runDcc()) );
+  connect( m_buttonRemove, SIGNAL(clicked()), this, SLOT(removeFile()) );
+  connect( m_buttonDetail, SIGNAL(clicked()), this, SLOT(openDetail()) );
 
   // popup menu
   
-  popup = new KPopupMenu(this);
-  popup->insertItem(icon("player_play"),i18n("Accept"),Popup::Accept);
-  popup->insertItem(icon("stop"),i18n("Abort"),Popup::Abort);
-  popup->insertSeparator();
-  popup->insertItem(icon("editdelete"),i18n("Clear"),Popup::Clear);
-  popup->insertItem(i18n("Clear All Completed Items"),Popup::ClearAllCompleted);
-  popup->insertItem(i18n("Remove and Clear"),Popup::RemoveAndClear);
-  popup->insertSeparator();
-  popup->insertItem(icon("exec"),i18n("Open File"),Popup::Open);
-  popup->insertItem(icon("edittrash"),i18n("Remove File"),Popup::Remove);
-  popup->insertItem(icon("messagebox_info"),i18n("File Information"),Popup::Info);
-  popup->insertSeparator();
-  popup->insertItem(icon("view_text"),i18n("Detail"),Popup::Detail);
+  m_popup = new KPopupMenu(this);
+  m_popup->insertItem(icon("player_play"),     i18n("Accept"),                    Popup::Accept);
+  m_popup->insertItem(icon("stop"),            i18n("Abort"),                     Popup::Abort);
+  m_popup->insertSeparator();
+  m_popup->insertItem(icon("editdelete"),      i18n("Clear"),                     Popup::Clear);
+  m_popup->insertItem(                         i18n("Clear All Completed Items"), Popup::ClearAllCompleted);
+  m_popup->insertItem(                         i18n("Remove and Clear"),          Popup::RemoveAndClear);
+  m_popup->insertSeparator();
+  m_popup->insertItem(icon("exec"),            i18n("Open File"),                 Popup::Open);
+  m_popup->insertItem(icon("edittrash"),       i18n("Remove File"),               Popup::Remove);
+  m_popup->insertItem(icon("messagebox_info"), i18n("File Information"),          Popup::Info);
+  m_popup->insertSeparator();
+  m_popup->insertItem(icon("view_text"),       i18n("Detail"),                    Popup::Detail);
     
-  connect(dccListView, SIGNAL(contextMenuRequested(QListViewItem*,const QPoint&,int)), this, SLOT(popupRequested(QListViewItem*,const QPoint&,int)));
-  connect(popup, SIGNAL(activated(int)), this, SLOT(popupActivated(int)));
+  connect(m_listView, SIGNAL(contextMenuRequested(QListViewItem*,const QPoint&,int)), this, SLOT(popupRequested(QListViewItem*,const QPoint&,int)));
+  connect(m_popup, SIGNAL(activated(int)), this, SLOT(popupActivated(int)));
   
   // misc.
-  connect(dccListView, SIGNAL(doubleClicked(QListViewItem*,const QPoint&,int)), this, SLOT(doubleClicked(QListViewItem*,const QPoint&,int)));
+  connect(m_listView, SIGNAL(doubleClicked(QListViewItem*,const QPoint&,int)), this, SLOT(doubleClicked(QListViewItem*,const QPoint&,int)));
   
-  selectionChanged();
+  updateButton();
 }
 
 DccPanel::~DccPanel()
@@ -145,92 +144,102 @@ DccPanel::~DccPanel()
 
 void DccPanel::dccStatusChanged(const DccTransfer* /* item */)
 {
-  selectionChanged();
+  updateButton();
 }
 
-void DccPanel::selectionChanged()
+void DccPanel::updateButton()
 {
   bool accept            = true,
        abort             = false,
        clear             = false,
        clearAllCompleted = false,
+       detail            = true,
+       info              = true,
        open              = true,
        remove            = true,
-       info              = true,
-       detail            = true,
        removeAndClear    = true;
-  bool selectedItemfound = false;
-  QListViewItemIterator it( getListView() );
+  
+  int selectedItems = 0;
+  QListViewItemIterator it( m_listView );
+  
   while( it.current() )
   {
     DccTransfer* item = static_cast<DccTransfer*>( it.current() );
-    if( item )
+    
+    DccTransfer::DccType type = item->getType();
+    DccTransfer::DccStatus status = item->getStatus();
+    
+    clearAllCompleted |= ( status >= DccTransfer::Done );
+    
+    if( it.current()->isSelected() )
     {
-      DccTransfer::DccType type = item->getType();
-      DccTransfer::DccStatus status = item->getStatus();
+      ++selectedItems;
       
-      clearAllCompleted |= ( status >= DccTransfer::Done );
+      accept &= ( status == DccTransfer::Queued );
       
-      if( it.current()->isSelected() )
-      {
-        selectedItemfound = true;
-        
-        accept &= ( status == DccTransfer::Queued );
-        
-        abort  |= ( status < DccTransfer::Done );
-        
-        clear  |= ( status >= DccTransfer::Done );
-        
-        open   &= ( type == DccTransfer::Send ||
-                    status == DccTransfer::Done );
-        
-        remove &= ( type == DccTransfer::Receive &&
-                    status == DccTransfer::Done );
-        
-        info   &= ( type == DccTransfer::Send ||
-                    status == DccTransfer::Done );
-      }
+      abort  |= ( status < DccTransfer::Done );
+      
+      clear  |= ( status >= DccTransfer::Done );
+      
+      info   &= ( type == DccTransfer::Send ||
+                  status == DccTransfer::Done );
+      
+      open   &= ( type == DccTransfer::Send ||
+                  status == DccTransfer::Done );
+      
+      remove &= ( type == DccTransfer::Receive &&
+                  status == DccTransfer::Done );
     }
     ++it;
   }
-  if( !selectedItemfound ) { accept = abort = clear = open = remove = info = detail = removeAndClear = false; }
   
-  acceptButton->setEnabled( accept );
-  abortButton->setEnabled( abort );
-  clearButton->setEnabled( clear );
-  openButton->setEnabled( open );
-  removeButton->setEnabled( remove );
-  detailButton->setEnabled( detail );
+  if( !selectedItems )
+  {
+    accept = false;
+    abort = false;
+    clear = false;
+    detail = false;
+    info = false;
+    open = false;
+    remove = false;
+    removeAndClear = false;
+  }
   
-  popup->setItemEnabled( Popup::Accept,            accept );
-  popup->setItemEnabled( Popup::Abort,             abort );
-  popup->setItemEnabled( Popup::Clear,             clear );
-  popup->setItemEnabled( Popup::ClearAllCompleted, clearAllCompleted );
-  popup->setItemEnabled( Popup::RemoveAndClear,    removeAndClear );
-  popup->setItemEnabled( Popup::Open,              open );
-  popup->setItemEnabled( Popup::Remove,            remove );
-  popup->setItemEnabled( Popup::Info,              info );
-  popup->setItemEnabled( Popup::Detail,            detail );
+  m_buttonAccept->setEnabled( accept );
+  m_buttonAbort->setEnabled( abort );
+  m_buttonClear->setEnabled( clear );
+  m_buttonOpen->setEnabled( open );
+  m_buttonRemove->setEnabled( remove );
+  m_buttonDetail->setEnabled( detail );
+  
+  m_popup->setItemEnabled( Popup::Accept,            accept );
+  m_popup->setItemEnabled( Popup::Abort,             abort );
+  m_popup->setItemEnabled( Popup::Clear,             clear );
+  m_popup->setItemEnabled( Popup::ClearAllCompleted, clearAllCompleted );
+  m_popup->setItemEnabled( Popup::RemoveAndClear,    removeAndClear );
+  m_popup->setItemEnabled( Popup::Open,              open );
+  m_popup->setItemEnabled( Popup::Remove,            remove );
+  m_popup->setItemEnabled( Popup::Info,              info );
+  m_popup->setItemEnabled( Popup::Detail,            detail );
 }
 
 void DccPanel::selectMe(DccTransfer* item)
 {
-  dccListView->clearSelection();
-  dccListView->setSelected(item, true);
-  selectionChanged();
+  m_listView->clearSelection();
+  m_listView->setSelected(item, true);
+  updateButton();
 }
 
 void DccPanel::acceptDcc()
 {
-  QListViewItemIterator it( getListView() );
+  QListViewItemIterator it( m_listView );
   while( it.current() )
   {
     if( it.current()->isSelected() )
     {
       DccTransfer* item=static_cast<DccTransfer*>( it.current() );
-      if( item )
-        if( item->getType() == DccTransfer::Receive && item->getStatus() == DccTransfer::Queued )
-          item->start();
+      if( item->getType() == DccTransfer::Receive && item->getStatus() == DccTransfer::Queued )
+        item->start();
     }
     ++it;
   }
@@ -238,15 +247,14 @@ void DccPanel::acceptDcc()
 
 void DccPanel::abortDcc()
 {
-  QListViewItemIterator it( getListView() );
+  QListViewItemIterator it( m_listView );
   while( it.current() )
   {
     if( it.current()->isSelected() )
     {
       DccTransfer* item=static_cast<DccTransfer*>( it.current() );
-      if( item )
-        if( item->getStatus() < DccTransfer::Done )
-          item->abort();
+      if( item->getStatus() < DccTransfer::Done )
+        item->abort();
     }
     ++it;
   }
@@ -255,7 +263,7 @@ void DccPanel::abortDcc()
 void DccPanel::clearDcc()
 {
   QPtrList<QListViewItem> lst;
-  QListViewItemIterator it( getListView() );
+  QListViewItemIterator it( m_listView );
   while( it.current() )
   {
     DccTransfer* item = static_cast<DccTransfer*>( it.current() );
@@ -266,20 +274,19 @@ void DccPanel::clearDcc()
   }
   lst.setAutoDelete( true );
   while( lst.remove() );
-  selectionChanged();
+  updateButton();
 }
 
 void DccPanel::runDcc()
 {
-  QListViewItemIterator it( getListView() );
+  QListViewItemIterator it( m_listView );
   while( it.current() )
   {
     if( it.current()->isSelected() )
     {
       DccTransfer* item=static_cast<DccTransfer*>( it.current() );
-      if( item )
-        if( item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done )
-          item->runFile();
+      if( item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done )
+        item->runFile();
     }
     ++it;
   }
@@ -287,15 +294,14 @@ void DccPanel::runDcc()
 
 void DccPanel::removeFile()
 {
-  QListViewItemIterator it( getListView() );
+  QListViewItemIterator it( m_listView );
   while( it.current() )
   {
     if( it.current()->isSelected() )
     {
       DccTransfer* item=static_cast<DccTransfer*>( it.current() );
-      if( item )
-        if( item->getType() == DccTransfer::Receive && item->getStatus() == DccTransfer::Done )
-          item->removeFile();
+      if( item->getType() == DccTransfer::Receive && item->getStatus() == DccTransfer::Done )
+        item->removeFile();
     }
     ++it;
   } 
@@ -303,15 +309,14 @@ void DccPanel::removeFile()
 
 void DccPanel::showFileInfo()
 {
-  QListViewItemIterator it( getListView() );
+  QListViewItemIterator it( m_listView );
   while( it.current() )
   {
     if( it.current()->isSelected() )
     {
       DccTransfer* item=static_cast<DccTransfer*>( it.current() );
-      if( item )
-        if( item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done )
-          item->openFileInfoDialog();
+      if( item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done )
+        item->openFileInfoDialog();
     }
     ++it;
   }
@@ -319,14 +324,13 @@ void DccPanel::showFileInfo()
 
 void DccPanel::openDetail()
 {
-  QListViewItemIterator it( getListView() );
+  QListViewItemIterator it( m_listView );
   while( it.current() )
   {
     if( it.current()->isSelected() )
     {
       DccTransfer* item=static_cast<DccTransfer*>( it.current() );
-      if( item )
-        item->openDetailDialog();
+      item->openDetailDialog();
     }
     ++it;
   }
@@ -335,7 +339,7 @@ void DccPanel::openDetail()
 void DccPanel::clearAllCompletedDcc()
 {
   QPtrList<QListViewItem> lst;
-  QListViewItemIterator it( getListView() );
+  QListViewItemIterator it( m_listView );
   while( it.current() )
   {
     DccTransfer* item = static_cast<DccTransfer*>(it.current());
@@ -346,78 +350,53 @@ void DccPanel::clearAllCompletedDcc()
   }
   lst.setAutoDelete( true );
   while( lst.remove() );
-  selectionChanged();
+  updateButton();
 }
 
 void DccPanel::removeAndClear()
 {
   QPtrList<QListViewItem> clearList;
-  QListViewItemIterator it( getListView() );
+  QListViewItemIterator it( m_listView );
   while ( it.current() )
   {
     if ( it.current()->isSelected() )
     {
       DccTransfer* item=static_cast<DccTransfer*>( it.current() );
-      if ( item )
-      {
-        if ( item->getType() == DccTransfer::Receive && item->getStatus() == DccTransfer::Done )
-          item->removeFile();
-        clearList.append( it.current() );
-      }
+      if ( item->getType() == DccTransfer::Receive && item->getStatus() == DccTransfer::Done )
+        item->removeFile();
+      clearList.append( it.current() );
     }
     ++it;
   }
   clearList.setAutoDelete( true );
   while( clearList.remove() );
-  selectionChanged();
+  updateButton();
 }
 
 void DccPanel::popupRequested(QListViewItem* /* item */, const QPoint& pos, int /* col */)  // slot
 {
-  selectionChanged();
-  popup->popup(pos);
+  updateButton();
+  m_popup->popup(pos);
 }
 
-void DccPanel::popupActivated(int id)  // slot
+void DccPanel::popupActivated( int id )  // slot
 {
-  switch(id)
-  {
-    case Popup::Accept:
-      acceptDcc();
-      break;
-    case Popup::Abort:
-      abortDcc();
-      break;
-    case Popup::Clear:
-      clearDcc();
-      break;
-    case Popup::Open:
-      runDcc();
-      break;
-    case Popup::Remove:
-      removeFile();
-      break;
-    case Popup::Info:
-      showFileInfo();
-      break;
-    case Popup::Detail:
-      openDetail();
-      break;
-    case Popup::ClearAllCompleted:
-      clearAllCompletedDcc();
-      break;
-    case Popup::RemoveAndClear:
-      removeAndClear();
-      break;
-  }
+       if ( id == Popup::Abort )                  abortDcc();
+  else if ( id == Popup::Accept )                 acceptDcc();
+  else if ( id == Popup::Clear )                  clearDcc();
+  else if ( id == Popup::ClearAllCompleted )      clearAllCompletedDcc();
+  else if ( id == Popup::Detail )                 openDetail();
+  else if ( id == Popup::Info )                   showFileInfo();
+  else if ( id == Popup::Open )                   runDcc();
+  else if ( id == Popup::Remove )                 removeFile();
+  else if ( id == Popup::RemoveAndClear )         removeAndClear();
 }
 
 void DccPanel::doubleClicked(QListViewItem* _item, const QPoint& /* _pos */, int /* _col */)
 {
   DccTransfer* item = static_cast<DccTransfer*>(_item);
-  if(item)
-    if(item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done)
-      new KRun( item->getFileURL() );
+  if(item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done)
+    new KRun( item->getFileURL() );
 }
 
 DccTransfer* DccPanel::getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed)
@@ -473,6 +452,6 @@ void DccPanel::childAdjustFocus()
 {
 }
 
-KListView* DccPanel::getListView() { return dccListView; }
+KListView* DccPanel::getListView() { return m_listView; }
 
 #include "dccpanel.moc"

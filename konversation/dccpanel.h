@@ -98,7 +98,7 @@ class DccPanel : public ChatWindow
     
     void doubleClicked(QListViewItem* _item,const QPoint& _pos,int _col);
     
-    void selectionChanged();
+    void updateButton();
 
   protected:
 #ifdef USE_MDI
@@ -108,15 +108,15 @@ class DccPanel : public ChatWindow
     /** Called from ChatWindow adjustFocus */
     virtual void childAdjustFocus();
     
-    KListView* dccListView;
-    KPopupMenu* popup;
+    KListView* m_listView;
+    KPopupMenu* m_popup;
     
-    QPushButton* acceptButton;
-    QPushButton* abortButton;
-    QPushButton* clearButton;
-    QPushButton* openButton;
-    QPushButton* removeButton;
-    QPushButton* detailButton;
+    QPushButton* m_buttonAccept;
+    QPushButton* m_buttonAbort;
+    QPushButton* m_buttonClear;
+    QPushButton* m_buttonOpen;
+    QPushButton* m_buttonRemove;
+    QPushButton* m_buttonDetail;
 };
 
 #endif

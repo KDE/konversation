@@ -14,7 +14,7 @@
 
 /*
 DCC TODOs (URGENT):
-  - Add an option to switch fast dcc sending
+  d Add an option to switch fast dcc sending
   - Integrate error messages (we should use modal dialogs as less as possible)
   - Reconsider the file-naming process at dcc receiving
   - Check if the refactored dcc receiving function works well at all situations
@@ -47,8 +47,9 @@ DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partn
   m_dccType = dccType;
   m_partnerNick = partnerNick;
   
-  m_fileName = QFileInfo(fileName).fileName();  //Just incase anyone tries to do anything nasty
-  if(m_fileName.isEmpty()) m_fileName= "unnamed";
+  m_fileName = QFileInfo( fileName ).fileName();  //Just incase anyone tries to do anything nasty
+  if( m_fileName.isEmpty() )
+    m_fileName= "unnamed";
   
   m_dccStatus = Queued;
   m_resumed = false;
@@ -66,8 +67,8 @@ DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partn
   m_autoUpdateViewTimer = 0;
   
   m_progressBar = new KProgress( 100, listView()->viewport() );
-  m_progressBar->setCenterIndicator(true);
-  m_progressBar->setPercentageVisible(true);
+  m_progressBar->setCenterIndicator( true );
+  m_progressBar->setPercentageVisible( true );
   
   m_detailDialog = 0;
   
@@ -156,7 +157,7 @@ void DccTransfer::paintCell( QPainter* painter, const QColorGroup& colorgroup, i
 
 void DccTransfer::showProgressBar()
 {  
-  // I've referenced the Apollon's code for progressbar things. Thank you, the Apollon team! (shin)
+  // I referenced Apollon's code for the progressbar. Thank you the Apollon team! (shin)
   if( m_fileSize )
   {
     QRect rect = listView()->itemRect( this );
