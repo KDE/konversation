@@ -168,7 +168,12 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
           // Incoming file that shall be resumed?
           else if(dccType=="accept")
           {
-            emit resumeDccTransfer(sourceNick,dccArgument);
+            emit resumeDccGetTransfer(sourceNick,dccArgument);
+          }
+          // Remote client wants our sent file resumed
+          else if(dccType=="resume")
+          {
+            emit resumeDccSendTransfer(sourceNick,dccArgument);
           }
         }
         // No known CTCP request, give a general message
@@ -205,6 +210,8 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
     {
       QString key;
 /*
+      // TODO: Try to remember channel keys for autojoins and manual joins, so
+      //       we can get %k to work
 
       if(channelName.find(' ')!=-1)
       {
@@ -213,9 +220,9 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
         kdDebug() << "Found channel key " << key << endl;
       }
 */
-      /* Join the channel */
+      // Join the channel
       server->joinChannel(channelName,sourceHostmask,key);
-      /* Request modes for the channel */
+      // Request modes for the channel
       server->queue("MODE "+channelName);
     }
     else server->nickJoinsChannel(channelName,sourceNick,sourceHostmask);
@@ -264,9 +271,9 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   {
     if(command==RPL_WELCOME)
     {
-      /* Remember server's insternal name (don't know if I will need this, though) */
+      // Remember server's insternal name
       server->setIrcName(prefix);
-      /* Send the welcome signal, so the server class knows we are connected properly */
+      // Send the welcome signal, so the server class knows we are connected properly
       if(!welcomeSent)
       {
         emit welcome();
@@ -281,7 +288,7 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
                           arg(parameterList[2]).
                           arg(parameterList[3]).
                           arg(parameterList[4]) );
-  /* FIXME: Untested */
+  // FIXME: Untested
   else if(command==RPL_BOUNCE)
   {
     server->appendStatusMessage(i18n("Bounce"),parameterList.join(" "));
@@ -290,7 +297,7 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   else if(command==RPL_CHANNELMODEIS)
   {
     const QString modeString=parameterList[2];
-    /* This is the string the user will see */
+    // This is the string the user will see
     QString modesAre="";
 
     for(unsigned int index=0;index<modeString.length();index++)
@@ -358,29 +365,29 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   {
     server->appendCommandMessageToChannel(parameterList[1],i18n("Names"),i18n("End of NAMES list."));
   }
-  /* Topic set messages */
+  // Topic set messages
   else if(command==RPL_TOPIC)
   {
-    /* Update channel window */
+    // Update channel window
     server->setChannelTopic(parameterList[1],trailing);
   }
   else if(command==RPL_TOPICSETBY)
   {
-    /* Inform user who set the topic and when */
+    // Inform user who set the topic and when
     QDateTime when;
     when.setTime_t(parameterList[3].toUInt());
     server->appendCommandMessageToChannel(parameterList[1],i18n("Topic"),i18n("Topic was set by %1 on %2.").arg(parameterList[2]).arg(when.toString(Qt::LocalDate)));
   }
-  /* Nick already on the server, so try another one */
+  // Nick already on the server, so try another one
   else if(command==ERR_NICKNAMEINUSE)
   {
-    /* Get the next nick from the list */
+    // Get the next nick from the list
     QString newNick=server->getNextNickname();
-    /* Update Server window */
+    // Update Server window
     server->setNickname(newNick);
-    /* Show message */
+    // Show message
     server->appendStatusMessage(i18n("Nick"),i18n("Nickname already in use. Trying %1.").arg(newNick));
-    /* Send nickchange request to the server */
+    // Send nickchange request to the server
     server->queue("NICK "+newNick);
   }
   else if(command==RPL_MOTDSTART)
@@ -394,7 +401,7 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   else if(command==RPL_ENDOFMOTD)
   {
     server->appendStatusMessage(i18n("MOTD"),i18n("End of Message Of The Day"));
-    /* Autojoin (for now this must be enough) */
+    // Autojoin (for now this must be enough)
     if(server->getAutoJoin()) server->queue(server->getAutoJoinCommand());
   }
   else if(command==RPL_ISON)
@@ -404,9 +411,9 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   }
   else if(command=="pong")
   {
-    // Since we use PONG replys to measure lag, too, we check, if this Pong was
+    // Since we use PONG replys to measure lag, too, we check, if this PONG was
     // due to Lag measures and tell the notify system about it. We use "###" as
-    // response, because this couldn't be a 303 reply, so it must be a Pong reply
+    // response, because this couldn't be a 303 reply, so it must be a PONG reply
     if(trailing=="LAG") emit notifyResponse("###");
   }
   else if(command==RPL_AWAY)
@@ -421,7 +428,7 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   {
     server->appendStatusMessage(i18n("Notice"),i18n("from %1: %2").arg(prefix).arg(trailing));
   }
-  /* All yet unknown messages go into the frontmost window unaltered */
+  // All yet unknown messages go into the frontmost window unaltered
   else
   {
     server->appendStatusMessage(command,parameterList.join(" ")+" "+trailing);
@@ -434,7 +441,7 @@ void InputFilter::parseModes(QString sourceNick,QStringList parameterList)
 
   bool plus=false;
   int parameterIndex=0;
-  /* List of modes that need a parameter (note exception with -k and -l) */
+  // List of modes that need a parameter (note exception with -k and -l)
   QString parameterModes="oOvkbleI";
 
   for(unsigned int index=0;index<modestring.length();index++)
@@ -442,29 +449,29 @@ void InputFilter::parseModes(QString sourceNick,QStringList parameterList)
     unsigned char mode=modestring[index];
     QString parameter;
 
-    /* Check if this is a mode or a +/- qualifier */
+    // Check if this is a mode or a +/- qualifier
     if(mode=='+' || mode=='-') plus=(mode=='+');
     else
     {
-       /* Check if this was a parameter mode */
+       // Check if this was a parameter mode
       if(parameterModes.find(mode)!=-1)
       {
-        /* Check if the mode actually wants a parameter. -k and -l do not! */
+        // Check if the mode actually wants a parameter. -k and -l do not!
         if(plus || (!plus && (mode!='k') && (mode!='l')))
         {
-          /* Remember the mode parameter */
+          // Remember the mode parameter
           parameter=parameterList[2+parameterIndex];
-          /* Switch to next parameter */
+          // Switch to next parameter
           parameterIndex++;
         }
       }
-      /* Let the channel update its modes */
+      // Let the channel update its modes
       server->updateChannelMode(sourceNick,parameterList[0],mode,plus,parameter);
     }
   }
 }
 
-/* # & + and ! are Channel identifiers */
+// # & + and ! are Channel identifiers
 bool InputFilter::isAChannel(QString check)
 {
   QChar initial=check.at(0);

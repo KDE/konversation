@@ -40,7 +40,8 @@ class DccTransfer : public QObject, public KListViewItem
     {
       Send=0,
       Get,
-      Resume
+      ResumeSend,
+      ResumeGet
     };
 
     enum DccStatus
@@ -50,7 +51,8 @@ class DccTransfer : public QObject, public KListViewItem
       Lookup,      // DCC-GET, trying to find ip address of sender
       Connecting,  // DCC-GET, trying to connect to sender
       Offering,    // DCC-SEND, waiting for receiver to connect to us
-      Running,     // Transferring data
+      Sending,     // Sending data
+      Receiving,   // Receiving data
       Stalled,     // Transfer stalls
       Failed,      // Transfer failed
       Aborted,     // Transfer aborted by user
@@ -75,14 +77,15 @@ class DccTransfer : public QObject, public KListViewItem
 
   signals:
     void send(QString partner,QString fileName,QString ip,QString port,unsigned long size);
-    void resume(QString partner,QString fileName,QString port,int startAt);
+    void resumeGet(QString partner,QString fileName,QString port,int startAt);
     void dccGetDone(QString fileName);
     void dccSendDone(QString fileName);
 
   public slots:
     void startGet();
     void startSend();
-    void startResume(QString position);
+    void startResumeGet(QString position);
+    void startResumeSend(QString position);
 
   protected slots:
     void updateCPS();

@@ -413,6 +413,15 @@ void OutputFilter::sendRequest(QString recipient,QString fileName,QString addres
   program=true;
 }
 
+// Accepting Resume Request
+void OutputFilter::acceptRequest(QString recipient,QString fileName,QString port,int startAt)
+{
+  toServer="PRIVMSG "+recipient+" :"+'\x01'+"DCC ACCEPT "+fileName+" "+port+" "+QString::number(startAt)+'\x01';
+  output=i18n("Accepting DCC Resume request from \"%1\" for file \"%2\".").arg(recipient).arg(fileName);
+  type=i18n("DCC");
+  program=true;
+}
+
 void OutputFilter::resumeRequest(QString sender,QString fileName,QString port,int startAt)
 {
   toServer="PRIVMSG "+sender+" :"+'\x01'+"DCC RESUME "+fileName+" "+port+" "+QString::number(startAt)+'\x01';

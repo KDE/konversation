@@ -129,9 +129,10 @@ class Server : public QObject
     void connectionEstablished();
     void notifyResponse(QString nicksOnline);
     void addDccGet(QString sourceNick,QStringList dccArguments);
-    void resumeDccTransfer(QString sourceNick,QStringList dccArguments);
+    void resumeDccGetTransfer(QString sourceNick,QStringList dccArguments);  // -> to inputFilter
+    void resumeDccSendTransfer(QString sourceNick,QStringList dccArguments); // -> to inputFilter
     void dccSendRequest(QString recipient,QString fileName,QString address,QString port,unsigned long size);
-    void dccResumeRequest(QString sender,QString fileName,QString port,int startAt);
+    void dccResumeGetRequest(QString sender,QString fileName,QString port,int startAt);
     void dccGetDone(QString fileName);
     void dccSendDone(QString fileName);
 

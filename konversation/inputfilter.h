@@ -40,7 +40,8 @@ class InputFilter : public QObject
     void welcome();
     void notifyResponse(QString nicksOnline);
     void addDccGet(QString sourceNick,QStringList dccArgument); // will be connected to Server->addDccGet()
-    void resumeDccTransfer(QString sourceNick,QStringList dccArgument); // will be connected to Server->resumeDccTransfer()
+    void resumeDccGetTransfer(QString sourceNick,QStringList dccArgument); // will be connected to Server->resumeDccGetTransfer()
+    void resumeDccSendTransfer(QString sourceNick,QStringList dccArgument); // will be connected to Server->resumeDccSendTransfer()
 
   protected:
     void parseClientCommand(QString& prefix,QString& command,QStringList& parameterList,QString& trailing);

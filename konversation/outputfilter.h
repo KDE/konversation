@@ -35,6 +35,7 @@ class OutputFilter : public QObject
     QString& parse(const QString& line,const QString& name);
     void sendRequest(QString recipient,QString fileName,QString address,QString port,unsigned long size);
     void resumeRequest(QString sender,QString fileName,QString port,int startAt);
+    void acceptRequest(QString recipient,QString fileName,QString port,int startAt);
 
     bool isAction();
     bool isCommand();

@@ -85,8 +85,10 @@ Server::Server(int id)
                   this,SLOT  (notifyResponse(QString)) );
   connect(&inputFilter,SIGNAL(addDccGet(QString,QStringList)),
                   this,SLOT  (addDccGet(QString,QStringList)) );
-  connect(&inputFilter,SIGNAL(resumeDccTransfer(QString,QStringList)),
-                  this,SLOT  (resumeDccTransfer(QString,QStringList)) );
+  connect(&inputFilter,SIGNAL(resumeDccGetTransfer(QString,QStringList)),
+                  this,SLOT  (resumeDccGetTransfer(QString,QStringList)) );
+  connect(&inputFilter,SIGNAL(resumeDccSendTransfer(QString,QStringList)),
+                  this,SLOT  (resumeDccSendTransfer(QString,QStringList)) );
 
   connect(this,SIGNAL(serverLag(int)),serverWindow,SLOT(updateLag(int)) );
   connect(this,SIGNAL(tooLongLag(int)),serverWindow,SLOT(tooLongLag(int)) );
@@ -469,7 +471,7 @@ void Server::addDccGet(QString sourceNick,QStringList dccArguments)
                   ip.toString(),       // ip
                   dccArguments[2]);    // port
 
-  connect(newDcc,SIGNAL (resume(QString,QString,QString,int)),this,SLOT (dccResumeRequest(QString,QString,QString,int)) );
+  connect(newDcc,SIGNAL (resumeGet(QString,QString,QString,int)),this,SLOT (dccResumeGetRequest(QString,QString,QString,int)) );
   connect(newDcc,SIGNAL (dccGetDone(QString)),this,SLOT (dccGetDone(QString)) );
 
   if(KonversationApplication::preferences.getDccAutoGet()) newDcc->startGet();
@@ -488,29 +490,60 @@ void Server::dccSendRequest(QString partner,QString fileName,QString address,QSt
   appendStatusMessage(outputFilter.getType(),outputFilter.getOutput());
 }
 
-void Server::dccResumeRequest(QString sender,QString fileName,QString port,int startAt)
+void Server::dccResumeGetRequest(QString sender,QString fileName,QString port,int startAt)
 {
-  kdDebug() << "Server::sendResumeRequest()" << endl;
+  kdDebug() << "Server::dccResumeGetRequest()" << endl;
   outputFilter.resumeRequest(sender,fileName,port,startAt);
   queue(outputFilter.getServerOutput());
   appendStatusMessage(outputFilter.getType(),outputFilter.getOutput());
 }
 
-void Server::resumeDccTransfer(QString sourceNick,QStringList dccArguments)
+void Server::resumeDccGetTransfer(QString sourceNick,QStringList dccArguments)
 {
   // Check if there actually is a transfer going on on that port
-  DccTransfer* dccTransfer=serverWindow->getDccPanel()->getTransferByPort(dccArguments[1]);
+  DccTransfer* dccTransfer=serverWindow->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::ResumeGet);
+  if(!dccTransfer)
+    // Check if there actually is a transfer going on with that name, could be behind a NAT
+    // so the port number may get changed
+    // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
+    DccTransfer* dccTransfer=serverWindow->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::ResumeGet);
 
   if(dccTransfer)
   {
     // overcome mIRCs brain-dead "file.ext" substitution
     QString fileName=dccTransfer->getFile();
     appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(sourceNick).arg(dccArguments[2]));
-    dccTransfer->startResume(dccArguments[2]);
+    dccTransfer->startResumeGet(dccArguments[2]);
   }
   else
   {
-    appendStatusMessage(i18n("Error"),i18n("No DCC transfer running on port %1!").arg(dccArguments[1]));
+    appendStatusMessage(i18n("Error"),i18n("No DCC download running on port %1!").arg(dccArguments[1]));
+  }
+}
+
+void Server::resumeDccSendTransfer(QString recipient,QStringList dccArguments)
+{
+  // Check if there actually is a transfer going on on that port
+  DccTransfer* dccTransfer=serverWindow->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::Send);
+  if(!dccTransfer)
+    // Check if there actually is a transfer going on with that name, could be behind a NAT
+    // so the port number may get changed
+    // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
+    DccTransfer* dccTransfer=serverWindow->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::Send);
+
+  if(dccTransfer)
+  {
+    QString fileName=dccTransfer->getFile();
+    appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(recipient).arg(dccArguments[2]));
+    kdDebug() << "Sending ACCEPT" << endl;
+    dccTransfer->startResumeSend(dccArguments[2]);
+    outputFilter.acceptRequest(recipient,fileName,dccArguments[1],dccArguments[2].toUInt());
+    queue(outputFilter.getServerOutput());
+    appendStatusMessage(outputFilter.getType(),outputFilter.getOutput());
+  }
+  else
+  {
+    appendStatusMessage(i18n("Error"),i18n("No DCC upload running on port %1!").arg(dccArguments[1]));
   }
 }
 

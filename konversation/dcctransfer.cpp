@@ -28,7 +28,7 @@
 DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString partner,QString name,QString size,QString ipString,QString portString) :
              KListViewItem(parent)
 {
-  kdDebug() << "DccTransfer::DccTransfer()" << endl;
+  kdDebug() << this << "DccTransfer::DccTransfer()" << endl;
 
   dccSocket=0;
   
@@ -50,7 +50,8 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString p
   statusText.append(i18n("Lookup ..."));
   statusText.append(i18n("Connecting ..."));
   statusText.append(i18n("Offering ..."));
-  statusText.append(i18n("Running"));
+  statusText.append(i18n("Sending"));
+  statusText.append(i18n("Receiving"));
   statusText.append(i18n("Stalled"));
   statusText.append(i18n("Failed"));
   statusText.append(i18n("Aborted"));
@@ -74,7 +75,7 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString p
 
 DccTransfer::~DccTransfer()
 {
-  kdDebug() << "DccTransfer::~DccTransfer(" << getFile() << ")" << endl;
+  kdDebug() << this << "DccTransfer::~DccTransfer(" << getFile() << ")" << endl;
 
   delete[] buffer;
 
@@ -113,14 +114,14 @@ void DccTransfer::startGet()
     if(fileSize)
     {
       // TODO: Ask user if they want to resume
-      setType(Resume);
+      setType(ResumeGet);
       setStatus(Resuming);
       // Rollback for Resume
       fileSize-=KonversationApplication::preferences.getDccRollback();
       if(fileSize<0) fileSize=0;
       setPosition(fileSize);
 
-      emit resume(getPartner(),getFile(),getPort(),getPosition());
+      emit resumeGet(getPartner(),getFile(),getPort(),getPosition());
     }
     else connectToSender();
   }
@@ -147,24 +148,36 @@ void DccTransfer::startSend()
 
     emit send(getPartner(),getFile(),getNumericalIp(),getPort(),getSize());
   }
-  else kdDebug() << "DccTransfer::startSend(): listen() failed!" << endl;
+  else kdDebug() << this << "DccTransfer::startSend(): listen() failed!" << endl;
+}
+
+void DccTransfer::startResumeSend(QString position)
+{
+  setType(ResumeSend);
+  setStatus(Resuming);
+  setPosition(position.toULong());
+  kdDebug() << this << "DccTransfer::startResumeSend(" << position << ")" << endl;
 }
 
 void DccTransfer::heard()
 {
-  kdDebug() << "DccTransfer::heard(): accepting ..." << endl;
+  kdDebug() << this << "DccTransfer::heard(): accepting ..." << endl;
 
   int fail=dccSocket->accept(sendSocket);
 
   connect(sendSocket,SIGNAL (readyRead()),this,SLOT (getAck()) );
   connect(sendSocket,SIGNAL (readyWrite()),this,SLOT (writeData()) );
 
-  kdDebug() << "DccTransfer::heard(): accept() returned " << fail << endl;
+  kdDebug() << this << "DccTransfer::heard(): accept() returned " << fail << endl;
+  kdDebug() << this << "DccTransfer::heard(): getType() returns " << getType() << endl;
+  kdDebug() << this << "DccTransfer::heard(): getPosition() returns " << getPosition() << endl;
 
   if(!fail)
   {
     file.open(IO_ReadOnly);
-    setStatus(Running);
+    if(getType()==ResumeSend) kdDebug() << this << "Seeking to " << getPosition() << endl;
+/*    if(getType()==ResumeSend) */ file.at(getPosition());
+    setStatus(Sending);
     sendSocket->enableRead(true);
     sendSocket->enableWrite(true);
   }
@@ -175,7 +188,7 @@ void DccTransfer::heard()
   }
 }
 
-void DccTransfer::startResume(QString position)
+void DccTransfer::startResumeGet(QString position)
 {
   setPosition(position.toULong());
   connectToSender();
@@ -191,7 +204,7 @@ void DccTransfer::connectToSender()
   dccSocket->enableWrite(false);
   dccSocket->setTimeout(5);
 
-  kdDebug() << "Socket created." << endl;
+  kdDebug() << this << "Socket created." << endl;
 
   connect(dccSocket,SIGNAL (lookupFinished(int))  ,this,SLOT (lookupFinished(int)) );
   connect(dccSocket,SIGNAL (connectionSuccess())  ,this,SLOT (dccGetConnectionSuccess()) );
@@ -200,33 +213,32 @@ void DccTransfer::connectToSender()
   connect(dccSocket,SIGNAL (readyRead()),this,SLOT (readData()) );
   connect(dccSocket,SIGNAL (readyWrite()),this,SLOT (sendAck()) );
 
-  kdDebug() << "Lookup ..." << endl;
+  kdDebug() << this << "Lookup ..." << endl;
   dccSocket->startAsyncConnect();
 }
 
 void DccTransfer::lookupFinished(int numOfResults)
 {
-  kdDebug() << "Lookup finished. Connecting ..." << endl;
+  kdDebug() << this << "Lookup finished. Connecting ..." << endl;
   setStatus(Connecting);
   numOfResults=0; // suppress compiler warning
 }
 
 void DccTransfer::dccGetConnectionSuccess()
 {
-  kdDebug() << "Connected! Starting transfer ..." << endl;
-  setStatus(Running);
+  kdDebug() << this << "Connected! Starting transfer ..." << endl;
+  setStatus(Receiving);
   dccSocket->enableRead(true);
 
   file.open(IO_ReadWrite);
-  // Set position
+  // Set position for DCC Resume Get
   file.at(getPosition());
-  // for DCC Resume
-  if (getType()==Resume) sendAck();
+//   if (getType()==ResumeGet) sendAck(); // seems not to work ...
 }
 
 void DccTransfer::dccGetBroken(int errNo)
 {
-  kdDebug() << "DccTransfer: Error " << errNo << endl;
+  kdDebug() << this << "DccTransfer: Error " << errNo << endl;
 
   setStatus(Failed);
   file.close();
@@ -354,7 +366,7 @@ DccTransfer::DccStatus DccTransfer::getStatus() { return dccStatus; }
 unsigned long DccTransfer::getPosition() { return transferred; }
 unsigned long DccTransfer::getSize() { return fileSize; }
 
-void DccTransfer::setType(DccType type) { dccType=type; }
+void DccTransfer::setType(DccType type) { dccType=type; kdDebug() << this << "Type set to " << type << endl;}
 DccTransfer::DccType DccTransfer::getType() { return dccType; }
 
 void DccTransfer::setIp(QString ip)

@@ -94,7 +94,8 @@ void DccPanel::dccSelected()
       case DccTransfer::Resuming:
         setButtons(false,true,true,true,true);
         break;
-      case DccTransfer::Running:
+      case DccTransfer::Sending:
+      case DccTransfer::Receiving:
       case DccTransfer::Stalled:
         setButtons(false,true,true,true,true);
         break;
@@ -141,17 +142,40 @@ void DccPanel::removeDcc()
   }
 }
 
-DccTransfer* DccPanel::getTransferByPort(QString port)
+DccTransfer* DccPanel::getTransferByPort(QString port,DccTransfer::DccType type)
 {
   int index=0;
   DccTransfer* item;
   do
   {
     // TODO: Get rid of this cast
-    item=(DccTransfer*) getListView()->itemAtIndex(index);
+    item=(DccTransfer*) getListView()->itemAtIndex(index++);
     if(item)
     {
-      if(item->getPort()==port) return item;
+      kdDebug() << item->getType() << endl;
+      if(item->getStatus()<DccTransfer::Failed &&
+         item->getType()==type &&
+         item->getPort()==port) return item;
+    }
+  } while(item);
+
+  return 0;
+}
+// To find the resuming dcc over firewalls that change the port numbers
+DccTransfer* DccPanel::getTransferByName(QString name,DccTransfer::DccType type)
+{
+  int index=0;
+  DccTransfer* item;
+  do
+  {
+    // TODO: Get rid of this cast
+    item=(DccTransfer*) getListView()->itemAtIndex(index++);
+    if(item)
+    {
+      kdDebug() << name << " == " << item->getFile() << endl;
+      if(item->getStatus()<DccTransfer::Failed &&
+         item->getType()==type &&
+         item->getFile()==name) return item;
     }
   } while(item);
 

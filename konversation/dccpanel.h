@@ -37,7 +37,8 @@ class DccPanel : public ChatWindow
     ~DccPanel();
 
     KListView* getListView();
-    DccTransfer* getTransferByPort(QString port);
+    DccTransfer* getTransferByPort(QString port,DccTransfer::DccType type);
+    DccTransfer* getTransferByName(QString name,DccTransfer::DccType type);
 
   protected slots:
     void acceptDcc();
