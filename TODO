@@ -14,7 +14,6 @@ Make a command that makes you goto away mode on all servers
 Tab completion should work on an alphabetic list
 /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
 List of channels / queries in a new window that indicate new text
-Channel list: sort channels numerically when sorted by user amount
 Optionally copy log files to new location
 DCC options on same file name should include "Rename" and maybe "Auto Rename"
 Events for scripting, auto-text and stuff
