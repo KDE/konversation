@@ -113,6 +113,7 @@ void DccTransfer::startGet()
   if(!dir.exists())
   {
     // QT's mkdir() is too stupid to do this alone, so we use the shell command
+    // TODO: Try KProcess here!
     system(QString("mkdir -p "+dir.path()).latin1());
   }
 

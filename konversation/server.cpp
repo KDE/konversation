@@ -57,7 +57,7 @@ Server::Server(int id)
   }
   else autoJoin=false;
 
-  autoReconnect=KonversationApplication::preferences.getAutoRejoin();
+  autoRejoin=KonversationApplication::preferences.getAutoRejoin();
   autoReconnect=KonversationApplication::preferences.getAutoReconnect();
 
   serverSocket=0;
@@ -287,7 +287,12 @@ void Server::notifyCheckTimeout()
 
 QString Server::getAutoJoinCommand()
 {
-  QString autoString("JOIN "+autoJoinChannel+" "+autoJoinChannelKey);
+  // Multichannel joins
+  QStringList channels=QStringList::split(' ',autoJoinChannel);
+  QStringList keys=QStringList::split(' ',autoJoinChannelKey);
+  
+  QString autoString("JOIN "+channels.join(",")+" "+keys.join(","));
+
   return autoString;
 }
 
