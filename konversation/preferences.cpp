@@ -121,7 +121,7 @@ Preferences::Preferences()
   setDccChatPortsFirst(0);
   setDccChatPortsLast(0);
   setDccAutoGet(false);
-  setDccBufferSize(1024);
+  setDccBufferSize(8192);
   setDccFastSend(true);
   setDccSendTimeout(120);
 

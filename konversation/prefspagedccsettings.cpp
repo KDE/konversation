@@ -164,7 +164,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   QHBoxLayout* dccBufferSizeLayout=new QHBoxLayout(dccBufferSizeFrame);
   dccBufferSizeLayout->setSpacing(spacingHint());
   QLabel* dccBufferSizeLabel=new QLabel(i18n("Buffer si&ze:"),dccBufferSizeFrame);
-  dccBufferSpin=new QSpinBox(512,13684,128,dccBufferSizeFrame,"dcc_buffer_spin");
+  dccBufferSpin=new QSpinBox(512,65536,128,dccBufferSizeFrame,"dcc_buffer_spin");
   dccBufferSpin->setSuffix(" "+i18n("bytes"));
   dccBufferSpin->setValue(preferences->getDccBufferSize());
   dccBufferSizeLabel->setBuddy(dccBufferSpin);
