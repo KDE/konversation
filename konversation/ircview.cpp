@@ -506,8 +506,8 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps)
   buffer+=line;
   emit newText();
 
-  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-  line=codec->toUnicode(line.ascii());
+//  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
+//  line=codec->toUnicode(line);
 
   // scroll view only if the scroll bar is already at the bottom
 #if QT_VERSION == 303

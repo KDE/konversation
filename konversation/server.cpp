@@ -1161,9 +1161,9 @@ void Server::setChannelTopic(const QString &channel, const QString &newTopic)
   Channel* outChannel=getChannelByName(channel);
   if(outChannel)
   {
-    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-    QString topic=codec->toUnicode(newTopic.ascii());
-    outChannel->setTopic(topic);
+//    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
+//    QString topic=codec->toUnicode(newTopic);
+    outChannel->setTopic(newTopic);
   }
 }
 
@@ -1172,8 +1172,8 @@ void Server::setChannelTopic(const QString& nickname, const QString &channel, co
   Channel* outChannel=getChannelByName(channel);
   if(outChannel)
   {
-    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-    QString topic=codec->toUnicode(newTopic.ascii());
+//    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
+//    QString topic=codec->toUnicode(newTopic);
     outChannel->setTopic(nickname,newTopic);
   }
 }

@@ -92,10 +92,11 @@ void Query::queryTextEntered()
 
 void Query::sendQueryText(const QString& sendLine)
 {
-  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-  QCString line=codec->fromUnicode(sendLine);
+//  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
+//  QCString line=codec->fromUnicode(sendLine);
 
-  QString output=filter.parse(server->getNickname(),line,getName());
+//  QString output=filter.parse(server->getNickname(),line,getName());
+  QString output=filter.parse(server->getNickname(),sendLine,getName());
 
   if(!output.isEmpty())
   {

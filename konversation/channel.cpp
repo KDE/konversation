@@ -239,8 +239,8 @@ void Channel::requestNewTopic(const QString& newTopic)
 {
   kdDebug() << "requestNewTopic(" << newTopic << ")" << endl;
 
-  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-  topicLine->setCurrentText(codec->toUnicode(topic.ascii()));
+//  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
+  topicLine->setCurrentText(/*codec->toUnicode(*/topic/*)*/);
 
   if(newTopic!=topic) sendChannelText(KonversationApplication::preferences.getCommandChar()+"TOPIC "+newTopic);
 
