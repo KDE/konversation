@@ -224,7 +224,7 @@ QString ChannelNick::tooltip() {
     dirty=true;
   }
   tooltip << "</table></qt>";
-  kdDebug() << strTooltip << endl;
+  //kdDebug() << strTooltip << endl;
   //if(!dirty) return QString::null;
   return strTooltip;
 }
