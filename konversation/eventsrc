@@ -1,60 +1,87 @@
 [!Global!]
 IconName=konversation
 Comment=Konversation
+Comment[pt_BR]=Konversação
 
 [message]
 Name=New message
+Name[da]=Ny besked
+Name[it]=Nuovo messaggio
+Name[pt]=Nova mensagem
+Name[pt_BR]=Nova mensagem
 Name[sv]=Nytt meddelande
-Name[de]=Neue Nachricht
 Comment=New message arrived in a channel
+Comment[da]=Ny besked ankom i kanal
+Comment[pt]=Nova mensagem chegou ao canal
+Comment[pt_BR]=Uma nova mensagem chegou em um canal
 Comment[sv]=Nytt meddelande anlände i en kanal
-Comment[de]=Neue Nachricht in einem Kanal
 default_presentation=0
 
 [nick]
 Name=Nick written
+Name[da]=Alias skrevet
+Name[pt]=Alcunha escrita
+Name[pt_BR]=Apelido escrito
 Name[sv]=Något skrivet till smeknamnet
-Name[de]=Nick geschrieben
 Comment=Someone wrote your nick in a message
+Comment[da]=Nogen skrev dit alias i en besked
+Comment[pt]=Alguém escrever a sua alcunha numa mensagem
+Comment[pt_BR]=Alguém escreveu o seu nick em uma mensagem
 Comment[sv]=Någon skrev ett meddelande till ditt smeknamn
-Comment[de]=Jemand hat deinen Nick in einer Nachricht erwähnt
 default_presentation=0
 
 [nickchange]
 Name=Nick changed
-Name[de]=Nickwechsel
+Name[da]=Alias ændret
+Name[pt]=Alcunha alterada
+Name[pt_BR]=Apelido modificado
+Name[sv]=Smeknamn ändrat
 Comment=Someone changed their nick
-Comment[de]=Jemand hat seinen Nick gewechselt
+Comment[da]=Nogen ændrede deres alias
+Comment[pt]=Alguém mudou a sua alcunha
+Comment[pt_BR]=Alguém mudou o seu apelido
+Comment[sv]=Någon ändrade sitt smeknamn
 default_presentation=0
 
 [dcc_incomming]
 Name=Incomming file
+Name[da]=Indkommende fil
+Name[pt]=Ficheiro recebido
+Name[pt_BR]=Arquivo de entrada
 Name[sv]=Inkommande fil
-Name[de]=Ankommende Datei
 Comment=Someone wants to transmit a file to you over DCC
+Comment[da]=Nogen ønsker at transmittere en fil til dig over DCC
+Comment[pt]=Alguém quer transmitir um ficheiro através de DCC
+Comment[pt_BR]=Alguém deseja transmitir um arquivo para você via DCC
 Comment[sv]=Någon vill skicka en fil till dig via direktkommunikation
-Comment[de]=Jemand bietet dir eine Datei zum DCC Download an
 default_prentation=0
 
 [join]
 Name=Nick joined channel
+Name[da]=Alias gik med i kanal
+Name[pt]=Alcunha juntou-se ao canal
+Name[pt_BR]=Apelido entrou no canal
 Name[sv]=Någon med smeknamnet gick med i en kanal
-Name[de]=Nick betritt Kanal
 Comment=New nick joined a channel
+Comment[da]=Nyt alias gik med i en kanal
+Comment[pt]=Nova alcunha juntou-se ao canal
+Comment[pt_BR]=Um novo apelido entrou em um canal
 Comment[sv]=Någon med ett nytt smeknamn gick med i en kanal
-Comment[de]=Ein neuer Nick betritt einen Kanal
 defalt_presentation=0
 
 [part]
 Name=Nick left channel
-Name[de]=Nick verläßt Kanal
+Name[da]=Alias forlod kanal
+Name[pt]=Alcunha saiu do canal
+Name[pt_BR]=Apelido deixou o canal
+Name[sv]=Någon med smeknamnet lämnade en kanal
 Comment=A nick left a channel
-Comment[de]=Ein Nick verläßt einen Kanal
+Comment[da]=Et alias forlod en kanal
+Comment[pt_BR]=Alguém deixou um canal
+Comment[sv]=Någon med ett smeknamn lämnade en kanal
 defalt_presentation=0
 
 [mode]
 Name=Mode change
-Name[de]=Moduswechsel
 Comment=A user or channel mode was changed
-Comment[de]=Ein Benutzer- oder Kanalmodus wurde geändert
 defalt_presentation=0
