@@ -1,5 +1,5 @@
 /*
-    ksslsocket.cpp - KDE SSL Socket
+    sslsocket.cpp - KDE SSL Socket
 
     Copyright (c) 2004      by Jason Keirstead <jason@keirstead.org>
     Kopete    (c) 2002-2003 by the Kopete developers <kopete-devel@kde.org>
@@ -28,15 +28,15 @@
 
 #include "sslsocket.h"
 
-struct KSSLSocketPrivate
+struct SSLSocketPrivate
 {
     mutable KSSL *kssl;
     KSSLCertificateCache *cc;
 };
 
-KSSLSocket::KSSLSocket()
+SSLSocket::SSLSocket()
 {
-	d = new KSSLSocketPrivate;
+	d = new SSLSocketPrivate;
 	d->kssl = 0L;
 	d->cc = new KSSLCertificateCache;
 	d->cc->reload();
@@ -47,7 +47,7 @@ KSSLSocket::KSSLSocket()
         connect(m_streamSocket,SIGNAL(connected(const KResolverEntry&)),this,SLOT(slotConnected()));
 }
 
-KSSLSocket::~KSSLSocket()
+SSLSocket::~SSLSocket()
 {
     // Close stream socket
     m_streamSocket->close();
@@ -60,7 +60,7 @@ KSSLSocket::~KSSLSocket()
     delete d;
 }
 
-void KSSLSocket::slotConnected()
+void SSLSocket::slotConnected()
 {
 	if( KSSL::doesSSLWork() )
 	{
@@ -90,7 +90,7 @@ void KSSLSocket::slotConnected()
 	}
 }
 
-void KSSLSocket::showInfoDialog()
+void SSLSocket::showInfoDialog()
 {
     if( m_streamSocket->state() == KNetwork::KClientSocketBase::Connected )
     {
@@ -98,7 +98,7 @@ void KSSLSocket::showInfoDialog()
     }
 }
 
-void KSSLSocket::showSSLInfoDialog()
+void SSLSocket::showSSLInfoDialog()
 {
     // Taken from kio/misc/uiserver.cpp
     // Variable names changed and adopted to our usage for Konversation
@@ -144,7 +144,7 @@ void KSSLSocket::showSSLInfoDialog()
                                  i18n( "SSL" ) );
 }
 
-int KSSLSocket::verifyCertificate()
+int SSLSocket::verifyCertificate()
 {
 	int rc = 0;
 	bool permacache = false;

@@ -2,7 +2,7 @@
 #define SSL_SOCKET_H
 
 /*
-    ksslsocket.h - KDE SSL Socket
+    sslsocket.h - KDE SSL Socket
 
     Copyright (c) 2004      by Jason Keirstead <jason@keirstead.org>
     Kopete    (c) 2002-2003 by the Kopete developers <kopete-devel@kde.org>
@@ -23,15 +23,15 @@
 #include <kstreamsocket.h>
 using namespace KNetwork;
 
-class KSSLSocketPrivate;
+class SSLSocketPrivate;
 
-class KSSLSocket : public QObject
+class SSLSocket : public QObject
 {
 	Q_OBJECT
 
 	public:
-		KSSLSocket();
-		~KSSLSocket();
+		SSLSocket();
+		~SSLSocket();
 
 		KStreamSocket* m_streamSocket;
 		void showInfoDialog();
@@ -54,7 +54,7 @@ class KSSLSocket : public QObject
 		QString m_sslPeerChain;
 		QString m_sslCertErrors;
 
-		KSSLSocketPrivate *d;
+		SSLSocketPrivate *d;
 
 };
 
