@@ -2681,7 +2681,7 @@ void Server::reconnect() {
     reconnectCounter = 0;
     connectToIRCServer();
   } else {
-    getStatusView()->appendServerMessage("Error", i18n("Server already connected!"));
+    getStatusView()->appendServerMessage("Error", i18n("Server already connected."));
   }
 }
 
