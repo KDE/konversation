@@ -30,6 +30,7 @@ getmails()
      FOUNDFOLDER=1
      MAILCOUNT=$(dcop $(dcop kmail KMailIface getFolder $f ) "unreadMessages()" )
      MAILTOTALCOUNT=$(dcop $(dcop kmail KMailIface getFolder $f ) "messages()" )
+     MAILTOTALCOUNT=$(($MAILCOUNT + $MAILTOTALCOUNT))
      if [[ -z "$MAILCOUNT" ]] ; then MAILCOUNT = "0" ; fi
      if [ "$MAILCOUNT" != 0 ] ;  then
        FOUNDEMAIL=1
@@ -59,5 +60,11 @@ if [[ -z "$3" ]] ; then
   exit
 fi
 
-getmails | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" "$line"; done
+#LINECOUNT=$(getmails | wc -l)
+#if [[ "$LINECOUNT" -gt 5 ]] ; then
+#  dcop $PORT Konversation info "There are more than 5 matches.  Cancelling to avoid flooding the server"
+#  exit
+#fi
+
+getmails | head -n 3 | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" "$line"; done
 
