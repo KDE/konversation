@@ -136,30 +136,21 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView->header()->hide();
   nicknameListView->setFont(KonversationApplication::preferences.getListFont());
 
-  // The grid that holds the quick action buttons
+  // the grid that holds the quick action buttons
   buttonsGrid=new QGrid(2,nickListButtons);
+  // set hide() or show() on grid
+  showQuickButtons(KonversationApplication::preferences.getShowQuickButtons());
+
   for(int index=0;index<8;index++)
   {
-    // Get the button definition
-    QString buttonText=KonversationApplication::preferences.getButtonList()[index];
-    // Extract button label
-    QString buttonLabel=buttonText.section(',',0,0);
-    // Extract button definition
-    buttonText=buttonText.mid(buttonLabel.length()+1);
-
-    // Build new button
-    QuickButton* newQuickButton=new QuickButton(buttonLabel,buttonText,buttonsGrid);
+    // generate empty buttons first, text will be added by updateQuickButtons() later
+    QuickButton* newQuickButton=new QuickButton("","",buttonsGrid);
     buttonList.append(newQuickButton);
-    // Create tooltip for current button
-    QString toolTip=buttonText.replace(QRegExp("&",false,true),"&amp;").
-                               replace(QRegExp("<",false,true),"&lt;").
-                               replace(QRegExp(">",false,true),"&gt;");
-
-    QToolTip::add(newQuickButton,toolTip);
 
     connect(newQuickButton,SIGNAL (clicked(QString)),this,SLOT (quickButtonClicked(QString)) );
   }
-  showQuickButtons(KonversationApplication::preferences.getShowQuickButtons());
+
+  updateQuickButtons(KonversationApplication::preferences.getButtonList());
 
   // The box holding the Nickname button, Channel input and Log Checkbox
   QHBox* commandLineBox=new QHBox(this);
@@ -1031,18 +1022,22 @@ void Channel::updateQuickButtons(QStringList newButtonList)
 {
   for(int index=0;index<8;index++)
   {
-    QuickButton* quickButton;
+    // Get the button definition
+    QString buttonText=newButtonList[index];
+    // Extract button label
+    QString buttonLabel=buttonText.section(',',0,0);
+    // Extract button definition
+    buttonText=buttonText.section(',',1);
 
-    QStringList buttonText=QStringList::split(',',newButtonList[index]);
-    quickButton=buttonList.at(index);
-    quickButton->setText(buttonText[0]);
-    quickButton->setDefinition(buttonText[1]);
+    QuickButton* quickButton=buttonList.at(index);
+    quickButton->setText(buttonLabel);
+    quickButton->setDefinition(buttonText);
 
     // Update tool tips
     QToolTip::remove(quickButton);
-    QString toolTip=buttonText[1].replace(QRegExp("&",false,true),"&amp;").
-                                  replace(QRegExp("<",false,true),"&lt;").
-                                  replace(QRegExp(">",false,true),"&gt;");
+    QString toolTip=buttonText.replace(QRegExp("&",false,true),"&amp;").
+                               replace(QRegExp("<",false,true),"&lt;").
+                               replace(QRegExp(">",false,true),"&gt;");
 
     QToolTip::add(quickButton,toolTip);
   }
