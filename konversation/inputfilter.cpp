@@ -723,7 +723,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           if(numeric==RPL_WELCOME)
           {
             // re-set nickname, since the server may have truncated it
-            server->setNickname(parameterList[0]);
+            if(parameterList[0]!=server->getNickname()) server->setNickname(parameterList[0]);
             // Remember server's insternal name
             server->setIrcName(prefix);
             // Send the welcome signal, so the server class knows we are connected properly
