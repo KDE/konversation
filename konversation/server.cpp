@@ -179,6 +179,9 @@ Server::~Server()
   queryList.setAutoDelete(true);
   while(queryList.removeFirst());
 
+  // kill resolver thread if it's still running
+  if(resolver.running()) resolver.terminate();
+
   // notify KonversationApplication that this server is gone
   emit deleted(this);
 }
