@@ -1,0 +1,13 @@
+Here are some scripts that can help you in everyday life with konvi.
+
+They are usually put in ~/.kde/apps/share/konversation/scripts/ and executed by
+typing /exec <scriptname> in konversation.
+
+Please add descriptions here as new scripts appear:
+
+amarok		Displays one the current channel what you are playing
+                in amaroK right now.
+		usage: /exec amarok
+		
+bug		Opens up konqueror with kde bugzilla on specified bug number.
+		usage: /exec bug 65090

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+PORT=$1
+SERVER=$2
+TARGET=$3
+BUG=$4
+
+kfmclient openURL http://bugs.kde.org/show_bug.cgi?id=$4
