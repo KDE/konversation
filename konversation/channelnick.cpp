@@ -6,7 +6,6 @@
 */
 
 /*
-  channelnick.h - There is an instance of this for each nick in each channel.  So for a person in multiple channels, they will have one NickInfo, and multiple ChannelNicks.
   begin:     Wed Aug 04 2004
   copyright: (C) 2002,2003,2004 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -17,9 +16,15 @@
 #include "server.h"
 #include <klocale.h>
 
-/** An instance of ChannelNick is made for each nick in each channel.  So for a person in multiple channels, they will have one NickInfo, and multiple ChannelNicks.  It contains a pointer to the NickInfo, and the mode of that person in the channel.*/
+/** An instance of ChannelNick is made for each nick in each channel.  
+    So for a person in multiple channels, they will have one NickInfo, and multiple ChannelNicks.  
+    It contains a pointer to the NickInfo, and the mode of that person in the channel.
+*/
 
-ChannelNick::ChannelNick(NickInfoPtr nickInfo, bool isop, bool isadmin, bool isowner, bool ishalfop, bool hasvoice) : KShared() {
+ChannelNick::ChannelNick(const NickInfoPtr& nickInfo, const bool& isop, const bool& isadmin, 
+			 const bool& isowner, const bool& ishalfop, const bool& hasvoice) 
+  : KShared() 
+{
   this->nickInfo = nickInfo;
   this->isop = isop;
   this->isadmin = isadmin;
@@ -27,6 +32,7 @@ ChannelNick::ChannelNick(NickInfoPtr nickInfo, bool isop, bool isadmin, bool iso
   this->ishalfop = ishalfop;
   this->hasvoice = hasvoice;
 }
+
 ChannelNick::~ChannelNick() {
 }
 bool ChannelNick::isOp() const { return isop; }
@@ -37,6 +43,7 @@ bool ChannelNick::hasVoice() const {return hasvoice; }
 
 bool ChannelNick::isAnyTypeOfOp() const { return isop || isadmin || isowner || ishalfop; }
 NickInfoPtr ChannelNick::getNickInfo() const { return nickInfo; }
+
 /** @param mode 'v' to set voice, 'a' to set admin, 'h' to set halfop, 'o' to set op.
  *  @param state what to set the mode to.
  */
@@ -55,6 +62,7 @@ bool ChannelNick::setMode(char mode, bool state) {
      return false;
   }
 }
+
 /** Used still for passing modes from inputfilter to Server.  Should be removed.
  */
 bool ChannelNick::setMode(int mode) {
@@ -94,6 +102,7 @@ bool ChannelNick::setVoice(bool state) {
   emit channelNickChanged();
   return true;
 }
+
 bool ChannelNick::setOwner(bool state) {
   if(isowner==state) return false;
   isowner=state;
@@ -101,6 +110,7 @@ bool ChannelNick::setOwner(bool state) {
   emit channelNickChanged();
   return true;
 }
+
 bool ChannelNick::setAdmin(bool state) {
   if(isadmin==state) return false;
   isadmin=state;
@@ -108,6 +118,7 @@ bool ChannelNick::setAdmin(bool state) {
   emit channelNickChanged();
   return true;
 }
+
 bool ChannelNick::setHalfOp(bool state) {
   if(ishalfop==state) return false;
   ishalfop=state;
@@ -115,6 +126,7 @@ bool ChannelNick::setHalfOp(bool state) {
   emit channelNickChanged();
   return true;
 }
+
 bool ChannelNick::setOp(bool state) {
   if(isop==state) return false;
   isop=state;
@@ -132,6 +144,7 @@ QString ChannelNick::getNickname() const
     else
         return QString::null;
 }
+
 QString ChannelNick::getHostmask() const
 {
     if ( this )

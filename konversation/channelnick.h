@@ -19,14 +19,13 @@
 
 #include "nickinfo.h"
 
-
-/** An instance of ChannelNick is made for each nick in each channel.  So for a person in multiple channels, they will have one NickInfo, and multiple ChannelNicks.  It contains a pointer to the NickInfo, and the mode of that person in the channel.*/
 class ChannelNick :  public QObject, public KShared
 {
   Q_OBJECT
 	  
   public:
-    ChannelNick(NickInfoPtr nickInfo, bool isop, bool isadmin, bool isowner, bool ishalfop, bool hasvoice);
+    ChannelNick(const NickInfoPtr& nickInfo, const bool& isop, const bool& isadmin,
+		const bool& isowner, const bool& ishalfop, const bool& hasvoice);
     ~ChannelNick();
     bool isOp() const;
     bool isAdmin() const;
@@ -64,6 +63,7 @@ class ChannelNick :  public QObject, public KShared
   signals:
     void channelNickChanged();
 };
+
 /** A ChannelNickPtr is a pointer to a ChannelNick.  Since it is a KSharedPtr,
  *  the ChannelNick object is automatically destroyed when all references are destroyed.
  */
