@@ -230,6 +230,8 @@ void PrefsPageServerList::updateServer(const QString& groupName,
 {
   // Need to find a better way without casting
   ServerListItem* item=static_cast<ServerListItem*>(serverListView->selectedItems().first());
+  // save state of autoconnect checkbox
+  bool autoConnect = item->isOn();
   // find branch the old item resides in
   QListViewItem* branch=findBranch(item->getGroup());
   // save server id of the old item
@@ -251,6 +253,8 @@ void PrefsPageServerList::updateServer(const QString& groupName,
                           channelName,
                           (!channelKey || channelKey.isEmpty()) ? QString::null : QString("********"),
                           identity);
+
+  item->setOn(autoConnect);
 
   preferences->updateServer(id,groupName+","+
                                serverName+","+
