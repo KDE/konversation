@@ -104,6 +104,7 @@ class KonversationMainWindow : public KMainWindow
     // it seems that moc does not honor #ifs in compile so we create an
     // empty slot in our .cpp file rather than #if this slot out
     void openNotifications();
+    void openToolbars();
 
     void showToolbar();
     void showStatusbar();

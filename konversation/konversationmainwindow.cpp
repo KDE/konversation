@@ -24,6 +24,7 @@
 #include <kmenubar.h>
 #include <kkeydialog.h>
 #include <kdeversion.h>
+#include <kedittoolbar.h>
 
 #ifdef KDE_IS_VERSION
 #if KDE_IS_VERSION(3,1,1)
@@ -81,6 +82,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); // options_show_toolbar
   showStatusBarAction=KStdAction::showStatusbar(this,SLOT(showStatusbar()),actionCollection()); // options_show_statusbar
   showMenuBarAction=KStdAction::showMenubar(this,SLOT(showMenubar()),actionCollection()); // options_show_menubar
+  KStdAction::configureToolbars(this, SLOT(openToolbars()), actionCollection());
 #ifdef USE_KNOTIFY
   KStdAction::configureNotifications(this,SLOT(openNotifications()), actionCollection());  // options_configure_notifications
 #endif
@@ -772,6 +774,16 @@ void KonversationMainWindow::serverQuit(Server* server)
   tray->removeServer(server);
   delete server->getStatusView();
   delete server;
+}
+
+void KonversationMainWindow::openToolbars()
+{
+  KEditToolbar dlg(actionCollection());
+  
+  if (dlg.exec())
+  {
+    createGUI();
+  }
 }
 
 #include "konversationmainwindow.moc"
