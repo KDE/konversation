@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>596</width>
-            <height>480</height>
+            <height>572</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -71,6 +71,17 @@
         <widget class="KListView" row="2" column="0" rowspan="1" colspan="2">
             <column>
                 <property name="text">
+                    <string>Photo</string>
+                </property>
+                <property name="clickable">
+                    <bool>false</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <column>
+                <property name="text">
                     <string>Name</string>
                 </property>
                 <property name="clickable">
@@ -106,7 +117,7 @@
                 <bool>true</bool>
             </property>
             <property name="resizeMode">
-                <enum>AllColumns</enum>
+                <enum>LastColumn</enum>
             </property>
             <property name="toolTip" stdset="0">
                 <string>Select the contact you want to communicate with via Instant Messaging</string>
