@@ -113,6 +113,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   connect(this,SIGNAL (applyPreferences()),ignorePage,SLOT (applyPreferences()) );
 
   connect(this,SIGNAL (applyPreferences()),logSettingsPage,SLOT (applyPreferences()) );
+  connect(this,SIGNAL (applyPreferences()),dccSettingsPage,SLOT (applyPreferences()) );
 
   // connect all individual signals and slots
   connect(serverListPage,SIGNAL(connectToServer(int)),this,SLOT(connectRequest(int)) );

@@ -46,21 +46,21 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSpinBoxes->setSpacing(spacingHint());
 
   new QLabel(i18n("Buffer size:"),dccSpinBoxes);
-  QSpinBox* dccBufferSpin=new QSpinBox(512,16384,128,dccSpinBoxes,"dcc_buffer_spin");
+  dccBufferSpin=new QSpinBox(512,16384,128,dccSpinBoxes,"dcc_buffer_spin");
   dccBufferSpin->setSuffix(" "+i18n("bytes"));
   dccBufferSpin->setValue(preferences->getDccBufferSize());
 
   QLabel* dccRollbackLabel=new QLabel(i18n("Rollback:"),dccSpinBoxes);
   dccRollbackLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  QSpinBox* dccRollbackSpin=new QSpinBox(0,65536,512,dccSpinBoxes,"dcc_rollback_spin");
+  dccRollbackSpin=new QSpinBox(0,65536,512,dccSpinBoxes,"dcc_rollback_spin");
   dccRollbackSpin->setSuffix(" "+i18n("bytes"));
   dccRollbackSpin->setValue(preferences->getDccRollback());
 
   dccSpinBoxes->setStretchFactor(dccRollbackLabel,10);
 
-  QCheckBox* dccAutoGet=new QCheckBox(i18n("Automatically accept DCC download"),parentFrame,"dcc_autoget_checkbox");
-  QCheckBox* dccAddSender=new QCheckBox(i18n("Add sender to file name"),parentFrame,"dcc_sender_checkbox");
-  QCheckBox* dccCreateFolder=new QCheckBox(i18n("Create folder for sender"),parentFrame,"dcc_create_folder_checkbox");
+  dccAutoGet=new QCheckBox(i18n("Automatically accept DCC download"),parentFrame,"dcc_autoget_checkbox");
+  dccAddSender=new QCheckBox(i18n("Add sender to file name"),parentFrame,"dcc_sender_checkbox");
+  dccCreateFolder=new QCheckBox(i18n("Create folder for sender"),parentFrame,"dcc_create_folder_checkbox");
 
   dccAddSender->setChecked(preferences->getDccAddPartner());
   dccCreateFolder->setChecked(preferences->getDccCreateFolder());
@@ -88,22 +88,11 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSettingsLayout->setRowStretch(row,10);
 
   // Set up signals / slots for DCC Setup page
-  connect(dccFolderInput,SIGNAL (textChanged(const QString&)),this,SLOT (folderInputChanged(const QString&)) );
   connect(dccFolderButton,SIGNAL (clicked()),this,SLOT (folderButtonClicked()) );
-  connect(dccBufferSpin,SIGNAL (valueChanged(int)),this,SLOT (bufferValueChanged(int)) );
-  connect(dccRollbackSpin,SIGNAL (valueChanged(int)),this,SLOT (rollbackValueChanged(int)));
-  connect(dccAutoGet,SIGNAL (stateChanged(int)),this,SLOT (autoGetChanged(int)) );
-  connect(dccAddSender,SIGNAL (stateChanged(int)),this,SLOT (addSenderChanged(int)) );
-  connect(dccCreateFolder,SIGNAL (stateChanged(int)),this,SLOT (createFolderChanged(int)) );
 }
 
 PrefsPageDccSettings::~PrefsPageDccSettings()
 {
-}
-
-void PrefsPageDccSettings::folderInputChanged(const QString& newFolder)
-{
-  preferences->setDccPath(newFolder);
 }
 
 void PrefsPageDccSettings::folderButtonClicked()
@@ -117,38 +106,19 @@ void PrefsPageDccSettings::folderButtonClicked()
   {
     QFileInfo folderInfo(folderName);
 
-    if(folderInfo.isDir())
-    {
-      preferences->setDccPath(folderName);
-      dccFolderInput->setText(folderName);
-    }
+    if(folderInfo.isDir()) dccFolderInput->setText(folderName);
     else KMessageBox::sorry(0,i18n("<qt>Error: %1 is not a regular folder!</qt>").arg(folderName),i18n("Incorrect path"));
   }
 }
 
-void PrefsPageDccSettings::bufferValueChanged(int newBuffer)
+void PrefsPageDccSettings::applyPreferences()
 {
-  preferences->setDccBufferSize(newBuffer);
-}
-
-void PrefsPageDccSettings::rollbackValueChanged(int newRollback)
-{
-  preferences->setDccRollback(newRollback);
-}
-
-void PrefsPageDccSettings::autoGetChanged(int state)
-{
-  preferences->setDccAutoGet(state==2);
-}
-
-void PrefsPageDccSettings::addSenderChanged(int state)
-{
-  preferences->setDccAddPartner(state==2);
-}
-
-void PrefsPageDccSettings::createFolderChanged(int state)
-{
-  preferences->setDccCreateFolder(state==2);
+  preferences->setDccPath(dccFolderInput->text());
+  preferences->setDccBufferSize(dccBufferSpin->value());
+  preferences->setDccRollback(dccRollbackSpin->value());
+  preferences->setDccAutoGet(dccAutoGet->isChecked());
+  preferences->setDccAddPartner(dccAddSender->isChecked());
+  preferences->setDccCreateFolder(dccCreateFolder->isChecked());
 }
 
 #include "prefspagedccsettings.moc"

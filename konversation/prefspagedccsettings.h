@@ -24,25 +24,31 @@
   @author Dario Abatianni
 */
 
+class QSpinBox;
+
+class KLineEdit;
+
 class PrefsPageDccSettings : public PrefsPage
 {
   Q_OBJECT
 
-  public: 
+  public:
     PrefsPageDccSettings(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageDccSettings();
 
+  public slots:
+    void applyPreferences();
+
   protected slots:
-    void folderInputChanged(const QString& newPath);
     void folderButtonClicked();
-    void bufferValueChanged(int newBuffer);
-    void rollbackValueChanged(int newRollback);
-    void autoGetChanged(int state);
-    void addSenderChanged(int state);
-    void createFolderChanged(int state);
 
   protected:
     KLineEdit* dccFolderInput;
+    QSpinBox* dccBufferSpin;
+    QSpinBox* dccRollbackSpin;
+    QCheckBox* dccAutoGet;
+    QCheckBox* dccAddSender;
+    QCheckBox* dccCreateFolder;
 };
 
 #endif
