@@ -42,8 +42,6 @@ class PrefsPageIgnore : public PrefsPage
     PrefsPageIgnore(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageIgnore();
 
-    QPtrList<Ignore> getIgnoreList();
-
   signals:
     void applyClicked(QPtrList<Ignore> newList);
     void cancelClicked(QSize newSize);
@@ -58,6 +56,8 @@ class PrefsPageIgnore : public PrefsPage
     void checked(int flag,bool active);
 
   protected:
+    QPtrList<Ignore> getIgnoreList();
+
     KListView* ignoreListView;
     QLineEdit* ignoreInput;
     QPushButton* newButton;

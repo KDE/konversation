@@ -83,4 +83,9 @@ QStringList PrefsPageButtons::getButtonList()
   return newList;
 }
 
+void PrefsPageButtons::applyPreferences()
+{
+  preferences->setButtonList(getButtonList());
+}
+
 #include "prefspagebuttons.moc"

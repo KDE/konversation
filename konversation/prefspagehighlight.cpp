@@ -69,15 +69,17 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   patternInput->setEnabled(false);
   patternColor->setEnabled(false);
 
-  QCheckBox* currentNickCheck=new QCheckBox(i18n("Always highlight current nick"),parentFrame,"highlight_current_nick_check");
+  currentNickCheck=new QCheckBox(i18n("Always highlight current nick"),parentFrame,"highlight_current_nick_check");
   currentNickCheck->setChecked(preferences->getHilightNick());
-  KColorCombo* currentNickColor=new KColorCombo(parentFrame,"current_nick_color");
+  currentNickColor=new KColorCombo(parentFrame,"current_nick_color");
   currentNickColor->setColor(preferences->getHilightNickColor());
+  currentNickChanged(preferences->getHilightNick() ? 2 : 0);
 
-  QCheckBox* ownLinesCheck=new QCheckBox(i18n("Always highlight own lines"),parentFrame,"highlight_own_lines_check");
+  ownLinesCheck=new QCheckBox(i18n("Always highlight own lines"),parentFrame,"highlight_own_lines_check");
+  ownLinesColor=new KColorCombo(parentFrame,"own_lines_color");
   ownLinesCheck->setChecked(preferences->getHilightOwnLines());
-  KColorCombo* ownLinesColor=new KColorCombo(parentFrame,"own_lines_color");
   ownLinesColor->setColor(preferences->getHilightOwnLinesColor());
+  ownLinesChanged(preferences->getHilightOwnLines() ? 2 : 0);
 
   QVBox* highlightButtonBox=new QVBox(highlightListGroup);
   highlightButtonBox->setSpacing(spacingHint());
@@ -108,8 +110,6 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
 
   connect(currentNickCheck,SIGNAL(stateChanged(int)),this,SLOT(currentNickChanged(int)));
   connect(ownLinesCheck,SIGNAL(stateChanged(int)),this,SLOT(ownLinesChanged(int)));
-  connect(currentNickColor,SIGNAL(activated(const QColor&)),this,SLOT(currentNickColorChanged(const QColor&)));
-  connect(ownLinesColor,SIGNAL(activated(const QColor&)),this,SLOT(ownLinesColorChanged(const QColor&)));
 }
 
 PrefsPageHighlight::~PrefsPageHighlight()
@@ -197,22 +197,21 @@ QPtrList<Highlight> PrefsPageHighlight::getHighlightList()
 
 void PrefsPageHighlight::currentNickChanged(int state)
 {
-  preferences->setHilightNick(state==2);
+  currentNickColor->setEnabled(state==2);
 }
 
 void PrefsPageHighlight::ownLinesChanged(int state)
 {
-  preferences->setHilightOwnLines(state==2);
+  ownLinesColor->setEnabled(state==2);
 }
 
-void PrefsPageHighlight::currentNickColorChanged(const QColor& newColor)
+void PrefsPageHighlight::applyPreferences()
 {
-  preferences->setHilightNickColor(newColor.name());
-}
-
-void PrefsPageHighlight::ownLinesColorChanged(const QColor& newColor)
-{
-  preferences->setHilightOwnLinesColor(newColor.name());
+  preferences->setHilightList(getHighlightList());
+  preferences->setHilightNick(currentNickCheck->isChecked());
+  preferences->setHilightOwnLines(ownLinesCheck->isChecked());
+  preferences->setHilightNickColor(currentNickColor->color().name());
+  preferences->setHilightOwnLinesColor(ownLinesColor->color().name());
 }
 
 #include "prefspagehighlight.moc"

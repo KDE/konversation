@@ -99,7 +99,9 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   // connect standard signals and slots
   // TODO: not implemented in all pages yet!
+  connect(this,SIGNAL (applyPreferences()),buttonsPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),notifyPage,SLOT (applyPreferences()) );
+  connect(this,SIGNAL (applyPreferences()),highlightPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),ignorePage,SLOT (applyPreferences()) );
 
   // connect all individual signals and slots
@@ -134,9 +136,7 @@ void PrefsDialog::slotApply()
   // tell all preferences pages to save their new values
   // TODO: not implemented in aöö pages yet!
   emit applyPreferences();
-
-  preferences->setButtonList(buttonsPage->getButtonList());
-  preferences->setHilightList(highlightPage->getHighlightList());
+  // tell the rest of the application to re-read the settings
   emit prefsChanged();
 }
 

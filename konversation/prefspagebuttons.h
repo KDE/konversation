@@ -33,9 +33,12 @@ class PrefsPageButtons : public PrefsPage
     PrefsPageButtons(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageButtons();
 
-    QStringList getButtonList();
+  public slots:
+    void applyPreferences();
 
   protected:
+    QStringList getButtonList();
+
     KListView* buttonListView;
 };
 

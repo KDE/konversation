@@ -17,16 +17,20 @@
 #ifndef PREFSPAGEHIGHLIGHT_H
 #define PREFSPAGEHIGHLIGHT_H
 
+#include <qptrlist.h>
+
 #include "prefspage.h"
+#include "highlight.h"
 
 /*
   @author Dario Abatianni
 */
 
+class QCheckBox;
+
 class KListView;
 class KColorCombo;
 class KLineEdit;
-class Highlight;
 
 class PrefsPageHighlight : public PrefsPage
 {
@@ -37,6 +41,9 @@ class PrefsPageHighlight : public PrefsPage
     ~PrefsPageHighlight();
 
     QPtrList<Highlight> getHighlightList();
+
+  public slots:
+    void applyPreferences();
 
   protected slots:
     void highlightSelected(QListViewItem* item);
@@ -49,13 +56,15 @@ class PrefsPageHighlight : public PrefsPage
 
     void currentNickChanged(int state);
     void ownLinesChanged(int state);
-    void currentNickColorChanged(const QColor& newColor);
-    void ownLinesColorChanged(const QColor& newColor);
 
   protected:
     KListView* highlightListView;
     KLineEdit* patternInput;
     KColorCombo* patternColor;
+    QCheckBox* currentNickCheck;
+    KColorCombo* currentNickColor;
+    QCheckBox* ownLinesCheck;
+    KColorCombo* ownLinesColor;
 };
 
 #endif
