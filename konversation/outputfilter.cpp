@@ -191,6 +191,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="kick")                parseKick(QString::null);
     else if(line=="topic")               parseTopic(QString::null);
     else if(line=="away")                parseAway(QString::null);
+    else if(line=="back")                parseAway(QString::null);
     else if(line=="unaway")              parseAway(QString::null);
     else if(line=="invite")              parseInvite(QString::null);
     else if(line=="exec")                parseExec(QString::null);
