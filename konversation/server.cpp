@@ -799,6 +799,81 @@ QString Server::getNumericalIp()
   return QString::number(ip.ip4Addr());
 }
 
+// Given a nickname, returns NickInfo object.   0 if not found.
+NickInfo* Server::getNickInfo(const QString& nickName)
+{
+  return allNicks.find(nickName);
+/*
+  NickInfo* nickInfo;
+  NickInfoList* members;
+  // Search joined channels.
+  ChannelMembershipListIterator joinedChannelIterator(joinedChannels);
+  for( ; (members=joinedChannelIterator.current()); ++joinedChannelIterator )
+  {
+    nickInfo = members->find(nickName);
+    if (nickInfo) return nickInfo;
+  }
+  // Search unjoined channels.
+  ChannelMembershipListIterator unjoinedChannelIterator(unjoinedChannels);
+  for( ; (members=unjoinedChannelIterator.current()); ++unjoinedChannelIterator )
+  {
+    nickInfo = members->find(nickName);
+    if (nickInfo) return nickInfo;
+  }
+  // Search Queries.
+  nickInfo = queryNicks.find(nickname);
+  if (nickInfo) return nickInfo;
+  // Search nicks online.
+  nickInfo = nicksOnline.find(nickname);
+  if (nickInfo) return nickInfo;
+  // Search nicks offline.
+  nickInfo = nicksOffline.find(nickname);
+  return nickInfo;
+*/
+}
+
+// Returns the list of members for a channel in the joinedChannels list.  0 if channel is not in the joinedChannels list.
+// Using code must not alter the list.
+const NickInfoList* Server::getJoinedChannelMembers(const QString& channelName)
+{
+  return joinedChannels.find(channelName);
+}
+
+// Returns the list of members for a channel in the unjoinedChannels list.  0 if channel is not in the unjoinedChannels list.
+// Using code must not alter the list.
+const NickInfoList* Server::getUnjoinedChannelMembers(const QString& channelName)
+{
+  return unjoinedChannels.find(channelName);
+}
+
+// Searches the Joined and Unjoined lists for the given channel and returns the member list.  0 if channel is not in either list.
+// Using code must not alter the list.
+const NickInfoList* Server::getChannelMembers(const QString& channelName)
+{
+  const NickInfoList* members = getJoinedChannelMembers(channelName);
+  if (!members) members = getUnjoinedChannelMembers(channelName);
+  return members;
+}
+
+// Returns a list of all the channels (joined or unjoined) that a nick is in.
+QStringList Server::getNickChannels(QString& nickName)
+{
+  QStringList channellist;
+  NickInfoList* members;
+  ChannelMembershipListIterator joinedChannelIterator(joinedChannels);
+  for( ; (members=joinedChannelIterator.current()); ++joinedChannelIterator )
+  {
+    if (members->find(nickName)) channellist.append(joinedChannelIterator.currentKey());
+  }
+  ChannelMembershipListIterator unjoinedChannelIterator(unjoinedChannels);
+  for( ; (members=unjoinedChannelIterator.current()); ++unjoinedChannelIterator )
+  {
+    if (members->find(nickName)) channellist.append(unjoinedChannelIterator.currentKey());
+  }
+  return channellist;
+}
+
+
 QString Server::getIp()
 {
   // Get our own IP address.

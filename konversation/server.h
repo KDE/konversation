@@ -17,6 +17,7 @@
 
 #include <qtimer.h>
 #include <qdatetime.h>
+#include <qdict.h>
 
 #include "inputfilter.h"
 #include "outputfilter.h"
@@ -24,6 +25,7 @@
 #include "ircresolver.h"
 
 #include "dcctransfer.h"
+#include "nickinfo.h"
 
 /*
   @author Dario Abatianni
@@ -36,6 +38,15 @@ class Identity;
 class KonversationMainWindow;
 class RawLog;
 class ChannelListPanel;
+
+// A NickInfoList is a list of NickInfo objects, indexed by nickname.
+typedef QDict<NickInfo> NickInfoList;
+// A ChannelMembershipList is a list of MemberLists, indexed by channel name.
+typedef QDict<NickInfoList> ChannelMembershipList;
+// An iterator for a MemberList.
+typedef QDictIterator<NickInfo> NickInfoListIterator;
+// An iterator for a ChannelMembershipList.
+typedef QDictIterator<NickInfoList> ChannelMembershipListIterator;
 
 class Server : public QObject
 {
@@ -131,6 +142,20 @@ class Server : public QObject
     bool connected();
     QString getIp();
     QString getNumericalIp();
+    
+    // Given a nickname, returns NickInfo object.  0 if not found.
+    NickInfo* getNickInfo(const QString& nickName);
+    // Returns the list of members for a channel in the joinedChannels list.  0 if channel is not in the joinedChannels list.
+    // Using code must not alter the list.
+    const NickInfoList* getJoinedChannelMembers(const QString& channelName);
+    // Returns the list of members for a channel in the unjoinedChannels list.  0 if channel is not in the unjoinedChannels list.
+    // Using code must not alter the list.
+    const NickInfoList* getUnjoinedChannelMembers(const QString& channelName);
+    // Searches the Joined and Unjoined lists for the given channel and returns the member list.  0 if channel is not in either list.
+    // Using code must not alter the list.
+    const NickInfoList* getChannelMembers(const QString& channelName);
+    // Returns a list of all the channels (joined or unjoined) that a nick is in.
+    QStringList getNickChannels(QString& nickName);
 
   signals:
     void nicknameChanged(const QString&);
@@ -284,6 +309,21 @@ class Server : public QObject
     bool rejoinChannels;
     
     QString nonAwayNick;
+    
+    // All nicks known to this server.  Note this is NOT a list of nicks on the server.
+    NickInfoList allNicks;
+    // List of membership lists for joined channels.  A "joined" channel is a channel that user has joined, i.e.,
+    // a tab appears for the channel in the main window.
+    ChannelMembershipList joinedChannels;
+    // List of membership lists for unjoined channels.  These come from WHOIS responses.  Note that this is NOT
+    // a list of all channels on the server, just those we are interested in because of nicks in the Nick Watch List.
+    ChannelMembershipList unjoinedChannels;
+    // List of nicks in the Nick Watch List that are online.
+    NickInfoList nicksOnline;
+    // List of nicks in the Nick Watch List that are not online.
+    NickInfoList nicksOffline;
+    // List of nicks in Queries.
+    NickInfoList queryNicks;
 };
 
 #endif
