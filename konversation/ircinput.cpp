@@ -16,11 +16,13 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <klocale.h>
+#include <kcompletionbox.h>
 
 #include <qclipboard.h>
 #include <qregexp.h>
 
 #include "ircinput.h"
+#include "konversationapplication.h"
 
 #define MAXHISTORY 100
 
@@ -36,6 +38,8 @@ IRCInput::IRCInput(QWidget* parent) : KLineEdit(parent)
   lineNum=0;
   // reset completion mode
   setCompletionMode('\0');
+  completionBox = new KCompletionBox(this);
+  connect(completionBox, SIGNAL(activated(const QString&)), this, SLOT(insertCompletion(const QString&)));
 }
 
 IRCInput::~IRCInput()
@@ -79,7 +83,15 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
 
         case Key_Enter:
         case Key_Return:
+        {
           if(text().length()) addHistory(text());
+          if(completionBox->isHidden()) {
+            emit submit();
+          } else {
+            insertCompletion(completionBox->currentText());
+            completionBox->hide();
+          }
+        }
         break;
 
         default:
@@ -91,6 +103,8 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
               setCompletionMode('\0');
               emit endCompletion();
             }
+            
+            completionBox->hide();
           }
           // support ASCII BEL
           if(keyEvent->ascii()==7) insert("%G");
@@ -228,6 +242,40 @@ bool IRCInput::checkPaste(const QString& text)
   return(doPaste==KMessageBox::Yes);
 }
 
+void IRCInput::showCompletionList(const QStringList& nicks)
+{
+  completionBox->setItems(nicks);
+  completionBox->popup();
+}
+
+void IRCInput::insertCompletion(const QString& nick)
+{
+  int pos = cursorPosition();
+  int oldPos = cursorPosition();
+  QString line = text();
+  
+  while(pos && line[pos-1] != ' ') pos--;
+  
+  line.remove(pos, oldPos - pos);
+  
+  // did we find the nick in the middle of the line?
+  if(pos)
+  {
+    QString addMiddle(KonversationApplication::preferences.getNickCompleteSuffixMiddle());
+    line.insert(pos, nick + addMiddle);
+    pos += nick.length() + addMiddle.length();
+  }
+  // no, it was at the beginning
+  else
+  {
+    QString addStart(KonversationApplication::preferences.getNickCompleteSuffixStart());
+    line.insert(pos, nick + addStart);
+    pos += nick.length() + addStart.length();
+  }
+  
+  setText(line);
+  setCursorPosition(pos);
+}
 
 // Accessor methods
 

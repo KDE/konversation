@@ -225,7 +225,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicksOps->setSizePolicy(modest);
   nicknameListView->setSizePolicy(hmodest);
 
-  connect(channelInput,SIGNAL (returnPressed()),this,SLOT (channelTextEntered()) );
+  connect(channelInput,SIGNAL (submit()),this,SLOT (channelTextEntered()) );
   connect(channelInput,SIGNAL (nickCompletion()),this,SLOT (completeNick()) );
   connect(channelInput,SIGNAL (endCompletion()),this,SLOT (endCompleteNick()) );
   connect(channelInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
@@ -507,13 +507,19 @@ void Channel::completeNick()
       QString foundNick;
 
       // try to find matching nickname in list of names
-      if(KonversationApplication::preferences.getNickCompletionMode() == 1) { // Shell like completion
+      if(KonversationApplication::preferences.getNickCompletionMode() == 1 ||
+        KonversationApplication::preferences.getNickCompletionMode() == 2)
+      { // Shell like completion
         QStringList found;
         foundNick = nicknameList.completeNick(pattern, complete, found);
         
         if(!complete && !found.isEmpty()) {
-          QString nicks = found.join(" ");
-          appendServerMessage(i18n("Completion"),i18n("Possible completions: %1.").arg(nicks));
+          if(KonversationApplication::preferences.getNickCompletionMode() == 1) {
+            QString nicks = found.join(" ");
+            appendServerMessage(i18n("Completion"),i18n("Possible completions: %1.").arg(nicks));
+          } else {
+            channelInput->showCompletionList(found);
+          }
         }
       } else if(KonversationApplication::preferences.getNickCompletionMode() == 0) { // Cycle completion
         complete = true;
@@ -534,19 +540,19 @@ void Channel::completeNick()
       // did we find a suitable nick?
       if(!foundNick.isEmpty())
       {
-        QString addStart(KonversationApplication::preferences.getNickCompleteSuffixStart());
-        QString addMiddle(KonversationApplication::preferences.getNickCompleteSuffixMiddle());
         // remove pattern from line
         newLine.remove(pos,pattern.length());
         // did we find the nick in the middle of the line?
         if(pos && complete)
         {
+          QString addMiddle(KonversationApplication::preferences.getNickCompleteSuffixMiddle());
           newLine.insert(pos,foundNick+addMiddle);
           pos=pos+foundNick.length()+addMiddle.length();
         }
         // no, it was at the beginning
         else if(complete)
         {
+          QString addStart(KonversationApplication::preferences.getNickCompleteSuffixStart());
           newLine.insert(pos,foundNick+addStart);
           pos=pos+foundNick.length()+addStart.length();
         }

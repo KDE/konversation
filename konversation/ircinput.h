@@ -23,6 +23,8 @@
   @author Dario Abatianni
 */
 
+class KCompletionBox;
+
 class IRCInput : public KLineEdit
 {
   Q_OBJECT
@@ -43,13 +45,16 @@ class IRCInput : public KLineEdit
     void pageUp();
     void pageDown();
     void textPasted(QString text);
+    void submit();
 
   public slots:
     void paste();
     void insert(const QString& text);
+    void showCompletionList(const QStringList& nicks);
 
   protected slots:
     void getHistory(bool up);
+    void insertCompletion(const QString& nick);
 
   protected:
     bool eventFilter(QObject *object,QEvent *event);
@@ -60,6 +65,7 @@ class IRCInput : public KLineEdit
     unsigned int lineNum;
     unsigned int oldPos;
     char completionMode;
+    KCompletionBox* completionBox;
 };
 
 #endif
