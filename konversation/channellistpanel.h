@@ -42,6 +42,8 @@ class ChannelListPanel : public ChatWindow
     void joinChannel(const QString& channelName);
     void adjustMinValue(int num);
     void adjustMaxValue(int num);
+    void updateNumUsers(const QString& num);
+    void updateNumChannels(const QString& num);
 
   public slots:
     void adjustFocus();

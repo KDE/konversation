@@ -85,6 +85,16 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   channelListView->setFullWidth(true);
   channelListView->setAllColumnsShowFocus(true);
 
+  QHBox* statsBox=new QHBox(this);
+  statsBox->setSpacing(spacing());
+  
+  new QLabel(i18n("Users: "),statsBox);
+  QLabel* usersLabel=new QLabel("0",statsBox);
+  new QLabel(i18n("Channels: "),statsBox);
+  QLabel* channelsLabel=new QLabel("0",statsBox);
+
+  statsBox->setStretchFactor(channelsLabel,10);
+    
   QHBox* actionBox=new QHBox(this);
   actionBox->setSpacing(spacing());
 
@@ -109,6 +119,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   connect(refreshListButton,SIGNAL (clicked()),this,SLOT (refreshList()) );
   connect(saveListButton,SIGNAL (clicked()),this,SLOT (saveList()) );
   connect(joinChannelButton,SIGNAL (clicked()),this,SLOT (joinChannelClicked()) );
+
+  connect(this,SIGNAL (updateNumUsers(const QString&)),usersLabel,SLOT (setText(const QString&)) );
+  connect(this,SIGNAL (updateNumChannels(const QString&)),channelsLabel,SLOT (setText(const QString&)) );
 }
 
 ChannelListPanel::~ChannelListPanel()
@@ -229,13 +242,13 @@ const QString& ChannelListPanel::getFilterText() { return filterText; }
 void ChannelListPanel::setNumChannels(int num)
 {
   numChannels=num;
-  // update widgets here
+  emit updateNumChannels(QString::number(num));
 }
 
 void ChannelListPanel::setNumUsers(int num)
 {
   numUsers=num;
-  // update widgets here
+  emit updateNumUsers(QString::number(num));
 }
 
 void ChannelListPanel::setMinUsers(int num)
