@@ -1,7 +1,16 @@
 [Desktop Entry]
+Type=Theme
 Name=Default Theme
+Name[it]=Tema predefinito
+Name[nl]=Standaardthema
+Name[pt]=Tema Predefinido
+Name[pt_BR]=Tema Predefinido
+Name[sv]=Standardtema
 Comment="Simplistic" by Shintaro Matsuoka
+Comment[it]="Simplistic" di Shintaro Matsuoka
+Comment[nl]="Simplistic", door Shintaro Matsuoka
+Comment[pt]="Simplistic" por Shintaro Matsuoka
+Comment[pt_BR]="Simplistic" por Shintaro Matsuoka
+Comment[sv]="Förenklat" av Shintaro Matsuoka
 Encoding=UTF-8
 
-Name[xx]=Default Theme
-Comment[xx]="Simplistic" by Shintaro Matsuoka
