@@ -287,7 +287,7 @@ void IRCView::replaceDecoration(QString& line,char decoration,char replacement)
   }
 }
 
-QString IRCView::filter(const QString& line,const QString& defaultColor,const QString& whoSent,bool doHighlight, bool parseURL)
+QString IRCView::filter(const QString& line,const QString& defaultColor,const QString& whoSent,bool doHighlight, bool parseURL, bool self)
 {
   QString filteredLine(line);
   KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
@@ -404,7 +404,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
     ownNick = m_server->getNickname();
   }
 
-  if(doHighlight && m_server && (whoSent != ownNick))
+  if(doHighlight && m_server && (whoSent != ownNick) && !self)
   {
     m_highlightColor = QString::null;
 
@@ -676,8 +676,8 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
     line = "<p><font color=\"#" + commandColor + "\">%1 %2 %3</font></p>\n";
   }
 
-  line = line.arg(timeStamp(), prefix, filter(message,commandColor,0,true,parseURL));
- 
+  line = line.arg(timeStamp(), prefix, filter(message, commandColor, 0, true, parseURL, self));
+
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
   doAppend(line, important, self);
