@@ -1,3 +1,9 @@
+[!Global!]
+IconName=konversation
+Comment=Konversation
+Comment[pt_BR]=Konversação
+Comment[xx]=xxKonversationxx
+
 [message]
 Name=New message
 Name[ca]=Nou missatge
