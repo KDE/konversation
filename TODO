@@ -25,7 +25,7 @@ LONG-TERM:
 IDEAS:
 - Automatically gzip files before DCC SEND
 
-TODO That Will Be Fixed When Kmdi interface is stable :
+TODO That Will Be Fixed When we port interface to KMdi2:
 - Tabs on left / right (?)
 - Detachable queries
 - Make [x] on tabs harder to click (1 second hover delay or similar)
@@ -40,7 +40,7 @@ DISCUSSING:
 - Let the user decide how many quick buttons they want, if at all.
 - Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated
 - Different tab sortings
-- Import watched nicks list from .ircrc ( cartman: Got sample )
+- Import watched nicks list from .ircrc
 - Notify with more than 500 characters
 - Watched nicks editor should sort alphabetically, manual sorting makes no sense there
 - Watched nicks panel should have a "last seen" column so you can sort them
