@@ -33,10 +33,11 @@ class ServerEntry
     QString getChannelName();
     QString getChannelKey();
     bool getAutoConnect();
-    QString getDefinition() { return definition; };
+    QString getIdentity();
+    QString getDefinition();
 
-    void setDefinition(const QString& newDefinition) { definition=newDefinition; };
-    int getId() { return id; };
+    void setDefinition(const QString& newDefinition);
+    int getId();
     void updateProperty(int property,const QString& value);
 
   protected:

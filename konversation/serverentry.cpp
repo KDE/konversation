@@ -28,7 +28,11 @@ ServerEntry::ServerEntry(const QString newDefinition)
   id=newId++;
   definition=newDefinition;
   QStringList properties=QStringList::split(',',getDefinition(),true);
-  if(properties.count()!=7) definition=definition+",";
+  while(properties.count()<8)
+  {
+    definition=definition+",";
+    properties.append("");
+  }
 }
 
 ServerEntry::~ServerEntry()
@@ -72,3 +76,12 @@ bool ServerEntry::getAutoConnect()
   return (definition[6]=="1") ? true : false;
 }
 
+QString ServerEntry::getIdentity()
+{
+  QStringList definition(QStringList::split(',',getDefinition(),true));
+  return definition[7];
+}
+
+QString ServerEntry::getDefinition() { return definition; }
+void ServerEntry::setDefinition(const QString& newDefinition) { definition=newDefinition; }
+int ServerEntry::getId() { return id; }

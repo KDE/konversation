@@ -36,6 +36,7 @@
 Server::Server(int id)
 {
   QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
+  setIdentity(KonversationApplication::preferences.getIdentityByName(serverEntry[7]));
 
   tryNickNumber=0;
   checkTime=0;
@@ -43,7 +44,7 @@ Server::Server(int id)
   lastDccDir="";
 
   serverWindow=new ServerWindow(this);
-  setNickname(KonversationApplication::preferences.getNickname(tryNickNumber));
+  setNickname(identity.getNickname(tryNickNumber));
   serverWindow->show();
 
   serverName=serverEntry[1];
@@ -70,6 +71,7 @@ Server::Server(int id)
   completeQueryPosition=0;
 
   inputFilter.setServer(this);
+  outputFilter.setIdentity(identity);
 
   incomingTimer.start(10);
 
@@ -174,9 +176,9 @@ void Server::connectToIRCServer()
       serverWindow->appendToStatus(i18n("Info"),i18n("Connected! Logging in ..."));
 
       QString connectString="USER " +
-                            KonversationApplication::preferences.getIdent() +
+                            identity.getIdent() +
                             " 8 * :" +  // 8 = +i; 4 = +w
-                            KonversationApplication::preferences.getRealName();
+                            identity.getRealName();
 
       if(serverKey) queue("PASS "+serverKey);
       queue("NICK "+getNickname());
@@ -303,7 +305,7 @@ QString Server::getNextNickname()
   {
     tryNickNumber++;
     if(tryNickNumber==4) newNick=getNickname()+"_";
-    else newNick=KonversationApplication::preferences.getNickname(tryNickNumber);
+    else newNick=identity.getNickname(tryNickNumber);
   }
   return newNick;
 }
@@ -419,6 +421,7 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
   {
     query=new Query(serverWindow->getWindowContainer());
     query->setServer(this);
+    query->setIdentity(getIdentity());
     query->setName(nickname);
     // Add new query pane to tabwidget
     serverWindow->addView(query,0,nickname);
@@ -685,6 +688,7 @@ void Server::joinChannel(QString& name,QString& hostmask,QString& key)
   channel=new Channel(serverWindow->getWindowContainer());
 
   channel->setServer(this);
+  channel->setIdentity(getIdentity());
   channel->setName(name);
   channel->setNickname(getNickname());
 //  channel->setKey(key);
@@ -1061,5 +1065,8 @@ void Server::unAway()
 {
   isAway=false;
 }
+
+void Server::setIdentity(Identity newIdentity) { identity=newIdentity; }
+const Identity& Server::getIdentity() { return identity; }
 
 #include "server.moc"

@@ -20,6 +20,8 @@
 #include <qobject.h>
 #include <qstring.h>
 
+#include "identity.h"
+
 /*
   @author Dario Abatianni
 */
@@ -58,6 +60,7 @@ class OutputFilter : public QObject
 
   public slots:
     void setCommandChar();
+    void setIdentity(const Identity& newIdentity);
 
   protected:
     QString output;
@@ -66,6 +69,7 @@ class OutputFilter : public QObject
     QString destination;
 
     QString commandChar;
+    Identity identity;
 
     // message types
     bool action;

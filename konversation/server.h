@@ -26,6 +26,7 @@
 #include "inputfilter.h"
 #include "outputfilter.h"
 #include "ircserversocket.h"
+#include "identity.h"
 
 /*
   @author Dario Abatianni
@@ -44,6 +45,7 @@ class Server : public QObject
     ~Server();
 
     QString getServerName();
+    const Identity& getIdentity();
     int getPort();
     bool getAutoJoin();
     void setAutoJoin(bool on);
@@ -146,12 +148,15 @@ class Server : public QObject
 
   protected:
     void startNotifyCheckTimer();
+    void setIdentity(Identity newIdentity);
 
     unsigned int completeQueryPosition;
     unsigned int tryNickNumber;
 
     QString serverName;
     int serverPort;
+
+    Identity identity;
 
     bool autoJoin;
     bool autoRejoin;

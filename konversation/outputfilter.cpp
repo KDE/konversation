@@ -172,7 +172,7 @@ void OutputFilter::parseKick(QString parameter)
       // get kick reason (if any)
       QString reason=parameter.mid(victim.length()+1);
       // if no reason given, take default reason
-      if(reason=="") reason=KonversationApplication::preferences.getKickReason();
+      if(reason=="") reason=identity.getKickReason();
       toServer="KICK "+destination+" "+victim+" :"+reason;
     }
   }
@@ -190,7 +190,7 @@ void OutputFilter::parsePart(QString parameter)
   if(parameter=="")
   {
     // But only if we actually are in a channel
-    if(isAChannel(destination)) toServer="PART "+destination+" :"+KonversationApplication::preferences.getPartReason();
+    if(isAChannel(destination)) toServer="PART "+destination+" :"+identity.getPartReason();
     else
     {
       type=i18n("Error");
@@ -533,6 +533,7 @@ bool OutputFilter::isProgram() { return program; };
 bool OutputFilter::isQuery() { return query; };
 
 void OutputFilter::setCommandChar() { commandChar=KonversationApplication::preferences.getCommandChar(); }
+void OutputFilter::setIdentity(const Identity& newIdentity) { identity=newIdentity; }
 
 QString& OutputFilter::getOutput() { return output; };
 QString& OutputFilter::getServerOutput() { return toServer; };

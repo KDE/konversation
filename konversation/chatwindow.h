@@ -22,6 +22,7 @@
 
 #include "ircview.h"
 #include "outputfilter.h"
+#include "identity.h"
 
 /*
   @author Dario Abatianni
@@ -47,6 +48,7 @@ class ChatWindow : public QVBox
     };
 
     void setServer(Server* newServer);
+    void setIdentity(const Identity& newIdentity);
     void setTextView(IRCView* newView);
     IRCView* getTextView();
     void setLog(bool activate);
@@ -83,9 +85,10 @@ class ChatWindow : public QVBox
     QString logName;
 
     QFont font;
-    
+
     IRCView* textView;
     Server* server;
+    Identity identity;
     QFile logfile;
     OutputFilter filter;
     WindowType type;

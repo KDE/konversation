@@ -84,6 +84,12 @@ void ChatWindow::setServer(Server* newServer)
   }
 }
 
+void ChatWindow::setIdentity(const Identity& newIdentity)
+{
+  identity=newIdentity;
+  filter.setIdentity(identity);
+}
+
 void ChatWindow::setTextView(IRCView* newView)
 {
   textView=newView;

@@ -153,6 +153,7 @@ class Preferences : public QObject
     void addIdentity(Identity* identity);
     void clearIdentityList();
     QPtrList<Identity> getIdentityList();
+    const Identity& getIdentityByName(const QString& name);
 
     QString getIdent();
     void setIdent(QString ident);

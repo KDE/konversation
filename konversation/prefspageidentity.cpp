@@ -15,6 +15,10 @@
 */
 
 #include <qlayout.h>
+#include <qhbox.h>
+#include <qpushbutton.h>
+
+#include <kdebug.h>
 
 #include "prefspageidentity.h"
 
@@ -26,14 +30,13 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
 
   QLabel* identityLabel=new QLabel(i18n("Identity:"),parentFrame);
   identityCombo=new KComboBox(parentFrame);
+  identityCombo->setEditable(true);
+  identityCombo->setInsertionPolicy(QComboBox::NoInsertion);
 
   identities=preferences->getIdentityList();
+
   for(unsigned int index=0;index<identities.count();index++)
     identityCombo->insertItem(identities.at(index)->getName());
-
-  defaultText=new QLabel(i18n("<qt>This is the default identity used for all servers "
-                              "where no separate identity was selected.</qt>"),
-                              parentFrame);
 
   QLabel* realNameLabel=new QLabel(i18n("Real name:"),parentFrame);
   realNameInput=new KLineEdit(parentFrame);
@@ -60,13 +63,24 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   QLabel* unAwayLabel=new QLabel(i18n("Return message:"),parentFrame);
   unAwayInput=new KLineEdit(parentFrame);
 
+  defaultText=new QLabel(i18n("<qt>This is the default identity used for all servers "
+                              "where no separate identity was selected.</qt>"),
+                              parentFrame);
+
+  QHBox* buttonBox=new QHBox(parentFrame);
+  buttonBox->setSpacing(spacingHint());
+
+  QPushButton* addIdentityButton=new QPushButton(i18n("Add new identity"),buttonBox,"add_identity_button");
+  QPushButton* removeIdentityButton=new QPushButton(i18n("Remove identity"),buttonBox,"remove_identity_button");
+  removeIdentityButton->setEnabled(false);
+  QHBox* spacer=new QHBox(parentFrame);
+
+  // set values for the widgets
   updateIdentity(0);
 
   int row=0;
   identityLayout->addWidget(identityLabel,row,0);
   identityLayout->addMultiCellWidget(identityCombo,row,row,1,3);
-  row++;
-  identityLayout->addMultiCellWidget(defaultText,row,row,0,3);
   row++;
   identityLayout->addWidget(realNameLabel,row,0);
   identityLayout->addMultiCellWidget(realNameInput,row,row,1,3);
@@ -98,6 +112,11 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   identityLayout->addWidget(unAwayLabel,row,0);
   identityLayout->addMultiCellWidget(unAwayInput,row,row,1,3);
   row++;
+  identityLayout->addMultiCellWidget(defaultText,row,row,0,3);
+  row++;
+  identityLayout->addMultiCellWidget(buttonBox,row,row,0,3);
+  row++;
+  identityLayout->addMultiCellWidget(spacer,row,row,0,3);
   identityLayout->setRowStretch(row,10);
 
   // Set up signals / slots for identity page
@@ -113,6 +132,8 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   connect(awayInput,SIGNAL (textChanged(const QString&)),this,SLOT (awayMessageChanged(const QString&)) );
   connect(unAwayInput,SIGNAL (textChanged(const QString&)),this,SLOT (unAwayMessageChanged(const QString&)) );
   connect(identityCombo,SIGNAL (activated(int)),this,SLOT (updateIdentity(int)) );
+  connect(identityCombo,SIGNAL (returnPressed(const QString&)),this,SLOT (renameIdentity(const QString&)) );
+  connect(addIdentityButton,SIGNAL (clicked()),this,SLOT(addIdentity()) );
 }
 
 PrefsPageIdentity::~PrefsPageIdentity()
@@ -197,6 +218,26 @@ void PrefsPageIdentity::updateIdentity(int number)
   showAwayMessageCheck->setChecked(identity->getShowAwayMessage());
   awayInput->setText(identity->getAwayMessage());
   unAwayInput->setText(identity->getReturnMessage());
+}
+
+void PrefsPageIdentity::renameIdentity(const QString& newName)
+{
+  identity->setName(newName);
+  identityCombo->changeItem(newName,identityCombo->currentItem());
+}
+
+void PrefsPageIdentity::addIdentity()
+{
+  identity=new Identity();
+  identity->setName(i18n("New Identity"));
+
+  preferences->addIdentity(identity);
+  identities=preferences->getIdentityList();
+
+  identityCombo->insertItem(identity->getName());
+  identityCombo->setCurrentItem(identityCombo->count()-1);
+
+  updateIdentity(identityCombo->count()-1);
 }
 
 #include "prefspageidentity.moc"

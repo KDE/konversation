@@ -242,6 +242,7 @@ void ServerWindow::addStatusView()
   statusPanel=new StatusPanel(getWindowContainer());
   addView(statusPanel,2,i18n("Status"));
   statusPanel->setServer(getServer());
+  statusPanel->setIdentity(getServer()->getIdentity());
 
   connect(statusPanel,SIGNAL (newText(QWidget*)),this,SLOT (newText(QWidget*)) );
 }

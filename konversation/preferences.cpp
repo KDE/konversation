@@ -63,7 +63,7 @@ Preferences::Preferences()
   setNickCompleteSuffixStart(": ");
   setNickCompleteSuffixMiddle(" ");
 
-  addServer("IRCNet,irc.kde.org,6667,,#kde-users,,0");
+  addServer("IRCNet,irc.kde.org,6667,,#kde-users,,0,");
 
   buttonList.append("Op,/OP %u%n");
   buttonList.append("DeOp,/DEOP %u%n");
@@ -291,6 +291,24 @@ QStringList Preferences::getButtonList() { return buttonList; }
 void Preferences::addIdentity(Identity* identity) { identityList.append(identity); }
 void Preferences::clearIdentityList() { identityList.clear(); }
 QPtrList<Identity> Preferences::getIdentityList() { return identityList; }
+
+const Identity& Preferences::getIdentityByName(const QString& name)
+{
+  kdDebug() << "Requested Identity: " << name << endl;
+
+  QPtrList<Identity> identities=getIdentityList();
+  Identity* identity=identities.first();
+  while(identity)
+  {
+    kdDebug() << "Trying " << identity->getName() << endl;
+    if(identity->getName()==name) return *identity;
+    identity=identities.next();
+  }
+  // no matching identity found, return default identity
+  identity=identities.first();
+  kdDebug() << "Default Identity returned" << endl;
+  return *identity;
+}
 
 QString Preferences::getRealName() { return identityList.at(0)->getRealName(); }
 void Preferences::setRealName(QString name) { identityList.at(0)->setRealName(name); }

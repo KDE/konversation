@@ -102,7 +102,7 @@ void KonversationApplication::connectToAnotherServer(int id)
 
   ServerEntry* chosenServer=preferences.getServerEntryById(id);
 
-  /* Check if a server window with same name and port is already open */
+  // Check if a server window with same name and port is already open
   Server* newServer=serverList.first();
   while(newServer)
   {
