@@ -294,8 +294,17 @@ void LedTabBar::layoutTabs()
       QRect r=ltab->rect();
       r.setWidth(r.width()+LABEL_OFFSET);
 
+#if QT_VERSION >= 0x030300
+      if(index)
+        r.moveLeft(offset);
+      else
+        r.moveLeft(0);
+
+      offset+=r.width();
+#else
       r.moveBy(offset,0);
       offset+=LABEL_OFFSET;
+#endif
 
       ltab->setRect(r);
     } // endfor
