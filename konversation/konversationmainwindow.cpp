@@ -246,7 +246,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
   // set up KABC with a nice gui error dialog
   KABC::GuiErrorHandler *m_guiErrorHandler = new KABC::GuiErrorHandler(this);
+  kapp->dcopClient()->setAcceptCalls( false );
   Konversation::Addressbook::self()->getAddressBook()->setErrorHandler(m_guiErrorHandler);
+  kapp->dcopClient()->setAcceptCalls( true );
 
   // demo how to add additional dock windows
 //  QListView* dockList=new QListView(this);
