@@ -23,11 +23,11 @@ Changes from 0.12 to 0.13
 - Channel list update is now more CPU friendly
 - Tell the user why the channel list could not be opened
 - Channel list now sorts correctly when number column is clicked
-- Applied a patch by Christian Mühlhäuser to enable bigger mode changes (thanks)
-- Applied a patch by Christian Mühlhäuser to right-align close widgets (thanks)
+- Applied a patch by Christian Muehlhaeuser to enable bigger mode changes (thanks)
+- Applied a patch by Christian Muehlhaeuser to right-align close widgets (thanks)
 - Info button on dcc panel now works
 - Added /unban command
-- Applied a patch by Christian Mühlhäuser for OSD functions (thanks)
+- Applied a patch by Christian Muehlhaeuser for OSD functions (thanks)
 - Applied a patch by Sascha Cunz for extended user modes beyond @ and + (thanks)
 
 Changes from 0.11 to 0.12
