@@ -418,7 +418,6 @@ void IRCView::append(const QString& nick,const QString& message)
       if(!colorMap.contains(nick))
 	{
 	  colorList = KonversationApplication::preferences.getNickColorList();
-	  QColor nickColor;
 	  QString backgroundColor=KonversationApplication::preferences.getColor("TextViewBackground");
 	  KRandomSequence sq;
 	  uint i = (uint) sq.getLong(7);
