@@ -170,6 +170,7 @@ namespace Konversation {
     m_serverList = new KListView(mainWidget);
     m_serverList->setAllColumnsShowFocus(true);
     m_serverList->setRootIsDecorated(true);
+    m_serverList->setResizeMode(QListView::AllColumns);
     m_serverList->addColumn(i18n("Network"));
     m_serverList->addColumn(i18n("Identity"));
     //m_serverList->addColumn(i18n("Auto Connect"));
