@@ -27,11 +27,11 @@ if( utf8::valid($input) ) {
 
 @chars = split //, $input;
 
-srand(time());
-
 foreach (@chars) {
-  $random = int(rand(15))+1;
-  $message = $message."%C".$random.$_;
+  # Rainbow colors. Code courtesy of boren
+  $i = ($i+1)%16;
+  $i++ if $i == 1;
+  $message = $message."%C".$i.$_;
 }
 
 system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$message\" ");
