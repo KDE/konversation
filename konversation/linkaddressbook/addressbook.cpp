@@ -245,7 +245,7 @@ void Addressbook::emitContactPresenceChanged(QString uid, int presence) {
 	}
 	Q_ASSERT(kapp->dcopClient());
 	emit contactPresenceChanged(uid, kapp->dcopClient()->appId(), presence);
-	kdDebug() << "Presence changed for uid " << uid << " to " << presence << endl;
+//	kdDebug() << "Presence changed for uid " << uid << " to " << presence << endl;
 }
 
 void Addressbook::emitContactPresenceChanged(QString uid) {
