@@ -140,6 +140,9 @@ void StatusPanel::updateLag(int msec)
 
 QString StatusPanel::getTextInLine() { return statusInput->text(); }
 
+bool StatusPanel::frontView()        { return true; }
+bool StatusPanel::searchView()       { return true; }
+
 void StatusPanel::closeYourself()
 {
   int result=KMessageBox::warningYesNo(

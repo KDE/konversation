@@ -70,8 +70,10 @@ class Channel : public ChatWindow
     void updateQuickButtons(QStringList newButtonList);
     void updateFonts();
 
-    QString getTextInLine();
-    void closeYourself();
+    virtual QString getTextInLine();
+    virtual void closeYourself();
+    virtual bool frontView();
+    virtual bool searchView();
 
   signals:
     void newText(QWidget* channel,const QString& highlightColor);

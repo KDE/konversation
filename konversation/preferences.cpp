@@ -91,6 +91,7 @@ Preferences::Preferences()
 
   setAutoReconnect(true);
   setAutoRejoin(true);
+  setAutojoinOnInvite(false);
 
   setFixedMOTD(true);
   setBeep(false);
@@ -297,6 +298,9 @@ bool Preferences::getAutoReconnect() { return autoReconnect; }
 
 void Preferences::setAutoRejoin(bool state) { autoRejoin=state; }
 bool Preferences::getAutoRejoin() { return autoRejoin; }
+
+void Preferences::setAutojoinOnInvite(bool state) { autojoinOnInvite=state; }
+bool Preferences::getAutojoinOnInvite()           { return autojoinOnInvite; }
 
 void Preferences::setBeep(bool state) { beep=state; }
 bool Preferences::getBeep() { return beep; }

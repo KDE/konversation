@@ -69,6 +69,9 @@ class Preferences : public QObject
     void setAutoReconnect(bool state);
     bool getAutoRejoin();
     void setAutoRejoin(bool state);
+    bool getAutojoinOnInvite();
+    void setAutojoinOnInvite(bool state);
+
     bool getBeep();
     void setBeep(bool state);
     bool getRawLog();
@@ -316,6 +319,7 @@ class Preferences : public QObject
 
     bool autoReconnect;
     bool autoRejoin;
+    bool autojoinOnInvite;
 
     int notifyDelay;
     int opLedColor;

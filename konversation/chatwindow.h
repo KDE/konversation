@@ -78,13 +78,15 @@ class ChatWindow : public QVBox
 
     virtual QString getTextInLine();
     virtual void closeYourself();
+    virtual bool frontView();
+    virtual bool searchView();
 
   signals:
     void nameChanged(ChatWindow* view,const QString& newName);
 
   public slots:
     void logText(const QString& text);
-    virtual void adjustFocus() = 0;
+    virtual void adjustFocus()=0;
 
   protected:
     bool log;

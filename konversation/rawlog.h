@@ -31,7 +31,8 @@ class RawLog : public ChatWindow
     RawLog(QWidget* parent);
     ~RawLog();
 
-    void closeYourself();
+    virtual void closeYourself();
+    virtual bool searchView();
 
   public slots:
     virtual void adjustFocus();

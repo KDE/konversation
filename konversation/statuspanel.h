@@ -37,8 +37,10 @@ class StatusPanel : public ChatWindow
     StatusPanel(QWidget* parent);
     ~StatusPanel();
 
-    QString getTextInLine();
-    void closeYourself();
+    virtual QString getTextInLine();
+    virtual void closeYourself();
+    virtual bool frontView();
+    virtual bool searchView();
 
   signals:
     void newText(QWidget* widget,const QString& highlightColor);

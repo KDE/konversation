@@ -412,15 +412,9 @@ void KonversationMainWindow::updateFrontView()
   ChatWindow* view=static_cast<ChatWindow*>(getViewContainer()->currentPage());
 
   // Make sure that only views with info output get to be the frontView
-  // TODO: make a function to check this rather than excluding types here
-  if(view->getType()!=ChatWindow::DccPanel &&
-     view->getType()!=ChatWindow::RawLog &&
-     view->getType()!=ChatWindow::Konsole &&
-     view->getType()!=ChatWindow::ChannelList) frontView=view;
+  if(view->frontView()) frontView=view;
   // Make sure that only text views get to be the searchView
-  if(view->getType()!=ChatWindow::DccPanel &&
-     view->getType()!=ChatWindow::Konsole &&
-     view->getType()!=ChatWindow::ChannelList) searchView=view;
+  if(view->searchView()) searchView=view;
 }
 
 void KonversationMainWindow::changeView(QWidget* viewToChange)

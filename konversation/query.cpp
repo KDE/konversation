@@ -158,6 +158,9 @@ void Query::sendFileMenu()
 
 QString Query::getTextInLine() { return queryInput->text(); }
 
+bool Query::frontView()        { return true; }
+bool Query::searchView()       { return true; }
+
 void Query::closeYourself()
 {
   server->removeQuery(this);

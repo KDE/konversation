@@ -45,8 +45,10 @@ class Query : public ChatWindow
     void setName(const QString& newName);
     void setHostmask(const QString& newHostmask);
     void updateFonts();
-    QString getTextInLine();
-    void closeYourself();
+    virtual QString getTextInLine();
+    virtual void closeYourself();
+    virtual bool frontView();
+    virtual bool searchView();
 
   signals:
     void newText(QWidget* query,const QString& highlightColor);

@@ -49,4 +49,6 @@ void RawLog::closeYourself()
   kdDebug() << "RawLog::closeYourself()" << endl;
 }
 
+bool RawLog::searchView() { return true; }
+
 #include "rawlog.moc"

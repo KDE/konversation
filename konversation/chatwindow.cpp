@@ -304,7 +304,12 @@ IRCView* ChatWindow::getTextView()     { return textView; }
 void ChatWindow::setLog(bool activate) { log=activate; }
 
 // reimplement this in all panels that have user input
-QString ChatWindow::getTextInLine() { return QString::null; }
+QString ChatWindow::getTextInLine()    { return QString::null; }
+
+// reimplement this to return true in all classes that can become front view
+bool ChatWindow::frontView()           { return false; }
+// reimplement this to return true in all classes that can become search view
+bool ChatWindow::searchView()          { return false; }
 
 // reimplement this if your window needs special close treatment
 void ChatWindow::closeYourself()

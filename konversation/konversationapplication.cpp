@@ -460,6 +460,7 @@ void KonversationApplication::readOptions()
 
   preferences.setAutoReconnect(config->readBoolEntry("AutoReconnect",preferences.getAutoReconnect()));
   preferences.setAutoRejoin(config->readBoolEntry("AutoRejoin",preferences.getAutoRejoin()));
+  preferences.setAutojoinOnInvite(config->readBoolEntry("AutojoinOnInvite",preferences.getAutojoinOnInvite()));
 
   preferences.setFixedMOTD(config->readBoolEntry("FixedMOTD",preferences.getFixedMOTD()));
   preferences.setShowServerList(config->readBoolEntry("ShowServerList",preferences.getShowServerList()));
@@ -665,6 +666,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->writeEntry("AutoReconnect",preferences.getAutoReconnect());
   config->writeEntry("AutoRejoin",preferences.getAutoRejoin());
+  config->writeEntry("AutojoinOnInvite",preferences.getAutojoinOnInvite());
 
   config->writeEntry("FixedMOTD",preferences.getFixedMOTD());
   config->writeEntry("ShowServerList",preferences.getShowServerList());

@@ -159,6 +159,11 @@ void PrefsPageGeneralSettings::autoReconnectChanged(int state)
   preferences->setAutoReconnect(state==2);
 }
 
+void PrefsPageGeneralSettings::autojoinOnInviteChanged(int state)
+{
+  preferences->setAutojoinOnInvite(state==2);
+}
+
 void PrefsPageGeneralSettings::autoRejoinChanged(int state)
 {
   preferences->setAutoRejoin(state==2);

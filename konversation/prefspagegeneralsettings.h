@@ -40,6 +40,7 @@ class PrefsPageGeneralSettings : public PrefsPage
     void notifyActionChanged(const QString& newAction);
     void autoReconnectChanged(int state);
     void autoRejoinChanged(int state);
+    void autojoinOnInviteChanged(int state);
     void blinkingTabsChanged(int state);
     void bringToFrontChanged(int state);
     void fixedMOTDChanged(int state);
