@@ -897,99 +897,53 @@ void Server::incoming()
   }
   buffer[len] = 0;
 
-  // replace \r \n with NULL
-  for(char* currentChar = buffer ; *currentChar ; ++currentChar)
-    if(*currentChar == '\r' || *currentChar == '\n')
-      *currentChar = 0;
-  
-  char* bufferLine = buffer;
-  while(*bufferLine != 0)  // parse buffer per line
+  bool isUtf8 = KStringHandler::isUtf8(buffer);
+
+  if(isUtf8 || ((identity->getCodec() == "utf8") && !isUtf8))
   {
-  
-    bool isUtf8 = KStringHandler::isUtf8(bufferLine);
-    
+    inputBuffer += KStringHandler::from8Bit(buffer);
+  }
+  else
+  {
     // set channel encoding if specified
     // {
-    QString senderNick;
-    bool isServerMessage = false;
-    QString channelKey;
     QString channelEncoding;
     QTextCodec* tmpCodec = QTextCodec::codecForName(identity->getCodec().ascii());
-    QStringList lineSplitted = QStringList::split(" ",tmpCodec->toUnicode(bufferLine));
+    QStringList lineSplitted = QStringList::split(" ",tmpCodec->toUnicode(buffer));
     // remove prefix
+    QString senderNick;
     if(1 <= lineSplitted.count())  // for safe
       if(lineSplitted[0][0] == ':')
       {
-        if(!lineSplitted[0].contains('!'))
-          isServerMessage = true;
-        else
-        {
-          QRegExp re("^:(.+)\\!~.+@");
-          if(re.search(lineSplitted[0]) > -1)
-            senderNick = re.cap(1);
-        }
+        QRegExp re("^:(.+)\\!~.+@");
+        if(re.search(lineSplitted[0]) > -1)
+          senderNick = re.cap(1);
         lineSplitted.pop_front();
       }
-    // set channel key
-    QString command = lineSplitted[0].lower();
-    if(isServerMessage)
-    {
-      if(3 <= lineSplitted.count())
-      {
-        if( command == "332" )  // RPL_TOPIC
-          channelKey = lineSplitted[2];
-      }
-    }
-    else
-    {
-      if(2 <= lineSplitted.count())
-      {
-        // query
-        if( ( command == "privmsg" ||
-              command == "notice"  ) &&
-            lineSplitted[1] == getNickname() )
-          channelKey = senderNick;
-        // channel message
-        else if( command == "privmsg" ||
-                 command == "notice"  ||
-                 command == "join"    ||
-                 command == "kick"    ||
-                 command == "part"    ||
-                 command == "topic"   )
-        channelKey = lineSplitted[1];
-      }
-    }
     // check setting
-    if(!channelKey.isEmpty())
-      channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), channelKey);
+    QString command = lineSplitted[0].lower();
+    if(2 <= lineSplitted.count())
+    {
+      // query
+      if( ( command == "privmsg" ||
+            command == "notice"  ) &&
+          lineSplitted[1] == getNickname() )
+        channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), senderNick);
+      
+      // channel message
+      else if( command == "privmsg" ||
+               command == "notice"  ||
+               command == "kick"    ||
+               command == "part"    ||
+               command == "topic"   )
+        channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), lineSplitted[1]);
+    }
     // }
     
-    if(!channelEncoding.isEmpty())
-    {
-      QTextCodec* codec=QTextCodec::codecForName(channelEncoding.ascii());
-      inputBuffer += codec->toUnicode(bufferLine) + "\n";
-    }
-    else if(isUtf8 || ((identity->getCodec() == "utf8") && !isUtf8))
-      inputBuffer += KStringHandler::from8Bit(bufferLine) + "\n";
-    else
-    {
-      QTextCodec* codec=QTextCodec::codecForName(identity->getCodec().ascii());
-      inputBuffer += codec->toUnicode(bufferLine) + "\n";
-    }
-    
-    // move to next line
-    while(true)
-    {
-      while(*bufferLine != 0)  // seek next null
-        ++bufferLine;
-      if(bufferLine == buffer+len)  // meet the end of buffer
-        break;
-      ++bufferLine;
-      if(*bufferLine != 0)  // next character is NOT null
-        break;
-    }
+    QTextCodec* codec=QTextCodec::codecForName(channelEncoding.isEmpty() ? identity->getCodec().ascii() : channelEncoding.ascii());
+    inputBuffer += codec->toUnicode(buffer);
   }
-  
+
   // refresh lock timer if it was still locked
   if(!sendUnlocked) lockSending();
 
