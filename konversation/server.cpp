@@ -2891,11 +2891,6 @@ void Server::startAwayTimer()
 void Server::slotLoadAddressees() {
  
   kdDebug() << "server::slotLoadAddressees " << endl;
-  for(NickInfoMap::Iterator it=m_allNicks.begin(); it != m_allNicks.end(); ++it)
-  {
-    NickInfoPtr nickInfo = it.data();
-    nickInfo->refreshAddressee();
-  }
   // Build a list of all nicks in the addressbook for this server's server group.
   if (m_useNotify)
   {

@@ -39,6 +39,9 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 
   if(!m_addressee.isEmpty())
     Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid(), 4);
+
+  connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( refreshAddressee() ) );
+  connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(refreshAddressee()));
 }
 NickInfo::~NickInfo()
 {
@@ -51,16 +54,16 @@ NickInfo::~NickInfo()
 QString NickInfo::getNickname() const { return m_nickname; }
 QString NickInfo::getHostmask() const { return m_hostmask; }
 
-bool NickInfo::isAway() { return m_away; }
-QString NickInfo::getAwayMessage() { return m_awayMessage; }
-QString NickInfo::getIdentdInfo() { return m_identdInfo; }
-QString NickInfo::getVersionInfo() { return m_versionInfo; }
-bool NickInfo::isNotified() { return m_notified; }
-QString NickInfo::getRealName() { return m_realName; }
-QString NickInfo::getNetServer() { return m_netServer; }
-QString NickInfo::getNetServerInfo() { return m_netServerInfo; }
-QDateTime NickInfo::getOnlineSince() { return m_onlineSince; }
-QString NickInfo::getPrettyOnlineSince() { 
+bool NickInfo::isAway() const { return m_away; }
+QString NickInfo::getAwayMessage() const { return m_awayMessage; }
+QString NickInfo::getIdentdInfo() const { return m_identdInfo; }
+QString NickInfo::getVersionInfo() const { return m_versionInfo; }
+bool NickInfo::isNotified() const { return m_notified; }
+QString NickInfo::getRealName() const { return m_realName; }
+QString NickInfo::getNetServer() const { return m_netServer; }
+QString NickInfo::getNetServerInfo() const { return m_netServerInfo; }
+QDateTime NickInfo::getOnlineSince() const { return m_onlineSince; }
+QString NickInfo::getPrettyOnlineSince() const { 
   QString prettyOnlineSince;
   int daysto = m_onlineSince.date().daysTo( QDate::currentDate());
   if(daysto == 0) prettyOnlineSince = "Today";
@@ -73,7 +76,7 @@ QString NickInfo::getPrettyOnlineSince() {
 }
      
 // Return the Server object that owns this NickInfo object.
-Server* NickInfo::getServer() { return m_owningServer; }
+Server* NickInfo::getServer() const { return m_owningServer; }
  
 // Set properties of NickInfo object.
 void NickInfo::setNickname(const QString& newNickname) {
@@ -164,7 +167,7 @@ void NickInfo::setOnlineSince(const QDateTime& datetime) {
   emit nickInfoChanged();
 }
 
-KABC::Addressee NickInfo::getAddressee() { return m_addressee;}
+KABC::Addressee NickInfo::getAddressee() const { return m_addressee;}
 
 void NickInfo::refreshAddressee() {
   //m_addressee might not have changed, but information inside it may have.
@@ -175,7 +178,7 @@ void NickInfo::refreshAddressee() {
     Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid(), 4);
 }
 
-QString NickInfo::tooltip() {
+QString NickInfo::tooltip() const {
 
   QString strTooltip;
   QTextStream tooltip( &strTooltip, IO_WriteOnly );
@@ -187,7 +190,7 @@ QString NickInfo::tooltip() {
   return strTooltip;
 }
     
-void NickInfo::tooltipTableData(QTextStream &tooltip) {
+void NickInfo::tooltipTableData(QTextStream &tooltip) const {
   tooltip << "<tr><td colspan=\"2\" valign=\"top\">";
 
   bool dirty = false;

@@ -49,25 +49,25 @@ class NickInfo : public QObject, public KShared
      *  May be changed in the future to parse the nick string and see if it contains
      *  "|away" or "|afk"  or something.
      */
-    bool isAway();
-    QString getAwayMessage();
-    QString getIdentdInfo();
-    QString getVersionInfo();
-    bool isNotified();
-    QString getRealName();
-    QString getNetServer();
-    QString getNetServerInfo();
-    QDateTime getOnlineSince();
+    bool isAway() const;
+    QString getAwayMessage() const;
+    QString getIdentdInfo() const;
+    QString getVersionInfo() const;
+    bool isNotified() const;
+    QString getRealName() const;
+    QString getNetServer() const;
+    QString getNetServerInfo() const;
+    QDateTime getOnlineSince() const;
     /** This returns a string of the date and time that the user has been online since.
      *  It will return null if a /whois hasn't been issued yet for this nickinfo
      *  @return a date-string in the form of "Today 4:23pm", "Yesteerday 12:32pm" or "Mon 3 Mar 2004 8:02am"
      */
-    QString getPrettyOnlineSince();
+    QString getPrettyOnlineSince() const;
     // Return the Server object that owns this NickInfo object.
-    Server* getServer();
+    Server* getServer() const;
      
     // Return the kabc (kaddressbook) contact for this nick
-    KABC::Addressee getAddressee();
+    KABC::Addressee getAddressee() const;
     
     // Set properties of NickInfo object.
     // If any of these are called, call Server::nickInfoUpdated to let Server know about the change.
@@ -87,14 +87,13 @@ class NickInfo : public QObject, public KShared
      *  @see getPrettyOnlineSince()
      */
     void setOnlineSince(const QDateTime& datetime);
-    void refreshAddressee();
     /** Returns html describing this nickInfo - useful for tooltips when hovering over this nick.
      */
-    QString tooltip();
+    QString tooltip() const;
     /** Returns just the <tr><td>..   data for a tooltip.
      *  Used so that channelNick->tooltip()  can call this, then append on its own information.
      */
-    void tooltipTableData(QTextStream &tooltip);
+    void tooltipTableData(QTextStream &tooltip) const;
   private:
     QString m_nickname;
     Server* m_owningServer;
@@ -109,6 +108,8 @@ class NickInfo : public QObject, public KShared
     QString m_netServerInfo;
     QDateTime m_onlineSince;
     KABC::Addressee m_addressee;
+  private slots:
+    void refreshAddressee();
   signals:
     void nickInfoChanged(void);
 };
