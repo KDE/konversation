@@ -17,7 +17,7 @@
 
 #include <qstringlist.h>
 
-#include <klineedit.h>
+#include <ktextedit.h>
 
 /*
   @author Dario Abatianni
@@ -25,7 +25,7 @@
 
 class KCompletionBox;
 
-class IRCInput : public KLineEdit
+class IRCInput : public KTextEdit
 {
   Q_OBJECT
 
@@ -37,6 +37,8 @@ class IRCInput : public KLineEdit
     char getCompletionMode();
     void setOldCursorPosition(int pos);
     int getOldCursorPosition();
+
+    virtual QSize sizeHint() const;
 
   signals:
     void nickCompletion();

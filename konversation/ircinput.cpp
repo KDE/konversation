@@ -27,7 +27,7 @@
 
 #define MAXHISTORY 100
 
-IRCInput::IRCInput(QWidget* parent) : KLineEdit(parent)
+IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
   // install eventFilter() function to trap TAB and cursor keys
   installEventFilter(this);
@@ -41,10 +41,24 @@ IRCInput::IRCInput(QWidget* parent) : KLineEdit(parent)
   setCompletionMode('\0');
   completionBox = new KCompletionBox(this);
   connect(completionBox, SIGNAL(activated(const QString&)), this, SLOT(insertCompletion(const QString&)));
+
+  // widget may not resize vertically  
+  setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
 }
 
 IRCInput::~IRCInput()
 {
+}
+
+// widget must be only one line high
+QSize IRCInput::sizeHint() const
+{
+  constPolish();
+
+  int f=2*frameWidth();
+  int h=QMAX(fontMetrics().lineSpacing(),14)+f+4;
+
+  return QSize(12*h,h);
 }
 
 // Take care of Tab, Cursor and so on
@@ -92,6 +106,9 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
             insertCompletion(completionBox->currentText());
             completionBox->hide();
           }
+          clear();
+          // prevent widget from adding lines
+          return true;
         }
         break;
 
@@ -104,7 +121,6 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
               setCompletionMode('\0');
               emit endCompletion();
             }
-            
             completionBox->hide();
           }
           // support ASCII BEL
@@ -126,7 +142,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
     {
     }
   }
-  return QLineEdit::eventFilter(object,event);
+  return QTextEdit::eventFilter(object,event);
 }
 
 void IRCInput::addHistory(const QString& line)
@@ -178,7 +194,7 @@ void IRCInput::insert(const QString& textToInsert)
     if(checkPaste(text)) emit textPasted(text);
   }
   // otherwise let KLineEdit handle the new text
-  else KLineEdit::insert(text);
+  else KTextEdit::insert(text);
 }
 
 void IRCInput::paste()
@@ -217,7 +233,7 @@ void IRCInput::paste()
       if(checkPaste(text)) emit textPasted(text);
     }
     // otherwise let the KLineEdit handle the pasting
-    else KLineEdit::paste();
+    else KTextEdit::paste();
   }
 }
 
@@ -259,8 +275,12 @@ void IRCInput::showCompletionList(const QStringList& nicks)
 
 void IRCInput::insertCompletion(const QString& nick)
 {
-  int pos = cursorPosition();
-  int oldPos = cursorPosition();
+  int pos; // = cursorPosition();
+  int oldPos; // = cursorPosition();
+  
+  getCursorPosition(&oldPos,&pos);
+  oldPos=pos;
+  
   QString line = text();
   
   while(pos && line[pos-1] != ' ') pos--;
@@ -283,7 +303,7 @@ void IRCInput::insertCompletion(const QString& nick)
   }
   
   setText(line);
-  setCursorPosition(pos);
+  setCursorPosition(0,pos);
 }
 
 // Accessor methods

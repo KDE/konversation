@@ -452,8 +452,11 @@ void Channel::doubleClickCommand(QListViewItem* item)
 
 void Channel::completeNick()
 {
-  int pos=channelInput->cursorPosition();
-  int oldPos=channelInput->getOldCursorPosition();
+  int pos; // = cursorPosition();
+  int oldPos; // = cursorPosition();
+  
+  channelInput->getCursorPosition(&oldPos,&pos);
+  oldPos=pos;
 
   QString line=channelInput->text();
   QString newLine;
@@ -580,7 +583,7 @@ void Channel::completeNick()
   }
   // Set new text and cursor position
   channelInput->setText(newLine);
-  channelInput->setCursorPosition(pos);
+  channelInput->setCursorPosition(0,pos);
 }
 
 // make sure to step back one position when completion ends so the user starts

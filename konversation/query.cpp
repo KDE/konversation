@@ -16,6 +16,7 @@
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <qpopupmenu.h>
+#include <qlineedit.h>
 
 #include <klocale.h>
 #include <kstddirs.h>
