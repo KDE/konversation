@@ -12,7 +12,5 @@ password=`echo $channel_and_password | awk -F"?" '{print $2}'`
 
 if test -z "$port";then port=6667;fi;
 if test ! ${channel:0:1} == '#' && test ! -z $channel ;then channel="#"$channel;fi 
-if test -z "$channel";then channel="\"\"";fi;
-if test -z "$password";then password="\"\"";fi;
 
-dcop "konversation*" | while read line; do dcop $line Konversation connectToServer $server $port $channel $password; done
+dcop "konversation*" | while read line; do dcop $line Konversation connectToServer $server $port "$channel" "$password"; done
