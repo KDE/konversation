@@ -238,7 +238,7 @@ void LedTabBar::layoutTabs()
   // do we want close widgets on the tabs?
   if(KonversationApplication::preferences.getCloseButtonsOnTabs())
   {
-    // make neccessary modifications
+    // make necessary modifications
     int offset=0;
     for(int index=0;index<count();index++)
     {

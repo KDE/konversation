@@ -43,7 +43,7 @@ class KonversationApplication : public KApplication
     const QStringList& getUrlList();
 
     // DCOP: Returns a list of signals we should emit
-    QPtrList<IRCEvent> retreiveHooks(EVENT_TYPE type);
+    QPtrList<IRCEvent> retrieveHooks(EVENT_TYPE type);
 
     KonversationApplication();
     ~KonversationApplication();

@@ -795,7 +795,7 @@ bool KonversationApplication::emitDCOPSig(const QString &appId, const QString &o
   }
 }
 
-QPtrList<IRCEvent> KonversationApplication::retreiveHooks (EVENT_TYPE a_type)
+QPtrList<IRCEvent> KonversationApplication::retrieveHooks (EVENT_TYPE a_type)
 {
   QPtrList<IRCEvent> ret_value;
   IRCEvent *e;

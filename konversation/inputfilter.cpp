@@ -64,7 +64,7 @@ void InputFilter::parseLine(const QString &a_newLine)
     // Cut trailing parameter from string
     newLine=newLine.left(pos);
   }
-  // Remove all unneccessary white spaces to make parsing easier
+  // Remove all unnecessary white spaces to make parsing easier
   QString incomingLine=newLine.simplifyWhiteSpace();
 
   QString prefix(QString::null);
@@ -130,7 +130,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
       // ******
       KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
-      QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_CTCP);
+      QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_CTCP);
       IRCEvent *e;
       for (e = ctcp_events.first(); e; e = ctcp_events.next())
       {
@@ -230,7 +230,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           // Incoming file?
           if(dccType=="send")
           {
-            KNotifyClient::event("dcc_incomming");
+            KNotifyClient::event("dcc_incoming");
             emit addDccGet(sourceNick,dccArgument);
           }
           // Incoming file that shall be resumed?
@@ -273,7 +273,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     {
       // ******
       KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
-      QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_MESSAGE);
+      QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_MESSAGE);
       IRCEvent *e;
       for (e = ctcp_events.first(); e; e = ctcp_events.next())
       {
@@ -328,7 +328,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   {
     // ******
     KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
-    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_NOTICE);
+    QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_NOTICE);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
     {
@@ -395,7 +395,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
     // ******
     KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
-    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_JOIN);
+    QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_JOIN);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
     {
@@ -441,7 +441,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   {
     // ******
     KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
-    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_KICK);
+    QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_KICK);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
     {
@@ -464,7 +464,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   {
     // ******
     KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
-    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_PART);
+    QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_PART);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
     {
@@ -490,7 +490,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   {
     // ******
     KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
-    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_QUIT);
+    QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_QUIT);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
     {
@@ -523,7 +523,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   {
     // ******
     KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
-    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_TOPIC);
+    QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_TOPIC);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
     {
@@ -545,7 +545,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   {
     // ******
     KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
-    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_MODE);
+    QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_MODE);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
     {
@@ -570,7 +570,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   {
     // ******
     KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
-    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_INVITE);
+    QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_INVITE);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
     {
@@ -634,7 +634,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
     {
       // ******
       KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
-      QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_NOTICE);
+      QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_NOTICE);
       IRCEvent *e;
       for (e = ctcp_events.first(); e; e = ctcp_events.next())
       {
@@ -662,7 +662,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
   {
     // ******
     KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
-    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_NUMERIC);
+    QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_NUMERIC);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
     {
@@ -1049,7 +1049,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       default:
         {
           // All yet unknown messages go into the frontmost window without the
-          // preceeding nickname
+          // preceding nickname
           server->appendStatusMessage(command,parameterList.join(" ").section(' ',1)+" "+trailing);
         }
     }
