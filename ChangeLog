@@ -1,4 +1,5 @@
 Changes from 0.15 to 0.16
+- Konversation now depends on KDE 3.3+
 - Dropping URLs onto nick on nicklist or onto query initiates DCC send
 - You can now do SSL connections from Quick Connect Dialog
 - Nicklist Icon Themes
