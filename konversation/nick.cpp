@@ -137,7 +137,7 @@ QString Nick::tooltip() {
     tooltip << "<br/>" << *it;
   }
   bool isdirty = false;
-  tooltip << "%1<table>";
+  tooltip << "%1";
   if(!addressee.organization().isEmpty()) {
     tooltip << "<tr><td>" << addressee.organizationLabel() << "</td><td>" << addressee.organization() << "</td></tr>";
     isdirty = true;
@@ -156,11 +156,13 @@ QString Nick::tooltip() {
     tooltip << "<tr><td>" << addressee.birthdayLabel() << "</td><td>" << addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
     isdirty = true;
   }
-
-  tooltip << "<table></qt>";
+  if(isdirty)
+    tooltip << "</table></qt>";
   
   if(isdirty)
-    strTooltip = strTooltip.arg("<br/>");
+    strTooltip = strTooltip.arg("<br/><table>");
+  else
+    strTooltip = strTooltip.arg("");
   
   return strTooltip;
 }
