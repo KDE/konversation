@@ -15,6 +15,7 @@
 */
 
 #include <stdlib.h>
+#include <netinet/in.h>
 
 #include <qtimer.h>
 #include <qhostaddress.h>
@@ -181,8 +182,13 @@ void DccTransfer::startSend()
 
   if(dccSocket->listen(5)==0)
   {
-    // FIXME: This seems to be a laugh but it works ...
-    setPort(dccSocket->localAddress()->pretty().section(' ',1,1));
+    // Get our own port number
+    const KSocketAddress* ipAddr=dccSocket->localAddress();
+    const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr->address();
+
+//    kdDebug() << ipAddr->pretty() << " " << ntohs(socketAddress->sin_port) << endl;
+    setPort(QString::number(ntohs(socketAddress->sin_port)));
+
     connect(dccSocket,SIGNAL (readyAccept()),this,SLOT(heard()) );
 
     file.setName(getFile());
