@@ -33,6 +33,7 @@
 #include <kactivelabel.h>
 #include <kdebug.h>
 #include <klistview.h>
+#include <klistviewsearchline.h>
 #include <qlabel.h>
 #include <qlayout.h>
 // used for its AddresseeItem class
@@ -65,17 +66,19 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
   connect( m_mainWidget->addresseeListView, SIGNAL( spacePressed( QListViewItem * ) ),
 			SLOT( slotAddresseeListClicked( QListViewItem * ) ) );
 
-	connect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
-    connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
+  connect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
+  connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
 
-	m_ircnick = ircnick;
-	m_lower_ircnick = m_ircnick.lower();
-	m_servername = servername;
-	m_servergroup = servergroup;
-	m_suggested_realname = suggested_realname;
-	if(m_suggested_realname.isEmpty()) m_suggested_realname = suggested_realname;
-	Q_ASSERT(!ircnick.isEmpty());
-	slotLoadAddressees();
+  m_ircnick = ircnick;
+  m_lower_ircnick = m_ircnick.lower();
+  m_servername = servername;
+  m_servergroup = servergroup;
+  m_suggested_realname = suggested_realname;
+  if(m_suggested_realname.isEmpty()) m_suggested_realname = suggested_realname;
+  Q_ASSERT(!ircnick.isEmpty());
+//m_mainWidget->kListViewSearchLine->setListView(m_mainWidget->addresseeListView);
+  slotLoadAddressees();
+  
 }
 
 

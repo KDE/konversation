@@ -50,7 +50,7 @@ private:
 	QString m_servername;
 	QString m_servergroup;
 	QString m_suggested_realname;
-  LinkAddressbookUI_Base* m_mainWidget;
+    LinkAddressbookUI_Base* m_mainWidget;
 
 protected slots:
   virtual void slotOk();
