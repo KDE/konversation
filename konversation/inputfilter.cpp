@@ -889,6 +889,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
               ownerChannels.append(lookChannel.mid(1));
               server->setChannelNick(lookChannel.mid(1), parameterList[1], 8);
             }
+	    else if(lookChannel.startsWith("@+"))
+	    {
+	      opChannels.append(lookChannel.mid(2));
+	      server->setChannelNick(lookChannel.mid(2), parameterList[1], 4);
+	    }
             else if(lookChannel.startsWith("@"))
             {
               opChannels.append(lookChannel.mid(1));
