@@ -1,3 +1,4 @@
+// nicklistviewitem.h
 /***************************************************************************
                           ledlistviewitem.h  -  A list view with led indicator
                              -------------------
@@ -15,8 +16,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef LEDLISTVIEWITEM_H
-#define LEDLISTVIEWITEM_H
+#ifndef NICKLISTVIEWITEM_H
+#define NICKLISTVIEWITEM_H
 
 #include <klistview.h>
 
@@ -31,32 +32,40 @@
   @author Dario Abatianni (sorting code)
 */
 
-class LedListViewItem : public QObject, public KListViewItem
+class NickListViewItem : public QObject, public KListViewItem
 {
   Q_OBJECT
   public:
-    LedListViewItem(KListView* parent,
+    NickListViewItem(KListView* parent,
                     const QString &passed_label,
                     const QString &passed_label2,
                     Nick *n);
-    ~LedListViewItem();
+    ~NickListViewItem();
     int getFlags() const;
     virtual int compare(QListViewItem* item,int col,bool ascending) const;
     Nick *getNick();
 
+  protected slots:
+    //We will refresh ourselves, so make it protected.
+    void refresh();
+  
   protected:
     Nick *nick;
 
     QString label;
 
-
     QString calculateLabel1();
     QString calculateLabel2();
-
-  protected slots:
-    //We will refresh ourselves, so make it protected.
-    void refresh();
+    
+    static void initializeIcons();
+    
+    static bool s_bIconsInitialized;
+    static QPixmap *s_pIconNormal, *s_pIconNormalAway,
+                   *s_pIconVoice,  *s_pIconVoiceAway,
+                   *s_pIconHalfOp, *s_pIconHalfOpAway,
+                   *s_pIconOp,     *s_pIconOpAway,
+                   *s_pIconOwner,  *s_pIconOwnerAway,
+                   *s_pIconAdmin,  *s_pIconAdminAway;
 };
 
 #endif
-

@@ -47,8 +47,6 @@ class NickListView : public KListView
       AddressbookEdit, SendEmail
     };
     
-    Images images() { return m_images; }
-
   signals:
     /* Will be connected to Channel::popupCommand(int) */
     void popupCommand(int id);
@@ -62,7 +60,6 @@ class NickListView : public KListView
     QPopupMenu* kickban;
     QPopupMenu* addressbook;
     Channel *channel;
-    Images m_images;
 };
 
 #endif

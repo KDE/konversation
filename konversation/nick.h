@@ -22,7 +22,7 @@
 #include "channelnick.h"
 
 class KListView;
-class LedListViewItem;
+class NickListViewItem;
 
 class Nick
 {
@@ -46,7 +46,7 @@ class Nick
     
   protected:
     ChannelNickPtr channelnickptr;
-    LedListViewItem* listViewItem;
+    NickListViewItem* listViewItem;
 };
 
 #endif

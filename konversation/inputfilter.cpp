@@ -1343,6 +1343,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_NOWAWAY:
         {
+          NickInfo* nickInfo = server->getNickInfo(parameterList[0]);
+          if(nickInfo)
+            nickInfo->setAway(true);
+          
           server->startAwayTimer();
           server->appendStatusMessage(i18n("Away"),i18n("You are now marked as being away."));
           emit away();
@@ -1351,6 +1355,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_UNAWAY:
         {
+          NickInfo* nickInfo = server->getNickInfo(parameterList[0]);
+          if(nickInfo)
+          {
+            nickInfo->setAway(false);
+            nickInfo->setAwayMessage(QString::null);
+          }
+          
           Identity identity = *(server->getIdentity());
 
           if(identity.getShowAwayMessage()) {

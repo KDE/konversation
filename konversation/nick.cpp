@@ -15,7 +15,7 @@
 #include <kdebug.h>
 #include <klistview.h>
 
-#include "ledlistviewitem.h"
+#include "nicklistviewitem.h"
 #include "nick.h"
 #include "addressbook.h"
 #include <klocale.h>
@@ -30,7 +30,7 @@ Nick::Nick(KListView *listView,
   if(!channelnick) return;
   
     channelnickptr = channelnick;
-  listViewItem=new LedListViewItem(listView,channelnick->getNickname(),channelnick->getHostmask(),this);
+  listViewItem=new NickListViewItem(listView,channelnick->getNickname(),channelnick->getHostmask(),this);
 }
 Nick::~Nick()
 {
