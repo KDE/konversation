@@ -28,6 +28,7 @@ MID-TERM:
 - In Nicks Online panel, show stats like "last spoken" "last seen"
 - Compute md5sum over DCCs and send / display the hash after transfer
 - Make separate Highlight lists for each identity
+- DCC file transfers should use progressbars for better usability
 
 LONG-TERM:
 - Logrotate with timer or at shutdown, compress rotated logs ( berkus )
@@ -38,6 +39,8 @@ LONG-TERM:
 - Make LED colors for nick list configurable via GUI
 - Detect shell commands and warn the user
 - Ban List. A window in which the user can see the bans of a channel(and remove them).
+- Usernames/channels are not clickable. Like you double click #foo on channel view and you join #foo channel
+- Detachable queries
 
 
 IDEAS:
@@ -47,6 +50,7 @@ IDEAS:
 
 DISCUSSING:
 
+- There seems to be some speed problems like konversation eats %99 of CPU sometimes . Need to profile konversation ( I cannot seem to connect while running konversation under valgrind )
 - The text-search could offer a button "any highlight"
 - Check for channel or user parameter in mode changes to take care of duplicate mode chars
 - Click on notify messages opens query
