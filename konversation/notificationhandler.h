@@ -36,6 +36,9 @@ class NotificationHandler : public QObject
     void nickChange(ChatWindow* chatWin, const QString& oldNick, const QString& newNick);
     void dccIncomming(ChatWindow* chatWin, const QString& fromNick);
     void mode(ChatWindow* chatWin, const QString& nick);
+    void query(ChatWindow* chatWin, const QString& fromNick);
+    void nickOnline(ChatWindow* chatWin, const QString& nick);
+    void nickOffline(ChatWindow* chatWin, const QString& nick);
   
   protected:
     void startTrayNotification(ChatWindow* chatWin);

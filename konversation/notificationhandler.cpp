@@ -132,10 +132,34 @@ void NotificationHandler::dccIncomming(ChatWindow* chatWin, const QString& fromN
   }
 }
 
-void NotificationHandler::mode(ChatWindow* chatWin, const QString& nick)
+void NotificationHandler::mode(ChatWindow* chatWin, const QString& /*nick*/)
 {
   if(chatWin && chatWin->notificationsEnabled()) {
     KNotifyClient::event(winId(), "mode");
+  }
+}
+
+void NotificationHandler::query(ChatWindow* chatWin, const QString& fromNick)
+{
+  if(chatWin && chatWin->notificationsEnabled()) {
+    KNotifyClient::event(winId(), "query",
+      i18n("%1 has started a conversation (query) with you.").arg(fromNick));
+  }
+}
+
+void NotificationHandler::nickOnline(ChatWindow* chatWin, const QString& nick)
+{
+  if(chatWin && chatWin->notificationsEnabled()) {
+    KNotifyClient::event(winId(), "notify",
+      i18n("%1 is online (%2).").arg(nick).arg(chatWin->getServer()->getServerName()));
+  }
+}
+
+void NotificationHandler::nickOffline(ChatWindow* chatWin, const QString& nick)
+{
+  if(chatWin && chatWin->notificationsEnabled()) {
+    KNotifyClient::event(winId(), "notify",
+      i18n("%1 went offline (%2).").arg(nick).arg(chatWin->getServer()->getServerName()));
   }
 }
 

@@ -64,13 +64,9 @@ using namespace KNetwork;
 #include "addressbook.h"
 #include "serverison.h"
 #include "common.h"
+#include "notificationhandler.h"
 
 #include <config.h>
-
-#ifdef USE_KNOTIFY
-#include <knotifyclient.h>
-#endif
-
 
 Server::Server(KonversationMainWindow* mainWindow, int id)
 {
@@ -1488,12 +1484,9 @@ Query *Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
 
     m_queryNicks.insert(lcNickname, nickInfo);
 
-#ifdef USE_KNOTIFY
     if(!weinitiated) {
-      KNotifyClient::event(mainWindow->winId(), "query",
-        i18n("%1 has started a conversation (query) with you.").arg(nickname));
+      static_cast<KonversationApplication*>(kapp)->notificationHandler()->query(query, nickname);
     }
-#endif
   }
 
   // try to get hostmask if there's none yet
@@ -2216,10 +2209,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
     getMainWindow()->appendToFrontmost(i18n("Notify"),
       i18n("%1 is online (%2).").arg(nickname).arg(getServerName()),statusView);
 
-#ifdef USE_KNOTIFY
-    KNotifyClient::event(mainWindow->winId(), "notify",
-      i18n("%1 is online (%2).").arg(nickname).arg(getServerName()));
-#endif
+    static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOnline(getStatusView(), nickname);
   }
   return nickInfo;
 }
@@ -2250,10 +2240,8 @@ bool Server::setNickOffline(const QString& nickname)
         Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
       getMainWindow()->appendToFrontmost(i18n("Notify"),
         i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()),statusView);
-#ifdef USE_KNOTIFY
-      KNotifyClient::event(mainWindow->winId(), "notify",
-        i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()));
-#endif
+      
+      static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOffline(getStatusView(), nickname);
     }
   }
   return (nickInfo != 0);
