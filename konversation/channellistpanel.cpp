@@ -151,7 +151,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   connect(this,SIGNAL (updateNumChannels(const QString&)),channelsLabel,SLOT (setText(const QString&)) );
 
   updateUsersChannels();
-  KMessageBox::information(this,i18n("Warning: using this function may result in a lot "
+  KMessageBox::information(this,i18n("Warning: Using this function may result in a lot "
                                      "of network traffic. If your connection is not fast "
                                      "enough, it is possible that your client will be "
                                      "disconnected by the server."),
