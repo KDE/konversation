@@ -31,3 +31,10 @@ uptime          Displays the system uptime on the current channel.
 
 fortune         Displays a random fortune cookie
 		usage: /exec fortune
+
+kdeversion	Displays the Qt/KDE version.
+		usage: /exec kdeversion
+
+cmd		Prints the output of a given command.
+		usage: /exec cmd command
+
