@@ -21,7 +21,7 @@
 
 #include "nickchangedialog.h"
 
-NickChangeDialog::NickChangeDialog(QWidget* parent,QString currentNick,QStringList nickList,QSize size):
+NickChangeDialog::NickChangeDialog(QWidget* parent,QString currentNick,const QStringList& nickList,QSize size):
                   KDialogBase(parent,"nickchangedialog",false,i18n("Change Nickname"),
                               KDialogBase::Ok | KDialogBase::Cancel,
                               KDialogBase::Ok,true)

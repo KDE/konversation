@@ -32,7 +32,7 @@ class NickChangeDialog : public KDialogBase
   Q_OBJECT
 
   public: 
-    NickChangeDialog(QWidget* parent,QString currentNick,QStringList nickList,QSize initialSize);
+    NickChangeDialog(QWidget* parent,QString currentNick,const QStringList& nickList,QSize initialSize);
     ~NickChangeDialog();
 
   signals:

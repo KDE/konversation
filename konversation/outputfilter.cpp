@@ -208,7 +208,7 @@ void OutputFilter::parsePart(QString parameter)
       // get part reason (if any)
       QString reason=parameter.mid(channel.length()+1);
       // if no reason given, take default reason
-      if(reason=="") reason=KonversationApplication::preferences.getPartReason();
+      if(reason=="") reason=identity.getPartReason();
       toServer="PART "+channel+" :"+reason;
     }
     // part this channel with a given reason
@@ -271,16 +271,19 @@ void OutputFilter::parseAway(QString reason)
 {
   if(reason=="")
   {
-    if(KonversationApplication::preferences.getShowAwayMessage())
-      sendToAllChannels(KonversationApplication::preferences.getUnAwayMessage());
+    if(identity.getShowAwayMessage())
+      sendToAllChannels(identity.getReturnMessage());
 
     emit unAway();
     toServer="AWAY";
   }
   else
   {
-    if(KonversationApplication::preferences.getShowAwayMessage())
-      sendToAllChannels(KonversationApplication::preferences.getAwayMessage().replace(QRegExp("%s",false),reason));
+    if(identity.getShowAwayMessage())
+    {
+      QString message=identity.getAwayMessage();
+      sendToAllChannels(message.replace(QRegExp("%s",false),reason));
+    }
 
     emit away();
     toServer="AWAY :"+reason;
@@ -292,7 +295,7 @@ void OutputFilter::parseAway(QString reason)
 void OutputFilter::parseQuit(QString reason)
 {
   // if no reason given, take default reason
-  if(reason=="") reason=KonversationApplication::preferences.getPartReason();
+  if(reason=="") reason=identity.getPartReason();
   toServer="QUIT :"+reason;
 }
 
