@@ -35,9 +35,9 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
                       DCC_Settings(newParent)
 {
   preferences=newPreferences;
-	setName("DCC Settings");
+  setName("DCC Settings");
 	
-	kcfg_DccPath->setText(preferences->getDccPath());
+  kcfg_DccPath->setText(preferences->getDccPath());
 	
   connect(kcfg_AutoGet, SIGNAL(stateChanged(int)), this, SLOT(autoGetStateChanged(int)));
   connect(kcfg_AutoResume, SIGNAL(stateChanged(int)), this, SLOT(autoResumeStateChanged(int)));
