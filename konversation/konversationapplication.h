@@ -89,6 +89,7 @@ class KonversationApplication : public KApplication
     
   signals:
     void catchUrl(const QString& who,const QString& url);
+    void prefsChanged();
 
   public slots:
     void connectToServer(int number);

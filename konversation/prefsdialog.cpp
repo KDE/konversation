@@ -167,6 +167,10 @@ void PrefsDialog::slotApply()
   // tell all preferences pages to save their new values
   emit applyPreferences();
   // tell the rest of the application to re-read the settings
+  // The current (sep 2004) sequence is:
+  // signal PrefDialog::prefsChanged -> KonversationApplication::saveOptions ->
+  // signal KonversationApplication::prefsChanged -> KonversationMainWindow::slotPrefsChanged ->
+  // signal KonversationMainWindow::prefsChanged -> rest of program.
   emit prefsChanged();
 }
 

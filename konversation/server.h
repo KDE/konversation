@@ -249,7 +249,7 @@ class Server : public QObject
     /**
     * Returns a list of all the nicks on the watch list plus nicks in the addressbook.
     */
-    QStringList getNotifyStringList();
+    QStringList getNotifyList();
     QString getNotifyString();
     /**
     * Return true if the given nickname is on the watch list.
@@ -370,6 +370,7 @@ class Server : public QObject
     void setTopicAuthor(const QString& channel,const QString& author);
     void invitation(const QString& nick,const QString& channel);
     void sendToAllChannelsAndQueries(const QString& text);
+    void slotPrefsChanged();
 
   protected:
     // constants
@@ -416,6 +417,14 @@ class Server : public QObject
      */
     NickInfoPtr setWatchedNickOnline(const QString& nickname);
     /**
+    * If nickname is no longer on any channel list, or the query list, delete it altogether.
+    * Call this routine only if the nick is not on the notify list or is on the notify
+    * list but is known to be offline.
+    * @param nickname           The nickname to be deleted.  Case insensitive.
+    * @return                   True if the nickname is deleted.
+    */
+    bool deleteNickIfUnlisted(QString &nickname);
+    /**
      * If not already offline, changes a nick to the offline state.
      * Removes it from all channels on the joined and unjoined lists.
      * If the nick is in the watch list, and went offline, emits a signal,
@@ -427,7 +436,6 @@ class Server : public QObject
      */
     bool setNickOffline(const QString& nickname, const QStringList& watchList);
     /** Remove nickname from a channel (on joined or unjoined lists).
-     *  Delete the nickname altogether if no longer on any lists.
      *  @param channelName The channel name.  Case insensitive.
      *  @param nickname    The nickname.  Case insensitive.
      */
@@ -519,26 +527,37 @@ class Server : public QObject
 
     QString nonAwayNick;
 
-    /// All nicks known to this server.  Note this is NOT a list of all nicks on the server.
-    /// Any nick appearing in this list is online, but may not necessarily appear in
-    /// any of the joined or unjoined channel lists because a WHOIS has not yet been
-    /// performed on the nick.
-    NickInfoMap allNicks;
-    /// List of membership lists for joined channels.  A "joined" channel is a channel
-    /// that user has joined, i.e., a tab appears for the channel in the main window.
-    ChannelMembershipMap joinedChannels;
-    /// List of membership lists for unjoined channels.  These come from WHOIS responses.
-    /// Note that this is NOT a list of all channels on the server, just those we are
-    /// interested in because of nicks in the Nick Watch List.
-    ChannelMembershipMap unjoinedChannels;
-    /// List of nicks in Queries.
-    NickInfoMap queryNicks;
-
     int m_awayTime;
     
     ScriptLauncher* m_scriptLauncher;
 
     KProcess preShellCommand;
+    
+  private:
+    // List of nicks in the Nick Watch List (from preferences).
+    QStringList m_prefsWatchList;
+    // List of nicks in the addressbook for this server group.
+    QStringList m_addressbookWatchList;
+    // Merged list of the two above.
+    QStringList m_notifyList;
+    // State of UseNotify preference.
+    bool m_useNotify;
+
+    /// All nicks known to this server.  Note this is NOT a list of all nicks on the server.
+    /// Any nick appearing in this list is online, but may not necessarily appear in
+    /// any of the joined or unjoined channel lists because a WHOIS has not yet been
+    /// performed on the nick.
+    NickInfoMap m_allNicks;
+    /// List of membership lists for joined channels.  A "joined" channel is a channel
+    /// that user has joined, i.e., a tab appears for the channel in the main window.
+    ChannelMembershipMap m_joinedChannels;
+    /// List of membership lists for unjoined channels.  These come from WHOIS responses.
+    /// Note that this is NOT a list of all channels on the server, just those we are
+    /// interested in because of nicks in the Nick Watch List.
+    ChannelMembershipMap m_unjoinedChannels;
+    /// List of nicks in Queries.
+    NickInfoMap m_queryNicks;
+
 };
 
 #endif

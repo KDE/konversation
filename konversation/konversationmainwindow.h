@@ -116,6 +116,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     virtual void switchToIDEAlMode();      // USE_MDI
     virtual void switchToChildframeMode(); // USE_MDI
     virtual void switchToToplevelMode();   // USE_MDI
+    
+    void slotPrefsChanged();
 
   protected slots:
     void openPreferences();

@@ -442,18 +442,6 @@ void NicksOnline::timerFired()
 }
 
 /**
-* This signal is received when a server has updated its nick online/offline lists.
-* We update the display.
-*/
-void NicksOnline::setOnlineList(const QString& serverName, const QStringList&, bool /*changed*/)
-{
-    // Get the server object corresponding to the server name.
-    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-    Server* server = konvApp->getServerByName(serverName);
-    updateServerOnlineList(server);
-}
-
-/**
 * When a user double-clicks a nickname in the nicklistview, let server know so that
 * it can perform the user's chosen default action for that.
 */

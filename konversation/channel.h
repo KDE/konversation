@@ -119,7 +119,6 @@ class Channel : public ChatWindow
     
   signals:
     void newText(QWidget* channel,const QString& highlightColor, bool important);
-    void prefsChanged();
     void sendFile();
   public slots:
     void setNickname(const QString& newNickname);

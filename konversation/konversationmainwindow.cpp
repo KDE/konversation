@@ -752,7 +752,9 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
 
   connect(statusView,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
   connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );
-  connect(statusView,SIGNAL (prefsChanged()),this,SLOT (channelPrefsChanged()) );
+  // TODO: Why was this here?  Delete channelPrefsChanged method as it does not
+  // appear to do anything since statusView never emits signal prefsChanged.
+  // connect(statusView,SIGNAL (prefsChanged()),this,SLOT (channelPrefsChanged()) );
   connect(server,SIGNAL (awayState(bool)),statusView,SLOT (indicateAway(bool)) );
 
   // make sure that frontServer gets set on adding the first status panel, too,
@@ -780,7 +782,9 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
 #endif
 
   connect(channel,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
-  connect(channel,SIGNAL (prefsChanged()),this,SLOT (channelPrefsChanged()) );
+  // TODO: Why is this here?  Delete channelPrefsChanged as it does not appear to
+  // do anything since channel never emits prefsChanged.
+  // connect(channel,SIGNAL (prefsChanged()),this,SLOT (channelPrefsChanged()) );
   connect(server,SIGNAL (awayState(bool)),channel,SLOT (indicateAway(bool)) );
 
   return channel;
@@ -1029,6 +1033,12 @@ void KonversationMainWindow::notifyAction(const QString& serverName,const QStrin
   KonversationApplication* konv_app=static_cast<KonversationApplication*>(KApplication::kApplication());
   Server* server=konv_app->getServerByName(serverName);
   server->notifyAction(nick);
+}
+
+void KonversationMainWindow::slotPrefsChanged()
+{ 
+  kdDebug() << "KonversationMainWindow::slotPrefsChanged()" << endl;
+  emit prefsChanged();
 }
 
 void KonversationMainWindow::channelPrefsChanged()

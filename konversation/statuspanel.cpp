@@ -241,7 +241,7 @@ void StatusPanel::closeYourself(ChatWindow*)
   }
 }
 
-void StatusPanel::nicknameComboboxChanged(int index)
+void StatusPanel::nicknameComboboxChanged(int /*index*/)
 {
   QString newNick=nicknameCombobox->currentText();
   oldNick=server->getNickname();

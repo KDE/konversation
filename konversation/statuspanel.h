@@ -55,7 +55,7 @@ class StatusPanel : public ChatWindow
   signals:
     void newText(QWidget* widget,const QString& highlightColor,bool important);
     void sendFile();
-    void prefsChanged();
+    // void prefsChanged();
 
   public slots:
     void setNickname(const QString& newNickname);

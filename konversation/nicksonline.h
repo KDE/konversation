@@ -72,11 +72,6 @@ class NicksOnline : public ChatWindow
     void doubleClicked(const QString& server,const QString& nick);
 
   public slots:
-    /**
-    * This signal is received when a server has updated its nick online/offline lists.
-    * We update the display.
-    */
-    void setOnlineList(const QString& serverName,const QStringList& list,bool changed);
 
   protected slots:
     /**

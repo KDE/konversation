@@ -80,6 +80,7 @@ KonversationApplication::KonversationApplication()
   connect(mainWindow,SIGNAL (openPrefsDialog(Preferences::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
   connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
   connect(&preferences,SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
+  connect(this, SIGNAL(prefsChanged()), mainWindow, SLOT(slotPrefsChanged()));
 
   // handle autoconnect on startup
   QValueList<int> list=preferences.getAutoConnectServerIDs();
@@ -1019,6 +1020,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   }
 
   config->sync();
+  
+  emit prefsChanged();
 
   if(updateGUI) appearanceChanged();
 }
