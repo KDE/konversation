@@ -49,6 +49,7 @@
 #include "ignoredialog.h"
 #include "notifydialog.h"
 #include "ledtabwidget.h"
+#include "colorconfiguration.h"
 
 class ServerWindow : public KMainWindow
 {
@@ -103,6 +104,12 @@ class ServerWindow : public KMainWindow
     void applyButtons(QStringList newList);
     void closeButtons(QSize newSize);
 
+		void openColorConfiguration();
+		void applyColorConfiguration(QString actionTextColor, QString backlogTextColor, QString channelTextColor,
+														 		 QString commandTextColor, QString linkTextColor, QString queryTextColor,
+																 QString serverTextColor);
+		void closeColorConfiguration(QSize windowSize);
+
   protected:
     int spacing();
     int margin();
@@ -134,6 +141,7 @@ class ServerWindow : public KMainWindow
     NotifyDialog* notifyDialog;
     IgnoreDialog* ignoreDialog;
     QuickButtonsDialog* buttonsDialog;
+		ColorConfiguration*	colorConfigurationDialog;
 
     QFile logfile;
     bool log;

@@ -100,6 +100,7 @@ void KonversationApplication::readOptions()
   preferences.setButtonsSize(config->readSizeEntry("ButtonsGeometry"));
   preferences.setIgnoreSize(config->readSizeEntry("IgnoreGeometry"));
   preferences.setNicknameSize(config->readSizeEntry("NicknameGeometry"));
+	preferences.setColorConfigurationSize(config->readSizeEntry("ColorConfigurationGeometry"));
 
   /* Reasons */
   QString reason;
@@ -110,13 +111,14 @@ void KonversationApplication::readOptions()
 
   // Colors
 	config->setGroup("Message Text Colors");
-	preferences.setChannelMessageColor(config->readEntry("ChannelMessage", preferences.defaultChannelMessageColor));
-	preferences.setQueryMessageColor(config->readEntry("QueryMessage", preferences.defaultQueryMessageColor));
-	preferences.setServerMessageColor(config->readEntry("ServerMessage", preferences.defaultServerMessageColor));
+
 	preferences.setActionMessageColor(config->readEntry("ActionMessage", preferences.defaultActionMessageColor));
 	preferences.setBacklogMessageColor(config->readEntry("BacklogMessage", preferences.defaultBacklogMessageColor));
-	preferences.setLinkMessageColor(config->readEntry("LinkMessage", preferences.defaultLinkMessageColor));
+	preferences.setChannelMessageColor(config->readEntry("ChannelMessage", preferences.defaultChannelMessageColor));
 	preferences.setCommandMessageColor(config->readEntry("CommandMessage", preferences.defaultCommandMessageColor));
+	preferences.setLinkMessageColor(config->readEntry("LinkMessage", preferences.defaultLinkMessageColor));
+	preferences.setQueryMessageColor(config->readEntry("QueryMessage", preferences.defaultQueryMessageColor));
+	preferences.setServerMessageColor(config->readEntry("ServerMessage", preferences.defaultServerMessageColor));
 
 	/* User identity */
   config->setGroup("User Identity");
@@ -206,6 +208,7 @@ void KonversationApplication::saveOptions()
   config->writeEntry("ButtonsGeometry",preferences.getButtonsSize());
   config->writeEntry("IgnoreGeometry",preferences.getIgnoreSize());
   config->writeEntry("NicknameGeometry",preferences.getNicknameSize());
+	config->writeEntry("ColorconfigurationGeometry", preferences.getColorConfigurationSize());
 
   config->writeEntry("ServerWindowToolBarPos",preferences.serverWindowToolBarPos);
   config->writeEntry("ServerWindowToolBarStatus",preferences.serverWindowToolBarStatus);
@@ -219,13 +222,13 @@ void KonversationApplication::saveOptions()
 
   config->setGroup("Message Text Colors");
 
-	config->writeEntry("ChannelMessage", preferences.getChannelMessageColor());
-	config->writeEntry("QueryMessage", preferences.getQueryMessageColor());
-	config->writeEntry("ServerMessage", preferences.getServerMessageColor());
 	config->writeEntry("ActionMessage", preferences.getActionMessageColor());
 	config->writeEntry("BacklogMessage", preferences.getBacklogMessageColor());
+	config->writeEntry("ChannelMessage", preferences.getChannelMessageColor());
+	config->writeEntry("CommandMessage", preferences.getCommandMessageColor());
   config->writeEntry("LinkMessage", preferences.getLinkMessageColor());
-	config->writeEntry("CommandMessageColor", preferences.getCommandMessageColor());
+	config->writeEntry("QueryMessage", preferences.getQueryMessageColor());
+	config->writeEntry("ServerMessage", preferences.getServerMessageColor());
 
 	config->setGroup("User Identity");
 

@@ -59,26 +59,21 @@ class Preferences : public QObject
     void setBlinkingTabs(bool blink);
     bool getBlinkingTabs();
 
-		QString channelMessageColor, queryMessageColor, serverMessageColor, actionMessageColor,
-				 		backlogMessageColor, linkMessageColor, commandMessageColor;
-
-		QString defaultChannelMessageColor, defaultQueryMessageColor, defaultServerMessageColor,
-						defaultActionMessageColor, defaultBacklogMessageColor, defaultLinkMessageColor,
-						defaultCommandMessageColor;
-
-        /* Geometry functions */
+		        /* Geometry functions */
     QSize getServerWindowSize();
     QSize& getHilightSize();
     QSize& getButtonsSize();
     QSize& getIgnoreSize();
     QSize& getNotifySize();
     QSize& getNicknameSize();
+		QSize& getColorConfigurationSize();
     void setServerWindowSize(QSize newSize);
     void setHilightSize(QSize newSize);
     void setButtonsSize(QSize newSize);
     void setIgnoreSize(QSize newSize);
     void setNotifySize(QSize newSize);
     void setNicknameSize(QSize newSize);
+		void setColorConfigurationSize(QSize newSize);
 
     int getNotifyDelay();
     void setNotifyDelay(int delay);
@@ -112,6 +107,13 @@ class Preferences : public QObject
     QStringList getNicknameList();
     void setNickname(int index,QString newName);
     void setNicknameList(QStringList newList);
+	
+  	QString channelMessageColor, queryMessageColor, serverMessageColor, actionMessageColor,
+				 		backlogMessageColor, linkMessageColor, commandMessageColor;
+
+		QString defaultChannelMessageColor, defaultQueryMessageColor, defaultServerMessageColor,
+						defaultActionMessageColor, defaultBacklogMessageColor, defaultLinkMessageColor,
+						defaultCommandMessageColor;
 
 		QString getChannelMessageColor();
 		QString getQueryMessageColor();
@@ -152,6 +154,7 @@ class Preferences : public QObject
     QSize ignoreSize;
     QSize notifySize;
     QSize nicknameSize;
+		QSize colorConfigurationSize;
 
     QList<ServerEntry> serverList;
     QStringList hilightList;
@@ -163,7 +166,7 @@ class Preferences : public QObject
 
     QStringList nicknameList;
 
-    QString partReason;
+		QString partReason;
     QString kickReason;
 };
 

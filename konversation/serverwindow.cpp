@@ -34,6 +34,7 @@ ServerWindow::ServerWindow(Server* server) : KMainWindow()
   ignoreDialog=0;
   notifyDialog=0;
   buttonsDialog=0;
+	colorConfigurationDialog = 0;
 
 /*  KAction* quitAction= */ KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); /* file_quit */
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); /* options_show_toolbar */
@@ -43,7 +44,7 @@ ServerWindow::ServerWindow(Server* server) : KMainWindow()
 /*  KAction* open_hilight_action=      */ new KAction(i18n("Hilight List"),0,0,this,SLOT (openHilight()),actionCollection(),"open_hilight_window");
 /*  KAction* open_notify_action=       */ new KAction(i18n("Notify List"),0,0,this,SLOT (openNotify()),actionCollection(),"open_notify_window");
 /*  KAction* open_ignore_action=       */ new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
-
+/*	KAction* open_colors_action=			 */ new KAction(i18n("Configure Colors"), 0, 0, this, SLOT(openColorConfiguration()), actionCollection(), "open_colors_window");
   setCentralWidget(windowContainer);
 
   /* Initialize KMainWindow->statusBar() */
@@ -364,6 +365,50 @@ void ServerWindow::closeNotify(QSize newSize)
 
   delete notifyDialog;
   notifyDialog=0;
+}
+
+void ServerWindow::openColorConfiguration()
+{
+	colorConfigurationDialog = new ColorConfiguration(KonversationApplication::preferences.getActionMessageColor(),
+																										KonversationApplication::preferences.getBacklogMessageColor(),
+																										KonversationApplication::preferences.getChannelMessageColor(),
+																										KonversationApplication::preferences.getCommandMessageColor(),
+																										KonversationApplication::preferences.getLinkMessageColor(),
+																										KonversationApplication::preferences.getQueryMessageColor(),
+																										KonversationApplication::preferences.getServerMessageColor(),
+																										KonversationApplication::preferences.getColorConfigurationSize());
+	connect(colorConfigurationDialog, SIGNAL(saveFontColorSettings(QString, QString, QString, QString, QString, QString, QString)),
+					this, SLOT(applyColorConfiguration(QString, QString, QString, QString, QString, QString, QString)));
+	connect(colorConfigurationDialog, SIGNAL(closeFontColorConfiguration(QSize)),
+					this, SLOT(closeColorConfiguration(QSize)));
+
+	colorConfigurationDialog->show();
+}
+
+void ServerWindow::applyColorConfiguration(QString actionTextColor, QString backlogTextColor, QString channelTextColor,
+														 							 QString commandTextColor, QString linkTextColor, QString queryTextColor,
+																					 QString serverTextColor)
+{
+	KonversationApplication::preferences.setActionMessageColor(actionTextColor);
+	KonversationApplication::preferences.setBacklogMessageColor(backlogTextColor);
+	KonversationApplication::preferences.setChannelMessageColor(channelTextColor);
+	KonversationApplication::preferences.setCommandMessageColor(commandTextColor);
+	KonversationApplication::preferences.setLinkMessageColor(linkTextColor);
+	KonversationApplication::preferences.setQueryMessageColor(queryTextColor);
+	KonversationApplication::preferences.setServerMessageColor(serverTextColor);
+	emit prefsChanged();
+}
+
+void ServerWindow::closeColorConfiguration(QSize windowSize)
+{
+	KonversationApplication::preferences.setColorConfigurationSize(windowSize);
+	emit prefsChanged();
+	disconnect(colorConfigurationDialog, SIGNAL(saveFontColorSettings(QString, QString, QString, QString, QString, QString, QString)),
+				 		 this, SLOT(applyColorConfiguration(QString, QString, QString, QString, QString, QString, QString)));
+	disconnect(colorConfigurationDialog, SIGNAL(closeFontColorConfiguration(QSize)),
+						 this, SLOT(closeColorConfiguration(QSize)));
+	delete colorConfigurationDialog;
+	colorConfigurationDialog = 0;
 }
 
 void ServerWindow::channelPrefsChanged()

@@ -221,32 +221,40 @@ bool Preferences::getBlinkingTabs() { return blinkingTabs; }
 
 // get/set message font colors
 
-QString Preferences::getChannelMessageColor() {return channelMessageColor;}
-void Preferences::setChannelMessageColor(QString passed_channelMessageColor) {channelMessageColor = passed_channelMessageColor;}
-QString Preferences::getQueryMessageColor() {return queryMessageColor;}
-void Preferences::setQueryMessageColor(QString passed_queryMessageColor) {queryMessageColor = passed_queryMessageColor;}
-QString Preferences::getServerMessageColor() {return serverMessageColor;}
-void Preferences::setServerMessageColor(QString passed_serverMessageColor) {serverMessageColor = passed_serverMessageColor;}
 QString Preferences::getActionMessageColor() {return actionMessageColor;}
 void Preferences::setActionMessageColor(QString passed_actionMessageColor) {actionMessageColor = passed_actionMessageColor;}
+
 QString Preferences::getBacklogMessageColor() {return backlogMessageColor;}
 void Preferences::setBacklogMessageColor(QString passed_backlogMessageColor) {backlogMessageColor = passed_backlogMessageColor;}
-QString Preferences::getLinkMessageColor() {return linkMessageColor;}
-void Preferences::setLinkMessageColor(QString passed_linkMessageColor) {linkMessageColor = passed_linkMessageColor;}
+
+QString Preferences::getChannelMessageColor() {return channelMessageColor;}
+void Preferences::setChannelMessageColor(QString passed_channelMessageColor) {channelMessageColor = passed_channelMessageColor;}
+
 QString Preferences::getCommandMessageColor() {return commandMessageColor;}
 void Preferences::setCommandMessageColor(QString passed_commandMessageColor) {commandMessageColor = passed_commandMessageColor;}
 
-/* Geometry functions */
-QSize Preferences::getServerWindowSize() { return serverWindowSize; };
-QSize& Preferences::getHilightSize()     { return hilightSize; };
-QSize& Preferences::getButtonsSize()     { return buttonsSize; };
-QSize& Preferences::getIgnoreSize()      { return ignoreSize; };
-QSize& Preferences::getNotifySize()      { return notifySize; };
-QSize& Preferences::getNicknameSize()    { return nicknameSize; };
+QString Preferences::getLinkMessageColor() {return linkMessageColor;}
+void Preferences::setLinkMessageColor(QString passed_linkMessageColor) {linkMessageColor = passed_linkMessageColor;}
 
-void Preferences::setServerWindowSize(QSize newSize) { serverWindowSize=newSize; };
-void Preferences::setHilightSize(QSize newSize)      { hilightSize=newSize; };
-void Preferences::setButtonsSize(QSize newSize)      { buttonsSize=newSize; };
-void Preferences::setIgnoreSize(QSize newSize)       { ignoreSize=newSize; };
-void Preferences::setNotifySize(QSize newSize)       { notifySize=newSize; };
-void Preferences::setNicknameSize(QSize newSize)     { nicknameSize=newSize; };
+QString Preferences::getQueryMessageColor() {return queryMessageColor;}
+void Preferences::setQueryMessageColor(QString passed_queryMessageColor) {queryMessageColor = passed_queryMessageColor;}
+
+QString Preferences::getServerMessageColor() {return serverMessageColor;}
+void Preferences::setServerMessageColor(QString passed_serverMessageColor) {serverMessageColor = passed_serverMessageColor;}
+
+/* Geometry functions */
+QSize Preferences::getServerWindowSize() 				{ return serverWindowSize; };
+QSize& Preferences::getHilightSize()     				{ return hilightSize; };
+QSize& Preferences::getButtonsSize()     				{ return buttonsSize; };
+QSize& Preferences::getIgnoreSize()      				{ return ignoreSize; };
+QSize& Preferences::getNotifySize()      				{ return notifySize; };
+QSize& Preferences::getNicknameSize()   			  { return nicknameSize; };
+QSize& Preferences::getColorConfigurationSize() {return colorConfigurationSize;}
+
+void Preferences::setServerWindowSize(QSize newSize)			  { serverWindowSize=newSize; };
+void Preferences::setHilightSize(QSize newSize)     				{ hilightSize=newSize; };
+void Preferences::setButtonsSize(QSize newSize)     				{ buttonsSize=newSize; };
+void Preferences::setIgnoreSize(QSize newSize)    			    { ignoreSize=newSize; };
+void Preferences::setNotifySize(QSize newSize)    				  { notifySize=newSize; };
+void Preferences::setNicknameSize(QSize newSize) 				    { nicknameSize=newSize; };
+void Preferences::setColorConfigurationSize(QSize newSize)  {colorConfigurationSize = newSize;}

@@ -11,7 +11,8 @@
       <Action name="open_hilight_window" />
       <Action name="open_notify_window" />
       <Action name="open_ignore_window" />
-    </Menu>
+  		<Action name="open_colors_window" />
+	 </Menu>
   </MenuBar>
 
   <ToolBar fullWidth="true" name="mainToolBar">
