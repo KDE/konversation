@@ -192,7 +192,9 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
 
   outgoingTimer.setName("outgoing_timer");
   outgoingTimer.start(timerInterval);
-    
+
+  m_scriptLauncher = new ScriptLauncher(this);
+      
   connectSignals();
 
   emit serverOnline(false);
