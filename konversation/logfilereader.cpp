@@ -90,7 +90,9 @@ void LogfileReader::updateView()
     // Skip first line, since it may be incomplete
     stream.readLine();
 
-    getTextView()->setText(stream.read());
+    while(!stream.eof()) {
+      getTextView()->appendRaw(stream.readLine(), true);
+    }
 
     stream.unsetDevice();
     file.close();
