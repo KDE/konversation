@@ -469,8 +469,7 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
       }
       else if(r == SendEmail) {
 	KABC::Addressee addressee = win->getServer()->getNickInfo(win->getName())->getAddressee();	
-	if(!addressee.isEmpty())
-          Konversation::Addressbook::self()->sendEmail(addressee);
+        Konversation::Addressbook::self()->sendEmail(addressee);
       }
       else if(r == AddressbookEdit) {
         KABC::Addressee addressee = win->getServer()->getNickInfo(win->getName())->getAddressee();
