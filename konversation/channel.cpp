@@ -132,7 +132,12 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
     QuickButton* newQuickButton=new QuickButton(buttonLabel,buttonText,buttonsGrid);
     buttonList.append(newQuickButton);
     // Create tooltip for current button
-    QToolTip::add(newQuickButton,buttonText);
+    QString toolTip=buttonText.replace(QRegExp("&",false,true),"&amp;").
+                               replace(QRegExp("<",false,true),"&lt;").
+                               replace(QRegExp(">",false,true),"&gt;");
+
+    QToolTip::add(newQuickButton,toolTip);
+
     connect(newQuickButton,SIGNAL (clicked(QString)),this,SLOT (quickButtonClicked(QString)) );
   }
 
@@ -646,7 +651,15 @@ void Channel::setTopic(QString& newTopic)
     topic=newTopic;
     /* Add a tool tip to the topic line if it gets too long */
     QToolTip::remove(topicLine);
-    if(newTopic.length()>80) QToolTip::add(topicLine,"<qt>"+newTopic+"</qt>");
+
+    if(newTopic.length()>80)
+    {
+      QString toolTip=newTopic.replace(QRegExp("&",false,true),"&amp;").
+                               replace(QRegExp("<",false,true),"&lt;").
+                               replace(QRegExp(">",false,true),"&gt;");
+
+      QToolTip::add(topicLine,"<qt>"+toolTip+"</qt>");
+    }
   }
 }
 
@@ -665,6 +678,15 @@ void Channel::setTopic(QString& nickname,QString& newTopic) // Overloaded
   topic=newTopic;
   /* Add a tool tip to the topic line if it gets too long */
   QToolTip::remove(topicLine);
+  if(newTopic.length()>80)
+  {
+    QString toolTip=newTopic.replace(QRegExp("&",false,true),"&amp;").
+                             replace(QRegExp("<",false,true),"&lt;").
+                             replace(QRegExp(">",false,true),"&gt;");
+
+    QToolTip::add(topicLine,"<qt>"+toolTip+"</qt>");
+  }
+
   if(newTopic.length()>80) QToolTip::add(topicLine,"<qt>"+newTopic+"</qt>");
 }
 
@@ -958,9 +980,14 @@ void Channel::updateQuickButtons(QStringList newButtonList)
     quickButton=buttonList.at(index);
     quickButton->setText(buttonText[0]);
     quickButton->setDefinition(buttonText[1]);
+
     // Update tool tips
     QToolTip::remove(quickButton);
-    QToolTip::add(quickButton,buttonText[1]);
+    QString toolTip=buttonText[1].replace(QRegExp("&",false,true),"&amp;").
+                                  replace(QRegExp("<",false,true),"&lt;").
+                                  replace(QRegExp(">",false,true),"&gt;");
+
+    QToolTip::add(quickButton,toolTip);
   }
 }
 

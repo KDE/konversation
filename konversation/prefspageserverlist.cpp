@@ -108,21 +108,16 @@ void PrefsPageServerList::connectClicked()
   // Maybe inherit from serverListView to return proper type
   ServerListItem* item=(ServerListItem*)lv_item;
 
-  // -> Think that was the bad guy causing all the trouble when
-  //    trying to connect on double click.
-
-	//if(item) emit connectToServer(item->getId());
-	
-		if (item)
-	{
-		// Just copy the getId() accessor functions return value
-		// into an integer variable.
-		itemId = item->getId();
+  if (item)
+  {
+    // copy the getId() accessor functions return value
+    // into an integer variable.
+    itemId = item->getId();
     // now we can pass the integer variable as argument for the emitted
     // signal instead of a reference to the locally declared
-		// ServerListItems accessor function.
-		emit connectToServer(itemId);
-	}
+    // ServerListItems accessor function. [MG]
+    emit connectToServer(itemId);
+  }
 }
 
 void PrefsPageServerList::newServer()
