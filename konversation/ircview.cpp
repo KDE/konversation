@@ -676,8 +676,8 @@ void IRCView::doAppend(QString newLine, bool important, bool self)
     document()->lastParagraph()->format();
     resizeContents(contentsWidth(), document()->height());
 
-    //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not at an end,
-    //             so the scrollbar wets its pants and forgets who it is for ten minutes
+    //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not 
+    // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
 
     if (doScroll) // TODO: make this eat multiple lines at once when the preference is changed so it doesn't take so long
     {
