@@ -332,13 +332,16 @@ bool IRCInput::checkPaste(QString& text)
   int doPaste=KMessageBox::Yes;
   
   // Don't use QString::stripWhiteSpace() because it deletes spaces in the first line too.
+  // remove waste spaces (including LF)
   QRegExp reTopSpace("^ *\n");
   while(text.contains(reTopSpace))
     text.remove(reTopSpace);
   QRegExp reBottomSpace("\n *$");
   while(text.contains(reBottomSpace))
     text.remove(reBottomSpace);
-  text += "\n";  // convenient to edit
+  // remove blank lines
+  while(text.contains("\n\n"))
+    text.replace("\n\n","\n");
   
   int lines=text.contains('\n');
 
