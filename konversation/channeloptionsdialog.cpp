@@ -127,15 +127,16 @@ void ChannelOptionsDialog::refreshTopicHistory()
 void ChannelOptionsDialog::topicHistoryItemClicked(QListViewItem* item)
 {
   //if they didn't click on anything, item is null
-  if(item)
-    m_widget->topicEdit->setText(item->text(1));
+  if(m_channel->getOwnChannelNick()->isAnyTypeOfOp() || !m_widget->topicModeChBox->isChecked()) {
+    if(item)
+      m_widget->topicEdit->setText(item->text(1));
+  }
 }
 
 void ChannelOptionsDialog::refreshEnableModes() {
   bool enable = m_channel->getOwnChannelNick()->isAnyTypeOfOp();
   m_widget->otherModesList->setEnabled(enable);
   m_widget->topicEdit->setReadOnly(!enable && m_widget->topicModeChBox->isChecked());
-  m_widget->topicHistoryList->setEnabled(enable || !m_widget->topicModeChBox->isChecked());
 
   m_widget->topicModeChBox->setEnabled(enable);
   m_widget->messageModeChBox->setEnabled(enable);
