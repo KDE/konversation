@@ -220,14 +220,20 @@ void PrefsPageThemes::updateList()
   QTextStream stream;
   QString currentTheme = KonversationApplication::preferences.getIconTheme();
   int index = 0;
+  bool found = false;
 
   m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/themerc");
   m_themeList->clear();
 
   for(QStringList::Iterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
     {
-      if((*it).section('/',-2,-2) != currentTheme)
-        ++index;
+      if(!found)
+	{
+	  if((*it).section('/',-2,-2) == currentTheme)
+	    found = true;
+	  else
+	    ++index;
+	}
 
       themeRC.setName(*it);
       themeRC.open(IO_ReadOnly);
@@ -238,6 +244,9 @@ void PrefsPageThemes::updateList()
 
       themeComment = stream.readLine();
       themeComment = themeComment.section('=',1,1);
+      
+      if(!themeComment.isEmpty())
+	themeName = themeName+" ( "+themeComment+" )";
 
       m_themeList->insertItem(themeName);
       themeRC.close();
