@@ -19,12 +19,16 @@ class Preferences;
 class QPushButton;
 
 namespace Konversation {
+  class ServerGroupSettings;
+  
   class ServerListItem : public KListViewItem
   {
     public:
-      ServerListItem(QListViewItem* parent, int serverId, const QString& group, const QString& server, 
-        const QString& port, const QString& identity, bool autoConnect);
-        
+      ServerListItem(QListViewItem* parent, int serverId, const QString& group, const QString& serverGroup, 
+        const QString& identity, bool autoConnect);
+      ServerListItem(QListView* parent, int serverId, const QString& group, const QString& serverGroup, 
+        const QString& identity, bool autoConnect);
+
       int serverId() const { return m_serverId; }
       QString group() const { return m_group; }
       bool autoConnect() const { return m_autoConnect; }
@@ -46,28 +50,24 @@ namespace Konversation {
     public:
       ServerListDialog(QWidget *parent = 0, const char *name = 0);
       ~ServerListDialog();
-    
+
     signals:
       void connectToServer(int serverId);
-      
+
     protected slots:
       virtual void slotOk();
       virtual void slotApply();
-      
+
       void slotAdd();
       void slotEdit();
       void slotDelete();
 
-      void createServer(const QString&, const QString&, const QString&, const QString&, const QString&,
-        const QString&, const QString&, const QString&);
-      void updateServer(const QString&, const QString&, const QString&, const QString&, const QString&,
-        const QString&, const QString&, const QString&);
-      
       void updateButtons();
-              
+
     protected:
       QListViewItem* findBranch(QString name, bool generate = true);
-          
+      void addServerGroup(const ServerGroupSettings& serverGroup);
+
     private:
       KListView* m_serverList;
       QPushButton* m_addButton;

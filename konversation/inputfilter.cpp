@@ -1311,7 +1311,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             server->appendStatusMessage(i18n("List"),i18n("End of channel list."));
           } else {
             setAutomaticRequest(false);
-            //kdDebug() << "End of channel list... " << QTime::currentTime().toString() << endl;
           }
 
           break;

@@ -74,6 +74,7 @@ class InputFilter : public QObject
 
 
     QStringList newNickList;
+    int m_debugCount;
 };
 
 #endif

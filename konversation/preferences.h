@@ -26,6 +26,8 @@
 
 #include <kdeversion.h>
 
+#include "servergroupsettings.h"
+
 /*
   @author Dario Abatianni
 */
@@ -39,7 +41,6 @@ VoiceColor (int)
 NoRightsColor (int)
 */
 
-class ServerEntry;
 class Ignore;
 class Highlight;
 class Identity;
@@ -59,7 +60,6 @@ class Preferences : public QObject
 
     enum Pages
     {
-      ServerListPage=0,
       NotifyPage,
       IdentityPage
     };
@@ -67,14 +67,11 @@ class Preferences : public QObject
     Preferences();
     ~Preferences();
 
-    QPtrList<ServerEntry> getServerList();
-    int addServer(const QString& serverString);
-    void removeServer(int id);
-    QString getServerByIndex(unsigned int);
-    QString getServerById(int);
-    ServerEntry* getServerEntryById(int id);
-    int getServerIdByIndex(unsigned int);
-    QValueList<int> getAutoConnectServerIDs();
+    Konversation::ServerGroupList serverGroupList();
+    void setServerGroupList(const Konversation::ServerGroupList& list);
+    void addServerGroup(const Konversation::ServerGroupSettings& serverGroup);
+    Konversation::ServerGroupSettings serverGroupById(int id);
+    void removeServerGroup(int id);
 
     bool getAutoReconnect();
     void setAutoReconnect(bool state);
@@ -90,10 +87,6 @@ class Preferences : public QObject
 
     QString getVersionReply();
     void    setVersionReply(QString reply);
-
-    void clearServerList();
-    void changeServerProperty(int id,int property,const QString& value);
-    void updateServer(int id,const QString& newDefinition);
 
     void setLog(bool state);
     bool getLog();
@@ -588,7 +581,7 @@ class Preferences : public QObject
 
     QStringList buttonList;
 
-    QPtrList<ServerEntry> serverList;
+    Konversation::ServerGroupList m_serverGroupList;
     QPtrList<Ignore> ignoreList;
     QPtrList<Identity> identityList;
     QPtrList<Highlight> hilightList;

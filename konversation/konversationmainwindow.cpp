@@ -1047,7 +1047,6 @@ void KonversationMainWindow::closeNicksOnlinePanel()
 
 void KonversationMainWindow::openServerList()
 {
-  //emit openPrefsDialog(Preferences::ServerListPage);
   Konversation::ServerListDialog dialog;
   KonversationApplication *konvApp = static_cast<KonversationApplication *>(KApplication::kApplication());
   connect(&dialog, SIGNAL(connectToServer(int)), konvApp, SLOT(connectToAnotherServer(int)));
@@ -1132,7 +1131,7 @@ void KonversationMainWindow::updateLag(Server* lagServer,int msec)
 
 void KonversationMainWindow::updateSSLInfo(Server* server)
 {
-  if(server->getUseSSL() && server->isConnected())
+  if(server && server->getUseSSL() && server->isConnected())
     {
       QObject::disconnect(m_sslLabel,0,0,0);
       QObject::connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));

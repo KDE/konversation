@@ -34,6 +34,7 @@
 #include "nickinfo.h"
 
 #include "sslsocket.h"
+#include "serversettings.h"
 
 /*
   @author Dario Abatianni
@@ -492,11 +493,8 @@ class Server : public QObject
     unsigned int tryNickNumber;
     unsigned int reconnectCounter;
 
-    QString serverGroup;
-    QString serverName;
     QString bot;
     QString botPassword;
-    int serverPort;
 
     // TODO roll these into a QMap.
     QString serverNickPrefixes;     // Prefixes used by the server to indicate a mode
@@ -519,7 +517,6 @@ class Server : public QObject
 
     KNetwork::KBufferedSocket* serverSocket;
     SSLSocket*   m_serverSSLSocket;
-    bool         m_useSSL;
     bool         m_tryReconnect;
 
     QTimer reconnectTimer;
@@ -543,7 +540,6 @@ class Server : public QObject
     QString nickname;
     QString ownIpByUserhost;  // RPL_USERHOST
     QString ownIpByWelcome;  // RPL_WELCOME
-    QString serverKey;
     QString lastDccDir;
 
     QPtrList<Channel> channelList;
@@ -588,6 +584,9 @@ class Server : public QObject
     ChannelMembershipMap m_unjoinedChannels;
     /// List of nicks in Queries.
     NickInfoMap m_queryNicks;
+    
+    Konversation::ServerSettings m_serverSettings;
+    QString m_serverGroup;
 };
 
 #endif

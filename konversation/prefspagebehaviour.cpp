@@ -37,8 +37,11 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   trayNotifyCheck->setChecked(preferences->getTrayNotify());
   connect(trayIconCheck, SIGNAL(toggled(bool)), trayNotifyCheck, SLOT(setEnabled(bool)));
 
-  rawLogCheck = new QCheckBox(i18n("Show ra&w log window on startup"), parentFrame, "raw_log_check");
+  rawLogCheck = new QCheckBox(i18n("Show ra&w log window on application startup"), parentFrame, "raw_log_check");
   rawLogCheck->setChecked(preferences->getRawLog());
+
+  showServerList = new QCheckBox(i18n("&Show server list on application startup"), parentFrame, "show_serverlist_check");
+  showServerList->setChecked(preferences->getShowServerList());
 
   useCustomBrowserCheck = new QCheckBox(i18n("Use custom Web &browser:"), parentFrame, "useCustomBrowserCheck");
   useCustomBrowserCheck->setChecked(!preferences->getWebBrowserUseKdeDefault());
@@ -133,6 +136,8 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   row++;
   generalLayout->addMultiCellWidget(rawLogCheck, row, row, 0, 1);
   row++;
+  generalLayout->addMultiCellWidget(showServerList, row, row, 0, 1);
+  row++;
   generalLayout->addWidget(useCustomBrowserCheck, row, 0);
   generalLayout->addWidget(browserCmdInput, row, 1);
   row++;
@@ -158,6 +163,7 @@ void PrefsPageBehaviour::applyPreferences()
   preferences->setShowTrayIcon(trayIconCheck->isChecked());
   preferences->setTrayNotify(trayNotifyCheck->isChecked());
   preferences->setRawLog(rawLogCheck->isChecked());
+  preferences->setShowServerList(showServerList->isChecked());
   preferences->setWebBrowserUseKdeDefault(!useCustomBrowserCheck->isChecked());
   preferences->setWebBrowserCmd(browserCmdInput->text());
 

@@ -72,9 +72,6 @@ class KonvPreferencesIface : virtual public DCOPObject
     virtual void setAutoRejoin(bool state) = 0;
     virtual bool getBeep() = 0;
     virtual void setBeep(bool state) = 0;
-    virtual void clearServerList() = 0;
-    virtual void changeServerProperty(int id,int property,const QString& value) = 0;
-    virtual void updateServer(int id,const QString& newDefinition) = 0;
     virtual void setLog(bool state) = 0;
     virtual bool getLog() = 0;
     virtual void setLowerLog(bool state) = 0;

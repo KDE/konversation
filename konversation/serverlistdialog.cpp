@@ -30,16 +30,26 @@
 
 #include "preferences.h"
 #include "konversationapplication.h"
-#include "editserverdialog.h"
+#include "servergroupdialog.h"
+#include "servergroupsettings.h"
 
 namespace Konversation {
   //
   // ServerListItem
   //
   
-  ServerListItem::ServerListItem(QListViewItem* parent, int serverId, const QString& group, const QString& server, 
-    const QString& port, const QString& identity, bool autoConnect)
-    : KListViewItem(parent, server + ":" + port, identity)
+  ServerListItem::ServerListItem(QListViewItem* parent, int serverId, const QString& group, const QString& serverGroup, 
+    const QString& identity, bool autoConnect)
+    : KListViewItem(parent, serverGroup, identity)
+  {
+    m_serverId = serverId;
+    m_autoConnect = autoConnect;
+    m_group = group;
+  }
+
+  ServerListItem::ServerListItem(QListView* parent, int serverId, const QString& group, const QString& serverGroup, 
+    const QString& identity, bool autoConnect)
+    : KListViewItem(parent, serverGroup, identity)
   {
     m_serverId = serverId;
     m_autoConnect = autoConnect;
@@ -161,7 +171,7 @@ namespace Konversation {
     m_serverList->setRootIsDecorated(true);
     m_serverList->addColumn(i18n("Server"));
     m_serverList->addColumn(i18n("Identity"));
-    m_serverList->addColumn(i18n("Auto Connect"));
+    //m_serverList->addColumn(i18n("Auto Connect"));
     
     m_addButton = new QPushButton(i18n("A&dd..."), mainWidget);
     m_editButton = new QPushButton(i18n("&Edit..."), mainWidget);
@@ -177,22 +187,25 @@ namespace Konversation {
   
     // Load server list
     int index = 0;
-    QString serverString = m_preferences->getServerByIndex(index);
+    Konversation::ServerGroupList serverGroups = m_preferences->serverGroupList();
+    Konversation::ServerGroupList::iterator it;
     
-    while(!serverString.isEmpty())
-    {
-      int id = m_preferences->getServerIdByIndex(index);
-      QStringList serverEntry = QStringList::split(',', serverString, true);
-  
-      QListViewItem* branch = findBranch(serverEntry[0]);
-      new ServerListItem(branch, id,
-                        serverEntry[0],
-                        serverEntry[1],
-                        serverEntry[2],
-                        serverEntry[7],
-                        serverEntry[6] == "1");
-  
-      serverString = m_preferences->getServerByIndex(++index);
+    for(it = serverGroups.begin(); it != serverGroups.end(); ++it) {
+      QListViewItem* branch = findBranch((*it).group());
+
+      if(branch) {
+        new ServerListItem(branch, (*it).id(),
+                        (*it).group(),
+                        (*it).name(),
+                        (*it).identity()->getName(),
+                        (*it).autoConnectEnabled());
+      } else {
+        new ServerListItem(m_serverList, (*it).id(),
+                        (*it).group(),
+                        (*it).name(),
+                        (*it).identity()->getName(),
+                        (*it).autoConnectEnabled());
+      }
     }
     
     connect(m_serverList, SIGNAL(doubleClicked(QListViewItem *, const QPoint&, int)), this, SLOT(slotOk()));
@@ -210,15 +223,19 @@ namespace Konversation {
 
   QListViewItem* ServerListDialog::findBranch(QString name, bool generate)
   {
+    if(name.isEmpty()) {
+      return 0;
+    }
+
     QListViewItem* branch = m_serverList->findItem(name, 0);
-    
+
     if(branch == 0 && generate == true)
     {
       branch = new KListViewItem(m_serverList, name);
       branch->setOpen(true);
       branch->setSelectable(false);
     }
-  
+
     return branch;
   }
 
@@ -226,20 +243,20 @@ namespace Konversation {
   {
     QPtrList<QListViewItem> selected = m_serverList->selectedItems();
     ServerListItem * server = static_cast<ServerListItem*>(selected.first());
-    
+
     while(server) {
       emit connectToServer(server->serverId());
-      
+
       server = static_cast<ServerListItem*>(selected.next());
     }
-    
+
     slotApply();
     accept();
   }
 
   void ServerListDialog::slotApply()
   {
-    QListViewItem* branch = m_serverList->firstChild();
+/*    QListViewItem* branch = m_serverList->firstChild();
     ServerListItem* item;
     
     while(branch) {
@@ -251,65 +268,69 @@ namespace Konversation {
       }
       
       branch = branch->nextSibling();
-    }
+  }*/
   }
   
   void ServerListDialog::slotAdd()
   {
-    EditServerDialog editServerDialog(this, i18n("New"), QString::null, "6667", QString::null, QString::null,
-      QString::null, QString::null, QString::null);
-  
-    connect(&editServerDialog, SIGNAL(serverChanged(const QString&,
-                                                    const QString&,
-                                                    const QString&,
-                                                    const QString&,
-                                                    const QString&,
-                                                    const QString&,
-                                                    const QString&,
-                                                    const QString&)),
-                            this, SLOT(createServer(const QString&,
-                                                    const QString&,
-                                                    const QString&,
-                                                    const QString&,
-                                                    const QString&,
-                                                    const QString&,
-                                                    const QString&,
-                                                    const QString&)));
-    
-    editServerDialog.exec();
+    ServerGroupDialog dlg(i18n("Add Network"), this);
+    QStringList groups;
+    QListViewItem* branch = m_serverList->firstChild();
+
+    while(branch) {
+      if(branch->childCount() > 0) {
+        groups.append(branch->text(0));
+      }
+
+      branch = branch->nextSibling();
+    }
+
+    dlg.setAvailableGroups(groups);
+
+    if(dlg.exec() == KDialog::Accepted) {
+      addServerGroup(dlg.serverGroupSettings());
+    }
   }
-  
+
   void ServerListDialog::slotEdit()
   {
     ServerListItem* item = static_cast<ServerListItem*>(m_serverList->selectedItems().first());
-    
+  
     if(item)
     {
-      QString server = m_preferences->getServerById(item->serverId());
+      Konversation::ServerGroupSettings serverGroup = m_preferences->serverGroupById(item->serverId());
       
-      if(!server.isEmpty()) {
-        QStringList properties = QStringList::split(',', server, true);
-        EditServerDialog editServerDialog(this, properties[0], properties[1], properties[2], properties[3],
-          properties[4], properties[5], properties[7], properties[8]);
-  
-        connect(&editServerDialog, SIGNAL(serverChanged(const QString&,
-                                                        const QString&,
-                                                        const QString&,
-                                                        const QString&,
-                                                        const QString&,
-                                                        const QString&,
-                                                        const QString&,
-                                                        const QString&)),
-                                this, SLOT(updateServer(const QString&,
-                                                        const QString&,
-                                                        const QString&,
-                                                        const QString&,
-                                                        const QString&,
-                                                        const QString&,
-                                                        const QString&,
-                                                        const QString&)));
-        
-        editServerDialog.exec();
+      if(!serverGroup.name().isEmpty()) {
+        ServerGroupDialog dlg(i18n("Edit Network"), this);
+        QStringList groups;
+        QListViewItem* branch = m_serverList->firstChild();
+    
+        while(branch) {
+          if(branch->childCount() > 0) {
+            groups.append(branch->text(0));
+          }
+    
+          branch = branch->nextSibling();
+        }
+    
+        dlg.setAvailableGroups(groups);
+        dlg.setServerGroupSettings(serverGroup);
+    
+        if(dlg.exec() == KDialog::Accepted) {
+          // find branch the old item resides in
+          branch = findBranch(item->group());
+          // remove item from the list
+          delete item;
+    
+          // if the branch is empty, remove it
+          if(branch && branch->childCount() == 0) {
+            delete branch;
+          }
+
+          ServerGroupSettings serverGroup = dlg.serverGroupSettings();
+          m_preferences->removeServerGroup(serverGroup.id());
+          addServerGroup(serverGroup);
+        }
       }
     }
   }
@@ -323,7 +344,7 @@ namespace Konversation {
       // find branch this item belongs to
       QListViewItem* branch = findBranch(server->group());
       // remove server from preferences
-      m_preferences->removeServer(server->serverId());
+      m_preferences->removeServerGroup(server->serverId());
       // remove item from view
       delete server;
       // if the branch has no other items, remove it
@@ -335,54 +356,6 @@ namespace Konversation {
     }
   }
 
-  void ServerListDialog::createServer(const QString& groupName, const QString& serverName,
-    const QString& serverPort, const QString& serverKey, const QString& channelName, const QString& channelKey,
-    const QString& identity, const QString& connectCommands)
-  {
-    
-    int id = m_preferences->addServer(groupName + "," + serverName + "," + serverPort + "," + serverKey + "," +
-      channelName + "," + channelKey + ",0," + identity + "," + connectCommands);
-    
-    // find branch to insert the new item into
-    QListViewItem* branch = findBranch(groupName);
-  
-    ServerListItem* item = new ServerListItem(branch, id, groupName, serverName, serverPort, identity, false);
-  
-    m_serverList->setSelected(item, true);
-    m_serverList->ensureItemVisible(item);
-  }
-
-  void ServerListDialog::updateServer(const QString& groupName, const QString& serverName, const QString& serverPort,
-    const QString& serverKey, const QString& channelName, const QString& channelKey, const QString& identity,
-    const QString& connectCommands)
-  {
-    ServerListItem* item = static_cast<ServerListItem*>(m_serverList->selectedItems().first());
-    // save state of autoconnect checkbox
-    bool autoConnect = item->autoConnect();
-    // find branch the old item resides in
-    QListViewItem* branch = findBranch(item->group());
-    // save server id of the old item
-    int id = item->serverId();
-    // remove item from the list
-    delete item;
-    
-    // if the branch is empty, remove it
-    if(branch->childCount() == 0) {
-      delete branch;
-    }
-  
-    // find branch to insert the new item into
-    branch = findBranch(groupName);
-  
-    item = new ServerListItem(branch, id, groupName, serverName, serverPort, identity, autoConnect);
-  
-    m_preferences->updateServer(id, groupName + "," + serverName + "," + serverPort + "," + serverKey + "," +
-      channelName + "," + channelKey + "," + (autoConnect ? "1" : "0") + "," + identity + "," + connectCommands);
-  
-    m_serverList->setSelected(item, true);
-    m_serverList->ensureItemVisible(item);
-  }
-
   void ServerListDialog::updateButtons()
   {
     bool enable = m_serverList->selectedItems().count() > 0;
@@ -390,6 +363,31 @@ namespace Konversation {
     enableButtonOK(enable);
     m_editButton->setEnabled(enable);
     m_delButton->setEnabled(enable);
+  }
+
+  void ServerListDialog::addServerGroup(const ServerGroupSettings& serverGroup)
+  {
+    m_preferences->addServerGroup(serverGroup);
+
+    QListViewItem* branch = findBranch(serverGroup.group());
+    ServerListItem* item;
+
+    if(branch) {
+      item = new ServerListItem(branch, serverGroup.id(),
+                                serverGroup.group(),
+                                serverGroup.name(),
+                                serverGroup.identity()->getName(),
+                                serverGroup.autoConnectEnabled());
+    } else {
+      item = new ServerListItem(m_serverList, serverGroup.id(),
+                                serverGroup.group(),
+                                serverGroup.name(),
+                                serverGroup.identity()->getName(),
+                                serverGroup.autoConnectEnabled());
+    }
+
+    m_serverList->setSelected(item, true);
+    m_serverList->ensureItemVisible(item);
   }
 }
 

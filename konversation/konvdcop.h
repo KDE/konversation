@@ -92,9 +92,6 @@ class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
   void setAutoRejoin(bool state);
   bool getBeep();
   void setBeep(bool state);
-  void clearServerList();
-  void changeServerProperty(int id,int property,const QString& value);
-  void updateServer(int id,const QString& newDefinition);
   void setLog(bool state);
   bool getLog();
   void setLowerLog(bool state);

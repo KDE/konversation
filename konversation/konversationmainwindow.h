@@ -124,10 +124,11 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void removeSSLIcon();
     void slotPrefsChanged();
 
+    void openServerList();
+
   protected slots:
     void openPreferences();
     void openKeyBindings();
-    void openServerList();
     void openQuickConnectDialog();
     void openChannelList();
     void openNotify();

@@ -19,7 +19,6 @@
 
 #include "preferences.h"
 #include "prefsdialog.h"
-#include "prefspageserverlist.h"
 #include "prefspageidentity.h"
 #include "prefspagebuttons.h"
 #include "prefspagelog.h"
@@ -46,20 +45,17 @@ class PrefsDialog : public KDialogBase
   Q_OBJECT
 
   public:
-    PrefsDialog(Preferences* preferences,bool noServer);
+    PrefsDialog(Preferences* preferences);
     ~PrefsDialog();
 
     void openPage(Preferences::Pages page);
 
   signals:
-    void connectToServer(int id);
     void applyPreferences();
     void prefsChanged();
     void closed();
 
   protected slots:
-    void connectRequest(int id);
-
     void slotOk();
     void slotApply();
     void slotCancel();
@@ -69,7 +65,6 @@ class PrefsDialog : public KDialogBase
   protected:
     Preferences* preferences;
 
-    PrefsPage* serverListPage;
     PrefsPageIdentity*        identityPage;
     PrefsPageTabBehavior*     tabBehaviorPage;
     PrefsPageButtons*         buttonsPage;
@@ -83,7 +78,6 @@ class PrefsDialog : public KDialogBase
     PrefsPageDialogs*         dialogsPage;
 
     // for openPage();
-    QFrame* serverListPane;
     QFrame* notifyPane;
     QFrame* identityPane;
     

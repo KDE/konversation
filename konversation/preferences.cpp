@@ -28,16 +28,12 @@
 #include "identity.h"
 #include "ignore.h"
 #include "highlight.h"
-#include "serverentry.h"
 #include "commit.h"
 #include "version.h"
 
 
 Preferences::Preferences()
 {
-  // Presets
-  serverList.setAutoDelete(true);
-
   // create default identity
   identity=new Identity();
   identity->setName(i18n("Default Identity"));
@@ -61,8 +57,6 @@ Preferences::Preferences()
 
   setNickCompleteSuffixStart(": ");
   setNickCompleteSuffixMiddle(" ");
-
-  addServer("Freenode,irc.kde.org,6667,,#kde-users,,0,");
 
   buttonList.append("Op,/OP %u%n");
   buttonList.append("DeOp,/DEOP %u%n");
@@ -225,79 +219,53 @@ Preferences::~Preferences()
   delete identity;
 }
 
-QString Preferences::getServerByIndex(unsigned int index)
+Konversation::ServerGroupList Preferences::serverGroupList()
 {
-  if(index>=serverList.count()) return 0;
-  ServerEntry* entry=serverList.at(index);
-
-  return entry->getDefinition();
+  return m_serverGroupList;
 }
 
-QString Preferences::getServerById(int id)
+void Preferences::setServerGroupList(const Konversation::ServerGroupList& list)
 {
-  for(unsigned int index=0;index<serverList.count();index++)
-  {
-    ServerEntry* entry=serverList.at(index);
-    if(entry->getId()==id) return entry->getDefinition();
+  m_serverGroupList.clear();
+  m_serverGroupList = list;
+}
+
+void Preferences::addServerGroup(const Konversation::ServerGroupSettings& serverGroup)
+{
+  m_serverGroupList.append(serverGroup);
+}
+
+Konversation::ServerGroupSettings Preferences::serverGroupById(int id)
+{
+  if(!m_serverGroupList.count()) {
+    return Konversation::ServerGroupSettings();
   }
-  return 0;
-}
-
-ServerEntry* Preferences::getServerEntryById(int id)
-{
-  for(unsigned int index=0;index<serverList.count();index++)
-  {
-    ServerEntry* entry=serverList.at(index);
-    if(entry->getId()==id) return entry;
-  }
-  return 0;
-}
-
-int Preferences::getServerIdByIndex(unsigned int index)
-{
-  if(index>=serverList.count()) return -1;
-  ServerEntry* entry=serverList.at(index);
-
-  return entry->getId();
-}
-
-QValueList<int> Preferences::getAutoConnectServerIDs()
-{
-  QValueList<int> list;
-
-  ServerEntry* lookServer=serverList.first();
-  while(lookServer)
-  {
-    if(lookServer->getAutoConnect()) list.append(lookServer->getId());
-    lookServer=serverList.next();
+  
+  Konversation::ServerGroupList::iterator it;
+  
+  for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it) {
+    if((*it).id() == id) {
+      return (*it);
+    }
   }
 
-  return list;
+  return Konversation::ServerGroupSettings();
 }
 
-QPtrList<ServerEntry> Preferences::getServerList() { return serverList; }
-
-int Preferences::addServer(const QString& serverString)
+void Preferences::removeServerGroup(int id)
 {
-  ServerEntry* newEntry=new ServerEntry(serverString);
-
-  // make sure that a new server entry gets at least the default identity
-  const Identity* defaultIdentity=getIdentityList().at(0);
-  QString defaultName=defaultIdentity->getName();
-
-  if(newEntry->getIdentity().isEmpty())
-    newEntry->setIdentity(defaultName);
-
-  // put server entry into the list of servers
-  serverList.append(newEntry);
-
-  return newEntry->getId();
-}
-
-void Preferences::removeServer(int id)
-{
-  // Deletes the object, too
-  serverList.remove(getServerEntryById(id));
+  if(!m_serverGroupList.count()) {
+    return;
+  }
+  
+  Konversation::ServerGroupList::iterator it;
+  
+  for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it) {
+    if((*it).id() == id) {
+      m_serverGroupList.remove(it);
+      return;
+    }
+  }
 }
 
 QPtrList<Highlight> Preferences::getHilightList()
@@ -348,21 +316,7 @@ void Preferences::addIgnore(const QString &newIgnore)
   ignoreList.append(new Ignore(ignore[0],ignore[1].toInt()));
 }
 
-void Preferences::changeServerProperty(int serverId,int property,const QString& value)
-{
-  ServerEntry* entry=getServerEntryById(serverId);
-  if(entry) entry->updateProperty(property,value);
-}
-
-void Preferences::updateServer(int serverId,const QString& newDefinition)
-{
-  ServerEntry* entry=getServerEntryById(serverId);
-  if(entry) entry->setDefinition(newDefinition);
-}
-
 // Accessor methods
-
-void Preferences::clearServerList() { serverList.clear(); }
 
 void Preferences::setLog(bool state) { log=state; }
 bool Preferences::getLog() { return log; }

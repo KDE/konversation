@@ -29,9 +29,10 @@
 #include "prefsdialog.h"
 #include "highlight.h"
 #include "server.h"
-#include "serverentry.h"
 #include "konversationsound.h"
 #include "quickconnectdialog.h"
+#include "servergroupsettings.h"
+#include "serversettings.h"
 
 // include static variables
 Preferences KonversationApplication::preferences;
@@ -75,38 +76,26 @@ KonversationApplication::KonversationApplication()
   QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
 
   // open main window
-  mainWindow=new KonversationMainWindow();
+  mainWindow = new KonversationMainWindow();
   connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
   connect(mainWindow,SIGNAL (openPrefsDialog(Preferences::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
   connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
   connect(&preferences,SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
   connect(this, SIGNAL(prefsChanged()), mainWindow, SLOT(slotPrefsChanged()));
+  mainWindow->show();
+
+  if(preferences.getShowServerList())
+  {
+    mainWindow->openServerList();
+  }
 
   // handle autoconnect on startup
-  QValueList<int> list=preferences.getAutoConnectServerIDs();
-  // if there is at least one autoconnect server, start connecting right away
-  if(list.count())
-  {
-    for(unsigned int index=0;index<list.count();index++) connectToServer(list[index]);
-    // maybe the user wants to see the prefs dialog anyway
-    if(preferences.getShowServerList())
-    {
-      openPrefsDialog();
+  Konversation::ServerGroupList serverGroups = preferences.serverGroupList();
+
+  for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it) {
+    if((*it).autoConnectEnabled()) {
+      connectToServer((*it).id());
     }
-  }
-  // no autoconnect server, so show the prefs dialog (with exit functionality)
-  else
-  {
-    prefsDialog=new PrefsDialog(&preferences,true);
-
-    connect(prefsDialog,SIGNAL (connectToServer(int)),this,SLOT (connectToServer(int)) );
-    connect(prefsDialog,SIGNAL (cancelClicked()),this,SLOT (quitKonversation()) );
-    connect(prefsDialog,SIGNAL (prefsChanged()),this,SLOT (saveOptions()) );
-
-    prefsDialog->show();
-
-    connect(&preferences,SIGNAL (requestServerConnection(int)),this,SLOT (connectToAnotherServer(int)) );
-    connect(&preferences,SIGNAL (requestSaveOptions()),this,SLOT (saveOptions()) );
   }
 
   // prepare dcop interface
@@ -188,8 +177,12 @@ void KonversationApplication::connectToServer(int id)
 
 bool KonversationApplication::connectToAnotherServer(int id)
 {
-  ServerEntry* chosenServer=preferences.getServerEntryById(id);
-  Identity* identity=preferences.getIdentityByName(chosenServer->getIdentity());
+  Konversation::ServerGroupSettings serverGroup = preferences.serverGroupById(id);
+  Identity* identity = serverGroup.identity();
+  
+  if(!identity) {
+    return false;
+  }
 
   // sanity check for identity
   QString check;
@@ -210,7 +203,7 @@ bool KonversationApplication::connectToAnotherServer(int id)
   {
     KMessageBox::information(0,
                              i18n("<qt>Your identity \"%1\" is not set up correctly:<br>%2</qt>")
-                                  .arg(chosenServer->getIdentity())
+                                  .arg(identity->getName())
                                   .arg(check),i18n("Check Identity Settings")
                             );
     if(prefsDialog)
@@ -224,7 +217,7 @@ bool KonversationApplication::connectToAnotherServer(int id)
   // identity ok, carry on
 
   mainWindow->show();
-
+  /* FIXME Make this work again...
   // Check if a server window with same name and port is already open
   Server* newServer=serverList.first();
   while(newServer)
@@ -258,8 +251,8 @@ bool KonversationApplication::connectToAnotherServer(int id)
     newServer=serverList.next();
   } // endwhile
   // We came this far, so generate a new server
-
-  newServer=new Server(mainWindow,id);
+  */
+  Server* newServer = new Server(mainWindow,id);
 
   connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
   connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
@@ -550,16 +543,91 @@ void KonversationApplication::readOptions()
     }
   }
 
-  // Server List
+  // Check if there is old server list config
   config->setGroup("Server List");
 
-  int index=0;
-  // Remove all default entries if there is at least one Server in the preferences file
-  if(config->hasKey("Server0")) preferences.clearServerList();
-  // Read all servers
-  while(config->hasKey(QString("Server%1").arg(index)))
-  {
-    preferences.addServer(config->readEntry(QString("Server%1").arg(index++)));
+  if(config->hasKey(QString("Server0"))) {
+    int index=0;
+    Konversation::ServerGroupList serverGroups;
+
+    // Read all old server settings
+    while(config->hasKey(QString("Server%1").arg(index)))
+    {
+      QString serverStr = config->readEntry(QString("Server%1").arg(index++));
+
+      Konversation::ServerGroupSettings serverGroup;
+      QStringList tmp = QStringList::split(',', serverStr, true);
+      serverGroup.setName(tmp[1]);
+      serverGroup.setGroup(tmp[0]);
+      Konversation::ServerSettings server;
+      server.setServer(tmp[1]);
+      server.setPort(tmp[2].toInt());
+      server.setPassword(tmp[3]);
+      serverGroup.addServer(server);
+      serverGroup.setIdentity(preferences.getIdentityByName(tmp[7]));
+      serverGroup.setAutoConnectEnabled(tmp[6].toInt());
+      serverGroup.setConnectCommands(tmp[8]);
+
+      if(!tmp[4].isEmpty()) {
+        QStringList tmp2 = QStringList::split(" ", tmp[4], false);
+        QStringList tmp3 = QStringList::split(" ", tmp[5], true);
+        for(int i = 0; i < tmp3.count(); i++) {
+          Konversation::ChannelSettings channel;
+          channel.setName(tmp2[i]);
+          channel.setPassword(tmp3[i]);
+          serverGroup.addChannel(channel);
+        }
+      }
+
+      serverGroups.append(serverGroup);
+    }
+
+    preferences.setServerGroupList(serverGroups);
+  } else {
+    // Read the new server settings
+    Konversation::ServerGroupList serverGroups;
+    QStringList groups = config->groupList().grep(QRegExp("ServerGroup [0-9]+"));
+    QStringList::iterator it;
+    QStringList tmp1, tmp2;
+    QStringList::iterator it2;
+
+    for(it = groups.begin(); it != groups.end(); ++it) {
+      config->setGroup((*it));
+      Konversation::ServerGroupSettings serverGroup;
+      serverGroup.setName(config->readEntry("Name"));
+      serverGroup.setGroup(config->readEntry("Group"));
+      serverGroup.setIdentity(preferences.getIdentityByName(config->readEntry("Identity")));
+      serverGroup.setConnectCommands(config->readEntry("ConnectCommands"));
+      serverGroup.setAutoConnectEnabled(config->readBoolEntry("AutoConnect"));
+      tmp1 = config->readListEntry("ServerList");
+      tmp2 = config->readListEntry("AutoJoinChannels");
+
+      for(it2 = tmp1.begin(); it2 != tmp1.end(); ++it2) {
+        config->setGroup((*it2));
+        Konversation::ServerSettings server;
+        server.setServer(config->readEntry("Server"));
+        server.setPort(config->readNumEntry("Port"));
+        server.setPassword(config->readEntry("Password"));
+        server.setSSLEnabled(config->readBoolEntry("SSLEnabled"));
+        serverGroup.addServer(server);
+      }
+
+
+      for(it2 = tmp2.begin(); it2 != tmp2.end(); ++it2) {
+        config->setGroup((*it2));
+        Konversation::ChannelSettings channel;
+
+        if(!config->readEntry("Name").isEmpty()) {
+          channel.setName(config->readEntry("Name"));
+          channel.setPassword(config->readEntry("Password"));
+          serverGroup.addChannel(channel);
+        }
+      }
+
+      serverGroups.append(serverGroup);
+    }
+
+    preferences.setServerGroupList(serverGroups);
   }
 
   // Notify Settings and lists.  Must follow Server List.
@@ -569,7 +637,7 @@ void KonversationApplication::readOptions()
 //  QString notifyList=config->readEntry("NotifyList",QString::null);
 //  preferences.setNotifyList(QStringList::split(' ',notifyList));
   preferences.setOpenWatchedNicksAtStartup(config->readBoolEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup()));
-  index = 0;
+  int index = 0;
   QMap<QString, QStringList> notifyList;
   QMap<QString, QString> notifyGroups = config->entryMap("Notify Group Lists");
   if (!notifyGroups.empty())
@@ -588,12 +656,16 @@ void KonversationApplication::readOptions()
     {
       QStringList oldNotifyNicknameList = QStringList::split(" ", oldNotifyNicknames, false);
       // Build a list of unique server group names.
-      QPtrList<ServerEntry> serverEntries = preferences.getServerList();
+      Konversation::ServerGroupList serverGroups = preferences.serverGroupList();
       QStringList groupNames;
-      for(unsigned int index=0;index<serverEntries.count();index++)
+
+      for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it)
       {
-        QString name=serverEntries.at(index)->getGroupName();
-        if (!groupNames.contains(name)) groupNames.append(name);
+        QString name = (*it).name();
+
+        if (!groupNames.contains(name)) {
+          groupNames.append(name);
+        }
       }
       // Apply the old Notify List to all groups.
       for (QStringList::Iterator groupIt = groupNames.begin(); groupIt != groupNames.end(); ++groupIt)
@@ -872,21 +944,96 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->setGroup("Notify Group Lists");
   QMap<QString, QStringList> notifyList = preferences.getNotifyList();
   QMapConstIterator<QString, QStringList> groupItEnd = notifyList.constEnd();
+  
   for (QMapConstIterator<QString, QStringList> groupIt = notifyList.constBegin();
     groupIt != groupItEnd; ++groupIt)
+  {
     config->writeEntry(groupIt.key(), groupIt.data().join(" "));
+  }
+
+  // Remove the old servergroups from the config
+  QStringList groups = config->groupList().grep(QRegExp("ServerGroup [0-9]+"));
+  if(groups.count())
+  {
+    QStringList::iterator it;
+    for(it = groups.begin(); it != groups.end(); ++it) {
+      config->deleteGroup((*it));
+    }
+  }
+
+  // Remove the old servers from the config
+  groups = config->groupList().grep(QRegExp("Server [0-9]+"));
+  if(groups.count())
+  {
+    QStringList::iterator it;
+    for(it = groups.begin(); it != groups.end(); ++it) {
+      config->deleteGroup((*it));
+    }
+  }
+
+  // Remove the old channels from the config
+  groups = config->groupList().grep(QRegExp("Channel [0-9]+"));
+  if(groups.count())
+  {
+    QStringList::iterator it;
+    for(it = groups.begin(); it != groups.end(); ++it) {
+      config->deleteGroup((*it));
+    }
+  }
+
+  // Add the new servergroups to the config
+  Konversation::ServerGroupList serverGroupList = preferences.serverGroupList();
+  Konversation::ServerGroupList::iterator it;
+  int index = 0;
+  int index2 = 0;
+  int index3 = 0;
+  QString groupName;
+  QStringList servers;
+  Konversation::ServerList::iterator it2;
+  Konversation::ServerList serverlist;
+  Konversation::ChannelList channelList;
+  Konversation::ChannelList::iterator it3;
+  QStringList channels;
+
+  for(it = serverGroupList.begin(); it != serverGroupList.end(); ++it) {
+    serverlist = (*it).serverList();
+    servers.clear();
+
+    for(it2 = serverlist.begin(); it2 != serverlist.end(); ++it2) {
+      groupName = QString("Server %1").arg(index2);
+      servers.append(groupName);
+      config->setGroup(groupName);
+      config->writeEntry("Server", (*it2).server());
+      config->writeEntry("Port", (*it2).port());
+      config->writeEntry("Password", (*it2).password());
+      config->writeEntry("SSLEnabled", (*it2).SSLEnabled());
+      index2++;
+    }
+
+    channelList = (*it).channelList();
+    channels.clear();
+
+    for(it3 = channelList.begin(); it3 != channelList.end(); ++it3) {
+      groupName = QString("Channel %1").arg(index3);
+      channels.append(groupName);
+      config->setGroup(groupName);
+      config->writeEntry("Name", (*it3).name());
+      config->writeEntry("Password", (*it3).password());
+      index3++;
+    }
+
+    config->setGroup(QString("ServerGroup %1").arg(index));
+    config->writeEntry("Name", (*it).name());
+    config->writeEntry("Group", (*it).group());
+    config->writeEntry("Identity", (*it).identity()->getName());
+    config->writeEntry("ServerList", servers);
+    config->writeEntry("AutoJoinChannels", channels);
+    config->writeEntry("ConnectCommands", (*it).connectCommands());
+    config->writeEntry("AutoConnect", (*it).autoConnectEnabled());
+    index++;
+  }
 
   config->deleteGroup("Server List");
-  config->setGroup("Server List");
-
-  int index=0;
-  QString serverEntry=preferences.getServerByIndex(0);
-
-  while(!serverEntry.isEmpty())
-  {
-    config->writeEntry(QString("Server%1").arg(index),serverEntry);
-    serverEntry=preferences.getServerByIndex(++index);
-  }
 
   config->setGroup("Button List");
 
@@ -1092,9 +1239,8 @@ void KonversationApplication::openPrefsDialog()
 {
   if(prefsDialog==0)
   {
-    prefsDialog=new PrefsDialog(&preferences,false);
+    prefsDialog=new PrefsDialog(&preferences);
 
-    connect(prefsDialog,SIGNAL (connectToServer(int)),this,SLOT (connectToAnotherServer(int)) );
     connect(prefsDialog,SIGNAL (cancelClicked()),this,SLOT (closePrefsDialog()) );
     connect(prefsDialog,SIGNAL (prefsChanged()),this,SLOT (saveOptions()) );
 

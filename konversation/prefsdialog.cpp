@@ -23,15 +23,13 @@
 
 #include "prefsdialog.h"
 
-#include "serverlistitem.h"
-#include "editserverdialog.h"
 #include "konversationapplication.h"
 #include "prefspagebehaviour.h"
 #include "prefspagechatwinbehavior.h"
 #include "prefspagechatwinappearance.h"
 #include "prefspagecolorsappearance.h"
 
-PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
+PrefsDialog::PrefsDialog(Preferences* preferences) :
              KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
                           KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                           KDialogBase::Ok,0,"edit_prefs",false,true)
@@ -41,7 +39,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   
   lastPane = 0;
 
-  serverListPane = addPage(i18n("Server List"),QString::null,SmallIcon("network_local" ));
   identityPane = addPage(i18n("Identity"),QString::null,SmallIcon("identity"));
 
   setFolderIcon(QStringList::split(',', i18n("Appearance")), SmallIcon("looknfeel"));
@@ -80,7 +77,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   // QFrame* scriptsPane        =addPage(i18n("Scripting"));
 
   // Add pages to preferences dialog
-  serverListPage=new PrefsPageServerList(serverListPane,preferences);
   identityPage = new PrefsPageIdentity(identityPane, preferences); // FIXME: see class::applyPreferences()
 
   PrefsPageChatWinAppearance* chatWinAppearancePage = new PrefsPageChatWinAppearance(chatWinAppearancePane, preferences);
@@ -106,16 +102,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Keep changes made to configuration and close the window")));
   setButtonApply(KGuiItem(i18n("&Apply"),"apply",i18n("Keep changes made to configuration")));
-
-  if(noServer)
-  {
-    enableButtonOK(false);
-    setButtonCancel(KGuiItem(i18n("&Quit"),"exit",i18n("Quits application")));
-  }
-  else
-  {
-    setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Discards all changes made")));
-  }
+  setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Discards all changes made")));
 
   // connect standard signals and slots
   connect(this, SIGNAL(applyPreferences()), identityPage, SLOT(applyPreferences()));
@@ -138,9 +125,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   connect(this, SIGNAL(applyPreferences()), dccSettingsPage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), dialogsPage, SLOT(applyPreferences()));
 
-  // connect all individual signals and slots
-  connect(serverListPage, SIGNAL(connectToServer(int)), this, SLOT(connectRequest(int)));
-
 // TODO: Uncomment this again when it's ready to go
 // but ... is this really the way it's meant to be done?
 // scriptsPage should use applyPreferences()
@@ -151,13 +135,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
 PrefsDialog::~PrefsDialog()
 {
-}
-
-void PrefsDialog::connectRequest(int id)
-{
-  // Save changes before trying to connect
-  slotApply();
-  connectToServer(id);
 }
 
 void PrefsDialog::slotOk()
@@ -185,13 +162,12 @@ void PrefsDialog::slotCancel()
 
 void PrefsDialog::setPreferences(Preferences* newPrefs)
 {
-  preferences=newPrefs;
+  preferences = newPrefs;
 }
 
 void PrefsDialog::openPage(Preferences::Pages page)
 {
-  if     (page==Preferences::ServerListPage) showPage(pageIndex(serverListPane));
-  else if(page==Preferences::NotifyPage)     showPage(pageIndex(notifyPane));
+  if(page==Preferences::NotifyPage)     showPage(pageIndex(notifyPane));
   else if(page==Preferences::IdentityPage)   showPage(pageIndex(identityPane));
 }
 

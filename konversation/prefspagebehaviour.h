@@ -35,6 +35,7 @@ class PrefsPageBehaviour : public PrefsPage
     QCheckBox* trayIconCheck;
     QCheckBox* trayNotifyCheck;
     QCheckBox* rawLogCheck;
+    QCheckBox* showServerList;
     QCheckBox* useCustomBrowserCheck;
     KLineEdit* browserCmdInput;
     KLineEdit* commandCharInput;

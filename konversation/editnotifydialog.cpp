@@ -26,7 +26,7 @@
 // Konversation includes.
 #include "editnotifydialog.h"
 #include "konversationapplication.h"
-#include "serverentry.h"
+#include "servergroupsettings.h"
 
 EditNotifyDialog::EditNotifyDialog(QWidget* parent,
                                    QString group,
@@ -60,13 +60,18 @@ EditNotifyDialog::EditNotifyDialog(QWidget* parent,
   nicknameLabel->setBuddy(m_nicknameInput);
 
   // Build a list of unique server group names.
-  QPtrList<ServerEntry> serverEntries=KonversationApplication::preferences.getServerList();
+  Konversation::ServerGroupList serverGroups = KonversationApplication::preferences.serverGroupList();
   QStringList groupNames;
-  for(unsigned int index=0;index<serverEntries.count();index++)
+
+  for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it)
   {
-    QString name=serverEntries.at(index)->getGroupName();
-    if (!groupNames.contains(name)) groupNames.append(name);
+    QString name = (*it).name();
+
+    if (!groupNames.contains(name)) {
+      groupNames.append(name);
+    }
   }
+
   groupNames.sort();
   // Add group names to group combobox and select the one corresponding to argument.
   for (QStringList::Iterator it = groupNames.begin(); it != groupNames.end(); ++it)

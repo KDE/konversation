@@ -314,21 +314,6 @@ void KonvPrefsDCOP::setBeep(bool state)
   static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
-void KonvPrefsDCOP::clearServerList()
-{
-  KonversationApplication::preferences.clearServerList();
-}
-
-void KonvPrefsDCOP::changeServerProperty(int id,int property,const QString& value)
-{
-  KonversationApplication::preferences.changeServerProperty(id, property, value);
-}
-
-void KonvPrefsDCOP::updateServer(int id,const QString& newDefinition)
-{
-  kdDebug() << "KonvPrefsDCOP::updateServer(" << id << "," << newDefinition << ")" << endl;
-}
-
 void KonvPrefsDCOP::setLog(bool state)
 {
   KonversationApplication::preferences.setLog(state);
