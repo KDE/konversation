@@ -944,11 +944,19 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           }
           break;
         }
-      case RPL_MOTDSTART:
-        {
-          server->appendStatusMessage(i18n("MOTD"),i18n("Message of the day:"));
-          break;
-        }
+    case ERR_ERRONEUSNICKNAME:
+    {
+        // Happens in Dalnet when NickEnforcer is currently holding a nick
+        QString newNick=server->getNextNickname();
+        server->appendStatusMessage(i18n( "Nick" ), i18n("Erroneus nickname. Trying %1." ).arg(newNick)) ;
+        server->queue( "NICK "+newNick );
+        break;
+    }
+    case RPL_MOTDSTART:
+    {
+        server->appendStatusMessage(i18n("MOTD"),i18n("Message of the day:"));
+        break;
+    }
       case RPL_MOTD:
         {
           server->appendStatusMessage(i18n("MOTD"),trailing);
