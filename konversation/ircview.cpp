@@ -22,7 +22,7 @@
 #include <qbrush.h>
 #include <qpopupmenu.h>
 
-#include <kdebug.h>
+#include "konvidebug.h"
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kurl.h>
@@ -220,8 +220,24 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
   filteredLine.replace(QRegExp("<"),"&lt;");
   // Replace all > with &gt;
   filteredLine.replace(QRegExp(">"),"&gt;");
-  // Replace all 0x03 without color number (reset color) with \0x031,0
-  filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0031,0\\1");
+  // Replace all 0x03 without color number (reset color) with \0x031,0 or \0x030,1, depending on which one fits
+  // with the users chosen colours, based on the relative brightness. TODO defaultColor needs explanation
+  bool inverted=0; // TODO this flag should be stored somewhere
+  {
+    QColor fg("#"+KonversationApplication::preferences.getColor("ChannelMessage")),
+        bg=("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
+    int h=0,s=0,fv=0,bv=0;
+    fg.getHsv(&h,&s,&fv);
+    bg.getHsv(&h,&s,&bv);
+    if (bv<=fv)
+      inverted=TRUE;
+  }
+  
+  if (inverted)
+    filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0030,1\\1");
+  else
+    filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0031,0\\1");
+  
   // Hack to allow for whois info hostmask info to not be parsed as email
   filteredLine.replace(QRegExp("&amp;#64;"),"&#64;");
 
