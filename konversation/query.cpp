@@ -20,6 +20,7 @@
 #include <klocale.h>
 #include <kstddirs.h>
 #include <kdebug.h>
+#include <kmessagebox.h>
 
 #include "query.h"
 #include "server.h"
@@ -202,7 +203,17 @@ void Query::popup(int id)
   if(id==POPUP_WHOIS)
     sendQueryText(KonversationApplication::preferences.getCommandChar()+"WHOIS "+getName());
   else if(id==POPUP_IGNORE)
+  {
     sendQueryText(KonversationApplication::preferences.getCommandChar()+"IGNORE -ALL "+getName()+"!*");
+    int rc=KMessageBox::questionYesNo(this,
+                                      i18n("Do you want to close this query after ignoring this nickname?"),
+                                      i18n("Close This Query"),
+                                      KStdGuiItem::yes(),
+                                      KStdGuiItem::no(),
+                                      "CloseQueryAfterIgnore");
+
+    if(rc==KStdGuiItem::Yes) closeYourself();
+  }
   else
     kdDebug() << "Query::popup(): Popup id " << id << " does not belong to me!" << endl;
 }

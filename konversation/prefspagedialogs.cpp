@@ -24,6 +24,7 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
                   PrefsPage(newParent,newPreferences)
 {
   QStringList dialogDefinitions;
+
   dialogDefinitions.append("HideMenuBarWarning "         +i18n("Warning on hiding the main window menu"));
   dialogDefinitions.append("LargePaste "                 +i18n("Warning on pasting large portions of text"));
   dialogDefinitions.append("ResumeTransfer "             +i18n("Question on what to do on DCC resume"));
@@ -31,6 +32,7 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
   dialogDefinitions.append("ChannelListWarning "         +i18n("Warning on high traffic with channel list"));
   dialogDefinitions.append("ChannelListNoServerSelected "+i18n("The channel list can only be opened from server-aware tabs"));
   dialogDefinitions.append("QuitServerTab "              +i18n("Quit server when you hit the tab's close button"));
+  dialogDefinitions.append("CloseQueryAfterIgnore "      +i18n("Question on closing queries after ignoring the nickname"));
 
   QVBoxLayout* dialogsLayout=new QVBoxLayout(parentFrame,marginHint(),spacingHint(),"dialogs_layout");
 
