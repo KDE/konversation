@@ -30,14 +30,14 @@ foreach $station (@stations) {
   chomp $detail;
   
   foreach $det (split(/\n/,$detail)) {
-    chomp $det;
-    if( $i==0 ) {
-      $details = $det;
-      $i = 1;
-    }
-    else {
-      $details = $details.", ".$det;
-    }
+      chomp $det;
+      if( $i==0 ) {
+	  $details = $det;
+	  $i = 1;
+      }
+      else {
+	  $details = $details.", ".$det;
+      }
   }
 
   # Fix detail2
@@ -65,7 +65,6 @@ foreach $station (@stations) {
   chomp $wind;
 
   if ( $details2 =~ /(\S)+/ ) {
-      print "Inside\n";
       if( $details =~ /(\S)+/ ) {
 	  $details = $details.", ".$details2;
       }
