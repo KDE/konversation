@@ -20,7 +20,7 @@
       <Action name="insert_character" />
     </Menu>
     <Menu name="settings">
-      <Action name="identities_dialog" append="configure_merge" />
+      <Action name="identities_dialog" append="save_merge" />
     </Menu>
     <Menu name="windows" append="settings_merge">
       <Text>&amp;Window</Text>
