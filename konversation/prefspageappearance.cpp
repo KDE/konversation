@@ -33,8 +33,8 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   QGridLayout* appearanceLayout=new QGridLayout(parentFrame,3,3,marginHint(),spacingHint());
 
   // Font settings
-  QLabel* textFontLabel=new QLabel(i18n("Text Font:"),parentFrame);
-  QLabel* listFontLabel=new QLabel(i18n("Nickname List Font:"),parentFrame);
+  QLabel* textFontLabel=new QLabel(i18n("Text font:"),parentFrame);
+  QLabel* listFontLabel=new QLabel(i18n("Nickname list font:"),parentFrame);
 
   textPreviewLabel=new QLabel(parentFrame);
   listPreviewLabel=new QLabel(parentFrame);
@@ -70,8 +70,6 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   {
     if(encodings[index].find(actualEncoding)!=-1)
     {
-      kdDebug() << actualEncoding << endl;
-      kdDebug() << encodings[index] << endl;
       codecList->setCurrentItem(index);
       break;
     }
@@ -83,7 +81,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   QHBox* timestampBox=new QHBox(parentFrame);
   timestampBox->setSpacing(spacingHint());
 
-  doTimestamping=new QCheckBox(i18n("Show Timestamps"),timestampBox,"show_timestamps_checkbox");
+  doTimestamping=new QCheckBox(i18n("Show timestamps"),timestampBox,"show_timestamps_checkbox");
 
   formatLabel=new QLabel(i18n("Format:"),timestampBox);
   formatLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -102,10 +100,10 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   QHBox* showButtonsBox=new QHBox(parentFrame);
 
-  showQuickButtons=new QCheckBox(i18n("Show Quick Buttons"),showButtonsBox,"show_quickbuttons_checkbox");
+  showQuickButtons=new QCheckBox(i18n("Show quick buttons"),showButtonsBox,"show_quickbuttons_checkbox");
   showQuickButtons->setChecked(preferences->getShowQuickButtons());
 
-  showModeButtons=new QCheckBox(i18n("Show Channel Mode Buttons"),showButtonsBox,"show_modebuttons_checkbox");
+  showModeButtons=new QCheckBox(i18n("Show channel mode buttons"),showButtonsBox,"show_modebuttons_checkbox");
   showModeButtons->setChecked(preferences->getShowModeButtons());
 
   useSpacingCheck=new QCheckBox(i18n("Use custom widget spacing"),parentFrame,"use_spacing_check");
@@ -220,7 +218,6 @@ void PrefsPageAppearance::timestampingChanged(int state)
 
 void PrefsPageAppearance::formatChanged(const QString& newFormat)
 {
-  kdDebug() << newFormat << endl;
   preferences->setTimestampFormat(newFormat);
 }
 
@@ -244,8 +241,6 @@ void PrefsPageAppearance::encodingChanged(int newEncodingIndex)
   if(newEncodingIndex)
   {
     QString newEncoding=codecList->text(newEncodingIndex);
-    
-    kdDebug() << newEncoding << endl;
     
     if(newEncoding.startsWith("utf 16"))
       preferences->setCodec(QString::null);

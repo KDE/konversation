@@ -310,19 +310,15 @@ QPtrList<Identity> Preferences::getIdentityList() { return identityList; }
 
 const Identity * Preferences::getIdentityByName(const QString& name)
 {
-  kdDebug() << "Requested Identity: " << name << endl;
-
   QPtrList<Identity> identities=getIdentityList();
   Identity* identity=identities.first();
   while(identity)
   {
-    kdDebug() << "Trying " << identity->getName() << endl;
     if(identity->getName()==name) return identity;
     identity=identities.next();
   }
   // no matching identity found, return default identity
   identity=identities.first();
-  kdDebug() << "Default Identity returned" << endl;
   return identity;
 }
 

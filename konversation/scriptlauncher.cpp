@@ -47,8 +47,6 @@ void ScriptLauncher::setTargetName(const QString& newName)
 
 void ScriptLauncher::launchScript(const QString &parameter)
 {
-  kdDebug() << target << endl;
-
   KStandardDirs kstddir;
   QString scriptPath(kstddir.saveLocation("data","konversation/scripts"));
   KProcess process;

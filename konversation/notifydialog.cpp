@@ -26,7 +26,7 @@
 #include "notifydialog.h"
 
 NotifyDialog::NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int delay):
-               KDialogBase(0,"notifydialog",false,i18n("Edit Notify List"),
+               KDialogBase(0,"notifydialog",false,i18n("Edit notify list"),
                            KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                            KDialogBase::Ok,true)
 {
@@ -44,7 +44,7 @@ NotifyDialog::NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int 
 
   useNotifyCheck=new QCheckBox(i18n("Use notify"),delayBox,"use_notify_checkbox");
   useNotifyCheck->setChecked(use);
-  new QLabel(i18n("Notify Interval:"),delayBox,"interval_label");
+  new QLabel(i18n("Notify interval:"),delayBox,"interval_label");
   notifyDelaySpin=new QSpinBox(5,1000,1,delayBox,"delay_spin");
   notifyDelaySpin->setValue(delay);
   notifyDelaySpin->setSuffix(i18n(" seconds"));

@@ -73,8 +73,8 @@ KonversationApplication::KonversationApplication()
   {
     connect(dcopObject,SIGNAL (dcopSay(const QString&,const QString&,const QString&)),
                     this,SLOT (dcopSay(const QString&,const QString&,const QString&)) );
-    connect(dcopObject,SIGNAL (dcopError(const QString&)),
-                    this,SLOT (dcopError(const QString&)) );
+    connect(dcopObject,SIGNAL (dcopInfo(const QString&)),
+                    this,SLOT (dcopInfo(const QString&)) );
   }
 }
 
@@ -87,14 +87,11 @@ KonversationApplication::~KonversationApplication()
 
 void KonversationApplication::dcopSay(const QString& server,const QString& target,const QString& command)
 {
-  kdDebug() << server << target << command << endl;
-
   Server* lookServer=serverList.first();
   while(lookServer)
   {
     if(lookServer->getServerName()==server)
     {
-      kdDebug() << "Server found: " << server << endl;
       lookServer->dcopSay(target,command);
       // break out of while loop
       lookServer=0;
@@ -103,11 +100,11 @@ void KonversationApplication::dcopSay(const QString& server,const QString& targe
   }
 }
 
-void KonversationApplication::dcopError(const QString& string)
+void KonversationApplication::dcopInfo(const QString& string)
 {
   Server* lookServer=serverList.first();
   if(lookServer)
-    lookServer->dcopError(string);
+    lookServer->dcopInfo(string);
 }
 
 void KonversationApplication::connectToServer(int id)
@@ -135,8 +132,6 @@ void KonversationApplication::connectToAnotherServer(int id)
     if(chosenServer->getServerName()==newServer->getServerName() &&
        chosenServer->getPort()==newServer->getPort())
     {
-      kdDebug() << "Using existing Server " << id << endl;
-
       QString autoJoinChannel=chosenServer->getChannelName();
 
       if(newServer->isConnected())
@@ -163,8 +158,6 @@ void KonversationApplication::connectToAnotherServer(int id)
   } // endwhile
   // We came this far, so generate a new server
 
-  kdDebug() << "Creating new Server " << id << endl;
-
   newServer=new Server(id);
   serverList.append(newServer);
 
@@ -179,13 +172,8 @@ void KonversationApplication::removeServer(Server* server)
   Server* lookServer=serverList.first();
   while(lookServer)
   {
-    if(lookServer==server)
-    {
-      serverList.remove();
-      kdDebug() << "server removed." << endl;
-    }
-    else
-      lookServer=serverList.next();
+    if(lookServer==server) serverList.remove();
+    else lookServer=serverList.next();
   }
 }
 
@@ -643,7 +631,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
     }
   }
 }
-
 
 void KonversationApplication::storeURL(const QString &url)
 {

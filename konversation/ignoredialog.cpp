@@ -28,7 +28,7 @@
 #include "ignoredialog.h"
 
 IgnoreDialog::IgnoreDialog(QPtrList<Ignore> newIgnoreList,QSize newSize):
-               KDialogBase(0,"ignoredialog",false,i18n("Edit Ignore List"),
+               KDialogBase(0,"ignoredialog",false,i18n("Edit ignore list"),
                            KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                            KDialogBase::Ok,true)
 {
@@ -44,7 +44,7 @@ IgnoreDialog::IgnoreDialog(QPtrList<Ignore> newIgnoreList,QSize newSize):
   listBox->setSpacing(spacingHint());
   ignoreListView=new KListView(listBox);
 
-  ignoreListView->addColumn(i18n("Ignore Pattern"));
+  ignoreListView->addColumn(i18n("Ignore pattern"));
   ignoreListView->addColumn(i18n("Channels"));
   ignoreListView->addColumn(i18n("Queries"));
   ignoreListView->addColumn(i18n("Notices"));
@@ -155,7 +155,7 @@ QPtrList<Ignore> IgnoreDialog::getIgnoreList()
 {
   QPtrList<Ignore> newList;
 
-  IgnoreListViewItem* item=(IgnoreListViewItem *) ignoreListView->firstChild();
+  IgnoreListViewItem* item=static_cast<IgnoreListViewItem*>(ignoreListView->firstChild());
   while(item)
   {
     Ignore* newItem=new Ignore(item->text(0),item->getFlags());
@@ -168,14 +168,14 @@ QPtrList<Ignore> IgnoreDialog::getIgnoreList()
 
 void IgnoreDialog::checked(int flag,bool active)
 {
-  IgnoreListViewItem* i=(IgnoreListViewItem*) ignoreListView->selectedItem();
+  IgnoreListViewItem* i=static_cast<IgnoreListViewItem*>(ignoreListView->selectedItem());
   if(i) i->setFlag(flag,active);
 }
 
 void IgnoreDialog::select(QListViewItem* item)
 {
   /* FIXME: Cast to IgnoreListViewItem, maybe derive from KListView some day */
-  IgnoreListViewItem* selectedItem=(IgnoreListViewItem*) item;
+  IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(item);
 
   if(item)
   {

@@ -31,7 +31,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   // Add a Layout to the General Settings pane
   QGridLayout* generalSettingsLayout=new QGridLayout(parentFrame,5,2,marginHint(),spacingHint(),"general_settings_layout");
 
-  QLabel* commandCharLabel=new QLabel(i18n("Command Char:"),parentFrame);
+  QLabel* commandCharLabel=new QLabel(i18n("Command char:"),parentFrame);
   KLineEdit* commandCharInput=new KLineEdit(preferences->getCommandChar(),parentFrame);
   commandCharInput->setMaxLength(1);
 
@@ -61,9 +61,9 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   middleLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   KLineEdit* suffixMiddleInput=new KLineEdit(preferences->getNickCompleteSuffixMiddle(),suffixEditBox);
 
-  QCheckBox* autoReconnectCheck=new QCheckBox(i18n("Auto Reconnect"),parentFrame,"auto_reconnect_check");
-  QCheckBox* autoRejoinCheck=new QCheckBox(i18n("Auto Rejoin"),parentFrame,"auto_rejoin_check");
-  QCheckBox* blinkingTabsCheck=new QCheckBox(i18n("Blinking Tabs"),parentFrame,"blinking_tabs_check");
+  QCheckBox* autoReconnectCheck=new QCheckBox(i18n("Auto reconnect"),parentFrame,"auto_reconnect_check");
+  QCheckBox* autoRejoinCheck=new QCheckBox(i18n("Auto rejoin"),parentFrame,"auto_rejoin_check");
+  QCheckBox* blinkingTabsCheck=new QCheckBox(i18n("Blinking tabs"),parentFrame,"blinking_tabs_check");
   QCheckBox* bringToFrontCheck=new QCheckBox(i18n("Bring new tabs to front"),parentFrame,"bring_to_front_check");
   QCheckBox* fixedMOTDCheck=new QCheckBox(i18n("Show MOTD in fixed font"),parentFrame,"fixed_motd_check");
   QCheckBox* beepCheck=new QCheckBox(i18n("Beep on incoming ASCII BEL"),parentFrame,"beep_check");

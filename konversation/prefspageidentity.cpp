@@ -53,10 +53,10 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   password=new KLineEdit(parentFrame);
   password->setEchoMode(QLineEdit::Password);
   
-  QLabel* partLabel=new QLabel(i18n("Part Reason:"),parentFrame);
+  QLabel* partLabel=new QLabel(i18n("Part reason:"),parentFrame);
   partInput=new KLineEdit(parentFrame);
 
-  QLabel* kickLabel=new QLabel(i18n("Kick Reason:"),parentFrame);
+  QLabel* kickLabel=new QLabel(i18n("Kick reason:"),parentFrame);
   kickInput=new KLineEdit(parentFrame);
 
   showAwayMessageCheck=new QCheckBox(i18n("Show away messages"),parentFrame,"away_message_check");

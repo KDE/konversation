@@ -68,7 +68,7 @@ class KonversationApplication : public KApplication
   protected slots:
     void removeServer(Server* server);
     void dcopSay(const QString& server,const QString& target,const QString& command);
-    void dcopError(const QString& string);
+    void dcopInfo(const QString& string);
 
   protected:
     QPtrList<Server> serverList;

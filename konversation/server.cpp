@@ -452,7 +452,7 @@ void Server::dcopSay(const QString& target,const QString& command)
   }
 }
 
-void Server::dcopError(const QString& string)
+void Server::dcopInfo(const QString& string)
 {
   appendStatusMessage(i18n("DCOP"),string);
 }

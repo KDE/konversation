@@ -22,7 +22,7 @@
 #include "nickchangedialog.h"
 
 NickChangeDialog::NickChangeDialog(QWidget* parent,QString currentNick,const QStringList& nickList,QSize size):
-                  KDialogBase(parent,"nickchangedialog",false,i18n("Change Nickname"),
+                  KDialogBase(parent,"nickchangedialog",false,i18n("Change nickname"),
                               KDialogBase::Ok | KDialogBase::Cancel,
                               KDialogBase::Ok,true)
 {
@@ -35,7 +35,7 @@ NickChangeDialog::NickChangeDialog(QWidget* parent,QString currentNick,const QSt
   QHBoxLayout* dialogLayout=new QHBoxLayout(page);
   dialogLayout->setSpacing(spacingHint());
   /* Add the nickname input widget */
-  nicknameInput=new QComboBox(true,page,"nicknameinput");
+  nicknameInput=new QComboBox(true,page,"nickname_input");
   
   nicknameInput->insertStringList(nickList);
   nicknameInput->insertItem(currentNick,0);

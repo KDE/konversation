@@ -37,10 +37,22 @@ void KonvDCOP::say(const QString& server,const QString& target,const QString& co
   emit dcopSay(server,target,command);
 }
 
+void KonvDCOP::info(const QString& string)
+{
+  kdDebug() << "KonvDCOP::info()" << endl;
+  emit dcopInfo(string);
+}
+
+void KonvDCOP::debug(const QString& string)
+{
+  kdDebug() << "KonvDCOP::debug()" << endl;
+  emit dcopInfo(QString("Debug: %1").arg(string));
+}
+
 void KonvDCOP::error(const QString& string)
 {
   kdDebug() << "KonvDCOP::error()" << endl;
-  emit dcopError(string);
+  emit dcopInfo(QString("Error: %1").arg(string));
 }
 
 void KonvDCOP::registerEventHook (const QString &type, const QString &criteria, const QString &app, const QString &object, const QString &signal)

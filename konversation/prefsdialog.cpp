@@ -34,19 +34,19 @@
 #include "konversationapplication.h"
 
 PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
-             KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
+             KDialogBase (KDialogBase::TreeList,i18n("Edit preferences"),
                           KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                           KDialogBase::Ok,0,"edit_prefs",false,true)
 {
   kdDebug() << "PrefsDialog::PrefsDialog()" << endl;
   setPreferences(preferences);
 
-  QFrame* serverListPane     =addPage(i18n("Server List"));
-  QFrame* generalSettingsPane=addPage(i18n("General Settings"));
+  QFrame* serverListPane     =addPage(i18n("Server list"));
+  QFrame* generalSettingsPane=addPage(i18n("General settings"));
   QFrame* identityPane       =addPage(i18n("Identity"));
   QFrame* appearancePane     =addPage(i18n("Appearance"));
-  QFrame* logSettingsPane    =addPage(i18n("Log Settings"));
-  QFrame* dccSettingsPane    =addPage(i18n("DCC Settings"));
+  QFrame* logSettingsPane    =addPage(i18n("Log settings"));
+  QFrame* dccSettingsPane    =addPage(i18n("DCC settings"));
 // TODO: Uncomment this again when it's ready to go
 //  QFrame* scriptsPane        =addPage(i18n("Scripting"));
 
@@ -73,7 +73,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   if(noServer)
   {
     enableButtonOK(false);
-    setButtonCancelText(i18n("Quit"),i18n("Quits Application"));
+    setButtonCancelText(i18n("Quit"),i18n("Quits application"));
   }
   else
   {

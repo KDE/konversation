@@ -22,7 +22,7 @@ class KonvDCOP : public QObject, virtual public KonvIface
 
   signals:
     void dcopSay(const QString& server,const QString& target,const QString& command);
-    void dcopError(const QString& string);
+    void dcopInfo(const QString& string);
 
   public slots:
     void registerEventHook (const QString &type, const QString &criteria, const QString &app, const QString &object, const QString &signal);
@@ -30,6 +30,8 @@ class KonvDCOP : public QObject, virtual public KonvIface
 
     void raw(const QString& server,const QString& command);
     void say(const QString& server,const QString& target,const QString& command);
+    void info(const QString& string);
+    void debug(const QString& string);
     void error(const QString& string);
 };
 

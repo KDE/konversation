@@ -88,7 +88,7 @@ class Server : public QObject
     void appendStatusMessage(const char* type,const char* message);
 
     void dcopSay(const QString& target,const QString& command);
-    void dcopError(const QString& string);
+    void dcopInfo(const QString& string);
     void ctcpReply(const QString& receiver, const QString& text);
 
     void setChannelTopic(const QString& channel, const QString& topic);

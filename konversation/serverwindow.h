@@ -75,7 +75,6 @@ class ServerWindow : public KMainWindow
     DccPanel* getDccPanel();
 
     void setServer(Server* server);
-    Server* getServer();
     void setIdentity(const Identity *identity);
     bool isFrontView(const ChatWindow* view);
 
@@ -98,6 +97,8 @@ class ServerWindow : public KMainWindow
     void tooLongLag(int msec);
 
   protected slots:
+    Server* getServer();
+    
     void addStatusView();
     void nextTab();
     void previousTab();
@@ -172,7 +173,7 @@ class ServerWindow : public KMainWindow
     DccPanel* dccPanel; // the adress of the dcc panel
     bool dccPanelOpen;  // to track if a dcc panel is already open
 
-    Server* server;
+    Server* server_;
     KToggleAction* showMenuBarAction;
     KToggleAction* showToolBarAction;
     KToggleAction* showStatusBarAction;

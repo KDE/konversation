@@ -25,7 +25,7 @@
 #include "quickbuttonsdialog.h"
 
 QuickButtonsDialog::QuickButtonsDialog(QStringList buttonList,QSize size):
-                    KDialogBase(0,"quickbuttonsdialog",false,i18n("Edit Quick Buttons"),
+                    KDialogBase(0,"quickbuttonsdialog",false,i18n("Edit quick buttons"),
                                 KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                                 KDialogBase::Ok,true)
 {
@@ -40,8 +40,8 @@ QuickButtonsDialog::QuickButtonsDialog(QStringList buttonList,QSize size):
   // Set up the button list
   buttonListView=new KListView(page);
 
-  buttonListView->addColumn(i18n("Button Name"));
-  buttonListView->addColumn(i18n("Button Action"));
+  buttonListView->addColumn(i18n("Button name"));
+  buttonListView->addColumn(i18n("Button action"));
 
   buttonListView->setAllColumnsShowFocus(true);
   buttonListView->setItemsRenameable(true);

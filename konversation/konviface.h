@@ -15,6 +15,8 @@ class KonvIface : virtual public DCOPObject
   k_dcop:
     virtual void raw(const QString& server,const QString& command) = 0;
     virtual void say(const QString& server,const QString& target,const QString& command) = 0;
+    virtual void info(const QString& string) = 0;
+    virtual void debug(const QString& string) = 0;
     virtual void error(const QString& string) = 0;
     virtual void registerEventHook (const QString &type, const QString &criteria, const QString &app, const QString &object, const QString &signal) = 0;
     virtual void unregisterEventHook (int id) = 0;

@@ -24,7 +24,7 @@
 QString DccRecipientDialog::selectedNickname;  // static
 
 DccRecipientDialog::DccRecipientDialog(QWidget* parent,QStringList list,QSize size) :
-                    KDialogBase(parent,"dcc_recipient_dialog",true,i18n("Select Recipient"),
+                    KDialogBase(parent,"dcc_recipient_dialog",true,i18n("Select recipient"),
                     KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
 {
   kdDebug() << "DccRecipientDialog::DccRecipientDialog()" << endl;

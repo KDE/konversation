@@ -152,15 +152,15 @@ void ServerWindow::setServer(Server* newServer)
     nicksOnlineWindow=0;
   }
 
-  server=newServer;
+  server_=newServer;
 
-  connect(this,SIGNAL (closeChannel(const QString&)),server,SLOT (closeChannel(const QString&)));
-  connect(this,SIGNAL (closeQuery(const QString&)),server,SLOT (closeQuery(const QString&)));
+  connect(this,SIGNAL (closeChannel(const QString&)),getServer(),SLOT (closeChannel(const QString&)));
+  connect(this,SIGNAL (closeQuery(const QString&)),getServer(),SLOT (closeQuery(const QString&)));
 }
 
 Server* ServerWindow::getServer()
 {
-  return server;
+  return server_;
 }
 
 void ServerWindow::setIdentity(const Identity *identity)
@@ -225,7 +225,7 @@ void ServerWindow::closeTab(QWidget* viewToClose)
   {
     int result= KMessageBox::warningYesNo(
                   this,
-                  i18n("Do you really want to disconnect from %1?").arg(server->getIrcName()),
+                  i18n("Do you really want to disconnect from %1?").arg(getServer()->getIrcName()),
                   i18n("Quit server"),
                   KStdGuiItem::yes(),
                   KStdGuiItem::no(),
@@ -233,8 +233,8 @@ void ServerWindow::closeTab(QWidget* viewToClose)
 
     if(result==KMessageBox::Yes)
     {
-      QString command=filter.parse(server->getNickname(),KonversationApplication::preferences.getCommandChar()+"quit",QString::null);
-      server->queue(filter.getServerOutput());
+      QString command=filter.parse(getServer()->getNickname(),KonversationApplication::preferences.getCommandChar()+"quit",QString::null);
+      getServer()->queue(filter.getServerOutput());
     }
   }
   else if(viewType==ChatWindow::Channel)  emit closeChannel(viewName);
@@ -350,7 +350,7 @@ void ServerWindow::changedView(QWidget* view)
 {
   frontView=0;
   
-  ChatWindow* pane=(ChatWindow*) view;
+  ChatWindow* pane=static_cast<ChatWindow*>(view);
   // Make sure that only text-capable views get to be the frontView
   if(pane->getType()!=ChatWindow::DccPanel &&
      pane->getType()!=ChatWindow::RawLog) frontView=pane;
@@ -395,12 +395,12 @@ void ServerWindow::saveOptions()
 bool ServerWindow::queryExit()
 {
   kdDebug() << "ServerWindow::queryExit()" << endl;
-  QString command=filter.parse(server->getNickname(),KonversationApplication::preferences.getCommandChar()+"quit",QString::null);
-  server->queue(filter.getServerOutput());
+  QString command=filter.parse(getServer()->getNickname(),KonversationApplication::preferences.getCommandChar()+"quit",QString::null);
+  getServer()->queue(filter.getServerOutput());
 
   saveOptions();
 
-  server->setServerWindow(0);
+  getServer()->setServerWindow(0);
   return true;
 }
 
@@ -453,7 +453,7 @@ void ServerWindow::applyButtons(QStringList newButtonList)
 {
   KonversationApplication::preferences.setButtonList(newButtonList);
   emit prefsChanged();
-  server->updateChannelQuickButtons(newButtonList);
+  getServer()->updateChannelQuickButtons(newButtonList);
 }
 
 void ServerWindow::closeButtons(QSize newButtonsSize)
@@ -513,7 +513,7 @@ void ServerWindow::applyNotify(QStringList newList,bool use,int delay)
   KonversationApplication::preferences.setUseNotify(use);
 
   // Restart notify timer if desired
-  if(use) server->startNotifyTimer();
+  if(use) getServer()->startNotifyTimer();
 
   emit prefsChanged();
 }
@@ -535,7 +535,7 @@ void ServerWindow::openNicksOnlineWindow()
     connect(nicksOnlineWindow,SIGNAL (editClicked()),this,SLOT (openNotify()) );
     connect(nicksOnlineWindow,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT (notifyAction(QListViewItem*)) );
     connect(nicksOnlineWindow,SIGNAL (closeClicked(QSize)),this,SLOT (closeNicksOnlineWindow(QSize)) );
-    connect(server,SIGNAL (nicksNowOnline(const QStringList&)),nicksOnlineWindow,SLOT (setOnlineList(const QStringList&)) );
+    connect(getServer(),SIGNAL (nicksNowOnline(const QStringList&)),nicksOnlineWindow,SLOT (setOnlineList(const QStringList&)) );
     nicksOnlineWindow->show();
   }
 }
@@ -554,8 +554,8 @@ void ServerWindow::notifyAction(QListViewItem* item)
   if(item)
   {
     // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
-    QString out=server->parseWildcards(KonversationApplication::preferences.getNotifyDoubleClickAction(),
-                                       server->getNickname(),
+    QString out=getServer()->parseWildcards(KonversationApplication::preferences.getNotifyDoubleClickAction(),
+                                       getServer()->getNickname(),
                                        QString::null,
                                        QString::null,
                                        item->text(0),
@@ -565,8 +565,8 @@ void ServerWindow::notifyAction(QListViewItem* item)
     QStringList outList=QStringList::split('\n',out);
     for(unsigned int index=0;index<outList.count();index++)
     {
-      filter.parse(server->getNickname(),outList[index],QString::null);
-      server->queue(filter.getServerOutput());
+      filter.parse(getServer()->getNickname(),outList[index],QString::null);
+      getServer()->queue(filter.getServerOutput());
     } // endfor
   }
 }

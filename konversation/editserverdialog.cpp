@@ -33,7 +33,7 @@ EditServerDialog::EditServerDialog(QWidget* parent,
                                    QString channelKey,
                                    QString currentIdentity) :
 
-                  KDialogBase(parent,"editserver",true,i18n("Edit Server"),
+                  KDialogBase(parent,"editserver",true,i18n("Edit server"),
                               KDialogBase::Ok | KDialogBase::Cancel,
                               KDialogBase::Ok,true)
 
