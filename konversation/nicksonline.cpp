@@ -79,7 +79,7 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
     {
       QString lcNickName = itOnline.currentKey();
       QString nickname = nickInfo->getNickname();
-      QString nickAdditionalInfo = "";
+      QString nickAdditionalInfo;
       if (nickInfo->isAway())
       {
         nickAdditionalInfo = nickAdditionalInfo + i18n("Away");
@@ -95,7 +95,7 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
         // Known channels where nickname is online and mode in each channel.
         ChannelNick* channelNick = server->getChannelNick(channelList[index].lower(), lcNickName);
         unsigned int nickModeWord = channelNick->mode;
-        QString nickMode = "";
+        QString nickMode;
         if (nickModeWord & 1) nickMode = nickMode + i18n(" Voice");
         nickModeWord >>= 1;
         if (nickModeWord & 1) nickMode = nickMode + i18n(" HalfOp");
