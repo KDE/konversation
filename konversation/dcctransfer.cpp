@@ -332,14 +332,18 @@ void DccTransfer::updateTransferMeters()
   if ( m_dccStatus == Sending || m_dccStatus == Receiving )
   {
     // update CPS
-    QValueList<QDateTime>::iterator it = m_transferTimeLog.begin();
-    while ( it != m_transferTimeLog.end() && (*it).secsTo( QDateTime::currentDateTime() ) > timeToCalc )
-      it = m_transferTimeLog.remove( it );
+    QValueList<QDateTime>::iterator itTime = m_transferTimeLog.begin();
+    QValueList<KIO::fileoffset_t>::iterator itPos = m_transferPositionLog.begin();
+    while ( itTime != m_transferTimeLog.end() && (*itTime).secsTo( QDateTime::currentDateTime() ) > timeToCalc )
+    {
+      itTime = m_transferTimeLog.remove( itTime );
+      itPos = m_transferPositionLog.remove( itPos );
+    }
     int timeElapsed = m_timeTransferStarted.secsTo( QDateTime::currentDateTime() );
     if ( timeElapsed >= timeToCalc )
-      m_cps = (double)( m_transferTimeLog.count() * m_bufferSize ) / (double)timeToCalc;
+      m_cps = (double)( m_transferringPosition - m_transferPositionLog.front() ) / (double)timeToCalc;
     else if ( timeElapsed > 0 )
-      m_cps = (double)( m_transferTimeLog.count() * m_bufferSize ) / (double)timeElapsed;
+      m_cps = (double)( m_transferringPosition - m_transferPositionLog.front() ) / (double)timeElapsed;
     else  // avoid zero devision
       m_cps = CPS_UNKNOWN;
     

@@ -122,6 +122,7 @@ class DccTransfer : public QObject, public KListViewItem
     KIO::fileoffset_t m_transferringPosition;
     KIO::fileoffset_t m_transferStartPosition;
     QValueList<QDateTime> m_transferTimeLog;  // write per packet to calc CPS
+    QValueList<KIO::fileoffset_t> m_transferPositionLog;  // write per packet to calc CPS
     QString m_partnerNick;
     QString m_partnerIp;  // null when unknown
     QString m_partnerPort;

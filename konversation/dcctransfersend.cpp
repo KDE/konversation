@@ -285,6 +285,7 @@ void DccTransferSend::writeData()  // slot
     m_sendSocket->writeBlock( m_buffer, actual );
     m_transferringPosition += actual;
     m_transferTimeLog.append( QDateTime::currentDateTime() );
+    m_transferPositionLog.append( m_transferringPosition );
     if ( (KIO::fileoffset_t)m_fileSize <= m_transferringPosition )
     {
       Q_ASSERT( (KIO::fileoffset_t)m_fileSize == m_transferringPosition );

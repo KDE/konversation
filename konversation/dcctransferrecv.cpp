@@ -91,7 +91,7 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
   
   // set default filename
   // note: Don't edit m_fileName. (i.e. leave it as it is)
-  // because we need the original file name to resume its translation.
+  // because we need the original file name to resume its transfer.
   QString fileNameTmp = QFileInfo( m_fileName ).fileName();  //Just incase anyone tries to do anything nasty
   if ( fileNameTmp.startsWith( "." ) )
     fileNameTmp.replace( 0, 1, '_' ); // Don't create hidden files
@@ -443,6 +443,7 @@ void DccTransferRecv::readData()  // slot
     //actual is the size we read in, and is guaranteed to be less than m_bufferSize
     m_transferringPosition += actual;
     m_transferTimeLog.append( QDateTime::currentDateTime() );
+    m_transferPositionLog.append( m_transferringPosition );
     m_writeCacheHandler->append( m_buffer, actual );
     m_writeCacheHandler->write( false );
     m_recvSocket->enableWrite( true );
