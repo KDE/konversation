@@ -43,6 +43,7 @@ StatusPanel::StatusPanel(QWidget* parent) :
 
   nicknameCombobox=new QComboBox(commandLineBox);
   nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
+  oldNick=nicknameCombobox->currentText();
   awayLabel=new QLabel(i18n("(away)"),commandLineBox);
   awayLabel->hide();
   statusInput=new IRCInput(commandLineBox);
@@ -62,7 +63,7 @@ StatusPanel::StatusPanel(QWidget* parent) :
   connect(statusInput,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
   connect(statusInput,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
 
-  connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxActivated(int)));
+  connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged(int)));
 
   updateFonts();
 }
@@ -214,9 +215,12 @@ void StatusPanel::closeYourself()
   }
 }
 
-void StatusPanel::nicknameComboboxActivated(int index)
+void StatusPanel::nicknameComboboxChanged(int index)
 {
-  changeNickname(nicknameCombobox->currentText());
+  QString newNick=nicknameCombobox->currentText();
+  oldNick=server->getNickname();
+  nicknameCombobox->setCurrentText(oldNick);
+  server->queue("NICK "+newNick);
 }
 
 void StatusPanel::changeNickname(const QString& newNickname)

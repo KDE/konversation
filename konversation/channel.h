@@ -16,6 +16,7 @@
 #define CHANNEL_H
 
 #include <qtimer.h>
+#include <qstring.h>
 
 #include "chatwindow.h"
 
@@ -189,8 +190,8 @@ class Channel : public ChatWindow
     NickListView* nicknameListView;
     QString abgCache;                   // caches the alternate background color
     QHBox* commandLineBox;
-    //QPushButton* nicknameButton;
     QComboBox* nicknameCombobox;
+    QString oldNick;
     QLabel* awayLabel;
     QGrid* buttonsGrid;
     IRCInput* channelInput;

@@ -17,6 +17,8 @@
 
 #include "chatwindow.h"
 
+#include <qstring.h>
+
 /*
   @author Dario Abatianni
 */
@@ -61,7 +63,7 @@ class StatusPanel : public ChatWindow
     // connected to IRCInput::textPasted() - used for large/multiline pastes
     void textPasted(QString text);
     void changeNickname(const QString& newNickname);
-    void nicknameComboboxActivated(int index);
+    void nicknameComboboxChanged(int index);
 
   protected:
     bool awayChanged;
@@ -73,6 +75,7 @@ class StatusPanel : public ChatWindow
     QLabel* awayLabel;
     IRCInput* statusInput;
     QCheckBox* logCheckBox;
+    QString oldNick;
 };
 
 #endif

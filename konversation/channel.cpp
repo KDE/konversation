@@ -204,6 +204,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   nicknameCombobox=new QComboBox(commandLineBox);
   nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
+  oldNick = nicknameCombobox->currentText();
   awayLabel=new QLabel(i18n("(away)"),commandLineBox);
   awayLabel->hide();
   channelInput=new IRCInput(commandLineBox);
@@ -1535,7 +1536,10 @@ void Channel::updateStyleSheet()
 
 void Channel::nicknameComboboxChanged(int index)
 {
-  server->queue("NICK "+nicknameCombobox->currentText());
+  QString newNick=nicknameCombobox->currentText();
+  oldNick=server->getNickname();
+  nicknameCombobox->setCurrentText(oldNick);
+  server->queue("NICK "+newNick);
 }
 
 void Channel::changeNickname(const QString& newNickname)
