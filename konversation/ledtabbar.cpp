@@ -107,6 +107,7 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
 
   else kdWarning() << "LedTabBar::LedTabBar(): Could not create popup!" << endl;
 
+  setTabCloseActivatePrevious(true);
   m_closePixmap = new QPixmap(remove_xpm);
 }
 
