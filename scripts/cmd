@@ -6,6 +6,10 @@ $PORT= shift;
 $SERVER= shift;
 $TARGET= shift;
 
+if( $ARGV[0] eq "yes" )
+    exec ("dcop $PORT Konversation error \"Requested command is not executed!\" ");
+}
+
 $ARG_MESSAGE = `@ARGV`;
 
 foreach $entry (split(/\n/, $ARG_MESSAGE)) {
