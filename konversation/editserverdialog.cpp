@@ -48,13 +48,21 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   layout->setColStretch(1,10);
 
   QLabel* groupNameLabel=new QLabel(i18n("&Group name:"),page);
+  QString groupNameWT = i18n("Enter anything you like here. It is used to "
+                             "organize the entries in the Server List.");
+  QWhatsThis::add(groupNameLabel, groupNameWT);
   groupNameInput=new KLineEdit(group,page);
+  QWhatsThis::add(groupNameInput, groupNameWT);
   groupNameLabel->setBuddy(groupNameInput);
 
   QLabel* identityLabel=new QLabel(i18n("&Identity:"),page);
-  QString identityWT = i18n("Select the identity to use with this server. "
-                            "(See the Identity page in the Preferences to "
-                            "add or modify identities.)");
+  QString identityWT = i18n("<qt>Your identity, among other things, "
+                            "determines your starting nickname. (See "
+                            "the <strong>Identity</strong> page in the "
+                            "Preferences to add or modify identities or <a "
+                            "href=\"help:/konversation/identity.html\">"
+                            "Setting your identity</a> in the manual for more "
+                            "information).</qt>");
   QWhatsThis::add(identityLabel, identityWT);
   identityCombo=new KComboBox(page);
   QWhatsThis::add(identityCombo, identityWT);
@@ -70,8 +78,11 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   }
 
   QLabel* serverNameLabel=new QLabel(i18n("&Server name:"),page);
-  QString serverNameWT = i18n("Enter the host name of the IRC server here.\n\n"
-                              "Example:  irc.kde.org");
+  QString serverNameWT = i18n("<qt><p>Enter the host name of the IRC server "
+                              "here.\nSee irchelp.org for a <a "
+                              "href='http://www.irchelp.org/irchelp/networks/'"
+                              ">list of networks and servers</a>.</p>"
+                              "<p>Example:  irc.kde.org</p></qt>");
   QHBox* serverBox=new QHBox(page);
   serverBox->setSpacing(spacingHint());
   serverNameInput=new KLineEdit(name,serverBox);
@@ -100,19 +111,26 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   serverKeyLabel->setBuddy(serverKeyInput);
 
   QLabel* channelNameLabel=new QLabel(i18n("C&hannel name:"),page);
-  QString channelNameWT = i18n("Enter one or more channel names here.  These "
-                               "channels will be joined automatically when "
-                               "this server is connected.  (Separate multiple "
-                               "channel names with spaces.)\n\n"
-                               "Example:  #debian #kde-users");
+  QString channelNameWT = i18n("Enter the names of zero or more channels to "
+                               "join automatically when this server is "
+                               "connected. (Most channel names start with #. "
+                               "Separate multiple channel names with "
+                               "spaces.)\n\n"
+                               "Example:  #debian #kde");
   QWhatsThis::add(channelNameLabel, channelNameWT);
   channelNameInput=new KLineEdit(channelName,page);
   QWhatsThis::add(channelNameInput, channelNameWT);
   channelNameLabel->setBuddy(channelNameInput);
 
   QLabel* channelKeyLabel=new QLabel(i18n("Pass&word:"),page);
+  QString channelKeyWT = i18n("If the channel requires a password in order "
+                              "to join, enter it here, otherwise leave blank. "
+                              "This password will apply to all channels "
+                              "listed in the Channel name box.");
+  QWhatsThis::add(channelKeyLabel, channelKeyWT);
   channelKeyInput=new KLineEdit(channelKey,page);
   channelKeyInput->setEchoMode(QLineEdit::Password);
+  QWhatsThis::add(channelKeyInput, channelKeyWT);
   channelKeyLabel->setBuddy(channelKeyInput);
 
   QHBox* spacer=new QHBox(page);
