@@ -27,6 +27,8 @@ if( utf8::valid($input) ) {
 
 @chars = split //, $input;
 
+$message = "";
+
 foreach (@chars) {
   # Rainbow colors. Code courtesy of boren
   $i = ($i+1)%16;
