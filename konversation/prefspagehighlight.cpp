@@ -80,6 +80,7 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
 
   enableSoundCheck->setChecked(preferences->getHighlightSoundEnabled());
 
+  currentNickCheck->setChecked(preferences->getHighlightNick());
   currentNickColor->setColor(preferences->getHighlightNickColor());
   currentNickChanged(preferences->getHighlightNick() ? 2 : 0);
 
