@@ -999,8 +999,8 @@ void Channel::adjustOps(int value)
 
 void Channel::updateNicksOps()
 {
-  QString txt = i18n("%1  nick", "%1 nicks", nicks).arg(nicks);
-  txt += i18n(" (%1 op)", " (%1 ops)", ops).arg(ops);
+  QString txt = i18n("%n  nick", "%n nicks", nicks);
+  txt += i18n(" (%n op)", " (%n ops)", ops);
   nicksOps->setText(txt);
 }
 
