@@ -179,6 +179,7 @@ namespace Konversation {
             else if(command == "prefs")   result = parsePrefs(parameter);
 
 	    else if(command == "charset") parseCharset(parameter);
+	    else if(command == "whoami")  {result.type = Message; result.toServer = "whois " + mynick; }
 
 	    else if(command == "cycle")   parseCycle();
 
