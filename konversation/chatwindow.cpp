@@ -312,6 +312,11 @@ bool ChatWindow::frontView()           { return false; }
 bool ChatWindow::searchView()          { return false; }
 
 // reimplement this in all panels that have user input
+void ChatWindow::indicateAway(bool away)
+{
+}
+
+// reimplement this in all panels that have user input
 void ChatWindow::appendInputText(const QString&)
 {
 }

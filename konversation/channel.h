@@ -10,8 +10,6 @@
     begin:     Wed Jan 23 2002
     copyright: (C) 2002 by Dario Abatianni
     email:     eisfuchs@tigress.com
-
-    $Id$
 */
 
 #ifndef CHANNEL_H
@@ -74,6 +72,7 @@ class Channel : public ChatWindow
     void updateFonts();
 
     virtual QString getTextInLine();
+    virtual void indicateAway(bool away);
     virtual void closeYourself();
     virtual bool frontView();
     virtual bool searchView();

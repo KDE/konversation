@@ -10,8 +10,6 @@
     begin:     Wed Jan 23 2002
     copyright: (C) 2002 by Dario Abatianni
     email:     eisfuchs@tigress.com
-
-    $Id$
 */
 
 #include <qlabel.h>
@@ -1381,6 +1379,10 @@ QString Channel::getTextInLine() { return channelInput->text(); }
 
 bool Channel::frontView()        { return true; }
 bool Channel::searchView()       { return true; }
+
+void Channel::indicateAway(bool away)
+{
+}
 
 void Channel::appendInputText(const QString& s)
 {

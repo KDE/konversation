@@ -80,6 +80,7 @@ class ChatWindow : public QVBox
     QWidget* parentWidget;
 
     virtual QString getTextInLine();
+    virtual void indicateAway(bool away);
     virtual void closeYourself();
     virtual bool frontView();
     virtual bool searchView();
