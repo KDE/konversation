@@ -309,9 +309,10 @@ void IRCInput::insertHtml(const QString& htmlTextToInsert)
   text.replace(QRegExp("\n[ <t]*\n"), "");
   
 
-  text.replace("&amp;", "&");
   text.replace("&lt;", "<");
   text.replace("&gt;", ">");
+  // &amp; must be de-escaped last otherwise &amp;lt; will end up as '<'
+  text.replace("&amp;", "&");
 
   //strip newlines at the start and end.
   text = text.stripWhiteSpace();
