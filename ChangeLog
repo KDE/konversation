@@ -1,4 +1,5 @@
 Changes from 0.13 to 0.14
+- New application icons by luciash d' being <luci@sh.ground.cz>. Thanks!
 - Added /server command for connecting to a server.
 - After the connection is lost and the old nickname is still in use,
   the nickbutton in the channelwindows is updated to the new nick.

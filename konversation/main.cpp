@@ -63,6 +63,7 @@ int main(int argc, char* argv[])
   aboutData.addCredit("Ruud Nabben",I18N_NOOP("Option to enable IRC color filtering"),"r.nabben@gawab.com");
   aboutData.addCredit("Michael Goettsche",I18N_NOOP("Various bugfixes"),"mail@tuxipuxi.de");
   aboutData.addCredit("İsmail Dönmez",I18N_NOOP("Bugfixes and features"),"kde@myrealbox.com");
+  aboutData.addCredit("Luciash d' being",I18N_NOOP("Application icons"),"luci@sh.ground.cz");
   KCmdLineArgs::init(argc,argv,&aboutData);
 
   KonversationApplication app;
