@@ -63,6 +63,11 @@ void KonvDCOP::insertRememberLine()
   emit dcopInsertRememberLine();
 }
 
+void KonvDCOP::connectToServer(const QString& url)
+{
+  emit dcopConnectToServer(url);
+}
+
 /*
  app is the dcop app name, object is that dcop app's object name, and signal is the name of the
  function for that dcop app's object. I didn't implement any matching code yet, so I think it

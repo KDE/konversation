@@ -19,6 +19,7 @@ class KonvIface : virtual public DCOPObject
     virtual void debug(const QString& string) = 0;
     virtual void error(const QString& string) = 0;
     virtual void insertRememberLine() = 0;
+    virtual void connectToServer(const QString& url) = 0;
     virtual int registerEventHook (const QString &type, const QString &criteria, const QString &app, const QString &object, const QString &signal) = 0;
     virtual void unregisterEventHook (int id) = 0;
     virtual bool isIgnore (int serverid, const QString &hostmask, int type) = 0;
