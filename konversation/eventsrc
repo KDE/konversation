@@ -373,4 +373,6 @@ Name=Query
 Name[pt]=Procura
 Name[pt_BR]=Procura
 Comment=Someone started a conversation (query) with you
+Comment[pt]=Alguém iniciou uma conversa (procura) consigo
+Comment[pt_BR]=Alguém iniciou uma conversa (procura) consigo
 default_presentation=0
