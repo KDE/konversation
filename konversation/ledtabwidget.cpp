@@ -55,7 +55,8 @@ void LedTabWidget::changeTabState(QWidget* child,bool state,const QString& label
     else
     {
       tab->setOn(state);
-      tab->setLabelColor(labelColor);
+      if(!labelColor.isEmpty() || !state)
+        tab->setLabelColor(labelColor);
     }
   }
 }
