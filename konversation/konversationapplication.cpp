@@ -384,6 +384,13 @@ void KonversationApplication::readOptions()
   }
 
   preferences.setFilterColors(config->readBoolEntry("FilterColorCodes",preferences.getFilterColors()));  //FIXME
+
+  QStringList nickColorList = preferences.getNickColorList();
+  preferences.setNickColorList(config->readListEntry("NickColors"));
+
+  if(preferences.getNickColorList().empty()) {
+    preferences.setNickColorList(nickColorList);
+  }
   preferences.setUseColoredNicks(config->readBoolEntry("UseColoredNicks",preferences.getUseColoredNicks()));
 
   preferences.setShowTabBarCloseButton(config->readBoolEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton()));
@@ -876,6 +883,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("TopicSplitterSizes", preferences.topicSplitterSizes());
   config->writeEntry("BackgroundImage",preferences.getBackgroundImageName());
   config->writeEntry("IRCColors", preferences.getIRCColorList());
+  config->writeEntry("NickColors", preferences.getNickColorList());
   config->writeEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton());
 
   config->writeEntry("ShowTopic", preferences.getShowTopic());

@@ -90,8 +90,6 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   QString bgColor=KonversationApplication::preferences.getColor("TextViewBackground");
   setViewBackground(bgColor,QString::null);
 
-  colorList << "red" << "green" << "blue" << "pink" << "magenta" << "yellow" ;
-
   setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
 
   setNotifyClick(true);
@@ -415,6 +413,7 @@ void IRCView::append(const QString& nick,const QString& message)
     {
       if(!colorMap.contains(nick))
 	{
+	  colorList = KonversationApplication::preferences.getNickColorList();
 	  QColor nickColor;
 	  QString backgroundColor=KonversationApplication::preferences.getColor("TextViewBackground");
 	  srandom(time(NULL));

@@ -209,6 +209,15 @@ Preferences::Preferences()
   ircColorList.append("#a0a0a0");
   ircColorList.append("#c0c0c0");
   setFilterColors(false);
+
+  nickColorList.append("#E90E7F");
+  nickColorList.append("#8E55E9");
+  nickColorList.append("#B30E0E");
+  nickColorList.append("#18B33C");
+  nickColorList.append("#58ADB3");
+  nickColorList.append("#9E54B3");
+  nickColorList.append("#0FB39A");
+  nickColorList.append("#3176B3");
   setUseColoredNicks(false);
 
   setNickCompletionMode(2);
@@ -931,6 +940,9 @@ void Preferences::setFilterColors(bool filter) { filterColors = filter; }
 
 const bool Preferences::getUseColoredNicks() { return useColoredNicks; }
 void Preferences::setUseColoredNicks(bool useColor) { useColoredNicks=useColor; }
+
+void Preferences::setNickColorList(QStringList cl) { nickColorList=cl; }
+const QStringList Preferences::getNickColorList() { return nickColorList; }
 
 const bool Preferences::getRedirectToStatusPane() { return redirectToStatusPane; }
 void Preferences::setRedirectToStatusPane(bool redirect) { redirectToStatusPane = redirect; }

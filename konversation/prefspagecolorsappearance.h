@@ -35,6 +35,7 @@ class PrefsPageColorsAppearance : public PrefsPage
   protected:
     QStringList colorList;
     QPtrList<KColorButton> colorBtnList;
+    QPtrList<KColorButton> nickColorBtnList;
     QPtrList<KColorButton> ircColorBtnList;
     QCheckBox* colorInputFieldsCheck;
     QCheckBox* useColoredNicksCheck;

@@ -70,16 +70,43 @@ PrefsPageColorsAppearance::PrefsPageColorsAppearance(QFrame* newParent,Preferenc
   }
 
   row++;
-  useColoredNicksCheck = new QCheckBox(i18n("&Use colored nicks"), parentFrame, "use_color_nicks");
-  useColoredNicksCheck->setChecked(preferences->getUseColoredNicks());
-  colorLayout->addMultiCellWidget(useColoredNicksCheck, row, row, 0, 3);
+  colorInputFieldsCheck = new QCheckBox(
+       i18n("&Input fields and nick list use custom colors"), parentFrame, "input_fields_color_check");
+  colorInputFieldsCheck->setChecked(preferences->getColorInputFields());
+  colorLayout->addMultiCellWidget(colorInputFieldsCheck, row, row, 0, 3);  
 
   row++;
-  colorInputFieldsCheck = new QCheckBox(
-    i18n("&Input fields and nick list use custom colors"), parentFrame, "input_fields_color_check");
-  colorInputFieldsCheck->setChecked(preferences->getColorInputFields());
-  colorLayout->addMultiCellWidget(colorInputFieldsCheck, row, row, 0, 3);
+  QGroupBox* nickColorGroup = new QGroupBox(i18n("N&ick Colors"), parentFrame);
+  nickColorGroup->setColumnLayout(0, Qt::Vertical);
+  nickColorGroup->setMargin(marginHint());
+  QGridLayout* nickColorLayout = new QGridLayout(nickColorGroup->layout(), 2, 4, spacingHint());
 
+  int r=0;
+  useColoredNicksCheck = new QCheckBox(i18n("&Use colored nicks"), nickColorGroup, "use_color_nicks");
+  useColoredNicksCheck->setChecked(preferences->getUseColoredNicks());
+  nickColorLayout->addMultiCellWidget(useColoredNicksCheck, r, r, 0, 3);
+
+  QStringList nickColors = preferences->getNickColorList();
+  col=0;
+  r=1;
+
+  for(int i = 0; i < 8; i++) {
+    QLabel* label = new QLabel(QString::number(i) + ":", nickColorGroup);
+    KColorButton* button = new KColorButton(nickColorGroup);
+    nickColorBtnList.append(button);
+    button->setColor(nickColors[i]);
+
+    nickColorLayout->addWidget(label, r, col);
+    nickColorLayout->addWidget(button, r, col+1);
+    r++;
+
+    if(r > 2) {
+      r=1;
+      col += 2;
+    }
+  }
+
+  colorLayout->addMultiCellWidget(nickColorGroup, row, row, 0, 3);
 
   row++;
   QGroupBox* ircColorGroup = new QGroupBox(i18n("I&RC Colors"), parentFrame);
@@ -87,7 +114,7 @@ PrefsPageColorsAppearance::PrefsPageColorsAppearance(QFrame* newParent,Preferenc
   ircColorGroup->setMargin(marginHint());
   QGridLayout* ircColorLayout = new QGridLayout(ircColorGroup->layout(), 2, 4, spacingHint());
 
-  int r = 0;
+  r = 0;
   parseIrcColorsCheck = new QCheckBox(i18n("&Parse color codes"), ircColorGroup);
   parseIrcColorsCheck->setChecked(!preferences->getFilterColors());
 
@@ -135,8 +162,17 @@ void PrefsPageColorsAppearance::applyPreferences()
     preferences->setColor(button->name(), button->color().name().mid(1));
   }
 
-  preferences->setUseColoredNicks(useColoredNicksCheck->isChecked());
   preferences->setColorInputFields(colorInputFieldsCheck->isChecked());
+
+  QStringList nickColorList;
+
+  for(unsigned int i = 0; i < nickColorBtnList.count(); i++) {
+    KColorButton* button = nickColorBtnList.at(i);
+    nickColorList.append(button->color().name());
+  }
+
+  preferences->setNickColorList(nickColorList);
+  preferences->setUseColoredNicks(useColoredNicksCheck->isChecked());
 
   QStringList colorList;
 

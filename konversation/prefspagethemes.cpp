@@ -105,15 +105,19 @@ PrefsPageThemes::~PrefsPageThemes()
 
 void PrefsPageThemes::applyPreferences()
 {
-  if(m_themeList->count() > 0)
+  if(m_themeList->count())
     {
       QString theme;
+      QString oldTheme = KonversationApplication::preferences.getIconTheme();
       theme = m_dirs[m_themeList->currentItem()];
       theme = theme.section('/',-2,-2);
-      kdDebug() << "Theme :" << theme << endl;
-      preferences->setIconTheme(theme);
-      KonversationApplication::instance()->images()->initializeNickIcons();
-      KonversationApplication::instance()->updateNickIcons();
+      if(oldTheme != theme)
+	{
+	  kdDebug() << "New Theme :" << theme << endl;
+	  preferences->setIconTheme(theme);
+	  KonversationApplication::instance()->images()->initializeNickIcons();
+	  KonversationApplication::instance()->updateNickIcons();
+	}
     }
 }
 

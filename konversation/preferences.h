@@ -305,8 +305,13 @@ class Preferences : public QObject
     const QString getColor(const QString& name);
     void setColor(const QString& name,const QString& color);
     
+
+    // Colored nicknames
     const bool getUseColoredNicks();
     void setUseColoredNicks(bool usecolor);
+
+    const QStringList getNickColorList();
+    void setNickColorList(QStringList cl);
 
     const bool getFilterColors();
     void setFilterColors(bool filter);
@@ -626,6 +631,7 @@ class Preferences : public QObject
 
     // IRC colors
     QStringList ircColorList;
+    QStringList nickColorList;
     bool filterColors;
     bool useColoredNicks;
 
