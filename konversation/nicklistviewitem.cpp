@@ -47,12 +47,16 @@ NickListViewItem::~NickListViewItem()
 
 void NickListViewItem::refresh()
 {
+  bool needResort = false;
   NickInfo* nickInfo = nick->getNickInfo();
   bool away = false;
   if ( nickInfo )
     away = nickInfo->isAway();
   
-  //FIXME: remove KonversationApplication::preferences.getOpLedColor() and so on. (obsolete)
+  if(away != m_away) {
+    m_away = away;
+    needResort = true;
+  }
   
   Images* images = KonversationApplication::instance()->images();
   QPixmap icon;
@@ -80,10 +84,16 @@ void NickListViewItem::refresh()
     QPixmap qpixmap(pic.data().scaleHeight(m_height));
     setPixmap(1,qpixmap);
   }
-  setText(1,calculateLabel1());
+  QString newtext1 = calculateLabel1();
+  if(newtext1 != text(1)) {
+    setText(1,calculateLabel1());
+    needResort = true;
+  }
   setText(2,calculateLabel2());
   repaint();
-  emit refreshed(); // Resort nick list
+  
+  if(needResort)
+    emit refreshed(); // Resort nick list
 }
 
 QString NickListViewItem::calculateLabel1() {
