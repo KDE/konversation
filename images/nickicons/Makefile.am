@@ -1,1 +1,1 @@
-SUBDIRS = alternative default
+SUBDIRS = alternative classic default
