@@ -35,6 +35,7 @@ class ChatWindow;
 class Channel;
 class Query;
 class RawLog;
+class ChannelListPanel;
 class DccPanel;
 class DccTransferHandler;
 class Highlight;
@@ -77,6 +78,7 @@ class KonversationMainWindow : public KMainWindow
   public slots:
     // connected in server class
     void addDccPanel();
+    void addChannelListPanel();
 
     void resetLag();
     void updateLag(Server* lagServer,int msec);
@@ -162,6 +164,7 @@ class KonversationMainWindow : public KMainWindow
     ChatWindow* frontView;
     ChatWindow* searchView;
 
+    ChannelListPanel* channelListPanel;
     DccPanel* dccPanel;
     bool dccPanelOpen;
 

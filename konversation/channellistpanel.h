@@ -18,6 +18,8 @@
 #ifndef _CHANNELLISTPANEL_H_
 #define _CHANNELLISTPANEL_H_
 
+#include "klistview.h"
+
 #include <chatwindow.h>
 
 /*
@@ -31,6 +33,12 @@ class ChannelListPanel : public ChatWindow
   public:
     ChannelListPanel(QWidget* parent);
     ~ChannelListPanel();
+
+  public slots:
+    void adjustFocus();
+    
+  protected:
+    KListView* channelListView;
 };
 
 #endif

@@ -31,6 +31,7 @@
 #include "channel.h"
 #include "query.h"
 #include "rawlog.h"
+#include "channellistpanel.h"
 #include "dccpanel.h"
 #include "dcctransferhandler.h"
 #include "highlightdialog.h"
@@ -48,6 +49,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   frontView=0;
   searchView=0;
   frontServer=0;
+  channelListPanel=0;
   dccPanel=0;
   dccPanelOpen=false;
 
@@ -112,6 +114,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
   createGUI();
   readOptions();
+
+//  addChannelListPanel();
 }
 
 KonversationMainWindow::~KonversationMainWindow()
@@ -331,6 +335,15 @@ RawLog* KonversationMainWindow::addRawLog(Server* server)
   addView(rawLog,2,i18n("Raw Log"),false);
 
   return rawLog;
+}
+
+void KonversationMainWindow::addChannelListPanel()
+{
+  if(channelListPanel==0)
+  {
+    channelListPanel=new ChannelListPanel(getViewContainer());
+    addView(channelListPanel,2,i18n("Channel list"));
+  }
 }
 
 void KonversationMainWindow::newText(QWidget* view)

@@ -76,7 +76,7 @@ void DccPanel::setButtons(bool accept,bool abort,bool remove,bool open,bool info
 
 void DccPanel::dccSelected()
 {
-  DccTransfer* item=(DccTransfer*) getListView()->selectedItem();
+  DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
 
   if(item)
   {
@@ -138,7 +138,7 @@ void DccPanel::abortDcc()
 
 void DccPanel::removeDcc()
 {
-  DccTransfer* item=(DccTransfer*) getListView()->selectedItem();
+  DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
 
   if(item)
   {
