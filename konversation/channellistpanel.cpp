@@ -23,12 +23,14 @@
 #include <qcheckbox.h>
 #include <qtimer.h>
 
+#include <krun.h>
 #include <klistview.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
+#include <kpopupmenu.h>
 
 #include "channellistpanel.h"
 #include "channellistviewitem.h"
@@ -114,6 +116,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   // double click on channel entry joins the channel
   connect(channelListView,SIGNAL (doubleClicked(QListViewItem*)),
                        this,SLOT (joinChannelClicked()) );
+
+  connect(channelListView,SIGNAL (contextMenu (KListView*, QListViewItem*, const QPoint&) ),
+                       this, SLOT (contextMenu (KListView*, QListViewItem*, const QPoint&)) );
 
   connect(minUsersSpin,SIGNAL (valueChanged(int)),this,SLOT(setMinUsers(int)) );
   connect(maxUsersSpin,SIGNAL (valueChanged(int)),this,SLOT(setMaxUsers(int)) );
@@ -401,6 +406,71 @@ void ChannelListPanel::closeYourself()
 
 void ChannelListPanel::adjustFocus()
 {
+}
+
+void ChannelListPanel::contextMenu (KListView* l, QListViewItem* i, const QPoint& p)
+{
+  KPopupMenu* showURLmenu = new KPopupMenu(this);
+  showURLmenu->setTitle( i18n("Open URL") );
+ 
+  QString filteredLine(i->text(2));
+  
+  QRegExp pattern("((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
+                  // IP Address
+                  "([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|"
+                  // Decimal IP address
+                  "[0-9]{1,12}|"
+                  // Standard host name
+                  "[a-z0-9][\\.@%a-z0-9_-]+\\.[a-z]{2,}"
+                  // Port number, path to document
+                  ")(:[0-9]{1,5})?(/[^)>\"'\\s]*)?|"
+                  // eDonkey2000 links need special treatment
+                  "ed2k://\\|([^|]+\\|){4})");
+
+  pattern.setCaseSensitive(false);
+
+  int pos=0;
+  while(static_cast<unsigned int>(pos) < filteredLine.length())
+  {
+    if(pattern.search(filteredLine,pos)!=-1) {
+      // Remember where we found the url
+      pos=pattern.pos();
+
+      // Extract url
+      QString url=pattern.capturedTexts()[0];
+      QString href(url);
+
+      // clean up href for browser
+      if(href.startsWith("www.")) href="http://"+href;
+      else if(href.startsWith("ftp.")) href="ftp://"+href;
+
+      // Replace all spaces with %20 in href
+      href.replace(QRegExp(" "),"%20");
+      href.replace("&","&&");
+      
+      // next search begins right after the link
+      pos+=url.length();
+      
+      // tell the program that we have found a new url
+      showURLmenu->insertItem(href);
+    }
+    else {
+      pos++;
+    }
+  }
+  
+  if (showURLmenu->count()==1) {
+    showURLmenu->insertItem(i18n("<<No URL found>>"),5);
+    showURLmenu->setItemEnabled(5,false);
+  }
+  
+  int selected = showURLmenu->exec(p);  
+  if (selected!=-1) {
+    QMenuItem* item = showURLmenu->findItem( selected );
+    new KRun(item->text().replace("&&","&"));
+  }
+  
+  delete showURLmenu;
 }
 
 #include "channellistpanel.moc"

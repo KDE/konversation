@@ -65,6 +65,8 @@ class ChannelListPanel : public ChatWindow
     void topicTargetClicked();
     void regExpClicked();
 
+    void contextMenu (KListView* l, QListViewItem* i, const QPoint& p);
+    
   protected:
     int getNumChannels();
     int getNumUsers();
