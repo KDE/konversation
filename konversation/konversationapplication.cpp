@@ -650,7 +650,10 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->writeEntry("ShowBackgroundImage",preferences.getShowBackgroundImage());
 
-  config->writeEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction());
+  if ( preferences.getChannelDoubleClickAction() == "/QUERY %u%n" )
+      config->deleteEntry("ChannelDoubleClickAction");
+  else
+      config->writeEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction());
   config->writeEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction());
 
   config->writeEntry("Beep",preferences.getBeep());
