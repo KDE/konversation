@@ -90,7 +90,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   setType(ChatWindow::Channel);
 
   setChannelEncodingSupported(true);
-  
+
   // Build some size policies for the widgets
   QSizePolicy hfixed=QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
   QSizePolicy hmodest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
@@ -132,7 +132,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   topicLabel->setBuddy(topicLine);
 
   showTopic(KonversationApplication::preferences.getShowTopic());
-  
+
   // The box holding the channel modes
   modeBox=new QHBox(topicBox);
   modeBox->setSizePolicy(hfixed);
@@ -232,7 +232,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   channelInput=new IRCInput(commandLineBox);
   channelInput->installEventFilter(this);
   nicknameListView->installEventFilter(channelInput);
-  
+
   // Set the widgets size policies
   topicBox->setSizePolicy(vmodest);
   topicLabel->setSizePolicy(hfixed);  // This should prevent the widget from growing too wide
@@ -389,7 +389,7 @@ void Channel::popupCommand(int id)
 	    if(id == NickListView::AddressbookDelete) {
               KABC::Addressee addr = (*it)->getNickInfo()->getAddressee();
    	      addressbook->unassociateNick(addr, (*it)->getNickname(), server->getServerName(), server->getServerGroup());
-	    } else { 
+	    } else {
 	      //make new addressbook contact
               KABC::Addressee addr;
 	      NickInfoPtr nickInfo = (*it)->getNickInfo();
@@ -504,7 +504,7 @@ void Channel::popupCommand(int id)
 
   if(!pattern.isEmpty())
   {
-    pattern.replace(QRegExp("%c"),getName());
+    pattern.replace("%c",getName());
 
     ChannelNickList nickList=getSelectedChannelNicks();
 
@@ -516,7 +516,7 @@ void Channel::popupCommand(int id)
       for(unsigned int index=0;index<patternList.count();index++)
       {
         command=patternList[index];
-        command.replace(QRegExp("%u"),(*it)->getNickname());
+        command.replace("%u",(*it)->getNickname());
 
         if(raw)
           server->queue(command);
@@ -783,7 +783,7 @@ ChannelNickList Channel::getSelectedChannelNicks()
   }
 
   return result;
- 
+
 }
 
 void Channel::channelLimitChanged()
@@ -1069,7 +1069,7 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
 {
   //Note for future expansion: doing server->getChannelNick(getName(), sourceNick);  may not return a valid channelNickPtr if the
   //mode is updated by the server.
-  
+
 
   QString message(QString::null);
   ChannelNickPtr parameterChannelNick;
@@ -1641,7 +1641,7 @@ void Channel::addPendingNickList(const ChannelNickList& pendingChannelNickList)
   }
 
 //  nicknameListView->setUpdatesEnabled(false);
-/*  
+/*
   ChannelNickList::iterator it;
   int count = 0;
   for( it = pendingChannelNickList.begin(); it != pendingChannelNickList.end(); it++,count++)
@@ -1659,7 +1659,7 @@ void Channel::addPendingNickList(const ChannelNickList& pendingChannelNickList)
   adjustNicks(pendingChannelNickList.count());
 */
   m_pendingChannelNickLists.append(pendingChannelNickList);
-/*  
+/*
   // should have been done already, but you never know ...
   nicknameListView->setUpdatesEnabled(true);
 
@@ -1800,17 +1800,17 @@ void Channel::showTopic(bool show)
 void Channel::processPendingNicks()
 {
   ChannelNickPtr nick = m_pendingChannelNickLists.first()[m_currentIndex];
-  
+
   fastAddNickname(nick);
-  
+
   if(nick->isAdmin() || nick->isOwner() ||
     nick->isOp() || nick->isHalfOp())
   {
     m_opsToAdd++;
   }
-  
+
   m_currentIndex++;
-  
+
   if(m_pendingChannelNickLists.first().count() == m_currentIndex) {
     adjustNicks(m_pendingChannelNickLists.first().count());
     adjustOps(m_opsToAdd);
