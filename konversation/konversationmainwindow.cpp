@@ -1357,7 +1357,7 @@ void KonversationMainWindow::serverQuit(Server* server)
     frontServer = 0;
   }
 
-  if(frontView->getServer() == server) {
+  if(frontView && frontView->getServer() == server) {
     frontView = 0;
   }
 
