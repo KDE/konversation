@@ -349,7 +349,8 @@ void KonversationMainWindow::updateFrontView()
   if(view->getType()!=ChatWindow::DccPanel &&
      view->getType()!=ChatWindow::RawLog) frontView=view;
   // Make sure that only text views get to be the searchView
-  if(view->getType()!=ChatWindow::DccPanel) searchView=view;
+  if(view->getType()!=ChatWindow::DccPanel &&
+     view->getType()!=ChatWindow::ChannelList) searchView=view;
 }
 
 void KonversationMainWindow::changeView(QWidget* viewToChange)

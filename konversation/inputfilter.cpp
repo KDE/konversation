@@ -942,6 +942,39 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
           break;
         }
+      case RPL_LISTSTART:
+        {
+          if(getAutomaticRequest()==0)
+          {
+            server->appendStatusMessage(i18n("List"),i18n("List of channels:"));
+          }
+          else ; // send them to /LIST window
+          break;
+        }
+      case RPL_LIST:
+        {
+          if(getAutomaticRequest()==0)
+          {
+            QString message;
+          
+            if(parameterList[2]=="1") message="%1 (%2 user): %3";
+            else message="%1 (%2 users): %3";
+          
+            server->appendStatusMessage(i18n("List"),i18n(message).arg(parameterList[1]).arg(parameterList[2]).arg(trailing));
+          }
+          else ; // send them to /LIST window
+          break;
+        }
+      case RPL_LISTEND:
+        {
+          // was this an automatic request?
+          if(getAutomaticRequest()==0)
+            server->appendStatusMessage(i18n("List"),i18n("End of channel list."));
+          else
+            setAutomaticRequest(false);
+          
+          break;
+        }
       default:
         {
           // All yet unknown messages go into the frontmost window without the

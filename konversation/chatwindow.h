@@ -48,7 +48,8 @@ class ChatWindow : public QVBox
       DccPanel,
       RawLog,
       Notice,
-      SNotice
+      SNotice,
+      ChannelList
     };
 
     void setServer(Server* newServer);
