@@ -96,7 +96,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 
 IRCView::~IRCView()
 {
-  if(popup) delete popup;
+    delete popup;
 }
 
 void IRCView::updateStyleSheet()
@@ -232,12 +232,12 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
     if (bv<=fv)
       inverted=TRUE;
   }
-  
+
   if (inverted)
     filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0030,1\\1");
   else
     filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0031,0\\1");
-  
+
   // Hack to allow for whois info hostmask info to not be parsed as email
   filteredLine.replace(QRegExp("&amp;#64;"),"&#64;");
 
