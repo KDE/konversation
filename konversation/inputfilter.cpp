@@ -299,7 +299,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           if(sourceNick != server->getNickname()) {
             if(trailing.lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
             {
-              KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(trailing));
+			  QString cutup = trailing; cutup.truncate(47);
+			  if(cutup.length() == 47)
+			  	cutup.append("...");
+              KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
             }
             else
             {
@@ -318,7 +321,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
           // KNotify events...
           if(sourceNick != server->getNickname()) {
-           KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(trailing));
+			QString cutup = trailing; cutup.truncate(47);
+			if(cutup.length() == 47)
+			 cutup.append("...");
+           KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
           }
         }
       }
