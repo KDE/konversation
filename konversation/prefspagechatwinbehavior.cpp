@@ -48,7 +48,7 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
    "show_remember_line_in_all_windows");
   showRememberLineInAllWindows->setChecked(preferences->getShowRememberLineInAllWindows());
 
-  
+
   redirectToStatusPaneCheck = new QCheckBox(i18n("&Redirect all status messages to the server status window"), parentFrame,
     "redirect_to_status_page_check");
   redirectToStatusPaneCheck->setChecked(preferences->getRedirectToStatusPane());
@@ -62,9 +62,9 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
   QWhatsThis::add(scrollbackMaxSpin,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
   QToolTip::add(scrollbackMaxSpin,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
   QToolTip::add(scrollbackMaxLabel,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
-  
-  QVGroupBox* autoWhoGroup = new QVGroupBox(i18n("&Auto /WHO"), parentFrame, "auto_who_group");
-  
+
+  QVGroupBox* autoWhoGroup = new QVGroupBox(i18n("Au&to /WHO"), parentFrame, "auto_who_group");
+
   QFrame* autoWhoNicksLimitFrame = new QFrame(autoWhoGroup);
   QHBoxLayout* autoWhoNicksLimitLayout = new QHBoxLayout(autoWhoNicksLimitFrame);
   autoWhoNicksLimitLayout->setSpacing(spacingHint());
@@ -75,13 +75,13 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
   autoWhoNicksLimitLayout->addWidget(autoWhoNicksLimitLabel);
   autoWhoNicksLimitLayout->addWidget(autoWhoNicksLimitSpin);
   autoWhoNicksLimitLayout->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
-  
-  autoWhoContinuousEnabledCheck = new QCheckBox(i18n("Request /WHO &continually"), autoWhoGroup);
+
+  autoWhoContinuousEnabledCheck = new QCheckBox(i18n("Re&quest /WHO continually"), autoWhoGroup);
   autoWhoContinuousEnabledCheck->setChecked(preferences->getAutoWhoContinuousEnabled());
   QFrame* autoWhoContinuousIntervalFrame = new QFrame(autoWhoGroup);
   QHBoxLayout* autoWhoContinuousIntervalLayout = new QHBoxLayout(autoWhoContinuousIntervalFrame);
   autoWhoContinuousIntervalLayout->setSpacing(spacingHint());
-  QLabel* autoWhoContinuousIntervalLabel = new QLabel(i18n("&Interval:"), autoWhoContinuousIntervalFrame);
+  QLabel* autoWhoContinuousIntervalLabel = new QLabel(i18n("Inter&val:"), autoWhoContinuousIntervalFrame);
   autoWhoContinuousIntervalSpin = new QSpinBox(30, 10000, 10, autoWhoContinuousIntervalFrame, "auto_who_continuous_interval_spin");
   autoWhoContinuousIntervalSpin->setSuffix(" "+i18n("sec"));
   autoWhoContinuousIntervalSpin->setValue(preferences->getAutoWhoContinuousInterval());
@@ -95,14 +95,14 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
   new QLabel(i18n("Continuous auto /WHO can cause a heavy traffic, so be careful not to get banned."),autoWhoGroup);
 
   QVGroupBox* sortOptionsGroup = new QVGroupBox(i18n("&Nickname List"), parentFrame, "sort_options_group");
-  
+
   QHBox* actionEditBox = new QHBox(sortOptionsGroup);
   actionEditBox->setSpacing(spacingHint());
   QLabel* channelActionLabel = new QLabel(i18n("Command executed on double click:"), actionEditBox);
   channelActionInput = new KLineEdit(preferences->getChannelDoubleClickAction(), actionEditBox);
 
-  sortCaseInsensitiveCheck = new QCheckBox(i18n("Sort case &insensitive"),sortOptionsGroup,"sort_case_insensitive_check");
-  sortByStatusCheck = new QCheckBox(i18n("Sort by us&er status"),sortOptionsGroup,"sort_by_status_check");
+  sortCaseInsensitiveCheck = new QCheckBox(i18n("Sort case ins&ensitive"),sortOptionsGroup,"sort_case_insensitive_check");
+  sortByStatusCheck = new QCheckBox(i18n("Sort b&y user status"),sortOptionsGroup,"sort_by_status_check");
 
   sortByStatusCheck->setChecked(preferences->getSortByStatus());
   sortCaseInsensitiveCheck->setChecked(preferences->getSortCaseInsensitive());
