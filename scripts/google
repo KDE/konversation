@@ -5,6 +5,7 @@
 use warnings;
 use Getopt::Long;
 use CGI qw(:standard);
+use HTML::Entities;
 
 my $PORT=shift;
 my $SERVER=shift;
@@ -61,7 +62,10 @@ else
 	system 'dcop', $PORT, 'Konversation', 'info',  "Searching Google for \x02$search\x02 ...";
 
 	$googleSearch = SOAP::Lite->service("http://api.google.com/GoogleSearch.wsdl"); 
-	$result = $googleSearch->doGoogleSearch($key, $search, 0, 10, "false", "", "false", "", "UTF-8", "UTF-8"); 
+	# Encode "&", "<", ">", and "'" . See http://groups.yahoo.com/group/soaplite/message/3037
+	$search_escape = $search;
+	encode_entities($search_escape, "&<>'");
+	$result = $googleSearch->doGoogleSearch($key, $search_escape, 0, 10, "false", "", "false", "", "UTF-8", "UTF-8"); 
 
 	if($result->{estimatedTotalResultsCount} > 0)
 	{
@@ -77,6 +81,7 @@ else
 	    $print = $result->{URL}." (".$result->{title}.")";
 	    $print =~ s/\<b\>/\x02/g;
 	    $print =~ s/\<\/b\>/\x02/g;
+	    $print =~ s/\&amp\;/\&/g;
 	    system 'dcop', $PORT, 'Konversation', 'info', $print;
 	}
     }
