@@ -30,6 +30,7 @@
 #include <kshell.h>
 
 #include "urlcatcher.h"
+#include "channel.h"
 #include "server.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"

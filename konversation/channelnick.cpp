@@ -12,6 +12,7 @@
   email:     eisfuchs@tigress.com
 */
 
+#include "channel.h"
 #include "channelnick.h"
 #include "server.h"
 #include <klocale.h>

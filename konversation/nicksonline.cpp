@@ -32,6 +32,7 @@
 #include <kmessagebox.h>
 
 // Konversation includes.
+#include "channel.h"
 #include "nicksonline.h"
 #include "server.h"
 #include "konversationapplication.h"

@@ -33,6 +33,7 @@
 #include <kpopupmenu.h>
 #include <kdeversion.h>
 
+#include "channel.h"
 #include "channellistpanel.h"
 #include "channellistviewitem.h"
 #include "server.h"

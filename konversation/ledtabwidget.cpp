@@ -18,6 +18,7 @@
 #include <kiconloader.h>
 #include <qevent.h>
 
+#include "channel.h"
 #include "ledtabwidget.h"
 #include "ledtab.h"
 #include "ledtabbar.h"

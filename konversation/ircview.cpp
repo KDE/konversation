@@ -38,6 +38,7 @@
 #include <kshell.h>
 #include <kpopupmenu.h>
 
+#include "channel.h"
 #include "konvidebug.h"
 #include "konversationapplication.h"
 #include "ircview.h"

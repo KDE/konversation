@@ -23,6 +23,7 @@
 #include <kpopupmenu.h>
 #include <kiconloader.h>
 
+#include "channel.h"
 #include "irccharsets.h"
 #include "ledtabbar.h"
 #include "ledtab.h"

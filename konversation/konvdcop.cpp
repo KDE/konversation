@@ -20,6 +20,7 @@
 #include <klocale.h>
 
 #include "konversationapplication.h"
+#include "channel.h"
 #include "konvdcop.h"
 #include "identity.h"
 #include "ircevent.h"

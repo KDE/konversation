@@ -29,6 +29,7 @@
 #define MAIN_TYPE KMainWindow
 #endif
 
+#include "channel.h"
 #include "preferences.h"
 #include "ssllabel.h"
 #include "nickinfo.h"

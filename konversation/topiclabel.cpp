@@ -23,6 +23,7 @@
 #include "konversationapplication.h"
 #include "server.h"
 #include "common.h"
+#include "channel.h"
 
 #include <kdeversion.h>
 

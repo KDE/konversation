@@ -16,6 +16,7 @@
 #include <kdebug.h>
 
 #include "rawlog.h"
+#include "channel.h"
 #include "ircview.h"
 #include "server.h"
 #include "konversationapplication.h"

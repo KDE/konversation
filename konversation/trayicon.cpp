@@ -23,6 +23,7 @@
 #include <kwin.h>
 #include <klocale.h>
 
+#include "channel.h"
 #include "server.h"
 #include "chatwindow.h"
 

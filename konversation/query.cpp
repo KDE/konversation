@@ -26,6 +26,7 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
+#include "channel.h"
 #include "query.h"
 #include "server.h"
 #include "konversationapplication.h"

@@ -23,6 +23,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
+#include "channel.h"
 #include "statuspanel.h"
 #include "konversationapplication.h"
 #include "ircinput.h"
