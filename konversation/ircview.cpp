@@ -230,7 +230,7 @@ void IRCView::replaceDecoration(QString& line,char decoration,char replacement)
   }
 }
 
-QString IRCView::filter(const QString& line,const QString& whoSent,bool doHilight)
+QString IRCView::filter(const QString& line,const QString& whoSent,bool doHilight, bool parseURL)
 {
   QString filteredLine(line);
 
@@ -320,7 +320,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   pattern.setCaseSensitive(false);
 
   pos=0;
-  while(pattern.search(filteredLine,pos)!=-1) {
+  while(pattern.search(filteredLine,pos)!=-1 && parseURL) {
       // Remember where we found the url
       pos=pattern.pos();
 
@@ -516,17 +516,17 @@ void IRCView::appendServerMessage(const QString& type,const QString& message)
   doAppend(line);
 }
 
-void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important)
+void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important, bool parseURL)
 {
   QString commandColor=KonversationApplication::preferences.getColor("CommandMessage");
 
 #ifdef TABLE_VERSION
-  QString line=QString("<tr><td><font color=\"#"+commandColor+"\">%1</font></td><td><font color=\"#"+commandColor+"\">%2</font></td></tr>\n").arg(type).arg(filter(message));
+  QString line=QString("<tr><td><font color=\"#"+commandColor+"\">%1</font></td><td><font color=\"#"+commandColor+"\">%2</font></td></tr>\n").arg(type).arg(filter(message, 0, true, parseURL));
 #else
 #ifdef ADD_LINE_BREAKS
-  QString line=QString("<font color=\"#"+commandColor+"\">*** %2</font><br>\n").arg(filter(message));
+  QString line=QString("<font color=\"#"+commandColor+"\">*** %2</font><br>\n").arg(filter(message, 0, true, parseURL));
 #else
-  QString line=QString("<p><font color=\"#"+commandColor+"\">*** %2</font></p>\n").arg(filter(message));
+  QString line=QString("<p><font color=\"#"+commandColor+"\">*** %2</font></p>\n").arg(filter(message, 0, true, parseURL));
 #endif
 #endif
   emit textToLog(QString("%1\t%2").arg(type).arg(message));

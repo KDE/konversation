@@ -72,7 +72,7 @@ class ChatWindow : public QVBox
     void appendQuery(const QString& nickname,const QString& message);
     void appendAction(const QString& nickname,const QString& message);
     void appendServerMessage(const QString& type,const QString& message);
-    void appendCommandMessage(const QString& command,const QString& message,bool important=true);
+    void appendCommandMessage(const QString& command,const QString& message,bool important=true, bool parseURL = true);
     void appendBacklogMessage(const QString& firstColumn,const QString& message);
 
     QWidget* parentWidget;

@@ -63,7 +63,7 @@ class IRCView : public KTextBrowser
     void appendQuery(const QString& nick,const QString& message);
     void appendAction(const QString& nick,const QString& message);
     void appendServerMessage(const QString& type,const QString& message);
-    void appendCommandMessage(const QString& command,const QString& message,bool important);
+    void appendCommandMessage(const QString& command,const QString& message,bool important, bool parseURL = true);
     void appendBacklogMessage(const QString& firstColumn,const QString& message);
     void search();
 
@@ -75,7 +75,7 @@ class IRCView : public KTextBrowser
     void urlClickSlot(const QString &url);
     
   protected:
-    QString filter(const QString& line,const QString& who=NULL,bool doHilight=true);
+    QString filter(const QString& line,const QString& who=NULL,bool doHilight=true, bool parseURL = true);
     void doAppend(QString line,bool suppressTimestamps=false,bool important=true);
     void replaceDecoration(QString& line,char decoration,char replacement);
 

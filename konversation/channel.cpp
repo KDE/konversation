@@ -265,6 +265,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   // every few seconds try to get more userhosts
   autoUserhostChanged(KonversationApplication::preferences.getAutoUserhost());
   userhostTimer.start(10000);
+  
+  m_allowNotifications = true;
 }
 
 Channel::~Channel()
@@ -813,12 +815,12 @@ void Channel::joinNickname(const QString& nickname,const QString& hostmask)
   /* Did we join this channel ourselves? */
   if(nickname==server->getNickname())
   {
-    appendCommandMessage(i18n("Join"),i18n("You have joined channel %1. (%2)").arg(getName()).arg(hostmask),false);
+    appendCommandMessage(i18n("Join"),i18n("You have joined channel %1. (%2)").arg(getName()).arg(hostmask),false, false);
   }
   /* No, it was somebody else */
   else
   {
-    appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel. (%2)").arg(nickname).arg(hostmask),false);
+    appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel. (%2)").arg(nickname).arg(hostmask),false, false);
     addNickname(nickname,hostmask,false,false,false,false,false);
   }
 }
