@@ -1,9 +1,11 @@
 /***************************************************************************
-                          colorconfiguration.cpp  -  description
-                             -------------------
+    colorconfiguration.cpp  -  Color configuration dialog
+    -------------------
     begin                : Sat Jul 20 2002
     copyright            : (C) 2002 by Matthias Gierlings
     email                : gismore@users.sourceforge.net
+    redesign             : Wed Feb 19 2003
+    by                   : eisfuchs@tigress.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -15,123 +17,135 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <qlayout.h>
+#include <qhbox.h>
+
 #include <klocale.h>
 #include <kdebug.h>
+
 #include "colorconfiguration.h"
 
 ColorConfiguration::ColorConfiguration(QString passed_actionTextColor, QString passed_backlogTextColor,
-																			 QString passed_channelTextColor, QString passed_commandTextColor,
-																			 QString passed_linkTextColor, QString passed_queryTextColor,
-																			 QString passed_serverTextColor, QString passed_timeColor,
+                                       QString passed_channelTextColor, QString passed_commandTextColor,
+                                       QString passed_linkTextColor, QString passed_queryTextColor,
+                                       QString passed_serverTextColor, QString passed_timeColor,
                                        QString passed_backgroundColor,
                                        QSize passed_windowSize)
                    : KDialogBase(0, 0, false, i18n("Color Configuration"), Ok|Apply|Cancel, Default, true)
 {
-	kdDebug() << "ColorConfiguration::ColorConfiguration()" << endl;
+  kdDebug() << "ColorConfiguration::ColorConfiguration()" << endl;
 
-	windowSize = passed_windowSize;
- 	MainBox = makeVBoxMainWidget();
-	
-	//upperPadBox = new QHBox(MainBox);
+  // Create the top level widget
+  QWidget* page=new QWidget(this);
+  setMainWidget(page);
+  // Add the layout to the widget
+  QGridLayout* dialogLayout=new QGridLayout(page,9,2);
 
-	widgetBox = new QHBox(MainBox);
-  //leftPadBox = new QVBox(widgetBox);
-	centerBox = new QVBox(widgetBox);
-	rightPadBox = new QVBox(widgetBox);
-	
-	lowerPadBox = new QVBox(MainBox);
+  QLabel* actionLabel = new QLabel(i18n("Action text color"), page);
+  MyColorCombo* actionMessageColorSelection = new MyColorCombo(page);
 
-	centerBox->setFixedWidth(250);
-	centerBox->setFixedHeight(180);
+  QLabel* backlogLabel = new QLabel(i18n("Backlog text color"), page);
+  MyColorCombo* backlogMessageColorSelection = new MyColorCombo(page);
 
-	actionBox = new QHBox(centerBox);
-	actionLabel = new QLabel(i18n("Action text color"), actionBox);
-	actionMessageColorSelection = new MyColorCombo(actionBox);
-	actionMessageColorSelection->setMinimumWidth(50);
-	actionMessageColorSelection->setMaximumWidth(50);
-	
-	backlogBox = new QHBox(centerBox);
-	backlogLabel = new QLabel(i18n("Backlog text color"), backlogBox);
-	backlogMessageColorSelection = new MyColorCombo(backlogBox);
-	backlogMessageColorSelection->setMinimumWidth(50);
-	backlogMessageColorSelection->setMaximumWidth(50);
+  QLabel* channelLabel = new QLabel(i18n("Channel message text color"), page);
+  MyColorCombo* channelMessageColorSelection = new MyColorCombo(page);
 
-	channelBox = new QHBox(centerBox);
-	channelLabel = new QLabel(i18n("Channel message text color"), channelBox);
-	channelMessageColorSelection = new MyColorCombo(channelBox);
-	channelMessageColorSelection->setMinimumWidth(50);
-	channelMessageColorSelection->setMaximumWidth(50);
+  QLabel* commandLabel = new QLabel(i18n("Command message text color"), page);
+  MyColorCombo* commandMessageColorSelection = new MyColorCombo(page);
 
-	commandBox = new QHBox(centerBox);
-	commandLabel = new QLabel(i18n("Command message text color"), commandBox);
-	commandMessageColorSelection = new MyColorCombo(commandBox);
-	commandMessageColorSelection->setMinimumWidth(50);
-	commandMessageColorSelection->setMaximumWidth(50);
+  QLabel* linkLabel = new QLabel(i18n("Hyperlink text color"), page);
+  MyColorCombo* linkMessageColorSelection = new MyColorCombo(page);
 
-	linkBox = new QHBox(centerBox);
-	linkLabel = new QLabel(i18n("Hyperlink text color"), linkBox);
-	linkMessageColorSelection = new MyColorCombo(linkBox);
-	linkMessageColorSelection->setMinimumWidth(50);
-	linkMessageColorSelection->setMaximumWidth(50);
+  QLabel* queryLabel = new QLabel(i18n("Query messsage text color"), page);
+  MyColorCombo* queryMessageColorSelection = new MyColorCombo(page);
 
-	queryBox = new QHBox(centerBox);
-	queryLabel = new QLabel(i18n("Query messsage text color"), queryBox);
-	queryMessageColorSelection = new MyColorCombo(queryBox);
-	queryMessageColorSelection->setMinimumWidth(50);
-	queryMessageColorSelection->setMaximumWidth(50);
+  QLabel* serverLabel = new QLabel(i18n("Server message text color"), page);
+  MyColorCombo* serverMessageColorSelection = new MyColorCombo(page);
 
-	serverBox = new QHBox(centerBox);
-	serverLabel = new QLabel(i18n("Server message text color"), serverBox);
-	serverMessageColorSelection = new MyColorCombo(serverBox);
-	serverMessageColorSelection->setMinimumWidth(50);
-	serverMessageColorSelection->setMaximumWidth(50);
+  QLabel* timeLabel = new QLabel(i18n("Timestamp color"), page);
+  MyColorCombo* timeColorSelection = new MyColorCombo(page);
 
-	timeBox = new QHBox(centerBox);
-	timeLabel = new QLabel(i18n("Timestamp color"), timeBox);
-	timeColorSelection = new MyColorCombo(timeBox);
-	timeColorSelection->setMinimumWidth(50);
-	timeColorSelection->setMaximumWidth(50);
+  QLabel* backgroundLabel = new QLabel(i18n("Background color"), page);
+  MyColorCombo* backgroundColorSelection = new MyColorCombo(page);
 
-	backgroundBox = new QHBox(centerBox);
-	backgroundLabel = new QLabel(i18n("Background color"), backgroundBox);
-	backgroundColorSelection = new MyColorCombo(backgroundBox);
-	backgroundColorSelection->setMinimumWidth(50);
-	backgroundColorSelection->setMaximumWidth(50);
+  QHBox* pad=new QHBox(page);
 
-	setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
+  channelTextColor = QColor(passed_channelTextColor.prepend("#"));
+  channelMessageColorSelection->setColor(channelTextColor);
+  queryTextColor = QColor(passed_queryTextColor.prepend("#"));
+  queryMessageColorSelection->setColor(queryTextColor);
+  serverTextColor = QColor(passed_serverTextColor.prepend("#"));
+  serverMessageColorSelection->setColor(serverTextColor);
+  actionTextColor = QColor(passed_actionTextColor.prepend("#"));
+  actionMessageColorSelection->setColor(actionTextColor);
+  backlogTextColor = QColor(passed_backlogTextColor.prepend("#"));
+  backlogMessageColorSelection->setColor(backlogTextColor);
+  commandTextColor = QColor(passed_commandTextColor.prepend("#"));
+  commandMessageColorSelection->setColor(commandTextColor);
+  linkTextColor = QColor(passed_linkTextColor.prepend("#"));
+  linkMessageColorSelection->setColor(linkTextColor);
+  timeColor = QColor(passed_timeColor.prepend("#"));
+  timeColorSelection->setColor(timeColor);
+  backgroundColor = QColor(passed_backgroundColor.prepend("#"));
+  backgroundColorSelection->setColor(backgroundColor);
+
+  // Layout
+  int row=0;
+
+  dialogLayout->addWidget(actionLabel,row,0);
+  dialogLayout->addWidget(actionMessageColorSelection,row,1);
+
+  row++;
+  dialogLayout->addWidget(backlogLabel,row,0);
+  dialogLayout->addWidget(backlogMessageColorSelection,row,1);
+
+  row++;
+  dialogLayout->addWidget(channelLabel,row,0);
+  dialogLayout->addWidget(channelMessageColorSelection,row,1);
+
+  row++;
+  dialogLayout->addWidget(commandLabel,row,0);
+  dialogLayout->addWidget(commandMessageColorSelection,row,1);
+
+  row++;
+  dialogLayout->addWidget(linkLabel,row,0);
+  dialogLayout->addWidget(linkMessageColorSelection,row,1);
+
+  row++;
+  dialogLayout->addWidget(queryLabel,row,0);
+  dialogLayout->addWidget(queryMessageColorSelection,row,1);
+
+  row++;
+  dialogLayout->addWidget(serverLabel,row,0);
+  dialogLayout->addWidget(serverMessageColorSelection,row,1);
+
+  row++;
+  dialogLayout->addWidget(timeLabel,row,0);
+  dialogLayout->addWidget(timeColorSelection,row,1);
+
+  row++;
+  dialogLayout->addWidget(backgroundLabel,row,0);
+  dialogLayout->addWidget(backgroundColorSelection,row,1);
+
+  row++;
+  dialogLayout->addMultiCellWidget(pad,row,row,0,1);
+  dialogLayout->setRowStretch(row,10);
+
+  setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
   setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
   setButtonCancelText(i18n("Cancel"),i18n("Discards all changes made"));
 
-	channelTextColor = QColor(passed_channelTextColor.prepend("#"));
-	channelMessageColorSelection->setColor(channelTextColor);
-	queryTextColor = QColor(passed_queryTextColor.prepend("#"));
-	queryMessageColorSelection->setColor(queryTextColor);
-	serverTextColor = QColor(passed_serverTextColor.prepend("#"));
-	serverMessageColorSelection->setColor(serverTextColor);
-	actionTextColor = QColor(passed_actionTextColor.prepend("#"));
-	actionMessageColorSelection->setColor(actionTextColor);
-	backlogTextColor = QColor(passed_backlogTextColor.prepend("#"));
-	backlogMessageColorSelection->setColor(backlogTextColor);
-	commandTextColor = QColor(passed_commandTextColor.prepend("#"));
-	commandMessageColorSelection->setColor(commandTextColor);
-	linkTextColor = QColor(passed_linkTextColor.prepend("#"));
-	linkMessageColorSelection->setColor(linkTextColor);
-	timeColor = QColor(passed_timeColor.prepend("#"));
-	timeColorSelection->setColor(timeColor);
-	backgroundColor = QColor(passed_backgroundColor.prepend("#"));
-	backgroundColorSelection->setColor(backgroundColor);
+  connect(actionMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setActionTextColor(const QColor&)));
+  connect(backlogMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setBacklogTextColor(const QColor&)));
+  connect(channelMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setChannelTextColor(const QColor&)));
+  connect(commandMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setCommandTextColor(const QColor&)));
+  connect(linkMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setLinkTextColor(const QColor&)));
+  connect(queryMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setQueryTextColor(const QColor&)));
+  connect(serverMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setServerTextColor(const QColor&)));
+  connect(timeColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setTimeColor(const QColor&)));
+  connect(backgroundColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setBackgroundColor(const QColor&)));
 
-	connect(actionMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setActionTextColor(const QColor&)));
-	connect(backlogMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setBacklogTextColor(const QColor&)));
-	connect(channelMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setChannelTextColor(const QColor&)));
-	connect(commandMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setCommandTextColor(const QColor&)));
-	connect(linkMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setLinkTextColor(const QColor&)));
-	connect(queryMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setQueryTextColor(const QColor&)));
-	connect(serverMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setServerTextColor(const QColor&)));
-	connect(timeColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setTimeColor(const QColor&)));
-	connect(backgroundColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setBackgroundColor(const QColor&)));
-
-	this->resize(windowSize);
+  this->resize(passed_windowSize);
 }
 
 ColorConfiguration::~ColorConfiguration()
@@ -140,29 +154,9 @@ ColorConfiguration::~ColorConfiguration()
 
 void ColorConfiguration::closeEvent(QCloseEvent *ev)
 {
-	ev->ignore();
-	emit closeFontColorConfiguration(this->size());
+  ev->ignore();
+  emit closeFontColorConfiguration(this->size());
 }
-
-/*void ColorConfiguration::setColors(QString passed_channelTextColor, QString passed_queryTextColor, QString passed_serverTextColor,
-																	 QString passed_actionTextColor, QString passed_backlogTextColor, QString passed_commandTextColor,
-																	 QString passed_linkTextColor)
-{
-	channelTextColor = QColor(passed_channelTextColor);
-	channelMessageColorSelection->setColor(channelTextColor);
-	queryTextColor = QColor(passed_queryTextColor);
-	queryMessageColorSelection->setColor(queryTextColor);
-	serverTextColor = QColor(passed_serverTextColor);
-	serverMessageColorSelection->setColor(serverTextColor);
-	actionTextColor = QColor(passed_actionTextColor);
-	actionMessageColorSelection->setColor(actionTextColor);
-	backlogTextColor = QColor(passed_backlogTextColor);
-	backlogMessageColorSelection->setColor(backlogTextColor);
-	commandTextColor = QColor(passed_commandTextColor);
-	commandMessageColorSelection->setColor(commandTextColor);
-	linkTextColor = QColor(passed_linkTextColor);
-	linkMessageColorSelection->setColor(linkTextColor);
-} */
 
 void ColorConfiguration::slotOk()
 {
@@ -172,24 +166,24 @@ void ColorConfiguration::slotOk()
 
 void ColorConfiguration::slotApply()
 {
-	actionTextColorString = actionTextColor.name().mid(1);
-	backlogTextColorString = backlogTextColor.name().mid(1);
-	channelTextColorString = channelTextColor.name().mid(1);
-	commandTextColorString = commandTextColor.name().mid(1);
-	linkTextColorString = linkTextColor.name().mid(1);
-	queryTextColorString = queryTextColor.name().mid(1);
-	serverTextColorString = serverTextColor.name().mid(1);
-	timeColorString = timeColor.name().mid(1);
-	backgroundColorString = backgroundColor.name().mid(1);
+  QString actionTextColorString = actionTextColor.name().mid(1);
+  QString backlogTextColorString = backlogTextColor.name().mid(1);
+  QString channelTextColorString = channelTextColor.name().mid(1);
+  QString commandTextColorString = commandTextColor.name().mid(1);
+  QString linkTextColorString = linkTextColor.name().mid(1);
+  QString queryTextColorString = queryTextColor.name().mid(1);
+  QString serverTextColorString = serverTextColor.name().mid(1);
+  QString timeColorString = timeColor.name().mid(1);
+  QString backgroundColorString = backgroundColor.name().mid(1);
 
-	emit saveFontColorSettings(actionTextColorString, backlogTextColorString, channelTextColorString,
-														 commandTextColorString, linkTextColorString, queryTextColorString,
-														 serverTextColorString, timeColorString, backgroundColorString);
+  emit saveFontColorSettings(actionTextColorString, backlogTextColorString, channelTextColorString,
+                             commandTextColorString, linkTextColorString, queryTextColorString,
+                             serverTextColorString, timeColorString, backgroundColorString);
 }
 
 void ColorConfiguration::slotCancel()
 {
-	emit closeFontColorConfiguration(this->size());
+  emit closeFontColorConfiguration(this->size());
 }
 
 #include "colorconfiguration.moc"

@@ -30,22 +30,12 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
   setType(ChatWindow::Query);
 
-  /* This box holds the hostmask and the close button */
-  QHBox* maskQuitBox=new QHBox(this);
-  maskQuitBox->setSpacing(spacing());
-
-  queryHostmask=new QLineEdit(maskQuitBox);
+  queryHostmask=new QLineEdit(this);
   queryHostmask->setReadOnly(true);
-
-  KStandardDirs kstd;
-  QString prefix=kstd.findResource("data","konversation/images/");
-  QPushButton* closeButton=new QPushButton("",maskQuitBox);
-  closeButton->setPixmap(prefix+"close_pane.png");
-  closeButton->setMaximumWidth(20);
 
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer();
 
-  /* This box holds the input line and the log checkbox */
+  // This box holds the input line and the log checkbox
   QHBox* inputLogBox=new QHBox(this);
   inputLogBox->setSpacing(spacing());
 
@@ -55,9 +45,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   logCheckBox->setChecked(KonversationApplication::preferences.getLog());
   setLogfileName("");
 
-  /* connect the signals and slots */
-  connect(closeButton,SIGNAL (clicked()),this,SLOT (close()) );
-
+  // connect the signals and slots
   connect(queryInput,SIGNAL (returnPressed()),this,SLOT (queryTextEntered()) );
   connect(queryInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
 
@@ -90,13 +78,7 @@ void Query::setName(const QString& newName)
                     ? getName().lower()
                     : getName())+".log");
 }
-/*
-void Query::setServer(Server* newServer)
-{
-  getTextView()->setServer(newServer);
-  ChatWindow::setServer(newServer);
-}
-*/
+
 void Query::queryTextEntered()
 {
   QString line=queryInput->text();

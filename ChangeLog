@@ -5,6 +5,7 @@ Changes from 0.9 to 0.10
 - Added support for ASCII-BEL
 - Added custom spacing and margin
 - Added close buttons for the tabs
+- Redesign of the color configuration dialog
 
 Changes from 0.8 to 0.9
 - Added strikeout support (untested yet)
