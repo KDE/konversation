@@ -69,13 +69,15 @@ NotifyDialog::NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int 
   newButton=new QPushButton(i18n("New"),buttonBox);
   removeButton=new QPushButton(i18n("Remove"),buttonBox);
 
-  /* Set up instructions */
+/* No longer needed!
+  // Set up instructions
   QLabel* instructions=new QLabel(i18n("<b>Note:</b> If you switch off the notify function or remove all "
                                        "entries from the list the Lag-O-Meter will stop working."),page);
  
+*/
   dialogLayout->addWidget(delayBox);
   dialogLayout->addWidget(listBox);
-  dialogLayout->addWidget(instructions);
+//  dialogLayout->addWidget(instructions);
 
   setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
   setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));

@@ -16,7 +16,7 @@
 
 // Comment this #define to try a different text widget
 // #define TABLE_VERSION
-#define OLD_QT
+// #define OLD_QT
 
 #include <qstylesheet.h>
 #include <qtextcodec.h>

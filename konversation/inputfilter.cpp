@@ -382,7 +382,7 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
     /* Autojoin (for now this must be enough) */
     if(server->getAutoJoin()) server->queue(server->getAutoJoinCommand());
   }
-  else if(command==RPL_ISON)
+  else if(command==RPL_ISON || command=="pong")
   {
     /* TODO: implement proper notify handling */
     /* Tell server to start the next notify timer round */

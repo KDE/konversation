@@ -241,20 +241,25 @@ void Server::startNotifyCheckTimer()
 
 void Server::notifyTimeout()
 {
-  /* Notify delay time is over, send ISON request if desired */
+  bool sent=false;
+
+  // Notify delay time is over, send ISON request if desired
   if(KonversationApplication::preferences.getUseNotify())
   {
-    /* But only if there actually are nicks in the notify list */
+    // But only if there actually are nicks in the notify list
     QString list=KonversationApplication::preferences.getNotifyString();
     if(list!="")
     {
       queue("ISON "+list);
-      /* start check timer waiting for 303 response */
-      startNotifyCheckTimer();
+      // remember that we already sent out ISON
+      sent=true;
     }
   }
-  /* show unknown lag time if no notify is used */
-  else emit resetLag();
+
+  // if no ISON was sent, fall back to PING for lag measuring
+  if(!sent) queue("PING LAG :"+ircName);
+  // start check timer waiting for 303 or PONG response
+  startNotifyCheckTimer();
 }
 
 void Server::notifyCheckTimeout()
@@ -314,7 +319,7 @@ void Server::incoming(KSocket* ksocket)
 
 void Server::queue(const QString& buffer)
 {
-  /* Only queue lines if we are connected */
+  // Only queue lines if we are connected
   if(serverSocket && buffer.length())
   {
     kdDebug() << "Q: " << buffer << endl;
@@ -328,15 +333,16 @@ void Server::queue(const QString& buffer)
 
 void Server::send(KSocket* ksocket)
 {
-  /* Check if we are still online */
+  // Check if we are still online
   if(serverSocket)
   {
-    kdDebug() << "-> " << outputBuffer << endl;
-    /* To make lag calculation more precise, we reset the timer here */
-    if(outputBuffer.startsWith("ISON")) notifySent.start();
-    /* Don't reconnect if we WANT to quit */
+//    kdDebug() << "-> " << outputBuffer << endl;
+    // To make lag calculation more precise, we reset the timer here
+    if(outputBuffer.startsWith("ISON") ||
+       outputBuffer.startsWith("PING LAG")) notifySent.start();
+    // Don't reconnect if we WANT to quit
     else if(outputBuffer.startsWith("QUIT")) setDeliberateQuit(true);
-    /* TODO: Implement Flood-Protection here */
+    // TODO: Implement Flood-Protection here
     write(ksocket->socket(),outputBuffer.latin1(),outputBuffer.length());
     serverSocket->enableWrite(false);
   }
@@ -747,9 +753,9 @@ QString Server::parseWildcards(const QString& toParse,const QString& nickname,co
   return out;
 }
 
-void Server::setIrcName(QString& newIrcName)
+void Server::setIrcName(QString newIrcName)
 {
-  ircName=*newIrcName;
+  ircName=newIrcName;
 }
 
 OutputFilter& Server::getOutputFilter()
