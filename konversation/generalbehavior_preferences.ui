@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>GeneralBehavior_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,12 +18,12 @@ the Free Software Foundation; either version 2 of the License, or
             <height>463</height>
         </rect>
     </property>
-    <property name="caption">
-        <string></string>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
         </property>
         <widget class="QGroupBox" row="0" column="0" rowspan="1" colspan="3">
             <property name="name">
@@ -48,9 +48,6 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="text">
                         <string>Use sys&amp;tem tray for new message notification</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+T</string>
                     </property>
                 </widget>
                 <spacer row="1" column="0">
@@ -79,9 +76,6 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="text">
                         <string>Only notify when someone says &amp;your nick</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+Y</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
@@ -191,9 +185,6 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="text">
                 <string>&amp;Show server list dialog on application startup</string>
             </property>
-            <property name="accel">
-                <string>Alt+S</string>
-            </property>
         </widget>
         <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="3">
             <property name="name">
@@ -252,9 +243,6 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="text">
                 <string>Use custom Web &amp;browser:</string>
             </property>
-            <property name="accel">
-                <string>Alt+B</string>
-            </property>
         </widget>
         <widget class="QLabel" row="6" column="0">
             <property name="name">
@@ -296,10 +284,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>autojoinOnInviteCheck</cstring>
             </property>
             <property name="text">
-                <string>Automaticaly join channel on &amp;invite</string>
-            </property>
-            <property name="accel">
-                <string>Alt+I</string>
+                <string>Automaticaly &amp;join channel on invite</string>
             </property>
         </widget>
     </grid>

@@ -16,6 +16,9 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
         <widget class="KListView" row="0" column="0">
             <column>
                 <property name="text">

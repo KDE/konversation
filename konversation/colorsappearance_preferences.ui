@@ -21,6 +21,9 @@ the Free Software Foundation; either version 2 of the License, or
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
         <widget class="QGroupBox">
             <property name="name">
                 <cstring>groupBox1</cstring>
@@ -59,7 +62,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>textLabel1_2</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Hyperlink:</string>
+                        <string>H&amp;yperlink:</string>
                     </property>
                     <property name="buddy" stdset="0">
                         <cstring>kcfg_HyperlinkColor</cstring>

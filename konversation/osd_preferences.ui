@@ -16,6 +16,9 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
         <spacer row="5" column="0">
             <property name="name">
                 <cstring>spacer1</cstring>

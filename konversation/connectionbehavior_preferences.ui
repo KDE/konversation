@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>ConnectionBehavior_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,12 +18,12 @@ the Free Software Foundation; either version 2 of the License, or
             <height>480</height>
         </rect>
     </property>
-    <property name="caption">
-        <string></string>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
         </property>
         <widget class="QGroupBox" row="0" column="0">
             <property name="name">
@@ -94,9 +94,6 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>Automaticaly re&amp;join channels on reconnect</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+J</string>
-                    </property>
                 </widget>
             </grid>
         </widget>
@@ -117,9 +114,6 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="text">
                         <string>Show raw &amp;log window when connecting</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+L</string>
                     </property>
                 </widget>
             </grid>

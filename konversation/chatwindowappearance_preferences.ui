@@ -20,6 +20,9 @@ the Free Software Foundation; either version 2 of the License, or
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
         <widget class="QGroupBox">
             <property name="name">
                 <cstring>groupBox3</cstring>
@@ -139,7 +142,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_ShowQuickButtons</cstring>
                     </property>
                     <property name="text">
-                        <string>Show quick &amp;buttons</string>
+                        <string>Show &amp;quick buttons</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox">
@@ -155,7 +158,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_ShowNicknameBox</cstring>
                     </property>
                     <property name="text">
-                        <string>Show nickname box in channel and status window</string>
+                        <string>Show nickname bo&amp;x in channel and status window</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox">

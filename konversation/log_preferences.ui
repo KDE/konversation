@@ -20,6 +20,9 @@ the Free Software Foundation; either version 2 of the License, or
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
         <widget class="QGroupBox" row="0" column="0">
             <property name="name">
                 <cstring>kcfg_Log</cstring>
