@@ -100,27 +100,10 @@ class DccTransfer : public QObject, public KListViewItem
   protected slots:
     void updateView();
     
-    void slotRemoveFileDone( KIO::Job* job );
-    
   protected:
-    void showProgressBar();  // called from printCell()
-    
-    void startAutoUpdateView();
-    void stopAutoUpdateView();
-    
     void setStatus( DccStatus status, const QString& statusDetail = QString::null );
-    
-    // called from updateView()
-    QString         getTypeText()                                   const;
-    QPixmap         getTypeIcon()                                   const;
-    QPixmap         getStatusIcon()                                 const;
-    QString         getStatusText()                                 const;
-    QString         getFileSizePrettyText()                         const;
-    int             getProgress()                                   const;
-    QString         getPositionPrettyText( bool detailed = false )  const;
-    QString         getTimeRemainingPrettyText()                    const;
-    QString         getCPSPrettyText()                              const;
-    unsigned long   getCPS()                                        const;
+    void initTransferMeter();
+    void finishTransferMeter();
     
     static QString getNumericalIpText( const QString& ipString );
     static QString getErrorString( int code );
@@ -139,9 +122,6 @@ class DccTransfer : public QObject, public KListViewItem
     QString m_partnerPort;
     QString m_ownIp;
     QString m_ownPort;
-    QDateTime m_timeOffer;
-    QDateTime m_timeTransferStarted;
-    QDateTime m_timeLastActive;
     
     unsigned long m_bufferSize;
     char* m_buffer;
@@ -163,6 +143,32 @@ class DccTransfer : public QObject, public KListViewItem
      */
     KURL m_fileURL;
     
+  private slots:
+    void slotRemoveFileDone( KIO::Job* job );
+    
+  private:
+    void showProgressBar();  // called from printCell()
+    
+    void startAutoUpdateView();
+    void stopAutoUpdateView();    
+    
+    // called from updateView()
+    QString         getTypeText()                                   const;
+    QPixmap         getTypeIcon()                                   const;
+    QPixmap         getStatusIcon()                                 const;
+    QString         getStatusText()                                 const;
+    QString         getFileSizePrettyText()                         const;
+    int             getProgress()                                   const;
+    QString         getPositionPrettyText( bool detailed = false )  const;
+    QString         getTimeRemainingPrettyText()                    const;
+    QString         getCPSPrettyText()                              const;
+    unsigned long   getCPS()                                        const;
+    
+    QDateTime m_timeOffer;
+    QDateTime m_timeTransferStarted;
+    //QDateTime m_timeLastActive;
+    QDateTime m_timeTransferFinished;
+        
     // UI
     QTimer* m_autoUpdateViewTimer;
     KProgress* m_progressBar;
@@ -173,4 +179,4 @@ class DccTransfer : public QObject, public KListViewItem
     
 };
 
-#endif
+#endif  // DCCTRANSFER_H

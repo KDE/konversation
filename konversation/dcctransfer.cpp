@@ -64,18 +64,18 @@ DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partn
   m_detailDialog = 0;
   
   // FIXME: we shouldn't do these init in the instance constructer
-  s_dccTypeText[ Send    ] = i18n("Send");
+  s_dccTypeText[ Send ]    = i18n("Send");
   s_dccTypeText[ Receive ] = i18n("Receive");
   
-  s_dccStatusText[ Queued        ] = i18n("Queued");
+  s_dccStatusText[ Queued ]        = i18n("Queued");
   s_dccStatusText[ WaitingRemote ] = i18n("Offering");
-  s_dccStatusText[ Connecting    ] = i18n("Connecting");
-  s_dccStatusText[ Sending       ] = i18n("Sending");
-  s_dccStatusText[ Receiving     ] = i18n("Receiving");
-  s_dccStatusText[ Done          ] = i18n("Done");
-  s_dccStatusText[ Failed        ] = i18n("Failed");
-  s_dccStatusText[ Aborted       ] = i18n("Aborted");
-  s_dccStatusText[ Removed       ] = i18n("Removed");
+  s_dccStatusText[ Connecting ]    = i18n("Connecting");
+  s_dccStatusText[ Sending ]       = i18n("Sending");
+  s_dccStatusText[ Receiving ]     = i18n("Receiving");
+  s_dccStatusText[ Done ]          = i18n("Done");
+  s_dccStatusText[ Failed ]        = i18n("Failed");
+  s_dccStatusText[ Aborted ]       = i18n("Aborted");
+  s_dccStatusText[ Removed ]       = i18n("Removed");
 }
 
 DccTransfer::~DccTransfer()
@@ -86,7 +86,7 @@ DccTransfer::~DccTransfer()
   delete m_progressBar;
 }
 
-void DccTransfer::updateView()  // slot
+void DccTransfer::updateView()  // slot, protected
 {
   setPixmap( DccPanel::Column::TypeIcon, getTypeIcon() );
   setPixmap( DccPanel::Column::Status,   getStatusIcon() );
@@ -108,17 +108,30 @@ void DccTransfer::updateView()  // slot
     m_detailDialog->updateView();
 }
 
+void DccTransfer::initTransferMeter()  // protected
+{
+  m_timeTransferStarted = QDateTime::currentDateTime();
+  startAutoUpdateView();
+}
+
+void DccTransfer::finishTransferMeter()  // protected
+{
+  if ( m_timeTransferFinished.isNull() )
+    m_timeTransferFinished = QDateTime::currentDateTime();
+  stopAutoUpdateView();
+}
+
 void DccTransfer::startAutoUpdateView()
 {
   stopAutoUpdateView();
-  m_autoUpdateViewTimer = new QTimer(this);
-  connect(m_autoUpdateViewTimer, SIGNAL(timeout()), this, SLOT(updateView()));
-  m_autoUpdateViewTimer->start(500);
+  m_autoUpdateViewTimer = new QTimer( this );
+  connect( m_autoUpdateViewTimer, SIGNAL( timeout() ), this, SLOT( updateView()) );
+  m_autoUpdateViewTimer->start( 500 );
 }
 
 void DccTransfer::stopAutoUpdateView()
 {
-  if(m_autoUpdateViewTimer)
+  if( m_autoUpdateViewTimer )
   {
     m_autoUpdateViewTimer->stop();
     delete m_autoUpdateViewTimer;
@@ -172,7 +185,7 @@ void DccTransfer::slotRemoveFileDone( KIO::Job* job )
   }
 }
 
-void DccTransfer::openFileInfoDialog()
+void DccTransfer::openFileInfoDialog()  // public
 {
   if( m_dccType == Send || m_dccStatus == Done )
   {
@@ -255,7 +268,7 @@ void DccTransfer::closeDetailDialog()  // public
   }
 }
 
-void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )
+void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )  // protected
 {
   bool changed = ( status != m_dccStatus );
   m_dccStatus = status;
@@ -340,7 +353,7 @@ QString DccTransfer::getTimeRemainingPrettyText() const
   if( !m_fileSize )
     return i18n("unknown");
   // not use getCPS() for exact result
-  int trnsfdTime = m_timeTransferStarted.secsTo( QDateTime::currentDateTime() );
+  int trnsfdTime = m_timeTransferStarted.secsTo( m_timeTransferFinished.isNull() ? QDateTime::currentDateTime() : m_timeTransferFinished );
   KIO::fileoffset_t trnsfdBytes = m_transferringPosition - m_transferStartPosition;
   if( trnsfdBytes == 0 )
     return QString::null;
@@ -367,7 +380,7 @@ QString DccTransfer::getCPSPrettyText() const
 
 unsigned long DccTransfer::getCPS() const
 {
-  int elapsed = m_timeTransferStarted.secsTo( QDateTime::currentDateTime() );
+  int elapsed = m_timeTransferStarted.secsTo( m_timeTransferFinished.isNull() ? QDateTime::currentDateTime() : m_timeTransferFinished );
   if( elapsed == 0 && m_transferringPosition - m_transferStartPosition > 0 )
     elapsed = 1;
   // prevent division by zero
@@ -375,7 +388,7 @@ unsigned long DccTransfer::getCPS() const
 }
 
 //FIXME: IPv6 support
-QString DccTransfer::getNumericalIpText( const QString& ipString )  // static
+QString DccTransfer::getNumericalIpText( const QString& ipString )  // protected, static
 {
   QHostAddress ip;
   ip.setAddress( ipString );
@@ -383,7 +396,7 @@ QString DccTransfer::getNumericalIpText( const QString& ipString )  // static
   return QString::number( ip.ip4Addr() );
 }
 
-QString DccTransfer::getErrorString( int code )  // static
+QString DccTransfer::getErrorString( int code )  // protected, static
 {
   QString errorString(QString::null);
 
@@ -427,7 +440,7 @@ QString DccTransfer::getErrorString( int code )  // static
   return errorString;
 }
 
-unsigned long DccTransfer::intel( unsigned long value )  // static
+unsigned long DccTransfer::intel( unsigned long value )  // protected, static
 {
   value = ( (value & 0xff000000) >> 24 ) +
           ( (value & 0xff0000) >> 8 ) +
@@ -437,7 +450,7 @@ unsigned long DccTransfer::intel( unsigned long value )  // static
   return value;
 }
 
-QString DccTransfer::getPrettyNumberText( const QString& numberText )  // static
+QString DccTransfer::getPrettyNumberText( const QString& numberText )  // protected, static
 {
   QString prettyNumberText = numberText;
   int commas = (int)( ( numberText.length() - 1 ) / 3 );

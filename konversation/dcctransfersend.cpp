@@ -183,11 +183,11 @@ void DccTransferSend::setResume( unsigned long position )  // public
 void DccTransferSend::cleanUp()
 {
   kdDebug() << "DccTransferSend::cleanUp()" << endl;
+  stopConnectionTimer();
+  finishTransferMeter();
   if( !m_tmpFile.isEmpty() )
     KIO::NetAccess::removeTempFile( m_tmpFile );
   m_tmpFile = QString::null;
-  stopConnectionTimer();
-  stopAutoUpdateView();
   if( m_sendSocket )
   {
     m_sendSocket->close();
@@ -220,8 +220,6 @@ void DccTransferSend::heard()  // slot
   // we don't need ServerSocket anymore
   m_serverSocket->close();
   
-  m_timeTransferStarted = QDateTime::currentDateTime();
-  
   if( m_file.open( IO_ReadOnly ) )
   {
     // seek to file position to make resume work
@@ -231,7 +229,7 @@ void DccTransferSend::heard()  // slot
     setStatus( Sending );
     m_sendSocket->enableRead( true );
     m_sendSocket->enableWrite( true );
-    startAutoUpdateView();
+    initTransferMeter();  // initialize CPS counter, ETA counter, etc...
   }
   else
   {

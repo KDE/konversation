@@ -211,7 +211,7 @@ void DccTransferRecv::cleanUp()
   kdDebug() << "DccTransferRecv::cleanUp()" << endl;
   
   stopConnectionTimer();
-  stopAutoUpdateView();
+  finishTransferMeter();
   if( m_recvSocket )
   {
     m_recvSocket->close();
@@ -296,13 +296,12 @@ void DccTransferRecv::connectionSuccess()  // slot
 {
   kdDebug() << "DccTransferRecv::connectionSuccess()" << endl;
   
-  m_timeTransferStarted = QDateTime::currentDateTime();
-  
   setStatus( Receiving );
   updateView();
-  startAutoUpdateView();
   
   m_recvSocket->enableRead( true );
+  
+  initTransferMeter();  // initialize CPS counter, ETA counter, etc...
 }
 
 void DccTransferRecv::connectionFailed( int errorCode )  // slot
@@ -349,11 +348,10 @@ void DccTransferRecv::sendAck()  // slot
 
 void DccTransferRecv::writeDone()  // slot
 {
-
-  kdDebug() << "writeDone()" << endl;
-  cleanUp();
+  kdDebug() << "DccTransferRecv::writeDone()" << endl;
   setStatus( Done );
   updateView();
+  cleanUp();
   emit done( m_fileName );
 }
 
