@@ -408,6 +408,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
           patternFound = ((filteredLine.lower().find(needle) != -1) ||   // hilight patterns in text
                           (whoSent.lower().find(needle) != -1));            // hilight patterns in nickname
         }
+	++it;
       }
       
       if(patternFound)
