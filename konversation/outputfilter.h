@@ -6,12 +6,10 @@
 */
 
 /*
-  outputfilter.h  -  description
+  outputfilter.h  -  Converts input to RFC1459 output
   begin:     Fri Feb 1 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef OUTPUTFILTER_H

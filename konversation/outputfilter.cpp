@@ -6,12 +6,10 @@
 */
 
 /*
-  outputfilter.cpp  -  description
+  outputfilter.cpp  -  Converts input to RFC1459 output
   begin:     Fri Feb 1 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include <qstringlist.h>
@@ -86,8 +84,6 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
   command=false;
   query=false;
 
-  // replace aliases before anything else happens
-//  QString inputLine=replaceAliases(originalLine);
   QString inputLine(originalLine);
 
   // replace placeholders
