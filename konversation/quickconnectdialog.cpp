@@ -34,8 +34,8 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 	layout->setSpacing(spacingHint());
 	layout->setColStretch(1, 10);
 	
-	QLabel* hostNameLabel = new QLabel(i18n("&Server URL:"), page);
-	QString hostNameWT = i18n("Enter the URL of the network here.");
+	QLabel* hostNameLabel = new QLabel(i18n("&Server host:"), page);
+	QString hostNameWT = i18n("Enter the host of the network here.");
 	QWhatsThis::add(hostNameLabel, hostNameWT);
 	hostNameInput = new KLineEdit(page);
 	QWhatsThis::add(hostNameInput, hostNameWT);
