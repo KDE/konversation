@@ -34,6 +34,7 @@ ChatWindow::ChatWindow(QWidget* parent)
   parentWidget=parent;
   firstLog=true;
   server=0;
+  m_notificationsEnabled = true;
 
   setMargin(margin());
   setSpacing(spacing());

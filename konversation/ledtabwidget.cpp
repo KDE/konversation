@@ -170,30 +170,28 @@ void LedTabWidget::changeName(ChatWindow* view,const QString& newName)
 #ifndef QT_NO_WHEELEVENT
 void LedTabWidget::wheelEvent( QWheelEvent *e )
 {
-	processWheelEvent(e);
+  processWheelEvent(e);
 }
 #endif
 
 #ifndef QT_NO_WHEELEVENT
 void LedTabWidget::processWheelEvent(QWheelEvent *e)
 {
-	if (e->delta() > 0)
-	{
-		if ( currentPageIndex() == 0 )
-			setCurrentPage(count()-1);
-		else
-			setCurrentPage(currentPageIndex()-1);
-	}
-        else
-	{
-		if ( currentPageIndex()+1 >= count() )
-			setCurrentPage(0);
-		else
-			setCurrentPage(currentPageIndex()+1);
-	}
+  if (e->delta() > 0)
+  {
+    if ( currentPageIndex() == 0 )
+      setCurrentPage(count()-1);
+    else
+      setCurrentPage(currentPageIndex()-1);
+  }
+  else
+  {
+    if ( currentPageIndex()+1 >= count() )
+      setCurrentPage(0);
+    else
+      setCurrentPage(currentPageIndex()+1);
+  }
 }
 #endif
 
 #include "ledtabwidget.moc"
-
-

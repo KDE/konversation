@@ -38,6 +38,8 @@
 #include "konversationapplication.h"
 #include "commit.h"
 #include "version.h"
+#include "query.h"
+#include "channel.h"
 
 #if QT_VERSION < 0x030100
 #include "main.h"
@@ -165,7 +167,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
           server->appendActionToChannel(parameterList[0],sourceNick,ctcpArgument);
 #ifdef USE_KNOTIFY
           // KNotify events...
-          if(sourceNick != server->getNickname()) {
+          if(sourceNick != server->getNickname() && server->getChannelByName(parameterList[0])->notificationsEnabled()) {
             if(ctcpArgument.lower().find(QRegExp("(^|[^\\d\\w])"+QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
             {
               KNotifyClient::event(mainWindow->winId(), "nick");
@@ -191,7 +193,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 
 #ifdef USE_KNOTIFY
           // KNotify events...
-          if(sourceNick != server->getNickname()) {
+          if(sourceNick != server->getNickname() && server->getQueryByName(parameterList[0])->notificationsEnabled()) {
             KNotifyClient::event(mainWindow->winId(), "nick");
           }
 #endif
@@ -314,7 +316,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 
 #ifdef USE_KNOTIFY
           // KNotify events...
-          if(sourceNick != server->getNickname()) {
+          if(sourceNick != server->getNickname() && server->getChannelByName(parameterList[0])->notificationsEnabled()) {
             if(trailing.lower().find(QRegExp("(^|[^\\d\\w])"+
               QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
             {
@@ -341,7 +343,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 
 #ifdef USE_KNOTIFY
           // KNotify events...
-          if(sourceNick != server->getNickname()) {
+          if(sourceNick != server->getNickname() && server->getQueryByName(sourceNick)->notificationsEnabled()) {
             QString cutup = KStringHandler::rsqueeze(trailing, 50);
             KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
           }
@@ -461,7 +463,9 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
     {
       server->nickJoinsChannel(channelName,sourceNick,sourceHostmask);
 #ifdef USE_KNOTIFY
-      KNotifyClient::event(mainWindow->winId(), "join");
+      if(server->getChannelByName(channelName)->notificationsEnabled()) {
+        KNotifyClient::event(mainWindow->winId(), "join");
+      }
 #endif
     }
   }
@@ -511,7 +515,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
     server->removeNickFromChannel(parameterList[0],sourceNick,trailing);
 #ifdef USE_KNOTIFY
     // KNotify events...
-    if(sourceNick != server->getNickname()) {
+    if(sourceNick != server->getNickname() && server->getChannelByName(parameterList[0])->notificationsEnabled()) {
       KNotifyClient::event(mainWindow->winId(), "part");
     }
 #endif
@@ -597,7 +601,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
     parseModes(sourceNick,parameterList);
 #ifdef USE_KNOTIFY
     // KNotify events...
-    if(sourceNick != server->getNickname()) {
+    if(sourceNick != server->getNickname() && server->getChannelByName(parameterList[0])->notificationsEnabled()) {
       KNotifyClient::event(mainWindow->winId(), "mode");
     }
 #endif

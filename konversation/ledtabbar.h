@@ -59,7 +59,8 @@ class LedTabBar : public QTabBar
       Label=0,
       MoveLeft,
       MoveRight,
-      CloseTab
+      CloseTab,
+      EnableNotifications
     };
     // these two come from the original QT source
     virtual void paint( QPainter *, QTab *, bool ) const; // ### not const

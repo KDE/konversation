@@ -30,6 +30,8 @@ class QTimer;
 class QListViewItem;
 class QHBox;
 class QStringList;
+class QSplitter;
+class QGrid;
 
 class KLineEdit;
 

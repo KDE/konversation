@@ -83,6 +83,8 @@ class ChatWindow : public QVBox
     virtual void closeYourself();
     virtual bool frontView();
     virtual bool searchView();
+    
+    virtual bool notificationsEnabled() { return m_notificationsEnabled; }
 
   signals:
     void nameChanged(ChatWindow* view,const QString& newName);
@@ -96,6 +98,8 @@ class ChatWindow : public QVBox
     virtual void adjustFocus()=0;
     virtual void appendInputText(const QString&);
     virtual void indicateAway(bool away);
+    
+    virtual void setNotificationsEnabled(bool enable) { m_notificationsEnabled = enable; }
 
   protected:
     bool log;
@@ -118,6 +122,8 @@ class ChatWindow : public QVBox
     OutputFilter filter;
     WindowType type;
     ScriptLauncher scriptLauncher;
+    
+    bool m_notificationsEnabled;
 };
 
 #endif

@@ -25,6 +25,7 @@
 #include "ledtabbar.h"
 #include "ledtab.h"
 #include "konversationapplication.h"
+#include "chatwindow.h"
 
 #define LABEL_OFFSET 16
 
@@ -76,6 +77,8 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
     popup->insertTitle(i18n("Tab"),Label);
     popup->insertItem(i18n("Move Left"),MoveLeft);
     popup->insertItem(i18n("Move Right"),MoveRight);
+    popup->insertSeparator();
+    popup->insertItem(i18n("Enable Notifications"), EnableNotifications);
     popup->insertSeparator();
     popup->insertItem(i18n("Close Tab"),CloseTab);
   }
@@ -348,6 +351,15 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
     if(lookTab->rect().contains(ce->pos()))
     {
       popup->changeTitle(Label,lookTab->text());
+      ChatWindow* win = dynamic_cast<ChatWindow*>(static_cast<LedTab*>(lookTab)->getWidget());
+      
+      if(win) {
+        popup->setItemVisible(EnableNotifications, true);
+        popup->setItemChecked(EnableNotifications, win->notificationsEnabled());
+      } else {
+        popup->setItemVisible(EnableNotifications, false);
+      }
+      
       int r=popup->exec(ce->globalPos());
       if(r==CloseTab)
       {
@@ -360,6 +372,12 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
       else if(r==MoveRight)
       {
         emit moveTabRight(lookTab->identifier());
+      }
+      else if(r == EnableNotifications)
+      {
+        if(win) {
+          win->setNotificationsEnabled(!win->notificationsEnabled());
+        }
       }
     }
   } // endfor
