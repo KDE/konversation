@@ -147,6 +147,7 @@ class KonversationApplication : public KApplication
     void dcopRaw(const QString& server, const QString &command);
     void dcopSay(const QString& server,const QString& target,const QString& command);
     void dcopInfo(const QString& string);
+    void setAutoAway();
     void insertRememberLine();
     void appearanceChanged();
     void sendMultiServerCommand(const QString& command, const QString& parameter);

@@ -36,6 +36,19 @@ KonvDCOP::KonvDCOP()
     kapp->dcopClient()->registerAs("konversation");
     kapp->dcopClient()->setDefaultObject(objId());
   }
+  KConfig *config = KGlobal::config();
+  config->setGroup("AutoAway");  //TODO - add this to preferences somewhere
+
+  if (config->readBoolEntry("UseAutoAway", true))
+  {
+    connectDCOPSignal("kdesktop", "KScreensaverIface",
+                      "KDE_start_screensaver()", "setAutoAway()", false);
+  }
+  else
+  {
+    disconnectDCOPSignal("kdesktop", "KScreensaverIface",
+    "KDE_start_screensaver()", "setAutoAway()");
+  }
 }
 
 void KonvDCOP::raw(const QString& server,const QString& command)
@@ -51,6 +64,10 @@ void KonvDCOP::setAway(const QString &awaymessage)
     emit dcopMultiServerRaw("away " + i18n("Gone away for now."));  //away messages can't be empty.
   else
     emit dcopMultiServerRaw("away " + awaymessage);
+}
+void KonvDCOP::setAutoAway()
+{
+  emit setAutoAway();
 }
 void KonvDCOP::setBack()
 {

@@ -26,12 +26,14 @@ class KonvDCOP : public QObject, virtual public KonvIface
     void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
     void dcopRaw(const QString& server, const QString& command);
     void dcopMultiServerRaw(const QString& command);
+    void dcopSetAutoAway();
 
   public slots:
     int registerEventHook(const QString& type,const QString& criteria,const QString& app,const QString& object,const QString& signal);
     void unregisterEventHook (int id);
 
     void setAway(const QString &awaymessage);
+    void setAutoAway();
     void setBack();
     void sayToAll(const QString &message);
     void actionToAll(const QString &message);

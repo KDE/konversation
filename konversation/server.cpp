@@ -2849,7 +2849,12 @@ void Server::away()
   }
   
 }
-
+void Server::setAutoAway() {
+  kdDebug() << "going autoaway!" << endl;
+  m_isAutoAway = true;
+  //note that we now need to tell the server we are away.  m_isAway is set when we get a reply from the server saying we are now away.
+  executeMultiServerCommand("away", i18n("Gone away for now.")); //fix this to use a prefered auto-away string.
+}
 void Server::unAway()
 {
   m_isAway=false;

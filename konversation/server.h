@@ -281,7 +281,14 @@ class Server : public QObject
      *  If we are not away, returns 00:00:00
      */
     QString awayTime() const;
+    /** Does the _server_ think we are away.  Note that if we went auto-away when not connected to the server, this may
+     *  return false.
+     */
     bool isAway() const;
+    /** Put the server in autoaway.  This means that when there is mouse activity, we will set to available again
+     *  @see isAway
+     */
+    void setAutoAway();
 
     void emitChannelNickChanged(const ChannelNickPtr channelNick);
     void emitNickInfoChanged(const NickInfoPtr nickInfo);
@@ -584,6 +591,7 @@ class Server : public QObject
     ChannelListPanel* channelListPanel;
 
     bool m_isAway;
+    bool m_isAutoAway; ///Note that this may be true, but m_isAway is false, if we go auto-away when disconnected.
     bool alreadyConnected;
     bool rejoinChannels;
     bool sendUnlocked;
