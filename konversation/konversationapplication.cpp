@@ -515,9 +515,9 @@ void KonversationApplication::readOptions()
   preferences.setOSDOffsetY(config->readNumEntry("OffsetY",preferences.getOSDOffsetY()));
   preferences.setOSDAlignment(config->readNumEntry("Alignment",preferences.getOSDAlignment()));
   // if osd object exists
-  if(osd && preferences.getOSDUsage())
+  if(osd)
   {
-    osd->setEnabled(true);
+    osd->setEnabled(preferences.getOSDUsage());
     osd->setFont(preferences.getOSDFont());
     osd->setDuration(preferences.getOSDDuration());
     osd->setScreen(preferences.getOSDScreen());
@@ -543,8 +543,6 @@ void KonversationApplication::readOptions()
 
       osd->setBackgroundColor(preferences.getOSDBackgroundColor());
     }
-  } else if(osd && !preferences.getOSDUsage()) {
-    osd->setEnabled(false);
   }
 
   // Check if there is old server list config
