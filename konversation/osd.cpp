@@ -9,7 +9,7 @@ the Free Software Foundation; either version 2 of the License, or
   osd.cpp  -  Provides an interface to a plain QWidget, which is independent of KDE (bypassed to X11)
   begin:     Fre Sep 26 2003
   copyright: (C) 2003 by Christian Muehlhaeuser
-  email:     chris@chris.de
+  copyright: (C) 2004 by Michael Goettsche
 */
 
 #include "osd.h"
