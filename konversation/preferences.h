@@ -294,6 +294,8 @@ class Preferences : public QObject
 
     void setTimestamping(bool state);
     bool getTimestamping();
+    void setShowDate(bool state);
+    bool getShowDate();
     void setTimestampFormat(const QString& newFormat);
     QString getTimestampFormat();
 
@@ -429,6 +431,7 @@ class Preferences : public QObject
     bool useNotify;
 
     bool timestamping;
+    bool showDate;
     QString timestampFormat;
 
     bool showQuickButtons;

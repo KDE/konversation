@@ -145,6 +145,7 @@ Preferences::Preferences()
   setNoRightsLedColor(3);
 
   setTimestamping(true);
+  setShowDate(false);
   setTimestampFormat("hh:mm");
 
   setCommandChar("/");
@@ -604,6 +605,8 @@ void Preferences::setListFontRaw(const QString &rawFont) { listFont.fromString(r
 
 void Preferences::setTimestamping(bool state) { timestamping=state; }
 bool Preferences::getTimestamping() { return timestamping; }
+void Preferences::setShowDate(bool state) { showDate=state; }
+bool Preferences::getShowDate() { return showDate; }
 void Preferences::setTimestampFormat(const QString& newFormat) { timestampFormat=newFormat; }
 QString Preferences::getTimestampFormat() { return timestampFormat; }
 

@@ -59,11 +59,13 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   updateFonts();
 
-  // Timestamp settings
+  //
   QHBox* timestampBox=new QHBox(parentFrame);
   timestampBox->setSpacing(spacingHint());
 
   doTimestamping=new QCheckBox(i18n("Show &timestamps"),timestampBox,"show_timestamps_checkbox");
+  showDate=new QCheckBox(i18n("Show &dates"),timestampBox,"show_date_checkbox");
+  showDate->setChecked(preferences->getShowDate());
 
   formatLabel=new QLabel(i18n("&Format:"),timestampBox);
   formatLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -251,6 +253,11 @@ void PrefsPageAppearance::timestampingChanged(int state)
   doTimestamping->setChecked(state==2);
   timestampFormat->setEnabled(state==2);
   formatLabel->setEnabled(state==2);
+  showDate->setEnabled(state==2);
+  if(state!=2)
+  {
+	showDate->setChecked(false);
+  }
 }
 
 void PrefsPageAppearance::useSpacingChanged(int state)
@@ -298,6 +305,7 @@ void PrefsPageAppearance::applyPreferences()
   preferences->setTextFont(textFont);
   preferences->setListFont(listFont);
   preferences->setTimestamping(doTimestamping->isChecked());
+  preferences->setShowDate(showDate->isChecked());
   preferences->setTimestampFormat(timestampFormat->currentText());
   preferences->setShowQuickButtons(showQuickButtons->isChecked());
   preferences->setShowModeButtons(showModeButtons->isChecked());

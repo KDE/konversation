@@ -609,7 +609,16 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps,bool important)
     QTime time=QTime::currentTime();
     QString timeColor=KonversationApplication::preferences.getColor("Time");
     QString timeFormat=KonversationApplication::preferences.getTimestampFormat();
-    QString timeString(QString("<font color=\"#"+timeColor+"\">[%1]</font> ").arg(time.toString(timeFormat)));
+    QString timeString;
+    if(!KonversationApplication::preferences.getShowDate())
+    {
+    	timeString = QString("<font color=\"#"+timeColor+"\">[%1]</font> ").arg(time.toString(timeFormat));
+    }
+    else
+    {
+	QDate date = QDate::currentDate();
+	timeString = QString("<font color=\"#"+timeColor+"\">[%1 %2]</font> ").arg(date.toString(Qt::ISODate)).arg(time.toString(timeFormat));
+    }
 
 #ifdef ADD_LINE_BREAKS
       line.prepend(timeString);

@@ -65,6 +65,7 @@ class PrefsPageAppearance : public PrefsPage
     QFont listFont;
 
     QCheckBox* doTimestamping;
+    QCheckBox* showDate;
     QCheckBox* showQuickButtons;
     QCheckBox* showModeButtons;
     QCheckBox* showTopic;
