@@ -23,7 +23,9 @@
 // Konversation includes.
 #include "nickinfo.h"
 #include "chatwindow.h"
+#include "channel.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
+
 /**
 *  @author Dario Abatianni
 *  @author Gary Cramblitt <garycramblitt@comcast.net>
