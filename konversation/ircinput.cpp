@@ -209,14 +209,15 @@ bool IRCInput::checkPaste(const QString& text)
 {
   int doPaste=KMessageBox::Yes;
 
-  if(text.length()>256 || text.contains('\n')>2)
+  int lines = text.contains('\n');
+  if(text.length()>256 || lines>2)
   {
     doPaste=KMessageBox::warningYesNo
             (
               0,
-              i18n("<qt>You are attempting to paste a large portion of text into "
+              i18n("<qt>You are attempting to paste a large portion of text (%1 bytes or %2 lines) into "
                    "the chat. This can cause connection resets or flood kills. "
-                   "Do you really want to continue?</qt>"),
+                   "Do you really want to continue?</qt>").arg(text.length()).arg(lines),
               i18n("Large Paste Warning"),
               KStdGuiItem::yes(),
               KStdGuiItem::no(),
