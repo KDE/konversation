@@ -121,7 +121,15 @@ class Preferences : public QObject
     QString getDccPath();
     void setDccRollback(unsigned long bytes);
     unsigned long getDccRollback();
-
+    void setDccSpecificSendPorts(bool state);
+    bool getDccSpecificSendPorts();
+    void setDccSendPortsFirst(unsigned long port);
+    unsigned int getDccSendPortsFirst();
+    void setDccSendPortsLast(unsigned long port);
+    unsigned int getDccSendPortsLast();
+    void setDccGetIpFromServer(bool state);
+    bool getDccGetIpFromServer();
+    
     TabPlacement getTabPlacement();
     void setTabPlacement(TabPlacement where);
     void setBlinkingTabs(bool blink);
@@ -445,6 +453,10 @@ class Preferences : public QObject
 
     bool dccAddPartner;
     bool dccCreateFolder;   // create folders for each DCC partner?
+    bool dccSpecificSendPorts;
+    unsigned long dccSendPortsFirst;
+    unsigned long dccSendPortsLast;
+    bool dccGetIpFromServer;
     bool dccAutoGet;
     bool dccAutoResume;
     unsigned long dccBufferSize;

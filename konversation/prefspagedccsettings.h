@@ -39,13 +39,23 @@ class PrefsPageDccSettings : public PrefsPage
 
   protected slots:
     void folderButtonClicked();
+    void specificSendPortsStateChanged(int state);
+    void sendPortsFirstSpinValueChanged(int port);
+    void sendPortsLastSpinValueChanged(int port);
     void autoResumeStateChanged(int state);
     void autoGetStateChanged(int state);
+    void updateSendPortsWidgets(bool enabled);
 
   protected:
     KLineEdit* dccFolderInput;
     QSpinBox* dccBufferSpin;
     QSpinBox* dccRollbackSpin;
+    QCheckBox* dccSpecificSendPorts;
+    QLabel* dccSendPortsFirstLabel;
+    QLabel* dccSendPortsLastLabel;
+    QSpinBox* dccSendPortsFirstSpin;
+    QSpinBox* dccSendPortsLastSpin;
+    QCheckBox* dccGetIpFromServer;
     QCheckBox* dccAutoGet;
     QCheckBox* dccAutoResume;
     QCheckBox* dccAddSender;

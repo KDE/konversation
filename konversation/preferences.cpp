@@ -102,6 +102,10 @@ Preferences::Preferences()
   setDccPath(QString::null);
   setDccAddPartner(true);
   setDccCreateFolder(false);
+  setDccSpecificSendPorts(false);
+  setDccSendPortsFirst(0);
+  setDccSendPortsLast(0);
+  setDccGetIpFromServer(false);
   setDccAutoGet(false);
   setDccBufferSize(1024);
   setDccRollback(1024);
@@ -377,6 +381,18 @@ unsigned long Preferences::getDccBufferSize() { return dccBufferSize; }
 
 void Preferences::setDccRollback(unsigned long bytes) { dccRollback=bytes; }
 unsigned long Preferences::getDccRollback() { return dccRollback; }
+
+void Preferences::setDccSpecificSendPorts(bool state) { dccSpecificSendPorts=state; }
+bool Preferences::getDccSpecificSendPorts() { return dccSpecificSendPorts; }
+
+void Preferences::setDccSendPortsFirst(unsigned long port) { dccSendPortsFirst=port; }
+unsigned int Preferences::getDccSendPortsFirst() { return dccSendPortsFirst; }
+
+void Preferences::setDccSendPortsLast(unsigned long port) { dccSendPortsLast=port; }
+unsigned int Preferences::getDccSendPortsLast() { return dccSendPortsLast; }
+
+void Preferences::setDccGetIpFromServer(bool state) { dccGetIpFromServer=state; }
+bool Preferences::getDccGetIpFromServer() { return dccGetIpFromServer; }
 
 void Preferences::setDccAutoGet(bool state) { dccAutoGet=state; }
 bool Preferences::getDccAutoGet() { return dccAutoGet; }

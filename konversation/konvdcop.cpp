@@ -458,6 +458,54 @@ unsigned long KonvPrefsDCOP::getDccRollback()
   return KonversationApplication::preferences.getDccRollback();
 }
 
+void KonvPrefsDCOP::setDccSpecificSendPorts(bool state)
+{
+  KonversationApplication::preferences.setDccSpecificSendPorts(state);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+bool KonvPrefsDCOP::getDccSpecificSendPorts()
+{
+  return KonversationApplication::preferences.getDccSpecificSendPorts();
+}
+
+void KonvPrefsDCOP::setDccSendPortsFirst(unsigned long port)
+{
+  KonversationApplication::preferences.setDccSendPortsFirst(port);
+  if(KonversationApplication::preferences.getDccSendPortsLast() < port)
+    KonversationApplication::preferences.setDccSendPortsLast(port);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+unsigned long KonvPrefsDCOP::getDccSendPortsFirst()
+{
+  return KonversationApplication::preferences.getDccSendPortsFirst();
+}
+
+void KonvPrefsDCOP::setDccSendPortsLast(unsigned long port)
+{
+  KonversationApplication::preferences.setDccSendPortsLast(port);
+  if(port < KonversationApplication::preferences.getDccSendPortsFirst())
+    KonversationApplication::preferences.setDccSendPortsFirst(port);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+unsigned long KonvPrefsDCOP::getDccSendPortsLast()
+{
+  return KonversationApplication::preferences.getDccSendPortsLast();
+}
+
+void KonvPrefsDCOP::setDccGetIpFromServer(bool state)
+{
+  KonversationApplication::preferences.setDccGetIpFromServer(state);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+bool KonvPrefsDCOP::getDccGetIpFromServer()
+{
+  return KonversationApplication::preferences.getDccGetIpFromServer();
+}
+
 void KonvPrefsDCOP::setBlinkingTabs(bool blink)
 {
   KonversationApplication::preferences.setBlinkingTabs(blink);

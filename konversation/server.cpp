@@ -34,6 +34,7 @@ typedef unsigned long long __u64;
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
+#include <kresolver.h>
 #include <kstringhandler.h>
 #include <kdeversion.h>
 
@@ -1415,8 +1416,12 @@ void Server::addDccSend(const QString &recipient,const QString &fileName)
 {
   emit addDccPanel();
 
-  QString ip=getIp();
-
+  QString ip;
+  if(KonversationApplication::preferences.getDccGetIpFromServer())
+    ip=myIpByServer;
+  if(ip.isEmpty())
+    ip=getIp();
+  
   // We already checked that the file exists in output filter / requestDccSend() resp.
   QFile file(fileName);
   QString size=QString::number(file.size());
@@ -2212,6 +2217,15 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
 
 void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceHostmask)
 {
+  // for DCC sending
+  if(!myIpByServer && sourceNick==nickname)  // myself
+  {
+    QString myhost = sourceHostmask.section('@',1);
+    KNetwork::KResolverResults res = KNetwork::KResolver::resolve(myhost, "");
+    if(res.size() > 0)
+      myIpByServer = res.first().address().nodeName();
+  }
+  
   Channel* channel=channelList.first();
 
   while(channel)

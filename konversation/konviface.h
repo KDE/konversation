@@ -87,6 +87,14 @@ class KonvPreferencesIface : virtual public DCOPObject
     virtual bool getDccAddPartner() = 0;
     virtual void setDccCreateFolder(bool state) = 0;
     virtual bool getDccCreateFolder() = 0;
+    virtual void setDccSpecificSendPorts(bool state) = 0;
+    virtual bool getDccSpecificSendPorts() = 0;
+    virtual void setDccSendPortsFirst(unsigned long port) = 0;
+    virtual unsigned long getDccSendPortsFirst() = 0;
+    virtual void setDccSendPortsLast(unsigned long port) = 0;
+    virtual unsigned long getDccSendPortsLast() = 0;
+    virtual void setDccGetIpFromServer(bool state) = 0;
+    virtual bool getDccGetIpFromServer() = 0;
     virtual void setDccAutoGet(bool state) = 0;
     virtual bool getDccAutoGet() = 0;
     virtual void setDccAutoResume(bool state) = 0;

@@ -24,6 +24,7 @@
 #include <kdebug.h>
 #include <kextsock.h>
 #include <kmessagebox.h>
+#include <ksocketaddress.h>
 #include <kstandarddirs.h>
 
 #include "dcctransfer.h"
@@ -195,37 +196,57 @@ void DccTransfer::startGet()
 
 void DccTransfer::startSend()
 {
+  kdDebug() << "DccTransfer::startSend(): my IP = " << getIp() << endl;
+
   // Set up server socket
   dccSocket=new KExtendedSocket();
-  // Listen on all available interfaces
-  dccSocket->setHost("0.0.0.0");
 
-  /*
-reset()
-setPort(x)
-listen()
-until port found
-*/
-
-  dccSocket->setSocketFlags(KExtendedSocket::passiveSocket |
-                            KExtendedSocket::inetSocket |
-                            KExtendedSocket::streamSocket);
-
-  if(dccSocket->listen(5)==0)
+  if(KonversationApplication::preferences.getDccSpecificSendPorts())  // user specifies ports
   {
-    // Get our own port number
-    const KSocketAddress* ipAddr=dccSocket->localAddress();
-    const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr->address();
-
-    setPort(QString::number(ntohs(socketAddress->sin_port)));
-
-    connect(dccSocket,SIGNAL (readyAccept()),this,SLOT(heard()) );
-
-    file.setName(getFile());
-
-    emit send(getPartner(),getFile(),getNumericalIp(),getPort(),getSize());
+    // set port
+    bool found = false;  // wheter succeeded to set port
+    unsigned long port = KonversationApplication::preferences.getDccSendPortsFirst();
+    for( ; port <= KonversationApplication::preferences.getDccSendPortsLast(); ++port )
+    {
+      dccSocket->setHost("0.0.0.0");
+      dccSocket->setSocketFlags(KExtendedSocket::passiveSocket |
+                                KExtendedSocket::inetSocket |
+                                KExtendedSocket::streamSocket);
+      dccSocket->setPort(port);
+      if(found = (dccSocket->listen(5) == 0))
+        break;
+      dccSocket->reset();
+    }
+    if(!found)
+    {
+      KMessageBox::sorry(static_cast<QWidget*>(0),i18n("There is no vacant port for DCC sending."));
+      return;
+    }
   }
-  else kdDebug() << this << "DccTransfer::startSend(): listen() failed!" << endl;
+  else  // user doesn't specify ports
+  {
+    dccSocket->setHost("0.0.0.0");
+    dccSocket->setSocketFlags(KExtendedSocket::passiveSocket |
+                              KExtendedSocket::inetSocket |
+                              KExtendedSocket::streamSocket);
+    if(dccSocket->listen(5) != 0)
+    {
+      kdDebug() << this << "DccTransfer::startSend(): listen() failed!" << endl;
+      return;
+    }
+  }
+  
+  // Get our own port number
+  const KSocketAddress* ipAddr=dccSocket->localAddress();
+  const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr->address();
+
+  setPort(QString::number(ntohs(socketAddress->sin_port)));
+  
+  connect(dccSocket,SIGNAL (readyAccept()),this,SLOT(heard()) );
+
+  file.setName(getFile());
+  
+  emit send(getPartner(),getFile(),getNumericalIp(),getPort(),getSize());
 }
 
 void DccTransfer::startResumeSend(QString position)
@@ -371,6 +392,7 @@ void DccTransfer::getAck()
   {
     setStatus(Done);
     sendSocket->close();
+    dccSocket->close();
     file.close();
     emit dccSendDone(getFile());
   }
@@ -467,7 +489,7 @@ QString DccTransfer::getNumericalIp()
 {
   QHostAddress ip;
   ip.setAddress(getIp());
-
+  
   return QString::number(ip.ip4Addr());
 }
 

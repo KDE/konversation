@@ -62,6 +62,25 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
 
   dccSpinBoxes->setStretchFactor(dccRollbackLabel,10);
 
+  dccSpecificSendPorts=new QCheckBox(i18n("Use specific ports for DCC sending"),parentFrame,"dcc_specific_send_ports_checkbox");
+  connect(dccSpecificSendPorts, SIGNAL(stateChanged(int)), this, SLOT(specificSendPortsStateChanged(int)));
+  dccSendPortsFirstLabel=new QLabel(i18n("First DCC send port:"),parentFrame);
+  dccSendPortsFirstLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  dccSendPortsFirstSpin=new QSpinBox(0,65536,1,parentFrame,"dcc_send_ports_first_spin");
+  connect(dccSendPortsFirstSpin, SIGNAL(valueChanged(int)), this, SLOT(sendPortsFirstSpinValueChanged(int)));
+  dccSendPortsFirstSpin->setMaximumWidth(100);
+  dccSendPortsFirstLabel->setBuddy(dccSendPortsFirstSpin);
+  dccSendPortsLastLabel=new QLabel(i18n("Last DCC send port:"),parentFrame);
+  dccSendPortsLastLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  dccSendPortsLastSpin=new QSpinBox(0,65536,1,parentFrame,"dcc_send_ports_last_spin");
+  connect(dccSendPortsLastSpin, SIGNAL(valueChanged(int)), this, SLOT(sendPortsLastSpinValueChanged(int)));
+  dccSendPortsLastSpin->setMaximumWidth(100);
+  dccSendPortsLastLabel->setBuddy(dccSendPortsLastSpin);
+  dccSpecificSendPorts->setChecked(preferences->getDccSpecificSendPorts());
+  dccSendPortsFirstSpin->setValue(preferences->getDccSendPortsFirst());
+  dccSendPortsLastSpin->setValue(preferences->getDccSendPortsLast());
+  
+  dccGetIpFromServer=new QCheckBox(i18n("Get my IP from IRC server"),parentFrame,"dcc_get_ip_from_server_checkbox");
   dccAutoGet=new QCheckBox(i18n("Automatically accept &DCC download"),parentFrame,"dcc_autoget_checkbox");
   connect(dccAutoGet, SIGNAL(stateChanged(int)), this, SLOT(autoGetStateChanged(int)));
   dccAutoResume=new QCheckBox(i18n("Au&tomatically resume DCC download"), parentFrame,"dcc_autoresume_checkbox");
@@ -69,6 +88,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccAddSender=new QCheckBox(i18n("Add &sender to file name"),parentFrame,"dcc_sender_checkbox");
   dccCreateFolder=new QCheckBox(i18n("Cr&eate folder for sender"),parentFrame,"dcc_create_folder_checkbox");
 
+  dccGetIpFromServer->setChecked(preferences->getDccGetIpFromServer());
   dccAddSender->setChecked(preferences->getDccAddPartner());
   dccCreateFolder->setChecked(preferences->getDccCreateFolder());
   dccAutoGet->setChecked(preferences->getDccAutoGet());
@@ -86,6 +106,17 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSettingsLayout->addMultiCellWidget(dccSpinBoxes,row,row,0,2);
   row++;
 
+  dccSettingsLayout->addMultiCellWidget(dccSpecificSendPorts,row,row,0,2);
+  row++;
+  dccSettingsLayout->addWidget(dccSendPortsFirstLabel,row,0);
+  dccSettingsLayout->addWidget(dccSendPortsFirstSpin,row,1);
+  row++;
+  dccSettingsLayout->addWidget(dccSendPortsLastLabel,row,0);
+  dccSettingsLayout->addWidget(dccSendPortsLastSpin,row,1);
+  row++;
+  
+  dccSettingsLayout->addMultiCellWidget(dccGetIpFromServer,row,row,0,2);
+  row++;
   dccSettingsLayout->addMultiCellWidget(dccAutoGet,row,row,0,2);
   row++;
   dccSettingsLayout->addMultiCellWidget(dccAutoResume,row,row,0,2);
@@ -121,20 +152,45 @@ void PrefsPageDccSettings::folderButtonClicked()
   }
 }
 
+void PrefsPageDccSettings::specificSendPortsStateChanged(int state)
+{
+  updateSendPortsWidgets(state == QButton::On);
+}
+
+void PrefsPageDccSettings::updateSendPortsWidgets(bool enabled)
+{
+  dccSendPortsFirstSpin->setEnabled(enabled);
+  dccSendPortsLastSpin->setEnabled(enabled);
+  dccSendPortsFirstLabel->setEnabled(enabled);
+  dccSendPortsLastLabel->setEnabled(enabled);
+}
+
+void PrefsPageDccSettings::sendPortsFirstSpinValueChanged(int port)
+{
+  if(dccSendPortsLastSpin->value() < port)
+    dccSendPortsLastSpin->setValue(port);
+}
+
+void PrefsPageDccSettings::sendPortsLastSpinValueChanged(int port)
+{
+  if(port < dccSendPortsFirstSpin->value())
+    dccSendPortsFirstSpin->setValue(port);
+}
+
 void PrefsPageDccSettings::autoResumeStateChanged(int state)
 {
-	if(state == QButton::On)
-	{
-		dccAutoGet->setChecked(true);
-	}
+  if(state == QButton::On)
+  {
+    dccAutoGet->setChecked(true);
+  }
 }
 
 void PrefsPageDccSettings::autoGetStateChanged(int state)
 {
-	if(state == QButton::Off && dccAutoResume->isChecked())
-	{
-		dccAutoResume->setChecked(false);
-	}
+  if(state == QButton::Off && dccAutoResume->isChecked())
+  {
+    dccAutoResume->setChecked(false);
+  }
 }
 
 void PrefsPageDccSettings::applyPreferences()
@@ -142,6 +198,10 @@ void PrefsPageDccSettings::applyPreferences()
   preferences->setDccPath(dccFolderInput->text());
   preferences->setDccBufferSize(dccBufferSpin->value());
   preferences->setDccRollback(dccRollbackSpin->value());
+  preferences->setDccSpecificSendPorts(dccSpecificSendPorts->isChecked());
+  preferences->setDccSendPortsFirst(dccSendPortsFirstSpin->value());
+  preferences->setDccSendPortsLast(dccSendPortsLastSpin->value());
+  preferences->setDccGetIpFromServer(dccGetIpFromServer->isChecked());
   preferences->setDccAutoGet(dccAutoGet->isChecked());
   preferences->setDccAutoResume(dccAutoResume->isChecked());
   preferences->setDccAddPartner(dccAddSender->isChecked());
