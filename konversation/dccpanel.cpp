@@ -92,7 +92,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   QHBox* buttonsBox=new QHBox(this);
   buttonsBox->setSpacing(spacing());
   
-  #define icon(s) KGlobal::iconLoader()->loadIcon( s, KIcon::Small )
+  #define icon(s) KGlobal::iconLoader()->loadIconSet( s, KIcon::Small )
   
   m_buttonAccept = new QPushButton(icon("player_play"), i18n("&Accept"), buttonsBox, "start_dcc");
   m_buttonAbort  = new QPushButton(icon("stop"),        i18n("A&bort"),  buttonsBox, "abort_dcc");

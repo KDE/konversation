@@ -58,10 +58,10 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   localFileURLBox->setSpacing( spacingHint() );
   m_localFileURL = new KURLRequester( m_item->getFileURL().prettyURL(), localFileURLBox );
   connect( m_localFileURL, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotLocalFileURLChanged( const QString& ) ) );
-  m_buttonOpenFile = new KPushButton( KGlobal::iconLoader()->loadIcon( "exec", KIcon::Small ), QString::null, localFileURLBox );
+  m_buttonOpenFile = new KPushButton( KGlobal::iconLoader()->loadIconSet( "exec", KIcon::Small ), QString::null, localFileURLBox );
   m_buttonOpenFile->setFixedSize( m_localFileURL->button()->size() );
   connect( m_buttonOpenFile, SIGNAL( clicked() ), this, SLOT( slotOpenFile() ) );
-  m_buttonRemoveFile = new KPushButton( KGlobal::iconLoader()->loadIcon( "edittrash", KIcon::Small ), QString::null, localFileURLBox );
+  m_buttonRemoveFile = new KPushButton( KGlobal::iconLoader()->loadIconSet( "edittrash", KIcon::Small ), QString::null, localFileURLBox );
   m_buttonRemoveFile->setFixedSize( m_localFileURL->button()->size() );
   connect( m_buttonRemoveFile, SIGNAL( clicked() ), this, SLOT( slotRemoveFile() ) );
   
@@ -126,18 +126,18 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   m_buttonAccept = 0;
   if ( m_item->m_dccType == DccTransfer::Receive )
   {
-    m_buttonAccept = new KPushButton( KGlobal::iconLoader()->loadIcon( "player_play", KIcon::Small ), i18n("&Accept"), buttonFrame );
+    m_buttonAccept = new KPushButton( KGlobal::iconLoader()->loadIconSet( "player_play", KIcon::Small ), i18n("&Accept"), buttonFrame );
     m_buttonAccept->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
     connect( m_buttonAccept, SIGNAL( clicked() ), this, SLOT( slotAccept() ) );
   }
   
   // Abort
-  m_buttonAbort = new KPushButton( KGlobal::iconLoader()->loadIcon( "stop", KIcon::Small ), i18n("A&bort"), buttonFrame );
+  m_buttonAbort = new KPushButton( KGlobal::iconLoader()->loadIconSet( "stop", KIcon::Small ), i18n("A&bort"), buttonFrame );
   m_buttonAbort->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   connect( m_buttonAbort, SIGNAL( clicked() ), this, SLOT( slotAbort() ) );
   
   // Close
-  KPushButton* buttonClose = new KPushButton( KGlobal::iconLoader()->loadIcon( "button_ok", KIcon::Small ), i18n("&Close"), buttonFrame );
+  KPushButton* buttonClose = new KPushButton( KGlobal::iconLoader()->loadIconSet( "button_ok", KIcon::Small ), i18n("&Close"), buttonFrame );
   buttonClose->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   connect( buttonClose, SIGNAL( clicked() ), this, SLOT( slotClose() ) );
   
