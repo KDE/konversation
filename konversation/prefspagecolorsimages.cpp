@@ -14,6 +14,8 @@
   $Id$
 */
 
+#include <kcolorcombo.h>
+
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qhbox.h>
@@ -42,7 +44,9 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
 //    QString name(colorList[index].section(',',1));
 
     QLabel* colorLabel=new QLabel(label,parentFrame);
+    KColorCombo* colorCombo=new KColorCombo(parentFrame);
     colorSettingsLayout->addWidget(colorLabel,row,0);
+    colorSettingsLayout->addWidget(colorCombo,row,1);
     row++;
   }
 

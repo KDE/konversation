@@ -114,16 +114,18 @@ IRCView::~IRCView()
 
 void IRCView::setViewBackground(const QString& color,const QString& pixmapName)
 {
-/*  backgroundPixmap.resize(0,0);
-
+  QColor backgroundColor("#"+color);
   backgroundPixmap.load(pixmapName);
-  backgroundBrush.setColor(QColor("#"+color));
-  backgroundBrush.setPixmap(backgroundPixmap);
 
-  setPaper(backgroundBrush);
+  if(pixmapName.isEmpty() || backgroundPixmap.isNull()) setPaper(backgroundColor);
+  else
+  {
+    backgroundBrush.setColor(backgroundColor);
+    backgroundBrush.setPixmap(backgroundPixmap);
 
-//  setStaticBackground(true); */
-  setPaper(QColor("#"+color));
+    setPaper(backgroundBrush);
+//  setStaticBackground(true);
+  }
 }
 
 void IRCView::setServer(Server* newServer)
