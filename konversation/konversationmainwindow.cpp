@@ -439,18 +439,20 @@ void KonversationMainWindow::setWindowNotification(ChatWindow*,const QIconSet&,c
 #endif
 }
 
+#ifdef USE_MDI
+
 void KonversationMainWindow::setTabOnline(ChatWindow* view,bool online)
 {
-#ifdef USE_MDI
 /*
   // just testing here... ignore this bit for now
   KMdiTaskBarButton* button=m_pTaskBar->getButton(view);
   if(tabWidget()) tabWidget()->setTabColor(view,QColor("#eeeeee"));
   button->setText("<qt><b>fgfg</b></qt>");
 */
-#endif
 }
-
+#else
+void KonversationMainWindow::setTabOnline(ChatWindow* ,bool ) {}
+#endif
 #ifdef USE_MDI
 void KonversationMainWindow::closeWindow(ChatWindow* viewToClose) // USE_MDI
 #else
@@ -1078,9 +1080,46 @@ void KonversationMainWindow::updateLag(Server* lagServer,int msec)
 
 void KonversationMainWindow::tooLongLag(Server* lagServer,int msec)
 {
+
   if((msec % 5000)==0)
   {
-    QString lagString(i18n("No answer from server %1 for more than %2 seconds").arg(lagServer->getServerName()).arg(msec/1000));
+    int secsleft = msec/1000;
+    QStringList timeString;
+    
+    if(secsleft%60 == 1) {
+	    timeString.push_front(i18n("1 second"));
+	    secsleft -= 1;
+    } else if(secsleft %60) {
+	    timeString.push_front(i18n("%1 seconds").arg(secsleft%60));
+	    secsleft -= secsleft%60;
+    }
+    if(secsleft % 360 == 60) {
+	    timeString.push_front(i18n("1 minute"));
+	    secsleft -= 60;
+    } else if(secsleft % 360) {
+	    timeString.push_front(i18n("%1 minutes").arg((secsleft%360)/60));
+	    secsleft -= secsleft%360;
+    }
+    if(secsleft % (360*24) == 360){
+	    timeString.push_front(i18n("1 hour"));
+            secsleft -= 360;
+    } else if(secsleft % (360*24)) {
+            timeString.push_front(i18n("%1 hours").arg((secsleft%360*24)/360));
+            secsleft -= secsleft%(360*24);
+    }
+    if(secsleft == (360*24)) {
+            timeString.push_front(i18n("1 day"));
+            secsleft -= 360*24;
+    } else if(secsleft) {
+            timeString.push_front(i18n("%1 days").arg(secsleft/(360*24)));
+    }
+    Q_ASSERT(!timeString.empty()); if(timeString.empty()) return;
+    QString timestring = timeString.first();
+    timeString.pop_front();
+    if(!timeString.empty()) {
+	    timestring += " and " + timeString.join(", ");
+    }
+    QString lagString(i18n("No answer from server %1 for more than %2").arg(lagServer->getServerName(), timestring));
     statusBar()->changeItem(lagString,StatusText);
   }
 
