@@ -77,7 +77,7 @@ void StatusPanel::adjustFocus()
   statusInput->setFocus();
 }
 
-void StatusPanel::sendStatusText(QString sendLine)
+void StatusPanel::sendStatusText(const QString& sendLine)
 {
   // create a work copy
   QString output(sendLine);
