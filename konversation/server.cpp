@@ -1920,7 +1920,7 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
     ChannelNickPtr updateeNick = getChannelNick(channelName, parameter);
     if(!updateeNick) {
 	  kdDebug() << "in updateChannelMode, could not find updatee nick " << parameter << " for channel " << channelName << endl;
-	  kdDebug() << "This could indicate an obscure race condition that is safely being handled (like the mode of someone changed and they quit almost simulatanously, or it could indicate an internal error.";
+      kdDebug() << "This could indicate an obscure race condition that is safely being handled (like the mode of someone changed and they quit almost simulatanously, or it could indicate an internal error." << endl;
 	  //TODO Do we need to add this nick?
 	  return;
     }
