@@ -19,10 +19,13 @@
 #define DCCTRANSFER_H
 
 #include <klistview.h>
-#include <ksock.h>
+#include <kextsock.h>
 
+#include <qdir.h>
+#include <qfile.h>
 #include <qdatetime.h>
 #include <qstringlist.h>
+#include <qthread.h>
 
 /*
   @author Dario Abatianni
@@ -41,28 +44,38 @@ class DccTransfer : public QObject, public KListViewItem
 
     enum DccStatus
     {
-      Queued=0,    /* Newly added DCC */
-      Connecting,  /* DCC-GET, trying to connect to sender */
-      Offering,    /* DCC-SEND, waiting for receiver to connect to us */
-      Running,     /* Transferring data */
-      Stalled,     /* Transfer stalls */
-      Failed,      /* Transfer failed */
-      Done         /* Transfer done */
+      Queued=0,    // Newly added DCC
+      Lookup,      // DCC-GET, trying to find ip address of sender
+      Connecting,  // DCC-GET, trying to connect to sender
+      Offering,    // DCC-SEND, waiting for receiver to connect to us
+      Running,     // Transferring data
+      Stalled,     // Transfer stalls
+      Failed,      // Transfer failed
+      Done         // Transfer done
     };
 
-    DccTransfer(KListView* parent,DccType type,QString partner,QString name,QString size,QString ipString,QString portString);
+    DccType getType();
+    DccStatus getStatus();
+
+    DccTransfer(KListView* parent,DccType type,QString folder,QString partner,QString name,QString size,QString ipString,QString portString);
     ~DccTransfer();
+
+  public slots:
+    void startGet();
 
   protected slots:
     void updateCPS();
-    void increase();
-
+    void lookupFinished(int numOfResults);
+    void connectionSuccess();
+    void broken(int errorCode);
+    void check();
+    void readData();
+    void writeData();
+    void sendAck();
+    
   protected:
     void setType(DccType type);
-    DccType getType();
-
     void setStatus(DccStatus status);
-    DccStatus getStatus();
 
     void setSize(unsigned long size);
     unsigned long getSize();
@@ -70,23 +83,45 @@ class DccTransfer : public QObject, public KListViewItem
     void setPosition(unsigned long pos);
     unsigned long getPosition();
 
+    void setIp(QString ip);
+    QString getIp();
+
+    void setPort(QString port);
+    QString getPort();
+
     void setPartner(QString partner);
+    QString getPartner();
+
     void setFile(QString file);
+    QString getFile();
+
+    void setFolder(QString folder);
+    QString getFolder();
+
+    void setBufferSize(unsigned long size);
+    unsigned long getBufferSize();
 
     DccType dccType;
     DccStatus dccStatus;
     QStringList statusText;
     QString dccPartner;
+    QString dccFolder;
     QString dccFile;
+    QString dccIp;
+    QString dccPort;
 
+    unsigned long bufferSize;
     unsigned long fileSize;
     unsigned long transferred;
 
-    KSocket* dccSocket;
+    KExtendedSocket* dccSocket;
+    QDir dir;
+    QFile file;
 
     QDateTime transferStarted;
-    QDateTime lastActive;         /* To find out if the transfer stalled */
+    QDateTime lastActive;         // To find out if the transfer stalled
 
+    char* buffer;
 };
 
 #endif

@@ -63,6 +63,13 @@ class Preferences : public QObject
     void setLog(bool state);
     bool getLog();
 
+    void setDccAddPartner(bool state);
+    bool getDccAddPartner();
+    void setDccAutoGet(bool state);
+    bool getDccAutoGet();
+    void setDccBufferSize(unsigned long size);
+    unsigned long getDccBufferSize();
+
     void setBlinkingTabs(bool blink);
     bool getBlinkingTabs();
 
@@ -151,6 +158,7 @@ class Preferences : public QObject
     QString ident;
     QString realname;
     QString logPath;
+    QString dccPath;
 
   signals:
     void requestServerConnection(int number);
@@ -158,8 +166,12 @@ class Preferences : public QObject
 
   protected:
     bool log;
-    bool blinkingTabs; /* Do we want the LEDs on the tabs to blink? */
+    bool blinkingTabs; // Do we want the LEDs on the tabs to blink?
     bool fixedMOTD;
+
+    bool dccAddPartner;
+    bool dccAutoGet;
+    unsigned long dccBufferSize;
 
     bool autoReconnect;
     bool autoRejoin;

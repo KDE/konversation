@@ -167,6 +167,7 @@ void ServerWindow::addDccPanel()
     addView(dccPanel,3,i18n("DCC Status"));
     kdDebug() << "ServerWindow::addDccPanel(): " << dccPanel << endl;
   }
+  else newText(dccPanel);
 }
 
 DccPanel* ServerWindow::getDccPanel()
@@ -201,7 +202,7 @@ void ServerWindow::addStatusView()
 
   connect(statusInput,SIGNAL (returnPressed()),this,SLOT(statusTextEntered()) );
   connect(statusView,SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
-  connect(statusView,SIGNAL(textToLog(const QString&)),this,SLOT (logText(const QString&)) );
+  connect(statusView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
 
   setLog(KonversationApplication::preferences.getLog());
 }

@@ -11,14 +11,14 @@
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 
-  §Id$
+  $Id$
 */
 
 #include <qhbox.h>
-#include <qpushbutton.h>
 
 #include <kdialog.h>
 #include <klocale.h>
+#include <kdebug.h>
 
 #include "dccpanel.h"
 #include "dcctransfer.h"
@@ -40,6 +40,7 @@ DccPanel::DccPanel(QWidget* parent) :
   dccListView->addColumn(i18n("% done"));
   dccListView->addColumn(i18n("CPS"));
   dccListView->addColumn(i18n("IP Address"));
+  dccListView->addColumn(i18n("Port"));
   dccListView->addColumn(i18n("Status"));
 
   dccListView->setDragEnabled(true);
@@ -49,19 +50,72 @@ DccPanel::DccPanel(QWidget* parent) :
 
   QHBox* buttonsBox=new QHBox(this);
   buttonsBox->setSpacing(spacing());
-  new QPushButton(i18n("Accept"),buttonsBox,"start_dcc");
-  new QPushButton(i18n("Resume"),buttonsBox,"resume_dcc");
-  new QPushButton(i18n("Abort"),buttonsBox,"abort_dcc");
-  new QPushButton(i18n("Remove"),buttonsBox,"remove_dcc");
-  new QPushButton(i18n("Open"),buttonsBox,"open_dcc_file");
-  new QPushButton(i18n("Information"),buttonsBox,"info_on_dcc_file");
+  acceptButton=new QPushButton(i18n("Accept"),buttonsBox,"start_dcc");
+  resumeButton=new QPushButton(i18n("Resume"),buttonsBox,"resume_dcc");
+  abortButton =new QPushButton(i18n("Abort"),buttonsBox,"abort_dcc");
+  removeButton=new QPushButton(i18n("Remove"),buttonsBox,"remove_dcc");
+  openButton  =new QPushButton(i18n("Open"),buttonsBox,"open_dcc_file");
+  infoButton  =new QPushButton(i18n("Information"),buttonsBox,"info_on_dcc_file");
 
-//  new DccTransfer(dccListView,DccTransfer::Get,"GetPartner","get/file/name.html");
-//  new DccTransfer(dccListView,DccTransfer::Send,"SendPartner","send/file/name.html");
+  connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (dccSelected()) );
+
+  connect(acceptButton,SIGNAL (clicked()) ,this,SLOT (acceptDcc()) );
 }
 
 DccPanel::~DccPanel()
 {
+}
+
+void DccPanel::setButtons(bool accept,bool resume,bool abort,bool remove,bool open,bool info)
+{
+  acceptButton->setEnabled(accept);
+  resumeButton->setEnabled(resume);
+  abortButton->setEnabled(abort);
+  removeButton->setEnabled(remove);
+  openButton->setEnabled(open);
+  infoButton->setEnabled(info);
+}
+
+void DccPanel::dccSelected()
+{
+  DccTransfer* item=(DccTransfer*) getListView()->selectedItem();
+  kdDebug() << "(item)" << item << endl;
+
+  if(item)
+  {
+    DccTransfer::DccStatus status=item->getStatus();
+    switch(status)
+    {
+      case DccTransfer::Queued:
+      case DccTransfer::Lookup:
+      case DccTransfer::Connecting:
+        setButtons(true,true,false,true,false,false);
+        break;
+      case DccTransfer::Offering:
+        setButtons(false,false,true,true,true,true);
+        break;
+      case DccTransfer::Running:
+      case DccTransfer::Stalled:
+        setButtons(false,false,true,true,true,true);
+        break;
+      case DccTransfer::Failed:
+      case DccTransfer::Done:
+        setButtons(false,false,false,true,true,true);
+        break;
+      default:
+        setButtons(false,false,false,false,false,false);
+    }
+  }
+  else setButtons(false,false,false,false,false,false);
+}
+
+void DccPanel::acceptDcc()
+{
+  DccTransfer* item=(DccTransfer*) getListView()->selectedItem();
+  if(item)
+  {
+    if(item->getType()==DccTransfer::Get && item->getStatus()==DccTransfer::Queued) item->startGet();
+  }
 }
 
 int DccPanel::spacing() { return KDialog::spacingHint(); }

@@ -220,9 +220,16 @@ void KonversationApplication::readOptions()
     preferences.addIgnore(config->readEntry(QString("Ignore%1").arg(index++)));
   }
 
+  // DCC Settings
+  config->setGroup("DCC Settings");
+  preferences.setDccBufferSize(config->readNumEntry("BufferSize",preferences.getDccBufferSize()));
+  preferences.setDccAddPartner(config->readBoolEntry("AddPartner",preferences.getDccAddPartner()));
+  preferences.setDccAutoGet(config->readBoolEntry("AutoGet",preferences.getDccAutoGet()));
+
   /* Path settings */
   config->setGroup("Path Settings");
   preferences.logPath=config->readEntry("LogfilePath",preferences.logPath);
+  preferences.dccPath=config->readEntry("DccPath",preferences.dccPath);
 
   /* Miscellaneous Flags */
   config->setGroup("Flags");
@@ -331,7 +338,13 @@ void KonversationApplication::saveOptions()
     index++;
   }
 
+  config->setGroup("DCC Settings");
+  config->writeEntry("AddPartner",preferences.getDccAddPartner());
+  config->writeEntry("BufferSize",preferences.getDccBufferSize());
+  config->writeEntry("AutoGet",preferences.getDccAutoGet());
+
   config->setGroup("Path Settings");
+  config->writeEntry("DccPath",preferences.dccPath);
   config->writeEntry("LogfilePath",preferences.logPath);
 
   config->setGroup("Flags");

@@ -90,6 +90,8 @@ Server::Server(int id)
   connect(this,SIGNAL(tooLongLag(int)),serverWindow,SLOT(tooLongLag(int)) );
   connect(this,SIGNAL(resetLag()),serverWindow,SLOT(resetLag()) );
   connect(this,SIGNAL(addDccPanel()),serverWindow,SLOT(addDccPanel()) );
+
+  emit addDccPanel();
 }
 
 Server::~Server()
@@ -406,10 +408,16 @@ void Server::addDccTransfer(QString sourceNick,QStringList dccArguments)
 
   ip.setAddress(dccArguments[1].toULong());
 
-  appendStatusMessage("DCC",QString("%1 offers the file \"%2\" (%3 bytes) for download (%4:%5).").arg(sourceNick).arg(dccArguments[0]).arg(dccArguments[3]).arg(ip.toString()).arg(dccArguments[2]) );
+  appendStatusMessage("DCC",QString("%1 offers the file \"%2\" (%3 bytes) for download (%4:%5).")
+                            .arg(sourceNick)               // name
+                            .arg(dccArguments[0])          // file
+                            .arg((dccArguments[3]=="") ? i18n("unknown") : dccArguments[3] )  // size
+                            .arg(ip.toString())            // ip
+                            .arg(dccArguments[2]) );       // port
 
-  new DccTransfer(serverWindow->getDccPanel()->getListView(),
+  DccTransfer* newDcc=new DccTransfer(serverWindow->getDccPanel()->getListView(),
                   DccTransfer::Get,
+                  KonversationApplication::preferences.dccPath,
                   sourceNick,
                   dccArguments[0],     // name
                   dccArguments[3],     // size

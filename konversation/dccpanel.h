@@ -17,6 +17,8 @@
 #ifndef DCCPANEL_H
 #define DCCPANEL_H
 
+#include <qpushbutton.h>
+
 #include <klistview.h>
 
 #include "chatwindow.h"
@@ -27,18 +29,32 @@
 
 class DccPanel : public ChatWindow
 {
+  Q_OBJECT
+
   public:
     DccPanel(QWidget* parent);
     ~DccPanel();
 
     KListView* getListView();
 
+  protected slots:
+    void acceptDcc();
+    void dccSelected();
+
   protected:
-    KListView* dccListView;
+    void setButtons(bool accept,bool resume,bool abort,bool remove,bool open,bool info);
 
     int spacing();
     int margin();
 
+    KListView* dccListView;
+
+    QPushButton* acceptButton;
+    QPushButton* resumeButton;
+    QPushButton* abortButton;
+    QPushButton* removeButton;
+    QPushButton* openButton;
+    QPushButton* infoButton;
 };
 
 #endif

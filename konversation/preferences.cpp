@@ -65,10 +65,12 @@ Preferences::Preferences()
   partReason="Konversation terminated!";
   kickReason="User terminated!";
 
-  setHilightSize(QSize(260,235));
-  setHilightSize(QSize(500,200));
-
   KStandardDirs kstddir;
+
+  dccPath="";
+  setDccAddPartner(true);
+  setDccAutoGet(false);
+  setDccBufferSize(1024);
 
   logPath=kstddir.saveLocation("data","konversation/logs");
   log=true;
@@ -178,12 +180,21 @@ void Preferences::updateServer(int serverId,const QString& newDefinition)
   if(entry) entry->setDefinition(newDefinition);
 }
 
-/* Accessor methods */
+// Accessor methods
 
 void Preferences::clearServerList() { serverList.clear(); }
 
 void Preferences::setLog(bool state) { log=state; }
 bool Preferences::getLog() { return log; }
+
+void Preferences::setDccAddPartner(bool state) { dccAddPartner=state; }
+bool Preferences::getDccAddPartner() { return dccAddPartner; }
+
+void Preferences::setDccBufferSize(unsigned long size) { dccBufferSize=size; }
+unsigned long Preferences::getDccBufferSize() { return dccBufferSize; }
+
+void Preferences::setDccAutoGet(bool state) { dccAutoGet=state; }
+bool Preferences::getDccAutoGet() { return dccAutoGet; }
 
 void Preferences::setFixedMOTD(bool fixed) { fixedMOTD=fixed; }
 bool Preferences::getFixedMOTD() { return fixedMOTD; }

@@ -164,8 +164,7 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
           {
             emit addDccTransfer(sourceNick,dccArgument);
           }
-
-          server->appendStatusMessage("DCC",QString("Incoming DCC %1 %2").arg(dccType).arg(dccArgument.join(" ")));
+//          server->appendStatusMessage("DCC",QString("Incoming DCC %1 %2").arg(dccType).arg(dccArgument.join(" ")));
         }
         // No known CTCP request, give a general message
         else server->appendStatusMessage(i18n("CTCP"),i18n("Received unknown CTCP-%1 request from %2").arg(ctcp).arg(sourceNick));
