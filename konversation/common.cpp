@@ -49,13 +49,13 @@ QString tagURLs(const QString& text, const QString& fromNick)
 
   if(filteredLine.contains("#"))
     {
-      QRegExp chanExp("^#\\S+|\\s#\\S+");
+      QRegExp chanExp("#[\\S]+");
 
       while((pos = chanExp.search(filteredLine, pos)) >= 0)
 	{
 	  urlLen = chanExp.matchedLength();
 	  QString href = filteredLine.mid( pos, urlLen );
-	  QString link = "#"+href.stripWhiteSpace();
+	  QString link = "#" + href.stripWhiteSpace();
 
 	  link = "<font color=\"#"+linkColor+"\"></u><a href=\""+link+"\">"+href+"</a><u></font>";
 	  filteredLine.replace( pos, urlLen, link );
