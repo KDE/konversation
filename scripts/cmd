@@ -1,10 +1,13 @@
-#!/bin/bash
+#!/usr/bin/perl -w
 
-# Executes a command and prints the output into Konversation.
+$PORT= shift;
+$SERVER= shift;
+$TARGET= shift;
 
-PORT=$1;
-SERVER=$2;
-TARGET=$3;
-shift;shift;shift;
+$ARG_MESSAGE = `@ARGV`;
 
-$@ | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" "$@: $line"; done 
+foreach $entry (split(/\n/, $ARG_MESSAGE)) {
+  chomp $entry;
+  system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$entry\" ");
+}
+
