@@ -2154,8 +2154,9 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
     for (unsigned int index=0;index<nickChannels.count();index++)
     {
       const ChannelNickMap *channel = getChannelMembers(nickChannels[index]);
+      Q_ASSERT(channel);
       ChannelNickPtr member = (*channel)[lcNickname];
-      //FIXME: JOHNFLUX - I don't get what the const_cast stuff is for?
+      Q_ASSERT(member);
       const_cast<ChannelNickMap *>(channel)->remove(lcNickname);
       const_cast<ChannelNickMap *>(channel)->insert(lcNewname, member);
     }
@@ -2857,7 +2858,7 @@ void Server::slotLoadAddressees() {
   for(NickInfoMap::Iterator it=nicknamesOnline.begin(); it != nicknamesOnline.end(); ++it)
   {
     NickInfoPtr addressee = it.data();
-    addressee->tooltip();
+    addressee->refreshAddressee();
   }
 }
 

@@ -149,62 +149,6 @@ void NickInfo::setOnlineSince(const QDateTime& datetime) {
 KABC::Addressee NickInfo::getAddressee() { return addressee;}
 
 void NickInfo::refreshAddressee() {
-/*  addressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname);
-  QString realname = addressee.realName();
-
-  kdDebug() << "refreshing addressee nick '" << nickname << "' and found realname '" << realname << "'" << endl;
-  if(!realname.isEmpty() && realname.lower() != nickname.lower())
-    listViewItem->setText(1,nickname + " (" + realname + ")");
-  else
-    listViewItem->setText(1,nickname);*/
+  emit nickInfoChanged();
 }
-QString NickInfo::tooltip() {
-  if(addressee.isEmpty()) return QString::null;
-
-  QString strTooltip;
-  QTextStream tooltip( &strTooltip, IO_WriteOnly );
-
-  tooltip << "<qt>";
-  if(!addressee.formattedName().isEmpty())
-    tooltip << "<b><center>" << addressee.formattedName() << "</center></b>";
-
-  bool isdirty = false;
-  tooltip << "%1";
- 
-  if(!addressee.emails().isEmpty()) {
-    tooltip << "<tr><td><b>" << addressee.emailLabel() << ": </b></td><td>";
-    tooltip << addressee.emails().join(", ");
-    tooltip << "</td></tr>";
-    isdirty = true;
-  }
-  
-  if(!addressee.organization().isEmpty()) {
-    tooltip << "<tr><td><b>" << addressee.organizationLabel() << ": </b></td><td>" << addressee.organization() << "</td></tr>";
-    isdirty = true;
-  }
-  if(!addressee.role().isEmpty()) {
-    tooltip << "<tr><td><b>" << addressee.roleLabel() << ": </b></td><td>" << addressee.role() << "</td></tr>";
-    isdirty = true;
-  }
-  KABC::PhoneNumber::List numbers = addressee.phoneNumbers();
-  for( KABC::PhoneNumber::List::Iterator it = numbers.begin(); it != numbers.end(); ++it) {
-    tooltip << "<tr><td><b>" << (*it).label() << ": </b></td><td>" << (*it).number() << "</td></tr>";
-    isdirty = true;
-  }
-
-  if(!addressee.birthday().toString().isEmpty() ) {
-    tooltip << "<tr><td><b>" << addressee.birthdayLabel() << ": </b></td><td>" << addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
-    isdirty = true;
-  }
-  if(isdirty)
-    tooltip << "</table></qt>";
-
-  if(isdirty)
-    strTooltip = strTooltip.arg("<br/><table>");
-  else
-    strTooltip = strTooltip.arg("");
-
-  return strTooltip;
-}
-
 

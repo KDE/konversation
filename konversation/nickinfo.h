@@ -55,7 +55,6 @@ class NickInfo : public QObject, public KShared
     QString getNetServer();
     QString getNetServerInfo();
     QDateTime getOnlineSince();
-    QString tooltip();
     // Return the Server object that owns this NickInfo object.
     Server* getServer();
      

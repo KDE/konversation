@@ -14,6 +14,8 @@
 
 #include "channelnick.h"
 #include <server.h>
+#include <klocale.h>
+
 /** An instance of ChannelNick is made for each nick in each channel.  So for a person in multiple channels, they will have one NickInfo, and multiple ChannelNicks.  It contains a pointer to the NickInfo, and the mode of that person in the channel.*/
 
 ChannelNick::ChannelNick(NickInfoPtr nickinfo, bool isop, bool isadmin, bool isowner, bool ishalfop, bool hasvoice) : KShared() {
@@ -120,6 +122,64 @@ bool ChannelNick::setOp(bool state) {
 //Just calls nickInfo->getNickname() etc
 QString ChannelNick::getNickname() const { return nickInfo->getNickname(); }
 QString ChannelNick::getHostmask() const { return nickInfo->getHostmask(); }
+
+
+QString ChannelNick::tooltip() {
+//  if(addressee.isEmpty()) return QString::null;
+  KABC::Addressee addressee = nickInfo->getAddressee();
+  QString strTooltip;
+  QTextStream tooltip( &strTooltip, IO_WriteOnly );
+
+  tooltip << "<qt>";
+  if(!addressee.formattedName().isEmpty())
+    tooltip << "<b><center>" << addressee.formattedName() << "</center></b>";
+  else
+    tooltip << "<b><center>" << getNickname() << "</center></b>";
+
+  tooltip << "<table>";
+ 
+  if(!addressee.emails().isEmpty()) {
+    tooltip << "<tr><td><b>" << addressee.emailLabel() << ": </b></td><td>";
+    tooltip << addressee.emails().join(", ");
+    tooltip << "</td></tr>";
+  }
+  
+  if(!addressee.organization().isEmpty()) {
+    tooltip << "<tr><td><b>" << addressee.organizationLabel() << ": </b></td><td>" << addressee.organization() << "</td></tr>";
+  }
+  if(!addressee.role().isEmpty()) {
+    tooltip << "<tr><td><b>" << addressee.roleLabel() << ": </b></td><td>" << addressee.role() << "</td></tr>";
+  }
+  KABC::PhoneNumber::List numbers = addressee.phoneNumbers();
+  for( KABC::PhoneNumber::List::Iterator it = numbers.begin(); it != numbers.end(); ++it) {
+    tooltip << "<tr><td><b>" << (*it).label() << ": </b></td><td>" << (*it).number() << "</td></tr>";
+  }
+
+  if(!addressee.birthday().toString().isEmpty() ) {
+    tooltip << "<tr><td><b>" << addressee.birthdayLabel() << ": </b></td><td>" << addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
+  }
+  if(!nickInfo->getHostmask().isEmpty()) {
+    tooltip << "<tr><td><b>" << i18n("IRC Hostmask") << ": </b></td><td>" << nickInfo->getHostmask() << "</td></tr>";
+  }
+  if(nickInfo->isAway() && !nickInfo->getAwayMessage().isEmpty()) {
+     tooltip << "<tr><td><b>" << i18n("Away Message") << ": </b></td><td>" << nickInfo->getAwayMessage() << "</td></tr>";
+  }
+  if(!nickInfo->getOnlineSince().toString().isEmpty()) {
+     tooltip << "<tr><td><b>" << i18n("Online Since") << ": </b></td><td>" << nickInfo->getOnlineSince().toString("ddd d MMMM yyyy") << "</td></tr>";
+  }
+  QStringList modes;
+  if(isOp()) modes << i18n("Operator");
+  if(isAdmin()) modes << i18n("Admin");
+  if(isOwner()) modes << i18n("Owner");
+  if(isHalfOp()) modes << i18n("Half-operator");
+  if(hasVoice()) modes << i18n("Has voice");
+  if(modes.empty()) modes << i18n("A normal user");
+  tooltip << "<tr><td><b>" << i18n("Channel Mode") << ": </b></td><td>" << modes.join(", ") << "</td></tr>";
+  tooltip << "</table></qt>";
+  
+  kdDebug() << strTooltip << endl;
+  return strTooltip;
+}
 
 #include "channelnick.moc"
 

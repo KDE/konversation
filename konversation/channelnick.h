@@ -45,8 +45,9 @@ class ChannelNick :  public QObject, public KShared
     NickInfoPtr getNickInfo() const;
     //Purely provided for convience because they are used so often.
     //Just calls nickInfo->getNickname() etc
-    QString getNickname() const;
+    QString getNickname() const; 
     QString getHostmask() const;
+    QString tooltip();
   private: 
     NickInfoPtr nickInfo;
     bool isop;
