@@ -141,8 +141,6 @@ void DccChat::listenForPartner()
   const KNetwork::KSocketAddress ipAddr=m_listenSocket->localAddress();
   const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr.address();
   port=ntohs(socketAddress->sin_port);
-  // remove temporary object
-  delete ipAddr;
   
   getTextView()->append(i18n("Info"),i18n("Offering DCC Chat connection to %1 on port %2...").arg(nick).arg(port));
   sourceLine->setText(i18n("DCC chat with %1 on port %2").arg(nick).arg(port));
@@ -217,7 +215,7 @@ void DccChat::readData()
     actual = m_dccSocket->readBlock( buffer, available );
     buffer[ actual ] = 0;
     line.append( codec->toUnicode( buffer ) );
-    delete buffer;
+    delete[] buffer;
   }
   
   if(!line.isEmpty())
