@@ -54,6 +54,7 @@ class InputFilter : public QObject
     void resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArgument); // will be connected to Server::resumeDccSendTransfer()
     void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp); // will be connected to Server::userhost()
     void topicAuthor(const QString& channel,const QString& author); // will be connected to Server::setTopicAuthor()
+    void endOfWho(const QString& target); // for scheduling auto /WHO
     void addChannelListPanel();
     void addToChannelList(const QString& channel,int users,const QString& topic);
     void invitation(const QString& nick,const QString& channel);

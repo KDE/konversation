@@ -345,6 +345,8 @@ void Server::connectSignals()
                   this,SLOT  (userhost(const QString&,const QString&,bool,bool)) );
   connect(&inputFilter,SIGNAL(topicAuthor(const QString&,const QString&)),
                   this,SLOT  (setTopicAuthor(const QString&,const QString&)) );
+  connect(&inputFilter,SIGNAL(endOfWho(const QString&)),
+                  this,SLOT  (endOfWho(const QString&)) );
   connect(&inputFilter,SIGNAL(invitation(const QString&,const QString&)),
                   this,SLOT  (invitation(const QString&,const QString&)) );
   connect(&inputFilter, SIGNAL(addToChannelList(const QString&, int, const QString& )),
@@ -2686,6 +2688,15 @@ void Server::setTopicAuthor(const QString& channel,const QString& author)
   if(outChannel)
   {
     outChannel->setTopicAuthor(author);
+  }
+}
+
+void Server::endOfWho(const QString& target)
+{
+  Channel* channel=getChannelByName(target);
+  if(channel)
+  {
+    channel->scheduleAutoWho();
   }
 }
 

@@ -130,6 +130,7 @@ class Channel : public ChatWindow
     void appendInputText(const QString& s);
     virtual void indicateAway(bool show);
     void showTopic(bool show);
+    void scheduleAutoWho();
 
     void setAllowNotifications(bool allow) { m_allowNotifications = allow; }
 

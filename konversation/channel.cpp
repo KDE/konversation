@@ -293,6 +293,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   
   m_firstAutoWhoDone = false;
   connect(&m_whoTimer,SIGNAL (timeout()),this,SLOT (autoWho()));
+  // re-schedule when the settings were changed
+  connect(&KonversationApplication::preferences,SIGNAL (autoContinuousWhoChanged()),this,SLOT (scheduleAutoWho()));
 
   m_allowNotifications = true;
 
@@ -1732,17 +1734,19 @@ void Channel::autoUserhostChanged(bool state)
   }
 }
 
+void Channel::scheduleAutoWho()  // slot
+{
+  kdDebug() << "Channel::scheduleAutoWho(): " << getName() << endl;
+  if(!m_firstAutoWhoDone)  // abort if initialization hasn't done yet
+    return;
+  if(m_whoTimer.isActive())
+    m_whoTimer.stop();
+  if(KonversationApplication::preferences.getAutoWhoContinuousEnabled())
+    m_whoTimer.start(KonversationApplication::preferences.getAutoWhoContinuousInterval()*1000, true);
+}
+
 void Channel::autoWho()
 {
-  if(m_whoTimer.isActive())  // continuous auto /WHO
-  {
-    // is continuous auto /WHO enabled?
-    if(!KonversationApplication::preferences.getAutoWhoContinuousEnabled())
-      return;
-    // update the setting
-    m_whoTimer.changeInterval(KonversationApplication::preferences.getAutoWhoContinuousInterval() * 1000);
-  }
-  
   if(nicks>KonversationApplication::preferences.getAutoWhoNicksLimit())
   {
     // don't use auto /WHO when the number of nicks is too large, or get banned.
@@ -1854,11 +1858,6 @@ void Channel::processPendingNicks()
     {
       autoWho();
       m_firstAutoWhoDone = true;
-    }
-    if(!m_whoTimer.isActive())
-    {
-      kdDebug() << "Channel::processPendingNicks(): " << getName() << ": start auto Who" << endl;
-      m_whoTimer.start(KonversationApplication::preferences.getAutoWhoContinuousInterval() * 1000);
     }
   }
 }

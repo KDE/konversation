@@ -454,6 +454,7 @@ class Preferences : public QObject
     void requestServerConnection(int number);
     void requestSaveOptions();
     void autoUserhostChanged(bool state);
+    void autoContinuousWhoChanged();
     void updateTrayIcon();
 
   protected:

@@ -1100,6 +1100,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           }
           else
             kdDebug() << "InputFilter::parseServerCommand(): RPL_ENDOFWHO: unexpected ENDOFWHO. retrieved: " << parameterList[1] << endl;
+          emit endOfWho(parameterList[1]);
           break;
         }
       case RPL_WHOISCHANNELS:

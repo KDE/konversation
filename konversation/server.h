@@ -412,6 +412,7 @@ class Server : public QObject
     void scriptExecutionError(const QString& name);
     void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
     void setTopicAuthor(const QString& channel,const QString& author);
+    void endOfWho(const QString& target);
     void invitation(const QString& nick,const QString& channel);
     void sendToAllChannelsAndQueries(const QString& text);
     void gotOwnResolvedHostByWelcome(KResolverResults res);
