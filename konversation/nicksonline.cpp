@@ -626,13 +626,17 @@ void NicksOnline::doCommand(int id)
 
     switch(id)
     {
-        case ciAddressbookEdit:
-        {
-            if (addressee.isEmpty()) return;
-            Konversation::Addressbook::self()->editAddressee(addressee.uid());
-            break;
-        }
-        case ciAddressbookNew:
+	case(ciSendEmail):
+	  nickInfo->sendEmail();
+	  return; //no need to refresh item
+	case(ciAddressbookEdit):
+          nickInfo->editAddressee();
+	  return; //no need to refresh item - nickinfo changed will be called anyway.
+	case(ciAddressbookChange):
+	  nickInfo->showLinkAddressbookUI();
+	  break;
+        
+	case ciAddressbookNew:
         case ciAddressbookDelete:
         {
             Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
@@ -655,21 +659,7 @@ void NicksOnline::doCommand(int id)
             }
             break;
         }
-        case ciAddressbookChange:
-        {
-            QString realName;
-            if (nickInfo) realName = nickInfo->getRealName();
-            LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, nickname, server->getServerName(), server->getServerGroup(), realName);
-            linkaddressbookui->show();
-            break;
-        }
-        case ciSendEmail:
-        {
-            if (addressee.isEmpty()) return;
-            Konversation::Addressbook::self()->sendEmail(addressee);
-            return;
-        }
-        case ciJoinChannel:
+       case ciJoinChannel:
         {
             // Channels have no nlvcServerName entry.
             // We test if it is empty to see if we really have a channel name.

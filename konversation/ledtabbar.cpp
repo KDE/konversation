@@ -479,22 +479,13 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
         }
       }
       else if(r == SendEmail) {
-	KABC::Addressee addressee = win->getServer()->getNickInfo(win->getName())->getAddressee();	
-        Konversation::Addressbook::self()->sendEmail(addressee);
+	win->getServer()->obtainNickInfo(win->getName())->sendEmail();	
       }
       else if(r == AddressbookEdit) {
-        KABC::Addressee addressee = win->getServer()->getNickInfo(win->getName())->getAddressee();
-	if(!addressee.isEmpty())
-          Konversation::Addressbook::self()->editAddressee(addressee.uid());
+        win->getServer()->obtainNickInfo( win->getName() )->editAddressee();
       }
       else if(r == AddressbookChange) {
-	QString realName;
-	Server *server = win->getServer();
-	NickInfoPtr nickInfo = server->getNickInfo(win->getName());
-        if (nickInfo) realName = nickInfo->getRealName();
-	QString nickname = win->getName();
-        LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, nickname, server->getServerName(), server->getServerGroup(), realName);
-        linkaddressbookui->show();
+	win->getServer()->obtainNickInfo( win->getName() )->showLinkAddressbookUI();
       }
       else if(r == AddressbookDelete || r == AddressbookNew) {
 	Server *server = win->getServer();

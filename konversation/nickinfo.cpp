@@ -18,6 +18,8 @@
 #include "server.h"
 #include <klocale.h>
 #include "linkaddressbook/addressbook.h"
+#include "linkaddressbook/linkaddressbookui.h"
+#include "konversationmainwindow.h"
 /*
   @author Gary Cramblitt
 */
@@ -25,8 +27,7 @@
 /*
   The NickInfo object is a data container for information about a single nickname.
   It is owned by the Server object and should NOT be deleted by anything other than Server.
-  If using code alters the NickInfo object, it should call Server::nickInfoUpdated to
-  let Server know that the object has been modified.
+  Store a pointer to this with NickInfoPtr
 */
 
 NickInfo::NickInfo(const QString& nick, Server* server): KShared()
@@ -79,7 +80,8 @@ QString NickInfo::getPrettyOnlineSince() const {
      
 // Return the Server object that owns this NickInfo object.
 Server* NickInfo::getServer() const { return m_owningServer; }
- 
+
+
 // Set properties of NickInfo object.
 void NickInfo::setNickname(const QString& newNickname) {
   Q_ASSERT(!newNickname.isEmpty());
@@ -315,7 +317,24 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const {
   }
 				
 }
-    
+
+void NickInfo::showLinkAddressbookUI() 
+{
+  LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(m_owningServer->getMainWindow(), NULL, m_nickname, m_owningServer->getServerName(), m_owningServer->getServerGroup(), m_realName);
+  linkaddressbookui->show();
+
+}
+
+bool NickInfo::editAddressee() const {
+  if(m_addressee.isEmpty()) return false;
+
+  Konversation::Addressbook::self()->editAddressee(m_addressee.uid());
+  return true;
+}
+bool NickInfo::sendEmail() const { 
+  return Konversation::Addressbook::self()->sendEmail(m_addressee);
+}
+   
 
 #include "nickinfo.moc"
 

@@ -405,8 +405,7 @@ void Channel::popupCommand(int id)
       {
         ChannelNickList nickList=getSelectedChannelNicks();
 	for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
-          NickInfoPtr nickInfo = (*it)->getNickInfo();
-	  if(!Konversation::Addressbook::self()->editAddressee(nickInfo->getAddressee().uid())) break;
+          if(!(*it)->getNickInfo()->editAddressee()) break;;
 	}
 	break;
       }
@@ -441,9 +440,7 @@ void Channel::popupCommand(int id)
       {
         ChannelNickList nickList=getSelectedChannelNicks();
         for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
-	  NickInfoPtr nickInfo = (*it)->getNickInfo();
-	  LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, (*it)->getNickname(), m_server->getServerName(), m_server->getServerGroup(), nickInfo->getRealName());
-	  linkaddressbookui->show();
+	  (*it)->getNickInfo()->showLinkAddressbookUI();
 	}
         break;
       }

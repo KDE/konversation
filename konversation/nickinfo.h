@@ -118,6 +118,17 @@ class NickInfo : public QObject, public KShared
      *  @return A string to show the user for the name of this contact
      */
     QString NickInfo::getBestAddresseeName();
+
+    /** Open this contact up in a "edit addresee association" window
+     */
+    void showLinkAddressbookUI();
+    /** Edit the contact in kaddressbook
+     */
+    bool editAddressee() const;
+    /** Run kmail for this contact
+     */
+    bool sendEmail() const; 
+
   private:
     QString m_nickname;
     Server* m_owningServer;
