@@ -42,6 +42,7 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
       ChatWindow(parent)
 #endif
 {
+  kdDebug() << k_funcinfo << " nickname = " << nickname << endl;
   m_dccSocket=0;
   m_listenSocket=0;
   port=0;
@@ -199,6 +200,7 @@ void DccChat::dccChatBroken(int error)
 
 void DccChat::readData()
 {
+  kdDebug() << k_funcinfo << " BEGIN" << endl;
   int actual=0;
   char* buffer=0;
   QString line;
@@ -206,7 +208,7 @@ void DccChat::readData()
 
   do
   {
-    buffer=static_cast<char *>(malloc(1025));
+    buffer = new char[ 1025 ];
     if(buffer)
     {
       actual=m_dccSocket->readBlock(buffer,1024);
@@ -226,7 +228,7 @@ void DccChat::readData()
         m_dccSocket->close();
         m_dccSocket = 0;
       }
-      free(buffer);
+      delete[] buffer;
     }
     else kdDebug() << "DCC Chat input buffer broken." << endl;
 
@@ -254,6 +256,7 @@ void DccChat::readData()
       else getTextView()->append(nick,lines[index]);
     } // endfor
   }
+  kdDebug() << k_funcinfo << " END" << endl;
 }
 
 void DccChat::dccChatTextEntered()
@@ -269,6 +272,7 @@ void DccChat::dccChatTextEntered()
 
 void DccChat::sendDccChatText(const QString& sendLine)
 {
+  kdDebug() << k_funcinfo << " BEGIN" << endl;
   // create a work copy
   QString output(sendLine);
   QString cc=KonversationApplication::preferences.getCommandChar();
@@ -313,6 +317,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
     // detach stream
     stream.unsetDevice();
   }
+  kdDebug() << k_funcinfo << " END" << endl;
 }
 
 void DccChat::heardPartner()
