@@ -20,7 +20,7 @@
 */
 
 class QWidget;
-class KTextEdit;
+class QTextEdit;
 
 class MultilineEdit : public KDialogBase
 {
@@ -35,7 +35,7 @@ class MultilineEdit : public KDialogBase
     void slotCancel();
 
   protected:
-    KTextEdit* textEditor;
+    QTextEdit* textEditor;
     static QString returnText;
 };
 

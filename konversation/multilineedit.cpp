@@ -12,7 +12,7 @@
 
 #include <qlayout.h>
 
-#include <ktextedit.h>
+#include <qtextedit.h>
 #include <klocale.h>
 
 #include "multilineedit.h"
@@ -31,7 +31,7 @@ MultilineEdit::MultilineEdit(QWidget* parent,QString text) :
   QVBoxLayout* dialogLayout=new QVBoxLayout(page);
   dialogLayout->setSpacing(spacingHint());
   // add the text editor
-  textEditor=new KTextEdit(page,"multiline_text_editor");
+  textEditor=new QTextEdit(page,"multiline_text_editor");
   textEditor->setTextFormat(PlainText);
   textEditor->setText(text);
   returnText=text;
