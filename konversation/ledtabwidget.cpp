@@ -164,17 +164,17 @@ void LedTabWidget::processWheelEvent(QWheelEvent *e)
 {
 	if (e->delta() > 0)
 	{
-		if ( currentPageIndex()+1 >= count() )
-			setCurrentPage(0);
-		else
-			setCurrentPage(currentPageIndex()+1);
-	}
-	else
-	{
 		if ( currentPageIndex() == 0 )
 			setCurrentPage(count()-1);
 		else
 			setCurrentPage(currentPageIndex()-1);
+	}
+        else
+	{
+		if ( currentPageIndex()+1 >= count() )
+			setCurrentPage(0);
+		else
+			setCurrentPage(currentPageIndex()+1);
 	}
 }
 #endif
