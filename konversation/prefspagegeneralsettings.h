@@ -39,20 +39,9 @@ class PrefsPageGeneralSettings : public PrefsPage
   public slots:
     void applyPreferences();
 
-  protected slots:
-    void autoReconnectChanged(int state);
-
   protected:
     KLineEdit* commandCharInput;
-    KLineEdit* ctcpVersionInput;
-
-    QCheckBox* autoReconnectCheck;
-    QCheckBox* autoRejoinCheck;
-    QCheckBox* autojoinOnInviteCheck;
-
-    QLabel* reconnectTimeoutLabel;
-    QSpinBox* reconnectTimeoutSpin;
-    
+    KLineEdit* ctcpVersionInput;    
 };
 
 #endif

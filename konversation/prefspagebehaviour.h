@@ -37,6 +37,12 @@ class PrefsPageBehaviour : public PrefsPage
     QCheckBox* rawLogCheck;
     QCheckBox* useCustomBrowserCheck;
     KLineEdit* browserCmdInput;
+
+    QCheckBox* autoReconnectCheck;
+    QCheckBox* autoRejoinCheck;
+    QCheckBox* autojoinOnInviteCheck;
+    QSpinBox* reconnectTimeoutSpin;
+        
     KLineEdit* suffixStartInput;
     KLineEdit* suffixMiddleInput;
     QComboBox* completionModeCBox;

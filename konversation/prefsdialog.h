@@ -22,9 +22,6 @@
 #include "prefspageserverlist.h"
 #include "prefspagegeneralsettings.h"
 #include "prefspageidentity.h"
-#include "prefspageappearance.h"
-#include "prefspagecolorsimages.h"
-#include "prefspageirccolors.h"
 #include "prefspagebuttons.h"
 #include "prefspagelog.h"
 #include "prefspagedccsettings.h"
@@ -34,9 +31,7 @@
 #include "prefspageosd.h"
 #include "prefspageignore.h"
 #include "prefspagealiases.h"
-#include "prefspagenickcompletion.h"
 #include "prefspagetabbehavior.h"
-#include "prefspagewebbrowser.h"
 // TODO: uncomment this when it's ready to go
 // #include "prefspagescripts.h"
 
@@ -46,7 +41,6 @@
 */
 
 class QFrame;
-class PrefsPageBehaviour;
 
 class PrefsDialog : public KDialogBase
 {
@@ -77,12 +71,8 @@ class PrefsDialog : public KDialogBase
     PrefsPageGeneralSettings* generalSettingsPage;
     PrefsPage* serverListPage;
     PrefsPageIdentity*        identityPage;
-    PrefsPageAppearance*      appearancePage;
     PrefsPageTabBehavior*     tabBehaviorPage;
-    PrefsPageColorsImages*    colorsImagesPage;
-    PrefsPageIRCColors*       ircColorsPage;
     PrefsPageButtons*         buttonsPage;
-    PrefsPageNickCompletion*  nickCompletionPage;
     PrefsPageNotify*          notifyPage;
     PrefsPageHighlight*       highlightPage;
     PrefsPageOSD*             OSDPage;
@@ -90,9 +80,7 @@ class PrefsDialog : public KDialogBase
     PrefsPageAliases*         aliasesPage;
     PrefsPageLog*             logSettingsPage;
     PrefsPageDccSettings*     dccSettingsPage;
-    PrefsPageWebBrowser*    webBrowserPage;
     PrefsPageDialogs*         dialogsPage;
-    PrefsPageBehaviour* behaviourPage;
 
 
     // for openPage();

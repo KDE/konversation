@@ -47,66 +47,23 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   QString msg = i18n("<qt>Here you can set a custom reply for <b>CTCP <i>VERSION</i></b> requests.</qt>");
   QWhatsThis::add(ctcpVersionLabel,msg);
 
-  autoReconnectCheck=new QCheckBox(i18n("A&uto reconnect"),parentFrame,"auto_reconnect_check");
-  autoRejoinCheck=new QCheckBox(i18n("Auto re&join"),parentFrame,"auto_rejoin_check");
-  autojoinOnInviteCheck=new QCheckBox(i18n("Autojoin channel on &invite"),parentFrame,"autojoin_on_invite_check");
-
-  reconnectTimeoutLabel=new QLabel(i18n("&Reconnect timeout:"),parentFrame);
-  reconnectTimeoutLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  reconnectTimeoutSpin=new QSpinBox(1,9999,1,parentFrame,"reconnect_timeout_spin");
-  reconnectTimeoutSpin->setValue(preferences->getMaximumLagTime());
-  reconnectTimeoutSpin->setSuffix(i18n(" seconds"));
-  reconnectTimeoutLabel->setBuddy(reconnectTimeoutSpin);
-  
-
-  autoReconnectCheck->setChecked(preferences->getAutoReconnect());
-  // handle ghosting of timeout widget
-  autoReconnectChanged(preferences->getAutoReconnect() ? 2 : 0);
-
-  autoRejoinCheck->setChecked(preferences->getAutoRejoin());
-  autojoinOnInviteCheck->setChecked(preferences->getAutojoinOnInvite());
-  
-
   QHBox* generalSpacer=new QHBox(parentFrame);
 
   int row=0;
   generalSettingsLayout->addMultiCellWidget(commandCharBox,row,row,0,2);
   row++;
-  generalSettingsLayout->addWidget(autoReconnectCheck,row,0);
-  generalSettingsLayout->addWidget(reconnectTimeoutLabel,row,1);
-  generalSettingsLayout->addWidget(reconnectTimeoutSpin,row,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(autoRejoinCheck,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(autojoinOnInviteCheck,row,row,0,2);
-  row++;
   generalSettingsLayout->addMultiCellWidget(generalSpacer,row,row,0,2);
   generalSettingsLayout->setRowStretch(row,10);
-
-  connect(autoReconnectCheck,SIGNAL (stateChanged(int)),this,SLOT (autoReconnectChanged(int)) );
 }
 
 PrefsPageGeneralSettings::~PrefsPageGeneralSettings()
 {
 }
 
-void PrefsPageGeneralSettings::autoReconnectChanged(int state)
-{
-  reconnectTimeoutLabel->setEnabled(state==2);
-  reconnectTimeoutSpin->setEnabled(state==2);
-}
-
 void PrefsPageGeneralSettings::applyPreferences()
 {
   preferences->setCommandChar(commandCharInput->text());
-
-  preferences->setAutoReconnect(autoReconnectCheck->isChecked());
-  preferences->setAutoRejoin(autoRejoinCheck->isChecked());
-  preferences->setAutojoinOnInvite(autojoinOnInviteCheck->isChecked());
   preferences->setVersionReply(ctcpVersionInput->text());
-
-  preferences->setMaximumLagTime(reconnectTimeoutSpin->value());
-  
 }
 
 #include "prefspagegeneralsettings.moc"

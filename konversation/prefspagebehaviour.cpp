@@ -18,6 +18,7 @@
 #include <qgroupbox.h>
 #include <qcombobox.h>
 #include <qwhatsthis.h>
+#include <qspinbox.h>
 
 #include <klocale.h>
 #include <klineedit.h>
@@ -46,7 +47,41 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   browserCmdInput->setText(preferences->getWebBrowserCmd());
   connect(useCustomBrowserCheck, SIGNAL(toggled(bool)), browserCmdInput, SLOT(setEnabled(bool)));
   
-  QGroupBox* nickCompletionGroup =  new QGroupBox(i18n("Nickname Completion"), parentFrame, "nickCompletionGroup");
+  QGroupBox* connectionGroup = new QGroupBox(i18n("Connection"), parentFrame, "connectionGroup");
+  connectionGroup->setColumnLayout(0, Qt::Vertical);
+  connectionGroup->setMargin(marginHint());
+  QGridLayout* connectionLayout = new QGridLayout(connectionGroup->layout(), 3, 2, spacingHint());
+
+  autoReconnectCheck = new QCheckBox(i18n("A&uto reconnect"), connectionGroup, "auto_reconnect_check");
+  autoReconnectCheck->setChecked(preferences->getAutoReconnect());
+
+  QLabel* reconnectTimeoutLabel = new QLabel(i18n("&Reconnect timeout:"), connectionGroup);
+  reconnectTimeoutLabel->setEnabled(autoReconnectCheck->isChecked());
+  reconnectTimeoutSpin = new QSpinBox(1, 9999, 1, connectionGroup, "reconnect_timeout_spin");
+  reconnectTimeoutSpin->setEnabled(autoReconnectCheck->isChecked());
+  reconnectTimeoutSpin->setValue(preferences->getMaximumLagTime());
+  reconnectTimeoutSpin->setSuffix(i18n(" seconds"));
+  reconnectTimeoutLabel->setBuddy(reconnectTimeoutSpin);
+  connect(autoReconnectCheck, SIGNAL(toggled(bool)), reconnectTimeoutLabel, SLOT(setEnabled(bool)));
+  connect(autoReconnectCheck, SIGNAL(toggled(bool)), reconnectTimeoutSpin, SLOT(setEnabled(bool)));
+
+  autoRejoinCheck = new QCheckBox(i18n("Auto re&join"), connectionGroup, "auto_rejoin_check");
+  autojoinOnInviteCheck = new QCheckBox(i18n("Autojoin channel on &invite"), connectionGroup, "autojoin_on_invite_check");
+  autoRejoinCheck->setChecked(preferences->getAutoRejoin());
+  autojoinOnInviteCheck->setChecked(preferences->getAutojoinOnInvite());
+  
+  int row = 0;
+  connectionLayout->addMultiCellWidget(autoReconnectCheck, row, row, 0, 1);
+  row++;
+  connectionLayout->addWidget(reconnectTimeoutLabel, row, 0);
+  connectionLayout->addWidget(reconnectTimeoutSpin, row, 1);
+  row++;
+  connectionLayout->addMultiCellWidget(autoRejoinCheck, row, row, 0, 1);
+  row++;
+  connectionLayout->addMultiCellWidget(autojoinOnInviteCheck, row, row, 0, 1);
+  connectionLayout->setColStretch(1, 10);
+    
+  QGroupBox* nickCompletionGroup = new QGroupBox(i18n("Nickname Completion"), parentFrame, "nickCompletionGroup");
   nickCompletionGroup->setMargin(marginHint());
   nickCompletionGroup->setColumnLayout(0, Qt::Vertical);
   QGridLayout* nickCompletionLayout = new QGridLayout(nickCompletionGroup->layout(), 2, 4, spacingHint());
@@ -68,7 +103,7 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   suffixMiddleInput = new KLineEdit(preferences->getNickCompleteSuffixMiddle(), nickCompletionGroup);
   middleLabel->setBuddy(suffixMiddleInput);
     
-  int row = 0;
+  row = 0;
   nickCompletionLayout->addWidget(modeLbl, row, 0);
   nickCompletionLayout->addWidget(completionModeCBox, row, 1);
   row++;
@@ -87,6 +122,8 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   generalLayout->addWidget(useCustomBrowserCheck, row, 0);
   generalLayout->addWidget(browserCmdInput, row, 1);
   row++;
+  generalLayout->addMultiCellWidget(connectionGroup, row, row, 0, 1);
+  row++;
   generalLayout->addMultiCellWidget(nickCompletionGroup, row, row, 0, 1);
   row++;
   generalLayout->setRowStretch(row, 10);
@@ -103,6 +140,12 @@ void PrefsPageBehaviour::applyPreferences()
   preferences->setRawLog(rawLogCheck->isChecked());
   preferences->setWebBrowserUseKdeDefault(!useCustomBrowserCheck->isChecked());
   preferences->setWebBrowserCmd(browserCmdInput->text());
+
+  preferences->setAutoReconnect(autoReconnectCheck->isChecked());
+  preferences->setAutoRejoin(autoRejoinCheck->isChecked());
+  preferences->setAutojoinOnInvite(autojoinOnInviteCheck->isChecked());
+  preferences->setMaximumLagTime(reconnectTimeoutSpin->value());
+    
   preferences->setNickCompletionMode(completionModeCBox->currentItem());
   preferences->setNickCompleteSuffixStart(suffixStartInput->text());
   preferences->setNickCompleteSuffixMiddle(suffixMiddleInput->text());
