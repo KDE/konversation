@@ -97,18 +97,18 @@ void StatusPanel::sendStatusText(const QString& sendLine)
   // create a work copy
   QString output(sendLine);
   // replace aliases and wildcards
-  if(server->getOutputFilter()->replaceAliases(output)) {
-    output = server->parseWildcards(output, server->getNickname(), QString::null, QString::null, QString::null, QString::null);
+  if(m_server->getOutputFilter()->replaceAliases(output)) {
+    output = m_server->parseWildcards(output, m_server->getNickname(), QString::null, QString::null, QString::null, QString::null);
   }
 
   // encoding stuff is done in Server()
-  Konversation::OutputFilterResult result = server->getOutputFilter()->parse(server->getNickname(), output, QString::null);
+  Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, QString::null);
 
   if(!result.output.isEmpty()) {
     appendServerMessage(result.typeString, result.output);
   }
 
-  server->queue(result.toServer);
+  m_server->queue(result.toServer);
 }
 
 void StatusPanel::statusTextEntered()
@@ -130,7 +130,7 @@ void StatusPanel::newTextInView(const QString& highlightColor,bool important)
 
 void StatusPanel::textPasted(const QString& text)
 {
-  if(server)
+  if(m_server)
   {
     QStringList multiline=QStringList::split('\n',text);
     for(unsigned int index=0;index<multiline.count();index++)
@@ -228,7 +228,7 @@ void StatusPanel::closeYourself(ChatWindow*)
 {
   int result=KMessageBox::warningYesNo(
                 this,
-                i18n("Do you want to disconnect from '%1'?").arg(server->getServerName()),
+                i18n("Do you want to disconnect from '%1'?").arg(m_server->getServerName()),
                 i18n("Disconnect From Server"),
                 KStdGuiItem::yes(),
                 KStdGuiItem::cancel(),
@@ -236,10 +236,10 @@ void StatusPanel::closeYourself(ChatWindow*)
 
   if(result==KMessageBox::Yes)
   {
-    server->quitServer();
+    m_server->quitServer();
      //Why are these seperate?  why would deleting the server not quit it? FIXME
-    delete server;
-    server=0;
+    delete m_server;
+    m_server=0;
 #ifdef USE_MDI
     emit chatWindowCloseRequest(this);
 #else
@@ -253,14 +253,21 @@ void StatusPanel::closeYourself(ChatWindow*)
 void StatusPanel::nicknameComboboxChanged(int /*index*/)
 {
   QString newNick=nicknameCombobox->currentText();
-  oldNick=server->getNickname();
+  oldNick=m_server->getNickname();
   nicknameCombobox->setCurrentText(oldNick);
-  server->queue("NICK "+newNick);
+  m_server->queue("NICK "+newNick);
 }
 
 void StatusPanel::changeNickname(const QString& newNickname)
 {
-  server->queue("NICK "+newNickname);
+  m_server->queue("NICK "+newNickname);
+}
+
+void StatusPanel::emitUpdateInfo()
+{
+  QString info = m_server->getServerGroup();
+  
+  emit updateInfo(info);
 }
 
 void StatusPanel::appendInputText(const QString& text)
@@ -270,12 +277,12 @@ void StatusPanel::appendInputText(const QString& text)
 
 void StatusPanel::setChannelEncoding(const QString& encoding)  // virtual
 {
-  KonversationApplication::preferences.setChannelEncoding(server->getServerGroup(), ":server", encoding);
+  KonversationApplication::preferences.setChannelEncoding(m_server->getServerGroup(), ":server", encoding);
 }
 
 QString StatusPanel::getChannelEncoding()  // virtual
 {
-  return KonversationApplication::preferences.getChannelEncoding(server->getServerGroup(), ":server");
+  return KonversationApplication::preferences.getChannelEncoding(m_server->getServerGroup(), ":server");
 }
 
 QString StatusPanel::getChannelEncodingDefaultDesc()  // virtual

@@ -56,7 +56,7 @@ bool RawLog::closeYourself()
 {
 #ifndef USE_MDI
   // make the server delete us so server can reset the pointer to us
-  server->closeRawLog();
+  m_server->closeRawLog();
 #endif
   return true;
 }
@@ -65,7 +65,7 @@ bool RawLog::closeYourself()
 void RawLog::closeYourself(ChatWindow*)
 {
   // make the server delete us so server can reset the pointer to us
-  server->closeRawLog();
+  m_server->closeRawLog();
   emit chatWindowCloseRequest(this);
 }
 #endif

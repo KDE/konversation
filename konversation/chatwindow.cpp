@@ -55,7 +55,7 @@ ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
   parentWidget=parent;
 #endif
   firstLog=true;
-  server=0;
+  m_server=0;
   m_notificationsEnabled = true;
   m_channelEncodingSupported = false;
 
@@ -164,10 +164,10 @@ void ChatWindow::setServer(Server* newServer)
   else
   {
 
-    server=newServer;
-    setMainWindow(server->getMainWindow());
+    m_server=newServer;
+    setMainWindow(m_server->getMainWindow());
 #ifdef USE_MDI
-    connect(server,SIGNAL(serverQuit(const QString&)),this,SLOT(serverQuit(const QString&)));
+    connect(m_server,SIGNAL(serverQuit(const QString&)),this,SLOT(serverQuit(const QString&)));
 #endif
     // check if we need to set up the signals
     if(getType()!=ChannelList)
@@ -188,7 +188,7 @@ void ChatWindow::setMainWindow(KonversationMainWindow *mainWindow) {
 
 Server* ChatWindow::getServer()
 {
-  return server;
+  return m_server;
 }
 
 void ChatWindow::serverOnline(bool state)
@@ -301,9 +301,9 @@ void ChatWindow::setLogfileName(const QString& name)
     // status panels get special treatment here, since they have no server at the beginning
     if(getType()==Status) {
       logName=name+".log";
-    } else if(server) {
+    } else if(m_server) {
       // make sure that no path delimiters are in the name
-      logName=server->getServerGroup().lower().replace("/","_")+"_"+name+".log";
+      logName=m_server->getServerGroup().lower().replace("/","_")+"_"+name+".log";
     }
 
     // "cd" into log path or create path, if it's not there
@@ -527,7 +527,7 @@ void ChatWindow::adjustFocus() {
     action = m_mainWindow->actionCollection()->action("edit_find_next");
     if(action) action->setEnabled(textView!=NULL); else Q_ASSERT(action);
     action = m_mainWindow->actionCollection()->action("open_channel_list");
-    if(action) action->setEnabled(server!=NULL); else Q_ASSERT(action);
+    if(action) action->setEnabled(m_server!=NULL); else Q_ASSERT(action);
     action = m_mainWindow->actionCollection()->action("open_logfile");
     if(action) {
 	    action->setEnabled(!logName.isEmpty());

@@ -89,7 +89,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 Query::~Query()
 {
 #ifdef USE_MDI
-  server->removeQuery(this);
+  m_server->removeQuery(this);
 #endif
 }
 
@@ -114,7 +114,7 @@ void Query::queryTextEntered()
   QString line=queryInput->text();
   queryInput->clear();
   if(line.lower()=="/clear") textView->clear();
-  if(line.lower()=="/part") server->closeQuery(getName());
+  if(line.lower()=="/part") m_server->closeQuery(getName());
   else
   {
     if(line.length()) sendQueryText(line);
@@ -126,23 +126,23 @@ void Query::sendQueryText(const QString& sendLine)
   // create a work copy
   QString output(sendLine);
   // replace aliases and wildcards
-  if(server->getOutputFilter()->replaceAliases(output)) {
-    output = server->parseWildcards(output, server->getNickname(), getName(), QString::null, QString::null, QString::null);
+  if(m_server->getOutputFilter()->replaceAliases(output)) {
+    output = m_server->parseWildcards(output, m_server->getNickname(), getName(), QString::null, QString::null, QString::null);
   }
 
   // encoding stuff is done in Server()
-  Konversation::OutputFilterResult result = server->getOutputFilter()->parse(server->getNickname(), output, getName());
+  Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, getName());
 
   if(!result.output.isEmpty())
   {
-    if(result.type == Konversation::Action) appendAction(server->getNickname(), result.output);
+    if(result.type == Konversation::Action) appendAction(m_server->getNickname(), result.output);
     else if(result.type == Konversation::Command) appendCommandMessage(result.typeString, result.output);
     else if(result.type == Konversation::Program) appendServerMessage(result.typeString, result.output);
     else if(!result.typeString.isEmpty()) appendQuery(result.typeString, result.output);
-    else appendQuery(server->getNickname(), result.output);
+    else appendQuery(m_server->getNickname(), result.output);
   }
 
-  server->queue(result.toServer);
+  m_server->queue(result.toServer);
 }
 
 void Query::newTextInView(const QString& highlightColor,bool important)
@@ -190,7 +190,7 @@ void Query::updateFonts()
 
 void Query::textPasted(const QString& text)
 {
-  if(server)
+  if(m_server)
   {
     QStringList multiline=QStringList::split('\n',text);
     for(unsigned int index=0;index<multiline.count();index++)
@@ -292,12 +292,12 @@ void Query::appendInputText(const QString& s)
 
 void Query::setChannelEncoding(const QString& encoding)  // virtual
 {
-  KonversationApplication::preferences.setChannelEncoding(server->getServerGroup(), getName(), encoding);
+  KonversationApplication::preferences.setChannelEncoding(m_server->getServerGroup(), getName(), encoding);
 }
 
 QString Query::getChannelEncoding()  // virtual
 {
-  return KonversationApplication::preferences.getChannelEncoding(server->getServerGroup(), getName());
+  return KonversationApplication::preferences.getChannelEncoding(m_server->getServerGroup(), getName());
 }
 
 QString Query::getChannelEncodingDefaultDesc()  // virtual
@@ -308,7 +308,7 @@ QString Query::getChannelEncodingDefaultDesc()  // virtual
 bool Query::closeYourself()
 {
 #ifndef USE_MDI
-  server->removeQuery(this);
+  m_server->removeQuery(this);
 #endif
   return true;
 }
@@ -327,10 +327,13 @@ void Query::serverQuit(const QString&)
 
 void Query::emitUpdateInfo()
 {
-  QString info = getName();
-
-  if(m_nickInfo)
+  QString info;
+  if(m_nickInfo->getNickname().lower() == m_server->getNickname().lower())
+    info = i18n("Talking to yourself");
+  else if(m_nickInfo)
     info = m_nickInfo->getBestAddresseeName();
+  else  
+    info = getName();
   
   emit updateInfo(info);
 }

@@ -209,7 +209,7 @@ void ChannelListPanel::saveList()
     QTextStream stream(&listFile);
 
     QString header(i18n("Konversation Channel List: %1 - %2\n\n")
-                         .arg(server->getServerName())
+                         .arg(m_server->getServerName())
                          .arg(QDateTime::currentDateTime().toString()));
 
     // send header to stream
@@ -403,14 +403,14 @@ void ChannelListPanel::updateUsersChannels()
 bool ChannelListPanel::closeYourself()
 {
   // make the server delete us so server can reset the pointer to us
-  server->closeChannelListPanel();
+  m_server->closeChannelListPanel();
   return true;
 }
 
 #ifdef USE_MDI
 void ChannelListPanel::closeYourself(ChatWindow*)
 {
-  server->closeChannelListPanel();
+  m_server->closeChannelListPanel();
   emit chatWindowCloseRequest(this);
 }
 #endif

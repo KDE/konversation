@@ -52,7 +52,8 @@ class StatusPanel : public ChatWindow
     virtual QString getChannelEncoding();
     virtual QString getChannelEncodingDefaultDesc();
     virtual void setName(const QString& newName) { ChatWindow::setName(newName); }
-    
+    virtual void emitUpdateInfo();
+
   signals:
     void newText(QWidget* widget,const QString& highlightColor,bool important);
     void sendFile();

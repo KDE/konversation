@@ -241,8 +241,8 @@ class ChatWindow : public BASE_CLASS
     /** A pointer to the server this chatwindow is part of.
      *  Not always non-null - e.g. for konsolepanel
      */
-    Server* server;
-        Identity identity;
+    Server* m_server;
+    Identity identity;
     QFile logfile;
     WindowType type;
 
