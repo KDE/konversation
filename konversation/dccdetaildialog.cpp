@@ -76,7 +76,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   m_partner->setAlignment( AlignHCenter );
     
   // Self
-  QLabel* selfHeader;
+  QLabel* selfHeader = 0;
   m_self = 0;
   if ( m_item->dccType == DccTransfer::Send )
   {
