@@ -7,11 +7,9 @@ my $PORT= shift;
 my $SERVER= shift;
 my $TARGET= shift;
 
-my $char;
 my $message;
 my $random;
 my $input;
-my $entry;
 my @chars;
 my $i = 0;
 
@@ -19,23 +17,28 @@ if(!@ARGV){
     exec ("dcop $PORT Konversation error \"Colorizer script needs a message argument!\" ");
 }
 
-foreach $entry (@ARGV) {
+foreach (@ARGV) {
     if($i == 0) {
-	$input = $entry;
+	$input = $_;
 	$i = 1;
     }
     else {
-	$input = $input." ".$entry;
+	$input = $input." ".$_;
     }
+}
+
+if( utf8::valid($input) ) {
+    utf8::decode($input);
 }
 
 @chars = split //, $input;
 
 srand(time());
 
-foreach $char (@chars) {
+foreach (@chars) {
   $random = int(rand(15))+1;
-  $message = $message."%C".$random.$char;
+  $message = $message."%C".$random.$_;
 }
 
 system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$message\" ");
+
