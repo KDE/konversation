@@ -323,11 +323,8 @@ void PrefsPageIdentity::updateIdentity(int number)
   
   QRegExp encoding("\\b"+identity->getCodec().lower()+"\\b");
   
-  kdDebug() << "finding encoding " << identity->getCodec().lower() << endl;
-  
   for(unsigned int index=0;index<encodings.count();index++)
   {
-    kdDebug() << "comparing with " << encodings[index].lower() << endl;
     if(encoding.search(encodings[index].lower())!=-1)
     {
       codecComboBox->setCurrentItem(index);
