@@ -30,6 +30,7 @@ Images::Images()
 {
   initializeLeds();
   initializeNickIcons();
+  initializeKimifaceIcons();
 }
 
 Images::~Images()
@@ -76,6 +77,11 @@ QIconSet Images::getGreenLed(bool on)  const { return getLed(1,on); }
 QIconSet Images::getBlueLed(bool on)   const { return getLed(2,on); }
 QIconSet Images::getYellowLed(bool on) const { return getLed(3,on); }
 
+QIconSet Images::getKimproxyAway() const { return kimproxyAway; }
+QIconSet Images::getKimproxyOnline() const { return kimproxyOnline; }
+QIconSet Images::getKimproxyOffline() const { return kimproxyOffline; }
+
+
 QPixmap Images::getNickIcon(NickPrivilege privilege,bool isAway) const
 {
   return nickIcons[privilege][isAway?1:0];
@@ -107,6 +113,13 @@ void Images::initializeLeds()
   bigBlueLedOff.setPixmap(prefix+"big_led_blue_off.png",QIconSet::Automatic);  // USE_MDI
   bigYellowLedOn.setPixmap(prefix+"big_led_yellow_on.png",QIconSet::Automatic);  // USE_MDI
   bigYellowLedOff.setPixmap(prefix+"big_led_yellow_off.png",QIconSet::Automatic);  // USE_MDI
+}
+
+void Images::initializeKimifaceIcons()
+{
+   kimproxyAway = KGlobal::iconLoader()->loadIconSet("kimproxyaway",KIcon::Small);
+   kimproxyOnline = KGlobal::iconLoader()->loadIconSet("kimproxyonline",KIcon::Small);
+   kimproxyOffline = KGlobal::iconLoader()->loadIconSet("kimproxyoffline",KIcon::Small);
 }
 
 // NickIcons

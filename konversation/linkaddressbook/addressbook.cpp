@@ -130,8 +130,8 @@ QString Addressbook::locate(const QString &contactId, const QString &protocol) {
 }
 QPixmap Addressbook::icon(const QString &uid) {
 	
-	Images* leds = KonversationApplication::instance()->images();
-	QIconSet currentLeds;
+	Images* icons = KonversationApplication::instance()->images();
+	QIconSet currentIcon;
 	if(!isPresent(uid))
 		return QPixmap();
 
@@ -139,13 +139,13 @@ QPixmap Addressbook::icon(const QString &uid) {
 	  case 0: //Unknown
 	  case 1: //Offline
 	  case 2: //connecting - invalid for us?
-		currentLeds = leds->getRedLed(false);
+		currentIcon = icons->getKimproxyOffline();
 		break;
 	  case 3: //Away
-		currentLeds = leds->getYellowLed(false);
+		currentIcon = icons->getKimproxyAway();
 		break;
 	  case 4: //Online
-		currentLeds = leds->getGreenLed(false);
+		currentIcon = icons->getKimproxyOnline();
 		break;
 	  default:
 		//error
@@ -153,8 +153,8 @@ QPixmap Addressbook::icon(const QString &uid) {
 		return QPixmap();
 	}
 
-        QPixmap joinedLed = currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
-	return joinedLed;
+        QPixmap joinedIcon = currentIcon.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
+	return joinedIcon;
 }
 QString Addressbook::context(const QString &uid) {
 	if(uid.isEmpty()) {

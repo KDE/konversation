@@ -1,1 +1,1 @@
-SUBDIRS = ledicons icons nickicons kimproxy
+SUBDIRS = ledicons icons nickicons

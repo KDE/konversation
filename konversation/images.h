@@ -51,11 +51,16 @@ class Images
     QIconSet getBlueLed(bool on) const;
     QIconSet getYellowLed(bool on) const;
 
+    QIconSet getKimproxyAway() const;
+    QIconSet getKimproxyOnline() const;
+    QIconSet getKimproxyOffline() const;
+    
     QPixmap getNickIcon(NickPrivilege privilege,bool isAway=false) const;
     void initializeNickIcons();
 
   protected:
     void initializeLeds();
+    void initializeKimifaceIcons();
     
     QIconSet redLedOn;
     QIconSet redLedOff;
@@ -74,6 +79,11 @@ class Images
     QIconSet bigBlueLedOff;
     QIconSet bigYellowLedOn;
     QIconSet bigYellowLedOff;
+
+    QIconSet kimproxyAway;
+    QIconSet kimproxyOnline;
+    QIconSet kimproxyOffline;
+    
 
     QPixmap nickIcons[_NickPrivilege_COUNT][2];  // [privilege][away]
 };
