@@ -45,11 +45,8 @@
 
 IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 {
-  highlightColor=QString::null;
   copyUrlMenu=false;
-  urlToCopy=QString::null;
   resetScrollbar=TRUE;
-  autoTextToSend=QString::null;
 
   setAutoFormatting(0);
   setUndoRedoEnabled(0);
@@ -144,7 +141,7 @@ void IRCView::setViewBackground(const QString& color,const QString& pixmapName)
 
 void IRCView::setServer(Server* newServer)
 {
-  server=newServer;
+  m_server=newServer;
 }
 
 void IRCView::clear()
@@ -221,28 +218,33 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
   filteredLine.replace(">","&gt;");
   // Replace all 0x03 without color number (reset color) with \0x031,0 or \0x030,1, depending on which one fits
   // with the users chosen colours, based on the relative brightness. TODO defaultColor needs explanation
-  bool inverted=0; // TODO this flag should be stored somewhere
+  bool inverted = false; // TODO this flag should be stored somewhere
   {
     QColor fg("#"+KonversationApplication::preferences.getColor("ChannelMessage")),
-        bg=("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
-    int h=0,s=0,fv=0,bv=0;
+        bg("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
+    int h = 0, s = 0,fv = 0,bv = 0;
     fg.getHsv(&h,&s,&fv);
     bg.getHsv(&h,&s,&bv);
-    if (bv<=fv)
-      inverted=TRUE;
+    
+    if (bv <= fv) {
+      inverted = false;
+    }
   }
 
-  if (inverted)
+  if(inverted) {
     filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0030,1\\1");
-  else
+  } else {
     filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0031,0\\1");
+  }
 
   // Hack to allow for whois info hostmask info to not be parsed as email
   filteredLine.replace("&amp;#64;","&#64;");
 
-  if(filteredLine.find("\x07")!=-1)
+  if(filteredLine.find("\x07") != -1)
   {
-    if(KonversationApplication::preferences.getBeep()) kapp->beep();
+    if(KonversationApplication::preferences.getBeep()) {
+      kapp->beep();
+    }
   }
 
   // replace \003 and \017 codes with rich text color codes
@@ -261,33 +263,37 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
 
   while((pos=colorRegExp.search(filteredLine))!=-1)
   {
-    colorString=(firstColor) ? QString::null : QString("</font>");
-
-    // reset colors on \017 to default value
-    if(colorRegExp.cap(1)=="\017")
-      colorString+="<font color=\"#"+defaultColor+"\">";
-    else
-    {
-      int foregroundColor=colorRegExp.cap(2).toInt();
-/*
-    int backgroundColor=colorRegExp.cap(4).toInt();
-
-    if(bgColor) colorString+="</td></tr></table>";
-
-    if(colorRegExp.cap(4).length())
-    {
-      colorString+="<table cellpadding=0 cellspacing=0 bgcolor=\"#"+QString(colorCodes[backgroundColor])+"\"><tr><td>";
-      bgColor=true;
+    if(filterColors) {
+      colorString = QString::null;
+    } else {
+      colorString=(firstColor) ? QString::null : QString("</font>");
+  
+      // reset colors on \017 to default value
+      if(colorRegExp.cap(1)=="\017")
+        colorString+="<font color=\"#"+defaultColor+"\">";
+      else
+      {
+        int foregroundColor=colorRegExp.cap(2).toInt();
+  /*
+      int backgroundColor=colorRegExp.cap(4).toInt();
+  
+      if(bgColor) colorString+="</td></tr></table>";
+  
+      if(colorRegExp.cap(4).length())
+      {
+        colorString+="<table cellpadding=0 cellspacing=0 bgcolor=\"#"+QString(colorCodes[backgroundColor])+"\"><tr><td>";
+        bgColor=true;
+      }
+      else
+        bgColor=false;
+  */
+        colorString += "<font color=\"" + colorCodes[foregroundColor] + "\">";
+      }
+      
+      firstColor = false;
     }
-    else
-      bgColor=false;
-*/
-      colorString+="<font color=\""+colorCodes[foregroundColor]+"\">";
-    }
 
-    if (filterColors == true) colorString = QString::null;
     filteredLine.replace(pos,colorRegExp.cap(0).length(),colorString);
-    firstColor=false;
   }
 
   if(!firstColor) filteredLine+="</font>";
@@ -303,7 +309,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
   replaceDecoration(filteredLine,'\x1f','u');
 
   // URL Catcher
-  QString linkColor=KonversationApplication::preferences.getColor("LinkMessage");
+  QString linkColor = KonversationApplication::preferences.getColor("LinkMessage");
 
 // Maybe switch to this function some day when it does hilight better than my own stuff ;)
 //  filteredLine=KStringHandler::tagURLs(filteredLine);
@@ -323,14 +329,15 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
                   "(mailto:|)((([a-z]|\\d)+[\\w\\x2E\\x2D]+)\\x40([\\w\\x2E\\x2D]{2,})\\x2E(\\w{2,})))");
 
   pattern.setCaseSensitive(false);
-
-  pos=0;
-  while(pattern.search(filteredLine,pos)!=-1 && parseURL) {
+  KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+  pos = 0;
+  
+  while((pattern.search(filteredLine,pos) != -1) && parseURL) {
       // Remember where we found the url
-      pos=pattern.pos();
+      pos = pattern.pos();
 
       // Extract url
-      QString url=pattern.capturedTexts()[0];
+      QString url = pattern.capturedTexts()[0];
       QString href(url);
 
       // clean up href for browser
@@ -343,92 +350,89 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
       // Replace all spaces with %20 in href
       href.replace(" ","%20");
       // Build rich text link
-      QString link("<font color=\"#"+linkColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
+      QString link("<font color=\"#" + linkColor + "\"><a href=\"" + href + "\">" + url + "</a></font>");
 
       // replace found url with built link
-      filteredLine.replace(pos,url.length(),link);
+      filteredLine.replace(pos, url.length(), link);
       // next search begins right after the link
-      pos+=link.length();
+      pos += link.length();
       // tell the program that we have found a new url
 
-      KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-      konvApp->storeUrl(whoSent,href);
+      konvApp->storeUrl(whoSent, href);
   }
 
   // Hilight
+  QString ownNick;
+  
+  if(m_server) {
+    ownNick = m_server->getNickname();
+  }
 
-  if(doHilight && whoSent!=server->getNickname())
+  if(doHilight && m_server && (whoSent != ownNick))
   {
-    highlightColor=QString::null;
+    m_highlightColor = QString::null;
 
-    // FIXME: We got to get rid of server dependance here
-    if(server && whoSent==server->getNickname() && KonversationApplication::preferences.getHilightOwnLines())
+    // FIXME: We got to get rid of m_server dependance here
+    if(KonversationApplication::preferences.getHilightNick() &&
+        filteredLine.lower().find(QRegExp("(^|[^\\d\\w])" +
+        QRegExp::escape(ownNick.lower()) +
+        "([^\\d\\w]|$)")) != -1)
     {
-      // hilight own lines
-      filteredLine=QString("<font color=\""+KonversationApplication::preferences.getHilightOwnLinesColor().name()+"\">")+filteredLine+QString("</font>");
-    }
-    else
-    {
-      QString who(QString::null);
-      // only copy sender name if it was not our own line
-      if(server && whoSent!=server->getNickname()) who=whoSent;
-
-      // FIXME: We got to get rid of server dependance here
-      if(server && KonversationApplication::preferences.getHilightNick() &&
-         filteredLine.lower().find(QRegExp("(^|[^\\d\\w])"+
-         QRegExp::escape(server->getNickname().lower())+
-         "([^\\d\\w]|$)"))!=-1)
+      // hilight current nickname
+      m_highlightColor = KonversationApplication::preferences.getHilightNickColor().name();
+      ChatWindow* chatWin = static_cast<ChatWindow*>(parent());
+      
+      if (KonversationApplication::preferences.getOSDShowOwnNick() &&
+        !KonversationApplication::preferences.getOSDShowChannel() && chatWin->notificationsEnabled())
       {
-        // hilight current nickname
-        highlightColor=KonversationApplication::preferences.getHilightNickColor().name();
-        ChatWindow* chatWin = static_cast<ChatWindow*>(parent());
-        if (KonversationApplication::preferences.getOSDShowOwnNick() && !KonversationApplication::preferences.getOSDShowChannel() && chatWin->notificationsEnabled())
+        konvApp->osd->showOSD(i18n("(HIGHLIGHT)") + " <" + whoSent + "> " + filteredLine);
+      }
+    } else {
+      QPtrList<Highlight> hilightList = KonversationApplication::preferences.getHilightList();
+      QPtrListIterator<Highlight> it(hilightList);
+      unsigned int index;
+      Highlight* hilight;
+      bool patternFound = false;
+
+      while(((hilight = it.current()) != 0) && !patternFound)
+      {
+
+        if(hilight->getRegExp())
         {
-          KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-          konvApp->osd->showOSD( i18n("(HIGHLIGHT)") + " <" + whoSent + "> " + filteredLine);
+          QRegExp needle(hilight->getPattern().lower());
+          patternFound = ((filteredLine.lower().find(needle) != -1) ||   // hilight regexp in text
+                          (whoSent.lower().find(needle) != -1));            // hilight regexp in nickname
+        }
+        else
+        {
+          QString needle(hilight->getPattern().lower());
+          patternFound = ((filteredLine.lower().find(needle) != -1) ||   // hilight patterns in text
+                          (whoSent.lower().find(needle) != -1));            // hilight patterns in nickname
         }
       }
-      else
+      
+      if(patternFound)
       {
-        QPtrList<Highlight> hilightList=KonversationApplication::preferences.getHilightList();
-        unsigned int index;
+        m_highlightColor = hilight->getColor().name();
 
-        for(index=0;index<hilightList.count();index++)
-        {
-          bool patternFound=0;
-          Highlight* hilight=hilightList.at(index);
-
-          if(hilight->getRegExp())
-          {
-            QRegExp needle(hilight->getPattern().lower());
-            patternFound=(filteredLine.lower().find(needle)!=-1 ||   // hilight regexp in text
-                          who.lower().find(needle)!=-1 );            // hilight regexp in nickname
-          }
-          else
-          {
-            QString needle(hilight->getPattern().lower());
-            patternFound=(filteredLine.lower().find(needle)!=-1 ||   // hilight patterns in text
-                          who.lower().find(needle)!=-1 );            // hilight patterns in nickname
-          }
-
-          if(patternFound)
-          {
-            highlightColor=hilightList.at(index)->getColor().name();
-
-            if(KonversationApplication::preferences.getHilightSoundEnabled()) {
-              KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-              konvApp->sound()->play(hilightList.at(index)->getSoundURL());
-            }
-            // only set auto text if it was someone else but ourselves
-            if(whoSent!=server->getNickname()) autoTextToSend=hilight->getAutoText();
-            break;
-          }
-        } // endfor
+        if(KonversationApplication::preferences.getHilightSoundEnabled()) {
+          konvApp->sound()->play(hilight->getSoundURL());
+        }
+        
+        autoTextToSend = hilight->getAutoText();
       }
     }
+    
     // apply found highlight color to line
-    if(!highlightColor.isEmpty())
-      filteredLine=QString("<font color=\""+highlightColor+"\">")+filteredLine+QString("</font>");
+    if(!m_highlightColor.isEmpty()) {
+      filteredLine = "<font color=\"" + m_highlightColor + "\">" + filteredLine + "</font>";
+    }
+  } else if(doHilight && (whoSent == ownNick) &&
+    KonversationApplication::preferences.getHilightOwnLines())
+  {
+    // hilight own lines
+    filteredLine = "<font color=\"" + KonversationApplication::preferences.getHilightOwnLinesColor().name() +
+      "\">" + filteredLine + "</font>";
   }
 
   // Replace multiple Spaces with "<space>&nbsp;"
@@ -516,7 +520,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
 
 void IRCView::appendServerMessage(const QString& type,const QString& message)
 {
-  QString serverColor=KonversationApplication::preferences.getColor("ServerMessage");
+  QString m_serverColor=KonversationApplication::preferences.getColor("ServerMessage");
 
   // Fixed width font option for MOTD
   QString fixed;
@@ -530,12 +534,12 @@ void IRCView::appendServerMessage(const QString& type,const QString& message)
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
-    line += "<p><font color=\"#" + serverColor + "\"" + fixed + "><b>[%2]</b> %1" + PDF + " %3</font></p>\n";
+    line += "<p><font color=\"#" + m_serverColor + "\"" + fixed + "><b>[%2]</b> %1" + PDF + " %3</font></p>\n";
   } else {
-    line = "<p><font color=\"#" + serverColor + "\"" + fixed + ">%1 <b>[%2]</b> %3</font></p>\n";
+    line = "<p><font color=\"#" + m_serverColor + "\"" + fixed + ">%1 <b>[%2]</b> %3</font></p>\n";
   }
 
-  line = line.arg(timeStamp(), type, filter(message,serverColor));
+  line = line.arg(timeStamp(), type, filter(message,m_serverColor));
 
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
@@ -623,7 +627,7 @@ void IRCView::doAppend(QString newLine, bool important, bool self)
   if(important || !KonversationApplication::preferences.getHideUnimportantEvents())
   {
     if(!self) {
-      emit newText(highlightColor,important);
+      emit newText(m_highlightColor,important);
     }
 
     // scroll view only if the scroll bar is already at the bottom
@@ -663,7 +667,7 @@ void IRCView::doAppend(QString newLine, bool important, bool self)
   if(!autoTextToSend.isEmpty())
   {
     // replace placeholders in autoText
-    QString sendText=server->parseWildcards(autoTextToSend,server->getNickname(),QString::null,QString::null,QString::null,QString::null);
+    QString sendText=m_server->parseWildcards(autoTextToSend,m_server->getNickname(),QString::null,QString::null,QString::null,QString::null);
     // avoid recursion due to signalling
     autoTextToSend=QString::null;
     // send signal only now

@@ -104,12 +104,12 @@ class IRCView : public KTextBrowser
     bool resetScrollbar;
 
     QString autoTextToSend;
-    QString highlightColor;
+    QString m_highlightColor;
     bool copyUrlMenu;
     QString urlToCopy;
 
     QString buffer;
-    Server *server;
+    Server* m_server;
     QPopupMenu* popup;
     QPixmap backgroundPixmap;
     QBrush backgroundBrush;
