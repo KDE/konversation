@@ -186,6 +186,9 @@ void KonversationApplication::connectToAnotherServer(int id)
   connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&)) );
 
   connect(newServer,SIGNAL (deleted(Server*)),this,SLOT (removeServer(Server*)) );
+  
+  connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
+    this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
 
   serverList.append(newServer);
 }
@@ -864,6 +867,13 @@ QPtrList<IRCEvent> KonversationApplication::retrieveHooks (EVENT_TYPE a_type)
       }
     }
   return ret_value;
+}
+
+void KonversationApplication::sendMultiServerCommand(const QString& command, const QString& parameter)
+{
+  for(Server* server = serverList.first(); server; server = serverList.next()) {
+    server->executeMultiServerCommand(command, parameter);
+  }
 }
 
 #include "konversationapplication.moc"

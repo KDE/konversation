@@ -140,6 +140,7 @@ class Server : public QObject
     void closeDccPanel(); // will be connected to MainWindow::closeDccPanel()
     void deleted(Server* myself); // will be connected to KonversationApplication::removeServer()
     void awayState(bool away); // will be connected to any user input panel;
+    void multiServerCommand(const QString& command, const QString& parameter);
 
   public slots:
     void connectToIRCServer();
@@ -167,6 +168,8 @@ class Server : public QObject
     void addChannelListPanel();
     void closeChannelListPanel();
     void updateChannelQuickButtons();
+    void sendMultiServerCommand(const QString& command, const QString& parameter);
+    void executeMultiServerCommand(const QString& command, const QString& parameter);
 
   protected slots:
     void ircServerConnectionSuccess();
@@ -195,7 +198,6 @@ class Server : public QObject
     void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
     void setTopicAuthor(const QString& channel,const QString& author);
     void invitation(const QString& nick,const QString& channel);
-    void tmp_multiServerCommand(const QString& command, const QString& parameter);
 
   protected:
     // constants

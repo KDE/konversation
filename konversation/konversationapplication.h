@@ -77,7 +77,8 @@ class KonversationApplication : public KApplication
     void dcopSay(const QString& server,const QString& target,const QString& command);
     void dcopInfo(const QString& string);
     void appearanceChanged();
-
+    void sendMultiServerCommand(const QString& command, const QString& parameter);
+    
   protected:
     QPtrList<Server> serverList;
     QStringList urlList;

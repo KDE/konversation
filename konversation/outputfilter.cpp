@@ -156,7 +156,9 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("dcc "))     parseDcc(parameter);
     else if(line.startsWith("konsole ")) parseKonsole();
     
-    else if(line.startsWith("aaway ")) parseAaway(parameter);
+    else if(line.startsWith("aaway "))   parseAaway(parameter);
+    else if(line.startsWith("ame "))     parseAme(parameter);
+    else if(line.startsWith("amsg "))    parseAmsg(parameter);
 
     else if(line=="join")                parseJoin(QString::null);
     else if(line=="part")                parsePart(QString::null);
@@ -181,7 +183,9 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="raw")                 parseRaw(QString::null);
     else if(line=="konsole")             parseKonsole();
 
-    else if(line=="aaway") parseAaway(QString::null);
+    else if(line=="aaway")               parseAaway(QString::null);
+    else if(line=="ame")                 parseAme(QString::null);
+    else if(line=="amsg")                parseAmsg(QString::null);
     
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
@@ -961,8 +965,34 @@ void OutputFilter::error(const QString& string)
 
 void OutputFilter::parseAaway(const QString& parameter)
 {
-  kdDebug() << "AAWAY: " << parameter << endl;
-  emit multiServerCommand(QString("aaway"), parameter);
+  emit multiServerCommand("away", parameter);
+  output=QString::null;
+}
+
+void OutputFilter::parseAme(const QString& parameter)
+{
+  if(parameter.isEmpty()) {
+    type=i18n("Usage");
+    output=i18n("Usage: %1AME text").arg(commandChar);
+    program=true;
+    return;
+  }
+  
+  emit multiServerCommand("me", parameter);
+  output=QString::null;
+}
+
+void OutputFilter::parseAmsg(const QString& parameter)
+{
+  if(parameter.isEmpty()) {
+    type=i18n("Usage");
+    output=i18n("Usage: %1AMSG text").arg(commandChar);
+    program=true;
+    return;
+  }
+  
+  emit multiServerCommand("msg", parameter);
+  output=QString::null;
 }
 
 #include "outputfilter.moc"

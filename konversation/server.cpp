@@ -127,6 +127,8 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
                    this,SLOT   (requestDccSend()) );
   connect(&outputFilter,SIGNAL (requestDccSend(const QString&)),
                    this,SLOT   (requestDccSend(const QString&)) );
+  connect(&outputFilter, SIGNAL(multiServerCommand(const QString&, const QString&)),
+    this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
 
   connect(&notifyTimer,SIGNAL(timeout()),
                   this,SLOT  (notifyTimeout()) );
@@ -1677,9 +1679,27 @@ KonversationMainWindow* Server::getMainWindow() const { return mainWindow; }
 
 bool Server::connected() { return alreadyConnected; }
 
-void Server::tmp_multiServerCommand(const QString& command, const QString& parameter)
+void Server::sendMultiServerCommand(const QString& command, const QString& parameter)
 {
-  kdDebug() << "Multi Server Command: " << command << ": " << parameter << endl;
+  emit multiServerCommand(command, parameter);
+}
+
+void Server::executeMultiServerCommand(const QString& command, const QString& parameter)
+{
+  if(command == "away") {
+    QString str = KonversationApplication::preferences.getCommandChar() + command;
+    
+    if(!parameter.isEmpty()) {
+      str += " " + parameter;
+    }
+    
+    outputFilter.parse(getNickname(), str,QString::null);
+    queue(outputFilter.getServerOutput());
+  } else if(command == "msg") {
+    sendToAllChannels(parameter);
+  } else {
+    sendToAllChannels(KonversationApplication::preferences.getCommandChar() + command + " " + parameter);
+  }
 }
 
 #include "server.moc"
