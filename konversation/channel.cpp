@@ -267,11 +267,12 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(channelInput,SIGNAL (nickCompletion()),this,SLOT (completeNick()) );
   connect(channelInput,SIGNAL (endCompletion()),this,SLOT (endCompleteNick()) );
   connect(channelInput,SIGNAL (textPasted(const QString&)),this,SLOT (textPasted(const QString&)) );
-  connect(getTextView(), SIGNAL(textPasted()), channelInput, SLOT(paste()));
 
-  connect(textView,SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
-  connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
-  connect(textView,SIGNAL (autoText(const QString&)),this,SLOT (sendChannelText(const QString&)) );
+  connect(getTextView(), SIGNAL(textPasted()), channelInput, SLOT(paste()));
+  connect(getTextView(),SIGNAL (gotFocus()),channelInput,SLOT (setFocus()) );
+  connect(getTextView(),SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
+  connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
+  connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendChannelText(const QString&)) );
 
   connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
   connect(nicknameListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT (doubleClickCommand(QListViewItem*)) );

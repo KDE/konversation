@@ -74,6 +74,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   connect(queryInput,SIGNAL (submit()),this,SLOT (queryTextEntered()) );
   connect(queryInput,SIGNAL (textPasted(const QString&)),this,SLOT (textPasted(const QString&)) );
   connect(getTextView(), SIGNAL(textPasted()), queryInput, SLOT(paste()));
+  connect(getTextView(),SIGNAL (gotFocus()),queryInput,SLOT (setFocus()) );
 
   connect(textView,SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
