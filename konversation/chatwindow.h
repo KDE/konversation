@@ -38,6 +38,8 @@ class QFile;
 
 class IRCView;
 class Server;
+class KonversationMainWindow;
+#include "konvidebug.h"
 
 #ifdef USE_MDI
 #define BASE_CLASS KMdiChildView
@@ -77,7 +79,22 @@ class ChatWindow : public BASE_CLASS
       LogFileReader
     };
 
+    /** This should be called and set with a non-null server as soon
+     *  as possibly after ChatWindow is created.
+     *  Some chatWindows don't have a server - like konsolepanel.
+     *  In these cases, you should call setMainWindow.
+     *  @param newServer The server to set it to.
+     *  @see setMainWindow(KonversationMainWindow *mainWindow)
+     */
     void setServer(Server* newServer);
+    /** This should be called if setServer is not called - e.g.
+     *  in the case of konsolepanel.  This should be set as soon
+     *  as possible after creation.
+     */
+    void setMainWindow(KonversationMainWindow *mainWindow);
+    /** Get the server this is linked to.
+     *  @return The server it is associated with, or null if none.
+     */
     Server* getServer();
     void setIdentity(const Identity *newIdentity);
     void setTextView(IRCView* newView);
@@ -173,7 +190,7 @@ class ChatWindow : public BASE_CLASS
      *  "irc color" item on the menu to be enabled.
      */
     virtual bool areIRCColorsSupported() {return false; }
-    
+
     int spacing();
     int margin();
 
@@ -204,7 +221,14 @@ class ChatWindow : public BASE_CLASS
 #endif
 
     IRCView* textView;
+    /** A pointer to the server this chatwindow is part of.
+     *  Not always non-null - e.g. for konsolepanel
+     */
     Server* server;
+    /** This should always be non-null.  Used to enable/disable mainWindow
+     *  kactions.
+     */
+    KonversationMainWindow *m_mainWindow;
     Identity identity;
     QFile logfile;
     WindowType type;

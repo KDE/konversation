@@ -930,6 +930,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 
   viewContainer->changeTabState(view,false,false,QString::null);
   emit endNotification(viewToChange);
+  view->adjustFocus();
 #endif
 }
 

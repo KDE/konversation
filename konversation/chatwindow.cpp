@@ -73,6 +73,7 @@ ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
   connect(&blinkTimer,SIGNAL(timeout()),this,SLOT(blinkTimeout()));
   blinkTimer.start(500);
 #endif
+  m_mainWindow=NULL;
 
 }
 
@@ -161,6 +162,7 @@ void ChatWindow::setServer(Server* newServer)
   else
   {
     server=newServer;
+    m_mainWindow = server->getMainWindow();
 #ifdef USE_MDI
     connect(server,SIGNAL(serverQuit(const QString&)),this,SLOT(serverQuit(const QString&)));
 #endif
@@ -172,7 +174,10 @@ void ChatWindow::setServer(Server* newServer)
     }
   }
 }
-
+void ChatWindow::setMainWindow(KonversationMainWindow *mainWindow) {
+  m_mainWindow = mainWindow;
+}
+    
 Server* ChatWindow::getServer()
 {
   return server;
@@ -193,6 +198,7 @@ void ChatWindow::setTextView(IRCView* newView)
 {
   textView=newView;
   connect(textView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
+  connect(textView,SIGNAL (currentChanged()),this,SLOT (adjustFocus()) );
 }
 
 void ChatWindow::insertRememberLine()
@@ -426,13 +432,14 @@ void ChatWindow::serverQuit(const QString&) // USE_MDI
 {
 }
 
+#ifdef USEMDI
 void ChatWindow::closeRequest(KMdiChildView* view) // USE_MDI
 {
-#ifdef USE_MDI
   closeYourself(static_cast<ChatWindow*>(view));
-#endif
 }
-
+#else
+void ChatWindow::closeRequest(KMdiChildView*) {}
+#endif
 bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 {
   if(e->type() == QEvent::KeyPress) {
@@ -477,13 +484,26 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
   return QVBox::eventFilter(watched, e);
 #endif
 }
-  
 
 
 void ChatWindow::adjustFocus() {
-  KAction *action;
-  action = server->getMainWindow()->actionCollection()->action("insert_remember_line");
-  action->setEnabled(!!textView);
+  if(m_mainWindow && m_mainWindow->actionCollection()) {
+    KAction *action;
+    action = m_mainWindow->actionCollection()->action("insert_remember_line");
+    if(action) action->setEnabled(textView!=NULL); else Q_ASSERT(action);
+    action = m_mainWindow->actionCollection()->action("insert_character");
+    if(action) action->setEnabled(isInsertCharacterSupported()); else Q_ASSERT(action);
+    action = m_mainWindow->actionCollection()->action("irc_colors");
+    if(action) action->setEnabled(areIRCColorsSupported()); else Q_ASSERT(action);
+    action = m_mainWindow->actionCollection()->action("clear_window");
+    if(action) action->setEnabled(textView!=NULL); else Q_ASSERT(action);
+    action = m_mainWindow->actionCollection()->action("edit_find");
+    if(action) action->setEnabled(textView!=NULL); else Q_ASSERT(action);
+    action = m_mainWindow->actionCollection()->action("edit_find_next");
+    if(action) action->setEnabled(textView!=NULL); else Q_ASSERT(action);
+    action = m_mainWindow->actionCollection()->action("open_channel_list");
+    if(action) action->setEnabled(server!=NULL); else Q_ASSERT(action);
+  }
   childAdjustFocus();
 }
 

@@ -675,10 +675,8 @@ void IRCView::showEvent(QShowEvent* /* event */)
   emit gotFocus();
 }
 
-void IRCView::focusInEvent(QFocusEvent* event)
+void IRCView::focusInEvent(QFocusEvent*)
 {
-  // Suppress Compiler Warning
-  event->type();
   // Set focus to input line (must be connected)
   emit gotFocus();
 }

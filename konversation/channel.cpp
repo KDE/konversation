@@ -1692,7 +1692,6 @@ QPtrList<Nick> Channel::getNickList()
 }
 void Channel::childAdjustFocus()
 {
-  kdDebug() << "Setting focus"<<endl;
   channelInput->setFocus();
 }
 
