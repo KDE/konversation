@@ -307,8 +307,6 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
   replaceDecoration(filteredLine,'\x16','b'); // should be inverse
   replaceDecoration(filteredLine,'\x1f','u');
 
-  kdDebug() << filteredLine << endl;
-  
   // URL Catcher
   QString linkColor=KonversationApplication::preferences.getColor("LinkMessage");
 
