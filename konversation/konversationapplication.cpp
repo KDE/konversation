@@ -182,23 +182,11 @@ void KonversationApplication::insertRememberLine()
 
 void KonversationApplication::connectToServer(int id)
 {
-  if(connectToAnotherServer(id))
-  {
-    // to prevent doubleClicked() to crash the dialog
-    // FIXME: Seems to have a race, though
-    // only close the dialog when we didn't use autoconnect
-    if(prefsDialog) prefsDialog->delayedDestruct();
-    prefsDialog=0;
-  }
-}
-
-bool KonversationApplication::connectToAnotherServer(int id)
-{
   Konversation::ServerGroupSettings serverGroup = preferences.serverGroupById(id);
   IdentityPtr identity = serverGroup.identity();
   
   if(!identity) {
-    return false;
+    return;
   }
 
   // sanity check for identity
@@ -220,53 +208,20 @@ bool KonversationApplication::connectToAnotherServer(int id)
   {
     KMessageBox::information(0,
                              i18n("<qt>Your identity \"%1\" is not set up correctly:<br>%2</qt>")
-                                  .arg(identity->getName())
-                                  .arg(check),i18n("Check Identity Settings")
+                                  .arg(identity->getName()).arg(check),
+                             i18n("Check Identity Settings")
                             );
 
     mainWindow->openIdentitiesDialog();
     
-    return false;
+    return;
   }
 
   // identity ok, carry on
 
   mainWindow->show();
-  /* FIXME Make this work again...
+  
   // Check if a server window with same name and port is already open
-  Server* newServer=serverList.first();
-  while(newServer)
-  {
-    if(chosenServer->getServerName()==newServer->getServerName() &&
-       chosenServer->getPort()==newServer->getPort() &&
-       chosenServer->getIdentity()==newServer->getIdentity()->getName())
-    {
-      QString autoJoinChannel=chosenServer->getChannelName();
-
-      if(newServer->isConnected() || newServer->isConnecting())
-      {
-        if(!autoJoinChannel.isEmpty())
-          newServer->queue("JOIN "+autoJoinChannel+" "+chosenServer->getChannelKey());
-      }
-      else
-      {
-        if(!autoJoinChannel.isEmpty())
-        {
-          newServer->setAutoJoin(true);
-          newServer->setAutoJoinChannel(newServer->getAutoJoinChannel()+" "+autoJoinChannel);
-          newServer->setAutoJoinChannelKey(newServer->getAutoJoinChannelKey()+" "+chosenServer->getChannelKey());
-        }
-        else newServer->setAutoJoin(false);
-
-        newServer->connectToIRCServer();
-      }
-      return true;
-    }
-
-    newServer=serverList.next();
-  } // endwhile
-  // We came this far, so generate a new server
-  */
   Server* newServer = new Server(mainWindow,id);
 
   connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
@@ -281,8 +236,6 @@ bool KonversationApplication::connectToAnotherServer(int id)
   connect(newServer, SIGNAL(awayInsertRememberLine()), this, SLOT(insertRememberLine()));
 
   serverList.append(newServer);
-
-  return true;
 }
 
 void KonversationApplication::quickConnectToServer(const QString& hostName, const QString& port, const QString& channel, const QString& nick, const QString& password)
@@ -303,17 +256,18 @@ void KonversationApplication::quickConnectToServer(const QString& hostName, cons
   connect(newServer, SIGNAL(awayInsertRememberLine()), this, SLOT(insertRememberLine()));
 
   serverList.append(newServer);
-
 }
 
 Server* KonversationApplication::getServerByName(const QString& name)
 {
   Server* lookServer=serverList.first();
+  
   while(lookServer)
   {
     if(lookServer->getServerName()==name) return lookServer;
     lookServer=serverList.next();
   }
+  
   return 0;
 }
 

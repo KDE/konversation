@@ -1084,7 +1084,7 @@ void KonversationMainWindow::openServerList()
   if(!m_serverListDialog) {
     m_serverListDialog = new Konversation::ServerListDialog(this);
     KonversationApplication *konvApp = static_cast<KonversationApplication *>(KApplication::kApplication());
-    connect(m_serverListDialog, SIGNAL(connectToServer(int)), konvApp, SLOT(connectToAnotherServer(int)));
+    connect(m_serverListDialog, SIGNAL(connectToServer(int)), konvApp, SLOT(connectToServer(int)));
   }
 
   m_serverListDialog->show();

@@ -107,7 +107,6 @@ class KonversationApplication : public KApplication
 
   public slots:
     void connectToServer(int number);
-    bool connectToAnotherServer(int number);
     void quickConnectToServer(const QString& hostName, 
 			      const QString& port = "6667", 
 			      const QString& channel="",
