@@ -174,11 +174,7 @@ PrefsPageBehaviour::~PrefsPageBehaviour()
 void PrefsPageBehaviour::applyPreferences()
 {
   preferences->setShowTrayIcon(trayIconCheck->isChecked());
-
-  if (trayIconCheck->isChecked())
-      preferences->setSystrayOnly(trayOnlyCheck->isChecked());
-  else
-      preferences->setSystrayOnly(false);
+  preferences->setSystrayOnly(trayOnlyCheck->isChecked());
 
   preferences->setRawLog(rawLogCheck->isChecked());
   preferences->setShowServerList(showServerList->isChecked());

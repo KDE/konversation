@@ -34,7 +34,8 @@ TrayIcon::TrayIcon(QWidget* parent) : KSystemTray(parent)
   m_widgets.setAutoDelete(false);
   m_blinkTimer = new QTimer(this);
   connect(m_blinkTimer, SIGNAL(timeout()), SLOT(blinkTimeout()));
-  if(KonversationApplication::preferences.getSystrayOnly())
+  if(KonversationApplication::preferences.getShowTrayIcon() &&
+     KonversationApplication::preferences.getSystrayOnly())
     KWin::setState(m_parent->winId(), NET::SkipTaskbar);
 }
 
@@ -93,7 +94,8 @@ void TrayIcon::removeServer(Server* server)
 
 void TrayIcon::mousePressEvent(QMouseEvent *e)
 {
-  if(KonversationApplication::preferences.getSystrayOnly())
+  if(KonversationApplication::preferences.getShowTrayIcon() &&
+     KonversationApplication::preferences.getSystrayOnly())
     KWin::setState(m_parent->winId(), NET::SkipTaskbar);
   KSystemTray::mousePressEvent(e);
 }

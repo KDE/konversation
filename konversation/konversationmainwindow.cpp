@@ -1318,15 +1318,19 @@ void KonversationMainWindow::updateTrayIcon()
   if(KonversationApplication::preferences.getShowTrayIcon())
     {
       tray->show();
-      if(KonversationApplication::preferences.getSystrayOnly())
-	KWin::setState(winId(), NET::SkipTaskbar);
-      else
-	KWin::clearState(winId(), NET::SkipTaskbar);
     }
   else
     tray->hide();
 
   tray->setNotificationEnabled(KonversationApplication::preferences.getTrayNotify());
+
+  if(KonversationApplication::preferences.getShowTrayIcon() &&
+     KonversationApplication::preferences.getSystrayOnly())
+  {
+    KWin::setState(winId(), NET::SkipTaskbar);
+  } else {
+    KWin::clearState(winId(), NET::SkipTaskbar);
+  }
 }
 
 void KonversationMainWindow::addIRCColor()
