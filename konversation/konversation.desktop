@@ -1,31 +1,9 @@
-# KDE Config File
-
 [Desktop Entry]
 Type=Application
 Exec=konversation -caption "%c" %i %m
 Icon=konversation
 DocPath=konversation/index.html
-GenericName=Internet Relay Chat Client
-GenericName[ca]=Client per al Internet Relay Chat
-GenericName[da]=Internet Relay Chat klient
-GenericName[de]=Internet Relay Chatprogramm
-GenericName[es]=Cliente de Internet Relay Chat
-GenericName[et]=IRC klient
-GenericName[fi]=IRC-asiakasohjelma
-GenericName[fr]=Client IRC
-GenericName[hi]=इंटरनेट रिले चैट क्लाएंट
-GenericName[hu]=IRC-kliens
-GenericName[it]=Client IRC
-GenericName[nl]=IRC-programma
-GenericName[pt]=Cliente de IRC
-GenericName[pt_BR]=Cliente de bate-papo na Internet
-GenericName[ru]=Клиент IRC
-GenericName[sr]=Клијент за ћаскање путем Интернета
-GenericName[sv]=Internet Relay Chat-klient
-GenericName[ta]=இணைய அஞ்சல் அரட்டையைச் சார்ந்திருப்பவன்
-GenericName[tr]=Internet Sohbet Yazılımı
-GenericName[xx]=xxInternet Relay Chat Clientxx
-GenericName[zh_CN]=互联网中继聊天客户端
+GenericName=IRC Chat
 Terminal=false
 Name=Konversation
 Name[hi]=कनवर्सेसन
@@ -34,5 +12,4 @@ Name[xx]=xxKonversationxx
 Categories=Qt;KDE;Network;X-SuSE-IRCClient;
 ServiceTypes=DCOP/InstantMessenger
 X-DCOP-ServiceName=konversation
-
 Encoding=UTF-8
