@@ -29,6 +29,7 @@
 #include <kiconloader.h>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
+#include <kuser.h>
 
 #include "konversationapplication.h"
 #include "irccharsets.h"
@@ -390,8 +391,10 @@ void IdentityDialog::newIdentity()
   QString txt = KInputDialog::getText(i18n("Add Identity"), i18n("Identity name:"), QString::null, &ok, this);
 
   if(ok && !txt.isEmpty()) {
+    KUser user(KUser::UseRealUserID);
     IdentityPtr identity = new Identity;
     identity->setName(txt);
+    identity->setIdent(user.loginName());
     m_identityList.append(identity);
     m_identityCBox->insertItem(txt);
     m_identityCBox->setCurrentItem(m_identityCBox->count() - 1);
