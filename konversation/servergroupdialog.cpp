@@ -68,9 +68,10 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   
   m_autoConnectCBox = new QCheckBox(i18n("Connect on &application start up."), mainWidget);
   
-  QGridLayout* groupLayout = new QGridLayout(mainWidget, 1, 2, 0, spacingHint());
+  QWidget* groupWidget = new QWidget(mainWidget);
+  QGridLayout* groupLayout = new QGridLayout(groupWidget, 1, 2, 0, spacingHint());
   
-  QGroupBox* serverGBox = new QGroupBox(0, Qt::Horizontal, i18n("Servers"), mainWidget);
+  QGroupBox* serverGBox = new QGroupBox(0, Qt::Horizontal, i18n("Servers"), groupWidget);
   serverGBox->setMargin(marginHint());
   QGridLayout* serverLayout = new QGridLayout(serverGBox->layout(), 1, 2, spacingHint());
   
@@ -100,7 +101,7 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   serverLayout->addWidget(upServerBtn, 3, 2);
   serverLayout->addWidget(downServerBtn, 3, 3);
 
-  QGroupBox* channelGBox = new QGroupBox(0, Qt::Horizontal, i18n("Auto Join Channels"), mainWidget);
+  QGroupBox* channelGBox = new QGroupBox(0, Qt::Horizontal, i18n("Auto Join Channels"), groupWidget);
   channelGBox->setMargin(marginHint());
   QGridLayout* channelLayout = new QGridLayout(channelGBox->layout(), 1, 2, spacingHint());
   
@@ -139,7 +140,7 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   mainLayout->addWidget(commandLbl, 3, 0);
   mainLayout->addWidget(m_commandEdit, 3, 1);
   mainLayout->addMultiCellWidget(m_autoConnectCBox, 4, 4, 0, 1);
-  mainLayout->addMultiCellLayout(groupLayout, 5, 5, 0, 1);
+  mainLayout->addMultiCellWidget(groupWidget, 5, 5, 0, 1);
   groupLayout->addWidget(serverGBox, 0, 0);
   groupLayout->addWidget(channelGBox, 0, 1);
 
