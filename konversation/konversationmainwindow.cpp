@@ -71,6 +71,7 @@
 #include "dccchat.h"
 #include "serverlistdialog.h"
 #include "insertchardialog.h"
+#include "logfilereader.h"
 
 #ifdef USE_MDI
 KonversationMainWindow::KonversationMainWindow() : KMdiMainFrm(0,"mdi_main_form")
@@ -554,6 +555,7 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     else if(viewType==ChatWindow::Konsole)      closeKonsolePanel(view);
     else if(viewType==ChatWindow::UrlCatcher)   closeUrlCatcher();
     else if(viewType==ChatWindow::NicksOnline)  closeNicksOnlinePanel();
+    else if(viewType == ChatWindow::LogFileReader) view->closeYourself();
 
 /*
     else if(viewType==ChatWindow::Notice);
@@ -573,11 +575,21 @@ void KonversationMainWindow::openLogfile()
        viewType==ChatWindow::Query ||
        viewType==ChatWindow::Status)
     {
-      view->openLogfile();
+      openLogFile(view->getName(), view->logFileName());
     }
-    else
-    {
-    }
+  }
+}
+
+void KonversationMainWindow::openLogFile(const QString& caption, const QString& file)
+{
+  if(!file.isEmpty()) {
+#ifdef USE_MDI
+    LogfileReader* logReader = new LogfileReader(i18n("Logfile of %1").arg(caption), file);
+    addMdiView(LogFileReader, 3);
+#else
+    LogfileReader* logReader = new LogfileReader(getViewContainer(), file);
+    addView(logReader, 3, i18n("Logfile of %1").arg(caption));
+#endif
   }
 }
 

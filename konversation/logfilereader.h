@@ -15,7 +15,7 @@
 #ifndef LOGFILEREADER_H
 #define LOGFILEREADER_H
 
-#include <qframe.h>
+#include "chatwindow.h"
 
 #include <kio/job.h>
 
@@ -27,15 +27,22 @@ class KToolBar;
 class KTextBrowser;
 class QSpinBox;
 
-class LogfileReader : public QFrame
+class LogfileReader : public ChatWindow
 {
   Q_OBJECT
 
   public:
-    LogfileReader(QString caption,QString log);
+#ifdef USE_MDI
+    LogfileReader(QString caption, QString log);
+#else
+    LogfileReader(QWidget* parent, QString log);
+#endif
     ~LogfileReader();
 
-    void hide();
+    virtual void closeYourself() { closeLog(); }
+  
+  public slots:
+    virtual void adjustFocus() {}
   
   protected slots:
     void updateView();

@@ -382,15 +382,6 @@ void ChatWindow::indicateAway(bool)
 {
 }
 
-void ChatWindow::openLogfile()
-{
-  if(!logfile.name().isEmpty())
-  {
-    LogfileReader* reader=new LogfileReader(name,logfile.name());
-    reader->show();
-  }
-}
-
 // reimplement this in all panels that have user input
 void ChatWindow::appendInputText(const QString&)
 {

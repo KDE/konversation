@@ -34,38 +34,32 @@
 #include "logfilereader.h"
 #include "konversationapplication.h"
 
-LogfileReader::LogfileReader(QString caption,QString log) :
-                      QFrame(0)
+#ifdef USE_MDI
+LogfileReader::LogfileReader(QString caption, QString log) : ChatWindow(caption)
+#else
+LogfileReader::LogfileReader(QWidget* parent, QString log) : ChatWindow(parent)
+#endif
 {
-  setCaption(i18n("Logfile of %1").arg(caption));
+  //setName(i18n("Logfile of %1").arg(caption));
+  setType(ChatWindow::LogFileReader);
 
-  QGridLayout* mainLayout=new QGridLayout(this,2,1,0,0);
-  fileName=log;
-  QDockArea* toolBarDock=new QDockArea(Qt::Horizontal,QDockArea::Normal,this,"logfile_toolbar_dock"); 
-  toolBar=new KToolBar(toolBarDock,"logfile_toolbar",true,true);
+  fileName = log;
+  QDockArea* toolBarDock = new QDockArea(Qt::Horizontal,QDockArea::Normal,this,"logfile_toolbar_dock"); 
+  toolBar = new KToolBar(toolBarDock,"logfile_toolbar",true,true);
   
   toolBar->insertButton("filesaveas",0,SIGNAL(clicked()),this,SLOT(saveLog()),true,i18n("Save As..."));
   
-  new QLabel(i18n("Show last"),toolBar,"logfile_size_label");
-  sizeSpin=new QSpinBox(10,1000,10,toolBar,"logfile_size_spinbox");
+  new QLabel(i18n("Show last:"),toolBar,"logfile_size_label");
+  sizeSpin = new QSpinBox(10,1000,10,toolBar,"logfile_size_spinbox");
   sizeSpin->setValue(KonversationApplication::preferences.getLogfileBufferSize());
   sizeSpin->setSuffix(i18n(" KB"));
 
   toolBar->insertButton("reload",0,SIGNAL(clicked()),this,SLOT(updateView()),true,i18n("Reload"));
   toolBar->insertButton("editdelete",0,SIGNAL(clicked()),this,SLOT(clearLog()),true,i18n("Clear Logfile"));
-  toolBar->insertButton("fileclose",0,SIGNAL(clicked()),this,SLOT(closeLog()),true,i18n("Close"));
   
-  view=new KTextBrowser(this);
+  view = new KTextBrowser(this);
   
   updateView();
-
-  int row=0;
-
-  mainLayout->addMultiCellWidget(toolBarDock,row,row,0,3);
-  
-  row++;
-  mainLayout->addMultiCellWidget(view,row,row,0,3);
-
   resize(KonversationApplication::preferences.getLogfileReaderSize());
 }
 
@@ -145,12 +139,6 @@ void LogfileReader::copyResult(KIO::Job* job)
   if(job->error()) job->showErrorDialog(this);
  
   job->deleteLater();
-}
-
-// make sure that the widget gets closed when user presses the window manager's [x] button
-void LogfileReader::hide()
-{
-  closeLog();
 }
 
 void LogfileReader::closeLog()

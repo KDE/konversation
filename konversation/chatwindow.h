@@ -73,7 +73,8 @@ class ChatWindow : public BASE_CLASS
       ChannelList,
       Konsole,
       UrlCatcher,
-      NicksOnline
+      NicksOnline,
+      LogFileReader
     };
 
     void setServer(Server* newServer);
@@ -117,6 +118,8 @@ class ChatWindow : public BASE_CLASS
     virtual bool notificationsEnabled() { return m_notificationsEnabled; }
     
     virtual bool eventFilter(QObject* watched, QEvent* e);
+    
+    QString logFileName() { return logfile.name(); }
 
   signals:
     void nameChanged(ChatWindow* view,const QString& newName);
@@ -126,7 +129,6 @@ class ChatWindow : public BASE_CLASS
 
   public slots:
     void logText(const QString& text);
-    void openLogfile();
     void serverOnline(bool state);
 
     virtual void adjustFocus()=0;

@@ -109,6 +109,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void updateTrayIcon();
     void serverQuit(Server* server);
     void setShowTabBarCloseButton(bool s);
+    
+    void openLogFile(const QString& caption, const QString& file);
 
     virtual void switchToTabPageMode();    // USE_MDI
     virtual void switchToIDEAlMode();      // USE_MDI
