@@ -687,7 +687,7 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps,bool important)
     if (doScroll)
     {
       setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
-      repaintChanged();
+      repaintContents(FALSE);
     }
   }
   if(!autoTextToSend.isEmpty())
