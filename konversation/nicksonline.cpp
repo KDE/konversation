@@ -20,6 +20,7 @@
 #include <qlabel.h>
 #include <qpopupmenu.h>
 #include <qptrlist.h>
+#include <qwhatsthis.h>
 
 // KDE includes.
 #include <kdebug.h>
@@ -69,6 +70,17 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_nickListView->setFullWidth(false);
     m_nickListView->setRootIsDecorated(true);
     m_nickListView->setShowToolTips(false);
+    QString nickListViewWT = i18n(
+        "<p>This is all the nicknames on your Nickname Watch list listed under the "
+        "server group they are connected to.  The list also includes the nicknames "
+        "in KAddressBook associated with the server group.</p>"
+        "<p>The <b>Additional Information</b> column shows the information known "
+        "for each nickname.</p>"
+        "<p>The channels the nickname has joined are listed underneath each nickname</p>"
+        "<p>Nicknames appearing under <b>Offline</b> are not connected to any of the "
+        "servers in the group.</p>"
+        "<p>Right-click with the mouse on a nickname to perform additional functions.</p>");
+    QWhatsThis::add(m_nickListView, nickListViewWT);
         
     m_tooltip = new Konversation::KonversationNicksOnlineToolTip(m_nickListView->viewport(), this);
         
@@ -82,6 +94,9 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     buttonBox->setSpacing(KDialog::spacingHint());
     QPushButton* editButton=new QPushButton(i18n("&Edit Watch List..."),
         buttonBox,"edit_notify_button");
+    QString editButtonWT = i18n(
+        "Click to edit the list of nicknames that appear on this screen.");
+    QWhatsThis::add(editButton, editButtonWT);
     
     connect(editButton, SIGNAL(clicked()), SIGNAL(editClicked()) );
     connect(m_nickListView, SIGNAL(doubleClicked(QListViewItem*)),
@@ -89,15 +104,30 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     
     QLabel* addressbookLabel = new QLabel(i18n("Address Book:"),
         buttonBox, "nicksonline_addressbook_label");
+    QString addressbookLabelWT = i18n(
+        "When you select a nickname in the list above, the buttons here are used "
+        "to associate the nickname with an entry in KAddressBook.");
+    QWhatsThis::add(addressbookLabel, addressbookLabelWT);
     addressbookLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     m_editContactButton = new QPushButton(i18n("Edit C&ontact..."),
         buttonBox, "nicksonline_editcontact_button");
+    QString editContactButtonWT = i18n(
+        "Click to create, view or edit the KAddressBook entry associated with the nickname "
+        "selected above.");
+    QWhatsThis::add(m_editContactButton, editContactButtonWT);
     m_editContactButton->setIconSet(m_kabcIconSet);
     m_changeAssociationButton = new QPushButton(i18n("&Change Association..."),
         buttonBox, "nicksonline_changeassociation_button");
+    QString changeAssociationButtonWT = i18n(
+        "Click to associate the nickname selected above with an entry in KAddressBook.");
+    QWhatsThis::add(m_changeAssociationButton, changeAssociationButtonWT);
     m_changeAssociationButton->setIconSet(m_kabcIconSet);
     m_deleteAssociationButton = new QPushButton(i18n("&Delete Association"),
         buttonBox, "nicksonline_deleteassociation_button");
+    QString deleteAssociationButtonWT = i18n(
+        "Click to remove the association between the nickname selected above and a "
+        "KAddressBook entry.");
+    QWhatsThis::add(m_deleteAssociationButton, deleteAssociationButtonWT);
     m_deleteAssociationButton->setIconSet(m_kabcIconSet);
     
     connect(m_editContactButton, SIGNAL(clicked()),
