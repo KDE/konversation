@@ -511,10 +511,6 @@ void KonversationMainWindow::closeWindow(ChatWindow*) // USE_MDI
       KMdiMainFrm::closeWindow(viewToClose);
       viewToClose->deleteLater();
     }
-/*
-    else if(viewType==ChatWindow::Notice){};
-    else if(viewType==ChatWindow::SNotice){};
-*/
   }
 #endif
 }
@@ -562,10 +558,6 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
 
     viewContainer->removePage(view);
 
-/*
-    else if(viewType==ChatWindow::Notice){};
-    else if(viewType==ChatWindow::SNotice){};
-*/
     if(viewContainer->count() <= 0) {
       viewContainer->hide();
     }
