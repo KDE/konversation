@@ -1629,6 +1629,7 @@ void Channel::updateFonts()
                                    KonversationApplication::preferences.getBackgroundImageName());
 
   nicksOps->setFont(KonversationApplication::preferences.getListFont());
+  QWhatsThis::add(nicksOps, i18n("<qt>This shows the number of users in the channel, and the number of those that are operators (ops).<p>A channel operator is a user that has special privilages, such as the ability to kick and ban users, change the channel modes, make other users operators</qt>"));
 
   nicknameListView->sort();
 
