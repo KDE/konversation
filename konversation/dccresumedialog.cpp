@@ -61,7 +61,7 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
   , m_selectedAction(RA_Cancel)
 {
   if(enabledButtonCodes & KDialogBase::User1)
-    setButtonText(KDialogBase::User1, i18n("Resume"));
+    setButtonText(KDialogBase::User1, i18n("&Resume"));
   
   QVBox* page = new QVBox(this);
   setMainWidget(page);
@@ -77,8 +77,8 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
     QFrame* filePathToolsFrame = new QFrame(page);
     QHBoxLayout* filePathToolsLayout = new QHBoxLayout(filePathToolsFrame);
     filePathToolsLayout->setSpacing(spacingHint());
-    QPushButton* btnDefaultName = new QPushButton(i18n("Default"), filePathToolsFrame);
-    QPushButton* btnSuggestNewName = new QPushButton(i18n("Suggest New Name"), filePathToolsFrame);
+    QPushButton* btnDefaultName = new QPushButton(i18n("&Default"), filePathToolsFrame);
+    QPushButton* btnSuggestNewName = new QPushButton(i18n("Suggest &New Name"), filePathToolsFrame);
     filePathToolsLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding));
     filePathToolsLayout->addWidget(btnDefaultName);
     filePathToolsLayout->addWidget(btnSuggestNewName);
@@ -120,13 +120,13 @@ void DccResumeDialog::updateDialogButtons()  // slot
 {
   if(m_item->getFileURL() == m_urlreqFileURL->url())
   {
-    setButtonText(KDialogBase::Ok, i18n("Overwrite"));
+    setButtonText(KDialogBase::Ok, i18n("&Overwrite"));
     enableButton(KDialogBase::Ok, m_enabledActions & RA_Overwrite);
     enableButton(KDialogBase::User1, true);
   }
   else
   {
-    setButtonText(KDialogBase::Ok, i18n("Rename"));
+    setButtonText(KDialogBase::Ok, i18n("R&ename"));
     enableButton(KDialogBase::Ok, m_enabledActions & RA_Rename);
     enableButton(KDialogBase::User1, false);
   }

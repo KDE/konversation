@@ -127,18 +127,18 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   m_buttonAccept = 0;
   if ( m_item->m_dccType == DccTransfer::Receive )
   {
-    m_buttonAccept = new KPushButton( KGlobal::iconLoader()->loadIcon( "player_play", KIcon::Small ), i18n("Accept"), buttonFrame );
+    m_buttonAccept = new KPushButton( KGlobal::iconLoader()->loadIcon( "player_play", KIcon::Small ), i18n("&Accept"), buttonFrame );
     m_buttonAccept->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
     connect( m_buttonAccept, SIGNAL( clicked() ), this, SLOT( slotAccept() ) );
   }
   
   // Abort
-  m_buttonAbort = new KPushButton( KGlobal::iconLoader()->loadIcon( "stop", KIcon::Small ), i18n("Abort"), buttonFrame );
+  m_buttonAbort = new KPushButton( KGlobal::iconLoader()->loadIcon( "stop", KIcon::Small ), i18n("A&bort"), buttonFrame );
   m_buttonAbort->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   connect( m_buttonAbort, SIGNAL( clicked() ), this, SLOT( slotAbort() ) );
   
   // Close
-  KPushButton* buttonClose = new KPushButton( KGlobal::iconLoader()->loadIcon( "button_ok", KIcon::Small ), i18n("Close"), buttonFrame );
+  KPushButton* buttonClose = new KPushButton( KGlobal::iconLoader()->loadIcon( "button_ok", KIcon::Small ), i18n("&Close"), buttonFrame );
   buttonClose->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   connect( buttonClose, SIGNAL( clicked() ), this, SLOT( slotClose() ) );
   
