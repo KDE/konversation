@@ -107,8 +107,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Go to Tab Number %1").arg( 9),0,KShortcut("Alt+9"),this,SLOT(goToTab8()),actionCollection(),"go_to_tab_9");
   new KAction(i18n("Go to Tab Number %1").arg(10),0,KShortcut("Alt+0"),this,SLOT(goToTab9()),actionCollection(),"go_to_tab_0");
 
-  new KAction(i18n("Find Text"),0,KShortcut("F3"),this,SLOT(findTextShortcut()),actionCollection(),"find_text");
-  new KAction(i18n("&Insert IRC Color"), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors");
+  new KAction(i18n("Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
+  new KAction(i18n("Find Text..."),0,KShortcut("F3"),this,SLOT(findTextShortcut()),actionCollection(),"find_text");
+  new KAction(i18n("&Insert IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors");
 
   // Initialize KMainWindow->statusBar()
   statusBar();
@@ -690,6 +691,12 @@ void KonversationMainWindow::findTextShortcut()
   {
     searchView->getTextView()->search();
   }
+}
+
+void KonversationMainWindow::clearWindow()
+{
+  if (frontView)
+    frontView->getTextView()->clear();
 }
 
 void KonversationMainWindow::openNotifications()

@@ -130,6 +130,7 @@ class KonversationMainWindow : public KMainWindow
 
     void findTextShortcut();
     void addIRCColor();
+    void clearWindow();
 
   protected:
     enum StatusID
