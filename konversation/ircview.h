@@ -77,7 +77,7 @@ class IRCView : public KTextBrowser
 
   public slots:
     void append(const QString& nick, const QString& message);
-    void appendRaw(const QString& message, bool suppressTimestamps=false);
+    void appendRaw(const QString& message, bool suppressTimestamps=false, bool self = false);
     void appendQuery(const QString& nick, const QString& message);
     void appendAction(const QString& nick, const QString& message);
     void appendServerMessage(const QString& type, const QString& message);
