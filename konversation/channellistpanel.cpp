@@ -31,6 +31,7 @@
 #include <kmessagebox.h>
 
 #include "channellistpanel.h"
+#include "channellistviewitem.h"
 #include "server.h"
 
 ChannelListPanel::ChannelListPanel(QWidget* parent) :
@@ -233,9 +234,7 @@ void ChannelListPanel::joinChannelClicked()
 
 void ChannelListPanel::addToChannelList(const QString& channel,int users,const QString& topic)
 {
-  pendingChannels.append(channel+" "+users+" "+topic);
-
-//  new KListViewItem(channelListView,channel,QString::number(users),topic);
+  pendingChannels.append(channel+" "+QString::number(users)+" "+topic);
 
   // set internal numbers of channels and users, display will be updated by a timer
   setNumChannels(getNumChannels()+1);
@@ -266,7 +265,7 @@ void ChannelListPanel::updateDisplay()
       // if it's the last one of this batch, update the widget
       if(index==pendingChannels.count()-1) channelListView->setUpdatesEnabled(true);
       // add channel line to list view
-      new KListViewItem(channelListView,channel,users,topic);
+      new ChannelListViewItem(channelListView,channel,users,topic);
     }
     // clear list of pending inserts
     pendingChannels.clear();

@@ -22,6 +22,7 @@ Changes from 0.12 to 0.13
 - Added system tray icon patch by Frauke Oster (thanks!)
 - Channel list update is now more CPU friendly
 - Tell the user why the channel list could not be opened
+- Channel list now sorts correctly when number column is clicked
 
 Changes from 0.11 to 0.12
 - Now handles multi server mode in one single window

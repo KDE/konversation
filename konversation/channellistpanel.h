@@ -26,6 +26,7 @@ class QStringList;
 class QTimer;
 
 class KListView;
+class ChannelListViewItem;
 
 class ChannelListPanel : public ChatWindow
 {
