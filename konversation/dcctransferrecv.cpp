@@ -166,7 +166,9 @@ void DccTransferRecv::prepareLocalKio( bool overwrite, KIO::fileoffset_t startPo
   if( !createDirs( m_fileURL.upURL() ) )
   {
     switch( DccResumeDialog::ask( this,
-                                  i18n("<b>Cannot create folder</b><br>Folder %1").arg( m_fileURL.upURL().prettyURL() ),
+                                  i18n( "<b>Cannot create the folder.</b><br>"
+                                        "Folder: %1<br>" )
+                                    .arg( m_fileURL.upURL().url() ),
                                   DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                                   DccResumeDialog::RA_Resume ) )
     {
@@ -240,7 +242,11 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
     else
     {
       switch( DccResumeDialog::ask( this,
-                                    i18n("<b>A partial file exists</b><br>file %1").arg( m_fileURL.prettyURL() ),
+                                    i18n( "<b>A partial file is existing.</b><br>"
+                                          "%1<br>"
+                                          "Size of the partial file: %2 bytes<br>" )
+                                      .arg( m_fileURL.url() )
+                                      .arg( DccTransfer::getPrettyNumberText( QString::number( size ) ) ),
                                     DccResumeDialog::RA_Resume | DccResumeDialog::RA_Overwrite | DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                                     DccResumeDialog::RA_Resume ) )
       {
@@ -278,9 +284,11 @@ void DccTransferRecv::slotLocalGotResult( KIO::Job* job )
       break;
     case KIO::ERR_FILE_ALREADY_EXIST:
       switch( DccResumeDialog::ask( this,
-                                  i18n("<b>The file already exists.</b><br>file %1").arg( m_fileURL.prettyURL() ),
-                                  DccResumeDialog::RA_Overwrite | DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
-                                  DccResumeDialog::RA_Overwrite ) )
+                                    i18n( "<b>The file is already existing.</b><br>"
+                                          "%1<br>" )
+                                      .arg( m_fileURL.url() ),
+                                    DccResumeDialog::RA_Overwrite | DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
+                                    DccResumeDialog::RA_Overwrite ) )
       {
         case DccResumeDialog::RA_Overwrite:
           prepareLocalKio( true, 0 );
@@ -295,9 +303,11 @@ void DccTransferRecv::slotLocalGotResult( KIO::Job* job )
       break;
     default:
       switch( DccResumeDialog::ask( this,
-                                    i18n("<b>Cannot open the file</m><br>file %1<br>error %2")
-                                      .arg( m_fileURL.prettyURL() )
-                                      .arg( transferJob->error() ),
+                                    i18n( "<b>Cannot open the file.<br>"
+                                          "Error: %1</b><br>"
+                                          "File: %2<br>" )
+                                      .arg( transferJob->error() )
+                                      .arg( m_fileURL.prettyURL() ),
                                     DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                                     DccResumeDialog::RA_Rename ) )
       {
