@@ -221,6 +221,8 @@ public:
 
 } resInit;
 
+} // anonymous namespace
+
 /*
  * parameters
  */
@@ -817,5 +819,3 @@ void KResolverManager::dequeue(KResolver *obj)
   QMutexLocker locker(&mutex);
   dequeueNew(obj);
 }
-
-} // anonymous namespace

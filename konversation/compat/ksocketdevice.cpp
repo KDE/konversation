@@ -804,58 +804,58 @@ namespace
     bool isNull() const
     { return obj == 0; }
   };
-
-  static KSocketDeviceFactoryBase* defaultImplFactory;
-  static QMutex defaultImplFactoryMutex;
-  typedef QMap<int, KSocketDeviceFactoryBase* > factoryMap;
-  static factoryMap factories;
- 
-  KSocketDevice* KSocketDevice::createDefault(KSocketBase* parent)
-  {
-    KSocketDevice* device = dynamic_cast<KSocketDevice*>(parent);
-    if (device != 0L)
-      return device;
-
-    KSocksSocketDevice::initSocks();
-
-    if (defaultImplFactory)
-      return defaultImplFactory->create(parent);
-
-    // the really default
-    return new KSocketDevice(parent);
-  }
-
-  KSocketDevice* KSocketDevice::createDefault(KSocketBase* parent, int capabilities)
-  {
-    KSocketDevice* device = dynamic_cast<KSocketDevice*>(parent);
-    if (device != 0L)
-      return device;
-
-    QMutexLocker locker(&defaultImplFactoryMutex);
-    factoryMap::ConstIterator it = factories.constBegin();
-    for ( ; it != factories.constEnd(); ++it)
-      if ((it.key() & capabilities) == capabilities)
-	// found a match
-	return it.data()->create(parent);
-
-    return 0L;			// no default
-  }
-
-  KSocketDeviceFactoryBase*
-  KSocketDevice::setDefaultImpl(KSocketDeviceFactoryBase* factory)
-  {
-    QMutexLocker locker(&defaultImplFactoryMutex);
-    KSocketDeviceFactoryBase* old = defaultImplFactory;
-    defaultImplFactory = factory;
-    return old;
-  }
-
-  void KSocketDevice::addNewImpl(KSocketDeviceFactoryBase* factory, int capabilities)
-  {
-    QMutexLocker locker(&defaultImplFactoryMutex);
-    if (factories.contains(capabilities))
-      delete factories[capabilities];
-    factories.insert(capabilities, factory);
-  }
-
 }
+
+static KSocketDeviceFactoryBase* defaultImplFactory;
+static QMutex defaultImplFactoryMutex;
+typedef QMap<int, KSocketDeviceFactoryBase* > factoryMap;
+static factoryMap factories;
+ 
+KSocketDevice* KSocketDevice::createDefault(KSocketBase* parent)
+{
+  KSocketDevice* device = dynamic_cast<KSocketDevice*>(parent);
+  if (device != 0L)
+    return device;
+
+  KSocksSocketDevice::initSocks();
+
+  if (defaultImplFactory)
+    return defaultImplFactory->create(parent);
+
+  // the really default
+  return new KSocketDevice(parent);
+}
+
+KSocketDevice* KSocketDevice::createDefault(KSocketBase* parent, int capabilities)
+{
+  KSocketDevice* device = dynamic_cast<KSocketDevice*>(parent);
+  if (device != 0L)
+    return device;
+
+  QMutexLocker locker(&defaultImplFactoryMutex);
+  factoryMap::ConstIterator it = factories.constBegin();
+  for ( ; it != factories.constEnd(); ++it)
+    if ((it.key() & capabilities) == capabilities)
+      // found a match
+      return it.data()->create(parent);
+
+  return 0L;			// no default
+}
+
+KSocketDeviceFactoryBase*
+KSocketDevice::setDefaultImpl(KSocketDeviceFactoryBase* factory)
+{
+  QMutexLocker locker(&defaultImplFactoryMutex);
+  KSocketDeviceFactoryBase* old = defaultImplFactory;
+  defaultImplFactory = factory;
+  return old;
+}
+
+void KSocketDevice::addNewImpl(KSocketDeviceFactoryBase* factory, int capabilities)
+{
+  QMutexLocker locker(&defaultImplFactoryMutex);
+  if (factories.contains(capabilities))
+    delete factories[capabilities];
+  factories.insert(capabilities, factory);
+}
+
