@@ -526,37 +526,34 @@ void KResolverManager::doNotifying(RequestData *p)
       // lock the object
       p->obj->mutex.lock();
       KResolver* parent = p->obj->parent; // is 0 for non-"user" objects
-
-      // post processing
-      if (p->obj->status != KResolver::Canceled 
-	  && p->worker)
-	p->worker->postprocess();	// ignore the result
-
-      // copy the results from the worker thread to the final
-      // object
       KResolverResults& r = p->obj->results;
-      if (p->worker)
+
+      if (p->obj->status == KResolver::Canceled)
 	{
+	  p->obj->status = KResolver::Canceled;
+	  p->obj->errorcode = KResolver::Canceled;
+	  p->obj->syserror = 0;
+	  r.setError(KResolver::Canceled, 0);
+	}
+      else if (p->worker)
+	{
+	  // post processing
+	  p->worker->postprocess();	// ignore the result
+
+	  // copy the results from the worker thread to the final
+	  // object
 	  r = p->worker->results;
+
 	  // reset address
 	  r.setAddress(p->input->node, p->input->service);
 
 	  //qDebug("KResolverManager::doNotifying(%u/%p): for %p whose status is %d and has %d results", 
 		 //pid, (void*)QThread::currentThread(), (void*)p, p->obj->status, r.count());
 
-	  if (p->obj->status != KResolver::Canceled)
-	    {
-	      p->obj->errorcode = r.error();
-	      p->obj->syserror = r.systemError();
-	      p->obj->status = !r.isEmpty() ? 
-		KResolver::Success : KResolver::Failed;
-	    }
-	  else
-	    {
-	      p->obj->status = KResolver::Canceled;
-	      p->obj->errorcode = KResolver::Canceled;
-	      p->obj->syserror = 0;
-	    }
+	  p->obj->errorcode = r.error();
+	  p->obj->syserror = r.systemError();
+	  p->obj->status = !r.isEmpty() ? 
+	    KResolver::Success : KResolver::Failed;
 	}
       else
 	{
@@ -573,11 +570,6 @@ void KResolverManager::doNotifying(RequestData *p)
 
       // release the mutex
       p->obj->mutex.unlock();
-
-      if (parent == 0L)
-	// it doesn't have a parent, which means it was a destroyed object lying 
-	// around
-	delete p->obj;
     }
   else
     {
@@ -712,44 +704,59 @@ void KResolverManager::dispatch(RequestData *data)
     }
 }
 
-// this function is called by KResolverManager::dequeue and
-// KResolverManager::aboutToDelete below.
+// this function is called by KResolverManager::dequeue
 bool KResolverManager::dequeueNew(KResolver* obj)
 {
   // This function must be called with a locked mutex
   // Deadlock warning:
   // always lock the global mutex first if both mutexes must be locked
 
-  // check if this object is running
-  if (!obj->isRunning())
-    {
-      KResolverPrivate *d = obj->d;
+  KResolverPrivate *d = obj->d;
 
-      // check if it's in the new request list
-      RequestData *curr = newRequests.first(); 
-      while (curr)
-	if (curr->obj == d)
-	  {
-	    // yes, this object is still in the list
-	    // but it has never been processed
-	    d->status = KResolver::Canceled;
-	    newRequests.take();
-	    doNotifying(curr);
-	    
-	    return true;
-	  }
-	else
-	  curr = currentRequests.next();
+  // check if it's in the new request list
+  RequestData *curr = newRequests.first(); 
+  while (curr)
+    if (curr->obj == d)
+      {
+	// yes, this object is still in the list
+	// but it has never been processed
+	d->status = KResolver::Canceled;
+	d->errorcode = KResolver::Canceled;
+	d->syserror = 0;
+	newRequests.take();
 
-      // This object has never been queued
-      return true;		// do nothing with it
-    }      
+	delete curr->worker;
+	delete curr;
+	
+	return true;
+      }
+    else
+      curr = newRequests.next();
 
-  // no, it's running. We cannot simply take it out of the list.
-  // it will be handled when the thread that is working on it finishes
-  obj->d->mutex.lock();
-  obj->d->status = KResolver::Canceled;
-  obj->d->mutex.unlock();
+  // check if it's running
+  curr = currentRequests.first();
+  while (curr)
+    if (curr->obj == d)
+      {
+	// it's running. We cannot simply take it out of the list.
+	// it will be handled when the thread that is working on it finishes
+	d->mutex.lock();
+
+	d->status = KResolver::Canceled;
+	d->errorcode = KResolver::Canceled;
+	d->syserror = 0;
+
+	// disengage from the running threads
+	curr->obj = 0L;
+	curr->input = 0L;
+	if (curr->worker)
+	  curr->worker->input = 0L;
+
+	d->mutex.unlock();
+      }
+    else
+      curr = currentRequests.next();
+
   return false;
 }
 
@@ -759,46 +766,6 @@ void KResolverManager::dequeue(KResolver *obj)
 {
   QMutexLocker locker(&mutex);
   dequeueNew(obj);
-}
-
-// this function is called by the KResolver destructor
-// it's expected to be thread-safe
-void KResolverManager::aboutToBeDeleted(KResolver *obj)
-{
-  // This function is called when the object is being destroyed.
-  // Unlike cancellation, we must also make sure the object is
-  // no longer referenced. And the signal will not be emitted.
-
-  QMutexLocker locker(&mutex);
-  KResolverPrivate* d = obj->d;
-
-  if (!dequeueNew(obj))
-    {
-      // the object failed to dequeue
-      // that means it is running and is in the currentRequests list
-      RequestData *curr = currentRequests.first(); 
-      while (curr)
-	if (curr->obj == d)
-	  {
-	    // yes, this object is still in the list
-	    // let the thread working on it dispose of it
-	    d->parent = 0L;
-	    d->emitSignal = false;
-	    d->status = KResolver::Canceled;
-	
-	    return;
-	  }
-	else
-	  curr = currentRequests.next();
-
-      // we couldn't find it in the list
-      qWarning("KResolverManager::aboutToBeDeleted: pid = %u, obj = %p: could not find obj in list",
-	       pid, (void*)obj);
-    }
-
-  // the object is not in any list
-  // it's safe to delete
-  delete d;
 }
 
 } // anonymous namespace

@@ -61,7 +61,6 @@ namespace KNetwork
     KResolver* parent;
     bool deleteWhenDone : 1;
     bool waiting : 1;
-    mutable bool emitSignal : 1;
 
     // class status. Should not be changed by worker threads!
     volatile int status;
@@ -87,7 +86,7 @@ namespace KNetwork
     KResolverPrivate(KResolver* _parent,
 		     const QString& _node = QString::null, 
 		     const QString& _service = QString::null)
-      : parent(_parent), deleteWhenDone(false), waiting(false), emitSignal(true),
+      : parent(_parent), deleteWhenDone(false), waiting(false),
 	status(0), errorcode(0), syserror(0)
     {
       input.node = _node;

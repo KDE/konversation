@@ -314,10 +314,8 @@ KResolver::KResolver(const QString& nodename, const QString& servicename,
 // destructor
 KResolver::~KResolver()
 {
-  // this deletes our d pointer (if necessary)
-  // and cancels the lookup as well
-  KResolverManager::manager()->aboutToBeDeleted(this);
-  d = 0L;
+  cancel(false);
+  delete d;
 }
 
 // get the status
@@ -452,7 +450,6 @@ bool KResolver::start()
   if (!isRunning())
     {
       d->results.empty();
-      d->emitSignal = true;	// reset the variable
 
       // is there anything to be queued?
       if (d->input.node.isEmpty() && d->input.service.isEmpty())
@@ -512,8 +509,9 @@ bool KResolver::wait(int msec)
 
 void KResolver::cancel(bool emitSignal)
 {
-  d->emitSignal = emitSignal;
   KResolverManager::manager()->dequeue(this);
+  if (emitSignal)
+    emitFinished();
 }
 
 KResolverResults
@@ -547,8 +545,7 @@ void KResolver::emitFinished()
 
   QGuardedPtr<QObject> p = this; // guard against deletion
 
-  if (d->emitSignal)
-    emit finished(d->results);
+  emit finished(d->results);
 
   if (p && d->deleteWhenDone)
     deleteLater();		// in QObject
