@@ -607,7 +607,11 @@ void KonversationApplication::openPrefsDialog()
     prefsDialog->show();
   }
   else
+  {
+    prefsDialog->show();
     prefsDialog->raise();
+    prefsDialog->setActiveWindow();
+  }
 }
 
 void KonversationApplication::syncPrefs()
