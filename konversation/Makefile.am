@@ -4,6 +4,7 @@ COMPAT_INCLUDE = -Icompat
 COMPAT_LIBS = compat/libkonversationcompat.la
 endif
 
+TOPSUBDIRS = images konversation scripts spec
 SUBDIRS = $(COMPAT_DIR) linkaddressbook
 
 METASOURCES = AUTO
