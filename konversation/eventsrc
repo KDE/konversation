@@ -381,6 +381,7 @@ Name[sr]=Упит
 Name[sv]=Fråga
 Name[ta]=கேள்வி
 Name[tr]=Sorgu
+Name[xx]=xxQueryxx
 Comment=Someone started a conversation (query) with you
 Comment[da]=Nogen startede en konversation (query) med dig
 Comment[es]=Alguien empezó una conversación (consulta) con usted
@@ -394,12 +395,14 @@ Comment[sr]=Неко је започео разговор (упит) са вам
 Comment[sv]=Någon startade en konversation med dig (ställde en fråga till dig)
 Comment[ta]=ஒருவர் உங்களுடன் உரையாடலை துவக்கியிருக்கிறார் (கேள்வி)
 Comment[tr]=Birisi sizinle sohbet başlattı
+Comment[xx]=xxSomeone started a conversation (query) with youxx
 default_presentation=0
 
 [kick]
 Name=Kick
 Name[cy]=Lluchio
 Name[it]=Espulsione
+Name[xx]=xxKickxx
 Comment=Someone kicked you out of a channel
 Comment[it]=Qualcuno ti ha espulso da un canale
 Comment[nl]=Iemand heeft u van het kanaal gekicked
@@ -407,6 +410,7 @@ Comment[pt]=Alguém o expulsou de um canal
 Comment[pt_BR]=Alguém o expulsou de um canal
 Comment[ru]=Кто-то выпнул вас с канала
 Comment[sv]=Någon sparkade ut dig från en kanal
+Comment[xx]=xxSomeone kicked you out of a channelxx
 default_presentation=0
 
 [dccChat]
@@ -417,10 +421,12 @@ Name[nl]=DCC-gesprek
 Name[pt]=Conversa DCC
 Name[pt_BR]=Conversa DCC
 Name[sv]=DCC-chatt
+Name[xx]=xxDcc Chatxx
 Comment=Some started a dcc chat with you
 Comment[it]=Qualcuno ha avviato una conversazione DCC con te
 Comment[nl]=Iemand begon een DCC-gesprek met u
 Comment[pt]=Alguém iniciou uma conversa DCC consigo
 Comment[pt_BR]=Alguém iniciou uma conversa DCC consigo
 Comment[sv]=Någon startade en DCC-chatt med dig
+Comment[xx]=xxSome started a dcc chat with youxx
 default_presentation=0
