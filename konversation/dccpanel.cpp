@@ -65,6 +65,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   m_listView->setColumnText(Column::CPS,           i18n("Speed"));
   m_listView->setColumnText(Column::SenderAddress, i18n("Sender Address"));
   
+  m_listView->setColumnWidth(Column::TypeIcon,       16);
   m_listView->setColumnWidth(Column::OfferDate,      70);
   m_listView->setColumnWidth(Column::Status,         80);
   m_listView->setColumnWidth(Column::FileName,      150);
@@ -73,6 +74,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   m_listView->setColumnWidth(Column::Position,      120);
   m_listView->setColumnWidth(Column::TimeRemaining,  80);
   m_listView->setColumnWidth(Column::CPS,            70);
+  m_listView->setColumnWidth(Column::SenderAddress, 120);
   
   m_listView->setColumnWidthMode(Column::FileName, QListView::Manual);
   
@@ -117,19 +119,19 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   // popup menu
   
   m_popup = new KPopupMenu(this);
-  m_popup->insertItem(                         i18n("Select All Items"),           Popup::SelectAll);
-  m_popup->insertItem(                         i18n("Select All Completed Items"), Popup::SelectAllCompleted);
+  m_popup->insertItem(                         i18n("&Select All Items"),           Popup::SelectAll);
+  m_popup->insertItem(                         i18n("S&elect All Completed Items"), Popup::SelectAllCompleted);
   m_popup->insertSeparator(); // -----
-  m_popup->insertItem(icon("player_play"),     i18n("Accept"),                     Popup::Accept);
-  m_popup->insertItem(icon("stop"),            i18n("Abort"),                      Popup::Abort);
+  m_popup->insertItem(icon("player_play"),     i18n("&Accept"),                     Popup::Accept);
+  m_popup->insertItem(icon("stop"),            i18n("A&bort"),                      Popup::Abort);
   m_popup->insertSeparator(); // -----
-  m_popup->insertItem(icon("editdelete"),      i18n("Clear Item"),                 Popup::Clear);
+  m_popup->insertItem(icon("editdelete"),      i18n("&Clear Item"),                 Popup::Clear);
   m_popup->insertSeparator(); // -----
-  m_popup->insertItem(icon("exec"),            i18n("Open File"),                  Popup::Open);
-  m_popup->insertItem(icon("edittrash"),       i18n("Remove File"),                Popup::Remove);
-  m_popup->insertItem(icon("messagebox_info"), i18n("File Information"),           Popup::Info);
+  m_popup->insertItem(icon("exec"),            i18n("&Open File"),                  Popup::Open);
+  m_popup->insertItem(icon("edittrash"),       i18n("&Remove File"),                Popup::Remove);
+  m_popup->insertItem(icon("messagebox_info"), i18n("File &Information"),           Popup::Info);
   m_popup->insertSeparator(); // -----
-  m_popup->insertItem(icon("view_text"),       i18n("DCC Detail Information"),     Popup::Detail);
+  m_popup->insertItem(icon("view_text"),       i18n("DCC &Detail Information"),     Popup::Detail);
     
   connect(m_listView, SIGNAL(contextMenuRequested(QListViewItem*,const QPoint&,int)), this, SLOT(popupRequested(QListViewItem*,const QPoint&,int)));
   connect(m_popup, SIGNAL(activated(int)), this, SLOT(popupActivated(int)));
