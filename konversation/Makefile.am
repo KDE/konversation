@@ -1,5 +1,7 @@
 bin_PROGRAMS = konversation
 
+sound_support = ""
+sound_libs = ""
 if include_ARTS
 sound_support = konversationsound.cpp
 sound_libs = -lartskde
