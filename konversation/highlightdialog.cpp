@@ -47,7 +47,7 @@ HighlightDialog::HighlightDialog(QWidget* parent, QPtrList<Highlight> passed_Hig
 	InputLineLabel = new QLabel(i18n("Pattern:"), InputLineBox);
 	InputLine = new KLineEdit(InputLineBox);
 
-	ColorSelection = new MyColorCombo(InputLineBox);
+	ColorSelection = new KColorCombo(InputLineBox);
 	ColorSelection->setMinimumWidth(50);
 	ColorSelection->setMaximumWidth(50);
 
@@ -58,7 +58,7 @@ HighlightDialog::HighlightDialog(QWidget* parent, QPtrList<Highlight> passed_Hig
   highlightNickCheck=new QCheckBox(i18n("Always highlight current nick"),hilightNickBox,"highlight_nick_check");
   highlightNickCheck->setChecked(KonversationApplication::preferences.getHilightNick());
 
-  MyColorCombo* nickColor=new MyColorCombo(hilightNickBox);
+  KColorCombo* nickColor=new KColorCombo(hilightNickBox);
   nickColor->setMinimumWidth(50);
   nickColor->setMaximumWidth(50);
   nickColor->setColor(KonversationApplication::preferences.getHilightNickColor());
@@ -68,7 +68,7 @@ HighlightDialog::HighlightDialog(QWidget* parent, QPtrList<Highlight> passed_Hig
   highlightOwnLinesCheck=new QCheckBox(i18n("Always highlight own lines"),hilightOwnLinesBox,"highlight_own_lines_check");
   highlightOwnLinesCheck->setChecked(KonversationApplication::preferences.getHilightOwnLines());
 
-  MyColorCombo* ownLinesColor=new MyColorCombo(hilightOwnLinesBox);
+  KColorCombo* ownLinesColor=new KColorCombo(hilightOwnLinesBox);
   ownLinesColor->setMinimumWidth(50);
   ownLinesColor->setMaximumWidth(50);
   ownLinesColor->setColor(KonversationApplication::preferences.getHilightOwnLinesColor());

@@ -21,6 +21,7 @@
 #include <kdialogbase.h>
 #include <klineedit.h>
 #include <kpushbutton.h>
+#include <kcolorcombo.h>
 
 #include <qvgroupbox.h>
 #include <qvbox.h>
@@ -33,7 +34,6 @@
 #include "highlight.h"
 #include "highlightview.h"
 #include "highlightviewitem.h"
-#include "mycolorcombo.h"
 
 /**
   *@author Matthias Gierlings
@@ -58,7 +58,7 @@ class HighlightDialog : public KDialogBase
 		QString						backupHighlightText;
 		KLineEdit					*InputLine;
 		KPushButton				*RemoveButton;
-		MyColorCombo				*ColorSelection;
+		KColorCombo				*ColorSelection;
 		HighlightView			*HighlightBrowser;
 		HighlightViewItem	*currentHighlightViewItem, *selectedHighlightViewItem,
 											*oldSelectedHighlightViewItem, *backupHighlightViewItem;
