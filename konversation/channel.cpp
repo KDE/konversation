@@ -1833,7 +1833,7 @@ QString Channel::getChannelEncoding()  // virtual
 
 QString Channel::getChannelEncodingDefaultDesc()  // virtual
 {
-  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodec()->name());
+  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodecName());
 }
 
 //

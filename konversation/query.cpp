@@ -283,7 +283,7 @@ QString Query::getChannelEncoding()  // virtual
 
 QString Query::getChannelEncodingDefaultDesc()  // virtual
 {
-  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodec()->name());
+  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodecName());
 }
 
 void Query::closeYourself()

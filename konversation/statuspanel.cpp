@@ -272,7 +272,7 @@ QString StatusPanel::getChannelEncoding()  // virtual
 
 QString StatusPanel::getChannelEncodingDefaultDesc()  // virtual
 {
-  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodec()->name());
+  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodecName());
 }
 
 #include "statuspanel.moc"
