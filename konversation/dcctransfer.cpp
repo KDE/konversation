@@ -24,7 +24,6 @@
 #include <kdebug.h>
 #include <kextsock.h>
 #include <kmessagebox.h>
-#include <ksocketaddress.h>
 #include <kstandarddirs.h>
 
 #include "dcctransfer.h"
