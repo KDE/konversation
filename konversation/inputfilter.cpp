@@ -32,6 +32,7 @@
 #include "server.h"
 #include "errorcodes.h"
 #include "konversationapplication.h"
+#include "commit.h"
 
 #if QT_VERSION < 0x030100
 #include "main.h"
@@ -197,7 +198,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1 to channel %2.").arg(sourceNick).arg(parameterList[0]));
           else
             server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1.").arg(sourceNick));
-          server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002-2003 by the Konversation team").arg(VERSION));
+
+          server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002-2003 by the Konversation team").arg(QString(VERSION)+QString(" Build %1").arg(COMMIT)));
         }
       }
       // DCC request?
