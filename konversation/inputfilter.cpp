@@ -872,7 +872,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                      (halfop ?  2 : 0)+
                      (voice  ?  1 : 0);
 
-            // store nicks in list, transmit them to the channel on RPL_ENDOFNAMES later
+            // store nicks in list
             newNickList.append(nickname+" "+QString::number(mode));
           }
           // send list to channel
