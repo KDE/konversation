@@ -267,6 +267,27 @@ void KonversationMainWindow::setupScripts()
   QStringList l ( m_kscript->scripts() );
   for (QStringList::Iterator it=l.begin(); it != l.end(); ++it )
     m_scriptMenu->popupMenu()->insertItem( *it );
+  
+  // Auto-alias scripts
+/*  QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/ *");
+  QFileInfo* fileInfo = new QFileInfo();
+  QStringList aliasList(KonversationApplication::preferences.getAliasList());
+  QString newAlias;
+
+  for ( QStringList::Iterator it = scripts.begin(); it != scripts.end(); ++it ) {
+    fileInfo->setFile( *it );
+  if ( fileInfo->isExecutable() ) {
+    newAlias = (*it).section('/',-1)+" "+"/exec "+(*it).section('/', -1 );
+    if(!aliasList.contains(newAlias))
+      aliasList.append(newAlias);
+  }*/
+//}
+//  KonversationApplication::preferences.setAliasList(aliasList);
+}
+
+void KonversationMainWindow::runScript( const QString &scriptname )
+{
+  m_kscript->runScript( scriptname );
 }
 
 void KonversationMainWindow::runScript( int mIId )

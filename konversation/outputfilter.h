@@ -114,6 +114,7 @@ namespace Konversation
       OutputFilterResult parseConnect(const QString& parameter);
       OutputFilterResult parseInvite(const QString& parameter);
       OutputFilterResult parseExec(const QString& parameter);
+      OutputFilterResult parseScript(const QString& parameter);
       OutputFilterResult parseNotify(const QString& parameter);
       OutputFilterResult parseOper(const QString& myNick,const QString& parameter);
       OutputFilterResult parseDcc(const QString& parameter);
