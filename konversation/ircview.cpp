@@ -197,13 +197,13 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   // TODO: Use QStyleSheet::escape() here
 
   // Replace all & with &amp;
-  filteredLine.replace(QRegExp("&"),"&amp;");
+  filteredLine.replace('&',"&amp;");
   // Replace all < with &lt;
-  filteredLine.replace(QRegExp("\\<"),"&lt;");
+  filteredLine.replace('<',"&lt;");
   // Replace all > with &gt;
-  filteredLine.replace(QRegExp("\\>"),"&gt;");
+  filteredLine.replace('>',"&gt;");
   // Replace all 0x0f (reset to defaults) with \0x031,0 (should be extended to reset all text decorations as well)
-  filteredLine.replace(QRegExp("\017"),"\0031,0");
+  filteredLine.replace('\017',"\0031,0");
   // Replace all 0x03 without color number (reset color) with \0x031,0
   filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0031,0\\1");
 
@@ -264,7 +264,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
 // Maybe switch to this function some day when it does hilight better than my own stuff ;)
 //  filteredLine=KStringHandler::tagURLs(filteredLine);
 
-  QRegExp pattern("((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
+  QRegExp pattern("(((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
                   // IP Address
                   "([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|"
                   // Decimal IP address
@@ -274,11 +274,10 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
                   // Port number, path to document
                   ")(:[0-9]{1,5})?(/[^)>\"'\\s]*)?|"
                   // eDonkey2000 links need special treatment
-                  "ed2k://\\|([^|]+\\|){4})");
+                  "ed2k://\\|([^|]+\\|){4})|"
+                  "(mailto:|)(([a-z]+[\\w\\x2E\\x2D]+)\\x40([\\w\\x2E\\x2D]{2,})\\x2E(\\w{2,})))");
 
   pattern.setCaseSensitive(false);
-  QRegExp emailPattern("(mailto:|)(([a-z]+[\\w\\x2E\\x2D]+)\\x40([\\w\\x2E\\x2D]{2,})\\x2E(\\w{2,}))");
-  emailPattern.setCaseSensitive(false);
 
   pos=0;
   while(pattern.search(filteredLine,pos)!=-1) {
@@ -292,11 +291,12 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
       // clean up href for browser
       if(href.startsWith("www.")) href="http://"+href;
       else if(href.startsWith("ftp.")) href="ftp://"+href;
+      else if(href.find(QRegExp("(([a-z]+[\\w\\x2E\\x2D]+)\\x40)")) == 0) href = "mailto:" + href;
 
       // Fix &amp; back to & in href ... kludgy but I don't know a better way.
       href.replace(QRegExp("&amp;"),"&");
       // Replace all spaces with %20 in href
-      href.replace(QRegExp(" "),"%20");
+      href.replace(' ',"%20");
       // Build rich text link
       QString link("<font color=\"#"+linkColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
 
@@ -309,27 +309,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
       KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
       konvApp->storeUrl(whoSent,url);
   }
-
-  pos = 0;
-  while (emailPattern.search(filteredLine,pos)!=-1) {
-      // Remember where we found the url
-      pos=emailPattern.pos();
-      // Extract url
-      QString url=emailPattern.capturedTexts()[0];
-      QString href(url);
-
-      if(!href.startsWith("mailto:")) {
-        href.prepend("mailto:");
-      }
-
-      QString link("<font color=\"#"+linkColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
-
-      // replace found url with built link
-      filteredLine.replace(pos,url.length(),link);
-      // next search begins right after the link
-      pos+=link.length();
-  }
-
+  
   // Hilight
 
   if(doHilight)

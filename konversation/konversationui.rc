@@ -31,7 +31,7 @@
   <ToolBar fullWidth="true" name="mainToolBar">
     <Action name="options_configure_key_binding" />
     <Action name="options_configure" />
-    <separator lineSeparator="true" />
+    <separator />
     <Action name="irc_colors" />
   </ToolBar>
 
