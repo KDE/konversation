@@ -16,10 +16,10 @@
 
 #include "quickbutton.h"
 
-QuickButton::QuickButton(QString label,QWidget* parent,int newId) :
+QuickButton::QuickButton(QString label,QString newDefinition,QWidget* parent) :
              QPushButton::QPushButton(label,parent)
 {
-  id=newId;
+  setDefinition(newDefinition);
   connect(this,SIGNAL (clicked()),this,SLOT (wasClicked()) );
 }
 
@@ -29,5 +29,10 @@ QuickButton::~QuickButton()
 
 void QuickButton::wasClicked()
 {
-  emit clicked(id);
+  emit clicked(definition);
+}
+
+void QuickButton::setDefinition(QString newDefinition)
+{
+  definition=newDefinition;
 }

@@ -28,17 +28,22 @@ class QuickButton : public QPushButton
   Q_OBJECT
 
   public:
-    QuickButton(QString label,QWidget* parent,int id);
+    QuickButton(QString label,QString newDefinition,QWidget* parent);
     ~QuickButton();
 
+    void setDefinition(QString newDefinition);
+    
   signals:
     void clicked(int);
+    void clicked(QString definition);
 
   public slots:
     void wasClicked();
 
   protected:
     int id;
+
+    QString definition;
 };
 
 #endif

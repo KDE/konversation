@@ -79,15 +79,15 @@ class Channel : public ChatWindow
 
   protected slots:
     void completeNick();
-    void quickButtonClicked(int id);
+    void quickButtonClicked(QString definition);
     void modeButtonClicked(int id,bool on);
-    /* Will be connected to NickListView::popupCommand(int) */
+    // Will be connected to NickListView::popupCommand(int)
     void popupCommand(int id);
-    /* Dialogs */
+    // Dialogs
     void openNickChangeDialog();
     void changeNickname(QString newNickname);
     void closeNickChangeDialog(QSize newSize);
-    /* will be called when the user types a new topic in the topic line */
+    // will be called when the user types a new topic in the topic line
     void requestNewTopic(const QString& newTopic);
 
   protected:
@@ -101,9 +101,9 @@ class Channel : public ChatWindow
 
     unsigned int completionPosition;
 
-    QString topic; /* Caches actual topic */
+    QString topic; // Caches current topic
     KComboBox* topicLine;
-    /* TODO: Somehow we need the nickname to the corresponding topic displayed */
+    // TODO: Somehow we need the nickname to the corresponding topic displayed
     QStringList topicHistory;
 
     ModeButton* modeT;

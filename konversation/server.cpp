@@ -93,7 +93,10 @@ Server::~Server()
   {
     serverSocket->enableWrite(true);
     send(serverSocket);
+    delete serverSocket;
   }
+
+  delete serverWindow;
 }
 
 QString Server::getServerName()

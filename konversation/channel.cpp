@@ -104,7 +104,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   setTextView(new IRCView(topicViewNicksGrid));
 
-  /* The box that holds the Nick List and the quick action buttons */
+  // The box that holds the Nick List and the quick action buttons
   QVBox* nickListButtons=new QVBox(topicViewNicksGrid);
   nickListButtons->setSpacing(spacing());
 
@@ -117,22 +117,26 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView->addColumn("");
   nicknameListView->header()->hide();
 
-  /* The grid that holds the quick action buttons */
+  // The grid that holds the quick action buttons
   QGrid* buttonsGrid=new QGrid(2,nickListButtons);
   for(int index=0;index<8;index++)
   {
-    QuickButton* newQuickButton=new QuickButton("",buttonsGrid,index);
-    buttonList.append(newQuickButton);
-    // Get the button definition to set tooltips
+    // Get the button definition
     QString buttonText=KonversationApplication::preferences.getButtonList()[index];
-    buttonText = buttonText.section(",", -1);
-    // Create tooltip for current button
-    QToolTip::add(buttonList.at(index), buttonText);
-    connect(newQuickButton,SIGNAL (clicked(int)),this,SLOT (quickButtonClicked(int)) );
-  }
-  updateQuickButtons(KonversationApplication::preferences.getButtonList());
+    // Extract button label
+    QString buttonLabel=buttonText.section(',',0,0);
+    // Extract button definition
+    buttonText=buttonText.mid(buttonLabel.length()+1);
 
-  /* The box holding the Nickname button, Channel input and Log Checkbox */
+    // Build new button
+    QuickButton* newQuickButton=new QuickButton(buttonLabel,buttonText,buttonsGrid);
+    buttonList.append(newQuickButton);
+    // Create tooltip for current button
+    QToolTip::add(newQuickButton,buttonText);
+    connect(newQuickButton,SIGNAL (clicked(QString)),this,SLOT (quickButtonClicked(QString)) );
+  }
+
+  // The box holding the Nickname button, Channel input and Log Checkbox
   QHBox* commandLineBox=new QHBox(this);
   commandLineBox->setSpacing(spacing());
 
@@ -446,23 +450,21 @@ void Channel::modeButtonClicked(int id,bool on)
   server->queue(command);
 }
 
-void Channel::quickButtonClicked(int id)
+void Channel::quickButtonClicked(QString buttonText)
 {
-  /* get button definition */
-  QString buttonText=KonversationApplication::preferences.getButtonList()[id];
-  /* parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter) */
+  // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
   QString out=server->parseWildcards(buttonText,server->getNickname(),getName(),getSelectedNicksList(),0,0);
-  /* does the return string end with a newline? */
+  // are there any newlines in the definition?
   if(out.find('\n')!=-1)
   {
-    /* Send all strings, one after another */
+    // Send all strings, one after another
     QStringList outList=QStringList::split('\n',out);
     for(unsigned int index=0;index<outList.count();index++)
     {
       sendChannelText(outList[index]);
     }
   }
-  /* single line without newline needs to be copied into input line */
+  // single line without newline needs to be copied into input line
   else channelInput->setText(out);
 }
 
@@ -955,6 +957,7 @@ void Channel::updateQuickButtons(QStringList newButtonList)
     QStringList buttonText=QStringList::split(',',newButtonList[index]);
     quickButton=buttonList.at(index);
     quickButton->setText(buttonText[0]);
+    quickButton->setDefinition(buttonText[1]);
     // Update tool tips
     QToolTip::remove(quickButton);
     QToolTip::add(quickButton,buttonText[1]);
