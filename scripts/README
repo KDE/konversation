@@ -19,3 +19,5 @@ juk		Displays on the current channel what you are playing
                 in JuK right now.
                 usage: /exec juk
 
+gauge		Displays funny "beer load" meter. Author: Eisfuchs, Idea: berkus.
+                usage: /exec gauge 55
