@@ -745,19 +745,25 @@ void Server::connectionEstablished(const QString& ownHost)
     m_serverISON = new ServerISON(this);
      // get first notify very early
     startNotifyTimer(1000);
-    // register with services
-    if(!botPassword.isEmpty() && !bot.isEmpty())
-      queue("PRIVMSG "+bot+" :identify "+botPassword);
+    // Register with services
+    registerWithServices();
     // get own ip by userhost
     requestUserhost(nickname);
-
-    if(rejoinChannels) {
-      rejoinChannels = false;
-      autoRejoinChannels();
-    }
+    
+    if(rejoinChannels)
+      {
+	rejoinChannels = false;
+	autoRejoinChannels();
+      }
   }
   else
     kdDebug() << "alreadyConnected==true! How did that happen?" << endl;
+}
+
+void Server::registerWithServices()
+{
+  if(!botPassword.isEmpty() && !bot.isEmpty())
+    queue("PRIVMSG "+bot+" :identify "+botPassword);
 }
 
 void Server::gotOwnResolvedHostByWelcome(KResolverResults res)
@@ -2427,6 +2433,7 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
     // Get existing lowercase nickname and rename nickname in the NickInfo object.
     QString lcNickname = nickInfo->getNickname().lower();
     nickInfo->setNickname(newname);
+    nickInfo->setIdentified(false);
     QString lcNewname = newname.lower();
     // Rename the key in m_allNicks list.
     m_allNicks.remove(lcNickname);
@@ -2755,7 +2762,7 @@ QString Server::parseWildcards(const QString& toParse,
   while ((found = toParse.find('%',index)) != -1) {
     out.append(toParse.mid(index,found-index)); // append part before the %
     index = found + 1; // skip the part before, including %
-    if (index >= toParse.length())
+    if (index >= (int)toParse.length())
       break; // % was the last char (not valid)
     toExpand = toParse.at(index++);
     if (toExpand == 's') {

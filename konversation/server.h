@@ -333,6 +333,8 @@ class Server : public QObject
 
     void setAllowedChannelModes(const QString& modes) { m_allowedChannelModes = modes; }
     QString allowedChannelModes() const { return m_allowedChannelModes; }
+
+    void registerWithServices();
     
   signals:
     void nicknameChanged(const QString&);
@@ -416,7 +418,7 @@ class Server : public QObject
     void showSSLDialog();
     void sendToAllChannels(const QString& text);
     void notifyTimeout();
-    
+
   protected slots:
 
     void preShellCommandExited(KProcess*);

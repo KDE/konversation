@@ -336,7 +336,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     else if(command=="notice")
     {
-        if(!isIgnore(prefix,Ignore::Notice))
+      if(!isIgnore(prefix,Ignore::Notice))
         {
             // Channel notice?
             if(isAChannel(parameterList[0]))
@@ -380,15 +380,20 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 // No, so it was a normal notice
                 else
                 {
-                    if(trailing.lower() == "password accepted - you are now recognized" 
-                        || trailing.lower() == "you have already identified") 
+		  
+		  if(trailing.startsWith("If this is your nick")) // Nickserv
+		    {
+		      // Identify command if specified
+		      server->registerWithServices();
+		    }
+		  else if(trailing.lower() == "password accepted - you are now recognized" 
+		     || trailing.lower() == "you have already identified") 
                     {
-                        NickInfoPtr nickInfo = server->getNickInfo(server->getNickname());
-                        Q_ASSERT(nickInfo);
-                        if(nickInfo)
-                            nickInfo->setIdentified(true);
+		      NickInfoPtr nickInfo = server->getNickInfo(server->getNickname());
+		      if(nickInfo)
+			nickInfo->setIdentified(true);
                     }
-                    server->appendMessageToFrontmost(i18n("Notice"), i18n("-%1- %2").arg(sourceNick).arg(trailing));
+		  server->appendMessageToFrontmost(i18n("Notice"), i18n("-%1- %2").arg(sourceNick).arg(trailing));
                 }
             }
         }
