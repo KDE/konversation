@@ -1048,17 +1048,21 @@ namespace Konversation {
         } else {
             QStringList splitted = QStringList::split(" ", parameter);
             QString password;
+	    QStringList splitAddress;
 
             if(splitted.count() > 1) {
                 password = splitted[1];
             }
 
-            splitted = QStringList::split(":", splitted[0]);
+	    splitAddress= QStringList::split(":", splitted[0]);
             QString port = "6667";
 
-            if(splitted.count() > 1) {
-                port = splitted[1];
+            if(splitAddress.count() < 3 && splitAddress.count() == 2) {
+	      port = splitted[1];
+	      splitted[0] = splitAddress[0];
             }
+
+	    kdDebug() << "Server : " << splitted[0] << " Port : " << port << endl;
 
             emit connectToServer(splitted[0], port, password);
         }
