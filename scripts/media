@@ -58,6 +58,20 @@ sub pretty_print
     }
 }
 
+sub is_empty
+{
+    our $string=shift;
+    
+    if($string =~ /\S/)
+    {
+	return 1;
+    }
+    else
+    {
+	return 0;
+    }
+}
+
 $amarok=check_running("amarok");
 $juk=check_running("juk");
 $kaffeine=check_running("kaffeine");
@@ -73,7 +87,7 @@ if($amarok)
     chomp $artist;
     chomp $album;
 
-    if($title =~ /\w+/)
+    if(is_empty($title))
     {
 	our $string=pretty_print($title,$artist,$album);
 	exec("dcop $port Konversation say $server \"$target\" \"$string\"");
@@ -89,7 +103,7 @@ if($juk)
     our $string=`dcop juk Player playingString`;
     chomp $string;
 
-    if($string =~ /\w+/)
+    if(is_empty($string))
     {
 	exec("dcop $port Konversation say $server \"$target\" \"/me is playing $string\"");
     }
@@ -104,7 +118,7 @@ if($kaffeine)
     our $string=`dcop kaffeine Kaffeine getTitle`;
     chomp $string;
     
-    if($string =~ /\w+/)
+    if(is_empty($string))
     {
 	exec("dcop $port Konversation say $server \"$target\" \"/me is playing $string\"");
     }
@@ -119,7 +133,7 @@ if($noatun)
     our $string=`dcop Noatun title`;
     chomp $string;
 
-    if($string =~ /\w+/)
+    if(is_empty($string))
     {
         exec("dcop $port Konversation say $server \"$target\" \"/me is playing $string\"");
     }
