@@ -1019,12 +1019,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             nickInfo->setHostmask(i18n("%1@%2").arg(parameterList[2]).arg(parameterList[3]));
             nickInfo->setRealName(trailing);
 	  }
-          server->appendStatusMessage(i18n("Whois"),
+          // Display message only if this was not an automatic request.
+          if(getAutomaticRequest()==0)
+            server->appendStatusMessage(i18n("Whois"),
                                       i18n("%1 is %2&#64;%3 (%4)").arg(parameterList[1]) // Use &#64; instead of @
                                       .arg(parameterList[2])                             // to avoid parsing as email
                                       .arg(parameterList[3])
                                       .arg(trailing));
-          break;
         }
 /* Sample WHO response
 /WHO #lounge
@@ -1039,11 +1040,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 	    nickInfo->setRealName(trailing.section(" ", 1)); //Strip off the "0 "
 	    nickInfo->setAway(parameterList[6].upper() == "G");
 	  }
-	  server->appendStatusMessage(i18n("Who"),
-			              i18n("%1 is %2&#64;%3 (%4)").arg(parameterList[5]) // Use &#64; instead of @
-				      .arg(parameterList[2])
-				      .arg(parameterList[3])
-				      .arg(trailing.section(" ", 1)));
+          // Display message only if this was not an automatic request.
+          if(getAutomaticRequest()==0)
+	    server->appendStatusMessage(i18n("Who"),
+			                i18n("%1 is %2&#64;%3 (%4)").arg(parameterList[5]) // Use &#64; instead of @
+				        .arg(parameterList[2])
+				        .arg(parameterList[3])
+				        .arg(trailing.section(" ", 1)));
 	  break; 
 	  
 	}
@@ -1095,41 +1098,45 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
               server->setChannelNick(lookChannel, parameterList[1], 0); 
             }
           } // endfor
-          if(userChannels.count())
+          // Display message only if this was not an automatic request.
+          if(getAutomaticRequest()==0)
           {
-            server->appendStatusMessage(i18n("Whois"),
-                                        i18n("%1 is a user on channels: %2").arg(parameterList[1])
-                                        .arg(userChannels.join(" ")) );
-          }
-          if(voiceChannels.count())
-          {
-            server->appendStatusMessage(i18n("Whois"),
-                                        i18n("%1 has voice on channels: %2").arg(parameterList[1])
-                                        .arg(voiceChannels.join(" ")) );
-          }
-          if(halfopChannels.count())
-          {
-            server->appendStatusMessage(i18n("Whois"),
-                                        i18n("%1 is a halfop on channels: %2").arg(parameterList[1])
-                                        .arg(halfopChannels.join(" ")) );
-          }
-          if(opChannels.count())
-          {
-            server->appendStatusMessage(i18n("Whois"),
-                                        i18n("%1 is an operator on channels: %2").arg(parameterList[1])
-                                        .arg(opChannels.join(" ")) );
-          }
-          if(ownerChannels.count())
-          {
-            server->appendStatusMessage(i18n("Whois"),
-                                        i18n("%1 is owner of channels: %2").arg(parameterList[1])
-                                        .arg(ownerChannels.join(" ")) );
-          }
-          if(adminChannels.count())
-          {
-            server->appendStatusMessage(i18n("Whois"),
-                                        i18n("%1 is admin on channels: %2").arg(parameterList[1])
-                                        .arg(adminChannels.join(" ")) );
+            if(userChannels.count())
+            {
+              server->appendStatusMessage(i18n("Whois"),
+                                          i18n("%1 is a user on channels: %2").arg(parameterList[1])
+                                          .arg(userChannels.join(" ")) );
+            }
+            if(voiceChannels.count())
+            {
+              server->appendStatusMessage(i18n("Whois"),
+                                          i18n("%1 has voice on channels:  %2").arg(parameterList[1])
+                                         .arg(voiceChannels.join(" ")) );
+            }
+            if(halfopChannels.count())
+            {
+              server->appendStatusMessage(i18n("Whois"),
+                                          i18n("%1 is a halfop on channels: %2").arg(parameterList[1])
+                                          .arg(halfopChannels.join(" ")) );
+            }
+            if(opChannels.count())
+            {
+              server->appendStatusMessage(i18n("Whois"),
+                                          i18n("%1 is an operator on channels: %2").arg(parameterList[1])
+                                          .arg(opChannels.join(" ")) );
+            }
+            if(ownerChannels.count())
+            {
+              server->appendStatusMessage(i18n("Whois"),
+                                          i18n("%1 is owner of channels: %2").arg(parameterList[1])
+                                          .arg(ownerChannels.join(" ")) );
+            }
+            if(adminChannels.count())
+            {
+              server->appendStatusMessage(i18n("Whois"),
+                                          i18n("%1 is admin on channels: %2").arg(parameterList[1])
+                                          .arg(adminChannels.join(" ")) );
+            }
           }
           break;
         }
@@ -1144,15 +1151,19 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             nickInfo->setAway(false);
             nickInfo->setAwayMessage(QString::null);
 	  }
-          server->appendStatusMessage(i18n("Whois"),
-                                      i18n("%1 is online via %2 (%3)").arg(parameterList[1])
-                                      .arg(parameterList[2])
-                                      .arg(trailing) );
+          // Display message only if this was not an automatic request.
+          if(getAutomaticRequest()==0)
+            server->appendStatusMessage(i18n("Whois"),
+                                        i18n("%1 is online via %2 (%3)").arg(parameterList[1])
+                                        .arg(parameterList[2])
+                                        .arg(trailing) );
           break;
         }
       case RPL_WHOISIDENTIFY:
         {
-          server->appendStatusMessage(i18n("Whois"),i18n("%1 has identified for this nick.").arg(parameterList[1]));
+          // Display message only if this was not an automatic request.
+          if(getAutomaticRequest()==0)
+            server->appendStatusMessage(i18n("Whois"),i18n("%1 has identified for this nick.").arg(parameterList[1]));
           break;
         }
       case RPL_WHOISIDLE:
@@ -1165,22 +1176,26 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
           // TODO: replace QString()s with i18n()s after i18n-freeze!
           // if idle time is longer than a day
-          if(days)
-            server->appendStatusMessage(i18n("Whois"),QString("%1 has been idle for %2 days, %3 hours, %4 minutes and %5 seconds.").arg(parameterList[1])
+          // Display message only if this was not an automatic request.
+          if(getAutomaticRequest()==0)
+          {         
+            if(days)
+              server->appendStatusMessage(i18n("Whois"),QString("%1 has been idle for %2 days, %3 hours, %4 minutes and %5 seconds.").arg(parameterList[1])
                                         .arg(days).arg(hours % 24).arg(minutes % 60).arg(seconds % 60));
-          // or longer than an hour
-          else if(hours)
-            server->appendStatusMessage(i18n("Whois"),QString("%1 has been idle for %2 hours, %3 minutes and %4 seconds.").arg(parameterList[1])
+            // or longer than an hour
+            else if(hours)
+              server->appendStatusMessage(i18n("Whois"),QString("%1 has been idle for %2 hours, %3 minutes and %4 seconds.").arg(parameterList[1])
                                         .arg(hours).arg(minutes % 60).arg(seconds % 60));
-          // or longer than a minute
-          else if(minutes)
-            server->appendStatusMessage(i18n("Whois"),QString("%1 has been idle for %2 minutes and %3 seconds.").arg(parameterList[1])
+            // or longer than a minute
+            else if(minutes)
+              server->appendStatusMessage(i18n("Whois"),QString("%1 has been idle for %2 minutes and %3 seconds.").arg(parameterList[1])
                                         .arg(minutes).arg(seconds % 60));
-          // or just some seconds
-          else
-            server->appendStatusMessage(i18n("Whois"),i18n("%1 has been idle for %2 seconds.").arg(parameterList[1])
+            // or just some seconds
+            else
+              server->appendStatusMessage(i18n("Whois"),i18n("%1 has been idle for %2 seconds.").arg(parameterList[1])
                                         .arg(seconds));
-
+          }
+          
           if(parameterList.count()==4)
           {
             QDateTime when;
@@ -1189,14 +1204,20 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 	    if(nickInfo) {
               nickInfo->setOnlineSince(when);
 	    }
-            server->appendStatusMessage(i18n("Whois"),i18n("%1 has been online since %2.").arg(parameterList[1]).arg(when.toString(Qt::LocalDate)));
+            // Display message only if this was not an automatic request.
+            if(getAutomaticRequest()==0)
+              server->appendStatusMessage(i18n("Whois"),i18n("%1 has been online since %2.").arg(parameterList[1]).arg(when.toString(Qt::LocalDate)));
             break;
           }
         }
       case RPL_ENDOFWHOIS:
         {
 //          NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
-          server->appendStatusMessage(i18n("Whois"),i18n("End of WHOIS list."));
+          // Display message only if this was not an automatic request.
+          if(getAutomaticRequest()==0)
+            server->appendStatusMessage(i18n("Whois"),i18n("End of WHOIS list."));
+          // was this an automatic request?
+          if(getAutomaticRequest()!=0) setAutomaticRequest(false);
           break;
         }
       case RPL_USERHOST:
