@@ -571,10 +571,14 @@ void KonversationApplication::readOptions()
       if(!tmp[4].isEmpty()) {
         QStringList tmp2 = QStringList::split(" ", tmp[4], false);
         QStringList tmp3 = QStringList::split(" ", tmp[5], true);
-        for(int i = 0; i < tmp3.count(); i++) {
+        for(int i = 0; i < tmp2.count(); i++) {
           Konversation::ChannelSettings channel;
           channel.setName(tmp2[i]);
-          channel.setPassword(tmp3[i]);
+
+          if(i < tmp3.count()) {
+            channel.setPassword(tmp3[i]);
+          }
+
           serverGroup.addChannel(channel);
         }
       }
