@@ -35,7 +35,7 @@ void OutputFilter::resumeRequest(QString sender,QString fileName,QString port,in
   setCommandChar();
 
   toServer="PRIVMSG "+sender+" :"+'\x01'+"DCC RESUME "+fileName+" "+port+" "+QString::number(startAt)+'\x01';
-  output="Sending DCC Resume request for file \""+fileName+"\"";
+  output=i18n("Sending DCC Resume request for file \"%1\".").arg(fileName);
   type=i18n("Resume");
 }
 

@@ -347,7 +347,7 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   }
   else if(command==RPL_ENDOFNAMES)
   {
-    server->appendCommandMessageToChannel(parameterList[1],i18n("Names"),i18n("End of /NAMES list."));
+    server->appendCommandMessageToChannel(parameterList[1],i18n("Names"),i18n("End of NAMES list."));
   }
   /* Topic set messages */
   else if(command==RPL_TOPIC)
