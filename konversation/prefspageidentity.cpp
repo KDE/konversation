@@ -49,6 +49,10 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   nick2=new KLineEdit(parentFrame);
   nick3=new KLineEdit(parentFrame);
 
+  bot=new KLineEdit(parentFrame);
+  password=new KLineEdit(parentFrame);
+  password->setEchoMode(QLineEdit::Password);
+  
   QLabel* partLabel=new QLabel(i18n("Part Reason:"),parentFrame);
   partInput=new KLineEdit(parentFrame);
 
@@ -88,15 +92,20 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   identityLayout->addWidget(loginLabel,row,0);
   identityLayout->addMultiCellWidget(loginInput,row,row,1,3);
   row++;
-  identityLayout->addWidget(new QLabel("Nickname 1:",parentFrame),row,0);
+  identityLayout->addWidget(new QLabel(i18n("Nickname %1:").arg(1),parentFrame),row,0);
   identityLayout->addWidget(nick0,row,1);
-  identityLayout->addWidget(new QLabel("Nickname 3:",parentFrame),row,2);
+  identityLayout->addWidget(new QLabel(i18n("Nickname %1:").arg(2),parentFrame),row,2);
   identityLayout->addWidget(nick2,row,3);
   row++;
-  identityLayout->addWidget(new QLabel("Nickname 2:",parentFrame),row,0);
+  identityLayout->addWidget(new QLabel(i18n("Nickname %1:").arg(3),parentFrame),row,0);
   identityLayout->addWidget(nick1,row,1);
-  identityLayout->addWidget(new QLabel("Nickname 4:",parentFrame),row,2);
+  identityLayout->addWidget(new QLabel(i18n("Nickname %1:").arg(4),parentFrame),row,2);
   identityLayout->addWidget(nick3,row,3);
+  row++;
+  identityLayout->addWidget(new QLabel(i18n("Service:"), parentFrame),row,0);
+  identityLayout->addWidget(bot,row,1);
+  identityLayout->addWidget(new QLabel(i18n("Password:"), parentFrame),row,2);
+  identityLayout->addWidget(password,row,3);
   row++;
   identityLayout->addWidget(partLabel,row,0);
   identityLayout->addMultiCellWidget(partInput,row,row,1,3);
@@ -126,6 +135,8 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   connect(nick1,SIGNAL (textChanged(const QString&)),this,SLOT (nick1Changed(const QString&)) );
   connect(nick2,SIGNAL (textChanged(const QString&)),this,SLOT (nick2Changed(const QString&)) );
   connect(nick3,SIGNAL (textChanged(const QString&)),this,SLOT (nick3Changed(const QString&)) );
+  connect(bot,SIGNAL (textChanged(const QString&)), this,SLOT (botChanged(const QString&)) );
+  connect(password,SIGNAL (textChanged(const QString&)), this,SLOT (passwordChanged(const QString&)) );
   connect(partInput,SIGNAL (textChanged(const QString&)),this,SLOT (partReasonChanged(const QString&)) );
   connect(kickInput,SIGNAL (textChanged(const QString&)),this,SLOT (kickReasonChanged(const QString&)) );
   connect(showAwayMessageCheck,SIGNAL (stateChanged(int)),this,SLOT (showAwayMessageChanged(int)) );
@@ -172,6 +183,16 @@ void PrefsPageIdentity::nick3Changed(const QString& newNick)
   identity->setNickname(3,newNick);
 }
 
+void PrefsPageIdentity::botChanged(const QString& newBot)
+{
+  identity->setBot(newBot);
+}
+
+void PrefsPageIdentity::passwordChanged(const QString& newPassword)
+{
+  identity->setPassword(newPassword);
+}
+
 void PrefsPageIdentity::partReasonChanged(const QString& newReason)
 {
   identity->setPartReason(newReason);
@@ -211,6 +232,9 @@ void PrefsPageIdentity::updateIdentity(int number)
   nick1->setText(identity->getNickname(1));
   nick2->setText(identity->getNickname(2));
   nick3->setText(identity->getNickname(3));
+
+  bot->setText(identity->getBot());
+  password->setText(identity->getPassword());
 
   partInput->setText(identity->getPartReason());
   kickInput->setText(identity->getKickReason());

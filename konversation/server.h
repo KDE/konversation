@@ -158,6 +158,8 @@ class Server : public QObject
     unsigned int tryNickNumber;
 
     QString serverName;
+    QString bot;
+    QString botPassword;
     int serverPort;
 
     Identity identity;

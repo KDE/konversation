@@ -21,7 +21,6 @@
 
 #include <qstring.h>
 
-#include <iostream.h>
 #include <stdlib.h>
 
 #include "highlightdialog.h"

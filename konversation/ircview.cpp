@@ -163,8 +163,6 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   if(!firstColor) filteredLine+="</font>";
 //  if(bgColor) colorString+="</td></tr></table>";
 
-  kdDebug() << filteredLine << endl;
-  
   // Replace all text decorations
   replaceDecoration(filteredLine,'\x02','b');
   replaceDecoration(filteredLine,'\x09','i');

@@ -45,6 +45,8 @@ Server::Server(int id)
 
   serverWindow=new ServerWindow(this);
   setNickname(identity.getNickname(tryNickNumber));
+  bot=identity.getBot();
+  botPassword=identity.getPassword();
   serverWindow->setIdentity(getIdentity());
   serverWindow->show();
 
@@ -197,6 +199,9 @@ void Server::connectionEstablished()
 {
   // get first notify very early
   startNotifyTimer(1000);
+
+  if(!botPassword.isEmpty() && !bot.isEmpty())
+    queue("PRIVMSG "+bot+" :identify "+botPassword);
 }
 
 void Server::notifyResponse(QString nicksOnline)

@@ -40,6 +40,11 @@ class Identity
     void setNickname(int index,const QString& nick);
     const QString& getNickname(int index);
 
+    void setBot(const QString& bot);
+    const QString& getBot();
+    void setPassword(const QString& password);
+    const QString& getPassword();
+
     void setNicknameList(const QStringList& newList);
     const QStringList& getNicknameList();
 
@@ -58,6 +63,9 @@ class Identity
 
   protected:
     QString name;
+
+    QString bot;
+    QString password;
 
     QString realName;
     QString ident;

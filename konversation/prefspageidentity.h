@@ -46,6 +46,9 @@ class PrefsPageIdentity : public PrefsPage
     void nick2Changed(const QString& newNick);
     void nick3Changed(const QString& newNick);
 
+    void botChanged(const QString& newBot);
+    void passwordChanged(const QString& newPassword);
+
     void partReasonChanged(const QString& newReason);
     void kickReasonChanged(const QString& newReason);
 
@@ -73,6 +76,9 @@ class PrefsPageIdentity : public PrefsPage
     KLineEdit* nick1;
     KLineEdit* nick2;
     KLineEdit* nick3;
+
+    KLineEdit* bot;
+    KLineEdit* password;
 
     KLineEdit* partInput;
     KLineEdit* kickInput;

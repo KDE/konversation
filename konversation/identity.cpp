@@ -39,6 +39,12 @@ const QString& Identity::getIdent()                     { return ident; }
 void Identity::setNickname(int index,const QString& newName) { nicknameList[index]=newName; }
 const QString& Identity::getNickname(int index)         { return nicknameList[index]; }
 
+void Identity::setBot(const QString& newBot)            { bot=newBot; }
+const QString& Identity::getBot()                       { return bot; }
+
+void Identity::setPassword(const QString& newPassword)  { password=newPassword; }
+const QString& Identity::getPassword()                  { return password; }
+
 void Identity::setPartReason(const QString& reason)     { partReason=reason; }
 const QString& Identity::getPartReason()                { return partReason; }
 void Identity::setKickReason(const QString& reason)     { kickReason=reason; }

@@ -224,6 +224,9 @@ void KonversationApplication::readOptions()
       QString nickList=config->readEntry("Nicknames");
       newIdentity->setNicknameList(QStringList::split(",",nickList));
 
+      newIdentity->setBot(config->readEntry("Bot"));
+      newIdentity->setPassword(config->readEntry("Password"));
+
       newIdentity->setShowAwayMessage(config->readBoolEntry("ShowAwayMessage"));
       newIdentity->setAwayMessage(config->readEntry("AwayMessage"));
       newIdentity->setReturnMessage(config->readEntry("ReturnMessage"));
@@ -441,6 +444,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->writeEntry("Ident",identity->getIdent());
     config->writeEntry("Realname",identity->getRealName());
     config->writeEntry("Nicknames",identity->getNicknameList());
+    config->writeEntry("Bot",identity->getBot());
+    config->writeEntry("Password",identity->getPassword());
     config->writeEntry("ShowAwayMessage",identity->getShowAwayMessage());
     config->writeEntry("AwayMessage",identity->getAwayMessage());
     config->writeEntry("ReturnMessage",identity->getReturnMessage());
