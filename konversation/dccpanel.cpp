@@ -39,6 +39,7 @@ DccPanel::DccPanel(QWidget* parent) :
   dccListView->addColumn(i18n("Position"));
   dccListView->addColumn(i18n("% done"));
   dccListView->addColumn(i18n("CPS"));
+  dccListView->addColumn(i18n("IP Address"));
   dccListView->addColumn(i18n("Status"));
 
   dccListView->setDragEnabled(true);

@@ -40,6 +40,9 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString partner,QString 
   setFile(name);
   setSize(67588);
   setPosition(0);
+
+  setText(6,"123.123.123.123");
+
   updateCPS();
 
   if(type==Get) setStatus(Queued);
@@ -61,7 +64,7 @@ DccTransfer::~DccTransfer()
 void DccTransfer::setStatus(DccStatus status)
 {
   dccStatus=status;
-  setText(6,statusText[status]);
+  setText(7,statusText[status]);
 }
 
 void DccTransfer::setSize(unsigned long size)

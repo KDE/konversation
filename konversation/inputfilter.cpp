@@ -15,6 +15,7 @@
 */
 
 #include <qstringlist.h>
+#include <qdatetime.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -289,6 +290,13 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
     } // endfor
     if(modesAre!="") server->appendCommandMessageToChannel(parameterList[1],i18n("Mode"),"Channel modes: "+modesAre);
   }
+  else if(command==RPL_CHANNELCREATED)
+  {
+    QDateTime when;
+    when.setTime_t(parameterList[2].toUInt());
+
+    server->appendCommandMessageToChannel(parameterList[1],i18n("Created"),i18n("This channel has been created on %1.").arg(when.toString(Qt::LocalDate)));
+  }
   else if(command==RPL_NAMREPLY)
   {
     QStringList nickList=QStringList::split(" ",trailing);
@@ -308,11 +316,22 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
       server->addNickToChannel(parameterList[2],nickname,hostmask,op,voice);
     }
   }
-  /* Topic set message */
+  else if(command==RPL_ENDOFNAMES)
+  {
+    server->appendCommandMessageToChannel(parameterList[1],i18n("Names"),i18n("End of /NAMES list."));
+  }
+  /* Topic set messages */
   else if(command==RPL_TOPIC)
   {
-    /* Update server window */
+    /* Update channel window */
     server->setChannelTopic(parameterList[1],trailing);
+  }
+  else if(command==RPL_TOPICSETBY)
+  {
+    /* Inform user who set the topic and when */
+    QDateTime when;
+    when.setTime_t(parameterList[3].toUInt());
+    server->appendCommandMessageToChannel(parameterList[1],i18n("Topic"),i18n("Topic was set by %1 on %2.").arg(parameterList[2]).arg(when.toString(Qt::LocalDate)));
   }
   /* Nick already on the server, so try another one */
   else if(command==ERR_NICKNAMEINUSE)
@@ -325,6 +344,10 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
     server->appendStatusMessage(i18n("Nick"),i18n("Nickname already in use. Trying %1.").arg(newNick));
     /* Send nickchange request to the server */
     server->queue("NICK "+newNick);
+  }
+  else if(command==RPL_MOTDSTART)
+  {
+    server->appendStatusMessage(i18n("MOTD"),i18n("Message Of The Day:"));
   }
   else if(command==RPL_MOTD)
   {
