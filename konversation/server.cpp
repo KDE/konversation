@@ -32,7 +32,6 @@
 #include <ksocketdevice.h>
 #include <kaction.h>
 using namespace KNetwork;
-#include <kstringhandler.h>
 #include <kdeversion.h>
 #include <kwin.h>
 
