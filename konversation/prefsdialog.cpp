@@ -37,14 +37,17 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
                           KDialogBase::Ok,0,"edit_prefs",false,true)
 {
   setPreferences(preferences);
+  setShowIconsInTreeList(true);
 
   serverListPane = addPage(i18n("Server List"));
   QFrame* generalSettingsPane = addPage(i18n("General Settings"));
   QFrame* identityPane = addPage(i18n("Identity"));
   
   QFrame* chatWinAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")));
-  QFrame* colorsAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Colors")));
+  QFrame* colorsAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Colors")),
+    QString::null, SmallIcon("colorize"));
   
+  setFolderIcon(QStringList::split(',', i18n("Behavior")), SmallIcon("configure"));
   QFrame* generalBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("General")));
   QFrame* chatWinBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Chat Window")));
   QFrame* tabBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Tab Bar")));
@@ -54,11 +57,13 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   QFrame* logSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Logging")));
   QFrame* dccSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("DCC")));
 
+  setFolderIcon(QStringList::split(',', i18n("Notification")), SmallIcon("knotify"));
   notifyPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Watched Nicknames")));
   QFrame* highlightPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Highlighting")));
   QFrame* OSDPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("On Screen Display")));
   
-  QFrame* dialogsPane        =addPage(i18n("Dialogs"));
+  QFrame* dialogsPane = addPage(i18n("Dialogs"));
+  
   // TODO: Uncomment this again when it's ready to go
   // QFrame* scriptsPane        =addPage(i18n("Scripting"));
 
