@@ -65,7 +65,7 @@ PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
   QPushButton* installButton = new QPushButton(buttonFrame,"installButton");
   m_removeButton = new QPushButton(buttonFrame,"removeButton");
 
-  installButton->setText(i18n("I&nstall Theme"));
+  installButton->setText(i18n("I&nstall Theme..."));
   m_removeButton->setText(i18n("&Remove Theme"));
   m_removeButton->setEnabled(false);
 
@@ -140,7 +140,7 @@ void PrefsPageThemes::installTheme()
     {
       KMessageBox::error(0L,
 			 KIO::NetAccess::lastErrorString(),
-			 i18n("Failed to download theme"),
+			 i18n("Failed to Download Theme"),
 			 KMessageBox::Notify
 			 );
       return;
@@ -155,8 +155,8 @@ void PrefsPageThemes::installTheme()
       else
 	{
 	  KMessageBox::error(0L,
-                             i18n("Invalid Theme Archive"),
-                             i18n("Cannot install theme"),
+                             i18n("Theme archive is invalid."),
+                             i18n("Cannot Install Theme"),
                              KMessageBox::Notify
                              );
 	}
@@ -176,8 +176,8 @@ void PrefsPageThemes::installTheme()
 	  if(themeDir->entry(*it+"/index.desktop") == NULL)
 	    {
 	      KMessageBox::error(0L,
-				 i18n("Invalid Theme Archive"),
-				 i18n("Cannot install theme"),
+				 i18n("Theme archive is invalid."),
+				 i18n("Cannot Install Theme"),
 				 KMessageBox::Notify
 				 );
 	      break;
@@ -226,17 +226,17 @@ void PrefsPageThemes::updatePreview(int id)
   QPixmap normal(dir+"/irc_normal.png");
 
   m_label[0]->setPixmap(normal);
-  QToolTip::add(m_label[0],i18n("Icon For Normal Users"));
+  QToolTip::add(m_label[0],i18n("Icon for normal users"));
   m_label[1]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_voice.png")));
-  QToolTip::add(m_label[1],i18n("Icon For Users With Voice"));
+  QToolTip::add(m_label[1],i18n("Icon for users with voice"));
   m_label[2]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_halfop.png")));
-  QToolTip::add(m_label[2],i18n("Icon For Users With Half-Operator Priviliges"));
+  QToolTip::add(m_label[2],i18n("Icon for users with half-operator priviliges"));
   m_label[3]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_op.png")));
-  QToolTip::add(m_label[3],i18n("Icon For Users With Operator Priviliges"));
+  QToolTip::add(m_label[3],i18n("Icon for users with operator priviliges"));
   m_label[4]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_owner.png")));
-  QToolTip::add(m_label[4],i18n("Icon For Users With Owner privileges"));
+  QToolTip::add(m_label[4],i18n("Icon for users with owner privileges"));
   m_label[5]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_admin.png")));
-  QToolTip::add(m_label[5],i18n("Icon For Users With Admin privileges"));
+  QToolTip::add(m_label[5],i18n("Icon for users with admin privileges"));
 
   for(int i=0; i <= 5; ++i)
     m_label[i]->show();
@@ -268,7 +268,7 @@ void PrefsPageThemes::updateList()
       KDesktopFile themeRC(*it);
       themeName = themeRC.readName();
       themeComment = themeRC.readComment();
-      
+
       if(!themeComment.isEmpty())
 	themeName = themeName+" ( "+themeComment+" )";
 

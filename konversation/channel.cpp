@@ -120,7 +120,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   m_topicButton = new QToolButton(topicWidget);
   m_topicButton->setIconSet(SmallIconSet("edit", 16));
-  QToolTip::add(m_topicButton, i18n("Edit Topic"));
+  QToolTip::add(m_topicButton, i18n("Edit topic"));
   connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
   topicLine = new Konversation::TopicLabel(topicWidget);
   QWhatsThis::add(topicLine, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by changing the text in the topic line, and pressing enter.<p>You can see the previous topics that were entered by dropping down the drop down box.</qt>"));

@@ -24,7 +24,7 @@
 namespace Konversation {
 
 ChannelOptionsDialog::ChannelOptionsDialog(const QString& channel, QWidget *parent, const char *name)
-  : KDialogBase(parent, name, false, i18n("Channel options for %1").arg(channel), Ok|Cancel, Ok)
+  : KDialogBase(parent, name, false, i18n("Channel Options for %1").arg(channel), Ok|Cancel, Ok)
 {
   m_widget = new ChannelOptionsUI(this);
   setMainWidget(m_widget);
@@ -101,9 +101,9 @@ void ChannelOptionsDialog::setModes(const QStringList& modes)
     static_cast<QCheckListItem*>(item)->setOn(false);
     item = item->nextSibling();
   }
-  
+
   char mode;
-  
+
   for(QStringList::const_iterator it = modes.begin(); it != modes.end(); ++it) {
     mode = (*it)[0];
 
@@ -147,7 +147,7 @@ void ChannelOptionsDialog::setModes(const QStringList& modes)
             item = item->nextSibling();
           }
         }
-        
+
         break;
       }
     }
@@ -181,7 +181,7 @@ QStringList ChannelOptionsDialog::modes()
     modes.append(sign + item->text(0) + item->text(1));
     item = item->nextSibling();
   }
-  
+
   return modes;
 }
 
