@@ -56,6 +56,7 @@ typedef unsigned long long __u64;
 #include "rawlog.h"
 #include "channellistpanel.h"
 #include "scriptlauncher.h"
+#include "konvidebug.h"
 
 #include "addressbook.h"
 
