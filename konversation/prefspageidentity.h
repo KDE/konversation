@@ -17,7 +17,11 @@
 #ifndef PREFSPAGEIDENTITY_H
 #define PREFSPAGEIDENTITY_H
 
+#include <qcheckbox.h>
+#include <qlabel.h>
+
 #include <klineedit.h>
+#include <kcombobox.h>
 
 #include "prefspage.h"
 
@@ -33,24 +37,46 @@ class PrefsPageIdentity : public PrefsPage
     PrefsPageIdentity(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageIdentity();
 
+  protected slots:
+    void realNameChanged(const QString& newRealName);
+    void loginChanged(const QString& newlogin);
+
+    void nick0Changed(const QString& newNick);
+    void nick1Changed(const QString& newNick);
+    void nick2Changed(const QString& newNick);
+    void nick3Changed(const QString& newNick);
+
+    void partReasonChanged(const QString& newReason);
+    void kickReasonChanged(const QString& newReason);
+
+    void showAwayMessageChanged(int state);
+    void awayMessageChanged(const QString& newMessage);
+    void unAwayMessageChanged(const QString& newMessage);
+
+    void updateIdentity(int number);
+
   protected:
+    QPtrList<Identity> identities;
+    Identity* identity;
+
+    KComboBox* identityCombo;
+
+    QLabel* defaultText;
+
+    KLineEdit* realNameInput;
+    KLineEdit* loginInput;
+
     KLineEdit* nick0;
     KLineEdit* nick1;
     KLineEdit* nick2;
     KLineEdit* nick3;
 
-  protected slots:
-    void realNameChanged(const QString& newRealName);
-    void loginChanged(const QString& newlogin);
-    void nick0Changed(const QString& newNick);
-    void nick1Changed(const QString& newNick);
-    void nick2Changed(const QString& newNick);
-    void nick3Changed(const QString& newNick);
-    void partReasonChanged(const QString& newReason);
-    void kickReasonChanged(const QString& newReason);
-    void showAwayMessageChanged(int state);
-    void awayMessageChanged(const QString& newMessage);
-    void unAwayMessageChanged(const QString& newMessage);
+    KLineEdit* partInput;
+    KLineEdit* kickInput;
+
+    QCheckBox* showAwayMessageCheck;
+    KLineEdit* awayInput;
+    KLineEdit* unAwayInput;
 };
 
 #endif

@@ -15,10 +15,6 @@
 */
 
 #include <qlayout.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-
-#include <kcombobox.h>
 
 #include "prefspageidentity.h"
 
@@ -29,43 +25,48 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   QGridLayout* identityLayout=new QGridLayout(parentFrame,4,4,marginHint(),spacingHint());
 
   QLabel* identityLabel=new QLabel(i18n("Identity:"),parentFrame);
-  KComboBox* identityCombo=new KComboBox(parentFrame);
+  identityCombo=new KComboBox(parentFrame);
 
-  QPtrList<Identity> identities=preferences->getIdentityList();
+  identities=preferences->getIdentityList();
   for(unsigned int index=0;index<identities.count();index++)
     identityCombo->insertItem(identities.at(index)->getName());
 
+  defaultText=new QLabel(i18n("<qt>This is the default identity used for all servers "
+                              "where no separate identity was selected.</qt>"),
+                              parentFrame);
+
   QLabel* realNameLabel=new QLabel(i18n("Real name:"),parentFrame);
-  KLineEdit* realNameInput=new KLineEdit(preferences->getRealName(),parentFrame);
+  realNameInput=new KLineEdit(parentFrame);
 
   QLabel* loginLabel=new QLabel(i18n("Ident:"),parentFrame);
-  KLineEdit* loginInput=new KLineEdit(preferences->getIdent(),parentFrame);
+  loginInput=new KLineEdit(parentFrame);
 
-  QStringList nicknameList=preferences->getNicknameList();
-
-  nick0=new KLineEdit(nicknameList[0],parentFrame);
-  nick1=new KLineEdit(nicknameList[1],parentFrame);
-  nick2=new KLineEdit(nicknameList[2],parentFrame);
-  nick3=new KLineEdit(nicknameList[3],parentFrame);
+  nick0=new KLineEdit(parentFrame);
+  nick1=new KLineEdit(parentFrame);
+  nick2=new KLineEdit(parentFrame);
+  nick3=new KLineEdit(parentFrame);
 
   QLabel* partLabel=new QLabel(i18n("Part Reason:"),parentFrame);
-  KLineEdit* partInput=new KLineEdit(preferences->getPartReason(),parentFrame);
+  partInput=new KLineEdit(parentFrame);
 
   QLabel* kickLabel=new QLabel(i18n("Kick Reason:"),parentFrame);
-  KLineEdit* kickInput=new KLineEdit(preferences->getKickReason(),parentFrame);
+  kickInput=new KLineEdit(parentFrame);
 
-  QCheckBox* showAwayMessageCheck=new QCheckBox(i18n("Show away messages"),parentFrame,"away_message_check");
-  showAwayMessageCheck->setChecked(preferences->getShowAwayMessage());
+  showAwayMessageCheck=new QCheckBox(i18n("Show away messages"),parentFrame,"away_message_check");
 
   QLabel* awayLabel=new QLabel(i18n("Away message:"),parentFrame);
-  KLineEdit* awayInput=new KLineEdit(preferences->getAwayMessage(),parentFrame);
+  awayInput=new KLineEdit(parentFrame);
 
   QLabel* unAwayLabel=new QLabel(i18n("Return message:"),parentFrame);
-  KLineEdit* unAwayInput=new KLineEdit(preferences->getUnAwayMessage(),parentFrame);
+  unAwayInput=new KLineEdit(parentFrame);
+
+  updateIdentity(0);
 
   int row=0;
   identityLayout->addWidget(identityLabel,row,0);
   identityLayout->addMultiCellWidget(identityCombo,row,row,1,3);
+  row++;
+  identityLayout->addMultiCellWidget(defaultText,row,row,0,3);
   row++;
   identityLayout->addWidget(realNameLabel,row,0);
   identityLayout->addMultiCellWidget(realNameInput,row,row,1,3);
@@ -97,11 +98,6 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   identityLayout->addWidget(unAwayLabel,row,0);
   identityLayout->addMultiCellWidget(unAwayInput,row,row,1,3);
   row++;
-  identityLayout->addMultiCellWidget(new QLabel(i18n(
-                                     "<qt>This is the default identity used for all servers "
-                                     "where no separate identity was selected.</qt>"),
-                                     parentFrame),row,row,0,3);
-  row++;
   identityLayout->setRowStretch(row,10);
 
   // Set up signals / slots for identity page
@@ -116,6 +112,7 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   connect(showAwayMessageCheck,SIGNAL (stateChanged(int)),this,SLOT (showAwayMessageChanged(int)) );
   connect(awayInput,SIGNAL (textChanged(const QString&)),this,SLOT (awayMessageChanged(const QString&)) );
   connect(unAwayInput,SIGNAL (textChanged(const QString&)),this,SLOT (unAwayMessageChanged(const QString&)) );
+  connect(identityCombo,SIGNAL (activated(int)),this,SLOT (updateIdentity(int)) );
 }
 
 PrefsPageIdentity::~PrefsPageIdentity()
@@ -124,59 +121,82 @@ PrefsPageIdentity::~PrefsPageIdentity()
 
 void PrefsPageIdentity::realNameChanged(const QString& newRealName)
 {
-  preferences->setRealName(newRealName);
+  identity->setRealName(newRealName);
 }
 
 void PrefsPageIdentity::loginChanged(const QString& newLogin)
 {
-  preferences->setIdent(newLogin);
+  identity->setIdent(newLogin);
 }
 
 // TODO: derive from QLineEdit and submit an index in the signal to
 //       avoid duplicate code like this
 void PrefsPageIdentity::nick0Changed(const QString& newNick)
 {
-  preferences->setNickname(0,newNick);
+  identity->setNickname(0,newNick);
 }
 
 void PrefsPageIdentity::nick1Changed(const QString& newNick)
 {
-  preferences->setNickname(1,newNick);
+  identity->setNickname(1,newNick);
 }
 
 void PrefsPageIdentity::nick2Changed(const QString& newNick)
 {
-  preferences->setNickname(2,newNick);
+  identity->setNickname(2,newNick);
 }
 
 void PrefsPageIdentity::nick3Changed(const QString& newNick)
 {
-  preferences->setNickname(3,newNick);
+  identity->setNickname(3,newNick);
 }
 
 void PrefsPageIdentity::partReasonChanged(const QString& newReason)
 {
-  preferences->setPartReason(newReason);
+  identity->setPartReason(newReason);
 }
 
 void PrefsPageIdentity::kickReasonChanged(const QString& newReason)
 {
-  preferences->setKickReason(newReason);
+  identity->setKickReason(newReason);
 }
 
 void PrefsPageIdentity::showAwayMessageChanged(int state)
 {
-  preferences->setShowAwayMessage(state==2);
+  identity->setShowAwayMessage(state==2);
 }
 
 void PrefsPageIdentity::awayMessageChanged(const QString& newMessage)
 {
-  preferences->setAwayMessage(newMessage);
+  identity->setAwayMessage(newMessage);
 }
 
 void PrefsPageIdentity::unAwayMessageChanged(const QString& newMessage)
 {
-  preferences->setUnAwayMessage(newMessage);
+  identity->setReturnMessage(newMessage);
+}
+
+void PrefsPageIdentity::updateIdentity(int number)
+{
+  identity=identities.at(number);
+
+  if(number==0) defaultText->show();
+  else defaultText->hide();
+
+  loginInput->setText(identity->getIdent());
+  realNameInput->setText(identity->getRealName());
+
+  nick0->setText(identity->getNickname(0));
+  nick1->setText(identity->getNickname(1));
+  nick2->setText(identity->getNickname(2));
+  nick3->setText(identity->getNickname(3));
+
+  partInput->setText(identity->getPartReason());
+  kickInput->setText(identity->getKickReason());
+
+  showAwayMessageCheck->setChecked(identity->getShowAwayMessage());
+  awayInput->setText(identity->getAwayMessage());
+  unAwayInput->setText(identity->getReturnMessage());
 }
 
 #include "prefspageidentity.moc"
