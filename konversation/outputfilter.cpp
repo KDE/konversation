@@ -279,7 +279,7 @@ void OutputFilter::parsePart(const QString &parameter)
     else
     {
       type=i18n("Error");
-      output=i18n("%1PART without parameters only works from within a channel.").arg(commandChar);
+      output=i18n("%1PART without parameters only works from within a channel or a query.").arg(commandChar);
       program=true;
     }
   }

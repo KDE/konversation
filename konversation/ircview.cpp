@@ -364,7 +364,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
   
   // Hilight
 
-  if(doHilight)
+  if(doHilight && whoSent!=server->getNickname())
   {
     highlightColor=QString::null;
 

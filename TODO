@@ -11,7 +11,6 @@ SHORT-TERM (URGENT):
 - Option to disable %G, %C %B... expansion
 - Make URLs like http://user@somedomain.com/ work
 - /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
-- Don't trigger events when we did highlight ourselves
 - Add ETA counter for DCC transfers
 - Show / Hide tab types (status tabs ect.)
 - Hide all "technical" messages from channels and queries or redirect them into the status view
