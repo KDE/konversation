@@ -139,6 +139,8 @@ PrefsDialog::PrefsDialog(Preferences* preferences) :
 
   int lastActiveModule = config->readNumEntry("LastActiveModule",0);
   showPage(lastActiveModule);
+  if(lastActiveModule == pageIndex(OSDPane))
+    OSDPage->aboutToShow();
   unfoldTreeList(true);
 }
 
