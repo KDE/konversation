@@ -580,6 +580,10 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
   QString first(firstColumn);
   QString backlogColor=KonversationApplication::preferences.getColor("BacklogMessage");
 
+  if(!first.isEmpty() && !first.startsWith("<") && !first.startsWith("*")) {
+    first = "|" + first + "|";
+  }
+
   // Nicks are in "<nick>" format so replace the "<>"
   first.replace("<","&lt;");
   first.replace(">","&gt;");
