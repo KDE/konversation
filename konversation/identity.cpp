@@ -12,9 +12,9 @@
   email: eisfuchs@tigress.com
 */
 
-#include <qtextcodec.h>
-
 #include <kdebug.h>
+
+#include "defaultcodec.h"
 
 #include "identity.h"
 
@@ -25,7 +25,7 @@ Identity::Identity()
   nicknameList.append(QString::null);
   nicknameList.append(QString::null);
 
-  setCodec(QTextCodec::codecForLocale()->name());
+  setCodec(DefaultCodec::getCodecForLang());
 }
 
 Identity::~Identity()
