@@ -46,6 +46,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& inputLine,cons
   action=false;
   program=false;
   command=false;
+  query=false;
 
   // Action?
   if(line.startsWith(commandChar+"me ") && destination!="")
