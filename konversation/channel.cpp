@@ -618,13 +618,12 @@ void Channel::sendFileMenu()
 void Channel::channelTextEntered()
 {
   QString line=channelInput->text();
+  channelInput->clear();
 
   if(line.lower()=="/clear")
     textView->clear();
   else
     if(!line.isEmpty()) sendChannelText(line);
-
-  channelInput->clear();
 }
 
 void Channel::sendChannelText(const QString& sendLine)

@@ -224,12 +224,12 @@ void DccChat::readData()
 void DccChat::dccChatTextEntered()
 {
   QString line=dccChatInput->text();
+  dccChatInput->clear();
   if(line.lower()=="/clear") textView->clear();
   else
   {
     if(line.length()) sendDccChatText(line);
   }
-  dccChatInput->clear();
 }
 
 void DccChat::sendDccChatText(const QString& sendLine)

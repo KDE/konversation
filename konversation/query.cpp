@@ -98,12 +98,12 @@ void Query::setName(const QString& newName)
 void Query::queryTextEntered()
 {
   QString line=queryInput->text();
+  queryInput->clear();
   if(line.lower()=="/clear") textView->clear();
   else
   {
     if(line.length()) sendQueryText(line);
   }
-  queryInput->clear();
 }
 
 void Query::sendQueryText(const QString& sendLine)

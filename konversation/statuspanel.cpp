@@ -94,14 +94,13 @@ void StatusPanel::sendStatusText(QString sendLine)
 void StatusPanel::statusTextEntered()
 {
   QString line=statusInput->text();
+  statusInput->clear();
 
   if(line.lower()=="/clear") textView->clear();
   else
   {
     if(line.length()) sendStatusText(line);
   }
-
-  statusInput->clear();
 }
 
 void StatusPanel::newTextInView(const QString& highlightColor,bool important)
