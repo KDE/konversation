@@ -1016,6 +1016,31 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                                       .arg(trailing));
           break;
         }
+/* Sample WHO response
+/WHO #lounge
+[21:39] [352] #lounge jasmine bots.worldforge.org irc.worldforge.org jasmine H 0 jasmine
+[21:39] [352] #lounge ~Nottingha worldforge.org irc.worldforge.org SherwoodSpirit H 0 Arboreal Entity
+*/
+      case RPL_WHOREPLY:
+	{
+	  NickInfo* nickInfo = server->getNickInfo(parameterList[5]);
+	  if(nickInfo) {
+	    nickInfo->setHostmask(i18n("%1@%2").arg(parameterList[2]).arg(parameterList[3]));
+	    nickInfo->setRealName(trailing.section(" ", 1)); //Strip off the "0 "
+	  }
+	  server->appendStatusMessage(i18n("Who"),
+			              i18n("%1 is %2&#64;%3 (%4)").arg(parameterList[5]) // Use &#64; instead of @
+				      .arg(parameterList[2])
+				      .arg(parameterList[3])
+				      .arg(trailing.section(" ", 1)));
+	  break; 
+	  
+	}
+      case RPL_ENDOFWHO:
+	{
+	  server->appendStatusMessage(i18n("Who"), i18n("End of /WHO list for %1").arg(parameterList[1]));
+	  break;
+	}
       case RPL_WHOISCHANNELS:
         {
           QStringList userChannels,voiceChannels,opChannels,halfopChannels,ownerChannels,adminChannels;
