@@ -22,7 +22,7 @@ class IRCCharsets
      * You can get instances of QTextCodec from these names
      * like this: QTextCodec* codec= QTextCodec::codecForName( shortName.ascii() )
      * Encodings which don't work on IRC are excluded. (e.g. utf16)
-     * @note It's guranteed that the order of this list is same with that of @ref availableEncodingDescriptiveNames() .
+     * @note It's guaranteed that the order of this list is same with that of @ref availableEncodingDescriptiveNames() .
      */
     static QStringList availableEncodingShortNames();
     

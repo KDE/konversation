@@ -99,8 +99,8 @@ void IRCCharsets::private_init()  // static, private
   while ( it != s_descriptiveNames.end() )
   {
     QString encodingName = KGlobal::charsets()->encodingForName( *it );
-    // exclude utf16 and iso-10646*
-    if ( encodingName == "utf16" || encodingName.startsWith( "iso-10646" ) )
+    // exclude utf16 and ucs2
+    if ( encodingName == "utf16" || encodingName == "iso-10646-ucs-2" )
       it = s_descriptiveNames.remove( it );
     else
     {
