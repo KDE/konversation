@@ -6,6 +6,7 @@ berkus: Logrotate with timer or at shutdown, compress rotated logs
 
 Eisfuchs: Automatic/Manual reconnect on long lag times
 
+List of channels / queries in a new window that indicate new text
 Channel list: sort channels numerically when sorted by user amount
 Optionally copy log files to new location
 DCC options on same file name should include "Rename" and maybe "Auto Rename"
