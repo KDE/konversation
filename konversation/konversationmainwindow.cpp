@@ -1302,7 +1302,9 @@ void KonversationMainWindow::setShowTabBarCloseButton(bool) {}
 
 void KonversationMainWindow::resizeEvent(QResizeEvent* ev)
 {
+#ifdef USE_MDI
   setSysButtonsAtMenuPosition();
+#endif
   QWidget::resizeEvent(ev);
 }
 
