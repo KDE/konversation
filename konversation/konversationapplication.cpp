@@ -413,6 +413,7 @@ void KonversationApplication::readOptions()
     preferences.setOpValue(config->readNumEntry("OperatorValue",preferences.getOpValue()));
     preferences.setHalfopValue(config->readNumEntry("HalfopValue",preferences.getHalfopValue()));
     preferences.setVoiceValue(config->readNumEntry("VoiceValue",preferences.getVoiceValue()));
+    preferences.setAwayValue(config->readNumEntry("AwayValue",preferences.getAwayValue()));
     preferences.setNoRightsValue(config->readNumEntry("NoRightsValue",preferences.getNoRightsValue()));
   }
 
@@ -885,6 +886,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("OperatorValue",preferences.getOpValue());
   config->writeEntry("HalfopValue",preferences.getHalfopValue());
   config->writeEntry("VoiceValue",preferences.getVoiceValue());
+  config->writeEntry("AwayValue",preferences.getAwayValue());
   config->writeEntry("NoRightsValue",preferences.getNoRightsValue());
   config->writeEntry("SortByStatus",preferences.getSortByStatus());
   config->writeEntry("SortCaseInsensitive",preferences.getSortCaseInsensitive());

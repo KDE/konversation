@@ -119,14 +119,15 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
   sortingOrder->setAcceptDrops(true);
   sortingOrder->setMaximumHeight(sortingOrder->fontMetrics().height()*7);
 
-  for(int index = 32; index != 0; index >>= 1)
+  for(int index = 64; index != 0; index >>= 1)
   {
     if(preferences->getNoRightsValue() == index) new ValueListViewItem(0, sortingOrder, i18n("Normal Users"));
-    if(preferences->getVoiceValue() == index)    new ValueListViewItem(1, sortingOrder, i18n("Voice (+v)"));
-    if(preferences->getHalfopValue() == index)   new ValueListViewItem(2, sortingOrder, i18n("Halfops (+h)"));
-    if(preferences->getOpValue() == index)       new ValueListViewItem(3, sortingOrder, i18n("Operators (+o)"));
-    if(preferences->getOwnerValue() == index)    new ValueListViewItem(4, sortingOrder, i18n("Channel Owners"));
-    if(preferences->getAdminValue() == index)    new ValueListViewItem(5, sortingOrder, i18n("Channel Admins"));
+    if(preferences->getAwayValue() == index)     new ValueListViewItem(1, sortingOrder, i18n("Away Users"));
+    if(preferences->getVoiceValue() == index)    new ValueListViewItem(2, sortingOrder, i18n("Voice (+v)"));
+    if(preferences->getHalfopValue() == index)   new ValueListViewItem(3, sortingOrder, i18n("Halfops (+h)"));
+    if(preferences->getOpValue() == index)       new ValueListViewItem(4, sortingOrder, i18n("Operators (+o)"));
+    if(preferences->getOwnerValue() == index)    new ValueListViewItem(5, sortingOrder, i18n("Channel Owners"));
+    if(preferences->getAdminValue() == index)    new ValueListViewItem(6, sortingOrder, i18n("Channel Admins"));
   }
 
   QToolButton* sortMoveUp=new QToolButton(sortOrderGroup,"sort_move_up_button");
@@ -213,17 +214,18 @@ void PrefsPageChatWinBehavior::applyPreferences()
 
   int flag = 1;
 
-  for(int index = 0; index < 6; index++)
+  for(int index = 0; index < 7; index++)
   {
     ValueListViewItem* item = static_cast<ValueListViewItem*>(sortingOrder->itemAtIndex(index));
     int value = item->getValue();
 
     if(value == 0) preferences->setNoRightsValue(flag);
-    else if(value == 1) preferences->setVoiceValue(flag);
-    else if(value == 2) preferences->setHalfopValue(flag);
-    else if(value == 3) preferences->setOpValue(flag);
-    else if(value == 4) preferences->setOwnerValue(flag);
-    else if(value == 5) preferences->setAdminValue(flag);
+    else if(value == 1) preferences->setAwayValue(flag);
+    else if(value == 2) preferences->setVoiceValue(flag);
+    else if(value == 3) preferences->setHalfopValue(flag);
+    else if(value == 4) preferences->setOpValue(flag);
+    else if(value == 5) preferences->setOwnerValue(flag);
+    else if(value == 6) preferences->setAdminValue(flag);
 
     flag <<= 1;
   }

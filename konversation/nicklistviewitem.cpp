@@ -112,14 +112,16 @@ int NickListViewItem::compare(QListViewItem* item,int col,bool ascending) const
 
 int NickListViewItem::getFlags() const
 {
+  NickInfo* nickInfo = nick->getNickInfo();
   int flags;
 
-  if(nick->isAdmin())       flags=KonversationApplication::preferences.getAdminValue();
-  else if(nick->isOwner())  flags=KonversationApplication::preferences.getOwnerValue();
-  else if(nick->isOp())     flags=KonversationApplication::preferences.getOpValue();
-  else if(nick->isHalfop()) flags=KonversationApplication::preferences.getHalfopValue();
-  else if(nick->hasVoice())  flags=KonversationApplication::preferences.getVoiceValue();
-  else                 flags=KonversationApplication::preferences.getNoRightsValue();
+  if(nick->isAdmin())           flags=KonversationApplication::preferences.getAdminValue();
+  else if(nick->isOwner())      flags=KonversationApplication::preferences.getOwnerValue();
+  else if(nick->isOp())         flags=KonversationApplication::preferences.getOpValue();
+  else if(nick->isHalfop())     flags=KonversationApplication::preferences.getHalfopValue();
+  else if(nick->hasVoice())     flags=KonversationApplication::preferences.getVoiceValue();
+  else if(nickInfo->isAway())   flags=KonversationApplication::preferences.getAwayValue();
+  else                          flags=KonversationApplication::preferences.getNoRightsValue();
 
   return flags;
 }

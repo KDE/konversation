@@ -166,6 +166,8 @@ class Preferences : public QObject
     void setHalfopValue(int value);
     int getVoiceValue();
     void setVoiceValue(int value);
+    int getAwayValue();
+    void setAwayValue(int value); // ends here
     int getNoRightsValue();
     void setNoRightsValue(int value);
 
@@ -561,6 +563,7 @@ class Preferences : public QObject
     int opValue;
     int halfopValue;
     int voiceValue;
+    int awayValue;
     int noRightsValue;
 
     // flag for hostmasks next to nicknames
