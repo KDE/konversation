@@ -14,6 +14,7 @@ $ARG_MESSAGE = `@ARGV`;
 
 foreach $entry (split(/\n/, $ARG_MESSAGE)) {
     chomp $entry;
+    $entry =~ s/^\//\/\//;
     unless($i) { 
 	system("dcop $PORT Konversation say $SERVER \"$TARGET\" \"Output Of Command : %B @ARGV %B\" ");
 	$i=1;
