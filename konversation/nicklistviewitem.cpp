@@ -136,13 +136,27 @@ int NickListViewItem::compare(QListViewItem* item,int col,bool ascending) const
     }
   }
 
-  QString thisKey = key(col, ascending);
-  QString otherKey = otherItem->key(col, ascending);
+  QString thisKey;
+  QString otherKey;
 
-  if(KonversationApplication::preferences.getSortCaseInsensitive())
-  {
-    thisKey = thisKey.lower();
-    otherKey = otherKey.lower();
+  if(col > 1) {
+    if(KonversationApplication::preferences.getSortCaseInsensitive())
+    {
+      thisKey = thisKey.lower();
+      otherKey = otherKey.lower();
+    } else {
+      thisKey = key(col, ascending);
+      otherKey = otherItem->key(col, ascending);
+    }
+  } else if(col == 1) {
+    if(KonversationApplication::preferences.getSortCaseInsensitive())
+    {
+      thisKey = nick->loweredNickname();
+      otherKey = otherItem->getNick()->loweredNickname();
+    } else {
+      thisKey = key(col, ascending);
+      otherKey = otherItem->key(col, ascending);
+    }
   }
 
   return thisKey.compare(otherKey);
