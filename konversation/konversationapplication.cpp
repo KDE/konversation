@@ -603,6 +603,8 @@ void KonversationApplication::openPrefsDialog()
 
     prefsDialog->show();
   }
+  else
+    prefsDialog->raise();
 }
 
 void KonversationApplication::syncPrefs()
