@@ -51,7 +51,7 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
     popup->insertSeparator();
     popup->insertItem(i18n("Open Query"),Query);
     popup->insertItem(i18n("Send File..."),DccSend);
-
+    popup->insertItem(i18n("Send Email..."), SendEmail);
     if(addressbook) {
       popup->insertSeparator();
       popup->insertItem(i18n("Addressbook Associations"), addressbook, AddressbookSub);

@@ -117,6 +117,7 @@ class Channel : public ChatWindow
     virtual QString getChannelEncoding();
     virtual QString getChannelEncodingDefaultDesc();
     
+    bool sendEmail(const ChannelNickList &nicklist);
   signals:
     void newText(QWidget* channel,const QString& highlightColor, bool important);
     void sendFile();
