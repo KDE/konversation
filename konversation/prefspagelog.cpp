@@ -19,6 +19,7 @@
 #include <qgroupbox.h>
 #include <qwhatsthis.h>
 #include <qspinbox.h>
+#include <qtooltip.h>
 #include <klineedit.h>
 #include <klocale.h>
 
