@@ -1,5 +1,5 @@
 /*  -*- C++ -*-
- *  Copyright (C) 2003 Thiago Macieira <thiago.macieira@kdemail.net>
+ *  Copyright (C) 2003,2004 Thiago Macieira <thiago.macieira@kdemail.net>
  *
  *
  *  Permission is hereby granted, free of charge, to any person obtaining
@@ -257,6 +257,7 @@ bool KSocketBase::isFatalError(int code)
     {
     case WouldBlock:
     case InProgress:
+    case NoError:
       return false;
     }
 
