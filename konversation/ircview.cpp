@@ -192,7 +192,7 @@ void IRCView::urlClickSlot(const QString &url)
   if (!url.isEmpty())
   {
     // Always use KDE default mailer.
-    if (url.startsWith("mailto:", false))
+    if (url.lower().startsWith("mailto:"))
     {
       new KRun(url);
     }
@@ -206,7 +206,6 @@ void IRCView::urlClickSlot(const QString &url)
 #else
       QStringList cmdAndArgs = QStringList::split(' ',cmd);
 #endif
-      kdDebug() << "IRCView::urlClickSlot(): cmd = " << cmdAndArgs << endl;
       *proc << cmdAndArgs;
 //      This code will also work, but starts an extra shell process.
 //      kdDebug() << "IRCView::urlClickSlot(): cmd = " << cmd << endl;

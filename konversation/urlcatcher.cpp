@@ -106,7 +106,7 @@ void UrlCatcher::addUrl(const QString& who,const QString& url)
 void UrlCatcher::openUrl(QListViewItem* item)
 {
   QString url = item->text(1);
-  if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.startsWith("mailto:", false) )
+  if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.lower().startsWith("mailto:") )
   {
     new KRun(url);
   }
@@ -120,7 +120,6 @@ void UrlCatcher::openUrl(QListViewItem* item)
 #else
     QStringList cmdAndArgs = QStringList::split(' ',cmd);
 #endif
-    kdDebug() << "UrlCatcher::openUrl(): cmd = " << cmdAndArgs << endl;
     *proc << cmdAndArgs;
 //    This code will also work, but starts an extra shell process.
 //    kdDebug() << "UrlCatcher::openUrl(): cmd = " << cmd << endl;
