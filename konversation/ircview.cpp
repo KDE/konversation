@@ -780,7 +780,6 @@ bool IRCView::eventFilter(QObject* object,QEvent* event)
       if (!urlToDrag.isNull()) {
         mousePressed=true;
         pressPosition=me->pos();
-	return true;
 	}
     }
   } else if(event->type()==QEvent::MouseMove) {
