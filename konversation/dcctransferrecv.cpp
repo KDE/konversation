@@ -467,7 +467,7 @@ void DccTransferRecv::slotLocalWriteDone()  // <-WriteCacheHandler::done()
 void DccTransferRecv::slotLocalGotWriteError( const QString& errorString )  // <- WriteCacheHandler::gotError()
 {
   kdDebug() << "DccTransferRecv::slotLocalGotWriteError()" << endl;
-  failed( i18n( "KIO Error: %1" ).arg( errorString ) );
+  failed( i18n( "KIO error: %1" ).arg( errorString ) );
 }
 
 void DccTransferRecv::startConnectionTimer( int sec )

@@ -278,20 +278,20 @@ void DccTransfer::openFileInfoDialog()  // public
           listView(),
           i18n("Available information for file %1:").arg(path),
           infoList,
-          i18n("File information")
+          i18n("File Information")
         );
 #else
         KMessageBox::information(
           listView(),
           "<qt>"+infoList.join("<br>")+"</qt>",
-          i18n("File information")
+          i18n("File Information")
         );
 #endif
       }
     }
     else
     {
-      KMessageBox::sorry(listView(),i18n("No detailed information for this file found."),i18n("File information"));
+      KMessageBox::sorry(listView(),i18n("No detailed information for this file found."),i18n("File Information"));
     }
   }
 }
