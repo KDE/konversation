@@ -10,8 +10,6 @@
   begin:     Don Jun 5 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include <qlabel.h>
@@ -39,6 +37,7 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
   colorList.append(i18n("Server message text color:")+",ServerMessage");
   colorList.append(i18n("Timestamp color:")+",Time");
   colorList.append(i18n("Background color:")+",TextViewBackground");
+  colorList.append(i18n("Alternate Background color:")+",AlternateBackground");
 
   QGridLayout* colorSettingsLayout=new QGridLayout(parentFrame,4,3,marginHint(),spacingHint(),"log_settings_layout");
 

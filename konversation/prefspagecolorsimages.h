@@ -10,8 +10,6 @@
   begin:     Don Jun 5 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef PREFSPAGECOLORSIMAGES_H

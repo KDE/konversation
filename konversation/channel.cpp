@@ -1299,8 +1299,9 @@ void Channel::updateFonts()
 
   nicknameButton->setFont(KonversationApplication::preferences.getTextFont());
 
-  const QColor fg("#"+KonversationApplication::preferences.getColor("ChannelMessage"));
-  const QColor bg("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
+  const QColor  fg("#"+KonversationApplication::preferences.getColor("ChannelMessage"));
+  const QColor  bg("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
+  const QColor abg("#"+KonversationApplication::preferences.getColor("AlternateBackground"));
 
   channelInput->setPaletteForegroundColor(fg);
   channelInput->setPaletteBackgroundColor(bg);
@@ -1324,6 +1325,7 @@ void Channel::updateFonts()
 
   nicknameListView->setPaletteForegroundColor(fg);
   nicknameListView->setPaletteBackgroundColor(bg);
+  nicknameListView->setAlternateBackground(abg);
   nicknameListView->setFont(KonversationApplication::preferences.getListFont());
 }
 
