@@ -373,37 +373,25 @@ void Channel::changeOptions()
   }
 
   QStringList modes = m_optionsDialog->modes();
-  QStringList rmModes = m_modeList;
+  QStringList rmModes;
   QStringList addModes;
   QStringList tmp;
-
-  for(QStringList::iterator it = modes.begin(); it != modes.end(); ++it) {
-    tmp = m_modeList.grep((*it));
-
-    if(tmp.isEmpty()) {
-      addModes.append((*it));
-      QStringList removable = rmModes.grep(QRegExp(QString("^%1.*").arg((*it)[0])));
-  
-      for(QStringList::iterator it2 = removable.begin(); it2 != removable.end(); ++it2) {
-        QStringList::iterator foundIt = rmModes.find((*it2));
-        rmModes.remove(foundIt);
-      }
-    } else {
-      for(QStringList::iterator it2 = tmp.begin(); it2 != tmp.end(); ++it2) {
-        QStringList::iterator foundIt = rmModes.find((*it2));
-        rmModes.remove(foundIt);
-      }
-    }
-  }
-
+  QString modeString;
+  bool plus;
   QString command("MODE %1 %2%3 %4");
 
-  for(QStringList::iterator it = addModes.begin(); it != addModes.end(); ++it) {
-    m_server->queue(command.arg(getName()).arg("+").arg((*it)[0]).arg((*it).mid(1)));
-  }
-  
-  for(QStringList::iterator it = rmModes.begin(); it != rmModes.end(); ++it) {
-    m_server->queue(command.arg(getName()).arg("-").arg((*it)[0]).arg(""));
+  kdDebug() << "Current modes: " << m_modeList << endl;
+
+  for(QStringList::iterator it = modes.begin(); it != modes.end(); ++it) {
+    modeString = (*it).mid(1);
+    plus = ((*it)[0] == '+');
+    tmp = m_modeList.grep(QRegExp("^" + modeString));
+
+    if(tmp.isEmpty() && plus) {
+      m_server->queue(command.arg(getName()).arg("+").arg(modeString[0]).arg(modeString.mid(1)));
+    } else if(!tmp.isEmpty() && !plus) {
+      m_server->queue(command.arg(getName()).arg("-").arg(modeString[0]).arg(modeString.mid(1)));
+    }
   }
 
   closeOptionsDialog();

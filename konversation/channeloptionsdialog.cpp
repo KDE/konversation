@@ -119,34 +119,14 @@ void ChannelOptionsDialog::setModes(const QStringList& modes)
 QStringList ChannelOptionsDialog::modes()
 {
   QStringList modes;
-  
-  if(m_widget->topicModeChBox->isChecked()) {
-    modes.append("t");
-  }
-  
-  if(m_widget->messageModeChBox->isChecked()) {
-    modes.append("n");
-  }
 
-  if(m_widget->userLimitChBox->isChecked()) {
-    modes.append("l" + m_widget->userLimitEdit->text());
-  }
-  
-  if(m_widget->inviteModeChBox->isChecked()) {
-    modes.append("i");
-  }
-  
-  if(m_widget->moderatedModeChBox->isChecked()) {
-    modes.append("m");
-  }
-  
-  if(m_widget->secretModeChBox->isChecked()) {
-    modes.append("s");
-  }
-  
-  if(m_widget->keyModeChBox->isChecked()) {
-    modes.append("k" + m_widget->keyModeEdit->text());
-  }
+  modes.append(QString(m_widget->topicModeChBox->isChecked() ? "+" : "-") + "t");
+  modes.append(QString(m_widget->messageModeChBox->isChecked() ? "+" : "-") + "n");
+  modes.append(QString(m_widget->userLimitChBox->isChecked() ? "+" : "-") + "l" + m_widget->userLimitEdit->text());
+  modes.append(QString(m_widget->inviteModeChBox->isChecked() ? "+" : "-") + "i");
+  modes.append(QString(m_widget->moderatedModeChBox->isChecked() ? "+" : "-") + "m");
+  modes.append(QString(m_widget->secretModeChBox->isChecked() ? "+" : "-") + "s");
+  modes.append(QString(m_widget->keyModeChBox->isChecked() ? "+" : "-") + "k" + m_widget->keyModeEdit->text());
 
   return modes;
 }
