@@ -14,9 +14,9 @@ if [ ! $TARGET ]
 then
   dcop $PORT Konversation error "Can't write into status view."
 else
-  STATUS=`dcop amarok player isPlaying`
+  PLAYING=`dcop amarok player nowPlaying`
   
-  if [ $STATUS == "false" ]
+  if [[ ${PLAYING//[[:space:]]} = "" ]]
   then
     dcop $PORT Konversation error "Nothing's playing in Amarok."
   else  
