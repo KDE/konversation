@@ -8,6 +8,7 @@ Comment[xx]=xxKonversationxx
 
 [message]
 Name=New message
+Name[br]=Kemennad nevez
 Name[ca]=Nou missatge
 Name[da]=Ny besked
 Name[de]=Neue Nachricht
