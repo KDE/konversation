@@ -1,10 +1,4 @@
-if compile_LIBKONVERSATION_COMPAT
-COMPAT_DIR = compat
-COMPAT_INCLUDE = -Icompat
-COMPAT_LIBS = compat/libkonversationcompat.la
-endif
-
-SUBDIRS = $(COMPAT_DIR) linkaddressbook
+SUBDIRS = linkaddressbook
 
 METASOURCES = AUTO
 
@@ -35,18 +29,17 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp \
 		topiclabel.cpp channeloptionsui.ui channeloptionsdialog.cpp prefspagethemes.cpp notificationhandler.cpp \
 		joinchannelui.ui joinchanneldialog.cpp konversation_settings.kcfgc emoticon.cpp
 
-konversation_LDADD = $(COMPAT_LIBS) $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la -lkscript
+konversation_LDADD = $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la -lkscript
 
 xdg_apps_DATA = konversation.desktop
 
 # set the include path for X, qt and KDE
-INCLUDES= $(COMPAT_INCLUDE) -Ilinkaddressbook -I$(srcdir)/linkaddressbook $(all_includes)
+INCLUDES= -Ilinkaddressbook -I$(srcdir)/linkaddressbook $(all_includes)
 # the library search path.
 konversation_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 
 rcdir = $(kde_datadir)/konversation
 rc_DATA = konversationui.rc eventsrc
-KDE_ICON = AUTO
 
 kdelnk_DATA = konvirc.protocol konvirc6.protocol
 kdelnkdir = $(kde_servicesdir)
