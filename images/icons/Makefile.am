@@ -1,2 +1,2 @@
-konversationicondir = $(kde_datadir)/konversation/icons
+konversationicondir = $(kde_icondir)
 konversationicon_ICON = AUTO
