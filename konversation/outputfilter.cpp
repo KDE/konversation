@@ -58,8 +58,14 @@ namespace Konversation {
             // TODO: cc may be a regexp character here ... we should escape it then
             if(line.find(QRegExp("^"+cc+aliasPattern+"\\b"))!=-1)
             {
+                QString aliasReplace;
+
                 // cut alias replacement from definition
-                QString aliasReplace(aliasList[index].section(' ',1));
+                if ( aliasList[index].contains("%p") )
+                    aliasReplace = aliasList[index].section(' ',1);
+                else
+                    aliasReplace = aliasList[index].section(' ',1 )+" "+line.section(' ',1 );
+
                 // protect "%%"
                 aliasReplace.replace(QRegExp("%%"),"%\x01");
                 // replace %p placeholder with rest of line
