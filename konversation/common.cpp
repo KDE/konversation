@@ -57,7 +57,7 @@ QString tagURLs(const QString& text, const QString& fromNick)
           QString href = filteredLine.mid( pos, urlLen );
           QString link = "#" + href.stripWhiteSpace();
 
-          link = "<font color=\"#"+linkColor+"\"></u><a href=\""+link+"\">"+href+"</a><u></font>";
+          link = "<font color=\"#"+linkColor+"\"><a href=\""+link+"\">"+href+"</a></font>";
           filteredLine.replace( pos, urlLen, link );
           pos += link.length()-1;
       }
@@ -70,7 +70,7 @@ QString tagURLs(const QString& text, const QString& fromNick)
       "([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
   urlPattern.setCaseSensitive(false);
 
-  while((pos = urlPattern.search(filteredLine, pos)) >= 0) 
+  while((pos = urlPattern.search(filteredLine, pos)) >= 0)
   {
     urlLen = urlPattern.matchedLength();
     QString href = filteredLine.mid( pos, urlLen );
