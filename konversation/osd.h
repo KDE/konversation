@@ -35,14 +35,19 @@ class OSDWidget : public QWidget
         void setColor(QColor newcolor);
       protected slots:
         void removeOSD();
+        void minReached();
 //        void dblClick();
       protected:
+        void paintOSD(const QString &text);
         void paintEvent(QPaintEvent*);
 //        void mouseDoubleClickEvent(QMouseEvent *e);
         QString text;
         QTimer *timer;
+        QTimer *timerMin;
         QFont font;
         QColor color;
+        QPixmap osdBuffer;
+        QStringList textBuffer;
 };
 
 #endif
