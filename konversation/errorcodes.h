@@ -16,7 +16,8 @@
 #define RPL_YOURHOST           002
 #define RPL_CREATED            003
 #define RPL_MYINFO             004
-#define RPL_BOUNCE             005
+#define RPL_BOUNCE             005  // old RFC1459 definition
+#define RPL_ISUPPORT           005  // new DALnet definition
 
 #define RPL_TRACELINK          200
 #define RPL_TRACECONNECTING    201

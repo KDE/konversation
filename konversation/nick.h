@@ -25,22 +25,42 @@ class LedListViewItem;
 class Nick
 {
   public:
-    Nick(KListView* listView, const QString &nickname, const QString &hostmask, bool op, bool voice);
+    Nick(KListView* listView,
+         const QString &nickname,
+         const QString &hostmask,
+         bool admin,
+         bool owner,
+         bool op,
+         bool halfop,
+         bool voice);
+
     ~Nick();
 
+    bool isAdmin();
+    bool isOwner();
     bool isOp();
+    bool isHalfop();
     bool hasVoice();
-    void setOp(bool setop);
-    void setVoice(bool setvoice);
+
+    void setAdmin(bool state);
+    void setOwner(bool state);
+    void setOp(bool state);
+    void setHalfop(bool state);
+    void setVoice(bool state);
+
     bool isSelected();
 
     QString getNickname();
     QString getHostmask();
+
     void setHostmask(const QString& newMask);
     void setNickname(const QString& newName);
 
   protected:
+    bool admin;
+    bool owner;
     bool op;
+    bool halfop;
     bool voice;
 
     QString nickname;

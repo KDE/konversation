@@ -225,12 +225,99 @@ void Server::connectToIRCServer()
     // set up the connection details
     serverSocket.setAddress(serverName,serverPort);
 
+    // reset server/network properites to RFC1459 compatible modes as default.
+    setPrefixes("ov","@+");
+
     // (re)connect. Autojoin will be done by the input filter
     statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1 ...").arg(serverSocket.host()));
     // QDns is broken, so don't use async lookup, use own threaded class instead
     resolver.setSocket(&serverSocket);
     resolver.start();
   }
+}
+
+// set user mode prefixes according to non-standard 005-Reply (see inputfilter.cpp)
+void Server::setPrefixes(const QString &modes, const QString& prefixes)
+{
+  // NOTE: serverModes is QString::null, if server did not supply the
+  // modes which relates to the network's nick-prefixes
+  serverNickPrefixModes=modes;
+  serverNickPrefixes=prefixes;
+
+  kdDebug() << "Setting Prefixes to '" << prefixes << "' and modes to '" << modes << "'" << endl;
+}
+
+// return a nickname without possible mode character at the beginning
+bool Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwner,
+                                     bool& isOp,bool& isHalfop,bool& hasVoice,char* realMode )
+{
+  kdDebug() << "mangleNicknameWithModes(" << nickname << ")" << endl;
+  isAdmin=false;
+  isOwner=false;
+  isOp=false;
+  isHalfop=false;
+  hasVoice=false;
+
+  if(realMode)
+  {
+    *realMode=' ';
+  }
+  // try to find a prefix
+  int modeIndex=serverNickPrefixes.find(nickname[0]);
+  if(modeIndex==-1)
+  {
+    // nothing to do, if it was not found.
+    // remember that we've set up RFC1459 compatible serverNickPrefixes
+    return false;
+  }
+  if(realMode)
+  {
+    *realMode=nickname[0].latin1();
+  }
+  // cut off the prefix
+  nickname=nickname.mid(1);
+  // determine, whether status is like op or like voice
+  while(static_cast<unsigned int>(modeIndex)<serverNickPrefixes.length())
+  {
+    switch(serverNickPrefixes[modeIndex].latin1())
+    {
+      case '*':  // admin (EUIRC)
+        {
+          isAdmin=true;
+          return true;
+        }
+      case '!':  // channel owner (RFC2811)
+        {
+          isOwner=true;
+          return true;
+        }
+      case '@':  // channel operator (RFC1459)
+        {
+          isOp=true;
+          return true;
+        }
+      case '%':  // halfop
+        {
+          isHalfop=true;
+          kdDebug() << "Halfop" << endl;
+          return true;
+        }
+      case '+':  // voiced (RFC1459)
+        {
+          hasVoice=true;
+          return true;
+        }
+      default:
+        {
+          modeIndex++;
+          break;
+        }
+    }
+  } // endwhile
+
+  // a mode was used, which has lower priority than voice.
+  // (Not seen an ircd which supports this, yet)
+  return true;
 }
 
 bool Server::eventFilter(QObject* parent,QEvent* event)
@@ -1098,10 +1185,11 @@ Query* Server::getQueryByName(const QString& name)
   return 0;
 }
 
-void Server::addNickToChannel(const QString &channelName, const QString &nickname, const QString &hostmask, bool op, bool voice)
+void Server::addNickToChannel(const QString &channelName,const QString &nickname,const QString &hostmask,
+                              bool admin,bool owner,bool op,bool halfop,bool voice)
 {
   Channel* outChannel=getChannelByName(channelName);
-  if(outChannel) outChannel->addNickname(nickname,hostmask,op,voice);
+  if(outChannel) outChannel->addNickname(nickname,hostmask,admin,owner,op,halfop,voice);
 }
 
 void Server::nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask)

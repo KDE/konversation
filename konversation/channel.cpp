@@ -685,7 +685,8 @@ void Channel::quickButtonClicked(const QString &buttonText)
   else channelInput->setText(out);
 }
 
-void Channel::addNickname(const QString& nickname,const QString& hostmask,bool op,bool voice)
+void Channel::addNickname(const QString& nickname,const QString& hostmask,
+                          bool admin,bool owner,bool op,bool halfop,bool voice)
 {
   Nick* nick=0;
   Nick* lookNick=nicknameList.first();
@@ -697,12 +698,12 @@ void Channel::addNickname(const QString& nickname,const QString& hostmask,bool o
 
   if(nick==0)
   {
-    Nick* nick=new Nick(nicknameListView,nickname,hostmask,op,voice);
+    Nick* nick=new Nick(nicknameListView,nickname,hostmask,admin,owner,op,halfop,voice);
     nicknameListView->sort();
 
     nicknameList.append(nick);
     adjustNicks(1);
-    if(op) adjustOps(1);
+    if(admin || owner || op || halfop) adjustOps(1);
   }
   else
   {
@@ -711,12 +712,18 @@ void Channel::addNickname(const QString& nickname,const QString& hostmask,bool o
 
     if(nick->isOp() && (op==false))
     {
-      nick->setOp(false);
       adjustOps(-1);
     }
-    if((nick->isOp()==false) && op)
+
+    nick->setAdmin(admin);
+    nick->setOwner(owner);
+    nick->setOp(op);
+    nick->setHalfop(halfop);
+    nick->setVoice(voice);
+
+    // add all modes higher than voice to ops
+    if((nick->isOp()==false) && (admin || owner || op || halfop))
     {
-      nick->setOp(true);
       adjustOps(1);
     }
   }
@@ -752,7 +759,7 @@ void Channel::joinNickname(const QString& nickname,const QString& hostmask)
   else
   {
     appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel. (%2)").arg(nickname).arg(hostmask));
-    addNickname(nickname,hostmask,false,false);
+    addNickname(nickname,hostmask,false,false,false,false,false);
   }
   nicknameListView->sort();
 }
@@ -918,6 +925,8 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
   bool fromMe=false;
   bool toMe=false;
 
+  kdDebug() << "updateMode(): sourceNick: " << sourceNick << " server->getNickname(): " << server->getNickname() << endl;
+
   if(sourceNick.lower()==server->getNickname().lower()) fromMe=true;
   if(parameter.lower()==server->getNickname().lower()) toMe=true;
 
@@ -967,6 +976,53 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
         if(plus && !nick->isOp()) adjustOps(1);
         else if(!plus && nick->isOp()) adjustOps(-1);
         nick->setOp(plus);
+        updateNicksOps();
+        nicknameListView->sort();
+      }
+    break;
+
+    case 'h':
+      if(plus)
+      {
+        if(fromMe)
+        {
+          if(toMe)
+            message=i18n("You give channel halfop privileges to yourself.");
+          else
+            message=i18n("You give channel halfop privileges to %1.").arg(parameter);
+        }
+        else
+        {
+          if(toMe)
+            message=i18n("%1 gives channel halfop privileges to you.").arg(sourceNick);
+          else
+            message=i18n("%1 gives channel halfop privileges to %2.").arg(sourceNick).arg(parameter);
+        }
+      }
+      else
+      {
+        if(fromMe)
+        {
+          if(toMe)
+            message=i18n("You take channel halfop privileges from yourself.");
+          else
+            message=i18n("You take channel halfop privileges from %1.").arg(parameter);
+        }
+        else
+        {
+          if(toMe)
+            message=i18n("%1 takes channel halfop privileges from you.").arg(sourceNick);
+          else
+            message=i18n("%1 takes channel halfop privileges from %2.").arg(sourceNick).arg(parameter);
+        }
+      }
+      nick=getNickByName(parameter);
+      if(nick)
+      {
+        // Only update counter if something has actually changed
+        if(plus && !nick->isHalfop()) adjustOps(1);
+        else if(!plus && nick->isHalfop()) adjustOps(-1);
+        nick->setHalfop(plus);
         updateNicksOps();
         nicknameListView->sort();
       }

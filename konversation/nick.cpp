@@ -18,13 +18,23 @@
 #include "ledlistviewitem.h"
 #include "nick.h"
 
-Nick::Nick(KListView* listView,const QString& nickname, const QString& hostmask, bool op, bool voice)
+Nick::Nick(KListView* listView,
+           const QString& nickname,
+           const QString& hostmask,
+           bool admin,
+           bool owner,
+           bool op,
+           bool halfop,
+           bool voice)
 {
-  listViewItem=new LedListViewItem(listView,nickname,hostmask,op,voice);
+  listViewItem=new LedListViewItem(listView,nickname,hostmask,admin,owner,op,halfop,voice);
   setNickname(nickname);
   setHostmask(hostmask);
 
+  setAdmin(admin);
+  setOwner(owner);
   setOp(op);
+  setHalfop(halfop);
   setVoice(voice);
 }
 
@@ -45,19 +55,40 @@ void Nick::setHostmask(const QString& newMask)
   listViewItem->setText(2,hostmask);
 }
 
-void Nick::setOp(bool setop)
+void Nick::setAdmin(bool state)
 {
-  op=setop;
-  listViewItem->setState(op,voice);
+  admin=state;
+  listViewItem->setState(admin,owner,op,halfop,voice);
 }
 
-void Nick::setVoice(bool setvoice)
+void Nick::setOwner(bool state)
 {
-  voice=setvoice;
-  listViewItem->setState(op,voice);
+  owner=state;
+  listViewItem->setState(admin,owner,op,halfop,voice);
 }
 
-bool Nick::isOp() { return op; }
+void Nick::setOp(bool state)
+{
+  op=state;
+  listViewItem->setState(admin,owner,op,halfop,voice);
+}
+
+void Nick::setHalfop(bool state)
+{
+  halfop=state;
+  listViewItem->setState(admin,owner,op,halfop,voice);
+}
+
+void Nick::setVoice(bool state)
+{
+  voice=state;
+  listViewItem->setState(admin,owner,op,halfop,voice);
+}
+
+bool Nick::isAdmin()  { return admin; }
+bool Nick::isOwner()  { return owner; }
+bool Nick::isOp()     { return op; }
+bool Nick::isHalfop() { return halfop; }
 bool Nick::hasVoice() { return voice; }
 
 QString Nick::getNickname() { return nickname; }

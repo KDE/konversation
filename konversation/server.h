@@ -66,13 +66,19 @@ class Server : public QObject
     void setIrcName(const QString &newIrcName);
     QString getIrcName() const;
 
-    void addNickToChannel(const QString &channelName, const QString &nickname, const QString &hostmask, bool op, bool voice);
+    void addNickToChannel(const QString &channelName,const QString &nickname,const QString &hostmask,
+                          bool admin,bool owner,bool op,bool halfop,bool voice);
     void addHostmaskToNick(const QString &sourceNick, const QString &sourceHostmask);
     void nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask);
     void renameNick(const QString &nickname,const QString &newNick);
     void removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit=false);
     void nickWasKickedFromChannel(const QString &channelName, const QString &nickname, const QString &kicker, const QString &reason);
     void removeNickFromServer(const QString &nickname, const QString &reason);
+
+    // extended user modes support
+    void setPrefixes(const QString &modes, const QString& prefixes);
+    bool mangleNicknameWithModes(QString &nickname,bool& isAdmin,bool& isOwner,bool &isOp,
+                                 bool& isHalfop,bool &hasVoice,char *realMode );
 
     bool isNickname(const QString& compare);
     QString getNickname() const;
@@ -204,6 +210,9 @@ class Server : public QObject
     QString bot;
     QString botPassword;
     int serverPort;
+
+    QString serverNickPrefixes;     // Prefixes used by the server to indicate a mode
+    QString serverNickPrefixModes;  // if supplied: modes related to those prefixes
 
     IRCResolver resolver;
     const Identity* identity;

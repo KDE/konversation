@@ -28,6 +28,7 @@ Changes from 0.12 to 0.13
 - Info button on dcc panel now works
 - Added /unban command
 - Applied a patch by Christian Mühlhäuser for OSD functions (thanks)
+- Applied a patch by Sascha Cunz for extended user modes beyond @ and + (thanks)
 
 Changes from 0.11 to 0.12
 - Now handles multi server mode in one single window

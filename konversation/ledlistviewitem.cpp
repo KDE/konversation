@@ -23,12 +23,27 @@
 LedListViewItem::LedListViewItem(KListView* parent,
                                  const QString& passed_label,
                                  const QString& passed_label2,
-                                 bool passed_opState,
-                                 bool passed_voiceState) :
+                                 bool admin,
+                                 bool owner,
+                                 bool op,
+                                 bool halfop,
+                                 bool voice) :
                    KListViewItem(parent,passed_label,passed_label2)
 {
-  opState=passed_opState;
-  voiceState=passed_voiceState;
+  adminState=admin;
+  ownerState=owner;
+  opState=op;
+  halfopState=halfop;
+  voiceState=voice;
+
+  currentLeds=leds.getLed(0,true);
+  adminLedOn =currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
+
+  currentLeds=leds.getLed(0,false);
+  ownerLedOff=currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
+
+  currentLeds=leds.getLed(KonversationApplication::preferences.getOpLedColor(),false);
+  opLedOff   =currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
 
   currentLeds=leds.getLed(KonversationApplication::preferences.getOpLedColor(),true);
   opLedOn    =currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
@@ -46,20 +61,29 @@ LedListViewItem::LedListViewItem(KListView* parent,
   listView()->setColumnAlignment(2,Qt::AlignLeft);
 
   setText(0,QString::null);
-  setState(opState,voiceState);
+  setState(admin,owner,op,halfop,voice);
 }
 
 LedListViewItem::~LedListViewItem()
 {
 }
 
-void LedListViewItem::setState(bool passed_opState,bool passed_voiceState)
+void LedListViewItem::setState(bool admin,bool owner,bool op,bool halfop,bool voice)
 {
-  opState=passed_opState;
-  voiceState=passed_voiceState;
+  adminState=admin;
+  ownerState=owner;
+  opState=op;
+  halfopState=halfop;
+  voiceState=voice;
 
-  if(opState)
+  if(admin)
+    setPixmap(0,adminLedOn);
+  else if(owner)
+    setPixmap(0,ownerLedOff);
+  else if(op)
     setPixmap(0,opLedOn);
+  else if(halfop)
+    setPixmap(0,opLedOff);
   else if(voiceState)
     setPixmap(0,voiceLedOn);
   else
@@ -70,13 +94,13 @@ void LedListViewItem::setState(bool passed_opState,bool passed_voiceState)
 
 void LedListViewItem::toggleOpState()
 {
-  setState(!opState,voiceState);
+  setState(adminState,ownerState,!opState,halfopState,voiceState);
   repaint();
 }
 
 void LedListViewItem::toggleVoiceState()
 {
-  setState(opState,!voiceState);
+  setState(adminState,ownerState,opState,halfopState,!voiceState);
   repaint();
 }
 
@@ -105,8 +129,11 @@ int LedListViewItem::compare(QListViewItem* item,int col,bool ascending) const
   return thisKey.compare(otherKey);
 }
 
-bool LedListViewItem::getOpState()    { return opState; }
-bool LedListViewItem::getVoiceState() { return voiceState; }
+bool LedListViewItem::getAdminState()  { return adminState; }
+bool LedListViewItem::getOwnerState()  { return ownerState; }
+bool LedListViewItem::getOpState()     { return opState; }
+bool LedListViewItem::getHalfopState() { return halfopState; }
+bool LedListViewItem::getVoiceState()  { return voiceState; }
 
 int LedListViewItem::getFlags() const
 {
@@ -114,6 +141,7 @@ int LedListViewItem::getFlags() const
   int voiceValue=KonversationApplication::preferences.getVoiceValue();
   int noRightsValue=KonversationApplication::preferences.getNoRightsValue();
 
+  // TODO: Support extended modes here
   int flags;
   if(opState) flags=opValue;
   else if(voiceState) flags=voiceValue;

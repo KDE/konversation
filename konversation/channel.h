@@ -54,7 +54,8 @@ class Channel : public ChatWindow
 
     void joinNickname(const QString& nickname,const QString& hostname);
     void renameNick(const QString& nickname,const QString& newName);
-    void addNickname(const QString& nickname,const QString& hostmask, bool op, bool voice);
+    void addNickname(const QString& nickname,const QString& hostmask,
+                     bool admin,bool owner,bool op,bool halfop,bool voice);
     void removeNick(const QString& nickname, const QString& reason, bool quit);
     void kickNick(const QString& nickname, const QString& kicker, const QString& reason);
     Nick *getNickByName(const QString& lookname);

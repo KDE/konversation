@@ -745,10 +745,50 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                                       arg(parameterList[4]) );
           break;
         }
-        // FIXME: Untested
-      case RPL_BOUNCE:
+//    case RPL_BOUNCE:   // RFC 1459 name, now seems to be obsoleted by ...
+      case RPL_ISUPPORT: // ... DALnet RPL_ISUPPORT
         {
           server->appendStatusMessage(i18n("Bounce"),parameterList.join(" "));
+
+          // The following behavoiur is neither documented in RFC 1459 nor in 2810-2813
+          // Nowadays, most ircds send server capabilities out via 005 (BOUNCE).
+          // refer to http://www.irc.org/tech_docs/005.html for a kind of documentation.
+          // More on http://www.irc.org/tech_docs/draft-brocklesby-irc-isupport-02.txt
+
+          QStringList::const_iterator it = parameterList.begin();
+          // don't want the user name
+          ++it;
+          for (; it != parameterList.end(); ++it )
+          {
+            QString property, value;
+            int pos;
+            if ((pos=(*it).find( '=' ))!=-1)
+            {
+              property = (*it).left(pos);
+              value = (*it).mid(pos+1);
+            }
+            else
+            {
+              property = *it;
+              // value = "";
+            }
+            if (property=="PREFIX")
+            {
+              pos = value.find(')',1);
+              if(pos==-1)
+              {
+                server->setPrefixes (QString::null, value);
+              }
+              else
+              {
+                server->setPrefixes (value.mid(1, pos-1), value.mid(pos+1));
+              }
+            }
+            else
+            {
+              kdDebug() << "Ignored server-capability: " << property << " with value '" << value << "'" << endl;
+            }
+          } // endfor
           break;
         }
       case RPL_CHANNELMODEIS:
@@ -818,17 +858,19 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
           for(unsigned int index=0;index<nickList.count();index++)
           {
+            bool admin=false;
+            bool owner=false;
             bool op=false;
+            bool halfop=false;
             bool voice=false;
-            QString nick=nickList[index];
 
-            op=(nick[0]=='@');
-            voice=(nick[0]=='+');
+            QString nickname=nickList[index];
 
-            QString nickname=(op || voice) ? nick.mid(1) : nick;
+            // remove possible mode characters from nickname
+            server->mangleNicknameWithModes(nickname,admin,owner,op,halfop,voice,NULL);
             QString hostmask(QString::null);
 
-            server->addNickToChannel(parameterList[2],nickname,hostmask,op,voice);
+            server->addNickToChannel(parameterList[2],nickname,hostmask,admin,owner,op,halfop,voice);
           }
           break;
         }
