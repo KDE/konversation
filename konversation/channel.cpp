@@ -98,8 +98,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView->setSelectionModeExt(KListView::Extended);
   nicknameListView->setAllColumnsShowFocus(true);
   nicknameListView->setSorting(1,false);
-  nicknameListView->addColumn("",16);
+  nicknameListView->addColumn("",4);
   nicknameListView->addColumn("");
+	nicknameListView->addColumn("");
   nicknameListView->header()->hide();
 
   /* The grid that holds the quick action buttons */

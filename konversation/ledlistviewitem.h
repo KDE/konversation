@@ -32,22 +32,24 @@
 class LedListViewItem : public KListViewItem
 {
 	public:
-		LedListViewItem(KListView* parent, QString passed_label, bool passed_state, int passed_color, int passed_column);
+		LedListViewItem(KListView* parent, QString passed_label, bool passed_state, bool passed_voiceState, int passed_color, int passed_column);
 		~LedListViewItem();
 
 	private:	
-		QPixmap						ledOn, ledOff;
+		QPixmap						opLedOn, opLedOff, voiceLedOn, voiceLedOff;
 		QIconSet					currentLeds;
 		Images						leds;
     QString						label;
-		bool							state;
+		bool							opState, voiceState;
 	  int								color, column;
 	
 	public:
-		bool getState() {return state;}
- 		void setState(bool passed_state);
-		void toggleState();
-	
+		bool getOpState() {return opState;}
+		bool getVoiceState() {return voiceState;}
+    void setState(bool passed_opState, bool passed_voiceState);
+		void toggleOpState();
+		void toggleVoiceState();
+		void setText(int passed_column, QString passed_label);
 
 };
 #endif

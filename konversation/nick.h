@@ -29,7 +29,7 @@
 class Nick
 {
   public:
-    Nick(KListView* listView,QString& nickname,QString& hostmask,bool op,bool voice);
+    Nick(KListView* listView,QString& nickname,QString& hostmask, bool op, bool voice);
     ~Nick();
 
     bool isOp() { return op; };
