@@ -41,9 +41,6 @@ class LogfileReader : public ChatWindow
 
     virtual void closeYourself() { closeLog(); }
   
-  public slots:
-    virtual void adjustFocus() {}
-  
   protected slots:
     void updateView();
     void clearLog();
@@ -54,6 +51,9 @@ class LogfileReader : public ChatWindow
   protected:
     int margin();
     int spacing();
+
+    /** Called from ChatWindow adjustFocus */
+    virtual void childAdjustFocus();
 
     KToolBar* toolBar;
     KTextBrowser* view;

@@ -27,6 +27,7 @@
 #include "ircview.h"
 #include "server.h"
 
+
 #ifdef USE_MDI
 StatusPanel::StatusPanel(QString caption) : ChatWindow(caption)
 #else
@@ -81,7 +82,7 @@ void StatusPanel::setNickname(const QString& newNickname)
   nicknameCombobox->setCurrentText(newNickname);
 }
 
-void StatusPanel::adjustFocus()
+void StatusPanel::childAdjustFocus()
 {
   statusInput->setFocus();
 }

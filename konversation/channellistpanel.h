@@ -52,7 +52,6 @@ class ChannelListPanel : public ChatWindow
     void updateNumChannels(const QString& num);
 
   public slots:
-    void adjustFocus();
     void addToChannelList(const QString& channel,int users,const QString& topic);
 
     virtual void appendInputText(const QString&);
@@ -77,6 +76,10 @@ class ChannelListPanel : public ChatWindow
     void serverQuit(const QString& reason); // USE_MDI
 
   protected:
+
+    /** Called from ChatWindow adjustFocus */
+    virtual void childAdjustFocus();
+    
     int getNumChannels();
     int getNumUsers();
     int getVisibleChannels();

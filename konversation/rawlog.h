@@ -37,7 +37,6 @@ class RawLog : public ChatWindow
     virtual bool searchView();
 
   public slots:
-    virtual void adjustFocus();
     void updateFonts();
 
   protected slots:
@@ -47,6 +46,8 @@ class RawLog : public ChatWindow
   protected:
     virtual void closeYourself(ChatWindow* view);
 #endif
+    /** Called from ChatWindow adjustFocus */
+    virtual void childAdjustFocus();
 };
 
 #endif

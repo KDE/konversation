@@ -412,10 +412,6 @@ void NicksOnline::closeYourself(ChatWindow*)
 }
 #endif
 
-void NicksOnline::adjustFocus()
-{
-}
-
 /**
 * Returns the server name and nickname of the specified nicklistview item.
 * @param item              The nicklistview item.
@@ -726,6 +722,9 @@ void NicksOnline::slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo
   QString nickAdditionalInfo = getNickAdditionalInfo(nickInfo);
   item->setText(nlvcAdditionalInfo, nickAdditionalInfo);
   if (item == m_nickListView->selectedItem()) setupAddressbookButtons(nickState);
+}
+void NicksOnline::childAdjustFocus()
+{
 }
 
 #include "nicksonline.moc"

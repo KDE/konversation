@@ -465,7 +465,7 @@ void DccPanel::closeYourself(ChatWindow*)
 #endif
 
 // virtual
-void DccPanel::adjustFocus()
+void DccPanel::childAdjustFocus()
 {
 }
 

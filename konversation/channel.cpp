@@ -1690,11 +1690,11 @@ QPtrList<Nick> Channel::getNickList()
 {
   return nicknameList;
 }
-
-void Channel::adjustFocus()
+void Channel::childAdjustFocus()
 {
   channelInput->setFocus();
 }
+
 
 void Channel::autoUserhost()
 {

@@ -34,7 +34,7 @@ KonsolePanel::~KonsolePanel() {
 	}
 }
 
-void KonsolePanel::adjustFocus() {
+void KonsolePanel::childAdjustFocus() {
 }
 
 void KonsolePanel::partDestroyed()

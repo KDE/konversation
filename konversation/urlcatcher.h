@@ -42,7 +42,6 @@ class UrlCatcher : public ChatWindow
     void clearUrlList();
 
   public slots:
-    virtual void adjustFocus();
     void addUrl(const QString& who,const QString& url);
 
   protected slots:
@@ -61,6 +60,8 @@ class UrlCatcher : public ChatWindow
 #endif
     KListView* urlListView;
 
+    /** Called from ChatWindow adjustFocus */
+    virtual void childAdjustFocus();
     QPushButton* openUrlButton;
     QPushButton* copyUrlButton;
     QPushButton* deleteUrlButton;

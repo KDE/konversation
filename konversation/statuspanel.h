@@ -55,7 +55,6 @@ class StatusPanel : public ChatWindow
 
   public slots:
     void setNickname(const QString& newNickname);
-    void adjustFocus();
     void newTextInView(const QString& highlightColor,bool important);
     void updateFonts();
     virtual void indicateAway(bool show);
@@ -72,6 +71,10 @@ class StatusPanel : public ChatWindow
     void nicknameComboboxChanged(int index);
 
   protected:
+
+    /** Called from ChatWindow adjustFocus */
+    virtual void childAdjustFocus();
+
     bool awayChanged;
     bool awayState;
 

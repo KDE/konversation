@@ -247,6 +247,8 @@ class Server : public QObject
 	    
     QString Server::getNotifyString();
     
+    KonversationMainWindow* getMainWindow() const;
+    
   signals:
     void nicknameChanged(const QString&);
     void serverLag(Server* server,int msec); /// will be connected to KonversationMainWindow::updateLag()
@@ -363,7 +365,6 @@ class Server : public QObject
     /// Connect to the signals used in this class.
     void connectSignals();
 
-    KonversationMainWindow* getMainWindow() const;
     void setMainWindow(KonversationMainWindow* newMainWindow);
 
     

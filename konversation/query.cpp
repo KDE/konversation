@@ -250,15 +250,16 @@ void Query::popup(int id)
     kdDebug() << "Query::popup(): Popup id " << id << " does not belong to me!" << endl;
 }
 
-void Query::adjustFocus()
-{
-  queryInput->setFocus();
-}
-
 void Query::sendFileMenu()
 {
   emit sendFile(getName());
 }
+void Query::childAdjustFocus()
+{
+  queryInput->setFocus();
+}
+
+
 
 QString Query::getTextInLine() { return queryInput->text(); }
 

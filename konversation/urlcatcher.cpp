@@ -195,7 +195,7 @@ void UrlCatcher::closeYourself(ChatWindow*)
 }
 #endif
 
-void UrlCatcher::adjustFocus()
+void UrlCatcher::childAdjustFocus()
 {
 }
 

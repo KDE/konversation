@@ -60,7 +60,6 @@ class Query : public ChatWindow
     void sendFile(const QString& recipient);
 
   public slots:
-    void adjustFocus();
     void sendQueryText(const QString& text);
     void appendInputText(const QString& s);
     virtual void indicateAway(bool show);
@@ -75,10 +74,11 @@ class Query : public ChatWindow
 #ifdef USE_MDI
     void serverQuit(const QString& reason);
 #endif
-
   protected:
     void showEvent(QShowEvent* event);
-
+    /** Called from ChatWindow adjustFocus */
+    virtual void childAdjustFocus();
+    
     bool awayChanged;
     bool awayState;
 

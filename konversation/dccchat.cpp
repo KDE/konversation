@@ -331,7 +331,7 @@ void DccChat::textPasted(QString text)
   sendDccChatText(text);
 }
 
-void DccChat::adjustFocus()
+void DccChat::childAdjustFocus()
 {
   dccChatInput->setFocus();
 }

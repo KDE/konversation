@@ -118,7 +118,6 @@ class Channel : public ChatWindow
     void channelTextEntered();
     void sendChannelText(const QString& line);
     void newTextInView(const QString& highlightColor, bool important);
-    void adjustFocus();
     void showQuickButtons(bool show);
     void showModeButtons(bool show);
     void appendInputText(const QString& s);
@@ -158,6 +157,8 @@ class Channel : public ChatWindow
     void showEvent(QShowEvent* event);
     // use with caution! does not check for duplicates
     void fastAddNickname(ChannelNickPtr channelnick);
+    /** Called from ChatWindow adjustFocus */
+    virtual void childAdjustFocus();
     int nicks;
     int ops;
 

@@ -146,6 +146,10 @@ void LogfileReader::closeLog()
   delete this;
 }
 
+void LogfileReader::childAdjustFocus()
+{
+}
+
 int LogfileReader::margin() { return KDialog::marginHint(); }
 int LogfileReader::spacing() { return KDialog::spacingHint(); }
 

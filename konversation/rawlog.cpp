@@ -35,9 +35,8 @@ RawLog::~RawLog()
 {
 }
 
-void RawLog::adjustFocus()
+void RawLog::childAdjustFocus()
 {
-  // do nothing, just implement this to make abstract functions work
 }
 
 void RawLog::updateFonts()

@@ -80,7 +80,6 @@ class DccPanel : public ChatWindow
     void selectMe(DccTransfer* item);
     
   public slots:
-    void adjustFocus();
     void dccStatusChanged(const DccTransfer* item);
     
   protected slots:
@@ -105,6 +104,9 @@ class DccPanel : public ChatWindow
 #ifdef USE_MDI
     virtual void closeYourself(ChatWindow*);
 #endif
+    
+    /** Called from ChatWindow adjustFocus */
+    virtual void childAdjustFocus();
     
     KListView* dccListView;
     KPopupMenu* popup;

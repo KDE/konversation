@@ -26,11 +26,14 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <kdebug.h>
+#include <kactioncollection.h> 
+#include <kaction.h>
 
 #include "chatwindow.h"
 #include "ircview.h"
 #include "server.h"
 #include "konversationapplication.h"
+#include "konversationmainwindow.h"
 #include "logfilereader.h"
 
 #ifdef USE_MDI
@@ -70,6 +73,7 @@ ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
   connect(&blinkTimer,SIGNAL(timeout()),this,SLOT(blinkTimeout()));
   blinkTimer.start(500);
 #endif
+
 }
 
 ChatWindow::~ChatWindow()
@@ -193,41 +197,49 @@ void ChatWindow::setTextView(IRCView* newView)
 
 void ChatWindow::insertRememberLine()
 {
+  Q_ASSERT(textView);  if(!textView) return;
   textView->appendRaw("<br><hr color=\"#"+KonversationApplication::preferences.getColor("CommandMessage")+"\" noshade>", true);
 }
 
 void ChatWindow::appendRaw(const QString& message, bool suppressTimestamps)
 {
+  Q_ASSERT(textView);  if(!textView) return;
   textView->appendRaw(message, suppressTimestamps);
 }
 
 void ChatWindow::append(const QString& nickname,const QString& message)
 {
+  Q_ASSERT(textView);  if(!textView) return ;
   textView->append(nickname,message);
 }
 
 void ChatWindow::appendQuery(const QString& nickname,const QString& message)
 {
+  Q_ASSERT(textView);  if(!textView) return ;
   textView->appendQuery(nickname,message);
 }
 
 void ChatWindow::appendAction(const QString& nickname,const QString& message)
 {
+  Q_ASSERT(textView);  if(!textView) return ;
   textView->appendAction(nickname,message);
 }
 
 void ChatWindow::appendServerMessage(const QString& type,const QString& message)
 {
+  Q_ASSERT(textView);  if(!textView) return ;
   textView->appendServerMessage(type,message);
 }
 
 void ChatWindow::appendCommandMessage(const QString& command,const QString& message, bool important, bool parseURL, bool self)
 {
+  Q_ASSERT(textView);  if(!textView) return ;
   textView->appendCommandMessage(command,message,important, parseURL, self);
 }
 
 void ChatWindow::appendBacklogMessage(const QString& firstColumn,const QString& message)
 {
+  Q_ASSERT(textView);  if(!textView) return ;
   textView->appendBacklogMessage(firstColumn,message);
 }
 
@@ -465,5 +477,12 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
   return QVBox::eventFilter(watched, e);
 #endif
 }
+  
+
+
+void ChatWindow::adjustFocus() {
+}
+
 
 #include "chatwindow.moc"
+

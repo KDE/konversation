@@ -52,7 +52,6 @@ class DccChat : public ChatWindow
 
   public slots:
     void appendInputText(const QString& s);
-    virtual void adjustFocus();
 
   signals:
     void newText(QWidget* query,const QString& highlightColor,bool important);
@@ -75,6 +74,9 @@ class DccChat : public ChatWindow
     virtual void closeYourself(ChatWindow*);
 #endif
 
+    /** Called from ChatWindow adjustFocus */
+    virtual void childAdjustFocus();
+    
     QString myNick;
     QString nick;
     QString host;

@@ -73,7 +73,6 @@ class NicksOnline : public ChatWindow
     * We update the display.
     */
     void setOnlineList(const QString& serverName,const QStringList& list,bool changed);
-    virtual void adjustFocus();
 
   protected slots:
     /**
@@ -116,6 +115,8 @@ class NicksOnline : public ChatWindow
 #ifdef USE_MDI
     virtual void closeYourself(ChatWindow*);
 #endif
+    /** Called from ChatWindow adjustFocus */
+    virtual void childAdjustFocus();
 
     KListView* m_nickListView;
     QTimer* m_timer;

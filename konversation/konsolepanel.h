@@ -22,13 +22,15 @@ class KonsolePanel : public ChatWindow {
 		void deleted(ChatWindow* myself);
 
         public slots:
-		void adjustFocus();
 		void partDestroyed();
 
 #ifdef USE_MDI
         protected:
                 virtual void closeYourself(ChatWindow*);
 #endif
+
+             	/** Called from ChatWindow adjustFocus */
+		virtual void childAdjustFocus();
 	private:
 		KParts::ReadOnlyPart *k_part;
 };

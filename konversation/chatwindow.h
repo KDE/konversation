@@ -99,7 +99,7 @@ class ChatWindow : public BASE_CLASS
     void appendCommandMessage(const QString& command, const QString& message, bool important = true,
       bool parseURL = true, bool self = false);
     void appendBacklogMessage(const QString& firstColumn,const QString& message);
-
+    
 #ifdef USE_MDI
     void setIconSet(QIconSet newIconSet);
     const QIconSet& getIconSet();
@@ -124,7 +124,7 @@ class ChatWindow : public BASE_CLASS
     virtual void setChannelEncoding(const QString& /* encoding */) {}
     virtual QString getChannelEncoding() { return QString::null; }
     bool getChannelEncodingEnabled() const;
-
+    
   signals:
     void nameChanged(ChatWindow* view,const QString& newName);
     void online(ChatWindow* myself,bool state);
@@ -135,7 +135,12 @@ class ChatWindow : public BASE_CLASS
     void logText(const QString& text);
     void serverOnline(bool state);
 
-    virtual void adjustFocus()=0;
+    /** 
+     * This is called when a chat window gains focus.
+     * It enables and disables the appropriate menu items,
+     * then calls childAdjustFocus
+     */
+    void adjustFocus();
     virtual void appendInputText(const QString&);
     virtual void indicateAway(bool away);
 
@@ -150,10 +155,24 @@ class ChatWindow : public BASE_CLASS
   protected:
     bool log;
     bool firstLog;
-
+    
+    /** Called from adjustFocus */
+    virtual void childAdjustFocus() = 0;
+    
     void setLogfileName(const QString& name);
     void setChannelEncodingEnabled(bool enabled);
     void cdIntoLogPath();
+
+    /** child classes have to override this and return true if they want the
+     *  "insert character" item on the menu to be enabled.
+     */
+    virtual bool isInsertCharacterSupported() { return false; }
+
+    /** child classes have to override this and return true if they want the
+     *  "irc color" item on the menu to be enabled.
+     */
+    virtual bool areIRCColorsSupported() {return false; }
+    
     int spacing();
     int margin();
 

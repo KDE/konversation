@@ -429,8 +429,9 @@ void ChannelListPanel::serverQuit(const QString&)
 #endif
 }
 
-void ChannelListPanel::adjustFocus()
+void ChannelListPanel::childAdjustFocus()
 {
+ 
 }
 
 void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const QPoint& p)
