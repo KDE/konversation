@@ -13,8 +13,7 @@
 #include <qstring.h>
 
 
-KonvDCOP::KonvDCOP() :
-           QObject(0,"Konversation"), DCOPObject("Konversation")
+KonvDCOP::KonvDCOP() : QObject(0,"Konversation"), DCOPObject("Konversation")
 {
   if(!kapp->dcopClient()->isRegistered())
   {
