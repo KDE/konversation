@@ -673,41 +673,41 @@ void KonversationApplication::readOptions()
   // Put back the changed button list
   preferences.setButtonList(buttonList);
 
-  // Hilight List
-  config->setGroup("Hilight List");
-  preferences.setHilightSoundEnabled(config->readBoolEntry("HilightSoundsEnabled",
-    preferences.getHilightSoundEnabled()));
-  preferences.setHilightNick(config->readBoolEntry("HilightNick",preferences.getHilightNick()));
-  QString hilight=config->readEntry("HilightNickColor");
-  if(hilight.isEmpty())
-    preferences.setHilightNickColor(preferences.getHilightNickColor().name());
+  // Highlight List
+  config->setGroup("Highlight List");
+  preferences.setHighlightSoundEnabled(config->readBoolEntry("HighlightSoundsEnabled",
+    preferences.getHighlightSoundEnabled()));
+  preferences.setHighlightNick(config->readBoolEntry("HighlightNick",preferences.getHighlightNick()));
+  QString highlight=config->readEntry("HighlightNickColor");
+  if(highlight.isEmpty())
+    preferences.setHighlightNickColor(preferences.getHighlightNickColor().name());
   else
-    preferences.setHilightNickColor("#"+hilight);
+    preferences.setHighlightNickColor("#"+highlight);
 
-  preferences.setHilightOwnLines(config->readBoolEntry("HilightOwnLines",preferences.getHilightOwnLines()));
-  hilight=config->readEntry("HilightOwnLinesColor");
-  if(hilight.isEmpty())
-    preferences.setHilightOwnLinesColor(preferences.getHilightOwnLinesColor().name());
+  preferences.setHighlightOwnLines(config->readBoolEntry("HighlightOwnLines",preferences.getHighlightOwnLines()));
+  highlight=config->readEntry("HighlightOwnLinesColor");
+  if(highlight.isEmpty())
+    preferences.setHighlightOwnLinesColor(preferences.getHighlightOwnLinesColor().name());
   else
-    preferences.setHilightOwnLinesColor("#"+hilight);
+    preferences.setHighlightOwnLinesColor("#"+highlight);
 
-  if(config->hasKey("Hilight")) { // Stay compatible with versions < 0.14
-    hilight=config->readEntry("Hilight");
-    QStringList hiList=QStringList::split(' ',hilight);
+  if(config->hasKey("Highlight")) { // Stay compatible with versions < 0.14
+    highlight=config->readEntry("Highlight");
+    QStringList hiList=QStringList::split(' ',highlight);
 
     unsigned int hiIndex;
     for(hiIndex=0;hiIndex<hiList.count();hiIndex+=2)
     {
-      preferences.addHilight(hiList[hiIndex],false,"#"+hiList[hiIndex+1],QString::null,QString::null);
+      preferences.addHighlight(hiList[hiIndex],false,"#"+hiList[hiIndex+1],QString::null,QString::null);
     }
 
-    config->deleteEntry("Hilight");
+    config->deleteEntry("Highlight");
   } else {
     int i = 0;
 
     while(config->hasGroup(QString("Highlight%1").arg(i))) {
       config->setGroup(QString("Highlight%1").arg(i));
-      preferences.addHilight(config->readEntry("Pattern"),
+      preferences.addHighlight(config->readEntry("Pattern"),
                              config->readBoolEntry("RegExp"),
                              config->readColorEntry("Color"),
                              config->readPathEntry("Sound"),
@@ -1040,16 +1040,16 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->writeEntry(QString("Button%1").arg(index),buttonList[index]);
   }
 
-  // Write all hilight entries
-  config->setGroup("Hilight List");
+  // Write all highlight entries
+  config->setGroup("Highlight List");
 
-  config->writeEntry("HilightNick",preferences.getHilightNick());
-  config->writeEntry("HilightNickColor",preferences.getHilightNickColor().name().mid(1));
-  config->writeEntry("HilightOwnLines",preferences.getHilightOwnLines());
-  config->writeEntry("HilightOwnLinesColor",preferences.getHilightOwnLinesColor().name().mid(1));
-  config->writeEntry("HilightSoundsEnabled", preferences.getHilightSoundEnabled());
+  config->writeEntry("HighlightNick",preferences.getHighlightNick());
+  config->writeEntry("HighlightNickColor",preferences.getHighlightNickColor().name().mid(1));
+  config->writeEntry("HighlightOwnLines",preferences.getHighlightOwnLines());
+  config->writeEntry("HighlightOwnLinesColor",preferences.getHighlightOwnLinesColor().name().mid(1));
+  config->writeEntry("HighlightSoundsEnabled", preferences.getHighlightSoundEnabled());
 
-  QPtrList<Highlight> hiList=preferences.getHilightList();
+  QPtrList<Highlight> hiList=preferences.getHighlightList();
   int i = 0;
 
   for(Highlight* hl = hiList.first(); hl; hl = hiList.next()) {

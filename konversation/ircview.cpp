@@ -209,7 +209,7 @@ void IRCView::replaceDecoration(QString& line,char decoration,char replacement)
   }
 }
 
-QString IRCView::filter(const QString& line,const QString& defaultColor,const QString& whoSent,bool doHilight, bool parseURL)
+QString IRCView::filter(const QString& line,const QString& defaultColor,const QString& whoSent,bool doHighlight, bool parseURL)
 {
   QString filteredLine(line);
   KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
@@ -317,25 +317,25 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
     filteredLine = Konversation::tagURLs(filteredLine, whoSent);
   }
 
-  // Hilight
+  // Highlight
   QString ownNick;
 
   if(m_server) {
     ownNick = m_server->getNickname();
   }
 
-  if(doHilight && m_server && (whoSent != ownNick))
+  if(doHighlight && m_server && (whoSent != ownNick))
   {
     m_highlightColor = QString::null;
 
     // FIXME: We got to get rid of m_server dependance here
-    if(KonversationApplication::preferences.getHilightNick() &&
+    if(KonversationApplication::preferences.getHighlightNick() &&
         filteredLine.lower().find(QRegExp("(^|[^\\d\\w])" +
         QRegExp::escape(ownNick.lower()) +
         "([^\\d\\w]|$)")) != -1)
     {
-      // hilight current nickname
-      m_highlightColor = KonversationApplication::preferences.getHilightNickColor().name();
+      // highlight current nickname
+      m_highlightColor = KonversationApplication::preferences.getHighlightNickColor().name();
       ChatWindow* chatWin = dynamic_cast<ChatWindow*>(parent());
       Q_ASSERT(chatWin);
       if (chatWin && KonversationApplication::preferences.getOSDShowOwnNick() &&
@@ -344,29 +344,29 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
         konvApp->osd->showOSD(i18n("(HIGHLIGHT)") + " <" + whoSent + "> " + filteredLine);
       }
     } else {
-      QPtrList<Highlight> hilightList = KonversationApplication::preferences.getHilightList();
-      QPtrListIterator<Highlight> it(hilightList);
-      Highlight* hilight = it.current();
+      QPtrList<Highlight> highlightList = KonversationApplication::preferences.getHighlightList();
+      QPtrListIterator<Highlight> it(highlightList);
+      Highlight* highlight = it.current();
       bool patternFound = false;
 
-      while(hilight != 0)
+      while(highlight != 0)
       {
-        if(hilight->getRegExp())
+        if(highlight->getRegExp())
         {
-          QRegExp needle(hilight->getPattern().lower());
-          patternFound = ((filteredLine.lower().find(needle) != -1) ||   // hilight regexp in text
-                          (whoSent.lower().find(needle) != -1));            // hilight regexp in nickname
+          QRegExp needle(highlight->getPattern().lower());
+          patternFound = ((filteredLine.lower().find(needle) != -1) ||   // highlight regexp in text
+                          (whoSent.lower().find(needle) != -1));            // highlight regexp in nickname
         }
         else
         {
-          QString needle(hilight->getPattern().lower());
-          patternFound = ((filteredLine.lower().find(needle) != -1) ||   // hilight patterns in text
-                          (whoSent.lower().find(needle) != -1));            // hilight patterns in nickname
+          QString needle(highlight->getPattern().lower());
+          patternFound = ((filteredLine.lower().find(needle) != -1) ||   // highlight patterns in text
+                          (whoSent.lower().find(needle) != -1));            // highlight patterns in nickname
         }
 
         if(!patternFound) {
           ++it;
-          hilight = it.current();
+          highlight = it.current();
         } else {
           break;
         }
@@ -374,13 +374,13 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
 
       if(patternFound)
       {
-        m_highlightColor = hilight->getColor().name();
+        m_highlightColor = highlight->getColor().name();
 
-        if(KonversationApplication::preferences.getHilightSoundEnabled()) {
-          konvApp->sound()->play(hilight->getSoundURL());
+        if(KonversationApplication::preferences.getHighlightSoundEnabled()) {
+          konvApp->sound()->play(highlight->getSoundURL());
         }
 
-        autoTextToSend = hilight->getAutoText();
+        autoTextToSend = highlight->getAutoText();
       }
     }
 
@@ -388,11 +388,11 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
     if(!m_highlightColor.isEmpty()) {
       filteredLine = "<font color=\"" + m_highlightColor + "\">" + filteredLine + "</font>";
     }
-  } else if(doHilight && (whoSent == ownNick) &&
-    KonversationApplication::preferences.getHilightOwnLines())
+  } else if(doHighlight && (whoSent == ownNick) &&
+    KonversationApplication::preferences.getHighlightOwnLines())
   {
-    // hilight own lines
-    filteredLine = "<font color=\"" + KonversationApplication::preferences.getHilightOwnLinesColor().name() +
+    // highlight own lines
+    filteredLine = "<font color=\"" + KonversationApplication::preferences.getHighlightOwnLinesColor().name() +
       "\">" + filteredLine + "</font>";
   }
 

@@ -196,23 +196,23 @@ class Preferences : public QObject
     bool addNotify(const QString& groupName, const QString& newPattern);
     bool removeNotify(const QString& groupName, const QString& pattern);
 
-    QPtrList<Highlight> getHilightList();
-    void setHilightList(QPtrList<Highlight> newList);
-    void addHilight(const QString& newHilight,bool regExp,QColor color,const QString& sound,const QString& autoText);
-    void setHilightSoundEnabled(bool enabled);
-    bool getHilightSoundEnabled();
+    QPtrList<Highlight> getHighlightList();
+    void setHighlightList(QPtrList<Highlight> newList);
+    void addHighlight(const QString& newHighlight,bool regExp,QColor color,const QString& sound,const QString& autoText);
+    void setHighlightSoundEnabled(bool enabled);
+    bool getHighlightSoundEnabled();
 
-    void setHilightNick(bool state);      // shall we hilight the current nick?
-    bool getHilightNick();
+    void setHighlightNick(bool state);      // shall we highlight the current nick?
+    bool getHighlightNick();
 
-    void setHilightNickColor(const QString &color);
-    QColor getHilightNickColor();
+    void setHighlightNickColor(const QString &color);
+    QColor getHighlightNickColor();
 
-    void setHilightOwnLines(bool state);  // shall we hilight all our own lines?
-    bool getHilightOwnLines();
+    void setHighlightOwnLines(bool state);  // shall we highlight all our own lines?
+    bool getHighlightOwnLines();
 
-    void setHilightOwnLinesColor(const QString &color);
-    QColor getHilightOwnLinesColor();
+    void setHighlightOwnLinesColor(const QString &color);
+    QColor getHighlightOwnLinesColor();
 
     // On Screen Display
     void setOSDUsage(bool state);
@@ -575,11 +575,11 @@ class Preferences : public QObject
     QFont textFont;
     QFont listFont;
 
-    bool hilightNick;
-    bool hilightOwnLines;
-    QColor hilightNickColor;
-    QColor hilightOwnLinesColor;
-    bool hilightSoundEnabled;
+    bool highlightNick;
+    bool highlightOwnLines;
+    QColor highlightNickColor;
+    QColor highlightOwnLinesColor;
+    bool highlightSoundEnabled;
 
     // On Screen Display
     bool OSDUsage;            // Use OSD?
@@ -607,7 +607,7 @@ class Preferences : public QObject
     Konversation::ServerGroupList m_serverGroupList;
     QPtrList<Ignore> ignoreList;
     QValueList<IdentityPtr> identityList;
-    QPtrList<Highlight> hilightList;
+    QPtrList<Highlight> highlightList;
     QMap< QString,QMap<QString,QString> > channelEncodingsMap;
 
     // IRC colors

@@ -150,11 +150,11 @@ Preferences::Preferences()
   setUseNotify(true);
 
 
-  setHilightNick(true);
-  setHilightOwnLines(false);
-  setHilightNickColor("#ff0000");
-  setHilightOwnLinesColor("#ff0000");
-  setHilightSoundEnabled(true);
+  setHighlightNick(true);
+  setHighlightOwnLines(false);
+  setHighlightNickColor("#ff0000");
+  setHighlightOwnLinesColor("#ff0000");
+  setHighlightSoundEnabled(true);
 
   // On Screen Display
   setOSDUsage(false);
@@ -288,34 +288,34 @@ void Preferences::removeServerGroup(int id)
   }
 }
 
-QPtrList<Highlight> Preferences::getHilightList()
+QPtrList<Highlight> Preferences::getHighlightList()
 {
-  return hilightList;
+  return highlightList;
 }
 
-void Preferences::setHilightList(QPtrList<Highlight> newList)
+void Preferences::setHighlightList(QPtrList<Highlight> newList)
 {
-  hilightList.clear();
-  hilightList=newList;
+  highlightList.clear();
+  highlightList=newList;
 }
 
-void Preferences::addHilight(const QString& newHilight,
+void Preferences::addHighlight(const QString& newHighlight,
                              bool regExp,
                              QColor newColor,
                              const QString& sound,
                              const QString& autoText)
 {
-  hilightList.append(new Highlight(newHilight,regExp,newColor,KURL(sound),autoText));
+  highlightList.append(new Highlight(newHighlight,regExp,newColor,KURL(sound),autoText));
 }
 
-void Preferences::setHilightSoundEnabled(bool enabled)
+void Preferences::setHighlightSoundEnabled(bool enabled)
 {
-  hilightSoundEnabled = enabled;
+  highlightSoundEnabled = enabled;
 }
 
-bool Preferences::getHilightSoundEnabled()
+bool Preferences::getHighlightSoundEnabled()
 {
-  return hilightSoundEnabled;
+  return highlightSoundEnabled;
 }
 
 void Preferences::setButtonList(QStringList newList)
@@ -681,17 +681,17 @@ void Preferences::setNicknameSize(QSize newSize)           { nicknameSize=newSiz
 void Preferences::setLogfileReaderSize(QSize newSize)      { logfileReaderSize=newSize; }
 void Preferences::setMultilineEditSize(QSize newSize)      { multilineEditSize=newSize; }
 
-void Preferences::setHilightNick(bool state) { hilightNick=state; }
-bool Preferences::getHilightNick() { return hilightNick; }
+void Preferences::setHighlightNick(bool state) { highlightNick=state; }
+bool Preferences::getHighlightNick() { return highlightNick; }
 
-void Preferences::setHilightNickColor(const QString &newColor) { hilightNickColor.setNamedColor(newColor); }
-QColor Preferences::getHilightNickColor() { return hilightNickColor; }
+void Preferences::setHighlightNickColor(const QString &newColor) { highlightNickColor.setNamedColor(newColor); }
+QColor Preferences::getHighlightNickColor() { return highlightNickColor; }
 
-void Preferences::setHilightOwnLines(bool state) { hilightOwnLines=state; }
-bool Preferences::getHilightOwnLines() { return hilightOwnLines; }
+void Preferences::setHighlightOwnLines(bool state) { highlightOwnLines=state; }
+bool Preferences::getHighlightOwnLines() { return highlightOwnLines; }
 
-void Preferences::setHilightOwnLinesColor(const QString &newColor) { hilightOwnLinesColor.setNamedColor(newColor); }
-QColor Preferences::getHilightOwnLinesColor() { return hilightOwnLinesColor; }
+void Preferences::setHighlightOwnLinesColor(const QString &newColor) { highlightOwnLinesColor.setNamedColor(newColor); }
+QColor Preferences::getHighlightOwnLinesColor() { return highlightOwnLinesColor; }
 
 // On Screen Display
 void Preferences::setOSDUsage(bool state) { OSDUsage=state; }

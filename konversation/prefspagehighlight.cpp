@@ -60,7 +60,7 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   highlightListView->setAcceptDrops(true);
   highlightListView->setSorting(-1);
 
-  QPtrList<Highlight> highlightList=preferences->getHilightList();
+  QPtrList<Highlight> highlightList=preferences->getHighlightList();
   // fill in the highlight patterns backwards to keep the right sorting order
   for(unsigned int i=highlightList.count();i!=0;i--)
   {
@@ -128,19 +128,19 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
 
   enableSoundCheck = new QCheckBox(i18n("&Enable sounds for highlight list items"),
     parentFrame, "highlight_enable_sound_check");
-  enableSoundCheck->setChecked(preferences->getHilightSoundEnabled());
+  enableSoundCheck->setChecked(preferences->getHighlightSoundEnabled());
 
   currentNickCheck=new QCheckBox(i18n("Al&ways highlight current nick:"),parentFrame,"highlight_current_nick_check");
-  currentNickCheck->setChecked(preferences->getHilightNick());
+  currentNickCheck->setChecked(preferences->getHighlightNick());
   currentNickColor=new KColorCombo(parentFrame,"current_nick_color");
-  currentNickColor->setColor(preferences->getHilightNickColor());
-  currentNickChanged(preferences->getHilightNick() ? 2 : 0);
+  currentNickColor->setColor(preferences->getHighlightNickColor());
+  currentNickChanged(preferences->getHighlightNick() ? 2 : 0);
 
   ownLinesCheck=new QCheckBox(i18n("Always highlight own &lines:"),parentFrame,"highlight_own_lines_check");
   ownLinesColor=new KColorCombo(parentFrame,"own_lines_color");
-  ownLinesCheck->setChecked(preferences->getHilightOwnLines());
-  ownLinesColor->setColor(preferences->getHilightOwnLinesColor());
-  ownLinesChanged(preferences->getHilightOwnLines() ? 2 : 0);
+  ownLinesCheck->setChecked(preferences->getHighlightOwnLines());
+  ownLinesColor->setColor(preferences->getHighlightOwnLinesColor());
+  ownLinesChanged(preferences->getHighlightOwnLines() ? 2 : 0);
 
   QVBox* highlightButtonBox=new QVBox(highlightListGroup);
   highlightButtonBox->setSpacing(spacingHint());
@@ -317,12 +317,12 @@ void PrefsPageHighlight::ownLinesChanged(int state)
 
 void PrefsPageHighlight::applyPreferences()
 {
-  preferences->setHilightList(getHighlightList());
-  preferences->setHilightNick(currentNickCheck->isChecked());
-  preferences->setHilightOwnLines(ownLinesCheck->isChecked());
-  preferences->setHilightNickColor(currentNickColor->color().name());
-  preferences->setHilightOwnLinesColor(ownLinesColor->color().name());
-  preferences->setHilightSoundEnabled(enableSoundCheck->isChecked());
+  preferences->setHighlightList(getHighlightList());
+  preferences->setHighlightNick(currentNickCheck->isChecked());
+  preferences->setHighlightOwnLines(ownLinesCheck->isChecked());
+  preferences->setHighlightNickColor(currentNickColor->color().name());
+  preferences->setHighlightOwnLinesColor(ownLinesColor->color().name());
+  preferences->setHighlightSoundEnabled(enableSoundCheck->isChecked());
 }
 
 void PrefsPageHighlight::playSound()
