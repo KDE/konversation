@@ -49,11 +49,8 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
   m_listenSocket=0;
   port=0;
 
-  setServer(newServer);
   setType(ChatWindow::DccChat);
   setChannelEncodingSupported(true);
-  ChatWindow::setName("-"+nickname+"-");
-  ChatWindow::setLogfileName("-"+nickname+"-");
 
   myNick=myNickname;
   nick=nickname;
@@ -69,13 +66,17 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
   mainBox->setSpacing(spacing());
 
   sourceLine=new KLineEdit(mainBox);
-  setTextView(new IRCView(mainBox,newServer));
+  setTextView(new IRCView(mainBox,NULL));
 
   dccChatInput=new IRCInput(mainBox);
 
   sourceLine->setReadOnly(true);
   dccChatInput->setEnabled(false);
-
+  
+  setServer(newServer);
+  ChatWindow::setName("-"+nickname+"-");
+  ChatWindow::setLogfileName("-"+nickname+"-");
+  
   // connect the signals and slots
   connect(dccChatInput,SIGNAL (submit()),this,SLOT (dccChatTextEntered()) );
   connect(dccChatInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
