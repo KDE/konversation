@@ -3053,6 +3053,7 @@ QString Server::awayTime() const
 
 void Server::startAwayTimer()
 {
+  m_isAway = true;
   m_awayTime = QDateTime::currentDateTime().toTime_t();
 }
 
