@@ -10,39 +10,41 @@ Please add descriptions here as new scripts appear:
 
 amarok		Displays on the current channel what you are playing
                 in amaroK right now.
-		usage: /exec amarok
+		usage: /amarok
 		
 bug		Opens up konqueror with kde bugzilla on specified bug number.
-		usage: /exec bug 65090
+		usage: /bug 65090
 
 juk		Displays on the current channel what you are playing
                 in JuK right now.
-                usage: /exec juk
+                usage: /juk
                 
 kaffeine  Displays on the current channel what you are playing
                 in Kaffeine right now.
-                usage /exec kaffeine
+                usage /kaffeine
 
 gauge		Displays funny "beer load" meter. Author: Eisfuchs, Idea: berkus.
-                usage: /exec gauge 55
+                usage: /gauge 55
 
 noatun		Displays on the current channel what you are playing
 		in noatun right now.
-		usage: /exec noatun
+		usage: /noatun
 
 uptime          Displays the system uptime on the current channel.
-                usage: /exec uptime
+                usage: /xuptime
 
 fortune         Displays a random fortune cookie
-		usage: /exec fortune
+		usage: /fortune
 
 kdeversion	Displays the Qt/KDE version.
-		usage: /exec kdeversion
+		usage: /kdeversion
 
 cmd		Prints the output of a given command.
-		usage: /exec cmd command
+		usage: /cmd command
 
 sayclip         Prints the contents of the clipboard on the current channel 
                 with flood protection.  Klipper must be running.
-                usage: /exec sayclip [pause-time]
+                usage: /sayclip [pause-time]
 
+weather         Displays current weather using KWeather applet.
+		usage: /weather
