@@ -51,8 +51,9 @@ PrefsPageOSD::PrefsPageOSD(QWidget* newParent,Preferences* newPreferences) :
   kcfg_OsdJoinPart->setChecked(preferences->getOSDShowChannelEvent());
 
   // Font settings
-   osdFont = preferences->getOSDFont();
-   connect(kcfg_OsdFont,SIGNAL(fontSelected(const QFont&)), this, SLOT(osdFontClicked()));
+  osdFont = preferences->getOSDFont();
+  kcfg_OsdFont->setFont(osdFont);
+  connect(kcfg_OsdFont,SIGNAL(fontSelected(const QFont&)), this, SLOT(osdFontClicked()));
 
   kcfg_OsdDrawShadow->setChecked(preferences->getOSDDrawShadow());
 
