@@ -25,6 +25,7 @@
 #include "editserverdialog.h"
 #include "konversationapplication.h"
 #include "identity.h"
+#include "serverlistitem.h" //for ChannelListValidator
 
 EditServerDialog::EditServerDialog(QWidget* parent,
                                    QString group,
@@ -120,6 +121,8 @@ EditServerDialog::EditServerDialog(QWidget* parent,
                                "Example:  #debian #kde");
   QWhatsThis::add(channelNameLabel, channelNameWT);
   channelNameInput=new KLineEdit(channelName,page);
+  channelNameInput->setValidator( new ChannelListValidator(channelNameInput) );
+  channelNameInput->installEventFilter(this);
   QWhatsThis::add(channelNameInput, channelNameWT);
   channelNameLabel->setBuddy(channelNameInput);
 
@@ -177,6 +180,22 @@ EditServerDialog::EditServerDialog(QWidget* parent,
 
 EditServerDialog::~EditServerDialog()
 {
+}
+
+bool EditServerDialog::eventFilter(QObject *obj, QEvent *event)
+{
+  if (obj==channelNameInput && event->type() == QEvent::FocusOut && ! channelNameInput->hasAcceptableInput()) {
+    int pos=channelNameInput->cursorPosition();
+    QString text(channelNameInput->text());
+    QString t1(text);
+    const QValidator * v = channelNameInput->validator();
+    v->fixup( text );
+    if (text != t1) {
+      channelNameInput->setText(text);
+      // XXX do something if the text isn't any good, someday
+    }
+  }
+  return FALSE; // doing a half-job is the order of the day
 }
 
 void EditServerDialog::slotOk()

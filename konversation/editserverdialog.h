@@ -41,6 +41,8 @@ class EditServerDialog : public KDialogBase
                                        QString connectCommands=QString::null);
     ~EditServerDialog();
 
+    bool eventFilter(QObject*,QEvent *);
+    
   signals:
     void serverChanged(const QString& group,
                        const QString& serverName,

@@ -12,7 +12,10 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <kdebug.h>
+#include <konvidebug.h>
+#include <klineedit.h>
+#include <klistview.h>
+#include <qevent.h>
 
 #include "serverlistitem.h"
 
@@ -38,6 +41,8 @@ ServerListItem::ServerListItem(QListViewItem* parent,
   setText(7,arg7);
 
   group=arg0;
+  
+  m_eventFilterInstalled=FALSE;
 }
 
 ServerListItem::~ServerListItem()
@@ -51,5 +56,65 @@ void ServerListItem::stateChange(bool state)
 
 int ServerListItem::getId() const        { return id; }
 QString ServerListItem::getGroup() const { return group; }
+
+
+// The massive workaround because the FIXUP method of the QValidator doesn't get called
+// from KListViewLineEdit::terminate, and the QLineEdit::keyPressEvent is bypassed for
+// the terminate call.
+
+void ServerListItem::startRename( int col ) 
+{
+  QListViewItem::startRename(col);
+  KListView *lv=dynamic_cast<KListView*>(listView());
+  m_klvle=dynamic_cast<KListViewLineEdit *>( lv->renameLineEdit() );
+  if (listView()->columnText(col) == "Channel") {
+    //m_klvle->setCompletionMode(KGlobalSettings::CompletionNone);
+    m_klvle->setValidator( new ChannelListValidator(m_klvle) );
+    m_klvle->installEventFilter(this);
+    m_eventFilterInstalled=TRUE;
+    connect(m_klvle,SIGNAL(done(QListViewItem*, int)),this,SLOT(done(QListViewItem*, int)));
+  }
+}
+
+bool ServerListItem::eventFilter(QObject *obj, QEvent *event)
+{ 
+    //This shall only be set for the correct column
+    if (m_eventFilterInstalled && event->type()==QEvent::KeyPress) {
+        QKeyEvent* keyEvent=(QKeyEvent*) event;
+        if(keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter ) {
+            KListViewLineEdit *edit=dynamic_cast<KListViewLineEdit*>(obj);
+            if (edit != m_klvle)
+              KX << "<Robin> holy fuck, Batman! It broke already!" << endl;
+            const QValidator * v = edit->validator();
+            QString text=edit->text();
+            int pos = edit->cursorPosition();
+            if ( !v || v->validate( text,pos ) == QValidator::Acceptable ) {
+                return FALSE;
+            } else {
+                QString vstr = edit->text();
+                v->fixup( vstr );
+                if ( vstr != edit->text() ) {
+                    edit->setText( vstr );
+                    text=edit->text();
+                    pos=edit->cursorPosition();
+                    if ( v->validate(text, pos) == QValidator::Acceptable )
+                        return FALSE;
+                }
+                return TRUE; // XXX silently swallow the enter key-press!
+            }
+        }
+    }
+    return FALSE;
+}
+
+void ServerListItem::done(QListViewItem *item, int col)
+{
+  if (m_eventFilterInstalled) {
+      m_klvle->clearValidator();
+      m_klvle->removeEventFilter(this);
+      m_eventFilterInstalled=FALSE;
+  }
+}
+
 
 #include "serverlistitem.moc"

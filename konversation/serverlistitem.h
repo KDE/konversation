@@ -17,12 +17,52 @@
 #ifndef SERVERLISTITEM_H
 #define SERVERLISTITEM_H
 
-#include <qlistview.h>
+#include <qvalidator.h>
 #include <qstring.h>
 
 /*
   @author Dario Abatianni
 */
+
+#include <klistview.h>
+#include <klineedit.h>
+
+#include "konvidebug.h"
+
+class KListViewLineEdit : public KLineEdit
+{
+Q_OBJECT
+public:
+	KListViewLineEdit(KListView *parent);
+	~KListViewLineEdit();
+
+	QListViewItem *currentItem() const;
+
+signals:
+	void done(QListViewItem*, int);
+
+public slots:
+	void terminate();
+	void load(QListViewItem *i, int c);
+
+protected:
+	virtual void focusOutEvent(QFocusEvent *);
+	virtual void keyPressEvent(QKeyEvent *e);
+	virtual void paintEvent(QPaintEvent *e);
+	virtual bool event (QEvent *pe);
+
+	/// @since 3.1
+	void selectNextCell (QListViewItem *pi, int column, bool forward);
+	void terminate(bool commit);
+	QListViewItem *item;
+	int col;
+	KListView *p;
+
+protected slots:
+	void slotSelectionChanged();
+
+};
+
 
 class ServerListItem : public QObject, public QCheckListItem
 {
@@ -47,10 +87,41 @@ class ServerListItem : public QObject, public QCheckListItem
   signals:
     void stateChanged(ServerListItem* myself,bool state);
 
+  public slots:
+    void done(QListViewItem*, int);
+  
   protected:
     void stateChange(bool state);
     int id;
     QString group;
+    
+  private:
+    virtual void startRename( int col );
+    bool m_eventFilterInstalled;
+    KListViewLineEdit *m_klvle;
+    bool eventFilter(QObject *obj, QEvent *event); //Because KListViewLine edit does not call fixup for the validator
+};
+
+
+class ChannelListValidator: public QValidator
+{
+public:
+  ChannelListValidator(QObject *parent, const char *name = 0): QValidator(parent, name) { KX << "validator created" << endl;}
+  
+  virtual QValidator::State validate(QString & input, int & pos) const  {
+    KX << "validate" << endl;
+    if (input.contains(','))
+      return Intermediate;
+    return Acceptable;
+  }
+  
+  virtual void fixup(QString & input) const {
+    KX << "fixup" << endl;
+    if (input.contains(',')) {
+      input.replace(','," ");
+      input.simplifyWhiteSpace();
+    }
+  }
 };
 
 #endif
