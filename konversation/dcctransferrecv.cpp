@@ -452,7 +452,7 @@ void DccTransferRecv::slotSocketClosed()
 
 void DccTransferRecv::slotCanResume( KIO::Job* /* job */, KIO::filesize_t size )
 {
-  kdDebug() << "DccTransferRecv::slotCanResume(): size = " << size << endl;
+  kdDebug() << "DccTransferRecv::slotCanResume(): size = " << QString::number(size) << endl;
 }
 
 // WriteCacheHandler
