@@ -741,6 +741,8 @@ void Server::connectionEstablished(const QString& ownHost)
   }
 
   emit serverOnline(true);
+  if(m_isAutoAway) //we are in autoaway, so tell the server
+    setAutoAway();
 
   if(!alreadyConnected)
   {
@@ -2857,6 +2859,7 @@ void Server::setAutoAway() {
 void Server::unAway()
 {
   m_isAway=false;
+  m_isAutoAway = false;
   emit awayState(false);
 
   if(!getIdentity()->getAwayNick().isEmpty() && !nonAwayNick.isEmpty()) {
