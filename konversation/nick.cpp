@@ -28,40 +28,66 @@ Nick::Nick(KListView *listView,
   Q_ASSERT(channelnick);
   if(!channelnick) return;
   
-    channelnickptr = channelnick;
-    listViewItem=new NickListViewItem(listView,listView->lastItem(),
-				      channelnick->getNickname(),channelnick->getHostmask(),this);
-
+  channelnickptr = channelnick;
+  listViewItem=new NickListViewItem(listView,listView->lastItem(),
+				    channelnick->getNickname(),channelnick->getHostmask(),this);
+  
   QObject::connect(listViewItem,SIGNAL(refreshed()),listView,SLOT(startResortTimer()));
-
 }
+
 Nick::~Nick()
 {
   delete listViewItem;
 }
 
-bool Nick::isAdmin()  { return channelnickptr->isAdmin(); }
-bool Nick::isOwner()  { return channelnickptr->isOwner(); }
-bool Nick::isOp()     { return channelnickptr->isOp(); }
-bool Nick::isHalfop() { return channelnickptr->isHalfOp(); }
-bool Nick::hasVoice() { return channelnickptr->hasVoice(); }
+bool Nick::isAdmin() const
+{ 
+  return channelnickptr->isAdmin(); 
+}
 
+bool Nick::isOwner() const
+{ 
+  return channelnickptr->isOwner(); 
+}
 
+bool Nick::isOp() const
+{ 
+  return channelnickptr->isOp(); 
+}
 
-NickInfoPtr Nick::getNickInfo() {
+bool Nick::isHalfop() const
+{ 
+  return channelnickptr->isHalfOp(); 
+}
+
+bool Nick::hasVoice() const
+{ 
+  return channelnickptr->hasVoice(); 
+}
+
+NickInfoPtr Nick::getNickInfo() const {
   Q_ASSERT(channelnickptr);
   if(!channelnickptr) return NULL;
   return channelnickptr->getNickInfo();
 }
 
-ChannelNickPtr Nick::getChannelNick() {
+ChannelNickPtr Nick::getChannelNick() const {
   Q_ASSERT(channelnickptr);
   return channelnickptr;
 }
 
-QString Nick::getNickname() { return channelnickptr->getNickname(); }
-QString Nick::getHostmask() { return channelnickptr->getHostmask(); }
+QString Nick::getNickname() const 
+{ 
+  return channelnickptr->getNickname(); 
+}
 
+QString Nick::getHostmask() const
+{ 
+  return channelnickptr->getHostmask(); 
+}
 
-bool Nick::isSelected() { return listViewItem->isSelected(); }
+bool Nick::isSelected() const
+{ 
+  return listViewItem->isSelected(); 
+}
 

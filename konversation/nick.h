@@ -30,18 +30,18 @@ class Nick
 	 const ChannelNickPtr& channelnick);
     ~Nick();
 
-    bool isAdmin();
-    bool isOwner();
-    bool isOp();
-    bool isHalfop();
-    bool hasVoice();
+    bool isAdmin() const;
+    bool isOwner() const;
+    bool isOp() const;
+    bool isHalfop() const;
+    bool hasVoice() const;
 
-    bool isSelected();
+    bool isSelected() const;
 
-    QString getNickname();
-    QString getHostmask();
-    NickInfoPtr getNickInfo();
-    ChannelNickPtr getChannelNick();
+    QString getNickname() const;
+    QString getHostmask() const;
+    NickInfoPtr getNickInfo() const;
+    ChannelNickPtr getChannelNick() const;
     
   protected:
     ChannelNickPtr channelnickptr;
