@@ -103,11 +103,14 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   QHBox* topicBox=new QHBox(topicViewNicksGrid);
   topicBox->setSpacing(spacing());
 
-  QLabel* topicLabel=new QLabel(i18n("Topic:"),topicBox);
+  QLabel* topicLabel=new QLabel(i18n("&Topic:"),topicBox);
   topicLine=new TopicComboBox(topicBox);
   topicLine->setEditable(true);
   topicLine->setAutoCompletion(false);
   topicLine->setInsertionPolicy(QComboBox::NoInsertion);
+
+  // link topic label shortcut to topic line
+  topicLabel->setBuddy(topicLine);
 
   // The box holding the channel modes
   modeBox=new QHBox(topicBox);
