@@ -140,35 +140,41 @@ QString ChannelNick::tooltip() {
   bool dirty = false;
   KABC::Picture photo = addressee.photo();
   KABC::Picture logo = addressee.logo();
+  bool isimage=false;
    if(photo.isIntern()) {
     QMimeSourceFactory::defaultFactory()->setImage( "photo", photo.data() );
     tooltip << "<img src=\"photo\">";
     dirty=true;
+    isimage=true;
   } else if(!photo.url().isEmpty()) {
     //JOHNFLUX FIXME TODO:
     //Are there security problems with this?  loading from an external refrence?
     //Assuming not. 
     tooltip << "<img src=\"" << photo.url() << "\">";
     dirty=true;
+    isimage=true;
   }
   if(logo.isIntern()) {
     QMimeSourceFactory::defaultFactory()->setImage( "logo", logo.data() );
     tooltip << "<img src=\"logo\">";
     dirty=true;
+    isimage=true;
   } else if(!logo.url().isEmpty()) {
     //JOHNFLUX FIXME TODO:
     //Are there security problems with this?  loading from an external refrence?
     //Assuming not. 
     tooltip << "<img src=\"" << logo.url() << "\">";
     dirty=true;
+    isimage=true;
   }
   
-   if(!addressee.formattedName().isEmpty()) {
-    tooltip << "<b><center>" << addressee.formattedName() << "</center></b>";
+  if(!addressee.formattedName().isEmpty()) {
+    tooltip << "<b>" << (isimage?"":"<center>") << addressee.formattedName() << (isimage?"":"</center>") << "</b>";
     dirty = true;
   }
   else {
-    tooltip << "<b><center>" << getNickname() << "</center></b>";
+    tooltip << "<b>" << (isimage?"":"<center>") << getNickname() << (isimage?"":"</center>") << "</b>";
+    //Don't set dirty if all we have is their nickname
   }
 
 
