@@ -18,7 +18,7 @@
 #include <kapp.h>
 
 #include "preferences.h"
-#include "event.h"
+#include "ircevent.h"
 #include "osd.h"
 
 class QCString;

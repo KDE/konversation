@@ -6,7 +6,6 @@
 #include <qptrlist.h>
 
 #include "konviface.h"
-#include "event.h"
 
 class KonvDCOP : public QObject, virtual public KonvIface
 {
