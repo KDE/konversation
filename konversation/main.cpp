@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
   aboutData.addCredit("Ruud Nabben",I18N_NOOP("Option to enable IRC color filtering"),"r.nabben@gawab.com");
   aboutData.addCredit("Michael Goettsche",I18N_NOOP("Quick connect, Ported new OSD, other features and bugfixes"),"michael.goettsche@kdemail.net");
   aboutData.addCredit("Luciash d' being",I18N_NOOP("Application icons"),"luci@sh.ground.cz");
-  aboutData.addCredit("Shintaro Matsuoka",I18N_NOOP("DCC transfer"),"shin@shoegazed.org");
+  aboutData.addCredit("Shintaro Matsuoka",I18N_NOOP("DCC transfer, Encodings improvements"),"shin@shoegazed.org");
 
   KCmdLineArgs::init(argc,argv,&aboutData);
 
