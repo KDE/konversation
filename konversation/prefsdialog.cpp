@@ -40,7 +40,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   setShowIconsInTreeList(true);
 
   serverListPane = addPage(i18n("Server List"),QString::null,SmallIcon("network_local" ));
-  QFrame* identityPane = addPage(i18n("Identity"),QString::null,SmallIcon("identity"));
+  identityPane = addPage(i18n("Identity"),QString::null,SmallIcon("identity"));
 
   setFolderIcon(QStringList::split(',', i18n("Appearance")), SmallIcon("looknfeel"));
   QFrame* chatWinAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("window_new"));
@@ -184,6 +184,7 @@ void PrefsDialog::openPage(Preferences::Pages page)
 {
   if     (page==Preferences::ServerListPage) showPage(pageIndex(serverListPane));
   else if(page==Preferences::NotifyPage)     showPage(pageIndex(notifyPane));
+  else if(page==Preferences::IdentityPage)   showPage(pageIndex(identityPane));
 }
 
 #include "prefsdialog.moc"

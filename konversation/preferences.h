@@ -63,7 +63,8 @@ class Preferences : public QObject
     enum Pages
     {
       ServerListPage=0,
-      NotifyPage
+      NotifyPage,
+      IdentityPage
     };
 
     Preferences();

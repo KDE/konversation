@@ -2747,7 +2747,11 @@ void Server::autoRejoinChannels()
   queue(joinString);
 }
 
-void Server::setIdentity(Identity* newIdentity) { identity=newIdentity; }
+void Server::setIdentity(Identity* newIdentity)
+{
+  identity=newIdentity;
+}
+
 Identity* Server::getIdentity() { return identity; }
 
 void Server::setMainWindow(KonversationMainWindow* newMainWindow) { mainWindow=newMainWindow; }

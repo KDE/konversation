@@ -21,6 +21,8 @@
 #include <dcopclient.h>
 #include <kdeversion.h>
 #include <kstandarddirs.h>
+#include <klocale.h>
+#include <kmessagebox.h>
 
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
@@ -175,20 +177,55 @@ void KonversationApplication::insertRememberLine()
 
 void KonversationApplication::connectToServer(int id)
 {
-  connectToAnotherServer(id);
-  // to prevent doubleClicked() to crash the dialog
-  // FIXME: Seems to have a race, though
-  // only close the dialog when we didn't use autoconnect
-  if(prefsDialog) prefsDialog->delayedDestruct();
-  prefsDialog=0;
+  if(connectToAnotherServer(id))
+  {
+    // to prevent doubleClicked() to crash the dialog
+    // FIXME: Seems to have a race, though
+    // only close the dialog when we didn't use autoconnect
+    if(prefsDialog) prefsDialog->delayedDestruct();
+    prefsDialog=0;
+  }
 }
 
-void KonversationApplication::connectToAnotherServer(int id)
+bool KonversationApplication::connectToAnotherServer(int id)
 {
-  mainWindow->show();
-
   ServerEntry* chosenServer=preferences.getServerEntryById(id);
+  Identity* identity=preferences.getIdentityByName(chosenServer->getIdentity());
 
+  // sanity check for identity    
+  QString check;
+  
+  if(identity->getIdent().isEmpty())
+  {
+    check+=i18n("Please fill in your <b>ident</b>.<br>");
+  }
+  if(identity->getRealName().isEmpty())
+  {
+    check+=i18n("Please fill in your <b>Real name</b>.<br>");
+  }
+  if(identity->getNickname(0).isEmpty())
+  {
+    check+=i18n("Please provide at least one <b>Nickname</b>.<br>");
+  }
+  if(!check.isEmpty())
+  {  
+    KMessageBox::information(0,
+                             i18n("<qt>Your identity \"%1\" is not set up correctly:<br>%2</qt>")
+                                  .arg(chosenServer->getIdentity())
+                                  .arg(check),i18n("Check Identity Settings")
+                            );
+    if(prefsDialog)
+      prefsDialog->openPage(Preferences::IdentityPage);
+    else
+      openPrefsDialog(Preferences::IdentityPage);
+
+    return false;
+  }
+
+  // identity ok, carry on
+  
+  mainWindow->show();
+    
   // Check if a server window with same name and port is already open
   Server* newServer=serverList.first();
   while(newServer)
@@ -216,7 +253,7 @@ void KonversationApplication::connectToAnotherServer(int id)
 
         newServer->connectToIRCServer();
       }
-      return;
+      return true;
     }
 
     newServer=serverList.next();
@@ -237,6 +274,8 @@ void KonversationApplication::connectToAnotherServer(int id)
   connect(newServer, SIGNAL(awayInsertRememberLine()), this, SLOT(insertRememberLine()));
 
   serverList.append(newServer);
+  
+  return true;
 }
 
 void KonversationApplication::quickConnectToServer(const QString& hostName, const QString& port, const QString& nick, const QString& password)

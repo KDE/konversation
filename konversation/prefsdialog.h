@@ -80,10 +80,10 @@ class PrefsDialog : public KDialogBase
     PrefsPageDccSettings*     dccSettingsPage;
     PrefsPageDialogs*         dialogsPage;
 
-
     // for openPage();
     QFrame* serverListPane;
     QFrame* notifyPane;
+    QFrame* identityPane;
 
     void setPreferences(Preferences* newPrefs);
 };

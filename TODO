@@ -4,7 +4,6 @@ TODO-list for Konversation
 SHORT-TERM (URGENT):
 - Show / Hide tab types (status tabs ect.)
 - Support "CTCP-DCC reply from <nickname>: REJECT SEND <filename> <reason>"
-- On connect konversation should check if the identity was set up correctly to satisfy USER command
 
 MID-TERM:
 - Doxify the source
