@@ -26,7 +26,7 @@ if( utf8::valid($input) ) {
     utf8::decode($input);
 }
 
-if($input =~ /^(\/[^\S]*\S)(.*)$/)
+if($input =~ /^(\/[^ ]* )(.*)$/)
 {
     $me=$1;
     $input =$2;
@@ -41,11 +41,4 @@ foreach (@chars) {
   $message = $message."%C".$i.$_;
 }
 
-if(chomp($me))
-{
-    system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$me $message\" ");
-}
-else
-{
-    system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$message\" ");
-}
+system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$me $message\" ");
