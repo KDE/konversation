@@ -40,35 +40,37 @@ QString tagURLs(const QString& text, const QString& fromNick)
   QString linkColor = KonversationApplication::preferences.getColor("LinkMessage");
   int pos = 0;
 
-  QRegExp channelPattern("^#(\\S)+$|"
-			 "\\s#(\\S)+"
-			 );
-
-  channelPattern.setCaseSensitive(false);
+  if(!fromNick.isEmpty()) // Don't put channel links in topic label
+    {
+      QRegExp channelPattern("^#(\\S)+$|"
+			     "\\s#(\\S)+"
+			     );
+      
+      channelPattern.setCaseSensitive(false);
   
-  while(channelPattern.search(filteredLine, pos) != -1) {
+      while(channelPattern.search(filteredLine, pos) != -1) {
+	
+	// Remember where we found the url
+	pos = channelPattern.pos();
     
-    // Remember where we found the url
-    pos = channelPattern.pos();
-    
-    // Extract channel
-    QString channel = channelPattern.capturedTexts()[0];
-    QString space;
+	// Extract channel
+	QString channel = channelPattern.capturedTexts()[0];
+	QString space;
 
-    QString href(channel.stripWhiteSpace());
-    if(href.length() != channel.length())
-      space=" "; // We eated some space so we will put it before channel link
+	QString href(channel.stripWhiteSpace());
+	if(href.length() != channel.length())
+	  space=" "; // We eated some space so we will put it before channel link
+	
+	href = "#" + href;
+	QString link = "<font color=\"#" + linkColor + "\">"+space+"<a href=\"" + href + "\">" + channel.stripWhiteSpace() + "</a></font>";
+	
+	filteredLine.replace(pos,channel.length(),link);
+	pos += link.length();
 
-    href = "#" + href;
-    QString link = "<font color=\"#" + linkColor + "\">"+space+"<a href=\"" + href + "\">" + channel.stripWhiteSpace() + "</a></font>";
-
-    filteredLine.replace(pos,channel.length(),link);
-    pos += link.length();
-
-  }
+      }
+      pos = 0;
+    }
   
-  pos = 0;
-
   QRegExp urlPattern("(((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
                   "(([-_.%\\d\\w]*(:[-_.%\\d\\w]*)?@)|)"
                   // IP Address
