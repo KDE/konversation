@@ -724,12 +724,15 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         {
           if(numeric==RPL_WELCOME)
           {
+            QString host;
+            if(trailing.contains("@"))
+              host = trailing.section("@",1);
             // re-set nickname, since the server may have truncated it
             if(parameterList[0]!=server->getNickname()) server->renameNick(server->getNickname(), parameterList[0]);
             // Remember server's insternal name
             server->setIrcName(prefix);
             // Send the welcome signal, so the server class knows we are connected properly
-            emit welcome();
+            emit welcome(host);
           }
           server->appendStatusMessage(i18n("Welcome"),trailing);
           break;

@@ -45,7 +45,7 @@ class InputFilter : public QObject
     bool getLagMeasuring();
 
   signals:
-    void welcome();
+    void welcome(const QString& ownHost);
     void notifyResponse(const QString &nicksOnline);
     void addDccGet(const QString &sourceNick, const QStringList &dccArgument); // will be connected to Server::addDccGet()
     void resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArgument); // will be connected to Server::resumeDccGetTransfer()

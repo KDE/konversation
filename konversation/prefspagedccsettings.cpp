@@ -72,7 +72,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccMethodToGetOwnIpComboBox = new QComboBox(dccMethodToGetOwnIpBox, "dcc_method_to_get_own_ip_combo");
   dccMethodToGetOwnIpComboBox->insertItem(i18n("Network interface"));
   dccMethodToGetOwnIpComboBox->insertItem(i18n("WHOIS Reply from IRC server"));
-  dccMethodToGetOwnIpComboBox->insertItem(i18n("001 Reply [NOT IMPLEMENTED YET]"));
+  dccMethodToGetOwnIpComboBox->insertItem(i18n("001 Reply from IRC server"));
   dccMethodToGetOwnIpComboBox->insertItem(i18n("Specify manually"));
   dccMethodToGetOwnIpLabel->setBuddy(dccMethodToGetOwnIpComboBox);
   

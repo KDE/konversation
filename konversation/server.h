@@ -337,7 +337,7 @@ class Server : public QObject
     void closed();
     void broken(int state);
     void notifyCheckTimeout();
-    void connectionEstablished();
+    void connectionEstablished(const QString& ownHost);
     void notifyResponse(const QString& nicksOnline);
     void addDccGet(const QString& sourceNick,const QStringList& dccArguments);
     void requestDccSend();                           // -> to outputFilter, dccPanel
@@ -478,7 +478,8 @@ class Server : public QObject
     QString inputBuffer;
     QStringList outputBuffer;
     QString nickname;
-    QString ownIpByServer;
+    QString ownIpByWHOIS;
+    QString ownIpBy001;
     QString serverKey;
     QString lastDccDir;
 

@@ -344,8 +344,8 @@ void Server::connectSignals()
   connect(&notifyCheckTimer,SIGNAL(timeout()),
                   this,SLOT  (notifyCheckTimeout()) );
 
-  connect(&inputFilter,SIGNAL(welcome()),
-                  this,SLOT  (connectionEstablished()) );
+  connect(&inputFilter,SIGNAL(welcome(const QString&)),
+                  this,SLOT  (connectionEstablished(const QString&)) );
   connect(&inputFilter,SIGNAL(notifyResponse(const QString&)),
                   this,SLOT  (notifyResponse(const QString&)) );
   connect(&inputFilter,SIGNAL(addDccGet(const QString&, const QStringList&)),
@@ -644,8 +644,12 @@ void Server::broken(int state)
 }
 
 // Will be called from InputFilter as soon as the Welcome message was received
-void Server::connectionEstablished()
+void Server::connectionEstablished(const QString& ownHost)
 {
+  KNetwork::KResolverResults res = KNetwork::KResolver::resolve(ownHost, "");
+  if(res.size() > 0)
+    ownIpBy001 = res.first().address().nodeName();
+  
   emit serverOnline(true);
 
   if(!alreadyConnected)
@@ -1302,12 +1306,16 @@ QString Server::getIp(bool followDccSetting)
   {
     int methodId = KonversationApplication::preferences.getDccMethodToGetOwnIp();
     
-    if(methodId == 1 && !ownIpByServer.isEmpty())  // WHOIS reply
-      ip = ownIpByServer;
+    if(methodId == 1 && !ownIpByWHOIS.isEmpty())  // WHOIS reply
+      ip = ownIpByWHOIS;
     else if(methodId == 2)  // 001 reply
-      ;  // not implemented yet
+      ip = ownIpBy001;
     else if(methodId == 3 && !KonversationApplication::preferences.getDccSpecificOwnIp().isEmpty())  // user specifies
-      ip = KonversationApplication::preferences.getDccSpecificOwnIp();
+    {
+      KNetwork::KResolverResults res = KNetwork::KResolver::resolve(KonversationApplication::preferences.getDccSpecificOwnIp(), "");
+      if(res.size() > 0)
+        ip = res.first().address().nodeName();
+    }
   }
   
   if(ip.isEmpty())
@@ -2285,12 +2293,12 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
 void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceHostmask)
 {
   // remember my IP for DCC sending
-  if(ownIpByServer.isEmpty() && sourceNick==nickname)  // myself
+  if(ownIpByWHOIS.isEmpty() && sourceNick==nickname)  // myself
   {
     QString myhost = sourceHostmask.section('@', 1);
     KNetwork::KResolverResults res = KNetwork::KResolver::resolve(myhost, "");
     if(res.size() > 0)
-      ownIpByServer = res.first().address().nodeName();
+      ownIpByWHOIS = res.first().address().nodeName();
   }
 
 
