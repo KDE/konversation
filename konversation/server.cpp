@@ -33,6 +33,7 @@ typedef unsigned long long __u64;
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
+#include <kstringhandler.h>
 #include <kdeversion.h>
 
 #include "server.h"
@@ -890,7 +891,11 @@ void Server::incoming()
 
   // convert IRC ascii data to selected encoding
   QTextCodec* codec=QTextCodec::codecForName(identity->getCodec().ascii());
-  inputBuffer+=codec->toUnicode(buffer);
+
+  if(KStringHandler::isUtf8(buffer))
+    inputBuffer+=KStringHandler::from8Bit(buffer);
+  else
+    inputBuffer+=codec->toUnicode(buffer);
 
   if(len==0) broken(0);
 

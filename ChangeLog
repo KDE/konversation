@@ -1,4 +1,5 @@
 Changes from 0.13 to 0.14
+- Now you can read utf8 encoded messages even if your locale is not unicode
 - "Do not show this dialog again" preferences now works correctly
 - Added an "Insert Remember Line" feature.
   The user can mark the position in the channel where he stopped
