@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#
+# Licensed under GPL v2 or later at your option
+# Copyright 2005 by John Tapsell <john.tapsell@kdemail.net>
+
+PORT=$1;
+SERVER=$2;
+TARGET=$3;
+
+getmails()
+{
+
+  dcop kmail > /dev/null || {
+    dcop $PORT Konversation info "Sorry kmail is not running"
+    exit
+  }
+
+  for f in $(dcop kmail KMailIface folderList | grep -i inbox) ; do 
+   MAILCOUNT=$(dcop $(dcop kmail KMailIface getFolder $f ) "unreadMessages()" )
+   if [ "$MAILCOUNT" != 0 ] ;  then
+     MAILFOLDER=$(dcop $(dcop kmail KMailIface getFolder $f) "displayPath")
+     echo Email folder $MAILFOLDER has $MAILCOUNT unread messages
+   fi
+  done
+
+}
+
+getmails | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" "$line"; done
+
