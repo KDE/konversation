@@ -600,49 +600,52 @@ void KonversationApplication::readOptions()
     preferences.setServerGroupList(serverGroups);
   } else {
     // Read the new server settings
-    Konversation::ServerGroupList serverGroups;
     QStringList groups = config->groupList().grep(QRegExp("ServerGroup [0-9]+"));
-    QStringList::iterator it;
-    QStringList tmp1, tmp2;
-    QStringList::iterator it2;
-
-    for(it = groups.begin(); it != groups.end(); ++it) {
-      config->setGroup((*it));
-      Konversation::ServerGroupSettings serverGroup;
-      serverGroup.setName(config->readEntry("Name"));
-      serverGroup.setGroup(config->readEntry("Group"));
-      serverGroup.setIdentityId(preferences.getIdentityByName(config->readEntry("Identity"))->id());
-      serverGroup.setConnectCommands(config->readEntry("ConnectCommands"));
-      serverGroup.setAutoConnectEnabled(config->readBoolEntry("AutoConnect"));
-      tmp1 = config->readListEntry("ServerList");
-      tmp2 = config->readListEntry("AutoJoinChannels");
-
-      for(it2 = tmp1.begin(); it2 != tmp1.end(); ++it2) {
-        config->setGroup((*it2));
-        Konversation::ServerSettings server;
-        server.setServer(config->readEntry("Server"));
-        server.setPort(config->readNumEntry("Port"));
-        server.setPassword(config->readEntry("Password"));
-        server.setSSLEnabled(config->readBoolEntry("SSLEnabled"));
-        serverGroup.addServer(server);
-      }
-
-
-      for(it2 = tmp2.begin(); it2 != tmp2.end(); ++it2) {
-        config->setGroup((*it2));
-        Konversation::ChannelSettings channel;
-
-        if(!config->readEntry("Name").isEmpty()) {
-          channel.setName(config->readEntry("Name"));
-          channel.setPassword(config->readEntry("Password"));
-          serverGroup.addChannel(channel);
+    
+    if(!groups.isEmpty()) {
+      Konversation::ServerGroupList serverGroups;
+      QStringList::iterator it;
+      QStringList tmp1, tmp2;
+      QStringList::iterator it2;
+  
+      for(it = groups.begin(); it != groups.end(); ++it) {
+        config->setGroup((*it));
+        Konversation::ServerGroupSettings serverGroup;
+        serverGroup.setName(config->readEntry("Name"));
+        serverGroup.setGroup(config->readEntry("Group"));
+        serverGroup.setIdentityId(preferences.getIdentityByName(config->readEntry("Identity"))->id());
+        serverGroup.setConnectCommands(config->readEntry("ConnectCommands"));
+        serverGroup.setAutoConnectEnabled(config->readBoolEntry("AutoConnect"));
+        tmp1 = config->readListEntry("ServerList");
+        tmp2 = config->readListEntry("AutoJoinChannels");
+  
+        for(it2 = tmp1.begin(); it2 != tmp1.end(); ++it2) {
+          config->setGroup((*it2));
+          Konversation::ServerSettings server;
+          server.setServer(config->readEntry("Server"));
+          server.setPort(config->readNumEntry("Port"));
+          server.setPassword(config->readEntry("Password"));
+          server.setSSLEnabled(config->readBoolEntry("SSLEnabled"));
+          serverGroup.addServer(server);
         }
+  
+  
+        for(it2 = tmp2.begin(); it2 != tmp2.end(); ++it2) {
+          config->setGroup((*it2));
+          Konversation::ChannelSettings channel;
+  
+          if(!config->readEntry("Name").isEmpty()) {
+            channel.setName(config->readEntry("Name"));
+            channel.setPassword(config->readEntry("Password"));
+            serverGroup.addChannel(channel);
+          }
+        }
+  
+        serverGroups.append(serverGroup);
       }
-
-      serverGroups.append(serverGroup);
+  
+      preferences.setServerGroupList(serverGroups);
     }
-
-    preferences.setServerGroupList(serverGroups);
   }
 
   // Notify Settings and lists.  Must follow Server List.

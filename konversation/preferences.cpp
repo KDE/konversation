@@ -60,6 +60,17 @@ Preferences::Preferences()
   setNickCompleteSuffixStart(": ");
   setNickCompleteSuffixMiddle(" ");
 
+  Konversation::ServerGroupSettings serverGroup;
+  serverGroup.setName("Freenode");
+  Konversation::ServerSettings server;
+  server.setServer("irc.freenode.org");
+  serverGroup.addServer(server);
+  serverGroup.setIdentityId(identity->id());
+  Konversation::ChannelSettings channel;
+  channel.setName("#kde");
+  serverGroup.addChannel(channel);
+  m_serverGroupList.append(serverGroup);
+
   buttonList.append("Op,/OP %u%n");
   buttonList.append("DeOp,/DEOP %u%n");
   buttonList.append("WhoIs,/WHOIS %s,%%u%n");
