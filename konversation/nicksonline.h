@@ -102,6 +102,10 @@ class NicksOnline : public ChatWindow
     * Received when right-clicking an item in the NickListView.
     */
     void slotNickListView_RightButtonClicked(QListViewItem* item, const QPoint& pt);
+    /**
+    * Received from server when a NickInfo changes its information.
+    */
+    void slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo);
 
   protected:
     /**
@@ -131,6 +135,10 @@ class NicksOnline : public ChatWindow
     */
     void refreshAllServerOnlineLists();
     /**
+    * Update the Offline list in the Nick ListView.
+    */
+    void updateOfflineList(Server* server);
+    /**
     * Return a string contained formatted additional information about a nick.
     * @param nickInfo          A pointer to NickInfo structure for the nick.
     * @return                  A string formatted for display containing the information
@@ -152,6 +160,16 @@ class NicksOnline : public ChatWindow
     * @return nickname         The nickname at the item.
     */
     bool getItemServerAndNick(const QListViewItem* item, QString& serverName, QString& nickname);
+    /**
+    * Given a server name and nickname, returns the item in the Nick List View displaying
+    * the nick.
+    * @param serverName        Name of server.Server
+    * @param nickname          Nick name.
+    * @return                  Pointer to QListViewItem displaying the nick, or 0 if not found.
+    *
+    * @see getItemServerAndNick
+    */
+    QListViewItem* getServerAndNickItem(const QString& serverName, const QString& nickname);
     /**
     * Perform an addressbook command (edit contact, create new contact, 
     * change/delete association.)
@@ -184,7 +202,10 @@ class NicksOnline : public ChatWindow
     QPushButton* m_deleteAssociationButton;
     QPopupMenu* m_popupMenu;
     Konversation::KonversationNicksOnlineToolTip *m_tooltip;
-	
+    
+    /* Set to False every 8 seconds so that we generate a WHOIS on watch nicks that
+       lack information.*/
+    bool m_whoisRequested;
 };
 
 #endif
