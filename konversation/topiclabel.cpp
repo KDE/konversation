@@ -10,10 +10,14 @@
 */
 #include "topiclabel.h"
 
+#include <qsimplerichtext.h>
+
 #include <krun.h>
 #include <kprocess.h>
 #include <kshell.h>
 #include <kstringhandler.h>
+#include <kglobal.h>
+#include <kdebug.h>
 
 #include "konversationapplication.h"
 #include "common.h"
@@ -74,26 +78,60 @@ void TopicLabel::setText(const QString& text)
 void TopicLabel::updateSqueezedText()
 {
   QFontMetrics fm(currentFont());
-  QString text;
-
-  if(height() < (fm.lineSpacing() * 2)) {
-    text = KStringHandler::rPixelSqueeze(m_fullText, fm, visibleWidth() - 10);
-    setWordWrap(NoWrap);
-  } else {
-    text = m_fullText;
-    setWordWrap(WidgetWidth);
-  }
-  
+  QString text = m_fullText;
   text.replace("&", "&amp;").
       replace("<", "&lt;").
       replace(">", "&gt;");
-  KActiveLabel::setText("<qt>" + tagURLs(text, "") + "</qt>");
+  text = tagURLs(text, "");
+
+  if(height() < (fm.lineSpacing() * 2)) {
+    text = rPixelSqueeze(text, visibleWidth() - 10);
+    setWordWrap(NoWrap);
+  } else {
+    setWordWrap(WidgetWidth);
+  }
+  
+  KActiveLabel::setText("<qt>" + text + "</qt>");
 }
 
 void TopicLabel::resizeEvent(QResizeEvent* ev)
 {
   KActiveLabel::resizeEvent(ev);
   updateSqueezedText();
+}
+
+QString TopicLabel::rPixelSqueeze(const QString& text, uint maxPixels)
+{
+  QFontMetrics fm(currentFont());
+  uint tw = textWidth(text, fm);
+
+  if(tw > maxPixels) {
+    QString tmp = text;
+    const uint em = fm.maxWidth();
+    maxPixels -= fm.width("...");
+    int len, delta;
+
+    while((tw > maxPixels) && !tmp.isEmpty()) {
+      len = tmp.length();
+      delta = (tw - maxPixels) / em;
+      delta = kClamp(delta, 1, len);
+
+      tmp.remove(len - delta, delta);
+      tw = textWidth(tmp, fm);
+    }
+
+    return tmp.append("...");
+  }
+
+  return text;
+}
+
+uint TopicLabel::textWidth(const QString& text, const QFontMetrics& fm)
+{
+  QSimpleRichText richText("<qt>" + text + "</qt>", currentFont());
+  richText.setWidth(fm.width(text));
+
+  return richText.widthUsed();
 }
 
 }

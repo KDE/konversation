@@ -13,6 +13,8 @@
 
 #include <kactivelabel.h>
 
+class QFontMetrics;
+
 namespace Konversation {
 
 class TopicLabel : public KActiveLabel
@@ -31,6 +33,8 @@ class TopicLabel : public KActiveLabel
 
   protected:
     void updateSqueezedText();
+    QString rPixelSqueeze(const QString& text, uint maxPixels);
+    uint textWidth(const QString& text, const QFontMetrics& fm);
 
     void resizeEvent(QResizeEvent*);
 
