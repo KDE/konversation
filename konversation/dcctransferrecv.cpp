@@ -436,9 +436,7 @@ void DccTransferRecv::readData()  // slot
   {
     //actual is the size we read in, and is guaranteed to be less than m_bufferSize
     m_transferringPosition += actual;
-    QByteArray ba;
-    ba.duplicate( m_buffer, actual );
-    m_writeCacheHandler->append( ba );
+    m_writeCacheHandler->append( m_buffer, actual );
     if(!m_writeCacheHandler->write( false )) {
       //kdDebug() << "m_writeCacheHandler->write() failed in readData()" << endl;
     }
@@ -538,20 +536,20 @@ DccTransferRecvWriteCacheHandler::~DccTransferRecvWriteCacheHandler()
   closeNow();
 }
 
-void DccTransferRecvWriteCacheHandler::append( const QByteArray& cache )  // public
+void DccTransferRecvWriteCacheHandler::append( char* data, int size )  // public
 {
   // sendAsyncData() and dataReq() cost a lot of time, so we should pack some caches.
   
   static const unsigned int maxWritePacketSize = 2 * 1024 * 1024;  // 2megs
   
-  if( m_cacheList.isEmpty() || m_cacheList.back().size() + cache.size() > maxWritePacketSize )
+  if( m_cacheList.isEmpty() || m_cacheList.back().size() + size > maxWritePacketSize )
   {
     m_cacheList.append( QByteArray() );
     delete m_cacheStream;
     m_cacheStream = new QDataStream( m_cacheList.back(), IO_WriteOnly );
   }
   
-  m_cacheStream->writeRawBytes( cache.data(), cache.size() );
+  m_cacheStream->writeRawBytes( data, size );
 }
 
 bool DccTransferRecvWriteCacheHandler::write( bool force )  // public

@@ -141,7 +141,7 @@ class DccTransferRecvWriteCacheHandler : public QObject
     DccTransferRecvWriteCacheHandler( KIO::TransferJob* transferJob );
     virtual ~DccTransferRecvWriteCacheHandler();
     
-    void append( const QByteArray& cache );
+    void append( char* data, int size );
     bool write( bool force );
     void close();
     void closeNow();
