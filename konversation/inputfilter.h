@@ -22,8 +22,7 @@
 #include "ignore.h"
 
 /*
-  @author Dario Abatianni
-  test
+  @author Dario Abatianni (tst)
 */
 
 class Server;
