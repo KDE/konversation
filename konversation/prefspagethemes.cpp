@@ -29,6 +29,7 @@
 
 #include "preferences.h"
 #include "common.h"
+#include "konversationapplication.h"
 
 using namespace Konversation;
 
@@ -40,6 +41,7 @@ PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
 
   QLabel* selectLabel = new QLabel(i18n("Select Nicklist Icon Theme to Use"),newParent,"selectLabel");
   themeList = new KListBox(newParent,"themeList");
+  themeList->setSelectionMode( QListBox::Single );
   QLabel* previewLabel = new QLabel(newParent);
   previewLabel->setText("Preview :");
   
@@ -72,9 +74,15 @@ PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
   QString themeName,themeComment;
   QFile themeRC;
   QTextStream stream;
+  QString currentTheme = KonversationApplication::preferences.getIconTheme();
+  int index = 0;
 
   for(QStringList::Iterator it = dirs.begin(); it != dirs.end(); ++it)
     {
+
+      if((*it).section('/',-2,-2) != currentTheme)
+	++index;
+
       themeRC.setName( *it );
       themeRC.open( IO_ReadOnly );
       stream.setDevice( &themeRC );
@@ -88,9 +96,12 @@ PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
       themeList->insertItem( themeName );
       themeRC.close();
     }
-  
+
+  themeList->setSelected(index,TRUE);
+  updatePreview(index);
+
   connect(themeList,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
-  
+    
 }
 
 PrefsPageThemes::~PrefsPageThemes()
