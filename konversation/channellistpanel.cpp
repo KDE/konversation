@@ -408,7 +408,7 @@ void ChannelListPanel::adjustFocus()
 {
 }
 
-void ChannelListPanel::contextMenu (KListView* l, QListViewItem* i, const QPoint& p)
+void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const QPoint& p)
 {
   KPopupMenu* showURLmenu = new KPopupMenu(this);
   showURLmenu->setTitle( i18n("Open URL") );
