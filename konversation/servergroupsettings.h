@@ -43,6 +43,7 @@ class ServerGroupSettings
     void setServerList(const ServerList& list);
     void addServer(const ServerSettings& settings) { m_serverList.append(settings); }
     ServerList serverList() const { return m_serverList; }
+    ServerSettings serverByIndex(unsigned int index) const;
 
     void setIdentity(Identity* identity) { m_identity = identity; }
     Identity* identity() const { return m_identity; }
@@ -50,6 +51,7 @@ class ServerGroupSettings
     void setChannelList(const ChannelList& list);
     void addChannel(const ChannelSettings& channel) { m_channelList.append(channel); }
     ChannelList channelList() const { return m_channelList; }
+    ChannelSettings channelByIndex(unsigned int index) const;
 
     void setConnectCommands(const QString& commands) { m_connectCommands = commands; }
     QString connectCommands() const { return m_connectCommands; }

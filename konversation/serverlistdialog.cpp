@@ -186,7 +186,6 @@ namespace Konversation {
     layout->setRowStretch(3, 10);
   
     // Load server list
-    int index = 0;
     Konversation::ServerGroupList serverGroups = m_preferences->serverGroupList();
     Konversation::ServerGroupList::iterator it;
     

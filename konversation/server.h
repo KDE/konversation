@@ -35,6 +35,7 @@
 
 #include "sslsocket.h"
 #include "serversettings.h"
+#include "servergroupsettings.h"
 
 /*
   @author Dario Abatianni
@@ -69,7 +70,7 @@ class Server : public QObject
 
     QString getServerName() const;
     QString getServerGroup() const;
-    Identity *getIdentity();
+    Identity *getIdentity() const;
     bool getUseSSL() const;
     QString getSSLInfo() const;
     int getPort() const;
@@ -382,9 +383,9 @@ class Server : public QObject
     void incoming();
     void processIncomingData();
     void send();
-    /** 
-	Because KBufferedSocket has no closed(int) signal we use this slot to call broken(0)
-    */
+    /**
+     *Because KBufferedSocket has no closed(int) signal we use this slot to call broken(0)
+     */
     void closed();
     void broken(int state);
     void sslError();
@@ -417,7 +418,7 @@ class Server : public QObject
     static const int BUFFER_LEN=513;
     
     /// Initialize the class
-    void init(KonversationMainWindow* mainWindow);
+    void init(KonversationMainWindow* mainWindow, const QString& nick);
     
     /// Initialize the timers
     void initTimers();
@@ -429,7 +430,6 @@ class Server : public QObject
 
     
     void startNotifyCheckTimer();
-    void setIdentity(Identity *newIdentity);
 
     void autoRejoinChannels();
     
@@ -500,8 +500,6 @@ class Server : public QObject
     QString serverNickPrefixes;     // Prefixes used by the server to indicate a mode
     QString serverNickPrefixModes;  // if supplied: modes related to those prefixes
     QString channelPrefixes;        // prefixes that indicate channel names. defaults to RFC1459 "#&"
-
-    Identity* identity;
 
     bool autoJoin;
     bool autoRejoin;
@@ -586,7 +584,8 @@ class Server : public QObject
     NickInfoMap m_queryNicks;
     
     Konversation::ServerSettings m_serverSettings;
-    QString m_serverGroup;
+    Konversation::ServerGroupSettings m_serverGroup;
+    unsigned int m_currentServerIndex;
 };
 
 #endif

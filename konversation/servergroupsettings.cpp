@@ -67,10 +67,28 @@ void ServerGroupSettings::setServerList(const ServerList& list)
   m_serverList = list;
 }
 
+ServerSettings ServerGroupSettings::serverByIndex(unsigned int index) const
+{
+  if(index < m_serverList.count()) {
+    return m_serverList[index];
+  }
+
+  return ServerSettings();
+}
+
 void ServerGroupSettings::setChannelList(const ChannelList& list)
 {
   m_channelList.clear();
   m_channelList = list;
+}
+
+ChannelSettings ServerGroupSettings::channelByIndex(unsigned int index) const
+{
+  if(index < m_channelList.count()) {
+    return m_channelList[index];
+  }
+
+  return ChannelSettings();
 }
 
 //
