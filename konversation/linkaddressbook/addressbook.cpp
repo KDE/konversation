@@ -245,7 +245,7 @@ int Addressbook::presenceStatus(const KABC::Addressee &addressee) {
  * @return 0 (we aren't connected to the server), 1 (offline), 3 (away), 4 (online)
  */
 int Addressbook::presenceStatusByNick(const QString &ircnick, const QString &server) {
-	if(ircnick.isEmpty() || server.isEmpty()) {
+	if(ircnick.isEmpty() /* || server.isEmpty()*/) {  //server stuff not implemented yet.  we need to hurry up on this. FIXME
 		kdDebug() << "presenceStatusByNick called, but ircnick or server was empty/null" << endl;
 		return 0;
 	}

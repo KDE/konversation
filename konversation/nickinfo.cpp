@@ -96,6 +96,8 @@ void NickInfo::setAway(bool state) {
   away = state; 
   owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
+  if(!addressee.isEmpty())
+    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
 }
 void NickInfo::setAwayMessage(const QString& newMessage) { 
   if(awayMessage == newMessage) return;
