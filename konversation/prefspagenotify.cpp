@@ -72,10 +72,10 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   actionEditBox->setSpacing(spacingHint());
   actionEditBox->setEnabled(useNotifyCheck->isChecked());
 
-  QLabel* notifyActionLabel = new QLabel(i18n("Command executed when nickname is double clicked:"), actionEditBox);
+  QLabel* notifyActionLabel = new QLabel(i18n("Command &executed when nickname is double clicked:"), actionEditBox);
   notifyActionInput = new KLineEdit(preferences->getNotifyDoubleClickAction(), actionEditBox);
   notifyActionLabel->setBuddy(notifyActionInput);
-  
+
   notifyLayout->addWidget(delayBox);
   notifyLayout->addWidget(listBox);
   notifyLayout->addWidget(actionEditBox);
@@ -86,7 +86,7 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   connect(removeButton, SIGNAL(clicked()), this, SLOT(removeNotify()) );
 
   QStringList notifyList(preferences->getNotifyList());
-  
+
   // Insert Notify items backwards to get them sorted properly
   for(int index = notifyList.count(); index != 0; index--)
   {
@@ -104,9 +104,9 @@ PrefsPageNotify::~PrefsPageNotify()
 void PrefsPageNotify::newNotify()
 {
   bool ok = false;
-  QString newPattern = KInputDialog::getText(i18n("Nick Watch Dialog"), 
+  QString newPattern = KInputDialog::getText(i18n("Nick Watch Dialog"),
     i18n("Add nick to watch for:"), i18n("New"), &ok, parentFrame);
-  
+
   if(ok)
   {
     KListViewItem* newItem = new KListViewItem(notifyListView, newPattern);
@@ -117,7 +117,7 @@ void PrefsPageNotify::newNotify()
 void PrefsPageNotify::removeNotify()
 {
   QListViewItem* selected = notifyListView->selectedItem();
-  
+
   if(selected)
   {
     if(selected->itemBelow()) {

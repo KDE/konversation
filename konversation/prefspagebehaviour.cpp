@@ -39,15 +39,15 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
 
   rawLogCheck = new QCheckBox(i18n("Show ra&w log window on startup"), parentFrame, "raw_log_check");
   rawLogCheck->setChecked(preferences->getRawLog());
-      
-  useCustomBrowserCheck = new QCheckBox(i18n("Use custom web browser:"), parentFrame, "useCustomBrowserCheck");
+
+  useCustomBrowserCheck = new QCheckBox(i18n("Use custom web &browser:"), parentFrame, "useCustomBrowserCheck");
   useCustomBrowserCheck->setChecked(!preferences->getWebBrowserUseKdeDefault());
   browserCmdInput = new KLineEdit(parentFrame, "browserCmdInput");
   browserCmdInput->setEnabled(useCustomBrowserCheck->isChecked());
   browserCmdInput->setText(preferences->getWebBrowserCmd());
   connect(useCustomBrowserCheck, SIGNAL(toggled(bool)), browserCmdInput, SLOT(setEnabled(bool)));
-  
-  QLabel* commandCharLabel = new QLabel(i18n("&Command char:"), parentFrame);
+
+  QLabel* commandCharLabel = new QLabel(i18n("Comman&d char:"), parentFrame);
   commandCharInput = new KLineEdit(preferences->getCommandChar(), parentFrame);
   commandCharInput->setMaxLength(1);
   commandCharLabel->setBuddy(commandCharInput);
@@ -57,7 +57,7 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   ctcpVersionLabel->setBuddy(ctcpVersionInput);
   QString msg = i18n("<qt>Here you can set a custom reply for <b>CTCP <i>VERSION</i></b> requests.</qt>");
   QWhatsThis::add(ctcpVersionLabel,msg);
-  
+
   QGroupBox* connectionGroup = new QGroupBox(i18n("Connection"), parentFrame, "connectionGroup");
   connectionGroup->setColumnLayout(0, Qt::Vertical);
   connectionGroup->setMargin(marginHint());
@@ -83,7 +83,7 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   connect(autoReconnectCheck, SIGNAL(toggled(bool)), reconnectTimeoutLabel, SLOT(setEnabled(bool)));
   connect(autoReconnectCheck, SIGNAL(toggled(bool)), reconnectTimeoutSpin, SLOT(setEnabled(bool)));
   connect(autoReconnectCheck, SIGNAL(toggled(bool)), autoRejoinCheck, SLOT(setEnabled(bool)));
-    
+
   int row = 0;
   connectionLayout->addMultiCellWidget(autoReconnectCheck, row, row, 0, 1);
   row++;
@@ -94,8 +94,8 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   row++;
   connectionLayout->addMultiCellWidget(autojoinOnInviteCheck, row, row, 0, 1);
   connectionLayout->setColStretch(1, 10);
-    
-  QGroupBox* nickCompletionGroup = new QGroupBox(i18n("Nickname Completion"), parentFrame, "nickCompletionGroup");
+
+  QGroupBox* nickCompletionGroup = new QGroupBox(i18n("&Nickname Completion"), parentFrame, "nickCompletionGroup");
   nickCompletionGroup->setMargin(marginHint());
   nickCompletionGroup->setColumnLayout(0, Qt::Vertical);
   QGridLayout* nickCompletionLayout = new QGridLayout(nickCompletionGroup->layout(), 2, 4, spacingHint());
@@ -116,7 +116,7 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   middleLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   suffixMiddleInput = new KLineEdit(preferences->getNickCompleteSuffixMiddle(), nickCompletionGroup);
   middleLabel->setBuddy(suffixMiddleInput);
-    
+
   row = 0;
   nickCompletionLayout->addWidget(modeLbl, row, 0);
   nickCompletionLayout->addMultiCellWidget(completionModeCBox, row, row, 1, 3);
@@ -125,7 +125,7 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   nickCompletionLayout->addWidget(suffixStartInput, row, 1);
   nickCompletionLayout->addWidget(middleLabel, row, 2);
   nickCompletionLayout->addWidget(suffixMiddleInput, row, 3);
-  
+
   row = 0;
   generalLayout->addMultiCellWidget(trayIconCheck, row, row, 0, 1);
   row++;
@@ -167,7 +167,7 @@ void PrefsPageBehaviour::applyPreferences()
   preferences->setAutoRejoin(autoRejoinCheck->isChecked());
   preferences->setAutojoinOnInvite(autojoinOnInviteCheck->isChecked());
   preferences->setMaximumLagTime(reconnectTimeoutSpin->value());
-    
+
   preferences->setNickCompletionMode(completionModeCBox->currentItem());
   preferences->setNickCompleteSuffixStart(suffixStartInput->text());
   preferences->setNickCompleteSuffixMiddle(suffixMiddleInput->text());

@@ -62,12 +62,12 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
 
   dccSpinBoxes->setStretchFactor(dccRollbackLabel,10);
 
-  dccAutoGet=new QCheckBox(i18n("&Automatically accept DCC download"),parentFrame,"dcc_autoget_checkbox");
+  dccAutoGet=new QCheckBox(i18n("Automatically accept &DCC download"),parentFrame,"dcc_autoget_checkbox");
   connect(dccAutoGet, SIGNAL(stateChanged(int)), this, SLOT(autoGetStateChanged(int)));
-  dccAutoResume=new QCheckBox(i18n("&Automatically resume DCC download"), parentFrame,"dcc_autoresume_checkbox");
+  dccAutoResume=new QCheckBox(i18n("Au&tomatically resume DCC download"), parentFrame,"dcc_autoresume_checkbox");
   connect(dccAutoResume, SIGNAL(stateChanged(int)), this, SLOT(autoResumeStateChanged(int)));
   dccAddSender=new QCheckBox(i18n("Add &sender to file name"),parentFrame,"dcc_sender_checkbox");
-  dccCreateFolder=new QCheckBox(i18n("&Create folder for sender"),parentFrame,"dcc_create_folder_checkbox");
+  dccCreateFolder=new QCheckBox(i18n("Cr&eate folder for sender"),parentFrame,"dcc_create_folder_checkbox");
 
   dccAddSender->setChecked(preferences->getDccAddPartner());
   dccCreateFolder->setChecked(preferences->getDccCreateFolder());

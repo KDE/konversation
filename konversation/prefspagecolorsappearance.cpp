@@ -25,11 +25,11 @@ PrefsPageColorsAppearance::PrefsPageColorsAppearance(QFrame* newParent,Preferenc
  : PrefsPage(newParent, newPreferences)
 {
   QGridLayout* colorLayout = new QGridLayout(parentFrame, 4, 4, marginHint(), spacingHint());
-  
-  colorList.append(i18n("&Action:")+",ActionMessage");
+
+  colorList.append(i18n("Actio&n:")+",ActionMessage");
   colorList.append(i18n("Bac&klog:")+",BacklogMessage");
-  colorList.append(i18n("&Channel message:")+",ChannelMessage");
-  colorList.append(i18n("C&ommand message:")+",CommandMessage");
+  colorList.append(i18n("Channel &message:")+",ChannelMessage");
+  colorList.append(i18n("Comman&d message:")+",CommandMessage");
   colorList.append(i18n("&Hyperlink:")+",LinkMessage");
   colorList.append(i18n("&Query message:")+",QueryMessage");
   colorList.append(i18n("&Server message:")+",ServerMessage");
@@ -39,7 +39,7 @@ PrefsPageColorsAppearance::PrefsPageColorsAppearance(QFrame* newParent,Preferenc
   int col = 0;
   QString label;
   QString name;
-  
+
   for(unsigned int index = 0; index < colorList.count(); index++) {
     label = colorList[index].section(',',0,0);
     name = colorList[index].section(',',1);
@@ -71,40 +71,40 @@ PrefsPageColorsAppearance::PrefsPageColorsAppearance(QFrame* newParent,Preferenc
     i18n("&Input fields and nick list use custom colors"), parentFrame, "input_fields_color_check");
   colorInputFieldsCheck->setChecked(preferences->getColorInputFields());
   colorLayout->addMultiCellWidget(colorInputFieldsCheck, row, row, 0, 3);
-    
-  
+
+
   row++;
-  QGroupBox* ircColorGroup = new QGroupBox(i18n("IRC Colors"), parentFrame);
+  QGroupBox* ircColorGroup = new QGroupBox(i18n("I&RC Colors"), parentFrame);
   ircColorGroup->setColumnLayout(0, Qt::Vertical);
   ircColorGroup->setMargin(marginHint());
   QGridLayout* ircColorLayout = new QGridLayout(ircColorGroup->layout(), 2, 4, spacingHint());
-  
+
   int r = 0;
-  parseIrcColorsCheck = new QCheckBox(i18n("Parse color codes"), ircColorGroup);
+  parseIrcColorsCheck = new QCheckBox(i18n("&Parse color codes"), ircColorGroup);
   parseIrcColorsCheck->setChecked(!preferences->getFilterColors());
-  
+
   ircColorLayout->addMultiCellWidget(parseIrcColorsCheck, r, r, 0, 3);
-  
+
   QStringList colors = preferences->getIRCColorList();
   col = 0;
   r = 1;
-  
+
   for(int i = 0; i < 16; i++) {
     QLabel* label = new QLabel(QString::number(i) + ":", ircColorGroup);
     KColorButton* button = new KColorButton(ircColorGroup);
     ircColorBtnList.append(button);
     button->setColor(colors[i]);
-    
+
     ircColorLayout->addWidget(label, r, col);
     ircColorLayout->addWidget(button, r, col + 1);
     r++;
-    
+
     if(r > 4) {
       r = 1;
       col += 2;
     }
   }
-  
+
   colorLayout->addMultiCellWidget(ircColorGroup, row, row, 0, 3);
 
   row++;
@@ -128,14 +128,14 @@ void PrefsPageColorsAppearance::applyPreferences()
   }
 
   preferences->setColorInputFields(colorInputFieldsCheck->isChecked());
-  
+
   QStringList colorList;
-  
+
   for(unsigned int i = 0; i < ircColorBtnList.count(); i++) {
     KColorButton* button = ircColorBtnList.at(i);
     colorList.append(button->color().name());
   }
-  
+
   preferences->setIRCColorList(colorList);
   preferences->setFilterColors(!parseIrcColorsCheck->isChecked());
 }

@@ -49,10 +49,10 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
 
 
   // Set up osd widgets
-  osdActionsBox = new QVGroupBox(i18n("Show OSD Message"), parentFrame, "osd_actions_group");
-  osdShowOwnNick = new QCheckBox(i18n("If &own nick appears in channel message"), osdActionsBox, "osd_show_ownnick");
-  osdShowChannel = new QCheckBox(i18n("On any &channel message"), osdActionsBox, "osd_show_channel");
-  osdShowQuery = new QCheckBox(i18n("&On query activity"), osdActionsBox, "osd_show_query");
+  osdActionsBox = new QVGroupBox(i18n("Sho&w OSD Message"), parentFrame, "osd_actions_group");
+  osdShowOwnNick = new QCheckBox(i18n("&If own nick appears in channel message"), osdActionsBox, "osd_show_ownnick");
+  osdShowChannel = new QCheckBox(i18n("On any channel &message"), osdActionsBox, "osd_show_channel");
+  osdShowQuery = new QCheckBox(i18n("On &query activity"), osdActionsBox, "osd_show_query");
   osdShowChannelEvent = new QCheckBox(i18n("On &Join/Part events"), osdActionsBox, "osd_show_event");
 
   useOSDCheck->setChecked(preferences->getOSDUsage());
@@ -74,7 +74,7 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
 
   //color box
   osdColorsBox = new QVGroupBox(i18n("Colors"), parentFrame, "osd_colors_group");
-  useCustomColorsCheck = new QCheckBox(i18n("&Use custom colors"), osdColorsBox, "use_custom_colors_checkbox");
+  useCustomColorsCheck = new QCheckBox(i18n("Us&e custom colors"), osdColorsBox, "use_custom_colors_checkbox");
   useCustomColorsCheck->setChecked(preferences->getOSDUseCustomColors());
 
   QHBox *osdTextColorBox = new QHBox(osdColorsBox);
@@ -90,9 +90,9 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdBackgroundColorLabel->setBuddy(osdBackgroundColorChooser);
 
    //others box
-  osdOthersBox = new QVGroupBox("Other settings", parentFrame, "osd_others_group");
+  osdOthersBox = new QVGroupBox("O&ther settings", parentFrame, "osd_others_group");
   QHBox* durationBox = new QHBox(osdOthersBox);
-  QLabel *osdDurationLabel = new QLabel(i18n("&Duration:"), durationBox);
+  QLabel *osdDurationLabel = new QLabel(i18n("Du&ration:"), durationBox);
   osdDurationSpin = new KIntSpinBox(durationBox);
   osdDurationSpin->setSuffix("ms");
   osdDurationSpin->setMaxValue( 10000 );

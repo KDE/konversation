@@ -85,7 +85,7 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
   QHBox* buttonBox=new QHBox(parentFrame);
   buttonBox->setSpacing(spacingHint());
   // Add the buttons
-  connectButton=new QPushButton(i18n("&Connect"),buttonBox);
+  connectButton=new QPushButton(i18n("Connec&t"),buttonBox);
   connectButton->setDisabled(true);
   newServerButton=new QPushButton(i18n("&New Server..."),buttonBox);
   editServerButton=new QPushButton(i18n("&Edit..."),buttonBox);
@@ -297,7 +297,7 @@ void PrefsPageServerList::createServer(const QString& groupName,
                                        const QString& identity,
                                        const QString& connectCommands)
 {
-  
+
   int id = preferences->addServer(groupName+","+
                                   serverName+","+
                                   serverPort+","+
@@ -307,7 +307,7 @@ void PrefsPageServerList::createServer(const QString& groupName,
                                   "0,"+ //auto connect
                                   identity+","+
                                   connectCommands);
-  
+
   // find branch to insert the new item into
   QListViewItem* branch=findBranch(groupName);
 

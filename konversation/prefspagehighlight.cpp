@@ -43,7 +43,7 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
 {
   // Add the layout to the widget
   QGridLayout* highlightLayout=new QGridLayout(parentFrame,3,2,marginHint(),spacingHint());
-  QHGroupBox* highlightListGroup=new QHGroupBox(i18n("Highlight List"),parentFrame,"highlight_pattern_group");
+  QHGroupBox* highlightListGroup=new QHGroupBox(i18n("&Highlight List"),parentFrame,"highlight_pattern_group");
 
   QVBox* highlightListBox=new QVBox(highlightListGroup);
   highlightListBox->setSpacing(spacingHint());
@@ -75,10 +75,10 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   patternInput=new KLineEdit(highlightEditBox,"highlight_pattern_input");
   patternColor=new KColorCombo(highlightEditBox,"highlight_pattern_color");
   patternLabel->setBuddy(patternInput);
-  
+
   QHBox* highlightSoundBox=new QHBox(highlightListBox);
   highlightSoundBox->setSpacing(spacingHint());
-  
+
   soundLabel = new QLabel(i18n("&Sound:"), highlightSoundBox);
   soundPlayBtn = new QPushButton(highlightSoundBox, "highlight_sound_play_button");
   soundPlayBtn->setPixmap(SmallIcon( "player_play" ));
@@ -87,7 +87,7 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
 
   QHBox* autoTextBox=new QHBox(highlightListBox);
   autoTextBox->setSpacing(spacingHint());
-  autoTextLabel=new QLabel(i18n("&Auto text:"),autoTextBox);
+  autoTextLabel=new QLabel(i18n("Auto &text:"),autoTextBox);
   autoTextInput=new KLineEdit(autoTextBox,"auto_text_input");
   autoTextLabel->setBuddy(autoTextInput);
 
@@ -99,11 +99,11 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   soundPlayBtn->setEnabled(false);
   autoTextInput->setEnabled(false);
   autoTextLabel->setEnabled(false);
-  
+
   QString filter = "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm";
   soundURL->setFilter(filter);
   soundURL->setCaption(i18n("Select Sound File"));
-  
+
   // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]
   // find the first "sound"-resource that contains files
   QStringList soundDirs = KGlobal::dirs()->findDirs("data", "konversation/sounds");
@@ -129,14 +129,14 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   enableSoundCheck = new QCheckBox(i18n("&Enable sounds for highlight list items"),
     parentFrame, "highlight_enable_sound_check");
   enableSoundCheck->setChecked(preferences->getHilightSoundEnabled());
-  
-  currentNickCheck=new QCheckBox(i18n("Always highlight &current nick:"),parentFrame,"highlight_current_nick_check");
+
+  currentNickCheck=new QCheckBox(i18n("Al&ways highlight current nick:"),parentFrame,"highlight_current_nick_check");
   currentNickCheck->setChecked(preferences->getHilightNick());
   currentNickColor=new KColorCombo(parentFrame,"current_nick_color");
   currentNickColor->setColor(preferences->getHilightNickColor());
   currentNickChanged(preferences->getHilightNick() ? 2 : 0);
 
-  ownLinesCheck=new QCheckBox(i18n("Always highlight &own lines:"),parentFrame,"highlight_own_lines_check");
+  ownLinesCheck=new QCheckBox(i18n("Always highlight own &lines:"),parentFrame,"highlight_own_lines_check");
   ownLinesColor=new KColorCombo(parentFrame,"own_lines_color");
   ownLinesCheck->setChecked(preferences->getHilightOwnLines());
   ownLinesColor->setColor(preferences->getHilightOwnLinesColor());
@@ -151,10 +151,10 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
 
   int row=0;
   highlightLayout->addMultiCellWidget(highlightListGroup,row,row,0,1);
-  
+
   row++;
   highlightLayout->addMultiCellWidget(enableSoundCheck, row, row, 0, 1);
-  
+
   row++;
   highlightLayout->addWidget(currentNickCheck,row,0);
   highlightLayout->addWidget(currentNickColor,row,1);
@@ -172,7 +172,7 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   connect(soundPlayBtn, SIGNAL(clicked()), this, SLOT(playSound()));
 
   connect(autoTextInput, SIGNAL(textChanged(const QString&)), this, SLOT(autoTextChanged(const QString&)));
-  
+
   connect(newButton,SIGNAL (clicked()),this,SLOT (addHighlight()) );
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeHighlight()) );
 

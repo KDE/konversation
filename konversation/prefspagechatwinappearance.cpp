@@ -31,18 +31,18 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QFrame* newParent,Prefere
  : PrefsPage(newParent, newPreferences)
 {
   QGridLayout* chatLayout = new QGridLayout(parentFrame, 4, 3, marginHint(), spacingHint());
-  
+
   // Font settings
-  QGroupBox* fontGBox = new QGroupBox(i18n("Fonts"), parentFrame, "fons_groupbox");
+  QGroupBox* fontGBox = new QGroupBox(i18n("Fo&nts"), parentFrame, "fons_groupbox");
   fontGBox->setColumnLayout(0, Qt::Vertical);
   fontGBox->setMargin(marginHint());
   QGridLayout* fontLayout = new QGridLayout(fontGBox->layout(), 1, 3, spacingHint());
-  
+
   QLabel* textFontLabel = new QLabel(i18n("Chat text:"),fontGBox);
   textFont=preferences->getTextFont();
   textPreviewLabel = new QLabel(fontGBox);
   textPreviewLabel->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-  QPushButton* textFontButton = new QPushButton(i18n("&Choose..."),fontGBox,"text_font_button");
+  QPushButton* textFontButton = new QPushButton(i18n("Choos&e..."),fontGBox,"text_font_button");
   connect(textFontButton, SIGNAL(clicked()), this, SLOT(textFontClicked()));
 
   QLabel* listFontLabel = new QLabel(i18n("Nickname list:"), fontGBox);
@@ -52,11 +52,11 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QFrame* newParent,Prefere
   QPushButton* listFontButton = new QPushButton(i18n("C&hoose..."), fontGBox, "list_font_button");
   connect(listFontButton, SIGNAL(clicked()), this, SLOT(listFontClicked()));
 
-  fixedMOTDCheck = new QCheckBox(i18n("Use a fixed font for &MOTD messages"), fontGBox, "fixed_motd_check");
+  fixedMOTDCheck = new QCheckBox(i18n("&Use a fixed font for MOTD messages"), fontGBox, "fixed_motd_check");
   fixedMOTDCheck->setChecked(preferences->getFixedMOTD());
-  
+
   updateFonts();
-  
+
   int row = 0;
   fontLayout->addWidget(textFontLabel, row, 0);
   fontLayout->addWidget(textPreviewLabel, row, 1);
@@ -68,9 +68,9 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QFrame* newParent,Prefere
   row++;
   fontLayout->addMultiCellWidget(fixedMOTDCheck, row, row, 0, 2);
   fontLayout->setColStretch(1, 10);
-  
+
   QVGroupBox* timestampBox = new QVGroupBox(i18n("Timestamps"), parentFrame);
-  
+
   doTimestamping = new QCheckBox(i18n("Show &timestamps"), timestampBox, "show_timestamps_checkbox");
 
   showDate=new QCheckBox(i18n("Show &dates"), timestampBox, "show_date_checkbox");
@@ -91,32 +91,32 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QFrame* newParent,Prefere
   formatLabel->setBuddy(timestampFormat);
 
   connect(doTimestamping, SIGNAL(stateChanged(int)), this, SLOT(timestampingChanged(int)));
-  
+
   // find actual timestamp format
   for(int index=0; index < timestampFormat->count(); index++) {
     if(timestampFormat->text(index) == preferences->getTimestampFormat()) {
       timestampFormat->setCurrentItem(index);
     }
   }
-    
+
   // Take care of ghosting / unghosting format widget
   timestampingChanged(preferences->getTimestamping() ? 2 : 0);
 
-  QVGroupBox* layoutGroup = new QVGroupBox(i18n("Layout"), parentFrame, "layout_options_group");
-  
-  showTopic=new QCheckBox(i18n("Show channel topic"), layoutGroup, "show_topic");
+  QVGroupBox* layoutGroup = new QVGroupBox(i18n("&Layout"), parentFrame, "layout_options_group");
+
+  showTopic=new QCheckBox(i18n("&Show channel topic"), layoutGroup, "show_topic");
   showTopic->setChecked(preferences->getShowTopic());
-    
+
   showModeButtons=new QCheckBox(i18n("Show channel &mode buttons"), layoutGroup, "show_modebuttons_checkbox");
   showModeButtons->setChecked(preferences->getShowModeButtons());
-  
+
   showQuickButtons=new QCheckBox(i18n("Show quick &buttons"), layoutGroup, "show_quickbuttons_checkbox");
   showQuickButtons->setChecked(preferences->getShowQuickButtons());
 
-  autoUserhostCheck=new QCheckBox(i18n("Show h&ostmasks in nickname list"), layoutGroup, "auto_userhost_check");
+  autoUserhostCheck=new QCheckBox(i18n("Show hostmasks &in nickname list"), layoutGroup, "auto_userhost_check");
   autoUserhostCheck->setChecked(preferences->getAutoUserhost());
-  
-  QGroupBox* backgroundImageBox = new QGroupBox("Use a bac&kground image", parentFrame);
+
+  QGroupBox* backgroundImageBox = new QGroupBox("Use a back&ground image", parentFrame);
   backgroundImageBox->setColumnLayout(0, Qt::Horizontal);
   backgroundImageBox->setMargin(marginHint());
   backgroundImageBox->setCheckable(TRUE);
@@ -125,7 +125,7 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QFrame* newParent,Prefere
 
   QGridLayout* backgroundImageLayout=new QGridLayout(backgroundImageBox->layout(),4,2,spacingHint(),"background_image_layout");
 
-  QLabel* backgroundLabel = new QLabel(i18n("Path:"), backgroundImageBox );
+  QLabel* backgroundLabel = new QLabel(i18n("&Path:"), backgroundImageBox );
   backgroundURL = new KURLRequester(backgroundImageBox, "background_image_url");
 
   backgroundURL->setCaption(i18n("Select Background Image"));
@@ -197,7 +197,7 @@ void PrefsPageChatWinAppearance::timestampingChanged(int state)
   timestampFormat->setEnabled(state == 2);
   formatLabel->setEnabled(state == 2);
   showDate->setEnabled(state == 2);
-  
+
   if(state != 2)
   {
     showDate->setChecked(false);

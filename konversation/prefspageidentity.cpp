@@ -109,7 +109,7 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   kickInput=new KLineEdit(parentFrame);
   kickLabel->setBuddy(kickInput);
 
-  insertRememberLineOnAwayCheck=new QCheckBox(i18n("&Insert remember line when switching state to away"),parentFrame);
+  insertRememberLineOnAwayCheck=new QCheckBox(i18n("Insert remember &line when switching state to away"),parentFrame);
   showAwayMessageCheck=new QCheckBox(i18n("Show a&way messages"),parentFrame,"away_message_check");
 
   awayLabel=new QLabel(i18n("Away &message:"),parentFrame);

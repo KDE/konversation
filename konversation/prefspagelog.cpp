@@ -40,7 +40,7 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   QVBoxLayout *outer=new QVBoxLayout(parentFrame);
   outer->setSpacing(spacingHint());
 
-  loggingBox = new QGroupBox("&Enable logging",parentFrame);
+  loggingBox = new QGroupBox("Enable &logging",parentFrame);
   loggingBox->setColumnLayout(0, Qt::Vertical);
   loggingBox->setMargin(marginHint());
   loggingBox->setCheckable(TRUE);
@@ -61,7 +61,7 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   QToolButton* logPathBtn = new QToolButton(logPathBox, "logPathBtn");
   logPathBtn->setIconSet(SmallIconSet("folder"));
   connect(logPathBtn, SIGNAL(clicked()), this, SLOT(selectLogPath()));
-  
+
   lowerLog->setChecked(preferences->getLowerLog());
   logFollowsNick->setChecked(preferences->getLogFollowsNick());
 
@@ -95,7 +95,7 @@ void PrefsPageLog::applyPreferences()
 void PrefsPageLog::selectLogPath()
 {
   KURL url = KDirSelectDialog::selectDirectory(logPathInput->text(), false, parentFrame);
-  
+
   if(!url.isEmpty()) {
     logPathInput->setText(url.path());
   }

@@ -41,11 +41,11 @@ PrefsPageTabBehavior::PrefsPageTabBehavior(QFrame* newParent,Preferences* newPre
   bringToFrontCheck->setChecked(preferences->getBringToFront());
 
 #if QT_VERSION >= 0x030200
-  tabBarCloseButtonCheck = new QCheckBox(i18n("Show &a close tab button to the right in the tab bar"),
+  tabBarCloseButtonCheck = new QCheckBox(i18n("&Show a close tab button to the right in the tab bar"),
     parentFrame, "tab_bar_close_button");
   tabBarCloseButtonCheck->setChecked(preferences->getShowTabBarCloseButton());
 #endif
-    
+
   int row = 0;
   tabsLayout->addMultiCellWidget(closeButtonsCheck, row, row, 0, 1);
   row++;

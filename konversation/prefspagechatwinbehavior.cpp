@@ -34,21 +34,21 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
  : PrefsPage(newParent, newPreferences)
 {
   QGridLayout* chatLayout = new QGridLayout(parentFrame, 4, 3, marginHint(), spacingHint());
-  
+
   beepCheck = new QCheckBox(i18n("Bee&p on incoming ASCII BEL"), parentFrame, "beep_check");
   beepCheck->setChecked(preferences->getBeep());
 
   hideUnimportantCheck = new QCheckBox(i18n("&Hide Join/Part/Nick events"), parentFrame, "hide_unimportant_check");
   hideUnimportantCheck->setChecked(preferences->getHideUnimportantEvents());
-  
+
   disableExpansionCheck = new QCheckBox(i18n("&Disable %C, %B, %G, etc. expansion"), parentFrame, "disable_expansion_check");
   disableExpansionCheck->setChecked(preferences->getDisableExpansion());
-    
-  showRememberLineInAllWindows = new QCheckBox(i18n("Show remember line in all channels/queries"), parentFrame,
+
+  showRememberLineInAllWindows = new QCheckBox(i18n("Show remember &line in all channels/queries"), parentFrame,
    "show_remember_line_in_all_windows");
   showRememberLineInAllWindows->setChecked(preferences->getShowRememberLineInAllWindows());
 
-  redirectToStatusPaneCheck = new QCheckBox(i18n("Redirect all status messages to the server status window"), parentFrame,
+  redirectToStatusPaneCheck = new QCheckBox(i18n("&Redirect all status messages to the server status window"), parentFrame,
     "redirect_to_status_page_check");
   redirectToStatusPaneCheck->setChecked(preferences->getRedirectToStatusPane());
 
@@ -61,20 +61,20 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
   QWhatsThis::add(scrollbackMaxSpin,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
   QToolTip::add(scrollbackMaxSpin,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
   QToolTip::add(scrollbackMaxLabel,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
-    
-  QVGroupBox* sortOptionsGroup = new QVGroupBox(i18n("Nickname List"), parentFrame, "sort_options_group");
+
+  QVGroupBox* sortOptionsGroup = new QVGroupBox(i18n("&Nickname List"), parentFrame, "sort_options_group");
 
   QHBox* actionEditBox = new QHBox(sortOptionsGroup);
   actionEditBox->setSpacing(spacingHint());
   QLabel* channelActionLabel = new QLabel(i18n("Command executed on double click:"), actionEditBox);
   channelActionInput = new KLineEdit(preferences->getChannelDoubleClickAction(), actionEditBox);
-  
+
   sortCaseInsensitiveCheck = new QCheckBox(i18n("Sort case &insensitive"),sortOptionsGroup,"sort_case_insensitive_check");
   sortByStatusCheck = new QCheckBox(i18n("Sort by us&er status"),sortOptionsGroup,"sort_by_status_check");
 
   sortByStatusCheck->setChecked(preferences->getSortByStatus());
   sortCaseInsensitiveCheck->setChecked(preferences->getSortCaseInsensitive());
-  
+
   sortOrderGroup = new QWidget(sortOptionsGroup, "sorting_order_widget");
   sortOrderGroup->setEnabled(preferences->getSortByStatus());
 
@@ -103,18 +103,18 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
   QToolButton* sortMoveDown=new QToolButton(sortOrderGroup,"sort_move_up_button");
   sortMoveDown->setIconSet(SmallIconSet("down"));
   sortMoveDown->setAutoRepeat(true);
-  
+
   connect(sortByStatusCheck,SIGNAL (stateChanged(int)),this,SLOT (sortByStatusChanged(int)) );
   connect(sortMoveUp,SIGNAL (clicked()),this,SLOT (moveUp()) );
   connect(sortMoveDown,SIGNAL (clicked()),this,SLOT (moveDown()) );
-  
+
   QGridLayout* sortOrderLayout = new QGridLayout(sortOrderGroup,4,2,0,spacingHint());
   sortOrderLayout->addMultiCellWidget(sortingOrder, 0, 3, 0, 0);
   sortOrderLayout->addWidget(sortMoveUp, 1, 1);
   sortOrderLayout->addWidget(sortMoveDown, 2, 1);
   sortOrderLayout->setRowStretch(0, 10);
   sortOrderLayout->setRowStretch(3, 10);
-    
+
   int row = 0;
   chatLayout->addMultiCellWidget(beepCheck, row, row, 0, 2);
   row++;
@@ -147,7 +147,7 @@ void PrefsPageChatWinBehavior::sortByStatusChanged(int state)
 void PrefsPageChatWinBehavior::moveUp()
 {
   QListViewItem* item = sortingOrder->selectedItem();
-  
+
   if(item)
   {
     int pos = sortingOrder->itemIndex(item);
@@ -158,7 +158,7 @@ void PrefsPageChatWinBehavior::moveUp()
 void PrefsPageChatWinBehavior::moveDown()
 {
   QListViewItem* item = sortingOrder->selectedItem();
-  
+
   if(item)
   {
     int pos = sortingOrder->itemIndex(item);

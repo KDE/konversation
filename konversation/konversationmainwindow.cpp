@@ -119,22 +119,22 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
   KAction *preferencesAction = KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
-  new KAction(i18n("Server List"), 0, 0, this, SLOT(openServerList()), actionCollection(), "open_server_list");
-  new KAction(i18n("Quick Connect"), "connect_creating", 0, this, SLOT(openQuickConnectDialog()), actionCollection(), "quick_connect_dialog");
+  new KAction(i18n("&Server List"), 0, 0, this, SLOT(openServerList()), actionCollection(), "open_server_list");
+  new KAction(i18n("Quick &Connect"), "connect_creating", 0, this, SLOT(openQuickConnectDialog()), actionCollection(), "quick_connect_dialog");
 
-  new KAction(i18n("Watched Nicks Online"), 0, 0, this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
-  new KAction(i18n("Open Logfile"), 0, 0, this, SLOT(openLogfile()), actionCollection(), "open_logfile");
+  new KAction(i18n("&Watched Nicks Online"), 0, 0, this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
+  new KAction(i18n("&Open Logfile"), 0, 0, this, SLOT(openLogfile()), actionCollection(), "open_logfile");
 
-  new KAction(i18n("Channel List"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
-  new KAction(i18n("URL Catcher"), 0, 0, this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
+  new KAction(i18n("&Channel List"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
+  new KAction(i18n("&URL Catcher"), 0, 0, this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
 
-  new KAction(i18n("New Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
+  new KAction(i18n("&New Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
 
   // Actions to navigate through the different pages
-  new KAction(i18n("Next Tab"), "next",KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
-  new KAction(i18n("Previous Tab"), "previous",KShortcut("Alt+Left"),
+  new KAction(i18n("&Next Tab"), "next",KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
+  new KAction(i18n("&Previous Tab"), "previous",KShortcut("Alt+Left"),
     this,SLOT(previousTab()),actionCollection(),"previous_tab");
-  new KAction(i18n("Close Tab"),"tab_remove",KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
+  new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
   new TabAction(i18n("Go to Tab Number %1").arg( 1),0,KShortcut("Alt+1"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_1");
   new TabAction(i18n("Go to Tab Number %1").arg( 2),1,KShortcut("Alt+2"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_2");
   new TabAction(i18n("Go to Tab Number %1").arg( 3),2,KShortcut("Alt+3"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_3");
@@ -146,11 +146,11 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new TabAction(i18n("Go to Tab Number %1").arg( 9),8,KShortcut("Alt+9"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_9");
   new TabAction(i18n("Go to Tab Number %1").arg(10),9,KShortcut("Alt+0"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_0");
 
-  new KAction(i18n("Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
-  new KAction(i18n("Find Text..."),"find",KShortcut("F3"),this,SLOT(findTextShortcut()),actionCollection(),"find_text");
+  new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
+  new KAction(i18n("&Find Text..."),"find",KShortcut("F3"),this,SLOT(findTextShortcut()),actionCollection(),"find_text");
   new KAction(i18n("&Insert IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors");
   new KAction(i18n("Insert &Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line");
-  new KAction(i18n("Close All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
+  new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
 
   // Initialize KMainWindow->statusBar()
   statusBar();
@@ -904,7 +904,7 @@ void KonversationMainWindow::openServerList()
   Konversation::ServerListDialog dialog;
   KonversationApplication *konvApp = static_cast<KonversationApplication *>(KApplication::kApplication());
   connect(&dialog, SIGNAL(connectToServer(int)), konvApp, SLOT(connectToAnotherServer(int)));
-  
+
   dialog.exec();
 }
 

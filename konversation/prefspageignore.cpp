@@ -57,18 +57,18 @@ PrefsPageIgnore::PrefsPageIgnore(QFrame* newParent,Preferences* newPreferences) 
   buttonBox->setSpacing(spacingHint());
   newButton=new QPushButton(i18n("&New"),buttonBox);
   removeButton=new QPushButton(i18n("&Remove"),buttonBox);
-  clearButton=new QPushButton(i18n("&Clear"),buttonBox);
+  clearButton=new QPushButton(i18n("C&lear"),buttonBox);
 
   // Set up the checkboxes
   QHBox* flagBox=new QHBox(parentFrame);
   flagBox->setSpacing(spacingHint());
   IgnoreCheckBox* c;
   // Store the checkbox pointers in a list
-  c=new IgnoreCheckBox(i18n("&Channels"),flagBox,Ignore::Channel);
+  c=new IgnoreCheckBox(i18n("C&hannels"),flagBox,Ignore::Channel);
   checkList.append(c);
   c=new IgnoreCheckBox(i18n("&Queries"),flagBox,Ignore::Query);
   checkList.append(c);
-  c=new IgnoreCheckBox(i18n("N&otices"),flagBox,Ignore::Notice);
+  c=new IgnoreCheckBox(i18n("Not&ices"),flagBox,Ignore::Notice);
   checkList.append(c);
   c=new IgnoreCheckBox(i18n("C&TCPs"),flagBox,Ignore::CTCP);
   checkList.append(c);
