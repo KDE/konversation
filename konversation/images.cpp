@@ -120,8 +120,8 @@ void Images::initializeNickIcons()
   if( icons.count() < 7 ) // Sanity
     icons = KGlobal::dirs()->findAllResources("data","konversation/themes/default/*.png");
 
+  icons.sort();
   QStringList::Iterator it = icons.begin();
-  it.sort();
 
   /* The list is sorted alphabetically. */
 
