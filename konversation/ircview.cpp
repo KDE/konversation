@@ -404,7 +404,11 @@ void IRCView::doAppend(QString line)
   emit newText();
 
   // scroll view only if the scroll bar is already at the bottom
+#if QT_VERSION == 303
   bool doScroll=((contentsHeight()-visibleHeight())==contentsY());
+#else
+  bool doScroll=true;
+#endif
 
 #ifdef TABLE_VERSION
   setText("<qt><table cellpadding=\"0\" cellspacing=\"0\">"+buffer+"</table></qt>");

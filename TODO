@@ -10,8 +10,9 @@ Pasting into text views should trigger the paste mechanism
 Hurga: ^G shall beep
 
 nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  das markieren
-des letzten Zeitpunkts wo das Fenster aktiv war  und  die Text-Suche "
-
+      des letzten Zeitpunkts wo das Fenster aktiv war  und  die Text-Suche "
+*nobs* noch ein Feature-Request: alle "technischen" Meldungen aus # und query ausblenden können;
+       entweder ins Status-Fenster umleiten oder ganz verwerfen optional 
 Consistency check in Preferences:
 - Command Char must be present
 
