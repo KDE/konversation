@@ -836,6 +836,9 @@ void KonversationMainWindow::setShowTabBarCloseButton(bool) {}
 
 void KonversationMainWindow::closeEvent(QCloseEvent* e)
 {
+  KonversationApplication* konv_app=static_cast<KonversationApplication*>(KApplication::kApplication());
+  if ( konv_app->sessionSaving() ) m_closeApp = true;
+  
   if(KonversationApplication::preferences.getShowTrayIcon() && !m_closeApp) {
     // Message copied from kopete...
     KMessageBox::information(this,

@@ -1,4 +1,6 @@
 Changes from 0.13 to 0.14
+- Properly receive a logout/shutdown request and terminate konversation,
+  instead of minimizing to the systray.
 - Make OSD switchable on/off via DCOP. Thanks to Michael Goettsche! (BR 75870)
 - Dates can now be shown, next to the timestamp. Patch by Michael Goettsche
   (BR 82785) (thanks!)
