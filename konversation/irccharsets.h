@@ -40,14 +40,16 @@ class IRCCharsets
     
     /**
      * Converts the ambiguous encoding name to a short encoding name
-     * Like : iso8859-9 -> iso 8859-9
+     * Like : iso8859-9 -> iso 8859-9, iso-8859-9 -> iso 8859-9
+     * If the ambiguous name is invalid, returns QString:null.
      * @return a short encoding name or QString::null
      */
     static QString ambiguousNameToShortName( const QString& ambiguousName );
     
     /**
      * Returns the encoding index in the short names list or the descriptions list.
-     * If the encoding name is invalid, returns -1 .
+     * If the encoding name is invalid, returns -1.
+     * @return an index number of the encoding
      */
     static int shortNameToIndex( const QString& shortName );
     
@@ -69,7 +71,7 @@ class IRCCharsets
     static void private_init();
     static bool s_initialized;
 
-    static QMap<QString,QString> s_localeAliases;
+    static QMap<QString,QString> s_shortNameAliases;
     
     /**
      * short names list
@@ -86,7 +88,7 @@ class IRCCharsets
     static QStringList s_descriptiveNames;
     
     /**
-     * simplified short names list (internal use)
+     * simplified short names list (for internal use)
      * e.g. iso88591
      * used in @ref ambiguousNameToShortName()
      */

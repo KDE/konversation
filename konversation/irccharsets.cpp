@@ -46,7 +46,7 @@ int IRCCharsets::availableEncodingsCount()  // static
 QString IRCCharsets::shortNameToDescriptiveName( const QString& shortName ) // static
 {
   private_init();
-  return availableEncodingDescriptiveNames()[shortNameToIndex(shortName)];
+  return s_descriptiveNames[ shortNameToIndex( shortName ) ];
 }
 
 QString descriptiveNameToShortName( const QString& descriptiveName )  // static
@@ -59,10 +59,10 @@ QString IRCCharsets::ambiguousNameToShortName( const QString& ambiguousName )
   private_init();
   
   // simplify ambiguousName
-  QString simplifiedAmbiguousName( ambiguousName );
-  simplifiedAmbiguousName.replace( QRegExp( "[^a-zA-Z0-9]" ), "" );
+  QString simplifiedAmbiguousName( ambiguousName.lower() );
+  simplifiedAmbiguousName.replace( QRegExp( "[^a-z0-9]" ), "" );
   
-  // search
+  // search s_simplifiedShortNames
   int index = 0;
   for ( QStringList::iterator it = s_simplifiedShortNames.begin() ; it != s_simplifiedShortNames.end() ; ++it )
   {
@@ -70,6 +70,10 @@ QString IRCCharsets::ambiguousNameToShortName( const QString& ambiguousName )
       return s_shortNames[index];
     ++index;
   }
+  
+  // search s_shortNameAliases
+  if ( s_shortNameAliases.contains( simplifiedAmbiguousName ) )
+    return s_shortNameAliases[ simplifiedAmbiguousName ];
   
   // failed
   return QString::null;
@@ -126,7 +130,11 @@ void IRCCharsets::private_init()  // static, private
   if ( s_initialized )
     return;
   s_initialized = true;
-      
+  
+  // setup s_shortNameAliases
+  // use only [a-z0-9] for keys!
+  s_shortNameAliases[ "unicode" ] = "utf8";
+  
   // setup s_shortNames, s_descriptiveNames, s_simplifiedShortNames
   QRegExp reSimplify( "[^a-zA-Z0-9]" );
   s_descriptiveNames = KGlobal::charsets()->descriptiveEncodingNames();
@@ -150,4 +158,4 @@ bool IRCCharsets::s_initialized = false;
 QStringList IRCCharsets::s_shortNames;
 QStringList IRCCharsets::s_descriptiveNames;
 QStringList IRCCharsets::s_simplifiedShortNames;
-QMap<QString,QString> IRCCharsets::s_localeAliases;
+QMap<QString,QString> IRCCharsets::s_shortNameAliases;
