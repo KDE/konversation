@@ -399,6 +399,7 @@ void IRCView::appendBacklogMessage(const char* firstColumn,const char* rawMessag
 
 void IRCView::doAppend(QString line)
 {
+  kdDebug() << "IRCView::doAppend()" << endl;
   // Add line to buffer
   buffer+=line;
   emit newText();
