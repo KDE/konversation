@@ -105,12 +105,12 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   QLabel *osdScreenLabel = new QLabel(i18n("&Screen:"), screenBox);
   osdScreenCombo = new KComboBox(screenBox,"osd_screen_combo");
   osdScreenLabel->setBuddy(osdScreenCombo);
-  osdScreenCombo->setCurrentText(QString::number(preferences->getOSDScreen()));
 
   const int numScreens = QApplication::desktop()->numScreens();
     for( int i = 0; i < numScreens; i++ )
       osdScreenCombo->insertItem( QString::number( i ) );
 
+  osdScreenCombo->setCurrentText(QString::number(preferences->getOSDScreen()));
 
   // Take care of ghosting / unghosting close button checkboxes
   osdUsageChanged(preferences->getOSDUsage() ? 2 : 0);
