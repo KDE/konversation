@@ -48,6 +48,7 @@ class DccTransferSend : public DccTransfer
     void getAck();
     void socketError( int errorCode );
     void connectionTimeout();
+    void slotSendSocketClosed();
     
   protected:
     void cleanUp();

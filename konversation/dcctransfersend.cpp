@@ -211,8 +211,9 @@ void DccTransferSend::heard()  // slot
     cleanUp();
     return;
   }
-  connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() )    );
-  connect( m_sendSocket, SIGNAL( readyWrite() ), this, SLOT( writeData() ) );
+  connect( m_sendSocket, SIGNAL( readyRead()  ), this, SLOT( getAck()               ) );
+  connect( m_sendSocket, SIGNAL( readyWrite() ), this, SLOT( writeData()            ) );
+  connect( m_sendSocket, SIGNAL( closed()     ), this, SLOT( slotSendSocketClosed() ) );
   
   // we don't need ServerSocket anymore
   m_serverSocket->close();
@@ -242,7 +243,7 @@ void DccTransferSend::heard()  // slot
 
 void DccTransferSend::writeData()  // slot
 {
-  kdDebug() << "writeData()" << endl;
+  //kdDebug() << "writeData()" << endl;
   int actual = m_file.readBlock( m_buffer, m_bufferSize );
   if( actual > 0 )
   {
@@ -253,7 +254,7 @@ void DccTransferSend::writeData()  // slot
 
 void DccTransferSend::getAck()  // slot
 {
-  kdDebug() << "getAck()" << endl;
+  //kdDebug() << "getAck()" << endl;
   unsigned long pos;
   while( m_sendSocket->bytesAvailable() >= 4 )
   {
@@ -300,9 +301,19 @@ void DccTransferSend::connectionTimeout()  // slot
 {
   kdDebug() << "DccTransferSend::connectionTimeout()" << endl;
   
-  setStatus(Failed, i18n("Timed out"));
+  setStatus( Failed, i18n("Timed out") );
   updateView();
   cleanUp();
+}
+
+void DccTransferSend::slotSendSocketClosed()
+{
+  if( m_dccStatus == Sending )
+  {
+    setStatus( Failed, i18n("Remote user disconnected") );
+    updateView();
+    cleanUp();
+  }
 }
 
 #include "dcctransfersend.moc"
