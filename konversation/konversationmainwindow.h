@@ -77,6 +77,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void showView(ChatWindow* view);
 
     void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView);
+    void appendToFrontmostIfDifferent(const QString& type,const QString& message,ChatWindow* serverView);
 
     void updateFonts();
     void updateTabPlacement();

@@ -644,13 +644,15 @@ void Server::broken(int state)
   //       Or at least make sure that all gets reconnected properly
   if(autoReconnect && !getDeliberateQuit())
   {
-    statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName));
-    getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName),statusView);
+    QString ip = getIp();
+    if(ip.isEmpty()) ip = "No ip found";
+    statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 (%2) lost. Trying to reconnect.").arg(serverName,ip));
+    getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 (%2) lost. Trying to reconnect.").arg(serverName,ip),statusView);
     // TODO: Make retry counter configurable
     if(++reconnectCounter==10)
     {
-      statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 failed.").arg(serverName));
-      getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 failed.").arg(serverName),statusView);
+      statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 (%2) failed.").arg(serverName));
+      getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 (%2) failed.").arg(serverName),statusView);
       reconnectCounter=0;
       rejoinChannels = false;
     }
@@ -1114,7 +1116,9 @@ void Server::setDeliberateQuit(bool on)
 QString Server::getNumericalIp()
 {
   QHostAddress ip;
-  ip.setAddress(getIp());
+  QString sip = getIp();
+  if(sip.isEmpty()) return sip;
+  ip.setAddress(sip);
 
   return QString::number(ip.ip4Addr());
 }
@@ -1279,19 +1283,20 @@ const NickInfoMap* Server::getNicksOffline() { return &nicknamesOffline; }
 
 QString Server::getIp()
 {
-  // Get our own IP address.
-  KSocketAddress* ipAddr=KExtendedSocket::localAddress(serverSocket.fd());
-
+  //Below is the deprecated way.  Checking the docs, the correct way seems to be in 3.2
+//  KSocketAddress* ipAddr=KExtendedSocket::localAddress(serverSocket.fd());
+  const KSocketAddress*ipAddr = serverSocket.localAddress();
   if(ipAddr)
   {
     KInetSocketAddress inetSocket((const sockaddr_in*)ipAddr->address(),ipAddr->size());
 
     struct in_addr in_addr=inetSocket.hostV4();
     QString ip(KInetSocketAddress::addrToString(inetSocket.family(),&in_addr));
-    // remove temporary object
-    delete ipAddr;
+    // remove temporary object - only in deprecated way
+    //delete ipAddr;
     return ip;
   }
+  kdDebug() << "in getIp(), serverSocket.localAddress() is returning NULL" <<endl;
   return QString::null;
 }
 
