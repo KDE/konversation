@@ -14,14 +14,12 @@ if [ ! $TARGET ]
 then
   dcop $PORT Konversation error "Can't write into status view."
 else
-  PLAYING=`dcop amarok player nowPlaying`
+  TEXT=`dcop amarok player nowPlaying`
   
-  if [[ ${PLAYING//[[:space:]]} = "" ]]
+  if [[ ${TEXT//[[:space:]]} = "" ]]
   then
     dcop $PORT Konversation error "Nothing's playing in Amarok."
   else  
-    TEXT=`dcop amarok player nowPlaying`
-
     TOTAL=`dcop amarok player trackTotalTime`
     let TMIN=$TOTAL/60
     let TSEC=$TOTAL%60
