@@ -26,7 +26,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <kdebug.h>
-#include <kactioncollection.h> 
+#include <kactioncollection.h>
 #include <kaction.h>
 
 #include "chatwindow.h"
@@ -57,7 +57,7 @@ ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
   server=0;
   m_notificationsEnabled = true;
   m_channelEncodingSupported = false;
-  
+
 #ifdef USE_MDI
   mainLayout=new QVBoxLayout(this);
   mainLayout->setAutoAdd(true);
@@ -179,9 +179,9 @@ void ChatWindow::setMainWindow(KonversationMainWindow *mainWindow) {
 
   //setMainWindow may be called in a constructor, so make sure we call adjust
   //focus after it is set up.
-  QTimer::singleShot(0, this, SLOT(adjustFocus()));  
+  QTimer::singleShot(0, this, SLOT(adjustFocus()));
 }
-    
+
 Server* ChatWindow::getServer()
 {
   return server;
@@ -282,7 +282,7 @@ void ChatWindow::setLogfileName(const QString& name)
       logName=name+".log";
     } else if(server) {
       // make sure that no path delimiters are in the name
-      logName=server->getServerGroup().lower().replace(QRegExp("/"),"_")+"_"+name+".log";
+      logName=server->getServerGroup().lower().replace("/","_")+"_"+name+".log";
     }
 
     // "cd" into log path or create path, if it's not there
@@ -448,40 +448,40 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 {
   if(e->type() == QEvent::KeyPress) {
     QKeyEvent* ke = static_cast<QKeyEvent*>(e);
-    
+
     if(ke->key() == Qt::Key_Up && ke->state() == Qt::ShiftButton) {
       if(textView) {
         QScrollBar* sbar = textView->verticalScrollBar();
         sbar->setValue(sbar->value() - sbar->lineStep());
       }
-      
+
       return true;
     } else if(ke->key() == Qt::Key_Down && ke->state() == Qt::ShiftButton) {
       if(textView) {
         QScrollBar* sbar = textView->verticalScrollBar();
         sbar->setValue(sbar->value() + sbar->lineStep());
       }
-      
+
       return true;
     } else if(ke->key() == Qt::Key_Prior) {
       if(textView) {
         QScrollBar* sbar = textView->verticalScrollBar();
         sbar->setValue(sbar->value() - sbar->pageStep());
       }
-      
+
       return true;
     } else if(ke->key() == Qt::Key_Next) {
       if(textView) {
         QScrollBar* sbar = textView->verticalScrollBar();
         sbar->setValue(sbar->value() + sbar->pageStep());
       }
-      
+
       return true;
     }
 
 
   }
-  
+
 #ifdef USE_MDI
   return KMdiChildView::eventFilter(watched, e);
 #else

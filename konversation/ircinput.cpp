@@ -60,7 +60,7 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
   setTextFormat(PlainText);
 #endif
 
-  
+
   QObject *p=static_cast<QObject*>(parent);
   //find our parent ChatWindow derivative, if there is one
   while(p && !p->inherits("ChatWindow")) {
@@ -130,12 +130,12 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
             emit nickCompletion();
             return true;
           break;
-  
+
           case Key_Up:
             emit history(true);
             return true;
           break;
-  
+
           case Key_Down:
             emit history(false);
             return true;
@@ -155,7 +155,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
             return true;
           }
           break;
-  
+
           case Key_V:
           {
               if ( keyEvent->state() & ControlButton ) {
@@ -164,7 +164,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
               }
           }
           break;
-  
+
           default:
             // Check if the keystroke actually produced text. If not it was just a qualifier.
             if(!keyEvent->text().isEmpty())
@@ -251,7 +251,7 @@ void IRCInput::insert(const QString& textToInsert)
 {
   QString text(textToInsert);
   // replace \r with \n to make xterm pastes happy
-  text.replace(QRegExp("\r"),"\n");
+  text.replace("\r","\n");
   // is there a newline in the pasted/inserted text?
   if(text.find('\n')!=-1)
   {
@@ -272,7 +272,7 @@ void IRCInput::paste()
   {
     bool signal=false;
     // replace \r with \n to make xterm pastes happy
-    text.replace(QRegExp("\r"),"\n");
+    text.replace("\r","\n");
 
     //  remove all trailing newlines
     text.replace(QRegExp("\n+$"),"");
@@ -332,7 +332,7 @@ bool IRCInput::checkPaste(QString& text)
     text=MultilineEdit::edit(this,text);
     return true;
   }
-  
+
   return(doPaste==KMessageBox::Yes);
 }
 
@@ -346,16 +346,16 @@ void IRCInput::insertCompletion(const QString& nick)
 {
   int pos; // = cursorPosition();
   int oldPos; // = cursorPosition();
-  
+
   getCursorPosition(&oldPos,&pos);
   oldPos=pos;
-  
+
   QString line = text();
-  
+
   while(pos && line[pos-1] != ' ') pos--;
-  
+
   line.remove(pos, oldPos - pos);
-  
+
   // did we find the nick in the middle of the line?
   if(pos)
   {
@@ -370,7 +370,7 @@ void IRCInput::insertCompletion(const QString& nick)
     line.insert(pos, nick + addStart);
     pos += nick.length() + addStart.length();
   }
-  
+
   setText(line);
   setCursorPosition(0,pos);
 }

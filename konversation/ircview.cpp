@@ -182,7 +182,7 @@ void IRCView::urlClickSlot(const QString &url)
     else
     {
       QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
-      cmd.replace(QRegExp("%u"),url);
+      cmd.replace("%u",url);
       KProcess *proc = new KProcess;
       QStringList cmdAndArgs = KShell::splitArgs(cmd);
       *proc << cmdAndArgs;
@@ -214,12 +214,11 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
 
   // TODO: Use QStyleSheet::escape() here
 
-  // Replace all & with &amp;   We use QRegExp here because of pre 3.1 compatibility!
-  filteredLine.replace(QRegExp("&"),"&amp;");
+  filteredLine.replace("&","&amp;");
   // Replace all < with &lt;
-  filteredLine.replace(QRegExp("<"),"&lt;");
+  filteredLine.replace("<","&lt;");
   // Replace all > with &gt;
-  filteredLine.replace(QRegExp(">"),"&gt;");
+  filteredLine.replace(">","&gt;");
   // Replace all 0x03 without color number (reset color) with \0x031,0 or \0x030,1, depending on which one fits
   // with the users chosen colours, based on the relative brightness. TODO defaultColor needs explanation
   bool inverted=0; // TODO this flag should be stored somewhere
@@ -239,7 +238,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
     filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0031,0\\1");
 
   // Hack to allow for whois info hostmask info to not be parsed as email
-  filteredLine.replace(QRegExp("&amp;#64;"),"&#64;");
+  filteredLine.replace("&amp;#64;","&#64;");
 
   if(filteredLine.find("\x07")!=-1)
   {
@@ -340,9 +339,9 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
       else if(href.find(QRegExp("(([a-z]+[\\w\\x2E\\x2D]+)\\x40)")) == 0) href = "mailto:" + href;
 
       // Fix &amp; back to & in href ... kludgy but I don't know a better way.
-      href.replace(QRegExp("&amp;"),"&");
+      href.replace("&amp;","&");
       // Replace all spaces with %20 in href
-      href.replace(QRegExp(" "),"%20");
+      href.replace(" ","%20");
       // Build rich text link
       QString link("<font color=\"#"+linkColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
 
@@ -571,8 +570,8 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
   QString backlogColor=KonversationApplication::preferences.getColor("BacklogMessage");
 
   // Nicks are in "<nick>" format so replace the "<>"
-  first.replace(QRegExp("<"),"&lt;");
-  first.replace(QRegExp(">"),"&gt;");
+  first.replace("<","&lt;");
+  first.replace(">","&gt;");
 
   // extract timestamp from message string
   if(message.startsWith("["))

@@ -67,11 +67,11 @@ namespace Konversation {
                     aliasReplace = aliasList[index].section(' ',1 )+" "+line.section(' ',1 );
 
                 // protect "%%"
-                aliasReplace.replace(QRegExp("%%"),"%\x01");
+                aliasReplace.replace("%%","%\x01");
                 // replace %p placeholder with rest of line
-                aliasReplace.replace(QRegExp("%p"),line.section(' ',1));
+                aliasReplace.replace("%p",line.section(' ',1));
                 // restore "%<1>" as "%%"
-                aliasReplace.replace(QRegExp("%\x01"),"%%");
+                aliasReplace.replace("%\x01","%%");
                 // modify line
                 line=aliasReplace;
                 // return "replaced"
@@ -94,18 +94,17 @@ namespace Konversation {
         if(!KonversationApplication::preferences.getDisableExpansion())
         {
             // replace placeholders
-            inputLine.replace(QRegExp("%%"),"%\x01");  // make sure to protect double %%
-            inputLine.replace(QRegExp("%B"),"\x02");   // replace %B with bold char
-            inputLine.replace(QRegExp("%C"),"\x03");   // replace %C with color char
-            inputLine.replace(QRegExp("%G"),"\x07");   // replace %G with ASCII BEL 0x07
-            inputLine.replace(QRegExp("%I"),"\x09");   // replace %I with italics char
-            inputLine.replace(QRegExp("%O"),"\x0f");   // replace %O with reset to default char
-            inputLine.replace(QRegExp("%S"),"\x13");   // replace %S with strikethru char
+            inputLine.replace("%%","%\x01");  // make sure to protect double %%
+            inputLine.replace("%B","\x02");   // replace %B with bold char
+            inputLine.replace("%C","\x03");   // replace %C with color char
+            inputLine.replace("%G","\x07");   // replace %G with ASCII BEL 0x07
+            inputLine.replace("%I","\x09");   // replace %I with italics char
+            inputLine.replace("%O","\x0f");   // replace %O with reset to default char
+            inputLine.replace("%S","\x13");   // replace %S with strikethru char
             //  inputLine.replace(QRegExp("%?"),"\x15");
-            inputLine.replace(QRegExp("%R"),"\x16");   // replace %R with reverse char
-            inputLine.replace(QRegExp("%U"),"\x1f");   // replace %U with underline char
-
-            inputLine.replace(QRegExp("%\x01"),"%");   // restore double %% as single %
+            inputLine.replace("%R","\x16");   // replace %R with reverse char
+            inputLine.replace("%U","\x1f");   // replace %U with underline char
+            inputLine.replace("%\x01","%");   // restore double %% as single %
         }
 
         QString line=inputLine.lower();
@@ -596,7 +595,8 @@ namespace Konversation {
         QFile file(fileName);
         QFileInfo info(file);
 
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND " + info.fileName().replace(QRegExp(" "),"_")
+        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
+                          + info.fileName().replace(" ","_")
                           + " " + address + " " + port + " " + QString::number(size) + '\x01';
         result.output = i18n("Offering \"%1\" to %2 for upload.").arg(fileName).arg(recipient);
         result.typeString = i18n("DCC");
@@ -622,7 +622,7 @@ namespace Konversation {
     {
         OutputFilterResult result;
         QString newFileName(fileName);
-        newFileName.replace(QRegExp(" "), "_");
+        newFileName.replace(" ", "_");
         result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + newFileName + " " + port + " "
                           + QString::number(startAt) + '\x01';
         result.output = i18n("Sending DCC Resume request to \"%1\" for file \"%2\".").arg(sender).arg(fileName);

@@ -2612,17 +2612,14 @@ QString Server::parseWildcards(const QString& toParse,
     out.replace(separatorRegExp, QString::null);
   }
 
-  out.replace(QRegExp("%u"),nickList.join(separator));
-  if(!channelName.isEmpty()) out.replace(QRegExp("%c"),channelName);
-  out.replace(QRegExp("%o"),sender);
-  if(!channelKey.isEmpty()) out.replace(QRegExp("%k"),channelKey);
-  if(!serverKey.isEmpty()) out.replace(QRegExp("%K"),serverKey);
-  out.replace(QRegExp("%n"),"\n");
-//  out.replace(QRegExp("%f"),getFortuneCookie());
-//  out.replace(QRegExp("%p"),parameter);
-
+  out.replace("%u",nickList.join(separator));
+  if(!channelName.isEmpty()) out.replace("%c",channelName);
+  out.replace("%o",sender);
+  if(!channelKey.isEmpty()) out.replace("%k",channelKey);
+  if(!serverKey.isEmpty()) out.replace("%K",serverKey);
+  out.replace("%n","\n");
   // finally replace all "%p" with "%"
-  out.replace(QRegExp("%p"),"%");
+  out.replace("%p","%");
 
   return out;
 }

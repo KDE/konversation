@@ -130,7 +130,7 @@ void UrlCatcher::openUrl(QListViewItem* item)
   else
   {
     QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
-    cmd.replace(QRegExp("%u"), url);
+    cmd.replace("%u", url);
     KProcess *proc = new KProcess;
     QStringList cmdAndArgs = KShell::splitArgs(cmd);
     *proc << cmdAndArgs;

@@ -191,9 +191,9 @@ bool KonversationApplication::connectToAnotherServer(int id)
   ServerEntry* chosenServer=preferences.getServerEntryById(id);
   Identity* identity=preferences.getIdentityByName(chosenServer->getIdentity());
 
-  // sanity check for identity    
+  // sanity check for identity
   QString check;
-  
+
   if(identity->getIdent().isEmpty())
   {
     check+=i18n("Please fill in your <b>ident</b>.<br>");
@@ -207,7 +207,7 @@ bool KonversationApplication::connectToAnotherServer(int id)
     check+=i18n("Please provide at least one <b>Nickname</b>.<br>");
   }
   if(!check.isEmpty())
-  {  
+  {
     KMessageBox::information(0,
                              i18n("<qt>Your identity \"%1\" is not set up correctly:<br>%2</qt>")
                                   .arg(chosenServer->getIdentity())
@@ -222,9 +222,9 @@ bool KonversationApplication::connectToAnotherServer(int id)
   }
 
   // identity ok, carry on
-  
+
   mainWindow->show();
-    
+
   // Check if a server window with same name and port is already open
   Server* newServer=serverList.first();
   while(newServer)
@@ -273,7 +273,7 @@ bool KonversationApplication::connectToAnotherServer(int id)
   connect(newServer, SIGNAL(awayInsertRememberLine()), this, SLOT(insertRememberLine()));
 
   serverList.append(newServer);
-  
+
   return true;
 }
 
@@ -596,7 +596,7 @@ void KonversationApplication::readOptions()
     }
   }
   preferences.setNotifyList(notifyList);
-  
+
   // Quick Buttons List
   config->setGroup("Button List");
   // Read all buttons and overwrite default entries
@@ -725,7 +725,7 @@ void KonversationApplication::readOptions()
   config->setGroup("Web Browser Settings");
   preferences.setWebBrowserUseKdeDefault(config->readBoolEntry("UseKdeDefault",preferences.getWebBrowserUseKdeDefault()));
   preferences.setWebBrowserCmd(config->readEntry("WebBrowserCmd",preferences.getWebBrowserCmd()));
-  
+
   // Channel Encodings
   QMap<QString,QString> channelEncodingsEntry=config->entryMap("Channel Encodings");
   QRegExp re("^(.+) ([^\\s]+)$");
@@ -862,7 +862,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("UseNotify",preferences.getUseNotify());
 //  config->writeEntry("NotifyList",preferences.getNotifyString());
   config->writeEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup());
-  
+
   config->deleteGroup("Notify Group Lists");
   config->setGroup("Notify Group Lists");
   QMap<QString, QStringList> notifyList = preferences.getNotifyList();
@@ -1007,7 +1007,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->setGroup("Web Browser Settings");
   config->writeEntry("UseKdeDefault", preferences.getWebBrowserUseKdeDefault());
   config->writeEntry("WebBrowserCmd", preferences.getWebBrowserCmd());
-  
+
   // Channel Encodings
   config->setGroup("Channel Encodings");
   QStringList channelEncodingsServerList=preferences.getChannelEncodingsServerList();
@@ -1022,7 +1022,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   }
 
   config->sync();
-  
+
   emit prefsChanged();
 
   if(updateGUI) appearanceChanged();
@@ -1057,7 +1057,7 @@ void KonversationApplication::storeUrl(const QString& who,const QString& newUrl)
   if(url.startsWith("www.")) url="http://"+url;
   else if(url.startsWith("ftp.")) url="ftp://"+url;
 
-  url=url.replace(QRegExp("&amp;"),"&");
+  url=url.replace("&amp;","&");
 
   // check that we don't add the same URL twice
   deleteUrl(who,url);

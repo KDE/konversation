@@ -44,11 +44,11 @@ LogfileReader::LogfileReader(QWidget* parent, QString log) : ChatWindow(parent)
   setType(ChatWindow::LogFileReader);
 
   fileName = log;
-  QDockArea* toolBarDock = new QDockArea(Qt::Horizontal,QDockArea::Normal,this,"logfile_toolbar_dock"); 
+  QDockArea* toolBarDock = new QDockArea(Qt::Horizontal,QDockArea::Normal,this,"logfile_toolbar_dock");
   toolBar = new KToolBar(toolBarDock,"logfile_toolbar",true,true);
-  
+
   toolBar->insertButton("filesaveas",0,SIGNAL(clicked()),this,SLOT(saveLog()),true,i18n("Save As..."));
-  
+
   new QLabel(i18n("Show last:"),toolBar,"logfile_size_label");
   sizeSpin = new QSpinBox(10,1000,10,toolBar,"logfile_size_spinbox");
   sizeSpin->setValue(KonversationApplication::preferences.getLogfileBufferSize());
@@ -56,9 +56,9 @@ LogfileReader::LogfileReader(QWidget* parent, QString log) : ChatWindow(parent)
 
   toolBar->insertButton("reload",0,SIGNAL(clicked()),this,SLOT(updateView()),true,i18n("Reload"));
   toolBar->insertButton("editdelete",0,SIGNAL(clicked()),this,SLOT(clearLog()),true,i18n("Clear Logfile"));
-  
+
   view = new KTextBrowser(this);
-  
+
   updateView();
   resize(KonversationApplication::preferences.getLogfileReaderSize());
 }
@@ -67,7 +67,7 @@ LogfileReader::~LogfileReader()
 {
   KonversationApplication::preferences.setLogfileReaderSize(size());
   KonversationApplication::preferences.setLogfileBufferSize(sizeSpin->value());
-  
+
   delete view;
   delete toolBar;
 }
@@ -118,7 +118,7 @@ void LogfileReader::saveLog()
                            i18n("Note: By saving the logfile you will save all data in the file, not only the part you can see in this viewer."),
                            i18n("Save Logfile"),
                            "SaveLogfileNote");
-  
+
   QString destination=KFileDialog::getSaveFileName(fileName,
                                                    QString::null,
                                                    this,
@@ -126,10 +126,10 @@ void LogfileReader::saveLog()
   if(!destination.isEmpty())
   {
     // replace # with %25 to make it URL conforming
-    KIO::Job* job=KIO::copy(KURL(fileName.replace(QRegExp("#"),"%23")),
+    KIO::Job* job=KIO::copy(KURL(fileName.replace("#","%23")),
                             KURL(destination),
                             true);
-    
+
     connect(job,SIGNAL(result(KIO::Job*)),this,SLOT(copyResult(KIO::Job*)));
   }
 }
@@ -137,7 +137,7 @@ void LogfileReader::saveLog()
 void LogfileReader::copyResult(KIO::Job* job)
 {
   if(job->error()) job->showErrorDialog(this);
- 
+
   job->deleteLater();
 }
 

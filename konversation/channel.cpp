@@ -1022,9 +1022,9 @@ void Channel::setTopic(const QString &newTopic)
     if(newTopic.length()>80)
     {
       QString toolTip=newTopic;
-      toolTip.replace(QRegExp("&",false,true),"&amp;").
-                               replace(QRegExp("<",false,true),"&lt;").
-                               replace(QRegExp(">",false,true),"&gt;");
+      toolTip.replace("&","&amp;").
+          replace("<","&lt;").
+          replace(">","&gt;");
 
       QToolTip::add(topicLine,"<qt>"+toolTip+"</qt>");
     }
@@ -1047,9 +1047,9 @@ void Channel::setTopic(const QString &nickname, const QString &newTopic) // Over
   if(newTopic.length()>80)
   {
     QString toolTip=newTopic;
-    toolTip.replace(QRegExp("&",false,true),"&amp;").
-                             replace(QRegExp("<",false,true),"&lt;").
-                             replace(QRegExp(">",false,true),"&gt;");
+    toolTip.replace("&","&amp;").
+        replace("<","&lt;").
+        replace(">", "&gt;");
 
     QToolTip::add(topicLine,"<qt>"+toolTip+"</qt>");
   }
@@ -1468,9 +1468,9 @@ void Channel::updateQuickButtons(QStringList newButtonList)
 
     // Update tool tips
     QToolTip::remove(quickButton);
-    QString toolTip=buttonText.replace(QRegExp("&",false,true),"&amp;").
-                               replace(QRegExp("<",false,true),"&lt;").
-                               replace(QRegExp(">",false,true),"&gt;");
+    QString toolTip=buttonText.replace("&","&amp;").
+                    replace("<","&lt;").
+                    replace(">","&gt;");
 
     QToolTip::add(quickButton,toolTip);
   }
