@@ -413,6 +413,8 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
       ChatWindow* win = dynamic_cast<ChatWindow*>(static_cast<LedTab*>(lookTab)->getWidget());
 
       if(win) {
+        m_popup->setItemEnabled(MoveRight, index!=(count()-1));
+        m_popup->setItemEnabled(MoveLeft, index!=0);
         ChatWindow::WindowType viewType = win->getType();
         if(viewType == ChatWindow::Channel || viewType == ChatWindow::Query || viewType == ChatWindow::Status) {
           m_popup->setItemEnabled(EnableNotifications, true);
@@ -432,8 +434,9 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
 	      m_popup->setItemEnabled(AddressbookSub, true);
 	      m_popup->setItemEnabled(SendEmail, true);
 	    } else {
-              m_popup->setItemEnabled(AddressbookSub, false); //This shouldn't happen.  All queries have a nickinfo
+              m_popup->setItemEnabled(AddressbookSub, false); //This _does_ happen when the user goes offline!
 	      m_popup->setItemEnabled(SendEmail, false);
+	      m_popup->changeTitle(Label,lookTab->text() + " - Offline");
 	    }
 	  } else {
 	    m_popup->setItemEnabled(AddressbookSub, false); //This shouldn't happen.  All queries have a server.
