@@ -198,10 +198,10 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
   // before the DCC tab. Maybe we should also make sure to order Channels
   // Queries and DCC chats in groups
   viewContainer->addTab(view,label,color,on);
-  
+
   // Check, if user was typing in old input line
   bool doBringToFront=true;
-  
+
   if(frontView)
   {
     if(!frontView->getTextInLine().isEmpty()) doBringToFront=false;
@@ -253,6 +253,8 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     else if(viewType==ChatWindow::SNotice);
 */
   }
+  // if this view was the front view, delete the pointer
+  if(view==frontView) frontView=0;
 }
 
 void KonversationMainWindow::addKonsolePanel()
