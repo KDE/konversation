@@ -114,16 +114,16 @@ void KonversationApplication::readOptions()
 {
   kdDebug() << "KonversationApplication::readOptions()" << endl;
 
-  /* Read configuration and provide the default values */
+  // Read configuration and provide the default values
   config->setGroup("General Options");
 
-  /* Tool bar position settings */
+  // Tool bar position settings
   preferences.serverWindowToolBarPos     =config->readNumEntry("ServerWindowToolBarPos",KToolBar::Top);
   preferences.serverWindowToolBarStatus  =config->readNumEntry("ServerWindowToolBarStatus",KToolBar::Show);
   preferences.serverWindowToolBarIconText=config->readNumEntry("ServerWindowToolBarIconText",KToolBar::IconTextBottom);
   preferences.serverWindowToolBarIconSize=config->readNumEntry("ServerWindowToolBarIconSize",0);
 
-  /* Status bar settings */
+  // Status bar settings
   preferences.serverWindowStatusBarStatus=config->readBoolEntry("ServerWindowStatusBarStatus",true);
 
   // Window geometries
@@ -159,7 +159,8 @@ void KonversationApplication::readOptions()
   preferences.setOpLedColor(config->readNumEntry("OperatorColor",preferences.getOpLedColor()));
   preferences.setVoiceLedColor(config->readNumEntry("VoiceColor",preferences.getVoiceLedColor()));
   preferences.setNoRightsLedColor(config->readNumEntry("NoRightsColor",preferences.getNoRightsLedColor()));
-  /* User identity */
+
+  // User identity
   config->setGroup("User Identity");
   preferences.ident=config->readEntry("Ident",preferences.ident);
   preferences.realname=config->readEntry("Realname",preferences.realname);
@@ -167,7 +168,7 @@ void KonversationApplication::readOptions()
   QString nickList=config->readEntry("Nicknames",preferences.getNicknameList().join(","));
   preferences.setNicknameList(QStringList::split(",",nickList));
 
-  /* Notify Settings and list */
+  // Notify Settings and list
   config->setGroup("Notify List");
   preferences.setNotifyDelay(config->readNumEntry("NotifyDelay",20));
   preferences.setUseNotify(config->readBoolEntry("UseNotify",true));
@@ -229,7 +230,7 @@ void KonversationApplication::readOptions()
 
   // Path settings
   config->setGroup("Path Settings");
-  preferences.logPath=config->readEntry("LogfilePath",preferences.logPath);
+  preferences.setLogPath(config->readEntry("LogfilePath",preferences.getLogPath()));
   preferences.setDccPath(config->readEntry("DccPath",preferences.getDccPath()));
 
   // Miscellaneous Flags
@@ -314,22 +315,22 @@ void KonversationApplication::saveOptions()
     config->writeEntry(QString("Button%1").arg(index),buttonList[index]);
   }
 
-  /* Write all hilight entries  */
+  // Write all hilight entries
   config->setGroup("Hilight List");
 
   QPtrList<Highlight> hiList=preferences.getHilightList();
 
-  /* Put all hilight patterns and colors after another, separated with a space */
+  // Put all hilight patterns and colors after another, separated with a space
   QString hilight;
   for(unsigned int index=0;index<hiList.count();index++)
     hilight+=hiList.at(index)->getText()+" "+hiList.at(index)->getColor().name().mid(1)+" ";
 
-  /* remove extra spaces */
+  // remove extra spaces
   hilight=hilight.stripWhiteSpace();
-  /* write hilight string */
+  // write hilight string
   config->writeEntry("Hilight",hilight);
 
-  /* Ignore List  */
+  // Ignore List
   config->setGroup("Ignore List");
   QPtrList<Ignore> ignoreList=preferences.getIgnoreList();
   Ignore* item=ignoreList.first();
@@ -349,7 +350,7 @@ void KonversationApplication::saveOptions()
 
   config->setGroup("Path Settings");
   config->writeEntry("DccPath",preferences.getDccPath());
-  config->writeEntry("LogfilePath",preferences.logPath);
+  config->writeEntry("LogfilePath",preferences.getLogPath());
 
   config->setGroup("Flags");
   config->writeEntry("Log",preferences.getLog());

@@ -193,6 +193,8 @@ void Preferences::setLowerLog(bool state) { lowerLog=state; }
 bool Preferences::getLowerLog() { return lowerLog; }
 void Preferences::setLogFollowsNick(bool state) { logFollowsNick=state; }
 bool Preferences::getLogFollowsNick() { return logFollowsNick; }
+void Preferences::setLogPath(QString path) { logPath=path; }
+QString Preferences::getLogPath() { return logPath; }
 
 void Preferences::setDccAddPartner(bool state) { dccAddPartner=state; }
 bool Preferences::getDccAddPartner() { return dccAddPartner; }

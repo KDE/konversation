@@ -18,7 +18,7 @@
 #ifndef PREFSPAGEDCCSETTINGS_H
 #define PREFSPAGEDCCSETTINGS_H
 
-#include <prefspage.h>
+#include "prefspage.h"
 
 /*
   @author Dario Abatianni

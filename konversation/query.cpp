@@ -81,11 +81,15 @@ void Query::close()
 void Query::setName(const QString& newName)
 {
   ChatWindow::setName(newName);
-  /* don't change logfile name if query name changes */
-  if(logName=="") setLogfileName("konversation_"+
-                                  ((KonversationApplication::preferences.getLowerLog())
-                                  ? getName()
-                                  : getName().lower())+".log");
+  // don't change logfile name if query name changes
+  // This will prevent Nick-Changers to create more than one log file,
+  // unless we want this by turning the option Log Follows Nick off.
+
+  if((logName=="") || (KonversationApplication::preferences.getLogFollowsNick()==false))
+    setLogfileName("konversation_"+
+                  ((KonversationApplication::preferences.getLowerLog())
+                    ? getName().lower()
+                    : getName())+".log");
 }
 
 void Query::queryTextEntered()

@@ -30,7 +30,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
                       PrefsPage(newParent,newPreferences)
 {
   // Add a Layout to the DCC settings pane
-  QGridLayout* dccSettingsLayout=new QGridLayout(parentFrame,3,5,marginHint(),spacingHint(),"dcc_settings_layout");
+  QGridLayout* dccSettingsLayout=new QGridLayout(parentFrame,5,3,marginHint(),spacingHint(),"dcc_settings_layout");
 
   QLabel* dccFolderLabel=new QLabel(i18n("DCC Folder:"),parentFrame);
   KLineEdit* dccFolderInput=new KLineEdit(preferences->getDccPath(),parentFrame);
@@ -49,7 +49,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccAutoGet->setChecked(preferences->getDccAutoGet());
 
   QHBox* dccSpacer=new QHBox(parentFrame);
-  
+
   int row=0;
 
   dccSettingsLayout->addWidget(dccFolderLabel,row,0);

@@ -17,7 +17,7 @@
 #ifndef PREFSPAGEIDENTITY_H
 #define PREFSPAGEIDENTITY_H
 
-#include <prefspage.h>
+#include "prefspage.h"
 
 /*
   @author Dario Abatianni

@@ -212,11 +212,11 @@ void ServerWindow::logText(const QString& text)
   QDir logPath=QDir::home();
 
   /* Try to "cd" into the logfile path */
-  if(!logPath.cd(KonversationApplication::preferences.logPath,true))
+  if(!logPath.cd(KonversationApplication::preferences.getLogPath(),true))
   {
     /* Try to create the logfile path and "cd" into it again */
-    logPath.mkdir(KonversationApplication::preferences.logPath,true);
-    logPath.cd(KonversationApplication::preferences.logPath,true);
+    logPath.mkdir(KonversationApplication::preferences.getLogPath(),true);
+    logPath.cd(KonversationApplication::preferences.getLogPath(),true);
   }
 
   /* add the logfile name to the path */

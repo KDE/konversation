@@ -99,55 +99,54 @@ void ChatWindow::appendBacklogMessage(const char* firstColumn,const char* messag
 void ChatWindow::cdIntoLogPath()
 {
   QDir logPath=QDir::home();
-  /* Try to "cd" into the logfile path */
-  if(!logPath.cd(KonversationApplication::preferences.logPath,true))
+  // Try to "cd" into the logfile path
+  if(!logPath.cd(KonversationApplication::preferences.getLogPath(),true))
   {
-    /* Only create log path if logging is enabled */
+    // Only create log path if logging is enabled
     if(log)
     {
-      /* Try to create the logfile path and "cd" into it again */
-      logPath.mkdir(KonversationApplication::preferences.logPath,true);
-      logPath.cd(KonversationApplication::preferences.logPath,true);
+      // Try to create the logfile path and "cd" into it again
+      logPath.mkdir(KonversationApplication::preferences.getLogPath(),true);
+      logPath.cd(KonversationApplication::preferences.getLogPath(),true);
     }
   }
 
-  /* add the logfile name to the path */
+  // add the logfile name to the path
   logfile.setName(logPath.path()+"/"+logName);
 }
 
 void ChatWindow::setLogfileName(const QString& name)
 {
-  /* Only change name of logfile if the window was new */
-  /* This will prevent Nick-Changers to create more than one log file */
+  // Only change name of logfile if the window was new.
   if(firstLog)
   {
     logName=name;
-    /* "cd" into log path or create path, if it's not there */
+    // "cd" into log path or create path, if it's not there
     cdIntoLogPath();
-    /* Show last log lines. This idea was stole ... um ... inspired by PMP :) */
+    // Show last log lines. This idea was stole ... um ... inspired by PMP :)
     if(logfile.open(IO_ReadOnly))
     {
       QString backlogLine;
-      /* Set file pointer to 1 kB from the end */
+      // Set file pointer to 1 kB from the end
       logfile.at(logfile.size()-1024);
-      /* Skip first line, since it may be incomplete */
+      // Skip first line, since it may be incomplete
       logfile.readLine(backlogLine,1024);
-      /* Loop until end of file reached */
+      // Loop until end of file reached
       while(!logfile.atEnd())
       {
         logfile.readLine(backlogLine,1024);
-        /* if a tab character is present in the line */
+        // if a tab character is present in the line
         if(backlogLine.find('\t')!=-1)
         {
-          /* extract timestamp from log */
+          // extract timestamp from log
           QString backlogTime=backlogLine.left(backlogLine.find(' '));
-          /* cut timestamp from line */
+          // cut timestamp from line
           backlogLine=backlogLine.mid(backlogLine.find(' ')+1);
-          /* extract first column from log */
+          // extract first column from log
           QString backlogFirst=backlogLine.left(backlogLine.find('\t'));
-          /* cut first column from line */
+          // cut first column from line
           backlogLine=backlogLine.mid(backlogLine.find('\t')+1);
-          /* append backlog with time and first column to text view */
+          // append backlog with time and first column to text view
           appendBacklogMessage(backlogFirst,backlogTime+' '+backlogLine);
         }
       } // while
@@ -158,7 +157,7 @@ void ChatWindow::setLogfileName(const QString& name)
 
 void ChatWindow::logText(const QString& text)
 {
-  /* "cd" into log path or create path, if it's not there */
+  // "cd" into log path or create path, if it's not there
   cdIntoLogPath();
 
   if(logfile.open(IO_WriteOnly | IO_Append))

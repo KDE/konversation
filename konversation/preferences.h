@@ -66,6 +66,8 @@ class Preferences : public QObject
     bool getLowerLog();
     void setLogFollowsNick(bool state);
     bool getLogFollowsNick();
+    void setLogPath(QString path);
+    QString getLogPath();
 
     void setDccAddPartner(bool state);
     bool getDccAddPartner();
@@ -165,7 +167,6 @@ class Preferences : public QObject
 
     QString ident;
     QString realname;
-    QString logPath;
 
   signals:
     void requestServerConnection(int number);
@@ -175,6 +176,8 @@ class Preferences : public QObject
     bool log;
     bool lowerLog;
     bool logFollowsNick;
+    QString logPath;
+
     bool blinkingTabs;      // Do we want the LEDs on the tabs to blink?
     bool fixedMOTD;
 

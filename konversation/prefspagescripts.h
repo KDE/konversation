@@ -18,7 +18,6 @@
 #ifndef PREFSPAGESCRIPTS_H
 #define PREFSPAGESCRIPTS_H
 
-#include <prefspage.h>
 #include <qlayout.h>
 #include <klistview.h>
 #include <keditcl.h>
@@ -26,9 +25,11 @@
 #include <qstringlist.h>
 #include <qtextstream.h>
 
-/**
-  *@author Matthias Gierlings
-  */
+#include "prefspage.h"
+
+/*
+  @author Matthias Gierlings
+*/
 
 class PrefsPageScripts : public PrefsPage
 {

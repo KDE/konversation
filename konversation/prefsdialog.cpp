@@ -24,6 +24,7 @@
 #include "prefsdialog.h"
 #include "prefspageserverlist.h"
 #include "prefspageidentity.h"
+#include "prefspagelog.h"
 #include "prefspagedccsettings.h"
 #include "prefspagescripts.h"
 #include "serverlistitem.h"
@@ -40,6 +41,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   QFrame* serverListPane =addPage(i18n("Server List"));
   QFrame* identityPane   =addPage(i18n("Identity"));
+  QFrame* logSettingsPane=addPage(i18n("Log Settings"));
   QFrame* dccSettingsPane=addPage(i18n("DCC Settings"));
   QFrame* scriptsPane    =addPage(i18n("Scripting"));
 
@@ -47,11 +49,13 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   PrefsPage* serverListPage=new PrefsPageServerList(serverListPane,preferences);
   connect(serverListPage,SIGNAL(connectToServer(int)),this,SLOT(connectRequest(int)) );
   // Add Identity page
-  PrefsPage* identityPage=new PrefsPageIdentity(identityPane,preferences);
+/*  PrefsPage* identityPage= */ new PrefsPageIdentity(identityPane,preferences);
+  // Add Log Settings page
+/*  PrefsPage* logSettingsPage= */ new PrefsPageLog(logSettingsPane, preferences);
   // Add Dcc Settings page
-  PrefsPage* dccSettingsPage=new PrefsPageDccSettings(dccSettingsPane, preferences);
+/*  PrefsPage* dccSettingsPage= */ new PrefsPageDccSettings(dccSettingsPane, preferences);
   // Add scripts page
-  PrefsPage* scriptsPage=new PrefsPageScripts(scriptsPane, preferences);
+/*  PrefsPage* scriptsPage= */ new PrefsPageScripts(scriptsPane, preferences);
 
   setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
   setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
