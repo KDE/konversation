@@ -2459,15 +2459,6 @@ Channel* Server::nickJoinsChannel(const QString &channelName, const QString &nic
   Channel* outChannel=getChannelByName(channelName);
   if(outChannel)
   {
-
-    // OnScreen Message
-    if(KonversationApplication::preferences.getOSDShowChannelEvent() && outChannel->notificationsEnabled())
-    {
-      KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-      konvApp->osd->showOSD(i18n( "(%1) %2 has joined this channel. (%3)" )
-                            .arg(channelName).arg(nickname).arg(hostmask));
-    }
-
     // Update NickInfo.
     ChannelNickPtr channelNick = addNickToJoinedChannelsList(channelName, nickname);
     NickInfoPtr nickInfo = channelNick->getNickInfo();
@@ -2499,13 +2490,6 @@ Channel* Server::removeNickFromChannel(const QString &channelName, const QString
   Channel* outChannel=getChannelByName(channelName);
   if(outChannel)
   {
-    // OnScreen Message
-    if(KonversationApplication::preferences.getOSDShowChannelEvent() && outChannel->notificationsEnabled())
-    {
-      KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-      konvApp->osd->showOSD(i18n( "(%1) %2 has left this channel. (%3)" )
-                            .arg(channelName).arg(nickname).arg(reason));
-    }
     ChannelNickPtr channelNick = getChannelNick(channelName, nickname);
     if(channelNick) outChannel->removeNick(channelNick,reason,quit);
   }

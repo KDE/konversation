@@ -208,6 +208,12 @@ class Channel : public ChatWindow
     
     // Connected to OutputFilter::cycleChannel
     void cycleChannel();
+
+    ///Request a delayed nicklist sorting
+    void requestNickListSort();
+
+    ///Sort the nicklist
+    void sortNickList();
     
   protected:
     void showEvent(QShowEvent* event);
@@ -282,6 +288,7 @@ class Channel : public ChatWindow
     uint m_currentIndex;
     
     QTimer* m_processingTimer;
+    QTimer* m_delayedSortTimer;
 
     QStringList m_modeList;
     ChannelNickPtr m_ownChannelNick;

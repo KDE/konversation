@@ -43,18 +43,20 @@ class NickListView : public KListView
     void refresh();
     void setWhatsThis();
 
+    virtual void setSorting(int column, bool ascending);
+
   public slots:
     /** When this is called, resort is guaranteed to be called within a hard-coded time (a few seconds).
      *  This prevents lots of calls to resort.
      */
     void startResortTimer();
-  protected slots:
+
     /** Resort the listview.
-     *  It is better to call startResortTimer() which will resort with a minimum of a 
-     *  1 second delay.  If this isn't good enough, you can make the function public
-     *  again and use this, but best not to.
+     *  It is better to call startResortTimer() which will resort with a minimum of a
+     *  1 second delay.
      */
     void resort();
+
   signals:
     /* Will be connected to Channel::popupCommand(int) */
     void popupCommand(int id);
@@ -69,6 +71,9 @@ class NickListView : public KListView
     QPopupMenu* addressbook;
     Channel *channel;
     QTimer *m_resortTimer;
+
+    int m_column;
+    bool m_ascending;
 };
 
 #endif

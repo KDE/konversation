@@ -71,6 +71,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 {
   // init variables
   m_processingTimer = 0;
+  m_delayedSortTimer = 0;
   m_pendingChannelNickLists.clear();
   m_currentIndex = 0;
   m_opsToAdd = 0;
@@ -896,24 +897,33 @@ void Channel::quickButtonClicked(const QString &buttonText)
 void Channel::addNickname(ChannelNickPtr channelnick)
 {
 
-  QString nickname = channelnick->getNickname();
+  QString nickname = channelnick->getNickname().lower();
 
   Nick* nick=0;
-  Nick* lookNick=nicknameList.first();
-  while(lookNick && (nick==0))
+  Nick* lookNick;
+  QPtrListIterator<Nick> it(nicknameList);
+
+  while((lookNick = it.current()) != 0)
   {
-    if(lookNick->getNickname().lower()==nickname.lower()) nick=lookNick;
-    lookNick=nicknameList.next();
+    if(lookNick->getNickname().lower() == nickname) {
+      nick = lookNick;
+      break;
+    }
+
+    ++it;
   }
 
-  if(nick==0)
+  if(nick == 0)
   {
     fastAddNickname(channelnick);
+
     if(channelnick->isAdmin() || channelnick->isOwner() || channelnick->isOp() || channelnick->isHalfOp())
+    {
       adjustOps(1);
-    nicknameList.sort();
+    }
 
     adjustNicks(1);
+    requestNickListSort();
   }
   else
   {
@@ -925,7 +935,7 @@ void Channel::addNickname(ChannelNickPtr channelnick)
 void Channel::fastAddNickname(ChannelNickPtr channelnick) {
   Q_ASSERT(channelnick);
   if(!channelnick) return;
-  Nick* nick=new Nick(nicknameListView, channelnick);
+  Nick* nick = new Nick(nicknameListView, channelnick);
   // nicks get sorted later
   nicknameList.append(nick);
 }
@@ -1980,7 +1990,7 @@ void Channel::processPendingNicks()
   if(m_pendingChannelNickLists.isEmpty()) {
     m_processingTimer->stop();
     nicknameListView->sort();
-    nicknameList.sort();
+    sortNickList();
     nicknameListView->setUpdatesEnabled(true);
     nicknameListView->triggerUpdate();
     if(!m_firstAutoWhoDone)
@@ -2015,13 +2025,36 @@ void Channel::setShowNicknameBox(bool show)
   }
 }
 
+void Channel::requestNickListSort()
+{
+  if(!m_delayedSortTimer) {
+    m_delayedSortTimer = new QTimer(this);
+    connect(m_delayedSortTimer, SIGNAL(timeout()), this, SLOT(sortNickList()));
+  }
+
+  if(!m_delayedSortTimer->isActive()) {
+    m_delayedSortTimer->start(300, true);
+  }
+}
+
+void Channel::sortNickList()
+{
+  nicknameList.sort();
+  nicknameListView->resort();
+
+  if(m_delayedSortTimer) {
+    m_delayedSortTimer->stop();
+  }
+}
+
+
 //
 // NickList
 //
 
 int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
 {
-  return QString::compare(static_cast<Nick*>(item1)->getNickname(),
+  return QString::localeAwareCompare(static_cast<Nick*>(item1)->getNickname(),
     static_cast<Nick*>(item2)->getNickname());
 }
 

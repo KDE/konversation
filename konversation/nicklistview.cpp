@@ -30,7 +30,8 @@
 NickListView::NickListView(QWidget* parent, Channel *chan) :
               KListView(parent)
 {
-  setWhatsThis(); 
+  KListView::setSorting(-1);
+  setWhatsThis();
   channel=chan;
   popup=new KPopupMenu(this,"nicklist_context_menu");
   modes=new KPopupMenu(this,"nicklist_modes_context_submenu");
@@ -171,7 +172,9 @@ void NickListView::startResortTimer() {
 
 void NickListView::resort()
 {
+  KListView::setSorting(m_column, m_ascending);
   sort();
+  KListView::setSorting(-1);
 }
 
 void NickListView::contextMenuEvent(QContextMenuEvent* ce)
@@ -232,5 +235,12 @@ void NickListView::insertAssociationSubMenu() {
     popup->setItemEnabled(Konversation::SendEmail, true);
 
 }
+
+void NickListView::setSorting(int column, bool ascending)
+{
+  m_column = column;
+  m_ascending = ascending;
+}
+
 #include "nicklistview.moc"
 

@@ -115,6 +115,13 @@ void NotificationHandler::join(ChatWindow* chatWin, const QString& nick)
   }
   
   KNotifyClient::event(winId(), "join", i18n("%1 joined %2").arg(nick, chatWin->getName()));
+
+  KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+
+  // OnScreen Message
+  if(KonversationApplication::preferences.getOSDShowChannelEvent()) {
+    konvApp->osd->showOSD(i18n("%1 joined %2").arg(nick, chatWin->getName()));
+  }
 }
 
 void NotificationHandler::part(ChatWindow* chatWin, const QString& nick)
@@ -128,6 +135,13 @@ void NotificationHandler::part(ChatWindow* chatWin, const QString& nick)
   }
   
   KNotifyClient::event(winId(), "part", i18n("%1 parted %2").arg(nick, chatWin->getName()));
+
+  KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+
+  // OnScreen Message
+  if(KonversationApplication::preferences.getOSDShowChannelEvent()) {
+    konvApp->osd->showOSD(i18n("%1 parted %2").arg(nick, chatWin->getName()));
+  }
 }
 
 int NotificationHandler::winId() const
