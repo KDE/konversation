@@ -132,12 +132,12 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   closeButtonsCheck=new QCheckBox(i18n("Show close widgets on tabs"),parentFrame,"tab_close_widgets_check");
   closeButtonsCheck->setChecked(preferences->getCloseButtonsOnTabs());
 
-  // Take care of ghosting / unghosting close button checkboxes
-  closeButtonsChanged(preferences->getCloseButtonsOnTabs() ? 2 : 0);
-
   // Display close buttons on which side
   closeButtonsAlignRight=new QCheckBox(i18n("Place close widgets on the right side"),parentFrame,"tab_close_widgets_align_right");
   closeButtonsAlignRight->setChecked(preferences->getCloseButtonsAlignRight());
+
+  // Take care of ghosting / unghosting close button checkboxes
+  closeButtonsChanged(preferences->getCloseButtonsOnTabs() ? 2 : 0);
 
   // Sorting
   QVGroupBox* sortOptionsGroup=new QVGroupBox(i18n("Sort Options"),parentFrame,"sort_options_group");
