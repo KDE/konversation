@@ -55,11 +55,11 @@ class DccPanel : public ChatWindow
       public:
         enum Object
         {
+          SelectAll,
+          SelectAllCompleted,
           Accept,
           Abort,
           Clear,
-          ClearAllCompleted,
-          RemoveAndClear,
           Open,
           Remove,
           Info,
@@ -91,8 +91,8 @@ class DccPanel : public ChatWindow
     void removeFile();
     void showFileInfo();
     void openDetail();
-    void clearAllCompletedDcc();
-    void removeAndClear();
+    void selectAll();
+    void selectAllCompleted();
     
     void popupRequested(QListViewItem* item,const QPoint& pos,int col);
     void popupActivated(int id);
