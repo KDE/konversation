@@ -3,6 +3,7 @@ Changes from 0.13 to 0.14
 - Added shell like nick completion mode (aka uga mode)
 - Implemented a cleaner way of handling tab shortcuts
 - Implemented DCC Chat
+- Hilight mailto: links
 
 Changes from 0.12 to 0.13
 - Added an option to hide hostmasks in channel nick lists

@@ -21,7 +21,6 @@ Make coloring of list view and input lines an option
 Context menu on nick in nick should contain hostmask, realname, etc. infos (in a sub-menu)
 Check for channel or user parameter in mode changes to take care of duplicate mode chars
 History viewer
-Hilight mailto: links
 Option to disable %G, %C %B... expansion
 
 Channel List Panel:

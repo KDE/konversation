@@ -270,38 +270,67 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
                   "ed2k://\\|([^|]+\\|){4})");
 
   pattern.setCaseSensitive(false);
+  QRegExp emailPattern("(mailto:|)(([a-z]+[\\w\\x2E\\x2D]+)\\x40([\\w\\x2E\\x2D]{2,})\\x2E(\\w{2,}))");
+  emailPattern.setCaseSensitive(false);
 
   pos=0;
-  while(pattern.search(filteredLine,pos)!=-1)
+  while(static_cast<unsigned int>(pos) < filteredLine.length())
   {
-    // Remember where we found the url
-    pos=pattern.pos();
-
-    // Extract url
-    QString url=pattern.capturedTexts()[0];
-    QString href(url);
-
-    // clean up href for browser
-    if(href.startsWith("www.")) href="http://"+href;
-    else if(href.startsWith("ftp.")) href="ftp://"+href;
-
-    // Fix &amp; back to & in href ... kludgy but I don't know a better way.
-    href.replace(QRegExp("&amp;"),"&");
-    // Replace all spaces with %20 in href
-    href.replace(QRegExp(" "),"%20");
-    // Build rich text link
-    QString link("<font color=\"#"+linkColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
-
-    // replace found url with built link
-    filteredLine.replace(pos,url.length(),link);
-    // next search begins right after the link
-    pos+=link.length();
-    // tell the program that we have found a new url
-
-    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-    konvApp->storeUrl(whoSent,url);
+    if(pattern.search(filteredLine,pos)!=-1) {
+      // Remember where we found the url
+      pos=pattern.pos();
+  
+      // Extract url
+      QString url=pattern.capturedTexts()[0];
+      QString href(url);
+  
+      // clean up href for browser
+      if(href.startsWith("www.")) href="http://"+href;
+      else if(href.startsWith("ftp.")) href="ftp://"+href;
+  
+      // Fix &amp; back to & in href ... kludgy but I don't know a better way.
+      href.replace(QRegExp("&amp;"),"&");
+      // Replace all spaces with %20 in href
+      href.replace(QRegExp(" "),"%20");
+      // Build rich text link
+      QString link("<font color=\"#"+linkColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
+      kdDebug() << "LINK: " << link << endl;
+  
+      // replace found url with built link
+      filteredLine.replace(pos,url.length(),link);
+      // next search begins right after the link
+      pos+=link.length();
+      // tell the program that we have found a new url
+  
+      KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+      konvApp->storeUrl(whoSent,url);
+    } else if(emailPattern.search(filteredLine,pos)!=-1) {
+      // Remember where we found the url
+      pos=emailPattern.pos();
+      // Extract url
+      QString url=emailPattern.capturedTexts()[0];
+      QString href(url);
+      
+      if(!href.startsWith("mailto:")) {
+        href.prepend("mailto:");
+      }
+      
+      QString link("<font color=\"#"+linkColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
+      kdDebug() << "LINK: " << link << endl;
+  
+      // replace found url with built link
+      filteredLine.replace(pos,url.length(),link);
+      // next search begins right after the link
+      pos+=link.length();
+      // tell the program that we have found a new url
+  
+      KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+      konvApp->storeUrl(whoSent,url);
+    } else {
+      pos++;
+    }
   }
-
+  
   // Hilight
 
   if(doHilight)
