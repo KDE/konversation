@@ -120,7 +120,23 @@ bool KSocksSocketDevice::connect(const KResolverEntry& address)
   if (m_sockfd == -1 && !create(address))
     return false;		// failed creating!
 
-  if (KSocks::self()->connect(m_sockfd, address.address(), address.length()) == -1)
+  int retval;
+  if (KSocks::self()->hasWorkingAsyncConnect())
+    retval = KSocks::self()->connect(m_sockfd, address.address(), 
+				     address.length());
+  else
+    {
+      // work around some SOCKS implementation bugs
+      // we will do a *synchronous* connection here!
+      // FIXME: KDE4, write a proper SOCKS implementation
+      bool isBlocking = blocking();
+      setBlocking(true);
+      retval = KSocks::self()->connect(m_sockfd, address.address(),
+				       address.length());
+      setBlocking(isBlocking);
+    }
+  
+  if (retval == -1)
     {
       if (errno == EISCONN)
 	return true;		// we're already connected
