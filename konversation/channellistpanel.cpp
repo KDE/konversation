@@ -92,7 +92,6 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   channelListView->addColumn(i18n("Channel Name"));
   channelListView->addColumn(i18n("Users"));
   channelListView->addColumn(i18n("Channel Topic"));
-  channelListView->setFullWidth(true);
   channelListView->setAllColumnsShowFocus(true);
 
   QHBox* statsBox=new QHBox(this);

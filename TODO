@@ -23,7 +23,6 @@ Convert idle time in hours, minutes and seconds
 Context menu on nick in nick should contain hostmask, realname, etc. infos (in a sub-menu)
 
 Channel List Panel:
-long channel topics are cut off, how about a horizontal scrollbar then
 Make URLs in topic clickable or at least selectable
 and a "channel or topic" checkbox would be nice, or better, make the current checkboxes work as "or" not as "and"
 
