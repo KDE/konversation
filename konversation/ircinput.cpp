@@ -89,6 +89,8 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
           if(!keyEvent->text().isEmpty()) setCompletionMode('\0');
           // support ASCII BEL
           if(keyEvent->ascii()==7) insert("%G");
+          // support ^U (delete text in input box)
+          if(keyEvent->ascii()==21) clear();
           // support ^W (delete word)
           else if(keyEvent->ascii()==23)
           {
@@ -124,6 +126,8 @@ void IRCInput::addHistory(const QString& line)
 
 void IRCInput::getHistory(bool up)
 {
+  // preserve text
+  historyList[lineNum]=text();
   // Did the user press cursor up?
   if(up)
   {
