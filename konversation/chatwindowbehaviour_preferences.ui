@@ -32,7 +32,7 @@
                         <cstring>kcfg_DisableExpansions</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Disable %C,%B,%G, etc. expansions</string>
+                        <string>Disable %C,%B,%G, etc. e&amp;xpansions</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="3">
@@ -56,7 +56,7 @@
                         <cstring>kcfg_HideJoinPart</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Hide Join/Part/Nick Events</string>
+                        <string>Hide &amp;Join/Part/Nick Events</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="3">
@@ -252,7 +252,7 @@
                         <cstring>kcfg_SortUserStatus</cstring>
                     </property>
                     <property name="text">
-                        <string>Sort by user stat&amp;us</string>
+                        <string>Sort b&amp;y user status</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="1" column="0">
@@ -265,13 +265,49 @@
                 </widget>
                 <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>layout3</cstring>
+                        <cstring>layout2</cstring>
                     </property>
                     <grid>
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="KListView" row="0" column="0" rowspan="3" colspan="1">
+                        <spacer row="0" column="1">
+                            <property name="name">
+                                <cstring>spacer4_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>60</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QToolButton" row="2" column="1">
+                            <property name="name">
+                                <cstring>kcfg_DownButton</cstring>
+                            </property>
+                            <property name="text">
+                                <string>...</string>
+                            </property>
+                        </widget>
+                        <widget class="QToolButton" row="1" column="1">
+                            <property name="name">
+                                <cstring>kcfg_UpButton</cstring>
+                            </property>
+                            <property name="text">
+                                <string>...</string>
+                            </property>
+                            <property name="autoRepeat">
+                                <bool>true</bool>
+                            </property>
+                        </widget>
+                        <widget class="KListView" row="0" column="0" rowspan="4" colspan="1">
                             <property name="name">
                                 <cstring>kcfg_SortOrder</cstring>
                             </property>
@@ -285,26 +321,7 @@
                                 <bool>true</bool>
                             </property>
                         </widget>
-                        <widget class="QToolButton" row="0" column="1">
-                            <property name="name">
-                                <cstring>kcfg_UpButton</cstring>
-                            </property>
-                            <property name="text">
-                                <string>...</string>
-                            </property>
-                            <property name="autoRepeat">
-                                <bool>true</bool>
-                            </property>
-                        </widget>
-                        <widget class="QToolButton" row="1" column="1">
-                            <property name="name">
-                                <cstring>kcfg_DownButton</cstring>
-                            </property>
-                            <property name="text">
-                                <string>...</string>
-                            </property>
-                        </widget>
-                        <spacer row="2" column="1">
+                        <spacer row="3" column="1">
                             <property name="name">
                                 <cstring>spacer4</cstring>
                             </property>
@@ -317,7 +334,7 @@
                             <property name="sizeHint">
                                 <size>
                                     <width>20</width>
-                                    <height>20</height>
+                                    <height>70</height>
                                 </size>
                             </property>
                         </spacer>
@@ -327,8 +344,6 @@
         </widget>
     </vbox>
 </widget>
-<customwidgets>
-</customwidgets>
 <connections>
     <connection>
         <sender>kcfg_autoWhoContinuous</sender>
@@ -340,6 +355,7 @@
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
+    <includehint>klineedit.h</includehint>
     <includehint>klistview.h</includehint>
 </includehints>
 </UI>
