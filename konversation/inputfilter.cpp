@@ -873,7 +873,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           QDateTime when;
           when.setTime_t(parameterList[3].toUInt());
 
-          server->appendStatusMessage(i18n("Whois"),i18n("%1 is online since %2.").arg(parameterList[1]));
+          server->appendStatusMessage(i18n("Whois"),i18n("%1 is online since %2.").arg(parameterList[1]).arg(when.toString(Qt::LocalDate)));
           break;
         }
       }
