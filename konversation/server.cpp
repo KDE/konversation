@@ -1855,9 +1855,9 @@ void Server::sendJoinCommand(const QString& name, const QString& password)
 void Server::joinChannel(const QString &name, const QString &hostmask, const QString &/*key*/)
 {
   // (re-)join channel, open a new panel if needed
-  Channel* channel=getChannelByName(name);
-  if(!channel)
-  {
+  Channel* channel = getChannelByName(name);
+
+  if(!channel) {
     channel=getMainWindow()->addChannel(this,name);
     Q_ASSERT(channel);
     channel->setIdentity(getIdentity());
@@ -1872,11 +1872,11 @@ void Server::joinChannel(const QString &name, const QString &hostmask, const QSt
   // Move channel from unjoined (if present) to joined list and add our own nickname to the joined list.
   ChannelNickPtr channelNick = addNickToJoinedChannelsList(name, getNickname());
 
-  if ((channelNick->getHostmask() != hostmask ) && !hostmask.isEmpty())
-  {
+  if ((channelNick->getHostmask() != hostmask ) && !hostmask.isEmpty()) {
     NickInfoPtr nickInfo = channelNick->getNickInfo();
     nickInfo->setHostmask(hostmask);
   }
+
   channel->joinNickname(channelNick);
 }
 

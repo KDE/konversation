@@ -98,7 +98,7 @@ class ChatWindow : public BASE_CLASS
      *  @return The server it is associated with, or null if none.
      */
     Server* getServer();
-    void setIdentity(const Identity *newIdentity);
+    virtual void setIdentity(const Identity *newIdentity);
     void setTextView(IRCView* newView);
     IRCView* getTextView() const;
     void setLog(bool activate);

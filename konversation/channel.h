@@ -98,7 +98,8 @@ class Channel : public ChatWindow
     virtual void emitUpdateInfo();
 
     virtual void setServer(Server* newServer);
-    
+    virtual void setIdentity(const Identity *newIdentity);
+
     /** get the channel topic history, including the current topic at the top,
      * and descending by age.
      * Each topic may or may not have the author that set it at the start of the string,

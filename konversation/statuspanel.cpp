@@ -315,4 +315,15 @@ void StatusPanel::setShowNicknameBox(bool show)
   }
 }
 
+void StatusPanel::setIdentity(const Identity *newIdentity)
+{
+  if(!newIdentity) {
+    return;
+  }
+
+  ChatWindow::setIdentity(newIdentity);
+  nicknameCombobox->clear();
+  nicknameCombobox->insertStringList(newIdentity->getNicknameList());
+}
+
 #include "statuspanel.moc"

@@ -18,6 +18,7 @@ namespace Konversation {
 int ServerGroupSettings::s_availableId = 0;
 
 ServerGroupSettings::ServerGroupSettings()
+  : KShared()
 {
   m_id = s_availableId;
   s_availableId++;
@@ -26,6 +27,7 @@ ServerGroupSettings::ServerGroupSettings()
 }
 
 ServerGroupSettings::ServerGroupSettings(int id)
+  : KShared()
 {
   if(id < 0) {
     m_id = s_availableId;
@@ -39,6 +41,7 @@ ServerGroupSettings::ServerGroupSettings(int id)
 }
 
 ServerGroupSettings::ServerGroupSettings(const ServerGroupSettings& settings)
+  : KShared()
 {
   setName(settings.name());
   setGroup(settings.group());
@@ -51,6 +54,7 @@ ServerGroupSettings::ServerGroupSettings(const ServerGroupSettings& settings)
 }
 
 ServerGroupSettings::ServerGroupSettings(const QString& name)
+  : KShared()
 {
   setName(name);
   m_id = s_availableId;

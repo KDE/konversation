@@ -47,13 +47,15 @@ class StatusPanel : public ChatWindow
     virtual bool closeYourself();
     virtual bool canBeFrontView();
     virtual bool searchView();
-    
+
     virtual void setChannelEncoding(const QString& encoding);
     virtual QString getChannelEncoding();
     virtual QString getChannelEncodingDefaultDesc();
     virtual void setName(const QString& newName) { ChatWindow::setName(newName); }
     virtual void emitUpdateInfo();
-    
+
+    virtual void setIdentity(const Identity *newIdentity);
+
   signals:
     void newText(QWidget* widget,const QString& highlightColor,bool important);
     void sendFile();
@@ -67,7 +69,7 @@ class StatusPanel : public ChatWindow
     void setShowNicknameBox(bool show);
 
     virtual void appendInputText(const QString&);
-    
+
   protected slots:
     void sendFileMenu();
     void statusTextEntered();
@@ -86,7 +88,7 @@ class StatusPanel : public ChatWindow
     virtual void childAdjustFocus();
     virtual bool areIRCColorsSupported() {return true; }
     virtual bool isInsertCharacterSupported() { return true; }
-    
+
     bool awayChanged;
     bool awayState;
 

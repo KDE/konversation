@@ -333,6 +333,7 @@ void Channel::setServer(Server *server) {
   ChatWindow::setServer(server);
   topicLine->setServer(server);
   refreshModeButtons();
+  setIdentity(server->getIdentity());
 
   connect(server->getOutputFilter(),SIGNAL(cycleChannel()),this,SLOT(cycleChannel()));
 }
@@ -2166,6 +2167,17 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
   }
 
   return QString::null;
+}
+
+void Channel::setIdentity(const Identity *newIdentity)
+{
+  if(!newIdentity) {
+    return;
+  }
+
+  ChatWindow::setIdentity(newIdentity);
+  nicknameCombobox->clear();
+  nicknameCombobox->insertStringList(newIdentity->getNicknameList());
 }
 
 #include "channel.moc"
