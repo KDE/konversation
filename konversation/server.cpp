@@ -931,8 +931,10 @@ void Server::lockSending()
 
 void Server::incoming()
 { 
-  //kdDebug() << "readyRead signal emitted socket has " << serverSocket->bytesAvailable() << " bytes!" << endl;
+  // We read all available bytes here because readyRead() signal will be emitted when there is new data
+  // else we will stall when displaying MOTD etc.
   int max_bytes = serverSocket->bytesAvailable();
+
   Q_ASSERT(max_bytes>0);  //Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
   char buffer[max_bytes];
   int len = 0;
