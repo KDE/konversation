@@ -21,7 +21,7 @@
 #include "nicklisttooltip.h"
 #include "../nick.h"
 #include "../nicklistview.h"
-#include "../ledlistviewitem.h"
+#include "../nicklistviewitem.h"
 #include "../nickinfo.h"
 #include "../common.h"
 
@@ -44,7 +44,7 @@ void KonversationNickListViewToolTip::maybeTip( const QPoint &pos )
     QListViewItem *item = m_listView->itemAt( pos );
     if( !item )
         return;
-    LedListViewItem *ledItem = dynamic_cast<LedListViewItem *>( item );
+    NickListViewItem *ledItem = dynamic_cast<NickListViewItem *>( item );
     Nick *nick = NULL;
     if(ledItem)
         nick = ledItem->getNick();
