@@ -7,6 +7,10 @@ $OPTION = shift;
 
 @stations = `dcop KWeatherService WeatherService listStations`;
 
+if( $OPTION && $stations[$OPTION-1] ) {
+  @stations = $stations[$OPTION-1];
+}
+
 foreach $station (@stations) {
 
   $city = `dcop KWeatherService WeatherService stationName $station`;
@@ -30,5 +34,5 @@ foreach $station (@stations) {
   }
 
   system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$MESSAGE\" ");
-  
+    
 }
