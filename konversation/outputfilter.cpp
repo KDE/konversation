@@ -215,8 +215,8 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     
     else if(line == "prefs")             parsePrefs(QString::null);
     
-    // Try if unknown command is a script...
-    else parseExec(inputLine.mid(1));
+    // Forward unknown commands to server
+    else toServer=inputLine.mid(1);
   }
   // Ordinary message to channel/query?
   else if(!destination.isEmpty())
