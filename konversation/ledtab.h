@@ -38,8 +38,6 @@ class LedTab : public QObject,public QTab
 
     void setOn(bool state);
 
-    void setBlinkEnabled(bool state) { doBlink=state; };
-
     QWidget* getWidget();
 
     QIconSet iconOn;
@@ -51,7 +49,6 @@ class LedTab : public QObject,public QTab
 
     int color;      /* color of the LED */
     bool on;        /* true, if LED should indicate "on" status */
-    bool doBlink;   /* true, if LED should blink */
     bool blinkOn;   /* true, if blinking LED is on at this moment */
 
     QWidget* widget;

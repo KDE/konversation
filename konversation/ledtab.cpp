@@ -16,6 +16,7 @@
 
 #include <kdebug.h>
 
+#include "konversationapplication.h"
 #include "ledtab.h"
 
 LedTab::LedTab(QWidget* newWidget,const QString& label,int newColor,bool state) :
@@ -44,12 +45,24 @@ void LedTab::blinkTimeout()
 {
   if(on)
   {
-    /* if the user wants us to blink, toggle LED blink status */
-    if(doBlink) blinkOn=!blinkOn;
-    /* else LED should be always on */
-    else blinkOn=true;
-    /* draw the new LED */
-    setIconSet((blinkOn) ? iconOn : iconOff);
+    // if the user wants us to blink, toggle LED blink status
+    if(KonversationApplication::preferences.getBlinkingTabs())
+    {
+      blinkOn=!blinkOn;
+      // draw the new LED
+      setIconSet((blinkOn) ? iconOn : iconOff);
+    }
+    // else LED should be always on
+    else
+    {
+      // only change state when LED was off until now
+      if(!blinkOn)
+      {
+        // switch LED on
+        blinkOn=true;
+        setIconSet((blinkOn) ? iconOn : iconOff);
+      }
+    }
   }
 }
 

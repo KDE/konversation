@@ -30,10 +30,9 @@ LedTabWidget::~LedTabWidget()
 {
 }
 
-void LedTabWidget::addTab(QWidget* child,const QString& label,int color,bool on,bool blink)
+void LedTabWidget::addTab(QWidget* child,const QString& label,int color,bool on)
 {
   LedTab* tab=new LedTab(child,label,color,on);
-  tab->setBlinkEnabled(blink);
 
   QTabWidget::addTab(child,tab);
   /* This signal will be emitted when the tab is blinking */

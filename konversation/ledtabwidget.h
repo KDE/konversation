@@ -35,7 +35,7 @@ class LedTabWidget : public QTabWidget
     LedTabWidget(QWidget* parent,const char* name);
     ~LedTabWidget();
 
-    void addTab(QWidget* child,const QString& label,int color,bool on,bool blink);
+    void addTab(QWidget* child,const QString& label,int color,bool on);
     void changeTabState(QWidget* child,bool state);
 
   signals:

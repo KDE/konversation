@@ -151,7 +151,7 @@ void ServerWindow::addView(QWidget* pane,int color,const QString& label)
   /* TODO: Make sure to add DCC status tab at the end of the list and all others */
   /* before the DCC tab. Maybe we should also make sure to order Channels */
   /* Queries and DCC chats in groups */
-  windowContainer->addTab(pane,label,color,true,KonversationApplication::preferences.getBlinkingTabs());
+  windowContainer->addTab(pane,label,color,true);
 }
 
 void ServerWindow::showView(QWidget* pane)
@@ -198,7 +198,7 @@ void ServerWindow::addStatusView()
   logCheckBox=new QCheckBox(i18n("Log"),commandLineBox);
   logCheckBox->setChecked(KonversationApplication::preferences.getLog());
 
-  windowContainer->addTab(statusPane,i18n("Status"),2,false,KonversationApplication::preferences.getBlinkingTabs());
+  windowContainer->addTab(statusPane,i18n("Status"),2,false);
 
   connect(statusInput,SIGNAL (returnPressed()),this,SLOT(statusTextEntered()) );
   connect(statusView,SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
