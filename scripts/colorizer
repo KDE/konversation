@@ -17,15 +17,7 @@ if(!@ARGV){
     exec ("dcop $PORT Konversation error \"Colorizer script needs a message argument!\" ");
 }
 
-foreach (@ARGV) {
-    if($i == 0) {
-	$input = $_;
-	$i = 1;
-    }
-    else {
-	$input = $input." ".$_;
-    }
-}
+$input = join " ", @ARGV;
 
 if( utf8::valid($input) ) {
     utf8::decode($input);
