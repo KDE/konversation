@@ -22,6 +22,7 @@ Changes from 0.15 to 0.16
 - Fix unicode detection for strings containing color markup
 - /omsg,/onotice support
 - Added an option to use an IPv4 interface for IPv6 dcc sends
+- A new /google script added to search Google using Google SOAP api
 
 Changes from 0.14 to 0.15
 - Ported socket code to KNetwork. Weird connection problems should be gone now

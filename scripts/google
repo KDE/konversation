@@ -80,7 +80,6 @@ else
 	$googleSearch = SOAP::Lite->service("http://api.google.com/GoogleSearch.wsdl")->
 	    on_fault(sub {
 		my $res = $_[0]; 
-		#$error = join ', ', $res->call->faultcode, $res->call->faultstring, $res->call->faultdetail;
 		$error = $res->call->faultstring;
 		exec 'dcop', $PORT, 'Konversation', 'error', "$error";
 	    });
