@@ -18,6 +18,7 @@
 #include <qhbox.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
+#include <qpopupmenu.h>
 
 // KDE includes.
 #include <kdebug.h>
@@ -102,7 +103,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
   m_deleteAssociationButton = new QPushButton(i18n("&Delete Association"),
     buttonBox, "nicksonline_deleteassociation_button");
   m_deleteAssociationButton->setIconSet(m_kabcIconSet);
-    
+  
   connect(m_editContactButton, SIGNAL(clicked()),
     this, SLOT(slotEditContactButton_Clicked()));
   connect(m_changeAssociationButton, SIGNAL(clicked()),
@@ -114,6 +115,11 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     
   setupAddressbookButtons(0);
 
+  // Create context menu.  Individual menu entries are created in rightButtonClicked slot.
+  m_popupMenu = new QPopupMenu(this,"nicksonline_context_menu");
+  connect(m_nickListView, SIGNAL(rightButtonClicked(QListViewItem *, const QPoint &, int )),
+    this, SLOT(slotNickListView_RightButtonClicked(QListViewItem*, const QPoint &)));
+    
   // Display info for all currently-connected servers.
   refreshAllServerOnlineLists();
   // Connect and start refresh timer.
@@ -489,6 +495,7 @@ bool NicksOnline::editAddressee(const QString &uid)
 #ifdef USE_NICKINFO
 void NicksOnline::doCommand(int id)
 {
+  if (id < 0) return;
   QString serverName;
   QString nickname;
   QListViewItem* item = m_nickListView->selectedItem();
@@ -650,6 +657,42 @@ void NicksOnline::slotNickListView_SelectionChanged()
   QListViewItem* item = m_nickListView->selectedItem();
   int nickState = getNickAddressbookState(item);
   setupAddressbookButtons(nickState);
+}
+/**
+* Received when right-clicking an item in the NickListView.
+*/
+void NicksOnline::slotNickListView_RightButtonClicked(QListViewItem* item, const QPoint& pt)
+{
+  if (!item) return;
+  m_popupMenu->clear();
+  int nickState = getNickAddressbookState(item);
+  switch (nickState)
+  {
+    case 0:
+      {
+        break;
+      }
+    case 1:
+      {
+        m_popupMenu->insertItem(i18n("&Choose Association..."), ciAddressbookChange);
+        m_popupMenu->insertItem(i18n("New C&ontact..."), ciAddressbookNew);
+        break;
+      }
+    case 2:
+      {
+        m_popupMenu->insertItem(i18n("Edit C&ontact..."), ciAddressbookEdit);
+        m_popupMenu->insertSeparator();
+        m_popupMenu->insertItem(i18n("&Change Association..."), ciAddressbookChange);
+        m_popupMenu->insertItem(i18n("&Delete Association"), ciAddressbookDelete);
+        break;
+      }
+  }
+  if (nickState != 0)
+  {
+    // TODO: Does this block the main event loop?
+    int r = m_popupMenu->exec(pt);
+    doCommand(r);
+  }
 }
 
 #include "nicksonline.moc"

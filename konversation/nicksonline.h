@@ -30,6 +30,7 @@
 
 class KListView;
 class QPushButton;
+class QPopupMenu;
 
 class NicksOnline : public ChatWindow
 {
@@ -97,6 +98,10 @@ class NicksOnline : public ChatWindow
     * Received when user selects a different item in the nicklistview.
     */
     void slotNickListView_SelectionChanged();
+    /**
+    * Received when right-clicking an item in the NickListView.
+    */
+    void slotNickListView_RightButtonClicked(QListViewItem* item, const QPoint& pt);
 
   protected:
     /**
@@ -177,6 +182,7 @@ class NicksOnline : public ChatWindow
     QPushButton* m_editContactButton;
     QPushButton* m_changeAssociationButton;
     QPushButton* m_deleteAssociationButton;
+    QPopupMenu* m_popupMenu;
     Konversation::KonversationNicksOnlineToolTip *m_tooltip;
 	
 };
