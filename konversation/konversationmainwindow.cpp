@@ -26,6 +26,7 @@
 #include <kdeversion.h>
 #include <kedittoolbar.h>
 #include <kpopupmenu.h>
+#include <qpainter.h>
 
 #include <kabc/addressbook.h>
 #include <kabc/errorhandler.h>
@@ -948,14 +949,43 @@ bool KonversationMainWindow::queryClose()
   }
 
   if(KonversationApplication::preferences.getShowTrayIcon() && !m_closeApp) {
-    // Message copied from kopete...
-    KMessageBox::information(this,
-      i18n( "<qt>Closing the main window will keep Konversation running in the "
-      "system tray. Use 'Quit' from the 'File' menu to quit the application.</qt>" ),
-      i18n( "Docking in System Tray" ), "hideOnCloseInfo");
 
-    hide();
-    return false;
+      // Compute size and position of the pixmap to be grabbed:
+      QPoint g = tray->mapToGlobal( tray->pos() );
+      int desktopWidth  = kapp->desktop()->width();
+      int desktopHeight = kapp->desktop()->height();
+      int tw = tray->width();
+      int th = tray->height();
+      int w = desktopWidth / 4;
+      int h = desktopHeight / 9;
+      int x = g.x() + tw/2 - w/2; // Center the rectange in the systray icon
+      int y = g.y() + th/2 - h/2;
+      if ( x < 0 )                 x = 0; // Move the rectangle to stay in the desktop limits
+      if ( y < 0 )                 y = 0;
+      if ( x + w > desktopWidth )  x = desktopWidth - w;
+      if ( y + h > desktopHeight ) y = desktopHeight - h;
+
+      // Grab the desktop and draw a circle arround the icon:
+      QPixmap shot = QPixmap::grabWindow( qt_xrootwin(),  x,  y,  w,  h );
+      QPainter painter( &shot );
+      const int MARGINS = 6;
+      const int WIDTH   = 3;
+      int ax = g.x() - x - MARGINS -1;
+      int ay = g.y() - y - MARGINS -1;
+      painter.setPen(  QPen( KApplication::palette().active().highlight(),  WIDTH ) );
+      painter.drawArc( ax,  ay,  tw + 2*MARGINS,  th + 2*MARGINS,  0,  16*360 );
+      painter.end();
+
+      // Associate source to image and show the dialog:
+      QMimeSourceFactory::defaultFactory()->setPixmap( "systray_shot",  shot );
+      KMessageBox::information( this,
+      i18n( "<p>Closing the main window will keep Konversation running in the system tray. "
+            "Use <b>Quit</b> from the <b>Konversation</b> menu to quit the application.</p>"
+            "<p><center><img source=\"systray_shot\"></center></p>" ),
+      i18n( "Docking in System Tray" ),  "HideMenuBarWarning" );
+      hide();
+
+      return false;
   }
 
   // send quit to all servers
@@ -1035,7 +1065,7 @@ void KonversationMainWindow::notifyAction(const QString& serverName,const QStrin
 }
 
 void KonversationMainWindow::slotPrefsChanged()
-{ 
+{
   kdDebug() << "KonversationMainWindow::slotPrefsChanged()" << endl;
   emit prefsChanged();
 }
@@ -1345,13 +1375,13 @@ void KonversationMainWindow::insertCharacter()
   if(!m_insertCharDialog) {
     ChatWindow* view = static_cast<ChatWindow*>(viewContainer->currentPage());
     QFont font;
-    
+
     if(view && view->getTextView()) {
       font = view->getTextView()->font();
     } else if(view) {
       font = static_cast<QWidget*>(view)->font();
     }
-    
+
     m_insertCharDialog = new Konversation::InsertCharDialog(font.family(), this);
     connect(m_insertCharDialog, SIGNAL(insertChar(const QChar&)), this, SLOT(insertChar(const QChar&)));
   }
@@ -1362,7 +1392,7 @@ void KonversationMainWindow::insertCharacter()
 void KonversationMainWindow::insertChar(const QChar& chr)
 {
   ChatWindow* view = static_cast<ChatWindow*>(viewContainer->currentPage());
-  
+
   if(view) {
     view->appendInputText(chr);
   }
