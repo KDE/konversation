@@ -147,9 +147,10 @@ int SSLSocket::verifyCertificate()
 	bool doAddHost = false;
 
         remoteHost = m_streamSocket->peerAddress().nodeName();
-        url = "irc://"+remoteHost+m_streamSocket->peerAddress().serviceName();
+        url = "irc://"+remoteHost+":"+m_streamSocket->peerAddress().serviceName();
 
 	KSSLCertificate& peerCertificate = kssl->peerInfo().getPeerCertificate();
+	m_sslPeerCertificate = peerCertificate.toString();
 
 	KSSLCertificate::KSSLValidationList validationList
             = peerCertificate.validateVerbose(KSSLCertificate::SSLServer);

@@ -23,7 +23,8 @@
 #include <kstreamsocket.h>
 using namespace KNetwork;
 
-class SSLSocketPrivate;
+class KSSL;
+class KSSLCertificateCache;
 
 class SSLSocket : public QObject
 {
@@ -33,11 +34,13 @@ class SSLSocket : public QObject
 		SSLSocket();
 		~SSLSocket();
 
+		KSSL* kssl;
 		KStreamSocket* m_streamSocket;
 		void showInfoDialog();
 
 	signals:
 		void sslFailure();
+		void sslSocketConnected();
 
 	private slots:
 		void slotConnected();
@@ -54,7 +57,7 @@ class SSLSocket : public QObject
 		QString m_sslPeerChain;
 		QString m_sslCertErrors;
 
-		SSLSocketPrivate *d;
+		KSSLCertificateCache* cc;
 
 };
 
