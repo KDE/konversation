@@ -36,6 +36,7 @@ KonversationApplication::KonversationApplication()
 
   prefsDialog=0;
 
+  preferences.setOSDFont(font());
   preferences.setTextFont(font());
   preferences.setListFont(font());
 
@@ -79,6 +80,9 @@ KonversationApplication::KonversationApplication()
     connect(&preferences,SIGNAL (requestServerConnection(int)),this,SLOT (connectToAnotherServer(int)) );
     connect(&preferences,SIGNAL (requestSaveOptions()),this,SLOT (saveOptions()) );
   }
+  // initialize OSD display
+  osd = new OSDWidget();
+
   // prepare dcop interface
   dcopObject=new KonvDCOP;
   (void)new KonvIdentDCOP;
@@ -378,6 +382,21 @@ void KonversationApplication::readOptions()
   QString notifyList=config->readEntry("NotifyList",QString::null);
   preferences.setNotifyList(QStringList::split(' ',notifyList));
 
+  // OnScreen Display
+  config->setGroup("OSD");
+  preferences.setOSDUsage(config->readBoolEntry("UseOSD",preferences.getOSDUsage()));
+  preferences.setOSDShowOwnNick(config->readBoolEntry("ShowOwnNick",preferences.getOSDShowOwnNick()));
+  preferences.setOSDShowChannel(config->readBoolEntry("ShowChannel",preferences.getOSDShowChannel()));
+  preferences.setOSDShowQuery(config->readBoolEntry("ShowQuery",preferences.getOSDShowQuery()));
+  preferences.setOSDShowChannelEvent(config->readBoolEntry("ShowChannelEvent",preferences.getOSDShowChannelEvent()));
+  preferences.setOSDFontRaw(config->readEntry("OSDFont",preferences.getOSDFont().rawName()));
+
+  if (preferences.getOSDUsage())
+  {
+    osd->setEnabled(true);
+    osd->setFont(preferences.getOSDFont());
+  }
+
   // Server List
   config->setGroup("Server List");
 
@@ -631,6 +650,15 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("HilightNickColor",preferences.getHilightNickColor().name().mid(1));
   config->writeEntry("HilightOwnLines",preferences.getHilightOwnLines());
   config->writeEntry("HilightOwnLinesColor",preferences.getHilightOwnLinesColor().name().mid(1));
+
+  // OnScreen Display
+  config->setGroup("OSD");
+  config->writeEntry("UseOSD",preferences.getOSDUsage());
+  config->writeEntry("ShowOwnNick",preferences.getOSDShowOwnNick());
+  config->writeEntry("ShowChannel",preferences.getOSDShowChannel());
+  config->writeEntry("ShowQuery",preferences.getOSDShowQuery());
+  config->writeEntry("ShowChannelEvent",preferences.getOSDShowChannelEvent());
+  config->writeEntry("OSDFont",preferences.getOSDFont().toString());
 
   // Ignore List
   config->deleteGroup("Ignore List");

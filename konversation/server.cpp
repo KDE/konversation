@@ -1107,7 +1107,17 @@ void Server::addNickToChannel(const QString &channelName, const QString &nicknam
 void Server::nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask)
 {
   Channel* outChannel=getChannelByName(channelName);
-  if(outChannel) outChannel->joinNickname(nickname,hostmask);
+  if(outChannel)
+  {
+    outChannel->joinNickname(nickname,hostmask);
+
+    // OnScreen Message
+    if(KonversationApplication::preferences.getOSDShowChannelEvent())
+    {
+      KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+      konvApp->osd->showOSD("(" + channelName + ") " + nickname + " has joined this channel. (" + hostmask + ")");
+    }
+  }
 }
 
 void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceHostmask)
@@ -1131,6 +1141,13 @@ void Server::removeNickFromChannel(const QString &channelName, const QString &ni
   if(outChannel)
   {
     if(outChannel->getNickByName(nickname)) outChannel->removeNick(nickname,reason,quit);
+
+    // OnScreen Message
+    if(KonversationApplication::preferences.getOSDShowChannelEvent())
+    {
+      KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+      konvApp->osd->showOSD("(" + channelName + ") " + nickname + " has left this channel. (" + reason + ")");
+    }
   }
 }
 
@@ -1185,6 +1202,13 @@ void Server::appendToChannel(const QString& channel,const QString& nickname,cons
 {
   Channel* outChannel=getChannelByName(channel);
   if(outChannel) outChannel->append(nickname,message);
+
+  // OnScreen Message
+  if (KonversationApplication::preferences.getOSDShowChannel())
+  {
+    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+    konvApp->osd->showOSD("(" + channel + ") <" + nickname + "> " + message);
+  }
 }
 
 void Server::appendActionToChannel(const QString& channel,const QString& nickname,const QString& message)
@@ -1208,7 +1232,16 @@ void Server::appendCommandMessageToChannel(const QString& channel,const QString&
 void Server::appendToQuery(const QString& queryName,const QString& message)
 {
   Query* outQuery=getQueryByName(queryName);
-  if(outQuery) outQuery->appendQuery(queryName,message);
+  if(outQuery)
+  {
+    outQuery->appendQuery(queryName,message);
+    // OnScreen Message
+    if(KonversationApplication::preferences.getOSDShowQuery())
+    {
+      KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+      konvApp->osd->showOSD("(Query) <" + queryName + "> " + message);
+    }
+  }
   else kdWarning() << "Server::appendToQuery(" << queryName << "): Query not found!" << endl;
 }
 

@@ -182,6 +182,26 @@ class Preferences : public QObject
     void setHilightOwnLinesColor(const QString &color);
     QColor getHilightOwnLinesColor();
 
+    // On Screen Display
+    void setOSDUsage(bool state);
+    bool getOSDUsage();
+
+    void setOSDShowOwnNick(bool state);
+    bool getOSDShowOwnNick();
+
+    void setOSDShowChannel(bool state);
+    bool getOSDShowChannel();
+
+    void setOSDShowQuery(bool state);
+    bool getOSDShowQuery();
+
+    void setOSDShowChannelEvent(bool state);
+    bool getOSDShowChannelEvent();
+
+    QFont getOSDFont();
+    void setOSDFont(QFont newFont);
+    void setOSDFontRaw(const QString &rawFont);
+
     QStringList getButtonList();
     void setButtonList(QStringList newList);
 
@@ -404,6 +424,14 @@ class Preferences : public QObject
     bool hilightOwnLines;
     QColor hilightNickColor;
     QColor hilightOwnLinesColor;
+
+    // On Screen Display
+    bool OSDUsage;            // Use OSD?
+    bool OSDShowOwnNick;      // Message, if own nick appears
+    bool OSDShowChannel;      // Message on any channel acticity
+    bool OSDShowQuery;        // Message on query acticity
+    bool OSDShowChannelEvent; // Message on channel join/part events
+    QFont osdFont;            // Which font to use
 
     QString backgroundImage;
 

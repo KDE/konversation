@@ -301,6 +301,11 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
       {
         // hilight current nickname
         highlightColor=KonversationApplication::preferences.getHilightNickColor().name();
+        if (KonversationApplication::preferences.getOSDShowOwnNick() && !KonversationApplication::preferences.getOSDShowChannel())
+        {
+          KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+          konvApp->osd->showOSD("(HIGHLIGHT) <" + whoSent + "> " + filteredLine);
+        }
       }
       else
       {

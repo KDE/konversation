@@ -27,6 +27,7 @@ Changes from 0.12 to 0.13
 - Applied a patch by Christian Mühlhäuser to right-align close widgets (thanks)
 - Info button on dcc panel now works
 - Added /unban command
+- Applied a patch by Christian Mühlhäuser for OSD functions (thanks)
 
 Changes from 0.11 to 0.12
 - Now handles multi server mode in one single window

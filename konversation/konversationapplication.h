@@ -19,6 +19,7 @@
 
 #include "preferences.h"
 #include "event.h"
+#include "osd.h"
 
 class QCString;
 
@@ -50,6 +51,7 @@ class KonversationApplication : public KApplication
 
     void syncPrefs();
     Server* getServerByName(const QString& name);
+    OSDWidget* osd;
 
   signals:
     void catchUrl(const QString& who,const QString& url);

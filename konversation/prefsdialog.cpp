@@ -38,6 +38,7 @@
 #include "prefspagedialogs.h"
 #include "prefspagehighlight.h"
 #include "prefspagenotify.h"
+#include "prefspageosd.h"
 #include "prefspageignore.h"
 #include "prefspagealiases.h"
 
@@ -60,6 +61,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
           notifyPane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Notify List")));
   QFrame* highlightPane      =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Highlight List")));
+  QFrame* OSDPane            =addPage(QStringList::split(',',i18n("Chat")+","+i18n("OnScreen Display")));
   QFrame* ignorePane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Ignore List")));
   QFrame* aliasesPane        =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Aliases")));
 
@@ -82,6 +84,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   PrefsPageNotify*          notifyPage         =new PrefsPageNotify(notifyPane,preferences);
   PrefsPageHighlight*       highlightPage      =new PrefsPageHighlight(highlightPane,preferences);
+  PrefsPageOSD*             OSDPage            =new PrefsPageOSD(OSDPane,preferences);
   PrefsPageIgnore*          ignorePage         =new PrefsPageIgnore(ignorePane,preferences);
   PrefsPageAliases*         aliasesPage        =new PrefsPageAliases(aliasesPane,preferences);
 
@@ -116,6 +119,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   connect(this,SIGNAL (applyPreferences()),notifyPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),highlightPage,SLOT (applyPreferences()) );
+  connect(this,SIGNAL (applyPreferences()),OSDPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),ignorePage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),aliasesPage,SLOT (applyPreferences()) );
 

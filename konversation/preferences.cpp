@@ -123,6 +123,12 @@ Preferences::Preferences()
   setHilightNickColor("#ff0000");
   setHilightOwnLinesColor("#ff0000");
 
+  // On Screen Display
+  setOSDUsage(false);
+  setOSDShowOwnNick(false);
+  setOSDShowQuery(false);
+  setOSDShowChannelEvent(false);
+
   setBackgroundImageName(QString::null);
 
   setOpLedColor(1);
@@ -510,6 +516,26 @@ bool Preferences::getHilightOwnLines() { return hilightOwnLines; }
 
 void Preferences::setHilightOwnLinesColor(const QString &newColor) { hilightOwnLinesColor.setNamedColor(newColor); }
 QColor Preferences::getHilightOwnLinesColor() { return hilightOwnLinesColor; }
+
+// On Screen Display
+void Preferences::setOSDUsage(bool state) { OSDUsage=state; }
+bool Preferences::getOSDUsage() { return OSDUsage; }
+
+void Preferences::setOSDShowOwnNick(bool state) { OSDShowOwnNick=state; }
+bool Preferences::getOSDShowOwnNick() { return OSDShowOwnNick; }
+
+void Preferences::setOSDShowChannel(bool state) { OSDShowChannel=state; }
+bool Preferences::getOSDShowChannel() { return OSDShowChannel; }
+
+void Preferences::setOSDShowQuery(bool state) { OSDShowQuery=state; }
+bool Preferences::getOSDShowQuery() { return OSDShowQuery; }
+
+void Preferences::setOSDShowChannelEvent(bool state) { OSDShowChannelEvent=state; }
+bool Preferences::getOSDShowChannelEvent() { return OSDShowChannelEvent; }
+
+QFont Preferences::getOSDFont() { return osdFont; }
+void Preferences::setOSDFont(QFont newFont) { osdFont=newFont; }
+void Preferences::setOSDFontRaw(const QString &rawFont) { osdFont.fromString(rawFont); }
 
 QFont Preferences::getTextFont() { return textFont; }
 QFont Preferences::getListFont() { return listFont; }
