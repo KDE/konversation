@@ -52,7 +52,9 @@ int main(int argc, char* argv[])
   aboutData.addAuthor("Stanislav Karchebny",I18N_NOOP("Non-Latin1-Encodings"),"berkus@users.sourceforge.net");
   aboutData.addAuthor("Mickael Marchand",I18N_NOOP("Konsole part view"),"marchand@kde.org");
   aboutData.addAuthor("Peter Simonsson",I18N_NOOP("Color picker, IRC color preferences, KNotify events"),"psn@linux.se");
-  aboutData.addAuthor("Frauke Oster",I18N_NOOP("System tray patch"),"frauke@frsv.de");
+
+  aboutData.addCredit("Frauke Oster",I18N_NOOP("System tray patch"),"frauke@frsv.de");
+  aboutData.addCredit("Lucijan Busch",I18N_NOOP("Bug fixes"),"lucijan@kde.org");
 
   KCmdLineArgs::init(argc,argv,&aboutData);
 
