@@ -92,14 +92,18 @@ void StatusPanel::sendStatusText(const QString& sendLine)
   // create a work copy
   QString output(sendLine);
   // replace aliases and wildcards
-  if(server->getOutputFilter()->replaceAliases(output)) output=server->parseWildcards(output,server->getNickname(),QString::null,QString::null,QString::null,QString::null);
+  if(server->getOutputFilter()->replaceAliases(output)) {
+    output = server->parseWildcards(output, server->getNickname(), QString::null, QString::null, QString::null, QString::null);
+  }
 
   // encoding stuff is done in Server()
-  output=server->getOutputFilter()->parse(server->getNickname(),output,QString::null);
+  Konversation::OutputFilterResult result = server->getOutputFilter()->parse(server->getNickname(), output, QString::null);
 
-  if(!output.isEmpty()) appendServerMessage(server->getOutputFilter()->getType(),output);
+  if(!result.output.isEmpty()) {
+    appendServerMessage(result.typeString, result.output);
+  }
 
-  server->queue(server->getOutputFilter()->getServerOutput());
+  server->queue(result.toServer);
 }
 
 void StatusPanel::statusTextEntered()

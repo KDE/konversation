@@ -17,6 +17,8 @@
 
 #include <kdialogbase.h>
 
+#include <qvaluelist.h>
+
 /*
   @author Dario Abatianni
 */
@@ -61,5 +63,52 @@ class EditServerDialog : public KDialogBase
     KLineEdit* channelKeyInput;
     KComboBox* identityCombo;
 };
-
+/*
+namespace Konversation
+{
+  typedef struct ChannelSettings
+  {
+    QString channel;
+    QString password;
+  };
+  
+  typedef QValueList<ChannelSettings> ChannelList;
+  
+  class EditServerDialog : public KDialogBase
+  {
+    Q_OBJECT
+    public:
+      EditServerDialog(QWidget* parent, const QString& group,
+                                          const QString& name,
+                                          unsigned int port,
+                                          const QString& password,
+                                          const QString& identity,
+                                          const QString& connectCommands,
+                                          bool autoConnect,
+                                          ChannelList channels);
+      ~EditServerDialog();
+      
+      QString group();
+      QString server();
+      unsigned int port();
+      QString password();
+      QString identity();
+      QString connectCommands();
+      bool autoConnect();
+      ChannelList channels();
+  
+    protected slots:
+      void slotOk();
+    
+    private:
+      KLineEdit* m_groupInput;
+      KLineEdit* m_serverInput;
+      KLineEdit* m_portInput;
+      KLineEdit* m_passwordInput;
+      KLineEdit* m_connectCommandsInput;
+      KComboBox* m_identityCombo;
+      QCheckBox* m_autoConnectCheck;
+  };
+};
+*/
 #endif

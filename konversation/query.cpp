@@ -121,20 +121,23 @@ void Query::sendQueryText(const QString& sendLine)
   // create a work copy
   QString output(sendLine);
   // replace aliases and wildcards
-  if(server->getOutputFilter()->replaceAliases(output)) output=server->parseWildcards(output,server->getNickname(),getName(),QString::null,QString::null,QString::null);
+  if(server->getOutputFilter()->replaceAliases(output)) {
+    output = server->parseWildcards(output, server->getNickname(), getName(), QString::null, QString::null, QString::null);
+  }
 
   // encoding stuff is done in Server()
-  output=server->getOutputFilter()->parse(server->getNickname(),output,getName());
+  Konversation::OutputFilterResult result = server->getOutputFilter()->parse(server->getNickname(), output, getName());
 
-  if(!output.isEmpty())
+  if(!result.output.isEmpty())
   {
-    if(server->getOutputFilter()->isAction()) appendAction(server->getNickname(),output);
-    else if(server->getOutputFilter()->isCommand()) appendCommandMessage(server->getOutputFilter()->getType(),output);
-    else if(server->getOutputFilter()->isProgram()) appendServerMessage(server->getOutputFilter()->getType(),output);
-    else if(!server->getOutputFilter()->getType().isEmpty()) appendQuery(server->getOutputFilter()->getType(),output);
-    else appendQuery(server->getNickname(),output);
+    if(result.type == Konversation::Action) appendAction(server->getNickname(), result.output);
+    else if(result.type == Konversation::Command) appendCommandMessage(result.typeString, result.output);
+    else if(result.type == Konversation::Program) appendServerMessage(result.typeString, result.output);
+    else if(!result.typeString.isEmpty()) appendQuery(result.typeString, result.output);
+    else appendQuery(server->getNickname(), result.output);
   }
-  server->queue(server->getOutputFilter()->getServerOutput());
+  
+  server->queue(result.toServer);
 }
 
 void Query::newTextInView(const QString& highlightColor,bool important)

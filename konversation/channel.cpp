@@ -736,19 +736,23 @@ void Channel::sendChannelText(const QString& sendLine)
   }
 
   // encoding stuff is done in Server()
-  output = server->getOutputFilter()->parse(server->getNickname(),output,getName());
+  Konversation::OutputFilterResult result = server->getOutputFilter()->parse(server->getNickname(),output,getName());
 
   // Is there something we need to display for ourselves?
-  if(!output.isEmpty())
+  if(!result.output.isEmpty())
   {
-    if(server->getOutputFilter()->isAction()) appendAction(server->getNickname(),output);
-    else if(server->getOutputFilter()->isCommand()) appendCommandMessage(server->getOutputFilter()->getType(),output);
-    else if(server->getOutputFilter()->isProgram()) appendServerMessage(server->getOutputFilter()->getType(),output);
-    else if(server->getOutputFilter()->isQuery()) appendQuery(server->getOutputFilter()->getType(),output);
-    else append(server->getNickname(),output);
+    if(result.type == Konversation::Action) appendAction(server->getNickname(), result.output);
+    else if(result.type == Konversation::Command) appendCommandMessage(result.typeString, result.output);
+    else if(result.type == Konversation::Program) appendServerMessage(result.typeString, result.output);
+    else if(result.type == Konversation::Query) appendQuery(result.typeString, result.output);
+    else append(server->getNickname(), result.output);
   }
   // Send anything else to the server
-  server->queueList(server->getOutputFilter()->getServerOutputList());
+  if(!result.toServer.isEmpty()) {
+    server->queue(result.toServer);
+  } else {
+    server->queueList(result.toServerList);
+  }
 }
 
 void Channel::newTextInView(const QString& highlightColor,bool important)

@@ -551,9 +551,8 @@ void Server::ircServerConnectionSuccess()
     {
       output.remove(0, 1);
     }*/
-    outputFilter->parse(getNickname(),output,QString::null);
-    output = outputFilter->getServerOutput();
-    queue(output);
+    Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),output,QString::null);
+    queue(result.toServer);
   }
 
   emit nicknameChanged(getNickname());
@@ -639,8 +638,8 @@ void Server::connectionEstablished()
 void Server::quitServer()
 {
   QString command(KonversationApplication::preferences.getCommandChar()+"QUIT");
-  outputFilter->parse(getNickname(),command,QString::null);
-  queue(outputFilter->getServerOutput());
+  Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command,QString::null);
+  queue(result.toServer);
 }
 
 void Server::notifyAction(const QString& nick)
@@ -656,8 +655,8 @@ void Server::notifyAction(const QString& nick)
   QStringList outList=QStringList::split('\n',out);
   for(unsigned int index=0;index<outList.count();index++)
   {
-    outputFilter->parse(getNickname(),outList[index],QString::null);
-    queue(outputFilter->getServerOutput());
+    Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),outList[index],QString::null);
+    queue(result.toServer);
   } // endfor
 }
 
@@ -1281,8 +1280,9 @@ void Server::closeChannel(const QString& name)
   Channel* channelToClose=getChannelByName(name);
   if(channelToClose)
   {
-    outputFilter->parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"PART",name);
-    queue(outputFilter->getServerOutput());
+    Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),
+      KonversationApplication::preferences.getCommandChar() + "PART", name);
+    queue(result.toServer);
   }
 }
 
@@ -1307,7 +1307,6 @@ void Server::requestUserhost(const QString& nicks)
 void Server::requestBan(const QStringList& users,const QString& channel,const QString& a_option)
 {
   QString hostmask;
-  QString banCommand;
   QString option=a_option.lower();
 
   Channel* targetChannel=getChannelByName(channel);
@@ -1343,18 +1342,15 @@ void Server::requestBan(const QStringList& users,const QString& channel,const QS
       }
     }
 
-    outputFilter->execBan(mask,channel);
-
-    banCommand=outputFilter->getServerOutput();
-
-    queue(banCommand);
+    Konversation::OutputFilterResult result = outputFilter->execBan(mask,channel);
+    queue(result.toServer);
   }
 }
 
 void Server::requestUnban(const QString& mask,const QString& channel)
 {
-  outputFilter->execUnban(mask,channel);
-  queue(outputFilter->getServerOutput());
+  Konversation::OutputFilterResult result = outputFilter->execUnban(mask,channel);
+  queue(result.toServer);
 }
 
 void Server::requestDccSend()
@@ -1504,16 +1500,16 @@ void Server::requestDccChat(const QString& nickname)
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)
 {
-  outputFilter->sendRequest(partner,fileName,address,port,size);
-  queue(outputFilter->getServerOutput());
-  appendStatusMessage(outputFilter->getType(),outputFilter->getOutput());
+  Konversation::OutputFilterResult result = outputFilter->sendRequest(partner,fileName,address,port,size);
+  queue(result.toServer);
+  appendStatusMessage(result.typeString, result.output);
 }
 
 void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, int startAt)
 {
-  outputFilter->resumeRequest(sender,fileName,port,startAt);
-  queue(outputFilter->getServerOutput());
-  appendStatusMessage(outputFilter->getType(),outputFilter->getOutput());
+  Konversation::OutputFilterResult result = outputFilter->resumeRequest(sender,fileName,port,startAt);
+  queue(result.toServer);
+  appendStatusMessage(result.typeString, result.output);
 }
 
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
@@ -1554,9 +1550,10 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
     QString fileName=dccTransfer->getFile();
     appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(recipient).arg(dccArguments[2]));
     dccTransfer->startResumeSend(dccArguments[2]);
-    outputFilter->acceptRequest(recipient,fileName,dccArguments[1],dccArguments[2].toUInt());
-    queue(outputFilter->getServerOutput());
-    appendStatusMessage(outputFilter->getType(),outputFilter->getOutput());
+    Konversation::OutputFilterResult result = outputFilter->acceptRequest(recipient,
+      fileName, dccArguments[1], dccArguments[2].toUInt());
+    queue(result.toServer);
+    appendStatusMessage(result.typeString, result.output);
   }
   else
   {
@@ -1614,8 +1611,9 @@ void Server::removeQuery(Query* query)
 
 void Server::sendJoinCommand(const QString& name)
 {
-  outputFilter->parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"JOIN "+name,QString::null);
-  queue(outputFilter->getServerOutput());
+  Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),
+    KonversationApplication::preferences.getCommandChar() + "JOIN " + name, QString::null);
+  queue(result.toServer);
 }
 
 void Server::joinChannel(const QString &name, const QString &hostmask, const QString &/*key*/)
@@ -2708,8 +2706,8 @@ void Server::executeMultiServerCommand(const QString& command, const QString& pa
       str += " " + parameter;
     }
 
-    outputFilter->parse(getNickname(), str,QString::null);
-    queue(outputFilter->getServerOutput());
+    Konversation::OutputFilterResult result = outputFilter->parse(getNickname(), str, QString::null);
+    queue(result.toServer);
   } else if(command == "msg") {
     sendToAllChannelsAndQueries(parameter);
   } else {
