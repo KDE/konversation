@@ -145,6 +145,9 @@
                     <property name="text">
                         <string>Update interval:</string>
                     </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kcfg_WhoInterval</cstring>
+                    </property>
                 </widget>
             </grid>
         </widget>

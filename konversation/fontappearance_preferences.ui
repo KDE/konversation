@@ -66,6 +66,9 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="text">
                 <string>Enable fi&amp;xed font for MOTD messages</string>
             </property>
+            <property name="whatsThis" stdset="0">
+                <string>Show MOTD (Message Of The Day) message in fixed font</string>
+            </property>
         </widget>
         <spacer row="4" column="1">
             <property name="name">
