@@ -40,6 +40,8 @@ else
 	$key = $_;
     }
 
+    close(KEY);
+
     GetOptions('search=s' => \$search,
 	       'spell=s' => \$spellcheck,
 	       'browser' => \$browser);
