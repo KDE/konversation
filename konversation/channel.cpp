@@ -215,7 +215,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   connect(&userhostTimer,SIGNAL (timeout()),this,SLOT (autoUserhost()));
   connect(&KonversationApplication::preferences,SIGNAL (autoUserhostChanged(bool)),this,SLOT (autoUserhostChanged(bool)));
+
   // every few seconds try to get more userhosts
+  autoUserhostChanged(KonversationApplication::preferences.getAutoUserhost());
   userhostTimer.start(10000);
 }
 
