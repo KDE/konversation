@@ -502,8 +502,10 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
   switch(r)
   {
     case Copy:
+      copy();
       break;
     case SelectAll:
+      selectAll();
       break;
     case SendFile:
       emit sendFile();
