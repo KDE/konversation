@@ -215,7 +215,7 @@ void DccChat::readData()
   int actual=0;
   char* buffer=0;
   QString line;
-  QTextCodec* codec = QTextCodec::codecForName(m_encoding.isEmpty() ? IRCCharsets::encodingForLocale().ascii() : m_encoding.ascii());
+  QTextCodec* codec = IRCCharsets::codecForName(m_encoding.isEmpty() ? IRCCharsets::encodingForLocale() : m_encoding);
 
   available = m_dccSocket->bytesAvailable();
   if( available > 0 )
@@ -276,7 +276,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
     // wrap socket into a stream
     QTextStream stream(m_dccSocket);
     // init stream props
-    stream.setCodec(QTextCodec::codecForName(m_encoding.isEmpty() ? IRCCharsets::encodingForLocale().ascii() : m_encoding.ascii()));
+    stream.setCodec(IRCCharsets::codecForName(m_encoding.isEmpty() ? IRCCharsets::encodingForLocale() : m_encoding));
 
     for(unsigned int index=0;index<lines.count();index++)
     {

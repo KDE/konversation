@@ -21,8 +21,6 @@ class IRCCharsets
     /**
      * Lists all available encoding names.
      * e.g. "utf8", "iso 8859-1"
-     * You can get instances of QTextCodec from these names
-     * like this: QTextCodec* codec= QTextCodec::codecForName( shortName.ascii() )
      * Encodings which don't work on IRC are excluded. (e.g. utf16)
      * @note It's guaranteed that the order of this list is same with that of @ref availableEncodingDescriptiveNames() .
      */
@@ -39,6 +37,13 @@ class IRCCharsets
     
     static QString shortNameToDescriptiveName( const QString& shortName );
     static QString descriptiveNameToShortName( const QString& descriptiveName );
+    
+    /**
+     * Converts the ambiguous encoding name to a short encoding name
+     * Like : iso8859-9 -> iso 8859-9
+     * @return a short encoding name or QString::null
+     */
+    static QString ambiguousNameToShortName( const QString& ambiguousName );
     
     /**
      * Returns the encoding index in the short names list or the descriptions list.
@@ -58,18 +63,34 @@ class IRCCharsets
      */
     static QString encodingForLocale();
     
-    /*
-      Converts iso code to shortname
-      Like : iso8859-9 -> iso 8859-9
-    */
-    static QString localeAlias(const QString& locale);
+    static QTextCodec* codecForName( const QString& shortName );
     
   private:
     static void private_init();
+    static bool s_initialized;
 
     static QMap<QString,QString> s_localeAliases;
+    
+    /**
+     * short names list
+     * you can get this list with @ref availableEncodingShortNames()
+     * e.g. iso 8859-1
+     */
     static QStringList s_shortNames;
+    
+    /**
+     * descriptive names list
+     * you can get this list with @ref availableEncodingDescriptiveNames();
+     * e.g. Western European ( iso 8859-1 )
+     */
     static QStringList s_descriptiveNames;
+    
+    /**
+     * simplified short names list (internal use)
+     * e.g. iso88591
+     * used in @ref ambiguousNameToShortName()
+     */
+    static QStringList s_simplifiedShortNames;
 };
 
 #endif  // KONVERSATION_IRCCHARSETS_H

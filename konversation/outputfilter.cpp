@@ -1194,15 +1194,9 @@ namespace Konversation {
 
   void OutputFilter::parseCharset(const QString charset)
   {
-    if(QTextCodec::codecForName(charset.ascii()))
-      {
-	QString newCharset = IRCCharsets::localeAlias(charset);
-	if(!newCharset.isEmpty())
-	  m_server->getIdentity()->setCodecName(newCharset);
-	else
-	  m_server->getIdentity()->setCodecName(charset);
-      }
-    
+    QString shortName = IRCCharsets::ambiguousNameToShortName(charset);
+    if(!shortName.isEmpty())
+      m_server->getIdentity()->setCodecName(shortName);
   }
 
 }

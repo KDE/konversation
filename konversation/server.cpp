@@ -53,6 +53,7 @@ using namespace KNetwork;
 #include "dcctransferrecv.h"
 #include "dccrecipientdialog.h"
 #include "nick.h"
+#include "irccharsets.h"
 #include "konversationmainwindow.h"
 #include "statuspanel.h"
 #include "rawlog.h"
@@ -1047,7 +1048,7 @@ void Server::incoming()
 
       QTextCodec* codec;
       if(!channelEncoding.isEmpty())
-        codec = QTextCodec::codecForName(channelEncoding.ascii());
+        codec = IRCCharsets::codecForName(channelEncoding);
       else
         codec = getIdentity()->getCodec();
       inputBuffer << codec->toUnicode(qcsBufferLines.front());
@@ -1144,7 +1145,7 @@ void Server::send()
     QTextCodec* codec = getIdentity()->getCodec();
 
     if(!channelCodecName.isEmpty()) {
-       codec = QTextCodec::codecForName(channelCodecName.ascii());
+       codec = IRCCharsets::codecForName(channelCodecName);
     }
 
     // convert encoded data to IRC ascii only when we don't have the same codec locally

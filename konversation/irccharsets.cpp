@@ -17,6 +17,7 @@
 #include <qlocale.h>
 #endif
 
+#include <qregexp.h>
 #include <qtextcodec.h>
 #include <kcharsets.h>
 #include <kdebug.h>
@@ -51,6 +52,27 @@ QString IRCCharsets::shortNameToDescriptiveName( const QString& shortName ) // s
 QString descriptiveNameToShortName( const QString& descriptiveName )  // static
 {
   return KGlobal::charsets()->encodingForName( descriptiveName );
+}
+
+QString IRCCharsets::ambiguousNameToShortName( const QString& ambiguousName )
+{
+  private_init();
+  
+  // simplify ambiguousName
+  QString simplifiedAmbiguousName( ambiguousName );
+  simplifiedAmbiguousName.replace( QRegExp( "[^a-zA-Z0-9]" ), "" );
+  
+  // search
+  int index = 0;
+  for ( QStringList::iterator it = s_simplifiedShortNames.begin() ; it != s_simplifiedShortNames.end() ; ++it )
+  {
+    if ( (*it) == simplifiedAmbiguousName )
+      return s_shortNames[index];
+    ++index;
+  }
+  
+  // failed
+  return QString::null;
 }
 
 int IRCCharsets::shortNameToIndex( const QString& shortName )  // static
@@ -94,50 +116,20 @@ QString IRCCharsets::encodingForLocale()  // static
   return "utf8";
 }
 
-QString IRCCharsets::localeAlias(const QString& locale)
+QTextCodec* IRCCharsets::codecForName( const QString& shortName )
 {
-  private_init();
-  return s_localeAliases[locale.lower()];
+  return QTextCodec::codecForName( shortName.ascii() );
 }
-
 
 void IRCCharsets::private_init()  // static, private
 {
-  if(s_localeAliases.isEmpty())
-    {
-      // Setup locale aliases
-      // Only need to alias the ones containing space
-      s_localeAliases["cp1250"] = "cp 1250";
-      s_localeAliases["cp1251"] = "cp 1251";
-      s_localeAliases["cp1252"] = "cp 1252";
-      s_localeAliases["cp1253"] = "cp 1253";
-      s_localeAliases["cp1254"] = "cp 1254";
-      s_localeAliases["cp1255"] = "cp 1255";
-      s_localeAliases["cp1256"] = "cp 1256";
-      s_localeAliases["cp1257"] = "cp 1257";
-
-      s_localeAliases["iso8859-1"] = "iso 8859-1";
-      s_localeAliases["iso8859-2"] = "iso 8859-2";
-      s_localeAliases["iso8859-3"] = "iso 8859-3";
-      s_localeAliases["iso8859-4"] = "iso 8859-4";
-      s_localeAliases["iso8859-5"] = "iso 8859-5";
-      s_localeAliases["iso8859-6"] = "iso 8859-6";
-      s_localeAliases["iso8859-7"] = "iso 8859-7";
-      s_localeAliases["iso8859-8"] = "iso 8859-8";
-      s_localeAliases["iso8859-8-i"] = "iso 8859-8-i";
-      s_localeAliases["iso8859-9"] = "iso 8859-9";
-      s_localeAliases["iso8859-11"] = "iso 8859-11";
-      s_localeAliases["iso8859-13"] = "iso 8859-13";
-      s_localeAliases["iso8859-15"] = "iso 8859-15";
-
-      s_localeAliases["pt154"] = "pt 154";
-    }
-
-  if ( !s_shortNames.isEmpty() )
+  if ( s_initialized )
     return;
-
+  s_initialized = true;
+      
+  // setup s_shortNames, s_descriptiveNames, s_simplifiedShortNames
+  QRegExp reSimplify( "[^a-zA-Z0-9]" );
   s_descriptiveNames = KGlobal::charsets()->descriptiveEncodingNames();
-  
   QStringList::Iterator it = s_descriptiveNames.begin();
   while ( it != s_descriptiveNames.end() )
   {
@@ -148,11 +140,14 @@ void IRCCharsets::private_init()  // static, private
     else
     {
       s_shortNames.append( encodingName );
+      s_simplifiedShortNames.append( encodingName.replace( reSimplify, "" ) );
       ++it;
     }
   }
 }
 
+bool IRCCharsets::s_initialized = false;
 QStringList IRCCharsets::s_shortNames;
 QStringList IRCCharsets::s_descriptiveNames;
+QStringList IRCCharsets::s_simplifiedShortNames;
 QMap<QString,QString> IRCCharsets::s_localeAliases;

@@ -120,7 +120,7 @@ void Identity::setCodecName(const QString &newCodecName)
     codecName=IRCCharsets::encodingForLocale();
   
   m_codecName=codecName;
-  m_codec=QTextCodec::codecForName(codecName.ascii());
+  m_codec=IRCCharsets::codecForName(codecName);
 }
 
 QString Identity::getAwayNick() { return awayNick; }
