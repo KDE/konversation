@@ -201,22 +201,26 @@ void ChatWindow::setLogfileName(const QString& name)
       unsigned long filePosition;
 
       QString backlogLine;
+      QTextStream backlog(&logfile);
+      backlog.setEncoding(QTextStream::UnicodeUTF8);
       // Set file pointer to 1 kB from the end
-      logfile.at(logfile.size()-1024);
+      backlog.device()->at(backlog.device()->size()-1024);
       // Skip first line, since it may be incomplete
-      logfile.readLine(backlogLine,1024);
+      backlog.readLine();
+       
       // Loop until end of file reached
-      while(!logfile.atEnd())
+      while(!backlog.atEnd())
       {
         // remember actual file position to check for deadlocks
-        filePosition=logfile.at();
+        filePosition=backlog.device()->at();
 
-        logfile.readLine(backlogLine,1024);
+        backlogLine=backlog.readLine();
+         
         // check for deadlocks
-        if(logfile.at()==filePosition) logfile.at(filePosition+1);
-        // if a tab character is present in the line
-        if(backlogLine.find('\t')!=-1)
-        {
+        if(backlog.device()->at()==filePosition) backlog.device()->at(filePosition+1);
+         // if a tab character is present in the line
+         if(backlogLine.find('\t')!=-1)
+         {
           // extract timestamp from log
           QString backlogTime=backlogLine.left(backlogLine.find(' '));
           // cut timestamp from line
@@ -225,16 +229,12 @@ void ChatWindow::setLogfileName(const QString& name)
           QString backlogFirst=backlogLine.left(backlogLine.find('\t'));
           // cut first column from line
           backlogLine=backlogLine.mid(backlogLine.find('\t')+1);
+          // Logfile is in utf8 so we don't need to do encoding stuff here
           // append backlog with time and first column to text view
-
-          // convert logfile ascii data to selected encoding, here we must
-          // encode always, if the local encoding matches or not
-          QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-          backlogLine=codec->toUnicode(backlogLine.ascii());
-
           appendBacklogMessage(backlogFirst,backlogTime+' '+backlogLine);
         }
       } // while
+      backlog.unsetDevice();
       logfile.close();
     }
   }

@@ -1227,6 +1227,7 @@ QString Server::parseWildcards(const QString &toParse, const QString &nickname, 
   int pos=out.find(separatorRegExp);
   if(pos!=-1)
   {
+    // TODO: This could be better done with .cap() and proper RegExp ...
     // skip "%s" at the beginning
     pos+=2;
     // copy out all text to the next "%" as new separator
