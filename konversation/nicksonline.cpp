@@ -41,11 +41,12 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
   nickListView->addColumn(i18n("Server/Nickname/Channel"));
   nickListView->addColumn(i18n("Additional Information"));
   nickListView->setFullWidth(false);
+  nickListView->setRootIsDecorated(true);
 #else
   nickListView->addColumn(i18n("Server/Nickname"));
   nickListView->setFullWidth(true);
-#endif
   nickListView->setRootIsDecorated(false);
+#endif
   
   setMargin(KDialog::marginHint());
   setSpacing(KDialog::spacingHint());
@@ -78,18 +79,37 @@ NicksOnline::~NicksOnline()
 #endif
   delete nickListView;
 }
+    
+// Returns the named child of parent item in KListView.
+QListViewItem* NicksOnline::findItemChild(const QListViewItem* parent, const QString& name)
+{
+  if (!parent) return 0;
+  QListViewItem* child;
+  for (child = parent->firstChild(); (child) ; child = child->nextSibling())
+  {
+    if (child->text(0) == name) return child;
+  }
+  return 0;
+}
 
 #ifdef USE_NICKINFO
 void NicksOnline::updateServerOnlineList(Server* server, bool changed)
 {
   bool whoisRequested = false;
+  bool newServerRoot = false;
+  QString nickname;
+  QListViewItem* child;
+  QListViewItem* nextChild;
   QString serverName = server->getServerName();
-  QListViewItem* serverRoot=nickListView->findItem(serverName,0);
+  QListViewItem* serverRoot = nickListView->findItem(serverName,0);
   // If server is not in our list, or if the list changed, then display the new list.
   if ( true )
   {
-    delete serverRoot;
-    KListViewItem* newServerRoot=new KListViewItem(nickListView,serverName);
+    if (!serverRoot)
+    {
+      serverRoot = new KListViewItem(nickListView,serverName);
+      newServerRoot = true;
+    }
     // Get a green LED for flagging of joined channels.
     Images leds;
     QIconSet currentLeds = leds.getGreenLed(false);
@@ -101,7 +121,7 @@ void NicksOnline::updateServerOnlineList(Server* server, bool changed)
     for ( ; (nickInfo=itOnline.current()) ; ++itOnline)
     {
       QString lcNickName = itOnline.currentKey();
-      QString nickname = nickInfo->getNickname();
+      nickname = nickInfo->getNickname();
       // Construct additional information string for nick.
       QString nickAdditionalInfo;
       if (nickInfo->isAway())
@@ -131,8 +151,11 @@ void NicksOnline::updateServerOnlineList(Server* server, bool changed)
       }
       if (!nickInfo->getOnlineSince().isNull())
         nickAdditionalInfo = nickAdditionalInfo + " since " + nickInfo->getOnlineSince().toString(Qt::LocalDate);
-        
-      KListViewItem* nickRoot = new KListViewItem(newServerRoot, nickname, nickAdditionalInfo);
+      
+      QListViewItem* nickRoot = findItemChild(serverRoot, nickname);
+      if (!nickRoot) nickRoot = new KListViewItem(serverRoot, nickname, nickAdditionalInfo);
+      nickRoot->setText(1, nickAdditionalInfo);
+      
       QStringList channelList = server->getNickChannels(nickname);
       for ( unsigned int index=0; index<channelList.count(); index++ )
       {
@@ -150,24 +173,59 @@ void NicksOnline::updateServerOnlineList(Server* server, bool changed)
         if (nickModeWord & 1) nickMode = nickMode + i18n(" Owner");
         nickModeWord >>= 1;
         if (nickModeWord & 1) nickMode = nickMode + i18n(" Admin");
-        KListViewItem* channelItem = new KListViewItem(nickRoot, channelName, nickMode);
+        QListViewItem* channelItem = findItemChild(nickRoot, channelName);
+        if (!channelItem) channelItem = new KListViewItem(nickRoot, channelName, nickMode);
+        channelItem->setText(1, nickMode);
+        
         if (server->getJoinedChannelMembers(channelName) != 0)
         {
           channelItem->setPixmap(0, joinedLed);
         }
+        else
+        {
+          channelItem->setPixmap(0, 0);
+        }
       }
-      nickRoot->setOpen(true);
+      // Remove channel if nick no longer in it.
+      child = nickRoot->firstChild();
+      while (child)
+      {
+        nextChild = child->nextSibling();
+        if (channelList.find(child->text(0)) == channelList.end()) delete child;
+        child = nextChild;
+      }
+    }
+    // Remove nicks from list if no longer online.
+    child = serverRoot->firstChild();
+    while (child)
+    {
+      nextChild = child->nextSibling();
+      if (!nickInfoList->find(child->text(0))) delete child;
+      child = nextChild;
     }
     // List offline nicknames.
-    KListViewItem* offlineRoot = new KListViewItem(newServerRoot, i18n("Offline"));
+    QListViewItem* offlineRoot = findItemChild(serverRoot, i18n("Offline"));
+    if (!offlineRoot) offlineRoot = new KListViewItem(serverRoot, i18n("Offline"));
     nickInfoList = server->getNicksOffline();
     NickInfoListIterator itOffline(*nickInfoList);
     for ( ; (nickInfo=itOffline.current()) ; ++itOffline)
     {
-      new KListViewItem(offlineRoot, nickInfo->getNickname());
+      nickname = nickInfo->getNickname();
+      if (!findItemChild(offlineRoot, nickname))
+      {
+        new KListViewItem(offlineRoot, nickname);
+      }
     }
-    newServerRoot->setOpen(true);
-    offlineRoot->setOpen(true);
+    // Remove nick from list if no longer in offline list.
+    child = offlineRoot->firstChild();
+    while (child)
+    {
+      nextChild = child->nextSibling();
+      if (!nickInfoList->find(child->text(0))) delete child;
+      child = nextChild;
+    }
+    // Expand server if newly added to list.
+    if (newServerRoot) serverRoot->setOpen(true);
     nickListView->adjustColumn(0);
     nickListView->adjustColumn(1);
   }
@@ -179,13 +237,20 @@ void NicksOnline::updateServerOnlineList(Server*, bool) {}
 void NicksOnline::refreshAllServerOnlineLists()
 {
   // Display info for all currently-connected servers.
-  nickListView->clear();
   KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
   QPtrList<Server> serverList = konvApp->getServerList();
   Server* server;
   for ( server = serverList.first(); server; server = serverList.next() )
   {
     updateServerOnlineList(server, true);
+  }
+  // Remove servers no longer connected.
+  QListViewItem* child = nickListView->firstChild();
+  while (child)
+  {
+    QListViewItem* nextChild = child->nextSibling();
+    if (!konvApp->getServerByName(child->text(0))) delete child;
+    child = nextChild;
   }
 }
 

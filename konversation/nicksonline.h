@@ -48,6 +48,8 @@ class NicksOnline : public ChatWindow
   protected:
     void updateServerOnlineList(Server* server, bool changed);
     void refreshAllServerOnlineLists();
+    // Returns the named child of parent item in KListView.
+    QListViewItem* findItemChild(const QListViewItem* parent, const QString& name);
 
     KListView* nickListView;
     QTimer* timer;
