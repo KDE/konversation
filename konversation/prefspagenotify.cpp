@@ -62,7 +62,7 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   m_notifyDelaySpin->setSuffix(i18n(" seconds"));
   m_notifyDelayLabel->setBuddy(m_notifyDelaySpin);
   
-  m_showWatchedNicksAtStartup = new QCheckBox(i18n("&Show Watched Nicks Online on startup"), parentFrame);
+  m_showWatchedNicksAtStartup = new QCheckBox(i18n("&Show watched nicks online on startup"), parentFrame);
   QString showWatchedNicksAtStartupWT = i18n(
       "When checked, the <b>Nicks Online</b> window will be automatically opened when "
       "starting Konversation.");

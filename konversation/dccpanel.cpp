@@ -120,7 +120,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   m_popup->insertSeparator();
   m_popup->insertItem(icon("editdelete"),      i18n("Clear"),                     Popup::Clear);
   m_popup->insertItem(                         i18n("Clear All Completed Items"), Popup::ClearAllCompleted);
-  m_popup->insertItem(                         i18n("Remove and Clear"),          Popup::RemoveAndClear);
+  m_popup->insertItem(                         i18n("Remove && Clear"),          Popup::RemoveAndClear);
   m_popup->insertSeparator();
   m_popup->insertItem(icon("exec"),            i18n("Open File"),                 Popup::Open);
   m_popup->insertItem(icon("edittrash"),       i18n("Remove File"),               Popup::Remove);

@@ -316,7 +316,7 @@ bool AddressbookBase::editAddressee(const QString &uid) {
 
 bool AddressbookBase::sendEmail(const KABC::Addressee &addressee) {
   if(addressee.preferredEmail().isEmpty()) {
-    KMessageBox::sorry(0, i18n("The contact that you have selected does not have an email address associated with them. "), i18n("Cannot send email"));
+    KMessageBox::sorry(0, i18n("The contact that you have selected does not have an email address associated with them. "), i18n("Cannot Send Email"));
     return false;
   }
   return runEmailProgram(addressee.fullEmail());
@@ -388,11 +388,11 @@ bool AddressbookBase::sendEmail(const ChannelNickList &nickList) {
       message += i18n("You can right click on a contact, and choose to edit the Addressbook Associations to link them to a contact in your addressbook, and choose to edit the addressbook contact, adding an email for them.");
     }
     if(nicksWithEmails.isEmpty()) {
-      KMessageBox::sorry(0, message, i18n("Cannot send email"));
+      KMessageBox::sorry(0, message, i18n("Cannot Send Email"));
       return false;
     } else {
       message += i18n("\nDo you want to send an email anyway to the nicks that do have an email address?");
-      int result = KMessageBox::questionYesNo(0, message, i18n("Send Email"), KGuiItem(i18n("&Send email...")), KGuiItem(i18n("&Cancel")));
+      int result = KMessageBox::questionYesNo(0, message, i18n("Send Email"), KGuiItem(i18n("&Send Email...")), KGuiItem(i18n("&Cancel")));
       if(result == KMessageBox::No) {
         return false;
       }     

@@ -23,7 +23,7 @@ QString MultilineEdit::returnText; // static
 MultilineEdit::MultilineEdit(QWidget* parent,QString text) :
                KDialogBase(parent,"multiline_edit_dialog",true,i18n("Edit Multiline Paste"),
                            KDialogBase::User1 | KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true,
-                           KGuiItem(i18n("Add &quotation indicators")))
+                           KGuiItem(i18n("Add &Quotation Indicators")))
 {
   // Create the top level widget
   QWidget* page=new QWidget(this);

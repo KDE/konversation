@@ -102,7 +102,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     connect(m_nickListView, SIGNAL(doubleClicked(QListViewItem*)),
         this,SLOT(processDoubleClick(QListViewItem*)));
     
-    QLabel* addressbookLabel = new QLabel(i18n("Address Book:"),
+    QLabel* addressbookLabel = new QLabel(i18n("Address book:"),
         buttonBox, "nicksonline_addressbook_label");
     QString addressbookLabelWT = i18n(
         "When you select a nickname in the list above, the buttons here are used "

@@ -40,7 +40,7 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   rawLogCheck = new QCheckBox(i18n("Show ra&w log window on startup"), parentFrame, "raw_log_check");
   rawLogCheck->setChecked(preferences->getRawLog());
 
-  useCustomBrowserCheck = new QCheckBox(i18n("Use custom web &browser:"), parentFrame, "useCustomBrowserCheck");
+  useCustomBrowserCheck = new QCheckBox(i18n("Use custom Web &browser:"), parentFrame, "useCustomBrowserCheck");
   useCustomBrowserCheck->setChecked(!preferences->getWebBrowserUseKdeDefault());
   browserCmdInput = new KLineEdit(parentFrame, "browserCmdInput");
   browserCmdInput->setEnabled(useCustomBrowserCheck->isChecked());
