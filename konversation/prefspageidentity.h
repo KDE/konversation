@@ -19,6 +19,7 @@
 
 #include <qcheckbox.h>
 #include <qlabel.h>
+#include <qpushbutton.h>
 
 #include <klineedit.h>
 #include <kcombobox.h>
@@ -61,6 +62,7 @@ class PrefsPageIdentity : public PrefsPage
     void renameIdentity();
 
     void addIdentity();
+    void removeIdentity();
 
   protected:
     QPtrList<Identity> identities;
@@ -87,6 +89,8 @@ class PrefsPageIdentity : public PrefsPage
     QCheckBox* showAwayMessageCheck;
     KLineEdit* awayInput;
     KLineEdit* unAwayInput;
+    
+    QPushButton* removeIdentityButton;
 };
 
 #endif

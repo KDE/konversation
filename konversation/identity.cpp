@@ -14,6 +14,8 @@
   $Id$
 */
 
+#include <kdebug.h>
+
 #include "identity.h"
 
 Identity::Identity()
@@ -26,6 +28,7 @@ Identity::Identity()
 
 Identity::~Identity()
 {
+  kdDebug() << "Identity::~Identity("+getName()+")" << endl;
 }
 
 void Identity::setName(const QString& newName)          { name=newName; }

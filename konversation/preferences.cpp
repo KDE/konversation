@@ -325,6 +325,7 @@ QStringList Preferences::getButtonList() { return buttonList; }
 
 // Default identity functions
 void Preferences::addIdentity(Identity* identity) { identityList.append(identity); }
+void Preferences::removeIdentity(Identity* identity) { identityList.remove(identity); }
 void Preferences::clearIdentityList() { identityList.clear(); }
 QPtrList<Identity> Preferences::getIdentityList() { return identityList; }
 

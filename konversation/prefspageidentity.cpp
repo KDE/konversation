@@ -16,7 +16,6 @@
 
 #include <qlayout.h>
 #include <qhbox.h>
-#include <qpushbutton.h>
 
 #include <klineeditdlg.h>
 #include <kdebug.h>
@@ -78,8 +77,11 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   buttonBox->setSpacing(spacingHint());
 
   QPushButton* addIdentityButton=new QPushButton(i18n("Add new identity"),buttonBox,"add_identity_button");
-  QPushButton* removeIdentityButton=new QPushButton(i18n("Remove identity"),buttonBox,"remove_identity_button");
+  removeIdentityButton=new QPushButton(i18n("Remove identity"),buttonBox,"remove_identity_button");
+  
+  // TODO: Enable the button when all's fine
   removeIdentityButton->setEnabled(false);
+
   QHBox* spacer=new QHBox(parentFrame);
 
   // set values for the widgets
@@ -158,6 +160,7 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   connect(unAwayInput,SIGNAL (textChanged(const QString&)),this,SLOT (unAwayMessageChanged(const QString&)) );
   
   connect(addIdentityButton,SIGNAL (clicked()),this,SLOT(addIdentity()) );
+  connect(removeIdentityButton,SIGNAL (clicked()),this,SLOT(removeIdentity()) );
 }
 
 PrefsPageIdentity::~PrefsPageIdentity()
@@ -237,6 +240,9 @@ void PrefsPageIdentity::updateIdentity(int number)
 
   if(number==0) defaultText->show();
   else defaultText->hide();
+  
+  // TODO: Enable the button when all's fine
+//  removeIdentityButton->setEnabled((number!=0));
 
   loginInput->setText(identity->getIdent());
   realNameInput->setText(identity->getRealName());
@@ -285,6 +291,27 @@ void PrefsPageIdentity::addIdentity()
   identityCombo->setCurrentItem(identityCombo->count()-1);
 
   updateIdentity(identityCombo->count()-1);
+}
+
+void PrefsPageIdentity::removeIdentity()
+{
+  // TODO: are you sure here
+  int current=identityCombo->currentItem();
+  
+  if(current)
+  {
+    preferences->removeIdentity(identity);
+    identities=preferences->getIdentityList();
+
+    delete identity;
+
+    identityCombo->removeItem(current);
+    updateIdentity(identityCombo->currentItem());
+  }
+  else
+    // should not happen!
+    kdDebug() << "Trying to delete the default identity! This should never happen!" << endl;
+
 }
 
 #include "prefspageidentity.moc"

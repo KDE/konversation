@@ -173,6 +173,7 @@ class Preferences : public QObject
     void setIgnoreList(QPtrList<Ignore> newList);
 
     void addIdentity(Identity* identity);
+    void removeIdentity(Identity* identity);
     void clearIdentityList();
     QPtrList<Identity> getIdentityList();
     const Identity *getIdentityByName(const QString& name);
