@@ -629,7 +629,6 @@ void ServerWindow::updateFonts()
 {
   kdDebug() << "ServerWindow::updateFonts()" << endl;
 
-  statusPanel->updateFonts();       // FIXME: should be done by the respective server, no?
   if(rawLog) rawLog->updateFonts(); // FIXME: should be done by the respective server, no?
 }
 
@@ -695,6 +694,12 @@ void ServerWindow::findTextShortcut()
   {
     searchView->getTextView()->search();
   }
+}
+
+// TODO: remove this once the StatusPanel is managed by the Server class
+StatusPanel* ServerWindow::getStatusView()
+{
+  return statusPanel;
 }
 
 // I hope we can find a better way soon ... this is ridiculous"

@@ -37,6 +37,7 @@
 class Channel;
 class Query;
 class ServerWindow;
+class StatusPanel;
 
 class Server : public QObject
 {
@@ -227,6 +228,8 @@ class Server : public QObject
 
     InputFilter inputFilter;
     OutputFilter outputFilter;
+    
+    StatusPanel* statusPanel;
 
     QDateTime awayTime;
     bool isAway;

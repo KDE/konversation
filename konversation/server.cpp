@@ -59,6 +59,7 @@ Server::Server(int id)
   botPassword=identity->getPassword();
   serverWindow->setIdentity(getIdentity());
   serverWindow->show();
+  statusPanel=serverWindow->getStatusView();
 
   serverSocket.setAddress(serverName,serverPort);
 
@@ -892,6 +893,8 @@ void Server::updateFonts()
 {
   kdDebug() << "Server::updateFonts()" << endl;
 
+  statusPanel->updateFonts();
+  
   Channel* channel=channelList.first();
   while(channel)
   {
@@ -905,8 +908,9 @@ void Server::updateFonts()
     query->updateFonts();
     query=queryList.next();
   }
-
-  // TODO: To be revised
+  
+  // TODO: To be revised. Why should the server update the serverWindow?
+  //       This must be done with signals / slots ASAP
   if(serverWindow)
   {
     serverWindow->updateFonts();
@@ -1049,7 +1053,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
   }
 }
 
-void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp)
+void Server::userhost(const QString& nick,const QString& hostmask,bool /* away */ ,bool /* ircOp */)
 {
   addHostmaskToNick(nick,hostmask);
 }
