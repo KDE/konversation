@@ -6,9 +6,9 @@
 */
 
 /*
-  notifydialog.cpp  -  description
-  begin:     Sam Jul 20 2002
-  copyright: (C) 2002 by Dario Abatianni
+  prefspagenotify.cpp  -  Proivides an interface to the notify list
+  begin:     Fre Jun 13 2003
+  copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
 
   $Id$
@@ -24,37 +24,30 @@
 
 #include <klocale.h>
 #include <klistview.h>
-#include <kdebug.h>
 #include <klineeditdlg.h>
 
-#include "notifydialog.h"
+#include "prefspagenotify.h"
+#include "preferences.h"
 
-NotifyDialog::NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int delay):
-               KDialogBase(static_cast<QWidget*>(0),"notifydialog",false,i18n("Edit notify list"),
-                           KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
-                           KDialogBase::Ok,true)
+PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) :
+                 PrefsPage(newParent,newPreferences)
 {
-  kdDebug() << "NotifyDialog::NotifyDialog()" << endl;
-  // Create the top level widget
-  QWidget* page=new QWidget(this);
-  setMainWidget(page);
-  // Add the layout to the widget
-  QVBoxLayout* dialogLayout=new QVBoxLayout(page);
-  dialogLayout->setSpacing(spacingHint());
+  // Add the layout to the page
+  QVBoxLayout* notifyLayout=new QVBoxLayout(parentFrame,marginHint(),spacingHint());
 
   // Set up notify delay widgets
-  QHBox* delayBox=new QHBox(page);
+  QHBox* delayBox=new QHBox(parentFrame);
   delayBox->setSpacing(spacingHint());
 
   useNotifyCheck=new QCheckBox(i18n("Use notify"),delayBox,"use_notify_checkbox");
-  useNotifyCheck->setChecked(use);
   notifyDelayLabel=new QLabel(i18n("Notify interval:"),delayBox,"interval_label");
+  notifyDelayLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   notifyDelaySpin=new QSpinBox(5,1000,1,delayBox,"delay_spin");
-  notifyDelaySpin->setValue(delay);
+  notifyDelaySpin->setValue(preferences->getNotifyDelay());
   notifyDelaySpin->setSuffix(i18n(" seconds"));
 
   // Set up the notify list
-  QHBox* listBox=new QHBox(page);
+  QHBox* listBox=new QHBox(parentFrame);
   listBox->setSpacing(spacingHint());
   notifyListView=new KListView(listBox);
 
@@ -74,38 +67,34 @@ NotifyDialog::NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int 
   newButton=new QPushButton(i18n("New"),buttonBox);
   removeButton=new QPushButton(i18n("Remove"),buttonBox);
 
-  dialogLayout->addWidget(delayBox);
-  dialogLayout->addWidget(listBox);
-
-  setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
-  setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
-  setButtonCancelText(i18n("Cancel"),i18n("Discards all changes made"));
+  notifyLayout->addWidget(delayBox);
+  notifyLayout->addWidget(listBox);
 
   connect(useNotifyCheck,SIGNAL (stateChanged(int)),this,SLOT (notifyCheckChanged(int)));
   connect(newButton,SIGNAL (clicked()),this,SLOT (newNotify()) );
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeNotify()) );
 
+  QStringList notifyList(preferences->getNotifyList());
   // Insert Notify items backwards to get them sorted properly
-  int index=newNotifyList.count()-1;
-
-  while(index!=-1)
+  for(int index=notifyList.count();index!=0;index--)
   {
-    QString item=newNotifyList[index--];
-/*    KListViewItem* newItem= */ new KListViewItem(notifyListView,item);
+    QString item=notifyList[index-1];
+    new KListViewItem(notifyListView,item);
   }
 
-  setInitialSize(newSize);
+  bool use=preferences->getUseNotify();
   notifyCheckChanged(use ? 2 : 0);
+  useNotifyCheck->setChecked(use);
 }
 
-NotifyDialog::~NotifyDialog()
+PrefsPageNotify::~PrefsPageNotify()
 {
 }
 
-void NotifyDialog::newNotify()
+void PrefsPageNotify::newNotify()
 {
   bool ok=false;
-  QString newPattern=KLineEditDlg::getText(i18n("Add notify"),i18n("New"),&ok,this);
+  QString newPattern=KLineEditDlg::getText(i18n("Add notify"),i18n("New"),&ok,parentFrame);
   if(ok)
   {
     KListViewItem* newItem=new KListViewItem(notifyListView,newPattern);
@@ -113,35 +102,19 @@ void NotifyDialog::newNotify()
   }
 }
 
-void NotifyDialog::removeNotify()
+void PrefsPageNotify::removeNotify()
 {
   QListViewItem* selected=notifyListView->selectedItem();
   if(selected)
   {
     if(selected->itemBelow()) notifyListView->setSelected(selected->itemBelow(),true);
     else notifyListView->setSelected(selected->itemAbove(),true);
-  
+
     delete selected;
   }
 }
 
-void NotifyDialog::slotOk()
-{
-  slotApply();
-  slotCancel();
-}
-
-void NotifyDialog::slotApply()
-{
-  emit applyClicked(getNotifyList(),useNotifyCheck->isChecked(),notifyDelaySpin->value());
-}
-
-void NotifyDialog::slotCancel()
-{
-  emit cancelClicked(size());
-}
-
-QStringList NotifyDialog::getNotifyList()
+QStringList PrefsPageNotify::getNotifyList()
 {
   QStringList newList;
 
@@ -156,7 +129,7 @@ QStringList NotifyDialog::getNotifyList()
   return newList;
 }
 
-void NotifyDialog::notifyCheckChanged(int state)
+void PrefsPageNotify::notifyCheckChanged(int state)
 {
   bool enable=(state==2);
   notifyDelayLabel->setEnabled(enable);
@@ -166,4 +139,12 @@ void NotifyDialog::notifyCheckChanged(int state)
   removeButton->setEnabled(enable);
 }
 
-#include "notifydialog.moc"
+// TODO: This should be done in all preferences pages I think
+void PrefsPageNotify::applyPreferences()
+{
+  preferences->setUseNotify(useNotifyCheck->state()==2);
+  preferences->setNotifyList(getNotifyList());
+  preferences->setNotifyDelay(notifyDelaySpin->value());
+}
+
+#include "prefspagenotify.moc"

@@ -38,7 +38,6 @@
 #include "dccpanel.h"
 #include "dcctransferhandler.h"
 #include "ignoredialog.h"
-#include "notifydialog.h"
 #include "nicksonline.h"
 #include "konsolepanel.h"
 #include "urlcatcher.h"
@@ -58,7 +57,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   dccTransferHandler=new DccTransferHandler(this);
 
   ignoreDialog=0;
-  notifyDialog=0;
   nicksOnlineWindow=0;
 
   viewContainer=new LedTabWidget(this,"main_window_tab_widget");
@@ -75,7 +73,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
   KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
-  new KAction(i18n("Notify List"),0,0,this,SLOT (openNotify()),actionCollection(),"open_notify_window");
   new KAction(i18n("Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
   new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
   new KAction(i18n("Channel list"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
@@ -549,40 +546,6 @@ void KonversationMainWindow::closeIgnore(QSize newSize)
 
   delete ignoreDialog;
   ignoreDialog=0;
-}
-
-void KonversationMainWindow::openNotify()
-{
-  if(!notifyDialog)
-  {
-    notifyDialog=new NotifyDialog(KonversationApplication::preferences.getNotifyList(),
-                                  KonversationApplication::preferences.getNotifySize(),
-                                  KonversationApplication::preferences.getUseNotify(),
-                                  KonversationApplication::preferences.getNotifyDelay());
-    connect(notifyDialog,SIGNAL (cancelClicked(QSize)),this,SLOT (closeNotify(QSize)) );
-    connect(notifyDialog,SIGNAL (applyClicked(QStringList,bool,int)),this,SLOT (applyNotify(QStringList,bool,int)) );
-    notifyDialog->show();
-  }
-}
-
-void KonversationMainWindow::applyNotify(QStringList newList,bool use,int delay)
-{
-  KonversationApplication::preferences.setNotifyList(newList);
-  KonversationApplication::preferences.setNotifyDelay(delay);
-  KonversationApplication::preferences.setUseNotify(use);
-
-  // Restart notify timer if desired
-  if(use) emit startNotifyTimer(0);
-  emit prefsChanged();
-}
-
-void KonversationMainWindow::closeNotify(QSize newSize)
-{
-  KonversationApplication::preferences.setNotifySize(newSize);
-  emit prefsChanged();
-
-  delete notifyDialog;
-  notifyDialog=0;
 }
 
 void KonversationMainWindow::openNicksOnlineWindow()

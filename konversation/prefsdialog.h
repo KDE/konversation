@@ -26,6 +26,7 @@
 class Preferences;
 class PrefsPageButtons;
 class PrefsPageHighlight;
+class PrefsPageNotify;
 
 class PrefsDialog : public KDialogBase
 {
@@ -37,6 +38,7 @@ class PrefsDialog : public KDialogBase
 
   signals:
     void connectToServer(int id);
+    void applyPreferences();
     void prefsChanged();
     void closed();
 
@@ -51,6 +53,7 @@ class PrefsDialog : public KDialogBase
     Preferences* preferences;
     PrefsPageButtons* buttonsPage;
     PrefsPageHighlight* highlightPage;
+    PrefsPageNotify* notifyPage;
 
     void setPreferences(Preferences* newPrefs);
 };

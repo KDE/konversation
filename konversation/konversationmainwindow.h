@@ -41,7 +41,6 @@ class DccTransferHandler;
 class Ignore;
 class IgnoreDialog;
 class NicksOnline;
-class NotifyDialog;
 class QuickButtonsDialog;
 class UrlCatcher;
 
@@ -103,9 +102,6 @@ class KonversationMainWindow : public KMainWindow
     void applyIgnore(QPtrList<Ignore> newList);
     void closeIgnore(QSize newSize);
 
-    void openNotify();
-    void applyNotify(QStringList newList,bool use,int delay);
-    void closeNotify(QSize newSize);
     void notifyAction(const QString& serverName,const QString& nick);
 
     void openNicksOnlineWindow();
@@ -165,7 +161,6 @@ class KonversationMainWindow : public KMainWindow
     KToggleAction* showStatusBarAction;
     KToggleAction* showMenuBarAction;
 
-    NotifyDialog* notifyDialog;
     IgnoreDialog* ignoreDialog;
     NicksOnline* nicksOnlineWindow;
     QStringList nicksOnlineList;

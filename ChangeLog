@@ -10,6 +10,7 @@ Changes from 0.12 to 0.13
 - Added option to place tabs on top
 - Color configuration is now in preferences dialog
 - Quick buttons configuration is now in preferences dialog
+- Notify list is now in preferences dialog
 - Option for a background image added
 - Added /quote command for raw server messages
 

@@ -6,18 +6,18 @@
 */
 
 /*
-  notifydialog.h  -  description
-  begin:     Sam Jul 20 2002
-  copyright: (C) 2002 by Dario Abatianni
+  prefspagenotify.h  -  Proivides an interface to the notify list
+  begin:     Fre Jun 13 2003
+  copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
 
   $Id$
 */
 
-#ifndef NOTIFYDIALOG_H
-#define NOTIFYDIALOG_H
+#ifndef PREFSPAGENOTIFY_H
+#define PREFSPAGENOTIFY_H
 
-#include <kdialogbase.h>
+#include "prefspage.h"
 
 /*
   @author Dario Abatianni
@@ -25,32 +25,26 @@
 
 class QLineEdit;
 class QPushButton;
-class QPushButton;
 class QCheckBox;
 class QLabel;
 class QSpinBox;
 
 class KListView;
 
-class NotifyDialog : public KDialogBase
+class PrefsPageNotify : public PrefsPage
 {
   Q_OBJECT
 
   public:
-    NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int delay);
-    ~NotifyDialog();
+    PrefsPageNotify(QFrame* newParent,Preferences* newPreferences);
+    ~PrefsPageNotify();
 
-  protected:
     QStringList getNotifyList();
 
-  signals:
-    void applyClicked(QStringList newList,bool use,int delay);
-    void cancelClicked(QSize newSize);
+  public slots:
+    void applyPreferences();
 
   protected slots:
-    void slotOk();
-    void slotApply();
-    void slotCancel();
     void newNotify();
     void removeNotify();
     void notifyCheckChanged(int state);
