@@ -89,7 +89,6 @@ ServerWindow::ServerWindow(Server* newServer) : KMainWindow()
   showMenubar();
 
   addStatusView();
-  addRawLog();
 
   connect( windowContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changedView(QWidget*)) );
   connect( windowContainer,SIGNAL (closeTab(QWidget*)),this,SLOT (closeTab(QWidget*)) );
