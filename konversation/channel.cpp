@@ -326,6 +326,8 @@ void Channel::setServer(Server *server) {
   ChatWindow::setServer(server);
   topicLine->setServer(server);
   refreshModeButtons();
+
+  connect(server->getOutputFilter(),SIGNAL(cycleChannel()),this,SLOT(cycleChannel()));
 }
 
 Channel::~Channel()
@@ -1801,6 +1803,12 @@ void Channel::refreshModeButtons() {
   QToolTip::add(modeK, i18n("Protect channel with a password."));
   QToolTip::add(modeL, i18n("Set user limit to channel."));
 
+}
+
+void Channel::cycleChannel()
+{
+  closeYourself();
+  m_server->sendJoinCommand(getName());
 }
 
 void Channel::autoUserhost()

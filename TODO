@@ -39,7 +39,6 @@ DISCUSSING:
 - Reverse-I-Search
 - Pasting into text views should trigger the paste mechanism (Partly implemented, MMB works. psn)
 - Let the user decide how many quick buttons they want, if at all.
-- cycle command (script)
 - Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated
 - Show away messages only once per nick
 - Different tab sortings

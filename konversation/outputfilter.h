@@ -80,6 +80,7 @@ namespace Konversation
       void multiServerCommand(const QString& command, const QString& parameter);
       void reconnectServer();
       void connectToServer(const QString& server, const QString& port, const QString& password);
+      void cycleChannel();
   
     public slots:
       void setCommandChar();
@@ -126,6 +127,7 @@ namespace Konversation
       OutputFilterResult parseAmsg(const QString& parameter);
       OutputFilterResult parsePrefs(const QString& parameter);
       void parseCharset(const QString charset);
+      void parseCycle();
   
       OutputFilterResult changeMode(const QString& parameter,char mode,char giveTake);
       bool isAChannel(const QString& check);

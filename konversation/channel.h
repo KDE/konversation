@@ -206,6 +206,9 @@ class Channel : public ChatWindow
      */
     void refreshModeButtons();
     
+    // Connected to OutputFilter::cycleChannel
+    void cycleChannel();
+    
   protected:
     void showEvent(QShowEvent* event);
     // use with caution! does not check for duplicates
