@@ -10,8 +10,6 @@
   begin:     Tue Feb 5 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef PREFERENCES_H
@@ -265,6 +263,9 @@ class Preferences : public QObject
     void setShowServerList(bool state);
     bool getShowServerList();
 
+    void setShowTrayIcon(bool state);
+    bool getShowTrayIcon();
+
     void setChannelSplitter(QValueList<int> sizes);
     QValueList<int> getChannelSplitter();
 
@@ -307,6 +308,7 @@ class Preferences : public QObject
     void requestServerConnection(int number);
     void requestSaveOptions();
     void autoUserhostChanged(bool state);
+    void updateTrayIcon();
 
   protected:
     QString getDefaultColor(const QString& name);
@@ -350,6 +352,7 @@ class Preferences : public QObject
     bool showQuickButtons;
     bool showModeButtons;
     bool showServerList;
+    bool showTrayIcon;
 
     QValueList<int> channelSplitter;
 

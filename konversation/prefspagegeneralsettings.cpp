@@ -10,8 +10,6 @@
   begin:     Fre Nov 15 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include <qlayout.h>
@@ -34,15 +32,18 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   // Add a Layout to the General Settings pane
   QGridLayout* generalSettingsLayout=new QGridLayout(parentFrame,5,3,marginHint(),spacingHint(),"general_settings_layout");
 
-  QLabel* commandCharLabel=new QLabel(i18n("Command char:"),parentFrame);
-  commandCharInput=new KLineEdit(preferences->getCommandChar(),parentFrame);
+  QHBox* commandCharBox=new QHBox(parentFrame);
+  commandCharBox->setSpacing(spacingHint());
+
+  new QLabel(i18n("Command char:"),commandCharBox);
+  commandCharInput=new KLineEdit(preferences->getCommandChar(),commandCharBox);
   commandCharInput->setMaxLength(1);
 
   // double click actions
   QVBox* actionBox=new QVBox(parentFrame);
   new QLabel(i18n("Commands to execute when doubleclicked in"),actionBox);
 
-  QGrid* actionEditBox=new QGrid(2,actionBox);
+  QHBox* actionEditBox=new QHBox(actionBox);
   actionEditBox->setSpacing(spacingHint());
 
   new QLabel(i18n("Nick list:"),actionEditBox);
@@ -73,6 +74,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   fixedMOTDCheck=new QCheckBox(i18n("Show MOTD in fixed font"),parentFrame,"fixed_motd_check");
   beepCheck=new QCheckBox(i18n("Beep on incoming ASCII BEL"),parentFrame,"beep_check");
   rawLogCheck=new QCheckBox(i18n("Show raw log window on startup"),parentFrame,"raw_log_check");
+  trayIconCheck=new QCheckBox(i18n("Show icon in system tray"),parentFrame,"tray_icon_check");
 
   reconnectTimeoutLabel=new QLabel(i18n("Reconnect timeout:"),parentFrame);
   reconnectTimeoutLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -92,12 +94,12 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   fixedMOTDCheck->setChecked(preferences->getFixedMOTD());
   beepCheck->setChecked(preferences->getBeep());
   rawLogCheck->setChecked(preferences->getRawLog());
+  trayIconCheck->setChecked(preferences->getShowTrayIcon());
 
   QHBox* generalSpacer=new QHBox(parentFrame);
 
   int row=0;
-  generalSettingsLayout->addWidget(commandCharLabel,row,0);
-  generalSettingsLayout->addWidget(commandCharInput,row,1);
+  generalSettingsLayout->addMultiCellWidget(commandCharBox,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(suffixBox,row,row,0,2);
   row++;
@@ -122,6 +124,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   generalSettingsLayout->addMultiCellWidget(beepCheck,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(rawLogCheck,row,row,0,2);
+  row++;
+  generalSettingsLayout->addMultiCellWidget(trayIconCheck,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(generalSpacer,row,row,0,2);
   generalSettingsLayout->setRowStretch(row,10);
@@ -156,6 +160,7 @@ void PrefsPageGeneralSettings::applyPreferences()
   preferences->setFixedMOTD(fixedMOTDCheck->isChecked());
   preferences->setBeep(beepCheck->isChecked());
   preferences->setRawLog(rawLogCheck->isChecked());
+  preferences->setShowTrayIcon(trayIconCheck->isChecked());
 
   preferences->setMaximumLagTime(reconnectTimeoutSpin->value());
 }

@@ -10,8 +10,6 @@
   begin:     Fre Nov 15 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 
@@ -60,6 +58,7 @@ class PrefsPageGeneralSettings : public PrefsPage
     QCheckBox* fixedMOTDCheck;
     QCheckBox* beepCheck;
     QCheckBox* rawLogCheck;
+    QCheckBox* trayIconCheck;
 
     QLabel* reconnectTimeoutLabel;
     QSpinBox* reconnectTimeoutSpin;

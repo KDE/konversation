@@ -10,8 +10,6 @@
   begin:     Mon Jan 28 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include <qtextcodec.h>
@@ -53,6 +51,7 @@ KonversationApplication::KonversationApplication()
   mainWindow=new KonversationMainWindow();
   connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
   connect(mainWindow,SIGNAL (openPrefsDialog(Preferences::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
+  connect(&preferences,SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
 
   // handle autoconnect on startup
   QValueList<int> list=preferences.getAutoConnectServerIDs();
@@ -241,6 +240,9 @@ void KonversationApplication::readOptions()
 
   // Menu bar settings
   preferences.mainWindowMenuBarStatus=config->readBoolEntry("ServerWindowMenuBarStatus",true);
+
+  // Tray icon settings
+  preferences.setShowTrayIcon(config->readBoolEntry("ShowTrayIcon",preferences.getShowTrayIcon()));
 
   // Window geometries
   preferences.setMainWindowSize(config->readSizeEntry("Geometry"));
@@ -504,6 +506,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ServerWindowStatusBarStatus",preferences.mainWindowStatusBarStatus);
 
   config->writeEntry("ServerWindowMenuBarStatus",preferences.mainWindowMenuBarStatus);
+  config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon());
 
   config->writeEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction());
   config->writeEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction());

@@ -10,8 +10,6 @@
   begin:     Tue Feb 5 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include <ktoolbar.h>
@@ -75,6 +73,7 @@ Preferences::Preferences()
   setShowQuickButtons(true);
   setShowModeButtons(true);
   setShowServerList(true);
+  setShowTrayIcon(true);
 
   setUseSpacing(false);
   setSpacing(2);
@@ -532,6 +531,13 @@ bool Preferences::getShowModeButtons() { return showModeButtons; }
 
 void Preferences::setShowServerList(bool state) { showServerList=state; }
 bool Preferences::getShowServerList() { return showServerList; }
+
+void Preferences::setShowTrayIcon(bool state)
+{
+  showTrayIcon=state;
+  emit updateTrayIcon();
+}
+bool Preferences::getShowTrayIcon() { return showTrayIcon; }
 
 void Preferences::setChannelSplitter(QValueList<int> sizes) { channelSplitter=sizes; }
 QValueList<int> Preferences::getChannelSplitter() { return channelSplitter; }

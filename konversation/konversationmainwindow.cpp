@@ -116,13 +116,15 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   connect( viewContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changeView(QWidget*)) );
   connect( viewContainer,SIGNAL (closeTab(QWidget*)),this,SLOT (closeView(QWidget*)) );
 
+  // set up system tray
+  tray=new KSystemTray(this);
+  tray->setPixmap(kapp->miniIcon());
+
+  // decide whether to show the tray icon or not
+  updateTrayIcon();
+
   createGUI();
   readOptions();
-
-  // TODO: make this an option
-  KSystemTray *tray=new KSystemTray(this);
-  tray->setPixmap(kapp->miniIcon());
-  tray->show();
 }
 
 KonversationMainWindow::~KonversationMainWindow()
@@ -671,6 +673,14 @@ void KonversationMainWindow::openNotifications()
 #if KDE_VERSION >= 310
   (void)KNotifyDialog::configure(this);
 #endif
+}
+
+void KonversationMainWindow::updateTrayIcon()
+{
+  if(KonversationApplication::preferences.getShowTrayIcon())
+    tray->show();
+  else
+    tray->hide();
 }
 
 void KonversationMainWindow::addIRCColor()

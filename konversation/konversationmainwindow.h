@@ -10,8 +10,6 @@
   begin:     Don Apr 17 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 
@@ -31,6 +29,7 @@
 */
 
 class KToggleAction;
+class KSystemTray;
 
 class LedTabWidget;
 class Server;
@@ -87,6 +86,7 @@ class KonversationMainWindow : public KMainWindow
     void tooLongLag(Server* lagServer,int msec);
     void channelPrefsChanged();
     void setOnlineList(Server* notifyServer,const QStringList& list);
+    void updateTrayIcon();
 
   protected slots:
     void openPreferences();
@@ -170,6 +170,8 @@ class KonversationMainWindow : public KMainWindow
     QStringList nicksOnlineList;
 
     DccTransferHandler* dccTransferHandler;
+
+    KSystemTray* tray;
 };
 
 #endif
