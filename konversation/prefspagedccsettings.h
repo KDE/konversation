@@ -9,6 +9,7 @@
   Provides a user interface to customize DCC settings
   begin:     Wed Oct 23 2002
   copyright: (C) 2002 by Dario Abatianni
+             (C) 2005 by Peter Simonsson
   email:     eisfuchs@tigress.com
 */
 
@@ -34,7 +35,6 @@ class PrefsPageDccSettings : public DCC_Settings
     void applyPreferences();
 
   protected slots:
-    void folderButtonClicked();
     void methodToGetOwnIpComboBoxActivated(int methodId);
     void sendPortsFirstSpinValueChanged(int port);
     void sendPortsLastSpinValueChanged(int port);
@@ -43,7 +43,7 @@ class PrefsPageDccSettings : public DCC_Settings
     void autoResumeStateChanged(int state);
     void autoGetStateChanged(int state);
 
-protected:
+  protected:
     Preferences* preferences;
 };
 

@@ -9,6 +9,7 @@
   Provides a user interface to customize DCC settings
   begin:     Wed Oct 23 2002
   copyright: (C) 2002 by Dario Abatianni
+             (C) 2005 by Peter Simonsson
   email:     eisfuchs@tigress.com
 */
 
@@ -23,7 +24,7 @@
 #include <qvgroupbox.h>
 
 #include <klineedit.h>
-#include <kfiledialog.h>
+#include <kurlrequester.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -34,11 +35,12 @@
 PrefsPageDccSettings::PrefsPageDccSettings(QWidget* newParent,Preferences* newPreferences) :
                       DCC_Settings(newParent)
 {
-  preferences=newPreferences;
+  preferences = newPreferences;
   setName("DCC Settings");
-	
-  kcfg_DccPath->setText(preferences->getDccPath());
-	
+
+  kcfg_DccPath->setURL(preferences->getDccPath());
+  kcfg_DccPath->setCaption(i18n("Select DCC Download Folder"));
+
   connect(kcfg_AutoGet, SIGNAL(stateChanged(int)), this, SLOT(autoGetStateChanged(int)));
   connect(kcfg_AutoResume, SIGNAL(stateChanged(int)), this, SLOT(autoResumeStateChanged(int)));
 
@@ -49,7 +51,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QWidget* newParent,Preferences* newPr
 
   // Dcc send timeout
   kcfg_SendTimeout->setValue(preferences->getDccSendTimeout());
-  
+
   // own IP
   kcfg_MethodToGetOwnIp->insertItem(i18n("Network Interface"));
   kcfg_MethodToGetOwnIp->insertItem(i18n("Reply From IRC Server"));
@@ -84,31 +86,12 @@ PrefsPageDccSettings::PrefsPageDccSettings(QWidget* newParent,Preferences* newPr
   // buffer size
   kcfg_BufferSize->setValue(preferences->getDccBufferSize());
   kcfg_FastSend->setChecked(preferences->getDccFastSend());
-
-  // Set up signals / slots for DCC Setup page
-  connect(dccFolderButton,SIGNAL (clicked()),this,SLOT (folderButtonClicked()) );
-}
-
-void PrefsPageDccSettings::folderButtonClicked()
-{
-  QString folderName=KFileDialog::getExistingDirectory(
-                                                        preferences->getDccPath(),
-                                                        0,
-                                                        i18n("Select DCC Download Folder")
-                                                      );
-  if(!folderName.isEmpty())
-  {
-    QFileInfo folderInfo(folderName);
-
-    if(folderInfo.isDir()) kcfg_DccPath->setText(folderName);
-    else KMessageBox::sorry(0,i18n("<qt>Error: %1 is not a regular folder.</qt>").arg(folderName),i18n("Incorrect Path"));
-  }
 }
 
 void PrefsPageDccSettings::methodToGetOwnIpComboBoxActivated(int methodId)
 {
   kcfg_SpecificOwnIp->setEnabled(methodId == 2);
-	ownIP->setEnabled(methodId == 2);
+  ownIP->setEnabled(methodId == 2);
 }
 
 void PrefsPageDccSettings::sendPortsFirstSpinValueChanged(int port)
@@ -153,7 +136,7 @@ void PrefsPageDccSettings::autoGetStateChanged(int state)
 
 void PrefsPageDccSettings::applyPreferences()
 {
-  preferences->setDccPath(kcfg_DccPath->text());
+  preferences->setDccPath(kcfg_DccPath->url());
   preferences->setDccBufferSize(kcfg_BufferSize->value());
   preferences->setDccMethodToGetOwnIp(kcfg_MethodToGetOwnIp->currentItem());
   preferences->setDccSpecificOwnIp(kcfg_SpecificOwnIp->text());
