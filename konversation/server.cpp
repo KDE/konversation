@@ -186,41 +186,45 @@ void Server::connectionEstablished()
 
 void Server::notifyResponse(QString nicksOnline)
 {
-  /* We received a 303 notify message, so calculate server lag */
+  // We received a 303 or "PONG :LAG" notify message, so calculate server lag
   int lag=notifySent.elapsed();
   emit serverLag(lag);
-  /* Stop check timer */
+  // Stop check timer
   notifyCheckTimer.stop();
 
-  /* First copy the old notify cache to a new cache, but all in lowercase */
-  QStringList notifyLowerCache=QStringList::split(' ',notifyCache.join(" ").lower());
-  /* Create a case correct nick list from the notification reply */
-  QStringList nickList=QStringList::split(' ',nicksOnline);
-  /* Create a lower case nick list from the notification reply */
-  QStringList nickLowerList=QStringList::split(' ',nicksOnline.lower());
-
-  /* Did some new nicks appear in our notify? */
-  for(unsigned int index=0;index<nickLowerList.count();index++)
+  // only update Nicks Online list if we got a 303 response, not a PONG
+  if(nicksOnline!="###")
   {
-    if(notifyLowerCache.find(nickLowerList[index])==notifyLowerCache.end())
+    // First copy the old notify cache to a new cache, but all in lowercase
+    QStringList notifyLowerCache=QStringList::split(' ',notifyCache.join(" ").lower());
+    // Create a case correct nick list from the notification reply
+    QStringList nickList=QStringList::split(' ',nicksOnline);
+    // Create a lower case nick list from the notification reply
+    QStringList nickLowerList=QStringList::split(' ',nicksOnline.lower());
+
+    // Did some new nicks appear in our notify?
+    for(unsigned int index=0;index<nickLowerList.count();index++)
     {
-      serverWindow->appendToFrontmost(i18n("Notify"),i18n("%1 is online.").arg(nickList[index]));
+      if(notifyLowerCache.find(nickLowerList[index])==notifyLowerCache.end())
+      {
+        serverWindow->appendToFrontmost(i18n("Notify"),i18n("%1 is online.").arg(nickList[index]));
+      }
     }
-  }
 
-  /* Did some nicks leave our notify? */
-  for(unsigned int index=0;index<notifyLowerCache.count();index++)
-  {
-    if(nickLowerList.find(notifyLowerCache[index])==nickLowerList.end())
+    // Did some nicks leave our notify?
+    for(unsigned int index=0;index<notifyLowerCache.count();index++)
     {
-      serverWindow->appendToFrontmost(i18n("Notify"),i18n("%1 went offline.").arg(notifyCache[index]));
+      if(nickLowerList.find(notifyLowerCache[index])==nickLowerList.end())
+      {
+        serverWindow->appendToFrontmost(i18n("Notify"),i18n("%1 went offline.").arg(notifyCache[index]));
+      }
     }
+
+    // Finally copy the new ISON list with correct case to our notify cache
+    notifyCache=nickList;
+    emit nicksNowOnline(nickList);
   }
-
-  /* Finally copy the new ISON list with correct case to our notify cache */
-  notifyCache=nickList;
-  emit nicksNowOnline(nickList);
-
+  // Next round
   startNotifyTimer();
 }
 
@@ -421,7 +425,7 @@ void Server::addDccTransfer(QString sourceNick,QStringList dccArguments)
                             .arg(ip.toString())            // ip
                             .arg(dccArguments[2]) );       // port
 
-  DccTransfer* newDcc=new DccTransfer(serverWindow->getDccPanel()->getListView(),
+/*  DccTransfer* newDcc= */ new DccTransfer(serverWindow->getDccPanel()->getListView(),
                   DccTransfer::Get,
                   KonversationApplication::preferences.getDccPath(),
                   sourceNick,

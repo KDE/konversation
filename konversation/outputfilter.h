@@ -69,6 +69,7 @@ class OutputFilter : public QObject
     void parseVoice(QString parameter);
     void parseUnvoice(QString parameter);
     void parseTopic(QString parameter);
+    void parseAway(QString parameter);
     void parseCtcp(QString parameter);
     void parsePing(QString parameter);
     void parseVersion(QString parameter);

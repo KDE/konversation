@@ -382,11 +382,21 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
     /* Autojoin (for now this must be enough) */
     if(server->getAutoJoin()) server->queue(server->getAutoJoinCommand());
   }
-  else if(command==RPL_ISON || command=="pong")
+  else if(command==RPL_ISON)
   {
-    /* TODO: implement proper notify handling */
-    /* Tell server to start the next notify timer round */
+    // Tell server to start the next notify timer round
     emit notifyResponse(trailing);
+  }
+  else if(command=="pong")
+  {
+    // Since we use PONG replys to measure lag, too, we check, if this Pong was
+    // due to Lag measures and tell the notify system about it. We use "###" as
+    // response, because this couldn't be a 303 reply, so it must be a Pong reply
+    if(trailing=="LAG") emit notifyResponse("###");
+  }
+  else if(command==RPL_AWAY)
+  {
+    server->appendStatusMessage(i18n("Away"),i18n("%1 is away: %2").arg(parameterList[1]).arg(trailing) );
   }
   else if(command=="mode")
   {

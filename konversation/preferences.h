@@ -30,6 +30,20 @@
   @author Dario Abatianni
 */
 
+/*
+Options still to be GUIfied:
+
+AutoReconnect (bool)
+AutoRejoin (bool)
+BlinkingTabs (bool)
+FixedMOTD (bool)
+
+Operator LEDs (int)
+OperatorColor (int)
+VoiceColor (int)
+NoRightsColor (int)
+*/
+
 class Preferences : public QObject
 {
   Q_OBJECT

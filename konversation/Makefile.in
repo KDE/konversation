@@ -569,7 +569,7 @@ distclean-tags:
 
 #>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 #>+ 4
-KDE_DIST=Eisfuchs.franken.jpg Eisfuchs.cum.jpg konversation 
+KDE_DIST=konversation 
 
 DISTFILES= $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST) $(KDE_DIST)
 
@@ -800,6 +800,7 @@ messages: rc.cpp
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
+
 
 #>+ 3
 prefspagelog.moc.cpp: $(srcdir)/prefspagelog.h

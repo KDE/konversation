@@ -47,7 +47,7 @@
 
 class MyColorComboInternal;
 
-/**
+/*
  * Combobox for colors.
  */
 class MyColorCombo : public QComboBox

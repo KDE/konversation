@@ -76,6 +76,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
     else if(line.startsWith("/ctcp "))    parseCtcp(parameter);
     else if(line.startsWith("/kick "))    parseKick(parameter);
     else if(line.startsWith("/topic "))   parseTopic(parameter);
+    else if(line.startsWith("/away "))    parseAway(parameter);
 
     else if(line=="/join")                parseJoin("");
     else if(line=="/part")                parsePart("");
@@ -84,6 +85,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
     else if(line=="/notice")              parseNotice("");
     else if(line=="/kick")                parseKick("");
     else if(line=="/topic")               parseTopic("");
+    else if(line=="/away")                parseAway("");
 
     /* Forward unknown commands to server */
     else toServer=inputLine.mid(1);
@@ -239,6 +241,11 @@ void OutputFilter::parseTopic(QString parameter)
       }
     }
   }
+}
+
+void OutputFilter::parseAway(QString reason)
+{
+  toServer="AWAY :"+reason;
 }
 
 void OutputFilter::parseQuit(QString reason)
