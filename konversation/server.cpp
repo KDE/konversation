@@ -622,6 +622,9 @@ void Server::ircServerConnectionSuccess()
 
 void Server::broken(int state)
 {
+  if(state == 0)
+    return; // Ignore "No error" case
+
   kdBacktrace();
   m_socket->enableRead(false);
   m_socket->enableWrite(false);
@@ -647,7 +650,7 @@ void Server::broken(int state)
   
   // TODO: Close all queries and channels!
   //       Or at least make sure that all gets reconnected properly
-  if(autoReconnect && !getDeliberateQuit() && state)
+  if(autoReconnect && !getDeliberateQuit())
   {
     // TODO: Make retry counter configurable
     reconnectCounter++;
