@@ -35,7 +35,6 @@ Preferences::Preferences()
 {
   // Presets
   serverList.setAutoDelete(true);
-  identityList.setAutoDelete(true);
 
   // create default identity
   identity=new Identity();

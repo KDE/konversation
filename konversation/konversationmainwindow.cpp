@@ -537,7 +537,7 @@ ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
 
 void KonversationMainWindow::newText(QWidget* widget,const QString& highlightColor,bool important)
 {
-  ChatWindow* view=static_cast<ChatWindow*>(view);
+  ChatWindow* view=static_cast<ChatWindow*>(widget);
 
   if(view!=getViewContainer()->currentPage())
   {
