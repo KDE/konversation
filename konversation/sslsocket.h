@@ -39,7 +39,6 @@ class SSLSocket : public KStreamSocket
   Q_LONG readBlock  (char *data, Q_ULONG maxlen);
  
  protected:
-  void connected();
   void stateChanging (KClientSocketBase::SocketState newState);
   
  signals:
@@ -47,6 +46,7 @@ class SSLSocket : public KStreamSocket
   void sslInitDone();
 
  private:
+  void connected();
   int verifyCertificate();
   void showSSLInfoDialog();
 
