@@ -2050,7 +2050,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
 
   if(pattern.find(QRegExp("^(\\d|\\w)")) != -1) {
-    prefix = "(^|[^\\d\\w]|[\\_])";
+    prefix = "^([\\D\\W\\_]|)";
   }
 
   QRegExp regexp(prefix + QRegExp::escape(pattern.lower()));
