@@ -15,6 +15,5 @@ Konversation is a user friendly IRC client for KDE 3.x
 /opt/kde3/share/apps/konversation/images/*
 /opt/kde3/share/apps/konversation/konversationui.rc
 /opt/kde3/share/icons/*/*/apps/konversation.png
-/opt/kde3/share/icons/*/*/apps/konversation.png
 /opt/kde3/share/applnk/Internet/konversation.desktop
 /opt/kde3/share/locale/*/LC_MESSAGES/konversation.mo
