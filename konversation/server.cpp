@@ -1267,8 +1267,14 @@ const NickInfoMap* Server::getNicksOffline() { return &nicknamesOffline; }
 QString Server::getIp()
 {
   // Return our ip using serverSocket
-  kdDebug() << "getIp() returned : " << serverSocket->localResults().nodeName() << endl;
-  return serverSocket->localResults().nodeName();
+  if( serverSocket->state() != KNetwork::KClientSocketBase::HostLookup ) {
+    kdDebug() << "getIp() returned : " << serverSocket->localResults().nodeName() << endl;
+    return serverSocket->localResults().nodeName();
+  }
+  else {
+    kdDebug() << "Resolver is not finished yet!" << endl;
+    return QString::null;
+  }
 }
 
 void Server::addQuery(const QString& nickname,const QString& hostmask, bool weinitiated )
