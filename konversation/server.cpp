@@ -211,7 +211,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
             }
 
             channels += (*it).name();
-            keys += (*it).password();
+            keys += ((*it).password().isEmpty() ? "''" : (*it).password());
         }
 
         setAutoJoinChannel(channels);
