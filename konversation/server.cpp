@@ -44,6 +44,10 @@ Server::Server(int id)
   checkTime=0;
   reconnectCounter=0;
 
+  serverName=serverEntry[1];
+  serverPort=serverEntry[2].toInt();
+  serverKey=serverEntry[3];
+
   resolver.setRecipient(this);
   installEventFilter(this);
 
@@ -55,10 +59,6 @@ Server::Server(int id)
   botPassword=identity->getPassword();
   serverWindow->setIdentity(getIdentity());
   serverWindow->show();
-
-  serverName=serverEntry[1];
-  serverPort=serverEntry[2].toInt();
-  serverKey=serverEntry[3];
 
   serverSocket.setAddress(serverName,serverPort);
 

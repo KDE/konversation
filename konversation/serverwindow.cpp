@@ -302,7 +302,7 @@ void ServerWindow::deleteDccPanel()
 void ServerWindow::addStatusView()
 {
   statusPanel=new StatusPanel(getWindowContainer());
-  addView(statusPanel,2,i18n("Status"));
+  addView(statusPanel,2,i18n(getServer()->getServerName()));
   statusPanel->setServer(getServer());
   statusPanel->setIdentity(getServer()->getIdentity());
 
