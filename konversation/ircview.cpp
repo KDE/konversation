@@ -30,6 +30,7 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kurl.h>
+#include <kurldrag.h>
 #include <kbookmark.h>
 #include <kbookmarkmanager.h>
 #include <kdeversion.h>
@@ -59,6 +60,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   copyUrlMenu=false;
   resetScrollbar=TRUE;
   offset=0;
+  mousePressed=false;
   m_currentNick=QString::null;
   m_isOnNick=false;
 
@@ -767,10 +769,29 @@ bool IRCView::eventFilter(QObject* object,QEvent* event)
         emit textPasted();
       }
     }
+    if (me->button()==QMouseEvent::LeftButton) mousePressed=false;
   } else if(event->type()==QEvent::ContextMenu) {
     return contextMenu((QContextMenuEvent*) event);
+  } else if(event->type()==QEvent::MouseButtonPress) {
+    QMouseEvent* me=(QMouseEvent*) event;
+    if (me->button()==QMouseEvent::LeftButton)
+    {
+      urlToDrag = anchorAt(viewportToContents(me->pos()));
+      if (!urlToDrag.isNull()) {
+        mousePressed=true;
+        pressPosition=me->pos();
+	return true;
+	}
+    }
+  } else if(event->type()==QEvent::MouseMove) {
+    QMouseEvent* me=(QMouseEvent*) event;
+    if (mousePressed && (pressPosition-me->pos()).manhattanLength() > QApplication::startDragDistance()) 
+    {
+        mousePressed=false;
+        KURLDrag* u=new KURLDrag(KURL(urlToDrag),viewport());	
+        u->drag();
+    }
   }
-
   return KTextBrowser::eventFilter(object,event);
 }
 

@@ -158,6 +158,9 @@ class IRCView : public KTextBrowser
     
     QString m_currentNick;
     bool m_isOnNick;
+    bool mousePressed;
+    QString urlToDrag;
+    QPoint pressPosition;
     int popupId;
 };
 
