@@ -461,14 +461,8 @@ const bool Preferences::getRawLog() { return rawLog; }
 
 void Preferences::setVersionReply(const QString &reply) { versionReply = reply; }
 
-/**
-  Get the version custom version response, or the default if none has been configured.
-  @param forRc If true, this request is going to be stored in the RC file so do not return the default reply.
-*/
-const QString Preferences::getVersionReply(bool forRC) const
+const QString Preferences::getVersionReply() const
 {
-  if (!forRC || versionReply.isEmpty())
-    return QString("Konversation %1 Build %2 (C) 2002-2005 by the Konversation team.").arg(VERSION).arg(COMMIT);
   return versionReply;
 }
 
