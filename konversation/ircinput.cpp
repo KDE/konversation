@@ -66,7 +66,7 @@ QSize IRCInput::sizeHint() const
 QString IRCInput::text() const
 {
   return KTextEdit::text();
-  /*
+
   QString content=KTextEdit::text();
   QDomDocument document;
 
@@ -76,7 +76,6 @@ QString IRCInput::text() const
   kdDebug() << "IRCInput::text(): " << nodes.count() << endl;
 
   return nodes.item(0).toText().nodeValue();
-*/
 }
 
 // Take care of Tab, Cursor and so on
@@ -124,7 +123,6 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
             insertCompletion(completionBox->currentText());
             completionBox->hide();
           }
-          clear();
           // prevent widget from adding lines
           return true;
         }
