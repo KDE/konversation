@@ -104,7 +104,7 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
     m_popup->insertItem(SmallIconSet("charset"),i18n("Set &Encoding"),m_popupEncoding,EncodingSub);
     m_popup->insertItem(SmallIconSet("mail_generic"),i18n("&Send Email..."),SendEmail);
     m_popup->insertItem(i18n("Addressbook Associations"), m_popupAddressbook, AddressbookSub);
-    
+
     m_popup->insertSeparator();
     m_popup->insertItem(i18n("Enable Notifications"), EnableNotifications);
     m_popup->insertSeparator();
@@ -125,7 +125,7 @@ LedTabBar::~LedTabBar()
     delete m_closePixmap;
 }
 void LedTabBar::insertAssociationSubMenu(const NickInfoPtr &nickinfo) {
-  
+
   KABC::Addressee addr = nickinfo->getAddressee();
   m_popupAddressbook->clear();
   if(!addr.isEmpty()) {
@@ -136,7 +136,7 @@ void LedTabBar::insertAssociationSubMenu(const NickInfoPtr &nickinfo) {
     if(addr.preferredEmail().isEmpty()) {
       m_popup->setItemEnabled(SendEmail, false);
       m_popup->setWhatsThis(SendEmail, "Sends an email to this contact using the preferred email address set in the contact's addressbook association.  This is currently disabled because the associated contact does not have any preferred email address set.");
-    } else { 
+    } else {
       m_popup->setItemEnabled(SendEmail, true);
       m_popup->setWhatsThis(SendEmail, i18n("Sends an email to this contact using the preferred email address (%1) set in the contact's addressbook association").arg(addr.preferredEmail()));
     }
@@ -434,13 +434,13 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
 	    if(!nickinfo->getAddressee().preferredEmail().isEmpty())
 	      m_popup->setItemEnabled(SendEmail, true);
 	    else
-	      m_popup->setItemEnabled(SendEmail, false); 
+	      m_popup->setItemEnabled(SendEmail, false);
 	  } else {
             m_popup->setItemEnabled(AddressbookSub, false); //This _does_ happen when the user goes offline!
 	    m_popup->setItemEnabled(SendEmail, false);
-	    m_popup->changeTitle(Label,lookTab->text() + " - Offline");
+	    m_popup->changeTitle(Label, i18n( "%1 - Offline" ).arg( lookTab->text() ) );
 	  }
-	} else {	
+	} else {
 	  m_popup->setItemVisible(AddressbookSub, false);
 	  m_popup->setItemVisible(SendEmail, false);
 	}
@@ -478,7 +478,7 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
         }
       }
       else if(r == SendEmail) {
-	win->getServer()->obtainNickInfo(win->getName())->sendEmail();	
+	win->getServer()->obtainNickInfo(win->getName())->sendEmail();
       }
       else if(r == AddressbookEdit) {
         win->getServer()->obtainNickInfo( win->getName() )->editAddressee();

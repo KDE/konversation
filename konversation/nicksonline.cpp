@@ -222,12 +222,12 @@ QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo, KABC::Addressee
             niInfo += " (" + nickInfo->getRealName() + ")";
         if (!nickInfo->getNetServer().isEmpty())
         {
-            niInfo += " online via " + nickInfo->getNetServer();
+            niInfo += i18n( " online via %1" ).arg( nickInfo->getNetServer() );
             if (!nickInfo->getNetServerInfo().isEmpty())
                 niInfo += " (" + nickInfo->getNetServerInfo() + ")";
         }
         if (!nickInfo->getOnlineSince().isNull())
-            niInfo += " since " + nickInfo->getPrettyOnlineSince();
+            niInfo += i18n( " since %1" ).arg( nickInfo->getPrettyOnlineSince() );
     }
     needWhois = niInfo.isEmpty();
     if (!info.isEmpty() && !needWhois) info += " ";
@@ -635,7 +635,7 @@ void NicksOnline::doCommand(int id)
 	case(ciAddressbookChange):
 	  nickInfo->showLinkAddressbookUI();
 	  break;
-        
+
 	case ciAddressbookNew:
         case ciAddressbookDelete:
         {

@@ -127,7 +127,7 @@ void DccChat::listenForPartner()
     }
     if(!found)
     {
-      KMessageBox::sorry(0, i18n("There is no vacant port for DCC chat."));
+      KMessageBox::sorry(this, i18n("There is no vacant port for DCC chat."));
       return;
     }
   }

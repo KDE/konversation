@@ -177,8 +177,8 @@ namespace Konversation {
             else if(command == "server")  parseServer(parameter);
 
             else if(command == "prefs")   result = parsePrefs(parameter);
-	    
-	    else if(command == "charset") parseCharset(parameter); 
+
+	    else if(command == "charset") parseCharset(parameter);
 
             // Forward unknown commands to server
             else {
@@ -471,19 +471,19 @@ namespace Konversation {
             KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
             konv_app->getMainWindow()->showView(query);
 	  }
-	} 
+	}
 	else {
 	  //We have  "/msg nick message"
           query=m_server->getQueryByName(recipient);
 	}
-	
+
         if(query && !output.isEmpty()) {
 	  if(message.startsWith(commandChar+"me"))
 	    query->appendAction(m_server->getNickname(), message.mid(4)); //log if and only if the query open
-	  else 
+	  else
 	    query->appendQuery(m_server->getNickname(), output); //log if and only if the query open
 	}
-       
+
 	if(output.isEmpty()) return result; //result should be completely empty;
 	//FIXME - don't do below line if query is focussed
 	result.output = output;
@@ -517,7 +517,7 @@ namespace Konversation {
         QString request = parameter.section(' ', 1, 1, QString::SectionSkipEmpty);   // what is the first word of the ctcp?
         QString message = parameter.section(' ', 1, 0xffffff, QString::SectionSkipEmpty);      // what is the complete ctcp command?
 
-        if(request.lower() == "ping") 
+        if(request.lower() == "ping")
         {
             unsigned int time_t = QDateTime::currentDateTime().toTime_t();
             result.toServer = QString("PRIVMSG %1 :\x01PING %2\x01").arg(recipient).arg(time_t);
@@ -1165,7 +1165,7 @@ namespace Konversation {
                         if (option.lower() == "list")
                         {
                             // List available options in group.
-                            QString output = i18n("Available Options in Group ") + group + ": ";
+                            QString output = i18n("Available Options in Group %1:").arg( group );
 
                             for (i = 0; i < optionList.count(); ++i)
                             {

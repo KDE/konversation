@@ -31,13 +31,13 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   QVBoxLayout* baseLayout = new QVBoxLayout( this );
   baseLayout->setMargin( marginHint() );
   baseLayout->setSpacing( spacingHint() );
-  
+
   // information
-  
+
   QFrame* infoFrame = new QFrame( this );
   QGridLayout* infoLayout = new QGridLayout( infoFrame, 1, 2 );
   infoLayout->setSpacing( spacingHint() );
-  
+
   // Filename
   QLabel* fileNameHeader = new QLabel( i18n("File"), infoFrame );
   fileNameHeader->setAlignment( AlignHCenter | AlignVCenter );
@@ -46,7 +46,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   fileName->setReadOnly( true );
   fileName->setFrame( false );
   fileName->setAlignment( AlignHCenter );
-  
+
   // Local File URL
   QLabel* localFileURLHeader = new QLabel( infoFrame );
   localFileURLHeader->setAlignment( AlignHCenter | AlignVCenter );
@@ -64,7 +64,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   m_buttonRemoveFile = new KPushButton( KGlobal::iconLoader()->loadIconSet( "edittrash", KIcon::Small ), QString::null, localFileURLBox );
   m_buttonRemoveFile->setFixedSize( m_localFileURL->button()->size() );
   connect( m_buttonRemoveFile, SIGNAL( clicked() ), this, SLOT( slotRemoveFile() ) );
-  
+
   // Partner
   QLabel* partnerHeader = new QLabel( infoFrame );
   partnerHeader->setAlignment( AlignHCenter | AlignVCenter );
@@ -77,7 +77,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   m_partner->setReadOnly( true );
   m_partner->setFrame( false );
   m_partner->setAlignment( AlignHCenter );
-    
+
   // Self
   QLabel* selfHeader = 0;
   m_self = 0;
@@ -91,7 +91,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
     m_self->setFrame( false );
     m_self->setAlignment( AlignHCenter );
   }
-  
+
   // Status
   QLabel* statusHeader = new QLabel( i18n("Status"), infoFrame );
   statusHeader->setAlignment( AlignHCenter | AlignVCenter );
@@ -100,13 +100,13 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   m_status->setReadOnly( true );
   m_status->setFrame( false );
   m_status->setAlignment( AlignHCenter );
-  
+
   // Progres
   QLabel* progressHeader = new QLabel( i18n("Progress"), infoFrame );
   progressHeader->setAlignment( AlignHCenter | AlignVCenter );
   m_progress = new KProgress( 100, infoFrame );
   m_progress->setCenterIndicator( true );
-  
+
   // Position
   QLabel* positionHeader = new QLabel( i18n("Position"), infoFrame );
   positionHeader->setAlignment( AlignHCenter | AlignVCenter );
@@ -115,13 +115,13 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   m_position->setReadOnly( true );
   m_position->setFrame( false );
   m_position->setAlignment( AlignHCenter );
-  
+
   // buttons
-  
+
   QFrame* buttonFrame = new QFrame( this );
   QHBoxLayout* buttonLayout = new QHBoxLayout( buttonFrame );
   buttonLayout->setSpacing( spacingHint() );
-  
+
   // Accept
   m_buttonAccept = 0;
   if ( m_item->m_dccType == DccTransfer::Receive )
@@ -130,64 +130,64 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
     m_buttonAccept->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
     connect( m_buttonAccept, SIGNAL( clicked() ), this, SLOT( slotAccept() ) );
   }
-  
+
   // Abort
   m_buttonAbort = new KPushButton( KGlobal::iconLoader()->loadIconSet( "stop", KIcon::Small ), i18n("A&bort"), buttonFrame );
   m_buttonAbort->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   connect( m_buttonAbort, SIGNAL( clicked() ), this, SLOT( slotAbort() ) );
-  
+
   // Close
   KPushButton* buttonClose = new KPushButton( KGlobal::iconLoader()->loadIconSet( "button_ok", KIcon::Small ), i18n("&Close"), buttonFrame );
   buttonClose->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   connect( buttonClose, SIGNAL( clicked() ), this, SLOT( slotClose() ) );
-  
+
   // layout
-  
+
   // construct layout: base
   baseLayout->addWidget( infoFrame );
   baseLayout->addItem( new QSpacerItem( 0, 0, QSizePolicy::Expanding ) );
   baseLayout->addWidget( buttonFrame );
-  
+
   // construct layout: info
   int row = 0;
-  
+
   infoLayout->addWidget( fileNameHeader, row, 0 );
   infoLayout->addWidget( fileName, row, 1 );
-  
+
   ++row;
   infoLayout->addWidget( localFileURLHeader, row, 0 );
   infoLayout->addWidget( localFileURLBox, row, 1 );
-  
+
   ++row;
   infoLayout->addWidget( partnerHeader, row, 0 );
   infoLayout->addWidget( m_partner, row, 1 );
-  
+
   if ( m_self )
   {
     ++row;
     infoLayout->addWidget( selfHeader, row, 0 );
     infoLayout->addWidget( m_self, row, 1 );
   }
-  
+
   ++row;
   infoLayout->addWidget( statusHeader, row, 0 );
   infoLayout->addWidget( m_status, row, 1 );
-  
+
   ++row;
   infoLayout->addWidget( progressHeader, row, 0 );
   infoLayout->addWidget( m_progress, row, 1 );
-  
+
   ++row;
   infoLayout->addWidget( positionHeader, row, 0 );
   infoLayout->addWidget( m_position, row, 1 );
-  
+
   // construct layout: buttons
   if ( m_buttonAccept )
     buttonLayout->addWidget( m_buttonAccept );
   buttonLayout->addWidget( m_buttonAbort );
   buttonLayout->addItem( new QSpacerItem( 0, 0, QSizePolicy::Expanding ) );
   buttonLayout->addWidget( buttonClose );
-  
+
   // update
   updateView();
 
@@ -204,14 +204,14 @@ DccDetailDialog::~DccDetailDialog()
 void DccDetailDialog::updateView()  // public
 {
   // caption
-  
+
   if ( m_item->m_dccType == DccTransfer::Send )
-    setCaption( i18n("DCC Send") + " : " + m_item->m_fileName );
+    setCaption( i18n("DCC Send : %1").arg( m_item->m_fileName ) );
   else
-    setCaption( i18n("DCC Receive") + " : " + m_item->m_fileName );
-  
+    setCaption( i18n("DCC Receive : %1").arg( m_item->m_fileName ) );
+
   // information
-  
+
   // Local path
   m_localFileURL->setURL( m_item->getFileURL().prettyURL() );
   m_localFileURL->lineEdit()->setFocusPolicy( m_item->m_dccStatus == DccTransfer::Queued ? StrongFocus : ClickFocus );
@@ -221,7 +221,7 @@ void DccDetailDialog::updateView()  // public
   m_localFileURL->button()->setEnabled( m_item->m_dccStatus == DccTransfer::Queued );
   m_buttonOpenFile->setEnabled( m_item->m_dccType == DccTransfer::Send || m_item->m_dccStatus == DccTransfer::Done );
   m_buttonRemoveFile->setEnabled( m_item->m_dccType == DccTransfer::Receive && m_item->m_dccStatus == DccTransfer::Done );
-  
+
   // Partner
   if ( !m_item->m_partnerIp.isEmpty() || !m_item->m_partnerPort.isEmpty() )
     m_partner->setText( QString( "%1 (%2:%3)" )
@@ -231,7 +231,7 @@ void DccDetailDialog::updateView()  // public
                       );
   else
     m_partner->setText( m_item->m_partnerNick );
-  
+
   // Self
   if ( m_self )
   {
@@ -244,26 +244,26 @@ void DccDetailDialog::updateView()  // public
     else
       m_self->setText( i18n("unknown") );
   }
-  
+
   // Status
   if ( m_item->m_dccStatus == DccTransfer::Sending || m_item->m_dccStatus == DccTransfer::Receiving )
     m_status->setText( m_item->getStatusText() + " ( " + m_item->getCPSPrettyText() + " )" );
   else
     m_status->setText( m_item->m_dccStatusDetail.isEmpty() ? m_item->getStatusText() : m_item->getStatusText() + " (" + m_item->m_dccStatusDetail + ")" );
-  
+
   // Progress
   // FIXME: in case filesize is unknown
   m_progress->setProgress( m_item->getProgress() );
-  
+
   // Position
   m_position->setText( m_item->getPositionPrettyText( true ) );
-  
+
   // buttons
-  
+
   // Accept
   if ( m_buttonAccept )
     m_buttonAccept->setEnabled( m_item->m_dccStatus == DccTransfer::Queued );
-  
+
   // Abort
   m_buttonAbort->setEnabled( m_item->m_dccStatus < DccTransfer::Done );
 }
