@@ -156,7 +156,7 @@ class KonversationMainWindow : public KMainWindow
     LedTabWidget* viewContainer;
 
     Server* frontServer;
-    ChatWindow* frontView;
+    QGuardedPtr<ChatWindow> frontView;
     ChatWindow* searchView;
 
     UrlCatcher* urlCatcherPanel;
