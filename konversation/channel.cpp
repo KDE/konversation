@@ -62,7 +62,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   splitterChanged=true;
   modeButtonsChanged=false;
   modeButtonsState=false;
-  
+
   // flag for first seen topic
   topicAuthorUnknown=true;
 
@@ -71,6 +71,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   // Build some size policies for the widgets
   QSizePolicy hfixed=QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
   QSizePolicy hmodest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
+  QSizePolicy vmodest=QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
   QSizePolicy vfixed=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
   QSizePolicy modest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
   QSizePolicy greedy=QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
@@ -80,7 +81,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   setStretchFactor(splitter,10);
   splitter->setOpaqueResize(true);
 
-  // The grid for the topic line, Nicks/Ops label, Channel View and Nick list
+  // The grid for the topic line and Channel View
   QVBox* topicViewNicksGrid=new QVBox(splitter);
   topicViewNicksGrid->setSpacing(spacing());
 
@@ -175,10 +176,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   logCheckBox->setChecked(KonversationApplication::preferences.getLog());
 
   // Set the widgets size policies
-  topicBox->setSizePolicy(greedy);
-  topicLabel->setSizePolicy(hfixed);
-
-  topicLine->setSizePolicy(vfixed);  // This should prevent the widget from growing too wide
+  topicBox->setSizePolicy(vmodest);
+  topicLabel->setSizePolicy(hfixed);  // This should prevent the widget from growing too wide
+  topicLine->setSizePolicy(vfixed);
 
   limit->setMaximumSize(40,100);
   limit->setSizePolicy(hfixed);
