@@ -49,6 +49,10 @@ class DccChat : public ChatWindow
     virtual bool searchView();
 
     int getPort();
+    
+    virtual void setChannelEncoding(const QString& encoding);
+    virtual QString getChannelEncoding();
+    virtual QString getChannelEncodingDefaultDesc();
 
   public slots:
     void appendInputText(const QString& s);
@@ -88,6 +92,8 @@ class DccChat : public ChatWindow
     IRCInput* dccChatInput;
     KNetwork::KStreamSocket* dccSocket;
     KNetwork::KServerSocket* listenSocket;
+    
+    QString m_encoding;
 };
 
 #endif
