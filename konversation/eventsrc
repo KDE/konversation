@@ -12,6 +12,11 @@ Name=Nick written
 Comment=Someone wrote your nick in a message
 default_presentation=0
 
+[nickchange]
+Name=Nick changed
+Comment=Someone changed their nick
+default_presentation=0
+
 [dcc_incomming]
 Name=Incomming file
 Comment=Someone wants to transmit a file to you over DCC
@@ -20,4 +25,9 @@ default_prentation=0
 [join]
 Name=Nick joined channel
 Comment=New nick joined a channel
+defalt_presentation=0
+
+[part]
+Name=Nick left channel
+Comment=A nick left a channel
 defalt_presentation=0
