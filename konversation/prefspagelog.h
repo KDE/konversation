@@ -15,39 +15,26 @@
 #ifndef PREFSPAGELOG_H
 #define PREFSPAGELOG_H
 
-#include "prefspage.h"
+#include "log_preferences.h"
+class Preferences;
 
 /*
  *@author Dario Abatianni
 */
 
-class QCheckBox;
-class QLabel;
-class KURLRequester;
-class QSpinBox;
-class QGroupBox;
-class KLineEdit;
-
-class PrefsPageLog : public PrefsPage
+class PrefsPageLog : public Log_Config
 {
   Q_OBJECT
 
   public:
     PrefsPageLog(QFrame* newParent,Preferences* newPreferences);
-    ~PrefsPageLog();
 
   public slots:
     void applyPreferences();
     
-  protected slots:
-    void selectLogPath();
+protected:
+		Preferences* preferences;
 
-  protected:
-    QGroupBox* loggingBox;
-    QCheckBox* lowerLog;
-    QCheckBox* logFollowsNick;
-    QLabel* logPathLabel;
-    KLineEdit* logPathInput;
 };
 
 #endif
