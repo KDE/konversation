@@ -1329,8 +1329,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case ERR_NOCHANMODES:
         {
-	  ChatWindow *chatwindow = server->getChannelByName(parameterList[1]);
-          if(chatwindow) chatwindow->appendServerMessage(i18n("Channel"), trailing);
+          ChatWindow *chatwindow = server->getChannelByName(parameterList[1]);
+          if(chatwindow)
+              chatwindow->appendServerMessage(i18n("Channel"), trailing);
+          else // We couldn't join the channel , so print the error. with [#channel] : <Error Message>
+              server->appendStatusMessage( i18n( parameterList[1].ascii() ),  trailing );
+
           break;
         }
       case ERR_UNKNOWNCOMMAND:

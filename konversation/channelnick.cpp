@@ -77,11 +77,11 @@ bool ChannelNick::setMode(bool admin,bool owner,bool op,bool halfop,bool voice) 
   hasvoice=voice;
   nickInfo->getServer()->emitChannelNickChanged(this);
   emit channelNickChanged();
-  return true;  
+  return true;
 }
 
 
-/** set the voice for the nick, and update 
+/** set the voice for the nick, and update
  * @returns Whether it needed to be changed.  False for no change.
  */
 bool ChannelNick::setVoice(bool state) {
@@ -103,7 +103,7 @@ bool ChannelNick::setAdmin(bool state) {
   isadmin=state;
   nickInfo->getServer()->emitChannelNickChanged(this);
   emit channelNickChanged();
-  return true;  
+  return true;
 }
 bool ChannelNick::setHalfOp(bool state) {
   if(ishalfop==state) return false;
@@ -122,8 +122,20 @@ bool ChannelNick::setOp(bool state) {
 
 //Purely provided for convience because they are used so often.
 //Just calls nickInfo->getNickname() etc
-QString ChannelNick::getNickname() const { return nickInfo->getNickname(); }
-QString ChannelNick::getHostmask() const { return nickInfo->getHostmask(); }
+QString ChannelNick::getNickname() const
+{
+    if ( this )
+        return nickInfo->getNickname();
+    else
+        return QString::null;
+}
+QString ChannelNick::getHostmask() const
+{
+    if ( this )
+        return nickInfo->getHostmask();
+    else
+        return QString::null;
+}
 
 
 QString ChannelNick::tooltip() {
@@ -133,7 +145,7 @@ QString ChannelNick::tooltip() {
   QTextStream tooltip( &strTooltip, IO_WriteOnly );
 
   tooltip << "<qt>";
-  
+
   tooltip << "<table cellspacing=\"0\" cellpadding=\"0\">";
 
   nickInfo->tooltipTableData(tooltip);
