@@ -24,6 +24,8 @@
 #ifndef KNETWORKINTERFACE_H
 #define KNETWORKINTERFACE_H
 
+#include <kdelibs_export.h>
+
 namespace KNetwork {
 
 /**

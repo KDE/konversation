@@ -30,6 +30,7 @@
 
 #include "ksocketbase.h"
 #include "kresolver.h"
+#include <kdelibs_export.h>
 
 namespace KNetwork {
 
@@ -45,7 +46,7 @@ class KClientSocketBasePrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KClientSocketBase : public QObject, public KActiveSocketBase
+class KDECORE_EXPORT KClientSocketBase : public QObject, public KActiveSocketBase
 {
   Q_OBJECT
 

@@ -88,7 +88,7 @@ class KStreamSocketPrivate;
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @version 0.9
  */
-class KStreamSocket: public KClientSocketBase
+class KDECORE_EXPORT KStreamSocket: public KClientSocketBase
 {
   Q_OBJECT
 

@@ -40,10 +40,9 @@
 #include <qevent.h>
 
 #include "kresolver.h"
-#include <kdemacros.h>
 
 /* decide whether we need a mutex */
-#if !defined(HAVE_GETPROTOBYNAME_R) || !defined(HAVE_GETSERVBYNAME_R) || !defined(HAVE_GETHOSTBYNAME_R)
+#if !defined(HAVE_GETPROTOBYNAME_R) || !defined(HAVE_GETSERVBYNAME_R) || !defined(HAVE_GETHOSTBYNAME_R) || !defined(HAVE_GETSERVBYPORT_R)
 # define NEED_MUTEX
 extern QMutex getXXbyYYmutex;
 #endif

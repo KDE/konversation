@@ -874,7 +874,7 @@ QStrList KResolver::serviceName(int port, const char *protoname)
 	lst.append(*p);
     }
 
-#ifdef HAVE_GETSERVBYNAME_R
+#ifdef HAVE_GETSERVBYPORT_R
   delete [] buf;
 #endif
 
