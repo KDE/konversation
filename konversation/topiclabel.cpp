@@ -16,6 +16,7 @@
 #include <krun.h>
 #include <kprocess.h>
 #include <kshell.h>
+#include <kurldrag.h>
 #include <kstringhandler.h>
 #include <kglobal.h>
 #include <kdebug.h>
@@ -43,6 +44,7 @@ TopicLabel::TopicLabel(QWidget *parent, const char *name)
  : KActiveLabel(parent, name)
 {
   setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
+  mousePressed=false;
 }
 
 TopicLabel::~TopicLabel()
@@ -62,6 +64,31 @@ QSize TopicLabel::sizeHint() const
 void TopicLabel::setServer(Server* server)
 {
   m_server = server;
+}
+
+void TopicLabel::contentsMousePressEvent(QMouseEvent *e)
+{
+ if (e->button()==QMouseEvent::LeftButton)
+ {
+   pressPosition=e->pos();
+   urlToDrag = anchorAt(pressPosition);
+   if (!urlToDrag.isNull()) mousePressed=true;
+   }
+}
+
+void TopicLabel::contentsMouseReleaseEvent(QMouseEvent *e)
+{
+ if (e->button()==QMouseEvent::LeftButton) mousePressed=false;
+}
+ 
+void TopicLabel::contentsMouseMoveEvent(QMouseEvent *e)
+{
+ if (mousePressed && (pressPosition-e->pos()).manhattanLength() > QApplication::startDragDistance()) 
+ {
+   mousePressed=false;
+   KURLDrag* u=new KURLDrag(KURL(urlToDrag),viewport());	
+   u->drag();
+ }
 }
 
 void TopicLabel::openLink(const QString& link)

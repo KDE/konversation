@@ -37,12 +37,18 @@ class TopicLabel : public KActiveLabel
     void updateSqueezedText();
     QString rPixelSqueeze(const QString& text, uint maxPixels);
     uint textWidth(const QString& text, const QFontMetrics& fm);
+    virtual void contentsMousePressEvent(QMouseEvent *e);
+    virtual void contentsMouseReleaseEvent(QMouseEvent *e);
+    virtual void contentsMouseMoveEvent(QMouseEvent *e);
 
     void resizeEvent(QResizeEvent*);
 
   private:
     QString m_fullText;
     Server* m_server;
+    bool mousePressed;
+    QString urlToDrag;
+    QPoint pressPosition;
 };
 
 }
