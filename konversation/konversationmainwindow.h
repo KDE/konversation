@@ -24,8 +24,11 @@
  Dario Abatianni
 */
 
-class KStdAction;
+class KToggleAction;
+
 class LedTabWidget;
+class Server;
+class StatusPanel;
 
 class KonversationMainWindow : public KMainWindow
 {
@@ -35,15 +38,26 @@ class KonversationMainWindow : public KMainWindow
     KonversationMainWindow();
     ~KonversationMainWindow();
 
+    StatusPanel* addStatusView(Server* server);
+
+  protected slots:
+    void showToolbar();
+    void showStatusbar();
+    void showMenubar();
+  
   protected:
     void readOptions();
+    void addView(QWidget* view,int color,const QString& label,bool on=true);
+    void showView(QWidget* view);
+    void newText(QWidget* view);
+
+    LedTabWidget* getViewContainer();
 
     LedTabWidget* viewContainer;
-    
-    KStdAction* showToolBarAction;
-    KStdAction* showStatusBarAction;
-    KStdAction* showMenuBarAction;
 
+    KToggleAction* showToolBarAction;
+    KToggleAction* showStatusBarAction;
+    KToggleAction* showMenuBarAction;
 };
 
 #endif

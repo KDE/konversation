@@ -34,7 +34,14 @@
 #include "dccrecipientdialog.h"
 #include "nick.h"
 
+#ifdef NEW_MAIN_WINDOW
+#include "konversationmainwindow.h"
+#include "statuspanel.h"
+
+Server::Server(KonversationMainWindow* mainWindow,int id)
+#else
 Server::Server(int id)
+#endif
 {
   setName("server");
   QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
@@ -59,8 +66,12 @@ Server::Server(int id)
   botPassword=identity->getPassword();
   serverWindow->setIdentity(getIdentity());
   serverWindow->show();
-  statusPanel=serverWindow->getStatusView();
+  statusPanel_old=serverWindow->getStatusView();
 
+#ifdef NEW_MAIN_WINDOW
+  statusView=mainWindow->addStatusView(this);
+#endif
+  
   serverSocket.setAddress(serverName,serverPort);
 
   if(serverEntry[4] && !serverEntry[4].isEmpty())
@@ -893,7 +904,10 @@ void Server::updateFonts()
 {
   kdDebug() << "Server::updateFonts()" << endl;
 
-  statusPanel->updateFonts();
+  statusPanel_old->updateFonts();
+#ifdef NEW_MAIN_WINDOW
+  statusView->updateFonts();
+#endif
   
   Channel* channel=channelList.first();
   while(channel)

@@ -169,7 +169,11 @@ void KonversationApplication::connectToAnotherServer(int id)
   } // endwhile
   // We came this far, so generate a new server
 
+#if NEW_MAIN_WINDOW
+  newServer=new Server(mainWindow,id);
+#else
   newServer=new Server(id);
+#endif
   serverList.append(newServer);
 
   connect(newServer,SIGNAL(deleted(Server*)),this,SLOT(removeServer(Server*)));

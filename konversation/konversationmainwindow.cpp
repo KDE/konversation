@@ -14,23 +14,25 @@
   $Id$
 */
 
+#include <kstdaction.h>
 #include <kaction.h>
 #include <kdebug.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kstatusbar.h>
+#include <kmenubar.h>
 
 /*
 #include <qdir.h>
 
-#include <klocale.h>
 #include <kdialog.h>
 #include <kaccel.h>
-#include <kmessagebox.h>
-#include <kstatusbar.h>
-#include <kmenubar.h>
 */
 
 #include "ledtabwidget.h"
 #include "konversationmainwindow.h"
 #include "konversationapplication.h"
+#include "statuspanel.h"
 
 KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 {
@@ -56,19 +58,21 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   setCentralWidget(viewContainer);
 /*
   connect(getServer(),SIGNAL(repaintTabs()),getWindowContainer(),SLOT(updateTabs()) );
-*/
+  
   KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); // file_quit
+*/
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); // options_show_toolbar
   showStatusBarAction=KStdAction::showStatusbar(this,SLOT(showStatusbar()),actionCollection()); // options_show_statusbar
   showMenuBarAction=KStdAction::showMenubar(this,SLOT(showMenubar()),actionCollection()); // options_show_menubar
-  new KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
+/*
+  KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
   new KAction(i18n("Buttons"),0,0,this,SLOT (openButtons()),actionCollection(),"open_buttons_window");
   new KAction(i18n("Highlight List"),0,0,this,SLOT (openHilight()),actionCollection(),"open_hilight_window");
   new KAction(i18n("Notify List"),0,0,this,SLOT (openNotify()),actionCollection(),"open_notify_window");
   new KAction(i18n("Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
   new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
   new KAction(i18n("Configure Colors"), 0, 0, this, SLOT(openColorConfiguration()), actionCollection(), "open_colors_window");
-/*  
+  
   // Keyboard accelerators to navigate through the different pages
   KAccel* accelerator=accel();
   accelerator->insert("Next Tab",i18n("Next Tab"),i18n("Go to next tab"),KShortcut("Alt+Right"),this,SLOT(nextTab()));
@@ -84,19 +88,19 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   accelerator->insert("Go to Tab 9",i18n("Tab %1").arg(9),i18n("Go to tab number %1").arg(9),KShortcut("Alt+9"),this,SLOT(goToTab8()));
   accelerator->insert("Go to Tab 0",i18n("Tab %1").arg(0),i18n("Go to tab number %1").arg(0),KShortcut("Alt+0"),this,SLOT(goToTab9()));
   accelerator->insert("Find text",i18n("Find text").arg(0),i18n("Find text").arg(0),KShortcut("F3"),this,SLOT(findTextShortcut()));
-
+*/
   // Initialize KMainWindow->statusBar()
   statusBar();
+/*
   statusBar()->insertItem(i18n("Ready."),StatusText,1);
   statusBar()->insertItem("lagometer",LagOMeter,0,true);
-
   // Show "Lag unknown"
   resetLag();
   statusBar()->setItemAlignment(StatusText,QLabel::AlignLeft);
-
+*/
   // Initialize KMainWindow->menuBar()
   showMenubar();
-
+/*
   addStatusView();
   if(KonversationApplication::preferences.getRawLog()) addRawLog();
 
@@ -126,8 +130,9 @@ void ServerWindow::openPreferences()
 {
   emit openPrefsDialog();
 }
+*/
 
-void ServerWindow::showToolbar()
+void KonversationMainWindow::showToolbar()
 {
   if(showToolBarAction->isChecked()) toolBar("mainToolBar")->show();
   else toolBar("mainToolBar")->hide();
@@ -135,7 +140,7 @@ void ServerWindow::showToolbar()
   KonversationApplication::preferences.serverWindowToolBarStatus=showToolBarAction->isChecked();
 }
 
-void ServerWindow::showMenubar()
+void KonversationMainWindow::showMenubar()
 {
   if(showMenuBarAction->isChecked()) menuBar()->show();
   else
@@ -150,7 +155,7 @@ void ServerWindow::showMenubar()
   KonversationApplication::preferences.serverWindowMenuBarStatus=showMenuBarAction->isChecked();
 }
 
-void ServerWindow::showStatusbar()
+void KonversationMainWindow::showStatusbar()
 {
   if(showStatusBarAction->isChecked()) statusBar()->show();
   else statusBar()->hide();
@@ -158,6 +163,7 @@ void ServerWindow::showStatusbar()
   KonversationApplication::preferences.serverWindowStatusBarStatus=showStatusBarAction->isChecked();
 }
 
+/*
 void ServerWindow::setServer(Server* newServer)
 {
   // to make sure that the new server will open a fresh nicks online window
@@ -205,31 +211,31 @@ void ServerWindow::appendToFrontmost(const QString& type,const QString& message)
   else
     frontView->appendServerMessage(type,message);
 }
-
-void ServerWindow::addView(QWidget* pane,int color,const QString& label,bool on)
+*/
+void KonversationMainWindow::addView(QWidget* view,int color,const QString& label,bool on)
 {
   // TODO: Make sure to add DCC status tab at the end of the list and all others
   // before the DCC tab. Maybe we should also make sure to order Channels
   // Queries and DCC chats in groups
-  windowContainer->addTab(pane,label,color,on);
+  viewContainer->addTab(view,label,color,on);
   // TODO: Check, if user was typing in old input line
   if(KonversationApplication::preferences.getBringToFront())
   {
-    showView(pane);
+    showView(view);
   }
 }
 
-void ServerWindow::showView(QWidget* pane)
+void KonversationMainWindow::showView(QWidget* view)
 {
   // Don't bring Tab to front if TabWidget is hidden. Otherwise QT gets confused
   // and shows the Tab as active but will display the wrong pane
-  if(windowContainer->isVisible())
+  if(viewContainer->isVisible())
   {
     // TODO: add adjustFocus() here?
-    windowContainer->showPage(pane);
+    viewContainer->showPage(view);
   }
 }
-
+/*
 void ServerWindow::closeTab(QWidget* viewToClose)
 {
   ChatWindow* view=(ChatWindow*) viewToClose;
@@ -309,18 +315,20 @@ void ServerWindow::deleteDccPanel()
     dccPanel=0;
   }
 }
-
-void ServerWindow::addStatusView()
+*/
+StatusPanel* KonversationMainWindow::addStatusView(Server* server)
 {
-  statusPanel=new StatusPanel(getWindowContainer());
-  addView(statusPanel,2,i18n(getServer()->getServerName()));
-  statusPanel->setServer(getServer());
-  statusPanel->setIdentity(getServer()->getIdentity());
+  StatusPanel* statusView=new StatusPanel(getViewContainer());
+  addView(statusView,2,i18n(server->getServerName()));
+  statusView->setServer(server);
+  statusView->setIdentity(server->getIdentity());
+  
+  connect(statusView,SIGNAL (newText(QWidget*)),this,SLOT (newText(QWidget*)) );
+  connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );
 
-  connect(statusPanel,SIGNAL (newText(QWidget*)),this,SLOT (newText(QWidget*)) );
-  connect(statusPanel,SIGNAL (sendFile()),getServer(),SLOT (requestDccSend()) );
+  return statusView;
 }
-
+/*
 void ServerWindow::addRawLog()
 {
   kdDebug() << "ServerWindow::addRawLog()" << endl;
@@ -350,17 +358,17 @@ void ServerWindow::setNickname(const QString& newNickname)
   // TODO: connect this to the appropriate server's nickname signal
   statusPanel->setNickname(newNickname);
 }
-
-void ServerWindow::newText(QWidget* view)
+*/
+void KonversationMainWindow::newText(QWidget* view)
 {
   // FIXME: Should be compared to ChatWindow* but the status Window currently is something else
   // Now that the status Window is a ChatWindow* we can start cleaning up here
-  if(view!=static_cast<QWidget*>(windowContainer->currentPage()))
+  if(view!=static_cast<QWidget*>(getViewContainer()->currentPage()))
   {
-    windowContainer->changeTabState(view,true);
+    getViewContainer()->changeTabState(view,true);
   }
 }
-
+/*
 void ServerWindow::changedView(QWidget* view)
 {
   frontView=0;
@@ -621,12 +629,12 @@ void ServerWindow::channelPrefsChanged()
 {
   emit prefsChanged();
 }
-
-LedTabWidget* ServerWindow::getWindowContainer()
+*/
+LedTabWidget* KonversationMainWindow::getViewContainer()
 {
-  return windowContainer;
+  return viewContainer;
 }
-
+/*
 int ServerWindow::spacing()
 {
   return KDialog::spacingHint();

@@ -30,6 +30,11 @@
 #include "identity.h"
 #include "ircresolver.h"
 
+#ifdef NEW_MAIN_WINDOW
+#include "konversationmainwindow.h"
+class KonversationMainWindow;
+#endif
+
 /*
   @author Dario Abatianni
 */
@@ -44,7 +49,11 @@ class Server : public QObject
   Q_OBJECT
 
   public:
+#ifdef NEW_MAIN_WINDOW
+    Server(KonversationMainWindow* mainWindow,int number);
+#else
     Server(int number);
+#endif
     ~Server();
 
     QString getServerName();
@@ -204,6 +213,9 @@ class Server : public QObject
     QString autoJoinChannel;
     QString autoJoinChannelKey;
 
+#ifdef NEW_MAIN_WINDOW
+    KonversationMainWindow* mainWindow;
+#endif
     ServerWindow* serverWindow;
     IRCServerSocket serverSocket;
 
@@ -228,8 +240,11 @@ class Server : public QObject
 
     InputFilter inputFilter;
     OutputFilter outputFilter;
-    
-    StatusPanel* statusPanel;
+
+#ifdef NEW_MAIN_WINDOW    
+    StatusPanel* statusView;
+#endif
+    StatusPanel* statusPanel_old;
 
     QDateTime awayTime;
     bool isAway;
