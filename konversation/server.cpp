@@ -192,6 +192,125 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   emit serverOnline(false);
 }
 
+//FIXME: remove code duplicates by introducing some new method
+Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,const QString& nick,const QString& password)
+{
+  autoJoin=false;
+  identity=0;
+  tryNickNumber=0;
+  checkTime=0;
+  reconnectCounter=0;
+  currentLag=0;
+  rawLog=0;
+  channelListPanel=0;
+  alreadyConnected=false;
+  rejoinChannels=false;
+  connecting=false;
+
+  timerInterval=1;  // flood protection
+  
+  setIdentity(KonversationApplication::preferences.getIdentityByName("Default"));
+  setName(hostName.ascii());
+  setMainWindow(mainWindow);
+  
+  serverGroup=hostName;
+  serverName=hostName;
+  serverPort=port.toInt();
+  serverKey=password;
+  
+  resolver.setRecipient(this);
+  installEventFilter(this);
+
+  lastDccDir=QString::null;
+
+  statusView=getMainWindow()->addStatusView(this);
+  if(KonversationApplication::preferences.getRawLog()) addRawLog(false);
+  setNickname(nick);
+  
+  connectToIRCServer();
+  
+   // don't delete items when they are removed
+  channelList.setAutoDelete(false);
+  // For /msg query completion
+  completeQueryPosition=0;
+
+  inputFilter.setServer(this);
+  outputFilter.setIdentity(getIdentity());
+
+  notifyTimer.setName("notify_timer");
+  incomingTimer.setName("incoming_timer");
+  incomingTimer.start(10);
+
+  outgoingTimer.setName("outgoing_timer");
+  outgoingTimer.start(timerInterval);
+
+  connect(&incomingTimer,SIGNAL(timeout()),
+                    this,SLOT  (processIncomingData()) );
+
+  connect(&outgoingTimer,SIGNAL(timeout()),
+                    this,SLOT  (send()) );
+
+  connect(&unlockTimer,SIGNAL(timeout()),
+                  this,SLOT  (unlockSending()) );
+
+  connect(&outputFilter,SIGNAL (openQuery(const QString&,const QString&)),
+                   this,SLOT   (addQuery(const QString&,const QString&)) );
+  connect(&outputFilter,SIGNAL (requestDccSend()),
+                   this,SLOT   (requestDccSend()) );
+  connect(&outputFilter,SIGNAL (requestDccSend(const QString&)),
+                   this,SLOT   (requestDccSend(const QString&)) );
+  connect(&outputFilter, SIGNAL(multiServerCommand(const QString&, const QString&)),
+    this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
+
+  connect(&notifyTimer,SIGNAL(timeout()),
+                  this,SLOT  (notifyTimeout()) );
+  connect(&notifyCheckTimer,SIGNAL(timeout()),
+                  this,SLOT  (notifyCheckTimeout()) );
+
+  connect(&inputFilter,SIGNAL(welcome()),
+                  this,SLOT  (connectionEstablished()) );
+  connect(&inputFilter,SIGNAL(notifyResponse(const QString&)),
+                  this,SLOT  (notifyResponse(const QString&)) );
+  connect(&inputFilter,SIGNAL(addDccGet(const QString&, const QStringList&)),
+                  this,SLOT  (addDccGet(const QString&, const QStringList&)) );
+  connect(&inputFilter,SIGNAL(resumeDccGetTransfer(const QString&, const QStringList&)),
+                  this,SLOT  (resumeDccGetTransfer(const QString&, const QStringList&)) );
+  connect(&inputFilter,SIGNAL(resumeDccSendTransfer(const QString&, const QStringList&)),
+                  this,SLOT  (resumeDccSendTransfer(const QString&, const QStringList&)) );
+  connect(&inputFilter,SIGNAL(userhost(const QString&,const QString&,bool,bool)),
+                  this,SLOT  (userhost(const QString&,const QString&,bool,bool)) );
+  connect(&inputFilter,SIGNAL(topicAuthor(const QString&,const QString&)),
+                  this,SLOT  (setTopicAuthor(const QString&,const QString&)) );
+  connect(&inputFilter,SIGNAL(addChannelListPanel()),
+                  this,SLOT  (addChannelListPanel()) );
+  connect(&inputFilter,SIGNAL(invitation(const QString&,const QString&)),
+                  this,SLOT  (invitation(const QString&,const QString&)) );
+
+  connect(&inputFilter,SIGNAL (away()),this,SLOT (away()) );
+  connect(&inputFilter,SIGNAL (unAway()),this,SLOT (unAway()) );
+  connect(&inputFilter,SIGNAL (addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)),
+         getMainWindow(),SLOT (addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)) );
+
+  connect(this,SIGNAL(serverLag(Server*,int)),getMainWindow(),SLOT(updateLag(Server*,int)) );
+  connect(this,SIGNAL(tooLongLag(Server*,int)),getMainWindow(),SLOT(tooLongLag(Server*,int)) );
+  connect(this,SIGNAL(resetLag()),getMainWindow(),SLOT(resetLag()) );
+  connect(this,SIGNAL(addDccPanel()),getMainWindow(),SLOT(addDccPanel()) );
+  connect(this,SIGNAL(addKonsolePanel()),getMainWindow(),SLOT(addKonsolePanel()) );
+
+  connect(&serverSocket,SIGNAL (connectionSuccess())  ,this,SLOT (ircServerConnectionSuccess()) );
+  connect(&serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
+  connect(&serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
+  connect(&serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
+  connect(&serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
+
+  connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
+  connect(getMainWindow(),SIGNAL(openPrefsDialog()),KonversationApplication::kApplication(),SLOT(openPrefsDialog()));
+
+  connect(this,SIGNAL (serverOnline(bool)),statusView,SLOT (serverOnline(bool)) );
+
+  emit serverOnline(false);
+}
+
 Server::~Server()
 {
 

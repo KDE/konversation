@@ -1,9 +1,10 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="10">
+<kpartgui name="konversation" version="11">
 
   <MenuBar>
     <Menu name="file">
       <Action name="open_server_list" />
+      <Action name="quick_connect_dialog" />
     </Menu>
     <Menu name="actions">
       <Text>&amp;Actions</Text>

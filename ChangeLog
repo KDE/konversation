@@ -1,4 +1,5 @@
 Changes from 0.13 to 0.14
+- Added QuickConnect dialog by Michael Goettsche. (Thanks once again)
 - Properly receive a logout/shutdown request and terminate konversation,
   instead of minimizing to the systray.
 - Make OSD switchable on/off via DCOP. Thanks to Michael Goettsche! (BR 75870)

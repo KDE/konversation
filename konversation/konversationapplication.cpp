@@ -27,6 +27,7 @@
 #include "server.h"
 #include "serverentry.h"
 #include "konversationsound.h"
+#include "quickconnectdialog.h"
 
 // include static variables
 Preferences KonversationApplication::preferences;
@@ -36,6 +37,7 @@ KonversationApplication::KonversationApplication()
 {
   // make sure all vars are initialized properly
   prefsDialog=0;
+  quickConnectDialog=0;
 
   // initialize OSD display here, so we can read the preferences properly
   osd = new OSDWidget( "Konversation" );
@@ -56,6 +58,7 @@ KonversationApplication::KonversationApplication()
   mainWindow=new KonversationMainWindow();
   connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
   connect(mainWindow,SIGNAL (openPrefsDialog(Preferences::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
+  connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
   connect(&preferences,SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
 
   // handle autoconnect on startup
@@ -203,6 +206,26 @@ void KonversationApplication::connectToAnotherServer(int id)
     this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
 
   serverList.append(newServer);
+}
+
+void KonversationApplication::quickConnectToServer(const QString& hostName, const QString& port, const QString& nick, const QString& password)
+{
+  //used for the quick connect dialog and maybe later for the /server command
+  
+  Server* newServer = new Server(mainWindow, hostName, port, nick, password);
+  
+  connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
+  connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
+
+  connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&,bool)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&,bool)) );
+  
+  connect(newServer,SIGNAL (deleted(Server*)),this,SLOT (removeServer(Server*)) );
+  
+  connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
+    this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
+
+  serverList.append(newServer);
+  
 }
 
 Server* KonversationApplication::getServerByName(const QString& name)
@@ -897,6 +920,14 @@ void KonversationApplication::openPrefsDialog(Preferences::Pages page)
 {
   openPrefsDialog();
   prefsDialog->openPage(page);
+}
+
+void KonversationApplication::openQuickConnectDialog()
+{
+	quickConnectDialog = new QuickConnectDialog(mainWindow);
+	connect(quickConnectDialog, SIGNAL(connectClicked(const QString&, const QString&, const QString&, const QString&)), 
+		      this, SLOT(quickConnectToServer(const QString&, const QString&, const QString&, const QString&)));
+	quickConnectDialog->show();
 }
 
 void KonversationApplication::syncPrefs()

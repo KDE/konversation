@@ -93,6 +93,7 @@ class Server : public QObject
 
   public:
     Server(KonversationMainWindow* mainWindow,int number);
+    Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,const QString& nick,const QString& password);
     ~Server();
 
     QString getServerName() const;

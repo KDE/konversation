@@ -29,6 +29,7 @@ class KonversationMainWindow;
 class KonvDCOP;
 class Server;
 class PrefsDialog;
+class QuickConnectDialog;
 
 namespace Konversation {
   class Sound;
@@ -70,6 +71,8 @@ class KonversationApplication : public KApplication
   public slots:
     void connectToServer(int number);
     void connectToAnotherServer(int number);
+    void quickConnectToServer(const QString& hostName, const QString& port = "6667", 
+    						const QString& nick = KonversationApplication::preferences.getNickname(0), const QString& password="");
     void readOptions();
     void saveOptions(bool updateGUI=true);
     void quitKonversation();
@@ -84,6 +87,7 @@ class KonversationApplication : public KApplication
   protected slots:
     void openPrefsDialog();
     void openPrefsDialog(Preferences::Pages page);
+    void openQuickConnectDialog();
     void removeServer(Server* server);
     void dcopSay(const QString& server,const QString& target,const QString& command);
     void dcopInfo(const QString& string);
@@ -99,6 +103,8 @@ class KonversationApplication : public KApplication
     KonvIdentDCOP* identDCOP;
     KonversationMainWindow* mainWindow;
     Konversation::Sound* m_sound;
+		QuickConnectDialog* quickConnectDialog;
+
 };
 
 #endif

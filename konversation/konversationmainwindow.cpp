@@ -101,6 +101,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
   new KAction(i18n("Server List"), 0, 0, this, SLOT(openServerList()), actionCollection(), "open_server_list");
+  new KAction(i18n("Quick Connect"), 0, 0, this, SLOT(openQuickConnectDialog()), actionCollection(), "quick_connect_dialog");
 
   new KAction(i18n("Watched Nicks Online"), 0, 0, this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
   new KAction(i18n("Open Logfile"), 0, 0, this, SLOT(openLogfile()), actionCollection(), "open_logfile");
@@ -628,6 +629,11 @@ void KonversationMainWindow::closeNicksOnlinePanel()
 void KonversationMainWindow::openServerList()
 {
   emit openPrefsDialog(Preferences::ServerListPage);
+}
+
+void KonversationMainWindow::openQuickConnectDialog()
+{
+	emit showQuickConnectDialog();
 }
 
 void KonversationMainWindow::openNotify()

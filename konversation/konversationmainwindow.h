@@ -71,6 +71,7 @@ class KonversationMainWindow : public KMainWindow
     void startNotifyTimer(int msec);
     void openPrefsDialog();
     void openPrefsDialog(Preferences::Pages page);
+    void showQuickConnectDialog();
     void quitServer();
     void nicksNowOnline(const QString& serverName,const QStringList& list,bool changed);
     void closeTab(int id);
@@ -96,6 +97,7 @@ class KonversationMainWindow : public KMainWindow
     void openPreferences();
     void openKeyBindings();
     void openServerList();
+    void openQuickConnectDialog();
     void openChannelList();
     void openNotify();
     void openLogfile();
@@ -172,6 +174,7 @@ class KonversationMainWindow : public KMainWindow
     TrayIcon* tray;
     
     bool m_closeApp;
+
 };
 
 #endif
