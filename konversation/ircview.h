@@ -38,6 +38,8 @@ class IRCView : public KTextBrowser
     void setViewBackground(const QString& color,const QString& pixmapName);
     void setServer(Server* server);
 
+    void updateStyleSheet();
+
     QPopupMenu* getPopup();
     enum PopupIDs
     {

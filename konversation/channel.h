@@ -76,6 +76,7 @@ class Channel : public ChatWindow
     void updateModeWidgets(char mode, bool plus, const QString &parameter);
     void updateQuickButtons(QStringList newButtonList);
     void updateFonts();
+    void updateStyleSheet();
 
     virtual QString getTextInLine();
     virtual void closeYourself();

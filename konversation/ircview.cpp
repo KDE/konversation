@@ -69,20 +69,9 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 
   installEventFilter(this);
 
-  // set style sheet for <p> to define paragraph spacing
+  // set basic style sheet for <p> to make paragraph spacing possible
   QStyleSheet* sheet=new QStyleSheet(this,"ircview_style_sheet");
-
-  int paragraphSpacing;
-  if(KonversationApplication::preferences.getUseParagraphSpacing())
-    paragraphSpacing=KonversationApplication::preferences.getParagraphSpacing();
-  else
-    paragraphSpacing=0;
-
-  QStyleSheetItem* style=new QStyleSheetItem(sheet,"p");
-  style->setDisplayMode(QStyleSheetItem::DisplayBlock);
-  style->setMargin(QStyleSheetItem::MarginVertical,paragraphSpacing);
-  style->setSelfNesting(false);
-
+  new QStyleSheetItem(sheet,"p");
   setStyleSheet(sheet);
 
   setServer(newServer);
@@ -106,6 +95,34 @@ IRCView::~IRCView()
   kdDebug() << "IRCView::~IRCView()" << endl;
 
   if(popup) delete popup;
+}
+
+void IRCView::updateStyleSheet()
+{
+  // set style sheet for <p> to define paragraph spacing
+  QStyleSheet* sheet=styleSheet();
+  if(sheet==0)
+  {
+    kdDebug() << "IRCView::updateStyleSheet(): sheet==0!" << endl;
+    return;
+  }
+
+  int paragraphSpacing;
+  if(KonversationApplication::preferences.getUseParagraphSpacing())
+    paragraphSpacing=KonversationApplication::preferences.getParagraphSpacing();
+  else
+    paragraphSpacing=0;
+
+  QStyleSheetItem* style=sheet->item("p");
+  if(sheet==0)
+  {
+    kdDebug() << "IRCView::updateStyleSheet(): style==0!" << endl;
+    return;
+  }
+
+  style->setDisplayMode(QStyleSheetItem::DisplayBlock);
+  style->setMargin(QStyleSheetItem::MarginVertical,paragraphSpacing);
+  style->setSelfNesting(false);
 }
 
 void IRCView::setViewBackground(const QString& color,const QString& pixmapName)

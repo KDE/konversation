@@ -1415,6 +1415,11 @@ void Channel::updateFonts()
   nicknameListView->setFont(KonversationApplication::preferences.getListFont());
 }
 
+void Channel::updateStyleSheet()
+{
+  getTextView()->updateStyleSheet();
+}
+
 void Channel::openNickChangeDialog()
 {
   if(!nickChangeDialog)

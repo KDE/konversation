@@ -1123,6 +1123,7 @@ void Server::updateFonts()
   while(channel)
   {
     channel->updateFonts();
+    channel->updateStyleSheet();
     channel=channelList.next();
   }
 
