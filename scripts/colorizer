@@ -9,7 +9,7 @@ my $PORT= shift;
 my $SERVER= shift;
 my $TARGET= shift;
 
-my $message;
+my $message = "";
 my $random;
 my $input;
 my @chars;
@@ -26,8 +26,6 @@ if( utf8::valid($input) ) {
 }
 
 @chars = split //, $input;
-
-$message = "";
 
 foreach (@chars) {
   # Rainbow colors. Code courtesy of boren
