@@ -332,7 +332,12 @@ void KonversationApplication::readOptions()
   preferences.setRawLog(config->readBoolEntry("RawLog",preferences.getRawLog()));
 
   // Custom CTCP Version Reply
-  preferences.setVersionReply(config->readEntry("VersionReply",preferences.getVersionReply()));
+  QString mv=config->readEntry("VersionReply");
+  // Check to see if its the old default version string. this string had been translated and stored :(
+  QRegExp r("Konversation 0\\.\\d* .* \\d* \\(C\\)2002-200[34].*");
+  if (r.exactMatch(mv))
+    mv=QString::null;
+  preferences.setVersionReply(mv);
 
   // Reconnection timeout
   preferences.setMaximumLagTime(config->readNumEntry("MaximumLag",preferences.getMaximumLagTime()));
@@ -830,7 +835,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("Beep",preferences.getBeep());
   config->writeEntry("RawLog",preferences.getRawLog());
 
-  config->writeEntry("VersionReply",preferences.getVersionReply());
+  config->writeEntry("VersionReply",preferences.getVersionReply(TRUE));
 
   config->writeEntry("MaximumLag",preferences.getMaximumLagTime());
 

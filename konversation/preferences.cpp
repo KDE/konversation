@@ -108,7 +108,7 @@ Preferences::Preferences()
   setBeep(false);
   setRawLog(false);
 
-  setVersionReply(QString("Konversation %1 Build %2 (C)2002-2004 by the Konversation team").arg(VERSION).arg(COMMIT));
+  setVersionReply(QString::null); //XXX is this really necessary?
   setDccPath(user.homeDir()+"/dccrecv");
   setDccAddPartner(false);
   setDccCreateFolder(false);
@@ -447,7 +447,17 @@ void Preferences::setRawLog(bool state) { rawLog=state; }
 bool Preferences::getRawLog() { return rawLog; }
 
 void    Preferences::setVersionReply(QString reply) { versionReply = reply; }
-QString Preferences::getVersionReply() { return versionReply; }
+
+/**
+  Get the version custom version response, or the default if none has been configured.
+  @param forRc If true, this request is going to be stored in the RC file so do not return the default reply.
+*/
+QString Preferences::getVersionReply(bool forRC) const
+{
+  if (!forRC && versionReply.isNull())
+    return QString("Konversation %1 Build %2 (C)2002-2004 by the Konversation team.").arg(VERSION).arg(COMMIT);
+  return versionReply;
+}
 
 int Preferences::getNotifyDelay() { return notifyDelay; }
 void Preferences::setNotifyDelay(int delay) { notifyDelay=delay; }
