@@ -1092,8 +1092,10 @@ void Channel::adjustNicks(int value)
 
 void Channel::adjustOps(int value)
 {
-  ops+=value;
-  emitUpdateInfo();
+  if(ops == 0 && value < 0) {
+    ops+=value;
+    emitUpdateInfo();
+  }
 }
 
 void Channel::emitUpdateInfo()
