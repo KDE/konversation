@@ -491,7 +491,7 @@ void Channel::popupCommand(int id)
       raw=true;
       break;
     case Konversation::Version:
-      pattern="PRIVMSG %u :\x01KONVI_VERSION\x01";
+      pattern="PRIVMSG %u :\x01VERSION\x01";
       raw=true;
       break;
     case Konversation::Whois:
