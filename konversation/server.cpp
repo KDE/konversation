@@ -2114,21 +2114,38 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
   if (doSignal) emit channelMembersChanged(this, channelName, joined, true, nickname);
 }
 
-QString Server::getNotifyString() {
-  if( KonversationApplication::preferences.getNotifyStringByGroup(getServerGroup())
-    != QString::null ) 
-    return KonversationApplication::preferences.getNotifyStringByGroup(getServerGroup())
-      + " " + Konversation::Addressbook::self()->allContactsNicks().join(" ");
-  else
-    return Konversation::Addressbook::self()->allContactsNicks().join(" ");
+QStringList Server::getNotifyStringList() {
+  QString groupName = getServerGroup();
+  QStringList notifies = KonversationApplication::preferences.getNotifyListByGroup(groupName);
+  // FIXME: Since this method is called frequently, we need a better way to get
+  // the list of nicks associated with this server group.
+  QStringList allContacts = Konversation::Addressbook::self()->allContactsNicks();
+  for (unsigned int index=0; index<allContacts.count(); index++)
+  {
+    // Separate nickname from server or group.
+    QStringList nicknameAndGroup = QStringList::split(QChar(0xE120), allContacts[index]);
+    // Only add nick in addressbook if in the same group as server.
+    if (nicknameAndGroup.count() == 2)
+    {
+      if (nicknameAndGroup[1] == groupName)
+      {
+        QString nickname = nicknameAndGroup[0];
+        // If nickname not already in the list, add it.
+        if (!notifies.contains(nickname)) notifies.append(nickname);
+      }
+    }
+  }
+  return notifies;
 }
+
+QString Server::getNotifyString() { return getNotifyStringList().join(" "); }
 
 /**
 * Return true if the given nickname is on the watch list.
 */
 bool Server::isWatchedNick(const QString& nickname)
 {
-    QStringList watchList = QStringList::split(" ", getNotifyString());
+    QStringList watchList = getNotifyStringList();
     return (watchList.contains(nickname));
 }
 

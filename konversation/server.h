@@ -239,6 +239,7 @@ class Server : public QObject
     /**
     * Returns a list of all the nicks on the watch list plus nicks in the addressbook.
     */
+    QStringList getNotifyStringList();
     QString getNotifyString();
     /**
     * Return true if the given nickname is on the watch list.
