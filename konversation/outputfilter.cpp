@@ -125,6 +125,11 @@ namespace Konversation {
         else if(line.startsWith(commandChar+commandChar) && !destination.isEmpty())
         {
             result.toServer = "PRIVMSG " + name + " :" + inputLine.mid(1);
+
+            for(int i = 508; i < result.toServer.length(); i += 509) {
+                result.toServer.insert(i, "\nPRIVMSG " + destination + " :");
+            }
+
             result.output = inputLine.mid(1);
             result.type = Message;
         }
@@ -196,6 +201,11 @@ namespace Konversation {
         else if(!destination.isEmpty())
         {
             result.toServer = "PRIVMSG " + destination + " :" + inputLine;
+
+            for(int i = 508; i < result.toServer.length(); i += 509) {
+                result.toServer.insert(i, "\nPRIVMSG " + destination + " :");
+            }
+
             result.output = inputLine;
             result.type = Message;
         }
