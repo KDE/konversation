@@ -180,7 +180,7 @@ void NickListViewItem::paintCell(QPainter * p, const QColorGroup & cg, int colum
 
   if(nickInfo->isAway())
   {
-    cg2 = kapp->palette().disabled();
+    cg2.setColor(QColorGroup::Text, kapp->palette().disabled().text());
   }
 
   QListViewItem::paintCell(p,cg2,column,width,align);
