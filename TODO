@@ -76,3 +76,4 @@ DISCUSSING:
 - Make Kick and Kill-Reasons available via popup so they don't disappear with the closing tab
 - Watched nicks editor should sort alphabetically, manual sorting makes no sense there
 - Watched nicks panel should have a "last seen" column so you can sort them
+- On connect konversation should check if the identity was set up correctly to satisfy USER command
