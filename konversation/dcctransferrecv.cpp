@@ -121,11 +121,9 @@ void DccTransferRecv::start()  // public slot
     m_partialFileSize = partialFileInfo.size();
   }
   
-  m_saveToFileExists = m_saveToFileExists && 
-                       0 < m_saveToFileSize && 
-                       m_saveToFileSize < m_fileSize;
   m_partialFileExists = m_partialFileExists && 
-                        0 < m_partialFileSize;
+                        0 < m_partialFileSize &&
+                        m_partialFileSize < m_fileSize;
 
   if( !m_saveToFileExists && m_partialFileExists && KonversationApplication::preferences.getDccAutoResume() )
     requestResume();
@@ -176,13 +174,13 @@ void DccTransferRecv::cleanUp()
   
   stopConnectionTimer();
   stopAutoUpdateView();
-  if(m_recvSocket)
+  if( m_recvSocket )
   {
     m_recvSocket->close();
     m_recvSocket->deleteLater();
     m_recvSocket = 0;
   }
-  if(m_writeCacheHandler)
+  if( m_writeCacheHandler )
   {
     m_writeCacheHandler->closeNow();
     m_writeCacheHandler->deleteLater();
@@ -198,11 +196,16 @@ void DccTransferRecv::requestResume()
   setStatus( WaitingRemote, i18n("Requesting to accept resuming") );
   
   // Rollback for Resume
+  // disabled temporarily
+  // hey, can we rallback a file via KIO?
+  /*
   KIO::filesize_t rb = KonversationApplication::preferences.getDccRollback();
   if( m_fileSize < rb )
     m_transferringPosition = 0;
   else
-    m_transferringPosition = m_fileSize - rb;
+    m_transferringPosition = m_partialFileSize - rb;
+  */
+  m_transferringPosition = m_partialFileSize;
   
   updateView();
   
@@ -216,7 +219,7 @@ void DccTransferRecv::connectToSender()
   kdDebug() << "DccTransferRecv::connectToSender()" << endl;
   
   // prepare local KIO
-  KIO::TransferJob* transferJob = KIO::put( m_fileURL, -1, false, false, false );
+  KIO::TransferJob* transferJob = KIO::put( m_fileURL, -1, !m_resumed, m_resumed, false );
   
   m_writeCacheHandler = new DccTransferRecvWriteCacheHandler( transferJob );
   
@@ -477,6 +480,7 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
     if ( !m_cacheList.isEmpty() )
       data = *( popCache() );  //once we write everything in cache, the file is complete.
                                //This function will be called once more after this last data is written.
+                               //FIXME: should I delete the instance from popCache() here?
     else
     {
       //finally, no data left to write or read.
