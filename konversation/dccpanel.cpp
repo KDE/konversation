@@ -64,6 +64,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   m_listView->setColumnText(Column::Position,      i18n("Position"));
   m_listView->setColumnText(Column::TimeRemaining, i18n("Remain"));
   m_listView->setColumnText(Column::CPS,           i18n("Speed"));
+  m_listView->setColumnText(Column::SenderAddress, i18n("Sender Address"));
   
   m_listView->setColumnWidth(Column::OfferDate,      70);
   m_listView->setColumnWidth(Column::Status,         80);

@@ -46,6 +46,7 @@ class DccPanel : public ChatWindow
           Position,
           TimeRemaining,
           CPS,
+          SenderAddress,
           COUNT
         };
     };

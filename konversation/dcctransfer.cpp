@@ -108,6 +108,7 @@ void DccTransfer::updateView()  // slot, protected
   setText( DccPanel::Column::Position,      getPositionPrettyText() );
   setText( DccPanel::Column::TimeRemaining, getTimeRemainingPrettyText() );
   setText( DccPanel::Column::CPS,           getCPSPrettyText() );
+  setText( DccPanel::Column::SenderAddress, getSenderAddressPrettyText() );
   
   if( m_fileSize )
     m_progressBar->setProgress( getProgress() );
@@ -396,6 +397,19 @@ unsigned long DccTransfer::getCPS() const
     elapsed = 1;
   // prevent division by zero
   return elapsed ? ( m_transferringPosition - m_transferStartPosition ) / elapsed : 0;
+}
+
+QString DccTransfer::getSenderAddressPrettyText() const
+{
+  if( m_dccType == Send && ( !m_ownIp.isEmpty() || m_ownPort.isEmpty() ) )
+    return QString( "%1:%2" )
+             .arg( !m_ownIp.isEmpty() ? m_ownIp : QString( "?" ) )
+             .arg( !m_ownPort.isEmpty() ? m_ownPort : QString( "?" ) );
+  if( m_dccType == Receive && ( !m_partnerIp.isEmpty() || m_partnerPort.isEmpty() ) )
+    return QString( "%1:%2" )
+             .arg( !m_partnerIp.isEmpty() ? m_partnerIp : QString( "?" ) )
+             .arg( !m_partnerPort.isEmpty() ? m_partnerPort : QString( "?" ) );
+  return QString::null;
 }
 
 //FIXME: IPv6 support

@@ -154,16 +154,17 @@ class DccTransfer : public QObject, public KListViewItem
     void stopAutoUpdateView();    
     
     // called from updateView()
-    QString         getTypeText()                                   const;
-    QPixmap         getTypeIcon()                                   const;
-    QPixmap         getStatusIcon()                                 const;
-    QString         getStatusText()                                 const;
-    QString         getFileSizePrettyText()                         const;
-    int             getProgress()                                   const;
-    QString         getPositionPrettyText( bool detailed = false )  const;
-    QString         getTimeRemainingPrettyText()                    const;
-    QString         getCPSPrettyText()                              const;
-    unsigned long   getCPS()                                        const;
+    QString         getTypeText()                                  const;
+    QPixmap         getTypeIcon()                                  const;
+    QPixmap         getStatusIcon()                                const;
+    QString         getStatusText()                                const;
+    QString         getFileSizePrettyText()                        const;
+    int             getProgress()                                  const;
+    QString         getPositionPrettyText( bool detailed = false ) const;
+    QString         getTimeRemainingPrettyText()                   const;
+    QString         getCPSPrettyText()                             const;
+    unsigned long   getCPS()                                       const;
+    QString         getSenderAddressPrettyText()                   const;
     
     QDateTime m_timeOffer;
     QDateTime m_timeTransferStarted;
