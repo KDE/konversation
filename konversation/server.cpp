@@ -2425,17 +2425,19 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
     kdDebug() << "server::renameNick called for nickname '" << nickname << "' to '" << newNick << "' but getNickInfo('" << nickname << "') returned no results." << endl;
   }
   else
-    renameNickInfo(nickInfo, newNick);
-  //The rest of the code below allows the channels to echo to the user to tell them that the nick has changed.
-
-  // Rename the nick in every channel they are in
-  Channel* channel=channelList.first();
-  while(channel)
   {
-    // All we do is notify that the nick has been renamed.. we haven't actually renamed it yet
-    // Note that NickPanel has already updated, so pass new nick to getNickByName.
-    if(channel->getNickByName(newNick)) channel->nickRenamed(nickname, *nickInfo);
-    channel=channelList.next();
+    renameNickInfo(nickInfo, newNick);
+    //The rest of the code below allows the channels to echo to the user to tell them that the nick has changed.
+
+    // Rename the nick in every channel they are in
+    Channel* channel=channelList.first();
+    while(channel)
+    {
+      // All we do is notify that the nick has been renamed.. we haven't actually renamed it yet
+      // Note that NickPanel has already updated, so pass new nick to getNickByName.
+      if(channel->getNickByName(newNick)) channel->nickRenamed(nickname, *nickInfo);
+      channel=channelList.next();
+    }
   }
   // If this was our own nickchange, tell our server object about it
   if(nickname==getNickname()) setNickname(newNick);
