@@ -18,9 +18,6 @@ the Free Software Foundation; either version 2 of the License, or
             <height>502</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>Konversation::ChannelDialog</string>
-    </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -149,23 +146,6 @@ the Free Software Foundation; either version 2 of the License, or
                             <string>&amp;Moderated channel, only people with voice can write to the channel</string>
                         </property>
                     </widget>
-                    <spacer row="6" column="0">
-                        <property name="name">
-                            <cstring>spacer8</cstring>
-                        </property>
-                        <property name="orientation">
-                            <enum>Vertical</enum>
-                        </property>
-                        <property name="sizeType">
-                            <enum>Expanding</enum>
-                        </property>
-                        <property name="sizeHint">
-                            <size>
-                                <width>20</width>
-                                <height>141</height>
-                            </size>
-                        </property>
-                    </spacer>
                     <widget class="QCheckBox" row="2" column="0">
                         <property name="name">
                             <cstring>secretModeChBox</cstring>
@@ -174,9 +154,54 @@ the Free Software Foundation; either version 2 of the License, or
                             <string>Secret channel, the channel isn't listed in the channel list</string>
                         </property>
                     </widget>
+                    <widget class="KListView" row="6" column="0">
+                        <column>
+                            <property name="text">
+                                <string>Mode</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>true</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property name="text">
+                                <string>Attribute</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>true</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <property name="name">
+                            <cstring>otherModesList</cstring>
+                        </property>
+                        <property name="selectionMode" stdset="0">
+                            <enum>Single</enum>
+                        </property>
+                        <property name="allColumnsShowFocus">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizeMode">
+                            <enum>LastColumn</enum>
+                        </property>
+                        <property name="defaultRenameAction">
+                            <enum>Accept</enum>
+                        </property>
+                        <property name="itemsMovable">
+                            <bool>false</bool>
+                        </property>
+                        <property name="itemsRenameable">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
                     <widget class="QLayoutWidget" row="5" column="0">
                         <property name="name">
-                            <cstring>layout3</cstring>
+                            <cstring>layout11</cstring>
                         </property>
                         <grid>
                             <property name="name">
@@ -190,12 +215,15 @@ the Free Software Foundation; either version 2 of the License, or
                                     <string>Channel &amp;key:</string>
                                 </property>
                             </widget>
-                            <widget class="KLineEdit" row="1" column="1">
+                            <widget class="KIntNumInput" row="0" column="1">
                                 <property name="name">
-                                    <cstring>keyModeEdit</cstring>
+                                    <cstring>userLimitEdit</cstring>
                                 </property>
                                 <property name="enabled">
                                     <bool>false</bool>
+                                </property>
+                                <property name="minValue">
+                                    <number>0</number>
                                 </property>
                             </widget>
                             <widget class="QCheckBox" row="0" column="0">
@@ -206,9 +234,26 @@ the Free Software Foundation; either version 2 of the License, or
                                     <string>User &amp;limit:</string>
                                 </property>
                             </widget>
-                            <widget class="KLineEdit" row="0" column="1">
+                            <spacer row="0" column="2">
                                 <property name="name">
-                                    <cstring>userLimitEdit</cstring>
+                                    <cstring>spacer10</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>211</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <widget class="KLineEdit" row="1" column="1" rowspan="1" colspan="2">
+                                <property name="name">
+                                    <cstring>keyModeEdit</cstring>
                                 </property>
                                 <property name="enabled">
                                     <bool>false</bool>
@@ -223,15 +268,15 @@ the Free Software Foundation; either version 2 of the License, or
 </widget>
 <connections>
     <connection>
-        <sender>userLimitChBox</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>userLimitEdit</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
         <sender>keyModeChBox</sender>
         <signal>toggled(bool)</signal>
         <receiver>keyModeEdit</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>userLimitChBox</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>userLimitEdit</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>
@@ -240,7 +285,9 @@ the Free Software Foundation; either version 2 of the License, or
 <includehints>
     <includehint>klistview.h</includehint>
     <includehint>ktextedit.h</includehint>
-    <includehint>klineedit.h</includehint>
+    <includehint>klistview.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
     <includehint>klineedit.h</includehint>
 </includehints>
 </UI>

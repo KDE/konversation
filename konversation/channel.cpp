@@ -408,7 +408,6 @@ void Channel::showOptionsDialog()
   m_optionsDialog->setTopicHistory(m_topicHistory);
   m_optionsDialog->setAllowedChannelModes(getServer()->allowedChannelModes());
   m_optionsDialog->setModes(m_modeList);
-  kdDebug() << "MODES: " << m_modeList << endl;
   m_optionsDialog->show();
 }
 
