@@ -1,0 +1,98 @@
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<class>FontAppearance_Config</class>
+<comment>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+</comment>
+<author>Copyright (C) 2005 Peter Simonsson</author>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>FontAppearance_Config</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>414</width>
+            <height>148</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string></string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
+        <widget class="QLabel" row="1" column="0">
+            <property name="name">
+                <cstring>textLabel3</cstring>
+            </property>
+            <property name="text">
+                <string>Nickname list:</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>kcfg_UseBoldNicks</cstring>
+            </property>
+            <property name="text">
+                <string>Make nicknames &amp;bold</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="0" column="0">
+            <property name="name">
+                <cstring>textLabel2</cstring>
+            </property>
+            <property name="text">
+                <string>Chat text:</string>
+            </property>
+        </widget>
+        <widget class="KFontRequester" row="1" column="1">
+            <property name="name">
+                <cstring>kcfg_ListFont</cstring>
+            </property>
+        </widget>
+        <widget class="KFontRequester" row="0" column="1">
+            <property name="name">
+                <cstring>kcfg_TextFont</cstring>
+            </property>
+        </widget>
+        <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>kcfg_FixedMOTD</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Use a fixed font for MOTD messages</string>
+            </property>
+        </widget>
+        <spacer row="4" column="1">
+            <property name="name">
+                <cstring>spacer89</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>161</height>
+                </size>
+            </property>
+        </spacer>
+    </grid>
+</widget>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<includehints>
+    <includehint>kfontrequester.h</includehint>
+    <includehint>kfontrequester.h</includehint>
+</includehints>
+</UI>

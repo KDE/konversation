@@ -30,6 +30,7 @@
 #include "prefspagechatwinappearance.h"
 #include "prefspagecolorsappearance.h"
 #include "prefspageconnectionbehavior.h"
+#include "prefspagefontsappearance.h"
 
 PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
              KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
@@ -43,6 +44,7 @@ PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
 
   setFolderIcon(QStringList::split(',', i18n("Appearance")), SmallIcon("looknfeel"));
   chatWinAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("window_new"));
+  QWidget* fontsAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Fonts")), QString::null, SmallIcon("fonts"));
   QWidget* colorsAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Colors")),
     QString::null, SmallIcon("colorize"));
   QWidget* themesPane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Themes")),
@@ -82,6 +84,7 @@ PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
 
   // Add pages to preferences dialog
   PrefsPageChatWinAppearance* chatWinAppearancePage = new PrefsPageChatWinAppearance(chatWinAppearancePane, preferences);
+  PrefsPageFontsAppearance* fontsAppearancePage = new PrefsPageFontsAppearance(fontsAppearancePane, preferences);
   PrefsPageColorsAppearance* colorsAppearancePage = new PrefsPageColorsAppearance(colorsAppearancePane, preferences);
 
   PrefsPageBehaviour* generalBehaviorPage = new PrefsPageBehaviour(generalBehaviorPane, preferences);
@@ -111,6 +114,7 @@ PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
 
   // connect standard signals and slots
   connect(this, SIGNAL(applyPreferences()), chatWinAppearancePage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), fontsAppearancePage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), colorsAppearancePage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), themesPage, SLOT(applyPreferences()));
 

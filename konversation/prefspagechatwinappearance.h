@@ -7,7 +7,7 @@
 
 /*
   copyright: (C) 2002 by Dario Abatianni
-             (C) 2004 by Peter Simonsson
+             (C) 2004-1005 by Peter Simonsson
 */
 #ifndef PREFSPAGECHATWINAPPERANCE_H
 #define PREFSPAGECHATWINAPPERANCE_H
@@ -22,7 +22,7 @@ class PrefsPageChatWinAppearance : public ChatWindowAppearance_Config
   Q_OBJECT
   public:
     PrefsPageChatWinAppearance(QWidget* newParent,Preferences* newPreferences);
-  
+
   public slots:
     void applyPreferences();
 
@@ -30,8 +30,8 @@ class PrefsPageChatWinAppearance : public ChatWindowAppearance_Config
     void setBackgroundImageConfig(bool state);
     void saveBackgroundImage(const QString&);
 
-protected:
-		Preferences* preferences;
+  protected:
+    Preferences* preferences;
 };
 
 #endif

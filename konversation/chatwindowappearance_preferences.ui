@@ -16,61 +16,14 @@ the Free Software Foundation; either version 2 of the License, or
             <height>526</height>
         </rect>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>groupBox3</cstring>
-            </property>
-            <property name="title">
-                <string>Fo&amp;nts</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_FixedMOTD</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Use a fixed font for MOTD messages</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>textLabel2</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Chat text:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>textLabel3</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Nickname list:</string>
-                    </property>
-                </widget>
-                <widget class="KFontRequester" row="1" column="1">
-                    <property name="name">
-                        <cstring>kcfg_ListFont</cstring>
-                    </property>
-                </widget>
-                <widget class="KFontRequester" row="0" column="1">
-                    <property name="name">
-                        <cstring>kcfg_TextFont</cstring>
-                    </property>
-                </widget>
-            </grid>
-        </widget>
-        <widget class="QGroupBox">
+        <widget class="QGroupBox" row="0" column="0">
             <property name="name">
                 <cstring>kcfg_Timestamping</cstring>
             </property>
@@ -110,76 +63,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </grid>
         </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>groupBox2</cstring>
-            </property>
-            <property name="title">
-                <string>&amp;Layout</string>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_ShowTopic</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Show channel topic</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_ShowModeButtons</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show channel &amp;mode buttons</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_ShowQuickButtons</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show &amp;quick buttons</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_AutoUserhost</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show hostmasks &amp;in nickname list</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_ShowNicknameBox</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show nickname bo&amp;x in channel and status window</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_UseBoldNicks</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Use &amp;bold nicknames</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_UseLiteralModes</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Use &amp;raw modes for mode changes</string>
-                    </property>
-                </widget>
-            </vbox>
-        </widget>
-        <widget class="QGroupBox">
+        <widget class="QGroupBox" row="2" column="0">
             <property name="name">
                 <cstring>kcfg_ShowBackgroundImage</cstring>
             </property>
@@ -211,12 +95,87 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </hbox>
         </widget>
-    </vbox>
+        <widget class="QGroupBox" row="1" column="0">
+            <property name="name">
+                <cstring>groupBox2</cstring>
+            </property>
+            <property name="title">
+                <string>&amp;Layout</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>kcfg_ShowTopic</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Show channel topic</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="1" column="0">
+                    <property name="name">
+                        <cstring>kcfg_ShowModeButtons</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show channel &amp;mode buttons</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="2" column="0">
+                    <property name="name">
+                        <cstring>kcfg_ShowQuickButtons</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show &amp;quick buttons</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="4" column="0">
+                    <property name="name">
+                        <cstring>kcfg_ShowNicknameBox</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show nickname bo&amp;x in channel and status window</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="3" column="0">
+                    <property name="name">
+                        <cstring>kcfg_AutoUserhost</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show hostmasks &amp;in nickname list</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="5" column="0">
+                    <property name="name">
+                        <cstring>kcfg_UseLiteralModes</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use &amp;raw modes for mode changes</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <spacer row="3" column="0">
+            <property name="name">
+                <cstring>spacer90</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>61</height>
+                </size>
+            </property>
+        </spacer>
+    </grid>
 </widget>
 <tabstops>
-    <tabstop>kcfg_TextFont</tabstop>
-    <tabstop>kcfg_ListFont</tabstop>
-    <tabstop>kcfg_FixedMOTD</tabstop>
     <tabstop>kcfg_ShowDate</tabstop>
     <tabstop>kcfg_TimestampFormat</tabstop>
     <tabstop>kcfg_ShowTopic</tabstop>
@@ -228,8 +187,6 @@ the Free Software Foundation; either version 2 of the License, or
 </tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>kfontrequester.h</includehint>
-    <includehint>kfontrequester.h</includehint>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>

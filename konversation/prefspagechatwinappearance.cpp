@@ -7,7 +7,7 @@
 
 /*
   copyright: (C) 2002 by Dario Abatianni
-             (C) 2004 by Peter Simonsson
+             (C) 2004-2005 by Peter Simonsson
 */
 #include "prefspagechatwinappearance.h"
 
@@ -16,6 +16,7 @@
 #include <qcombobox.h>
 #include <qgroupbox.h>
 #include <qcheckbox.h>
+
 #include <klocale.h>
 #include <kfontrequester.h>
 #include <kurlrequester.h>
@@ -26,10 +27,6 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QWidget* newParent,Prefer
  : ChatWindowAppearance_Config(newParent)
 {
   preferences = newPreferences;
-
-  kcfg_TextFont->setFont(preferences->getTextFont());
-  kcfg_ListFont->setFont(preferences->getListFont());
-  kcfg_FixedMOTD->setChecked(preferences->getFixedMOTD());
 
   kcfg_Timestamping->setChecked(preferences->getTimestamping());
   kcfg_ShowDate->setChecked(preferences->getShowDate());
@@ -53,7 +50,6 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QWidget* newParent,Prefer
   kcfg_ShowQuickButtons->setChecked(preferences->getShowQuickButtons());
   kcfg_AutoUserhost->setChecked(preferences->getAutoUserhost());
   kcfg_ShowNicknameBox->setChecked(preferences->showNicknameBox());
-  kcfg_UseBoldNicks->setChecked(preferences->getUseBoldNicks());
   kcfg_UseLiteralModes->setChecked(preferences->getUseLiteralModes());
 
   kcfg_ShowBackgroundImage->setChecked(preferences->getShowBackgroundImage());
@@ -84,9 +80,6 @@ void PrefsPageChatWinAppearance::saveBackgroundImage(const QString& url)
 
 void PrefsPageChatWinAppearance::applyPreferences()
 {
-  preferences->setTextFont(kcfg_TextFont->font());
-  preferences->setListFont(kcfg_ListFont->font());
-  preferences->setFixedMOTD(kcfg_FixedMOTD->isChecked());
   preferences->setTimestamping(kcfg_Timestamping->isChecked());
   preferences->setShowDate(kcfg_ShowDate->isChecked());
   preferences->setTimestampFormat(kcfg_TimestampFormat->currentText());
@@ -95,7 +88,6 @@ void PrefsPageChatWinAppearance::applyPreferences()
   preferences->setAutoUserhost(kcfg_AutoUserhost->isChecked());
   preferences->setShowTopic(kcfg_ShowTopic->isChecked());
   preferences->setShowNicknameBox(kcfg_ShowNicknameBox->isChecked());
-  preferences->setUseBoldNicks(kcfg_UseBoldNicks->isChecked());
   preferences->setUseLiteralModes(kcfg_UseLiteralModes->isChecked());
 }
 
