@@ -25,6 +25,7 @@
 */
 
 class QCheckBox;
+class QPushButton;
 
 class KListView;
 class KColorCombo;
@@ -56,6 +57,8 @@ class PrefsPageHighlight : public PrefsPage
 
     void currentNickChanged(int state);
     void ownLinesChanged(int state);
+    
+    void playSound();
 
   protected:
     KListView* highlightListView;
@@ -68,6 +71,7 @@ class PrefsPageHighlight : public PrefsPage
     KColorCombo* ownLinesColor;
     KURLRequester* soundURL;
     QLabel* soundLabel;
+    QPushButton* soundPlayBtn;
 };
 
 #endif

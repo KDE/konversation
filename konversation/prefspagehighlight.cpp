@@ -29,11 +29,14 @@
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kfiledialog.h>
+#include <kiconloader.h>
 
 #include "prefspagehighlight.h"
 #include "preferences.h"
 #include "highlight.h"
 #include "highlightviewitem.h"
+#include "konversationapplication.h"
+#include "konversationsound.h"
 
 PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPreferences) :
                     PrefsPage(newParent,newPreferences)
@@ -75,7 +78,9 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   highlightSoundBox->setSpacing(spacingHint());
   
   soundLabel = new QLabel(i18n("&Sound:"), highlightSoundBox);
-  soundURL = new KURLRequester(highlightSoundBox, "highlight_pattern_sound_url");
+  soundPlayBtn = new QPushButton(highlightSoundBox, "highlight_sound_play_button");
+  soundPlayBtn->setPixmap(SmallIcon( "player_play" ));
+  soundURL = new KURLRequester(highlightSoundBox, "highlight_sound_url");
   soundLabel->setBuddy(soundURL);
 
   patternLabel->setEnabled(false);
@@ -83,6 +88,7 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   patternColor->setEnabled(false);
   soundURL->setEnabled(false);
   soundLabel->setEnabled(false);
+  soundPlayBtn->setEnabled(false);
   
   QString filter = "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm";
   soundURL->setFilter(filter);
@@ -146,6 +152,7 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   connect(patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (highlightTextChanged(const QString&)) );
   connect(patternColor,SIGNAL (activated(const QColor&)),this,SLOT (highlightColorChanged(const QColor&)) );
   connect(soundURL, SIGNAL(textChanged(const QString&)), this, SLOT(soundURLChanged(const QString&)));
+  connect(soundPlayBtn, SIGNAL(clicked()), this, SLOT(playSound()));
 
   connect(newButton,SIGNAL (clicked()),this,SLOT (addHighlight()) );
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeHighlight()) );
@@ -169,6 +176,7 @@ void PrefsPageHighlight::highlightSelected(QListViewItem* item)
     patternColor->setEnabled(true);
     soundURL->setEnabled(true);
     soundLabel->setEnabled(true);
+    soundPlayBtn->setEnabled(true);
 
     patternColor->setColor(highlightItem->getColor());
     patternInput->setText(highlightItem->getText());
@@ -181,6 +189,7 @@ void PrefsPageHighlight::highlightSelected(QListViewItem* item)
     patternColor->setEnabled(false);
     soundURL->setEnabled(false);
     soundLabel->setEnabled(false);
+    soundPlayBtn->setEnabled(false);
   }
 }
 
@@ -239,6 +248,7 @@ void PrefsPageHighlight::removeHighlight()
       patternColor->setEnabled(false);
       soundURL->setEnabled(false);
       soundLabel->setEnabled(false);
+      soundPlayBtn->setEnabled(false);
     }
   }
 }
@@ -274,6 +284,12 @@ void PrefsPageHighlight::applyPreferences()
   preferences->setHilightOwnLines(ownLinesCheck->isChecked());
   preferences->setHilightNickColor(currentNickColor->color().name());
   preferences->setHilightOwnLinesColor(ownLinesColor->color().name());
+}
+
+void PrefsPageHighlight::playSound()
+{
+  KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+  konvApp->sound()->play(KURL(soundURL->url()));
 }
 
 #include "prefspagehighlight.moc"
