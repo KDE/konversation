@@ -335,8 +335,7 @@ void KonversationApplication::readOptions()
       newIdentity->setIdent(config->readEntry("Ident"));
       newIdentity->setRealName(config->readEntry("Realname"));
 
-      QString nickList=config->readEntry("Nicknames");
-      newIdentity->setNicknameList(QStringList::split(",",nickList));
+      newIdentity->setNicknameList(config->readListEntry("Nicknames"));
 
       newIdentity->setBot(config->readEntry("Bot"));
       newIdentity->setPassword(config->readEntry("Password"));
