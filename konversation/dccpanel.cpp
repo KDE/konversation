@@ -26,9 +26,6 @@
 DccPanel::DccPanel(QWidget* parent) :
           ChatWindow(parent)
 {
-  setSpacing(spacing());
-  setMargin(margin());
-
   setType(ChatWindow::DccPanel);
 
   dccListView=new KListView(this,"dcc_control_panel");

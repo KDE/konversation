@@ -30,10 +30,6 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
   setType(ChatWindow::Query);
 
-  /* (this) is the main box */
-  setMargin(margin());
-  setSpacing(spacing());
-
   /* This box holds the hostmask and the close button */
   QHBox* maskQuitBox=new QHBox(this);
   maskQuitBox->setSpacing(spacing());

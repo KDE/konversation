@@ -29,6 +29,9 @@ ChatWindow::ChatWindow(QWidget* parent)
 {
   parentWidget=parent;
   firstLog=true;
+
+  setMargin(margin());
+  setSpacing(spacing());
 }
 
 ChatWindow::~ChatWindow()
@@ -220,12 +223,18 @@ void ChatWindow::logText(const QString& text)
 
 int ChatWindow::spacing()
 {
-  return KDialog::spacingHint();
+  if(KonversationApplication::preferences.getUseSpacing())
+    return KonversationApplication::preferences.getSpacing();
+  else
+    return KDialog::spacingHint();
 }
 
 int ChatWindow::margin()
 {
-  return KDialog::marginHint();
+  if(KonversationApplication::preferences.getUseSpacing())
+    return KonversationApplication::preferences.getMargin();
+  else
+    return KDialog::marginHint();
 }
 
 // Accessors

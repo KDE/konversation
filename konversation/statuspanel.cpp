@@ -29,9 +29,6 @@ StatusPanel::StatusPanel(QWidget* parent) :
 
   setType(ChatWindow::Status);
 
-  setSpacing(spacing());
-  setMargin(margin());
-
   // set up text view, will automatically take care of logging
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer()
 

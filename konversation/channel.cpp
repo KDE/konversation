@@ -56,9 +56,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   QSizePolicy greedy=QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
 
   // (this) The main Box, holding the channel view/topic and the input line
-  setSpacing(spacing());
-  setMargin(margin());
-
   splitter=new QSplitter(this);
   setStretchFactor(splitter,10);
   splitter->setOpaqueResize(true);
@@ -119,7 +116,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   // The box that holds the Nick List and the quick action buttons
   QVBox* nickListButtons=new QVBox(splitter);
-
   nickListButtons->setSpacing(spacing());
 
 //  nicksOps=new QLabel(i18n("Nicks"),topicViewNicksGrid);

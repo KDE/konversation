@@ -94,6 +94,27 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   showModeButtons=new QCheckBox(i18n("Show Channel Mode Buttons"),showButtonsBox,"show_modebuttons_checkbox");
   showModeButtons->setChecked(preferences->getShowModeButtons());
 
+  useSpacingCheck=new QCheckBox(i18n("Use custom widget spacing"),parentFrame,"use_spacing_check");
+
+  QHBox* spacingMarginBox=new QHBox(parentFrame);
+  spacingMarginBox->setSpacing(spacingHint());
+
+  spacingLabel=new QLabel(i18n("Spacing:"),spacingMarginBox);
+  spacing=new QSpinBox(0,10,1,spacingMarginBox,"spacing_spin_box");
+  marginLabel=new QLabel(i18n("Margin:"),spacingMarginBox);
+  margin=new QSpinBox(0,10,1,spacingMarginBox,"margin_spin_box");
+
+  spacing->setValue(preferences->getSpacing());
+  spacing->setSuffix(" "+i18n("Pixel"));
+  margin->setValue(preferences->getMargin());
+  margin->setSuffix(" "+i18n("Pixel"));
+  
+  marginLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  spacingMarginBox->setStretchFactor(marginLabel,10);
+
+  // Take care of ghosting / unghosting spacing widgets
+  useSpacingChanged(preferences->getUseSpacing() ? 2 : 0);
+
   // Layout
   int row=0;
   appearanceLayout->addWidget(textFontLabel,row,0);
@@ -111,6 +132,10 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   row++;
   appearanceLayout->addMultiCellWidget(showButtonsBox,row,row,0,2);
   row++;
+  appearanceLayout->addMultiCellWidget(useSpacingCheck,row,row,0,2);
+  row++;
+  appearanceLayout->addMultiCellWidget(spacingMarginBox,row,row,0,2);
+  row++;
   appearanceLayout->setRowStretch(row,10);
   appearanceLayout->setColStretch(1,10);
 
@@ -118,11 +143,18 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   connect(textFontButton,SIGNAL (clicked()),this,SLOT (textFontClicked()) );
   connect(listFontButton,SIGNAL (clicked()),this,SLOT (listFontClicked()) );
+
   connect(codecList,SIGNAL (highlighted(const QString&)),this,SLOT (encodingChanged(const QString&)));
+
   connect(doTimestamping,SIGNAL (stateChanged(int)),this,SLOT (timestampingChanged(int)) );
+  connect(timestampFormat,SIGNAL(activated(const QString&)),this,SLOT(formatChanged(const QString&)));
+
   connect(showQuickButtons,SIGNAL (stateChanged(int)),this,SLOT (showQuickButtonsChanged(int)) );
   connect(showModeButtons,SIGNAL (stateChanged(int)),this,SLOT (showModeButtonsChanged(int)) );
-  connect(timestampFormat,SIGNAL(activated(const QString&)),this,SLOT(formatChanged(const QString&)));
+
+  connect(useSpacingCheck,SIGNAL (stateChanged(int)),this,SLOT (useSpacingChanged(int)) );
+  connect(spacing,SIGNAL (valueChanged(int)),this,SLOT (spacingChanged(int)));
+  connect(margin,SIGNAL (valueChanged(int)),this,SLOT (marginChanged(int)));
 }
 
 PrefsPageAppearance::~PrefsPageAppearance()
@@ -187,6 +219,26 @@ void PrefsPageAppearance::encodingChanged(const QString& newEncoding)
     preferences->setCodec(QString::null);
   else
     preferences->setCodec(KGlobal::charsets()->encodingForName(newEncoding));
+}
+
+void PrefsPageAppearance::useSpacingChanged(int state)
+{
+  useSpacingCheck->setChecked(state);
+  preferences->setUseSpacing(state==2);
+  spacingLabel->setEnabled(state==2);
+  spacing->setEnabled(state==2);
+  marginLabel->setEnabled(state==2);
+  margin->setEnabled(state==2);
+}
+
+void PrefsPageAppearance::spacingChanged(int newSpacing)
+{
+  preferences->setSpacing(newSpacing);
+}
+
+void PrefsPageAppearance::marginChanged(int newMargin)
+{
+  preferences->setMargin(newMargin);
 }
 
 #include "prefspageappearance.moc"

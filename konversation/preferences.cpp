@@ -78,6 +78,10 @@ Preferences::Preferences()
   setShowModeButtons(true);
   setShowServerList(true);
 
+  setUseSpacing(false);
+  setSpacing(2);
+  setMargin(2);
+
   channelSplitter.append(10);
   channelSplitter.append(1);
   
@@ -452,5 +456,12 @@ QString Preferences::getChannelDoubleClickAction() { return channelDoubleClickAc
 
 void Preferences::setNotifyDoubleClickAction(QString action) { notifyDoubleClickAction=action; }
 QString Preferences::getNotifyDoubleClickAction() { return notifyDoubleClickAction; }
+
+void Preferences::setUseSpacing(bool state) { useSpacing=state; }
+bool Preferences::getUseSpacing() { return useSpacing; }
+void Preferences::setSpacing(int newSpacing) { spacing=newSpacing; }
+int Preferences::getSpacing() { return spacing; }
+void Preferences::setMargin(int newMargin) { margin=newMargin; }
+int Preferences::getMargin() { return margin; }
 
 #include "preferences.moc"

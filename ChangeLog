@@ -3,6 +3,7 @@ Changes from 0.9 to 0.10
 - Implemented different identities
 - Added double click actions to nick list and notify list
 - Added support for ASCII-BEL
+- Added custom spacing and margin
 
 Changes from 0.8 to 0.9
 - Added strikeout support (untested yet)

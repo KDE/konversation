@@ -19,6 +19,7 @@
 
 #include <qlabel.h>
 #include <qcheckbox.h>
+#include <qspinbox.h>
 
 #include "prefspage.h"
 
@@ -42,6 +43,9 @@ class PrefsPageAppearance : public PrefsPage
     void showModeButtonsChanged(int state);
     void formatChanged(const QString& newFormat);
     void encodingChanged(const QString& newEncoding);
+    void useSpacingChanged(int state);
+    void spacingChanged(int newSpacing);
+    void marginChanged(int newMargin);
 
   protected:
     void updateFonts();
@@ -54,6 +58,14 @@ class PrefsPageAppearance : public PrefsPage
     QCheckBox* showModeButtons;
     QLabel* formatLabel;
     QComboBox* timestampFormat;
+
+    QCheckBox* useSpacingCheck;
+
+    QLabel* spacingLabel;
+    QLabel* marginLabel;
+    
+    QSpinBox* spacing;
+    QSpinBox* margin;
 };
 
 #endif

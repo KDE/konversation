@@ -252,6 +252,13 @@ class Preferences : public QObject
     void setNotifyDoubleClickAction(QString action);
     QString getNotifyDoubleClickAction();
 
+    void setUseSpacing(bool state);
+    bool getUseSpacing();
+    void setSpacing(int newSpacing);
+    int getSpacing();
+    void setMargin(int newMargin);
+    int getMargin();
+
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();
@@ -322,6 +329,10 @@ class Preferences : public QObject
     QSize nicksOnlineSize;
     QSize nicknameSize;
     QSize colorConfigurationSize;
+
+    bool useSpacing;
+    int spacing;
+    int margin;
 
     QFont textFont;
     QFont listFont;

@@ -23,8 +23,6 @@
 #include <qvbox.h>
 #include <qlabel.h>
 
-#include <kdialog.h>
-
 #include "nick.h"
 #include "nicklistview.h"
 #include "chatwindow.h"
@@ -103,9 +101,6 @@ class Channel : public ChatWindow
   protected:
     const QStringList& getSelectedNicksList();
     void showEvent(QShowEvent* event);
-
-    int spacing() {  return KDialog::spacingHint(); };
-    int margin() {  return KDialog::marginHint(); };
 
     int nicks;
     int ops;
