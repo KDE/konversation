@@ -47,7 +47,7 @@ void ServerListItem::stateChange(bool state)
   emit stateChanged(this,state);
 }
 
-int ServerListItem::getId() const        { return id; };
-QString ServerListItem::getGroup() const { return group; };
+int ServerListItem::getId() const        { return id; }
+QString ServerListItem::getGroup() const { return group; }
 
 #include "serverlistitem.moc"
