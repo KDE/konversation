@@ -596,39 +596,21 @@ void Channel::completeNick()
   if(completionPosition>=nicknameList.count()) completionPosition=0;
   // Check, which completion mode is active
   char mode=channelInput->getCompletionMode();
-  // Are we in query mode?
-  if(mode=='q')
-  {
-    // Remove /msg <nick> part from string
-    line=line.mid(pos);
-    // Set cursor to beginning to restart query completion
-    pos=0;
-  }
-  // Or maybe in channel mode?
-  else if(mode=='c')
-  {
+
+  if(mode == 'c') {
     line.remove(oldPos,pos-oldPos);
-    pos=oldPos;
+    pos = oldPos;
   }
-  // If the cursor is at beginning of line, insert /msq <query>
-  if(pos==0)
+
+  // If the cursor is at beginning of line, insert last completion
+  if(pos == 0 && !m_lastCompletion.isEmpty())
   {
-    // Find next query in list
-    QString queryName=m_server->getNextQueryName();
-    // Did we find any queries?
-    if(!queryName.isEmpty())
-    {
-      // Prepend /msg name
-      newLine="/msg "+queryName+" ";
-      // New cursor position is behind nickname
-      pos=newLine.length();
-      // Add rest of the line
-      newLine+=line;
-      // Set query completion mode
-      channelInput->setCompletionMode('q');
-    }
-    // No queries at all, so ignore this TAB
-    else newLine=line;
+    QString addStart(KonversationApplication::preferences.getNickCompleteSuffixStart());
+    newLine = m_lastCompletion + addStart;
+    // New cursor position is behind nickname
+    pos = newLine.length();
+    // Add rest of the line
+    newLine += line;
   }
   else
   {
@@ -702,6 +684,8 @@ void Channel::completeNick()
       {
         // remove pattern from line
         newLine.remove(pos,pattern.length());
+        m_lastCompletion = foundNick;
+
         // did we find the nick in the middle of the line?
         if(pos && complete)
         {

@@ -13,6 +13,7 @@ Changes from 0.15 to 0.16
 will now join channel #foo
 - Nicks in channel view now have a context menu as in nicklistview
 - /cycle command
+- Tab at begining of line inserts last completed nick
 
 Changes from 0.14 to 0.15
 - Ported socket code to KNetwork. Weird connection problems should be gone now
