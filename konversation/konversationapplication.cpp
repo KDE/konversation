@@ -100,7 +100,7 @@ void KonversationApplication::readOptions()
   preferences.setButtonsSize(config->readSizeEntry("ButtonsGeometry"));
   preferences.setIgnoreSize(config->readSizeEntry("IgnoreGeometry"));
   preferences.setNicknameSize(config->readSizeEntry("NicknameGeometry"));
-	preferences.setColorConfigurationSize(config->readSizeEntry("ColorConfigurationGeometry"));
+  preferences.setColorConfigurationSize(config->readSizeEntry("ColorConfigurationGeometry"));
 
   /* Reasons */
   QString reason;
@@ -110,17 +110,17 @@ void KonversationApplication::readOptions()
   if(reason!="") preferences.setKickReason(reason);
 
   // Colors
-	config->setGroup("Message Text Colors");
+  config->setGroup("Message Text Colors");
 
-	preferences.setActionMessageColor(config->readEntry("ActionMessage", preferences.defaultActionMessageColor));
-	preferences.setBacklogMessageColor(config->readEntry("BacklogMessage", preferences.defaultBacklogMessageColor));
-	preferences.setChannelMessageColor(config->readEntry("ChannelMessage", preferences.defaultChannelMessageColor));
-	preferences.setCommandMessageColor(config->readEntry("CommandMessage", preferences.defaultCommandMessageColor));
-	preferences.setLinkMessageColor(config->readEntry("LinkMessage", preferences.defaultLinkMessageColor));
-	preferences.setQueryMessageColor(config->readEntry("QueryMessage", preferences.defaultQueryMessageColor));
-	preferences.setServerMessageColor(config->readEntry("ServerMessage", preferences.defaultServerMessageColor));
+  preferences.setActionMessageColor(config->readEntry("ActionMessage", preferences.defaultActionMessageColor));
+  preferences.setBacklogMessageColor(config->readEntry("BacklogMessage", preferences.defaultBacklogMessageColor));
+  preferences.setChannelMessageColor(config->readEntry("ChannelMessage", preferences.defaultChannelMessageColor));
+  preferences.setCommandMessageColor(config->readEntry("CommandMessage", preferences.defaultCommandMessageColor));
+  preferences.setLinkMessageColor(config->readEntry("LinkMessage", preferences.defaultLinkMessageColor));
+  preferences.setQueryMessageColor(config->readEntry("QueryMessage", preferences.defaultQueryMessageColor));
+  preferences.setServerMessageColor(config->readEntry("ServerMessage", preferences.defaultServerMessageColor));
 
-	/* User identity */
+  /* User identity */
   config->setGroup("User Identity");
   preferences.ident=config->readEntry("Ident",preferences.ident);
   preferences.realname=config->readEntry("Realname",preferences.realname);
@@ -165,15 +165,9 @@ void KonversationApplication::readOptions()
   QStringList hiList=QStringList::split(' ',hilight);
 
   unsigned int hiIndex;
-  for(hiIndex=0;hiIndex<hiList.count();hiIndex++)
+  for(hiIndex=0;hiIndex<hiList.count();hiIndex+=2)
   {
-    preferences.addHilight(hiList[hiIndex]);
-  }
-
-  if(config->hasKey("HilightColor"))
-  {
-    QString color=config->readEntry("HilightColor");
-    preferences.setHilightColor(color);
+    preferences.addHilight(hiList[hiIndex],"#"+hiList[hiIndex+1]);
   }
 
   /* Ignore List  */
@@ -208,7 +202,7 @@ void KonversationApplication::saveOptions()
   config->writeEntry("ButtonsGeometry",preferences.getButtonsSize());
   config->writeEntry("IgnoreGeometry",preferences.getIgnoreSize());
   config->writeEntry("NicknameGeometry",preferences.getNicknameSize());
-	config->writeEntry("ColorconfigurationGeometry", preferences.getColorConfigurationSize());
+  config->writeEntry("ColorConfigurationGeometry", preferences.getColorConfigurationSize());
 
   config->writeEntry("ServerWindowToolBarPos",preferences.serverWindowToolBarPos);
   config->writeEntry("ServerWindowToolBarStatus",preferences.serverWindowToolBarStatus);
@@ -222,13 +216,13 @@ void KonversationApplication::saveOptions()
 
   config->setGroup("Message Text Colors");
 
-	config->writeEntry("ActionMessage", preferences.getActionMessageColor());
-	config->writeEntry("BacklogMessage", preferences.getBacklogMessageColor());
-	config->writeEntry("ChannelMessage", preferences.getChannelMessageColor());
-	config->writeEntry("CommandMessage", preferences.getCommandMessageColor());
+  config->writeEntry("ActionMessage", preferences.getActionMessageColor());
+  config->writeEntry("BacklogMessage", preferences.getBacklogMessageColor());
+  config->writeEntry("ChannelMessage", preferences.getChannelMessageColor());
+  config->writeEntry("CommandMessage", preferences.getCommandMessageColor());
   config->writeEntry("LinkMessage", preferences.getLinkMessageColor());
-	config->writeEntry("QueryMessage", preferences.getQueryMessageColor());
-	config->writeEntry("ServerMessage", preferences.getServerMessageColor());
+  config->writeEntry("QueryMessage", preferences.getQueryMessageColor());
+  config->writeEntry("ServerMessage", preferences.getServerMessageColor());
 
   config->setGroup("User Identity");
 
@@ -244,7 +238,7 @@ void KonversationApplication::saveOptions()
   config->deleteGroup("Server List");
   config->setGroup("Server List");
 
-	int index=0;
+  int index=0;
   QString serverEntry=preferences.getServerByIndex(0);
 
   while(serverEntry)
@@ -264,13 +258,17 @@ void KonversationApplication::saveOptions()
   /* Write all hilight entries  */
   config->setGroup("Hilight List");
 
-  QStringList hiList=preferences.getHilightList();
-  QString hilight=hiList.join(" ");
+  QPtrList<Highlight> hiList=preferences.getHilightList();
 
+  /* Put all hilight patterns and colors after another, separated with a space */
+  QString hilight;
+  for(unsigned int index=0;index<hiList.count();index++)
+    hilight+=hiList.at(index)->getText()+" "+hiList.at(index)->getColor().name().mid(1)+" ";
+
+  /* remove extra spaces */
+  hilight=hilight.stripWhiteSpace();
+  /* write hilight string */
   config->writeEntry("Hilight",hilight);
-
-  QString color=preferences.getHilightColor();
-  config->writeEntry("HilightColor",color);
 
   /* Ignore List  */
   config->setGroup("Ignore List");

@@ -60,21 +60,21 @@ class Preferences : public QObject
     void setBlinkingTabs(bool blink);
     bool getBlinkingTabs();
 
-		        /* Geometry functions */
+    /* Geometry functions */
     QSize getServerWindowSize();
     QSize& getHilightSize();
     QSize& getButtonsSize();
     QSize& getIgnoreSize();
     QSize& getNotifySize();
     QSize& getNicknameSize();
-		QSize& getColorConfigurationSize();
+    QSize& getColorConfigurationSize();
     void setServerWindowSize(QSize newSize);
     void setHilightSize(QSize newSize);
     void setButtonsSize(QSize newSize);
     void setIgnoreSize(QSize newSize);
     void setNotifySize(QSize newSize);
     void setNicknameSize(QSize newSize);
-		void setColorConfigurationSize(QSize newSize);
+    void setColorConfigurationSize(QSize newSize);
 
     int getNotifyDelay();
     void setNotifyDelay(int delay);
@@ -84,12 +84,9 @@ class Preferences : public QObject
     QString getNotifyString();
     void setNotifyList(QStringList newList);
 
-    QStringList& getHilightList();
-    QPtrList<Highlight> getHilightList2();
-    void setHilightList(QStringList& newList);
-    void addHilight(QString& newHilight);
-    QString getHilightColor();
-    void setHilightColor(const QString& color);
+    QPtrList<Highlight> getHilightList();
+    void setHilightList(QPtrList<Highlight> newList);
+    void addHilight(QString newHilight,QColor color);
 
     QStringList getButtonList();
     void setButtonList(QStringList newList);
@@ -159,9 +156,7 @@ class Preferences : public QObject
 		QSize colorConfigurationSize;
 
     QList<ServerEntry> serverList;
-    QStringList hilightList;
-    QPtrList<Highlight> hilightList2;
-    QString hilightColor;
+    QPtrList<Highlight> hilightList;
 
     QStringList buttonList;
 

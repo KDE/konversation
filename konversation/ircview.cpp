@@ -28,6 +28,7 @@
 
 #include "konversationapplication.h"
 #include "ircview.h"
+#include "highlight.h"
 
 // IRCView::IRCView(QWidget* parent)
 //IRCView::IRCView(QWidget* parent) : QScrollView(parent)
@@ -181,17 +182,16 @@ QString IRCView::filter(const QString& line,bool doHilight)
   /* Hilight */
   if(doHilight)
   {
-    QStringList hilightList=KonversationApplication::preferences.getHilightList();
-    QString hilightColor=KonversationApplication::preferences.getHilightColor();
-
+    QPtrList<Highlight> hilightList=KonversationApplication::preferences.getHilightList();
+    
     unsigned int index;
 
     for(index=0;index<hilightList.count();index++)
     {
-      QString needle=hilightList[index].lower();
+      QString needle=hilightList.at(index)->getText().lower();
       if(filteredLine.lower().find(needle)!=-1)
       {
-        filteredLine=QString("<font color=\"#"+hilightColor+"\">")+filteredLine+QString("</font>");
+        filteredLine=QString("<font color=\""+hilightList.at(index)->getColor().name()+"\">")+filteredLine+QString("</font>");
         break;
       }
     }

@@ -30,12 +30,11 @@ ServerWindow::ServerWindow(Server* server) : KMainWindow()
   windowContainer=new LedTabWidget(this,"server_window_tab_widget");
   windowContainer->setTabPosition(QTabWidget::Bottom);
 
-  hilightWindow=0;
   hilightDialog=0;
   ignoreDialog=0;
   notifyDialog=0;
   buttonsDialog=0;
-	colorConfigurationDialog = 0;
+  colorConfigurationDialog=0;
 
 /*  KAction* quitAction= */ KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); /* file_quit */
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); /* options_show_toolbar */
@@ -252,27 +251,19 @@ void ServerWindow::quitProgram()
 
 void ServerWindow::openHilight()
 {
-  if(!hilightWindow)
-  {
-    hilightWindow=new HighLightBox(KonversationApplication::preferences.getHilightList(),
-                                   KonversationApplication::preferences.getHilightSize());
-    connect(hilightWindow, SIGNAL(highLightListChange(QStringList)), this, SLOT(saveHilight(QStringList)));
-    connect(hilightWindow, SIGNAL(highLightListClose(QSize)), this, SLOT(closeHilight(QSize)));
-  }
-
-
   if(!hilightDialog)
   {
-    hilightDialog=new HighlightDialog(this,KonversationApplication::preferences.getHilightList2(),
+    hilightDialog=new HighlightDialog(this,KonversationApplication::preferences.getHilightList(),
                                       KonversationApplication::preferences.getHilightSize());
+    connect(hilightDialog,SIGNAL (cancelClicked(QSize)),this,SLOT (closeHilight(QSize)) );
+    connect(hilightDialog,SIGNAL (applyClicked(QPtrList<Highlight>)),this,SLOT (applyHilight(QPtrList<Highlight>)) );
   }
-
-
 }
 
-void ServerWindow::saveHilight(QStringList passed_highlightList)
+void ServerWindow::applyHilight(QPtrList<Highlight> hilightList)
 {
-  KonversationApplication::preferences.setHilightList(passed_highlightList);
+  KonversationApplication::preferences.setHilightList(hilightList);
+  emit prefsChanged();
 }
 
 void ServerWindow::closeHilight(QSize newHilightSize)
@@ -280,11 +271,8 @@ void ServerWindow::closeHilight(QSize newHilightSize)
   KonversationApplication::preferences.setHilightSize(newHilightSize);
   emit prefsChanged();
 
-  disconnect(hilightWindow, SIGNAL(highLightListChange(QStringList)), this, SLOT(saveHilight(QStringList)));
-  disconnect(hilightWindow, SIGNAL(highLightListClose(QSize)), this, SLOT(closeHilight(QSize)));
-
-  delete hilightWindow;
-  hilightWindow=0;
+  delete hilightDialog;
+  hilightDialog=0;
 }
 
 void ServerWindow::openButtons()

@@ -60,8 +60,6 @@ Preferences::Preferences()
   partReason="Konversation terminated!";
   kickReason="User terminated!";
 
-  hilightColor="0000ff";
-
   setHilightSize(QSize(260,235));
   setHilightSize(QSize(500,200));
 
@@ -129,42 +127,20 @@ void Preferences::removeServer(int id)
   serverList.remove(getServerEntryById(id));
 }
 
-QStringList& Preferences::getHilightList()
+QPtrList<Highlight> Preferences::getHilightList()
 {
   return hilightList;
 }
 
-QPtrList<Highlight> Preferences::getHilightList2()
-{
-  return hilightList2;
-}
-
-void Preferences::setHilightList(QStringList& newList)
+void Preferences::setHilightList(QPtrList<Highlight> newList)
 {
   hilightList.clear();
   hilightList=newList;
-
-  hilightList2.clear();
-  for(unsigned int index=0;index<newList.count();index++)
-  {
-    hilightList2.append(new Highlight(newList[index],QColor(255,0,0)));
-  }
 }
 
-void Preferences::setHilightColor(const QString& color)
+void Preferences::addHilight(QString newHilight,QColor newColor)
 {
-  hilightColor=color;
-}
-
-QString Preferences::getHilightColor()
-{
-  return hilightColor;
-}
-
-void Preferences::addHilight(QString& newHilight)
-{
-  hilightList.append(newHilight);
-  hilightList2.append(new Highlight(newHilight,QColor(255,0,0)));
+  hilightList.append(new Highlight(newHilight,newColor));
 }
 
 void Preferences::setButtonList(QStringList newList)

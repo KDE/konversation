@@ -42,7 +42,6 @@
 #include "server.h"
 #include "ircview.h"
 #include "ircinput.h"
-#include "highlightbox.h"
 #include "highlightdialog.h"
 #include "quickbuttonsdialog.h"
 #include "notifydialog.h"
@@ -89,8 +88,8 @@ class ServerWindow : public KMainWindow
     void quitProgram();
 
     void openHilight();
+    void applyHilight(QPtrList<Highlight> newList);
     void closeHilight(QSize newSize);
-    void saveHilight(QStringList newList);
 
     void openIgnore();
     void applyIgnore(QPtrList<Ignore> newList);
@@ -104,11 +103,11 @@ class ServerWindow : public KMainWindow
     void applyButtons(QStringList newList);
     void closeButtons(QSize newSize);
 
-		void openColorConfiguration();
-		void applyColorConfiguration(QString actionTextColor, QString backlogTextColor, QString channelTextColor,
-														 		 QString commandTextColor, QString linkTextColor, QString queryTextColor,
-																 QString serverTextColor);
-		void closeColorConfiguration(QSize windowSize);
+    void openColorConfiguration();
+    void applyColorConfiguration(QString actionTextColor, QString backlogTextColor, QString channelTextColor,
+                                 QString commandTextColor, QString linkTextColor, QString queryTextColor,
+                                 QString serverTextColor);
+    void closeColorConfiguration(QSize windowSize);
 
   protected:
     int spacing();
@@ -137,12 +136,11 @@ class ServerWindow : public KMainWindow
     Server* server;
     KToggleAction* showToolBarAction;
     KToggleAction* showStatusBarAction;
-    HighLightBox* hilightWindow;
     HighlightDialog* hilightDialog;
     NotifyDialog* notifyDialog;
     IgnoreDialog* ignoreDialog;
     QuickButtonsDialog* buttonsDialog;
-		ColorConfiguration*	colorConfigurationDialog;
+    ColorConfiguration* colorConfigurationDialog;
 
     QFile logfile;
     bool log;
