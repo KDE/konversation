@@ -1487,8 +1487,10 @@ void KonversationMainWindow::resizeEvent(QResizeEvent* ev)
 {
 #ifdef USE_MDI
   setSysButtonsAtMenuPosition();
-#endif
+  KMdiMainFrm::resizeEvent(ev);
+#else
   KMainWindow::resizeEvent(ev);
+#endif
 }
 
 void KonversationMainWindow::insertCharacter()
