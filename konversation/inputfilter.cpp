@@ -884,12 +884,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
               adminChannels.append(lookChannel.mid(1));
               server->setChannelNick(lookChannel.mid(1), parameterList[1], 16);
             }
-            else if(lookChannel.startsWith("!"))
+            else if(lookChannel.startsWith("!") && server->isAChannel(lookChannel.mid(1))) // See bug #97354 part 2
             {
               ownerChannels.append(lookChannel.mid(1));
               server->setChannelNick(lookChannel.mid(1), parameterList[1], 8);
             }
-	    else if(lookChannel.startsWith("@+"))
+	    else if(lookChannel.startsWith("@+")) // See bug #97354 part 1
 	    {
 	      opChannels.append(lookChannel.mid(2));
 	      server->setChannelNick(lookChannel.mid(2), parameterList[1], 4);
