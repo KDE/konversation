@@ -70,6 +70,7 @@ ServerWindow::ServerWindow(Server* newServer) : KMainWindow()
   addStatusView();
 
   connect( windowContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changedView(QWidget*)) );
+  connect( windowContainer,SIGNAL (closeTab(QWidget*)),this,SLOT (closeTab(QWidget*)) );
 
   createGUI();
   readOptions();
@@ -114,6 +115,9 @@ void ServerWindow::setServer(Server* newServer)
   }
 
   server=newServer;
+
+  connect(this,SIGNAL (closeChannel(const QString&)),server,SLOT (closeChannel(const QString&)));
+  connect(this,SIGNAL (closeQuery(const QString&)),server,SLOT (closeQuery(const QString&)));
 }
 
 Server* ServerWindow::getServer()
@@ -187,6 +191,22 @@ void ServerWindow::previousTab()
     ChatWindow* newPage=(ChatWindow*) windowContainer->page(page);
     newPage->adjustFocus();
   }
+}
+
+void ServerWindow::closeTab(QWidget* viewToClose)
+{
+  ChatWindow* view=(ChatWindow*) viewToClose;
+  QString viewName=view->getName();
+  ChatWindow::WindowType viewType=view->getType();
+
+  if(viewType==ChatWindow::Status);
+  else if(viewType==ChatWindow::Channel) emit closeChannel(viewName);
+  else if(viewType==ChatWindow::Query)   emit closeQuery(viewName);
+  else if(viewType==ChatWindow::DccChat);
+  else if(viewType==ChatWindow::DccPanel) closeDccPanel();
+
+  kdDebug() << "close tab " << ((ChatWindow*) view)->getName() << endl;
+
 }
 
 void ServerWindow::addDccPanel()

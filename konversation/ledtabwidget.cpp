@@ -24,6 +24,7 @@ LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :
 {
   setTabBar(new LedTabBar(this,"led_tab_bar"));
   connect(tabBar(),SIGNAL (selected(int)) ,this,SLOT (tabSelected(int)) );
+  connect(tabBar(),SIGNAL (closeTab(int)), this,SLOT (tabClosed(int)) );
 }
 
 LedTabWidget::~LedTabWidget()
@@ -35,8 +36,7 @@ void LedTabWidget::addTab(QWidget* child,const QString& label,int color,bool on)
   LedTab* tab=new LedTab(child,label,color,on);
 
   QTabWidget::addTab(child,tab);
-  /* This signal will be emitted when the tab is blinking */
-//  connect(tab,SIGNAL(repaintTab()),tabBar(),SLOT(repaint()));
+  // This signal will be emitted when the tab is blinking
   connect(tab,SIGNAL(repaintTab(LedTab*)),tabBar(),SLOT(repaintLED(LedTab*)));
 }
 
@@ -55,7 +55,7 @@ void LedTabWidget::changeTabState(QWidget* child,bool state)
 void LedTabWidget::tabSelected(int id)
 {
   LedTab* tab=tabBar()->tab(id);
-  if(tab==0) kdWarning() << "LedTabWidget::tabSelected: tab==0!" << endl;
+  if(tab==0) kdWarning() << "LedTabWidget::tabSelected(): tab==0!" << endl;
   else
   {
     emit currentChanged(currentPage());
@@ -63,7 +63,14 @@ void LedTabWidget::tabSelected(int id)
   }
 }
 
-/* reimplemented to avoid casts in active code */
+void LedTabWidget::tabClosed(int id)
+{
+  LedTab* tab=tabBar()->tab(id);
+  if(tab==0) kdWarning() << "LedTabWidget::closeTab(): tab==0!" << endl;
+  else emit closeTab(tab->getWidget());
+}
+
+// reimplemented to avoid casts in active code
 LedTabBar* LedTabWidget::tabBar()
 {
   return (LedTabBar*) QTabWidget::tabBar();

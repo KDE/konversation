@@ -9,6 +9,7 @@
   ledtabbar.h  -  description
   begin:     Sun Feb 24 2002
   copyright: (C) 2002 by Dario Abatianni
+             in parts (C) by Trolltech
   email:     eisfuchs@tigress.com
 
   $Id$
@@ -36,27 +37,21 @@ class LedTabBar : public QTabBar
     LedTab* tab(int id);
     LedTab* tab(QWidget* widget);
 
-
-
     virtual void layoutTabs();
 
-
+  signals:
+    void closeTab(int id);
 
   public slots:
     void repaintLED(LedTab* tab);
 
-
-
-
-
-
-
-
-
-
   protected:
+    // these two come from the original QT source
     virtual void paint( QPainter *, QTab *, bool ) const; // ### not const
     virtual void paintLabel( QPainter*, const QRect&, QTab*, bool ) const;
+
+  protected:
+    void mouseReleaseEvent(QMouseEvent* e);
 };
 
 #endif

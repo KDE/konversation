@@ -79,6 +79,8 @@ class ServerWindow : public KMainWindow
   signals:
     void prefsChanged();
     void openPrefsDialog();
+    void closeChannel(const QString& name);
+    void closeQuery(const QString& name);
 
   public slots:
     void setNickname(const QString&);
@@ -94,6 +96,7 @@ class ServerWindow : public KMainWindow
     void addStatusView();
     void nextTab();
     void previousTab();
+    void closeTab(QWidget* tab);
     void addDccPanel();
     void closeDccPanel();      // remove dcc panel from view, but does not delete it
     void deleteDccPanel();     // deletes dcc panel from memory

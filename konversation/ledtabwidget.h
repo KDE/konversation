@@ -40,9 +40,11 @@ class LedTabWidget : public QTabWidget
 
   signals:
     void currentChanged(QWidget* view);
+    void closeTab(QWidget* view);
 
   protected slots:
     void tabSelected(int id);
+    void tabClosed(int id);
 
   protected:
     LedTabBar* tabBar();

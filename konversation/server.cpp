@@ -435,6 +435,18 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
   query->setHostmask(hostmask);
 }
 
+void Server::closeQuery(const QString& name)
+{
+  Query* query=getQueryByName(name);
+  removeQuery(query);
+}
+
+void Server::closeChannel(const QString& name)
+{
+  outputFilter.parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"PART",name);
+  queue(outputFilter.getServerOutput());
+}
+
 void Server::requestDccSend(QString recipient)
 {
   // if we don't have a recipient yet, let the user select one

@@ -232,7 +232,7 @@ void Channel::requestNewTopic(const QString& newTopic)
   QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
   topicLine->setCurrentText(codec->toUnicode(topic));
 
-  if(newTopic!=topic) sendChannelText("/TOPIC "+newTopic);
+  if(newTopic!=topic) sendChannelText(KonversationApplication::preferences.getCommandChar()+"TOPIC "+newTopic);
 
   channelInput->setFocus();
 }

@@ -120,6 +120,8 @@ class Server : public QObject
     void queue(const QString& buffer);
     void setNickname(const QString& newNickname);
     void addQuery(const QString& nickname,const QString& hostmask);
+    void closeQuery(const QString& name);
+    void closeChannel(const QString& name);
     void requestDccPanel();
     void requestCloseDccPanel();
     void addDccSend(QString recipient,QString file);

@@ -9,6 +9,7 @@
   ledtabbar.cpp  -  description
   begin:     Sun Feb 24 2002
   copyright: (C) 2002 by Dario Abatianni
+             in parts (C) by Trolltech
   email:     eisfuchs@tigress.com
 
   $Id$
@@ -22,6 +23,45 @@
 #include <kdebug.h>
 
 #include "ledtabbar.h"
+
+// const char* LedTabBar::remove_xpm[]; // static
+
+#define LABEL_OFFSET 16
+
+// from kbarcode
+static const char* remove_xpm[] = {
+"16 16 15 1",
+" 	c None",
+".	c #B7B7B7",
+"+	c #FFFFFF",
+"@	c #6E6E6E",
+"#	c #E9E9E9",
+"$	c #E4E4E4",
+"%	c #000000",
+"&	c #DEDEDE",
+"*	c #D9D9D9",
+"=	c #D4D4D4",
+"-	c #CECECE",
+";	c #C9C9C9",
+">	c #C3C3C3",
+",	c #BEBEBE",
+"'	c #B9B9B9",
+"...............+",
+".@@@@@@@@@@@@@@+",
+".@+++++++++++.@+",
+".@+##########.@+",
+".@+$$%$$$$%$$.@+",
+".@+&%%%&&%%%&.@+",
+".@+**%%%%%%**.@+",
+".@+===%%%%===.@+",
+".@+---%%%%---.@+",
+".@+;;%%%%%%;;.@+",
+".@+>%%%>>%%%>.@+",
+".@+,,%,,,,%,,.@+",
+".@+''''''''''.@+",
+".@............@+",
+".@@@@@@@@@@@@@@+",
+"++++++++++++++++"};
 
 LedTabBar::LedTabBar(QWidget* parent,const char* name) :
            QTabBar(parent,name)
@@ -59,17 +99,7 @@ void LedTabBar::repaintLED(LedTab* tab)
   repaint(tab->rect(),false);
 }
 
-
-
-
-
-
-
-
-
-
-
-
+// original code by Trolltech, adapted for close pixmap
 void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
 {
     QStyle::SFlags flags = QStyle::Style_Default;
@@ -78,9 +108,9 @@ void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
         flags |= QStyle::Style_Enabled;
     if ( selected )
         flags |= QStyle::Style_Selected;
-/*    else if(t == d->pressed)
+    else if(t == tabAt(currentTab()))
         flags |= QStyle::Style_Sunken;
-*/
+
     //selection flags
     if(t->rect().contains(mapFromGlobal(QCursor::pos())))
         flags |= QStyle::Style_MouseOver;
@@ -96,6 +126,10 @@ void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
         iw = t->iconSet()->pixmap( QIconSet::Small, QIconSet::Normal ).width() + 4;
         ih = t->iconSet()->pixmap( QIconSet::Small, QIconSet::Normal ).height();
     }
+
+    // add size of close pixmap
+    iw+=LABEL_OFFSET;
+
     QFontMetrics fm = p->fontMetrics();
     int fw = fm.width( t->text() );
     fw -= t->text().contains('&') * fm.width('&');
@@ -107,11 +141,7 @@ void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
                           w, h ), t, t->identifier() == keyboardFocusTab() );
 }
 
-/*!
-    Paints the label of tab \a t centered in rectangle \a br using
-    painter \a p. A focus indication is drawn if \a has_focus is TRUE.
-*/
-
+// original code by Trolltech, adapted for close pixmap
 void LedTabBar::paintLabel( QPainter* p, const QRect& br,
                           QTab* t, bool has_focus ) const
 {
@@ -124,14 +154,20 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br,
         if ( mode == QIconSet::Normal && has_focus )
             mode = QIconSet::Active;
         QPixmap pixmap = t->iconSet()->pixmap( QIconSet::Small, mode );
+        QPixmap close_pixmap(remove_xpm);
         int pixw = pixmap.width();
         int pixh = pixmap.height();
-        r.setLeft( r.left() + pixw + 4 );
-        r.setRight( r.right() + 2 );
+        int close_pixh = close_pixmap.height();
+        r.setLeft( r.left() + pixw + LABEL_OFFSET);
+        r.setRight( r.right() + 2 + LABEL_OFFSET);
         // ### the pixmap shift should probably not be hardcoded..
-        p->drawPixmap( br.left() + 2 + 8 + ((selected == TRUE) ? 0 : 2),
-                       br.center().y()-pixh/2 + ((selected == TRUE) ? 0 : 2),
+        p->drawPixmap( br.left() + 6 + LABEL_OFFSET + ((selected == TRUE) ? 0 : 1),
+                       br.center().y()-pixh/2 + ((selected == TRUE) ? 0 : 1),
                        pixmap );
+
+        p->drawPixmap( br.left(),
+                       br.center().y()-close_pixh/2,
+                       close_pixmap );
     }
 
     QStyle::SFlags flags = QStyle::Style_Default;
@@ -141,97 +177,49 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br,
     if (has_focus)
         flags |= QStyle::Style_HasFocus;
 
-    r.moveBy(8,0);
     style().drawControl( QStyle::CE_TabBarLabel, p, this, r,
                          t->isEnabled() ? colorGroup(): palette().disabled(),
                          flags, QStyleOption(t) );
 }
 
-
+// reimplemented for close pixmap
 void LedTabBar::layoutTabs()
 {
   if(count()==0) return;
 
+  // at first let QT layout our tabs
   QTabBar::layoutTabs();
-  int offset=0;
 
+  // make neccessary modifications
+  int offset=0;
   for(int index=0;index<count();index++)
   {
-    LedTab* ltab=tab(index);
+    QTab* ltab=tabAt(index);
     QRect r=ltab->rect();
-    r.setWidth(r.width()+8);
-    r.setLeft(r.left()+offset);
-//    offset+=50;
+    r.setWidth(r.width()+LABEL_OFFSET);
+    r.moveBy(offset,0);
+    offset+=LABEL_OFFSET;
+
     ltab->setRect(r);
   }
-/*
-
-    if ( count()==0 )
-        return;
-
-    int hframe, vframe, overlap;
-    hframe  = style().pixelMetric( QStyle::PM_TabBarTabHSpace, this );
-    vframe  = style().pixelMetric( QStyle::PM_TabBarTabVSpace, this );
-    overlap = style().pixelMetric( QStyle::PM_TabBarTabOverlap, this );
-
-    QFontMetrics fm = fontMetrics();
-    int x = 0;
-    QRect r;
-    LedTab *t;
-    int index;
-    int increment;
-    int max;
-    bool reverse = QApplication::reverseLayout();
-
-    if ( reverse )
-    {
-        index=count()-1;
-        increment=-1;
-        max=-1;
-    }
-    else
-    {
-        index=0;
-        increment=1;
-        max=count();
-    }
-
-    t=tab(index);
-
-
-    for(;index!=max;index+=increment)
-    {
-        int lw = fm.width( t->text() );
-        lw -= t->text().contains('&') * fm.width('&');
-        lw += t->text().contains("&&") * fm.width('&');
-        int iw = 0;
-        int ih = 0;
-        if ( t->iconSet() != 0 ) {
-            iw = t->iconSet()->pixmap( QIconSet::Small, QIconSet::Normal ).width() + 4;
-            ih = t->iconSet()->pixmap( QIconSet::Small, QIconSet::Normal ).height();
-        }
-        int h = QMAX( fm.height(), ih );
-        h = QMAX( h, QApplication::globalStrut().height() );
-
-        h += vframe;
-        t->setRect( QRect(QPoint(x, 0), style().sizeFromContents(QStyle::CT_TabBarTab, this,
-                     QSize( QMAX( lw + hframe + iw, QApplication::globalStrut().width() ), h ),
-                     QStyleOption(t) )));
-        x += t->rect().width() - overlap;
-        r = r.unite( t->rect() );
-
-        if ( reverse )
-            t = lstatic->prev();
-        else
-            t = lstatic->next();
-
-    }
-
-    for ( t = lstatic->first(); t; t = lstatic->next() )
-        t->r.setHeight( r.height() ); */
 }
 
+void LedTabBar::mouseReleaseEvent(QMouseEvent* e)
+{
+  if(e->button()==LeftButton)
+  {
+    LedTab* t=tab(currentTab());
 
+    // get physical position of QTab* t
+    QRect target(t->rect());
+    // set size of target area
+    target.setWidth(16);
+    target.setHeight(16);
+    // move target area to final place
+    target.moveBy(8,4);
 
+    if(target.contains(e->pos())) emit closeTab(t->identifier());
+  }
+}
 
 #include "ledtabbar.moc"

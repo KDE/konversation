@@ -42,11 +42,11 @@ class NicksOnline : public QVBox
     void setOnlineList(QStringList list);
     void closeButton();
     
-  protected:
-    void closeEvent(QCloseEvent* ce);
-
   protected slots:
     void processDoubleClick(QListViewItem* item);
+
+  protected:
+    void closeEvent(QCloseEvent* ce);
 
     KListView* nickListView;
 };
