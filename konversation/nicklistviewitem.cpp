@@ -46,14 +46,12 @@ NickListViewItem::~NickListViewItem()
 
 void NickListViewItem::refresh()
 {
-  bool needResort = false;
   int flags = 0;
   NickInfo* nickInfo = nick->getNickInfo();
   bool away = false;
   
-  if ( nickInfo ) {
+  if ( nickInfo )
     away = nickInfo->isAway();
-  }
 
   if(away)
     flags=1;
@@ -62,31 +60,25 @@ void NickListViewItem::refresh()
   QPixmap icon;
   
   if ( nick->isAdmin() ) {
-    flags += 64;
+    flags += 128;
     icon = images->getNickIcon( Images::Admin, away );
   } else if ( nick->isOwner() ) {
-    flags += 32;
+    flags += 64;
     icon = images->getNickIcon( Images::Owner, away );
   } else if ( nick->isOp() ) {
-    flags += 16;
+    flags += 32;
     icon = images->getNickIcon( Images::Op, away );
   } else if ( nick->isHalfop() ) {
-    flags += 8;
+    flags += 16;
     icon = images->getNickIcon( Images::HalfOp, away );
   } else if ( nick->hasVoice() ) {
-    flags += 4;
+    flags += 8;
     icon = images->getNickIcon( Images::Voice, away );
   } else {
-    flags += 2;
+    flags += 4;
     icon = images->getNickIcon( Images::Normal, away );
   }
 
-  if(flags != m_flags)
-    {
-      needResort = true;
-      m_flags = flags;
-    }
-  
   setPixmap( 0, icon );
   
   KABC::Picture pic = nickInfo->getAddressee().photo();
@@ -103,13 +95,19 @@ void NickListViewItem::refresh()
 
   QString newtext1 = calculateLabel1();
   if(newtext1 != text(1))
-    setText(1,calculateLabel1());
+    {
+      setText(1,calculateLabel1());
+      flags += 2;
+    }
 
   setText(2,calculateLabel2());
   repaint();
 
-  if(needResort)
-    emit refreshed(); // Resort nick list
+  if(m_flags != flags)
+    {
+      m_flags = flags;
+      emit refreshed(); // Resort nick list
+    }
 }
 
 QString NickListViewItem::calculateLabel1() {
