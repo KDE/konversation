@@ -48,7 +48,6 @@ KonversationApplication::KonversationApplication()
   prefsDialog=0;
   quickConnectDialog=0;
   colorOffSet=0;
-  colorList = KonversationApplication::preferences.getNickColorList();
 
   // Sound object used to play sound...
   m_sound = new Konversation::Sound(this);
@@ -61,6 +60,7 @@ KonversationApplication::KonversationApplication()
   preferences.setListFont(font());
 
   readOptions();
+  colorList = KonversationApplication::preferences.getNickColorList();
 
   // Images object providing LEDs, NickIcons
   m_images = new Images();
@@ -468,9 +468,8 @@ void KonversationApplication::readOptions()
   QStringList nickColorList = preferences.getNickColorList();
   preferences.setNickColorList(config->readListEntry("NickColors"));
 
-  if(preferences.getNickColorList().empty()) {
+  if(preferences.getNickColorList().empty())
     preferences.setNickColorList(nickColorList);
-  }
   preferences.setUseColoredNicks(config->readBoolEntry("UseColoredNicks",preferences.getUseColoredNicks()));
 
   preferences.setShowTabBarCloseButton(config->readBoolEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton()));
