@@ -58,10 +58,12 @@ void Nick::setNickname(const QString& newName)
 {
   KABC::Addressee newaddressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(newName);
 
-  if(addressee.isEmpty() && !newaddressee.isEmpty()) //We now know who this person is
+  if(addressee.isEmpty() && !newaddressee.isEmpty()) { //We now know who this person is
     Konversation::Addressbook::self()->associateNick(newaddressee,nickname);  //Associate the old nickname with new contact
-  else if(!addressee.isEmpty() && newaddressee.isEmpty()) {
+    Konversation::Addressbook::self()->saveAddressee(newaddressee);
+  } else if(!addressee.isEmpty() && newaddressee.isEmpty()) {
     Konversation::Addressbook::self()->associateNick(addressee, newName);
+    Konversation::Addressbook::self()->saveAddressee(newaddressee);	
     newaddressee = addressee;
   }
 
