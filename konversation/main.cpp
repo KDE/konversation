@@ -10,6 +10,8 @@
   begin:     Die Jan 15 05:59:05 CET 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
+
+  $Id$
 */
 
 #ifdef HAVE_CONFIG_H

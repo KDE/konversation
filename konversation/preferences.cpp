@@ -10,6 +10,8 @@
   begin:     Tue Feb 5 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
+
+  $Id$
 */
 
 #include <ktoolbar.h>

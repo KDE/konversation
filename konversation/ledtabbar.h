@@ -10,6 +10,8 @@
   begin:     Sun Feb 24 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
+
+  $Id$
 */
 
 #ifndef LEDTABBAR_H

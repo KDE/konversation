@@ -1,4 +1,6 @@
 # KDE Config File  
+# $Id$
+
 [Desktop Entry]
 Type=Application
 Exec=konversation -caption "%c" %i %m

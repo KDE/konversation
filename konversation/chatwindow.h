@@ -10,6 +10,8 @@
   begin:     Fri Feb 1 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
+
+  $Id$
 */
 
 #include <qobject.h>

@@ -10,6 +10,8 @@
   begin:     Sat Jan 19 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
+
+  $Id$
 */
 
 #include <ksock.h>

@@ -10,6 +10,8 @@
     begin:     Wed Jan 23 2002
     copyright: (C) 2002 by Dario Abatianni
     email:     eisfuchs@tigress.com
+
+    $Id$
 */
 
 #include <qcombobox.h>

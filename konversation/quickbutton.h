@@ -10,6 +10,8 @@
   begin:     Wed Feb 6 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
+
+  $Id$
 */
 
 #ifndef QUICKBUTTON_H
