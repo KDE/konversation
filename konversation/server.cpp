@@ -2308,6 +2308,7 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
   if(ownIpByWHOIS.isEmpty() && sourceNick==nickname)  // myself
   {
     QString myhost = sourceHostmask.section('@', 1);
+    // Use async lookup else you will be blocking GUI badly
     KNetwork::KResolver::resolveAsync(this,SLOT(gotWhoisIpReply(KResolverResults)),myhost,"0");
   }
 
