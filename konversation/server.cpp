@@ -1504,9 +1504,7 @@ void Server::requestDccChat(const QString& nickname)
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)
 {
-  kdDebug() << "Server::dccSendRequest()" << endl;
   outputFilter->sendRequest(partner,fileName,address,port,size);
-  kdDebug() << "Server::dccSendRequest(): outputFilter->getServerOutput() returns: " << outputFilter->getServerOutput() << endl;
   queue(outputFilter->getServerOutput());
   appendStatusMessage(outputFilter->getType(),outputFilter->getOutput());
 }
