@@ -41,7 +41,6 @@ ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
 {
 #ifdef USE_MDI
   setName(caption);
-
   setLedColor(0);
   setLabelColor(QString::null);
   setOn(0);

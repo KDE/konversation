@@ -20,9 +20,11 @@
 
 #include <kstaticdeleter.h> 
 #include <qobject.h>
+#include <qregexp.h>
+#include "kimiface.h"
 
 namespace Konversation {
-class Addressbook : public QObject
+class Addressbook : public QObject, public KIMIface
 {
   Q_OBJECT
   public:
@@ -31,6 +33,12 @@ class Addressbook : public QObject
     void unassociateNick(KABC::Addressee &addressee, const QString &ircnick);
     void associateNick(KABC::Addressee &addressee, const QString &ircnick);
     bool associateNickAndUnassociateFromEveryoneElse(KABC::Addressee &addressee, const QString &ircnick);
+    QString getMainNick(const KABC::Addressee &addressee);
+    bool hasAnyNicks(const KABC::Addressee &addresse, const QString &/*server*/);
+    int presenceStatus(const KABC::Addressee &addressee);
+    int presenceStatusByNick(const QString &ircnick);
+    bool isOnline(KABC::Addressee &addressee);
+    bool isOnline(const QString &ircnick);
     bool getAndCheckTicket();
     bool saveTicket();	
     void releaseTicket();
@@ -39,6 +47,50 @@ class Addressbook : public QObject
     KABC::AddressBook *getAddressBook();
     
     static Addressbook *self();
+    QStringList allContacts();
+    QStringList reachableContacts();
+    QStringList onlineContacts();
+    QStringList fileTransferContacts();
+    bool isPresent( const QString &uid );
+    QString displayName( const QString &uid );
+    QString presenceString( const QString &uid );
+    bool canReceiveFiles( const QString &uid );
+    bool canRespond( const QString &uid );
+    QString locate( const QString &contactId, const QString &protocol );
+// metadata
+    QPixmap icon( const QString &uid );
+    QString context( const QString &uid );
+    int presenceStatus(const QString &uid);
+// App capabilities
+    QStringList protocols();
+    
+    /**
+     * Message a contact by their metaContactId, aka their uid in KABC.
+     */
+    void messageContact( const QString &uid, const QString& message );
+
+    /**
+     * Open a chat to a contact, and optionally set some initial text
+     */
+    void messageNewContact(  const QString &contactId, const QString &protocolId );
+
+    /**
+     * Message a contact by their metaContactId, aka their uid in KABC.
+     */
+    void chatWithContact( const QString &uid );
+
+    /**
+     * Send the file to the contact
+     */
+    void sendFile(const QString &uid, const KURL &sourceURL,
+        const QString &altFileName = QString::null, uint fileSize = 0);
+
+// MUTATORS
+// Contact list
+    bool addContact( const QString &contactId, const QString &protocolId );
+
+    void contactPresenceChanged( QString uid, QCString appId, int presence );
+    
   private:
     Addressbook();
     static Addressbook *m_instance;
@@ -48,6 +100,7 @@ class Addressbook : public QObject
     
   signals:
     void addresseesChanged();
+    
 };
 
 

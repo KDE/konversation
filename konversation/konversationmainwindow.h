@@ -180,6 +180,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     Server* frontServer;
     QGuardedPtr<ChatWindow> frontView;
+    QGuardedPtr<ChatWindow> previousFrontView;
     ChatWindow* searchView;
 
     UrlCatcher* urlCatcherPanel;

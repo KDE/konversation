@@ -80,6 +80,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 {
   // Init variables before anything else can happen
   frontView=0;
+  previousFrontView=0;
   searchView=0;
   frontServer=0;
   urlCatcherPanel=0;
@@ -379,7 +380,11 @@ void KonversationMainWindow::showView(ChatWindow* view)
 #endif
 }
 
+#ifdef USE_MDI
 void KonversationMainWindow::setWindowNotification(ChatWindow* view,const QIconSet& iconSet,const QString& color) // USE_MDI
+#else
+void KonversationMainWindow::setWindowNotification(ChatWindow*,const QIconSet&,const QString&) // USE_MDI
+#endif
 {
 #ifdef USE_MDI
   if(tabWidget())
@@ -390,15 +395,21 @@ void KonversationMainWindow::setWindowNotification(ChatWindow* view,const QIconS
 #endif
 }
 
+#ifdef USE_MDI
 void KonversationMainWindow::closeWindow(ChatWindow* viewToClose) // USE_MDI
+#else
+void KonversationMainWindow::closeWindow(ChatWindow*) // USE_MDI
+#endif
 {
 #ifdef USE_MDI
   ChatWindow* view=static_cast<ChatWindow*>(viewToClose);
   if(view)
   {
     // if this view was the front view, delete the pointer
-    if(view==frontView) frontView=0;
-
+    // JOHNFLUX - move to previous view 
+    if(view==previousFrontView) previousFrontView=0
+    if(view==frontView) frontView=previousFrontView;
+    
     emit endNotification(viewToClose);
 
     ChatWindow::WindowType viewType=view->getType();
@@ -448,8 +459,9 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
   if(view)
   {
     // if this view was the front view, delete the pointer
-    if(view==frontView) frontView=0;
-
+    if(view==previousFrontView) previousFrontView=0;
+    if(view==frontView) frontView=previousFrontView;
+    
     emit endNotification(viewToClose);
 
     ChatWindow::WindowType viewType=view->getType();
@@ -821,6 +833,8 @@ void KonversationMainWindow::updateFrontView()
   if(view)
   {
     // Make sure that only views with info output get to be the frontView
+    if(frontView)
+        previousFrontView=frontView;
     if(view->frontView()) frontView=view;
     // Make sure that only text views get to be the searchView
     if(view->searchView()) searchView=view;
@@ -830,15 +844,16 @@ void KonversationMainWindow::updateFrontView()
 void KonversationMainWindow::changeToView(KMdiChildView* viewToChange) // USE_MDI
 {
 #ifdef USE_MDI
+  ChatWindow* view=static_cast<ChatWindow*>(viewToChange);
+  if(frontView)
+    previousFrontView = frontView;
   frontView=0;
   searchView=0;
 
-  ChatWindow* view=static_cast<ChatWindow*>(viewToChange);
 
   // display this server's lag time
   frontServer=view->getServer();
   if(frontServer) updateLag(frontServer,frontServer->getLag());
-
   updateFrontView();
 
   view->setOn(false);
@@ -851,15 +866,16 @@ void KonversationMainWindow::changeToView(KMdiChildView* viewToChange) // USE_MD
 void KonversationMainWindow::changeView(QWidget* viewToChange)
 {
 #ifndef USE_MDI
+  ChatWindow* view=static_cast<ChatWindow*>(viewToChange);
+  if(frontView)
+    previousFrontView = frontView;
   frontView=0;
   searchView=0;
 
-  ChatWindow* view=static_cast<ChatWindow*>(viewToChange);
 
   // display this server's lag time
   frontServer=view->getServer();
   if(frontServer) updateLag(frontServer,frontServer->getLag());
-
   updateFrontView();
 
   viewContainer->changeTabState(view,false,false,QString::null);
