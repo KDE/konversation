@@ -37,6 +37,8 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QWidget* newParent, Preferenc
 
   kcfg_autoWhoContinuous->setChecked(preferences->getAutoWhoContinuousEnabled());
   kcfg_WhoInterval->setValue(preferences->getAutoWhoContinuousInterval());
+
+  kcfg_ShowRealNames->setChecked(preferences->getShowRealNames());
 }
 
 PrefsPageChatWinBehavior::~PrefsPageChatWinBehavior()
@@ -55,6 +57,7 @@ void PrefsPageChatWinBehavior::applyPreferences()
   preferences->setAutoWhoNicksLimit(kcfg_AutoWhoLimit->value());
   preferences->setAutoWhoContinuousEnabled(kcfg_autoWhoContinuous->isChecked());
   preferences->setAutoWhoContinuousInterval(kcfg_WhoInterval->value());
+  preferences->setShowRealNames(kcfg_ShowRealNames->isChecked());
 }
 
 #include "prefspagechatwinbehavior.moc"

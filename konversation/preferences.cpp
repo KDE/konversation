@@ -133,6 +133,8 @@ Preferences::Preferences()
   setAutoWhoContinuousEnabled(true);
   setAutoWhoContinuousInterval(90);
 
+  setShowRealNames(false);
+
   setLog(true);
   setLowerLog(true);
   setAddHostnameToLog(false);
@@ -378,6 +380,10 @@ void Preferences::setAutoWhoContinuousEnabled(bool state)
 const bool Preferences::getAutoWhoContinuousEnabled() { return autoWhoContinuousEnabled; }
 void Preferences::setAutoWhoContinuousInterval(int interval) { autoWhoContinuousInterval=interval; }
 const int Preferences::getAutoWhoContinuousInterval() { return autoWhoContinuousInterval; }
+
+
+const bool Preferences::getShowRealNames() { return showRealNames;}
+void Preferences::setShowRealNames(bool show) { showRealNames=show; }
 
 void Preferences::setDccAddPartner(bool state) { dccAddPartner=state; }
 const bool Preferences::getDccAddPartner() { return dccAddPartner; }

@@ -104,16 +104,18 @@ int KonversationApplication::newInstance()
 
     // Setup system codec
     // TODO: check if this works now as intended
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
+    //    QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
 
     // open main window
     mainWindow = new KonversationMainWindow();
     setMainWidget(mainWindow);
+    
     connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
     connect(mainWindow,SIGNAL (openPrefsDialog(Preferences::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
     connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
     connect(&preferences,SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
-    connect(this, SIGNAL(prefsChanged()), mainWindow, SLOT(slotPrefsChanged()));
+    connect(this, SIGNAL (prefsChanged()), mainWindow, SLOT (slotPrefsChanged()) );
+    
     // apply GUI settings
     appearanceChanged();
     mainWindow->show();
@@ -185,6 +187,7 @@ void KonversationApplication::setAutoAway()
   }
  
 }
+
 void KonversationApplication::toggleAway()
 {
   kdDebug() << "toggleAway()" << endl;
@@ -193,6 +196,7 @@ void KonversationApplication::toggleAway()
   bool alreadyaway = false;
   
   Server* lookServer=serverList.first();
+
   while(lookServer)
   {
     if(lookServer->isConnected()) {
@@ -204,13 +208,15 @@ void KonversationApplication::toggleAway()
     }
     lookServer=serverList.next();
   }
+
   //alreadyaway is true if _any_ servers are away
   if(alreadyaway) {
     sendMultiServerCommand("away", QString::null);  //toggle as not away
-  } else {
+  } 
+  else {
     QString awaymessage ; //get default awaymessage
     if(awaymessage.isEmpty()) awaymessage = "Away at the moment";
-
+    
     sendMultiServerCommand("away", awaymessage);
   }
 }
@@ -219,6 +225,7 @@ void KonversationApplication::dcopMultiServerRaw(const QString &command)
 {
   sendMultiServerCommand(command.section(' ', 0,0), command.section(' ', 1));
 }
+
 void KonversationApplication::dcopRaw(const QString& server, const QString &command)
 {
   Server* lookServer=serverList.first();
@@ -409,6 +416,7 @@ void KonversationApplication::readOptions()
   preferences.setAutoWhoNicksLimit(config->readUnsignedNumEntry("AutoWhoNicksLimit",preferences.getAutoWhoNicksLimit()));
   preferences.setAutoWhoContinuousEnabled(config->readBoolEntry("AutoWhoContinuousEnabled",preferences.getAutoWhoContinuousEnabled()));
   preferences.setAutoWhoContinuousInterval(config->readUnsignedNumEntry("AutoWhoContinuousInterval",preferences.getAutoWhoContinuousInterval()));
+  preferences.setShowRealNames(config->readBoolEntry("ShowRealNames",preferences.getShowRealNames()));
 
   // Double click actions
   preferences.setChannelDoubleClickAction(config->readEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction()));
@@ -929,6 +937,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("AutoWhoNicksLimit",preferences.getAutoWhoNicksLimit());
   config->writeEntry("AutoWhoContinuousEnabled",preferences.getAutoWhoContinuousEnabled());
   config->writeEntry("AutoWhoContinuousInterval",preferences.getAutoWhoContinuousInterval());
+  config->writeEntry("ShowRealNames",preferences.getShowRealNames());
 
   config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon());
   config->writeEntry("SystrayOnly",preferences.getSystrayOnly());

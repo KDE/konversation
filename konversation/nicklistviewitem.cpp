@@ -114,11 +114,14 @@ QString NickListViewItem::calculateLabel1() {
   NickInfoPtr nickinfo = nick->getNickInfo();
   KABC::Addressee addressee = nickinfo->getAddressee();
 
-  if(!addressee.realName().isEmpty()) {//if no addressee, realName will be empty
-    return nick->getNickInfo()->getNickname() + " (" + addressee.realName() + ")";
-  } else if(!nick->getNickInfo()->getRealName().isEmpty()) {
-    return nick->getNickInfo()->getNickname() + " (" + nick->getNickInfo()->getRealName() + ")";
-  }
+  if(!addressee.realName().isEmpty()) //if no addressee, realName will be empty
+    {
+      return nick->getNickInfo()->getNickname() + " (" + addressee.realName() + ")";
+    } 
+  else if(KonversationApplication::preferences.getShowRealNames() && !nick->getNickInfo()->getRealName().isEmpty())
+    {
+      return nick->getNickInfo()->getNickname() + " (" + nick->getNickInfo()->getRealName() + ")";
+    }
 
   return nick->getNickInfo()->getNickname();
 }

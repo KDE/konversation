@@ -108,6 +108,9 @@ class Preferences : public QObject
     void setAutoWhoContinuousInterval(int interval);
     const int getAutoWhoContinuousInterval();
 
+    void setShowRealNames(bool show);
+    const bool getShowRealNames();
+
     void setDccAddPartner(bool state);
     const bool getDccAddPartner();
     void setDccCreateFolder(bool state);
@@ -507,6 +510,8 @@ class Preferences : public QObject
     int autoWhoNicksLimit;
     bool autoWhoContinuousEnabled;
     int autoWhoContinuousInterval;
+
+    bool showRealNames;
 
     TabPlacement tabPlacement;   // where do the tabs go?
     bool blinkingTabs;           // Do we want the LEDs on the tabs to blink?
