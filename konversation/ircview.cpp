@@ -643,6 +643,12 @@ void IRCView::removeSelectedText( int selNum )
     // ...snip...
 }
 
+void IRCView::scrollToBottom()
+{
+  // QTextEdit::scrollToBottom does sync() too, but we don't want it because its slow
+  setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
+}
+
 void IRCView::doAppend(QString newLine, bool important, bool self)
 {
   // Add line to buffer
