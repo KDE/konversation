@@ -7,6 +7,8 @@ berkus: Logrotate with timer or at shutdown, compress rotated logs
 Eisfuchs: Automatic/Manual reconnect on long lag times
 Eisfuchs: Check KStringHandler::tagURLs for URL highlighting
 
+Tab completion should wor on an alphabetic list
+/WHOWAS after /WHOIS if /WHOIS returns unknown nickname
 List of channels / queries in a new window that indicate new text
 Channel list: sort channels numerically when sorted by user amount
 Optionally copy log files to new location

@@ -41,7 +41,7 @@ Preferences::Preferences()
 
   // create default identity
   Identity* identity=new Identity();
-  identity->setName(i18n("Default Identity"));
+  identity->setName(i18n("Default identity"));
   addIdentity(identity);
 
   setIdent("konversation");
@@ -146,6 +146,23 @@ Preferences::Preferences()
   setSortByStatus(false);
 
   setAutoUserhost(false);
+
+  ircColorList.append("#ffffff");
+  ircColorList.append("#000000");
+  ircColorList.append("#000080");
+  ircColorList.append("#008000");
+  ircColorList.append("#ff0000");
+  ircColorList.append("#a52a2a");
+  ircColorList.append("#800080");
+  ircColorList.append("#ff8000");
+  ircColorList.append("#808000");
+  ircColorList.append("#00ff00");
+  ircColorList.append("#008080");
+  ircColorList.append("#00ffff");
+  ircColorList.append("#0000ff");
+  ircColorList.append("#ffc0cb");
+  ircColorList.append("#a0a0a0");
+  ircColorList.append("#c0c0c0");
 }
 
 Preferences::~Preferences()
@@ -577,5 +594,11 @@ void Preferences::setDialogFlag(const QString& flagName,bool state)
 
 void Preferences::setMaximumLagTime(int lag) { maximumLag=lag; }
 int Preferences::getMaximumLagTime()         { return maximumLag; }
+
+void Preferences::setIRCColorList(QStringList cl) { ircColorList=cl; }
+QStringList Preferences::getIRCColorList()        { return ircColorList; }
+
+void Preferences::setAliasList(QStringList newList) { aliasList=newList; }
+QStringList Preferences::getAliasList()             { return aliasList; }
 
 #include "preferences.moc"

@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="0.4 $Id$">
+<kpartgui name="konversation" version="0.5 $Id$">
 
   <MenuBar>
     <Menu name="file">
@@ -20,6 +20,8 @@
   <ToolBar fullWidth="true" name="mainToolBar">
     <Action name="options_configure_key_binding" />
     <Action name="options_configure" />
+    <separator lineSeparator="true" />
+    <Action name="irc_colors" />
   </ToolBar>
 
 </kpartgui>

@@ -30,7 +30,7 @@ NicksOnline::NicksOnline(const QSize& newSize)
 {
   kdDebug() << "NicksOnline::NicksOnline()" << endl;
   
-  setCaption(i18n("Nicks Online"));
+  setCaption(i18n("Nicks online - Konversation"));
   
   nickListView=new KListView(this);
   

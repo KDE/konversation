@@ -91,6 +91,7 @@ class Channel : public ChatWindow
     void adjustFocus();
     void showQuickButtons(bool show);
     void showModeButtons(bool show);
+    void appendInputText(const QString& s);
 
   protected slots:
     void completeNick();

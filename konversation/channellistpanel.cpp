@@ -53,7 +53,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
 
   filterTextChanged(QString::null);
 
-  QHGroupBox* filterGroup=new QHGroupBox(i18n("Filter Settings"),this);
+  QHGroupBox* filterGroup=new QHGroupBox(i18n("Filter settings"),this);
   QGrid* mainGrid=new QGrid(2,Qt::Vertical,filterGroup);
   mainGrid->setSpacing(spacing());
 
@@ -76,7 +76,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   channelFilter=new QCheckBox(i18n("Channel"),targetBox,"filter_target_channel_check");
   topicFilter=new QCheckBox(i18n("Topic"),targetBox,"filter_target_topic_check");
   regexpCheck=new QCheckBox(i18n("Regular expression"),targetBox,"regexp_check");
-  QPushButton* applyFilter=new QPushButton(i18n("Apply Filter"),targetBox,"apply_filter_button");
+  QPushButton* applyFilter=new QPushButton(i18n("Apply filter"),targetBox,"apply_filter_button");
 
   channelFilter->setChecked(getChannelTarget());
   topicFilter->setChecked(getTopicTarget());
@@ -85,9 +85,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   targetBox->setStretchFactor(topicFilter,10);
 
   channelListView=new KListView(this,"channel_list_view");
-  channelListView->addColumn(i18n("Channel Name"));
+  channelListView->addColumn(i18n("Channel name"));
   channelListView->addColumn(i18n("Users"));
-  channelListView->addColumn(i18n("Channel Topic"));
+  channelListView->addColumn(i18n("Channel topic"));
   channelListView->setFullWidth(true);
   channelListView->setAllColumnsShowFocus(true);
 
@@ -102,9 +102,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   QHBox* actionBox=new QHBox(this);
   actionBox->setSpacing(spacing());
 
-  QPushButton* refreshListButton=new QPushButton(i18n("Refresh List"),actionBox,"refresh_list_button");
-  QPushButton* saveListButton=new QPushButton(i18n("Save List..."),actionBox,"save_list_button");
-  QPushButton* joinChannelButton=new QPushButton(i18n("Join Channel"),actionBox,"join_channel_button");
+  QPushButton* refreshListButton=new QPushButton(i18n("Refresh list"),actionBox,"refresh_list_button");
+  QPushButton* saveListButton=new QPushButton(i18n("Save list"),actionBox,"save_list_button");
+  QPushButton* joinChannelButton=new QPushButton(i18n("Join channel"),actionBox,"join_channel_button");
 
   connect(minUsersSpin,SIGNAL (valueChanged(int)),this,SLOT(setMinUsers(int)) );
   connect(maxUsersSpin,SIGNAL (valueChanged(int)),this,SLOT(setMaxUsers(int)) );
@@ -132,7 +132,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
                                      "of network traffic. If your connection is not fast "
                                      "enough, it's possible that your client gets "
                                      "disconnected by the server!"),
-                                i18n("Channel List Warning"),"ChannelListWarning");
+                                i18n("Channel list warning"),"ChannelListWarning");
 }
 
 ChannelListPanel::~ChannelListPanel()
@@ -159,7 +159,7 @@ void ChannelListPanel::saveList()
                                                  QString::null,
                                                  QString::null,
                                                  this,
-                                                 i18n("Save Channel List"));
+                                                 i18n("Save channel list"));
 
   if(!fileName.isEmpty())
   {

@@ -32,7 +32,7 @@ bool SearchDialog::forward=false;
 bool SearchDialog::fromCursor=false;
 
 SearchDialog::SearchDialog(QWidget* parent,QSize size) :
-               KDialogBase(parent,"search_dialog",true,i18n("Search Text"),
+               KDialogBase(parent,"search_dialog",true,i18n("Search text"),
                            KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
 {
   kdDebug() << "SearchDialog::SearchDialog()" << endl;
@@ -47,7 +47,7 @@ SearchDialog::SearchDialog(QWidget* parent,QSize size) :
 
   QHBox* searchBox=new QHBox(page);
   
-  new QLabel(i18n("Search text:"),searchBox,"search_label");
+  new QLabel(i18n("Search text"),searchBox,"search_label");
   searchPattern=new KComboBox(searchBox);
   searchPattern->setEditable(true);
   searchPattern->insertStringList(lastSearchPatterns);
@@ -83,8 +83,8 @@ SearchDialog::SearchDialog(QWidget* parent,QSize size) :
   connect(forwardCheck,SIGNAL (stateChanged(int)),this,SLOT (forwardChanged(int)));
   connect(fromCursorCheck,SIGNAL (stateChanged(int)),this,SLOT (fromCursorChanged(int)));
 
-  setButtonOKText(i18n("&OK"),i18n("Search for text"));
-  setButtonCancelText(i18n("&Cancel"),i18n("Close the window"));
+  setButtonOKText(i18n("OK"),i18n("Search for text"));
+  setButtonCancelText(i18n("Cancel"),i18n("Close the window"));
 
   setInitialSize(size);
   searchPattern->setFocus();

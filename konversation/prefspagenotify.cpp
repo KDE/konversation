@@ -64,7 +64,7 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   // Set up the buttons to the right of the list
   QGrid* buttonBox=new QGrid(3,QGrid::Vertical,listBox);
   buttonBox->setSpacing(spacingHint());
-  newButton=new QPushButton(i18n("New..."),buttonBox);
+  newButton=new QPushButton(i18n("New"),buttonBox);
   removeButton=new QPushButton(i18n("Remove"),buttonBox);
 
   notifyLayout->addWidget(delayBox);
@@ -94,7 +94,7 @@ PrefsPageNotify::~PrefsPageNotify()
 void PrefsPageNotify::newNotify()
 {
   bool ok=false;
-  QString newPattern=KLineEditDlg::getText(i18n("Add notify:"),i18n("New"),&ok,parentFrame);
+  QString newPattern=KLineEditDlg::getText(i18n("Add notify"),i18n("New"),&ok,parentFrame);
   if(ok)
   {
     KListViewItem* newItem=new KListViewItem(notifyListView,newPattern);

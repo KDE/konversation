@@ -291,6 +291,12 @@ void KonversationApplication::readOptions()
   preferences.setChannelSplitter(sizes);
 
   preferences.setBackgroundImageName(config->readEntry("BackgroundImage",preferences.getBackgroundImageName()));
+  QStringList ircColorList = preferences.getIRCColorList();
+  preferences.setIRCColorList(config->readListEntry("IRCColors"));
+
+  if(preferences.getIRCColorList().empty()) {
+    preferences.setIRCColorList(ircColorList);
+  }
 
   // Colors are now handled in preferences
 
@@ -426,6 +432,11 @@ void KonversationApplication::readOptions()
     preferences.addIgnore(config->readEntry(QString("Ignore%1").arg(index++)));
   }
 
+  // Aliases
+  config->setGroup("Aliases");
+  QStringList newList=config->readListEntry("AliasList");
+  if(!newList.isEmpty()) preferences.setAliasList(newList);
+
   // Nick Completion
   config->setGroup("Nick Completion");
   preferences.setNickCompleteSuffixStart(config->readEntry("SuffixStart",preferences.getNickCompleteSuffixStart()));
@@ -521,8 +532,9 @@ void KonversationApplication::saveOptions(bool updateGUI)
   QString sizesString(QString::number(preferences.getChannelSplitter()[0])+","+QString::number(preferences.getChannelSplitter()[1]));
   config->writeEntry("ChannelSplitter",sizesString);
   config->writeEntry("BackgroundImage",preferences.getBackgroundImageName());
+  config->writeEntry("IRCColors", preferences.getIRCColorList());
 
-  // colors are now handled in preferences
+  // Colors are now handled in preferences
 
   config->setGroup("Sort Nicknames");
   config->writeEntry("OperatorValue",preferences.getOpValue());
@@ -624,6 +636,10 @@ void KonversationApplication::saveOptions(bool updateGUI)
     item=ignoreList.next();
     index++;
   }
+
+  // Aliases
+  config->setGroup("Aliases");
+  config->writeEntry("AliasList",preferences.getAliasList());
 
   // Nick Completion
   config->setGroup("Nick Completion");

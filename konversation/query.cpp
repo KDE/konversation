@@ -55,7 +55,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
   connect(queryInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );
   connect(queryInput,SIGNAL (pageDown()),getTextView(),SLOT (pageDown()) );
-  
+
   connect(textView,SIGNAL (newText(const QString&)),this,SLOT (newTextInView(const QString&)) );
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
@@ -165,10 +165,14 @@ QString Query::getTextInLine() { return queryInput->text(); }
 bool Query::frontView()        { return true; }
 bool Query::searchView()       { return true; }
 
+void Query::appendInputText(const QString& s)
+{
+  queryInput->setText(queryInput->text() + s);
+}
+
 void Query::closeYourself()
 {
   server->removeQuery(this);
 }
-
 
 #include "query.moc"

@@ -298,6 +298,14 @@ class Preferences : public QObject
     int getMaximumLagTime();
     void setMaximumLagTime(int maxLag);
 
+    // IRC colors
+    QStringList getIRCColorList();
+    void setIRCColorList(QStringList cl);
+
+    // aliases
+    QStringList getAliasList();
+    void setAliasList(QStringList aliasList);
+
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();
@@ -404,6 +412,11 @@ class Preferences : public QObject
     QPtrList<Highlight> hilightList;
 
     QString codec;
+
+    // IRC colors
+    QStringList ircColorList;
+    // aliases
+    QStringList aliasList;
 };
 
 #endif

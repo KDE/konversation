@@ -194,7 +194,7 @@ void IRCInput::paste()
                   i18n("<qt>You are attempting to paste a large portion of text into "
                        "the chat. This can cause connection resets or flood kills. "
                        "Do you really want to continue?</qt>"),
-                  i18n("Large Paste Warning"),
+                  i18n("Large paste warning"),
                   KStdGuiItem::yes(),
                   KStdGuiItem::no(),
                   "LargePaste"

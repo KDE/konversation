@@ -24,7 +24,7 @@
 #include "nickchangedialog.h"
 
 NickChangeDialog::NickChangeDialog(QWidget* parent,QString currentNick,const QStringList& nickList,QSize size):
-                  KDialogBase(parent,"nickchangedialog",false,i18n("Change Nickname"),
+                  KDialogBase(parent,"nickchangedialog",false,i18n("Change nickname"),
                               KDialogBase::Ok | KDialogBase::Cancel,
                               KDialogBase::Ok,true)
 {
@@ -46,8 +46,8 @@ NickChangeDialog::NickChangeDialog(QWidget* parent,QString currentNick,const QSt
 
   connect(nicknameInput,SIGNAL (activated(const QString&)),this,SLOT (newNicknameEntered(const QString&)) );
   
-  setButtonOKText(i18n("&OK"),i18n("Set new nickname and close the window"));
-  setButtonCancelText(i18n("&Cancel"),i18n("Close the window without changes"));
+  setButtonOKText(i18n("OK"),i18n("Set new nickname and close the window"));
+  setButtonCancelText(i18n("Cancel"),i18n("Close the window without changes"));
 
   setInitialSize(size);
 }

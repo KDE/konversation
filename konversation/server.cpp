@@ -730,7 +730,7 @@ void Server::requestDccSend(const QString &a_recipient)
                                                    lastDccDir,
                                                    QString::null,
                                                    getMainWindow(),
-                                                   i18n("Select File to Send to %1").arg(recipient)
+                                                   i18n("Select file to send to %1").arg(recipient)
                                                  );
     if(!fileName.isEmpty())
     {

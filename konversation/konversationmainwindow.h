@@ -21,6 +21,8 @@
 #include <qstringlist.h>
 
 #include <kmainwindow.h>
+#include <kdeversion.h>
+#include <kdeversion.h>
 
 #include "preferences.h"
 
@@ -94,6 +96,9 @@ class KonversationMainWindow : public KMainWindow
     void openNotify();
     void openNicksOnlineWindow();
     void closeNicksOnlineWindow(QSize newSize);
+#if KDE_VERSION >= 310
+    void openNotifications();
+#endif
 
     void showToolbar();
     void showStatusbar();
@@ -124,6 +129,7 @@ class KonversationMainWindow : public KMainWindow
     void goToTab9();
 
     void findTextShortcut();
+    void addIRCColor();
 
   protected:
     enum StatusID

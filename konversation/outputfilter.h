@@ -86,6 +86,8 @@ class OutputFilter : public QObject
     bool program;
     bool query;
 
+    QString replaceAliases(const QString& line);
+
     void parseMsg(const QString& myNick,const QString& parameter);      // works
     void parseSMsg(const QString& parameter);     // works
     void parseQuery(const QString& parameter);    // works

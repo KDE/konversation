@@ -154,8 +154,8 @@ void StatusPanel::closeYourself()
 {
   int result=KMessageBox::warningYesNo(
                 this,
-                i18n("Do you really want to disconnect from '%1'?").arg(server->getServerName()),
-                i18n("Quit Server"),
+                i18n("Do you really want to disconnect from %1?").arg(server->getServerName()),
+                i18n("Quit server"),
                 KStdGuiItem::yes(),
                 KStdGuiItem::no(),
                 "QuitServerOnTabClose");

@@ -56,6 +56,8 @@ class Query : public ChatWindow
   public slots:
     void adjustFocus();
     void sendQueryText(const QString& text);
+    void appendInputText(const QString& s);
+
 
   protected slots:
     void queryTextEntered();

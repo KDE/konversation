@@ -36,7 +36,7 @@ EditServerDialog::EditServerDialog(QWidget* parent,
                                    QString channelKey,
                                    QString currentIdentity) :
 
-                  KDialogBase(parent,"editserver",true,i18n("Edit Server"),
+                  KDialogBase(parent,"editserver",true,i18n("Edit server"),
                               KDialogBase::Ok | KDialogBase::Cancel,
                               KDialogBase::Ok,true)
 
@@ -108,8 +108,8 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   layout->addMultiCellWidget(spacer,row,row,0,3);
   layout->setRowStretch(row,10);
 
-  setButtonOKText(i18n("&OK"),i18n("Change server information"));
-  setButtonCancelText(i18n("&Cancel"),i18n("Discards all changes made"));
+  setButtonOKText(i18n("OK"),i18n("Change server information"));
+  setButtonCancelText(i18n("Cancel"),i18n("Discards all changes made"));
 }
 
 EditServerDialog::~EditServerDialog()

@@ -1,0 +1,31 @@
+[!Global!]
+IconName=konversation
+Comment=Konversation
+
+[message]
+Name=New message
+Name[sv]=Nytt meddelande
+Comment=New message arrived in a channel
+Comment[sv]=Nytt meddelande har inkommit till en kanal
+default_presentation=0
+
+[nick]
+Name=Nick written
+Name[sv]=Smeknamn skrivet
+Comment=Someone wrote your nick in a message
+Comment[sv]=NÃ¥gon skrev ditt smeknamn i ett meddelande
+default_presentation=0
+
+[dcc_incomming]
+Name=Incomming file
+Name[sv]=Inkommande fil
+Comment=Someone wants to transmit a file to you over DCC
+Comment[sv]=NÃ¥gon will sÃ¤nda en fil till dig Ã¶ver DCC
+default_prentation=0
+
+[join]
+Name=Nick joined channel
+Name[sv]=Ny medlem
+Comment=New nick joined a channel
+Comment[sv]=En kanal fick en ny medlem
+defalt_presentation=0

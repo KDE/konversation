@@ -213,7 +213,7 @@ void ChatWindow::setLogfileName(const QString& name)
       backlog.device()->at(backlog.device()->size()-1024);
       // Skip first line, since it may be incomplete
       backlog.readLine();
-       
+
       // Loop until end of file reached
       while(!backlog.atEnd())
       {
@@ -221,7 +221,7 @@ void ChatWindow::setLogfileName(const QString& name)
         filePosition=backlog.device()->at();
 
         backlogLine=backlog.readLine();
-         
+
         // check for deadlocks
         if(backlog.device()->at()==filePosition) backlog.device()->at(filePosition+1);
          // if a tab character is present in the line
@@ -310,6 +310,11 @@ QString ChatWindow::getTextInLine()    { return QString::null; }
 bool ChatWindow::frontView()           { return false; }
 // reimplement this to return true in all classes that can become search view
 bool ChatWindow::searchView()          { return false; }
+
+// reimplement this in all panels that have user input
+void ChatWindow::appendInputText(const QString&)
+{
+}
 
 // reimplement this if your window needs special close treatment
 void ChatWindow::closeYourself()
