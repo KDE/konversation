@@ -131,6 +131,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   // link topic label shortcut to topic line
   topicLabel->setBuddy(topicLine);
 
+  showTopic(KonversationApplication::preferences.getShowTopic());
+  
   // The box holding the channel modes
   modeBox=new QHBox(topicBox);
   modeBox->setSizePolicy(hfixed);
