@@ -102,7 +102,6 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
     {
     }
   }
-  // reset completion mode
   return QLineEdit::eventFilter(object,event);
 }
 
@@ -149,7 +148,7 @@ void IRCInput::paste()
   // Copy text from the clipboard (paste)
   QString text=cb->text();
   // is there any text in the clipboard?
-  if(text)
+  if(!text.isEmpty())
   {
     bool signal=false;
     // does the text contain at least one newline character?
