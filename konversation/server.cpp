@@ -1640,6 +1640,7 @@ void Server::joinChannel(const QString &name, const QString &hostmask, const QSt
 #ifdef USE_NICKINFO
   // Move channel from unjoined (if present) to joined list and add our own nickname to the joined list.
   ChannelNickPtr channelNick = addNickToJoinedChannelsList(name, getNickname());
+  
   if ((channelNick->getHostmask() != hostmask ) && !hostmask.isEmpty())
   {
     NickInfoPtr nickInfo = channelNick->getNickInfo();
@@ -2233,12 +2234,12 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
 #ifdef USE_NICKINFO
     // Update NickInfo.
     ChannelNickPtr channelNick = addNickToJoinedChannelsList(channelName, nickname);
-    outChannel->joinNickname(channelNick);
     NickInfoPtr nickInfo = channelNick->getNickInfo();
     if ((nickInfo->getHostmask() != hostmask) && !hostmask.isEmpty())
     {
       nickInfo->setHostmask(hostmask);
     }
+    outChannel->joinNickname(channelNick);
 #else
 
     outChannel->joinNickname(nickname,hostmask);
