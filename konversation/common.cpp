@@ -50,17 +50,16 @@ QString tagURLs(const QString& text, const QString& fromNick)
 
   if(filteredLine.contains("#"))
     {
-      QRegExp chanExp("(?:^|\\s)#[^\\s\\x0007,]+");
+      QRegExp chanExp("(?:^|\\s)#[^\\s\\x0007,]{2,}");
 
       while((pos = chanExp.search(filteredLine, pos)) >= 0)
       {
           urlLen = chanExp.matchedLength();
-          QString href = filteredLine.mid( pos, urlLen );
-          QString link = "#" + href.stripWhiteSpace();
-
-          link = "<font color=\"#"+linkColor+"\"><a href=\""+link+"\">"+href+"</a></font>";
-          filteredLine.replace( pos, urlLen, link );
-          pos += link.length()-1;
+	  QString href = filteredLine.mid( pos, urlLen );
+	  QString link = "#" + href.stripWhiteSpace();
+	  link = "<font color=\"#"+linkColor+"\"><a href=\""+link+"\">"+href+"</a></font>";
+	  filteredLine.replace( pos, urlLen, link );
+	  pos += link.length()-1;
       }
     }
 
