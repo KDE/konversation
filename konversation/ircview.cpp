@@ -163,6 +163,11 @@ const QString& IRCView::getContextNick() const
   return m_currentNick;
 }
 
+void IRCView::clearContextNick()
+{
+  m_currentNick = QString::null;
+}
+
 void IRCView::clear()
 {
   buffer=QString::null;
@@ -441,10 +446,13 @@ void IRCView::append(const QString& nick,const QString& message)
   QString channelColor = KonversationApplication::preferences.getColor("ChannelMessage");
   QString line;
   QString nickLine = "%2";
+
+  if(KonversationApplication::preferences.getUseBoldNicks())
+    nickLine = "<b>%2</b>";
   
   if(KonversationApplication::preferences.getUseColoredNicks() && nick != m_server->getNickname()) {
     NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
-    nickLine = "<a href=\"#" + nick + "\"><font color=\"" + nickinfo->getNickColor() + "\">%2</font></a>";
+    nickLine = "<a href=\"#" + nick + "\"><font color=\"" + nickinfo->getNickColor() + "\">"+nickLine+"</font></a>";
   }
   
   if(basicDirection(message) == QChar::DirR) {
@@ -482,10 +490,13 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
   QString line;
   QString nickLine = "%2";
 
+  if(KonversationApplication::preferences.getUseBoldNicks())
+    nickLine = "<b>%2</b>";
+
   if(KonversationApplication::preferences.getUseColoredNicks() && nick != m_server->getNickname())
   {
     NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
-    nickLine = "<font color=\"" + nickinfo->getNickColor() + "\">%2</font>";
+    nickLine = "<font color=\"" + nickinfo->getNickColor() + "\">"+nickLine+"</font>";
   }
 
   if(basicDirection(message) == QChar::DirR) {
@@ -509,10 +520,13 @@ void IRCView::appendAction(const QString& nick,const QString& message)
   QString line;
   QString nickLine = "%2";
 
+  if(KonversationApplication::preferences.getUseBoldNicks())
+    nickLine = "<b>%2</b>";
+
   if(KonversationApplication::preferences.getUseColoredNicks() && nick != m_server->getNickname())
   {
     NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
-    nickLine = "<a href=\"#" + nick + "\"><font color=\"" + nickinfo->getNickColor() + "\">%2</font></a>";
+    nickLine = "<a href=\"#" + nick + "\"><font color=\"" + nickinfo->getNickColor() + "\">"+nickLine+"</font></a>";
   }
 
   if(basicDirection(message) == QChar::DirR) {

@@ -472,6 +472,8 @@ void KonversationApplication::readOptions()
     preferences.setNickColorList(nickColorList);
   preferences.setUseColoredNicks(config->readBoolEntry("UseColoredNicks",preferences.getUseColoredNicks()));
 
+  preferences.setUseBoldNicks(config->readBoolEntry("UseBoldNicks",preferences.getUseBoldNicks()));
+
   preferences.setShowTabBarCloseButton(config->readBoolEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton()));
 
   preferences.setShowTopic(config->readBoolEntry("ShowTopic", preferences.getShowTopic()));

@@ -216,6 +216,7 @@ Preferences::Preferences()
   nickColorList.append("#0FB39A");
   nickColorList.append("#3176B3");
   setUseColoredNicks(false);
+  setUseBoldNicks(false);
 
   setNickCompletionMode(2);
   setNickCompletionCaseSensitive(false);
@@ -945,6 +946,9 @@ void Preferences::setUseColoredNicks(bool useColor) { useColoredNicks=useColor; 
 
 void Preferences::setNickColorList(const QStringList &cl) { nickColorList=cl; }
 const QStringList Preferences::getNickColorList() { return nickColorList; }
+
+void Preferences::setUseBoldNicks(bool boldNicks) { useBoldNicks=boldNicks; }
+const bool Preferences::getUseBoldNicks() { return useBoldNicks; }
 
 const bool Preferences::getRedirectToStatusPane() { return redirectToStatusPane; }
 void Preferences::setRedirectToStatusPane(bool redirect) { redirectToStatusPane = redirect; }

@@ -313,6 +313,9 @@ class Preferences : public QObject
     const QStringList getNickColorList();
     void setNickColorList(const QStringList &cl);
 
+    const bool getUseBoldNicks();
+    void setUseBoldNicks(bool boldNicks);
+
     const bool getFilterColors();
     void setFilterColors(bool filter);
 
@@ -632,6 +635,7 @@ class Preferences : public QObject
     QStringList nickColorList;
     bool filterColors;
     bool useColoredNicks;
+    bool useBoldNicks;
 
     // aliases
     QStringList aliasList;

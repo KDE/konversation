@@ -12,8 +12,8 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>527</width>
-            <height>482</height>
+            <width>525</width>
+            <height>504</height>
         </rect>
     </property>
     <vbox>
@@ -158,6 +158,14 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>Show nickname box in channel and status window</string>
                     </property>
                 </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_UseBoldNicks</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use &amp;bold nicknames</string>
+                    </property>
+                </widget>
             </vbox>
         </widget>
         <widget class="QGroupBox">
@@ -192,23 +200,6 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </hbox>
         </widget>
-        <spacer>
-            <property name="name">
-                <cstring>spacer4</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>20</height>
-                </size>
-            </property>
-        </spacer>
     </vbox>
 </widget>
 <tabstops>

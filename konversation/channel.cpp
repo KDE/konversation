@@ -391,7 +391,7 @@ void Channel::textPasted(const QString& text)
   }
 }
 
-// Will be connected to NickListView::popupCommand(int)
+// Will be connected to NickListView::popupCommand(int) and IRCView::popupCommand(int)
 void Channel::popupCommand(int id)
 {
   QString pattern;
@@ -406,6 +406,7 @@ void Channel::popupCommand(int id)
       QListViewItem* item = nicknameListView->findItem(textView->getContextNick(),1);
       nicknameListView->setSelected(item,true);
       nicknameListView->ensureItemVisible(item);
+      textView->clearContextNick();
     }
 
   switch(id)

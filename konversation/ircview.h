@@ -40,8 +40,11 @@ class IRCView : public KTextBrowser
     void clear();
     void setViewBackground(const QString& color,const QString& pixmapName);
     void setServer(Server* server);
+    
     // Returns the current nick under context menu.
     const QString& getContextNick() const;
+    // Resets context nick
+    void clearContextNick();
 
     void updateStyleSheet();
 
