@@ -405,9 +405,9 @@ void IRCView::doAppend(QString line)
 
   // scroll view only if the scroll bar is already at the bottom
 #if QT_VERSION == 303
-  bool doScroll=((contentsHeight()-visibleHeight())==contentsY());
-#else
   bool doScroll=true;
+#else
+  bool doScroll=((contentsHeight()-visibleHeight())==contentsY());
 #endif
 
 #ifdef TABLE_VERSION
