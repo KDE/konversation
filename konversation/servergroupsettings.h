@@ -16,8 +16,7 @@
 #include <qstringlist.h>
 
 #include "serversettings.h"
-
-class Identity;
+#include "identity.h"
 
 namespace Konversation {
 
@@ -45,8 +44,8 @@ class ServerGroupSettings
     ServerList serverList() const { return m_serverList; }
     ServerSettings serverByIndex(unsigned int index) const;
 
-    void setIdentity(Identity* identity) { m_identity = identity; }
-    Identity* identity() const { return m_identity; }
+    void setIdentity(IdentityPtr identity) { m_identity = identity; }
+    IdentityPtr identity() const { return m_identity; }
 
     void setChannelList(const ChannelList& list);
     void addChannel(const ChannelSettings& channel) { m_channelList.append(channel); }
@@ -67,7 +66,7 @@ class ServerGroupSettings
   private:
     QString m_name;
     ServerList m_serverList;
-    Identity* m_identity;
+    IdentityPtr m_identity;
     ChannelList m_channelList;
     QString m_connectCommands;
     bool m_autoConnect;

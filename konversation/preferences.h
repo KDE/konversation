@@ -27,6 +27,7 @@
 #include <kdeversion.h>
 
 #include "servergroupsettings.h"
+#include "identity.h"
 
 /*
   @author Dario Abatianni
@@ -43,7 +44,6 @@ NoRightsColor (int)
 
 class Ignore;
 class Highlight;
-class Identity;
 
 class Preferences : public QObject
 {
@@ -260,12 +260,12 @@ class Preferences : public QObject
     QPtrList<Ignore> getIgnoreList();
     void setIgnoreList(QPtrList<Ignore> newList);
 
-    void addIdentity(Identity* identity);
-    void removeIdentity(Identity* identity);
+    void addIdentity(IdentityPtr identity);
+    void removeIdentity(IdentityPtr identity);
     void clearIdentityList();
-    QPtrList<Identity> getIdentityList();
-    Identity *getIdentityByName(const QString& name);
-    Identity* identity;
+    QValueList<IdentityPtr> getIdentityList();
+    IdentityPtr getIdentityByName(const QString& name);
+    IdentityPtr identity;
 
     QString getIdent();
     void setIdent(const QString &ident);
@@ -583,7 +583,7 @@ class Preferences : public QObject
 
     Konversation::ServerGroupList m_serverGroupList;
     QPtrList<Ignore> ignoreList;
-    QPtrList<Identity> identityList;
+    QValueList<IdentityPtr> identityList;
     QPtrList<Highlight> hilightList;
     QMap< QString,QMap<QString,QString> > channelEncodingsMap;
 

@@ -21,7 +21,7 @@
 
 #include "identity.h"
 
-Identity::Identity()
+Identity::Identity() : KShared()
 {
   nicknameList.append(QString::null);
   nicknameList.append(QString::null);

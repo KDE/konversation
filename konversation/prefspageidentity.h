@@ -16,6 +16,7 @@
 #define PREFSPAGEIDENTITY_H
 
 #include "prefspage.h"
+#include "identity.h"
 
 /*
   @author Dario Abatianni
@@ -28,8 +29,6 @@ class QPushButton;
 
 class KLineEdit;
 class KComboBox;
-
-class Identity;
 
 class PrefsPageIdentity : public PrefsPage
 {
@@ -75,8 +74,8 @@ class PrefsPageIdentity : public PrefsPage
     void awayNickChanged(const QString& newNick);
 
   protected:
-    QPtrList<Identity> identities;
-    Identity* identity;
+    QValueList<IdentityPtr> identities;
+    IdentityPtr identity;
 
     KComboBox* identityCombo;
 

@@ -178,7 +178,7 @@ void KonversationApplication::connectToServer(int id)
 bool KonversationApplication::connectToAnotherServer(int id)
 {
   Konversation::ServerGroupSettings serverGroup = preferences.serverGroupById(id);
-  Identity* identity = serverGroup.identity();
+  IdentityPtr identity = serverGroup.identity();
   
   if(!identity) {
     return false;
@@ -448,7 +448,7 @@ void KonversationApplication::readOptions()
 
     for(unsigned int index=0;index<identityList.count();index++)
     {
-      Identity* newIdentity=new Identity();
+      IdentityPtr newIdentity=new Identity();
 
       config->setGroup(identityList[index]);
 
@@ -915,10 +915,11 @@ void KonversationApplication::saveOptions(bool updateGUI)
       config->deleteGroup(identities[index]);
   }
 
-  QPtrList<Identity> identityList=preferences.getIdentityList();
-  for(unsigned int index=0;index<identityList.count();index++)
-  {
-    Identity* identity=identityList.at(index);
+  QValueList<IdentityPtr> identityList = preferences.getIdentityList();
+  int index = 0;
+
+  for(QValueList<IdentityPtr>::iterator it = identityList.begin(); it != identityList.end(); ++it) {
+    IdentityPtr identity = (*it);
     config->setGroup(QString("Identity %1").arg(index));
 
     config->writeEntry("Name",identity->getName());
@@ -935,6 +936,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->writeEntry("KickReason",identity->getKickReason());
     config->writeEntry("Codec",identity->getCodecName());
     config->writeEntry("AwayNick", identity->getAwayNick());
+    index++;
   } // endfor
 
   config->setGroup("Notify List");
@@ -988,7 +990,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   // Add the new servergroups to the config
   Konversation::ServerGroupList serverGroupList = preferences.serverGroupList();
   Konversation::ServerGroupList::iterator it;
-  int index = 0;
+  index = 0;
   int index2 = 0;
   int index3 = 0;
   QString groupName;

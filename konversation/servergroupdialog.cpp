@@ -55,11 +55,11 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   m_identityCBox = new QComboBox(mainWidget);
   identityLbl->setBuddy(m_identityCBox);
   
-  QPtrList<Identity> identities = KonversationApplication::preferences.getIdentityList();
+  QValueList<IdentityPtr> identities = KonversationApplication::preferences.getIdentityList();
 
-  for(unsigned int i = 0; i < identities.count(); i++)
+  for(QValueList<IdentityPtr>::iterator it = identities.begin(); it != identities.end(); ++it)
   {
-    m_identityCBox->insertItem(identities.at(i)->getName());
+    m_identityCBox->insertItem((*it)->getName());
   }
   
   QLabel* commandLbl = new QLabel(i18n("Co&mmands:"), mainWidget);
@@ -183,8 +183,8 @@ ServerGroupSettings ServerGroupDialog::serverGroupSettings()
   ServerGroupSettings settings(m_id);
   settings.setName(m_nameEdit->text());
   settings.setGroup(m_groupCBox->currentText());
-  QPtrList<Identity> identities = KonversationApplication::preferences.getIdentityList();
-  settings.setIdentity(identities.at(m_identityCBox->currentItem()));
+  QValueList<IdentityPtr> identities = KonversationApplication::preferences.getIdentityList();
+  settings.setIdentity(identities[m_identityCBox->currentItem()]);
   settings.setConnectCommands(m_commandEdit->text());
   settings.setAutoConnectEnabled(m_autoConnectCBox->isChecked());
   settings.setServerList(m_serverList);

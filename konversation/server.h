@@ -71,7 +71,7 @@ class Server : public QObject
 
     QString getServerName() const;
     QString getServerGroup() const;
-    Identity *getIdentity() const;
+    IdentityPtr getIdentity() const;
     bool getUseSSL() const;
     QString getSSLInfo() const;
     int getPort() const;

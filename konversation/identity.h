@@ -15,6 +15,7 @@
 #ifndef IDENTITY_H
 #define IDENTITY_H
 
+#include <ksharedptr.h>
 #include <qstringlist.h>
 
 class QTextCodec;
@@ -23,7 +24,7 @@ class QTextCodec;
  *@author Dario Abatianni
  */
 
-class Identity
+class Identity : public KShared
 {
   public: 
     Identity();
@@ -93,5 +94,7 @@ class Identity
     
     QString awayNick;
 };
+
+typedef KSharedPtr<Identity> IdentityPtr;
 
 #endif

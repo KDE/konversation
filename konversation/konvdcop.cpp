@@ -138,16 +138,16 @@ void KonvIdentDCOP::setrealName(const QString &/*identity*/, const QString& /*na
 
 QString KonvIdentDCOP::getrealName(const QString &id_name)
 {
-  QPtrList<Identity> ids = KonversationApplication::preferences.getIdentityList();
+  QValueList<IdentityPtr> ids = KonversationApplication::preferences.getIdentityList();
 
-  Identity *identity;
-  for (identity = ids.first(); identity; identity = ids.next())
+  for(QValueList<IdentityPtr>::iterator it = ids.begin(); it != ids.end(); ++it)
   {
-    if (identity->getName()==id_name)
+    if ((*it)->getName() == id_name)
     {
-      return identity->getRealName();
+      return (*it)->getRealName();
     }
   }
+
   return QString::null;
 }
 

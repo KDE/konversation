@@ -50,8 +50,9 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
 
   identities=preferences->getIdentityList();
 
-  for(unsigned int index=0;index<identities.count();index++)
-    identityCombo->insertItem(identities.at(index)->getName());
+  for(QValueList<IdentityPtr>::iterator it = identities.begin(); it != identities.end(); ++it) {
+    identityCombo->insertItem((*it)->getName());
+  }
 
   QLabel* realNameLabel=new QLabel(i18n("&Real name:"),parentFrame);
   realNameInput=new KLineEdit(parentFrame);
@@ -312,7 +313,7 @@ void PrefsPageIdentity::updateAwayWidgets(bool enabled)
 
 void PrefsPageIdentity::updateIdentity(int number)
 {
-  identity=identities.at(number);
+  identity = identities[number];
 
   if(number==0) defaultText->show();
   else defaultText->hide();

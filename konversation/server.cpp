@@ -2876,7 +2876,7 @@ void Server::autoRejoinChannels()
   queue(joinString);
 }
 
-Identity* Server::getIdentity() const { return m_serverGroup.identity(); }
+IdentityPtr Server::getIdentity() const { return m_serverGroup.identity(); }
 
 void Server::setMainWindow(KonversationMainWindow* newMainWindow) { mainWindow=newMainWindow; }
 KonversationMainWindow* Server::getMainWindow() const { return mainWindow; }

@@ -216,7 +216,7 @@ Preferences::Preferences()
 
 Preferences::~Preferences()
 {
-  delete identity;
+  clearIdentityList();
 }
 
 Konversation::ServerGroupList Preferences::serverGroupList()
@@ -468,52 +468,61 @@ bool Preferences::removeNotify(const QString& groupName, const QString& pattern)
 QStringList Preferences::getButtonList() { return buttonList; }
 
 // Default identity functions
-void Preferences::addIdentity(Identity* identity) { identityList.append(identity); }
-void Preferences::removeIdentity(Identity* identity) { identityList.remove(identity); }
-void Preferences::clearIdentityList() { identityList.clear(); }
-QPtrList<Identity> Preferences::getIdentityList() { return identityList; }
+void Preferences::addIdentity(IdentityPtr identity) { identityList.append(identity); }
+void Preferences::removeIdentity(IdentityPtr identity) { identityList.remove(identity); }
 
-Identity * Preferences::getIdentityByName(const QString& name)
+void Preferences::clearIdentityList()
 {
-  QPtrList<Identity> identities=getIdentityList();
-  Identity* identity=identities.first();
-  while(identity)
-  {
-    if(identity->getName()==name) return identity;
-    identity=identities.next();
-  }
-  // no matching identity found, return default identity
-  identity=identities.first();
-  return identity;
+  identityList.clear();
 }
 
-QString Preferences::getRealName() { return identityList.at(0)->getRealName(); }
-void Preferences::setRealName(const QString &name) { identityList.at(0)->setRealName(name); }
+QValueList<IdentityPtr> Preferences::getIdentityList() { return identityList; }
 
-QString Preferences::getIdent() { return identityList.at(0)->getIdent(); }
-void Preferences::setIdent(const QString &ident) { identityList.at(0)->setIdent(ident); }
+IdentityPtr Preferences::getIdentityByName(const QString& name)
+{
+  QValueList<IdentityPtr> identities = getIdentityList();
+  QValueList<IdentityPtr>::iterator it = identities.begin();
 
-QString Preferences::getPartReason() { return identityList.at(0)->getPartReason(); }
-void Preferences::setPartReason(const QString &newReason) { identityList.at(0)->setPartReason(newReason); }
+  while(it != identities.end())
+  {
+    if((*it)->getName() == name) {
+      return (*it);
+    }
 
-QString Preferences::getKickReason() { return identityList.at(0)->getKickReason(); }
-void Preferences::setKickReason(const QString &newReason) { identityList.at(0)->setKickReason(newReason); }
+    ++it;
+  }
 
-bool Preferences::getShowAwayMessage() { return identityList.at(0)->getShowAwayMessage(); }
-void Preferences::setShowAwayMessage(bool state) { identityList.at(0)->setShowAwayMessage(state); }
+  // no matching identity found, return default identity
+  return identities.first();
+}
 
-QString Preferences::getAwayMessage() { return identityList.at(0)->getAwayMessage(); }
-void Preferences::setAwayMessage(const QString &newMessage) { identityList.at(0)->setAwayMessage(newMessage); }
-QString Preferences::getUnAwayMessage() { return identityList.at(0)->getReturnMessage(); }
-void Preferences::setUnAwayMessage(const QString &newMessage) { identityList.at(0)->setReturnMessage(newMessage); }
+QString Preferences::getRealName() { return identityList[0]->getRealName(); }
+void Preferences::setRealName(const QString &name) { identityList[0]->setRealName(name); }
+
+QString Preferences::getIdent() { return identityList[0]->getIdent(); }
+void Preferences::setIdent(const QString &ident) { identityList[0]->setIdent(ident); }
+
+QString Preferences::getPartReason() { return identityList[0]->getPartReason(); }
+void Preferences::setPartReason(const QString &newReason) { identityList[0]->setPartReason(newReason); }
+
+QString Preferences::getKickReason() { return identityList[0]->getKickReason(); }
+void Preferences::setKickReason(const QString &newReason) { identityList[0]->setKickReason(newReason); }
+
+bool Preferences::getShowAwayMessage() { return identityList[0]->getShowAwayMessage(); }
+void Preferences::setShowAwayMessage(bool state) { identityList[0]->setShowAwayMessage(state); }
+
+QString Preferences::getAwayMessage() { return identityList[0]->getAwayMessage(); }
+void Preferences::setAwayMessage(const QString &newMessage) { identityList[0]->setAwayMessage(newMessage); }
+QString Preferences::getUnAwayMessage() { return identityList[0]->getReturnMessage(); }
+void Preferences::setUnAwayMessage(const QString &newMessage) { identityList[0]->setReturnMessage(newMessage); }
 
 void Preferences::clearIgnoreList() { ignoreList.clear(); }
 QPtrList<Ignore> Preferences::getIgnoreList() { return ignoreList; }
 
-QString Preferences::getNickname(int index) { return identityList.at(0)->getNickname(index); }
-QStringList Preferences::getNicknameList() { return identityList.at(0)->getNicknameList(); }
-void Preferences::setNickname(int index,const QString &newName) { identityList.at(0)->setNickname(index,newName); }
-void Preferences::setNicknameList(const QStringList &newList) { identityList.at(0)->setNicknameList(newList); }
+QString Preferences::getNickname(int index) { return identityList[0]->getNickname(index); }
+QStringList Preferences::getNicknameList() { return identityList[0]->getNicknameList(); }
+void Preferences::setNickname(int index,const QString &newName) { identityList[0]->setNickname(index,newName); }
+void Preferences::setNicknameList(const QStringList &newList) { identityList[0]->setNicknameList(newList); }
 
 void Preferences::setTabPlacement(TabPlacement where) { tabPlacement=where; }
 Preferences::TabPlacement Preferences::getTabPlacement() { return tabPlacement; }
