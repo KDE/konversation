@@ -1195,10 +1195,16 @@ Query* Server::getQueryByName(const QString& name)
   return 0;
 }
 
-void Server::setChannelNickList(const QString& channelName,const QStringList& nickList)
+void Server::addPendingNickList(const QString& channelName,const QStringList& nickList)
 {
   Channel* outChannel=getChannelByName(channelName);
-  if(outChannel) outChannel->setNickList(nickList);
+  if(outChannel) outChannel->addPendingNickList(nickList);
+}
+
+void Server::noMorePendingNicks(const QString& channelName)
+{
+  Channel* outChannel=getChannelByName(channelName);
+  if(outChannel) outChannel->setPendingNicks(false);
 }
 
 void Server::addNickToChannel(const QString &channelName,const QString &nickname,const QString &hostmask,

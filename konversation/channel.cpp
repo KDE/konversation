@@ -73,6 +73,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   awayChanged=false;
   awayState=false;
 
+  // no nicks pending from /names reply
+  setPendingNicks(false);
+
   // flag for first seen topic
   topicAuthorUnknown=true;
 
@@ -1435,9 +1438,13 @@ void Channel::closeNickChangeDialog(QSize newSize)
   nickChangeDialog=0;
 }
 
-void Channel::setNickList(const QStringList& newNickList)
+void Channel::addPendingNickList(const QStringList& newNickList)
 {
-  purgeNicks();
+  if(!pendingNicks)
+  {
+    purgeNicks();
+    pendingNicks=true;
+  }
 
   nicknameListView->setUpdatesEnabled(false);
   for(unsigned int i=0;i<newNickList.count();i++)
@@ -1462,6 +1469,16 @@ void Channel::setNickList(const QStringList& newNickList)
 
   // should have been done already, but you never know ...
   nicknameListView->setUpdatesEnabled(true);
+}
+
+void Channel::setPendingNicks(bool state)
+{
+  pendingNicks=state;
+}
+
+bool Channel::getPendingNicks()
+{
+  return pendingNicks;
 }
 
 QPtrList<Nick> Channel::getNickList()

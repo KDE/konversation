@@ -46,8 +46,6 @@ InputFilter::InputFilter()
 {
   kdDebug() << "InputFilter::InputFilter()" << endl;
   automaticRequest=0;
-  // clear pending nick list
-  newNickList.clear();
 }
 
 InputFilter::~InputFilter()
@@ -857,6 +855,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       case RPL_NAMREPLY:
         {
           QStringList nickList=QStringList::split(" ",trailing);
+          QStringList newNickList;
 
           for(unsigned int index=0;index<nickList.count();index++)
           {
@@ -881,16 +880,16 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             // store nicks in list, transmit them to the channel on RPL_ENDOFNAMES later
             newNickList.append(nickname+" "+QString::number(mode));
           }
+          // send list to channel
+          server->addPendingNickList(parameterList[2],newNickList);
           break;
         }
       case RPL_ENDOFNAMES:
         {
           server->appendCommandMessageToChannel(parameterList[1],i18n("Names"),i18n("End of NAMES list."));
 
-          // transmit recorded nick list to the channel now
-          server->setChannelNickList(parameterList[1],newNickList);
-          // clear pending nick list
-          newNickList.clear();
+          // tell the channel that the list of nicks is complete
+          server->noMorePendingNicks(parameterList[1]);
 
           break;
         }

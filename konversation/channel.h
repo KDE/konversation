@@ -60,7 +60,10 @@ class Channel : public ChatWindow
     void kickNick(const QString& nickname, const QString& kicker, const QString& reason);
     Nick *getNickByName(const QString& lookname);
     QPtrList<Nick> getNickList();
-    void setNickList(const QStringList& nickList);
+    void addPendingNickList(const QStringList& nickList);
+
+    void setPendingNicks(bool state);
+    bool getPendingNicks();
 
     void adjustNicks(int value);
     void adjustOps(int value);
@@ -124,6 +127,9 @@ class Channel : public ChatWindow
 
     int nicks;
     int ops;
+
+    // are there still nicks to be added by /names reply?
+    bool pendingNicks;
 
     // to take care of redraw problem if hidden
     bool quickButtonsChanged;
