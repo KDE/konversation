@@ -317,8 +317,8 @@ void KonversationApplication::saveOptions()
   config->writeEntry("KickReason",preferences.getKickReason());
 
   config->setGroup("Appearance");
-  config->writeEntry("TextFont",preferences.getTextFont().rawName());
-  config->writeEntry("ListFont",preferences.getListFont().rawName());
+  config->writeEntry("TextFont",preferences.getTextFont().toString());
+  config->writeEntry("ListFont",preferences.getListFont().toString());
   config->writeEntry("Timestamping",preferences.getTimestamping());
   config->writeEntry("TimestampFormat",preferences.getTimestampFormat());
   config->writeEntry("ShowQuickButtons",preferences.getShowQuickButtons());

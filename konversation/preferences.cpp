@@ -347,8 +347,8 @@ QFont Preferences::getTextFont() { return textFont; }
 QFont Preferences::getListFont() { return listFont; }
 void Preferences::setTextFont(QFont newFont) { textFont=newFont; }
 void Preferences::setListFont(QFont newFont) { listFont=newFont; }
-void Preferences::setTextFontRaw(QString rawFont) { textFont.setRawName(rawFont); }
-void Preferences::setListFontRaw(QString rawFont) { listFont.setRawName(rawFont); }
+void Preferences::setTextFontRaw(QString rawFont) { textFont.fromString(rawFont); }
+void Preferences::setListFontRaw(QString rawFont) { listFont.fromString(rawFont); }
 
 void Preferences::setTimestamping(bool state) { timestamping=state; }
 bool Preferences::getTimestamping() { return timestamping; }
