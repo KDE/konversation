@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspage.cpp  -  description
+  prefspage.cpp  -  This is the base class used for settings user interfaces
   begin:     Don Aug 29 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

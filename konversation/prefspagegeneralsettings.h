@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspagegeneralsettings.h  -  description
+  prefspagegeneralsettings.h  -  Provides a user interface to customize general settings
   begin:     Fre Nov 15 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

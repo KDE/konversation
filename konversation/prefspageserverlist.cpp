@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspageserverlist.cpp  -  description
+  prefspageserverlist.cpp  -  Provides a user interface to edit and select servers
   begin:     Don Aug 29 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

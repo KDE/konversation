@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspageidentity.h  -  description
+  prefspageidentity.h  -  Provides a user interface to customize identity settings
   begin:     Don Aug 29 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

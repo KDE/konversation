@@ -221,7 +221,7 @@ void DccTransfer::dccGetConnectionSuccess()
   // Set position
   file.at(getPosition());
   // for DCC Resume
-  sendAck();
+  if (getType()==Resume) sendAck();
 }
 
 void DccTransfer::dccGetBroken(int errNo)

@@ -6,7 +6,7 @@
 */
 
 /*
-  prefsdialog.cpp  -  description
+  prefsdialog.cpp  -  This class holds the subpages for the preferences dialog
   begin:     Sun Feb 10 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
