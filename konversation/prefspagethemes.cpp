@@ -19,11 +19,13 @@
 #include <qstringlist.h>
 #include <qbitmap.h>
 #include <qpainter.h>
+#include <qtooltip.h>
 
 #include <klistbox.h>
 #include <kurl.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
+#include <klocale.h>
 
 #include "preferences.h"
 #include "common.h"
@@ -36,20 +38,33 @@ PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
 
   QGridLayout* gridLayout = new QGridLayout(newParent,3,1,marginHint(),spacingHint());
 
-  QLabel* selectLabel = new QLabel("Select Nicklist Icon Theme to Use",newParent,"selectLabel");
+  QLabel* selectLabel = new QLabel(i18n("Select Nicklist Icon Theme to Use"),newParent,"selectLabel");
   themeList = new KListBox(newParent,"themeList");
   QLabel* previewLabel = new QLabel(newParent);
   previewLabel->setText("Preview :");
   
-  QHBox* previewBox = new QHBox(newParent);
+  QFrame* previewFrame = new QFrame(newParent);
+  
+  QHBoxLayout *previewLayout=new QHBoxLayout( previewFrame );
+  
+  for(int i=0; i <= 5; ++i) {
 
-  for(int i=0; i <= 5; ++i)
-    label[i] = new QLabel(previewBox);
+    if(i == 0) 
+      previewLayout->addStretch(10);
+    else
+      previewLayout->addStretch(1);
+
+    label[i] = new QLabel(previewFrame);
+    previewLayout->addWidget(label[i]);
+
+    if(i == 5)
+      previewLayout->addStretch(10);
+  }
   
   gridLayout->addWidget(selectLabel, 1, 0);
   gridLayout->addWidget(themeList, 2, 0);
   gridLayout->addWidget(previewLabel, 3, 0);
-  gridLayout->addWidget(previewBox, 4, 0);
+  gridLayout->addWidget(previewFrame, 4, 0);
   
   
   dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/themerc");
@@ -99,11 +114,17 @@ void PrefsPageThemes::updatePreview(int id)
   QPixmap normal(dir+"/irc_normal.png");
 
   label[0]->setPixmap(normal);
+  QToolTip::add(label[0],i18n("Icon For Normal Users"));
   label[1]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_voice.png")));
+  QToolTip::add(label[1],i18n("Icon For Users With Voice"));
   label[2]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_halfop.png")));
+  QToolTip::add(label[2],i18n("Icon For Users With Half-Operator Priviliges"));
   label[3]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_op.png")));
+  QToolTip::add(label[3],i18n("Icon For Users With Operator Priviliges"));
   label[4]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_owner.png")));
+  QToolTip::add(label[4],i18n("Icon For Users With Owner privileges"));
   label[5]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_admin.png")));
+  QToolTip::add(label[5],i18n("Icon For Users With Admin privileges"));
 
   for(int i=0; i <= 5; ++i)
     label[i]->show();
