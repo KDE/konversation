@@ -955,11 +955,11 @@ void Channel::fastAddNickname(ChannelNickPtr channelnick) {
 }
 
 void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo) {
-  Q_ASSERT(&nickInfo);
-  Q_ASSERT(!oldNick.isEmpty());
+ 
   /* Did we change our nick name? */
   QString newNick = nickInfo.getNickname();
-  if(oldNick==m_server->getNickname()) {
+
+  if(newNick == m_server->getNickname()) {/* Check newNick because  m_server->getNickname() is already updated to new nick */
     setNickname(newNick);
     appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.").arg(newNick), false, true, true);
   } else {
