@@ -391,11 +391,10 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   }
 
   // Replace multiple Spaces with "<space>&nbsp;"
-  do
+  while((pos = filteredLine.find("  ")) != -1)
   {
-    pos=filteredLine.find("  ");
-    if(pos!=-1) filteredLine.replace(pos+1,1,"&nbsp;");
-  } while(pos!=-1);
+    filteredLine.replace(pos+1,1,"&nbsp;");
+  }
 
   return filteredLine;
 }
