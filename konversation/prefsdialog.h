@@ -27,6 +27,7 @@ class Preferences;
 class PrefsPageButtons;
 class PrefsPageHighlight;
 class PrefsPageNotify;
+class PrefsPageIgnore;
 
 class PrefsDialog : public KDialogBase
 {
@@ -54,6 +55,7 @@ class PrefsDialog : public KDialogBase
     PrefsPageButtons* buttonsPage;
     PrefsPageHighlight* highlightPage;
     PrefsPageNotify* notifyPage;
+    PrefsPageIgnore* ignorePage;
 
     void setPreferences(Preferences* newPrefs);
 };

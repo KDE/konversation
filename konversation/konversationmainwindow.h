@@ -39,7 +39,6 @@ class ChannelListPanel;
 class DccPanel;
 class DccTransferHandler;
 class Ignore;
-class IgnoreDialog;
 class NicksOnline;
 class QuickButtonsDialog;
 class UrlCatcher;
@@ -97,10 +96,6 @@ class KonversationMainWindow : public KMainWindow
 
     void newText(QWidget* view,const QString& highlightColor);
     void quitProgram();
-
-    void openIgnore();
-    void applyIgnore(QPtrList<Ignore> newList);
-    void closeIgnore(QSize newSize);
 
     void notifyAction(const QString& serverName,const QString& nick);
 
@@ -161,7 +156,6 @@ class KonversationMainWindow : public KMainWindow
     KToggleAction* showStatusBarAction;
     KToggleAction* showMenuBarAction;
 
-    IgnoreDialog* ignoreDialog;
     NicksOnline* nicksOnlineWindow;
     QStringList nicksOnlineList;
 

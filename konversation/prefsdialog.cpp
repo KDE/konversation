@@ -37,6 +37,7 @@
 #include "prefspagedialogs.h"
 #include "prefspagehighlight.h"
 #include "prefspagenotify.h"
+#include "prefspageignore.h"
 
 PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
              KDialogBase (KDialogBase::TreeList,i18n("Edit preferences"),
@@ -56,7 +57,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   QFrame* notifyPane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Notify list")));
   QFrame* highlightPane      =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Highlight list")));
-//  QFrame* ignorePane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Ignore list")));
+  QFrame* ignorePane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Ignore list")));
 
   QFrame* logSettingsPane    =addPage(i18n("Log settings"));
   QFrame* dccSettingsPane    =addPage(i18n("DCC settings"));
@@ -72,7 +73,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   notifyPage=new PrefsPageNotify(notifyPane,preferences);
   highlightPage=new PrefsPageHighlight(highlightPane,preferences);
-//  new PrefsPageIgnore(ignorePane,preferences);
+  ignorePage=new PrefsPageIgnore(ignorePane,preferences);
 
   new PrefsPageAppearance(appearancePane,preferences);
   new PrefsPageColorsImages(colorsImagesPane,preferences);
@@ -99,6 +100,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   // connect standard signals and slots
   // TODO: not implemented in all pages yet!
   connect(this,SIGNAL (applyPreferences()),notifyPage,SLOT (applyPreferences()) );
+  connect(this,SIGNAL (applyPreferences()),ignorePage,SLOT (applyPreferences()) );
 
   // connect all individual signals and slots
   connect(serverListPage,SIGNAL(connectToServer(int)),this,SLOT(connectRequest(int)) );

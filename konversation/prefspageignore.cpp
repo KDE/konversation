@@ -6,9 +6,9 @@
 */
 
 /*
-  ignoredialog.cpp  -  description
-  begin:     Mon Jun 24 2002
-  copyright: (C) 2002 by Dario Abatianni
+  prefspageignore.cpp  -  Provides an interface to the ignore list
+  begin:     Fre Jun 13 2003
+  copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
 
   $Id$
@@ -18,29 +18,24 @@
 #include <qhbox.h>
 #include <qgrid.h>
 #include <qpushbutton.h>
-#include <qlabel.h>
 
 #include <klocale.h>
 #include <klistview.h>
-#include <kdebug.h>
 
+#include "prefspageignore.h"
+#include "preferences.h"
 #include "ignore.h"
-#include "ignoredialog.h"
+#include "ignorecheckbox.h"
+#include "ignorelistviewitem.h"
 
-IgnoreDialog::IgnoreDialog(QPtrList<Ignore> newIgnoreList,QSize newSize):
-               KDialogBase(static_cast<QWidget*>(0),"ignoredialog",false,i18n("Edit ignore list"),
-                           KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
-                           KDialogBase::Ok,true)
+PrefsPageIgnore::PrefsPageIgnore(QFrame* newParent,Preferences* newPreferences) :
+                 PrefsPage(newParent,newPreferences)
 {
-  kdDebug() << "IgnoreDialog::IgnoreDialog()" << endl;
-  /* Create the top level widget */
-  QWidget* page=new QWidget(this);
-  setMainWidget(page);
-  /* Add the layout to the widget */
-  QVBoxLayout* dialogLayout=new QVBoxLayout(page);
+  // Add the layout to the widget
+  QVBoxLayout* dialogLayout=new QVBoxLayout(parentFrame);
   dialogLayout->setSpacing(spacingHint());
-  /* Set up the ignore list */
-  QHBox* listBox=new QHBox(page);
+  // Set up the ignore list
+  QHBox* listBox=new QHBox(parentFrame);
   listBox->setSpacing(spacingHint());
   ignoreListView=new KListView(listBox);
 
@@ -59,17 +54,17 @@ IgnoreDialog::IgnoreDialog(QPtrList<Ignore> newIgnoreList,QSize newSize):
   ignoreListView->setDragEnabled(true);
   ignoreListView->setAcceptDrops(true);
 
-  /* Set up the buttons to the right of the list */
+  // Set up the buttons to the right of the list
   QGrid* buttonBox=new QGrid(3,QGrid::Vertical,listBox);
   buttonBox->setSpacing(spacingHint());
   newButton=new QPushButton(i18n("New"),buttonBox);
   removeButton=new QPushButton(i18n("Remove"),buttonBox);
 
-  /* Set up the checkboxes */
-  QHBox* flagBox=new QHBox(page);
+  // Set up the checkboxes
+  QHBox* flagBox=new QHBox(parentFrame);
   flagBox->setSpacing(spacingHint());
   IgnoreCheckBox* c;
-  /* Store the checkbox pointers in a list */
+  // Store the checkbox pointers in a list
   c=new IgnoreCheckBox(i18n("Channels"),flagBox,Ignore::Channel);
   checkList.append(c);
   c=new IgnoreCheckBox(i18n("Queries"),flagBox,Ignore::Query);
@@ -83,15 +78,8 @@ IgnoreDialog::IgnoreDialog(QPtrList<Ignore> newIgnoreList,QSize newSize):
   c=new IgnoreCheckBox(i18n("Exception"),flagBox,Ignore::Exception);
   checkList.append(c);
 
-//  QLabel* note=new QLabel(i18n("<qt>Please note that the ignore function is not yet operational!</qt>"),page);
-
   dialogLayout->addWidget(listBox);
   dialogLayout->addWidget(flagBox);
-//  dialogLayout->addWidget(note);
-
-  setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
-  setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
-  setButtonCancelText(i18n("Cancel"),i18n("Discards all changes made"));
 
   connect(newButton,SIGNAL(clicked()),
                  this,SLOT(newIgnore()));
@@ -100,58 +88,42 @@ IgnoreDialog::IgnoreDialog(QPtrList<Ignore> newIgnoreList,QSize newSize):
   connect(ignoreListView,SIGNAL(selectionChanged(QListViewItem*)),
                       this,SLOT(select(QListViewItem*)));
 
-  /* Connect the checkboxes's signals to the appropriate slot */
+  // Connect the checkboxes's signals to the appropriate slot
   for(int index=0;index<6;index++)
     connect(checkList.at(index),SIGNAL(flagChanged(int,bool)),
                              this,SLOT(checked(int,bool)));
 
-  /* Insert Ignore items backwards to get them sorted properly */
-  Ignore* item=newIgnoreList.last();
+  QPtrList<Ignore> ignoreList=preferences->getIgnoreList();
+  // Insert Ignore items backwards to get them sorted properly
+  Ignore* item=ignoreList.last();
   while(item)
   {
-/*    IgnoreListViewItem* newItem= */ new IgnoreListViewItem(ignoreListView,item->getName(),item->getFlags());
-    item=newIgnoreList.prev();
+    new IgnoreListViewItem(ignoreListView,item->getName(),item->getFlags());
+    item=ignoreList.prev();
   }
-
-  setInitialSize(newSize);
 }
 
-IgnoreDialog::~IgnoreDialog()
+PrefsPageIgnore::~PrefsPageIgnore()
 {
 }
 
-void IgnoreDialog::newIgnore()
+void PrefsPageIgnore::newIgnore()
 {
-/*  IgnoreListViewItem* newItem= */ new IgnoreListViewItem(ignoreListView,"new!new@new.new",
-                                                     Ignore::Channel |
-                                                     Ignore::Query |
-                                                     Ignore::Notice |
-                                                     Ignore::CTCP |
-                                                     Ignore::DCC);
+  new IgnoreListViewItem(ignoreListView,
+                         "new!new@new.new",
+                         Ignore::Channel |
+                         Ignore::Query |
+                         Ignore::Notice |
+                         Ignore::CTCP |
+                         Ignore::DCC);
 }
 
-void IgnoreDialog::removeIgnore()
+void PrefsPageIgnore::removeIgnore()
 {
   delete ignoreListView->selectedItem();
 }
 
-void IgnoreDialog::slotOk()
-{
-  slotApply();
-  slotCancel();
-}
-
-void IgnoreDialog::slotApply()
-{
-  emit applyClicked(getIgnoreList());
-}
-
-void IgnoreDialog::slotCancel()
-{
-  emit cancelClicked(size());
-}
-
-QPtrList<Ignore> IgnoreDialog::getIgnoreList()
+QPtrList<Ignore> PrefsPageIgnore::getIgnoreList()
 {
   QPtrList<Ignore> newList;
 
@@ -166,20 +138,20 @@ QPtrList<Ignore> IgnoreDialog::getIgnoreList()
   return newList;
 }
 
-void IgnoreDialog::checked(int flag,bool active)
+void PrefsPageIgnore::checked(int flag,bool active)
 {
   IgnoreListViewItem* i=static_cast<IgnoreListViewItem*>(ignoreListView->selectedItem());
   if(i) i->setFlag(flag,active);
 }
 
-void IgnoreDialog::select(QListViewItem* item)
+void PrefsPageIgnore::select(QListViewItem* item)
 {
-  /* FIXME: Cast to IgnoreListViewItem, maybe derive from KListView some day */
+  // FIXME: Cast to IgnoreListViewItem, maybe derive from KListView some day
   IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(item);
 
   if(item)
   {
-    /* Update Checkboxes */
+    // Update Checkboxes
     int flagValue=1;
     for(int index=0;index<6;index++)
     {
@@ -190,4 +162,9 @@ void IgnoreDialog::select(QListViewItem* item)
   }
 }
 
-#include "ignoredialog.moc"
+void PrefsPageIgnore::applyPreferences()
+{
+  preferences->setIgnoreList(getIgnoreList());
+}
+
+#include "prefspageignore.moc"

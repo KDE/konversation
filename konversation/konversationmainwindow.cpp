@@ -37,7 +37,6 @@
 #include "channellistpanel.h"
 #include "dccpanel.h"
 #include "dcctransferhandler.h"
-#include "ignoredialog.h"
 #include "nicksonline.h"
 #include "konsolepanel.h"
 #include "urlcatcher.h"
@@ -56,7 +55,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
   dccTransferHandler=new DccTransferHandler(this);
 
-  ignoreDialog=0;
   nicksOnlineWindow=0;
 
   viewContainer=new LedTabWidget(this,"main_window_tab_widget");
@@ -74,7 +72,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
   new KAction(i18n("Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
-  new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
   new KAction(i18n("Channel list"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
   new KAction(i18n("Open a Konsole"), 0, 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
   new KAction(i18n("Open URL catcher"), 0, 0, this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
@@ -519,33 +516,6 @@ void KonversationMainWindow::quitProgram()
   kdDebug() << "KonversationMainWindow::quitProgram()" << endl;
   // will call queryClose()
   close();
-}
-
-void KonversationMainWindow::openIgnore()
-{
-  if(!ignoreDialog)
-  {
-    ignoreDialog=new IgnoreDialog(KonversationApplication::preferences.getIgnoreList(),
-                                  KonversationApplication::preferences.getIgnoreSize());
-    connect(ignoreDialog,SIGNAL (cancelClicked(QSize)),this,SLOT (closeIgnore(QSize)) );
-    connect(ignoreDialog,SIGNAL (applyClicked(QPtrList<Ignore>)),this,SLOT (applyIgnore(QPtrList<Ignore>)) );
-    ignoreDialog->show();
-  }
-}
-
-void KonversationMainWindow::applyIgnore(QPtrList<Ignore> newList)
-{
-  KonversationApplication::preferences.setIgnoreList(newList);
-  emit prefsChanged();
-}
-
-void KonversationMainWindow::closeIgnore(QSize newSize)
-{
-  KonversationApplication::preferences.setIgnoreSize(newSize);
-  emit prefsChanged();
-
-  delete ignoreDialog;
-  ignoreDialog=0;
 }
 
 void KonversationMainWindow::openNicksOnlineWindow()

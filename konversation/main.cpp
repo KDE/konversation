@@ -27,10 +27,11 @@
 
 #if QT_VERSION < 0x030100
 #include <time.h>
+#include <qdatetime.h>
 #endif
 
 /*
-  Don't use i18n() here, use I18N_NOOP() instead!
+  Don't use i18n() here, use I18N_NOOP() instetime.h>ad!
   i18n() will only work as soon as a kapplication object was made.
 */
 

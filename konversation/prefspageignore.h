@@ -6,49 +6,52 @@
 */
 
 /*
-  ignoredialog.h  -  description
-  begin:     Mon Jun 24 2002
-  copyright: (C) 2002 by Dario Abatianni
+  prefspageignore.h  -  Provides an interface to the ignore list
+  begin:     Fre Jun 13 2003
+  copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
 
   $Id$
 */
 
-#ifndef IGNOREDIALOG_H
-#define IGNOREDIALOG_H
+#ifndef PREFSPAGEIGNORE_H
+#define PREFSPAGEIGNORE_H
 
-#include <qlineedit.h>
-#include <qcheckbox.h>
+#include <qptrlist.h>
 
-#include <kdialogbase.h>
-
-#include "ignore.h"
-#include "ignorelistviewitem.h"
-#include "ignorecheckbox.h"
+#include "prefspage.h"
 
 /*
   @author Dario Abatianni
 */
 
-class IgnoreDialog : public KDialogBase
+class QLineEdit;
+class QListViewItem;
+class QPushButton;
+
+class KListView;
+
+class Ignore;
+class IgnoreCheckBox;
+
+class PrefsPageIgnore : public PrefsPage
 {
   Q_OBJECT
 
   public:
-    IgnoreDialog(QPtrList<Ignore> newIgnoreList,QSize newSize);
-    ~IgnoreDialog();
+    PrefsPageIgnore(QFrame* newParent,Preferences* newPreferences);
+    ~PrefsPageIgnore();
 
-  protected:
     QPtrList<Ignore> getIgnoreList();
 
   signals:
     void applyClicked(QPtrList<Ignore> newList);
     void cancelClicked(QSize newSize);
 
+  public slots:
+    void applyPreferences();
+
   protected slots:
-    void slotOk();
-    void slotApply();
-    void slotCancel();
     void newIgnore();
     void removeIgnore();
     void select(QListViewItem* item);

@@ -16,7 +16,6 @@
  ***************************************************************************/
 
 #include "highlightviewitem.h"
-#include "highlight.h"
 
 HighlightViewItem::HighlightViewItem(KListView* parent, Highlight* passed_Highlight) : KListViewItem(parent, passed_Highlight->getText())
 {
