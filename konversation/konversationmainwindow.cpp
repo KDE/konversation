@@ -181,7 +181,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
   (new KAction(i18n("&IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors"))->setToolTip(i18n("Set the color of your current IRC message."));
   (new KAction(i18n("&Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line"))->setToolTip(i18n("Add a horizontal line that only you can see."));
-  (new KAction(i18n("Special &Character..."), "fonts", KShortcut("Alt+Shift+C"), this, SLOT(insertCharacter()), actionCollection(), "insert_character"))->setToolTip(i18n("Insert any character into your current IRC message. "));
+  (new KAction(i18n("Special &Character..."), "char", KShortcut("Alt+Shift+C"), this, SLOT(insertCharacter()), actionCollection(), "insert_character"))->setToolTip(i18n("Insert any character into your current IRC message. "));
 
   new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
   
