@@ -102,7 +102,7 @@ Preferences::Preferences()
 
   setVersionReply(i18n("Konversation %1 Build %2 (C)2002-2004 by the Konversation team").arg(VERSION).arg(COMMIT));
   setDccPath(user.homeDir()+"/dccrecv");
-  setDccAddPartner(true);
+  setDccAddPartner(false);
   setDccCreateFolder(false);
   setDccSpecificSendPorts(false);
   setDccSendPortsFirst(0);
