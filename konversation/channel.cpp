@@ -2033,7 +2033,7 @@ void Channel::requestNickListSort()
   }
 
   if(!m_delayedSortTimer->isActive()) {
-    m_delayedSortTimer->start(300, true);
+    m_delayedSortTimer->start(1000, true);
   }
 }
 
@@ -2054,7 +2054,7 @@ void Channel::sortNickList()
 
 int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
 {
-  return QString::localeAwareCompare(static_cast<Nick*>(item1)->getNickname(),
+  return QString::compare(static_cast<Nick*>(item1)->getNickname(),
     static_cast<Nick*>(item2)->getNickname());
 }
 
