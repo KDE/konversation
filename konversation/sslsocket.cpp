@@ -72,6 +72,18 @@ Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
   return err;
 }
 
+QString SSLSocket::details()
+{
+  QString details;
+  int strength = kssl->connectionInfo().getCipherUsedBits();
+
+  details = "Connection is secured with ";
+  details += QString::number(strength);
+  details += "bit SSL";
+
+  return details;
+}
+
 void SSLSocket::slotConnected()
 {
   
@@ -122,7 +134,7 @@ void SSLSocket::showSSLInfoDialog()
     // Copyright ( C ) David Faure <faure@kde.org>
     // Copyright ( C ) 2001 George Staikos <staikos@kde.org>
 
-  if( !sslInfoDlg ) sslInfoDlg = new KSSLInfoDlg(true, 0L, 0L, true);
+  if( !sslInfoDlg ) sslInfoDlg = new KSSLInfoDlg(true, 0L, 0L, false);
     KSSLCertificate *sslCert = KSSLCertificate::fromString(m_sslPeerCertificate.local8Bit());
 
     if ( sslCert ) {
@@ -138,7 +150,7 @@ void SSLSocket::showSSLInfoDialog()
 
         if ( newChainList.count() > 0 )
             sslCert->chain().setChain( newChainList );
-
+		    
         sslInfoDlg->setCertState( m_sslCertErrors );
         sslInfoDlg->setup( sslCert,
                            remoteHost,

@@ -125,7 +125,7 @@ Server::Server(KonversationMainWindow* mainWindow, int id)
 //FIXME: remove code duplicates by introducing some new method
 Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
   const QString& nick,const QString& password)
-  :m_useSSL(false)
+  :m_useSSL(true)
 {
   init(mainWindow);
 
@@ -483,6 +483,11 @@ void Server::connectToIRCServer()
     setPrefixes("ov","@+");
     statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...").arg(serverName).arg(serverPort));
   }
+}
+
+void Server::showSSLDialog()
+{
+  m_serverSSLSocket->showInfoDialog();
 }
 
 // set available channel types according to 005 RPL_ISUPPORT
@@ -2906,6 +2911,16 @@ Identity* Server::getIdentity() { return identity; }
 
 void Server::setMainWindow(KonversationMainWindow* newMainWindow) { mainWindow=newMainWindow; }
 KonversationMainWindow* Server::getMainWindow() const { return mainWindow; }
+
+bool Server::getUseSSL() const
+{
+  return m_useSSL;
+}
+
+QString Server::getSSLInfo() const
+{
+  return m_serverSSLSocket->details();
+}
 
 bool Server::connected() { return alreadyConnected; }
 

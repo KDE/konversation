@@ -26,6 +26,7 @@
 #include <kdeversion.h>
 #include <kedittoolbar.h>
 #include <kpopupmenu.h>
+#include <kiconloader.h>
 #include <qpainter.h>
 
 #include <kabc/addressbook.h>
@@ -153,8 +154,14 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
   // Initialize KMainWindow->statusBar()
   statusBar();
+  m_sslLabel = new SSLLabel(statusBar(),"sslLabel");
+  m_sslLabel->setPixmap(SmallIcon("encrypted"));
+  m_sslLabel->hide();
+
   statusBar()->insertItem(i18n("Ready."),StatusText,1);
   statusBar()->insertItem("lagometer",LagOMeter,0,true);
+  statusBar()->addWidget(m_sslLabel,0,true);
+
   // Show "Lag unknown"
   resetLag();
   statusBar()->setItemAlignment(StatusText,QLabel::AlignLeft);
@@ -928,10 +935,13 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
   frontView=0;
   searchView=0;
 
-
-  // display this server's lag time
   frontServer=view->getServer();
-  if(frontServer) updateLag(frontServer,frontServer->getLag());
+  if(frontServer) {
+    // display this server's lag time
+    updateLag(frontServer,frontServer->getLag());
+    updateSSLInfo(frontServer);
+  }
+
   updateFrontView();
 
   viewContainer->changeTabState(view,false,false,QString::null);
@@ -1107,6 +1117,18 @@ void KonversationMainWindow::updateLag(Server* lagServer,int msec)
     }
     statusBar()->changeItem(lagString,LagOMeter);
   }
+}
+
+void KonversationMainWindow::updateSSLInfo(Server* server)
+{
+  if(server->getUseSSL())
+    {
+      QObject::connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
+      QToolTip::add(m_sslLabel,server->getSSLInfo());
+      m_sslLabel->show();
+    }
+  else
+    m_sslLabel->hide();
 }
 
 void KonversationMainWindow::tooLongLag(Server* lagServer,int msec)

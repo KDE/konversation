@@ -30,6 +30,7 @@
 #endif
 
 #include "preferences.h"
+#include "ssllabel.h"
 
 /*
  Dario Abatianni
@@ -105,6 +106,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     void resetLag();
     void updateLag(Server* lagServer,int msec);
+    void updateSSLInfo(Server* server);
     void tooLongLag(Server* lagServer,int msec);
     void channelPrefsChanged();
     void setOnlineList(Server* notifyServer,const QStringList& list, bool changed);
@@ -220,6 +222,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     TrayIcon* tray;
 
     bool m_closeApp;
+    
+    SSLLabel* m_sslLabel;
 
     Konversation::InsertCharDialog* m_insertCharDialog;
 };

@@ -11,7 +11,7 @@ METASOURCES = AUTO
 bin_PROGRAMS = konversation
 bin_SCRIPTS = konversationircprotocolhandler
 
-konversation_SOURCES = konviface.skel konversationmainwindow.cpp valuelistviewitem.cpp\
+konversation_SOURCES = konviface.skel ssllabel.cpp konversationmainwindow.cpp valuelistviewitem.cpp\
 	urlcatcher.cpp searchdialog.cpp prefspagehighlight.cpp scriptlauncher.cpp rawlog.cpp\
 	prefspagenotify.cpp prefspagedialogs.cpp prefspagebuttons.cpp konvdcop.cpp channellistpanel.cpp\
 	konsolepanel.cpp dcctransferhandler.cpp prefspageignore.cpp identity.cpp statuspanel.cpp\
@@ -22,14 +22,14 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp valuelistviewit
 	ircinput.cpp ledtabbar.cpp ledtab.cpp ledtabwidget.cpp images.cpp editserverdialog.cpp\
 	serverlistitem.cpp serverentry.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp\
 	chatwindow.cpp outputfilter.cpp query.cpp konversationapplication.cpp nick.cpp inputfilter.cpp\
-	channel.cpp ircview.cpp server.cpp main.cpp irccolorchooserui.ui\
+	channel.cpp ircview.cpp sslsocket.cpp server.cpp main.cpp irccolorchooserui.ui\
 	irccolorchooser.cpp prefspagealiases.cpp channellistviewitem.cpp osd.cpp prefspageosd.cpp\
 	ircevent.cpp trayicon.cpp tabaction.cpp prefspagetabbehavior.cpp dccchat.cpp logfilereader.cpp\
 	multilineedit.cpp nickinfo.cpp dccresumedialog.cpp konversationsound.cpp quickconnectdialog.cpp\
 	prefspagebehaviour.cpp prefspagechatwinbehavior.cpp prefspagechatwinappearance.cpp\
 	prefspagecolorsappearance.cpp serverlistdialog.cpp dcctransfersend.cpp dcctransferrecv.cpp\
 	channelnick.cpp dccdetaildialog.cpp insertchardialog.cpp irccharsets.cpp\
-        editnotifydialog.cpp common.cpp serverison.cpp sslsocket.cpp
+        editnotifydialog.cpp common.cpp serverison.cpp
 konversation_LDADD   = $(COMPAT_LIBS) $(LIB_KIO) -lkmdi -lm $(LIB_ARTS) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la
 
 xdg_apps_DATA = konversation.desktop

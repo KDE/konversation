@@ -69,6 +69,8 @@ class Server : public QObject
     QString getServerName() const;
     QString getServerGroup() const;
     Identity *getIdentity();
+    bool getUseSSL() const;
+    QString getSSLInfo() const;
     int getPort() const;
     int getLag() const;
     bool getAutoJoin() const;
@@ -362,7 +364,7 @@ class Server : public QObject
     void executeMultiServerCommand(const QString& command, const QString& parameter);
     void reconnect();
     void connectToNewServer(const QString& server, const QString& port, const QString& password);
-
+    void showSSLDialog();
     void startAwayTimer();
     void sendToAllChannels(const QString& text);
     void notifyTimeout();
@@ -512,8 +514,8 @@ class Server : public QObject
     KonversationMainWindow* mainWindow;
 
     KNetwork::KBufferedSocket* serverSocket;
-    KStreamSocket*   m_serverSSLSocket;
-    bool                       m_useSSL;
+    SSLSocket*   m_serverSSLSocket;
+    bool         m_useSSL;
     
 
     QTimer reconnectTimer;
