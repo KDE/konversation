@@ -37,6 +37,9 @@ class SSLSocket : public KStreamSocket
   
   Q_LONG writeBlock (const char *data, Q_ULONG len);
   Q_LONG readBlock  (char *data, Q_ULONG maxlen);
+ 
+ protected:
+  void   stateChanging (KClientSocketBase::SocketState newState);
   
  signals:
   void sslFailure();

@@ -48,8 +48,6 @@ SSLSocket::SSLSocket(QWidget* serverParent, QObject* parent, const char* name)
   d->kssl = 0L;
   d->cc = new KSSLCertificateCache;
   d->cc->reload();
-
-  QObject::connect(this,SIGNAL(connected(const KResolverEntry&)),this,SLOT(slotConnected()));
 }
 
 SSLSocket::~SSLSocket()
@@ -87,9 +85,20 @@ Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
   return err;
 }
 
+void SSLSocket::stateChanging(KClientSocketBase::SocketState newState)
+{
+  //kdDebug() << "SSLSocket::stateChanging" << endl;
+  if(newState == KClientSocketBase::Connected)
+    {
+      KClientSocketBase::stateChanging(KClientSocketBase::Connected);
+      slotConnected();
+    }
+  else
+    KClientSocketBase::stateChanging(newState);
+}
+
 QString SSLSocket::details()
 {
-  if(state() == KNetwork::KClientSocketBase::Connected) {
     QString details;
     int strength = d->kssl->connectionInfo().getCipherUsedBits();
     
@@ -98,9 +107,6 @@ QString SSLSocket::details()
     details += " bit SSL";
 
     return details;
-  }
-  else
-    return "";
 }
 
 void SSLSocket::slotConnected()
