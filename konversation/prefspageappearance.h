@@ -45,7 +45,6 @@ class PrefsPageAppearance : public PrefsPage
 
   protected:
     void updateFonts();
-    QStringList getEncodings();
 
     QLabel* textPreviewLabel;
     QLabel* listPreviewLabel;

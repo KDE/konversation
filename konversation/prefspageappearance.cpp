@@ -21,6 +21,7 @@
 
 #include <kfontdialog.h>
 #include <kdebug.h>
+#include <kcharsets.h>
 
 #include "prefspageappearance.h"
 
@@ -46,7 +47,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   QLabel* codecLabel=new QLabel(i18n("Encoding"),parentFrame);
   QComboBox* codecList=new QComboBox(parentFrame);
   codecList->insertItem(preferences->getCodec()+" "+i18n("(Current)"));
-  codecList->insertStringList(getEncodings());
+  codecList->insertStringList(KGlobal::charsets()->descriptiveEncodingNames());
 
   updateFonts();
 
@@ -169,53 +170,6 @@ void PrefsPageAppearance::showModeButtonsChanged(int state)
 void PrefsPageAppearance::encodingChanged(const QString& newEncoding)
 {
   preferences->setCodec(newEncoding.section('(',0,0).stripWhiteSpace());
-}
-
-QStringList PrefsPageAppearance::getEncodings()
-{
-  QString codecString=
-    ("ISO 8859-1 (Western)#"
-     "ISO 8859-2 (Central European)#"
-     "ISO 8859-3 (Central European)#"
-     "ISO 8859-4 (Baltic)#"
-     "ISO 8859-5 (Cyrillic)#"
-     "ISO 8859-6 (Arabic)#"
-     "ISO 8859-7 (Greek)#"
-     "ISO 8859-8 (Hebrew, visually ordered)#"
-     "ISO 8859-8-i (Hebrew, logically ordered)#"
-     "ISO 8859-9 (Turkish)#"
-     "ISO 8859-10#"
-     "ISO 8859-11 (Thai)#"
-     "ISO 8859-13#"
-     "ISO 8859-14#"
-     "ISO 8859-15 (Western, with Euro)#"
-     "utf8 (Unicode, 8-bit)#"
-     "utf16 (Unicode 16-bit)#"
-     "eucJP (Japanese)#"
-     "JIS7 (Japanese)#"
-     "Shift-JIS (Japanese)#"
-     "eucKR (Korean)#"
-     "Big5 (Chinese)#"
-     "GBK (Chinese)#"
-     "TSCII (Tamil)#"
-     "KOI8-R (Russian)#"
-     "KOI8-U (Ukrainian)#"
-     "CP 850#"
-     "CP 874#"
-     "CP 1250 (Central European)#"
-     "CP 1251 (Cyrillic)#"
-     "CP 1252 (Western)#"
-     "CP 1253 (Greek)#"
-     "CP 1254 (Turkish)#"
-     "CP 1255 (Hebrew-)#"
-     "CP 1256 (Arabic)#"
-     "CP 1257 (Baltic)#"
-     "CP 1258#"
-     "TIS-620 (Thai)#"
-     "Apple Roman");
-
-  QStringList encodings=QStringList::split('#',codecString);
-  return encodings;
 }
 
 #include "prefspageappearance.moc"
