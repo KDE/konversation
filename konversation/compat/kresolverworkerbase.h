@@ -1,5 +1,5 @@
 /*  -*- C++ -*-
- *  Copyright (C) 2003 Thiago Macieira <thiago.macieira@kdemail.net>
+ *  Copyright (C) 2003,2004 Thiago Macieira <thiago.macieira@kdemail.net>
  *
  *
  *  Permission is hereby granted, free of charge, to any person obtaining
@@ -36,6 +36,7 @@ namespace KNetwork {
   namespace Internal
   {
     class KResolverThread;
+    struct InputData;
   }
 
 /** @internal
@@ -61,12 +62,12 @@ class KResolverWorkerBase
 private:
   // this will be like our d pointer
   KNetwork::Internal::KResolverThread *th;
-  const KResolverPrivate::InputData *input;
+  const KNetwork::Internal::InputData *input;
   friend class KNetwork::Internal::KResolverThread;
   friend class KNetwork::Internal::KResolverManager;
 
   int m_finished : 1;
-  int m__reserved : 31;		// reserved
+  int m_reserved : 31;		// reserved
 
 public:
   /**
@@ -202,6 +203,31 @@ protected:
    * @overload
    */
   bool enqueue(KResolverWorkerBase* worker);
+
+  /*
+   * Checks the resolver subsystem status.
+   * @returns true if the resolver subsystem changed, false otherwise.
+   *          If this function returns true, it might be necessary to
+   *          restart the resolution altogether.
+   */
+  bool checkResolver();
+
+  /*
+   * This function has to be called from the resolver workers that require
+   * use of the DNS resolver code (i.e., res_* functions, generally in
+   * libresolv). It indicates that the function is starting a resolution
+   * and that the resolver backend shouldn't change asynchronously.
+   *
+   * If any pending res_init's are required, they will be performed before 
+   * this function returns.
+   */
+  void acquireResolver();
+
+  /*
+   * This function is the counterpart for @ref acquireResolver: the worker
+   * thread indicates that it's done with the resolver.
+   */
+  void releaseResolver();
 };
 
 /** @internal

@@ -1,5 +1,5 @@
 /*  -*- C++ -*-
- *  Copyright (C) 2003 Thiago Macieira <thiago.macieira@kdemail.net>
+ *  Copyright (C) 2003,2004 Thiago Macieira <thiago.macieira@kdemail.net>
  *
  *
  *  Permission is hereby granted, free of charge, to any person obtaining
@@ -41,9 +41,10 @@
 #include <qmutex.h>
 #include <qstrlist.h>
 
+#include "kdebug.h"
+
 #include "kresolver.h"
 #include "ksocketaddress.h"
-#include "kresolver_p.h"
 #include "kresolverstandardworkers_p.h"
 
 struct hostent;
@@ -54,7 +55,35 @@ using namespace KNetwork::Internal;
 
 namespace
 {
+  /*
+   * Note on the use of the system resolver functions:
+   *
+   * In all cases, we prefer to use the new getaddrinfo(3) call. That means
+   * it will always be used if it is found.
+   *
+   * If it's not found, we have the option to use gethostbyname2_r, 
+   * gethostbyname_r, gethostbyname2 and gethostbyname. If gethostbyname2_r
+   * is defined, we will use it.
+   *
+   * If it's not defined, we have to choose between the non-reentrant
+   * gethostbyname2 and the reentrant but IPv4-only gethostbyname_r:
+   * we will choose gethostbyname2 if AF_INET6 is defined.
+   *
+   * Lastly, gethostbyname will be used if nothing else is present.
+   */
+
 #ifndef HAVE_GETADDRINFO
+
+# if defined(HAVE_GETHOSTBYNAME2_R)
+#  define USE_GETHOSTBYNAME2_R
+# elif defined(HAVE_GETHOSTBYNAME_R) && (!defined(AF_INET6) || !defined(HAVE_GETHOSTBYNAME2))
+#  define USE_GETHOSTBYNAME_R
+# elif defined(HAVE_GETHOSTBYNAME2)
+#  define USE_GETHOSTBYNAME2)
+# else
+#  define USE_GETHOSTBYNAME
+# endif
+
   class GetHostByNameThread: public KResolverWorkerBase
   {
   public:
@@ -83,29 +112,6 @@ namespace
 
   bool GetHostByNameThread::run()
   {
-    /*
-     * Note on the use of the system resolver functions:
-     *
-     * In all cases, we prefer to use the new getaddrinfo(3) call. That means
-     * it will always be used if it is found.
-     *
-     * If it's not found, we have the option to use gethostbyname2_r, 
-     * gethostbyname_r, gethostbyname2 and gethostbyname. If gethostbyname2_r
-     * is defined, we will use it.
-     *
-     * If it's not defined, we have to choose between the non-reentrant
-     * gethostbyname2 and the reentrant but IPv4-only gethostbyname_r:
-     * we will choose gethostbyname2 if AF_INET6 is defined.
-     *
-     * Lastly, gethostbyname will be used if nothing else is present.
-     */
-
-    /*
-     * Note on the use of mutexes:
-     * if gethostbyname_r and gethostbyname2_r aren't available, we must assume
-     * that all function calls are non-reentrant. Therefore, we will lock
-     * a global mutex for protection.
-     */
 
     hostent *resultptr;
     hostent my_results;
@@ -116,17 +122,19 @@ namespace
 
     // qDebug("ResolveThread::run(): started threaded gethostbyname for %s (af = %d)", 
     //	   m_hostname.data(), m_af);
+
+    acquireResolver();
     do
       {
 	res = 0;
 	my_h_errno = HOST_NOT_FOUND;
 
-# ifdef HAVE_GETHOSTBYNAME2_R
+# ifdef USE_GETHOSTBYNAME2_R
 	buf = new char[buflen];
 	res = gethostbyname2_r(m_hostname, m_af, &my_results, buf, buflen,
 			       &resultptr, &my_h_errno);
 
-# elif defined(HAVE_GETHOSTBYNAME_R) && (!defined(AF_INET6) || !defined(HAVE_GETHOSTBYNAME2))
+# elif defined(USE_GETHOSTBYNAME_R)
 	if (m_af == AF_INET)
 	  {
 	    buf = new char[buflen];
@@ -136,9 +144,8 @@ namespace
 	else
 	  resultptr = 0;		// signal error
 
-# elif defined(HAVE_GETHOSTBYNAME2)
+# elif defined(USE_GETHOSTBYNAME2)
 	// must lock mutex
-	QMutexLocker locker(&getXXbyYYmutex);
 	resultptr = gethostbyname2(m_hostname, m_af);
 	my_h_errno = h_errno;
 
@@ -146,7 +153,6 @@ namespace
 	if (m_af == AF_INET)
 	  {
 	    // must lock mutex
-	    QMutexLocker locker(&getXXbyYYmutex);
 	    resultptr = gethostbyname(m_hostname);
 	    my_h_errno = h_errno;
 	  }
@@ -166,9 +172,17 @@ namespace
 	    delete [] buf;
 	    buf = new char[buflen];
 	  }
+
+	if ((res == ERANGE || my_h_errno != 0) && checkResolver())
+	  {
+	    // resolver needs updating, so we might as well do it now
+	    releaseResolver();
+	    acquireResolver();
+	  }
       }
     while (res == ERANGE);
     processResults(resultptr, my_h_errno);
+    releaseResolver();
 
     delete [] buf;
 
@@ -264,121 +278,128 @@ namespace
 
   bool GetAddrInfoThread::run()
   {
-# ifdef NEED_MUTEX
-    // in some platforms, getaddrinfo(3) is not thread-safe nor reentrant
-    // therefore, we will lock a global mutex (defined in qresolver.cpp)
-    // relating to all the lookup functions
-
-    QMutexLocker locker(&getXXbyYYmutex);
-# endif
-
-    // process hints
-    addrinfo hint;
-    memset(&hint, 0, sizeof(hint));
-    hint.ai_family = m_af;
-    hint.ai_socktype = socketType();
-    hint.ai_protocol = protocol();
-
-    if (hint.ai_socktype == 0)
-      hint.ai_socktype = SOCK_STREAM; // default
-
-    if (flags() & KResolver::Passive)
-      hint.ai_flags |= AI_PASSIVE;
-    if (flags() & KResolver::CanonName)
-      hint.ai_flags |= AI_CANONNAME;
-# ifdef AI_NUMERICHOST
-    if (flags() & KResolver::NoResolve)
-      hint.ai_flags |= AI_NUMERICHOST;
-# endif
-
-    // now we do the blocking processing
-    if (m_node.isEmpty())
-      m_node = "*";
-
-    addrinfo *result;
-    int res = getaddrinfo(m_node, m_serv, &hint, &result);
-    // qDebug("QGetAddrInfoThread::run: getaddrinfo for [%s]:%s (af = %d); result = %d", 
-    //	   m_node.data(), m_serv.data(), m_af, res);
-
-    if (res != 0)
+    do
       {
-	switch (res)
+	acquireResolver();
+
+	// process hints
+	addrinfo hint;
+	memset(&hint, 0, sizeof(hint));
+	hint.ai_family = m_af;
+	hint.ai_socktype = socketType();
+	hint.ai_protocol = protocol();
+
+	if (hint.ai_socktype == 0)
+	  hint.ai_socktype = SOCK_STREAM; // default
+
+	if (flags() & KResolver::Passive)
+	  hint.ai_flags |= AI_PASSIVE;
+	if (flags() & KResolver::CanonName)
+	  hint.ai_flags |= AI_CANONNAME;
+# ifdef AI_NUMERICHOST
+	if (flags() & KResolver::NoResolve)
+	  hint.ai_flags |= AI_NUMERICHOST;
+# endif
+
+	// now we do the blocking processing
+	if (m_node.isEmpty())
+	  m_node = "*";
+
+	addrinfo *result;
+	int res = getaddrinfo(m_node, m_serv, &hint, &result);
+	//    kdDebug(179) << k_funcinfo << "getaddrinfo(\""
+	//		 << m_node << "\", \"" << m_serv << "\", af="
+	//		 << m_af << ") returned " << res << endl;
+
+	if (res != 0)
 	  {
-	  case EAI_BADFLAGS:
-	    results.setError(KResolver::BadFlags);
-	    break;
+	    if (checkResolver())
+	      {
+		// resolver requires reinitialisation
+		releaseResolver();
+		acquireResolver();
+		continue;
+	      }
+
+	    switch (res)
+	      {
+	      case EAI_BADFLAGS:
+		results.setError(KResolver::BadFlags);
+		break;
 
 #ifdef EAI_NODATA
-          // In some systems, EAI_NODATA was #define'd to EAI_NONAME which would break this case.
+		// In some systems, EAI_NODATA was #define'd to EAI_NONAME which would break this case.
 #if EAI_NODATA != EAI_NONAME
-	  case EAI_NODATA:	// it was removed in RFC 3493
+	      case EAI_NODATA:	// it was removed in RFC 3493
 #endif
 #endif
-	  case EAI_NONAME:
-	    results.setError(KResolver::NoName);
-	    break;
+	      case EAI_NONAME:
+		results.setError(KResolver::NoName);
+		break;
 
-	  case EAI_AGAIN:
-	    results.setError(KResolver::TryAgain);
-	    break;
+	      case EAI_AGAIN:
+		results.setError(KResolver::TryAgain);
+		break;
 
-	  case EAI_FAIL:
-	    results.setError(KResolver::NonRecoverable);
-	    break;
+	      case EAI_FAIL:
+		results.setError(KResolver::NonRecoverable);
+		break;
 
-	  case EAI_FAMILY:
-	    results.setError(KResolver::UnsupportedFamily);
-	    break;
+	      case EAI_FAMILY:
+		results.setError(KResolver::UnsupportedFamily);
+		break;
 
-	  case EAI_SOCKTYPE:
-	    results.setError(KResolver::UnsupportedSocketType);
-	    break;
+	      case EAI_SOCKTYPE:
+		results.setError(KResolver::UnsupportedSocketType);
+		break;
 
-	  case EAI_SERVICE:
-	    results.setError(KResolver::UnsupportedService);
-	    break;
+	      case EAI_SERVICE:
+		results.setError(KResolver::UnsupportedService);
+		break;
 
-	  case EAI_MEMORY:
-	    results.setError(KResolver::Memory);
-	    break;
+	      case EAI_MEMORY:
+		results.setError(KResolver::Memory);
+		break;
 
-	  case EAI_SYSTEM:
-	    results.setError(KResolver::SystemError, errno);
-	    break;
+	      case EAI_SYSTEM:
+		results.setError(KResolver::SystemError, errno);
+		break;
 
-	  default:
-	    results.setError(KResolver::UnknownError, errno);
-	    break;
+	      default:
+		results.setError(KResolver::UnknownError, errno);
+		break;
+	      }
+
+	    finished();
+	    return false;		// failed
 	  }
 
-	finished();
-	return false;		// failed
-      }
+	// if we are here, lookup succeeded
+	QString canon;
+	const char *previous_canon = 0L;
 
-    // if we are here, lookup succeeded
-    QString canon;
-    const char *previous_canon = 0L;
-
-    for (addrinfo* p = result; p; p = p->ai_next)
-      {
-	// cache the last canon name to avoid doing the ToUnicode processing unnecessarily
-	if ((previous_canon && !p->ai_canonname) ||
-	    (!previous_canon && p->ai_canonname) ||
-	    (p->ai_canonname != previous_canon && 
-	     strcmp(p->ai_canonname, previous_canon) != 0))
+	for (addrinfo* p = result; p; p = p->ai_next)
 	  {
-	    canon = KResolver::domainToUnicode(QString::fromAscii(p->ai_canonname));
-	    previous_canon = p->ai_canonname;
+	    // cache the last canon name to avoid doing the ToUnicode processing unnecessarily
+	    if ((previous_canon && !p->ai_canonname) ||
+		(!previous_canon && p->ai_canonname) ||
+		(p->ai_canonname != previous_canon && 
+		 strcmp(p->ai_canonname, previous_canon) != 0))
+	      {
+		canon = KResolver::domainToUnicode(QString::fromAscii(p->ai_canonname));
+		previous_canon = p->ai_canonname;
+	      }
+
+	    results.append(KResolverEntry(p->ai_addr, p->ai_addrlen, p->ai_socktype, 
+					  p->ai_protocol, canon, m_node));
 	  }
 
-	results.append(KResolverEntry(p->ai_addr, p->ai_addrlen, p->ai_socktype, 
-				      p->ai_protocol, canon, m_node));
+	freeaddrinfo(result);
+	results.setError(KResolver::NoError);
+	finished();
+	return results.error() == KResolver::NoError;
       }
-
-    freeaddrinfo(result);
-    results.setError(KResolver::NoError);
-    finished();
-    return results.error() == KResolver::NoError;
+    while (true);
   }
 
 #endif // HAVE_GETADDRINFO
@@ -715,7 +736,7 @@ bool KStandardWorker::run()
   };
   int familyCount = sizeof(families)/sizeof(families[0]);
   bool skipIPv6 = false;
-  if (getenv("KDE_NO_IPV6"))
+  if (getenv("KDE_NO_IPV6") != 0L)
     skipIPv6 = true;
   resultList.setAutoDelete(true);
 

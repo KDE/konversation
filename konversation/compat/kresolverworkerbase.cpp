@@ -1,5 +1,5 @@
 /*  -*- C++ -*-
- *  Copyright (C) 2003 Thiago Macieira <thiago.macieira@kdemail.net>
+ *  Copyright (C) 2003,2004 Thiago Macieira <thiago.macieira@kdemail.net>
  *
  *
  *  Permission is hereby granted, free of charge, to any person obtaining
@@ -24,6 +24,8 @@
 
 #include "config.h"
 
+#include <assert.h>
+
 #include <qcstring.h>
 #include <qstring.h>
 
@@ -35,7 +37,7 @@ using namespace KNetwork;
 using namespace KNetwork::Internal;
 
 KResolverWorkerBase::KResolverWorkerBase()
-  : th(0L), input(0L), m_finished(0), m__reserved(0)
+  : th(0L), input(0L), m_finished(0), m_reserved(0)
 {
 }
 
@@ -117,7 +119,26 @@ bool KResolverWorkerBase::enqueue(KResolverWorkerBase* worker)
   return true;
 }
 
+bool KResolverWorkerBase::checkResolver()
+{
+  assert(th != 0L);
+  return th->checkResolver();
+}
+
+void KResolverWorkerBase::acquireResolver()
+{
+  assert(th != 0L);
+  th->acquireResolver();
+}
+
+void KResolverWorkerBase::releaseResolver()
+{
+  assert(th != 0L);
+  th->releaseResolver();
+}
+
 void KResolverWorkerFactoryBase::registerNewWorker(KResolverWorkerFactoryBase* factory)
 {
   KResolverManager::manager()->registerNewWorker(factory);
 }
+
