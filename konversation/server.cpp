@@ -1047,9 +1047,11 @@ QString Server::getNumericalIp()
 // Given a nickname, returns NickInfo object.   0 if not found.
 NickInfoPtr Server::getNickInfo(const QString& nickname)
 {
-  LocaleString lcNickname = nickname.lower();
+  LocaleString lcNickname(nickname.lower());
   if (allNicks.contains(lcNickname))
+  {
     return allNicks[lcNickname];
+  }
   else
     return 0;
 }

@@ -17,6 +17,9 @@
 
 #include <qtimer.h>
 #include <qdict.h>
+
+#include <qdeepcopy.h>
+
 #include <ksharedptr.h>
 
 #include "inputfilter.h"
@@ -56,6 +59,7 @@ class LocaleString : public QString
     LocaleString& operator=(const LocaleString& s) { 
       QString::operator=(s); 
       return *this; }
+    inline bool operator<( const LocaleString &s1) { return (localeAwareCompare(s1) < 0); }
     inline bool operator<( const QString &s1) { return (localeAwareCompare(s1) < 0); }
     inline bool operator<( const char *s1) { return (localeAwareCompare(s1) < 0); }
     inline bool operator<( QChar c) { return (localeAwareCompare(c) < 0); }
@@ -70,8 +74,8 @@ typedef QMap<LocaleString,NickInfoPtr> NickInfoMap;
 class ChannelNick : public KShared 
 {
   public:
-    ChannelNick() : mode(0), nickInfo(0) {}
-    ChannelNick(unsigned int m, NickInfoPtr ni) : mode(m), nickInfo(ni) {}
+    ChannelNick() : KShared(), mode(0), nickInfo(0) {}
+    ChannelNick(unsigned int m, NickInfoPtr ni) : KShared(), mode(m), nickInfo(ni) {}
     unsigned int mode;
     NickInfoPtr nickInfo;
 };

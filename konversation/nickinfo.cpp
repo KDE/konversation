@@ -25,7 +25,7 @@
   let Server know that the object has been modified.
 */
 
-NickInfo::NickInfo(const QString& nick, Server* server)
+NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 {
   nickname = nick;
   owningServer = server;
