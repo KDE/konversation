@@ -77,6 +77,7 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
     NickInfo* nickInfo;
     for ( ; (nickInfo=itOnline.current()) ; ++itOnline)
     {
+      QString lcNickName = itOnline.currentKey();
       QString nickname = nickInfo->getNickname();
       QString nickAdditionalInfo = "";
       if (nickInfo->isAway())
@@ -91,8 +92,20 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
       QStringList channelList = server->getNickChannels(nickname);
       for ( unsigned int index=0; index<channelList.count(); index++ )
       {
-        // Known channels where nickname is online.
-        new KListViewItem(nickRoot, channelList[index]);
+        // Known channels where nickname is online and mode in each channel.
+        ChannelNick* channelNick = server->getChannelNick(channelList[index].lower(), lcNickName);
+        unsigned int nickModeWord = channelNick->mode;
+        QString nickMode = "";
+        if (nickModeWord & 1) nickMode = nickMode + " Voice";
+        nickModeWord >>= 1;
+        if (nickModeWord & 1) nickMode = nickMode + " HalfOp";
+        nickModeWord >>= 1;
+        if (nickModeWord & 1) nickMode = nickMode + " Operator";
+        nickModeWord >>= 1;
+        if (nickModeWord & 1) nickMode = nickMode + " Owner";
+        nickModeWord >>= 1;
+        if (nickModeWord & 1) nickMode = nickMode + " Admin";
+        new KListViewItem(nickRoot, channelList[index], nickMode);
       }
       nickRoot->setOpen(true);
     }
