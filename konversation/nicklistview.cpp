@@ -112,49 +112,49 @@ void NickListView::contextMenuEvent(QContextMenuEvent* ce)
 
 void NickListView::insertAssociationSubMenu() {
 
-  bool any_existing_associations=false;
-  bool any_not_having_associations=false;
+  bool existingAssociation = false;
+  bool noAssociation = false;
+  bool emailAddress = false;
+
   addressbook->clear();
-  bool any_email_address=false;
+
   ChannelNickList nickList=channel->getSelectedChannelNicks();
   for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it)
   {
     KABC::Addressee addr = (*it)->getNickInfo()->getAddressee();
     if(addr.isEmpty()) {
-      any_not_having_associations=true;
-      if(any_existing_associations && any_email_address) break;
+        noAssociation=true;
+        if(existingAssociation && emailAddress) break;
     } else {
-      if(!any_email_address && !addr.preferredEmail().isEmpty())
-        any_email_address = true;
-      any_existing_associations=true;
-      if(any_not_having_associations && any_email_address) break;
+        if(!emailAddress && !addr.preferredEmail().isEmpty())
+            emailAddress = true;
+        existingAssociation=true;
+        if(noAssociation && emailAddress) break;
     }
   }
 
-  if(!any_not_having_associations && any_existing_associations) {
-    addressbook->insertItem(SmallIcon("contents"), i18n("Edit Contact..."), AddressbookEdit);
-    addressbook->insertSeparator();
+  if(!noAssociation && existingAssociation) {
+      addressbook->insertItem(SmallIcon("contents"), i18n("Edit Contact..."), AddressbookEdit);
+      addressbook->insertSeparator();
   }
 
-  if(any_not_having_associations && any_existing_associations)
-    addressbook->insertItem(i18n("Choose/Change Associations..."), AddressbookChange);
-  else if(any_not_having_associations)
-    addressbook->insertItem(i18n("Choose Contact..."), AddressbookChange);
+  if(noAssociation && existingAssociation)
+      addressbook->insertItem(i18n("Choose/Change Associations..."), AddressbookChange);
+  else if(noAssociation)
+      addressbook->insertItem(i18n("Choose Contact..."), AddressbookChange);
   else
-    addressbook->insertItem(i18n("Change Association..."), AddressbookChange);
-  if(any_not_having_associations && !any_existing_associations)
-    addressbook->insertItem(i18n("Create New Contact..."), AddressbookNew);
+      addressbook->insertItem(i18n("Change Association..."), AddressbookChange);
 
-  if(any_existing_associations)
-    addressbook->insertItem(SmallIcon("editdelete"), i18n("Delete Association"), AddressbookDelete);
+  if(noAssociation && !existingAssociation)
+      addressbook->insertItem(i18n("Create New Contact..."), AddressbookNew);
 
-  if(!any_email_address) {
+  if(existingAssociation)
+      addressbook->insertItem(SmallIcon("editdelete"), i18n("Delete Association"), AddressbookDelete);
+
+  if(emailAddress)
       popup->setItemEnabled(SendEmail, false);
-      popup->setWhatsThis(SendEmail, "Sends an email to this contact using the preferred email address set in the contact's addressbook association.  This is currently disabled because the associated contact does not have any preferred email address set.");
-    } else {
+  else
       popup->setItemEnabled(SendEmail, true);
-      popup->setWhatsThis(SendEmail, i18n("Sends an email to this contact using the preferred email address set in the contact's addressbook association"));
-    }
 
 }
 #include "nicklistview.moc"
