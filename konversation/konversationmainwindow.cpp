@@ -216,7 +216,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   // set up system tray
   tray = new Konversation::TrayIcon(this);
   connect(this, SIGNAL(endNotification()), tray, SLOT(endNotification()));
-  connect(tray, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
   KPopupMenu *trayMenu = tray->contextMenu();
 #ifdef USE_KNOTIFY
   configureNotificationsAction->plug(trayMenu);
@@ -1096,7 +1095,7 @@ bool KonversationMainWindow::queryClose()
 {
   KonversationApplication* konv_app = static_cast<KonversationApplication*>(kapp);
 
-  if(konv_app->sessionSaving()) {
+  if(konv_app->sessionSaving() || sender() == tray) {
     m_closeApp = true;
   }
 
