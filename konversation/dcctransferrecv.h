@@ -93,6 +93,7 @@ class DccTransferRecv : public DccTransfer
     void connectionTimeout();
     void writeDone();
     void gotWriteError( int errorCode );
+    void slotSocketClosed();
     
   protected:
     void requestResume();

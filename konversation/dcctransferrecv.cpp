@@ -269,11 +269,11 @@ void DccTransferRecv::connectToSender()
   m_recvSocket->enableRead( false );
   m_recvSocket->enableWrite( false );
   
-  connect( m_recvSocket, SIGNAL( connected(const KResolverEntry&) ), this, SLOT( connectionSuccess() )   );
-  connect( m_recvSocket, SIGNAL( gotError(int) ),                    this, SLOT( connectionFailed(int) ) );
-  
-  connect( m_recvSocket, SIGNAL( readyRead() ),  this, SLOT( readData() ) );
-  connect( m_recvSocket, SIGNAL( readyWrite() ), this, SLOT( sendAck() )  );
+  connect( m_recvSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( connectionSuccess()     ) );
+  connect( m_recvSocket, SIGNAL( gotError( int )                    ), this, SLOT( connectionFailed( int ) ) );
+  connect( m_recvSocket, SIGNAL( closed()                           ), this, SLOT( slotSocketClosed()      ) );
+  connect( m_recvSocket, SIGNAL( readyRead()                        ), this, SLOT( readData()              ) );
+  connect( m_recvSocket, SIGNAL( readyWrite()                       ), this, SLOT( sendAck()               ) );
   kdDebug() << "In connectToSender - attempting to connect to " << m_partnerIp << ":" << m_partnerPort << endl;
   if(!m_recvSocket->connect()) {
     kdDebug() << "connect failed immediately!! - " << m_recvSocket->errorString() << endl;
@@ -305,7 +305,7 @@ void DccTransferRecv::connectionFailed( int errorCode )  // slot
 
 void DccTransferRecv::readData()  // slot
 {
-  kdDebug() << "readData()" << endl;
+  //kdDebug() << "readData()" << endl;
   int actual = m_recvSocket->readBlock( m_buffer, m_bufferSize );
   if( actual > 0 )
   {
@@ -322,7 +322,7 @@ void DccTransferRecv::readData()  // slot
 void DccTransferRecv::sendAck()  // slot
 {
 
-  kdDebug() << "sendAck()" << endl;
+  //kdDebug() << "sendAck()" << endl;
   KIO::fileoffset_t pos = intel( m_transferringPosition );
 
   m_recvSocket->enableWrite( false );
@@ -380,6 +380,16 @@ void DccTransferRecv::connectionTimeout()  // slot
   setStatus(Failed, i18n("Timed out"));
   updateView();
   cleanUp();
+}
+
+void DccTransferRecv::slotSocketClosed()
+{
+  if( m_dccStatus == Receiving )
+  {
+    setStatus( Failed, i18n("Remote user disconnected") );
+    updateView();
+    cleanUp();
+  }
 }
 
 // WriteCacheHandler
