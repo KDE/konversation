@@ -15,6 +15,8 @@
 #include <qlayout.h>
 #include <qgrid.h>
 #include <qpushbutton.h>
+#include <qlabel.h>
+#include <qvbox.h>
 
 #include <klocale.h>
 #include <klistview.h>
@@ -28,8 +30,9 @@ PrefsPageAliases::PrefsPageAliases(QFrame* newParent,Preferences* newPreferences
 {
   // Add the layout to the page
   QHBoxLayout* aliasesLayout=new QHBoxLayout(parentFrame,marginHint(),spacingHint());
+  QVBox* listLayout=new QVBox(parentFrame);
 
-  aliasesListView=new KListView(parentFrame);
+  aliasesListView=new KListView(listLayout);
 
   aliasesListView->addColumn(i18n("Alias"));
   aliasesListView->addColumn(i18n("Replacement"));
@@ -42,6 +45,10 @@ PrefsPageAliases::PrefsPageAliases(QFrame* newParent,Preferences* newPreferences
   aliasesListView->setSorting(-1,false);
   aliasesListView->setDragEnabled(true);
   aliasesListView->setAcceptDrops(true);
+
+  QLabel *defaultText=new QLabel(i18n("<qt>Click added alias to edit."
+  									"To pass parameters to alias insert %p in the replacement line.</qt>"),
+                              listLayout);
 
   QStringList aliasList(preferences->getAliasList());
   // Insert alias items backwards to get them sorted properly
@@ -57,7 +64,7 @@ PrefsPageAliases::PrefsPageAliases(QFrame* newParent,Preferences* newPreferences
   QPushButton* newButton=new QPushButton(i18n("&New..."),buttonBox);
   QPushButton* removeButton=new QPushButton(i18n("&Remove"),buttonBox);
 
-  aliasesLayout->addWidget(aliasesListView);
+  aliasesLayout->addWidget(listLayout);
   aliasesLayout->addWidget(buttonBox);
 
   connect(newButton,SIGNAL (clicked()),this,SLOT (newAlias()) );
