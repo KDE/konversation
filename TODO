@@ -29,8 +29,6 @@ Pasting into text views should trigger the paste mechanism
 Make LED colors for nick list configurable via GUI
 Detect shell commands and warn the user
 Let the user decide how many quick buttons they want, if at all.
-Think about another way to get rid of the cut off "Custom" text in color combos ...
-Border changes on-the-fly using some kind of "redraw-pointer-list"
 CHECK: Replace "0.0.0.0" with QString::null in dccTransfer to allow other than IPv4
 Session management
 Make font for quick buttons configurable
