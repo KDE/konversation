@@ -841,14 +841,14 @@ QString Server::getNextNickname()
 
 void Server::processIncomingData()
 {
-  if(inputBuffer.count())
+  if(!inputBuffer.isEmpty())
   {
     if(rawLog) rawLog->appendRaw(inputBuffer.front());
     inputFilter.parseLine(inputBuffer.front(), mainWindow);
     inputBuffer.pop_front();
   }
   
-  if(!inputBuffer.count()) {
+  if(inputBuffer.isEmpty()) {
     incomingTimer.stop();
   }
 }
