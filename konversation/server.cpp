@@ -111,6 +111,7 @@ Server::~Server() {
 
     // Delete helper object.
     delete m_serverISON;
+    m_serverISON = 0;
     // clear nicks online
     emit nicksNowOnline(this,QStringList(),true);
     // Make sure no signals get sent to a soon to be dying Server Window
@@ -129,17 +130,17 @@ Server::~Server() {
     queryList.clear();
 
     // Delete all the NickInfos and ChannelNick structures.
+    m_allNicks.clear();
     ChannelMembershipMap::ConstIterator it;
-  
-    for ( it = m_joinedChannels.begin(); it != m_joinedChannels.end(); ++it ) 
+
+    for ( it = m_joinedChannels.begin(); it != m_joinedChannels.end(); ++it )
         delete it.data();
     m_joinedChannels.clear();
-  
-    for ( it = m_unjoinedChannels.begin(); it != m_unjoinedChannels.end(); ++it ) 
+
+    for ( it = m_unjoinedChannels.begin(); it != m_unjoinedChannels.end(); ++it )
         delete it.data();
     m_unjoinedChannels.clear();
 
-    m_allNicks.clear();
     m_queryNicks.clear();
 
     // notify KonversationApplication that this server is gone
