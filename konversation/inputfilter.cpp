@@ -46,6 +46,8 @@ InputFilter::InputFilter()
 {
   kdDebug() << "InputFilter::InputFilter()" << endl;
   automaticRequest=0;
+  // clear pending nick list
+  newNickList.clear();
 }
 
 InputFilter::~InputFilter()
@@ -866,17 +868,30 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
             QString nickname=nickList[index];
 
-            // remove possible mode characters from nickname
+            // remove possible mode characters from nickname and store the resulting mode
             server->mangleNicknameWithModes(nickname,admin,owner,op,halfop,voice,NULL);
-            QString hostmask(QString::null);
 
-            server->addNickToChannel(parameterList[2],nickname,hostmask,admin,owner,op,halfop,voice);
+            // TODO: make these an enumeration in KApplication or somewhere, we can use them from channel.cpp as well
+            int mode=(admin  ? 16 : 0)+
+                     (owner  ?  8 : 0)+
+                     (op     ?  4 : 0)+
+                     (halfop ?  2 : 0)+
+                     (voice  ?  1 : 0);
+
+            // store nicks in list, transmit them to the channel on RPL_ENDOFNAMES later
+            newNickList.append(nickname+" "+QString::number(mode));
           }
           break;
         }
       case RPL_ENDOFNAMES:
         {
           server->appendCommandMessageToChannel(parameterList[1],i18n("Names"),i18n("End of NAMES list."));
+
+          // transmit recorded nick list to the channel now
+          server->setChannelNickList(parameterList[1],newNickList);
+          // clear pending nick list
+          newNickList.clear();
+
           break;
         }
         // Topic set messages

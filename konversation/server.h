@@ -66,6 +66,7 @@ class Server : public QObject
     void setIrcName(const QString &newIrcName);
     QString getIrcName() const;
 
+    void setChannelNickList(const QString& channelName,const QStringList& nickList);
     void addNickToChannel(const QString &channelName,const QString &nickname,const QString &hostmask,
                           bool admin,bool owner,bool op,bool halfop,bool voice);
     void addHostmaskToNick(const QString &sourceNick, const QString &sourceHostmask);

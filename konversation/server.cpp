@@ -1195,6 +1195,12 @@ Query* Server::getQueryByName(const QString& name)
   return 0;
 }
 
+void Server::setChannelNickList(const QString& channelName,const QStringList& nickList)
+{
+  Channel* outChannel=getChannelByName(channelName);
+  if(outChannel) outChannel->setNickList(nickList);
+}
+
 void Server::addNickToChannel(const QString &channelName,const QString &nickname,const QString &hostmask,
                               bool admin,bool owner,bool op,bool halfop,bool voice)
 {

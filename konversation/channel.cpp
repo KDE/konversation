@@ -260,6 +260,15 @@ Channel::~Channel()
   KonversationApplication::preferences.setChannelSplitter(splitter->sizes());
 
   // Purge nickname list
+  purgeNicks();
+
+  // Unlink this channel from channel list
+  server->removeChannel(this);
+}
+
+void Channel::purgeNicks()
+{
+  // Purge nickname list
   Nick* nick=nicknameList.first();
   while(nick)
   {
@@ -268,8 +277,6 @@ Channel::~Channel()
     // Again, get the first element in the list
     nick=nicknameList.first();
   }
-  // Unlink this channel from channel list
-  server->removeChannel(this);
 }
 
 void Channel::requestNewTopic(const QString& newTopic)
@@ -1426,6 +1433,35 @@ void Channel::closeNickChangeDialog(QSize newSize)
 
   delete nickChangeDialog;
   nickChangeDialog=0;
+}
+
+void Channel::setNickList(const QStringList& newNickList)
+{
+  purgeNicks();
+
+  nicknameListView->setUpdatesEnabled(false);
+  for(unsigned int i=0;i<newNickList.count();i++)
+  {
+    QString nick=newNickList[i].section(" ",0,0);
+    unsigned int mode=newNickList[i].section(" ",1,1).toInt();
+
+    // refresh visual if index is 50, 100, 150 ... or if it's the last nick in the list
+    if((i % 50==0) || i==newNickList.count()-1) nicknameListView->setUpdatesEnabled(true);
+
+    // TODO: make these an enumeration in KApplication or somewhere, we can use them from inputfilter.cpp as well
+    addNickname(nick,QString::null,(mode & 16),(mode & 8),(mode & 4),(mode & 2),(mode & 1));
+
+    // stop refresh of visual if index is 50, 100, 150 ...
+    if(i % 50==0)
+    {
+      // care about pending events befor continuing
+      qApp->processEvents();
+      nicknameListView->setUpdatesEnabled(false);
+    }
+  } // endfor
+
+  // should have been done already, but you never know ...
+  nicknameListView->setUpdatesEnabled(true);
 }
 
 QPtrList<Nick> Channel::getNickList()

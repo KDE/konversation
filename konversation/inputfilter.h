@@ -68,6 +68,8 @@ class InputFilter : public QObject
     Server* server;
     int automaticRequest;
     int lagMeasuring;
+
+    QStringList newNickList;
 };
 
 #endif

@@ -60,6 +60,7 @@ class Channel : public ChatWindow
     void kickNick(const QString& nickname, const QString& kicker, const QString& reason);
     Nick *getNickByName(const QString& lookname);
     QPtrList<Nick> getNickList();
+    void setNickList(const QStringList& nickList);
 
     void adjustNicks(int value);
     void adjustOps(int value);
@@ -95,6 +96,7 @@ class Channel : public ChatWindow
     virtual void indicateAway(bool show);
 
   protected slots:
+    void purgeNicks();
     void completeNick();
     void endCompleteNick();
     void quickButtonClicked(const QString& definition);
