@@ -99,7 +99,7 @@ class OutputFilter : public QObject
     void parseBan(const QString& parameter);
     void parseUnban(const QString& parameter);
     void parseNames(const QString& parameter);
-    void parseList(const QString& parameter);
+    void parseList(const QString& parameter);     // works
     void parseOp(const QString& parameter);       // works
     void parseDeop(const QString& parameter);     // works
     void parseVoice(const QString& parameter);    // works
@@ -111,13 +111,14 @@ class OutputFilter : public QObject
     void parseVersion(const QString& parameter);
     void parseServer(const QString& parameter);
     void parseConnect(const QString& parameter);
-    void parseInvite(const QString& parameter);
+    void parseInvite(const QString& parameter);   // works
     void parseExec(const QString& parameter);
-    void parseNotify(const QString& parameter);
+    void parseNotify(const QString& parameter);   // works
     void parseOper(const QString& myNick,const QString& parameter);
     void parseDcc(const QString& parameter);
-    void parseRaw(const QString& parameter);
-    void parseKonsole();
+    void parseRaw(const QString& parameter);      // works
+    void parseQuote(const QString& parameter);
+    void parseKonsole();                          // works
 
     void changeMode(const QString& parameter,char mode,char giveTake);
     bool isAChannel(const QString& check);

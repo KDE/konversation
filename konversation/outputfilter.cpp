@@ -113,6 +113,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("notify "))  parseNotify(parameter);
     else if(line.startsWith("oper "))    parseOper(myNick,parameter);
     else if(line.startsWith("ban "))     parseBan(parameter);
+    else if(line.startsWith("quote "))   parseQuote(parameter);
 
     else if(line.startsWith("raw "))     parseRaw(parameter);
     else if(line.startsWith("dcc "))     parseDcc(parameter);
@@ -132,6 +133,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="notify")              parseNotify(QString::null);
     else if(line=="oper")                parseOper(myNick,QString::null);
     else if(line=="ban")                 parseBan(QString::null);
+    else if(line=="quote")               parseQuote(QString::null);
 
     else if(line=="dcc")                 parseDcc(QString::null);
     else if(line=="raw")                 parseRaw(QString::null);
@@ -672,7 +674,7 @@ void OutputFilter::parseBan(const QString& parameter)
 {
   // assume incorrect syntax first
   bool showUsage=true;
-  
+
   if(parameter.isEmpty()) showUsage=true;
   else
   {
@@ -684,14 +686,14 @@ void OutputFilter::parseBan(const QString& parameter)
     bool domain=(parameterList[0].lower()=="-domain");
     bool uhost=(parameterList[0].lower()=="-userhost");
     bool udomain=(parameterList[0].lower()=="-userdomain");
-    
+
     // remove possible option
     if(host || domain || uhost || udomain)
     {
       option=parameterList[0].mid(1);
       parameterList.pop_front();
     }
-    
+
     // look for channel / ban mask
     if(parameterList.count())
     {
@@ -728,6 +730,14 @@ void OutputFilter::parseBan(const QString& parameter)
 void OutputFilter::execBan(const QString& mask,const QString& channel)
 {
   toServer="MODE "+channel+" +b "+mask;
+}
+
+void OutputFilter::parseQuote(const QString& parameter)
+{
+  if(parameter.isEmpty())
+    usage(i18n("Usage: QUOTE command list"));
+  else
+    toServer=parameter;
 }
 
 void OutputFilter::parseKonsole()

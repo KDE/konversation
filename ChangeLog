@@ -10,8 +10,8 @@ Changes from 0.12 to 0.13
 - Added option to place tabs on top
 - Color configuration is now in preferences dialog
 - Quick buttons configuration is now in preferences dialog
-- Highlight configuration is now part of preferences dialog
 - Option for a background image added
+- Added /quote command for raw server messages
 
 Changes from 0.11 to 0.12
 - Now handles multi server mode in one single window
