@@ -38,7 +38,33 @@ QString tagURLs(const QString& text, const QString& fromNick)
 {
   QString filteredLine = text;
   QString linkColor = KonversationApplication::preferences.getColor("LinkMessage");
-  QRegExp pattern("(((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
+  int pos = 0;
+
+  QRegExp channelPattern("^#([a-z]|[0-9])+$|"
+			 "\\s#([a-z]|[0-9])+"
+			 );
+
+  channelPattern.setCaseSensitive(false);
+  
+  while(channelPattern.search(filteredLine, pos) != -1) {
+    
+    // Remember where we found the url
+    pos = channelPattern.pos();
+    
+    // Extract channel
+    QString channel = channelPattern.capturedTexts()[0];
+    QString href(channel.stripWhiteSpace());
+    href = "#" + href;
+    QString link = "<font color=\"#" + linkColor + "\"><a href=\"" + href + "\">" + channel + "</a></font>";
+
+    filteredLine.replace(pos,channel.length(),link);
+    pos += link.length();
+
+  }
+  
+  pos = 0;
+
+  QRegExp urlPattern("(((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
                   "(([-_.%\\d\\w]*(:[-_.%\\d\\w]*)?@)|)"
                   // IP Address
                   "([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|"
@@ -50,31 +76,31 @@ QString tagURLs(const QString& text, const QString& fromNick)
                   ")(:[0-9]{1,5})?((:|)(/[^>\"\\s]*))?|"
                   // eDonkey2000 links need special treatment
                   "ed2k://\\|([^|]+\\|){4})|"
-                  "(mailto:|)((([a-z]|\\d)+[\\w\\x2E\\x2D]+)\\x40([\\w\\x2E\\x2D]{2,})\\x2E(\\w{2,})))");
+		  "(mailto:|)((([a-z]|\\d)+[\\w\\x2E\\x2D]+)\\x40([\\w\\x2E\\x2D]{2,})\\x2E(\\w{2,})))"
+		  );
 
-  pattern.setCaseSensitive(false);
+  urlPattern.setCaseSensitive(false);
   KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-  int pos = 0;
 
-  while(pattern.search(filteredLine, pos) != -1) {
+  while(urlPattern.search(filteredLine, pos) != -1) {
       // Remember where we found the url
-      pos = pattern.pos();
+      pos = urlPattern.pos();
 
       // Extract url
-      QString url = pattern.capturedTexts()[0];
+      QString url = urlPattern.capturedTexts()[0];
       QString href(url);
 
       // clean up href for browser
       if(href.startsWith("www.")) href = "http://" + href;
       else if(href.startsWith("ftp.")) href = "ftp://" + href;
       else if(href.find(QRegExp("(([a-z]+[\\w\\x2E\\x2D]+)\\x40)")) == 0) href = "mailto:" + href;
-
+  
       // Fix &amp; back to & in href ... kludgy but I don't know a better way.
       href.replace("&amp;", "&");
       // Replace all spaces with %20 in href
       href.replace(" ", "%20");
       // Build rich text link
-      QString link("<font color=\"#" + linkColor + "\"><u><a href=\"" + href + "\">" + url + "</a></u></font>");
+      QString link = "<font color=\"#" + linkColor + "\"><u><a href=\"" + href + "\">" + url + "</a></u></font>";
 
       // replace found url with built link
       filteredLine.replace(pos, url.length(), link);
