@@ -124,8 +124,6 @@ class Server : public QObject
 
     void joinChannel(const QString& name, const QString& hostmask, const QString& key);
     void removeChannel(Channel* channel);
-    void appendToChannel(const QString& channel,const QString& nickname, const QString& message);
-    void appendActionToChannel(const QString& channel, const QString& nickname, const QString& message);
     void appendServerMessageToChannel(const QString& channel, const QString& type, const QString& message);
     void appendCommandMessageToChannel(const QString& channel, const QString& command, const QString& message);
     void appendStatusMessage(const QString& type,const QString& message);

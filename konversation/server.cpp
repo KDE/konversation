@@ -2590,25 +2590,6 @@ void Server::gotOwnResolvedHostByUserhost(KResolverResults res)
     kdDebug() << "Server::gotOwnResolvedHostByUserhost(): Got error: " << ( int )res.error() << endl;
 }
 
-void Server::appendToChannel(const QString& channel,const QString& nickname,const QString& message)
-{
-  Channel* outChannel=getChannelByName(channel);
-  if(outChannel) outChannel->append(nickname,message);
-
-  // OnScreen Message
-  if (KonversationApplication::preferences.getOSDShowChannel() && outChannel->notificationsEnabled())
-  {
-    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-    konvApp->osd->showOSD("(" + channel + ") <" + nickname + "> " + message);
-  }
-}
-
-void Server::appendActionToChannel(const QString& channel,const QString& nickname,const QString& message)
-{
-  Channel* outChannel=getChannelByName(channel);
-  if(outChannel) outChannel->appendAction(nickname,message);
-}
-
 void Server::appendServerMessageToChannel(const QString& channel,const QString& type,const QString& message)
 {
   Channel* outChannel=getChannelByName(channel);
@@ -2619,22 +2600,6 @@ void Server::appendCommandMessageToChannel(const QString& channel,const QString&
 {
   Channel* outChannel=getChannelByName(channel);
   if(outChannel) outChannel->appendCommandMessage(command,message);
-}
-
-void Server::appendToQuery(const QString& queryName,const QString& message)
-{
-  Query* outQuery=getQueryByName(queryName);
-  if(outQuery) outQuery->appendQuery(queryName,message);
-  else kdWarning() << "Server::appendToQuery(" << queryName << "): Query not found!" << endl;
-
-  
-}
-
-void Server::appendActionToQuery(const QString& queryName,const QString& message)
-{
-  Query* outQuery=getQueryByName(queryName);
-  if(outQuery) outQuery->appendAction(queryName,message);
-  else kdWarning() << "Server::appendActionToQuery(" << queryName << "): Query not found!" << endl;
 }
 
 void Server::appendServerMessageToQuery(const QString& queryName,const QString& type,const QString& message)

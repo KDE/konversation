@@ -87,6 +87,8 @@ class Channel : public ChatWindow
     Nick *getNickByName(const QString& lookname);
     QPtrList<Nick> getNickList();
 
+    virtual void append(const QString& nickname,const QString& message);
+
     void setPendingNicks(bool state);
     bool getPendingNicks();
 

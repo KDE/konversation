@@ -101,16 +101,16 @@ class ChatWindow : public BASE_CLASS
     IRCView* getTextView();
     void setLog(bool activate);
 
-    QString& getName();
+    QString getName();
 
     void setType(WindowType newType);
     WindowType getType();
 
     void insertRememberLine();
-    void append(const QString& nickname,const QString& message);
+    virtual void append(const QString& nickname,const QString& message);
     void appendRaw(const QString& message, bool suppressTimestamps=false);
     void appendQuery(const QString& nickname,const QString& message, bool usenotifications = false);
-    void appendAction(const QString& nickname,const QString& message, bool usenotifications = false);
+    virtual void appendAction(const QString& nickname,const QString& message, bool usenotifications = false);
     void appendServerMessage(const QString& type,const QString& message);
     void appendCommandMessage(const QString& command, const QString& message, bool important = true,
       bool parseURL = true, bool self = false);

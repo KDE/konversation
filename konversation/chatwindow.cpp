@@ -143,7 +143,7 @@ void ChatWindow::setName(const QString& newName)
   emit nameChanged(this,newName);
 }
 
-QString& ChatWindow::getName()
+QString ChatWindow::getName()
 {
   return name;
 }

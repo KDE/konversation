@@ -1811,6 +1811,17 @@ void Channel::appendInputText(const QString& s)
   channelInput->setText(channelInput->text() + s);
 }
 
+void Channel::append(const QString& nickname,const QString& message)
+{
+  // OnScreen Message
+  if (KonversationApplication::preferences.getOSDShowChannel() && notificationsEnabled())
+  {
+    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+    konvApp->osd->showOSD("(" + getName() + ") <" + nickname + "> " + message);
+  }
+  ChatWindow::append(nickname, message);
+}
+
 bool Channel::closeYourself()
 {
 #ifndef USE_MDI

@@ -314,11 +314,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       if (isChan)
       {
         if(!isIgnore(prefix,Ignore::Channel)) {
-          server->appendToChannel(parameterList[0],sourceNick,trailing);
+	  Channel* channel = server->getChannelByName(parameterList[0]);
+	  channel->append(sourceNick, trailing);
 
 #ifdef USE_KNOTIFY
           // KNotify events...
-	  Channel* channel = server->getChannelByName(parameterList[0]);
 
           if(channel && sourceNick != server->getNickname() && channel->notificationsEnabled()) {
             if(trailing.lower().find(QRegExp("(^|[^\\d\\w])"+
