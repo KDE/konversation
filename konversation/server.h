@@ -27,6 +27,9 @@
 #include "dcctransfer.h"
 #include "nickinfo.h"
 
+// Comment this out to turn off the NICKINFO code.
+// #define USE_NICKINFO
+
 /*
   @author Dario Abatianni
 */
@@ -165,6 +168,10 @@ class Server : public QObject
     // Returns pointer to the ChannelNick (mode and pointer to NickInfo) for a given channel and nickname.
    // 0 if not found.
     ChannelNick* getChannelNick(const QString& channelName, const QString& nickname);
+    // Returns a list of the nicks on the watch list that are online.
+    const NickInfoList* getNicksOnline();
+    // Returns a list of the nicks on the watch list that are offline.
+    const NickInfoList* getNicksOffline();
 
   signals:
     void nicknameChanged(const QString&);

@@ -59,9 +59,6 @@ typedef unsigned long long __u64;
 #endif
 #endif
 
-// Comment this out to turn off the NICKINFO code.
-// #define USE_NICKINFO
-
 Server::Server(KonversationMainWindow* newMainWindow,int id)
 {
   identity=0;
@@ -943,6 +940,11 @@ QStringList Server::getNickChannels(QString& nickname)
   return channellist;
 }
 
+// Returns a list of the nicks on the watch list that are online.
+const NickInfoList* Server::getNicksOnline() { return &nicknamesOnline; }
+
+// Returns a list of the nicks on the watch list that are offline.
+const NickInfoList* Server::getNicksOffline() { return &nicknamesOffline; }
 
 QString Server::getIp()
 {
@@ -1337,7 +1339,7 @@ void Server::sendJoinCommand(const QString& name)
 
 void Server::joinChannel(const QString &name, const QString &hostmask, const QString &/*key*/)
 {
-  // (re-)join channel, open a new panel if needded
+  // (re-)join channel, open a new panel if needed
   Channel* channel=getChannelByName(name);
   if(!channel)
   {
@@ -1966,10 +1968,19 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
 #endif
 }
 
+#ifdef USE_NICKINFO
+void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool /* ircOp */)
+{
+  addHostmaskToNick(nick,hostmask);
+  NickInfo* nickInfo = getNickInfo(nick);
+  if (nickInfo) nickInfo->setAway(away);
+}
+#else
 void Server::userhost(const QString& nick,const QString& hostmask,bool /* away */ ,bool /* ircOp */)
 {
   addHostmaskToNick(nick,hostmask);
 }
+#endif
 
 void Server::appendToChannel(const QString& channel,const QString& nickname,const QString& message)
 {

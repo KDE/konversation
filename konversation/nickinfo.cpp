@@ -50,7 +50,10 @@ Server* NickInfo::getServer() { return owningServer; }
 // Set properties of NickInfo object.
 // If any of these are called, call Server::nickInfoUpdated to let Server know about the change.
 void NickInfo::setNickname(const QString& newNickname) { nickname = newNickname; }
-void NickInfo::setHostmask(const QString& newMask) { hostmask = newMask; }
+void NickInfo::setHostmask(const QString& newMask)
+{
+  if (!newMask.isEmpty()) hostmask = newMask;
+}
 void NickInfo::setAway(bool state) { away = state; }
 void NickInfo::setAwayMessage(const QString& newMessage) { awayMessage = newMessage; }
 void NickInfo::setIdentdInfo(const QString& newIdentdInfo) {identdInfo = newIdentdInfo; }

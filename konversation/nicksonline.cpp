@@ -23,6 +23,8 @@
 #include <klistview.h>
 
 #include "nicksonline.h"
+#include "server.h"
+#include "konversationapplication.h"
 
 NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 {  
@@ -31,7 +33,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
   nickListView=new KListView(this);
   
-  nickListView->addColumn(i18n("Nickname"));
+  nickListView->addColumn(i18n("Server/Nickname"));
   nickListView->setRootIsDecorated(false);
   nickListView->setFullWidth(true);
   
@@ -55,6 +57,60 @@ NicksOnline::~NicksOnline()
 
 void NicksOnline::setOnlineList(const QString& serverName,const QStringList& list,bool changed)
 {
+#ifdef USE_NICKINFO
+  QListViewItem* serverRoot=nickListView->findItem(serverName,0);
+  // If server is not in our list, or if the list changed, then display the new list.
+  if ( true )
+  {
+    delete serverRoot;
+    if (nickListView->columns() == 1)
+    {
+      nickListView->addColumn(i18n("Additional Information"));
+      nickListView->setColumnText(0, i18n("Server/Nickname/Channel"));
+    }
+    KListViewItem* newServerRoot=new KListViewItem(nickListView,serverName);
+    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+    Server* server = konvApp->getServerByName(serverName);
+    const NickInfoList* nickInfoList = server->getNicksOnline();
+    NickInfoListIterator itOnline(*nickInfoList);
+    // Online nicknames.
+    NickInfo* nickInfo;
+    for ( ; (nickInfo=itOnline.current()) ; ++itOnline)
+    {
+      QString nickname = nickInfo->getNickname();
+      QString nickAdditionalInfo = "";
+      if (nickInfo->isAway())
+      {
+        nickAdditionalInfo = nickAdditionalInfo + i18n("Away");
+        QString awayMsg = nickInfo->getAwayMessage();
+        if (!awayMsg.isEmpty()) nickAdditionalInfo = nickAdditionalInfo + "(" + awayMsg + ")";
+      }
+      nickAdditionalInfo = nickAdditionalInfo + " ";
+      nickAdditionalInfo = nickAdditionalInfo + nickInfo->getHostmask();
+      KListViewItem* nickRoot = new KListViewItem(newServerRoot, nickname, nickAdditionalInfo);
+      QStringList channelList = server->getNickChannels(nickname);
+      for ( unsigned int index=0; index<channelList.count(); index++ )
+      {
+        // Known channels where nickname is online.
+        new KListViewItem(nickRoot, channelList[index]);
+      }
+      nickRoot->setOpen(true);
+    }
+    // Offline nicknames.
+    KListViewItem* offlineRoot = new KListViewItem(newServerRoot, i18n("Offline"));
+    nickInfoList = server->getNicksOffline();
+    NickInfoListIterator itOffline(*nickInfoList);
+    for ( ; (nickInfo=itOffline.current()) ; ++itOffline)
+    {
+      new KListViewItem(offlineRoot, nickInfo->getNickname());
+    }
+    newServerRoot->setOpen(true);
+    offlineRoot->setOpen(true);
+    nickListView->adjustColumn(0);
+  }
+
+#else
+
   QListViewItem* serverRoot=nickListView->findItem(serverName,0);
   // If server is not in our list, or if the list changed, then display the new list.
   if ( (serverRoot == 0) || changed)
@@ -70,6 +126,7 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
       newServerRoot->setOpen(true);
     }
   }
+#endif
 }
 
 void NicksOnline::processDoubleClick(QListViewItem* item)
