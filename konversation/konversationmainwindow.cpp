@@ -444,7 +444,7 @@ void KonversationMainWindow::appendToFrontmost(const QString& type,const QString
 {
   if( !serverView) serverView = frontView->getServer()->getStatusView();
 
-  Q_ASSERT(frontView->getServer() == frontServer);  //if this fails, we need to fix frontServer
+  Q_ASSERT(frontView && frontView->getServer() == frontServer);  //if this fails, we need to fix frontServer
 
   Q_ASSERT(serverView); if(!serverView) return;
   updateFrontView();
