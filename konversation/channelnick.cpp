@@ -18,8 +18,8 @@
 
 /** An instance of ChannelNick is made for each nick in each channel.  So for a person in multiple channels, they will have one NickInfo, and multiple ChannelNicks.  It contains a pointer to the NickInfo, and the mode of that person in the channel.*/
 
-ChannelNick::ChannelNick(NickInfoPtr nickinfo, bool isop, bool isadmin, bool isowner, bool ishalfop, bool hasvoice) : KShared() {
-  this->nickInfo = nickinfo;
+ChannelNick::ChannelNick(NickInfoPtr nickInfo, bool isop, bool isadmin, bool isowner, bool ishalfop, bool hasvoice) : KShared() {
+  this->nickInfo = nickInfo;
   this->isop = isop;
   this->isadmin = isadmin;
   this->isowner = isowner;

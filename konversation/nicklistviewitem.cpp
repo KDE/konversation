@@ -34,7 +34,7 @@ NickListViewItem::NickListViewItem(KListView* parent,
   Q_ASSERT(n);
   nick = n;
   
-  m_height = this->height();
+  m_height = height();
   connect(nick->getChannelNick(), SIGNAL(channelNickChanged()), SLOT(refresh()));
   connect(nick->getNickInfo(), SIGNAL(nickInfoChanged()), SLOT(refresh()));
   
