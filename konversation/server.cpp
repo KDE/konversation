@@ -881,7 +881,7 @@ void Server::requestDccSend(const QString &a_recipient)
       Nick* lookNick=nicks.first();
       while(lookNick)
       {
-        nickList.append(lookNick->getNickname());
+        if(!nickList.contains(lookNick->getNickname())) nickList.append(lookNick->getNickname());
         lookNick=nicks.next();
       }
       lookChannel=channelList.next();
@@ -891,7 +891,7 @@ void Server::requestDccSend(const QString &a_recipient)
     Query* lookQuery=queryList.first();
     while(lookQuery)
     {
-      if(nickList.find(lookQuery->getName())==nickList.end()) nickList.append(lookQuery->getName());
+      if(!nickList.contains(lookQuery->getName())) nickList.append(lookQuery->getName());
       lookQuery=queryList.next();
     }
 
