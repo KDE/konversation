@@ -1,0 +1,2 @@
+This is a module to keep KDE 3.2 compatibility in KDE. Commits from CVS HEAD
+should be carefully committed here. So don't blindly commit code here.
