@@ -439,6 +439,7 @@ void Server::addDccSend(QString recipient,QString fileName)
 
   connect(newDcc,SIGNAL (send(QString,QString,QString,QString,unsigned long)),
     this,SLOT (dccSendRequest(QString,QString,QString,QString,unsigned long)) );
+  connect(newDcc,SIGNAL (dccSendDone(QString)),this,SLOT (dccSendDone(QString)) );
   newDcc->startSend();
 }
 
@@ -469,6 +470,7 @@ void Server::addDccGet(QString sourceNick,QStringList dccArguments)
                   dccArguments[2]);    // port
 
   connect(newDcc,SIGNAL (resume(QString,QString,QString,int)),this,SLOT (dccResumeRequest(QString,QString,QString,int)) );
+  connect(newDcc,SIGNAL (dccGetDone(QString)),this,SLOT (dccGetDone(QString)) );
 
   if(KonversationApplication::preferences.getDccAutoGet()) newDcc->startGet();
 }
@@ -510,6 +512,16 @@ void Server::resumeDccTransfer(QString sourceNick,QStringList dccArguments)
   {
     appendStatusMessage(i18n("Error"),i18n("No DCC transfer running on port %1!").arg(dccArguments[1]));
   }
+}
+
+void Server::dccGetDone(QString fileName)
+{
+  appendStatusMessage(i18n("DCC"),i18n("DCC download of file \"%1\" finished.").arg(fileName));
+}
+
+void Server::dccSendDone(QString fileName)
+{
+  appendStatusMessage(i18n("DCC"),i18n("DCC upload of file \"%1\" finished.").arg(fileName));
 }
 
 QString Server::getNextQueryName()

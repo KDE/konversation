@@ -132,6 +132,8 @@ class Server : public QObject
     void resumeDccTransfer(QString sourceNick,QStringList dccArguments);
     void dccSendRequest(QString recipient,QString fileName,QString address,QString port,unsigned long size);
     void dccResumeRequest(QString sender,QString fileName,QString port,int startAt);
+    void dccGetDone(QString fileName);
+    void dccSendDone(QString fileName);
 
   protected:
     void startNotifyCheckTimer();

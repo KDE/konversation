@@ -21,7 +21,7 @@
 #include <qlabel.h>
 
 #include <kdialog.h>
-#include <kcombobox.h>
+// #include <kcombobox.h>
 
 #ifndef CHANNEL_H
 #define CHANNEL_H
@@ -34,6 +34,7 @@
 #include "modebutton.h"
 #include "ircinput.h"
 #include "nickchangedialog.h"
+#include "topiccombobox.h"
 
 /*
   @author Dario Abatianni
@@ -102,8 +103,7 @@ class Channel : public ChatWindow
     unsigned int completionPosition;
 
     QString topic; // Caches current topic
-    KComboBox* topicLine;
-    // TODO: Somehow we need the nickname to the corresponding topic displayed
+    TopicComboBox* topicLine;
     QStringList topicHistory;
 
     ModeButton* modeT;

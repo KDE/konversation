@@ -18,7 +18,7 @@
 #include <qhbox.h>
 #include <qgrid.h>
 #include <qsizepolicy.h>
-#include <qcombobox.h>
+// #include <qcombobox.h>
 #include <qheader.h>
 #include <qregexp.h>
 #include <qtooltip.h>
@@ -61,7 +61,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   topicBox->setSpacing(spacing());
 
   QLabel* topicLabel=new QLabel(i18n("Topic:"),topicBox);
-  topicLine=new KComboBox(topicBox);
+  topicLine=new TopicComboBox(topicBox);
   topicLine->setEditable(true);
   topicLine->setAutoCompletion(false);
   topicLine->setInsertionPolicy(QComboBox::NoInsertion);
@@ -186,7 +186,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(textView,SIGNAL (gotFocus()),channelInput,SLOT (setFocus()) );
   connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
   connect(nicknameButton,SIGNAL (clicked()),this,SLOT (openNickChangeDialog()) );
-  connect(topicLine,SIGNAL (activated(const QString&)),this,SLOT (requestNewTopic(const QString&)) );
+  connect(topicLine,SIGNAL (topicChanged(const QString&)),this,SLOT (requestNewTopic(const QString&)) );
 
   nicknameList.setAutoDelete(true);     // delete items when they are removed
 
@@ -213,6 +213,8 @@ Channel::~Channel()
 
 void Channel::requestNewTopic(const QString& newTopic)
 {
+  kdDebug() << "requestNewTopic(" << newTopic << ")" << endl;
+
   topicLine->setCurrentText(topic);
 
   if(newTopic!=topic) sendChannelText("/TOPIC "+newTopic);
@@ -647,8 +649,7 @@ void Channel::setTopic(QString& newTopic)
   appendCommandMessage(i18n("Topic"),i18n("The channel topic is \"%1\".").arg(newTopic));
   if(topic!=newTopic)
   {
-//    topicHistory.prepend(newTopic.left(80)); // FIXME! Window gets too big
-    topicHistory.prepend(newTopic);
+    topicHistory.prepend(i18n("<unknown> %1").arg(newTopic));
     topicLine->clear();
     topicLine->insertStringList(topicHistory);
     topic=newTopic;
@@ -674,8 +675,7 @@ void Channel::setTopic(QString& nickname,QString& newTopic) // Overloaded
   else
     appendCommandMessage(i18n("Topic"),i18n("%1 sets the channel topic to \"%2\".").arg(nickname).arg(newTopic));
 
-//  topicHistory.prepend(newTopic.left(80)); // FIXME! Window gets too big
-  topicHistory.prepend(newTopic);
+  topicHistory.prepend("<"+nickname+"> "+newTopic);
   topicLine->clear();
   topicLine->insertStringList(topicHistory);
   topic=newTopic;

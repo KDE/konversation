@@ -292,6 +292,7 @@ void DccTransfer::getAck()
     setStatus(Done);
     sendSocket->close();
     file.close();
+    emit dccSendDone(getFile());
   }
 }
 
@@ -307,6 +308,7 @@ void DccTransfer::sendAck()
     setStatus(Done);
     dccSocket->close();
     file.close();
+    emit dccGetDone(getFile());
   }
 }
 
