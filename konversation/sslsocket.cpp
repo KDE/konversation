@@ -166,6 +166,8 @@ int SSLSocket::verifyCertificate()
 	KSSLCertificate::KSSLValidationList validationList
             = peerCertificate.validateVerbose(KSSLCertificate::SSLServer);
 
+	_IPmatchesCN = kssl->peerInfo().certMatchesAddress();
+
 	KSSLCertificate::KSSLValidation validation = KSSLCertificate::Ok;
 
         if (!validationList.isEmpty())
