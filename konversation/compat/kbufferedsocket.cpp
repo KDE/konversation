@@ -52,7 +52,6 @@ KBufferedSocket::KBufferedSocket(const QString& host, const QString& service,
   : KStreamSocket(host, service, parent, name),
     d(new KBufferedSocketPrivate)
 {
-  setBlocking(false);
   setInputBuffering(true);
   setOutputBuffering(true);
 }
