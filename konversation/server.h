@@ -47,6 +47,8 @@ class ChannelListPanel;
 class ScriptLauncher;
 class ServerISON;
 
+using namespace KNetwork;
+
 class Server : public QObject
 {
   Q_OBJECT
@@ -327,6 +329,7 @@ class Server : public QObject
   public slots:
     void lookupFinished();
     void connectToIRCServer();
+    void gotWhoisIpReply(KResolverResults res);
     void queue(const QString &buffer);
     void queueList(const QStringList &buffer);
     void queueAt(uint pos,const QString& buffer);

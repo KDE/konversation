@@ -606,7 +606,7 @@ void Server::broken(int state)
   inputFilter.setLagMeasuring(false); // XXX paranoia?
   currentLag = -1; // XXX will this make it server independent now?
   emit resetLag();
-  
+
   kdDebug() << "Connection broken (Socket fd " << serverSocket->socketDevice()->socket() << ") " << state << "!" << endl;
 
   // clear nicks online
@@ -847,7 +847,7 @@ void Server::processIncomingData()
     inputFilter.parseLine(inputBuffer.front(), mainWindow);
     inputBuffer.pop_front();
   }
-  
+
   if(inputBuffer.isEmpty()) {
     incomingTimer.stop();
   }
@@ -2308,12 +2308,8 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
   if(ownIpByWHOIS.isEmpty() && sourceNick==nickname)  // myself
   {
     QString myhost = sourceHostmask.section('@', 1);
-    KNetwork::KResolverResults res = KNetwork::KResolver::resolve(myhost, "");
-    if(res.size() > 0)
-      ownIpByWHOIS = res.first().address().nodeName();
+    KNetwork::KResolver::resolveAsync(this,SLOT(gotWhoisIpReply(KResolverResults)),myhost,"0");
   }
-
-
 
   // Update NickInfo.
   NickInfoPtr nickInfo=getNickInfo(sourceNick);
@@ -2327,6 +2323,16 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
   // Set hostmask for query with the same name
   Query* query=getQueryByName(sourceNick);
   if(query) query->setHostmask(sourceHostmask);
+}
+
+void Server::gotWhoisIpReply(KResolverResults res)
+{
+    if ( res.error() == KResolver::NoError  ) {
+        ownIpByWHOIS = res.first().address().nodeName();
+        kdDebug() << "ownIpByWHOIS reply : " << ownIpByWHOIS << endl;
+    }
+    else
+        kdDebug() << "Got error " << ( int )res.error() << endl;
 }
 
 void Server::removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit)
