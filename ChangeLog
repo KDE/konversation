@@ -16,6 +16,8 @@ Changes from 0.14 to 0.15
 - Added an option to stay in systray all the time
 - Full irc:/ url support (channel name & password now supported in url)
 - /charset support
+- auto /WHO support
+- display away status of nicks in nick list
 
 Changes from 0.13 to 0.14
 - Added irc "pseudo" command /prefs for changing settings without settings dialog.
