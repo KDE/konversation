@@ -13,6 +13,8 @@
 */
 
 #include <stdlib.h>
+#include <sys/types.h>
+#include <netinet/in.h>
 
 #include <qvbox.h>
 #include <qhostaddress.h>
@@ -33,14 +35,21 @@ DccChat::DccChat(QWidget* parent,const QString& myNickname,const QString& nickna
   kdDebug() << "DccChat::DccChat()" << endl;
 
   dccSocket=0;
+  listenSocket=0;
+  port=0;
 
   setType(ChatWindow::DccChat);
   setName("-"+nickname+"-");
 
   myNick=myNickname;
   nick=nickname;
-  host=parameters[1];
-  port=parameters[2].toInt();
+
+  if(listen);
+  else
+  {
+    host=parameters[1];
+    port=parameters[2].toInt();
+  }
 
   // this is the main box
   QVBox* mainBox=new QVBox(this);
@@ -60,17 +69,42 @@ DccChat::DccChat(QWidget* parent,const QString& myNickname,const QString& nickna
   connect(getTextView(),SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(getTextView(),SIGNAL (newText(const QString&)),this,SLOT (newTextInView(const QString&)) );
 
-  if(listen);
+  if(listen)
+    listenForPartner();
   else
-  {
     connectToPartner();
-  }
 }
 
 DccChat::~DccChat()
 {
   kdDebug() << "DccChat::~DccChat()" << endl;
   if(dccSocket) delete dccSocket;
+}
+
+void DccChat::listenForPartner()
+{
+  // Set up server socket
+  listenSocket=new KExtendedSocket();
+  // Listen on all available interfaces
+  listenSocket->setHost("0.0.0.0");
+
+  listenSocket->setSocketFlags(KExtendedSocket::passiveSocket |
+                               KExtendedSocket::inetSocket |
+                               KExtendedSocket::streamSocket);
+
+  if(listenSocket->listen(5)==0)
+  {
+    // Get our own port number
+    const KSocketAddress* ipAddr=listenSocket->localAddress();
+    const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr->address();
+    port=ntohs(socketAddress->sin_port);
+
+    // remove temporary object
+    delete ipAddr;
+
+    connect(listenSocket,SIGNAL (readyAccept()),this,SLOT(heardPartner()) );
+  }
+  else kdDebug() << this << "DccChat::listenForPartner(): listenSocket->listen() failed!" << endl;
 }
 
 void DccChat::newTextInView(const QString& highlightColor)
@@ -86,6 +120,7 @@ void DccChat::connectToPartner()
   host=ip.toString();
 
   getTextView()->append(i18n("Info"),i18n("Establishing DCC Chat connection to %1 (%2:%3)").arg(nick).arg(host).arg(port));
+  sourceLine->setText(i18n("DCC chat with %1 on %2:%3").arg(nick).arg(host).arg(port));
 
   dccSocket=new KExtendedSocket(host,port,KExtendedSocket::inetSocket);
 
@@ -230,6 +265,18 @@ void DccChat::sendDccChatText(const QString& sendLine)
   }
 }
 
+void DccChat::heardPartner()
+{
+  int fail=listenSocket->accept(dccSocket);
+  if(fail)
+    delete this;
+  else
+  {
+    connect(dccSocket,SIGNAL (readyRead()),this,SLOT (readData()) );
+    dccSocket->enableRead(true);
+  }
+}
+
 void DccChat::textPasted(QString /* text */ )
 {
 }
@@ -241,6 +288,8 @@ void DccChat::adjustFocus()
 
 bool DccChat::frontView()        { return true; }
 bool DccChat::searchView()       { return true; }
+
+int DccChat::getPort()           { return port; }
 
 QString DccChat::getTextInLine() { return dccChatInput->text(); }
 

@@ -125,6 +125,8 @@ class Server : public QObject
     StatusPanel* getStatusView() const { return statusView; }
 
     bool connected();
+    QString getIp();
+    QString getNumericalIp();
 
   signals:
     void nicknameChanged(const QString&);
@@ -149,6 +151,7 @@ class Server : public QObject
     void quitServer();
     void requestKonsolePanel();
     void requestDccPanel();
+    void requestDccChat(const QString& nickname);
     void requestCloseDccPanel();
     void requestBan(const QStringList& users,const QString& channel,const QString& option);
     void requestUnban(const QString& mask,const QString& channel);

@@ -552,10 +552,21 @@ void OutputFilter::parseDcc(const QString &parameter)
       }
     }
     // TODO: DCC Chat etc. comes here
+    else if(dccType=="chat")
+    {
+      if(parameterList.count()==2)
+        emit requestDccChat(parameterList[1]);
+      else
+      {
+        type=i18n("Usage");
+        output=i18n("Usage: %1DCC [CHAT nickname]").arg(commandChar);
+        program=true;
+      }
+    }
     else
     {
       type=i18n("Error");
-      output=i18n("Error: Unrecognized command DCC %1.").arg(parameterList[0]);
+      output=i18n("Error: Unrecognized command DCC %1. Possible commands are SEND, CHAT, CLOSE.").arg(parameterList[0]);
       program=true;
     }
   }

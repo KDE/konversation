@@ -410,10 +410,15 @@ void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nic
 {
   kdDebug() << "KonversationMainWindow::addDccChat(" << nick << " " << arguments.join(" ") << " " << listen << ")" << endl;
 
-  DccChat* dccChatPanel=new DccChat(getViewContainer(),myNick,nick,arguments,listen);
-  addView(dccChatPanel,3,dccChatPanel->getName());
+  if(frontServer)
+  {
+    DccChat* dccChatPanel=new DccChat(getViewContainer(),myNick,nick,arguments,listen);
+    addView(dccChatPanel,3,dccChatPanel->getName());
 
-  connect(dccChatPanel,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
+    connect(dccChatPanel,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
+
+    frontServer->queue(QString("PRIVMSG %1 :\x01%2 CHAT chat %3 %4\x01").arg(nick).arg("DCC").arg(frontServer->getNumericalIp()).arg(dccChatPanel->getPort()));
+  }
 }
 
 StatusPanel* KonversationMainWindow::addStatusView(Server* server)

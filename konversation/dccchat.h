@@ -38,6 +38,8 @@ class DccChat : public ChatWindow
     virtual bool frontView();
     virtual bool searchView();
 
+    int getPort();
+
   public slots:
     void appendInputText(const QString& s);
     virtual void adjustFocus();
@@ -53,19 +55,24 @@ class DccChat : public ChatWindow
     void dccChatTextEntered();
     void textPasted(QString text);
     void newTextInView(const QString& highlightColor);
+    void heardPartner();
 
   protected:
+    void listenForPartner();
     void connectToPartner();
     void sendDccChatText(const QString& sendLine);
 
     QString myNick;
     QString nick;
     QString host;
+
+    QString ip;
     int port;
 
     KLineEdit* sourceLine;
     IRCInput* dccChatInput;
     KExtendedSocket* dccSocket;
+    KExtendedSocket* listenSocket;
 };
 
 #endif

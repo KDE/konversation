@@ -739,6 +739,27 @@ void Server::setDeliberateQuit(bool on)
   deliberateQuit=on;
 }
 
+QString Server::getNumericalIp()
+{
+  QHostAddress ip;
+  ip.setAddress(getIp());
+
+  return QString::number(ip.ip4Addr());
+}
+
+QString Server::getIp()
+{
+  // Get our own IP address.
+  KSocketAddress* ipAddr=KExtendedSocket::localAddress(serverSocket.fd());
+  KInetSocketAddress inetSocket((const sockaddr_in*)ipAddr->address(),ipAddr->size());
+
+  struct in_addr in_addr=inetSocket.hostV4();
+  QString ip(KInetSocketAddress::addrToString(inetSocket.family(),&in_addr));
+  // remove temporary object
+  delete ipAddr;
+  return ip;
+}
+
 void Server::addQuery(const QString& nickname,const QString& hostmask)
 {
   // Only create new query object if there isn't already one with the same name
@@ -901,14 +922,7 @@ void Server::addDccSend(const QString &recipient,const QString &fileName)
 {
   emit addDccPanel();
 
-  // Get our own IP address.
-  KSocketAddress* ipAddr=KExtendedSocket::localAddress(serverSocket.fd());
-  KInetSocketAddress inetSocket((const sockaddr_in*)ipAddr->address(),ipAddr->size());
-
-  struct in_addr in_addr=inetSocket.hostV4();
-  QString ip(KInetSocketAddress::addrToString(inetSocket.family(),&in_addr));
-  // remove temporary object
-  delete ipAddr;
+  QString ip=getIp();
 
   // We already checked that the file exists in output filter / requestDccSend() resp.
   QFile file(fileName);
@@ -976,6 +990,11 @@ void Server::requestDccPanel()
 void Server::requestCloseDccPanel()
 {
   emit closeDccPanel();
+}
+
+void Server::requestDccChat(const QString& nickname)
+{
+  getMainWindow()->addDccChat(getNickname(),nickname,QStringList(),true);
 }
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)

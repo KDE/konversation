@@ -92,6 +92,8 @@ void ChatWindow::setServer(Server* newServer)
                server,SLOT   (requestDccSend()) );
       connect(&filter,SIGNAL (requestDccSend(const QString &)),
                server,SLOT   (requestDccSend(const QString &)) );
+      connect(&filter,SIGNAL (requestDccChat(const QString &)),
+               server,SLOT   (requestDccChat(const QString &)) );
 
       connect(&filter,SIGNAL (openKonsolePanel()),
                server,SLOT   (requestKonsolePanel()) );
