@@ -9,7 +9,14 @@
   (at your option) any later version.
 */
 
+#include <qglobal.h>
+
+#if QT_VERSION < 0x030300
+#include <klocale.h>
+#else
 #include <qlocale.h>
+#endif
+
 #include <qtextcodec.h>
 #include <kcharsets.h>
 #include <kdebug.h>
@@ -62,8 +69,11 @@ bool IRCCharsets::isValidEncoding( const QString& shortName )  // static
 QString IRCCharsets::encodingForLocale()  // static
 {
   private_init();
-  
+#if QT_VERSION < 0x030300
+  QString locale = KLocale::defaultLanguage();
+#else
   QString locale = QLocale::system().name();
+#endif  
   
   // Special cases
   // don't add conditions for the languages which QTextCodec::codecForLocale() returns a correct codec for.
