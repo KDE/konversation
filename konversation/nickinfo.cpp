@@ -25,8 +25,9 @@
   let Server know that the object has been modified.
 */
 
-NickInfo::NickInfo(Server* server)
+NickInfo::NickInfo(const QString& nick, Server* server)
 {
+  nickname = nick;
   owningServer = server;
 }
 NickInfo::~NickInfo()
@@ -35,6 +36,7 @@ NickInfo::~NickInfo()
 
 
 // Get properties of NickInfo object.
+QString NickInfo::getNickname() { return nickname; }
 QString NickInfo::getHostmask() { return hostmask; }
 bool NickInfo::isAway() { return away; }
 QString NickInfo::getAwayMessage() { return awayMessage; }
@@ -47,6 +49,7 @@ Server* NickInfo::getServer() { return owningServer; }
      
 // Set properties of NickInfo object.
 // If any of these are called, call Server::nickInfoUpdated to let Server know about the change.
+void NickInfo::setNickname(const QString& newNickname) { nickname = newNickname; }
 void NickInfo::setHostmask(const QString& newMask) { hostmask = newMask; }
 void NickInfo::setAway(bool state) { away = state; }
 void NickInfo::setAwayMessage(const QString& newMessage) { awayMessage = newMessage; }

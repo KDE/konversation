@@ -33,10 +33,11 @@ class Server;
 class NickInfo
 {
   public:
-    NickInfo(Server* server);
+    NickInfo(const QString& nick, Server* server);
     ~NickInfo();
      
     // Get properties of NickInfo object.
+    QString getNickname();
     QString getHostmask();
     bool isAway();
     QString getAwayMessage();
@@ -49,6 +50,7 @@ class NickInfo
      
     // Set properties of NickInfo object.
     // If any of these are called, call Server::nickInfoUpdated to let Server know about the change.
+    void setNickname(const QString& newNickname);
     void setHostmask(const QString& newMask);
     void setAway(bool state);
     void setAwayMessage(const QString& newMessage);
@@ -57,6 +59,7 @@ class NickInfo
     void setNotified(bool state);
 
   protected:
+    QString nickname;
     Server* owningServer;
     QString hostmask;
     bool away;
