@@ -42,20 +42,20 @@
 #define UTF8_ValidTrialByte(c) ( kTrialByte == ((c) & kLeft2BitsMask))
  
 
-bool isUtf8(const QCString& utf8)
+bool isUtf8(const QCString& text)
 {
   int i;
   int j;
   int clen = 0;
-  int len = utf8.length();
+  int len = text.length();
 
   for(i=0; i < len; i += clen)
     {
-      if(UTF8_1Byte(utf8[i]))
+      if(UTF8_1Byte(text[i]))
 	{
 	  clen = 1;
 	} 
-      else if(UTF8_2Bytes(utf8[i])) 
+      else if(UTF8_2Bytes(text[i])) 
 	{
 	  clen = 2;
 	
@@ -64,10 +64,10 @@ bool isUtf8(const QCString& utf8)
 	    return false;
 	  
 	  /* 0000 0000 - 0000 007F : should encode in less bytes */
-	  if(0 ==  (utf8[i] & 0x1E )) 
+	  if(0 ==  (text[i] & 0x1E )) 
 	    return false;
 	} 
-      else if(UTF8_3Bytes(utf8[i])) 
+      else if(UTF8_3Bytes(text[i])) 
 	{
 	  clen = 3;
 	  
@@ -77,14 +77,14 @@ bool isUtf8(const QCString& utf8)
 	  
 	  /* a single Surrogate should not show in 3 bytes UTF8, instead, the pair should be intepreted
 	     as one single UCS4 char and encoded UTF8 in 4 bytes */
-	  if((QChar(0xED) == utf8[i] ) && (0xA0 == (utf8[i+1] & 0xA0 ) )) 
+	  if((QChar(0xED) == text[i] ) && (0xA0 == (text[i+1] & 0xA0 ) )) 
 	    return false;
 	  
 	  /* 0000 0000 - 0000 07FF : should encode in less bytes */
-	  if((0 ==  (utf8[i] & 0x0F )) && (0 ==  (utf8[i+1] & 0x20 ) )) 
+	  if((0 ==  (text[i] & 0x0F )) && (0 ==  (text[i+1] & 0x20 ) )) 
 	    return false;
       } 
-      else if(UTF8_4Bytes(utf8[i])) 
+      else if(UTF8_4Bytes(text[i])) 
 	{
 	  clen = 4;
 	  
@@ -93,10 +93,10 @@ bool isUtf8(const QCString& utf8)
 	    return false;
 	  
 	  /* 0000 0000 - 0000 FFFF : should encode in less bytes */
-	  if((0 ==  (utf8[i] & 0x07 )) && (0 ==  (utf8[i+1] & 0x30 )) ) 
+	  if((0 ==  (text[i] & 0x07 )) && (0 ==  (text[i+1] & 0x30 )) ) 
 	    return false;
       } 
-      else if(UTF8_5Bytes(utf8[i])) {
+      else if(UTF8_5Bytes(text[i])) {
 	clen = 5;
 	
 	/* No enough trail bytes */
@@ -104,10 +104,10 @@ bool isUtf8(const QCString& utf8)
 	  return false;
 	
 	/* 0000 0000 - 001F FFFF : should encode in less bytes */
-	if((0 ==  (utf8[i] & 0x03 )) && (0 ==  (utf8[i+1] & 0x38 )) ) 
+	if((0 ==  (text[i] & 0x03 )) && (0 ==  (text[i+1] & 0x38 )) ) 
 	  return false;
       } 
-      else if(UTF8_6Bytes(utf8[i])) 
+      else if(UTF8_6Bytes(text[i])) 
 	{
 	  clen = 6;
 	  
@@ -116,7 +116,7 @@ bool isUtf8(const QCString& utf8)
 	    return false;
 	  
 	  /* 0000 0000 - 03FF FFFF : should encode in less bytes */
-	  if((0 ==  (utf8[i] & 0x01 )) && (0 ==  (utf8[i+1] & 0x3E )) ) 
+	  if((0 ==  (text[i] & 0x01 )) && (0 ==  (text[i+1] & 0x3E )) ) 
 	    return false;
       } 
       else 
@@ -126,7 +126,7 @@ bool isUtf8(const QCString& utf8)
       
       for(j = 1; j<clen ;++j)
 	{
-	  if(! UTF8_ValidTrialByte(utf8[i+j])) /* Trail bytes invalid */
+	  if(! UTF8_ValidTrialByte(text[i+j])) /* Trail bytes invalid */
 	    return false;
 	}
     }

@@ -24,7 +24,7 @@ namespace Konversation
   QString tagURLs(const QString& text, const QString& fromNick);
   QBitmap overlayMasks( const QBitmap *under, const QBitmap *over );
   QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
-  bool isUtf8(const QCString& utf8);
+  bool isUtf8(const QCString& text);
 }
 
 #endif
