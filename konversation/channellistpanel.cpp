@@ -412,9 +412,9 @@ void ChannelListPanel::contextMenu (KListView* l, QListViewItem* i, const QPoint
 {
   KPopupMenu* showURLmenu = new KPopupMenu(this);
   showURLmenu->setTitle( i18n("Open URL") );
- 
+
   QString filteredLine(i->text(2));
-  
+
   QRegExp pattern("((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
                   // IP Address
                   "([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|"

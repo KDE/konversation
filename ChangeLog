@@ -6,6 +6,7 @@ Changes from 0.13 to 0.14
 - Hilight mailto: links
 - Topic line can now be hidden
 - Added an away nickname
+- Added "Open URL" context menu to channel list entries
 
 Changes from 0.12 to 0.13
 - Added an option to hide hostmasks in channel nick lists
