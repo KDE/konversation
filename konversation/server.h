@@ -176,6 +176,13 @@ class Server : public QObject
      *  @return            Pointer to the found or created NickInfo object. 
      */
     NickInfoPtr obtainNickInfo(const QString& nickname);
+    /**
+     * Returns a list of all the NickInfos known to the server.  A nick in this
+     * list may be assumed to be online.  A nick not in this list may or may not be
+     * online.  Caller should not modify the list.
+     * Returns a QMap of KSharedPtrs to NickInfos indexed by lowercase nickname.
+     */
+    const NickInfoMap* getAllNicks();
     /** Returns the list of members for a channel in the joinedChannels list.
      *  A joinedChannel is one that you are in, as opposed to a channel that you aren't in,
      *  but one of your watched nicks is in.

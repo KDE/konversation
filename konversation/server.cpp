@@ -1135,14 +1135,6 @@ NickInfoPtr Server::getNickInfo(const QString& nickname)
     return 0;
 }
 
-/*
-// Given a nickname, returns NickInfo object.   0 if not found.
-NickInfoPtr Server::getOnlineNickInfo(const QString& nickname)
-{
-  return getNickInfo(nickname);
-}
-*/
-
 // Given a nickname, returns an existing NickInfo object, or creates a new NickInfo object.
 // Returns pointer to the found or created NickInfo object.
 NickInfoPtr Server::obtainNickInfo(const QString& nickname)
@@ -1155,6 +1147,14 @@ NickInfoPtr Server::obtainNickInfo(const QString& nickname)
   }
   return nickInfo;
 }
+
+/**
+* Returns a list of all the NickInfos known to the server.  A nick in this
+* list may be assumed to be online.  A nick not in this list may or may not be
+* online.  Caller should not modify the list.
+* Returns a QMap of KSharedPtrs to NickInfos indexed by lowercase nickname.
+*/
+const NickInfoMap* Server::getAllNicks() { return &allNicks; }
 
 // Returns the list of members for a channel in the joinedChannels list.
 // 0 if channel is not in the joinedChannels list.
