@@ -19,9 +19,9 @@
 #include <qtooltip.h>
 
 #ifdef USE_MDI
-#include <qlayout.h>
-#else
 #include <kmdichildview.h>
+#else
+#include <qlayout.h>
 #endif
 
 #include <klocale.h>
