@@ -42,7 +42,7 @@ struct SSLSocketPrivate
 };
 
 SSLSocket::SSLSocket(QWidget* serverParent, QObject* parent, const char* name)
-  : KStreamSocket("","",parent,name), m_serverParent(serverParent) 
+  : KStreamSocket(0L,0L,parent,name), m_serverParent(serverParent) 
 {
   d = new SSLSocketPrivate;
   d->kssl = 0L;
@@ -155,7 +155,7 @@ void SSLSocket::showSSLInfoDialog()
 {
   /* We don't delete sslInfoDlg here as code in kio/misc/uiserver.cpp says not to do so*/
 
-  KSSLInfoDlg* sslInfoDlg = new KSSLInfoDlg(true, 0L, 0L, true);
+  KSSLInfoDlg* sslInfoDlg = new KSSLInfoDlg(true, m_serverParent, "sslInfoDlg", true);
   sslInfoDlg->setCertState( d->m_sslCertErrors );
   sslInfoDlg->setup( *(d->kssl),
 		     (const QString&) d->remoteHost,
