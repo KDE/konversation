@@ -107,6 +107,19 @@ class Preferences : public QObject
     void setCloseButtonsOnTabs(bool state);
     bool getCloseButtonsOnTabs();
 
+    // sorting stuff
+    bool getSortByStatus();
+    void setSortByStatus(bool state);
+    bool getSortCaseInsensitive();
+    void setSortCaseInsensitive(bool state);
+    // more sorting stuff
+    int getOpValue();
+    void setOpValue(int value);
+    int getVoiceValue();
+    void setVoiceValue(int value);
+    int getNoRightsValue();
+    void setNoRightsValue(int value);
+
     // Geometry functions
     QSize getMainWindowSize();
     QSize getHilightSize();
@@ -347,6 +360,14 @@ class Preferences : public QObject
     bool useSpacing;
     int spacing;
     int margin;
+
+    // sorting stuff
+    bool sortByStatus;
+    bool sortCaseInsensitive;
+    // more sorting stuff
+    int opValue;
+    int voiceValue;
+    int noRightsValue;
 
     bool useParagraphSpacing;
     int paragraphSpacing;

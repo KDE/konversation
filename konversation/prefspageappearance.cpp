@@ -19,12 +19,14 @@
 #include <qhbox.h>
 #include <qcombobox.h>
 #include <qtextcodec.h>
+#include <qheader.h>
 
 #include <kfontdialog.h>
 #include <kdebug.h>
 #include <kcharsets.h>
 
 #include "prefspageappearance.h"
+#include "valuelistviewitem.h"
 
 PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPreferences) :
                      PrefsPage(newParent,newPreferences)
@@ -50,7 +52,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 //  codecList->insertItem(preferences->getCodec()+" "+i18n("(Current)"));
 
   QStringList encodings=KGlobal::charsets()->descriptiveEncodingNames();
-  
+
   // from ksirc: remove utf16/ucs2 as it just doesn't work for IRC
   QStringList::Iterator iterator=encodings.begin();
   while(iterator!=encodings.end())
@@ -120,24 +122,24 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   spacing->setSuffix(" "+i18n("Pixel"));
   margin->setValue(preferences->getMargin());
   margin->setSuffix(" "+i18n("Pixel"));
-  
+
   marginLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   spacingMarginBox->setStretchFactor(marginLabel,10);
 
   // Take care of ghosting / unghosting spacing widgets
   useSpacingChanged(preferences->getUseSpacing() ? 2 : 0);
- 
+
   // paragraph spacing stuff
   QHBox* paragraphSpacingBox=new QHBox(parentFrame);
   paragraphSpacingBox->setSpacing(spacingHint());
-  
+
   useParagraphSpacingCheck=new QCheckBox(i18n("Use paragraph spacing"),paragraphSpacingBox,"use_paragraph_spacing_check");
 
   paragraphSpacingSpin=new QSpinBox(0,10,1,paragraphSpacingBox,"paragraph_spacing_spin_box");
 
   paragraphSpacingSpin->setValue(preferences->getParagraphSpacing());
   paragraphSpacingSpin->setSuffix(" "+i18n("Pixel"));
-  
+
   paragraphSpacingBox->setStretchFactor(paragraphSpacingSpin,10);
 
   // Take care of ghosting / unghosting paragraph spacing widgets
@@ -146,6 +148,28 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   // close buttons on tabs
   QCheckBox* closeButtonsCheck=new QCheckBox(i18n("Show close widgets on tabs"),parentFrame,"tab_close_widgets_check");
   closeButtonsCheck->setChecked(preferences->getCloseButtonsOnTabs());
+
+  // Sorting
+  QCheckBox* sortByStatusCheck=new QCheckBox(i18n("Sort by user status"),parentFrame,"sort_by_status_check");
+  QCheckBox* sortCaseInsensitiveCheck=new QCheckBox(i18n("Sort case insensitive"),parentFrame,"sort_case_insensitive_check");
+
+  sortByStatusCheck->setChecked(preferences->getSortByStatus());
+  sortCaseInsensitiveCheck->setChecked(preferences->getSortCaseInsensitive());
+
+  sortingOrder=new KListView(parentFrame,"sorting_order_view");
+  sortingOrder->addColumn("");
+  sortingOrder->setFullWidth(true);
+  sortingOrder->header()->hide();
+  sortingOrder->setSorting(-1);
+  sortingOrder->setDragEnabled(true);
+  sortingOrder->setAcceptDrops(true);
+
+  for(int index=4;index!=0;index>>=1)
+  {
+    if(preferences->getNoRightsValue()==index) new ValueListViewItem(0,sortingOrder,i18n("Normal users"));
+    if(preferences->getVoiceValue()==index)    new ValueListViewItem(1,sortingOrder,i18n("Voice (+v)"));
+    if(preferences->getOpValue()==index)       new ValueListViewItem(2,sortingOrder,i18n("Operators (+o)"));
+  }
 
   // Layout
   int row=0;
@@ -172,6 +196,11 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   row++;
   appearanceLayout->addMultiCellWidget(closeButtonsCheck,row,row,0,2);
   row++;
+  appearanceLayout->addWidget(sortByStatusCheck,row,0);
+  appearanceLayout->addMultiCellWidget(sortingOrder,row,row+1,1,1);
+  row++;
+  appearanceLayout->addWidget(sortCaseInsensitiveCheck,row,0);
+  row++;
   appearanceLayout->setRowStretch(row,10);
   appearanceLayout->setColStretch(1,10);
 
@@ -196,6 +225,10 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   connect(paragraphSpacingSpin,SIGNAL (valueChanged(int)),this,SLOT (paragraphSpacingChanged(int)));
 
   connect(closeButtonsCheck,SIGNAL (stateChanged(int)),this,SLOT (showCloseButtonsChanged(int)) );
+
+  connect(sortByStatusCheck,SIGNAL (stateChanged(int)),this,SLOT (sortByStatusChanged(int)) );
+  connect(sortCaseInsensitiveCheck,SIGNAL (stateChanged(int)),this,SLOT (sortCaseInsensitiveChanged(int)) );
+  connect(sortingOrder,SIGNAL (moved()),this,SLOT (sortingOrderChanged()) );
 }
 
 PrefsPageAppearance::~PrefsPageAppearance()
@@ -263,7 +296,7 @@ void PrefsPageAppearance::encodingChanged(int newEncodingIndex)
   if(newEncodingIndex)
   {
     QString newEncoding=codecList->text(newEncodingIndex);
-    
+
     if(newEncoding.startsWith("utf 16"))
       preferences->setCodec(QString::null);
     else
@@ -301,6 +334,33 @@ void PrefsPageAppearance::useParagraphSpacingChanged(int state)
 void PrefsPageAppearance::paragraphSpacingChanged(int newSpacing)
 {
   preferences->setParagraphSpacing(newSpacing);
+}
+
+void PrefsPageAppearance::sortByStatusChanged(int state)
+{
+  preferences->setSortByStatus(state==2);
+}
+
+void PrefsPageAppearance::sortCaseInsensitiveChanged(int state)
+{
+  preferences->setSortCaseInsensitive(state==2);
+}
+
+void PrefsPageAppearance::sortingOrderChanged()
+{
+  int flag=1;
+
+  for(int index=0;index<3;index++)
+  {
+    ValueListViewItem* item=static_cast<ValueListViewItem*>(sortingOrder->itemAtIndex(index));
+    int value=item->getValue();
+
+    if(value==0) preferences->setNoRightsValue(flag);
+    else if(value==1) preferences->setVoiceValue(flag);
+    else if(value==2) preferences->setOpValue(flag);
+
+    flag<<=1;
+  }
 }
 
 #include "prefspageappearance.moc"

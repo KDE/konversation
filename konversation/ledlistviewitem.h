@@ -38,6 +38,7 @@ class LedListViewItem : public KListViewItem
 
     bool getOpState();
     bool getVoiceState();
+    int getFlags() const;
     void setState(bool passed_opState, bool passed_voiceState);
     void toggleOpState();
     void toggleVoiceState();

@@ -134,6 +134,12 @@ Preferences::Preferences()
   setCommandChar("/");
   setChannelDoubleClickAction("/WHOIS %u%n");
   setNotifyDoubleClickAction("/WHOIS %u%n");
+
+  setOpValue(1);
+  setVoiceValue(2);
+  setNoRightsValue(4);
+  setSortCaseInsensitive(true);
+  setSortByStatus(false);
 }
 
 Preferences::~Preferences()
@@ -504,5 +510,20 @@ void Preferences::setUseParagraphSpacing(bool state) { useParagraphSpacing=state
 bool Preferences::getUseParagraphSpacing() { return useParagraphSpacing; }
 void Preferences::setParagraphSpacing(int newSpacing) { paragraphSpacing=newSpacing; }
 int Preferences::getParagraphSpacing() { return paragraphSpacing; }
+
+// sorting stuff
+void Preferences::setOpValue(int value)              { opValue=value; }
+void Preferences::setVoiceValue(int value)           { voiceValue=value; }
+void Preferences::setNoRightsValue(int value)        { noRightsValue=value; }
+
+int Preferences::getOpValue()                        { return opValue; }
+int Preferences::getVoiceValue()                     { return voiceValue; }
+int Preferences::getNoRightsValue()                  { return noRightsValue; }
+
+void Preferences::setSortCaseInsensitive(bool state) { sortCaseInsensitive=state; }
+void Preferences::setSortByStatus(bool state)        { sortByStatus=state; }
+
+bool Preferences::getSortCaseInsensitive()           { return sortCaseInsensitive; }
+bool Preferences::getSortByStatus()                  { return sortByStatus; }
 
 #include "preferences.moc"

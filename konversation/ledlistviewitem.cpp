@@ -82,11 +82,42 @@ void LedListViewItem::toggleVoiceState()
 
 int LedListViewItem::compare(QListViewItem* item,int col,bool ascending) const
 {
-  QString thisKey=key(col,ascending).lower();
-  QString otherKey=item->key(col,ascending).lower();
+  LedListViewItem* otherItem=static_cast<LedListViewItem*>(item);
+
+  int thisFlags=getFlags();
+  int otherFlags=otherItem->getFlags();
+
+  if(KonversationApplication::preferences.getSortByStatus())
+  {
+    if(thisFlags>otherFlags) return 1;
+    if(thisFlags<otherFlags) return -1;
+  }
+
+  QString thisKey=key(col,ascending);
+  QString otherKey=otherItem->key(col,ascending);
+
+  if(KonversationApplication::preferences.getSortCaseInsensitive())
+  {
+    thisKey=thisKey.lower();
+    otherKey=otherKey.lower();
+  }
 
   return thisKey.compare(otherKey);
 }
 
 bool LedListViewItem::getOpState()    { return opState; }
 bool LedListViewItem::getVoiceState() { return voiceState; }
+
+int LedListViewItem::getFlags() const
+{
+  int opValue=KonversationApplication::preferences.getOpValue();
+  int voiceValue=KonversationApplication::preferences.getVoiceValue();
+  int noRightsValue=KonversationApplication::preferences.getNoRightsValue();
+
+  int flags;
+  if(opState) flags=opValue;
+  else if(voiceState) flags=voiceValue;
+  else flags=noRightsValue;
+
+  return flags;
+}

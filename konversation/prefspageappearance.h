@@ -21,6 +21,8 @@
 #include <qcheckbox.h>
 #include <qspinbox.h>
 
+#include <klistview.h>
+
 #include "prefspage.h"
 
 /*
@@ -44,13 +46,17 @@ class PrefsPageAppearance : public PrefsPage
     void showCloseButtonsChanged(int state);
     void formatChanged(const QString& newFormat);
     void encodingChanged(int newEncodingIndex);
-    
+
     void useSpacingChanged(int state);
     void spacingChanged(int newSpacing);
     void marginChanged(int newMargin);
-    
+
     void useParagraphSpacingChanged(int state);
     void paragraphSpacingChanged(int newSpacing);
+
+    void sortByStatusChanged(int state);
+    void sortCaseInsensitiveChanged(int state);
+    void sortingOrderChanged();
 
   protected:
     void updateFonts();
@@ -69,12 +75,14 @@ class PrefsPageAppearance : public PrefsPage
 
     QLabel* spacingLabel;
     QLabel* marginLabel;
-    
+
     QSpinBox* spacing;
     QSpinBox* margin;
 
     QCheckBox* useParagraphSpacingCheck;
     QSpinBox* paragraphSpacingSpin;
+
+    KListView* sortingOrder;
 };
 
 #endif

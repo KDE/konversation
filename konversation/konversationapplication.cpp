@@ -247,10 +247,10 @@ void KonversationApplication::readOptions()
 
   // Beep
   preferences.setBeep(config->readBoolEntry("Beep",preferences.getBeep()));
-  
+
   // Raw log window
   preferences.setRawLog(config->readBoolEntry("RawLog",preferences.getRawLog()));
-  
+
   // Appearance
   config->setGroup("Appearance");
   // Fonts
@@ -269,13 +269,13 @@ void KonversationApplication::readOptions()
 
   preferences.setUseParagraphSpacing(config->readBoolEntry("UseParagraphSpacing",preferences.getUseParagraphSpacing()));
   preferences.setParagraphSpacing(config->readNumEntry("ParagraphSpacing",preferences.getParagraphSpacing()));
-  
+
   QValueList<int> sizes;
   QString sizesString=config->readEntry("ChannelSplitter","10,1");
   sizes.append(sizesString.section(',',0,0).toInt());
   sizes.append(sizesString.section(',',1,1).toInt());
   preferences.setChannelSplitter(sizes);
-  
+
   // Colors
   config->setGroup("Message Text Colors");
 
@@ -294,6 +294,14 @@ void KonversationApplication::readOptions()
   preferences.setOpLedColor(config->readNumEntry("OperatorColor",preferences.getOpLedColor()));
   preferences.setVoiceLedColor(config->readNumEntry("VoiceColor",preferences.getVoiceLedColor()));
   preferences.setNoRightsLedColor(config->readNumEntry("NoRightsColor",preferences.getNoRightsLedColor()));
+
+  // Sorting
+  config->setGroup("Sort Nicknames");
+  preferences.setOpValue(config->readNumEntry("OperatorValue",preferences.getOpValue()));
+  preferences.setVoiceValue(config->readNumEntry("VoiceValue",preferences.getVoiceValue()));
+  preferences.setNoRightsValue(config->readNumEntry("NoRightsValue",preferences.getNoRightsValue()));
+  preferences.setSortByStatus(config->readBoolEntry("SortByStatus",preferences.getSortByStatus()));
+  preferences.setSortCaseInsensitive(config->readBoolEntry("SortCaseInsensitive",preferences.getSortCaseInsensitive()));
 
   // Identity list
   QStringList identityList=config->groupList().grep(QRegExp("Identity [0-9]+"));
@@ -506,15 +514,22 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->setGroup("Message Text Colors");
 
-  config->writeEntry("ActionMessage", preferences.getActionMessageColor());
-  config->writeEntry("BacklogMessage", preferences.getBacklogMessageColor());
-  config->writeEntry("ChannelMessage", preferences.getChannelMessageColor());
-  config->writeEntry("CommandMessage", preferences.getCommandMessageColor());
-  config->writeEntry("LinkMessage", preferences.getLinkMessageColor());
-  config->writeEntry("QueryMessage", preferences.getQueryMessageColor());
-  config->writeEntry("ServerMessage", preferences.getServerMessageColor());
-  config->writeEntry("Time", preferences.getTimeColor());
-  config->writeEntry("TextViewBackground", preferences.getTextViewBackground());
+  config->writeEntry("ActionMessage",preferences.getActionMessageColor());
+  config->writeEntry("BacklogMessage",preferences.getBacklogMessageColor());
+  config->writeEntry("ChannelMessage",preferences.getChannelMessageColor());
+  config->writeEntry("CommandMessage",preferences.getCommandMessageColor());
+  config->writeEntry("LinkMessage",preferences.getLinkMessageColor());
+  config->writeEntry("QueryMessage",preferences.getQueryMessageColor());
+  config->writeEntry("ServerMessage",preferences.getServerMessageColor());
+  config->writeEntry("Time",preferences.getTimeColor());
+  config->writeEntry("TextViewBackground",preferences.getTextViewBackground());
+
+  config->setGroup("Sort Nicknames");
+  config->writeEntry("OperatorValue",preferences.getOpValue());
+  config->writeEntry("VoiceValue",preferences.getVoiceValue());
+  config->writeEntry("NoRightsValue",preferences.getNoRightsValue());
+  config->writeEntry("SortByStatus",preferences.getSortByStatus());
+  config->writeEntry("SortCaseInsensitive",preferences.getSortCaseInsensitive());
 
   config->setGroup("Led Colors");
   config->writeEntry("OperatorColor", preferences.getOpLedColor());
