@@ -9,7 +9,8 @@ Changes from 0.15 to 0.16
 - Calculate DCC CPS more accurately
 - Colored nicks support
 - Added dcop functions to set away and added alt+a shortcut to toggle away
-
+- Clicking nicks in channel text will now open a query and similarly, clicking #foo
+will now join channel #foo
 
 
 Changes from 0.14 to 0.15
