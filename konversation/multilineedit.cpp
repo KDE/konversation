@@ -73,7 +73,7 @@ QString MultilineEdit::edit(QWidget* parent,QString text)
   MultilineEdit dlg(parent,text);
   dlg.exec();
 
-  return returnText.stripWhiteSpace();
+  return returnText;
 }
 
 #include "multilineedit.moc"
