@@ -5,6 +5,7 @@ Implement different identities so user can choose which identity to use on which
 Move Part / Kick Reasons into the Identity section in Preferences File
 Make sure, that lines don't get cleared while viewing the history
 Background color of Channel window / Nicklist View
+Add a possibility to close the dcc panel
 
 nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  das markieren
 des letzten Zeitpunkts wo das Fenster aktiv war  und  die Text-Suche "

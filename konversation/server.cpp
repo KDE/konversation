@@ -100,6 +100,7 @@ Server::Server(int id)
   connect(this,SIGNAL(tooLongLag(int)),serverWindow,SLOT(tooLongLag(int)) );
   connect(this,SIGNAL(resetLag()),serverWindow,SLOT(resetLag()) );
   connect(this,SIGNAL(addDccPanel()),serverWindow,SLOT(addDccPanel()) );
+  connect(this,SIGNAL(closeDccPanel()),serverWindow,SLOT(closeDccPanel()) );
 }
 
 Server::~Server()
@@ -538,6 +539,11 @@ void Server::addDccGet(QString sourceNick,QStringList dccArguments)
 void Server::requestDccPanel()
 {
   emit addDccPanel();
+}
+
+void Server::requestCloseDccPanel()
+{
+  emit closeDccPanel();
 }
 
 void Server::dccSendRequest(QString partner,QString fileName,QString address,QString port,unsigned long size)

@@ -51,6 +51,7 @@ class OutputFilter : public QObject
     void openDccSend(QString recipient,QString fileName);
     void requestDccSend(QString recipient);       // Choose Recipient / File from requester
     void openDccPanel();
+    void closeDccPanel();
 
   public slots:
     void setCommandChar();

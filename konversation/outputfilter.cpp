@@ -379,7 +379,8 @@ void OutputFilter::parseDcc(QString parameter)
 
     QString dccType=parameterList[0].lower();
 
-    if(dccType=="send")
+    if(dccType=="close") emit closeDccPanel();
+    else if(dccType=="send")
     {
       if(parameterList.count()==1)                 // DCC SEND
       {

@@ -185,8 +185,11 @@ DccPanel* ServerWindow::getDccPanel()
 
 void ServerWindow::closeDccPanel()
 {
+// TODO: Make sure to keep the running DCCs alive ...
+/*
   delete dccPanel;
   dccPanel=0;
+*/
 }
 
 void ServerWindow::addStatusView()

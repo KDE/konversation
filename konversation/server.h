@@ -109,12 +109,14 @@ class Server : public QObject
     void resetLag();
     void nicksNowOnline(QStringList list); // Will be emitted when new 303 came in
     void addDccPanel(); // will be connected to ServerWindow->addDccPanel()
+    void closeDccPanel(); // will be connected to ServerWindow->closeDccPanel()
 
   public slots:
     void queue(const QString& buffer);
     void setNickname(const QString& newNickname);
     void addQuery(const QString& nickname,const QString& hostmask);
     void requestDccPanel();
+    void requestCloseDccPanel();
     void addDccSend(QString recipient,QString file);
     void removeQuery(Query* query);
     void startNotifyTimer(int msec=0);
