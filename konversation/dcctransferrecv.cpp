@@ -62,24 +62,16 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
             << "DccTransferRecv::DccTransferRecv(): FileSize: " << fileSize << endl
             << "DccTransferRecv::DccTransferRecv(): Partner Address: " << partnerIp << ":" << partnerPort << endl;
   
-  // TODO: should we support it?
-  if ( fileSize == 0 )
-  {
-    failed( i18n( "Unsupported negotiation (filesize=0)" ) );
-    return;
-  }
+  m_recvSocket = 0;
+  m_writeCacheHandler = 0;
   
   m_fileSize = fileSize;
   m_partnerIp = partnerIp;
   m_partnerPort = partnerPort;
   
-  m_writeCacheHandler = 0;
-  
   m_connectionTimer = new QTimer( this );
   connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
   //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
-  
-  m_recvSocket = 0;
   
   // determine default incoming file URL
   calculateSaveToFileURL( defaultFolderURL );
@@ -88,6 +80,13 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
   updateView();
   
   panel->selectMe( this );
+  
+  // TODO: should we support it?
+  if ( fileSize == 0 )
+  {
+    failed( i18n( "Unsupported negotiation (filesize=0)" ) );
+    return;
+  }
   
   kdDebug() << "DccTransferRecv::DccTransferRecv() [END]" << endl;
 }
@@ -142,11 +141,16 @@ void DccTransferRecv::cleanUp()
 // just for convenience
 void DccTransferRecv::failed( const QString& errorMessage )
 {
+  // don't show the dialog if user didn't take action on this DCC
+  bool bNeedToOpenDetail = ( m_dccStatus != Queued );
+  
   setStatus( Failed, errorMessage );
   updateView();
   cleanUp();
   emit done( m_fileURL.path(), Failed, errorMessage );
-  openDetailDialog();
+  
+  if ( bNeedToOpenDetail )
+    openDetailDialog();
 }
 
 void DccTransferRecv::abort()  // public slot
@@ -381,7 +385,7 @@ void DccTransferRecv::connectToSender()
   m_recvSocket->setBlocking( false );  // asynchronous mode
   m_recvSocket->setFamily( KNetwork::KResolver::InetFamily );
   m_recvSocket->setResolutionEnabled( false );
-  m_recvSocket->setTimeout( 50000 );
+  m_recvSocket->setTimeout( 30000 );
   
   m_recvSocket->enableRead( false );
   m_recvSocket->enableWrite( false );
@@ -446,7 +450,7 @@ void DccTransferRecv::sendAck()  // slot
   }
   else if ( m_transferringPosition > (KIO::fileoffset_t)m_fileSize )
   {
-    kdDebug() << "DccTransferRecv::sendAck(): wtf? the remote host sent larger data than expected: " << QString::number( m_transferringPosition ) << endl;
+    kdDebug() << "DccTransferRecv::sendAck(): the remote host sent larger data than expected: " << QString::number( m_transferringPosition ) << endl;
     failed( i18n( "Transferring error" ) );
   }
 }
