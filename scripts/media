@@ -143,7 +143,7 @@ if($kaffeine)
 
 if($noatun)
 {
-    my $string=`dcop Noatun title`;
+    my $string=`dcop noatun Noatun title`;
     chomp $string;
 
     if(!is_empty($string))
