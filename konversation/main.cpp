@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
                        "(C)2002, 2003 by the Konversation team",
                        I18N_NOOP("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
                                  "Meet friends on the net, make new acquaintances and lose yourself in\n"
-                                 "talk about your favourite subject."),
+                                 "talk about your favorite subject."),
                        "http://konversation.sourceforge.net/",
                        "eisfuchs@tigress.com");
 
