@@ -71,6 +71,7 @@ class InputFilter : public QObject
     int automaticRequest;
     int lagMeasuring;
 
+
     QStringList newNickList;
 };
 

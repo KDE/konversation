@@ -46,6 +46,7 @@ class PrefsPageGeneralSettings : public PrefsPage
     KLineEdit* commandCharInput;
     KLineEdit* channelActionInput;
     KLineEdit* notifyActionInput;
+    KLineEdit* ctcpVersionInput;
 
     QCheckBox* autoReconnectCheck;
     QCheckBox* autoRejoinCheck;

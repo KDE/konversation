@@ -44,7 +44,7 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   highlightListView=new KListView(highlightListBox,"highlight_list_view");
 
   highlightListView->addColumn(i18n("Highlights"));
-  highlightListView->setFullWidth();
+  highlightListView->setFullWidth(true);
   highlightListView->setDragEnabled(true);
   highlightListView->setAcceptDrops(true);
   highlightListView->setSorting(-1);

@@ -19,6 +19,7 @@
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <qspinbox.h>
+#include <qwhatsthis.h> 
 
 #include <klineedit.h>
 #include <klocale.h>
@@ -40,9 +41,15 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   commandCharInput->setMaxLength(1);
   commandCharLabel->setBuddy(commandCharInput);
 
+  QLabel* ctcpVersionLabel=new QLabel(i18n("Custom &Version Reply:"),commandCharBox);
+  ctcpVersionInput=new KLineEdit(preferences->getVersionReply(),commandCharBox);
+  ctcpVersionLabel->setBuddy(ctcpVersionInput);
+  QString msg = i18n("<qt>Here you can set a custom reply for <b>CTCP <i>VERSION</i></b> requests.</qt>");
+  QWhatsThis::add(ctcpVersionLabel,msg);
+
   // double click actions
   QVBox* actionBox=new QVBox(parentFrame);
-  new QLabel(i18n("Commands to execute when doubleclicked in"),actionBox);
+  new QLabel(i18n("Commands to execute when doubleclicked in :"),actionBox);
 
   QHBox* actionEditBox=new QHBox(actionBox);
   actionEditBox->setSpacing(spacingHint());
@@ -142,6 +149,7 @@ void PrefsPageGeneralSettings::applyPreferences()
   preferences->setFixedMOTD(fixedMOTDCheck->isChecked());
   preferences->setBeep(beepCheck->isChecked());
   preferences->setRawLog(rawLogCheck->isChecked());
+  preferences->setVersionReply(ctcpVersionInput->text());
   preferences->setShowTrayIcon(trayIconCheck->isChecked());
   preferences->setTrayNotify(trayNotifyCheck->isChecked());
   preferences->setHideUnimportantEvents(hideUnimportantCheck->isChecked());

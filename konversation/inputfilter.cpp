@@ -220,11 +220,10 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
           else
             server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1.").arg(sourceNick));
 
-          server->ctcpReply(sourceNick,
-                            i18n("VERSION Konversation %1 Build %2 (C)2002-2003 by the Konversation team")
-                            .arg(VERSION)
-                            .arg(COMMIT));
-        }
+	  QString reply = KonversationApplication::preferences.getVersionReply();
+	  server->ctcpReply(sourceNick,"VERSION "+reply);
+
+	}
       }
       // DCC request?
       else if(ctcpCommand=="dcc" && !isChan)

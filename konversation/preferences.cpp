@@ -27,6 +27,9 @@
 #include "ignore.h"
 #include "highlight.h"
 #include "serverentry.h"
+#include "commit.h"
+#include "version.h"
+
 
 Preferences::Preferences()
 {
@@ -93,6 +96,7 @@ Preferences::Preferences()
   setBeep(false);
   setRawLog(false);
 
+  setVersionReply(i18n("Konversation %1 Build %2 (C)2002-2003 by the Konversation team").arg(VERSION).arg(COMMIT));
   setDccPath(QString::null);
   setDccAddPartner(true);
   setDccCreateFolder(false);
@@ -359,6 +363,9 @@ bool Preferences::getBeep() { return beep; }
 
 void Preferences::setRawLog(bool state) { rawLog=state; }
 bool Preferences::getRawLog() { return rawLog; }
+
+void    Preferences::setVersionReply(QString reply) { versionReply = reply; }
+QString Preferences::getVersionReply() { return versionReply; }
 
 int Preferences::getNotifyDelay() { return notifyDelay; }
 void Preferences::setNotifyDelay(int delay) { notifyDelay=delay; }

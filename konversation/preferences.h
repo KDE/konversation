@@ -89,6 +89,9 @@ class Preferences : public QObject
     bool getRawLog();
     void setRawLog(bool state);
 
+    QString getVersionReply();
+    void    setVersionReply(QString reply);
+
     void clearServerList();
     void changeServerProperty(int id,int property,const QString& value);
     void updateServer(int id,const QString& newDefinition);
@@ -385,6 +388,8 @@ class Preferences : public QObject
     bool fixedMOTD;
     bool beep;
     bool rawLog;
+
+    QString versionReply;
 
     bool dccAddPartner;
     bool dccCreateFolder;   // create folders for each DCC partner?
