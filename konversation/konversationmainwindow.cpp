@@ -1053,7 +1053,12 @@ void KonversationMainWindow::previousTab()
 
 void KonversationMainWindow::goToTab(int page)
 {
-#ifndef USE_MDI
+#ifdef USE_MDI
+  if(tabWidget())
+  {
+    if(page>=0 && page<tabWidget()->count()) activateView(page);
+  }
+#else
     if ( page >= getViewContainer()->count() )
         page = 0;
     else if ( page < 0 )
