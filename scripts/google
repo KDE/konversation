@@ -108,6 +108,6 @@ else
 	    exec 'dcop', $PORT, 'Konversation', 'error','No alternative spelling found';
 	}
 	
-	system 'dcop', $PORT, 'Konversation', 'info', $result;
+	system 'dcop', $PORT, 'Konversation', 'info', $spell;
     }
 }
