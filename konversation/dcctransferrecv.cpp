@@ -118,6 +118,12 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
     return;
   }
   
+  if ( KonversationApplication::preferences.getDccAutoGet() )
+  {
+    kdDebug() << "DccTransferRecv::DccTransferRecv(): starting automatically..." << endl;
+    start();
+  }
+  
   kdDebug() << "DccTransferRecv::DccTransferRecv() [END]" << endl;
 }
 
