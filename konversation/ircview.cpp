@@ -384,7 +384,12 @@ void IRCView::appendBacklogMessage(const char* firstColumn,const char* rawMessag
 {
   QString time;
   QString message(rawMessage);
+  QString first(firstColumn);
   QString backlogMessageColor = KonversationApplication::preferences.getBacklogMessageColor();
+
+  // Nicks are in "<nick>" format so replace the "<>"
+  first.replace(QRegExp("\\<"),"&lt;");
+  first.replace(QRegExp("\\>"),"&gt;");
 
   // extract timestamp from message string
   if(message.startsWith("["))
@@ -394,12 +399,12 @@ void IRCView::appendBacklogMessage(const char* firstColumn,const char* rawMessag
   }
 
 #ifdef TABLE_VERSION
-  QString line=QString("<tr><td><font color=\"#"+backlogMessageColor+"\">%1</font></td><td><font color=\"#"+backlogMessageColor+"\">%2 %3</font></td></tr>\n").arg(time).arg(firstColumn).arg(filter(message,NULL,false));
+  QString line=QString("<tr><td><font color=\"#"+backlogMessageColor+"\">%1</font></td><td><font color=\"#"+backlogMessageColor+"\">%2 %3</font></td></tr>\n").arg(time).arg(first).arg(filter(message,NULL,false));
 #else
 #ifdef ADD_LINE_BREAKS
-  QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2 %3</font><br>\n").arg(time).arg(firstColumn).arg(filter(message,NULL,false));
+  QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2 %3</font><br>\n").arg(time).arg(first).arg(filter(message,NULL,false));
 #else
-  QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2 %3</font>\n").arg(time).arg(firstColumn).arg(filter(message,NULL,false));
+  QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2 %3</font>\n").arg(time).arg(first).arg(filter(message,NULL,false));
 #endif
 #endif
 

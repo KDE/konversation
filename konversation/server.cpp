@@ -324,16 +324,14 @@ void Server::incoming()
 {
   char buffer[513];
   int len=0;
-  bool lost=false;
 
   len=read(serverSocket->fd(),buffer,512);
 
-  if(len==0) lost=true;
   buffer[len]=0;
 
   inputBuffer+=buffer;
 
-  if(lost) broken(0);
+  if(len==0) broken(0);
 }
 
 void Server::queue(const QString& buffer)
