@@ -98,7 +98,6 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
     m_popupEncoding->insertItem(i18n("Default"),POPUPID_ENCODING_OFFSET+0);
     // }
 
-    m_popup->insertTitle(i18n("Tab"),Label);
     m_popup->insertItem(SmallIconSet("1leftarrow"), i18n("Move Left"),MoveLeft);
     m_popup->insertItem(SmallIconSet("1rightarrow"), i18n("Move Right"),MoveRight);
     m_popup->insertSeparator();
@@ -406,7 +405,6 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
     QTab* lookTab=tabAt(index);
     if(lookTab->rect().contains(ce->pos()))
     {
-      m_popup->changeTitle(Label,lookTab->text());
       m_popup->setItemEnabled(EncodingSub, false);
       ChatWindow* win = dynamic_cast<ChatWindow*>(static_cast<LedTab*>(lookTab)->getWidget());
 
