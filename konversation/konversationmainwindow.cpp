@@ -10,8 +10,6 @@
   begin:     Don Apr 17 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include "konversationmainwindow.h"
@@ -25,6 +23,7 @@
 #include <kstatusbar.h>
 #include <kmenubar.h>
 #include <kkeydialog.h>
+#include <ksystemtray.h>
 #if KDE_VERSION >= 310
 #include <knotifydialog.h>
 #endif
@@ -119,6 +118,11 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
   createGUI();
   readOptions();
+
+  // TODO: make this an option
+  KSystemTray *tray=new KSystemTray(this);
+  tray->setPixmap(kapp->miniIcon());
+  tray->show();
 }
 
 KonversationMainWindow::~KonversationMainWindow()
