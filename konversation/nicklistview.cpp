@@ -152,7 +152,8 @@ void NickListView::refresh()
 }
 
 void NickListView::startResortTimer() {
-  m_resortTimer->start(1000, TRUE /*single shot*/); 
+  if(!m_resortTimer->isActive());
+    m_resortTimer->start(5000, TRUE /*single shot*/); 
 }
 
 void NickListView::resort()

@@ -189,6 +189,8 @@ class Channel : public ChatWindow
     void fastAddNickname(ChannelNickPtr channelnick);
     /** Called from ChatWindow adjustFocus */
     virtual void childAdjustFocus();
+
+    void refreshModeButtons();
     virtual bool areIRCColorsSupported() {return true; }
     virtual bool isInsertCharacterSupported() { return true; }
 

@@ -1803,6 +1803,10 @@ QPtrList<Nick> Channel::getNickList()
 void Channel::childAdjustFocus()
 {
   channelInput->setFocus();
+  refreshModeButtons();
+}
+
+void Channel::refreshModeButtons() {
   if(getOwnChannelNick()){
     bool enable=getOwnChannelNick()->isAnyTypeOfOp();
     modeT->setEnabled(enable);
@@ -1816,7 +1820,6 @@ void Channel::childAdjustFocus()
     limit->setEnabled(enable);
   }
 }
-
 
 void Channel::autoUserhost()
 {
