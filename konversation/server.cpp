@@ -926,8 +926,8 @@ void Server::incoming()
       bool isServerMessage = false;
       QString channelKey;
       QTextCodec* tmpCodec = QTextCodec::codecForName(identity->getCodec().ascii());
+      // pre-parse to know which channel the message belongs to
       QStringList lineSplitted = QStringList::split(" ",tmpCodec->toUnicode(qcsBufferLines.front()));
-      // remove prefix
       if(1 <= lineSplitted.count())  // for safe
         if(lineSplitted[0][0] == ':')
         {
@@ -939,7 +939,7 @@ void Server::incoming()
             if(re.search(lineSplitted[0]) > -1)
               senderNick = re.cap(1);
           }
-          lineSplitted.pop_front();
+          lineSplitted.pop_front();  // remove prefix
         }
       // set channel key
       QString command = lineSplitted[0].lower();
@@ -949,6 +949,8 @@ void Server::incoming()
         {
           if( command == "332" )  // RPL_TOPIC
             channelKey = lineSplitted[2];
+          if( command == "372" )  // RPL_MOTD
+            channelKey = "!status";
         }
       }
       else

@@ -47,6 +47,10 @@ class StatusPanel : public ChatWindow
     virtual void closeYourself();
     virtual bool frontView();
     virtual bool searchView();
+    
+    virtual void setChannelEncoding(const QString& encoding);
+    virtual QString getChannelEncoding();
+    virtual QString getChannelEncodingDefaultDesc();
 
   signals:
     void newText(QWidget* widget,const QString& highlightColor,bool important);

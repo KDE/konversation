@@ -35,6 +35,8 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 #endif
 {
   setType(ChatWindow::Status);
+  
+  setChannelEncodingEnabled(true);
 
   awayChanged=false;
   awayState=false;
@@ -255,6 +257,21 @@ void StatusPanel::changeNickname(const QString& newNickname)
 void StatusPanel::appendInputText(const QString& text)
 {
   statusInput->setText(statusInput->text() + text);
+}
+
+void StatusPanel::setChannelEncoding(const QString& encoding)  // virtual
+{
+  KonversationApplication::preferences.setChannelEncoding(server->getServerGroup(), "!status", encoding);
+}
+
+QString StatusPanel::getChannelEncoding()  // virtual
+{
+  return KonversationApplication::preferences.getChannelEncoding(server->getServerGroup(), "!status");
+}
+
+QString StatusPanel::getChannelEncodingDefaultDesc()  // virtual
+{
+  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodec());
 }
 
 #include "statuspanel.moc"
