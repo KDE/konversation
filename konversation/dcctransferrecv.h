@@ -141,7 +141,7 @@ class DccTransferRecvWriteCacheHandler : public QObject
     DccTransferRecvWriteCacheHandler( KIO::TransferJob* transferJob );
     virtual ~DccTransferRecvWriteCacheHandler();
     
-    void append( QByteArray cache );
+    void append( const QByteArray& cache );
     bool write( bool force );
     void close();
     void closeNow();
@@ -156,14 +156,12 @@ class DccTransferRecvWriteCacheHandler : public QObject
     void slotKIOResult( KIO::Job* job );                     // <-  m_transferJob->result()
     
   protected:
-    QByteArray popCache();
-    
     KIO::TransferJob* m_transferJob;
     bool m_writeAsyncMode;
     bool m_writeReady;
     
     QValueList<QByteArray> m_cacheList;
-    unsigned long m_wholeCacheSize;
+    QDataStream* m_cacheStream;
 };
 
 #endif // DCCTRANSFERRECV_H

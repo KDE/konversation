@@ -302,11 +302,11 @@ void DccTransferRecv::slotLocalGotResult( KIO::Job* job )
       break;
     default:
       switch( DccResumeDialog::ask( this,
-                                  i18n("<b>Cannot open the file</m><br>file %1<br>error %2")
-                                    .arg( m_fileURL.prettyURL() )
-                                    .arg( transferJob->error() ),
-                                  DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
-                                  DccResumeDialog::RA_Rename ) )
+                                    i18n("<b>Cannot open the file</m><br>file %1<br>error %2")
+                                      .arg( m_fileURL.prettyURL() )
+                                      .arg( transferJob->error() ),
+                                    DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
+                                    DccResumeDialog::RA_Rename ) )
       {
         case DccResumeDialog::RA_Rename:
           prepareLocalKio( false, 0 );
@@ -488,9 +488,11 @@ void DccTransferRecv::startConnectionTimer( int sec )
 
 void DccTransferRecv::stopConnectionTimer()
 {
-  kdDebug() << "DccTransferRecv::stopConnectionTimer()" << endl;
-  Q_ASSERT( m_connectionTimer );
-  m_connectionTimer->stop();
+  if( m_connectionTimer->isActive() )
+  {
+    m_connectionTimer->stop();
+    kdDebug() << "DccTransferRecv::stopConnectionTimer(): stop" << endl;
+  }
 }
 
 void DccTransferRecv::connectionTimeout()  // slot
@@ -519,7 +521,7 @@ DccTransferRecvWriteCacheHandler::DccTransferRecvWriteCacheHandler( KIO::Transfe
   : m_transferJob( transferJob )
 {
   m_writeReady = true;
-  m_wholeCacheSize = 0;
+  m_cacheStream = 0;
   
   connect( this,          SIGNAL( dataFinished() ),                    m_transferJob, SLOT( slotFinished() )                           );
   connect( m_transferJob, SIGNAL( dataReq( KIO::Job*, QByteArray& ) ), this,          SLOT( slotKIODataReq( KIO::Job*, QByteArray& ) ) );
@@ -533,10 +535,20 @@ DccTransferRecvWriteCacheHandler::~DccTransferRecvWriteCacheHandler()
   closeNow();
 }
 
-void DccTransferRecvWriteCacheHandler::append( QByteArray cache )  // public
+void DccTransferRecvWriteCacheHandler::append( const QByteArray& cache )  // public
 {
-  m_cacheList.append( cache );
-  m_wholeCacheSize += cache.size();
+  // sendAsyncData() and dataReq() cost a lot of time, so we should pack some caches.
+  
+  static const unsigned int maxWritePacketSize = 2 * 1024 * 1024;  // 2megs
+  
+  if( m_cacheList.isEmpty() || m_cacheList.back().size() + cache.size() > maxWritePacketSize )
+  {
+    m_cacheList.append( QByteArray() );
+    delete m_cacheStream;
+    m_cacheStream = new QDataStream( m_cacheList.back(), IO_WriteOnly );
+  }
+  
+  m_cacheStream->writeRawBytes( cache.data(), cache.size() );
 }
 
 bool DccTransferRecvWriteCacheHandler::write( bool force )  // public
@@ -544,18 +556,21 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )  // public
   // force == false: return without doing anything when the whole cache size is less than minWritePacketSize
   static const unsigned int minWritePacketSize = 1 * 1024 * 1024;  // 1meg
   
-  if ( m_cacheList.isEmpty() || !m_transferJob || !m_writeReady || !m_writeAsyncMode )
+  if( m_cacheList.isEmpty() || !m_transferJob || !m_writeReady || !m_writeAsyncMode )
     return false;
   
-  if ( !force && m_wholeCacheSize < minWritePacketSize )
+  if( !force && m_cacheList.front().size() < minWritePacketSize )
     return false;
   
   // do write
-
-  kdDebug() << "DTRWriteCacheHandler:::write(" << force << ")" << endl;
+  
   m_writeReady = false;
-  QByteArray cache = popCache();
-  m_transferJob->sendAsyncData( cache );
+  m_transferJob->sendAsyncData( m_cacheList.front() );
+  unsigned int wroteSize = m_cacheList.front().size();
+  m_cacheList.pop_front();
+  
+  kdDebug() << "DTRWriteCacheHandler::write(): wrote " << wroteSize << " bytes." << endl;
+  
   return true;
 }
 
@@ -576,35 +591,8 @@ void DccTransferRecvWriteCacheHandler::closeNow()  // public
     m_transferJob = 0;
   }
   m_cacheList.clear();
-}
-
-QByteArray DccTransferRecvWriteCacheHandler::popCache()
-{
-  // sendAsyncData() and dataReq() cost a lot of time, so we should pack some caches.
-  
-  static const unsigned int maxWritePacketSize = 2 * 1024 * 1024;  // 2megs
-  
-  QByteArray buffer;
-  int number_written = 0; //purely for debug info
-  int sizeSum = 0;
-  if ( !m_cacheList.isEmpty() )
-  {
-    QDataStream out( buffer, IO_WriteOnly );
-    QValueList<QByteArray>::iterator it = m_cacheList.begin();
-    do { //It is guaranteed that at least one bytearray is written since m_cacheList is not empty
-      Q_ASSERT((*it).size() > 0);
-      out.writeRawBytes( (*it).data(), (*it).size() );
-      sizeSum += (*it).size();
-      it = m_cacheList.remove( it );
-      number_written++; //for debug info
-    } while( it != m_cacheList.end() && maxWritePacketSize >= sizeSum + (*it).size() );
-    m_wholeCacheSize -= sizeSum;
-  }
-  kdDebug() << "DTRWriteCacheHandler::popCache(): caches in the packet: " << number_written << ", remaining caches: " << m_cacheList.count() << ".  Size just written now: " << sizeSum << endl;
-  static unsigned long allPoppedSize = 0;  // for debug
-  allPoppedSize += buffer.size();
-  kdDebug() << "DTRWriteCacheHandler::popCache(): all popped size: " << allPoppedSize << endl;
-  return buffer;
+  delete m_cacheStream;
+  m_cacheStream = 0;
 }
 
 void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& data )
@@ -621,14 +609,13 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
     {
       //once we write everything in cache, the file is complete.
       //This function will be called once more after this last data is written.
-      kdDebug() << "DTRWriteCacheHandler::slotKIODataReq(): sending data." << endl;
-      data = popCache();
+      data = m_cacheList.front();
+      m_cacheList.pop_front();
     }
     else
     {
       //finally, no data left to write or read.
       kdDebug() << "DTRWriteCacheHandler::slotKIODataReq(): flushing done." << endl;
-      Q_ASSERT( m_wholeCacheSize == 0 );
       m_transferJob = 0;
       emit done();  // ->DccTransferRecv
     }
