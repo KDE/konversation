@@ -21,9 +21,6 @@
 
 #include <klocale.h>
 #include <kdebug.h>
-#include <kstddirs.h>
-#include <kprocess.h>
-#include <dcopclient.h>
 
 #include "konversationapplication.h"
 #include "outputfilter.h"
@@ -560,7 +557,7 @@ void OutputFilter::parseInvite(const QString &parameter)
   }
 }
 
-void OutputFilter::parseExec(const QString &parameter)
+void OutputFilter::parseExec(const QString& parameter)
 {
   if(parameter.isEmpty())
   {
@@ -570,28 +567,8 @@ void OutputFilter::parseExec(const QString &parameter)
   }
   else
   {
-    KStandardDirs kstddir;
-    QString scriptPath(kstddir.saveLocation("data","konversation/scripts"));
-    KProcess process;
     QStringList parameterList=QStringList::split(' ',parameter);
-    if(parameterList[0].find("../")==-1)
-    {
-      // TODO: This is in the making
-      // send the script all the information it will need
-      process << scriptPath+"/"+parameterList[0]  // script path / name
-              << kapp->dcopClient()->appId()      // our dcop port
-              << "my.server.de"                   // the server we are connected to
-              << "target";                        // the target where the call came from
-
-      // send remaining parameters to the script
-      for(unsigned int index=1;index<parameterList.count();index++)
-        process << parameterList[index];
-
-      process.setWorkingDirectory(scriptPath);
-      if(process.start()==false) kdDebug() << "exec() error" << endl;
-      process.detach(); // to free the script's stdin
-      kdDebug() << "Script running." << endl;
-    }
+    if(parameterList[0].find("../")==-1) emit launchScript(parameter);
     else
     {
       type=i18n("Error");

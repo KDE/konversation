@@ -115,7 +115,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   showModeButtons(KonversationApplication::preferences.getShowModeButtons());
 
   setTextView(new IRCView(topicViewNicksGrid,NULL));  // Server will be set later in setServer()
-
   // The box that holds the Nick List and the quick action buttons
   QVBox* nickListButtons=new QVBox(splitter);
   nickListButtons->setSpacing(spacing());

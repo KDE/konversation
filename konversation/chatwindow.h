@@ -23,6 +23,7 @@
 #include "ircview.h"
 #include "outputfilter.h"
 #include "identity.h"
+#include "scriptlauncher.h"
 
 /*
   @author Dario Abatianni
@@ -92,6 +93,7 @@ class ChatWindow : public QVBox
     QFile logfile;
     OutputFilter filter;
     WindowType type;
+    ScriptLauncher* scriptLauncher;
 };
 
 #endif

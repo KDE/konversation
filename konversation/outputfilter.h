@@ -58,6 +58,7 @@ class OutputFilter : public QObject
     void away();
     void unAway();
     void sendToAllChannels(const QString& text);
+    void launchScript(const QString& parameter);
 
   public slots:
     void setCommandChar();
