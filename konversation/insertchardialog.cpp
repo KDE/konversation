@@ -43,6 +43,6 @@ void InsertCharDialog::slotOk()
   emit insertChar(m_charTable->chr());
 }
 
-};
+}
 
 #include "insertchardialog.moc"

@@ -50,6 +50,6 @@ class ChannelOptionsDialog : public KDialogBase
     Channel *m_channel;
 };
 
-};
+}
 
 #endif

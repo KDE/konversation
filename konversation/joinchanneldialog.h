@@ -31,6 +31,6 @@ class JoinChannelDialog : public KDialogBase
     JoinChannelUI* m_widget;
 };
 
-};
+}
 
 #endif

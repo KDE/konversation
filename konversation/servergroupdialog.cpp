@@ -371,6 +371,6 @@ void ServerGroupDialog::slotOk()
   }
 }
 
-};
+}
 
 #include "servergroupdialog.moc"

@@ -51,7 +51,7 @@ namespace Konversation
 {
   class TopicLabel;
   class ChannelOptionsDialog;
-};
+}
 
 class NickList : public QPtrList<Nick>
 {

@@ -39,6 +39,6 @@ class EmotIcon{
     EmotIconMap m_emotIconMap;
 };
 
-};
+}
 
 #endif

@@ -39,6 +39,6 @@ class ServerDialog : public KDialogBase
     QCheckBox* m_sslChBox;
 };
 
-};
+}
 
 #endif

@@ -50,6 +50,6 @@ class NotificationHandler : public QObject
     KonversationMainWindow* m_mainWindow;
 };
 
-};
+}
 
 #endif

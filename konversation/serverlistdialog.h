@@ -82,6 +82,6 @@ namespace Konversation {
       QPushButton* m_delButton;
       Preferences* m_preferences;
   };
-};
+}
 
 #endif

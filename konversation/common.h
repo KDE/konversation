@@ -24,6 +24,6 @@ namespace Konversation
   QBitmap overlayMasks( const QBitmap *under, const QBitmap *over );
   QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
 
-};
+}
 
 #endif

@@ -56,6 +56,6 @@ class TrayIcon : public KSystemTray
     QPixmap m_messagePix;
 };
 
-};
+}
 
 #endif

@@ -70,6 +70,6 @@ class ServerGroupDialog : public KDialogBase
     bool m_identitiesNeedsUpdate;
 };
 
-};
+}
 
 #endif

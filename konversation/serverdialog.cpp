@@ -80,6 +80,6 @@ ServerSettings ServerDialog::serverSettings()
   return server;
 }
 
-};
+}
 
 #include "serverdialog.moc"

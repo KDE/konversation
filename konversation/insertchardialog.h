@@ -38,6 +38,6 @@ class InsertCharDialog : public KDialogBase
     KCharSelect* m_charTable;
 };
 
-};
+}
 
 #endif

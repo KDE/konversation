@@ -74,6 +74,6 @@ class IdentityDialog : public KDialogBase
     IdentityPtr m_currentIdentity;
 };
 
-};
+}
 
 #endif

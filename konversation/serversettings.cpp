@@ -37,4 +37,4 @@ ServerSettings::~ServerSettings()
 {
 }
 
-};
+}

@@ -95,6 +95,6 @@ class ChannelSettings
     QString m_password;
 };
 
-};
+}
 
 #endif

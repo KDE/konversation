@@ -486,6 +486,6 @@ void IdentityDialog::setCurrentIdentity(int index)
   updateIdentity(index);
 }
 
-};
+}
 
 #include "identitydialog.moc"

@@ -42,6 +42,6 @@ class ServerSettings{
     bool m_SSLEnabled;
 };
 
-};
+}
 
 #endif

@@ -140,6 +140,6 @@ namespace Konversation
   
       Server* m_server;
   };
-};
+}
 
 #endif

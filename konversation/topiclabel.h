@@ -45,6 +45,6 @@ class TopicLabel : public KActiveLabel
     Server* m_server;
 };
 
-};
+}
 
 #endif

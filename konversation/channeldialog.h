@@ -36,6 +36,6 @@ class ChannelDialog : public KDialogBase
 
 };
 
-};
+}
 
 #endif
