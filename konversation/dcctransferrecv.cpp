@@ -23,6 +23,7 @@
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 
+#include "dccpanel.h"
 #include "dccresumedialog.h"
 #include "dcctransferrecv.h"
 #include "konversationapplication.h"
@@ -44,8 +45,8 @@
  
 */
 
-DccTransferRecv::DccTransferRecv( KListView* parent, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort )
-  : DccTransfer( parent, DccTransfer::Receive, partnerNick, fileName )
+DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort )
+  : DccTransfer( panel, DccTransfer::Receive, partnerNick, fileName )
 {
   
   QString sanitised_filename = QFileInfo(fileName).fileName();  //Just incase anyone tries to do anything nasty
@@ -86,7 +87,7 @@ DccTransferRecv::DccTransferRecv( KListView* parent, const QString& partnerNick,
   m_connectionTimer = 0;
   
   updateView();
-  
+  panel->selectMe( this );
 }
 
 DccTransferRecv::~DccTransferRecv()

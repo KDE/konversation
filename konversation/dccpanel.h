@@ -76,11 +76,13 @@ class DccPanel : public ChatWindow
     KListView* getListView();
     DccTransfer* getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed=false);
     DccTransfer* getTransferByName(const QString& name,DccTransfer::DccType type,bool resumed=false);
-    void dccStatusChanged(const DccTransfer* item);
-
+    
+    void selectMe(DccTransfer* item);
+    
   public slots:
     void adjustFocus();
-
+    void dccStatusChanged(const DccTransfer* item);
+    
   protected slots:
     void acceptDcc();
     void abortDcc();
@@ -91,7 +93,7 @@ class DccPanel : public ChatWindow
     void openDetail();
     void clearAllCompletedDcc();
     void removeAndClear();
-        
+    
     void popupRequested(QListViewItem* item,const QPoint& pos,int col);
     void popupActivated(int id);
     

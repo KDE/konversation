@@ -1403,7 +1403,7 @@ void Server::addDccSend(const QString &recipient,KURL fileURL)
   QString ownIp = getIp(KonversationApplication::preferences.getDccGetIpFromServer());
   
   // We already checked that the file exists in output filter / requestDccSend() resp.
-  DccTransferSend* newDcc=new DccTransferSend(getMainWindow()->getDccPanel()->getListView(),
+  DccTransferSend* newDcc=new DccTransferSend(getMainWindow()->getDccPanel(),
                                               recipient,
                                               fileURL,  // url to the sending file
                                               ownIp);          // ip
@@ -1411,6 +1411,8 @@ void Server::addDccSend(const QString &recipient,KURL fileURL)
   connect(newDcc,SIGNAL (sendReady(const QString&,const QString&,const QString&,const QString&,unsigned long)),
     this,SLOT (dccSendRequest(const QString&,const QString&,const QString&,const QString&,unsigned long)) );
   connect(newDcc,SIGNAL (done(const QString&)),this,SLOT (dccSendDone(const QString&)) );
+  connect(newDcc,SIGNAL (statusChanged(const DccTransfer* )), this,
+         SLOT(dccStatusChanged(const DccTransfer*)) );
   newDcc->start();
 }
 
@@ -1431,7 +1433,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
                               .arg(dccArguments[2])          // port
                              );
 
-  DccTransferRecv* newDcc=new DccTransferRecv(getMainWindow()->getDccPanel()->getListView(),
+  DccTransferRecv* newDcc=new DccTransferRecv(getMainWindow()->getDccPanel(),
                       sourceNick,
                       KURL(KonversationApplication::preferences.getDccPath()),
                       dccArguments[0],     // name

@@ -23,12 +23,14 @@ namespace KNetwork
   class KStreamSocket;
 }
 
+class DccPanel;
+
 class DccTransferSend : public DccTransfer
 {
   Q_OBJECT
   
   public:
-    DccTransferSend( KListView* parent, const QString& partnerNick, const KURL& fileURL, const QString& ownIp );
+    DccTransferSend( DccPanel* panel, const QString& partnerNick, const KURL& fileURL, const QString& ownIp );
     virtual ~DccTransferSend();
     
     void setResume( unsigned long position );

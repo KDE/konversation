@@ -83,6 +83,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   dccListView->setColumnAlignment(Column::TimeRemaining, AlignRight);
   dccListView->setColumnAlignment(Column::CPS,           AlignRight);
   
+  connect(dccListView,SIGNAL (itemAdded(QListViewItem*)),this,SLOT (slotItemAdded(QListViewItem*)) );
   connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (selectionChanged()) );
   
   // button
@@ -203,7 +204,14 @@ void DccPanel::selectionChanged()
   popup->setItemEnabled( Popup::Info,           info );
   popup->setItemEnabled( Popup::Detail,         detail );
 }
-  
+
+void DccPanel::selectMe(DccTransfer* item)
+{
+  dccListView->clearSelection();
+  dccListView->setSelected(item, true);
+  selectionChanged();
+}
+
 void DccPanel::acceptDcc()
 {
   QListViewItemIterator it( getListView() );
@@ -396,7 +404,6 @@ void DccPanel::popupActivated(int id)  // slot
 
 void DccPanel::doubleClicked(QListViewItem* _item, const QPoint& /* _pos */, int /* _col */)
 {
-  kdDebug()<<"dc()"<<endl;
   DccTransfer* item = static_cast<DccTransfer*>(_item);
   if(item)
     if(item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done)

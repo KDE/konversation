@@ -27,11 +27,12 @@
 #include <kfileitem.h>
 #include <kinputdialog.h>
 
+#include "dccpanel.h"
 #include "dcctransfersend.h"
 #include "konversationapplication.h"
 
-DccTransferSend::DccTransferSend( KListView* parent, const QString& partnerNick, const KURL& fileURL, const QString& ownIp )
-  : DccTransfer( parent, DccTransfer::Send, partnerNick, fileURL.filename() )
+DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, const KURL& fileURL, const QString& ownIp )
+  : DccTransfer( panel, DccTransfer::Send, partnerNick, fileURL.filename() )
 {
   kdDebug() << "DccTransferSend::DccTransferSend()" << endl
             << "DccTransferSend::DccTransferSend(): Partner=" << partnerNick << endl
@@ -79,6 +80,7 @@ DccTransferSend::DccTransferSend( KListView* parent, const QString& partnerNick,
   m_sendSocket=0;
   
   updateView();
+  panel->selectMe( this );
 }
 
 DccTransferSend::~DccTransferSend()

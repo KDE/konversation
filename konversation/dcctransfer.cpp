@@ -31,8 +31,8 @@
 #include "dcctransfer.h"
 #include "konversationapplication.h"
 
-DccTransfer::DccTransfer( KListView* parent, DccType dccType, const QString& partnerNick, const QString& fileName )
-  : KListViewItem( parent )
+DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partnerNick, const QString& fileName )
+  : KListViewItem( panel->getListView() )
 {
   m_dccType = dccType;
   m_partnerNick = partnerNick;

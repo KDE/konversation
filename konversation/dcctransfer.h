@@ -24,8 +24,11 @@
 class QDateTime;
 class QStringList;
 class QTimer;
+
 class KProgress;
+
 class DccDetailDialog;
+class DccPanel;
 
 /*
   @author Dario Abatianni
@@ -58,7 +61,7 @@ class DccTransfer : public QObject, public KListViewItem
       DccStatusCount
     };
     
-    DccTransfer( KListView* parent, DccType dccType, const QString& partnerNick, const QString& fileName );
+    DccTransfer( DccPanel* panel, DccType dccType, const QString& partnerNick, const QString& fileName );
     virtual ~DccTransfer();
     
     virtual void paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment);

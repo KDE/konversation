@@ -31,6 +31,8 @@ namespace KNetwork
   class KStreamSocket;
 }
 
+class DccPanel;
+
 class DccTransferRecvWriteCacheHandler;
 
 class DccTransferRecv : public DccTransfer
@@ -40,7 +42,7 @@ class DccTransferRecv : public DccTransfer
   friend class DccResumeDialog;
   
   public:
-    DccTransferRecv( KListView* parent, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort );
+    DccTransferRecv( DccPanel* panel, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort );
     virtual ~DccTransferRecv();
     
   signals:
