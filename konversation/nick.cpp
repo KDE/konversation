@@ -47,10 +47,14 @@ Nick::Nick(KListView* listView,
   setHalfop(halfop);
   setVoice(voice);
 //  QToolTip::add(listView->viewport(), i18n("<qt>This person is %1</qt>").arg(realname));
+  if(!addressee.isEmpty())
+    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 4);
 }
 
 Nick::~Nick()
 {
+  if(!addressee.isEmpty())
+    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
   delete listViewItem;
 }
 

@@ -1181,6 +1181,24 @@ QStringList Server::getNickChannels(QString& nickname)
   return channellist;
 }
 
+bool Server::isNickOnline(const QString &nickname) {
+  Channel* lookChannel=channelList.first();
+
+  while(lookChannel)
+  {
+    if(lookChannel->getNickByName(nickname)) return true;
+    lookChannel = channelList.next();
+  }
+//Check queries as well
+  
+  Query* lookQuery=queryList.first();
+  while(lookQuery)
+  {
+    lookQuery = queryList.next();
+  }
+  return false;
+}
+
 // Returns a list of the nicks on the watch list that are online.
 const NickInfoMap* Server::getNicksOnline() { return &nicknamesOnline; }
 

@@ -15,6 +15,10 @@
 #include "addressbook.h"
 #include <qstringlist.h>
 #include <klocale.h>
+#include "../server.h"
+#include "../konversationapplication.h"
+#include <kapplication.h>
+#include <dcopclient.h>
 
 namespace Konversation {
 
@@ -199,7 +203,10 @@ bool Addressbook::saveAddressbook(){
 
 bool Addressbook::saveAddressee(KABC::Addressee &addressee) {
 	addressBook->insertAddressee(addressee);
-	return saveAddressbook();
+	bool success = saveAddressbook();
+	if(success)
+		emitContactPresenceChanged(addressee.uid(), presenceStatus(addressee));
+	return success;
 }
 
 /**
@@ -217,7 +224,7 @@ int Addressbook::presenceStatus(const KABC::Addressee &addressee) {
 	QStringList::iterator end = addresses.end();
 	for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
 	{
-		int presence = presenceStatusByNick(*it);
+		int presence = presenceStatusByNick(*it, "");
 		if(presence == 4) 
 			return 4; //The ultimate goal - online and not away.
 		if(presence == 3)
@@ -231,15 +238,32 @@ int Addressbook::presenceStatus(const KABC::Addressee &addressee) {
 
 /**
  * Indicate the presence as a number.
- * @param Irc nick of the person we want to know if they are online.
+ * @param ircnick of the person we want to know if they are online.
+ * @param server name of the person that the ircnick is for.  Set to null or empty for all servers
  * @return 0 (we aren't connected to the server), 1 (offline), 3 (away), 4 (online)
  */
-int Addressbook::presenceStatusByNick(const QString &ircnick) {
-	//TODO: FIXME!
-	if(!isOnline(ircnick)) return 0; //OFFLINE
-	if(ircnick.find( QRegExp( "[^a-zA-Z]away[^a-zA-Z]", FALSE)) >= 0)
-		return 3; //AWAY
-	return 4; //ONLINE
+int Addressbook::presenceStatusByNick(const QString &ircnick, const QString &server) {
+
+	bool foundaserver = false;
+	QPtrList<Server> serverlist;
+	serverlist =dynamic_cast<KonversationApplication*>(kapp)->getServerList();
+	Server* lookServer=serverlist.first();
+	while(lookServer)
+	{
+		if(lookServer->getServerName()==server || server.isEmpty())
+		{
+			if(lookServer->isNickOnline(ircnick)) {
+				//Found nick..  are they online?
+				if(ircnick.find( QRegExp( "[^a-zA-Z]away[^a-zA-Z]", FALSE)) >= 0)
+					return 3; //AWAY
+				return 4; //ONLINE
+			}
+			foundaserver = true;
+		}
+		lookServer = serverlist.next();
+	}
+	if(foundaserver) return 1;
+	return 0;
 }
 
 
@@ -255,12 +279,14 @@ bool Addressbook::isOnline(KABC::Addressee &addressee) {
 	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
 	QStringList::iterator end = addresses.end();
 	for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
-		if(isOnline(*it)) return true;
+		if(isOnline(*it, "")) return true;
 	return false;
 }
 
-bool Addressbook::isOnline(const QString &ircnick) {
-	return true;
+bool Addressbook::isOnline(const QString &ircnick, const QString &server) {
+	if(presenceStatusByNick(ircnick, server) >=3)
+		return true;
+	return false;
 }
 
 QStringList Addressbook::onlineContacts() {
@@ -268,7 +294,7 @@ QStringList Addressbook::onlineContacts() {
 	for( KABC::AddressBook::Iterator it = addressBook->begin(); it != addressBook->end(); ++it )
 		if(isOnline(*it)) contactUIDS.append((*it).uid());
 		
-	return allContacts();
+	return contactUIDS;
 }
 QStringList Addressbook::reachableContacts() {
 	return onlineContacts();
@@ -315,9 +341,31 @@ QString Addressbook::locate(const QString &contactId, const QString &protocol) {
 	return Addressbook::getKABCAddresseeFromNick(contactId).uid();
 }
 QPixmap Addressbook::icon(const QString &uid) {
-	//TODO: Add an icon
-	QPixmap pixmap;
-	return pixmap;
+	
+	Images leds;
+	QIconSet currentLeds;
+	if(!isPresent(uid))
+		return QPixmap();
+
+	switch(presenceStatus(uid)) {
+	  case 0: //Unknown
+	  case 1: //Offline
+	  case 2: //connecting - invalid for us?
+		currentLeds = leds.getRedLed(false);
+		break;
+	  case 3: //Away
+		currentLeds = leds.getYellowLed(false);
+		break;
+	  case 4: //Online
+		currentLeds = leds.getGreenLed(false);
+		break;
+	  default:
+		//error
+		return QPixmap();
+	}
+
+        QPixmap joinedLed = currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
+	return joinedLed;
 }
 QString Addressbook::context(const QString &uid) {
 	QString context;
@@ -373,6 +421,15 @@ void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QStr
  */
 bool Addressbook::addContact( const QString &contactId, const QString &protocol ) {
 	return false;
+}
+
+void Addressbook::emitContactPresenceChanged( QString uid, int presence) {
+	emit contactPresenceChanged(uid, kapp->dcopClient()->appId(), presence);
+	kdDebug() << "Presence changed for uid " << uid << " to " << presence << endl;
+}
+
+void Addressbook::emitContactPresenceChanged(QString uid) {
+	emitContactPresenceChanged(uid, presenceStatus(uid));
 }
 
 }

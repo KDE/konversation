@@ -23,6 +23,8 @@
 #include <qregexp.h>
 #include "kimiface.h"
 
+#include "../images.h"
+
 namespace Konversation {
 class Addressbook : public QObject, public KIMIface
 {
@@ -34,11 +36,11 @@ class Addressbook : public QObject, public KIMIface
     void associateNick(KABC::Addressee &addressee, const QString &ircnick);
     bool associateNickAndUnassociateFromEveryoneElse(KABC::Addressee &addressee, const QString &ircnick);
     QString getMainNick(const KABC::Addressee &addressee);
-    bool hasAnyNicks(const KABC::Addressee &addresse, const QString &/*server*/);
+    bool hasAnyNicks(const KABC::Addressee &addresse, const QString &server);
     int presenceStatus(const KABC::Addressee &addressee);
-    int presenceStatusByNick(const QString &ircnick);
+    int presenceStatusByNick(const QString &ircnick, const QString &server);
     bool isOnline(KABC::Addressee &addressee);
-    bool isOnline(const QString &ircnick);
+    bool isOnline(const QString &ircnick, const QString &server);
     bool getAndCheckTicket();
     bool saveTicket();	
     void releaseTicket();
@@ -83,12 +85,16 @@ class Addressbook : public QObject, public KIMIface
      * Send the file to the contact
      */
     void sendFile(const QString &uid, const KURL &sourceURL,
-        const QString &altFileName = QString::null, uint fileSize = 0);
+    const QString &altFileName = QString::null, uint fileSize = 0);
+
+    void emitContactPresenceChanged( QString uid, int presence);
+    void emitContactPresenceChanged(QString uid);
+	
 
 // MUTATORS
 // Contact list
     bool addContact( const QString &contactId, const QString &protocolId );
-
+  signals:
     void contactPresenceChanged( QString uid, QCString appId, int presence );
     
   private:

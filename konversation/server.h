@@ -121,7 +121,7 @@ class Server : public QObject
     bool getDeliberateQuit() const;
 
     QString getNextNickname();
-
+    
     void setIrcName(const QString &newIrcName);
     QString getIrcName() const;
 
@@ -187,7 +187,7 @@ class Server : public QObject
     bool connected();
     QString getIp();
     QString getNumericalIp();
-
+    bool isNickOnline(const QString &nickname);
     // Given a nickname, returns NickInfo object.  0 if not found.
     NickInfoPtr getNickInfo(const QString& nickname);
     // Given a nickname, returns an existing NickInfo object, or creates a new NickInfo object.
