@@ -39,7 +39,7 @@ class LogfileReader : public ChatWindow
 #endif
     ~LogfileReader();
 
-    virtual void closeYourself() { closeLog(); }
+    virtual bool closeYourself() { closeLog(); return true; }
   
   protected slots:
     void updateView();

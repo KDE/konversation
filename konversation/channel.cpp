@@ -1771,12 +1771,13 @@ void Channel::appendInputText(const QString& s)
   channelInput->setText(channelInput->text() + s);
 }
 
-void Channel::closeYourself()
+bool Channel::closeYourself()
 {
 #ifndef USE_MDI
   server->closeChannel(getName());
   server->removeChannel(this);
   delete this;
+  return true;
 #endif
 }
 

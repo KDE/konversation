@@ -48,12 +48,13 @@ void RawLog::updateFonts()
                                    KonversationApplication::preferences.getBackgroundImageName());
 }
 
-void RawLog::closeYourself()
+bool RawLog::closeYourself()
 {
 #ifndef USE_MDI
   // make the server delete us so server can reset the pointer to us
   server->closeRawLog();
 #endif
+  return true;
 }
 
 #ifdef USE_MDI

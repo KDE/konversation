@@ -16,6 +16,7 @@
 #include <qdir.h>
 #include <qregexp.h>
 #include <qtextcodec.h>
+#include <qtooltip.h>
 
 #ifdef USE_MDI
 #include <qlayout.h>
@@ -162,6 +163,7 @@ void ChatWindow::setServer(Server* newServer)
   if(newServer==0) kdDebug("ChatWindow::setServer(0)!") << endl;
   else
   {
+
     server=newServer;
     setMainWindow(server->getMainWindow());
 #ifdef USE_MDI
@@ -208,6 +210,7 @@ void ChatWindow::setTextView(IRCView* newView)
 void ChatWindow::insertRememberLine()
 {
   Q_ASSERT(textView);  if(!textView) return;
+  kdDebug() << "Inserting remember line" << endl;
   textView->appendRaw("<br><hr color=\"#"+KonversationApplication::preferences.getColor("CommandMessage")+"\" noshade>", true);
 }
 
@@ -422,8 +425,9 @@ void ChatWindow::appendInputText(const QString&)
 }
 
 // reimplement this if your window needs special close treatment
-void ChatWindow::closeYourself()
+bool ChatWindow::closeYourself()
 {
+  return true;
 }
 
 #ifdef USE_MDI

@@ -44,7 +44,7 @@ class StatusPanel : public ChatWindow
     ~StatusPanel();
 
     virtual QString getTextInLine();
-    virtual void closeYourself();
+    virtual bool closeYourself();
     virtual bool frontView();
     virtual bool searchView();
     

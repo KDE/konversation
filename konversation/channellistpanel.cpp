@@ -400,10 +400,11 @@ void ChannelListPanel::updateUsersChannels()
   emit updateNumUsers(i18n("Non-unique users: %1 (%2 shown)").arg(getNumUsers()).arg(getVisibleUsers()));
 }
 
-void ChannelListPanel::closeYourself()
+bool ChannelListPanel::closeYourself()
 {
   // make the server delete us so server can reset the pointer to us
   server->closeChannelListPanel();
+  return true;
 }
 
 #ifdef USE_MDI

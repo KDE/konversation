@@ -212,9 +212,10 @@ void UrlCatcher::saveListClicked()
 }
 
 #ifdef USE_MDI
-void UrlCatcher::closeYourself(ChatWindow*)
+bool UrlCatcher::closeYourself(ChatWindow*)
 {
   emit chatWindowCloseRequest(this);
+  return true;
 }
 #endif
 

@@ -103,7 +103,7 @@ class Channel : public ChatWindow
     void updateStyleSheet();
 
     virtual QString getTextInLine();
-    virtual void closeYourself();
+    virtual bool closeYourself();
     virtual bool frontView();
     virtual bool searchView();
 	

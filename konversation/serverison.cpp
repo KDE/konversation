@@ -83,7 +83,6 @@ KABC::Addressee ServerISON::getOfflineNickAddressee(QString& nickname)
 
 void ServerISON::recalculateAddressees()
 {
-  kdDebug() << "ServerISON::recalculateAddressees" << endl;
   // If not watching nicks, no need to build notify list.
   if (KonversationApplication::preferences.getUseNotify())
   {

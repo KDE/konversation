@@ -287,11 +287,12 @@ QString Query::getChannelEncodingDefaultDesc()  // virtual
   return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodecName());
 }
 
-void Query::closeYourself()
+bool Query::closeYourself()
 {
 #ifndef USE_MDI
   server->removeQuery(this);
 #endif
+  return true;
 }
 
 #ifdef USE_MDI

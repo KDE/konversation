@@ -33,7 +33,7 @@ class RawLog : public ChatWindow
 #endif
     ~RawLog();
 
-    virtual void closeYourself();
+    virtual bool closeYourself();
     virtual bool searchView();
 
   public slots:

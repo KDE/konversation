@@ -48,7 +48,7 @@ class Query : public ChatWindow
     void setHostmask(const QString& newHostmask);
     void updateFonts();
     virtual QString getTextInLine();
-    virtual void closeYourself();
+    virtual bool closeYourself();
     virtual bool frontView();
     virtual bool searchView();
 

@@ -22,6 +22,7 @@
 #include "ledtab.h"
 #include "ledtabbar.h"
 #include "chatwindow.h"
+#include "server.h"
 
 LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :
               KTabWidget(parent,name)
@@ -54,6 +55,22 @@ void LedTabWidget::addTab(ChatWindow* child,const QString& label,int color,bool 
   LedTab* tab=new LedTab(child,label,color,on);
 
   QTabWidget::insertTab(child,tab,index);
+
+  Server *server= child->getServer();
+  if(server) {
+    
+    QString tooltip = server->getServerGroup();
+    kdDebug() << "server group is " << server->getServerGroup() << "." << endl;
+    if(tooltip.lower() != server->getServerName().lower()) {
+      if( !tooltip.isEmpty() )
+        tooltip += " - ";
+      tooltip += server->getServerName();
+    }
+    if(!tooltip.isEmpty())
+	    setTabToolTip(child, tooltip);
+    
+  } 
+
   // This signal will be emitted when the tab is blinking
   connect(tab,SIGNAL(repaintTab(LedTab*)),tabBar(),SLOT(repaintLED(LedTab*)));
   // This signal will be emitted when the chat window changes its name

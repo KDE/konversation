@@ -2530,7 +2530,6 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
     kdDebug() << "server::renameNick called with empty strings!  Trying to rename '" << nickname << "' to '" << newNick << "'" << endl;
     return;
   }
-  kdDebug() << "server::renameNick - renaming " << nickname << "' to '" << newNick << "'" << endl;
   //Actually do the rename.
   NickInfoPtr nickInfo = getNickInfo(nickname);
   if(!nickInfo) {

@@ -13,6 +13,7 @@
 */
 
 #include <kdebug.h>
+#include <qtooltip.h>
 
 #include "images.h"
 #include "konversationapplication.h"
@@ -39,6 +40,7 @@ LedTab::LedTab(QWidget* newWidget,const QString& label,int newColor,bool on) :
   connect(&blinkTimer,SIGNAL(timeout()),this,SLOT(blinkTimeout()));
 
   blinkTimer.start(500);
+
 }
 
 LedTab::~LedTab()

@@ -176,6 +176,7 @@ void KonversationApplication::dcopInfo(const QString& string)
 
 void KonversationApplication::insertRememberLine()
 {
+  kdDebug() << "insert remember line in konversationApplication()" << endl;
   mainWindow->insertRememberLine();
 }
 

@@ -29,6 +29,7 @@
 #include <kiconloader.h>
 #include <kwin.h>
 #include <qpainter.h>
+#include <qnamespace.h>
 
 #include <kabc/addressbook.h>
 #include <kabc/errorhandler.h>
@@ -72,7 +73,7 @@
 #ifdef USE_MDI
 KonversationMainWindow::KonversationMainWindow() : KMdiMainFrm(0,"mdi_main_form")
 #else
-KonversationMainWindow::KonversationMainWindow() : KMainWindow()
+KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", WStyle_ContextHelp | WType_TopLevel)
 #endif
 {
   // Init variables before anything else can happen
@@ -522,32 +523,38 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
   ChatWindow* view=static_cast<ChatWindow*>(viewToClose);
   if(view)
   {
-    // if this view was the front view, delete the pointer
-    if(view==previousFrontView) previousFrontView=0;
-    if(view==frontView) frontView=previousFrontView;
-
-    emit endNotification(viewToClose);
 
     ChatWindow::WindowType viewType=view->getType();
 
     QString viewName=view->getName();
     
-    viewContainer->removePage(view);
     // the views should know by themselves how to close
 
-    if(viewType==ChatWindow::Status)            view->closeYourself();
-    else if(viewType==ChatWindow::Channel)      view->closeYourself();
-    else if(viewType==ChatWindow::ChannelList)  view->closeYourself();
-    else if(viewType==ChatWindow::Query)        view->closeYourself();
-    else if(viewType==ChatWindow::RawLog)       view->closeYourself();
-    else if(viewType==ChatWindow::DccChat)      view->closeYourself();
+    bool confirmClose = true;
+    if(viewType==ChatWindow::Status)            confirmClose = view->closeYourself();
+    else if(viewType==ChatWindow::Channel)      confirmClose = view->closeYourself();
+    else if(viewType==ChatWindow::ChannelList)  confirmClose = view->closeYourself();
+    else if(viewType==ChatWindow::Query)        confirmClose = view->closeYourself();
+    else if(viewType==ChatWindow::RawLog)       confirmClose = view->closeYourself();
+    else if(viewType==ChatWindow::DccChat)      confirmClose = view->closeYourself();
 
     else if(viewType==ChatWindow::DccPanel)     closeDccPanel();
     else if(viewType==ChatWindow::Konsole)      closeKonsolePanel(view);
     else if(viewType==ChatWindow::UrlCatcher)   closeUrlCatcher();
     else if(viewType==ChatWindow::NicksOnline)  closeNicksOnlinePanel();
     else if(viewType == ChatWindow::LogFileReader) view->closeYourself();
+ 
+    if(!confirmClose) 
+	    return; //We haven't done anything yet, so safe to return
 
+    // if this view was the front view, delete the pointer
+    if(view==previousFrontView) previousFrontView=0;
+    if(view==frontView) frontView=previousFrontView;
+
+    emit endNotification(viewToClose);
+
+    viewContainer->removePage(view);
+    
 /*
     else if(viewType==ChatWindow::Notice);
     else if(viewType==ChatWindow::SNotice);
@@ -1325,6 +1332,7 @@ void KonversationMainWindow::addIRCColor()
 void KonversationMainWindow::insertRememberLine()
 {
 #ifndef USE_MDI
+  kdDebug() << "insertRememberLine in konversationMainWindow" << endl;
   if(KonversationApplication::preferences.getShowRememberLineInAllWindows())
   {
     int total = getViewContainer()->count()-1;

@@ -356,9 +356,10 @@ void DccChat::appendInputText(const QString& s)
   dccChatInput->setText(dccChatInput->text() + s);
 }
 
-void DccChat::closeYourself()
+bool DccChat::closeYourself()
 {
   delete this;
+  return true;
 }
 
 void DccChat::setChannelEncoding(const QString& encoding)  // virtual

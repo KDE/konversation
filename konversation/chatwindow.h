@@ -128,7 +128,8 @@ class ChatWindow : public BASE_CLASS
 #endif
 
     virtual QString getTextInLine();
-    virtual void closeYourself();
+    /** Clean up and close this tab.  Return false if you want to cancel the close. */
+    virtual bool closeYourself();
     virtual bool frontView();
     virtual bool searchView();
 

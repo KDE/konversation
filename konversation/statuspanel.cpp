@@ -214,19 +214,20 @@ QString StatusPanel::getTextInLine() { return statusInput->text(); }
 bool StatusPanel::frontView()        { return true; }
 bool StatusPanel::searchView()       { return true; }
 
-void StatusPanel::closeYourself()
+bool StatusPanel::closeYourself()
 #ifdef USE_MDI
 {
+	return true;
 }
 void StatusPanel::closeYourself(ChatWindow*)
 #endif
 {
   int result=KMessageBox::warningYesNo(
                 this,
-                i18n("Do you really want to disconnect from '%1'?").arg(server->getServerName()),
-                i18n("Quit Server"),
+                i18n("Do you want to disconnect from '%1'?").arg(server->getServerName()),
+                i18n("Disconnect from server"),
                 KStdGuiItem::yes(),
-                KStdGuiItem::no(),
+                KStdGuiItem::cancel(),
                 "QuitServerTab");
 
   if(result==KMessageBox::Yes)
@@ -239,8 +240,10 @@ void StatusPanel::closeYourself(ChatWindow*)
     emit chatWindowCloseRequest(this);
 #else
     this->deleteLater(); //NO NO!  Deleting the server should delete this! FIXME
+    return true;
 #endif
   }
+  return false;
 }
 
 void StatusPanel::nicknameComboboxChanged(int /*index*/)
