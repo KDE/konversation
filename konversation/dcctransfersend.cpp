@@ -40,8 +40,8 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   : DccTransfer( panel, DccTransfer::Send, partnerNick, fileURL.filename() )
 {
   kdDebug() << "DccTransferSend::DccTransferSend()" << endl
-            << "DccTransferSend::DccTransferSend(): Partner=" << partnerNick << endl
-            << "DccTransferSend::DccTransferSend(): File=" << fileURL.prettyURL() << endl;
+            << "DccTransferSend::DccTransferSend(): Partner: " << partnerNick << endl
+            << "DccTransferSend::DccTransferSend(): File: " << fileURL.prettyURL() << endl;
   
   m_fileURL = fileURL;
   m_ownIp = ownIp;
@@ -53,7 +53,7 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   m_serverSocket = 0;
   m_sendSocket = 0;
   m_fastSend = KonversationApplication::preferences.getDccFastSend();
-  kdDebug() << "DccTransferSend::DccTransferSend(): Fast DCC send " << ( m_fastSend ? QString("Enabled.") : QString("Disabled.") ) << endl;
+  kdDebug() << "DccTransferSend::DccTransferSend(): Fast DCC send: " << m_fastSend << endl;
   
   m_connectionTimer = new QTimer( this );
   connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
@@ -88,12 +88,14 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
     }
   }
   m_file.setName( m_tmpFile );
+  
   if(fileSize > 0)
     m_fileSize = fileSize;
   else
     m_fileSize = m_file.size();
 
   updateView();
+  
   panel->selectMe( this );
 }
 
@@ -310,17 +312,18 @@ void DccTransferSend::socketError( int errorCode )
 
 void DccTransferSend::startConnectionTimer( int sec )
 {
-  kdDebug() << "DccTransferSend::startConnectionTimer"<< endl;
-  Q_ASSERT(m_connectionTimer);  // mmm? what is it for?
+  kdDebug() << "DccTransferSend::startConnectionTimer()"<< endl;
   stopConnectionTimer();
   m_connectionTimer->start( sec*1000, TRUE );
 }
 
 void DccTransferSend::stopConnectionTimer()
 {
-  kdDebug() << "DccTransferSend::stopConnectionTimer" << endl;
-  Q_ASSERT(m_connectionTimer);
-  m_connectionTimer->stop();
+  if( m_connectionTimer->isActive() )
+  {
+    kdDebug() << "DccTransferSend::stopConnectionTimer(): stop" << endl;
+    m_connectionTimer->stop();
+  }
 }
 
 void DccTransferSend::connectionTimeout()  // slot
@@ -331,12 +334,15 @@ void DccTransferSend::connectionTimeout()  // slot
   updateView();
   cleanUp();
 }
-void DccTransferSend::slotServerSocketClosed() {
-  kdDebug() << "Server socket closed, status: "<< m_dccStatus << endl;
+
+void DccTransferSend::slotServerSocketClosed()
+{
+  kdDebug() << "DccTransferSend::slotServerSocketClosed()" << endl;
 }
+
 void DccTransferSend::slotSendSocketClosed()
 {
-  kdDebug() << "Socket closed, status: "<< m_dccStatus << endl;
+  kdDebug() << "DccTransferSend::slotSendSocketClosed()" << endl;
   if( m_dccStatus == Sending )
   {
     setStatus( Failed, i18n("Remote user disconnected") );
