@@ -13,11 +13,11 @@
 */
 
 #include <unistd.h>
-#include <iostream>
 
 #include <qregexp.h>
 
 #include <klocale.h>
+#include <kdebug.h>
 
 #include "server.h"
 #include "ircserversocket.h"
@@ -67,7 +67,7 @@ Server::Server(int id)
 
 Server::~Server()
 {
-  cerr << "Server::~Server()" << endl;
+  kdDebug() << "Server::~Server()" << endl;
   serverSocket->enableWrite(true);
   send(serverSocket);
 }
@@ -136,7 +136,7 @@ void Server::processIncomingData()
 
     inputBuffer=inputBuffer.mid(pos+1);
 
-    cout << line << endl;
+    kdDebug() << line << endl;
 
     inputFilter.parseLine(line);
   }
@@ -160,7 +160,7 @@ void Server::queue(const QString& buffer)
 {
   if(buffer.length())
   {
-    cerr << "Q: " << buffer << endl;
+    kdDebug() << "Q: " << buffer << endl;
 
     outputBuffer+=buffer;
     outputBuffer+="\n";
@@ -171,7 +171,7 @@ void Server::queue(const QString& buffer)
 
 void Server::send(KSocket* ksocket)
 {
-  cerr << "-> " << outputBuffer << endl;
+  kdDebug() << "-> " << outputBuffer << endl;
   /* TODO: Implement Flood-Protection here */
   write(ksocket->socket(),outputBuffer.latin1(),outputBuffer.length());
   serverSocket->enableWrite(false);
@@ -180,14 +180,15 @@ void Server::send(KSocket* ksocket)
 
 void Server::ctcpReply(QString& receiver,const QString& text)
 {
-  queue("NOTICE "+receiver+" :"+0x01+text+0x01);
+  queue("NOTICE "+receiver+" :"+'\x01'+text+'\x01');
 }
 
 void Server::broken(KSocket* ksocket)
 {
-  cerr << "Connection broken!" << endl;
+  kdWarning() << "Connection broken (Socket " << ksocket->socket() << ")!" << endl;
+
   serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost.").arg(serverName));
-  /* Close all queries and channels! */
+  /* TODO: Close all queries and channels! */
   delete serverSocket;
 
   if(autoReconnect)
@@ -322,8 +323,8 @@ Channel* Server::getChannelByName(const char* name)
     if(lookChannel->getChannelName().lower()==wanted) return lookChannel;
     lookChannel=channelList.next();
   }
-  /* No channel by that name found? Return 0 (Shouldn't happen) */
-  cerr << "Server::getChannelByName(" << name << "): Channel name not found!" << endl;
+  /* No channel by that name found? Return 0. Happens on first channel join */
+  kdWarning() << "Server::getChannelByName(" << name << "): Channel name not found!" << endl;
   return 0;
 }
 
@@ -445,28 +446,28 @@ void Server::appendToQuery(const char* queryName,const char* message)
 {
   Query* outQuery=getQueryByName(queryName);
   if(outQuery) outQuery->appendQuery(queryName,message);
-  else cerr << "Server::appendToQuery(" << queryName << "): Query not found!" << endl;
+  else kdWarning() << "Server::appendToQuery(" << queryName << "): Query not found!" << endl;
 }
 
 void Server::appendActionToQuery(const char* queryName,const char* message)
 {
   Query* outQuery=getQueryByName(queryName);
   if(outQuery) outQuery->appendAction(queryName,message);
-  else cerr << "Server::appendActionToQuery(" << queryName << "): Query not found!" << endl;
+  else kdWarning() << "Server::appendActionToQuery(" << queryName << "): Query not found!" << endl;
 }
 
 void Server::appendServerMessageToQuery(const char* queryName,const char* type,const char* message)
 {
   Query* outQuery=getQueryByName(queryName);
   if(outQuery) outQuery->appendServerMessage(type,message);
-  else cerr << "Server::appendServerMessageToQuery(" << queryName << "): Query not found!" << endl;
+  else kdWarning() << "Server::appendServerMessageToQuery(" << queryName << "): Query not found!" << endl;
 }
 
 void Server::appendCommandMessageToQuery(const char* queryName,const char* command,const char* message)
 {
   Query* outQuery=getQueryByName(queryName);
   if(outQuery) outQuery->appendCommandMessage(command,message);
-  else cerr << "Server::appendCommandMessageToQuery(" << queryName << "): Query not found!" << endl;
+  else kdWarning() << "Server::appendCommandMessageToQuery(" << queryName << "): Query not found!" << endl;
 }
 
 void Server::appendStatusMessage(const char* type,const char* message)
@@ -504,6 +505,8 @@ QString& Server::getNickname()
 
 QString Server::parseWildcards(const QString& toParse,const QString& nickname,const QString& channelName,QStringList* nickList,const QString& queryName,const QString& parameter)
 {
+  /* TODO: parameter handling. this line is only to suppress a compiler warning */
+  parameter.lower();
   /* cut button name from definition */
   QString out(toParse.mid(toParse.find(',')+1));
   /* define default separator and regular expression for definition */

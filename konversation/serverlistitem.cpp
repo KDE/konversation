@@ -12,7 +12,7 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
+#include <kdebug.h>
 
 #include "serverlistitem.h"
 
@@ -30,5 +30,5 @@ ServerListItem::ServerListItem(QListView* parent,int newId,
 
 ServerListItem::~ServerListItem()
 {
-  cerr << "ServerListItem::~ServerListItem(" << text(0) << ")" << endl;
+  kdDebug() << "ServerListItem::~ServerListItem(" << text(0) << ")" << endl;
 }

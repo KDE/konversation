@@ -317,7 +317,7 @@ DIST_COMMON =  Makefile.am Makefile.in
 
 #>- DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 #>+ 4
-KDE_DIST=konversation led.xcf 
+KDE_DIST=led.xcf 
 
 DISTFILES= $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST) $(KDE_DIST)
 
@@ -895,7 +895,7 @@ clean-moc-classes:
 	-rm -f  konversation_meta_unload.cpp
 
 #>+ 11
-konversation.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/nickchangedialog.cpp $(srcdir)/modebutton.cpp $(srcdir)/ignorelistviewitem.cpp $(srcdir)/ignorecheckbox.cpp $(srcdir)/ignore.cpp $(srcdir)/ignoredialog.cpp $(srcdir)/quickbuttonsdialog.cpp $(srcdir)/nicklistview.cpp $(srcdir)/highlightbox.cpp $(srcdir)/ircinput.cpp $(srcdir)/ledtabbar.cpp $(srcdir)/ledtab.cpp $(srcdir)/ledtabwidget.cpp $(srcdir)/images.cpp $(srcdir)/editserverdialog.cpp $(srcdir)/serverlistitem.cpp $(srcdir)/serverentry.cpp $(srcdir)/prefsdialog.cpp $(srcdir)/quickbutton.cpp $(srcdir)/preferences.cpp $(srcdir)/chatwindow.cpp $(srcdir)/outputfilter.cpp $(srcdir)/query.cpp $(srcdir)/konversationapplication.cpp $(srcdir)/nick.cpp $(srcdir)/inputfilter.cpp $(srcdir)/channel.cpp $(srcdir)/ircview.cpp $(srcdir)/server.cpp $(srcdir)/serverwindow.cpp $(srcdir)/ircserversocket.cpp $(srcdir)/main.cpp $(srcdir)/konversation_meta_unload.cpp  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp
+konversation.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/nickchangedialog.cpp $(srcdir)/modebutton.cpp $(srcdir)/ignorelistviewitem.cpp $(srcdir)/ignorecheckbox.cpp $(srcdir)/ignore.cpp $(srcdir)/ignoredialog.cpp $(srcdir)/quickbuttonsdialog.cpp $(srcdir)/nicklistview.cpp $(srcdir)/highlightbox.cpp $(srcdir)/ircinput.cpp $(srcdir)/ledtabbar.cpp $(srcdir)/ledtab.cpp $(srcdir)/ledtabwidget.cpp $(srcdir)/images.cpp $(srcdir)/editserverdialog.cpp $(srcdir)/serverlistitem.cpp $(srcdir)/serverentry.cpp $(srcdir)/prefsdialog.cpp $(srcdir)/quickbutton.cpp $(srcdir)/preferences.cpp $(srcdir)/chatwindow.cpp $(srcdir)/outputfilter.cpp $(srcdir)/query.cpp $(srcdir)/konversationapplication.cpp $(srcdir)/nick.cpp $(srcdir)/inputfilter.cpp $(srcdir)/channel.cpp $(srcdir)/ircview.cpp $(srcdir)/server.cpp $(srcdir)/serverwindow.cpp $(srcdir)/ircserversocket.cpp $(srcdir)/main.cpp konversation_meta_unload.cpp  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp
 	@echo 'creating konversation.all_cpp.cpp ...'; \
 	rm -f konversation.all_cpp.files konversation.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> konversation.all_cpp.final; \

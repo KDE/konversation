@@ -12,7 +12,7 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
+#include <kdebug.h>
 
 #include "ignore.h"
 
@@ -24,5 +24,5 @@ Ignore::Ignore(QString newName,int newFlags)
 
 Ignore::~Ignore()
 {
-  cerr << "Ignore::~Ignore(" << name << ")" << endl;
+  kdDebug() << "Ignore::~Ignore(" << name << ")" << endl;
 }

@@ -12,12 +12,11 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include <qdatetime.h>
 #include <qdir.h>
 
 #include <klocale.h>
+#include <kdebug.h>
 
 #include "chatwindow.h"
 #include "konversationapplication.h"
@@ -154,5 +153,5 @@ void ChatWindow::logText(const QString& text)
     logfile.writeBlock(logLine,logLine.length());
     logfile.close();
   }
-  else cerr << "ChatWindow::logText(): open(IO_Append) for " << logfile.name() << " failed!" << endl;
+  else kdWarning() << "ChatWindow::logText(): open(IO_Append) for " << logfile.name() << " failed!" << endl;
 }

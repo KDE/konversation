@@ -12,20 +12,19 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include <qlayout.h>
 
 #include <klocale.h>
+#include <kdebug.h>
 
 #include "nickchangedialog.h"
 
 NickChangeDialog::NickChangeDialog(QWidget* parent,QString currentNick,QStringList nickList,QSize size):
-                  KDialogBase(0,"nickchangedialog",false,i18n("Change Nickname"),
+                  KDialogBase(parent,"nickchangedialog",false,i18n("Change Nickname"),
                               KDialogBase::Ok | KDialogBase::Cancel,
                               KDialogBase::Ok,true)
 {
-  cerr << "NickChangeDialog::NickChangeDialog()" << endl;
+  kdDebug() << "NickChangeDialog::NickChangeDialog()" << endl;
 
   /* Create the top level widget */
   QWidget* page=new QWidget(this);
@@ -41,7 +40,7 @@ NickChangeDialog::NickChangeDialog(QWidget* parent,QString currentNick,QStringLi
 
   dialogLayout->addWidget(nicknameInput);
 
-  connect(nicknameInput,SIGNAL (activated(QString)),this,SLOT (newNicknameEntered(QString)) );
+  connect(nicknameInput,SIGNAL (activated(const QString&)),this,SLOT (newNicknameEntered(const QString&)) );
   
   setButtonOKText(i18n("OK"),i18n("Set new nickname and close the window"));
   setButtonCancelText(i18n("Cancel"),i18n("Close the window without changes"));
@@ -51,7 +50,7 @@ NickChangeDialog::NickChangeDialog(QWidget* parent,QString currentNick,QStringLi
 
 NickChangeDialog::~NickChangeDialog()
 {
-  cerr << "NickChangeDialog::~NickChangeDialog()" << endl;
+  kdDebug() << "NickChangeDialog::~NickChangeDialog()" << endl;
 }
 
 void NickChangeDialog::slotOk()

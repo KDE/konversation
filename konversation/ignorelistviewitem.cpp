@@ -12,11 +12,10 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include "ignorelistviewitem.h"
 
 #include <klocale.h>
+#include <kdebug.h>
 
 IgnoreListViewItem::IgnoreListViewItem(QListView* parent,QString name,int newFlags):
         KListViewItem(parent,name)
@@ -29,7 +28,7 @@ IgnoreListViewItem::IgnoreListViewItem(QListView* parent,QString name,int newFla
 
 IgnoreListViewItem::~IgnoreListViewItem()
 {
-  cerr << "IgnoreListViewItem::~IgnoreListViewItem(" << text(0) << ")" << endl;
+  kdDebug() << "IgnoreListViewItem::~IgnoreListViewItem(" << text(0) << ")" << endl;
 }
 
 void IgnoreListViewItem::setFlag(int flag,bool active)

@@ -12,8 +12,6 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include <qstringlist.h>
 
 #include <klocale.h>
@@ -43,7 +41,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
   /* Action? */
   if(line.startsWith("/me ") && destination!="")
   {
-    toServer="PRIVMSG "+name+" :"+0x01+"ACTION "+inputLine.mid(4)+0x01;
+    toServer="PRIVMSG "+name+" :"+'\x01'+"ACTION "+inputLine.mid(4)+'\x01';
     output=inputLine.mid(4);
     action=true;
   }
@@ -243,7 +241,7 @@ void OutputFilter::parseMsg(QString parameter)
   QString recipient=parameter.left(parameter.find(" "));
   QString message=parameter.mid(recipient.length()+1);
 
-  if(message.startsWith("/me")) toServer="PRIVMSG "+recipient+" :"+0x01+"ACTION "+message.mid(4)+0x01;
+  if(message.startsWith("/me")) toServer="PRIVMSG "+recipient+" :"+'\x01'+"ACTION "+message.mid(4)+'\x01';
   else toServer="PRIVMSG "+recipient+" :"+message;
 }
 
@@ -252,7 +250,7 @@ void OutputFilter::parseCtcp(QString parameter)
   QString recipient=parameter.left(parameter.find(" "));
   QString message=parameter.mid(recipient.length()+1);
 
-  toServer=QString("PRIVMSG "+recipient+" :"+0x01+message+0x01);
+  toServer=QString("PRIVMSG "+recipient+" :"+'\x01'+message+'\x01');
   
   output=i18n("Sending CTCP-%1 request to %2").arg(message).arg(recipient);
   type="CTCP";

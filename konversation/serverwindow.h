@@ -44,7 +44,6 @@
 #include "quickbuttonsdialog.h"
 #include "ignoredialog.h"
 
-class Server;
 class ServerWindow : public KMainWindow
 {
   Q_OBJECT

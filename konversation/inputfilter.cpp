@@ -12,16 +12,15 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include <qstringlist.h>
 
 #include <klocale.h>
+#include <kdebug.h>
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #else
-#define VERSION 0.2
+#define VERSION 0.4
 #endif
 
 #include "server.h"
@@ -30,12 +29,12 @@
 
 InputFilter::InputFilter()
 {
-  cerr << "InputFilter::InputFilter()" << endl;
+  kdDebug() << "InputFilter::InputFilter()" << endl;
 }
 
 InputFilter::~InputFilter()
 {
-  cerr << "InputFilter::~InputFilter()" << endl;
+  kdDebug() << "InputFilter::~InputFilter()" << endl;
 }
 
 void InputFilter::setServer(Server* newServer)
@@ -198,38 +197,7 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
   }
   else if(command=="mode") /* mode #channel -/+ mmm params */
   {
-    const QString modestring=parameterList[1];
-
-    bool plus=false;
-    int parameterIndex=0;
-    /* List of modes that need a parameter (note exception with -k and -l) */
-    QString parameterModes="oOvkbleI";
-
-    for(int index=0;modestring[index]!=0;index++)
-    {
-      unsigned char mode=modestring[index];
-      QString parameter;
-
-      /* Check if this is a mode or a +/- qualifier */
-      if(mode=='+' || mode=='-') plus=(mode=='+');
-      else
-      {
-        /* Check if this was a parameter mode */
-        if(parameterModes.find(mode)!=-1)
-        {
-          /* Check if the mode actually wants a parameter. -k and -l do not! */
-          if(plus || (!plus && (mode!='k') && (mode!='l')))
-          {
-            /* Remember the mode parameter */
-            parameter=parameterList[2+parameterIndex];
-            /* Switch to next parameter */
-            parameterIndex++;
-          }
-        }
-        /* Let the channel update its modes */
-        server->updateChannelMode(sourceNick,parameterList[0],mode,plus,parameter);
-      }
-    }
+    parseModes(sourceNick,parameterList);
   }
   else
   {
@@ -262,7 +230,7 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
     /* This is the string the user will see */
     QString modesAre="";
 
-    for(int index=0;modeString[index]!=0;index++)
+    for(unsigned int index=0;index<modeString.length();index++)
     {
       QString parameter;
       int parameterCount=3;
@@ -341,9 +309,49 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
     /* Autojoin (for now this must be enough) */
     server->queue(server->getAutoJoinCommand());
   }
+  else if(command=="mode")
+  {
+    parseModes(prefix,parameterList);
+  }
   /* All yet unknown messages go into the status window unaltered */
   else
   {
     server->appendStatusMessage(command,parameterList.join(" ")+" "+trailing);
+  }
+}
+
+void InputFilter::parseModes(QString sourceNick,QStringList parameterList)
+{
+  const QString modestring=parameterList[1];
+
+  bool plus=false;
+  int parameterIndex=0;
+  /* List of modes that need a parameter (note exception with -k and -l) */
+  QString parameterModes="oOvkbleI";
+
+  for(unsigned int index=0;index<modestring.length();index++)
+  {
+    unsigned char mode=modestring[index];
+    QString parameter;
+
+    /* Check if this is a mode or a +/- qualifier */
+    if(mode=='+' || mode=='-') plus=(mode=='+');
+    else
+    {
+       /* Check if this was a parameter mode */
+      if(parameterModes.find(mode)!=-1)
+      {
+        /* Check if the mode actually wants a parameter. -k and -l do not! */
+        if(plus || (!plus && (mode!='k') && (mode!='l')))
+        {
+          /* Remember the mode parameter */
+          parameter=parameterList[2+parameterIndex];
+          /* Switch to next parameter */
+          parameterIndex++;
+        }
+      }
+      /* Let the channel update its modes */
+      server->updateChannelMode(sourceNick,parameterList[0],mode,plus,parameter);
+    }
   }
 }

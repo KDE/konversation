@@ -28,7 +28,7 @@ class LedTabWidget : public QTabWidget
   Q_OBJECT
 
   public:
-    LedTabWidget(QWidget* parent,char* name);
+    LedTabWidget(QWidget* parent,const char* name);
     ~LedTabWidget();
 
     void addTab(QWidget* child,const QString& label,int color,bool on,bool blink);

@@ -12,7 +12,6 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
 #include <klistview.h>
 
 #ifndef NICK_H

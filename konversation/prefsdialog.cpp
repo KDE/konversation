@@ -12,25 +12,25 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qvbox.h>
 #include <qhbox.h>
 
 #include <klocale.h>
+#include <kdebug.h>
 
 #include "prefsdialog.h"
 #include "serverlistitem.h"
 #include "editserverdialog.h"
 #include "konversationapplication.h"
+
 PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
              KDialogBase(0,"editprefs",false,i18n("Edit Preferences"),
                          KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                          KDialogBase::Ok,true)
 {
-  cerr << "PrefsDialog::PrefsDialog()" << endl;
+  kdDebug() << "PrefsDialog::PrefsDialog()" << endl;
   setPreferences(preferences);
 
   /* Create the top level widget */
@@ -174,7 +174,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
 PrefsDialog::~PrefsDialog()
 {
-  cerr << "PrefsDialog::~PrefsDialog()" << endl;
+  kdDebug() << "PrefsDialog::~PrefsDialog()" << endl;
 }
 
 void PrefsDialog::connectClicked()
@@ -255,6 +255,8 @@ void PrefsDialog::serverSelected(QListViewItem* item)
 
 void PrefsDialog::serverDoubleClicked(QListViewItem* item)
 {
+  /* Suppress a compiler warning */
+  item->height();
   connectClicked();
 }
 
@@ -339,6 +341,6 @@ void PrefsDialog::slotApply()
 
 void PrefsDialog::slotCancel()
 {
-  cerr << "PrefsDialog::slotCancel()" << endl;
+  kdDebug() << "PrefsDialog::slotCancel()" << endl;
   emit cancelClicked();
 }

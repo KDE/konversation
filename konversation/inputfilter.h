@@ -37,6 +37,7 @@ class InputFilter
 
     void parseClientCommand(QString& prefix,QString& command,QStringList& parameterList,QString& trailing);
     void parseServerCommand(QString& prefix,QString& command,QStringList& parameterList,QString& trailing);
+    void parseModes(QString sourceNick,QStringList parameterList);
 };
 
 #endif

@@ -12,8 +12,6 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include "modebutton.h"
 
 ModeButton::ModeButton(QString label,QWidget* parent,int newId) :

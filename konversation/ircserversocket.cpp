@@ -12,17 +12,17 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include "ircserversocket.h"
+
+#include <kdebug.h>
 
 IRCServerSocket::IRCServerSocket(const char *server,unsigned short int port,int timeout=30) :
                  KSocket(server,port,timeout)
 {
-  cerr << "IRCServerSocket::IRCServerSocket(" << server << "," << port << "): Socket=" << socket() << endl;
+  kdDebug() << "IRCServerSocket::IRCServerSocket(" << server << "," << port << "): Socket=" << socket() << endl;
 }
 
 IRCServerSocket::~IRCServerSocket()
 {
-  cerr << "IRCServerSocket::~IRCServerSocket()" << endl;
+  kdDebug() << "IRCServerSocket::~IRCServerSocket()" << endl;
 }

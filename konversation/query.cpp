@@ -12,20 +12,19 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include <qhbox.h>
 
 #include <kdialog.h>
 #include <klocale.h>
 #include <kstddirs.h>
+#include <kdebug.h>
 
 #include "query.h"
 #include "konversationapplication.h"
 
 Query::Query(QWidget* parent) : ChatWindow(parent)
 {
-  cerr << "Query::Query()" << endl;
+  kdDebug() << "Query::Query()" << endl;
   /* This is the main box */
   queryPane=new QVBox(parent);
   queryPane->setMargin(margin());
@@ -67,7 +66,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
 Query::~Query()
 {
-  cerr << "Query::~Query(" << getQueryName() << ")" << endl;
+  kdDebug() << "Query::~Query(" << getQueryName() << ")" << endl;
 }
 
 void Query::close()

@@ -12,8 +12,6 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include "ircinput.h"
 
 #define MAXHISTORY 100

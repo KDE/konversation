@@ -12,13 +12,13 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
+#include <kdebug.h>
 
 #include "nick.h"
 
 Nick::Nick(KListView* listView,QString& nickname,QString& hostmask,bool op,bool voice)
 {
-  cerr << "Nick::Nick(" << nickname << "," << hostmask << ")" << endl;
+  kdDebug() << "Nick::Nick(" << nickname << "," << hostmask << ")" << endl;
 
   listViewItem=new KListViewItem(listView,(op) ? "@" : (voice) ?  "+" : "-",nickname);
   setNickname(nickname);
@@ -30,7 +30,7 @@ Nick::Nick(KListView* listView,QString& nickname,QString& hostmask,bool op,bool 
 
 Nick::~Nick()
 {
-  cerr << "Nick::~Nick(" << getNickname() << ")" << endl;
+  kdDebug() << "Nick::~Nick(" << getNickname() << ")" << endl;
   delete listViewItem;
 }
 

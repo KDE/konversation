@@ -15,8 +15,6 @@
 // Comment this #define to try a different text widget
 #define TABLE_VERSION
 
-#include <iostream>
-
 // #include <qlabel.h>
 #include <qstylesheet.h>
 #include <qtextcodec.h>
@@ -24,8 +22,9 @@
 #include <qregexp.h>
 #include <qtextbrowser.h>
 
-#include "konversationapplication.h"
+#include <kdebug.h>
 
+#include "konversationapplication.h"
 #include "ircview.h"
 
 // IRCView::IRCView(QWidget* parent)
@@ -41,10 +40,10 @@ IRCView::IRCView(QWidget* parent) : KTextBrowser(parent)
 //  addChild(grid);
 
 // QListView stuff
-//  addColumn("Nick");
+//  addColumn("cerrNick");
 //  addColumn("Text");
 
-  cerr << "IRCView::IRCView()" << endl;
+  kdDebug() << "IRCView::IRCView()" << endl;
   // setTextFormat(Qt::RichText);
   setVScrollBarMode(AlwaysOn);
   setHScrollBarMode(AlwaysOff);
@@ -59,7 +58,7 @@ IRCView::IRCView(QWidget* parent) : KTextBrowser(parent)
 
 IRCView::~IRCView()
 {
-  cerr << "IRCView::~IRCView()" << endl;
+  kdDebug() << "IRCView::~IRCView()" << endl;
 }
 
 void IRCView::clear()
@@ -104,8 +103,8 @@ QString IRCView::filter(const QString& line,bool doHilight)
     int digitPos=pos;
     int foregroundColor=1; /* replace with default foreground */
     int backgroundColor=0; /* replace with default background */
-    char* colorCodes[]={"ffffff","000000","000080","008000","ff0000","a52a2a","800080","ff8000",
-                        "808000","00ff00","008080","00ffff","0000ff","ffc0cb","a0a0a0","c0c0c0"};
+    const char* colorCodes[]={"ffffff","000000","000080","008000","ff0000","a52a2a","800080","ff8000",
+                              "808000","00ff00","008080","00ffff","0000ff","ffc0cb","a0a0a0","c0c0c0"};
     /* remove \003 */
 
     filteredLine.replace(pos,1,"");
@@ -336,6 +335,8 @@ void IRCView::doAppend(QString line)
 
 void IRCView::showEvent(QShowEvent* event)
 {
+  /* Suppress Compiler Warning */
+  event->type();
   /* Workaround to scroll to the end of the TextView when it's shown */
 //  setText(buffer);
 #ifdef TABLE_VERSION
@@ -348,6 +349,8 @@ void IRCView::showEvent(QShowEvent* event)
 
 void IRCView::focusInEvent(QFocusEvent* event)
 {
+  /* Suppress Compiler Warning */
+  event->type();
   /* Set focus to input line (must be connected) */
   emit gotFocus();
 }

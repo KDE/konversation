@@ -12,11 +12,9 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include "ledtabbar.h"
 
-LedTabBar::LedTabBar(QWidget* parent,char* name) :
+LedTabBar::LedTabBar(QWidget* parent,const char* name) :
            QTabBar(parent,name)
 {
 }
@@ -27,7 +25,7 @@ LedTabBar::~LedTabBar()
 
 LedTab* LedTabBar::tab(QWidget* widget)
 {
-  QList<QTab>* list=tabList();
+  QPtrList<QTab>* list=tabList();
   /* Again cast ... Grrrr */
   LedTab* tab=(LedTab*) list->first();
 

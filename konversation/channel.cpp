@@ -12,8 +12,6 @@
     email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include <qvbox.h>
 #include <qhbox.h>
 #include <qgrid.h>
@@ -23,6 +21,7 @@
 #include <qregexp.h>
 
 #include <klocale.h>
+#include <kdebug.h>
 
 #include "konversationapplication.h"
 #include "channel.h"
@@ -164,7 +163,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
 Channel::~Channel()
 {
-  cerr << "Channel::~Channel()" << endl;
+  kdDebug() << "Channel::~Channel()" << endl;
 
   /* Purge nickname list */
   Nick* nick=nicknameList.first();
@@ -407,7 +406,7 @@ QStringList* Channel::getSelectedNicksList()
 
 void Channel::modeButtonClicked(int id,bool on)
 {
-  char* modes="tnsipmkl";
+  char modes[]={'t','n','s','i','p','m','k','l'};
 
   QString command("MODE "+getChannelName()+" "+((on) ? "+" : "-")+modes[id]);
   server->queue(command);
@@ -487,7 +486,7 @@ void Channel::renameNick(QString& nickname,QString& newNick)
 
   /* Update the nick list */
   Nick* nick=getNickByName(nickname);
-  if(nick==0) cerr << "Channel::renameNick(): Nickname " << nickname << " not found!" << endl;
+  if(nick==0) kdWarning() << "Channel::renameNick(): Nickname " << nickname << " not found!" << endl;
   else nick->setNickname(newNick);
 }
 
@@ -521,7 +520,7 @@ void Channel::removeNick(QString& nickname,QString& reason,bool quit)
     else appendCommandMessage(i18n("Part"),i18n("%1 has left this channel. (%2)").arg(nickname).arg(reason));
 
     Nick* nick=getNickByName(nickname);
-    if(nick==0) cerr << "Channel::removeNick(): Nickname " << nickname << " not found!" << endl;
+    if(nick==0) kdWarning() << "Channel::removeNick(): Nickname " << nickname << " not found!" << endl;
     else
     {
       if(nick->isOp()) adjustOps(-1);
@@ -559,7 +558,7 @@ void Channel::kickNick(QString& nickname,QString& kicker,QString& reason)
       appendCommandMessage(i18n("Kick"),i18n("%1 has been kicked from the channel by %2. (%3)").arg(nickname).arg(kicker).arg(reason));
 
     Nick* nick=getNickByName(nickname);
-    if(nick==0) cerr << "Channel::kickNick(): Nickname " << nickname << " not found!" << endl;
+    if(nick==0) kdWarning() << "Channel::kickNick(): Nickname " << nickname << " not found!" << endl;
     else
     {
       if(nick->isOp()) adjustOps(-1);
@@ -868,7 +867,7 @@ void Channel::updateMode(QString& sourceNick,char mode,bool plus,QString& parame
 void Channel::updateModeWidgets(char mode,bool plus,QString& parameter)
 {
   ModeButton* widget=0;
-cerr << "Setting mode" << endl;
+
   if(mode=='t') widget=modeT;
   else if(mode=='n') widget=modeN;
   else if(mode=='s') widget=modeS;

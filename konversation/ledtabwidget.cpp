@@ -12,16 +12,14 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include "ledtabwidget.h"
 #include "ledtab.h"
 #include "ledtabbar.h"
 
-LedTabWidget::LedTabWidget(QWidget* parent,char* name) :
+LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :
               QTabWidget(parent,name)
 {
-  setTabBar(new LedTabBar(this,"led tab control"));
+  setTabBar(new LedTabBar(this,"led_tab_control"));
   connect(tabBar(),SIGNAL (selected(int)) ,this,SLOT (tabSelected(int)) );
 }
 

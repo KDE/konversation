@@ -12,7 +12,7 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
+#include <kdebug.h>
 
 #include "konversationapplication.h"
 
@@ -22,7 +22,7 @@ QStringList KonversationApplication::urlList;
 
 KonversationApplication::KonversationApplication()
 {
-  cerr << "KonversationApplication::KonversationApplication()" << endl;
+  kdDebug() << "KonversationApplication::KonversationApplication()" << endl;
 
   config=new KSimpleConfig("konversationrc");
   readOptions();
@@ -44,12 +44,12 @@ KonversationApplication::KonversationApplication()
 KonversationApplication::~KonversationApplication()
 {
   saveOptions();
-  cerr << "KonversationApplication::~KonversationApplication()" << endl;
+  kdDebug() << "KonversationApplication::~KonversationApplication()" << endl;
 }
 
 void KonversationApplication::connectToServer(int id)
 {
-  cerr << "KonversationApplication::connectToServer(" << id << ")" << endl;
+  kdDebug() << "KonversationApplication::connectToServer(" << id << ")" << endl;
 
   connectToAnotherServer(id);
   /* to prevent doubleClicked() to crash the dialog */
@@ -60,7 +60,7 @@ void KonversationApplication::connectToServer(int id)
 
 void KonversationApplication::connectToAnotherServer(int id)
 {
-  cerr << "KonversationApplication::connectToAnotherServer(" << id << ")" << endl;
+  kdDebug() << "KonversationApplication::connectToAnotherServer(" << id << ")" << endl;
 
   Server* newServer=new Server(id);
   serverList.append(newServer);
@@ -70,14 +70,14 @@ void KonversationApplication::connectToAnotherServer(int id)
 
 void KonversationApplication::quitKonversation()
 {
-  cerr << "KonversationApplication::quitKonversation()" << endl;
+  kdDebug() << "KonversationApplication::quitKonversation()" << endl;
   delete prefsDialog;
   this->exit();
 }
 
 void KonversationApplication::readOptions()
 {
-  cerr << "KonversationApplication::readOptions()" << endl;
+  kdDebug() << "KonversationApplication::readOptions()" << endl;
 
   /* Read configuration and provide the default values */
   config->setGroup("General Options");
@@ -178,7 +178,7 @@ void KonversationApplication::readOptions()
 
 void KonversationApplication::saveOptions()
 {
-  cerr << "KonversationApplication::saveOptions()" << endl;
+  kdDebug() << "KonversationApplication::saveOptions()" << endl;
 
   config->setGroup("General Options");
 

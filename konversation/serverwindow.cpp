@@ -12,11 +12,10 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include <qdir.h>
 
 #include <klocale.h>
+#include <kdebug.h>
 
 #include "serverwindow.h"
 #include "konversationapplication.h"
@@ -25,7 +24,7 @@ ServerWindow::ServerWindow(Server* server) : KMainWindow()
 {
   setServer(server);
 
-  windowContainer=new LedTabWidget(this,"container");
+  windowContainer=new LedTabWidget(this,"server_window_tab_widget");
   windowContainer->setTabPosition(QTabWidget::Bottom);
 
   hilightWindow=0;
@@ -50,7 +49,7 @@ ServerWindow::ServerWindow(Server* server) : KMainWindow()
 
 ServerWindow::~ServerWindow()
 {
-  cerr << "ServerWindow::~ServerWindow()" << endl;
+  kdDebug() << "ServerWindow::~ServerWindow()" << endl;
 }
 
 void ServerWindow::openPreferences()
@@ -162,7 +161,7 @@ void ServerWindow::logText(const QString& text)
     logfile.writeBlock(logLine,logLine.length());
     logfile.close();
   }
-  else cerr << "ServerWindow::logText(): open(IO_Append) for " << logfile.name() << " failed!" << endl;
+  else kdWarning() << "ServerWindow::logText(): open(IO_Append) for " << logfile.name() << " failed!" << endl;
 }
 
 void ServerWindow::setNickname(const QString& newNickname)
@@ -237,7 +236,7 @@ void ServerWindow::saveOptions()
 
 bool ServerWindow::queryExit()
 {
-  cerr << "ServerWindow::queryExit()" << endl;
+  kdDebug() << "ServerWindow::queryExit()" << endl;
   QString command=filter.parse("/quit","");
   server->queue(filter.getServerOutput());
   saveOptions();

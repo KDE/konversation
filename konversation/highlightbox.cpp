@@ -18,7 +18,7 @@
 #include "highlightbox.h"
 #include <kdialog.h>
 #include <klocale.h>
-#include <iostream.h>
+#include <kdebug.h>
 
 HighLightBox::HighLightBox(QStringList passed_highLightList, QSize passed_windowSize)
 {

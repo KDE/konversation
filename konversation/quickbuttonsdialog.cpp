@@ -12,14 +12,13 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include <qlayout.h>
 #include <qregexp.h>
 #include <qlabel.h>
 
 #include <klocale.h>
 #include <klistview.h>
+#include <kdebug.h>
 
 #include "quickbuttonsdialog.h"
 
@@ -28,7 +27,7 @@ QuickButtonsDialog::QuickButtonsDialog(QStringList buttonList,QSize size):
                                 KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                                 KDialogBase::Ok,true)
 {
-  cerr << "QuickButtonsDialog::QuickButtonsDialog()" << endl;
+  kdDebug() << "QuickButtonsDialog::QuickButtonsDialog()" << endl;
 
   /* Create the top level widget */
   QWidget* page=new QWidget(this);

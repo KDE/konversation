@@ -12,12 +12,11 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include <qhbox.h>
 #include <qlayout.h>
 #include <qlabel.h>
 
+#include <kdebug.h>
 #include <klocale.h>
 
 #include "editserverdialog.h"
@@ -29,7 +28,7 @@ EditServerDialog::EditServerDialog(QWidget* parent,QString group,QString name,QS
                               KDialogBase::Ok,true)
 
 {
-  cerr << "EditServerDialog::EditServerDialog()" << endl;
+  kdDebug() << "EditServerDialog::EditServerDialog()" << endl;
 
   QWidget* page=new QWidget(this);
   setMainWidget(page);
@@ -79,7 +78,7 @@ EditServerDialog::EditServerDialog(QWidget* parent,QString group,QString name,QS
 
 EditServerDialog::~EditServerDialog()
 {
-  cerr << "EditServerDialog::~EditServerDialog()" << endl;
+  kdDebug() << "EditServerDialog::~EditServerDialog()" << endl;
 }
 
 void EditServerDialog::slotOk()

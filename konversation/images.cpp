@@ -12,9 +12,8 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include <kstddirs.h>
+#include <kdebug.h>
 
 #include "images.h"
 
@@ -46,7 +45,7 @@ QIconSet Images::getLed(int color,bool on)
   QIconSet led;
 
   /* Return a QIconSet for the desired color and state (on/off) */
-  if(color>3) cerr << "Images::getLed(): color " << color << " out of range!" << endl;
+  if(color>3) kdWarning() << "Images::getLed(): color " << color << " out of range!" << endl;
   else
   {
     if(color==0 && on) led=redLedOn;

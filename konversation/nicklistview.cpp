@@ -12,11 +12,10 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <iostream>
-
 #include <qpopupmenu.h>
 
 #include <klocale.h>
+#include <kdebug.h>
 
 #include "nicklistview.h"
 
@@ -38,7 +37,7 @@ NickListView::NickListView(QWidget* parent) :
     }
     else
     {
-      cerr << "NickListView::contextMenuEvent(): Could not create modes popup!" << endl;
+      kdWarning() << "NickListView::contextMenuEvent(): Could not create modes popup!" << endl;
     }
     popup->insertSeparator();
     popup->insertItem(i18n("Whois"),Whois);
@@ -54,7 +53,7 @@ NickListView::NickListView(QWidget* parent) :
   }
   else
   {
-    cerr << "NickListView::contextMenuEvent(): Could not create popup!" << endl;
+    kdWarning() << "NickListView::contextMenuEvent(): Could not create popup!" << endl;
   }
 }
 

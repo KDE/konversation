@@ -25,12 +25,12 @@
 class ServerListItem : public KListViewItem
 {
   public:
-    ServerListItem::ServerListItem(QListView* parent,int newId,QString arg0,
-                                   QString arg1=QString::null,
-                                   QString arg2=QString::null,
-                                   QString arg3=QString::null,
-                                   QString arg5=QString::null,
-                                   QString arg4=QString::null);
+    ServerListItem(QListView* parent,int newId,QString arg0,
+                   QString arg1=QString::null,
+                   QString arg2=QString::null,
+                   QString arg3=QString::null,
+                   QString arg5=QString::null,
+                   QString arg4=QString::null);
     ~ServerListItem();
     int getId() { return id; };
 
