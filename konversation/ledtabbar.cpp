@@ -102,6 +102,7 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
     m_popup->insertItem(i18n("Move Right"),MoveRight);
     m_popup->insertSeparator();
     m_popup->insertItem(SmallIcon("charset"),i18n("Set Encoding"),m_popupEncoding,EncodingSub);
+    m_popup->insertItem(i18n("Send Email..."),SendEmail);
     m_popup->insertItem(i18n("Addressbook Associations"), m_popupAddressbook, AddressbookSub);
     
     m_popup->insertSeparator();
@@ -412,6 +413,7 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
         }
 	if(viewType == ChatWindow::Query) {
           m_popup->setItemVisible(AddressbookSub, true);
+	  m_popup->setItemVisible(SendEmail, true);
 	  //Now.. how do we get a nickinfo from this query?  A good question!
           Server *server = win->getServer();
 	  if(server) {
@@ -419,14 +421,18 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
 	    if(nickinfo) {
               insertAssociationSubMenu(nickinfo);
 	      m_popup->setItemEnabled(AddressbookSub, true);
+	      m_popup->setItemEnabled(SendEmail, true);
 	    } else {
               m_popup->setItemEnabled(AddressbookSub, false); //This shouldn't happen.  All queries have a nickinfo
+	      m_popup->setItemEnabled(SendEmail, false);
 	    }
 	  } else {
 	    m_popup->setItemEnabled(AddressbookSub, false); //This shouldn't happen.  All queries have a server.
+	    m_popup->setItemEnabled(SendEmail, false);
 	  }
 	} else {	
 	  m_popup->setItemVisible(AddressbookSub, false);
+	  m_popup->setItemVisible(SendEmail, false);
 	}
         if(win->isChannelEncodingSupported())
         {
@@ -461,9 +467,15 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
           win->setNotificationsEnabled(!win->notificationsEnabled());
         }
       }
+      else if(r == SendEmail) {
+	KABC::Addressee addressee = win->getServer()->getNickInfo(win->getName())->getAddressee();	
+	if(!addressee.isEmpty())
+          Konversation::Addressbook::self()->sendEmail(addressee);
+      }
       else if(r == AddressbookEdit) {
         KABC::Addressee addressee = win->getServer()->getNickInfo(win->getName())->getAddressee();
-        Konversation::Addressbook::self()->editAddressee(addressee.uid());
+	if(!addressee.isEmpty())
+          Konversation::Addressbook::self()->editAddressee(addressee.uid());
       }
       else if(r == AddressbookChange) {
 	QString realName;

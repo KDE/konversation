@@ -66,7 +66,8 @@ class LedTabBar : public KTabBar
       AddressbookEdit,
       AddressbookChange,
       AddressbookDelete,
-      AddressbookNew
+      AddressbookNew,
+      SendEmail
     };
     // these two come from the original QT source
     virtual void paint( QPainter *, QTab *, bool ) const; // ### not const
