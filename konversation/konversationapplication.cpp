@@ -243,6 +243,9 @@ void KonversationApplication::readOptions()
   preferences.setSpacing(config->readNumEntry("Spacing",preferences.getSpacing()));
   preferences.setMargin(config->readNumEntry("Margin",preferences.getMargin()));
 
+  preferences.setUseParagraphSpacing(config->readBoolEntry("UseParagraphSpacing",preferences.getUseParagraphSpacing()));
+  preferences.setParagraphSpacing(config->readNumEntry("ParagraphSpacing",preferences.getParagraphSpacing()));
+  
   QValueList<int> sizes;
   QString sizesString=config->readEntry("ChannelSplitter","10,1");
   sizes.append(sizesString.section(',',0,0).toInt());
@@ -470,6 +473,9 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("UseSpacing",preferences.getUseSpacing());
   config->writeEntry("Spacing",preferences.getSpacing());
   config->writeEntry("Margin",preferences.getMargin());
+  
+  config->writeEntry("UseParagraphSpacing",preferences.getUseParagraphSpacing());
+  config->writeEntry("ParagraphSpacing",preferences.getParagraphSpacing());
   
   QString sizesString(QString::number(preferences.getChannelSplitter()[0])+","+QString::number(preferences.getChannelSplitter()[1]));
   config->writeEntry("ChannelSplitter",sizesString);

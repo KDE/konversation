@@ -83,6 +83,9 @@ Preferences::Preferences()
   setSpacing(2);
   setMargin(3);
 
+  setUseParagraphSpacing(false);
+  setParagraphSpacing(2);
+
   channelSplitter.append(10);
   channelSplitter.append(1);
   
@@ -496,5 +499,10 @@ void Preferences::setSpacing(int newSpacing) { spacing=newSpacing; }
 int Preferences::getSpacing() { return spacing; }
 void Preferences::setMargin(int newMargin) { margin=newMargin; }
 int Preferences::getMargin() { return margin; }
+
+void Preferences::setUseParagraphSpacing(bool state) { useParagraphSpacing=state; }
+bool Preferences::getUseParagraphSpacing() { return useParagraphSpacing; }
+void Preferences::setParagraphSpacing(int newSpacing) { paragraphSpacing=newSpacing; }
+int Preferences::getParagraphSpacing() { return paragraphSpacing; }
 
 #include "preferences.moc"

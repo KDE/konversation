@@ -1,6 +1,5 @@
 Large pastes: Let the user decide if they want an Editor or paste immediately
 Make Config Dialogs fit into one Tab-Dialog and throw out single windows
-Make sure, that lines don't get cleared while viewing the history
 Background color of Nicklist View
 Pasting into text views should trigger the paste mechanism
 Make colors for nick list configurable via GUI
@@ -33,7 +32,7 @@ Measure away time and make it available via placeholder
 
 -privmsg (/msg) should be logged to the specific log file (if i do /msg foo bar i want to have this in konversation-foo.log)
 
-nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  das markieren
+nobs: "nette mirc- Features im normalen text-Fenster:  und  das markieren
       des letzten Zeitpunkts wo das Fenster aktiv war"
 *nobs* noch ein Feature-Request: alle "technischen" Meldungen aus # und query ausblenden können;
        entweder ins Status-Fenster umleiten oder ganz verwerfen optional 
@@ -54,4 +53,3 @@ Automatically gzip files before DCC SEND
 Compute md5sum over DCCs and send / display the hash after transfer
 Import notify list from .ircrc
 PgUp / Pg/Dn scrolls text
-Search function needs Shortcuts.

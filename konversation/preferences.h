@@ -265,6 +265,11 @@ class Preferences : public QObject
     int getSpacing();
     void setMargin(int newMargin);
     int getMargin();
+
+    void setUseParagraphSpacing(bool state);
+    bool getUseParagraphSpacing();
+    void setParagraphSpacing(int newSpacing);
+    int getParagraphSpacing();
     
   signals:
     void requestServerConnection(int number);
@@ -342,6 +347,9 @@ class Preferences : public QObject
     bool useSpacing;
     int spacing;
     int margin;
+
+    bool useParagraphSpacing;
+    int paragraphSpacing;
 
     QFont textFont;
     QFont listFont;

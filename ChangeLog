@@ -8,6 +8,7 @@ Changes from 0.11 to 0.12
 - Added shortcut (F3) for search dialog
 - History does not get cleared on cursor up/down anymore
 - Added context menu to copy URLs immediately
+- Added paragraph spacing
 
 Changes from 0.10 to 0.11
 - Added a patch by Bart Verwilst to provide automatic service registration (thanks!)

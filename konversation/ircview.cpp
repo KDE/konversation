@@ -67,6 +67,22 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 
   installEventFilter(this);
 
+  // set style sheet for <p> to define paragraph spacing
+  QStyleSheet* sheet=new QStyleSheet(this,"ircview_style_sheet");
+
+  int paragraphSpacing;
+  if(KonversationApplication::preferences.getUseParagraphSpacing())
+    paragraphSpacing=KonversationApplication::preferences.getParagraphSpacing();
+  else
+    paragraphSpacing=0;
+
+  QStyleSheetItem* style=new QStyleSheetItem(sheet,"p");
+  style->setDisplayMode(QStyleSheetItem::DisplayBlock);
+  style->setMargin(QStyleSheetItem::MarginVertical,paragraphSpacing);
+  style->setSelfNesting(false);
+
+  setStyleSheet(sheet);
+
   setServer(newServer);
   setFont(KonversationApplication::preferences.getTextFont());
 
@@ -313,7 +329,8 @@ void IRCView::append(const char* nick,const char* message)
 #ifdef ADD_LINE_BREAKS
   QString line=QString("<font color=\"#"+channelMessageColor+"\"><b>&lt;%1&gt;</b> %2</font><br>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick));
 #else
-  QString line=QString("<font color=\"#"+channelMessageColor+"\"><b>&lt;%1&gt;</b> %2</font>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
+//  QString line=QString("<font color=\"#"+channelMessageColor+"\"><b>&lt;%1&gt;</b> %2</font>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
+  QString line=QString("<p><font color=\"#"+channelMessageColor+"\"><b>&lt;%1&gt;</b> %2</font></p>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
 #endif
 #endif
 
@@ -332,7 +349,8 @@ void IRCView::appendRaw(const char* message)
 #ifdef ADD_LINE_BREAKS
   QString line=QString("<font color=\"#"+channelMessageColor+"\">"+message+"</font><br>\n");
 #else
-  QString line=QString("<font color=\"#"+channelMessageColor+"\">"+message+"</font>\n");
+//  QString line=QString("<font color=\"#"+channelMessageColor+"\">"+message+"</font>\n");
+  QString line=QString("<p><font color=\"#"+channelMessageColor+"\">"+message+"</font></p>\n");
 #endif
 #endif
 
@@ -349,7 +367,8 @@ void IRCView::appendQuery(const char* nick,const char* message)
 #ifdef ADD_LINE_BREAKS
   QString line=QString("<font color=\"#"+queryMessageColor+"\"><b>*%1*</b> %2</font><br>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
 #else
-  QString line=QString("<font color=\"#"+queryMessageColor+"\"><b>*%1*</b> %2</font>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
+//  QString line=QString("<font color=\"#"+queryMessageColor+"\"><b>*%1*</b> %2</font>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
+  QString line=QString("<p><font color=\"#"+queryMessageColor+"\"><b>*%1*</b> %2</font></p>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
 #endif
 #endif
 
@@ -368,7 +387,8 @@ void IRCView::appendAction(const char* nick,const char* message)
 #ifdef ADD_LINE_BREAKS
   QString line=QString("<font color=\"#"+actionMessageColor+"\">* %1 %2</font><br>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
 #else
-  QString line=QString("<font color=\"#"+actionMessageColor+"\">* %1 %2</font>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
+//  QString line=QString("<font color=\"#"+actionMessageColor+"\">* %1 %2</font>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
+  QString line=QString("<p><font color=\"#"+actionMessageColor+"\">* %1 %2</font></p>\n").arg(filter(nick,NULL,false)).arg(filter(message,nick,true));
 #endif
 #endif
 
@@ -394,7 +414,8 @@ void IRCView::appendServerMessage(const char* type,const char* message)
 #ifdef ADD_LINE_BREAKS
   QString line=QString("<font color=\"#"+serverMessageColor+"\""+fixed+"><b>[%1]</b> %2</font><br>\n").arg(type).arg(filter(message));
 #else
-  QString line=QString("<font color=\"#"+serverMessageColor+"\""+fixed+"><b>[%1]</b> %2</font>\n").arg(type).arg(filter(message));
+//  QString line=QString("<font color=\"#"+serverMessageColor+"\""+fixed+"><b>[%1]</b> %2</font>\n").arg(type).arg(filter(message));
+  QString line=QString("<p><font color=\"#"+serverMessageColor+"\""+fixed+"><b>[%1]</b> %2</font></p>\n").arg(type).arg(filter(message));
 #endif
 #endif
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
@@ -412,7 +433,8 @@ void IRCView::appendCommandMessage(const char* type,const char* message)
 #ifdef ADD_LINE_BREAKS
   QString line=QString("<font color=\"#"+commandMessageColor+"\">*** %2</font><br>\n").arg(filter(message));
 #else
-  QString line=QString("<font color=\"#"+commandMessageColor+"\">*** %2</font>\n").arg(filter(message));
+//  QString line=QString("<font color=\"#"+commandMessageColor+"\">*** %2</font>\n").arg(filter(message));
+  QString line=QString("<p><font color=\"#"+commandMessageColor+"\">*** %2</font></p>\n").arg(filter(message));
 #endif
 #endif
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
@@ -444,7 +466,8 @@ void IRCView::appendBacklogMessage(const char* firstColumn,const char* rawMessag
 #ifdef ADD_LINE_BREAKS
   QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2 %3</font><br>\n").arg(time).arg(first).arg(filter(message,NULL,false));
 #else
-  QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2 %3</font>\n").arg(time).arg(first).arg(filter(message,NULL,false));
+//  QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2 %3</font>\n").arg(time).arg(first).arg(filter(message,NULL,false));
+  QString line=QString("<p><font color=\"#"+backlogMessageColor+"\">%1 %2 %3</font></p>\n").arg(time).arg(first).arg(filter(message,NULL,false));
 #endif
 #endif
 
@@ -466,7 +489,13 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps)
     QTime time=QTime::currentTime();
     QString timeColor=KonversationApplication::preferences.getTimeColor();
     QString timeFormat=KonversationApplication::preferences.getTimestampFormat();
-    line.prepend(QString("<font color=\"#"+timeColor+"\">[%1]</font> ").arg(time.toString(timeFormat)));
+    QString timeString(QString("<font color=\"#"+timeColor+"\">[%1]</font> ").arg(time.toString(timeFormat)));
+
+#ifdef ADD_LINE_BREAKS
+      line.prepend(timeString);
+#else
+      line.insert(3,timeString);
+#endif
   }
 
   buffer+=line;

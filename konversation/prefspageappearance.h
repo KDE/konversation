@@ -44,9 +44,13 @@ class PrefsPageAppearance : public PrefsPage
     void showCloseButtonsChanged(int state);
     void formatChanged(const QString& newFormat);
     void encodingChanged(int newEncodingIndex);
+    
     void useSpacingChanged(int state);
     void spacingChanged(int newSpacing);
     void marginChanged(int newMargin);
+    
+    void useParagraphSpacingChanged(int state);
+    void paragraphSpacingChanged(int newSpacing);
 
   protected:
     void updateFonts();
@@ -68,6 +72,9 @@ class PrefsPageAppearance : public PrefsPage
     
     QSpinBox* spacing;
     QSpinBox* margin;
+
+    QCheckBox* useParagraphSpacingCheck;
+    QSpinBox* paragraphSpacingSpin;
 };
 
 #endif

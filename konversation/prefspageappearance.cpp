@@ -126,7 +126,24 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   // Take care of ghosting / unghosting spacing widgets
   useSpacingChanged(preferences->getUseSpacing() ? 2 : 0);
+ 
+  // paragraph spacing stuff
+  QHBox* paragraphSpacingBox=new QHBox(parentFrame);
+  paragraphSpacingBox->setSpacing(spacingHint());
+  
+  useParagraphSpacingCheck=new QCheckBox(i18n("Use paragraph spacing"),paragraphSpacingBox,"use_paragraph_spacing_check");
 
+  paragraphSpacingSpin=new QSpinBox(0,10,1,paragraphSpacingBox,"paragraph_spacing_spin_box");
+
+  paragraphSpacingSpin->setValue(preferences->getParagraphSpacing());
+  paragraphSpacingSpin->setSuffix(" "+i18n("Pixel"));
+  
+  paragraphSpacingBox->setStretchFactor(paragraphSpacingSpin,10);
+
+  // Take care of ghosting / unghosting paragraph spacing widgets
+  useParagraphSpacingChanged(preferences->getUseParagraphSpacing() ? 2 : 0);
+
+  // close buttons on tabs
   QCheckBox* closeButtonsCheck=new QCheckBox(i18n("Show close widgets on tabs"),parentFrame,"tab_close_widgets_check");
   closeButtonsCheck->setChecked(preferences->getCloseButtonsOnTabs());
 
@@ -151,6 +168,8 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   row++;
   appearanceLayout->addMultiCellWidget(spacingMarginBox,row,row,0,2);
   row++;
+  appearanceLayout->addMultiCellWidget(paragraphSpacingBox,row,row,0,2);
+  row++;
   appearanceLayout->addMultiCellWidget(closeButtonsCheck,row,row,0,2);
   row++;
   appearanceLayout->setRowStretch(row,10);
@@ -172,6 +191,9 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   connect(useSpacingCheck,SIGNAL (stateChanged(int)),this,SLOT (useSpacingChanged(int)) );
   connect(spacing,SIGNAL (valueChanged(int)),this,SLOT (spacingChanged(int)));
   connect(margin,SIGNAL (valueChanged(int)),this,SLOT (marginChanged(int)));
+
+  connect(useParagraphSpacingCheck,SIGNAL (stateChanged(int)),this,SLOT (useParagraphSpacingChanged(int)) );
+  connect(paragraphSpacingSpin,SIGNAL (valueChanged(int)),this,SLOT (paragraphSpacingChanged(int)));
 
   connect(closeButtonsCheck,SIGNAL (stateChanged(int)),this,SLOT (showCloseButtonsChanged(int)) );
 }
@@ -267,6 +289,18 @@ void PrefsPageAppearance::spacingChanged(int newSpacing)
 void PrefsPageAppearance::marginChanged(int newMargin)
 {
   preferences->setMargin(newMargin);
+}
+
+void PrefsPageAppearance::useParagraphSpacingChanged(int state)
+{
+  useParagraphSpacingCheck->setChecked(state);
+  preferences->setUseParagraphSpacing(state==2);
+  paragraphSpacingSpin->setEnabled(state==2);
+}
+
+void PrefsPageAppearance::paragraphSpacingChanged(int newSpacing)
+{
+  preferences->setParagraphSpacing(newSpacing);
 }
 
 #include "prefspageappearance.moc"
