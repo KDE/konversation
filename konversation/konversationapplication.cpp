@@ -19,6 +19,7 @@
 #include <kconfig.h>
 #include <dcopclient.h>
 #include <kdeversion.h>
+#include <kstandarddirs.h>
 
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
@@ -47,6 +48,24 @@ KonversationApplication::KonversationApplication()
   preferences.setListFont(font());
 
   readOptions();
+
+  // Auto-alias scripts
+  QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
+  QFileInfo* fileInfo = new QFileInfo();
+  QStringList aliasList(KonversationApplication::preferences.getAliasList());
+  QString newAlias;
+
+  for ( QStringList::Iterator it = scripts.begin(); it != scripts.end(); ++it ) {
+      fileInfo->setFile( *it );
+      if ( fileInfo->isExecutable() ) {
+          newAlias = (*it).section('/',-1)+" "+"/exec "+(*it).section('/', -1 );
+
+          if(!aliasList.contains(newAlias))
+              aliasList.append(newAlias);
+      }
+  }
+
+  KonversationApplication::preferences.setAliasList(aliasList);
 
 #if QT_VERSION >= 0x030100
   // Setup system codec
