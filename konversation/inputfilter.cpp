@@ -1228,15 +1228,15 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           if(getAutomaticRequest("WHOIS",parameterList[1])==0)
           {
             if(days)
-              server->appendStatusMessage(i18n("Whois"),QString("%1 has been idle for %2 days, %3 hours, %4 minutes and %5 seconds.").arg(parameterList[1])
+              server->appendStatusMessage(i18n("Whois"),i18n("%1 has been idle for %2 days, %3 hours, %4 minutes and %5 seconds.").arg(parameterList[1])
                                         .arg(days).arg(hours % 24).arg(minutes % 60).arg(seconds % 60));
             // or longer than an hour
             else if(hours)
-              server->appendStatusMessage(i18n("Whois"),QString("%1 has been idle for %2 hours, %3 minutes and %4 seconds.").arg(parameterList[1])
+              server->appendStatusMessage(i18n("Whois"),i18n("%1 has been idle for %2 hours, %3 minutes and %4 seconds.").arg(parameterList[1])
                                         .arg(hours).arg(minutes % 60).arg(seconds % 60));
             // or longer than a minute
             else if(minutes)
-              server->appendStatusMessage(i18n("Whois"),QString("%1 has been idle for %2 minutes and %3 seconds.").arg(parameterList[1])
+              server->appendStatusMessage(i18n("Whois"),i18n("%1 has been idle for %2 minutes and %3 seconds.").arg(parameterList[1])
                                         .arg(minutes).arg(seconds % 60));
             // or just some seconds
             else
