@@ -22,8 +22,7 @@
 #include <kstreamsocket.h>
 using namespace KNetwork;
 
-class KSSL;
-class KSSLCertificateCache;
+struct SSLSocketPrivate;
 
 class SSLSocket : public KStreamSocket
 {
@@ -52,13 +51,7 @@ class SSLSocket : public KStreamSocket
 
   QWidget* m_serverParent;
 
-  int m_sslCertState;
-  QString remoteHost;
-  QString url;
-  QString m_sslCertErrors;
-  
-  KSSL* kssl;
-  KSSLCertificateCache* cc;
+  SSLSocketPrivate* d;
 };
 
 #endif

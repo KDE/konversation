@@ -30,11 +30,24 @@
 
 #include "sslsocket.h"
 
-SSLSocket::SSLSocket(QWidget* serverParent, QObject* parent, const char* name)
-  : KStreamSocket("","",parent,name), m_serverParent(serverParent), kssl(0L) 
+struct SSLSocketPrivate 
 {
-  cc = new KSSLCertificateCache;
-  cc->reload();
+  int m_sslCertState;
+  QString remoteHost;
+  QString url;
+  QString m_sslCertErrors;
+
+  KSSL* kssl;
+  KSSLCertificateCache* cc;
+};
+
+SSLSocket::SSLSocket(QWidget* serverParent, QObject* parent, const char* name)
+  : KStreamSocket("","",parent,name), m_serverParent(serverParent) 
+{
+  d = new SSLSocketPrivate;
+  d->kssl = 0L;
+  d->cc = new KSSLCertificateCache;
+  d->cc->reload();
 
   QObject::connect(this,SIGNAL(connected(const KResolverEntry&)),this,SLOT(slotConnected()));
 }
@@ -45,16 +58,16 @@ SSLSocket::~SSLSocket()
   close();
   
   // close ssl socket
-  if( kssl ) kssl->close();
+  if( d->kssl ) d->kssl->close();
   
-  delete kssl;
-  delete cc;
+  delete d->kssl;
+  delete d->cc;
 }
 
 Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
 {
   //kdDebug() << "SSLSocket::writeBlock : " << data << endl;
-  return kssl->write( data,len );
+  return d->kssl->write( data,len );
 }
 
 Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
@@ -64,12 +77,12 @@ Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
 
   /* Default KSSL timeout is 0.2 seconds so we loop here until socket times out */
 
-    while(bytesAvailable() && err == 0) {
-      err = kssl->read( data, maxlen );
-      if (err == 0) {
-	::sleep(1);
-      }
+  while(state() == KNetwork::KClientSocketBase::Connected && err == 0) {
+    err = d->kssl->read( data, maxlen );
+    if (err == 0) {
+      ::sleep(1);
     }
+  }
 
   return err;
 }
@@ -78,7 +91,7 @@ QString SSLSocket::details()
 {
   if(state() == KNetwork::KClientSocketBase::Connected) {
     QString details;
-    int strength = kssl->connectionInfo().getCipherUsedBits();
+    int strength = d->kssl->connectionInfo().getCipherUsedBits();
     
     details = "Connection is secured with ";
     details += QString::number(strength);
@@ -96,10 +109,10 @@ void SSLSocket::slotConnected()
   if( KSSL::doesSSLWork() )
     {
       kdDebug() << "Trying SSL connection..." << endl;
-      if( !kssl )
+      if( !d->kssl )
 	{
-	  kssl = new KSSL();
-	  if( kssl->connect( socketDevice()->socket() ) )
+	  d->kssl = new KSSL();
+	  if( d->kssl->connect( socketDevice()->socket() ) )
 	    {
 	      if( verifyCertificate() != 1 )
 		{
@@ -112,7 +125,7 @@ void SSLSocket::slotConnected()
 	}
       else
 	{
-	  kssl->reInitialize();
+	  d->kssl->reInitialize();
 	}
     }
   else
@@ -136,10 +149,10 @@ void SSLSocket::showSSLInfoDialog()
   /* We don't delete sslInfoDlg here as code in kio/misc/uiserver.cpp says not to do so*/
 
   KSSLInfoDlg* sslInfoDlg = new KSSLInfoDlg(true, 0L, 0L, true);
-  sslInfoDlg->setCertState( m_sslCertErrors );
-  sslInfoDlg->setup( *kssl,
-		     (const QString&) remoteHost,
-		     (const QString&) url
+  sslInfoDlg->setCertState( d->m_sslCertErrors );
+  sslInfoDlg->setup( *(d->kssl),
+		     (const QString&) d->remoteHost,
+		     (const QString&) d->url
 		     );
   sslInfoDlg->exec();
 }
@@ -154,10 +167,10 @@ int SSLSocket::verifyCertificate()
   QString hostname;
   KSSLCertificate::KSSLValidation validation;
   
-  remoteHost = peerAddress().nodeName();
-  url = "irc://"+remoteHost+":"+peerAddress().serviceName();
+  d->remoteHost = peerAddress().nodeName();
+  d->url = "irc://"+d->remoteHost+":"+peerAddress().serviceName();
   
-  KSSLCertificate& peerCertificate = kssl->peerInfo().getPeerCertificate();
+  KSSLCertificate& peerCertificate = d->kssl->peerInfo().getPeerCertificate();
 
   validation = peerCertificate.validate();
   if(validation == KSSLCertificate::Unknown ) {
@@ -171,7 +184,7 @@ int SSLSocket::verifyCertificate()
   KSSLCertificate::KSSLValidationList validationList
     = peerCertificate.validateVerbose(KSSLCertificate::SSLServer);
   
-  ipMatchesCN = kssl->peerInfo().certMatchesAddress();
+  ipMatchesCN = d->kssl->peerInfo().certMatchesAddress();
   
   validation = KSSLCertificate::Ok;
   
@@ -182,7 +195,7 @@ int SSLSocket::verifyCertificate()
   for(KSSLCertificate::KSSLValidationList::ConstIterator it = validationList.begin();
       it != validationList.end(); ++it)
     {
-      m_sslCertErrors += QString::number(*it)+":";
+      d->m_sslCertErrors += QString::number(*it)+":";
     }
   
   if (peerCertificate.chain().isValid() && peerCertificate.chain().depth() > 1)
@@ -196,13 +209,13 @@ int SSLSocket::verifyCertificate()
 	}
     }
 
-  m_sslCertState = validation;
+  d->m_sslCertState = validation;
   
   if (validation == KSSLCertificate::Ok)
     rc = 1;
   
   //  - Read from cache and see if there is a policy for this
-  KSSLCertificateCache::KSSLCertificatePolicy cp = cc->getPolicyByCertificate(peerCertificate);
+  KSSLCertificateCache::KSSLCertificatePolicy cp = d->cc->getPolicyByCertificate(peerCertificate);
   
   //  - validation code
   if (validation != KSSLCertificate::Ok)
@@ -214,7 +227,7 @@ int SSLSocket::verifyCertificate()
       else
 	{
 	  // A policy was already set so let's honor that.
-	  permacache = cc->isPermanent(peerCertificate);
+	  permacache = d->cc->isPermanent(peerCertificate);
 	}
       
       if (!ipMatchesCN && cp == KSSLCertificateCache::Accept )
@@ -326,9 +339,9 @@ int SSLSocket::verifyCertificate()
     }
   
   //  - cache the results
-  cc->addCertificate(peerCertificate, cp, permacache);
+  d->cc->addCertificate(peerCertificate, cp, permacache);
   if (doAddHost)
-    cc->addHost(peerCertificate, remoteHost);
+    d->cc->addHost(peerCertificate, d->remoteHost);
   
   
   
@@ -338,15 +351,15 @@ int SSLSocket::verifyCertificate()
   
   kdDebug() << "SSL connection information follows:" << endl
 	    << "+-----------------------------------------------" << endl
-	    << "| Cipher: " << kssl->connectionInfo().getCipher() << endl
-	    << "| Description: " << kssl->connectionInfo().getCipherDescription() << endl
-	    << "| Version: " << kssl->connectionInfo().getCipherVersion() << endl
-	    << "| Strength: " << kssl->connectionInfo().getCipherUsedBits()
-	    << " of " << kssl->connectionInfo().getCipherBits()
+	    << "| Cipher: " << d->kssl->connectionInfo().getCipher() << endl
+	    << "| Description: " << d->kssl->connectionInfo().getCipherDescription() << endl
+	    << "| Version: " << d->kssl->connectionInfo().getCipherVersion() << endl
+	    << "| Strength: " << d->kssl->connectionInfo().getCipherUsedBits()
+	    << " of " << d->kssl->connectionInfo().getCipherBits()
 	    << " bits used." << endl
 	    << "| PEER:" << endl
-	    << "| Subject: " << kssl->peerInfo().getPeerCertificate().getSubject() << endl
-	    << "| Issuer: " << kssl->peerInfo().getPeerCertificate().getIssuer() << endl
+	    << "| Subject: " << d->kssl->peerInfo().getPeerCertificate().getSubject() << endl
+	    << "| Issuer: " << d->kssl->peerInfo().getPeerCertificate().getIssuer() << endl
 	    << "| Validation: " << (int) validation << endl
 	    << "+-----------------------------------------------"
 	    << endl;
