@@ -346,6 +346,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
             KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
           }
 #endif
+
         }
       }
     }
@@ -1277,7 +1278,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
   bool plus=false;
   int parameterIndex=0;
   // List of modes that need a parameter (note exception with -k and -l)
-  QString parameterModes="oOvhkbleI";
+  QString parameterModes="aAoOvhkbleI";
 
   for(unsigned int index=0;index<modestring.length();index++)
   {
