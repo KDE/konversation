@@ -1372,12 +1372,12 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
   } // endfor
 }
 
-// # & + and ! are Channel identifiers
+// # & + and ! are *often*, but not necessarily, Channel identifiers. + and ! are non-RFC, so if a server doesn't offer 005 and
+// supports + and ! channels, I think thats broken behaviour on their part - not ours.
 bool InputFilter::isAChannel(const QString &check)
 {
-  QChar initial=check.at(0);
-
-  return (initial=='#' || initial=='&' || initial=='+' || initial=='!');
+    Q_ASSERT(server);
+    return server? server->isAChannel(check) : QString("#&").contains(check.at(0)); // XXX if we ever see the assert, we need the ternary
 }
 
 bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)

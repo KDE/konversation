@@ -84,9 +84,10 @@ Server::Server(KonversationMainWindow* mainWindow,int id)
   isAway = false;
   m_serverISON = 0;
   
-  serverNickPrefixModes = "ov"; // XXX fold these into a QMAP
+  // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
+  serverNickPrefixModes = "ov";
   serverNickPrefixes = "@+";
-  channelPrefixes = "@&";
+  channelPrefixes = "#&";
   
   serverSocket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
 
@@ -176,9 +177,10 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   connecting=false;
   m_serverISON = 0;
 
-  serverNickPrefixModes = "ov"; // XXX fold these into a QMAP
+  // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
+  serverNickPrefixModes = "ov";
   serverNickPrefixes = "@+";
-  channelPrefixes = "@&";
+  channelPrefixes = "#&";
   
   timerInterval=1;  // flood protection
   
@@ -2735,9 +2737,7 @@ void Server::unAway()
 
 bool Server::isAChannel(const QString &check)
 {
-  QChar initial=check.at(0);
-
-  return (initial=='#' || initial=='&' || initial=='+' || initial=='!');
+  return (getChannelTypes().contains(check.at(0)) >0);
 }
 
 void Server::addRawLog(bool show)

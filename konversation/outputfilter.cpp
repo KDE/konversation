@@ -976,12 +976,12 @@ namespace Konversation {
 
     void OutputFilter::setCommandChar() { commandChar=KonversationApplication::preferences.getCommandChar(); }
 
-    //     # & + and ! are Channel identifiers
+    // # & + and ! are *often*, but not necessarily, channel identifiers. + and ! are non-RFC, so if a server doesn't offer 005 and
+    // supports + and ! channels, I think thats broken behaviour on their part - not ours.
     bool OutputFilter::isAChannel(const QString &check)
     {
-        QChar initial=check.at(0);
-
-        return (initial=='#' || initial=='&' || initial=='+' || initial=='!');
+        Q_ASSERT(m_server);
+        return m_server? m_server->isAChannel(check) : QString("#&").contains(check.at(0)); // XXX if we ever see the assert, we need the ternary
     }
 
     OutputFilterResult OutputFilter::usage(const QString& string)

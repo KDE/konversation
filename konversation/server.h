@@ -106,6 +106,7 @@ class Server : public QObject
     void mangleNicknameWithModes(QString &nickname,bool& isAdmin,bool& isOwner,bool &isOp,
                                  bool& isHalfop,bool &hasVoice);
 
+    bool isAChannel(const QString &check);
     bool isNickname(const QString& compare);
     QString getNickname() const;
     Konversation::OutputFilter* getOutputFilter();
@@ -398,7 +399,6 @@ class Server : public QObject
 
     
     void startNotifyCheckTimer();
-    bool isAChannel(const QString &check);
     void setIdentity(Identity *newIdentity);
 
     void autoRejoinChannels();
@@ -482,7 +482,7 @@ class Server : public QObject
     // TODO roll these into a QMap.
     QString serverNickPrefixes;     // Prefixes used by the server to indicate a mode
     QString serverNickPrefixModes;  // if supplied: modes related to those prefixes
-    QString channelPrefixes;        // prefixes that indicate channel names. defaults to RFC1459 "@&"
+    QString channelPrefixes;        // prefixes that indicate channel names. defaults to RFC1459 "#&"
 
     Identity* identity;
 
