@@ -56,6 +56,7 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
   setHScrollBarMode(AlwaysOff);
   setVScrollBarMode(AlwaysOff);
 #if RICHTEXT == 1
+  setAutoFormatting(QTextEdit::AutoNone);
   setTextFormat(RichText);
 #else
   setTextFormat(PlainText);
