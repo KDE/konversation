@@ -143,7 +143,7 @@ bool DccTransferRecv::createDirs(const KURL &dirURL) const
   {
     if (!KIO::NetAccess::exists(*it,true,listView())) {
       if(!KIO::NetAccess::mkdir(*it,listView(),-1)) {
-        KMessageBox::error(listView(), i18n("To save the sent file, the folder %1 needed to be created.  This failed, probably because you do not have permission to write there.  You can set where sent files are saved to by default in the Settings menu, under Configure Konversation, and choosing the Behaviour->dcc tab.").arg(dirURL.prettyURL()), i18n("Failed to create folder"));
+        KMessageBox::error(listView(), i18n("To save the sent file, the folder %1 needed to be created.  This failed, probably because you do not have permission to write there.  You can set where sent files are saved to by default in the Settings menu, under Configure Konversation, and choosing the Behavior->dcc tab.").arg(dirURL.prettyURL()), i18n("Failed to create folder"));
 	return false;
       }
     }
