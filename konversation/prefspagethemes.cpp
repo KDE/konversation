@@ -47,7 +47,7 @@ PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
 
   QLabel* selectLabel = new QLabel(i18n("Select Nicklist Icon Theme to Use"),newParent,"selectLabel");
   m_themeList = new KListBox(newParent,"themeList");
-  m_themeList->setSelectionMode( QListBox::Single );
+  m_themeList->setSelectionMode(QListBox::Single);
   QLabel* previewLabel = new QLabel(newParent);
   previewLabel->setText("Preview :");
   
@@ -105,7 +105,7 @@ void PrefsPageThemes::applyPreferences()
   theme = m_dirs[m_themeList->currentItem()];
   theme = theme.section('/',-2,-2);
   kdDebug() << "Theme :" << theme << endl;
-  preferences->setIconTheme( theme );
+  preferences->setIconTheme(theme);
 }
 
 void PrefsPageThemes::installTheme()
@@ -120,13 +120,13 @@ void PrefsPageThemes::removeTheme()
   dir = m_dirs[m_themeList->currentItem()];
 
   int remove = KMessageBox::warningContinueCancel(0L,
-						  QString("Are you sure you want to remove %1 ?").arg(themeName),
+						  i18n("Do you want to remove %1 ?").arg(themeName),
 						  i18n("Remove Theme"),
 						  KStdGuiItem::cont(),
 						  "warningRemoveTheme"
 						  );
 
-  if( remove == KMessageBox::Continue ) 
+  if(remove == KMessageBox::Continue) 
     {
       unlink(QFile::encodeName(dir));
       KIO::del(KURL(dir.remove("themerc")));
@@ -174,9 +174,9 @@ void PrefsPageThemes::updateList()
       if((*it).section('/',-2,-2) != currentTheme)
         ++index;
 
-      themeRC.setName( *it );
-      themeRC.open( IO_ReadOnly );
-      stream.setDevice( &themeRC );
+      themeRC.setName(*it);
+      themeRC.open(IO_ReadOnly);
+      stream.setDevice(&themeRC);
 
       themeName = stream.readLine();
       themeName = themeName.section('=',1,1);
@@ -184,7 +184,7 @@ void PrefsPageThemes::updateList()
       themeComment = stream.readLine();
       themeComment = themeComment.section('=',1,1);
 
-      m_themeList->insertItem( themeName );
+      m_themeList->insertItem(themeName);
       themeRC.close();
     }
 
