@@ -120,6 +120,12 @@ void NickListView::insertAssociationSubMenu() {
       if(any_not_having_associations) break;
     }
   }
+
+  if(any_existing_associations) {
+    addressbook->insertItem(i18n("Edit contact..."), AddressbookEdit);
+    addressbook->insertSeparator();	  
+  }
+  
   if(any_not_having_associations && any_existing_associations)
     addressbook->insertItem(i18n("Chose/change associations..."), AddressbookChange);
   else if(any_not_having_associations)
@@ -128,7 +134,8 @@ void NickListView::insertAssociationSubMenu() {
     addressbook->insertItem(i18n("Change association..."), AddressbookChange);
   if(any_not_having_associations && !any_existing_associations)
     addressbook->insertItem(i18n("Create new contact..."), AddressbookNew);
-  if(any_existing_associations)
+  
+    if(any_existing_associations)
     addressbook->insertItem(i18n("Delete association"), AddressbookDelete);
 }
 #include "nicklistview.moc"

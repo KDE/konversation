@@ -99,7 +99,8 @@ class Channel : public ChatWindow
     virtual void closeYourself();
     virtual bool frontView();
     virtual bool searchView();
-
+    bool editAddressee(const QString &uid);
+	
     bool allowNotifications() { return m_allowNotifications; }
 
     QStringList getSelectedNicksList();
@@ -107,7 +108,6 @@ class Channel : public ChatWindow
     void newText(QWidget* channel,const QString& highlightColor, bool important);
     void prefsChanged();
     void sendFile();
-
   public slots:
     void setNickname(const QString& newNickname);
     void channelTextEntered();

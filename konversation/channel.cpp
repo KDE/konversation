@@ -34,6 +34,7 @@
 #include <kdebug.h>
 #include <kglobalsettings.h>
 #include <kdeversion.h>
+#include <kmessagebox.h>
 
 #include "konversationapplication.h"
 #include "channel.h"
@@ -352,6 +353,20 @@ void Channel::textPasted(QString text)
   }
 }
 
+bool Channel::editAddressee(const QString &uid)
+{
+  Q_ASSERT(!uid.isEmpty());
+  KProcess *proc = new KProcess;
+  *proc << "kaddressbook";
+  *proc << "--editor-only" << "--uid" << uid;
+  kdDebug() << "running kaddressbook --editor-only --uid " << uid << endl;
+  if(!proc->start()) {
+    KMessageBox::error(this, "Could not run your addressbook program (kaddressbook).  This is most likely because it isn't installed.  Please install the 'kdepim' packages.");
+    return false;
+  }
+  return true;
+}
+
 // Will be connected to NickListView::popupCommand(int)
 void Channel::popupCommand(int id)
 {
@@ -363,19 +378,28 @@ void Channel::popupCommand(int id)
 
   switch(id)
   {
-    case NickListView::AddressbookDelete:
+    case NickListView::AddressbookEdit:
+      {
+        QStringList nickList=getSelectedNicksList();
+	for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
+	  Nick *nick = getNickByName(*nickIterator);
+	  if(!editAddressee(nick->getAddressee().uid())) break;
+	}
+	break;
+      }
     case NickListView::AddressbookNew:
+    case NickListView::AddressbookDelete:
       {
 	Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
         QStringList nickList=getSelectedNicksList();
 	//Handle all the selected nicks in one go.  Either they all save, or none do.
 	if(addressbook->getAndCheckTicket()) {
           for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
-            KABC::Addressee addr;
 	    if(id == NickListView::AddressbookDelete) {
-              addressbook->getKABCAddresseeFromNick(*nickIterator);
+              KABC::Addressee addr = addressbook->getKABCAddresseeFromNick(*nickIterator);
    	      addressbook->unassociateNick(addr, *nickIterator);
 	    } else { 
+              KABC::Addressee addr;
 	      addr.setGivenName(*nickIterator);
 	      addr.setNickName(*nickIterator);
 	      addressbook->associateNickAndUnassociateFromEveryoneElse(addr, *nickIterator);
@@ -386,11 +410,8 @@ void Channel::popupCommand(int id)
 	    for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
 	      Nick *nick = getNickByName(*nickIterator);
 	      nick->refreshAddressee();
-	      if(id == NickListView::AddressbookNew) {
-	        KProcess *proc = new KProcess;
-		*proc << "kaddressbook";
-		*proc << "--uid" << nick->getAddressee().uid();
-		proc->start();
+	      if(id == NickListView::AddressbookNew || NickListView::AddressbookEdit) {
+		if(!editAddressee(nick->getAddressee().uid())) break;
 	      }
 	    }
 	  }

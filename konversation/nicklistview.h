@@ -42,7 +42,8 @@ class NickListView : public KListView
       Kick,KickBan,BanNick,BanHost,BanDomain,BanUserHost,BanUserDomain,
       KickBanHost,KickBanDomain,KickBanUserHost,KickBanUserDomain,
       Whois,Version,Ping,Query,DccSend,
-      CustomID, AddressbookSub, AddressbookChange, AddressbookNew, AddressbookDelete
+      CustomID, AddressbookSub, AddressbookChange, AddressbookNew, AddressbookDelete,
+      AddressbookEdit
     };
 
   signals:
