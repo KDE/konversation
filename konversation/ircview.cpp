@@ -679,11 +679,12 @@ void IRCView::doAppend(QString newLine, bool important, bool self)
     //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not 
     // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
 
-    if (doScroll) // TODO: make this eat multiple lines at once when the preference is changed so it doesn't take so long
-    {
+    // TODO: make this eat multiple lines at once when the preference is changed so it doesn't take so long
+    if (doScroll) {
       int sbm=KonversationApplication::preferences.getScrollbackMax();
       if (sbm) {
-        for(sbm=paragraphs()-sbm;sbm>0;sbm--) //loop for two reasons: 1) preference changed 2) lines added while scrolled up
+	//loop for two reasons: 1) preference changed 2) lines added while scrolled up
+        for(sbm=paragraphs()-sbm;sbm>0;--sbm) 
           removeParagraph(0);
         resizeContents(contentsWidth(), document()->height());
       }
@@ -691,12 +692,12 @@ void IRCView::doAppend(QString newLine, bool important, bool self)
 
     KTextBrowser::viewport()->setUpdatesEnabled(up);
 
-    if (doScroll)
-    {
+    if (doScroll) {
       setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
       repaintContents(FALSE);
     }
   }
+
   if(!autoTextToSend.isEmpty())
   {
     // replace placeholders in autoText
