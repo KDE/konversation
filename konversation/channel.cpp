@@ -25,6 +25,7 @@
 #include <qtimer.h>
 #include <qcombobox.h>
 #include <qtextcodec.h>
+#include <qwhatsthis.h>
 
 #include <kprocess.h>
 
@@ -105,7 +106,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   topicBox->setSpacing(spacing());
 
   topicLabel=new QLabel(i18n("&Topic:"),topicBox);
+  QWhatsThis::add(topicLabel, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by changing the text in the topic line, and pressing enter.<p>You can see the previous topics that were entered by dropping down the drop down box.</qt>"));
   topicLine=new TopicComboBox(topicBox);
+  QWhatsThis::add(topicLine, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by changing the text in the topic line, and pressing enter.<p>You can see the previous topics that were entered by dropping down the drop down box.</qt>"));
   topicLine->setEditable(true);
   topicLine->setAutoCompletion(false);
   topicLine->setInsertionPolicy(QComboBox::NoInsertion);
@@ -138,6 +141,15 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   QToolTip::add(modeK, i18n("Protect channel with a password."));
   QToolTip::add(modeL, i18n("Set user limit to channel."));
 
+  QWhatsThis::add(modeT, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>The <b>T</b>opic mode means that only the channel operator can change the topic for the channel.</qt>"));
+  QWhatsThis::add(modeN, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p><b>N</b>o messages from outside means that users that are not in the channel cannot sends messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.</qt>"));
+  QWhatsThis::add(modeS, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>S</b>ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the <em>WHOIS</em> command or anything similiar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.</qt>"));
+  QWhatsThis::add(modeI, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>An <b>I</b>nvite only channel means that people can only join the channel if they are invited.  To invite someone, a channel operator needs to issue the command <em>/invite nick</em> from within the channel.</qt>"));
+  QWhatsThis::add(modeP, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>P</b>rivate channel is shown in a listing of all channels, but the topic is not shown.  A user's <em>WHOIS</e> may or may not show them as being in a private channel depending on the irc server.</qt>"));
+  QWhatsThis::add(modeM, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>M</b>oderated channel is one where only operators, half-operators and those with voice can talk.</qt>"));
+  QWhatsThis::add(modeK, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>P</b>rotected channel requires users to enter a password in order to join.</qt>"));
+  QWhatsThis::add(modeL, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>A chanel that has a user <b>L</b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.</qt>"));
+  
   connect(modeT,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
   connect(modeN,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
   connect(modeS,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
@@ -148,6 +160,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(modeL,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
 
   limit=new KLineEdit(modeBox);
+  QWhatsThis::add(limit, i18n("<qt>This is the channel user limit - the maximum number of users that can be in the channel at a time.  If you are an operator, you can set this by putting the channel in mode <T>opic (button to right) and entering the number you want to be the maximum number that can join.</qt>"));
   connect(limit,SIGNAL (returnPressed()),this,SLOT (channelLimitChanged()) );
   limit->installEventFilter(this);
 
