@@ -10,8 +10,6 @@
   begin:     Mit Aug 7 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef DCCPANEL_H
@@ -49,6 +47,7 @@ class DccPanel : public ChatWindow
     void abortDcc();
     void removeDcc();
     void dccSelected();
+    void showFileInfo();
 
   protected:
     void setButtons(bool accept,bool abort,bool remove,bool open,bool info);
