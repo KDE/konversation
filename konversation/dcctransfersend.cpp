@@ -78,7 +78,7 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   {
     bool pressedOk;
     m_fileName = KInputDialog::getText( i18n( "Enter filename" ), i18n( "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>" ).arg( getPartnerNick() ), "unknown", &pressedOk, listView() );
-    if( !pressedOk )
+    if ( !pressedOk )
     {
       failed( i18n( "No filename was given" ) );
       return;
@@ -247,22 +247,23 @@ void DccTransferSend::heard()  // slot
     m_transferStartPosition = m_transferringPosition;
     
     setStatus( Sending );
-    m_sendSocket->enableWrite( m_fastSend );
-    m_sendSocket->enableRead( true );
+    m_sendSocket->enableWrite( true );
+    m_sendSocket->enableRead( m_fastSend );
     initTransferMeter();  // initialize CPS counter, ETA counter, etc...
     updateView();
-    
-    if ( !m_fastSend )
-      writeData();
   }
   else
     failed( i18n( "Could not open the file: %1" ).arg( getQFileErrorString( m_file.status() ) ) );
 }
 
-// this function is a slot when Fast DCC Send is enabled
 void DccTransferSend::writeData()  // slot
 {
   //kdDebug() << "DccTransferSend::writeData()" << endl;
+  if ( !m_fastSend )
+  {
+    m_sendSocket->enableWrite( false );
+    m_sendSocket->enableRead( true );
+  }
   int actual = m_file.readBlock( m_buffer, m_bufferSize );
   if ( actual > 0 )
   {
@@ -274,6 +275,11 @@ void DccTransferSend::writeData()  // slot
 void DccTransferSend::getAck()  // slot
 {
   //kdDebug() << "DccTransferSend::getAck()" << endl;
+  if ( !m_fastSend )
+  {
+    m_sendSocket->enableWrite( true );
+    m_sendSocket->enableRead( false );
+  }
   unsigned long pos;
   while ( m_sendSocket->bytesAvailable() >= 4 )
   {
@@ -288,8 +294,6 @@ void DccTransferSend::getAck()  // slot
       emit done( m_fileURL.path() );
       break;  // for safe
     }
-    else if ( !m_fastSend )
-      writeData();
   }
 }
 
