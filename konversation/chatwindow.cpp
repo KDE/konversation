@@ -489,9 +489,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 }
 
 void ChatWindow::adjustFocus() {
-  kdDebug() << "AdjustFocus()" << endl;
   if(m_mainWindow && m_mainWindow->actionCollection()) {
-    kdDebug() << "Adjusting" << endl;
     KAction *action;
     action = m_mainWindow->actionCollection()->action("insert_remember_line");
     if(action) action->setEnabled(textView!=NULL); else Q_ASSERT(action);
