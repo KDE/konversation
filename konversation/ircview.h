@@ -25,6 +25,7 @@
 
 class QPixmap;
 class QEvent;
+class KPopupMenu;
 
 class Server;
 
@@ -39,6 +40,8 @@ class IRCView : public KTextBrowser
     void clear();
     void setViewBackground(const QString& color,const QString& pixmapName);
     void setServer(Server* server);
+    // Returns the current nick under context menu.
+    const QString& getContextNick() const;
 
     void updateStyleSheet();
 
@@ -51,6 +54,18 @@ class IRCView : public KTextBrowser
       Bookmark
     };
 
+    enum NickPopupIDs
+      {
+	ModesSub,GiveOp,TakeOp,GiveVoice,TakeVoice,
+	KickBanSub,Ignore,
+	Kick,KickBan,BanNick,BanHost,BanDomain,BanUserHost,BanUserDomain,
+	KickBanHost,KickBanDomain,KickBanUserHost,KickBanUserDomain,
+	Whois,Version,Ping,Query,DccSend,
+	CustomID, AddressbookSub, AddressbookChange, AddressbookNew, AddressbookDelete,
+	AddressbookEdit, SendEmail
+      };
+
+
   signals:
     // Notify container of new text and highlight state
     void newText(const QString& highlightColor, bool important);
@@ -60,6 +75,7 @@ class IRCView : public KTextBrowser
     void extendedPopup(int id);
     void autoText(const QString& text);
     void textPasted();
+    void popupCommand(int);
 
   public slots:
     void append(const QString& nick,const QString& message);
@@ -91,6 +107,7 @@ class IRCView : public KTextBrowser
     bool eventFilter(QObject* object,QEvent* event);
 
     bool contextMenu(QContextMenuEvent* ce);
+    void setupNickPopupMenu();
 
     QChar::Direction basicDirection(const QString &string);
     
@@ -112,6 +129,10 @@ class IRCView : public KTextBrowser
     QString buffer;
     Server* m_server;
     QPopupMenu* popup;
+
+    KPopupMenu* nickPopup;
+    KPopupMenu* modes;
+    KPopupMenu* kickban;
     
     static QChar LRM;
     static QChar RLM;
@@ -126,10 +147,14 @@ class IRCView : public KTextBrowser
     bool forward;
     bool fromCursor;
     QString pattern;
-
+    
     uint offset;
     QStringList colorList;
     QMap<QString,QString> colorMap;
+    
+    QString m_currentNick;
+    bool m_isOnNick;
+    int popupId;
 };
 
 #endif

@@ -182,6 +182,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 #endif
 
   setTextView(new IRCView(splitter, NULL));  // Server will be set later in setServer()
+  connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupCommand(int)));
   // The box that holds the Nick List and the quick action buttons
   QVBox* nickListButtons = new QVBox(splitter);
   nickListButtons->setSpacing(spacing());
@@ -397,6 +398,14 @@ void Channel::popupCommand(int id)
   bool raw=false;
 
   QString args;
+
+  if(!textView->getContextNick().isEmpty())
+    {
+      nicknameListView->clearSelection();
+      QListViewItem* item = nicknameListView->findItem(textView->getContextNick(),1);
+      nicknameListView->setSelected(item,true);
+      nicknameListView->ensureItemVisible(item);
+    }
 
   switch(id)
   {

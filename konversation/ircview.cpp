@@ -25,7 +25,6 @@
 #include <qmap.h>
 #include <qcolor.h>
 
-#include "konvidebug.h"
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kurl.h>
@@ -37,7 +36,9 @@
 #include <kprocess.h>
 #include <kiconloader.h>
 #include <kshell.h>
+#include <kpopupmenu.h>
 
+#include "konvidebug.h"
 #include "konversationapplication.h"
 #include "ircview.h"
 #include "highlight.h"
@@ -46,8 +47,7 @@
 #include "konversationsound.h"
 #include "chatwindow.h"
 #include "common.h"
-
-#include <time.h>
+#include "images.h"
 
 IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 {
@@ -55,6 +55,8 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   copyUrlMenu=false;
   resetScrollbar=TRUE;
   offset=0;
+  m_currentNick=QString::null;
+  m_isOnNick=false;
 
   setAutoFormatting(QTextEdit::AutoNone);
   setUndoRedoEnabled(0);
@@ -72,6 +74,8 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
     popup->insertItem(i18n("Send File..."),SendFile);
   }
   else kdWarning() << "IRCView::IRCView(): Could not create popup!" << endl;
+
+  setupNickPopupMenu();
 
   findParagraph=0;
   findIndex=0;
@@ -154,6 +158,11 @@ void IRCView::setServer(Server* newServer)
   m_server=newServer;
 }
 
+const QString& IRCView::getContextNick() const
+{
+  return m_currentNick;
+}
+
 void IRCView::clear()
 {
   buffer=QString::null;
@@ -162,19 +171,29 @@ void IRCView::clear()
 
 void IRCView::highlightedSlot(const QString& link)
 {
-  if(link.isEmpty() && copyUrlMenu)
-  {
-    popup->removeItem(CopyUrl);
-    popup->removeItem(Bookmark);
-    copyUrlMenu=false;
+  if(!link.startsWith("#")){
+    m_isOnNick=false;
+    if(link.isEmpty() && copyUrlMenu)
+      {
+	popup->removeItem(CopyUrl);
+	popup->removeItem(Bookmark);
+	copyUrlMenu=false;
+      }
+    else if(!link.isEmpty() && !copyUrlMenu)
+      {
+	popup->insertItem(i18n("Copy URL to Clipboard"),CopyUrl,1);
+	popup->insertItem(i18n("Add to Bookmarks"),Bookmark,2);
+	copyUrlMenu=true;
+	urlToCopy=link;
+      }
   }
-  else if(!link.isEmpty() && !copyUrlMenu)
-  {
-    popup->insertItem(i18n("Copy URL to Clipboard"),CopyUrl,1);
-    popup->insertItem(i18n("Add to Bookmarks"),Bookmark,2);
-    copyUrlMenu=true;
-    urlToCopy=link;
-  }
+  else if(link.startsWith("#") && !link.startsWith("##"))
+    {
+      m_currentNick=link;
+      m_currentNick.remove("#");
+      nickPopup->changeTitle(popupId,m_currentNick);
+      m_isOnNick=true;
+    }
 }
 
 void IRCView::urlClickSlot(const QString &url)
@@ -211,9 +230,8 @@ void IRCView::urlClickSlot(const QString &url)
     {
       QString recepient(url);
       recepient.remove("#");
-      Query* query;
       NickInfoPtr nickInfo = m_server->obtainNickInfo(recepient);
-      query = m_server->addQuery(nickInfo, true /*we initiated*/);
+      m_server->addQuery(nickInfo, true /*we initiated*/);
     }
 }
 
@@ -714,48 +732,94 @@ bool IRCView::eventFilter(QObject* object,QEvent* event)
 
 bool IRCView::contextMenu(QContextMenuEvent* ce)
 {
-  popup->setItemEnabled(Copy,(hasSelectedText()));
-
-  int r=popup->exec(ce->globalPos());
-
-  switch(r)
-  {
-    case -1:
-      // dummy. -1 means, no entry selected. we don't want -1to go in default, so
-      // we catch it here
-      break;
-    case Copy:
-      copy();
-      break;
-    case CopyUrl:
+  if(m_isOnNick)
     {
-      QClipboard *cb=KApplication::kApplication()->clipboard();
-      cb->setText(urlToCopy,QClipboard::Selection);
-      cb->setText(urlToCopy,QClipboard::Clipboard);
-      break;
+      nickPopup->exec(ce->pos());
     }
-    case SelectAll:
-      selectAll();
-      break;
-    case Search:
-      search();
-      break;
-    case SendFile:
-      emit sendFile();
-      break;
-    case Bookmark:
-    {
-      KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
-      KBookmarkGroup bg = bm->addBookmarkDialog(urlToCopy, QString::null);
-      bm->save();
-      bm->emitChanged(bg);
-      break;
-    }
-    default:
-      emit extendedPopup(r);
+  else {
+      
+    popup->setItemEnabled(Copy,(hasSelectedText()));
+
+    int r=popup->exec(ce->globalPos());
+
+    switch(r)
+      {
+      case -1:
+	// dummy. -1 means, no entry selected. we don't want -1to go in default, so
+	// we catch it here
+	break;
+      case Copy:
+	copy();
+	break;
+      case CopyUrl:
+	{
+	  QClipboard *cb=KApplication::kApplication()->clipboard();
+	  cb->setText(urlToCopy,QClipboard::Selection);
+	  cb->setText(urlToCopy,QClipboard::Clipboard);
+	  break;
+	}
+      case SelectAll:
+	selectAll();
+	break;
+      case Search:
+	search();
+	break;
+      case SendFile:
+	emit sendFile();
+	break;
+      case Bookmark:
+	{
+	  KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
+	  KBookmarkGroup bg = bm->addBookmarkDialog(urlToCopy, QString::null);
+	  bm->save();
+	  bm->emitChanged(bg);
+	  break;
+	}
+      default:
+	emit extendedPopup(r);
+      }
   }
-
   return true;
+}
+
+void IRCView::setupNickPopupMenu()
+{
+  nickPopup=new KPopupMenu(this,"nicklist_context_menu");
+  modes=new KPopupMenu(this,"nicklist_modes_context_submenu");
+  kickban=new KPopupMenu(this,"nicklist_kick_ban_context_submenu");
+  popupId= nickPopup->insertTitle(m_currentNick);
+  modes->insertItem(i18n("Give Op"),GiveOp);
+  modes->insertItem(i18n("Take Op"),TakeOp);
+  modes->insertItem(i18n("Give Voice"),GiveVoice);
+  modes->insertItem(i18n("Take Voice"),TakeVoice);
+  nickPopup->insertItem(i18n("Modes"),modes,ModesSub);
+  nickPopup->insertSeparator();
+  nickPopup->insertItem(i18n("&Whois"),Whois);
+  nickPopup->insertItem(i18n("&Version"),Version);
+  nickPopup->insertItem(i18n("&Ping"),Ping);
+  nickPopup->insertSeparator();
+  nickPopup->insertItem(i18n("Open Query"),Query);
+  nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),DccSend);
+  nickPopup->insertSeparator();
+  kickban->insertItem(i18n("Kick"),Kick);
+  kickban->insertItem(i18n("Kickban"),KickBan);
+  kickban->insertItem(i18n("Ban Nickname"),BanNick);
+  kickban->insertSeparator();
+  kickban->insertItem(i18n("Ban *!*@*.host"),BanHost);
+  kickban->insertItem(i18n("Ban *!*@domain"),BanDomain);
+  kickban->insertItem(i18n("Ban *!user@*.host"),BanUserHost);
+  kickban->insertItem(i18n("Ban *!user@domain"),BanUserDomain);
+  kickban->insertSeparator();
+  kickban->insertItem(i18n("Kickban *!*@*.host"),KickBanHost);
+  kickban->insertItem(i18n("Kickban *!*@domain"),KickBanDomain);
+  kickban->insertItem(i18n("Kickban *!user@*.host"),KickBanUserHost);
+  kickban->insertItem(i18n("Kickban *!user@domain"),KickBanUserDomain);
+  nickPopup->insertItem(i18n("Kick / Ban"),kickban,KickBanSub);
+  nickPopup->insertItem(i18n("Ignore"),Ignore);
+  
+  connect (nickPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+  connect (modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+  connect (kickban, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
 }
 
 void IRCView::search()
