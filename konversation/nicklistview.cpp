@@ -151,7 +151,7 @@ void NickListView::insertAssociationSubMenu() {
   if(existingAssociation)
       addressbook->insertItem(SmallIcon("editdelete"), i18n("Delete Association"), AddressbookDelete);
 
-  if(emailAddress)
+  if(!emailAddress)
       popup->setItemEnabled(SendEmail, false);
   else
       popup->setItemEnabled(SendEmail, true);
