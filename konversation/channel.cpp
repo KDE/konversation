@@ -177,8 +177,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   awayLabel=new QLabel(i18n("(away)"),commandLineBox);
   awayLabel->hide();
   channelInput=new IRCInput(commandLineBox);
-  logCheckBox=new QCheckBox(i18n("Log"),commandLineBox);
-  logCheckBox->setChecked(KonversationApplication::preferences.getLog());
 
   // Set the widgets size policies
   topicBox->setSizePolicy(vmodest);
@@ -1303,7 +1301,6 @@ void Channel::updateFonts()
   limit->setFont(KonversationApplication::preferences.getTextFont());
   nicknameButton->setFont(KonversationApplication::preferences.getTextFont());
   channelInput->setFont(KonversationApplication::preferences.getTextFont());
-  logCheckBox->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
                                    KonversationApplication::preferences.getBackgroundImageName());

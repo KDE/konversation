@@ -161,7 +161,6 @@ class Channel : public ChatWindow
     QLabel* awayLabel;
     QGrid* buttonsGrid;
     IRCInput* channelInput;
-    QCheckBox* logCheckBox;
 
     NickChangeDialog* nickChangeDialog;
     QPtrList<Nick> nicknameList;
