@@ -8,7 +8,6 @@ TODO-list for Konversation
 
 SHORT-TERM (URGENT):
 - Limit backlog to x lines or KB
-- Make URLs like http://user@somedomain.com/ work
 - /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
 - Add ETA counter for DCC transfers
 - Show / Hide tab types (status tabs ect.)
@@ -65,7 +64,6 @@ DISCUSSING:
 - Session management
 - Make font for quick buttons configurable
 - cycle command
-- Nick button in status pane does nothing
 - privmsg (/msg) should be logged to the specific log file (if i do "/msg foo bar"
   i want to have this in konversation-foo.log)
 - Mark the last point where the panel was active

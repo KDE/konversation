@@ -104,14 +104,13 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
 #endif
 
-  // Use default KDE web browser or custom command?
-  setNotifyClick(!KonversationApplication::preferences.getWebBrowserUseKdeDefault());
+  setNotifyClick(true);
 
 #ifndef TABLE_VERSION
   setText("<qt>\n");
 #endif
   connect(this,SIGNAL (highlighted(const QString&)),this,SLOT (highlightedSlot(const QString&)));
-  connect(this,SIGNAL (urlClick (const QString&)),this,SLOT(urlClickSlot(const QString&)));
+  connect(this,SIGNAL (linkClicked(const QString&)),this,SLOT(urlClickSlot(const QString&)));
 }
 
 IRCView::~IRCView()
@@ -194,8 +193,9 @@ void IRCView::urlClickSlot(const QString &url)
 {
   if (!url.isEmpty())
   {
+    kdDebug() << "URL: " << url << endl;
     // Always use KDE default mailer.
-    if (url.lower().startsWith("mailto:"))
+    if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.lower().startsWith("mailto:"))
     {
       new KRun(KURL(url));
     }
