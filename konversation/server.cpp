@@ -644,15 +644,13 @@ void Server::broken(int state)
   //       Or at least make sure that all gets reconnected properly
   if(autoReconnect && !getDeliberateQuit())
   {
-    QString ip = getIp();
-    if(ip.isEmpty()) ip = "No ip found";
-    statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 (%2) lost. Trying to reconnect.").arg(serverName,ip));
-    getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 (%2) lost. Trying to reconnect.").arg(serverName,ip),statusView);
+    statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName));
+    getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName),statusView);
     // TODO: Make retry counter configurable
     if(++reconnectCounter==10)
     {
-      statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 (%2) failed.").arg(serverName));
-      getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 (%2) failed.").arg(serverName),statusView);
+      statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 failed.").arg(serverName));
+      getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 failed.").arg(serverName),statusView);
       reconnectCounter=0;
       rejoinChannels = false;
     }
