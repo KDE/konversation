@@ -146,14 +146,17 @@ int SSLSocket::verifyCertificate()
   int result;
   bool permacache = false;
   bool ipMatchesCN = false;
-  
   bool doAddHost = false;
+  QString hostname;
+  
   
   remoteHost = peerAddress().nodeName();
   url = "irc://"+remoteHost+":"+peerAddress().serviceName();
   
   KSSLCertificate& peerCertificate = kssl->peerInfo().getPeerCertificate();
-  
+  KSSLX509Map certinfo(peerCertificate.getSubject());
+  hostname = certinfo.getValue("CN");
+    
   KSSLCertificate::KSSLValidationList validationList
     = peerCertificate.validateVerbose(KSSLCertificate::SSLServer);
   
@@ -210,14 +213,18 @@ int SSLSocket::verifyCertificate()
 	      QString msg = i18n("The IP address of the host %1 "
 				 "does not match the one the "
 				 "certificate was issued to.");
-	      result = KMessageBox::warningYesNo( 0L,
-						  msg.arg(remoteHost),
-						  i18n("Server Authentication"),
-						  KGuiItem(i18n("Details")),
-						  KGuiItem(i18n("Continue")),
-						  "SslIpCNMismatch");
-	      if( result == KMessageBox::Yes )
+	      result = KMessageBox::warningYesNoCancel( 0L,
+							msg.arg(hostname),
+							i18n("Server Authentication"),
+							KGuiItem(i18n("Details")),
+							KGuiItem(i18n("Continue")),
+							"SslIpCNMismatch");
+	      if(result == KMessageBox::Yes)
 		showInfoDialog();
+	      else if(result == KMessageBox::Cancel)
+		{
+		  return 0;
+		}
 	    } 
 	  while ( result == KMessageBox::Yes );
 	  
@@ -244,28 +251,32 @@ int SSLSocket::verifyCertificate()
 		    QString msg = i18n("The IP address of the host %1 "
 				       "does not match the one the "
 				       "certificate was issued to.");
-		    result = KMessageBox::warningYesNo( 0L,
-							msg.arg(remoteHost),
-							i18n("Server Authentication"),
-							KGuiItem(i18n("Details")),
-							KGuiItem(i18n("Continue")),
-							"SslInvalidHost");
+		    result = KMessageBox::warningYesNoCancel( 0L,
+							      msg.arg(hostname),
+							      i18n("Server Authentication"),
+							      KGuiItem(i18n("Details")),
+							      KGuiItem(i18n("Continue")),
+							      "SslInvalidHost");
 		  }
 		else
 		  {
-		    QString msg = i18n("The server certificate failed the "
-				       "authenticity test (%1).");
-		    result = KMessageBox::warningYesNo( 0L,
-							msg.arg(remoteHost),
-							i18n("Server Authentication"),
-							KGuiItem(i18n("Details")),
-							KGuiItem(i18n("Continue")),
-							"SslCertificateNotAuthentic" );
+		    QString msg = i18n("The server (%1) certificate failed the "
+				       "authenticity test.");
+		    result = KMessageBox::warningYesNoCancel( 0L,
+							      msg.arg(hostname),
+							      i18n("Server Authentication"),
+							      KGuiItem(i18n("Details")),
+							      KGuiItem(i18n("Continue")),
+							      "SslCertificateNotAuthentic" );
 		  }
 		
 		if (result == KMessageBox::Yes)
 		  {
 		    showInfoDialog();
+		  }
+		else if(result == KMessageBox::Cancel)
+		  {
+		    return 0;
 		  }
 	      }
 	    while (result == KMessageBox::Yes);
