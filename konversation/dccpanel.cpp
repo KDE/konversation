@@ -45,7 +45,14 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
 
   dccListView=new KListView(this,"dcc_control_panel");
   
+  dccListView->setSelectionMode(QListView::Extended);
+  dccListView->setDragEnabled(true);
+  dccListView->setAcceptDrops(true);
+  dccListView->setSorting(-1,false);
+  dccListView->setAllColumnsShowFocus(true);
+  
   for(unsigned int i=0 ; i < Column::COUNT ; ++i)
+  
     dccListView->addColumn("");
   
   //dccListView->setColumnText(Column::StatusIcon,    "");
@@ -76,11 +83,6 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   dccListView->setColumnAlignment(Column::TimeRemaining, AlignRight);
   dccListView->setColumnAlignment(Column::CPS,           AlignRight);
   
-  dccListView->setDragEnabled(true);
-  dccListView->setAcceptDrops(true);
-  dccListView->setSorting(-1,false);
-  dccListView->setAllColumnsShowFocus(true);
-
   QHBox* buttonsBox=new QHBox(this);
   buttonsBox->setSpacing(spacing());
   acceptButton=new QPushButton(i18n("Accept"),buttonsBox,"start_dcc");
@@ -90,7 +92,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   infoButton  =new QPushButton(i18n("Information"),buttonsBox,"info_on_dcc_file");
   detailButton=new QPushButton(i18n("Detail"),buttonsBox,"detail_dcc");
 
-  connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (dccSelected()) );
+  connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (selectionChanged()) );
   
   connect(acceptButton,SIGNAL (clicked()) ,this,SLOT (acceptDcc()) );
   connect(abortButton,SIGNAL (clicked()) ,this,SLOT (abortDcc()) );
@@ -108,122 +110,108 @@ DccPanel::~DccPanel()
 void DccPanel::dccStatusChanged(const DccTransfer *item)
 {
   // If the item is currently selected, update buttons.
-  if (item->isSelected()) dccSelected();
+  if (item->isSelected()) selectionChanged();
 }
 
-void DccPanel::dccSelected()
+void DccPanel::selectionChanged()
 {
-  DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
-  if(item)
+  bool accept=true, abort=false, remove=true, open=true, info=false, detail=true;
+  bool itemfound = false;
+  QListViewItemIterator it( getListView() );
+  while( it.current() )
   {
-    DccTransfer::DccStatus status=item->getStatus();
-    
-    // Accept
-    acceptButton->setEnabled( status == DccTransfer::Queued );
-    
-    // Abort
-    abortButton->setEnabled( status != DccTransfer::Failed && 
-                             status != DccTransfer::Aborted && 
-                             status != DccTransfer::Done );
-    
-    // Remove
-    removeButton->setEnabled( true );
-    
-    // Open
-    openButton->setEnabled( item->getType() == DccTransfer::Send ||
-                            status == DccTransfer::Done );
-    
-    // Info
-    infoButton->setEnabled( false );  // disabled temporarily
-    
-    // Detail
-    detailButton->setEnabled( true );
+    if( it.current()->isSelected() )
+    {
+      DccTransfer* item = static_cast<DccTransfer*>( it.current() );
+      DccTransfer::DccType type = item->getType();
+      DccTransfer::DccStatus status = item->getStatus();
+      if( item )
+      {
+        itemfound = true;
+        
+        accept &= ( status == DccTransfer::Queued );
+        abort  |= ( status != DccTransfer::Failed && 
+                    status != DccTransfer::Aborted && 
+                    status != DccTransfer::Done );
+        open   &= ( type == DccTransfer::Send ||
+                    status == DccTransfer::Done );
+      }
+    }
+    ++it;
   }
-  else
-  {
-    acceptButton->setEnabled( false );
-    abortButton->setEnabled( false );
-    removeButton->setEnabled( false );
-    openButton->setEnabled( false );
-    infoButton->setEnabled( false );
-    detailButton->setEnabled( false );
-  }
+  if( !itemfound ) { accept=false, abort=false, remove=false, open=false, info=false, detail=false; }
+  
+  acceptButton->setEnabled( accept );
+  abortButton->setEnabled( abort );
+  removeButton->setEnabled( remove );
+  openButton->setEnabled( open );
+  infoButton->setEnabled( info );
+  detailButton->setEnabled( detail );
 }
   
 void DccPanel::acceptDcc()
 {
-  DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
-  if(item)
+  QListViewItemIterator it( getListView() );
+  while( it.current() )
   {
-    if(item->getType()==DccTransfer::Receive && item->getStatus()==DccTransfer::Queued) item->start();
+    if( it.current()->isSelected() )
+    {
+      DccTransfer* item=static_cast<DccTransfer*>( it.current() );
+      if( item )
+        if( item->getType() == DccTransfer::Receive && item->getStatus() == DccTransfer::Queued )
+          item->start();
+    }
+    ++it;
   }
-}
-
-void DccPanel::runDcc()
-{
-  DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
-  if(item)
-    if(item->getType()==DccTransfer::Send || item->getStatus()==DccTransfer::Done)
-      new KRun(KURL(item->getFilePath()));
 }
 
 void DccPanel::abortDcc()
 {
-  DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
-  if(item) item->abort();
+  QListViewItemIterator it( getListView() );
+  while( it.current() )
+  {
+    if( it.current()->isSelected() )
+    {
+      DccTransfer* item=static_cast<DccTransfer*>( it.current() );
+      if( item )
+        if( item->getStatus() != DccTransfer::Aborted && item->getStatus() != DccTransfer::Failed && item->getStatus() != DccTransfer::Done )
+          item->abort();
+    }
+    ++it;
+  }
 }
 
 void DccPanel::removeDcc()
 {
-  DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
-  delete item;
-  // select next item so the user can clean up the list quickly
-  item=static_cast<DccTransfer*>(getListView()->currentItem());
-  if(item) getListView()->setSelected(item,true);
-}
-
-DccTransfer* DccPanel::getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed)
-{
-  int index=0;
-  DccTransfer* item;
-  do
+  QPtrList<QListViewItem> lst;
+  QListViewItemIterator it( getListView() );
+  while( it.current() )
   {
-    // TODO: Get rid of this cast
-    item=static_cast<DccTransfer*>(getListView()->itemAtIndex(index++));
-    if(item)
-    {
-      if( (item->getStatus()==DccTransfer::Queued || item->getStatus()==DccTransfer::WaitingRemote) &&
-         item->getType()==type &&
-         !(resumed && !item->isResumed()) &&
-         item->getOwnPort()==port) return item;
-    }
-  } while(item);
-
-  return 0;
+    if( it.current()->isSelected() )
+      lst.append( it.current() );
+    ++it;
+  }
+  lst.setAutoDelete( true );
+  while( lst.remove() );  // whoa! what a smart and weird code!
 }
 
-// To find the resuming dcc over firewalls that change the port numbers
-DccTransfer* DccPanel::getTransferByName(const QString& name,DccTransfer::DccType type,bool resumed)
+void DccPanel::runDcc()
 {
-  int index=0;
-  DccTransfer* item;
-  do
+  QListViewItemIterator it( getListView() );
+  while( it.current() )
   {
-    // TODO: Get rid of this cast
-    item=static_cast<DccTransfer*>(getListView()->itemAtIndex(index++));
-    if(item)
+    if( it.current()->isSelected() )
     {
-      if( (item->getStatus()==DccTransfer::Queued || item->getStatus()==DccTransfer::WaitingRemote) &&
-         item->getType()==type &&
-         !(resumed && !item->isResumed()) &&
-         item->getFileName()==name) return item;
+      DccTransfer* item=static_cast<DccTransfer*>( it.current() );
+      if( item )
+        if( item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done )
+          new KRun( KURL( item->getFilePath() ) );
     }
-  } while(item);
-
-  return 0;
+    ++it;
+  }
 }
 
-void DccPanel::showFileInfo()
+void DccPanel::showFileInfo()  // disabled temporarily
 {
   /*
   QStringList infoList;
@@ -293,9 +281,58 @@ void DccPanel::showFileInfo()
 
 void DccPanel::openDetail()
 {
-  DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
-  if(item)
-    item->openDetailDialog();
+  QListViewItemIterator it( getListView() );
+  while( it.current() )
+  {
+    if( it.current()->isSelected() )
+    {
+      DccTransfer* item=static_cast<DccTransfer*>( it.current() );
+      if( item )
+        item->openDetailDialog();
+    }
+    ++it;
+  }
+}
+
+DccTransfer* DccPanel::getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed)
+{
+  int index=0;
+  DccTransfer* item;
+  do
+  {
+    // TODO: Get rid of this cast
+    item=static_cast<DccTransfer*>(getListView()->itemAtIndex(index++));
+    if(item)
+    {
+      if( (item->getStatus()==DccTransfer::Queued || item->getStatus()==DccTransfer::WaitingRemote) &&
+         item->getType()==type &&
+         !(resumed && !item->isResumed()) &&
+         item->getOwnPort()==port) return item;
+    }
+  } while(item);
+
+  return 0;
+}
+
+// To find the resuming dcc over firewalls that change the port numbers
+DccTransfer* DccPanel::getTransferByName(const QString& name,DccTransfer::DccType type,bool resumed)
+{
+  int index=0;
+  DccTransfer* item;
+  do
+  {
+    // TODO: Get rid of this cast
+    item=static_cast<DccTransfer*>(getListView()->itemAtIndex(index++));
+    if(item)
+    {
+      if( (item->getStatus()==DccTransfer::Queued || item->getStatus()==DccTransfer::WaitingRemote) &&
+         item->getType()==type &&
+         !(resumed && !item->isResumed()) &&
+         item->getFileName()==name) return item;
+    }
+  } while(item);
+
+  return 0;
 }
 
 #ifdef USE_MDI
