@@ -1,5 +1,5 @@
 /***************************************************************************
-                          ledlistviewitem.h  -  description
+                          ledlistviewitem.h  -  A list view with led indicator
                              -------------------
     begin                : Thu Jul 25 2002
     copyright            : (C) 2002 by Matthias Gierlings
@@ -19,11 +19,11 @@
 #define LEDLISTVIEWITEM_H
 
 #include <klistview.h>
+
 #include <qiconset.h>
 #include <qpixmap.h>
-#include <kstandarddirs.h>
-#include <images.h>
-#include <qobject.h>
+
+#include "images.h"
 
 /**
   *@author Matthias Gierlings
@@ -31,25 +31,29 @@
 
 class LedListViewItem : public KListViewItem
 {
-	public:
-		LedListViewItem(KListView* parent, QString passed_label, bool passed_state, bool passed_voiceState, int passed_color, int passed_column);
-		~LedListViewItem();
+  public:
+    LedListViewItem(KListView* parent,QString passed_label,bool passed_state,bool passed_voiceState);
+    ~LedListViewItem();
 
-	private:	
-		QPixmap						opLedOn, opLedOff, voiceLedOn, voiceLedOff;
-		QIconSet					currentLeds;
-		Images						leds;
-    QString						label;
-		bool							opState, voiceState;
-	  int								color, column;
-	
-	public:
-		bool getOpState() {return opState;}
-		bool getVoiceState() {return voiceState;}
+    bool getOpState();
+    bool getVoiceState();
     void setState(bool passed_opState, bool passed_voiceState);
-		void toggleOpState();
-		void toggleVoiceState();
-		void setText(int passed_column, QString passed_label);
+    void toggleOpState();
+    void toggleVoiceState();
 
+  protected:
+    QPixmap opLedOn;
+    QPixmap opLedOff;
+    QPixmap voiceLedOn;
+    QPixmap voiceLedOff;
+
+    QIconSet currentLeds;
+    QString label;
+
+    Images leds;
+
+    bool opState;
+    bool voiceState;
 };
+
 #endif

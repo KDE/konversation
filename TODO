@@ -6,6 +6,7 @@ Make sure, that lines don't get cleared while viewing the history
 Background color of Channel window / Nicklist View
 Add a possibility to close the dcc panel via GUI
 Pasting into text views should trigger the paste mechanism
+Make colors for nick list configurable via GUI
 
 Hurga: ^G shall beep
 
@@ -13,7 +14,7 @@ nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  d
       des letzten Zeitpunkts wo das Fenster aktiv war  und  die Text-Suche "
 *nobs* noch ein Feature-Request: alle "technischen" Meldungen aus # und query ausblenden können;
        entweder ins Status-Fenster umleiten oder ganz verwerfen optional 
-Consistency check in Preferences:
+Consistency check in Preferences:nob
 - Command Char must be present
 
 /part may close Queries, too.

@@ -22,3 +22,5 @@ Changes from 0.7 to 0.8:
 - Fixed bug with lockups on defective logfiles
 - Added support for EUR currency symbol
 - Added keyboard handling to navigate between pages
+- Code cleanup in nick list
+- Added first support for custom colors in nick list
