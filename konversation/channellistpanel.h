@@ -64,10 +64,15 @@ class ChannelListPanel : public ChatWindow
     void regExpClicked();
 
   protected:
-    void setNumChannels(int num);
     int getNumChannels();
-    void setNumUsers(int num);
     int getNumUsers();
+    int getVisibleChannels();
+    int getVisibleUsers();
+
+    void setNumChannels(int num);
+    void setNumUsers(int num);
+    void setVisibleChannels(int num);
+    void setVisibleUsers(int num);
 
     void setChannelTarget(bool state);
     bool getChannelTarget();
@@ -83,8 +88,12 @@ class ChannelListPanel : public ChatWindow
 
     const QString& getFilterText();
 
+    void updateUsersChannels();
+
     int numChannels;
     int numUsers;
+    int visibleChannels;
+    int visibleUsers;
 
     int minUsers;
     int maxUsers;

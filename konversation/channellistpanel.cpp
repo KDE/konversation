@@ -26,6 +26,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
+#include <kmessagebox.h>
 
 #include "channellistpanel.h"
 #include "server.h"
@@ -37,6 +38,8 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
 
   setNumChannels(0);
   setNumUsers(0);
+  setVisibleChannels(0);
+  setVisibleUsers(0);
 
   setMinUsers(0);
   setMaxUsers(0);
@@ -87,14 +90,12 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
 
   QHBox* statsBox=new QHBox(this);
   statsBox->setSpacing(spacing());
-  
-  new QLabel(i18n("Users: "),statsBox);
-  QLabel* usersLabel=new QLabel("0",statsBox);
-  new QLabel(i18n("Channels: "),statsBox);
-  QLabel* channelsLabel=new QLabel("0",statsBox);
+
+  QLabel* usersLabel=new QLabel(QString::null,statsBox);
+  QLabel* channelsLabel=new QLabel(QString::null,statsBox);
 
   statsBox->setStretchFactor(channelsLabel,10);
-    
+
   QHBox* actionBox=new QHBox(this);
   actionBox->setSpacing(spacing());
 
@@ -122,6 +123,13 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
 
   connect(this,SIGNAL (updateNumUsers(const QString&)),usersLabel,SLOT (setText(const QString&)) );
   connect(this,SIGNAL (updateNumChannels(const QString&)),channelsLabel,SLOT (setText(const QString&)) );
+
+  updateUsersChannels();
+  KMessageBox::information(this,i18n("Warning! Using this function may result in a lot "
+                                     "of network traffic. If your connection is not fast "
+                                     "enough, it's possible that your client gets "
+                                     "disconnected by the server!"),
+                                i18n("Channel list warning"),"ChannelListWarning");
 }
 
 ChannelListPanel::~ChannelListPanel()
@@ -134,7 +142,10 @@ void ChannelListPanel::refreshList()
 
   setNumChannels(0);
   setNumUsers(0);
+  setVisibleChannels(0);
+  setVisibleUsers(0);
 
+  updateUsersChannels();
   emit refreshChannelList();
 }
 
@@ -146,14 +157,14 @@ void ChannelListPanel::saveList()
                                                  QString::null,
                                                  this,
                                                  i18n("Save channel list"));
-  
+
   if(!fileName.isEmpty())
   {
     // first find the longest channel name and nick number for clean table layouting
     unsigned int index=0;
     unsigned int maxChannelWidth=0;
     unsigned int maxNicksWidth=0;
-    
+
     QListViewItem* item=channelListView->itemAtIndex(0);
     while(item)
     {
@@ -200,7 +211,7 @@ void ChannelListPanel::saveList()
       }
       item=channelListView->itemAtIndex(++index);
     }
-    
+
     listFile.close();
   }
 }
@@ -220,6 +231,12 @@ void ChannelListPanel::addToChannelList(const QString& channel,int users,const Q
 
   setNumChannels(getNumChannels()+1);
   setNumUsers(getNumUsers()+users);
+
+  // no filter yet, so set visible value to the same value
+  setVisibleChannels(getNumChannels());
+  setVisibleUsers(getNumUsers());
+
+  updateUsersChannels();
 }
 
 void ChannelListPanel::filterTextChanged(const QString& newText)
@@ -227,8 +244,17 @@ void ChannelListPanel::filterTextChanged(const QString& newText)
   filterText=newText;
 }
 
-int ChannelListPanel::getNumChannels() { return numChannels; }
-int ChannelListPanel::getNumUsers()    { return numUsers; }
+int ChannelListPanel::getNumChannels()     { return numChannels; }
+int ChannelListPanel::getNumUsers()        { return numUsers; }
+
+void ChannelListPanel::setNumChannels(int num) { numChannels=num; }
+void ChannelListPanel::setNumUsers(int num)    { numUsers=num; }
+
+int ChannelListPanel::getVisibleChannels() { return visibleChannels; }
+int ChannelListPanel::getVisibleUsers()    { return visibleUsers; }
+
+void ChannelListPanel::setVisibleChannels(int num) { visibleChannels=num; }
+void ChannelListPanel::setVisibleUsers(int num)    { visibleUsers=num; }
 
 int ChannelListPanel::getMinUsers()    { return minUsers; }
 int ChannelListPanel::getMaxUsers()    { return maxUsers; }
@@ -239,28 +265,14 @@ bool ChannelListPanel::getRegExp()        { return regExp; }
 
 const QString& ChannelListPanel::getFilterText() { return filterText; }
 
-void ChannelListPanel::setNumChannels(int num)
-{
-  numChannels=num;
-  emit updateNumChannels(QString::number(num));
-}
-
-void ChannelListPanel::setNumUsers(int num)
-{
-  numUsers=num;
-  emit updateNumUsers(QString::number(num));
-}
-
 void ChannelListPanel::setMinUsers(int num)
 {
   minUsers=num;
-  if(minUsers>maxUsers) adjustMaxValue(num);
 }
 
 void ChannelListPanel::setMaxUsers(int num)
 {
   maxUsers=num;
-  if(maxUsers<minUsers) adjustMinValue(num);
 }
 
 void ChannelListPanel::setChannelTarget(bool state)  { channelTarget=state; }
@@ -278,14 +290,18 @@ void ChannelListPanel::applyFilterClicked()
 
   QListViewItem* item=channelListView->itemAtIndex(0);
 
+  setVisibleChannels(0);
+  setVisibleUsers(0);
+
   while(item)
   {
     bool visible=true;
 
-    if(getMaxUsers())
+    if(getMinUsers() || getMaxUsers())
     {
       if(item->text(1).toInt()<getMinUsers() ||
-         item->text(1).toInt()>getMaxUsers() ) visible=false;
+          (getMaxUsers()>=getMinUsers() &&
+           item->text(1).toInt()>getMaxUsers())) visible=false;
     }
 
     if(!getFilterText().isEmpty())
@@ -302,9 +318,22 @@ void ChannelListPanel::applyFilterClicked()
     }
 
     item->setVisible(visible);
+    if(visible)
+    {
+      setVisibleUsers(getVisibleUsers()+item->text(1).toInt());
+      setVisibleChannels(getVisibleChannels()+1);
+    }
 
     item=channelListView->itemAtIndex(++index);
   }
+
+  updateUsersChannels();
+}
+
+void ChannelListPanel::updateUsersChannels()
+{
+  emit updateNumChannels(i18n("Channels: %1 (%2 shown)").arg(getNumChannels()).arg(getVisibleChannels()));
+  emit updateNumUsers(i18n("Users: %1 (%2 shown)").arg(getNumUsers()).arg(getVisibleUsers()));
 }
 
 void ChannelListPanel::closeYourself()
