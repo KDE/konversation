@@ -1,0 +1,41 @@
+#!/usr/bin/env perl
+
+use warnings;
+use strict;
+
+my $PORT= shift;
+my $SERVER= shift;
+my $TARGET= shift;
+
+my $char;
+my $message;
+my $random;
+my $input;
+my $entry;
+my @chars;
+my $i = 0;
+
+if(!@ARGV){
+    exec ("dcop $PORT Konversation error \"Colorizer script needs a message argument!\" ");
+}
+
+foreach $entry (@ARGV) {
+    if($i == 0) {
+	$input = $entry;
+	$i = 1;
+    }
+    else {
+	$input = $input." ".$entry;
+    }
+}
+
+@chars = split //, $input;
+
+srand(time());
+
+foreach $char (@chars) {
+  $random = int(rand(15))+1;
+  $message = $message."%C".$random.$char;
+}
+
+system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$message\" ");
