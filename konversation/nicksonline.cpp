@@ -71,12 +71,12 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_nickListView->setRootIsDecorated(true);
     m_nickListView->setShowToolTips(false);
     QString nickListViewWT = i18n(
-        "<p>This is all the nicknames on your Nickname Watch list listed under the "
+        "<p>These are all the nicknames on your Nickname Watch list, listed under the "
         "server group they are connected to.  The list also includes the nicknames "
         "in KAddressBook associated with the server group.</p>"
         "<p>The <b>Additional Information</b> column shows the information known "
         "for each nickname.</p>"
-        "<p>The channels the nickname has joined are listed underneath each nickname</p>"
+        "<p>The channels the nickname has joined are listed underneath each nickname.</p>"
         "<p>Nicknames appearing under <b>Offline</b> are not connected to any of the "
         "servers in the group.</p>"
         "<p>Right-click with the mouse on a nickname to perform additional functions.</p>");
@@ -112,7 +112,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_editContactButton = new QPushButton(i18n("Edit C&ontact..."),
         buttonBox, "nicksonline_editcontact_button");
     QString editContactButtonWT = i18n(
-        "Click to create, view or edit the KAddressBook entry associated with the nickname "
+        "Click to create, view, or edit the KAddressBook entry associated with the nickname "
         "selected above.");
     QWhatsThis::add(m_editContactButton, editContactButtonWT);
     m_editContactButton->setIconSet(m_kabcIconSet);
