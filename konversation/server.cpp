@@ -561,15 +561,6 @@ bool Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwn
   return true;
 }
 
-bool Server::eventFilter(QObject* parent,QEvent* event)
-{
-  if(event->type()==QEvent::User)
-  {
-    lookupFinished();
-    return true;
-  }
-  return QObject::eventFilter(parent,event);
-}
 /** 
 	When serverSocket emits hostFound() signal this slot is called.
 
