@@ -48,6 +48,12 @@
 #include "main.h"
 #endif
 
+#ifdef KDE_IS_VERSION
+#if KDE_IS_VERSION(3,1,92)
+#define OPAQUE_CONF
+#endif
+#endif
+
 Channel::Channel(QWidget* parent) : ChatWindow(parent)
 {
   // init variables
@@ -83,7 +89,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   // (this) The main Box, holding the channel view/topic and the input line
   splitter=new QSplitter(this);
   setStretchFactor(splitter,10);
-#if KDE_IS_VERSION( 3, 1,92 )
+#ifdef OPAQUE_CONF
   splitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 #else
   splitter->setOpaqueResize(true);
