@@ -19,6 +19,7 @@
 #include <qhbox.h>
 #include <qspinbox.h>
 #include <qfileinfo.h>
+#include <qvgroupbox.h>
 
 #include <klineedit.h>
 #include <kfiledialog.h>
@@ -61,27 +62,33 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccRollbackLabel->setBuddy(dccRollbackSpin);
 
   dccSpinBoxes->setStretchFactor(dccRollbackLabel,10);
-
-  dccSpecificSendPorts=new QCheckBox(i18n("Use specific ports for DCC sending"),parentFrame,"dcc_specific_send_ports_checkbox");
+  
+  // Ports specification for DCC sending
+  QVGroupBox* dccSpecificSendPortsBox = new QVGroupBox(i18n("Ports for DCC sending"), parentFrame, "dcc_specific_send_ports_box");
+  
+  dccSpecificSendPorts = new QCheckBox(i18n("Use specific &ports for DCC sending"),dccSpecificSendPortsBox,"dcc_specific_send_ports_checkbox");
   connect(dccSpecificSendPorts, SIGNAL(stateChanged(int)), this, SLOT(specificSendPortsStateChanged(int)));
-  dccSendPortsFirstLabel=new QLabel(i18n("First DCC send port:"),parentFrame);
-  dccSendPortsFirstLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  dccSendPortsFirstSpin=new QSpinBox(0,65535,1,parentFrame,"dcc_send_ports_first_spin");
+  
+  QHBox *dccSendPortsFirstBox = new QHBox(dccSpecificSendPortsBox);
+  dccSendPortsFirstLabel=new QLabel(i18n("&First DCC send port:"),dccSendPortsFirstBox);
+  dccSendPortsFirstSpin=new QSpinBox(0,65535,1,dccSendPortsFirstBox,"dcc_send_ports_first_spin");
   connect(dccSendPortsFirstSpin, SIGNAL(valueChanged(int)), this, SLOT(sendPortsFirstSpinValueChanged(int)));
   dccSendPortsFirstSpin->setMaximumWidth(100);
   dccSendPortsFirstLabel->setBuddy(dccSendPortsFirstSpin);
-  dccSendPortsLastLabel=new QLabel(i18n("Last DCC send port:"),parentFrame);
-  dccSendPortsLastLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  dccSendPortsLastSpin=new QSpinBox(0,65535,1,parentFrame,"dcc_send_ports_last_spin");
+  
+  QHBox *dccSendPortsLastBox = new QHBox(dccSpecificSendPortsBox);
+  dccSendPortsLastLabel=new QLabel(i18n("&Last DCC send port:"),dccSendPortsLastBox);
+  dccSendPortsLastSpin=new QSpinBox(0,65535,1,dccSendPortsLastBox,"dcc_send_ports_last_spin");
   connect(dccSendPortsLastSpin, SIGNAL(valueChanged(int)), this, SLOT(sendPortsLastSpinValueChanged(int)));
   dccSendPortsLastSpin->setMaximumWidth(100);
   dccSendPortsLastLabel->setBuddy(dccSendPortsLastSpin);
+  
   dccSpecificSendPorts->setChecked(preferences->getDccSpecificSendPorts());
   dccSendPortsFirstSpin->setValue(preferences->getDccSendPortsFirst());
   dccSendPortsLastSpin->setValue(preferences->getDccSendPortsLast());
   updateSendPortsWidgets(preferences->getDccSpecificSendPorts());
   
-  dccGetIpFromServer=new QCheckBox(i18n("Get my IP from IRC server"),parentFrame,"dcc_get_ip_from_server_checkbox");
+  dccGetIpFromServer=new QCheckBox(i18n("&Get my IP from IRC server"),parentFrame,"dcc_get_ip_from_server_checkbox");
   dccAutoGet=new QCheckBox(i18n("Automatically accept &DCC download"),parentFrame,"dcc_autoget_checkbox");
   connect(dccAutoGet, SIGNAL(stateChanged(int)), this, SLOT(autoGetStateChanged(int)));
   dccAutoResume=new QCheckBox(i18n("Au&tomatically resume DCC download"), parentFrame,"dcc_autoresume_checkbox");
@@ -107,13 +114,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSettingsLayout->addMultiCellWidget(dccSpinBoxes,row,row,0,2);
   row++;
 
-  dccSettingsLayout->addMultiCellWidget(dccSpecificSendPorts,row,row,0,2);
-  row++;
-  dccSettingsLayout->addWidget(dccSendPortsFirstLabel,row,0);
-  dccSettingsLayout->addWidget(dccSendPortsFirstSpin,row,1);
-  row++;
-  dccSettingsLayout->addWidget(dccSendPortsLastLabel,row,0);
-  dccSettingsLayout->addWidget(dccSendPortsLastSpin,row,1);
+  dccSettingsLayout->addMultiCellWidget(dccSpecificSendPortsBox,row,row,0,2);
   row++;
   
   dccSettingsLayout->addMultiCellWidget(dccGetIpFromServer,row,row,0,2);
