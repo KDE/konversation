@@ -1537,7 +1537,9 @@ void Channel::updateFonts()
   topicLine->setFont(KonversationApplication::preferences.getTextFont());
 
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
-  getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
+
+  if(KonversationApplication::preferences.getShowBackgroundImage())
+      getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
                                    KonversationApplication::preferences.getBackgroundImageName());
 
   nicksOps->setFont(KonversationApplication::preferences.getListFont());
