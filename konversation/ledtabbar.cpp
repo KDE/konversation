@@ -102,7 +102,7 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
     m_popup->insertItem(SmallIconSet("1leftarrow"), i18n("Move &Left"),MoveLeft);
     m_popup->insertItem(SmallIconSet("1rightarrow"), i18n("Move &Right"),MoveRight);
     m_popup->insertSeparator();
-    m_popup->insertItem(SmallIcon("charset"),i18n("Set &Encoding"),m_popupEncoding,EncodingSub);
+    m_popup->insertItem(SmallIconSet("charset"),i18n("Set &Encoding"),m_popupEncoding,EncodingSub);
     m_popup->insertItem(SmallIconSet("mail_generic"),i18n("&Send Email..."),SendEmail);
     m_popup->insertItem(i18n("Addressbook Associations"), m_popupAddressbook, AddressbookSub);
     
