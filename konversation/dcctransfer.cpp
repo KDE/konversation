@@ -72,9 +72,10 @@ DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _p
 
 DccTransfer::~DccTransfer()
 {
-  delete[] buffer;
   stopAutoUpdateView();
   closeDetailDialog();
+  delete[] buffer;
+  delete progressBar;
 }
 
 void DccTransfer::updateView()  // slot
