@@ -162,11 +162,11 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
           case Key_V:
           {
               if ( keyEvent->state() & ControlButton ) {
-		QCString subtype("html");
+/*		QCString subtype("html");
                 QString html =  kapp->clipboard()->text(subtype, QClipboard::Clipboard );
 		if(!html.isEmpty() && subtype == "html")
 		  insertHtml(html);
-		else
+		else*/
 		  insert( kapp->clipboard()->text(QClipboard::Clipboard));
 		
                 return true;
