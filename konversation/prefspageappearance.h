@@ -17,6 +17,8 @@
 #ifndef PREFSPAGEAPPEARANCE_H
 #define PREFSPAGEAPPEARANCE_H
 
+#include <qfont.h>
+
 #include "prefspage.h"
 
 /*
@@ -38,28 +40,20 @@ class PrefsPageAppearance : public PrefsPage
     PrefsPageAppearance(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageAppearance();
 
+  public slots:
+    void applyPreferences();
+
   protected slots:
     void textFontClicked();
     void listFontClicked();
     void timestampingChanged(int state);
-    void showQuickButtonsChanged(int state);
-    void showModeButtonsChanged(int state);
-    void showCloseButtonsChanged(int state);
-    void formatChanged(const QString& newFormat);
     void encodingChanged(int newEncodingIndex);
 
-    void autoUserhostChanged(int state);
-
     void useSpacingChanged(int state);
-    void spacingChanged(int newSpacing);
-    void marginChanged(int newMargin);
 
     void useParagraphSpacingChanged(int state);
-    void paragraphSpacingChanged(int newSpacing);
 
     void sortByStatusChanged(int state);
-    void sortCaseInsensitiveChanged(int state);
-    void sortingOrderChanged();
 
     void moveUp();
     void moveDown();
@@ -70,23 +64,35 @@ class PrefsPageAppearance : public PrefsPage
     QLabel* textPreviewLabel;
     QLabel* listPreviewLabel;
 
+    QFont textFont;
+    QFont listFont;
+
+    QString encoding;
+
     QCheckBox* doTimestamping;
     QCheckBox* showQuickButtons;
     QCheckBox* showModeButtons;
+
     QLabel* formatLabel;
+
     QComboBox* timestampFormat;
     QComboBox* codecList;
 
+    QCheckBox* autoUserhostCheck;
+    QCheckBox* closeButtonsCheck;
     QCheckBox* useSpacingCheck;
 
     QLabel* spacingLabel;
     QLabel* marginLabel;
 
-    QSpinBox* spacing;
-    QSpinBox* margin;
+    QSpinBox* spacingSpin;
+    QSpinBox* marginSpin;
 
     QCheckBox* useParagraphSpacingCheck;
     QSpinBox* paragraphSpacingSpin;
+
+    QCheckBox* sortByStatusCheck;
+    QCheckBox* sortCaseInsensitiveCheck;
 
     QHGroupBox* sortOrderGroup;
     KListView* sortingOrder;

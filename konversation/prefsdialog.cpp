@@ -68,16 +68,17 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   // Add pages to preferences dialog
   PrefsPage* serverListPage=new PrefsPageServerList(serverListPane,preferences);
 
-  generalSettingsPage=new PrefsPageGeneralSettings(generalSettingsPane,preferences);
-  new PrefsPageIdentity(identityPane,preferences);
+  PrefsPageGeneralSettings* generalSettingsPage=new PrefsPageGeneralSettings(generalSettingsPane,preferences);
+  PrefsPageIdentity*        identityPage       =new PrefsPageIdentity(identityPane,preferences); // FIXME: see class::applyPreferences()
 
-  notifyPage=new PrefsPageNotify(notifyPane,preferences);
-  highlightPage=new PrefsPageHighlight(highlightPane,preferences);
-  ignorePage=new PrefsPageIgnore(ignorePane,preferences);
+  PrefsPageAppearance*      appearancePage     =new PrefsPageAppearance(appearancePane,preferences);
+  PrefsPageColorsImages*    colorsImagesPage   =new PrefsPageColorsImages(colorsImagesPane,preferences);
+  PrefsPageButtons*         buttonsPage        =new PrefsPageButtons(buttonsPane,preferences);
 
-  new PrefsPageAppearance(appearancePane,preferences);
-  new PrefsPageColorsImages(colorsImagesPane,preferences);
-  buttonsPage=new PrefsPageButtons(buttonsPane,preferences);
+  PrefsPageNotify*          notifyPage         =new PrefsPageNotify(notifyPane,preferences);
+  PrefsPageHighlight*       highlightPage      =new PrefsPageHighlight(highlightPane,preferences);
+  PrefsPageIgnore*          ignorePage         =new PrefsPageIgnore(ignorePane,preferences);
+
   new PrefsPageLog(logSettingsPane,preferences);
   new PrefsPageDccSettings(dccSettingsPane,preferences);
   new PrefsPageDialogs(dialogsPane,preferences);
@@ -100,7 +101,10 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   // connect standard signals and slots
   // TODO: not implemented in all pages yet!
   connect(this,SIGNAL (applyPreferences()),generalSettingsPage,SLOT (applyPreferences()) );
+  connect(this,SIGNAL (applyPreferences()),identityPage,SLOT (applyPreferences()) );
 
+  connect(this,SIGNAL (applyPreferences()),appearancePage,SLOT (applyPreferences()) );
+  connect(this,SIGNAL (applyPreferences()),colorsImagesPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),buttonsPage,SLOT (applyPreferences()) );
 
   connect(this,SIGNAL (applyPreferences()),notifyPage,SLOT (applyPreferences()) );
@@ -136,7 +140,7 @@ void PrefsDialog::slotOk()
 void PrefsDialog::slotApply()
 {
   // tell all preferences pages to save their new values
-  // TODO: not implemented in aöö pages yet!
+  // TODO: not implemented in all pages yet!
   emit applyPreferences();
   // tell the rest of the application to re-read the settings
   emit prefsChanged();

@@ -48,6 +48,9 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   QLabel* textFontLabel=new QLabel(i18n("Text font:"),parentFrame);
   QLabel* listFontLabel=new QLabel(i18n("Nickname list font:"),parentFrame);
 
+  textFont=preferences->getTextFont();
+  listFont=preferences->getListFont();
+
   textPreviewLabel=new QLabel(parentFrame);
   listPreviewLabel=new QLabel(parentFrame);
 
@@ -76,10 +79,10 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   codecList->insertStringList(encodings);
 
   // find actual encoding and set combo box accordingly
-  QString actualEncoding="( "+preferences->getCodec().lower()+" )";
+  encoding="( "+preferences->getCodec().lower()+" )";
   for(unsigned int index=0;index<encodings.count();index++)
   {
-    if(encodings[index].lower().find(actualEncoding)!=-1)
+    if(encodings[index].lower().find(encoding)!=-1)
     {
       codecList->setCurrentItem(index);
       break;
@@ -117,7 +120,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   showModeButtons=new QCheckBox(i18n("Show channel mode buttons"),showButtonsBox,"show_modebuttons_checkbox");
   showModeButtons->setChecked(preferences->getShowModeButtons());
 
-  QCheckBox* autoUserhostCheck=new QCheckBox(i18n("Show hostmasks in nick list"),parentFrame,"auto_userhost_check");
+  autoUserhostCheck=new QCheckBox(i18n("Show hostmasks in nick list"),parentFrame,"auto_userhost_check");
   autoUserhostCheck->setChecked(preferences->getAutoUserhost());
 
   useSpacingCheck=new QCheckBox(i18n("Use custom widget spacing"),parentFrame,"use_spacing_check");
@@ -126,14 +129,14 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   spacingMarginBox->setSpacing(spacingHint());
 
   spacingLabel=new QLabel(i18n("Spacing:"),spacingMarginBox);
-  spacing=new QSpinBox(0,10,1,spacingMarginBox,"spacing_spin_box");
+  spacingSpin=new QSpinBox(0,10,1,spacingMarginBox,"spacing_spin_box");
   marginLabel=new QLabel(i18n("Margin:"),spacingMarginBox);
-  margin=new QSpinBox(0,10,1,spacingMarginBox,"margin_spin_box");
+  marginSpin=new QSpinBox(0,10,1,spacingMarginBox,"margin_spin_box");
 
-  spacing->setValue(preferences->getSpacing());
-  spacing->setSuffix(" "+i18n("Pixel"));
-  margin->setValue(preferences->getMargin());
-  margin->setSuffix(" "+i18n("Pixel"));
+  spacingSpin->setValue(preferences->getSpacing());
+  spacingSpin->setSuffix(" "+i18n("Pixel"));
+  marginSpin->setValue(preferences->getMargin());
+  marginSpin->setSuffix(" "+i18n("Pixel"));
 
   marginLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   spacingMarginBox->setStretchFactor(marginLabel,10);
@@ -158,15 +161,15 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   useParagraphSpacingChanged(preferences->getUseParagraphSpacing() ? 2 : 0);
 
   // close buttons on tabs
-  QCheckBox* closeButtonsCheck=new QCheckBox(i18n("Show close widgets on tabs"),parentFrame,"tab_close_widgets_check");
+  closeButtonsCheck=new QCheckBox(i18n("Show close widgets on tabs"),parentFrame,"tab_close_widgets_check");
   closeButtonsCheck->setChecked(preferences->getCloseButtonsOnTabs());
 
   // Sorting
   QVGroupBox* sortOptionsGroup=new QVGroupBox(i18n("Sort options"),parentFrame,"sort_options_group");
   sortOrderGroup=new QHGroupBox(i18n("Sorting order"),parentFrame,"sort_order_group");
 
-  QCheckBox* sortByStatusCheck=new QCheckBox(i18n("Sort by user status"),sortOptionsGroup,"sort_by_status_check");
-  QCheckBox* sortCaseInsensitiveCheck=new QCheckBox(i18n("Sort case insensitive"),sortOptionsGroup,"sort_case_insensitive_check");
+  sortByStatusCheck=new QCheckBox(i18n("Sort by user status"),sortOptionsGroup,"sort_by_status_check");
+  sortCaseInsensitiveCheck=new QCheckBox(i18n("Sort case insensitive"),sortOptionsGroup,"sort_case_insensitive_check");
 
   sortByStatusCheck->setChecked(preferences->getSortByStatus());
   sortOrderGroup->setEnabled(preferences->getSortByStatus());
@@ -238,25 +241,12 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   connect(codecList,SIGNAL (activated(int)),this,SLOT (encodingChanged(int)));
 
   connect(doTimestamping,SIGNAL (stateChanged(int)),this,SLOT (timestampingChanged(int)) );
-  connect(timestampFormat,SIGNAL(activated(const QString&)),this,SLOT(formatChanged(const QString&)));
-
-  connect(showQuickButtons,SIGNAL (stateChanged(int)),this,SLOT (showQuickButtonsChanged(int)) );
-  connect(showModeButtons,SIGNAL (stateChanged(int)),this,SLOT (showModeButtonsChanged(int)) );
-
-  connect(autoUserhostCheck,SIGNAL (stateChanged(int)),this,SLOT (autoUserhostChanged(int)) );
 
   connect(useSpacingCheck,SIGNAL (stateChanged(int)),this,SLOT (useSpacingChanged(int)) );
-  connect(spacing,SIGNAL (valueChanged(int)),this,SLOT (spacingChanged(int)));
-  connect(margin,SIGNAL (valueChanged(int)),this,SLOT (marginChanged(int)));
 
   connect(useParagraphSpacingCheck,SIGNAL (stateChanged(int)),this,SLOT (useParagraphSpacingChanged(int)) );
-  connect(paragraphSpacingSpin,SIGNAL (valueChanged(int)),this,SLOT (paragraphSpacingChanged(int)));
-
-  connect(closeButtonsCheck,SIGNAL (stateChanged(int)),this,SLOT (showCloseButtonsChanged(int)) );
 
   connect(sortByStatusCheck,SIGNAL (stateChanged(int)),this,SLOT (sortByStatusChanged(int)) );
-  connect(sortCaseInsensitiveCheck,SIGNAL (stateChanged(int)),this,SLOT (sortCaseInsensitiveChanged(int)) );
-  connect(sortingOrder,SIGNAL (moved()),this,SLOT (sortingOrderChanged()) );
 
   connect(sortMoveUp,SIGNAL (clicked()),this,SLOT (moveUp()) );
   connect(sortMoveDown,SIGNAL (clicked()),this,SLOT (moveDown()) );
@@ -268,136 +258,55 @@ PrefsPageAppearance::~PrefsPageAppearance()
 
 void PrefsPageAppearance::textFontClicked()
 {
-  QFont newFont(preferences->getTextFont());
-  KFontDialog::getFont(newFont);
-  preferences->setTextFont(newFont);
+  KFontDialog::getFont(textFont);
   updateFonts();
 }
 
 void PrefsPageAppearance::listFontClicked()
 {
-  QFont newFont(preferences->getListFont());
-  KFontDialog::getFont(newFont);
-  preferences->setListFont(newFont);
+  KFontDialog::getFont(listFont);
   updateFonts();
 }
 
 void PrefsPageAppearance::updateFonts()
 {
-  QFont textFont=preferences->getTextFont();
-  QFont listFont=preferences->getListFont();
+  textPreviewLabel->setFont(textFont);
+  listPreviewLabel->setFont(listFont);
 
   textPreviewLabel->setText(QString("%1 %2").arg(textFont.family().section(':',0,0)).arg(textFont.pointSize()));
   listPreviewLabel->setText(QString("%1 %2").arg(listFont.family().section(':',0,0)).arg(listFont.pointSize()));
-
-  textPreviewLabel->setFont(textFont);
-  listPreviewLabel->setFont(listFont);
 }
 
 void PrefsPageAppearance::timestampingChanged(int state)
 {
-  preferences->setTimestamping(state==2);
   doTimestamping->setChecked(state==2);
   timestampFormat->setEnabled(state==2);
   formatLabel->setEnabled(state==2);
 }
 
-void PrefsPageAppearance::formatChanged(const QString& newFormat)
-{
-  preferences->setTimestampFormat(newFormat);
-}
-
-void PrefsPageAppearance::showQuickButtonsChanged(int state)
-{
-  preferences->setShowQuickButtons(state==2);
-}
-
-void PrefsPageAppearance::showModeButtonsChanged(int state)
-{
-  preferences->setShowModeButtons(state==2);
-}
-
-void PrefsPageAppearance::showCloseButtonsChanged(int state)
-{
-  preferences->setCloseButtonsOnTabs(state==2);
-}
-
 void PrefsPageAppearance::encodingChanged(int newEncodingIndex)
 {
-  if(newEncodingIndex)
-  {
-    QString newEncoding=codecList->text(newEncodingIndex);
-
-    if(newEncoding.startsWith("utf 16"))
-      preferences->setCodec(QString::null);
-    else
-      preferences->setCodec(KGlobal::charsets()->encodingForName(newEncoding));
-  }
-}
-
-void PrefsPageAppearance::autoUserhostChanged(int state)
-{
-  preferences->setAutoUserhost(state);
+  if(newEncodingIndex) encoding=codecList->text(newEncodingIndex);
 }
 
 void PrefsPageAppearance::useSpacingChanged(int state)
 {
   useSpacingCheck->setChecked(state);
-  preferences->setUseSpacing(state==2);
   spacingLabel->setEnabled(state==2);
-  spacing->setEnabled(state==2);
+  spacingSpin->setEnabled(state==2);
   marginLabel->setEnabled(state==2);
-  margin->setEnabled(state==2);
-}
-
-void PrefsPageAppearance::spacingChanged(int newSpacing)
-{
-  preferences->setSpacing(newSpacing);
-}
-
-void PrefsPageAppearance::marginChanged(int newMargin)
-{
-  preferences->setMargin(newMargin);
+  marginSpin->setEnabled(state==2);
 }
 
 void PrefsPageAppearance::useParagraphSpacingChanged(int state)
 {
   useParagraphSpacingCheck->setChecked(state);
-  preferences->setUseParagraphSpacing(state==2);
   paragraphSpacingSpin->setEnabled(state==2);
-}
-
-void PrefsPageAppearance::paragraphSpacingChanged(int newSpacing)
-{
-  preferences->setParagraphSpacing(newSpacing);
 }
 
 void PrefsPageAppearance::sortByStatusChanged(int state)
 {
-  preferences->setSortByStatus(state==2);
   sortOrderGroup->setEnabled(state==2);
-}
-
-void PrefsPageAppearance::sortCaseInsensitiveChanged(int state)
-{
-  preferences->setSortCaseInsensitive(state==2);
-}
-
-void PrefsPageAppearance::sortingOrderChanged()
-{
-  int flag=1;
-
-  for(int index=0;index<3;index++)
-  {
-    ValueListViewItem* item=static_cast<ValueListViewItem*>(sortingOrder->itemAtIndex(index));
-    int value=item->getValue();
-
-    if(value==0) preferences->setNoRightsValue(flag);
-    else if(value==1) preferences->setVoiceValue(flag);
-    else if(value==2) preferences->setOpValue(flag);
-
-    flag<<=1;
-  }
 }
 
 void PrefsPageAppearance::moveUp()
@@ -417,6 +326,45 @@ void PrefsPageAppearance::moveDown()
   {
     int pos=sortingOrder->itemIndex(item);
     if(pos!=2) item->moveItem(item->itemBelow());
+  }
+}
+
+void PrefsPageAppearance::applyPreferences()
+{
+  preferences->setTextFont(textFont);
+  preferences->setListFont(listFont);
+  preferences->setTimestamping(doTimestamping->isChecked());
+  preferences->setTimestampFormat(timestampFormat->currentText());
+  preferences->setShowQuickButtons(showQuickButtons->isChecked());
+  preferences->setShowModeButtons(showModeButtons->isChecked());
+  preferences->setCloseButtonsOnTabs(closeButtonsCheck->isChecked());
+
+  if(encoding.startsWith("utf 16"))
+    preferences->setCodec(QString::null);
+  else
+    preferences->setCodec(KGlobal::charsets()->encodingForName(encoding));
+
+  preferences->setAutoUserhost(autoUserhostCheck->isChecked());
+  preferences->setUseSpacing(useSpacingCheck->isChecked());
+  preferences->setSpacing(spacingSpin->value());
+  preferences->setMargin(marginSpin->value());
+  preferences->setUseParagraphSpacing(useParagraphSpacingCheck->isChecked());
+  preferences->setParagraphSpacing(paragraphSpacingSpin->value());
+  preferences->setSortByStatus(sortByStatusCheck->isChecked());
+  preferences->setSortCaseInsensitive(sortCaseInsensitiveCheck->isChecked());
+
+  int flag=1;
+
+  for(int index=0;index<3;index++)
+  {
+    ValueListViewItem* item=static_cast<ValueListViewItem*>(sortingOrder->itemAtIndex(index));
+    int value=item->getValue();
+
+    if(value==0) preferences->setNoRightsValue(flag);
+    else if(value==1) preferences->setVoiceValue(flag);
+    else if(value==2) preferences->setOpValue(flag);
+
+    flag<<=1;
   }
 }
 

@@ -40,6 +40,9 @@ class PrefsPageIdentity : public PrefsPage
     PrefsPageIdentity(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageIdentity();
 
+  public slots:
+    void applyPreferences();
+
   protected slots:
     void realNameChanged(const QString& newRealName);
     void loginChanged(const QString& newlogin);

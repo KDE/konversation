@@ -331,4 +331,9 @@ void PrefsPageIdentity::removeIdentity()
 
 }
 
+void PrefsPageIdentity::applyPreferences()
+{
+  // FIXME: keep a copy of all identities and save them only here!
+}
+
 #include "prefspageidentity.moc"

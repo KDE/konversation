@@ -27,12 +27,6 @@
 
 class QFrame;
 
-class PrefsPageGeneralSettings;
-class PrefsPageButtons;
-class PrefsPageHighlight;
-class PrefsPageNotify;
-class PrefsPageIgnore;
-
 class PrefsDialog : public KDialogBase
 {
   Q_OBJECT
@@ -58,11 +52,6 @@ class PrefsDialog : public KDialogBase
 
   protected:
     Preferences* preferences;
-    PrefsPageGeneralSettings* generalSettingsPage;
-    PrefsPageButtons* buttonsPage;
-    PrefsPageHighlight* highlightPage;
-    PrefsPageNotify* notifyPage;
-    PrefsPageIgnore* ignorePage;
 
     // for openPage();
     QFrame* serverListPane;
