@@ -8,17 +8,16 @@ Eisfuchs: Check KStringHandler::tagURLs for URL highlighting
 Treeview with servers, list of channels / queries in a detachable window that also indicates new text
 after being away a summary of lines with highlighting in its own window would be nice; a click on one line might jump to the according line in the channel/query-window
 additionally the text-search could offer a button "any highlight"
-show the away-status somewhere; maybe with a gray background in the input line
 additionally do some kind of marker to the lines that came in while being away; maybe with a special colour of the timestamp
-Make a command that makes you goto away mode on all servers
+Make a command that makes you go to away mode on all servers
 /amsg and /ame for sending messages/actions to all open channels/queries
-Per nick coloring
-Shortcut for /clear
+Per nick coloring in channel discussion
+Keyboard shortcut for /clear
 Use checkForUtf8 to make non-UTF8-users able to at least read UTF8.
 DCC RESUME should start counting cps from the beginning
 Joining large channels is very slow
 Close query on RMB Ignore ([x] don't ask again)
-Replace KDE_VERSION >= 310 with #if KDE_IS_VERSION(3.1.1)
+Make coloring of list view and input lines an option
 
 Tab completion should work on an alphabetic list
 /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
@@ -30,8 +29,6 @@ Remember server group in logfiles, make same channel names on different servers 
 Reverse-I-Search
 Large pastes: Let the user decide if they want an Editor or paste immediately
 Multi line behaviour in input line with "little enter"
-Make Config Dialogs fit into one Tab-Dialog and throw out single windows
-Background color of Nicklist View
 Pasting into text views should trigger the paste mechanism
 Make LED colors for nick list configurable via GUI
 Detect shell commands and warn the user
@@ -48,9 +45,6 @@ cycle command
 Make separate Highlight lists for each identity
 Nick button in status pane does nothing
 Measure away time and make it available via placeholder
-
-<mETz[]> Eisfuchs: And why have the "Mitschnitt" button there? having it in the menubar is
-  enough, no?
 
 -privmsg (/msg) should be logged to the specific log file (if i do "/msg foo bar" i
   want to have this in konversation-foo.log)
@@ -76,4 +70,3 @@ Notify with more than 500 characters
 Stats for server lag, words per session per person / channel, quits etc.
 "Open Nicks online window on startup" option
 Make nicks online a panel, show stats like "last spoken" "last seen"
-Colored nicks in channel discussion

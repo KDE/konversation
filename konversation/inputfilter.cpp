@@ -301,10 +301,11 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
         // && match_ctcp_type && match_data
         QByteArray args;
         QDataStream data (args, IO_WriteOnly);
+        data << server->getServerName();
         data << prefix; // Source
         data << parameterList[0]; // Target
         data << trailing; // data
-        if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QString, QString)").arg(e->signal).ascii(), args))
+        if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QString, QString, QString)").arg(e->signal).ascii(), args))
           return; // if they return false, stop processing
       }
       // ******
