@@ -45,7 +45,7 @@ class PrefsPageServerList : public PrefsPage
     void editServer();
     void removeServer();
     void serverSelected(QListViewItem* item);
-    void updateServer(const QString&,const QString&,const QString&,const QString&,const QString&,const QString&,const QString&);
+    void updateServer(const QString&,const QString&,const QString&,const QString&,const QString&,const QString&,const QString&, const QString&);
     void updateServerProperty(QListViewItem*,const QString&,int);
     void updateAutoState(ServerListItem* item,bool state);
     void connectClicked();

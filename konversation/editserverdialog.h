@@ -35,7 +35,8 @@ class EditServerDialog : public KDialogBase
                                        QString serverKey=QString::null,
                                        QString channel=QString::null,
                                        QString channelKey=QString::null,
-                                       QString currentIdentity=QString::null);
+                                       QString currentIdentity=QString::null,
+                                       QString connectCommands=QString::null);
     ~EditServerDialog();
 
   signals:
@@ -45,7 +46,8 @@ class EditServerDialog : public KDialogBase
                        const QString& serverKey,
                        const QString& channelName,
                        const QString& channelKey,
-                       const QString& identity);
+                       const QString& identity,
+                       const QString& connectCommands);
   protected slots:
     void slotOk();
 
@@ -55,6 +57,7 @@ class EditServerDialog : public KDialogBase
     KLineEdit* serverPortInput;
     KLineEdit* serverKeyInput;
     KLineEdit* channelNameInput;
+    KLineEdit* connectCommandsInput;
     KLineEdit* channelKeyInput;
     KComboBox* identityCombo;
 };

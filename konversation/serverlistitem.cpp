@@ -24,7 +24,8 @@ ServerListItem::ServerListItem(QListViewItem* parent,
                                QString arg3,
                                QString arg4,
                                QString arg5,
-                               QString arg6) :
+                               QString arg6,
+                               QString arg7) :
                 QCheckListItem(parent,QString::null,QCheckListItem::CheckBox)
 {
   id=newId;
@@ -34,6 +35,7 @@ ServerListItem::ServerListItem(QListViewItem* parent,
   setText(4,arg4);
   setText(5,arg5);
   setText(6,arg6);
+  setText(7,arg7);
 
   group=arg0;
 }

@@ -33,7 +33,8 @@ EditServerDialog::EditServerDialog(QWidget* parent,
                                    QString serverKey,
                                    QString channelName,
                                    QString channelKey,
-                                   QString currentIdentity) :
+                                   QString currentIdentity,
+                                   QString connectCommands) :
 
                   KDialogBase(parent,"editserver",true,i18n("Edit Server"),
                               KDialogBase::Ok | KDialogBase::Cancel,
@@ -43,7 +44,7 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   QWidget* page=new QWidget(this);
   setMainWidget(page);
 
-  QGridLayout* layout=new QGridLayout(page,3,4);
+  QGridLayout* layout=new QGridLayout(page,4,4);
   layout->setSpacing(spacingHint());
   layout->setColStretch(1,10);
 
@@ -121,6 +122,14 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   channelNameInput=new KLineEdit(channelName,page);
   QWhatsThis::add(channelNameInput, channelNameWT);
   channelNameLabel->setBuddy(channelNameInput);
+  
+  QLabel* connectCommandsLabel = new QLabel(i18n("C&onnect Command(s):"), page);
+  QString connectCommandsWT = i18n("Enter the command(s) you want to execute on "
+                                                                "connection to the server(separated by semicolon)");
+  QWhatsThis::add(connectCommandsLabel, connectCommandsWT);
+  connectCommandsInput = new KLineEdit(connectCommands, page);
+  QWhatsThis::add(connectCommandsInput, connectCommandsWT);
+  connectCommandsLabel->setBuddy(connectCommandsInput);
 
   QLabel* channelKeyLabel=new QLabel(i18n("Pass&word:"),page);
   QString channelKeyWT = i18n("If the channel requires a password in order "
@@ -157,6 +166,10 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   row++;
   layout->addMultiCellWidget(spacer,row,row,0,3);
   layout->setRowStretch(row,10);
+  
+  row++;
+  layout->addWidget(connectCommandsLabel, row, 0);
+  layout->addMultiCellWidget(connectCommandsInput, row, row, 1, 3);
 
   setButtonOKText(i18n("&OK"),i18n("Change server information"));
   setButtonCancelText(i18n("&Cancel"),i18n("Discards all changes made"));
@@ -174,7 +187,8 @@ void EditServerDialog::slotOk()
                      serverKeyInput->text(),
                      channelNameInput->text(),
                      channelKeyInput->text(),
-                     identityCombo->currentText());
+                     identityCombo->currentText(),
+                     connectCommandsInput->text());
   delayedDestruct();
 }
 

@@ -26,7 +26,7 @@ ServerEntry::ServerEntry(const QString &newDefinition)
   id=newId++;
   definition=newDefinition;
   QStringList properties=QStringList::split(',',getDefinition(),true);
-  while(properties.count()<8)
+  while(properties.count()<9)
   {
     definition=definition+",";
     properties.append(QString::null);

@@ -1,4 +1,7 @@
 Changes from 0.13 to 0.14
+- Added the possibility to execute commands on server connection(for
+  authentication and such things). Can be configured in the "Edit Server"
+  dialog.
 - Added further timestamps for am/pm (BR 79612)
 - Added QuickConnect dialog by Michael Goettsche. (Thanks once again)
 - Properly receive a logout/shutdown request and terminate konversation,

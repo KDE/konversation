@@ -43,6 +43,7 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
   serverListView->addColumn(i18n("Channel"));  // 4
   serverListView->addColumn(i18n("Password")); // 5
   serverListView->addColumn(i18n("Identity")); // 6
+  serverListView->addColumn(i18n("Connect Command(s)")); //8
 
   serverListView->setRenameable(0,false);
   serverListView->setRenameable(1,true);
@@ -70,7 +71,8 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
                                             (!serverEntry[3].isEmpty()) ? QString("********") : QString::null,
                                             serverEntry[4],
                                             (!serverEntry[5].isEmpty()) ? QString("********") : QString::null,
-                                            serverEntry[7]);
+                                            serverEntry[7],
+                                            serverEntry[8]);
 
     item->setOn(serverEntry[6]=="1");
 
@@ -199,7 +201,7 @@ void PrefsPageServerList::editServer()
     if(!server.isEmpty())
     {
       QStringList properties=QStringList::split(',',server,true);
-      EditServerDialog editServerDialog(parentFrame,properties[0],properties[1],properties[2],properties[3],properties[4],properties[5],properties[7]);
+      EditServerDialog editServerDialog(parentFrame,properties[0],properties[1],properties[2],properties[3],properties[4],properties[5],properties[7], properties[8]);
 
       connect(&editServerDialog,SIGNAL (serverChanged(const QString&,
                                                       const QString&,
@@ -207,8 +209,10 @@ void PrefsPageServerList::editServer()
                                                       const QString&,
                                                       const QString&,
                                                       const QString&,
+                                                      const QString&,
                                                       const QString&)),
                               this,SLOT (updateServer(const QString&,
+                                                      const QString&,
                                                       const QString&,
                                                       const QString&,
                                                       const QString&,
@@ -226,7 +230,8 @@ void PrefsPageServerList::updateServer(const QString& groupName,
                                        const QString& serverKey,
                                        const QString& channelName,
                                        const QString& channelKey,
-                                       const QString& identity)
+                                       const QString& identity,
+                                       const QString& connectCommands)
 {
   // Need to find a better way without casting
   ServerListItem* item=static_cast<ServerListItem*>(serverListView->selectedItems().first());
@@ -252,7 +257,8 @@ void PrefsPageServerList::updateServer(const QString& groupName,
                           (!serverKey || serverKey.isEmpty()) ? QString::null : QString("********"),
                           channelName,
                           (!channelKey || channelKey.isEmpty()) ? QString::null : QString("********"),
-                          identity);
+                          identity,
+                          connectCommands);
 
   item->setOn(autoConnect);
 
@@ -263,7 +269,8 @@ void PrefsPageServerList::updateServer(const QString& groupName,
                                channelName+","+
                                channelKey+","+
                                (item->isOn() ? "1" : "0")+","+
-                               identity);
+                               identity+","+
+                               connectCommands);
 
   serverListView->setSelected(item,true);
   serverListView->ensureItemVisible(item);

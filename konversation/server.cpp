@@ -107,6 +107,11 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   autoRejoin=KonversationApplication::preferences.getAutoRejoin();
   autoReconnect=KonversationApplication::preferences.getAutoReconnect();
+  
+  if(!serverEntry[8].isEmpty())
+  {
+    connectCommands = QStringList::split(";", serverEntry[8]);
+  }
 
   connectToIRCServer();
 
@@ -529,7 +534,20 @@ void Server::ircServerConnectionSuccess()
 
   queueAt(1,"NICK "+getNickname());
   queueAt(2,connectString);
-
+  
+  QStringList::iterator iter;
+  for(iter = connectCommands.begin(); iter != connectCommands.end(); ++iter)
+  {
+    QString output(*iter);
+    /*if(output.startsWith("/"))
+    {
+      output.remove(0, 1);
+    }*/
+    outputFilter.parse(getNickname(),output,QString::null);
+    output = outputFilter.getServerOutput();
+    queue(output);
+  }
+  
   emit nicknameChanged(getNickname());
 
   serverSocket.enableRead(true);
