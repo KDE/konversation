@@ -1412,15 +1412,13 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
     case 'q':
       if(plus)
       {
-	QString user = parameter.isEmpty() ? "" : "on "+parameter;
-        if(fromMe) message=i18n("You set the channel mode to 'quiet' %1.").arg(user);
-        else message=i18n("%1 sets the channel mode to 'quiet' %2.").arg(sourceNick).arg(user);
+	if(fromMe) message=i18n("You set the channel mode to 'quiet' on %1.").arg(parameter);
+        else message=i18n("%1 sets the channel mode to 'quiet' on %2.").arg(sourceNick).arg(parameter);
       }
       else
       {
-	QString user = parameter.isEmpty() ? "" : "on "+parameter;
-        if(fromMe) message=i18n("You remove the 'quiet' channel mode %1.").arg(user);
-        else message=i18n("%1 removes the 'quiet' channel mode %1.").arg(sourceNick).arg(user);
+	if(fromMe) message=i18n("You remove the 'quiet' channel mode from %1.").arg(parameter);
+        else message=i18n("%1 removes the 'quiet' channel mode from %2.").arg(sourceNick).arg(parameter);
       }
 
     break;
