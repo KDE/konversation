@@ -1606,17 +1606,21 @@ int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item
 QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found)
 {
   found.clear();
-  
+
   for(Nick* n = first(); n; n = next()) {
+#if QT_VERSION >= 0x030200
     if(n->getNickname().startsWith(pattern, false)) {
+#else
+    if(n->getNickname().lower().startsWith(pattern.lower())) {
+#endif
       found.append(n->getNickname());
     }
   }
-  
+
   if(found.count() > 1) {
     bool ok = true;
     int i = 0;
-    
+
     while(ok && ((pattern.length() + i) < found[0].length())) {
       i++;
       QStringList tmp = found.grep(found[0].left(pattern.length() + i), false);
