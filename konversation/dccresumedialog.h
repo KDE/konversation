@@ -29,32 +29,34 @@ class DccResumeDialog : public KDialogBase
   public:
     enum ReceiveAction
     {
-      Overwrite,
-      Rename,
-      Resume,
-      Cancel
+      RA_Rename    = 0x01,
+      RA_Overwrite = 0x02,
+      RA_Resume    = 0x04,
+      RA_Cancel    = 0x08
     };
   
-    ~DccResumeDialog();
+    virtual ~DccResumeDialog();
 
-    static ReceiveAction ask(DccTransferRecv* parentItem);
+    static ReceiveAction ask(DccTransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction);
 
   protected slots:
-    void slotOkClicked();
-    void slotUser1Clicked();
+    void slotOk();
+    void slotUser1();
+    void slotCancel();
     void suggestNewName();
     void setDefaultName();
     void updateDialogButtons();
-        
+    
   protected:
-    DccResumeDialog(DccTransferRecv* item);
+    DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, int enabledButtonCodes, KDialogBase::ButtonCode defaultButtonCode);
     
     // UI
-    KURLRequester* urlreqFilePath;
+    KURLRequester* m_urlreqFileURL;
     
     // data
-    DccTransferRecv* item;
-    ReceiveAction action;
+    DccTransferRecv* m_item;
+    int m_enabledActions;
+    ReceiveAction m_selectedAction;
   
 };
 

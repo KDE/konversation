@@ -52,38 +52,6 @@ class DccTransferRecv : public DccTransfer
     DccTransferRecv( DccPanel* panel, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort );
     virtual ~DccTransferRecv();
     
-    /** 
-     * This function reads the member variables set in the constructor, and
-     * calls @ref saveToFileURL() based on these, and konversation's preferences.
-     * It may not call @ref saveToFileURL(), may not give it a valid url,
-     * and may set it to empty.
-     * Checking @ref saveToFileURL isn't done until the user accepts the dcc
-     * and @ref start() is called, which calls validateSaveToFileURL.
-     * @param folderURL The directory url to save in.  The ircnick is added if needed.
-     * @see validateSaveToFileURL()
-     */
-    void calculateSaveToFileURL( const KURL &folderURL );
-    /**
-     * This checks saveToFileURL, and if it's empty, asks the user for a new
-     * directory to save to.
-     * If the directory doesn't exist, it attempts to create it.
-     * This function will either return with saveToFileURL set to a valid,
-     * existing directory, or will call abort() and return
-     * @see abort()
-     * @return True if the URL is valid.  False if not.
-     */
-    bool validateSaveToFileURL();
-    /**
-     * This calls KIO::NetAccess::mkdir on all the subdirectories of dirURL, to
-     * create the given directory.  Note that a url like  file:/foo/bar  will
-     * make sure both foo and bar are created.  It assumes everything in the path is
-     * a directory.  
-     * Note: If the directory already exists, returns true.
-     * 
-     * @param A url for the directory to create.
-     * @return True if the directory now exists.  False if there was a problem and the directory doesn't exist.
-     */
-    bool createDirs(const KURL &dirURL) const;
   signals:
     void resumeRequest( const QString& partnerNick, const QString& fileName, const QString& partnerPort, KIO::filesize_t filePosition);  // emitted by requestResume()
     
@@ -102,24 +70,55 @@ class DccTransferRecv : public DccTransfer
     void startResume( unsigned long position );
     
   protected slots:
+    // Local KIO
+    void slotLocalCanResume( KIO::Job* job, KIO::filesize_t size );
+    void slotLocalGotResult( KIO::Job* job );
+    void slotLocalReady( KIO::Job* job );
+    void slotLocalWriteDone();
+    void slotLocalGotWriteError( const QString& errorString );
+    
+    // Remote DCC
     void connectionSuccess();
     void connectionFailed( int errorCode );
     void readData();
     void sendAck();
     void connectionTimeout();
-    void writeDone();
-    void gotWriteError( const QString& errorString );
     void slotSocketClosed();
-    void slotCanResume( KIO::Job* job, KIO::filesize_t size );
     
   protected:
+     /** 
+     * This function reads the member variables set in the constructor, and
+     * calls @ref saveToFileURL() based on these, and konversation's preferences.
+     * It may not call @ref saveToFileURL(), may not give it a valid url,
+     * and may set it to empty.
+     * Checking @ref saveToFileURL isn't done until the user accepts the dcc
+     * and @ref start() is called, which calls validateSaveToFileURL.
+     * @param folderURL The directory url to save in.  The ircnick is added if needed.
+     * @see validateSaveToFileURL()
+     */
+    void calculateSaveToFileURL( const KURL& defaultFolderURL );
+    
+    void prepareLocalKio( bool overwrite, KIO::fileoffset_t startPosition );  // (startPosition == 0) means "don't resume"
+    
+    /**
+     * This calls KIO::NetAccess::mkdir on all the subdirectories of dirURL, to
+     * create the given directory.  Note that a url like  file:/foo/bar  will
+     * make sure both foo and bar are created.  It assumes everything in the path is
+     * a directory.  
+     * Note: If the directory already exists, returns true.
+     * 
+     * @param A url for the directory to create.
+     * @return True if the directory now exists.  False if there was a problem and the directory doesn't exist.
+     */
+    bool createDirs(const KURL &dirURL) const;
+    
     void requestResume();
     void connectToSender();
+    
     void cleanUp();
+    
     void startConnectionTimer( int sec );
     void stopConnectionTimer();
-    
-    void setSaveToFileURL( const KURL& url );
     
   protected:
     KURL m_saveToTmpFileURL;
@@ -130,7 +129,6 @@ class DccTransferRecv : public DccTransfer
     DccTransferRecvWriteCacheHandler* m_writeCacheHandler;
     bool m_saveToFileExists;
     bool m_partialFileExists;
-    KURL m_defaultFolderURL;
     QTimer* m_connectionTimer;
     KNetwork::KStreamSocket* m_recvSocket;
 };
@@ -144,7 +142,7 @@ class DccTransferRecvWriteCacheHandler : public QObject
     virtual ~DccTransferRecvWriteCacheHandler();
     
     void append( QByteArray cache );
-    bool write( bool force = false );
+    bool write( bool force );
     void close();
     void closeNow();
     

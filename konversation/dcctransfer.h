@@ -55,6 +55,7 @@ class DccTransfer : public QObject, public KListViewItem
     enum DccStatus
     {
       Queued = 0,    // Newly added DCC, RECV: Waiting for local user's response
+      Preparing,     // Opening KIO to write received data
       WaitingRemote, // Waiting for remote host's response
       Connecting,    // RECV: trying to connect to the server
       Sending,       // Sending

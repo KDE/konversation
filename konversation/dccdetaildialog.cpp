@@ -266,7 +266,7 @@ void DccDetailDialog::slotLocalFileURLChanged( const QString& newURL )
 {
   DccTransferRecv* item = static_cast<DccTransferRecv*>( m_item );
   if ( item )
-    item->setSaveToFileURL( KURL::fromPathOrURL( newURL ) );
+    item->m_fileURL = KURL::fromPathOrURL( newURL );
 }
 
 void DccDetailDialog::slotOpenFile()

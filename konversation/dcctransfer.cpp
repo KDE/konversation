@@ -77,6 +77,7 @@ DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partn
   s_dccTypeText[ Receive ] = i18n("Receive");
   
   s_dccStatusText[ Queued ]        = i18n("Queued");
+  s_dccStatusText[ Preparing ]     = i18n("Preparing");
   s_dccStatusText[ WaitingRemote ] = i18n("Offering");
   s_dccStatusText[ Connecting ]    = i18n("Connecting");
   s_dccStatusText[ Sending ]       = i18n("Sending");
@@ -309,6 +310,7 @@ QPixmap DccTransfer::getStatusIcon() const
     case Queued:
       icon = "player_stop";
       break;
+    case Preparing:
     case WaitingRemote:
     case Connecting:
       icon = "goto";
