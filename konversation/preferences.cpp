@@ -117,7 +117,7 @@ Preferences::Preferences()
   
   setTabPlacement(Bottom);
   setBlinkingTabs(true);
-  setCloseButtonsOnTabs(true);
+  setCloseButtonsOnTabs(false);
   setCloseButtonsAlignRight(false);
   setBringToFront(true);
 
