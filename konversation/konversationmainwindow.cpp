@@ -121,7 +121,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   new KAction(i18n("&Identities..."), "identity", 0, this, SLOT(openIdentitiesDialog()), actionCollection(), "identities_dialog");
 
   new KToggleAction(i18n("&Watched Nicks Online"), 0, 0, this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
-  new KAction(i18n("&Open Logfile"), "history", 0, this, SLOT(openLogfile()), actionCollection(), "open_logfile");
+  new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), this, SLOT(openLogfile()), actionCollection(), "open_logfile");
 
   new KAction(i18n("&Channel List"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
   new KToggleAction(i18n("&URL Catcher"), 0, 0, this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
