@@ -25,10 +25,16 @@ else
     TOTAL=`dcop amarok player trackTotalTime`
     let TMIN=$TOTAL/60
     let TSEC=$TOTAL%60
+    if [ $TSEC -lt 10 ]; then
+      TSEC="0$TSEC"
+    fi
 
     CURR=`dcop amarok player trackCurrentTime`
     let CMIN=$CURR/60
     let CSEC=$CURR%60
+    if [ $CSEC -lt 10 ]; then
+      CSEC="0$CSEC"
+    fi
 
     dcop $PORT Konversation say $SERVER "$TARGET" "/me plays $TEXT [$CMIN:$CSEC/$TMIN:$TSEC]"
   fi
