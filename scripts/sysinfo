@@ -4,13 +4,6 @@ PORT=$1;
 SERVER=$2;
 TARGET=$3;
 
-if [[ -z "$3" ]] ; then 
-  echo "Scripts are not meant to be called from the command line."
-  echo "This script should be installed to  $KDEDIR/share/apps/konversation/scripts"
-  echo "Then executed with /script   from the konversation"
-  exit
-fi
-
 sysinfo()
 {
 LC_ALL="C"
@@ -24,7 +17,9 @@ do
 	[[ -e $I/media && $(< $I/media) = disk ]] && ((CAP+=$(< $I/capacity))) 
 done 
 HDD="$((CAP*512/1000**3))"
-MEM="$(free | awk '/Mem:/ {printf("%s%s\n",$3/1024"/",$2/1024"MB")}')"
+USEDMEM="$(free | awk '/cache:/ {printf("%s",$3/1024"/")}')"
+TOTALMEM="$(free | awk '/Mem:/ {printf("%s\n",$2/1024"MB")}')"
+MEM="${USEDMEM}${TOTALMEM}"
 PROC="$(($(ps aux | wc -l)-1))"
 UPT="$(uptime | sed 's/^.*up *\([^,]*\).*$/\1/g')"
 
@@ -39,5 +34,15 @@ printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s\n" "Memory" " $MEM"
 printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s\n" "Processes" " $PROC"
 printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s\n" "Uptime" " $UPT"
 }
+if [[ -z "$3" ]] ; then 
+  echo "Scripts are not meant to be called from the command line."
+  echo "This script should be installed to  $KDEDIR/share/apps/konversation/scripts"
+  echo "Then executed with /script   from the konversation"
+  echo
+  echo The output is:
+  sysinfo
+  exit
+fi
+
 
 sysinfo | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" "$line"; done
