@@ -122,7 +122,8 @@ void Query::sendQueryText(const QString& sendLine)
     if(filter.isAction()) appendAction(server->getNickname(),output);
     else if(filter.isCommand()) appendCommandMessage(filter.getType(),output);
     else if(filter.isProgram()) appendServerMessage(filter.getType(),output);
-    else appendQuery(server->getNickname(),output);
+    else if(filter.isQuery())   appendQuery(filter.getType(),output);
+    else appendQuery(getName(),output);
   }
   server->queue(filter.getServerOutput());
 }

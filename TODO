@@ -5,7 +5,6 @@ berkus: Doxify the source
 berkus: Docufy the app
 berkus: Logrotate with timer or at shutdown, compress rotated logs
 
-Fix the /query oneuser, /msg anotheruser problem
 Support "CTCP-DCC reply from <nickname>: REJECT SEND <filename> <reason>"
 Treeview with servers, list of channels / queries in a detachable window that also indicates new text
 after being away a summary of lines with highlighting in its own window would be nice; a click on one line might jump to the according line in the channel/query-window
