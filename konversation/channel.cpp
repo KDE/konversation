@@ -1803,15 +1803,18 @@ QPtrList<Nick> Channel::getNickList()
 void Channel::childAdjustFocus()
 {
   channelInput->setFocus();
-  modeT->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
-  modeN->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
-  modeS->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
-  modeI->setEnabled(getOwnChannelNick()->isAnyTypeOfOp()); 
-  modeP->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
-  modeM->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
-  modeK->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
-  modeL->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
-  limit->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
+  if(getOwnChannelNick()){
+    bool enable=getOwnChannelNick()->isAnyTypeOfOp();
+    modeT->setEnabled(enable);
+    modeN->setEnabled(enable);
+    modeS->setEnabled(enable);
+    modeI->setEnabled(enable); 
+    modeP->setEnabled(enable);
+    modeM->setEnabled(enable);
+    modeK->setEnabled(enable);
+    modeL->setEnabled(enable);
+    limit->setEnabled(enable);
+  }
 }
 
 
