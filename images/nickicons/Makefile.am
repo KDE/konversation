@@ -1,1 +1,1 @@
-SUBDIRS = alternative classic default
+SUBDIRS = alternative classic default smiling
