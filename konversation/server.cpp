@@ -1919,10 +1919,15 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
   {
     ChannelNickPtr updateeNick = getChannelNick(channelName, parameter);
     if(!updateeNick) {
-	  kdDebug() << "in updateChannelMode, could not find updatee nick " << parameter << " for channel " << channelName << endl;
-      kdDebug() << "This could indicate an obscure race condition that is safely being handled (like the mode of someone changed and they quit almost simulatanously, or it could indicate an internal error." << endl;
-	  //TODO Do we need to add this nick?
-	  return;
+      if(parameter.isEmpty()) {
+        kdDebug() << "in updateChannelMode, a nick with no-name has had their mode '" << mode << "' changed to (" <<plus << ") in channel '" << channelName << "' by " << updater << ".  How this happened, I have no idea.  Please report this message to irc #konversation if you want to be helpful." << endl << "Ignoring the error and continuing." << endl;
+	kdDebug() << kdBacktrace() << endl; //this will get their attention.
+      } else {
+	kdDebug() << "in updateChannelMode, could not find updatee nick " << parameter << " for channel " << channelName << endl;
+        kdDebug() << "This could indicate an obscure race condition that is safely being handled (like the mode of someone changed and they quit almost simulatanously, or it could indicate an internal error." << endl;
+      }
+      //TODO Do we need to add this nick?
+      return;
     }
 
     updateeNick->setMode(mode, plus);
