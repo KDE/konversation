@@ -34,9 +34,15 @@ KonviBookmarkHandler::KonviBookmarkHandler(KonversationMainWindow* mainWindow)
   m_menu = static_cast<KPopupMenu*>(mainWindow->factory()->container("bookmarks", mainWindow));
 
   m_file = locate( "data", "konversation/bookmarks.xml" );
+
   if ( m_file.isEmpty() )
     m_file = locateLocal( "data", "konversation/bookmarks.xml" );
-  
+
+  if(!m_menu) {
+    m_bookmarkMenu = 0;
+    return;
+  }
+
   KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, false);
   manager->setEditorOptions(kapp->caption(), false);
   manager->setUpdate( true );
