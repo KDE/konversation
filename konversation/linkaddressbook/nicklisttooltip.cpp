@@ -23,6 +23,7 @@
 #include "../nicklistview.h"
 #include "../ledlistviewitem.h"
 #include "../nickinfo.h"
+#include "../common.h"
 
 class NickListView;
 
@@ -60,7 +61,7 @@ void KonversationNickListViewToolTip::maybeTip( const QPoint &pos )
     uint xAdjust = itemRect.left() + leftMargin;
     uint yAdjust = itemRect.top();
     QPoint relativePos( pos.x() - xAdjust, pos.y() - yAdjust );
-    toolTip = nick->getChannelNick()->tooltip();
+    toolTip = Konversation::removeIrcMarkup(nick->getChannelNick()->tooltip());
     if(!toolTip.isEmpty()) 
         tip(itemRect, toolTip);
 }
