@@ -19,7 +19,6 @@
 #define COLORCONFIGURATION_H
 
 #include <kdialogbase.h>
-#include <kcolorcombo.h>
 #include <qvbox.h>
 #include <qhbox.h>
 #include <qlabel.h>
@@ -27,6 +26,7 @@
 #include <qcolor.h>
 #include <qsize.h>
 #include <qstring.h>
+#include "mycolorcombo.h"
 
 /**
   *@author Matthias Gierlings
@@ -44,8 +44,9 @@ class ColorConfiguration : public KDialogBase
 		~ColorConfiguration();
 
 	private:
-		QVBox					*MainBox;
-		QHBox					*channelBox, *queryBox, *serverBox, *actionBox, *backlogBox, *commandBox, *linkBox;
+		QVBox					*MainBox, *centerBox, *rightPadBox, *lowerPadBox;
+		QHBox					*channelBox, *queryBox, *serverBox, *actionBox, *backlogBox, *commandBox, *linkBox,
+									*widgetBox;
 		QLabel				*channelLabel, *queryLabel, *serverLabel, *actionLabel, *backlogLabel, *commandLabel,
 									*linkLabel;
 		QColor				channelTextColor, queryTextColor, serverTextColor, actionTextColor, backlogTextColor,
@@ -53,7 +54,7 @@ class ColorConfiguration : public KDialogBase
 		QString				channelTextColorString, queryTextColorString, serverTextColorString, actionTextColorString,
 									backlogTextColorString, commandTextColorString, linkTextColorString;
 		QSize					windowSize;
-		KColorCombo	  *channelMessageColorSelection, *queryMessageColorSelection, *serverMessageColorSelection,
+		MyColorCombo  *channelMessageColorSelection, *queryMessageColorSelection, *serverMessageColorSelection,
 									*actionMessageColorSelection, *backlogMessageColorSelection, *commandMessageColorSelection,
 									*linkMessageColorSelection;
 			

@@ -30,45 +30,57 @@ ColorConfiguration::ColorConfiguration(QString passed_actionTextColor, QString p
 	windowSize = passed_windowSize;
  	MainBox = makeVBoxMainWidget();
 	
-	actionBox = new QHBox(MainBox);
+	//upperPadBox = new QHBox(MainBox);
+
+	widgetBox = new QHBox(MainBox);
+  //leftPadBox = new QVBox(widgetBox);
+	centerBox = new QVBox(widgetBox);
+	rightPadBox = new QVBox(widgetBox);
+	
+	lowerPadBox = new QVBox(MainBox);
+
+	centerBox->setFixedWidth(250);
+	centerBox->setFixedHeight(180);
+
+	actionBox = new QHBox(centerBox);
 	actionLabel = new QLabel(i18n("Action text color"), actionBox);
-	actionMessageColorSelection = new KColorCombo(actionBox);
+	actionMessageColorSelection = new MyColorCombo(actionBox);
 	actionMessageColorSelection->setMinimumWidth(50);
 	actionMessageColorSelection->setMaximumWidth(50);
-		
-	backlogBox = new QHBox(MainBox);
+	
+	backlogBox = new QHBox(centerBox);
 	backlogLabel = new QLabel(i18n("Backlog text color"), backlogBox);
-	backlogMessageColorSelection = new KColorCombo(backlogBox);
+	backlogMessageColorSelection = new MyColorCombo(backlogBox);
 	backlogMessageColorSelection->setMinimumWidth(50);
 	backlogMessageColorSelection->setMaximumWidth(50);
 
-	channelBox = new QHBox(MainBox);
+	channelBox = new QHBox(centerBox);
 	channelLabel = new QLabel(i18n("Channel message text color"), channelBox);
-	channelMessageColorSelection = new KColorCombo(channelBox);
+	channelMessageColorSelection = new MyColorCombo(channelBox);
 	channelMessageColorSelection->setMinimumWidth(50);
 	channelMessageColorSelection->setMaximumWidth(50);
 
-	commandBox = new QHBox(MainBox);
+	commandBox = new QHBox(centerBox);
 	commandLabel = new QLabel(i18n("Command message text color"), commandBox);
-	commandMessageColorSelection = new KColorCombo(commandBox);
+	commandMessageColorSelection = new MyColorCombo(commandBox);
 	commandMessageColorSelection->setMinimumWidth(50);
 	commandMessageColorSelection->setMaximumWidth(50);
 
-	linkBox = new QHBox(MainBox);
+	linkBox = new QHBox(centerBox);
 	linkLabel = new QLabel(i18n("Hyperlink text color"), linkBox);
-	linkMessageColorSelection = new KColorCombo(linkBox);
+	linkMessageColorSelection = new MyColorCombo(linkBox);
 	linkMessageColorSelection->setMinimumWidth(50);
 	linkMessageColorSelection->setMaximumWidth(50);
 
-	queryBox = new QHBox(MainBox);
+	queryBox = new QHBox(centerBox);
 	queryLabel = new QLabel(i18n("Query messsage text color"), queryBox);
-	queryMessageColorSelection = new KColorCombo(queryBox);
+	queryMessageColorSelection = new MyColorCombo(queryBox);
 	queryMessageColorSelection->setMinimumWidth(50);
 	queryMessageColorSelection->setMaximumWidth(50);
 
-	serverBox = new QHBox(MainBox);	
+	serverBox = new QHBox(centerBox);	
 	serverLabel = new QLabel(i18n("Server message text color"), serverBox);
-	serverMessageColorSelection = new KColorCombo(serverBox);
+	serverMessageColorSelection = new MyColorCombo(serverBox);
 	serverMessageColorSelection->setMinimumWidth(50);
 	serverMessageColorSelection->setMaximumWidth(50);
 

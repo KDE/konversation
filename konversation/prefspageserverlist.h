@@ -57,6 +57,8 @@ class PrefsPageServerList : public PrefsPage
     QPushButton* removeServerButton;
 
     KListView* serverListView;
+
+		int itemId;
 };
 
 #endif
