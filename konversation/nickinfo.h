@@ -76,7 +76,7 @@ class NickInfo : public QObject, public KShared
     
     /** Set properties of NickInfo object. */
     void setNickname(const QString& newNickname);
-    /** Set properties of NickInfo object. */
+    /** Set properties of NickInfo object. Ignores the request is newmask is empty.*/
     void setHostmask(const QString& newMask);
     /** Set properties of NickInfo object. */
     void setAway(bool state);

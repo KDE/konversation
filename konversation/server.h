@@ -351,7 +351,12 @@ class Server : public QObject
     void queueList(const QStringList &buffer);
     void queueAt(uint pos,const QString& buffer);
     void setNickname(const QString &newNickname);
-    void addQuery(const QString &nickname, const QString &hostmask, bool weinitiated = true);
+    /** This is called when we want to open a new query, or focus an existing one.
+     *  @param nickInfo The nickinfo we want to open the query to.  Must exist.
+     *  @param weinitiated This is whether we initiated this - did we do /query, or somebody else sending us a message.
+     *  @return A pointer to a new or already-existing query.  Guaranteed to be non-null
+     */
+    Query *addQuery(const NickInfoPtr & nickInfo, bool weinitiated);
     void closeQuery(const QString &name);
     void closeChannel(const QString &name);
     void quitServer();

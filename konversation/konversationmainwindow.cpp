@@ -842,8 +842,9 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
   return channel;
 }
 
-Query* KonversationMainWindow::addQuery(Server* server, const QString& name, bool weinitiated)
+Query* KonversationMainWindow::addQuery(Server* server, const NickInfoPtr& nickInfo, bool weinitiated)
 {
+  QString name = nickInfo->getNickname();
 #ifdef USE_MDI
   Query* query=new Query(name);
 #else
@@ -851,7 +852,7 @@ Query* KonversationMainWindow::addQuery(Server* server, const QString& name, boo
 #endif
 
   query->setServer(server);
-  query->setName(name);
+  query->setNickInfo(nickInfo);
 
 #ifdef USE_MDI
   addMdiView(query,0, true, weinitiated);

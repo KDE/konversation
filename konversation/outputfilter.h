@@ -64,7 +64,6 @@ namespace Konversation
       bool replaceAliases(QString& line);
   
     signals:
-      void openQuery(const QString& nick,const QString& hostmask); // hostmask currently unused
       void openDccSend(const QString &recipient, KURL kurl);
       void requestDccSend();                        // Choose Recipient and File from requester
       void requestDccSend(const QString& recipient);       // Choose File from requester
@@ -88,9 +87,8 @@ namespace Konversation
       OutputFilterResult execUnban(const QString& mask,const QString& channels);
   
     protected:
-      OutputFilterResult parseMsg(const QString& myNick,const QString& parameter);
+      OutputFilterResult parseMsg(const QString& myNick,const QString& parameter, bool focusQueryWindow);
       OutputFilterResult parseSMsg(const QString& parameter);
-      void parseQuery(const QString& parameter);
       OutputFilterResult parseDescribe(const QString& parameter);
       OutputFilterResult parseNotice(const QString& parameter);
       OutputFilterResult parseJoin(const QString& parameter);

@@ -95,6 +95,8 @@ Query::~Query()
 
 void Query::setName(const QString& newName)
 {
+  if(ChatWindow::getName() == newName) return; // no change, so return
+
   ChatWindow::setName(newName);
   // don't change logfile name if query name changes
   // This will prevent Nick-Changers to create more than one log file,
@@ -146,12 +148,6 @@ void Query::sendQueryText(const QString& sendLine)
 void Query::newTextInView(const QString& highlightColor,bool important)
 {
   emit newText(this,highlightColor,important);
-}
-
-void Query::setHostmask(const QString& newHostmask)
-{
-  hostmask=newHostmask;
-  queryHostmask->setText(newHostmask);
 }
 
 void Query::updateFonts()
@@ -266,6 +262,21 @@ void Query::childAdjustFocus()
 }
 
 
+void Query::setNickInfo(const NickInfoPtr & nickInfo) {
+  if(m_nickInfo)
+    disconnect(m_nickInfo, SIGNAL(nickInfoChanged()), this, SLOT(nickInfoChanged()));
+
+  m_nickInfo = nickInfo;
+  Q_ASSERT(m_nickInfo); if(!m_nickInfo) return;
+  setName(m_nickInfo->getNickname());
+  connect(m_nickInfo, SIGNAL(nickInfoChanged()), this, SLOT(nickInfoChanged()));
+}
+void Query::nickInfoChanged() {
+  setName(m_nickInfo->getNickname());
+}
+NickInfoPtr Query::getNickInfo() {
+  return m_nickInfo;
+}
 
 QString Query::getTextInLine() { return queryInput->text(); }
 

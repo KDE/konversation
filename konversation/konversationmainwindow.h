@@ -31,6 +31,7 @@
 
 #include "preferences.h"
 #include "ssllabel.h"
+#include "nickinfo.h"
 
 /*
  Dario Abatianni
@@ -75,7 +76,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     RawLog* addRawLog(Server* server);
     ChannelListPanel* addChannelListPanel(Server* server);
     Channel* addChannel(Server* server,const QString& name);
-    Query* addQuery(Server* server,const QString& name, bool weinitiated=true);
+    Query* addQuery(Server* server,const NickInfoPtr & name, bool weinitiated=true);
 
     DccPanel* getDccPanel();
     void showView(ChatWindow* view);

@@ -101,7 +101,6 @@ class ChatWindow : public BASE_CLASS
     IRCView* getTextView();
     void setLog(bool activate);
 
-    void setName(const QString& newName);
     QString& getName();
 
     void setType(WindowType newType);
@@ -110,8 +109,8 @@ class ChatWindow : public BASE_CLASS
     void insertRememberLine();
     void append(const QString& nickname,const QString& message);
     void appendRaw(const QString& message, bool suppressTimestamps=false);
-    void appendQuery(const QString& nickname,const QString& message);
-    void appendAction(const QString& nickname,const QString& message);
+    void appendQuery(const QString& nickname,const QString& message, bool usenotifications = false);
+    void appendAction(const QString& nickname,const QString& message, bool usenotifications = false);
     void appendServerMessage(const QString& type,const QString& message);
     void appendCommandMessage(const QString& command, const QString& message, bool important = true,
       bool parseURL = true, bool self = false);
@@ -174,8 +173,13 @@ class ChatWindow : public BASE_CLASS
     void blinkTimeout();  // USE_MDI
 
   protected:
-    bool log;
-    bool firstLog;
+    
+    /** Some children may handle the name themselves, and not want this public.
+     *  Increase the visibility in the subclass if you want outsiders to call this.
+     *  The name is the string that is shown in the tab.
+     *  @param newName The name to show in the tab
+     */
+    virtual void setName(const QString& newName);
     
     /** Called from adjustFocus */
     virtual void childAdjustFocus() = 0;
@@ -193,9 +197,12 @@ class ChatWindow : public BASE_CLASS
      *  "irc color" item on the menu to be enabled.
      */
     virtual bool areIRCColorsSupported() {return false; }
+    
     int spacing();
     int margin();
 
+    bool log;
+    bool firstLog;
     QString name;
     QString logName;
 
@@ -240,7 +247,6 @@ class ChatWindow : public BASE_CLASS
      *  @see setMainWindow
      */
     KonversationMainWindow *m_mainWindow;
-
 };
 
 #endif

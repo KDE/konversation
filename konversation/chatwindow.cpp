@@ -227,16 +227,32 @@ void ChatWindow::append(const QString& nickname,const QString& message)
   textView->append(nickname,message);
 }
 
-void ChatWindow::appendQuery(const QString& nickname,const QString& message)
+void ChatWindow::appendQuery(const QString& nickname,const QString& message, bool usenotifications)
 {
   Q_ASSERT(textView);  if(!textView) return ;
   textView->appendQuery(nickname,message);
+
+  // OnScreen Message
+  if(usenotifications && KonversationApplication::preferences.getOSDShowQuery() && notificationsEnabled())
+  {
+    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+    konvApp->osd->showOSD(i18n( "(Query) <%1> %2" ).arg(nickname).arg(message));
+  }
+
 }
 
-void ChatWindow::appendAction(const QString& nickname,const QString& message)
+void ChatWindow::appendAction(const QString& nickname,const QString& message, bool usenotifications)
 {
   Q_ASSERT(textView);  if(!textView) return ;
   textView->appendAction(nickname,message);
+
+  // OnScreen Message
+  if(usenotifications && KonversationApplication::preferences.getOSDShowQuery() && notificationsEnabled())
+  {
+    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+    konvApp->osd->showOSD(i18n( "(Query) * %1 %2" ).arg(nickname).arg(message));
+  }
+
 }
 
 void ChatWindow::appendServerMessage(const QString& type,const QString& message)

@@ -293,8 +293,6 @@ void Server::connectSignals()
   connect(&unlockTimer,SIGNAL(timeout()),
                   this,SLOT  (unlockSending()) );
 
-  connect(outputFilter,SIGNAL (openQuery(const QString&,const QString&)),
-                   this,SLOT   (addQuery(const QString&,const QString&)) );
   connect(outputFilter,SIGNAL (requestDccSend()),
                    this,SLOT   (requestDccSend()) );
   connect(outputFilter,SIGNAL (requestDccSend(const QString&)),
@@ -1196,8 +1194,8 @@ void Server::dcopSay(const QString& target,const QString& command)
     Query* query=getQueryByName(target);
     if(query==0)
     {
-      addQuery(target,QString::null);
-      query=getQueryByName(target);
+      NickInfoPtr nickinfo = obtainNickInfo(target);
+      query=addQuery(nickinfo, true);
     }
     if(query) {
       if(!command.isEmpty())
@@ -1436,13 +1434,15 @@ QString Server::getIp(bool followDccSetting)
   return ip;
 }
 
-void Server::addQuery(const QString& nickname,const QString& hostmask, bool weinitiated )
+Query *Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
 {
+  QString nickname = nickInfo->getNickname();
   // Only create new query object if there isn't already one with the same name
   Query* query=getQueryByName(nickname);
   if(!query)
   {
-    query=getMainWindow()->addQuery(this,nickname, weinitiated);
+    QString lcNickname = nickname.lower();
+    query=getMainWindow()->addQuery(this,nickInfo, weinitiated);
     query->setIdentity(getIdentity());
 
     connect(query,SIGNAL (sendFile(const QString&)),this,SLOT (requestDccSend(const QString &)) );
@@ -1451,26 +1451,20 @@ void Server::addQuery(const QString& nickname,const QString& hostmask, bool wein
     // Append query to internal list
     queryList.append(query);
 
-    // Update NickInfo.
-    QString lcNickname = nickname.lower();
-    NickInfoPtr nickInfo = obtainNickInfo(nickname);
-    if ((nickInfo->getHostmask() != hostmask) && !hostmask.isEmpty())
-    {
-      nickInfo->setHostmask(hostmask);
-    }
     m_queryNicks.insert(lcNickname, nickInfo);
 
 #ifdef USE_KNOTIFY
-    KNotifyClient::event(mainWindow->winId(), "query",
-      i18n("%1 have started a conversation (query) with you.").arg(nickname));
+    if(!weinitiated) {
+      KNotifyClient::event(mainWindow->winId(), "query",
+        i18n("%1 has started a conversation (query) with you.").arg(nickname));
+    }
 #endif
   }
 
   // try to get hostmask if there's none yet
-  if(hostmask.isEmpty()) requestUserhost(nickname);
-
-  // Always set hostmask
-  if(query) query->setHostmask(hostmask);
+  if(query->getNickInfo()->getHostmask().isEmpty()) requestUserhost(nickname);
+  Q_ASSERT(query);
+  return query;
 }
 
 void Server::closeQuery(const QString &name)
@@ -2451,9 +2445,6 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
       nickInfo->setHostmask(sourceHostmask);
     }
   }
-  // Set hostmask for query with the same name
-  Query* query=getQueryByName(sourceNick);
-  if(query) query->setHostmask(sourceHostmask);
 }
 
 void Server::removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit)
@@ -2543,15 +2534,6 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
   // If this was our own nickchange, tell our server object about it
   if(nickname==getNickname()) setNickname(newNick);
   // If we had a query with this nick, change that name, too
-  Query* query=queryList.first();
-  while(query)
-  {
-    if(query->getName().lower()==nickname.lower())
-    {
-      query->setName(newNick);
-    }
-    query=queryList.next();
-  }
 
 }
 
@@ -2620,17 +2602,10 @@ void Server::appendCommandMessageToChannel(const QString& channel,const QString&
 void Server::appendToQuery(const QString& queryName,const QString& message)
 {
   Query* outQuery=getQueryByName(queryName);
-  if(outQuery)
-  {
-    outQuery->appendQuery(queryName,message);
-    // OnScreen Message
-    if(KonversationApplication::preferences.getOSDShowQuery() && outQuery->notificationsEnabled())
-    {
-      KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-      konvApp->osd->showOSD(i18n( "(Query) <%1> %2" ).arg(queryName).arg(message));
-    }
-  }
+  if(outQuery) outQuery->appendQuery(queryName,message);
   else kdWarning() << "Server::appendToQuery(" << queryName << "): Query not found!" << endl;
+
+  
 }
 
 void Server::appendActionToQuery(const QString& queryName,const QString& message)

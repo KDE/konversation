@@ -18,6 +18,7 @@
 #include <qstring.h>
 
 #include "chatwindow.h"
+#include "nickinfo.h"
 
 /*
   @author Dario Abatianni
@@ -44,8 +45,12 @@ class Query : public ChatWindow
 #endif
     ~Query();
 
-    void setName(const QString& newName);
-    void setHostmask(const QString& newHostmask);
+
+    /** This will always be called soon after this object is created.
+     *  @param nickInfo A nickinfo that must exist.
+     */
+    void setNickInfo(const NickInfoPtr & nickInfo);
+    NickInfoPtr getNickInfo();
     void updateFonts();
     virtual QString getTextInLine();
     virtual bool closeYourself();
@@ -72,10 +77,12 @@ class Query : public ChatWindow
     // connected to IRCInput::textPasted() - used to handle large/multiline pastes
     void textPasted(const QString& text);
     void popup(int id);
+    void nickInfoChanged();
 #ifdef USE_MDI
     void serverQuit(const QString& reason);
 #endif
   protected:
+    void setName(const QString& newName);
     void showEvent(QShowEvent* event);
     /** Called from ChatWindow adjustFocus */
     virtual void childAdjustFocus();
@@ -88,12 +95,12 @@ class Query : public ChatWindow
 #endif
 
     QString queryName;
-    QString hostmask;
     QString buffer;
 
     QLineEdit* queryHostmask;
     QLabel* awayLabel;
     IRCInput* queryInput;
+    NickInfoPtr m_nickInfo;
 };
 
 #endif

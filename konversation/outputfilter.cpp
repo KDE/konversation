@@ -29,10 +29,13 @@
 
 #include "outputfilter.h"
 #include "konversationapplication.h"
+#include "konversationmainwindow.h"
 #include "ignore.h"
 #include "server.h"
 #include "irccharsets.h"
 #include "linkaddressbook/addressbook.h"
+
+#include "query.h"
 
 namespace Konversation {
     OutputFilter::OutputFilter(Server* server)
@@ -138,9 +141,9 @@ namespace Konversation {
             else if(command == "quit")    result = parseQuit(parameter);
             else if(command == "notice")  result = parseNotice(parameter);
             else if(command == "j")       result = parseJoin(parameter);
-            else if(command == "msg")     result = parseMsg(myNick,parameter);
+            else if(command == "msg")     result = parseMsg(myNick,parameter, false);
             else if(command == "smsg")    result = parseSMsg(parameter);
-            else if(command == "query")   parseQuery(parameter);
+            else if(command == "query")   result = parseMsg(myNick,parameter, true);
             else if(command == "op")      result = parseOp(parameter);
             else if(command == "deop")    result = parseDeop(parameter);
             else if(command == "voice")   result = parseVoice(parameter);
@@ -431,23 +434,58 @@ namespace Konversation {
         return result;
     }
 
-    OutputFilterResult OutputFilter::parseMsg(const QString &myNick, const QString &parameter)
+    OutputFilterResult OutputFilter::parseMsg(const QString &myNick, const QString &parameter, bool isQuery)
     {
         OutputFilterResult result;
-        QString recipient = parameter.left(parameter.find(" "));
-        QString message = parameter.mid(recipient.length() + 1);
+//        QString recipient = parameter.left(parameter.find(" "));
+//        QString message = parameter.mid(recipient.length() + 1);
+        QString recipient = parameter.section(" ", 0, 0);
+	QString message = parameter.section(" ", 1);
 
-        if(message.startsWith(commandChar+"me"))
+	QString output;
+	if(message.stripWhiteSpace().isEmpty()) {
+	    //empty result - we don't want to send any message to the server
+	}
+	else if(message.startsWith(commandChar+"me"))
         {
             result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "ACTION " + message.mid(4) + '\x01';
-            result.output = QString("* %1 %2").arg(myNick).arg(message.mid(4));
+            output = QString("* %1 %2").arg(myNick).arg(message.mid(4));
         }
         else
         {
             result.toServer = "PRIVMSG " + recipient + " :" + message;
-            result.output = message;
+            output = message;
         }
+        ::Query *query;
+	if(isQuery || output.isEmpty()) {
+	  //if this is a /query, always open a query window.
+	  //treat "/msg nick" as "/query nick"
 
+          //Note we have to be a bit careful here.
+	  //We only want to create ('obtain') a new nickinfo if we have done /query
+	  //or "/msg nick".  Not "/msg nick message".
+          NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
+          query = m_server->addQuery(nickInfo, true /*we initiated*/);
+	  if(output.isEmpty()) { //force focus if the user did not specify any message
+            KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
+            konv_app->getMainWindow()->showView(query);
+	  }
+	} 
+	else {
+	  //We have  "/msg nick message"
+          query=m_server->getQueryByName(recipient);
+	}
+	
+        if(query && !output.isEmpty()) {
+	  if(message.startsWith(commandChar+"me"))
+	    query->appendAction(m_server->getNickname(), message.mid(4)); //log if and only if the query open
+	  else 
+	    query->appendQuery(m_server->getNickname(), output); //log if and only if the query open
+	}
+       
+	if(output.isEmpty()) return result; //result should be completely empty;
+	//FIXME - don't do below line if query is focussed
+	result.output = output;
         result.typeString= "-> " + recipient;
         result.type = Query;
         return result;
@@ -493,15 +531,6 @@ namespace Konversation {
         result.typeString = i18n("CTCP");
         result.type = Program;
         return result;
-    }
-
-    void OutputFilter::parseQuery(const QString &parameter)
-    {
-        QStringList queryList = QStringList::split(' ', parameter);
-
-        for(unsigned int index = 0; index < queryList.count(); index++) {
-            emit openQuery(queryList[index], QString::null);
-        }
     }
 
     OutputFilterResult OutputFilter::changeMode(const QString &parameter,char mode,char giveTake)

@@ -162,10 +162,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       {
         if(!isIgnore(prefix,Ignore::Channel))
         {
-          server->appendActionToChannel(parameterList[0],sourceNick,ctcpArgument);
+          Channel* channel = server->getChannelByName( parameterList[0] );
+          channel->appendAction(sourceNick,ctcpArgument);
 #ifdef USE_KNOTIFY
           // KNotify events...
-          Channel* channel = server->getChannelByName( parameterList[0] );
           if(channel && sourceNick != server->getNickname() && channel->notificationsEnabled()) {
             if(ctcpArgument.lower().find(QRegExp("(^|[^\\d\\w])"+QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
             {
@@ -185,14 +185,17 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         // Check if we ignore queries from this nick
         if(!isIgnore(prefix,Ignore::Query))
         {
+	  NickInfoPtr nickinfo = server->obtainNickInfo(sourceNick);
+	  nickinfo->setHostmask(sourceHostmask);
+	  
           // create new query (server will check for dupes)
-          server->addQuery(sourceNick,sourceHostmask, false); //we didn't initiate this
+          Query *query = server->addQuery(nickinfo, false /* we didn't initiate this*/ );
           // send action to query
-	  server->appendActionToQuery(sourceNick,ctcpArgument);
+	  query->appendAction(sourceNick,ctcpArgument,  true /*use notifications if enabled - e.g. OSD */);
 
 #ifdef USE_KNOTIFY
           // KNotify events...
-          if(sourceNick != server->getNickname() && server->getQueryByName(sourceNick)->notificationsEnabled()) {
+          if(sourceNick != server->getNickname() && query->notificationsEnabled()) {
             KNotifyClient::event(mainWindow->winId(), "nick");
           }
 #endif
@@ -337,11 +340,13 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       {
         if(!isIgnore(prefix,Ignore::Query))
         {
+	  NickInfoPtr nickinfo = server->obtainNickInfo(sourceNick);
+	  nickinfo->setHostmask(sourceHostmask);
+
           // Create a new query (server will check for dupes)
-          server->addQuery(sourceNick,sourceHostmask, false/*we didn't initiate the add query*/);
-          // Append this message to the query
-	  kdDebug() << "Query 2 inputfilter" << endl;
-          server->appendToQuery(sourceNick,trailing);
+	  Query *query = server->addQuery(nickinfo, false /*we didn't initiate this*/ );
+          // send action to query
+	  query->appendQuery(sourceNick,trailing, true /*use notifications if enabled - e.g. OSD */ );
 
 #ifdef USE_KNOTIFY
           // KNotify events...
