@@ -601,6 +601,12 @@ void Server::broken(int state)
   connecting=false;
   outputBuffer.clear();
 
+  notifyTimer.stop();
+  notifyCheckTimer.stop();
+  inputFilter.setLagMeasuring(false); // XXX paranoia?
+  currentLag = -1; // XXX will this make it server independent now?
+  emit resetLag();
+  
   kdDebug() << "Connection broken (Socket fd " << serverSocket->socketDevice()->socket() << ") " << state << "!" << endl;
 
   // clear nicks online

@@ -1097,7 +1097,10 @@ void KonversationMainWindow::updateLag(Server* lagServer,int msec)
     statusBar()->changeItem(i18n("Ready."),StatusText);
     QString lagString;
 
-    if(msec<1000) {
+    if (msec == -1) {
+      lagString=i18n("Lag: not known");
+    }
+    else if(msec<1000) {
       lagString = i18n("Lag: %1 ms").arg(msec);
     } else {
       lagString = i18n("Lag: %1 s").arg(msec/1000);
