@@ -12,6 +12,8 @@
 #ifndef KONVERSATION_IRCCHARSETS_H
 #define KONVERSATION_IRCCHARSETS_H
 
+#include <qmap.h>
+
 class IRCCharsets
 {
   public:
@@ -35,6 +37,7 @@ class IRCCharsets
     
     static int availableEncodingsCount();
     
+    static QString shortNameToDescriptiveName( const QString& shortName );
     static QString descriptiveNameToShortName( const QString& descriptiveName );
     
     /**
@@ -55,8 +58,16 @@ class IRCCharsets
      */
     static QString encodingForLocale();
     
+    /*
+      Converts iso code to shortname
+      Like : iso8859-9 -> iso 8859-9
+    */
+    static QString localeAlias(const QString& locale);
+    
   private:
     static void private_init();
+
+    static QMap<QString,QString> s_localeAliases;
     static QStringList s_shortNames;
     static QStringList s_descriptiveNames;
 };

@@ -42,6 +42,12 @@ int IRCCharsets::availableEncodingsCount()  // static
   return s_shortNames.count();
 }
 
+QString IRCCharsets::shortNameToDescriptiveName( const QString& shortName ) // static
+{
+  private_init();
+  return availableEncodingDescriptiveNames()[shortNameToIndex(shortName)];
+}
+
 QString descriptiveNameToShortName( const QString& descriptiveName )  // static
 {
   return KGlobal::charsets()->encodingForName( descriptiveName );
@@ -88,11 +94,47 @@ QString IRCCharsets::encodingForLocale()  // static
   return "utf8";
 }
 
+QString IRCCharsets::localeAlias(const QString& locale)
+{
+  private_init();
+  return s_localeAliases[locale.lower()];
+}
+
+
 void IRCCharsets::private_init()  // static, private
 {
+  if(s_localeAliases.isEmpty())
+    {
+      // Setup locale aliases
+      s_localeAliases["cp1250"] = "cp 1250";
+      s_localeAliases["cp1251"] = "cp 1251";
+      s_localeAliases["cp1252"] = "cp 1252";
+      s_localeAliases["cp1253"] = "cp 1253";
+      s_localeAliases["cp1254"] = "cp 1254";
+      s_localeAliases["cp1255"] = "cp 1255";
+      s_localeAliases["cp1256"] = "cp 1256";
+      s_localeAliases["cp1257"] = "cp 1257";
+
+      s_localeAliases["iso8859-1"] = "iso 8859-1";
+      s_localeAliases["iso8859-2"] = "iso 8859-2";
+      s_localeAliases["iso8859-3"] = "iso 8859-3";
+      s_localeAliases["iso8859-4"] = "iso 8859-4";
+      s_localeAliases["iso8859-5"] = "iso 8859-5";
+      s_localeAliases["iso8859-6"] = "iso 8859-6";
+      s_localeAliases["iso8859-7"] = "iso 8859-7";
+      s_localeAliases["iso8859-8"] = "iso 8859-8";
+      s_localeAliases["iso8859-8-i"] = "iso 8859-8-i";
+      s_localeAliases["iso8859-9"] = "iso 8859-9";
+      s_localeAliases["iso8859-11"] = "iso 8859-11";
+      s_localeAliases["iso8859-13"] = "iso 8859-13";
+      s_localeAliases["iso8859-15"] = "iso 8859-15";
+
+      s_localeAliases["pt154"] = "pt 154";
+    }
+
   if ( !s_shortNames.isEmpty() )
     return;
-  
+
   s_descriptiveNames = KGlobal::charsets()->descriptiveEncodingNames();
   
   QStringList::Iterator it = s_descriptiveNames.begin();
@@ -112,3 +154,4 @@ void IRCCharsets::private_init()  // static, private
 
 QStringList IRCCharsets::s_shortNames;
 QStringList IRCCharsets::s_descriptiveNames;
+QMap<QString,QString> IRCCharsets::s_localeAliases;

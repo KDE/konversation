@@ -127,6 +127,7 @@ namespace Konversation
       OutputFilterResult parseAme(const QString& parameter);
       OutputFilterResult parseAmsg(const QString& parameter);
       OutputFilterResult parsePrefs(const QString& parameter);
+      void parseCharset(const QString charset);
   
       OutputFilterResult changeMode(const QString& parameter,char mode,char giveTake);
       bool isAChannel(const QString& check);

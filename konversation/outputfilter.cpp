@@ -18,6 +18,7 @@
 #include <qregexp.h>
 #include <qmap.h>
 #include <qvaluelist.h>
+#include <qtextcodec.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -30,6 +31,7 @@
 #include "konversationapplication.h"
 #include "ignore.h"
 #include "server.h"
+#include "irccharsets.h"
 #include "linkaddressbook/addressbook.h"
 
 namespace Konversation {
@@ -168,6 +170,8 @@ namespace Konversation {
             else if(command == "server")  parseServer(parameter);
 
             else if(command == "prefs")   result = parsePrefs(parameter);
+	    
+	    else if(command == "charset") parseCharset(parameter); 
 
             // Forward unknown commands to server
             else {
@@ -1173,6 +1177,20 @@ namespace Konversation {
 
         return result;
     }
+
+  void OutputFilter::parseCharset(const QString charset)
+  {
+    if(QTextCodec::codecForName(charset.ascii()))
+      {
+	QString newCharset = IRCCharsets::localeAlias(charset);
+	if(!newCharset.isEmpty())
+	  m_server->getIdentity()->setCodecName(newCharset);
+	else
+	  m_server->getIdentity()->setCodecName(charset);
+      }
+    
+  }
+
 }
 
 #include "outputfilter.moc"
