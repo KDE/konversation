@@ -46,60 +46,28 @@ PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
   previewLabel->setText("Preview :");
   
   QFrame* previewFrame = new QFrame(newParent);
-  
   QHBoxLayout *previewLayout=new QHBoxLayout( previewFrame );
+
+  previewLayout->addStretch(9); 
   
   for(int i=0; i <= 5; ++i) {
-
-    if(i == 0) 
-      previewLayout->addStretch(10);
-    else
-      previewLayout->addStretch(1);
+    
+    previewLayout->addStretch(1);
 
     label[i] = new QLabel(previewFrame);
     previewLayout->addWidget(label[i]);
 
-    if(i == 5)
-      previewLayout->addStretch(10);
   }
-  
+
+  previewLayout->addStretch(10);
+
   gridLayout->addWidget(selectLabel, 1, 0);
   gridLayout->addWidget(themeList, 2, 0);
   gridLayout->addWidget(previewLabel, 3, 0);
   gridLayout->addWidget(previewFrame, 4, 0);
   
+  updateList();
   
-  dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/themerc");
-  
-  QString themeName,themeComment;
-  QFile themeRC;
-  QTextStream stream;
-  QString currentTheme = KonversationApplication::preferences.getIconTheme();
-  int index = 0;
-
-  for(QStringList::Iterator it = dirs.begin(); it != dirs.end(); ++it)
-    {
-
-      if((*it).section('/',-2,-2) != currentTheme)
-	++index;
-
-      themeRC.setName( *it );
-      themeRC.open( IO_ReadOnly );
-      stream.setDevice( &themeRC );
-
-      themeName = stream.readLine();
-      themeName = themeName.section('=',1,1);
-
-      themeComment = stream.readLine();
-      themeComment = themeComment.section('=',1,1);
-
-      themeList->insertItem( themeName );
-      themeRC.close();
-    }
-
-  themeList->setSelected(index,TRUE);
-  updatePreview(index);
-
   connect(themeList,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
     
 }
@@ -139,6 +107,41 @@ void PrefsPageThemes::updatePreview(int id)
 
   for(int i=0; i <= 5; ++i)
     label[i]->show();
+}
+
+void PrefsPageThemes::updateList()
+{
+  QString themeName,themeComment;
+  QFile themeRC;
+  QTextStream stream;
+  QString currentTheme = KonversationApplication::preferences.getIconTheme();
+  int index = 0;
+
+  dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/themerc");
+  themeList->clear();
+
+  for(QStringList::Iterator it = dirs.begin(); it != dirs.end(); ++it)
+    {
+
+      if((*it).section('/',-2,-2) != currentTheme)
+        ++index;
+
+      themeRC.setName( *it );
+      themeRC.open( IO_ReadOnly );
+      stream.setDevice( &themeRC );
+
+      themeName = stream.readLine();
+      themeName = themeName.section('=',1,1);
+
+      themeComment = stream.readLine();
+      themeComment = themeComment.section('=',1,1);
+
+      themeList->insertItem( themeName );
+      themeRC.close();
+    }
+
+  themeList->setSelected(index,TRUE);
+  updatePreview(index);
 }
 
 #include "prefspagethemes.moc"

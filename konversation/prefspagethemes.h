@@ -39,6 +39,8 @@ class PrefsPageThemes : public PrefsPage
     QStringList dirs;
     KListBox *themeList;
 
+    void updateList();
+
 };
 
 #endif
