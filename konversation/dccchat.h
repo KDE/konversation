@@ -24,13 +24,14 @@
 class IRCInput;
 class KLineEdit;
 class KExtendedSocket;
+class Server;
 
 class DccChat : public ChatWindow
 {
   Q_OBJECT
 
   public:
-    DccChat(QWidget* parent,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen);
+    DccChat(QWidget* parent,Server* newServer,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen);
     ~DccChat();
 
     virtual QString getTextInLine();
@@ -53,6 +54,7 @@ class DccChat : public ChatWindow
     void dccChatBroken(int error);
     void readData();
     void dccChatTextEntered();
+    void sendDccChatText(const QString& sendLine);
     void textPasted(QString text);
     void newTextInView(const QString& highlightColor, bool important);
     void heardPartner();
@@ -60,7 +62,6 @@ class DccChat : public ChatWindow
   protected:
     void listenForPartner();
     void connectToPartner();
-    void sendDccChatText(const QString& sendLine);
 
     QString myNick;
     QString nick;

@@ -29,23 +29,21 @@
 #include "ircinput.h"
 #include "dccchat.h"
 
-DccChat::DccChat(QWidget* parent,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen) :
+DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen) :
       ChatWindow(parent)
 {
-  kdDebug() << "DccChat::DccChat()" << endl;
-
   dccSocket=0;
   listenSocket=0;
   port=0;
 
   setType(ChatWindow::DccChat);
-  setName("-"+nickname+"-");
+  ChatWindow::setName("-"+nickname+"-");
+  ChatWindow::setLogfileName("-"+nickname+"-");
 
   myNick=myNickname;
   nick=nickname;
 
-  if(listen);
-  else
+  if(!listen)
   {
     host=parameters[1];
     port=parameters[2].toInt();
@@ -57,6 +55,7 @@ DccChat::DccChat(QWidget* parent,const QString& myNickname,const QString& nickna
 
   sourceLine=new KLineEdit(mainBox);
   setTextView(new IRCView(mainBox,NULL));
+  setServer(newServer);
 
   dccChatInput=new IRCInput(mainBox);
 

@@ -454,11 +454,9 @@ void KonversationMainWindow::deleteDccPanel()
 
 void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen)
 {
-  kdDebug() << "KonversationMainWindow::addDccChat(" << nick << " " << arguments.join(" ") << " " << listen << ")" << endl;
-
   if(frontServer)
   {
-    DccChat* dccChatPanel=new DccChat(getViewContainer(),myNick,nick,arguments,listen);
+    DccChat* dccChatPanel=new DccChat(getViewContainer(),frontServer,myNick,nick,arguments,listen);
     addView(dccChatPanel,3,dccChatPanel->getName());
 
     connect(dccChatPanel,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
