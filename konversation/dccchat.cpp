@@ -49,6 +49,7 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
   m_listenSocket=0;
   port=0;
 
+  setServer(newServer);
   setType(ChatWindow::DccChat);
   setChannelEncodingSupported(true);
   ChatWindow::setName("-"+nickname+"-");
@@ -69,7 +70,6 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
 
   sourceLine=new KLineEdit(mainBox);
   setTextView(new IRCView(mainBox,NULL));
-  setServer(newServer);
 
   dccChatInput=new IRCInput(mainBox);
 
