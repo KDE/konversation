@@ -62,9 +62,20 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
   QWhatsThis::add(scrollbackMaxSpin,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
   QToolTip::add(scrollbackMaxSpin,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
   QToolTip::add(scrollbackMaxLabel,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
-
+  
   QVGroupBox* sortOptionsGroup = new QVGroupBox(i18n("&Nickname List"), parentFrame, "sort_options_group");
 
+  QFrame* autoWhoNicksLimitFrame=new QFrame(sortOptionsGroup);
+  QHBoxLayout* autoWhoNicksLimitLayout=new QHBoxLayout(autoWhoNicksLimitFrame);
+  autoWhoNicksLimitLayout->setSpacing(spacingHint());
+  QLabel* autoWhoNicksLimitLabel = new QLabel(i18n("Nicks limit for auto /&WHO:"), autoWhoNicksLimitFrame);
+  autoWhoNicksLimitSpin = new QSpinBox(0, 1000, 1, autoWhoNicksLimitFrame, "auto_who_nicks_limit_spin");
+  autoWhoNicksLimitSpin->setValue(preferences->getAutoWhoNicksLimit());
+  autoWhoNicksLimitLabel->setBuddy(autoWhoNicksLimitSpin);
+  autoWhoNicksLimitLayout->addWidget(autoWhoNicksLimitLabel);
+  autoWhoNicksLimitLayout->addWidget(autoWhoNicksLimitSpin);
+  autoWhoNicksLimitLayout->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+  
   QHBox* actionEditBox = new QHBox(sortOptionsGroup);
   actionEditBox->setSpacing(spacingHint());
   QLabel* channelActionLabel = new QLabel(i18n("Command executed on double click:"), actionEditBox);
@@ -171,6 +182,7 @@ void PrefsPageChatWinBehavior::applyPreferences()
   preferences->setShowRememberLineInAllWindows(showRememberLineInAllWindows->isChecked());
   preferences->setRedirectToStatusPane(redirectToStatusPaneCheck->isChecked());
   preferences->setScrollbackMax(scrollbackMaxSpin->value());
+  preferences->setAutoWhoNicksLimit(autoWhoNicksLimitSpin->value());
   preferences->setChannelDoubleClickAction(channelActionInput->text());
   preferences->setSortByStatus(sortByStatusCheck->isChecked());
   preferences->setSortCaseInsensitive(sortCaseInsensitiveCheck->isChecked());

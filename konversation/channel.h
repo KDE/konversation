@@ -153,6 +153,7 @@ class Channel : public ChatWindow
     void sendFileMenu();
     void autoUserhost();
     void autoUserhostChanged(bool state);
+    void autoWho();
     void nicknameComboboxChanged(int index);
 
     void closeYourself(ChatWindow* view); // USE_MDI
@@ -222,6 +223,7 @@ class Channel : public ChatWindow
     NickList nicknameList;
     QPtrList<QuickButton> buttonList;
     QTimer userhostTimer;
+    QTimer whoTimer;
 
     bool m_allowNotifications;
     

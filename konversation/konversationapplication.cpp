@@ -353,6 +353,8 @@ void KonversationApplication::readOptions()
 
   preferences.setLogfileBufferSize(config->readNumEntry("LogfileBufferSize",preferences.getLogfileBufferSize()));
   preferences.setScrollbackMax(config->readUnsignedNumEntry("ScrollbackMax",preferences.getScrollbackMax()));
+  
+  preferences.setAutoWhoNicksLimit(config->readUnsignedNumEntry("AutoWhoNicksLimit",preferences.getAutoWhoNicksLimit()));
 
   // Double click actions
   preferences.setChannelDoubleClickAction(config->readEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction()));
@@ -838,6 +840,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->writeEntry("LogfileBufferSize",preferences.getLogfileBufferSize());
   config->writeEntry("ScrollbackMax",preferences.getScrollbackMax());
+  
+  config->writeEntry("AutoWhoNicksLimit",preferences.getAutoWhoNicksLimit());
 
   config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon());
   config->writeEntry("SystrayOnly",preferences.getSystrayOnly());

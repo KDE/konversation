@@ -1508,7 +1508,6 @@ void Server::requestWhois(const QString& nickname)
 
 void Server::requestWho(const QString& channel)
 {
-  kdDebug() << "Server::requestWho: " << channel << endl;
   inputFilter.setAutomaticRequest("WHO", channel, true);
   queue("WHO "+channel);
 }
@@ -2762,6 +2761,11 @@ void Server::setIrcName(const QString &newIrcName)
 QString Server::getIrcName() const
 {
   return ircName;
+}
+
+InputFilter* Server::getInputFilter()
+{
+  return &inputFilter;
 }
 
 Konversation::OutputFilter* Server::getOutputFilter()

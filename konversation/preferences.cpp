@@ -117,6 +117,8 @@ Preferences::Preferences()
   KStandardDirs kstddir;
   setLogPath(kstddir.saveLocation("data","konversation/logs"));
   setScrollbackMax(1000);
+  
+  setAutoWhoNicksLimit(300);
 
   setLog(true);
   setLowerLog(true);
@@ -332,6 +334,9 @@ QString Preferences::getLogPath() { return logPath; }
 
 void Preferences::setScrollbackMax(int max) { scrollbackMax=max; }
 int Preferences::getScrollbackMax() { return scrollbackMax; }
+
+void Preferences::setAutoWhoNicksLimit(int limit) { autoWhoNicksLimit=limit; }
+int Preferences::getAutoWhoNicksLimit() { return autoWhoNicksLimit; }
 
 void Preferences::setDccAddPartner(bool state) { dccAddPartner=state; }
 bool Preferences::getDccAddPartner() { return dccAddPartner; }

@@ -290,6 +290,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   // every few seconds try to get more userhosts
   autoUserhostChanged(KonversationApplication::preferences.getAutoUserhost());
   userhostTimer.start(10000);
+  
+  connect(&whoTimer,SIGNAL (timeout()),this,SLOT (autoWho()));
 
   m_allowNotifications = true;
 
@@ -1729,6 +1731,24 @@ void Channel::autoUserhostChanged(bool state)
   }
 }
 
+void Channel::autoWho()
+{
+  //FIXME: make it configurable
+  if(nicks>KonversationApplication::preferences.getAutoWhoNicksLimit())
+  {
+    // don't use auto /WHO when the number of nicks is too large, or get banned.
+    kdDebug() << "Channel::autoWho(): " << getName() << ": nicks=" << nicks << " > " << KonversationApplication::preferences.getAutoWhoNicksLimit() << ". aborted." << endl;
+    return;
+  }
+  if(server->getInputFilter()->isWhoRequestUnderProcess(getName()))
+  {
+    kdDebug() << "Channel::autoWho(): " << getName() << ": already under process. aborted." << endl;
+    return;
+  }
+  kdDebug() << "Channel::autoWho(): " << getName() << ": requesting" << endl;
+  server->requestWho(getName());
+}
+
 QString Channel::getTextInLine() { return channelInput->text(); }
 
 bool Channel::frontView()        { return true; }
@@ -1821,6 +1841,12 @@ void Channel::processPendingNicks()
     nicknameList.sort();
     nicknameListView->setUpdatesEnabled(true);
     nicknameListView->triggerUpdate();
+    if(!whoTimer.isActive())
+    {
+      kdDebug() << "Channel::processPendingNicks(): " << getName() << ": start auto-WHO" << endl;
+      autoWho();
+      whoTimer.start(60000);
+    }
   }
 }
 

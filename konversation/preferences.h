@@ -98,6 +98,9 @@ class Preferences : public QObject
     QString getLogPath();
     void setScrollbackMax(int max);
     int getScrollbackMax();
+    
+    void setAutoWhoNicksLimit(int limit);
+    int getAutoWhoNicksLimit();
 
     void setDccAddPartner(bool state);
     bool getDccAddPartner();
@@ -457,6 +460,7 @@ class Preferences : public QObject
     bool logFollowsNick;
     QString logPath;
     int scrollbackMax;
+    int autoWhoNicksLimit;
 
     TabPlacement tabPlacement;   // where do the tabs go?
     bool blinkingTabs;           // Do we want the LEDs on the tabs to blink?

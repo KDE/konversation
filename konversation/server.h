@@ -119,6 +119,7 @@ class Server : public QObject
     bool isAChannel(const QString &check);
     bool isNickname(const QString& compare);
     QString getNickname() const;
+    InputFilter* getInputFilter();
     Konversation::OutputFilter* getOutputFilter();
 
     void joinChannel(const QString& name, const QString& hostmask, const QString& key);
