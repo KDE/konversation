@@ -20,8 +20,8 @@
 
 QString MultilineEdit::returnText; // static
 
-MultilineEdit::MultilineEdit(QWidget* parent,QString text) : 
-               KDialogBase(parent,"multiline_edit_dialog",true,i18n("Edit multiline paste"),
+MultilineEdit::MultilineEdit(QWidget* parent,QString text) :
+               KDialogBase(parent,"multiline_edit_dialog",true,i18n("Edit Multiline Paste"),
                            KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
 {
   // Create the top level widget
