@@ -958,7 +958,7 @@ void Server::incoming()
   
   // convert IRC ascii data to selected encoding
   bool isUtf8;
-  if(len < 8 )
+  if(len > 8 )
     isUtf8 = KStringHandler::isUtf8(buffer);
   else
     isUtf8 = true;
