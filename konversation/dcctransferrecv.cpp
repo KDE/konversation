@@ -168,8 +168,11 @@ void DccTransferRecv::failed( const QString& errorMessage )
 void DccTransferRecv::abort()  // public slot
 {
   kdDebug() << "DccTransferRecv::abort()" << endl;
-  
-  m_writeCacheHandler->write( true ); // flush
+
+  if(m_writeCacheHandler) {
+    m_writeCacheHandler->write( true ); // flush
+  }
+
   setStatus( Aborted );
   updateView();
   cleanUp();
