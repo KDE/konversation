@@ -15,7 +15,7 @@ the Free Software Foundation; either version 2 of the License, or
             <x>0</x>
             <y>0</y>
             <width>538</width>
-            <height>502</height>
+            <height>474</height>
         </rect>
     </property>
     <vbox>
@@ -345,6 +345,23 @@ the Free Software Foundation; either version 2 of the License, or
                             <bool>true</bool>
                         </property>
                     </widget>
+                    <spacer>
+                        <property name="name">
+                            <cstring>spacer3_2</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>20</width>
+                                <height>51</height>
+                            </size>
+                        </property>
+                    </spacer>
                 </vbox>
             </widget>
         </widget>
