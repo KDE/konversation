@@ -153,8 +153,7 @@ void SSLSocket::showInfoDialog()
 
 void SSLSocket::showSSLInfoDialog()
 {
-  /* We don't delete sslInfoDlg here as code in kio/misc/uiserver.cpp says not to do so*/
-
+  
   KSSLInfoDlg* sslInfoDlg = new KSSLInfoDlg(true, m_serverParent, "sslInfoDlg", true);
   sslInfoDlg->setCertState( d->m_sslCertErrors );
   sslInfoDlg->setup( *(d->kssl),
