@@ -10,7 +10,7 @@
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included 
+ *  The above copyright notice and this permission notice shall be included
  *  in all copies or substantial portions of the Software.
  *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -84,7 +84,7 @@ namespace KNetwork
     KResolverResults results;
 
     KResolverPrivate(KResolver* _parent,
-		     const QString& _node = QString::null, 
+		     const QString& _node = QString::null,
 		     const QString& _service = QString::null)
       : parent(_parent), deleteWhenDone(false), waiting(false),
 	status(0), errorcode(0), syserror(0)
@@ -281,7 +281,7 @@ namespace KNetwork
 
       /*
        * Dequeues and notifies an object that is in Queued state
-       * Returns true if the object is no longer queued; false if it could not 
+       * Returns true if the object is no longer queued; false if it could not
        * be dequeued (i.e., it's running)
        */
       bool dequeueNew(KNetwork::KResolver* obj);
@@ -298,7 +298,7 @@ namespace KNetwork
       // private constructor. Only the manager can create worker threads
       KResolverThread();
       RequestData* data;
-  
+
     protected:
       virtual void run();		// here the thread starts
 

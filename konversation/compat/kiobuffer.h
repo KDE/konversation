@@ -10,7 +10,7 @@
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included 
+ *  The above copyright notice and this permission notice shall be included
  *  in all copies or substantial portions of the Software.
  *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -35,7 +35,8 @@ class QIODevice;
  *
  * This class declares the base methods to interface with an I/O buffer.
  * Most applications will not need to access this class directly, since
- * it is all handled by @ref KBufferedSocket and other buffering classes.
+ * it is all handled by @ref KNetwork::KBufferedSocket and other buffering
+ * classes.
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */

@@ -44,6 +44,7 @@
 #include <qwaitcondition.h>
 #include <qsemaphore.h>
 
+#include <kde_file.h>
 #include "kresolver.h"
 #include "kresolver_p.h"
 #include "kresolverworkerbase.h"
@@ -122,8 +123,8 @@ class ResInitUsage
   bool shouldResInit()
   {
     // check that /etc/resolv.conf has changed 
-    struct stat st;
-    if (stat("/etc/resolv.conf", &st) != 0)
+    KDE_struct_stat st;
+    if (KDE_stat("/etc/resolv.conf", &st) != 0)
       return false;
     
     if (mTime < st.st_mtime)
@@ -139,8 +140,8 @@ class ResInitUsage
     //qDebug("ResInitUsage: calling res_init()");
     res_init();
     
-    struct stat st;
-    if (stat("/etc/resolv.conf", &st) == 0)
+    KDE_struct_stat st;
+    if (KDE_stat("/etc/resolv.conf", &st) == 0)
       mTime = st.st_mtime;
   }
 

@@ -27,7 +27,7 @@
 #include <unistd.h>
 #endif
 
-#include <kapplication.h>
+#include "kapplication.h"
 
 #include "ksocks.h"
 #include "ksocketaddress.h"
@@ -155,7 +155,7 @@ KSocksSocketDevice* KSocksSocketDevice::accept()
     }
 
   struct sockaddr sa;
-  socklen_t len = sizeof(sa);
+  kde_socklen_t len = sizeof(sa);
   int newfd = KSocks::self()->accept(m_sockfd, &sa, &len);
   if (newfd == -1)
     {
@@ -169,9 +169,9 @@ KSocksSocketDevice* KSocksSocketDevice::accept()
   return new KSocksSocketDevice(newfd);
 }
 
-static int socks_read_common(int sockfd, char *data, Q_ULONG maxlen, KNetwork::KSocketAddress* from, ssize_t &retval, bool peek = false)
+static int socks_read_common(int sockfd, char *data, Q_ULONG maxlen, KSocketAddress* from, ssize_t &retval, bool peek = false)
 {
-  socklen_t len;
+  kde_socklen_t len;
   if (from)
     {
       from->setLength(len = 128); // arbitrary length
@@ -309,7 +309,7 @@ KNetwork::KSocketAddress KSocksSocketDevice::localAddress() const
   if (m_sockfd == -1)
     return KSocketAddress();	// not open, empty value
 
-  socklen_t len;
+  kde_socklen_t len;
   KSocketAddress localAddress;
   localAddress.setLength(len = 32);	// arbitrary value
   if (KSocks::self()->getsockname(m_sockfd, localAddress.address(), &len) == -1)
@@ -338,7 +338,7 @@ KNetwork::KSocketAddress KSocksSocketDevice::peerAddress() const
   if (m_sockfd == -1)
     return KSocketAddress();	// not open, empty value
 
-  socklen_t len;
+  kde_socklen_t len;
   KSocketAddress peerAddress;
   peerAddress.setLength(len = 32);	// arbitrary value
   if (KSocks::self()->getpeername(m_sockfd, peerAddress.address(), &len) == -1)

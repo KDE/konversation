@@ -360,7 +360,7 @@ public:
    * Error codes
    *
    * These are the possible error values that objects of this class
-   * may return. See @ref strError for getting a string representation
+   * may return. See \ref errorString() for getting a string representation
    * for these errors.
    *
    * @li AddrFamily: Address family for the given nodename is not supported.
@@ -379,7 +379,7 @@ public:
    */
   enum ErrorCodes
     {
-      // note: if you change this enum, take a look at KResolver::strError
+      // note: if you change this enum, take a look at KResolver::errorString
       NoError = 0,
       AddrFamily = -1,
       TryAgain = -2,
