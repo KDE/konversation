@@ -32,11 +32,11 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
 
   trayIconCheck = new QCheckBox(i18n("Show icon in s&ystem tray"), parentFrame, "tray_icon_check");
   trayIconCheck->setChecked(preferences->getShowTrayIcon());
-  
+
   trayNotifyCheck = new QCheckBox(i18n("Use sys&tem tray for new message notification"), parentFrame,"tray_notify_check");
   trayNotifyCheck->setEnabled(trayIconCheck->isChecked());
   trayNotifyCheck->setChecked(preferences->getTrayNotify());
-  
+
   trayOnlyCheck = new QCheckBox(i18n("Stay in system &tray all the time"), parentFrame,"tray_only");
   trayOnlyCheck->setChecked(preferences->getSystrayOnly());
   trayOnlyCheck->setEnabled(trayIconCheck->isChecked());
@@ -174,8 +174,12 @@ PrefsPageBehaviour::~PrefsPageBehaviour()
 void PrefsPageBehaviour::applyPreferences()
 {
   preferences->setShowTrayIcon(trayIconCheck->isChecked());
-  preferences->setTrayNotify(trayNotifyCheck->isChecked());
-  preferences->setSystrayOnly(trayOnlyCheck->isChecked());
+
+  if (trayIconCheck->isChecked())
+      preferences->setSystrayOnly(trayOnlyCheck->isChecked());
+  else
+      preferences->setSystrayOnly(false);
+
   preferences->setRawLog(rawLogCheck->isChecked());
   preferences->setShowServerList(showServerList->isChecked());
   preferences->setWebBrowserUseKdeDefault(!useCustomBrowserCheck->isChecked());
