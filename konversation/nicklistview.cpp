@@ -12,6 +12,8 @@
   email:     eisfuchs@tigress.com
 */
 
+#include <qiconset.h>
+
 #include <kpopupmenu.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -52,7 +54,7 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
     popup->insertSeparator();
     popup->insertItem(i18n("Open Query"),Query);
     popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),DccSend);
-    popup->insertItem(SmallIcon("mail_generic"),i18n("&Send Email..."), SendEmail);
+    popup->insertItem(SmallIconSet("mail_generic"),i18n("&Send Email..."), SendEmail);
     if(addressbook) {
       popup->insertSeparator();
       popup->insertItem(i18n("Addressbook Associations"), addressbook, AddressbookSub);

@@ -55,7 +55,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 
   if(popup)
   {
-    popup->insertItem(SmallIcon("editcopy"),i18n("&Copy"),Copy);
+    popup->insertItem(SmallIconSet("editcopy"),i18n("&Copy"),Copy);
     popup->insertItem(i18n("Select All"),SelectAll);
     popup->insertSeparator();
     popup->insertItem(SmallIcon("find"),i18n("Find Text..."),Search);
@@ -225,7 +225,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
     int h = 0, s = 0,fv = 0,bv = 0;
     fg.getHsv(&h,&s,&fv);
     bg.getHsv(&h,&s,&bv);
-    
+
     if (bv <= fv) {
       inverted = false;
     }
@@ -267,7 +267,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
       colorString = QString::null;
     } else {
       colorString=(firstColor) ? QString::null : QString("</font>");
-  
+
       // reset colors on \017 to default value
       if(colorRegExp.cap(1)=="\017")
         colorString+="<font color=\"#"+defaultColor+"\">";
@@ -276,9 +276,9 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
         int foregroundColor=colorRegExp.cap(2).toInt();
   /*
       int backgroundColor=colorRegExp.cap(4).toInt();
-  
+
       if(bgColor) colorString+="</td></tr></table>";
-  
+
       if(colorRegExp.cap(4).length())
       {
         colorString+="<table cellpadding=0 cellspacing=0 bgcolor=\"#"+QString(colorCodes[backgroundColor])+"\"><tr><td>";
@@ -289,7 +289,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
   */
         colorString += "<font color=\"" + colorCodes[foregroundColor] + "\">";
       }
-      
+
       firstColor = false;
     }
 
@@ -363,7 +363,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
 
   // Hilight
   QString ownNick;
-  
+
   if(m_server) {
     ownNick = m_server->getNickname();
   }
@@ -381,7 +381,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
       // hilight current nickname
       m_highlightColor = KonversationApplication::preferences.getHilightNickColor().name();
       ChatWindow* chatWin = static_cast<ChatWindow*>(parent());
-      
+
       if (KonversationApplication::preferences.getOSDShowOwnNick() &&
         !KonversationApplication::preferences.getOSDShowChannel() && chatWin->notificationsEnabled())
       {
@@ -415,7 +415,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
           break;
         }
       }
-      
+
       if(patternFound)
       {
         m_highlightColor = hilight->getColor().name();
@@ -423,11 +423,11 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
         if(KonversationApplication::preferences.getHilightSoundEnabled()) {
           konvApp->sound()->play(hilight->getSoundURL());
         }
-        
+
         autoTextToSend = hilight->getAutoText();
       }
     }
-    
+
     // apply found highlight color to line
     if(!m_highlightColor.isEmpty()) {
       filteredLine = "<font color=\"" + m_highlightColor + "\">" + filteredLine + "</font>";
