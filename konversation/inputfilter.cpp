@@ -174,7 +174,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 #ifdef USE_KNOTIFY
           // KNotify events...
           if(sourceNick != server->getNickname()) {
-            if(ctcpArgument.lower().find(QRegExp("\\b"+QRegExp::escape(server->getNickname().lower())+"\\b"))!=-1)
+            if(ctcpArgument.lower().find(QRegExp("(^|[^\\d\\w])"+QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
             {
               KNotifyClient::event(mainWindow->winId(), "nick");
             }
@@ -318,7 +318,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 #ifdef USE_KNOTIFY
           // KNotify events...
           if(sourceNick != server->getNickname()) {
-            if(trailing.lower().find(QRegExp("\\b"+QRegExp::escape(server->getNickname().lower())+"\\b"))!=-1)
+            if(trailing.lower().find(QRegExp("(^|[^\\d\\w])"+QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
             {
 			  QString cutup = trailing; cutup.truncate(47);
 			  if(cutup.length() == 47)
@@ -448,7 +448,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
       /*
             // TODO: Try to remember channel keys for autojoins and manual joins, so
             //       we can get %k to work
-       
+
             if(channelName.find(' ')!=-1)
             {
               key=channelName.section(' ',1,1);
