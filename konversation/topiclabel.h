@@ -27,6 +27,15 @@ class TopicLabel : public KActiveLabel
 
   public slots:
     virtual void openLink(const QString& link);
+    void setText(const QString& text);
+
+  protected:
+    void updateSqueezedText();
+
+    void resizeEvent(QResizeEvent*);
+
+  private:
+    QString m_fullText;
 };
 
 };

@@ -1060,10 +1060,7 @@ void Channel::setTopic(const QString &newTopic)
   {
     m_topicHistory.prepend(i18n("<unknown> %1").arg(newTopic));
     QString topic = Konversation::removeIrcMarkup(newTopic);
-    topic.replace("&", "&amp;").
-        replace("<", "&lt;").
-        replace(">", "&gt;");
-    topicLine->setText("<qt>" + Konversation::tagURLs(topic, "") + "</qt>");
+    topicLine->setText(topic);
     // Add a tool tip to the topic line if it gets too long
     QToolTip::remove(topicLine);
 
@@ -1084,10 +1081,7 @@ void Channel::setTopic(const QString &nickname, const QString &newTopic) // Over
 
   m_topicHistory.prepend("<" + nickname + "> " + newTopic);
   QString topic = Konversation::removeIrcMarkup(newTopic);
-  topic.replace("&", "&amp;").
-      replace("<", "&lt;").
-      replace(">", "&gt;");
-  topicLine->setText("<qt>" + Konversation::tagURLs(topic, nickname) + "</qt>");
+  topicLine->setText(topic);
   // Add a tool tip to the topic line if it gets too long
   QToolTip::remove(topicLine);
 
@@ -1592,7 +1586,6 @@ void Channel::showEvent(QShowEvent*)
     QValueList<int> sizes = config->readIntListEntry("TopicSplitterSizes");
 
     if(sizes.isEmpty()) {
-      int topicSize = (topicLine->fontMetrics().height() * 2) + (topicLine->fontMetrics().lineSpacing() * 2);
       sizes << m_topicButton->height() << (m_vertSplitter->height() - m_topicButton->height());
     }
     

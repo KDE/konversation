@@ -13,8 +13,10 @@
 #include <krun.h>
 #include <kprocess.h>
 #include <kshell.h>
+#include <kstringhandler.h>
 
 #include "konversationapplication.h"
+#include "common.h"
 
 namespace Konversation {
 
@@ -61,6 +63,37 @@ void TopicLabel::openLink(const QString& link)
       delete proc;
     }
   }
+}
+
+void TopicLabel::setText(const QString& text)
+{
+  m_fullText = text;
+  updateSqueezedText();
+}
+
+void TopicLabel::updateSqueezedText()
+{
+  QFontMetrics fm(currentFont());
+  QString text;
+
+  if(height() < (fm.height() * 2)) {
+    text = KStringHandler::rPixelSqueeze(m_fullText, fm, contentsWidth() - 10);
+    setWordWrap(NoWrap);
+  } else {
+    text = m_fullText;
+    setWordWrap(WidgetWidth);
+  }
+  
+  text.replace("&", "&amp;").
+      replace("<", "&lt;").
+      replace(">", "&gt;");
+  KActiveLabel::setText("<qt>" + tagURLs(text, "") + "</qt>");
+}
+
+void TopicLabel::resizeEvent(QResizeEvent* ev)
+{
+  KActiveLabel::resizeEvent(ev);
+  updateSqueezedText();
 }
 
 }
