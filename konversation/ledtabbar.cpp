@@ -107,12 +107,12 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
 
   else kdWarning() << "LedTabBar::LedTabBar(): Could not create popup!" << endl;
 
-  close_pixmap = new QPixmap(remove_xpm);
+  m_closePixmap = new QPixmap(remove_xpm);
 }
 
 LedTabBar::~LedTabBar()
 {
-    delete close_pixmap;
+    delete m_closePixmap;
 }
 
 LedTab* LedTabBar::tab(QWidget* widget)
@@ -234,7 +234,7 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
 
       int pixw = pixmap.width();
       int pixh = pixmap.height();
-      int close_pixh = close_pixmap->height();
+      int close_pixh = m_closePixmap->height();
 
       r.setLeft( r.left() + pixw);
       r.setRight( r.right() + 2);
@@ -256,7 +256,7 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
           // Draw close button on the left side
           p->drawPixmap( br.left(),
                          br.center().y() - close_pixh/2,
-                         *close_pixmap );
+                         *m_closePixmap );
         }
         else
         {
@@ -271,7 +271,7 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
           // Draw close button on the right side
           p->drawPixmap( br.right() - 7,
                          br.center().y() - close_pixh/2,
-                         *close_pixmap );
+                         *m_closePixmap );
         }
       }
       else
