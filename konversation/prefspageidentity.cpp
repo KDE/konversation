@@ -28,6 +28,7 @@
 #include <kcombobox.h>
 #include <klineedit.h>
 #include <kcharsets.h>
+#include <kmessagebox.h>
 
 #include "prefspageidentity.h"
 #include "preferences.h"
@@ -384,23 +385,29 @@ void PrefsPageIdentity::addIdentity()
 
 void PrefsPageIdentity::removeIdentity()
 {
-  // TODO: are you sure here
-  int current=identityCombo->currentItem();
-
-  if(current)
+  if(KMessageBox::warningYesNo(parentFrame,
+                               i18n("Are you sure you want to delete all information for this identity?"),
+                               i18n("Delete Identity"),
+                               KStdGuiItem::yes(),
+                               KStdGuiItem::no())==KMessageBox::Yes)
   {
-    preferences->removeIdentity(identity);
-    identities=preferences->getIdentityList();
+    // TODO: are you sure here
+    int current=identityCombo->currentItem();
 
-    delete identity;
+    if(current)
+    {
+      preferences->removeIdentity(identity);
+      identities=preferences->getIdentityList();
 
-    identityCombo->removeItem(current);
-    updateIdentity(identityCombo->currentItem());
+      delete identity;
+
+      identityCombo->removeItem(current);
+      updateIdentity(identityCombo->currentItem());
+    }
+    else
+      // should not happen!
+      kdDebug() << "Trying to delete the default identity! This should never happen!" << endl;
   }
-  else
-    // should not happen!
-    kdDebug() << "Trying to delete the default identity! This should never happen!" << endl;
-
 }
 
 void PrefsPageIdentity::applyPreferences()
