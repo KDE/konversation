@@ -51,7 +51,7 @@ class Nick
     void setHalfop(bool state);
     void setVoice(bool state);
     void refreshAddressee();
-	
+    KABC::Addressee getAddressee();
     bool isSelected();
 
     QString getNickname();

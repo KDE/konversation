@@ -25,6 +25,8 @@
 #include <qtimer.h>
 #include <qcombobox.h>
 
+#include <kprocess.h>
+
 #include <klineedit.h>
 #include <kinputdialog.h>
 #include <kpassdlg.h>
@@ -362,24 +364,39 @@ void Channel::popupCommand(int id)
   switch(id)
   {
     case NickListView::AddressbookDelete:
+    case NickListView::AddressbookNew:
       {
 	Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
         QStringList nickList=getSelectedNicksList();
 	//Handle all the selected nicks in one go.  Either they all save, or none do.
 	if(addressbook->getAndCheckTicket()) {
           for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
-            KABC::Addressee addr = addressbook->getKABCAddresseeFromNick(*nickIterator);
-  	    addressbook->unassociateNick(addr, *nickIterator);
+            KABC::Addressee addr;
+	    if(id == NickListView::AddressbookDelete) {
+              addressbook->getKABCAddresseeFromNick(*nickIterator);
+   	      addressbook->unassociateNick(addr, *nickIterator);
+	    } else { 
+	      addr.setGivenName(*nickIterator);
+	      addr.setNickName(*nickIterator);
+	      addressbook->associateNickAndUnassociateFromEveryoneElse(addr, *nickIterator);
+	    }
           }
 	  if(addressbook->saveTicket()) {
             //Nicks have changed.  Refresh.
-	    for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator)
-	      getNickByName(*nickIterator)->refreshAddressee();
+	    for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
+	      Nick *nick = getNickByName(*nickIterator);
+	      nick->refreshAddressee();
+	      if(id == NickListView::AddressbookNew) {
+	        KProcess *proc = new KProcess;
+		*proc << "kaddressbook";
+		*proc << "--uid" << nick->getAddressee().uid();
+		proc->start();
+	      }
+	    }
 	  }
         }
         break;
       }
-    case NickListView::AddressbookNew:
     case NickListView::AddressbookChange:
       {
         QStringList nickList=getSelectedNicksList();

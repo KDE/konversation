@@ -180,5 +180,8 @@ bool Nick::hasVoice() { return voice; }
 
 QString Nick::getNickname() { return nickname; }
 QString Nick::getHostmask() { return hostmask; }
+KABC::Addressee Nick::getAddressee() { return addressee; }
+    
 
 bool Nick::isSelected() { return listViewItem->isSelected(); }
+
