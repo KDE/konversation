@@ -324,7 +324,7 @@ bool AddressbookBase::editAddressee(const QString &uid) {
   *proc << "--editor-only" << "--uid" << uid;
   kdDebug() << "running kaddressbook --editor-only --uid " << uid << endl;
   if(!proc->start()) {
-    KMessageBox::error(0, "Could not run your addressbook program (kaddressbook).  This is most likely because it isn't installed.  Please install the 'kdepim' packages.");
+    KMessageBox::error(0, i18n("Could not run your addressbook program (kaddressbook).  This is most likely because it isn't installed.  Please install the 'kdepim' packages."));
     return false;
   }
   return true;
@@ -342,7 +342,7 @@ bool AddressbookBase::runEmailProgram(const QString &mailtoaddress) {
   KRun *proc = new KRun(KURL(QString("mailto:") + KStringHandler::from8Bit(mailtoaddress.ascii())));
   kdDebug() << "Sending email to " << mailtoaddress << endl;
   if(proc->hasError()) {
-	  KMessageBox::error(0, "Could not run your email program.  This is possibly because one isn't installed.  To install the KDE email program (kmail) please install the 'kdepim' packages.");
+	  KMessageBox::error(0, i18n("Could not run your email program.  This is possibly because one isn't installed.  To install the KDE email program (kmail) please install the 'kdepim' packages."));
 	  return false;
   }
   return true;
