@@ -49,6 +49,8 @@ class DccTransferSend : public DccTransfer
     void startConnectionTimer(int sec);
     void stopConnectionTimer();
     
+    virtual void setFilePath(const QString& _filePath) { filePath = _filePath; }
+    
     QTimer* connectionTimer;
     
     KExtendedSocket* serverSocket;

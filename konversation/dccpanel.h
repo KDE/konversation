@@ -59,6 +59,7 @@ class DccPanel : public ChatWindow
     void removeDcc();
     void dccSelected();
     void showFileInfo();
+    void openDetail();
 
   protected:
 #ifdef USE_MDI
@@ -73,6 +74,7 @@ class DccPanel : public ChatWindow
     QPushButton* removeButton;
     QPushButton* openButton;
     QPushButton* infoButton;
+    QPushButton* detailButton;
 };
 
 #endif

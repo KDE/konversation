@@ -97,11 +97,7 @@ DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item)  // p
     ra = Cancel;
   
   if(ra == Rename)
-  {
-    item->filePath = dlg.urlreqFilePath->url().stripWhiteSpace();
-    item->fileTmpPath = item->filePath + ".part";
-    item->file.setName(item->fileTmpPath);
-  }
+    item->setFilePath(dlg.urlreqFilePath->url().stripWhiteSpace());
   
   return ra;
 }

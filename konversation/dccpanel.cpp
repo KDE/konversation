@@ -12,6 +12,9 @@
   email:     eisfuchs@tigress.com
 */
 
+// for debug
+#define USE_DETAILDIALOG
+
 #include <qhbox.h>
 #include <qheader.h>
 #include <qvbox.h>
@@ -88,6 +91,9 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   removeButton=new QPushButton(i18n("Remove"),buttonsBox,"remove_dcc");
   openButton  =new QPushButton(i18n("Open"),buttonsBox,"open_dcc_file");
   infoButton  =new QPushButton(i18n("Information"),buttonsBox,"info_on_dcc_file");
+#ifdef USE_DETAILDIALOG
+  detailButton=new QPushButton(i18n("Detail"),buttonsBox,"detail_dcc");
+#endif
 
   connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (dccSelected()) );
   
@@ -96,6 +102,9 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   connect(removeButton,SIGNAL (clicked()) ,this,SLOT (removeDcc()) );
   connect(openButton,SIGNAL (clicked()) ,this,SLOT (runDcc()) );
   connect(infoButton,SIGNAL (clicked()) ,this,SLOT (showFileInfo()) );
+#ifdef USE_DETAILDIALOG
+  connect(detailButton,SIGNAL (clicked()) ,this,SLOT (openDetail()) );
+#endif
 }
 
 DccPanel::~DccPanel()
@@ -311,6 +320,13 @@ void DccPanel::showFileInfo()
   }
   delete fileInfo;
   */
+}
+
+void DccPanel::openDetail()
+{
+  DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
+  if(item)
+    item->openDetailDialog();
 }
 
 #ifdef USE_MDI

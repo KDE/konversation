@@ -53,6 +53,8 @@ class DccTransferRecv : public DccTransfer
     void startConnectionTimer(int sec);
     void stopConnectionTimer();
     
+    virtual void setFilePath(const QString& _filePath);
+    
   protected:
     QString fileTmpPath;
     QTimer* connectionTimer;

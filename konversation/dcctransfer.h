@@ -24,6 +24,7 @@ class QDateTime;
 class QStringList;
 class QTimer;
 class KProgress;
+class DccDetailDialog;
 
 /*
   @author Dario Abatianni
@@ -32,6 +33,7 @@ class KProgress;
 class DccTransfer : public QObject, public KListViewItem
 {
   Q_OBJECT
+  friend class DccDetailDialog;
   
   public:
     enum DccType
@@ -68,6 +70,9 @@ class DccTransfer : public QObject, public KListViewItem
     QString getFilePath() const { return filePath; }
     bool isResumed() const { return bResumed; }
     
+    void openDetailDialog();
+    void closeDetailDialog();
+    
   signals:
     void done(const QString& filename);
     void statusChanged(const DccTransfer* item);
@@ -86,6 +91,7 @@ class DccTransfer : public QObject, public KListViewItem
     void stopAutoUpdateView();
     
     void setStatus(DccStatus status);
+    virtual void setFilePath(const QString& _filePath) = 0;
     
     // called from updateView()
     QString getTypeText() const;
@@ -121,7 +127,7 @@ class DccTransfer : public QObject, public KListViewItem
     unsigned long bufferSize;
     char* buffer;
     
-    // file information
+    // file & file information
     QFile file;
     QString fileName;
     QString filePath;
@@ -129,8 +135,8 @@ class DccTransfer : public QObject, public KListViewItem
     
     // UI
     QTimer* autoUpdateViewTimer;
-    
     KProgress* progressBar;
+    DccDetailDialog* detailDialog;
     
     static QString TypeText[DccTypeCount];
     static QString StatusText[DccStatusCount];

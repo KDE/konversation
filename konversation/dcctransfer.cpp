@@ -23,6 +23,7 @@
 #include <klocale.h>
 #include <kprogress.h>
 
+#include "dccdetaildialog.h"
 #include "dccpanel.h"
 #include "dcctransfer.h"
 #include "konversationapplication.h"
@@ -52,6 +53,8 @@ DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _p
   progressBar->setCenterIndicator(true);
   progressBar->setPercentageVisible(true);
   
+  detailDialog = 0;
+  
   // FIXME: we shouldn't do these init in the instance constructer
   TypeText[Send]    = i18n("Send");
   TypeText[Receive] = i18n("Receive");
@@ -71,6 +74,7 @@ DccTransfer::~DccTransfer()
 {
   delete[] buffer;
   stopAutoUpdateView();
+  closeDetailDialog();
 }
 
 void DccTransfer::updateView()  // slot
@@ -90,6 +94,9 @@ void DccTransfer::updateView()  // slot
     progressBar->setProgress((int)(100*transferringPosition/fileSize));
   else  // filesize is unknown
     setText(DccPanel::Column::Progress, i18n("unknown"));
+  
+  if(detailDialog)
+    detailDialog->updateView();
 }
 
 void DccTransfer::startAutoUpdateView()
@@ -129,6 +136,22 @@ void DccTransfer::showProgressBar()
     progressBar->setGeometry(rect);
     
     progressBar->show();
+  }
+}
+
+void DccTransfer::openDetailDialog()  // public
+{
+  if(!detailDialog)
+    detailDialog = new DccDetailDialog(this);
+  detailDialog->show();
+}
+
+void DccTransfer::closeDetailDialog()  // public
+{
+  if(detailDialog)
+  {
+    delete detailDialog;
+    detailDialog = 0;
   }
 }
 

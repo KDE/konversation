@@ -47,12 +47,9 @@ DccTransferRecv::DccTransferRecv(KListView* _parent, const QString& _partnerNick
   // set default path
   // Append folder with partner's name if wanted
   if(KonversationApplication::preferences.getDccCreateFolder())
-    filePath=_fileFolder+"/"+_partnerNick.lower()+"/"+localFileName;
+    setFilePath(_fileFolder+"/"+_partnerNick.lower()+"/"+localFileName);
   else
-    filePath=_fileFolder+"/"+localFileName;
-  
-  fileTmpPath=filePath+".part";
-  file.setName(fileTmpPath);
+    setFilePath(filePath=_fileFolder+"/"+localFileName);
   
   fileSize=_fileSize;
   
@@ -135,8 +132,9 @@ void DccTransferRecv::cleanUp()
   stopAutoUpdateView();
   if(recvSocket)
   {
-    recvSocket->closeNow();
     recvSocket->cancelAsyncConnect();
+    disconnect(recvSocket, 0, 0, 0);
+    recvSocket->closeNow();
     delete recvSocket;
     recvSocket = 0;
   }
@@ -270,6 +268,13 @@ void DccTransferRecv::sendAck()  // slot
     updateView();
     emit done(fileName);
   }
+}
+
+void DccTransferRecv::setFilePath(const QString& _filePath)  // virtual
+{
+  filePath = _filePath;
+  fileTmpPath = filePath + ".part";
+  file.setName(fileTmpPath);
 }
 
 void DccTransferRecv::startConnectionTimer(int sec)
