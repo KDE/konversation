@@ -292,7 +292,7 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const {
     if(!getAwayMessage().isEmpty())
       tooltip << getAwayMessage();
     else
-      tooltip << i18n("(Unknown)");
+      tooltip << i18n("(unknown)");
     tooltip << "</td></tr>";
     dirty=true;
   }
