@@ -16,18 +16,15 @@
 
 #include <qlist.h>
 #include <qtimer.h>
+#include <qdatetime.h>
 
 #ifndef SERVER_H
 #define SERVER_H
 
-#include "ircserversocket.h"
-#include "channel.h"
-#include "query.h"
 #include "inputfilter.h"
 #include "outputfilter.h"
+#include "ircserversocket.h"
 #include "server.h"
-
-#include "serverwindow.h"
 
 /*
   Server Class to handle connection to the IRC server
@@ -37,7 +34,6 @@
 class Channel;
 class Query;
 class ServerWindow;
-class InputFilter;
 
 class Server : public QObject
 {
@@ -49,7 +45,7 @@ class Server : public QObject
 
     QString getNextNickname();
 
-    void setIrcName(QString& newIrcName) { ircName=*newIrcName; };
+    void setIrcName(QString& newIrcName);
     void addNickToChannel(QString& channelName,QString& nickname,QString& hostmask,bool op,bool voice);
     void addHostmaskToNick(QString& sourceNick,QString& sourceHostmask);
     void nickJoinsChannel(QString& channelName,QString& nickname,QString& hostmask);
@@ -60,7 +56,7 @@ class Server : public QObject
 
     bool isNickname(QString& compare);
     QString& getNickname();
-    OutputFilter& getOutputFilter() { return outputFilter; };
+    OutputFilter& getOutputFilter();
 
     void joinChannel(QString& name,QString& hostmask);
     void removeChannel(Channel* channel);
@@ -79,7 +75,7 @@ class Server : public QObject
     void updateChannelQuickButtons(QStringList newButtons);
 
     QString getNextQueryName();
-    ServerWindow* getServerWindow() { return serverWindow; };
+    ServerWindow* getServerWindow();
 
     void appendToQuery(const char* queryName,const char* message);
     void appendActionToQuery(const char* queryName,const char* message);
@@ -92,8 +88,12 @@ class Server : public QObject
 
     QString getAutoJoinCommand();
 
+    void startNotifyTimer(int msec=0);
+
   signals:
     void nicknameChanged(const QString&);
+    void serverLag(int msec);
+    void resetLag();
 
   public slots:
     void queue(const QString& buffer);
@@ -102,10 +102,13 @@ class Server : public QObject
     void removeQuery(Query* query);
 
   protected slots:
-    void incoming(KSocket *);
+    void incoming(KSocket* socket);
     void processIncomingData();
-    void send(KSocket *);
-    void broken(KSocket *);
+    void send(KSocket* socket);
+    void broken(KSocket* socket);
+    void notifyTimeout();
+    void connectionEstablished();
+    void notifyResponse(QString nicksOnline);
 
   protected:
     void connectToIRCServer();
@@ -127,6 +130,10 @@ class Server : public QObject
     IRCServerSocket* serverSocket;
 
     QTimer incomingTimer;
+
+    QTimer notifyTimer;
+    QTime notifySent;
+    QStringList notifyCache; /* List of users found with ISON */
 
     QString ircName;
     QString inputBuffer;

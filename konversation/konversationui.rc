@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="0.3">
+<kpartgui name="konversation" version="0.4">
 
   <MenuBar>
     <Menu name="actions">

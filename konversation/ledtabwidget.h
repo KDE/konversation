@@ -17,6 +17,7 @@
 
 #include <qtabwidget.h>
 
+#include "chatwindow.h"
 #include "images.h"
 
 /*

@@ -92,6 +92,9 @@ QString IRCView::filter(const QString& line,bool doHilight)
   while((pos=filteredLine.find('<'))!=-1) filteredLine.replace(pos,1,"&lt;");
   /* Replace all > with &gt; */
   while((pos=filteredLine.find('>'))!=-1) filteredLine.replace(pos,1,"&gt;");
+  /* Replace all 0x0f (reset color) with \0x031,0 */
+  /* TODO: place default fore/background colors here */
+  while((pos=filteredLine.find('\017'))!=-1) filteredLine.replace(pos,1,"\0031,0");
 
   /* How many chars to replace? */
   int replace;
@@ -102,8 +105,8 @@ QString IRCView::filter(const QString& line,bool doHilight)
   while((pos=filteredLine.find('\003'))!=-1)
   {
     int digitPos=pos;
-    int foregroundColor=1; /* replace with default foreground */
-    int backgroundColor=0; /* replace with default background */
+    int foregroundColor=1; /* TODO: replace with default foreground */
+    int backgroundColor=0; /* TODO: replace with default background */
     const char* colorCodes[]={"ffffff","000000","000080","008000","ff0000","a52a2a","800080","ff8000",
                               "808000","00ff00","008080","00ffff","0000ff","ffc0cb","a0a0a0","c0c0c0"};
     /* remove \003 */
@@ -118,9 +121,9 @@ QString IRCView::filter(const QString& line,bool doHilight)
       foregroundColor=colChar.digitValue();  /* take this digit as color */
       replace++;
 
+      colChar=filteredLine[++digitPos];      /* get next char */
       if(foregroundColor<2)                  /* maybe a two digit color? */
       {
-        colChar=filteredLine[++digitPos];    /* get next char */
         if(colChar.isDigit())                /* is this a digit? */
         {
           if(colChar.digitValue()<6)         /* would this be a color from 10 to 15?  */
@@ -161,7 +164,7 @@ QString IRCView::filter(const QString& line,bool doHilight)
 
     filteredLine.replace(pos,replace,colorString);
     firstColor=false;
-  }
+  } // while
 
   if(!firstColor) filteredLine+="</font>";
 

@@ -39,6 +39,7 @@ class Preferences : public QObject
     int serverWindowToolBarStatus;
     int serverWindowToolBarIconText;
     int serverWindowToolBarIconSize;
+    bool serverWindowStatusBarStatus;
 
     int addServer(const QString& serverString);
     void removeServer(int id);
@@ -67,6 +68,13 @@ class Preferences : public QObject
     void setButtonsSize(QSize newSize);
     void setIgnoreSize(QSize newSize);
     void setNicknameSize(QSize newSize);
+
+    int getNotifyDelay();
+    void setNotifyDelay(int delay);
+    bool getUseNotify();
+    void setUseNotify(bool use);
+    QString getNotifyList();
+    void setNotifyList(QStringList newList);
 
     QStringList& getHilightList();
     void setHilightList(QStringList& newList);
@@ -104,6 +112,10 @@ class Preferences : public QObject
   protected:
     bool log;
     bool blinkingTabs; /* Do we want the LEDs on the tabs to blink? */
+
+    int notifyDelay;
+    bool useNotify;
+    QStringList notifyList;
 
     /* Geometries */
     QSize serverWindowSize;

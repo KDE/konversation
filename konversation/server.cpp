@@ -20,6 +20,9 @@
 #include <kdebug.h>
 
 #include "server.h"
+#include "serverwindow.h"
+#include "channel.h"
+#include "query.h"
 #include "ircserversocket.h"
 #include "konversationapplication.h"
 
@@ -63,6 +66,17 @@ Server::Server(int id)
 
   connect(&outputFilter,SIGNAL (openQuery(const QString&,const QString&)),
                    this,SLOT   (addQuery(const QString&,const QString&)) );
+
+  connect(&notifyTimer,SIGNAL(timeout()),
+                  this,SLOT  (notifyTimeout()) );
+
+  connect(&inputFilter,SIGNAL(welcome()),
+                  this,SLOT  (connectionEstablished()) );
+  connect(&inputFilter,SIGNAL(notifyResponse(QString)),
+                  this,SLOT  (notifyResponse(QString)) );
+
+  connect(this,SIGNAL(serverLag(int)),serverWindow,SLOT(updateLag(int)) );
+  connect(this,SIGNAL(resetLag()),serverWindow,SLOT(resetLag()) );
 }
 
 Server::~Server()
@@ -102,6 +116,72 @@ void Server::connectToIRCServer()
 
     serverSocket->enableRead(true);
   }
+}
+
+/* Will be called from InputFilter as soon as the Welcome message was received */
+void Server::connectionEstablished()
+{
+  /* get first notify very early */
+  startNotifyTimer(1000);
+}
+
+void Server::notifyResponse(QString nicksOnline)
+{
+  /* We received a notify message, so calculate server lag */
+  int lag=notifySent.elapsed();
+  emit serverLag(lag);
+
+  /* First copy the old notify cache to a new cache, but all in lowercase */
+  QStringList notifyLowerCache=QStringList::split(' ',notifyCache.join(" ").lower());
+  /* Create a case correct nick list from the notification reply */
+  QStringList nickList=QStringList::split(' ',nicksOnline);
+  /* Create a lower case nick list from the notification reply */
+  QStringList nickLowerList=QStringList::split(' ',nicksOnline.lower());
+
+  /* Did some new nicks appear in our notify? */
+  for(unsigned int index=0;index<nickLowerList.count();index++)
+  {
+    if(notifyLowerCache.find(nickLowerList[index])==notifyLowerCache.end())
+    {
+      /* TODO: Try to display notify message on the frontmost view */
+      appendStatusMessage(i18n("Notify"),i18n("%1 is online.").arg(nickList[index]));
+    }
+  }
+
+  /* Did some nicks leave our notify? */
+  for(unsigned int index=0;index<notifyLowerCache.count();index++)
+  {
+    if(nickLowerList.find(notifyLowerCache[index])==nickLowerList.end())
+    {
+      /* TODO: Try to display notify message on the frontmost view */
+      appendStatusMessage(i18n("Notify"),i18n("%1 went offline.").arg(notifyCache[index]));
+    }
+  }
+
+  /* Finally copy the new ISON list with correct case to our notify cache */
+  notifyCache=nickList;
+
+  startNotifyTimer();
+}
+
+void Server::startNotifyTimer(int msec)
+{
+  if(msec==0) msec=KonversationApplication::preferences.getNotifyDelay()*1000 /* msec! */;
+  /* start the timer in one shot mode */
+  notifyTimer.start(msec,true);
+}
+
+void Server::notifyTimeout()
+{
+  /* Notify delay time is over, send ISON request if desired */
+  if(KonversationApplication::preferences.getUseNotify())
+  {
+    /* But only if there actually are nicks in the notify list */
+    QString list=KonversationApplication::preferences.getNotifyList();
+    if(list!="") queue("ISON "+list);
+  }
+  /* show unknown lag time if no notify is used */
+  else emit resetLag();
 }
 
 QString Server::getAutoJoinCommand()
@@ -175,6 +255,8 @@ void Server::send(KSocket* ksocket)
   /* TODO: Implement Flood-Protection here */
   write(ksocket->socket(),outputBuffer.latin1(),outputBuffer.length());
   serverSocket->enableWrite(false);
+  /* To make lag calculation more precise, we reset the timer here */
+  if(outputBuffer.startsWith("ISON")) notifySent.start();
   outputBuffer="";
 }
 
@@ -541,3 +623,19 @@ QString Server::parseWildcards(const QString& toParse,const QString& nickname,co
 
   return out;
 }
+
+void Server::setIrcName(QString& newIrcName)
+{
+  ircName=*newIrcName;
+}
+
+OutputFilter& Server::getOutputFilter()
+{
+  return outputFilter;
+}
+
+ServerWindow* Server::getServerWindow()
+{
+  return serverWindow;
+}
+

@@ -294,7 +294,7 @@ konversation_nofinal_OBJECTS = nickchangedialog.$(OBJEXT) modebutton.$(OBJEXT) \
 	inputfilter.$(OBJEXT) channel.$(OBJEXT) ircview.$(OBJEXT) \
 	server.$(OBJEXT) serverwindow.$(OBJEXT) ircserversocket.$(OBJEXT) \
 	main.$(OBJEXT)\
-	nickchangedialog.moc.o ledtab.moc.o konversationapplication.moc.o ircview.moc.o server.moc.o ircinput.moc.o query.moc.o outputfilter.moc.o preferences.moc.o chatwindow.moc.o editserverdialog.moc.o quickbuttonsdialog.moc.o serverwindow.moc.o quickbutton.moc.o highlightbox.moc.o ignoredialog.moc.o channel.moc.o ignorecheckbox.moc.o ledtabwidget.moc.o modebutton.moc.o prefsdialog.moc.o nicklistview.moc.o  \
+	nickchangedialog.moc.o ledtab.moc.o konversationapplication.moc.o ircview.moc.o server.moc.o ircinput.moc.o query.moc.o outputfilter.moc.o preferences.moc.o chatwindow.moc.o editserverdialog.moc.o inputfilter.moc.o quickbuttonsdialog.moc.o serverwindow.moc.o quickbutton.moc.o highlightbox.moc.o ignoredialog.moc.o channel.moc.o ignorecheckbox.moc.o ledtabwidget.moc.o modebutton.moc.o prefsdialog.moc.o nicklistview.moc.o  \
 	konversation_meta_unload.o 
 @KDE_USE_FINAL_FALSE@konversation_OBJECTS = $(konversation_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@konversation_OBJECTS = $(konversation_final_OBJECTS)
@@ -336,7 +336,7 @@ GZIP_ENV = --best
 #>- .deps/server.P .deps/serverentry.P .deps/serverlistitem.P \
 #>- .deps/serverwindow.P
 #>+ 24
-@KDE_USE_FINAL_TRUE@DEP_FILES =  $(DEPDIR)/nickchangedialog.moc.P $(DEPDIR)/ledtab.moc.P $(DEPDIR)/konversationapplication.moc.P $(DEPDIR)/ircview.moc.P $(DEPDIR)/server.moc.P $(DEPDIR)/ircinput.moc.P $(DEPDIR)/query.moc.P $(DEPDIR)/outputfilter.moc.P $(DEPDIR)/preferences.moc.P $(DEPDIR)/chatwindow.moc.P $(DEPDIR)/editserverdialog.moc.P $(DEPDIR)/quickbuttonsdialog.moc.P $(DEPDIR)/serverwindow.moc.P $(DEPDIR)/quickbutton.moc.P $(DEPDIR)/highlightbox.moc.P $(DEPDIR)/ignoredialog.moc.P $(DEPDIR)/channel.moc.P $(DEPDIR)/ignorecheckbox.moc.P $(DEPDIR)/ledtabwidget.moc.P $(DEPDIR)/modebutton.moc.P $(DEPDIR)/prefsdialog.moc.P $(DEPDIR)/nicklistview.moc.P $(DEPDIR)/konversation_meta_unload.P  $(DEPDIR)/konversation.all_cpp.P \
+@KDE_USE_FINAL_TRUE@DEP_FILES =  $(DEPDIR)/nickchangedialog.moc.P $(DEPDIR)/ledtab.moc.P $(DEPDIR)/konversationapplication.moc.P $(DEPDIR)/ircview.moc.P $(DEPDIR)/server.moc.P $(DEPDIR)/ircinput.moc.P $(DEPDIR)/query.moc.P $(DEPDIR)/outputfilter.moc.P $(DEPDIR)/preferences.moc.P $(DEPDIR)/chatwindow.moc.P $(DEPDIR)/editserverdialog.moc.P $(DEPDIR)/inputfilter.moc.P $(DEPDIR)/quickbuttonsdialog.moc.P $(DEPDIR)/serverwindow.moc.P $(DEPDIR)/quickbutton.moc.P $(DEPDIR)/highlightbox.moc.P $(DEPDIR)/ignoredialog.moc.P $(DEPDIR)/channel.moc.P $(DEPDIR)/ignorecheckbox.moc.P $(DEPDIR)/ledtabwidget.moc.P $(DEPDIR)/modebutton.moc.P $(DEPDIR)/prefsdialog.moc.P $(DEPDIR)/nicklistview.moc.P $(DEPDIR)/konversation_meta_unload.P  $(DEPDIR)/konversation.all_cpp.P \
 		  .deps/channel.P .deps/chatwindow.P .deps/editserverdialog.P \
 	.deps/highlightbox.P .deps/ignore.P .deps/ignorecheckbox.P \
 	.deps/ignoredialog.P .deps/ignorelistviewitem.P .deps/images.P \
@@ -348,7 +348,7 @@ GZIP_ENV = --best
 	.deps/query.P .deps/quickbutton.P .deps/quickbuttonsdialog.P \
 	.deps/server.P .deps/serverentry.P .deps/serverlistitem.P \
 	.deps/serverwindow.P
-@KDE_USE_FINAL_FALSE@DEP_FILES =  $(DEPDIR)/nickchangedialog.moc.P $(DEPDIR)/ledtab.moc.P $(DEPDIR)/konversationapplication.moc.P $(DEPDIR)/ircview.moc.P $(DEPDIR)/server.moc.P $(DEPDIR)/ircinput.moc.P $(DEPDIR)/query.moc.P $(DEPDIR)/outputfilter.moc.P $(DEPDIR)/preferences.moc.P $(DEPDIR)/chatwindow.moc.P $(DEPDIR)/editserverdialog.moc.P $(DEPDIR)/quickbuttonsdialog.moc.P $(DEPDIR)/serverwindow.moc.P $(DEPDIR)/quickbutton.moc.P $(DEPDIR)/highlightbox.moc.P $(DEPDIR)/ignoredialog.moc.P $(DEPDIR)/channel.moc.P $(DEPDIR)/ignorecheckbox.moc.P $(DEPDIR)/ledtabwidget.moc.P $(DEPDIR)/modebutton.moc.P $(DEPDIR)/prefsdialog.moc.P $(DEPDIR)/nicklistview.moc.P $(DEPDIR)/konversation_meta_unload.P   .deps/channel.P .deps/chatwindow.P .deps/editserverdialog.P \
+@KDE_USE_FINAL_FALSE@DEP_FILES =  $(DEPDIR)/nickchangedialog.moc.P $(DEPDIR)/ledtab.moc.P $(DEPDIR)/konversationapplication.moc.P $(DEPDIR)/ircview.moc.P $(DEPDIR)/server.moc.P $(DEPDIR)/ircinput.moc.P $(DEPDIR)/query.moc.P $(DEPDIR)/outputfilter.moc.P $(DEPDIR)/preferences.moc.P $(DEPDIR)/chatwindow.moc.P $(DEPDIR)/editserverdialog.moc.P $(DEPDIR)/inputfilter.moc.P $(DEPDIR)/quickbuttonsdialog.moc.P $(DEPDIR)/serverwindow.moc.P $(DEPDIR)/quickbutton.moc.P $(DEPDIR)/highlightbox.moc.P $(DEPDIR)/ignoredialog.moc.P $(DEPDIR)/channel.moc.P $(DEPDIR)/ignorecheckbox.moc.P $(DEPDIR)/ledtabwidget.moc.P $(DEPDIR)/modebutton.moc.P $(DEPDIR)/prefsdialog.moc.P $(DEPDIR)/nicklistview.moc.P $(DEPDIR)/konversation_meta_unload.P   .deps/channel.P .deps/chatwindow.P .deps/editserverdialog.P \
 	.deps/highlightbox.P .deps/ignore.P .deps/ignorecheckbox.P \
 	.deps/ignoredialog.P .deps/ignorelistviewitem.P .deps/images.P \
 	.deps/inputfilter.P .deps/ircinput.P .deps/ircserversocket.P \
@@ -821,6 +821,10 @@ editserverdialog.moc.cpp: $(srcdir)/editserverdialog.h
 	$(MOC) $(srcdir)/editserverdialog.h -o editserverdialog.moc.cpp
 
 #>+ 3
+inputfilter.moc.cpp: $(srcdir)/inputfilter.h
+	$(MOC) $(srcdir)/inputfilter.h -o inputfilter.moc.cpp
+
+#>+ 3
 quickbuttonsdialog.moc.cpp: $(srcdir)/quickbuttonsdialog.h
 	$(MOC) $(srcdir)/quickbuttonsdialog.h -o quickbuttonsdialog.moc.cpp
 
@@ -866,7 +870,7 @@ nicklistview.moc.cpp: $(srcdir)/nicklistview.h
 
 #>+ 3
 clean-metasources:
-	-rm -f  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp
+	-rm -f  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp
 
 #>+ 2
 docs-am:
@@ -878,12 +882,12 @@ force-reedit:
 
 
 #>+ 12
-konversation_meta_unload.cpp:  ledtab.moc.cpp nickchangedialog.moc.cpp server.moc.cpp ircview.moc.cpp konversationapplication.moc.cpp query.moc.cpp ircinput.moc.cpp outputfilter.moc.cpp chatwindow.moc.cpp preferences.moc.cpp editserverdialog.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp channel.moc.cpp ignoredialog.moc.cpp ledtabwidget.moc.cpp ignorecheckbox.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp
+konversation_meta_unload.cpp:  ledtab.moc.cpp nickchangedialog.moc.cpp server.moc.cpp ircview.moc.cpp konversationapplication.moc.cpp query.moc.cpp ircinput.moc.cpp outputfilter.moc.cpp chatwindow.moc.cpp preferences.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp channel.moc.cpp ignoredialog.moc.cpp ledtabwidget.moc.cpp ignorecheckbox.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp
 	@echo 'creating konversation_meta_unload.cpp'
 	@-rm -f konversation_meta_unload.cpp
 	@if test ${kde_qtver} = 2; then \
 		echo 'static const char * _metalist_konversation[] = {' > konversation_meta_unload.cpp ;\
-		cat  ledtab.moc.cpp nickchangedialog.moc.cpp server.moc.cpp ircview.moc.cpp konversationapplication.moc.cpp query.moc.cpp ircinput.moc.cpp outputfilter.moc.cpp chatwindow.moc.cpp preferences.moc.cpp editserverdialog.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp channel.moc.cpp ignoredialog.moc.cpp ledtabwidget.moc.cpp ignorecheckbox.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp | grep 'char.*className' | sed -e 's/.*[^A-Za-z0-9_:]\([A-Za-z0-9_:]*\)::className.*$$/\"\1\",/' | sort | uniq >> konversation_meta_unload.cpp ;\
+		cat  ledtab.moc.cpp nickchangedialog.moc.cpp server.moc.cpp ircview.moc.cpp konversationapplication.moc.cpp query.moc.cpp ircinput.moc.cpp outputfilter.moc.cpp chatwindow.moc.cpp preferences.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp channel.moc.cpp ignoredialog.moc.cpp ledtabwidget.moc.cpp ignorecheckbox.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp | grep 'char.*className' | sed -e 's/.*[^A-Za-z0-9_:]\([A-Za-z0-9_:]*\)::className.*$$/\"\1\",/' | sort | uniq >> konversation_meta_unload.cpp ;\
 		echo '0};' >> konversation_meta_unload.cpp ;\
 		echo '#include <kunload.h>' >> konversation_meta_unload.cpp ;\
 		echo '_UNLOAD(konversation)' >> konversation_meta_unload.cpp ;\
@@ -895,11 +899,11 @@ clean-moc-classes:
 	-rm -f  konversation_meta_unload.cpp
 
 #>+ 11
-konversation.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/nickchangedialog.cpp $(srcdir)/modebutton.cpp $(srcdir)/ignorelistviewitem.cpp $(srcdir)/ignorecheckbox.cpp $(srcdir)/ignore.cpp $(srcdir)/ignoredialog.cpp $(srcdir)/quickbuttonsdialog.cpp $(srcdir)/nicklistview.cpp $(srcdir)/highlightbox.cpp $(srcdir)/ircinput.cpp $(srcdir)/ledtabbar.cpp $(srcdir)/ledtab.cpp $(srcdir)/ledtabwidget.cpp $(srcdir)/images.cpp $(srcdir)/editserverdialog.cpp $(srcdir)/serverlistitem.cpp $(srcdir)/serverentry.cpp $(srcdir)/prefsdialog.cpp $(srcdir)/quickbutton.cpp $(srcdir)/preferences.cpp $(srcdir)/chatwindow.cpp $(srcdir)/outputfilter.cpp $(srcdir)/query.cpp $(srcdir)/konversationapplication.cpp $(srcdir)/nick.cpp $(srcdir)/inputfilter.cpp $(srcdir)/channel.cpp $(srcdir)/ircview.cpp $(srcdir)/server.cpp $(srcdir)/serverwindow.cpp $(srcdir)/ircserversocket.cpp $(srcdir)/main.cpp konversation_meta_unload.cpp  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp
+konversation.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/nickchangedialog.cpp $(srcdir)/modebutton.cpp $(srcdir)/ignorelistviewitem.cpp $(srcdir)/ignorecheckbox.cpp $(srcdir)/ignore.cpp $(srcdir)/ignoredialog.cpp $(srcdir)/quickbuttonsdialog.cpp $(srcdir)/nicklistview.cpp $(srcdir)/highlightbox.cpp $(srcdir)/ircinput.cpp $(srcdir)/ledtabbar.cpp $(srcdir)/ledtab.cpp $(srcdir)/ledtabwidget.cpp $(srcdir)/images.cpp $(srcdir)/editserverdialog.cpp $(srcdir)/serverlistitem.cpp $(srcdir)/serverentry.cpp $(srcdir)/prefsdialog.cpp $(srcdir)/quickbutton.cpp $(srcdir)/preferences.cpp $(srcdir)/chatwindow.cpp $(srcdir)/outputfilter.cpp $(srcdir)/query.cpp $(srcdir)/konversationapplication.cpp $(srcdir)/nick.cpp $(srcdir)/inputfilter.cpp $(srcdir)/channel.cpp $(srcdir)/ircview.cpp $(srcdir)/server.cpp $(srcdir)/serverwindow.cpp $(srcdir)/ircserversocket.cpp $(srcdir)/main.cpp konversation_meta_unload.cpp  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp
 	@echo 'creating konversation.all_cpp.cpp ...'; \
 	rm -f konversation.all_cpp.files konversation.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> konversation.all_cpp.final; \
-	for file in nickchangedialog.cpp modebutton.cpp ignorelistviewitem.cpp ignorecheckbox.cpp ignore.cpp ignoredialog.cpp quickbuttonsdialog.cpp nicklistview.cpp highlightbox.cpp ircinput.cpp ledtabbar.cpp ledtab.cpp ledtabwidget.cpp images.cpp editserverdialog.cpp serverlistitem.cpp serverentry.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp chatwindow.cpp outputfilter.cpp query.cpp konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp ircview.cpp server.cpp serverwindow.cpp ircserversocket.cpp main.cpp konversation_meta_unload.cpp  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp; do \
+	for file in nickchangedialog.cpp modebutton.cpp ignorelistviewitem.cpp ignorecheckbox.cpp ignore.cpp ignoredialog.cpp quickbuttonsdialog.cpp nicklistview.cpp highlightbox.cpp ircinput.cpp ledtabbar.cpp ledtab.cpp ledtabwidget.cpp images.cpp editserverdialog.cpp serverlistitem.cpp serverentry.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp chatwindow.cpp outputfilter.cpp query.cpp konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp ircview.cpp server.cpp serverwindow.cpp ircserversocket.cpp main.cpp konversation_meta_unload.cpp  nickchangedialog.moc.cpp ledtab.moc.cpp konversationapplication.moc.cpp ircview.moc.cpp server.moc.cpp ircinput.moc.cpp query.moc.cpp outputfilter.moc.cpp preferences.moc.cpp chatwindow.moc.cpp editserverdialog.moc.cpp inputfilter.moc.cpp quickbuttonsdialog.moc.cpp serverwindow.moc.cpp quickbutton.moc.cpp highlightbox.moc.cpp ignoredialog.moc.cpp channel.moc.cpp ignorecheckbox.moc.cpp ledtabwidget.moc.cpp modebutton.moc.cpp prefsdialog.moc.cpp nicklistview.moc.cpp; do \
 	  echo "#include \"$$file\"" >> konversation.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> konversation.all_cpp.final; \
 	done; \

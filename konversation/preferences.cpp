@@ -22,10 +22,11 @@ Preferences::Preferences()
 {
   /* Presets */
   serverWindowToolBarPos=KToolBar::Top;
+  serverWindowStatusBarStatus=true;
   serverList.setAutoDelete(true);
 
-  ident="dummy";
-  realname="Arno Nym";
+  ident="konversation";
+  realname="Konversation User";
 
   nicknameList.append("KonvIRC");
   nicknameList.append("_KonvIRC");
@@ -59,6 +60,9 @@ Preferences::Preferences()
   logPath=kstddir.saveLocation("data","konversation/logs");
   log=true;
   blinkingTabs=true;
+
+  notifyDelay=20;
+  useNotify=true;
 }
 
 Preferences::~Preferences()
@@ -171,85 +175,38 @@ void Preferences::updateServer(int serverId,const QString& newDefinition)
   if(entry) entry->setDefinition(newDefinition);
 }
 
-void Preferences::clearServerList()
-{
-  serverList.clear();
-}
+/* Accessor methods */
 
-void Preferences::setLog(bool state)
-{
-  log=state;
-}
+void Preferences::clearServerList() { serverList.clear(); }
 
-bool Preferences::getLog()
-{
-  return log;
-}
+void Preferences::setLog(bool state) { log=state; }
+bool Preferences::getLog() { return log; }
 
-QStringList Preferences::getButtonList()
-{
-  return buttonList;
-}
+int Preferences::getNotifyDelay() { return notifyDelay; }
+void Preferences::setNotifyDelay(int delay) { notifyDelay=delay; }
+bool Preferences::getUseNotify() { return useNotify; }
+void Preferences::setUseNotify(bool use) { useNotify=use; }
+QString Preferences::getNotifyList() { return notifyList.join(" "); }
+void Preferences::setNotifyList(QStringList newList) { notifyList=newList; }
 
-void Preferences::clearIgnoreList()
-{
-  ignoreList.clear();
-}
+QStringList Preferences::getButtonList() { return buttonList; }
 
-QString Preferences::getPartReason()
-{
-  return partReason;
-}
+QString Preferences::getPartReason() { return partReason; }
+void Preferences::setPartReason(QString newReason) { partReason=newReason; }
 
-void Preferences::setPartReason(QString newReason)
-{
-  partReason=newReason;
-}
+QString Preferences::getKickReason() { return kickReason; }
+void Preferences::setKickReason(QString newReason) { kickReason=newReason; }
 
-QString Preferences::getKickReason()
-{
-  return kickReason;
-}
+void Preferences::clearIgnoreList() { ignoreList.clear(); }
+QPtrList<Ignore> Preferences::getIgnoreList() { return ignoreList; }
 
-void Preferences::setKickReason(QString newReason)
-{
-  kickReason=newReason;
-}
+QString Preferences::getNickname(int index) { return nicknameList[index]; }
+QStringList Preferences::getNicknameList() { return nicknameList; }
+void Preferences::setNickname(int index,QString newName) { nicknameList[index]=newName; }
+void Preferences::setNicknameList(QStringList newList) { nicknameList=newList; }
 
-QPtrList<Ignore> Preferences::getIgnoreList()
-{
-  return ignoreList;
-}
-
-QString Preferences::getNickname(int index)
-{
-  return nicknameList[index];
-}
-
-QStringList Preferences::getNicknameList()
-{
-  return nicknameList;
-}
-
-void Preferences::setNickname(int index,QString newName)
-{
-  nicknameList[index]=newName;
-}
-
-void Preferences::setNicknameList(QStringList newList)
-{
-  nicknameList=newList;
-}
-
-void Preferences::setBlinkingTabs(bool blink)
-{
-  blinkingTabs=blink;
-}
-
-bool Preferences::getBlinkingTabs()
-{
-  return blinkingTabs;
-}
+void Preferences::setBlinkingTabs(bool blink) { blinkingTabs=blink; }
+bool Preferences::getBlinkingTabs() { return blinkingTabs; }
 
 /* Geometry functions */
 QSize Preferences::getServerWindowSize() { return serverWindowSize; };

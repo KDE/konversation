@@ -30,6 +30,7 @@
 InputFilter::InputFilter()
 {
   kdDebug() << "InputFilter::InputFilter()" << endl;
+  welcomeSent=false;
 }
 
 InputFilter::~InputFilter()
@@ -216,8 +217,17 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   }
   else if(command=="001" || command=="002" || command=="003")
   {
-    /* Remember server's insternal name (don't know if I will need this, though) */
-    if(command=="001") server->setIrcName(prefix);
+    if(command=="001")
+    {
+      /* Remember server's insternal name (don't know if I will need this, though) */
+      server->setIrcName(prefix);
+      /* Send the welcome signal, so the server class knows we are connected properly */
+      if(!welcomeSent)
+      {
+        emit welcome();
+        welcomeSent=true;
+      }
+    }
     server->appendStatusMessage(i18n("Welcome"),trailing);
   }
   else if(command=="004") server->appendStatusMessage(i18n("Welcome"),
@@ -311,6 +321,13 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
     server->appendStatusMessage(i18n("MOTD"),i18n("End of Message Of The Day"));
     /* Autojoin (for now this must be enough) */
     server->queue(server->getAutoJoinCommand());
+  }
+  else if(command==RPL_ISON)
+  {
+    /* TODO: implement proper notify handling */
+  //  if(trailing!="") server->appendStatusMessage(i18n("Notify"),trailing);
+    /* Tell server to start the next notify timer round */
+    emit notifyResponse(trailing);
   }
   else if(command=="mode")
   {

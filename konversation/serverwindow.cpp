@@ -16,6 +16,7 @@
 
 #include <klocale.h>
 #include <kdebug.h>
+#include <kdialog.h>
 
 #include "serverwindow.h"
 #include "konversationapplication.h"
@@ -33,12 +34,21 @@ ServerWindow::ServerWindow(Server* server) : KMainWindow()
 
 /*  KAction* quitAction= */ KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); /* file_quit */
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); /* options_show_toolbar */
+  showStatusBarAction=KStdAction::showStatusbar(this,SLOT(showStatusbar()),actionCollection()); /* options_show_statusbar */
 /*  KAction* prefsAction= */ KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); /* options_configure */
 /*  KAction* open_quickbuttons_action= */new KAction(i18n("Buttons"),0,0,this,SLOT (openButtons()),actionCollection(),"open_buttons_window");
 /*  KAction* open_hilight_action= */ new KAction(i18n("Hilight List"),0,0,this,SLOT (openHilight()),actionCollection(),"open_hilight_window");
 /*  KAction* open_ignore_action= */ new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
 
   setCentralWidget(windowContainer);
+
+  /* Initialize KMainWindow->statusBar() */
+  statusBar();
+  statusBar()->insertItem(i18n("Ready."),StatusText,1);
+  statusBar()->insertItem("lagometer",LagOMeter,0,true);
+  /* Show "Lag unknown" */
+  resetLag();
+  statusBar()->setItemAlignment(StatusText,QLabel::AlignLeft);
 
   addStatusView();
   connect( windowContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changedView(QWidget*)) );
@@ -54,7 +64,6 @@ ServerWindow::~ServerWindow()
 
 void ServerWindow::openPreferences()
 {
-//  KonversationApplication::preferences.openPrefsDialog();
   emit openPrefsDialog();
 }
 
@@ -64,6 +73,14 @@ void ServerWindow::showToolbar()
   else toolBar("mainToolBar")->hide();
 
   KonversationApplication::preferences.serverWindowToolBarStatus=showToolBarAction->isChecked();
+}
+
+void ServerWindow::showStatusbar()
+{
+  if(showStatusBarAction->isChecked()) statusBar()->show();
+  else statusBar()->hide();
+
+  KonversationApplication::preferences.serverWindowStatusBarStatus=showStatusBarAction->isChecked();
 }
 
 void ServerWindow::setServer(Server* newServer)
@@ -157,7 +174,7 @@ void ServerWindow::logText(const QString& text)
     }
 
     QTime time=QTime::currentTime();
-    QString logLine(QString("[%1:%2:%3] %4\n").arg(time.hour()).arg(time.minute()).arg(time.second()).arg(text));
+    QString logLine(QString("[%1] %2\n").arg(time.toString("hh:mm:ss")).arg(text));
     logfile.writeBlock(logLine,logLine.length());
     logfile.close();
   }
@@ -171,7 +188,8 @@ void ServerWindow::setNickname(const QString& newNickname)
 
 void ServerWindow::newText(QWidget* view)
 {
-  if(view!=windowContainer->currentPage())
+  /* FIXME: Should be compared to ChatWindow* but the status Window currently is something else */
+  if(view!=(QWidget*) windowContainer->currentPage())
   {
     windowContainer->changeTabState(view,true);
   }
@@ -184,35 +202,16 @@ void ServerWindow::changedView(QWidget* view)
 
 void ServerWindow::readOptions()
 {
-
-//  config->setGroup("General Options");
-
-  // bar status settings
-//  bool bViewToolbar = config->readBoolEntry("Show Toolbar", true);
-//  viewToolBar->setChecked(bViewToolbar);
-//  slotViewToolBar();
-
-//  bool bViewStatusbar = config->readBoolEntry("Show Statusbar", true);
-//  viewStatusBar->setChecked(bViewStatusbar);
-//  slotViewStatusBar();
-
-  // bar position settings
+  /* Tool bar settings */
+  showToolBarAction->setChecked(KonversationApplication::preferences.serverWindowToolBarStatus);
   toolBar("mainToolBar")->setBarPos((KToolBar::BarPosition) KonversationApplication::preferences.serverWindowToolBarPos);
-  if(KonversationApplication::preferences.serverWindowToolBarStatus)
-  {
-    toolBar("mainToolBar")->show();
-    showToolBarAction->setChecked(true);
-  }
-  else
-  {
-    toolBar("mainToolBar")->hide();
-    showToolBarAction->setChecked(false);
-  }
   toolBar("mainToolBar")->setIconText((KToolBar::IconText) KonversationApplication::preferences.serverWindowToolBarIconText);
   toolBar("mainToolBar")->setIconSize(KonversationApplication::preferences.serverWindowToolBarIconSize);
+  showToolbar();
 
-// initialize the recent file list
-//  fileOpenRecent->loadEntries(config,"Recent Files");
+  /* Status bar settings */
+  showStatusBarAction->setChecked(KonversationApplication::preferences.serverWindowStatusBarStatus);
+  showStatusbar();
 
   QSize size=KonversationApplication::preferences.getServerWindowSize();
   if(!size.isEmpty())
@@ -225,13 +224,9 @@ void ServerWindow::saveOptions()
 {
   KonversationApplication::preferences.setServerWindowSize(size());
 
-//  config->writeEntry("Show Toolbar", viewToolBar->isChecked());
-//  config->writeEntry("Show Statusbar",viewStatusBar->isChecked());
   KonversationApplication::preferences.serverWindowToolBarPos=toolBar("mainToolBar")->barPos();
-//  KonversationApplication::preferences.serverWindowToolBarStatus=(int) toolBar("mainToolBar")->barStatus();
   KonversationApplication::preferences.serverWindowToolBarIconText=toolBar("mainToolBar")->iconText();
   KonversationApplication::preferences.serverWindowToolBarIconSize=toolBar("mainToolBar")->iconSize();
-//  fileOpenRecent->saveEntries(config,"Recent Files");
 }
 
 bool ServerWindow::queryExit()
@@ -335,4 +330,35 @@ void ServerWindow::closeIgnore(QSize newSize)
 void ServerWindow::channelPrefsChanged()
 {
   emit prefsChanged();
+}
+
+void ServerWindow::setLog(bool activated)
+{
+  log=activated;
+}
+
+LedTabWidget* ServerWindow::getWindowContainer()
+{
+  return windowContainer;
+}
+
+int ServerWindow::spacing()
+{
+  return KDialog::spacingHint();
+}
+
+int ServerWindow::margin()
+{
+  return KDialog::marginHint();
+}
+
+void ServerWindow::updateLag(int msec)
+{
+  QString lagString(i18n("Lag: %1 ms").arg(msec));
+  statusBar()->changeItem(lagString,LagOMeter);
+}
+
+void ServerWindow::resetLag()
+{
+  statusBar()->changeItem(i18n("Lag: not known"),LagOMeter);
 }

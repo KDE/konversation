@@ -15,6 +15,7 @@
 #include <qobject.h>
 #include <qvbox.h>
 #include <qiconset.h>
+#include <qcheckbox.h>
 
 #ifndef QUERY_H
 #define QUERY_H

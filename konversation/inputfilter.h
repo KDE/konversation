@@ -12,10 +12,10 @@
   email:     eisfuchs@tigress.com
 */
 
+#include <qobject.h>
+
 #ifndef INPUTFILTER_H
 #define INPUTFILTER_H
-
-#include "server.h"
 
 /*
   @author Dario Abatianni
@@ -23,8 +23,10 @@
 
 class Server;
 
-class InputFilter
+class InputFilter : public QObject
 {
+  Q_OBJECT
+
   public:
     InputFilter();
     ~InputFilter();
@@ -32,12 +34,17 @@ class InputFilter
     void setServer(Server* newServer);
     void parseLine(QString line);
 
-  protected:
-    Server* server;
+  signals:
+    void welcome();
+    void notifyResponse(QString nicksOnline);
 
+  protected:
     void parseClientCommand(QString& prefix,QString& command,QStringList& parameterList,QString& trailing);
     void parseServerCommand(QString& prefix,QString& command,QStringList& parameterList,QString& trailing);
     void parseModes(QString sourceNick,QStringList parameterList);
+
+    Server* server;
+    bool welcomeSent;
 };
 
 #endif

@@ -19,10 +19,10 @@
 #include <qlabel.h>
 #include <qvbox.h>
 #include <qhbox.h>
+#include <qfile.h>
 
 /* KDE specific includes */
 #include <kmainwindow.h>
-#include <kdialog.h>
 #include <kaction.h>
 #include <kstdaction.h>
 
@@ -36,13 +36,16 @@
 #ifndef SERVERWINDOW_H
 #define SERVERWINDOW_H
 
-#include "ledtabwidget.h"
+
+#include <kstatusbar.h>
+
 #include "server.h"
 #include "ircview.h"
 #include "ircinput.h"
 #include "highlightbox.h"
 #include "quickbuttonsdialog.h"
 #include "ignoredialog.h"
+#include "ledtabwidget.h"
 
 class ServerWindow : public KMainWindow
 {
@@ -54,8 +57,8 @@ class ServerWindow : public KMainWindow
 
     void appendToStatus(const QString& type,const QString& message);
     void setServer(Server* server);
-    void setLog(bool activated) { log=activated; };
-    QTabWidget* getWindowContainer() {  return windowContainer; };
+    void setLog(bool activated);
+    LedTabWidget* getWindowContainer();
     void addView(QWidget* pane,int color,const QString& name);
     void showView(QWidget* pane);
 
@@ -69,11 +72,14 @@ class ServerWindow : public KMainWindow
     void changedView(QWidget* view);
     void logText(const QString& text);
     void channelPrefsChanged();
+    void resetLag();
+    void updateLag(int msec);
 
   protected slots:
     void statusTextEntered();
     void addStatusView();
     void showToolbar();
+    void showStatusbar();
     void openPreferences();
     void quitProgram();
 
@@ -90,14 +96,19 @@ class ServerWindow : public KMainWindow
     void closeButtons(QSize newSize);
 
   protected:
-    int spacing() {  return KDialog::spacingHint(); };
-    int margin() {  return KDialog::marginHint(); };
+    int spacing();
+    int margin();
 
     void setLogfileName(const QString& name);
 
     void readOptions();
     void saveOptions();
     bool queryExit();
+
+    enum StatusID
+    {
+      StatusText,LagOMeter
+    };
 
     OutputFilter filter;
     LedTabWidget* windowContainer;
@@ -110,6 +121,7 @@ class ServerWindow : public KMainWindow
 
     Server* server;
     KToggleAction* showToolBarAction;
+    KToggleAction* showStatusBarAction;
     HighLightBox* hilightWindow;
     IgnoreDialog* ignoreDialog;
     QuickButtonsDialog* buttonsDialog;

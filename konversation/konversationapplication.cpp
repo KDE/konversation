@@ -15,6 +15,7 @@
 #include <kdebug.h>
 
 #include "konversationapplication.h"
+#include "serverwindow.h"
 
 /* include static variables */
 Preferences KonversationApplication::preferences;
@@ -82,15 +83,14 @@ void KonversationApplication::readOptions()
   /* Read configuration and provide the default values */
   config->setGroup("General Options");
 
-//  bool bViewStatusbar = config->readBoolEntry("Show Statusbar", true);
-//  viewStatusBar->setChecked(bViewStatusbar);
-//  slotViewStatusBar();
-
-  /* bar position settings */
+  /* Tool bar position settings */
   preferences.serverWindowToolBarPos     =config->readNumEntry("ServerWindowToolBarPos",KToolBar::Top);
   preferences.serverWindowToolBarStatus  =config->readNumEntry("ServerWindowToolBarStatus",KToolBar::Show);
   preferences.serverWindowToolBarIconText=config->readNumEntry("ServerWindowToolBarIconText",KToolBar::IconTextBottom);
   preferences.serverWindowToolBarIconSize=config->readNumEntry("ServerWindowToolBarIconSize",0);
+
+  /* Status bar settings */
+  preferences.serverWindowStatusBarStatus=config->readBoolEntry("ServerWindowStatusBarStatus",true);
 
   /* Window geometries */
   preferences.setServerWindowSize(config->readSizeEntry("Geometry"));
@@ -113,6 +113,13 @@ void KonversationApplication::readOptions()
 
   QString nickList=config->readEntry("Nicknames",preferences.getNicknameList().join(","));
   preferences.setNicknameList(QStringList::split(",",nickList));
+
+  /* Notify Settings and list */
+  config->setGroup("Notify List");
+  preferences.setNotifyDelay(config->readNumEntry("NotifyDelay",20));
+  preferences.setUseNotify(config->readBoolEntry("UseNotify",true));
+  QString notifyList=config->readEntry("NotifyList","");
+  preferences.setNotifyList(QStringList::split(' ',notifyList));
 
   /* Server List */
   config->setGroup("Server List");
@@ -188,11 +195,12 @@ void KonversationApplication::saveOptions()
   config->writeEntry("IgnoreGeometry",preferences.getIgnoreSize());
   config->writeEntry("NicknameGeometry",preferences.getNicknameSize());
 
-//  config->writeEntry("Show Statusbar",viewStatusBar->isChecked());
   config->writeEntry("ServerWindowToolBarPos",preferences.serverWindowToolBarPos);
   config->writeEntry("ServerWindowToolBarStatus",preferences.serverWindowToolBarStatus);
   config->writeEntry("ServerWindowToolBarIconText",preferences.serverWindowToolBarIconText);
   config->writeEntry("ServerWindowToolBarIconSize",preferences.serverWindowToolBarIconSize);
+
+  config->writeEntry("ServerWindowStatusBarStatus",preferences.serverWindowStatusBarStatus);
 
   config->writeEntry("PartReason",preferences.getPartReason());
   config->writeEntry("KickReason",preferences.getKickReason());
@@ -202,6 +210,12 @@ void KonversationApplication::saveOptions()
   config->writeEntry("Ident",preferences.ident);
   config->writeEntry("Realname",preferences.realname);
   config->writeEntry("Nicknames",preferences.getNicknameList());
+
+  config->setGroup("Notify List");
+  config->writeEntry("NotifyDelay",preferences.getNotifyDelay());
+  config->writeEntry("UseNotify",preferences.getUseNotify());
+  QStringList notifyList=preferences.getNotifyList();
+  config->writeEntry("NotifyList",notifyList);
 
   config->deleteGroup("Server List");
   config->setGroup("Server List");
