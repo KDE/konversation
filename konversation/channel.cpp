@@ -195,6 +195,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(channelInput,SIGNAL (nickCompletion()),this,SLOT (completeNick()) );
   connect(channelInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
   
+  connect(channelInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );
+  connect(channelInput,SIGNAL (pageDown()),getTextView(),SLOT (pageDown()) );
+  
   connect(textView,SIGNAL (newText()),this,SLOT (newTextInView()) );
   connect(textView,SIGNAL (newURL(const QString &)),this, SLOT (urlCatcher(const QString &)) );
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );

@@ -49,7 +49,9 @@ StatusPanel::StatusPanel(QWidget* parent) :
   connect(getTextView(),SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
 
   connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
-//  connect(getTextView(),SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
+
+  connect(statusInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );
+  connect(statusInput,SIGNAL (pageDown()),getTextView(),SLOT (pageDown()) );
 
   connect(statusInput,SIGNAL (returnPressed()),this,SLOT(statusTextEntered()) );
   connect(statusInput,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );

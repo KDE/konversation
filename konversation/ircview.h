@@ -62,6 +62,9 @@ class IRCView : public KTextBrowser
     void appendCommandMessage(const QString& command,const QString& message);
     void appendBacklogMessage(const QString& firstColumn,const QString& message);
     void search();
+    
+    void pageUp();
+    void pageDown();
 
   protected slots:
     void highlightedSlot(const QString& link);

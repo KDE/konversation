@@ -51,9 +51,13 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   connect(queryInput,SIGNAL (returnPressed()),this,SLOT (queryTextEntered()) );
   connect(queryInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
 
+  connect(queryInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );
+  connect(queryInput,SIGNAL (pageDown()),getTextView(),SLOT (pageDown()) );
+  
   connect(textView,SIGNAL (newText()),this,SLOT (newTextInView()) );
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
+  
 
   updateFonts();
 

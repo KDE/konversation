@@ -523,7 +523,11 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps)
   KTextBrowser::append(line);
 #endif
 
-  if(doScroll) ensureVisible(0,contentsHeight());
+  if(doScroll)
+  {
+    moveCursor(MoveEnd,false);
+    ensureVisible(0,contentsHeight());
+  }
 }
 
 // Workaround to scroll to the end of the TextView when it's shown
@@ -536,6 +540,7 @@ void IRCView::showEvent(QShowEvent* event)
 #ifdef TABLE_VERSION
   setText("<qt><table cellpadding=\"0\" cellspacing=\"0\">"+buffer+"</table></qt>");
 #endif
+  moveCursor(MoveEnd,false);
   ensureVisible(0,contentsHeight());
   // Set focus to input line (must be connected)
   emit gotFocus();
@@ -662,5 +667,18 @@ void IRCView::search()
       KMessageBox::information(this,i18n("No matches found for \"%1\".").arg(pattern),i18n("Information"));
   }
 }
+
+void IRCView::pageUp()
+{
+  kdDebug() << "up" << endl;
+  moveCursor(MovePgUp,false);
+}
+
+void IRCView::pageDown()
+{
+  kdDebug() << "down" << endl;
+  moveCursor(MovePgDown,false);
+}
+
 
 #include "ircview.moc"
