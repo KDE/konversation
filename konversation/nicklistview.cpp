@@ -75,6 +75,7 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
       popup->insertItem(i18n("Kick / Ban"),kickban,KickBanSub);
     }
     popup->insertItem(i18n("Ignore"),Ignore);
+    connect (popup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
   }
   else
   {
@@ -99,11 +100,10 @@ void NickListView::contextMenuEvent(QContextMenuEvent* ce)
   if(selectedItems().count())
   {
     insertAssociationSubMenu();
-    int r=popup->exec(ce->globalPos());
-    // Will be connected to Channel::popupCommand(int)
-    emit popupCommand(r);
+    popup->popup(ce->globalPos());
   }
 }
+
 void NickListView::insertAssociationSubMenu() {
 
   bool any_existing_associations=false;
