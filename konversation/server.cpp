@@ -964,7 +964,7 @@ void Server::setChannelTopic(QString& nickname,QString& channel,QString& newTopi
   {
     QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
     QString topic=codec->toUnicode(newTopic);
-    outChannel->setTopic(newTopic,nickname);
+    outChannel->setTopic(nickname,newTopic);
   }
 }
 
