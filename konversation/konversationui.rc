@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="19">
+<kpartgui name="konversation" version="20">
 
   <MenuBar>
     <Menu name="file">
@@ -17,7 +17,7 @@
       <Action name="insert_remember_line" />
       <Action name="insert_character" />
     </Menu>
-    <Menu name="windows">
+    <Menu name="windows" append="settings_merge">
       <Text>&amp;Window</Text>
       <Action name="previous_tab" />
       <Action name="next_tab" />
