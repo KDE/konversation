@@ -13,10 +13,8 @@
 */
 
 #include <qlayout.h>
-#include <qgrid.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
-#include <qvbox.h>
 
 #include <klocale.h>
 #include <klistview.h>
@@ -26,25 +24,14 @@
 #include "prefspagealiases.h"
 
 PrefsPageAliases::PrefsPageAliases(QFrame* newParent,Preferences* newPreferences) :
-                  PrefsPage(newParent,newPreferences)
+  Alias_Config( newParent )
 {
-  // Add the layout to the page
-  QHBoxLayout* aliasesLayout=new QHBoxLayout(parentFrame,marginHint(),spacingHint());
-  QVBox* listLayout=new QVBox(parentFrame);
+  preferences = newPreferences;
+  parentFrame = newParent;
 
-  aliasesListView=new KListView(listLayout);
-
-  aliasesListView->addColumn(i18n("Alias"));
-  aliasesListView->addColumn(i18n("Replacement"));
-
-  aliasesListView->setAllColumnsShowFocus(true);
-  aliasesListView->setItemsRenameable(true);
   aliasesListView->setRenameable(0,true);
   aliasesListView->setRenameable(1,true);
-  aliasesListView->setFullWidth(true);
   aliasesListView->setSorting(-1,false);
-  aliasesListView->setDragEnabled(true);
-  aliasesListView->setAcceptDrops(true);
 
 
   QStringList aliasList(preferences->getAliasList());
@@ -54,15 +41,6 @@ PrefsPageAliases::PrefsPageAliases(QFrame* newParent,Preferences* newPreferences
     QString item=aliasList[index-1];
     new KListViewItem(aliasesListView,item.section(' ',0,0),item.section(' ',1));
   }
-
-  // Set up the buttons to the right of the list
-  QGrid* buttonBox=new QGrid(3,QGrid::Vertical,parentFrame);
-  buttonBox->setSpacing(spacingHint());
-  QPushButton* newButton=new QPushButton(i18n("&New..."),buttonBox);
-  QPushButton* removeButton=new QPushButton(i18n("&Remove"),buttonBox);
-
-  aliasesLayout->addWidget(listLayout);
-  aliasesLayout->addWidget(buttonBox);
 
   connect(newButton,SIGNAL (clicked()),this,SLOT (newAlias()) );
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeAlias()) );

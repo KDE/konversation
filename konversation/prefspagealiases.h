@@ -15,15 +15,12 @@
 #ifndef PREFSPAGEALIASES_H
 #define PREFSPAGEALIASES_H
 
-#include "prefspage.h"
+#include "alias_preferences.h"
 
-/*
-  @author Dario Abatianni
-*/
+class Preferences;
+class QFrame;
 
-class KListView;
-
-class PrefsPageAliases : public PrefsPage
+class PrefsPageAliases : public Alias_Config
 {
   Q_OBJECT
 
@@ -39,7 +36,8 @@ class PrefsPageAliases : public PrefsPage
     void removeAlias();
 
   protected:
-    KListView* aliasesListView;
+    Preferences* preferences;
+    QFrame* parentFrame;
 
 };
 
