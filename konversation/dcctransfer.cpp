@@ -87,14 +87,11 @@ DccTransfer::~DccTransfer()
 
 void DccTransfer::startGet()
 {
-//  kdDebug() << dccFolder << endl;
-
-  if(KonversationApplication::preferences.getDccAddPartner())
+  // Append folder with partner's name if wanted
+  if(KonversationApplication::preferences.getDccCreateFolder())
     dir.setPath(dccFolder+"/"+dccPartner.lower());
   else
     dir.setPath(dccFolder);
-
-//  kdDebug() << dir.path() << endl;
 
   if(!dir.exists())
   {
@@ -104,6 +101,7 @@ void DccTransfer::startGet()
   }
 
   QString fullName(dccFile);
+  // Append partner's name to file name if wanted
   if(KonversationApplication::preferences.getDccAddPartner()) fullName=dccPartner.lower()+"."+fullName;
   file.setName(dir.path()+"/"+fullName);
 
@@ -234,7 +232,7 @@ void DccTransfer::dccGetConnectionSuccess()
   setStatus(Running);
   dccSocket->enableRead(true);
 
-  file.open(IO_WriteOnly);
+  file.open(IO_ReadWrite);
   // Set position
   file.at(getPosition());
   // for DCC Resume
