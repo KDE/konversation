@@ -54,7 +54,6 @@ bool isUtf8(const QCString& text)
 
   switch(result) 
     {
-    case JapaneseCode::EUC:
     case JapaneseCode::SJIS:
     case JapaneseCode::JIS:
       return false;
