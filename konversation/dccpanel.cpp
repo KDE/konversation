@@ -60,6 +60,7 @@ DccPanel::DccPanel(QWidget* parent) :
   connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (dccSelected()) );
 
   connect(acceptButton,SIGNAL (clicked()) ,this,SLOT (acceptDcc()) );
+  connect(removeButton,SIGNAL (clicked()) ,this,SLOT (removeDcc()) );
 }
 
 DccPanel::~DccPanel()
@@ -115,6 +116,29 @@ void DccPanel::acceptDcc()
   if(item)
   {
     if(item->getType()==DccTransfer::Get && item->getStatus()==DccTransfer::Queued) item->startGet();
+  }
+}
+
+void DccPanel::removeDcc()
+{
+  DccTransfer* item=(DccTransfer*) getListView()->selectedItem();
+
+  if(item)
+  {
+    DccTransfer::DccStatus status=item->getStatus();
+    bool doDelete=true;
+
+    if(status!=DccTransfer::Queued &&
+       status!=DccTransfer::Offering &&
+       status!=DccTransfer::Aborted &&
+       status!=DccTransfer::Failed &&
+       status!=DccTransfer::Done)
+    {
+      // TODO: do some user question here
+      doDelete=false;
+    }
+
+    if(doDelete) delete item;
   }
 }
 

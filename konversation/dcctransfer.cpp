@@ -51,6 +51,7 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString p
   statusText.append(i18n("Running"));
   statusText.append(i18n("Stalled"));
   statusText.append(i18n("Failed"));
+  statusText.append(i18n("Aborted"));
   statusText.append(i18n("Done"));
 
   transferStarted=QDateTime::currentDateTime();
@@ -77,7 +78,12 @@ DccTransfer::~DccTransfer()
   kdDebug() << "DccTransfer::~DccTransfer(" << getFile() << ")" << endl;
 
   delete[] buffer;
-  delete dccSocket;
+
+  if(dccSocket)
+  {
+    dccSocket->close();
+    delete dccSocket;
+  }
 }
 
 void DccTransfer::startGet()
@@ -146,6 +152,8 @@ void DccTransfer::connectionSuccess()
 void DccTransfer::broken(int errNo)
 {
   kdDebug() << "DccTransfer: Error " << errNo << endl;
+
+  setStatus(Failed);
   file.close();
 }
 

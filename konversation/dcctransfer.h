@@ -51,6 +51,7 @@ class DccTransfer : public QObject, public KListViewItem
       Running,     // Transferring data
       Stalled,     // Transfer stalls
       Failed,      // Transfer failed
+      Aborted,     // Transfer aborted by user
       Done         // Transfer done
     };
 
