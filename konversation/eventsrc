@@ -71,6 +71,7 @@ default_presentation=0
 [dcc_incoming]
 Name=Incoming file
 Name[ca]=Fitxer entrant
+Name[da]=Indkommende fil
 Name[de]=Datei angeboten
 Name[es]=Fichero entrante
 Name[pt]=Ficheiro recebido
@@ -133,6 +134,7 @@ default_presentation=0
 [mode]
 Name=Mode change
 Name[ca]=Mode canviat
+Name[da]=Tilstadn ændret
 Name[de]=Moduswechsel
 Name[es]=Cambio de modo
 Name[pt]=Mudança de modo
@@ -141,6 +143,7 @@ Name[sv]=Tillståndsändring
 Name[xx]=xxMode changexx
 Comment=A user or channel mode was changed
 Comment[ca]=A mode d'usuari o de canal ha estat canviat
+Comment[da]=En bruger- eller kanaltilstand blev ændret
 Comment[de]=Ein Benutzer- oder Kanalmodus wurde geändert
 Comment[es]= Un modo de usuario o de canal ha sido modificado
 Comment[pt]=O modo de um utilizador ou canal foi alterado
