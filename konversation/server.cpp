@@ -151,6 +151,8 @@ Server::~Server()
 {
   kdDebug() << "Server::~Server()" << endl;
 
+  // clear nicks online
+  emit nicksNowOnline(this,QStringList());
   // Make sure no signals get sent to a soon to be dying Server Window
   serverSocket.blockSignals(true);
   // Send out the last messages (usually the /QUIT)
@@ -250,9 +252,11 @@ void Server::broken(int state)
 
   kdDebug() << "Connection broken (Socket fd " << serverSocket.fd() << ") " << state << "!" << endl;
 
+  // clear nicks online
+  emit nicksNowOnline(this,QStringList());
+
   // TODO: Close all queries and channels!
   //       Or at least make sure that all gets reconnected properly
-
   if(autoReconnect && !getDeliberateQuit())
   {
     statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName));

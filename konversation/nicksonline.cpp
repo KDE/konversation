@@ -64,13 +64,16 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
 {
   QListViewItem* serverRoot=nickListView->findItem(serverName,0);
   delete serverRoot;  
-  
-  KListViewItem* newServerRoot=new KListViewItem(nickListView,serverName);
-  for(unsigned int i=list.count();i!=0;i--)
+
+  if(list.count())
   {
-    new KListViewItem(newServerRoot,list[i-1]);
+    KListViewItem* newServerRoot=new KListViewItem(nickListView,serverName);
+    for(unsigned int i=list.count();i!=0;i--)
+    {
+      new KListViewItem(newServerRoot,list[i-1]);
+    }
+    newServerRoot->setOpen(true);
   }
-  newServerRoot->setOpen(true);
 }
 
 void NicksOnline::closeEvent(QCloseEvent* ce)
