@@ -453,6 +453,7 @@ void KonversationApplication::readOptions()
   preferences.setLowerLog(config->readBoolEntry("LowerLog",preferences.getLowerLog()));
   preferences.setLogFollowsNick(config->readBoolEntry("LogFollowsNick",preferences.getLogFollowsNick()));
 
+  preferences.setTabPlacement(static_cast<Preferences::TabPlacement>(config->readNumEntry("TabPlacement",static_cast<int>(preferences.getTabPlacement()))));
   preferences.setBlinkingTabs(config->readBoolEntry("BlinkingTabs",preferences.getBlinkingTabs()));
   preferences.setBringToFront(config->readBoolEntry("BringToFront",preferences.getBringToFront()));
 
@@ -659,6 +660,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("LowerLog",preferences.getLowerLog());
   config->writeEntry("LogFollowsNick",preferences.getLogFollowsNick());
 
+  config->writeEntry("TabPlacement",static_cast<int>(preferences.getTabPlacement()));
   config->writeEntry("BlinkingTabs",preferences.getBlinkingTabs());
   config->writeEntry("BringToFront",preferences.getBringToFront());
 
@@ -684,6 +686,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
       lookServer->setShowModeButtons(preferences.getShowModeButtons());
       lookServer=serverList.next();
     }
+
+    mainWindow->updateTabPlacement();
   }
 }
 

@@ -68,6 +68,7 @@ class KonversationMainWindow : public KMainWindow
     void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView);
 
     void updateFonts();
+    void updateTabPlacement();
 
   signals:
     void prefsChanged();

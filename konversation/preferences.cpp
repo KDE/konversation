@@ -113,6 +113,7 @@ Preferences::Preferences()
   setLowerLog(true);
   setLogFollowsNick(true);
 
+  setTabPlacement(Bottom);
   setBlinkingTabs(true);
   setCloseButtonsOnTabs(true);
   setBringToFront(true);
@@ -382,6 +383,9 @@ void Preferences::setNicknameList(const QStringList &newList) { identityList.at(
 // FIXME: use per-identity codec setting
 void Preferences::setCodec(const QString &newCodec) { codec=newCodec; }
 QString Preferences::getCodec() { return codec; }
+
+void Preferences::setTabPlacement(TabPlacement where) { tabPlacement=where; }
+Preferences::TabPlacement Preferences::getTabPlacement() { return tabPlacement; }
 
 void Preferences::setBlinkingTabs(bool blink) { blinkingTabs=blink; }
 bool Preferences::getBlinkingTabs() { return blinkingTabs; }

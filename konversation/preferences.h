@@ -47,6 +47,14 @@ class Preferences : public QObject
   Q_OBJECT
 
   public:
+    enum TabPlacement
+    {
+      Top=0,
+      Bottom,
+      Left,    // not yet supported
+      Right    // not yet supported
+    };
+
     Preferences();
     ~Preferences();
 
@@ -103,6 +111,8 @@ class Preferences : public QObject
     void setDccRollback(unsigned long bytes);
     unsigned long getDccRollback();
 
+    TabPlacement getTabPlacement();
+    void setTabPlacement(TabPlacement where);
     void setBlinkingTabs(bool blink);
     bool getBlinkingTabs();
     void setBringToFront(bool state);
@@ -305,9 +315,10 @@ class Preferences : public QObject
     bool logFollowsNick;
     QString logPath;
 
-    bool blinkingTabs;       // Do we want the LEDs on the tabs to blink?
-    bool closeButtonsOnTabs; // Do we want close widgets on the tabs?
-    bool bringToFront;       // Do we want to see newly created tabs immediately?
+    TabPlacement tabPlacement; // where do the tabs go?
+    bool blinkingTabs;         // Do we want the LEDs on the tabs to blink?
+    bool closeButtonsOnTabs;   // Do we want close widgets on the tabs?
+    bool bringToFront;         // Do we want to see newly created tabs immediately?
 
     bool fixedMOTD;
     bool beep;

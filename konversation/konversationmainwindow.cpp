@@ -66,7 +66,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   nicksOnlineWindow=0;
 
   viewContainer=new LedTabWidget(this,"main_window_tab_widget");
-  viewContainer->setTabPosition(QTabWidget::Bottom);
+  updateTabPlacement();
 
   setCentralWidget(viewContainer);
 
@@ -131,6 +131,12 @@ KonversationMainWindow::~KonversationMainWindow()
 
   deleteDccPanel();
   if(dccTransferHandler) delete dccTransferHandler;
+}
+
+void KonversationMainWindow::updateTabPlacement()
+{
+  viewContainer->setTabPosition((KonversationApplication::preferences.getTabPlacement()==Preferences::Top) ?
+                                 QTabWidget::Top : QTabWidget::Bottom);
 }
 
 void KonversationMainWindow::openPreferences()

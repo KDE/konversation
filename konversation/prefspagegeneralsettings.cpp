@@ -64,6 +64,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   QCheckBox* autoReconnectCheck=new QCheckBox(i18n("Auto reconnect"),parentFrame,"auto_reconnect_check");
   QCheckBox* autoRejoinCheck=new QCheckBox(i18n("Auto rejoin"),parentFrame,"auto_rejoin_check");
   QCheckBox* autojoinOnInviteCheck=new QCheckBox(i18n("Autojoin channel on invite"),parentFrame,"autojoin_on_invite_check");
+  QCheckBox* tabPlacementCheck=new QCheckBox(i18n("Place tab labels on top"),parentFrame,"tab_placement_check");
   QCheckBox* blinkingTabsCheck=new QCheckBox(i18n("Blinking tabs"),parentFrame,"blinking_tabs_check");
   QCheckBox* bringToFrontCheck=new QCheckBox(i18n("Bring new tabs to front"),parentFrame,"bring_to_front_check");
   QCheckBox* fixedMOTDCheck=new QCheckBox(i18n("Show MOTD in fixed font"),parentFrame,"fixed_motd_check");
@@ -73,6 +74,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   autoReconnectCheck->setChecked(preferences->getAutoReconnect());
   autoRejoinCheck->setChecked(preferences->getAutoRejoin());
   autojoinOnInviteCheck->setChecked(preferences->getAutojoinOnInvite());
+  tabPlacementCheck->setChecked(preferences->getTabPlacement()==Preferences::Top);
   blinkingTabsCheck->setChecked(preferences->getBlinkingTabs());
   bringToFrontCheck->setChecked(preferences->getBringToFront());
   fixedMOTDCheck->setChecked(preferences->getFixedMOTD());
@@ -94,6 +96,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   generalSettingsLayout->addMultiCellWidget(autoRejoinCheck,row,row,0,1);
   row++;
   generalSettingsLayout->addMultiCellWidget(autojoinOnInviteCheck,row,row,0,1);
+  row++;
+  generalSettingsLayout->addMultiCellWidget(tabPlacementCheck,row,row,0,1);
   row++;
   generalSettingsLayout->addMultiCellWidget(blinkingTabsCheck,row,row,0,1);
   row++;
@@ -120,8 +124,9 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   connect(autoRejoinCheck,SIGNAL (stateChanged(int)),this,SLOT (autoRejoinChanged(int)) );
   connect(autojoinOnInviteCheck,SIGNAL (stateChanged(int)),this,SLOT (autojoinOnInviteChanged(int)) );
 
-  connect(bringToFrontCheck,SIGNAL (stateChanged(int)),this,SLOT (bringToFrontChanged(int)) );
+  connect(tabPlacementCheck,SIGNAL (stateChanged(int)),this,SLOT (tabPlacementChanged(int)) );
   connect(blinkingTabsCheck,SIGNAL (stateChanged(int)),this,SLOT (blinkingTabsChanged(int)) );
+  connect(bringToFrontCheck,SIGNAL (stateChanged(int)),this,SLOT (bringToFrontChanged(int)) );
 
   connect(fixedMOTDCheck,SIGNAL (stateChanged(int)),this,SLOT (fixedMOTDChanged(int)) );
 
@@ -172,6 +177,11 @@ void PrefsPageGeneralSettings::autojoinOnInviteChanged(int state)
 void PrefsPageGeneralSettings::autoRejoinChanged(int state)
 {
   preferences->setAutoRejoin(state==2);
+}
+
+void PrefsPageGeneralSettings::tabPlacementChanged(int state)
+{
+  preferences->setTabPlacement((state==2) ? Preferences::Top : Preferences::Bottom);
 }
 
 void PrefsPageGeneralSettings::blinkingTabsChanged(int state)
