@@ -26,7 +26,7 @@ using namespace KNetwork;
 class KSSL;
 class KSSLCertificateCache;
 
-class SSLSocket : public QObject
+class SSLSocket : public KStreamSocket
 {
 	Q_OBJECT
 
@@ -34,18 +34,18 @@ class SSLSocket : public QObject
 		SSLSocket();
 		~SSLSocket();
 
-		KSSL* kssl;
-		KStreamSocket* m_streamSocket;
 		void showInfoDialog();
+
+		Q_LONG writeBlock (const char *data, Q_ULONG len);
+		Q_LONG readBlock  (char *data, Q_ULONG maxlen);
 
 	signals:
 		void sslFailure();
-		void sslSocketConnected();
 
 	private slots:
 		void slotConnected();
-
-	private:
+	
+        private:
 		int verifyCertificate();
 		void showSSLInfoDialog();
 
@@ -58,6 +58,7 @@ class SSLSocket : public QObject
 		QString m_sslCertErrors;
 
 		KSSLCertificateCache* cc;
+		KSSL* kssl;
 
 };
 

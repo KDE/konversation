@@ -34,22 +34,29 @@ SSLSocket::SSLSocket()
 	cc = new KSSLCertificateCache;
 	cc->reload();
 
-        m_streamSocket = new KStreamSocket( "", "", this, "ssl_stream_socket" );
-
-        // Connect signal/slots
-        connect(m_streamSocket,SIGNAL(connected(const KResolverEntry&)),this,SLOT(slotConnected()));
+	QObject::connect(this,SIGNAL(connected(const KResolverEntry&)),this,SLOT(slotConnected()));
 }
 
 SSLSocket::~SSLSocket()
 {
     // Close stream socket
-    m_streamSocket->close();
+    close();
 
     // close ssl socket
     if( kssl ) kssl->close();
 
     delete kssl;
     delete cc;
+}
+
+Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
+{
+  return kssl->write( data,len );
+}
+
+Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
+{
+  return kssl->read( data, maxlen );
 }
 
 void SSLSocket::slotConnected()
@@ -60,7 +67,7 @@ void SSLSocket::slotConnected()
 		if( !kssl )
 		{
 			kssl = new KSSL();
-			kssl->connect( m_streamSocket->socketDevice()->socket() );
+			kssl->connect( socketDevice()->socket() );
 		}
 		else
 		{
@@ -69,10 +76,9 @@ void SSLSocket::slotConnected()
 
 		if( verifyCertificate() != 1 )
 		{
-                    m_streamSocket->close();
+		  kdDebug() << "Closing socket!" << endl;
+                    close();
 		}
-		
-		emit sslSocketConnected();
 	}
 	else
 	{
@@ -80,13 +86,13 @@ void SSLSocket::slotConnected()
 
 		kssl = 0L;
 		emit sslFailure();
-		m_streamSocket->close();
+		close();
 	}
 }
 
 void SSLSocket::showInfoDialog()
 {
-    if( m_streamSocket->state() == KNetwork::KClientSocketBase::Connected )
+    if( state() == KNetwork::KClientSocketBase::Connected )
     {
         showSSLInfoDialog();
     }
@@ -130,7 +136,7 @@ void SSLSocket::showSSLInfoDialog()
             );
 
         sslInfoDlg->exec();
-        delete sslInfoDlg;
+	//        delete sslInfoDlg;
     }
     else
         KMessageBox::information(0L,
@@ -146,8 +152,8 @@ int SSLSocket::verifyCertificate()
 	int result;
 	bool doAddHost = false;
 
-        remoteHost = m_streamSocket->peerAddress().nodeName();
-        url = "irc://"+remoteHost+":"+m_streamSocket->peerAddress().serviceName();
+        remoteHost = peerAddress().nodeName();
+        url = "irc://"+remoteHost+":"+peerAddress().serviceName();
 
 	KSSLCertificate& peerCertificate = kssl->peerInfo().getPeerCertificate();
 	m_sslPeerCertificate = peerCertificate.toString();
