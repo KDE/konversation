@@ -31,6 +31,7 @@
 Preferences KonversationApplication::preferences;
 
 KonversationApplication::KonversationApplication()
+    : KApplication()
 {
   kdDebug() << "KonversationApplication::KonversationApplication()" << endl;
 
