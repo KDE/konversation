@@ -111,6 +111,9 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   showModeButtons=new QCheckBox(i18n("Show channel mode buttons"),showButtonsBox,"show_modebuttons_checkbox");
   showModeButtons->setChecked(preferences->getShowModeButtons());
 
+  QCheckBox* autoUserhostCheck=new QCheckBox(i18n("Show hostmasks in nick list"),parentFrame,"auto_userhost_check");
+  autoUserhostCheck->setChecked(preferences->getAutoUserhost());
+
   useSpacingCheck=new QCheckBox(i18n("Use custom widget spacing"),parentFrame,"use_spacing_check");
 
   QHBox* spacingMarginBox=new QHBox(parentFrame);
@@ -202,6 +205,8 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   row++;
   appearanceLayout->addMultiCellWidget(showButtonsBox,row,row,0,2);
   row++;
+  appearanceLayout->addMultiCellWidget(autoUserhostCheck,row,row,0,2);
+  row++;
   appearanceLayout->addMultiCellWidget(useSpacingCheck,row,row,0,2);
   row++;
   appearanceLayout->addMultiCellWidget(spacingMarginBox,row,row,0,2);
@@ -229,6 +234,8 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   connect(showQuickButtons,SIGNAL (stateChanged(int)),this,SLOT (showQuickButtonsChanged(int)) );
   connect(showModeButtons,SIGNAL (stateChanged(int)),this,SLOT (showModeButtonsChanged(int)) );
+
+  connect(autoUserhostCheck,SIGNAL (stateChanged(int)),this,SLOT (autoUserhostChanged(int)) );
 
   connect(useSpacingCheck,SIGNAL (stateChanged(int)),this,SLOT (useSpacingChanged(int)) );
   connect(spacing,SIGNAL (valueChanged(int)),this,SLOT (spacingChanged(int)));
@@ -318,6 +325,11 @@ void PrefsPageAppearance::encodingChanged(int newEncodingIndex)
     else
       preferences->setCodec(KGlobal::charsets()->encodingForName(newEncoding));
   }
+}
+
+void PrefsPageAppearance::autoUserhostChanged(int state)
+{
+  preferences->setAutoUserhost(state);
 }
 
 void PrefsPageAppearance::useSpacingChanged(int state)

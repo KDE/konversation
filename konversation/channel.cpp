@@ -214,6 +214,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   setLog(KonversationApplication::preferences.getLog());
 
   connect(&userhostTimer,SIGNAL (timeout()),this,SLOT (autoUserhost()));
+  connect(&KonversationApplication::preferences,SIGNAL (autoUserhostChanged(bool)),this,SLOT (autoUserhostChanged(bool)));
   // every few seconds try to get more userhosts
   userhostTimer.start(10000);
 }
@@ -1262,20 +1263,37 @@ void Channel::adjustFocus()
 
 void Channel::autoUserhost()
 {
-  int limit=5;
-
-  QString nickString;
-  QPtrList<Nick> nicks=getNickList();
-
-  for(unsigned int index=0;index<nicks.count();index++)
+  if(KonversationApplication::preferences.getAutoUserhost())
   {
-    if(nicks.at(index)->getHostmask().isEmpty())
+    int limit=5;
+
+    QString nickString;
+    QPtrList<Nick> nicks=getNickList();
+
+    for(unsigned int index=0;index<nicks.count();index++)
     {
-      if(limit--) nickString=nickString+nicks.at(index)->getNickname()+" ";
-      else break;
+      if(nicks.at(index)->getHostmask().isEmpty())
+      {
+        if(limit--) nickString=nickString+nicks.at(index)->getNickname()+" ";
+        else break;
+      }
     }
+    if(!nickString.isEmpty()) server->requestUserhost(nickString);
   }
-  if(!nickString.isEmpty()) server->requestUserhost(nickString);
+}
+
+void Channel::autoUserhostChanged(bool state)
+{
+  if(state)
+  {
+    userhostTimer.start(10000);
+    if(nicknameListView->columns()==2)nicknameListView->addColumn(QString::null);
+  }
+  else
+  {
+    userhostTimer.stop();
+    if(nicknameListView->columns()==3)nicknameListView->removeColumn(2);
+  }
 }
 
 QString Channel::getTextInLine() { return channelInput->text(); }

@@ -47,6 +47,8 @@ class PrefsPageAppearance : public PrefsPage
     void formatChanged(const QString& newFormat);
     void encodingChanged(int newEncodingIndex);
 
+    void autoUserhostChanged(int state);
+
     void useSpacingChanged(int state);
     void spacingChanged(int newSpacing);
     void marginChanged(int newMargin);

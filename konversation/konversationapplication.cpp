@@ -270,6 +270,8 @@ void KonversationApplication::readOptions()
   preferences.setCloseButtonsOnTabs(config->readBoolEntry("CloseButtonsOnTabs",preferences.getCloseButtonsOnTabs()));
   preferences.setCodec(config->readEntry("Codec",preferences.getCodec()));
 
+  preferences.setAutoUserhost(config->readBoolEntry("AutoUserhost",preferences.getAutoUserhost()));
+
   preferences.setUseSpacing(config->readBoolEntry("UseSpacing",preferences.getUseSpacing()));
   preferences.setSpacing(config->readNumEntry("Spacing",preferences.getSpacing()));
   preferences.setMargin(config->readNumEntry("Margin",preferences.getMargin()));
@@ -496,7 +498,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->writeEntry("Beep",preferences.getBeep());
   config->writeEntry("RawLog",preferences.getRawLog());
-  
+
   config->setGroup("Appearance");
 
   config->writeEntry("TextFont",preferences.getTextFont().toString());
@@ -507,6 +509,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ShowModeButtons",preferences.getShowModeButtons());
   config->writeEntry("CloseButtonsOnTabs",preferences.getCloseButtonsOnTabs());
   config->writeEntry("Codec",preferences.getCodec().stripWhiteSpace());
+
+  config->writeEntry("AutoUserhost",preferences.getAutoUserhost());
 
   config->writeEntry("UseSpacing",preferences.getUseSpacing());
   config->writeEntry("Spacing",preferences.getSpacing());

@@ -1,5 +1,8 @@
 $Id$
 
+Changes from 0.12 to 0.13
+- Added an option to hide hostmasks in channel nick lists
+
 Changes from 0.11 to 0.12
 - Now handles multi server mode in one single window
 - Fixed the wrong Ops counter

@@ -284,10 +284,14 @@ class Preferences : public QObject
     bool getUseParagraphSpacing();
     void setParagraphSpacing(int newSpacing);
     int getParagraphSpacing();
-    
+
+    void setAutoUserhost(bool state);
+    bool getAutoUserhost();
+
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();
+    void autoUserhostChanged(bool state);
 
   protected:
     bool log;
@@ -365,10 +369,14 @@ class Preferences : public QObject
     // sorting stuff
     bool sortByStatus;
     bool sortCaseInsensitive;
+
     // more sorting stuff
     int opValue;
     int voiceValue;
     int noRightsValue;
+
+    // flag for hostmasks next to nicknames
+    bool autoUserhost;
 
     bool useParagraphSpacing;
     int paragraphSpacing;

@@ -106,6 +106,7 @@ class Channel : public ChatWindow
     // connected to IRCInput::sendFile()
     void sendFileMenu();
     void autoUserhost();
+    void autoUserhostChanged(bool state);
 
   protected:
     QStringList getSelectedNicksList();

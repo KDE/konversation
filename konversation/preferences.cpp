@@ -140,6 +140,8 @@ Preferences::Preferences()
   setNoRightsValue(4);
   setSortCaseInsensitive(true);
   setSortByStatus(false);
+
+  setAutoUserhost(false);
 }
 
 Preferences::~Preferences()
@@ -527,5 +529,12 @@ void Preferences::setSortByStatus(bool state)        { sortByStatus=state; }
 
 bool Preferences::getSortCaseInsensitive()           { return sortCaseInsensitive; }
 bool Preferences::getSortByStatus()                  { return sortByStatus; }
+
+bool Preferences::getAutoUserhost()                  { return autoUserhost; }
+void Preferences::setAutoUserhost(bool state)
+{
+  autoUserhost=state;
+  emit autoUserhostChanged(state);
+}
 
 #include "preferences.moc"
