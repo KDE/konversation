@@ -1659,7 +1659,8 @@ void Channel::showEvent(QShowEvent*)
 
     if(sizes.isEmpty()) {
       int listWidth = nicknameListView->columnWidth(0) + nicknameListView->columnWidth(1);
-      sizes << (splitter->width() - listWidth) << listWidth;
+      sizes << (width() - listWidth) << listWidth;
+      KonversationApplication::preferences.setChannelSplitter(sizes);
     }
     
     splitter->setSizes(sizes);
