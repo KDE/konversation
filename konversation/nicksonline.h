@@ -15,10 +15,12 @@
 #ifndef NICKSONLINE_H
 #define NICKSONLINE_H
 
+// Qt includes.
 #include <qvbox.h>
 #include <qiconset.h>
 #include <qpair.h>
 
+// Konversation includes.
 #include "nickinfo.h"
 #include "chatwindow.h"
 
@@ -40,6 +42,7 @@ class NicksOnline : public ChatWindow
       nlvcKabc = 1,
       nlvcAdditionalInfo = 2
     };
+    // Ids associated with addressbook commands.
     enum CommandIDs
     {
       ciAddressbookChange, ciAddressbookNew, ciAddressbookDelete, ciAddressbookEdit
@@ -55,40 +58,115 @@ class NicksOnline : public ChatWindow
 
   signals:
     void editClicked();
+    /**
+    * Emitted whenever user double-clicks a nick in the Nicks Online tab.
+    */
     void doubleClicked(const QString& server,const QString& nick);
 
   public slots:
+    /**
+    * This signal is received when a server has updated its nick online/offline lists.
+    * We update the display.
+    */
     void setOnlineList(const QString& serverName,const QStringList& list,bool changed);
     virtual void adjustFocus();
 
   protected slots:
+    /**
+    * When a user double-clicks a nickname in the nicklistview, let server know so that
+    * it can perform the user's chosen default action for that.
+    */
     void processDoubleClick(QListViewItem* item);
     void timerFired();
+    /**
+    * Received when user clicks the Edit Contact (or New Contact) button.
+    */
     void slotEditContactButton_Clicked();
+    /**
+    * Received when user clicks the Change Association button.
+    */
     void slotChangeAssociationButton_Clicked();
+    /**
+    * Received when user clicks the Delete Association button.
+    */
     void slotDeleteAssociationButton_Clicked();
+    /**
+    * Received when user selects a different item in the nicklistview.
+    */
     void slotNickListView_SelectionChanged();
 
   protected:
-    void updateServerOnlineList(Server* server, bool changed);
+    /**
+    * Refresh the nicklistview for a single server.
+    * @param server            The server to be refreshed.
+    */
+    void updateServerOnlineList(Server* server);
 #ifdef USE_MDI
     virtual void closeYourself(ChatWindow*);
 #endif
-    // Returns the named child of parent item in KListView.
-    QListViewItem* findItemChild(const QListViewItem* parent, const QString& name);
 
     KListView* m_nickListView;
     QTimer* m_timer;
     QIconSet m_kabcIconSet;
     
   private:
+    /**
+    * Returns the named child of parent item in a KListView.
+    * @param parent            Pointer to a QListViewItem.
+    * @param name              The name in the desired child QListViewItem.  Name
+    *                          is assumed to be in column 0 of the item.
+    * @return                  Pointer to the child QListViewItem or 0 if not found.
+    */
+    QListViewItem* findItemChild(const QListViewItem* parent, const QString& name);
+    /**
+    * Refresh the nicklistview for all servers.
+    */
     void refreshAllServerOnlineLists();
+    /**
+    * Return a string contained formatted additional information about a nick.
+    * @param nickInfo          A pointer to NickInfo structure for the nick.
+    * @return                  A string formatted for display containing the information
+    *                          about the nick.
+    */
     QString getNickAdditionalInfo(NickInfoPtr nickInfo);
+    /**
+    * Invokes the KAddressBook contact editor for the specified contact id.
+    * @param uid               Id of the contact.
+    * @return                  False if unable to invoke the Contact editor.
+    */
     bool editAddressee(const QString &uid);
-    // Returns the server name and nickname of the currently-selected item in the nicklistview.
+    /**
+    * Returns the server name and nickname of the specified nicklistview item.
+    * @param item              The nicklistview item.
+    * @return serverName       Name of the server for the nick at the item, or Null if not a nick.
+    * @return nickname         The nickname at the item.
+    */
     bool getItemServerAndNick(const QListViewItem* item, QString& serverName, QString& nickname);
+    /**
+    * Perform an addressbook command (edit contact, create new contact, 
+    * change/delete association.)
+    * @param id                The command id.  @ref CommandIDs.
+    *
+    * The operation is performed on the nickname at the currently-selected item in
+    * the nicklistview.
+    *
+    * Also refreshes the nicklistview display to reflect the new addressbook state
+    * for the nick.
+    */
     void doCommand(int id);
+    /**
+    * Get the addressbook state of the nickname at the specified nicklistview item.
+    * @param item              Item of the nicklistview.
+    * @return                  Addressbook state.
+    * 0 = not a nick, 1 = nick has no addressbook association, 2 = nick has association
+    */
     int getNickAddressbookState(QListViewItem* item);
+    /**
+    * Sets the enabled/disabled state and labels of the addressbook buttons
+    * based on the given nick addressbook state.
+    * @param nickState         The state of the nick. 1 = not associated with addressbook,
+    *                          2 = associated with addressbook.  @ref getNickAddressbookState.
+    */
     void setupAddressbookButtons(int nickState);
     
     QPushButton* m_editContactButton;
