@@ -2118,6 +2118,8 @@ bool Server::setNickOffline(const QString& nickname)
 */
 bool Server::deleteNickIfUnlisted(QString &nickname)
 {
+  // Don't delete our own nickinfo.
+  if (nickname == getNickname()) return false;
   QString lcNickname = nickname.lower();
   if (!m_queryNicks.contains(lcNickname))
   {
@@ -2416,14 +2418,14 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
     kdDebug() << "server::renameNick called with empty strings!  Trying to rename '" << nickname << "' to '" << newNick << "'" << endl;
     return;
   }
+  kdDebug() << "server::renameNick - renaming " << nickname << "' to '" << newNick << "'" << endl;
   //Actually do the rename.
   NickInfoPtr nickInfo = getNickInfo(nickname);
   if(!nickInfo) {
     kdDebug() << "server::renameNick called for nickname '" << nickname << "' to '" << newNick << "' but getNickInfo('" << nickname << "') returned no results." << endl;
-    return;
   }
-  kdDebug() << "server::renameNick - renaming " << nickname << "' to '" << newNick << "'" << endl;
-  renameNickInfo(nickInfo, newNick);
+  else
+    renameNickInfo(nickInfo, newNick);
   //The rest of the code below allows the channels to echo to the user to tell them that the nick has changed.
 
   // Rename the nick in every channel they are in
