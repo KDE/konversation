@@ -1,5 +1,4 @@
 # KDE Config File
-# $Id$
 
 [Desktop Entry]
 Type=Application
@@ -8,10 +7,12 @@ Icon=konversation
 MiniIcon=konversation
 DocPath=konversation/index.html
 GenericName=Internet Relay Chat Client
-GenericName[de]=Internet Relay Chatprogramm
+GenericName[da]=Internet Relay Chat klient
 GenericName[pt]=Cliente de IRC
-GenericName[pt_BR]=Cliente de IRC
+GenericName[pt_BR]=Cliente de bate-papo na Internet
 GenericName[sv]=Internet Relay Chat-klient
+GenericName[xx]=xxInternet Relay Chat Clientxx
 Terminal=0
 Name=Konversation
-Name[de]=Konversation
+Name[pt_BR]=Konversação
+Name[xx]=xxKonversationxx
