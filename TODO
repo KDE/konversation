@@ -1,13 +1,13 @@
 TODO-list for Konversation
-======================
+==========================
 <nick>  == reported by
 -->nick == assigned to
 #x      == sequential bug number,
            #1 being the highest available (take this one for your next bug and increase here)
 
+
 SHORT-TERM (URGENT):
 - Limit backlog to x lines or KB
-- Docufy the app
 - Option to disable %G, %C %B... expansion
 - Make URLs like http://user@somedomain.com/ work
 - /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
@@ -24,7 +24,6 @@ MID-TERM:
 - Doxify the source ( berkus )
 - Per nick coloring in channel discussion
 - DCC RESUME should start counting cps from the beginning
-- History viewer
 - Treeview with servers, list of channels / queries in a detachable window that also indicates new text
 - After being away a summary of lines with highlighting in its own window would be nice; a click on one line
   might jump to the according line in the channel/query-window
