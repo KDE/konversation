@@ -116,12 +116,12 @@ void TopicLabel::updateSqueezedText()
   if(height() < (fm.lineSpacing() * 2)) {
     text = rPixelSqueeze(text, visibleWidth() - 10);
     setWordWrap(NoWrap);
-    QToolTip::add(this, "<qt>" + m_fullText + "</qt>");
+    QToolTip::add(this, "<qt>" + QStyleSheet::escape(m_fullText) + "</qt>");
   } else {
     setWordWrap(WidgetWidth);
 
     if(height() < contentsHeight()) {
-      QToolTip::add(this, "<qt>" + m_fullText + "</qt>");
+      QToolTip::add(this, "<qt>" + QStyleSheet::escape(m_fullText) + "</qt>");
     }
   }
 
