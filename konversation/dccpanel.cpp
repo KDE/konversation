@@ -151,7 +151,7 @@ void DccPanel::dccStatusChanged(const DccTransfer* /* item */)
 
 void DccPanel::selectionChanged()
 {
-  bool accept=true, abort=false, clear=true, open=true, info=true, detail=true;
+  bool accept=true, abort=false, clear=true, open=true, info=false, detail=true;
   bool itemfound = false;
   QListViewItemIterator it( getListView() );
   while( it.current() )
@@ -254,7 +254,7 @@ void DccPanel::runDcc()
       DccTransfer* item=static_cast<DccTransfer*>( it.current() );
       if( item )
         if( item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done )
-          new KRun( KURL( item->getFilePath() ) );
+          new KRun( item->getLocalFileURL() );
     }
     ++it;
   }
@@ -262,6 +262,7 @@ void DccPanel::runDcc()
 
 void DccPanel::showFileInfo()
 {
+  /*
   QListViewItemIterator it( getListView() );
   while( it.current() )
   {
@@ -336,6 +337,7 @@ void DccPanel::showFileInfo()
     }
     ++it;
   }
+  */
 }
 
 void DccPanel::openDetail()
@@ -410,7 +412,7 @@ void DccPanel::doubleClicked(QListViewItem* _item, const QPoint& /* _pos */, int
   DccTransfer* item = static_cast<DccTransfer*>(_item);
   if(item)
     if(item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done)
-      new KRun( KURL( item->getFilePath() ) );
+      new KRun( item->getLocalFileURL() );
 }
 
 DccTransfer* DccPanel::getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed)

@@ -16,9 +16,9 @@
 #define DCCTRANSFER_H
 
 #include <qdatetime.h>
-#include <qfile.h>
 
 #include <klistview.h>
+#include <kurl.h>
 
 class QDateTime;
 class QStringList;
@@ -46,17 +46,18 @@ class DccTransfer : public QObject, public KListViewItem
     enum DccStatus
     {
       Queued=0,      // Newly added DCC, RECV: Waiting for local user's response
-      WaitingRemote, // SEND: Waiting for remote host's response
+      WaitingRemote, // Waiting for remote host's response
       Connecting,    // RECV: trying to connect to the server
       Sending,       // Sending
       Receiving,     // Receiving
+      Closing,       // Flushing local transfer (KIO)
       Failed,        // Transfer failed
       Aborted,       // Transfer aborted by user
       Done,          // Transfer done
       DccStatusCount
     };
     
-    DccTransfer(KListView* _parent, DccType _dccType, const QString& _partnerNick);
+    DccTransfer(KListView* _parent, DccType _dccType, const QString& _partnerNick, const QString& _fileName);
     virtual ~DccTransfer();
     
     virtual void paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment);
@@ -67,7 +68,7 @@ class DccTransfer : public QObject, public KListViewItem
     QString getOwnPort() const { return ownPort; }
     QString getPartnerNick() const { return partnerNick; }
     QString getFileName() const { return fileName; }
-    QString getFilePath() const { return filePath; }
+    KURL getLocalFileURL() const { return localFileURL; }
     bool isResumed() const { return bResumed; }
     
     void openDetailDialog();
@@ -91,7 +92,6 @@ class DccTransfer : public QObject, public KListViewItem
     void stopAutoUpdateView();
     
     void setStatus(DccStatus status, const QString& statusDetail = QString::null);
-    virtual void setFilePath(const QString& _filePath) = 0;
     
     // called from updateView()
     QString getTypeText() const;
@@ -128,11 +128,10 @@ class DccTransfer : public QObject, public KListViewItem
     unsigned long bufferSize;
     char* buffer;
     
-    // file & file information
-    QFile file;
+    // file information
     QString fileName;
-    QString filePath;
     unsigned long fileSize;
+    KURL localFileURL;
     
     // UI
     QTimer* autoUpdateViewTimer;

@@ -17,6 +17,7 @@
 
 #include "dccdetaildialog.h"
 #include "dcctransfer.h"
+#include "dcctransferrecv.h"
 
 DccDetailDialog::DccDetailDialog( DccTransfer* item )
   : KDialog( 0 )
@@ -41,20 +42,20 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   fileName->setFrame( false );
   fileName->setAlignment( AlignHCenter );
   
-  // Local path
-  QLabel* localPathHeader = new QLabel( infoFrame );
-  localPathHeader->setAlignment( AlignHCenter | AlignVCenter );
+  // Local File URL
+  QLabel* localFileURLHeader = new QLabel( infoFrame );
+  localFileURLHeader->setAlignment( AlignHCenter | AlignVCenter );
   if ( m_item->dccType == DccTransfer::Send )
-    localPathHeader->setText( i18n("Local Path") );
+    localFileURLHeader->setText( i18n("Local Path") );
   else
-    localPathHeader->setText( i18n("Save to") );
-  QHBox* localPathBox = new QHBox( infoFrame );
-  localPathBox->setSpacing( spacingHint() );
-  m_localPath = new KURLRequester( m_item->filePath, localPathBox );
-  connect( m_localPath, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotLocalPathChanged( const QString& ) ) );
-  m_localPathOpen = new KPushButton( KGlobal::iconLoader()->loadIcon( "exec", KIcon::Small ), QString::null, localPathBox );
-  m_localPathOpen->setFixedSize( m_localPath->button()->size() );
-  connect( m_localPathOpen, SIGNAL( clicked() ), this, SLOT( slotOpenFile() ) );
+    localFileURLHeader->setText( i18n("Save to") );
+  QHBox* localFileURLBox = new QHBox( infoFrame );
+  localFileURLBox->setSpacing( spacingHint() );
+  m_localFileURL = new KURLRequester( m_item->localFileURL.prettyURL(), localFileURLBox );
+  connect( m_localFileURL, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotLocalFileURLChanged( const QString& ) ) );
+  m_localFileURLOpen = new KPushButton( KGlobal::iconLoader()->loadIcon( "exec", KIcon::Small ), QString::null, localFileURLBox );
+  m_localFileURLOpen->setFixedSize( m_localFileURL->button()->size() );
+  connect( m_localFileURLOpen, SIGNAL( clicked() ), this, SLOT( slotOpenFile() ) );
   
   // Partner
   QLabel* partnerHeader = new QLabel( infoFrame );
@@ -146,8 +147,8 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   infoLayout->addWidget( fileName, row, 1 );
   
   ++row;
-  infoLayout->addWidget( localPathHeader, row, 0 );
-  infoLayout->addWidget( localPathBox, row, 1 );
+  infoLayout->addWidget( localFileURLHeader, row, 0 );
+  infoLayout->addWidget( localFileURLBox, row, 1 );
   
   ++row;
   infoLayout->addWidget( partnerHeader, row, 0 );
@@ -204,13 +205,13 @@ void DccDetailDialog::updateView()  // public
   // information
   
   // Local path
-  m_localPath->setURL( m_item->filePath );
-  m_localPath->lineEdit()->setFocusPolicy( m_item->dccStatus == DccTransfer::Queued ? StrongFocus : ClickFocus );
-  m_localPath->lineEdit()->setReadOnly( m_item->dccStatus != DccTransfer::Queued );
-  m_localPath->lineEdit()->setFrame( m_item->dccStatus == DccTransfer::Queued );
-  m_localPath->lineEdit()->setAlignment( m_item->dccStatus == DccTransfer::Queued ? AlignLeft : AlignHCenter );
-  m_localPath->button()->setEnabled( m_item->dccStatus == DccTransfer::Queued );
-  m_localPathOpen->setEnabled( m_item->dccType == DccTransfer::Send || m_item->dccStatus == DccTransfer::Done );
+  m_localFileURL->setURL( m_item->localFileURL.prettyURL() );
+  m_localFileURL->lineEdit()->setFocusPolicy( m_item->dccStatus == DccTransfer::Queued ? StrongFocus : ClickFocus );
+  m_localFileURL->lineEdit()->setReadOnly( m_item->dccStatus != DccTransfer::Queued );
+  m_localFileURL->lineEdit()->setFrame( m_item->dccStatus == DccTransfer::Queued );
+  m_localFileURL->lineEdit()->setAlignment( m_item->dccStatus == DccTransfer::Queued ? AlignLeft : AlignHCenter );
+  m_localFileURL->button()->setEnabled( m_item->dccStatus == DccTransfer::Queued );
+  m_localFileURLOpen->setEnabled( m_item->dccType == DccTransfer::Send || m_item->dccStatus == DccTransfer::Done );
   
   // Partner
   if ( !m_item->partnerIp.isEmpty() || !m_item->partnerPort.isEmpty() )
@@ -258,15 +259,19 @@ void DccDetailDialog::updateView()  // public
   
 }
 
-void DccDetailDialog::slotLocalPathChanged( const QString& newFilePath )
+void DccDetailDialog::slotLocalFileURLChanged( const QString& newURL )
 {
-  m_localPath->setURL( newFilePath.stripWhiteSpace() );
-  m_item->setFilePath( newFilePath.stripWhiteSpace() );
+  DccTransferRecv* item = static_cast< DccTransferRecv* >( m_item );
+  if ( item )
+  {
+    item->setLocalFileURL( KURL::fromPathOrURL( newURL ) );
+    m_localFileURL->setURL( item->localFileURL.prettyURL() );
+  }
 }
 
 void DccDetailDialog::slotOpenFile()
 {
-  new KRun( KURL( m_item->filePath ) );
+  new KRun( m_item->localFileURL );
 }
 
 void DccDetailDialog::slotAccept()
@@ -281,7 +286,7 @@ void DccDetailDialog::slotAbort()
 
 void DccDetailDialog::slotClose()
 {
-  accept();  // *not* mean accepting DCC, but close this dialog
+  accept();  // *not* mean accepting DCC, but closing this dialog
 }
 
 #include "dccdetaildialog.moc"

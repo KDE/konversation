@@ -40,7 +40,7 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* parentItem)
   QLabel* topMessage = new QLabel(page);
   if(item->bCompletedFileExists)
     topMessage->setText( i18n("<qt>A file with the name <b>%1</b> already exists.<br>")
-                         .arg(item->filePath.section("/", -1))
+                         .arg(item->localFileURL.fileName())
                        );
   /*
     topMessage->setText( i18n("<qt>A file with the name <b>%1</b> already exists.<br>"
@@ -55,10 +55,10 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* parentItem)
   */
   else
     topMessage->setText( i18n("<qt>A part of the file <b>%1</b> exists.<br>")
-                         .arg(item->filePath.section("/", -1))
+                         .arg(item->localFileURL.fileName())
                        );
   
-  urlreqFilePath = new KURLRequester(item->filePath, page);
+  urlreqFilePath = new KURLRequester(item->localFileURL.prettyURL(), page);
   
   QFrame* filePathToolsFrame = new QFrame(page);
   QHBoxLayout* filePathToolsLayout = new QHBoxLayout(filePathToolsFrame);
@@ -97,14 +97,14 @@ DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item)  // p
     ra = Cancel;
   
   if(ra == Rename)
-    item->setFilePath(dlg.urlreqFilePath->url().stripWhiteSpace());
+    item->setLocalFileURL(dlg.urlreqFilePath->url());
   
   return ra;
 }
 
 void DccResumeDialog::slotOkClicked()  // slot
 {
-  if(item->filePath == urlreqFilePath->url().stripWhiteSpace())
+  if(item->localFileURL == urlreqFilePath->url())
     action = Overwrite;
   else
     action = Rename;
@@ -118,7 +118,7 @@ void DccResumeDialog::slotUser1Clicked()  // slot
 
 void DccResumeDialog::updateDialogButtons()  // slot
 {
-  if(item->filePath == urlreqFilePath->url().stripWhiteSpace())
+  if(item->localFileURL == urlreqFilePath->url())
   {
     setButtonText(KDialogBase::Ok, i18n("Overwrite"));
     if(!item->bCompletedFileExists)
@@ -132,6 +132,7 @@ void DccResumeDialog::updateDialogButtons()  // slot
   }
 }
 
+// FIXME: kio-fy me!
 // taken and adapted from kio::renamedlg.cpp
 void DccResumeDialog::suggestNewName()  // slot
 {
@@ -177,7 +178,7 @@ void DccResumeDialog::suggestNewName()  // slot
 
 void DccResumeDialog::setDefaultName()  // slot
 {
-  urlreqFilePath->setURL(item->filePath);
+  urlreqFilePath->setURL(item->localFileURL.prettyURL());
 }
 
 #include "dccresumedialog.moc"

@@ -31,7 +31,7 @@ class DccTransferSend : public DccTransfer
   Q_OBJECT
   
   public:
-    DccTransferSend(KListView* _parent, const QString& _partnerNick, const QString& _filePath, const QString& _ownIp);
+    DccTransferSend(KListView* _parent, const QString& _partnerNick, const KURL& _fileURL, const QString& _ownIp);
     virtual ~DccTransferSend();
     
     void setResume(unsigned long _position);
@@ -55,13 +55,11 @@ class DccTransferSend : public DccTransfer
     void startConnectionTimer(int sec);
     void stopConnectionTimer();
     
-    virtual void setFilePath(const QString& _filePath) { filePath = _filePath; }
-    
-    QTimer* connectionTimer;
+    QFile file;
     
     KNetwork::KServerSocket* serverSocket;
     KNetwork::KStreamSocket* sendSocket;
-    
+    QTimer* connectionTimer;
 };
 
 #endif // DCCTRANSFERSEND_H

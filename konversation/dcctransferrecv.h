@@ -18,6 +18,7 @@
 
 #include "dcctransfer.h"
 
+class QFile;
 class QTimer;
 
 namespace KNetwork
@@ -28,10 +29,11 @@ namespace KNetwork
 class DccTransferRecv : public DccTransfer
 {
   Q_OBJECT
+  friend class DccDetailDialog;
   friend class DccResumeDialog;
   
   public:
-    DccTransferRecv(KListView* _parent, const QString& _partnerNick, const QString& _fileFolder, const QString& _fileName, unsigned long _fileSize, const QString& _partnerIp, const QString& _partnerPort);
+    DccTransferRecv(KListView* _parent, const QString& _partnerNick, const KURL& _defaultFolderURL, const QString& _fileName, unsigned long _fileSize, const QString& _partnerIp, const QString& _partnerPort);
     virtual ~DccTransferRecv();
     
   signals:
@@ -56,12 +58,15 @@ class DccTransferRecv : public DccTransfer
     void startConnectionTimer(int sec);
     void stopConnectionTimer();
     
-    virtual void setFilePath(const QString& _filePath);
+    void setLocalFileURL(const KURL& _url);
     
   protected:
-    QString fileTmpPath;
+    QFile file;
+    KURL localTmpFileURL;
+    
     QTimer* connectionTimer;
     KNetwork::KStreamSocket* recvSocket;
+    
     bool bTemporaryFileExists;
     bool bCompletedFileExists;
 };

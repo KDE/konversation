@@ -25,8 +25,8 @@
 #include "dcctransferrecv.h"
 #include "konversationapplication.h"
 
-DccTransferRecv::DccTransferRecv(KListView* _parent, const QString& _partnerNick, const QString& _fileFolder, const QString& _fileName, unsigned long _fileSize, const QString& _partnerIp, const QString& _partnerPort)
-  : DccTransfer(_parent, DccTransfer::Receive, _partnerNick)
+DccTransferRecv::DccTransferRecv(KListView* _parent, const QString& _partnerNick, const KURL& _defaultFolderURL, const QString& _fileName, unsigned long _fileSize, const QString& _partnerIp, const QString& _partnerPort)
+  : DccTransfer(_parent, DccTransfer::Receive, _partnerNick, _fileName)
 {
   kdDebug() << "DccTransferRecv::DccTransferRecv()" << endl
             << "DccTransferRecv::DccTransferRecv(): Partner=" << _partnerNick << endl
@@ -34,22 +34,21 @@ DccTransferRecv::DccTransferRecv(KListView* _parent, const QString& _partnerNick
             << "DccTransferRecv::DccTransferRecv(): FileSize=" << _fileSize << endl
             << "DccTransferRecv::DccTransferRecv(): Partner Address=" << _partnerIp << ":" << _partnerPort << endl;
   
-  fileName=_fileName;
+  // set default path
+  // Append folder with partner's name if wanted
+  KURL localFileURLTmp(_defaultFolderURL);
+  localFileURLTmp.adjustPath(1);  // add a slash if there is none
+  if(KonversationApplication::preferences.getDccCreateFolder())
+    localFileURLTmp.addPath(_partnerNick.lower()+"/");
   
   // determine default filename
   // Append partner's name to file name if wanted
-  QString localFileName;
   if(KonversationApplication::preferences.getDccAddPartner())
-    localFileName=_partnerNick.lower()+"."+_fileName;
+    localFileURLTmp.addPath(_partnerNick.lower()+"."+_fileName);
   else
-    localFileName=_fileName;
+    localFileURLTmp.addPath(_fileName);
   
-  // set default path
-  // Append folder with partner's name if wanted
-  if(KonversationApplication::preferences.getDccCreateFolder())
-    setFilePath(_fileFolder+"/"+_partnerNick.lower()+"/"+localFileName);
-  else
-    setFilePath(filePath=_fileFolder+"/"+localFileName);
+  setLocalFileURL(localFileURLTmp);
   
   fileSize=_fileSize;
   
@@ -74,7 +73,7 @@ void DccTransferRecv::start()  // public slot
   
   // check whether the file exists
   // if exists, ask user to rename/overwrite/abort
-  bCompletedFileExists = QFile::exists(filePath);
+  bCompletedFileExists = QFile::exists(localFileURL.path());
   
   // check whether the temporary file exists
   // if exists, ask user to resume/rename/overwrite/abort
@@ -169,12 +168,6 @@ void DccTransferRecv::connectToSender()
   
   recvSocket=new KNetwork::KStreamSocket(partnerIp, partnerPort);
   
-  connect( recvSocket, SIGNAL(connected(const KResolverEntry&)), this, SLOT(connectionSuccess()) );
-  connect( recvSocket, SIGNAL(gotError(int)),                    this, SLOT(connectionFailed(int)) );
-  
-  connect( recvSocket, SIGNAL(readyRead()),  this, SLOT(readData()) );
-  connect( recvSocket, SIGNAL(readyWrite()), this, SLOT(sendAck()) );
-  
   recvSocket->setBlocking(false);  // asynchronous mode
   recvSocket->setFamily(KNetwork::KResolver::InetFamily);
   recvSocket->setResolutionEnabled(false);
@@ -182,6 +175,12 @@ void DccTransferRecv::connectToSender()
   
   recvSocket->enableRead(false);
   recvSocket->enableWrite(false);
+  
+  connect( recvSocket, SIGNAL( connected(const KResolverEntry&) ), this, SLOT( connectionSuccess() ) );
+  connect( recvSocket, SIGNAL( gotError(int) ),                    this, SLOT( connectionFailed(int) ) );
+  
+  connect( recvSocket, SIGNAL( readyRead() ),  this, SLOT( readData() ) );
+  connect( recvSocket, SIGNAL( readyWrite() ), this, SLOT( sendAck() ) );
   
   recvSocket->connect();
 }
@@ -192,10 +191,10 @@ void DccTransferRecv::connectionSuccess()  // slot
   
   timeTransferStarted = QDateTime::currentDateTime();
   
-  if(!QDir(filePath.section("/",0,-2)).exists())
-    if(!KStandardDirs::makeDir(filePath.section("/",0,-2)))
+  if(!QDir(localFileURL.directory()).exists())
+    if(!KStandardDirs::makeDir(localFileURL.directory()))
     {
-      KMessageBox::sorry(static_cast<QWidget*>(0),i18n("Cannot create received files directory '%1'.").arg(filePath.section("/",0,-2)),i18n("DCC Error"));
+      KMessageBox::sorry(static_cast<QWidget*>(0),i18n("Cannot create received files directory '%1'.").arg(localFileURL.directory()),i18n("DCC Error"));
       setStatus(Failed);
       cleanUp();
       updateView();
@@ -256,9 +255,9 @@ void DccTransferRecv::sendAck()  // slot
     cleanUp();
     
     // rename the file
-    if(QFile::exists(filePath))
-      QFile::remove(filePath);  // already confirmed to overwrite
-    QDir().rename(fileTmpPath, filePath);
+    if(QFile::exists(localFileURL.path()))
+      QFile::remove(localFileURL.path());  // already confirmed to overwrite
+    QDir().rename(localTmpFileURL.path(), localFileURL.path());
     
     setStatus(Done);
     updateView();
@@ -266,11 +265,11 @@ void DccTransferRecv::sendAck()  // slot
   }
 }
 
-void DccTransferRecv::setFilePath(const QString& _filePath)  // virtual
+void DccTransferRecv::setLocalFileURL(const KURL& url)
 {
-  filePath = _filePath;
-  fileTmpPath = filePath + ".part";
-  file.setName(fileTmpPath);
+  localFileURL = url;
+  localTmpFileURL = KURL(url.url() + ".part");
+  file.setName(localTmpFileURL.path());
 }
 
 void DccTransferRecv::startConnectionTimer(int sec)

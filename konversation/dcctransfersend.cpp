@@ -17,6 +17,7 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 
+#include <qfile.h>
 #include <qtimer.h>
 
 #include <kdebug.h>
@@ -29,19 +30,19 @@
 #include "dcctransfersend.h"
 #include "konversationapplication.h"
 
-DccTransferSend::DccTransferSend(KListView* _parent, const QString& _partnerNick, const QString& _filePath, const QString& _ownIp)
-  : DccTransfer(_parent, DccTransfer::Send, _partnerNick)
+DccTransferSend::DccTransferSend(KListView* _parent, const QString& _partnerNick, const KURL& _fileURL, const QString& _ownIp)
+  : DccTransfer(_parent, DccTransfer::Send, _partnerNick, _fileURL.filename())
 {
   kdDebug() << "DccTransferSend::DccTransferSend()" << endl
             << "DccTransferSend::DccTransferSend(): Partner=" << _partnerNick << endl
-            << "DccTransferSend::DccTransferSend(): File=" << _filePath << endl;
+            << "DccTransferSend::DccTransferSend(): File=" << _fileURL.prettyURL() << endl;
   
-  filePath=_filePath;
+  localFileURL = _fileURL;
   ownIp=_ownIp;
   
-  file.setName(filePath);
-  fileName=filePath.section("/",-1);
-  fileSize=file.size();
+  file.setName(localFileURL.path());
+  fileName = localFileURL.filename();
+  fileSize = file.size();
   
   connectionTimer=0;
   
@@ -215,7 +216,7 @@ void DccTransferSend::getAck()  // slot
       setStatus(Done);
       cleanUp();
       updateView();
-      emit done(filePath);
+      emit done(localFileURL.path());
       break;  // for safe
     }
   }

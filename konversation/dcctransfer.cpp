@@ -28,11 +28,12 @@
 #include "dcctransfer.h"
 #include "konversationapplication.h"
 
-DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _partnerNick)
+DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _partnerNick, const QString& _fileName)
   : KListViewItem(_parent)
 {
   dccType = _dccType;
   partnerNick = _partnerNick;
+  fileName = _fileName;
   
   dccStatus = Queued;
   bResumed = false;
@@ -64,6 +65,7 @@ DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _p
   StatusText[Connecting]    = i18n("Connecting");
   StatusText[Sending]       = i18n("Sending");
   StatusText[Receiving]     = i18n("Receiving");
+  StatusText[Closing]       = i18n("Closing");
   StatusText[Failed]        = i18n("Failed");
   StatusText[Aborted]       = i18n("Aborted");
   StatusText[Done]          = i18n("Done");
