@@ -26,12 +26,14 @@
 #include <ksystemtray.h>
 #include <kdeversion.h>
 
+#ifdef KDE_IS_VERSION
 #if KDE_IS_VERSION(3,1,1)
 #define USE_KNOTIFY
 #endif
 
 #ifdef USE_KNOTIFY
 #include <knotifydialog.h>
+#endif
 #endif
 
 #include "ledtabwidget.h"
