@@ -165,6 +165,7 @@ void DccTransferRecv::cleanUp()
   stopAutoUpdateView();
   if(recvSocket)
   {
+    recvSocket->cancelAsyncConnect();
     recvSocket->flush();
     recvSocket->closeNow();
     disconnect(recvSocket, 0, 0, 0);

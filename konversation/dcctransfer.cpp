@@ -207,8 +207,8 @@ QString DccTransfer::getTimeRemainingPrettyText() const
   // not use getCPS() for exact result
   int trnsfdTime = timeTransferStarted.secsTo(QDateTime::currentDateTime());
   unsigned long trnsfdBytes = transferringPosition - transferStartPosition;
-  if(!trnsfdBytes)
-    return QString::null;  // anyway we cannot anticipate exactly
+  if(trnsfdBytes == 0)
+    return QString::null;
   unsigned long remBytes = fileSize - transferringPosition;
   int remTime = (int)((double)remBytes / (double)trnsfdBytes * trnsfdTime);
   int remHour = remTime / 3600; remTime -= remHour * 3600;
