@@ -75,21 +75,24 @@ void LedTab::blinkTimeout()
 void LedTab::setOn(bool on,bool important)
 {
   if (on) {
-    if (important)
+    if (important) {
       blinkTimer.changeInterval(500);
-    else if (state!=Fast)
+    } else if (state!=Fast) {
       blinkTimer.changeInterval(1000);
-    state = important ? Fast : Slow;    
+    }
+
+    state = important ? Fast : Slow;
+  } else {
+    state = Off;
+    labelColor = QString::null;
   }
-  else
-    state=Off;  
-   
+
   setIconSet((state!=Off) ? iconOn : iconOff);
 }
 
 void LedTab::setLabelColor(const QString& newLabelColor)
 {
-  labelColor=newLabelColor;
+  labelColor = newLabelColor;
   emit repaintTab(this);
 }
 

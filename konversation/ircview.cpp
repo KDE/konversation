@@ -228,9 +228,9 @@ void IRCView::urlClickSlot(const QString &url, bool newTab)
   if (!url.isEmpty() && !url.startsWith("#"))
   {
     // Always use KDE default mailer.
-    if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.lower().startsWith("mailto:"))
+    if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.startsWith("mailto:"))
     {
-      if(newTab)
+      if(newTab && !url.startsWith("mailto:"))
 	{
 	  QCString foundApp, foundObj;
 	  QByteArray data;

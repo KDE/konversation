@@ -37,6 +37,7 @@ PrefsPageNotify::PrefsPageNotify(QWidget* newParent,Preferences* newPreferences)
   m_useNotifyCheck->setChecked(preferences->getUseNotify());
   m_showWatchedNicksAtStartup->setChecked(preferences->getOpenWatchedNicksAtStartup());
   m_notifyActionInput->setText(preferences->getNotifyDoubleClickAction());
+  m_notifyDelaySpin->setValue(preferences->getNotifyDelay());
 
   m_notifyListView->setRenameable(0,true);
   m_notifyListView->setSorting(-1,false);
