@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2004      by İsmail Dönmez <ismail.donmez@boun.edu.tr>
+    Copyright (c) 2004,2005 by İsmail Dönmez <ismail.donmez@boun.edu.tr>
 
     based on the code by :
     Copyright (c) 2004      by Jason Keirstead <jason@keirstead.org>
