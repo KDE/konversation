@@ -86,7 +86,14 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
 
         default:
           // Check if the keystroke actually produced text. If not it was just a qualifier.
-          if(!keyEvent->text().isEmpty()) setCompletionMode('\0');
+          if(!keyEvent->text().isEmpty())
+          {
+            if(getCompletionMode()!='\0')
+            {
+              setCompletionMode('\0');
+              emit endCompletion();
+            }
+          }
           // support ASCII BEL
           if(keyEvent->ascii()==7) insert("%G");
           // support ^U (delete text in input box)

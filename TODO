@@ -6,7 +6,6 @@ berkus: Logrotate with timer or at shutdown, compress rotated logs
 
 Try to keep open views on server disconnects, kicks and stuff
 Remember server group in logfiles, make same channel names on different servers possible
-Nick completion should remember last position
 Reverse-I-Search
 Large pastes: Let the user decide if they want an Editor or paste immediately
 Multi line behaviour in input line with "little enter"

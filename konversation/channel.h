@@ -91,6 +91,7 @@ class Channel : public ChatWindow
 
   protected slots:
     void completeNick();
+    void endCompleteNick();
     void quickButtonClicked(const QString& definition);
     void modeButtonClicked(int id,bool on);
 

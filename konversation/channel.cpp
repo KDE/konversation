@@ -192,8 +192,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   connect(channelInput,SIGNAL (returnPressed()),this,SLOT (channelTextEntered()) );
   connect(channelInput,SIGNAL (nickCompletion()),this,SLOT (completeNick()) );
+  connect(channelInput,SIGNAL (endCompletion()),this,SLOT (endCompleteNick()) );
   connect(channelInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
-  
+
   connect(channelInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );
   connect(channelInput,SIGNAL (pageDown()),getTextView(),SLOT (pageDown()) );
   
@@ -491,6 +492,14 @@ void Channel::completeNick()
   // Set new text and cursor position
   channelInput->setText(newLine);
   channelInput->setCursorPosition(pos);
+}
+
+// make sure to step back one position when completion ends so the user starts
+// with the last complete they made
+void Channel::endCompleteNick()
+{
+  if(completionPosition) completionPosition--;
+  else completionPosition=nicknameList.count()-1;
 }
 
 void Channel::setName(const QString& newName)

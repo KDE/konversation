@@ -39,6 +39,7 @@ class IRCInput : public QLineEdit
 
   signals:
     void nickCompletion();
+    void endCompletion();   // tell channel that completion phase is over
     void history(bool up);
     void pageUp();
     void pageDown();
