@@ -44,7 +44,7 @@ class PrefsPageNotify : public PrefsPage
 
   private slots:
     void newNotify();
-    void createNotify(const QString& groupName, const QString& nickname);
+    void createNotify(const QString& networkName, const QString& nickname);
     void removeNotify();
     void notifyCheckChanged(bool enable);
     void slotNotifyListView_SelectionChanged();

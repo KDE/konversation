@@ -19,8 +19,8 @@
 
 /**
   The EditNotifyDialog implements the dialog for user to add or edit a
-  notify.  A notify consists of a server group name and a nickname.
-  User must pick the server group name from existing group names
+  notify.  A notify consists of a server network name and a nickname.
+  User must pick the server network name from existing network names
   in the server list.
   
   @author Gary Cramblitt <garycramblitt@comcast.net>
@@ -34,18 +34,18 @@ class EditNotifyDialog : public KDialogBase
   Q_OBJECT
 
   public:
-    EditNotifyDialog(QWidget* parent=0,QString group=QString::null,
+    EditNotifyDialog(QWidget* parent=0,QString network=QString::null,
                                        QString nickname=QString::null);
     ~EditNotifyDialog();
 
   signals:
-    void notifyChanged(const QString& group,
+    void notifyChanged(const QString& network,
                        const QString& nickname);
   protected slots:
     void slotOk();
 
   protected:
-    KComboBox* m_groupNameCombo;
+    KComboBox* m_networkNameCombo;
     KLineEdit* m_nicknameInput;
 };
 #endif

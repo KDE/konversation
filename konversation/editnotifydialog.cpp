@@ -29,7 +29,7 @@
 #include "servergroupsettings.h"
 
 EditNotifyDialog::EditNotifyDialog(QWidget* parent,
-                                   QString group,
+                                   QString network,
                                    QString nickname):
 
                   KDialogBase(parent,"editnotify",true,i18n("Edit Watched Nickname"),
@@ -43,45 +43,47 @@ EditNotifyDialog::EditNotifyDialog(QWidget* parent,
   QHBoxLayout* layout = new QHBoxLayout(page);
   layout->setSpacing(spacingHint());
 
-  QLabel* groupNameLabel=new QLabel(i18n("&Group name:"),page);
-  QString groupNameWT = i18n(
-    "Pick the server group you will connect to here.");
-  QWhatsThis::add(groupNameLabel, groupNameWT);
-  m_groupNameCombo=new KComboBox(page,"notify_group_combo");
-  QWhatsThis::add(m_groupNameCombo, groupNameWT);
-  groupNameLabel->setBuddy(m_groupNameCombo);
+  QLabel* networkNameLabel=new QLabel(i18n("&Network name:"),page);
+  QString networkNameWT = i18n(
+    "Pick the server network you will connect to here.");
+  QWhatsThis::add(networkNameLabel, networkNameWT);
+  m_networkNameCombo=new KComboBox(page,"notify_network_combo");
+  QWhatsThis::add(m_networkNameCombo, networkNameWT);
+  networkNameLabel->setBuddy(m_networkNameCombo);
   
   QLabel* nicknameLabel=new QLabel(i18n("&Nickname:"),page);
   QString nicknameWT = i18n(
-      "<qt>The nickname to watch for when connected to a server in the group.</qt>");
+      "<qt>The nickname to watch for when connected to a server in the network.</qt>");
   QWhatsThis::add(nicknameLabel, nicknameWT);
   m_nicknameInput = new KLineEdit(nickname, page);
   QWhatsThis::add(m_nicknameInput, nicknameWT);
   nicknameLabel->setBuddy(m_nicknameInput);
 
-  // Build a list of unique server group names.
-  Konversation::ServerGroupList serverGroups = KonversationApplication::preferences.serverGroupList();
-  QStringList groupNames;
+  // Build a list of unique server network names.
+  // TODO: The "ServerGroupList type is a misnomer (it is actually networks), which
+  // should be fixed at some point.
+  Konversation::ServerGroupList serverNetworks = KonversationApplication::preferences.serverGroupList();
+  QStringList networkNames;
 
-  for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it)
+  for(Konversation::ServerGroupList::iterator it = serverNetworks.begin(); it != serverNetworks.end(); ++it)
   {
     QString name = (*it).name();
 
-    if (!groupNames.contains(name)) {
-      groupNames.append(name);
+    if (!networkNames.contains(name)) {
+      networkNames.append(name);
     }
   }
 
-  groupNames.sort();
-  // Add group names to group combobox and select the one corresponding to argument.
-  for (QStringList::Iterator it = groupNames.begin(); it != groupNames.end(); ++it)
+  networkNames.sort();
+  // Add network names to network combobox and select the one corresponding to argument.
+  for (QStringList::Iterator it = networkNames.begin(); it != networkNames.end(); ++it)
   {
-    m_groupNameCombo->insertItem(*it);
-    if(*it == group) m_groupNameCombo->setCurrentItem(m_groupNameCombo->count()-1);
+    m_networkNameCombo->insertItem(*it);
+    if(*it == network) m_networkNameCombo->setCurrentItem(m_networkNameCombo->count()-1);
   }
 
-  layout->addWidget(groupNameLabel);
-  layout->addWidget(m_groupNameCombo);
+  layout->addWidget(networkNameLabel);
+  layout->addWidget(m_networkNameCombo);
   layout->addWidget(nicknameLabel);
   layout->addWidget(m_nicknameInput);
 
@@ -95,7 +97,7 @@ EditNotifyDialog::~EditNotifyDialog()
 
 void EditNotifyDialog::slotOk()
 {
-  emit notifyChanged(m_groupNameCombo->currentText(),
+  emit notifyChanged(m_networkNameCombo->currentText(),
                      m_nicknameInput->text());
   delayedDestruct();
 }

@@ -62,7 +62,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     // Remove when server or addressbook does this automatically.
     m_whoisRequested = true;
     
-    m_nickListView->addColumn(i18n("Group/Nickname/Channel"));
+    m_nickListView->addColumn(i18n("Network/Nickname/Channel"));
     m_kabcIconSet = KGlobal::iconLoader()->loadIconSet("kaddressbook",KIcon::Small);
     m_nickListView->addColumn(i18n("Additional Information"));
     m_nickListView->addColumn("ServerName");
@@ -72,13 +72,13 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_nickListView->setShowToolTips(false);
     QString nickListViewWT = i18n(
         "<p>These are all the nicknames on your Nickname Watch list, listed under the "
-        "server group they are connected to.  The list also includes the nicknames "
-        "in KAddressBook associated with the server group.</p>"
+        "server network they are connected to.  The list also includes the nicknames "
+        "in KAddressBook associated with the server network.</p>"
         "<p>The <b>Additional Information</b> column shows the information known "
         "for each nickname.</p>"
         "<p>The channels the nickname has joined are listed underneath each nickname.</p>"
         "<p>Nicknames appearing under <b>Offline</b> are not connected to any of the "
-        "servers in the group.</p>"
+        "servers in the network.</p>"
         "<p>Right-click with the mouse on a nickname to perform additional functions.</p>");
     QWhatsThis::add(m_nickListView, nickListViewWT);
         
@@ -245,35 +245,37 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     Images leds;
     QIconSet currentLeds = leds.getGreenLed(false);
     QPixmap joinedLed = currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
-    bool newGroupRoot = false;
+    bool newNetworkRoot = false;
     QString serverName = servr->getServerName();
-    QString groupName = servr->getServerGroup();
-    QListViewItem* groupRoot = m_nickListView->findItem(groupName, nlvcGroup);
-    // If server is not in our list, add it.
-    if (!groupRoot)
+    // TODO: The method name "getServerGroup" is a misnomer.  Actually returns the
+    // network for a server.
+    QString networkName = servr->getServerGroup();
+    QListViewItem* networkRoot = m_nickListView->findItem(networkName, nlvcNetwork);
+    // If network is not in our list, add it.
+    if (!networkRoot)
     {
-        groupRoot = new KListViewItem(m_nickListView,groupName);
-        newGroupRoot = true;
+        networkRoot = new KListViewItem(m_nickListView,networkName);
+        newNetworkRoot = true;
     }
     // Store server name in hidden column.
-    // Note that there could be more than one server in the group connected,
-    // but it doesn't matter because all the servers in a group have the same
+    // Note that there could be more than one server in the network connected,
+    // but it doesn't matter because all the servers in a network have the same
     // watch list.
-    groupRoot->setText(nlvcServerName, serverName);
-    // Update list of servers in the group that are connected.
-    QStringList serverList = QStringList::split(",", groupRoot->text(nlvcAdditionalInfo));
+    networkRoot->setText(nlvcServerName, serverName);
+    // Update list of servers in the network that are connected.
+    QStringList serverList = QStringList::split(",", networkRoot->text(nlvcAdditionalInfo));
     if (!serverList.contains(serverName)) serverList.append(serverName);
-    groupRoot->setText(nlvcAdditionalInfo, serverList.join(","));
+    networkRoot->setText(nlvcAdditionalInfo, serverList.join(","));
     // Get item in nicklistview for the Offline branch.
-    QListViewItem* offlineRoot = findItemChild(groupRoot, c_i18nOffline);
-    if (!offlineRoot) offlineRoot = new KListViewItem(groupRoot, c_i18nOffline);
+    QListViewItem* offlineRoot = findItemChild(networkRoot, c_i18nOffline);
+    if (!offlineRoot) offlineRoot = new KListViewItem(networkRoot, c_i18nOffline);
     offlineRoot->setText(nlvcServerName, serverName);
     // Get watch list.
     QStringList watchList = servr->getWatchList();
     for (unsigned int nickIndex = 0; nickIndex<watchList.count(); nickIndex++)
     {
         QString nickname = watchList[nickIndex];
-        NickInfoPtr nickInfo = getOnlineNickInfo(groupName, nickname);
+        NickInfoPtr nickInfo = getOnlineNickInfo(networkName, nickname);
         if (nickInfo)
         {
             // Nick is online.
@@ -287,9 +289,9 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // Remove from offline branch if present.
             QListViewItem* item = findItemChild(offlineRoot, nickname);
             if (item) delete item;
-            // Add to group if not already added.
-            QListViewItem* nickRoot = findItemChild(groupRoot, nickname);
-            if (!nickRoot) nickRoot = new KListViewItem(groupRoot, nickname, nickAdditionalInfo);
+            // Add to network if not already added.
+            QListViewItem* nickRoot = findItemChild(networkRoot, nickname);
+            if (!nickRoot) nickRoot = new KListViewItem(networkRoot, nickname, nickAdditionalInfo);
             nickRoot->setText(nlvcAdditionalInfo, nickAdditionalInfo);
             nickRoot->setText(nlvcServerName, serverName);
             // If no additional info available, request a WHOIS on the nick.
@@ -297,7 +299,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             {
                 if (needWhois)
                 {
-                    requestWhois(groupName, nickname);
+                    requestWhois(networkName, nickname);
                     m_whoisRequested = true;
                 }
             }
@@ -349,7 +351,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
         {
             // Nick is offline.
             // Remove from online nicks, if present.
-            QListViewItem* item = findItemChild(groupRoot, nickname);
+            QListViewItem* item = findItemChild(networkRoot, nickname);
             if (item) delete item;
             // Add to offline list if not already listed.
             QListViewItem* nickRoot = findItemChild(offlineRoot, nickname);
@@ -371,7 +373,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
         }
     }
     // Erase nicks no longer being watched.
-    QListViewItem* item = groupRoot->firstChild();
+    QListViewItem* item = networkRoot->firstChild();
     while (item)
     {
         QListViewItem* nextItem = item->nextSibling();
@@ -393,9 +395,9 @@ void NicksOnline::updateServerOnlineList(Server* servr)
         item = nextItem;
     }
     // Expand server if newly added to list.
-    if (newGroupRoot) 
+    if (newNetworkRoot) 
     {
-        groupRoot->setOpen(true);
+        networkRoot->setOpen(true);
         // Connect server NickInfo updates.
         connect (servr, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
             this, SLOT(slotNickInfoChanged(Server*, const NickInfoPtr)));
@@ -404,20 +406,20 @@ void NicksOnline::updateServerOnlineList(Server* servr)
 }
 
 /**
-* Determines if a nick is online in any of the servers in a group and returns
+* Determines if a nick is online in any of the servers in a network and returns
 * a NickInfo if found, otherwise 0.
-* @param groupName          Server group name.
+* @param networkName        Server network name.
 * @param nickname           Nick name.
 * @return                   NickInfo if nick is online in any server, otherwise 0.
 */
-NickInfoPtr NicksOnline::getOnlineNickInfo(QString& groupName, QString& nickname)
+NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickname)
 {
     // Get list of pointers to all servers.
     KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
     QPtrList<Server> serverList = konvApp->getServerList();
     for (Server* server = serverList.first(); server; server = serverList.next())
     {
-        if (server->getServerGroup() == groupName)
+        if (server->getServerGroup() == networkName)
         {
             NickInfoPtr nickInfo = server->getNickInfo(nickname);
             if (nickInfo) return nickInfo;
@@ -427,17 +429,22 @@ NickInfoPtr NicksOnline::getOnlineNickInfo(QString& groupName, QString& nickname
 }
 
 /**
-* Requests a WHOIS in all servers for a specified server group and nickname.
+* Requests a WHOIS for a specified server network and nickname.
+* The request is sent to the first server found in the network.
 * @param groupName          Server group name.
 * @param nickname           Nick name.
 */
-void NicksOnline::requestWhois(QString& groupName, QString& nickname)
+void NicksOnline::requestWhois(QString& networkName, QString& nickname)
 {
     KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
     QPtrList<Server> serverList = konvApp->getServerList();
     for (Server* server = serverList.first(); server; server = serverList.next())
     {
-        if (server->getServerGroup() == groupName) server->requestWhois(nickname);
+        if (server->getServerGroup() == networkName)
+        {
+            server->requestWhois(nickname);
+            return;
+        }
     }
 }
 
@@ -455,7 +462,7 @@ void NicksOnline::refreshAllServerOnlineLists()
     while (child)
     {
         QListViewItem* nextChild = child->nextSibling();
-        QString groupName = child->text(nlvcGroup);
+        QString networkName = child->text(nlvcNetwork);
         QStringList serverNameList = QStringList::split(",", child->text(nlvcAdditionalInfo));
         QStringList::Iterator itEnd = serverNameList.end();
         QStringList::Iterator it = serverNameList.begin();
@@ -467,14 +474,14 @@ void NicksOnline::refreshAllServerOnlineLists()
             for (server = serverList.first(); server; server = serverList.next())
             {
                 if ((server->getServerName() == serverName) && 
-                    (server->getServerGroup() == groupName)) found = true;
+                    (server->getServerGroup() == networkName)) found = true;
             }
             if (!found)
                 it = serverNameList.remove(it);
             else
                 ++it;
         }
-        // Remove groups with no servers connected, otherwise update list of connected
+        // Remove Networks with no servers connected, otherwise update list of connected
         // servers.
         if (serverNameList.empty())
             delete child;
@@ -489,7 +496,7 @@ void NicksOnline::refreshAllServerOnlineLists()
     }
     // Adjust column widths.
     m_nickListView->hideColumn(nlvcServerName);
-    m_nickListView->adjustColumn(nlvcGroupNickChannel);
+    m_nickListView->adjustColumn(nlvcNetworkNickChannel);
     m_nickListView->adjustColumn(nlvcAdditionalInfo);
     // Refresh addressbook buttons.
     slotNickListView_SelectionChanged();
@@ -532,7 +539,7 @@ void NicksOnline::closeYourself(ChatWindow*)
 bool NicksOnline::getItemServerAndNick(const QListViewItem* item, QString& serverName, QString& nickname)
 {
     if (!item) return false;
-    // If on a group, return false;
+    // If on a network, return false;
     if (!item->parent()) return false;
     serverName = item->text(nlvcServerName);
     // If on a channel, move up to the nickname.
@@ -570,10 +577,10 @@ QListViewItem* NicksOnline::getServerAndNickItem(const QString& serverName,
 {
     KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
     Server* server = konvApp->getServerByName(serverName);
-    QString groupName = server->getServerGroup();
-    QListViewItem* groupRoot = m_nickListView->findItem(groupName, nlvcGroup);
-    if (!groupRoot) return 0;
-    QListViewItem* nickRoot = findItemChild(groupRoot, nickname);
+    QString networkName = server->getServerGroup();
+    QListViewItem* networkRoot = m_nickListView->findItem(networkName, nlvcNetwork);
+    if (!networkRoot) return 0;
+    QListViewItem* nickRoot = findItemChild(networkRoot, nickname);
     return nickRoot;
 }
 

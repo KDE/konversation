@@ -40,8 +40,8 @@ class NicksOnline : public ChatWindow
   public:
     // Columns of the NickListView.
     enum NickListViewColumn {
-      nlvcGroupNickChannel = 0,
-      nlvcGroup = 0,
+      nlvcNetworkNickChannel = 0,
+      nlvcNetwork = 0,
       nlvcNick = 0,
       nlvcChannel = 0,
       nlvcKabc = 1,
@@ -217,21 +217,22 @@ class NicksOnline : public ChatWindow
     */
     void setupAddressbookButtons(int nickState);
     /**
-    * Determines if a nick is online in any of the servers in a group and returns
+    * Determines if a nick is online in any of the servers in a network and returns
     * a NickInfo if found, otherwise 0.
-    * @param groupName          Server group name.
+    * @param networkName        Server network name.
     * @param nickname           Nick name.
     * @return                   NickInfo if nick is online in any server, otherwise 0.
     */
-    NickInfoPtr getOnlineNickInfo(QString& groupName, QString& nickname);
+    NickInfoPtr getOnlineNickInfo(QString& networkName, QString& nickname);
     /**
-    * Requests a WHOIS in all servers for a specified server group and nickname.
+    * Requests a WHOIS for a specified server network and nickname.
+    * The request is sent to the first server found in the network.
     * @param groupName          Server group name.
     * @param nickname           Nick name.
     */
-    void requestWhois(QString& groupName, QString& nickname);
+    void requestWhois(QString& networkName, QString& nickname);
 
-    // The main display of groups, nicks, and channels.
+    // The main display of networks, nicks, and channels.
     KListView* m_nickListView;
     // Buttons on screen.    
     QPushButton* m_editContactButton;

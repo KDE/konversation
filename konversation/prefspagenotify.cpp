@@ -45,7 +45,7 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   m_useNotifyCheck = new QCheckBox(i18n("&Use nickname watcher"),delayBox,"use_nick_watcher_checkbox");
   QString useNotifyCheckWT = i18n(
       "<p>When the nickname watcher is turned on, you will be notified when the "
-      "nicknames appearing in the <b>Watched Groups/Nicknames</b> list come "
+      "nicknames appearing in the <b>Watched Networkss/Nicknames</b> list come "
       "online or go offline.</p>"
       "<p>You can also open the <b>Nicks Online</b> window to see the status of all the "
       "watched nicknames.</p>");
@@ -75,7 +75,7 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   m_notifyListView=new KListView(listBox);
   QWhatsThis::add(m_notifyListView, useNotifyCheckWT);
 
-  m_notifyListView->addColumn(i18n("Watched Groups/Nicknames"));
+  m_notifyListView->addColumn(i18n("Watched Networks/Nicknames"));
 
   m_notifyListView->setAllColumnsShowFocus(true);
   m_notifyListView->setItemsRenameable(true);
@@ -130,22 +130,22 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   QMap<QString, QStringList> notifyList(preferences->getNotifyList());
 
   // Insert backwards to get them sorted properly.
-  QStringList groupNameList = notifyList.keys();
-  for(int groupIndex = groupNameList.count(); groupIndex != 0; groupIndex--)
+  QStringList networkNameList = notifyList.keys();
+  for(int networkIndex = networkNameList.count(); networkIndex != 0; networkIndex--)
   {
-    QString groupName = groupNameList[groupIndex - 1];
-    QStringList nicknameList = notifyList[groupName];
-    QListViewItem* groupNameItem = new KListViewItem(m_notifyListView, groupName);
+    QString networkName = networkNameList[networkIndex - 1];
+    QStringList nicknameList = notifyList[networkName];
+    QListViewItem* networkNameItem = new KListViewItem(m_notifyListView, networkName);
     for(int index = nicknameList.count(); index != 0; index--)
     {
       QString nickname = nicknameList[index - 1];
-      KListViewItem* nicknameItem = new KListViewItem(groupNameItem, nickname);
+      KListViewItem* nicknameItem = new KListViewItem(networkNameItem, nickname);
       // Nicknames are selectable, editable, and removable.
       nicknameItem->setSelectable(true);
     }
-    // Group names are not selectable, not editable, and not removable.
-    groupNameItem->setSelectable(false);
-    groupNameItem->setOpen(true);
+    // Network names are not selectable, not editable, and not removable.
+    networkNameItem->setSelectable(false);
+    networkNameItem->setOpen(true);
   }
   connect(m_notifyListView, SIGNAL(selectionChanged()),
     this, SLOT(slotNotifyListView_SelectionChanged()));
@@ -159,14 +159,14 @@ PrefsPageNotify::~PrefsPageNotify()
 
 void PrefsPageNotify::newNotify()
 {
-  QString groupName;
+  QString networkName;
   QListViewItem* item = m_notifyListView->currentItem();
   if (item)
   {
     if (item->parent()) item = item->parent();
-    if (item) groupName = item->text(0);
+    if (item) networkName = item->text(0);
   } 
-  EditNotifyDialog editNotifyDialog(parentFrame, groupName, QString::null);
+  EditNotifyDialog editNotifyDialog(parentFrame, networkName, QString::null);
 
   connect(&editNotifyDialog,SIGNAL (notifyChanged(const QString&,
                                                   const QString&)),
@@ -175,14 +175,14 @@ void PrefsPageNotify::newNotify()
   editNotifyDialog.exec();
 }
 
-void PrefsPageNotify::createNotify(const QString& groupName, const QString& nickname)
+void PrefsPageNotify::createNotify(const QString& networkName, const QString& nickname)
 {
-  if (groupName.isEmpty() || nickname.isEmpty()) return;
-  QListViewItem* groupNameItem = findBranch(groupName, true);
-  QListViewItem* nicknameItem = findItemChild(groupNameItem, nickname);
+  if (networkName.isEmpty() || nickname.isEmpty()) return;
+  QListViewItem* networkNameItem = findBranch(networkName, true);
+  QListViewItem* nicknameItem = findItemChild(networkNameItem, nickname);
   if (!nicknameItem)
   {
-    KListViewItem* newItem = new KListViewItem(groupNameItem, nickname);
+    KListViewItem* newItem = new KListViewItem(networkNameItem, nickname);
     newItem->setSelectable(true);
     m_notifyListView->setSelected(newItem, true);
   }
@@ -195,11 +195,11 @@ void PrefsPageNotify::removeNotify()
 
   if(selected)
   {
-    // Cannot delete group (except by deleting all nicks in the group).
+    // Cannot delete network (except by deleting all nicks in the network).
     if (!selected->parent()) return;
-    QListViewItem* groupNameItem = selected->parent();
+    QListViewItem* networkNameItem = selected->parent();
     // Select next nickname, or if no such nickname, previous nickname, but skip
-    // over group names.
+    // over network names.
     QListViewItem* item = selected->itemBelow();
     if (item)
     {
@@ -217,9 +217,9 @@ void PrefsPageNotify::removeNotify()
       m_notifyListView->setSelected(item, true);
 
     delete selected;
-    // If all nicknames for a group deleted, delete the group.
-    item = groupNameItem->firstChild();
-    if (!item) delete groupNameItem;
+    // If all nicknames for a network deleted, delete the network.
+    item = networkNameItem->firstChild();
+    if (!item) delete networkNameItem;
   }
 }
 
@@ -227,18 +227,18 @@ QMap<QString, QStringList> PrefsPageNotify::getNotifyList()
 {
   QMap<QString, QStringList> notifyList;
   
-  QListViewItem* groupItem = m_notifyListView->firstChild();
-  while (groupItem)
+  QListViewItem* networkItem = m_notifyListView->firstChild();
+  while (networkItem)
   {
     QStringList nicknameList;
-    QListViewItem* nicknameItem = groupItem->firstChild();
+    QListViewItem* nicknameItem = networkItem->firstChild();
     while (nicknameItem)
     {
         nicknameList.append(nicknameItem->text(0));
         nicknameItem = nicknameItem->nextSibling();
     }
-    notifyList[groupItem->text(0)] = nicknameList;
-    groupItem = groupItem->nextSibling();
+    notifyList[networkItem->text(0)] = nicknameList;
+    networkItem = networkItem->nextSibling();
   }
 
   return notifyList;
