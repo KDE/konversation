@@ -1142,6 +1142,7 @@ void Channel::kickNick(const QString &nickname, const QString &kicker, const QSt
 #endif //USE_NICKINFO
 Nick* Channel::getNickByName(const QString &lookname)
 {
+//FIXME I don't think this works
   QString lcLookname = lookname.lower();
   Nick* nick=nicknameList.first();
   while(nick)

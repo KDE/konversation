@@ -27,6 +27,7 @@ class ChannelNick :  public QObject, public KShared
 	  
   public:
     ChannelNick(NickInfoPtr nickinfo, bool isop, bool isadmin, bool isowner, bool ishalfop, bool hasvoice);
+    ~ChannelNick();
     bool isOp() const;
     bool isAdmin() const;
     bool isOwner() const;

@@ -41,7 +41,7 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 NickInfo::~NickInfo()
 {
   if(!addressee.isEmpty())
-    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
+    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
 }
 
 

@@ -160,7 +160,7 @@ class Server : public QObject
     // Using code must not alter the list.
     const ChannelNickMap *getChannelMembers(const QString& channelName) const;
     // Returns a list of all the channels (joined or unjoined) that a nick is in.
-    QStringList getNickChannels(QString& nickname);
+    QStringList getNickChannels(const QString& nickname);
     // Returns pointer to the ChannelNick (mode and pointer to NickInfo) for a given channel and nickname.
     // 0 if not found.
     ChannelNickPtr getChannelNick(const QString& channelName, const QString& nickname);

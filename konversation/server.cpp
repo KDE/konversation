@@ -1177,7 +1177,7 @@ ChannelNickPtr Server::setChannelNick(const QString& channelName, const QString&
 }
 
 // Returns a list of all the channels (joined or unjoined) that a nick is in.
-QStringList Server::getNickChannels(QString& nickname)
+QStringList Server::getNickChannels(const QString& nickname)
 {
   QString lcNickname = nickname.lower();
   QStringList channellist;
@@ -1193,6 +1193,12 @@ QStringList Server::getNickChannels(QString& nickname)
   return channellist;
 }
 
+#if USE_NICKINFO
+
+bool Server::isNickOnline(const QString &nickname) {
+  return !!getNickInfo(nickname);
+}
+#else
 bool Server::isNickOnline(const QString &nickname) {
   Channel* lookChannel=channelList.first();
 
@@ -1210,7 +1216,7 @@ bool Server::isNickOnline(const QString &nickname) {
   }
   return false;
 }
-
+#endif
 // Returns a list of the nicks on the watch list that are online.
 const NickInfoMap* Server::getNicksOnline() { return &nicknamesOnline; }
 

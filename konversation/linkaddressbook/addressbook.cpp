@@ -379,6 +379,7 @@ QPixmap Addressbook::icon(const QString &uid) {
 		break;
 	  default:
 		//error
+		kdDebug() << "Unknown status " << uid << endl;
 		return QPixmap();
 	}
 
@@ -470,7 +471,7 @@ void Addressbook::emitContactPresenceChanged(QString uid, int presence) {
 	}
 	Q_ASSERT(kapp);
 	Q_ASSERT(kapp->dcopClient());
-	contactPresenceChanged(uid, kapp->dcopClient()->appId(), presence);
+	emit contactPresenceChanged(uid, kapp->dcopClient()->appId(), presence);
 	kdDebug() << "Presence changed for uid " << uid << " to " << presence << endl;
 }
 
