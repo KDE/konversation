@@ -17,7 +17,6 @@
 #include <qpopupmenu.h>
 #include <qlineedit.h>
 #include <qtextcodec.h>
-#include <qhbox.h>
 #include <qtooltip.h>
 #include <qtextstream.h>
 #include <qwhatsthis.h>

@@ -19,7 +19,6 @@
 #include <qbitmap.h>
 #include <qpainter.h>
 #include <qtooltip.h>
-#include <qpushbutton.h>
 
 #include <klistbox.h>
 #include <kurl.h>

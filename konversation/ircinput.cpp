@@ -23,7 +23,6 @@
 #include <qdom.h>
 #include <qevent.h>
 #include <qobject.h>
-#include <qregexp.h>
 #include <qwhatsthis.h>
 
 

@@ -23,7 +23,6 @@
 #include <qpalette.h>
 #include <qpixmap.h>
 #include <qpainter.h>
-#include <qsize.h>
 
 #include <klocale.h>
 #include <kdebug.h>

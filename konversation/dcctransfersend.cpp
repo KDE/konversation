@@ -42,11 +42,11 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
             << "DccTransferSend::DccTransferSend(): Partner: " << partnerNick << endl
             << "DccTransferSend::DccTransferSend(): File: " << fileURL.prettyURL() << endl;
   
-  m_fileName = fileURL.filename();
+  m_fileName = fileURL.fileName();
   m_fileURL = fileURL;
   m_ownIp = ownIp;
   if ( altFileName.isEmpty() )
-    m_fileName = m_fileURL.filename();
+    m_fileName = m_fileURL.fileName();
   else
     m_fileName = altFileName;
  

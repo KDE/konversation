@@ -1384,7 +1384,7 @@ bool KonversationApplication::emitDCOPSig(const QString &appId, const QString &o
   QCString replyType;
   if (!KApplication::dcopClient()->call(appId.ascii(), objId.ascii(), signal.ascii() /*must have prototype*/,
                                         data, replyType, replyData)) {
-    qDebug("there was some error using DCOP.");
+    kdDebug() << "There was some error using DCOP." << endl;
     return true; // Keep processing filters
   } else {
     QDataStream reply(replyData, IO_ReadOnly);
@@ -1393,7 +1393,7 @@ bool KonversationApplication::emitDCOPSig(const QString &appId, const QString &o
       reply >> result;
       return result;
     } else {
-      qDebug("doIt returned an unexpected type of reply!");
+      kdDebug() << "doIt returned an unexpected type of reply!" << endl;
       return true; // Keep processing
     }
   }
