@@ -5,7 +5,7 @@ typing /exec <scriptname> in konversation.
 
 Please add descriptions here as new scripts appear:
 
-amarok		Displays one the current channel what you are playing
+amarok		Displays on the current channel what you are playing
                 in amaroK right now.
 		usage: /exec amarok
 		
