@@ -358,14 +358,7 @@ ChannelNickPtr Channel::getChannelNick(const QString &ircnick) {
 void Channel::purgeNicks()
 {
   // Purge nickname list
-  Nick* nick=nicknameList.first();
-  while(nick)
-  {
-    // Remove the first element of the list
-    nicknameList.removeRef(nick);
-    // Again, get the first element in the list
-    nick=nicknameList.first();
-  }
+  nicknameList.clear();
 
   // clear stats counter
   nicks=0;
