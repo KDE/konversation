@@ -40,6 +40,7 @@ class OutputFilter : public QObject
     void sendRequest(const QString &recipient,const QString &fileName,const QString &address,const QString &port,unsigned long size);
     void resumeRequest(const QString &sender,const QString &fileName,const QString &port,int startAt);
     void acceptRequest(const QString &recipient,const QString &fileName,const QString &port,int startAt);
+    bool replaceAliases(QString& line);
 
     bool isAction();
     bool isCommand();
@@ -85,8 +86,6 @@ class OutputFilter : public QObject
     bool command;
     bool program;
     bool query;
-
-    QString replaceAliases(const QString& line);
 
     void parseMsg(const QString& myNick,const QString& parameter);      // works
     void parseSMsg(const QString& parameter);     // works

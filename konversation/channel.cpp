@@ -556,8 +556,13 @@ void Channel::channelTextEntered()
 
 void Channel::sendChannelText(const QString& sendLine)
 {
+  // create a work copy
+  QString output(sendLine);
+  // replace aliases and wildcards
+  if(filter.replaceAliases(output)) output=server->parseWildcards(output,server->getNickname(),getName(),getKey(),getSelectedNicksList(),QString::null);
+
   // encoding stuff is done in Server()
-  QString output=filter.parse(server->getNickname(),sendLine,getName());
+  output=filter.parse(server->getNickname(),output,getName());
 
   // Is there something we need to display for ourselves?
   if(!output.isEmpty())
@@ -646,7 +651,7 @@ void Channel::modeButtonClicked(int id,bool on)
 void Channel::quickButtonClicked(const QString &buttonText)
 {
   // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
-  QString out=server->parseWildcards(buttonText,server->getNickname(),getName(),getKey(),getSelectedNicksList(),0,0);
+  QString out=server->parseWildcards(buttonText,server->getNickname(),getName(),getKey(),getSelectedNicksList(),QString::null);
   // are there any newlines in the definition?
   if(out.find('\n')!=-1)
   {

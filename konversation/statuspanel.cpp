@@ -80,8 +80,13 @@ void StatusPanel::adjustFocus()
 
 void StatusPanel::sendStatusText(QString sendLine)
 {
+  // create a work copy
+  QString output(sendLine);
+  // replace aliases and wildcards
+  if(filter.replaceAliases(output)) output=server->parseWildcards(output,server->getNickname(),QString::null,QString::null,QString::null,QString::null);
+
   // encoding stuff is done in Server()
-  QString output=filter.parse(server->getNickname(),sendLine, QString::null);
+  output=filter.parse(server->getNickname(),output,QString::null);
 
   if(!output.isEmpty()) appendServerMessage(filter.getType(),output);
 

@@ -38,9 +38,11 @@ OutputFilter::~OutputFilter()
 {
 }
 
-QString OutputFilter::replaceAliases(const QString& line)
+// replace all aliases in the string and return true if anything got replaced at all
+bool OutputFilter::replaceAliases(QString& line)
 {
   QStringList aliasList=KonversationApplication::preferences.getAliasList();
+  QString cc(KonversationApplication::preferences.getCommandChar());
 
   // check if the line starts with a defined alias
   for(unsigned int index=0;index<aliasList.count();index++)
@@ -49,25 +51,25 @@ QString OutputFilter::replaceAliases(const QString& line)
     QString aliasPattern(aliasList[index].section(' ',0,0));
 
     // pattern found?
-    if(line.find(QRegExp("^/"+aliasPattern+"\\b"))!=-1)
+    // TODO: cc may be a regexp character here ... we should escape it then
+    if(line.find(QRegExp("^"+cc+aliasPattern+"\\b"))!=-1)
     {
-      // TODO: use server->parseWildcards() here somehow
-
       // cut alias replacement from definition
       QString aliasReplace(aliasList[index].section(' ',1));
-
       // protect "%%"
       aliasReplace.replace(QRegExp("%%"),"%\x01");
       // replace %p placeholder with rest of line
       aliasReplace.replace(QRegExp("%p"),line.section(' ',1));
       // restore "%%" as "%"
       aliasReplace.replace(QRegExp("%\x01"),"%");
-      // return new line
-      return aliasReplace;
+      // modify line
+      line=aliasReplace;
+      // return "replaced"
+      return true;
     }
   } // for
 
-  return line;
+  return false;
 }
 
 QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,const QString& name)
@@ -85,7 +87,8 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
   query=false;
 
   // replace aliases before anything else happens
-  QString inputLine=replaceAliases(originalLine);
+//  QString inputLine=replaceAliases(originalLine);
+  QString inputLine(originalLine);
 
   // replace placeholders
   inputLine.replace(QRegExp("%%"),"%\x01");  // make sure to protect double %%

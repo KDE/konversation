@@ -108,8 +108,8 @@ class Server : public QObject
 
     Channel* getChannelByName(const QString& name);
     Query* getQueryByName(const QString& name);
-    QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QStringList& nickList, const QString& queryName, const QString& parameter);
-    QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& queryName, const QString& parameter);
+    QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QStringList& nickList, const QString& parameter);
+    QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& parameter);
 
     QString getAutoJoinCommand() const;
 

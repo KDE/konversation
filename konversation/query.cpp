@@ -98,8 +98,13 @@ void Query::queryTextEntered()
 
 void Query::sendQueryText(const QString& sendLine)
 {
+  // create a work copy
+  QString output(sendLine);
+  // replace aliases and wildcards
+  if(filter.replaceAliases(output)) output=server->parseWildcards(output,server->getNickname(),getName(),QString::null,QString::null,QString::null);
+
   // encoding stuff is done in Server()
-  QString output=filter.parse(server->getNickname(),sendLine,getName());
+  output=filter.parse(server->getNickname(),output,getName());
 
   if(!output.isEmpty())
   {

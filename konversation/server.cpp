@@ -323,13 +323,12 @@ void Server::quitServer()
 
 void Server::notifyAction(const QString& nick)
 {
-  // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
+  // parse wildcards (toParse,nickname,channelName,nickList,parameter)
   QString out=parseWildcards(KonversationApplication::preferences.getNotifyDoubleClickAction(),
                              getNickname(),
                              QString::null,
                              QString::null,
                              nick,
-                             QString::null,
                              QString::null);
   // Send all strings, one after another
   QStringList outList=QStringList::split('\n',out);
@@ -1255,17 +1254,25 @@ QString Server::getNickname() const
   return nickname;
 }
 
-QString Server::parseWildcards(const QString &toParse, const QString &nickname, const QString &channelName, const QString &channelKey, const QString &nick, const QString &queryName, const QString &parameter)
+QString Server::parseWildcards(const QString& toParse,
+                               const QString& sender,
+                               const QString& channelName,
+                               const QString& channelKey,
+                               const QString& nick,
+                               const QString& parameter)
 {
-  return parseWildcards(toParse,nickname,channelName,channelKey,QStringList::split(' ',nick),queryName,parameter);
+  return parseWildcards(toParse,sender,channelName,channelKey,QStringList::split(' ',nick),parameter);
 }
 
-QString Server::parseWildcards(const QString &toParse, const QString &nickname, const QString &channelName, const QString &channelKey, const QStringList &nickList, const QString &queryName, const QString &/*parameter*/)
+QString Server::parseWildcards(const QString& toParse,
+                               const QString& sender,
+                               const QString& channelName,
+                               const QString& channelKey,
+                               const QStringList& nickList,
+                               const QString& /*parameter*/)
 {
   // TODO: parameter handling.
   //       since parameters are not functional yet
-  //       maybe put parseWildcards() into outputFilter()
-
 
   // make a copy to work with
   QString out(toParse);
@@ -1288,13 +1295,12 @@ QString Server::parseWildcards(const QString &toParse, const QString &nickname, 
 
   out.replace(QRegExp("%u"),nickList.join(separator));
   if(!channelName.isEmpty()) out.replace(QRegExp("%c"),channelName);
-  out.replace(QRegExp("%o"),nickname);
-  out.replace(QRegExp("%k"),channelKey);
-  out.replace(QRegExp("%K"),serverKey);
+  out.replace(QRegExp("%o"),sender);
+  if(!channelKey.isEmpty()) out.replace(QRegExp("%k"),channelKey);
+  if(!serverKey.isEmpty()) out.replace(QRegExp("%K"),serverKey);
   out.replace(QRegExp("%n"),"\n");
 //  out.replace(QRegExp("%f"),getFortuneCookie());
 //  out.replace(QRegExp("%p"),parameter);
-  if(!queryName.isEmpty()) out.replace(QRegExp("%q"),queryName);
 
   // finally replace all "%p" with "%"
   out.replace(QRegExp("%p"),"%");
