@@ -1736,7 +1736,6 @@ void Channel::autoUserhostChanged(bool state)
 
 void Channel::scheduleAutoWho()  // slot
 {
-  kdDebug() << "Channel::scheduleAutoWho(): " << getName() << endl;
   if(!m_firstAutoWhoDone)  // abort if initialization hasn't done yet
     return;
   if(m_whoTimer.isActive())
