@@ -74,6 +74,7 @@ void InputFilter::parseLine(const QString &a_newLine, QWidget *mainWindow)
   {
     // Copy trailing parameter
     trailing=newLine.mid(pos+2);
+    
     // Cut trailing parameter from string
     newLine=newLine.left(pos);
   }

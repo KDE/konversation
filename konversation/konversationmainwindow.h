@@ -169,7 +169,6 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void deleteDccPanel();
 
     virtual bool event(QEvent* e);
-    virtual void closeEvent(QCloseEvent* e);
 
 #ifdef USE_MDI
     Images images;

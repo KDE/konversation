@@ -897,7 +897,9 @@ void Server::incoming()
   bool isUtf8 = KStringHandler::isUtf8(buffer);
 
   if(isUtf8 || ((identity->getCodec() == "utf8") && !isUtf8))
+  {
     inputBuffer += KStringHandler::from8Bit(buffer);
+  }
   else
   {
     QTextCodec* codec=QTextCodec::codecForName(identity->getCodec().ascii());

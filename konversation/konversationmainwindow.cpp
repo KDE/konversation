@@ -868,6 +868,23 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 
 bool KonversationMainWindow::queryClose()
 {
+  KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
+  
+  if(konv_app->sessionSaving()) {
+    m_closeApp = true;
+  }
+
+  if(KonversationApplication::preferences.getShowTrayIcon() && !m_closeApp) {
+    // Message copied from kopete...
+    KMessageBox::information(this,
+      i18n( "<qt>Closing the main window will keep Konversation running in the "
+      "system tray. Use 'Quit' from the 'File' menu to quit the application.</qt>" ),
+      i18n( "Docking in System Tray" ), "hideOnCloseInfo");
+
+    hide();
+    return false;
+  }
+  
   // send quit to all servers
   emit quitServer();
 
@@ -1189,24 +1206,5 @@ void KonversationMainWindow::setShowTabBarCloseButton(bool s)
 #else
 void KonversationMainWindow::setShowTabBarCloseButton(bool) {}
 #endif
-
-void KonversationMainWindow::closeEvent(QCloseEvent* e)
-{
-  KonversationApplication* konv_app=static_cast<KonversationApplication*>(KApplication::kApplication());
-  if ( konv_app->sessionSaving() ) m_closeApp = true;
-
-  if(KonversationApplication::preferences.getShowTrayIcon() && !m_closeApp) {
-    // Message copied from kopete...
-    KMessageBox::information(this,
-      i18n( "<qt>Closing the main window will keep Konversation running in the "
-      "system tray. Use 'Quit' from the 'File' menu to quit the application.</qt>" ),
-      i18n( "Docking in System Tray" ), "hideOnCloseInfo");
-
-    hide();
-    e->ignore();
-  } else {
-    KMainWindow::closeEvent(e);
-  }
-}
 
 #include "konversationmainwindow.moc"

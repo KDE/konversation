@@ -716,7 +716,7 @@ void Channel::sendFileMenu()
 
 void Channel::channelTextEntered()
 {
-  QString line=channelInput->text();
+  QString line = channelInput->text();
   channelInput->clear();
 
   if(line.lower()=="/clear")

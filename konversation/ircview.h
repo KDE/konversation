@@ -80,7 +80,7 @@ class IRCView : public KTextBrowser
     
   protected:
     QString filter(const QString& line,const QString& defaultColor,const QString& who=NULL,bool doHilight=true, bool parseURL = true);
-    void doAppend(QString line,bool suppressTimestamps=false,bool important=true);
+    void doAppend(QString line, bool important = true);
     void replaceDecoration(QString& line,char decoration,char replacement);
 
     void hideEvent(QHideEvent* event);
@@ -91,6 +91,11 @@ class IRCView : public KTextBrowser
 
     bool contextMenu(QContextMenuEvent* ce);
 
+    QChar::Direction basicDirection(const QString &string);
+    
+    /// Returns a formated timestamp if timestamps are enabled else it returns QString::null
+    QString timeStamp();
+    
     // used by search function
     int findParagraph;
     int findIndex;
@@ -108,6 +113,14 @@ class IRCView : public KTextBrowser
     QPopupMenu* popup;
     QPixmap backgroundPixmap;
     QBrush backgroundBrush;
+    
+    static QChar LRM;
+    static QChar RLM;
+    static QChar LRE;
+    static QChar RLE;
+    static QChar RLO;
+    static QChar LRO;
+    static QChar PDF;
 };
 
 #endif
