@@ -32,6 +32,7 @@ SSLSocket::SSLSocket(QObject* parent,const char* name)
   : KStreamSocket("","",parent,name)
 {
 	kssl = 0L;
+	sslInfoDlg = 0L;
 	cc = new KSSLCertificateCache;
 	cc->reload();
 
@@ -249,7 +250,7 @@ int SSLSocket::verifyCertificate()
 						i18n("Server Authentication"),
                                                 KGuiItem(i18n("Details")),
                                                 KGuiItem(i18n("Continue")),
-						"ssl_invalid_host");
+						"SslInvalidHost");
 					}
 					else
 					{
@@ -260,7 +261,7 @@ int SSLSocket::verifyCertificate()
 						i18n("Server Authentication"),
                                                 KGuiItem(i18n("Details")),
                                                 KGuiItem(i18n("Continue")),
-                                                "ssl_cert_not_authentic" );
+                                                "SslCertificateNotAuthentic" );
 					}
 
 					if (result == KMessageBox::Yes)
@@ -306,7 +307,7 @@ int SSLSocket::verifyCertificate()
 	//  - cache the results
 	cc->addCertificate(peerCertificate, cp, permacache);
 	if (doAddHost)
-		cc->addHost(peerCertificate, remoteHost);
+	  cc->addHost(peerCertificate, remoteHost);
 
 
 	if (rc == -1)
