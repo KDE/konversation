@@ -808,7 +808,7 @@ bool Preferences::getDialogFlag(const QString& flagName)
 
   config->setGroup("Notification Messages");
 
-  if( config->readEntry(flagName) != QString::null )
+  if( !config->readEntry(flagName).isEmpty() )
     return false;
   else
     return true;

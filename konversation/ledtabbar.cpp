@@ -394,7 +394,7 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
           popupEncoding->changeItem(POPUPID_ENCODING_OFFSET+0,win->getChannelEncodingDefaultDesc());
           QString encoding=win->getChannelEncoding();
           int encodingIndex=IRCCharsets::shortNameToIndex(encoding);
-          popupEncoding->setItemChecked(POPUPID_ENCODING_OFFSET+0, (encoding == QString::null)); // identity default
+          popupEncoding->setItemChecked(POPUPID_ENCODING_OFFSET+0, (encoding.isEmpty())); // identity default
           for(int i=0; i<IRCCharsets::availableEncodingsCount(); ++i)
             popupEncoding->setItemChecked(POPUPID_ENCODING_OFFSET+i+1, (encodingIndex == i));
         }
