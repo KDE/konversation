@@ -20,6 +20,7 @@ class QLineEdit;
 class QComboBox;
 class QListBox;
 class QCheckBox;
+class QToolButton;
 
 namespace Konversation {
 
@@ -43,12 +44,14 @@ class ServerGroupDialog : public KDialogBase
     void addServer();
     void editServer();
     void deleteServer();
+    void updateServerArrows();
     void moveServerUp();
     void moveServerDown();
 
     void addChannel();
     void editChannel();
     void deleteChannel();
+    void updateChannelArrows();
     void moveChannelUp();
     void moveChannelDown();
 
@@ -64,6 +67,10 @@ class ServerGroupDialog : public KDialogBase
     QCheckBox* m_autoConnectCBox;
     ServerList m_serverList;
     ChannelList m_channelList;
+    QToolButton* m_upServerBtn;
+    QToolButton* m_downServerBtn;
+    QToolButton* m_upChannelBtn;
+    QToolButton* m_downChannelBtn;
 
     int m_id;
     

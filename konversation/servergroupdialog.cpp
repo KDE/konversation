@@ -84,18 +84,21 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   QPushButton* addServerBtn = new QPushButton(i18n("Add..."), serverGBox);
   QPushButton* changeServerBtn = new QPushButton(i18n("Edit..."), serverGBox);
   QPushButton* removeServerBtn = new QPushButton(i18n("Delete"), serverGBox);
-  QToolButton* upServerBtn = new QToolButton(serverGBox);
-  upServerBtn->setIconSet(SmallIconSet("up"));
-  upServerBtn->setAutoRepeat(true);
-  QToolButton* downServerBtn = new QToolButton(serverGBox);
-  downServerBtn->setIconSet(SmallIconSet("down"));
-  downServerBtn->setAutoRepeat(true);
+  m_upServerBtn = new QToolButton(serverGBox);
+  m_upServerBtn->setIconSet(SmallIconSet("up"));
+  m_upServerBtn->setAutoRepeat(true);
+  m_upServerBtn->setEnabled(false);
+  m_downServerBtn = new QToolButton(serverGBox);
+  m_downServerBtn->setIconSet(SmallIconSet("down"));
+  m_downServerBtn->setAutoRepeat(true);
+  m_downServerBtn->setEnabled(false);
 
   connect(addServerBtn, SIGNAL(clicked()), this, SLOT(addServer()));
   connect(changeServerBtn, SIGNAL(clicked()), this, SLOT(editServer()));
   connect(removeServerBtn, SIGNAL(clicked()), this, SLOT(deleteServer()));
-  connect(upServerBtn, SIGNAL(clicked()), this, SLOT(moveServerUp()));
-  connect(downServerBtn, SIGNAL(clicked()), this, SLOT(moveServerDown()));
+  connect(m_serverLBox, SIGNAL(selectionChanged()), this, SLOT(updateServerArrows()));
+  connect(m_upServerBtn, SIGNAL(clicked()), this, SLOT(moveServerUp()));
+  connect(m_downServerBtn, SIGNAL(clicked()), this, SLOT(moveServerDown()));
 
   serverLayout->setColStretch(0, 10);
   serverLayout->setRowStretch(4, 10);
@@ -103,8 +106,8 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   serverLayout->addMultiCellWidget(addServerBtn, 0, 0, 1, 4);
   serverLayout->addMultiCellWidget(changeServerBtn, 1, 1, 1, 4);
   serverLayout->addMultiCellWidget(removeServerBtn, 2, 2, 1, 4);
-  serverLayout->addWidget(upServerBtn, 3, 2);
-  serverLayout->addWidget(downServerBtn, 3, 3);
+  serverLayout->addWidget(m_upServerBtn, 3, 2);
+  serverLayout->addWidget(m_downServerBtn, 3, 3);
 
   QGroupBox* channelGBox = new QGroupBox(0, Qt::Horizontal, i18n("Auto Join Channels"), groupWidget);
   channelGBox->setMargin(marginHint());
@@ -114,18 +117,21 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   QPushButton* addChannelBtn = new QPushButton(i18n("Add..."), channelGBox);
   QPushButton* changeChannelBtn = new QPushButton(i18n("Edit..."), channelGBox);
   QPushButton* removeChannelBtn = new QPushButton(i18n("Delete"), channelGBox);
-  QToolButton* upChannelBtn = new QToolButton(channelGBox);
-  upChannelBtn->setIconSet(SmallIconSet("up"));
-  upChannelBtn->setAutoRepeat(true);
-  QToolButton* downChannelBtn = new QToolButton(channelGBox);
-  downChannelBtn->setIconSet(SmallIconSet("down"));
-  downChannelBtn->setAutoRepeat(true);
+  m_upChannelBtn = new QToolButton(channelGBox);
+  m_upChannelBtn->setIconSet(SmallIconSet("up"));
+  m_upChannelBtn->setAutoRepeat(true);
+  m_upChannelBtn->setEnabled(false);
+  m_downChannelBtn = new QToolButton(channelGBox);
+  m_downChannelBtn->setIconSet(SmallIconSet("down"));
+  m_downChannelBtn->setAutoRepeat(true);
+  m_downChannelBtn->setEnabled(false);
 
   connect(addChannelBtn, SIGNAL(clicked()), this, SLOT(addChannel()));
   connect(changeChannelBtn, SIGNAL(clicked()), this, SLOT(editChannel()));
   connect(removeChannelBtn, SIGNAL(clicked()), this, SLOT(deleteChannel()));
-  connect(upChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelUp()));
-  connect(downChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelDown()));
+  connect(m_channelLBox, SIGNAL(selectionChanged()), this, SLOT(updateChannelArrows()));
+  connect(m_upChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelUp()));
+  connect(m_downChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelDown()));
 
   channelLayout->setColStretch(0, 10);
   channelLayout->setRowStretch(4, 10);
@@ -133,8 +139,8 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   channelLayout->addMultiCellWidget(addChannelBtn, 0, 0, 1, 4);
   channelLayout->addMultiCellWidget(changeChannelBtn, 1, 1, 1, 4);
   channelLayout->addMultiCellWidget(removeChannelBtn, 2, 2, 1, 4);
-  channelLayout->addWidget(upChannelBtn, 3, 2);
-  channelLayout->addWidget(downChannelBtn, 3, 3);
+  channelLayout->addWidget(m_upChannelBtn, 3, 2);
+  channelLayout->addWidget(m_downChannelBtn, 3, 3);
 
   mainLayout->addWidget(nameLbl, 0, 0);
   mainLayout->addMultiCellWidget(m_nameEdit, 0, 0, 1, 2);
@@ -214,6 +220,7 @@ void ServerGroupDialog::addServer()
     ServerSettings server = dlg.serverSettings();
     m_serverLBox->insertItem(server.server());
     m_serverList.append(server);
+    updateServerArrows();
   }
 }
 
@@ -241,6 +248,15 @@ void ServerGroupDialog::deleteServer()
     m_serverList.remove(m_serverList.at(current));
     m_serverLBox->removeItem(current);
   }
+
+  updateServerArrows();
+}
+
+void ServerGroupDialog::updateServerArrows()
+{
+  m_upServerBtn->setEnabled( m_serverLBox->count()>1 && m_serverLBox->currentItem()>0 );
+
+  m_downServerBtn->setEnabled( m_serverLBox->count()>1 && m_serverLBox->currentItem()<m_serverLBox->count()-1 );
 }
 
 void ServerGroupDialog::moveServerUp()
@@ -256,6 +272,8 @@ void ServerGroupDialog::moveServerUp()
     --it;
     m_serverList.insert(it, server);
   }
+
+  updateServerArrows();
 }
 
 void ServerGroupDialog::moveServerDown()
@@ -271,6 +289,8 @@ void ServerGroupDialog::moveServerDown()
     ++it;
     m_serverList.insert(it, server);
   }
+
+  updateServerArrows();
 }
 
 void ServerGroupDialog::addChannel()
@@ -281,6 +301,7 @@ void ServerGroupDialog::addChannel()
     ChannelSettings channel = dlg.channelSettings();
     m_channelLBox->insertItem(channel.name());
     m_channelList.append(channel);
+    updateChannelArrows();
   }
 }
 
@@ -307,7 +328,15 @@ void ServerGroupDialog::deleteChannel()
   if(current < m_channelList.count()) {
     m_channelList.remove(m_channelList.at(current));
     m_channelLBox->removeItem(current);
+    updateChannelArrows();
   }
+}
+
+void ServerGroupDialog::updateChannelArrows()
+{
+  m_upChannelBtn->setEnabled( m_channelLBox->count()>1 && m_channelLBox->currentItem()>0 );
+
+  m_downChannelBtn->setEnabled( m_channelLBox->count()>1 && m_channelLBox->currentItem()<m_channelLBox->count()-1 );
 }
 
 void ServerGroupDialog::moveChannelUp()
@@ -323,6 +352,8 @@ void ServerGroupDialog::moveChannelUp()
     --it;
     m_channelList.insert(it, channel);
   }
+
+  updateChannelArrows();
 }
 
 void ServerGroupDialog::moveChannelDown()
@@ -338,6 +369,8 @@ void ServerGroupDialog::moveChannelDown()
     ++it;
     m_channelList.insert(it, channel);
   }
+
+  updateChannelArrows();
 }
 
 void ServerGroupDialog::editIdentity()
