@@ -147,12 +147,6 @@ class Server : public QObject
     void setShowTopic(bool state);
     void setShowNicknameBox(bool state);
 
-    QString getNextQueryName();
-    void appendToQuery(const QString& queryName,const QString& message);
-    void appendActionToQuery(const QString& queryName,const QString& message);
-    void appendServerMessageToQuery(const QString& queryName,const QString& type,const QString& message);
-    void appendCommandMessageToQuery(const QString& queryName,const QString& command,const QString& message);
-
     Channel* getChannelByName(const QString& name);
     class Query* getQueryByName(const QString& name);
     QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QStringList &nickList, const QString& parameter);

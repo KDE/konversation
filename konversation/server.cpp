@@ -1826,16 +1826,6 @@ void Server::dccStatusChanged(const DccTransfer *item)
   getMainWindow()->getDccPanel()->dccStatusChanged(item);
 }
 
-QString Server::getNextQueryName()
-{
-  // Check if completion position is out of range
-  if(completeQueryPosition>=queryList.count()) completeQueryPosition=0;
-  // return the next query in the list (for /msg completion)
-  if(queryList.count()) return queryList.at(completeQueryPosition++)->getName();
-
-  return QString::null;
-}
-
 void Server::removeQuery(class Query* query)
 {
   // Traverse through list to find the query
@@ -2605,20 +2595,6 @@ void Server::appendCommandMessageToChannel(const QString& channel,const QString&
 {
   Channel* outChannel=getChannelByName(channel);
   if(outChannel) outChannel->appendCommandMessage(command,message);
-}
-
-void Server::appendServerMessageToQuery(const QString& queryName,const QString& type,const QString& message)
-{
-  class Query* outQuery=getQueryByName(queryName);
-  if(outQuery) outQuery->appendServerMessage(type,message);
-  else kdWarning() << "Server::appendServerMessageToQuery(" << queryName << "): Query not found!" << endl;
-}
-
-void Server::appendCommandMessageToQuery(const QString& queryName,const QString& command,const QString& message)
-{
-  class Query* outQuery=getQueryByName(queryName);
-  if(outQuery) outQuery->appendCommandMessage(command,message);
-  else kdWarning() << "Server::appendCommandMessageToQuery(" << queryName << "): Query not found!" << endl;
 }
 
 void Server::appendStatusMessage(const QString& type,const QString& message)
