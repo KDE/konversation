@@ -17,6 +17,7 @@
 
 #include <kstaticdeleter.h>
 #include <kstandarddirs.h>
+#include <kdeversion.h>
 
 #include "konversationapplication.h"
 #include "preferences.h"
@@ -57,6 +58,10 @@ void EmotIcon::changeTheme(const QString& themeName)
     return;
   }
 
+#if KDE_IS_VERSION(3,3,91)
+ QString filename = KGlobal::dirs()->findResource("emoticons",  themeName + "/emoticons.xml");
+ self()->self()->m_themeName = themeName;
+#else
   QString app = "konversation";
   QString filename = KGlobal::dirs()->findResource("data", app + "/pics/emoticons/" + themeName + "/emoticons.xml");
 
@@ -64,7 +69,9 @@ void EmotIcon::changeTheme(const QString& themeName)
     app = "kopete";
     filename = KGlobal::dirs()->findResource("data", app + "/pics/emoticons/" + themeName + "/emoticons.xml");
   }
-  
+  self()->self()->m_themeName = app + "/" + themeName;
+#endif
+
   if(filename.isEmpty()) {
     return;
   }
@@ -80,7 +87,6 @@ void EmotIcon::changeTheme(const QString& themeName)
     return;
   }
 
-  self()->self()->m_themeName = app + "/" + themeName;
   self()->m_emotIconMap.clear();
 
   QDomNode node = docElement.firstChild();
@@ -149,21 +155,28 @@ QString EmotIcon::findIcon(const QString& filename)
   //
   KStandardDirs *dirs = KGlobal::dirs();
   QString pic;
+
+#if KDE_IS_VERSION(3,3,91)
+  QString file =  self()->m_themeName + "/" +filename;
+  const char *resource="emoticons";
+#else
   QString app = self()->m_themeName.section('/', 0, 0);
   QString dir = self()->m_themeName.section('/', 1);
   QString file = app + "/pics/emoticons/" + dir + "/" + filename;
+  const char *resource="data";
+#endif
 
   //maybe an extension was given, so try to find the exact file
-  pic = dirs->findResource("data", file);
+  pic = dirs->findResource(resource, file);
 
   if(pic.isEmpty()) {
-    pic = dirs->findResource("data", file + ".png");
+     pic = dirs->findResource(resource, file + ".png");
   }
   if(pic.isEmpty()) {
-    pic = dirs->findResource("data", file + ".mng");
+     pic = dirs->findResource(resource, file + ".mng");
   }
   if(pic.isEmpty()) {
-    pic = dirs->findResource("data", file + ".gif");
+     pic = dirs->findResource(resource, file + ".gif");
   }
 
   return pic;
