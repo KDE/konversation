@@ -23,19 +23,29 @@ getmails()
     dcop $PORT Konversation info "Sorry kmail is not running"
     exit
   }
-
+  
   for f in $(dcop kmail KMailIface folderList) ; do
    MAILFOLDER=$(dcop $(dcop kmail KMailIface getFolder $f) "displayPath" | grep -i $FOLDER)
    if [ "$MAILFOLDER" != "" ] ; then
-   
+     FOUNDFOLDER=1
      MAILCOUNT=$(dcop $(dcop kmail KMailIface getFolder $f ) "unreadMessages()" )
      MAILTOTALCOUNT=$(dcop $(dcop kmail KMailIface getFolder $f ) "messages()" )
-     if [ "$MAILCOUNT" = "" ] ; then MAILCOUNT = "0" ; fi
+     if [[ -z "$MAILCOUNT" ]] ; then MAILCOUNT = "0" ; fi
      if [ "$MAILCOUNT" != 0 ] ;  then
-       echo "Email folder %C2$MAILFOLDER%C1 has %C2$MAILCOUNT%C1 unread messages, out of %C2$MAILTOTALCOUNT%C1"
+       FOUNDEMAIL=1
+       echo "Email folder %B$MAILFOLDER%B has %B$MAILCOUNT%B unread messages, out of %B$MAILTOTALCOUNT%B"
      fi
    fi
   done
+
+  if [[ -z "$FOUNDEMAIL" ]] ; then
+    if [[ -z "$FOUNDFOLDER" ]] ; then
+      dcop $PORT Konversation info "No email folders were found that had a name containing '$FOLDER'"
+      exit
+    else
+      echo "No new emails in any folders matching '$FOLDER'"
+    fi
+  fi
 
 }
 
