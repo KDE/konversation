@@ -125,6 +125,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
   new KAction(i18n("Find Text..."),0,KShortcut("F3"),this,SLOT(findTextShortcut()),actionCollection(),"find_text");
   new KAction(i18n("&Insert IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors");
+  new KAction(i18n("Close All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
 
   // Initialize KMainWindow->statusBar()
   statusBar();
@@ -754,6 +755,27 @@ void KonversationMainWindow::addIRCColor()
 
   if(dlg.exec() == QDialog::Accepted) {
     frontView->appendInputText(dlg.color());
+  }
+}
+
+void KonversationMainWindow::closeQueries()
+{
+  int total=getViewContainer()->count()-1;
+  int operations=0;
+  ChatWindow* nextPage;
+
+  for(int i=0;i<=total;i++)
+  {
+    if (operations > total)
+      break;
+      
+    nextPage=static_cast<ChatWindow*>(getViewContainer()->page(i));
+    
+    if(nextPage && nextPage->getType()==ChatWindow::Query) {
+      nextPage->closeYourself();
+      --i; /* Tab indexes changed */
+    }
+    ++operations;
   }
 }
 
