@@ -44,6 +44,7 @@ class Identity;
 class KonversationMainWindow;
 class RawLog;
 class ChannelListPanel;
+class ScriptLauncher;
 
 // A LocaleString is used as a key to a QMap.  Unlike QString, it sorts the QMap
 // in localeAware order.
@@ -142,7 +143,7 @@ class Server : public QObject
 
     bool isNickname(const QString& compare);
     QString getNickname() const;
-    OutputFilter& getOutputFilter();
+    Konversation::OutputFilter* getOutputFilter();
 
     void joinChannel(const QString& name, const QString& hostmask, const QString& key);
     void removeChannel(Channel* channel);
@@ -328,6 +329,9 @@ class Server : public QObject
   protected:
     // constants
     static const int BUFFER_LEN=513;
+    
+    /// Connect to the signals used in this class.
+    void connectSignals();
 
     KonversationMainWindow* getMainWindow() const;
     void setMainWindow(KonversationMainWindow* newMainWindow);
@@ -341,37 +345,37 @@ class Server : public QObject
 
     void autoRejoinChannels();
 
-    // Adds a nickname to the joinedChannels list.
-    // Creates new NickInfo if necessary.
-    // If needed, moves the channel from the unjoined list to the joined list.
-    // If needed, moves the nickname from the Offline to Online lists.
-    // If mode != 99 sets the mode for this nick in this channel.
-    // Returns the NickInfo for the nickname.
+    /// Adds a nickname to the joinedChannels list.
+    /// Creates new NickInfo if necessary.
+    /// If needed, moves the channel from the unjoined list to the joined list.
+    /// If needed, moves the nickname from the Offline to Online lists.
+    /// If mode != 99 sets the mode for this nick in this channel.
+    /// Returns the NickInfo for the nickname.
     NickInfoPtr addNickToJoinedChannelsList(const QString& channelName, const QString& nickname, unsigned int mode = 99);
-    // Adds a nickname to the unjoinedChannels list.
-    // Creates new NickInfo if necessary.
-    // If needed, moves the channel from the joined list to the unjoined list.
-    // If needed, moves the nickname from the Offline to the Online list.
-    // If mode != 99 sets the mode for this nick in this channel.
-    // Returns the NickInfo for the nickname.
+    /// Adds a nickname to the unjoinedChannels list.
+    /// Creates new NickInfo if necessary.
+    /// If needed, moves the channel from the joined list to the unjoined list.
+    /// If needed, moves the nickname from the Offline to the Online list.
+    /// If mode != 99 sets the mode for this nick in this channel.
+    /// Returns the NickInfo for the nickname.
     NickInfoPtr addNickToUnjoinedChannelsList(const QString& channelName, const QString& nickname, unsigned int mode = 99);
-    // Adds a nickname to the Online list, removing it from the Offline list, if present.
-    // Returns the NickInfo of the nickname.
-    // Creates new NickInfo if necessary.
+    /// Adds a nickname to the Online list, removing it from the Offline list, if present.
+    /// Returns the NickInfo of the nickname.
+    /// Creates new NickInfo if necessary.
     NickInfoPtr addNickToOnlineList(const QString& nickname);
-    // Adds a nickname to the Offline list provided it is on the watch list,
-    // removing it from the Online list, if present.
-    // Returns the NickInfo of the nickname or 0 if deleted altogether.
-    // Creates new NickInfo if necessary.
+    /// Adds a nickname to the Offline list provided it is on the watch list,
+    /// removing it from the Online list, if present.
+    /// Returns the NickInfo of the nickname or 0 if deleted altogether.
+    /// Creates new NickInfo if necessary.
     NickInfoPtr addNickToOfflineList(const QString& nickname, const QStringList& watchList);
-    // Remove nickname from a channel (on joined or unjoined lists).
-    // Delete the nickname altogether if no longer on any lists.
+    /// Remove nickname from a channel (on joined or unjoined lists).
+    /// Delete the nickname altogether if no longer on any lists.
     void removeChannelNick(const QString& channelName, const QString& nickname);
-    // Remove channel from the joined list.
-    // Nicknames in the channel are added to the unjoined list if they are in the watch list.
+    /// Remove channel from the joined list.
+    /// Nicknames in the channel are added to the unjoined list if they are in the watch list.
     void removeJoinedChannel(const QString& channelName);
-    // Renames a nickname in all NickInfo lists.
-    // Returns pointer to the NickInfo object or 0 if nick not found.
+    /// Renames a nickname in all NickInfo lists.
+    /// Returns pointer to the NickInfo object or 0 if nick not found.
     NickInfoPtr renameNickInfo(const QString& nickname, const QString& newname);
 
     unsigned int completeQueryPosition;
@@ -428,7 +432,7 @@ class Server : public QObject
     QPtrList<Query> queryList;
 
     InputFilter inputFilter;
-    OutputFilter outputFilter;
+    Konversation::OutputFilter* outputFilter;
 
     StatusPanel* statusView;
     RawLog* rawLog;
@@ -458,6 +462,8 @@ class Server : public QObject
     NickInfoMap queryNicks;
 
     int m_awayTime;
+    
+    ScriptLauncher* m_scriptLauncher;
 };
 
 #endif

@@ -9,6 +9,7 @@
   scriptlauncher.cpp  -  Launches shell scripts
   begin:     Mit Mär 12 2003
   copyright: (C) 2003 by Dario Abatianni
+             (C) 2004 by Peter Simonsson
   email:     eisfuchs@tigress.com
 */
 
@@ -23,28 +24,19 @@
 
 #include "scriptlauncher.h"
 #include "konversationapplication.h"
+#include "server.h"
 
-ScriptLauncher::ScriptLauncher()
+ScriptLauncher::ScriptLauncher(Server* server)
+  : QObject(server)
 {
-  server=QString::null;
-  target=QString::null;
+  m_server = server;
 }
 
 ScriptLauncher::~ScriptLauncher()
 {
 }
 
-void ScriptLauncher::setServerName(const QString& newName)
-{
-  server=newName;
-}
-
-void ScriptLauncher::setTargetName(const QString& newName)
-{
-  target=newName;
-}
-
-void ScriptLauncher::launchScript(const QString &parameter)
+void ScriptLauncher::launchScript(const QString& target, const QString &parameter)
 {
   KStandardDirs kstddir;
 //  QString scriptPath(kstddir.saveLocation("data",QString("konversation/scripts")));
@@ -59,7 +51,7 @@ void ScriptLauncher::launchScript(const QString &parameter)
 
   process << scriptPath                    // script path and name
           << kapp->dcopClient()->appId()   // our dcop port
-          << server                        // the server we are connected to
+          << m_server->getServerName()     // the server we are connected to
           << target;                       // the target where the call came from
 
   // send remaining parameters to the script

@@ -50,6 +50,7 @@ typedef unsigned long long __u64;
 #include "statuspanel.h"
 #include "rawlog.h"
 #include "channellistpanel.h"
+#include "scriptlauncher.h"
 
 #ifdef KDE_IS_VERSION
 #if KDE_IS_VERSION(3,1,1)
@@ -124,7 +125,8 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   completeQueryPosition=0;
 
   inputFilter.setServer(this);
-  outputFilter.setIdentity(getIdentity());
+  outputFilter = new Konversation::OutputFilter(this);
+  outputFilter->setIdentity(getIdentity());
 
   notifyTimer.setName("notify_timer");
   incomingTimer.setName("incoming_timer");
@@ -132,71 +134,10 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   outgoingTimer.setName("outgoing_timer");
   outgoingTimer.start(timerInterval);
-
-  connect(&incomingTimer,SIGNAL(timeout()),
-                    this,SLOT  (processIncomingData()) );
-
-  connect(&outgoingTimer,SIGNAL(timeout()),
-                    this,SLOT  (send()) );
-
-  connect(&unlockTimer,SIGNAL(timeout()),
-                  this,SLOT  (unlockSending()) );
-
-  connect(&outputFilter,SIGNAL (openQuery(const QString&,const QString&)),
-                   this,SLOT   (addQuery(const QString&,const QString&)) );
-  connect(&outputFilter,SIGNAL (requestDccSend()),
-                   this,SLOT   (requestDccSend()) );
-  connect(&outputFilter,SIGNAL (requestDccSend(const QString&)),
-                   this,SLOT   (requestDccSend(const QString&)) );
-  connect(&outputFilter, SIGNAL(multiServerCommand(const QString&, const QString&)),
-    this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
-  connect(&outputFilter, SIGNAL(reconnectServer()), this, SLOT(reconnect()));
-
-  connect(&notifyTimer,SIGNAL(timeout()),
-                  this,SLOT  (notifyTimeout()) );
-  connect(&notifyCheckTimer,SIGNAL(timeout()),
-                  this,SLOT  (notifyCheckTimeout()) );
-
-  connect(&inputFilter,SIGNAL(welcome()),
-                  this,SLOT  (connectionEstablished()) );
-  connect(&inputFilter,SIGNAL(notifyResponse(const QString&)),
-                  this,SLOT  (notifyResponse(const QString&)) );
-  connect(&inputFilter,SIGNAL(addDccGet(const QString&, const QStringList&)),
-                  this,SLOT  (addDccGet(const QString&, const QStringList&)) );
-  connect(&inputFilter,SIGNAL(resumeDccGetTransfer(const QString&, const QStringList&)),
-                  this,SLOT  (resumeDccGetTransfer(const QString&, const QStringList&)) );
-  connect(&inputFilter,SIGNAL(resumeDccSendTransfer(const QString&, const QStringList&)),
-                  this,SLOT  (resumeDccSendTransfer(const QString&, const QStringList&)) );
-  connect(&inputFilter,SIGNAL(userhost(const QString&,const QString&,bool,bool)),
-                  this,SLOT  (userhost(const QString&,const QString&,bool,bool)) );
-  connect(&inputFilter,SIGNAL(topicAuthor(const QString&,const QString&)),
-                  this,SLOT  (setTopicAuthor(const QString&,const QString&)) );
-  connect(&inputFilter,SIGNAL(addChannelListPanel()),
-                  this,SLOT  (addChannelListPanel()) );
-  connect(&inputFilter,SIGNAL(invitation(const QString&,const QString&)),
-                  this,SLOT  (invitation(const QString&,const QString&)) );
-
-  connect(&inputFilter,SIGNAL (away()),this,SLOT (away()) );
-  connect(&inputFilter,SIGNAL (unAway()),this,SLOT (unAway()) );
-  connect(&inputFilter,SIGNAL (addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)),
-         getMainWindow(),SLOT (addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)) );
-
-  connect(this,SIGNAL(serverLag(Server*,int)),getMainWindow(),SLOT(updateLag(Server*,int)) );
-  connect(this,SIGNAL(tooLongLag(Server*,int)),getMainWindow(),SLOT(tooLongLag(Server*,int)) );
-  connect(this,SIGNAL(resetLag()),getMainWindow(),SLOT(resetLag()) );
-  connect(this,SIGNAL(addDccPanel()),getMainWindow(),SLOT(addDccPanel()) );
-  connect(this,SIGNAL(addKonsolePanel()),getMainWindow(),SLOT(addKonsolePanel()) );
-
-  connect(&serverSocket,SIGNAL (connectionSuccess())  ,this,SLOT (ircServerConnectionSuccess()) );
-  connect(&serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
-  connect(&serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
-  connect(&serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
-  connect(&serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
-
-  connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
-  connect(getMainWindow(),SIGNAL(openPrefsDialog()),KonversationApplication::kApplication(),SLOT(openPrefsDialog()));
-
-  connect(this,SIGNAL (serverOnline(bool)),statusView,SLOT (serverOnline(bool)) );
+  
+  m_scriptLauncher = new ScriptLauncher(this);
+  
+  connectSignals();
 
   emit serverOnline(false);
 }
@@ -244,7 +185,8 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   completeQueryPosition=0;
 
   inputFilter.setServer(this);
-  outputFilter.setIdentity(getIdentity());
+  outputFilter = new Konversation::OutputFilter(this);
+  outputFilter->setIdentity(getIdentity());
 
   notifyTimer.setName("notify_timer");
   incomingTimer.setName("incoming_timer");
@@ -252,73 +194,8 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
 
   outgoingTimer.setName("outgoing_timer");
   outgoingTimer.start(timerInterval);
-
-  connect(&incomingTimer,SIGNAL(timeout()),
-                    this,SLOT  (processIncomingData()) );
-
-  connect(&outgoingTimer,SIGNAL(timeout()),
-                    this,SLOT  (send()) );
-
-  connect(&unlockTimer,SIGNAL(timeout()),
-                  this,SLOT  (unlockSending()) );
-
-  connect(&outputFilter,SIGNAL (openQuery(const QString&,const QString&)),
-                   this,SLOT   (addQuery(const QString&,const QString&)) );
-  connect(&outputFilter,SIGNAL (requestDccSend()),
-                   this,SLOT   (requestDccSend()) );
-  connect(&outputFilter,SIGNAL (requestDccSend(const QString&)),
-                   this,SLOT   (requestDccSend(const QString&)) );
-  connect(&outputFilter, SIGNAL(multiServerCommand(const QString&, const QString&)),
-    this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
-  connect(&outputFilter, SIGNAL(reconnectServer()), this, SLOT(reconnect()));
-  connect(&outputFilter, SIGNAL(connectToServer(const QString&, const QString&, const QString&)),
-    this, SLOT(connectToNewServer(const QString&, const QString&, const QString&)));
-
-  connect(&notifyTimer,SIGNAL(timeout()),
-                  this,SLOT  (notifyTimeout()) );
-  connect(&notifyCheckTimer,SIGNAL(timeout()),
-                  this,SLOT  (notifyCheckTimeout()) );
-
-  connect(&inputFilter,SIGNAL(welcome()),
-                  this,SLOT  (connectionEstablished()) );
-  connect(&inputFilter,SIGNAL(notifyResponse(const QString&)),
-                  this,SLOT  (notifyResponse(const QString&)) );
-  connect(&inputFilter,SIGNAL(addDccGet(const QString&, const QStringList&)),
-                  this,SLOT  (addDccGet(const QString&, const QStringList&)) );
-  connect(&inputFilter,SIGNAL(resumeDccGetTransfer(const QString&, const QStringList&)),
-                  this,SLOT  (resumeDccGetTransfer(const QString&, const QStringList&)) );
-  connect(&inputFilter,SIGNAL(resumeDccSendTransfer(const QString&, const QStringList&)),
-                  this,SLOT  (resumeDccSendTransfer(const QString&, const QStringList&)) );
-  connect(&inputFilter,SIGNAL(userhost(const QString&,const QString&,bool,bool)),
-                  this,SLOT  (userhost(const QString&,const QString&,bool,bool)) );
-  connect(&inputFilter,SIGNAL(topicAuthor(const QString&,const QString&)),
-                  this,SLOT  (setTopicAuthor(const QString&,const QString&)) );
-  connect(&inputFilter,SIGNAL(addChannelListPanel()),
-                  this,SLOT  (addChannelListPanel()) );
-  connect(&inputFilter,SIGNAL(invitation(const QString&,const QString&)),
-                  this,SLOT  (invitation(const QString&,const QString&)) );
-
-  connect(&inputFilter,SIGNAL (away()),this,SLOT (away()) );
-  connect(&inputFilter,SIGNAL (unAway()),this,SLOT (unAway()) );
-  connect(&inputFilter,SIGNAL (addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)),
-         getMainWindow(),SLOT (addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)) );
-
-  connect(this,SIGNAL(serverLag(Server*,int)),getMainWindow(),SLOT(updateLag(Server*,int)) );
-  connect(this,SIGNAL(tooLongLag(Server*,int)),getMainWindow(),SLOT(tooLongLag(Server*,int)) );
-  connect(this,SIGNAL(resetLag()),getMainWindow(),SLOT(resetLag()) );
-  connect(this,SIGNAL(addDccPanel()),getMainWindow(),SLOT(addDccPanel()) );
-  connect(this,SIGNAL(addKonsolePanel()),getMainWindow(),SLOT(addKonsolePanel()) );
-
-  connect(&serverSocket,SIGNAL (connectionSuccess())  ,this,SLOT (ircServerConnectionSuccess()) );
-  connect(&serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
-  connect(&serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
-  connect(&serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
-  connect(&serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
-
-  connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
-  connect(getMainWindow(),SIGNAL(openPrefsDialog()),KonversationApplication::kApplication(),SLOT(openPrefsDialog()));
-
-  connect(this,SIGNAL (serverOnline(bool)),statusView,SLOT (serverOnline(bool)) );
+    
+  connectSignals();
 
   emit serverOnline(false);
 }
@@ -381,6 +258,106 @@ Server::~Server()
 
   // notify KonversationApplication that this server is gone
   emit deleted(this);
+}
+
+void Server::connectSignals()
+{
+  connect(&incomingTimer,SIGNAL(timeout()),
+                    this,SLOT  (processIncomingData()) );
+
+  connect(&outgoingTimer,SIGNAL(timeout()),
+                    this,SLOT  (send()) );
+
+  connect(&unlockTimer,SIGNAL(timeout()),
+                  this,SLOT  (unlockSending()) );
+
+  connect(outputFilter,SIGNAL (openQuery(const QString&,const QString&)),
+                   this,SLOT   (addQuery(const QString&,const QString&)) );
+  connect(outputFilter,SIGNAL (requestDccSend()),
+                   this,SLOT   (requestDccSend()) );
+  connect(outputFilter,SIGNAL (requestDccSend(const QString&)),
+                   this,SLOT   (requestDccSend(const QString&)) );
+  connect(outputFilter, SIGNAL(multiServerCommand(const QString&, const QString&)),
+    this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
+  connect(outputFilter, SIGNAL(reconnectServer()), this, SLOT(reconnect()));
+
+  connect(outputFilter,SIGNAL (openDccPanel()),
+            this,SLOT   (requestDccPanel()) );
+  connect(outputFilter,SIGNAL (closeDccPanel()),
+            this,SLOT   (requestCloseDccPanel()) );
+  connect(outputFilter,SIGNAL (openDccSend(const QString &, const QString &)),
+            this,SLOT   (addDccSend(const QString &, const QString &)) );
+  connect(outputFilter,SIGNAL (requestDccChat(const QString &)),
+            this,SLOT   (requestDccChat(const QString &)) );
+  connect(outputFilter,SIGNAL (connectToServer(const QString&, const QString&, const QString&)),
+            this,SLOT   (connectToNewServer(const QString&, const QString&, const QString&)));
+
+  connect(outputFilter,SIGNAL (openKonsolePanel()),
+            this,SLOT   (requestKonsolePanel()) );
+
+  connect(outputFilter,SIGNAL (sendToAllChannels(const QString&)),
+            this,SLOT   (sendToAllChannels(const QString&)) );
+  connect(outputFilter,SIGNAL (banUsers(const QStringList&,const QString&,const QString&)),
+            this,SLOT   (requestBan(const QStringList&,const QString&,const QString&)) );
+  connect(outputFilter,SIGNAL (unbanUsers(const QString&,const QString&)),
+            this,SLOT   (requestUnban(const QString&,const QString&)) );
+
+  connect(outputFilter,SIGNAL (openRawLog(bool)), this,SLOT (addRawLog(bool)) );
+  connect(outputFilter,SIGNAL (closeRawLog()),this,SLOT (closeRawLog()) );
+
+  connect(&notifyTimer,SIGNAL(timeout()),
+                  this,SLOT  (notifyTimeout()) );
+  connect(&notifyCheckTimer,SIGNAL(timeout()),
+                  this,SLOT  (notifyCheckTimeout()) );
+
+  connect(&inputFilter,SIGNAL(welcome()),
+                  this,SLOT  (connectionEstablished()) );
+  connect(&inputFilter,SIGNAL(notifyResponse(const QString&)),
+                  this,SLOT  (notifyResponse(const QString&)) );
+  connect(&inputFilter,SIGNAL(addDccGet(const QString&, const QStringList&)),
+                  this,SLOT  (addDccGet(const QString&, const QStringList&)) );
+  connect(&inputFilter,SIGNAL(resumeDccGetTransfer(const QString&, const QStringList&)),
+                  this,SLOT  (resumeDccGetTransfer(const QString&, const QStringList&)) );
+  connect(&inputFilter,SIGNAL(resumeDccSendTransfer(const QString&, const QStringList&)),
+                  this,SLOT  (resumeDccSendTransfer(const QString&, const QStringList&)) );
+  connect(&inputFilter,SIGNAL(userhost(const QString&,const QString&,bool,bool)),
+                  this,SLOT  (userhost(const QString&,const QString&,bool,bool)) );
+  connect(&inputFilter,SIGNAL(topicAuthor(const QString&,const QString&)),
+                  this,SLOT  (setTopicAuthor(const QString&,const QString&)) );
+  connect(&inputFilter,SIGNAL(addChannelListPanel()),
+                  this,SLOT  (addChannelListPanel()) );
+  connect(&inputFilter,SIGNAL(invitation(const QString&,const QString&)),
+                  this,SLOT  (invitation(const QString&,const QString&)) );
+
+  connect(&inputFilter,SIGNAL (away()),this,SLOT (away()) );
+  connect(&inputFilter,SIGNAL (unAway()),this,SLOT (unAway()) );
+  connect(&inputFilter,SIGNAL (addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)),
+         getMainWindow(),SLOT (addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)) );
+
+  connect(this,SIGNAL(serverLag(Server*,int)),getMainWindow(),SLOT(updateLag(Server*,int)) );
+  connect(this,SIGNAL(tooLongLag(Server*,int)),getMainWindow(),SLOT(tooLongLag(Server*,int)) );
+  connect(this,SIGNAL(resetLag()),getMainWindow(),SLOT(resetLag()) );
+  connect(this,SIGNAL(addDccPanel()),getMainWindow(),SLOT(addDccPanel()) );
+  connect(this,SIGNAL(addKonsolePanel()),getMainWindow(),SLOT(addKonsolePanel()) );
+
+  connect(&serverSocket,SIGNAL (connectionSuccess())  ,this,SLOT (ircServerConnectionSuccess()) );
+  connect(&serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
+  connect(&serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
+  connect(&serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
+  connect(&serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
+
+  connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
+  connect(getMainWindow(),SIGNAL(openPrefsDialog()),KonversationApplication::kApplication(),SLOT(openPrefsDialog()));
+
+  connect(this,SIGNAL (serverOnline(bool)),statusView,SLOT (serverOnline(bool)) );
+
+  connect(outputFilter, SIGNAL(launchScript(const QString&, const QString&)),
+    m_scriptLauncher, SLOT(launchScript(const QString&, const QString&)));
+  
+  connect(m_scriptLauncher, SIGNAL(scriptNotFound(const QString&)),
+                      this, SLOT(scriptNotFound(const QString&)));
+  connect(m_scriptLauncher, SIGNAL(scriptExecutionError(const QString&)),
+                      this, SLOT(scriptExecutionError(const QString&)));
 }
 
 QString Server::getServerName()  const { return serverName; }
@@ -571,8 +548,8 @@ void Server::ircServerConnectionSuccess()
     {
       output.remove(0, 1);
     }*/
-    outputFilter.parse(getNickname(),output,QString::null);
-    output = outputFilter.getServerOutput();
+    outputFilter->parse(getNickname(),output,QString::null);
+    output = outputFilter->getServerOutput();
     queue(output);
   }
 
@@ -659,8 +636,8 @@ void Server::connectionEstablished()
 void Server::quitServer()
 {
   QString command(KonversationApplication::preferences.getCommandChar()+"QUIT");
-  outputFilter.parse(getNickname(),command,QString::null);
-  queue(outputFilter.getServerOutput());
+  outputFilter->parse(getNickname(),command,QString::null);
+  queue(outputFilter->getServerOutput());
 }
 
 void Server::notifyAction(const QString& nick)
@@ -676,8 +653,8 @@ void Server::notifyAction(const QString& nick)
   QStringList outList=QStringList::split('\n',out);
   for(unsigned int index=0;index<outList.count();index++)
   {
-    outputFilter.parse(getNickname(),outList[index],QString::null);
-    queue(outputFilter.getServerOutput());
+    outputFilter->parse(getNickname(),outList[index],QString::null);
+    queue(outputFilter->getServerOutput());
   } // endfor
 }
 
@@ -1275,8 +1252,8 @@ void Server::closeChannel(const QString& name)
   Channel* channelToClose=getChannelByName(name);
   if(channelToClose)
   {
-    outputFilter.parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"PART",name);
-    queue(outputFilter.getServerOutput());
+    outputFilter->parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"PART",name);
+    queue(outputFilter->getServerOutput());
   }
 }
 
@@ -1337,9 +1314,9 @@ void Server::requestBan(const QStringList& users,const QString& channel,const QS
       }
     }
 
-    outputFilter.execBan(mask,channel);
+    outputFilter->execBan(mask,channel);
 
-    banCommand=outputFilter.getServerOutput();
+    banCommand=outputFilter->getServerOutput();
 
     queue(banCommand);
   }
@@ -1347,8 +1324,8 @@ void Server::requestBan(const QStringList& users,const QString& channel,const QS
 
 void Server::requestUnban(const QString& mask,const QString& channel)
 {
-  outputFilter.execUnban(mask,channel);
-  queue(outputFilter.getServerOutput());
+  outputFilter->execUnban(mask,channel);
+  queue(outputFilter->getServerOutput());
 }
 
 void Server::requestDccSend()
@@ -1494,16 +1471,16 @@ void Server::requestDccChat(const QString& nickname)
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)
 {
-  outputFilter.sendRequest(partner,fileName,address,port,size);
-  queue(outputFilter.getServerOutput());
-  appendStatusMessage(outputFilter.getType(),outputFilter.getOutput());
+  outputFilter->sendRequest(partner,fileName,address,port,size);
+  queue(outputFilter->getServerOutput());
+  appendStatusMessage(outputFilter->getType(),outputFilter->getOutput());
 }
 
 void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, int startAt)
 {
-  outputFilter.resumeRequest(sender,fileName,port,startAt);
-  queue(outputFilter.getServerOutput());
-  appendStatusMessage(outputFilter.getType(),outputFilter.getOutput());
+  outputFilter->resumeRequest(sender,fileName,port,startAt);
+  queue(outputFilter->getServerOutput());
+  appendStatusMessage(outputFilter->getType(),outputFilter->getOutput());
 }
 
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
@@ -1544,9 +1521,9 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
     QString fileName=dccTransfer->getFile();
     appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(recipient).arg(dccArguments[2]));
     dccTransfer->startResumeSend(dccArguments[2]);
-    outputFilter.acceptRequest(recipient,fileName,dccArguments[1],dccArguments[2].toUInt());
-    queue(outputFilter.getServerOutput());
-    appendStatusMessage(outputFilter.getType(),outputFilter.getOutput());
+    outputFilter->acceptRequest(recipient,fileName,dccArguments[1],dccArguments[2].toUInt());
+    queue(outputFilter->getServerOutput());
+    appendStatusMessage(outputFilter->getType(),outputFilter->getOutput());
   }
   else
   {
@@ -1604,8 +1581,8 @@ void Server::removeQuery(Query* query)
 
 void Server::sendJoinCommand(const QString& name)
 {
-  outputFilter.parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"JOIN "+name,QString::null);
-  queue(outputFilter.getServerOutput());
+  outputFilter->parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"JOIN "+name,QString::null);
+  queue(outputFilter->getServerOutput());
 }
 
 void Server::joinChannel(const QString &name, const QString &hostmask, const QString &/*key*/)
@@ -2517,7 +2494,7 @@ QString Server::getIrcName() const
   return ircName;
 }
 
-OutputFilter& Server::getOutputFilter()
+Konversation::OutputFilter* Server::getOutputFilter()
 {
   return outputFilter;
 }
@@ -2683,8 +2660,8 @@ void Server::executeMultiServerCommand(const QString& command, const QString& pa
       str += " " + parameter;
     }
 
-    outputFilter.parse(getNickname(), str,QString::null);
-    queue(outputFilter.getServerOutput());
+    outputFilter->parse(getNickname(), str,QString::null);
+    queue(outputFilter->getServerOutput());
   } else if(command == "msg") {
     sendToAllChannelsAndQueries(parameter);
   } else {

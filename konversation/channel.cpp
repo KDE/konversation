@@ -650,22 +650,25 @@ void Channel::sendChannelText(const QString& sendLine)
   // create a work copy
   QString output(sendLine);
   // replace aliases and wildcards
-  if(filter.replaceAliases(output)) output=server->parseWildcards(output,server->getNickname(),getName(),getKey(),getSelectedNicksList(),QString::null);
+  if(server->getOutputFilter()->replaceAliases(output)) {
+    output = server->parseWildcards(output,server->getNickname(),getName(),getKey(),
+      getSelectedNicksList(),QString::null);
+  }
 
   // encoding stuff is done in Server()
-  output=filter.parse(server->getNickname(),output,getName());
+  output = server->getOutputFilter()->parse(server->getNickname(),output,getName());
 
   // Is there something we need to display for ourselves?
   if(!output.isEmpty())
   {
-    if(filter.isAction()) appendAction(server->getNickname(),output);
-    else if(filter.isCommand()) appendCommandMessage(filter.getType(),output);
-    else if(filter.isProgram()) appendServerMessage(filter.getType(),output);
-    else if(filter.isQuery()) appendQuery(filter.getType(),output);
+    if(server->getOutputFilter()->isAction()) appendAction(server->getNickname(),output);
+    else if(server->getOutputFilter()->isCommand()) appendCommandMessage(server->getOutputFilter()->getType(),output);
+    else if(server->getOutputFilter()->isProgram()) appendServerMessage(server->getOutputFilter()->getType(),output);
+    else if(server->getOutputFilter()->isQuery()) appendQuery(server->getOutputFilter()->getType(),output);
     else append(server->getNickname(),output);
   }
   // Send anything else to the server
-  server->queueList(filter.getServerOutputList());
+  server->queueList(server->getOutputFilter()->getServerOutputList());
 }
 
 void Channel::newTextInView(const QString& highlightColor,bool important)

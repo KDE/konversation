@@ -24,9 +24,7 @@
 #include <qvbox.h>
 #endif
 
-#include "outputfilter.h"
 #include "identity.h"
-#include "scriptlauncher.h"
 
 #ifdef USE_MDI
 #include "images.h"
@@ -179,9 +177,7 @@ class ChatWindow : public BASE_CLASS
     Server* server;
     Identity identity;
     QFile logfile;
-    OutputFilter filter;
     WindowType type;
-    ScriptLauncher scriptLauncher;
 
     bool m_notificationsEnabled;
 };

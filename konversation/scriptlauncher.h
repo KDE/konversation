@@ -9,6 +9,7 @@
   scriptlauncher.h  -  Launches shell scripts
   begin:     Mit Mär 12 2003
   copyright: (C) 2003 by Dario Abatianni
+             (C) 2004 by Peter Simonsson
   email:     eisfuchs@tigress.com
 */
 
@@ -21,27 +22,25 @@
   @author Dario Abatianni
 */
 
+class Server;
+
 class ScriptLauncher : public QObject
 {
   Q_OBJECT
 
   public:
-    ScriptLauncher();
+    ScriptLauncher(Server* server);
     ~ScriptLauncher();
-
-    void setServerName(const QString& newServerName);
-    void setTargetName(const QString& newName);
 
   signals:
     void scriptNotFound(const QString& name);
     void scriptExecutionError(const QString& name);
 
   public slots:
-    void launchScript(const QString& parameter);
+    void launchScript(const QString& target, const QString& parameter);
 
   protected:
-    QString server;
-    QString target;
+    Server* m_server;
 };
 
 #endif

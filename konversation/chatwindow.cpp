@@ -65,9 +65,6 @@ ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
   setSpacing(spacing());
 #endif
 
-  connect(&filter,SIGNAL(launchScript(const QString&)),
-    &scriptLauncher,SLOT(launchScript(const QString&)) );
-
 #ifdef USE_MDI
   connect(this,SIGNAL(childWindowCloseRequest(KMdiChildView*)),this,SLOT(closeRequest(KMdiChildView*)));
   connect(&blinkTimer,SIGNAL(timeout()),this,SLOT(blinkTimeout()));
@@ -136,7 +133,6 @@ void ChatWindow::blinkTimeout() // USE_MDI
 void ChatWindow::setName(const QString& newName)
 {
   name=newName;
-  scriptLauncher.setTargetName(newName);
   emit nameChanged(this,newName);
 }
 
@@ -169,48 +165,6 @@ void ChatWindow::setServer(Server* newServer)
     {
       if(textView) textView->setServer(newServer);
       else kdDebug() << "ChatWindow::setServer(): textView==0!" << endl;
-
-      connect(&filter,SIGNAL (openQuery(const QString&,const QString&)),
-               server,SLOT   (addQuery(const QString&,const QString&)) );
-
-      connect(&filter,SIGNAL (openDccPanel()),
-               server,SLOT   (requestDccPanel()) );
-      connect(&filter,SIGNAL (closeDccPanel()),
-               server,SLOT   (requestCloseDccPanel()) );
-      connect(&filter,SIGNAL (openDccSend(const QString &, const QString &)),
-               server,SLOT   (addDccSend(const QString &, const QString &)) );
-      connect(&filter,SIGNAL (requestDccSend()),
-               server,SLOT   (requestDccSend()) );
-      connect(&filter,SIGNAL (requestDccSend(const QString &)),
-               server,SLOT   (requestDccSend(const QString &)) );
-      connect(&filter,SIGNAL (requestDccChat(const QString &)),
-               server,SLOT   (requestDccChat(const QString &)) );
-      connect(&filter,SIGNAL (multiServerCommand(const QString&, const QString&)),
-               server,SLOT   (sendMultiServerCommand(const QString&, const QString&)));
-      connect(&filter,SIGNAL (reconnectServer()),
-               server,SLOT   (reconnect()));
-      connect(&filter,SIGNAL (connectToServer(const QString&, const QString&, const QString&)),
-               server,SLOT   (connectToNewServer(const QString&, const QString&, const QString&)));
-
-      connect(&filter,SIGNAL (openKonsolePanel()),
-               server,SLOT   (requestKonsolePanel()) );
-
-      connect(&filter,SIGNAL (sendToAllChannels(const QString&)),
-               server,SLOT   (sendToAllChannels(const QString&)) );
-      connect(&filter,SIGNAL (banUsers(const QStringList&,const QString&,const QString&)),
-               server,SLOT   (requestBan(const QStringList&,const QString&,const QString&)) );
-      connect(&filter,SIGNAL (unbanUsers(const QString&,const QString&)),
-               server,SLOT   (requestUnban(const QString&,const QString&)) );
-
-      connect(&filter,SIGNAL (openRawLog(bool)), server,SLOT (addRawLog(bool)) );
-      connect(&filter,SIGNAL (closeRawLog()),server,SLOT (closeRawLog()) );
-
-      scriptLauncher.setServerName(server->getServerName());
-
-      connect(&scriptLauncher,SIGNAL (scriptNotFound(const QString&)),
-                         server,SLOT (scriptNotFound(const QString&)) );
-      connect(&scriptLauncher,SIGNAL (scriptExecutionError(const QString&)),
-                         server,SLOT (scriptExecutionError(const QString&)) );
     }
   }
 }
@@ -228,7 +182,6 @@ void ChatWindow::serverOnline(bool state)
 void ChatWindow::setIdentity(const Identity *newIdentity)
 {
   identity=*newIdentity;
-  filter.setIdentity(newIdentity);
 }
 
 void ChatWindow::setTextView(IRCView* newView)
