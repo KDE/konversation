@@ -122,6 +122,10 @@ class NicksOnline : public ChatWindow
     * Received from server when a NickInfo changes its information.
     */
     void slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo);
+    /**
+    * Received from popup menu when user chooses something.
+    */
+    void slotPopupMenu_Activated(int id);
 
   protected:
 #ifdef USE_MDI

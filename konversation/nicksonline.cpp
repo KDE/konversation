@@ -145,6 +145,8 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_popupMenu = new QPopupMenu(this,"nicksonline_context_menu");
     connect(m_nickListView, SIGNAL(rightButtonClicked(QListViewItem *, const QPoint &, int )),
         this, SLOT(slotNickListView_RightButtonClicked(QListViewItem*, const QPoint &)));
+    connect(m_popupMenu, SIGNAL(activated(int)),
+        this, SLOT(slotPopupMenu_Activated(int)));
         
     // Display info for all currently-connected servers.
     refreshAllServerOnlineLists();
@@ -813,12 +815,17 @@ void NicksOnline::slotNickListView_RightButtonClicked(QListViewItem* item, const
         }
     }
     if (nickState != nsNotANick)
-    {
-        // TODO: Does this block the main event loop?
-        int r = m_popupMenu->exec(pt);
-        doCommand(r);
-    }
+        m_popupMenu->popup(pt);
 }
+
+/**
+* Received from popup menu when user chooses something.
+*/
+void NicksOnline::slotPopupMenu_Activated(int id)
+{
+    doCommand(id);
+}
+
 
 /**
 * Received from server when a NickInfo changes its information.
