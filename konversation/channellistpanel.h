@@ -10,8 +10,6 @@
   begin:     Die Apr 29 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef _CHANNELLISTPANEL_H_
@@ -24,6 +22,8 @@
 */
 
 class QCheckBox;
+class QStringList;
+class QTimer;
 
 class KListView;
 
@@ -52,6 +52,7 @@ class ChannelListPanel : public ChatWindow
   protected slots:
     void applyFilterClicked();
     void refreshList();
+    void updateDisplay();      // will be called by a timer to update regularly
     void saveList();
     void joinChannelClicked();
 
@@ -102,6 +103,10 @@ class ChannelListPanel : public ChatWindow
     bool topicTarget;
 
     bool regExp;
+
+    // store channels to be inserted in ListView here first
+    QStringList pendingChannels;
+    QTimer updateTimer;
 
     QCheckBox* channelFilter;
     QCheckBox* topicFilter;

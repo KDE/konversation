@@ -10,8 +10,6 @@
   begin:     Die Apr 29 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include <qhbox.h>
@@ -23,6 +21,7 @@
 #include <qhgroupbox.h>
 #include <qregexp.h>
 #include <qcheckbox.h>
+#include <qtimer.h>
 
 #include <klistview.h>
 #include <klineedit.h>
@@ -105,6 +104,10 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   QPushButton* refreshListButton=new QPushButton(i18n("Refresh List"),actionBox,"refresh_list_button");
   QPushButton* saveListButton=new QPushButton(i18n("Save List..."),actionBox,"save_list_button");
   QPushButton* joinChannelButton=new QPushButton(i18n("Join Channel"),actionBox,"join_channel_button");
+
+  // update list view every 0.5 seconds
+  updateTimer.start(500);
+  connect(&updateTimer,SIGNAL (timeout()),this,SLOT (updateDisplay()));
 
   connect(minUsersSpin,SIGNAL (valueChanged(int)),this,SLOT(setMinUsers(int)) );
   connect(maxUsersSpin,SIGNAL (valueChanged(int)),this,SLOT(setMaxUsers(int)) );
@@ -230,16 +233,46 @@ void ChannelListPanel::joinChannelClicked()
 
 void ChannelListPanel::addToChannelList(const QString& channel,int users,const QString& topic)
 {
-  new KListViewItem(channelListView,channel,QString::number(users),topic);
+  pendingChannels.append(channel+" "+users+" "+topic);
 
+//  new KListViewItem(channelListView,channel,QString::number(users),topic);
+
+  // set internal numbers of channels and users, display will be updated by a timer
   setNumChannels(getNumChannels()+1);
   setNumUsers(getNumUsers()+users);
 
   // no filter yet, so set visible value to the same value
   setVisibleChannels(getNumChannels());
   setVisibleUsers(getNumUsers());
+}
 
-  updateUsersChannels();
+void ChannelListPanel::updateDisplay()
+{
+  if(pendingChannels.count())
+  {
+    // stop list view from updating
+    channelListView->setUpdatesEnabled(false);
+
+    // list view changes are done inside the loop, since QT can't update the
+    // widget afterwards ...
+    for(unsigned int index=0;index<pendingChannels.count();index++)
+    {
+      // fetch next channel line
+      QString channelLine=pendingChannels[index];
+      // split it up into the single parts we need
+      QString channel=channelLine.section(' ',0,0);
+      QString users=channelLine.section(' ',1,1);
+      QString topic=channelLine.section(' ',2);
+      // if it's the last one of this batch, update the widget
+      if(index==pendingChannels.count()-1) channelListView->setUpdatesEnabled(true);
+      // add channel line to list view
+      new KListViewItem(channelListView,channel,users,topic);
+    }
+    // clear list of pending inserts
+    pendingChannels.clear();
+    // update display
+    updateUsersChannels();
+  }
 }
 
 void ChannelListPanel::filterTextChanged(const QString& newText)
