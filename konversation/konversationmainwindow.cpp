@@ -14,6 +14,8 @@
   $Id$
 */
 
+#include "konversationmainwindow.h"
+
 #include <kaccel.h>
 #include <kstdaction.h>
 #include <kaction.h>
@@ -23,10 +25,12 @@
 #include <kstatusbar.h>
 #include <kmenubar.h>
 #include <kkeydialog.h>
+#if KDE_VERSION >= 310
+#include <knotifydialog.h>
+#endif
 
 #include "ledtabwidget.h"
 #include "chatwindow.h"
-#include "konversationmainwindow.h"
 #include "konversationapplication.h"
 #include "ircview.h"
 #include "server.h"
@@ -40,6 +44,7 @@
 #include "nicksonline.h"
 #include "konsolepanel.h"
 #include "urlcatcher.h"
+#include "irccolorchooser.h"
 
 KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 {
@@ -67,6 +72,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); // options_show_toolbar
   showStatusBarAction=KStdAction::showStatusbar(this,SLOT(showStatusbar()),actionCollection()); // options_show_statusbar
   showMenuBarAction=KStdAction::showMenubar(this,SLOT(showMenubar()),actionCollection()); // options_show_menubar
+#if KDE_VERSION >= 310
+  KStdAction::configureNotifications(this,SLOT(openNotifications()), actionCollection());  // options_configure_notifications
+#endif
 
   KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
   KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
@@ -93,6 +101,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Go to Tab Number %1").arg(10),0,KShortcut("Alt+0"),this,SLOT(goToTab9()),actionCollection(),"go_to_tab_0");
 
   new KAction(i18n("Find Text"),0,KShortcut("F3"),this,SLOT(findTextShortcut()),actionCollection(),"find_text");
+  new KAction(i18n("&Insert IRC Color"), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors");
 
   // Initialize KMainWindow->statusBar()
   statusBar();
@@ -649,6 +658,22 @@ void KonversationMainWindow::findTextShortcut()
     searchView->getTextView()->search();
   }
 }
+
+#if KDE_VERSION >= 310
+void KonversationMainWindow::openNotifications()
+{
+  (void)KNotifyDialog::configure(this);
+}
+#endif
+
+void KonversationMainWindow::addIRCColor()
+{
+  IRCColorChooser dlg(this, &(KonversationApplication::preferences));
+
+  if(dlg.exec() == QDialog::Accepted) {
+    frontView->appendInputText(dlg.color());
+   }
+ }
 
 // I hope we can find a better way soon ... this is ridiculous"
 void KonversationMainWindow::goToTab0() { goToTab(0); }

@@ -1377,6 +1377,11 @@ QString Channel::getTextInLine() { return channelInput->text(); }
 bool Channel::frontView()        { return true; }
 bool Channel::searchView()       { return true; }
 
+void Channel::appendInputText(const QString& s)
+{
+  channelInput->setText(channelInput->text() + s);
+}
+
 void Channel::closeYourself()
 {
   server->closeChannel(getName());

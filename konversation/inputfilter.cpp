@@ -21,6 +21,7 @@
 
 #include <klocale.h>
 #include <kdebug.h>
+#include <knotifyclient.h>
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -98,6 +99,11 @@ void InputFilter::parseLine(const QString &a_newLine)
     // The rest of the string will be the parameter list
     parameterList=QStringList::split(" ",incomingLine);
   }
+  kdDebug() << "InputFilter::parseLine(): " << prefix << " "
+                                            << command << " "
+                                            << parameterList.join(" ") << " "
+                                            << trailing << " "
+                                            << endl;
   // Server command, if no "!" was found in prefix
   if(prefix.find('!')==-1 && prefix!=server->getNickname())
     parseServerCommand(prefix,command,parameterList,trailing);
@@ -160,7 +166,21 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       if(ctcpCommand=="action" && isChan)
       {
         if(!isIgnore(prefix,Ignore::Channel))
+        {
           server->appendActionToChannel(parameterList[0],sourceNick,ctcpArgument);
+
+          // KNotify events...
+          if(sourceNick != server->getNickname()) {
+            if(parameterList[0].lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
+            {
+              KNotifyClient::event("nick");
+            }
+            else
+            {
+              KNotifyClient::event("message");
+            }
+          }
+        }
       }
       // If it was a ctcp action, build an action string
       else if(ctcpCommand=="action" && !isChan)
@@ -172,6 +192,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           server->addQuery(sourceNick,sourceHostmask);
           // send action to query
           server->appendActionToQuery(sourceNick,ctcpArgument);
+
+          // KNotify events...
+          if(sourceNick != server->getNickname()) {
+            KNotifyClient::event("nick");
+          }
         }
       }
 
@@ -216,6 +241,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           // Incoming file?
           if(dccType=="send")
           {
+            KNotifyClient::event("dcc_incomming");
             emit addDccGet(sourceNick,dccArgument);
           }
           // Incoming file that shall be resumed?
@@ -279,6 +305,18 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       {
         if(!isIgnore(prefix,Ignore::Channel))
           server->appendToChannel(parameterList[0],sourceNick,trailing);
+
+          // KNotify events...
+          if(sourceNick != server->getNickname()) {
+            if(parameterList[0].lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
+            {
+              KNotifyClient::event("nick");
+            }
+            else
+            {
+              KNotifyClient::event("message");
+            }
+          }
       }
       else
       {
@@ -288,6 +326,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           server->addQuery(sourceNick,sourceHostmask);
           // Append this message to the query
           server->appendToQuery(sourceNick,trailing);
+
+          // KNotify events...
+          if(sourceNick != server->getNickname()) {
+            KNotifyClient::event("nick");
+          }
         }
       }
     }
@@ -400,7 +443,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       server->queue("MODE "+channelName);
     }
     else
+    {
       server->nickJoinsChannel(channelName,sourceNick,sourceHostmask);
+      KNotifyClient::event("join");
+    }
   }
   else if(command=="kick")
   {

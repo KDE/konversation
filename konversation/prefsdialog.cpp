@@ -27,6 +27,7 @@
 #include "prefspageidentity.h"
 #include "prefspageappearance.h"
 #include "prefspagecolorsimages.h"
+#include "prefspageirccolors.h"
 #include "prefspagebuttons.h"
 #include "prefspagelog.h"
 #include "prefspagedccsettings.h"
@@ -38,6 +39,7 @@
 #include "prefspagehighlight.h"
 #include "prefspagenotify.h"
 #include "prefspageignore.h"
+#include "prefspagealiases.h"
 
 PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
              KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
@@ -53,11 +55,13 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   QFrame* appearancePane     =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("General")));
   QFrame* colorsImagesPane   =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Colors & Images")));
+  QFrame* ircColorsPane      =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("IRC Colors")));
   QFrame* buttonsPane        =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Quick Buttons")));
 
           notifyPane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Notify List")));
   QFrame* highlightPane      =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Highlight List")));
   QFrame* ignorePane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Ignore List")));
+  QFrame* aliasesPane        =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Aliases")));
 
   QFrame* logSettingsPane    =addPage(i18n("Log Settings"));
   QFrame* dccSettingsPane    =addPage(i18n("DCC Settings"));
@@ -73,11 +77,13 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   PrefsPageAppearance*      appearancePage     =new PrefsPageAppearance(appearancePane,preferences);
   PrefsPageColorsImages*    colorsImagesPage   =new PrefsPageColorsImages(colorsImagesPane,preferences);
+  PrefsPageIRCColors*       ircColorsPage      =new PrefsPageIRCColors(ircColorsPane,preferences);
   PrefsPageButtons*         buttonsPage        =new PrefsPageButtons(buttonsPane,preferences);
 
   PrefsPageNotify*          notifyPage         =new PrefsPageNotify(notifyPane,preferences);
   PrefsPageHighlight*       highlightPage      =new PrefsPageHighlight(highlightPane,preferences);
   PrefsPageIgnore*          ignorePage         =new PrefsPageIgnore(ignorePane,preferences);
+  PrefsPageAliases*         aliasesPage        =new PrefsPageAliases(aliasesPane,preferences);
 
   PrefsPageLog*             logSettingsPage    =new PrefsPageLog(logSettingsPane,preferences);
   PrefsPageDccSettings*     dccSettingsPage    =new PrefsPageDccSettings(dccSettingsPane,preferences);
@@ -105,11 +111,13 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   connect(this,SIGNAL (applyPreferences()),appearancePage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),colorsImagesPage,SLOT (applyPreferences()) );
+  connect(this,SIGNAL (applyPreferences()),ircColorsPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),buttonsPage,SLOT (applyPreferences()) );
 
   connect(this,SIGNAL (applyPreferences()),notifyPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),highlightPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),ignorePage,SLOT (applyPreferences()) );
+  connect(this,SIGNAL (applyPreferences()),aliasesPage,SLOT (applyPreferences()) );
 
   connect(this,SIGNAL (applyPreferences()),logSettingsPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),dccSettingsPage,SLOT (applyPreferences()) );

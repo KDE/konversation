@@ -186,21 +186,18 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   }
 
   // replace \003 codes with rich text color codes
-  QRegExp colorRegExp("\003([0-9]|1[0-5])(,([0-9]|1[0-5])|)");
+  QRegExp colorRegExp("\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)");
 
   // TODO: Make Background colors work somehow. The code is in comments until we
   //       find some way to use it
 //  bool bgColor=false;
+  int pos;
   bool firstColor=true;
   QString colorString;
-  int pos;
+  QStringList colorCodes = KonversationApplication::preferences.getIRCColorList();
 
   while((pos=colorRegExp.search(filteredLine))!=-1)
   {
-    // TODO: make these configurable
-    const char* colorCodes[]={"ffffff","000000","000080","008000","ff0000","a52a2a","800080","ff8000",
-                              "808000","00ff00","008080","00ffff","0000ff","ffc0cb","a0a0a0","c0c0c0"};
-
     colorString=(firstColor) ? QString::null : QString("</font>");
 
     int foregroundColor=colorRegExp.cap(1).toInt();
@@ -217,7 +214,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
     else
       bgColor=false;
 */
-    colorString+="<font color=\"#"+QString(colorCodes[foregroundColor])+"\">";
+    colorString+="<font color=\""+colorCodes[foregroundColor]+"\">";
 
     filteredLine.replace(pos,colorRegExp.cap(0).length(),colorString);
     firstColor=false;
