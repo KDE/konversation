@@ -160,7 +160,7 @@ Server* ServerWindow::getServer()
   return server;
 }
 
-void ServerWindow::setIdentity(const Identity& identity)
+void ServerWindow::setIdentity(const Identity *identity)
 {
   filter.setIdentity(identity);
 }

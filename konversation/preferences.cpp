@@ -211,7 +211,7 @@ void Preferences::setHilightList(QPtrList<Highlight> newList)
   hilightList=newList;
 }
 
-void Preferences::addHilight(QString newHilight,QColor newColor)
+void Preferences::addHilight(const QString &newHilight, QColor newColor)
 {
   hilightList.append(new Highlight(newHilight,newColor));
 }
@@ -228,7 +228,7 @@ void Preferences::setIgnoreList(QPtrList<Ignore> newList)
   ignoreList=newList;
 }
 
-void Preferences::addIgnore(QString newIgnore)
+void Preferences::addIgnore(const QString &newIgnore)
 {
   QStringList ignore=QStringList::split(',',newIgnore);
   ignoreList.append(new Ignore(ignore[0],ignore[1].toInt()));
@@ -256,7 +256,7 @@ void Preferences::setLowerLog(bool state) { lowerLog=state; }
 bool Preferences::getLowerLog() { return lowerLog; }
 void Preferences::setLogFollowsNick(bool state) { logFollowsNick=state; }
 bool Preferences::getLogFollowsNick() { return logFollowsNick; }
-void Preferences::setLogPath(QString path) { logPath=path; }
+void Preferences::setLogPath(const QString &path) { logPath=path; }
 QString Preferences::getLogPath() { return logPath; }
 
 void Preferences::setDccAddPartner(bool state) { dccAddPartner=state; }
@@ -274,7 +274,7 @@ unsigned long Preferences::getDccRollback() { return dccRollback; }
 void Preferences::setDccAutoGet(bool state) { dccAutoGet=state; }
 bool Preferences::getDccAutoGet() { return dccAutoGet; }
 
-void Preferences::setDccPath(QString path) { dccPath=path; }
+void Preferences::setDccPath(const QString &path) { dccPath=path; }
 QString Preferences::getDccPath() { return dccPath; }
 
 void Preferences::setFixedMOTD(bool state) { fixedMOTD=state; }
@@ -293,7 +293,7 @@ int Preferences::getNotifyDelay() { return notifyDelay; }
 void Preferences::setNotifyDelay(int delay) { notifyDelay=delay; }
 bool Preferences::getUseNotify() { return useNotify; }
 void Preferences::setUseNotify(bool use) { useNotify=use; }
-void Preferences::setNotifyList(QStringList newList) { notifyList=newList; }
+void Preferences::setNotifyList(const QStringList &newList) { notifyList=newList; }
 QStringList Preferences::getNotifyList() { return notifyList; }
 QString Preferences::getNotifyString() { return notifyList.join(" "); }
 
@@ -304,7 +304,7 @@ void Preferences::addIdentity(Identity* identity) { identityList.append(identity
 void Preferences::clearIdentityList() { identityList.clear(); }
 QPtrList<Identity> Preferences::getIdentityList() { return identityList; }
 
-const Identity& Preferences::getIdentityByName(const QString& name)
+const Identity * Preferences::getIdentityByName(const QString& name)
 {
   kdDebug() << "Requested Identity: " << name << endl;
 
@@ -313,42 +313,42 @@ const Identity& Preferences::getIdentityByName(const QString& name)
   while(identity)
   {
     kdDebug() << "Trying " << identity->getName() << endl;
-    if(identity->getName()==name) return *identity;
+    if(identity->getName()==name) return identity;
     identity=identities.next();
   }
   // no matching identity found, return default identity
   identity=identities.first();
   kdDebug() << "Default Identity returned" << endl;
-  return *identity;
+  return identity;
 }
 
 QString Preferences::getRealName() { return identityList.at(0)->getRealName(); }
-void Preferences::setRealName(QString name) { identityList.at(0)->setRealName(name); }
+void Preferences::setRealName(const QString &name) { identityList.at(0)->setRealName(name); }
 
 QString Preferences::getIdent() { return identityList.at(0)->getIdent(); }
-void Preferences::setIdent(QString ident) { identityList.at(0)->setIdent(ident); }
+void Preferences::setIdent(const QString &ident) { identityList.at(0)->setIdent(ident); }
 
 QString Preferences::getPartReason() { return identityList.at(0)->getPartReason(); }
-void Preferences::setPartReason(QString newReason) { identityList.at(0)->setPartReason(newReason); }
+void Preferences::setPartReason(const QString &newReason) { identityList.at(0)->setPartReason(newReason); }
 
 QString Preferences::getKickReason() { return identityList.at(0)->getKickReason(); }
-void Preferences::setKickReason(QString newReason) { identityList.at(0)->setKickReason(newReason); }
+void Preferences::setKickReason(const QString &newReason) { identityList.at(0)->setKickReason(newReason); }
 
 bool Preferences::getShowAwayMessage() { return identityList.at(0)->getShowAwayMessage(); }
 void Preferences::setShowAwayMessage(bool state) { identityList.at(0)->setShowAwayMessage(state); }
 
 QString Preferences::getAwayMessage() { return identityList.at(0)->getAwayMessage(); }
-void Preferences::setAwayMessage(QString newMessage) { identityList.at(0)->setAwayMessage(newMessage); }
+void Preferences::setAwayMessage(const QString &newMessage) { identityList.at(0)->setAwayMessage(newMessage); }
 QString Preferences::getUnAwayMessage() { return identityList.at(0)->getReturnMessage(); }
-void Preferences::setUnAwayMessage(QString newMessage) { identityList.at(0)->setReturnMessage(newMessage); }
+void Preferences::setUnAwayMessage(const QString &newMessage) { identityList.at(0)->setReturnMessage(newMessage); }
 
 void Preferences::clearIgnoreList() { ignoreList.clear(); }
 QPtrList<Ignore> Preferences::getIgnoreList() { return ignoreList; }
 
 QString Preferences::getNickname(int index) { return identityList.at(0)->getNickname(index); }
 QStringList Preferences::getNicknameList() { return identityList.at(0)->getNicknameList(); }
-void Preferences::setNickname(int index,QString newName) { identityList.at(0)->setNickname(index,newName); }
-void Preferences::setNicknameList(QStringList newList) { identityList.at(0)->setNicknameList(newList); }
+void Preferences::setNickname(int index,const QString &newName) { identityList.at(0)->setNickname(index,newName); }
+void Preferences::setNicknameList(const QStringList &newList) { identityList.at(0)->setNicknameList(newList); }
 
 void Preferences::setBlinkingTabs(bool blink) { blinkingTabs=blink; }
 bool Preferences::getBlinkingTabs() { return blinkingTabs; }
@@ -359,7 +359,7 @@ bool Preferences::getCloseButtonsOnTabs() { return closeButtonsOnTabs; }
 void Preferences::setBringToFront(bool state) { bringToFront=state; }
 bool Preferences::getBringToFront() { return bringToFront; }
 
-void Preferences::setCommandChar(QString newCommandChar) { commandChar=newCommandChar; }
+void Preferences::setCommandChar(const QString &newCommandChar) { commandChar=newCommandChar; }
 QString Preferences::getCommandChar() { return commandChar; }
 
 // TODO: Make this a little simpler (use an array and enum)
@@ -375,21 +375,38 @@ QString Preferences::getServerMessageColor()  { return serverMessageColor; }
 QString Preferences::getTimeColor()           { return timeColor; }
 QString Preferences::getTextViewBackground()  { return textViewBackground; }
 
-void Preferences::setActionMessageColor(QString passed_actionMessageColor) {actionMessageColor = passed_actionMessageColor;}
-void Preferences::setBacklogMessageColor(QString passed_backlogMessageColor) {backlogMessageColor = passed_backlogMessageColor;}
-void Preferences::setChannelMessageColor(QString passed_channelMessageColor) {channelMessageColor = passed_channelMessageColor;}
-void Preferences::setCommandMessageColor(QString passed_commandMessageColor) {commandMessageColor = passed_commandMessageColor;}
-void Preferences::setLinkMessageColor(QString passed_linkMessageColor) {linkMessageColor = passed_linkMessageColor;}
-void Preferences::setQueryMessageColor(QString passed_queryMessageColor) {queryMessageColor = passed_queryMessageColor;}
-void Preferences::setServerMessageColor(QString passed_serverMessageColor) {serverMessageColor = passed_serverMessageColor;}
-void Preferences::setTimeColor(QString passed_timeColor) { timeColor = passed_timeColor; }
-void Preferences::setTextViewBackground(QString passed_background) { textViewBackground = passed_background; }
+void Preferences::setActionMessageColor(const QString &passed_actionMessageColor)
+	{ actionMessageColor = passed_actionMessageColor;}
+
+void Preferences::setBacklogMessageColor(const QString &passed_backlogMessageColor)
+	{ backlogMessageColor = passed_backlogMessageColor;}
+
+void Preferences::setChannelMessageColor(const QString &passed_channelMessageColor)
+	{ channelMessageColor = passed_channelMessageColor;}
+
+void Preferences::setCommandMessageColor(const QString &passed_commandMessageColor)
+	{ commandMessageColor = passed_commandMessageColor;}
+
+void Preferences::setLinkMessageColor(const QString &passed_linkMessageColor)
+	{ linkMessageColor = passed_linkMessageColor;}
+
+void Preferences::setQueryMessageColor(const QString &passed_queryMessageColor)
+	{ queryMessageColor = passed_queryMessageColor;}
+
+void Preferences::setServerMessageColor(const QString &passed_serverMessageColor)
+	{ serverMessageColor = passed_serverMessageColor;}
+
+void Preferences::setTimeColor(const QString &passed_timeColor)
+	{ timeColor = passed_timeColor; }
+
+void Preferences::setTextViewBackground(const QString &passed_background)
+	{ textViewBackground = passed_background; }
 
 QString Preferences::getNickCompleteSuffixStart() {return nickCompleteSuffixStart; }
 QString Preferences::getNickCompleteSuffixMiddle() {return nickCompleteSuffixMiddle; }
 
-void Preferences::setNickCompleteSuffixStart(QString suffix) { nickCompleteSuffixStart=suffix; }
-void Preferences::setNickCompleteSuffixMiddle(QString suffix) { nickCompleteSuffixMiddle=suffix; }
+void Preferences::setNickCompleteSuffixStart(const QString &suffix) { nickCompleteSuffixStart=suffix; }
+void Preferences::setNickCompleteSuffixMiddle(const QString &suffix) { nickCompleteSuffixMiddle=suffix; }
 
 int Preferences::getOpLedColor()       { return opLedColor; }
 int Preferences::getVoiceLedColor()    { return voiceLedColor; }
@@ -400,13 +417,13 @@ void Preferences::setNoRightsLedColor(int passed_color) { noRightsLedColor=passe
 
 // Geometry functions
 QSize Preferences::getServerWindowSize()  { return serverWindowSize; };
-QSize& Preferences::getHilightSize()      { return hilightSize; };
-QSize& Preferences::getButtonsSize()      { return buttonsSize; };
-QSize& Preferences::getIgnoreSize()       { return ignoreSize; };
-QSize& Preferences::getNotifySize()       { return notifySize; };
-QSize& Preferences::getNicksOnlineSize()  { return nicksOnlineSize; };
-QSize& Preferences::getNicknameSize()     { return nicknameSize; };
-QSize& Preferences::getColorConfigurationSize() {return colorConfigurationSize;}
+QSize Preferences::getHilightSize()            { return hilightSize; };
+QSize Preferences::getButtonsSize()            { return buttonsSize; };
+QSize Preferences::getIgnoreSize()             { return ignoreSize; };
+QSize Preferences::getNotifySize()             { return notifySize; };
+QSize Preferences::getNicksOnlineSize()        { return nicksOnlineSize; };
+QSize Preferences::getNicknameSize()           { return nicknameSize; };
+QSize Preferences::getColorConfigurationSize() { return colorConfigurationSize; }
 
 void Preferences::setServerWindowSize(QSize newSize)       { serverWindowSize=newSize; };
 void Preferences::setHilightSize(QSize newSize)            { hilightSize=newSize; };
@@ -420,26 +437,26 @@ void Preferences::setColorConfigurationSize(QSize newSize) { colorConfigurationS
 void Preferences::setHilightNick(bool state) { hilightNick=state; }
 bool Preferences::getHilightNick() { return hilightNick; }
 
-void Preferences::setHilightNickColor(QString newColor) { hilightNickColor.setNamedColor(newColor); }
+void Preferences::setHilightNickColor(const QString &newColor) { hilightNickColor.setNamedColor(newColor); }
 QColor Preferences::getHilightNickColor() { return hilightNickColor; }
 
 void Preferences::setHilightOwnLines(bool state) { hilightOwnLines=state; }
 bool Preferences::getHilightOwnLines() { return hilightOwnLines; }
 
-void Preferences::setHilightOwnLinesColor(QString newColor) { hilightOwnLinesColor.setNamedColor(newColor); }
+void Preferences::setHilightOwnLinesColor(const QString &newColor) { hilightOwnLinesColor.setNamedColor(newColor); }
 QColor Preferences::getHilightOwnLinesColor() { return hilightOwnLinesColor; }
 
 QFont Preferences::getTextFont() { return textFont; }
 QFont Preferences::getListFont() { return listFont; }
 void Preferences::setTextFont(QFont newFont) { textFont=newFont; }
 void Preferences::setListFont(QFont newFont) { listFont=newFont; }
-void Preferences::setTextFontRaw(QString rawFont) { textFont.fromString(rawFont); }
-void Preferences::setListFontRaw(QString rawFont) { listFont.fromString(rawFont); }
+void Preferences::setTextFontRaw(const QString &rawFont) { textFont.fromString(rawFont); }
+void Preferences::setListFontRaw(const QString &rawFont) { listFont.fromString(rawFont); }
 
 void Preferences::setTimestamping(bool state) { timestamping=state; }
 bool Preferences::getTimestamping() { return timestamping; }
 void Preferences::setTimestampFormat(const QString& newFormat) { timestampFormat=newFormat; }
-const QString& Preferences::getTimestampFormat() { return timestampFormat; }
+QString Preferences::getTimestampFormat() { return timestampFormat; }
 
 void Preferences::setShowQuickButtons(bool state) { showQuickButtons=state; }
 bool Preferences::getShowQuickButtons() { return showQuickButtons; }
@@ -453,13 +470,13 @@ bool Preferences::getShowServerList() { return showServerList; }
 void Preferences::setChannelSplitter(QValueList<int> sizes) { channelSplitter=sizes; }
 QValueList<int> Preferences::getChannelSplitter() { return channelSplitter; }
 
-void Preferences::setCodec(QString newCodec) { codec=newCodec; }
+void Preferences::setCodec(const QString &newCodec) { codec=newCodec; }
 QString Preferences::getCodec() { return codec; }
 
-void Preferences::setChannelDoubleClickAction(QString action) { channelDoubleClickAction=action; }
+void Preferences::setChannelDoubleClickAction(const QString &action) { channelDoubleClickAction=action; }
 QString Preferences::getChannelDoubleClickAction() { return channelDoubleClickAction; }
 
-void Preferences::setNotifyDoubleClickAction(QString action) { notifyDoubleClickAction=action; }
+void Preferences::setNotifyDoubleClickAction(const QString &action) { notifyDoubleClickAction=action; }
 QString Preferences::getNotifyDoubleClickAction() { return notifyDoubleClickAction; }
 
 void Preferences::setUseSpacing(bool state) { useSpacing=state; }

@@ -92,7 +92,7 @@ class Channel : public ChatWindow
     void doubleClickCommand(QListViewItem*);  // Will be connected to NickListView::doubleClicked()
     // Dialogs
     void openNickChangeDialog();
-    void changeNickname(QString newNickname);
+    void changeNickname(const QString &newNickname);
     void closeNickChangeDialog(QSize newSize);
     // will be called when the user types a new topic in the topic line
     void requestNewTopic(const QString& newTopic);
@@ -102,7 +102,7 @@ class Channel : public ChatWindow
     void sendFileMenu();
 
   protected:
-    const QStringList& getSelectedNicksList();
+    QStringList getSelectedNicksList();
     void showEvent(QShowEvent* event);
 
     int nicks;

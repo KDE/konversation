@@ -46,7 +46,7 @@ class Server : public QObject
     ~Server();
 
     QString getServerName();
-    const Identity& getIdentity();
+    const Identity *getIdentity();
     int getPort();
     bool getAutoJoin();
     void setAutoJoin(bool on);
@@ -156,6 +156,8 @@ class Server : public QObject
     void away();
     void unAway();
     void sendToAllChannels(const QString &text);
+    void scriptNotFound(const QString& name);
+    void scriptExecutionError(const QString& name);
 
   protected:
     // constants
@@ -166,7 +168,7 @@ class Server : public QObject
     void lookupFinished();
     void startNotifyCheckTimer();
     bool isAChannel(const QString &check);
-    void setIdentity(Identity newIdentity);
+    void setIdentity(const Identity *newIdentity);
 
     unsigned int completeQueryPosition;
     unsigned int tryNickNumber;
@@ -178,7 +180,7 @@ class Server : public QObject
     int serverPort;
 
     IRCResolver resolver;
-    Identity identity;
+    const Identity *identity;
 
     bool autoJoin;
     bool autoRejoin;

@@ -82,7 +82,7 @@ class Preferences : public QObject
     bool getLowerLog();
     void setLogFollowsNick(bool state);
     bool getLogFollowsNick();
-    void setLogPath(QString path);
+    void setLogPath(const QString &path);
     QString getLogPath();
 
     void setDccAddPartner(bool state);
@@ -93,7 +93,7 @@ class Preferences : public QObject
     bool getDccAutoGet();
     void setDccBufferSize(unsigned long size);
     unsigned long getDccBufferSize();
-    void setDccPath(QString path);
+    void setDccPath(const QString &path);
     QString getDccPath();
     void setDccRollback(unsigned long bytes);
     unsigned long getDccRollback();
@@ -107,13 +107,13 @@ class Preferences : public QObject
 
     // Geometry functions
     QSize getServerWindowSize();
-    QSize& getHilightSize();
-    QSize& getButtonsSize();
-    QSize& getIgnoreSize();
-    QSize& getNotifySize();
-    QSize& getNicksOnlineSize();
-    QSize& getNicknameSize();
-    QSize& getColorConfigurationSize();
+    QSize getHilightSize();
+    QSize getButtonsSize();
+    QSize getIgnoreSize();
+    QSize getNotifySize();
+    QSize getNicksOnlineSize();
+    QSize getNicknameSize();
+    QSize getColorConfigurationSize();
     void setServerWindowSize(QSize newSize);
     void setHilightSize(QSize newSize);
     void setButtonsSize(QSize newSize);
@@ -129,28 +129,28 @@ class Preferences : public QObject
     void setUseNotify(bool use);
     QStringList getNotifyList();
     QString getNotifyString();
-    void setNotifyList(QStringList newList);
+    void setNotifyList(const QStringList &newList);
 
     QPtrList<Highlight> getHilightList();
     void setHilightList(QPtrList<Highlight> newList);
-    void addHilight(QString newHilight,QColor color);
+    void addHilight(const QString &newHilight, QColor color);
 
     void setHilightNick(bool state);      // shall we hilight the current nick?
     bool getHilightNick();
 
-    void setHilightNickColor(QString color);
+    void setHilightNickColor(const QString &color);
     QColor getHilightNickColor();
 
     void setHilightOwnLines(bool state);  // shall we hilight all our own lines?
     bool getHilightOwnLines();
 
-    void setHilightOwnLinesColor(QString color);
+    void setHilightOwnLinesColor(const QString &color);
     QColor getHilightOwnLinesColor();
 
     QStringList getButtonList();
     void setButtonList(QStringList newList);
 
-    void addIgnore(QString newIgnore);
+    void addIgnore(const QString &newIgnore);
     void clearIgnoreList();
     QPtrList<Ignore> getIgnoreList();
     void setIgnoreList(QPtrList<Ignore> newList);
@@ -158,31 +158,31 @@ class Preferences : public QObject
     void addIdentity(Identity* identity);
     void clearIdentityList();
     QPtrList<Identity> getIdentityList();
-    const Identity& getIdentityByName(const QString& name);
+    const Identity *getIdentityByName(const QString& name);
 
     QString getIdent();
-    void setIdent(QString ident);
+    void setIdent(const QString &ident);
 
     QString getRealName();
-    void setRealName(QString name);
+    void setRealName(const QString &name);
 
     QString getPartReason();
-    void setPartReason(QString newReason);
+    void setPartReason(const QString &newReason);
 
     QString getKickReason();
-    void setKickReason(QString newReason);
+    void setKickReason(const QString &newReason);
 
     void setShowAwayMessage(bool state);
     bool getShowAwayMessage();
     QString getAwayMessage();
-    void setAwayMessage(QString newMessage);
+    void setAwayMessage(const QString &newMessage);
     QString getUnAwayMessage();
-    void setUnAwayMessage(QString newMessage);
+    void setUnAwayMessage(const QString &newMessage);
 
     QString getNickname(int index);
     QStringList getNicknameList();
-    void setNickname(int index,QString newName);
-    void setNicknameList(QStringList newList);
+    void setNickname(int index,const QString &newName);
+    void setNicknameList(const QStringList &newList);
 
     QString getChannelMessageColor();
     QString getQueryMessageColor();
@@ -194,18 +194,18 @@ class Preferences : public QObject
     QString getTimeColor();
     QString getTextViewBackground();
 
-    void setChannelMessageColor(QString color);
-    void setQueryMessageColor(QString color);
-    void setServerMessageColor(QString color);
-    void setActionMessageColor(QString color);
-    void setBacklogMessageColor(QString color);
-    void setLinkMessageColor(QString color);
-    void setCommandMessageColor(QString color);
-    void setTimeColor(QString color);
-    void setTextViewBackground(QString color);
+    void setChannelMessageColor(const QString &color);
+    void setQueryMessageColor(const QString &color);
+    void setServerMessageColor(const QString &color);
+    void setActionMessageColor(const QString &color);
+    void setBacklogMessageColor(const QString &color);
+    void setLinkMessageColor(const QString &color);
+    void setCommandMessageColor(const QString &color);
+    void setTimeColor(const QString &color);
+    void setTextViewBackground(const QString &color);
 
-    void setNickCompleteSuffixStart(QString suffix);
-    void setNickCompleteSuffixMiddle(QString suffix);
+    void setNickCompleteSuffixStart(const QString &suffix);
+    void setNickCompleteSuffixMiddle(const QString &suffix);
     QString getNickCompleteSuffixStart();
     QString getNickCompleteSuffixMiddle();
 
@@ -219,23 +219,23 @@ class Preferences : public QObject
     bool getFixedMOTD();
     void setFixedMOTD(bool fixed);
 
-    void setCommandChar(QString newCommandChar);
+    void setCommandChar(const QString &newCommandChar);
     QString getCommandChar();
 
-    void setCodec(QString newCodec);
+    void setCodec(const QString &newCodec);
     QString getCodec();
 
     QFont getTextFont();
     QFont getListFont();
     void setTextFont(QFont newFont);
     void setListFont(QFont newFont);
-    void setTextFontRaw(QString rawFont);
-    void setListFontRaw(QString newFont);
+    void setTextFontRaw(const QString &rawFont);
+    void setListFontRaw(const QString &newFont);
 
     void setTimestamping(bool state);
     bool getTimestamping();
     void setTimestampFormat(const QString& newFormat);
-    const QString& getTimestampFormat();
+    QString getTimestampFormat();
 
     void setShowQuickButtons(bool state);
     bool getShowQuickButtons();
@@ -249,10 +249,10 @@ class Preferences : public QObject
     void setChannelSplitter(QValueList<int> sizes);
     QValueList<int> getChannelSplitter();
 
-    void setChannelDoubleClickAction(QString action);
+    void setChannelDoubleClickAction(const QString &action);
     QString getChannelDoubleClickAction();
 
-    void setNotifyDoubleClickAction(QString action);
+    void setNotifyDoubleClickAction(const QString &action);
     QString getNotifyDoubleClickAction();
 
     void setUseSpacing(bool state);

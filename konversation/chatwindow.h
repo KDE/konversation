@@ -49,7 +49,7 @@ class ChatWindow : public QVBox
     };
 
     void setServer(Server* newServer);
-    void setIdentity(const Identity& newIdentity);
+    void setIdentity(const Identity *newIdentity);
     void setTextView(IRCView* newView);
     IRCView* getTextView();
     void setLog(bool activate);
@@ -89,7 +89,7 @@ class ChatWindow : public QVBox
 
     IRCView* textView;
     Server* server;
-    Identity identity;
+    const Identity *identity;
     QFile logfile;
     OutputFilter filter;
     WindowType type;

@@ -74,7 +74,7 @@ class ServerWindow : public KMainWindow
 
     void setServer(Server* server);
     Server* getServer();
-    void setIdentity(const Identity& identity);
+    void setIdentity(const Identity *identity);
     bool isFrontView(const ChatWindow* view);
 
   signals:

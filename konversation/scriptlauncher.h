@@ -34,6 +34,10 @@ class ScriptLauncher : public QObject
     void setServerName(const QString& newServerName);
     void setTargetName(const QString& newName);
 
+  signals:
+    void scriptNotFound(const QString& name);
+    void scriptExecutionError(const QString& name);
+
   public slots:
     void launchScript(const QString& parameter);
 

@@ -46,7 +46,7 @@ class KonversationApplication : public KApplication
     static void storeURL(const QString &url);
 
     // Returns a list of signals we should emit
-    void processHooks (EVENT_TYPE type, const QString &criteria, const QString &sender, const QString &target, const QString &data);
+    QPtrList<IRCEvent> retreiveHooks (EVENT_TYPE type);
 
     KonversationApplication();
     ~KonversationApplication();
@@ -63,7 +63,7 @@ class KonversationApplication : public KApplication
     void openPrefsDialog();
     void closePrefsDialog();
 
-    void emitDCOPSig(const QCString &signal,QByteArray &data);
+    bool emitDCOPSig(const QString &appId, const QString &objId, const QString &signal, QByteArray &data);
 
   protected slots:
     void removeServer(Server* server);

@@ -49,9 +49,9 @@ Server::Server(int id)
   lastDccDir=QString::null;
 
   serverWindow=new ServerWindow(this);
-  setNickname(identity.getNickname(tryNickNumber));
-  bot=identity.getBot();
-  botPassword=identity.getPassword();
+  setNickname(identity->getNickname(tryNickNumber));
+  bot=identity->getBot();
+  botPassword=identity->getPassword();
   serverWindow->setIdentity(getIdentity());
   serverWindow->show();
 
@@ -82,6 +82,8 @@ Server::Server(int id)
   inputFilter.setServer(this);
   outputFilter.setIdentity(identity);
 
+  notifyTimer.setName("notifyTimer");
+  incomingTimer.setName("incomingTimer");
   incomingTimer.start(10);
 
   connect(&incomingTimer,SIGNAL(timeout()),
@@ -205,9 +207,9 @@ void Server::ircServerConnectionSuccess()
   serverWindow->appendToStatus(i18n("Info"),i18n("Connected! Logging in ..."));
 
   QString connectString="USER " +
-                        identity.getIdent() +
+                        identity->getIdent() +
                         " 8 * :" +  // 8 = +i; 4 = +w
-                        identity.getRealName();
+                        identity->getRealName();
 
   if (serverKey) queue("PASS "+serverKey);
   queue("NICK "+getNickname());
@@ -368,7 +370,7 @@ QString Server::getNextNickname()
   {
     tryNickNumber++;
     if (tryNickNumber==4) newNick=getNickname()+"_";
-    else newNick=identity.getNickname(tryNickNumber);
+    else newNick=identity->getNickname(tryNickNumber);
   }
   return newNick;
 }
@@ -752,7 +754,7 @@ void Server::removeQuery(Query* query)
   delete query;
 }
 
-void Server::joinChannel(const QString &name, const QString &hostmask, const QString &key)
+void Server::joinChannel(const QString &name, const QString &hostmask, const QString &/*key*/)
 {
   // Make sure to delete stale Channel on rejoin.
   // FIXME: Hm ... Do we really have to? Wouldn't it be enough to just
@@ -770,7 +772,7 @@ void Server::joinChannel(const QString &name, const QString &hostmask, const QSt
   channel->setIdentity(getIdentity());
   channel->setName(name);
   channel->setNickname(getNickname());
-//  channel->setKey(key);
+  //channel->setKey(key);
 
   serverWindow->addView(channel,1,name);
   channel->joinNickname(getNickname(),hostmask);
@@ -1070,11 +1072,11 @@ QString Server::parseWildcards(const QString &toParse, const QString &nickname, 
   return parseWildcards(toParse,nickname,channelName,channelKey,QStringList::split(' ',nick),queryName,parameter);
 }
 
-QString Server::parseWildcards(const QString &toParse, const QString &nickname, const QString &channelName, const QString &channelKey, const QStringList &nickList, const QString &queryName, const QString &parameter)
+QString Server::parseWildcards(const QString &toParse, const QString &nickname, const QString &channelName, const QString &channelKey, const QStringList &nickList, const QString &queryName, const QString &/*parameter*/)
 {
-  // TODO: parameter handling. this line is only to suppress a compiler warning
+  // TODO: parameter handling.
   //       since parameters are not functional yet
-  parameter.lower();
+
   // cut button name from definition
   QString out(toParse.mid(toParse.find(',')+1));
   // define default separator and regular expression for definition
@@ -1153,6 +1155,16 @@ void Server::sendToAllChannels(const QString &text)
   }
 }
 
+void Server::scriptNotFound(const QString& name)
+{
+  appendStatusMessage(i18n("DCOP"),i18n("Error: Could not find script \"%1\".").arg(name));
+}
+
+void Server::scriptExecutionError(const QString& name)
+{
+  appendStatusMessage(i18n("DCOP"),i18n("Error: Could not execute script \"%1\". Check file permissions.").arg(name));
+}
+
 void Server::unAway()
 {
   isAway=false;
@@ -1165,7 +1177,7 @@ bool Server::isAChannel(const QString &check)
   return (initial=='#' || initial=='&' || initial=='+' || initial=='!');
 }
 
-void Server::setIdentity(Identity newIdentity) { identity=newIdentity; }
-const Identity& Server::getIdentity() { return identity; }
+void Server::setIdentity(const Identity *newIdentity) { identity=newIdentity; }
+const Identity *Server::getIdentity() { return identity; }
 
 #include "server.moc"

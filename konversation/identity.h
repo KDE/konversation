@@ -30,36 +30,36 @@ class Identity
     ~Identity();
 
     void setName(const QString& name);   // the name of this identity
-    const QString& getName();
+    QString getName() const;
 
     void setRealName(const QString& name);
-    const QString getRealName();
+    QString getRealName() const;
     void setIdent(const QString& ident);
-    const QString& getIdent();
+    QString getIdent() const;
 
     void setNickname(int index,const QString& nick);
-    const QString& getNickname(int index);
+    QString getNickname(int index) const;
 
     void setBot(const QString& bot);
-    const QString& getBot();
+    QString getBot() const;
     void setPassword(const QString& password);
-    const QString& getPassword();
+    QString getPassword() const;
 
     void setNicknameList(const QStringList& newList);
-    const QStringList& getNicknameList();
+    QStringList getNicknameList() const;
 
     void setPartReason(const QString& reason);
-    const QString& getPartReason();
+    QString getPartReason() const;
     void setKickReason(const QString& reason);
-    const QString& getKickReason();
+    QString getKickReason() const;
 
     void setShowAwayMessage(bool state);
-    bool getShowAwayMessage();
+    bool getShowAwayMessage() const;
 
     void setAwayMessage(const QString& message);
-    const QString& getAwayMessage();
+    QString getAwayMessage() const;
     void setReturnMessage(const QString& message);
-    const QString& getReturnMessage();
+    QString getReturnMessage() const;
 
   protected:
     QString name;

@@ -242,6 +242,7 @@ void Channel::textPasted(QString text)
 {
   if(server)
   {
+    // TODO: make sure that lines starting with / get extended to //
     QStringList multiline=QStringList::split('\n',text);
     for(unsigned int index=0;index<multiline.count();index++) sendChannelText(multiline[index]);
   }
@@ -501,7 +502,7 @@ void Channel::setNickname(const QString& newNickname)
   nicknameButton->setText(newNickname);
 }
 
-const QStringList& Channel::getSelectedNicksList()
+QStringList Channel::getSelectedNicksList()
 {
   selectedNicksList.clear();
   Nick* nick=nicknameList.first();
@@ -1138,10 +1139,10 @@ void Channel::openNickChangeDialog()
 {
   if(!nickChangeDialog)
   {
-    Identity identity=server->getIdentity();
+    const Identity *identity=server->getIdentity();
 
     nickChangeDialog=new NickChangeDialog(this,server->getNickname(),
-                                          identity.getNicknameList(),
+                                          identity->getNicknameList(),
                                           KonversationApplication::preferences.getNicknameSize());
     connect(nickChangeDialog,SIGNAL (closeDialog(QSize)),this,SLOT (closeNickChangeDialog(QSize)) );
     connect(nickChangeDialog,SIGNAL (newNickname(QString)),this,SLOT (changeNickname(QString)) );
@@ -1149,7 +1150,7 @@ void Channel::openNickChangeDialog()
   }
 }
 
-void Channel::changeNickname(QString newNickname)
+void Channel::changeNickname(const QString &newNickname)
 {
   server->queue("NICK "+newNickname);
 }

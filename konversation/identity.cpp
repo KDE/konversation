@@ -29,34 +29,34 @@ Identity::~Identity()
 }
 
 void Identity::setName(const QString& newName)          { name=newName; }
-const QString& Identity::getName()                      { return name; }
+QString Identity::getName() const                       { return name; }
 
 void Identity::setRealName(const QString& name)         { realName=name; }
-const QString Identity::getRealName()                   { return realName; }
+QString Identity::getRealName() const                   { return realName; }
 void Identity::setIdent(const QString& newIdent)        { ident=newIdent; }
-const QString& Identity::getIdent()                     { return ident; }
+QString Identity::getIdent() const                      { return ident; }
 
 void Identity::setNickname(int index,const QString& newName) { nicknameList[index]=newName; }
-const QString& Identity::getNickname(int index)         { return nicknameList[index]; }
+QString Identity::getNickname(int index) const          { return nicknameList[index]; }
 
 void Identity::setBot(const QString& newBot)            { bot=newBot; }
-const QString& Identity::getBot()                       { return bot; }
+QString Identity::getBot() const                        { return bot; }
 
 void Identity::setPassword(const QString& newPassword)  { password=newPassword; }
-const QString& Identity::getPassword()                  { return password; }
+QString Identity::getPassword() const                   { return password; }
 
 void Identity::setPartReason(const QString& reason)     { partReason=reason; }
-const QString& Identity::getPartReason()                { return partReason; }
+QString Identity::getPartReason() const                 { return partReason; }
 void Identity::setKickReason(const QString& reason)     { kickReason=reason; }
-const QString& Identity::getKickReason()                { return kickReason; }
+QString Identity::getKickReason() const                 { return kickReason; }
 
 void Identity::setShowAwayMessage(bool state)           { showAwayMessages=state; }
-bool Identity::getShowAwayMessage()                     { return showAwayMessages; }
+bool Identity::getShowAwayMessage() const                    { return showAwayMessages; }
 
 void Identity::setAwayMessage(const QString& message)   { awayMessage=message; }
-const QString& Identity::getAwayMessage()               { return awayMessage; }
+QString Identity::getAwayMessage() const                { return awayMessage; }
 void Identity::setReturnMessage(const QString& message) { returnMessage=message; }
-const QString& Identity::getReturnMessage()             { return returnMessage; }
+QString Identity::getReturnMessage() const              { return returnMessage; }
 
 void Identity::setNicknameList(const QStringList& newList)
 {
@@ -65,4 +65,4 @@ void Identity::setNicknameList(const QStringList& newList)
   // make sure that there are always 4 nicks in the list
   while(nicknameList.count()!=4) nicknameList.append(QString::null);
 }
-const QStringList& Identity::getNicknameList()          { return nicknameList; }
+QStringList Identity::getNicknameList() const           { return nicknameList; }

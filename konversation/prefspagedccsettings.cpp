@@ -32,6 +32,7 @@
 PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPreferences) :
                       PrefsPage(newParent,newPreferences)
 {
+  setName("DCC Settings");
   // Add a Layout to the DCC settings pane
   QGridLayout* dccSettingsLayout=new QGridLayout(parentFrame,5,3,marginHint(),spacingHint(),"dcc_settings_layout");
 

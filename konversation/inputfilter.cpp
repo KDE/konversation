@@ -14,6 +14,7 @@
   $Id$
 */
 
+#include <qdatastream.h>
 #include <qstringlist.h>
 #include <qdatetime.h>
 #include <qregexp.h>
@@ -109,9 +110,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
   if(command=="privmsg")
   {
-    // Channel message
-    if(isAChannel(parameterList[0]))
-    {
+    bool isChan = isAChannel(parameterList[0]);
       // CTCP message?
       if(trailing.at(0)==QChar(0x01))
       {
@@ -121,74 +120,79 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         QString ctcpCommand=ctcp.left(ctcp.find(" ")).lower();
         QString ctcpArgument=ctcp.mid(ctcp.find(" ")+1);
 
+      // ******
+      KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+      QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_CTCP);
+      IRCEvent *e;
+      for (e = ctcp_events.first(); e; e = ctcp_events.next())
+      {
+	// TODO
+	if (e->type == ON_CTCP)
+	{
+	  // match_hostmask(source, source_filt) && match_hostmask_or_chan(target, target_filt)
+	  // && match_ctcp_type && match_data
+	  QByteArray args;
+	  QDataStream data (args, IO_WriteOnly);
+	  data << prefix; // Source
+	  data << parameterList[0]; // Target
+	  data << ctcpCommand; // command
+	  data << ctcpArgument; // data
+	  if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QString, QString, QString)").arg(e->signal).ascii(), args))
+	    return; // if they return false, stop processing
+	}
+      }
+      // ******
+
         // If it was a ctcp action, build an action string
-        if(ctcpCommand=="action")
+      if(ctcpCommand=="action" && isChan)
         {
           if(!isIgnore(prefix,Ignore::Channel))
             server->appendActionToChannel(parameterList[0],sourceNick,ctcpArgument);
         }
+      // If it was a ctcp action, build an action string
+      else if(ctcpCommand=="action" && !isChan)
+      {
+	// Check if we ignore queries from this nick
+	if(!isIgnore(prefix,Ignore::Query))
+        {
+	  // Check if this nick is already in a query with us
+	  Query* query=server->getQueryByName(sourceNick);
+	  // If not, create a new one
+	  if(!query) server->addQuery(sourceNick,sourceHostmask);
+	  // else remember hostmask for this nick, it could have changed
+	  else server->addHostmaskToNick(sourceNick,sourceHostmask);
+
+	  server->appendActionToQuery(sourceNick,ctcpArgument);
+	}
+      }
+
         // Answer ping requests
         else if(ctcpCommand=="ping")
         {
           if(!isIgnore(prefix,Ignore::CTCP))
           {
+	  if(isChan)
             server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-PING request from %1 to channel %2, sending answer.").arg(sourceNick).arg(parameterList[0]));
+	  else
+	    server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-%1 request from %2, sending answer.").arg("PING").arg(sourceNick));
             server->ctcpReply(sourceNick,QString("PING %1").arg(ctcpArgument));
           }
         }
+
         // Maybe it was a version request, so act appropriately
         else if(ctcpCommand=="version")
         {
           if(!isIgnore(prefix,Ignore::CTCP))
           {
+	  if (isChan)
             server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1 to channel %2.").arg(sourceNick).arg(parameterList[0]));
-            server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002-2003 Dario Abatianni and Matthias Gierlings").arg(VERSION));
-          }
-        }
-        // No known CTCP request, give a general message
-        else
-        {
-          if(!isIgnore(prefix,Ignore::CTCP))
-            server->appendServerMessageToChannel(parameterList[0],"CTCP",i18n("Received unknown CTCP-%1 request from %2 to Channel %3").arg(ctcp).arg(sourceNick).arg(parameterList[0]));
-        }
-      }
-      // No CTCP, so it's an ordinary channel message
       else
-      {
-        if(!isIgnore(prefix,Ignore::Channel))
-          server->appendToChannel(parameterList[0],sourceNick,trailing);
-      }
-    }
-    // No channel message
-    else
-    {
-      // CTCP message?
-      if(trailing.at(0)==QChar(0x01))
-      {
-        // cut out the CTCP command
-        QString ctcp=trailing.mid(1,trailing.find(1,1)-1);
-
-        QString ctcpCommand=ctcp.left(ctcp.find(" ")).lower();
-        QString ctcpArgument=ctcp.mid(ctcp.find(" ")+1);
-
-        // If it was a ctcp action, build an action string
-        if(ctcpCommand=="action")
-        {
-          // Check if we ignore queries from this nick
-          if(!isIgnore(prefix,Ignore::Channel))
-          {
-            // Check if this nick is already in a query with us
-            Query* query=server->getQueryByName(sourceNick);
-            // If not, create a new one
-            if(!query) server->addQuery(sourceNick,sourceHostmask);
-            // else remember hostmask for this nick, it could have changed
-            else server->addHostmaskToNick(sourceNick,sourceHostmask);
-
-            server->appendActionToQuery(sourceNick,ctcpArgument);
+	    server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1.").arg(sourceNick));
+	  server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002-2003 Dario Abatianni and Matthias Gierlings").arg(VERSION));
           }
         }
         // DCC request?
-        else if(ctcpCommand=="dcc")
+      else if(ctcpCommand=="dcc" && !isChan)
         {
           if(!isIgnore(prefix,Ignore::DCC))
           {
@@ -213,44 +217,54 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             }
           }
         }
-        // Maybe it was a version request, so act appropriately
-        else if(ctcpCommand=="version")
-        {
-          if(!isIgnore(prefix,Ignore::CTCP))
-          {
-            server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1.").arg(sourceNick));
-            server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002-2003 Dario Abatianni and Matthias Gierlings").arg(VERSION));
-          }
-        }
-        // Answer ping requests
-        else if(ctcpCommand=="ping")
-        {
-          if(!isIgnore(prefix,Ignore::CTCP))
-          {
-            server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-%1 request from %2, sending answer.").arg("PING").arg(sourceNick));
-            server->ctcpReply(sourceNick,QString("PING %1").arg(ctcpArgument));
-          }
-        }
-        else if(ctcpCommand=="clientinfo")
+      else if (ctcpCommand=="clientinfo" && !isChan)
         {
           server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-%1 request from %2, sending answer.").arg("CLIENTINFO").arg(sourceNick));
           server->ctcpReply(sourceNick,QString("CLIENTINFO ACTION CLIENTINFO DCC PING TIME VERSION"));
         }
-        else if(ctcpCommand=="time")
+      else if(ctcpCommand=="time" && !isChan)
         {
           server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-%1 request from %2, sending answer.").arg("TIME").arg(sourceNick));
           server->ctcpReply(sourceNick,QString("TIME ")+QDateTime::currentDateTime().toString());
         }
+
         // No known CTCP request, give a general message
         else
         {
-          if(!isIgnore(prefix,Ignore::CTCP))
+	if(!isIgnore(prefix,Ignore::CTCP)) {
+	  if (isChan)
+	    server->appendServerMessageToChannel(parameterList[0],"CTCP",i18n("Received unknown CTCP-%1 request from %2 to Channel %3").arg(ctcp).arg(sourceNick).arg(parameterList[0]));
+	  else
             server->appendStatusMessage(i18n("CTCP"),i18n("Received unknown CTCP-%1 request from %2").arg(ctcp).arg(sourceNick));
         }
       }
-      // No CTCP, so it's an ordinary query message
+    }
+    // No CTCP, so it's an ordinary channel or query message
       else
       {
+      // ******
+      KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+      QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_MESSAGE);
+      IRCEvent *e;
+      for (e = ctcp_events.first(); e; e = ctcp_events.next())
+      {
+	// TODO
+	// match_hostmask(source, source_filt) && match_hostmask_or_chan(target, target_filt)
+	// && match_ctcp_type && match_data
+	QByteArray args;
+	QDataStream data (args, IO_WriteOnly);
+	data << prefix; // Source
+	data << parameterList[0]; // Target
+	data << trailing; // data
+	if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QString, QString)").arg(e->signal).ascii(), args))
+	  return; // if they return false, stop processing
+      }
+      // ******
+
+      if (isChan) {
+	if(!isIgnore(prefix,Ignore::Channel))
+	  server->appendToChannel(parameterList[0],sourceNick,trailing);
+      } else {
         if(!isIgnore(prefix,Ignore::Query))
         {
           // Create a new query (server will check for dupes)
@@ -265,6 +279,24 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   }
   else if(command=="notice")
   {
+    // ******
+    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_NOTICE);
+    IRCEvent *e;
+    for (e = ctcp_events.first(); e; e = ctcp_events.next())
+    {
+      // TODO
+      // match_hostmask(source, source_filt) && match_hostmask_or_chan(target, target_filt)
+      // && match_ctcp_type && match_data
+      QByteArray args;
+      QDataStream data (args, IO_WriteOnly);
+      data << prefix; // Source
+      data << parameterList[0]; // Target
+      data << trailing; // Data
+      if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QString, QString)").arg(e->signal).ascii(), args))
+	return; // if they return false, stop processing
+    }
+    // ****** 
     if(!isIgnore(prefix,Ignore::Notice))
     {
       // Channel notice?
@@ -310,6 +342,25 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     QString channelName(trailing);
     // Sometimes JOIN comes without ":" in front of the channel name
     if(channelName.isEmpty()) channelName=parameterList[parameterList.count()-1];
+ 
+    // ******
+    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_JOIN);
+    IRCEvent *e;
+    for (e = ctcp_events.first(); e; e = ctcp_events.next())
+    {
+      // TODO
+      // match_hostmask(source, source_filt) && match_hostmask_or_chan(target, target_filt)
+      // && match_ctcp_type && match_data
+      QByteArray args;
+      QDataStream data (args, IO_WriteOnly);
+      data << prefix; // Source
+      data << channelName; // Channel
+      if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QString)").arg(e->signal).ascii(), args))
+	return; // if they return false, stop processing
+    }
+    // ******
+
     // Did we join the channel, or was it someone else?
     if(server->isNickname(sourceNick))
     {
@@ -334,15 +385,68 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   }
   else if(command=="kick")
   {
+    // ******
+    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_KICK);
+    IRCEvent *e;
+    for (e = ctcp_events.first(); e; e = ctcp_events.next())
+    {
+      // TODO
+      // match_hostmask(source, source_filt) && match_hostmask_or_chan(target, target_filt)
+      // && match_ctcp_type && match_data
+      QByteArray args;
+      QDataStream data (args, IO_WriteOnly);
+      data << prefix; // kicker
+      data << parameterList[1]; //kickee
+      data << parameterList[0]; // Channel
+      data << trailing; // readon
+      if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QString, QString, QString)").arg(e->signal).ascii(), args))
+	return; // if they return false, stop processing
+    }
+    // ******
     server->nickWasKickedFromChannel(parameterList[0],parameterList[1],sourceNick,trailing);
   }
   else if(command=="part")
   {
+    // ******
+    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_PART);
+    IRCEvent *e;
+    for (e = ctcp_events.first(); e; e = ctcp_events.next())
+    {
+      // TODO
+      // match_hostmask(source, source_filt) && match_hostmask_or_chan(target, target_filt)
+      // && match_ctcp_type && match_data
+      QByteArray args;
+      QDataStream data (args, IO_WriteOnly);
+      data << prefix; // Source
+      data << parameterList[0]; // Channel
+      data << trailing; // Reason
+      if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QString, QString)").arg(e->signal).ascii(), args))
+	return; // if they return false, stop processing
+    }
+    // ******
     server->removeNickFromChannel(parameterList[0],sourceNick,trailing);
   }
   else if(command=="quit")
   {
-    server->removeNickFromServer(sourceNick,trailing);
+    // ******
+    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_QUIT);
+    IRCEvent *e;
+    for (e = ctcp_events.first(); e; e = ctcp_events.next())
+    {
+      // TODO
+      // match_hostmask(source, source_filt) && match_hostmask_or_chan(target, target_filt)
+      // && match_ctcp_type && match_data
+      QByteArray args;
+      QDataStream data (args, IO_WriteOnly);
+      data << prefix; // Source
+      data << trailing; // reason
+      if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QString)").arg(e->signal).ascii(), args))
+	return; // if they return false, stop processing
+    }
+    // ******    server->removeNickFromServer(sourceNick,trailing);
   }
   else if(command=="nick")
   {
@@ -350,14 +454,65 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   }
   else if(command=="topic")
   {
+    // ******
+    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_TOPIC);
+    IRCEvent *e;
+    for (e = ctcp_events.first(); e; e = ctcp_events.next())
+    {
+      // TODO
+      // match_hostmask(source, source_filt) && match_hostmask_or_chan(target, target_filt)
+      // && match_ctcp_type && match_data
+      QByteArray args;
+      QDataStream data (args, IO_WriteOnly);
+      data << prefix; // Source
+      data << parameterList[0]; // Channel
+      data << trailing; // New topic
+      if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QString, QString)").arg(e->signal).ascii(), args))
+	return; // if they return false, stop processing
+    }
+    // ******
     server->setChannelTopic(sourceNick,parameterList[0],trailing);
   }
   else if(command=="mode") // mode #channel -/+ mmm params
   {
-    parseModes(sourceNick,parameterList);
+    // ******
+    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_MODE);
+    IRCEvent *e;
+    for (e = ctcp_events.first(); e; e = ctcp_events.next())
+    {
+      // TODO
+      // match_hostmask(source, source_filt) && match_hostmask_or_chan(target, target_filt)
+      // && match_ctcp_type && match_data
+      QByteArray args;
+      QDataStream data (args, IO_WriteOnly);
+      data << prefix; // Source
+      data << parameterList; // Channel/Mode Combo
+      if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QStringList)").arg(e->signal).ascii(), args))
+	return; // if they return false, stop processing
+    }
+    // ******    parseModes(sourceNick,parameterList);
   }
   else if(command=="invite")
   {
+    // ******
+    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_INVITE);
+    IRCEvent *e;
+    for (e = ctcp_events.first(); e; e = ctcp_events.next())
+    {
+      // TODO
+      // match_hostmask(source, source_filt) && match_hostmask_or_chan(target, target_filt)
+      // && match_ctcp_type && match_data
+      QByteArray args;
+      QDataStream data (args, IO_WriteOnly);
+      data << prefix; // Source
+      data << trailing; // Channel
+      if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QString)").arg(e->signal).ascii(), args))
+	return; // if they return false, stop processing
+    }
+    // ******
     server->appendStatusMessage(i18n("Invite"),i18n("%1 invited you into channel %2").arg(sourceNick).arg(trailing));
   }
   else
@@ -402,6 +557,24 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
     }
     else if(command=="notice")
     {
+      // ******
+      KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+      QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_NOTICE);
+      IRCEvent *e;
+      for (e = ctcp_events.first(); e; e = ctcp_events.next())
+      {
+	// TODO
+	// match_hostmask(source, source_filt) && match_hostmask_or_chan(target, target_filt)
+	// && match_ctcp_type && match_data
+	QByteArray args;
+	QDataStream data (args, IO_WriteOnly);
+	data << prefix; // Source
+	data << parameterList[0]; // Target
+	data << trailing; // Message
+	if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QString, QString)").arg(e->signal).ascii(), args))
+	  return; // if they return false, stop processing
+      }
+      // ******
       server->appendStatusMessage(i18n("Notice"),i18n("-%1- %2").arg(prefix).arg(trailing));
     }
     // All yet unknown messages go into the frontmost window unaltered
@@ -412,7 +585,26 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
   }
   else
   {
-    switch(numeric)
+    // ******
+    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+    QPtrList<IRCEvent> ctcp_events = konv_app->retreiveHooks (ON_NUMERIC);
+    IRCEvent *e;
+    for (e = ctcp_events.first(); e; e = ctcp_events.next())
+    {
+      // TODO
+      // match_hostmask(source, source_filt) && match_hostmask_or_chan(target, target_filt)
+      // && match_ctcp_type && match_data
+      QByteArray args;
+      QDataStream data (args, IO_WriteOnly);
+      data << prefix; // Source
+      data << numeric; // Numeric
+      data << parameterList; // Parameters
+      data << trailing; // Rest
+      if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, int, QString, QString)").arg(e->signal).ascii(), args))
+	return; // if they return false, stop processing
+    }
+    // ******
+    switch (numeric)
     {
       case RPL_WELCOME:
       case RPL_YOURHOST:

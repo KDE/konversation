@@ -62,7 +62,7 @@ class OutputFilter : public QObject
 
   public slots:
     void setCommandChar();
-    void setIdentity(const Identity& newIdentity);
+    void setIdentity(const Identity *newIdentity);
 
   protected:
     QString output;
@@ -71,7 +71,7 @@ class OutputFilter : public QObject
     QString destination;
 
     QString commandChar;
-    Identity identity;
+    const Identity *identity;
 
     // message types
     bool action;

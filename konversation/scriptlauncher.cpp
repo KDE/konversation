@@ -15,6 +15,7 @@
 */
 
 #include <qstringlist.h>
+#include <qfile.h>
 
 #include <kdebug.h>
 #include <kstddirs.h>
@@ -52,7 +53,6 @@ void ScriptLauncher::launchScript(const QString &parameter)
   QString scriptPath(kstddir.saveLocation("data","konversation/scripts"));
   KProcess process;
 
-  // TODO: This is in the making
   // send the script all the information it will need
   QStringList parameterList=QStringList::split(' ',parameter);
 
@@ -66,9 +66,15 @@ void ScriptLauncher::launchScript(const QString &parameter)
     process << parameterList[index];
 
   process.setWorkingDirectory(scriptPath);
-  if(process.start()==false) kdDebug() << "exec() error" << endl;
-  process.detach(); // to free the script's stdin
-  kdDebug() << "Script running." << endl;
+  if(process.start()==false)
+  {
+    QFile file(scriptPath+"/"+parameterList[0]);
+    if(!file.exists()) emit scriptNotFound(file.name());
+    else emit scriptExecutionError(file.name());
+  }
+
+  // to free the script's stdin, otherwise backticks won't work
+  process.detach();
 }
 
 #include "scriptlauncher.moc"

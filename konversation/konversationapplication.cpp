@@ -15,8 +15,8 @@
 */
 
 #include <kdebug.h>
-
 #include <qregexp.h>
+#include <dcopclient.h>
 
 #include "konversationapplication.h"
 #include "konvdcop.h"
@@ -67,6 +67,8 @@ KonversationApplication::KonversationApplication()
   }
   // prepare dcop interface
   dcopObject=new KonvDCOP;
+  (void)new KonvIdentDCOP;
+  (void)new KonvPrefsDCOP;
   if(dcopObject)
   {
     connect(dcopObject,SIGNAL (dcopSay(const QString&,const QString&,const QString&)),
@@ -661,37 +663,40 @@ void KonversationApplication::closePrefsDialog()
   prefsDialog=0;
 }
 
-void KonversationApplication::emitDCOPSig(const QCString &signal, QByteArray &data)
+bool KonversationApplication::emitDCOPSig(const QString &appId, const QString &objId, const QString &signal, QByteArray &data)
 {
-  dcopObject->emitDCOPSignal(signal, data);
+  kdDebug() << "emitDCOPSig (" << signal << ")" << endl;
+  //dcopObject->emitDCOPSignal(signal, data);
+  QByteArray replyData;
+  QCString replyType;
+  if (!KApplication::dcopClient()->call(appId.ascii(), objId.ascii(), signal.ascii() /*must have prototype*/,
+					data, replyType, replyData)) {
+    qDebug("there was some error using DCOP.");
+    return true; // Keep processing filters
+  } else {
+    QDataStream reply(replyData, IO_ReadOnly);
+    if (replyType == "bool") {
+      bool result;
+      reply >> result;
+      return result;
+    } else {
+      qDebug("doIt returned an unexpected type of reply!");
+      return true; // Keep processing
+    }
+  }
 }
 
-void KonversationApplication::processHooks (EVENT_TYPE a_type, const QString &a_criteria, const QString &a_sender, const QString &a_target, const QString &a_data)
+QPtrList<IRCEvent> KonversationApplication::retreiveHooks (EVENT_TYPE a_type)
 {
-  QStringList dsig_list;
+  QPtrList<IRCEvent> ret_value;
+  IRCEvent *e;
 
-  kdDebug() << "KonversationApplication::processHooks(): "<< a_criteria << a_sender << a_target << endl;
-
-  // And here we scan the list of events in dcopObject and for every one matching type,
-  // then check to see if the sender:target:data tuple matches
-  // criteria (use regexp matching) and for each one that matches, append the appropriate
-  // signal to dsig_list.  For each signal in dsig_list, emit emitDCOPSig(sig, data)
-  IRCEvent *ev;
-  for (ev = dcopObject->registered_events.first(); ev; dcopObject->registered_events.next())
-  {
-    if (ev->type == a_type)
-    {
-      // TODO: Match the criteria and go from here
-      // if match
-      {
-        QByteArray data;
-        QDataStream arg(data, IO_WriteOnly);
-        arg << a_data;
-        emitDCOPSig(QString(ev->signal + "(QString)").ascii(), data);
+  for (e = dcopObject->registered_events.first(); e; e = dcopObject->registered_events.next()) {
+    if (e->type == a_type) {
+      ret_value.append(e);
       }
     }
-  } // endfor
+  return ret_value;
 }
 
 #include "konversationapplication.moc"
-

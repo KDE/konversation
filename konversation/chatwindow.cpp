@@ -93,10 +93,16 @@ void ChatWindow::setServer(Server* newServer)
              server,SLOT   (sendToAllChannels(const QString&)) );
 
     scriptLauncher.setServerName(server->getServerName());
+
+    connect(&scriptLauncher,SIGNAL (scriptNotFound(const QString&)),
+                       server,SLOT (scriptNotFound(const QString&)) );
+    connect(&scriptLauncher,SIGNAL (scriptExecutionError(const QString&)),
+                       server,SLOT (scriptExecutionError(const QString&)) );
+
   }
 }
 
-void ChatWindow::setIdentity(const Identity& newIdentity)
+void ChatWindow::setIdentity(const Identity *newIdentity)
 {
   identity=newIdentity;
   filter.setIdentity(identity);
