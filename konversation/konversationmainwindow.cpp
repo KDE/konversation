@@ -148,7 +148,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   updateTrayIcon();
 
   createGUI();
-  resize(800, 600);  // Give the app a sane default size
+  resize(700, 500);  // Give the app a sane default size
   setAutoSaveSettings();
 #if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)  
   showToolBarAction->setChecked(KonversationApplication::preferences.getShowToolBar());
