@@ -43,15 +43,12 @@ class StatusPanel : public ChatWindow
   signals:
     void newText(QWidget* widget,const QString& highlightColor);
     void sendFile();
-    // will be connected to KonversationMainWindow::updateLag()
-    void lag(Server* server,int msec);
 
   public slots:
     void adjustFocus();
     void setNickname(const QString& newNickname);
     void newTextInView(const QString& highlightColor);
     void updateFonts();
-    void updateLag(int msec);
     virtual void indicateAway(bool show);
 
   protected slots:
@@ -71,7 +68,6 @@ class StatusPanel : public ChatWindow
     QLabel* awayLabel;
     IRCInput* statusInput;
     QCheckBox* logCheckBox;
-    QLabel* lagOMeter;
 };
 
 #endif

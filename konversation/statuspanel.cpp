@@ -47,8 +47,6 @@ StatusPanel::StatusPanel(QWidget* parent) :
   awayLabel->hide();
   statusInput=new IRCInput(commandLineBox);
 
-  lagOMeter=new QLabel(i18n("Lag: not known"),commandLineBox,"status_panel_lagometer");
-
   setLog(KonversationApplication::preferences.getLog());
   setLogfileName("konversation.log");
 
@@ -145,12 +143,6 @@ void StatusPanel::updateFonts()
 void StatusPanel::sendFileMenu()
 {
   emit sendFile();
-}
-
-void StatusPanel::updateLag(int msec)
-{
-  lagOMeter->setText(i18n("Lag: %1 ms").arg(msec));
-  emit lag(getServer(),msec);
 }
 
 void StatusPanel::indicateAway(bool show)

@@ -118,7 +118,6 @@ class Server : public QObject
 
   signals:
     void nicknameChanged(const QString&);
-    void serverLag(int msec); // will be connected to StatusPanel::updateLag()
     void serverLag(Server* server,int msec); // will be connected to KonversationMainWindow::updateLag()
     void tooLongLag(Server* server, int msec); // will be connected to KonversationMainWindow::updateLag()
     void resetLag();

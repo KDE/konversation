@@ -143,7 +143,6 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   connect(&inputFilter,SIGNAL (away()),this,SLOT (away()) );
   connect(&inputFilter,SIGNAL (unAway()),this,SLOT (unAway()) );
 
-  connect(this,SIGNAL(serverLag(int)),statusView,SLOT(updateLag(int)) );
   connect(this,SIGNAL(serverLag(Server*,int)),getMainWindow(),SLOT(updateLag(Server*,int)) );
   connect(this,SIGNAL(tooLongLag(Server*,int)),getMainWindow(),SLOT(tooLongLag(Server*,int)) );
   connect(this,SIGNAL(resetLag()),getMainWindow(),SLOT(resetLag()) );
@@ -348,9 +347,7 @@ void Server::notifyResponse(const QString& nicksOnline)
   // We received a 303 or "PONG :LAG" notify message, so calculate server lag
   int lag=notifySent.elapsed();
   currentLag=lag;
-  // inform status panel ...
-  emit serverLag(lag);
-  // ... and main window
+  // inform main window
   emit serverLag(this,lag);
   // Stop check timer
   notifyCheckTimer.stop();
