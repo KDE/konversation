@@ -93,6 +93,8 @@ PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
   updateList();
   updateButtons();
 
+  m_oldTheme = KonversationApplication::preferences.getIconTheme();
+
   connect(m_themeList,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
   connect(m_themeList,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
   connect(installButton,SIGNAL(clicked()),this,SLOT(installTheme()));
@@ -108,10 +110,9 @@ void PrefsPageThemes::applyPreferences()
   if(m_themeList->count())
     {
       QString theme;
-      QString oldTheme = KonversationApplication::preferences.getIconTheme();
       theme = m_dirs[m_themeList->currentItem()];
       theme = theme.section('/',-2,-2);
-      if(oldTheme != theme)
+      if(m_oldTheme != theme)
 	{
 	  kdDebug() << "New Theme :" << theme << endl;
 	  preferences->setIconTheme(theme);
@@ -247,6 +248,13 @@ void PrefsPageThemes::updateList()
   QString currentTheme = KonversationApplication::preferences.getIconTheme();
   int index = 0;
   bool found = false;
+
+  if(!KGlobal::dirs()->findAllResources("data","konversation/themes/"+currentTheme+"/index.desktop").count())
+    {
+      m_oldTheme=currentTheme;
+      currentTheme = "default";
+      KonversationApplication::preferences.setIconTheme("default");
+    }
 
   m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/index.desktop");
 

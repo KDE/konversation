@@ -42,6 +42,7 @@ class PrefsPageThemes : public PrefsPage
     QStringList m_dirs;
     QPushButton* m_removeButton;
     KListBox* m_themeList;
+    QString m_oldTheme;
 
     void updateList();
 
