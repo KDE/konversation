@@ -57,6 +57,7 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
     popup->insertItem(i18n("&Ping"),Ping);
     popup->insertSeparator();
     popup->insertItem(i18n("Open Query"),Query);
+    popup->insertItem(i18n("Open DCC Chat"),DccChat);
     popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),DccSend);
     popup->insertItem(SmallIconSet("mail_generic"),i18n("&Send Email..."), SendEmail);
     if(addressbook) {

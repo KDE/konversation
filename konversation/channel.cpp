@@ -533,6 +533,9 @@ void Channel::popupCommand(int id)
     case NickListView::Query:
       pattern=cc+"QUERY %u";
       break;
+    case NickListView::DccChat:
+      pattern=cc+"DCC CHAT %u";
+      break;
     case NickListView::DccSend:
       pattern=cc+"DCC SEND %u";
       break;
