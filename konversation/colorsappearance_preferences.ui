@@ -409,7 +409,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <bool>true</bool>
             </property>
             <property name="title">
-                <string>&amp;Allow colored text in IRC messages</string>
+                <string>&amp;Allow Colored Text in IRC Messages</string>
             </property>
             <property name="checkable">
                 <bool>true</bool>
