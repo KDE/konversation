@@ -18,14 +18,14 @@ while read line; do {
       echo "  <group name=\"$GROUP\">"
     fi
      
-    PREFERENCESENTRY=$(echo "$line" | sed -n -e 's/.*preferences.\(.*\)().*/\1/p' )
+    PREFERENCESENTRY=$(echo "$line" | sed -n -e 's/^.*preferences.\(.*\)().*$/\1/p' )
     if [[ -z "$PREFERENCESENTRY" ]] ; then 
       echo "<!--  Could not understand:  \"$line\" -->"
     else
-      echo "preferencesentry = $PREFERENCESENTRY"
+      echo "    <!-- preferencesentry = $PREFERENCESENTRY -->"
     
       TYPE=$( grep -i "$PREFERENCESENTRY *(" preferences.h | sed -n -e "s/ *\(const\)\? *\([^&]*\)\(&\)\?  *${PREFERENCESENTRY}.*/\2/p" )
-      echo "type = $TYPE"
+      echo "    <!-- type = $TYPE  -->"
       #See http://www.kde.org/standards/kcfg/1.0/kcfg.dtd
     
       if [[ "$TYPE" == "int" ]] ; then TYPE="Int";
@@ -46,10 +46,29 @@ while read line; do {
     
       echo "$PREFERENCESENTRY" | grep .toString && TYPE="String"
     
-      echo "    <entry key=\"$ENTRY\" type=\"$TYPE\">"
       DEFAULT=$( grep -i "[^:]set$ENTRY *(" preferences.cpp | sed -n -e 's/.*set[^(]*[(]\(.*\)[)][^)]*/\1/p' )
       
       DEFAULT2=$(echo "$DEFAULT" | sed -n -e "s/^\(\"\(.*\)\"\|\([0-9][0-9]*\|true\|false\)\)$/\2\3/p" )
+      
+      if [[ -z "$TYPE" ]]; then
+        ISSTRING=$(echo "$DEFAULT" | sed -n -e "s/^\"\(.*\)\"$/\1/p" )
+	if [[ -n "$ISSTRING" ]]; then
+	  TYPE="String"
+	fi
+	ISNUM=$(echo "$DEFAULT" | sed -n -e "s/^\([0-9][0-9]*\)$/\1/p" )
+	if [[ -n "$ISNUM" ]] ; then
+	  TYPE="Int"
+	fi
+	ISBOOL=$(echo "$DEFAULT" | sed -n -e "s/^\(true|false\)$/\1/p" )
+	if [[ -n "$ISBOOL" ]] ; then
+	  TYPE="Bool"
+	fi
+
+        echo "$PREFERENCESENTRY" | grep Color && TYPE="Color"
+      fi
+      
+      
+      echo "    <entry key=\"$ENTRY\" type=\"$TYPE\">"
       if [[ -n "${DEFAULT2}" ]] ; then 
         echo "      <default>${DEFAULT2}</default>"
       else 
