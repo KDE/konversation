@@ -29,6 +29,8 @@
 #include <kpassdlg.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <kglobalsettings.h>
+#include <kdeversion.h>
 
 #include "konversationapplication.h"
 #include "channel.h"
@@ -81,7 +83,11 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   // (this) The main Box, holding the channel view/topic and the input line
   splitter=new QSplitter(this);
   setStretchFactor(splitter,10);
+#if KDE_IS_VERSION( 3, 1,92 )
+  splitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
+#else
   splitter->setOpaqueResize(true);
+#endif
 
   // The grid for the topic line and Channel View
   QVBox* topicViewNicksGrid=new QVBox(splitter);
