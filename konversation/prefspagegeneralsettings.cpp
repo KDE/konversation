@@ -58,9 +58,6 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   autoReconnectCheck=new QCheckBox(i18n("A&uto reconnect"),parentFrame,"auto_reconnect_check");
   autoRejoinCheck=new QCheckBox(i18n("Auto re&join"),parentFrame,"auto_rejoin_check");
   autojoinOnInviteCheck=new QCheckBox(i18n("Autojoin channel on &invite"),parentFrame,"autojoin_on_invite_check");
-  tabPlacementCheck=new QCheckBox(i18n("Place tab labels on &top"),parentFrame,"tab_placement_check");
-  blinkingTabsCheck=new QCheckBox(i18n("&Blinking tabs"),parentFrame,"blinking_tabs_check");
-  bringToFrontCheck=new QCheckBox(i18n("Bring new tabs to &front"),parentFrame,"bring_to_front_check");
   fixedMOTDCheck=new QCheckBox(i18n("Show &MOTD in fixed font"),parentFrame,"fixed_motd_check");
   beepCheck=new QCheckBox(i18n("Bee&p on incoming ASCII BEL"),parentFrame,"beep_check");
   rawLogCheck=new QCheckBox(i18n("Show ra&w log window on startup"),parentFrame,"raw_log_check");
@@ -82,9 +79,6 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
 
   autoRejoinCheck->setChecked(preferences->getAutoRejoin());
   autojoinOnInviteCheck->setChecked(preferences->getAutojoinOnInvite());
-  tabPlacementCheck->setChecked(preferences->getTabPlacement()==Preferences::Top);
-  blinkingTabsCheck->setChecked(preferences->getBlinkingTabs());
-  bringToFrontCheck->setChecked(preferences->getBringToFront());
   fixedMOTDCheck->setChecked(preferences->getFixedMOTD());
   beepCheck->setChecked(preferences->getBeep());
   rawLogCheck->setChecked(preferences->getRawLog());
@@ -105,12 +99,6 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   generalSettingsLayout->addMultiCellWidget(autoRejoinCheck,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(autojoinOnInviteCheck,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(tabPlacementCheck,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(blinkingTabsCheck,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(bringToFrontCheck,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(fixedMOTDCheck,row,row,0,2);
   row++;
@@ -147,9 +135,6 @@ void PrefsPageGeneralSettings::applyPreferences()
   preferences->setAutoReconnect(autoReconnectCheck->isChecked());
   preferences->setAutoRejoin(autoRejoinCheck->isChecked());
   preferences->setAutojoinOnInvite(autojoinOnInviteCheck->isChecked());
-  preferences->setTabPlacement(tabPlacementCheck->isChecked() ? Preferences::Top : Preferences::Bottom);
-  preferences->setBlinkingTabs(blinkingTabsCheck->isChecked());
-  preferences->setBringToFront(bringToFrontCheck->isChecked());
   preferences->setFixedMOTD(fixedMOTDCheck->isChecked());
   preferences->setBeep(beepCheck->isChecked());
   preferences->setRawLog(rawLogCheck->isChecked());

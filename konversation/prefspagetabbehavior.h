@@ -38,6 +38,9 @@ class PrefsPageTabBehavior : public PrefsPage
     void closeButtonsChanged(int state);
 
   protected:
+    QCheckBox* tabPlacementCheck;
+    QCheckBox* blinkingTabsCheck;
+    QCheckBox* bringToFrontCheck;
     QCheckBox* closeButtonsCheck;
     QCheckBox* closeButtonsAlignRight;
 };

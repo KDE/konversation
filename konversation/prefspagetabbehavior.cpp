@@ -29,6 +29,14 @@ PrefsPageTabBehavior::PrefsPageTabBehavior(QFrame* newParent,Preferences* newPre
   closeButtonsCheck=new QCheckBox(i18n("Show close &widgets on tabs"),parentFrame,"tab_close_widgets_check");
   closeButtonsCheck->setChecked(preferences->getCloseButtonsOnTabs());
 
+  // general tab options
+  tabPlacementCheck=new QCheckBox(i18n("Place tab labels on &top"),parentFrame,"tab_placement_check");
+  tabPlacementCheck->setChecked(preferences->getTabPlacement()==Preferences::Top);
+  blinkingTabsCheck=new QCheckBox(i18n("&Blinking tabs"),parentFrame,"blinking_tabs_check");
+  blinkingTabsCheck->setChecked(preferences->getBlinkingTabs());
+  bringToFrontCheck=new QCheckBox(i18n("Bring new tabs to &front"),parentFrame,"bring_to_front_check");
+  bringToFrontCheck->setChecked(preferences->getBringToFront());
+
   // Display close buttons on which side
   closeButtonsAlignRight=new QCheckBox(i18n("Place close widgets on the &right side"),parentFrame,"tab_close_widgets_align_right");
   closeButtonsAlignRight->setChecked(preferences->getCloseButtonsAlignRight());
@@ -36,9 +44,19 @@ PrefsPageTabBehavior::PrefsPageTabBehavior(QFrame* newParent,Preferences* newPre
   // Take care of ghosting / unghosting close button checkboxes
   closeButtonsChanged(preferences->getCloseButtonsOnTabs() ? 2 : 0);
 
+  QSpacerItem* spacer=new QSpacerItem(0,0,QSizePolicy::Minimum,QSizePolicy::Expanding);
+
   int row=0;
   tabBehaviorLayout->addWidget(closeButtonsCheck,row,0);
   tabBehaviorLayout->addWidget(closeButtonsAlignRight,row,1);
+  row++;
+  tabBehaviorLayout->addMultiCellWidget(tabPlacementCheck,row,row,0,2);
+  row++;
+  tabBehaviorLayout->addMultiCellWidget(blinkingTabsCheck,row,row,0,2);
+  row++;
+  tabBehaviorLayout->addMultiCellWidget(bringToFrontCheck,row,row,0,2);
+  row++;
+  tabBehaviorLayout->addItem(spacer,row,0);
 
   connect(closeButtonsCheck,SIGNAL (stateChanged(int)),this,SLOT (closeButtonsChanged(int)) );
 }
@@ -55,6 +73,9 @@ void PrefsPageTabBehavior::closeButtonsChanged(int state)
 
 void PrefsPageTabBehavior::applyPreferences()
 {
+  preferences->setTabPlacement(tabPlacementCheck->isChecked() ? Preferences::Top : Preferences::Bottom);
+  preferences->setBlinkingTabs(blinkingTabsCheck->isChecked());
+  preferences->setBringToFront(bringToFrontCheck->isChecked());
   preferences->setCloseButtonsOnTabs(closeButtonsCheck->isChecked());
   preferences->setCloseButtonsAlignRight(closeButtonsAlignRight->isChecked());
 }
