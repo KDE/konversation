@@ -25,11 +25,15 @@
 #include <klocale.h>
 #include <klistview.h>
 #include <klineeditdlg.h>
+#include <kcombobox.h>
+#include <kdebug.h>
+#include <knuminput.h>
 #include <kfontdialog.h>
 
 #include "prefspageosd.h"
 #include "preferences.h"
 #include "konversationapplication.h"
+#include "osd.h"
 
 PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
                  PrefsPage(newParent,newPreferences)
@@ -42,7 +46,8 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdBox->setSpacing(spacingHint());
 
   useOSDCheck = new QCheckBox(i18n("&Use OnScreen Display"), osdBox, "use_osd_checkbox");
-
+ 
+  
   // Set up osd widgets
   osdActionsBox = new QVGroupBox(i18n("Show OSD Message"), parentFrame, "osd_actions_group");
   osdShowOwnNick = new QCheckBox(i18n("If &own nick appears in channel message"), osdActionsBox, "osd_show_ownnick");
@@ -62,14 +67,53 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdPreviewLabel = new QLabel(parentFrame);
   osdPreviewLabel->setFrameStyle(QFrame::Panel | QFrame::Sunken);
   osdFontButton = new QPushButton(i18n("C&hoose..."), parentFrame, "osd_font_button");
+  connect(osdFontButton, SIGNAL(clicked()), this, SLOT(osdFontClicked()));
+  
+  drawShadowsCheck = new QCheckBox(i18n("&Draw Shadows"), parentFrame, "draw_shadows_checkbox");
+  drawShadowsCheck->setChecked(preferences->getOSDDrawShadow());
+  
+  //color box
+  osdColorsBox = new QVGroupBox(i18n("Colors"), parentFrame, "osd_colors_group");
+  useCustomColorsCheck = new QCheckBox(i18n("&Use custom colors"), osdColorsBox, "use_custom_colors_checkbox");
+  useCustomColorsCheck->setChecked(preferences->getOSDUseCustomColors());
 
-  osdColorLabel = new QLabel(i18n("Co&lor:"), parentFrame);
-  osdColorChooser = new KColorCombo(parentFrame, "osd_color");
-  osdColorChooser->setColor(preferences->getOSDColor());
-  osdColorLabel->setBuddy(osdColorChooser);
+  QHBox *osdTextColorBox = new QHBox(osdColorsBox);
+  osdTextColorLabel = new QLabel(i18n("Text Co&lor:"), osdTextColorBox);
+  osdTextColorChooser = new KColorCombo(osdTextColorBox, "osd_text_color");
+  osdTextColorChooser->setColor(preferences->getOSDTextColor());
+  osdTextColorLabel->setBuddy(osdTextColorChooser);
+  
+  QHBox *osdBackgroundColorBox = new QHBox(osdColorsBox);
+  osdBackgroundColorLabel = new QLabel(i18n("&Background Color:"), osdBackgroundColorBox);
+  osdBackgroundColorChooser = new KColorCombo(osdBackgroundColorBox, "osd_background_color");
+  osdBackgroundColorChooser->setColor(preferences->getOSDBackgroundColor());
+  osdBackgroundColorLabel->setBuddy(osdBackgroundColorChooser);
+   
+   //others box
+  osdOthersBox = new QVGroupBox("Other settings", parentFrame, "osd_others_group");
+  QHBox* durationBox = new QHBox(osdOthersBox);
+  QLabel *osdDurationLabel = new QLabel(i18n("&Duration:"), durationBox);
+  osdDurationSpin = new KIntSpinBox(durationBox);
+  osdDurationSpin->setSuffix("ms");
+  osdDurationSpin->setMaxValue( 10000 );
+  osdDurationSpin->setMinValue( 500 );
+  osdDurationSpin->setLineStep( 1000 );
+  osdDurationSpin->setValue(preferences->getOSDDuration());
+  osdDurationLabel->setBuddy(osdDurationSpin);
+  
+  QHBox* screenBox = new QHBox(osdOthersBox);
+  QLabel *osdScreenLabel = new QLabel(i18n("&Screen:"), screenBox);
+  osdScreenCombo = new KComboBox(screenBox);
+  osdScreenLabel->setBuddy(osdScreenCombo);
+  
+  const int numScreens = QApplication::desktop()->numScreens();
+    for( int i = 0; i < numScreens; i++ )
+      osdScreenCombo->insertItem( QString::number( i ) );
+
 
   // Take care of ghosting / unghosting close button checkboxes
   osdUsageChanged(preferences->getOSDUsage() ? 2 : 0);
+  customColorsCheckStateChanged(useCustomColorsCheck->state());
 
   // Update the preview
   updateFonts();
@@ -80,8 +124,10 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdLayout->addWidget(osdFontLabel, ++row, 0);
   osdLayout->addWidget(osdPreviewLabel, row, 1);
   osdLayout->addWidget(osdFontButton, row, 2);
-  osdLayout->addWidget(osdColorLabel, ++row, 0);
-  osdLayout->addWidget(osdColorChooser, row, 1);
+  osdLayout->addWidget(drawShadowsCheck, ++row, 0);
+  osdLayout->addMultiCellWidget(osdColorsBox, ++row, row + 2, 0, 2);
+  row++; row++;
+  osdLayout->addMultiCellWidget(osdOthersBox, ++row, row + 1, 0, 2);
   osdLayout->addMultiCellWidget(osdActionsBox, ++row, row + 2, 0, 2);
 
   row = row + 2;
@@ -89,9 +135,10 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdLayout->addMultiCellWidget(spacer, ++row, row + 1, 0, 2);
   osdLayout->setRowStretch(row, 2);
   osdLayout->setColStretch(1, 2);
-
-  connect(useOSDCheck,SIGNAL (stateChanged(int)),this,SLOT (osdUsageChanged(int)) );
-  connect(osdFontButton,SIGNAL (clicked()),this,SLOT (osdFontClicked()) );
+  
+  connect(useOSDCheck, SIGNAL(stateChanged(int)), this, SLOT(osdUsageChanged(int))); //this connect must be placed after the osdUsageChanged call.
+  connect(useCustomColorsCheck, SIGNAL(stateChanged(int)), this, SLOT(customColorsCheckStateChanged(int)));
+ 
 }
 
 PrefsPageOSD::~PrefsPageOSD()
@@ -107,10 +154,22 @@ void PrefsPageOSD::osdFontClicked()
 void PrefsPageOSD::osdUsageChanged(int state)
 {
   useOSDCheck->setChecked(state);
+  drawShadowsCheck->setEnabled(state==2);
   osdFontLabel->setEnabled(state==2);
   osdPreviewLabel->setEnabled(state==2);
   osdFontButton->setEnabled(state==2);
+  osdColorsBox->setEnabled(state==2);
+  osdOthersBox->setEnabled(state==2);
   osdActionsBox->setEnabled(state==2);
+}
+
+void PrefsPageOSD::customColorsCheckStateChanged(int state)
+{
+  useCustomColorsCheck->setChecked(state);
+  osdTextColorLabel->setEnabled(state==2);
+  osdTextColorChooser->setEnabled(state==2);
+  osdBackgroundColorLabel->setEnabled(state==2);
+  osdBackgroundColorChooser->setEnabled(state==2);
 }
 
 void PrefsPageOSD::applyPreferences()
@@ -121,14 +180,30 @@ void PrefsPageOSD::applyPreferences()
   preferences->setOSDShowQuery(osdShowQuery->isChecked());
   preferences->setOSDShowChannelEvent(osdShowChannelEvent->isChecked());
   preferences->setOSDFont(osdFont);
-  preferences->setOSDColor(osdColorChooser->color().name());
+  preferences->setOSDUseCustomColors(useCustomColorsCheck->isChecked());
+  preferences->setOSDTextColor(osdTextColorChooser->color().name());
+  preferences->setOSDBackgroundColor(osdBackgroundColorChooser->color().name());
+  preferences->setOSDDuration(osdDurationSpin->value());
+  preferences->setOSDScreen(osdScreenCombo->currentText().toUInt());
+  preferences->setOSDDrawShadow(drawShadowsCheck->isChecked());
 
   KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
   konvApp->osd->setEnabled(useOSDCheck->isChecked());
   if (preferences->getOSDUsage())
   {
     konvApp->osd->setFont(osdFont);
-    konvApp->osd->setTextColor(osdColorChooser->color());
+    if(useCustomColorsCheck->isChecked())
+    {
+      konvApp->osd->setTextColor(osdTextColorChooser->color());
+      konvApp->osd->setBackgroundColor(osdBackgroundColorChooser->color());
+    }
+    else
+    {
+      konvApp->osd->unsetColors();
+    }
+    konvApp->osd->setDuration(osdDurationSpin->value());
+    konvApp->osd->setScreen(osdScreenCombo->currentText().toUInt());
+    konvApp->osd->setShadow(drawShadowsCheck->isChecked());
   }
 
 }
@@ -138,5 +213,6 @@ void PrefsPageOSD::updateFonts()
   osdPreviewLabel->setFont(osdFont);
   osdPreviewLabel->setText(QString("%1 %2").arg(osdFont.family().section(':',0,0)).arg(osdFont.pointSize()));
 }
+
 
 #include "prefspageosd.moc"

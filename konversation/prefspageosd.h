@@ -25,6 +25,10 @@
 
 class QCheckBox;
 class QLabel;
+class KComboBox;
+class KIntSpinBox;
+
+class OSDPreviewWidget;
 
 class PrefsPageOSD : public PrefsPage
 {
@@ -37,6 +41,7 @@ class PrefsPageOSD : public PrefsPage
   protected slots:
     void osdFontClicked();
     void osdUsageChanged(int state);
+    void customColorsCheckStateChanged(int state);
 
   public slots:
     void applyPreferences();
@@ -46,19 +51,30 @@ class PrefsPageOSD : public PrefsPage
     QFont osdFont;
 
     QCheckBox* useOSDCheck;
+    QCheckBox* drawShadowsCheck;
+    QCheckBox* useCustomColorsCheck;
     QCheckBox* osdShowOwnNick;
     QCheckBox* osdShowChannel;
     QCheckBox* osdShowQuery;
     QCheckBox* osdShowChannelEvent;
 
+    KIntSpinBox* osdDurationSpin;
+    KComboBox* osdScreenCombo;
+    
     QPushButton* osdFontButton;
     QLabel* osdFontLabel;
     QLabel* osdPreviewLabel;
-    QLabel* osdColorLabel;
+    QLabel* osdTextColorLabel;
+    QLabel* osdBackgroundColorLabel;
 
-    KColorCombo* osdColorChooser;
+    KColorCombo* osdTextColorChooser;
+    KColorCombo* osdBackgroundColorChooser;
 
+    QVGroupBox* osdColorsBox;
+    QVGroupBox* osdOthersBox;
     QVGroupBox* osdActionsBox;
+    
+    OSDPreviewWidget* m_pOSDPreview;
 };
 
 #endif

@@ -9,44 +9,49 @@
   osd.h   -  Provides an interface to a plain QWidget, which is independent of KDE (bypassed to X11)
   begin:     Fre Sep 26 2003
   copyright: (C) 2003 by Christian Muehlhaeuser
-  email:     chris@chris.de
+  email:     muesli@chareit.net
 */
 
 #ifndef OSD_H
 #define OSD_H
 
-#include <qpixmap.h>
+#include <qpixmap.h> //stack allocated
+#include <qtimer.h>  //stack allocated
 #include <qwidget.h> //baseclass
 
 class QFont;
 class QString;
 class QStringList;
 class QTimer;
+class MetaBundle;
 
 class OSDWidget : public QWidget
 {
     Q_OBJECT
       public:
-        enum Position {
-          TopLeft,
-          TopRight,
-          BottomLeft,
-          BottomRight,
-          Center
-        };
+        enum Alignment { Left, Middle, Center, Right };
 
-        OSDWidget(const QString &appName);
+        OSDWidget(const QString &appName, QWidget *parent = 0, const char *name = "osd");
         void setDuration(int ms);
         void setFont(QFont newfont);
-        void setTextColor(QColor newcolor);
-        void setBackgroundColor(QColor newColor);
-        void setOffset(int x, int y);
-        void setPosition(Position pos);
+        void setShadow(bool shadow);
+        void setTextColor(const QColor &newcolor);
+        void setBackgroundColor(const QColor &newColor);
+        void setOffset( int x, int y );
+        void setAlignment(Alignment);
         void setScreen(uint screen);
+        void setText(const QString &text) { m_currentText = text; refresh(); }
+
+        void unsetColors();
+
+        int screen()    { return m_screen; }
+        int alignment() { return m_alignment; }
+        int y()         { return m_y; }
 
       public slots:
+        //TODO rename show, scrap removeOSD, just use hide() <- easier to learn
         void showOSD(const QString&, bool preemptive=false );
-        void removeOSD();
+        void removeOSD() { hide(); } //inlined as is convenience function
 
       protected slots:
         void minReached();
@@ -54,26 +59,33 @@ class OSDWidget : public QWidget
       protected:
         /* render text into osdBuffer */
         void renderOSDText(const QString &text);
-        void paintEvent(QPaintEvent*);
         void mousePressEvent( QMouseEvent* );
+        bool event(QEvent*);
 
-        /* always call rePosition if the size of osdBuffer has changed */
-        void rePosition();
+        void show();
+
+        /* call to reposition a new OSD text or when position attributes change */
+        void reposition( QSize newSize = QSize() );
+
+        /* called after most set*() calls to update the OSD */
+        void refresh();
+
+        static const int MARGIN = 15;
 
         QString     m_appName;
         int         m_duration;
-        QTimer      *timer;
-        QTimer      *timerMin;
-        QFont       font;
-        QColor      m_textColor;
-        QColor      m_bgColor;
+        QTimer      timer;
+        QTimer      timerMin;
         QPixmap     osdBuffer;
         QStringList textBuffer;
         QString     m_currentText;
+        bool        m_shadow;
 
-        QPoint m_offset;
-        Position m_position;
-        int m_screen;
+        Alignment   m_alignment;
+        int         m_screen;
+        uint        m_y;
+
+        bool m_dirty; //if dirty we will be re-rendered before we are shown
 };
 
 
@@ -83,10 +95,12 @@ class OSDPreviewWidget : public OSDWidget
 {
     Q_OBJECT
 public:
-    OSDPreviewWidget( const QString &appName );
+    OSDPreviewWidget( const QString &appName, QWidget *parent = 0, const char *name = "osdpreview" );
+
+    static QPoint m_previewOffset;
 
 signals:
-    void positionChanged( int screen, OSDWidget::Position alignment, int XOffset, int YOffset );
+    void positionChanged();
 
 protected:
     void mousePressEvent( QMouseEvent * );
@@ -94,8 +108,8 @@ protected:
     void mouseMoveEvent( QMouseEvent * );
 
 private:
-    bool m_dragging;
+    bool   m_dragging;
     QPoint m_dragOffset;
 };
 
-#endif
+#endif /*OSD_H*/

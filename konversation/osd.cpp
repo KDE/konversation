@@ -1,12 +1,12 @@
 /*
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
 */
 
 /*
-  osd.cpp -  Provides an interface to a plain QWidget, which is independent of KDE (bypassed to X11)
+  osd.cpp  -  Provides an interface to a plain QWidget, which is independent of KDE (bypassed to X11)
   begin:     Fre Sep 26 2003
   copyright: (C) 2003 by Christian Muehlhaeuser
   email:     chris@chris.de
@@ -16,339 +16,357 @@
 
 #include <qapplication.h>
 #include <qbitmap.h>
-#include <qimage.h>
 #include <qpainter.h>
-#include <qpixmap.h>
-#include <qregexp.h>
-#include <qtimer.h>
 
-#include <kcursor.h>
+#include <kdebug.h>
+#include <kglobalsettings.h> //unsetColors()
+
+#include <X11/Xlib.h> //reposition()
 
 
-OSDWidget::OSDWidget( const QString &appName )
-    : QWidget(NULL, "osd",
-              WType_TopLevel | WStyle_StaysOnTop |
-              WStyle_Customize | WStyle_NoBorder |
-              WStyle_Tool | WRepaintNoErase | WX11BypassWM)
-      , m_appName( appName )
-      , m_duration( 5000 )
-      , m_textColor( 0, 0 , 0 )
-      , m_bgColor( 0x00, 0x00, 0x80 )
-      , m_offset( 10, 40 )
-      , m_position( TopLeft )
-      , m_screen( 0 )
+OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name )
+        : QWidget( parent, name, WType_TopLevel | WNoAutoErase | WStyle_Customize | WX11BypassWM | WStyle_StaysOnTop )
+        , m_appName( appName )
+        , m_duration( 5000 )
+        , m_shadow( true )
+        , m_alignment( Middle )
+        , m_screen( 0 )
+        , m_y( MARGIN )
+        , m_dirty( false )
 {
     setFocusPolicy( NoFocus );
     setBackgroundMode( NoBackground );
-    timer = new QTimer( this );
-    timerMin = new QTimer( this );
-    connect( timer, SIGNAL( timeout() ), this, SLOT( removeOSD() ) );
-    connect( timerMin, SIGNAL( timeout() ), this, SLOT( minReached() ) );
+    unsetColors();
+
+    connect( &timer,     SIGNAL( timeout() ), SLOT( hide() ) );
+    connect( &timerMin,  SIGNAL( timeout() ), SLOT( minReached() ) );
 }
 
 
 void OSDWidget::renderOSDText( const QString &text )
 {
-    m_currentText = text;
-    QPainter paint;
-    QColor bg( 0, 0, 0 );
-    QColor fg( 255, 255, 255 );
+    static QBitmap mask;
 
-    // Get desktop dimensions
-    QWidget *d = QApplication::desktop()->screen( m_screen );
+    // Set a sensible maximum size, don't cover the whole desktop or cross the screen
+    QSize max = QApplication::desktop() ->screen( m_screen ) ->size() - QSize( MARGIN*2 + 20, 100 );
+    QFont titleFont( "Arial", 12, QFont::Bold );
+    QFontMetrics titleFm( titleFont );
 
-    QFontMetrics *fm = new QFontMetrics( font );
-    /* AlignAuto = we want to align Arabic to the right, don't we? */
-    /* Sane width and height limits - don't go over the screen dimensions,
-       and don't cover whole desktop neither. */
-    QRect fmRect = fm->boundingRect( 0, 0, d->width()-40, d->height()-100, AlignAuto | WordBreak, text );
-    fmRect.addCoords( 0, 0, fmRect.width() + 2, fmRect.height() + 2);
+    // The title cannnot be taller than one line
+    // AlignAuto = align Arabic to the right, etc.
+    QRect titleRect = titleFm.boundingRect( 0, 0, max.width(), titleFm.height(), AlignAuto, m_appName );
+    // The osd cannot be larger than the screen
+    QRect textRect = fontMetrics().boundingRect( 0, 0, max.width(), max.height(), AlignAuto | WordBreak, text );
 
-    resize( fmRect.size() );
-    QPixmap buffer = QPixmap( fmRect.size() );
+    if ( textRect.width() < titleRect.width() )
+        textRect.setWidth( titleRect.width() );
 
-    // Draw the OnScreenMessage
-    QPainter bufferPainter( &buffer );
+    //this should still be within the screen bounds
+    textRect.addCoords( 0, 0, 20, titleRect.height() );
 
-    bufferPainter.setFont( font );
+    osdBuffer.resize( textRect.size() );
+    mask.resize( textRect.size() );
 
-    // Draw the border around the text
-    bufferPainter.setPen( black );
+    // Start painting!
+    QPainter bufferPainter( &osdBuffer );
+    QPainter maskPainter( &mask );
 
-    bufferPainter.drawText( 3, 3, width()-1, height()-1, AlignLeft | WordBreak, text );
-      
+    // Draw backing rectangle
+    bufferPainter.setPen( Qt::black );
+    bufferPainter.setBrush( backgroundColor() );
+    bufferPainter.drawRoundRect( textRect, 1500 / textRect.width(), 1500 / textRect.height() );
+    bufferPainter.setFont( font() );
+
+    const uint w = textRect.width()  - 1;
+    const uint h = textRect.height() - 1;
+
+    // Draw the text shadow
+    if ( m_shadow ) {
+        bufferPainter.setPen( backgroundColor().dark( 175 ) );
+        bufferPainter.drawText( 13, titleFm.height() + 1, w, h, AlignLeft | WordBreak, text );
+    }
+
     // Draw the text
-    bufferPainter.setPen( m_textColor );
-    bufferPainter.drawText( 1, 1, width()-1, height()-1, AlignLeft | WordBreak, text );
-    bufferPainter.end();
+    bufferPainter.setPen( foregroundColor() );
+    bufferPainter.drawText( 10, titleFm.height() - 1, w, h, AlignLeft | WordBreak, text );
+
+    // Draw the title text
+    bufferPainter.setFont( titleFont );
+    bufferPainter.drawText( 10, 3, w, h, AlignLeft, m_appName );
 
     // Masking for transparency
-    QBitmap bm( fmRect.size() );
-    paint.begin( &bm );
-    paint.fillRect( 0, 0, fmRect.width(), fmRect.height(), bg );
-    paint.setPen( Qt::color0 );
-    paint.setFont( font );
-    paint.drawText( 1, 1, width()-1, height()-1, AlignLeft | WordBreak, text );
-    paint.drawText( 3, 3, width()-1, height()-1, AlignLeft | WordBreak, text );
-    paint.end();
+    mask.fill( Qt::black );
+    maskPainter.setBrush( Qt::white );
+    maskPainter.drawRoundRect( textRect, 1500 / textRect.width(), 1500 / textRect.height() );
+    setMask( mask );
 
-    delete fm;
+    //do last to reduce noticeable change when showing multiple OSDs in succession
+    reposition( textRect.size() );
 
-    osdBuffer = buffer;
+    m_currentText = text;
+    m_dirty = false;
 
-    setMask( bm );
-    rePosition();
+    update();
 }
 
 
 void OSDWidget::showOSD( const QString &text, bool preemptive )
 {
-    if ( isEnabled() && !text.isEmpty() )
-    {
-        // Strip HTML tags, expand basic HTML entities
-        QString plainText = text.copy();
-        plainText.replace(QRegExp("</?(?:font|a|b|i)\\b[^>]*>"), QString(""));
-        plainText.replace(QString("&lt;"), QString("<"));
-        plainText.replace(QString("&gt;"), QString(">"));
-        plainText.replace(QString("&amp;"), QString("&"));
+    if ( isEnabled() && !text.isEmpty() ) {
+        if ( preemptive || !timerMin.isActive() ) {
+            m_currentText = text;
+            m_dirty = true;
 
-        if ( preemptive == false && timerMin->isActive() )
-        {
-            textBuffer.append( plainText ); // queue
+            show();
         }
-        else
-        {
-            if ( timer->isActive() ) timer->stop();
-            renderOSDText( plainText );
-            if( !isVisible() )
-            {
-                raise();
-                QWidget::show();
-            }
-            else
-                repaint();
-
-            // let it disappear via a QTimer
-            if( m_duration ) // if duration is 0 stay forever
-            {
-                timer->start( m_duration, TRUE );
-                timerMin->start( 150, TRUE );
-            }
-        }
+        else textBuffer.append( text ); //queue
     }
 }
 
 
-void OSDWidget::setDuration(int ms)
+void OSDWidget::minReached() //SLOT
+{
+    if ( !textBuffer.isEmpty() ) {
+        renderOSDText( textBuffer.front() );
+        textBuffer.pop_front();
+
+        if( m_duration )
+            //timerMin is still running
+            timer.start( m_duration, TRUE );
+    }
+    else timerMin.stop();
+}
+
+
+void OSDWidget::setDuration( int ms )
 {
     m_duration = ms;
+
+    if( !m_duration ) timer.stop();
+}
+
+void OSDWidget::setFont( QFont newFont )
+{
+    QWidget::setFont( newFont );
+    refresh();
+}
+
+void OSDWidget::setShadow( bool shadow )
+{
+    m_shadow = shadow;
+    refresh();
+}
+
+void OSDWidget::setTextColor( const QColor &newColor )
+{
+    setPaletteForegroundColor( newColor );
+    refresh();
+}
+
+void OSDWidget::setBackgroundColor( const QColor &newColor )
+{
+    setPaletteBackgroundColor( newColor );
+    refresh();
+}
+
+void OSDWidget::unsetColors()
+{
+    setPaletteForegroundColor( KGlobalSettings::activeTextColor() );
+    setPaletteBackgroundColor( KGlobalSettings::activeTitleColor() );
+
+    refresh();
+}
+
+void OSDWidget::setOffset( int /*x*/, int y )
+{
+    //m_offset = QPoint( x, y );
+    m_y = y;
+    reposition();
+}
+
+void OSDWidget::setAlignment( Alignment a )
+{
+    m_alignment = a;
+    reposition();
+}
+
+void OSDWidget::setScreen( uint screen )
+{
+    const int n = QApplication::desktop()->numScreens();
+    m_screen = (screen >= n) ? n-1 : (int)screen;
+    reposition();
 }
 
 
-void OSDWidget::setFont(QFont newfont)
+bool OSDWidget::event( QEvent *e )
 {
-    font = newfont;
-    if( isVisible() )
+    switch( e->type() )
     {
-        renderOSDText( m_currentText );
-        repaint();
+    case QEvent::Paint:
+        bitBlt( this, 0, 0, &osdBuffer );
+        return TRUE;
+
+    default:
+        return QWidget::event( e );
     }
 }
 
-
-void OSDWidget::setTextColor(QColor newcolor)
-{
-    m_textColor = newcolor;
-    if( isVisible() )
-    {
-        renderOSDText( m_currentText );
-        repaint();
-    }
-}
-
-
-void OSDWidget::setBackgroundColor(QColor newColor)
-{
-    m_bgColor = newColor;
-    if( isVisible() )
-    {
-        renderOSDText( m_currentText );
-        repaint();
-    }
-}
-
-
-void OSDWidget::setOffset(int x, int y) // QPoint?
-{
-    m_offset.setX( x );
-    m_offset.setY( y );
-    if( isVisible() ) rePosition();
-}
-
-
-void OSDWidget::setPosition(Position pos)
-{
-    m_position = pos;
-    if( isVisible() ) rePosition();
-}
-
-
-void OSDWidget::setScreen(uint screen)
-{
-    m_screen = screen;
-    if( m_screen >= QApplication::desktop()->numScreens() )
-        m_screen = QApplication::desktop()->numScreens() - 1;
-    if( isVisible() ) rePosition();
-}
-
-
-//SLOT
-void OSDWidget::minReached()
-{
-    if ( textBuffer.count() > 0 )
-    {
-        renderOSDText( textBuffer[0] );
-        textBuffer.remove( textBuffer.at( 0 ) );
-        repaint();
-
-        if( m_duration ) // if duration is 0 stay forever
-        {
-            timer->start( m_duration, TRUE );
-            timerMin->start( 150, TRUE );
-        }
-    }
-}
-
-
-//SLOT
-void OSDWidget::removeOSD()
+void OSDWidget::mousePressEvent( QMouseEvent* )
 {
     hide();
 }
 
-
-void OSDWidget::paintEvent( QPaintEvent* )
+void OSDWidget::show()
 {
-    QPainter p( this );
-    p.drawPixmap( 0, 0, osdBuffer );
-    p.end();
-}
+    if ( m_dirty ) renderOSDText( m_currentText );
 
+    QWidget::show();
 
-void OSDWidget::mousePressEvent( QMouseEvent* )
-{
-    removeOSD();
-}
-
-
-void OSDWidget::rePosition()
-{
-    int newX = 0, newY = 0;
-    QRect screenRect = QApplication::desktop()->screenGeometry( m_screen );
-    switch( m_position )
+    if ( m_duration ) //duration 0 -> stay forever
     {
-        case TopLeft:
-            newX = m_offset.x();
-            newY = m_offset.y();
-            break;
-        case TopRight:
-            newX = screenRect.width() - m_offset.x() - osdBuffer.width();
-            newY = m_offset.y();
-            break;
-        case BottomLeft:
-            newX = m_offset.x();
-            newY = screenRect.height() - m_offset.y() - osdBuffer.height();
-            break;
-        case BottomRight:
-            newX = screenRect.width() - m_offset.x() - osdBuffer.width();
-            newY = screenRect.height() - m_offset.y() - osdBuffer.height();
-            break;
-        case Center:
-            newX = ( screenRect.width() - osdBuffer.width() ) / 2;
-            newY = ( screenRect.height() - osdBuffer.height() ) / 2;
-            break;
+        timer.start( m_duration, TRUE ); //calls hide()
+        timerMin.start( 150 ); //calls minReached()
+    }
+}
+
+void OSDWidget::refresh()
+{
+    if ( isVisible() )
+    {
+        //we need to update the buffer
+        renderOSDText( m_currentText );
+    }
+    else m_dirty = true; //ensure we are re-rendered before we are shown
+}
+
+void OSDWidget::reposition( QSize newSize )
+{
+    if( !newSize.isValid() ) newSize = size();
+
+    QPoint newPos( MARGIN, m_y );
+    const QRect screen = QApplication::desktop()->screenGeometry( m_screen );
+
+    //TODO m_y is the middle of the OSD, and don't exceed screen margins
+
+    switch ( m_alignment ) {
+    case Left:
+        break;
+
+    case Right:
+        newPos.rx() = screen.width() - MARGIN - newSize.width();
+        break;
+
+    case Center:
+        newPos.ry() = (screen.height() - newSize.height()) / 2;
+
+        //FALL THROUGH
+
+    case Middle:
+        newPos.rx() = (screen.width() - newSize.width()) / 2;
+        break;
     }
 
-    // correct for screen position
-    newX += screenRect.x();
-    newY += screenRect.y();
+    //ensure we don't dip below the screen
+    if( newPos.y()+newSize.height() > screen.height()-MARGIN ) newPos.ry() = screen.height()-MARGIN-newSize.height();
 
-    // TODO: check for sanity?
-    if( newX != x() || newY != y() ) move( newX, newY );
+    // correct for screen position
+    newPos += screen.topLeft();
+
+    //ensure we are painted before we move
+    if( isVisible() ) paintEvent( 0 );
+
+    //fancy X11 move+resize, reduces visual artifacts
+    XMoveResizeWindow( x11Display(), winId(), newPos.x(), newPos.y(), newSize.width(), newSize.height() );
 }
+
 
 
 //////  OSDPreviewWidget below /////////////////////
 
-OSDPreviewWidget::OSDPreviewWidget( const QString &appName ) : OSDWidget( appName )
+#include <kcursor.h>         //previewWidget
+#include <klocale.h>
+
+OSDPreviewWidget::OSDPreviewWidget( const QString &appName, QWidget *parent, const char *name )
+    : OSDWidget( appName, parent, name )
+    , m_dragging( false )
 {
-    m_dragging = false;
-    setDuration( 0 );
+    m_currentText = i18n( "OSD Preview - drag to reposition" );
+    m_duration    = 0;
 }
 
 
 void OSDPreviewWidget::mousePressEvent( QMouseEvent *event )
 {
-    m_dragOffset = QCursor::pos() - QPoint( x(), y() );
-    if( event->button() == LeftButton && !m_dragging ) {
+    m_dragOffset = event->pos();
+
+    if ( event->button() == LeftButton && !m_dragging ) {
         grabMouse( KCursor::sizeAllCursor() );
         m_dragging = true;
     }
 }
 
-
-void OSDPreviewWidget::mouseReleaseEvent( QMouseEvent */*event*/ )
+void OSDPreviewWidget::mouseReleaseEvent( QMouseEvent * /*event*/ )
 {
-    if( m_dragging )
-    {
+    if ( m_dragging ) {
         m_dragging = false;
         releaseMouse();
 
         // compute current Position && offset
         QDesktopWidget *desktop = QApplication::desktop();
-        int currentScreen = desktop->screenNumber( QPoint( x(), y() ) );
-        Position pos = Center;
-        if( currentScreen != -1 )
-        {
-            QRect screenRect = desktop->screenGeometry( currentScreen );
-            // figure out what quadrant we are in and the offset in that quadrant
-            int xoffset = 0, yoffset = 0;
-            bool left = false;
-            if( x() < screenRect.width() / 2 + screenRect.x() ) // left
-            {
-                left = true;
-                xoffset = x() - screenRect.x();
-            }
-            else
-            {
-                xoffset = screenRect.x() + screenRect.width() - x() - width();
-            }
-            if( y() < screenRect.height() / 2 + screenRect.y() ) // top
-            {
-                yoffset = y() - screenRect.y();
-                pos = left ? TopLeft : TopRight;
-            }
-            else
-            {
-                yoffset = screenRect.y() + screenRect.height() - y() - height();
-                pos = left ? BottomLeft : BottomRight;
-            }
+        int currentScreen = desktop->screenNumber( pos() );
+
+        if ( currentScreen != -1 ) {
             // set new data
-            m_offset.setX( xoffset );
-            m_offset.setY( yoffset );
-            m_position = pos;
             m_screen = currentScreen;
-            emit positionChanged( currentScreen, pos, xoffset, yoffset );
+            m_y      = QWidget::y();
+
+            emit positionChanged();
         }
     }
 }
 
-
-void OSDPreviewWidget::mouseMoveEvent( QMouseEvent */*event*/ )
+void OSDPreviewWidget::mouseMoveEvent( QMouseEvent *e )
 {
-    if( m_dragging && this == mouseGrabber() )
+    if ( m_dragging && this == mouseGrabber() )
     {
-        move( QCursor::pos() - m_dragOffset );
+        const QRect screen      = QApplication::desktop()->screenGeometry( m_screen );
+        const uint  hcenter     = screen.width() / 2;
+        const uint  eGlobalPosX = e->globalPos().x() - screen.left();
+        const uint  snapZone    = screen.width() / 8;
+
+        QPoint destination = e->globalPos() - m_dragOffset - screen.topLeft();
+        int maxY = screen.height() - height() - MARGIN;
+        if( destination.y() < MARGIN ) destination.ry() = MARGIN;
+        if( destination.y() > maxY ) destination.ry() = maxY;
+
+        if( eGlobalPosX < (hcenter-snapZone) )
+        {
+            m_alignment = Left;
+            destination.rx() = MARGIN;
+        }
+        else if( eGlobalPosX > (hcenter+snapZone) )
+        {
+            m_alignment = Right;
+            destination.rx() = screen.width() - MARGIN - width();
+        }
+        else
+        {
+            const uint eGlobalPosY = e->globalPos().y() - screen.top();
+            const uint vcenter     = screen.height()/2;
+
+            destination.rx() = hcenter - width()/2;
+
+            if( eGlobalPosY >= (vcenter-snapZone) && eGlobalPosY <= (vcenter+snapZone) )
+            {
+                m_alignment = Center;
+                destination.ry() = vcenter - height()/2;
+            }
+            else m_alignment = Middle;
+        }
+
+        destination += screen.topLeft();
+
+        move( destination );
     }
 }
 

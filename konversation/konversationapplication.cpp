@@ -457,20 +457,37 @@ void KonversationApplication::readOptions()
   preferences.setOSDShowQuery(config->readBoolEntry("ShowQuery",preferences.getOSDShowQuery()));
   preferences.setOSDShowChannelEvent(config->readBoolEntry("ShowChannelEvent",preferences.getOSDShowChannelEvent()));
   preferences.setOSDFontRaw(config->readEntry("OSDFont",preferences.getOSDFont().rawName()));
-
+  preferences.setOSDUseCustomColors(config->readBoolEntry("OSDUseCustomColors", preferences.getOSDUseCustomColors()));
+  preferences.setOSDDuration(config->readNumEntry("OSDDuration",preferences.getOSDDuration()));
+  preferences.setOSDScreen(config->readNumEntry("OSDScreen",preferences.getOSDScreen()));
+  preferences.setOSDDrawShadow(config->readBoolEntry("OSDDrawShadow",preferences.getOSDDrawShadow()));
   // if osd object exists
   if(osd && preferences.getOSDUsage())
   {
     osd->setEnabled(true);
     osd->setFont(preferences.getOSDFont());
+    osd->setDuration(preferences.getOSDDuration());
+    osd->setScreen(preferences.getOSDScreen());
+    osd->setShadow(preferences.getOSDDrawShadow());
+    
+    if(preferences.getOSDUseCustomColors())
+    {
+      QString osdTextColor = config->readEntry("OSDTextColor");
+      if(osdTextColor.isEmpty())
+        preferences.setOSDTextColor(preferences.getOSDTextColor().name());
+      else
+        preferences.setOSDTextColor("#" + osdTextColor);
 
-    QString osdColor = config->readEntry("OSDColor");
-    if(osdColor.isEmpty())
-      preferences.setOSDColor(preferences.getOSDColor().name());
-    else
-      preferences.setOSDColor("#" + osdColor);
-
-    osd->setTextColor(preferences.getOSDColor());
+      osd->setTextColor(preferences.getOSDTextColor());
+    
+      QString osdBackgroundColor = config->readEntry("OSDBackgroundColor");
+      if(osdBackgroundColor.isEmpty())
+        preferences.setOSDBackgroundColor(preferences.getOSDBackgroundColor().name());
+      else
+        preferences.setOSDBackgroundColor("#" + osdBackgroundColor);
+      
+      osd->setBackgroundColor(preferences.getOSDBackgroundColor());
+    }
   }
 
   // Server List
@@ -782,12 +799,17 @@ void KonversationApplication::saveOptions(bool updateGUI)
   // OnScreen Display
   config->setGroup("OSD");
   config->writeEntry("UseOSD",preferences.getOSDUsage());
+  config->writeEntry("OSDUseCustomColors",preferences.getOSDUseCustomColors());
   config->writeEntry("ShowOwnNick",preferences.getOSDShowOwnNick());
   config->writeEntry("ShowChannel",preferences.getOSDShowChannel());
   config->writeEntry("ShowQuery",preferences.getOSDShowQuery());
   config->writeEntry("ShowChannelEvent",preferences.getOSDShowChannelEvent());
   config->writeEntry("OSDFont",preferences.getOSDFont().toString());
-  config->writeEntry("OSDColor",preferences.getOSDColor().name().mid(1));
+  config->writeEntry("OSDTextColor",preferences.getOSDTextColor().name().mid(1));
+  config->writeEntry("OSDBackgroundColor",preferences.getOSDBackgroundColor().name().mid(1));
+  config->writeEntry("OSDDuration",preferences.getOSDDuration());
+  config->writeEntry("OSDScreen",preferences.getOSDScreen());
+  config->writeEntry("OSDDrawShadow",preferences.getOSDDrawShadow());
 
   // Ignore List
   config->deleteGroup("Ignore List");

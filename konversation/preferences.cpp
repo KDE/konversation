@@ -135,7 +135,7 @@ Preferences::Preferences()
   setOSDShowOwnNick(false);
   setOSDShowQuery(false);
   setOSDShowChannelEvent(false);
-  setOSDColor("#ffffff");
+  setOSDTextColor("#ffffff");
 
   setColorInputFields(true);
   setBackgroundImageName(QString::null);
@@ -593,8 +593,26 @@ QFont Preferences::getOSDFont() { return osdFont; }
 void Preferences::setOSDFont(QFont newFont) { osdFont=newFont; }
 void Preferences::setOSDFontRaw(const QString &rawFont) { osdFont.fromString(rawFont); }
 
-void Preferences::setOSDColor(const QString &newColor) { osdColor.setNamedColor(newColor); }
-QColor Preferences::getOSDColor() { return osdColor; }
+/*void Preferences::setOSDColor(const QString &newColor) { osdColor.setNamedColor(newColor); }
+QColor Preferences::getOSDColor() { return osdColor; }*/
+
+void Preferences::setOSDUseCustomColors(bool state) { useOSDCustomColors = state; }
+bool Preferences::getOSDUseCustomColors() { return useOSDCustomColors; }
+
+void Preferences::setOSDTextColor(const QString& newColor) { osdTextColor.setNamedColor(newColor); }
+QColor Preferences::getOSDTextColor() { return osdTextColor; }
+
+void Preferences::setOSDBackgroundColor(const QString& newColor) { osdBackgroundColor.setNamedColor(newColor); }
+QColor Preferences::getOSDBackgroundColor() { return osdBackgroundColor; }
+
+void Preferences::setOSDDuration(int ms) { OSDDuration = ms; }
+int Preferences::getOSDDuration() { return OSDDuration; }
+
+void Preferences::setOSDScreen(uint screen) { OSDScreen = screen; }
+uint Preferences::getOSDScreen() { return OSDScreen; }
+
+void Preferences::setOSDDrawShadow(bool state) { OSDDrawShadow = state; }
+bool Preferences::getOSDDrawShadow() { return OSDDrawShadow; }
 
 QFont Preferences::getTextFont() { return textFont; }
 QFont Preferences::getListFont() { return listFont; }

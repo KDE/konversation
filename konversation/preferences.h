@@ -212,8 +212,23 @@ class Preferences : public QObject
     void setOSDFont(QFont newFont);
     void setOSDFontRaw(const QString &rawFont);
 
-    void setOSDColor(const QString &color);
-    QColor getOSDColor();
+    void setOSDUseCustomColors(bool state);
+    bool getOSDUseCustomColors();
+    
+    void setOSDTextColor(const QString &color);
+    QColor getOSDTextColor();
+    
+    void setOSDBackgroundColor(const QString& color);
+    QColor getOSDBackgroundColor();
+    
+    void setOSDDuration(int ms);
+    int getOSDDuration();
+    
+    void setOSDScreen(uint screen);
+    uint getOSDScreen();
+    
+    void setOSDDrawShadow(bool state);
+    bool getOSDDrawShadow();
 
     QStringList getButtonList();
     void setButtonList(QStringList newList);
@@ -505,7 +520,12 @@ class Preferences : public QObject
     bool OSDShowQuery;        // Message on query acticity
     bool OSDShowChannelEvent; // Message on channel join/part events
     QFont osdFont;            // Which font to use
-    QColor osdColor;
+    bool useOSDCustomColors;
+    bool OSDDrawShadow;
+    int OSDDuration;
+    uint OSDScreen;
+    QColor osdTextColor;
+    QColor osdBackgroundColor;
 
     bool colorInputFields;
     
