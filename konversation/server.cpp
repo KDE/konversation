@@ -79,7 +79,6 @@ Server::Server(KonversationMainWindow* mainWindow, int id)
   init(mainWindow, getIdentity()->getNickname(0));
 }
 
-//FIXME: remove code duplicates by introducing some new method
 Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
   const QString& nick,const QString& password)
 {

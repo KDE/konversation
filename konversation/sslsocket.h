@@ -39,15 +39,13 @@ class SSLSocket : public KStreamSocket
   Q_LONG readBlock  (char *data, Q_ULONG maxlen);
  
  protected:
-  void   stateChanging (KClientSocketBase::SocketState newState);
+  void connected();
+  void stateChanging (KClientSocketBase::SocketState newState);
   
  signals:
   void sslFailure();
   void sslInitDone();
-  
-  private slots:
-  void slotConnected();
-  
+
  private:
   int verifyCertificate();
   void showSSLInfoDialog();

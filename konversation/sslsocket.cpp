@@ -91,7 +91,7 @@ void SSLSocket::stateChanging(KClientSocketBase::SocketState newState)
   if(newState == KClientSocketBase::Connected)
     {
       KClientSocketBase::stateChanging(KClientSocketBase::Connected);
-      slotConnected();
+      connected();
     }
   else
     KClientSocketBase::stateChanging(newState);
@@ -109,7 +109,7 @@ QString SSLSocket::details()
     return details;
 }
 
-void SSLSocket::slotConnected()
+void SSLSocket::connected()
 {
   
   if( KSSL::doesSSLWork() )
