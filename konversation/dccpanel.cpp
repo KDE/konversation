@@ -92,6 +92,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   QHBox* buttonsBox=new QHBox(this);
   buttonsBox->setSpacing(spacing());
   
+  // convenience, undeffed below again to avoid name clashes
   #define icon(s) KGlobal::iconLoader()->loadIconSet( s, KIcon::Small )
   
   m_buttonAccept = new QPushButton(icon("player_play"), i18n("&Accept"), buttonsBox, "start_dcc");
@@ -132,6 +133,8 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   m_popup->insertSeparator(); // -----
   m_popup->insertItem(icon("view_text"),       i18n("DCC &Detail Information"),     Popup::Detail);
     
+  #undef icon
+
   connect(m_listView, SIGNAL(contextMenuRequested(QListViewItem*,const QPoint&,int)), this, SLOT(popupRequested(QListViewItem*,const QPoint&,int)));
   connect(m_popup, SIGNAL(activated(int)), this, SLOT(popupActivated(int)));
   
