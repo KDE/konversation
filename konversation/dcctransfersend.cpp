@@ -108,7 +108,7 @@ void DccTransferSend::start()  // public slot
   
   kdDebug() << "DccTransferSend::start(): own Address=" << ownIp << ":" << ownPort << endl;
   
-  setStatus(WaitingRemote, i18n("Waiting the remote user's acceptance"));
+  setStatus(WaitingRemote, i18n("Waiting remote user's acceptance"));
   updateView();
   
   startConnectionTimer(90);  // wait for 90 sec
