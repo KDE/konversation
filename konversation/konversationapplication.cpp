@@ -327,6 +327,8 @@ void KonversationApplication::connectToServer(int id)
 
   connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
   connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
+  connect(newServer, SIGNAL(connectionChangedState(Server*, Server::State)),
+          mainWindow, SLOT(serverStateChanged(Server*, Server::State)));
 
   connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&,bool)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&,bool)) );
 

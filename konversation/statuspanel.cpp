@@ -89,7 +89,6 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 
 StatusPanel::~StatusPanel()
 {
-  m_server->serverGroupSettings()->setNotificationsEnabled(notificationsEnabled());
 }
 
 void StatusPanel::setNickname(const QString& newNickname)
@@ -246,6 +245,7 @@ void StatusPanel::closeYourself(ChatWindow*)
 
   if(result==KMessageBox::Yes)
   {
+    m_server->serverGroupSettings()->setNotificationsEnabled(notificationsEnabled());
     m_server->quitServer();
      //Why are these seperate?  why would deleting the server not quit it? FIXME
     delete m_server;

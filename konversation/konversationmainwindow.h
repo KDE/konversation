@@ -34,6 +34,7 @@
 #include "preferences.h"
 #include "ssllabel.h"
 #include "nickinfo.h"
+#include "server.h"
 
 /*
  Dario Abatianni
@@ -45,7 +46,6 @@ class KActionMenu;
 class KScriptManager;
 
 class KonviBookmarkHandler;
-class Server;
 class StatusPanel;
 class ChatWindow;
 class Channel;
@@ -150,6 +150,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     void openServerList();
     void openIdentitiesDialog();
+
+    void serverStateChanged(Server* server, Server::State state);
 
   protected slots:
     void openPreferences();

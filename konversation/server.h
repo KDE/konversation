@@ -53,6 +53,11 @@ class Server : public QObject
   Q_OBJECT
 
   public:
+    typedef enum {
+      SSDisconnected,
+      SSConnecting,
+      SSConnected
+    } State;
     /** Constructor used for connecting to a known server.
      *  Read in the prefrences to get all the details about the server.
      */	  
@@ -368,6 +373,8 @@ class Server : public QObject
     void awayInsertRememberLine();
     void sslInitFailure();
     void sslConnected(Server* server);
+
+    void connectionChangedState(Server* server, Server::State state);
 
   public slots:
     void lookupFinished();

@@ -131,7 +131,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   (new KAction(i18n("Quick &Connect..."), "connect_creating", KShortcut("F7"), this, SLOT(openQuickConnectDialog()),
     actionCollection(), "quick_connect_dialog"))->setToolTip(i18n("Type in the address of a new IRC server to connect to..."));
 
-  new KAction(i18n("&Reconnect"), "connect_creating", 0, this, SLOT(reconnectCurrentServer()), actionCollection(), "reconnect_server");
+  action = new KAction(i18n("&Reconnect"), "connect_creating", 0, this, SLOT(reconnectCurrentServer()), actionCollection(), "reconnect_server");
+  action->setEnabled(false);
 
   (new KAction(i18n("&Identities..."), "identity", KShortcut("F8"), this, SLOT(openIdentitiesDialog()),
     actionCollection(), "identities_dialog"))->setToolTip(i18n("Set your nick, away message, etc..."));
@@ -1069,6 +1070,17 @@ void KonversationMainWindow::updateFrontView()
 
     action = actionCollection()->action("toggle_away");
     if(action) action->setEnabled(true);
+
+    action = actionCollection()->action("reconnect_server");
+    if(action) {
+      Server* server = view->getServer();
+
+      if(server && !server->isConnected()) {
+        action->setEnabled(true);
+      } else {
+        action->setEnabled(false);
+      }
+    }
   } else {
     action = actionCollection()->action("insert_remember_line");
     if(action) action->setEnabled(false);
@@ -1101,6 +1113,9 @@ void KonversationMainWindow::updateFrontView()
     if(action) action->setEnabled(false);
 
     action = actionCollection()->action("join_channel");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("reconnect_server");
     if(action) action->setEnabled(false);
   }
 }
@@ -1760,6 +1775,20 @@ QString KonversationMainWindow::currentTitle()
     }
   else
     return QString::null;
+}
+
+void KonversationMainWindow::serverStateChanged(Server* server, Server::State state)
+{
+  KAction* action = actionCollection()->action("reconnect_server");
+
+  if(action && (frontServer == server)) {
+
+    if(state != Server::SSDisconnected) {
+      action->setEnabled(false);
+    } else {
+      action->setEnabled(true);
+    }
+  }
 }
 
 #include "konversationmainwindow.moc"

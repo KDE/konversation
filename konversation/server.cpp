@@ -236,6 +236,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
         connectSignals();
 
     emit serverOnline(false);
+    emit connectionChangedState(this, SSDisconnected);
 }
 
 void Server::initTimers() {
@@ -437,6 +438,7 @@ void Server::connectToIRCServer() {
     KWin::demandAttention(KonversationApplication::instance()->getMainWindow()->winId());
     // reset InputFilter (auto request info, /WHO request info)
     inputFilter.reset();
+    emit connectionChangedState(this, SSConnecting);
   }
 }
 
@@ -647,6 +649,7 @@ void Server::broken(int state) {
     }
 
   emit serverOnline(false);
+  emit connectionChangedState(this, SSDisconnected);
 }
 
 void Server::sslError(QString reason) {
@@ -666,6 +669,7 @@ void Server::connectionEstablished(const QString& ownHost) {
     }
 
     emit serverOnline(true);
+    emit connectionChangedState(this, SSConnected);
     if(m_isAutoAway) //we are in autoaway, so tell the server
         setAutoAway();
 
@@ -2298,8 +2302,7 @@ bool Server::isWatchedNick(const QString& nickname)
 void Server::removeJoinedChannel(const QString& channelName)
 {
   bool doSignal = false;
-  QString watchList = getWatchListString();
-  QStringList watchListLower = QStringList::split(' ', watchList.lower());
+  QStringList watchListLower = getWatchList();
   QString lcChannelName = channelName.lower();
   // Move the channel nick list from the joined to unjoined lists.
   if (m_joinedChannels.contains(lcChannelName))

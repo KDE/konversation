@@ -211,8 +211,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   // setResizeMode must be called after all the columns are added
   nicknameListView->setResizeMode(KListView::LastColumn);
 
-//  nicknameListView->header()->setStretchEnabled(true,2);
-
   // separate LED from Text a little more
   nicknameListView->setColumnWidth(0, 10);
   nicknameListView->setColumnAlignment(0, Qt::AlignHCenter);
