@@ -86,17 +86,13 @@ class ServerISON : public QObject
     Server* m_server;
     /// List of nicks to watch that come from addressbook.
     QStringList m_addresseesISON;
-    /// List of nicks in the Nick Watch List (from preferences).
-    QStringList m_prefsWatchList;
-    /// Merged list of the two above.
+    /// List from above merged with Watch List from preferences.
     QStringList m_ISONList;
     /// If this is true, then we need to call recalculateAddressee before returning m_ISONList
     bool m_ISONList_invalid;
-    /// State of UseNotify preference.
-    bool m_useNotify;
     /**
      * Rebuilds list of nicks to watch whenever an addressbook change occurs
-     * or whenever user turns on nick watching.
+     * or preferences change (whenever m_ISONLIst_invalid is true).
      */
     void recalculateAddressees();
 

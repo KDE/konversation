@@ -31,9 +31,7 @@
 #include "konversationmainwindow.h"
 
 ServerISON::ServerISON(Server* server) : m_server(server) {
-  m_useNotify = false;
-  m_ISONList_invalid = false;
-  slotPrefsChanged();
+  m_ISONList_invalid = true;
   //We need to know when the addressbook changes because if the info for an offline nick changes, 
   //we won't get a nickInfoChanged signal.
   connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), 
@@ -71,11 +69,11 @@ KABC::Addressee ServerISON::getOfflineNickAddressee(QString& nickname)
 void ServerISON::recalculateAddressees()
 {
   kdDebug() << "ServerISON::recalculateAddressees" << endl;
-  // Get all nicks known to be online.
-  const NickInfoMap* allNicks = m_server->getAllNicks();
   // If not watching nicks, no need to build notify list.
-  if (m_useNotify)
+  if (KonversationApplication::preferences.getUseNotify())
   {
+    // Get all nicks known to be online.
+    const NickInfoMap* allNicks = m_server->getAllNicks();
     // Build a map of online nicknames with associated addressbook entry,
     // indexed by KABC::Addressee uid.
     // Note that there can be more than one nick associated with an addressee.
@@ -100,8 +98,8 @@ void ServerISON::recalculateAddressees()
     QString lserverName = m_server->getServerName().lower();
     QString lserverGroup = m_server->getServerGroup().lower();
   
-    // Build notify list from nicks in addressbook.
-    m_addresseesISON.clear();
+    // Build notify list from nicks in addressbook, eliminating dups (case insensitive).
+    QMap<QString,QString> ISONMap;
     m_offlineNickToAddresseeMap.clear();
     for( KABC::AddressBook::ConstIterator it = 
       Konversation::Addressbook::self()->getAddressBook()->begin();
@@ -117,7 +115,7 @@ void ServerISON::recalculateAddressees()
         {
           QStringList nicknames = addresseeToOnlineNickMap[uid];
           for (unsigned int index=0; index<nicknames.count(); index++)
-            m_addresseesISON.append(nicknames[index]);
+            ISONMap.insert(nicknames[index].lower(), nicknames[index], true);
         }
         else
         {
@@ -125,7 +123,7 @@ void ServerISON::recalculateAddressees()
           // of the addressee associated with this server or server group (if any)
           // to the notify list.
           // Simultaneously, build a map of all offline nicks and corresponding
-          // KABC::Addressee, indexed by nickname.
+          // KABC::Addressee, indexed by lowercase nickname.
           QStringList nicks = QStringList::split( QChar( 0xE000 ),
             (*it).custom("messaging/irc", "All") );
           QStringList::ConstIterator nicksItEnd = nicks.constEnd();
@@ -137,20 +135,28 @@ void ServerISON::recalculateAddressees()
               lserverOrGroup.isEmpty())
             {
               QString nickname = (*nicksIt).section(QChar(0xE120),0,0);
-              m_addresseesISON.append(nickname);
-              m_offlineNickToAddresseeMap.insert(nickname.lower(), *it, true);
+              QString lcNickname = nickname.lower();
+              ISONMap.insert(lcNickname, nickname, true);
+              m_offlineNickToAddresseeMap.insert(lcNickname, *it, true);
             }
           }
         }
       }    
     }
-    // Merge with watch list from prefs.
-    m_ISONList = m_prefsWatchList;
-    for (unsigned int index=0; index<m_addresseesISON.count(); index++)
-    {
-      QString nickname = m_addresseesISON[index];
-      if (!m_ISONList.contains(nickname)) m_ISONList.append(nickname);
-    }
+    // The part of the ISON list due to the addressbook.
+    m_addresseesISON = ISONMap.values();
+    // Merge with watch list from prefs, eliminating dups (case insensitive).
+    QStringList prefsWatchList =
+      KonversationApplication::preferences.getNotifyListByGroup(m_server->getServerGroup());
+    for (unsigned int index=0; index<prefsWatchList.count(); index++)
+      ISONMap.insert(prefsWatchList[index].lower(), prefsWatchList[index], true);
+    // Build final ISON list.
+    m_ISONList = ISONMap.values();
+  }
+  else
+  {
+    m_addresseesISON.clear();
+    m_ISONList.clear();
   }
   m_ISONList_invalid = false;
 }
@@ -159,38 +165,7 @@ void ServerISON::recalculateAddressees()
 void ServerISON::slotPrefsChanged()
 {
   kdDebug() << "ServerISON::slotPrefsChanged" << endl;
-  bool useNotify = KonversationApplication::preferences.getUseNotify();
-  if (useNotify)
-  {
-    bool turnedOn = !m_useNotify;
-    m_useNotify = true;
-    // Get (possibly) modified Nick Watch List from preferences.
-    QString groupName = m_server->getServerGroup();
-    m_prefsWatchList =
-      KonversationApplication::preferences.getNotifyListByGroup(groupName);
-    // If user just turned on nick watching, build addressbook watch list
-    // and merge with user prefs watch list.
-
-    m_ISONList_invalid = true;
-    //FIXME I don't think I need anything below this.. if you agree, delete it - thanks - JOHNFLUX
-/*    if (turnedOn)
-      m_ISONList_invalid = true;
-    else
-    {
-      recalculateAddressees();
-      // Merge (possibly) modified Watch List from preferences with previously
-      // calculated addressbook watch list.
-      m_ISONList = m_prefsWatchList;
-      for (unsigned int index=0; index<m_addresseesISON.count(); index++)
-      {
-        QString nickname = m_addresseesISON[index];
-        if (!m_ISONList.contains(nickname)) m_ISONList.append(nickname);
-      }
-    }*/
-  }
-  // If nick watching is off, clear list.
-  else m_ISONList.clear();
-  m_useNotify = useNotify;
+  m_ISONList_invalid = true;
 }
 
 void ServerISON::nickInfoChanged(Server* /*server*/, const NickInfoPtr /*nickInfo*/) {

@@ -2181,7 +2181,7 @@ QString Server::getNotifyString() { return getNotifyList().join(" "); }
 bool Server::isWatchedNick(const QString& nickname)
 {
     QStringList watchList = getNotifyList();
-    return (watchList.contains(nickname));
+    return (watchList.contains(nickname.lower()));
 }
 
 /**
