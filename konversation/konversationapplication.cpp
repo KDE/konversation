@@ -37,6 +37,8 @@
 #include "nicklistview.h"
 #include "images.h"
 #include "notificationhandler.h"
+#include "commit.h"
+#include "version.h"
 
 // include static variables
 Preferences KonversationApplication::preferences;
@@ -426,12 +428,7 @@ void KonversationApplication::readOptions()
   preferences.setRawLog(config->readBoolEntry("RawLog",preferences.getRawLog()));
 
   // Custom CTCP Version Reply
-  QString mv=config->readEntry("VersionReply");
-  // Check to see if its the old default version string. this string had been translated and stored :(
-  QRegExp r("Konversation 0\\.\\d* .* \\d* \\(C\\)2002-200[345].*");
-  if (r.exactMatch(mv))
-    mv=QString::null;
-  preferences.setVersionReply(mv);
+  preferences.setVersionReply(config->readEntry("VersionReply",preferences.getVersionReply()));
 
   // Reconnection timeout
   preferences.setMaximumLagTime(config->readNumEntry("MaximumLag",preferences.getMaximumLagTime()));

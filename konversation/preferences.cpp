@@ -22,6 +22,7 @@
 #include <kuser.h>
 
 #include <qpalette.h>
+#include <qregexp.h>
 
 #include "preferences.h"
 #include "prefsdialog.h"
@@ -106,7 +107,6 @@ Preferences::Preferences()
   setBeep(false);
   setRawLog(false);
 
-  setVersionReply(QString::null); //XXX is this really necessary?
   setDccPath(user.homeDir()+"/dccrecv");
   setDccAddPartner(false);
   setDccCreateFolder(false);
@@ -476,11 +476,20 @@ const bool Preferences::getBeep() { return beep; }
 void Preferences::setRawLog(bool state) { rawLog=state; }
 const bool Preferences::getRawLog() { return rawLog; }
 
-void Preferences::setVersionReply(const QString &reply) { versionReply = reply; }
-
-const QString Preferences::getVersionReply() const
+void Preferences::setVersionReply(const QString &reply) 
 {
-  return versionReply;
+  if(!versionReply.isEmpty())
+    versionReply = reply;
+}
+
+QString Preferences::getVersionReply()
+{
+  QRegExp r("Konversation 0\\.\\d* .* \\d* \\(C\\) 2002-200[345].*");
+
+  if (r.exactMatch(versionReply) || versionReply.isEmpty())
+    versionReply = i18n("Konversation %1 Build %2 (C) 2002-2005 by the Konversation team").arg(QString(KONVI_VERSION)).arg(QString::number(COMMIT));
+
+    return versionReply;
 }
 
 const int Preferences::getNotifyDelay() { return notifyDelay; }

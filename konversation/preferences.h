@@ -85,8 +85,8 @@ class Preferences : public QObject
     const bool getRawLog();
     void setRawLog(bool state);
 
-    const QString getVersionReply() const;
-    void    setVersionReply(const QString &reply);
+    QString getVersionReply();
+    void setVersionReply(const QString &reply);
 
     void setLog(bool state);
     const bool getLog();
