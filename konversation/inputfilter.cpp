@@ -321,7 +321,9 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 
 #ifdef USE_KNOTIFY
           // KNotify events...
-          if(sourceNick != server->getNickname() && server->getChannelByName(parameterList[0])->notificationsEnabled()) {
+	  Channel* channel = server->getChannelByName(parameterList[0]);
+
+          if(channel && sourceNick != server->getNickname() && channel->notificationsEnabled()) {
             if(trailing.lower().find(QRegExp("(^|[^\\d\\w])"+
               QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
             {
