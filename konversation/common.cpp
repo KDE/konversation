@@ -74,7 +74,7 @@ QString tagURLs(const QString& text, const QString& fromNick)
       // Replace all spaces with %20 in href
       href.replace(" ", "%20");
       // Build rich text link
-      QString link("<font color=\"#" + linkColor + "\"><a href=\"" + href + "\">" + url + "</a></font>");
+      QString link("<font color=\"#" + linkColor + "\"><u><a href=\"" + href + "\">" + url + "</a></u></font>");
 
       // replace found url with built link
       filteredLine.replace(pos, url.length(), link);
