@@ -48,9 +48,9 @@ void OSDWidget::showOSD(const QString &text)
     // Strip HTML tags, expand basic HTML entities
     QString plaintext = text.copy();
     plaintext.replace(QRegExp("</?(?:font|a|b|i)\\b[^>]*>"), QString(""));
-    plaintext.replace(QString("&lt;"), QString("<"));
-    plaintext.replace(QString("&gt;"), QString(">"));
-    plaintext.replace(QString("&amp;"), QString("&"));
+    plaintext.replace(QRegExp("&lt;"), QString("<"));
+    plaintext.replace(QRegExp("&gt;"), QString(">"));
+    plaintext.replace(QRegExp("&amp;"), QString("&"));
 
     this->text = plaintext;
 
