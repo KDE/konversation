@@ -20,6 +20,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kdeversion.h>
+#include <kstringhandler.h>
 
 #ifdef KDE_IS_VERSION
 #if KDE_IS_VERSION(3,1,1)
@@ -317,14 +318,13 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
             if(trailing.lower().find(QRegExp("(^|[^\\d\\w])"+
               QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
             {
-              QString cutup = trailing; cutup.truncate(47);
-              if(cutup.length() == 47)
-                cutup.append("...");
+              QString cutup = KStringHandler::rsqueeze(trailing, 50);
               KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
             }
             else
             {
-              KNotifyClient::event(mainWindow->winId(), "message");
+              QString cutup = KStringHandler::rsqueeze(trailing, 50);
+              KNotifyClient::event(mainWindow->winId(), "message", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
             }
           }
 #endif
@@ -342,10 +342,8 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
 #ifdef USE_KNOTIFY
           // KNotify events...
           if(sourceNick != server->getNickname()) {
-			QString cutup = trailing; cutup.truncate(47);
-			if(cutup.length() == 47)
-			 cutup.append("...");
-           KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
+            QString cutup = KStringHandler::rsqueeze(trailing, 50);
+            KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
           }
 #endif
         }
