@@ -3,3 +3,6 @@ if test "$build_arts" = "yes"; then
 	LIB_ARTS="-lartskde"
 	AC_SUBST(LIB_ARTS)
 fi
+KDE_CHECK_HEADER(kimiface.h, FOUND_KIMIFACE="yes", FOUND_KIMIFACE="no")
+
+AM_CONDITIONAL(include_addressbook, test "$FOUND_KIMIFACE" = "yes")
