@@ -21,7 +21,6 @@
 #include <qheader.h>
 #include <qregexp.h>
 #include <qtooltip.h>
-#include <qtextcodec.h>
 #include <qsplitter.h>
 
 #include <klocale.h>
@@ -66,7 +65,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   splitter=new QSplitter(this);
   setStretchFactor(splitter,10);
   splitter->setOpaqueResize(true);
-  
+
   // The grid for the topic line, Nicks/Ops label, Channel View and Nick list
   QVBox* topicViewNicksGrid=new QVBox(splitter);
   topicViewNicksGrid->setSpacing(spacing());
@@ -224,7 +223,7 @@ Channel::~Channel()
   kdDebug() << "Channel::~Channel()" << endl;
 
   KonversationApplication::preferences.setChannelSplitter(splitter->sizes());
-  
+
   // Purge nickname list
   Nick* nick=nicknameList.first();
   while(nick)
@@ -240,10 +239,7 @@ Channel::~Channel()
 
 void Channel::requestNewTopic(const QString& newTopic)
 {
-  kdDebug() << "requestNewTopic(" << newTopic << ")" << endl;
-
-//  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
-  topicLine->setCurrentText(/*codec->toUnicode(*/topic/*)*/);
+  topicLine->setCurrentText(topic);
 
   if(newTopic!=topic) sendChannelText(KonversationApplication::preferences.getCommandChar()+"TOPIC "+newTopic);
 
@@ -271,7 +267,7 @@ void Channel::popupCommand(int id)
 {
   QString pattern;
   QString cc=KonversationApplication::preferences.getCommandChar();
-  
+
   bool raw=false;
 
   switch(id)
@@ -533,11 +529,10 @@ void Channel::channelTextEntered()
 
 void Channel::sendChannelText(const QString& sendLine)
 {
-  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-  QCString line=codec->fromUnicode(sendLine);
+  // encoding stuff is done in Server()
+  QString output=filter.parse(server->getNickname(),sendLine,getName());
 
   // Is there something we need to display for ourselves?
-  QString output=filter.parse(server->getNickname(),line,getName());
   if(!output.isEmpty())
   {
     if(filter.isAction()) appendAction(server->getNickname(),output);

@@ -476,17 +476,16 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
 #endif
 #endif
 
+  // convert logfile ascii data to selected encoding
   QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-  line=codec->fromUnicode(line);
+  line=codec->toUnicode(line.ascii());
   // no additional time stamps on backlog messages
   doAppend(line,true);
 }
 
 void IRCView::doAppend(QString newLine,bool suppressTimestamps)
 {
-  //  kdDebug() << "IRCView::doAppend("<< line << ")" << endl;
   // Add line to buffer
-
   QString line(newLine);
 
   if(!suppressTimestamps && KonversationApplication::preferences.getTimestamping())
@@ -505,9 +504,6 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps)
 
   buffer+=line;
   emit newText();
-
-//  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-//  line=codec->toUnicode(line);
 
   // scroll view only if the scroll bar is already at the bottom
 #if QT_VERSION == 303
@@ -533,7 +529,6 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps)
 // Workaround to scroll to the end of the TextView when it's shown
 void IRCView::showEvent(QShowEvent* event)
 {
-  // kdDebug() << "IRCView::showEvent()" << endl;
   // Suppress Compiler Warning
   event->type();
 
@@ -670,15 +665,12 @@ void IRCView::search()
 
 void IRCView::pageUp()
 {
-  kdDebug() << "up" << endl;
   moveCursor(MovePgUp,false);
 }
 
 void IRCView::pageDown()
 {
-  kdDebug() << "down" << endl;
   moveCursor(MovePgDown,false);
 }
-
 
 #include "ircview.moc"

@@ -460,7 +460,9 @@ void Server::incoming()
 
   buffer[len]=0;
 
-  inputBuffer+=buffer;
+  // convert IRC ascii data to selected encoding
+  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
+  inputBuffer+=codec->toUnicode(buffer);
 
   if(len==0) broken(0);
 }
@@ -471,7 +473,7 @@ void Server::queue(const QString& buffer)
   if(isConnected() && buffer.length())
   {
     if(rawLog) rawLog->appendRaw(buffer);
-    
+
     outputBuffer+=buffer;
     outputBuffer+="\n";
 
@@ -495,6 +497,11 @@ void Server::send()
 
     // wrap socket into a stream
     QTextStream stream(&serverSocket);
+
+    // convert encoded data to IRC ascii
+    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
+    QCString line=codec->fromUnicode(outputBuffer);
+
     stream << outputBuffer;
 
     serverSocket.enableWrite(false);
@@ -1161,8 +1168,7 @@ void Server::setChannelTopic(const QString &channel, const QString &newTopic)
   Channel* outChannel=getChannelByName(channel);
   if(outChannel)
   {
-//    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
-//    QString topic=codec->toUnicode(newTopic);
+    // encoding stuff is done in send()
     outChannel->setTopic(newTopic);
   }
 }
@@ -1172,8 +1178,7 @@ void Server::setChannelTopic(const QString& nickname, const QString &channel, co
   Channel* outChannel=getChannelByName(channel);
   if(outChannel)
   {
-//    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
-//    QString topic=codec->toUnicode(newTopic);
+    // encoding stuff is done in send()
     outChannel->setTopic(nickname,newTopic);
   }
 }

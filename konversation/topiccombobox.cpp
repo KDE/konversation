@@ -16,8 +16,6 @@
 
 #include <kdebug.h>
 
-#include <qtextcodec.h>
-
 #include "topiccombobox.h"
 
 TopicComboBox::TopicComboBox(QWidget* parent) :

@@ -18,8 +18,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include <qtextcodec.h>
-
 #include "statuspanel.h"
 #include "konversationapplication.h"
 #include "ircinput.h"
@@ -76,10 +74,8 @@ void StatusPanel::adjustFocus()
 
 void StatusPanel::sendStatusText(QString sendLine)
 {
-  QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-  QCString line=codec->fromUnicode(sendLine);
-
-  QString output=filter.parse(server->getNickname(),line, QString::null);
+  // encoding stuff is done in Server()
+  QString output=filter.parse(server->getNickname(),sendLine, QString::null);
 
   if(!output.isEmpty()) appendServerMessage(filter.getType(),output);
 

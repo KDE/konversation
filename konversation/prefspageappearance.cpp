@@ -53,7 +53,6 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   QLabel* codecLabel=new QLabel(i18n("Encoding"),parentFrame);
   codecList=new QComboBox(parentFrame);
-//  codecList->insertItem(preferences->getCodec()+" "+i18n("(Current)"));
 
   QStringList encodings=KGlobal::charsets()->descriptiveEncodingNames();
 
