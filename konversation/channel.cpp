@@ -354,8 +354,6 @@ Channel::~Channel()
 }
 
 ChannelNickPtr Channel::getOwnChannelNick() {
-  if(m_ownChannelNick) kdDebug() << "in getOwnChannelNick(), it is not empty" << endl;
-  else kdDebug() << "in getOwnChannelNick(), it is empty" << endl;
   return m_ownChannelNick;
 }
 
@@ -1818,8 +1816,6 @@ void Channel::refreshModeButtons() {
   if(getOwnChannelNick()){
     enable=getOwnChannelNick()->isAnyTypeOfOp();
   }  //if not channel nick, then enable is true - fall back to assuming they are op
-  else
-    kdDebug() << "getOwnChannelNick failed - why?" <<endl;
     
   modeT->setEnabled(enable);
   modeN->setEnabled(enable);
