@@ -2062,12 +2062,12 @@ bool Server::setNickOffline(const QString& nickname, const QStringList& watchLis
       emit watchedNickChanged(this, nickname, false);
       if (!addressee.isEmpty())
         Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
-      getMainWindow()->appendToFrontmost(i18n("Notify"),
+/*      getMainWindow()->appendToFrontmost(i18n("Notify"),
         i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()),statusView);
 #ifdef USE_KNOTIFY
       KNotifyClient::event(mainWindow->winId(), "notify",
         i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()));
-#endif
+#endif*/
     }
   }
   return (nickInfo != 0);
