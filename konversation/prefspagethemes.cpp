@@ -265,7 +265,6 @@ void PrefsPageThemes::updateList()
 	    ++index;
 	}
 
-      kdDebug() << "Got " << *it << endl;
       KDesktopFile themeRC(*it);
       themeName = themeRC.readName();
       themeComment = themeRC.readComment();
