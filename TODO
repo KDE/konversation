@@ -8,7 +8,6 @@ TODO-list for Konversation
 
 SHORT-TERM (URGENT):
 - /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
-- Add ETA counter for DCC transfers
 - Show / Hide tab types (status tabs ect.)
 - Support "CTCP-DCC reply from <nickname>: REJECT SEND <filename> <reason>"
 
@@ -23,7 +22,6 @@ MID-TERM:
 - In Nicks Online panel, show stats like "last spoken" "last seen"
 - Compute md5sum over DCCs and send / display the hash after transfer
 - Make separate Highlight lists for each identity
-- DCC file transfers should use progressbars for better usability
 
 LONG-TERM:
 - Logrotate with timer or at shutdown, compress rotated logs ( berkus )
