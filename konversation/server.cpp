@@ -356,10 +356,10 @@ void Server::connectSignals()
                   this,SLOT  (userhost(const QString&,const QString&,bool,bool)) );
   connect(&inputFilter,SIGNAL(topicAuthor(const QString&,const QString&)),
                   this,SLOT  (setTopicAuthor(const QString&,const QString&)) );
-  connect(&inputFilter,SIGNAL(addChannelListPanel()),
-                  this,SLOT  (addChannelListPanel()) );
   connect(&inputFilter,SIGNAL(invitation(const QString&,const QString&)),
                   this,SLOT  (invitation(const QString&,const QString&)) );
+  connect(&inputFilter, SIGNAL(addToChannelList(const QString&, int, const QString& )),
+    this, SLOT(addToChannelList(const QString&, int, const QString& )));
 
   connect(&inputFilter,SIGNAL (away()),this,SLOT (away()) );
   connect(&inputFilter,SIGNAL (unAway()),this,SLOT (unAway()) );
@@ -433,6 +433,7 @@ bool Server::isConnected()  const {
   else
     return m_serverSSLSocket->state()==KNetwork::KClientSocketBase::Connected;
 }
+
 bool Server::isConnecting() const { return connecting; }
 
 void Server::preShellCommandExited(KProcess* proc)
@@ -2877,15 +2878,18 @@ void Server::addChannelListPanel()
 {
   if(!channelListPanel)
   {
-    channelListPanel=getMainWindow()->addChannelListPanel(this);
+    channelListPanel = getMainWindow()->addChannelListPanel(this);
 
-    connect(channelListPanel,SIGNAL (refreshChannelList()),this,SLOT (requestChannelList()) );
-    connect(channelListPanel,SIGNAL (joinChannel(const QString&)),this,SLOT (sendJoinCommand(const QString&)) );
-    connect(this,SIGNAL (serverOnline(bool)),channelListPanel,SLOT (serverOnline(bool)) );
-
-    connect(&inputFilter,SIGNAL (addToChannelList(const QString&,int,const QString&)),
-          channelListPanel,SLOT (addToChannelList(const QString&,int,const QString&)) );
+    connect(channelListPanel, SIGNAL(refreshChannelList()), this, SLOT(requestChannelList()));
+    connect(channelListPanel, SIGNAL(joinChannel(const QString&)), this, SLOT(sendJoinCommand(const QString&)));
+    connect(this, SIGNAL(serverOnline(bool)), channelListPanel, SLOT(serverOnline(bool)));
   }
+}
+
+void Server::addToChannelList(const QString& channel, int users, const QString& topic)
+{
+  addChannelListPanel();
+  channelListPanel->addToChannelList(channel, users, topic);
 }
 
 ChannelListPanel* Server::getChannelListPanel() const { return channelListPanel; }

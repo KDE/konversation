@@ -93,6 +93,7 @@ void InputFilter::parseLine(const QString &a_newLine, QWidget *mainWindow)
   QString command=incomingLine.left(pos).lower();
   // Are there parameters left in the string?
   QStringList parameterList;
+  
   if(pos!=-1)
   {
     // Cut out the command
@@ -100,12 +101,15 @@ void InputFilter::parseLine(const QString &a_newLine, QWidget *mainWindow)
     // The rest of the string will be the parameter list
     parameterList=QStringList::split(" ",incomingLine);
   }
+  
   Q_ASSERT(server);
+  
   // Server command, if no "!" was found in prefix
-  if(prefix.find('!')==-1 && prefix!=server->getNickname())
+  if(prefix.find('!')==-1 && prefix!=server->getNickname()) {
     parseServerCommand(prefix,command,parameterList,trailing);
-  else
+  } else {
     parseClientCommand(prefix,command,parameterList,trailing, mainWindow);
+  }
 }
 
 void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing, QWidget *mainWindow)
@@ -1278,13 +1282,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
           break;
         }
-      case RPL_LISTSTART:
+      case RPL_LISTSTART: //FIXME This reply is obsolete!!!
         {
           if(getAutomaticRequest()==0) {
             server->appendStatusMessage(i18n("List"),i18n("List of channels:"));
-          } else {
-            emit addChannelListPanel();
-            //kdDebug() << "Start of channel list... " << QTime::currentTime().toString() << endl;
           }
           break;
         }

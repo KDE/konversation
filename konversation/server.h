@@ -360,6 +360,7 @@ class Server : public QObject
     void addRawLog(bool show);
     void closeRawLog();
     void addChannelListPanel();
+    void addToChannelList(const QString& channel, int users, const QString& topic);
     void closeChannelListPanel();
     void updateChannelQuickButtons();
     void sendMultiServerCommand(const QString& command, const QString& parameter);
