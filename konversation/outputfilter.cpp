@@ -23,7 +23,19 @@
 #include <kdebug.h>
 #include <kio/passdlg.h>
 #include <kconfig.h>
+#include <kdeversion.h>
+
+#ifndef KDE_MAKE_VERSION
+#define KDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
+#endif
+
+#ifndef KDE_IS_VERSION
+#define KDE_IS_VERSION(a,b,c) ( KDE_VERSION >= KDE_MAKE_VERSION(a,b,c) )
+#endif
+
+#if KDE_IS_VERSION(3,1,94)
 #include <kshell.h>
+#endif
 
 #include "outputfilter.h"
 #include "konversationapplication.h"
@@ -1041,7 +1053,11 @@ void OutputFilter::parsePrefs(const QString& parameter)
   {
     KConfig* config=KApplication::kApplication()->config();
   
+#if KDE_IS_VERSION(3,1,94)
     QStringList splitted = KShell::splitArgs(parameter);
+#else
+    QStringList splitted = QStringList::split(' ',parameter);
+#endif
     if (splitted.count() > 0)
     {
       QString group = splitted[0];
