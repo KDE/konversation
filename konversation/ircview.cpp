@@ -602,6 +602,10 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
 
   switch(r)
   {
+    case -1:
+      // dummy. -1 means, no entry selected. we don't want -1to go in default, so
+      // we catch it here
+      break;
     case Copy:
       copy();
       break;
@@ -625,6 +629,8 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
     case SendFile:
       emit sendFile();
       break;
+    default:
+      emit extendedPopup(r);
   }
 
   return true;
@@ -692,6 +698,12 @@ void IRCView::pageUp()
 void IRCView::pageDown()
 {
   moveCursor(MovePgDown,false);
+}
+
+// other windows can link own menu entries here
+QPopupMenu* IRCView::getPopup()
+{
+  return popup;
 }
 
 #include "ircview.moc"

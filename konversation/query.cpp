@@ -15,6 +15,7 @@
 #include <qhbox.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
+#include <qpopupmenu.h>
 
 #include <klocale.h>
 #include <kstddirs.h>
@@ -25,6 +26,8 @@
 #include "konversationapplication.h"
 #include "ircinput.h"
 #include "ircview.h"
+
+const int POPUP_IGNORE=0xff;
 
 Query::Query(QWidget* parent) : ChatWindow(parent)
 {
@@ -40,6 +43,10 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   queryHostmask->setReadOnly(true);
 
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer();
+
+  // link "Ignore" menu item into ircview popup
+  QPopupMenu* popup=textView->getPopup();
+  popup->insertItem(i18n("Ignore"),POPUP_IGNORE);  // TODO: let the ircview give the id back?
 
   // This box holds the input line
   QHBox* inputBox=new QHBox(this, "input_log_box");
@@ -61,6 +68,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   connect(textView,SIGNAL (newText(const QString&)),this,SLOT (newTextInView(const QString&)) );
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
+  connect(textView,SIGNAL (extendedPopup(int)),this,SLOT (popup(int)) );
 
   updateFonts();
 
@@ -188,6 +196,14 @@ void Query::showEvent(QShowEvent*)
     awayChanged=false;
     indicateAway(awayState);
   }
+}
+
+void Query::popup(int id)
+{
+  if(id==POPUP_IGNORE)
+    sendQueryText(KonversationApplication::preferences.getCommandChar()+"IGNORE -ALL "+getName());
+  else
+    kdDebug() << "Query::popup(): Popup id " << id << " does not belong to me!" << endl;
 }
 
 void Query::adjustFocus()

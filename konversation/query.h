@@ -64,6 +64,7 @@ class Query : public ChatWindow
     void newTextInView(const QString& highlightColor);
     // connected to IRCInput::textPasted() - used to handle large/multiline pastes
     void textPasted(QString text);
+    void popup(int id);
 
   protected:
     void showEvent(QShowEvent* event);

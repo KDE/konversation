@@ -38,6 +38,7 @@ class IRCView : public KTextBrowser
     void setViewBackground(const QString& color,const QString& pixmapName);
     void setServer(Server* server);
 
+    QPopupMenu* getPopup();
     enum PopupIDs
     {
       Copy,CopyUrl,SelectAll,
@@ -51,6 +52,7 @@ class IRCView : public KTextBrowser
     void gotFocus();                  // So we can set focus to input line
     void textToLog(const QString& text);
     void sendFile();
+    void extendedPopup(int id);
 
   public slots:
     void append(const QString& nick,const QString& message);
