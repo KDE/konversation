@@ -40,6 +40,12 @@ class IRCInput;
 class NickChangeDialog;
 class TopicComboBox;
 
+class NickList : public QPtrList<Nick>
+{
+  protected:
+    virtual int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2);
+};
+
 class Channel : public ChatWindow
 {
   Q_OBJECT
@@ -173,7 +179,7 @@ class Channel : public ChatWindow
     IRCInput* channelInput;
 
     NickChangeDialog* nickChangeDialog;
-    QPtrList<Nick> nicknameList;
+    NickList nicknameList;
     QStringList selectedNicksList;
     QPtrList<QuickButton> buttonList;
     QTimer userhostTimer;

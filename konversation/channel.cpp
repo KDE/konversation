@@ -715,7 +715,7 @@ void Channel::addNickname(const QString& nickname,const QString& hostmask,
     Nick* nick=new Nick(nicknameListView,nickname,hostmask,admin,owner,op,halfop,voice);
     nicknameListView->sort();
 
-    nicknameList.append(nick);
+    nicknameList.inSort(nick);
     adjustNicks(1);
     if(admin || owner || op || halfop) adjustOps(1);
   }
@@ -760,6 +760,7 @@ void Channel::renameNick(const QString& nickname,const QString& newNick)
   else nick->setNickname(newNick);
 
   nicknameListView->sort();
+  nicknameList.sort();
 }
 
 void Channel::joinNickname(const QString& nickname,const QString& hostmask)
@@ -1563,6 +1564,16 @@ void Channel::appendInputText(const QString& s)
 void Channel::closeYourself()
 {
   server->closeChannel(getName());
+}
+
+//
+// NickList
+//
+
+int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
+{
+  return QString::localeAwareCompare(static_cast<Nick*>(item1)->getNickname(),
+    static_cast<Nick*>(item2)->getNickname());
 }
 
 #include "channel.moc"
