@@ -114,6 +114,8 @@ class Server : public QObject
     void queue(const QString& buffer);
     void setNickname(const QString& newNickname);
     void addQuery(const QString& nickname,const QString& hostmask);
+    void requestDccPanel();
+    void addDccSend(QString recipient,QString file);
     void removeQuery(Query* query);
     void startNotifyTimer(int msec=0);
 
@@ -126,7 +128,7 @@ class Server : public QObject
     void notifyCheckTimeout();
     void connectionEstablished();
     void notifyResponse(QString nicksOnline);
-    void addDccTransfer(QString sourceNick,QStringList dccArguments);
+    void addDccGet(QString sourceNick,QStringList dccArguments);
     void resumeDccTransfer(QString sourceNick,QStringList dccArguments);
     void sendResumeRequest(QString sender,QString fileName,QString port,int startAt);
 

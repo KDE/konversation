@@ -58,6 +58,10 @@ void ChatWindow::setServer(Server* newServer)
   server=newServer;
   connect(&filter,SIGNAL (openQuery(const QString&,const QString&)),
            server,SLOT   (addQuery(const QString&,const QString&)) );
+  connect(&filter,SIGNAL (openDccPanel()),
+           server,SLOT   (requestDccPanel()) );
+  connect(&filter,SIGNAL (openDccSend(QString,QString)),
+           server,SLOT   (addDccSend(QString,QString)) );
 }
 
 void ChatWindow::setTextView(IRCView* newView)

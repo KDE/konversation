@@ -163,7 +163,7 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
           // Incoming file?
           if(dccType=="send")
           {
-            emit addDccTransfer(sourceNick,dccArgument);
+            emit addDccGet(sourceNick,dccArgument);
           }
           // Incoming file that shall be resumed?
           else if(dccType=="accept")

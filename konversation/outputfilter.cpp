@@ -35,7 +35,7 @@ void OutputFilter::resumeRequest(QString sender,QString fileName,QString port,in
   setCommandChar();
 
   toServer="PRIVMSG "+sender+" :"+'\x01'+"DCC RESUME "+fileName+" "+port+" "+QString::number(startAt)+'\x01';
-  output=i18n("Sending DCC Resume request for file \"%1\".").arg(fileName);
+  output=i18n("Sending DCC Resume request to \"%1\" for file \"%2\".").arg(sender).arg(fileName);
   type=i18n("Resume");
 }
 
@@ -91,6 +91,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
     else if(line.startsWith("kick "))    parseKick(parameter);
     else if(line.startsWith("topic "))   parseTopic(parameter);
     else if(line.startsWith("away "))    parseAway(parameter);
+    else if(line.startsWith("dcc "))     parseDcc(parameter);
 
     else if(line=="join")                parseJoin("");
     else if(line=="part")                parsePart("");
@@ -100,6 +101,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
     else if(line=="kick")                parseKick("");
     else if(line=="topic")               parseTopic("");
     else if(line=="away")                parseAway("");
+    else if(line=="dcc")                 parseDcc("");
 
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
@@ -349,6 +351,35 @@ void OutputFilter::changeMode(QString parameter,char mode,char giveTake)
       toServer+=QString(" ")+giveTake+modes;
 
       for(unsigned int index=0;index<modeCount;index++) toServer+=" "+nickList[index];
+    }
+  }
+}
+
+void OutputFilter::parseDcc(QString parameter)
+{
+  // No parameter, just open DCC panel
+  if(parameter=="") emit openDccPanel();
+  else
+  {
+    QStringList parameterList=QStringList::split(' ',parameter);
+    if(parameterList[0]=="send")
+    {
+      if(parameterList.count()<2)
+      {
+        type=i18n("Usage");
+        output=i18n("Usage: %1DCC [SEND nickname filename]").arg(commandChar);
+// TODO: make sure this will work:
+//        output=i18n("Usage: %1DCC [SEND nickname [filename] [filename] ...]").arg(commandChar);
+        command=true;
+      }
+      else
+      {
+        // TODO: Check if file is available
+        type=i18n("DCC");
+        output=i18n("Offering the file \"%1\" to %2").arg(parameterList[2]).arg(parameterList[1]);
+        command=true;
+        emit openDccSend(parameterList[1],parameterList[2]);
+      }
     }
   }
 }

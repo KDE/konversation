@@ -83,8 +83,8 @@ Server::Server(int id)
                   this,SLOT  (connectionEstablished()) );
   connect(&inputFilter,SIGNAL(notifyResponse(QString)),
                   this,SLOT  (notifyResponse(QString)) );
-  connect(&inputFilter,SIGNAL(addDccTransfer(QString,QStringList)),
-                  this,SLOT  (addDccTransfer(QString,QStringList)) );
+  connect(&inputFilter,SIGNAL(addDccGet(QString,QStringList)),
+                  this,SLOT  (addDccGet(QString,QStringList)) );
   connect(&inputFilter,SIGNAL(resumeDccTransfer(QString,QStringList)),
                   this,SLOT  (resumeDccTransfer(QString,QStringList)) );
 
@@ -413,7 +413,11 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
   query->setHostmask(hostmask);
 }
 
-void Server::addDccTransfer(QString sourceNick,QStringList dccArguments)
+void Server::addDccSend(QString recipient,QString file)
+{
+}
+
+void Server::addDccGet(QString sourceNick,QStringList dccArguments)
 {
   emit addDccPanel();
 
@@ -442,6 +446,11 @@ void Server::addDccTransfer(QString sourceNick,QStringList dccArguments)
   if(KonversationApplication::preferences.getDccAutoGet()) newDcc->startGet();
 }
 
+void Server::requestDccPanel()
+{
+  emit addDccPanel();
+}
+
 void Server::sendResumeRequest(QString sender,QString fileName,QString port,int startAt)
 {
   kdDebug() << "Server::sendResumeRequest()" << endl;
@@ -459,7 +468,7 @@ void Server::resumeDccTransfer(QString sourceNick,QStringList dccArguments)
   {
     // overcome mIRCs brain-dead "file.ext" substitution
     QString fileName=dccTransfer->getFile();
-    appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3").arg(fileName).arg(sourceNick).arg(dccArguments[2]));
+    appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(sourceNick).arg(dccArguments[2]));
     dccTransfer->startResume(dccArguments[2]);
   }
   else

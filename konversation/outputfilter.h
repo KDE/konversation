@@ -44,6 +44,8 @@ class OutputFilter : public QObject
 
   signals:
     void openQuery(const QString& nick,const QString& hostmask); // hostmask currently unused
+    void openDccSend(QString recipient,QString fileName);
+    void openDccPanel();
 
   public slots:
     void setCommandChar();
@@ -60,30 +62,31 @@ class OutputFilter : public QObject
     bool command;
     bool server;
 
-    void parseMsg(QString parameter);
-    void parseQuery(QString parameter);
+    void parseMsg(QString parameter);      // works
+    void parseQuery(QString parameter);    // works
     void parseDescribe(QString parameter);
-    void parseNotice(QString parameter);
-    void parseJoin(QString parameter);
-    void parsePart(QString parameter);
-    void parseQuit(QString parameter);
-    void parseKick(QString parameter);
+    void parseNotice(QString parameter);   // works
+    void parseJoin(QString parameter);     // works
+    void parsePart(QString parameter);     // works
+    void parseQuit(QString parameter);     // works
+    void parseKick(QString parameter);     // works
     void parseKickBan(QString parameter);
     void parseBan(QString parameter);
     void parseUnban(QString parameter);
     void parseNames(QString parameter);
     void parseList(QString parameter);
-    void parseOp(QString parameter);
-    void parseDeop(QString parameter);
-    void parseVoice(QString parameter);
-    void parseUnvoice(QString parameter);
-    void parseTopic(QString parameter);
-    void parseAway(QString parameter);
+    void parseOp(QString parameter);       // works
+    void parseDeop(QString parameter);     // works
+    void parseVoice(QString parameter);    // works
+    void parseUnvoice(QString parameter);  // works
+    void parseTopic(QString parameter);    // works
+    void parseAway(QString parameter);     // works
     void parseCtcp(QString parameter);
     void parsePing(QString parameter);
     void parseVersion(QString parameter);
     void parseServer(QString parameter);
     void parseConnect(QString parameter);
+    void parseDcc(QString parameter);
 
     void changeMode(QString parameter,char mode,char giveTake);
     bool isAChannel(QString check);

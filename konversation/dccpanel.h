@@ -45,7 +45,7 @@ class DccPanel : public ChatWindow
     void dccSelected();
 
   protected:
-    void setButtons(bool accept,bool resume,bool abort,bool remove,bool open,bool info);
+    void setButtons(bool accept,bool abort,bool remove,bool open,bool info);
 
     int spacing();
     int margin();
@@ -53,7 +53,7 @@ class DccPanel : public ChatWindow
     KListView* dccListView;
 
     QPushButton* acceptButton;
-    QPushButton* resumeButton;
+    QPushButton* sendButton;
     QPushButton* abortButton;
     QPushButton* removeButton;
     QPushButton* openButton;

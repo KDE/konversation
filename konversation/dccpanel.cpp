@@ -50,6 +50,7 @@ DccPanel::DccPanel(QWidget* parent) :
   QHBox* buttonsBox=new QHBox(this);
   buttonsBox->setSpacing(spacing());
   acceptButton=new QPushButton(i18n("Accept"),buttonsBox,"start_dcc");
+  sendButton  =new QPushButton(i18n("Send File"),buttonsBox,"send_dcc");
   abortButton =new QPushButton(i18n("Abort"),buttonsBox,"abort_dcc");
   removeButton=new QPushButton(i18n("Remove"),buttonsBox,"remove_dcc");
   openButton  =new QPushButton(i18n("Open"),buttonsBox,"open_dcc_file");
@@ -65,10 +66,9 @@ DccPanel::~DccPanel()
 {
 }
 
-void DccPanel::setButtons(bool accept,bool resume,bool abort,bool remove,bool open,bool info)
+void DccPanel::setButtons(bool accept,bool abort,bool remove,bool open,bool info)
 {
   acceptButton->setEnabled(accept);
-  resumeButton->setEnabled(resume);
   abortButton->setEnabled(abort);
   removeButton->setEnabled(remove);
   openButton->setEnabled(open);
@@ -88,24 +88,24 @@ void DccPanel::dccSelected()
       case DccTransfer::Queued:
       case DccTransfer::Lookup:
       case DccTransfer::Connecting:
-        setButtons(true,true,false,true,false,false);
+        setButtons(true,false,true,false,false);
         break;
       case DccTransfer::Offering:
-        setButtons(false,false,true,true,true,true);
+        setButtons(false,true,true,true,true);
         break;
       case DccTransfer::Running:
       case DccTransfer::Stalled:
-        setButtons(false,false,true,true,true,true);
+        setButtons(false,true,true,true,true);
         break;
       case DccTransfer::Failed:
       case DccTransfer::Done:
-        setButtons(false,false,false,true,true,true);
+        setButtons(false,false,true,true,true);
         break;
       default:
-        setButtons(false,false,false,false,false,false);
+        setButtons(false,false,false,false,false);
     }
   }
-  else setButtons(false,false,false,false,false,false);
+  else setButtons(false,false,false,false,false);
 }
 
 void DccPanel::acceptDcc()
