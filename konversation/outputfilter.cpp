@@ -105,6 +105,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("raw "))     parseRaw(parameter);
     else if(line.startsWith("notify "))  parseNotify(parameter);
     else if(line.startsWith("oper "))    parseOper(myNick,parameter);
+    else if(line.startsWith("ban "))     parseBan(parameter);
 
     else if(line=="join")                parseJoin(QString::null);
     else if(line=="part")                parsePart(QString::null);
@@ -121,6 +122,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="raw")                 parseRaw(QString::null);
     else if(line=="notify")              parseNotify(QString::null);
     else if(line=="oper")                parseOper(myNick,QString::null);
+    else if(line=="ban")                 parseBan(QString::null);
 
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
@@ -651,6 +653,67 @@ void OutputFilter::parseOper(const QString& myNick,const QString& parameter)
   }
 }
 
+void OutputFilter::parseBan(const QString& parameter)
+{
+  // assume incorrect syntax first
+  bool showUsage=true;
+  
+  if(parameter.isEmpty()) showUsage=true;
+  else
+  {
+    QStringList parameterList=QStringList::split(' ',parameter);
+    QString channel=QString::null;
+    QString option=QString::null;
+    // check for option
+    bool host=(parameterList[0].lower()=="-host");
+    bool domain=(parameterList[0].lower()=="-domain");
+    
+    // remove possible option
+    if(host || domain)
+    {
+      option=parameterList[0];
+      parameterList.pop_front();
+    }
+    
+    // look for channel / ban mask
+    if(parameterList.count())
+    {
+      // user specified channel
+      if(isAChannel(parameterList[0]))
+      {
+        channel=parameterList[0];
+        parameterList.pop_front();
+      }
+      // no channel, so assume current destination as channel
+      else if(isAChannel(destination))
+        channel=destination;
+      else
+      {
+        // destination is no channel => error
+        error(i18n("BAN without channel name works only from inside a channel."));
+        // no usage information after error
+        showUsage=false;
+      }
+      // signal server to ban this user if all went fine
+      if(!channel.isEmpty())
+      {
+        kdDebug() << "ban " << option << " " << channel << " " << parameterList.join(" ") << endl;
+        emit banUsers(parameterList,channel,option);
+        // syntax was correct, so reset flag
+        showUsage=false;
+      }
+    }
+  }
+
+  if(showUsage) usage(i18n("Usage: BAN [-HOST | -DOMAIN] [channel] <user|mask>"));
+}
+
+// finally set the ban
+void OutputFilter::execBan(const QString& mask,const QString& channel)
+{
+  toServer="MODE "+channel+" +b "+mask;
+}
+
 // Accessors
 
 // Maybe we should switch to values instead of flags
@@ -672,6 +735,20 @@ bool OutputFilter::isAChannel(const QString &check)
   QChar initial=check.at(0);
 
   return (initial=='#' || initial=='&' || initial=='+' || initial=='!');
+}
+
+void OutputFilter::usage(const QString& string)
+{
+  type=i18n("Usage");
+  output=string;
+  program=true;
+}
+
+void OutputFilter::error(const QString& string)
+{
+  type=i18n("Error");
+  output=string;
+  program=true;
 }
 
 #include "outputfilter.moc"

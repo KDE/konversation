@@ -400,7 +400,7 @@ void Server::incoming()
   if(len==0) broken(0);
 }
 
-void Server::queue(const QString &buffer)
+void Server::queue(const QString& buffer)
 {
   // Only queue lines if we are connected
   if(isConnected() && buffer.length())
@@ -505,6 +505,17 @@ void Server::closeChannel(const QString &name)
 {
   outputFilter.parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"PART",name);
   queue(outputFilter.getServerOutput());
+}
+
+void Server::requestBan(const QStringList& users,const QString& channel,const QString& option)
+{
+  for(unsigned int index=0;index<users.count();index++)
+  {
+    QString mask=users[index];
+    emit execBan(mask,channel);
+    QString banCommand=outputFilter.getServerOutput();
+    queue(banCommand);
+  }
 }
 
 void Server::requestDccSend()

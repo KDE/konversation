@@ -61,10 +61,12 @@ class OutputFilter : public QObject
     void unAway();
     void sendToAllChannels(const QString& text);
     void launchScript(const QString& parameter);
+    void banUsers(const QStringList& userList,const QString& channel,const QString& option);
 
   public slots:
     void setCommandChar();
     void setIdentity(const Identity *newIdentity);
+    void execBan(const QString& mask,const QString& channels);
 
   protected:
     QString output;
@@ -115,6 +117,8 @@ class OutputFilter : public QObject
 
     void changeMode(const QString& parameter,char mode,char giveTake);
     bool isAChannel(const QString& check);
+    void usage(const QString& check);
+    void error(const QString& check);
 };
 
 #endif

@@ -93,6 +93,11 @@ void ChatWindow::setServer(Server* newServer)
              server,SLOT   (unAway()) );
     connect(&filter,SIGNAL (sendToAllChannels(const QString&)),
              server,SLOT   (sendToAllChannels(const QString&)) );
+    connect(&filter,SIGNAL (banUsers(const QStringList&,const QString&,const QString&)),
+             server,SLOT   (requestBan(const QStringList&,const QString&,const QString&)) );
+
+    connect( server,SIGNAL (execBan(const QString&,const QString&)),
+            &filter,SLOT   (execBan(const QString&,const QString&)) );
 
     connect(&filter,SIGNAL (openRawLog()), server,SLOT (addRawLog()) );
     connect(&filter,SIGNAL (closeRawLog()),server,SLOT (closeRawLog()) );

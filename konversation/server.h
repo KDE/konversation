@@ -126,6 +126,7 @@ class Server : public QObject
     void closeDccPanel(); // will be connected to ServerWindow::closeDccPanel()
     void deleted(Server* myself); // will be connected to KonversationApplication::removeServer()
     void repaintTabs(); // will be connected to LedTabBar::repaintTabs();
+    void execBan(const QString& user,const QString& channel);
 
   public slots:
     void connectToIRCServer();
@@ -136,6 +137,7 @@ class Server : public QObject
     void closeChannel(const QString &name);
     void requestDccPanel();
     void requestCloseDccPanel();
+    void requestBan(const QStringList& users,const QString& channel,const QString& option);
     void addDccSend(const QString &recipient,const QString &file);
     void removeQuery(Query *query);
     void startNotifyTimer(int msec=0);
