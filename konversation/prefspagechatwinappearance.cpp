@@ -116,7 +116,7 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QFrame* newParent,Prefere
   autoUserhostCheck=new QCheckBox(i18n("Show hostmasks &in nickname list"), layoutGroup, "auto_userhost_check");
   autoUserhostCheck->setChecked(preferences->getAutoUserhost());
 
-  QGroupBox* backgroundImageBox = new QGroupBox("Use Back&ground Image", parentFrame);
+  QGroupBox* backgroundImageBox = new QGroupBox(i18n("Use Back&ground Image"), parentFrame);
   backgroundImageBox->setColumnLayout(0, Qt::Horizontal);
   backgroundImageBox->setMargin(marginHint());
   backgroundImageBox->setCheckable(TRUE);
