@@ -146,6 +146,15 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
         }
         break;
 
+        case Key_V:
+        {
+            if ( keyEvent->state() & ControlButton ) {
+                paste();
+            }
+            return true;
+        }
+        break;
+
         default:
           // Check if the keystroke actually produced text. If not it was just a qualifier.
           if(!keyEvent->text().isEmpty())
