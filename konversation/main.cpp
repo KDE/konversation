@@ -6,7 +6,7 @@
 */
 
 /*
-  main.cpp  -  description
+  main.cpp  -  Where it all began ...
   begin:     Die Jan 15 05:59:05 CET 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -30,7 +30,7 @@
   i18n() will only work as soon as a kapplication object was made.
 */
 
-static const char* description=I18N_NOOP("A user friendly IRC client");
+static const char* shortDescription=I18N_NOOP("A user friendly IRC client");
 // INSERT A DESCRIPTION FOR YOUR APPLICATION HERE
 
 int main(int argc, char* argv[])
@@ -38,10 +38,12 @@ int main(int argc, char* argv[])
   KAboutData aboutData("konversation",
                        I18N_NOOP("Konversation"),
                        VERSION,
-                       description,
+                       shortDescription,
                        KAboutData::License_GPL,
-                       "(C)2002, Dario Abatianni",
-                       I18N_NOOP("Description for the 'About' dialog here."),
+                       "(C)2002, 2003 Dario Abatianni",
+                       I18N_NOOP("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
+                                 "Meet friends on the net, make new acquaintances and lose yourself in\n"
+                                 "talk about your favourite subject."),
                        "http://konversation.sourceforge.net/",
                        "eisfuchs@tigress.com");
 

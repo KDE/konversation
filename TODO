@@ -1,5 +1,4 @@
 Make Config Dialogs fit into one Tab-Dialog and throw out single windows
-Write Application Description in main()
 Implement different identities so user can choose which identity to use on which server
 Move Part / Kick Reasons into the Identity section in Preferences File
 Make sure, that lines don't get cleared while viewing the history
