@@ -20,6 +20,8 @@
 #include <qobject.h>
 #include <qstring.h>
 
+#include "identity.h"
+
 /*
   @author Dario Abatianni
 */
@@ -75,7 +77,7 @@ class OutputFilter : public QObject
     QString destination;
 
     QString commandChar;
-    const Identity *identity;
+    Identity identity;
 
     // message types
     bool action;

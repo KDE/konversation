@@ -79,9 +79,6 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   QPushButton* addIdentityButton=new QPushButton(i18n("Add new identity"),buttonBox,"add_identity_button");
   removeIdentityButton=new QPushButton(i18n("Remove identity"),buttonBox,"remove_identity_button");
   
-  // TODO: Enable the button when all's fine
-  removeIdentityButton->setEnabled(false);
-
   QHBox* spacer=new QHBox(parentFrame);
 
   // set values for the widgets
@@ -243,6 +240,7 @@ void PrefsPageIdentity::updateIdentity(int number)
   
   // TODO: Enable the button when all's fine
 //  removeIdentityButton->setEnabled((number!=0));
+  removeIdentityButton->setEnabled(false);
 
   loginInput->setText(identity->getIdent());
   realNameInput->setText(identity->getRealName());

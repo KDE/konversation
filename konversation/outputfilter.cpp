@@ -25,7 +25,6 @@
 
 #include "konversationapplication.h"
 #include "outputfilter.h"
-#include "identity.h"
 
 #if QT_VERSION < 0x030100
 #include "main.h"
@@ -195,7 +194,7 @@ void OutputFilter::parseKick(const QString &parameter)
       // get kick reason (if any)
       QString reason=parameter.mid(victim.length()+1);
       // if no reason given, take default reason
-      if(reason.isEmpty()) reason=identity->getKickReason();
+      if(reason.isEmpty()) reason=identity.getKickReason();
       toServer="KICK "+destination+" "+victim+" :"+reason;
     }
   }
@@ -213,7 +212,7 @@ void OutputFilter::parsePart(const QString &parameter)
   if(parameter.isEmpty())
   {
     // But only if we actually are in a channel
-    if(isAChannel(destination)) toServer="PART "+destination+" :"+identity->getPartReason();
+    if(isAChannel(destination)) toServer="PART "+destination+" :"+identity.getPartReason();
     else
     {
       type=i18n("Error");
@@ -231,7 +230,7 @@ void OutputFilter::parsePart(const QString &parameter)
       // get part reason (if any)
       QString reason=parameter.mid(channel.length()+1);
       // if no reason given, take default reason
-      if(reason.isEmpty()) reason=identity->getPartReason();
+      if(reason.isEmpty()) reason=identity.getPartReason();
       toServer="PART "+channel+" :"+reason;
     }
     // part this channel with a given reason
@@ -294,17 +293,17 @@ void OutputFilter::parseAway(const QString &reason)
 {
   if(reason.isEmpty())
   {
-    if(identity->getShowAwayMessage())
-      sendToAllChannels(identity->getReturnMessage());
+    if(identity.getShowAwayMessage())
+      sendToAllChannels(identity.getReturnMessage());
 
     emit unAway();
     toServer="AWAY";
   }
   else
   {
-    if(identity->getShowAwayMessage())
+    if(identity.getShowAwayMessage())
     {
-      QString message=identity->getAwayMessage();
+      QString message=identity.getAwayMessage();
       sendToAllChannels(message.replace(QRegExp("%s",false),reason));
     }
 
@@ -320,9 +319,9 @@ void OutputFilter::parseQuit(const QString &reason)
   toServer = "QUIT :";
   // if no reason given, take default reason
   if(reason.isEmpty())
-    toServer += identity->getPartReason();
+    toServer+=identity.getPartReason();
   else
-    toServer += reason;
+    toServer+=reason;
 }
 
 void OutputFilter::parseNotice(const QString &parameter)
@@ -725,7 +724,12 @@ bool OutputFilter::isProgram() { return program; };
 bool OutputFilter::isQuery() { return query; };
 
 void OutputFilter::setCommandChar() { commandChar=KonversationApplication::preferences.getCommandChar(); }
-void OutputFilter::setIdentity(const Identity *newIdentity) { identity=newIdentity; }
+void OutputFilter::setIdentity(const Identity *newIdentity)
+{
+  identity=*newIdentity;
+  // TODO: move this into copy constructor! THis does not work yet!
+  identity.setNicknameList(newIdentity->getNicknameList());
+}
 
 QString& OutputFilter::getOutput() { return output; };
 QString& OutputFilter::getServerOutput() { return toServer; };
