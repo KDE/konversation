@@ -14,16 +14,13 @@
   $Id$
 */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include <kapp.h>
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <klocale.h>
 
 #include "konversationapplication.h"
+#include "version.h"
 
 #if QT_VERSION < 0x030100
 #include <time.h>

@@ -23,17 +23,12 @@
 #include <kdebug.h>
 #include <knotifyclient.h>
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#else
-#define VERSION 0.13
-#endif
-
 #include "inputfilter.h"
 #include "server.h"
 #include "errorcodes.h"
 #include "konversationapplication.h"
 #include "commit.h"
+#include "version.h"
 
 #if QT_VERSION < 0x030100
 #include "main.h"
