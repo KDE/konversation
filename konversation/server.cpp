@@ -175,6 +175,7 @@ Server::~Server()
 
   // Delete helper object.
   delete m_serverISON;
+  m_serverISON = 0;
   // clear nicks online
   emit nicksNowOnline(this,QStringList(),true);
   // Make sure no signals get sent to a soon to be dying Server Window
@@ -579,7 +580,7 @@ void Server::ircServerConnectionSuccess()
     {
       output.remove(0, 1);
     }*/
-    Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),output,QString::null);
+    Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),output,QString::Null);
     queue(result.toServer);
   }
 
