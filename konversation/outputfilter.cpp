@@ -780,10 +780,10 @@ void OutputFilter::parseKonsole()
 // Accessors
 
 // Maybe we should switch to values instead of flags
-bool OutputFilter::isAction() { return action; };
-bool OutputFilter::isCommand() { return command; };
-bool OutputFilter::isProgram() { return program; };
-bool OutputFilter::isQuery() { return query; };
+bool OutputFilter::isAction() { return action; }
+bool OutputFilter::isCommand() { return command; }
+bool OutputFilter::isProgram() { return program; }
+bool OutputFilter::isQuery() { return query; }
 
 void OutputFilter::setCommandChar() { commandChar=KonversationApplication::preferences.getCommandChar(); }
 void OutputFilter::setIdentity(const Identity *newIdentity)
@@ -793,9 +793,9 @@ void OutputFilter::setIdentity(const Identity *newIdentity)
   identity.setNicknameList(newIdentity->getNicknameList());
 }
 
-QString& OutputFilter::getOutput() { return output; };
-QString& OutputFilter::getServerOutput() { return toServer; };
-QString& OutputFilter::getType() { return type; };
+QString& OutputFilter::getOutput() { return output; }
+QString& OutputFilter::getServerOutput() { return toServer; }
+QString& OutputFilter::getType() { return type; }
 
 //     # & + and ! are Channel identifiers
 bool OutputFilter::isAChannel(const QString &check)

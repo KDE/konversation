@@ -484,21 +484,21 @@ void Preferences::setVoiceLedColor(int passed_color)    { voiceLedColor=passed_c
 void Preferences::setNoRightsLedColor(int passed_color) { noRightsLedColor=passed_color; }
 
 // Geometry functions
-QSize Preferences::getMainWindowSize()         { return mainWindowSize; };
-QSize Preferences::getHilightSize()            { return hilightSize; };
-QSize Preferences::getButtonsSize()            { return buttonsSize; };
-QSize Preferences::getIgnoreSize()             { return ignoreSize; };
-QSize Preferences::getNotifySize()             { return notifySize; };
-QSize Preferences::getNicksOnlineSize()        { return nicksOnlineSize; };
-QSize Preferences::getNicknameSize()           { return nicknameSize; };
+QSize Preferences::getMainWindowSize()         { return mainWindowSize; }
+QSize Preferences::getHilightSize()            { return hilightSize; }
+QSize Preferences::getButtonsSize()            { return buttonsSize; }
+QSize Preferences::getIgnoreSize()             { return ignoreSize; }
+QSize Preferences::getNotifySize()             { return notifySize; }
+QSize Preferences::getNicksOnlineSize()        { return nicksOnlineSize; }
+QSize Preferences::getNicknameSize()           { return nicknameSize; }
 
-void Preferences::setMainWindowSize(QSize newSize)         { mainWindowSize=newSize; };
-void Preferences::setHilightSize(QSize newSize)            { hilightSize=newSize; };
-void Preferences::setButtonsSize(QSize newSize)            { buttonsSize=newSize; };
-void Preferences::setIgnoreSize(QSize newSize)             { ignoreSize=newSize; };
-void Preferences::setNotifySize(QSize newSize)             { notifySize=newSize; };
-void Preferences::setNicksOnlineSize(QSize newSize)        { nicksOnlineSize=newSize; };
-void Preferences::setNicknameSize(QSize newSize)           { nicknameSize=newSize; };
+void Preferences::setMainWindowSize(QSize newSize)         { mainWindowSize=newSize; }
+void Preferences::setHilightSize(QSize newSize)            { hilightSize=newSize; }
+void Preferences::setButtonsSize(QSize newSize)            { buttonsSize=newSize; }
+void Preferences::setIgnoreSize(QSize newSize)             { ignoreSize=newSize; }
+void Preferences::setNotifySize(QSize newSize)             { notifySize=newSize; }
+void Preferences::setNicksOnlineSize(QSize newSize)        { nicksOnlineSize=newSize; }
+void Preferences::setNicknameSize(QSize newSize)           { nicknameSize=newSize; }
 
 void Preferences::setHilightNick(bool state) { hilightNick=state; }
 bool Preferences::getHilightNick() { return hilightNick; }
