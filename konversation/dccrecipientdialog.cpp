@@ -37,6 +37,7 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent,QStringList list,QSize si
   KListBox* nicknameList=new KListBox(page,"recipient_list");
 
   nicknameList->insertStringList(list);
+  nicknameList->sort(true);
 
   dialogLayout->addWidget(nicknameList);
 

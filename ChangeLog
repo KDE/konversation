@@ -10,3 +10,4 @@ Changes from 0.7 to 0.8:
 - Fixed nicklist sorting in channels
 - Switched to kdevelop 2.1.4 to hopefully fix some compile problems
 - Made Notices appear a bit different
+- DCC recipient list now gets sorted
