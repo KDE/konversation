@@ -544,6 +544,11 @@ void KonversationMainWindow::closeNicksOnlineWindow(QSize newSize)
   nicksOnlineWindow=0;
 }
 
+void KonversationMainWindow::openNotify()
+{
+  emit openPrefsDialog(Preferences::NotifyPage);
+}
+
 // TODO: Let an own class handle notify things
 void KonversationMainWindow::setOnlineList(Server* notifyServer,const QStringList& list)
 {

@@ -19,11 +19,12 @@
 
 #include <kdialogbase.h>
 
+#include "preferences.h"
+
 /*
  *@author Dario Abatianni
 */
 
-class Preferences;
 class PrefsPageGeneralSettings;
 class PrefsPageButtons;
 class PrefsPageHighlight;
@@ -37,6 +38,8 @@ class PrefsDialog : public KDialogBase
   public:
     PrefsDialog(Preferences* preferences,bool noServer);
     ~PrefsDialog();
+
+    void openPage(Preferences::Pages page);
 
   signals:
     void connectToServer(int id);

@@ -63,7 +63,6 @@ class KonversationApplication : public KApplication
     void saveOptions(bool updateGUI=true);
     void quitKonversation();
 
-    void openPrefsDialog();
     void closePrefsDialog();
 
     void deleteUrl(const QString& who,const QString& url);
@@ -72,6 +71,8 @@ class KonversationApplication : public KApplication
     bool emitDCOPSig(const QString& appId, const QString& objId, const QString& signal, QByteArray& data);
 
   protected slots:
+    void openPrefsDialog();
+    void openPrefsDialog(int page);
     void removeServer(Server* server);
     void dcopSay(const QString& server,const QString& target,const QString& command);
     void dcopInfo(const QString& string);

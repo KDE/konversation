@@ -69,6 +69,7 @@ class KonversationMainWindow : public KMainWindow
     void prefsChanged();
     void startNotifyTimer(int msec);
     void openPrefsDialog();
+    void openPrefsDialog(int page);
     void quitServer();
     void nicksNowOnline(const QString& serverName,const QStringList& list);
 
@@ -103,6 +104,7 @@ class KonversationMainWindow : public KMainWindow
     void closeNicksOnlineWindow(QSize newSize);
 
     void openChannelList();
+    void openNotify();
 
     void nextTab();
     void previousTab();

@@ -153,4 +153,9 @@ void PrefsDialog::setPreferences(Preferences* newPrefs)
   preferences=newPrefs;
 }
 
+void PrefsDialog::openPage(Preferences::Pages page)
+{
+  kdDebug() << "PrefsDialog::openPage(" << page << ")" << endl;
+}
+
 #include "prefsdialog.moc"

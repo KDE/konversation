@@ -52,6 +52,7 @@ KonversationApplication::KonversationApplication()
   // open main window
   mainWindow=new KonversationMainWindow();
   connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
+  connect(mainWindow,SIGNAL (openPrefsDialog(int)),this,SLOT (openPrefsDialog(int)) );
 
   // handle autoconnect on startup
   QValueList<int> list=preferences.getAutoConnectServerIDs();
@@ -727,6 +728,13 @@ void KonversationApplication::openPrefsDialog()
     prefsDialog->raise();
     prefsDialog->setActiveWindow();
   }
+}
+
+void KonversationApplication::openPrefsDialog(int page)
+{
+  openPrefsDialog();
+  // FIXME: remove the cast!
+  prefsDialog->openPage(static_cast<Preferences::Pages>(page));
 }
 
 void KonversationApplication::syncPrefs()

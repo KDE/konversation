@@ -56,6 +56,11 @@ class Preferences : public QObject
       Right    // not yet supported
     };
 
+    enum Pages
+    {
+      NotifyPage=0
+    };
+
     Preferences();
     ~Preferences();
 
