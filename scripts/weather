@@ -39,13 +39,12 @@ foreach $station (@stations) {
   
   $pressure =~ s/\"/\\\"/g; # Escape double quote
 
-  chomp $station;
   chomp $city;
   chomp $temperature;
   chomp $pressure;
   chomp $wind;
-  chomp $detail;
-
+  
+  
   if( $detail ) {
   $MESSAGE = "Current Weather for %B$city%B : %B$details%B, Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
   }
