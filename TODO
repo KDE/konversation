@@ -14,7 +14,7 @@ MID-TERM:
 - Text substitution list (aliases, dangerous commands) with ability to pop up messageboxes
 - Dcop interface for charset
 - Ability define multiple commands (bug#88533)
-
+- Full session management support
 
 LONG-TERM:
 - Treeview with servers, list of channels / queries in a detachable window that also indicates new text
