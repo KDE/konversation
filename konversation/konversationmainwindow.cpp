@@ -415,9 +415,11 @@ void KonversationMainWindow::updateFrontView()
   // TODO: make a function to check this rather than excluding types here
   if(view->getType()!=ChatWindow::DccPanel &&
      view->getType()!=ChatWindow::RawLog &&
+     view->getType()!=ChatWindow::Konsole &&
      view->getType()!=ChatWindow::ChannelList) frontView=view;
   // Make sure that only text views get to be the searchView
   if(view->getType()!=ChatWindow::DccPanel &&
+     view->getType()!=ChatWindow::Konsole &&
      view->getType()!=ChatWindow::ChannelList) searchView=view;
 }
 
