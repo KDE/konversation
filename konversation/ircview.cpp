@@ -275,7 +275,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
                   ")(:[0-9]{1,5})?(/[^)>\"'\\s]*)?|"
                   // eDonkey2000 links need special treatment
                   "ed2k://\\|([^|]+\\|){4})|"
-                  "(mailto:|)(([a-z]+[\\w\\x2E\\x2D]+)\\x40([\\w\\x2E\\x2D]{2,})\\x2E(\\w{2,})))");
+                  "(mailto:|)((([a-z]|\\d)+[\\w\\x2E\\x2D]+)\\x40([\\w\\x2E\\x2D]{2,})\\x2E(\\w{2,})))");
 
   pattern.setCaseSensitive(false);
 
