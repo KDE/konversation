@@ -1,2 +1,2 @@
 scriptsdir=$(kde_datadir)/konversation/scripts
-scripts_DATA=amarok bug gauge juk noatun uptime
+scripts_SCRIPTS=amarok bug gauge juk noatun uptime
