@@ -104,6 +104,7 @@ ServerWindow::~ServerWindow()
 
   if(nicksOnlineWindow) nicksOnlineWindow->closeButton();
   deleteDccPanel();
+  if(rawLog) delete rawLog;
 }
 
 void ServerWindow::openPreferences()
@@ -240,7 +241,7 @@ void ServerWindow::closeTab(QWidget* viewToClose)
   else if(viewType==ChatWindow::Query)    emit closeQuery(viewName);
   else if(viewType==ChatWindow::DccPanel) closeDccPanel();
   else if(viewType==ChatWindow::DccChat);
-  else if(viewType==ChatWindow::RawLog);
+  else if(viewType==ChatWindow::RawLog)   closeRawLog();
   else if(viewType==ChatWindow::Notice);
   else if(viewType==ChatWindow::SNotice);
 }
@@ -307,6 +308,7 @@ void ServerWindow::addStatusView()
 
 void ServerWindow::addRawLog()
 {
+  kdDebug() << "ServerWindow::addRawLog()" << endl;
   if(rawLog==0)
   {
     rawLog=new RawLog(getWindowContainer());
@@ -314,6 +316,8 @@ void ServerWindow::addRawLog()
     
     rawLog->setLog(false);
   }
+  else
+    windowContainer->showPage(rawLog);
 }
 
 void ServerWindow::closeRawLog()
@@ -321,6 +325,7 @@ void ServerWindow::closeRawLog()
   if(rawLog)
   {
     getWindowContainer()->removePage(rawLog);
+    delete rawLog;
     rawLog=0;
   }
 }

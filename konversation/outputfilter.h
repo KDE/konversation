@@ -55,6 +55,8 @@ class OutputFilter : public QObject
     void requestDccSend(const QString &recipient);       // Choose File from requester
     void openDccPanel();
     void closeDccPanel();
+    void openRawLog();
+    void closeRawLog();
     void away();
     void unAway();
     void sendToAllChannels(const QString& text);
@@ -107,6 +109,7 @@ class OutputFilter : public QObject
     void parseDcc(const QString &parameter);
     void parseInvite(const QString &parameter);
     void parseExec(const QString &parameter);
+    void parseRaw(const QString &parameter);
 
     void changeMode(const QString &parameter,char mode,char giveTake);
     bool isAChannel(const QString &check);

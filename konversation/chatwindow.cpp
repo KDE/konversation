@@ -22,6 +22,8 @@
 #include <kdebug.h>
 #include <krootpixmap.h>
 
+#include "server.h"
+#include "serverwindow.h"
 #include "chatwindow.h"
 #include "konversationapplication.h"
 
@@ -92,6 +94,9 @@ void ChatWindow::setServer(Server* newServer)
     connect(&filter,SIGNAL (sendToAllChannels(const QString&)),
              server,SLOT   (sendToAllChannels(const QString&)) );
 
+    connect(&filter,SIGNAL (openRawLog()), server,SLOT (addRawLog()) );
+    connect(&filter,SIGNAL (closeRawLog()),server,SLOT (closeRawLog()) );
+    
     scriptLauncher.setServerName(server->getServerName());
 
     connect(&scriptLauncher,SIGNAL (scriptNotFound(const QString&)),

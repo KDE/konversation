@@ -95,7 +95,7 @@ Server::Server(int id)
                    this,SLOT   (requestDccSend()) );
   connect(&outputFilter,SIGNAL (requestDccSend(const QString &)),
                    this,SLOT   (requestDccSend(const QString &)) );
-
+  
   connect(&notifyTimer,SIGNAL(timeout()),
                   this,SLOT  (notifyTimeout()) );
   connect(&notifyCheckTimer,SIGNAL(timeout()),
@@ -381,7 +381,7 @@ void Server::processIncomingData()
 
     inputBuffer=inputBuffer.mid(pos+1);
 
-    serverWindow->appendToRaw(line);
+    getServerWindow()->appendToRaw(line);
     inputFilter.parseLine(line);
   }
 }
@@ -407,6 +407,7 @@ void Server::queue(const QString &buffer)
   {
     kdDebug() << "Q: " << buffer << endl;
 
+    getServerWindow()->appendToRaw(buffer);
     outputBuffer+=buffer;
     outputBuffer+="\n";
 
@@ -1171,6 +1172,16 @@ bool Server::isAChannel(const QString &check)
   QChar initial=check.at(0);
 
   return (initial=='#' || initial=='&' || initial=='+' || initial=='!');
+}
+
+void Server::addRawLog()
+{
+  getServerWindow()->addRawLog();
+}
+
+void Server::closeRawLog()
+{
+  getServerWindow()->closeRawLog();
 }
 
 void Server::setIdentity(const Identity *newIdentity) { identity=newIdentity; }

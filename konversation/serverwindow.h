@@ -86,6 +86,8 @@ class ServerWindow : public KMainWindow
     void closeQuery(const QString& name);
 
   public slots:
+    void addRawLog();
+    void closeRawLog();
     void setNickname(const QString&);
     void newText(QWidget* view);
     void changedView(QWidget* view);
@@ -97,8 +99,6 @@ class ServerWindow : public KMainWindow
 
   protected slots:
     void addStatusView();
-    void addRawLog();
-    void closeRawLog();
     void nextTab();
     void previousTab();
     void closeTab(QWidget* tab);

@@ -101,6 +101,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("dcc "))     parseDcc(parameter);
     else if(line.startsWith("invite "))  parseInvite(parameter);
     else if(line.startsWith("exec "))    parseExec(parameter);
+    else if(line.startsWith("raw "))     parseRaw(parameter);
 
     else if(line=="join")                parseJoin(QString::null);
     else if(line=="part")                parsePart(QString::null);
@@ -114,6 +115,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="dcc")                 parseDcc(QString::null);
     else if(line=="invite")              parseInvite(QString::null);
     else if(line=="exec")                parseExec(QString::null);
+    else if(line=="raw")                 parseRaw(QString::null);
 
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
@@ -575,6 +577,20 @@ void OutputFilter::parseExec(const QString& parameter)
       output=i18n("Error: Script name may not contain \"../\"!");
       program=true;
     }
+  }
+}
+
+void OutputFilter::parseRaw(const QString& parameter)
+{
+  if(parameter.isEmpty() || parameter=="open")
+    emit openRawLog();
+  else if(parameter=="close")
+    emit closeRawLog();
+  else
+  {
+    type=i18n("Usage");
+    output=i18n("Usage: RAW [OPEN | CLOSE]");
+    program=true;
   }
 }
 

@@ -141,6 +141,8 @@ class Server : public QObject
     void startNotifyTimer(int msec=0);
 
   protected slots:
+    void addRawLog();
+    void closeRawLog();
     void ircServerConnectionSuccess();
     void incoming();
     void processIncomingData();
