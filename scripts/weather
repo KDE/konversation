@@ -45,7 +45,7 @@ foreach $station (@stations) {
   chomp $wind;
   
   
-  if( $detail ) {
+  if( $detail != /(\s)+/ ) {
   $MESSAGE = "Current Weather for %B$city%B : %B$details%B, Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
   }
   else {
