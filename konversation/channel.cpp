@@ -112,13 +112,10 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   setTextView(new IRCView(topicViewNicksGrid,NULL));  // Server will be set later in setServer()
 
-//  nicksOps=new QLabel(i18n("Nicks"),topicViewNicksGrid);
-
   // The box that holds the Nick List and the quick action buttons
   QVBox* nickListButtons=new QVBox(splitter);
   nickListButtons->setSpacing(spacing());
 
-//  nicksOps=new QLabel(i18n("Nicks"),topicViewNicksGrid);
   nicksOps=new QLabel(i18n("Nicks"),nickListButtons);
   nicksOps->setAlignment(AlignVCenter | AlignHCenter);
 
@@ -278,9 +275,8 @@ void Channel::popupCommand(int id)
       pattern="WHOIS %u";
       raw=true;
       break;
-    case NickListView::Ping: /* Find out what number has to be put here! */
-      pattern="PRIVMSG %u :\x01PING 2398475\x01";
-      raw=true;
+    case NickListView::Ping:
+      pattern=QString(KonversationApplication::preferences.getCommandChar()+"CTCP %u PING %1").arg(QDateTime::currentDateTime().toTime_t());
       break;
     case NickListView::Kick:
       pattern="KICK %c %u";
@@ -1112,6 +1108,7 @@ void Channel::updateFonts()
 
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setPaper(QColor("#"+KonversationApplication::preferences.getTextViewBackground()));
+
   nicknameListView->setFont(KonversationApplication::preferences.getListFont());
 }
 

@@ -196,7 +196,16 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
           if(!isIgnore(prefix,Ignore::CTCP))
           {
             server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1.").arg(sourceNick));
-            server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002 Dario Abatianni and Matthias Gierlings").arg(VERSION));
+            server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002-2003 Dario Abatianni and Matthias Gierlings").arg(VERSION));
+          }
+        }
+        // Answer ping requests
+        else if(ctcpCommand=="ping")
+        {
+          if(!isIgnore(prefix,Ignore::CTCP))
+          {
+            server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-PING request from %1, sending PONG answer.").arg(sourceNick));
+            server->ctcpReply(sourceNick,QString("PONG %1").arg(ctcpArgument));
           }
         }
         // No known CTCP request, give a general message
@@ -240,7 +249,18 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
           QString ctcp(trailing.mid(1,trailing.length()-2));
           QString replyReason(ctcp.section(' ',0,0));
           QString reply(ctcp.section(' ',1));
-          server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-%1 reply from %2: %3").arg(replyReason).arg(sourceNick).arg(reply));
+
+          // pong reply, calculate turnaround time
+          if(replyReason.lower()=="pong")
+          {
+            int dateArrived=QDateTime::currentDateTime().toTime_t();
+            int dateSent=reply.toInt();
+            
+            server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-PONG reply from %1: %2 seconds").arg(sourceNick).arg(dateArrived-dateSent));
+          }
+          // all other ctcp replies get a general message
+          else
+            server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-%1 reply from %2: %3").arg(replyReason).arg(sourceNick).arg(reply));
         }
         // No, so it was a normal notice
         else
