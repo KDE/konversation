@@ -295,8 +295,7 @@ class Server : public QObject
     KonversationMainWindow* getMainWindow() const;
     void setMainWindow(KonversationMainWindow* newMainWindow);
 
-    bool eventFilter(QObject* parent, QEvent *event);
-
+    
     void startNotifyCheckTimer();
     bool isAChannel(const QString &check);
     void setIdentity(Identity *newIdentity);

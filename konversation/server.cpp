@@ -101,8 +101,6 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   serverPort=serverEntry[2].toInt();
   serverKey=serverEntry[3];
 
-  installEventFilter(this);
-
   lastDccDir=QString::null;
 
   statusView=getMainWindow()->addStatusView(this);
@@ -199,8 +197,7 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   serverPort=port.toInt();
   serverKey=password;
 
-  installEventFilter(this);
-
+  
   lastDccDir=QString::null;
 
   statusView=getMainWindow()->addStatusView(this);
