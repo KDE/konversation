@@ -1113,7 +1113,7 @@ void Server::send()
        outputLine.startsWith("PING LAG")) notifySent.start();
     
     // remember the arg for /WHO to identify the responses
-    else if(outputLine.upper().startsWith("WHO"))
+    else if(outputLine.upper().startsWith("WHO "))
       inputFilter.addWhoRequest(outputLine.section(" ",1,1,QString::SectionSkipEmpty).stripWhiteSpace());
 
     // Don't reconnect if we WANT to quit
