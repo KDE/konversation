@@ -61,7 +61,7 @@ class DccTransferSend : public DccTransfer
     QString m_tmpFile;
     KNetwork::KServerSocket* m_serverSocket;
     KNetwork::KStreamSocket* m_sendSocket;
-    QTimer* m_connectionTimer;
+    QTimer m_connectionTimer;
 };
 
 #endif // DCCTRANSFERSEND_H

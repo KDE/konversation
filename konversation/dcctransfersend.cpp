@@ -74,8 +74,6 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   m_file.setName(m_tmpFile);
   m_fileSize = m_file.size();
 
-  m_connectionTimer=0;
-  
   m_serverSocket=0;
   m_sendSocket=0;
   
@@ -271,19 +269,13 @@ void DccTransferSend::socketError( int errorCode )
 void DccTransferSend::startConnectionTimer( int sec )
 {
   stopConnectionTimer();
-  m_connectionTimer = new QTimer();
-  connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
-  m_connectionTimer->start( sec*1000, TRUE );
+  connect( &m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
+  m_connectionTimer.start( sec*1000, TRUE );
 }
 
 void DccTransferSend::stopConnectionTimer()
 {
-  if( m_connectionTimer )
-  {
-    m_connectionTimer->stop();
-    delete m_connectionTimer;
-    m_connectionTimer = 0;
-  }
+    m_connectionTimer.stop();
 }
 
 void DccTransferSend::connectionTimeout()  // slot

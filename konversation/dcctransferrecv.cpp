@@ -84,7 +84,6 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
   m_writeCacheHandler = 0;
   
   m_recvSocket = 0;
-  m_connectionTimer = 0;
   
   updateView();
   panel->selectMe( this );
@@ -328,19 +327,13 @@ void DccTransferRecv::setSaveToFileURL( const KURL& url )
 void DccTransferRecv::startConnectionTimer( int sec )
 {
   stopConnectionTimer();
-  m_connectionTimer = new QTimer();
-  connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
-  m_connectionTimer->start( sec*1000, TRUE );
+  connect( &m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
+  m_connectionTimer.start( sec*1000, TRUE );
 }
 
 void DccTransferRecv::stopConnectionTimer()
 {
-  if( m_connectionTimer )
-  {
-    m_connectionTimer->stop();
-    delete m_connectionTimer;
-    m_connectionTimer = 0;
-  }
+  m_connectionTimer.stop();
 }
 
 void DccTransferRecv::connectionTimeout()  // slot
