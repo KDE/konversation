@@ -11,6 +11,8 @@ Changes from 0.14 to 0.15
 - support encoding settings per channel
 - SSL Support
 - KIO-fied local I/O on DCC send/receive
+- OSD Positioning Support
+
 
 Changes from 0.13 to 0.14
 - Added irc "pseudo" command /prefs for changing settings without settings dialog.
