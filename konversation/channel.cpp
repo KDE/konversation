@@ -290,7 +290,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   // every few seconds try to get more userhosts
   autoUserhostChanged(KonversationApplication::preferences.getAutoUserhost());
   userhostTimer.start(10000);
-  
+
   m_firstAutoWhoDone = false;
   connect(&m_whoTimer,SIGNAL (timeout()),this,SLOT (autoWho()));
   // re-schedule when the settings were changed
@@ -911,7 +911,7 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo) {
     /* No, must've been someone else */
     appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.").arg(oldNick).arg(newNick),false);
   }
-  
+
   nicknameListView->sort();
 
 }

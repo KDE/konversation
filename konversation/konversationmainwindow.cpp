@@ -116,7 +116,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
   new KAction(i18n("&Server List..."), "server", 0, this, SLOT(openServerList()), actionCollection(), "open_server_list");
   new KAction(i18n("Quick &Connect..."), "connect_creating", 0, this, SLOT(openQuickConnectDialog()), actionCollection(), "quick_connect_dialog");
-  
+
   new KAction(i18n("&Identities..."), 0, 0, this, SLOT(openIdentitiesDialog()), actionCollection(), "identities_dialog");
 
   new KAction(i18n("&Watched Nicks Online"), 0, 0, this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
@@ -527,7 +527,7 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     ChatWindow::WindowType viewType=view->getType();
 
     QString viewName=view->getName();
-    
+
     // the views should know by themselves how to close
 
     bool confirmClose = true;
@@ -543,8 +543,8 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     else if(viewType==ChatWindow::UrlCatcher)   closeUrlCatcher();
     else if(viewType==ChatWindow::NicksOnline)  closeNicksOnlinePanel();
     else if(viewType == ChatWindow::LogFileReader) view->closeYourself();
- 
-    if(!confirmClose) 
+
+    if(!confirmClose)
 	    return; //We haven't done anything yet, so safe to return
 
     // if this view was the front view, delete the pointer
@@ -554,7 +554,7 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     emit endNotification(viewToClose);
 
     viewContainer->removePage(view);
-    
+
 /*
     else if(viewType==ChatWindow::Notice);
     else if(viewType==ChatWindow::SNotice);
@@ -805,7 +805,7 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
   // make sure that frontServer gets set on adding the first status panel, too,
   // since there won't be a changeView happening
   if(!frontServer) frontServer=server;
-  
+
   return statusView;
 }
 
@@ -979,7 +979,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
     updateSSLInfo(frontServer);
     updateLag(frontServer,frontServer->getLag());
   }
-   
+
 
   updateFrontView();
 

@@ -179,10 +179,11 @@ void ChatWindow::setServer(Server* newServer)
 }
 void ChatWindow::setMainWindow(KonversationMainWindow *mainWindow) {
   m_mainWindow = mainWindow;
-
   //setMainWindow may be called in a constructor, so make sure we call adjust
   //focus after it is set up.
-  QTimer::singleShot(0, this, SLOT(adjustFocus()));
+
+  // FIXME: Please double-check if this is really needed. It steals focus to a hidden tab!
+  //  QTimer::singleShot(0, this, SLOT(adjustFocus()));
 }
 
 Server* ChatWindow::getServer()
@@ -513,7 +514,7 @@ void ChatWindow::adjustFocus() {
     if(action) action->setEnabled(server!=NULL); else Q_ASSERT(action);
     action = m_mainWindow->actionCollection()->action("open_logfile");
     if(action) {
-	    action->setEnabled(!logName.isEmpty()); 
+	    action->setEnabled(!logName.isEmpty());
 	    if(logName.isEmpty())
 		    action->setText(i18n("&Open Logfile"));
 	    else

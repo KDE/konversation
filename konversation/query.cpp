@@ -42,7 +42,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   // don't setName here! It will break logfiles!
   //   setName("QueryWidget");
   setType(ChatWindow::Query);
-  
+
   setChannelEncodingSupported(true);
 
   awayChanged=false;
@@ -138,7 +138,7 @@ void Query::sendQueryText(const QString& sendLine)
     else if(!result.typeString.isEmpty()) appendQuery(result.typeString, result.output);
     else appendQuery(server->getNickname(), result.output);
   }
-  
+
   server->queue(result.toServer);
 }
 
