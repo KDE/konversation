@@ -148,7 +148,9 @@ class ServerWindow : public KMainWindow
     void goToTab7();
     void goToTab8();
     void goToTab9();
-
+    
+    void findTextShortcut();
+  
   protected:
     int spacing();
     int margin();
@@ -167,7 +169,9 @@ class ServerWindow : public KMainWindow
     OutputFilter filter;
     LedTabWidget* windowContainer;
     StatusPanel* statusPanel;   // TODO: to be moved into Server class?
+
     ChatWindow* frontView;
+    ChatWindow* searchView;
 
     RawLog* rawLog;     // the address of the raw log panel
     DccPanel* dccPanel; // the adress of the dcc panel

@@ -61,6 +61,7 @@ class IRCView : public KTextBrowser
     void appendServerMessage(const char* type,const char* message);
     void appendCommandMessage(const char* command,const char* message);
     void appendBacklogMessage(const char* firstColumn,const char* message);
+    void search();
 
   protected:
     QString filter(const QString& line,const QString& who=NULL,bool doHilight=true);
@@ -73,7 +74,6 @@ class IRCView : public KTextBrowser
     bool eventFilter(QObject* object,QEvent* event);
 
     bool contextMenu(QContextMenuEvent* ce);
-    void search();
 
     // used by search function
     int findParagraph;

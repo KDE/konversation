@@ -75,6 +75,7 @@ ServerWindow::ServerWindow(Server* newServer) : KMainWindow()
   accelerator->insert("Go to Tab 8",i18n("Tab %1").arg(8),i18n("Go to tab number %1").arg(8),KShortcut("Alt+8"),this,SLOT(goToTab7()));
   accelerator->insert("Go to Tab 9",i18n("Tab %1").arg(9),i18n("Go to tab number %1").arg(9),KShortcut("Alt+9"),this,SLOT(goToTab8()));
   accelerator->insert("Go to Tab 0",i18n("Tab %1").arg(0),i18n("Go to tab number %1").arg(0),KShortcut("Alt+0"),this,SLOT(goToTab9()));
+  accelerator->insert("Find text",i18n("Find text").arg(0),i18n("Find text").arg(0),KShortcut("F3"),this,SLOT(findTextShortcut()));
 
   // Initialize KMainWindow->statusBar()
   statusBar();
@@ -352,11 +353,14 @@ void ServerWindow::newText(QWidget* view)
 void ServerWindow::changedView(QWidget* view)
 {
   frontView=0;
+  searchView=0;
   
   ChatWindow* pane=static_cast<ChatWindow*>(view);
-  // Make sure that only text-capable views get to be the frontView
+  // Make sure that only views with info output get to be the frontView
   if(pane->getType()!=ChatWindow::DccPanel &&
      pane->getType()!=ChatWindow::RawLog) frontView=pane;
+  // Make sure that only text views get to be the searchView
+  if(pane->getType()!=ChatWindow::DccPanel) searchView=pane;
 
   windowContainer->changeTabState(view,false);
 }
@@ -698,6 +702,20 @@ void ServerWindow::goToTab(int page)
     windowContainer->setCurrentPage(page);
     ChatWindow* newPage=(ChatWindow*) windowContainer->page(page);
     newPage->adjustFocus();
+  }
+}
+
+void ServerWindow::findTextShortcut()
+{
+  if(searchView==0)
+  {
+    KMessageBox::sorry(this,
+                       i18n("You can only search in text fields!"),
+                       i18n("Find text information"));
+  }
+  else
+  {
+    searchView->getTextView()->search();
   }
 }
 
