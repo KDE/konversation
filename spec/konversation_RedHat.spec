@@ -2,7 +2,7 @@
 
 Name: konversation
 Summary: A user friendly IRC Client for KDE3.x
-Version: 0.9
+Version: 0.10
 Release: 0
 License: GPL
 Group: Applications/Internet

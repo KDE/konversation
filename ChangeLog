@@ -10,6 +10,7 @@ Changes from 0.9 to 0.10
 - Color code parsing now works with QRegExp
 - CTCP-Ping now works
 - Removed files that are no longer needed
+- Updated German translation
 
 Changes from 0.8 to 0.9
 - Added strikeout support (untested yet)
