@@ -267,7 +267,7 @@ QString IRCView::filter(const QString& line,bool doHilight)
 
 void IRCView::append(const char* nick,const char* message)
 {
-QString channelMessageColor = KonversationApplication::preferences.getChannelMessageColor();
+  QString channelMessageColor = KonversationApplication::preferences.getChannelMessageColor();
 
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+channelMessageColor()+"\">%1:</font></td><td><font color=\"#"+channelMessageColor()+"\">%2</font></td></tr>\n").arg(filter(nick,false)).arg(filter(message));
@@ -282,7 +282,7 @@ QString channelMessageColor = KonversationApplication::preferences.getChannelMes
 
 void IRCView::appendQuery(const char* nick,const char* message)
 {
-QString queryMessageColor = KonversationApplication::preferences.getQueryMessageColor();
+  QString queryMessageColor = KonversationApplication::preferences.getQueryMessageColor();
 
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+queryMessageColor+"\">*%1*</font></td><td><font color=\"#"+queryMessageColor+"\">%2</font></td></tr>\n").arg(filter(nick,false)).arg(filter(message));
@@ -297,7 +297,7 @@ QString queryMessageColor = KonversationApplication::preferences.getQueryMessage
 
 void IRCView::appendAction(const char* nick,const char* message)
 {
-QString actionMessageColor = KonversationApplication::preferences.getActionMessageColor();
+  QString actionMessageColor = KonversationApplication::preferences.getActionMessageColor();
 
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td>&nbsp;</td><td><font color=\"#"+actionMessageColor+"\">* %1 %2</font></td></tr>\n").arg(filter(nick,false)).arg(filter(message));
@@ -312,7 +312,7 @@ QString actionMessageColor = KonversationApplication::preferences.getActionMessa
 
 void IRCView::appendServerMessage(const char* type,const char* message)
 {
-QString serverMessageColor = KonversationApplication::preferences.getServerMessageColor();
+  QString serverMessageColor = KonversationApplication::preferences.getServerMessageColor();
 
   /* Fixed width font option for MOTD */
   /* TODO: Make this configurable */
@@ -331,7 +331,7 @@ QString serverMessageColor = KonversationApplication::preferences.getServerMessa
 
 void IRCView::appendCommandMessage(const char* type,const char* message)
 {
-QString commandMessageColor = KonversationApplication::preferences.getCommandMessageColor();
+  QString commandMessageColor = KonversationApplication::preferences.getCommandMessageColor();
 
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+commandMessageColor+"\">%1</font></td><td><font color=\"#"+commandMessageColor+"\">%2</font></td></tr>\n").arg(type).arg(filter(message));
@@ -345,7 +345,7 @@ QString commandMessageColor = KonversationApplication::preferences.getCommandMes
 
 void IRCView::appendBacklogMessage(const char* firstColumn,const char* message)
 {
-QString backlogMessageColor = KonversationApplication::preferences.getBacklogMessageColor();
+  QString backlogMessageColor = KonversationApplication::preferences.getBacklogMessageColor();
 
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+backlogMessageColor+"\">%1</font></td><td><font color=\"#"+backlogMessageColor+"\">%2</font></td></tr>\n").arg(firstColumn).arg(filter(message));

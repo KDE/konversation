@@ -24,6 +24,7 @@
 
 #include "serverentry.h"
 #include "ignore.h"
+#include "highlight.h"
 
 /*
   @author Dario Abatianni
@@ -84,6 +85,7 @@ class Preferences : public QObject
     void setNotifyList(QStringList newList);
 
     QStringList& getHilightList();
+    QPtrList<Highlight> getHilightList2();
     void setHilightList(QStringList& newList);
     void addHilight(QString& newHilight);
     QString getHilightColor();
@@ -158,6 +160,7 @@ class Preferences : public QObject
 
     QList<ServerEntry> serverList;
     QStringList hilightList;
+    QPtrList<Highlight> hilightList2;
     QString hilightColor;
 
     QStringList buttonList;

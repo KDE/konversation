@@ -134,10 +134,21 @@ QStringList& Preferences::getHilightList()
   return hilightList;
 }
 
+QPtrList<Highlight> Preferences::getHilightList2()
+{
+  return hilightList2;
+}
+
 void Preferences::setHilightList(QStringList& newList)
 {
   hilightList.clear();
   hilightList=newList;
+
+  hilightList2.clear();
+  for(unsigned int index=0;index<newList.count();index++)
+  {
+    hilightList2.append(new Highlight(newList[index],QColor(255,0,0)));
+  }
 }
 
 void Preferences::setHilightColor(const QString& color)
@@ -153,6 +164,7 @@ QString Preferences::getHilightColor()
 void Preferences::addHilight(QString& newHilight)
 {
   hilightList.append(newHilight);
+  hilightList2.append(new Highlight(newHilight,QColor(255,0,0)));
 }
 
 void Preferences::setButtonList(QStringList newList)
@@ -219,7 +231,8 @@ void Preferences::setNicknameList(QStringList newList) { nicknameList=newList; }
 void Preferences::setBlinkingTabs(bool blink) { blinkingTabs=blink; }
 bool Preferences::getBlinkingTabs() { return blinkingTabs; }
 
-// get/set message font colors
+/* TODO: Make this a little simpler (use an array and enum)
+   get/set message font colors */
 
 QString Preferences::getActionMessageColor() {return actionMessageColor;}
 void Preferences::setActionMessageColor(QString passed_actionMessageColor) {actionMessageColor = passed_actionMessageColor;}

@@ -104,7 +104,8 @@ NotifyDialog::~NotifyDialog()
 
 void NotifyDialog::newNotify()
 {
-/*  KListViewItem* newItem= */ new KListViewItem(notifyListView,"New");
+  KListViewItem* newItem=new KListViewItem(notifyListView,"New");
+  notifyListView->setSelected(newItem,true);
 }
 
 void NotifyDialog::removeNotify()

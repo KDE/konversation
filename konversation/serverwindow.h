@@ -27,6 +27,7 @@
 #include <kmainwindow.h>
 #include <kaction.h>
 #include <kstdaction.h>
+#include <kstatusbar.h>
 
 /*
   This is the Server Window Class. It shows a window
@@ -38,12 +39,11 @@
 #ifndef SERVERWINDOW_H
 #define SERVERWINDOW_H
 
-#include <kstatusbar.h>
-
 #include "server.h"
 #include "ircview.h"
 #include "ircinput.h"
 #include "highlightbox.h"
+#include "highlightdialog.h"
 #include "quickbuttonsdialog.h"
 #include "notifydialog.h"
 #include "ignoredialog.h"
@@ -138,6 +138,7 @@ class ServerWindow : public KMainWindow
     KToggleAction* showToolBarAction;
     KToggleAction* showStatusBarAction;
     HighLightBox* hilightWindow;
+    HighlightDialog* hilightDialog;
     NotifyDialog* notifyDialog;
     IgnoreDialog* ignoreDialog;
     QuickButtonsDialog* buttonsDialog;

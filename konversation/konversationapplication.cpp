@@ -230,7 +230,7 @@ void KonversationApplication::saveOptions()
 	config->writeEntry("QueryMessage", preferences.getQueryMessageColor());
 	config->writeEntry("ServerMessage", preferences.getServerMessageColor());
 
-	config->setGroup("User Identity");
+  config->setGroup("User Identity");
 
   config->writeEntry("Ident",preferences.ident);
   config->writeEntry("Realname",preferences.realname);

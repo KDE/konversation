@@ -31,6 +31,7 @@ ServerWindow::ServerWindow(Server* server) : KMainWindow()
   windowContainer->setTabPosition(QTabWidget::Bottom);
 
   hilightWindow=0;
+  hilightDialog=0;
   ignoreDialog=0;
   notifyDialog=0;
   buttonsDialog=0;
@@ -258,6 +259,15 @@ void ServerWindow::openHilight()
     connect(hilightWindow, SIGNAL(highLightListChange(QStringList)), this, SLOT(saveHilight(QStringList)));
     connect(hilightWindow, SIGNAL(highLightListClose(QSize)), this, SLOT(closeHilight(QSize)));
   }
+
+
+  if(!hilightDialog)
+  {
+    hilightDialog=new HighlightDialog(this,KonversationApplication::preferences.getHilightList2(),
+                                      KonversationApplication::preferences.getHilightSize());
+  }
+
+
 }
 
 void ServerWindow::saveHilight(QStringList passed_highlightList)
