@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # Copyright 2005 İsmail Dönmez (Resistence is futile, turn on unicode!)
+# Licensed under GPLv2 or later at your option
 #
 # One media command to rule them all, inspired from Kopete's now listening plugin
 
