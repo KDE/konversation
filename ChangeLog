@@ -1,4 +1,5 @@
 Changes from 0.13 to 0.14
+- Added further timestamps for am/pm (BR 79612)
 - Added QuickConnect dialog by Michael Goettsche. (Thanks once again)
 - Properly receive a logout/shutdown request and terminate konversation,
   instead of minimizing to the systray.

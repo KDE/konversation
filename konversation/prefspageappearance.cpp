@@ -74,6 +74,9 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   timestampFormat->insertItem("hh");
   timestampFormat->insertItem("hh:mm");
   timestampFormat->insertItem("hh:mm:ss");
+  timestampFormat->insertItem("hh ap");
+  timestampFormat->insertItem("hh:mm ap");
+  timestampFormat->insertItem("hh:mm:ss ap");
 
   // link label shortcut to combo box
   formatLabel->setBuddy(timestampFormat);
