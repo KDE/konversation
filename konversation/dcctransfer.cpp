@@ -335,11 +335,11 @@ void DccTransfer::updateTransferMeters()
     QValueList<QDateTime>::iterator it = m_transferTimeLog.begin();
     while ( it != m_transferTimeLog.end() && (*it).secsTo( QDateTime::currentDateTime() ) > timeToCalc )
       it = m_transferTimeLog.remove( it );
-    int timeElapsed = m_timeTransferStarted.secsTo( m_timeTransferFinished );
+    int timeElapsed = m_timeTransferStarted.secsTo( QDateTime::currentDateTime() );
     if ( timeElapsed >= timeToCalc )
       m_cps = (double)( m_transferTimeLog.count() * m_bufferSize ) / (double)timeToCalc;
     else if ( timeElapsed > 0 )
-      m_cps = (double)( m_transferTimeLog.count() * m_bufferSize ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
+      m_cps = (double)( m_transferTimeLog.count() * m_bufferSize ) / (double)timeElapsed;
     else  // avoid zero devision
       m_cps = CPS_UNKNOWN;
     
