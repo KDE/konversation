@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
   
   aboutData.addCredit("Michael Goettsche",I18N_NOOP("Quick connect, Ported new OSD, other features and bugfixes"),"michael.goettsche@kdemail.net");
   aboutData.addCredit("Benjamin Meyer",I18N_NOOP("A Handfull of fixes and code cleanup"),"ben+konversation@meyerhome.net");
-  aboutData.addCredit("Jakub Stachowski",I18N_NOOP("Drag&Drop improvements","qbast@go2.pl");
+  aboutData.addCredit("Jakub Stachowski",I18N_NOOP("Drag&Drop improvements"),"qbast@go2.pl");
   aboutData.addCredit("Sebastian Sariego",I18N_NOOP("Artwork"),"segfault@kde.cl");
   aboutData.addCredit("Frauke Oster",I18N_NOOP("System tray patch"),"frauke@frsv.de");
   aboutData.addCredit("Lucijan Busch",I18N_NOOP("Bug fixes"),"lucijan@kde.org");
