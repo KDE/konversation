@@ -45,6 +45,7 @@ class LedTabWidget : public KTabWidget
   protected slots:
     void moveTabLeft(int id);
     void moveTabRight(int id);
+    void moveTabToIndex(int oldIndex,int newIndex);
     void tabSelected(int id);
     void tabClosed(int id);
     void tabClosed();
@@ -55,7 +56,6 @@ class LedTabWidget : public KTabWidget
 #endif
 
   protected:
-    void moveTabToIndex(int oldIndex,int newIndex);
     LedTabBar* tabBar();
 
 #ifndef QT_NO_WHEELEVENT

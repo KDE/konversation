@@ -113,6 +113,7 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
 
   else kdWarning() << "LedTabBar::LedTabBar(): Could not create popup!" << endl;
 
+   setTabReorderingEnabled(true);
 #if KDE_IS_VERSION(3,3,0)
   setTabCloseActivatePrevious(true);
 #endif
@@ -392,6 +393,7 @@ void LedTabBar::mouseReleaseEvent(QMouseEvent* e)
       if(target.contains(e->pos())) emit closeTab(t->identifier());
     }
   }
+  if (e->button()==MidButton) KTabBar::mouseReleaseEvent(e);
 }
 
 void LedTabBar::updateTabs()

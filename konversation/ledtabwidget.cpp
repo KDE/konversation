@@ -33,6 +33,7 @@ LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :
   connect(tabBar(),SIGNAL (moveTabLeft(int)), this,SLOT (moveTabLeft(int)) );
   connect(tabBar(),SIGNAL (moveTabRight(int)), this,SLOT (moveTabRight(int)) );
   connect(tabBar(),SIGNAL (closeTab(int)), this,SLOT (tabClosed(int)) );
+  connect(tabBar(),SIGNAL (moveTab(int,int)), this, SLOT(moveTabToIndex(int,int)) );
 
 #ifndef QT_NO_WHEELEVENT
   connect(tabBar(),SIGNAL (wheel(QWheelEvent*)), this,SLOT (processWheelEvent(QWheelEvent*)) );
