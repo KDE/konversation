@@ -1,4 +1,7 @@
 #!/bin/sh
+#
+# Licensed under GPL v2 or later at your option
+# Copyright 2004 by Michiel de Boer <infobash@rebelhomicide.demon.nl>
 
 PORT=$1;
 SERVER=$2;
