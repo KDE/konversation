@@ -33,11 +33,7 @@
 #include "dcctransfer.h"
 #include "dcctransfersend.h"
 
-#ifdef KDE_IS_VERSION
-#if KDE_IS_VERSION(3,1,1)
 #define USE_INFOLIST
-#endif
-#endif
 
 #ifdef USE_MDI
 DccPanel::DccPanel(QString caption) : ChatWindow(caption)

@@ -33,18 +33,7 @@
 #include <krun.h>
 #include <kprocess.h>
 #include <kiconloader.h>
-
-#ifndef KDE_MAKE_VERSION
-#define KDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
-#endif
-
-#ifndef KDE_IS_VERSION
-#define KDE_IS_VERSION(a,b,c) ( KDE_VERSION >= KDE_MAKE_VERSION(a,b,c) )
-#endif
-
-#if KDE_IS_VERSION(3,1,94)
 #include <kshell.h>
-#endif
 
 #include "konversationapplication.h"
 #include "ircview.h"
@@ -195,11 +184,7 @@ void IRCView::urlClickSlot(const QString &url)
       QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
       cmd.replace(QRegExp("%u"),url);
       KProcess *proc = new KProcess;
-#if KDE_IS_VERSION(3,1,94)
       QStringList cmdAndArgs = KShell::splitArgs(cmd);
-#else
-      QStringList cmdAndArgs = QStringList::split(' ',cmd);
-#endif
       *proc << cmdAndArgs;
 //      This code will also work, but starts an extra shell process.
 //      kdDebug() << "IRCView::urlClickSlot(): cmd = " << cmd << endl;
@@ -757,19 +742,10 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
       break;
     case Bookmark:
     {
-#if KDE_IS_VERSION(3,1,90)
       KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
       KBookmarkGroup bg = bm->addBookmarkDialog(urlToCopy, QString::null);
       bm->save();
       bm->emitChanged(bg);
-#else
-      KBookmarkManager* bm = KBookmarkManager::managerForFile(locateLocal("data",
-        "/konqueror/bookmarks.xml"));
-      KBookmarkGroup bg = bm->root();
-      bg.addBookmark(bm, urlToCopy, KURL(urlToCopy));
-      bm->save();
-      bm->emitChanged(bg);
-#endif
       break;
     }
     default:

@@ -374,12 +374,6 @@ void KonversationApplication::readOptions()
 
   //User interface
   preferences.setShowMenuBar(config->readBoolEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar()));
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
-  preferences.setShowToolBar(config->readBoolEntry("ServerWindowToolBarStatus", preferences.getShowToolBar()));
-#endif
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
-  preferences.setShowStatusBar(config->readBoolEntry("ServerWindowStatusBarStatus", preferences.getShowStatusBar()));
-#endif
 
   // Appearance
   config->setGroup("Appearance");
@@ -736,12 +730,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   //User interface
   config->writeEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar());
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
-  config->writeEntry("ServerWindowToolBarStatus", preferences.getShowToolBar());
-#endif
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
-  config->writeEntry("ServerWindowStatusBarStatus", preferences.getShowStatusBar());
-#endif
 
   config->setGroup("Appearance");
 

@@ -106,11 +106,7 @@ void InputFilter::parseLine(const QString &a_newLine, QWidget *mainWindow)
     parseClientCommand(prefix,command,parameterList,trailing, mainWindow);
 }
 
-void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing, QWidget *
-#if KDE_VERSION >= 310
-mainWindow  // get rid of a compiler warning under KDE 3.0.x
-#endif
-)
+void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing, QWidget *mainWindow)
 {
 
   Q_ASSERT(server);

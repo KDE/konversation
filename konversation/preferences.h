@@ -25,10 +25,6 @@
 
 #include <kdeversion.h>
 
-#ifndef KDE_MAKE_VERSION
-#define KDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
-#endif
-
 /*
   @author Dario Abatianni
 */

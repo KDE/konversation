@@ -38,14 +38,6 @@
 #endif
 
 
-#ifndef KDE_MAKE_VERSION
-#define KDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
-#endif
-
-#ifndef KDE_IS_VERSION
-#define KDE_IS_VERSION(a,b,c) ( KDE_VERSION >= KDE_MAKE_VERSION(a,b,c) )
-#endif
-
 #ifdef  USE_KNOTIFY
 #include <knotifydialog.h>
 #endif
@@ -104,16 +96,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
   KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); // file_quit
 
-#if KDE_IS_VERSION(3, 1, 0)
   setStandardToolBarMenuEnabled(true);
-#else
-  showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); // options_show_toolbar
-#endif
-#if KDE_IS_VERSION(3, 1, 90)
   createStandardStatusBarAction();
-#else
-  showStatusBarAction=KStdAction::showStatusbar(this,SLOT(showStatusbar()),actionCollection()); // options_show_statusbar
-#endif
   showMenuBarAction=KStdAction::showMenubar(this,SLOT(showMenubar()),actionCollection()); // options_show_menubar
   KStdAction::configureToolbars(this, SLOT(openToolbars()), actionCollection());
 #ifdef USE_KNOTIFY
@@ -190,13 +174,11 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   connect(this, SIGNAL(startNotification(QWidget*)), tray, SLOT(startNotification(QWidget*)));
   connect(this, SIGNAL(endNotification(QWidget*)), tray, SLOT(endNotification(QWidget*)));
   connect(tray, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
-#if KDE_VERSION >= KDE_MAKE_VERSION(3, 2, 0)
   KPopupMenu *trayMenu = tray->contextMenu();
 #ifdef USE_KNOTIFY
   configureNotificationsAction->plug(trayMenu);
 #endif
   preferencesAction->plug(trayMenu);
-#endif
 
   // decide whether to show the tray icon or not
   updateTrayIcon();
@@ -209,14 +191,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
   resize(700, 500);  // Give the app a sane default size
   setAutoSaveSettings();
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
-  showToolBarAction->setChecked(KonversationApplication::preferences.getShowToolBar());
-  showToolbar();
-#endif
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
-  showStatusBarAction->setChecked(KonversationApplication::preferences.getShowStatusBar());
-  showStatusbar();
-#endif
   showMenuBarAction->setChecked(KonversationApplication::preferences.getShowMenuBar());
   showMenubar();
 
@@ -305,12 +279,6 @@ void KonversationMainWindow::openKeyBindings()
 
 void KonversationMainWindow::showToolbar()
 {
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
-  if(showToolBarAction->isChecked()) toolBar("mainToolBar")->show();
-  else toolBar("mainToolBar")->hide();
-
-  KonversationApplication::preferences.setShowToolBar(showToolBarAction->isChecked());
-#endif
 }
 
 void KonversationMainWindow::showMenubar()
@@ -330,12 +298,6 @@ void KonversationMainWindow::showMenubar()
 
 void KonversationMainWindow::showStatusbar()
 {
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
-  if(showStatusBarAction->isChecked()) statusBar()->show();
-  else statusBar()->hide();
-
-  KonversationApplication::preferences.setShowStatusBar(showStatusBarAction->isChecked());
-#endif
 }
 /** Call this when you have already put a message in the serverView window, and want a message in the front most
  *  window if it's on the same server, but not put the message twice.

@@ -33,14 +33,6 @@
 #include <kpopupmenu.h>
 #include <kdeversion.h>
 
-#ifndef KDE_MAKE_VERSION
-#define KDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
-#endif
-
-#ifndef KDE_IS_VERSION
-#define KDE_IS_VERSION(a,b,c) ( KDE_VERSION >= KDE_MAKE_VERSION(a,b,c) )
-#endif
-
 #include "channellistpanel.h"
 #include "channellistviewitem.h"
 #include "server.h"
@@ -446,11 +438,7 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
   if(!i) return;
 
   KPopupMenu* showURLmenu = new KPopupMenu(this);
-#if KDE_IS_VERSION(3,1,94)
   showURLmenu->insertTitle( i18n("Open URL") );
-#else
-  showURLmenu->setTitle( i18n("Open URL") );
-#endif
   QString filteredLine(i->text(2));
 
   QRegExp pattern("((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
