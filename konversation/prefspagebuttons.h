@@ -15,15 +15,11 @@
 #ifndef PREFSPAGEBUTTONS_H
 #define PREFSPAGEBUTTONS_H
 
-#include "prefspage.h"
+#include "quickbuttons_preferences.h"
 
-/*
-  @author Dario Abatianni
-*/
+class Preferences;
 
-class KListView;
-
-class PrefsPageButtons : public PrefsPage
+class PrefsPageButtons : public QuickButtons_Config
 {
   Q_OBJECT
 
@@ -35,9 +31,8 @@ class PrefsPageButtons : public PrefsPage
     void applyPreferences();
 
   protected:
+    Preferences* preferences;
     QStringList getButtonList();
-
-    KListView* buttonListView;
 };
 
 #endif
