@@ -697,6 +697,7 @@ void KonversationApplication::readOptions()
         serverGroup->setIdentityId(preferences.getIdentityByName(config->readEntry("Identity"))->id());
         serverGroup->setConnectCommands(config->readEntry("ConnectCommands"));
         serverGroup->setAutoConnectEnabled(config->readBoolEntry("AutoConnect"));
+        serverGroup->setNotificationsEnabled(config->readBoolEntry("EnableNotifications", true));
         tmp1 = config->readListEntry("ServerList");
   
         for(it2 = tmp1.begin(); it2 != tmp1.end(); ++it2) {
@@ -731,6 +732,7 @@ void KonversationApplication::readOptions()
           if(!config->readEntry("Name").isEmpty()) {
             channel.setName(config->readEntry("Name"));
             channel.setPassword(config->readEntry("Password"));
+            channel.setNotificationsEnabled(config->readBoolEntry("EnableNotifications", true));
             channelHistory.append(channel);
           }
         }
@@ -1169,6 +1171,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
       config->setGroup(groupName);
       config->writeEntry("Name", (*it3).name());
       config->writeEntry("Password", (*it3).password());
+      config->writeEntry("EnableNotifications", (*it3).enableNotifications());
       index3++;
     }
 
@@ -1181,6 +1184,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->writeEntry("ConnectCommands", (*it)->connectCommands());
     config->writeEntry("AutoConnect", (*it)->autoConnectEnabled());
     config->writeEntry("ChannelHistory", channelHistory);
+    config->writeEntry("EnableNotifications", (*it)->enableNotifications());
     index++;
   }
 

@@ -178,6 +178,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
     setName(QString("server_" + m_serverGroup->name()).ascii());
     setMainWindow(mainWindow);
     statusView = getMainWindow()->addStatusView(this);
+    statusView->setNotificationsEnabled(m_serverGroup->enableNotifications());
     setNickname(nick);
     obtainNickInfo(getNickname());
 
@@ -1450,14 +1451,15 @@ void Server::closeQuery(const QString &name)
 
 void Server::closeChannel(const QString& name)
 {
-  kdDebug() << "Server::closeChannel(" << name << ")" << endl;
-  Channel* channelToClose=getChannelByName(name);
-  if(channelToClose)
-  {
-    Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),
-      KonversationApplication::preferences.getCommandChar() + "PART", name);
-    queue(result.toServer);
-  }
+    kdDebug() << "Server::closeChannel(" << name << ")" << endl;
+    Channel* channelToClose = getChannelByName(name);
+
+    if(channelToClose)
+    {
+        Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),
+        KonversationApplication::preferences.getCommandChar() + "PART", name);
+        queue(result.toServer);
+    }
 }
 
 void Server::requestChannelList()
@@ -1794,7 +1796,7 @@ void Server::sendJoinCommand(const QString& name, const QString& password)
   queue(result.toServer);
 }
 
-void Server::joinChannel(const QString &name, const QString &hostmask, const QString &/*key*/)
+void Server::joinChannel(const QString& name, const QString& hostmask)
 {
   // (re-)join channel, open a new panel if needed
   Channel* channel = getChannelByName(name);
@@ -1804,10 +1806,11 @@ void Server::joinChannel(const QString &name, const QString &hostmask, const QSt
     Q_ASSERT(channel);
     channel->setIdentity(getIdentity());
     channel->setNickname(getNickname());
-  //channel->setKey(key);
+    Konversation::ChannelSettings channelSettings = m_serverGroup->channelByNameFromHistory(name);
+    channel->setNotificationsEnabled(channelSettings.enableNotifications());
 
     channelList.append(channel);
-    m_serverGroup->appendChannelHistory(Konversation::ChannelSettings(name));
+    m_serverGroup->appendChannelHistory(channelSettings);
 
     connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
     connect(this,SIGNAL (serverOnline(bool)),channel,SLOT (serverOnline(bool)) );
@@ -1827,6 +1830,11 @@ void Server::removeChannel(Channel* channel)
 {
   // Update NickInfo.
   removeJoinedChannel(channel->getName());
+
+
+  Konversation::ChannelSettings channelSettings = m_serverGroup->channelByNameFromHistory(channel->getName());
+  channelSettings.setNotificationsEnabled(channel->notificationsEnabled());
+  m_serverGroup->appendChannelHistory(channelSettings);
 
   channelList.removeRef(channel);
 }
@@ -2947,7 +2955,6 @@ KABC::Addressee Server::getOfflineNickAddressee(QString& nickname) {
     else
         return KABC::Addressee();
 }
-
 
 #include "server.moc"
 

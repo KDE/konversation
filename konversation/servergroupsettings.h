@@ -69,6 +69,10 @@ class ServerGroupSettings : public KShared
     void setChannelHistory(const ChannelList& list) { m_channelHistory = list; }
     void appendChannelHistory(const ChannelSettings& channel);
     ChannelList channelHistory() const { return m_channelHistory; }
+    ChannelSettings channelByNameFromHistory(const QString& channelName);
+
+    void setNotificationsEnabled(bool enable) { m_enableNotifications = enable; }
+    bool enableNotifications() const { return m_enableNotifications; }
 
   private:
     QString m_name;
@@ -81,6 +85,8 @@ class ServerGroupSettings : public KShared
     QString m_group;
     int m_id;
     static int s_availableId;
+
+    bool m_enableNotifications;
 };
 
 class ChannelSettings
@@ -90,6 +96,7 @@ class ChannelSettings
     ChannelSettings(const ChannelSettings& settings);
     ChannelSettings(const QString& name);
     ChannelSettings(const QString& name, const QString& password);
+    ChannelSettings(const QString& name, const QString& password, bool enableNotifications);
     ~ChannelSettings();
 
     void setName(const QString& name) { m_name = name; }
@@ -98,9 +105,14 @@ class ChannelSettings
     void setPassword(const QString& password) { m_password = password; }
     QString password() const { return m_password; }
 
+    void setNotificationsEnabled(bool enable) { m_enableNotifications = enable; }
+    bool enableNotifications() const { return m_enableNotifications; }
+
   private:
     QString m_name;
     QString m_password;
+
+    bool m_enableNotifications;
 };
 
 }

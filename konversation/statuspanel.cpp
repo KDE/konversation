@@ -89,6 +89,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 
 StatusPanel::~StatusPanel()
 {
+  m_server->serverGroupSettings()->setNotificationsEnabled(notificationsEnabled());
 }
 
 void StatusPanel::setNickname(const QString& newNickname)

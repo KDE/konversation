@@ -24,6 +24,7 @@ ServerGroupSettings::ServerGroupSettings()
   s_availableId++;
   m_autoConnect = false;
   m_identityId = 0;
+  m_enableNotifications = true;
 }
 
 ServerGroupSettings::ServerGroupSettings(int id)
@@ -38,6 +39,7 @@ ServerGroupSettings::ServerGroupSettings(int id)
 
   m_autoConnect = false;
   m_identityId = 0;
+  m_enableNotifications = true;
 }
 
 ServerGroupSettings::ServerGroupSettings(const ServerGroupSettings& settings)
@@ -50,6 +52,7 @@ ServerGroupSettings::ServerGroupSettings(const ServerGroupSettings& settings)
   setChannelList(settings.channelList());
   setConnectCommands(settings.connectCommands());
   setAutoConnectEnabled(settings.autoConnectEnabled());
+  setNotificationsEnabled(settings.enableNotifications());
   m_id = settings.id();
 }
 
@@ -61,6 +64,7 @@ ServerGroupSettings::ServerGroupSettings(const QString& name)
   s_availableId++;
   m_autoConnect = false;
   m_identityId = 0;
+  m_enableNotifications = true;
 }
 
 ServerGroupSettings::~ServerGroupSettings()
@@ -109,11 +113,25 @@ void ServerGroupSettings::appendChannelHistory(const ChannelSettings& channel)
   for(ChannelList::iterator it = m_channelHistory.begin(); it != endIt; ++it) {
     if(channel.name() == (*it).name()) {
       (*it).setPassword(channel.password());
+      (*it).setNotificationsEnabled(channel.enableNotifications());
       return;
     }
   }
 
   m_channelHistory.append(channel);
+}
+
+ChannelSettings ServerGroupSettings::channelByNameFromHistory(const QString& channelName)
+{
+  ChannelList::iterator endIt = m_channelHistory.end();
+
+  for(ChannelList::iterator it = m_channelHistory.begin(); it != endIt; ++it) {
+    if(channelName == (*it).name()) {
+      return (*it);
+    }
+  }
+
+  return ChannelSettings(channelName);
 }
 
 //
@@ -124,24 +142,35 @@ ChannelSettings::ChannelSettings()
 {
   setName("");
   setPassword("");
+  setNotificationsEnabled(true);
 }
 
 ChannelSettings::ChannelSettings(const ChannelSettings& settings)
 {
   setName(settings.name());
   setPassword(settings.password());
+  setNotificationsEnabled(settings.enableNotifications());
 }
 
 ChannelSettings::ChannelSettings(const QString& name)
 {
   setName(name);
   setPassword("");
+  setNotificationsEnabled(true);
 }
 
 ChannelSettings::ChannelSettings(const QString& name, const QString& password)
 {
   setName(name);
   setPassword(password);
+  setNotificationsEnabled(true);
+}
+
+ChannelSettings::ChannelSettings(const QString& name, const QString& password, bool enableNotifications)
+{
+  setName(name);
+  setPassword(password);
+  setNotificationsEnabled(enableNotifications);
 }
 
 ChannelSettings::~ChannelSettings()

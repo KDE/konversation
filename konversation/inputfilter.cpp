@@ -424,8 +424,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         // Did we join the channel, or was it someone else?
         if(server->isNickname(sourceNick))
         {
-            QString key;
             /*
+                QString key;
                 // TODO: Try to remember channel keys for autojoins and manual joins, so
                 //       we can get %k to work
 
@@ -436,7 +436,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 }
             */
             // Join the channel
-            server->joinChannel(channelName,sourceHostmask,key);
+            server->joinChannel(channelName, sourceHostmask);
             // Request modes for the channel
             server->queue("MODE "+channelName);
         } else {
