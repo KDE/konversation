@@ -48,53 +48,19 @@ class KServerSocketPrivate;
  *
  * A typical example would look like:
  * \code
- *   QString service = "http";
  *   KServerSocket *ss = new KServerSocket(service);
- *   connect(ss, SIGNAL(readyAccept()), this, SLOT(slotReadyAccept()));
- *   connect(ss, SIGNAL(gotError(int)), this, SLOT(slotSocketError(int)));
+ *   QObject::connect(ss, SIGNAL(readyAccept()), this, SLOT(slotReadyAccept()))
  *   ss->listen();
  * \endcode
- * 
- * In this case, this class will place the socket into listening mode on the
+ *
+ * In that case, this class will place the socket into listening mode on the
  * service pointed to by @p service and will emit the @ref readyAccept signal
  * when a connection is ready for accepting. The called slot is responsible for
  * calling @ref accept.
- * 
- * The location of the services file (where @p service is looked up) 
- * is defined by _PATH_SERVICES in /usr/include/netdb.h.  This is
- * usually set to /etc/services.
- * See RFC 1700 for more information on services.
- * You can specify @p service as a port number directly, rather than as a service
- * name.  This is discouraged as it prevents the end user from easily modifying
- * the port number.
- *
- * For another example of usage, this below code attempts to make a connection on any port within a range:
- * \code
- *   KServerSocket *ss = new KServerSocket();
- *   ss->setFamily(KResolver::InetFamily);
- *   bool found = false;
- *   for( unsigned int port = firstport; port <= lastport; ++port) {
- *     ss->setAddress( QString::number( port ) );
- *     bool success = ss->listen();
- *     if( found = ( success && ss->error() == 
- *                              KSocketBase::NoError ) )
- *       break;
- *     ss->close();
- *   }
- *   if( !found ) {
- *     //Couldn't connect to any port.
- *   } else {
- *     connect(ss, SIGNAL(readyAccept()), this, SLOT(slotReadyAccept()));
- *     connect(ss, SIGNAL(gotError(int)), this, SLOT(slotSocketError(int)));
- *     ss->listen();
- *   }
- * \endcode
- * The called slot slotReadyAccept() is responsible for calling
- * @ref accept.
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KServerSocket: public QObject, public KPassiveSocketBase
+class KServerSocket: public QObject, public KPassiveSocketBase
 {
   Q_OBJECT
 public:
@@ -115,13 +81,7 @@ public:
    *
    * If the binding address isn't changed by setAddress, this socket will
    * bind to all interfaces and will listen on the port specified by
-   * @p service.  This is either a service name (e.g. 'www') or a port
-   * number (e.g. '80').
-   * 
-   * The location of the services file (where @p service is looked up) 
-   * is defined by _PATH_SERVICES in /usr/include/netdb.h.  This is
-   * usually set to /etc/services.
-   * See RFC 1700 for more information on services.
+   * @p service.
    *
    * @param service		the service name to listen on
    * @param parent		the parent QObject object
@@ -134,13 +94,7 @@ public:
    *
    * If the binding address isn't changed by setAddress, this socket will
    * bind to the interface specified by @p node and the port specified by
-   * @p service.  This is either a service name (e.g. 'www') or a port
-   * number (e.g. '80').
-   *   
-   * The location of the services file (where @p service is looked up) 
-   * is defined by _PATH_SERVICES in /usr/include/netdb.h.  This is
-   * usually set to /etc/services.
-   * See RFC 1700 for more information on services.   
+   * @p service.
    *
    * @param node		the node to bind to
    * @param service		the service port to listen on
@@ -206,14 +160,8 @@ public:
 
   /**
    * Sets the address on which we will listen. The port to listen on is given by
-   * @p service, and we will bind to all interfaces. To let the operating system choose a
-   * port, set the service to "0".  @p service can either be a service name
-   * (e.g. 'www') or a port number (e.g. '80').
-   *
-   * The location of the services file (where @p service is looked up) 
-   * is defined by _PATH_SERVICES in /usr/include/netdb.h.  This is
-   * usually set to /etc/services.
-   * See RFC 1700 for more information on services.
+   * @p and we will bind to all interfaces. To let the operating system choose a
+   * port, set the service to "0".
    *
    * @param service		the service name to listen on
    */
@@ -223,13 +171,6 @@ public:
    * @overload
    * Sets the address on which we will listen. This will cause the socket to listen
    * only on the interface given by @p node and on the port given by @p service.
-   * @p service can either be a service name (e.g. 'www') or a port number
-   * (e.g. '80').
-   *
-   * The location of the services file (where @p service is looked up) 
-   * is defined by _PATH_SERVICES in /usr/include/netdb.h.  This is
-   * usually set to /etc/services.
-   * See RFC 1700 for more information on services. 
    *
    * @param node		the node to bind to
    * @param service		the service port to listen on
@@ -411,7 +352,6 @@ protected:
 
 private:
   bool doBind();
-  bool doListen();
 
 private:
   KServerSocket(const KServerSocket&);

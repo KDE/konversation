@@ -33,11 +33,6 @@
 #include "ksocketaddress.h"
 #include "kresolver.h"
 #include "ksockssocketdevice.h"
-#include "config.h"
-
-#ifndef kde_socklen_t
-#define kde_socklen_t socklen_t
-#endif
 
 using namespace KNetwork;
 
@@ -174,7 +169,7 @@ KSocksSocketDevice* KSocksSocketDevice::accept()
   return new KSocksSocketDevice(newfd);
 }
 
-static int socks_read_common(int sockfd, char *data, Q_ULONG maxlen, KNetwork::KSocketAddress* from, ssize_t &retval, bool peek = false)
+static int socks_read_common(int sockfd, char *data, Q_ULONG maxlen, KSocketAddress* from, ssize_t &retval, bool peek = false)
 {
   kde_socklen_t len;
   if (from)
@@ -309,7 +304,7 @@ Q_LONG KSocksSocketDevice::writeBlock(const char *data, Q_ULONG len, const KSock
   return retval;
 }
 
-KNetwork::KSocketAddress KSocksSocketDevice::localAddress() const
+KSocketAddress KSocksSocketDevice::localAddress() const
 {
   if (m_sockfd == -1)
     return KSocketAddress();	// not open, empty value
@@ -338,7 +333,7 @@ KNetwork::KSocketAddress KSocksSocketDevice::localAddress() const
   return localAddress;
 }
 
-KNetwork::KSocketAddress KSocksSocketDevice::peerAddress() const
+KSocketAddress KSocksSocketDevice::peerAddress() const
 {
   if (m_sockfd == -1)
     return KSocketAddress();	// not open, empty value
@@ -367,7 +362,7 @@ KNetwork::KSocketAddress KSocksSocketDevice::peerAddress() const
   return peerAddress;
 }
 
-KNetwork::KSocketAddress KSocksSocketDevice::externalAddress() const
+KSocketAddress KSocksSocketDevice::externalAddress() const
 {
   // return empty, indicating unknown external address
   return KSocketAddress();

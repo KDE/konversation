@@ -21,8 +21,6 @@
 #ifndef _NETSUPP_H_
 #define _NETSUPP_H_
 
-#include "kdelibs_export.h"
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -158,10 +156,10 @@ struct kde_addrinfo
   int origin;
 };
 
-extern KDECORE_EXPORT int kde_getaddrinfo(const char *name, const char *service,
+extern int kde_getaddrinfo(const char *name, const char *service,
 			   const struct addrinfo* hint,
 			   struct kde_addrinfo** result);
-extern KDECORE_EXPORT void kde_freeaddrinfo(struct kde_addrinfo *p);
+extern void kde_freeaddrinfo(struct kde_addrinfo *p);
 
 #if !defined(HAVE_GETADDRINFO) || defined(HAVE_BROKEN_GETADDRINFO)
 
@@ -249,15 +247,15 @@ struct addrinfo
 namespace KDE
 {
   /** \internal */
-  extern KDECORE_EXPORT int getaddrinfo(const char *name, const char *service,
+  extern int getaddrinfo(const char *name, const char *service,
 			 const struct addrinfo* hint,
 			 struct addrinfo** result);
   /** \internal */
-  extern KDECORE_EXPORT void freeaddrinfo(struct addrinfo* ai);
+  extern void freeaddrinfo(struct addrinfo* ai);
   /** \internal */
-  extern KDECORE_EXPORT char *gai_strerror(int errorcode);
+  extern char *gai_strerror(int errorcode);
   /** \internal */
-  extern KDECORE_EXPORT int getnameinfo(const struct sockaddr *sa,
+  extern int getnameinfo(const struct sockaddr *sa,
 			 unsigned int salen,
 			 char *host, size_t hostlen,
 			 char *serv, size_t servlen,
@@ -277,7 +275,7 @@ namespace KDE
 namespace KDE
 {
   /** \internal */
-  extern KDECORE_EXPORT int inet_pton(int af, const char *cp, void* buf);
+  extern int inet_pton(int af, const char *cp, void* buf);
 }
 
 # define inet_pton	KDE::inet_pton
@@ -288,7 +286,7 @@ namespace KDE
 namespace KDE
 {
   /** \internal */
-  extern KDECORE_EXPORT const char* inet_ntop(int af, const void *cp, char *buf, size_t len);
+  extern const char* inet_ntop(int af, const void *cp, char *buf, size_t len);
 }
 
 # define inet_ntop	KDE::inet_ntop

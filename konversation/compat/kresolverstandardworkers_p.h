@@ -31,6 +31,7 @@
 #include <qptrlist.h>
 #include <qcstring.h>
 
+#include "kdemacros.h"
 #include "kresolver.h"
 #include "kresolverworkerbase.h"
 

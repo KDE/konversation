@@ -1,5 +1,5 @@
 /*  -*- C++ -*-
- *  Copyright (C) 2003 Thiago Macieira <thiago.macieira@kdemail.net>
+ *  Copyright (C) 2003,2004 Thiago Macieira <thiago.macieira@kdemail.net>
  *
  *
  *  Permission is hereby granted, free of charge, to any person obtaining
@@ -48,7 +48,7 @@ class KResolverEntry;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KDatagramPacket
+class KDatagramPacket
 {
   QByteArray m_data;
   KSocketAddress m_address;
@@ -177,7 +177,7 @@ class KDatagramSocketPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KDatagramSocket: public KClientSocketBase
+class KDatagramSocket: public KClientSocketBase
 {
   Q_OBJECT
 

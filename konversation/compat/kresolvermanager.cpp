@@ -1,5 +1,5 @@
 /*  -*- C++ -*-
- *  Copyright (C) 2003,2004 Thiago Macieira <thiago.macieira@kdemail.net>
+ *  Copyright (C) 2003 Thiago Macieira <thiago.macieira@kdemail.net>
  *
  *
  *  Permission is hereby granted, free of charge, to any person obtaining
@@ -32,7 +32,6 @@
 #ifdef HAVE_RES_INIT
 # include <sys/stat.h>
 # include <resolv.h>
-# include <time.h>
 #endif
 
 #include <qapplication.h>
@@ -45,7 +44,6 @@
 #include <qwaitcondition.h>
 #include <qsemaphore.h>
 
-#include "kde_file.h"
 #include "kresolver.h"
 #include "kresolver_p.h"
 #include "kresolverworkerbase.h"
@@ -115,25 +113,17 @@ namespace
  */
 class ResInitUsage
 {
-public:
-
 #ifdef HAVE_RES_INIT
   time_t mTime;
-  int useCount;
-
-# ifdef SHARED_LIBRESOLV
   QWaitCondition cond;
   QMutex mutex;
-# endif
+  int useCount;
 
-  bool shouldResInit(time_t &mTime)
+  bool shouldResInit()
   {
-    if (mTime == time(NULL))
-      return false;		// don't do it more than once per second
-
-    // check if /etc/resolv.conf has changed 
-    KDE_struct_stat st;
-    if (KDE_stat("/etc/resolv.conf", &st) != 0)
+    // check that /etc/resolv.conf has changed 
+    struct stat st;
+    if (stat("/etc/resolv.conf", &st) != 0)
       return false;
     
     if (mTime < st.st_mtime)
@@ -144,16 +134,17 @@ public:
     return false;
   }
 
-  void reResInit(time_t& mTime)
+  void reResInit()
   {
     //qDebug("ResInitUsage: calling res_init()");
     res_init();
     
-    KDE_struct_stat st;
-    if (KDE_stat("/etc/resolv.conf", &st) == 0)
+    struct stat st;
+    if (stat("/etc/resolv.conf", &st) == 0)
       mTime = st.st_mtime;
   }
 
+public:
   ResInitUsage()
     : mTime(0), useCount(0)
   { }
@@ -161,61 +152,46 @@ public:
   /*
    * Marks the end of usage to the resolver tools
    */
-  void release()
+  void operator--(int)
   {
-# ifdef SHARED_LIBRESOLV
-    QMutexLocker locker(&mutex);
+    mutex.lock();
     if (--useCount == 0)
-      {
-	// we've reached 0, wake up anyone that's waiting to call res_init
-	cond.wakeAll();
-      }
-# else
-    // do nothing
-# endif
+      // we've reached 0, wake up anyone that's waiting to call res_init
+      cond.wakeAll(); 
+    mutex.unlock();
   }
 
   /*
    * Marks the beginning of usage of the resolver API
    */
-  void acquire(time_t &mTime)
+  void operator++(int)
   {
-# ifdef SHARED_LIBRESOLV
     mutex.lock();
 
-    if (shouldResInit(mTime))
+    if (shouldResInit())
       {
 	if (useCount)
 	  {
 	    // other threads are already using the API, so wait till
 	    // it's all clear
-	    // the thread that emits this condition will also call res_init
 	    //qDebug("ResInitUsage: waiting for libresolv to be clear");
 	    cond.wait(&mutex);
 	  }
-	else
-	  // we're clear
-	  reResInit(mTime);
+	reResInit();
       }
     useCount++;
     mutex.unlock();
-# else
-    if (shouldResInit(mTime))
-      reResInit(mTime);
-# endif
   }
 
 #else
+public:
   ResInitUsage()
   { }
 
-  bool shouldResInit(time_t&)
-  { return false; }
-
-  void acquire(time_t&)
+  void operator--(int)
   { }
 
-  void release()
+  void operator++(int)
   { }
 #endif
 
@@ -229,13 +205,13 @@ public:
 // a thread will try maxThreadRetries to get data, waiting at most
 // maxThreadWaitTime milliseconds between each attempt. After that, it'll
 // exit
-static const int maxThreadWaitTime = 2000; // 2 seconds
+static const int maxThreadWaitTime = ULONG_MAX; // wait forever
 static const int maxThreads = 5;
 
 static pid_t pid;		// FIXME -- disable when everything is ok
 
 KResolverThread::KResolverThread()
-  : data(0L), resolverMTime(0)
+  : data(0L)
 {
 }
 
@@ -276,41 +252,6 @@ void KResolverThread::run()
   //qDebug("KResolverThread(thread %u/%p): exiting", pid, (void*)QThread::currentThread());
 }
 
-bool KResolverThread::checkResolver()
-{
-#ifdef SHARED_LIBRESOLV
-  time_t& mTime = resInit.mTime; // global
-#else
-  time_t& mTime = resolverMTime; // thread-specific
-#endif
-
-  return resInit.shouldResInit(mTime);
-}
-
-void KResolverThread::acquireResolver()
-{
-#ifdef SHARED_LIBRESOLV
-  time_t& mTime = resInit.mTime; // global
-#else
-  time_t& mTime = resolverMTime; // thread-specific
-#endif
-
-#ifdef NEED_MUTEX
-  getXXbyYYmutex.lock();
-#endif
-
-  resInit.acquire(mTime);
-}
-
-void KResolverThread::releaseResolver()
-{
-#ifdef NEED_MUTEX
-  getXXbyYYmutex.unlock();
-#endif
-
-  resInit.release();
-}
-
 static KResolverManager *globalManager;
 
 KResolverManager* KResolverManager::manager()
@@ -346,7 +287,6 @@ void KResolverManager::registerThread(KResolverThread* )
 
 void KResolverManager::unregisterThread(KResolverThread*)
 {
-  runningThreads--;
 }
 
 // this function is called by KResolverThread::run
@@ -355,6 +295,8 @@ RequestData* KResolverManager::requestData(KResolverThread *th, int maxWaitTime)
   /////
   // This function is called in a worker thread!!
   /////
+
+  resInit++;
 
   // lock the mutex, so that the manager thread or other threads won't
   // interfere.
@@ -371,6 +313,12 @@ RequestData* KResolverManager::requestData(KResolverThread *th, int maxWaitTime)
   availableThreads--;
 
   data = findData(th);
+  if (data == 0L)
+    {
+      // if we could find no data, this thread will exit
+      runningThreads--;
+      resInit--;
+    }
   return data;
 }
 
@@ -406,6 +354,8 @@ void KResolverManager::releaseData(KResolverThread *, RequestData* data)
   /////
   // This function is called in a worker thread!!
   /////
+
+  resInit--;
 
   //qDebug("KResolverManager::releaseData(%u/%p): %p has been released", pid, 
 //	 (void*)QThread::currentThread(), (void*)data);

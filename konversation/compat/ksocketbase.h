@@ -60,7 +60,6 @@
 #include <qstring.h>
 
 #include "ksocketaddress.h"
-#include "kdelibs_export.h"
 
 /*
  * This is extending QIODevice's error codes
@@ -94,7 +93,7 @@ class KSocketBasePrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KSocketBase
+class KSocketBase
 {
 public:
   /**
@@ -438,7 +437,7 @@ private:
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KActiveSocketBase: public QIODevice, virtual public KSocketBase
+class KActiveSocketBase: public QIODevice, virtual public KSocketBase
 {
 public:
   /**
@@ -669,7 +668,7 @@ protected:
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KPassiveSocketBase: virtual public KSocketBase
+class KPassiveSocketBase: virtual public KSocketBase
 {
 public:
   /**

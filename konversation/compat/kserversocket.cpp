@@ -125,8 +125,6 @@ void KServerSocket::setAddress(const QString& service)
   d->resolver.setNodeName(QString::null);
   d->resolver.setServiceName(service);
   d->resolverResults.empty();
-  if (d->state <= KServerSocketPrivate::LookupDone)
-    d->state = KServerSocketPrivate::None;
 }
 
 void KServerSocket::setAddress(const QString& node, const QString& service)
@@ -134,8 +132,6 @@ void KServerSocket::setAddress(const QString& node, const QString& service)
   d->resolver.setNodeName(node);
   d->resolver.setServiceName(service);
   d->resolverResults.empty();
-  if (d->state <= KServerSocketPrivate::LookupDone)
-    d->state = KServerSocketPrivate::None;
 }
 
 void KServerSocket::setTimeout(int msec)
@@ -212,21 +208,21 @@ bool KServerSocket::bind()
 
   if (d->state < KServerSocketPrivate::LookupDone)
     {
-      if (!blocking())
-	{
-	  d->bindWhenFound = true;
-	  bool ok = lookup();	// will call doBind
-	  if (d->state >= KServerSocketPrivate::Bound)
-	    d->bindWhenFound = false;
-	  return ok;
-	}
-
-      // not blocking
-      if (!lookup())
-	return false;
+      d->bindWhenFound = true;
+      bool ok = lookup();	// will call bind again
+      if (d->state >= KServerSocketPrivate::Bound)
+	d->bindWhenFound = false;
+      return ok;
     }
 
-  return doBind();
+  if (!doBind())
+    {
+      setError(NotSupported);
+      emit gotError(NotSupported);
+      return false;
+    }
+  
+  return true;;
 }
 
 bool KServerSocket::listen(int backlog)
@@ -239,13 +235,12 @@ bool KServerSocket::listen(int backlog)
   if (d->state == KServerSocketPrivate::Listening)
     return true;		// already listening
 
-  d->backlog = backlog;
-
   if (d->state < KServerSocketPrivate::Bound)
     {
       // we must bind
       // note that we can end up calling ourselves here
       d->listenWhenBound = true;
+      d->backlog = backlog;
       if (!bind())
 	{
 	  d->listenWhenBound = false;
@@ -261,7 +256,20 @@ bool KServerSocket::listen(int backlog)
     }
 
   if (d->state < KServerSocketPrivate::Listening)
-    return doListen();
+    {
+      if (!socketDevice()->listen(backlog))
+	{
+	  copyError();
+	  emit gotError(error());
+	  return false;		// failed to listen
+	}
+
+      // set up ready accept signal
+      QObject::connect(socketDevice()->readNotifier(), SIGNAL(activated(int)),
+		       this, SIGNAL(readyAccept()));
+      d->state = KServerSocketPrivate::Listening;
+      return true;
+    }
 
   return true;
 }
@@ -382,32 +390,13 @@ bool KServerSocket::doBind()
     if (bind(*it))
       {
 	if (d->listenWhenBound)
-	  return doListen();
+	  listen(d->backlog);
 	return true;
       }
-    else
-      socketDevice()->close();	// didn't work, try again
 
   // failed to bind
   emit gotError(error());
   return false;
 }
-
-bool KServerSocket::doListen()
-{
-  if (!socketDevice()->listen(d->backlog))
-    {
-      copyError();
-      emit gotError(error());
-      return false;		// failed to listen
-    }
-  
-  // set up ready accept signal
-  QObject::connect(socketDevice()->readNotifier(), SIGNAL(activated(int)),
-		   this, SIGNAL(readyAccept()));
-  d->state = KServerSocketPrivate::Listening;
-  return true;
-}
-
 
 #include "kserversocket.moc"

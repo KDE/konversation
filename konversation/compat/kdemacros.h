@@ -20,44 +20,9 @@
 #ifndef _KDE_MACROS_H_
 #define _KDE_MACROS_H_
 
-/**
- * The KDE_NO_EXPORT macro marks the symbol of the given variable 
- * to be hidden. A hidden symbol is stripped during the linking step, 
- * so it can't be used from outside the resulting library, which is similar
- * to static. However, static limits the visibility to the current 
- * compilation unit. hidden symbols can still be used in multiple compilation
- * units.
- *
- * \code
- * int KDE_NO_EXPORT foo;
- * int KDE_EXPORT bar;
- * \end
- */
-
-#if 0
-#define KDE_NO_EXPORT __attribute__ ((visibility("hidden")))
-#define KDE_EXPORT __attribute__ ((visibility("default")))
-#elif defined(Q_WS_WIN)
-#define KDE_NO_EXPORT
-#define KDE_EXPORT __declspec(dllexport)
-#else
-#define KDE_NO_EXPORT
 #define KDE_EXPORT
-#endif
+#define KDE_NO_EXPORT
 
-/**
- * KDE_Q_EXPORT_PLUGIN is a workaround for Qt not being able to
- * cope with symbol visibility.
- */
-#define KDE_Q_EXPORT_PLUGIN(PLUGIN) \
-  Q_EXTERN_C KDE_EXPORT const char* qt_ucm_query_verification_data(); \
-  Q_EXTERN_C KDE_EXPORT QUnknownInterface* ucm_instantiate(); \
-  Q_EXPORT_PLUGIN(PLUGIN)
-
-/**
- * The KDE_PACKED can be used to hint the compiler that a particular
- * structure or class should not contain unnecessary paddings. 
- */
 
 #ifdef __GNUC__
 #define KDE_PACKED __attribute__((__packed__))
@@ -67,7 +32,7 @@
 
 /**
  * The KDE_DEPRECATED macro can be used to trigger compile-time warnings
- * with newer compilers when deprecated functions are used.
+ * with gcc >= 3.2 when deprecated functions are used.
  *
  * For non-inline functions, the macro gets inserted at the very end of the
  * function declaration, right before the semicolon:
@@ -117,11 +82,7 @@
 
 #ifndef KDE_DEPRECATED
 #if __GNUC__ - 0 > 3 || (__GNUC__ - 0 == 3 && __GNUC_MINOR__ - 0 >= 2)
-  /* gcc >= 3.2 */
 # define KDE_DEPRECATED __attribute__ ((deprecated))
-#elif defined(_MSC_VER) && (_MSC_VER >= 1300)
-  /* msvc >= 7 */
-# define KDE_DEPRECATED __declspec(deprecated)
 #else
 # define KDE_DEPRECATED
 #endif
@@ -160,46 +121,4 @@
 # define KDE_ISUNLIKELY( x )  ( x )
 #endif
 
-/**
- * This macro, and it's friends going up to 10 reserve a fixed number of virtual
- * functions in a class.  Because adding virtual functions to a class changes the
- * size of the vtable, adding virtual functions to a class breaks binary
- * compatibility.  However, by using this macro, and decrementing it as new
- * virtual methods are added, binary compatibility can still be preserved.
- *
- * \note The added functions must be added to the header at the same location
- * as the macro; changing the order of virtual functions in a header is also
- * binary incompatible as it breaks the layout of the vtable.
- */
-
-#define RESERVE_VIRTUAL_1 \
-    virtual void reservedVirtual1() {}
-#define RESERVE_VIRTUAL_2 \
-    virtual void reservedVirtual2() {} \
-    RESERVE_VIRTUAL_1
-#define RESERVE_VIRTUAL_3 \
-    virtual void reservedVirtual3() {} \
-    RESERVE_VIRTUAL_2
-#define RESERVE_VIRTUAL_4 \
-    virtual void reservedVirtual4() {} \
-    RESERVE_VIRTUAL_3
-#define RESERVE_VIRTUAL_5 \
-    virtual void reservedVirtual5() {} \
-    RESERVE_VIRTUAL_4
-#define RESERVE_VIRTUAL_6 \
-    virtual void reservedVirtual6() {} \
-    RESERVE_VIRTUAL_5
-#define RESERVE_VIRTUAL_7 \
-    virtual void reservedVirtual7() {} \
-    RESERVE_VIRTUAL_6
-#define RESERVE_VIRTUAL_8 \
-    virtual void reservedVirtual8() {} \
-    RESERVE_VIRTUAL_7
-#define RESERVE_VIRTUAL_9 \
-    virtual void reservedVirtual9() {} \
-    RESERVE_VIRTUAL_8
-#define RESERVE_VIRTUAL_10 \
-    virtual void reservedVirtual10() {} \
-    RESERVE_VIRTUAL_9
-
-#endif /* _KDE_MACROS_H_ */
+#endif // _KDE_MACROS_H_

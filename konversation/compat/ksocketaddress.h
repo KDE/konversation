@@ -28,7 +28,6 @@
 #include <qstring.h>
 #include <qcstring.h>
 
-#include "kdelibs_export.h"
 
 struct sockaddr;
 struct sockaddr_in;
@@ -59,7 +58,7 @@ class KUnixSocketAddress;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KIpAddress
+class KIpAddress
 {
 public:
   /**
@@ -410,7 +409,7 @@ class KSocketAddressData;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KSocketAddress
+class KSocketAddress
 {
 public:
   /**
@@ -638,7 +637,7 @@ public:				// static
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KInetSocketAddress: public KSocketAddress
+class KInetSocketAddress: public KSocketAddress
 {
   friend class KSocketAddress;
 public:
@@ -827,7 +826,7 @@ private:
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KUnixSocketAddress: public KSocketAddress
+class KUnixSocketAddress: public KSocketAddress
 {
   friend class KSocketAddress;
 public:

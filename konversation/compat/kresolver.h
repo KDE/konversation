@@ -63,7 +63,7 @@ class KResolverEntryPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KResolverEntry
+class KResolverEntry
 {
 public:
   /**
@@ -194,7 +194,7 @@ class KResolverResultsPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KResolverResults: public QValueList<KResolverEntry>
+class KResolverResults: public QValueList<KResolverEntry>
 {
 public:
   /**
@@ -292,7 +292,7 @@ class KResolverPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KResolver: public QObject
+class KResolver: public QObject
 {
   Q_OBJECT
 
@@ -360,7 +360,7 @@ public:
    * Error codes
    *
    * These are the possible error values that objects of this class
-   * may return. See \ref errorString() for getting a string representation
+   * may return. See @ref strError for getting a string representation
    * for these errors.
    *
    * @li AddrFamily: Address family for the given nodename is not supported.
@@ -379,7 +379,7 @@ public:
    */
   enum ErrorCodes
     {
-      // note: if you change this enum, take a look at KResolver::errorString
+      // note: if you change this enum, take a look at KResolver::strError
       NoError = 0,
       AddrFamily = -1,
       TryAgain = -2,

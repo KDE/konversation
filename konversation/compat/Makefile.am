@@ -1,5 +1,5 @@
 METASOURCES = AUTO
-AM_CPPFLAGS = $(all_includes)
+AM_CPPFLAGS = -I. $(all_includes)
 
 SUBDIRS = .
 

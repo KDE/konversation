@@ -29,7 +29,6 @@
 #include <qcstring.h>
 #include <qvaluelist.h>
 #include "kstreamsocket.h"
-#include "kdelibs_export.h"
 
 class KIOBufferBase;
 
@@ -49,7 +48,7 @@ class KBufferedSocketPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KBufferedSocket: public KStreamSocket
+class KBufferedSocket: public KStreamSocket
 {
   Q_OBJECT
 public:
@@ -58,8 +57,6 @@ public:
    *
    * @param node	destination host
    * @param service	destination service to connect to
-   * @param parent      the parent object for this object
-   * @param name        the internal name for this object
    */
   KBufferedSocket(const QString& node = QString::null, const QString& service = QString::null,
 		  QObject* parent = 0L, const char *name = 0L);
