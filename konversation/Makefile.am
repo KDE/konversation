@@ -30,6 +30,7 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp \
 			dcctransferrecv.cpp	channelnick.cpp dccdetaildialog.cpp insertchardialog.cpp irccharsets.cpp \
 			editnotifydialog.cpp common.cpp serverison.cpp sslsocket.cpp servergroupsettings.cpp \
 			serversettings.cpp servergroupdialog.cpp ssllabel.cpp serverdialog.cpp channeldialog.cpp \
+	identitydialog.cpp
 konversation_LDADD   = $(COMPAT_LIBS) $(LIB_KIO) -lkmdi -lm $(LIB_ARTS) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la
 
 xdg_apps_DATA = konversation.desktop
@@ -59,4 +60,5 @@ noinst_HEADERS = prefspagebehaviour.h prefspagechatwinbehavior.h \
 					prefspagechatwinappearance.h	 prefspagecolorsappearance.h serverlistdialog.h dcctransfersend.h \
 					dcctransferrecv.h	 dccdetaildialog.h insertchardialog.h editnotifydialog.h serverison.h \
 					servergroupsettings.h serversettings.h servergroupdialog.h serverdialog.h channeldialog.h \
+	identitydialog.h
 
