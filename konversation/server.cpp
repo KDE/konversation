@@ -471,9 +471,25 @@ void Server::connectToIRCServer()
 
     // (re)connect. Autojoin will be done by the input filter
     statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...").arg(serverSocket.host()).arg(serverSocket.port()));
+
+    
+    // Okay, here's the deal.
+    // ASYNC look ups with KExtendedLookup are broke. See   http://bugs.kde.org/show_bug.cgi?id=50279
+    // The code before used to have a resolver class.  This runs in a seperate thread, and does a lookup.
+    // However, the serverSocket isn't thread safe, and now both the Server and IRCResolver are using
+    // the serverSocket in seperate threads.  This means you could call the resolver to do a lookup, but
+    // then modify the serverSocket in the server class, then when the resolver does the lookup, it is using
+    // the modified version.  Not to mention problems with the server and ircresolver modifying serversocket
+    // at the same instant.
+    // For now, I'm disabling the resolver code until either kde4 when hopefully async lookups are done, or until
+    // someone moves all the serversocket code into a seperate thread, so only one thread ever modifies or uses
+    // the serversocket.
+    serverSocket.lookup(); //sync lookup
+    lookupFinished();      //call this manually. with async code below, an event is called from resolver which is captured and runs lookupFinished()
+
     // QDns is broken, so don't use async lookup, use own threaded class instead
-    resolver.setSocket(&serverSocket);
-    resolver.start();
+    //resolver.setSocket(&serverSocket);
+    //resolver.start();
   }
 }
 
@@ -566,7 +582,11 @@ bool Server::eventFilter(QObject* parent,QEvent* event)
   }
   return QObject::eventFilter(parent,event);
 }
-
+/** Called when the remote servers IP has been found.
+ * connectToIRCServer does a lookup on the server name.
+ * In async mode, lookups are done via the ircresolver class, which is a thread.  This does a blocking serverSocket->lookup
+ * which send a QEvent::User when done, which inputfilter picks up, and calls this.
+ */
 void Server::lookupFinished()
 {
   // error during lookup
@@ -1292,6 +1312,7 @@ QString Server::getIp()
     QString ip(KInetSocketAddress::addrToString(inetSocket.family(),&in_addr));
     // remove temporary object - only in deprecated way
     //delete ipAddr;
+    kdDebug() << "in getIp(), serverSocket.localAddress() returns " << ip << endl;
     return ip;
   }
   kdDebug() << "in getIp(), serverSocket.localAddress() is returning NULL" <<endl;
