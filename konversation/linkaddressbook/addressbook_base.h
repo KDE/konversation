@@ -83,7 +83,7 @@ class AddressbookBase : public QObject, public KIMIface
      *  Run kmail to create a single email addressed to the addressee passed in.
      *  Gives an error dialog to the user if the addressee doesn't have an email address associated.
      */
-    bool sendEmail(const KABC::Addressee &addressee) {
+    bool sendEmail(const KABC::Addressee &addressee);
     /**
      *  Run kaddressbook to edit the addressee passed in.
      */

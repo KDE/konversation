@@ -320,7 +320,7 @@ bool AddressbookBase::sendEmail(const KABC::Addressee &addressee) {
   }
   KProcess *proc = new KProcess;
   *proc << "kmail";
-  *proc << addr.fullEmail();
+  *proc << addressee.fullEmail();
   if(!proc->start()) {
 	  KMessageBox::error(0, "Could not run your email program (kmail).  This is possibly because it isn't installed.  Please install the 'kdepim' packages.");
 	  return false;
