@@ -102,10 +102,12 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Server List"), 0, 0, this, SLOT(openServerList()), actionCollection(), "open_server_list");
 
   new KAction(i18n("Watched Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
-  new KAction(i18n("Channel List"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
-  new KAction(i18n("Open Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
-  new KAction(i18n("Open URL Catcher"), 0, 0, this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
   new KAction(i18n("Open Logfile"), 0, 0, this, SLOT(openLogfile()), actionCollection(), "open_logfile");
+  // TODO: Insert divider line here
+  new KAction(i18n("Channel List"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
+  new KAction(i18n("URL Catcher"), 0, 0, this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
+  // TODO: Insert divider line here
+  new KAction(i18n("New Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
 
   // Actions to navigate through the different pages
   new KAction(i18n("Next Tab"), "next",KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
