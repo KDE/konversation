@@ -39,9 +39,11 @@ KonversationApplication::KonversationApplication()
 
   readOptions();
 
+#if QT_VERSION >= 0x030100
   // Setup system codec
   // FIXME: change this to use per-identity codecs!
   QTextCodec::setCodecForCStrings(QTextCodec::codecForName(preferences.getCodec().ascii()));
+#endif
   
   // open main window
   mainWindow=new KonversationMainWindow();
