@@ -48,11 +48,6 @@ class Nick
     bool isHalfop();
     bool hasVoice();
 
-    void setAdmin(bool state);
-    void setOwner(bool state);
-    void setOp(bool state);
-    void setHalfop(bool state);
-    void setVoice(bool state);    
     bool isSelected();
 
     QString getNickname();
@@ -61,12 +56,20 @@ class Nick
     NickInfoPtr getNickInfo();
     ChannelNickPtr getChannelNick();
 #else
-    
     void setHostmask(const QString& newMask);
     void setNickname(const QString& newName);
+    void setAdmin(bool state);
+    void setOwner(bool state);
+    void setOp(bool state);
+    void setHalfop(bool state);
+    void setVoice(bool state);    
+
 #endif
     
   protected:
+#ifdef USE_NICKINFO
+    ChannelNickPtr channelnickptr;
+#else
     bool admin;
     bool owner;
     bool op;
@@ -74,9 +77,7 @@ class Nick
     bool voice;
 
     QString nickname;
-    QString hostmask;
-#ifdef USE_NICKINFO
-    ChannelNickPtr channelnickptr;
+    QString hostmask;   
 #endif
     LedListViewItem* listViewItem;
 };

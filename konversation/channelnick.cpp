@@ -51,15 +51,15 @@ bool ChannelNick::setMode(char mode, bool state) {
 /** Used still for passing modes from inputfilter to Server.  Should be removed.
  */
 bool ChannelNick::setMode(int mode) {
-  bool voice = mode%1;
+  bool voice = mode%2;
   mode >>= 1;
-  bool halfop = mode %1;
+  bool halfop = mode %2;
   mode >>= 1;
-  bool op = mode %1;
+  bool op = mode %2;
   mode >>= 1;
-  bool owner = mode %1;
+  bool owner = mode %2;
   mode >>= 1;
-  bool admin = mode %1;
+  bool admin = mode %2;
   return setMode(admin, owner, op, halfop, voice);
 }
 
@@ -83,6 +83,13 @@ bool ChannelNick::setMode(bool admin,bool owner,bool op,bool halfop,bool voice) 
 bool ChannelNick::setVoice(bool state) {
   if(hasvoice==state) return false;
   hasvoice=state;
+  nickInfo->getServer()->emitChannelNickChanged(this);
+  emit channelNickChanged();
+  return true;
+}
+bool ChannelNick::setOwner(bool state) {
+  if(isowner==state) return false;
+  isowner=state;
   nickInfo->getServer()->emitChannelNickChanged(this);
   emit channelNickChanged();
   return true;

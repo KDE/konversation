@@ -1286,7 +1286,7 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
       if(parameterChannelNick) {
         if(plus && !parameterChannelNick->isOwner() && !parameterChannelNick->isOp()) adjustOps(1);
         else if(!plus && parameterChannelNick->isOwner() && !parameterChannelNick->isOp()) adjustOps(-1);
-        //parameterChannelNick->setOwner(plus);
+        parameterChannelNick->setOwner(plus);
         updateNicksOps();
         nicknameListView->sort();
       }
@@ -1344,7 +1344,7 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
       if(parameterChannelNick) {
         if(plus && !parameterChannelNick->isOp()) adjustOps(1);
         else if(!plus && parameterChannelNick->isOp()) adjustOps(-1);
-        //parameterChannelNick->setOp(plus);
+        parameterChannelNick->setOp(plus);
         updateNicksOps();
         nicknameListView->sort();
       }
@@ -1402,7 +1402,7 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
       if(parameterChannelNick) {
         if(plus && !parameterChannelNick->isHalfOp()) adjustOps(1);
         else if(!plus && parameterChannelNick->isHalfOp()) adjustOps(-1);
-//        parameterChannelNick->setHalpOp(plus);
+        parameterChannelNick->setHalfOp(plus);
         updateNicksOps();
         nicknameListView->sort();
       }
@@ -1452,7 +1452,7 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
 #ifdef USE_NICKINFO
       parameterChannelNick=server->getChannelNick(getName(), parameter);
       if(parameterChannelNick) {
-	//parameterChannelNick->setVoice(plus);
+	parameterChannelNick->setVoice(plus);
 	nicknameListView->sort();
       }
 #else

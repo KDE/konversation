@@ -51,7 +51,7 @@ LedListViewItem::LedListViewItem(KListView* parent,
 #ifdef USE_NICKINFO
   connect(nick->getChannelNick(), SIGNAL(channelNickChanged()), SLOT(refresh()));
 #endif
-  
+  refresh();
 }
 
 LedListViewItem::~LedListViewItem()

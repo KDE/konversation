@@ -30,12 +30,7 @@ Nick::Nick(KListView *listView,
   Q_ASSERT(channelnick);
   if(!channelnick) return;
   
-  setAdmin(channelnick->isAdmin());
-  setOwner(channelnick->isOwner());
-  setOp(channelnick->isOp());
-  setHalfop(channelnick->isHalfOp());
-  setVoice(channelnick->hasVoice());
-  channelnickptr = channelnick;
+    channelnickptr = channelnick;
   listViewItem=new LedListViewItem(listView,channelnick->getNickname(),channelnick->getHostmask(),this);
 }
 #else
@@ -64,55 +59,47 @@ Nick::~Nick()
   delete listViewItem;
 }
 
+#ifdef USE_NICKINFO
+bool Nick::isAdmin()  { return channelnickptr->isAdmin(); }
+bool Nick::isOwner()  { return channelnickptr->isOwner(); }
+bool Nick::isOp()     { return channelnickptr->isOp(); }
+bool Nick::isHalfop() { return channelnickptr->isHalfOp(); }
+bool Nick::hasVoice() { return channelnickptr->hasVoice(); }
 
+#else
 void Nick::setAdmin(bool state)
 {
   admin=state;
-#ifndef USE_NICKINFO
   listViewItem->refresh();
-#endif
 }
-
 void Nick::setOwner(bool state)
 {
   owner=state;
-#ifndef USE_NICKINFO
   listViewItem->refresh();
-#endif
 }
-
 void Nick::setOp(bool state)
 {
   op=state;
-#ifndef USE_NICKINFO
   listViewItem->refresh();
-#endif
 }
-
 void Nick::setHalfop(bool state)
 {
   halfop=state;
-#ifndef USE_NICKINFO
   listViewItem->refresh();
-#endif
 }
-
 void Nick::setVoice(bool state)
 {
   voice=state;
-#ifndef USE_NICKINFO
   listViewItem->refresh();
-#endif
 }
-
-
-
 
 bool Nick::isAdmin()  { return admin; }
 bool Nick::isOwner()  { return owner; }
 bool Nick::isOp()     { return op; }
 bool Nick::isHalfop() { return halfop; }
 bool Nick::hasVoice() { return voice; }
+
+#endif
 
 #ifdef USE_NICKINFO
 
