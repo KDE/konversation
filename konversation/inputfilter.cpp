@@ -1031,6 +1031,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 	  if(nickInfo) {
 	    nickInfo->setHostmask(i18n("%1@%2").arg(parameterList[2]).arg(parameterList[3]));
 	    nickInfo->setRealName(trailing.section(" ", 1)); //Strip off the "0 "
+	    nickInfo->setAway(parameterList[6].upper() == "G");
 	  }
 	  server->appendStatusMessage(i18n("Who"),
 			              i18n("%1 is %2&#64;%3 (%4)").arg(parameterList[5]) // Use &#64; instead of @
