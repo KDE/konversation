@@ -48,6 +48,7 @@ class IdentityDialog : public KDialogBase
     void newIdentity();
     void renameIdentity();
     void deleteIdentity();
+    void copyIdentity();
 
   private:
     KComboBox* m_identityCBox;

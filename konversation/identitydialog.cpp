@@ -54,14 +54,22 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
 
   QToolButton* newBtn = new QToolButton(mainWidget);
   newBtn->setIconSet(SmallIconSet("new"));
+  newBtn->setTextLabel(i18n("Add"));
   connect(newBtn, SIGNAL(clicked()), this, SLOT(newIdentity()));
+
+  QToolButton* copyBtn = new QToolButton(mainWidget);
+  copyBtn->setIconSet(SmallIconSet("editcopy"));
+  copyBtn->setTextLabel(i18n("Duplicate"));
+  connect(copyBtn, SIGNAL(clicked()), this, SLOT(copyIdentity()));
 
   m_editBtn = new QToolButton(mainWidget);
   m_editBtn->setIconSet(SmallIconSet("edit"));
+  m_editBtn->setTextLabel(i18n("Rename"));
   connect(m_editBtn, SIGNAL(clicked()), this, SLOT(renameIdentity()));
 
   m_delBtn = new QToolButton(mainWidget);
   m_delBtn->setIconSet(SmallIconSet("editdelete"));
+  m_delBtn->setTextLabel(i18n("Remove"));
   connect(m_delBtn, SIGNAL(clicked()), this, SLOT(deleteIdentity()));
 
   QTabWidget* tabWidget = new QTabWidget(mainWidget);
@@ -223,11 +231,12 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   mainLayout->addWidget(identityLabel, row, 0);
   mainLayout->addMultiCellWidget(m_identityCBox, row, row, 1, 2);
   mainLayout->addWidget(newBtn, row, 3);
-  mainLayout->addWidget(m_editBtn, row, 4);
-  mainLayout->addWidget(m_delBtn, row, 5);
+  mainLayout->addWidget(copyBtn, row, 4);
+  mainLayout->addWidget(m_editBtn, row, 5);
+  mainLayout->addWidget(m_delBtn, row, 6);
   mainLayout->setColStretch(1, 10);
   row++;
-  mainLayout->addMultiCellWidget(tabWidget, row, row, 0, 5);
+  mainLayout->addMultiCellWidget(tabWidget, row, row, 0, 6);
 
   // set values for the widgets
   updateIdentity(0);
@@ -378,7 +387,8 @@ void IdentityDialog::newIdentity()
 void IdentityDialog::renameIdentity()
 {
   bool ok = false;
-  QString txt = KInputDialog::getText(i18n("Rename Identity"), i18n("Identity Name"), QString::null, &ok, this);
+  QString currentTxt = m_identityCBox->currentText();
+  QString txt = KInputDialog::getText(i18n("Rename Identity"), i18n("Identity Name"), currentTxt, &ok, this);
 
   if(ok && !txt.isEmpty()) {
     m_currentIdentity->setName(txt);
@@ -404,6 +414,26 @@ void IdentityDialog::deleteIdentity()
       m_currentIdentity = 0;
       updateIdentity(m_identityCBox->currentItem());
     }
+  }
+}
+
+void IdentityDialog::copyIdentity()
+{
+  bool ok = false;
+  QString currentTxt = m_identityCBox->currentText();
+  QString txt = KInputDialog::getText(i18n("Duplicate Identity"), i18n("Identity Name"), currentTxt, &ok, this);
+
+  if(ok && !txt.isEmpty()) {
+    IdentityPtr identity = new Identity;
+    identity->copy(*m_currentIdentity);
+    identity->setName(txt);
+    m_identityList.append(identity);
+    m_identityCBox->insertItem(txt);
+    m_identityCBox->setCurrentItem(m_identityCBox->count() - 1);
+    updateIdentity(m_identityCBox->currentItem());
+  } else if(ok && txt.isEmpty()) {
+    KMessageBox::error(this, i18n("You need to give the identity a name."));
+    renameIdentity();
   }
 }
 

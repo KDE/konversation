@@ -42,6 +42,16 @@ Identity::Identity(int id) : KShared()
 
 Identity::Identity(const Identity& original) : KShared()
 {
+  copy(original);
+  m_id = original.id();
+}
+
+Identity::~Identity()
+{
+}
+
+void Identity::copy(const Identity& original)
+{
   setName(original.getName());
   setRealName(original.getRealName());
   setIdent(original.getIdent());
@@ -55,11 +65,6 @@ Identity::Identity(const Identity& original) : KShared()
   setAwayMessage(original.getAwayMessage());
   setReturnMessage(original.getReturnMessage());
   setCodecName(original.getCodecName());
-  m_id = original.id();
-}
-
-Identity::~Identity()
-{
 }
 
 void Identity::setName(const QString& newName)          { name=newName; }

@@ -26,11 +26,17 @@ class QTextCodec;
 
 class Identity : public KShared
 {
-  public: 
+  public:
+    /// Create an Identity with a new id.
     Identity();
+    /// Create a new Identity with a set id.
     Identity(int id);
+    /// Copy all of @param original including the id.
     Identity(const Identity& original);
     ~Identity();
+
+    /// This function copies all of @param original but the id
+    void copy(const Identity& original);
 
     void setName(const QString& name);   // the name of this identity
     QString getName() const;
