@@ -27,7 +27,7 @@ class ValueListViewItem : public KListViewItem
     ValueListViewItem(int newValue,KListView* parent,QString label);
     ~ValueListViewItem();
 
-    int getValue() const;
+    const int getValue() const;
 
   protected:
     int value;

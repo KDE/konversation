@@ -26,7 +26,7 @@ ValueListViewItem::~ValueListViewItem()
 {
 }
 
-int ValueListViewItem::getValue() const
+const int ValueListViewItem::getValue() const
 {
   return value;
 }
