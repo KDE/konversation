@@ -1054,13 +1054,17 @@ namespace Konversation {
                 password = splitted[1];
             }
 
-	    splitAddress= QStringList::split(":", splitted[0]);
+	    splitAddress= QStringList::split(":", splitted[0], TRUE);
             QString port = "6667";
 
-            if(splitAddress.count() < 3 && splitAddress.count() == 2) {
-	      port = splitted[1];
+            if(splitAddress.count() == 2) { // IPv4 address with a port
+	      port = splitAddress[1];
 	      splitted[0] = splitAddress[0];
             }
+	    else if(splitAddress.count() > 6) { // IPv6 address with a port
+	      port = splitAddress[splitAddress.count()-1];
+	      splitted[0] = splitted[0].section(':',0,5);
+	    }
 
 	    kdDebug() << "Server : " << splitted[0] << " Port : " << port << endl;
 
