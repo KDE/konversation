@@ -49,7 +49,7 @@ void OSDWidget::renderOSDText( const QString &txt )
     QString text = txt; // Escaped text
     QRegExp colorRegExp("((\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)|\x02|\x09|\x13|\x16|\x1f)");
     // Escape text decoration
-    text = text.remove(colorRegExp);
+    text.remove(colorRegExp);
 
     static QBitmap mask;
 
