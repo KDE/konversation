@@ -6,8 +6,8 @@ Copyright: GPL
 Packager:  Dario Abatianni <eisfuchs@tigress.com>
 Group:     X11/Applications/Networking
 Requires:  libpng, kdebase3 >= 3.0
-BuildRequires: libpng-devel, kdelibs-devel, arts-devel, libjpeg-devel
-BuildRequires:  XFree86-devel, zlib-devel, qt-devel >= 3.0.2
+BuildRequires: libpng-devel, kdelibs3-devel, arts-devel, libjpeg-devel
+BuildRequires:  XFree86-devel, zlib-devel, qt3-devel >= 3.0.2
 
 %description
 Konversation is a user friendly IRC client for KDE 3.x
