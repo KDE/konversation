@@ -46,7 +46,7 @@ StatusPanel::StatusPanel(QWidget* parent) :
   statusInput=new IRCInput(commandLineBox);
 
   setLog(KonversationApplication::preferences.getLog());
-  setLogfileName("konversation.log");
+  setLogfileName("konversation");
 
   connect(getTextView(),SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
 

@@ -78,6 +78,9 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   setMainWindow(newMainWindow);
 
+  kdDebug() << "Server Group " << serverGroup << endl;
+
+  serverGroup=serverEntry[0];
   serverName=serverEntry[1];
   serverPort=serverEntry[2].toInt();
   serverKey=serverEntry[3];
@@ -206,6 +209,8 @@ Server::~Server()
 
 QString Server::getServerName()  const { return serverName; }
 int Server::getPort() const { return serverPort; }
+
+QString Server::getServerGroup() const { return serverGroup; }
 
 int Server::getLag()  const { return currentLag; }
 

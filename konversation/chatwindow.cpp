@@ -197,7 +197,13 @@ void ChatWindow::setLogfileName(const QString& name)
   // Only change name of logfile if the window was new.
   if(firstLog)
   {
-    logName=name;
+    // status panels start without a server set, so check for server 
+    if(server)
+      // make sure that no path delimiters are in the name
+      logName=server->getServerGroup().lower().replace(QRegExp("/"),"_")+"_"+name+".log";
+    else
+      logName=name+".log";
+    
     // "cd" into log path or create path, if it's not there
     cdIntoLogPath();
     // Show last log lines. This idea was stole ... um ... inspired by PMP :)

@@ -590,7 +590,7 @@ void Channel::endCompleteNick()
 void Channel::setName(const QString& newName)
 {
   ChatWindow::setName(newName);
-  setLogfileName("konversation_"+newName.lower()+".log");
+  setLogfileName(newName.lower());
 }
 
 void Channel::setKey(const QString& newKey)

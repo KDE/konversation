@@ -88,10 +88,9 @@ void Query::setName(const QString& newName)
   // unless we want this by turning the option Log Follows Nick off.
 
   if((logName.isEmpty()) || (KonversationApplication::preferences.getLogFollowsNick()==false))
-    setLogfileName("konversation_"+
-                  ((KonversationApplication::preferences.getLowerLog())
-                    ? getName().lower()
-                    : getName())+".log");
+    setLogfileName((
+                      (KonversationApplication::preferences.getLowerLog()) ? getName().lower() : getName()
+                  ));
 }
 
 void Query::queryTextEntered()

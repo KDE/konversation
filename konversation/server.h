@@ -44,6 +44,7 @@ class Server : public QObject
     ~Server();
 
     QString getServerName() const;
+    QString getServerGroup() const;
     Identity *getIdentity();
     int getPort() const;
     int getLag() const;
@@ -220,6 +221,7 @@ class Server : public QObject
     unsigned int tryNickNumber;
     unsigned int reconnectCounter;
 
+    QString serverGroup;
     QString serverName;
     QString bot;
     QString botPassword;
