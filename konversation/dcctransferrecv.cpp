@@ -542,6 +542,9 @@ QByteArray DccTransferRecvWriteCacheHandler::popCache()
     m_wholeCacheSize -= sizeSum;
   }
   kdDebug() << "DTRWriteCacheHandler::popCache(): caches in the packet: " << number_written << ", remaining caches: " << m_cacheList.count() << ".  Size just written now: " << sizeSum << endl;
+  static unsigned long allPoppedSize = 0;
+  allPoppedSize += buffer.size();
+  kdDebug() << "DTRWriteCacheHandler::popCache(): all popped size: " << allPoppedSize << endl;
   return buffer;
 }
 
