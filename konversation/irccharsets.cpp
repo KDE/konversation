@@ -106,6 +106,7 @@ void IRCCharsets::private_init()  // static, private
   if(s_localeAliases.isEmpty())
     {
       // Setup locale aliases
+      // Only need to alias the ones containing space
       s_localeAliases["cp1250"] = "cp 1250";
       s_localeAliases["cp1251"] = "cp 1251";
       s_localeAliases["cp1252"] = "cp 1252";
