@@ -70,6 +70,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   channelListPanel=0;
   alreadyConnected=false;
   rejoinChannels=false;
+  connecting=false;
 
   timerInterval=1;  // flood protection
 
@@ -246,12 +247,15 @@ void Server::setAutoJoinChannel(const QString &channel) { autoJoinChannel=channe
 QString Server::getAutoJoinChannelKey() const { return autoJoinChannelKey; }
 void Server::setAutoJoinChannelKey(const QString &key) { autoJoinChannelKey=key; }
 
-bool Server::isConnected() const { return serverSocket.socketStatus()==KExtendedSocket::connected; }
+bool Server::isConnected()  const { return serverSocket.socketStatus()==KExtendedSocket::connected; }
+bool Server::isConnecting() const { return connecting; }
 
 void Server::connectToIRCServer()
 {
+  outputBuffer.clear();
   deliberateQuit=false;
   serverSocket.blockSignals(false);
+  connecting=true;
 
   // prevent sending queue until server has sent something or the timeout is through
   lockSending();
@@ -402,10 +406,10 @@ void Server::ircServerConnectionSuccess()
                         " 8 * :" +  // 8 = +i; 4 = +w
                         identity->getRealName();
 
-  if(!serverKey.isEmpty()) queue("PASS "+serverKey);
+  if(!serverKey.isEmpty()) queueAt(0,"PASS "+serverKey);
 
-  queue("NICK "+getNickname());
-  queue(connectString);
+  queueAt(1,"NICK "+getNickname());
+  queueAt(2,connectString);
 
   emit nicknameChanged(getNickname());
 
@@ -422,6 +426,8 @@ void Server::broken(int state)
   serverSocket.blockSignals(true);
 
   alreadyConnected=false;
+  connecting=false;
+  outputBuffer.clear();
 
   kdDebug() << "Connection broken (Socket fd " << serverSocket.fd() << ") " << state << "!" << endl;
 
@@ -758,9 +764,20 @@ void Server::incoming()
 void Server::queue(const QString& buffer)
 {
   // Only queue lines if we are connected
-  if(isConnected() && buffer.length())
+  if(buffer.length())
   {
     outputBuffer.append(buffer);
+
+    timerInterval*=2;
+  }
+}
+
+void Server::queueAt(int pos,const QString& buffer)
+{
+  // Only queue lines if we are connected
+  if(buffer.length())
+  {
+    outputBuffer.insert(outputBuffer.at(pos),buffer);
 
     timerInterval*=2;
   }
@@ -769,7 +786,7 @@ void Server::queue(const QString& buffer)
 void Server::queueList(const QStringList& buffer)
 {
   // Only queue lines if we are connected
-  if(isConnected() && buffer.count())
+  if(buffer.count())
   {
     for(unsigned int i=0;i<buffer.count();i++)
     {
@@ -782,7 +799,7 @@ void Server::queueList(const QStringList& buffer)
 void Server::send()
 {
   // Check if we are still online
-  if(!isConnected()) outputBuffer.clear();
+  if(!isConnected()) return;
 
   if(outputBuffer.count() && sendUnlocked)
   {

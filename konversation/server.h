@@ -104,6 +104,7 @@ class Server : public QObject
     void setAutoJoin(bool on);
 
     bool isConnected() const;
+    bool isConnecting() const;
 
     QString getAutoJoinChannel() const;
     void setAutoJoinChannel(const QString &channel);
@@ -316,6 +317,8 @@ class Server : public QObject
     KonversationMainWindow* getMainWindow() const;
     void setMainWindow(KonversationMainWindow* newMainWindow);
 
+    void queueAt(int pos,const QString& buffer);
+
     bool eventFilter(QObject* parent, QEvent *event);
 
     void lookupFinished();
@@ -421,6 +424,7 @@ class Server : public QObject
     bool alreadyConnected;
     bool rejoinChannels;
     bool sendUnlocked;
+    bool connecting;
     
     QString nonAwayNick;
     

@@ -166,7 +166,7 @@ void KonversationApplication::connectToAnotherServer(int id)
     {
       QString autoJoinChannel=chosenServer->getChannelName();
 
-      if(newServer->isConnected())
+      if(newServer->isConnected() || newServer->isConnecting())
       {
         if(!autoJoinChannel.isEmpty())
           newServer->queue("JOIN "+autoJoinChannel+" "+chosenServer->getChannelKey());
