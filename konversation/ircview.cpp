@@ -257,13 +257,16 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   // URL Catcher
   QString linkColor=KonversationApplication::preferences.getColor("LinkMessage");
 
+// Maybe switch to this function some day when it does hilight better than my own stuff ;)
+//  filteredLine=KStringHandler::tagURLs(filteredLine);
+
   QRegExp pattern("((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
                   // IP Address
                   "([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|"
                   // Decimal IP address
                   "[0-9]{1,12}|"
                   // Standard host name
-                  "([\\.@%a-z0-9_-])+\\.[a-z]{2,}"
+                  "[a-z0-9][\\.@%a-z0-9_-]+\\.[a-z]{2,}"
                   // Port number, path to document
                   ")(:[0-9]{1,5})?(/[^)>\"'\\s]*)?|"
                   // eDonkey2000 links need special treatment
@@ -279,28 +282,28 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
     if(pattern.search(filteredLine,pos)!=-1) {
       // Remember where we found the url
       pos=pattern.pos();
-  
+
       // Extract url
       QString url=pattern.capturedTexts()[0];
       QString href(url);
-  
+
       // clean up href for browser
       if(href.startsWith("www.")) href="http://"+href;
       else if(href.startsWith("ftp.")) href="ftp://"+href;
-  
+
       // Fix &amp; back to & in href ... kludgy but I don't know a better way.
       href.replace(QRegExp("&amp;"),"&");
       // Replace all spaces with %20 in href
       href.replace(QRegExp(" "),"%20");
       // Build rich text link
       QString link("<font color=\"#"+linkColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
-  
+
       // replace found url with built link
       filteredLine.replace(pos,url.length(),link);
       // next search begins right after the link
       pos+=link.length();
       // tell the program that we have found a new url
-  
+
       KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
       konvApp->storeUrl(whoSent,url);
     } else if(emailPattern.search(filteredLine,pos)!=-1) {
@@ -309,26 +312,26 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
       // Extract url
       QString url=emailPattern.capturedTexts()[0];
       QString href(url);
-      
+
       if(!href.startsWith("mailto:")) {
         href.prepend("mailto:");
       }
-      
+
       QString link("<font color=\"#"+linkColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
-  
+
       // replace found url with built link
       filteredLine.replace(pos,url.length(),link);
       // next search begins right after the link
       pos+=link.length();
       // tell the program that we have found a new url
-  
+
       KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
       konvApp->storeUrl(whoSent,url);
     } else {
       pos++;
     }
   }
-  
+
   // Hilight
 
   if(doHilight)
