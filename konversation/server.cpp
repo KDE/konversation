@@ -622,6 +622,7 @@ void Server::ircServerConnectionSuccess()
 
 void Server::broken(int state)
 {
+  kdBacktrace();
   m_socket->enableRead(false);
   m_socket->enableWrite(false);
   m_socket->blockSignals(true);
