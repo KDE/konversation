@@ -6,7 +6,6 @@
 */
 
 /*
-  topiccombobox.cpp  -  description
   begin:     Don Nov 21 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

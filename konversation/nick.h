@@ -6,7 +6,6 @@
 */
 
 /*
-  nick.h  -  description
   begin:     Fri Jan 25 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

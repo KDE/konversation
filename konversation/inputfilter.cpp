@@ -6,7 +6,6 @@
 */
 
 /*
-  inputfilter.cpp  -  description
   begin:     Fri Jan 25 2002
   copyright: (C) 2002 by Dario Abatianni
              (C) 2004 by Peter Simonsson

@@ -6,7 +6,6 @@
 */
 
 /*
-  ledtabbar.h  -  description
   begin:     Sun Feb 24 2002
   copyright: (C) 2002 by Dario Abatianni
              in parts (C) by Trolltech

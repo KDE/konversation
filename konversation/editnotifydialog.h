@@ -6,7 +6,6 @@
 */
 
 /*
-  editnotifydialog.h  -  description
   begin:     Wed Sep 1 2004
   copyright: (C) 2004 by Gary Cramblitt
   email:     garycramblitt@comcast.net

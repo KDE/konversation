@@ -6,7 +6,6 @@
 */
 
 /*
-  errorcodes.h  -  description
   begin:     Fri Jan 25 "200"2
   copyright: (C) "200"2 by Dario Abatianni
   email:     eisfuchs@tigress.com

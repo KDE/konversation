@@ -6,7 +6,6 @@
 */
 
 /*
-  ignorelistviewitem.h  -  description
   begin:     Die Jun 25 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

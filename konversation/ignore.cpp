@@ -6,7 +6,6 @@
 */
 
 /*
-  ignore.cpp  -  description
   begin:     Mon Jun 24 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
