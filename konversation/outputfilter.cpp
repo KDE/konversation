@@ -370,17 +370,18 @@ void OutputFilter::parseDcc(QString parameter)
 
     if(dccType=="send")
     {
-      if(parameterList.count()<3)
+      if(parameterList.count()==1)                 // DCC SEND
       {
-        type=i18n("Usage");
-        output=i18n("Usage: %1DCC [SEND nickname filename]").arg(commandChar);
-// TODO: make sure this will work:
-//        output=i18n("Usage: %1DCC [SEND nickname [filename] [filename] ...]").arg(commandChar);
-        program=true;
+        emit requestDccSend(NULL);
       }
-      else
+      else if(parameterList.count()==2)            // DCC SEND <nickname>
       {
-        // TODO: Check if file is available
+        emit requestDccSend(parameterList[1]);
+      }
+      else if(parameterList.count()>2)             // DCC SEND <nickname> <file> [file] ...
+      {
+// TODO: make sure this will work:
+//        output=i18n("Usage: %1DCC SEND nickname [filename] [filename] ...").arg(commandChar);
         QFile file(parameterList[2]);
         if(file.exists())
           emit openDccSend(parameterList[1],parameterList[2]);
@@ -390,6 +391,12 @@ void OutputFilter::parseDcc(QString parameter)
           output=i18n("Error: File \"%1\" does not exist.").arg(parameterList[2]);
           program=true;
         }
+      }
+      else   // Don't know how this should happen, but ...
+      {
+        type=i18n("Usage");
+        output=i18n("Usage: %1DCC [SEND nickname filename]").arg(commandChar);
+        program=true;
       }
     }
     // TODO: DCC Chat etc. comes here

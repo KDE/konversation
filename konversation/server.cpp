@@ -21,6 +21,7 @@
 
 #include <klocale.h>
 #include <kdebug.h>
+#include <kfiledialog.h>
 
 #include "server.h"
 #include "query.h"
@@ -29,6 +30,7 @@
 #include "ircserversocket.h"
 #include "konversationapplication.h"
 #include "dcctransfer.h"
+#include "dccrecipientdialog.h"
 
 Server::Server(int id)
 {
@@ -36,6 +38,8 @@ Server::Server(int id)
 
   tryNickNumber=0;
   checkTime=0;
+
+  lastDccDir="";
 
   serverWindow=new ServerWindow(this);
   setNickname(KonversationApplication::preferences.getNickname(tryNickNumber));
@@ -73,6 +77,8 @@ Server::Server(int id)
 
   connect(&outputFilter,SIGNAL (openQuery(const QString&,const QString&)),
                    this,SLOT   (addQuery(const QString&,const QString&)) );
+  connect(&outputFilter,SIGNAL (requestDccSend(QString)),
+                   this,SLOT   (requestDccSend(QString)) );
 
   connect(&notifyTimer,SIGNAL(timeout()),
                   this,SLOT  (notifyTimeout()) );
@@ -94,8 +100,6 @@ Server::Server(int id)
   connect(this,SIGNAL(tooLongLag(int)),serverWindow,SLOT(tooLongLag(int)) );
   connect(this,SIGNAL(resetLag()),serverWindow,SLOT(resetLag()) );
   connect(this,SIGNAL(addDccPanel()),serverWindow,SLOT(addDccPanel()) );
-
-//  emit addDccPanel();
 }
 
 Server::~Server()
@@ -104,7 +108,7 @@ Server::~Server()
 
   if(serverSocket)
   {
-    // Make sure no signals get sent to a soon dying Server Window
+    // Make sure no signals get sent to a soon to be dying Server Window
     serverSocket->blockSignals(true);
     // Send out the last messages (usually the /QUIT)
     serverSocket->enableWrite(true);
@@ -119,7 +123,6 @@ QString Server::getServerName()
 {
   return serverName;
 }
-
 
 int Server::getPort()
 {
@@ -417,14 +420,69 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
   query->setHostmask(hostmask);
 }
 
+void Server::requestDccSend(QString recipient)
+{
+  // if we don't have a recipient yet, let the user select one
+  if(!recipient)
+  {
+    QStringList nickList;
+    Channel* lookChannel=channelList.first();
+
+    // fill nickList with all nicks we know about
+    while(lookChannel)
+    {
+      QList<Nick> nicks=lookChannel->getNickList();
+      Nick* lookNick=nicks.first();
+      while(lookNick)
+      {
+        nickList.append(lookNick->getNickname());
+        lookNick=nicks.next();
+      }
+      lookChannel=channelList.next();
+    }
+
+    // add Queries as well, but don't insert duplicates
+    Query* lookQuery=queryList.first();
+    while(lookQuery)
+    {
+      if(nickList.find(lookQuery->getName())==nickList.end()) nickList.append(lookQuery->getName());
+      lookQuery=queryList.next();
+    }
+
+    recipient=DccRecipientDialog::getNickname(getServerWindow(),nickList);
+  }
+  // do we have a recipient *now*?
+  if(recipient && recipient!="")
+  {
+    QString fileName=KFileDialog::getOpenFileName(
+                                                   lastDccDir,
+                                                   QString::null,
+                                                   getServerWindow(),
+                                                   i18n("Select file to send to %1").arg(recipient)
+                                                 );
+    if(fileName!="")
+    {
+      QFileInfo fileInfo(fileName);
+
+      lastDccDir=fileInfo.dirPath();
+
+      if(fileInfo.isDir())
+        appendStatusMessage(i18n("DCC"),i18n("Error: \"%1\" is not a regular file.").arg(fileName));
+      else
+        addDccSend(recipient,fileName);
+    }
+  }
+}
+
 void Server::addDccSend(QString recipient,QString fileName)
 {
   emit addDccPanel();
 
+  // Get our own IP address. Don't laugh! This works!
   QString ip=KExtendedSocket::localAddress(serverSocket->fd())->pretty();
   ip=ip.section('-',0,0);
 
-  // We already checked that the file exists in output filter
+  // We already checked that the file exists in output filter / requestDccSend() resp.
   QFile file(fileName);
   QString size=QString::number(file.size());
 
@@ -506,7 +564,7 @@ void Server::resumeDccGetTransfer(QString sourceNick,QStringList dccArguments)
     // Check if there actually is a transfer going on with that name, could be behind a NAT
     // so the port number may get changed
     // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-    DccTransfer* dccTransfer=serverWindow->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::ResumeGet);
+    dccTransfer=serverWindow->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::ResumeGet);
 
   if(dccTransfer)
   {
@@ -529,7 +587,7 @@ void Server::resumeDccSendTransfer(QString recipient,QStringList dccArguments)
     // Check if there actually is a transfer going on with that name, could be behind a NAT
     // so the port number may get changed
     // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-    DccTransfer* dccTransfer=serverWindow->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::Send);
+    dccTransfer=serverWindow->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::Send);
 
   if(dccTransfer)
   {

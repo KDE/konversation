@@ -68,6 +68,8 @@ void ChatWindow::setServer(Server* newServer)
            server,SLOT   (requestDccPanel()) );
   connect(&filter,SIGNAL (openDccSend(QString,QString)),
            server,SLOT   (addDccSend(QString,QString)) );
+  connect(&filter,SIGNAL (requestDccSend(QString)),
+           server,SLOT   (requestDccSend(QString)) );
 }
 
 void ChatWindow::setTextView(IRCView* newView)

@@ -39,7 +39,7 @@ class NickListView : public KListView
     {
       Modes,GiveOp,TakeOp,GiveVoice,TakeVoice,
       Kick,KickBan,BanNick,BanHostmask,
-      Whois,Version,Ping,Query,
+      Whois,Version,Ping,Query,DccSend,
       CustomID
     };
 

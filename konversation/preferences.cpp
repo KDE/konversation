@@ -47,10 +47,7 @@ Preferences::Preferences()
   nicknameList.append("KonvIRC_");
   nicknameList.append("_KonvIRC_");
 
-  addServer("FurNet,yiff.furry.de,6667,,#pantherchat,");
-  addServer("FurNet,irc.critter.net,6667,,#wolfsrudel,");
-  addServer("DALNet,irc.dal.net,6667,key,#linux,");
-  addServer("IRCNet,irc.net,7000,,#kde,key");
+  addServer("IRCNet,irc.kde.org,6667,,#kde-users,");
 
   buttonList.append("Op,/OP %u%n");
   buttonList.append("DeOp,/DEOP %u%n");
@@ -58,8 +55,8 @@ Preferences::Preferences()
   buttonList.append("Version,/CTCP %s,%%u VERSION%n");
   buttonList.append("Kick,/KICK %u%n");
   buttonList.append("Ban,/BAN %u%n");
-  buttonList.append("Part,/PART %c :KDE Rules!%n");
-  buttonList.append("Quit,/QUIT :KDE Rules!%n");
+  buttonList.append("Part,/PART %c KDE Rules!%n");
+  buttonList.append("Quit,/QUIT KDE Rules!%n");
 
   setPartReason("Konversation terminated!");
   setKickReason("User terminated!");

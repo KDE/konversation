@@ -265,6 +265,9 @@ void Channel::popupCommand(int id)
     case NickListView::Query:
       pattern=KonversationApplication::preferences.getCommandChar()+"QUERY %u";
       break;
+    case NickListView::DccSend:
+      pattern=KonversationApplication::preferences.getCommandChar()+"DCC SEND %u";
+      break;
   } /* switch */
 
   if(pattern.length())
@@ -1030,4 +1033,9 @@ void Channel::closeNickChangeDialog(QSize newSize)
 
   delete nickChangeDialog;
   nickChangeDialog=0;
+}
+
+QList<Nick> Channel::getNickList()
+{
+  return nicknameList;
 }

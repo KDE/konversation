@@ -58,6 +58,7 @@ class Channel : public ChatWindow
     void removeNick(QString& nickname,QString& reason,bool quit);
     void kickNick(QString& nickname,QString& kicker,QString& reason);
     Nick* getNickByName(QString& lookname);
+    QList<Nick> getNickList();
 
     void adjustNicks(int value);
     void adjustOps(int value);

@@ -129,6 +129,7 @@ class Server : public QObject
     void connectionEstablished();
     void notifyResponse(QString nicksOnline);
     void addDccGet(QString sourceNick,QStringList dccArguments);
+    void requestDccSend(QString recipient);                                  // -> to outputFilter
     void resumeDccGetTransfer(QString sourceNick,QStringList dccArguments);  // -> to inputFilter
     void resumeDccSendTransfer(QString sourceNick,QStringList dccArguments); // -> to inputFilter
     void dccSendRequest(QString recipient,QString fileName,QString address,QString port,unsigned long size);
@@ -169,9 +170,10 @@ class Server : public QObject
     QString outputBuffer;
     QString nickname;
     QString serverKey;
+    QString lastDccDir;
 
-    QList<Channel> channelList;
-    QList<Query> queryList;
+    QPtrList<Channel> channelList;
+    QPtrList<Query> queryList;
 
     InputFilter inputFilter;
     OutputFilter outputFilter;
