@@ -599,7 +599,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
       */
       prefix="-->";
     }
-  else if(type=="Part")
+  else if(type=="Part" || type=="Quit")
     {
       /*
       QString image = KGlobal::dirs()->findResource("data","konversation/images/part.png");
