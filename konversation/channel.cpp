@@ -489,6 +489,10 @@ void Channel::popupCommand(int id)
       pattern="WHOIS %u";
       raw=true;
       break;
+    case NickListView::WhoisServer:
+      pattern="WHOIS %u %u";
+      raw=true;
+      break;
     case NickListView::Ping:
       {
         unsigned int time_t = QDateTime::currentDateTime().toTime_t();
