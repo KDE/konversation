@@ -326,6 +326,7 @@ Channel::~Channel()
   kdDebug() << "Channel::~Channel(" << getName() << ")" << endl;
 
   KonversationApplication::preferences.setChannelSplitter(splitter->sizes());
+  KonversationApplication::preferences.setTopicSplitterSizes(m_vertSplitter->sizes());
   KConfig* config = kapp->config();
   config->setGroup("Appearance");
   config->writeEntry("TopicSplitterSizes", m_vertSplitter->sizes());
@@ -1580,15 +1581,20 @@ void Channel::showEvent(QShowEvent*)
   if(splitterChanged)
   {
     splitterChanged=false;
-    splitter->setSizes(KonversationApplication::preferences.getChannelSplitter());
-    KConfig* config = kapp->config();
-    config->setGroup("Appearance");
-    QValueList<int> sizes = config->readIntListEntry("TopicSplitterSizes");
+    QValueList<int> sizes = KonversationApplication::preferences.getChannelSplitter();
+
+    if(sizes.isEmpty()) {
+      int listWidth = nicknameListView->columnWidth(0) + nicknameListView->columnWidth(1);
+      sizes << (splitter->width() - listWidth) << listWidth;
+    }
+    
+    splitter->setSizes(sizes);
+    sizes = KonversationApplication::preferences.topicSplitterSizes();
 
     if(sizes.isEmpty()) {
       sizes << m_topicButton->height() << (m_vertSplitter->height() - m_topicButton->height());
     }
-    
+
     m_vertSplitter->setSizes(sizes);
   }
   if(awayChanged)

@@ -370,11 +370,8 @@ void KonversationApplication::readOptions()
   preferences.setUseParagraphSpacing(config->readBoolEntry("UseParagraphSpacing",preferences.getUseParagraphSpacing()));
   preferences.setParagraphSpacing(config->readNumEntry("ParagraphSpacing",preferences.getParagraphSpacing()));
 
-  QValueList<int> sizes;
-  QString sizesString=config->readEntry("ChannelSplitter","10,1");
-  sizes.append(sizesString.section(',',0,0).toInt());
-  sizes.append(sizesString.section(',',1,1).toInt());
-  preferences.setChannelSplitter(sizes);
+  preferences.setChannelSplitter(config->readIntListEntry("ChannelSplitter"));
+  preferences.setTopicSplitterSizes(config->readIntListEntry("TopicSplitterSizes"));
 
   preferences.setBackgroundImageName(config->readEntry("BackgroundImage",preferences.getBackgroundImageName()));
   QStringList ircColorList = preferences.getIRCColorList();
@@ -871,8 +868,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("UseParagraphSpacing",preferences.getUseParagraphSpacing());
   config->writeEntry("ParagraphSpacing",preferences.getParagraphSpacing());
 
-  QString sizesString(QString::number(preferences.getChannelSplitter()[0])+","+QString::number(preferences.getChannelSplitter()[1]));
-  config->writeEntry("ChannelSplitter",sizesString);
+  config->writeEntry("ChannelSplitter",preferences.getChannelSplitter());
+  config->writeEntry("TopicSplitterSizes", preferences.topicSplitterSizes());
   config->writeEntry("BackgroundImage",preferences.getBackgroundImageName());
   config->writeEntry("IRCColors", preferences.getIRCColorList());
   config->writeEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton());

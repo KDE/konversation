@@ -95,9 +95,6 @@ Preferences::Preferences()
   setUseParagraphSpacing(false);
   setParagraphSpacing(2);
 
-  channelSplitter.append(10);
-  channelSplitter.append(1);
-
   setAutoReconnect(true);
   setAutoRejoin(true);
   setAutojoinOnInvite(false);
@@ -796,6 +793,16 @@ bool Preferences::getTrayNotify() { return trayNotify; }
 
 void Preferences::setChannelSplitter(QValueList<int> sizes) { channelSplitter=sizes; }
 QValueList<int> Preferences::getChannelSplitter() { return channelSplitter; }
+
+void Preferences::setTopicSplitterSizes(QValueList<int> sizes)
+{
+  m_topicSplitterSizes = sizes;
+}
+
+QValueList<int> Preferences::topicSplitterSizes() const
+{
+  return m_topicSplitterSizes;
+}
 
 void Preferences::setChannelDoubleClickAction(const QString &action) { channelDoubleClickAction=action; }
 QString Preferences::getChannelDoubleClickAction() { return channelDoubleClickAction; }

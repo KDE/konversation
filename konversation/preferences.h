@@ -373,6 +373,9 @@ class Preferences : public QObject
     void setChannelSplitter(QValueList<int> sizes);
     QValueList<int> getChannelSplitter();
 
+    void setTopicSplitterSizes(QValueList<int> sizes);
+    QValueList<int> topicSplitterSizes() const;
+
     void setChannelDoubleClickAction(const QString &action);
     QString getChannelDoubleClickAction();
 
@@ -532,6 +535,7 @@ class Preferences : public QObject
     bool trayNotify;
 
     QValueList<int> channelSplitter;
+    QValueList<int> m_topicSplitterSizes;
 
     QMap<QString, QStringList> notifyList;
     QString commandChar;
