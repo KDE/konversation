@@ -129,13 +129,13 @@ void LedTabBar::insertAssociationSubMenu(const NickInfoPtr &nickinfo) {
   KABC::Addressee addr = nickinfo->getAddressee();
   m_popupAddressbook->clear();
   if(!addr.isEmpty()) {
-    m_popupAddressbook->insertItem(i18n("Edit Contact..."), AddressbookEdit);
+    m_popupAddressbook->insertItem(SmallIcon("contents"), i18n("Edit &Contact..."), AddressbookEdit);
     m_popupAddressbook->insertSeparator();
-    m_popupAddressbook->insertItem(i18n("Change Association..."), AddressbookChange);
-    m_popupAddressbook->insertItem(SmallIcon("editdelete"), i18n("Delete Association"), AddressbookDelete);
+    m_popupAddressbook->insertItem(i18n("&Change Association..."), AddressbookChange);
+    m_popupAddressbook->insertItem(SmallIcon("editdelete"), i18n("&Delete Association"), AddressbookDelete);
   } else {
-    m_popupAddressbook->insertItem(i18n("Choose Contact..."), AddressbookChange);
-    m_popupAddressbook->insertItem(i18n("Create New Contact..."), AddressbookNew);
+    m_popupAddressbook->insertItem(i18n("Choose &Contact..."), AddressbookChange);
+    m_popupAddressbook->insertItem(i18n("Create &New Contact..."), AddressbookNew);
   }
 }
 LedTab* LedTabBar::tab(QWidget* widget)
