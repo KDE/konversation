@@ -105,7 +105,7 @@ void LinkAddressbookUI::slotLoadAddressees()
 			num_contacts_with_nick++;
 			(new KABC::AddresseeItem( m_mainWidget->addresseeListView, (*it) ))->setSelected(true);
 		} else
-			/*KABC::AddresseeItem *item =*/ new KABC::AddresseeItem( m_mainWidget->addresseeListView, (*it) );
+			/*KABC::AddresseeItem *item =*/ new KABC::AddresseeItem( m_mainWidget->addresseeListView, (*it));
 	if(num_contacts_with_nick == 0)
     m_mainWidget->lblHeader->setText(i18n("Choose the person who '%2' is.").arg(m_ircnick));
 	else if(num_contacts_with_nick == 1 && realname.isEmpty())

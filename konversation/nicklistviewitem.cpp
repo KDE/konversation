@@ -37,6 +37,7 @@ NickListViewItem::NickListViewItem(KListView* parent,
   connect(nick->getChannelNick(), SIGNAL(channelNickChanged()), SLOT(refresh()));
   connect(nick->getNickInfo(), SIGNAL(nickInfoChanged()), SLOT(refresh()));
   refresh();
+  m_height = this->height();
 }
 
 NickListViewItem::~NickListViewItem()
@@ -75,7 +76,7 @@ void NickListViewItem::refresh()
     pic = nickInfo->getAddressee().logo();
   if(pic.isIntern())
   {
-    QPixmap qpixmap(pic.data().scaleHeight(this->height()));
+    QPixmap qpixmap(pic.data().scaleHeight(m_height));
     setPixmap(1,qpixmap);
   }
   setText(1,calculateLabel1());

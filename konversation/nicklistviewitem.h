@@ -52,7 +52,7 @@ class NickListViewItem : public QObject, public KListViewItem
 
     QString calculateLabel1();
     QString calculateLabel2();
-    
+    int m_height;
 };
 
 #endif
