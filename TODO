@@ -18,11 +18,9 @@ Joining large channels is very slow
 Close query on RMB Ignore ([x] don't ask again)
 Make coloring of list view and input lines an option
 
-in channel list window the filter is not applied when one refresh the list :-)
-and a "channel or topic" checkbox would be nice :-)
-and double click an list entry == join channel :-)
-
-/WHOIS needs support for extended channel modes
+in channel list window the filter is not applied when one refresh the list
+and a "channel or topic" checkbox would be nice, or better, make the current checkboxes work as "or" not as "and"
+and double click an list entry == join channel
 
 Tab completion should work on an alphabetic list
 /WHOWAS after /WHOIS if /WHOIS returns unknown nickname

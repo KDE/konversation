@@ -925,7 +925,7 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
   bool fromMe=false;
   bool toMe=false;
 
-  kdDebug() << "updateMode(): sourceNick: " << sourceNick << " server->getNickname(): " << server->getNickname() << endl;
+  kdDebug() << "updateMode(): sourceNick: " << sourceNick << " parameter: " << parameter << endl;
 
   if(sourceNick.lower()==server->getNickname().lower()) fromMe=true;
   if(parameter.lower()==server->getNickname().lower()) toMe=true;

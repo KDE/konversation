@@ -980,7 +980,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_WHOISCHANNELS:
         {
-          QStringList userChannels,voiceChannels,opChannels;
+          QStringList userChannels,voiceChannels,opChannels,halfopChannels,ownerChannels,adminChannels;
 
           // get a list of all channels the user is in
           QStringList channelList=QStringList::split(' ',trailing);
@@ -990,9 +990,15 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           for(unsigned int index=0; index < channelList.count(); index++)
           {
             QString lookChannel=channelList[index];
-            if (lookChannel.startsWith("@"))
+            if(lookChannel.startsWith("*"))
+              adminChannels.append(lookChannel.mid(1));
+            else if(lookChannel.startsWith("!"))
+              ownerChannels.append(lookChannel.mid(1));
+            else if(lookChannel.startsWith("@"))
               opChannels.append(lookChannel.mid(1));
-            else if (lookChannel.startsWith("+"))
+            else if(lookChannel.startsWith("%"))
+              halfopChannels.append(lookChannel.mid(1));
+            else if(lookChannel.startsWith("+"))
               voiceChannels.append(lookChannel.mid(1));
             else
               userChannels.append(lookChannel);
@@ -1009,11 +1015,29 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                                         i18n("%1 has voice on channels: %2").arg(parameterList[1])
                                         .arg(voiceChannels.join(" ")) );
           }
+          if(halfopChannels.count())
+          {
+            server->appendStatusMessage(i18n("Whois"),
+                                        i18n("%1 is halfop on channels: %2").arg(parameterList[1])
+                                        .arg(halfopChannels.join(" ")) );
+          }
           if(opChannels.count())
           {
             server->appendStatusMessage(i18n("Whois"),
                                         i18n("%1 is operator on channels: %2").arg(parameterList[1])
                                         .arg(opChannels.join(" ")) );
+          }
+          if(ownerChannels.count())
+          {
+            server->appendStatusMessage(i18n("Whois"),
+                                        i18n("%1 is owner of channels: %2").arg(parameterList[1])
+                                        .arg(ownerChannels.join(" ")) );
+          }
+          if(adminChannels.count())
+          {
+            server->appendStatusMessage(i18n("Whois"),
+                                        i18n("%1 is admin on channels: %2").arg(parameterList[1])
+                                        .arg(adminChannels.join(" ")) );
           }
           break;
         }
@@ -1153,7 +1177,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
   bool plus=false;
   int parameterIndex=0;
   // List of modes that need a parameter (note exception with -k and -l)
-  QString parameterModes="oOvkbleI";
+  QString parameterModes="oOvhkbleI";
 
   for(unsigned int index=0;index<modestring.length();index++)
   {
@@ -1180,7 +1204,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
       // Let the channel update its modes
       server->updateChannelMode(sourceNick,parameterList[0],mode,plus,parameter);
     }
-  }
+  } // endfor
 }
 
 // # & + and ! are Channel identifiers
