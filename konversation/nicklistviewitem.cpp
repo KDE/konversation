@@ -116,6 +116,8 @@ QString NickListViewItem::calculateLabel1() {
 
   if(!addressee.realName().isEmpty()) {//if no addressee, realName will be empty
     return nick->getNickInfo()->getNickname() + " (" + addressee.realName() + ")";
+  } else if(!nick->getNickInfo()->getRealName().isEmpty()) {
+    return nick->getNickInfo()->getNickname() + " (" + nick->getNickInfo()->getRealName() + ")";
   }
 
   return nick->getNickInfo()->getNickname();
