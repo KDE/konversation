@@ -1710,13 +1710,23 @@ int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item
 QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found)
 {
   found.clear();
+  QString prefix = "^";
+  
+  if(pattern.find(QRegExp("^(\\d|\\w)")) != -1) {
+    prefix = "(^|[^\\d\\w])";
+  }
+  
+  QRegExp regexp(prefix + QRegExp::escape(pattern.lower()));
 
   for(Nick* n = first(); n; n = next()) {
+/*
 #if QT_VERSION >= 0x030200
     if(n->getNickname().startsWith(pattern, false)) {
 #else
     if(n->getNickname().lower().startsWith(pattern.lower())) {
 #endif
+*/
+    if(n->getNickname().lower().find(regexp) != -1) {
       found.append(n->getNickname());
     }
   }
