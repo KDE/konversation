@@ -48,6 +48,7 @@ class UrlCatcher : public ChatWindow
     void openUrl(QListViewItem* item);
 
     void openUrlClicked();
+    void copyUrlClicked();
     void deleteUrlClicked();
     void saveListClicked();
     void clearListClicked();
@@ -56,6 +57,7 @@ class UrlCatcher : public ChatWindow
     KListView* urlListView;
 
     QPushButton* openUrlButton;
+    QPushButton* copyUrlButton;
     QPushButton* deleteUrlButton;
     QPushButton* saveListButton;
     QPushButton* clearListButton;

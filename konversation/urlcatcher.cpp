@@ -16,7 +16,9 @@
 
 #include <qhbox.h>
 #include <qpushbutton.h>
+#include <qclipboard.h>
 
+#include <kapp.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <klistview.h>
@@ -40,6 +42,7 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
   buttonBox->setSpacing(spacing());
 
   openUrlButton=new QPushButton(i18n("Open URL"),buttonBox,"open_url_button");
+  copyUrlButton=new QPushButton(i18n("Copy URL"),buttonBox,"copy_url_button");
   deleteUrlButton=new QPushButton(i18n("Delete URL"),buttonBox,"delete_url_button");
   saveListButton=new QPushButton(i18n("Save list"),buttonBox,"save_list_button");
   clearListButton=new QPushButton(i18n("Clear list"),buttonBox,"clear_list_button");
@@ -48,6 +51,7 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
   connect(urlListView,SIGNAL (selectionChanged()),this,SLOT (urlSelected()) );
 
   connect(openUrlButton,SIGNAL (clicked()),this,SLOT (openUrlClicked()) );
+  connect(copyUrlButton,SIGNAL (clicked()),this,SLOT (copyUrlClicked()) );
   connect(deleteUrlButton,SIGNAL (clicked()),this,SLOT (deleteUrlClicked()) );
   connect(saveListButton,SIGNAL (clicked()),this,SLOT (saveListClicked()) );
   connect(clearListButton,SIGNAL (clicked()),this,SLOT (clearListClicked()) );
@@ -68,11 +72,13 @@ void UrlCatcher::urlSelected()
   if(item)
   {
     openUrlButton->setEnabled(true);
+    copyUrlButton->setEnabled(true);
     deleteUrlButton->setEnabled(true);
   }
   else
   {
     openUrlButton->setEnabled(false);
+    copyUrlButton->setEnabled(false);
     deleteUrlButton->setEnabled(false);
   }
 }
@@ -93,6 +99,21 @@ void UrlCatcher::openUrlClicked()
 {
   QListViewItem* item=urlListView->selectedItem();
   if(item) openUrl(item);
+}
+
+void UrlCatcher::copyUrlClicked()
+{
+  QListViewItem* item=urlListView->selectedItem();
+  if(item)
+  {
+    QClipboard *cb=KApplication::kApplication()->clipboard();
+#if QT_VERSION >= 0x030100
+    cb->setText(item->text(1),QClipboard::Selection);
+#else
+    cb->setSelectionMode(true);
+    cb->setText(item->text(1));
+#endif
+  }
 }
 
 void UrlCatcher::deleteUrlClicked()

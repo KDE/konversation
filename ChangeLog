@@ -13,6 +13,7 @@ Changes from 0.12 to 0.13
 - Notify list is now in preferences dialog
 - Option for a background image added
 - Added /quote command for raw server messages
+- Added Copy URL into clipboard for URL catcher
 
 Changes from 0.11 to 0.12
 - Now handles multi server mode in one single window
