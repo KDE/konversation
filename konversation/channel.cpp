@@ -27,6 +27,7 @@
 #include <qtimer.h>
 
 #include <klineedit.h>
+#include <kpassdlg.h>
 #include <klocale.h>
 #include <kdebug.h>
 
@@ -595,9 +596,24 @@ QStringList Channel::getSelectedNicksList()
 
 void Channel::modeButtonClicked(int id,bool on)
 {
-  char modes[]={'t','n','s','i','p','m','k','l'};
+  char mode[]={'t','n','s','i','p','m','k','l'};
+  QString command("MODE "+getName()+" ");
 
-  QString command("MODE "+getName()+" "+((on) ? "+" : "-")+modes[id]);
+  if(mode[id]=='k')
+  {
+    if(getKey().isEmpty())
+    {
+      QCString key;
+
+      int result=KPasswordDialog::getPassword(key,i18n("Channel keyword:"));
+
+      if(result==KPasswordDialog::Accepted && !key.isEmpty()) setKey(key);
+    }
+    command+=((on) ? "+" : "-")+QString("k "+getKey());
+    if(!on) setKey(QString::null);
+  }
+  else command+=((on) ? "+" : "-")+mode[id];
+
   server->queue(command);
 }
 
