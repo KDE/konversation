@@ -32,6 +32,7 @@
 
 #include <kdebug.h>
 #include <kmessagebox.h>
+#include <klocale.h>
 
 #include "konversationapplication.h"
 #include "ircview.h"

@@ -171,7 +171,6 @@ void KonversationApplication::connectToAnotherServer(int id)
   newServer=new Server(mainWindow,id);
 
   connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
-  connect(mainWindow,SIGNAL (channelQuickButtonsChanged()),newServer,SLOT (updateChannelQuickButtons()) );
   connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
 
   connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&)) );
@@ -661,6 +660,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
       // TODO: updateFonts() also updates the background color and more stuff! We must finally
       // find a way to do all this with signals / slots!
       lookServer->updateFonts();
+      lookServer->updateChannelQuickButtons();
 
       lookServer->setShowQuickButtons(preferences.getShowQuickButtons());
       lookServer->setShowModeButtons(preferences.getShowModeButtons());

@@ -19,6 +19,7 @@
 #include <kdebug.h>
 #include <kapp.h>
 #include <kconfig.h>
+#include <klocale.h>
 
 #include <qpalette.h>
 #include <qtextcodec.h>

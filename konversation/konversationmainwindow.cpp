@@ -36,7 +36,6 @@
 #include "dccpanel.h"
 #include "dcctransferhandler.h"
 #include "highlightdialog.h"
-#include "quickbuttonsdialog.h"
 #include "ignoredialog.h"
 #include "notifydialog.h"
 #include "nicksonline.h"
@@ -60,7 +59,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   hilightDialog=0;
   ignoreDialog=0;
   notifyDialog=0;
-  buttonsDialog=0;
   nicksOnlineWindow=0;
 
   viewContainer=new LedTabWidget(this,"main_window_tab_widget");
@@ -77,7 +75,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
   KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
-  new KAction(i18n("Buttons"),0,0,this,SLOT (openButtons()),actionCollection(),"open_buttons_window");
   new KAction(i18n("Highlight List"),0,0,this,SLOT (openHilight()),actionCollection(),"open_hilight_window");
   new KAction(i18n("Notify List"),0,0,this,SLOT (openNotify()),actionCollection(),"open_notify_window");
   new KAction(i18n("Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
@@ -552,34 +549,6 @@ void KonversationMainWindow::closeHilight(QSize newHilightSize)
 
   delete hilightDialog;
   hilightDialog=0;
-}
-
-void KonversationMainWindow::openButtons()
-{
-  if(!buttonsDialog)
-  {
-    buttonsDialog=new QuickButtonsDialog(KonversationApplication::preferences.getButtonList(),
-                                         KonversationApplication::preferences.getButtonsSize());
-    connect(buttonsDialog,SIGNAL (cancelClicked(QSize)),this,SLOT (closeButtons(QSize)) );
-    connect(buttonsDialog,SIGNAL (applyClicked(QStringList)),this,SLOT (applyButtons(QStringList)) );
-    buttonsDialog->show();
-  }
-}
-
-void KonversationMainWindow::applyButtons(QStringList newButtonList)
-{
-  KonversationApplication::preferences.setButtonList(newButtonList);
-  emit prefsChanged();
-  emit channelQuickButtonsChanged();
-}
-
-void KonversationMainWindow::closeButtons(QSize newButtonsSize)
-{
-  KonversationApplication::preferences.setButtonsSize(newButtonsSize);
-  emit prefsChanged();
-
-  delete buttonsDialog;
-  buttonsDialog=0;
 }
 
 void KonversationMainWindow::openIgnore()

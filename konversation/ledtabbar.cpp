@@ -21,6 +21,7 @@
 #include <qapp.h>
 
 #include <kdebug.h>
+#include <klocale.h>
 
 #include "ledtabbar.h"
 #include "konversationapplication.h"

@@ -23,12 +23,12 @@
 #include <kdialogbase.h>
 #include <klistview.h>
 
-#include "preferences.h"
-#include "prefspage.h"
-
 /*
  *@author Dario Abatianni
 */
+
+class Preferences;
+class PrefsPageButtons;
 
 class PrefsDialog : public KDialogBase
 {
@@ -52,6 +52,7 @@ class PrefsDialog : public KDialogBase
 
   protected:
     Preferences* preferences;
+    PrefsPageButtons* buttonsPage;
 
     void setPreferences(Preferences* newPrefs);
 };

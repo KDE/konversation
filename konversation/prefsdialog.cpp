@@ -27,6 +27,7 @@
 #include "prefspageidentity.h"
 #include "prefspageappearance.h"
 #include "prefspagecolorsimages.h"
+#include "prefspagebuttons.h"
 #include "prefspagelog.h"
 #include "prefspagedccsettings.h"
 // #include "prefspagescripts.h"
@@ -46,9 +47,10 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   QFrame* serverListPane     =addPage(i18n("Server list"));
   QFrame* generalSettingsPane=addPage(i18n("General settings"));
   QFrame* identityPane       =addPage(i18n("Identity"));
-  // TODO: maybe we can make this a hierachy (use addPage(QStringList...)
+
   QFrame* appearancePane     =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("General")));
   QFrame* colorsImagesPane   =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Colors and images")));
+  QFrame* buttonsPane        =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Quick buttons")));
 
   QFrame* logSettingsPane    =addPage(i18n("Log settings"));
   QFrame* dccSettingsPane    =addPage(i18n("DCC settings"));
@@ -67,6 +69,8 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   new PrefsPageAppearance(appearancePane,preferences);
   // Add Colors and images page
   new PrefsPageColorsImages(colorsImagesPane,preferences);
+  // Add Quick buttons page
+  buttonsPage=new PrefsPageButtons(buttonsPane,preferences);
   // Add Log Settings page
   new PrefsPageLog(logSettingsPane,preferences);
   // Add Dcc Settings page
@@ -115,6 +119,7 @@ void PrefsDialog::slotOk()
 
 void PrefsDialog::slotApply()
 {
+  preferences->setButtonList(buttonsPage->getButtonList());
   emit prefsChanged();
 }
 

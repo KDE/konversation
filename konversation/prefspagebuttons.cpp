@@ -6,39 +6,30 @@
 */
 
 /*
-  quickbuttonsdialog.cpp  -  Provides an interface to edit the quick buttons
-  begin:     Mon Jun 10 2002
-  copyright: (C) 2002 by Dario Abatianni
+  prefspagebuttons.cpp  -  Provides an interface to edit the quick buttons
+  begin:     Mon Jun 9 2003
+  copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
 
   $Id$
 */
 
-#include <qlayout.h>
 #include <qregexp.h>
+#include <qlayout.h>
 #include <qlabel.h>
 
-#include <klocale.h>
 #include <klistview.h>
-#include <kdebug.h>
 
-#include "quickbuttonsdialog.h"
+#include "prefspagebuttons.h"
 
-QuickButtonsDialog::QuickButtonsDialog(QStringList buttonList,QSize size):
-                    KDialogBase(static_cast<QWidget*>(0),"quickbuttonsdialog",false,i18n("Edit quick buttons"),
-                                KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
-                                KDialogBase::Ok,true)
+PrefsPageButtons::PrefsPageButtons(QFrame* newParent,Preferences* newPreferences) :
+                  PrefsPage(newParent,newPreferences)
 {
-  kdDebug() << "QuickButtonsDialog::QuickButtonsDialog()" << endl;
-
-  // Create the top level widget
-  QWidget* page=new QWidget(this);
-  setMainWidget(page);
   // Add the layout to the widget
-  QVBoxLayout* dialogLayout=new QVBoxLayout(page);
-  dialogLayout->setSpacing(spacingHint());
+  QVBoxLayout* buttonsLayout=new QVBoxLayout(parentFrame,marginHint(),spacingHint());
+
   // Set up the button list
-  buttonListView=new KListView(page);
+  buttonListView=new KListView(parentFrame);
 
   buttonListView->addColumn(i18n("Button name"));
   buttonListView->addColumn(i18n("Button action"));
@@ -52,6 +43,7 @@ QuickButtonsDialog::QuickButtonsDialog(QStringList buttonList,QSize size):
   buttonListView->setAcceptDrops(true);
 
   // Insert buttons in reverse order to make them appear sorted correctly
+  QStringList buttonList=preferences->getButtonList();
   for(int index=8;index!=0;index--)
   {
     QString buttonText=buttonList[index-1];
@@ -64,39 +56,17 @@ QuickButtonsDialog::QuickButtonsDialog(QStringList buttonList,QSize size):
                                        "%K: Server key\n"
                                        "%u: List of selected nicknames\n"
                                        "%s<term>%: term used to separate nicknames in %u\n"
-                                       "%n: Send command directly to the server instead of your input line"),page);
+                                       "%n: Send command directly to the server instead of your input line"),parentFrame);
 
-  dialogLayout->addWidget(buttonListView);
-  dialogLayout->addWidget(instructions);
-
-  setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
-  setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
-  setButtonCancelText(i18n("Cancel"),i18n("Discards all changes made"));
-
-  setInitialSize(size);
+  buttonsLayout->addWidget(buttonListView);
+  buttonsLayout->addWidget(instructions);
 }
 
-QuickButtonsDialog::~QuickButtonsDialog()
+PrefsPageButtons::~PrefsPageButtons()
 {
 }
 
-void QuickButtonsDialog::slotOk()
-{
-  slotApply();
-  slotCancel();
-}
-
-void QuickButtonsDialog::slotApply()
-{
-  emit applyClicked(getButtonList());
-}
-
-void QuickButtonsDialog::slotCancel()
-{
-  emit cancelClicked(size());
-}
-
-QStringList QuickButtonsDialog::getButtonList()
+QStringList PrefsPageButtons::getButtonList()
 {
   QStringList newList;
   QListViewItem* item=buttonListView->itemAtIndex(0);
@@ -111,4 +81,4 @@ QStringList QuickButtonsDialog::getButtonList()
   return newList;
 }
 
-#include "quickbuttonsdialog.moc"
+#include "prefspagebuttons.moc"

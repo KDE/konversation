@@ -71,7 +71,6 @@ class KonversationMainWindow : public KMainWindow
 
   signals:
     void prefsChanged();
-    void channelQuickButtonsChanged();
     void startNotifyTimer(int msec);
     void openPrefsDialog();
     void quitServer();
@@ -117,9 +116,6 @@ class KonversationMainWindow : public KMainWindow
 
     void openNicksOnlineWindow();
     void closeNicksOnlineWindow(QSize newSize);
-    void openButtons();
-    void applyButtons(QStringList newList);
-    void closeButtons(QSize newSize);
 
     void openChannelList();
 
@@ -178,7 +174,6 @@ class KonversationMainWindow : public KMainWindow
     HighlightDialog* hilightDialog;
     NotifyDialog* notifyDialog;
     IgnoreDialog* ignoreDialog;
-    QuickButtonsDialog* buttonsDialog;
     NicksOnline* nicksOnlineWindow;
     QStringList nicksOnlineList;
 
