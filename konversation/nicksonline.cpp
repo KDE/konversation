@@ -26,7 +26,7 @@
 
 NicksOnline::NicksOnline(const QSize& newSize)
 {  
-  setCaption(i18n("Nicks Online"));
+  setCaption(i18n("Watched Nicks Online"));
   
   nickListView=new KListView(this);
   

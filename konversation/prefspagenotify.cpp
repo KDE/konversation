@@ -37,8 +37,8 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   QHBox* delayBox=new QHBox(parentFrame);
   delayBox->setSpacing(spacingHint());
 
-  useNotifyCheck=new QCheckBox(i18n("&Use notify"),delayBox,"use_notify_checkbox");
-  notifyDelayLabel=new QLabel(i18n("Notify &interval:"),delayBox,"interval_label");
+  useNotifyCheck=new QCheckBox(i18n("&Use nick watcher"),delayBox,"use_nick_watcher_checkbox");
+  notifyDelayLabel=new QLabel(i18n("Check &interval:"),delayBox,"interval_label");
   notifyDelayLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   notifyDelaySpin=new QSpinBox(5,1000,1,delayBox,"delay_spin");
   notifyDelaySpin->setValue(preferences->getNotifyDelay());
@@ -50,7 +50,7 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   listBox->setSpacing(spacingHint());
   notifyListView=new KListView(listBox);
 
-  notifyListView->addColumn(i18n("Notify"));
+  notifyListView->addColumn(i18n("Watched Nicks"));
 
   notifyListView->setAllColumnsShowFocus(true);
   notifyListView->setItemsRenameable(true);
@@ -93,7 +93,7 @@ PrefsPageNotify::~PrefsPageNotify()
 void PrefsPageNotify::newNotify()
 {
   bool ok=false;
-  QString newPattern=KLineEditDlg::getText(i18n("Add notify:"),i18n("New"),&ok,parentFrame);
+  QString newPattern=KLineEditDlg::getText(i18n("Add nick to watch for:"),i18n("New"),&ok,parentFrame);
   if(ok)
   {
     KListViewItem* newItem=new KListViewItem(notifyListView,newPattern);

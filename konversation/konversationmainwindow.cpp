@@ -101,7 +101,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
   new KAction(i18n("Server List"), 0, 0, this, SLOT(openServerList()), actionCollection(), "open_server_list");
 
-  new KAction(i18n("Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
+  new KAction(i18n("Watched Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
   new KAction(i18n("Channel List"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
   new KAction(i18n("Open Konsole"), 0, 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
   new KAction(i18n("Open URL Catcher"), 0, 0, this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
