@@ -97,10 +97,11 @@ void Query::setName(const QString& newName)
   // This will prevent Nick-Changers to create more than one log file,
   // unless we want this by turning the option Log Follows Nick off.
 
-  if((logName.isEmpty()) || (KonversationApplication::preferences.getLogFollowsNick()==false))
+  if((logName.isEmpty()) || (KonversationApplication::preferences.getLogFollowsNick()==false)) {
     setLogfileName((
                       (KonversationApplication::preferences.getLowerLog()) ? getName().lower() : getName()
                   ));
+  }
 }
 
 void Query::queryTextEntered()

@@ -731,8 +731,8 @@ Query* KonversationMainWindow::addQuery(Server* server, const QString& name, boo
   Query* query=new Query(getViewContainer());
 #endif
 
-  query->setName(name);
   query->setServer(server);
+  query->setName(name);
 
 #ifdef USE_MDI
   addMdiView(query,0, true, weinitiated);

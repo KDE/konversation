@@ -255,11 +255,12 @@ void ChatWindow::setLogfileName(const QString& name)
   if(firstLog)
   {
     // status panels get special treatment here, since they have no server at the beginning
-    if(getType()==Status)
+    if(getType()==Status) {
       logName=name+".log";
-    else if(server)
+    } else if(server) {
       // make sure that no path delimiters are in the name
       logName=server->getServerGroup().lower().replace(QRegExp("/"),"_")+"_"+name+".log";
+    }
 
     // "cd" into log path or create path, if it's not there
     cdIntoLogPath();
