@@ -37,8 +37,9 @@ KonvDCOP::KonvDCOP()
 
   if (config->readBoolEntry("UseAutoAway", true))
   {
-    connectDCOPSignal("kdesktop", "KScreensaverIface",
-                      "KDE_start_screensaver()", "setAutoAway()", false);
+	  //disable for now until auto-available is working, and we prevent the user from changing nick _and_ setting away message
+//    connectDCOPSignal("kdesktop", "KScreensaverIface",
+//                      "KDE_start_screensaver()", "setAutoAway()", false);
   }
   else
   {
