@@ -128,9 +128,6 @@ namespace Konversation {
         // Server command?
         else if(line.startsWith(commandChar))
         {
-	    //FIXME There will be problems with turkish locale with all of this.
-	    //Look at using kstricmp instead of .lower() and ==
-
             QString command = inputLine.section(' ', 0, 0).mid(1).lower();
             QString parameter = inputLine.section(' ', 1);
             parameter = parameter.stripWhiteSpace();
@@ -481,7 +478,7 @@ namespace Konversation {
         QString request = parameter.section(' ', 1, 1, QString::SectionSkipEmpty);   // what is the first word of the ctcp?
         QString message = parameter.section(' ', 1, 0xffffff, QString::SectionSkipEmpty);      // what is the complete ctcp command?
 
-        if(request.lower() == "ping") //Note that there may be locale problems with turkish with this
+        if(request.lower() == "ping") 
         {
             unsigned int time_t = QDateTime::currentDateTime().toTime_t();
             result.toServer = QString("PRIVMSG %1 :\x01PING %2\x01").arg(recipient).arg(time_t);
