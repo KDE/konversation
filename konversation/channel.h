@@ -182,7 +182,10 @@ class Channel : public ChatWindow
     
     void processPendingNicks();
     virtual void serverOnline(bool online);
-
+    /** Enable/disable the mode buttons depending on whether you are op or not.
+     */
+    void refreshModeButtons();
+    
   protected:
     void showEvent(QShowEvent* event);
     // use with caution! does not check for duplicates
@@ -190,7 +193,6 @@ class Channel : public ChatWindow
     /** Called from ChatWindow adjustFocus */
     virtual void childAdjustFocus();
 
-    void refreshModeButtons();
     virtual bool areIRCColorsSupported() {return true; }
     virtual bool isInsertCharacterSupported() { return true; }
 

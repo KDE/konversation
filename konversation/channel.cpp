@@ -333,7 +333,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
 void Channel::setServer(Server *server) {
   ChatWindow::setServer(server);
-  m_ownChannelNick = m_server->getChannelNick(getName(), m_server->getIrcName());
+  refreshModeButtons();
 }
 
 Channel::~Channel()
@@ -354,6 +354,8 @@ Channel::~Channel()
 }
 
 ChannelNickPtr Channel::getOwnChannelNick() {
+  if(m_ownChannelNick) kdDebug() << "in getOwnChannelNick(), it is not empty" << endl;
+  else kdDebug() << "in getOwnChannelNick(), it is empty" << endl;
   return m_ownChannelNick;
 }
 
@@ -1001,6 +1003,10 @@ void Channel::joinNickname(ChannelNickPtr channelNick) {
   if(channelNick->getNickname() == m_server->getNickname())
   {
     appendCommandMessage(i18n("Join"),i18n("You have joined channel %1. (%2)").arg(getName()).arg(channelNick->getHostmask()),false, false);
+    m_ownChannelNick = channelNick;
+    connect(m_ownChannelNick, SIGNAL(channelNickChanged()), SLOT(refreshModeButtons()));
+    refreshModeButtons();
+
   } else {
     appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel. (%2)").arg(channelNick->getNickname()).arg(channelNick->getHostmask()),false, false);
     addNickname(channelNick);
@@ -1009,6 +1015,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick) {
 void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit) {
   if(channelNick->getNickname() == m_server->getNickname())
   {
+    //If in the future we can leave a channel, but not close the window, refreshModeButtons() has to be called.
     if(quit) appendCommandMessage(i18n("Quit"),i18n("You have left this server. (%1)").arg(reason),false);
     else appendCommandMessage(i18n("Part"),i18n("You have left channel %1. (%2)").arg(getName()).arg(reason),false);
 #ifdef USE_MDI
@@ -1803,22 +1810,27 @@ QPtrList<Nick> Channel::getNickList()
 void Channel::childAdjustFocus()
 {
   channelInput->setFocus();
-  refreshModeButtons();
+  refreshModeButtons(); //not really needed i think
 }
 
 void Channel::refreshModeButtons() {
+  bool enable = true;
   if(getOwnChannelNick()){
-    bool enable=getOwnChannelNick()->isAnyTypeOfOp();
-    modeT->setEnabled(enable);
-    modeN->setEnabled(enable);
-    modeS->setEnabled(enable);
-    modeI->setEnabled(enable); 
-    modeP->setEnabled(enable);
-    modeM->setEnabled(enable);
-    modeK->setEnabled(enable);
-    modeL->setEnabled(enable);
-    limit->setEnabled(enable);
-  }
+    enable=getOwnChannelNick()->isAnyTypeOfOp();
+  }  //if not channel nick, then enable is true - fall back to assuming they are op
+  else
+    kdDebug() << "getOwnChannelNick failed - why?" <<endl;
+    
+  modeT->setEnabled(enable);
+  modeN->setEnabled(enable);
+  modeS->setEnabled(enable);
+  modeI->setEnabled(enable); 
+  modeP->setEnabled(enable);
+  modeM->setEnabled(enable);
+  modeK->setEnabled(enable);
+  modeL->setEnabled(enable);
+  limit->setEnabled(enable);
+  
 }
 
 void Channel::autoUserhost()
