@@ -90,8 +90,8 @@ class DccChat : public ChatWindow
 
     KLineEdit* sourceLine;
     IRCInput* dccChatInput;
-    KNetwork::KStreamSocket* dccSocket;
-    KNetwork::KServerSocket* listenSocket;
+    KNetwork::KStreamSocket* m_dccSocket;
+    KNetwork::KServerSocket* m_listenSocket;
     
     QString m_encoding;
 };
