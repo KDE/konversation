@@ -232,23 +232,18 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </grid>
         </widget>
-        <widget class="QCheckBox">
-            <property name="name">
-                <cstring>kcfg_UseColoredNicks</cstring>
-            </property>
-            <property name="text">
-                <string>Use colored nicks</string>
-            </property>
-        </widget>
         <widget class="QGroupBox">
             <property name="name">
-                <cstring>groupBox2</cstring>
+                <cstring>coloredNicksGBox</cstring>
             </property>
             <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
             </property>
             <property name="title">
-                <string>Nick Colors</string>
+                <string>Colored Nicks</string>
+            </property>
+            <property name="checkable">
+                <bool>true</bool>
             </property>
             <grid>
                 <property name="name">
@@ -403,26 +398,21 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </grid>
         </widget>
-        <widget class="QCheckBox">
-            <property name="name">
-                <cstring>kcfg_ParseIrcColors</cstring>
-            </property>
-            <property name="text">
-                <string>&amp;Allow colored text in IRC messages</string>
-            </property>
-            <property name="whatsThis" stdset="0">
-                <string> By enabling this option, color codes added to IRC messages will be displayed in your chat window as colored text. You can add color codes to your messages, by selecting Insert -&gt; IRC Color</string>
-            </property>
-        </widget>
         <widget class="QGroupBox">
             <property name="name">
-                <cstring>groupBox3</cstring>
+                <cstring>ircColorsGBox</cstring>
             </property>
             <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
             </property>
             <property name="title">
-                <string>IRC Colors</string>
+                <string>&amp;Allow colored text in IRC messages</string>
+            </property>
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <property name="whatsThis" stdset="0">
+                <string>By enabling this option, color codes added to IRC messages will be displayed in your chat window as colored text. You can add color codes to your messages, by selecting Insert -&gt; IRC Color</string>
             </property>
             <grid>
                 <property name="name">
@@ -688,20 +678,43 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
     </vbox>
 </widget>
-<connections>
-    <connection>
-        <sender>kcfg_ParseIrcColors</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>groupBox3</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_UseColoredNicks</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>groupBox2</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-</connections>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<includehints>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+</includehints>
 </UI>

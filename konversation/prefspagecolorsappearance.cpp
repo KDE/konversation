@@ -16,6 +16,7 @@
 
 #include <qstringlist.h>
 #include <qcheckbox.h>
+#include <qgroupbox.h>
 
 #include "prefspagecolorsappearance.h"
 #include "colorsappearance_preferences.h"
@@ -28,8 +29,8 @@ PrefsPageColorsAppearance::PrefsPageColorsAppearance(QWidget* newParent,Preferen
   
   // Checkboxes
   kcfg_UseCustomColors->setChecked(preferences->getColorInputFields());
-  kcfg_UseColoredNicks->setChecked(preferences->getUseColoredNicks());
-  kcfg_ParseIrcColors->setChecked(!preferences->getFilterColors());
+  coloredNicksGBox->setChecked(preferences->getUseColoredNicks());
+  ircColorsGBox->setChecked(!preferences->getFilterColors());
 
   // Custom Colors
   kcfg_ActionColor->setColor("#"+preferences->getColor("ActionMessage"));
@@ -135,8 +136,8 @@ void PrefsPageColorsAppearance::applyPreferences()
 
   // Checkboxes
   preferences->setColorInputFields(kcfg_UseCustomColors->isChecked());
-  preferences->setUseColoredNicks(kcfg_UseColoredNicks->isChecked());
-  preferences->setFilterColors(!kcfg_ParseIrcColors->isChecked());
+  preferences->setUseColoredNicks(coloredNicksGBox->isChecked());
+  preferences->setFilterColors(!ircColorsGBox->isChecked());
 }
 
 #include "prefspagecolorsappearance.moc"
