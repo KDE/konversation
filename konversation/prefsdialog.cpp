@@ -39,42 +39,48 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   setPreferences(preferences);
   setShowIconsInTreeList(true);
 
-  serverListPane = addPage(i18n("Server List"));
+  serverListPane = addPage(i18n("Server List"),QString::null,SmallIcon("network_local" ));
   QFrame* identityPane = addPage(i18n("Identity"),QString::null,SmallIcon("identity"));
-  
+
   setFolderIcon(QStringList::split(',', i18n("Appearance")), SmallIcon("looknfeel"));
   QFrame* chatWinAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("window_new"));
   QFrame* colorsAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Colors")),
     QString::null, SmallIcon("colorize"));
-  
+
   setFolderIcon(QStringList::split(',', i18n("Behavior")), SmallIcon("configure"));
-  QFrame* generalBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("General")));
-  QFrame* chatWinBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Chat Window")));
+  QFrame* generalBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("General")),
+    QString::null,SmallIcon("exec"));
+  QFrame* chatWinBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Chat Window")),QString::null, SmallIcon("window_new"));
   QFrame* tabBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Tab Bar")),
     QString::null, SmallIcon("tab_new"));
-  QFrame* ignorePane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Ignored Nicknames")));
-  QFrame* aliasesPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Aliases")));
-  QFrame* buttonsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Quick Buttons")));
+  QFrame* ignorePane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Ignored Nicknames")),
+    QString::null, SmallIcon("editdelete"));
+  QFrame* aliasesPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Aliases")),
+    QString::null,SmallIcon("editcopy"));
+  QFrame* buttonsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Quick Buttons")),
+    QString::null, SmallIcon("keyboard"));
   QFrame* logSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Logging")),
-    QString::null, SmallIcon("log"));
-  QFrame* dccSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("DCC")));
+    QString::null,SmallIcon("log"));
+  QFrame* dccSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("DCC")),
+    QString::null,SmallIcon("2rightarrow" ));
 
   setFolderIcon(QStringList::split(',', i18n("Notification")), SmallIcon("knotify"));
-  notifyPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Watched Nicknames")));
-  QFrame* highlightPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Highlighting")));
+  notifyPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Watched Nicknames")),
+    QString::null,SmallIcon("kfind"));
+  QFrame* highlightPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Highlighting"))   ,QString::null,SmallIcon("paintbrush"));
   QFrame* OSDPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("On Screen Display")),
     QString::null, SmallIcon("tv"));
-  
+
   QFrame* dialogsPane = addPage(i18n("Warning Dialogs"), QString::null, SmallIcon("messagebox_warning"));
 
-  
+
   // TODO: Uncomment this again when it's ready to go
   // QFrame* scriptsPane        =addPage(i18n("Scripting"));
 
   // Add pages to preferences dialog
   serverListPage=new PrefsPageServerList(serverListPane,preferences);
   identityPage = new PrefsPageIdentity(identityPane, preferences); // FIXME: see class::applyPreferences()
-  
+
   PrefsPageChatWinAppearance* chatWinAppearancePage = new PrefsPageChatWinAppearance(chatWinAppearancePane, preferences);
   PrefsPageColorsAppearance* colorsAppearancePage = new PrefsPageColorsAppearance(colorsAppearancePane, preferences);
 
@@ -111,10 +117,10 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   // connect standard signals and slots
   connect(this, SIGNAL(applyPreferences()), identityPage, SLOT(applyPreferences()));
-  
+
   connect(this, SIGNAL(applyPreferences()), chatWinAppearancePage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), colorsAppearancePage, SLOT(applyPreferences()));
-  
+
   connect(this, SIGNAL(applyPreferences()), generalBehaviorPage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), chatWinBehaviorPage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), tabBehaviorPage, SLOT(applyPreferences()));
