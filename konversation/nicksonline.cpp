@@ -205,7 +205,7 @@ void NicksOnline::updateServerOnlineList(Server* server, bool)
     while (child)
     {
       nextChild = child->nextSibling();
-      if (!nickInfoList->contains(LocaleString(child->text(0).lower()))) delete child;
+      if (!nickInfoList->contains(child->text(0).lower())) delete child;
       child = nextChild;
     }
     // List offline nicknames.
@@ -227,7 +227,7 @@ void NicksOnline::updateServerOnlineList(Server* server, bool)
     while (child)
     {
       nextChild = child->nextSibling();
-      if (!nickInfoList->contains(LocaleString(child->text(0).lower()))) delete child;
+      if (!nickInfoList->contains(child->text(0).lower())) delete child;
       child = nextChild;
     }
     // Expand server if newly added to list.

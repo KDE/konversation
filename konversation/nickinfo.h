@@ -25,7 +25,6 @@
 
 #include <kabc/addressbook.h>
 #include "addressbook.h"
-#include "localestring.h"
 
 class Server;
 
@@ -102,7 +101,7 @@ class NickInfo : public QObject, public KShared
 typedef KSharedPtr<NickInfo> NickInfoPtr;
 /** A NickInfoMap is a list of NickInfo objects, indexed and sorted by lowercase nickname.
  */
-typedef QMap<LocaleString,NickInfoPtr> NickInfoMap;
+typedef QMap<QString,NickInfoPtr> NickInfoMap;
 
 #endif
 

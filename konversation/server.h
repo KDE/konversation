@@ -44,7 +44,6 @@ class KonversationMainWindow;
 class RawLog;
 class ChannelListPanel;
 class ScriptLauncher;
-class LocaleString;
 
 class Server : public QObject
 {

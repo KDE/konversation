@@ -65,7 +65,7 @@ typedef KSharedPtr<ChannelNick> ChannelNickPtr;
 /** A ChannelNickMap is a list of ChannelNick pointers, indexed and sorted by
  *  lowercase nickname. 
  */
-typedef QMap<LocaleString,ChannelNickPtr> ChannelNickMap;
+typedef QMap<QString,ChannelNickPtr> ChannelNickMap;
 
 typedef QValueList<ChannelNickPtr> ChannelNickList;
 
@@ -73,7 +73,7 @@ typedef QValueList<ChannelNickPtr> ChannelNickList;
 /** A ChannelMembershipMap is a list of ChannelNickMap pointers, indexed and 
  *  sorted by lowercase channel name.
  */
-typedef QMap<LocaleString,ChannelNickMap *> ChannelMembershipMap;
+typedef QMap<QString,ChannelNickMap *> ChannelMembershipMap;
 
 
 #endif /* CHANNEL_NICK_H */
