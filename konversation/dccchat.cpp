@@ -100,7 +100,7 @@ void DccChat::listenForPartner()
   {
     // set port
     bool found = false;  // wheter succeeded to set port
-    unsigned long port = KonversationApplication::preferences.getDccSendPortsFirst();
+    unsigned long port = KonversationApplication::preferences.getDccChatPortsFirst();
     for( ; port <= KonversationApplication::preferences.getDccChatPortsLast() ; ++port )
     {
       kdDebug() << "DccChat::listenForPartner(): trying port " << port << endl;
