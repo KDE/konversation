@@ -115,7 +115,7 @@ class KonversationMainWindow : public KMainWindow
 
     void closeKonsolePanel(ChatWindow* konsolePanel);
 
-    void newText(QWidget* view,const QString& highlightColor);
+    void newText(QWidget* view,const QString& highlightColor,bool important);
     void quitProgram();
 
     void notifyAction(const QString& serverName,const QString& nick);

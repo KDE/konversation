@@ -51,7 +51,7 @@ class IRCView : public KTextBrowser
 
   signals:
     // Notify container of new text and highlight state
-    void newText(const QString& highlightColor);
+    void newText(const QString& highlightColor, bool important);
     void gotFocus();                  // So we can set focus to input line
     void textToLog(const QString& text);
     void sendFile();
@@ -63,7 +63,7 @@ class IRCView : public KTextBrowser
     void appendQuery(const QString& nick,const QString& message);
     void appendAction(const QString& nick,const QString& message);
     void appendServerMessage(const QString& type,const QString& message);
-    void appendCommandMessage(const QString& command,const QString& message);
+    void appendCommandMessage(const QString& command,const QString& message,bool important);
     void appendBacklogMessage(const QString& firstColumn,const QString& message);
     void search();
 
@@ -75,7 +75,7 @@ class IRCView : public KTextBrowser
 
   protected:
     QString filter(const QString& line,const QString& who=NULL,bool doHilight=true);
-    void doAppend(QString line,bool suppressTimestamps=false);
+    void doAppend(QString line,bool suppressTimestamps=false,bool important=true);
     void replaceDecoration(QString& line,char decoration,char replacement);
 
     void hideEvent(QHideEvent* event);

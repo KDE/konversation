@@ -17,7 +17,7 @@
 #include "konversationapplication.h"
 #include "ledtab.h"
 
-LedTab::LedTab(QWidget* newWidget,const QString& label,int newColor,bool state) :
+LedTab::LedTab(QWidget* newWidget,const QString& label,int newColor,bool on) :
         QTab(label)
 {
   // First of all set up the icons
@@ -31,7 +31,7 @@ LedTab::LedTab(QWidget* newWidget,const QString& label,int newColor,bool state) 
   widget=newWidget;
   labelColor=QString::null;
 
-  setOn(state);
+  setOn(on);
 
   connect(&blinkTimer,SIGNAL(timeout()),this,SLOT(blinkTimeout()));
 
@@ -44,7 +44,7 @@ LedTab::~LedTab()
 
 void LedTab::blinkTimeout()
 {
-  if(on)
+  if(state!=Off)
   {
     // if the user wants us to blink, toggle LED blink status
     if(KonversationApplication::preferences.getBlinkingTabs())
@@ -67,10 +67,19 @@ void LedTab::blinkTimeout()
   }
 }
 
-void LedTab::setOn(bool state)
+void LedTab::setOn(bool on,bool important)
 {
-  on=state;
-  setIconSet((on) ? iconOn : iconOff);
+  if (on) {
+    if (important)
+      blinkTimer.changeInterval(500);
+    else if (state!=Fast)
+      blinkTimer.changeInterval(1000);
+    state = important ? Fast : Slow;    
+  }
+  else
+    state=Off;  
+   
+  setIconSet((state!=Off) ? iconOn : iconOff);
 }
 
 void LedTab::setLabelColor(const QString& newLabelColor)

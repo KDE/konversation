@@ -68,7 +68,7 @@ DccChat::DccChat(QWidget* parent,const QString& myNickname,const QString& nickna
   connect(dccChatInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
 
   connect(getTextView(),SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
-  connect(getTextView(),SIGNAL (newText(const QString&)),this,SLOT (newTextInView(const QString&)) );
+  connect(getTextView(),SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
 
   if(listen)
     listenForPartner();
@@ -111,9 +111,9 @@ void DccChat::listenForPartner()
   else kdDebug() << this << "DccChat::listenForPartner(): listenSocket->listen() failed!" << endl;
 }
 
-void DccChat::newTextInView(const QString& highlightColor)
+void DccChat::newTextInView(const QString& highlightColor, bool important)
 {
-  emit newText(this,highlightColor);
+  emit newText(this,highlightColor,important);
 }
 
 void DccChat::connectToPartner()

@@ -499,7 +499,7 @@ void IRCView::appendServerMessage(const QString& type,const QString& message)
   doAppend(line);
 }
 
-void IRCView::appendCommandMessage(const QString& type,const QString& message)
+void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important)
 {
   QString commandColor=KonversationApplication::preferences.getColor("CommandMessage");
 
@@ -514,7 +514,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message)
 #endif
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
-  doAppend(line);
+  doAppend(line,false,important);
 }
 
 void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& rawMessage)
@@ -549,7 +549,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
   doAppend(line,true);
 }
 
-void IRCView::doAppend(QString newLine,bool suppressTimestamps)
+void IRCView::doAppend(QString newLine,bool suppressTimestamps,bool important)
 {
   // Add line to buffer
   QString line(newLine);
@@ -569,7 +569,7 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps)
   }
 
   buffer+=line;
-  emit newText(highlightColor);
+  emit newText(highlightColor,important);
 
   // scroll view only if the scroll bar is already at the bottom
 #if QT_VERSION == 303

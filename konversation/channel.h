@@ -93,7 +93,7 @@ class Channel : public ChatWindow
     virtual bool searchView();
 
   signals:
-    void newText(QWidget* channel,const QString& highlightColor);
+    void newText(QWidget* channel,const QString& highlightColor, bool important);
     void prefsChanged();
     void sendFile();
 
@@ -101,7 +101,7 @@ class Channel : public ChatWindow
     void setNickname(const QString& newNickname);
     void channelTextEntered();
     void sendChannelText(const QString& line);
-    void newTextInView(const QString& highlightColor);
+    void newTextInView(const QString& highlightColor, bool important);
     void adjustFocus();
     void showQuickButtons(bool show);
     void showModeButtons(bool show);

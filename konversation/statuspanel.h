@@ -41,13 +41,13 @@ class StatusPanel : public ChatWindow
     virtual bool searchView();
 
   signals:
-    void newText(QWidget* widget,const QString& highlightColor);
+    void newText(QWidget* widget,const QString& highlightColor,bool important);
     void sendFile();
 
   public slots:
     void adjustFocus();
     void setNickname(const QString& newNickname);
-    void newTextInView(const QString& highlightColor);
+    void newTextInView(const QString& highlightColor,bool important);
     void updateFonts();
     virtual void indicateAway(bool show);
 

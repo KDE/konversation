@@ -233,7 +233,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(channelInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );
   connect(channelInput,SIGNAL (pageDown()),getTextView(),SLOT (pageDown()) );
 
-  connect(textView,SIGNAL (newText(const QString&)),this,SLOT (newTextInView(const QString&)) );
+  connect(textView,SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
 
@@ -634,9 +634,9 @@ void Channel::sendChannelText(const QString& sendLine)
   server->queueList(filter.getServerOutputList());
 }
 
-void Channel::newTextInView(const QString& highlightColor)
+void Channel::newTextInView(const QString& highlightColor,bool important)
 {
-  emit newText(this,highlightColor);
+  emit newText(this,highlightColor,important);
 }
 
 void Channel::setNickname(const QString& newNickname)
@@ -773,10 +773,10 @@ void Channel::renameNick(const QString& nickname,const QString& newNick)
   if(nickname==server->getNickname())
   {
     setNickname(newNick);
-    appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.").arg(newNick));
+    appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.").arg(newNick),false);
   }
   /* No, must've been someone else */
-  else appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.").arg(nickname).arg(newNick));
+  else appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.").arg(nickname).arg(newNick),false);
 
   /* Update the nick list */
   Nick* nick=getNickByName(nickname);
@@ -792,12 +792,12 @@ void Channel::joinNickname(const QString& nickname,const QString& hostmask)
   /* Did we join this channel ourselves? */
   if(nickname==server->getNickname())
   {
-    appendCommandMessage(i18n("Join"),i18n("You have joined channel %1. (%2)").arg(getName()).arg(hostmask));
+    appendCommandMessage(i18n("Join"),i18n("You have joined channel %1. (%2)").arg(getName()).arg(hostmask),false);
   }
   /* No, it was somebody else */
   else
   {
-    appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel. (%2)").arg(nickname).arg(hostmask));
+    appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel. (%2)").arg(nickname).arg(hostmask),false);
     addNickname(nickname,hostmask,false,false,false,false,false);
   }
   nicknameListView->sort();
@@ -807,15 +807,15 @@ void Channel::removeNick(const QString &nickname, const QString &reason, bool qu
 {
   if(nickname==server->getNickname())
   {
-    if(quit) appendCommandMessage(i18n("Quit"),i18n("You have left this server. (%1)").arg(reason));
-    else appendCommandMessage(i18n("Part"),i18n("You have left channel %1. (%2)").arg(getName()).arg(reason));
+    if(quit) appendCommandMessage(i18n("Quit"),i18n("You have left this server. (%1)").arg(reason),false);
+    else appendCommandMessage(i18n("Part"),i18n("You have left channel %1. (%2)").arg(getName()).arg(reason),false);
 
     delete this;
   }
   else
   {
-    if(quit) appendCommandMessage(i18n("Quit"),i18n("%1 has left this server. (%2)").arg(nickname).arg(reason));
-    else appendCommandMessage(i18n("Part"),i18n("%1 has left this channel. (%2)").arg(nickname).arg(reason));
+    if(quit) appendCommandMessage(i18n("Quit"),i18n("%1 has left this server. (%2)").arg(nickname).arg(reason),false);
+    else appendCommandMessage(i18n("Part"),i18n("%1 has left this channel. (%2)").arg(nickname).arg(reason),false);
 
     Nick* nick=getNickByName(nickname);
     if(nick==0) kdWarning() << "Channel::removeNick(): Nickname " << nickname << " not found!" << endl;

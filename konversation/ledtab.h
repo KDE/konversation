@@ -31,10 +31,10 @@ class LedTab : public QObject,public QTab
   Q_OBJECT
 
   public:
-    LedTab(QWidget* newWidget,const QString& text,int newColor,bool state);
+    LedTab(QWidget* newWidget,const QString& text,int newColor,bool on);
     ~LedTab();
-
-    void setOn(bool state);
+    
+    void setOn(bool on, bool important=true);
     void setLabelColor(const QString& newLabelColor);
     const QString& getLabelColor();
 
@@ -52,10 +52,17 @@ class LedTab : public QObject,public QTab
     void blinkTimeout();
 
   protected:
+    enum StateType
+    {
+      Off=0,
+      Slow,
+      Fast
+    };
+
     void setIconSet(const QIconSet& icon);
 
     int color;      // color of the LED
-    bool on;        // true, if LED should indicate "on" status
+    StateType state;// if and how fast the LED should blink
     bool blinkOn;   // true, if blinking LED is on at this moment
 
     QWidget* widget;

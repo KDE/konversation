@@ -235,7 +235,7 @@ void KonversationMainWindow::appendToFrontmost(const QString& type,const QString
     // FIXME: this signal should be sent from the status panel instead, so it
     //        can be using the correct highlight color, would be more consistent
     //        anyway!
-    newText(serverView,QString::null);
+    newText(serverView,QString::null,true);
   }
   else
     frontView->appendServerMessage(type,message);
@@ -396,7 +396,7 @@ void KonversationMainWindow::addDccPanel()
       dccPanelOpen=true;
     }
     // no highlight color for DCC panels
-    newText(dccPanel,QString::null);
+    newText(dccPanel,QString::null,true);
   }
 }
 
@@ -435,7 +435,7 @@ void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nic
     DccChat* dccChatPanel=new DccChat(getViewContainer(),myNick,nick,arguments,listen);
     addView(dccChatPanel,3,dccChatPanel->getName());
 
-    connect(dccChatPanel,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
+    connect(dccChatPanel,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
 
     if(listen) frontServer->queue(QString("PRIVMSG %1 :\x01%2 CHAT chat %3 %4\x01").arg(nick).arg("DCC").arg(numericalIp).arg(dccChatPanel->getPort()));
   }
@@ -452,7 +452,7 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
   // ... then put it into the tab widget, otherwise we'd have a race with server member
   addView(statusView,2,server->getServerName(),false);
 
-  connect(statusView,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
+  connect(statusView,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
   connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );
   connect(server,SIGNAL (awayState(bool)),statusView,SLOT (indicateAway(bool)) );
 
@@ -471,7 +471,7 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
 
   addView(channel,1,name);
 
-  connect(channel,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
+  connect(channel,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
   connect(channel,SIGNAL (prefsChanged()),this,SLOT (channelPrefsChanged()) );
   connect(server,SIGNAL (awayState(bool)),channel,SLOT (indicateAway(bool)) );
 
@@ -486,7 +486,7 @@ Query* KonversationMainWindow::addQuery(Server* server, const QString& name)
 
   addView(query,0,name);
 
-  connect(query,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
+  connect(query,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
   connect(server,SIGNAL (awayState(bool)),query,SLOT (indicateAway(bool)) );
 
   return query;
@@ -514,11 +514,11 @@ ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
   return channelListPanel;
 }
 
-void KonversationMainWindow::newText(QWidget* view,const QString& highlightColor)
+void KonversationMainWindow::newText(QWidget* view,const QString& highlightColor,bool important)
 {
   if(view!=getViewContainer()->currentPage())
   {
-    getViewContainer()->changeTabState(view,true,highlightColor);
+    getViewContainer()->changeTabState(view,true,important,highlightColor);
 
     emit startNotification(view);
   } else if(!isActiveWindow() && static_cast<ChatWindow*>(view)->getServer()->connected())
@@ -553,7 +553,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 
   updateFrontView();
 
-  viewContainer->changeTabState(view,false,QString::null);
+  viewContainer->changeTabState(view,false,false,QString::null);
   emit endNotification(viewToChange);
 }
 

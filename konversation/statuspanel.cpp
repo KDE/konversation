@@ -50,7 +50,7 @@ StatusPanel::StatusPanel(QWidget* parent) :
 
   connect(getTextView(),SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
 
-  connect(getTextView(),SIGNAL (newText(const QString&)),this,SLOT (newTextInView(const QString&)) );
+  connect(getTextView(),SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
   connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
 
   connect(statusInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );
@@ -104,9 +104,9 @@ void StatusPanel::statusTextEntered()
   statusInput->clear();
 }
 
-void StatusPanel::newTextInView(const QString& highlightColor)
+void StatusPanel::newTextInView(const QString& highlightColor,bool important)
 {
-  emit newText(this,highlightColor);
+  emit newText(this,highlightColor,important);
 }
 
 void StatusPanel::textPasted(QString text)

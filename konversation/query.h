@@ -49,7 +49,7 @@ class Query : public ChatWindow
     virtual bool searchView();
 
   signals:
-    void newText(QWidget* query,const QString& highlightColor);
+    void newText(QWidget* query,const QString& highlightColor,bool important);
     void sendFile(const QString& recipient);
 
   public slots:
@@ -61,7 +61,7 @@ class Query : public ChatWindow
   protected slots:
     void queryTextEntered();
     void sendFileMenu();
-    void newTextInView(const QString& highlightColor);
+    void newTextInView(const QString& highlightColor,bool important);
     // connected to IRCInput::textPasted() - used to handle large/multiline pastes
     void textPasted(QString text);
     void popup(int id);

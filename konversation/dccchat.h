@@ -45,7 +45,7 @@ class DccChat : public ChatWindow
     virtual void adjustFocus();
 
   signals:
-    void newText(QWidget* query,const QString& highlightColor);
+    void newText(QWidget* query,const QString& highlightColor,bool important);
 
   protected slots:
     void lookupFinished(int numberOfResults);
@@ -54,7 +54,7 @@ class DccChat : public ChatWindow
     void readData();
     void dccChatTextEntered();
     void textPasted(QString text);
-    void newTextInView(const QString& highlightColor);
+    void newTextInView(const QString& highlightColor, bool important);
     void heardPartner();
 
   protected:
