@@ -27,6 +27,7 @@
 #include <qtextstream.h>
 
 #include "prefspage.h"
+#include "preferences.h"
 
 /*
   @author Matthias Gierlings
@@ -46,14 +47,19 @@ class PrefsPageScripts : public PrefsPage
 		KListViewItem   *scriptsListEntry;
 		KEdit           *scriptEditor;
     QDir						*scriptsDirectory;
-		QString					scriptFilePath;
+		QFile						openedScriptFile;
+		QString					scriptFilePath, oldScriptFileName;
 		QStringList			scriptFiles;
-		char						streamBuffer[512];
 		QTextStream			*script;
+		Preferences			*myPreferences;
+		char						streamBuffer[512];
+
+	signals:
+		void fileRenamed(QListViewItem *passedItem);
 
 	public slots:
-		//void openScriptFile();
-		//void renameScriptFile();
+		void openScriptFile(QListViewItem *passedItem);
+		void renameScriptFile(QListViewItem *passedItem);
 };
 
 #endif

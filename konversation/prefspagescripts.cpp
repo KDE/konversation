@@ -15,47 +15,70 @@
 */
 
 #include <qfile.h>
-
 #include <kdebug.h>
-
 #include "prefspagescripts.h"
 
 PrefsPageScripts::PrefsPageScripts(QFrame *passedParent, Preferences *passedPreferences)
                  :PrefsPage(passedParent, passedPreferences)
 {
+	myPreferences = passedPreferences;
+
 	scriptsList = new KListView(parentFrame);
 	scriptsList->addColumn(i18n("Name"));
 	scriptEditor = new KEdit(parentFrame);
-	
+	scriptsList->setItemsRenameable(true);
   mainBox = new QHBoxLayout(passedParent);
 	mainBox->addWidget(scriptsList);
 	mainBox->addWidget(scriptEditor);
 
-	//set scripts directory, save all file names into a QStringList
-	scriptsDirectory = new QDir("/home/gismore/applications/konversation/scripts/");
+	scriptsDirectory = new QDir(QString(myPreferences->getLogPath() + "/scripts"));
 	scriptFiles = scriptsDirectory->entryList(QDir::Files);
 
-	for(QStringList::Iterator it = scriptFiles.begin(); it != scriptFiles.end(); ++it)
+	scriptsList->setRenameable(0, true);
+
+  for(QStringList::Iterator it = scriptFiles.begin(); it != scriptFiles.end(); ++it)
 	{
 		scriptsListEntry = new KListViewItem(scriptsList, *it);
 	}
-	scriptFilePath = scriptsDirectory->path();
-	scriptFilePath.append("bla");
 
-	QFile	openedScriptFile(scriptFilePath);
+	connect(scriptsList, SIGNAL(executed(QListViewItem*)), this, SLOT(openScriptFile(QListViewItem*)));
+	//connect(this, SIGNAL(fileRenamed(QListViewItem*)), this, SLOT(openScriptFile(QListViewItem*)));
+	connect(scriptsList, SIGNAL(itemRenamed(QListViewItem*)), this, SLOT(renameScriptFile(QListViewItem*)));
 
-	if(openedScriptFile.open(IO_ReadOnly))
-	{
-		script = new QTextStream(&openedScriptFile);
-		scriptEditor->insertText(&(script->readRawBytes(streamBuffer, 6)));
-		for(int i = 1; i < 6; ++i)
-		{
-			kdDebug() << streamBuffer[i] << endl;
-		}
-	}
 }
 PrefsPageScripts::~PrefsPageScripts()
 {
 }
 
-#include "prefspagescripts.moc"
+void PrefsPageScripts::openScriptFile(QListViewItem *passedSelectedItem)
+{
+	kdDebug() << "001\n";
+
+	QListViewItem *selectedItem = passedSelectedItem;
+
+	scriptFilePath = QString(myPreferences->getLogPath() + "/scripts");
+	scriptFilePath.append("/");
+	scriptFilePath.append(selectedItem->text(0));
+
+	openedScriptFile.setName(scriptFilePath);
+  oldScriptFileName = openedScriptFile.name();
+
+	if(openedScriptFile.open(IO_ReadWrite))
+	{
+		scriptEditor->clear();
+		script = new QTextStream(&openedScriptFile);
+		scriptEditor->insertText(script);
+		openedScriptFile.close();
+	}
+}
+
+void PrefsPageScripts::renameScriptFile(QListViewItem *passedItem)
+{
+	QListViewItem *renameItem = passedItem;
+	
+	kdDebug() << "002\n";
+
+	openedScriptFile.close();
+	scriptsDirectory->rename(oldScriptFileName, renameItem->text(0));
+	emit fileRenamed(renameItem);
+}

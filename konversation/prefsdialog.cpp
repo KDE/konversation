@@ -28,7 +28,7 @@
 #include "prefspageappearance.h"
 #include "prefspagelog.h"
 #include "prefspagedccsettings.h"
-#include "prefspagescripts.h"
+// #include "prefspagescripts.h"
 #include "serverlistitem.h"
 #include "editserverdialog.h"
 #include "konversationapplication.h"
@@ -65,7 +65,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 /*  PrefsPage* dccSettingsPage= */ new PrefsPageDccSettings(dccSettingsPane, preferences);
   // Add scripts page
   // TODO: Uncomment this again when it's ready to go
-  //  PrefsPage* scriptsPage= new PrefsPageScripts(scriptsPane, preferences);
+//    PrefsPage* scriptsPage= new PrefsPageScripts(scriptsPane, preferences);
 
   setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
   setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
