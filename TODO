@@ -21,9 +21,7 @@ LONG-TERM:
 - Log rotation & maintainance ( Like copying log files to new location )
 - Context menu on nick in nick list should contain hostmask, realname, etc. infos (in a sub-menu)
 - "notices" tab for all notices that are no channel notices, snotices go to server status tab
-- Make LED colors for nick list configurable via GUI
 - Ban List. A window in which the user can see the bans of a channel(and remove them).
-- Usernames/channels are not clickable. Like you double click #foo on channel view and you join #foo channel.
 - Click on notify messages opens query
 - Use QCA for SSL when KNetwork natively supports it
 
@@ -48,14 +46,12 @@ DISCUSSING:
 - Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated
 - Show away messages only once per nick
 - Different tab sortings
-- Import watched nicks list from .ircrc ( cartman: Got sample.Will do after 0.15 )
+- Import watched nicks list from .ircrc ( cartman: Got sample )
 - Notify with more than 500 characters
 - Watched nicks editor should sort alphabetically, manual sorting makes no sense there
 - Watched nicks panel should have a "last seen" column so you can sort them
 
 NEW (15.08.2004):
 - KNotify for kicks / kills
-- Channel mode buttons should describe current state
-- Add common default aliases
-- Configure dialog should remember where it was when it closed
+- Add common default aliases (Commands are auto-aliased now. Is that whats wanted here?)
 - Right click on email addresses to associate them to the address book entry of user posting it
