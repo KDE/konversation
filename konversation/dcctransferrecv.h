@@ -19,7 +19,11 @@
 #include "dcctransfer.h"
 
 class QTimer;
-class KExtendedSocket;
+
+namespace KNetwork
+{
+  class KStreamSocket;
+}
 
 class DccTransferRecv : public DccTransfer
 {
@@ -57,7 +61,7 @@ class DccTransferRecv : public DccTransfer
   protected:
     QString fileTmpPath;
     QTimer* connectionTimer;
-    KExtendedSocket* recvSocket;
+    KNetwork::KStreamSocket* recvSocket;
     bool bTemporaryFileExists;
     bool bCompletedFileExists;
 };

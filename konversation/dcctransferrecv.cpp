@@ -16,10 +16,10 @@
 #include <qdir.h>
 
 #include <kdebug.h>
-#include <kextsock.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
+#include <kstreamsocket.h>
 
 #include "dccresumedialog.h"
 #include "dcctransferrecv.h"
@@ -131,7 +131,7 @@ void DccTransferRecv::cleanUp()
   stopAutoUpdateView();
   if(recvSocket)
   {
-    recvSocket->cancelAsyncConnect();
+    recvSocket->close();
     recvSocket->deleteLater();
     recvSocket = 0;
   }
@@ -167,20 +167,22 @@ void DccTransferRecv::connectToSender()
   setStatus(Connecting);
   updateView();
   
-  recvSocket=new KExtendedSocket(partnerIp,partnerPort.toUInt(),KExtendedSocket::inetSocket |
-                                                                KExtendedSocket::noResolve);
+  recvSocket=new KNetwork::KStreamSocket(partnerIp, partnerPort);
+  
+  connect( recvSocket, SIGNAL(connected(const KResolverEntry&)), this, SLOT(connectionSuccess()) );
+  connect( recvSocket, SIGNAL(gotError(int)),                    this, SLOT(connectionFailed(int)) );
+  
+  connect( recvSocket, SIGNAL(readyRead()),  this, SLOT(readData()) );
+  connect( recvSocket, SIGNAL(readyWrite()), this, SLOT(sendAck()) );
+  
+  recvSocket->setBlocking(false);  // asynchronous mode
   
   recvSocket->enableRead(false);
   recvSocket->enableWrite(false);
-  recvSocket->setTimeout(5);
   
-  connect(recvSocket,SIGNAL (connectionSuccess())  ,this,SLOT (connectionSuccess()) );
-  connect(recvSocket,SIGNAL (connectionFailed(int)),this,SLOT (connectionFailed(int)));
+  recvSocket->setTimeout(5000);
   
-  connect(recvSocket,SIGNAL (readyRead()),this,SLOT (readData()) );
-  connect(recvSocket,SIGNAL (readyWrite()),this,SLOT (sendAck()) );
-  
-  recvSocket->startAsyncConnect();
+  recvSocket->connect();
 }
 
 void DccTransferRecv::connectionSuccess()  // slot
@@ -189,17 +191,16 @@ void DccTransferRecv::connectionSuccess()  // slot
   
   timeTransferStarted = QDateTime::currentDateTime();
   
+  if(!QDir(filePath.section("/",0,-2)).exists())
+    if(!KStandardDirs::makeDir(filePath.section("/",0,-2)))
+    {
+      KMessageBox::sorry(static_cast<QWidget*>(0),i18n("Cannot create received files directory '%1'.").arg(filePath.section("/",0,-2)),i18n("DCC Error"));
+      setStatus(Failed);
+      cleanUp();
+      updateView();
+    }
   if(file.open(IO_ReadWrite))
   {
-    if(!QDir(filePath.section("/",0,-2)).exists())
-      if(!KStandardDirs::makeDir(filePath.section("/",0,-2)))
-      {
-        KMessageBox::sorry(static_cast<QWidget*>(0),i18n("Cannot create received files directory '%1'.").arg(filePath.section("/",0,-2)),i18n("DCC Error"));
-        setStatus(Failed);
-        cleanUp();
-        updateView();
-      }
-    
     // Set position for DCC Resume Get
     file.at(transferringPosition);
     transferStartPosition = transferringPosition;
@@ -221,8 +222,9 @@ void DccTransferRecv::connectionSuccess()  // slot
 
 void DccTransferRecv::connectionFailed(int errorCode)  // slot
 {
-  kdDebug() << "DccTransferRecv::connectionFailed(): Error " << errorCode << endl;
-
+  kdDebug() << "DccTransferRecv::connectionFailed(): code = " << errorCode << endl;
+  kdDebug() << "DccTransferRecv::connectionFailed(): string = " << recvSocket->errorString() << endl;
+  
   setStatus(Failed);
   cleanUp();
   updateView();
