@@ -1284,13 +1284,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case ERR_UNKNOWNCOMMAND:
         {
-          if(parameterList[1] == server->lastUnknownCommand().section(' ', 0, 0)) {
-            server->getOutputFilter()->parse(server->getNickname(),
-              KonversationApplication::preferences.getCommandChar() + "exec " + server->lastUnknownCommand(),
-              server->lastUnknownCommandDestination());
-          } else {
-            server->appendStatusMessage(command,parameterList.join(" ").section(' ',1)+" "+trailing);
-          }
+          server->appendStatusMessage(command,parameterList.join(" ").section(' ',1) + " " + trailing);
           break; 
         }
       default:

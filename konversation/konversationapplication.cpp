@@ -14,6 +14,7 @@
 
 #include <qtextcodec.h>
 #include <qregexp.h>
+#include <qfileinfo.h>
 
 #include <kdebug.h>
 #include <kconfig.h>

@@ -179,7 +179,6 @@ namespace Konversation {
       else {
         result.toServer = inputLine.mid(1);
         result.type = Message;
-        m_server->setLastUnknownCommand(destination, result.toServer);
       }
     }
     // Ordinary message to channel/query?
