@@ -4,7 +4,8 @@ Changes from 0.16 to 0.17
 - Remove sort by away status
 - Fix whois replies for normal users on safe channels ( IRCNet alike )
 - Fix whois replies from ircd-hybrid ( Efnet alike )
-
+- Better handling of quiet bans ( especially Freenode )
+	
 Changes from 0.15 to 0.16
 - Dropping URLs onto nick on nicklist or onto query initiates DCC send
 - You can now do SSL connections from Quick Connect Dialog
