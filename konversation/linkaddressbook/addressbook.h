@@ -27,10 +27,7 @@
 #include "../images.h"
 
 namespace Konversation {
-class Addressbook : public QObject
-#ifdef HAVE_KIMIFACE
-	           ,public KIMIface
-#endif
+class Addressbook : public QObject,public KIMIface
 {
   Q_OBJECT
   public:
