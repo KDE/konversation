@@ -37,7 +37,7 @@ class PrefsPageThemes : public PrefsPage
  private:
 
     /* Icon labels */
-    QLabel* m_label[6];
+    QLabel* m_label[7];
 
     QStringList m_dirs;
     QPushButton* m_removeButton;
