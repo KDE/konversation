@@ -35,4 +35,5 @@ Name[ta]=உரையாடல்
 Name[xx]=xxKonversationxx
 Categories=Qt;KDE;Network;
 ServiceTypes=DCOP/InstantMessenger
+X-DCOP-ServiceName=konversation
 
