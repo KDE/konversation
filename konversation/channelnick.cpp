@@ -183,5 +183,10 @@ QString ChannelNick::tooltip() {
   return strTooltip;
 }
 
+QString ChannelNick::loweredNickname() const
+{
+  return nickInfo->loweredNickname();
+}
+
 #include "channelnick.moc"
 

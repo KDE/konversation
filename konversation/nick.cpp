@@ -91,3 +91,8 @@ bool Nick::isSelected() const
   return listViewItem->isSelected(); 
 }
 
+QString Nick::loweredNickname() const
+{
+  return channelnickptr->loweredNickname();
+}
+

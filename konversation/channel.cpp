@@ -898,7 +898,7 @@ void Channel::addNickname(ChannelNickPtr channelnick)
 
   while((lookNick = it.current()) != 0)
   {
-    if(lookNick->getNickname().lower() == nickname) {
+    if(lookNick->loweredNickname() == nickname) {
       nick = lookNick;
       break;
     }

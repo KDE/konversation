@@ -39,6 +39,7 @@ class Nick
     bool isSelected() const;
 
     QString getNickname() const;
+    QString loweredNickname() const;
     QString getHostmask() const;
     NickInfoPtr getNickInfo() const;
     ChannelNickPtr getChannelNick() const;

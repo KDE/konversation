@@ -46,6 +46,7 @@ class NickInfo : public QObject, public KShared
      
     // Get properties of NickInfo object.
     QString getNickname() const;
+    QString loweredNickname() const;
     QString getHostmask() const;
     /** Currently return whether the user has set themselves to away with /away.
      *  May be changed in the future to parse the nick string and see if it contains
@@ -140,6 +141,7 @@ class NickInfo : public QObject, public KShared
      */
     void startNickInfoChangedTimer();
     QString m_nickname;
+    QString m_loweredNickname;
     Server* m_owningServer;
     QString m_hostmask;
     bool m_away;

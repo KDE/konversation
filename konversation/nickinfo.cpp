@@ -37,6 +37,7 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 {
   m_addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nick, server->getServerName(), server->getServerGroup());
   m_nickname = nick;
+  m_loweredNickname = nick.lower();
   m_owningServer = server;
   m_away = false;
   m_notified = false;
@@ -61,6 +62,7 @@ NickInfo::~NickInfo()
 
 // Get properties of NickInfo object.
 QString NickInfo::getNickname() const { return m_nickname; }
+QString NickInfo::loweredNickname() const { return m_loweredNickname; }
 QString NickInfo::getHostmask() const { return m_hostmask; }
 
 bool NickInfo::isAway() const { return m_away; }
@@ -129,7 +131,8 @@ void NickInfo::setNickname(const QString& newNickname) {
   }
 
   m_addressee = newaddressee;
-  m_nickname = newNickname; 
+  m_nickname = newNickname;
+  m_loweredNickname = newNickname.lower();
   
   QString realname = m_addressee.realName();
   startNickInfoChangedTimer();
@@ -242,7 +245,7 @@ QString NickInfo::getBestAddresseeName() {
     return m_addressee.formattedName();
   } else if(!m_addressee.realName().isEmpty()) {
     return m_addressee.realName();
-  } else if(!getRealName().isEmpty() && getRealName().lower() != getNickname().lower()) {
+  } else if(!getRealName().isEmpty() && getRealName().lower() != loweredNickname()) {
     return getRealName();
   } else {
     return getNickname();
@@ -291,7 +294,7 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const {
   } else if(!m_addressee.realName().isEmpty()) {
     tooltip << m_addressee.realName();
     dirty = true;
-  } else if(!getRealName().isEmpty() && getRealName().lower() != getNickname().lower()) {
+  } else if(!getRealName().isEmpty() && getRealName().lower() != loweredNickname()) {
     tooltip << getRealName();
     dirty = true;
   }
