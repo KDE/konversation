@@ -30,7 +30,6 @@
 #include <kmainwindow.h>
 #include <kaction.h>
 #include <kstdaction.h>
-#include <kstatusbar.h>
 
 /*
   This is the Server Window Class. It shows a window
@@ -104,6 +103,7 @@ class ServerWindow : public KMainWindow
     void deleteDccPanel();     // deletes dcc panel from memory
     void showToolbar();
     void showStatusbar();
+    void showMenubar();
     void openPreferences();
     void quitProgram();
 
@@ -154,6 +154,7 @@ class ServerWindow : public KMainWindow
     bool dccPanelOpen;  // to track if a dcc panel is already open
 
     Server* server;
+    KToggleAction* showMenuBarAction;
     KToggleAction* showToolBarAction;
     KToggleAction* showStatusBarAction;
     HighlightDialog* hilightDialog;

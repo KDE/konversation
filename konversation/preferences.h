@@ -55,6 +55,7 @@ class Preferences : public QObject
     int serverWindowToolBarIconText;
     int serverWindowToolBarIconSize;
     bool serverWindowStatusBarStatus;
+    bool serverWindowMenuBarStatus;
 
     int addServer(const QString& serverString);
     void removeServer(int id);

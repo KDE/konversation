@@ -21,6 +21,8 @@
 #include <kdialog.h>
 #include <kaccel.h>
 #include <kmessagebox.h>
+#include <kstatusbar.h>
+#include <kmenubar.h>
 
 #include "serverwindow.h"
 #include "konversationapplication.h"
@@ -46,6 +48,7 @@ ServerWindow::ServerWindow(Server* newServer) : KMainWindow()
 /*  KAction* quitAction= */ KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); /* file_quit */
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); /* options_show_toolbar */
   showStatusBarAction=KStdAction::showStatusbar(this,SLOT(showStatusbar()),actionCollection()); /* options_show_statusbar */
+  showMenuBarAction=KStdAction::showMenubar(this,SLOT(showMenubar()),actionCollection()); /* options_show_menubar */
 /*  KAction* prefsAction= */ KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); /* options_configure */
 /*  KAction* open_quickbuttons_action= */ new KAction(i18n("Buttons"),0,0,this,SLOT (openButtons()),actionCollection(),"open_buttons_window");
 /*  KAction* open_hilight_action=      */ new KAction(i18n("Highlight List"),0,0,this,SLOT (openHilight()),actionCollection(),"open_hilight_window");
@@ -64,9 +67,13 @@ ServerWindow::ServerWindow(Server* newServer) : KMainWindow()
   statusBar();
   statusBar()->insertItem(i18n("Ready."),StatusText,1);
   statusBar()->insertItem("lagometer",LagOMeter,0,true);
+
   // Show "Lag unknown"
   resetLag();
   statusBar()->setItemAlignment(StatusText,QLabel::AlignLeft);
+
+  // Initialize KMainWindow->menuBar()
+  showMenubar();
 
   addStatusView();
 
@@ -96,6 +103,21 @@ void ServerWindow::showToolbar()
   else toolBar("mainToolBar")->hide();
 
   KonversationApplication::preferences.serverWindowToolBarStatus=showToolBarAction->isChecked();
+}
+
+void ServerWindow::showMenubar()
+{
+  if(showMenuBarAction->isChecked()) menuBar()->show();
+  else
+  {
+    QString accel=showMenuBarAction->shortcut().toString();
+    KMessageBox::information(this,i18n("<qt>This will hide the menu bar completely."
+                                       "You can show it again by typing %1.</qt>").arg(accel),
+                                       "Hide menu bar","HideMenuBarWarning");
+    menuBar()->hide();
+  }
+
+  KonversationApplication::preferences.serverWindowMenuBarStatus=showMenuBarAction->isChecked();
 }
 
 void ServerWindow::showStatusbar()
@@ -324,6 +346,10 @@ void ServerWindow::readOptions()
   // Status bar settings
   showStatusBarAction->setChecked(KonversationApplication::preferences.serverWindowStatusBarStatus);
   showStatusbar();
+
+  // Menu bar settings
+  showMenuBarAction->setChecked(KonversationApplication::preferences.serverWindowMenuBarStatus);
+  showMenubar();
 
   QSize size=KonversationApplication::preferences.getServerWindowSize();
   if(!size.isEmpty())

@@ -82,3 +82,5 @@ void PrefsPageScripts::renameScriptFile(QListViewItem *passedItem)
 	scriptsDirectory->rename(oldScriptFileName, renameItem->text(0));
 	emit fileRenamed(renameItem);
 }
+
+#include "prefspagescripts.moc"

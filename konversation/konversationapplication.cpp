@@ -147,6 +147,9 @@ void KonversationApplication::readOptions()
   // Status bar settings
   preferences.serverWindowStatusBarStatus=config->readBoolEntry("ServerWindowStatusBarStatus",true);
 
+  // Menu bar settings
+  preferences.serverWindowMenuBarStatus=config->readBoolEntry("ServerWindowMenuBarStatus",true);
+
   // Window geometries
   preferences.setServerWindowSize(config->readSizeEntry("Geometry"));
   preferences.setHilightSize(config->readSizeEntry("HilightGeometry"));
@@ -383,6 +386,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ServerWindowToolBarIconSize",preferences.serverWindowToolBarIconSize);
 
   config->writeEntry("ServerWindowStatusBarStatus",preferences.serverWindowStatusBarStatus);
+
+  config->writeEntry("ServerWindowMenuBarStatus",preferences.serverWindowMenuBarStatus);
 
   config->writeEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction());
   config->writeEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction());

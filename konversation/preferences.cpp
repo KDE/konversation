@@ -29,6 +29,7 @@ Preferences::Preferences()
   // Presets
   serverWindowToolBarPos=KToolBar::Top;
   serverWindowStatusBarStatus=true;
+  serverWindowMenuBarStatus=true;
   serverList.setAutoDelete(true);
 
   // create default identity
