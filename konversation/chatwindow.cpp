@@ -484,6 +484,7 @@ void ChatWindow::adjustFocus() {
   KAction *action;
   action = server->getMainWindow()->actionCollection()->action("insert_remember_line");
   action->setEnabled(!!textView);
+  childAdjustFocus();
 }
 
 
