@@ -14,6 +14,9 @@
 
 #include <qstring.h>
 #include <qregexp.h>
+#include <qpixmap.h>
+#include <qbitmap.h>
+#include <qpainter.h>
 
 #include "konversationapplication.h"
 #include "preferences.h"
@@ -83,6 +86,32 @@ QString tagURLs(const QString& text, const QString& fromNick)
   }
 
   return filteredLine;
+}
+
+//TODO: there's room for optimization as pahlibar said. (strm)
+
+// the below two functions were taken from kopeteonlinestatus.cpp.
+QBitmap overlayMasks( const QBitmap *under, const QBitmap *over )
+{
+  if ( !under && !over ) return QBitmap();
+  if ( !under ) return *over;
+  if ( !over ) return *under;
+
+  QBitmap result = *under;
+  bitBlt( &result, 0, 0, over, 0, 0, over->width(), over->height(), Qt::OrROP );
+  return result;
+}
+
+QPixmap overlayPixmaps( const QPixmap &under, const QPixmap &over )
+{
+  if ( over.isNull() ) return under;
+
+  QPixmap result = under;
+  result.setMask( overlayMasks( under.mask(), over.mask() ) );
+
+  QPainter p( &result );
+  p.drawPixmap( 0, 0, over );
+  return result;
 }
 
 }

@@ -26,7 +26,9 @@
 #include <kstandarddirs.h>
 
 #include "preferences.h"
-#include "images.h"
+#include "common.h"
+
+using namespace Konversation;
 
 PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
  : PrefsPage(newParent, newPreferences)
@@ -87,29 +89,6 @@ void PrefsPageThemes::applyPreferences()
   theme = theme.section('/',-2,-2);
   kdDebug() << "Theme :" << theme << endl;
   preferences->setIconTheme( theme );
-}
-
-static QBitmap overlayMasks( const QBitmap *under, const QBitmap *over )
-{
-  if ( !under && !over ) return QBitmap();
-  if ( !under ) return *over;
-  if ( !over ) return *under;
-  
-  QBitmap result = *under;
-  bitBlt( &result, 0, 0, over, 0, 0, over->width(), over->height(), Qt::OrROP );
-  return result;
-}
-
-static QPixmap overlayPixmaps( const QPixmap &under, const QPixmap &over )
-{
-  if ( over.isNull() ) return under;
-
-  QPixmap result = under;
-  result.setMask( overlayMasks( under.mask(), over.mask() ) );
-
-  QPainter p( &result );
-  p.drawPixmap( 0, 0, over );
-  return result;
 }
 
 void PrefsPageThemes::updatePreview(int id)

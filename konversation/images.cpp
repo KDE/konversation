@@ -21,7 +21,10 @@
 #include <kstandarddirs.h>
 
 #include "images.h"
+#include "common.h"
 #include "konversationapplication.h"
+
+using namespace Konversation;
 
 Images::Images()
 {
@@ -77,36 +80,6 @@ QPixmap Images::getNickIcon(NickPrivilege privilege,bool isAway) const
 {
   return nickIcons[privilege][isAway?1:0];
 }
-
-// private functions //
-
-//TODO: there's room for optimization as pahlibar said. (strm)
-
-// the below two functions were taken from kopeteonlinestatus.cpp.
-static QBitmap overlayMasks( const QBitmap *under, const QBitmap *over )
-{
-  if ( !under && !over ) return QBitmap();
-  if ( !under ) return *over;
-  if ( !over ) return *under;
-
-  QBitmap result = *under;
-  bitBlt( &result, 0, 0, over, 0, 0, over->width(), over->height(), Qt::OrROP );
-  return result;
-}
-
-static QPixmap overlayPixmaps( const QPixmap &under, const QPixmap &over )
-{
-  if ( over.isNull() ) return under;
-
-  QPixmap result = under;
-  result.setMask( overlayMasks( under.mask(), over.mask() ) );
-
-  QPainter p( &result );
-  p.drawPixmap( 0, 0, over );
-  return result;
-}
-
-// LEDs
 
 void Images::initializeLeds()
 {
