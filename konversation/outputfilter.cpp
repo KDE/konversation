@@ -128,6 +128,9 @@ namespace Konversation {
         // Server command?
         else if(line.startsWith(commandChar))
         {
+	    //FIXME There will be problems with turkish locale with all of this.
+	    //Look at using kstricmp instead of .lower() and ==
+
             QString command = inputLine.section(' ', 0, 0).mid(1).lower();
             QString parameter = inputLine.section(' ', 1);
             parameter = parameter.stripWhiteSpace();
@@ -146,6 +149,7 @@ namespace Konversation {
             else if(command == "voice")   result = parseVoice(parameter);
             else if(command == "unvoice") result = parseUnvoice(parameter);
             else if(command == "ctcp")    result = parseCtcp(parameter);
+	    else if(command == "ping")    result = parseCtcp(parameter.section(' ', 0, 0) + " ping");
             else if(command == "kick")    result = parseKick(parameter);
             else if(command == "topic")   result = parseTopic(parameter);
             else if(command == "away")    result = parseAway(parameter);
