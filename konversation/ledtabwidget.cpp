@@ -36,7 +36,8 @@ void LedTabWidget::addTab(QWidget* child,const QString& label,int color,bool on)
 
   QTabWidget::addTab(child,tab);
   /* This signal will be emitted when the tab is blinking */
-  connect(tab,SIGNAL(repaintTab()),tabBar(),SLOT(repaint()));
+//  connect(tab,SIGNAL(repaintTab()),tabBar(),SLOT(repaint()));
+  connect(tab,SIGNAL(repaintTab(LedTab*)),tabBar(),SLOT(repaintLED(LedTab*)));
 }
 
 void LedTabWidget::changeTabState(QWidget* child,bool state)

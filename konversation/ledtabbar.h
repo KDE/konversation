@@ -35,6 +35,9 @@ class LedTabBar : public QTabBar
 
     LedTab* tab(int id);
     LedTab* tab(QWidget* widget);
+
+  public slots:
+    void repaintLED(LedTab* tab);
 };
 
 #endif

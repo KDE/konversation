@@ -76,7 +76,7 @@ void LedTab::setIconSet(const QIconSet& icon)
 {
   delete iconSet();
   QTab::setIconSet(icon);
-  emit repaintTab();
+  emit repaintTab(this);
 }
 
 QWidget* LedTab::getWidget()

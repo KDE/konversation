@@ -55,7 +55,7 @@ class LedTab : public QObject,public QTab
     Images images;
 
   signals:
-    void repaintTab();
+    void repaintTab(LedTab* myself);
 
   protected slots:
     void blinkTimeout();

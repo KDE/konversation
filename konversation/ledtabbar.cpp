@@ -50,4 +50,10 @@ LedTab* LedTabBar::tab(int id)
   return (LedTab*) QTabBar::tab(id);
 }
 
+// repaint only the needed tab region to avoid flickering
+void LedTabBar::repaintLED(LedTab* tab)
+{
+  repaint(tab->rect(),false);
+}
+
 #include "ledtabbar.moc"
