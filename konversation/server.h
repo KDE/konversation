@@ -68,6 +68,8 @@ class Server : public QObject
     QString getServerName() const;
     QString getServerGroup() const;
 
+    Konversation::ServerGroupSettingsPtr serverGroupSettings() const { return m_serverGroup; }
+
     IdentityPtr getIdentity() const;
 
     bool getUseSSL() const;

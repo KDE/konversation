@@ -1667,7 +1667,7 @@ void KonversationMainWindow::showJoinChannelDialog()
     return;
   }
 
-  Konversation::JoinChannelDialog dlg(frontServer->getServerGroup(), this);
+  Konversation::JoinChannelDialog dlg(frontServer, this);
 
   if(dlg.exec() == QDialog::Accepted) {
     frontServer->sendJoinCommand(dlg.channel(), dlg.password());

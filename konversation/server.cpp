@@ -1865,6 +1865,7 @@ void Server::joinChannel(const QString &name, const QString &hostmask, const QSt
   //channel->setKey(key);
 
     channelList.append(channel);
+    m_serverGroup->appendChannelHistory(Konversation::ChannelSettings(name));
 
     connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
     connect(this,SIGNAL (serverOnline(bool)),channel,SLOT (serverOnline(bool)) );

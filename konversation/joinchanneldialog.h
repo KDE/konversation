@@ -13,6 +13,8 @@
 
 #include <kdialogbase.h>
 
+class Server;
+
 namespace Konversation {
 
 class JoinChannelUI;
@@ -21,14 +23,18 @@ class JoinChannelDialog : public KDialogBase
 {
   Q_OBJECT
   public:
-    JoinChannelDialog(const QString& network, QWidget *parent = 0, const char *name = 0);
+    JoinChannelDialog(Server* server, QWidget *parent = 0, const char *name = 0);
     ~JoinChannelDialog();
-    
+
     QString channel() const;
     QString password() const;
 
+  protected slots:
+    virtual void slotOk();
+
   private:
     JoinChannelUI* m_widget;
+    Server* m_server;
 };
 
 }

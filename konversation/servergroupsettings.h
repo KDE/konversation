@@ -66,11 +66,16 @@ class ServerGroupSettings : public KShared
 
     int id() const { return m_id; }
 
+    void setChannelHistory(const ChannelList& list) { m_channelHistory = list; }
+    void appendChannelHistory(const ChannelSettings& channel);
+    ChannelList channelHistory() const { return m_channelHistory; }
+
   private:
     QString m_name;
     ServerList m_serverList;
     int m_identityId;
     ChannelList m_channelList;
+    ChannelList m_channelHistory;
     QString m_connectCommands;
     bool m_autoConnect;
     QString m_group;
@@ -84,6 +89,7 @@ class ChannelSettings
     ChannelSettings();
     ChannelSettings(const ChannelSettings& settings);
     ChannelSettings(const QString& name);
+    ChannelSettings(const QString& name, const QString& password);
     ~ChannelSettings();
 
     void setName(const QString& name) { m_name = name; }

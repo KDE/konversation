@@ -682,9 +682,12 @@ void KonversationApplication::readOptions()
     if(!groups.isEmpty()) {
       Konversation::ServerGroupList serverGroups;
       QStringList::iterator it;
-      QStringList tmp1, tmp2;
+      QStringList tmp1;
       QStringList::iterator it2;
-  
+      Konversation::ChannelList channelHistory;
+      Konversation::ServerSettings server;
+      Konversation::ChannelSettings channel;
+       
       for(it = groups.begin(); it != groups.end(); ++it) {
         config->setGroup((*it));
         Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
@@ -694,11 +697,9 @@ void KonversationApplication::readOptions()
         serverGroup->setConnectCommands(config->readEntry("ConnectCommands"));
         serverGroup->setAutoConnectEnabled(config->readBoolEntry("AutoConnect"));
         tmp1 = config->readListEntry("ServerList");
-        tmp2 = config->readListEntry("AutoJoinChannels");
   
         for(it2 = tmp1.begin(); it2 != tmp1.end(); ++it2) {
           config->setGroup((*it2));
-          Konversation::ServerSettings server;
           server.setServer(config->readEntry("Server"));
           server.setPort(config->readNumEntry("Port"));
           server.setPassword(config->readEntry("Password"));
@@ -706,10 +707,11 @@ void KonversationApplication::readOptions()
           serverGroup->addServer(server);
         }
   
+        config->setGroup((*it));
+        tmp1 = config->readListEntry("AutoJoinChannels");
   
-        for(it2 = tmp2.begin(); it2 != tmp2.end(); ++it2) {
+        for(it2 = tmp1.begin(); it2 != tmp1.end(); ++it2) {
           config->setGroup((*it2));
-          Konversation::ChannelSettings channel;
   
           if(!config->readEntry("Name").isEmpty()) {
             channel.setName(config->readEntry("Name"));
@@ -717,7 +719,23 @@ void KonversationApplication::readOptions()
             serverGroup->addChannel(channel);
           }
         }
-  
+
+        config->setGroup((*it));
+        tmp1 = config->readListEntry("ChannelHistory");
+        channelHistory.clear();
+
+        for(it2 = tmp1.begin(); it2 != tmp1.end(); ++it2) {
+          config->setGroup((*it2));
+
+          if(!config->readEntry("Name").isEmpty()) {
+            channel.setName(config->readEntry("Name"));
+            channel.setPassword(config->readEntry("Password"));
+            channelHistory.append(channel);
+          }
+        }
+
+        serverGroup->setChannelHistory(channelHistory);
+
         serverGroups.append(serverGroup);
       }
   
@@ -1111,6 +1129,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   Konversation::ChannelList channelList;
   Konversation::ChannelList::iterator it3;
   QStringList channels;
+  QStringList channelHistory;
 
   for(it = serverGroupList.begin(); it != serverGroupList.end(); ++it) {
     serverlist = (*it)->serverList();
@@ -1139,6 +1158,18 @@ void KonversationApplication::saveOptions(bool updateGUI)
       index3++;
     }
 
+    channelList = (*it)->channelHistory();
+    channelHistory.clear();
+
+    for(it3 = channelList.begin(); it3 != channelList.end(); ++it3) {
+      groupName = QString("Channel %1").arg(index3);
+      channelHistory.append(groupName);
+      config->setGroup(groupName);
+      config->writeEntry("Name", (*it3).name());
+      config->writeEntry("Password", (*it3).password());
+      index3++;
+    }
+
     config->setGroup(QString("ServerGroup %1").arg(index));
     config->writeEntry("Name", (*it)->name());
     config->writeEntry("Group", (*it)->group());
@@ -1147,6 +1178,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->writeEntry("AutoJoinChannels", channels);
     config->writeEntry("ConnectCommands", (*it)->connectCommands());
     config->writeEntry("AutoConnect", (*it)->autoConnectEnabled());
+    config->writeEntry("ChannelHistory", channelHistory);
     index++;
   }
 

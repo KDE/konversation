@@ -102,6 +102,20 @@ IdentityPtr ServerGroupSettings::identity() const
   return KonversationApplication::preferences.getIdentityById(m_identityId);
 }
 
+void ServerGroupSettings::appendChannelHistory(const ChannelSettings& channel)
+{
+  ChannelList::iterator endIt = m_channelHistory.end();
+
+  for(ChannelList::iterator it = m_channelHistory.begin(); it != endIt; ++it) {
+    if(channel.name() == (*it).name()) {
+      (*it).setPassword(channel.password());
+      return;
+    }
+  }
+
+  m_channelHistory.append(channel);
+}
+
 //
 // ChannelSettings
 //
@@ -122,6 +136,12 @@ ChannelSettings::ChannelSettings(const QString& name)
 {
   setName(name);
   setPassword("");
+}
+
+ChannelSettings::ChannelSettings(const QString& name, const QString& password)
+{
+  setName(name);
+  setPassword(password);
 }
 
 ChannelSettings::~ChannelSettings()
