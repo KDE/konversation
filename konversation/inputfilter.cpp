@@ -149,7 +149,7 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
         else if(ctcpCommand.lower()=="version")
         {
           server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1.").arg(sourceNick));
-          server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002 Dario Abatianni").arg(VERSION));
+          server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002 Dario Abatianni and Matthias Gierlings").arg(VERSION));
         }
         /* No known CTCP request, give a general message */
         else server->appendStatusMessage(i18n("CTCP"),i18n("Received unknown CTCP-%1 request from %2").arg(ctcp).arg(sourceNick));

@@ -21,6 +21,7 @@
 #include <qcombobox.h>
 #include <qheader.h>
 #include <qregexp.h>
+#include <qtooltip.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -74,6 +75,17 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   modeK=new ModeButton("K",modeBox,6);
   modeL=new ModeButton("L",modeBox,7);
 
+
+	// Tooltips for the ModeButtons
+	QToolTip::add(modeT, i18n("Topic settable by channel operator only."));
+	QToolTip::add(modeN, i18n("No messages to channel from clients on the outside."));
+  QToolTip::add(modeS, i18n("Secret channel."));
+	QToolTip::add(modeI, i18n("Invite only channel."));
+	QToolTip::add(modeP, i18n("Private channel."));
+	QToolTip::add(modeM, i18n("Moderated channel."));
+	QToolTip::add(modeK, i18n("Protect channel with a keyword."));
+	QToolTip::add(modeL, i18n("Set user limit to channel."));
+
   connect(modeT,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
   connect(modeN,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
   connect(modeS,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
@@ -105,11 +117,16 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   /* The grid that holds the quick action buttons */
   QGrid* buttonsGrid=new QGrid(2,nickListButtons);
-  for(int index=0;index<8;index++)
+	for(int index=0;index<8;index++)
   {
     QuickButton* newQuickButton=new QuickButton("",buttonsGrid,index);
     buttonList.append(newQuickButton);
-    connect(newQuickButton,SIGNAL (clicked(int)),this,SLOT (quickButtonClicked(int)) );
+   	// Get the button definition to set tooltips
+	  QString buttonText=KonversationApplication::preferences.getButtonList()[index];
+		buttonText = buttonText.section(",", -1);
+		// Create tooltip for current button
+		QToolTip::add(buttonList.at(index), buttonText);
+		connect(newQuickButton,SIGNAL (clicked(int)),this,SLOT (quickButtonClicked(int)) );
   }
   updateQuickButtons(KonversationApplication::preferences.getButtonList());
 
