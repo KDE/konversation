@@ -551,13 +551,16 @@ namespace Konversation {
                 } else if(parameterList.count()>2) {          // DCC SEND <nickname> <file> [file] ...
                     // TODO: make sure this will work:
                     //output=i18n("Usage: %1DCC SEND nickname [fi6lename] [filename] ...").arg(commandChar);
-                    QFile file(parameterList[2]);
+		    KURL fileURL(parameterList[2]);
 
-                    if(file.exists()) {
-                        emit openDccSend(parameterList[1],parameterList[2]);
-                    } else {
-                        result = error(i18n("Error: File \"%1\" does not exist.").arg(parameterList[2]));
-                    }
+
+		   //We could easily check if the remote file exists, but then we might
+		   //end up asking for creditionals twice, so settle for only checking locally
+                   if(!fileURL.isLocalFile() || QFile::exists( fileURL.path() )) {
+                     emit openDccSend(parameterList[1],fileURL);
+                   } else {
+                      result = error(i18n("Error: File \"%1\" does not exist.").arg(parameterList[2]));
+                   }
                 }
                 else   // Don't know how this should happen, but ...
                 {
@@ -610,7 +613,7 @@ namespace Konversation {
         return result;
     }
 
-    OutputFilterResult OutputFilter::resumeRequest(const QString &sender,const QString &fileName,const QString &port,int startAt)
+    OutputFilterResult OutputFilter::resumeRequest(const QString &sender,const QString &fileName,const QString &port,KIO::filesize_t startAt)
     {
         OutputFilterResult result;
         QString newFileName(fileName);

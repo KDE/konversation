@@ -17,6 +17,8 @@
 
 #include <qobject.h>
 #include <qstring.h>
+#include <kurl.h>
+#include <kio/global.h>
 
 #include "identity.h"
 
@@ -57,13 +59,13 @@ namespace Konversation
       OutputFilterResult parse(const QString& myNick,const QString& line,const QString& name);
       OutputFilterResult sendRequest(const QString &recipient,const QString &fileName,const QString &address,
         const QString &port,unsigned long size);
-      OutputFilterResult resumeRequest(const QString &sender,const QString &fileName,const QString &port,int startAt);
+      OutputFilterResult resumeRequest(const QString &sender,const QString &fileName,const QString &port,KIO::filesize_t startAt);
       OutputFilterResult acceptRequest(const QString &recipient,const QString &fileName,const QString &port,int startAt);
       bool replaceAliases(QString& line);
   
     signals:
       void openQuery(const QString& nick,const QString& hostmask); // hostmask currently unused
-      void openDccSend(const QString &recipient, const QString &fileName);
+      void openDccSend(const QString &recipient, KURL kurl);
       void requestDccSend();                        // Choose Recipient and File from requester
       void requestDccSend(const QString& recipient);       // Choose File from requester
       void requestDccChat(const QString& nick);
