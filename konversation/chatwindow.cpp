@@ -240,13 +240,13 @@ void ChatWindow::append(const QString& nickname,const QString& message)
   textView->append(nickname,message);
 }
 
-void ChatWindow::appendQuery(const QString& nickname,const QString& message, bool usenotifications)
+void ChatWindow::appendQuery(const QString& nickname,const QString& message, bool)
 {
   Q_ASSERT(textView);  if(!textView) return ;
   textView->appendQuery(nickname,message);
 }
 
-void ChatWindow::appendAction(const QString& nickname,const QString& message, bool usenotifications)
+void ChatWindow::appendAction(const QString& nickname,const QString& message, bool)
 {
   Q_ASSERT(textView);  if(!textView) return ;
   textView->appendAction(nickname,message);
@@ -300,7 +300,7 @@ void ChatWindow::setLogfileName(const QString& name)
       logName=name+".log";
     } else if(m_server) {
       // make sure that no path delimiters are in the name
-      logName=m_server->getServerGroup().lower().replace("/","_")+"_"+name+".log";
+      logName=QString(m_server->getServerGroup().lower()).append('_').append(name).append(".log").replace('/','_');
     }
 
     // "cd" into log path or create path, if it's not there
