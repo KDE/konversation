@@ -359,6 +359,7 @@ void KonversationApplication::saveOptions()
   config->sync();
 }
 
+
 void KonversationApplication::storeURL(QString& url)
 {
   urlList.append(url);

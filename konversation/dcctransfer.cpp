@@ -91,7 +91,7 @@ void DccTransfer::startGet()
   kdDebug() << dccFolder << endl;
 
   if(KonversationApplication::preferences.getDccAddPartner())
-    dir.setPath(dccFolder+"/"+dccPartner);
+    dir.setPath(dccFolder+"/"+dccPartner.lower());
   else
     dir.setPath(dccFolder);
   
@@ -105,7 +105,7 @@ void DccTransfer::startGet()
   }
 
   QString fullName(dccFile);
-  if(KonversationApplication::preferences.getDccAddPartner()) fullName=dccPartner+"."+fullName;
+  if(KonversationApplication::preferences.getDccAddPartner()) fullName=dccPartner.lower()+"."+fullName;
   file.setName(dir.path()+"/"+fullName);
   
   kdDebug() << "Opening Socket to " << getIp() << " ..." << endl;
