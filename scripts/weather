@@ -3,26 +3,32 @@
 $PORT = shift;
 $SERVER = shift;
 $TARGET = shift;
+$OPTION = shift;
 
-$station = `dcop KWeatherService WeatherService listStations`;
-$city = `dcop KWeatherService WeatherService stationName $station`;
-$temperature = `dcop KWeatherService WeatherService temperature $station`;
-$pressure = `dcop KWeatherService WeatherService pressure $station`;
-$wind = `dcop KWeatherService WeatherService wind $station`;
-$detail = `dcop KWeatherService WeatherService weather $station`;
+@stations = `dcop KWeatherService WeatherService listStations`;
 
-chomp $station;
-chomp $city;
-chomp $temperature;
-chomp $pressure;
-chomp $wind;
-chomp $detail;
+foreach $station (@stations) {
 
-if( $detail ) {
-$MESSAGE = "Current Weather for %B$city%B : %B$detail%B, Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
+  $city = `dcop KWeatherService WeatherService stationName $station`;
+  $temperature = `dcop KWeatherService WeatherService temperature $station`;
+  $pressure = `dcop KWeatherService WeatherService pressure $station`;
+  $wind = `dcop KWeatherService WeatherService wind $station`;
+  $detail = `dcop KWeatherService WeatherService weather $station`;
+
+  chomp $station;
+  chomp $city;
+  chomp $temperature;
+  chomp $pressure;
+  chomp $wind;
+  chomp $detail;
+
+  if( $detail ) {
+  $MESSAGE = "Current Weather for %B$city%B : %B$detail%B, Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
+  }
+  else {
+  $MESSAGE = "Current Weather for %B$city%B : Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
+  }
+
+  system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$MESSAGE\" ");
+  
 }
-else {
-$MESSAGE = "Current Weather for %B$city%B : Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
-}
-
-exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$MESSAGE\" ");
