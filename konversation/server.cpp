@@ -104,7 +104,10 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   statusView=getMainWindow()->addStatusView(this);
   if(KonversationApplication::preferences.getRawLog()) addRawLog(false);
+  
   setNickname(getIdentity()->getNickname(tryNickNumber));
+  obtainNickInfo(getNickname());
+  
   bot=getIdentity()->getBot();
   botPassword=getIdentity()->getPassword();
 
