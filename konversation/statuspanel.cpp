@@ -123,7 +123,7 @@ void StatusPanel::updateFonts()
 
   statusInput->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
-  getTextView()->setViewBackground(KonversationApplication::preferences.getTextViewBackground(),"/home/eisfuchs/bilder/Rabboonie03_2.png");
+  getTextView()->setViewBackground(KonversationApplication::preferences.getTextViewBackground(),QString::null);
   nicknameButton->setFont(KonversationApplication::preferences.getTextFont());
 }
 
