@@ -99,6 +99,10 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
     kdWarning() << "NickListView::NickListView(): Could not create popup!" << endl;
   }
 
+#if KDE_IS_VERSION(3,3,90)
+  setsetShadeSortColumn(false);
+#endif
+
   // We have our own tooltips, don't use the default QListView ones
   setShowToolTips(false);
   m_tooltip = new Konversation::KonversationNickListViewToolTip(viewport(), this);
