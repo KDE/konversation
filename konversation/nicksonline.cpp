@@ -850,8 +850,6 @@ void NicksOnline::slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo
     if (!nickInfo) return;
     QString nickname = nickInfo->getNickname();
 
-    kdDebug() << "NicksOnline::slotNickInfoChanged: nickname: " << nickname << endl;
-
     if (!server) return;
     QString serverName = server->getServerName();
     QListViewItem* item = getServerAndNickItem(serverName, nickname);
