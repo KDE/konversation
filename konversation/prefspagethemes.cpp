@@ -122,7 +122,9 @@ void PrefsPageThemes::installTheme()
 					  i18n("Select Theme Package")
 					   );
   
+  QString themesDir(locateLocal("data", "konversation/themes/"));
   QString tmpThemeFile;
+
   if(!KIO::NetAccess::download(themeURL, tmpThemeFile, NULL))
     {
       KMessageBox::error(0L,
@@ -133,17 +135,12 @@ void PrefsPageThemes::installTheme()
       return;
     }
   
-  QString themesDir(locateLocal("data", "konversation/themes/"));
   QDir themeInstallDir(tmpThemeFile);
 
   if(themeInstallDir.exists()) // We got a directory not a file
     {
       if(themeInstallDir.exists("themerc"))
-	{
 	  KIO::NetAccess::dircopy(KURL(tmpThemeFile),KURL(themesDir),0L);
-	  updateList();
-	  updateButtons();
-	}
       else
 	{
 	  KMessageBox::error(0L,
@@ -152,45 +149,38 @@ void PrefsPageThemes::installTheme()
                              KMessageBox::Notify
                              );
 	}
-      KIO::NetAccess::removeTempFile(tmpThemeFile);
-      return;
     }
-      
-  
-  KTar themeArchieve(tmpThemeFile);
-  themeArchieve.open(IO_ReadOnly);
-  kapp->processEvents();
-  
-  const KArchiveDirectory* themeDir = themeArchieve.directory();;
-  QStringList allEntries = themeDir->entries();
-
-  for(QStringList::Iterator it=allEntries.begin(); it != allEntries.end(); ++it)
+  else // we got a file
     {
-      if(themeDir->entry(*it+"/themerc") == NULL)
+       
+      KTar themeArchieve(tmpThemeFile);
+      themeArchieve.open(IO_ReadOnly);
+      kapp->processEvents();
+      
+      const KArchiveDirectory* themeDir = themeArchieve.directory();;
+      QStringList allEntries = themeDir->entries();
+      
+      for(QStringList::Iterator it=allEntries.begin(); it != allEntries.end(); ++it)
 	{
+	  if(themeDir->entry(*it+"/themerc") == NULL)
+	    {
+	      KMessageBox::error(0L,
+				 i18n("Invalid Theme Archieve"),
+				 i18n("Cannot install theme"),
+				 KMessageBox::Notify
+				 );
+	    }
+	  else
+	    themeDir->copyTo(themesDir);
 	  
-	  KMessageBox::error(0L,
-			     i18n("Invalid Theme Archieve"),
-			     i18n("Cannot install theme"),
-			     KMessageBox::Notify
-			     );
-
-	  KIO::NetAccess::removeTempFile(tmpThemeFile);
-	  themeArchieve.close();
-	  return;
 	}
-      else
-	{
-	  themeDir->copyTo(themesDir);
-	  KIO::NetAccess::removeTempFile(tmpThemeFile);
-	  themeArchieve.close();
-	  
-	  updateList();
-	  updateButtons();
-	  
-	  return;
-	}
+      themeArchieve.close();
     }
+
+  updateList();
+  updateButtons();
+  KIO::NetAccess::removeTempFile(tmpThemeFile);
+
 }
 
 void PrefsPageThemes::removeTheme()
@@ -212,6 +202,7 @@ void PrefsPageThemes::removeTheme()
       unlink(QFile::encodeName(dir));
       KIO::del(KURL(dir.remove("themerc")));
       updateList();
+      updateButtons();
     }
 }
 
@@ -290,7 +281,10 @@ void PrefsPageThemes::updateList()
 void PrefsPageThemes::updateButtons()
 {
   if(m_themeList->count() < 2)
-    return;
+    {
+      m_removeButton->setEnabled(false);
+      return;
+    }
 
   QString dir = m_dirs[m_themeList->currentItem()];
   QFile themeRC(dir);
