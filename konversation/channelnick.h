@@ -19,6 +19,7 @@
 
 #include "nickinfo.h"
 
+
 /** An instance of ChannelNick is made for each nick in each channel.  So for a person in multiple channels, they will have one NickInfo, and multiple ChannelNicks.  It contains a pointer to the NickInfo, and the mode of that person in the channel.*/
 class ChannelNick :  public QObject, public KShared
 {
@@ -56,11 +57,11 @@ class ChannelNick :  public QObject, public KShared
   signals:
     void channelNickChanged();
 };
-
 /** A ChannelNickPtr is a pointer to a ChannelNick.  Since it is a KSharedPtr,
  *  the ChannelNick object is automatically destroyed when all references are destroyed.
  */
 typedef KSharedPtr<ChannelNick> ChannelNickPtr;
+
 /** A ChannelNickMap is a list of ChannelNick pointers, indexed and sorted by
  *  lowercase nickname. 
  */

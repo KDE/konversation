@@ -22,6 +22,7 @@
 #include "../nick.h"
 #include "../nicklistview.h"
 #include "../ledlistviewitem.h"
+#include "../nickinfo.h"
 
 class NickListView;
 
@@ -59,7 +60,7 @@ void KonversationNickListViewToolTip::maybeTip( const QPoint &pos )
     uint xAdjust = itemRect.left() + leftMargin;
     uint yAdjust = itemRect.top();
     QPoint relativePos( pos.x() - xAdjust, pos.y() - yAdjust );
-/*    toolTip = nick->tooltip()*/;
+    toolTip = nick->getNickInfo()->tooltip();
     if(!toolTip.isEmpty()) 
         tip(itemRect, toolTip);
 
