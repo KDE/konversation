@@ -1291,7 +1291,7 @@ QString Server::getIp(bool followDccSetting)
   {
     int methodId = KonversationApplication::preferences.getDccMethodToGetOwnIp();
 
-    if(methodId == 1 && !ownIpByWHOIS.isEmpty())  // WHOIS reply
+    if(methodId == 1)  // WHOIS reply
       ip = ownIpByWHOIS;
     else if(methodId == 2)  // 001 reply
       ip = ownIpBy001;
