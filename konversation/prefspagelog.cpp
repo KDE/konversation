@@ -27,7 +27,7 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   QGridLayout* logSettingsLayout=new QGridLayout(parentFrame,4,2,marginHint(),spacingHint(),"log_settings_layout");
 
   useLog=new QCheckBox(i18n("Enable logging"),parentFrame,"use_log_checkbox");
-  lowerLog=new QCheckBox(i18n("Use lower case logs"),parentFrame,"lower_log_checkbox");
+  lowerLog=new QCheckBox(i18n("Use lower case logfile names"),parentFrame,"lower_log_checkbox");
   logFollowsNick=new QCheckBox(i18n("Follow nick changes"),parentFrame,"follow_nickchanges_checkbox");
 
   QHBox* logPathBox=new QHBox(parentFrame);

@@ -80,7 +80,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
   new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
   new KAction(i18n("Configure Colors"), 0, 0, this, SLOT(openColorConfiguration()), actionCollection(), "open_colors_window");
-  new KAction(i18n("Channel List"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
+  new KAction(i18n("Channel list"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
 
   // Keyboard accelerators to navigate through the different pages
   KAccel* accelerator=accel();
