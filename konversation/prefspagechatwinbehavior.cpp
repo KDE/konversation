@@ -160,11 +160,7 @@ void PrefsPageChatWinBehavior::moveDown()
 {
   QListViewItem* item = sortingOrder->selectedItem();
 
-  if(item)
-  {
-    int pos = sortingOrder->itemIndex(item);
-    if(pos != 2) item->moveItem(item->itemBelow());
-  }
+  if(item && item != sortingOrder->lastItem()) item->moveItem(item->itemBelow());
 }
 
 void PrefsPageChatWinBehavior::applyPreferences()
@@ -181,7 +177,7 @@ void PrefsPageChatWinBehavior::applyPreferences()
 
   int flag = 1;
 
-  for(int index = 0; index < 3; index++)
+  for(int index = 0; index < 6; index++)
   {
     ValueListViewItem* item = static_cast<ValueListViewItem*>(sortingOrder->itemAtIndex(index));
     int value = item->getValue();
