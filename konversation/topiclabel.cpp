@@ -90,7 +90,7 @@ void TopicLabel::contentsMouseMoveEvent(QMouseEvent *e)
    mousePressed=false;
    removeSelection();
    KURL ux(urlToDrag);
-   if (urlToDrag.left(2)=="##") ux=QString("irc://%1:%2/%3").arg(m_server->getServerName()).
+   if (urlToDrag.startsWith("##")) ux=QString("irc://%1:%2/%3").arg(m_server->getServerName()).
      arg(m_server->getPort()).arg(urlToDrag.mid(2));
    KURLDrag* u=new KURLDrag(ux,viewport());	
    u->drag();
