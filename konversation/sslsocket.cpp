@@ -29,10 +29,8 @@
 #include "sslsocket.h"
 
 SSLSocket::SSLSocket(QObject* parent,const char* name)
-  : KStreamSocket("","",parent,name)
+  : KStreamSocket("","",parent,name), kssl(0L), sslInfoDlg(0L)
 {
-	kssl = 0L;
-	sslInfoDlg = 0L;
 	cc = new KSSLCertificateCache;
 	cc->reload();
 
@@ -308,6 +306,7 @@ int SSLSocket::verifyCertificate()
 	cc->addCertificate(peerCertificate, cp, permacache);
 	if (doAddHost)
 	  cc->addHost(peerCertificate, remoteHost);
+	 
 
 
 	if (rc == -1)
