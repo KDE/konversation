@@ -1071,7 +1071,7 @@ void InputFilter::setAutomaticRequest(bool yes)
 }
 int InputFilter::getAutomaticRequest() { return automaticRequest; }
 
-void InputFilter::setLagMeasuring(bool state) { lagMeasuring=state; kdDebug() << state << endl; }
+void InputFilter::setLagMeasuring(bool state) { lagMeasuring=state; }
 bool InputFilter::getLagMeasuring()           { return lagMeasuring; }
 
 #include "inputfilter.moc"
