@@ -1,0 +1,234 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>ChatWindowAppearance_Config</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>ChatWindowAppearance_Config</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>527</width>
+            <height>482</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>ChatWindowAppearance_Config</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox3</cstring>
+            </property>
+            <property name="title">
+                <string>Fo&amp;nts</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_FixedMOTD</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Use a fixed font for MOTD messages</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>textLabel2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Chat text:</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>textLabel3</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Nickname list:</string>
+                    </property>
+                </widget>
+                <widget class="KFontRequester" row="1" column="1">
+                    <property name="name">
+                        <cstring>kcfg_ListFont</cstring>
+                    </property>
+                </widget>
+                <widget class="KFontRequester" row="0" column="1">
+                    <property name="name">
+                        <cstring>kcfg_TextFont</cstring>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>kcfg_Timestamping</cstring>
+            </property>
+            <property name="title">
+                <string>&amp;Timestamps</string>
+            </property>
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QComboBox" row="1" column="1">
+                    <property name="name">
+                        <cstring>kcfg_TimestampFormat</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Format:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kcfg_TimestampFormat</cstring>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>kcfg_ShowDate</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show &amp;dates</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox2</cstring>
+            </property>
+            <property name="title">
+                <string>&amp;Layout</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_ShowTopic</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Show channel topic</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_ShowModeButtons</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show channel &amp;mode buttons</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_ShowQuickButtons</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show quick &amp;buttons</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_AutoUserhost</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show hostmasks &amp;in nickname list</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_ShowNicknameBox</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show nickname box in channel and status window</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>kcfg_ShowBackgroundImage</cstring>
+            </property>
+            <property name="title">
+                <string>Use Back&amp;ground Image</string>
+            </property>
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel4</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Path:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kcfg_BackgroundImage</cstring>
+                    </property>
+                </widget>
+                <widget class="KURLRequester">
+                    <property name="name">
+                        <cstring>kcfg_BackgroundImage</cstring>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer4</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<tabstops>
+    <tabstop>kcfg_TextFont</tabstop>
+    <tabstop>kcfg_ListFont</tabstop>
+    <tabstop>kcfg_FixedMOTD</tabstop>
+    <tabstop>kcfg_ShowDate</tabstop>
+    <tabstop>kcfg_TimestampFormat</tabstop>
+    <tabstop>kcfg_ShowTopic</tabstop>
+    <tabstop>kcfg_ShowModeButtons</tabstop>
+    <tabstop>kcfg_ShowQuickButtons</tabstop>
+    <tabstop>kcfg_AutoUserhost</tabstop>
+    <tabstop>kcfg_ShowNicknameBox</tabstop>
+    <tabstop>kcfg_BackgroundImage</tabstop>
+</tabstops>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kfontrequester.h</includehint>
+    <includehint>kfontrequester.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
+</UI>

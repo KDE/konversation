@@ -12,55 +12,26 @@
 #ifndef PREFSPAGECHATWINAPPERANCE_H
 #define PREFSPAGECHATWINAPPERANCE_H
 
-#include <qfont.h>
-#include <kurlrequester.h>
-#include <qhgroupbox.h>
+#include "chatwindowappearance_preferences.h"
+class Preferences;
 
-#include "prefspage.h"
+#include <qframe.h>
 
-class QLabel;
-class QComboBox;
-class QCheckBox;
-
-class PrefsPageChatWinAppearance : public PrefsPage
+class PrefsPageChatWinAppearance : public ChatWindowAppearance_Config
 {
   Q_OBJECT
   public:
     PrefsPageChatWinAppearance(QFrame* newParent,Preferences* newPreferences);
-    ~PrefsPageChatWinAppearance();
   
   public slots:
     void applyPreferences();
 
   protected slots:
-    void textFontClicked();
-    void listFontClicked();
     void setBackgroundImageConfig(bool state);
     void saveBackgroundImage(const QString&);
 
-    void timestampingChanged(int state);
-            
-  protected:
-    void updateFonts();
-
-    QLabel* textPreviewLabel;
-    QLabel* listPreviewLabel;
-    QFont textFont;
-    QFont listFont;
-    QCheckBox* fixedMOTDCheck;
-
-    QCheckBox* doTimestamping;
-    QCheckBox* showDate;
-    QLabel* formatLabel;
-    QComboBox* timestampFormat;
-    
-    QCheckBox* autoUserhostCheck;
-    QCheckBox* showQuickButtons;
-    QCheckBox* showModeButtons;
-    QCheckBox* showTopic;
-    QCheckBox* m_showNicknameBoxCheck;
-    QCheckBox* showBackgroundImage;
-    KURLRequester* backgroundURL;
+protected:
+		Preferences* preferences;
 };
 
 #endif

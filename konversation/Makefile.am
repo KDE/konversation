@@ -23,7 +23,7 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp \
 		ledtabbar.cpp ledtab.cpp ledtabwidget.cpp images.cpp prefsdialog.cpp \
 		quickbutton.cpp preferences.cpp chatwindow.cpp outputfilter.cpp query.cpp \
 		konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp ircview.cpp server.cpp main.cpp \
-		dcc_preferences.ui log_preferences.ui tabbar_preferences.ui irccolorchooserui.ui irccolorchooser.cpp prefspagealiases.cpp channellistviewitem.cpp osd.cpp prefspageosd.cpp \
+		dcc_preferences.ui log_preferences.ui tabbar_preferences.ui chatwindowappearance_preferences.ui irccolorchooserui.ui irccolorchooser.cpp prefspagealiases.cpp channellistviewitem.cpp osd.cpp prefspageosd.cpp \
 		ircevent.cpp trayicon.cpp tabaction.cpp prefspagetabbehavior.cpp dccchat.cpp \
 		logfilereader.cpp multilineedit.cpp nickinfo.cpp dccresumedialog.cpp \
 		konversationsound.cpp quickconnectdialog.cpp prefspagebehaviour.cpp \
