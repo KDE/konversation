@@ -122,6 +122,7 @@ class Server : public QObject
     bool isAChannel(const QString &check);
     bool isNickname(const QString& compare);
     QString getNickname() const;
+    QString loweredNickname() const;
     InputFilter* getInputFilter();
     Konversation::OutputFilter* getOutputFilter();
 
@@ -581,6 +582,7 @@ class Server : public QObject
     QStringList inputBuffer;
     QStringList outputBuffer;
     QString nickname;
+    QString m_loweredNickname;
     QString ownIpByUserhost;  // RPL_USERHOST
     QString ownIpByWelcome;  // RPL_WELCOME
     QString lastDccDir;

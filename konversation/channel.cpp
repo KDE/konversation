@@ -1140,9 +1140,9 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
   bool fromMe=false;
   bool toMe=false;
 
-  if(sourceNick.lower()==m_server->getNickname().lower()) 
+  if(sourceNick.lower()==m_server->loweredNickname()) 
     fromMe=true;
-  if(parameter.lower()==m_server->getNickname().lower()) 
+  if(parameter.lower()==m_server->loweredNickname()) 
     toMe=true;
 
   switch(mode)

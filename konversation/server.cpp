@@ -2640,6 +2640,7 @@ void Server::appendMessageToFrontmost(const QString& type,const QString& message
 void Server::setNickname(const QString &newNickname)
 {
   nickname=newNickname;
+  m_loweredNickname=newNickname.lower();
   statusView->setNickname(newNickname);
 }
 
@@ -2689,6 +2690,11 @@ bool Server::isNickname(const QString &compare)
 QString Server::getNickname() const
 {
   return nickname;
+}
+
+QString Server::loweredNickname() const
+{
+  return m_loweredNickname;
 }
 
 QString Server::parseWildcards(const QString& toParse,

@@ -141,7 +141,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           channel->appendAction(sourceNick,ctcpArgument);
           
           if(channel && sourceNick != server->getNickname()) {
-            if(ctcpArgument.lower().find(QRegExp("(^|[^\\d\\w])"+QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
+            if(ctcpArgument.lower().find(QRegExp("(^|[^\\d\\w])"+QRegExp::escape(server->loweredNickname())+"([^\\d\\w]|$)"))!=-1)
             {
               konv_app->notificationHandler()->nick(channel, sourceNick, ctcpArgument);
             }
@@ -268,7 +268,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
           if(channel && sourceNick != server->getNickname()) {
             if(trailing.lower().find(QRegExp("(^|[^\\d\\w])"+
-              QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
+              QRegExp::escape(server->loweredNickname())+"([^\\d\\w]|$)"))!=-1)
             {
               konv_app->notificationHandler()->nick(channel, sourceNick, trailing);
             }

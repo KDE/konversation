@@ -399,7 +399,7 @@ void Query::serverQuit(const QString&)
 void Query::emitUpdateInfo()
 {
   QString info;
-  if(m_nickInfo->getNickname().lower() == m_server->getNickname().lower())
+  if(m_nickInfo->loweredNickname() == m_server->loweredNickname())
     info = i18n("Talking to yourself");
   else if(m_nickInfo)
     info = m_nickInfo->getBestAddresseeName();
