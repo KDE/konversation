@@ -24,8 +24,11 @@
 #include <ktoolbar.h>
 #include <ktextbrowser.h>
 #include <kmessagebox.h>
+#include <kfiledialog.h>
 #include <klocale.h>
 #include <kdebug.h>
+
+#include <kio/jobclasses.h>
 
 #include "logfilereader.h"
 #include "konversationapplication.h"
@@ -102,12 +105,45 @@ void LogfileReader::updateView()
 
 void LogfileReader::clearLog()
 {
-  KMessageBox::sorry(this,"Not implemented yet.");
+  if(KMessageBox::questionYesNo(this,
+                                i18n("Do you really want to permanently discard all log information of this file?"),
+                                i18n("Clear Logfile"),
+                                KStdGuiItem::yes(),
+                                KStdGuiItem::no(),
+                                "ClearLogfileQuestion")==KMessageBox::Yes)
+  {
+    QFile::remove(fileName);
+    updateView();
+  }
 }
 
 void LogfileReader::saveLog()
 {
-  KMessageBox::sorry(this,"Not implemented yet.");
+  KMessageBox::information(this,
+                           i18n("Note: By saving the logfile you will save all data in the file, not only the part you can see in this viewer."),
+                           i18n("Save Logfile"),
+                           "SaveLogfileNote");
+  
+  QString destination=KFileDialog::getSaveFileName(fileName,
+                                                   QString::null,
+                                                   this,
+                                                   i18n("Choose Destination Folder"));
+  if(!destination.isEmpty())
+  {
+    // replace # with %25 to make it URL conforming
+    KIO::Job* job=KIO::copy(fileName.replace(QRegExp("#"),"%23"),
+                            destination,
+                            true);
+    
+    connect(job,SIGNAL(result(KIO::Job*)),this,SLOT(copyResult(KIO::Job*)));
+  }
+}
+
+void LogfileReader::copyResult(KIO::Job* job)
+{
+  if(job->error()) job->showErrorDialog(this);
+ 
+  job->deleteLater();
 }
 
 // make sure that the widget gets closed when user presses the window manager's [x] button

@@ -1,7 +1,6 @@
 
 berkus: Doxify the source
 berkus: Docufy the app
-berkus: Logfile reader
 berkus: Logrotate with timer or at shutdown, compress rotated logs
 
 Support "CTCP-DCC reply from <nickname>: REJECT SEND <filename> <reason>"

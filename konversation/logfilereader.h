@@ -17,6 +17,8 @@
 
 #include <qframe.h>
 
+#include <kio/job.h>
+
 /*
   @author Dario Abatianni
 */
@@ -40,7 +42,8 @@ class LogfileReader : public QFrame
     void clearLog();
     void saveLog();
     void closeLog();
-
+    void copyResult(KIO::Job* job);
+  
   protected:
     int margin();
     int spacing();
