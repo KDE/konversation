@@ -6,10 +6,15 @@ $TARGET= shift;
 
 $ARG_MESSAGE = `@ARGV`;
 
-system("dcop $PORT Konversation say $SERVER \"$TARGET\" \"%BOutput Of Command : @ARGV %B\" ");
-
 foreach $entry (split(/\n/, $ARG_MESSAGE)) {
-  chomp $entry;
-  system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$entry\" ");
+    chomp $entry;
+    unless($i) { 
+	system("dcop $PORT Konversation say $SERVER \"$TARGET\" \"Output Of Command : %B @ARGV %B\" ");
+	$i=1;
+    }
+    system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$entry\" ");
 }
 
+unless($i) {
+    exec("dcop $PORT Konversation error \"Command @ARGV doesn't exist\!\"");
+}
