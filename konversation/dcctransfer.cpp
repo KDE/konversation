@@ -83,6 +83,7 @@ DccTransfer::~DccTransfer()
   stopAutoUpdateView();
   closeDetailDialog();
   delete[] m_buffer;
+  delete m_progressBar;
 }
 
 void DccTransfer::updateView()  // slot
