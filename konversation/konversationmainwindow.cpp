@@ -72,6 +72,7 @@
 #include "identitydialog.h"
 #include "joinchanneldialog.h"
 #include "notificationhandler.h"
+#include "common.h"
 
 #ifdef USE_MDI
 KonversationMainWindow::KonversationMainWindow() : KMdiMainFrm(0,"mdi_main_form")
@@ -954,7 +955,7 @@ void KonversationMainWindow::updateFrontView()
       view->emitUpdateInfo();
     } else {
       if( view->getName() != "ChatWindowObject" )
-	m_channelInfoLabel->setText(view->getName());
+	m_channelInfoLabel->setText(Konversation::removeIrcMarkup(view->getName()));
       else
 	m_channelInfoLabel->setText(QString::null);
     }
@@ -1538,7 +1539,7 @@ void KonversationMainWindow::openIdentitiesDialog()
 
 void KonversationMainWindow::updateChannelInfo(const QString &info)
 {
-  m_channelInfoLabel->setText(info);
+  m_channelInfoLabel->setText(Konversation::removeIrcMarkup(info));
 }
 
 void KonversationMainWindow::showJoinChannelDialog()
