@@ -60,6 +60,7 @@ class LedTabWidget;
 namespace Konversation
 {
   class InsertCharDialog;
+  class ServerListDialog;
 }
 
 class KonversationMainWindow : public MAIN_TYPE // USE_MDI
@@ -235,6 +236,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     SSLLabel* m_sslLabel;
 
     Konversation::InsertCharDialog* m_insertCharDialog;
+    Konversation::ServerListDialog* m_serverListDialog;
 };
 
 #endif

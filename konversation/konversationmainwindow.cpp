@@ -85,6 +85,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   dccPanelOpen=false;
   m_closeApp = false;
   m_insertCharDialog = 0;
+  m_serverListDialog = 0;
 
   dccTransferHandler=new DccTransferHandler(this);
 
@@ -1072,11 +1073,13 @@ void KonversationMainWindow::closeNicksOnlinePanel()
 
 void KonversationMainWindow::openServerList()
 {
-  Konversation::ServerListDialog dialog;
-  KonversationApplication *konvApp = static_cast<KonversationApplication *>(KApplication::kApplication());
-  connect(&dialog, SIGNAL(connectToServer(int)), konvApp, SLOT(connectToAnotherServer(int)));
+  if(!m_serverListDialog) {
+    m_serverListDialog = new Konversation::ServerListDialog(this);
+    KonversationApplication *konvApp = static_cast<KonversationApplication *>(KApplication::kApplication());
+    connect(m_serverListDialog, SIGNAL(connectToServer(int)), konvApp, SLOT(connectToAnotherServer(int)));
+  }
 
-  dialog.exec();
+  m_serverListDialog->show();
 }
 
 void KonversationMainWindow::openQuickConnectDialog()
@@ -1468,7 +1471,10 @@ void KonversationMainWindow::insertChar(const QChar& chr)
 void KonversationMainWindow::openIdentitiesDialog()
 {
   Konversation::IdentityDialog dlg(this);
-  dlg.exec();
+
+  if((dlg.exec() == KDialog::Accepted) && m_serverListDialog) {
+    m_serverListDialog->updateServerGroupList();
+  }
 }
 
 #include "konversationmainwindow.moc"

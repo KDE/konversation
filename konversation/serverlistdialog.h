@@ -54,6 +54,9 @@ namespace Konversation {
       ServerListDialog(QWidget *parent = 0, const char *name = 0);
       ~ServerListDialog();
 
+    public slots:
+      void updateServerGroupList();
+
     signals:
       void connectToServer(int serverId);
 
@@ -70,10 +73,8 @@ namespace Konversation {
     protected:
       QListViewItem* findBranch(QString name, bool generate = true);
       QStringList createGroupList();
-      
+
       void addServerGroup(const ServerGroupSettings& serverGroup);
-      
-      void updateServerGroupList();
 
     private:
       KListView* m_serverList;
