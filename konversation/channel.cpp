@@ -615,7 +615,7 @@ void Channel::modeButtonClicked(int id,bool on)
     {
       QCString key;
 
-      int result=KPasswordDialog::getPassword(key,i18n("Channel password:"));
+      int result=KPasswordDialog::getPassword(key,i18n("Channel Password"));
 
       if(result==KPasswordDialog::Accepted && !key.isEmpty()) setKey(key);
     }
@@ -628,7 +628,7 @@ void Channel::modeButtonClicked(int id,bool on)
     {
       bool ok=false;
       // ask user how many nicks should be the limit
-      args=KLineEditDlg::getText(i18n("Nick limit"),
+      args=KLineEditDlg::getText(i18n("Nick Limit"),
                                  i18n("Enter the new nick limit:"),
                                  limit->text(),                      // will be always "" but what the hell ;)
                                  &ok,
@@ -1376,11 +1376,6 @@ QString Channel::getTextInLine() { return channelInput->text(); }
 
 bool Channel::frontView()        { return true; }
 bool Channel::searchView()       { return true; }
-
-void Channel::appendInputText(const QString& s)
-{
-  channelInput->setText(channelInput->text() + s);
-}
 
 void Channel::closeYourself()
 {

@@ -27,7 +27,6 @@
 #include "prefspageidentity.h"
 #include "prefspageappearance.h"
 #include "prefspagecolorsimages.h"
-#include "prefspageirccolors.h"
 #include "prefspagebuttons.h"
 #include "prefspagelog.h"
 #include "prefspagedccsettings.h"
@@ -39,32 +38,29 @@
 #include "prefspagehighlight.h"
 #include "prefspagenotify.h"
 #include "prefspageignore.h"
-#include "prefspagealiases.h"
 
 PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
-             KDialogBase (KDialogBase::TreeList,i18n("Edit preferences"),
+             KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
                           KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                           KDialogBase::Ok,0,"edit_prefs",false,true)
 {
   kdDebug() << "PrefsDialog::PrefsDialog()" << endl;
   setPreferences(preferences);
 
-          serverListPane     =addPage(i18n("Server list"));
-  QFrame* generalSettingsPane=addPage(i18n("General settings"));
+          serverListPane     =addPage(i18n("Server List"));
+  QFrame* generalSettingsPane=addPage(i18n("General Settings"));
   QFrame* identityPane       =addPage(i18n("Identity"));
 
   QFrame* appearancePane     =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("General")));
-  QFrame* colorsImagesPane   =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Colors and images")));
-  QFrame* ircColorsPane      =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("IRC colors")));
-  QFrame* buttonsPane        =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Quick buttons")));
+  QFrame* colorsImagesPane   =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Colors & Images")));
+  QFrame* buttonsPane        =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Quick Buttons")));
 
-          notifyPane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Notify list")));
-  QFrame* highlightPane      =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Highlight list")));
-  QFrame* ignorePane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Ignore list")));
-  QFrame* aliasesPane        =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Aliases")));
+          notifyPane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Notify List")));
+  QFrame* highlightPane      =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Highlight List")));
+  QFrame* ignorePane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Ignore List")));
 
-  QFrame* logSettingsPane    =addPage(i18n("Log settings"));
-  QFrame* dccSettingsPane    =addPage(i18n("DCC settings"));
+  QFrame* logSettingsPane    =addPage(i18n("Log Settings"));
+  QFrame* dccSettingsPane    =addPage(i18n("DCC Settings"));
   QFrame* dialogsPane        =addPage(i18n("Dialogs"));
   // TODO: Uncomment this again when it's ready to go
   //  QFrame* scriptsPane        =addPage(i18n("Scripting"));
@@ -77,13 +73,11 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   PrefsPageAppearance*      appearancePage     =new PrefsPageAppearance(appearancePane,preferences);
   PrefsPageColorsImages*    colorsImagesPage   =new PrefsPageColorsImages(colorsImagesPane,preferences);
-  PrefsPageIRCColors*       ircColorsPage      =new PrefsPageIRCColors(ircColorsPane,preferences);
   PrefsPageButtons*         buttonsPage        =new PrefsPageButtons(buttonsPane,preferences);
 
   PrefsPageNotify*          notifyPage         =new PrefsPageNotify(notifyPane,preferences);
   PrefsPageHighlight*       highlightPage      =new PrefsPageHighlight(highlightPane,preferences);
   PrefsPageIgnore*          ignorePage         =new PrefsPageIgnore(ignorePane,preferences);
-  PrefsPageAliases*         aliasesPage        =new PrefsPageAliases(aliasesPane,preferences);
 
   PrefsPageLog*             logSettingsPage    =new PrefsPageLog(logSettingsPane,preferences);
   PrefsPageDccSettings*     dccSettingsPage    =new PrefsPageDccSettings(dccSettingsPane,preferences);
@@ -92,17 +86,17 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   // TODO: Uncomment this again when it's ready to go
   // new PrefsPageScripts(scriptsPane, preferences);
 
-  setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
-  setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
+  setButtonOKText(i18n("&OK"),i18n("Keep changes made to configuration and close the window"));
+  setButtonApplyText(i18n("&Apply"),i18n("Keep changes made to configuration"));
 
   if(noServer)
   {
     enableButtonOK(false);
-    setButtonCancelText(i18n("Quit"),i18n("Quits application"));
+    setButtonCancelText(i18n("&Quit"),i18n("Quits application"));
   }
   else
   {
-    setButtonCancelText(i18n("Cancel"),i18n("Discards all changes made"));
+    setButtonCancelText(i18n("&Cancel"),i18n("Discards all changes made"));
   }
 
   // connect standard signals and slots
@@ -111,13 +105,11 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   connect(this,SIGNAL (applyPreferences()),appearancePage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),colorsImagesPage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),ircColorsPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),buttonsPage,SLOT (applyPreferences()) );
 
   connect(this,SIGNAL (applyPreferences()),notifyPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),highlightPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),ignorePage,SLOT (applyPreferences()) );
-  connect(this,SIGNAL (applyPreferences()),aliasesPage,SLOT (applyPreferences()) );
 
   connect(this,SIGNAL (applyPreferences()),logSettingsPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),dccSettingsPage,SLOT (applyPreferences()) );

@@ -48,7 +48,7 @@ NickListView::NickListView(QWidget* parent) :
     popup->insertItem(i18n("Ping"),Ping);
     popup->insertSeparator();
     popup->insertItem(i18n("Open Query"),Query);
-    popup->insertItem(i18n("Send File"),DccSend);
+    popup->insertItem(i18n("Send File..."),DccSend);
     popup->insertSeparator();
     if(kickban)
     {

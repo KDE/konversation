@@ -101,7 +101,7 @@ void PrefsPageColorsImages::selectBackground()
                                                  backgroundName->text(),
                                                  QString::null,
                                                  parentFrame,
-                                                 i18n("Select background image")
+                                                 i18n("Select Background Image")
                                                );
 
   if(!fileName.isEmpty()) backgroundName->setText(fileName);

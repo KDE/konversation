@@ -54,11 +54,11 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   if(popup)
   {
     popup->insertItem(i18n("&Copy"),Copy);
-    popup->insertItem(i18n("Select all"),SelectAll);
+    popup->insertItem(i18n("Select All"),SelectAll);
     popup->insertSeparator();
-    popup->insertItem(i18n("Search text"),Search);
+    popup->insertItem(i18n("Search Text..."),Search);
     popup->insertSeparator();
-    popup->insertItem(i18n("Send file"),SendFile);
+    popup->insertItem(i18n("Send File..."),SendFile);
   }
   else kdWarning() << "IRCView::IRCView(): Could not create popup!" << endl;
 
@@ -145,7 +145,7 @@ void IRCView::highlightedSlot(const QString& link)
   }
   else if(!link.isEmpty() && !copyUrlMenu)
   {
-    popup->insertItem(i18n("Copy URL to clipboard"),CopyUrl,1);
+    popup->insertItem(i18n("Copy URL to Clipboard"),CopyUrl,1);
     copyUrlMenu=true;
     urlToCopy=link;
   }
@@ -186,18 +186,21 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   }
 
   // replace \003 codes with rich text color codes
-  QRegExp colorRegExp("\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)");
+  QRegExp colorRegExp("\003([0-9]|1[0-5])(,([0-9]|1[0-5])|)");
 
   // TODO: Make Background colors work somehow. The code is in comments until we
   //       find some way to use it
 //  bool bgColor=false;
-  int pos;
   bool firstColor=true;
   QString colorString;
-  QStringList colorCodes = KonversationApplication::preferences.getIRCColorList();
+  int pos;
 
   while((pos=colorRegExp.search(filteredLine))!=-1)
   {
+    // TODO: make these configurable
+    const char* colorCodes[]={"ffffff","000000","000080","008000","ff0000","a52a2a","800080","ff8000",
+                              "808000","00ff00","008080","00ffff","0000ff","ffc0cb","a0a0a0","c0c0c0"};
+
     colorString=(firstColor) ? QString::null : QString("</font>");
 
     int foregroundColor=colorRegExp.cap(1).toInt();
@@ -214,7 +217,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
     else
       bgColor=false;
 */
-    colorString+="<font color=\""+colorCodes[foregroundColor]+"\">";
+    colorString+="<font color=\"#"+QString(colorCodes[foregroundColor])+"\">";
 
     filteredLine.replace(pos,colorRegExp.cap(0).length(),colorString);
     firstColor=false;

@@ -39,7 +39,7 @@ PrefsPageIgnore::PrefsPageIgnore(QFrame* newParent,Preferences* newPreferences) 
   listBox->setSpacing(spacingHint());
   ignoreListView=new KListView(listBox);
 
-  ignoreListView->addColumn(i18n("Ignore pattern"));
+  ignoreListView->addColumn(i18n("Ignore Pattern"));
   ignoreListView->addColumn(i18n("Channels"));
   ignoreListView->addColumn(i18n("Queries"));
   ignoreListView->addColumn(i18n("Notices"));

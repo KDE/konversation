@@ -29,7 +29,7 @@
 
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
 {
-  setName(i18n("URL catcher"));
+  setName(i18n("URL Catcher"));
   setType(ChatWindow::UrlCatcher);
 
   urlListView=new KListView(this,"url_list_view");
@@ -44,8 +44,8 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
   openUrlButton=new QPushButton(i18n("Open URL"),buttonBox,"open_url_button");
   copyUrlButton=new QPushButton(i18n("Copy URL"),buttonBox,"copy_url_button");
   deleteUrlButton=new QPushButton(i18n("Delete URL"),buttonBox,"delete_url_button");
-  saveListButton=new QPushButton(i18n("Save list"),buttonBox,"save_list_button");
-  clearListButton=new QPushButton(i18n("Clear list"),buttonBox,"clear_list_button");
+  saveListButton=new QPushButton(i18n("Save List..."),buttonBox,"save_list_button");
+  clearListButton=new QPushButton(i18n("Clear List"),buttonBox,"clear_list_button");
 
   connect(urlListView,SIGNAL (executed(QListViewItem*)),this,SLOT (openUrl(QListViewItem*)) );
   connect(urlListView,SIGNAL (selectionChanged()),this,SLOT (urlSelected()) );
@@ -150,7 +150,7 @@ void UrlCatcher::saveListClicked()
                                                  QString::null,
                                                  QString::null,
                                                  this,
-                                                 i18n("Save URL list"));
+                                                 i18n("Save URL List"));
 
   if(!fileName.isEmpty())
   {

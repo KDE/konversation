@@ -10,7 +10,7 @@
   begin:     Fri Jan 25 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
+ 
   $Id$
 */
 
@@ -21,7 +21,6 @@
 
 #include <klocale.h>
 #include <kdebug.h>
-#include <knotifyclient.h>
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -99,11 +98,6 @@ void InputFilter::parseLine(const QString &a_newLine)
     // The rest of the string will be the parameter list
     parameterList=QStringList::split(" ",incomingLine);
   }
-  kdDebug() << "InputFilter::parseLine(): " << prefix << " "
-                                            << command << " "
-                                            << parameterList.join(" ") << " "
-                                            << trailing << " "
-                                            << endl;
   // Server command, if no "!" was found in prefix
   if(prefix.find('!')==-1 && prefix!=server->getNickname())
     parseServerCommand(prefix,command,parameterList,trailing);
@@ -123,7 +117,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   // Extract nickname fron prefix
   QString sourceNick=prefix.left(prefix.find("!"));
   QString sourceHostmask=prefix.mid(prefix.find("!")+1);
-
+          
   // remember hostmask for this nick, it could have changed
   server->addHostmaskToNick(sourceNick,sourceHostmask);
 
@@ -166,21 +160,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       if(ctcpCommand=="action" && isChan)
       {
         if(!isIgnore(prefix,Ignore::Channel))
-        {
           server->appendActionToChannel(parameterList[0],sourceNick,ctcpArgument);
-
-          // KNotify events...
-          if(sourceNick != server->getNickname()) {
-            if(parameterList[0].lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
-            {
-              KNotifyClient::event("nick");
-            }
-            else
-            {
-              KNotifyClient::event("message");
-            }
-          }
-        }
       }
       // If it was a ctcp action, build an action string
       else if(ctcpCommand=="action" && !isChan)
@@ -192,11 +172,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           server->addQuery(sourceNick,sourceHostmask);
           // send action to query
           server->appendActionToQuery(sourceNick,ctcpArgument);
-
-          // KNotify events...
-          if(sourceNick != server->getNickname()) {
-            KNotifyClient::event("nick");
-          }
         }
       }
 
@@ -241,7 +216,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           // Incoming file?
           if(dccType=="send")
           {
-            KNotifyClient::event("dcc_incomming");
             emit addDccGet(sourceNick,dccArgument);
           }
           // Incoming file that shall be resumed?
@@ -305,18 +279,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       {
         if(!isIgnore(prefix,Ignore::Channel))
           server->appendToChannel(parameterList[0],sourceNick,trailing);
-
-          // KNotify events...
-          if(sourceNick != server->getNickname()) {
-            if(parameterList[0].lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
-            {
-              KNotifyClient::event("nick");
-            }
-            else
-            {
-              KNotifyClient::event("message");
-            }
-          }
       }
       else
       {
@@ -326,11 +288,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           server->addQuery(sourceNick,sourceHostmask);
           // Append this message to the query
           server->appendToQuery(sourceNick,trailing);
-
-          // KNotify events...
-          if(sourceNick != server->getNickname()) {
-            KNotifyClient::event("nick");
-          }
         }
       }
     }
@@ -429,7 +386,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       /*
             // TODO: Try to remember channel keys for autojoins and manual joins, so
             //       we can get %k to work
-
+       
             if(channelName.find(' ')!=-1)
             {
               key=channelName.section(' ',1,1);
@@ -443,10 +400,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       server->queue("MODE "+channelName);
     }
     else
-    {
       server->nickJoinsChannel(channelName,sourceNick,sourceHostmask);
-      KNotifyClient::event("join");
-    }
   }
   else if(command=="kick")
   {
@@ -828,7 +782,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_MOTDSTART:
         {
-          server->appendStatusMessage(i18n("MOTD"),i18n("Message Of The Day:"));
+          server->appendStatusMessage(i18n("MOTD"),i18n("Message of the day:"));
           break;
         }
       case RPL_MOTD:
@@ -838,7 +792,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_ENDOFMOTD:
         {
-          server->appendStatusMessage(i18n("MOTD"),i18n("End of Message Of The Day"));
+          server->appendStatusMessage(i18n("MOTD"),i18n("End of message of the day"));
           // Autojoin (for now this must be enough)
           if(server->getAutoJoin())
             server->queue(server->getAutoJoinCommand());
@@ -1006,15 +960,15 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           if(getAutomaticRequest()==0)
           {
             QString message;
-
+          
             if(parameterList[2]=="1") message=i18n("%1 (%2 user): %3");
             else message=i18n("%1 (%2 users): %3");
-
+          
             server->appendStatusMessage(i18n("List"),message.arg(parameterList[1]).arg(parameterList[2]).arg(trailing));
           }
           else // send them to /LIST window
             emit addToChannelList(parameterList[1],parameterList[2].toInt(),trailing);
-
+          
           break;
         }
       case RPL_LISTEND:
@@ -1024,7 +978,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             server->appendStatusMessage(i18n("List"),i18n("End of channel list."));
           else
             setAutomaticRequest(false);
-
+          
           break;
         }
       default:

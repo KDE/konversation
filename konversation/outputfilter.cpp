@@ -38,23 +38,6 @@ OutputFilter::~OutputFilter()
 {
 }
 
-QString OutputFilter::replaceAliases(const QString& line)
-{
-  QStringList aliasList=KonversationApplication::preferences.getAliasList();
-  QString newLine(line);
-
-  for(unsigned int index=0;index<aliasList.count();index++)
-  {
-    // split up alias definition in pattern and replacement
-    QString aliasPattern(aliasList[index].section(' ',0,0));
-    QString aliasReplace(aliasList[index].section(' ',1));
-
-    // replace all /pattern at the beginning of the line with replacement
-    newLine.replace(QRegExp("^/"+aliasPattern+"\\b"),aliasReplace);
-  }
-  return newLine;
-}
-
 QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,const QString& name)
 {
   setCommandChar();
@@ -68,9 +51,8 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
   program=false;
   command=false;
   query=false;
-
-  // replace aliases before anything else happens
-  QString inputLine=replaceAliases(originalLine);
+  
+  QString inputLine=originalLine;
 
   // replace placeholders
   inputLine.replace(QRegExp("%%"),"%\x01");  // make sure to protect double %%
@@ -675,9 +657,9 @@ void OutputFilter::parseOper(const QString& myNick,const QString& parameter)
                                       nick,
                                       password,
                                       &keep,
-                                      i18n("Enter user name and password for IRC operator privileges"),
+                                      i18n("Enter user name and password for IRC operator privileges:"),
                                       false,
-                                      i18n("IRC operator password")
+                                      i18n("IRC Operator Password")
                                     );
 
     if(result==KIO::PasswordDialog::Accepted) toServer="OPER "+nick+" "+password;
