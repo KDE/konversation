@@ -13,7 +13,7 @@
 #include "connection.h"
 
 Connection::Connection(const QString& server, 
-		       QString port, 
+		       const QString& port, 
 		       const QString& password, 
 		       const QString& interface)
 {
@@ -25,13 +25,13 @@ Connection::Connection(const QString& server,
   m_interface = interface;
   m_fatalError = false;
   m_lastError = QString::null;
-  m_socket = new KBufferedSocket(this,"server_socket");
+  m_socket = new KBufferedSocket(m_server,m_port,this,"server_socket");
   
   // Catch the signals
-  connect(m_socket,SIGNAL(gotError(int)),this,SLOT(error(int)));
-  connect(m_socket,SIGNAL(connected(const KResolverEntry&,bool&)),
+  QObject::connect(m_socket,SIGNAL(gotError(int)),this,SLOT(error(int)));
+  QObject::connect(m_socket,SIGNAL(connected(const KResolverEntry&,bool&)),
 	  this,SLOT(connected(const KResolverEntry&,bool&)));
-  connect(m_socket,SIGNAL(readyRead()),this,SLOT(readData()));
+  QObject::connect(m_socket,SIGNAL(readyRead()),this,SLOT(readData()));
   
   // Ready to fire
   connect();
@@ -47,17 +47,17 @@ Connection::~Connection()
 
 void Connection::connect()
 {
-  m_socket->connect(m_servername,m_port);
+  m_socket->connect(m_server,m_port);
 }
  
 void Connection::connected(const KResolverEntry& remote, bool& /*skip*/)
 {
-  m_serverIp = remote->address()->toString();
+  m_serverIp = remote.address().toString();
 }
 
 void Connection::disconnect()
 {
-  m_server->close();
+  m_socket->close();
 }
 
 void Connection::error(int error)

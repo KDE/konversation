@@ -13,35 +13,40 @@
 */
 
 #include <kbufferedsocket.h>
+#include <kresolver.h>
+using namespace KNetwork;
 
-class Connection
+class Connection : public QObject
 {
   Q_OBJECT;
   
  public:
   
-  Connection(const QString& server, int port, const QString& password, const QString& interface);
+  Connection(const QString& server, const QString& port, const QString& password, const QString& interface);
   ~Connection();
 
   void connect();
   void reconnect();
   void disconnect();
+  void readData();
+  void writeData();
 
  protected slots:
   
   void connected(const KResolverEntry &remote,bool& /*skip*/);
+  void error(int error);
 
  signals:
   
   void disconnected();
-  void error(const QString& error);
 
  private:
 
   QString m_server;
-  int m_port;
+  QString m_port;
   QString m_password;
   QString m_interface;
+  QString m_lastError;
   bool m_fatalError;
   
   KBufferedSocket* m_socket;

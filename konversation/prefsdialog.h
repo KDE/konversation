@@ -18,7 +18,6 @@
 #include <kdialogbase.h>
 
 #include "preferences.h"
-#include "prefsdialog.h"
 #include "prefspagebuttons.h"
 #include "prefspagelog.h"
 #include "prefspagedccsettings.h"
