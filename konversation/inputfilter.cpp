@@ -204,8 +204,8 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
         {
           if(!isIgnore(prefix,Ignore::CTCP))
           {
-            server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-PING request from %1, sending PONG answer.").arg(sourceNick));
-            server->ctcpReply(sourceNick,QString("PONG %1").arg(ctcpArgument));
+            server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-PING request from %1, sending answer.").arg(sourceNick));
+            server->ctcpReply(sourceNick,QString("PING %1").arg(ctcpArgument));
           }
         }
         // No known CTCP request, give a general message
@@ -251,12 +251,12 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
           QString reply(ctcp.section(' ',1));
 
           // pong reply, calculate turnaround time
-          if(replyReason.lower()=="pong")
+          if(replyReason.lower()=="ping")
           {
             int dateArrived=QDateTime::currentDateTime().toTime_t();
             int dateSent=reply.toInt();
             
-            server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-PONG reply from %1: %2 seconds").arg(sourceNick).arg(dateArrived-dateSent));
+            server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-PING reply from %1: %2 seconds").arg(sourceNick).arg(dateArrived-dateSent));
           }
           // all other ctcp replies get a general message
           else
