@@ -1,0 +1,34 @@
+#! /bin/bash
+
+PORT=$1;
+SERVER=$2;
+TARGET=$3;
+
+sysinfo()
+{
+LC_ALL="C"
+export LC_ALL 
+HN="$(hostname)"
+OSKERN="$(uname -s) $(uname -r)"
+CPU="$(awk -F':' '/model name/{printf("%s",$2)} /cpu MHz/{printf("%s %s ",$2,"Mhz")}' /proc/cpuinfo )" 
+BOGO="$(awk -F':' '/bogomips/ {printf("%s %s\n",$2,"Bogomips") }' /proc/cpuinfo)"
+for I in /proc/ide/hd* 
+do 
+	[[ -e $I/media && $(< $I/media) = disk ]] && ((CAP+=$(< $I/capacity))) 
+done 
+HDD="$((CAP*512/1000**3))"
+MEM="$(free | awk '/Mem:/ {printf("%s%s\n",$3/1024"/",$2/1024"MB")}')"
+PROC="$(($(ps aux | wc -l)-1))"
+UPT="$(uptime | sed 's/^.*up *\([^,]*\).*$/\1/g')"
+
+printf "\x039%-25s\x03%s\x038 %s \x03%s\n" "System Information for" " [" "$HN" "]"
+[[ $KANVER ]] && printf "\x039%-25s\x038%s\n" "I use Kanotix" " $KANVER ... AND PROUD OF IT!"
+printf "\x039%-25s\x038%s\n" "OS/Kernel" " $OSKERN"
+printf "\x039%-25s\x038%s \x039%s\n" "CPU Info" "$CPU" "$BOGO"
+printf "\x039%-25s\x038%s\n" "HD Info" " ${HDD}GB total storage capacity"
+printf "\x039%-25s\x038%s\n" "Memory" " $MEM"
+printf "\x039%-25s\x038%s\n" "Processes" " $PROC"
+printf "\x039%-25s\x038%s\n" "Uptime" " $UPT"
+}
+
+sysinfo | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" "$line"; done
