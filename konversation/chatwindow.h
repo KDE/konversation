@@ -69,7 +69,7 @@ class ChatWindow : public QVBox
     WindowType getType();
 
     void append(const QString& nickname,const QString& message);
-    void appendRaw(const QString& message);
+    void appendRaw(const QString& message, bool suppressTimestamps=false);
     void appendQuery(const QString& nickname,const QString& message);
     void appendAction(const QString& nickname,const QString& message);
     void appendServerMessage(const QString& type,const QString& message);

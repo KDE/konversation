@@ -1,4 +1,9 @@
 Changes from 0.13 to 0.14
+- Added an "Insert Remember Line" feature.
+  The user can mark the position in the channel where he stopped
+  reading(because he is away for a short time).
+  When he comes back, he can scroll back to this mark and read
+  what he missed.
 - Added the possibility to execute commands on server connection(for
   authentication and such things). Can be configured in the "Edit Server"
   dialog.

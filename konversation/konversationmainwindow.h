@@ -129,6 +129,7 @@ class KonversationMainWindow : public KMainWindow
 
     void findTextShortcut();
     void addIRCColor();
+    void insertRememberLine();
     void clearWindow();
     void closeQueries();
 

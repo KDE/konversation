@@ -144,9 +144,9 @@ void ChatWindow::setTextView(IRCView* newView)
   connect(textView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
 }
 
-void ChatWindow::appendRaw(const QString& message)
+void ChatWindow::appendRaw(const QString& message, bool suppressTimestamps)
 {
-  textView->appendRaw(message);
+  textView->appendRaw(message, suppressTimestamps);
 }
 
 void ChatWindow::append(const QString& nickname,const QString& message)

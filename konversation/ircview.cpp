@@ -469,7 +469,7 @@ void IRCView::append(const QString& nick,const QString& message)
   doAppend(line);
 }
 
-void IRCView::appendRaw(const QString& message)
+void IRCView::appendRaw(const QString& message, bool suppressTimestamps)
 {
   QString channelColor=KonversationApplication::preferences.getColor("ChannelMessage");
 
@@ -483,7 +483,7 @@ void IRCView::appendRaw(const QString& message)
 #endif
 #endif
 
-  doAppend(line);
+  doAppend(line, suppressTimestamps);
 }
 
 void IRCView::appendQuery(const QString& nick,const QString& message)

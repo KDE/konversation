@@ -130,6 +130,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
   new KAction(i18n("Find Text..."),"find",KShortcut("F3"),this,SLOT(findTextShortcut()),actionCollection(),"find_text");
   new KAction(i18n("&Insert IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors");
+  new KAction(i18n("Insert &Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line");
   new KAction(i18n("Close All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
 
   // Initialize KMainWindow->statusBar()
@@ -769,6 +770,15 @@ void KonversationMainWindow::addIRCColor()
 
   if(dlg.exec() == QDialog::Accepted) {
     frontView->appendInputText(dlg.color());
+  }
+}
+
+void KonversationMainWindow::insertRememberLine()
+{
+  if(frontView->getType() == ChatWindow::Channel ||
+     frontView->getType() == ChatWindow::Query)
+  {
+    frontView->appendRaw("<br><hr color=\"#"+KonversationApplication::preferences.getColor("CommandMessage")+"\" noshade>", true);
   }
 }
 
