@@ -15,6 +15,7 @@
 * the Initial Developer. All Rights Reserved.
 */
 
+/* See http://lxr.mozilla.org/mozilla/source/modules/rdf/src/utils.c#540 */
 /* Modified by İsmail Dönmez <ismail@kde.org.tr> (C) 2005 */
 
 #define kLeft1BitMask  0x80
