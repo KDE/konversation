@@ -25,11 +25,8 @@
 TrayIcon::TrayIcon(QWidget* parent) : KSystemTray(parent)
 {
   m_notificationEnabled = false;
-  //FIXME:If we're going to require KDE 3.2 or higher the
-  //code below should be changed to use
-  //KSystemTray::loadIcon("konversation")
-  m_nomessagePix = KGlobal::iconLoader()->loadIcon("konversation", KIcon::Panel, 22);
-  m_messagePix = KGlobal::iconLoader()->loadIcon("konv_message", KIcon::Panel, 22);
+  m_nomessagePix = loadIcon("konversation");
+  m_messagePix = loadIcon("konv_message");
   setPixmap(m_nomessagePix);
   m_widgets.setAutoDelete(false);
   m_blinkTimer = new QTimer(this);
