@@ -139,7 +139,7 @@ namespace Konversation {
     // Server command?
     else if(line.startsWith(commandChar))
     {
-      QString command = inputLine.section(' ', 0, 0).mid(1);
+      QString command = inputLine.section(' ', 0, 0).mid(1).lower();
       QString parameter = inputLine.section(' ', 1);
       parameter = parameter.stripWhiteSpace();
   
