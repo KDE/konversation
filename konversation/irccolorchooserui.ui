@@ -57,7 +57,7 @@
                 <string>The chosen text color is added to the input line.</string>
             </property>
             <property name="whatsThis" stdset="0">
-                <string>&lt;qt&gt;Here you chose what color you want you the text in the next message you send to be.  If you chose a color and click Ok, the chosen color is added to the Input Line.  Any text written after this will be in the chosen color, until you change the color again.&lt;br&gt;
+                <string>&lt;qt&gt;Here you choose what color you want you the text in the next message you send to be.  If you choose a color and click Ok, the chosen color is added to the Input Line.  Any text written after this will be in the chosen color, until you change the color again.&lt;br&gt;
 &lt;b&gt;Note:  Not all users turn on the option to see this.&lt;/b&gt;&lt;/qt&gt;</string>
             </property>
         </widget>
@@ -83,7 +83,7 @@
                 <string>The chosen text color is added to the input line.</string>
             </property>
             <property name="whatsThis" stdset="0">
-                <string>&lt;qt&gt;Here you chose what color you want you the text in the next message you send to be.  If you chose a color and click Ok, the chosen color is added to the Input Line.  Any text written after this will be in the chosen color, until you change the color again.&lt;br&gt;
+                <string>&lt;qt&gt;Here you choose what color you want you the text in the next message you send to be.  If you choose a color and click Ok, the chosen color is added to the Input Line.  Any text written after this will be in the chosen color, until you change the color again.&lt;br&gt;
 &lt;b&gt;Note:  Not all users turn on the option to see this.&lt;/b&gt;&lt;/qt&gt;</string>
             </property>
         </widget>
@@ -106,10 +106,10 @@
                 <string>The chosen text-background color is added to the input line.</string>
             </property>
             <property name="whatsThis" stdset="0">
-                <string>&lt;qt&gt;Here you chose what color you want you background for the textin the next message you send to be.
-If you chose a color and click Ok, the chosen color is added to the Input Line.
+                <string>&lt;qt&gt;Here you choose what color you want you background for the text in the next message you send to be.
+If you choose a color and click Ok, the chosen color is added to the Input Line.
 Any text written after this will have the chosen color, until you change the color again.&lt;br&gt;
-Chosing the default "&lt;i&gt;None&lt;/i&gt;" will not change the background color of your message, so your readers will view your message with their normal background text color.&lt;br&gt;
+Choosing the default "&lt;i&gt;None&lt;/i&gt;" will not change the background color of your message, so your readers will view your message with their normal background text color.&lt;br&gt;
 &lt;b&gt;Note:  Not all clients support this, and not all users turn on the option to see this.&lt;/b&gt;&lt;/qt&gt;</string>
             </property>
         </widget>
@@ -127,10 +127,10 @@ Chosing the default "&lt;i&gt;None&lt;/i&gt;" will not change the background col
                 <string>The chosen text-background color is added to the input line.</string>
             </property>
             <property name="whatsThis" stdset="0">
-                <string>&lt;qt&gt;Here you chose what color you want you background for the textin the next message you send to be.
-If you chose a color and click Ok, the chosen color is added to the Input Line.
+                <string>&lt;qt&gt;Here you choose what color you want you background for the text in the next message you send to be.
+If you choose a color and click Ok, the chosen color is added to the Input Line.
 Any text written after this will have the chosen color, until you change the color again.&lt;br&gt;
-Chosing the default "&lt;i&gt;None&lt;/i&gt;" will not change the background color of your message, so your readers will view your message with their normal background text color.&lt;br&gt;
+Choosing the default "&lt;i&gt;None&lt;/i&gt;" will not change the background color of your message, so your readers will view your message with their normal background text color.&lt;br&gt;
 &lt;b&gt;Note:  Not all clients support this, and not all users turn on the option to see this.&lt;/b&gt;&lt;/qt&gt;</string>
             </property>
         </widget>
