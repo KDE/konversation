@@ -76,7 +76,7 @@ class Channel : public ChatWindow
     void kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, const QString &reason);
     void addNickname(ChannelNickPtr channelNick);
     void nickRenamed(const QString &oldNick, const NickInfo& channelnick);	    
-    void addPendingNickList(const ChannelNickList& pendingChannelNickList);
+    void addPendingNickList(const QStringList& pendingChannelNickList);
     Nick *getNickByName(const QString& lookname);
     QPtrList<Nick> getNickList();
 
@@ -225,7 +225,7 @@ class Channel : public ChatWindow
 
     bool m_allowNotifications;
     
-    QValueList<ChannelNickList> m_pendingChannelNickLists;
+    QValueList<QStringList> m_pendingChannelNickLists;
     int m_opsToAdd;
     uint m_currentIndex;
     

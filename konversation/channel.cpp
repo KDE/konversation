@@ -999,7 +999,7 @@ void Channel::adjustOps(int value)
 
 void Channel::updateNicksOps()
 {
-  QString txt = i18n("%n  nick", "%n nicks", nicks);
+  QString txt = i18n("%n nick", "%n nicks", nicks);
   txt += i18n(" (%n op)", " (%n ops)", ops);
   nicksOps->setText(txt);
 }
@@ -1624,46 +1624,21 @@ void Channel::changeNickname(const QString& newNickname)
   server->queue("NICK "+newNickname);
 }
 
-void Channel::addPendingNickList(const ChannelNickList& pendingChannelNickList)
+void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
 {
   if(!getPendingNicks())
   {
     purgeNicks();
     setPendingNicks(true);
-  }
 
-  if(!m_processingTimer) {
-    m_processingTimer = new QTimer(this);
-    connect(m_processingTimer, SIGNAL(timeout()), this, SLOT(processPendingNicks()));
-  }
-
-//  nicknameListView->setUpdatesEnabled(false);
-/*
-  ChannelNickList::iterator it;
-  int count = 0;
-  for( it = pendingChannelNickList.begin(); it != pendingChannelNickList.end(); it++,count++)
-  {
-    if(count % 50 == 0) nicknameListView->setUpdatesEnabled(true);
-    fastAddNickname(*it);
-    if(count % 50 == 0) {
-      //      qApp->processEvents();
-      nicknameListView->setUpdatesEnabled(false);
+    if(!m_processingTimer) {
+      m_processingTimer = new QTimer(this);
+      connect(m_processingTimer, SIGNAL(timeout()), this, SLOT(processPendingNicks()));
     }
-    if((*it)->isAdmin() || (*it)->isOwner() || (*it)->isOp() || (*it)->isHalfOp())
-      opsToAdd++;
   }
 
-  adjustNicks(pendingChannelNickList.count());
-*/
   m_pendingChannelNickLists.append(pendingChannelNickList);
-/*
-  // should have been done already, but you never know ...
-  nicknameListView->setUpdatesEnabled(true);
 
-  nicknameListView->sort();
-  nicknameList.sort();
-  adjustOps(opsToAdd);
-*/
   if(!m_processingTimer->isActive()) {
     m_processingTimer->start(0);
   }
@@ -1796,7 +1771,12 @@ void Channel::showTopic(bool show)
 
 void Channel::processPendingNicks()
 {
-  ChannelNickPtr nick = m_pendingChannelNickLists.first()[m_currentIndex];
+  QString nickStr = m_pendingChannelNickLists.first()[m_currentIndex];
+  QString nickname = nickStr.section(" ",0,0);
+  unsigned int mode = nickStr.section(" ",1,1).toInt();
+  ChannelNickPtr nick = server->addNickToJoinedChannelsList(getName(), nickname);
+  Q_ASSERT(nick);
+  nick->setMode(mode);
 
   fastAddNickname(nick);
 

@@ -1868,7 +1868,7 @@ Query* Server::getQueryByName(const QString& name)
 void Server::addPendingNickList(const QString& channelName,const QStringList& nickList)
 {
   Channel* outChannel=getChannelByName(channelName);
-  ChannelNickList pendingChannelNickList;
+/*  ChannelNickList pendingChannelNickList;
   // Update NickInfo.
   if (outChannel)
   {
@@ -1884,8 +1884,8 @@ void Server::addPendingNickList(const QString& channelName,const QStringList& ni
 	      pendingChannelNickList.append(channelNick);
       }
     }
-  }
-  if(outChannel) outChannel->addPendingNickList(pendingChannelNickList);
+  }*/
+  if(outChannel) outChannel->addPendingNickList(nickList);
 }
 
 // Adds a nickname to the joinedChannels list.

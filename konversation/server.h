@@ -278,6 +278,17 @@ class Server : public QObject
     QString getISONListString();
     
     KonversationMainWindow* getMainWindow() const;
+
+    /** Adds a nickname to the joinedChannels list.
+     *  Creates new NickInfo if necessary.
+     *  If needed, moves the channel from the unjoined list to the joined list.
+     *  If needed, moves the nickname from the Offline to Online lists.
+     *  If mode != 99 sets the mode for this nick in this channel.
+     *  @param channelName The channel name.  Case sensitive.
+     *  @param nickname    The nickname.  Case sensitive.
+     *  @return            The NickInfo for the nickname.
+     */
+    ChannelNickPtr addNickToJoinedChannelsList(const QString& channelName, const QString& nickname);
     
   signals:
     void nicknameChanged(const QString&);
@@ -294,23 +305,23 @@ class Server : public QObject
     void serverOnline(bool state); /// will be connected to all server dependant tabs
     void serverQuit(const QString& reason);  // USE_MDI
 
-    // Note that these signals haven't been implemented yet.
-    // Fires when the information in a NickInfo object changes.
+    /// Note that these signals haven't been implemented yet.
+    /// Fires when the information in a NickInfo object changes.
     void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);
-    // Fires when the mode of a nick in a channel changes.
+    /// Fires when the mode of a nick in a channel changes.
     void channelNickChanged(Server* server, const ChannelNickPtr channelNick);
-    // Fires when a nick leaves or joins a channel.  Based on joined flag, receiver could
-    // call getJoinedChannelMembers or getUnjoinedChannelMembers, or just
-    // getChannelMembers to get a list of all the nicks now in the channel.
-    // parted indicates whether the nick joined or left the channel.
+    /// Fires when a nick leaves or joins a channel.  Based on joined flag, receiver could
+    /// call getJoinedChannelMembers or getUnjoinedChannelMembers, or just
+    /// getChannelMembers to get a list of all the nicks now in the channel.
+    /// parted indicates whether the nick joined or left the channel.
     void channelMembersChanged(Server* server, const QString& channelName, bool joined, bool parted, const QString& nickname);
-    // Fires when a channel is moved to/from the Joinied/Unjoined lists.
-    // joined indicates which list it is now on.  Note that if joined is False, it is
-    // possible the channel does not exist in any list anymore.
+    /// Fires when a channel is moved to/from the Joinied/Unjoined lists.
+    /// joined indicates which list it is now on.  Note that if joined is False, it is
+    /// possible the channel does not exist in any list anymore.
     void channelJoinedOrUnjoined(Server* server, const QString& channelName, bool joined);
-    // Fires when a nick on the watch list goes online or offline.
+    /// Fires when a nick on the watch list goes online or offline.
     void watchedNickChanged(Server* server, const QString& nickname, bool online);
-    //Fires when the user switches his state to away and has enabled "Insert Remember Line on away" in his identity.
+    ///Fires when the user switches his state to away and has enabled "Insert Remember Line on away" in his identity.
     void awayInsertRememberLine();
 
   public slots:
@@ -408,17 +419,7 @@ class Server : public QObject
     void setIdentity(Identity *newIdentity);
 
     void autoRejoinChannels();
-
-    /** Adds a nickname to the joinedChannels list.
-     *  Creates new NickInfo if necessary.
-     *  If needed, moves the channel from the unjoined list to the joined list.
-     *  If needed, moves the nickname from the Offline to Online lists.
-     *  If mode != 99 sets the mode for this nick in this channel.
-     *  @param channelName The channel name.  Case sensitive.
-     *  @param nickname    The nickname.  Case sensitive.
-     *  @return            The NickInfo for the nickname.
-     */
-    ChannelNickPtr addNickToJoinedChannelsList(const QString& channelName, const QString& nickname);
+    
     /** Adds a nickname to the unjoinedChannels list.
      *  Creates new NickInfo if necessary.
      *  If needed, moves the channel from the joined list to the unjoined list.
