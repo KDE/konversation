@@ -373,12 +373,14 @@ default_presentation=0
 [query]
 Name=Query
 Name[it]=Conversazione privata
+Name[nl]=Aanvraag
 Name[pt]=Procura
 Name[pt_BR]=Procura
 Name[sr]=Упит
 Name[sr@Latn]=Упит
 Comment=Someone started a conversation (query) with you
 Comment[it]=Qualcuno ha avviato una conversazione privata (query) con te
+Comment[nl]=Iemand begon een conversatie (aanvraag) met u
 Comment[pt]=Alguém iniciou uma conversa (procura) consigo
 Comment[pt_BR]=Alguém iniciou uma conversa (procura) consigo
 Comment[sr]=Неко је започео разговор (упит) са вама
