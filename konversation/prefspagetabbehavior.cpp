@@ -41,6 +41,11 @@ PrefsPageTabBehavior::PrefsPageTabBehavior(QFrame* newParent,Preferences* newPre
   closeButtonsAlignRight=new QCheckBox(i18n("Place close widgets on the &right side"),parentFrame,"tab_close_widgets_align_right");
   closeButtonsAlignRight->setChecked(preferences->getCloseButtonsAlignRight());
 
+#if QT_VERSION >= 0x030200
+  tabBarCloseButtonCheck = new QCheckBox(i18n("Show a close tab button to the right in the tab bar"), parentFrame, "tab_bar_close_button");
+  tabBarCloseButtonCheck->setChecked(preferences->getShowTabBarCloseButton());
+#endif
+
   // Take care of ghosting / unghosting close button checkboxes
   closeButtonsChanged(preferences->getCloseButtonsOnTabs() ? 2 : 0);
 
@@ -55,6 +60,10 @@ PrefsPageTabBehavior::PrefsPageTabBehavior(QFrame* newParent,Preferences* newPre
   tabBehaviorLayout->addMultiCellWidget(blinkingTabsCheck,row,row,0,2);
   row++;
   tabBehaviorLayout->addMultiCellWidget(bringToFrontCheck,row,row,0,2);
+#if QT_VERSION >= 0x030200
+  row++;
+  tabBehaviorLayout->addMultiCellWidget(tabBarCloseButtonCheck,row,row,0,2);
+#endif
   row++;
   tabBehaviorLayout->addItem(spacer,row,0);
 
@@ -78,6 +87,9 @@ void PrefsPageTabBehavior::applyPreferences()
   preferences->setBringToFront(bringToFrontCheck->isChecked());
   preferences->setCloseButtonsOnTabs(closeButtonsCheck->isChecked());
   preferences->setCloseButtonsAlignRight(closeButtonsAlignRight->isChecked());
+#if QT_VERSION >= 0x030200
+  preferences->setShowTabBarCloseButton(tabBarCloseButtonCheck->isChecked());
+#endif
 }
 
 #include "prefspagetabbehavior.moc"

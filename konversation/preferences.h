@@ -346,6 +346,10 @@ class Preferences : public QObject
     bool getShowStatusBar();
     void setShowStatusBar(bool s);
 #endif
+#if QT_VERSION >= 0x030200
+    bool getShowTabBarCloseButton();
+    void setShowTabBarCloseButton(bool s);
+#endif
 
   signals:
     void requestServerConnection(int number);
@@ -483,6 +487,9 @@ class Preferences : public QObject
     bool showMenuBar;
 #if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
     bool showStatusBar;
+#endif
+#if QT_VERSION >= 0x030200
+    bool showTabBarCloseButton;
 #endif
 };
 

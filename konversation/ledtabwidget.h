@@ -44,6 +44,7 @@ class LedTabWidget : public QTabWidget
   protected slots:
     void tabSelected(int id);
     void tabClosed(int id);
+    void tabClosed();
     void changeName(ChatWindow* view,const QString& newName);
 
   protected:

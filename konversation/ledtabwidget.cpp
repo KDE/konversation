@@ -13,6 +13,9 @@
 */
 
 #include <kdebug.h>
+#include <kpushbutton.h>
+#include <kglobal.h>
+#include <kiconloader.h>
 
 #include "ledtabwidget.h"
 #include "ledtab.h"
@@ -25,6 +28,16 @@ LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :
   setTabBar(new LedTabBar(this,"led_tab_bar"));
   connect(tabBar(),SIGNAL (selected(int)) ,this,SLOT (tabSelected(int)) );
   connect(tabBar(),SIGNAL (closeTab(int)), this,SLOT (tabClosed(int)) );
+  
+#if QT_VERSION >= 0x030200
+  KPushButton* closeBtn = new KPushButton(this);
+  closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));
+  closeBtn->resize(22, 22);
+  closeBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  closeBtn->hide();
+  setCornerWidget(closeBtn);
+  connect(closeBtn, SIGNAL(clicked()), this, SLOT(tabClosed()));
+#endif
 }
 
 LedTabWidget::~LedTabWidget()
@@ -79,6 +92,11 @@ void LedTabWidget::tabClosed(int id)
   LedTab* tab=tabBar()->tab(id);
   if(tab==0) kdWarning() << "LedTabWidget::closeTab(): tab==0!" << endl;
   else emit closeTab(tab->getWidget());
+}
+
+void LedTabWidget::tabClosed()
+{
+  tabClosed(-1);
 }
 
 // reimplemented to avoid casts in active code

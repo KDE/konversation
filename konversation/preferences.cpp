@@ -179,6 +179,9 @@ Preferences::Preferences()
 #if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
   setShowStatusBar(true);
 #endif
+#if QT_VERSION >= 0x030200
+  setShowTabBarCloseButton(false);
+#endif
 }
 
 Preferences::~Preferences()
@@ -676,6 +679,10 @@ void Preferences::setShowToolBar(bool s) { showToolBar = s; }
 #if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
 bool Preferences::getShowStatusBar() { return showStatusBar; }
 void Preferences::setShowStatusBar(bool s) { showStatusBar = s; }
+#endif
+#if QT_VERSION >= 0x030200
+bool Preferences::getShowTabBarCloseButton() { return showTabBarCloseButton; }
+void Preferences::setShowTabBarCloseButton(bool s) { showTabBarCloseButton = s; }
 #endif
 
 #include "preferences.moc"

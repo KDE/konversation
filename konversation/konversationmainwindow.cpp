@@ -768,4 +768,15 @@ void KonversationMainWindow::openToolbars()
   }
 }
 
+void KonversationMainWindow::setShowTabBarCloseButton(bool s)
+{
+#if QT_VERSION >= 0x030200
+  if(s) {
+    viewContainer->cornerWidget()->show();
+  } else {
+    viewContainer->cornerWidget()->hide();
+  }
+#endif
+}
+
 #include "konversationmainwindow.moc"

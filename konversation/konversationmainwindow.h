@@ -92,6 +92,7 @@ class KonversationMainWindow : public KMainWindow
     void setOnlineList(Server* notifyServer,const QStringList& list);
     void updateTrayIcon();
     void serverQuit(Server* server);
+    void setShowTabBarCloseButton(bool s);
 
   protected slots:
     void openPreferences();

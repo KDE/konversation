@@ -296,6 +296,10 @@ void KonversationApplication::readOptions()
     preferences.setIRCColorList(ircColorList);
   }
 
+#if QT_VERSION >= 0x030200
+  preferences.setShowTabBarCloseButton(config->readBoolEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton()));
+#endif
+
   // Colors are now handled in preferences
 
   // Led Colors
@@ -566,6 +570,9 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ChannelSplitter",sizesString);
   config->writeEntry("BackgroundImage",preferences.getBackgroundImageName());
   config->writeEntry("IRCColors", preferences.getIRCColorList());
+#if QT_VERSION >= 0x030200
+  config->writeEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton());
+#endif
 
   // Colors are now handled in preferences
 
@@ -745,6 +752,9 @@ void KonversationApplication::appearanceChanged()
   }
 
   mainWindow->updateTabPlacement();
+#if QT_VERSION >= 0x030200
+  mainWindow->setShowTabBarCloseButton(preferences.getShowTabBarCloseButton());
+#endif
 }
 
 // FIXME: use KURL maybe?
