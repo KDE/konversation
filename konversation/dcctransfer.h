@@ -58,7 +58,7 @@ class DccTransfer : public QObject, public KListViewItem
     DccTransfer(KListView* _parent, DccType _dccType, const QString& _partnerNick);
     virtual ~DccTransfer();
     
-    //virtual void paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment);
+    virtual void paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment);
     void adjustGeometry();  // called by DccPanel
     
     DccType getType() const { return dccType; }

@@ -54,7 +54,7 @@ DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _p
   
   adjustGeometry();
   
-  progressBar->show();
+  //progressBar->show();
   
   // FIXME: we shouldn't do these init in the instance constructer
   TypeText[Send]    = i18n("Send");
@@ -112,11 +112,14 @@ void DccTransfer::stopAutoUpdateView()
   }
 }
 
-/*
+
 void DccTransfer::paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment)
 {
+  KListViewItem::paintCell(painter, colorgroup, column, width, alignment);
   if(column==DccPanel::Column::Progress)  // Render progress bar
   {
+    adjustGeometry();
+    /*
     progressBar->setProgress((int)(100*transferringPosition/fileSize));
     
     progressBar->setFixedWidth(width);
@@ -145,11 +148,10 @@ void DccTransfer::paintCell(QPainter* painter, const QColorGroup& colorgroup, in
                                       rectangle,
                                       progressBar->colorGroup(),
                                       styleflags );
+    */
   }
-  else
-    KListViewItem::paintCell(painter, colorgroup, column, width, alignment);
 }
-*/
+
 
 void DccTransfer::adjustGeometry()  // public
 {  // I've referenced the Apollon's code for progressbar things. Thank you, the Apollon team! (shin)
@@ -158,6 +160,8 @@ void DccTransfer::adjustGeometry()  // public
   rect.setLeft(head->sectionPos(DccPanel::Column::Progress) - head->offset());
   rect.setWidth(head->sectionSize(DccPanel::Column::Progress));
   progressBar->setGeometry(rect);
+  
+  progressBar->show();
 }
 
 void DccTransfer::setStatus(DccStatus status)
