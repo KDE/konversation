@@ -167,7 +167,8 @@ void DccTransferRecv::connectToSender()
   
   setStatus(LookingUp);
   
-  recvSocket=new KExtendedSocket(partnerIp,partnerPort.toUInt(),KExtendedSocket::inetSocket);
+  recvSocket=new KExtendedSocket(partnerIp,partnerPort.toUInt(),KExtendedSocket::inetSocket |
+                                                                KExtendedSocket::noResolve);
   
   recvSocket->enableRead(false);
   recvSocket->enableWrite(false);
