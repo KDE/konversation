@@ -379,10 +379,10 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
       if(win) {
         ChatWindow::WindowType viewType = win->getType();
         if(viewType == ChatWindow::Channel || viewType == ChatWindow::Query || viewType == ChatWindow::Status) {
-          popup->setItemVisible(EnableNotifications, true);
+          popup->setItemEnabled(EnableNotifications, true);
           popup->setItemChecked(EnableNotifications, win->notificationsEnabled());
         } else {
-          popup->setItemVisible(EnableNotifications, false);
+          popup->setItemEnabled(EnableNotifications, false);
         }
         if(win->getChannelEncodingEnabled())
         {
