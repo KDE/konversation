@@ -343,8 +343,7 @@ void Server::lookupFinished()
   if(serverSocket.status())
   {
     // inform user about the error
-    // TODO: I18N(): replace QString with i18n() after freeze
-    statusView->appendServerMessage(i18n("Error"),QString("Server %1 not found.").arg(serverName));
+    statusView->appendServerMessage(i18n("Error"),i18n("Server %1 not found.").arg(serverName));
     // prevent retrying to connect
     autoReconnect=0;
     // broken connection

@@ -28,7 +28,6 @@ Channel List Panel:
 Make URLs in topic clickable or at least selectable
 and a "channel or topic" checkbox would be nice, or better, make the current checkboxes work as "or" not as "and"
 
-Tab completion should work on an alphabetic list
 /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
 Optionally copy log files to new location
 DCC options on same file name should include "Rename" and maybe "Auto Rename"

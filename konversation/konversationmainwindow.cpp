@@ -97,8 +97,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   // Actions to navigate through the different pages
   new KAction(i18n("Next Tab"),0,KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
   new KAction(i18n("Previous Tab"),0,KShortcut("Alt+Left"),this,SLOT(previousTab()),actionCollection(),"previous_tab");
-// TODO: I18N() after freeze
-  new KAction(QString("Close Tab"),0,KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
+  new KAction(i18n("Close Tab"),0,KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
   new TabAction(i18n("Go to Tab Number %1").arg( 1),0,KShortcut("Alt+1"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_1");
   new TabAction(i18n("Go to Tab Number %1").arg( 2),1,KShortcut("Alt+2"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_2");
   new TabAction(i18n("Go to Tab Number %1").arg( 3),2,KShortcut("Alt+3"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_3");
