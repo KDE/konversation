@@ -176,7 +176,7 @@ class Server : public QObject
     QString autoJoinChannelKey;
 
     ServerWindow* serverWindow;
-    IRCServerSocket* serverSocket;
+    IRCServerSocket serverSocket;
 
     QTimer reconnectTimer;
     QTimer incomingTimer;

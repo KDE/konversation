@@ -28,6 +28,7 @@ class IRCServerSocket : public KExtendedSocket
   Q_OBJECT
 
   public:
+    IRCServerSocket();
     IRCServerSocket(const char *server,unsigned short int port,int timeout=30);
     ~IRCServerSocket();
 };

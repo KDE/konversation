@@ -18,10 +18,17 @@
 
 #include <kdebug.h>
 
-IRCServerSocket::IRCServerSocket(const char *server,unsigned short int port,int timeout) :
-                 KExtendedSocket(server,port)
+IRCServerSocket::IRCServerSocket() :
+                 KExtendedSocket()
 {
-  kdDebug() << "IRCServerSocket::IRCServerSocket(" << server << "," << port << "): Socket=" << fd() << endl;
+  kdDebug() << "IRCServerSocket::IRCServerSocket()" << endl;
+}
+
+IRCServerSocket::IRCServerSocket(const char *server,unsigned short int port,int timeout) :
+                 KExtendedSocket(server,port,KExtendedSocket::inetSocket)
+{
+  setTimeout(timeout);
+  kdDebug() << "IRCServerSocket::IRCServerSocket(" << server << "," << port << ")" << endl;
 }
 
 IRCServerSocket::~IRCServerSocket()

@@ -55,6 +55,8 @@ Server::Server(int id)
   serverPort=serverEntry[2].toInt();
   serverKey=serverEntry[3];
 
+  serverSocket.setAddress(serverName,serverPort);
+
   if(serverEntry[4] && serverEntry[4]!="")
   {
     setAutoJoin(true);
@@ -66,7 +68,7 @@ Server::Server(int id)
   autoRejoin=KonversationApplication::preferences.getAutoRejoin();
   autoReconnect=KonversationApplication::preferences.getAutoReconnect();
 
-  serverSocket=0;
+//  serverSocket=0;
   connectToIRCServer();
 
   // don't delete items when they are removed
@@ -108,21 +110,25 @@ Server::Server(int id)
   connect(this,SIGNAL(resetLag()),serverWindow,SLOT(resetLag()) );
   connect(this,SIGNAL(addDccPanel()),serverWindow,SLOT(addDccPanel()) );
   connect(this,SIGNAL(closeDccPanel()),serverWindow,SLOT(closeDccPanel()) );
+
+  connect(&serverSocket,SIGNAL (lookupFinished(int))  ,this,SLOT (lookupFinished(int)) );
+  connect(&serverSocket,SIGNAL (connectionSuccess())  ,this,SLOT (ircServerConnectionSuccess()) );
+  connect(&serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
+  connect(&serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
+  connect(&serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
+  connect(&serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
 }
 
 Server::~Server()
 {
   kdDebug() << "Server::~Server()" << endl;
 
-  if(serverSocket)
-  {
-    // Make sure no signals get sent to a soon to be dying Server Window
-    serverSocket->blockSignals(true);
-    // Send out the last messages (usually the /QUIT)
-    serverSocket->enableWrite(true);
-    send();
-    delete serverSocket;
-  }
+  // Make sure no signals get sent to a soon to be dying Server Window
+  serverSocket.blockSignals(true);
+  // Send out the last messages (usually the /QUIT)
+  serverSocket.enableWrite(true);
+  send();
+//  delete serverSocket;
 
   delete serverWindow;
 }
@@ -149,8 +155,9 @@ void Server::setAutoJoinChannelKey(QString key) { autoJoinChannelKey=key; }
 void Server::connectToIRCServer()
 {
   deliberateQuit=false;
+  serverSocket.blockSignals(false);
   // Are we (still) connected (yet)?
-  if(serverSocket)
+  if(serverSocket.socketStatus()==KExtendedSocket::connected)
   {
     // just join our autojoin-channel if desired
     if(getAutoJoin()) queue(getAutoJoinCommand());
@@ -159,14 +166,12 @@ void Server::connectToIRCServer()
   else
   {
     // (re)connect. Autojoin will be done by the input filter
-    serverWindow->appendToStatus(i18n("Info"),i18n("Looking for server ..."));
-    serverSocket=new IRCServerSocket(getServerName(),getPort());
+    serverWindow->appendToStatus(i18n("Info"),i18n("Looking for server %1 ...").arg(serverSocket.host()));
+//    serverSocket=new IRCServerSocket(getServerName(),getPort());
 
-    connect(serverSocket,SIGNAL (lookupFinished(int))  ,this,SLOT (lookupFinished(int)) );
-    connect(serverSocket,SIGNAL (connectionSuccess())  ,this,SLOT (ircServerConnectionSuccess()) );
-    connect(serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
-
-    serverSocket->startAsyncConnect();
+    // QDns is broken, so don't use async lookup
+    serverSocket.lookup();
+    serverSocket.startAsyncConnect();
   }
 }
 
@@ -181,10 +186,6 @@ void Server::lookupFinished(int number)
 void Server::ircServerConnectionSuccess()
 {
   reconnectCounter=0;
-
-  connect(serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
-  connect(serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
-  connect(serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
 
   connect(this,SIGNAL (nicknameChanged(const QString&)),serverWindow,SLOT (setNickname(const QString&)) );
 
@@ -201,7 +202,46 @@ void Server::ircServerConnectionSuccess()
 
   emit nicknameChanged(getNickname());
 
-  serverSocket->enableRead(true);
+  serverSocket.enableRead(true);
+}
+
+void Server::broken(int state)
+{
+  serverSocket.enableRead(false);
+  serverSocket.enableWrite(false);
+  serverSocket.blockSignals(true);
+
+  kdDebug() << "Connection broken (Socket fd " << serverSocket.fd() << ") " << state << "!" << endl;
+
+//  serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost.").arg(serverName));
+  // TODO: Close all queries and channels!
+  //       Or at least make sure that all gets reconnected properly
+
+  // This seems to crash randomly. So we just rely on QT disconnecting all on delete
+  // disconnect(serverSocket,0,0,0);
+
+//  delete serverSocket;
+//  serverSocket=0;
+//  kdDebug() << "Socket deleted" << endl;
+
+  if(autoReconnect && !getDeliberateQuit())
+  {
+    serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName));
+
+    // TODO: Make retry counter configurable
+    if(++reconnectCounter==10)
+    {
+      serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 failed.").arg(serverName));
+      reconnectCounter=0;
+    }
+    else
+      // TODO: Make timeout configurable
+      QTimer::singleShot(5000,this,SLOT(connectToIRCServer()));
+  }
+  else
+  {
+    serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 closed.").arg(serverName));
+  }
 }
 
 // Will be called from InputFilter as soon as the Welcome message was received
@@ -303,7 +343,7 @@ void Server::notifyTimeout()
 void Server::notifyCheckTimeout()
 {
   checkTime+=500;
-  if(serverSocket) emit tooLongLag(checkTime);
+  if(serverSocket.socketStatus()==KExtendedSocket::connected) emit tooLongLag(checkTime);
 }
 
 QString Server::getAutoJoinCommand()
@@ -349,7 +389,7 @@ void Server::incoming()
   char buffer[513];
   int len=0;
 
-  len=read(serverSocket->fd(),buffer,512);
+  len=read(serverSocket.fd(),buffer,512);
 
   buffer[len]=0;
 
@@ -361,21 +401,21 @@ void Server::incoming()
 void Server::queue(const QString& buffer)
 {
   // Only queue lines if we are connected
-  if(serverSocket && buffer.length())
+  if(serverSocket.socketStatus()==KExtendedSocket::connected && buffer.length())
   {
     kdDebug() << "Q: " << buffer << endl;
 
     outputBuffer+=buffer;
     outputBuffer+="\n";
 
-    serverSocket->enableWrite(true);
+    serverSocket.enableWrite(true);
   }
 }
 
 void Server::send()
 {
   // Check if we are still online
-  if(serverSocket)
+  if(serverSocket.socketStatus()==KExtendedSocket::connected)
   {
 //    kdDebug() << "-> " << outputBuffer << endl;
     // To make lag calculation more precise, we reset the timer here
@@ -384,9 +424,9 @@ void Server::send()
     // Don't reconnect if we WANT to quit
     else if(outputBuffer.startsWith("QUIT")) setDeliberateQuit(true);
     // TODO: Implement Flood-Protection here
-//    write(serverSocket->fd(),outputBuffer.latin1(),outputBuffer.length());
-    write(serverSocket->fd(),outputBuffer,outputBuffer.length());
-    serverSocket->enableWrite(false);
+//    write(serverSocket.fd(),outputBuffer.latin1(),outputBuffer.length());
+    write(serverSocket.fd(),outputBuffer,outputBuffer.length());
+    serverSocket.enableWrite(false);
   }
 
   outputBuffer="";
@@ -405,45 +445,6 @@ bool Server::getDeliberateQuit()
 void Server::setDeliberateQuit(bool on)
 {
   deliberateQuit=on;
-}
-
-void Server::broken(int state)
-{
-  serverSocket->enableRead(false);
-  serverSocket->enableWrite(false);
-  serverSocket->blockSignals(true);
-
-  kdDebug() << "Connection broken (Socket fd " << serverSocket->fd() << ") " << state << "!" << endl;
-
-  serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost.").arg(serverName));
-  // TODO: Close all queries and channels!
-  //       Or at least make sure that all gets reconnected properly
-
-  // This seems to crash randomly. So we just rely on QT disconnecting all on delete
-  // disconnect(serverSocket,0,0,0);
-
-  delete serverSocket;
-  serverSocket=0;
-  kdDebug() << "Socket deleted" << endl;
-
-  if(autoReconnect && !getDeliberateQuit())
-  {
-    serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName));
-
-    // TODO: Make this configurable
-    if(++reconnectCounter==10)
-    {
-      serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 failed.").arg(serverName));
-      reconnectCounter=0;
-    }
-    else
-      // TODO: Make timeout configurable
-      QTimer::singleShot(5000,this,SLOT(connectToIRCServer()));
-  }
-  else
-  {
-    serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 closed.").arg(serverName));
-  }
 }
 
 void Server::addQuery(const QString& nickname,const QString& hostmask)
@@ -539,7 +540,7 @@ void Server::addDccSend(QString recipient,QString fileName)
   emit addDccPanel();
 
   // Get our own IP address. Don't laugh! This works!
-  QString ip=KExtendedSocket::localAddress(serverSocket->fd())->pretty();
+  QString ip=KExtendedSocket::localAddress(serverSocket.fd())->pretty();
   ip=ip.section('-',0,0);
 
   // We already checked that the file exists in output filter / requestDccSend() resp.
