@@ -161,8 +161,10 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   filteredLine.replace(QRegExp("\\<"),"&lt;");
   // Replace all > with &gt;
   filteredLine.replace(QRegExp("\\>"),"&gt;");
-  // Replace all 0x0f (reset color) with \0x031,0
+  // Replace all 0x0f (reset to defaults) with \0x031,0 (should be extended to reset all text decorations as well)
   filteredLine.replace(QRegExp("\017"),"\0031,0");
+  // Replace all 0x03 without color number (reset color) with \0x031,0
+  filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0031,0\\1");
 
   if(filteredLine.find("\x07")!=-1)
   {
