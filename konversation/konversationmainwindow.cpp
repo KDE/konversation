@@ -1324,7 +1324,16 @@ void KonversationMainWindow::resizeEvent(QResizeEvent* ev)
 void KonversationMainWindow::insertCharacter()
 {
   if(!m_insertCharDialog) {
-    m_insertCharDialog = new Konversation::InsertCharDialog(frontView->getTextView()->font().family(), this);
+    ChatWindow* view = static_cast<ChatWindow*>(viewContainer->currentPage());
+    QFont font;
+    
+    if(view && view->getTextView()) {
+      font = view->getTextView()->font();
+    } else if(view) {
+      font = static_cast<QWidget*>(view)->font();
+    }
+    
+    m_insertCharDialog = new Konversation::InsertCharDialog(font.family(), this);
     connect(m_insertCharDialog, SIGNAL(insertChar(const QChar&)), this, SLOT(insertChar(const QChar&)));
   }
 
@@ -1333,7 +1342,11 @@ void KonversationMainWindow::insertCharacter()
 
 void KonversationMainWindow::insertChar(const QChar& chr)
 {
-  frontView->appendInputText(chr);
+  ChatWindow* view = static_cast<ChatWindow*>(viewContainer->currentPage());
+  
+  if(view) {
+    view->appendInputText(chr);
+  }
 }
 
 #include "konversationmainwindow.moc"

@@ -26,6 +26,7 @@ class QStringList;
 class QTimer;
 
 class KListView;
+class KLineEdit;
 class ChannelListViewItem;
 
 class ChannelListPanel : public ChatWindow
@@ -54,6 +55,8 @@ class ChannelListPanel : public ChatWindow
     void adjustFocus();
     void addToChannelList(const QString& channel,int users,const QString& topic);
 
+    virtual void appendInputText(const QString&);
+    
   protected slots:
     void applyFilterClicked();
     void refreshList();
@@ -129,6 +132,8 @@ class ChannelListPanel : public ChatWindow
     QPushButton* refreshListButton;
 
     KListView* channelListView;
+    
+    KLineEdit* filterInput;
 
     QString filterText;
 };

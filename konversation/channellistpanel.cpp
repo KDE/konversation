@@ -75,7 +75,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
   QLabel* patternLabel=new QLabel(i18n("Filter &pattern:"),mainGrid);
   new QLabel(i18n("Filter target:"),mainGrid);
 
-  KLineEdit* filterInput=new KLineEdit(mainGrid,"channel_list_filter_input");
+  filterInput=new KLineEdit(mainGrid,"channel_list_filter_input");
   filterInput->setText(getFilterText());
 
   patternLabel->setBuddy(filterInput);
@@ -497,6 +497,11 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
   }
 
   delete showURLmenu;
+}
+
+void ChannelListPanel::appendInputText(const QString& text)
+{
+  filterInput->setText(filterInput->text() + text);
 }
 
 #include "channellistpanel.moc"
