@@ -159,21 +159,11 @@ void DccPanel::acceptDcc()
 
 void DccPanel::runDcc()
 {
-  /*
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
   if(item)
-  {
-    if(item->getType()==DccTransfer::Send)
-      new KRun(KURL(item->getFile()));
-    else if(item->getType()==DccTransfer::Get)
-    {
-      KURL kurl;
-      QDir dir;
-      kurl.setPath(dir.cleanDirPath(dir.absFilePath(item->getFullPath(), TRUE)));
-      new KRun(kurl);
-    }
-  }
-  */
+    if( item->getType()==DccTransfer::Send 
+        || ( item->getType()==DccTransfer::Receive && item->getStatus()==DccTransfer::Done ) )
+      new KRun(KURL(item->getFilePath()));
 }
 
 void DccPanel::abortDcc()
@@ -184,7 +174,6 @@ void DccPanel::abortDcc()
 
 void DccPanel::removeDcc()
 {
-  /*
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
 
   if(item)
@@ -193,7 +182,7 @@ void DccPanel::removeDcc()
     bool doDelete=true;
 
     if(status!=DccTransfer::Queued &&
-       status!=DccTransfer::Offering &&
+       status!=DccTransfer::WaitingRemote &&
        status!=DccTransfer::Aborted &&
        status!=DccTransfer::Failed &&
        status!=DccTransfer::Done)
@@ -210,7 +199,6 @@ void DccPanel::removeDcc()
       if(item) getListView()->setSelected(item,true);
     }
   }
-  */
 }
 
 DccTransfer* DccPanel::getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed)

@@ -130,7 +130,7 @@ void DccTransfer::startAutoUpdateView()
   stopAutoUpdateView();
   autoUpdateViewTimer = new QTimer(this);
   connect(autoUpdateViewTimer, SIGNAL(timeout()), this, SLOT(updateView()));
-  autoUpdateViewTimer->start(1000);
+  autoUpdateViewTimer->start(500);
 }
 
 void DccTransfer::stopAutoUpdateView()
