@@ -2843,7 +2843,8 @@ void Server::away()
   if(getMainWindow()) {
     KAction *action = getMainWindow()->actionCollection()->action("toggle_away");
     if(action) {
-      action->setText(i18n("Set to not &away"));
+      action->setText(i18n("Set &Available Globally"));
+      action->setIcon("konversationavailable");
     }
   }
   
@@ -2863,7 +2864,8 @@ void Server::unAway()
   if(getMainWindow()) {
     KAction *action = getMainWindow()->actionCollection()->action("toggle_away");
     if(action) {
-      action->setText(i18n("Set to &away"));  //this may be wrong if other servers are still away
+      action->setText(i18n("Set &Away Globally"));  //this may be wrong if other servers are still away
+      action->setIcon("konversationaway");
     }
   }
 
