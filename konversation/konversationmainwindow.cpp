@@ -924,8 +924,7 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
 
   // Copy the name first
   QString newname = name;
-  for (int index = newname.find('&'); index != -1; index = newname.find('&', index+2))
-    newname.insert(index, '&');
+  newname.replace('&', "&&");
 
 #ifdef USE_MDI
   Channel* channel=new Channel(name);
