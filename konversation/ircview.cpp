@@ -22,6 +22,7 @@
 #include <qregexp.h>
 #include <qtextbrowser.h>
 #include <qclipboard.h>
+#include <qbrush.h>
 
 // Check if we use special QT versions to keep text widget from displaying
 // all lines after another without line breaks
@@ -92,7 +93,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
     bgColor=palette().color(QPalette::Active,QColorGroup::Base).name().mid(1);
     KonversationApplication::preferences.setTextViewBackground(bgColor);
   }
-  setPaper(QColor("#"+bgColor));
+  setViewBackground(bgColor,QString::null);
 
 #if QT_VERSION >= 0x030100
   setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
@@ -109,6 +110,16 @@ IRCView::~IRCView()
   kdDebug() << "IRCView::~IRCView()" << endl;
 
   if(popup) delete popup;
+}
+
+void IRCView::setViewBackground(const QString& color,const QString& pixmapName)
+{
+  backgroundPixmap.load(pixmapName);
+  backgroundBrush.setColor(QColor("#"+color));
+  backgroundBrush.setPixmap(backgroundPixmap);
+  setPaper(backgroundBrush);
+
+//  setStaticBackground(true);
 }
 
 void IRCView::setServer(Server* newServer)

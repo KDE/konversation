@@ -27,6 +27,7 @@
 */
 
 class Server;
+class QPixmap;
 
 class IRCView : public KTextBrowser
 {
@@ -37,6 +38,7 @@ class IRCView : public KTextBrowser
     ~IRCView();
 
     void clear();
+    void setViewBackground(const QString& color,const QString& pixmapName);
     void setServer(Server* server);
 
     enum PopupIDs
@@ -92,6 +94,8 @@ class IRCView : public KTextBrowser
     QString buffer;
     Server *server;
     QPopupMenu* popup;
+    QPixmap backgroundPixmap;
+    QBrush backgroundBrush;
 };
 
 #endif

@@ -127,7 +127,7 @@ void Query::updateFonts()
   queryInput->setFont(KonversationApplication::preferences.getTextFont());
   logCheckBox->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
-  getTextView()->setPaper(QColor("#"+KonversationApplication::preferences.getTextViewBackground()));
+  getTextView()->setViewBackground(KonversationApplication::preferences.getTextViewBackground(),QString::null);
 }
 
 void Query::textPasted(QString text)

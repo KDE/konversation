@@ -39,7 +39,7 @@ void RawLog::adjustFocus()
 void RawLog::updateFonts()
 {
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
-  getTextView()->setPaper(QColor("#"+KonversationApplication::preferences.getTextViewBackground()));
+  getTextView()->setViewBackground(KonversationApplication::preferences.getTextViewBackground(),QString::null);
 }
 
 void RawLog::closeYourself()

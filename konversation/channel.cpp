@@ -1220,7 +1220,7 @@ void Channel::updateFonts()
   channelInput->setFont(KonversationApplication::preferences.getTextFont());
   logCheckBox->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
-  getTextView()->setPaper(QColor("#"+KonversationApplication::preferences.getTextViewBackground()));
+  getTextView()->setViewBackground(KonversationApplication::preferences.getTextViewBackground(),QString::null);
 
   nicksOps->setFont(KonversationApplication::preferences.getListFont());
   nicknameListView->setFont(KonversationApplication::preferences.getListFont());
