@@ -42,6 +42,7 @@ StatusPanel::StatusPanel(QWidget* parent) :
   commandLineBox->setMargin(0);
 
   nicknameCombobox=new QComboBox(commandLineBox);
+  nicknameCombobox->setEditable(true);
   nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
   oldNick=nicknameCombobox->currentText();
   awayLabel=new QLabel(i18n("(away)"),commandLineBox);

@@ -203,6 +203,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   commandLineBox->setSpacing(spacing());
 
   nicknameCombobox=new QComboBox(commandLineBox);
+  nicknameCombobox->setEditable(true);
   nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
   oldNick = nicknameCombobox->currentText();
   awayLabel=new QLabel(i18n("(away)"),commandLineBox);
