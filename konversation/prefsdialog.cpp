@@ -100,7 +100,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   }
 
   // connect standard signals and slots
-  // TODO: not implemented in all pages yet!
   connect(this,SIGNAL (applyPreferences()),generalSettingsPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),identityPage,SLOT (applyPreferences()) );
 
@@ -121,6 +120,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
 // TODO: Uncomment this again when it's ready to go
 // but ... is this really the way it's meant to be done?
+// scriptsPage should use applyPreferences()
 //  connect(this, SIGNAL(prefsChanged()), scriptsPage, SLOT(saveChanges()));
 }
 
@@ -145,7 +145,6 @@ void PrefsDialog::slotOk()
 void PrefsDialog::slotApply()
 {
   // tell all preferences pages to save their new values
-  // TODO: not implemented in all pages yet!
   emit applyPreferences();
   // tell the rest of the application to re-read the settings
   emit prefsChanged();
@@ -153,7 +152,6 @@ void PrefsDialog::slotApply()
 
 void PrefsDialog::slotCancel()
 {
-  kdDebug() << "PrefsDialog::slotCancel()" << endl;
   emit cancelClicked();
 }
 
