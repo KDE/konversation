@@ -304,8 +304,8 @@ void DccTransferRecv::connectToSender()
   
   m_writeCacheHandler = new DccTransferRecvWriteCacheHandler( transferJob );
   
-  connect( m_writeCacheHandler, SIGNAL( done() ),          this, SLOT( writeDone() )          );
-  connect( m_writeCacheHandler, SIGNAL( gotError( int ) ), this, SLOT( gotWriteError( int ) ) );
+  connect( m_writeCacheHandler, SIGNAL( done() ),                     this, SLOT( writeDone() )                     );
+  connect( m_writeCacheHandler, SIGNAL( gotError( const QString& ) ), this, SLOT( gotWriteError( const QString& ) ) );
   
   // connect to sender
   
@@ -399,7 +399,7 @@ void DccTransferRecv::writeDone()  // slot
   emit done( m_fileName );
 }
 
-void DccTransferRecv::gotWriteError( QString errorString )  // slot
+void DccTransferRecv::gotWriteError( const QString& errorString )  // slot
 {
   Q_ASSERT(m_recvSocket); if(!m_recvSocket) return;
   
