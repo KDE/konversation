@@ -951,7 +951,7 @@ void Server::incoming()
   if(!m_useSSL)
     max_bytes = serverSocket->bytesAvailable();
   else
-    max_bytes = m_serverSSLSocket->bytesAvailable();
+    max_bytes = 512;
 
   QByteArray buffer(max_bytes+1);
   int len = 0;
