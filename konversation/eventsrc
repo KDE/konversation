@@ -406,5 +406,12 @@ default_presentation=0
 
 [dccChat]
 Name=Dcc Chat
+Name[br]=Flapañ Dcc
+Name[pt]=Conversa DCC
+Name[pt_BR]=Conversa DCC
+Name[sv]=DCC-chatt
 Comment=Some started a dcc chat with you
+Comment[pt]=Alguém iniciou uma conversa DCC consigo
+Comment[pt_BR]=Alguém iniciou uma conversa DCC consigo
+Comment[sv]=Någon startade en DCC-chatt med dig
 default_presentation=0
