@@ -317,9 +317,19 @@ void KonversationApplication::readOptions()
 
   // Sorting
   config->setGroup("Sort Nicknames");
-  preferences.setOpValue(config->readNumEntry("OperatorValue",preferences.getOpValue()));
-  preferences.setVoiceValue(config->readNumEntry("VoiceValue",preferences.getVoiceValue()));
-  preferences.setNoRightsValue(config->readNumEntry("NoRightsValue",preferences.getNoRightsValue()));
+  if(config->readNumEntry("AdminValue",-1)!=-1)
+  {
+    // if there is an AdminValue, read the rest, otherwise keep the defaults. This way we
+    // will actually kill peoples' sorting options once while upgrading but they will get
+    // the new extended modes in return
+    preferences.setAdminValue(config->readNumEntry("AdminValue",preferences.getAdminValue()));
+    preferences.setOwnerValue(config->readNumEntry("OwnerValue",preferences.getOwnerValue()));
+    preferences.setOpValue(config->readNumEntry("OperatorValue",preferences.getOpValue()));
+    preferences.setHalfopValue(config->readNumEntry("HalfopValue",preferences.getHalfopValue()));
+    preferences.setVoiceValue(config->readNumEntry("VoiceValue",preferences.getVoiceValue()));
+    preferences.setNoRightsValue(config->readNumEntry("NoRightsValue",preferences.getNoRightsValue()));
+  }
+
   preferences.setSortByStatus(config->readBoolEntry("SortByStatus",preferences.getSortByStatus()));
   preferences.setSortCaseInsensitive(config->readBoolEntry("SortCaseInsensitive",preferences.getSortCaseInsensitive()));
 
@@ -574,7 +584,10 @@ void KonversationApplication::saveOptions(bool updateGUI)
   // Colors are now handled in preferences
 
   config->setGroup("Sort Nicknames");
+  config->writeEntry("AdminValue",preferences.getAdminValue());
+  config->writeEntry("OwnerValue",preferences.getOwnerValue());
   config->writeEntry("OperatorValue",preferences.getOpValue());
+  config->writeEntry("HalfopValue",preferences.getHalfopValue());
   config->writeEntry("VoiceValue",preferences.getVoiceValue());
   config->writeEntry("NoRightsValue",preferences.getNoRightsValue());
   config->writeEntry("SortByStatus",preferences.getSortByStatus());

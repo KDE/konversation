@@ -133,8 +133,14 @@ class Preferences : public QObject
     bool getSortCaseInsensitive();
     void setSortCaseInsensitive(bool state);
     // more sorting stuff
+    int getAdminValue();
+    void setAdminValue(int value);
+    int getOwnerValue();
+    void setOwnerValue(int value);
     int getOpValue();
     void setOpValue(int value);
+    int getHalfopValue();
+    void setHalfopValue(int value);
     int getVoiceValue();
     void setVoiceValue(int value);
     int getNoRightsValue();
@@ -410,7 +416,10 @@ class Preferences : public QObject
     bool sortCaseInsensitive;
 
     // more sorting stuff
+    int adminValue;
+    int ownerValue;
     int opValue;
+    int halfopValue;
     int voiceValue;
     int noRightsValue;
 

@@ -164,14 +164,17 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   sortingOrder->setSorting(-1);
   sortingOrder->setDragEnabled(true);
   sortingOrder->setAcceptDrops(true);
-  sortingOrder->setMaximumHeight(sortingOrder->fontMetrics().height()*4);
+  sortingOrder->setMaximumHeight(sortingOrder->fontMetrics().height()*7);
 
-  for(int index=4;index!=0;index>>=1)
+  for(int index=32;index!=0;index>>=1)
   {
     if(preferences->getNoRightsValue()==index) new ValueListViewItem(0,sortingOrder,i18n("Normal Users"));
     if(preferences->getVoiceValue()==index)    new ValueListViewItem(1,sortingOrder,i18n("Voice (+v)"));
-    if(preferences->getOpValue()==index)       new ValueListViewItem(2,sortingOrder,i18n("Operators (+o)"));
-  }
+    if(preferences->getHalfopValue()==index)   new ValueListViewItem(2,sortingOrder,i18n("Halfops (+h)"));
+    if(preferences->getOpValue()==index)       new ValueListViewItem(3,sortingOrder,i18n("Operators (+o)"));
+    if(preferences->getOwnerValue()==index)    new ValueListViewItem(4,sortingOrder,i18n("Channel Owners"));
+    if(preferences->getAdminValue()==index)    new ValueListViewItem(5,sortingOrder,i18n("Channel Admins"));
+ }
 
   QVBox* sortOrderUpDownBox=new QVBox(sortOrderGroup);
 
@@ -338,7 +341,10 @@ void PrefsPageAppearance::applyPreferences()
 
     if(value==0) preferences->setNoRightsValue(flag);
     else if(value==1) preferences->setVoiceValue(flag);
-    else if(value==2) preferences->setOpValue(flag);
+    else if(value==2) preferences->setHalfopValue(flag);
+    else if(value==3) preferences->setOpValue(flag);
+    else if(value==4) preferences->setOwnerValue(flag);
+    else if(value==5) preferences->setAdminValue(flag);
 
     flag<<=1;
   }

@@ -137,15 +137,14 @@ bool LedListViewItem::getVoiceState()  { return voiceState; }
 
 int LedListViewItem::getFlags() const
 {
-  int opValue=KonversationApplication::preferences.getOpValue();
-  int voiceValue=KonversationApplication::preferences.getVoiceValue();
-  int noRightsValue=KonversationApplication::preferences.getNoRightsValue();
-
-  // TODO: Support extended modes here
   int flags;
-  if(opState) flags=opValue;
-  else if(voiceState) flags=voiceValue;
-  else flags=noRightsValue;
+
+  if(adminState)       flags=KonversationApplication::preferences.getAdminValue();
+  else if(ownerState)  flags=KonversationApplication::preferences.getOwnerValue();
+  else if(opState)     flags=KonversationApplication::preferences.getOpValue();
+  else if(halfopState) flags=KonversationApplication::preferences.getHalfopValue();
+  else if(voiceState)  flags=KonversationApplication::preferences.getVoiceValue();
+  else                 flags=KonversationApplication::preferences.getNoRightsValue();
 
   return flags;
 }

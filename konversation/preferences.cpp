@@ -143,9 +143,13 @@ Preferences::Preferences()
   setChannelDoubleClickAction("/WHOIS %u%n");
   setNotifyDoubleClickAction("/WHOIS %u%n");
 
-  setOpValue(1);
-  setVoiceValue(2);
-  setNoRightsValue(4);
+  setAdminValue(1);
+  setOwnerValue(2);
+  setOpValue(4);
+  setHalfopValue(8);
+  setVoiceValue(16);
+  setNoRightsValue(32);
+
   setSortCaseInsensitive(true);
   setSortByStatus(false);
 
@@ -591,11 +595,17 @@ void Preferences::setParagraphSpacing(int newSpacing) { paragraphSpacing=newSpac
 int Preferences::getParagraphSpacing() { return paragraphSpacing; }
 
 // sorting stuff
+void Preferences::setAdminValue(int value)           { adminValue=value; }
+void Preferences::setOwnerValue(int value)           { ownerValue=value; }
 void Preferences::setOpValue(int value)              { opValue=value; }
+void Preferences::setHalfopValue(int value)          { halfopValue=value; }
 void Preferences::setVoiceValue(int value)           { voiceValue=value; }
 void Preferences::setNoRightsValue(int value)        { noRightsValue=value; }
 
+int Preferences::getAdminValue()                     { return adminValue; }
+int Preferences::getOwnerValue()                     { return ownerValue; }
 int Preferences::getOpValue()                        { return opValue; }
+int Preferences::getHalfopValue()                    { return halfopValue; }
 int Preferences::getVoiceValue()                     { return voiceValue; }
 int Preferences::getNoRightsValue()                  { return noRightsValue; }
 
