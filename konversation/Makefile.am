@@ -35,7 +35,7 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp \
 		topiclabel.cpp channeloptionsui.ui channeloptionsdialog.cpp prefspagethemes.cpp notificationhandler.cpp \
 		joinchannelui.ui joinchanneldialog.cpp
 
-konversation_LDADD = $(COMPAT_LIBS) $(LIB_KIO) -lm $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la
+konversation_LDADD = $(COMPAT_LIBS) $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la
 
 xdg_apps_DATA = konversation.desktop
 
@@ -62,8 +62,8 @@ messages: rc.cpp
 	fi
 
 noinst_HEADERS = prefspagebehaviour.h prefspagechatwinbehavior.h 	 \
-			prefspagechatwinappearance.h	 prefspagecolorsappearance.h serverlistdialog.h dcctransfersend.h \
-			dcctransferrecv.h dccdetaildialog.h insertchardialog.h editnotifydialog.h serverison.h \
-			servergroupsettings.h serversettings.h		 servergroupdialog.h serverdialog.h channeldialog.h \
-			identitydialog.h topiclabel.h channeloptionsdialog.h joinchanneldialog.h
+		 prefspagechatwinappearance.h prefspagecolorsappearance.h serverlistdialog.h dcctransfersend.h \
+		 dcctransferrecv.h dccdetaildialog.h insertchardialog.h editnotifydialog.h serverison.h \
+		 servergroupsettings.h serversettings.h	servergroupdialog.h serverdialog.h channeldialog.h \
+		 identitydialog.h topiclabel.h channeloptionsdialog.h joinchanneldialog.h
 
