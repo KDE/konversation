@@ -12,7 +12,7 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <kdebug.h>
+#include "konvidebug.h"
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -21,10 +21,15 @@
 #include <qclipboard.h>
 #include <qregexp.h>
 #include <qdom.h>
+#include <qevent.h>
+#include <qobject.h>
+
 
 #include "ircinput.h"
 #include "konversationapplication.h"
 #include "multilineedit.h"
+#include "chatwindow.h"
+#include "ircview.h"
 
 #define MAXHISTORY 100
 #define RICHTEXT 0
@@ -54,6 +59,17 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 #else
   setTextFormat(PlainText);
 #endif
+
+  
+  QObject *p=static_cast<QObject*>(parent);
+  //find our parent ChatWindow derivative, if there is one
+  while(p && !p->inherits("ChatWindow")) {
+    p=p->parent();
+  }
+  //put an event handler on it to forward text
+  if (p) {
+    static_cast<ChatWindow*>(p)->getTextView()->installEventFilter(this);
+  }
 }
 
 IRCInput::~IRCInput()
@@ -102,83 +118,95 @@ void IRCInput::setText(const QString& text)
 // Take care of Tab, Cursor and so on
 bool IRCInput::eventFilter(QObject *object,QEvent *event)
 {
-  switch(event->type())
-  {
-    case QEvent::KeyPress:
+  if (object==this) {
+    switch(event->type())
     {
-      QKeyEvent* keyEvent=(QKeyEvent*) event;
-      switch(keyEvent->key())
+      case QEvent::KeyPress:
       {
-        case Key_Tab:
-          emit nickCompletion();
-          return true;
-        break;
-
-        case Key_Up:
-          emit history(true);
-          return true;
-        break;
-
-        case Key_Down:
-          emit history(false);
-          return true;
-        break;
-        // page up / down keys are now handled in chatwindow.cpp
-        case Key_Enter:
-        case Key_Return:
+        QKeyEvent* keyEvent=(QKeyEvent*) event;
+        switch(keyEvent->key())
         {
-          if(text().length()) addHistory(text());
-          if(completionBox->isHidden()) {
-            emit submit();
-          } else {
-            insertCompletion(completionBox->currentText());
-            completionBox->hide();
-          }
-          // prevent widget from adding lines
-          return true;
-        }
-        break;
-
-        case Key_V:
-        {
-            if ( keyEvent->state() & ControlButton ) {
-                insert( kapp->clipboard()->text( QClipboard::Clipboard ) );
-               return true;
-            }
-        }
-        break;
-
-        default:
-          // Check if the keystroke actually produced text. If not it was just a qualifier.
-          if(!keyEvent->text().isEmpty())
+          case Key_Tab:
+            emit nickCompletion();
+            return true;
+          break;
+  
+          case Key_Up:
+            emit history(true);
+            return true;
+          break;
+  
+          case Key_Down:
+            emit history(false);
+            return true;
+          break;
+          // page up / down keys are now handled in chatwindow.cpp
+          case Key_Enter:
+          case Key_Return:
           {
-            if(getCompletionMode()!='\0')
-            {
-              setCompletionMode('\0');
-              emit endCompletion();
+            if(text().length()) addHistory(text());
+            if(completionBox->isHidden()) {
+              emit submit();
+            } else {
+              insertCompletion(completionBox->currentText());
+              completionBox->hide();
             }
-            completionBox->hide();
+            // prevent widget from adding lines
+            return true;
           }
-          // support ASCII BEL
-          if(keyEvent->ascii()==7) insert("%G");
-          // support ^U (delete text in input box)
-          if(keyEvent->ascii()==21) clear();
-          // support ^W (delete word)
-          // KDE has CTRL Backspace for that ...
-//          else if(keyEvent->ascii()==23)
-//          {
-//            cursorWordBackward(true);
-//            cut();
-//          }
-//          else kdDebug() << keyEvent->ascii() << endl;
+          break;
+  
+          case Key_V:
+          {
+              if ( keyEvent->state() & ControlButton ) {
+                  insert( kapp->clipboard()->text( QClipboard::Clipboard ) );
+                return true;
+              }
+          }
+          break;
+  
+          default:
+            // Check if the keystroke actually produced text. If not it was just a qualifier.
+            if(!keyEvent->text().isEmpty())
+            {
+              if(getCompletionMode()!='\0')
+              {
+                setCompletionMode('\0');
+                emit endCompletion();
+              }
+              completionBox->hide();
+            }
+            // support ASCII BEL
+            if(keyEvent->ascii()==7) insert("%G");
+            // support ^U (delete text in input box)
+            if(keyEvent->ascii()==21) clear();
+            // support ^W (delete word)
+            // KDE has CTRL Backspace for that ...
+  //          else if(keyEvent->ascii()==23)
+  //          {
+  //            cursorWordBackward(true);
+  //            cut();
+  //          }
+  //          else kdDebug() << keyEvent->ascii() << endl;
+        }
+      }
+      // To prevent compiler warnings about unhandled case values
+      default:
+      {
       }
     }
-    // To prevent compiler warnings about unhandled case values
-    default:
-    {
+  }
+  else if (object->isA("IRCView")) {
+    if (event->type() == QEvent::KeyPress) {
+      QKeyEvent* ke = static_cast<QKeyEvent*>(event);
+      if (QChar(ke->ascii()).isPrint()) {
+        setFocus();
+        KonversationApplication::sendEvent(this,event);
+        return TRUE;
+      }
     }
   }
-  return QTextEdit::eventFilter(object,event);
+  return KTextEdit::eventFilter(object,event);
 }
 
 void IRCInput::addHistory(const QString& line)
