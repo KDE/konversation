@@ -1,5 +1,5 @@
 Changes from 0.14 to 0.15
-- Ported socket code to KNetwork.Weird connection problems should be gone now
+- Ported socket code to KNetwork. Weird connection problems should be gone now
 - Get default username/ident information from system
 - Support for bouncer prefixes in nick completion
 - Dcc port range support
@@ -9,6 +9,7 @@ Changes from 0.14 to 0.15
 - Added an option how to get own IP for DCC send/chat
 - "Open Watched Nicks Online panel on startup" option
 - support encoding settings per channel
+- SSL Support
 
 Changes from 0.13 to 0.14
 - Added irc "pseudo" command /prefs for changing settings without settings dialog.
