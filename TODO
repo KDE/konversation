@@ -22,6 +22,7 @@ Don't trigger events when we did highlight ourselves
 Click on notify messages opens query
 Make URLs like http://user@somedomain.com/ work
 Add date option to time stamp
+Events for Queries and DCC Chat
 
 Channel List Panel:
 and a "channel or topic" checkbox would be nice, or better, make the current checkboxes work as "or" not as "and"
