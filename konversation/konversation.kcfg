@@ -238,7 +238,7 @@
       <!--   config->writeEntry("ShowNicknameBox", preferences.showNicknameBox()); -->
     </entry>
     <entry key="UseBoldNicks" type="Bool">
-      <default>true</default>
+      <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
