@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>DCC_Settings</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,14 +13,17 @@ the Free Software Foundation; either version 2 of the License, or
             <x>0</x>
             <y>0</y>
             <width>553</width>
-            <height>487</height>
+            <height>501</height>
         </rect>
     </property>
-    <vbox>
+    <property name="caption">
+        <string>DCC_Settings</string>
+    </property>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLayoutWidget">
+        <widget class="QLayoutWidget" row="0" column="0">
             <property name="name">
                 <cstring>layout12</cstring>
             </property>
@@ -54,7 +57,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </hbox>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="QCheckBox" row="1" column="0">
             <property name="name">
                 <cstring>kcfg_AddPartner</cstring>
             </property>
@@ -62,7 +65,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>Add &amp;sender to file name</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="QCheckBox" row="2" column="0">
             <property name="name">
                 <cstring>kcfg_CreateFolder</cstring>
             </property>
@@ -70,7 +73,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>Cr&amp;eate folder for sender</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="QCheckBox" row="3" column="0">
             <property name="name">
                 <cstring>kcfg_AutoGet</cstring>
             </property>
@@ -78,7 +81,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>Automatically accept &amp;DCC download</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="QCheckBox" row="4" column="0">
             <property name="name">
                 <cstring>kcfg_AutoResume</cstring>
             </property>
@@ -86,7 +89,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>Au&amp;tomatically resume DCC download</string>
             </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="QLayoutWidget" row="5" column="0">
             <property name="name">
                 <cstring>layout2</cstring>
             </property>
@@ -138,7 +141,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </spacer>
             </hbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="QGroupBox" row="6" column="0">
             <property name="name">
                 <cstring>groupBox1</cstring>
             </property>
@@ -183,190 +186,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </grid>
         </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>groupBox2</cstring>
-            </property>
-            <property name="title">
-                <string>Port</string>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_SpecificSendPorts</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Use specific ports for DCC send</string>
-                    </property>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout5</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel2</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="text">
-                                <string>DCC se&amp;nd ports:</string>
-                            </property>
-                            <property name="buddy" stdset="0">
-                                <cstring>kcfg_ChatPortsFirst</cstring>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>kcfg_SendPortsFirst</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="maxValue">
-                                <number>65535</number>
-                            </property>
-                        </widget>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel1_2</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="text">
-                                <string>to</string>
-                            </property>
-                            <property name="alignment">
-                                <set>AlignCenter</set>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>kcfg_SendPortsLast</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="maxValue">
-                                <number>65535</number>
-                            </property>
-                        </widget>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacer4</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>231</width>
-                                    <height>21</height>
-                                </size>
-                            </property>
-                        </spacer>
-                    </hbox>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_SpecificChatPorts</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Use specific p&amp;orts for DCC chat</string>
-                    </property>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout6</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel3</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="text">
-                                <string>DCC &amp;chat ports:</string>
-                            </property>
-                            <property name="buddy" stdset="0">
-                                <cstring>kcfg_SendPortsFirst</cstring>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>kcfg_ChatPortsFirst</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="maxValue">
-                                <number>65535</number>
-                            </property>
-                        </widget>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel2_2</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="text">
-                                <string>to</string>
-                            </property>
-                            <property name="alignment">
-                                <set>AlignCenter</set>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>kcfg_ChatPortsLast</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="maxValue">
-                                <number>65535</number>
-                            </property>
-                        </widget>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacer6</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>231</width>
-                                    <height>21</height>
-                                </size>
-                            </property>
-                        </spacer>
-                    </hbox>
-                </widget>
-            </vbox>
-        </widget>
-        <widget class="QLayoutWidget">
+        <widget class="QLayoutWidget" row="8" column="0">
             <property name="name">
                 <cstring>layout3</cstring>
             </property>
@@ -421,7 +241,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </spacer>
             </hbox>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="QCheckBox" row="9" column="0">
             <property name="name">
                 <cstring>kcfg_FastSend</cstring>
             </property>
@@ -429,7 +249,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>Use fast DCC send (Might not work with all clients)</string>
             </property>
         </widget>
-        <spacer>
+        <spacer row="10" column="0">
             <property name="name">
                 <cstring>spacer1</cstring>
             </property>
@@ -442,19 +262,174 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="sizeHint">
                 <size>
                     <width>21</width>
-                    <height>61</height>
+                    <height>16</height>
                 </size>
             </property>
         </spacer>
-    </vbox>
+        <widget class="QGroupBox" row="7" column="0">
+            <property name="name">
+                <cstring>groupBox2</cstring>
+            </property>
+            <property name="title">
+                <string>Port</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget" row="1" column="0">
+                    <property name="name">
+                        <cstring>layout7</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>kcfg_SpecificChatPorts</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Use specific p&amp;orts for DCC chat:</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+O</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer6</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>50</width>
+                                    <height>21</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QSpinBox">
+                            <property name="name">
+                                <cstring>kcfg_ChatPortsFirst</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="maxValue">
+                                <number>65535</number>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel2_2</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="text">
+                                <string>to</string>
+                            </property>
+                            <property name="alignment">
+                                <set>AlignCenter</set>
+                            </property>
+                        </widget>
+                        <widget class="QSpinBox">
+                            <property name="name">
+                                <cstring>kcfg_ChatPortsLast</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="maxValue">
+                                <number>65535</number>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget" row="0" column="0">
+                    <property name="name">
+                        <cstring>layout6</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>kcfg_SpecificSendPorts</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Use specific &amp;ports for DCC send:</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+P</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer4</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>80</width>
+                                    <height>21</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QSpinBox">
+                            <property name="name">
+                                <cstring>kcfg_SendPortsFirst</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="maxValue">
+                                <number>65535</number>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_2</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="text">
+                                <string>to</string>
+                            </property>
+                            <property name="alignment">
+                                <set>AlignCenter</set>
+                            </property>
+                        </widget>
+                        <widget class="QSpinBox">
+                            <property name="name">
+                                <cstring>kcfg_SendPortsLast</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="maxValue">
+                                <number>65535</number>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </grid>
+        </widget>
+    </grid>
 </widget>
 <connections>
-    <connection>
-        <sender>kcfg_SpecificSendPorts</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>textLabel2</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
     <connection>
         <sender>kcfg_SpecificSendPorts</sender>
         <signal>toggled(bool)</signal>
@@ -489,12 +464,6 @@ the Free Software Foundation; either version 2 of the License, or
         <sender>kcfg_SpecificChatPorts</sender>
         <signal>toggled(bool)</signal>
         <receiver>kcfg_ChatPortsLast</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_SpecificChatPorts</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>textLabel3</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>
