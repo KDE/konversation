@@ -12,34 +12,33 @@
             <height>500</height>
         </rect>
     </property>
-    <widget class="KListView">
-        <column>
-            <property name="text">
-                <string>Warning dialogs to show</string>
-            </property>
-            <property name="clickable">
-                <bool>true</bool>
-            </property>
-            <property name="resizable">
-                <bool>true</bool>
-            </property>
-        </column>
+    <hbox>
         <property name="name">
-            <cstring>dialogListView</cstring>
+            <cstring>unnamed</cstring>
         </property>
-        <property name="geometry">
-            <rect>
-                <x>30</x>
-                <y>20</y>
-                <width>510</width>
-                <height>440</height>
-            </rect>
-        </property>
-        <property name="allColumnsShowFocus">
-            <bool>true</bool>
-        </property>
-    </widget>
+        <widget class="KListView">
+            <column>
+                <property name="text">
+                    <string>Warning dialogs to show</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>dialogListView</cstring>
+            </property>
+            <property name="allColumnsShowFocus">
+                <bool>true</bool>
+            </property>
+        </widget>
+    </hbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>klistview.h</includehint>

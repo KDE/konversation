@@ -13,14 +13,14 @@ the Free Software Foundation; either version 2 of the License, or
             <x>0</x>
             <y>0</y>
             <width>409</width>
-            <height>412</height>
+            <height>247</height>
         </rect>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QCheckBox">
+        <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>kcfg_CloseButtonsOnTabs</cstring>
             </property>
@@ -28,15 +28,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>Show close b&amp;utton on tabs</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
-            <property name="name">
-                <cstring>kcfg_CloseButtonsAlignRight</cstring>
-            </property>
-            <property name="text">
-                <string>Place close button on the &amp;right side of the tab</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox">
+        <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>kcfg_TabPlacement</cstring>
             </property>
@@ -44,7 +36,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>Place tab labels on &amp;top</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>kcfg_BlinkingTabs</cstring>
             </property>
@@ -52,7 +44,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>&amp;Blinking tabs</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>kcfg_BringToFront</cstring>
             </property>
@@ -60,7 +52,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>Bring new tabs to &amp;front</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>kcfg_FocusNewQueries</cstring>
             </property>
@@ -68,7 +60,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>When someone queries you, focus new &amp;query</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="QCheckBox" row="6" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>kcfg_ShowTabBarCloseButton</cstring>
             </property>
@@ -76,7 +68,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>&amp;Show a close tab button to the right in the tab bar</string>
             </property>
         </widget>
-        <spacer>
+        <spacer row="7" column="1">
             <property name="name">
                 <cstring>spacer1</cstring>
             </property>
@@ -93,7 +85,32 @@ the Free Software Foundation; either version 2 of the License, or
                 </size>
             </property>
         </spacer>
-    </vbox>
+        <widget class="QCheckBox" row="1" column="1">
+            <property name="name">
+                <cstring>kcfg_CloseButtonsAlignRight</cstring>
+            </property>
+            <property name="text">
+                <string>Place close button on the &amp;right side of the tab</string>
+            </property>
+        </widget>
+        <spacer row="1" column="0">
+            <property name="name">
+                <cstring>spacer6</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Fixed</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>30</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+    </grid>
 </widget>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
