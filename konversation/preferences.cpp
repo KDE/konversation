@@ -114,7 +114,7 @@ Preferences::Preferences()
   setDccChatPortsLast(0);
   setDccAutoGet(false);
   setDccBufferSize(1024);
-  setDccFastSend(false);
+  setDccFastSend(true);
   setDccSendTimeout(120);
 
   KStandardDirs kstddir;
