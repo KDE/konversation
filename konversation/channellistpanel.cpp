@@ -182,19 +182,24 @@ void ChannelListPanel::saveList()
   if(!fileName.isEmpty())
   {
     // first find the longest channel name and nick number for clean table layouting
-    unsigned int index=0;
     unsigned int maxChannelWidth=0;
     unsigned int maxNicksWidth=0;
 
-    QListViewItem* item=channelListView->itemAtIndex(0);
+    QListViewItem* item = channelListView->firstChild();
     while(item)
     {
       if(item->isVisible())
       {
-        if(item->text(0).length()>maxChannelWidth) maxChannelWidth=item->text(0).length();
-        if(item->text(1).length()>maxNicksWidth) maxNicksWidth=item->text(1).length();
+        if(item->text(0).length()>maxChannelWidth) {
+          maxChannelWidth = item->text(0).length();
+        }
+        
+        if(item->text(1).length()>maxNicksWidth) {
+          maxNicksWidth = item->text(1).length();
+        }
       }
-      item=channelListView->itemAtIndex(++index);
+
+      item = item->nextSibling();
     }
 
     // now save the list to disk
@@ -210,8 +215,8 @@ void ChannelListPanel::saveList()
     // send header to stream
     stream << header;
 
-    index=0;
-    item=channelListView->itemAtIndex(0);
+    item = channelListView->firstChild();
+    
     while(item)
     {
       if(item->isVisible())
@@ -230,7 +235,8 @@ void ChannelListPanel::saveList()
         // send final line to stream
         stream << line;
       }
-      item=channelListView->itemAtIndex(++index);
+      
+      item = item->nextSibling();
     }
 
     listFile.close();
@@ -378,8 +384,6 @@ void ChannelListPanel::applyFilterToItem(QListViewItem* item)
 
 void ChannelListPanel::applyFilterClicked()
 {
-  unsigned int index=0;
-
   if(!getNumChannels())
   {
     refreshList();
@@ -387,7 +391,7 @@ void ChannelListPanel::applyFilterClicked()
   }
   else
   {
-    QListViewItem* item=channelListView->itemAtIndex(0);
+    QListViewItem* item = channelListView->firstChild();
 
     setVisibleChannels(0);
     setVisibleUsers(0);
@@ -395,7 +399,7 @@ void ChannelListPanel::applyFilterClicked()
     while(item)
     {
       applyFilterToItem(item);
-      item=channelListView->itemAtIndex(++index);
+      item = item->nextSibling();
     }
 
     updateUsersChannels();
