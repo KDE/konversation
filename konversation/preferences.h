@@ -155,6 +155,13 @@ class Preferences : public QObject
     QString getKickReason();
     void setKickReason(QString newReason);
 
+    void setShowAwayMessage(bool state);
+    bool getShowAwayMessage();
+    QString getAwayMessage();
+    void setAwayMessage(QString newMessage);
+    QString getUnAwayMessage();
+    void setUnAwayMessage(QString newMessage);
+
     QString getNickname(int index);
     QStringList getNicknameList();
     void setNickname(int index,QString newName);
@@ -258,6 +265,10 @@ class Preferences : public QObject
     int voiceLedColor;
     int noRightsLedColor;
     bool useNotify;
+    
+    bool showAwayMessage;
+    QString awayMessage;
+    QString unAwayMessage;
 
     bool timestamping;
     QString timestampFormat;

@@ -32,7 +32,6 @@ Consistency check in Preferences:
 
 Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated
 
-Add away / back announcement messages
 Show away messages only once per nick
 Indicate own away status
 Try to fix the disconnect / no reconnect problem

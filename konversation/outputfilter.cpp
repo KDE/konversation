@@ -47,7 +47,6 @@ QString& OutputFilter::parse(const QString& myNick,const QString& inputLine,cons
   program=false;
   command=false;
   query=false;
-  silent=false;
 
   // Action?
   if(line.startsWith(commandChar+"me ") && destination!="")
@@ -98,6 +97,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& inputLine,cons
     else if(line=="kick")                parseKick("");
     else if(line=="topic")               parseTopic("");
     else if(line=="away")                parseAway("");
+    else if(line=="unaway")              parseAway("");
     else if(line=="dcc")                 parseDcc("");
     else if(line=="invite")              parseInvite("");
 
@@ -268,18 +268,24 @@ void OutputFilter::parseTopic(QString parameter)
 
 void OutputFilter::parseAway(QString reason)
 {
-  silent=true;
-
   if(reason=="")
   {
-    toServer="AWAY";
+    if(KonversationApplication::preferences.getShowAwayMessage())
+      sendToAllChannels(KonversationApplication::preferences.getUnAwayMessage());
+
     emit unAway();
+    toServer="AWAY";
   }
   else
   {
+    if(KonversationApplication::preferences.getShowAwayMessage())
+      sendToAllChannels(KonversationApplication::preferences.getAwayMessage().replace("%s",reason));
+
+    emit away();
     toServer="AWAY :"+reason;
-    emit away(reason);
   }
+  // remove lines in output to prevent them sent twice in sending channel
+  output="";
 }
 
 void OutputFilter::parseQuit(QString reason)
@@ -524,7 +530,6 @@ bool OutputFilter::isAction() { return action; };
 bool OutputFilter::isCommand() { return command; };
 bool OutputFilter::isProgram() { return program; };
 bool OutputFilter::isQuery() { return query; };
-bool OutputFilter::isSilent() { return silent; };
 
 void OutputFilter::setCommandChar() { commandChar=KonversationApplication::preferences.getCommandChar(); }
 

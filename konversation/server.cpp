@@ -1029,19 +1029,20 @@ void Server::setServerWindow(ServerWindow* newWindow)
   serverWindow=newWindow;
 }
 
-void Server::away(const QString& reason)
+void Server::away()
 {
-  kdDebug() << "Server:away()" << endl;
   isAway=true;
-//  if(KonversationApplication::preferences.showAwayMessage())
+}
+
+void Server::sendToAllChannels(const QString& text)
+{
+  // Send a message to all channels we are in
+  Channel* channel=channelList.first();
+
+  while(channel)
   {
-    // Send away message to all channels we are in
-    Channel* channel=channelList.first();
-    while(channel)
-    {
-      channel->sendChannelText(QString("/me is away: "+reason));
-      channel=channelList.next();
-    }
+    channel->sendChannelText(text);
+    channel=channelList.next();
   }
 }
 

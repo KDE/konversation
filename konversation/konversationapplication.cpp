@@ -217,6 +217,10 @@ void KonversationApplication::readOptions()
   QString nickList=config->readEntry("Nicknames",preferences.getNicknameList().join(","));
   preferences.setNicknameList(QStringList::split(",",nickList));
 
+  preferences.setShowAwayMessage(config->readBoolEntry("ShowAwayMessage",preferences.getShowAwayMessage()));
+  preferences.setAwayMessage(config->readEntry("AwayMessage",preferences.getAwayMessage()));
+  preferences.setUnAwayMessage(config->readEntry("UnAwayMessage",preferences.getUnAwayMessage()));
+
   // Notify Settings and list
   config->setGroup("Notify List");
   preferences.setNotifyDelay(config->readNumEntry("NotifyDelay",20));
@@ -348,6 +352,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("KickReason",preferences.getKickReason());
 
   config->setGroup("Appearance");
+
   config->writeEntry("TextFont",preferences.getTextFont().toString());
   config->writeEntry("ListFont",preferences.getListFont().toString());
   config->writeEntry("Timestamping",preferences.getTimestamping());
@@ -381,8 +386,12 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("Ident",preferences.ident);
   config->writeEntry("Realname",preferences.realname);
   config->writeEntry("Nicknames",preferences.getNicknameList());
+  config->writeEntry("ShowAwayMessage",preferences.getShowAwayMessage());
+  config->writeEntry("AwayMessage",preferences.getAwayMessage());
+  config->writeEntry("UnAwayMessage",preferences.getUnAwayMessage());
 
   config->setGroup("Notify List");
+
   config->writeEntry("NotifyDelay",preferences.getNotifyDelay());
   config->writeEntry("UseNotify",preferences.getUseNotify());
   config->writeEntry("NotifyList",preferences.getNotifyString());

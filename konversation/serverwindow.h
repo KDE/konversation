@@ -74,6 +74,7 @@ class ServerWindow : public KMainWindow
 
     void setServer(Server* server);
     Server* getServer();
+    bool isFrontView(const ChatWindow* view);
 
   signals:
     void prefsChanged();

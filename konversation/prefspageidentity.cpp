@@ -16,6 +16,7 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
+#include <qcheckbox.h>
 
 #include <klineedit.h>
 
@@ -46,6 +47,15 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   QLabel* kickLabel=new QLabel(i18n("Kick Reason:"),parentFrame);
   KLineEdit* kickInput=new KLineEdit(preferences->getKickReason(),parentFrame);
 
+  QCheckBox* showAwayMessageCheck=new QCheckBox(i18n("Show away messages"),parentFrame,"away_message_check");
+  showAwayMessageCheck->setChecked(preferences->getShowAwayMessage());
+
+  QLabel* awayLabel=new QLabel(i18n("Away message:"),parentFrame);
+  KLineEdit* awayInput=new KLineEdit(preferences->getAwayMessage(),parentFrame);
+
+  QLabel* unAwayLabel=new QLabel(i18n("Return message:"),parentFrame);
+  KLineEdit* unAwayInput=new KLineEdit(preferences->getUnAwayMessage(),parentFrame);
+
   int row=0;
   identityLayout->addWidget(realNameLabel,row,0);
   identityLayout->addMultiCellWidget(realNameInput,row,row,1,3);
@@ -69,6 +79,14 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   identityLayout->addWidget(kickLabel,row,0);
   identityLayout->addMultiCellWidget(kickInput,row,row,1,3);
   row++;
+  identityLayout->addMultiCellWidget(showAwayMessageCheck,row,row,0,3);
+  row++;
+  identityLayout->addWidget(awayLabel,row,0);
+  identityLayout->addMultiCellWidget(awayInput,row,row,1,3);
+  row++;
+  identityLayout->addWidget(unAwayLabel,row,0);
+  identityLayout->addMultiCellWidget(unAwayInput,row,row,1,3);
+  row++;
   identityLayout->addMultiCellWidget(new QLabel(i18n(
                                      "<qt>This is the default identity used for all servers "
                                      "where no separate identity was selected.</qt>"),
@@ -85,6 +103,9 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   connect(nick3,SIGNAL (textChanged(const QString&)),this,SLOT (nick3Changed(const QString&)) );
   connect(partInput,SIGNAL (textChanged(const QString&)),this,SLOT (partReasonChanged(const QString&)) );
   connect(kickInput,SIGNAL (textChanged(const QString&)),this,SLOT (kickReasonChanged(const QString&)) );
+  connect(showAwayMessageCheck,SIGNAL (stateChanged(int)),this,SLOT (showAwayMessageChanged(int)) );
+  connect(awayInput,SIGNAL (textChanged(const QString&)),this,SLOT (awayMessageChanged(const QString&)) );
+  connect(unAwayInput,SIGNAL (textChanged(const QString&)),this,SLOT (unAwayMessageChanged(const QString&)) );
 }
 
 PrefsPageIdentity::~PrefsPageIdentity()
@@ -131,6 +152,21 @@ void PrefsPageIdentity::partReasonChanged(const QString& newReason)
 void PrefsPageIdentity::kickReasonChanged(const QString& newReason)
 {
   preferences->setKickReason(newReason);
+}
+
+void PrefsPageIdentity::showAwayMessageChanged(int state)
+{
+  preferences->setShowAwayMessage(state==2);
+}
+
+void PrefsPageIdentity::awayMessageChanged(const QString& newMessage)
+{
+  preferences->setAwayMessage(newMessage);
+}
+
+void PrefsPageIdentity::unAwayMessageChanged(const QString& newMessage)
+{
+  preferences->setUnAwayMessage(newMessage);
 }
 
 #include "prefspageidentity.moc"

@@ -46,6 +46,10 @@ Preferences::Preferences()
   setNickCompleteSuffixStart(": ");
   setNickCompleteSuffixMiddle(" ");
 
+  setShowAwayMessage(false);
+  setAwayMessage("/me is away: %s");
+  setUnAwayMessage("/me is back.");
+
   nicknameList.append("KonvIRC");
   nicknameList.append("_KonvIRC");
   nicknameList.append("KonvIRC_");
@@ -283,6 +287,14 @@ void Preferences::setPartReason(QString newReason) { partReason=newReason; }
 
 QString Preferences::getKickReason() { return kickReason; }
 void Preferences::setKickReason(QString newReason) { kickReason=newReason; }
+
+void Preferences::setShowAwayMessage(bool state) { showAwayMessage=state; }
+bool Preferences::getShowAwayMessage() { return showAwayMessage; }
+
+QString Preferences::getAwayMessage() { return awayMessage; }
+void Preferences::setAwayMessage(QString newMessage) { awayMessage=newMessage; }
+QString Preferences::getUnAwayMessage() { return unAwayMessage; }
+void Preferences::setUnAwayMessage(QString newMessage) { unAwayMessage=newMessage; }
 
 void Preferences::clearIgnoreList() { ignoreList.clear(); }
 QPtrList<Ignore> Preferences::getIgnoreList() { return ignoreList; }

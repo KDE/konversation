@@ -41,7 +41,6 @@ class OutputFilter : public QObject
     bool isCommand();
     bool isProgram();
     bool isQuery();
-    bool isSilent();
 
     QString& getOutput();
     QString& getServerOutput();
@@ -53,8 +52,9 @@ class OutputFilter : public QObject
     void requestDccSend(QString recipient);       // Choose Recipient / File from requester
     void openDccPanel();
     void closeDccPanel();
-    void away(const QString& reason);
+    void away();
     void unAway();
+    void sendToAllChannels(const QString& text);
 
   public slots:
     void setCommandChar();
@@ -72,7 +72,6 @@ class OutputFilter : public QObject
     bool command;
     bool program;
     bool query;
-    bool silent;
 
     void parseMsg(QString myNick,QString parameter);      // works
     void parseSMsg(QString parameter);     // works

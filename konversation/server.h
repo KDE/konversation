@@ -140,8 +140,9 @@ class Server : public QObject
     void dccResumeGetRequest(QString sender,QString fileName,QString port,int startAt);
     void dccGetDone(QString fileName);
     void dccSendDone(QString fileName);
-    void away(const QString& reason);
+    void away();
     void unAway();
+    void sendToAllChannels(const QString& text);
 
   protected:
     void startNotifyCheckTimer();

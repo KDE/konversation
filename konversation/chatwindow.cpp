@@ -75,10 +75,12 @@ void ChatWindow::setServer(Server* newServer)
              server,SLOT   (addDccSend(QString,QString)) );
     connect(&filter,SIGNAL (requestDccSend(QString)),
              server,SLOT   (requestDccSend(QString)) );
-    connect(&filter,SIGNAL (away(const QString&)),
-             server,SLOT   (away(const QString&)) );
+    connect(&filter,SIGNAL (away()),
+             server,SLOT   (away()) );
     connect(&filter,SIGNAL (unAway()),
              server,SLOT   (unAway()) );
+    connect(&filter,SIGNAL (sendToAllChannels(const QString&)),
+             server,SLOT   (sendToAllChannels(const QString&)) );
   }
 }
 

@@ -560,4 +560,9 @@ void ServerWindow::resetLag()
   statusBar()->changeItem(i18n("Lag: not known"),LagOMeter);
 }
 
+bool ServerWindow::isFrontView(const ChatWindow* view)
+{
+  return(frontView==view);
+}
+
 #include "serverwindow.moc"
