@@ -76,7 +76,7 @@ void TopicLabel::updateSqueezedText()
   QFontMetrics fm(currentFont());
   QString text;
 
-  if(height() < (fm.height() * 2)) {
+  if(height() < (fm.lineSpacing() * 2)) {
     text = KStringHandler::rPixelSqueeze(m_fullText, fm, contentsWidth() - 10);
     setWordWrap(NoWrap);
   } else {
