@@ -370,7 +370,7 @@ void DccTransferRecv::readData()  // slot
     ba.duplicate( m_buffer, actual );
     m_writeCacheHandler->append( ba );
     if(!m_writeCacheHandler->write()) {
-      kdDebug() << "m_writeCacheHandler->write() failed in readData()" << endl;
+      //kdDebug() << "m_writeCacheHandler->write() failed in readData()" << endl;
     }
     m_recvSocket->enableWrite( true );
   }
@@ -534,8 +534,8 @@ QByteArray DccTransferRecvWriteCacheHandler::popCache()
     QValueList<QByteArray>::iterator it = m_cacheList.begin();
     do { //It is guaranteed that at least one bytearray is written since m_cacheList is not empty
       Q_ASSERT((*it).size() > 0);
-      out.writeBytes( (*it).data(), (*it).size() );
-      sizeSum+= (*it).size();
+      out.writeRawBytes( (*it).data(), (*it).size() );
+      sizeSum += (*it).size();
       it = m_cacheList.remove( it );
       number_written++; //for debug info
     } while( it != m_cacheList.end() && maxWritePacketSize >= sizeSum + (*it).size() );
