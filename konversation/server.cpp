@@ -71,7 +71,7 @@ using namespace KNetwork;
 #endif
 #endif
 
-Server::Server(KonversationMainWindow* newMainWindow,int id)
+Server::Server(KonversationMainWindow* mainWindow,int id)
 {
   identity=0;
   tryNickNumber=0;
@@ -94,7 +94,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   setName(QString("server_"+serverEntry[1]).ascii());
 
-  setMainWindow(newMainWindow);
+  setMainWindow(mainWindow);
 
   serverGroup=serverEntry[0];
   serverName=serverEntry[1];
