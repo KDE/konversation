@@ -151,10 +151,10 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   connect(this,SIGNAL (updateNumChannels(const QString&)),channelsLabel,SLOT (setText(const QString&)) );
 
   updateUsersChannels();
-  KMessageBox::information(this,i18n("Warning! Using this function may result in a lot "
+  KMessageBox::information(this,i18n("Warning: using this function may result in a lot "
                                      "of network traffic. If your connection is not fast "
-                                     "enough, it's possible that your client gets "
-                                     "disconnected by the server!"),
+                                     "enough, it is possible that your client will be "
+                                     "disconnected by the server."),
                                 i18n("Channel List Warning"),"ChannelListWarning");
 }
 
@@ -262,7 +262,7 @@ void ChannelListPanel::addToChannelList(const QString& channel,int users,const Q
   // set internal numbers of channels and users, display will be updated by a timer
   setNumChannels(getNumChannels()+1);
   setNumUsers(getNumUsers()+users);
-  
+
   if (!updateTimer.isActive())
   {
     updateTimer.start(500);
@@ -360,7 +360,7 @@ void ChannelListPanel::applyFilterToItem(QListViewItem* item)
   if(getMinUsers() || getMaxUsers())
   {
     if(item->text(1).toInt()<getMinUsers() || (getMaxUsers()>=getMinUsers() &&
-       item->text(1).toInt()>getMaxUsers())) 
+       item->text(1).toInt()>getMaxUsers()))
          visible=false;
   }
 
@@ -370,7 +370,7 @@ void ChannelListPanel::applyFilterToItem(QListViewItem* item)
     {
       if(item->text(0).find(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
     }
-        
+
     if(getTopicTarget())
     {
       if(item->text(2).find(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
@@ -403,7 +403,7 @@ void ChannelListPanel::applyFilterClicked()
 
     while(item)
     {
-      applyFilterToItem(item);  
+      applyFilterToItem(item);
       item=channelListView->itemAtIndex(++index);
     }
 
@@ -476,7 +476,7 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
 
       // next search begins right after the link
       pos+=url.length();
-      
+
       // tell the program that we have found a new url
       showURLmenu->insertItem(href);
     }
@@ -484,13 +484,13 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
       pos++;
     }
   }
-  
+
   if (showURLmenu->count()==1) {
     showURLmenu->insertItem(i18n("<<No URL found>>"),5);
     showURLmenu->setItemEnabled(5,false);
   }
-  
-  int selected = showURLmenu->exec(p);  
+
+  int selected = showURLmenu->exec(p);
   if (selected!=-1) {
     QMenuItem* item = showURLmenu->findItem( selected );
 #if QT_VERSION >= 0x030100

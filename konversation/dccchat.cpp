@@ -105,7 +105,7 @@ void DccChat::listenForPartner()
 
     connect(listenSocket,SIGNAL (readyAccept()),this,SLOT(heardPartner()) );
 
-    getTextView()->append(i18n("Info"),i18n("Offering DCC Chat connection to %1 on port %2 ...").arg(nick).arg(port));
+    getTextView()->append(i18n("Info"),i18n("Offering DCC Chat connection to %1 on port %2...").arg(nick).arg(port));
     sourceLine->setText(i18n("DCC chat with %1 on port %2").arg(nick).arg(port));
   }
   else kdDebug() << this << "DccChat::listenForPartner(): listenSocket->listen() failed!" << endl;
@@ -123,7 +123,7 @@ void DccChat::connectToPartner()
   ip.setAddress(host.toUInt());
   host=ip.toString();
 
-  getTextView()->append(i18n("Info"),i18n("Establishing DCC Chat connection to %1 (%2:%3) ...").arg(nick).arg(host).arg(port));
+  getTextView()->append(i18n("Info"),i18n("Establishing DCC Chat connection to %1 (%2:%3)...").arg(nick).arg(host).arg(port));
   sourceLine->setText(i18n("DCC chat with %1 on %2:%3").arg(nick).arg(host).arg(port));
 
   dccSocket=new KExtendedSocket(host,port,KExtendedSocket::inetSocket);
@@ -140,20 +140,20 @@ void DccChat::connectToPartner()
 
   dccSocket->startAsyncConnect();
 
-  getTextView()->append(i18n("Info"),i18n("Looking for host %1 ...").arg(host));
+  getTextView()->append(i18n("Info"),i18n("Looking for host %1...").arg(host));
 }
 
 void DccChat::lookupFinished(int numOfResults)
 {
   if(numOfResults)
-    getTextView()->append(i18n("Info"),i18n("Host found, connecting ..."));
+    getTextView()->append(i18n("Info"),i18n("Host found, connecting..."));
   else
     getTextView()->append(i18n("Error"),i18n("Host %1 not found. Connection aborted.").arg(host));
 }
 
 void DccChat::dccChatConnectionSuccess()
 {
-  getTextView()->append(i18n("Info"),i18n("Connection established!"));
+  getTextView()->append(i18n("Info"),i18n("Connection established."));
 
   dccSocket->enableRead(true);
   dccChatInput->setEnabled(true);
@@ -161,7 +161,7 @@ void DccChat::dccChatConnectionSuccess()
 
 void DccChat::dccChatBroken(int error)
 {
-  getTextView()->append(i18n("Error"),i18n("Connection broken, error code %1!").arg(error));
+  getTextView()->append(i18n("Error"),i18n("Connection broken, error code %1.").arg(error));
 }
 
 void DccChat::readData()
@@ -291,7 +291,7 @@ void DccChat::heardPartner()
     dccSocket->enableRead(true);
     dccChatInput->setEnabled(true);
 
-    getTextView()->append(i18n("Info"),i18n("Connection established!"));
+    getTextView()->append(i18n("Info"),i18n("Connection established."));
   }
 }
 

@@ -111,7 +111,7 @@ void PrefsPageDccSettings::folderButtonClicked()
     QFileInfo folderInfo(folderName);
 
     if(folderInfo.isDir()) dccFolderInput->setText(folderName);
-    else KMessageBox::sorry(0,i18n("<qt>Error: %1 is not a regular folder!</qt>").arg(folderName),i18n("Incorrect Path"));
+    else KMessageBox::sorry(0,i18n("<qt>Error: %1 is not a regular folder.</qt>").arg(folderName),i18n("Incorrect Path"));
   }
 }
 

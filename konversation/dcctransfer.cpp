@@ -49,10 +49,10 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString p
   buffer=new char[bufferSize];
 
   statusText.append(i18n("Queued"));
-  statusText.append(i18n("Negotiating resume ..."));
-  statusText.append(i18n("Lookup ..."));
-  statusText.append(i18n("Connecting ..."));
-  statusText.append(i18n("Offering ..."));
+  statusText.append(i18n("Negotiating resume..."));
+  statusText.append(i18n("Lookup..."));
+  statusText.append(i18n("Connecting..."));
+  statusText.append(i18n("Offering..."));
   statusText.append(i18n("Sending"));
   statusText.append(i18n("Receiving"));
   statusText.append(i18n("Stalled"));

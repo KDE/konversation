@@ -603,7 +603,7 @@ void KonversationMainWindow::openNicksOnlinePanel()
 {
   if(!nicksOnlinePanel)
   {
-    
+
     nicksOnlinePanel=new NicksOnline(getViewContainer());
     addView(nicksOnlinePanel, 2, i18n("Nicks Online"), true);
 
@@ -724,7 +724,7 @@ void KonversationMainWindow::findTextShortcut()
   if(searchView==0)
   {
     KMessageBox::sorry(this,
-                       i18n("You can only search in text fields!"),
+                       i18n("You can only search in text fields."),
                        i18n("Find Text Information"));
   }
   else
@@ -775,9 +775,9 @@ void KonversationMainWindow::closeQueries()
   {
     if (operations > total)
       break;
-      
+
     nextPage=static_cast<ChatWindow*>(getViewContainer()->page(i));
-    
+
     if(nextPage && nextPage->getType()==ChatWindow::Query) {
       nextPage->closeYourself();
       --i; /* Tab indexes changed */

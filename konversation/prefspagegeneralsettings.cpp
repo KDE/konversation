@@ -19,7 +19,7 @@
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <qspinbox.h>
-#include <qwhatsthis.h> 
+#include <qwhatsthis.h>
 
 #include <klineedit.h>
 #include <klocale.h>
@@ -49,7 +49,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
 
   // double click actions
   QVBox* actionBox=new QVBox(parentFrame);
-  new QLabel(i18n("Commands to execute when doubleclicked in :"),actionBox);
+  new QLabel(i18n("Commands to execute when double-clicked in:"),actionBox);
 
   QHBox* actionEditBox=new QHBox(actionBox);
   actionEditBox->setSpacing(spacingHint());

@@ -70,7 +70,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   channelListPanel=0;
   alreadyConnected=false;
   rejoinChannels=false;
-  
+
   timerInterval=1;  // flood protection
 
   QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
@@ -123,7 +123,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   outgoingTimer.setName("outgoing_timer");
   outgoingTimer.start(timerInterval);
-  
+
   connect(&incomingTimer,SIGNAL(timeout()),
                     this,SLOT  (processIncomingData()) );
 
@@ -259,7 +259,7 @@ void Server::connectToIRCServer()
 {
   deliberateQuit=false;
   serverSocket.blockSignals(false);
-  
+
   // prevent sending queue until server has sent something or the timeout is through
   lockSending();
 
@@ -281,7 +281,7 @@ void Server::connectToIRCServer()
     setPrefixes("ov","@+");
 
     // (re)connect. Autojoin will be done by the input filter
-    statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1 ...").arg(serverSocket.host()));
+    statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1...").arg(serverSocket.host()));
     // QDns is broken, so don't use async lookup, use own threaded class instead
     resolver.setSocket(&serverSocket);
     resolver.start();
@@ -392,7 +392,7 @@ void Server::lookupFinished()
   }
   else
   {
-    statusView->appendServerMessage(i18n("Info"),i18n("Server found, connecting ..."));
+    statusView->appendServerMessage(i18n("Info"),i18n("Server found, connecting..."));
     serverSocket.startAsyncConnect();
   }
 }
@@ -402,7 +402,7 @@ void Server::ircServerConnectionSuccess()
   reconnectCounter=0;
 
   connect(this,SIGNAL (nicknameChanged(const QString&)),statusView,SLOT (setNickname(const QString&)) );
-  statusView->appendServerMessage(i18n("Info"),i18n("Connected! Logging in ..."));
+  statusView->appendServerMessage(i18n("Info"),i18n("Connected! Logging in..."));
 
   QString connectString="USER " +
                         identity->getIdent() +
@@ -417,7 +417,7 @@ void Server::ircServerConnectionSuccess()
   emit nicknameChanged(getNickname());
 
   serverSocket.enableRead(true);
-    
+
   // wait at most 2 seconds for server to send something before sending the queue ourselves
   unlockTimer.start(2000);
 }
@@ -624,7 +624,7 @@ void Server::notifyResponse(const QString& nicksOnline)
 #endif
       }
     }
-    
+
     // Finally copy the new ISON list with correct case to our notify cache
     notifyCache=nickList;
 #endif
@@ -790,14 +790,14 @@ void Server::send()
 {
   // Check if we are still online
   if(!isConnected()) outputBuffer.clear();
-  
+
   if(outputBuffer.count() && sendUnlocked)
   {
     // NOTE: It's important to add the linefeed here, so the encoding process does not trash it
     //       for some servers.
     QString outputLine=outputBuffer[0]+"\n";
     outputBuffer.pop_front();
-        
+
     // To make lag calculation more precise, we reset the timer here
     if(outputLine.startsWith("ISON") ||
        outputLine.startsWith("PING LAG")) notifySent.start();
@@ -823,7 +823,7 @@ void Server::send()
     // detach server stream
     serverStream.unsetDevice();
   }
-    
+
   // Flood-Protection
   if(timerInterval>1)
   {
@@ -976,7 +976,7 @@ NickInfo* Server::setChannelNick(const QString& channelName, const QString& nick
     QStringList watchLowerList=QStringList::split(' ',watchlist.lower());
     // If on the watch list, add channel and nick to unjoinedChannels list.
     if (watchLowerList.find(lcNickname) != watchLowerList.end())
-    { 
+    {
       return addNickToUnjoinedChannelsList(channelName, nickname, mode);
     }
     else return 0;
@@ -1037,10 +1037,10 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
 
     connect(query,SIGNAL (sendFile(const QString&)),this,SLOT (requestDccSend(const QString &)) );
     connect(this,SIGNAL (serverOnline(bool)),query,SLOT (serverOnline(bool)) );
-    
+
     // Append query to internal list
     queryList.append(query);
-    
+
 #ifdef USE_NICKINFO
     // Update NickInfo.
     QString lcNickname = nickname.lower();
@@ -1066,7 +1066,7 @@ void Server::closeQuery(const QString &name)
 {
   Query* query=getQueryByName(name);
   removeQuery(query);
-  
+
 #ifdef USE_NICKINFO
   // Update NickInfo.
   queryNicks.remove(name.lower());
@@ -1259,7 +1259,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
          SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,int)) );
   connect(newDcc,SIGNAL (dccGetDone(const QString&)),
               this,SLOT (dccGetDone(const QString&)) );
-  connect(newDcc,SIGNAL (dccStatusChanged(const DccTransfer* )), this, 
+  connect(newDcc,SIGNAL (dccStatusChanged(const DccTransfer* )), this,
          SLOT(dccStatusChanged(const DccTransfer*)) );
 
   if(KonversationApplication::preferences.getDccAutoGet()) newDcc->startGet();
@@ -1318,7 +1318,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
   }
   else
   {
-    appendStatusMessage(i18n("Error"),i18n("No DCC download running on port %1!").arg(dccArguments[1]));
+    appendStatusMessage(i18n("Error"),i18n("No DCC download running on port %1.").arg(dccArguments[1]));
   }
 }
 
@@ -1343,7 +1343,7 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
   }
   else
   {
-    appendStatusMessage(i18n("Error"),i18n("No DCC upload running on port %1!").arg(dccArguments[1]));
+    appendStatusMessage(i18n("Error"),i18n("No DCC upload running on port %1.").arg(dccArguments[1]));
   }
 }
 
@@ -1602,7 +1602,7 @@ NickInfo* Server::addNickToJoinedChannelsList(const QString& channelName, const 
   // Move the channel from unjoined list (if present) to joined list.
   QString lcChannelName = channelName.lower();
   ChannelNickList* members=unjoinedChannels.find(lcChannelName);
-  if (members) 
+  if (members)
   {
     unjoinedChannels.remove(lcChannelName);
     joinedChannels.insert(lcChannelName, members);
@@ -1611,7 +1611,7 @@ NickInfo* Server::addNickToJoinedChannelsList(const QString& channelName, const 
   {
     // Create a new list in the joined channels if not already present.
     members=joinedChannels.find(lcChannelName);
-    if (!members) 
+    if (!members)
     {
       members = new ChannelNickList;
       joinedChannels.insert(lcChannelName, members);
@@ -1660,7 +1660,7 @@ NickInfo* Server::addNickToUnjoinedChannelsList(const QString& channelName, cons
   // Move the channel from joined list (if present) to unjoined list.
   QString lcChannelName = channelName.lower();
   ChannelNickList* members = joinedChannels.find(lcChannelName);
-  if (members) 
+  if (members)
   {
     joinedChannels.remove(lcChannelName);
     unjoinedChannels.insert(lcChannelName, members);
@@ -1669,7 +1669,7 @@ NickInfo* Server::addNickToUnjoinedChannelsList(const QString& channelName, cons
   {
     // Create a new list in the unjoined channels if not already present.
     members = unjoinedChannels.find(lcChannelName);
-    if (!members) 
+    if (!members)
     {
       members = new ChannelNickList;
       unjoinedChannels.insert(lcChannelName, members);
@@ -1923,10 +1923,10 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
   if(outChannel)
   {
     outChannel->joinNickname(nickname,hostmask);
-    
+
     // OnScreen Message
     if(KonversationApplication::preferences.getOSDShowChannelEvent())
-    { 
+    {
       KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
       konvApp->osd->showOSD(i18n( "(%1) %2 has joined this channel. (%3)" )
                             .arg(channelName).arg(nickname).arg(hostmask));
@@ -1976,7 +1976,7 @@ void Server::removeNickFromChannel(const QString &channelName, const QString &ni
                             .arg(channelName).arg(nickname).arg(reason));
     }
   }
-  
+
 #ifdef USE_NICKINFO
   // Update NickInfo.  Remove the nick from the channel.
   removeChannelNick(channelName, nickname);
@@ -1990,7 +1990,7 @@ void Server::nickWasKickedFromChannel(const QString &channelName, const QString 
   {
     if(outChannel->getNickByName(nickname)) outChannel->kickNick(nickname,kicker,reason);
   }
-  
+
   // TODO: Need to update NickInfo, or does that happen in method above?
 }
 
@@ -2002,7 +2002,7 @@ void Server::removeNickFromServer(const QString &nickname,const QString &reason)
     removeNickFromChannel(channel->getName(),nickname,reason,true);
     channel=channelList.next();
   }
-  
+
 #ifdef USE_NICKINFO
   // Unless nick is in the watch list, delete it altogether, otherwise move it to nicknamesOffline list.
   QString watchList = KonversationApplication::preferences.getNotifyString();
@@ -2280,13 +2280,13 @@ void Server::away()
 {
   isAway=true;
   emit awayState(isAway);
-  
+
   if(!getIdentity()->getAwayNick().isEmpty() &&
      getIdentity()->getAwayNick() != getNickname()) {
     nonAwayNick = getNickname();
     queue("NICK " + getIdentity()->getAwayNick());
   }
-  
+
   // TODO: call renameNickInfo ?
 }
 
@@ -2294,11 +2294,11 @@ void Server::unAway()
 {
   isAway=false;
   emit awayState(isAway);
-  
+
   if(!getIdentity()->getAwayNick().isEmpty() && !nonAwayNick.isEmpty()) {
     queue("NICK " + nonAwayNick);
   }
-  
+
   // TODO: call renameNickInfo ?
 }
 
@@ -2312,9 +2312,9 @@ bool Server::isAChannel(const QString &check)
 void Server::addRawLog(bool show)
 {
   if(!rawLog) rawLog=getMainWindow()->addRawLog(this);
-  
+
   connect(this,SIGNAL (serverOnline(bool)),rawLog,SLOT (serverOnline(bool)) );
-  
+
   // bring raw log to front since the main window does not do this for us
   if(show) getMainWindow()->showView(rawLog);
 }
@@ -2358,12 +2358,12 @@ void Server::autoRejoinChannels()
 {
   QStringList channels;
   QStringList keys;
-  
+
   for(Channel* ch = channelList.first(); ch; ch = channelList.next()) {
     channels.append(ch->getName());
     keys.append(ch->getKey());
   }
-  
+
   QString joinString("JOIN "+channels.join(",")+" "+keys.join(","));
   queue(joinString);
 }
@@ -2385,11 +2385,11 @@ void Server::executeMultiServerCommand(const QString& command, const QString& pa
 {
   if(command == "away") {
     QString str = KonversationApplication::preferences.getCommandChar() + command;
-    
+
     if(!parameter.isEmpty()) {
       str += " " + parameter;
     }
-    
+
     outputFilter.parse(getNickname(), str,QString::null);
     queue(outputFilter.getServerOutput());
   } else if(command == "msg") {
