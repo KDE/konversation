@@ -30,6 +30,8 @@
 #include "konversationapplication.h"
 #include "chatwindow.h"
 #include "server.h"
+#include "linkaddressbookui.h"
+#include "addressbook.h"
 
 #define LABEL_OFFSET 16
 
@@ -76,33 +78,36 @@ static const char* remove_xpm[]=
 LedTabBar::LedTabBar(QWidget* parent,const char* name) :
            KTabBar(parent,name)
 {
-  popup=new KPopupMenu(this,"ledtabbar_context_menu");
+  m_popup=new KPopupMenu(this,"ledtabbar_context_menu");
+  m_popupAddressbook = new KPopupMenu(this, "ledtabbar_addressbook_context_menu");
 
-  if(popup)
+  if(m_popup)
   {
     // Encoding {
-    popupEncoding=new KPopupMenu(this,"ledtabbar_context_menu_encoding");
-    popupEncoding->setCheckable(true);
+    m_popupEncoding=new KPopupMenu(this,"ledtabbar_context_menu_encoding");
+    m_popupEncoding->setCheckable(true);
     QStringList encodingDescs=IRCCharsets::availableEncodingDescriptiveNames();
     unsigned int j=0;
     for(QStringList::Iterator it=encodingDescs.begin(); it!=encodingDescs.end(); ++it)
     {
-      popupEncoding->insertItem(*it,POPUPID_ENCODING_OFFSET+j+1);
+      m_popupEncoding->insertItem(*it,POPUPID_ENCODING_OFFSET+j+1);
       ++j;
     }
-    popupEncoding->insertSeparator();
-    popupEncoding->insertItem(i18n("Default"),POPUPID_ENCODING_OFFSET+0);
+    m_popupEncoding->insertSeparator();
+    m_popupEncoding->insertItem(i18n("Default"),POPUPID_ENCODING_OFFSET+0);
     // }
 
-    popup->insertTitle(i18n("Tab"),Label);
-    popup->insertItem(i18n("Move Left"),MoveLeft);
-    popup->insertItem(i18n("Move Right"),MoveRight);
-    popup->insertSeparator();
-    popup->insertItem(SmallIcon("charset"),i18n("Set Encoding"),popupEncoding,EncodingSub);
-    popup->insertSeparator();
-    popup->insertItem(i18n("Enable Notifications"), EnableNotifications);
-    popup->insertSeparator();
-    popup->insertItem(SmallIcon("tab_remove"),i18n("Close Tab"),CloseTab);
+    m_popup->insertTitle(i18n("Tab"),Label);
+    m_popup->insertItem(i18n("Move Left"),MoveLeft);
+    m_popup->insertItem(i18n("Move Right"),MoveRight);
+    m_popup->insertSeparator();
+    m_popup->insertItem(SmallIcon("charset"),i18n("Set Encoding"),m_popupEncoding,EncodingSub);
+    m_popup->insertItem(i18n("Addressbook Associations"), m_popupAddressbook, AddressbookSub);
+    
+    m_popup->insertSeparator();
+    m_popup->insertItem(i18n("Enable Notifications"), EnableNotifications);
+    m_popup->insertSeparator();
+    m_popup->insertItem(SmallIcon("tab_remove"),i18n("Close Tab"),CloseTab);
   }
 
   else kdWarning() << "LedTabBar::LedTabBar(): Could not create popup!" << endl;
@@ -118,7 +123,20 @@ LedTabBar::~LedTabBar()
 {
     delete m_closePixmap;
 }
-
+void LedTabBar::insertAssociationSubMenu(const NickInfoPtr &nickinfo) {
+  
+  KABC::Addressee addr = nickinfo->getAddressee();
+  m_popupAddressbook->clear();
+  if(!addr.isEmpty()) {
+    m_popupAddressbook->insertItem(i18n("Edit Contact..."), AddressbookEdit);
+    m_popupAddressbook->insertSeparator();
+    m_popupAddressbook->insertItem(i18n("Change Association..."), AddressbookChange);
+    m_popupAddressbook->insertItem(i18n("Delete Association"), AddressbookDelete);
+  } else {
+    m_popupAddressbook->insertItem(i18n("Choose Contact..."), AddressbookChange);
+    m_popupAddressbook->insertItem(i18n("Create New Contact..."), AddressbookNew);
+  }
+}
 LedTab* LedTabBar::tab(QWidget* widget)
 {
   QPtrList<QTab>* list=tabList();
@@ -380,33 +398,51 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
     QTab* lookTab=tabAt(index);
     if(lookTab->rect().contains(ce->pos()))
     {
-      popup->changeTitle(Label,lookTab->text());
-      popup->setItemEnabled(EncodingSub, false);
+      m_popup->changeTitle(Label,lookTab->text());
+      m_popup->setItemEnabled(EncodingSub, false);
       ChatWindow* win = dynamic_cast<ChatWindow*>(static_cast<LedTab*>(lookTab)->getWidget());
 
       if(win) {
         ChatWindow::WindowType viewType = win->getType();
         if(viewType == ChatWindow::Channel || viewType == ChatWindow::Query || viewType == ChatWindow::Status) {
-          popup->setItemEnabled(EnableNotifications, true);
-          popup->setItemChecked(EnableNotifications, win->notificationsEnabled());
+          m_popup->setItemEnabled(EnableNotifications, true);
+          m_popup->setItemChecked(EnableNotifications, win->notificationsEnabled());
         } else {
-          popup->setItemEnabled(EnableNotifications, false);
+          m_popup->setItemEnabled(EnableNotifications, false);
         }
+	if(viewType == ChatWindow::Query) {
+          m_popup->setItemVisible(AddressbookSub, true);
+	  //Now.. how do we get a nickinfo from this query?  A good question!
+          Server *server = win->getServer();
+	  if(server) {
+	    NickInfoPtr nickinfo = server->getNickInfo(win->getName()); //I think.
+	    if(nickinfo) {
+              insertAssociationSubMenu(nickinfo);
+	      m_popup->setItemEnabled(AddressbookSub, true);
+	    } else {
+              m_popup->setItemEnabled(AddressbookSub, false); //This shouldn't happen.  All queries have a nickinfo
+	    }
+	  } else {
+	    m_popup->setItemEnabled(AddressbookSub, false); //This shouldn't happen.  All queries have a server.
+	  }
+	} else {	
+	  m_popup->setItemVisible(AddressbookSub, false);
+	}
         if(win->isChannelEncodingSupported())
         {
-          popup->setItemEnabled(EncodingSub, true);
-          popupEncoding->changeItem(POPUPID_ENCODING_OFFSET+0,win->getChannelEncodingDefaultDesc());
+          m_popup->setItemEnabled(EncodingSub, true);
+          m_popupEncoding->changeItem(POPUPID_ENCODING_OFFSET+0,win->getChannelEncodingDefaultDesc());
           QString encoding=win->getChannelEncoding();
           int encodingIndex=IRCCharsets::shortNameToIndex(encoding);
-          popupEncoding->setItemChecked(POPUPID_ENCODING_OFFSET+0, (encoding.isEmpty())); // identity default
+          m_popupEncoding->setItemChecked(POPUPID_ENCODING_OFFSET+0, (encoding.isEmpty())); // identity default
           for(int i=0; i<IRCCharsets::availableEncodingsCount(); ++i)
-            popupEncoding->setItemChecked(POPUPID_ENCODING_OFFSET+i+1, (encodingIndex == i));
+            m_popupEncoding->setItemChecked(POPUPID_ENCODING_OFFSET+i+1, (encodingIndex == i));
         }
       } else {
-        popup->setItemVisible(EnableNotifications, false);
+        m_popup->setItemVisible(EnableNotifications, false);
       }
 
-      int r=popup->exec(ce->globalPos());
+      int r=m_popup->exec(ce->globalPos());
       if(r==CloseTab)
       {
         emit closeTab(lookTab->identifier());
@@ -423,6 +459,42 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
       {
         if(win) {
           win->setNotificationsEnabled(!win->notificationsEnabled());
+        }
+      }
+      else if(r == AddressbookEdit) {
+        KABC::Addressee addressee = win->getServer()->getNickInfo(win->getName())->getAddressee();
+        Konversation::Addressbook::self()->editAddressee(addressee.uid());
+      }
+      else if(r == AddressbookChange) {
+	QString realName;
+	Server *server = win->getServer();
+	NickInfoPtr nickInfo = server->getNickInfo(win->getName());
+        if (nickInfo) realName = nickInfo->getRealName();
+	QString nickname = win->getName();
+        LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, nickname, server->getServerName(), server->getServerGroup(), realName);
+        linkaddressbookui->show();
+      }
+      else if(r == AddressbookDelete || r == AddressbookNew) {
+	Server *server = win->getServer();
+        KABC::Addressee addressee = server->getNickInfo(win->getName())->getAddressee();
+        Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
+	QString nickname = win->getName();
+        if(addressbook->getAndCheckTicket())
+        {
+          if(r == AddressbookDelete) {
+            if (addressee.isEmpty()) return;
+            addressbook->unassociateNick(addressee, nickname, server->getServerName(), server->getServerGroup());
+          } else {
+            addressee.setGivenName(nickname);
+            addressee.setNickName(nickname);
+            addressbook->associateNickAndUnassociateFromEveryoneElse(addressee, nickname, server->getServerName(), server->getServerGroup());
+          }
+          if(addressbook->saveTicket())
+          {
+            //saveTicket will refresh the addressees for us.
+            if(r == AddressbookNew)
+              Konversation::Addressbook::self()->editAddressee(addressee.uid());
+          }
         }
       }
       else if(POPUPID_ENCODING_OFFSET <= r && r <= POPUPID_ENCODING_OFFSET+IRCCharsets::availableEncodingsCount()+1)

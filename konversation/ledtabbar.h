@@ -17,14 +17,14 @@
 #define LEDTABBAR_H
 
 #include <ktabbar.h>
-
+#include "nickinfo.h"
 /*
   @author Dario Abatianni
 */
 
 class KPopupMenu;
-
 class LedTab;
+
 
 class LedTabBar : public KTabBar
 {
@@ -61,21 +61,27 @@ class LedTabBar : public KTabBar
       MoveRight,
       CloseTab,
       EnableNotifications,
-      EncodingSub
+      EncodingSub,
+      AddressbookSub,
+      AddressbookEdit,
+      AddressbookChange,
+      AddressbookDelete,
+      AddressbookNew
     };
     // these two come from the original QT source
     virtual void paint( QPainter *, QTab *, bool ) const; // ### not const
     virtual void paintLabel( QPainter*, const QRect&, QTab*, bool ) const;
-    
+    void insertAssociationSubMenu(const NickInfoPtr &nickinfo);
     QPixmap* m_closePixmap;
     
     void contextMenuEvent(QContextMenuEvent* ce);
     void mouseReleaseEvent(QMouseEvent* e);
 
-    KPopupMenu* popup;
-    KPopupMenu* popupEncoding;
+    KPopupMenu* m_popup;
+    KPopupMenu* m_popupEncoding;
+    KPopupMenu* m_popupAddressbook;
     
-    QStringList encodingsList;
+    QStringList m_encodingsList;
 
 #ifndef QT_NO_WHEELEVENT
     void wheelEvent( QWheelEvent *e );

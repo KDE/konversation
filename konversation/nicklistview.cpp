@@ -140,7 +140,8 @@ void NickListView::insertAssociationSubMenu() {
   if(any_not_having_associations && !any_existing_associations)
     addressbook->insertItem(i18n("Create New Contact..."), AddressbookNew);
 
-    if(any_existing_associations)
+  if(any_existing_associations)
     addressbook->insertItem(i18n("Delete Association"), AddressbookDelete);
 }
 #include "nicklistview.moc"
+
