@@ -54,9 +54,10 @@ class DccTransferRecv : public DccTransfer
      * and may set it to empty.
      * Checking saveToFileURL isn't done until the user accepts the dcc
      * and start() is called, which calls validateSaveToFileURL.
+     * @param folderURL The directory url to save in.  The ircnick is added if needed.
      * @see validateSaveToFileURL()
      */
-    void calculateSaveToFileURL();
+    void calculateSaveToFileURL(const KURL &folderURL);
     /**
      * This checks saveToFileURL, and if it's empty, asks the user for a new
      * directory to save to.
@@ -124,7 +125,7 @@ class DccTransferRecvWriteCacheHandler : public QObject
     DccTransferRecvWriteCacheHandler( KIO::TransferJob* transferJob );
     virtual ~DccTransferRecvWriteCacheHandler();
     
-    void append( QByteArray* cache );
+    void append( QByteArray cache );
     bool write( bool force = false );
     void close();
     void closeNow();
@@ -140,13 +141,14 @@ class DccTransferRecvWriteCacheHandler : public QObject
     
   protected:
     unsigned long allCacheSize();
-    QByteArray* popCache();
+    QByteArray popCache();
     
     KIO::TransferJob* m_transferJob;
     bool m_writeAsyncMode;
     bool m_writeReady;
     
-    QPtrList<QByteArray> m_cacheList;
+    QValueList<QByteArray> m_cacheList;
 };
 
 #endif // DCCTRANSFERRECV_H
+

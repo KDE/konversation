@@ -58,7 +58,7 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
   kdDebug() << "DccTransferRecv::DccTransferRecv()" << endl
             << "DccTransferRecv::DccTransferRecv(): Partner=" << partnerNick << endl
             << "DccTransferRecv::DccTransferRecv(): File=" << fileName << endl
-            << "DccTransferRecv::DccTransferRecv(): Sanitised Filename=" << sanitised_filename << endl
+            << "DccTransferRecv::DccTransferRecv(): Sanitised Filename=" << m_fileName << endl
             << "DccTransferRecv::DccTransferRecv(): FileSize=" << fileSize << endl
             << "DccTransferRecv::DccTransferRecv(): Partner Address=" << partnerIp << ":" << partnerPort << endl;
     
@@ -71,7 +71,7 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
   
   m_recvSocket = 0;
   //The below function may not be valid, and may be empty.  Not checked until this user selects accept, and start() is called
-  calculateSaveToFileURL();
+  calculateSaveToFileURL(m_defaultFolderURL);
   updateView();
   panel->selectMe( this );
 
@@ -83,12 +83,12 @@ DccTransferRecv::~DccTransferRecv()
   cleanUp();
 }
 
-void DccTransferRecv::calculateSaveToFileURL() {
+void DccTransferRecv::calculateSaveToFileURL(const KURL &folderURL) {
 
-  if(m_defaultFolderURL.isEmpty() || !m_defaultFolderURL.isValid()) {
+  if(folderURL.isEmpty() || !folderURL.isValid()) {
     return;  // don't do anything - we'll prompt the user about this in start()
   }
-  KURL saveToFileURL = m_defaultFolderURL;
+  KURL saveToFileURL = folderURL;
    // set default path
   // Append folder with partner's name if wanted
   saveToFileURL.adjustPath( 1 );  // add a slash if there is none
@@ -311,9 +311,10 @@ void DccTransferRecv::readData()  // slot
   int actual = m_recvSocket->readBlock( m_buffer, m_bufferSize );
   if( actual > 0 )
   {
+    //actual is the size we read in, and is guaranteed to be less than m_bufferSize
     m_transferringPosition += actual;
-    QByteArray* ba = new QByteArray;
-    ba->duplicate( m_buffer, actual );
+    QByteArray ba;
+    ba.duplicate( m_buffer, actual );
     m_writeCacheHandler->append( ba );
     m_writeCacheHandler->write();
     m_recvSocket->enableWrite( true );
@@ -402,7 +403,7 @@ DccTransferRecvWriteCacheHandler::~DccTransferRecvWriteCacheHandler()
   closeNow();
 }
 
-void DccTransferRecvWriteCacheHandler::append( QByteArray* cache )  // public
+void DccTransferRecvWriteCacheHandler::append( QByteArray cache )  // public
 {
   m_cacheList.append( cache );
 }
@@ -420,9 +421,8 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )  // public
   
   // do write
   m_writeReady = false;
-  QByteArray* cache = popCache();
-  m_transferJob->sendAsyncData( *cache );
-  delete cache;  //FIXME double check that it's okay to do this
+  QByteArray cache = popCache();
+  m_transferJob->sendAsyncData( cache );
   return true;
 }
 
@@ -442,64 +442,43 @@ void DccTransferRecvWriteCacheHandler::closeNow()  // public
     emit dataFinished();  // tell KIO to close file
     m_transferJob = 0;
   }
-  m_cacheList.setAutoDelete( true );
-  while ( m_cacheList.removeFirst() );
+  m_cacheList.clear();
 }
 
 unsigned long DccTransferRecvWriteCacheHandler::allCacheSize()
 {
-  QPtrListIterator<QByteArray> it( m_cacheList );
   unsigned long sizeSum = 0;
-  while ( it.current() )
+
+  for( QValueList<QByteArray>::Iterator it = m_cacheList.begin();  it != m_cacheList.end(); it++ )
   {
-    sizeSum += it.current()->size();
-    ++it;
+    sizeSum += (*it).size();
   }
   return sizeSum;
 }
 
-QByteArray* DccTransferRecvWriteCacheHandler::popCache()
+QByteArray DccTransferRecvWriteCacheHandler::popCache()
 {
   // sendAsyncData() and dataReq() cost a lot of time, so we should pack some caches.
   
   static const unsigned int maxWritePacketSize = 2 * 1024 * 1024;  // 2megs
   
+  
+  QByteArray buffer;
+  int number_written = 0; //purely for debug info
   if ( !m_cacheList.isEmpty() )
   {
-    // determine how many caches will be included in the packet to write
-    QPtrListIterator<QByteArray> it( m_cacheList );
-    unsigned int sizeSum = 0;
-    int numCacheToWrite = 0;
-    QByteArray* one;
-    while ( it.current() )
-    {
-      one = it.current();
-      if ( maxWritePacketSize < sizeSum + one->size() )
-        break;
-      sizeSum += one->size();
-      ++numCacheToWrite;
-      ++it;
-    }
-    
-    // generate a packet to write
-    QByteArray* cache = new QByteArray( sizeSum );
-    it.toFirst();
-    char* data = cache->data();
-    for ( int i=0 ; i < numCacheToWrite ; ++i )
-    {
-      one = it.current();
-      ++it;
-      memcpy( data, one->data(), one->size() );
-      data += one->size();
-      m_cacheList.removeFirst();
-      delete one; 
-    }
-    
-    kdDebug() << "DccTransferRecvWriteCacheHandler::popCache(): caches in the packet: " << numCacheToWrite << ", remaining caches: " << m_cacheList.count() << endl;
-    
-    return cache;
+    QDataStream out(buffer,IO_WriteOnly);
+    int sizeSum = 0;
+    QValueList<QByteArray>::iterator it = m_cacheList.begin();
+    do {   //Guarantee that at list one bytearray is written.. is this okay?
+      out.writeBytes((*it).data(), (*it).size());
+      sizeSum+= (*it).size();
+      it = m_cacheList.remove(it);
+      number_written++; //for debug info
+    } while(it != m_cacheList.end() && maxWritePacketSize >= sizeSum + (*it).size());
   }
-  return 0;
+  kdDebug() << "DccTransferRecvWriteCacheHandler::popCache(): caches in the packet: " << number_written << ", remaining caches: " << m_cacheList.count() << endl;
+  return buffer;
 }
 
 void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& data )
@@ -514,10 +493,7 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
     {
       //once we write everything in cache, the file is complete.
       //This function will be called once more after this last data is written.
-      // NOTE: data = *( popCache() );  <-- it'll copy the instance. we should delete one from popCache()!
-      QByteArray* cache = popCache();
-      data = *cache;
-      delete cache;
+      data = popCache();
     }
     else
     {
