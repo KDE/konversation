@@ -71,6 +71,7 @@
 #include "logfilereader.h"
 #include "identitydialog.h"
 #include "joinchanneldialog.h"
+#include "notificationhandler.h"
 
 #ifdef USE_MDI
 KonversationMainWindow::KonversationMainWindow() : KMdiMainFrm(0,"mdi_main_form")
@@ -766,6 +767,12 @@ void KonversationMainWindow::deleteDccPanel()
 
 void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen)
 {
+  if(!listen) // Someone else initiated dcc chat
+    {
+      KonversationApplication* konv_app=static_cast<KonversationApplication*>(KApplication::kApplication());
+      konv_app->notificationHandler()->dccChat(frontView,nick);
+    }
+    
   if(frontServer)
   {
 #ifdef USE_MDI

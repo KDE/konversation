@@ -40,7 +40,8 @@ class NotificationHandler : public QObject
     void nickOnline(ChatWindow* chatWin, const QString& nick);
     void nickOffline(ChatWindow* chatWin, const QString& nick);
     void kick(ChatWindow* chatWin, const QString& channel,const QString& nick);
-  
+    void dccChat(ChatWindow* chatWin, const QString& nick);
+		    
   protected:
     void startTrayNotification(ChatWindow* chatWin);
     int winId() const;

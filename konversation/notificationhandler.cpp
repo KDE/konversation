@@ -243,6 +243,16 @@ void NotificationHandler::kick(ChatWindow* chatWin, const QString& channel,const
     i18n("You are kicked by %1 from %2").arg(nick).arg(channel));
 }
 
+void NotificationHandler::dccChat(ChatWindow* chatWin, const QString& nick)
+{
+  if(!chatWin || !chatWin->notificationsEnabled()) {
+    return;
+  }
+  
+  KNotifyClient::event(winId(), "dccChat",
+    i18n("%1 started a dcc chat with you").arg(nick));
+}
+
 }
 
 #include "notificationhandler.moc"
