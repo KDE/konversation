@@ -105,8 +105,14 @@ void UrlCatcher::setMainWindow(KonversationMainWindow *mainWindow)
 }
 UrlCatcher::~UrlCatcher()
 {
-  if(m_mainWindow)
-    (dynamic_cast<KToggleAction*>(m_mainWindow->actionCollection()->action("open_url_catcher")))->setChecked(true);
+  if(m_mainWindow && m_mainWindow->actionCollection()) {
+    KToggleAction* action = dynamic_cast<KToggleAction*>(
+        m_mainWindow->actionCollection()->action("open_url_catcher"));
+
+    if(action) {
+      action->setChecked(false);
+    }
+  }
 }
 
 void UrlCatcher::urlSelected()

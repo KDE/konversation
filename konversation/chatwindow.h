@@ -158,6 +158,16 @@ class ChatWindow : public BASE_CLASS
      *  Useful for when this tab has just gained focus
      */
     virtual void emitUpdateInfo();
+
+    /** child classes have to override this and return true if they want the
+     *  "insert character" item on the menu to be enabled.
+     */
+    virtual bool isInsertCharacterSupported() { return false; }
+
+    /** child classes have to override this and return true if they want the
+     *  "irc color" item on the menu to be enabled.
+     */
+    virtual bool areIRCColorsSupported() {return false; }
     
   signals:
     void nameChanged(ChatWindow* view,const QString& newName);
@@ -209,16 +219,6 @@ class ChatWindow : public BASE_CLASS
     void setLogfileName(const QString& name);
     void setChannelEncodingSupported(bool enabled);
     void cdIntoLogPath();
-
-    /** child classes have to override this and return true if they want the
-     *  "insert character" item on the menu to be enabled.
-     */
-    virtual bool isInsertCharacterSupported() { return false; }
-
-    /** child classes have to override this and return true if they want the
-     *  "irc color" item on the menu to be enabled.
-     */
-    virtual bool areIRCColorsSupported() {return false; }
     
     int spacing();
     int margin();

@@ -124,6 +124,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
   KAction *preferencesAction = KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
+  KAction* action;
+
   (new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()),
     actionCollection(), "open_server_list"))->setToolTip(i18n("Connect to a new server..."));
   (new KAction(i18n("Quick &Connect..."), "connect_creating", KShortcut("F7"), this, SLOT(openQuickConnectDialog()),
@@ -135,9 +137,11 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     actionCollection(), "identities_dialog"))->setToolTip(i18n("Set your nick, away message, etc..."));
 
   new KToggleAction(i18n("&Watched Nicks Online"), 0, KShortcut("F4"), this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
-  new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), this, SLOT(openLogfile()), actionCollection(), "open_logfile");
+  action = new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), this, SLOT(openLogfile()), actionCollection(), "open_logfile");
+  action->setEnabled(false);
 
-  new KAction(i18n("&Channel List"), 0, KShortcut("F5"), this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
+  action = new KAction(i18n("&Channel List"), 0, KShortcut("F5"), this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
+  action->setEnabled(false);
   new KToggleAction(i18n("&URL Catcher"), 0, KShortcut("F6"), this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
 
   new KAction(i18n("&New Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
@@ -164,21 +168,35 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     tabSelectionMapper->setMapping( tabSelectionAction, i);
   }
   
-  (new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window"))->setToolTip(i18n("Clear content of current window"));
-  (new KAction(i18n("Clear &All Windows"),0,KShortcut("CTRL+SHIFT+L"),this,SLOT(clearTabs()),actionCollection(),"clear_tabs"))->setToolTip(i18n("Clear contents of all windows"));
+  action = new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
+  action->setToolTip(i18n("Clear content of current window"));
+  action->setEnabled(false);
+  action = new KAction(i18n("Clear &All Windows"),0,KShortcut("CTRL+SHIFT+L"),this,SLOT(clearTabs()),actionCollection(),"clear_tabs");
+  action->setToolTip(i18n("Clear contents of all windows"));
+  action->setEnabled(false);
 
   KAction* awayAction = new KAction(i18n("Set &Away Globally")/*, "konversationaway"*/, KShortcut("Alt+A"),
     static_cast<KonversationApplication *>(kapp), SLOT(toggleAway()), actionCollection(),"toggle_away");  //string must be the same as that used in server.cpp
-  new KAction(i18n("&Join Channel..."), 0, KShortcut("Ctrl+J"), this, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
+  awayAction->setEnabled(false);
+  action = new KAction(i18n("&Join Channel..."), 0, KShortcut("Ctrl+J"), this, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
+  action->setEnabled(false);
 
-  KStdAction::find(this, SLOT(findText()), actionCollection());
-  KStdAction::findNext(this, SLOT(findNextText()), actionCollection());
+  action = KStdAction::find(this, SLOT(findText()), actionCollection());
+  action->setEnabled(false);
+  action = KStdAction::findNext(this, SLOT(findNextText()), actionCollection());
+  action->setEnabled(false);
 
-  (new KAction(i18n("&IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors"))->setToolTip(i18n("Set the color of your current IRC message."));
-  (new KAction(i18n("&Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line"))->setToolTip(i18n("Add a horizontal line that only you can see."));
-  (new KAction(i18n("Special &Character..."), "char", KShortcut("Alt+Shift+C"), this, SLOT(insertCharacter()), actionCollection(), "insert_character"))->setToolTip(i18n("Insert any character into your current IRC message. "));
+  action = new KAction(i18n("&IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors");
+  action->setToolTip(i18n("Set the color of your current IRC message."));
+  action->setEnabled(false);
+  action = new KAction(i18n("&Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line");
+  action->setToolTip(i18n("Add a horizontal line that only you can see."));
+  action->setEnabled(false);
+  action = new KAction(i18n("Special &Character..."), "char", KShortcut("Alt+Shift+C"), this, SLOT(insertCharacter()), actionCollection(), "insert_character");
+  action->setToolTip(i18n("Insert any character into your current IRC message. "));
+  action->setEnabled(false);
 
-  (new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries"));
+  new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
   
 #ifdef USE_MDI
   new KAction(i18n("Tabpage Mode"),"tabpage",0,this,SLOT (switchToTabPageMode()),actionCollection(),"mdi_tabpage_mode");
@@ -979,6 +997,8 @@ void KonversationMainWindow::updateFrontView()
 #else
   ChatWindow* view = static_cast<ChatWindow*>(getViewContainer()->currentPage());
 #endif
+  KAction* action;
+
   if(view) {
     // Make sure that only views with info output get to be the m_frontView
     if(m_frontView) {
@@ -1002,6 +1022,86 @@ void KonversationMainWindow::updateFrontView()
     if(view->searchView()) {
       searchView = view;
     }
+
+    action = actionCollection()->action("insert_remember_line");
+    if(action) action->setEnabled(view->getTextView() != 0);
+
+    action = actionCollection()->action("insert_character");
+    if(action) action->setEnabled(view->isInsertCharacterSupported());
+
+    action = actionCollection()->action("irc_colors");
+    if(action) action->setEnabled(view->areIRCColorsSupported());
+
+    action = actionCollection()->action("clear_window");
+    if(action) action->setEnabled(view->getTextView() != 0);
+
+    action = actionCollection()->action("edit_find");
+    if(action) action->setEnabled(view->searchView());
+
+    action = actionCollection()->action("edit_find_next");
+    if(action) action->setEnabled(view->searchView());
+
+    action = actionCollection()->action("open_channel_list");
+    if(action) {
+      if(view->getServer()) {
+        action->setEnabled(true);
+        action->setText(i18n("&Channel List for %1").arg(view->getServer()->getServerGroup()));
+      } else {
+        action->setEnabled(false);
+        action->setText(i18n("&Channel List"));
+      }
+    }
+
+    action = actionCollection()->action("join_channel");
+    if(action) action->setEnabled(view->getServer() != 0);
+
+    action = actionCollection()->action("open_logfile");
+    if(action) {
+      action->setEnabled(!view->logFileName().isEmpty());
+      if(view->logFileName().isEmpty())
+        action->setText(i18n("&Open Logfile"));
+      else
+        action->setText(i18n("&Open Logfile for %1").arg(view->getName()));
+    }
+
+    action = actionCollection()->action("clear_tabs");
+    if(action) action->setEnabled(true);
+
+    action = actionCollection()->action("toggle_away");
+    if(action) action->setEnabled(true);
+  } else {
+    action = actionCollection()->action("insert_remember_line");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("insert_character");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("irc_colors");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("clear_window");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("clear_tabs");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("edit_find");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("edit_find_next");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("open_channel_list");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("open_logfile");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("toggle_away");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("join_channel");
+    if(action) action->setEnabled(false);
   }
 }
 #ifdef USE_MDI

@@ -505,42 +505,6 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 }
 
 void ChatWindow::adjustFocus() {
-  if(m_mainWindow && m_mainWindow->actionCollection()) {
-    KAction *action;
-    action = m_mainWindow->actionCollection()->action("insert_remember_line");
-    if(action) action->setEnabled(textView!=NULL); else Q_ASSERT(action);
-    action = m_mainWindow->actionCollection()->action("insert_character");
-    if(action) action->setEnabled(isInsertCharacterSupported()); else Q_ASSERT(action);
-    action = m_mainWindow->actionCollection()->action("irc_colors");
-    if(action) action->setEnabled(areIRCColorsSupported()); else Q_ASSERT(action);
-    action = m_mainWindow->actionCollection()->action("clear_window");
-    if(action) action->setEnabled(textView!=NULL); else Q_ASSERT(action);
-    action = m_mainWindow->actionCollection()->action("edit_find");
-    if(action) action->setEnabled(textView!=NULL); else Q_ASSERT(action);
-    action = m_mainWindow->actionCollection()->action("edit_find_next");
-    if(action) action->setEnabled(m_server!=NULL); else Q_ASSERT(action);
-    action = m_mainWindow->actionCollection()->action("open_logfile");
-    if(action) {
-	    action->setEnabled(!logName.isEmpty());
-	    if(logName.isEmpty())
-		    action->setText(i18n("&Open Logfile"));
-	    else
-		    action->setText(i18n("&Open Logfile for %1").arg(getName()));
-    } else
-	    Q_ASSERT(action);
-    action = m_mainWindow->actionCollection()->action("open_channel_list");
-    if(action) { 
-	    action->setEnabled(m_server);
-            if(m_server)
-	      action->setText(i18n("&Channel List for %1").arg(m_server->getServerGroup()));
-	    else {
-	      action->setText(i18n("&Channel List")); 
-	    }
-		    
-    }
-    else 
-	    Q_ASSERT(action);
-  }
   childAdjustFocus();
 }
 void ChatWindow::emitUpdateInfo()

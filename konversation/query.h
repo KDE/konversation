@@ -65,6 +65,9 @@ class Query : public ChatWindow
     virtual QString getChannelEncoding();
     virtual QString getChannelEncodingDefaultDesc();
     virtual void emitUpdateInfo();
+
+    virtual bool areIRCColorsSupported() {return true; }
+    virtual bool isInsertCharacterSupported() { return true; }
   signals:
     void newText(QWidget* query,const QString& highlightColor,bool important);
     void sendFile(const QString& recipient);

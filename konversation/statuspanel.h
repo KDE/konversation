@@ -56,6 +56,9 @@ class StatusPanel : public ChatWindow
 
     virtual void setIdentity(const Identity *newIdentity);
 
+    virtual bool areIRCColorsSupported() {return true; }
+    virtual bool isInsertCharacterSupported() { return true; }
+
   signals:
     void newText(QWidget* widget,const QString& highlightColor,bool important);
     void sendFile();
@@ -86,8 +89,6 @@ class StatusPanel : public ChatWindow
 
     /** Called from ChatWindow adjustFocus */
     virtual void childAdjustFocus();
-    virtual bool areIRCColorsSupported() {return true; }
-    virtual bool isInsertCharacterSupported() { return true; }
 
     bool awayChanged;
     bool awayState;

@@ -218,6 +218,9 @@ class Channel : public ChatWindow
 
     ///Sort the nicklist
     void sortNickList();
+
+    virtual bool areIRCColorsSupported() {return true; }
+    virtual bool isInsertCharacterSupported() { return true; }
     
   protected:
     void showEvent(QShowEvent* event);
@@ -225,9 +228,6 @@ class Channel : public ChatWindow
     void fastAddNickname(ChannelNickPtr channelnick);
     /** Called from ChatWindow adjustFocus */
     virtual void childAdjustFocus();
-
-    virtual bool areIRCColorsSupported() {return true; }
-    virtual bool isInsertCharacterSupported() { return true; }
 
     int nicks;
     int ops;
