@@ -948,7 +948,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           {
             server->appendStatusMessage(i18n("List"),i18n("List of channels:"));
           }
-          else ; // send them to /LIST window
+          else emit addChannelListPanel();
           break;
         }
       case RPL_LIST:
@@ -962,7 +962,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           
             server->appendStatusMessage(i18n("List"),i18n(message).arg(parameterList[1]).arg(parameterList[2]).arg(trailing));
           }
-          else ; // send them to /LIST window
+          else // send them to /LIST window
+            emit addToChannelList(parameterList[1],parameterList[2].toInt(),trailing);
+          
           break;
         }
       case RPL_LISTEND:

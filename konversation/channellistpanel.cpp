@@ -26,6 +26,7 @@
 #include <klocale.h>
 
 #include "channellistpanel.h"
+#include "server.h"
 
 ChannelListPanel::ChannelListPanel(QWidget* parent) :
                   ChatWindow(parent)
@@ -38,20 +39,21 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
 
   new QLabel(i18n("Minimum users:"),mainGrid);
   new QLabel(i18n("Maximum users:"),mainGrid);
-  QSpinBox* minUsersSpin=new QSpinBox(mainGrid);
-  QSpinBox* maxUsersSpin=new QSpinBox(mainGrid);
+  QSpinBox* minUsersSpin=new QSpinBox(mainGrid,"min_users_spin");
+  QSpinBox* maxUsersSpin=new QSpinBox(mainGrid,"max_users_spin");
   
   new QLabel(i18n("Filter pattern:"),mainGrid);
   new QLabel(i18n("Filter target:"),mainGrid);
   
-  KLineEdit* filterInput=new KLineEdit(mainGrid);
+  KLineEdit* filterInput=new KLineEdit(mainGrid,"channel_list_filter_input");
 
   QHBox* targetBox=new QHBox(mainGrid);
   targetBox->setSpacing(spacing());
   
-  QCheckBox* channelFilter=new QCheckBox(i18n("Channel"),targetBox);  
-  QCheckBox* topicFilter=new QCheckBox(i18n("Topic"),targetBox);
-  QPushButton* applyFilter=new QPushButton(i18n("Apply filter"),targetBox);     
+  QCheckBox* channelFilter=new QCheckBox(i18n("Channel"),targetBox,"filter_target_channel_check");  
+  QCheckBox* topicFilter=new QCheckBox(i18n("Topic"),targetBox,"filter_target_topic_check");
+  QCheckBox* regexCheck=new QCheckBox(i18n("Regular expression"),targetBox,"regex_check");
+  QPushButton* applyFilter=new QPushButton(i18n("Apply filter"),targetBox,"apply_filter_button");     
   
   targetBox->setStretchFactor(topicFilter,10);
   
@@ -67,12 +69,20 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   QPushButton* refreshListButton=new QPushButton(i18n("Refresh list"),actionBox,"refresh_list_button");
   QPushButton* saveListButton=new QPushButton(i18n("Save list"),actionBox,"save_list_button");
   QPushButton* joinChannelButton=new QPushButton(i18n("Join channel"),actionBox,"join_channel_button");
+
+  connect(refreshListButton,SIGNAL (clicked()),SIGNAL (refreshChannelList()) );
 }
 
 ChannelListPanel::~ChannelListPanel()
 {
 }
 
+void ChannelListPanel::addToChannelList(const QString& channel,int users,const QString& topic)
+{
+}
+
 void ChannelListPanel::adjustFocus()
 {
 }
+
+#include "channellistpanel.moc"

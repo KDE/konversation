@@ -57,6 +57,7 @@ class KonversationMainWindow : public KMainWindow
 
     StatusPanel* addStatusView(Server* server);
     RawLog* addRawLog(Server* server);
+    ChannelListPanel* addChannelListPanel(Server* server);
     Channel* addChannel(Server* server,const QString& name);
     Query* addQuery(Server* server,const QString& name);
 
@@ -78,7 +79,6 @@ class KonversationMainWindow : public KMainWindow
   public slots:
     // connected in server class
     void addDccPanel();
-    void addChannelListPanel();
 
     void resetLag();
     void updateLag(Server* lagServer,int msec);
@@ -164,7 +164,6 @@ class KonversationMainWindow : public KMainWindow
     ChatWindow* frontView;
     ChatWindow* searchView;
 
-    ChannelListPanel* channelListPanel;
     DccPanel* dccPanel;
     bool dccPanelOpen;
 

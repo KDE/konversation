@@ -37,15 +37,17 @@
 #include "konversationmainwindow.h"
 #include "statuspanel.h"
 #include "rawlog.h"
+#include "channellistpanel.h"
 
 Server::Server(KonversationMainWindow* newMainWindow,int id)
 {
   identity=0;
-  rawLog=0;
   tryNickNumber=0;
   checkTime=0;
   reconnectCounter=0;
   currentLag=0;
+  rawLog=0;
+  channelListPanel=0;
 
   QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
   setIdentity(KonversationApplication::preferences.getIdentityByName(serverEntry[7]));
@@ -125,6 +127,8 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
                   this,SLOT  (userhost(const QString&,const QString&,bool,bool)) );
   connect(&inputFilter,SIGNAL(topicAuthor(const QString&,const QString&)),
                   this,SLOT  (setTopicAuthor(const QString&,const QString&)) );
+  connect(&inputFilter,SIGNAL(addChannelListPanel()),
+                  this,SLOT  (addChannelListPanel()) );
 
 
   connect(this,SIGNAL(serverLag(int)),statusView,SLOT(updateLag(int)) );
@@ -141,6 +145,8 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
   connect(getMainWindow(),SIGNAL(openPrefsDialog()),KonversationApplication::kApplication(),SLOT(openPrefsDialog()));
+
+  addChannelListPanel();
 }
 
 Server::~Server()
@@ -154,6 +160,7 @@ Server::~Server()
   send();
   
   closeRawLog();
+  closeChannelListPanel();
   channelList.setAutoDelete(true);
   while(channelList.removeFirst());
   queryList.setAutoDelete(true);
@@ -560,6 +567,12 @@ void Server::closeChannel(const QString &name)
 {
   outputFilter.parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"PART",name);
   queue(outputFilter.getServerOutput());
+}
+
+void Server::requestChannelList()
+{
+  inputFilter.setAutomaticRequest(true);
+  queue("LIST");
 }
 
 void Server::requestUserhost(const QString& nicks)
@@ -1284,6 +1297,26 @@ void Server::closeRawLog()
   {
     delete rawLog;
     rawLog=0;
+  }
+}
+
+void Server::addChannelListPanel()
+{
+  if(!channelListPanel)
+  {
+    channelListPanel=getMainWindow()->addChannelListPanel(this);
+    connect(channelListPanel,SIGNAL (refreshChannelList()),this,SLOT (requestChannelList()) );
+    connect(&inputFilter,SIGNAL (addToChannelList(const QString&,int,const QString&)),
+          channelListPanel,SLOT (addToChannelList(const QString&,int,const QString&)) );
+  }
+}
+
+void Server::closeChannelListPanel()
+{
+  if(channelListPanel)
+  {
+    delete channelListPanel;
+    channelListPanel=0;
   }
 }
 

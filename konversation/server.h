@@ -39,6 +39,7 @@ class StatusPanel;
 class Identity;
 class KonversationMainWindow;
 class RawLog;
+class ChannelListPanel;
 
 class Server : public QObject
 {
@@ -143,9 +144,12 @@ class Server : public QObject
     void addDccSend(const QString &recipient,const QString &file);
     void removeQuery(Query *query);
     void startNotifyTimer(int msec=0);
+    void requestChannelList();
     void requestUserhost(const QString& nicks);
     void addRawLog(bool show);
     void closeRawLog();
+    void addChannelListPanel();
+    void closeChannelListPanel();
     void updateChannelQuickButtons();
 
   protected slots:
@@ -237,6 +241,7 @@ class Server : public QObject
 
     StatusPanel* statusView;
     RawLog* rawLog;
+    ChannelListPanel* channelListPanel;
 
     QDateTime awayTime;
     bool isAway;

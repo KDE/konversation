@@ -14,13 +14,12 @@
   $Id$
 */
 
-
 #ifndef _CHANNELLISTPANEL_H_
 #define _CHANNELLISTPANEL_H_
 
-#include "klistview.h"
+#include <klistview.h>
 
-#include <chatwindow.h>
+#include "chatwindow.h"
 
 /*
   Dario Abatianni
@@ -29,14 +28,18 @@
 class ChannelListPanel : public ChatWindow
 {
   Q_OBJECT
-  
+
   public:
     ChannelListPanel(QWidget* parent);
     ~ChannelListPanel();
 
+  signals:
+    void refreshChannelList();
+  
   public slots:
     void adjustFocus();
-    
+    void addToChannelList(const QString& channel,int users,const QString& topic);
+
   protected:
     KListView* channelListView;
 };

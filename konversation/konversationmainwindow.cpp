@@ -49,7 +49,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   frontView=0;
   searchView=0;
   frontServer=0;
-  channelListPanel=0;
   dccPanel=0;
   dccPanelOpen=false;
 
@@ -114,8 +113,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
   createGUI();
   readOptions();
-
-//  addChannelListPanel();
 }
 
 KonversationMainWindow::~KonversationMainWindow()
@@ -326,7 +323,6 @@ Query* KonversationMainWindow::addQuery(Server* server, const QString& name)
 
 RawLog* KonversationMainWindow::addRawLog(Server* server)
 {
-  kdDebug() << "KonversationMainWindow::addRawLog()" << endl;
   RawLog* rawLog=new RawLog(getViewContainer());
 
   rawLog->setServer(server);
@@ -337,13 +333,16 @@ RawLog* KonversationMainWindow::addRawLog(Server* server)
   return rawLog;
 }
 
-void KonversationMainWindow::addChannelListPanel()
+ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
 {
-  if(channelListPanel==0)
-  {
-    channelListPanel=new ChannelListPanel(getViewContainer());
-    addView(channelListPanel,2,i18n("Channel list"));
-  }
+  kdDebug() << "KonversationMainWindow::addChannelListPanel()" << endl;
+  
+  ChannelListPanel* channelListPanel=new ChannelListPanel(getViewContainer());
+  channelListPanel->setServer(server);
+  
+  addView(channelListPanel,2,i18n("Channel list"));
+  
+  return channelListPanel;
 }
 
 void KonversationMainWindow::newText(QWidget* view)
@@ -359,8 +358,10 @@ void KonversationMainWindow::updateFrontView()
   ChatWindow* view=static_cast<ChatWindow*>(getViewContainer()->currentPage());
 
   // Make sure that only views with info output get to be the frontView
+  // TODO: make a function to check this rather than excluding types here
   if(view->getType()!=ChatWindow::DccPanel &&
-     view->getType()!=ChatWindow::RawLog) frontView=view;
+     view->getType()!=ChatWindow::RawLog &&
+     view->getType()!=ChatWindow::ChannelList) frontView=view;
   // Make sure that only text views get to be the searchView
   if(view->getType()!=ChatWindow::DccPanel &&
      view->getType()!=ChatWindow::ChannelList) searchView=view;
@@ -378,13 +379,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
   if(frontServer) updateLag(frontServer,frontServer->getLag());
 
   updateFrontView();
-/*
-  // Make sure that only views with info output get to be the frontView
-  if(view->getType()!=ChatWindow::DccPanel &&
-     view->getType()!=ChatWindow::RawLog) frontView=view;
-  // Make sure that only text views get to be the searchView
-  if(view->getType()!=ChatWindow::DccPanel) searchView=view;
-*/
+  
   viewContainer->changeTabState(view,false);
 }
 
