@@ -2440,8 +2440,6 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
     }
     query=queryList.next();
   }
-  // Re-calculate ISON (notify) list.
-  m_serverISON->recalculateAddressees();
 
 }
 

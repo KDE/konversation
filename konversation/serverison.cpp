@@ -32,24 +32,30 @@
 
 ServerISON::ServerISON(Server* server) : m_server(server) {
   m_useNotify = false;
+  m_ISONList_invalid = false;
   slotPrefsChanged();
-  connect( Konversation::Addressbook::self()->getAddressBook(),
-    SIGNAL( addressBookChanged( AddressBook * ) ),
-    this, SLOT( recalculateAddressees() ) );
-  connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()),
-    this, SLOT(recalculateAddressees()));
-  // connect( m_server, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
-  //  this, SLOT(nickInfoChanged(Server*, const NickInfoPtr)));
+  connect( m_server, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
+    this, SLOT(nickInfoChanged(Server*, const NickInfoPtr)));
   connect(m_server->getMainWindow(), SIGNAL(prefsChanged()),
     this, SLOT(slotPrefsChanged()));
 }
     
-QStringList ServerISON::getISONList() { return m_ISONList; }
+QStringList ServerISON::getISONList() {  
+  if(m_ISONList_invalid)
+    recalculateAddressees();
+  return m_ISONList; 
+}
 
-QStringList ServerISON::getAddressees() { return m_addresseesISON; }
+QStringList ServerISON::getAddressees() { 
+  if(m_ISONList_invalid)
+    recalculateAddressees();
+  return m_addresseesISON; 
+}
 
 KABC::Addressee ServerISON::getOfflineNickAddressee(QString& nickname)
 {
+  if(m_ISONList_invalid)
+    recalculateAddressees();
   if (m_offlineNickToAddresseeMap.contains(nickname))
     return m_offlineNickToAddresseeMap[nickname];
   else
@@ -79,6 +85,7 @@ void ServerISON::recalculateAddressees()
         QString uid = addressee.uid();
         QStringList nicknames = addresseeToOnlineNickMap[uid];
         nicknames.append(nickInfo->getNickname());
+	//TODO: Check if this nick is in any channel, and if it is, don't add, since we know they are online if they are in the channel with us.
         addresseeToOnlineNickMap[uid] = nicknames;
       }
     }
@@ -139,6 +146,7 @@ void ServerISON::recalculateAddressees()
       if (!m_ISONList.contains(nickname)) m_ISONList.append(nickname);
     }
   }
+  m_ISONList_invalid = false;
 }
 
 // When user changes preferences and has nick watching turned on, rebuild notify list.
@@ -156,10 +164,14 @@ void ServerISON::slotPrefsChanged()
       KonversationApplication::preferences.getNotifyListByGroup(groupName);
     // If user just turned on nick watching, build addressbook watch list
     // and merge with user prefs watch list.
-    if (turnedOn)
-      recalculateAddressees();
+
+    m_ISONList_invalid = true;
+    //FIXME I don't think I need anything below this.. if you agree, delete it - thanks - JOHNFLUX
+/*    if (turnedOn)
+      m_ISONList_invalid = true;
     else
     {
+      recalculateAddressees();
       // Merge (possibly) modified Watch List from preferences with previously
       // calculated addressbook watch list.
       m_ISONList = m_prefsWatchList;
@@ -168,7 +180,7 @@ void ServerISON::slotPrefsChanged()
         QString nickname = m_addresseesISON[index];
         if (!m_ISONList.contains(nickname)) m_ISONList.append(nickname);
       }
-    }
+    }*/
   }
   // If nick watching is off, clear list.
   else m_ISONList.clear();
@@ -176,10 +188,8 @@ void ServerISON::slotPrefsChanged()
 }
 
 void ServerISON::nickInfoChanged(Server* /*server*/, const NickInfoPtr /*nickInfo*/) {
-  // TODO only reculate that one nickinfo somehow.. this is such a waste of time :(
-  // not sure how though
-  // I would hope we can get rid of this routine altogther..gary.
-  recalculateAddressees();
+  //We need to call recalculateAddressees before returning m_ISONList
+  m_ISONList_invalid = true;
 }
  
 #include "serverison.moc"

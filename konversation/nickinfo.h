@@ -104,6 +104,7 @@ class NickInfo : public QObject, public KShared
     QString m_versionInfo;
     bool m_notified;
     QString m_realName;
+    /** The server they are connected to. */
     QString m_netServer;
     QString m_netServerInfo;
     QDateTime m_onlineSince;
