@@ -469,7 +469,8 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
     {
       server->nickJoinsChannel(channelName,sourceNick,sourceHostmask);
 #ifdef USE_KNOTIFY
-      if(server->getChannelByName(channelName)->notificationsEnabled()) {
+      Channel* channel = server->getChannelByName(channelName);
+      if(channel && server->getChannelByName(channelName)->notificationsEnabled()) {
         KNotifyClient::event(mainWindow->winId(), "join");
       }
 #endif
