@@ -518,12 +518,12 @@ void NicksOnline::doCommand(int id)
         {
           if(id == ciAddressbookDelete) {
             KABC::Addressee addr = addressbook->getKABCAddresseeFromNick(nickname);
-            addressbook->unassociateNick(addr, nickname);
+            addressbook->unassociateNick(addr, nickname, server->getServerName(), server->getServerGroup());
           } else {
             KABC::Addressee addr;
             addr.setGivenName(nickname);
             addr.setNickName(nickname);
-            addressbook->associateNickAndUnassociateFromEveryoneElse(addr, nickname);
+            addressbook->associateNickAndUnassociateFromEveryoneElse(addr, nickname, server->getServerName(), server->getServerGroup());
           }
           if(addressbook->saveTicket())
           {
@@ -537,7 +537,7 @@ void NicksOnline::doCommand(int id)
       }
     case ciAddressbookChange:
       {
-        LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, nickname, nickInfo->getRealName());
+        LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, nickname, server->getServerName(), server->getServerGroup(), nickInfo->getRealName());
         linkaddressbookui->show();
         nickInfo->refreshAddressee();
         break;
@@ -571,7 +571,9 @@ int NicksOnline::getNickAddressbookState(QListViewItem* item)
   QString nickname;
   if (getItemServerAndNick(item, serverName, nickname))
   {
-    if (Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname).isEmpty())
+    Server *server = static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
+    if(!server) return 0;
+    if (Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname, serverName, server->getServerGroup()).isEmpty())
       nickState = 1;
     else
       nickState = 2;

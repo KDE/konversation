@@ -31,7 +31,7 @@
 
 NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 {
-  addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nick);
+  addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nick, server->getServerName(), server->getServerGroup());
   nickname = nick;
   owningServer = server;
   away = false;
@@ -80,13 +80,13 @@ void NickInfo::setNickname(const QString& newNickname) {
   Q_ASSERT(!newNickname.isEmpty());
   if(newNickname == nickname) return;
 
-  KABC::Addressee newaddressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(newNickname);
+  KABC::Addressee newaddressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(newNickname, owningServer->getServerName(), owningServer->getServerGroup());
 
   if(addressee.isEmpty() && !newaddressee.isEmpty()) { //We now know who this person is
-    Konversation::Addressbook::self()->associateNick(newaddressee,nickname);  //Associate the old nickname with new contact
+    Konversation::Addressbook::self()->associateNick(newaddressee,nickname, owningServer->getServerName(), owningServer->getServerGroup());  //Associate the old nickname with new contact
     Konversation::Addressbook::self()->saveAddressee(newaddressee);
   } else if(!addressee.isEmpty() && newaddressee.isEmpty()) {
-    Konversation::Addressbook::self()->associateNick(addressee, newNickname);
+    Konversation::Addressbook::self()->associateNick(addressee, newNickname, owningServer->getServerName(), owningServer->getServerGroup());
     Konversation::Addressbook::self()->saveAddressee(newaddressee);	
     newaddressee = addressee;
   }
@@ -167,7 +167,7 @@ void NickInfo::setOnlineSince(const QDateTime& datetime) {
 KABC::Addressee NickInfo::getAddressee() { return addressee;}
 
 void NickInfo::refreshAddressee() {
-  addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname);
+  addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname, owningServer->getServerName(), owningServer->getServerGroup());
   emit nickInfoChanged();
   
   if(!addressee.isEmpty())

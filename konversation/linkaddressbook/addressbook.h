@@ -32,11 +32,13 @@ class Addressbook : public QObject,public KIMIface
 {
   Q_OBJECT
   public:
-    KABC::Addressee getKABCAddresseeFromNick(const QString &ircnick);
-    bool hasNick(const KABC::Addressee &addressee, const QString &ircnick);
-    void unassociateNick(KABC::Addressee &addressee, const QString &ircnick);
-    void associateNick(KABC::Addressee &addressee, const QString &ircnick);
-    bool associateNickAndUnassociateFromEveryoneElse(KABC::Addressee &addressee, const QString &ircnick);
+    KABC::Addressee getKABCAddresseeFromNick(const QString &ircnick, const QString &servername, const QString &servergroup);
+    KABC::Addressee getKABCAddresseeFromNick(const QString &nick_server);
+    bool hasNick(const KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup);
+    bool hasNick(const KABC::Addressee &addressee, const QString &nick_server);
+    void unassociateNick(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup);
+    void associateNick(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup);
+    bool associateNickAndUnassociateFromEveryoneElse(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup);
     /** If this user is online, return one of the nicks that they are
       * using.  Otherwise return the first nick listed.
       * If there are multiple matches, it will prefer ones that are not set to away.

@@ -38,26 +38,58 @@ Addressbook *Addressbook::self() {
 }
 
 KABC::AddressBook *Addressbook::getAddressBook() { return addressBook; }
-    
 
-KABC::Addressee Addressbook::getKABCAddresseeFromNick(const QString &ircnick) {
+
+
+KABC::Addressee Addressbook::getKABCAddresseeFromNick(const QString &ircnick, const QString &servername, const QString &servergroup) {
 	KABC::Addressee addr;
 	KABC::AddressBook::Iterator it;
 	
 	for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
-		if(hasNick(*it, ircnick))
+		if(hasNick(*it, ircnick, servername, servergroup))
 			return (*it);
 	}
 	return KABC::Addressee();
 }
-
-bool Addressbook::hasNick(const KABC::Addressee &addressee, const QString &ircnick) {
-	QString lower_ircnick = ircnick.lower();
+KABC::Addressee Addressbook::getKABCAddresseeFromNick(const QString &nick_server) {
+	KABC::Addressee addr;
+	KABC::AddressBook::Iterator it;
+	
+	for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
+		if(hasNick(*it, nick_server))
+			return (*it);
+	}
+	return KABC::Addressee();
+}
+bool Addressbook::hasNick(const KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup) {
+	
+	QString lnick = ircnick.lower();
+	QString lnick_servername;
+	QString lnick_servergroup;
+	if(!servername.isEmpty())
+		lnick_servername = lnick + QChar(0xE120) + servername.lower();
+	if(!servergroup.isEmpty())
+		lnick_servergroup = lnick + QChar(0xE120) + servergroup.lower();
+		
+	QString lit;
 	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
 	QStringList::iterator end = addresses.end();
 	for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
 	{
-		if((*it).lower() == lower_ircnick)
+		lit = (*it).lower();
+		if(lit == lnick || lit == lnick_servername || lit == lnick_servergroup)
+			return true;
+	}
+	return false;
+
+}
+
+bool Addressbook::hasNick(const KABC::Addressee &addressee, const QString &nick_server) {
+	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
+	QStringList::iterator end = addresses.end();
+	for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
+	{
+		if((*it).lower() ==nick_server)
 			return true;
 	}
 	return false;
@@ -110,26 +142,42 @@ NickInfoPtr Addressbook::getNickInfo(const KABC::Addressee &addressee, bool onli
 bool Addressbook::hasAnyNicks(const KABC::Addressee &addressee, const QString &/*server*/) {
 	return !addressee.custom("messaging/irc", "All").isEmpty();
 }
-/** For a given contact, remove the ircnick if they have it. If you pass an addressBook, the contact is inserted
- *  if it has changed. */
-void Addressbook::unassociateNick(KABC::Addressee &addressee, const QString &ircnick) {
+/** For a given contact, remove the ircnick if they have it. If you
+ *  pass an addressBook, the contact is inserted if it has changed. 
+ */
+void Addressbook::unassociateNick(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup) {
 	
 	kdDebug() << "in unassociatenick for '" << ircnick << "'" << endl;
+	if(ircnick.isEmpty()) return;
 	
-	QString lower_ircnick = ircnick.lower();
+	QString lnick = ircnick.lower();
+	QString lnick_servername;
+	QString lnick_servergroup;
+	if(!servername.isEmpty())
+		lnick_servername = lnick + QChar(0xE120) + servername.lower();
+	if(!servergroup.isEmpty())
+		lnick_servergroup = lnick + QChar(0xE120) + servergroup.lower();  
 	
-	kdDebug() << "nick" << lower_ircnick<< endl;
+	//We should now have lnick = ircnick, and versions with servername and servergroup - 
+	// like johnflux, johnflux@freenode, or johnflux@irc.kde.org    except with the unicode
+	// seperator char 0xe120 instead of the @
+	
+	kdDebug() << "nick" << ircnick<< endl;
 	bool changed = false;
 	if(addressee.isEmpty()) {
 		kdDebug() << "Ignoring unassociation command for empty addressee for nick " << ircnick << endl;
 	}
+	QString lit;
 	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
-	for ( QStringList::iterator it = addresses.begin(); it != addresses.end(); ++it )
-	{
-		if((*it).lower() == lower_ircnick) {
+	QStringList::iterator it = addresses.begin();
+	while(it != addresses.end()) {
+		lit = (*it).lower();
+		if(lit == lnick || lit == lnick_servername || lit == lnick_servergroup) {
 			changed = true;
-			addresses.remove(it);
-			break; //We have to break.  Our iterator is not safe now.
+			QStringList::iterator todeleteit = ++it;
+			addresses.remove(todeleteit);
+		} else {
+			it++;
 		}
 	}
 	if(!changed)
@@ -149,29 +197,26 @@ void Addressbook::unassociateNick(KABC::Addressee &addressee, const QString &irc
 
 /**For a given contact, adds the ircnick if they don't already have it.  If you pass an addressBook, the contact is inserted
  * if it has changed. */
-void Addressbook::associateNick(KABC::Addressee &addressee, const QString &ircnick) {
-	QString lower_ircnick = ircnick.lower();
-	 QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
-	QStringList::iterator end = addresses.end();
-	for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
-	{
-		if((*it).lower() == lower_ircnick) {
-			return; //It's already there.  No need to do anything.
-		}
-	}
-	//if(!getAndCheckTicket()) return;
-	addresses.append(ircnick);
+void Addressbook::associateNick(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup) {
+	//It's easiest to just remove it from the list if it's there already
+	unassociateNick(addressee, ircnick, servername, servergroup);
+	QString nick_server = ircnick;
+	if(!servergroup.isEmpty())
+		nick_server += QChar(0xE120) + servergroup;
+	else if(!servername.isEmpty())
+		nick_server += QChar(0xE120) + servername;
+	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
+	addresses.append(nick_server);
 	addressee.insertCustom("messaging/irc", "All", addresses.join( QChar( 0xE000 )));
 	
 	addressBook->insertAddressee(addressee);
-	//saveTicket();
 }
 /** This function associates the nick for a person, then iterates over all the contacts unassociating the nick from everyone else. It saves the addressses that have changed.*/
-bool Addressbook::associateNickAndUnassociateFromEveryoneElse(KABC::Addressee &addressee, const QString &ircnick) {
+bool Addressbook::associateNickAndUnassociateFromEveryoneElse(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup) {
         for( KABC::AddressBook::Iterator it = addressBook->begin(); it != addressBook->end(); ++it )
 		if((*it).uid() != addressee.uid())
-			unassociateNick(*it, ircnick);
-	associateNick(addressee, ircnick);
+			unassociateNick(*it, ircnick, servername, servergroup);
+	associateNick(addressee, ircnick, servername, servergroup);
 	return true;;
 }
 
@@ -400,9 +445,11 @@ QString Addressbook::locate(const QString &contactId, const QString &/*protocol*
 		kdDebug() << "Addressbook::locate called with empty contactId" << endl;
 		return QString::null;
 	}
+	//FIXME the below lines - what protocol are we using for irc?
 	//if(protocol != "IRCProtocol")
 		//return false;
-	return Addressbook::getKABCAddresseeFromNick(contactId).uid();
+	
+	return getKABCAddresseeFromNick(contactId).uid();
 }
 QPixmap Addressbook::icon(const QString &uid) {
 	

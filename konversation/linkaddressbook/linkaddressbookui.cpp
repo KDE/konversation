@@ -43,7 +43,7 @@
 #include "addressbook.h"
 #include <kapplication.h>
 
-LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick, const QString &suggested_realname )
+LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick, const QString &servername, const QString &servergroup, const QString &suggested_realname )
 : LinkAddressbookUI_Base( parent, name )
 {
 
@@ -63,6 +63,8 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
 
 	m_ircnick = ircnick;
 	m_lower_ircnick = m_ircnick.lower();
+	m_servername = servername;
+	m_servergroup = servergroup;
 	m_suggested_realname = suggested_realname;
 	if(m_suggested_realname.isEmpty()) m_suggested_realname = suggested_realname;
 	Q_ASSERT(!ircnick.isEmpty());
@@ -84,7 +86,7 @@ void LinkAddressbookUI::slotLoadAddressees()
 
 	KABC::AddressBook::Iterator it;
 	for( it = m_addressBook->begin(); it != m_addressBook->end(); ++it )
-		if(Konversation::Addressbook::self()->hasNick(*it, m_lower_ircnick)) {
+		if(Konversation::Addressbook::self()->hasNick(*it, m_lower_ircnick, m_servername, m_servergroup)) {
 			realname = (*it).realName();
 			num_contacts_with_nick++;
 			(new KABC::AddresseeItem( addresseeListView, (*it) ))->setSelected(true);
@@ -139,7 +141,7 @@ void LinkAddressbookUI::accept()
 		if(!Konversation::Addressbook::self()->getAndCheckTicket()) {
 			return;
 		}
-		Konversation::Addressbook::self()->associateNickAndUnassociateFromEveryoneElse(addr, m_ircnick);
+		Konversation::Addressbook::self()->associateNickAndUnassociateFromEveryoneElse(addr, m_ircnick, m_servername, m_servergroup);
 		if(!Konversation::Addressbook::self()->saveTicket()) {
 			return;
 		}
