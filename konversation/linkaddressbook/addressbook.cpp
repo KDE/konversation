@@ -560,7 +560,8 @@ bool Addressbook::addContact( const QString &/*contactId*/, const QString &/*pro
 
 void Addressbook::emitContactPresenceChanged(QString uid, int presence) {
 	if(uid.isEmpty()) {
-		kdDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
+		//This warning below is annoying.  FIXME - disabled because it's too verbose
+//		kdDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
 		return;
 	}
 	Q_ASSERT(kapp);
