@@ -97,6 +97,7 @@ class Channel : public ChatWindow
     void endCompleteNick();
     void quickButtonClicked(const QString& definition);
     void modeButtonClicked(int id,bool on);
+    void channelLimitChanged();
 
     void popupCommand(int id);                // Will be connected to NickListView::popupCommand()
     void doubleClickCommand(QListViewItem*);  // Will be connected to NickListView::doubleClicked()
@@ -125,7 +126,7 @@ class Channel : public ChatWindow
     bool modeButtonsChanged;  // to take care of redraw problem if hidden
     bool modeButtonsState;
     bool splitterChanged;
-    
+
     bool topicAuthorUnknown;
 
     unsigned int completionPosition;

@@ -27,6 +27,7 @@
 #include <qtimer.h>
 
 #include <klineedit.h>
+#include <klineeditdlg.h>
 #include <kpassdlg.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -127,6 +128,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(modeL,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
 
   limit=new KLineEdit(modeBox);
+  connect(limit,SIGNAL (returnPressed()),this,SLOT (channelLimitChanged()) );
 
   showModeButtons(KonversationApplication::preferences.getShowModeButtons());
 
@@ -211,7 +213,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   connect(channelInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );
   connect(channelInput,SIGNAL (pageDown()),getTextView(),SLOT (pageDown()) );
-  
+
   connect(textView,SIGNAL (newText(const QString&)),this,SLOT (newTextInView(const QString&)) );
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
@@ -594,6 +596,13 @@ QStringList Channel::getSelectedNicksList()
   return selectedNicksList;
 }
 
+void Channel::channelLimitChanged()
+{
+  unsigned int lim=limit->text().toUInt();
+
+  modeButtonClicked(7,lim>0);
+}
+
 void Channel::modeButtonClicked(int id,bool on)
 {
   char mode[]={'t','n','s','i','p','m','k','l'};
@@ -613,7 +622,24 @@ void Channel::modeButtonClicked(int id,bool on)
     args=getKey();
     if(!on) setKey(QString::null);
   }
-
+  else if(mode[id]=='l')
+  {
+    if(limit->text().isEmpty() && on)
+    {
+      bool ok=false;
+      // ask user how many nicks should be the limit
+      args=KLineEditDlg::getText(i18n("Nick limit"),
+                                 i18n("Enter the new nick limit:"),
+                                 limit->text(),                      // will be always "" but what the hell ;)
+                                 &ok,
+                                 this);
+      // leave this function if user cancels
+      if(!ok) return;
+    }
+    else if(on)
+      args=limit->text();
+  }
+  // put together the mode command and send it to the server queue
   server->queue(command.arg(getName()).arg((on) ? "+" : "-").arg(mode[id]).arg(args));
 }
 
