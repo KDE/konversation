@@ -54,11 +54,15 @@ PrefsPageNickCompletion::PrefsPageNickCompletion(QFrame* newParent, Preferences*
   suffixMiddleInput=new KLineEdit(preferences->getNickCompleteSuffixMiddle(),suffixEditBox);
   middleLabel->setBuddy(suffixMiddleInput);
 
+  QSpacerItem* spacer=new QSpacerItem(0,0,QSizePolicy::Minimum,QSizePolicy::Expanding);
+
   int row = 0;
   gl->addWidget(modeLbl, row, 0);
   gl->addWidget(completionModeCBox, row, 1);
   row++;
   gl->addMultiCellWidget(suffixBox, row, row, 0, 1);
+  row++;
+  gl->addItem(spacer, row, 0);
 }
 
 PrefsPageNickCompletion::~PrefsPageNickCompletion()
