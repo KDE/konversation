@@ -4,7 +4,8 @@ Add option to highlight current nick independantly
 Implement different identities so user can choose which identity to use on which server
 Move Part / Kick Reasons into the Identity section in Preferences File
 
-nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  das markieren des letzten Zeitpunkts wo das Fenster aktiv war  und  die Text-Suche "
+nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  das markieren
+des letzten Zeitpunkts wo das Fenster aktiv war  und  die Text-Suche "
 
 :nifelan!~muehltom@194-208-040-061.TELE.NET INVITE Eisfuchs :#pantherchatquiz
 
@@ -15,3 +16,5 @@ Consistency check in Preferences:
 /msg should be shown, like in
 /msg Nick Hello
 *to Nick* Hello
+
+Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated

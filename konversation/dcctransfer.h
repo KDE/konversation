@@ -89,7 +89,6 @@ class DccTransfer : public QObject, public KListViewItem
     void lookupFinished(int numOfResults);
     void dccGetConnectionSuccess();
     void dccGetBroken(int errorCode);
-    void check();
     void readData();
     void writeData();
     void getAck();

@@ -558,7 +558,7 @@ void Server::removeQuery(Query* query)
   delete query;
 }
 
-void Server::joinChannel(QString& name,QString& hostmask)
+void Server::joinChannel(QString& name,QString& hostmask,QString& key)
 {
   // if(mode==singleWindows)
   //   Channel* channel=new Channel(this,name,0);
@@ -579,6 +579,7 @@ void Server::joinChannel(QString& name,QString& hostmask)
   channel->setServer(this);
   channel->setName(name);
   channel->setNickname(getNickname());
+//  channel->setKey(key);
 
   serverWindow->addView(channel,1,name);
   channel->joinNickname(getNickname(),hostmask);
@@ -808,7 +809,7 @@ QString& Server::getNickname()
   return nickname;
 }
 
-QString Server::parseWildcards(const QString& toParse,const QString& nickname,const QString& channelName,QStringList* nickList,const QString& queryName,const QString& parameter)
+QString Server::parseWildcards(const QString& toParse,const QString& nickname,const QString& channelName,const QString& channelKey,QStringList* nickList,const QString& queryName,const QString& parameter)
 {
   // TODO: parameter handling. this line is only to suppress a compiler warning
   parameter.lower();
@@ -834,6 +835,8 @@ QString Server::parseWildcards(const QString& toParse,const QString& nickname,co
   out.replace(QRegExp("%u"),nickList->join(separator));
   if(channelName) out.replace(QRegExp("%c"),channelName);
   out.replace(QRegExp("%o"),nickname);
+  out.replace(QRegExp("%k"),channelKey);
+  out.replace(QRegExp("%K"),serverKey);
   out.replace(QRegExp("%n"),"\n");
 //  out.replace(QRegExp("%f"),getFortuneCookie());
 //  out.replace(QRegExp("%p"),parameter);

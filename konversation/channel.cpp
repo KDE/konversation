@@ -401,6 +401,17 @@ void Channel::setName(const QString& newName)
   setLogfileName("konversation_"+newName.lower()+".log");
 }
 
+void Channel::setKey(const QString& newKey)
+{
+  kdDebug() << "Channel Key set to " << newKey << endl;
+  key=newKey;
+}
+
+const QString& Channel::getKey()
+{
+  return key;
+}
+
 void Channel::channelTextEntered()
 {
   QString line=channelInput->text();
@@ -463,7 +474,7 @@ void Channel::modeButtonClicked(int id,bool on)
 void Channel::quickButtonClicked(QString buttonText)
 {
   // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
-  QString out=server->parseWildcards(buttonText,server->getNickname(),getName(),getSelectedNicksList(),0,0);
+  QString out=server->parseWildcards(buttonText,server->getNickname(),getName(),getKey(),getSelectedNicksList(),0,0);
   // are there any newlines in the definition?
   if(out.find('\n')!=-1)
   {

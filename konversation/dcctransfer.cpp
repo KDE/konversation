@@ -95,7 +95,6 @@ void DccTransfer::startGet()
 
   if(!dir.exists())
   {
-    kdDebug() << dir.path() << " does not exist. Creating ..." << endl;
     // QT's mkdir() is too stupid to do this alone, so we use the shell command
     system(QString("mkdir -p "+dir.path()).latin1());
   }
@@ -113,7 +112,6 @@ void DccTransfer::startGet()
     // If the file is empty we can forget about resuming
     if(fileSize)
     {
-      kdDebug() << "File exists ... Resuming." << endl;
       // TODO: Ask user if they want to resume
       setType(Resume);
       setStatus(Resuming);
@@ -123,7 +121,6 @@ void DccTransfer::startGet()
       setPosition(fileSize);
 
       emit resume(getPartner(),getFile(),getPort(),getPosition());
-      kdDebug() << "Sent resume signal" << endl;
     }
     else connectToSender();
   }
@@ -164,7 +161,7 @@ void DccTransfer::heard()
 
   kdDebug() << "DccTransfer::heard(): accept() returned " << fail << endl;
 
-  if(fail==0)
+  if(!fail)
   {
     file.open(IO_ReadOnly);
     setStatus(Running);
@@ -180,21 +177,15 @@ void DccTransfer::heard()
 
 void DccTransfer::startResume(QString position)
 {
-  kdDebug() << "startResume(): calling connectToSender()" << endl;
   setPosition(position.toULong());
   connectToSender();
 }
 
 void DccTransfer::connectToSender()
 {
-  kdDebug() << "connectToSender(): Opening Socket to " << getIp() << ":" << getPort() << " ..." << endl;
   setStatus(Lookup);
 
   dccSocket=new KExtendedSocket(getIp(),getPort().toUInt(),KExtendedSocket::inetSocket);
-
-//QTimer* newTimer=new QTimer();
-//connect(newTimer,SIGNAL (timeout()),this,SLOT (check()));
-//newTimer->start(250);
 
   dccSocket->enableRead(false);
   dccSocket->enableWrite(false);
@@ -211,12 +202,6 @@ void DccTransfer::connectToSender()
 
   kdDebug() << "Lookup ..." << endl;
   dccSocket->startAsyncConnect();
-}
-
-// NOTE: Only for debugging purposes. Will be deleted eventually
-void DccTransfer::check()
-{
-  kdDebug() << "Status:" << dccSocket->socketStatus() << endl;
 }
 
 void DccTransfer::lookupFinished(int numOfResults)

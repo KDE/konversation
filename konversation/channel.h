@@ -49,6 +49,8 @@ class Channel : public ChatWindow
     ~Channel();
 
     void setName(const QString& newName);
+    void setKey(const QString& newKey);
+    const QString& getKey();
 
     void joinNickname(QString& nickname,QString& hostname);
     void renameNick(QString& nickname,QString& newName);
@@ -105,6 +107,8 @@ class Channel : public ChatWindow
     QString topic; // Caches current topic
     TopicComboBox* topicLine;
     QStringList topicHistory;
+
+    QString key;
 
     ModeButton* modeT;
     ModeButton* modeN;

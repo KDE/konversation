@@ -142,7 +142,7 @@ void OutputFilter::parseJoin(QString channelName)
   if(channelName=="")
   {
     type=i18n("Usage");
-    output=i18n("Usage: %1JOIN <channel>").arg(commandChar);
+    output=i18n("Usage: %1JOIN <channel> [key]").arg(commandChar);
     program=true;
   }
   else

@@ -203,8 +203,18 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
     /* Did we join the channel, or was it someone else? */
     if(server->isNickname(sourceNick))
     {
+      QString key;
+/*
+
+      if(channelName.find(' ')!=-1)
+      {
+        key=channelName.section(' ',1,1);
+        channelName=channelName.section(' ',0,0);
+        kdDebug() << "Found channel key " << key << endl;
+      }
+*/
       /* Join the channel */
-      server->joinChannel(channelName,sourceHostmask);
+      server->joinChannel(channelName,sourceHostmask,key);
       /* Request modes for the channel */
       server->queue("MODE "+channelName);
     }
