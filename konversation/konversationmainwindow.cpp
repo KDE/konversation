@@ -162,10 +162,12 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
   new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
 
+#ifdef USE_MDI
   new KAction(i18n("Tabpage Mode"),"tabpage",0,this,SLOT (switchToTabPageMode()),actionCollection(),"mdi_tabpage_mode");
   new KAction(i18n("Toplevel Mode"),"toplevel",0,this,SLOT (switchToToplevelMode()),actionCollection(),"mdi_toplevel_mode");
   new KAction(i18n("Childframe Mode"),"childframe",0,this,SLOT (switchToChildframeMode()),actionCollection(),"mdi_childframe_mode");
   new KAction(i18n("IDEAl Mode"),"ideal",0,this,SLOT (switchToIDEAlMode()),actionCollection(),"mdi_ideal_mode");
+#endif
 
   // Initialize KMainWindow->statusBar()
   statusBar();
