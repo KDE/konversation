@@ -310,6 +310,8 @@ bool IRCInput::checkPaste(QString& text)
 {
   int doPaste=KMessageBox::Yes;
 
+  text=text.stripWhiteSpace();
+  
   int lines=text.contains('\n');
 
   if(text.length()>256 || lines)

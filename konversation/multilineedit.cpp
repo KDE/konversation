@@ -63,10 +63,8 @@ void MultilineEdit::slotOk()
 void MultilineEdit::slotUser1()
 {
   QStringList lines=QStringList::split("\n",textEditor->text(),true);
-  QStringList::iterator it=lines.begin();
-  for( ; it!=lines.end() ; ++it )
-    if(!(*it).isEmpty())
-      (*it) = "> " + (*it);
+  for( QStringList::iterator it=lines.begin() ; it!=lines.end() ; ++it )
+    (*it) = "> " + (*it);
   textEditor->setText(lines.join("\n"));
 }
 
