@@ -47,6 +47,9 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 
   setServer(newServer);
   setFont(KonversationApplication::preferences.getTextFont());
+#if QT_VERSION >= 0x030100
+  setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
+#endif
 
 #ifndef TABLE_VERSION
   setText("<qt>\n");
@@ -184,7 +187,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   // Replace all text decorations
   replaceDecoration(filteredLine,'\x02','b');
   replaceDecoration(filteredLine,'\x09','i');
-  replaceDecoration(filteredLine,'\x13','u'); // should be strikethru
+  replaceDecoration(filteredLine,'\x13','s'); // should be strikethru
   replaceDecoration(filteredLine,'\x15','u');
   replaceDecoration(filteredLine,'\x16','b'); // should be reverse
   replaceDecoration(filteredLine,'\x1f','u');
@@ -412,6 +415,7 @@ void IRCView::doAppend(QString line)
 
   // scroll view only if the scroll bar is already at the bottom
 #if QT_VERSION == 303
+  // Does not seem to work very well with QT 3.0.3
   bool doScroll=true;
 #else
   bool doScroll=((contentsHeight()-visibleHeight())==contentsY());

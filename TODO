@@ -6,6 +6,8 @@ Background color of Channel window / Nicklist View
 Add a possibility to close the dcc panel via GUI
 Pasting into text views should trigger the paste mechanism
 Make colors for nick list configurable via GUI
+<lizard> ich will nen sortcut haben das wenn ich irgendwo ssh eingebe das mit ne shell aufgeht ;)
+
 
 Hurga: ^G shall beep
 

@@ -812,7 +812,6 @@ messages: rc.cpp
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
-
 #>+ 3
 statuspanel.moc.cpp: $(srcdir)/statuspanel.h
 	$(MOC) $(srcdir)/statuspanel.h -o statuspanel.moc.cpp
