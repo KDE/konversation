@@ -16,10 +16,14 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qregexp.h>
+#include <qmap.h>
+#include <qvaluelist.h>
 
 #include <klocale.h>
 #include <kdebug.h>
 #include <kio/passdlg.h>
+#include <kconfig.h>
+#include <kshell.h>
 
 #include "outputfilter.h"
 #include "konversationapplication.h"
@@ -164,6 +168,8 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("amsg "))    parseAmsg(parameter);
     
     else if(line.startsWith("server "))  parseServer(parameter);
+    
+    else if(line.startsWith("prefs "))   parsePrefs(parameter);
 
     else if(line=="join")                parseJoin(QString::null);
     else if(line=="part")                parsePart(QString::null);
@@ -193,6 +199,8 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="amsg")                parseAmsg(QString::null);
     
     else if(line == "server")            parseServer(QString::null);
+    
+    else if(line == "prefs")             parsePrefs(QString::null);
     
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
@@ -1022,6 +1030,91 @@ void OutputFilter::parseServer(const QString& parameter)
   }
   
   output=QString::null;
+}
+
+void OutputFilter::parsePrefs(const QString& parameter)
+{
+  bool showUsage = false;
+  if (parameter.isEmpty())
+    showUsage = true;
+  else
+  {
+    KConfig* config=KApplication::kApplication()->config();
+  
+    QStringList splitted = KShell::splitArgs(parameter);
+    if (splitted.count() > 0)
+    {
+      QString group = splitted[0];
+      QStringList groupList(config->groupList());
+      uint i;
+      if (group.lower() == "list")
+      {
+        // List available groups.
+        usage(i18n("Available Preference Groups: ") + groupList.join("|"));
+      }
+      else
+      {
+        // Validate group.
+        bool validGroup = false;
+        for (i = 0; i < groupList.count(); ++i)
+        {
+          if (group.lower() == groupList[i].lower())
+          {
+            validGroup = true;
+            group = groupList[i];
+            break;
+          }
+        }
+        if (validGroup and splitted.count() > 1)
+        {
+          QString option = splitted[1];
+          QMap<QString,QString> options = config->entryMap(group);
+          QValueList<QString> optionList = options.keys();
+          QValueList<QString> optionValueList = options.values();
+          if (option.lower() == "list")
+          {
+            // List available options in group.
+            output=i18n("Available Options in Group ") + group + ": ";
+            for (i = 0; i < optionList.count(); ++i)
+            {
+              output = output + optionList[i] + "(" + optionValueList[i] + ")|";
+            }
+            usage(output);
+          }
+          else
+          {
+            // Validate option.
+            bool validOption = false;
+            for (i = 0; i < optionList.count(); ++i)
+            {
+              if (option.lower() == optionList[i].lower())
+              {
+                validOption = true;
+                option = optionList[i];
+                break;
+              }
+            }
+            if (validOption)
+            {
+              if (splitted.count() > 2)
+              {
+                // Set the desired option.
+                config->setGroup(group);
+                config->writeEntry(option, splitted[2]);
+                config->sync();
+                // Reload preferences object.
+                dynamic_cast<KonversationApplication*>(kapp)->readOptions();
+              }
+              // If no value given, just display current value.
+              else usage(group + "/" + option + " = " + options[option]);
+            } else showUsage = true;
+          }
+        } else showUsage = true;
+      }
+    } else showUsage = true;
+  }
+  if (showUsage)
+    usage(i18n("Usage: %1PREFS group option value or %2PREFS LIST to list groups or %3PREFS group LIST to list options in group.  Quote parameters if they contain spaces.").arg(commandChar, commandChar, commandChar));
 }
 
 #include "outputfilter.moc"

@@ -129,6 +129,7 @@ class OutputFilter : public QObject
     void parseAaway(const QString& parameter);
     void parseAme(const QString& parameter);
     void parseAmsg(const QString& parameter);
+    void parsePrefs(const QString& parameter);
 
     void changeMode(const QString& parameter,char mode,char giveTake);
     bool isAChannel(const QString& check);
