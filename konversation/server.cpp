@@ -166,6 +166,7 @@ void Server::connectToIRCServer()
       connect(serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
       connect(serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
       connect(serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
+//      connect(serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
 
       connect(this,SIGNAL (nicknameChanged(const QString&)),serverWindow,SLOT (setNickname(const QString&)) );
 
@@ -240,9 +241,11 @@ void Server::notifyResponse(QString nicksOnline)
 
 void Server::startNotifyTimer(int msec)
 {
+  kdDebug() << "Server::startNotifyTimer()" << endl;
   if(msec==0) msec=KonversationApplication::preferences.getNotifyDelay()*1000; // msec!
   // start the timer in one shot mode
   notifyTimer.start(msec,true);
+  notifyCheckTimer.stop();
   // reset check time
   checkTime=0;
 }
@@ -279,7 +282,7 @@ void Server::notifyTimeout()
 void Server::notifyCheckTimeout()
 {
   checkTime+=500;
-  emit tooLongLag(checkTime);
+  if(serverSocket) emit tooLongLag(checkTime);
 }
 
 QString Server::getAutoJoinCommand()
@@ -321,14 +324,18 @@ void Server::incoming()
 {
   char buffer[513];
   int len=0;
+  bool lost=false;
 
   do
   {
     len=read(serverSocket->fd(),buffer,512);
+    if(len==0) lost=true;
     buffer[len]=0;
 
     inputBuffer+=buffer;
   } while(len==512);
+
+  if(lost) broken(0);
 }
 
 void Server::queue(const QString& buffer)
@@ -357,7 +364,8 @@ void Server::send()
     // Don't reconnect if we WANT to quit
     else if(outputBuffer.startsWith("QUIT")) setDeliberateQuit(true);
     // TODO: Implement Flood-Protection here
-    write(serverSocket->fd(),outputBuffer.latin1(),outputBuffer.length());
+//    write(serverSocket->fd(),outputBuffer.latin1(),outputBuffer.length());
+    write(serverSocket->fd(),outputBuffer,outputBuffer.length());
     serverSocket->enableWrite(false);
   }
 
@@ -381,13 +389,15 @@ void Server::setDeliberateQuit(bool on)
 
 void Server::broken(int state)
 {
-  kdWarning() << "Connection broken (Socket fd " << serverSocket->fd() << ") " << state << "!" << endl;
+  kdDebug() << "Connection broken (Socket fd " << serverSocket->fd() << ") " << state << "!" << endl;
 
   serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost.").arg(serverName));
   // TODO: Close all queries and channels!
   //       Or at least make sure that all gets reconnected properly
+  disconnect(serverSocket,0,0,0);
   delete serverSocket;
   serverSocket=0;
+  kdDebug() << "Socket deleted" << endl;
 
   if(autoReconnect && !getDeliberateQuit())
   {

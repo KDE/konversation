@@ -14,6 +14,7 @@
   $Id$
 */
 
+// #include "newkextsock.h"
 #include <kextsock.h>
 
 #ifndef IRCSERVERSOCKET_H
@@ -25,6 +26,8 @@
 
 class IRCServerSocket : public KExtendedSocket
 {
+  Q_OBJECT
+
   public:
     IRCServerSocket(const char *server,unsigned short int port,int timeout=30);
     ~IRCServerSocket();

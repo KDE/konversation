@@ -18,10 +18,10 @@
 #include <qhbox.h>
 #include <qgrid.h>
 #include <qsizepolicy.h>
-// #include <qcombobox.h>
 #include <qheader.h>
 #include <qregexp.h>
 #include <qtooltip.h>
+#include <qtextcodec.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -437,7 +437,12 @@ const QString& Channel::getKey()
 
 void Channel::channelTextEntered()
 {
-  QString line=channelInput->text();
+//  QString line=channelInput->text();
+  QTextCodec *codec=QTextCodec::codecForName("ISO8859-15");
+  QCString line=codec->fromUnicode(channelInput->text());
+
+// kdDebug() << (char) l2[0] << endl;
+
   if(line.lower()=="/clear")
     textView->clear();
   else

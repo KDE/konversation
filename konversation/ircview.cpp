@@ -254,7 +254,7 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
         }
         if(who!=NULL && who.lower().find(needle)!=-1)
         {
-          filteredLine=QString("<font color=\""+KonversationApplication::preferences.getHilightOwnLinesColor().name()+"\">")+filteredLine+QString("</font>");
+          filteredLine=QString("<font color=\""+hilightList.at(index)->getColor().name()+"\">")+filteredLine+QString("</font>");
           break;
         }
      } // endfor

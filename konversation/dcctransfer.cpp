@@ -86,8 +86,19 @@ DccTransfer::~DccTransfer()
 
 void DccTransfer::abort()
 {
-  if(dccSocket) dccSocket->closeNow();
-  if(sendSocket) sendSocket->closeNow();
+  if(dccSocket)
+  {
+    dccSocket->closeNow();
+    delete dccSocket;
+    dccSocket=0;
+  }
+  if(sendSocket)
+  {
+    sendSocket->closeNow();
+    delete sendSocket;
+    sendSocket=0;
+  }
+
   setStatus(Aborted);
 }
 
