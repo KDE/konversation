@@ -30,14 +30,11 @@
 #endif
 
 #include <kdebug.h>
-#include "server.h"
-#include "server.h"
-#include "server.h"
-#include "server.h"
 
 #include "konversationapplication.h"
 #include "ircview.h"
 #include "highlight.h"
+#include "server.h"
 
 IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
 {
@@ -397,13 +394,16 @@ void IRCView::doAppend(QString line)
   buffer+=line;
   emit newText();
 
+  // scroll view only if the scroll bar is already at the bottom
+  bool doScroll=((contentsHeight()-visibleHeight())==contentsY());
+
 #ifdef TABLE_VERSION
   setText("<qt><table cellpadding=\"0\" cellspacing=\"0\">"+buffer+"</table></qt>");
 #else
   KTextBrowser::append(line);
 #endif
-  // contentsHeight() seems to return wrong values when the widget is hidden
-  ensureVisible(0,contentsHeight());
+
+  if(doScroll) ensureVisible(0,contentsHeight());
 }
 
 // Workaround to scroll to the end of the TextView when it's shown
