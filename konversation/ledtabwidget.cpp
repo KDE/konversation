@@ -24,7 +24,7 @@
 #include "chatwindow.h"
 
 LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :
-              QTabWidget(parent,name)
+              KTabWidget(parent,name)
 {
   setTabBar(new LedTabBar(this,"led_tab_bar"));
   connect(tabBar(),SIGNAL (selected(int)) ,this,SLOT (tabSelected(int)) );

@@ -74,7 +74,7 @@ static const char* remove_xpm[]=
 };
 
 LedTabBar::LedTabBar(QWidget* parent,const char* name) :
-           QTabBar(parent,name)
+           KTabBar(parent,name)
 {
   popup=new KPopupMenu(this,"ledtabbar_context_menu");
 

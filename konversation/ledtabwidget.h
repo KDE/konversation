@@ -15,7 +15,7 @@
 #ifndef LEDTABWIDGET_H
 #define LEDTABWIDGET_H
 
-#include <qtabwidget.h>
+#include <ktabwidget.h>
 
 #include "images.h"
 
@@ -26,7 +26,7 @@
 class ChatWindow;
 class LedTabBar;
 
-class LedTabWidget : public QTabWidget
+class LedTabWidget : public KTabWidget
 {
   Q_OBJECT
 

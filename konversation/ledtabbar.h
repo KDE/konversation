@@ -16,7 +16,7 @@
 #ifndef LEDTABBAR_H
 #define LEDTABBAR_H
 
-#include <qtabbar.h>
+#include <ktabbar.h>
 
 /*
   @author Dario Abatianni
@@ -26,7 +26,7 @@ class KPopupMenu;
 
 class LedTab;
 
-class LedTabBar : public QTabBar
+class LedTabBar : public KTabBar
 {
   Q_OBJECT
 
