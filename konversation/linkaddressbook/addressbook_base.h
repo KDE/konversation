@@ -44,7 +44,7 @@ class AddressbookBase : public QObject, public KIMIface
       * using.  Otherwise return the first nick listed.
       * If there are multiple matches, it will prefer ones that are not set to away.
       * @return online nick, first nick, or QString::null if they aren't known at all.
-    */
+      */
     QString getBestNick(const KABC::Addressee &addressee);
     bool hasAnyNicks(const KABC::Addressee &addresse);
     int presenceStatusByAddressee(const KABC::Addressee &addressee);
@@ -64,12 +64,12 @@ class AddressbookBase : public QObject, public KIMIface
       */
     static NickInfoPtr getNickInfo(const KABC::Addressee &addressee, bool onlineOnlyNicks);
     /**
-     * Lets outsiders tell us to emit presenceChanged signal.
-     */
+      * Lets outsiders tell us to emit presenceChanged signal.
+      */
     virtual void emitContactPresenceChanged( QString uid, int presence) = 0;
     /**
-     * Lets outsiders tell us to emit presenceChanged signal.
-     */
+      * Lets outsiders tell us to emit presenceChanged signal.
+      */
     virtual void emitContactPresenceChanged(QString uid) = 0;
 
   signals:

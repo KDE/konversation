@@ -24,28 +24,67 @@
 */
 
 class Server;
-class Query;
-class StatusPanel;
-class Identity;
-class KonversationMainWindow;
-class RawLog;
-class ChannelListPanel;
-class ScriptLauncher;
+
+typedef QMap<KABC::Addressee,QString> AddresseeNickMap;
 
 class ServerISON : public QObject
 {
   Q_OBJECT
 
   public:
-    ServerISON(Server *server);
-    
+    ServerISON(const Server *const server);
+    /** Returns a list of nicks that we want to know whether they are online
+      * of offline.  This function is called, and the result sent to the
+      * server as an /ISON command.
+      * 
+      * Calls getAddressees() and getWatachedNicks(), and returns the merged result.
+      * The resulting nicks don't have the servername/servergroup attached.
+      *
+      * Read the documentation of the other two functions.
+      * 
+      * @returns A space delimited list of nicks that we want to know if they are on or not.
+      * 
+      * @see getAddressees()
+      * @see getWatchedNicks()
+      */
     QString getISON();
+    /** Returns _some_ of the nicks that the addressees have.
+     *  It loops through all the addressees that have nickinfos.
+     *
+     *  - If that addressee has some nicks, and at least one of them is in a
+     *    channel we are in, then we know they are online, so don't add.
+     *  - Otherwise, if that addressee has some nicks, and we think they are
+     *    online, add the nick that they are currently online with.  This does
+     *    mean that if they change their nick, they will appear offline for the
+     *    duration between ISON's.
+     *  - Otherwise, add all the nicks we know the addressee has.
+     */
     QStringList getAddressees();
+    /** Looks in the preferences for which nicks the user wants to watch for.
+     *  Filters for only the ones for this server.  Strips off the server
+     *  name/group.
+     */
     QString getWatchedNicks();
+  public slots:
+    void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);
+       
+  private:
+    /** A pointer to the server we are a member of.
+     */
+    const Server *const m_server;
+    /** A map of the nicks that are on this server,
+     *  mapped against the nick they are using if online,
+     *  TODO: actually use
+     */
+    AddresseeNickMap m_addresseeNickMap;
 
-    
-  protected:
-    Server *m_server;
+    void recalculateAddressees();
+    /** The return result for getAddressees()
+     *  @see getAddressees()
+     *  @return A list of nicks for this server that we need to do /ISON on.
+     */
+    QStringList m_addresseesISON;
 };
+
 
 #endif

@@ -236,9 +236,9 @@ class Server : public QObject
      */
     ChannelNickPtr setChannelNick(const QString& channelName, const QString& nickname, unsigned int mode = 99);
     /** Returns a list of the nicks on the watch list that are online. */
-    const NickInfoMap* getNicksOnline();
+    const NickInfoMap* getNicksOnline() const;
     /** Returns a list of the nicks on the watch list that are offline. */
-    const NickInfoMap* getNicksOffline();
+    const NickInfoMap* getNicksOffline() const;
 
     QString awayTime();
 
@@ -319,6 +319,10 @@ class Server : public QObject
 
     void startAwayTimer();
     void sendToAllChannels(const QString& text);
+    /** Intended to be called when the addressbook changes by us, or by another
+      *  app.  Cycles through all the nicks and calls 'refreshAddressee' on all of
+      *  them.
+      */
     void slotLoadAddressees(); 
     void notifyTimeout();
     

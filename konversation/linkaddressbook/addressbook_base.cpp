@@ -106,6 +106,8 @@ QString AddressbookBase::getBestNick(const KABC::Addressee &addressee) {
 	return QString::null;
 }
 
+
+
 NickInfoPtr AddressbookBase::getNickInfo(const KABC::Addressee &addressee, bool onlineOnlyNicks)
 {
 	NickInfoPtr lastNickInfo;

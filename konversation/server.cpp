@@ -1293,10 +1293,10 @@ bool Server::isNickOnline(const QString &nickname) {
   return nicknamesOnline.contains(nickname.lower());
 }
 // Returns a list of the nicks on the watch list that are online.
-const NickInfoMap* Server::getNicksOnline() { return &nicknamesOnline; }
+const NickInfoMap* Server::getNicksOnline() const { return &nicknamesOnline; }
 
 // Returns a list of the nicks on the watch list that are offline.
-const NickInfoMap* Server::getNicksOffline() { return &nicknamesOffline; }
+const NickInfoMap* Server::getNicksOffline() const { return &nicknamesOffline; }
 
 QString Server::getIp(bool followDccSetting)
 {
@@ -2860,15 +2860,13 @@ void Server::startAwayTimer()
 }
 
 
-/** Intended to be called when the addressbook changes by us, or by another app.  Cycles through all the nicks and
- *  calls 'refreshAddressee' on all of them.
- */
 void Server::slotLoadAddressees() {
+ 
   kdDebug() << "server::slotLoadAddressees " << endl;
   for(NickInfoMap::Iterator it=allNicks.begin(); it != allNicks.end(); ++it)
   {
-    NickInfoPtr addressee = it.data();
-    addressee->refreshAddressee();
+    NickInfoPtr nickInfo = it.data();
+    nickInfo->refreshAddressee();
   }
 }
 
