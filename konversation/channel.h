@@ -56,7 +56,7 @@ class Channel : public ChatWindow
     void removeNick(const QString &nickname, const QString &reason, bool quit);
     void kickNick(const QString &nickname, const QString &kicker, const QString &reason);
     Nick *getNickByName(const QString &lookname);
-    QList<Nick> getNickList();
+    QPtrList<Nick> getNickList();
 
     void adjustNicks(int value);
     void adjustOps(int value);
@@ -150,9 +150,9 @@ class Channel : public ChatWindow
     QCheckBox* logCheckBox;
 
     NickChangeDialog* nickChangeDialog;
-    QList<Nick> nicknameList;
+    QPtrList<Nick> nicknameList;
     QStringList selectedNicksList;
-    QList<QuickButton> buttonList;
+    QPtrList<QuickButton> buttonList;
     QTimer userhostTimer;
 };
 
