@@ -236,7 +236,7 @@ Preferences::Preferences()
   setWebBrowserUseKdeDefault(true);
   setWebBrowserCmd("mozilla \'%u\'");
 
-  setRedirectToStatusPane(true);
+  setRedirectToStatusPane(false);
   
   setOpenWatchedNicksAtStartup(false);
 
