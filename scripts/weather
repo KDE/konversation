@@ -33,7 +33,6 @@ foreach $station (@stations) {
   $details2 = join ", ", split(/\n/,$detail2);
 
   
-  $pressure =~ s/\"/\\\"/g; # Escape double quote
 
   chomp $city;
   chomp $temperature;
