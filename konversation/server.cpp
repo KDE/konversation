@@ -125,7 +125,7 @@ Server::Server(KonversationMainWindow* mainWindow, int id)
 //FIXME: remove code duplicates by introducing some new method
 Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
   const QString& nick,const QString& password)
-  :m_useSSL(false)
+  :m_useSSL(true)
 {
   init(mainWindow);
 
@@ -189,9 +189,9 @@ Server::~Server()
   // Close socket but don't delete it. QObject will take care of delete
   if(!m_useSSL)
     serverSocket->close();
-  else
-    m_serverSSLSocket->close();
-
+  
+  // For SSL socket we autoclose socket when the Server object is deleted
+  
   // Send out the last messages (usually the /QUIT)
   send();
 
