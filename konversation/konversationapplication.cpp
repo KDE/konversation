@@ -506,7 +506,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ShowQuickButtons",preferences.getShowQuickButtons());
   config->writeEntry("ShowModeButtons",preferences.getShowModeButtons());
   config->writeEntry("CloseButtonsOnTabs",preferences.getCloseButtonsOnTabs());
-  config->writeEntry("Codec",preferences.getCodec());
+  config->writeEntry("Codec",preferences.getCodec().stripWhiteSpace());
 
   config->writeEntry("UseSpacing",preferences.getUseSpacing());
   config->writeEntry("Spacing",preferences.getSpacing());

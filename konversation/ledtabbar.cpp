@@ -217,6 +217,7 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
     if (has_focus)
         flags |= QStyle::Style_HasFocus;
 
+    // FIXME: Move this somewhere, where it also works with close buttons turned off!
     // set new label color if there is one
     QColorGroup  myColorGroup(colorGroup());
     if(!t->getLabelColor().isEmpty())

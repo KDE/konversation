@@ -270,13 +270,6 @@ void ChatWindow::logText(const QString& text)
       QTime time=QTime::currentTime();
       QString logLine(QString("[%1] %2\n").arg(time.toString("hh:mm:ss")).arg(text));
 
-      // convert logfile ascii data to selected encoding only when local encoding differs
-      if(QString(QTextCodec::codecForLocale()->name()).lower()!=KonversationApplication::preferences.getCodec().lower())
-      {
-        QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-        logLine=codec->fromUnicode(logLine);
-      }
-
       logStream << logLine;
 
       // detach stream from file

@@ -496,19 +496,22 @@ void Server::send()
 
     // TODO: Implement Flood-Protection here
 
-    // wrap socket into a stream
-    QTextStream stream(&serverSocket);
+    // wrap server socket into a stream
+    QTextStream serverStream(&serverSocket);
 
-    QString line(outputBuffer);
-
-    // convert encoded data to IRC ascii only when we don£t have the same codec locally
-    if(QString(QTextCodec::codecForLocale()->name()).lower()!=KonversationApplication::preferences.getCodec().lower())
+    // init stream props
+    serverStream.setEncoding(QTextStream::Locale);
+    QString codecName=KonversationApplication::preferences.getCodec();
+    // convert encoded data to IRC ascii only when we don't have the same codec locally
+    if(QString(QTextCodec::codecForLocale()->name()).lower()!=codecName.lower())
     {
-      QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
-      line=codec->fromUnicode(outputBuffer);
+      serverStream.setCodec(QTextCodec::codecForName(codecName.ascii()));
     }
 
-    stream << line;
+    serverStream << outputBuffer;
+
+    // detach server stream
+    serverStream.unsetDevice();
 
     serverSocket.enableWrite(false);
   }

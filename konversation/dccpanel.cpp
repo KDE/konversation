@@ -133,7 +133,7 @@ void DccPanel::runDcc()
 void DccPanel::abortDcc()
 {
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
-  item->abort();
+  if(item) item->abort();
 }
 
 void DccPanel::removeDcc()

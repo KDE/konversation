@@ -23,6 +23,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
+#include <kstandarddirs.h>
 
 #include "dcctransfer.h"
 #include "konversationapplication.h"
@@ -115,7 +116,10 @@ void DccTransfer::startGet()
   {
     // QT's mkdir() is too stupid to do this alone, so we use the shell command
     // TODO: Try KProcess here!
-    system(QString("mkdir -p "+dir.path()).latin1());
+//    system(QString("mkdir -p "+dir.path()).latin1());
+    // TODO: switch to i18n() after freeze
+    if(!KStandardDirs::makeDir(dir.path()))
+      KMessageBox::sorry(static_cast<QWidget*>(0),QString("Cannot create received files directory %1").arg(dir.path()),QString("DCC error"));
   }
 
   QString fullName(dccFile);
