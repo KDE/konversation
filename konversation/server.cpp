@@ -902,8 +902,6 @@ void Server::incoming()
   {
     QTextCodec* codec=QTextCodec::codecForName(identity->getCodec().ascii());
     inputBuffer += codec->toUnicode(buffer);
-    delete codec;
-    codec = 0;
   }
 
   if(len == 0) broken(0);
