@@ -88,6 +88,7 @@ class KonversationMainWindow : public KMainWindow
 
   protected slots:
     void openPreferences();
+    void openKeyBindings();
     void showToolbar();
     void showStatusbar();
     void showMenubar();

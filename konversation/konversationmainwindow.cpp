@@ -22,6 +22,7 @@
 #include <kmessagebox.h>
 #include <kstatusbar.h>
 #include <kmenubar.h>
+#include <kkeydialog.h>
 
 #include "ledtabwidget.h"
 #include "chatwindow.h"
@@ -71,7 +72,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); // options_show_toolbar
   showStatusBarAction=KStdAction::showStatusbar(this,SLOT(showStatusbar()),actionCollection()); // options_show_statusbar
   showMenuBarAction=KStdAction::showMenubar(this,SLOT(showMenubar()),actionCollection()); // options_show_menubar
-
+  
+  KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
   KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
   new KAction(i18n("Buttons"),0,0,this,SLOT (openButtons()),actionCollection(),"open_buttons_window");
@@ -82,21 +84,21 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Configure Colors"), 0, 0, this, SLOT(openColorConfiguration()), actionCollection(), "open_colors_window");
   new KAction(i18n("Channel list"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
 
-  // Keyboard accelerators to navigate through the different pages
-  KAccel* accelerator=accel();
-  accelerator->insert("Next Tab",i18n("Next Tab"),i18n("Go to next tab"),KShortcut("Alt+Right"),this,SLOT(nextTab()));
-  accelerator->insert("Previous Tab",i18n("Previous Tab"),i18n("Go to previous tab"),KShortcut("Alt+Left"),this,SLOT(previousTab()));
-  accelerator->insert("Go to Tab 1",i18n("Tab %1").arg(1),i18n("Go to tab number %1").arg(1),KShortcut("Alt+1"),this,SLOT(goToTab0()));
-  accelerator->insert("Go to Tab 2",i18n("Tab %1").arg(2),i18n("Go to tab number %1").arg(2),KShortcut("Alt+2"),this,SLOT(goToTab1()));
-  accelerator->insert("Go to Tab 3",i18n("Tab %1").arg(3),i18n("Go to tab number %1").arg(3),KShortcut("Alt+3"),this,SLOT(goToTab2()));
-  accelerator->insert("Go to Tab 4",i18n("Tab %1").arg(4),i18n("Go to tab number %1").arg(4),KShortcut("Alt+4"),this,SLOT(goToTab3()));
-  accelerator->insert("Go to Tab 5",i18n("Tab %1").arg(5),i18n("Go to tab number %1").arg(5),KShortcut("Alt+5"),this,SLOT(goToTab4()));
-  accelerator->insert("Go to Tab 6",i18n("Tab %1").arg(6),i18n("Go to tab number %1").arg(6),KShortcut("Alt+6"),this,SLOT(goToTab5()));
-  accelerator->insert("Go to Tab 7",i18n("Tab %1").arg(7),i18n("Go to tab number %1").arg(7),KShortcut("Alt+7"),this,SLOT(goToTab6()));
-  accelerator->insert("Go to Tab 8",i18n("Tab %1").arg(8),i18n("Go to tab number %1").arg(8),KShortcut("Alt+8"),this,SLOT(goToTab7()));
-  accelerator->insert("Go to Tab 9",i18n("Tab %1").arg(9),i18n("Go to tab number %1").arg(9),KShortcut("Alt+9"),this,SLOT(goToTab8()));
-  accelerator->insert("Go to Tab 0",i18n("Tab %1").arg(0),i18n("Go to tab number %1").arg(0),KShortcut("Alt+0"),this,SLOT(goToTab9()));
-  accelerator->insert("Find text",i18n("Find text"),i18n("Find text"),KShortcut("F3"),this,SLOT(findTextShortcut()));
+  // Actions to navigate through the different pages
+  new KAction(i18n("Next Tab"),0,KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
+  new KAction(i18n("Previous Tab"),0,KShortcut("Alt+Left"),this,SLOT(previousTab()),actionCollection(),"previous_tab");
+  new KAction(i18n("Go to tab number %1").arg( 1),0,KShortcut("Alt+1"),this,SLOT(goToTab0()),actionCollection(),"go_to_tab_1");
+  new KAction(i18n("Go to tab number %1").arg( 2),0,KShortcut("Alt+2"),this,SLOT(goToTab1()),actionCollection(),"go_to_tab_2");
+  new KAction(i18n("Go to tab number %1").arg( 3),0,KShortcut("Alt+3"),this,SLOT(goToTab2()),actionCollection(),"go_to_tab_3");
+  new KAction(i18n("Go to tab number %1").arg( 4),0,KShortcut("Alt+4"),this,SLOT(goToTab3()),actionCollection(),"go_to_tab_4");
+  new KAction(i18n("Go to tab number %1").arg( 5),0,KShortcut("Alt+5"),this,SLOT(goToTab4()),actionCollection(),"go_to_tab_5");
+  new KAction(i18n("Go to tab number %1").arg( 6),0,KShortcut("Alt+6"),this,SLOT(goToTab5()),actionCollection(),"go_to_tab_6");
+  new KAction(i18n("Go to tab number %1").arg( 7),0,KShortcut("Alt+7"),this,SLOT(goToTab6()),actionCollection(),"go_to_tab_7");
+  new KAction(i18n("Go to tab number %1").arg( 8),0,KShortcut("Alt+8"),this,SLOT(goToTab7()),actionCollection(),"go_to_tab_8");
+  new KAction(i18n("Go to tab number %1").arg( 9),0,KShortcut("Alt+9"),this,SLOT(goToTab8()),actionCollection(),"go_to_tab_9");
+  new KAction(i18n("Go to tab number %1").arg(10),0,KShortcut("Alt+0"),this,SLOT(goToTab9()),actionCollection(),"go_to_tab_0");
+
+  new KAction(i18n("Find text"),0,KShortcut("F3"),this,SLOT(findTextShortcut()),actionCollection(),"find_text");
 
   // Initialize KMainWindow->statusBar()
   statusBar();
@@ -129,6 +131,11 @@ KonversationMainWindow::~KonversationMainWindow()
 void KonversationMainWindow::openPreferences()
 {
   emit openPrefsDialog();
+}
+
+void KonversationMainWindow::openKeyBindings()
+{
+  KKeyDialog::configure(actionCollection());
 }
 
 void KonversationMainWindow::showToolbar()
