@@ -125,7 +125,7 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   
   QLabel* connectCommandsLabel = new QLabel(i18n("C&onnect Command(s):"), page);
   QString connectCommandsWT = i18n("Enter the command(s) you want to execute on "
-                                                                "connection to the server(separated by semicolon)");
+                                                                "connection to the server (separated by semicolons.)");
   QWhatsThis::add(connectCommandsLabel, connectCommandsWT);
   connectCommandsInput = new KLineEdit(connectCommands, page);
   QWhatsThis::add(connectCommandsInput, connectCommandsWT);
