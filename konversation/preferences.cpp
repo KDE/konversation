@@ -104,13 +104,14 @@ Preferences::Preferences()
   setDccPath(user.homeDir()+"/dccrecv");
   setDccAddPartner(false);
   setDccCreateFolder(false);
+  setDccMethodToGetOwnIp(1);
+  setDccSpecificOwnIp("0.0.0.0");
   setDccSpecificSendPorts(false);
   setDccSendPortsFirst(0);
   setDccSendPortsLast(0);
   setDccSpecificChatPorts(false);
   setDccChatPortsFirst(0);
   setDccChatPortsLast(0);
-  setDccGetIpFromServer(false);
   setDccAutoGet(false);
   setDccBufferSize(1024);
   setDccRollback(1024);
@@ -383,6 +384,12 @@ unsigned long Preferences::getDccBufferSize() { return dccBufferSize; }
 void Preferences::setDccRollback(unsigned long bytes) { dccRollback=bytes; }
 unsigned long Preferences::getDccRollback() { return dccRollback; }
 
+void Preferences::setDccMethodToGetOwnIp(int methodId) { dccMethodToGetOwnIp=methodId; }
+int Preferences::getDccMethodToGetOwnIp() { return dccMethodToGetOwnIp; }
+
+void Preferences::setDccSpecificOwnIp(const QString& ip) { dccSpecificOwnIp = ip; }
+QString Preferences::getDccSpecificOwnIp() { return dccSpecificOwnIp; }
+
 void Preferences::setDccSpecificSendPorts(bool state) { dccSpecificSendPorts=state; }
 bool Preferences::getDccSpecificSendPorts() { return dccSpecificSendPorts; }
 
@@ -420,9 +427,6 @@ void Preferences::setDccChatPortsLast(unsigned long port)
     setDccChatPortsFirst(port);
 }
 unsigned int Preferences::getDccChatPortsLast() { return dccChatPortsLast; }
-
-void Preferences::setDccGetIpFromServer(bool state) { dccGetIpFromServer=state; }
-bool Preferences::getDccGetIpFromServer() { return dccGetIpFromServer; }
 
 void Preferences::setDccAutoGet(bool state) { dccAutoGet=state; }
 bool Preferences::getDccAutoGet() { return dccAutoGet; }

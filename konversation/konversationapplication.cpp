@@ -678,13 +678,14 @@ void KonversationApplication::readOptions()
   config->setGroup("DCC Settings");
   preferences.setDccBufferSize(config->readNumEntry("BufferSize",preferences.getDccBufferSize()));
   preferences.setDccRollback(config->readNumEntry("Rollback",preferences.getDccRollback()));
+  preferences.setDccMethodToGetOwnIp(config->readNumEntry("MethodToGetOwnIp",preferences.getDccMethodToGetOwnIp()));
+  preferences.setDccSpecificOwnIp(config->readEntry("SpecificOwnIp",preferences.getDccSpecificOwnIp()));
   preferences.setDccSpecificSendPorts(config->readBoolEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts()));
   preferences.setDccSendPortsFirst(config->readNumEntry("SendPortsFirst",preferences.getDccSendPortsFirst()));
   preferences.setDccSendPortsLast(config->readNumEntry("SendPortsLast",preferences.getDccSendPortsLast()));
   preferences.setDccSpecificChatPorts(config->readBoolEntry("SpecificChatPorts",preferences.getDccSpecificChatPorts()));
   preferences.setDccChatPortsFirst(config->readNumEntry("ChatPortsFirst",preferences.getDccChatPortsFirst()));
   preferences.setDccChatPortsLast(config->readNumEntry("ChatPortsLast",preferences.getDccChatPortsLast()));
-  preferences.setDccGetIpFromServer(config->readBoolEntry("GetIpFromServer",preferences.getDccGetIpFromServer()));
   preferences.setDccAddPartner(config->readBoolEntry("AddPartner",preferences.getDccAddPartner()));
   preferences.setDccCreateFolder(config->readBoolEntry("CreateFolder",preferences.getDccCreateFolder()));
   preferences.setDccAutoGet(config->readBoolEntry("AutoGet",preferences.getDccAutoGet()));
@@ -960,13 +961,14 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("CreateFolder",preferences.getDccCreateFolder());
   config->writeEntry("BufferSize",preferences.getDccBufferSize());
   config->writeEntry("Rollback",preferences.getDccRollback());
+  config->writeEntry("MethodToGetOwnIp",preferences.getDccMethodToGetOwnIp());
+  config->writeEntry("SpecificOwnIp",preferences.getDccSpecificOwnIp());
   config->writeEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts());
   config->writeEntry("SendPortsFirst",preferences.getDccSendPortsFirst());
   config->writeEntry("SendPortsLast",preferences.getDccSendPortsLast());
   config->writeEntry("SpecificChatPorts",preferences.getDccSpecificChatPorts());
   config->writeEntry("ChatPortsFirst",preferences.getDccChatPortsFirst());
   config->writeEntry("ChatPortsLast",preferences.getDccChatPortsLast());
-  config->writeEntry("GetIpFromServer",preferences.getDccGetIpFromServer());
   config->writeEntry("AutoGet",preferences.getDccAutoGet());
   config->writeEntry("AutoResume",preferences.getDccAutoResume());
 

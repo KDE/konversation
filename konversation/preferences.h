@@ -120,6 +120,10 @@ class Preferences : public QObject
     QString getDccPath();
     void setDccRollback(unsigned long bytes);
     unsigned long getDccRollback();
+    void setDccMethodToGetOwnIp(int methodId);
+    int getDccMethodToGetOwnIp();
+    void setDccSpecificOwnIp(const QString& ip);
+    QString getDccSpecificOwnIp();
     void setDccSpecificSendPorts(bool state);
     bool getDccSpecificSendPorts();
     void setDccSendPortsFirst(unsigned long port);
@@ -132,8 +136,6 @@ class Preferences : public QObject
     unsigned int getDccChatPortsFirst();
     void setDccChatPortsLast(unsigned long port);
     unsigned int getDccChatPortsLast();
-    void setDccGetIpFromServer(bool state);
-    bool getDccGetIpFromServer();
     
     TabPlacement getTabPlacement();
     void setTabPlacement(TabPlacement where);
@@ -461,13 +463,14 @@ class Preferences : public QObject
 
     bool dccAddPartner;
     bool dccCreateFolder;   // create folders for each DCC partner?
+    int dccMethodToGetOwnIp;
+    QString dccSpecificOwnIp;
     bool dccSpecificSendPorts;
     unsigned long dccSendPortsFirst;
     unsigned long dccSendPortsLast;
     bool dccSpecificChatPorts;
     unsigned long dccChatPortsFirst;
     unsigned long dccChatPortsLast;
-    bool dccGetIpFromServer;
     bool dccAutoGet;
     bool dccAutoResume;
     unsigned long dccBufferSize;

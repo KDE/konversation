@@ -12,13 +12,14 @@
   email:     eisfuchs@tigress.com
 */
 
+#include <qcheckbox.h>
+#include <qcombobox.h>
+#include <qfileinfo.h>
+#include <qhbox.h>
+#include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qhbox.h>
 #include <qspinbox.h>
-#include <qfileinfo.h>
 #include <qvgroupbox.h>
 
 #include <klineedit.h>
@@ -63,22 +64,53 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
 
   dccSpinBoxes->setStretchFactor(dccRollbackLabel,10);
   
-  // Ports specification for DCC sending
-  dccSpecificSendPortsGroupBox = new QVGroupBox(i18n("Use specific &ports for DCC Send"), parentFrame, "dcc_specific_send_ports_box");
-  dccSpecificSendPortsGroupBox->setCheckable(TRUE);
+  // own IP
+  QVGroupBox* dccOwnIpGroup = new QVGroupBox(i18n("Own IP"), parentFrame, "dcc_own_ip_group");
   
-  QFrame* dccSpecificSendPortsFrame = new QFrame(dccSpecificSendPortsGroupBox);
+  QHBox* dccMethodToGetOwnIpBox = new QHBox(dccOwnIpGroup);
+  QLabel* dccMethodToGetOwnIpLabel = new QLabel(i18n("&Method to get own IP:"), dccMethodToGetOwnIpBox);
+  dccMethodToGetOwnIpComboBox = new QComboBox(dccMethodToGetOwnIpBox, "dcc_method_to_get_own_ip_combo");
+  dccMethodToGetOwnIpComboBox->insertItem(i18n("Network interface"));
+  dccMethodToGetOwnIpComboBox->insertItem(i18n("WHOIS Reply from IRC server"));
+  //dccMethodToGetOwnIpComboBox->insertItem(i18n("001 Reply from IRC server"));
+  //dccMethodToGetOwnIpComboBox->insertItem(i18n("Specify manually"));
+  dccMethodToGetOwnIpLabel->setBuddy(dccMethodToGetOwnIpComboBox);
+  
+  dccSpecificOwnIpFrame = new QFrame(dccOwnIpGroup);
+  QHBoxLayout* dccSpecificOwnIpLayout = new QHBoxLayout(dccSpecificOwnIpFrame);
+  dccSpecificOwnIpLayout->setSpacing(spacingHint());
+  QLabel* dccSpecificOwnIpLabel = new QLabel(i18n("O&wn IP:"), dccSpecificOwnIpFrame);
+  dccSpecificOwnIpInput = new KLineEdit(preferences->getDccSpecificOwnIp(),dccSpecificOwnIpFrame);
+  dccSpecificOwnIpInput->setFixedWidth(150);
+  dccSpecificOwnIpLabel->setBuddy(dccSpecificOwnIpInput);
+  dccSpecificOwnIpLayout->addWidget(dccSpecificOwnIpLabel);
+  dccSpecificOwnIpLayout->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+  dccSpecificOwnIpLayout->addWidget(dccSpecificOwnIpInput);
+  
+  connect(dccMethodToGetOwnIpComboBox, SIGNAL(activated(int)), this, SLOT(methodToGetOwnIpComboBoxActivated(int)));
+  dccMethodToGetOwnIpComboBox->setCurrentItem(preferences->getDccMethodToGetOwnIp());
+  methodToGetOwnIpComboBoxActivated(preferences->getDccMethodToGetOwnIp());
+  
+  // Ports Group {
+  QVGroupBox* dccPortsGroup = new QVGroupBox(i18n("Port"), parentFrame, "dcc_ports_group");
+  
+  // Ports specification for DCC sending
+  dccSpecificSendPortsCheckBox = new QCheckBox(i18n("Use specific &ports for DCC Send"), dccPortsGroup, "dcc_specific_send_ports_box");
+  
+  QFrame* dccSpecificSendPortsFrame = new QFrame(dccPortsGroup);
   QHBoxLayout* dccSpecificSendPortsLayout = new QHBoxLayout(dccSpecificSendPortsFrame);
   dccSpecificSendPortsLayout->setSpacing(spacingHint());
   
   QLabel* dccSendPortsLabel=new QLabel(i18n("DCC Se&nd ports:"),dccSpecificSendPortsFrame);
   dccSendPortsFirstSpin=new QSpinBox(0,65535,1,dccSpecificSendPortsFrame,"dcc_send_ports_first_spin");
   connect(dccSendPortsFirstSpin, SIGNAL(valueChanged(int)), this, SLOT(sendPortsFirstSpinValueChanged(int)));
-  dccSendPortsFirstSpin->setFixedWidth(90);
+  dccSendPortsFirstSpin->setFixedWidth(80);
   QLabel* dccSendPortsCenterLabel=new QLabel(i18n("to"),dccSpecificSendPortsFrame);
   dccSendPortsLastSpin=new QSpinBox(0,65535,1,dccSpecificSendPortsFrame,"dcc_send_ports_last_spin");
   connect(dccSendPortsLastSpin, SIGNAL(valueChanged(int)), this, SLOT(sendPortsLastSpinValueChanged(int)));
-  dccSendPortsLastSpin->setFixedWidth(90);
+  dccSendPortsLastSpin->setFixedWidth(80);
+  
+  connect(dccSpecificSendPortsCheckBox, SIGNAL(toggled(bool)), dccSpecificSendPortsFrame, SLOT(setEnabled(bool)));
   
   dccSendPortsLabel->setBuddy(dccSendPortsFirstSpin);
   dccSpecificSendPortsLayout->addWidget(dccSendPortsLabel);
@@ -87,26 +119,25 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSpecificSendPortsLayout->addWidget(dccSendPortsCenterLabel);
   dccSpecificSendPortsLayout->addWidget(dccSendPortsLastSpin);
   
-  dccSpecificSendPortsGroupBox->setChecked(preferences->getDccSpecificSendPorts());
+  dccSpecificSendPortsCheckBox->setChecked(preferences->getDccSpecificSendPorts());
   dccSendPortsFirstSpin->setValue(preferences->getDccSendPortsFirst());
   dccSendPortsLastSpin->setValue(preferences->getDccSendPortsLast());
   
   // Ports specification for DCC chat
-  dccSpecificChatPortsGroupBox = new QVGroupBox(i18n("Use specific p&orts for DCC Chat"), parentFrame, "dcc_specific_chat_ports_box");
-  dccSpecificChatPortsGroupBox->setCheckable(TRUE);
+  dccSpecificChatPortsCheckBox = new QCheckBox(i18n("Use specific p&orts for DCC Chat"), dccPortsGroup, "dcc_specific_chat_ports_box");
   
-  QFrame* dccSpecificChatPortsFrame = new QFrame(dccSpecificChatPortsGroupBox);
+  QFrame* dccSpecificChatPortsFrame = new QFrame(dccPortsGroup);
   QHBoxLayout* dccSpecificChatPortsLayout = new QHBoxLayout(dccSpecificChatPortsFrame);
   dccSpecificChatPortsLayout->setSpacing(spacingHint());
   
   QLabel* dccChatPortsLabel=new QLabel(i18n("DCC &Chat ports:"),dccSpecificChatPortsFrame);
   dccChatPortsFirstSpin=new QSpinBox(0,65535,1,dccSpecificChatPortsFrame,"dcc_chat_ports_first_spin");
   connect(dccChatPortsFirstSpin, SIGNAL(valueChanged(int)), this, SLOT(chatPortsFirstSpinValueChanged(int)));
-  dccChatPortsFirstSpin->setFixedWidth(90);
+  dccChatPortsFirstSpin->setFixedWidth(80);
   QLabel* dccChatPortsCenterLabel=new QLabel(i18n("to"),dccSpecificChatPortsFrame);
   dccChatPortsLastSpin=new QSpinBox(0,65535,1,dccSpecificChatPortsFrame,"dcc_chat_ports_last_spin");
   connect(dccChatPortsLastSpin, SIGNAL(valueChanged(int)), this, SLOT(chatPortsLastSpinValueChanged(int)));
-  dccChatPortsLastSpin->setFixedWidth(90);
+  dccChatPortsLastSpin->setFixedWidth(80);
   
   dccChatPortsLabel->setBuddy(dccChatPortsFirstSpin);
   dccSpecificChatPortsLayout->addWidget(dccChatPortsLabel);
@@ -115,12 +146,12 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSpecificChatPortsLayout->addWidget(dccChatPortsCenterLabel);
   dccSpecificChatPortsLayout->addWidget(dccChatPortsLastSpin);
   
-  dccSpecificChatPortsGroupBox->setChecked(preferences->getDccSpecificChatPorts());
+  dccSpecificChatPortsCheckBox->setChecked(preferences->getDccSpecificChatPorts());
   dccChatPortsFirstSpin->setValue(preferences->getDccChatPortsFirst());
   dccChatPortsLastSpin->setValue(preferences->getDccChatPortsLast());
+  // }
   
   // misc
-  dccGetIpFromServer=new QCheckBox(i18n("&Get own IP from IRC server"),parentFrame,"dcc_get_ip_from_server_checkbox");
   dccAutoGet=new QCheckBox(i18n("Automatically accept &DCC download"),parentFrame,"dcc_autoget_checkbox");
   connect(dccAutoGet, SIGNAL(stateChanged(int)), this, SLOT(autoGetStateChanged(int)));
   dccAutoResume=new QCheckBox(i18n("Au&tomatically resume DCC download"), parentFrame,"dcc_autoresume_checkbox");
@@ -128,7 +159,6 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccAddSender=new QCheckBox(i18n("Add &sender to file name"),parentFrame,"dcc_sender_checkbox");
   dccCreateFolder=new QCheckBox(i18n("Cr&eate folder for sender"),parentFrame,"dcc_create_folder_checkbox");
 
-  dccGetIpFromServer->setChecked(preferences->getDccGetIpFromServer());
   dccAddSender->setChecked(preferences->getDccAddPartner());
   dccCreateFolder->setChecked(preferences->getDccCreateFolder());
   dccAutoGet->setChecked(preferences->getDccAutoGet());
@@ -146,14 +176,12 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSettingsLayout->addMultiCellWidget(dccSpinBoxes,row,row,0,2);
   row++;
 
-  dccSettingsLayout->addMultiCellWidget(dccSpecificSendPortsGroupBox,row,row,0,2);
+  dccSettingsLayout->addMultiCellWidget(dccOwnIpGroup,row,row,0,2);
   row++;
   
-  dccSettingsLayout->addMultiCellWidget(dccSpecificChatPortsGroupBox,row,row,0,2);
+  dccSettingsLayout->addMultiCellWidget(dccPortsGroup,row,row,0,2);
   row++;
   
-  dccSettingsLayout->addMultiCellWidget(dccGetIpFromServer,row,row,0,2);
-  row++;
   dccSettingsLayout->addMultiCellWidget(dccAutoGet,row,row,0,2);
   row++;
   dccSettingsLayout->addMultiCellWidget(dccAutoResume,row,row,0,2);
@@ -187,6 +215,11 @@ void PrefsPageDccSettings::folderButtonClicked()
     if(folderInfo.isDir()) dccFolderInput->setText(folderName);
     else KMessageBox::sorry(0,i18n("<qt>Error: %1 is not a regular folder.</qt>").arg(folderName),i18n("Incorrect Path"));
   }
+}
+
+void PrefsPageDccSettings::methodToGetOwnIpComboBoxActivated(int methodId)
+{
+  dccSpecificOwnIpFrame->setEnabled(methodId == 3);
 }
 
 void PrefsPageDccSettings::sendPortsFirstSpinValueChanged(int port)
@@ -234,13 +267,14 @@ void PrefsPageDccSettings::applyPreferences()
   preferences->setDccPath(dccFolderInput->text());
   preferences->setDccBufferSize(dccBufferSpin->value());
   preferences->setDccRollback(dccRollbackSpin->value());
-  preferences->setDccSpecificSendPorts(dccSpecificSendPortsGroupBox->isChecked());
+  preferences->setDccMethodToGetOwnIp(dccMethodToGetOwnIpComboBox->currentItem());
+  preferences->setDccSpecificOwnIp(dccSpecificOwnIpInput->text());
+  preferences->setDccSpecificSendPorts(dccSpecificSendPortsCheckBox->isChecked());
   preferences->setDccSendPortsFirst(dccSendPortsFirstSpin->value());
   preferences->setDccSendPortsLast(dccSendPortsLastSpin->value());
-  preferences->setDccSpecificChatPorts(dccSpecificChatPortsGroupBox->isChecked());
+  preferences->setDccSpecificChatPorts(dccSpecificChatPortsCheckBox->isChecked());
   preferences->setDccChatPortsFirst(dccChatPortsFirstSpin->value());
   preferences->setDccChatPortsLast(dccChatPortsLastSpin->value());
-  preferences->setDccGetIpFromServer(dccGetIpFromServer->isChecked());
   preferences->setDccAutoGet(dccAutoGet->isChecked());
   preferences->setDccAutoResume(dccAutoResume->isChecked());
   preferences->setDccAddPartner(dccAddSender->isChecked());

@@ -458,6 +458,27 @@ unsigned long KonvPrefsDCOP::getDccRollback()
   return KonversationApplication::preferences.getDccRollback();
 }
 
+void KonvPrefsDCOP::setDccMethodToGetOwnIp(int methodId)
+{
+  KonversationApplication::preferences.setDccMethodToGetOwnIp(methodId);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+int KonvPrefsDCOP::getDccMethodToGetOwnIp()
+{
+  return KonversationApplication::preferences.getDccMethodToGetOwnIp();
+}
+
+void KonvPrefsDCOP::setDccSpecificOwnIp(const QString& ip)
+{
+  KonversationApplication::preferences.setDccSpecificOwnIp(ip);
+}
+
+QString KonvPrefsDCOP::getDccSpecificOwnIp()
+{
+  return KonversationApplication::preferences.getDccSpecificOwnIp();
+}
+
 void KonvPrefsDCOP::setDccSpecificSendPorts(bool state)
 {
   KonversationApplication::preferences.setDccSpecificSendPorts(state);
@@ -530,17 +551,6 @@ void KonvPrefsDCOP::setDccChatPortsLast(unsigned long port)
 unsigned long KonvPrefsDCOP::getDccChatPortsLast()
 {
   return KonversationApplication::preferences.getDccChatPortsLast();
-}
-
-void KonvPrefsDCOP::setDccGetIpFromServer(bool state)
-{
-  KonversationApplication::preferences.setDccGetIpFromServer(state);
-  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
-}
-
-bool KonvPrefsDCOP::getDccGetIpFromServer()
-{
-  return KonversationApplication::preferences.getDccGetIpFromServer();
 }
 
 void KonvPrefsDCOP::setBlinkingTabs(bool blink)

@@ -22,6 +22,7 @@
   @author Dario Abatianni
 */
 
+class QFrame;
 class QSpinBox;
 class QVGroupBox;
 
@@ -40,6 +41,7 @@ class PrefsPageDccSettings : public PrefsPage
 
   protected slots:
     void folderButtonClicked();
+    void methodToGetOwnIpComboBoxActivated(int methodId);
     void sendPortsFirstSpinValueChanged(int port);
     void sendPortsLastSpinValueChanged(int port);
     void chatPortsFirstSpinValueChanged(int port);
@@ -51,13 +53,15 @@ class PrefsPageDccSettings : public PrefsPage
     KLineEdit* dccFolderInput;
     QSpinBox* dccBufferSpin;
     QSpinBox* dccRollbackSpin;
-    QVGroupBox* dccSpecificSendPortsGroupBox;
+    QComboBox* dccMethodToGetOwnIpComboBox;
+    QFrame* dccSpecificOwnIpFrame;
+    KLineEdit* dccSpecificOwnIpInput;
+    QCheckBox* dccSpecificSendPortsCheckBox;
     QSpinBox* dccSendPortsFirstSpin;
     QSpinBox* dccSendPortsLastSpin;
-    QVGroupBox* dccSpecificChatPortsGroupBox;
+    QCheckBox* dccSpecificChatPortsCheckBox;
     QSpinBox* dccChatPortsFirstSpin;
     QSpinBox* dccChatPortsLastSpin;
-    QCheckBox* dccGetIpFromServer;
     QCheckBox* dccAutoGet;
     QCheckBox* dccAutoResume;
     QCheckBox* dccAddSender;

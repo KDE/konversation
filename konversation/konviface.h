@@ -87,6 +87,10 @@ class KonvPreferencesIface : virtual public DCOPObject
     virtual bool getDccAddPartner() = 0;
     virtual void setDccCreateFolder(bool state) = 0;
     virtual bool getDccCreateFolder() = 0;
+    virtual void setDccMethodToGetOwnIp(int methodId) = 0;
+    virtual int getDccMethodToGetOwnIp() = 0;
+    virtual void setDccSpecificOwnIp(const QString& ip) = 0;
+    virtual QString getDccSpecificOwnIp() = 0;
     virtual void setDccSpecificSendPorts(bool state) = 0;
     virtual bool getDccSpecificSendPorts() = 0;
     virtual void setDccSendPortsFirst(unsigned long port) = 0;
@@ -99,8 +103,6 @@ class KonvPreferencesIface : virtual public DCOPObject
     virtual unsigned long getDccChatPortsFirst() = 0;
     virtual void setDccChatPortsLast(unsigned long port) = 0;
     virtual unsigned long getDccChatPortsLast() = 0;
-    virtual void setDccGetIpFromServer(bool state) = 0;
-    virtual bool getDccGetIpFromServer() = 0;
     virtual void setDccAutoGet(bool state) = 0;
     virtual bool getDccAutoGet() = 0;
     virtual void setDccAutoResume(bool state) = 0;

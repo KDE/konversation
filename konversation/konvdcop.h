@@ -117,6 +117,10 @@ class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
   QString getDccPath();
   void setDccRollback(unsigned long bytes);
   unsigned long getDccRollback();
+  void setDccMethodToGetOwnIp(int methodId);
+  int getDccMethodToGetOwnIp();
+  void setDccSpecificOwnIp(const QString& ip);
+  QString getDccSpecificOwnIp();
   void setDccSpecificSendPorts(bool state);
   bool getDccSpecificSendPorts();
   void setDccSendPortsFirst(unsigned long port);
@@ -129,8 +133,6 @@ class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
   unsigned long getDccChatPortsFirst();
   void setDccChatPortsLast(unsigned long port);
   unsigned long getDccChatPortsLast();
-  void setDccGetIpFromServer(bool state);
-  bool getDccGetIpFromServer();
   void setBlinkingTabs(bool blink);
   bool getBlinkingTabs();
   void setBringToFront(bool state);
