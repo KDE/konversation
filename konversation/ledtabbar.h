@@ -60,7 +60,8 @@ class LedTabBar : public QTabBar
       MoveLeft,
       MoveRight,
       CloseTab,
-      EnableNotifications
+      EnableNotifications,
+      EncodingSub
     };
     // these two come from the original QT source
     virtual void paint( QPainter *, QTab *, bool ) const; // ### not const
@@ -70,6 +71,9 @@ class LedTabBar : public QTabBar
     void mouseReleaseEvent(QMouseEvent* e);
 
     KPopupMenu* popup;
+    KPopupMenu* popupEncoding;
+    
+    QStringList encodingsList;
 
 #ifndef QT_NO_WHEELEVENT
     void wheelEvent( QWheelEvent *e );

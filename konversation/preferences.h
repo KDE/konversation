@@ -22,6 +22,7 @@
 #include <qstringlist.h>
 #include <qfont.h>
 #include <qcolor.h>
+#include <qmap.h>
 
 #include <kdeversion.h>
 
@@ -423,6 +424,11 @@ class Preferences : public QObject
     
     bool getOpenWatchedNicksAtStartup();
     void setOpenWatchedNicksAtStartup(bool open);
+    
+    QString getChannelEncoding(const QString& server,const QString& channel);
+    void setChannelEncoding(const QString& server,const QString& channel,const QString& encoding);
+    QStringList getChannelEncodingsServerList();
+    QStringList getChannelEncodingsChannelList(const QString& server);
 
   signals:
     void requestServerConnection(int number);
@@ -566,6 +572,7 @@ class Preferences : public QObject
     QPtrList<Ignore> ignoreList;
     QPtrList<Identity> identityList;
     QPtrList<Highlight> hilightList;
+    QMap< QString,QMap<QString,QString> > channelEncodingsMap;
 
     // IRC colors
     QStringList ircColorList;

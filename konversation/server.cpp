@@ -905,7 +905,42 @@ void Server::incoming()
   }
   else
   {
-    QTextCodec* codec=QTextCodec::codecForName(identity->getCodec().ascii());
+    // set channel encoding if specified
+    // {
+    QString channelEncoding;
+    QTextCodec* tmpCodec = QTextCodec::codecForName(identity->getCodec().ascii());
+    QStringList lineSplitted = QStringList::split(" ",tmpCodec->toUnicode(buffer));
+    // remove prefix
+    QString senderNick;
+    if(1 <= lineSplitted.count())  // for safe
+      if(lineSplitted[0][0] == ':')
+      {
+        QRegExp re("^:(.+)\\!~.+@");
+        if(re.search(lineSplitted[0]) > -1)
+          senderNick = re.cap(1);
+        lineSplitted.pop_front();
+      }
+    // check setting
+    QString command = lineSplitted[0].lower();
+    if(2 <= lineSplitted.count())
+    {
+      // query
+      if( ( command == "privmsg" ||
+            command == "notice"  ) &&
+          lineSplitted[1] == getNickname() )
+        channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), senderNick);
+      
+      // channel message
+      else if( command == "privmsg" ||
+               command == "notice"  ||
+               command == "kick"    ||
+               command == "part"    ||
+               command == "topic"   )
+        channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), lineSplitted[1]);
+    }
+    // }
+    
+    QTextCodec* codec=QTextCodec::codecForName(channelEncoding.isEmpty() ? identity->getCodec().ascii() : channelEncoding.ascii());
     inputBuffer += codec->toUnicode(buffer);
   }
 
@@ -973,9 +1008,20 @@ void Server::send()
     // wrap server socket into a stream
     QTextStream serverStream(serverSocket);
 
+    // set channel encoding if specified
+    QStringList outputLineSplitted=QStringList::split(" ",outputLine);
+    QString channelCodecName;
+    if(2<=outputLineSplitted.count())  // for safe
+      if(outputLineSplitted[0]=="PRIVMSG" ||
+         outputLineSplitted[0]=="NOTICE" ||
+         outputLineSplitted[0]=="KICK" ||
+         outputLineSplitted[0]=="PART" ||
+         outputLineSplitted[0]=="TOPIC")
+        channelCodecName=KonversationApplication::preferences.getChannelEncoding(getServerGroup(),outputLineSplitted[1]);
+
     // init stream props
     serverStream.setEncoding(QTextStream::Locale);
-    QString codecName=identity->getCodec();
+    QString codecName=channelCodecName.isEmpty() ? identity->getCodec() : channelCodecName;
     // convert encoded data to IRC ascii only when we don't have the same codec locally
     if(QString(QTextCodec::codecForLocale()->name()).lower()!=codecName.lower())
     {

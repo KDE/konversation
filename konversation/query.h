@@ -52,6 +52,9 @@ class Query : public ChatWindow
     virtual bool frontView();
     virtual bool searchView();
 
+    virtual void setChannelEncoding(const QString& encoding);
+    virtual QString getChannelEncoding();
+
   signals:
     void newText(QWidget* query,const QString& highlightColor,bool important);
     void sendFile(const QString& recipient);

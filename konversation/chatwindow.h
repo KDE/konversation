@@ -120,6 +120,10 @@ class ChatWindow : public BASE_CLASS
     virtual bool eventFilter(QObject* watched, QEvent* e);
     
     QString logFileName() { return logfile.name(); }
+    
+    virtual void setChannelEncoding(const QString& /* encoding */) {}
+    virtual QString getChannelEncoding() { return QString::null; }
+    bool getChannelEncodingEnabled() const;
 
   signals:
     void nameChanged(ChatWindow* view,const QString& newName);
@@ -148,6 +152,7 @@ class ChatWindow : public BASE_CLASS
     bool firstLog;
 
     void setLogfileName(const QString& name);
+    void setChannelEncodingEnabled(bool enabled);
     void cdIntoLogPath();
     int spacing();
     int margin();
@@ -185,6 +190,8 @@ class ChatWindow : public BASE_CLASS
     WindowType type;
 
     bool m_notificationsEnabled;
+    
+    bool m_channelEncodingEnabled;
 };
 
 #endif

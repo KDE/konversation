@@ -53,7 +53,8 @@ ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
   firstLog=true;
   server=0;
   m_notificationsEnabled = true;
-
+  m_channelEncodingEnabled = false;
+  
 #ifdef USE_MDI
   mainLayout=new QVBoxLayout(this);
   mainLayout->setAutoAdd(true);
@@ -347,6 +348,16 @@ void ChatWindow::logText(const QString& text)
     }
     else kdWarning() << "ChatWindow::logText(): open(IO_Append) for " << logfile.name() << " failed!" << endl;
   }
+}
+
+void ChatWindow::setChannelEncodingEnabled(bool enabled)
+{
+  m_channelEncodingEnabled = enabled;
+}
+
+bool ChatWindow::getChannelEncodingEnabled() const
+{
+  return m_channelEncodingEnabled;
 }
 
 int ChatWindow::spacing()

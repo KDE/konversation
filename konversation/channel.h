@@ -106,6 +106,9 @@ class Channel : public ChatWindow
 
     ChannelNickList getSelectedChannelNicks();
     QStringList getSelectedNickList();
+    
+    virtual void setChannelEncoding(const QString& encoding);
+    virtual QString getChannelEncoding();
   signals:
     void newText(QWidget* channel,const QString& highlightColor, bool important);
     void prefsChanged();

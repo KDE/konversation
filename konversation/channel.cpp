@@ -89,6 +89,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   setType(ChatWindow::Channel);
 
+  setChannelEncodingEnabled(true);
+  
   // Build some size policies for the widgets
   QSizePolicy hfixed=QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
   QSizePolicy hmodest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
@@ -1826,6 +1828,16 @@ void Channel::processPendingNicks()
     nicknameListView->sort();
     nicknameList.sort();
   }
+}
+
+void Channel::setChannelEncoding(const QString& encoding)  // virtual
+{
+  KonversationApplication::preferences.setChannelEncoding(server->getServerGroup(), getName(), encoding);
+}
+
+QString Channel::getChannelEncoding()  // virtual
+{
+  return KonversationApplication::preferences.getChannelEncoding(server->getServerGroup(), getName());
 }
 
 //

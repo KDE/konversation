@@ -841,4 +841,35 @@ void Preferences::setRedirectToStatusPane(bool redirect) { redirectToStatusPane 
 bool Preferences::getOpenWatchedNicksAtStartup() { return m_openWatchedNicksAtStartup; }
 void Preferences::setOpenWatchedNicksAtStartup(bool open) { m_openWatchedNicksAtStartup = open; }
 
+// Channel Encodings
+QString Preferences::getChannelEncoding(const QString& server,const QString& channel)
+{
+  if(channelEncodingsMap.contains(server))
+    if(channelEncodingsMap[server].contains(channel.lower()))
+      return channelEncodingsMap[server][channel.lower()];
+  return QString::null;
+}
+
+void Preferences::setChannelEncoding(const QString& server,const QString& channel,const QString& encoding)
+{
+  if(!encoding.isEmpty())
+    channelEncodingsMap[server][channel.lower()]=encoding;
+  else
+  {
+    channelEncodingsMap[server].remove(channel.lower());
+    if(channelEncodingsMap[server].count()==0)
+      channelEncodingsMap.remove(server);
+  }
+}
+
+QStringList Preferences::getChannelEncodingsServerList()
+{
+  return channelEncodingsMap.keys();
+}
+
+QStringList Preferences::getChannelEncodingsChannelList(const QString& server)
+{
+  return channelEncodingsMap[server].keys();
+}
+
 #include "preferences.moc"

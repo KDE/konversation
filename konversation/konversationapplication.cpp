@@ -690,6 +690,14 @@ void KonversationApplication::readOptions()
   config->setGroup("Web Browser Settings");
   preferences.setWebBrowserUseKdeDefault(config->readBoolEntry("UseKdeDefault",preferences.getWebBrowserUseKdeDefault()));
   preferences.setWebBrowserCmd(config->readEntry("WebBrowserCmd",preferences.getWebBrowserCmd()));
+  
+  // Channel Encodings
+  QMap<QString,QString> channelEncodingsEntry=config->entryMap("Channel Encodings");
+  QRegExp re("^(.+) ([^\\s]+)$");
+  QStringList channelEncodingsEntryKeys=channelEncodingsEntry.keys();
+  for(unsigned int i=0; i<channelEncodingsEntry.count(); ++i)
+    if(re.search(channelEncodingsEntryKeys[i]) > -1)
+      preferences.setChannelEncoding(re.cap(1),re.cap(2),channelEncodingsEntry[channelEncodingsEntryKeys[i]]);
 }
 
 void KonversationApplication::saveOptions(bool updateGUI)
@@ -954,6 +962,19 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->setGroup("Web Browser Settings");
   config->writeEntry("UseKdeDefault", preferences.getWebBrowserUseKdeDefault());
   config->writeEntry("WebBrowserCmd", preferences.getWebBrowserCmd());
+  
+  // Channel Encodings
+  config->setGroup("Channel Encodings");
+  QStringList channelEncodingsServerList=preferences.getChannelEncodingsServerList();
+  channelEncodingsServerList.sort();
+  for(unsigned int i=0; i<channelEncodingsServerList.count(); ++i)
+  {
+    QStringList channelEncodingsChannelList=preferences.getChannelEncodingsChannelList(channelEncodingsServerList[i]);
+    channelEncodingsChannelList.sort();
+    for(unsigned int j=0; j<channelEncodingsChannelList.count(); ++j)
+      if(!preferences.getChannelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]).isEmpty())
+        config->writeEntry(channelEncodingsServerList[i]+" "+channelEncodingsChannelList[j],preferences.getChannelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]));
+  }
 
   config->sync();
 

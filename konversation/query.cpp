@@ -41,6 +41,8 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   // don't setName here! It will break logfiles!
   //   setName("QueryWidget");
   setType(ChatWindow::Query);
+  
+  setChannelEncodingEnabled(true);
 
   awayChanged=false;
   awayState=false;
@@ -266,6 +268,16 @@ bool Query::searchView()       { return true; }
 void Query::appendInputText(const QString& s)
 {
   queryInput->setText(queryInput->text() + s);
+}
+
+void Query::setChannelEncoding(const QString& encoding)  // virtual
+{
+  KonversationApplication::preferences.setChannelEncoding(server->getServerGroup(), getName(), encoding);
+}
+
+QString Query::getChannelEncoding()  // virtual
+{
+  return KonversationApplication::preferences.getChannelEncoding(server->getServerGroup(), getName());
 }
 
 void Query::closeYourself()
