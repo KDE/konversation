@@ -157,7 +157,7 @@ the Free Software Foundation; either version 2 of the License, or
                             <cstring>secretModeChBox</cstring>
                         </property>
                         <property name="text">
-                            <string>&amp;Secret channel, the channel isn't listed in the channel list</string>
+                            <string>&amp;Secret channel, the channel is not listed in the channel list</string>
                         </property>
                         <property name="whatsThis" stdset="0">
                             <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A &lt;b&gt;S&lt;/b&gt;ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the &lt;em&gt;WHOIS&lt;/em&gt; command or anything similar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.&lt;/qt&gt;</string>
@@ -215,7 +215,7 @@ the Free Software Foundation; either version 2 of the License, or
                                     <number>0</number>
                                 </property>
                                 <property name="whatsThis" stdset="0">
-                                    <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A channel that has a user &lt;b&gt;L&lt;/b&gt;imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channeland changes this automatically depending on how busy the channel is.&lt;/qt&gt;</string>
+                                    <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A channel that has a user &lt;b&gt;L&lt;/b&gt;imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.&lt;/qt&gt;</string>
                                 </property>
                             </widget>
                             <widget class="QCheckBox" row="0" column="0">
@@ -226,7 +226,7 @@ the Free Software Foundation; either version 2 of the License, or
                                     <string>User &amp;limit:</string>
                                 </property>
                                 <property name="whatsThis" stdset="0">
-                                    <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A channel that has a user &lt;b&gt;L&lt;/b&gt;imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channeland changes this automatically depending on how busy the channel is.&lt;/qt&gt;</string>
+                                    <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A channel that has a user &lt;b&gt;L&lt;/b&gt;imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.&lt;/qt&gt;</string>
                                 </property>
                             </widget>
                             <spacer row="0" column="2">
