@@ -71,6 +71,7 @@ class Channel : public ChatWindow
     QString getKey();
 
 #ifdef USE_NICKINFO
+    ChannelNickPtr getChannelNick(const QString &ircnick);
     void joinNickname(ChannelNickPtr channelNick);
     void removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit);
     void kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, const QString &reason);

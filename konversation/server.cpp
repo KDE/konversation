@@ -1196,7 +1196,7 @@ QStringList Server::getNickChannels(const QString& nickname)
 #if USE_NICKINFO
 
 bool Server::isNickOnline(const QString &nickname) {
-  return !!getNickInfo(nickname);
+  return nicknamesOnline.contains(nickname.lower());
 }
 #else
 bool Server::isNickOnline(const QString &nickname) {
@@ -1996,8 +1996,10 @@ NickInfoPtr Server::addNickToOnlineList(const QString& nickname)
     nicknamesOnline.insert(lcNickname, nickInfo);
     doSignal = true;
   }
-  return nickInfo;
   if (doSignal) emit watchedNickChanged(this, nickInfo, true);
+  Konversation::Addressbook::self()->emitContactPresenceChanged(nickInfo->getAddressee().uid());
+    
+  return nickInfo;
 }
 #else
 NickInfoPtr Server::addNickToOnlineList(const QString&) { return 0; }
@@ -2032,11 +2034,14 @@ NickInfoPtr Server::addNickToOfflineList(const QString& nickname, const QStringL
   // When deleted from last channel and not on the watch list,
   // the nick will be deleted altogether.
   QStringList nickChannels = getNickChannels(lcNickname);
-  for (unsigned int index=0;index<nickChannels.count();index++)
+  for (QStringList::iterator it = nickChannels.begin();it != nickChannels.end();)
   {
-    removeChannelNick(nickChannels[index], lcNickname);
+    QString channel = *it;
+    it++;  //Make sure we iterate before the channel is (possibly) deleted.
+    removeChannelNick(channel, lcNickname);
   }
   if (doSignal) emit watchedNickChanged(this, nickInfo, false);
+  Konversation::Addressbook::self()->emitContactPresenceChanged(Konversation::Addressbook::self()->getKABCAddresseeFromNick(lcNickname).uid(), 1);
   return nickInfo;
 }
 #else
@@ -2112,7 +2117,9 @@ void Server::removeJoinedChannel(const QString& channelName)
     unjoinedChannels.insert(lcChannelName, channel);
     // Remove nicks not on the watch list.
     bool allDeleted = true;
-    for ( member = channel->begin(); member != channel->end() ;++member )
+    Q_ASSERT(channel);
+    if(!channel) return; //already removed.. hmm
+    for ( member = channel->begin(); member != channel->end() ;)
     {
       QString lcNickname = member.key();
       if (watchListLower.find(lcNickname) == watchListLower.end())
@@ -2120,10 +2127,12 @@ void Server::removeJoinedChannel(const QString& channelName)
         // Remove the nickname from the unjoined channel.  If nickname is no longer
         // on any lists, it is deleted altogether.
         removeChannelNick(lcChannelName, lcNickname);
+	member = channel->begin();
       }
       else
       {
         allDeleted = false;
+	member++;
       }
     }
     // If all were deleted, remove the channel from the unjoined list.
@@ -2342,9 +2351,10 @@ void Server::removeNickFromServer(const QString &nickname,const QString &reason)
   while(channel)
   {
     // Check if nick is this channel or not.
+    Channel *nextchannel = channelList.next();
     if( channel->getNickByName( nickname ) )
       removeNickFromChannel(channel->getName(),nickname,reason,true);
-    channel=channelList.next();
+    channel=nextchannel;
   }
 
 #ifdef USE_NICKINFO

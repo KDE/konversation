@@ -249,8 +249,9 @@ class Server : public QObject
 
     void startAwayTimer();
     void sendToAllChannels(const QString& text);
-    void slotLoadAddressees();
-  
+    void slotLoadAddressees(); 
+    void notifyTimeout();
+    
   protected slots:
     void ircServerConnectionSuccess();
     void lockSending();
@@ -259,7 +260,6 @@ class Server : public QObject
     void processIncomingData();
     void send();
     void broken(int state);
-    void notifyTimeout();
     void notifyCheckTimeout();
     void connectionEstablished();
     void notifyResponse(const QString& nicksOnline);

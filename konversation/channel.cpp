@@ -312,6 +312,11 @@ Channel::~Channel()
   server->removeChannel(this);
 }
 
+#ifdef USE_NICKINFO
+ChannelNickPtr Channel::getChannelNick(const QString &ircnick) {
+  return server->getChannelNick(getName(), ircnick);
+}
+#endif
 void Channel::purgeNicks()
 {
   // Purge nickname list
@@ -379,12 +384,13 @@ void Channel::popupCommand(int id)
 
   switch(id)
   {
-/*    case NickListView::AddressbookEdit:
+#ifdef USE_NICKINFO
+    case NickListView::AddressbookEdit:
       {
         QStringList nickList=getSelectedNicksList();
 	for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
-	  Nick *nick = getNickByName(*nickIterator);
-	  if(!editAddressee(nick->getAddressee().uid())) break;
+          NickInfoPtr nickInfo = server->getNickInfo(*nickIterator);
+	  if(!editAddressee(nickInfo->getAddressee().uid())) break;
 	}
 	break;
       }
@@ -409,10 +415,10 @@ void Channel::popupCommand(int id)
 	  if(addressbook->saveTicket()) {
             //Nicks have changed.  Refresh.
 	    for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
-	      Nick *nick = getNickByName(*nickIterator);
-	      nick->refreshAddressee();
-	      if(id == NickListView::AddressbookNew || NickListView::AddressbookEdit) {
-		if(!editAddressee(nick->getAddressee().uid())) break;
+	      NickInfoPtr nickInfo = server->getNickInfo(*nickIterator);
+	      nickInfo->refreshAddressee();
+	      if(id == NickListView::AddressbookNew) {
+		if(!editAddressee(nickInfo->getAddressee().uid())) break;
 	      }
 	    }
 	  }
@@ -425,13 +431,14 @@ void Channel::popupCommand(int id)
         for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator) {
 	  LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, *nickIterator);
 	  linkaddressbookui->show();
-	  getNickByName(*nickIterator)->refreshAddressee();
+	  server->getNickInfo(*nickIterator)->refreshAddressee();
 	}
         break;
       }
+#endif
     case NickListView::AddressbookSub:
       kdDebug() << "sub called" << endl;
-      break;*/
+      break;
     case NickListView::GiveOp:
       pattern="MODE %c +o %u";
       raw=true;

@@ -76,7 +76,7 @@ bool Addressbook::hasAnyNicks(const KABC::Addressee &addressee, const QString &/
  *  if it has changed. */
 void Addressbook::unassociateNick(KABC::Addressee &addressee, const QString &ircnick) {
 	
-	kdDebug() << "in unassociatenick" << endl;
+	kdDebug() << "in unassociatenick for '" << ircnick << "'" << endl;
 	
 	QString lower_ircnick = ircnick.lower();
 	
@@ -86,11 +86,8 @@ void Addressbook::unassociateNick(KABC::Addressee &addressee, const QString &irc
 		kdDebug() << "Ignoring unassociation command for empty addressee for nick " << ircnick << endl;
 	}
 	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
-	kdDebug() << "irc address list is:  " << addressee.custom("messaging/irc", "All") << endl; 
 	for ( QStringList::iterator it = addresses.begin(); it != addresses.end(); ++it )
 	{
-		kdDebug() << "found a nick" << endl;
-		kdDebug() << "it is " << (*it) << endl;
 		if((*it).lower() == lower_ircnick) {
 			changed = true;
 			addresses.remove(it);
@@ -107,7 +104,6 @@ void Addressbook::unassociateNick(KABC::Addressee &addressee, const QString &irc
 		addressee.removeCustom("messaging/irc", "All");
 	else
 		addressee.insertCustom("messaging/irc", "All", new_custom);
-	kdDebug() << "final irc address is '" << new_custom << "'" << endl;
 
 	addressBook->insertAddressee(addressee);
 	//saveTicket();
@@ -464,7 +460,6 @@ bool Addressbook::addContact( const QString &/*contactId*/, const QString &/*pro
 }
 
 void Addressbook::emitContactPresenceChanged(QString uid, int presence) {
-	Q_ASSERT(!uid.isEmpty());
 	if(uid.isEmpty()) {
 		kdDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
 		return;
@@ -476,7 +471,6 @@ void Addressbook::emitContactPresenceChanged(QString uid, int presence) {
 }
 
 void Addressbook::emitContactPresenceChanged(QString uid) {
-	Q_ASSERT(!uid.isEmpty());
 	if(uid.isEmpty()) {
 		kdDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
 		return;
