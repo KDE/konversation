@@ -926,7 +926,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("Beep",preferences.getBeep());
   config->writeEntry("RawLog",preferences.getRawLog());
 
-  config->writeEntry("VersionReply",preferences.getVersionReply(TRUE));
+  config->writeEntry("VersionReply",preferences.getVersionReply());
 
   config->writeEntry("MaximumLag",preferences.getMaximumLagTime());
 
