@@ -96,9 +96,9 @@ class KonversationMainWindow : public KMainWindow
     void openNotify();
     void openNicksOnlineWindow();
     void closeNicksOnlineWindow(QSize newSize);
-#if KDE_VERSION >= 310
+    // it seems that moc does not honor #ifs in compile so we create an
+    // empty slot in our .cpp file rather than #if this slot out
     void openNotifications();
-#endif
 
     void showToolbar();
     void showStatusbar();
