@@ -198,7 +198,20 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
       server->appendServerMessageToChannel(parameterList[0],i18n("Notice"),i18n("from %1 to %2: %3").arg(sourceNick).arg(parameterList[0]).arg(trailing));
     // Private notice
     else
-      server->appendStatusMessage(i18n("Notice"),i18n("from %1 to %2: %3").arg(sourceNick).arg(parameterList[0]).arg(trailing));
+    {
+      // Was this a CTCP reply?
+      if(trailing[0]==1)
+      {
+        // cut 0x01 bytes from trailing string
+        QString ctcp(trailing.mid(1,trailing.length()-2));
+        QString replyReason(ctcp.section(' ',0,0));
+        QString reply(ctcp.section(' ',1));
+        server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-%1 reply from %2: %3").arg(replyReason).arg(sourceNick).arg(reply));
+      }
+      // No, so it was a normal notice
+      else
+        server->appendStatusMessage(i18n("Notice"),i18n("from %1 to %2: %3").arg(sourceNick).arg(parameterList[0]).arg(trailing));
+    }
   }
   else if(command=="join")
   {

@@ -42,6 +42,7 @@ class DccPanel : public ChatWindow
 
   protected slots:
     void acceptDcc();
+    void runDcc();
     void removeDcc();
     void dccSelected();
 

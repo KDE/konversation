@@ -287,6 +287,7 @@ void OutputFilter::parseNotice(QString parameter)
   }
   else
   {
+    type=i18n("Notice");
     toServer="NOTICE "+recipient+" :"+message;
     output=i18n("Sending notice \"%1\" to %2.").arg(message).arg(recipient);
     program=true;

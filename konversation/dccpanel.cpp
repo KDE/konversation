@@ -19,6 +19,7 @@
 #include <kdialog.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <krun.h>
 
 #include "dccpanel.h"
 
@@ -60,6 +61,7 @@ DccPanel::DccPanel(QWidget* parent) :
 
   connect(acceptButton,SIGNAL (clicked()) ,this,SLOT (acceptDcc()) );
   connect(removeButton,SIGNAL (clicked()) ,this,SLOT (removeDcc()) );
+  connect(openButton,SIGNAL (clicked()) ,this,SLOT (runDcc()) );
 }
 
 DccPanel::~DccPanel()
@@ -116,6 +118,15 @@ void DccPanel::acceptDcc()
   if(item)
   {
     if(item->getType()==DccTransfer::Get && item->getStatus()==DccTransfer::Queued) item->startGet();
+  }
+}
+
+void DccPanel::runDcc()
+{
+  DccTransfer* item=(DccTransfer*) getListView()->selectedItem();
+  if(item)
+  {
+    new KRun(item->getFile());
   }
 }
 
