@@ -125,8 +125,15 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("&New Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
 
   // Actions to navigate through the different pages
-  new KAction(i18n("&Next Tab"), "next",KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
-  new KAction(i18n("&Previous Tab"), "previous",KShortcut("Alt+Left"),
+  KShortcut nextShortcut = KStdAccel::tabNext();
+  nextShortcut.setSeq(1, KKeySequence("Alt+Right"));
+  KShortcut prevShortcut = KStdAccel::tabPrev();
+  prevShortcut.setSeq(1, KKeySequence("Alt+Left"));
+  new KAction(i18n("&Next Tab"), QApplication::reverseLayout() ? "previous" : "next",
+    QApplication::reverseLayout() ? prevShortcut : nextShortcut,
+    this,SLOT(nextTab()), actionCollection(), "next_tab");
+  new KAction(i18n("&Previous Tab"), QApplication::reverseLayout() ? "next" : "previous",
+    QApplication::reverseLayout() ? nextShortcut : prevShortcut,
     this,SLOT(previousTab()),actionCollection(),"previous_tab");
   new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
   new TabAction(i18n("Go to Tab Number %1").arg( 1),0,KShortcut("Alt+1"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_1");
