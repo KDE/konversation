@@ -32,6 +32,7 @@
 #include <ksocketdevice.h>
 #include <kaction.h>
 using namespace KNetwork;
+#include <kstringhandler.h>
 #include <kdeversion.h>
 #include <kwin.h>
 
@@ -981,6 +982,7 @@ void Server::incoming()
   }
 
   buffer[len] = 0;
+
   QCString qcsBuffer = inputBufferIncomplete + QCString(buffer);
 
   // split buffer to lines
@@ -988,11 +990,18 @@ void Server::incoming()
   int lastLFposition = -1;
   for( int nextLFposition ; ( nextLFposition = qcsBuffer.find('\n', lastLFposition+1) ) != -1 ; lastLFposition = nextLFposition )
     qcsBufferLines << qcsBuffer.mid(lastLFposition+1, nextLFposition-lastLFposition-1);
-  
+
   // remember an incompleted line (split by packets)
   inputBufferIncomplete = qcsBuffer.right(qcsBuffer.length()-lastLFposition-1);
 
   while(!qcsBufferLines.isEmpty())
+  {
+    QString testString = qcsBufferLines.front();
+    bool isUtf8 = KStringHandler::isUtf8((Konversation::removeIrcMarkup(testString)).ascii());
+
+    if(isUtf8)
+      inputBuffer << KStringHandler::from8Bit(qcsBufferLines.front());
+    else
     {
       // set channel encoding if specified
       // {
@@ -1004,44 +1013,44 @@ void Server::incoming()
       QStringList lineSplit = QStringList::split(" ",tmpCodec->toUnicode(qcsBufferLines.front()));
       if(1 <= lineSplit.count())  // for safe
         if(lineSplit[0][0] == ':')
-	  {
-	    if(!lineSplit[0].contains('!'))
-	      isServerMessage = true;
-	    else
-	      senderNick = lineSplit[0].mid(1, lineSplit[0].find('!')-1);
-	    lineSplit.pop_front();  // remove prefix
-	  }
+        {
+          if(!lineSplit[0].contains('!'))
+            isServerMessage = true;
+          else
+            senderNick = lineSplit[0].mid(1, lineSplit[0].find('!')-1);
+          lineSplit.pop_front();  // remove prefix
+        }
       // set channel key
       QString command = lineSplit[0].lower();
       if(isServerMessage)
-	{
-	  if(3 <= lineSplit.count())
-	    {
-	      if( command == "332" )  // RPL_TOPIC
-		channelKey = lineSplit[2];
-	      if( command == "372" )  // RPL_MOTD
-		channelKey = ":server";
-	    }
-	}
+      {
+        if(3 <= lineSplit.count())
+        {
+          if( command == "332" )  // RPL_TOPIC
+            channelKey = lineSplit[2];
+          if( command == "372" )  // RPL_MOTD
+            channelKey = ":server";
+        }
+      }
       else
-	{
-	  if(2 <= lineSplit.count())
-	    {
-	      // query
-	      if( ( command == "privmsg" ||
-		    command == "notice"  ) &&
-		  lineSplit[1] == getNickname() )
-		channelKey = senderNick;
-	      // channel message
-	      else if( command == "privmsg" ||
-		       command == "notice"  ||
-		       command == "join"    ||
-		       command == "kick"    ||
-		       command == "part"    ||
-		       command == "topic"   )
-		channelKey = lineSplit[1];
-	    }
-	}
+      {
+        if(2 <= lineSplit.count())
+        {
+          // query
+          if( ( command == "privmsg" ||
+                command == "notice"  ) &&
+              lineSplit[1] == getNickname() )
+            channelKey = senderNick;
+          // channel message
+          else if( command == "privmsg" ||
+                   command == "notice"  ||
+                   command == "join"    ||
+                   command == "kick"    ||
+                   command == "part"    ||
+                   command == "topic"   )
+            channelKey = lineSplit[1];
+        }
+      }
       // check setting
       QString channelEncoding;
       if(!channelKey.isEmpty()) {
@@ -1056,11 +1065,12 @@ void Server::incoming()
         codec = getIdentity()->getCodec();
       inputBuffer << codec->toUnicode(qcsBufferLines.front());
     }
-  qcsBufferLines.pop_front();
+    qcsBufferLines.pop_front();
+  }
 
   // refresh lock timer if it was still locked
   if(!sendUnlocked) lockSending();
-  
+
   if(!incomingTimer.isActive()) {
     incomingTimer.start(0);
   }
