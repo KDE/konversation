@@ -159,13 +159,13 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   connect(tabSelectionMapper, SIGNAL(mapped(int)), this, SLOT(goToTab(int)));
   
   for(uint i = 0; i < 10; ++i) {
-    KAction* tabSelectionAction = new KAction(i18n("Go To Tab %1").arg(i), 0, KShortcut(QString("Alt+%1").arg(i)),
+    KAction* tabSelectionAction = new KAction(i18n("Go to Tab %1").arg(i), 0, KShortcut(QString("Alt+%1").arg(i)),
       tabSelectionMapper, SLOT(map()), actionCollection(), QString("go_to_tab_%1").arg(i).local8Bit());
     tabSelectionMapper->setMapping( tabSelectionAction, i);
   }
   
   new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
-  KAction* awayAction = new KAction(i18n("Set &Away Globally"), "konversationaway", KShortcut("Alt+A"),
+  KAction* awayAction = new KAction(i18n("Set &Away Globally")/*, "konversationaway"*/, KShortcut("Alt+A"),
     static_cast<KonversationApplication *>(kapp), SLOT(toggleAway()), actionCollection(),"toggle_away");  //string must be the same as that used in server.cpp
   new KAction(i18n("&Join Channel..."), 0, KShortcut("Ctrl+J"), this, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
 

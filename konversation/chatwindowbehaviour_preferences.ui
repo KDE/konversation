@@ -56,7 +56,7 @@
                         <cstring>kcfg_HideJoinPart</cstring>
                     </property>
                     <property name="text">
-                        <string>Hide &amp;Join/Part/Nick Events</string>
+                        <string>Hide &amp;Join/Part/Nick events</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="3">
@@ -72,7 +72,7 @@
                         <cstring>textLabel1</cstring>
                     </property>
                     <property name="text">
-                        <string>Scroll&amp;back Limit:</string>
+                        <string>Scroll&amp;back limit:</string>
                     </property>
                     <property name="buddy" stdset="0">
                         <cstring>kcfg_ScrollBackLimit</cstring>
@@ -161,7 +161,7 @@
                         <cstring>kcfg_autoWhoContinuous</cstring>
                     </property>
                     <property name="text">
-                        <string>Re&amp;quest /WHO continually</string>
+                        <string>Re&amp;quest /WHO continually:</string>
                     </property>
                 </widget>
                 <widget class="QSpinBox" row="1" column="1">
@@ -225,7 +225,7 @@
                 <cstring>groupBox2</cstring>
             </property>
             <property name="title">
-                <string>&amp;Nickname list</string>
+                <string>&amp;Nickname List</string>
             </property>
             <grid>
                 <property name="name">

@@ -24,7 +24,7 @@
                 <bool>false</bool>
             </property>
             <property name="text">
-                <string>&amp;RemoveTheme</string>
+                <string>&amp;Remove Theme</string>
             </property>
         </widget>
         <widget class="QPushButton" row="2" column="0" rowspan="1" colspan="2">
@@ -32,7 +32,7 @@
                 <cstring>installButton</cstring>
             </property>
             <property name="text">
-                <string>I&amp;nstall Theme</string>
+                <string>I&amp;nstall Theme...</string>
             </property>
         </widget>
         <widget class="QLabel" row="1" column="0">
