@@ -42,7 +42,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 //  buttonBox->setSpacing(KDialog::spacingHint());
 
   QPushButton* editButton=new QPushButton(i18n("&Edit..."),this,"edit_notify_button");
-  editButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  editButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed));
 
   connect(editButton,SIGNAL (clicked()),SIGNAL (editClicked()) );
   connect(nickListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT(processDoubleClick(QListViewItem*)));
