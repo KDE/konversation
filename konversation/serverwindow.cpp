@@ -204,9 +204,6 @@ void ServerWindow::closeTab(QWidget* viewToClose)
   else if(viewType==ChatWindow::Query)   emit closeQuery(viewName);
   else if(viewType==ChatWindow::DccChat);
   else if(viewType==ChatWindow::DccPanel) closeDccPanel();
-
-  kdDebug() << "close tab " << ((ChatWindow*) view)->getName() << endl;
-
 }
 
 void ServerWindow::addDccPanel()

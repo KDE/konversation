@@ -108,7 +108,7 @@ void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
         flags |= QStyle::Style_Enabled;
     if ( selected )
         flags |= QStyle::Style_Selected;
-    else if(t == tabAt(currentTab()))
+    else if(t == tabAt(indexOf(currentTab())))
         flags |= QStyle::Style_Sunken;
 
     //selection flags
