@@ -67,7 +67,8 @@ void KonvDCOP::setAway(const QString &awaymessage)
 }
 void KonvDCOP::setAutoAway()
 {
-  emit setAutoAway();
+  kdDebug() << "set auto away" << endl;
+  emit dcopSetAutoAway();
 }
 void KonvDCOP::setBack()
 {
