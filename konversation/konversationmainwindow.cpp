@@ -116,7 +116,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
   KAction *preferencesAction = KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
-  new KAction(i18n("&Server List..."), "server", 0, this, SLOT(openServerList()), actionCollection(), "open_server_list");
+  new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()), actionCollection(), "open_server_list");
   new KAction(i18n("Quick &Connect..."), "connect_creating", 0, this, SLOT(openQuickConnectDialog()), actionCollection(), "quick_connect_dialog");
 
   new KAction(i18n("&Identities..."), "identity", 0, this, SLOT(openIdentitiesDialog()), actionCollection(), "identities_dialog");
