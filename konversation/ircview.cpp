@@ -336,9 +336,9 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
     {
       // hilight current nickname
       m_highlightColor = KonversationApplication::preferences.getHilightNickColor().name();
-      ChatWindow* chatWin = static_cast<ChatWindow*>(parent());
-
-      if (KonversationApplication::preferences.getOSDShowOwnNick() &&
+      ChatWindow* chatWin = dynamic_cast<ChatWindow*>(parent());
+      Q_ASSERT(chatWin);
+      if (chatWin && KonversationApplication::preferences.getOSDShowOwnNick() &&
         !KonversationApplication::preferences.getOSDShowChannel() && chatWin->notificationsEnabled())
       {
         konvApp->osd->showOSD(i18n("(HIGHLIGHT)") + " <" + whoSent + "> " + filteredLine);
