@@ -59,7 +59,6 @@ class DccTransfer : public QObject, public KListViewItem
     virtual ~DccTransfer();
     
     virtual void paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment);
-    void showProgressBar();
     
     DccType getType() const { return dccType; }
     DccStatus getStatus() const { return dccStatus; }
@@ -81,12 +80,14 @@ class DccTransfer : public QObject, public KListViewItem
     void updateView();
     
   protected:
+    void showProgressBar();  // called from printCell()
+    
     void startAutoUpdateView();
     void stopAutoUpdateView();
     
     void setStatus(DccStatus status);
     
-    // called by updateView()
+    // called from updateView()
     QString getTypeText() const;
     QPixmap getTypeIcon() const;
     QPixmap getStatusIcon() const;
@@ -120,15 +121,15 @@ class DccTransfer : public QObject, public KListViewItem
     unsigned long bufferSize;
     char* buffer;
     
-    QTimer* autoUpdateViewTimer;
-    
     // file information
     QFile file;
     QString fileName;
     QString filePath;
     unsigned long fileSize;
     
-    // for interface
+    // UI
+    QTimer* autoUpdateViewTimer;
+    
     KProgress* progressBar;
     
     static QString TypeText[DccTypeCount];

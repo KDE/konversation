@@ -14,7 +14,6 @@
 
 #include <qheader.h>
 #include <qhostaddress.h>
-#include <qlocale.h>
 #include <qstyle.h>
 #include <qtimer.h>
 
@@ -111,14 +110,14 @@ void DccTransfer::stopAutoUpdateView()
   }
 }
 
-void DccTransfer::paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment)
+void DccTransfer::paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment)  // public virtual
 {
   KListViewItem::paintCell(painter, colorgroup, column, width, alignment);
   if(column==DccPanel::Column::Progress)
     showProgressBar();
 }
 
-void DccTransfer::showProgressBar()  // public
+void DccTransfer::showProgressBar()
 {  
   // I've referenced the Apollon's code for progressbar things. Thank you, the Apollon team! (shin)
   if(fileSize)
@@ -196,8 +195,7 @@ QString DccTransfer::getFileSizePrettyText() const
 QString DccTransfer::getPositionPrettyText() const
 {
   // TODO: make it pretty!
-  QLocale locale(QLocale::C);
-  return locale.toString(transferringPosition) + " / " + locale.toString(fileSize);
+  return QString::number(transferringPosition) + " / " + QString::number(fileSize);
 }
 
 QString DccTransfer::getTimeRemainingPrettyText() const
