@@ -25,3 +25,5 @@ DccTransferHandler::DccTransferHandler(KonversationMainWindow* newMainWindow)
 DccTransferHandler::~DccTransferHandler()
 {
 }
+
+#include "dcctransferhandler.moc"
