@@ -16,7 +16,6 @@
 
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qvbox.h>
 #include <qhbox.h>
 
 #include <klocale.h>
@@ -28,30 +27,22 @@
 #include "konversationapplication.h"
 
 PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
-             KDialogBase(0,"editprefs",false,i18n("Edit Preferences"),
-                         KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
-                         KDialogBase::Ok,true)
+             KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
+                          KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
+                          KDialogBase::Ok,0,"edit_prefs",false,true)
 {
   kdDebug() << "PrefsDialog::PrefsDialog()" << endl;
   setPreferences(preferences);
 
-  /* Create the top level widget */
-  QWidget* page=new QWidget(this);
-  setMainWidget(page);
-  /* Create the TabWidget */
-  prefsTabs=new QTabWidget(page);
-  prefsTabs->setMargin(marginHint());
-  /* Add the layout to the widget */
-  QVBoxLayout* dialogLayout=new QVBoxLayout(page);
-  dialogLayout->addWidget(prefsTabs);
+  QFrame* serverListPane=addPage(i18n("Server List"));
+  QFrame* identityPane=addPage(i18n("Identity"));
 
   /* Server list pane*/
+  QVBoxLayout* serverListLayout=new QVBoxLayout(serverListPane,marginHint(),spacingHint(),"server_list_layout");
 
-  /* Here goes the server list and the "connect / new / remove  ..." button box */
-  QVBox* serverListPane=new QVBox(prefsTabs);
-  serverListPane->setSpacing(spacingHint());
   /* Set up the server list */
   serverListView=new KListView(serverListPane);
+
   serverListView->setItemsRenameable(true);
   serverListView->addColumn(i18n("Group"));
   serverListView->addColumn(i18n("Server"));
@@ -95,8 +86,8 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   removeServerButton=new QPushButton(i18n("Remove"),buttonBox);
   removeServerButton->setDisabled(true);
 
-  /* Identity pane */
-  QWidget* identityPane=new QWidget(prefsTabs);
+  serverListLayout->addWidget(serverListView);
+  serverListLayout->addWidget(buttonBox);
 
   QLabel* realNameLabel=new QLabel(i18n("Real name:"),identityPane);
   KLineEdit* realNameInput=new KLineEdit(preferences->realname,identityPane);
@@ -110,9 +101,10 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   KLineEdit* nick1=new KLineEdit(nicknameList[1],identityPane);
   KLineEdit* nick2=new KLineEdit(nicknameList[2],identityPane);
   KLineEdit* nick3=new KLineEdit(nicknameList[3],identityPane);
+
   /* Add a Layout to the identity pane */
-  QGridLayout* identityLayout=new QGridLayout(identityPane,4,4);
-  identityLayout->setSpacing(spacingHint());
+  QGridLayout* identityLayout=new QGridLayout(identityPane,4,4,marginHint(),spacingHint());
+
   identityLayout->addWidget(realNameLabel,0,0);
   identityLayout->addMultiCellWidget(realNameInput,0,0,1,3);
   identityLayout->addWidget(loginLabel,1,0);
@@ -126,10 +118,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   identityLayout->addWidget(new QLabel("Nickname 4:",identityPane),3,2);
   identityLayout->addWidget(nick3,3,3);
   identityLayout->setRowStretch(4,10);
-
-  /* Add the panes to the Tab Widget */
-  prefsTabs->addTab(serverListPane,i18n("Server List"));
-  prefsTabs->addTab(identityPane,i18n("Identity"));
 
   /* Set up signals / slots for server list */
   connect(connectButton,SIGNAL(clicked()),
@@ -147,7 +135,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   // FIXME: Double click Server Entry in PrefsDialog!
   // This would delete the ListView while inside the doubleClicked() signal and
-  // this is not allowed. We must find another way to du this!
+  // this is not allowed. Delayed Destruct fixes this, but seems to have a race.
   connect(serverListView,SIGNAL(doubleClicked(QListViewItem*)),
                     this,SLOT  (serverDoubleClicked(QListViewItem*)) );
 
@@ -185,7 +173,7 @@ void PrefsDialog::connectClicked()
   slotApply();
   QListViewItem* lv_item=serverListView->selectedItems().first();
   /* FIXME: Do I really need to cast here? Isn't there a better way? */
-  /* Inherit from serverListView to return proper type */
+  /* Maybe inherit from serverListView to return proper type */
   ServerListItem* item=(ServerListItem*)lv_item;
   if(item) emit connectToServer(item->getId());
 }
