@@ -180,30 +180,10 @@ void DccPanel::abortDcc()
 void DccPanel::removeDcc()
 {
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
-
-  if(item)
-  {
-    DccTransfer::DccStatus status=item->getStatus();
-    bool doDelete=true;
-
-    if(status!=DccTransfer::Queued &&
-       status!=DccTransfer::WaitingRemote &&
-       status!=DccTransfer::Aborted &&
-       status!=DccTransfer::Failed &&
-       status!=DccTransfer::Done)
-    {
-      // TODO: do some user question here
-      doDelete=false;
-    }
-
-    if(doDelete)
-    {
-      delete item;
-      // select next item so the user can clean up the list quickly
-      item=static_cast<DccTransfer*>(getListView()->currentItem());
-      if(item) getListView()->setSelected(item,true);
-    }
-  }
+  delete item;
+  // select next item so the user can clean up the list quickly
+  item=static_cast<DccTransfer*>(getListView()->currentItem());
+  if(item) getListView()->setSelected(item,true);
 }
 
 DccTransfer* DccPanel::getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed)
