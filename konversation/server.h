@@ -144,6 +144,7 @@ class Server : public QObject
     void addDccSend(const QString &recipient,const QString &file);
     void removeQuery(Query *query);
     void startNotifyTimer(int msec=0);
+    void sendJoinCommand(const QString& channelName);
     void requestChannelList();
     void requestUserhost(const QString& nicks);
     void addRawLog(bool show);

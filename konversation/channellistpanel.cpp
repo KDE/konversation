@@ -33,6 +33,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
 {
   setType(ChatWindow::ChannelList);
 
+  setNumChannels(0);
+  setNumUsers(0);
+
   QHGroupBox* filterGroup=new QHGroupBox(i18n("Filter settings"),this);
   QGrid* mainGrid=new QGrid(2,Qt::Vertical,filterGroup);
   mainGrid->setSpacing(spacing());
@@ -70,16 +73,55 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   QPushButton* saveListButton=new QPushButton(i18n("Save list"),actionBox,"save_list_button");
   QPushButton* joinChannelButton=new QPushButton(i18n("Join channel"),actionBox,"join_channel_button");
 
-  connect(refreshListButton,SIGNAL (clicked()),SIGNAL (refreshChannelList()) );
+  connect(refreshListButton,SIGNAL (clicked()),this,SLOT (refreshList()) );
+  connect(saveListButton,SIGNAL (clicked()),this,SLOT (saveList()) );
+  connect(joinChannelButton,SIGNAL (clicked()),this,SLOT (joinChannelClicked()) );
 }
 
 ChannelListPanel::~ChannelListPanel()
 {
 }
 
-void ChannelListPanel::addToChannelList(const QString& channel,int users,const QString& topic)
+void ChannelListPanel::refreshList()
+{
+  channelListView->clear();
+  setNumChannels(0);
+  setNumUsers(0);
+  emit refreshChannelList();
+}
+
+void ChannelListPanel::saveList()
 {
 }
+
+void ChannelListPanel::joinChannelClicked()
+{
+  QListViewItem* item=channelListView->selectedItem();
+  if(item)
+  {
+    emit joinChannel(item->text(0));
+  }
+}
+
+void ChannelListPanel::addToChannelList(const QString& channel,int users,const QString& topic)
+{
+  new KListViewItem(channelListView,channel,QString::number(users),topic);
+}
+
+void ChannelListPanel::setNumChannels(int num)
+{
+  numChannels=num;
+  // update widgets here
+}
+
+void ChannelListPanel::setNumUsers(int num)
+{
+  numUsers=num;
+  // update widgets here
+}
+
+int ChannelListPanel::getNumChannels() { return numChannels; }
+int ChannelListPanel::getNumUsers()    { return numUsers; }
 
 void ChannelListPanel::adjustFocus()
 {

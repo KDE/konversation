@@ -35,12 +35,27 @@ class ChannelListPanel : public ChatWindow
 
   signals:
     void refreshChannelList();
-  
+    void joinChannel(const QString& channelName);
+
   public slots:
     void adjustFocus();
     void addToChannelList(const QString& channel,int users,const QString& topic);
 
+  protected slots:
+    void refreshList();
+    void saveList();
+    void joinChannelClicked();
+
   protected:
+    void setNumChannels(int num);
+    void setNumUsers(int num);
+
+    int getNumChannels();
+    int getNumUsers();
+
+    int numChannels;
+    int numUsers;
+
     KListView* channelListView;
 };
 

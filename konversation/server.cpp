@@ -146,7 +146,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
   connect(getMainWindow(),SIGNAL(openPrefsDialog()),KonversationApplication::kApplication(),SLOT(openPrefsDialog()));
 
-  addChannelListPanel();
+  // addChannelListPanel();
 }
 
 Server::~Server()
@@ -867,6 +867,12 @@ void Server::removeQuery(Query* query)
   delete query;
 }
 
+void Server::sendJoinCommand(const QString& name)
+{
+  outputFilter.parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"JOIN "+name,QString::null);
+  queue(outputFilter.getServerOutput());
+}
+
 void Server::joinChannel(const QString &name, const QString &hostmask, const QString &/*key*/)
 {
   // Make sure to delete stale Channel on rejoin.
@@ -1305,7 +1311,10 @@ void Server::addChannelListPanel()
   if(!channelListPanel)
   {
     channelListPanel=getMainWindow()->addChannelListPanel(this);
+
     connect(channelListPanel,SIGNAL (refreshChannelList()),this,SLOT (requestChannelList()) );
+    connect(channelListPanel,SIGNAL (joinChannel(const QString&)),this,SLOT (sendJoinCommand(const QString&)) );
+
     connect(&inputFilter,SIGNAL (addToChannelList(const QString&,int,const QString&)),
           channelListPanel,SLOT (addToChannelList(const QString&,int,const QString&)) );
   }

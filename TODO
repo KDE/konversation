@@ -16,6 +16,7 @@ Session management
 Make font for quick buttons configurable
 Different charsets / encodings for each channel / tab
 Fortunes
+Queries should get a Whois menu item
 "notices" tab for all notices that are no channel notices
 "snotices" tab for all server notices (prefix without "!")
 Indicate hilight on tab LED / label

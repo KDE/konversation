@@ -233,11 +233,6 @@ void KonversationMainWindow::addDccPanel()
     dccPanel=new DccPanel(getViewContainer());
     addView(dccPanel,3,i18n("DCC Status"));
     dccPanelOpen=true;
-/*
-    FIXME: where to connect this? It's not very sensible anyway, since
-           the dcc panel is not server dependant
-    connect(dccPanel,SIGNAL(requestDccSend()),getServer(),SLOT(requestDccSend()));
-*/
   }
   // show already opened panel
   else
@@ -339,9 +334,9 @@ ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
   
   ChannelListPanel* channelListPanel=new ChannelListPanel(getViewContainer());
   channelListPanel->setServer(server);
-  
+
   addView(channelListPanel,2,i18n("Channel list"));
-  
+
   return channelListPanel;
 }
 

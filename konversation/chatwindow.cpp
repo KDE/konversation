@@ -72,40 +72,43 @@ void ChatWindow::setServer(Server* newServer)
   {
     server=newServer;
 
-    if(textView) textView->setServer(newServer);
-    else kdDebug() << "ChatWindow::setServer(): textView==0!" << endl;
-  
-    connect(&filter,SIGNAL (openQuery(const QString&,const QString&)),
-             server,SLOT   (addQuery(const QString&,const QString&)) );
-    connect(&filter,SIGNAL (openDccPanel()),
-             server,SLOT   (requestDccPanel()) );
-    connect(&filter,SIGNAL (closeDccPanel()),
-             server,SLOT   (requestCloseDccPanel()) );
-    connect(&filter,SIGNAL (openDccSend(const QString &, const QString &)),
-             server,SLOT   (addDccSend(const QString &, const QString &)) );
-    connect(&filter,SIGNAL (requestDccSend()),
-             server,SLOT   (requestDccSend()) );
-    connect(&filter,SIGNAL (requestDccSend(const QString &)),
-             server,SLOT   (requestDccSend(const QString &)) );
-    connect(&filter,SIGNAL (away()),
-             server,SLOT   (away()) );
-    connect(&filter,SIGNAL (unAway()),
-             server,SLOT   (unAway()) );
-    connect(&filter,SIGNAL (sendToAllChannels(const QString&)),
-             server,SLOT   (sendToAllChannels(const QString&)) );
-    connect(&filter,SIGNAL (banUsers(const QStringList&,const QString&,const QString&)),
-             server,SLOT   (requestBan(const QStringList&,const QString&,const QString&)) );
+    // check if we need to set up the signals
+    if(getType()!=ChannelList)
+    {
+      if(textView) textView->setServer(newServer);
+      else kdDebug() << "ChatWindow::setServer(): textView==0!" << endl;
 
-    connect(&filter,SIGNAL (openRawLog(bool)), server,SLOT (addRawLog(bool)) );
-    connect(&filter,SIGNAL (closeRawLog()),server,SLOT (closeRawLog()) );
-    
-    scriptLauncher.setServerName(server->getServerName());
+      connect(&filter,SIGNAL (openQuery(const QString&,const QString&)),
+               server,SLOT   (addQuery(const QString&,const QString&)) );
+      connect(&filter,SIGNAL (openDccPanel()),
+               server,SLOT   (requestDccPanel()) );
+      connect(&filter,SIGNAL (closeDccPanel()),
+               server,SLOT   (requestCloseDccPanel()) );
+      connect(&filter,SIGNAL (openDccSend(const QString &, const QString &)),
+               server,SLOT   (addDccSend(const QString &, const QString &)) );
+      connect(&filter,SIGNAL (requestDccSend()),
+               server,SLOT   (requestDccSend()) );
+      connect(&filter,SIGNAL (requestDccSend(const QString &)),
+               server,SLOT   (requestDccSend(const QString &)) );
+      connect(&filter,SIGNAL (away()),
+               server,SLOT   (away()) );
+      connect(&filter,SIGNAL (unAway()),
+               server,SLOT   (unAway()) );
+      connect(&filter,SIGNAL (sendToAllChannels(const QString&)),
+               server,SLOT   (sendToAllChannels(const QString&)) );
+      connect(&filter,SIGNAL (banUsers(const QStringList&,const QString&,const QString&)),
+               server,SLOT   (requestBan(const QStringList&,const QString&,const QString&)) );
 
-    connect(&scriptLauncher,SIGNAL (scriptNotFound(const QString&)),
-                       server,SLOT (scriptNotFound(const QString&)) );
-    connect(&scriptLauncher,SIGNAL (scriptExecutionError(const QString&)),
-                       server,SLOT (scriptExecutionError(const QString&)) );
+      connect(&filter,SIGNAL (openRawLog(bool)), server,SLOT (addRawLog(bool)) );
+      connect(&filter,SIGNAL (closeRawLog()),server,SLOT (closeRawLog()) );
 
+      scriptLauncher.setServerName(server->getServerName());
+
+      connect(&scriptLauncher,SIGNAL (scriptNotFound(const QString&)),
+                         server,SLOT (scriptNotFound(const QString&)) );
+      connect(&scriptLauncher,SIGNAL (scriptExecutionError(const QString&)),
+                         server,SLOT (scriptExecutionError(const QString&)) );
+    }
   }
 }
 
