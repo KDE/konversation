@@ -54,7 +54,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="3" column="0" rowspan="1" colspan="2">
+                <widget class="QLabel" row="3" column="0">
                     <property name="name">
                         <cstring>patternLabel</cstring>
                     </property>
@@ -68,7 +68,7 @@
                         <cstring>patternInput</cstring>
                     </property>
                 </widget>
-                <widget class="KColorCombo" row="3" column="4">
+                <widget class="KColorCombo" row="3" column="3">
                     <property name="name">
                         <cstring>patternColor</cstring>
                     </property>
@@ -90,7 +90,7 @@
                         <cstring>soundURL</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="5" column="0" rowspan="1" colspan="3">
+                <widget class="QLabel" row="5" column="0">
                     <property name="name">
                         <cstring>autoTextLabel</cstring>
                     </property>
@@ -104,45 +104,7 @@
                         <cstring>autoTextInput</cstring>
                     </property>
                 </widget>
-                <widget class="KLineEdit" row="5" column="3" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>autoTextInput</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                </widget>
-                <widget class="KURLRequester" row="4" column="3" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>soundURL</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="filter">
-                        <string>audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton" row="4" column="1" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>soundPlayBtn</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="KLineEdit" row="3" column="2" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>patternInput</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                </widget>
-                <widget class="KPushButton" row="0" column="5">
+                <widget class="KPushButton" row="0" column="4">
                     <property name="name">
                         <cstring>newButton</cstring>
                     </property>
@@ -158,7 +120,7 @@
                         <string>&amp;New</string>
                     </property>
                 </widget>
-                <widget class="KPushButton" row="1" column="5">
+                <widget class="KPushButton" row="1" column="4">
                     <property name="name">
                         <cstring>removeButton</cstring>
                     </property>
@@ -174,7 +136,7 @@
                         <string>&amp;Remove</string>
                     </property>
                 </widget>
-                <widget class="KListView" row="0" column="0" rowspan="3" colspan="5">
+                <widget class="KListView" row="0" column="0" rowspan="3" colspan="4">
                     <column>
                         <property name="text">
                             <string>RE</string>
@@ -235,7 +197,7 @@
                         <bool>true</bool>
                     </property>
                 </widget>
-                <spacer row="2" column="5">
+                <spacer row="2" column="4">
                     <property name="name">
                         <cstring>spacer27</cstring>
                     </property>
@@ -252,6 +214,52 @@
                         </size>
                     </property>
                 </spacer>
+                <widget class="KLineEdit" row="5" column="1" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>autoTextInput</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                </widget>
+                <widget class="QPushButton" row="4" column="1">
+                    <property name="name">
+                        <cstring>soundPlayBtn</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="KURLRequester" row="4" column="2" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>soundURL</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="filter">
+                        <string>audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm</string>
+                    </property>
+                </widget>
+                <widget class="KLineEdit" row="3" column="1" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>patternInput</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                </widget>
             </grid>
         </widget>
         <widget class="KColorCombo" row="2" column="3">
@@ -303,14 +311,14 @@
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kcolorcombo.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>klistview.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>klineedit.h</includehint>
-    <includehint>kpushbutton.h</includehint>
-    <includehint>kpushbutton.h</includehint>
-    <includehint>klistview.h</includehint>
     <includehint>kcolorcombo.h</includehint>
     <includehint>kcolorcombo.h</includehint>
 </includehints>
