@@ -69,7 +69,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 #endif
 {
   // init variables
-  m_optionsDialog = 0;
   m_processingTimer = 0;
   m_pendingChannelNickLists.clear();
   m_currentIndex = 0;
@@ -367,60 +366,12 @@ void Channel::purgeNicks()
   ops=0;
 }
 
-void Channel::changeOptions()
-{
-  QString newTopic = m_optionsDialog->topic();
-
-  if(newTopic != m_topicHistory.first().section(' ', 1)) {
-    sendChannelText(KonversationApplication::preferences.getCommandChar() + "TOPIC " + getName() + " " + newTopic);
-  }
-
-  QStringList modes = m_optionsDialog->modes();
-  QStringList rmModes;
-  QStringList addModes;
-  QStringList tmp;
-  QString modeString;
-  bool plus;
-  QString command("MODE %1 %2%3 %4");
-
-  kdDebug() << "Current modes: " << m_modeList << endl;
-
-  for(QStringList::iterator it = modes.begin(); it != modes.end(); ++it) {
-    modeString = (*it).mid(1);
-    plus = ((*it)[0] == '+');
-    tmp = m_modeList.grep(QRegExp("^" + modeString));
-
-    if(tmp.isEmpty() && plus) {
-      m_server->queue(command.arg(getName()).arg("+").arg(modeString[0]).arg(modeString.mid(1)));
-    } else if(!tmp.isEmpty() && !plus) {
-      m_server->queue(command.arg(getName()).arg("-").arg(modeString[0]).arg(modeString.mid(1)));
-    }
-  }
-
-  closeOptionsDialog();
-}
 
 void Channel::showOptionsDialog()
 {
-  if(!m_optionsDialog) {
-    m_optionsDialog = new Konversation::ChannelOptionsDialog(getName(), this);
-    connect(m_optionsDialog, SIGNAL(okClicked()), this, SLOT(changeOptions()));
-    connect(m_optionsDialog, SIGNAL(cancelClicked()), this, SLOT(closeOptionsDialog()));
-  }
-
-  m_optionsDialog->setTopicHistory(m_topicHistory);
-  m_optionsDialog->setAllowedChannelModes(getServer()->allowedChannelModes());
-  m_optionsDialog->setModes(m_modeList);
-  m_optionsDialog->enableModes(getOwnChannelNick()->isAnyTypeOfOp());
-  m_optionsDialog->show();
-  
+  (new Konversation::ChannelOptionsDialog(this))->show();
 }
 
-void Channel::closeOptionsDialog()
-{
-  m_optionsDialog->deleteLater();
-  m_optionsDialog = 0;
-}
 
 void Channel::textPasted(const QString& text)
 {
@@ -1137,6 +1088,7 @@ void Channel::setTopic(const QString &newTopic)
     {
       QToolTip::add(topicLine,"<qt>" + topic + "</qt>");
     }
+    emit topicHistoryChanged();
   }
 }
 
@@ -1158,8 +1110,16 @@ void Channel::setTopic(const QString &nickname, const QString &newTopic) // Over
   {
     QToolTip::add(topicLine, "<qt>" + topic + "</qt>");
   }
+  emit topicHistoryChanged();
 }
 
+QStringList Channel::getTopicHistory() {
+  return m_topicHistory;
+}
+
+QString Channel::getTopic() {
+  return m_topicHistory[0];
+}
 void Channel::setTopicAuthor(const QString& newAuthor)
 {
   if(topicAuthorUnknown)
@@ -1566,6 +1526,7 @@ void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
       m_modeList.remove(m_modeList.find((*it)));
     }
   }
+  emit modesChanged();
 }
 
 void Channel::updateQuickButtons(const QStringList &newButtonList)

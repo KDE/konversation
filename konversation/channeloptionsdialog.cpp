@@ -19,14 +19,18 @@
 #include <klineedit.h>
 #include <knuminput.h>
 #include <qpushbutton.h>
+#include <qregexp.h>
 
+#include "konversationapplication.h"
 #include "channeloptionsui.h"
+#include "channel.h"
 
 namespace Konversation {
 
-ChannelOptionsDialog::ChannelOptionsDialog(const QString& channel, QWidget *parent, const char *name)
-  : KDialogBase(parent, name, false, i18n("Channel Options for %1").arg(channel), Ok|Cancel, Ok)
+ChannelOptionsDialog::ChannelOptionsDialog(Channel *channel)
+  : KDialogBase(channel, "channelOptions", false, i18n("Channel Options for %1").arg(channel->getName()), Ok|Cancel, Ok)
 {
+  Q_ASSERT(channel);
   m_widget = new ChannelOptionsUI(this);
   setMainWidget(m_widget);
 
@@ -34,13 +38,64 @@ ChannelOptionsDialog::ChannelOptionsDialog(const QString& channel, QWidget *pare
   m_widget->otherModesList->setRenameable(1, true);
   m_widget->otherModesList->hide();
 
+  m_channel = channel;
+
   connect(m_widget->topicHistoryList, SIGNAL(clicked(QListViewItem*)), this, SLOT(topicHistoryItemClicked(QListViewItem*)));
   connect(m_widget->toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
+  connect(m_channel, SIGNAL(topicHistoryChanged()), this, SLOT(refreshTopicHistory()));
+
+  connect(m_channel, SIGNAL(modesChanged()), this, SLOT(refreshModes()));
+  connect(m_channel->getOwnChannelNick(), SIGNAL(channelNickChanged()), this, SLOT(refreshEnableModes()));
+
+  connect(this, SIGNAL(cancelClicked()), this, SLOT(closeOptionsDialog()));
+  connect(this, SIGNAL(okClicked()), this, SLOT(changeOptions()));
+  
+  refreshTopicHistory();
+  refreshAllowedChannelModes();
+  refreshModes();
+  refreshEnableModes();
 }
 
 ChannelOptionsDialog::~ChannelOptionsDialog()
 {
 }
+
+void ChannelOptionsDialog::closeOptionsDialog()
+{
+  deleteLater();
+}
+
+void ChannelOptionsDialog::changeOptions()
+{
+  QString newTopic = topic();
+
+  if(newTopic != m_channel->getTopicHistory().first().section(' ', 1)) {
+    m_channel->sendChannelText(KonversationApplication::preferences.getCommandChar() + "TOPIC " + m_channel->getName() + " " + newTopic);
+  }
+
+  QStringList newModeList = modes();
+  QStringList currentModeList = m_channel->getModeList();
+  QStringList rmModes;
+  QStringList addModes;
+  QStringList tmp;
+  QString modeString;
+  bool plus;
+  QString command("MODE %1 %2%3 %4");
+  
+  for(QStringList::iterator it = newModeList.begin(); it != newModeList.end(); ++it) {
+    modeString = (*it).mid(1);
+    plus = ((*it)[0] == '+');
+    tmp = currentModeList.grep(QRegExp("^" + modeString));
+
+    if(tmp.isEmpty() && plus) {
+      m_channel->getServer()->queue(command.arg(m_channel->getName()).arg("+").arg(modeString[0]).arg(modeString.mid(1)));
+    } else if(!tmp.isEmpty() && !plus) {
+      m_channel->getServer()->queue(command.arg(m_channel->getName()).arg("-").arg(modeString[0]).arg(modeString.mid(1)));
+    }
+  }
+  deleteLater();
+}
+
 
 void ChannelOptionsDialog::toggleAdvancedModes()
 {
@@ -58,8 +113,9 @@ QString ChannelOptionsDialog::topic()
   return m_widget->topicEdit->text();
 }
 
-void ChannelOptionsDialog::setTopicHistory(const QStringList& history)
+void ChannelOptionsDialog::refreshTopicHistory()
 {
+  QStringList history = m_channel->getTopicHistory();
   m_widget->topicHistoryList->clear();
 
   for(QStringList::const_iterator it = history.begin(); it != history.end(); ++it) {
@@ -76,7 +132,9 @@ void ChannelOptionsDialog::topicHistoryItemClicked(QListViewItem* item)
     m_widget->topicEdit->setText(item->text(1));
 }
 
-void ChannelOptionsDialog::enableModes(bool enable) {
+void ChannelOptionsDialog::refreshEnableModes() {
+	
+  bool enable = m_channel->getOwnChannelNick()->isAnyTypeOfOp();
   m_widget->otherModesList->setEnabled(enable);
   m_widget->topicEdit->setEnabled(enable);
 
@@ -90,9 +148,9 @@ void ChannelOptionsDialog::enableModes(bool enable) {
   m_widget->keyModeChBox->setEnabled(enable);
   m_widget->keyModeEdit->setEnabled(enable);
 }
-void ChannelOptionsDialog::setAllowedChannelModes(const QString& modes)
+void ChannelOptionsDialog::refreshAllowedChannelModes()
 {
-  QString modeString = modes;
+  QString modeString = m_channel->getServer()->allowedChannelModes();
   // These modes are handled in a special way: ntimslkbeI
   modeString.remove('t');
   modeString.remove('n');
@@ -113,8 +171,10 @@ void ChannelOptionsDialog::setAllowedChannelModes(const QString& modes)
   }
 }
 
-void ChannelOptionsDialog::setModes(const QStringList& modes)
+void ChannelOptionsDialog::refreshModes()
 {
+  QStringList modes = m_channel->getModeList();
+  
   m_widget->topicModeChBox->setChecked(false);
   m_widget->messageModeChBox->setChecked(false);
   m_widget->userLimitChBox->setChecked(false);

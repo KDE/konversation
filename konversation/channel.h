@@ -98,9 +98,31 @@ class Channel : public ChatWindow
 
     virtual void setServer(Server* newServer);
     
+    /** get the channel topic history, including the current topic at the top,
+     * and descending by age.
+     * Each topic may or may not have the author that set it at the start of the string,
+     * like:  "<author> topic"
+     *
+     * @return a list of topics this channel used to have, current at the top.
+     */
+    QStringList getTopicHistory();
+    /** get the current channel topic
+     *
+     * The topic may or may not have the author that set it at the start of the string,
+     * like:  "<author> topic"
+     *
+     * The internal variable topicAuthorUnknown stores whether the "<author>" bit is there or not.
+     * 
+     * */
+    QString getTopic();
     void setTopic(const QString& topic);
     void setTopic(const QString& nickname,const QString& topic); // Overloaded
     void setTopicAuthor(const QString& author);
+
+    /** get the list of modes that this channel has - e.g. {+l,+s,-m}
+     *  @return All the modes that this channel has
+     */
+    QStringList getModeList() const { return m_modeList; }
     /** Outputs a message on the channel, and modifies the mode for a ChannelNick.
      *  @param sourceNick The server or the nick of the person that made the mode change.
      *  @param mode The mode that is changing one of v,h,o,a for voice halfop op admin
@@ -135,6 +157,8 @@ class Channel : public ChatWindow
   signals:
     void newText(QWidget* channel,const QString& highlightColor, bool important);
     void sendFile();
+    void topicHistoryChanged();
+    void modesChanged();
 
   public slots:
     void setNickname(const QString& newNickname);
@@ -163,9 +187,7 @@ class Channel : public ChatWindow
     void doubleClickCommand(QListViewItem*);  // Will be connected to NickListView::doubleClicked()
     // Dialogs
     void changeNickname(const QString& newNickname);
-    void changeOptions();
     void showOptionsDialog();
-    void closeOptionsDialog();
     // connected to IRCInput::textPasted() - used to handle large/multiline pastings
     void textPasted(const QString& text);
     // connected to IRCInput::sendFile()
@@ -257,8 +279,6 @@ class Channel : public ChatWindow
     uint m_currentIndex;
     
     QTimer* m_processingTimer;
-
-    Konversation::ChannelOptionsDialog* m_optionsDialog;
 
     QStringList m_modeList;
     ChannelNickPtr m_ownChannelNick;

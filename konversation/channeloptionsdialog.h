@@ -1,5 +1,5 @@
 /*
-  This program is free software; you can redistribute it and/or modify
+  This program is free software; you can redistribute it and/or modifydvancedModes
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
@@ -15,6 +15,7 @@
 #include <kdialogbase.h>
 
 #include <qstringlist.h>
+#include "channel.h"
 
 namespace Konversation {
 
@@ -24,24 +25,29 @@ class ChannelOptionsDialog : public KDialogBase
 {
   Q_OBJECT
   public:
-    ChannelOptionsDialog(const QString& channel, QWidget *parent = 0, const char *name = 0);
+    ChannelOptionsDialog(Channel *channel);
     ~ChannelOptionsDialog();
+
 
     QString topic();
     QStringList modes();
 
   public slots:
-    void setTopicHistory(const QStringList& history);
-    void setAllowedChannelModes(const QString& modes);
-    void setModes(const QStringList& modes);
-    void enableModes(bool enable);
+    void refreshTopicHistory();
+    void refreshAllowedChannelModes();
+    void refreshModes();
+    void refreshEnableModes();
     void toggleAdvancedModes();
+
+    void closeOptionsDialog();
+    void changeOptions();
 
   protected slots:
     void topicHistoryItemClicked(QListViewItem* item);
 
   private:
     ChannelOptionsUI* m_widget;
+    Channel *m_channel;
 };
 
 };
