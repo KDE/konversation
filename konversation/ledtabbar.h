@@ -20,6 +20,8 @@
 
 #include <qtabbar.h>
 
+#include <kpopupmenu.h>
+
 #include "ledtab.h"
 
 /*
@@ -47,12 +49,19 @@ class LedTabBar : public QTabBar
     void repaintLED(LedTab* tab);
 
   protected:
+    enum PopupIDs
+    {
+      Label=0,
+      CloseTab
+    };
     // these two come from the original QT source
     virtual void paint( QPainter *, QTab *, bool ) const; // ### not const
     virtual void paintLabel( QPainter*, const QRect&, QTab*, bool ) const;
 
-  protected:
+    void contextMenuEvent(QContextMenuEvent* ce);
     void mouseReleaseEvent(QMouseEvent* e);
+
+    KPopupMenu* popup;
 };
 
 #endif

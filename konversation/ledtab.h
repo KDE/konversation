@@ -6,7 +6,7 @@
 */
 
 /*
-  ledtab.h  -  description
+  ledtab.h  -  The tabs with LEDs on them
   begin:     Fri Feb 22 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -47,9 +47,9 @@ class LedTab : public QObject,public QTab
   protected:
     void setIconSet(const QIconSet& icon);
 
-    int color;      /* color of the LED */
-    bool on;        /* true, if LED should indicate "on" status */
-    bool blinkOn;   /* true, if blinking LED is on at this moment */
+    int color;      // color of the LED
+    bool on;        // true, if LED should indicate "on" status
+    bool blinkOn;   // true, if blinking LED is on at this moment
 
     QWidget* widget;
     Images images;

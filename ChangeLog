@@ -10,6 +10,7 @@ Changes from 0.10 to 0.11
 - Added dialog for Resume / Overwrite DCC Get files
 - Added large paste warning dialog
 - Close Buttons on tabs are now an option
+- Added context menu on tabs with close item
 
 Changes from 0.9 to 0.10
 - Font encodings are now set via KCharsets

@@ -87,6 +87,15 @@ static const char* remove_xpm[]=
 LedTabBar::LedTabBar(QWidget* parent,const char* name) :
            QTabBar(parent,name)
 {
+  popup=new KPopupMenu(this,"ledtabbar_context_menu");
+
+  if(popup)
+  {
+    popup->insertTitle(i18n("Tab"),Label);
+//    popup->insertSeparator();
+    popup->insertItem(i18n("Close Tab"),CloseTab);
+  }
+  else kdWarning() << "LedTabBar::LedTabBar(): Could not create popup!" << endl;
 }
 
 LedTabBar::~LedTabBar()
@@ -266,6 +275,23 @@ void LedTabBar::updateTabs()
 {
   layoutTabs();
   update();
+}
+
+void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
+{
+  for(int index=0;index<count();index++)
+  {
+    QTab* lookTab=tabAt(index);
+    if(lookTab->rect().contains(ce->pos()))
+    {
+      popup->changeTitle(Label,lookTab->text());
+      int r=popup->exec(ce->globalPos());
+      if(r==CloseTab)
+      {
+        emit closeTab(lookTab->identifier());
+      }
+    }
+  } // endfor
 }
 
 #include "ledtabbar.moc"

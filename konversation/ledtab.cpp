@@ -22,9 +22,11 @@
 LedTab::LedTab(QWidget* newWidget,const QString& label,int newColor,bool state) :
         QTab(label)
 {
-  /* First of all set up the icons */
+  // First of all set up the icons
   iconOn=images.getLed(newColor,true);
   iconOff=images.getLed(newColor,false);
+
+  installEventFilter(this);
 
   color=newColor;
   blinkOn=true;
