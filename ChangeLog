@@ -13,6 +13,7 @@ Changes from 0.8 to 0.9
 - Added ignore list functionality
 - Added away / unaway messages
 - DCC folder can now be selected vial GUI
+- Applied a patch by Barak Bloch to fix foreign character set behaviour (thanks!)
 
 Changes from 0.7 to 0.8:
 - DCCs can now be opened (started) using the 'open' button
