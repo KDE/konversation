@@ -984,10 +984,10 @@ QString& Server::getNickname()
 
 QString Server::parseWildcards(const QString& toParse,const QString& nickname,const QString& channelName,const QString& channelKey,const QString& nick,const QString& queryName,const QString& parameter)
 {
-  parseWildcards(toParse,nickname,channelName,channelKey,nick,queryName,parameter);
+  return parseWildcards(toParse,nickname,channelName,channelKey,QStringList::split(' ',nick),queryName,parameter);
 }
 
-QString Server::parseWildcards(const QString& toParse,const QString& nickname,const QString& channelName,const QString& channelKey,QStringList* nickList,const QString& queryName,const QString& parameter)
+QString Server::parseWildcards(const QString& toParse,const QString& nickname,const QString& channelName,const QString& channelKey,const QStringList& nickList,const QString& queryName,const QString& parameter)
 {
   // TODO: parameter handling. this line is only to suppress a compiler warning
   //       since parameters are not functional yet
@@ -1012,7 +1012,7 @@ QString Server::parseWildcards(const QString& toParse,const QString& nickname,co
   }
 
   kdDebug() << "Replacing placeholders in: " << out << endl;
-  out.replace(QRegExp("%u"),nickList->join(separator));
+  out.replace(QRegExp("%u"),nickList.join(separator));
   if(channelName) out.replace(QRegExp("%c"),channelName);
   out.replace(QRegExp("%o"),nickname);
   out.replace(QRegExp("%k"),channelKey);
@@ -1024,8 +1024,6 @@ QString Server::parseWildcards(const QString& toParse,const QString& nickname,co
 
   // finally replace all "%p" with "%"
   out.replace(QRegExp("%p"),"%");
-
-  delete nickList;
 
   return out;
 }

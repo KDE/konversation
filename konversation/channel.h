@@ -101,7 +101,7 @@ class Channel : public ChatWindow
     void textPasted(QString text);
 
   protected:
-    QStringList* getSelectedNicksList();
+    const QStringList& getSelectedNicksList();
     void showEvent(QShowEvent* event);
 
     int spacing() {  return KDialog::spacingHint(); };
@@ -146,6 +146,7 @@ class Channel : public ChatWindow
 
     NickChangeDialog* nickChangeDialog;
     QList<Nick> nicknameList;
+    QStringList selectedNicksList;
     QList<QuickButton> buttonList;
 };
 

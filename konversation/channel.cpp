@@ -302,10 +302,10 @@ void Channel::popupCommand(int id)
   {
     pattern.replace(QRegExp("%c"),getName());
 
-    QStringList* nickList=getSelectedNicksList();
+    QStringList nickList=getSelectedNicksList();
 
     QString command;
-    for(QStringList::Iterator index=nickList->begin();index!=nickList->end();++index)
+    for(QStringList::Iterator index=nickList.begin();index!=nickList.end();++index)
     {
       command=pattern;
       command.replace(QRegExp("%u"),*index);
@@ -315,8 +315,6 @@ void Channel::popupCommand(int id)
       else
         sendChannelText(command);
     }
-
-    delete nickList;
   }
 }
 
@@ -495,14 +493,14 @@ void Channel::setNickname(const QString& newNickname)
   nicknameButton->setText(newNickname);
 }
 
-QStringList* Channel::getSelectedNicksList()
+const QStringList& Channel::getSelectedNicksList()
 {
-  QStringList* selectedNicksList=new QStringList();
+  selectedNicksList.clear();
   Nick* nick=nicknameList.first();
 
   while(nick)
   {
-    if(nick->isSelected()) selectedNicksList->append(nick->getNickname());
+    if(nick->isSelected()) selectedNicksList.append(nick->getNickname());
     nick=nicknameList.next();
   }
 
