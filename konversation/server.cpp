@@ -2551,8 +2551,15 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
     kdDebug() << "server::renameNick called with empty strings!  Trying to rename '" << nickname << "' to '" << newNick << "'" << endl;
     return;
   }
+
+  // If this was our own nickchange, tell our server object about it
+  if(nickname == getNickname()) {
+    setNickname(newNick);
+  }
+
   //Actually do the rename.
   NickInfoPtr nickInfo = getNickInfo(nickname);
+
   if(!nickInfo) {
     kdDebug() << "server::renameNick called for nickname '" << nickname << "' to '" << newNick << "' but getNickInfo('" << nickname << "') returned no results." << endl;
   }
@@ -2571,8 +2578,6 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
       channel=channelList.next();
     }
   }
-  // If this was our own nickchange, tell our server object about it
-  if(nickname==getNickname()) setNickname(newNick);
   // If we had a query with this nick, change that name, too
 
 }
