@@ -195,6 +195,13 @@ void PrefsPageThemes::updateList()
 void PrefsPageThemes::updateButtons()
 {
   QString dir = m_dirs[m_themeList->currentItem()];
+
+  if(dir.endsWith("default/themerc"))
+    {
+      m_removeButton->setEnabled(false);
+      return;
+    }
+
   QFile themeRC(dir);
 
   if(!themeRC.open(IO_ReadOnly | IO_WriteOnly))
