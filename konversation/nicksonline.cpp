@@ -396,6 +396,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
         connect (servr, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
             this, SLOT(slotNickInfoChanged(Server*, const NickInfoPtr)));
     }
+    m_nickListView->hideColumn(nlvcServerName);
 }
 
 /**
