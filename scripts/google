@@ -99,9 +99,14 @@ else
 		$error = $res->call->faultstring;
 		exec 'dcop', $port, 'Konversation', 'error', "$error";
 	    });
-		
-	# Encode "&", "<", ">", and "'" . See http://groups.yahoo.com/group/soaplite/message/3037
+       
+	if(utf8::valid($search))
+	{
+	    utf8::decode($search);
+	}
+
 	$search_escape = $search;
+	# Encode "&", "<", ">", and "'" . See http://groups.yahoo.com/group/soaplite/message/3037
 	encode_entities($search_escape, "&<>'");
 	if($limit > 10) { $limit=10; }
 	$result = $googleSearch->doGoogleSearch($key, $search_escape, 0, $limit, "false", "", "false", "", "UTF-8", "UTF-8"); 
