@@ -30,8 +30,8 @@
 
 #include "sslsocket.h"
 
-SSLSocket::SSLSocket(QObject* parent,const char* name)
-  : KStreamSocket("","",parent,name), kssl(0L)
+SSLSocket::SSLSocket(QWidget* serverParent, QObject* parent, const char* name)
+  : KStreamSocket("","",parent,name), m_serverParent(serverParent), kssl(0L) 
 {
   cc = new KSSLCertificateCache;
   cc->reload();
@@ -214,7 +214,7 @@ int SSLSocket::verifyCertificate()
 	      QString msg = i18n("The IP address of the host %1 "
 				 "does not match the one the "
 				 "certificate was issued to.");
-	      result = KMessageBox::warningYesNoCancel( 0L,
+	      result = KMessageBox::warningYesNoCancel( m_serverParent,
 							msg.arg(hostname),
 							i18n("Server Authentication"),
 							KGuiItem(i18n("Details")),
@@ -252,7 +252,7 @@ int SSLSocket::verifyCertificate()
 		    QString msg = i18n("The IP address of the host %1 "
 				       "does not match the one the "
 				       "certificate was issued to.");
-		    result = KMessageBox::warningYesNoCancel( 0L,
+		    result = KMessageBox::warningYesNoCancel( m_serverParent,
 							      msg.arg(hostname),
 							      i18n("Server Authentication"),
 							      KGuiItem(i18n("Details")),
@@ -263,7 +263,7 @@ int SSLSocket::verifyCertificate()
 		  {
 		    QString msg = i18n("The server (%1) certificate failed the "
 				       "authenticity test.");
-		    result = KMessageBox::warningYesNoCancel( 0L,
+		    result = KMessageBox::warningYesNoCancel( m_serverParent,
 							      msg.arg(hostname),
 							      i18n("Server Authentication"),
 							      KGuiItem(i18n("Details")),
@@ -287,7 +287,7 @@ int SSLSocket::verifyCertificate()
 		rc = 1;
 		cp = KSSLCertificateCache::Accept;
 		doAddHost = true;
-		result = KMessageBox::warningYesNo( 0L,
+		result = KMessageBox::warningYesNo( m_serverParent,
 						    i18n("Would you like to accept this "
 							 "certificate forever without "
 							 "being prompted?"),

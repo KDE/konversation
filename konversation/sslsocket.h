@@ -27,36 +27,38 @@ class KSSLCertificateCache;
 
 class SSLSocket : public KStreamSocket
 {
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
-                SSLSocket(QObject* parent = 0L, const char* name = 0L);
-		~SSLSocket();
+ public:
+  SSLSocket(QWidget* serverParent, QObject* parent = 0L, const char* name = 0L);
+  ~SSLSocket();
 
-		void showInfoDialog();
-		QString details();
+  void showInfoDialog();
+  QString details();
+  
+  Q_LONG writeBlock (const char *data, Q_ULONG len);
+  Q_LONG readBlock  (char *data, Q_ULONG maxlen);
+  
+ signals:
+  void sslFailure();
+  void sslInitDone();
+  
+  private slots:
+  void slotConnected();
+  
+ private:
+  int verifyCertificate();
+  void showSSLInfoDialog();
 
-		Q_LONG writeBlock (const char *data, Q_ULONG len);
-		Q_LONG readBlock  (char *data, Q_ULONG maxlen);
+  QWidget* m_serverParent;
 
-	signals:
-		void sslFailure();
-		void sslInitDone();
-
-	private slots:
-		void slotConnected();
-	
-        private:
-		int verifyCertificate();
-		void showSSLInfoDialog();
-
-		int m_sslCertState;
-		QString remoteHost;
-		QString url;
-		QString m_sslCertErrors;
-
-		KSSL* kssl;
-		KSSLCertificateCache* cc;
+  int m_sslCertState;
+  QString remoteHost;
+  QString url;
+  QString m_sslCertErrors;
+  
+  KSSL* kssl;
+  KSSLCertificateCache* cc;
 };
 
 #endif
