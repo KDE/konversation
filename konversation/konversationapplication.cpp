@@ -36,6 +36,7 @@
 #include "channel.h"
 #include "nicklistview.h"
 #include "images.h"
+#include "notificationhandler.h"
 
 // include static variables
 Preferences KonversationApplication::preferences;
@@ -134,7 +135,8 @@ KonversationApplication::KonversationApplication()
 
   // take care of user style changes, setting back colors and stuff
   connect(KApplication::kApplication(),SIGNAL (appearanceChanged()),this,SLOT (appearanceChanged()) );
-
+  
+  m_notificationHandler = new Konversation::NotificationHandler(this);
 }
 
 KonversationApplication::~KonversationApplication()
@@ -363,6 +365,8 @@ void KonversationApplication::readOptions()
   preferences.setShowTrayIcon(config->readBoolEntry("ShowTrayIcon",preferences.getShowTrayIcon()));
   preferences.setSystrayOnly(config->readBoolEntry("SystrayOnly",preferences.getSystrayOnly()));
   preferences.setTrayNotify(config->readBoolEntry("TrayNotify",preferences.getTrayNotify()));
+  preferences.setTrayNotifyOnlyOwnNick(config->readBoolEntry("TrayNotifyOnlyOwnNick",
+    preferences.trayNotifyOnlyOwnNick()));
   preferences.setShowBackgroundImage(config->readBoolEntry("ShowBackgroundImage",preferences.getShowBackgroundImage()));
 
   // Window geometries
@@ -886,6 +890,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon());
   config->writeEntry("SystrayOnly",preferences.getSystrayOnly());
   config->writeEntry("TrayNotify",preferences.getTrayNotify());
+  config->writeEntry("TrayNotifyOnlyOwnNick", preferences.trayNotifyOnlyOwnNick());
 
   config->writeEntry("ShowBackgroundImage",preferences.getShowBackgroundImage());
 

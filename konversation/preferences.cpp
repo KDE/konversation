@@ -87,6 +87,7 @@ Preferences::Preferences()
   setShowBackgroundImage(false);
   setTrayNotify(false);
   setSystrayOnly(false);
+  setTrayNotifyOnlyOwnNick(false);
 
   setUseSpacing(false);
   setSpacing(2);
@@ -789,7 +790,17 @@ void Preferences::setTrayNotify(bool state)
   emit updateTrayIcon();
 }
 
-const bool Preferences::getTrayNotify() { return trayNotify; }
+const bool Preferences::getTrayNotify() const { return trayNotify; }
+
+void Preferences::setTrayNotifyOnlyOwnNick(bool onlyOwnNick)
+{
+  m_trayNotifyOnlyOwnNick = onlyOwnNick;
+}
+
+bool Preferences::trayNotifyOnlyOwnNick() const
+{
+  return m_trayNotifyOnlyOwnNick;
+}
 
 void Preferences::setChannelSplitter(QValueList<int> sizes) { channelSplitter=sizes; }
 const QValueList<int> Preferences::getChannelSplitter() { return channelSplitter; }

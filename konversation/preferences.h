@@ -369,7 +369,9 @@ class Preferences : public QObject
     const bool getShowBackgroundImage();
     
     void setTrayNotify(bool state);
-    const bool getTrayNotify();
+    const bool getTrayNotify() const;
+    void setTrayNotifyOnlyOwnNick(bool onlyOwnNick);
+    bool trayNotifyOnlyOwnNick() const;
 
     void setChannelSplitter(QValueList<int> sizes);
     const QValueList<int> getChannelSplitter();
@@ -534,6 +536,7 @@ class Preferences : public QObject
     bool systrayOnly;
     bool showBackgroundImage;
     bool trayNotify;
+    bool m_trayNotifyOnlyOwnNick;
 
     QValueList<int> channelSplitter;
     QValueList<int> m_topicSplitterSizes;

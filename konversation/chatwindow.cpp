@@ -218,7 +218,6 @@ void ChatWindow::setTextView(IRCView* newView)
 {
   textView=newView;
   connect(textView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
-  connect(textView,SIGNAL (nickSeenInView(const QString&, const QString &)), this, SLOT( nickWasSeenInView(const QString&, const QString&)));
 }
 
 void ChatWindow::insertRememberLine()
@@ -244,28 +243,12 @@ void ChatWindow::appendQuery(const QString& nickname,const QString& message, boo
 {
   Q_ASSERT(textView);  if(!textView) return ;
   textView->appendQuery(nickname,message);
-
-  // OnScreen Message
-  if(usenotifications && KonversationApplication::preferences.getOSDShowQuery() && notificationsEnabled())
-  {
-    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-    konvApp->osd->showOSD(i18n( "(Query) <%1> %2" ).arg(nickname).arg(message));
-  }
-
 }
 
 void ChatWindow::appendAction(const QString& nickname,const QString& message, bool usenotifications)
 {
   Q_ASSERT(textView);  if(!textView) return ;
   textView->appendAction(nickname,message);
-
-  // OnScreen Message
-  if(usenotifications && KonversationApplication::preferences.getOSDShowQuery() && notificationsEnabled())
-  {
-    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-    konvApp->osd->showOSD(i18n( "(Query) * %1 %2" ).arg(nickname).arg(message));
-  }
-
 }
 
 void ChatWindow::appendServerMessage(const QString& type,const QString& message)
@@ -568,15 +551,4 @@ void ChatWindow::emitUpdateInfo()
   emit updateInfo(info);
 }
 
-
-void ChatWindow::nickWasSeenInView(const QString &whoSent, const QString &filteredLine) {
-  KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-  if ( KonversationApplication::preferences.getOSDShowOwnNick() &&
-    !KonversationApplication::preferences.getOSDShowChannel() && notificationsEnabled())
-  {
-     konvApp->osd->showOSD(i18n("(HIGHLIGHT)") + " <" + whoSent + "> " + filteredLine);
-  }
-}
-
 #include "chatwindow.moc"
-

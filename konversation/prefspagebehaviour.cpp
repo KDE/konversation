@@ -33,9 +33,14 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   trayIconCheck = new QCheckBox(i18n("Show icon in s&ystem tray"), parentFrame, "tray_icon_check");
   trayIconCheck->setChecked(preferences->getShowTrayIcon());
 
-  trayNotifyCheck = new QCheckBox(i18n("Use sys&tem tray for new message notification"), parentFrame,"tray_notify_check");
+  trayNotifyCheck = new QCheckBox(i18n("Use sys&tem tray for new message notification"),
+    parentFrame,"tray_notify_check");
   trayNotifyCheck->setEnabled(trayIconCheck->isChecked());
   trayNotifyCheck->setChecked(preferences->getTrayNotify());
+  
+  trayNotifyOwnNickOnlyCheck = new QCheckBox(i18n("Only notify when someone says your nick"), parentFrame);
+  trayNotifyOwnNickOnlyCheck->setEnabled(trayIconCheck->isChecked() && trayNotifyCheck->isChecked());
+  trayNotifyOwnNickOnlyCheck->setChecked(preferences->trayNotifyOnlyOwnNick());
 
   trayOnlyCheck = new QCheckBox(i18n("Stay in system &tray all the time"), parentFrame,"tray_only");
   trayOnlyCheck->setChecked(preferences->getSystrayOnly());
@@ -43,6 +48,8 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
 
   connect(trayIconCheck, SIGNAL(toggled(bool)), trayNotifyCheck, SLOT(setEnabled(bool)));
   connect(trayIconCheck, SIGNAL(toggled(bool)), trayOnlyCheck, SLOT(setEnabled(bool)));
+  connect(trayIconCheck, SIGNAL(toggled(bool)), this, SLOT(updateCheckBoxes()));
+  connect(trayNotifyCheck, SIGNAL(toggled(bool)), this, SLOT(updateCheckBoxes()));
 
   rawLogCheck = new QCheckBox(i18n("Show ra&w log window on application startup"), parentFrame, "raw_log_check");
   rawLogCheck->setChecked(preferences->getRawLog());
@@ -145,6 +152,8 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   row++;
   generalLayout->addMultiCellWidget(trayNotifyCheck, row, row, 0, 1);
   row++;
+  generalLayout->addMultiCellWidget(trayNotifyOwnNickOnlyCheck, row, row, 0, 1);
+  row++;
   generalLayout->addMultiCellWidget(trayOnlyCheck, row, row, 0, 1);
   row++;
   generalLayout->addMultiCellWidget(rawLogCheck, row, row, 0, 1);
@@ -176,6 +185,7 @@ void PrefsPageBehaviour::applyPreferences()
   preferences->setShowTrayIcon(trayIconCheck->isChecked());
   preferences->setSystrayOnly(trayOnlyCheck->isChecked());
   preferences->setTrayNotify(trayNotifyCheck->isChecked());
+  preferences->setTrayNotifyOnlyOwnNick(trayNotifyOwnNickOnlyCheck->isChecked());
 
   preferences->setRawLog(rawLogCheck->isChecked());
   preferences->setShowServerList(showServerList->isChecked());
@@ -197,6 +207,11 @@ void PrefsPageBehaviour::applyPreferences()
   preferences->setNickCompleteSuffixStart(suffixStartInput->text());
   preferences->setNickCompleteSuffixMiddle(suffixMiddleInput->text());
   preferences->setNickCompletionCaseSensitive(m_nickCompletionCaseChBox->isChecked());
+}
+
+void PrefsPageBehaviour::updateCheckBoxes()
+{
+  trayNotifyOwnNickOnlyCheck->setEnabled(trayNotifyCheck->isChecked() && trayIconCheck->isChecked());
 }
 
 #include "prefspagebehaviour.moc"

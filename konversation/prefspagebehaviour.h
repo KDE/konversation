@@ -31,10 +31,14 @@ class PrefsPageBehaviour : public PrefsPage
   public slots:
     void applyPreferences();
   
+  protected slots:
+    void updateCheckBoxes();
+  
   private:
     QCheckBox* trayIconCheck;
     QCheckBox* trayOnlyCheck;
     QCheckBox* trayNotifyCheck;
+    QCheckBox* trayNotifyOwnNickOnlyCheck;
     QCheckBox* rawLogCheck;
     QCheckBox* showServerList;
     QCheckBox* useCustomBrowserCheck;

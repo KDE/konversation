@@ -26,19 +26,21 @@
 #include "server.h"
 #include "chatwindow.h"
 
+namespace Konversation
+{
+
 TrayIcon::TrayIcon(QWidget* parent) : KSystemTray(parent)
 {
-  m_parent = parent;
   m_notificationEnabled = false;
   m_nomessagePix = loadIcon("konversation");
   m_messagePix = loadIcon("konv_message");
   setPixmap(m_nomessagePix);
-  m_widgets.setAutoDelete(false);
   m_blinkTimer = new QTimer(this);
   connect(m_blinkTimer, SIGNAL(timeout()), SLOT(blinkTimeout()));
+  
   if(KonversationApplication::preferences.getShowTrayIcon() &&
      KonversationApplication::preferences.getSystrayOnly())
-    KWin::setState(m_parent->winId(), NET::SkipTaskbar);
+    KWin::setState(parent->winId(), NET::SkipTaskbar);
 
   QToolTip::add(this,i18n("Konversation - IRC Client"));
 }
@@ -47,30 +49,22 @@ TrayIcon::~TrayIcon()
 {
 }
 
-void TrayIcon::startNotification(QWidget* view)
+void TrayIcon::startNotification()
 {
   if(!m_notificationEnabled) {
     return;
   }
   
-  if(m_widgets.find(view) == -1) {
-    m_widgets.append(view);
-  } else {
-    return;
-  }
-  
-  if(!m_blinkTimer->isActive() && !m_widgets.isEmpty()) {
+  if(!m_blinkTimer->isActive()) {
     setPixmap(m_messagePix);
     m_blinkOn = true;
     m_blinkTimer->start(500);
   }
 }
 
-void TrayIcon::endNotification(QWidget* view)
+void TrayIcon::endNotification()
 {
-  m_widgets.remove(view);
-  
-  if(m_blinkTimer->isActive() && m_widgets.isEmpty()) {
+  if(m_blinkTimer->isActive()) {
     m_blinkTimer->stop();
     setPixmap(m_nomessagePix);
   }
@@ -87,21 +81,17 @@ void TrayIcon::blinkTimeout()
   }
 }
 
-void TrayIcon::removeServer(Server* server)
-{
-  for(QWidget* w = m_widgets.first(); w; w = m_widgets.next()) {
-    if(static_cast<ChatWindow*>(w)->getServer() == server) {
-      endNotification(w);
-    }
-  }
-}
-
 void TrayIcon::mousePressEvent(QMouseEvent *e)
 {
   if(KonversationApplication::preferences.getShowTrayIcon() &&
      KonversationApplication::preferences.getSystrayOnly())
-    KWin::setState(m_parent->winId(), NET::SkipTaskbar);
+  {
+    KWin::setState(static_cast<QWidget*>(parent())->winId(), NET::SkipTaskbar);
+  }
+  
   KSystemTray::mousePressEvent(e);
+}
+
 }
 
 #include "trayicon.moc"

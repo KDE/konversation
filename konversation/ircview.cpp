@@ -341,7 +341,6 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
     {
       // highlight current nickname
       m_highlightColor = KonversationApplication::preferences.getHighlightNickColor().name();
-      emit nickSeenInView(whoSent, filteredLine);
     } else {
       QPtrList<Highlight> highlightList = KonversationApplication::preferences.getHighlightList();
       QPtrListIterator<Highlight> it(highlightList);

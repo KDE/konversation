@@ -191,10 +191,6 @@ class ChatWindow : public BASE_CLASS
     void serverQuit(const QString& reason);  // USE_MDI
     void blinkTimeout();  // USE_MDI
 
-    /** Emitted when the users nickname is seen in the channel.
-     *  Lets the chatwindow use OSD to tell the user this. */
-    void nickWasSeenInView(const QString &whoSent, const QString &filteredLine);
-
     ///Used to disable functions when not connected
     virtual void serverOnline(bool online);
 

@@ -23,6 +23,9 @@
 class QTimer;
 class Server;
 
+namespace Konversation
+{
+
 class TrayIcon : public KSystemTray
 {
   Q_OBJECT
@@ -33,10 +36,9 @@ class TrayIcon : public KSystemTray
     bool notificationEnabled() { return m_notificationEnabled; }
 
   public slots:
-    void startNotification(QWidget* view);
-    void endNotification(QWidget* view);
+    void startNotification();
+    void endNotification();
     void setNotificationEnabled(bool notify) { m_notificationEnabled = notify; }
-    void removeServer(Server* server);
   
   protected slots:
     void blinkTimeout();
@@ -45,17 +47,15 @@ class TrayIcon : public KSystemTray
     void mousePressEvent(QMouseEvent *e);
 
   private:
-    QWidget* m_parent;
-
     QTimer* m_blinkTimer;
     bool m_blinkOn;
-    
-    QPtrList<QWidget> m_widgets;
     
     bool m_notificationEnabled;
     
     QPixmap m_nomessagePix;
     QPixmap m_messagePix;
+};
+
 };
 
 #endif

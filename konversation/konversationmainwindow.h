@@ -53,7 +53,6 @@ class Ignore;
 class NicksOnline;
 class QuickButtonsDialog;
 class UrlCatcher;
-class TrayIcon;
 #ifndef USE_MDI
 class LedTabWidget;
 #endif
@@ -62,6 +61,7 @@ namespace Konversation
 {
   class InsertCharDialog;
   class ServerListDialog;
+  class TrayIcon;
 }
 
 class KonversationMainWindow : public MAIN_TYPE // USE_MDI
@@ -95,6 +95,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     void updateFonts();
     void updateTabPlacement();
+    
+    Konversation::TrayIcon* systemTrayIcon() const { return tray; }
 
   signals:
     void prefsChanged();
@@ -105,8 +107,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void quitServer();
     void nicksNowOnline(const QString& serverName,const QStringList& list,bool changed);
     void closeTab(int id);
-    void startNotification(QWidget*);
-    void endNotification(QWidget*);
+    void endNotification();
 
   public slots:
     void addDccPanel();     // connected in server class
@@ -236,7 +237,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     DccTransferHandler* dccTransferHandler;
 
-    TrayIcon* tray;
+    Konversation::TrayIcon* tray;
 
     bool m_closeApp;
     

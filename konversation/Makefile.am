@@ -32,7 +32,7 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp \
 		dccdetaildialog.cpp insertchardialog.cpp irccharsets.cpp editnotifydialog.cpp common.cpp \
 		serverison.cpp sslsocket.cpp servergroupsettings.cpp serversettings.cpp \
 		servergroupdialog.cpp ssllabel.cpp serverdialog.cpp channeldialog.cpp identitydialog.cpp \
-		topiclabel.cpp channeloptionsui.ui channeloptionsdialog.cpp prefspagethemes.cpp
+		topiclabel.cpp channeloptionsui.ui channeloptionsdialog.cpp prefspagethemes.cpp notificationhandler.cpp
 
 konversation_LDADD   = $(COMPAT_LIBS) $(LIB_KIO) -lkmdi -lm $(LIB_ARTS) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la
 
@@ -55,15 +55,14 @@ update_DATA = konversation.upd
 update_SCRIPTS = konversation-0.14-mainwindow.pl
 
 messages: rc.cpp
-	  LIST=`find . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name \*.cxx -o -name \*.ecpp -o -name \*.C`; \
-	  if test -n "$$LIST"; then \
-	   $(XGETTEXT) $$LIST -o $(podir)/konversation.pot; \
-	   fi
+	LIST=`find . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name \*.cxx -o -name \*.ecpp -o -name \*.C`; \
+	if test -n "$$LIST"; then \
+		$(XGETTEXT) $$LIST -o $(podir)/konversation.pot; \
+	fi
 
 noinst_HEADERS = prefspagebehaviour.h prefspagechatwinbehavior.h 	 \
-		prefspagechatwinappearance.h	 prefspagecolorsappearance.h serverlistdialog.h dcctransfersend.h \
-		dcctransferrecv.h dccdetaildialog.h insertchardialog.h editnotifydialog.h serverison.h \
-		servergroupsettings.h serversettings.h		 servergroupdialog.h serverdialog.h channeldialog.h \
-		identitydialog.h topiclabel.h channeloptionsdialog.h
-
+	prefspagechatwinappearance.h	 prefspagecolorsappearance.h serverlistdialog.h dcctransfersend.h \
+	dcctransferrecv.h dccdetaildialog.h insertchardialog.h editnotifydialog.h serverison.h \
+	servergroupsettings.h serversettings.h		 servergroupdialog.h serverdialog.h channeldialog.h \
+	identitydialog.h topiclabel.h channeloptionsdialog.h notificationhandler.h
 

@@ -35,6 +35,7 @@ class Images;
 
 namespace Konversation {
   class Sound;
+  class NotificationHandler;
 }
 
 /*
@@ -103,6 +104,8 @@ class KonversationApplication : public KApplication
     
     // Returns list of pointers to Servers.
     const QPtrList<Server> getServerList();
+    
+    Konversation::NotificationHandler* notificationHandler() const { return m_notificationHandler; }
 
     // Nick color stuff
     uint& getColorOffset();
@@ -160,10 +163,12 @@ class KonversationApplication : public KApplication
     Konversation::Sound* m_sound;
     QuickConnectDialog* quickConnectDialog;
     Images* m_images;
+    
+    Konversation::NotificationHandler* m_notificationHandler;
+
     uint colorOffSet;
     QStringList colorList;
     QMap<QString,QString> colorMap;
-
 };
 
 #endif

@@ -39,6 +39,7 @@
 #include "channel.h"
 #include "statuspanel.h"
 #include "common.h"
+#include "notificationhandler.h"
 
 InputFilter::InputFilter()
 {
@@ -113,7 +114,8 @@ void InputFilter::parseLine(const QString &a_newLine, QWidget *mainWindow)
 
 void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing, QWidget *mainWindow)
 {
-
+  KonversationApplication* konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
+  Q_ASSERT(konv_app);
   Q_ASSERT(server);
   // Extract nickname fron prefix
   QString sourceNick=prefix.left(prefix.find("!"));
@@ -134,8 +136,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       QString ctcpArgument=ctcp.mid(ctcp.find(" ")+1);
 
       // ******
-      KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
-      Q_ASSERT(konv_app);
       QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_CTCP);
       IRCEvent *e;
       for (e = ctcp_events.first(); e; e = ctcp_events.next())
@@ -166,14 +166,14 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           channel->appendAction(sourceNick,ctcpArgument);
 #ifdef USE_KNOTIFY
           // KNotify events...
-          if(channel && sourceNick != server->getNickname() && channel->notificationsEnabled()) {
+          if(channel && sourceNick != server->getNickname()) {
             if(ctcpArgument.lower().find(QRegExp("(^|[^\\d\\w])"+QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
             {
-              KNotifyClient::event(mainWindow->winId(), "nick");
+              konv_app->notificationHandler()->nick(channel, sourceNick, ctcpArgument);
             }
             else
             {
-              KNotifyClient::event(mainWindow->winId(), "message");
+              konv_app->notificationHandler()->message(channel, sourceNick, ctcpArgument);
             }
           }
 #endif
@@ -195,8 +195,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
 #ifdef USE_KNOTIFY
           // KNotify events...
-          if(sourceNick != server->getNickname() && query->notificationsEnabled()) {
-            KNotifyClient::event(mainWindow->winId(), "nick");
+          if(sourceNick != server->getNickname() && query) {
+            konv_app->notificationHandler()->nick(query, sourceNick, ctcpArgument);
           }
 #endif
         }
@@ -292,7 +292,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     else
     {
       // ******
-      KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
       QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_MESSAGE);
       IRCEvent *e;
       for (e = ctcp_events.first(); e; e = ctcp_events.next())
@@ -320,17 +319,15 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 #ifdef USE_KNOTIFY
           // KNotify events...
 
-          if(channel && sourceNick != server->getNickname() && channel->notificationsEnabled()) {
+          if(channel && sourceNick != server->getNickname()) {
             if(trailing.lower().find(QRegExp("(^|[^\\d\\w])"+
               QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
             {
-              QString cutup = KStringHandler::rsqueeze(Konversation::removeIrcMarkup(trailing), 50);
-              KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
+              konv_app->notificationHandler()->nick(channel, sourceNick, trailing);
             }
             else
             {
-              QString cutup = KStringHandler::rsqueeze(Konversation::removeIrcMarkup(trailing), 50);
-              KNotifyClient::event(mainWindow->winId(), "message", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
+              konv_app->notificationHandler()->message(channel, sourceNick, trailing);
             }
           }
 #endif
@@ -350,9 +347,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
 #ifdef USE_KNOTIFY
           // KNotify events...
-          if(sourceNick != server->getNickname() && server->getQueryByName(sourceNick)->notificationsEnabled()) {
-            QString cutup = KStringHandler::rsqueeze(Konversation::removeIrcMarkup(trailing), 50);
-            KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(cutup));
+          if(sourceNick != server->getNickname() && query) {
+            konv_app->notificationHandler()->nick(query, sourceNick, trailing);
           }
 #endif
 
@@ -363,7 +359,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   else if(command=="notice")
   {
     // ******
-    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
     QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_NOTICE);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
@@ -431,7 +426,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       channelName=parameterList[parameterList.count()-1];
 
     // ******
-    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
     QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_JOIN);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
@@ -482,7 +476,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   else if(command=="kick")
   {
     // ******
-    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
     QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_KICK);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
@@ -505,7 +498,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   else if(command=="part")
   {
     // ******
-    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
     QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_PART);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
@@ -535,7 +527,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   else if(command=="quit")
   {
     // ******
-    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
     QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_QUIT);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
@@ -572,7 +563,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   else if(command=="topic")
   {
     // ******
-    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
     QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_TOPIC);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
@@ -594,7 +584,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   else if(command=="mode") // mode #channel -/+ mmm params
   {
     // ******
-    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
     QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_MODE);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())
@@ -623,7 +612,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   else if(command=="invite")
   {
     // ******
-    KonversationApplication *konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
     QPtrList<IRCEvent> ctcp_events = konv_app->retrieveHooks (ON_INVITE);
     IRCEvent *e;
     for (e = ctcp_events.first(); e; e = ctcp_events.next())

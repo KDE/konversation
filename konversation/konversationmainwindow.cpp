@@ -199,9 +199,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 #endif
 
   // set up system tray
-  tray = new TrayIcon(this);
-  connect(this, SIGNAL(startNotification(QWidget*)), tray, SLOT(startNotification(QWidget*)));
-  connect(this, SIGNAL(endNotification(QWidget*)), tray, SLOT(endNotification(QWidget*)));
+  tray = new Konversation::TrayIcon(this);
+  connect(this, SIGNAL(endNotification()), tray, SLOT(endNotification()));
   connect(tray, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
   KPopupMenu *trayMenu = tray->contextMenu();
 #ifdef USE_KNOTIFY
@@ -480,8 +479,6 @@ void KonversationMainWindow::closeWindow(ChatWindow*) // USE_MDI
     if(view==previousFrontView) previousFrontView=0;
     if(view==frontView) frontView=previousFrontView;
 
-    emit endNotification(viewToClose);
-
     ChatWindow::WindowType viewType=view->getType();
 
     QString viewName=view->getName();
@@ -562,8 +559,6 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     // if this view was the front view, delete the pointer
     if(view==previousFrontView) previousFrontView=0;
     if(view==frontView) frontView=previousFrontView;
-
-    emit endNotification(viewToClose);
 
     viewContainer->removePage(view);
 
@@ -933,12 +928,6 @@ void KonversationMainWindow::newText(QWidget* widget,const QString& highlightCol
 #else
     getViewContainer()->changeTabState(view,true,important,highlightColor);
 #endif
-
-    emit startNotification(view);
-  }
-  else if(!isActiveWindow() && view->getServer() && view->getServer()->connected())
-  {
-    emit startNotification(view);
   }
 }
 
@@ -993,7 +982,6 @@ void KonversationMainWindow::changeToView(KMdiChildView* viewToChange) // USE_MD
 
   view->setOn(false);
   view->setLabelColor(QString::null);
-  emit endNotification(viewToChange);
 }
 #else
 void KonversationMainWindow::changeToView(KMdiChildView* /*viewToChange*/)
@@ -1025,7 +1013,6 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
   updateFrontView();
 
   viewContainer->changeTabState(view, false, false, QString::null);
-  emit endNotification(viewToChange);
   view->adjustFocus();
 #endif
 }
@@ -1447,7 +1434,7 @@ bool KonversationMainWindow::event(QEvent* e)
 {
 #ifndef USE_MDI
   if(e->type() == QEvent::WindowActivate) {
-    emit endNotification(getViewContainer()->currentPage());
+    emit endNotification();
   }
 #endif
 
@@ -1464,7 +1451,6 @@ void KonversationMainWindow::serverQuit(Server* server)
     frontView = 0;
   }
 
-  tray->removeServer(server);
   delete server->getStatusView();
   delete server;
 }
