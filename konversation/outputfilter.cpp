@@ -385,7 +385,7 @@ void OutputFilter::parseCtcp(const QString &parameter)
     unsigned int time_t=QDateTime::currentDateTime().toTime_t();
 #endif
     toServer=QString("PRIVMSG %1 :\x01PING %2\x01").arg(recipient).arg(time_t);
-    output=i18n("Sending CTCP-%1 request to %1").arg("PING").arg(recipient);
+    output=i18n("Sending CTCP-%1 request to %2").arg("PING").arg(recipient);
   }
   else
   {

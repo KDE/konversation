@@ -405,8 +405,6 @@ void Server::queue(const QString &buffer)
   // Only queue lines if we are connected
   if(isConnected() && buffer.length())
   {
-    kdDebug() << "Q: " << buffer << endl;
-
     getServerWindow()->appendToRaw(buffer);
     outputBuffer+=buffer;
     outputBuffer+="\n";
@@ -420,14 +418,14 @@ void Server::send()
   // Check if we are still online
   if(isConnected())
   {
-//    kdDebug() << "-> " << outputBuffer << endl;
     // To make lag calculation more precise, we reset the timer here
     if(outputBuffer.startsWith("ISON") ||
        outputBuffer.startsWith("PING LAG")) notifySent.start();
+    
     // Don't reconnect if we WANT to quit
     else if(outputBuffer.startsWith("QUIT")) setDeliberateQuit(true);
+    
     // TODO: Implement Flood-Protection here
-//    write(serverSocket.fd(),outputBuffer.latin1(),outputBuffer.length());
     write(serverSocket.fd(),outputBuffer,outputBuffer.length());
     serverSocket.enableWrite(false);
   }
