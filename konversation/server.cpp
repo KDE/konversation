@@ -46,7 +46,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   checkTime=0;
   reconnectCounter=0;
   currentLag=0;
-  
+
   QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
   setIdentity(KonversationApplication::preferences.getIdentityByName(serverEntry[7]));
 
@@ -330,7 +330,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     {
       if(notifyLowerCache.find(nickLowerList[index])==notifyLowerCache.end())
       {
-        getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 is online.").arg(nickList[index]),statusView);
+        getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 is online (%2).").arg(nickList[index]).arg(getServerName()),statusView);
       }
     }
 

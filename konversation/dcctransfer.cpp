@@ -18,6 +18,7 @@
 
 #include <qtimer.h>
 #include <qhostaddress.h>
+#include <qregexp.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -186,7 +187,7 @@ void DccTransfer::startSend()
 
     file.setName(getFile());
 
-    emit send(getPartner(),getFile(),getNumericalIp(),getPort(),getSize());
+    emit send(getPartner(),getFile().replace(QRegExp(" "),"_"),getNumericalIp(),getPort(),getSize());
   }
   else kdDebug() << this << "DccTransfer::startSend(): listen() failed!" << endl;
 }
