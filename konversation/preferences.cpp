@@ -951,14 +951,7 @@ void Preferences::setFilterColors(bool filter) { filterColors = filter; }
 const bool Preferences::getUseColoredNicks() { return useColoredNicks; }
 void Preferences::setUseColoredNicks(bool useColor) { useColoredNicks=useColor; }
 
-void Preferences::setNickColorList(const QStringList &cl)
-{
-  nickColorList = cl;
-
-  if(nickColorList.count() < 9) {
-    nickColorList.append("#" + getColor("ChannelMessage"));
-  }
-}
+void Preferences::setNickColorList(const QStringList &cl) { nickColorList = cl; }
 const QStringList Preferences::getNickColorList() { return nickColorList; }
 
 void Preferences::setUseBoldNicks(bool boldNicks) { useBoldNicks=boldNicks; }

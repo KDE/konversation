@@ -42,7 +42,7 @@
 Preferences KonversationApplication::preferences;
 
 KonversationApplication::KonversationApplication()
-    : KApplication()
+    : KUniqueApplication(true, true, true)
 {
   // make sure all vars are initialized properly
   prefsDialog=0;
@@ -465,11 +465,18 @@ void KonversationApplication::readOptions()
 
   preferences.setFilterColors(config->readBoolEntry("FilterColorCodes",preferences.getFilterColors()));  //FIXME
 
-  QStringList nickColorList = preferences.getNickColorList();
-  preferences.setNickColorList(config->readListEntry("NickColors"));
+  QStringList nickColorList = config->readListEntry("NickColors");
 
-  if(preferences.getNickColorList().empty())
-    preferences.setNickColorList(nickColorList);
+  if(nickColorList.empty()) {
+    nickColorList = preferences.getNickColorList();
+  }
+
+  if(nickColorList.count() < 9) {
+    nickColorList.append("#" + preferences.getColor("ChannelMessage"));
+  }
+
+  preferences.setNickColorList(nickColorList);
+
   preferences.setUseColoredNicks(config->readBoolEntry("UseColoredNicks",preferences.getUseColoredNicks()));
 
   preferences.setUseBoldNicks(config->readBoolEntry("UseBoldNicks",preferences.getUseBoldNicks()));

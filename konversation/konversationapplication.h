@@ -15,7 +15,7 @@
 #ifndef KONVERSATIONAPPLICATION_H
 #define KONVERSATIONAPPLICATION_H
 
-#include <kapplication.h>
+#include <kuniqueapplication.h>
 
 #include "preferences.h"
 #include "ircevent.h"
@@ -51,7 +51,7 @@ enum PopupIDs
 
 }
 
-class KonversationApplication : public KApplication
+class KonversationApplication : public KUniqueApplication
 {
   Q_OBJECT
 
