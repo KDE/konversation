@@ -14,7 +14,7 @@
 
 #include <kdebug.h>
 
-#include "defaultcodec.h"
+#include "ircdefaultcodec.h"
 
 #include "identity.h"
 
@@ -25,7 +25,7 @@ Identity::Identity()
   nicknameList.append(QString::null);
   nicknameList.append(QString::null);
 
-  setCodec(DefaultCodec::getDefaultLocaleCodec());
+  setCodec(IRCDefaultCodec::getDefaultLocaleCodec());
 }
 
 Identity::~Identity()
