@@ -8,21 +8,18 @@
 /*
   copyright: (C) 2002 by Dario Abatianni
              (C) 2004 by Peter Simonsson
+	     (C) 2004 by İsmail Dönmez
 */
 #ifndef PREFSPAGECOLORSAPPEARANCE_H
 #define PREFSPAGECOLORSAPPEARANCE_H
 
-#include <qstringlist.h>
-#include <qptrlist.h>
+#include <qframe.h>
 
-#include <kcolorbutton.h>
+#include "colorsappearance_preferences.h"
 
-#include "prefspage.h"
+class Preferences;
 
-class QCheckBox;
-class KURLRequester;
-
-class PrefsPageColorsAppearance : public PrefsPage
+class PrefsPageColorsAppearance : public ColorsAppearance_Config
 {
   Q_OBJECT
   public:
@@ -33,13 +30,7 @@ class PrefsPageColorsAppearance : public PrefsPage
     void applyPreferences();
 
   protected:
-    QStringList colorList;
-    QPtrList<KColorButton> colorBtnList;
-    QPtrList<KColorButton> nickColorBtnList;
-    QPtrList<KColorButton> ircColorBtnList;
-    QCheckBox* colorInputFieldsCheck;
-    QCheckBox* useColoredNicksCheck;
-    QCheckBox* parseIrcColorsCheck;
+    Preferences* preferences;
 };
 
 #endif

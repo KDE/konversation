@@ -8,146 +8,71 @@
 /*
   copyright: (C) 2002 by Dario Abatianni
              (C) 2004 by Peter Simonsson
+	     (C) 2004 by İsmail Dönmez
 */
-#include "prefspagecolorsappearance.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
+#include <kcolorbutton.h>
+#include <kdebug.h>
+
+#include <qstringlist.h>
 #include <qcheckbox.h>
 
-#include <kdebug.h>
-#include <klocale.h>
-#include <kurlrequester.h>
-
+#include "prefspagecolorsappearance.h"
+#include "colorsappearance_preferences.h"
 #include "preferences.h"
 
 PrefsPageColorsAppearance::PrefsPageColorsAppearance(QFrame* newParent,Preferences* newPreferences)
- : PrefsPage(newParent, newPreferences)
+ : ColorsAppearance_Config(newParent)
 {
-  QGridLayout* colorLayout = new QGridLayout(parentFrame, 4, 4, marginHint(), spacingHint());
+  preferences = newPreferences;
+  
+  // Checkboxes
+  kcfg_UseCustomColors->setChecked(preferences->getColorInputFields());
+  kcfg_UseColoredNicks->setChecked(preferences->getUseColoredNicks());
+  kcfg_ParseIrcColors->setChecked(!preferences->getFilterColors());
 
-  colorList.append(i18n("Actio&n:")+",ActionMessage");
-  colorList.append(i18n("Bac&klog:")+",BacklogMessage");
-  colorList.append(i18n("Channel &message:")+",ChannelMessage");
-  colorList.append(i18n("Comman&d message:")+",CommandMessage");
-  colorList.append(i18n("&Hyperlink:")+",LinkMessage");
-  colorList.append(i18n("&Query message:")+",QueryMessage");
-  colorList.append(i18n("&Server message:")+",ServerMessage");
-  colorList.append(i18n("&Timestamp:")+",Time");
-  colorList.append(i18n("&Background:")+",TextViewBackground");
-  colorList.append(i18n("A&lternate background:")+",AlternateBackground");
+  // Custom Colors
+  kcfg_ActionColor->setColor("#"+preferences->getColor("ActionMessage"));
+  kcfg_BacklogColor->setColor("#"+preferences->getColor("BacklogMessage"));
+  kcfg_ChannelMessageColor->setColor("#"+preferences->getColor("ChannelMessage"));
+  kcfg_CommandMessageColor->setColor("#"+preferences->getColor("CommandMessage"));
+  kcfg_HyperlinkColor->setColor("#"+preferences->getColor("LinkMessage"));
+  kcfg_QueryMessageColor->setColor("#"+preferences->getColor("QueryMessage"));
+  kcfg_ServerMessageColor->setColor("#"+preferences->getColor("ServerMessage"));
+  kcfg_TimestampColor->setColor("#"+preferences->getColor("Time"));
+  kcfg_BackgroundColor->setColor("#"+preferences->getColor("TextViewBackground"));
+  kcfg_AlternateBackgroundColor->setColor("#"+preferences->getColor("AlternateBackground"));
 
-  int row = 0;
-  int col = 0;
-  QString label;
-  QString name;
+  // Nick colors
+  QStringList colorList = preferences->getNickColorList();
+  kcfg_NickColor1->setColor(colorList[0]);
+  kcfg_NickColor2->setColor(colorList[1]);
+  kcfg_NickColor3->setColor(colorList[2]);
+  kcfg_NickColor4->setColor(colorList[3]);
+  kcfg_NickColor5->setColor(colorList[4]);
+  kcfg_NickColor6->setColor(colorList[5]);
+  kcfg_NickColor7->setColor(colorList[6]);
+  kcfg_NickColor8->setColor(colorList[7]);
 
-  for(unsigned int index = 0; index < colorList.count(); index++) {
-    label = colorList[index].section(',',0,0);
-    name = colorList[index].section(',',1);
+  // IRC Color Codes
+  QStringList ircColorList = preferences->getIRCColorList();
+  kcfg_IrcColorCode1->setColor(ircColorList[0]);
+  kcfg_IrcColorCode2->setColor(ircColorList[1]);
+  kcfg_IrcColorCode3->setColor(ircColorList[2]);
+  kcfg_IrcColorCode4->setColor(ircColorList[3]);
+  kcfg_IrcColorCode5->setColor(ircColorList[4]);
+  kcfg_IrcColorCode6->setColor(ircColorList[5]);
+  kcfg_IrcColorCode7->setColor(ircColorList[6]);
+  kcfg_IrcColorCode8->setColor(ircColorList[7]);
+  kcfg_IrcColorCode9->setColor(ircColorList[8]);
+  kcfg_IrcColorCode10->setColor(ircColorList[9]);
+  kcfg_IrcColorCode11->setColor(ircColorList[10]);
+  kcfg_IrcColorCode12->setColor(ircColorList[11]);
+  kcfg_IrcColorCode13->setColor(ircColorList[12]);
+  kcfg_IrcColorCode14->setColor(ircColorList[13]);
+  kcfg_IrcColorCode15->setColor(ircColorList[14]);
+  kcfg_IrcColorCode16->setColor(ircColorList[15]);
 
-    QLabel* colorLabel = new QLabel(label,parentFrame);
-
-    KColorButton* colorBtn = new KColorButton(parentFrame);
-    colorBtnList.append(colorBtn);
-
-    colorLabel->setBuddy(colorBtn);
-
-    QString color = preferences->getColor(name);
-    colorBtn->setColor(color.prepend('#'));
-    // give this color button a name so we can save colors with their appropriate name later
-    colorBtn->setName(name.latin1());
-
-    colorLayout->addWidget(colorLabel, row, col);
-    col++;
-    colorLayout->addWidget(colorBtn, row, col);
-    col++;
-
-    if(col > 3) {
-      row++;
-      col = 0;
-    }
-  }
-
-  row++;
-  colorInputFieldsCheck = new QCheckBox(
-       i18n("&Input fields and nick list use custom colors"), parentFrame, "input_fields_color_check");
-  colorInputFieldsCheck->setChecked(preferences->getColorInputFields());
-  colorLayout->addMultiCellWidget(colorInputFieldsCheck, row, row, 0, 3);  
-
-  row++;
-  QGroupBox* nickColorGroup = new QGroupBox(i18n("N&ick Colors"), parentFrame);
-  nickColorGroup->setColumnLayout(0, Qt::Vertical);
-  nickColorGroup->setMargin(marginHint());
-  QGridLayout* nickColorLayout = new QGridLayout(nickColorGroup->layout(), 2, 4, spacingHint());
-
-  int r=0;
-  useColoredNicksCheck = new QCheckBox(i18n("&Use colored nicks"), nickColorGroup, "use_color_nicks");
-  useColoredNicksCheck->setChecked(preferences->getUseColoredNicks());
-  nickColorLayout->addMultiCellWidget(useColoredNicksCheck, r, r, 0, 3);
-
-  QStringList nickColors = preferences->getNickColorList();
-  col=0;
-  r=1;
-
-  for(int i = 0; i < 8; i++) {
-    QLabel* label = new QLabel(QString::number(i) + ":", nickColorGroup);
-    KColorButton* button = new KColorButton(nickColorGroup);
-    nickColorBtnList.append(button);
-    button->setColor(nickColors[i]);
-
-    nickColorLayout->addWidget(label, r, col);
-    nickColorLayout->addWidget(button, r, col+1);
-    r++;
-
-    if(r > 2) {
-      r=1;
-      col += 2;
-    }
-  }
-
-  colorLayout->addMultiCellWidget(nickColorGroup, row, row, 0, 3);
-
-  row++;
-  QGroupBox* ircColorGroup = new QGroupBox(i18n("I&RC Colors"), parentFrame);
-  ircColorGroup->setColumnLayout(0, Qt::Vertical);
-  ircColorGroup->setMargin(marginHint());
-  QGridLayout* ircColorLayout = new QGridLayout(ircColorGroup->layout(), 2, 4, spacingHint());
-
-  r = 0;
-  parseIrcColorsCheck = new QCheckBox(i18n("&Parse color codes"), ircColorGroup);
-  parseIrcColorsCheck->setChecked(!preferences->getFilterColors());
-
-  ircColorLayout->addMultiCellWidget(parseIrcColorsCheck, r, r, 0, 3);
-
-  QStringList colors = preferences->getIRCColorList();
-  col = 0;
-  r = 1;
-
-  for(int i = 0; i < 16; i++) {
-    QLabel* label = new QLabel(QString::number(i) + ":", ircColorGroup);
-    KColorButton* button = new KColorButton(ircColorGroup);
-    ircColorBtnList.append(button);
-    button->setColor(colors[i]);
-
-    ircColorLayout->addWidget(label, r, col);
-    ircColorLayout->addWidget(button, r, col + 1);
-    r++;
-
-    if(r > 4) {
-      r = 1;
-      col += 2;
-    }
-  }
-
-  colorLayout->addMultiCellWidget(ircColorGroup, row, row, 0, 3);
-
-  row++;
-  QHBox* spacer=new QHBox(parentFrame);
-  colorLayout->addWidget(spacer, row, 0);
-  colorLayout->setRowStretch(row, 10);
-  colorLayout->setColStretch(0, 10);
-  colorLayout->setColStretch(2, 10);
 }
 
 
@@ -157,32 +82,57 @@ PrefsPageColorsAppearance::~PrefsPageColorsAppearance()
 
 void PrefsPageColorsAppearance::applyPreferences()
 {
-  for(unsigned int index = 0; index < colorBtnList.count(); index++) {
-    KColorButton* button = colorBtnList.at(index);
-    preferences->setColor(button->name(), button->color().name().mid(1));
-  }
+  // Custom Colors
+  preferences->setColor("ActionMessage",kcfg_ActionColor->color().name().mid(1));
+  preferences->setColor("BacklogMessage",kcfg_BacklogColor->color().name().mid(1));
+  preferences->setColor("ChannelMessage",kcfg_ChannelMessageColor->color().name().mid(1));
+  preferences->setColor("CommandMessage",kcfg_CommandMessageColor->color().name().mid(1));
+  preferences->setColor("LinkMessage",kcfg_HyperlinkColor->color().name().mid(1));
+  preferences->setColor("QueryMessage",kcfg_QueryMessageColor->color().name().mid(1));
+  preferences->setColor("ServerMessage",kcfg_ServerMessageColor->color().name().mid(1));
+  preferences->setColor("Time",kcfg_TimestampColor->color().name().mid(1));
+  preferences->setColor("TextViewBackground",kcfg_BackgroundColor->color().name().mid(1));
+  preferences->setColor("AlternateBackground",kcfg_AlternateBackgroundColor->color().name().mid(1));
 
-  preferences->setColorInputFields(colorInputFieldsCheck->isChecked());
-
+  // Nick colors
   QStringList nickColorList;
 
-  for(unsigned int i = 0; i < nickColorBtnList.count(); i++) {
-    KColorButton* button = nickColorBtnList.at(i);
-    nickColorList.append(button->color().name());
-  }
-
+  nickColorList.append(kcfg_NickColor1->color().name());
+  nickColorList.append(kcfg_NickColor2->color().name());
+  nickColorList.append(kcfg_NickColor3->color().name());
+  nickColorList.append(kcfg_NickColor4->color().name());
+  nickColorList.append(kcfg_NickColor5->color().name());
+  nickColorList.append(kcfg_NickColor6->color().name());
+  nickColorList.append(kcfg_NickColor7->color().name());
+  nickColorList.append(kcfg_NickColor8->color().name());
   preferences->setNickColorList(nickColorList);
-  preferences->setUseColoredNicks(useColoredNicksCheck->isChecked());
+  
 
-  QStringList colorList;
+  // IRC Colors
+  QStringList ircColorList;
+  
+  ircColorList.append(kcfg_IrcColorCode1->color().name());
+  ircColorList.append(kcfg_IrcColorCode2->color().name());
+  ircColorList.append(kcfg_IrcColorCode3->color().name());
+  ircColorList.append(kcfg_IrcColorCode4->color().name());
+  ircColorList.append(kcfg_IrcColorCode5->color().name());
+  ircColorList.append(kcfg_IrcColorCode6->color().name());
+  ircColorList.append(kcfg_IrcColorCode7->color().name());
+  ircColorList.append(kcfg_IrcColorCode8->color().name());
+  ircColorList.append(kcfg_IrcColorCode9->color().name());
+  ircColorList.append(kcfg_IrcColorCode10->color().name());
+  ircColorList.append(kcfg_IrcColorCode11->color().name());
+  ircColorList.append(kcfg_IrcColorCode12->color().name());
+  ircColorList.append(kcfg_IrcColorCode13->color().name());
+  ircColorList.append(kcfg_IrcColorCode14->color().name());
+  ircColorList.append(kcfg_IrcColorCode15->color().name());
+  ircColorList.append(kcfg_IrcColorCode16->color().name());
+  preferences->setIRCColorList(ircColorList);
 
-  for(unsigned int i = 0; i < ircColorBtnList.count(); i++) {
-    KColorButton* button = ircColorBtnList.at(i);
-    colorList.append(button->color().name());
-  }
-
-  preferences->setIRCColorList(colorList);
-  preferences->setFilterColors(!parseIrcColorsCheck->isChecked());
+  // Checkboxes
+  preferences->setColorInputFields(kcfg_UseCustomColors->isChecked());
+  preferences->setUseColoredNicks(kcfg_UseColoredNicks->isChecked());
+  preferences->setFilterColors(!kcfg_ParseIrcColors->isChecked());
 }
 
 #include "prefspagecolorsappearance.moc"
