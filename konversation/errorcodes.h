@@ -12,6 +12,9 @@
   email:     eisfuchs@tigress.com
 */
 
+#ifndef ERRORCODES_H
+#define ERRORCODES_H 
+
 #define RPL_WELCOME            001
 #define RPL_YOURHOST           002
 #define RPL_CREATED            003
@@ -146,3 +149,6 @@
 #define ERR_NOOPERHOST         491
 #define ERR_UMODEUNKNOWNFLAG   501
 #define ERR_USERSDONTMATCH     502
+
+#endif
+

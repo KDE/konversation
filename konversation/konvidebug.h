@@ -18,6 +18,9 @@
  * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 **************************************************************************/
 
+#ifndef KONVIDEBUG_H
+#define KONVIDEBUG_H
+
 #include <kdebug.h>
 
 #define KX kdDebug()
@@ -30,3 +33,6 @@
 #define FLOON __FILE__ << ' ' << __LINE__ << ' '
 
 #define SHOW KX << FLOON << endl;
+
+#endif
+
