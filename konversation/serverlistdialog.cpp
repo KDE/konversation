@@ -23,10 +23,12 @@
 #include <qpalette.h>
 #include <qpixmap.h>
 #include <qpainter.h>
+#include <qsize.h>
 
 #include <klocale.h>
 #include <kdebug.h>
 #include <kguiitem.h>
+#include <kmessagebox.h>
 
 #include "preferences.h"
 #include "konversationapplication.h"
@@ -290,23 +292,23 @@ namespace Konversation {
   void ServerListDialog::slotEdit()
   {
     ServerListItem* item = static_cast<ServerListItem*>(m_serverList->selectedItems().first());
-  
+
     if(item)
     {
       Konversation::ServerGroupSettings serverGroup = m_preferences->serverGroupById(item->serverId());
-      
+
       if(!serverGroup.name().isEmpty()) {
         ServerGroupDialog dlg(i18n("Edit Network"), this);
         QStringList groups = createGroupList();
         dlg.setAvailableGroups(groups);
         dlg.setServerGroupSettings(serverGroup);
-    
+
         if(dlg.exec() == KDialog::Accepted) {
           // find branch the old item resides in
           QListViewItem* branch = findBranch(item->group());
           // remove item from the list
           delete item;
-    
+
           // if the branch is empty, remove it
           if(branch && branch->childCount() == 0) {
             delete branch;
@@ -315,7 +317,7 @@ namespace Konversation {
           ServerGroupSettings serverGroup = dlg.serverGroupSettings();
           m_preferences->removeServerGroup(serverGroup.id());
           addServerGroup(serverGroup);
-          
+
           if(dlg.identitiesNeedsUpdate()) {
             updateServerGroupList();
           }
@@ -323,12 +325,18 @@ namespace Konversation {
       }
     }
   }
-  
+
   void ServerListDialog::slotDelete()
   {
+    if(KMessageBox::warningContinueCancel(this, i18n("Do you really want to delete the selected networks?"))
+       == KMessageBox::Cancel)
+    {
+      return;
+    }
+
     QPtrList<QListViewItem> selected = m_serverList->selectedItems();
     ServerListItem * server = static_cast<ServerListItem*>(selected.first());
-    
+
     while(server) {
       // find branch this item belongs to
       QListViewItem* branch = findBranch(server->group());
@@ -340,18 +348,21 @@ namespace Konversation {
       if(branch && branch->childCount() == 0) {
         delete branch;
       }
-      
+
       server = static_cast<ServerListItem*>(selected.next());
     }
   }
 
   void ServerListDialog::updateButtons()
   {
-    bool enable = m_serverList->selectedItems().count() > 0;
-    
+    int count = m_serverList->selectedItems().count();
+    bool enable = count > 0;
+
     enableButtonOK(enable);
-    m_editButton->setEnabled(enable);
     m_delButton->setEnabled(enable);
+
+    enable = count == 1;
+    m_editButton->setEnabled(enable);
   }
 
   void ServerListDialog::addServerGroup(const ServerGroupSettings& serverGroup)
