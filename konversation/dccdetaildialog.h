@@ -26,6 +26,8 @@ class DccDetailDialog : public KDialog
   protected slots:
     void slotLocalFileURLChanged( const QString& newURL );
     void slotOpenFile();
+    void slotRemoveFile();
+    void slotViewFileInfo();
     void slotAccept();
     void slotAbort();
     void slotClose();
@@ -36,6 +38,8 @@ class DccDetailDialog : public KDialog
     // UI
     KURLRequester* m_localFileURL;
     KPushButton* m_localFileURLOpen;
+    KPushButton* m_localFileURLRemove;
+    KPushButton* m_localFileURLViewInfo;
     KLineEdit* m_partner;
     KLineEdit* m_self;
     KLineEdit* m_status;

@@ -21,7 +21,6 @@
 #include <kdebug.h>
 #include <kdeversion.h>
 #include <kdialog.h>
-#include <kfilemetainfo.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <klistview.h>
@@ -97,25 +96,25 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   
   #define icon(s) KGlobal::iconLoader()->loadIcon( s, KIcon::Small )
   
-  acceptButton=new QPushButton(icon("player_play"),i18n("Accept"),buttonsBox,"start_dcc");
-  abortButton =new QPushButton(icon("stop"),i18n("Abort"),buttonsBox,"abort_dcc");
-  clearButton=new QPushButton(icon("editdelete"), i18n("Clear"),buttonsBox,"clear_dcc");
-  openButton  =new QPushButton(icon("exec"), i18n("Open"),buttonsBox,"open_dcc_file");
-  infoButton  =new QPushButton(icon("messagebox_info"), i18n("Information"),buttonsBox,"info_on_dcc_file");
-  detailButton=new QPushButton(icon("view_text"), i18n("Detail"),buttonsBox,"detail_dcc");
+  acceptButton = new QPushButton(icon("player_play"),i18n("Accept"),buttonsBox,"start_dcc");
+  abortButton  = new QPushButton(icon("stop"),i18n("Abort"),buttonsBox,"abort_dcc");
+  clearButton  = new QPushButton(icon("editdelete"), i18n("Clear"),buttonsBox,"clear_dcc");
+  openButton   = new QPushButton(icon("exec"), i18n("Open"),buttonsBox,"open_dcc_file");
+  removeButton = new QPushButton(icon("edittrash"), i18n("Remove"),buttonsBox,"remove_dcc_file");
+  detailButton = new QPushButton(icon("view_text"), i18n("Detail"),buttonsBox,"detail_dcc");
   
   QToolTip::add(acceptButton,i18n("Start receiving"));
   QToolTip::add(abortButton, i18n("Abort the transfer"));
   QToolTip::add(clearButton,i18n("Remove the item from panel"));
-  QToolTip::add(openButton,  i18n("Execute the file"));
-  QToolTip::add(infoButton,  i18n("View file information"));
+  QToolTip::add(openButton,  i18n("Run the file"));
+  QToolTip::add(removeButton,  i18n("Remove the file"));
   QToolTip::add(detailButton,i18n("View DCC detail information"));
   
   connect(acceptButton,SIGNAL (clicked()) ,this,SLOT (acceptDcc()) );
   connect(abortButton,SIGNAL (clicked()) ,this,SLOT (abortDcc()) );
   connect(clearButton,SIGNAL (clicked()) ,this,SLOT (clearDcc()) );
   connect(openButton,SIGNAL (clicked()) ,this,SLOT (runDcc()) );
-  connect(infoButton,SIGNAL (clicked()) ,this,SLOT (showFileInfo()) );
+  connect(removeButton,SIGNAL (clicked()) ,this,SLOT (removeFile()) );
   connect(detailButton,SIGNAL (clicked()) ,this,SLOT (openDetail()) );
 
   // popup menu
@@ -125,10 +124,12 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   popup->insertItem(icon("stop"),i18n("Abort"),Popup::Abort);
   popup->insertSeparator();
   popup->insertItem(icon("editdelete"),i18n("Clear"),Popup::Clear);
-  popup->insertItem(i18n("Clear all completed items"),Popup::ClearAllCompleted);
+  popup->insertItem(i18n("Clear All Completed Items"),Popup::ClearAllCompleted);
+  popup->insertItem(i18n("Remove and Clear"),Popup::RemoveAndClear);
   popup->insertSeparator();
-  popup->insertItem(icon("exec"),i18n("Open"),Popup::Open);
-  popup->insertItem(icon("messagebox_info"),i18n("Information"),Popup::Info);
+  popup->insertItem(icon("exec"),i18n("Open File"),Popup::Open);
+  popup->insertItem(icon("edittrash"),i18n("Remove File"),Popup::Remove);
+  popup->insertItem(icon("messagebox_info"),i18n("File Information"),Popup::Info);
   popup->insertSeparator();
   popup->insertItem(icon("view_text"),i18n("Detail"),Popup::Detail);
     
@@ -151,7 +152,14 @@ void DccPanel::dccStatusChanged(const DccTransfer* /* item */)
 
 void DccPanel::selectionChanged()
 {
-  bool accept=true, abort=false, clear=true, open=true, info=false, detail=true;
+  bool accept         = true,
+       abort          = true,
+       clear          = true,
+       open           = true,
+       remove         = true,
+       info           = true,
+       detail         = true,
+       removeAndClear = true;
   bool itemfound = false;
   QListViewItemIterator it( getListView() );
   while( it.current() )
@@ -174,27 +182,32 @@ void DccPanel::selectionChanged()
         open   &= ( type == DccTransfer::Send ||
                     status == DccTransfer::Done );
         
+        remove &= ( type == DccTransfer::Receive &&
+                    status == DccTransfer::Done );
+        
         info   &= ( type == DccTransfer::Send ||
                     status == DccTransfer::Done );
       }
     }
     ++it;
   }
-  if( !itemfound ) { accept=false, abort=false, clear=false, open=false, info=false, detail=false; }
+  if( !itemfound ) { accept = abort = clear = open = remove = info = detail = removeAndClear = false; }
   
   acceptButton->setEnabled( accept );
   abortButton->setEnabled( abort );
   clearButton->setEnabled( clear );
   openButton->setEnabled( open );
-  infoButton->setEnabled( info );
+  removeButton->setEnabled( remove );
   detailButton->setEnabled( detail );
   
-  popup->setItemEnabled(Popup::Accept, accept);
-  popup->setItemEnabled(Popup::Abort, abort);
-  popup->setItemEnabled(Popup::Clear, clear);
-  popup->setItemEnabled(Popup::Open, open);
-  popup->setItemEnabled(Popup::Info, info);
-  popup->setItemEnabled(Popup::Detail, detail);
+  popup->setItemEnabled( Popup::Accept,         accept );
+  popup->setItemEnabled( Popup::Abort,          abort );
+  popup->setItemEnabled( Popup::Clear,          clear );
+  popup->setItemEnabled( Popup::RemoveAndClear, removeAndClear );
+  popup->setItemEnabled( Popup::Open,           open );
+  popup->setItemEnabled( Popup::Remove,         remove );
+  popup->setItemEnabled( Popup::Info,           info );
+  popup->setItemEnabled( Popup::Detail,         detail );
 }
   
 void DccPanel::acceptDcc()
@@ -254,15 +267,30 @@ void DccPanel::runDcc()
       DccTransfer* item=static_cast<DccTransfer*>( it.current() );
       if( item )
         if( item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done )
-          new KRun( item->getLocalFileURL() );
+          item->runFile();
     }
     ++it;
   }
 }
 
+void DccPanel::removeFile()
+{
+  QListViewItemIterator it( getListView() );
+  while( it.current() )
+  {
+    if( it.current()->isSelected() )
+    {
+      DccTransfer* item=static_cast<DccTransfer*>( it.current() );
+      if( item )
+        if( item->getType() == DccTransfer::Receive && item->getStatus() == DccTransfer::Done )
+          item->removeFile();
+    }
+    ++it;
+  } 
+}
+
 void DccPanel::showFileInfo()
 {
-  /*
   QListViewItemIterator it( getListView() );
   while( it.current() )
   {
@@ -271,73 +299,10 @@ void DccPanel::showFileInfo()
       DccTransfer* item=static_cast<DccTransfer*>( it.current() );
       if( item )
         if( item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done )
-        {
-          QStringList infoList;
-          
-          QString path=item->getFilePath();
-          
-          // get meta info object
-          KFileMetaInfo* fileInfo=new KFileMetaInfo(path,QString::null,KFileMetaInfo::Everything);
-          
-          // is there any info for this file?
-          if(fileInfo && !fileInfo->isEmpty())
-          {
-            // get list of meta information groups
-            QStringList groupList=fileInfo->groups();
-            // look inside for keys
-            for(unsigned int index=0;index<groupList.count();index++)
-            {
-              // get next group
-              KFileMetaInfoGroup group=fileInfo->group(groupList[index]);
-              // check if there are keys in this group at all
-              if(!group.isEmpty())
-              {
-                // append group name to list
-                infoList.append(groupList[index]);
-                // get list of keys in this group
-                QStringList keys=group.keys();
-                for(unsigned keyIndex=0;keyIndex<keys.count();keyIndex++)
-                {
-                  // get meta information item for this key
-                  KFileMetaInfoItem item=group.item(keys[keyIndex]);
-                  if(item.isValid())
-                  {
-                    // append item information to list
-                    infoList.append("- "+item.translatedKey()+" "+item.string());
-                  }
-                } // endfor
-              }
-            } // endfor
-            
-            // display information list if any available
-            if(infoList.count())
-            {
-#ifdef USE_INFOLIST
-              KMessageBox::informationList(
-                this,
-                i18n("Available information for file %1:").arg(path),
-                infoList,
-                i18n("File information")
-              );
-#else
-              KMessageBox::information(
-                this,
-                "<qt>"+infoList.join("<br>")+"</qt>",
-                i18n("File information")
-              );
-#endif
-            }
-          }
-          else
-          {
-            KMessageBox::sorry(this,i18n("No detailed information for this file found."),i18n("File information"));
-          }
-          delete fileInfo;
-        }
+          item->openFileInfoDialog();
     }
     ++it;
   }
-  */
 }
 
 void DccPanel::openDetail()
@@ -372,6 +337,29 @@ void DccPanel::clearAllCompletedDcc()
   selectionChanged();
 }
 
+void DccPanel::removeAndClear()
+{
+  QPtrList<QListViewItem> clearList;
+  QListViewItemIterator it( getListView() );
+  while ( it.current() )
+  {
+    if ( it.current()->isSelected() )
+    {
+      DccTransfer* item=static_cast<DccTransfer*>( it.current() );
+      if ( item )
+      {
+        if ( item->getType() == DccTransfer::Receive && item->getStatus() == DccTransfer::Done )
+          item->removeFile();
+        clearList.append( it.current() );
+      }
+    }
+    ++it;
+  }
+  clearList.setAutoDelete( true );
+  while( clearList.remove() );
+  selectionChanged();
+}
+
 void DccPanel::popupRequested(QListViewItem* /* item */, const QPoint& pos, int /* col */)  // slot
 {
   selectionChanged();
@@ -394,6 +382,9 @@ void DccPanel::popupActivated(int id)  // slot
     case Popup::Open:
       runDcc();
       break;
+    case Popup::Remove:
+      removeFile();
+      break;
     case Popup::Info:
       showFileInfo();
       break;
@@ -402,6 +393,9 @@ void DccPanel::popupActivated(int id)  // slot
       break;
     case Popup::ClearAllCompleted:
       clearAllCompletedDcc();
+      break;
+    case Popup::RemoveAndClear:
+      removeAndClear();
       break;
   }
 }

@@ -12,7 +12,6 @@
 #include <klineedit.h>
 #include <kprogress.h>
 #include <kpushbutton.h>
-#include <krun.h>
 #include <kurlrequester.h>
 
 #include "dccdetaildialog.h"
@@ -56,6 +55,12 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   m_localFileURLOpen = new KPushButton( KGlobal::iconLoader()->loadIcon( "exec", KIcon::Small ), QString::null, localFileURLBox );
   m_localFileURLOpen->setFixedSize( m_localFileURL->button()->size() );
   connect( m_localFileURLOpen, SIGNAL( clicked() ), this, SLOT( slotOpenFile() ) );
+  m_localFileURLRemove = new KPushButton( KGlobal::iconLoader()->loadIcon( "edittrash", KIcon::Small ), QString::null, localFileURLBox );
+  m_localFileURLRemove->setFixedSize( m_localFileURL->button()->size() );
+  connect( m_localFileURLRemove, SIGNAL( clicked() ), this, SLOT( slotRemoveFile() ) );
+  m_localFileURLViewInfo = new KPushButton( KGlobal::iconLoader()->loadIcon( "messagebox_info", KIcon::Small ), QString::null, localFileURLBox );
+  m_localFileURLViewInfo->setFixedSize( m_localFileURL->button()->size() );
+  connect( m_localFileURLViewInfo, SIGNAL( clicked() ), this, SLOT( slotViewFileInfo() ) );
   
   // Partner
   QLabel* partnerHeader = new QLabel( infoFrame );
@@ -212,6 +217,8 @@ void DccDetailDialog::updateView()  // public
   m_localFileURL->lineEdit()->setAlignment( m_item->dccStatus == DccTransfer::Queued ? AlignLeft : AlignHCenter );
   m_localFileURL->button()->setEnabled( m_item->dccStatus == DccTransfer::Queued );
   m_localFileURLOpen->setEnabled( m_item->dccType == DccTransfer::Send || m_item->dccStatus == DccTransfer::Done );
+  m_localFileURLRemove->setEnabled( m_item->dccType == DccTransfer::Receive && m_item->dccStatus == DccTransfer::Done );
+  m_localFileURLViewInfo->setEnabled( m_item->dccType == DccTransfer::Send || m_item->dccStatus == DccTransfer::Done );
   
   // Partner
   if ( !m_item->partnerIp.isEmpty() || !m_item->partnerPort.isEmpty() )
@@ -261,7 +268,7 @@ void DccDetailDialog::updateView()  // public
 
 void DccDetailDialog::slotLocalFileURLChanged( const QString& newURL )
 {
-  DccTransferRecv* item = static_cast< DccTransferRecv* >( m_item );
+  DccTransferRecv* item = static_cast<DccTransferRecv*>( m_item );
   if ( item )
   {
     item->setLocalFileURL( KURL::fromPathOrURL( newURL ) );
@@ -271,7 +278,17 @@ void DccDetailDialog::slotLocalFileURLChanged( const QString& newURL )
 
 void DccDetailDialog::slotOpenFile()
 {
-  new KRun( m_item->localFileURL );
+  m_item->runFile();
+}
+
+void DccDetailDialog::slotRemoveFile()
+{
+  m_item->removeFile();
+}
+
+void DccDetailDialog::slotViewFileInfo()
+{
+  m_item->openFileInfoDialog();
 }
 
 void DccDetailDialog::slotAccept()

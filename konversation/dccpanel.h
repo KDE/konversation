@@ -35,12 +35,35 @@ class DccPanel : public ChatWindow
     class Column
     {
       public:
-        enum Object { TypeIcon, OfferDate, Status, FileName, PartnerNick, Progress, Position, TimeRemaining, CPS, COUNT };
+        enum Object
+        {
+          TypeIcon,
+          OfferDate,
+          Status,
+          FileName,
+          PartnerNick,
+          Progress,
+          Position,
+          TimeRemaining,
+          CPS,
+          COUNT
+        };
     };
     class Popup
     {
       public:
-        enum Object { Accept, Abort, Clear, ClearAllCompleted, Open, Info, Detail };
+        enum Object
+        {
+         Accept,
+         Abort,
+         Clear,
+         ClearAllCompleted,
+         RemoveAndClear,
+         Open,
+         Remove,
+         Info,
+         Detail
+       };
     };
     
 #ifdef USE_MDI
@@ -63,9 +86,11 @@ class DccPanel : public ChatWindow
     void abortDcc();
     void clearDcc();
     void runDcc();
+    void removeFile();
     void showFileInfo();
     void openDetail();
     void clearAllCompletedDcc();
+    void removeAndClear();
         
     void popupRequested(QListViewItem* item,const QPoint& pos,int col);
     void popupActivated(int id);
@@ -86,7 +111,7 @@ class DccPanel : public ChatWindow
     QPushButton* abortButton;
     QPushButton* clearButton;
     QPushButton* openButton;
-    QPushButton* infoButton;
+    QPushButton* removeButton;
     QPushButton* detailButton;
 };
 

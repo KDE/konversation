@@ -50,10 +50,10 @@ class DccTransfer : public QObject, public KListViewItem
       Connecting,    // RECV: trying to connect to the server
       Sending,       // Sending
       Receiving,     // Receiving
-      Closing,       // Flushing local transfer (KIO)
       Failed,        // Transfer failed
       Aborted,       // Transfer aborted by user
       Done,          // Transfer done
+      Removed,       // The file was removed
       DccStatusCount
     };
     
@@ -70,6 +70,10 @@ class DccTransfer : public QObject, public KListViewItem
     QString getFileName() const { return fileName; }
     KURL getLocalFileURL() const { return localFileURL; }
     bool isResumed() const { return bResumed; }
+    
+    void runFile();
+    bool removeFile();
+    void openFileInfoDialog();
     
     void openDetailDialog();
     void closeDetailDialog();

@@ -18,10 +18,13 @@
 #include <qtimer.h>
 
 #include <kdebug.h>
+#include <kfilemetainfo.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <kprogress.h>
+#include <krun.h>
 
 #include "dccdetaildialog.h"
 #include "dccpanel.h"
@@ -65,10 +68,10 @@ DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _p
   StatusText[Connecting]    = i18n("Connecting");
   StatusText[Sending]       = i18n("Sending");
   StatusText[Receiving]     = i18n("Receiving");
-  StatusText[Closing]       = i18n("Closing");
   StatusText[Failed]        = i18n("Failed");
   StatusText[Aborted]       = i18n("Aborted");
   StatusText[Done]          = i18n("Done");
+  StatusText[Removed]       = i18n("Removed");
 }
 
 DccTransfer::~DccTransfer()
@@ -141,6 +144,94 @@ void DccTransfer::showProgressBar()
   }
 }
 
+void DccTransfer::runFile()  // public
+{
+  if ( dccType == Send || dccStatus == Done )
+    new KRun( localFileURL );
+}
+
+bool DccTransfer::removeFile()  // public
+{
+  if ( dccType != Receive || dccStatus != Done )
+    return false;
+  if ( !QFile( localFileURL.path() ).remove() )
+  {
+    KMessageBox::sorry( 0, i18n("Cannot remove file '%1'.").arg( localFileURL.url() ), i18n("DCC Error") );
+    return false;
+  }
+  setStatus( Removed );
+  updateView();
+  return true;
+}
+
+void DccTransfer::openFileInfoDialog()
+{
+  if( dccType == Send || dccStatus == Done )
+  {
+    QStringList infoList;
+    
+    QString path=localFileURL.path();
+    
+    // get meta info object
+    KFileMetaInfo* fileInfo=new KFileMetaInfo(path,QString::null,KFileMetaInfo::Everything);
+    
+    // is there any info for this file?
+    if(fileInfo && !fileInfo->isEmpty())
+    {
+      // get list of meta information groups
+      QStringList groupList=fileInfo->groups();
+      // look inside for keys
+      for(unsigned int index=0;index<groupList.count();index++)
+      {
+        // get next group
+        KFileMetaInfoGroup group=fileInfo->group(groupList[index]);
+        // check if there are keys in this group at all
+        if(!group.isEmpty())
+        {
+          // append group name to list
+          infoList.append(groupList[index]);
+          // get list of keys in this group
+          QStringList keys=group.keys();
+          for(unsigned keyIndex=0;keyIndex<keys.count();keyIndex++)
+          {
+            // get meta information item for this key
+            KFileMetaInfoItem item=group.item(keys[keyIndex]);
+            if(item.isValid())
+            {
+              // append item information to list
+              infoList.append("- "+item.translatedKey()+" "+item.string());
+            }
+          } // endfor
+        }
+      } // endfor
+      
+      // display information list if any available
+      if(infoList.count())
+      {
+#ifdef USE_INFOLIST
+        KMessageBox::informationList(
+          listView(),
+          i18n("Available information for file %1:").arg(path),
+          infoList,
+          i18n("File information")
+        );
+#else
+        KMessageBox::information(
+          listView(),
+          "<qt>"+infoList.join("<br>")+"</qt>",
+          i18n("File information")
+        );
+#endif
+      }
+    }
+    else
+    {
+      KMessageBox::sorry(listView(),i18n("No detailed information for this file found."),i18n("File information"));
+    }
+    delete fileInfo;
+  }
+}
+
 void DccTransfer::openDetailDialog()  // public
 {
   if(!detailDialog)
@@ -189,6 +280,7 @@ QPixmap DccTransfer::getStatusIcon() const
       icon = "player_stop";
       break;
     case WaitingRemote:
+    case Connecting:
       icon = "goto";
       break;
     case Sending:
@@ -202,7 +294,10 @@ QPixmap DccTransfer::getStatusIcon() const
     case Done:
       icon = "ok";
       break;
-    default: ; // sugar
+    case Removed:
+      icon = "trashcan_full";
+      break;
+    default: ;  // sugar
   }
   return KGlobal::iconLoader()->loadIcon(icon, KIcon::Small);
 }
