@@ -1,5 +1,10 @@
 // dcctransfersend.h - send a file on DCC protocol
-// Copyright (C) 2002-2004 Dario Abatianni <eisfuchs@tigress.com>
+/*
+  dcctransfer.h  -  description
+  begin:     Mit Aug 7 2002
+  copyright: (C) 2002 by Dario Abatianni
+  email:     eisfuchs@tigress.com
+*/
 // Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
 // Copyright (C) 2004 John Tapsell <john@geola.co.uk>
 

@@ -1,5 +1,10 @@
 // dcctransfersend.cpp - send a file on DCC protocol
-// Copyright (C) 2002-2004 Dario Abatianni <eisfuchs@tigress.com>
+/*
+  dcctransfer.cpp  -  description
+  begin:     Mit Aug 7 2002
+  copyright: (C) 2002 by Dario Abatianni
+  email:     eisfuchs@tigress.com
+*/
 // Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
 // Copyright (C) 2004 John Tapsell <john@geola.co.uk>
 
@@ -43,48 +48,45 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   
   m_fileName = m_fileURL.filename();
  
-  m_serverSocket=0;
-  m_sendSocket=0;
-  m_connectionTimer = new QTimer(this);
+  m_serverSocket = 0;
+  m_sendSocket = 0;
+  m_connectionTimer = new QTimer( this );
   connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
   //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
 
   //Check the file exists 
-  if( !KIO::NetAccess::exists(m_fileURL, true, listView()))  {
-    KMessageBox::sorry(listView(), i18n("The url \"%1\" does not exist").arg(m_fileURL.prettyURL()));
-    setStatus(Failed);
+  if( !KIO::NetAccess::exists( m_fileURL, true, listView() ) ) {
+    KMessageBox::sorry(listView(), i18n("The url \"%1\" does not exist").arg( m_fileURL.prettyURL() ) );
+    setStatus( Failed, i18n("The url \"%1\" does not exist").arg( m_fileURL.prettyURL() ) );
     updateView();
     cleanUp();
     return;
   }
   //Download the file.  Does nothing if it's local (file:/)
-  if(! KIO::NetAccess::download(m_fileURL, m_tmpFile, listView())) {
-    KMessageBox::sorry(listView(), i18n("Could not retrieve \"%1\".").arg(m_fileURL.prettyURL()));
-    setStatus(Failed);
+  if( !KIO::NetAccess::download( m_fileURL, m_tmpFile, listView() ) ) {
+    KMessageBox::sorry(listView(), i18n("Could not retrieve \"%1\".").arg( m_fileURL.prettyURL() ) );
+    setStatus( Failed, i18n("Could not retrieve \"%1\"").arg( m_fileURL.prettyURL() ) );
     updateView();
     cleanUp();
     return;
   }
 
   //Some protocols, like http, maybe not return a filename.  So prompt the user for one.
-  if(m_fileName.isEmpty()) {
+  if( m_fileName.isEmpty() ) {
     bool pressedOk;
-    m_fileName = KInputDialog::getText(i18n("Enter filename"), i18n("<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>").arg(getPartnerNick()), "unknown", &pressedOk, listView());
-    if(!pressedOk) {
-      setStatus(Failed);
+    m_fileName = KInputDialog::getText( i18n("Enter filename"), i18n("<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>").arg( getPartnerNick() ), "unknown", &pressedOk, listView() );
+    if( !pressedOk ) {
+      setStatus( Failed, i18n("Any filename weren't given") );
       updateView();
       cleanUp();
       return;    
     }
   }
-  m_file.setName(m_tmpFile);
+  m_file.setName( m_tmpFile );
   m_fileSize = m_file.size();
 
- 
   updateView();
   panel->selectMe( this );
-
-
 }
 
 DccTransferSend::~DccTransferSend()
@@ -94,13 +96,13 @@ DccTransferSend::~DccTransferSend()
 
 void DccTransferSend::start()  // public slot
 {
-
   kdDebug() << "DccTransferSend::start()" << endl;
-  if(getStatus() != Queued) return; //setStatus(Failed) or something has been called.
-
-     // Set up server socket
-  m_serverSocket = new KNetwork::KServerSocket(this);
-  m_serverSocket->setFamily(KNetwork::KResolver::InetFamily);
+  if( getStatus() != Queued )
+    return; //setStatus(Failed) or something has been called.
+  
+  // Set up server socket
+  m_serverSocket = new KNetwork::KServerSocket( this );
+  m_serverSocket->setFamily( KNetwork::KResolver::InetFamily );
   
   if( KonversationApplication::preferences.getDccSpecificSendPorts() )  // user specifies ports
   {
@@ -119,7 +121,7 @@ void DccTransferSend::start()  // public slot
     if( !found )
     {
       KMessageBox::sorry( listView(), i18n("There is no vacant port for DCC sending.") );
-      setStatus( Failed );
+      setStatus( Failed, i18n("No vacant port") );
       updateView();
       cleanUp();
       return;
@@ -163,8 +165,8 @@ void DccTransferSend::abort()  // public slot
   kdDebug() << "DccTransferSend::abort()" << endl;
   
   setStatus( Aborted );
-  cleanUp();
   updateView();
+  cleanUp();
   m_file.close();
 }
 
@@ -211,9 +213,9 @@ void DccTransferSend::heard()  // slot
     cleanUp();
     return;
   }
-  connect( m_sendSocket, SIGNAL( readyRead()  ), this, SLOT( getAck()               ) );
-  connect( m_sendSocket, SIGNAL( readyWrite() ), this, SLOT( writeData()            ) );
-  connect( m_sendSocket, SIGNAL( closed()     ), this, SLOT( slotSendSocketClosed() ) );
+  connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() )               );
+  connect( m_sendSocket, SIGNAL( readyWrite() ), this, SLOT( writeData() )            );
+  connect( m_sendSocket, SIGNAL( closed() ),     this, SLOT( slotSendSocketClosed() ) );
   
   // we don't need ServerSocket anymore
   m_serverSocket->close();
@@ -235,7 +237,7 @@ void DccTransferSend::heard()  // slot
   {
     QString errorString = getErrorString( m_file.status() );
     KMessageBox::sorry( listView(), QString( errorString ).arg( m_file.name() ), i18n("DCC Send Error") );
-    setStatus( Failed );
+    setStatus( Failed, i18n("File open failure") );
     cleanUp();
   }
   updateView();
@@ -284,15 +286,15 @@ void DccTransferSend::socketError( int errorCode )
 
 void DccTransferSend::startConnectionTimer( int sec )
 {
-  kdDebug() << "startConnectionTimer"<< endl;
-  Q_ASSERT(m_connectionTimer);
+  kdDebug() << "DccTransferSend::startConnectionTimer"<< endl;
+  Q_ASSERT(m_connectionTimer);  // mmm? what is it for?
   stopConnectionTimer();
   m_connectionTimer->start( sec*1000, TRUE );
 }
 
 void DccTransferSend::stopConnectionTimer()
 {
-  kdDebug() << "stopConnectionTimer"<< endl;
+  kdDebug() << "DccTransferSend::stopConnectionTimer" << endl;
   Q_ASSERT(m_connectionTimer);
   m_connectionTimer->stop();
 }
@@ -317,4 +319,3 @@ void DccTransferSend::slotSendSocketClosed()
 }
 
 #include "dcctransfersend.moc"
-

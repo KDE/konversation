@@ -1,5 +1,10 @@
 // dcctransferrecv.cpp - receive a file on DCC protocol
-// Copyright (C) 2002-2004 Dario Abatianni <eisfuchs@tigress.com>
+/*
+  dcctransfer.cpp  -  description
+  begin:     Mit Aug 7 2002
+  copyright: (C) 2002 by Dario Abatianni
+  email:     eisfuchs@tigress.com
+*/
 // Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
 // Copyright (C) 2004 John Tapsell <john@geola.co.uk>
 
@@ -74,7 +79,6 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
   panel->selectMe( this );
 
 }
-
 
 DccTransferRecv::~DccTransferRecv()
 {
@@ -269,11 +273,11 @@ void DccTransferRecv::connectToSender()
   m_recvSocket->enableRead( false );
   m_recvSocket->enableWrite( false );
   
-  connect( m_recvSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( connectionSuccess()     ) );
-  connect( m_recvSocket, SIGNAL( gotError( int )                    ), this, SLOT( connectionFailed( int ) ) );
-  connect( m_recvSocket, SIGNAL( closed()                           ), this, SLOT( slotSocketClosed()      ) );
-  connect( m_recvSocket, SIGNAL( readyRead()                        ), this, SLOT( readData()              ) );
-  connect( m_recvSocket, SIGNAL( readyWrite()                       ), this, SLOT( sendAck()               ) );
+  connect( m_recvSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( connectionSuccess() )     );
+  connect( m_recvSocket, SIGNAL( gotError( int ) ),                    this, SLOT( connectionFailed( int ) ) );
+  connect( m_recvSocket, SIGNAL( closed() ),                           this, SLOT( slotSocketClosed() )      );
+  connect( m_recvSocket, SIGNAL( readyRead() ),                        this, SLOT( readData() )              );
+  connect( m_recvSocket, SIGNAL( readyWrite() ),                       this, SLOT( sendAck() )               );
   kdDebug() << "In connectToSender - attempting to connect to " << m_partnerIp << ":" << m_partnerPort << endl;
   if(!m_recvSocket->connect()) {
     kdDebug() << "connect failed immediately!! - " << m_recvSocket->errorString() << endl;
