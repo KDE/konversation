@@ -55,6 +55,13 @@ void KonvDCOP::error(const QString& string)
   emit dcopInfo(QString("Error: %1").arg(string));
 }
 
+/*
+ app is the dcop app name, object is that dcop app's object name, and signal is the name of the
+ function for that dcop app's object. I didn't implement any matching code yet, so I think it
+ just passes all events through at this point. We could register more than one hook for an event
+ type when matching code is done.
+*/
+
 void KonvDCOP::registerEventHook (const QString &type, const QString &criteria, const QString &app, const QString &object, const QString &signal)
 {
   // append
@@ -103,6 +110,13 @@ IRCEvent::IRCEvent (const QString &a_type, const QString &a_criteria, const QStr
   objectId = a_obj;
   criteria = a_criteria;
   signal = a_signal;
+/*
+  kdDebug() << "IRCEvent(): type=" << type  << endl
+            << "            criteria=" << criteria << endl
+            << "            app=" << a_app << endl
+            << "            object=" << a_obj << endl
+            << "            signal=" << a_signal << endl;
+*/
 }
 
 bool KonvDCOP::isIgnore (int serverid, const QString &hostmask, Ignore::Type type)
