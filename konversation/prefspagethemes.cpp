@@ -65,6 +65,7 @@ PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
   
   installButton->setText(i18n("I&nstall Theme"));
   m_removeButton->setText(i18n("&Remove Theme"));
+  m_removeButton->setEnabled(false);
   
   buttonLayout->addWidget(installButton);
   buttonLayout->addWidget(m_removeButton);
@@ -103,11 +104,14 @@ PrefsPageThemes::~PrefsPageThemes()
 
 void PrefsPageThemes::applyPreferences()
 {
-  QString theme;
-  theme = m_dirs[m_themeList->currentItem()];
-  theme = theme.section('/',-2,-2);
-  kdDebug() << "Theme :" << theme << endl;
-  preferences->setIconTheme(theme);
+  if(m_themeList->count() > 0)
+    {
+      QString theme;
+      theme = m_dirs[m_themeList->currentItem()];
+      theme = theme.section('/',-2,-2);
+      kdDebug() << "Theme :" << theme << endl;
+      preferences->setIconTheme(theme);
+    }
 }
 
 void PrefsPageThemes::installTheme()
@@ -223,6 +227,9 @@ void PrefsPageThemes::updateList()
   bool found = false;
 
   m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/themerc");
+
+  if(m_dirs.count() > 0){
+
   m_themeList->clear();
 
   for(QStringList::Iterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
@@ -254,11 +261,13 @@ void PrefsPageThemes::updateList()
 
   m_themeList->setSelected(index,TRUE);
   updatePreview(index);
+
+  }
 }
 
 void PrefsPageThemes::updateButtons()
 {
-  if(m_themeList->count() == 1)
+  if(m_themeList->count() < 2)
     return;
 
   QString dir = m_dirs[m_themeList->currentItem()];
