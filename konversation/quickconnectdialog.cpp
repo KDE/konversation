@@ -92,3 +92,5 @@ void QuickConnectDialog::slotOk()
 		delayedDestruct();
 	}
 }
+
+#include "quickconnectdialog.moc"

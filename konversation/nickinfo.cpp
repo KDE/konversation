@@ -154,3 +154,5 @@ void NickInfo::refreshAddressee() {
   emit nickInfoChanged();
 }
 
+
+#include "nickinfo.moc"
