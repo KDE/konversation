@@ -50,12 +50,11 @@ int main(int argc, char* argv[])
                        "http://konversation.sourceforge.net/",
                        "eisfuchs@tigress.com");
 
-  // TODO: remove the comments after the i18n freeze
-  aboutData.addAuthor("Dario Abatianni",0 /* I18N_NOOP("Project founder, main programmer, release coordiator") */,"eisfuchs@tigress.com");
-  aboutData.addAuthor("Matthias Gierlings",0 /* I18N_NOOP("Color configurator, Highlight dialog") */,"gismore@users.sourceforge.net");
-  aboutData.addAuthor("Alex Zepeda",0 /* I18N_NOOP("DCOP interface") */,"garbanzo@hooked.net");
-  aboutData.addAuthor("Stanislav Karchebny",0 /* I18N_NOOP("Non-Latin1-Encodings, russian translation") */,"berkus@users.sourceforge.net");
-  aboutData.addAuthor("Mickael Marchand",0 /* I18N_NOOP("Konsole part view") */,"marchand@kde.org");
+  aboutData.addAuthor("Dario Abatianni",I18N_NOOP("Project founder, main programmer, release coordiator"),"eisfuchs@tigress.com");
+  aboutData.addAuthor("Matthias Gierlings",I18N_NOOP("Color configurator, Highlight dialog"),"gismore@users.sourceforge.net");
+  aboutData.addAuthor("Alex Zepeda",I18N_NOOP("DCOP interface"),"garbanzo@hooked.net");
+  aboutData.addAuthor("Stanislav Karchebny",I18N_NOOP("Non-Latin1-Encodings, russian translation"),"berkus@users.sourceforge.net");
+  aboutData.addAuthor("Mickael Marchand",I18N_NOOP("Konsole part view"),"marchand@kde.org");
 
   KCmdLineArgs::init(argc,argv,&aboutData);
 
