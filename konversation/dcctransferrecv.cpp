@@ -75,6 +75,7 @@ void DccTransferRecv::start()  // public slot
   // check whether the file exists
   // if exists, ask user to rename/overwrite/abort
   bCompletedFileExists = QFile::exists(filePath);
+  
   // check whether the temporary file exists
   // if exists, ask user to resume/rename/overwrite/abort
   bTemporaryFileExists = file.exists() && (0 < file.size());
@@ -109,8 +110,6 @@ void DccTransferRecv::startResume(unsigned long _position)  // public slot
   
   // TODO: we'd better check if _position is equals to the requested position (transferringPosition)
   transferringPosition = _position;
-  
-  updateView();
   
   connectToSender();
 }
@@ -166,6 +165,7 @@ void DccTransferRecv::connectToSender()
   kdDebug() << "DccTransferRecv::connectToSender()" << endl;
   
   setStatus(Connecting);
+  updateView();
   
   recvSocket=new KExtendedSocket(partnerIp,partnerPort.toUInt(),KExtendedSocket::inetSocket |
                                                                 KExtendedSocket::noResolve);

@@ -63,6 +63,7 @@ class DccTransfer : public QObject, public KListViewItem
     
     DccType getType() const { return dccType; }
     DccStatus getStatus() const { return dccStatus; }
+    QString getOwnIp() const { return ownIp; }
     QString getOwnPort() const { return ownPort; }
     QString getPartnerNick() const { return partnerNick; }
     QString getFileName() const { return fileName; }
