@@ -44,7 +44,7 @@ enum PopupIDs
     KickBanSub,IgnoreNick,
     Kick,KickBan,BanNick,BanHost,BanDomain,BanUserHost,BanUserDomain,
     KickBanHost,KickBanDomain,KickBanUserHost,KickBanUserDomain,
-    Whois,WhoisServer,Version,Ping,OpenQuery,DccSend,
+    Whois,Version,Ping,OpenQuery,DccSend,
     CustomID, AddressbookSub, AddressbookChange, AddressbookNew, AddressbookDelete,
     AddressbookEdit, SendEmail, StartDccChat
   };

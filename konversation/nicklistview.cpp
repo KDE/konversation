@@ -57,7 +57,6 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
     }
     popup->insertSeparator();
     popup->insertItem(i18n("&Whois"),Konversation::Whois);
-    popup->insertItem(i18n("W&hois With Idle Time"), Konversation::WhoisServer);
     popup->insertItem(i18n("&Version"),Konversation::Version);
     popup->insertItem(i18n("&Ping"),Konversation::Ping);
     popup->insertSeparator();

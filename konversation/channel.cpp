@@ -494,10 +494,6 @@ void Channel::popupCommand(int id)
       raw=true;
       break;
   case Konversation::Whois:
-      pattern="WHOIS %u";
-      raw=true;
-      break;
-  case Konversation::WhoisServer:
       pattern="WHOIS %u %u";
       raw=true;
       break;
