@@ -25,9 +25,10 @@
 
 #include "images.h"
 
-/**
-  *@author Matthias Gierlings
-  */
+/*
+  @author Matthias Gierlings
+  @author Dario Abatianni (sorting code)
+*/
 
 class LedListViewItem : public KListViewItem
 {
@@ -40,6 +41,7 @@ class LedListViewItem : public KListViewItem
     void setState(bool passed_opState, bool passed_voiceState);
     void toggleOpState();
     void toggleVoiceState();
+    virtual int compare(QListViewItem* item,int col,bool ascending) const;
 
   protected:
     QPixmap opLedOn;

@@ -15,6 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <kdebug.h>
+
 #include "ledlistviewitem.h"
 #include "konversationapplication.h"
 
@@ -76,6 +78,14 @@ void LedListViewItem::toggleVoiceState()
 {
   setState(opState,!voiceState);
   repaint();
+}
+
+int LedListViewItem::compare(QListViewItem* item,int col,bool ascending) const
+{
+  QString thisKey=key(col,ascending).lower();
+  QString otherKey=item->key(col,ascending).lower();
+
+  return thisKey.compare(otherKey);
 }
 
 bool LedListViewItem::getOpState()    { return opState; }

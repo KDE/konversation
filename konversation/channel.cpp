@@ -132,8 +132,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView->addColumn(QString::null);
   nicknameListView->addColumn(QString::null);
   nicknameListView->addColumn(QString::null);
-  nicknameListView->header()->hide();
-  nicknameListView->setFont(KonversationApplication::preferences.getListFont());
+//  nicknameListView->header()->hide();
 //  nicknameListView->setResizeMode(KListView::LastColumn);
   nicknameListView->setColumnWidthMode(1,KListView::Maximum);
   nicknameListView->setColumnWidthMode(2,KListView::Maximum);
