@@ -134,7 +134,7 @@ void ChannelOptionsDialog::topicHistoryItemClicked(QListViewItem* item)
 void ChannelOptionsDialog::refreshEnableModes() {
   bool enable = m_channel->getOwnChannelNick()->isAnyTypeOfOp();
   m_widget->otherModesList->setEnabled(enable);
-  m_widget->topicEdit->setEnabled(enable || !m_widget->topicModeChBox->isChecked());
+  m_widget->topicEdit->setReadOnly(!enable || m_widget->topicModeChBox->isChecked());
   m_widget->topicHistoryList->setEnabled(enable || !m_widget->topicModeChBox->isChecked());
 
   m_widget->topicModeChBox->setEnabled(enable);
