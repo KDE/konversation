@@ -34,7 +34,11 @@ KonversationApplication::KonversationApplication()
 {
   kdDebug() << "KonversationApplication::KonversationApplication()" << endl;
 
+  // make sure all vars are initialized properly
   prefsDialog=0;
+
+  // initialize OSD display here, so we can read the preferences properly
+  osd = new OSDWidget();
 
   preferences.setOSDFont(font());
   preferences.setTextFont(font());
@@ -80,8 +84,6 @@ KonversationApplication::KonversationApplication()
     connect(&preferences,SIGNAL (requestServerConnection(int)),this,SLOT (connectToAnotherServer(int)) );
     connect(&preferences,SIGNAL (requestSaveOptions()),this,SLOT (saveOptions()) );
   }
-  // initialize OSD display
-  osd = new OSDWidget();
 
   // prepare dcop interface
   dcopObject=new KonvDCOP;
@@ -391,7 +393,8 @@ void KonversationApplication::readOptions()
   preferences.setOSDShowChannelEvent(config->readBoolEntry("ShowChannelEvent",preferences.getOSDShowChannelEvent()));
   preferences.setOSDFontRaw(config->readEntry("OSDFont",preferences.getOSDFont().rawName()));
 
-  if (preferences.getOSDUsage())
+  // if osd object exists
+  if(osd && preferences.getOSDUsage())
   {
     osd->setEnabled(true);
     osd->setFont(preferences.getOSDFont());
