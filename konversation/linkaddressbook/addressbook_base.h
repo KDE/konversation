@@ -73,9 +73,17 @@ class AddressbookBase : public QObject, public KIMIface
     virtual void emitContactPresenceChanged(QString uid) = 0;
 
     /**
-     *  Run kmail a single email addressed to all of the nicks passed in.
+     *  Run kmail to create a single email addressed to all of the nicks passed in.
+     *  Gives an error dialog to the user if any of the contacts don't have an
+     *  email address associated, and gives the user the option to continue
+     *  with the contacts that did have email addresses.
      */
     bool sendEmail(const ChannelNickList &nicklist); 
+    /**
+     *  Run kmail to create a single email addressed to the addressee passed in.
+     *  Gives an error dialog to the user if the addressee doesn't have an email address associated.
+     */
+    bool sendEmail(const KABC::Addressee &addressee) {
     /**
      *  Run kaddressbook to edit the addressee passed in.
      */

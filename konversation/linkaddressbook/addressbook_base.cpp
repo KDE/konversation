@@ -312,6 +312,23 @@ bool AddressbookBase::editAddressee(const QString &uid) {
   }
   return true;
 }
+
+bool AddressbookBase::sendEmail(const KABC::Addressee &addressee) {
+  if(addressee.preferredEmail().isEmpty()) {
+    KMessageBox::sorry(0, i18n("The contact that you have selected does not have an email address associated with them. "), i18n("Cannot send email"));
+    return false;
+  }
+  KProcess *proc = new KProcess;
+  *proc << "kmail";
+  *proc << addr.fullEmail();
+  if(!proc->start()) {
+	  KMessageBox::error(0, "Could not run your email program (kmail).  This is possibly because it isn't installed.  Please install the 'kdepim' packages.");
+	  return false;
+  }
+  return true;
+
+}
+
 bool AddressbookBase::sendEmail(const ChannelNickList &nickList) {
   if(nickList.isEmpty()) return false;
   KProcess *proc = new KProcess;
