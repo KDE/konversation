@@ -69,7 +69,7 @@
                         <string>Enable s&amp;ystem bell on incoming ASCII BEL</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>Sounds the system bell when you recieve a ASCII BEL (0x07) control character</string>
+                        <string>Sounds the system bell when you receive an ASCII BEL (0x07) control character</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="3">
