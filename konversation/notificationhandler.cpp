@@ -36,7 +36,7 @@ NotificationHandler::~NotificationHandler()
 
 void NotificationHandler::message(ChatWindow* chatWin, const QString& fromNick, const QString& message)
 {
-  if(!chatWin->notificationsEnabled()) {
+  if(!chatWin || !chatWin->notificationsEnabled()) {
     return;
   }
   
@@ -56,7 +56,7 @@ void NotificationHandler::message(ChatWindow* chatWin, const QString& fromNick, 
 
 void NotificationHandler::nick(ChatWindow* chatWin, const QString& fromNick, const QString& message)
 {
-  if(!chatWin->notificationsEnabled()) {
+  if(!chatWin || !chatWin->notificationsEnabled()) {
     return;
   }
   
@@ -109,6 +109,34 @@ int NotificationHandler::winId() const
   }
   
   return m_mainWindow->winId();
+}
+
+void NotificationHandler::quit(ChatWindow* chatWin, const QString& nick)
+{
+  if(chatWin && chatWin->notificationsEnabled()) {
+    KNotifyClient::event(winId(), "part", i18n("%1 quit %2").arg(nick, chatWin->getServer()->getServerName()));
+  }
+}
+
+void NotificationHandler::nickChange(ChatWindow* chatWin, const QString& oldNick, const QString& newNick)
+{
+  if(chatWin && chatWin->notificationsEnabled()) {
+    KNotifyClient::event(winId(), "nickchange", i18n("%1 changed nickname to %2").arg(oldNick, newNick));
+  }
+}
+
+void NotificationHandler::dccIncomming(ChatWindow* chatWin, const QString& fromNick)
+{
+  if(chatWin && chatWin->notificationsEnabled()) {
+    KNotifyClient::event(winId(), "dcc_incoming", i18n("%1 wants to send a file to you").arg(fromNick));
+  }
+}
+
+void NotificationHandler::mode(ChatWindow* chatWin, const QString& nick)
+{
+  if(chatWin && chatWin->notificationsEnabled()) {
+    KNotifyClient::event(winId(), "mode");
+  }
 }
 
 }

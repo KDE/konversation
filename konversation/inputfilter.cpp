@@ -24,10 +24,6 @@
 
 #include <config.h>
 
-#ifdef USE_KNOTIFY
-#include <knotifyclient.h>
-#endif
-
 #include "inputfilter.h"
 #include "server.h"
 #include "errorcodes.h"
@@ -163,8 +159,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         {
           Channel* channel = server->getChannelByName( parameterList[0] );
           channel->appendAction(sourceNick,ctcpArgument);
-#ifdef USE_KNOTIFY
-          // KNotify events...
+          
           if(channel && sourceNick != server->getNickname()) {
             if(ctcpArgument.lower().find(QRegExp("(^|[^\\d\\w])"+QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
             {
@@ -175,7 +170,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
               konv_app->notificationHandler()->message(channel, sourceNick, ctcpArgument);
             }
           }
-#endif
         }
       }
       // If it was a ctcp action, build an action string
@@ -192,12 +186,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           // send action to query
 	  query->appendAction(sourceNick,ctcpArgument,  true /*use notifications if enabled - e.g. OSD */);
 
-#ifdef USE_KNOTIFY
-          // KNotify events...
           if(sourceNick != server->getNickname() && query) {
             konv_app->notificationHandler()->nick(query, sourceNick, ctcpArgument);
           }
-#endif
         }
       }
 
@@ -241,9 +232,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           // Incoming file?
           if(dccType=="send")
           {
-#ifdef USE_KNOTIFY
-            KNotifyClient::event(mainWindow->winId(), "dcc_incoming");
-#endif
+            konv_app->notificationHandler()->dccIncomming(server->getStatusView(), sourceNick);
+            
             emit addDccGet(sourceNick,dccArgument);
           }
           // Incoming file that shall be resumed?
@@ -315,9 +305,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 	  Channel* channel = server->getChannelByName(parameterList[0]);
 	  if(channel) channel->append(sourceNick, trailing);
 
-#ifdef USE_KNOTIFY
-          // KNotify events...
-
           if(channel && sourceNick != server->getNickname()) {
             if(trailing.lower().find(QRegExp("(^|[^\\d\\w])"+
               QRegExp::escape(server->getNickname().lower())+"([^\\d\\w]|$)"))!=-1)
@@ -329,7 +316,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
               konv_app->notificationHandler()->message(channel, sourceNick, trailing);
             }
           }
-#endif
         }
       }
       else
@@ -344,13 +330,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           // send action to query
 	  query->appendQuery(sourceNick,trailing, true /*use notifications if enabled - e.g. OSD */ );
 
-#ifdef USE_KNOTIFY
-          // KNotify events...
           if(sourceNick != server->getNickname() && query) {
             konv_app->notificationHandler()->nick(query, sourceNick, trailing);
           }
-#endif
-
         }
       }
     }
@@ -532,22 +514,18 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     // ******
     server->removeNickFromServer(sourceNick,trailing);
-#ifdef USE_KNOTIFY
-    // KNotify events...
-    if(sourceNick != server->getNickname() && server->getStatusView()->notificationsEnabled()) {
-      KNotifyClient::event(mainWindow->winId(), "part");
+    
+    if(sourceNick != server->getNickname()) {
+      konv_app->notificationHandler()->quit(server->getStatusView(), server->getNickname());
     }
-#endif
   }
   else if(command=="nick")
   {
     server->renameNick(sourceNick,trailing);
-#ifdef USE_KNOTIFY
-    // KNotify events...
-    if(sourceNick != server->getNickname() && server->getStatusView()->notificationsEnabled()) {
-      KNotifyClient::event(mainWindow->winId(), "nickchange");
+    
+    if(sourceNick != server->getNickname()) {
+      konv_app->notificationHandler()->nickChange(server->getStatusView(), sourceNick, trailing);
     }
-#endif
   }
   else if(command=="topic")
   {
@@ -589,14 +567,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     // ******
     parseModes(sourceNick,parameterList);
-#ifdef USE_KNOTIFY
-    // KNotify events...
     Channel* channel = server->getChannelByName(parameterList[0]);
 
-    if(channel && sourceNick != server->getNickname() && channel->notificationsEnabled()) {
-      KNotifyClient::event(mainWindow->winId(), "mode");
+    if(sourceNick != server->getNickname()) {
+      konv_app->notificationHandler()->mode(channel, sourceNick);
     }
-#endif
   }
   else if(command=="invite")
   {
