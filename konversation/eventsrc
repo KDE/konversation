@@ -367,6 +367,7 @@ default_presentation=0
 
 [query]
 Name=Query
+Name[br]=Goulenn
 Name[cy]=Ymholiad
 Name[es]=Consulta
 Name[et]=Päring
