@@ -363,11 +363,11 @@ bool AddressbookBase::sendEmail(const ChannelNickList &nickList) {
 	else
 	  message = i18n("One of the contacts (%1) that you have selected is not associated with an addressbook contact. ").arg(nicksWithoutAddressee.join(", "));
       } 
-      message += i18n("You can right click on a contact, and chose to edit the Addressbook Associations to link them to a contact in your addressbook.");
+      message += i18n("You can right click on a contact, and choose to edit the Addressbook Associations to link them to a contact in your addressbook.");
     } else if(nicksWithoutAddressee.isEmpty()) { 
       if(nicksWithEmails.isEmpty()) {
         if(nicksWithoutEmails.count() > 1)
-	  message = i18n("None of the contacts that you have selected had an email address associated with them. ");
+	  message = i18n("None of the contacts that you have selected have an email address associated with them. ");
         else
 	  message = i18n("The contact that you have selected does not have an email address associated with them. ");
       } else {
@@ -376,10 +376,10 @@ bool AddressbookBase::sendEmail(const ChannelNickList &nickList) {
         else
 	  message = i18n("One of the contacts (%1) that you have selected does not have an email address associated with them. ").arg(nicksWithoutEmails.join(", "));
       }
-      message += i18n("You can right click on a contact, and chose to edit the addressbook contact, adding an email for them.");
+      message += i18n("You can right click on a contact, and choose to edit the addressbook contact, adding an email for them.");
     } else {
       message = i18n("Some of the contacts (%1) that you have selected are not associated with addressbook contacts, and some of the contacts (%1) do not have an email address associated with them.  ").arg(nicksWithoutAddressee.join(", ").arg(nicksWithoutEmails.join(", ")));
-      message += i18n("You can right click on a contact, and chose to edit the Addressbook Associations to link them to a contact in your addressbook, and chose to edit the addressbook contact, adding an email for them.");
+      message += i18n("You can right click on a contact, and choose to edit the Addressbook Associations to link them to a contact in your addressbook, and choose to edit the addressbook contact, adding an email for them.");
     }
     if(nicksWithEmails.isEmpty()) {
       KMessageBox::sorry(0, message, i18n("Cannot send email"));

@@ -226,7 +226,7 @@ void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QStr
 	}
 	KABC::Addressee addressee = addressBook->findByUid(uid);
 	if(addressee.isEmpty()) {
- 		KMessageBox::sorry(0,i18n("You have requested to send a file to a contact, but the contact you specified couldn't be found."), i18n("Error sending file"));
+ 		KMessageBox::sorry(0,i18n("You have requested to send a file to a contact, but the contact you specified could not be found."), i18n("Error sending file"));
 		kdDebug() << "Addressbook::sendFile called with uid '" << uid << "'" << endl;
 		return;
 	}
