@@ -126,7 +126,6 @@ namespace Konversation
       OutputFilterResult parseAme(const QString& parameter);
       OutputFilterResult parseAmsg(const QString& parameter);
       OutputFilterResult parsePrefs(const QString& parameter);
-      OutputFilterResult parseWhoami();
       void parseCharset(const QString charset);
       void parseCycle();
   

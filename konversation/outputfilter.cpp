@@ -179,7 +179,7 @@ namespace Konversation {
             else if(command == "prefs")   result = parsePrefs(parameter);
 
 	    else if(command == "charset") parseCharset(parameter);
-	    else if(command == "whoami")  result = parseWhoami();
+
 	    else if(command == "cycle")   parseCycle();
 
             // Forward unknown commands to server
@@ -1235,13 +1235,6 @@ namespace Konversation {
   void OutputFilter::parseCycle()
   {
     emit cycleChannel();
-  }
-  OutputFilterResult OutputFilter::parseWhoami()
-  {
-    OutputFilterResult result;
-    result.type = Message;
-    result.toServer = "whois " + myNick;
-    return result;
   }
 
 
