@@ -89,7 +89,7 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
     m_popupEncoding->setCheckable(true);
     QStringList encodingDescs=Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames();
     unsigned int j=0;
-    for(QStringList::Iterator it=encodingDescs.begin(); it!=encodingDescs.end(); ++it)
+    for(QStringList::ConstIterator it=encodingDescs.begin(); it!=encodingDescs.end(); ++it)
     {
       m_popupEncoding->insertItem(*it,POPUPID_ENCODING_OFFSET+j+1);
       ++j;

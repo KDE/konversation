@@ -29,8 +29,6 @@
 #include "prefspagealiases.h"
 #include "prefspagetabbehavior.h"
 #include "prefspagethemes.h"
-// TODO: uncomment this when it's ready to go
-// #include "prefspagescripts.h"
 
 
 /*

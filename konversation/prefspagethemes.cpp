@@ -129,7 +129,7 @@ void PrefsPageThemes::installTheme()
       const KArchiveDirectory* themeDir = themeArchive.directory();;
       QStringList allEntries = themeDir->entries();
 
-      for(QStringList::Iterator it=allEntries.begin(); it != allEntries.end(); ++it)
+      for(QStringList::ConstIterator it=allEntries.begin(); it != allEntries.end(); ++it)
 	{
 	  if(themeDir->entry(*it+"/index.desktop") == NULL)
 	    {
@@ -213,7 +213,7 @@ void PrefsPageThemes::updateList()
 
       themeList->clear();
       
-      for(QStringList::Iterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
+      for(QStringList::ConstIterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
 	{
 	  if(!found)
 	    {

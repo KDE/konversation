@@ -262,7 +262,7 @@ bool DccTransferRecv::createDirs( const KURL& dirURL ) const
   
   //Now we create the directories
   
-  QStringList::Iterator it;
+  QStringList::ConstIterator it;
   for ( it=dirList.begin() ; it!=dirList.end() ; ++it )
     if ( !KIO::NetAccess::exists( *it, true, listView() ) )
       if ( !KIO::NetAccess::mkdir( *it, listView(), -1 ) )

@@ -324,7 +324,7 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const {
     dirty=true;
   }
   KABC::PhoneNumber::List numbers = m_addressee.phoneNumbers();
-  for( KABC::PhoneNumber::List::Iterator it = numbers.begin(); it != numbers.end(); ++it) {
+  for( KABC::PhoneNumber::List::ConstIterator it = numbers.begin(); it != numbers.end(); ++it) {
     tooltip << "<tr><td><b>" << (*it).label() << ": </b></td><td>" << (*it).number() << "</td></tr>";
     dirty=true;
   }

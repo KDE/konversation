@@ -71,7 +71,7 @@ KonversationApplication::KonversationApplication()
   QStringList aliasList(KonversationApplication::preferences.getAliasList());
   QString newAlias;
 
-  for ( QStringList::Iterator it = scripts.begin(); it != scripts.end(); ++it ) {
+  for ( QStringList::ConstIterator it = scripts.begin(); it != scripts.end(); ++it ) {
       fileInfo->setFile( *it );
       if ( fileInfo->isExecutable() ) {
           newAlias = (*it).section('/',-1)+" "+"/exec "+(*it).section('/', -1 );
@@ -738,7 +738,7 @@ void KonversationApplication::readOptions()
         }
       }
       // Apply the old Notify List to all groups.
-      for (QStringList::Iterator groupIt = groupNames.begin(); groupIt != groupNames.end(); ++groupIt)
+      for (QStringList::ConstIterator groupIt = groupNames.begin(); groupIt != groupNames.end(); ++groupIt)
         notifyList[*groupIt] = oldNotifyNicknameList;
     }
   }

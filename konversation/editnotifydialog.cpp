@@ -75,7 +75,7 @@ EditNotifyDialog::EditNotifyDialog(QWidget* parent,
 
   networkNames.sort();
   // Add network names to network combobox and select the one corresponding to argument.
-  for (QStringList::Iterator it = networkNames.begin(); it != networkNames.end(); ++it)
+  for (QStringList::ConstIterator it = networkNames.begin(); it != networkNames.end(); ++it)
   {
     m_networkNameCombo->insertItem(*it);
     if(*it == network) m_networkNameCombo->setCurrentItem(m_networkNameCombo->count()-1);

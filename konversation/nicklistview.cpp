@@ -199,7 +199,7 @@ void NickListView::insertAssociationSubMenu() {
   addressbook->clear();
 
   ChannelNickList nickList=channel->getSelectedChannelNicks();
-  for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it)
+  for(ChannelNickList::ConstIterator it=nickList.begin();it!=nickList.end();++it)
   {
     KABC::Addressee addr = (*it)->getNickInfo()->getAddressee();
     if(addr.isEmpty()) {

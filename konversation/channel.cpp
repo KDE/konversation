@@ -426,7 +426,7 @@ void Channel::popupCommand(int id)
     case Konversation::AddressbookEdit:
       {
         ChannelNickList nickList=getSelectedChannelNicks();
-	for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
+	for(ChannelNickList::ConstIterator it=nickList.begin();it!=nickList.end();++it) {
           if(!(*it)->getNickInfo()->editAddressee()) break;;
 	}
 	break;
@@ -438,7 +438,7 @@ void Channel::popupCommand(int id)
         ChannelNickList nickList=getSelectedChannelNicks();
 	//Handle all the selected nicks in one go.  Either they all save, or none do.
 	if(addressbook->getAndCheckTicket()) {
-          for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
+          for(ChannelNickList::ConstIterator it=nickList.begin();it!=nickList.end();++it) {
 	    if(id == Konversation::AddressbookDelete) {
               KABC::Addressee addr = (*it)->getNickInfo()->getAddressee();
    	      addressbook->unassociateNick(addr, (*it)->getNickname(), m_server->getServerName(), m_server->getServerGroup());
@@ -461,7 +461,7 @@ void Channel::popupCommand(int id)
     case Konversation::AddressbookChange:
       {
         ChannelNickList nickList=getSelectedChannelNicks();
-        for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
+        for(ChannelNickList::ConstIterator it=nickList.begin();it!=nickList.end();++it) {
 	  (*it)->getNickInfo()->showLinkAddressbookUI();
 	}
         break;
@@ -563,7 +563,7 @@ void Channel::popupCommand(int id)
       ChannelNickList nickList=getSelectedChannelNicks();
       
       QString command;
-      for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it)
+      for(ChannelNickList::ConstIterator it=nickList.begin();it!=nickList.end();++it)
 	{
 	  QStringList patternList=QStringList::split('\n',pattern);
 	  

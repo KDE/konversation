@@ -99,7 +99,7 @@ void Server::doPreShellCommand() {
 
     QStringList commandList = QStringList::split(" ",command);
 
-    for ( QStringList::Iterator it = commandList.begin(); it != commandList.end(); ++it ) {
+    for ( QStringList::ConstIterator it = commandList.begin(); it != commandList.end(); ++it ) {
       preShellCommand << *it;
     }
 
@@ -154,7 +154,7 @@ Server::~Server()
 
   // Delete all the NickInfos and ChannelNick structures.
   m_allNicks.clear();
-  ChannelMembershipMap::Iterator it;
+  ChannelMembershipMap::ConstIterator it;
   for ( it = m_joinedChannels.begin(); it != m_joinedChannels.end(); ++it ) delete it.data();
   m_joinedChannels.clear();
   for ( it = m_unjoinedChannels.begin(); it != m_unjoinedChannels.end(); ++it ) delete it.data();
@@ -1386,7 +1386,7 @@ QStringList Server::getNickJoinedChannels(const QString& nickname)
 {
   QString lcNickname = nickname.lower();
   QStringList channellist;
-  ChannelMembershipMap::Iterator channel;
+  ChannelMembershipMap::ConstIterator channel;
   for( channel = m_joinedChannels.begin(); channel != m_joinedChannels.end(); ++channel )
   {
     if (channel.data()->contains(lcNickname)) channellist.append(channel.key());
@@ -1399,7 +1399,7 @@ QStringList Server::getNickChannels(const QString& nickname)
 {
   QString lcNickname = nickname.lower();
   QStringList channellist;
-  ChannelMembershipMap::Iterator channel;
+  ChannelMembershipMap::ConstIterator channel;
   for( channel = m_joinedChannels.begin(); channel != m_joinedChannels.end(); ++channel )
   {
     if (channel.data()->contains(lcNickname)) channellist.append(channel.key());
@@ -1538,7 +1538,7 @@ void Server::requestWho(const QString& channel)
 void Server::requestUserhost(const QString& nicks)
 {
   QStringList nicksList = QStringList::split(" ", nicks);
-  for(QStringList::Iterator it=nicksList.begin() ; it!=nicksList.end() ; ++it)
+  for(QStringList::ConstIterator it=nicksList.begin() ; it!=nicksList.end() ; ++it)
     inputFilter.setAutomaticRequest("USERHOST", *it, true);
   queue("USERHOST "+nicks);
 }
@@ -1599,7 +1599,8 @@ void Server::requestDccSend()
 
 void Server::sendURIs(const QStrList& uris, const QString& nick)
 {
-  for (QStrListIterator it(uris) ; *it; ++it) addDccSend(nick,KURL(*it));
+  for (QStrListIterator it(uris) ; *it; ++it) 
+    addDccSend(nick,KURL(*it));
 }
 
 void Server::requestDccSend(const QString &a_recipient)
