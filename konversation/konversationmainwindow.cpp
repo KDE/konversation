@@ -659,12 +659,12 @@ void KonversationMainWindow::findTextShortcut()
   }
 }
 
-#if KDE_VERSION >= 310
 void KonversationMainWindow::openNotifications()
 {
+#if KDE_VERSION >= 310
   (void)KNotifyDialog::configure(this);
-}
 #endif
+}
 
 void KonversationMainWindow::addIRCColor()
 {
