@@ -304,10 +304,10 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             }
             // Set Kabc icon if the nick is associated with an addressbook entry.
             if (!addressee.isEmpty())
-            nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
+              nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
                 QIconSet::Small, QIconSet::Normal, QIconSet::On));
             else
-            nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
+              nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
                 QIconSet::Small, QIconSet::Disabled, QIconSet::Off));
             QStringList channelList = server->getNickChannels(nickname);
             for (unsigned int channelIndex=0; channelIndex<channelList.count(); channelIndex++)

@@ -27,7 +27,7 @@ PrefsPageTabBehavior::PrefsPageTabBehavior(QFrame* newParent,Preferences* newPre
 
   closeButtonsCheck = new QCheckBox(i18n("Show close b&utton on tabs"), parentFrame, "tab_close_widgets_check");
   closeButtonsCheck->setChecked(preferences->getCloseButtonsOnTabs());
-  closeButtonsAlignRight = new QCheckBox(i18n("Place close widgets on the &right side"),
+  closeButtonsAlignRight = new QCheckBox(i18n("Place close button on the &right side of the tab"),
     parentFrame, "tab_close_widgets_align_right");
   closeButtonsAlignRight->setChecked(preferences->getCloseButtonsAlignRight());
   connect(closeButtonsCheck, SIGNAL(stateChanged(int)), this, SLOT(closeButtonsChanged(int)));
