@@ -149,7 +149,7 @@ void TopicLabel::updateSqueezedText()
   text.replace("&", "&amp;").
       replace("<", "&lt;").
       replace(">", "&gt;");
-  text = tagURLs(text, "");
+  text = tagURLs(text, "", false);
 
   QToolTip::remove(this);
 

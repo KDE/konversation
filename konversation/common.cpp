@@ -39,7 +39,7 @@ QString removeIrcMarkup(const QString& text)
   return escaped;
 }
 
-QString tagURLs(const QString& text, const QString& fromNick)
+QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColor)
 {
   //QTime timer;
   //timer.start();
@@ -48,21 +48,27 @@ QString tagURLs(const QString& text, const QString& fromNick)
   QString linkColor = KonversationApplication::preferences.getColor("LinkMessage");
   int pos = 0;
   int urlLen;
+  QString href;
+  QString link;
 
-  if(filteredLine.contains("#"))
-    {
-      QRegExp chanExp("^(\\s+)?#[a-zA-Z0-9-+]{2,}$");
+  if(filteredLine.contains("#")) {
+    QRegExp chanExp("^(\\s+)?#[a-zA-Z0-9-+]{2,}$");
 
-      while((pos = chanExp.search(filteredLine, pos)) >= 0)
-      {
-          urlLen = chanExp.matchedLength();
-	  QString href = filteredLine.mid( pos, urlLen );
-	  QString link = "#" + href.stripWhiteSpace();
-	  link = "<font color=\"#"+linkColor+"\"><a href=\""+link+"\">"+href+"</a></font>";
-	  filteredLine.replace( pos, urlLen, link );
-	  pos += link.length()-1;
-      }
+    while((pos = chanExp.search(filteredLine, pos)) >= 0) {
+        urlLen = chanExp.matchedLength();
+        href = filteredLine.mid( pos, urlLen );
+
+        if(useCustomColor) {
+          link = "<font color=\"#"+linkColor+"\">%1</font>";
+        } else {
+          link = "%1";
+        }
+
+        link = link.arg("<a href=\"#" + href.stripWhiteSpace() + "\">" + href + "</a>");
+        filteredLine.replace( pos, urlLen, link );
+        pos += link.length()-1;
     }
+  }
 
   pos = 0;
   urlLen =0;
@@ -71,14 +77,12 @@ QString tagURLs(const QString& text, const QString& fromNick)
     "([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
   urlPattern.setCaseSensitive(false);
 
-  while((pos = urlPattern.search(filteredLine, pos)) >= 0)
-  {
+  while((pos = urlPattern.search(filteredLine, pos)) >= 0) {
     urlLen = urlPattern.matchedLength();
-    QString href = filteredLine.mid( pos, urlLen );
+    href = filteredLine.mid( pos, urlLen );
 
     // Qt doesn't support (?<=pattern) so we do it here
-    if((pos > 0) && filteredLine[pos-1].isLetterOrNumber())
-    {
+    if((pos > 0) && filteredLine[pos-1].isLetterOrNumber()) {
       pos++;
       continue;
     }
@@ -91,7 +95,13 @@ QString tagURLs(const QString& text, const QString& fromNick)
       protocol = "mailto:";
     }
 
-    QString link = "<font color=\"#"+linkColor+"\"><u><a href=\"" + protocol + href + "\">" + href + "</a></u></font>";
+    if(useCustomColor) {
+      link = "<font color=\"#"+linkColor+"\">%1</font>";
+    } else {
+      link = "%1";
+    }
+
+    link = link.arg("<u><a href=\"" + protocol + href + "\">" + href + "</a></u>");
     filteredLine.replace( pos, urlLen, link );
     pos += link.length();
     KonversationApplication::instance()->storeUrl(fromNick, href);

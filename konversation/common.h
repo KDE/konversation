@@ -21,7 +21,7 @@ class QPixmap;
 namespace Konversation
 {
   QString removeIrcMarkup(const QString& text);
-  QString tagURLs(const QString& text, const QString& fromNick);
+  QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColor = true);
   QBitmap overlayMasks( const QBitmap *under, const QBitmap *over );
   QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
   bool isUtf8(const QCString& text);
