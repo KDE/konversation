@@ -100,6 +100,8 @@ void ChatWindow::setServer(Server* newServer)
                server,SLOT   (sendToAllChannels(const QString&)) );
       connect(&filter,SIGNAL (banUsers(const QStringList&,const QString&,const QString&)),
                server,SLOT   (requestBan(const QStringList&,const QString&,const QString&)) );
+      connect(&filter,SIGNAL (unbanUsers(const QString&,const QString&)),
+               server,SLOT   (requestUnban(const QString&,const QString&)) );
 
       connect(&filter,SIGNAL (openRawLog(bool)), server,SLOT (addRawLog(bool)) );
       connect(&filter,SIGNAL (closeRawLog()),server,SLOT (closeRawLog()) );

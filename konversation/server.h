@@ -141,6 +141,7 @@ class Server : public QObject
     void requestDccPanel();
     void requestCloseDccPanel();
     void requestBan(const QStringList& users,const QString& channel,const QString& option);
+    void requestUnban(const QString& mask,const QString& channel);
     void addDccSend(const QString &recipient,const QString &file);
     void removeQuery(Query *query);
     void startNotifyTimer(int msec=0);

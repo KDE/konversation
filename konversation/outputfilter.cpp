@@ -146,6 +146,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("notify "))  parseNotify(parameter);
     else if(line.startsWith("oper "))    parseOper(myNick,parameter);
     else if(line.startsWith("ban "))     parseBan(parameter);
+    else if(line.startsWith("unban "))   parseUnban(parameter);
     else if(line.startsWith("quote "))   parseQuote(parameter);
 
     else if(line.startsWith("raw "))     parseRaw(parameter);
@@ -166,6 +167,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="notify")              parseNotify(QString::null);
     else if(line=="oper")                parseOper(myNick,QString::null);
     else if(line=="ban")                 parseBan(QString::null);
+    else if(line=="unban")               parseUnban(QString::null);
     else if(line=="quote")               parseQuote(QString::null);
 
     else if(line=="dcc")                 parseDcc(QString::null);
@@ -718,8 +720,7 @@ void OutputFilter::parseBan(const QString& parameter)
   // assume incorrect syntax first
   bool showUsage=true;
 
-  if(parameter.isEmpty()) showUsage=true;
-  else
+  if(!parameter.isEmpty())
   {
     QStringList parameterList=QStringList::split(' ',parameter);
     QString channel=QString::null;
@@ -773,6 +774,52 @@ void OutputFilter::parseBan(const QString& parameter)
 void OutputFilter::execBan(const QString& mask,const QString& channel)
 {
   toServer="MODE "+channel+" +b "+mask;
+}
+
+void OutputFilter::parseUnban(const QString& parameter)
+{
+  // assume incorrect syntax first
+  bool showUsage=true;
+
+  if(!parameter.isEmpty())
+  {
+    QStringList parameterList=QStringList::split(' ',parameter);
+    QString channel=QString::null;
+    QString mask=QString::null;
+
+    // if the user specified a channel
+    if(isAChannel(parameterList[0]))
+    {
+      // get channel
+      channel=parameterList[0];
+      // remove channel from parameter list
+      parameterList.pop_front();
+    }
+    // otherwise the current destination must be a channel
+    else if(isAChannel(destination))
+      channel=destination;
+    else
+    {
+      // destination is no channel => error
+      error(i18n("UNBAN without channel name works only from inside a channel."));
+      // no usage information after error
+      showUsage=false;
+    }
+    // if all went good, signal server to unban this mask
+    if(!channel.isEmpty())
+    {
+      emit unbanUsers(parameterList[0],channel);
+      // syntax was correct, so reset flag
+      showUsage=false;
+    }
+  }
+
+  if(showUsage) usage(i18n("Usage: UNBAN [channel] pattern"));
+}
+
+void OutputFilter::execUnban(const QString& mask,const QString& channel)
+{
+  toServer="MODE "+channel+" -b "+mask;
 }
 
 void OutputFilter::parseQuote(const QString& parameter)

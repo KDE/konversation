@@ -63,11 +63,13 @@ class OutputFilter : public QObject
     void sendToAllChannels(const QString& text);
     void launchScript(const QString& parameter);
     void banUsers(const QStringList& userList,const QString& channel,const QString& option);
+    void unbanUsers(const QString& mask,const QString& channel);
 
   public slots:
     void setCommandChar();
     void setIdentity(const Identity *newIdentity);
     void execBan(const QString& mask,const QString& channels);
+    void execUnban(const QString& mask,const QString& channels);
 
   protected:
     QString output;

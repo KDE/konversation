@@ -708,6 +708,12 @@ void Server::requestBan(const QStringList& users,const QString& channel,const QS
   }
 }
 
+void Server::requestUnban(const QString& mask,const QString& channel)
+{
+  outputFilter.execUnban(mask,channel);
+  queue(outputFilter.getServerOutput());
+}
+
 void Server::requestDccSend()
 {
   requestDccSend(QString::null);
