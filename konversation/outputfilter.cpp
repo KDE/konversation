@@ -362,13 +362,14 @@ void OutputFilter::parseSMsg(QString parameter)
 
 void OutputFilter::parseCtcp(QString parameter)
 {
-  QString recipient=parameter.left(parameter.find(" "));
-  QString message=parameter.mid(recipient.length()+1);
+  QString recipient=parameter.section(' ',0,0);  // who is the recipient?
+  QString request=parameter.section(' ',1,1);    // what is the first word of the ctcp?
+  QString message=parameter.section(' ',1);      // what is the complete ctcp command?
 
-  if(message.lower().startsWith("ping"))
+  if(request.lower()=="ping")
   {
     toServer=QString("PRIVMSG "+recipient+" :\x01PING %1\x01").arg(QString::number(QDateTime::currentDateTime().toTime_t()));
-    output=i18n("Sending CTCP-%1 request to %2").arg("PING").arg(recipient);
+    output=i18n("Sending CTCP-PING request to %1").arg(recipient);
   }
   else
   {
