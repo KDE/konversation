@@ -41,45 +41,45 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
 {
   m_id = -1;
   m_identitiesNeedsUpdate = false;
-  
+
   QFrame* mainWidget = plainPage();
   QGridLayout* mainLayout = new QGridLayout(mainWidget, 1, 2, 0, spacingHint());
   mainLayout->setColStretch(1, 10);
-  
+
   QLabel* nameLbl = new QLabel(i18n("&Network:"), mainWidget);
   m_nameEdit = new QLineEdit(mainWidget);
   nameLbl->setBuddy(m_nameEdit);
-  
+
   QLabel* groupLbl = new QLabel(i18n("&Group:"), mainWidget);
   m_groupCBox = new QComboBox(true, mainWidget);
   groupLbl->setBuddy(m_groupCBox);
-  
+
   QLabel* identityLbl = new QLabel(i18n("&Identity:"), mainWidget);
   m_identityCBox = new QComboBox(mainWidget);
   identityLbl->setBuddy(m_identityCBox);
   QPushButton* editIdentityBtn = new QPushButton(i18n("Edit..."), mainWidget);
   connect(editIdentityBtn, SIGNAL(clicked()), this, SLOT(editIdentity()));
-  
+
   QValueList<IdentityPtr> identities = KonversationApplication::preferences.getIdentityList();
 
   for(QValueList<IdentityPtr>::iterator it = identities.begin(); it != identities.end(); ++it)
   {
     m_identityCBox->insertItem((*it)->getName());
   }
-  
+
   QLabel* commandLbl = new QLabel(i18n("Co&mmands:"), mainWidget);
   m_commandEdit = new QLineEdit(mainWidget);
   commandLbl->setBuddy(m_commandEdit);
-  
-  m_autoConnectCBox = new QCheckBox(i18n("Connect on &application start up."), mainWidget);
-  
+
+  m_autoConnectCBox = new QCheckBox(i18n("Connect on &application start up"), mainWidget);
+
   QWidget* groupWidget = new QWidget(mainWidget);
   QGridLayout* groupLayout = new QGridLayout(groupWidget, 1, 2, 0, spacingHint());
-  
+
   QGroupBox* serverGBox = new QGroupBox(0, Qt::Horizontal, i18n("Servers"), groupWidget);
   serverGBox->setMargin(marginHint());
   QGridLayout* serverLayout = new QGridLayout(serverGBox->layout(), 1, 2, spacingHint());
-  
+
   m_serverLBox = new QListBox(serverGBox);
   QPushButton* addServerBtn = new QPushButton(i18n("Add..."), serverGBox);
   QPushButton* changeServerBtn = new QPushButton(i18n("Edit..."), serverGBox);
@@ -90,13 +90,13 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   QToolButton* downServerBtn = new QToolButton(serverGBox);
   downServerBtn->setIconSet(SmallIconSet("down"));
   downServerBtn->setAutoRepeat(true);
-  
+
   connect(addServerBtn, SIGNAL(clicked()), this, SLOT(addServer()));
   connect(changeServerBtn, SIGNAL(clicked()), this, SLOT(editServer()));
   connect(removeServerBtn, SIGNAL(clicked()), this, SLOT(deleteServer()));
   connect(upServerBtn, SIGNAL(clicked()), this, SLOT(moveServerUp()));
   connect(downServerBtn, SIGNAL(clicked()), this, SLOT(moveServerDown()));
-  
+
   serverLayout->setColStretch(0, 10);
   serverLayout->setRowStretch(4, 10);
   serverLayout->addMultiCellWidget(m_serverLBox, 0, 4, 0, 0);
@@ -109,7 +109,7 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   QGroupBox* channelGBox = new QGroupBox(0, Qt::Horizontal, i18n("Auto Join Channels"), groupWidget);
   channelGBox->setMargin(marginHint());
   QGridLayout* channelLayout = new QGridLayout(channelGBox->layout(), 1, 2, spacingHint());
-  
+
   m_channelLBox = new QListBox(channelGBox);
   QPushButton* addChannelBtn = new QPushButton(i18n("Add..."), channelGBox);
   QPushButton* changeChannelBtn = new QPushButton(i18n("Edit..."), channelGBox);
@@ -120,13 +120,13 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   QToolButton* downChannelBtn = new QToolButton(channelGBox);
   downChannelBtn->setIconSet(SmallIconSet("down"));
   downChannelBtn->setAutoRepeat(true);
-  
+
   connect(addChannelBtn, SIGNAL(clicked()), this, SLOT(addChannel()));
   connect(changeChannelBtn, SIGNAL(clicked()), this, SLOT(editChannel()));
   connect(removeChannelBtn, SIGNAL(clicked()), this, SLOT(deleteChannel()));
   connect(upChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelUp()));
   connect(downChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelDown()));
-  
+
   channelLayout->setColStretch(0, 10);
   channelLayout->setRowStretch(4, 10);
   channelLayout->addMultiCellWidget(m_channelLBox, 0, 4, 0, 0);
@@ -135,7 +135,7 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   channelLayout->addMultiCellWidget(removeChannelBtn, 2, 2, 1, 4);
   channelLayout->addWidget(upChannelBtn, 3, 2);
   channelLayout->addWidget(downChannelBtn, 3, 3);
-  
+
   mainLayout->addWidget(nameLbl, 0, 0);
   mainLayout->addMultiCellWidget(m_nameEdit, 0, 0, 1, 2);
   mainLayout->addWidget(groupLbl, 1, 0);
@@ -153,7 +153,7 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
 
   setButtonOK(KGuiItem(i18n("&OK"), "button_ok", i18n("Change network information")));
   setButtonCancel(KGuiItem(i18n("&Cancel"), "button_cancel", i18n("Discards all changes made")));
-  
+
   m_nameEdit->setFocus();
 }
 
@@ -176,10 +176,10 @@ void ServerGroupDialog::setServerGroupSettings(const ServerGroupSettings& settin
   for(it = m_serverList.begin(); it != m_serverList.end(); ++it) {
     m_serverLBox->insertItem((*it).server());
   }
-  
+
   m_channelList = settings.channelList();
   ChannelList::iterator it2;
-  
+
   for(it2 = m_channelList.begin(); it2 != m_channelList.end(); ++it2) {
     m_channelLBox->insertItem((*it2).name());
   }
@@ -209,7 +209,7 @@ void ServerGroupDialog::setAvailableGroups(const QStringList& groups)
 void ServerGroupDialog::addServer()
 {
   ServerDialog dlg(i18n("Add Server"), this);
-  
+
   if(dlg.exec() == KDialog::Accepted) {
     ServerSettings server = dlg.serverSettings();
     m_serverLBox->insertItem(server.server());
@@ -220,7 +220,7 @@ void ServerGroupDialog::addServer()
 void ServerGroupDialog::editServer()
 {
   uint current = m_serverLBox->currentItem();
-  
+
   if(current < m_serverList.count()) {
     ServerDialog dlg(i18n("Edit Server"), this);
     dlg.setServerSettings(m_serverList[current]);
@@ -236,7 +236,7 @@ void ServerGroupDialog::editServer()
 void ServerGroupDialog::deleteServer()
 {
   uint current = m_serverLBox->currentItem();
-  
+
   if(current < m_serverList.count()) {
     m_serverList.remove(m_serverList.at(current));
     m_serverLBox->removeItem(current);
