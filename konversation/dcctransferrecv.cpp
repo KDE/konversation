@@ -333,9 +333,9 @@ void DccTransferRecv::writeDone()  // slot
   emit done( m_fileName );
 }
 
-void DccTransferRecv::gotWriteError( int errorCode )  // slot
+void DccTransferRecv::gotWriteError( int /* errorCode */ )  // slot
 {
-  KMessageBox::sorry( 0, i18n("KIO Error: %1").arg( m_recvSocket->errorString() ),i18n("DCC Error") );
+  KMessageBox::sorry( 0, i18n("KIO Error: %1").arg( m_recvSocket->errorString() ), i18n("DCC Error") );
   setStatus( Failed, i18n("KIO Error: %1").arg( m_recvSocket->errorString() ) );
   cleanUp();
   updateView();
@@ -498,9 +498,13 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
   {
     //No more data left to read from incomming dcctransfer
     if ( !m_cacheList.isEmpty() )
-      data = *( popCache() );  //once we write everything in cache, the file is complete.
-                               //This function will be called once more after this last data is written.
-                               //FIXME: should I delete the instance from popCache() here?
+    {
+      //once we write everything in cache, the file is complete.
+      //This function will be called once more after this last data is written.
+      QByteArray* cache = popCache();
+      data = *cache;
+      delete cache;
+    }
     else
     {
       //finally, no data left to write or read.
