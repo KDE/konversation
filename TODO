@@ -18,6 +18,8 @@ Option to disable %G, %C %B... expansion
 Fix the /query oneuser, /msg anotheruser problem
 Don't trigger events when we did highlight ourselves
 Limit backlog to x lines or KB
+Click on notify messages opens query
+Make URLs like http://user@somedomain.com/ work
 
 Channel List Panel:
 and a "channel or topic" checkbox would be nice, or better, make the current checkboxes work as "or" not as "and"
