@@ -460,7 +460,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
   QString line;
   QString nickLine = "%2";
 
-  if(KonversationApplication::preferences.getUseColoredNicks())
+  if(KonversationApplication::preferences.getUseColoredNicks() && nick != m_server->getNickname())
   {
     NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
     nickLine = "<font color=\"" + nickinfo->getNickColor() + "\">%2</font>";
@@ -487,7 +487,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
   QString line;
   QString nickLine = "%2";
 
-  if(KonversationApplication::preferences.getUseColoredNicks())
+  if(KonversationApplication::preferences.getUseColoredNicks() && nick != m_server->getNickname())
   {
     NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
     nickLine = "<font color=\"" + nickinfo->getNickColor() + "\">%2</font>";
