@@ -47,21 +47,6 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   QString msg = i18n("<qt>Here you can set a custom reply for <b>CTCP <i>VERSION</i></b> requests.</qt>");
   QWhatsThis::add(ctcpVersionLabel,msg);
 
-  // double click actions
-  QVBox* actionBox=new QVBox(parentFrame);
-  new QLabel(i18n("Commands to execute when double-clicked in:"),actionBox);
-
-  QHBox* actionEditBox=new QHBox(actionBox);
-  actionEditBox->setSpacing(spacingHint());
-
-  QLabel* nickListLabel=new QLabel(i18n("&Nick list:"),actionEditBox);
-  channelActionInput=new KLineEdit(preferences->getChannelDoubleClickAction(),actionEditBox);
-  nickListLabel->setBuddy(channelActionInput);
-
-  QLabel* notifyListLabel=new QLabel(i18n("N&otify list:"),actionEditBox);
-  notifyActionInput=new KLineEdit(preferences->getNotifyDoubleClickAction(),actionEditBox);
-  notifyListLabel->setBuddy(notifyActionInput);
-
   autoReconnectCheck=new QCheckBox(i18n("A&uto reconnect"),parentFrame,"auto_reconnect_check");
   autoRejoinCheck=new QCheckBox(i18n("Auto re&join"),parentFrame,"auto_rejoin_check");
   autojoinOnInviteCheck=new QCheckBox(i18n("Autojoin channel on &invite"),parentFrame,"autojoin_on_invite_check");
@@ -86,8 +71,6 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
 
   int row=0;
   generalSettingsLayout->addMultiCellWidget(commandCharBox,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(actionBox,row,row,0,2);
   row++;
   generalSettingsLayout->addWidget(autoReconnectCheck,row,0);
   generalSettingsLayout->addWidget(reconnectTimeoutLabel,row,1);
@@ -116,8 +99,6 @@ void PrefsPageGeneralSettings::autoReconnectChanged(int state)
 void PrefsPageGeneralSettings::applyPreferences()
 {
   preferences->setCommandChar(commandCharInput->text());
-  preferences->setChannelDoubleClickAction(channelActionInput->text());
-  preferences->setNotifyDoubleClickAction(notifyActionInput->text());
 
   preferences->setAutoReconnect(autoReconnectCheck->isChecked());
   preferences->setAutoRejoin(autoRejoinCheck->isChecked());

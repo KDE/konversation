@@ -21,7 +21,7 @@
   @author Dario Abatianni
 */
 
-class QLineEdit;
+class KLineEdit;
 class QPushButton;
 class QCheckBox;
 class QLabel;
@@ -45,16 +45,16 @@ class PrefsPageNotify : public PrefsPage
   protected slots:
     void newNotify();
     void removeNotify();
-    void notifyCheckChanged(int state);
+    void notifyCheckChanged(bool enable);
 
   protected:
     KListView* notifyListView;
-    QLineEdit* notifyInput;
     QPushButton* newButton;
     QPushButton* removeButton;
     QCheckBox* useNotifyCheck;
     QLabel* notifyDelayLabel;
     QSpinBox* notifyDelaySpin;
+    KLineEdit* notifyActionInput;
 };
 
 #endif

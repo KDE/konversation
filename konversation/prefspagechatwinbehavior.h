@@ -18,6 +18,7 @@
 class QCheckBox;
 class QSpinBox;
 class KListView;
+class KLineEdit;
 
 class PrefsPageChatWinBehavior : public PrefsPage
 {
@@ -41,6 +42,7 @@ class PrefsPageChatWinBehavior : public PrefsPage
     QCheckBox* redirectToStatusPaneCheck;
     QSpinBox* scrollbackMaxSpin;
     
+    KLineEdit* channelActionInput;
     QCheckBox* sortByStatusCheck;
     QCheckBox* sortCaseInsensitiveCheck;
     QWidget* sortOrderGroup;

@@ -21,9 +21,11 @@
 #include <qwhatsthis.h>
 #include <qspinbox.h>
 #include <qtooltip.h>
+#include <qhbox.h>
 
 #include <klocale.h>
 #include <kiconloader.h>
+#include <klineedit.h>
 
 #include "preferences.h"
 #include "valuelistviewitem.h"
@@ -60,10 +62,15 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
   QToolTip::add(scrollbackMaxSpin,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
   QToolTip::add(scrollbackMaxLabel,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
     
-  QVGroupBox* sortOptionsGroup=new QVGroupBox(i18n("Nickname List Sorting"), parentFrame, "sort_options_group");
+  QVGroupBox* sortOptionsGroup = new QVGroupBox(i18n("Nickname List"), parentFrame, "sort_options_group");
 
-  sortCaseInsensitiveCheck = new QCheckBox(i18n("Case &insensitive"),sortOptionsGroup,"sort_case_insensitive_check");
-  sortByStatusCheck = new QCheckBox(i18n("By us&er status"),sortOptionsGroup,"sort_by_status_check");
+  QHBox* actionEditBox = new QHBox(sortOptionsGroup);
+  actionEditBox->setSpacing(spacingHint());
+  QLabel* channelActionLabel = new QLabel(i18n("Command executed on double click:"), actionEditBox);
+  channelActionInput = new KLineEdit(preferences->getChannelDoubleClickAction(), actionEditBox);
+  
+  sortCaseInsensitiveCheck = new QCheckBox(i18n("Sort case &insensitive"),sortOptionsGroup,"sort_case_insensitive_check");
+  sortByStatusCheck = new QCheckBox(i18n("Sort by us&er status"),sortOptionsGroup,"sort_by_status_check");
 
   sortByStatusCheck->setChecked(preferences->getSortByStatus());
   sortCaseInsensitiveCheck->setChecked(preferences->getSortCaseInsensitive());
@@ -167,6 +174,7 @@ void PrefsPageChatWinBehavior::applyPreferences()
   preferences->setShowRememberLineInAllWindows(showRememberLineInAllWindows->isChecked());
   preferences->setRedirectToStatusPane(redirectToStatusPaneCheck->isChecked());
   preferences->setScrollbackMax(scrollbackMaxSpin->value());
+  preferences->setChannelDoubleClickAction(channelActionInput->text());
   preferences->setSortByStatus(sortByStatusCheck->isChecked());
   preferences->setSortCaseInsensitive(sortCaseInsensitiveCheck->isChecked());
 

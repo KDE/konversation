@@ -23,6 +23,7 @@
 #include <klocale.h>
 #include <klistview.h>
 #include <kinputdialog.h>
+#include <klineedit.h>
 
 #include "prefspagenotify.h"
 #include "preferences.h"
@@ -31,16 +32,17 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
                  PrefsPage(newParent,newPreferences)
 {
   // Add the layout to the page
-  QVBoxLayout* notifyLayout=new QVBoxLayout(parentFrame,marginHint(),spacingHint());
+  QVBoxLayout* notifyLayout = new QVBoxLayout(parentFrame,marginHint(),spacingHint());
 
   // Set up notify delay widgets
-  QHBox* delayBox=new QHBox(parentFrame);
+  QHBox* delayBox = new QHBox(parentFrame);
   delayBox->setSpacing(spacingHint());
 
-  useNotifyCheck=new QCheckBox(i18n("&Use nick watcher"),delayBox,"use_nick_watcher_checkbox");
-  notifyDelayLabel=new QLabel(i18n("Check &interval:"),delayBox,"interval_label");
+  useNotifyCheck = new QCheckBox(i18n("&Use nickname watcher"),delayBox,"use_nick_watcher_checkbox");
+  useNotifyCheck->setChecked(preferences->getUseNotify());
+  notifyDelayLabel = new QLabel(i18n("Check &interval:"),delayBox,"interval_label");
   notifyDelayLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  notifyDelaySpin=new QSpinBox(5,1000,1,delayBox,"delay_spin");
+  notifyDelaySpin = new QSpinBox(5,1000,1,delayBox,"delay_spin");
   notifyDelaySpin->setValue(preferences->getNotifyDelay());
   notifyDelaySpin->setSuffix(i18n(" seconds"));
   notifyDelayLabel->setBuddy(notifyDelaySpin);
@@ -50,7 +52,7 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   listBox->setSpacing(spacingHint());
   notifyListView=new KListView(listBox);
 
-  notifyListView->addColumn(i18n("Watched Nicks"));
+  notifyListView->addColumn(i18n("Watched Nicknames"));
 
   notifyListView->setAllColumnsShowFocus(true);
   notifyListView->setItemsRenameable(true);
@@ -61,29 +63,38 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   notifyListView->setAcceptDrops(true);
 
   // Set up the buttons to the right of the list
-  QGrid* buttonBox=new QGrid(3,QGrid::Vertical,listBox);
+  QGrid* buttonBox = new QGrid(3, QGrid::Vertical, listBox);
   buttonBox->setSpacing(spacingHint());
-  newButton=new QPushButton(i18n("&New..."),buttonBox);
-  removeButton=new QPushButton(i18n("&Remove"),buttonBox);
+  newButton = new QPushButton(i18n("&New..."),buttonBox);
+  removeButton = new QPushButton(i18n("&Remove"),buttonBox);
 
+  QHBox* actionEditBox=new QHBox(parentFrame);
+  actionEditBox->setSpacing(spacingHint());
+  actionEditBox->setEnabled(useNotifyCheck->isChecked());
+
+  QLabel* notifyActionLabel = new QLabel(i18n("Command executed when nickname is double clicked:"), actionEditBox);
+  notifyActionInput = new KLineEdit(preferences->getNotifyDoubleClickAction(), actionEditBox);
+  notifyActionLabel->setBuddy(notifyActionInput);
+  
   notifyLayout->addWidget(delayBox);
   notifyLayout->addWidget(listBox);
+  notifyLayout->addWidget(actionEditBox);
 
-  connect(useNotifyCheck,SIGNAL (stateChanged(int)),this,SLOT (notifyCheckChanged(int)));
-  connect(newButton,SIGNAL (clicked()),this,SLOT (newNotify()) );
-  connect(removeButton,SIGNAL (clicked()),this,SLOT (removeNotify()) );
+  connect(useNotifyCheck, SIGNAL(toggled(bool)), this, SLOT(notifyCheckChanged(bool)));
+  connect(useNotifyCheck, SIGNAL(toggled(bool)), actionEditBox, SLOT(setEnabled(bool)));
+  connect(newButton, SIGNAL(clicked()), this, SLOT(newNotify()) );
+  connect(removeButton, SIGNAL(clicked()), this, SLOT(removeNotify()) );
 
   QStringList notifyList(preferences->getNotifyList());
+  
   // Insert Notify items backwards to get them sorted properly
-  for(int index=notifyList.count();index!=0;index--)
+  for(int index = notifyList.count(); index != 0; index--)
   {
-    QString item=notifyList[index-1];
-    new KListViewItem(notifyListView,item);
+    QString item = notifyList[index - 1];
+    new KListViewItem(notifyListView, item);
   }
 
-  bool use=preferences->getUseNotify();
-  notifyCheckChanged(use ? 2 : 0);
-  useNotifyCheck->setChecked(use);
+  notifyCheckChanged(useNotifyCheck->isChecked());
 }
 
 PrefsPageNotify::~PrefsPageNotify()
@@ -92,22 +103,28 @@ PrefsPageNotify::~PrefsPageNotify()
 
 void PrefsPageNotify::newNotify()
 {
-  bool ok=false;
-  QString newPattern=KInputDialog::getText(i18n("Nick Watch Dialog"),i18n("Add nick to watch for:"),i18n("New"),&ok,parentFrame);
+  bool ok = false;
+  QString newPattern = KInputDialog::getText(i18n("Nick Watch Dialog"), 
+    i18n("Add nick to watch for:"), i18n("New"), &ok, parentFrame);
+  
   if(ok)
   {
-    KListViewItem* newItem=new KListViewItem(notifyListView,newPattern);
-    notifyListView->setSelected(newItem,true);
+    KListViewItem* newItem = new KListViewItem(notifyListView, newPattern);
+    notifyListView->setSelected(newItem, true);
   }
 }
 
 void PrefsPageNotify::removeNotify()
 {
-  QListViewItem* selected=notifyListView->selectedItem();
+  QListViewItem* selected = notifyListView->selectedItem();
+  
   if(selected)
   {
-    if(selected->itemBelow()) notifyListView->setSelected(selected->itemBelow(),true);
-    else notifyListView->setSelected(selected->itemAbove(),true);
+    if(selected->itemBelow()) {
+      notifyListView->setSelected(selected->itemBelow(),true);
+    } else {
+      notifyListView->setSelected(selected->itemAbove(),true);
+    }
 
     delete selected;
   }
@@ -117,10 +134,10 @@ QStringList PrefsPageNotify::getNotifyList()
 {
   QStringList newList;
 
-  QListViewItem* item=notifyListView->firstChild();
+  QListViewItem* item = notifyListView->firstChild();
   while(item)
   {
-    QString newItem=item->text(0);
+    QString newItem = item->text(0);
     newList.append(newItem);
     item=item->itemBelow();
   }
@@ -128,9 +145,8 @@ QStringList PrefsPageNotify::getNotifyList()
   return newList;
 }
 
-void PrefsPageNotify::notifyCheckChanged(int state)
+void PrefsPageNotify::notifyCheckChanged(bool enable)
 {
-  bool enable=(state==2);
   notifyDelayLabel->setEnabled(enable);
   notifyDelaySpin->setEnabled(enable);
   notifyListView->setEnabled(enable);
@@ -138,12 +154,12 @@ void PrefsPageNotify::notifyCheckChanged(int state)
   removeButton->setEnabled(enable);
 }
 
-// TODO: This should be done in all preferences pages I think
 void PrefsPageNotify::applyPreferences()
 {
-  preferences->setUseNotify(useNotifyCheck->state()==2);
+  preferences->setUseNotify(useNotifyCheck->isChecked());
   preferences->setNotifyList(getNotifyList());
   preferences->setNotifyDelay(notifyDelaySpin->value());
+  preferences->setNotifyDoubleClickAction(notifyActionInput->text());
 }
 
 #include "prefspagenotify.moc"
