@@ -30,36 +30,7 @@
 NickListView::NickListView(QWidget* parent, Channel *chan) :
               KListView(parent)
 {
-  Images* images = KonversationApplication::instance()->images();
-  
-  QMimeSourceFactory::defaultFactory()->setImage( "admin", images->getNickIcon( Images::Admin, false ).convertToImage() );
-  QMimeSourceFactory::defaultFactory()->setImage( "owner", images->getNickIcon( Images::Owner, false ).convertToImage());
-  QMimeSourceFactory::defaultFactory()->setImage( "op", images->getNickIcon( Images::Op, false ).convertToImage() );
-  QMimeSourceFactory::defaultFactory()->setImage( "halfop", images->getNickIcon( Images::HalfOp, false ).convertToImage() );
-  QMimeSourceFactory::defaultFactory()->setImage( "voice", images->getNickIcon( Images::Voice, false ).convertToImage() );
-  QMimeSourceFactory::defaultFactory()->setImage( "normal", images->getNickIcon( Images::Normal, false ).convertToImage() );
-  QMimeSourceFactory::defaultFactory()->setImage( "normalaway", images->getNickIcon( Images::Normal, true).convertToImage() );
-  
-  if(images->getNickIcon( Images::Normal, false).isNull()) {
-    QWhatsThis::add(this, i18n("<qt>This shows all the people in the channel.  The nick for each person is shown.<br>Usually an icon is shown showing the status of each person, but you do not seem to have any icon theme installed.  See the Konversation settings - <i>Configure Konversation</i> under the <i>Settings</i> menu.  Then view the page for <i>Themes</i> under <i>Appearence</i>.</qt>"));
-  } else {
-	  
-    QWhatsThis::add(this, i18n("<qt>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.<p>"
-			  "<table>"
-			  
-			  "<tr><th><img src=\"admin\"></th><td>This person has administrator privileges.</td></tr>"
-			  "<tr><th><img src=\"owner\"></th><td>This person is a channel owner.</td></tr>"
-			  "<tr><th><img src=\"op\"></th><td>This person is a channel operator.</td></tr>"
-			  "<tr><th><img src=\"halfop\"></th><td>This person is a channel half-operator.</td></tr>" 
-			  "<tr><th><img src=\"voice\"></th><td>This person has voice, and can therefore talk in a moderated channel.</td></tr>"
-			  "<tr><th><img src=\"normal\"></th><td>This person does not have any special privileges.</td></tr>"
-			  "<tr><th><img src=\"normalaway\"></th><td>This indicates that this person is currently away.</td></tr>"
-			  "</table><p>"
-			  "The meaning of admin, owner and halfop varies between different irc servers.<p>"
-			  "Hovering over any nick shows their current status, as well as any information in the addressbook for this person.  See the Konversation Handbook for more information."
-			  "</qt>"
-			  ));
-  }
+  setWhatsThis(); 
   channel=chan;
   popup=new KPopupMenu(this,"nicklist_context_menu");
   modes=new KPopupMenu(this,"nicklist_modes_context_submenu");
@@ -139,16 +110,52 @@ NickListView::~NickListView()
 {
 }
 
+void NickListView::setWhatsThis()
+{
+  Images* images = KonversationApplication::instance()->images();
+  
+  QMimeSourceFactory::defaultFactory()->setImage( "admin", images->getNickIcon( Images::Admin, false ).convertToImage() );
+  QMimeSourceFactory::defaultFactory()->setImage( "owner", images->getNickIcon( Images::Owner, false ).convertToImage());
+  QMimeSourceFactory::defaultFactory()->setImage( "op", images->getNickIcon( Images::Op, false ).convertToImage() );
+  QMimeSourceFactory::defaultFactory()->setImage( "halfop", images->getNickIcon( Images::HalfOp, false ).convertToImage() );
+  QMimeSourceFactory::defaultFactory()->setImage( "voice", images->getNickIcon( Images::Voice, false ).convertToImage() );
+  QMimeSourceFactory::defaultFactory()->setImage( "normal", images->getNickIcon( Images::Normal, false ).convertToImage() );
+  QMimeSourceFactory::defaultFactory()->setImage( "normalaway", images->getNickIcon( Images::Normal, true).convertToImage() );
+
+  if(images->getNickIcon( Images::Normal, false).isNull()) {
+    QWhatsThis::add(this, i18n("<qt>This shows all the people in the channel.  The nick for each person is shown.<br>Usually an icon is shown showing the status of each person, but you do not seem to have any icon theme installed.  See the Konversation settings - <i>Configure Konversation</i> under the <i>Settings</i> menu.  Then view the page for <i>Themes</i> under <i>Appearence</i>.</qt>"));
+  } else {
+	  
+    QWhatsThis::add(this, i18n("<qt>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.<p>"
+			  "<table>"
+			  
+			  "<tr><th><img src=\"admin\"></th><td>This person has administrator privileges.</td></tr>"
+			  "<tr><th><img src=\"owner\"></th><td>This person is a channel owner.</td></tr>"
+			  "<tr><th><img src=\"op\"></th><td>This person is a channel operator.</td></tr>"
+			  "<tr><th><img src=\"halfop\"></th><td>This person is a channel half-operator.</td></tr>" 
+			  "<tr><th><img src=\"voice\"></th><td>This person has voice, and can therefore talk in a moderated channel.</td></tr>"
+			  "<tr><th><img src=\"normal\"></th><td>This person does not have any special privileges.</td></tr>"
+			  "<tr><th><img src=\"normalaway\"></th><td>This indicates that this person is currently away.</td></tr>"
+			  "</table><p>"
+			  "The meaning of admin, owner and halfop varies between different irc servers.<p>"
+			  "Hovering over any nick shows their current status, as well as any information in the addressbook for this person.  See the Konversation Handbook for more information."
+			  "</qt>"
+			  ));
+  }
+
+}
+
 void NickListView::refresh()
 {
   QPtrList<QListViewItem> nicklist;
   QListViewItemIterator it(this);
 
   while (it.current()) 
-    {
-      static_cast<NickListViewItem*>(it.current())->refresh();
-      ++it;
-    }
+  {
+    static_cast<NickListViewItem*>(it.current())->refresh();
+    ++it;
+  }
+  setWhatsThis();
 }
 
 void NickListView::startResortTimer() {

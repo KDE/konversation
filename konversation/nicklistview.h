@@ -37,7 +37,10 @@ class NickListView : public KListView
     NickListView(QWidget* parent, Channel *chan);
     ~NickListView();
 
+    /** Call when the icons have been changed.
+     */
     void refresh();
+    void setWhatsThis();
 
     enum PopupIDs
     {
