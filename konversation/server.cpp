@@ -2215,8 +2215,6 @@ void Server::removeNickFromChannel(const QString &channelName, const QString &ni
   Channel* outChannel=getChannelByName(channelName);
   if(outChannel)
   {
-    if(outChannel->getNickByName(nickname)) outChannel->removeNick(nickname,reason,quit);
-
     // OnScreen Message
     if(KonversationApplication::preferences.getOSDShowChannelEvent() && outChannel->notificationsEnabled())
     {
@@ -2224,6 +2222,7 @@ void Server::removeNickFromChannel(const QString &channelName, const QString &ni
       konvApp->osd->showOSD(i18n( "(%1) %2 has left this channel. (%3)" )
                             .arg(channelName).arg(nickname).arg(reason));
     }
+    if(outChannel->getNickByName(nickname)) outChannel->removeNick(nickname,reason,quit);
   }
 
 #ifdef USE_NICKINFO
