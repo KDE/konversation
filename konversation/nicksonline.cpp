@@ -48,23 +48,23 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 {
     setName(i18n("Watched Nicks Online"));
     setType(ChatWindow::NicksOnline);
-    
+
     // Convenience constant for the internationalized string "Offline".
     c_i18nOffline = i18n("Offline");
-    
+
     m_nickListView=new KListView(this);
-    
+
     // TODO: Need to derive from KListView and override sort() method in order to sort in
     // locale-aware order.
-    
+
     // Set to false every 8 seconds to permit a whois on watched nicks lacking information.
     // Remove when server or addressbook does this automatically.
     m_whoisRequested = true;
-    
+
     m_nickListView->addColumn(i18n("Network/Nickname/Channel"));
     m_kabcIconSet = KGlobal::iconLoader()->loadIconSet("kaddressbook",KIcon::Small);
     m_nickListView->addColumn(i18n("Additional Information"));
-    m_nickListView->addColumn("ServerName");
+    m_nickListView->addColumn(i18n("Server Name"));
     m_nickListView->hideColumn(nlvcServerName);
     m_nickListView->setFullWidth(false);
     m_nickListView->setRootIsDecorated(true);
@@ -80,15 +80,15 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
         "servers in the network.</p>"
         "<p>Right-click with the mouse on a nickname to perform additional functions.</p>");
     QWhatsThis::add(m_nickListView, nickListViewWT);
-        
+
     m_tooltip = new Konversation::KonversationNicksOnlineToolTip(m_nickListView->viewport(), this);
-        
-    
+
+
     #ifndef USE_MDI
     setMargin(KDialog::marginHint());
     setSpacing(KDialog::spacingHint());
     #endif
-    
+
     QHBox* buttonBox=new QHBox(this);
     buttonBox->setSpacing(KDialog::spacingHint());
     QPushButton* editButton=new QPushButton(i18n("&Edit Watch List..."),
@@ -96,11 +96,11 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     QString editButtonWT = i18n(
         "Click to edit the list of nicknames that appear on this screen.");
     QWhatsThis::add(editButton, editButtonWT);
-    
+
     connect(editButton, SIGNAL(clicked()), SIGNAL(editClicked()) );
     connect(m_nickListView, SIGNAL(doubleClicked(QListViewItem*)),
         this,SLOT(processDoubleClick(QListViewItem*)));
-    
+
     QLabel* addressbookLabel = new QLabel(i18n("Address book:"),
         buttonBox, "nicksonline_addressbook_label");
     QString addressbookLabelWT = i18n(
@@ -128,7 +128,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
         "KAddressBook entry.");
     QWhatsThis::add(m_deleteAssociationButton, deleteAssociationButtonWT);
     m_deleteAssociationButton->setIconSet(m_kabcIconSet);
-    
+
     connect(m_editContactButton, SIGNAL(clicked()),
         this, SLOT(slotEditContactButton_Clicked()));
     connect(m_changeAssociationButton, SIGNAL(clicked()),
@@ -137,19 +137,19 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
         this, SLOT(slotDeleteAssociationButton_Clicked()));
     connect(m_nickListView, SIGNAL(selectionChanged()),
         this, SLOT(slotNickListView_SelectionChanged()));
-        
+
     setupAddressbookButtons(nsNotANick);
-    
+
     // Create context menu.  Individual menu entries are created in rightButtonClicked slot.
     m_popupMenu = new QPopupMenu(this,"nicksonline_context_menu");
     connect(m_nickListView, SIGNAL(rightButtonClicked(QListViewItem *, const QPoint &, int )),
         this, SLOT(slotNickListView_RightButtonClicked(QListViewItem*, const QPoint &)));
     connect(m_popupMenu, SIGNAL(activated(int)),
         this, SLOT(slotPopupMenu_Activated(int)));
-        
+
     // Display info for all currently-connected servers.
     refreshAllServerOnlineLists();
-    
+
     // Connect and start refresh timer.
     m_timer = new QTimer(this, "nicksOnlineTimer");
     connect(m_timer, SIGNAL (timeout()), this, SLOT(timerFired()));
@@ -167,7 +167,7 @@ NicksOnline::~NicksOnline()
 KListView* NicksOnline::getNickListView() {
   return m_nickListView;
 }
-    
+
 
 /**
 * Returns the named child of parent item in a KListView.
@@ -196,7 +196,7 @@ QListViewItem* NicksOnline::findItemChild(const QListViewItem* parent, const QSt
 * @return needWhois        True if a WHOIS needs to be performed on the nick
 *                          to get additional information.
 */
-QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo, KABC::Addressee addressee, 
+QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo, KABC::Addressee addressee,
     bool& needWhois)
 {
     QString info;
@@ -388,7 +388,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
         QString nickname = item->text(nlvcNick);
         if (nickname != c_i18nOffline)
         {
-            if ((watchList.find(nickname) == watchList.end()) && 
+            if ((watchList.find(nickname) == watchList.end()) &&
             (serverName == item->text(nlvcServerName))) delete item;
         }
         item = nextItem;
@@ -398,12 +398,12 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     {
         QListViewItem* nextItem = item->nextSibling();
         QString nickname = item->text(nlvcNick);
-        if ((watchList.find(nickname) == watchList.end()) && 
+        if ((watchList.find(nickname) == watchList.end()) &&
             (serverName == item->text(nlvcServerName))) delete item;
         item = nextItem;
     }
     // Expand server if newly added to list.
-    if (newNetworkRoot) 
+    if (newNetworkRoot)
     {
         networkRoot->setOpen(true);
         // Connect server NickInfo updates.
@@ -481,7 +481,7 @@ void NicksOnline::refreshAllServerOnlineLists()
             bool found = false;
             for (server = serverList.first(); server; server = serverList.next())
             {
-                if ((server->getServerName() == serverName) && 
+                if ((server->getServerName() == serverName) &&
                     (server->getServerGroup() == networkName)) found = true;
             }
             if (!found)
@@ -593,7 +593,7 @@ QListViewItem* NicksOnline::getServerAndNickItem(const QString& serverName,
 }
 
 /**
-* Perform an addressbook command (edit contact, create new contact, 
+* Perform an addressbook command (edit contact, create new contact,
 * change/delete association.)
 * @param id                The command id.  @ref CommandIDs.
 *
@@ -611,7 +611,7 @@ void NicksOnline::doCommand(int id)
     QListViewItem* item = m_nickListView->selectedItem();
     if (!getItemServerAndNick(item, serverName, nickname)) return;
     // Get the server object corresponding to the server name.
-    KonversationApplication *konvApp = 
+    KonversationApplication *konvApp =
         static_cast<KonversationApplication *>(KApplication::kApplication());
     Server* server = konvApp->getServerByName(serverName);
     if (!server) return;
@@ -623,7 +623,7 @@ void NicksOnline::doCommand(int id)
         addressee = nickInfo->getAddressee();
     else
         addressee = server->getOfflineNickAddressee(nickname);
-    
+
     switch(id)
     {
         case ciAddressbookEdit:
@@ -671,8 +671,8 @@ void NicksOnline::doCommand(int id)
         }
         case ciJoinChannel:
         {
-            // Channels have no nlvcServerName entry. 
-            // We test if it is empty to see if we really have a channel name. 
+            // Channels have no nlvcServerName entry.
+            // We test if it is empty to see if we really have a channel name.
             if (m_nickListView->selectedItem()->text(nlvcServerName).isEmpty())
             {
                 QString contactChannel = m_nickListView->selectedItem()->text(nlvcChannel);
@@ -700,7 +700,7 @@ int NicksOnline::getNickAddressbookState(QListViewItem* item)
     QString nickname;
     if (getItemServerAndNick(item, serverName, nickname))
     {
-        Server *server = 
+        Server *server =
             static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
         if (!server) return nsNotANick;
         NickInfoPtr nickInfo = server->getNickInfo(nickname);
@@ -764,7 +764,7 @@ void NicksOnline::setupAddressbookButtons(int nickState)
 * Received when user clicks the Edit Contact (or New Contact) button.
 */
 void NicksOnline::slotEditContactButton_Clicked()
-{ 
+{
     switch (getNickAddressbookState(m_nickListView->selectedItem()))
     {
         case nsNotANick:    break;
@@ -849,9 +849,9 @@ void NicksOnline::slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo
 {
     if (!nickInfo) return;
     QString nickname = nickInfo->getNickname();
-    
+
     kdDebug() << "NicksOnline::slotNickInfoChanged: nickname: " << nickname << endl;
-    
+
     if (!server) return;
     QString serverName = server->getServerName();
     QListViewItem* item = getServerAndNickItem(serverName, nickname);
@@ -869,7 +869,7 @@ void NicksOnline::refreshItem(QListViewItem* item)
     QString nickname;
     if (getItemServerAndNick(item, serverName, nickname))
     {
-        Server *server = 
+        Server *server =
             static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
         if (server)
         {
@@ -886,7 +886,7 @@ void NicksOnline::refreshItem(QListViewItem* item)
                 case nsNotANick:
                     break;
                 case nsNoAddress:
-                    { 
+                    {
                         item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
                         QIconSet::Small, QIconSet::Disabled, QIconSet::Off)); break;
                     }
