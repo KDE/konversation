@@ -13,21 +13,27 @@
 */
 
 #include "connection.h"
+#include "sslsocket.h"
 
-Connection::Connection(const QString& server,
+Connection::Connection(
+                       const QString& server,
 		       const QString& port,
-		       const QString& password
+		       const QString& password,
+                       const bool& useSSL
                        )
 {
-    // FIXME SSL Support
-
     // Initialize our variables
     m_server = server;
     m_port = port;
     m_password = password;
     m_fatalError = false;
     m_lastError = QString::null;
-    m_socket = new KBufferedSocket(m_server,m_port,this,"server_socket");
+    m_useSSL = useSSL;
+
+    if(m_useSSL)
+        m_socket = new SSLSocket(0L,this,"sslSocket");
+    else
+        m_socket = new KBufferedSocket(m_server,m_port,this,"server_socket");
 
     // Catch the signals
     QObject::connect(m_socket,SIGNAL(gotError(int)),this,SLOT(error(int)));
@@ -36,8 +42,6 @@ Connection::Connection(const QString& server,
     QObject::connect(m_socket,SIGNAL(readyRead()),this,SIGNAL(readyRead()));
     QObject::connect(m_socket,SIGNAL(readyWrite()),this,SIGNAL(readyWrite()));
 
-    // Ready to fire
-    connect();
 }
 
 Connection::~Connection()
@@ -50,7 +54,6 @@ Connection::~Connection()
 
 void Connection::connect()
 {
-    // FIXME Bind to spesific interface (eth0,ppp0,...)
     m_socket->connect(m_server,m_port);
 }
 
@@ -77,8 +80,7 @@ void Connection::error(int error)
 
 void Connection::readData(QByteArray& buffer)
 {
-    // FIXME Do we need different thing for SSL?
-    int max_bytes = m_socket->bytesAvailable();
+    int max_bytes = m_useSSL ? 512 : m_socket->bytesAvailable();
     m_socket->readBlock( buffer.data(), max_bytes );
 }
 

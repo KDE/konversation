@@ -14,7 +14,9 @@
     *************************************************************************
 */
 
-#include <kbufferedsocket.h>
+#include "server.h"
+
+#include <kstreamsocket.h>
 #include <kresolver.h>
 using namespace KNetwork;
 
@@ -24,9 +26,11 @@ class Connection : public QObject
 
 public:
 
-    Connection(const QString& server,
+    Connection(
+               const QString& server,
                const QString& port,
-               const QString& password
+               const QString& password,
+               const bool& useSSL
                );
     ~Connection();
 
@@ -54,8 +58,9 @@ private:
     QString m_lastError;
     bool m_fatalError;
 
-    KBufferedSocket* m_socket;
+    KStreamSocket* m_socket;
     QString m_serverIp;
+    bool m_useSSL;
 };
 
 #endif // CONNECTION_H
