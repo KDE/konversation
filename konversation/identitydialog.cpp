@@ -152,7 +152,7 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   m_awayMessageGBox->setColumnLayout(0, Qt::Horizontal);
   m_awayMessageGBox->setMargin(marginHint());
   QGridLayout* messagesLayout = new QGridLayout(m_awayMessageGBox->layout(), 1, 2, spacingHint());
-  
+
   m_showAwayMessage = new QCheckBox(i18n("Show a&way messages"), m_awayMessageGBox);
   m_showAwayMessage->setChecked(true);
 
@@ -163,7 +163,7 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   QLabel* unAwayLabel = new QLabel(i18n("Re&turn message:"), m_awayMessageGBox);
   m_unAwayEdit = new KLineEdit(m_awayMessageGBox);
   unAwayLabel->setBuddy(m_unAwayEdit);
-  
+
   connect(m_showAwayMessage, SIGNAL(toggled(bool)), awayLabel, SLOT(setEnabled(bool)));
   connect(m_showAwayMessage, SIGNAL(toggled(bool)), m_awayEdit, SLOT(setEnabled(bool)));
   connect(m_showAwayMessage, SIGNAL(toggled(bool)), unAwayLabel, SLOT(setEnabled(bool)));
@@ -271,7 +271,7 @@ void IdentityDialog::updateIdentity(int index)
   m_loginEdit->setText(m_currentIdentity->getIdent());
   m_partEdit->setText(m_currentIdentity->getPartReason());
   m_kickEdit->setText(m_currentIdentity->getKickReason());
-  
+
   if(index == 0) {
     m_editBtn->setEnabled(false);
     m_delBtn->setEnabled(false);
@@ -284,7 +284,7 @@ void IdentityDialog::updateIdentity(int index)
 void IdentityDialog::addNickname()
 {
   bool ok = false;
-  QString txt = KInputDialog::getText(i18n("Add Nickname"), i18n("Nickname"), QString::null, &ok, this);
+  QString txt = KInputDialog::getText(i18n("Add Nickname"), i18n("Nickname:"), QString::null, &ok, this);
 
   if(ok && !txt.isEmpty()) {
     m_nicknameLBox->insertItem(txt);
@@ -294,7 +294,7 @@ void IdentityDialog::addNickname()
 void IdentityDialog::editNickname()
 {
   bool ok = false;
-  QString txt = KInputDialog::getText(i18n("Edit Nickname"), i18n("Nickname"), m_nicknameLBox->currentText(), &ok, this);
+  QString txt = KInputDialog::getText(i18n("Edit Nickname"), i18n("Nickname:"), m_nicknameLBox->currentText(), &ok, this);
 
   if(ok && !txt.isEmpty()) {
     m_nicknameLBox->changeItem(txt, m_nicknameLBox->currentItem());
@@ -369,7 +369,7 @@ void IdentityDialog::slotOk()
 void IdentityDialog::newIdentity()
 {
   bool ok = false;
-  QString txt = KInputDialog::getText(i18n("Add Identity"), i18n("Identity Name"), QString::null, &ok, this);
+  QString txt = KInputDialog::getText(i18n("Add Identity"), i18n("Identity name:"), QString::null, &ok, this);
 
   if(ok && !txt.isEmpty()) {
     IdentityPtr identity = new Identity;
@@ -388,7 +388,7 @@ void IdentityDialog::renameIdentity()
 {
   bool ok = false;
   QString currentTxt = m_identityCBox->currentText();
-  QString txt = KInputDialog::getText(i18n("Rename Identity"), i18n("Identity Name"), currentTxt, &ok, this);
+  QString txt = KInputDialog::getText(i18n("Rename Identity"), i18n("Identity name:"), currentTxt, &ok, this);
 
   if(ok && !txt.isEmpty()) {
     m_currentIdentity->setName(txt);
@@ -421,7 +421,7 @@ void IdentityDialog::copyIdentity()
 {
   bool ok = false;
   QString currentTxt = m_identityCBox->currentText();
-  QString txt = KInputDialog::getText(i18n("Duplicate Identity"), i18n("Identity Name"), currentTxt, &ok, this);
+  QString txt = KInputDialog::getText(i18n("Duplicate Identity"), i18n("Identity name:"), currentTxt, &ok, this);
 
   if(ok && !txt.isEmpty()) {
     IdentityPtr identity = new Identity;
@@ -442,7 +442,7 @@ void IdentityDialog::setCurrentIdentity(int index)
   if(index >= m_identityCBox->count()) {
     index = 0;
   }
-  
+
   m_identityCBox->setCurrentItem(index);
   updateIdentity(index);
 }
