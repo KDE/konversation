@@ -148,6 +148,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
         
     // Display info for all currently-connected servers.
     refreshAllServerOnlineLists();
+    
     // Connect and start refresh timer.
     m_timer = new QTimer(this, "nicksOnlineTimer");
     connect(m_timer, SIGNAL (timeout()), this, SLOT(timerFired()));
@@ -249,7 +250,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     if (!offlineRoot) offlineRoot = new KListViewItem(groupRoot, c_i18nOffline);
     offlineRoot->setText(nlvcServerName, serverName);
     // Get watch list.
-    QStringList watchList = QStringList::split(" ", servr->getNotifyString());
+    QStringList watchList = servr->getNotifyList();
     for (unsigned int nickIndex = 0; nickIndex<watchList.count(); nickIndex++)
     {
         QString nickname = watchList[nickIndex];
@@ -331,6 +332,26 @@ void NicksOnline::updateServerOnlineList(Server* servr)
           if (!nickRoot) nickRoot = new KListViewItem(offlineRoot, nickname);
           nickRoot->setText(nlvcServerName, serverName);
         }
+    }
+    // Erase nicks no longer being watched.
+    QListViewItem* item = groupRoot->firstChild();
+    while (item)
+    {
+      QListViewItem* nextItem = item->nextSibling();
+      QString nickname = item->text(nlvcNick);
+      if (nickname != c_i18nOffline)
+      {
+        if (watchList.find(nickname) == watchList.end()) delete item;
+      }
+      item = nextItem;
+    }
+    item = offlineRoot->firstChild();
+    while (item)
+    {
+      QListViewItem* nextItem = item->nextSibling();
+      QString nickname = item->text(nlvcNick);
+      if (watchList.find(nickname) == watchList.end()) delete item;
+      item = nextItem;
     }
     // Expand server if newly added to list.
     if (newGroupRoot) 
@@ -761,6 +782,13 @@ void NicksOnline::slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo
 }
 void NicksOnline::childAdjustFocus()
 {
+}
+
+void NicksOnline::setOnlineList(const QString& serverName,const QStringList& /*list*/,
+bool /*changed*/)
+{
+  Server *server = static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
+  updateServerOnlineList(server);
 }
 
 #include "nicksonline.moc"

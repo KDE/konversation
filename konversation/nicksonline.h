@@ -24,8 +24,9 @@
 #include "nickinfo.h"
 #include "chatwindow.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
-/*
-  @author Dario Abatianni
+/**
+*  @author Dario Abatianni
+*  @author Gary Cramblitt <garycramblitt@comcast.net>
 */
 
 class KListView;
@@ -60,11 +61,15 @@ class NicksOnline : public ChatWindow
     NicksOnline(QWidget* parent);
 #endif
     ~NicksOnline();
-    KListView* getNickListView();
-	
-    NickInfoPtr NicksOnline::getNickInfo(const QListViewItem* item);
 
+    // These are here for the benefit of NicksOnlineTooltip.    
+    KListView* getNickListView();
+    NickInfoPtr NicksOnline::getNickInfo(const QListViewItem* item);
+  
   signals:
+    /**
+    * Emitted when user clicks Edit Watch List button.
+    */
     void editClicked();
     /**
     * Emitted whenever user double-clicks a nick in the Nicks Online tab.
@@ -72,6 +77,10 @@ class NicksOnline : public ChatWindow
     void doubleClicked(const QString& server,const QString& nick);
 
   public slots:
+  
+    // Called from KonversationMainWindow when server informs it of a change
+    // in the watched nicks.
+    void setOnlineList(const QString& serverName,const QStringList& list,bool changed);
 
   protected slots:
     /**
@@ -79,6 +88,9 @@ class NicksOnline : public ChatWindow
     * it can perform the user's chosen default action for that.
     */
     void processDoubleClick(QListViewItem* item);
+    /**
+    * Timer used to refresh display.
+    */
     void timerFired();
     /**
     * Received when user clicks the Edit Contact (or New Contact) button.
@@ -106,22 +118,18 @@ class NicksOnline : public ChatWindow
     void slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo);
 
   protected:
-    /**
-    * Refresh the nicklistview for a single server.
-    * @param server            The server to be refreshed.
-    */
-    void updateServerOnlineList(Server* server);
 #ifdef USE_MDI
     virtual void closeYourself(ChatWindow*);
 #endif
     /** Called from ChatWindow adjustFocus */
     virtual void childAdjustFocus();
 
-    KListView* m_nickListView;
-    QTimer* m_timer;
-    QIconSet m_kabcIconSet;
-    
   private:
+    /**
+    * Refresh the nicklistview for a single server.
+    * @param server            The server to be refreshed.
+    */
+    void updateServerOnlineList(Server* server);
     /**
     * Returns the named child of parent item in a KListView.
     * @param parent            Pointer to a QListViewItem.
@@ -141,8 +149,6 @@ class NicksOnline : public ChatWindow
     *                          about the nick.
     */
     QString getNickAdditionalInfo(NickInfoPtr nickInfo);
-
-	
     /**
     * Invokes the KAddressBook contact editor for the specified contact id.
     * @param uid               Id of the contact.
@@ -206,15 +212,23 @@ class NicksOnline : public ChatWindow
     * @param nickname           Nick name.
     */
     void requestWhois(QString& groupName, QString& nickname);
-    
+
+    // The main display of groups, nicks, and channels.
+    KListView* m_nickListView;
+    // Buttons on screen.    
     QPushButton* m_editContactButton;
     QPushButton* m_changeAssociationButton;
     QPushButton* m_deleteAssociationButton;
+    // Context menu when right-clicking a nick.
     QPopupMenu* m_popupMenu;
+    // Helper to display tooltip information for nicks.
     Konversation::KonversationNicksOnlineToolTip *m_tooltip;
     // A string containing internationalized "Offline".
     QString c_i18nOffline;
-    
+    // Timer for refreshing display and generating WHOISes.
+    QTimer* m_timer;
+    // Addressbook icon.
+    QIconSet m_kabcIconSet;
     /* Set to False every 8 seconds so that we generate a WHOIS on watch nicks that
        lack information.*/
     bool m_whoisRequested;
