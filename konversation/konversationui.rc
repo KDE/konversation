@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="16">
+<kpartgui name="konversation" version="17">
 
   <MenuBar>
     <Menu name="file">
@@ -24,6 +24,7 @@
       <Action name="close_tab" />
       <Action name="close_queries" />
       <Separator />
+      <!-- only used with KMDI
       <Menu name="mdi_subwindow_mode">
         <Text>Child Window Mode</Text>
         <Action name="mdi_tabpage_mode" />
@@ -31,7 +32,7 @@
         <Action name="mdi_childframe_mode" />
         <Action name="mdi_ideal_mode" />
       </Menu>
-      <Separator />
+      <Separator />-->
       <Action name="open_nicksonline_window" />
       <Action name="open_channel_list" />
       <Action name="open_url_catcher" />
