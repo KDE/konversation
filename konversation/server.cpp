@@ -2045,6 +2045,8 @@ bool Server::setNickOffline(const QString& nickname, const QStringList& watchLis
   if (nickInfo)
   {
     KABC::Addressee addressee = nickInfo->getAddressee();
+    // Delete from query list, if present.
+    if (queryNicks.contains(lcNickname)) queryNicks.remove(lcNickname);
     // Delete the nickname from all channels (joined or unjoined).
     // When deleted from last channel, the nick will be deleted altogether.
     QStringList nickChannels = getNickChannels(lcNickname);
@@ -2060,12 +2062,11 @@ bool Server::setNickOffline(const QString& nickname, const QStringList& watchLis
       emit watchedNickChanged(this, nickname, false);
       if (!addressee.isEmpty())
         Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
-      //commented out because this code is buggy.
-//      getMainWindow()->appendToFrontmost(i18n("Notify"),
-//        i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()),statusView);
+      getMainWindow()->appendToFrontmost(i18n("Notify"),
+        i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()),statusView);
 #ifdef USE_KNOTIFY
-//      KNotifyClient::event(mainWindow->winId(), "notify",
-//        i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()));
+      KNotifyClient::event(mainWindow->winId(), "notify",
+        i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()));
 #endif
     }
   }
@@ -2105,12 +2106,12 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
         // TODO: If channel is now empty, delete it?
       }
     }
-    // If nickname is no longer on any list, delete it altogether.
-    if (!queryNicks.contains(lcNickname))
-    {
-        QStringList nickChannels = getNickChannels(lcNickname);
-        if (nickChannels.isEmpty()) allNicks.remove(lcNickname);
-    }
+  }
+  // If nickname is no longer on any list, delete it altogether.
+  if (!queryNicks.contains(lcNickname))
+  {
+    QStringList nickChannels = getNickChannels(lcNickname);
+    if (nickChannels.isEmpty()) allNicks.remove(lcNickname);
   }
   if (doSignal) emit channelMembersChanged(this, channelName, joined, true, nickname);
 }
