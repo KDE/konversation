@@ -61,7 +61,7 @@ QuickButtonsDialog::QuickButtonsDialog(QStringList buttonList,QSize size):
 
   QLabel* instructions=new QLabel(i18n("You can use the following placeholders:\n"
                                        "%c: Current channel\n"
-//                                       "%k: Channel key\n"
+                                       "%k: Channel key (not functional yet)\n"
                                        "%K: Server key\n"
                                        "%u: List of selected nicknames\n"
                                        "%s<term>%: term used to separate nicknames in %u\n"

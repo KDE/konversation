@@ -11,11 +11,13 @@
   copyright: (C) 2002 by Matthias Gierlings
   email:     gismore@users.sourceforge.net
 
-  Id$
+  $Id$
 */
 
 #include <qfile.h>
-#include <fstream.h>
+
+#include <kdebug.h>
+
 #include "prefspagescripts.h"
 
 PrefsPageScripts::PrefsPageScripts(QFrame *passedParent, Preferences *passedPreferences)
@@ -48,7 +50,7 @@ PrefsPageScripts::PrefsPageScripts(QFrame *passedParent, Preferences *passedPref
 		scriptEditor->insertText(&(script->readRawBytes(streamBuffer, 6)));
 		for(int i = 1; i < 6; ++i)
 		{
-			cout << streamBuffer[i];
+			kdDebug() << streamBuffer[i] << endl;
 		}
 	}
 }

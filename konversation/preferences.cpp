@@ -66,6 +66,11 @@ Preferences::Preferences()
 
   KStandardDirs kstddir;
 
+  setAutoReconnect(true);
+  setAutoRejoin(true);
+
+  setFixedMOTD(true);
+
   setDccPath("");
   setDccAddPartner(true);
   setDccCreateFolder(false);
@@ -79,6 +84,7 @@ Preferences::Preferences()
   setLogFollowsNick(true);
 
   setBlinkingTabs(true);
+  setBringToFront(true);
 
   setNotifyDelay(20);
   setUseNotify(true);
@@ -256,6 +262,9 @@ void Preferences::setNicknameList(QStringList newList) { nicknameList=newList; }
 
 void Preferences::setBlinkingTabs(bool blink) { blinkingTabs=blink; }
 bool Preferences::getBlinkingTabs() { return blinkingTabs; }
+
+void Preferences::setBringToFront(bool state) { bringToFront=state; }
+bool Preferences::getBringToFront() { return bringToFront; }
 
 void Preferences::setCommandChar(QString newCommandChar) { commandChar=newCommandChar; }
 QString Preferences::getCommandChar() { return commandChar; }

@@ -832,6 +832,7 @@ QString Server::parseWildcards(const QString& toParse,const QString& nickname,co
     out.replace(separatorRegExp,"");
   }
 
+  kdDebug() << "Replacing placeholders in: " << out << endl;
   out.replace(QRegExp("%u"),nickList->join(separator));
   if(channelName) out.replace(QRegExp("%c"),channelName);
   out.replace(QRegExp("%o"),nickname);

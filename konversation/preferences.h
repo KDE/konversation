@@ -98,6 +98,8 @@ class Preferences : public QObject
 
     void setBlinkingTabs(bool blink);
     bool getBlinkingTabs();
+    void setBringToFront(bool state);
+    bool getBringToFront();
 
     // Geometry functions
     QSize getServerWindowSize();
@@ -203,6 +205,8 @@ class Preferences : public QObject
     QString logPath;
 
     bool blinkingTabs;      // Do we want the LEDs on the tabs to blink?
+    bool bringToFront;      // Do we want to see newly created tabs immediately?
+
     bool fixedMOTD;
 
     bool dccAddPartner;

@@ -11,7 +11,7 @@
   copyright: (C) 2002 by Matthias Gierlings
   email:     gismore@users.sourceforge.net
 
-  Id$
+  $Id$
 */
 
 

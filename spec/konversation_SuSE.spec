@@ -1,6 +1,6 @@
 Summary:   A user friendly IRC Client for KDE3.x
 Name:      konversation
-Version:   0.5
+Version:   0.6
 Release:   1
 Copyright: GPL
 Packager:  Dario Abatianni <eisfuchs@tigress.com>

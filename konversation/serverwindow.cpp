@@ -152,6 +152,11 @@ void ServerWindow::addView(QWidget* pane,int color,const QString& label)
   /* before the DCC tab. Maybe we should also make sure to order Channels */
   /* Queries and DCC chats in groups */
   windowContainer->addTab(pane,label,color,true);
+  if(KonversationApplication::preferences.getBringToFront())
+  {
+    // TODO: Check, if user was typing in old input line
+    showView(pane);
+  }
 }
 
 void ServerWindow::showView(QWidget* pane)

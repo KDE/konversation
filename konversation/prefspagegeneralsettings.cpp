@@ -49,11 +49,13 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   QCheckBox* autoReconnectCheck=new QCheckBox(i18n("Auto Reconnect"),parentFrame,"auto_reconnect_check");
   QCheckBox* autoRejoinCheck=new QCheckBox(i18n("Auto Rejoin"),parentFrame,"auto_rejoin_check");
   QCheckBox* blinkingTabsCheck=new QCheckBox(i18n("Blinking Tabs"),parentFrame,"blinking_tabs_check");
+  QCheckBox* bringToFrontCheck=new QCheckBox(i18n("Bring new tabs to front"),parentFrame,"bring_to_front_check");
   QCheckBox* fixedMOTDCheck=new QCheckBox(i18n("Show MOTD in fixed font"),parentFrame,"fixed_motd_check");
 
   autoReconnectCheck->setChecked(preferences->getAutoReconnect());
   autoRejoinCheck->setChecked(preferences->getAutoRejoin());
   blinkingTabsCheck->setChecked(preferences->getBlinkingTabs());
+  bringToFrontCheck->setChecked(preferences->getBringToFront());
   fixedMOTDCheck->setChecked(preferences->getFixedMOTD());
 
   QHBox* generalSpacer=new QHBox(parentFrame);
@@ -70,6 +72,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   row++;
   generalSettingsLayout->addMultiCellWidget(blinkingTabsCheck,row,row,0,1);
   row++;
+  generalSettingsLayout->addMultiCellWidget(bringToFrontCheck,row,row,0,1);
+  row++;
   generalSettingsLayout->addMultiCellWidget(fixedMOTDCheck,row,row,0,1);
   row++;
   generalSettingsLayout->addMultiCellWidget(generalSpacer,row,row,0,1);
@@ -80,6 +84,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   connect(suffixMiddleInput,SIGNAL (textChanged(const QString&)),this,SLOT (suffixMiddleChanged(const QString&)) );
   connect(autoReconnectCheck,SIGNAL (stateChanged(int)),this,SLOT (autoReconnectChanged(int)) );
   connect(autoRejoinCheck,SIGNAL (stateChanged(int)),this,SLOT (autoRejoinChanged(int)) );
+  connect(bringToFrontCheck,SIGNAL (stateChanged(int)),this,SLOT (bringToFrontChanged(int)) );
   connect(blinkingTabsCheck,SIGNAL (stateChanged(int)),this,SLOT (blinkingTabsChanged(int)) );
   connect(fixedMOTDCheck,SIGNAL (stateChanged(int)),this,SLOT (fixedMOTDChanged(int)) );
 }
@@ -116,6 +121,11 @@ void PrefsPageGeneralSettings::autoRejoinChanged(int state)
 void PrefsPageGeneralSettings::blinkingTabsChanged(int state)
 {
   preferences->setBlinkingTabs(state==2);
+}
+
+void PrefsPageGeneralSettings::bringToFrontChanged(int state)
+{
+  preferences->setBringToFront(state==2);
 }
 
 void PrefsPageGeneralSettings::fixedMOTDChanged(int state)

@@ -244,13 +244,18 @@ void KonversationApplication::readOptions()
 
   // Miscellaneous Flags
   config->setGroup("Flags");
+
   preferences.setLog(config->readBoolEntry("Log",preferences.getLog()));
   preferences.setLowerLog(config->readBoolEntry("LowerLog",preferences.getLowerLog()));
   preferences.setLogFollowsNick(config->readBoolEntry("LogFollowsNick",preferences.getLogFollowsNick()));
-  preferences.setBlinkingTabs(config->readBoolEntry("BlinkingTabs",true));
-  preferences.setAutoReconnect(config->readBoolEntry("AutoReconnect",true));
-  preferences.setAutoRejoin(config->readBoolEntry("AutoRejoin",true));
-  preferences.setFixedMOTD(config->readBoolEntry("FixedMOTD",true));
+
+  preferences.setBlinkingTabs(config->readBoolEntry("BlinkingTabs",preferences.getBlinkingTabs()));
+  preferences.setBringToFront(config->readBoolEntry("BringToFront",preferences.getBringToFront()));
+
+  preferences.setAutoReconnect(config->readBoolEntry("AutoReconnect",preferences.getAutoReconnect()));
+  preferences.setAutoRejoin(config->readBoolEntry("AutoRejoin",preferences.getAutoRejoin()));
+
+  preferences.setFixedMOTD(config->readBoolEntry("FixedMOTD",preferences.getFixedMOTD()));
 }
 
 void KonversationApplication::saveOptions()
@@ -373,12 +378,17 @@ void KonversationApplication::saveOptions()
 
   // Flags
   config->setGroup("Flags");
+
   config->writeEntry("Log",preferences.getLog());
   config->writeEntry("LowerLog",preferences.getLowerLog());
   config->writeEntry("LogFollowsNick",preferences.getLogFollowsNick());
+
   config->writeEntry("BlinkingTabs",preferences.getBlinkingTabs());
+  config->writeEntry("BringToFront",preferences.getBringToFront());
+
   config->writeEntry("AutoReconnect",preferences.getAutoReconnect());
   config->writeEntry("AutoRejoin",preferences.getAutoRejoin());
+
   config->writeEntry("FixedMOTD",preferences.getFixedMOTD());
 
   config->sync();
