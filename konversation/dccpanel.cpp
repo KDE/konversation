@@ -114,8 +114,7 @@ DccPanel::~DccPanel()
 
 void DccPanel::dccStatusChanged(const DccTransfer *item)
 {
-  // If the item is currently selected, update buttons.
-  if (item->isSelected()) selectionChanged();
+  selectionChanged();
 }
 
 void DccPanel::selectionChanged()
@@ -234,12 +233,12 @@ void DccPanel::showFileInfo()
         if( item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done )
         {
           QStringList infoList;
-        
+          
           QString path=item->getFilePath();
           
           // get meta info object
           KFileMetaInfo* fileInfo=new KFileMetaInfo(path,QString::null,KFileMetaInfo::Everything);
-        
+          
           // is there any info for this file?
           if(fileInfo && !fileInfo->isEmpty())
           {
@@ -269,7 +268,7 @@ void DccPanel::showFileInfo()
                 } // endfor
               }
             } // endfor
-
+            
             // display information list if any available
             if(infoList.count())
             {
