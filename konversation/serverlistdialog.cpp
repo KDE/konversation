@@ -160,7 +160,7 @@ namespace Konversation {
   //
 
   ServerListDialog::ServerListDialog(QWidget *parent, const char *name)
-    : KDialogBase(Plain, i18n("Server List"), Ok|/*Apply|*/Cancel, Ok, parent, name, false)
+    : KDialogBase(Plain, i18n("Server List"), Ok|Close, Ok, parent, name, false)
   {
     m_preferences = &KonversationApplication::preferences;
     setButtonOK(KGuiItem(i18n("C&onnect"), "connect_creating", i18n("Connect to the server")));
