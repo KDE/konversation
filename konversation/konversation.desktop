@@ -31,7 +31,7 @@ Name=Konversation
 Name[hi]=कनवर्सेसन
 Name[ta]=உரையாடல்
 Name[xx]=xxKonversationxx
-Categories=Qt;KDE;Network;
+Categories=Qt;KDE;Network;X-SuSE-IRCClient
 ServiceTypes=DCOP/InstantMessenger
 X-DCOP-ServiceName=konversation
 
