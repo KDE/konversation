@@ -73,6 +73,7 @@ class DccTransferRecv : public DccTransfer
      */
     void validateSaveToFileURL();
 	
+    void createDirs(const KURL &fileURL) const;
   signals:
     void resumeRequest( const QString& partnerNick, const QString& fileName, const QString& partnerPort, KIO::filesize_t filePosition);  // emitted by requestResume()
     

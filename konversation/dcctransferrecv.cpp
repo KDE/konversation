@@ -120,6 +120,32 @@ void DccTransferRecv::validateSaveToFileURL() {
     calculateSaveToFileURL(saveToFileURL);
   }
 }
+void DccTransferRecv::createDirs(const KURL &fileURL) const
+{
+        KURL kurl(fileURL);
+        QString surl;
+        
+        //First we split directories until we reach to the top,
+        //since we need to create directories one by one
+        
+        QStringList dirList;
+	kurl=kurl.upURL();
+	surl=kurl.url();
+        while (surl!=kurl.upURL().url())
+        {
+                dirList.prepend(surl);
+                kurl=kurl.upURL();
+                surl=kurl.url();
+        }       
+        
+        //Now we create the directories
+        
+        QStringList::Iterator it;
+        for (it=dirList.begin(); it!=dirList.end();++it)
+        {
+                if (!KIO::NetAccess::exists(*it,true,0)) KIO::NetAccess::mkdir(*it,0,-1);
+        }
+}
 
 void DccTransferRecv::start()  // public slot
 {
@@ -152,6 +178,10 @@ void DccTransferRecv::start()  // public slot
     KIO::NetAccess::stat( m_saveToTmpFileURL, partialFileEntry, listView() );
     KFileItem partialFileInfo( partialFileEntry, m_saveToTmpFileURL );
     m_partialFileSize = partialFileInfo.size();
+  }
+  if(!m_saveToFileExists && !m_partialFileExists) {
+    createDirs(m_fileURL);
+    createDirs(m_saveToTmpFileURL);
   }
   
   m_partialFileExists = m_partialFileExists && 
