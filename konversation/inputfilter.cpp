@@ -867,7 +867,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             QString nickname=nickList[index];
 
             // remove possible mode characters from nickname and store the resulting mode
-            server->mangleNicknameWithModes(nickname,admin,owner,op,halfop,voice,NULL);
+            server->mangleNicknameWithModes(nickname,admin,owner,op,halfop,voice);
 
             // TODO: make these an enumeration in KApplication or somewhere, we can use them from channel.cpp as well
             int mode=(admin  ? 16 : 0)+

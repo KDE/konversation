@@ -99,8 +99,8 @@ class Server : public QObject
 
     // extended user modes support
     void setPrefixes(const QString &modes, const QString& prefixes);
-    bool mangleNicknameWithModes(QString &nickname,bool& isAdmin,bool& isOwner,bool &isOp,
-                                 bool& isHalfop,bool &hasVoice,char *realMode );
+    void mangleNicknameWithModes(QString &nickname,bool& isAdmin,bool& isOwner,bool &isOp,
+                                 bool& isHalfop,bool &hasVoice);
 
     bool isNickname(const QString& compare);
     QString getNickname() const;

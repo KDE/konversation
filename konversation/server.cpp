@@ -472,74 +472,60 @@ void Server::setPrefixes(const QString &modes, const QString& prefixes)
 }
 
 // return a nickname without possible mode character at the beginning
-bool Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwner,
-                                     bool& isOp,bool& isHalfop,bool& hasVoice,char* realMode )
+void Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwner,
+                                     bool& isOp,bool& isHalfop,bool& hasVoice)
 {
   isAdmin=false;
   isOwner=false;
   isOp=false;
   isHalfop=false;
   hasVoice=false;
-
-  if(realMode)
-  {
-    *realMode=' ';
-  }
-  // try to find a prefix
-  int modeIndex=serverNickPrefixes.find(nickname[0]);
-  if(modeIndex==-1)
-  {
-    // nothing to do, if it was not found.
-    // remember that we've set up RFC1459 compatible serverNickPrefixes
-    return false;
-  }
-  if(realMode)
-  {
-    *realMode=nickname[0].latin1();
-  }
-  // cut off the prefix
-  nickname=nickname.mid(1);
-  // determine, whether status is like op or like voice
-  while(static_cast<unsigned int>(modeIndex)<serverNickPrefixes.length())
-  {
-    switch(serverNickPrefixes[modeIndex].latin1())
+  int modeIndex;
+  Q_ASSERT(!nickname.isEmpty()); if(nickname.isEmpty()) return;
+  while( (modeIndex=serverNickPrefixes.find(nickname[0])) != -1) {
+    Q_ASSERT(!nickname.isEmpty()); if(nickname.isEmpty()) return;
+    nickname=nickname.mid(1);
+    // cut off the prefix
+    bool recognisedMode=false;
+    // determine, whether status is like op or like voice
+    while((modeIndex)<int(serverNickPrefixes.length()) && !recognisedMode)
     {
-      case '*':  // admin (EUIRC)
+      
+      switch(serverNickPrefixes[modeIndex].latin1())
+      {
+        case '*':  // admin (EUIRC)
         {
-          isAdmin=true;
-          return true;
+            isAdmin=true;
+	    recognisedMode=true;
         }
-      case '!':  // channel owner (RFC2811)
+        case '!':  // channel owner (RFC2811)
         {
           isOwner=true;
-          return true;
+	  recognisedMode=true;
         }
-      case '@':  // channel operator (RFC1459)
+        case '@':  // channel operator (RFC1459)
         {
           isOp=true;
-          return true;
+	  recognisedMode=true;
         }
-      case '%':  // halfop
+        case '%':  // halfop
         {
           isHalfop=true;
-          return true;
+	  recognisedMode=true;
         }
-      case '+':  // voiced (RFC1459)
+        case '+':  // voiced (RFC1459)
         {
           hasVoice=true;
-          return true;
+	  recognisedMode=true;
         }
-      default:
+        default:
         {
           modeIndex++;
           break;
         }
-    }
-  } // endwhile
-
-  // a mode was used, which has lower priority than voice.
-  // (Not seen an ircd which supports this, yet)
-  return true;
+      } //switch to recognise the mode.
+    } // loop through the modes to find one recognised
+  } // loop through the name
 }
 
 /** 
