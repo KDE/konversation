@@ -83,6 +83,7 @@ void ChatWindow::setServer(Server* newServer)
 
       connect(&filter,SIGNAL (openQuery(const QString&,const QString&)),
                server,SLOT   (addQuery(const QString&,const QString&)) );
+
       connect(&filter,SIGNAL (openDccPanel()),
                server,SLOT   (requestDccPanel()) );
       connect(&filter,SIGNAL (closeDccPanel()),
@@ -93,10 +94,15 @@ void ChatWindow::setServer(Server* newServer)
                server,SLOT   (requestDccSend()) );
       connect(&filter,SIGNAL (requestDccSend(const QString &)),
                server,SLOT   (requestDccSend(const QString &)) );
+
+      connect(&filter,SIGNAL (openKonsolePanel()),
+               server,SLOT   (requestKonsolePanel()) );
+
       connect(&filter,SIGNAL (away()),
                server,SLOT   (away()) );
       connect(&filter,SIGNAL (unAway()),
                server,SLOT   (unAway()) );
+
       connect(&filter,SIGNAL (sendToAllChannels(const QString&)),
                server,SLOT   (sendToAllChannels(const QString&)) );
       connect(&filter,SIGNAL (banUsers(const QStringList&,const QString&,const QString&)),

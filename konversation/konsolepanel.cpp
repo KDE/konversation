@@ -2,6 +2,7 @@
 // (C)2003 Mickael Marchand <marchand@kde.org>
 
 #include "konsolepanel.h"
+#include <kdebug.h>
 #include <klibloader.h>
 
 KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ) {
@@ -20,8 +21,11 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ) {
 }
 
 KonsolePanel::~KonsolePanel() {
-	if ( k_part )
+        if ( k_part ) {
+		// make sure to prevent partDestroyed() signals from being sent
+		disconnect(k_part, SIGNAL(destroyed()), this, SLOT(partDestroyed()));
 		delete k_part;
+	}
 }
 
 void KonsolePanel::adjustFocus() {
@@ -30,6 +34,8 @@ void KonsolePanel::adjustFocus() {
 void KonsolePanel::partDestroyed()
 {
   k_part = 0;
+  // tell the main window to delete us
+  emit deleted(this);
 }
 
 #include "konsolepanel.moc"

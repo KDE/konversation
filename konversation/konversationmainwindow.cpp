@@ -85,8 +85,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Configure Colors"), 0, 0, this, SLOT(openColorConfiguration()), actionCollection(), "open_colors_window");
   new KAction(i18n("Channel list"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
 // TODO: Switch to 18n() after i18n-Freeze has ended
-  new KAction(QString("Konsole"), 0, 0, this, SLOT(openKonsole()), actionCollection(), "open_konsole");
-//  new KAction(i18n("Open a Konsole"), 0, 0, this, SLOT(openKonsole()), actionCollection(), "open_konsole");
+  new KAction(QString("Konsole"), 0, 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
+//  new KAction(i18n("Open a Konsole"), 0, 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
 
   // Actions to navigate through the different pages
   new KAction(i18n("Next Tab"),0,KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
@@ -245,7 +245,7 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     else if(viewType==ChatWindow::RawLog)       view->closeYourself();
 
     else if(viewType==ChatWindow::DccPanel)     closeDccPanel();
-    else if(viewType==ChatWindow::Konsole)      closeKonsoleView(view);
+    else if(viewType==ChatWindow::Konsole)      closeKonsolePanel(view);
 
 /*
     else if(viewType==ChatWindow::DccChat);
@@ -255,16 +255,18 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
   }
 }
 
-void KonversationMainWindow::openKonsole()
+void KonversationMainWindow::addKonsolePanel()
 {
   KonsolePanel* panel=new KonsolePanel(getViewContainer());
   addView(panel,3,i18n("Konsole"));
+  connect(panel,SIGNAL (deleted(ChatWindow*)),this,SLOT (closeKonsolePanel(ChatWindow*)) );
 }
 
-void KonversationMainWindow::closeKonsoleView(ChatWindow* w)
+void KonversationMainWindow::closeKonsolePanel(ChatWindow* konsolePanel)
 {
-  getViewContainer()->removePage(w);
-  delete w;
+  getViewContainer()->removePage(konsolePanel);
+  // tell QT to delete the panel during the next event loop since we are inside a signal here
+  konsolePanel->deleteLater();
 }
 
 void KonversationMainWindow::openChannelList()

@@ -128,6 +128,7 @@ class Server : public QObject
     void resetLag();
     void nicksNowOnline(Server* server,const QStringList& list); // Will be emitted when new 303 came in
     void addDccPanel(); // will be connected to MainWindow::addDccPanel()
+    void addKonsolePanel(); // will be connected to MainWindow::addKonsolePanel()
     void closeDccPanel(); // will be connected to MainWindow::closeDccPanel()
     void deleted(Server* myself); // will be connected to KonversationApplication::removeServer()
 
@@ -139,6 +140,7 @@ class Server : public QObject
     void closeQuery(const QString &name);
     void closeChannel(const QString &name);
     void quitServer();
+    void requestKonsolePanel();
     void requestDccPanel();
     void requestCloseDccPanel();
     void requestBan(const QStringList& users,const QString& channel,const QString& option);

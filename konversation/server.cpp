@@ -136,6 +136,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   connect(this,SIGNAL(tooLongLag(Server*,int)),getMainWindow(),SLOT(tooLongLag(Server*,int)) );
   connect(this,SIGNAL(resetLag()),getMainWindow(),SLOT(resetLag()) );
   connect(this,SIGNAL(addDccPanel()),getMainWindow(),SLOT(addDccPanel()) );
+  connect(this,SIGNAL(addKonsolePanel()),getMainWindow(),SLOT(addKonsolePanel()) );
 
   connect(&serverSocket,SIGNAL (connectionSuccess())  ,this,SLOT (ircServerConnectionSuccess()) );
   connect(&serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
@@ -767,6 +768,11 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
               this,SLOT (dccGetDone(const QString&)) );
 
   if(KonversationApplication::preferences.getDccAutoGet()) newDcc->startGet();
+}
+
+void Server::requestKonsolePanel()
+{
+  emit addKonsolePanel();
 }
 
 void Server::requestDccPanel()

@@ -59,6 +59,7 @@ class OutputFilter : public QObject
     void closeDccPanel();
     void openRawLog(bool show);
     void closeRawLog();
+    void openKonsolePanel();
     void away();
     void unAway();
     void sendToAllChannels(const QString& text);
@@ -110,12 +111,13 @@ class OutputFilter : public QObject
     void parseVersion(const QString& parameter);
     void parseServer(const QString& parameter);
     void parseConnect(const QString& parameter);
-    void parseDcc(const QString& parameter);
     void parseInvite(const QString& parameter);
     void parseExec(const QString& parameter);
-    void parseRaw(const QString& parameter);
     void parseNotify(const QString& parameter);
     void parseOper(const QString& myNick,const QString& parameter);
+    void parseDcc(const QString& parameter);
+    void parseRaw(const QString& parameter);
+    void parseKonsole(const QString& parameter);
 
     void changeMode(const QString& parameter,char mode,char giveTake);
     bool isAChannel(const QString& check);

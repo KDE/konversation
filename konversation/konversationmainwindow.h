@@ -77,8 +77,8 @@ class KonversationMainWindow : public KMainWindow
     void nicksNowOnline(const QString& serverName,const QStringList& list);
 
   public slots:
-    // connected in server class
-    void addDccPanel();
+    void addDccPanel();     // connected in server class
+    void addKonsolePanel(); // connected in server class
 
     void resetLag();
     void updateLag(Server* lagServer,int msec);
@@ -94,6 +94,9 @@ class KonversationMainWindow : public KMainWindow
     void showMenubar();
     void changeView(QWidget* view);
     void closeView(QWidget* view);
+
+    void closeKonsolePanel(ChatWindow* konsolePanel);
+
     void newText(QWidget* view,const QString& highlightColor);
     void quitProgram();
 
@@ -123,7 +126,6 @@ class KonversationMainWindow : public KMainWindow
     void closeColorConfiguration(QSize windowSize);
 
     void openChannelList();
-    void openKonsole();
 
     void nextTab();
     void previousTab();
@@ -157,7 +159,6 @@ class KonversationMainWindow : public KMainWindow
 
     void goToTab(int page);
 
-    void closeKonsoleView(ChatWindow* w);
     void closeDccPanel();
     void deleteDccPanel();
 

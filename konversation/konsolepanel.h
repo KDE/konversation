@@ -14,7 +14,10 @@ class KonsolePanel : public ChatWindow {
 		KonsolePanel(QWidget *p);
 		~KonsolePanel();
 
-	public slots:
+	signals:
+		void deleted(ChatWindow* myself);
+
+        public slots:
 		void adjustFocus();
 		void partDestroyed();
 

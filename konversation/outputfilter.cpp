@@ -99,13 +99,15 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("kick "))    parseKick(parameter);
     else if(line.startsWith("topic "))   parseTopic(parameter);
     else if(line.startsWith("away "))    parseAway(parameter);
-    else if(line.startsWith("dcc "))     parseDcc(parameter);
     else if(line.startsWith("invite "))  parseInvite(parameter);
     else if(line.startsWith("exec "))    parseExec(parameter);
-    else if(line.startsWith("raw "))     parseRaw(parameter);
     else if(line.startsWith("notify "))  parseNotify(parameter);
     else if(line.startsWith("oper "))    parseOper(myNick,parameter);
     else if(line.startsWith("ban "))     parseBan(parameter);
+
+    else if(line.startsWith("raw "))     parseRaw(parameter);
+    else if(line.startsWith("dcc "))     parseDcc(parameter);
+    else if(line.startsWith("konsole ")) parseKonsole(parameter);
 
     else if(line=="join")                parseJoin(QString::null);
     else if(line=="part")                parsePart(QString::null);
@@ -116,13 +118,15 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="topic")               parseTopic(QString::null);
     else if(line=="away")                parseAway(QString::null);
     else if(line=="unaway")              parseAway(QString::null);
-    else if(line=="dcc")                 parseDcc(QString::null);
     else if(line=="invite")              parseInvite(QString::null);
     else if(line=="exec")                parseExec(QString::null);
-    else if(line=="raw")                 parseRaw(QString::null);
     else if(line=="notify")              parseNotify(QString::null);
     else if(line=="oper")                parseOper(myNick,QString::null);
     else if(line=="ban")                 parseBan(QString::null);
+
+    else if(line=="dcc")                 parseDcc(QString::null);
+    else if(line=="raw")                 parseRaw(QString::null);
+    else if(line=="konsole")             parseKonsole(QString::null);
 
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
@@ -644,7 +648,7 @@ void OutputFilter::parseOper(const QString& myNick,const QString& parameter)
                                       false,
                                       i18n("IRC operator password")
                                     );
-    
+
     if(result==KIO::PasswordDialog::Accepted) toServer="OPER "+nick+" "+password;
   }
   else
@@ -713,6 +717,11 @@ void OutputFilter::parseBan(const QString& parameter)
 void OutputFilter::execBan(const QString& mask,const QString& channel)
 {
   toServer="MODE "+channel+" +b "+mask;
+}
+
+void OutputFilter::parseKonsole(const QString &parameter)
+{
+  emit openKonsolePanel();
 }
 
 // Accessors
