@@ -215,6 +215,9 @@ class Preferences : public QObject
     void setNickname(int index,const QString &newName);
     void setNicknameList(const QStringList &newList);
 
+    QString getColor(const QString& name);
+    void setColor(const QString& name,const QString& color);
+
     QString getChannelMessageColor();
     QString getQueryMessageColor();
     QString getServerMessageColor();

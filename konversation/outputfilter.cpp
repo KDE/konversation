@@ -513,7 +513,7 @@ void OutputFilter::sendRequest(const QString &recipient,const QString &fileName,
   QFile file(fileName);
   QFileInfo info(file);
 
-  toServer="PRIVMSG "+recipient+" :"+'\x01'+"DCC SEND "+info.fileName()+" "+address+" "+port+" "+QString::number(size)+'\x01';
+  toServer="PRIVMSG "+recipient+" :"+'\x01'+"DCC SEND "+info.fileName().replace(QRegExp(" "),"_")+" "+address+" "+port+" "+QString::number(size)+'\x01';
   output=i18n("Offering \"%1\" to %2 for upload.").arg(fileName).arg(recipient);
   type=i18n("DCC");
   program=true;
@@ -530,7 +530,9 @@ void OutputFilter::acceptRequest(const QString &recipient,const QString &fileNam
 
 void OutputFilter::resumeRequest(const QString &sender,const QString &fileName,const QString &port,int startAt)
 {
-  toServer="PRIVMSG "+sender+" :"+'\x01'+"DCC RESUME "+fileName+" "+port+" "+QString::number(startAt)+'\x01';
+  QString newFileName(fileName);
+  newFileName.replace(QRegExp(" "),"_");
+  toServer="PRIVMSG "+sender+" :"+'\x01'+"DCC RESUME "+newFileName+" "+port+" "+QString::number(startAt)+'\x01';
   output=i18n("Sending DCC Resume request to \"%1\" for file \"%2\".").arg(sender).arg(fileName);
   type=i18n("DCC");
   program=true;

@@ -25,6 +25,8 @@
   @author Dario Abatianni
 */
 
+class QColor;
+
 class PrefsPageColorsImages : public PrefsPage
 {
   Q_OBJECT
@@ -33,7 +35,10 @@ class PrefsPageColorsImages : public PrefsPage
     PrefsPageColorsImages(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageColorsImages();
 
-  private:
+  protected slots:
+    void colorChanged(const QColor& color);
+
+  protected:
     QStringList colorList;
 };
 

@@ -402,6 +402,24 @@ QString Preferences::getCommandChar() { return commandChar; }
 // TODO: Make this a little simpler (use an array and enum)
 //       get/set message font colors
 
+QString Preferences::getColor(const QString& name)
+{
+  KConfig* config=KApplication::kApplication()->config();
+
+  config->setGroup("Message Text Colors");
+  return config->readEntry(name,"000000");
+}
+
+void Preferences::setColor(const QString& name,const QString& color)
+{
+  KConfig* config=KApplication::kApplication()->config();
+
+  config->setGroup("Message Text Colors");
+
+  config->writeEntry(name,color);
+  config->sync();
+}
+
 QString Preferences::getActionMessageColor()  { return actionMessageColor; }
 QString Preferences::getBacklogMessageColor() { return backlogMessageColor; }
 QString Preferences::getChannelMessageColor() { return channelMessageColor; }

@@ -15,6 +15,7 @@
 */
 
 #include <kcolorcombo.h>
+#include <kdebug.h>
 
 #include <qlabel.h>
 #include <qlayout.h>
@@ -41,12 +42,18 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
   for(unsigned int index=0;index<colorList.count();index++)
   {
     QString label(colorList[index].section(',',0,0));
-//    QString name(colorList[index].section(',',1));
+    QString name(colorList[index].section(',',1));
 
     QLabel* colorLabel=new QLabel(label,parentFrame);
+
     KColorCombo* colorCombo=new KColorCombo(parentFrame);
+    colorCombo->setColor(preferences->getColor(name).prepend('#'));
+    colorCombo->setName(name.latin1());
+
     colorSettingsLayout->addWidget(colorLabel,row,0);
     colorSettingsLayout->addWidget(colorCombo,row,1);
+
+    connect(colorCombo,SIGNAL (activated(const QColor&)),this,SLOT (colorChanged(const QColor&)) );
     row++;
   }
 
@@ -57,6 +64,14 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
 
 PrefsPageColorsImages::~PrefsPageColorsImages()
 {
+}
+
+void PrefsPageColorsImages::colorChanged(const QColor& color)
+{
+  kdDebug() << "PrefsPageColorsImages::colorChanged()" << endl;
+  QString name(static_cast<const QWidget*>(sender())->name());
+  preferences->setColor(name,color.name().mid(1));
+  kdDebug() << name << " " << color.name().mid(1) << endl;
 }
 
 #include "prefspagecolorsimages.moc"

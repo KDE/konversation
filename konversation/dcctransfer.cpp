@@ -201,7 +201,7 @@ until port found
 
     file.setName(getFile());
 
-    emit send(getPartner(),getFile().replace(QRegExp(" "),"_"),getNumericalIp(),getPort(),getSize());
+    emit send(getPartner(),getFile(),getNumericalIp(),getPort(),getSize());
   }
   else kdDebug() << this << "DccTransfer::startSend(): listen() failed!" << endl;
 }
