@@ -47,7 +47,7 @@ class KonversationApplication : public KApplication
     void quitKonversation();
 
   protected:
-    QList<Server> serverList;
+    QPtrList<Server> serverList;
     KSimpleConfig* config;
     PrefsDialog* prefsDialog;
 };

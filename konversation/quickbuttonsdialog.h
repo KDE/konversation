@@ -27,7 +27,7 @@ class QuickButtonsDialog : public KDialogBase
   Q_OBJECT
 
   public:
-    QuickButtonsDialog(QStringList& buttonList,QSize& size);
+    QuickButtonsDialog(QStringList buttonList,QSize size);
     ~QuickButtonsDialog();
 
   protected:

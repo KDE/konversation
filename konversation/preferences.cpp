@@ -139,6 +139,18 @@ void Preferences::setButtonList(QStringList newList)
   buttonList=newList;
 }
 
+void Preferences::setIgnoreList(QPtrList<Ignore> newList)
+{
+  ignoreList.clear();
+  ignoreList=newList;
+}
+
+void Preferences::addIgnore(QString newIgnore)
+{
+  QStringList ignore=QStringList::split(',',newIgnore);
+  ignoreList.append(new Ignore(ignore[0],ignore[1].toInt()));
+}
+
 void Preferences::changeServerProperty(int serverId,int property,const QString& value)
 {
   ServerEntry* entry=getServerEntryById(serverId);

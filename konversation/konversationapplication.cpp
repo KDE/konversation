@@ -91,8 +91,9 @@ void KonversationApplication::readOptions()
 
   /* Window geometries */
   preferences.serverWindowSize=config->readSizeEntry("Geometry");
-  preferences.hilightSize=config->readSizeEntry("HilightGeometry");
-  preferences.buttonsSize=config->readSizeEntry("ButtonsGeometry");
+  preferences.setHilightSize(config->readSizeEntry("HilightGeometry"));
+  preferences.setButtonsSize(config->readSizeEntry("ButtonsGeometry"));
+  preferences.setIgnoreSize(config->readSizeEntry("IgnoreGeometry"));
 
   /* Reasons */
   QString reason;
@@ -126,8 +127,9 @@ void KonversationApplication::readOptions()
   /* Read all buttons and overwrite default entries  */
   for(index=0;index<8;index++)
   {
+    QStringList buttonList(preferences.getButtonList());
     QString buttonKey(QString("Button%1").arg(index));
-    if(config->hasKey(buttonKey)) preferences.buttonList[index]=config->readEntry(buttonKey);
+    if(config->hasKey(buttonKey)) buttonList[index]=config->readEntry(buttonKey);
   }
 
   /* Hilight List  */
@@ -147,6 +149,17 @@ void KonversationApplication::readOptions()
     preferences.setHilightColor(color);
   }
 
+  /* Ignore List  */
+  config->setGroup("Ignore List");
+  /* Remove all default entries if there is at least one Ignore in the preferences file */
+  if(config->hasKey("Ignore0")) preferences.clearIgnoreList();
+  /* Read all ignores */
+  index=0;
+  while(config->hasKey(QString("Ignore%1").arg(index)))
+  {
+    preferences.addIgnore(config->readEntry(QString("Ignore%1").arg(index++)));
+  }
+
   /* Path settings */
   config->setGroup("Path Settings");
   preferences.logPath=config->readEntry("LogfilePath",preferences.logPath);
@@ -162,9 +175,12 @@ void KonversationApplication::saveOptions()
   cerr << "KonversationApplication::saveOptions()" << endl;
 
   config->setGroup("General Options");
+
   config->writeEntry("Geometry", preferences.serverWindowSize);
-  config->writeEntry("HilightGeometry",preferences.hilightSize);
-  config->writeEntry("ButtonsGeometry",preferences.buttonsSize);
+  config->writeEntry("HilightGeometry",preferences.getHilightSize());
+  config->writeEntry("ButtonsGeometry",preferences.getButtonsSize());
+  config->writeEntry("IgnoreGeometry",preferences.getIgnoreSize());
+
 //  config->writeEntry("Show Statusbar",viewStatusBar->isChecked());
   config->writeEntry("ServerWindowToolBarPos",preferences.serverWindowToolBarPos);
   config->writeEntry("ServerWindowToolBarStatus",preferences.serverWindowToolBarStatus);
@@ -196,7 +212,8 @@ void KonversationApplication::saveOptions()
 
   for(index=0;index<8;index++)
   {
-    config->writeEntry(QString("Button%1").arg(index),preferences.buttonList[index]);
+    QStringList buttonList(preferences.getButtonList());
+    config->writeEntry(QString("Button%1").arg(index),buttonList[index]);
   }
 
   /* Write all hilight entries  */
@@ -209,6 +226,18 @@ void KonversationApplication::saveOptions()
 
   QString color=preferences.getHilightColor();
   config->writeEntry("HilightColor",color);
+
+  /* Ignore List  */
+  config->setGroup("Ignore List");
+  QPtrList<Ignore> ignoreList=preferences.getIgnoreList();
+  Ignore* item=ignoreList.first();
+  index=0;
+  while(item)
+  {
+    config->writeEntry(QString("Ignore%1").arg(index),QString("%1,%2").arg(item->getName()).arg(item->getFlags()));
+    item=ignoreList.next();
+    index++;
+  }
 
   config->setGroup("Path Settings");
   config->writeEntry("LogfilePath",preferences.logPath);

@@ -96,7 +96,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
     buttonList.append(newQuickButton);
     connect(newQuickButton,SIGNAL (clicked(int)),this,SLOT (quickButtonClicked(int)) );
   }
-  updateQuickButtons(KonversationApplication::preferences.buttonList);
+  updateQuickButtons(KonversationApplication::preferences.getButtonList());
 
   /* The box holding the Nickname button, Channel input and Log Checkbox */
   QHBox* commandLineBox=new QHBox(channelPane);
@@ -394,7 +394,7 @@ QStringList* Channel::getSelectedNicksList()
 void Channel::quickButtonClicked(int id)
 {
   /* get button definition */
-  QString buttonText=KonversationApplication::preferences.buttonList[id];
+  QString buttonText=KonversationApplication::preferences.getButtonList()[id];
   /* parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter) */
   QString out=server->parseWildcards(buttonText,server->getNickname(),getChannelName(),getSelectedNicksList(),0,0);
   /* does the return string end with a newline? */

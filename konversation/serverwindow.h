@@ -42,6 +42,7 @@
 #include "ircinput.h"
 #include "highlightbox.h"
 #include "quickbuttonsdialog.h"
+#include "ignoredialog.h"
 
 class Server;
 class ServerWindow : public KMainWindow
@@ -74,12 +75,18 @@ class ServerWindow : public KMainWindow
     void showToolbar();
     void openPreferences();
     void quitProgram();
+
     void openHilight();
-    void closeHilight(QSize newHilightSize);
-    void saveHilight(QStringList passed_highlightList);
+    void closeHilight(QSize newSize);
+    void saveHilight(QStringList newList);
+
+    void openIgnore();
+    void applyIgnore(QPtrList<Ignore> newList);
+    void closeIgnore(QSize newSize);
+
     void openButtons();
-    void applyButtons(QStringList newButtonList);
-    void closeButtons(QSize newButtonsSize);
+    void applyButtons(QStringList newList);
+    void closeButtons(QSize newSize);
 
   protected:
     int spacing() {  return KDialog::spacingHint(); };
@@ -103,12 +110,12 @@ class ServerWindow : public KMainWindow
     Server* server;
     KToggleAction* showToolBarAction;
     HighLightBox* hilightWindow;
+    IgnoreDialog* ignoreDialog;
     QuickButtonsDialog* buttonsDialog;
 
     QFile logfile;
     bool log;
     bool firstLog;
-
 };
 
 #endif

@@ -23,7 +23,7 @@
 
 #include "quickbuttonsdialog.h"
 
-QuickButtonsDialog::QuickButtonsDialog(QStringList& buttonList,QSize& size):
+QuickButtonsDialog::QuickButtonsDialog(QStringList buttonList,QSize size):
                     KDialogBase(0,"quickbuttonsdialog",false,i18n("Edit Quick Buttons"),
                                 KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
                                 KDialogBase::Ok,true)

@@ -21,6 +21,7 @@
 #define PREFERENCES_H
 
 #include "serverentry.h"
+#include "ignore.h"
 
 /*
   @author Dario Abatianni
@@ -65,6 +66,13 @@ class Preferences : public QObject
     void setButtonsSize(QSize newSize) { buttonsSize=newSize; };
     QStringList getButtonList() { return buttonList; };
     void setButtonList(QStringList newList);
+    /* Ignore list functions */
+    void clearIgnoreList() { ignoreList.clear(); };
+    void addIgnore(QString newIgnore);
+    QSize& getIgnoreSize() { return ignoreSize; };
+    void setIgnoreSize(QSize newSize) { ignoreSize=newSize; };
+    QPtrList<Ignore> getIgnoreList() { return ignoreList; };
+    void setIgnoreList(QPtrList<Ignore> newList);
     /* Part reason */
     QString getPartReason() { return partReason; };
     void setPartReason(QString newReason) { partReason=newReason; };
@@ -73,12 +81,9 @@ class Preferences : public QObject
     void setKickReason(QString newReason) { kickReason=newReason; };
 
     QSize serverWindowSize;
-    QSize hilightSize;
-    QSize buttonsSize;
     QString ident;
     QString realname;
     QStringList nicknameList;
-    QStringList buttonList;
     QString logPath;
 
   signals:
@@ -96,6 +101,13 @@ class Preferences : public QObject
 
     QStringList hilightList;
     QString hilightColor;
+    QSize hilightSize;
+
+    QStringList buttonList;
+    QSize buttonsSize;
+
+    QPtrList<Ignore> ignoreList;
+    QSize ignoreSize;
 
     QString partReason;
     QString kickReason;

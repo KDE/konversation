@@ -29,6 +29,7 @@ ServerWindow::ServerWindow(Server* server) : KMainWindow()
   windowContainer->setTabPosition(QTabWidget::Bottom);
 
   hilightWindow=0;
+  ignoreDialog=0;
   buttonsDialog=0;
 
 /*  KAction* quitAction= */ KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); /* file_quit */
@@ -36,6 +37,7 @@ ServerWindow::ServerWindow(Server* server) : KMainWindow()
 /*  KAction* prefsAction= */ KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); /* options_configure */
 /*  KAction* open_quickbuttons_action= */new KAction(i18n("Buttons"),0,0,this,SLOT (openButtons()),actionCollection(),"open_buttons_window");
 /*  KAction* open_hilight_action= */ new KAction(i18n("Hilight List"),0,0,this,SLOT (openHilight()),actionCollection(),"open_hilight_window");
+/*  KAction* open_ignore_action= */ new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
 
   setCentralWidget(windowContainer);
 
@@ -277,7 +279,7 @@ void ServerWindow::openButtons()
 {
   if(!buttonsDialog)
   {
-    buttonsDialog=new QuickButtonsDialog(KonversationApplication::preferences.buttonList,
+    buttonsDialog=new QuickButtonsDialog(KonversationApplication::preferences.getButtonList(),
                                          KonversationApplication::preferences.getButtonsSize());
     connect(buttonsDialog,SIGNAL (cancelClicked(QSize)),this,SLOT (closeButtons(QSize)) );
     connect(buttonsDialog,SIGNAL (applyClicked(QStringList)),this,SLOT (applyButtons(QStringList)) );
@@ -299,4 +301,31 @@ void ServerWindow::closeButtons(QSize newButtonsSize)
 
   delete buttonsDialog;
   buttonsDialog=0;
+}
+
+void ServerWindow::openIgnore()
+{
+  if(!ignoreDialog)
+  {
+    ignoreDialog=new IgnoreDialog(KonversationApplication::preferences.getIgnoreList(),
+                                  KonversationApplication::preferences.getIgnoreSize());
+    connect(ignoreDialog,SIGNAL (cancelClicked(QSize)),this,SLOT (closeIgnore(QSize)) );
+    connect(ignoreDialog,SIGNAL (applyClicked(QPtrList<Ignore>)),this,SLOT (applyIgnore(QPtrList<Ignore>)) );
+    ignoreDialog->show();
+  }
+}
+
+void ServerWindow::applyIgnore(QPtrList<Ignore> newList)
+{
+  KonversationApplication::preferences.setIgnoreList(newList);
+  emit prefsChanged();
+}
+
+void ServerWindow::closeIgnore(QSize newSize)
+{
+  KonversationApplication::preferences.setIgnoreSize(newSize);
+  emit prefsChanged();
+
+  delete ignoreDialog;
+  ignoreDialog=0;
 }
