@@ -60,7 +60,6 @@ void LedTabWidget::addTab(ChatWindow* child,const QString& label,int color,bool 
   if(server) {
     
     QString tooltip = server->getServerGroup();
-    kdDebug() << "server group is " << server->getServerGroup() << "." << endl;
     if(tooltip.lower() != server->getServerName().lower()) {
       if( !tooltip.isEmpty() )
         tooltip += " - ";
