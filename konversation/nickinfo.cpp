@@ -187,7 +187,6 @@ QString NickInfo::tooltip() {
 }
     
 void NickInfo::tooltipTableData(QTextStream &tooltip) {
-
   tooltip << "<tr><td colspan=\"2\" valign=\"top\">";
 
   bool dirty = false;
@@ -223,6 +222,9 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) {
   tooltip << "<b>" << (isimage?"":"<center>");
   if(!addressee.formattedName().isEmpty()) {
     tooltip << addressee.formattedName();
+    dirty = true;
+  } else if(!addressee.realName().isEmpty()) {
+    tooltip << addressee.realName();
     dirty = true;
   } else if(!getRealName().isEmpty() && getRealName().lower() != getNickname().lower()) {
     tooltip << getRealName();
