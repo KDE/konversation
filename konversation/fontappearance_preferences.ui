@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>FontAppearance_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ the Free Software Foundation; either version 2 of the License, or
         </rect>
     </property>
     <property name="caption">
-        <string></string>
+        <string>FontAppearance_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -41,7 +41,10 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_UseBoldNicks</cstring>
             </property>
             <property name="text">
-                <string>Make nicknames &amp;bold</string>
+                <string>Make sender nicknames &amp;bold in the chat view</string>
+            </property>
+            <property name="accel">
+                <string>Alt+B</string>
             </property>
         </widget>
         <widget class="QLabel" row="0" column="0">
@@ -67,7 +70,10 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_FixedMOTD</cstring>
             </property>
             <property name="text">
-                <string>&amp;Use a fixed font for MOTD messages</string>
+                <string>Enable fi&amp;xed font for MOTD messages</string>
+            </property>
+            <property name="accel">
+                <string>Alt+X</string>
             </property>
         </widget>
         <spacer row="4" column="1">

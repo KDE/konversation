@@ -23,7 +23,7 @@
 PrefsPageTabBehavior::PrefsPageTabBehavior(QWidget* newParent,Preferences* newPreferences) :
                       TabBar_Config(newParent)
 {
-	preferences = newPreferences;
+  preferences = newPreferences;
 
   kcfg_CloseButtonsOnTabs->setChecked(preferences->getCloseButtonsOnTabs());
   kcfg_CloseButtonsAlignRight->setChecked(preferences->getCloseButtonsAlignRight());

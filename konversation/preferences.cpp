@@ -145,7 +145,8 @@ Preferences::Preferences()
   setBlinkingTabs(false);
   setCloseButtonsOnTabs(false);
   setCloseButtonsAlignRight(false);
-  setBringToFront(true);
+  setBringToFront(false);
+  setFocusNewQueries(false);
 
   setNotifyDelay(20);
   setUseNotify(true);
@@ -234,7 +235,6 @@ Preferences::Preferences()
   setShowNicknameBox(true);
 
   setShowRememberLineInAllWindows(false);
-  setFocusNewQueries(true);
 
   // Web Browser
   setWebBrowserUseKdeDefault(true);

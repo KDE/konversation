@@ -123,10 +123,15 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
   KAction *preferencesAction = KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
-  (new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()), actionCollection(), "open_server_list"))->setToolTip(i18n("Connect to a new server..."));
-  (new KAction(i18n("Quick &Connect..."), "connect_creating", KShortcut("F7"), this, SLOT(openQuickConnectDialog()), actionCollection(), "quick_connect_dialog"))->setToolTip(i18n("Type in the address of a new IRC server to connect to..."));
+  (new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()),
+    actionCollection(), "open_server_list"))->setToolTip(i18n("Connect to a new server..."));
+  (new KAction(i18n("Quick &Connect..."), "connect_creating", KShortcut("F7"), this, SLOT(openQuickConnectDialog()),
+    actionCollection(), "quick_connect_dialog"))->setToolTip(i18n("Type in the address of a new IRC server to connect to..."));
 
-  (new KAction(i18n("&Identities..."), "identity", KShortcut("F8"), this, SLOT(openIdentitiesDialog()), actionCollection(), "identities_dialog"))->setToolTip(i18n("Set your nick, away message, etc..."));
+  new KAction(i18n("&Reconnect"), "connect_creating", 0, this, SLOT(reconnectCurrentServer()), actionCollection(), "reconnect_server");
+
+  (new KAction(i18n("&Identities..."), "identity", KShortcut("F8"), this, SLOT(openIdentitiesDialog()),
+    actionCollection(), "identities_dialog"))->setToolTip(i18n("Set your nick, away message, etc..."));
 
   new KToggleAction(i18n("&Watched Nicks Online"), 0, KShortcut("F4"), this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
   new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), this, SLOT(openLogfile()), actionCollection(), "open_logfile");
@@ -1035,9 +1040,9 @@ void KonversationMainWindow::updateFrontView()
       view->emitUpdateInfo();
     } else {
       if( view->getName() != "ChatWindowObject" )
-	m_channelInfoLabel->setText(Konversation::removeIrcMarkup(view->getName()));
+        m_channelInfoLabel->setText(Konversation::removeIrcMarkup(view->getName()));
       else
-	m_channelInfoLabel->setText(QString::null);
+        m_channelInfoLabel->setText(QString::null);
     }
 
     // Make sure that only text views get to be the searchView
@@ -1632,6 +1637,13 @@ void KonversationMainWindow::showJoinChannelDialog()
 
   if(dlg.exec() == QDialog::Accepted) {
     frontServer->sendJoinCommand(dlg.channel(), dlg.password());
+  }
+}
+
+void KonversationMainWindow::reconnectCurrentServer()
+{
+  if(frontServer && !frontServer->isConnected() && !frontServer->isConnecting()) {
+    frontServer->reconnect();
   }
 }
 

@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>TabBar_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,8 +13,11 @@ the Free Software Foundation; either version 2 of the License, or
             <x>0</x>
             <y>0</y>
             <width>409</width>
-            <height>247</height>
+            <height>336</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>TabBar_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -23,55 +26,143 @@ the Free Software Foundation; either version 2 of the License, or
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
+        <widget class="QGroupBox" row="1" column="0">
             <property name="name">
-                <cstring>kcfg_CloseButtonsOnTabs</cstring>
+                <cstring>labelsGBox</cstring>
             </property>
-            <property name="text">
-                <string>Show close b&amp;utton on tabs</string>
+            <property name="title">
+                <string>Labels</string>
             </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="1" column="0">
+                    <property name="name">
+                        <cstring>kcfg_BlinkingTabs</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Blink the led on the label when something have changed in the tab</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+B</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>kcfg_TabPlacement</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Place tab labels on &amp;top</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+T</string>
+                    </property>
+                </widget>
+            </grid>
         </widget>
-        <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+        <widget class="QGroupBox" row="0" column="0">
             <property name="name">
-                <cstring>kcfg_TabPlacement</cstring>
+                <cstring>closeButtonGBox</cstring>
             </property>
-            <property name="text">
-                <string>Place tab labels on &amp;top</string>
+            <property name="title">
+                <string>Close Button</string>
             </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="1" column="1">
+                    <property name="name">
+                        <cstring>kcfg_CloseButtonsAlignRight</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>Place close button on the &amp;right side of the tab</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+R</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_CloseButtonsOnTabs</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show close b&amp;utton on tabs</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+U</string>
+                    </property>
+                </widget>
+                <spacer row="1" column="0">
+                    <property name="name">
+                        <cstring>spacer6</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Fixed</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>30</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_ShowTabBarCloseButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Show a close tab button to the right in the tab bar</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+S</string>
+                    </property>
+                </widget>
+            </grid>
         </widget>
-        <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
+        <widget class="QGroupBox" row="2" column="0">
             <property name="name">
-                <cstring>kcfg_BlinkingTabs</cstring>
+                <cstring>groupBox113</cstring>
             </property>
-            <property name="text">
-                <string>&amp;Blinking tabs</string>
+            <property name="title">
+                <string>Tab Management</string>
             </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>kcfg_BringToFront</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Bring new tabs to &amp;front</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+F</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="1" column="0">
+                    <property name="name">
+                        <cstring>kcfg_FocusNewQueries</cstring>
+                    </property>
+                    <property name="text">
+                        <string>When someone queries you, focus new &amp;query</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+Q</string>
+                    </property>
+                </widget>
+            </grid>
         </widget>
-        <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>kcfg_BringToFront</cstring>
-            </property>
-            <property name="text">
-                <string>Bring new tabs to &amp;front</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>kcfg_FocusNewQueries</cstring>
-            </property>
-            <property name="text">
-                <string>When someone queries you, focus new &amp;query</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="6" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>kcfg_ShowTabBarCloseButton</cstring>
-            </property>
-            <property name="text">
-                <string>&amp;Show a close tab button to the right in the tab bar</string>
-            </property>
-        </widget>
-        <spacer row="7" column="1">
+        <spacer row="3" column="0">
             <property name="name">
                 <cstring>spacer1</cstring>
             </property>
@@ -84,37 +175,20 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>121</height>
-                </size>
-            </property>
-        </spacer>
-        <widget class="QCheckBox" row="1" column="1">
-            <property name="name">
-                <cstring>kcfg_CloseButtonsAlignRight</cstring>
-            </property>
-            <property name="text">
-                <string>Place close button on the &amp;right side of the tab</string>
-            </property>
-        </widget>
-        <spacer row="1" column="0">
-            <property name="name">
-                <cstring>spacer6</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Horizontal</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Fixed</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>30</width>
-                    <height>20</height>
+                    <height>60</height>
                 </size>
             </property>
         </spacer>
     </grid>
 </widget>
+<connections>
+    <connection>
+        <sender>kcfg_CloseButtonsOnTabs</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_CloseButtonsAlignRight</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>

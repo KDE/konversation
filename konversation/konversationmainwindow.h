@@ -202,6 +202,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     
     void runScript( int menuItemId);
 
+    void reconnectCurrentServer();
+
   protected:
     enum StatusID
     {

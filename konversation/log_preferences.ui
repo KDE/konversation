@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>Log_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,6 +16,9 @@ the Free Software Foundation; either version 2 of the License, or
             <height>310</height>
         </rect>
     </property>
+    <property name="caption">
+        <string>Log_Config</string>
+    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -28,7 +31,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_Log</cstring>
             </property>
             <property name="title">
-                <string>Enable Logging</string>
+                <string>&amp;Enable Logging</string>
             </property>
             <property name="checkable">
                 <bool>true</bool>
@@ -66,7 +69,10 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_LowerLog</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Use lower case logfile names</string>
+                        <string>Enable &amp;lower case logfile names</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+L</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">

@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>ChatwindowBehaviour_Config</class>
 <widget class="QWidget">
     <property name="name">
@@ -11,6 +11,9 @@
             <width>496</width>
             <height>494</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>ChatwindowBehaviour_Config</string>
     </property>
     <property name="whatsThis" stdset="0">
         <string>Keep channel mode string as a combination of characters instead of translating them into human readable words. E.g. '*** Channel modes: no messages from outside' will become '*** Channel modes: n'</string>
@@ -44,7 +47,7 @@
                 <cstring>kcfg_autoWhoContinuous</cstring>
             </property>
             <property name="title">
-                <string>Automatic User Information Look Up (/WHO)</string>
+                <string>Enable Automatic User Information Look Up (/WHO)</string>
             </property>
             <property name="checkable">
                 <bool>true</bool>
@@ -153,7 +156,7 @@
                 <cstring>groupBox3</cstring>
             </property>
             <property name="title">
-                <string>&amp;General</string>
+                <string>General</string>
             </property>
             <grid>
                 <property name="name">
@@ -175,7 +178,13 @@
                         <cstring>kcfg_BeepOnAsciiBel</cstring>
                     </property>
                     <property name="text">
-                        <string>Bee&amp;p on incoming ASCII BEL</string>
+                        <string>Enable s&amp;ystem bell on incoming ASCII BEL</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+Y</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Sounds the system bell when you recieve a ASCII BEL (0x07) control character</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="3">
@@ -199,7 +208,10 @@
                         <cstring>kcfg_ShowRememberLine</cstring>
                     </property>
                     <property name="text">
-                        <string>Show remember line in all channels/&amp;&amp;&amp;queries</string>
+                        <string>Show remember line in all channels and &amp;queries</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+Q</string>
                     </property>
                 </widget>
                 <spacer row="6" column="2">

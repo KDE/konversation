@@ -12,14 +12,10 @@
   email:     muesli@chareit.net
 */
 
-#include <qlayout.h>
-#include <qhbox.h>
-#include <qvgroupbox.h>
-#include <qgrid.h>
-#include <qlabel.h>
 #include <qcheckbox.h>
 #include <qspinbox.h>
 #include <qpushbutton.h>
+#include <qgroupbox.h>
 
 #include <klocale.h>
 #include <klistview.h>
