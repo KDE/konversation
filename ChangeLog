@@ -1,0 +1,4 @@
+Changes from 0.7 to 0.8:
+- DCCs can now be opened (started) using the 'open' button
+- DCCs can now be aborted using the 'abort' button
+- Added support for /users reply

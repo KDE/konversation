@@ -60,6 +60,7 @@ DccPanel::DccPanel(QWidget* parent) :
   connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (dccSelected()) );
 
   connect(acceptButton,SIGNAL (clicked()) ,this,SLOT (acceptDcc()) );
+  connect(abortButton,SIGNAL (clicked()) ,this,SLOT (abortDcc()) );
   connect(removeButton,SIGNAL (clicked()) ,this,SLOT (removeDcc()) );
   connect(openButton,SIGNAL (clicked()) ,this,SLOT (runDcc()) );
 }
@@ -101,6 +102,7 @@ void DccPanel::dccSelected()
       case DccTransfer::Stalled:
         setButtons(false,true,true,true,true);
         break;
+      case DccTransfer::Aborted:
       case DccTransfer::Failed:
       case DccTransfer::Done:
         setButtons(false,false,true,true,true);
@@ -128,6 +130,12 @@ void DccPanel::runDcc()
   {
     new KRun(item->getFile());
   }
+}
+
+void DccPanel::abortDcc()
+{
+  DccTransfer* item=(DccTransfer*) getListView()->selectedItem();
+  item->abort();
 }
 
 void DccPanel::removeDcc()

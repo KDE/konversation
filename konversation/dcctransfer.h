@@ -86,6 +86,7 @@ class DccTransfer : public QObject, public KListViewItem
     void startSend();
     void startResumeGet(QString position);
     void startResumeSend(QString position);
+    void abort();
 
   protected slots:
     void updateCPS();

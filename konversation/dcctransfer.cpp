@@ -31,6 +31,7 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString p
   kdDebug() << this << "DccTransfer::DccTransfer()" << endl;
 
   dccSocket=0;
+  sendSocket=0;
   
   setType(type);
   setPartner(partner);
@@ -58,14 +59,10 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString p
   statusText.append(i18n("Done"));
 
   transferStarted=QDateTime::currentDateTime();
-  lastActive=QDateTime::currentDateTime();
 
   updateCPS();
 
-  if(getType()==Get)
-  {
-  }
-  else
+  if(getType()==Send)
   {
     setText(6,i18n("unknown"));
     setText(7,i18n("unknown"));
@@ -84,6 +81,13 @@ DccTransfer::~DccTransfer()
     dccSocket->close();
     delete dccSocket;
   }
+}
+
+void DccTransfer::abort()
+{
+  if(dccSocket) dccSocket->closeNow();
+  if(sendSocket) sendSocket->closeNow();
+  setStatus(Aborted);
 }
 
 void DccTransfer::startGet()
@@ -360,6 +364,7 @@ void DccTransfer::updateCPS()
   // prevent division by zero
   int cps=(elapsed) ? transferred/elapsed : 0;
   setText(5,QString::number(cps));
+  lastActive=QDateTime::currentDateTime();
 }
 
 DccTransfer::DccStatus DccTransfer::getStatus() { return dccStatus; }

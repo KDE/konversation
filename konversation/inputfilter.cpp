@@ -417,6 +417,18 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
     // Autojoin (for now this must be enough)
     if(server->getAutoJoin()) server->queue(server->getAutoJoinCommand());
   }
+  else if(command==RPL_GLOBALUSERS) // Current global users: 589 Max: 845
+  {
+    QString current(trailing.section(' ',3,3));
+    QString max(trailing.section(' ',5,5));
+    server->appendStatusMessage(i18n("Users"),i18n("Current users on the network: %1 of at most %2.").arg(current).arg(max));
+  }
+  else if(command==RPL_LOCALUSERS) // Current local users: 589 Max: 845
+  {
+    QString current(trailing.section(' ',3,3));
+    QString max(trailing.section(' ',5,5));
+    server->appendStatusMessage(i18n("Users"),i18n("Current users on %1: %2 of at most %3.").arg(prefix).arg(current).arg(max));
+  }
   else if(command==RPL_ISON)
   {
     // Tell server to start the next notify timer round
