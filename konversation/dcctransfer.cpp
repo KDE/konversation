@@ -32,6 +32,13 @@
 #include "dcctransfer.h"
 #include "konversationapplication.h"
 
+
+#define TIME_REMAINING_NOT_AVAILABLE -1
+#define TIME_REMAINING_INFINITE      -2
+
+#define CPS_UNKNOWN -1
+
+
 DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partnerNick )
   : KListViewItem( panel->getListView() )
 {
@@ -320,32 +327,40 @@ void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )  //
 
 void DccTransfer::updateTransferMeters()
 {
+  const int timeToCalc = 5;
+  
   if ( m_dccStatus == Sending || m_dccStatus == Receiving )
   {
     // update CPS
     QValueList<QDateTime>::iterator it = m_transferTimeLog.begin();
-    while ( it != m_transferTimeLog.end() && (*it).secsTo( QDateTime::currentDateTime() ) > 5 )
+    while ( it != m_transferTimeLog.end() && (*it).secsTo( QDateTime::currentDateTime() ) > timeToCalc )
       it = m_transferTimeLog.remove( it );
-    m_cps = (double)( m_transferTimeLog.count() * m_bufferSize ) / (double)5;
+    int timeElapsed = m_timeTransferStarted.secsTo( m_timeTransferFinished );
+    if ( timeElapsed >= timeToCalc )
+      m_cps = (double)( m_transferTimeLog.count() * m_bufferSize ) / (double)timeToCalc;
+    else if ( timeElapsed > 0 )
+      m_cps = (double)( m_transferTimeLog.count() * m_bufferSize ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
+    else  // avoid zero devision
+      m_cps = CPS_UNKNOWN;
     
     // update the remaining time
     if ( m_cps <= 0 )
-      m_timeRemaining = -2;
+      m_timeRemaining = TIME_REMAINING_INFINITE;
     else
       m_timeRemaining = (int)( (double)( m_fileSize - m_transferringPosition ) / m_cps );
   }
   else if ( m_dccStatus >= Done )
   {
-    if ( m_timeTransferStarted.secsTo( m_timeTransferFinished ) <= 0 )
-      m_cps = -1;
+    if ( m_timeTransferStarted.secsTo( m_timeTransferFinished ) <= 0 )  // avoid zero devision
+      m_cps = CPS_UNKNOWN;
     else
       m_cps = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
-    m_timeRemaining = -1;
+    m_timeRemaining = TIME_REMAINING_NOT_AVAILABLE;
   }
   else
   {
     m_cps = 0;
-    m_timeRemaining = -1;
+    m_timeRemaining = TIME_REMAINING_NOT_AVAILABLE;
   }
 }
 
@@ -421,29 +436,34 @@ QString DccTransfer::getPositionPrettyText( bool detailed ) const
 
 QString DccTransfer::getTimeRemainingPrettyText() const
 {
-  int remTime = m_timeRemaining;
-  if ( remTime < 0 )
+  if ( m_timeRemaining == TIME_REMAINING_NOT_AVAILABLE )
     return QString::null;
-  int remHour = remTime / 3600; remTime -= remHour * 3600;
-  int remMin = remTime / 60; remTime -= remMin * 60;
-  QString text;
-  if ( remHour )
-    text += QString::number( remHour ) + ":";
-  if ( remMin )
-    text += QString::number( remMin ) + ":";
-  if ( text.isEmpty() )
-    text = i18n("%1 sec").arg( QString::number( remTime ) );
+  else if ( m_timeRemaining == TIME_REMAINING_INFINITE )
+    return QString( "?" );
   else
-    text += QString::number( remTime );
-  return text;
+  {
+    int remTime = m_timeRemaining;
+    int remHour = remTime / 3600; remTime -= remHour * 3600;
+    int remMin = remTime / 60; remTime -= remMin * 60;
+    QString text;
+    if ( remHour )
+      text += QString::number( remHour ) + ":";
+    if ( remMin )
+      text += QString::number( remMin ) + ":";
+    if ( text.isEmpty() )
+      text = i18n("%1 sec").arg( QString::number( remTime ) );
+    else
+      text += QString::number( remTime );
+    return text;
+  }
 }
 
 QString DccTransfer::getCPSPrettyText() const
 {
-  if ( m_cps >= 0 )
-    return i18n("%1/sec").arg( KIO::convertSize( (KIO::fileoffset_t)m_cps ) );
+  if ( m_cps == CPS_UNKNOWN )
+    return QString( "?" );
   else
-    return QString::null;
+    return i18n("%1/sec").arg( KIO::convertSize( (KIO::fileoffset_t)m_cps ) );
 }
 
 QString DccTransfer::getSenderAddressPrettyText() const
