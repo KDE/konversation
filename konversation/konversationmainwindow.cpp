@@ -750,6 +750,8 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
   statusView->setIdentity(server->getIdentity());
   statusView->setName(server->getServerName());
 
+  updateSSLInfo(server);
+
   // ... then put it into the tab widget, otherwise we'd have a race with server member
 #ifdef USE_MDI
   addMdiView(statusView,2,false);
@@ -767,7 +769,7 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
   // make sure that frontServer gets set on adding the first status panel, too,
   // since there won't be a changeView happening
   if(!frontServer) frontServer=server;
-
+  
   return statusView;
 }
 
@@ -936,11 +938,12 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
   searchView=0;
 
   frontServer=view->getServer();
+  // display this server's lag time
   if(frontServer) {
-    // display this server's lag time
     updateLag(frontServer,frontServer->getLag());
     updateSSLInfo(frontServer);
   }
+   
 
   updateFrontView();
 
@@ -1080,6 +1083,11 @@ void KonversationMainWindow::slotPrefsChanged()
   emit prefsChanged();
 }
 
+void KonversationMainWindow::removeSSLIcon()
+{
+  m_sslLabel->hide();
+}
+
 void KonversationMainWindow::channelPrefsChanged()
 {
   emit prefsChanged();
@@ -1125,7 +1133,7 @@ void KonversationMainWindow::updateSSLInfo(Server* server)
     {
       QObject::disconnect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
       QObject::connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
-      QToolTip::remove(m_sslLabel);
+      QObject::connect(server,SIGNAL(sslInitFailure()),this,SLOT(removeSSLIcon()));
       QToolTip::add(m_sslLabel,server->getSSLInfo());
       m_sslLabel->show();
     }

@@ -329,6 +329,7 @@ class Server : public QObject
     void watchedNickChanged(Server* server, const QString& nickname, bool online);
     ///Fires when the user switches his state to away and has enabled "Insert Remember Line on away" in his identity.
     void awayInsertRememberLine();
+    void sslInitFailure();
 
   public slots:
     void lookupFinished();
@@ -383,6 +384,7 @@ class Server : public QObject
     */
     void closed();
     void broken(int state);
+    void sslError();
     void notifyCheckTimeout();
     void connectionEstablished(const QString& ownHost);
     void notifyResponse(const QString& nicksOnline);

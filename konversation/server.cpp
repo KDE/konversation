@@ -386,6 +386,8 @@ void Server::connectSignals()
     connect(m_serverSSLSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
     connect(m_serverSSLSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
     connect(m_serverSSLSocket,SIGNAL (closed()),this,SLOT(closed()));
+    connect(m_serverSSLSocket,SIGNAL (sslFailure()),this,SIGNAL(sslInitFailure()));
+    connect(m_serverSSLSocket,SIGNAL (sslFailure()),this,SLOT(sslError()));
   }
 
 
@@ -713,6 +715,13 @@ void Server::broken(int state)
     getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 closed.").arg(serverName),statusView);
   }
 
+  emit serverOnline(false);
+}
+
+void Server::sslError()
+{
+  statusView->appendServerMessage(i18n("Error"),i18n("An SSL error happened. Maybe the server does not support SSL?"));
+  
   emit serverOnline(false);
 }
 

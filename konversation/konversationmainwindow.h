@@ -121,6 +121,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     virtual void switchToChildframeMode(); // USE_MDI
     virtual void switchToToplevelMode();   // USE_MDI
     
+    void removeSSLIcon();
     void slotPrefsChanged();
 
   protected slots:
