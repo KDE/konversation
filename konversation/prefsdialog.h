@@ -20,7 +20,6 @@
 #include "preferences.h"
 #include "prefsdialog.h"
 #include "prefspageserverlist.h"
-#include "prefspagegeneralsettings.h"
 #include "prefspageidentity.h"
 #include "prefspagebuttons.h"
 #include "prefspagelog.h"
@@ -68,7 +67,6 @@ class PrefsDialog : public KDialogBase
   protected:
     Preferences* preferences;
 
-    PrefsPageGeneralSettings* generalSettingsPage;
     PrefsPage* serverListPage;
     PrefsPageIdentity*        identityPage;
     PrefsPageTabBehavior*     tabBehaviorPage;

@@ -40,7 +40,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   setShowIconsInTreeList(true);
 
   serverListPane = addPage(i18n("Server List"));
-  QFrame* generalSettingsPane = addPage(i18n("General Settings"));
   QFrame* identityPane = addPage(i18n("Identity"));
   
   QFrame* chatWinAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")));
@@ -69,8 +68,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   // Add pages to preferences dialog
   serverListPage=new PrefsPageServerList(serverListPane,preferences);
-
-  generalSettingsPage = new PrefsPageGeneralSettings(generalSettingsPane, preferences);
   identityPage = new PrefsPageIdentity(identityPane, preferences); // FIXME: see class::applyPreferences()
   
   PrefsPageChatWinAppearance* chatWinAppearancePage = new PrefsPageChatWinAppearance(chatWinAppearancePane, preferences);
@@ -108,7 +105,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   }
 
   // connect standard signals and slots
-  connect(this, SIGNAL(applyPreferences()), generalSettingsPage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), identityPage, SLOT(applyPreferences()));
   
   connect(this, SIGNAL(applyPreferences()), chatWinAppearancePage, SLOT(applyPreferences()));

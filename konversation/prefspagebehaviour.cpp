@@ -47,6 +47,17 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   browserCmdInput->setText(preferences->getWebBrowserCmd());
   connect(useCustomBrowserCheck, SIGNAL(toggled(bool)), browserCmdInput, SLOT(setEnabled(bool)));
   
+  QLabel* commandCharLabel = new QLabel(i18n("&Command char:"), parentFrame);
+  commandCharInput = new KLineEdit(preferences->getCommandChar(), parentFrame);
+  commandCharInput->setMaxLength(1);
+  commandCharLabel->setBuddy(commandCharInput);
+
+  QLabel* ctcpVersionLabel = new QLabel(i18n("Custom &version reply:"), parentFrame);
+  ctcpVersionInput = new KLineEdit(preferences->getVersionReply(), parentFrame);
+  ctcpVersionLabel->setBuddy(ctcpVersionInput);
+  QString msg = i18n("<qt>Here you can set a custom reply for <b>CTCP <i>VERSION</i></b> requests.</qt>");
+  QWhatsThis::add(ctcpVersionLabel,msg);
+  
   QGroupBox* connectionGroup = new QGroupBox(i18n("Connection"), parentFrame, "connectionGroup");
   connectionGroup->setColumnLayout(0, Qt::Vertical);
   connectionGroup->setMargin(marginHint());
@@ -62,14 +73,17 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   reconnectTimeoutSpin->setValue(preferences->getMaximumLagTime());
   reconnectTimeoutSpin->setSuffix(i18n(" seconds"));
   reconnectTimeoutLabel->setBuddy(reconnectTimeoutSpin);
+
+  autoRejoinCheck = new QCheckBox(i18n("Auto re&join channels on reconnect"), connectionGroup, "auto_rejoin_check");
+  autoRejoinCheck->setEnabled(autoReconnectCheck->isChecked());
+  autoRejoinCheck->setChecked(preferences->getAutoRejoin());
+  autojoinOnInviteCheck = new QCheckBox(i18n("Autojoin channel on &invite"), connectionGroup, "autojoin_on_invite_check");
+  autojoinOnInviteCheck->setChecked(preferences->getAutojoinOnInvite());
+
   connect(autoReconnectCheck, SIGNAL(toggled(bool)), reconnectTimeoutLabel, SLOT(setEnabled(bool)));
   connect(autoReconnectCheck, SIGNAL(toggled(bool)), reconnectTimeoutSpin, SLOT(setEnabled(bool)));
-
-  autoRejoinCheck = new QCheckBox(i18n("Auto re&join"), connectionGroup, "auto_rejoin_check");
-  autojoinOnInviteCheck = new QCheckBox(i18n("Autojoin channel on &invite"), connectionGroup, "autojoin_on_invite_check");
-  autoRejoinCheck->setChecked(preferences->getAutoRejoin());
-  autojoinOnInviteCheck->setChecked(preferences->getAutojoinOnInvite());
-  
+  connect(autoReconnectCheck, SIGNAL(toggled(bool)), autoRejoinCheck, SLOT(setEnabled(bool)));
+    
   int row = 0;
   connectionLayout->addMultiCellWidget(autoReconnectCheck, row, row, 0, 1);
   row++;
@@ -105,7 +119,7 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
     
   row = 0;
   nickCompletionLayout->addWidget(modeLbl, row, 0);
-  nickCompletionLayout->addWidget(completionModeCBox, row, 1);
+  nickCompletionLayout->addMultiCellWidget(completionModeCBox, row, row, 1, 3);
   row++;
   nickCompletionLayout->addWidget(startOfLineLabel, row, 0);
   nickCompletionLayout->addWidget(suffixStartInput, row, 1);
@@ -121,6 +135,12 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   row++;
   generalLayout->addWidget(useCustomBrowserCheck, row, 0);
   generalLayout->addWidget(browserCmdInput, row, 1);
+  row++;
+  generalLayout->addWidget(commandCharLabel, row, 0);
+  generalLayout->addWidget(commandCharInput, row, 1);
+  row++;
+  generalLayout->addWidget(ctcpVersionLabel, row, 0);
+  generalLayout->addWidget(ctcpVersionInput, row, 1);
   row++;
   generalLayout->addMultiCellWidget(connectionGroup, row, row, 0, 1);
   row++;
@@ -140,6 +160,8 @@ void PrefsPageBehaviour::applyPreferences()
   preferences->setRawLog(rawLogCheck->isChecked());
   preferences->setWebBrowserUseKdeDefault(!useCustomBrowserCheck->isChecked());
   preferences->setWebBrowserCmd(browserCmdInput->text());
+  preferences->setCommandChar(commandCharInput->text());
+  preferences->setVersionReply(ctcpVersionInput->text());
 
   preferences->setAutoReconnect(autoReconnectCheck->isChecked());
   preferences->setAutoRejoin(autoRejoinCheck->isChecked());
