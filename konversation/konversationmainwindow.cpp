@@ -1186,31 +1186,37 @@ void KonversationMainWindow::tooLongLag(Server* lagServer,int msec)
 
   if((msec % 5000)==0)
   {
-    int secsleft = msec/1000;
-    QStringList timeString;
+    int seconds  = msec/1000;
+    int minutes  = seconds/60;
+    int hours    = minutes/60;
+    int days     = hours/24;
+    QString lagString;
 
-    if(secsleft %60) {
-	    timeString.push_front(i18n("1 second", "%n seconds", secsleft%60));
-	    secsleft -= secsleft%60;
+    if(days) {
+      const QString daysString = i18n("1 day", "%n days", days);
+      const QString hoursString = i18n("1 hour", "%n hours", (hours % 24));
+      const QString minutesString = i18n("1 minute", "%n minutes", (minutes % 60));
+      const QString secondsString = i18n("1 second", "%n seconds", (seconds % 60));
+      lagString = i18n("%1 = name of server, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = (x seconds)", "No answer from server %1 for more than %2, %3, %4, and %5.").arg(lagServer->getServerName())
+                     .arg(daysString).arg(hoursString).arg(minutesString).arg(secondsString);
+    // or longer than an hour
+    } else if(hours) {
+      const QString hoursString = i18n("1 hour", "%n hours", hours);
+      const QString minutesString = i18n("1 minute", "%n minutes", (minutes % 60));
+      const QString secondsString = i18n("1 second", "%n seconds", (seconds % 60));
+      lagString = i18n("%1 = name of server, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)", "No answer from server %1 for more than %2, %3, and %4.").arg(lagServer->getServerName())
+                     .arg(hoursString).arg(minutesString).arg(secondsString);
+    // or longer than a minute
+    } else if(minutes) {
+      const QString minutesString = i18n("1 minute", "%n minutes", minutes);
+      const QString secondsString = i18n("1 second", "%n seconds", (seconds % 60));
+      lagString = i18n("%1 = name of server, %2 = (x minutes), %3 = (x seconds)", "No answer from server %1 for more than %2 and %3.").arg(lagServer->getServerName())
+                     .arg(minutesString).arg(secondsString);
+    // or just some seconds
+    } else {
+      lagString = i18n("No answer from server %1 for more than 1 second.", "No answer from server %1 for more than %n seconds.", seconds).arg(lagServer->getServerName());
     }
-    if(secsleft % 3600) {
-	    timeString.push_front(i18n("1 minute", "%n minutes", (secsleft%3600)/60));
-	    secsleft -= secsleft%3600;
-    }
-    if(secsleft % (3600*24)) {
-            timeString.push_front(i18n("1 hour", "%n hours", (secsleft%(3600*24))/3600));
-            secsleft -= secsleft%(3600*24);
-    }
-    if(secsleft) {
-            timeString.push_front(i18n("1 day", "%n days", secsleft/(3600*24)));
-    }
-    Q_ASSERT(!timeString.empty()); if(timeString.empty()) return;
-    QString timestring = timeString.last();
-    timeString.pop_back();
-    if(!timeString.empty()) {
-	    timestring = timeString.join(", ") + " and " + timestring;
-    }
-    QString lagString(i18n("No answer from server %1 for more than %2").arg(lagServer->getServerName(), timestring));
+
     statusBar()->changeItem(lagString,StatusText);
   }
   if(lagServer==frontServer) {
