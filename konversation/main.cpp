@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
   aboutData.addAuthor("Peter Simonsson",I18N_NOOP("Color picker, IRC color preferences, KNotify events, Systray notification, Shell style completion, Sound support for highlights"),"psn@linux.se");
   aboutData.addAuthor("Christian Muehlhaeuser",I18N_NOOP("Multiple modes extension, Close widget placement, OSD functionality"),"chris@chris.de");
   aboutData.addAuthor("John Tapsell",I18N_NOOP("Refactoring, Kadddressbook/Kontact integration"), "john@geola.co.uk");
-  aboutData.addAuthor("İsmail Dönmez",I18N_NOOP("SSL Support,Ported to KNetwork"),"ismail.donmez@boun.edu.tr");
+  aboutData.addAuthor("İsmail Dönmez",I18N_NOOP("SSL Support, Ported to KNetwork"),"ismail.donmez@boun.edu.tr");
 
   aboutData.addCredit("Frauke Oster",I18N_NOOP("System tray patch"),"frauke@frsv.de");
   aboutData.addCredit("Lucijan Busch",I18N_NOOP("Bug fixes"),"lucijan@kde.org");
