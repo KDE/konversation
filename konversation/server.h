@@ -531,6 +531,7 @@ class Server : public QObject
     int currentLag;
 
     QString ircName;
+    QCString inputBufferIncompleted;
     QStringList inputBuffer;
     QStringList outputBuffer;
     QString nickname;

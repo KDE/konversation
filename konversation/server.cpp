@@ -979,8 +979,7 @@ void Server::incoming()
 
   buffer[len] = 0;
 
-  static QCString qcsRemainBuffer;
-  QCString qcsBuffer = qcsRemainBuffer + QCString(buffer);
+  QCString qcsBuffer = inputBufferIncompleted + QCString(buffer);
 
   // split buffer to lines
   QValueList<QCString> qcsBufferLines;
@@ -988,8 +987,8 @@ void Server::incoming()
   for( int nextLFposition ; ( nextLFposition = qcsBuffer.find('\n', lastLFposition+1) ) != -1 ; lastLFposition = nextLFposition )
     qcsBufferLines << qcsBuffer.mid(lastLFposition+1, nextLFposition-lastLFposition-1);
 
-  // remember an incompleted line (split by a packet)
-  qcsRemainBuffer = qcsBuffer.right(qcsBuffer.length()-lastLFposition-1);
+  // remember an incompleted line (split by packets)
+  inputBufferIncompleted = qcsBuffer.right(qcsBuffer.length()-lastLFposition-1);
 
   while(!qcsBufferLines.isEmpty())
   {
