@@ -26,6 +26,9 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kurlrequester.h>
+#include <kglobal.h>
+#include <kstandarddirs.h>
+#include <kfiledialog.h>
 
 #include "prefspagehighlight.h"
 #include "preferences.h"
@@ -80,6 +83,32 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
   patternColor->setEnabled(false);
   soundURL->setEnabled(false);
   soundLabel->setEnabled(false);
+  
+  QString filter = "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm";
+  soundURL->setFilter(filter);
+  soundURL->setCaption(i18n("Select Sound File"));
+  
+  // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]
+  // find the first "sound"-resource that contains files
+  QStringList soundDirs = KGlobal::dirs()->findDirs("data", "konversation/sounds");
+  soundDirs += KGlobal::dirs()->resourceDirs( "sound" );
+
+  if ( !soundDirs.isEmpty() ) {
+    KURL url;
+    QDir dir;
+    dir.setFilter( QDir::Files | QDir::Readable );
+    QStringList::ConstIterator it = soundDirs.begin();
+    while ( it != soundDirs.end() ) {
+      dir = *it;
+      if ( dir.isReadable() && dir.count() > 2 ) {
+        url.setPath( *it );
+        soundURL->fileDialog()->setURL( url );
+        break;
+      }
+      ++it;
+    }
+  }
+  // End copy
 
   currentNickCheck=new QCheckBox(i18n("Always highlight &current nick:"),parentFrame,"highlight_current_nick_check");
   currentNickCheck->setChecked(preferences->getHilightNick());
