@@ -240,6 +240,8 @@ Preferences::Preferences()
 
   // Themes
   setIconTheme("default");
+  
+  setDisableNotifyWhileAway(false);
 }
 
 Preferences::~Preferences()

@@ -466,6 +466,9 @@ class Preferences : public QObject
 
     bool showNicknameBox() const;
     void setShowNicknameBox(bool show);
+    
+    bool disableNotifyWhileAway() const { return m_disableNotifyWhileAway; }
+    void setDisableNotifyWhileAway(bool disable) { m_disableNotifyWhileAway = disable; }
 
   signals:
     void requestServerConnection(int number);
@@ -621,6 +624,8 @@ class Preferences : public QObject
     QValueList<IdentityPtr> identityList;
     QPtrList<Highlight> highlightList;
     QMap< QString,QMap<QString,QString> > channelEncodingsMap;
+    
+    bool m_disableNotifyWhileAway;
 
     // IRC colors
     QStringList ircColorList;

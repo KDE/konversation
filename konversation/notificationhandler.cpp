@@ -40,6 +40,10 @@ void NotificationHandler::message(ChatWindow* chatWin, const QString& fromNick, 
     return;
   }
   
+  if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
+    return;
+  }
+  
   QString cutup = KStringHandler::rsqueeze(Konversation::removeIrcMarkup(message), 50);
   KNotifyClient::event(winId(), "message", QString("<%1> %2").arg(fromNick).arg(cutup));
   
@@ -59,7 +63,11 @@ void NotificationHandler::nick(ChatWindow* chatWin, const QString& fromNick, con
   if(!chatWin || !chatWin->notificationsEnabled()) {
     return;
   }
-  
+
+  if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
+    return;
+  }
+    
   QString cutup = KStringHandler::rsqueeze(Konversation::removeIrcMarkup(message), 50);
   KNotifyClient::event(winId(), "nick", QString("<%1> %2").arg(fromNick).arg(cutup));
   
@@ -82,6 +90,14 @@ void NotificationHandler::nick(ChatWindow* chatWin, const QString& fromNick, con
 
 void NotificationHandler::startTrayNotification(ChatWindow* chatWin)
 {
+  if(!chatWin || !chatWin->notificationsEnabled()) {
+    return;
+  }
+  
+  if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
+    return;
+  }
+  
   if(!m_mainWindow->isActiveWindow() && chatWin->getServer() && chatWin->getServer()->connected())
   {
     m_mainWindow->systemTrayIcon()->startNotification();
@@ -90,16 +106,28 @@ void NotificationHandler::startTrayNotification(ChatWindow* chatWin)
 
 void NotificationHandler::join(ChatWindow* chatWin, const QString& nick)
 {
-  if(chatWin && chatWin->notificationsEnabled()) {
-    KNotifyClient::event(winId(), "join", i18n("%1 joined %2").arg(nick, chatWin->getName()));
+  if(!chatWin || !chatWin->notificationsEnabled()) {
+    return;
   }
+  
+  if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
+    return;
+  }
+  
+  KNotifyClient::event(winId(), "join", i18n("%1 joined %2").arg(nick, chatWin->getName()));
 }
 
 void NotificationHandler::part(ChatWindow* chatWin, const QString& nick)
 {
-  if(chatWin && chatWin->notificationsEnabled()) {
-    KNotifyClient::event(winId(), "part", i18n("%1 parted %2").arg(nick, chatWin->getName()));
+  if(!chatWin || !chatWin->notificationsEnabled()) {
+    return;
   }
+  
+  if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
+    return;
+  }
+  
+  KNotifyClient::event(winId(), "part", i18n("%1 parted %2").arg(nick, chatWin->getName()));
 }
 
 int NotificationHandler::winId() const
@@ -113,54 +141,96 @@ int NotificationHandler::winId() const
 
 void NotificationHandler::quit(ChatWindow* chatWin, const QString& nick)
 {
-  if(chatWin && chatWin->notificationsEnabled()) {
-    KNotifyClient::event(winId(), "part", i18n("%1 quit %2").arg(nick, chatWin->getServer()->getServerName()));
+  if(!chatWin || !chatWin->notificationsEnabled()) {
+    return;
   }
+  
+  if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
+    return;
+  }
+  
+  KNotifyClient::event(winId(), "part", i18n("%1 quit %2").arg(nick, chatWin->getServer()->getServerName()));
 }
 
 void NotificationHandler::nickChange(ChatWindow* chatWin, const QString& oldNick, const QString& newNick)
 {
-  if(chatWin && chatWin->notificationsEnabled()) {
-    KNotifyClient::event(winId(), "nickchange", i18n("%1 changed nickname to %2").arg(oldNick, newNick));
+  if(!chatWin || !chatWin->notificationsEnabled()) {
+    return;
   }
+  
+  if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
+    return;
+  }
+  
+  KNotifyClient::event(winId(), "nickchange", i18n("%1 changed nickname to %2").arg(oldNick, newNick));
 }
 
 void NotificationHandler::dccIncomming(ChatWindow* chatWin, const QString& fromNick)
 {
-  if(chatWin && chatWin->notificationsEnabled()) {
-    KNotifyClient::event(winId(), "dcc_incoming", i18n("%1 wants to send a file to you").arg(fromNick));
+  if(!chatWin || !chatWin->notificationsEnabled()) {
+    return;
   }
+  
+  if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
+    return;
+  }
+  
+  KNotifyClient::event(winId(), "dcc_incoming", i18n("%1 wants to send a file to you").arg(fromNick));
 }
 
 void NotificationHandler::mode(ChatWindow* chatWin, const QString& /*nick*/)
 {
-  if(chatWin && chatWin->notificationsEnabled()) {
-    KNotifyClient::event(winId(), "mode");
+  if(!chatWin || !chatWin->notificationsEnabled()) {
+    return;
   }
+  
+  if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
+    return;
+  }
+  
+  KNotifyClient::event(winId(), "mode");
 }
 
 void NotificationHandler::query(ChatWindow* chatWin, const QString& fromNick)
 {
-  if(chatWin && chatWin->notificationsEnabled()) {
-    KNotifyClient::event(winId(), "query",
-      i18n("%1 has started a conversation (query) with you.").arg(fromNick));
+  if(!chatWin || !chatWin->notificationsEnabled()) {
+    return;
   }
+  
+  if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
+    return;
+  }
+  
+  KNotifyClient::event(winId(), "query",
+    i18n("%1 has started a conversation (query) with you.").arg(fromNick));
 }
 
 void NotificationHandler::nickOnline(ChatWindow* chatWin, const QString& nick)
 {
-  if(chatWin && chatWin->notificationsEnabled()) {
-    KNotifyClient::event(winId(), "notify",
-      i18n("%1 is online (%2).").arg(nick).arg(chatWin->getServer()->getServerName()));
+  if(!chatWin || !chatWin->notificationsEnabled()) {
+    return;
   }
+  
+  if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
+    return;
+  }
+  
+  KNotifyClient::event(winId(), "notify",
+    i18n("%1 is online (%2).").arg(nick).arg(chatWin->getServer()->getServerName()));
 }
 
 void NotificationHandler::nickOffline(ChatWindow* chatWin, const QString& nick)
 {
-  if(chatWin && chatWin->notificationsEnabled()) {
-    KNotifyClient::event(winId(), "notify",
-      i18n("%1 went offline (%2).").arg(nick).arg(chatWin->getServer()->getServerName()));
+  if(!chatWin || !chatWin->notificationsEnabled()) {
+    return;
   }
+  
+  if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
+    return;
+  }
+  
+  KNotifyClient::event(winId(), "notify",
+    i18n("%1 went offline (%2).").arg(nick).arg(chatWin->getServer()->getServerName()));
 }
 
 }

@@ -426,6 +426,9 @@ void KonversationApplication::readOptions()
 
   //User interface
   preferences.setShowMenuBar(config->readBoolEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar()));
+  
+  preferences.setDisableNotifyWhileAway(config->readBoolEntry("DisableNotifyWhileAway",
+    preferences.disableNotifyWhileAway()));
 
   // Appearance
   config->setGroup("Appearance");
@@ -927,6 +930,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   //User interface
   config->writeEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar());
+  
+  config->writeEntry("DisableNotifyWhileAway", preferences.disableNotifyWhileAway());
 
   config->setGroup("Appearance");
 

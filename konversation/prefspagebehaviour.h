@@ -41,6 +41,7 @@ class PrefsPageBehaviour : public PrefsPage
     QCheckBox* trayNotifyOwnNickOnlyCheck;
     QCheckBox* rawLogCheck;
     QCheckBox* showServerList;
+    QCheckBox* m_disableNotifyWhileAwayCheck;
     QCheckBox* useCustomBrowserCheck;
     KLineEdit* browserCmdInput;
     KLineEdit* commandCharInput;

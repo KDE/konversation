@@ -56,6 +56,9 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
 
   showServerList = new QCheckBox(i18n("&Show server list on application startup"), parentFrame, "show_serverlist_check");
   showServerList->setChecked(preferences->getShowServerList());
+  
+  m_disableNotifyWhileAwayCheck = new QCheckBox(i18n("Disable notifications while away"), parentFrame);
+  m_disableNotifyWhileAwayCheck->setChecked(preferences->disableNotifyWhileAway());
 
   useCustomBrowserCheck = new QCheckBox(i18n("Use custom Web &browser:"), parentFrame, "useCustomBrowserCheck");
   useCustomBrowserCheck->setChecked(!preferences->getWebBrowserUseKdeDefault());
@@ -160,6 +163,8 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   row++;
   generalLayout->addMultiCellWidget(showServerList, row, row, 0, 1);
   row++;
+  generalLayout->addMultiCellWidget(m_disableNotifyWhileAwayCheck, row, row, 0, 1);
+  row++;
   generalLayout->addWidget(useCustomBrowserCheck, row, 0);
   generalLayout->addWidget(browserCmdInput, row, 1);
   row++;
@@ -189,6 +194,7 @@ void PrefsPageBehaviour::applyPreferences()
 
   preferences->setRawLog(rawLogCheck->isChecked());
   preferences->setShowServerList(showServerList->isChecked());
+  preferences->setDisableNotifyWhileAway(m_disableNotifyWhileAwayCheck->isChecked());
   preferences->setWebBrowserUseKdeDefault(!useCustomBrowserCheck->isChecked());
   preferences->setWebBrowserCmd(browserCmdInput->text());
 
