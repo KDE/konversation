@@ -26,7 +26,6 @@
 
 // include static variables
 Preferences KonversationApplication::preferences;
-QStringList KonversationApplication::urlList;
 
 KonversationApplication::KonversationApplication()
 {
@@ -44,10 +43,9 @@ KonversationApplication::KonversationApplication()
   // FIXME: change this to use per-identity codecs!
   QTextCodec::setCodecForCStrings(QTextCodec::codecForName(preferences.getCodec().ascii()));
 #endif
-  
+
   // open main window
   mainWindow=new KonversationMainWindow();
-
   connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
 
   // handle autoconnect on startup
@@ -689,10 +687,28 @@ void KonversationApplication::saveOptions(bool updateGUI)
   }
 }
 
-void KonversationApplication::storeURL(const QString &url)
+// FIXME: use KURL maybe?
+void KonversationApplication::storeUrl(const QString& who,const QString& url)
 {
-  // FIXME: use KURL, check that we don't add the same URL twice
-  urlList.append(url);
+  // check that we don't add the same URL twice
+  deleteUrl(who,url);
+  urlList.append(who+" "+url);
+  emit catchUrl(who,url);
+}
+
+const QStringList& KonversationApplication::getUrlList()
+{
+  return urlList;
+}
+
+void KonversationApplication::deleteUrl(const QString& who,const QString& url)
+{
+  urlList.remove(who+" "+url);
+}
+
+void KonversationApplication::clearUrlList()
+{
+  urlList.clear();
 }
 
 void KonversationApplication::openPrefsDialog()

@@ -37,23 +37,25 @@ class KonvDCOP;
 class KonversationApplication : public KApplication
 {
   Q_OBJECT
-  public:
 
+  public:
     static Preferences preferences;
 
     // URL-Catcher
-    // TODO: Provide a list of seen URLs
-    static QStringList urlList;
-    static void storeURL(const QString& url);
+    void storeUrl(const QString& who,const QString& url);
+    const QStringList& getUrlList();
 
-    // Returns a list of signals we should emit
-    QPtrList<IRCEvent> retreiveHooks (EVENT_TYPE type);
+    // DCOP: Returns a list of signals we should emit
+    QPtrList<IRCEvent> retreiveHooks(EVENT_TYPE type);
 
     KonversationApplication();
     ~KonversationApplication();
 
     void syncPrefs();
     Server* getServerByName(const QString& name);
+
+  signals:
+    void catchUrl(const QString& who,const QString& url);
 
   public slots:
     void connectToServer(int number);
@@ -65,6 +67,9 @@ class KonversationApplication : public KApplication
     void openPrefsDialog();
     void closePrefsDialog();
 
+    void deleteUrl(const QString& who,const QString& url);
+    void clearUrlList();
+
     bool emitDCOPSig(const QString& appId, const QString& objId, const QString& signal, QByteArray& data);
 
   protected slots:
@@ -74,6 +79,7 @@ class KonversationApplication : public KApplication
 
   protected:
     QPtrList<Server> serverList;
+    QStringList urlList;
     PrefsDialog* prefsDialog;
     KonvDCOP* dcopObject;
     KonversationMainWindow* mainWindow;

@@ -85,7 +85,6 @@ class Channel : public ChatWindow
     void channelTextEntered();
     void sendChannelText(const QString& line);
     void newTextInView(const QString& highlightColor);
-    void urlCatcher(const QString &url);
     void adjustFocus();
     void showQuickButtons(bool show);
     void showModeButtons(bool show);

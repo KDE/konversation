@@ -5,7 +5,6 @@ berkus: Move Encoding into identity
 berkus: Logrotate with timer or at shutdown, compress rotated logs
 
 Eisfuchs: User interface for dialog options (don't show again dialogs)
-Eisfuchs: URL catcher user interface
 
 Nick completion should remember last position
 Reverse-I-Search

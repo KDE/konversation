@@ -199,9 +199,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           else
             server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1.").arg(sourceNick));
 
-          server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002-2003 by the Konversation team").arg(QString(VERSION)+QString(" Build %1").arg(COMMIT)));
-// TODO: Switch here when i18n-freeze is over
-//          server->ctcpReply(sourceNick,QString("VERSION Konversation %1 Build %2 (C)2002-2003 by the Konversation team").arg(QString(VERSION)).arg(COMMIT)));
+          server->ctcpReply(sourceNick,
+                            i18n("VERSION Konversation %1 Build %2 (C)2002-2003 by the Konversation team")
+                            .arg(VERSION)
+                            .arg(COMMIT));
         }
       }
       // DCC request?

@@ -198,7 +198,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(channelInput,SIGNAL (pageDown()),getTextView(),SLOT (pageDown()) );
   
   connect(textView,SIGNAL (newText(const QString&)),this,SLOT (newTextInView(const QString&)) );
-  connect(textView,SIGNAL (newURL(const QString&)),this, SLOT (urlCatcher(const QString&)) );
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
 
@@ -594,11 +593,6 @@ void Channel::quickButtonClicked(const QString &buttonText)
   }
   // single line without newline needs to be copied into input line
   else channelInput->setText(out);
-}
-
-void Channel::urlCatcher(const QString &url)
-{
-  KonversationApplication::storeURL(url);
 }
 
 void Channel::addNickname(const QString& nickname,const QString& hostmask,bool op,bool voice)

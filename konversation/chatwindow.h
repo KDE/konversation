@@ -50,7 +50,8 @@ class ChatWindow : public QVBox
       Notice,
       SNotice,
       ChannelList,
-      Konsole
+      Konsole,
+      UrlCatcher
     };
 
     void setServer(Server* newServer);

@@ -46,6 +46,7 @@ class NicksOnline;
 class NotifyDialog;
 class QuickButtonsDialog;
 class ColorConfiguration;
+class UrlCatcher;
 
 class KonversationMainWindow : public KMainWindow
 {
@@ -79,6 +80,7 @@ class KonversationMainWindow : public KMainWindow
   public slots:
     void addDccPanel();     // connected in server class
     void addKonsolePanel(); // connected in server class
+    void addUrlCatcher();
 
     void resetLag();
     void updateLag(Server* lagServer,int msec);
@@ -159,6 +161,7 @@ class KonversationMainWindow : public KMainWindow
 
     void goToTab(int page);
 
+    void closeUrlCatcher();
     void closeDccPanel();
     void deleteDccPanel();
 
@@ -170,6 +173,7 @@ class KonversationMainWindow : public KMainWindow
     ChatWindow* frontView;
     ChatWindow* searchView;
 
+    UrlCatcher* urlCatcherPanel;
     DccPanel* dccPanel;
     bool dccPanelOpen;
 

@@ -263,7 +263,9 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
     // next search begins right after the link
     pos+=link.length();
     // tell the program that we have found a new url
-    emit newURL(url);
+
+    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+    konvApp->storeUrl(whoSent,url);
   }
 
   // Hilight

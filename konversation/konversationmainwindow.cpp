@@ -42,6 +42,7 @@
 #include "nicksonline.h"
 #include "colorconfiguration.h"
 #include "konsolepanel.h"
+#include "urlcatcher.h"
 
 KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 {
@@ -51,6 +52,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   frontView=0;
   searchView=0;
   frontServer=0;
+  urlCatcherPanel=0;
   dccPanel=0;
   dccPanelOpen=false;
 
@@ -84,9 +86,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
   new KAction(i18n("Configure Colors"), 0, 0, this, SLOT(openColorConfiguration()), actionCollection(), "open_colors_window");
   new KAction(i18n("Channel list"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
-// TODO: Switch to 18n() after i18n-Freeze has ended
-  new KAction(QString("Konsole"), 0, 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
-//  new KAction(i18n("Open a Konsole"), 0, 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
+  new KAction(i18n("Open a Konsole"), 0, 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
+  new KAction(i18n("Open URL catcher"), 0, 0, this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
 
   // Actions to navigate through the different pages
   new KAction(i18n("Next Tab"),0,KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
@@ -246,6 +247,7 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
 
     else if(viewType==ChatWindow::DccPanel)     closeDccPanel();
     else if(viewType==ChatWindow::Konsole)      closeKonsolePanel(view);
+    else if(viewType==ChatWindow::UrlCatcher)   closeUrlCatcher();
 
 /*
     else if(viewType==ChatWindow::DccChat);
@@ -280,6 +282,41 @@ void KonversationMainWindow::openChannelList()
       getViewContainer()->showPage(panel);
     else
       frontServer->addChannelListPanel();
+  }
+}
+
+void KonversationMainWindow::addUrlCatcher()
+{
+  // if the panel wasn't open yet
+  if(urlCatcherPanel==0)
+  {
+    urlCatcherPanel=new UrlCatcher(getViewContainer());
+    addView(urlCatcherPanel,2,i18n("URL catcher"),true);
+
+    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+    connect(konvApp,SIGNAL (catchUrl(const QString&,const QString&)),
+        urlCatcherPanel,SLOT (addUrl(const QString&,const QString&)) );
+    connect(urlCatcherPanel,SIGNAL (deleteUrl(const QString&,const QString&)),
+                      konvApp,SLOT (deleteUrl(const QString&,const QString&)) );
+    connect(urlCatcherPanel,SIGNAL (clearUrlList()),
+                      konvApp,SLOT (clearUrlList()) );
+
+    QStringList urlList=konvApp->getUrlList();
+    for(unsigned int index=0;index<urlList.count();index++)
+    {
+      QString urlItem=urlList[index];
+      urlCatcherPanel->addUrl(urlItem.section(' ',0,0),urlItem.section(' ',1,1));
+    } // for
+  }
+}
+
+void KonversationMainWindow::closeUrlCatcher()
+{
+  // if there actually is a dcc panel
+  if(urlCatcherPanel)
+  {
+    delete urlCatcherPanel;
+    urlCatcherPanel=0;
   }
 }
 
