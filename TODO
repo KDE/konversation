@@ -42,7 +42,6 @@ LONG-TERM:
 
 IDEAS:
 - Automatically gzip files before DCC SEND
-- Fortunes
 - Multi line behaviour in input line with "little enter"
 
 
