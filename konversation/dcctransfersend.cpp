@@ -186,8 +186,16 @@ void DccTransferSend::cleanUp()
   m_tmpFile = QString::null;
   stopConnectionTimer();
   stopAutoUpdateView();
-  m_sendSocket->close();  // in case of aborting
-  m_serverSocket->close();
+  if( m_sendSocket )
+  {
+    m_sendSocket->close();
+    m_sendSocket = 0;  // the instance will be deleted automatically by its parent
+  }
+  if( m_serverSocket )
+  {
+    m_serverSocket->close();
+    m_serverSocket = 0;  // the instance will be deleted automatically by its parent
+  }
 }
 
 void DccTransferSend::heard()  // slot
