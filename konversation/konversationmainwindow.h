@@ -144,7 +144,7 @@ class KonversationMainWindow : public KMainWindow
     void closeDccPanel();
     void deleteDccPanel();
     
-    virtual void showEvent(QShowEvent* e);
+    virtual bool event(QEvent* e);
 
     LedTabWidget* getViewContainer();
 

@@ -741,10 +741,13 @@ void KonversationMainWindow::addIRCColor()
   }
 }
 
-void KonversationMainWindow::showEvent(QShowEvent* e)
+bool KonversationMainWindow::event(QEvent* e)
 {
-  KMainWindow::showEvent(e);
-  emit endNotification(getViewContainer()->currentPage());
+  if(e->type() == QEvent::WindowActivate) {
+    emit endNotification(getViewContainer()->currentPage());
+  }
+  
+  return KMainWindow::event(e);
 }
 
 void KonversationMainWindow::serverQuit(Server* server)
