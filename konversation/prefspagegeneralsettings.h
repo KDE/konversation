@@ -57,6 +57,7 @@ class PrefsPageGeneralSettings : public PrefsPage
     QCheckBox* trayIconCheck;
     QCheckBox* trayNotifyCheck;
     QCheckBox* hideUnimportantCheck;
+    QCheckBox* disableExpansionCheck;
 
     QLabel* reconnectTimeoutLabel;
     QSpinBox* reconnectTimeoutSpin;

@@ -749,6 +749,9 @@ void Preferences::setShowRememberLineInAllWindows(bool s) { showRememberLineInAl
 bool Preferences::getHideUnimportantEvents()           { return hideUnimportantEvents; }
 void Preferences::setHideUnimportantEvents(bool state) { hideUnimportantEvents=state; }
 
+bool Preferences::getDisableExpansion() { return disableExpansion; }
+void Preferences::setDisableExpansion(bool state) { disableExpansion = state; }
+
 // Web Browser
 bool Preferences::getWebBrowserUseKdeDefault() { return webBrowserUseKdeDefault; }
 void Preferences::setWebBrowserUseKdeDefault(bool state) { webBrowserUseKdeDefault = state; }

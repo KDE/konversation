@@ -72,6 +72,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   trayNotifyCheck=new QCheckBox(i18n("Use sys&tem tray for new message notification"),parentFrame,"tray_notify_check");
   trayNotifyCheck->setEnabled(trayIconCheck->isChecked());
   hideUnimportantCheck=new QCheckBox(i18n("&Hide Join/Part/Nick events"),parentFrame,"hide_unimportant_check");
+  disableExpansionCheck=new QCheckBox(i18n("&Disable %C, %B, %G, etc. expansion"),parentFrame,"disable_expansion_check");
 
   connect(trayIconCheck, SIGNAL(toggled(bool)), trayNotifyCheck, SLOT(setEnabled(bool)));
 
@@ -94,6 +95,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   trayIconCheck->setChecked(preferences->getShowTrayIcon());
   trayNotifyCheck->setChecked(preferences->getTrayNotify());
   hideUnimportantCheck->setChecked(preferences->getHideUnimportantEvents());
+  disableExpansionCheck->setChecked(preferences->getDisableExpansion());
 
   QHBox* generalSpacer=new QHBox(parentFrame);
 
@@ -121,6 +123,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   generalSettingsLayout->addMultiCellWidget(trayNotifyCheck,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(hideUnimportantCheck,row,row,0,2);
+  row++;
+  generalSettingsLayout->addMultiCellWidget(disableExpansionCheck,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(generalSpacer,row,row,0,2);
   generalSettingsLayout->setRowStretch(row,10);
@@ -154,6 +158,7 @@ void PrefsPageGeneralSettings::applyPreferences()
   preferences->setShowTrayIcon(trayIconCheck->isChecked());
   preferences->setTrayNotify(trayNotifyCheck->isChecked());
   preferences->setHideUnimportantEvents(hideUnimportantCheck->isChecked());
+  preferences->setDisableExpansion(disableExpansionCheck->isChecked());
 
   preferences->setMaximumLagTime(reconnectTimeoutSpin->value());
 }

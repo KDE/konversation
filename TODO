@@ -8,7 +8,6 @@ TODO-list for Konversation
 
 SHORT-TERM (URGENT):
 - Limit backlog to x lines or KB
-- Option to disable %G, %C %B... expansion
 - Make URLs like http://user@somedomain.com/ work
 - /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
 - Add ETA counter for DCC transfers
@@ -38,6 +37,7 @@ LONG-TERM:
 - "snotices" tab for all server notices (prefix without "!" )
 - Make LED colors for nick list configurable via GUI
 - Detect shell commands and warn the user
+- Ban List. A window in which the user can see the bans of a channel(and remove them).
 
 
 IDEAS:

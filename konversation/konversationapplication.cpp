@@ -578,6 +578,7 @@ void KonversationApplication::readOptions()
   preferences.setBringToFront(config->readBoolEntry("BringToFront",preferences.getBringToFront()));
 
   preferences.setHideUnimportantEvents(config->readBoolEntry("HideUnimportantEvents",preferences.getHideUnimportantEvents()));
+  preferences.setDisableExpansion(config->readBoolEntry("DisableExpansion", preferences.getDisableExpansion()));
 
   preferences.setAutoReconnect(config->readBoolEntry("AutoReconnect",preferences.getAutoReconnect()));
   preferences.setAutoRejoin(config->readBoolEntry("AutoRejoin",preferences.getAutoRejoin()));
@@ -826,6 +827,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("BringToFront",preferences.getBringToFront());
 
   config->writeEntry("HideUnimportantEvents",preferences.getHideUnimportantEvents());
+  config->writeEntry("DisableExpansion",preferences.getDisableExpansion());
 
   config->writeEntry("AutoReconnect",preferences.getAutoReconnect());
   config->writeEntry("AutoRejoin",preferences.getAutoRejoin());

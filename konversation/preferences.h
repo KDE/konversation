@@ -381,6 +381,9 @@ class Preferences : public QObject
     bool getHideUnimportantEvents();
     void setHideUnimportantEvents(bool state);
     
+    bool getDisableExpansion();
+    void setDisableExpansion(bool state);
+    
     // Web Browser
     bool getWebBrowserUseKdeDefault();
     void setWebBrowserUseKdeDefault(bool state);
@@ -539,6 +542,7 @@ class Preferences : public QObject
     bool showTopic;
     bool showRememberLineInAllWindows;
     bool hideUnimportantEvents;
+    bool disableExpansion;
     
     // Web Browser
     bool webBrowserUseKdeDefault;

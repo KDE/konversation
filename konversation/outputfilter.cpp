@@ -88,19 +88,22 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
 
   QString inputLine(originalLine);
 
-  // replace placeholders
-  inputLine.replace(QRegExp("%%"),"%\x01");  // make sure to protect double %%
-  inputLine.replace(QRegExp("%B"),"\x02");   // replace %B with bold char
-  inputLine.replace(QRegExp("%C"),"\x03");   // replace %C with color char
-  inputLine.replace(QRegExp("%G"),"\x07");   // replace %G with ASCII BEL 0x07
-  inputLine.replace(QRegExp("%I"),"\x09");   // replace %I with italics char
-  inputLine.replace(QRegExp("%O"),"\x0f");   // replace %O with reset to default char
-  inputLine.replace(QRegExp("%S"),"\x13");   // replace %S with strikethru char
-//  inputLine.replace(QRegExp("%?"),"\x15");
-  inputLine.replace(QRegExp("%R"),"\x16");   // replace %R with reverse char
-  inputLine.replace(QRegExp("%U"),"\x1f");   // replace %U with underline char
+  if(!KonversationApplication::preferences.getDisableExpansion())
+  {
+    // replace placeholders
+    inputLine.replace(QRegExp("%%"),"%\x01");  // make sure to protect double %%
+    inputLine.replace(QRegExp("%B"),"\x02");   // replace %B with bold char
+    inputLine.replace(QRegExp("%C"),"\x03");   // replace %C with color char
+    inputLine.replace(QRegExp("%G"),"\x07");   // replace %G with ASCII BEL 0x07
+    inputLine.replace(QRegExp("%I"),"\x09");   // replace %I with italics char
+    inputLine.replace(QRegExp("%O"),"\x0f");   // replace %O with reset to default char
+    inputLine.replace(QRegExp("%S"),"\x13");   // replace %S with strikethru char
+    //  inputLine.replace(QRegExp("%?"),"\x15");
+    inputLine.replace(QRegExp("%R"),"\x16");   // replace %R with reverse char
+    inputLine.replace(QRegExp("%U"),"\x1f");   // replace %U with underline char
 
-  inputLine.replace(QRegExp("%\x01"),"%");   // restore double %% as single %
+    inputLine.replace(QRegExp("%\x01"),"%");   // restore double %% as single %
+  }
 
   QString line=inputLine.lower();
 
