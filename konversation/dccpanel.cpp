@@ -83,7 +83,6 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   m_listView->setColumnAlignment(Column::CPS,           AlignRight);
   
   m_listView->setSorting(Column::OfferDate, false);
-  m_listView->setShowSortIndicator(true);
   
   connect(m_listView,SIGNAL (selectionChanged()),this,SLOT (updateButton()) );
   
