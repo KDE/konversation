@@ -24,6 +24,7 @@
 #include <qpixmap.h>
 
 #include "images.h"
+#include "nick.h"
 
 /*
   @author Matthias Gierlings
@@ -40,7 +41,8 @@ class LedListViewItem : public KListViewItem
                     bool owner,
                     bool op,
                     bool halfop,
-                    bool voice);
+                    bool voice,
+		    Nick *n);
 
     ~LedListViewItem();
 
@@ -54,8 +56,10 @@ class LedListViewItem : public KListViewItem
     void toggleOpState();
     void toggleVoiceState();
     virtual int compare(QListViewItem* item,int col,bool ascending) const;
+    Nick *getNick();
 
   protected:
+    Nick *nick;
     QPixmap adminLedOn;
     QPixmap ownerLedOff;
     QPixmap opLedOn;

@@ -27,7 +27,8 @@ LedListViewItem::LedListViewItem(KListView* parent,
                                  bool owner,
                                  bool op,
                                  bool halfop,
-                                 bool voice) :
+                                 bool voice,
+				 Nick *n) :
                    KListViewItem(parent,QString::null,passed_label,passed_label2)
 {
   adminState=admin;
@@ -35,6 +36,8 @@ LedListViewItem::LedListViewItem(KListView* parent,
   opState=op;
   halfopState=halfop;
   voiceState=voice;
+  Q_ASSERT(n);
+  nick = n;
 
   currentLeds=leds.getLed(0,true);
   adminLedOn =currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
@@ -140,4 +143,8 @@ int LedListViewItem::getFlags() const
   else                 flags=KonversationApplication::preferences.getNoRightsValue();
 
   return flags;
+}
+
+Nick *LedListViewItem::getNick() {
+  return nick;
 }

@@ -59,6 +59,7 @@ class Nick
 
     void setHostmask(const QString& newMask);
     void setNickname(const QString& newName);
+    QString tooltip();
 
   protected:
     bool admin;

@@ -16,6 +16,7 @@
 
 #include <klocale.h>
 #include <kdebug.h>
+#include <qtooltip.h>
 
 #include "nicklistview.h"
 #include "linkaddressbook/addressbook.h"
@@ -79,6 +80,10 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
   {
     kdWarning() << "NickListView::NickListView(): Could not create popup!" << endl;
   }
+
+  // We have our own tooltips, don't use the default QListView ones
+  setShowToolTips(false);
+  m_tooltip = new Konversation::KonversationNickListViewToolTip(viewport(), this);
 }
 
 NickListView::~NickListView()

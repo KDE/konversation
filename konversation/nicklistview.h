@@ -18,6 +18,8 @@
 
 #include <klistview.h>
 #include "channel.h"
+#include "nicklisttooltip.h"
+
 /*
   @author Dario Abatianni
 */
@@ -50,7 +52,7 @@ class NickListView : public KListView
   protected:
     void contextMenuEvent(QContextMenuEvent* ce);
     void insertAssociationSubMenu();
-	
+    Konversation::KonversationNickListViewToolTip *m_tooltip;
     QPopupMenu* popup;
     QPopupMenu* modes;
     QPopupMenu* kickban;

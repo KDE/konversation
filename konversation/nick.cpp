@@ -18,6 +18,10 @@
 #include "ledlistviewitem.h"
 #include "nick.h"
 #include "addressbook.h"
+#include <qtooltip.h>
+#include <klocale.h>
+#include <qtextstream.h>
+#include <kabc/phonenumber.h> 
 
 Nick::Nick(KListView* listView,
            const QString& newName,
@@ -31,9 +35,9 @@ Nick::Nick(KListView* listView,
   addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(newName);
   QString realname = addressee.realName();
   if(!realname.isEmpty() && realname.lower() != newName.lower())
-  	listViewItem=new LedListViewItem(listView,newName + " (" + realname + ")",newMask,admin,owner,op,halfop,voice);
+  	listViewItem=new LedListViewItem(listView,newName + " (" + realname + ")",newMask,admin,owner,op,halfop,voice, this);
   else
-	listViewItem=new LedListViewItem(listView,newName,newMask,admin,owner,op,halfop,voice);
+	listViewItem=new LedListViewItem(listView,newName,newMask,admin,owner,op,halfop,voice, this);
   nickname=newName;
   hostmask=newMask;
 
@@ -42,6 +46,7 @@ Nick::Nick(KListView* listView,
   setOp(op);
   setHalfop(halfop);
   setVoice(voice);
+//  QToolTip::add(listView->viewport(), i18n("<qt>This person is %1</qt>").arg(realname));
 }
 
 Nick::~Nick()
@@ -116,6 +121,50 @@ void Nick::setVoice(bool state)
   voice=state;
   listViewItem->setState(admin,owner,op,halfop,voice);
 }
+
+QString Nick::tooltip() {
+  if(addressee.isEmpty()) return QString::null;
+
+  QString strTooltip;
+  QTextStream tooltip( &strTooltip, IO_WriteOnly );
+  
+  tooltip << "<qt>";
+  if(!addressee.formattedName().isEmpty())
+    tooltip << "<tr><td><b>" << addressee.formattedName() << "</b>";
+
+  QStringList emails = addressee.emails();
+  for( QStringList::Iterator it = emails.begin(); it != emails.end(); ++it) {
+    tooltip << "<br/>" << *it;
+  }
+  bool isdirty = false;
+  tooltip << "%1<table>";
+  if(!addressee.organization().isEmpty()) {
+    tooltip << "<tr><td>" << addressee.organizationLabel() << "</td><td>" << addressee.organization() << "</td></tr>";
+    isdirty = true;
+  }
+  if(!addressee.role().isEmpty()) {
+    tooltip << "<tr><td>" << addressee.roleLabel() << "</td><td>" << addressee.role() << "</td></tr>";
+    isdirty = true;
+  }
+  KABC::PhoneNumber::List numbers = addressee.phoneNumbers();
+  for( KABC::PhoneNumber::List::Iterator it = numbers.begin(); it != numbers.end(); ++it) {
+    tooltip << "<tr><td>" << (*it).label() << "</td><td>" << (*it).number() << "</td></tr>";
+    isdirty = true;
+  } 
+
+  if(!addressee.birthday().toString().isEmpty() ) {
+    tooltip << "<tr><td>" << addressee.birthdayLabel() << "</td><td>" << addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
+    isdirty = true;
+  }
+
+  tooltip << "<table></qt>";
+  
+  if(isdirty)
+    strTooltip = strTooltip.arg("<br/>");
+  
+  return strTooltip;
+}
+    
 
 bool Nick::isAdmin()  { return admin; }
 bool Nick::isOwner()  { return owner; }
