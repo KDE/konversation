@@ -114,6 +114,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   updateTimer.start(500);
   connect(&updateTimer,SIGNAL (timeout()),this,SLOT (updateDisplay()));
 
+  connect(channelListView,SIGNAL (doubleClicked(QListViewItem*,const QPoint&,int)),
+                       this,SLOT (doubleClicked(QListViewItem*,const QPoint&,int)) );
+
   connect(minUsersSpin,SIGNAL (valueChanged(int)),this,SLOT(setMinUsers(int)) );
   connect(maxUsersSpin,SIGNAL (valueChanged(int)),this,SLOT(setMaxUsers(int)) );
   connect(this,SIGNAL (adjustMinValue(int)),minUsersSpin,SLOT (setValue(int)) );
@@ -145,6 +148,11 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
 
 ChannelListPanel::~ChannelListPanel()
 {
+}
+
+void ChannelListPanel::doubleClicked(QListViewItem*,const QPoint&,int)
+{
+  joinChannelClicked();
 }
 
 void ChannelListPanel::refreshList()

@@ -56,6 +56,7 @@ class ChannelListPanel : public ChatWindow
     void updateDisplay();      // will be called by a timer to update regularly
     void saveList();
     void joinChannelClicked();
+    void doubleClicked(QListViewItem*,const QPoint&,int);
 
     void setMinUsers(int num);
     void setMaxUsers(int num);
