@@ -60,6 +60,7 @@ class PrefsPageIgnore : public PrefsPage
     QLineEdit* ignoreInput;
     QPushButton* newButton;
     QPushButton* removeButton;
+    QPushButton* clearButton;
     QPtrList<IgnoreCheckBox> checkList;
 };
 

@@ -53,10 +53,11 @@ PrefsPageIgnore::PrefsPageIgnore(QFrame* newParent,Preferences* newPreferences) 
   ignoreListView->setAcceptDrops(true);
 
   // Set up the buttons to the right of the list
-  QGrid* buttonBox=new QGrid(3,QGrid::Vertical,listBox);
+  QGrid* buttonBox=new QGrid(4,QGrid::Vertical,listBox);
   buttonBox->setSpacing(spacingHint());
   newButton=new QPushButton(i18n("&New"),buttonBox);
   removeButton=new QPushButton(i18n("&Remove"),buttonBox);
+  clearButton=new QPushButton(i18n("&Clear"),buttonBox);
 
   // Set up the checkboxes
   QHBox* flagBox=new QHBox(parentFrame);
@@ -83,6 +84,8 @@ PrefsPageIgnore::PrefsPageIgnore(QFrame* newParent,Preferences* newPreferences) 
                  this,SLOT(newIgnore()));
   connect(removeButton,SIGNAL(clicked()),
                     this,SLOT(removeIgnore()));
+  connect(clearButton,SIGNAL(clicked()),
+		    ignoreListView,SLOT(clear()));
   connect(ignoreListView,SIGNAL(selectionChanged(QListViewItem*)),
                       this,SLOT(select(QListViewItem*)));
 
