@@ -378,6 +378,7 @@ void IdentityDialog::slotOk()
   
   refreshCurrentIdentity();
   KonversationApplication::preferences.setIdentityList(m_identityList);
+  static_cast<KonversationApplication*>(kapp)->saveOptions(true);
   accept();
 }
 

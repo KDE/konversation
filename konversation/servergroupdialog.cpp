@@ -366,6 +366,7 @@ void ServerGroupDialog::slotOk()
   if(m_serverList.count() == 0) {
     KMessageBox::error(this, i18n("You need to add at least one server to the network."));
   } else {
+    static_cast<KonversationApplication*>(kapp)->saveOptions(true);
     accept();
   }
 }
