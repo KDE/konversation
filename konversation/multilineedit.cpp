@@ -32,6 +32,7 @@ MultilineEdit::MultilineEdit(QWidget* parent,QString text) :
   dialogLayout->setSpacing(spacingHint());
   // add the text editor
   textEditor=new KTextEdit(page,"multiline_text_editor");
+  textEditor->setTextFormat(PlainText);
   textEditor->setText(text);
   returnText=text;
 
