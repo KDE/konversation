@@ -596,23 +596,19 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
 {
   QString time;
   QString message(rawMessage);
-  QString first(firstColumn);
+  QString nick(firstColumn);
   QString backlogColor=KonversationApplication::preferences.getColor("BacklogMessage");
 
-  if(!first.isEmpty() && !first.startsWith("<") && !first.startsWith("*")) {
-    first = "|" + first + "|";
+  time = nick.section(' ', 0, 4);
+  nick = nick.section(' ', 5);
+
+  if(!nick.isEmpty() && !nick.startsWith("<") && !nick.startsWith("*")) {
+    nick = "|" + nick + "|";
   }
 
   // Nicks are in "<nick>" format so replace the "<>"
-  first.replace("<","&lt;");
-  first.replace(">","&gt;");
-
-  // extract timestamp from message string
-  if(message.startsWith("["))
-  {
-    time=message.section(' ',0,0);
-    message=message.section(' ',1);
-  }
+  nick.replace("<","&lt;");
+  nick.replace(">","&gt;");
 
   QString line;
 
@@ -622,7 +618,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     line = "<p><font color=\"#" + backlogColor + "\">%1 %2 %3</font></p>\n";
   }
 
-  line = line.arg(time, first, filter(message, backlogColor, NULL, false));
+  line = line.arg(time, nick, filter(message, backlogColor, NULL, false));
 
   doAppend(line);
 }

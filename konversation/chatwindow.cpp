@@ -334,17 +334,13 @@ void ChatWindow::setLogfileName(const QString& name)
         // if a tab character is present in the line
         if(backlogLine.find('\t')!=-1)
         {
-          // extract timestamp from log
-          QString backlogTime=backlogLine.left(backlogLine.find(' '));
-          // cut timestamp from line
-          backlogLine=backlogLine.mid(backlogLine.find(' ')+1);
           // extract first column from log
           QString backlogFirst=backlogLine.left(backlogLine.find('\t'));
           // cut first column from line
           backlogLine=backlogLine.mid(backlogLine.find('\t')+1);
           // Logfile is in utf8 so we don't need to do encoding stuff here
           // append backlog with time and first column to text view
-          appendBacklogMessage(backlogFirst,backlogTime+' '+backlogLine);
+          appendBacklogMessage(backlogFirst, backlogLine);
         }
       } // while
       backlog.unsetDevice();
