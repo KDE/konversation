@@ -70,8 +70,15 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   encodings=KGlobal::charsets()->descriptiveEncodingNames();
 
   // from ksirc: remove utf16/ucs2 as it just doesn't work for IRC
-  encodings.remove( "utf16" );
-  encodings.remove( "iso-10646" );
+  QStringList::Iterator it=encodings.begin();
+  while(it != encodings.end())
+  {
+    QString encoding=KGlobal::charsets()->encodingForName(*it);
+    if( encoding=="utf16" || encoding.startsWith("iso-10646") )
+      it=encodings.remove(it);
+    else
+      ++it;
+  }
 
   // add encodings to combo box
   codecComboBox->insertStringList(encodings);

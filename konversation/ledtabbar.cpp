@@ -82,8 +82,18 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
   {
     // Encoding {
     QStringList encodingsListDesc=KGlobal::charsets()->descriptiveEncodingNames();
-    for(QStringList::iterator it=encodingsListDesc.begin(); it!=encodingsListDesc.end(); ++it)
-      encodingsList.append(KGlobal::charsets()->encodingForName(*it));
+    QStringList::Iterator it=encodingsListDesc.begin();
+    while(it != encodingsListDesc.end())
+    {
+      QString encodingName=KGlobal::charsets()->encodingForName(*it);
+      if( encodingName == "utf16" || encodingName.startsWith("iso-10646") )
+        it=encodingsListDesc.remove(it);
+      else
+      {
+        encodingsList.append(encodingName);
+        ++it;
+      }
+    }
     popupEncoding=new KPopupMenu(this,"ledtabbar_context_menu_encoding");
     popupEncoding->setCheckable(true);
     for(unsigned int j=0; j<encodingsList.count(); ++j)
