@@ -30,7 +30,8 @@ class KonvDCOP : public QObject, virtual public KonvIface
     QPtrList<IRCEvent> registered_events;
 
     QString getNickname (const QString &server);
-
+    QString getAnyNickname ();
+	    
   signals:
     void dcopSay(const QString& server,const QString& target,const QString& command);
     void dcopInfo(const QString& string);
@@ -98,6 +99,7 @@ class KonvIdentDCOP : public QObject, virtual public KonvIdentityIface
   void setReturnMessage(const QString &identity, const QString& message);
   QString getReturnMessage(const QString &identity);
 
+  QStringList listIdentities();
 };
 
 class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface

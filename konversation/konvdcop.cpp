@@ -178,11 +178,29 @@ QString KonvDCOP::getNickname (const QString &server)
   return static_cast<KonversationApplication *>(kapp)->getServerByName(server)->getNickname();
 }
 
+QString KonvDCOP::getAnyNickname ()
+{
+  const QPtrList<Server>serverlist = static_cast<KonversationApplication *>(kapp)->getServerList();
+  Server *server = serverlist.getFirst();
+  return server->getNickname();
+}
+
 // Identity stuff
 KonvIdentDCOP::KonvIdentDCOP()
              : DCOPObject("KonvDCOPIdentity"),
                QObject(0, "KonvDCOPIdentity")
 {
+}
+
+QStringList KonvIdentDCOP::listIdentities()
+{
+  QStringList identities;
+  QValueList<IdentityPtr> ids = KonversationApplication::preferences.getIdentityList();
+  for(QValueList<IdentityPtr>::iterator it = ids.begin(); it != ids.end(); ++it)
+  {
+    identities.append((*it)->getName());
+  }
+  return identities;
 }
 
 void KonvIdentDCOP::setrealName(const QString &id_name, const QString& name)

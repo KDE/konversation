@@ -29,6 +29,7 @@ class KonvIface : virtual public DCOPObject
     virtual int registerEventHook (const QString &type, const QString &criteria, const QString &app, const QString &object, const QString &signal) = 0;
     virtual void unregisterEventHook (int id) = 0;
     virtual QString getNickname (const QString &serverid) = 0;
+    virtual QString getAnyNickname () = 0; 
     virtual QStringList listServers() = 0;
     virtual QStringList listConnectedServers() = 0;
 };
@@ -66,6 +67,8 @@ class KonvIdentityIface : virtual public DCOPObject
     virtual QString getAwayMessage(const QString &identity) = 0;
     virtual void setReturnMessage(const QString &identity, const QString& message) = 0;
     virtual QString getReturnMessage(const QString &identity) = 0;
+
+    virtual QStringList listIdentities() = 0;
 };
 
 class KonvPreferencesIface : virtual public DCOPObject
