@@ -17,8 +17,6 @@
 
 #include <ktabwidget.h>
 
-#include "images.h"
-
 /*
   @author Dario Abatianni
 */
@@ -59,8 +57,6 @@ class LedTabWidget : public KTabWidget
   protected:
     void moveTabToIndex(int oldIndex,int newIndex);
     LedTabBar* tabBar();
-
-    Images images;
 
 #ifndef QT_NO_WHEELEVENT
     void wheelEvent(QWheelEvent *e);

@@ -14,6 +14,7 @@
 
 #include <kdebug.h>
 
+#include "images.h"
 #include "konversationapplication.h"
 #include "ledtab.h"
 
@@ -21,8 +22,9 @@ LedTab::LedTab(QWidget* newWidget,const QString& label,int newColor,bool on) :
           QTab(label)
 {
   // First of all set up the icons
-  iconOn=images.getLed(newColor,true);
-  iconOff=images.getLed(newColor,false);
+  Images* images=KonversationApplication::instance()->images();
+  iconOn=images->getLed(newColor,true);
+  iconOff=images->getLed(newColor,false);
 
   installEventFilter(this);
 

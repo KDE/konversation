@@ -12,45 +12,26 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <kstandarddirs.h>
+#include <qbitmap.h>
+#include <qpainter.h>
+
 #include <kdebug.h>
+#include <kiconloader.h>
+#include <kstandarddirs.h>
 
 #include "images.h"
 
 Images::Images()
 {
-  // Get standard directories
-  KStandardDirs kstd;
-
-  // Find our own image directory
-  QString prefix=kstd.findResource("data","konversation/images/");
-
-
-  // Setup pixmaps for the LEDs
-  redLedOn.setPixmap(prefix+"led_red_on.png",QIconSet::Automatic);
-  redLedOff.setPixmap(prefix+"led_red_off.png",QIconSet::Automatic);
-  greenLedOn.setPixmap(prefix+"led_green_on.png",QIconSet::Automatic);
-  greenLedOff.setPixmap(prefix+"led_green_off.png",QIconSet::Automatic);
-  blueLedOn.setPixmap(prefix+"led_blue_on.png",QIconSet::Automatic);
-  blueLedOff.setPixmap(prefix+"led_blue_off.png",QIconSet::Automatic);
-  yellowLedOn.setPixmap(prefix+"led_yellow_on.png",QIconSet::Automatic);
-  yellowLedOff.setPixmap(prefix+"led_yellow_off.png",QIconSet::Automatic);
-
-  bigRedLedOn.setPixmap(prefix+"big_led_red_on.png",QIconSet::Automatic);  // USE_MDI
-  bigRedLedOff.setPixmap(prefix+"big_led_red_off.png",QIconSet::Automatic);  // USE_MDI
-  bigGreenLedOn.setPixmap(prefix+"big_led_green_on.png",QIconSet::Automatic);  // USE_MDI
-  bigGreenLedOff.setPixmap(prefix+"big_led_green_off.png",QIconSet::Automatic);  // USE_MDI
-  bigBlueLedOn.setPixmap(prefix+"big_led_blue_on.png",QIconSet::Automatic);  // USE_MDI
-  bigBlueLedOff.setPixmap(prefix+"big_led_blue_off.png",QIconSet::Automatic);  // USE_MDI
-  bigYellowLedOn.setPixmap(prefix+"big_led_yellow_on.png",QIconSet::Automatic);  // USE_MDI
-  bigYellowLedOff.setPixmap(prefix+"big_led_yellow_off.png",QIconSet::Automatic);  // USE_MDI
+  initializeLeds();
+  initializeNickIcons();
 }
 
 Images::~Images()
 {
 }
 
-QIconSet Images::getLed(int color,bool on,bool big)
+QIconSet Images::getLed(int color,bool on,bool big) const
 {
   QIconSet led;
 
@@ -85,7 +66,111 @@ QIconSet Images::getLed(int color,bool on,bool big)
   return led;
 }
 
-QIconSet Images::getRedLed(bool on)     { return getLed(0,on); }
-QIconSet Images::getGreenLed(bool on)   { return getLed(1,on); }
-QIconSet Images::getBlueLed(bool on)    { return getLed(2,on); }
-QIconSet Images::getYellowLed(bool on)  { return getLed(3,on); }
+QIconSet Images::getRedLed(bool on)    const { return getLed(0,on); }
+QIconSet Images::getGreenLed(bool on)  const { return getLed(1,on); }
+QIconSet Images::getBlueLed(bool on)   const { return getLed(2,on); }
+QIconSet Images::getYellowLed(bool on) const { return getLed(3,on); }
+
+QPixmap Images::getNickIcon(NickPrivilege privilege,bool isAway) const
+{
+  return nickIcons[privilege][isAway?1:0];
+}
+
+// private functions //
+
+//TODO: there's room for optimization as pahlibar said. (strm)
+
+// the below two functions were taken from kopeteonlinestatus.cpp.
+static QBitmap overlayMasks( const QBitmap *under, const QBitmap *over )
+{
+  if ( !under && !over ) return QBitmap();
+  if ( !under ) return *over;
+  if ( !over ) return *under;
+
+  QBitmap result = *under;
+  bitBlt( &result, 0, 0, over, 0, 0, over->width(), over->height(), Qt::OrROP );
+  return result;
+}
+
+static QPixmap overlayPixmaps( const QPixmap &under, const QPixmap &over )
+{
+  if ( over.isNull() ) return under;
+
+  QPixmap result = under;
+  result.setMask( overlayMasks( under.mask(), over.mask() ) );
+
+  QPainter p( &result );
+  p.drawPixmap( 0, 0, over );
+  return result;
+}
+
+// LEDs
+
+void Images::initializeLeds()
+{
+  // Get standard directories
+  KStandardDirs kstd;
+
+  // Find our own image directory
+  QString prefix=kstd.findResource("data","konversation/images/");
+
+  // Setup pixmaps for the LEDs
+  redLedOn.setPixmap(prefix+"led_red_on.png",QIconSet::Automatic);
+  redLedOff.setPixmap(prefix+"led_red_off.png",QIconSet::Automatic);
+  greenLedOn.setPixmap(prefix+"led_green_on.png",QIconSet::Automatic);
+  greenLedOff.setPixmap(prefix+"led_green_off.png",QIconSet::Automatic);
+  blueLedOn.setPixmap(prefix+"led_blue_on.png",QIconSet::Automatic);
+  blueLedOff.setPixmap(prefix+"led_blue_off.png",QIconSet::Automatic);
+  yellowLedOn.setPixmap(prefix+"led_yellow_on.png",QIconSet::Automatic);
+  yellowLedOff.setPixmap(prefix+"led_yellow_off.png",QIconSet::Automatic);
+
+  bigRedLedOn.setPixmap(prefix+"big_led_red_on.png",QIconSet::Automatic);  // USE_MDI
+  bigRedLedOff.setPixmap(prefix+"big_led_red_off.png",QIconSet::Automatic);  // USE_MDI
+  bigGreenLedOn.setPixmap(prefix+"big_led_green_on.png",QIconSet::Automatic);  // USE_MDI
+  bigGreenLedOff.setPixmap(prefix+"big_led_green_off.png",QIconSet::Automatic);  // USE_MDI
+  bigBlueLedOn.setPixmap(prefix+"big_led_blue_on.png",QIconSet::Automatic);  // USE_MDI
+  bigBlueLedOff.setPixmap(prefix+"big_led_blue_off.png",QIconSet::Automatic);  // USE_MDI
+  bigYellowLedOn.setPixmap(prefix+"big_led_yellow_on.png",QIconSet::Automatic);  // USE_MDI
+  bigYellowLedOff.setPixmap(prefix+"big_led_yellow_off.png",QIconSet::Automatic);  // USE_MDI
+}
+
+// NickIcons
+
+void Images::initializeNickIcons()
+{
+  KIconLoader* loader = KGlobal::instance()->iconLoader();
+  
+  QPixmap elementNormal = loader->loadIcon( "irc_normal", KIcon::Small, 16 );  // base
+  QPixmap elementAway   = loader->loadIcon( "irc_away",   KIcon::Small, 16 );
+  QPixmap elementVoice  = loader->loadIcon( "irc_voice",  KIcon::Small, 16 );
+  QPixmap elementHalfOp = loader->loadIcon( "irc_halfop", KIcon::Small, 16 );
+  QPixmap elementOp     = loader->loadIcon( "irc_op",     KIcon::Small, 16 );
+  QPixmap elementOwner  = loader->loadIcon( "irc_owner",  KIcon::Small, 16 );
+  QPixmap elementAdmin  = loader->loadIcon( "irc_admin",  KIcon::Small, 16 );
+  
+  nickIcons[Normal][0] = elementNormal;
+  nickIcons[Normal][1] = overlayPixmaps( nickIcons[Normal][0], elementAway );
+  
+  nickIcons[Voice][0] = overlayPixmaps( elementNormal, elementVoice );
+  nickIcons[Voice][1] = overlayPixmaps( nickIcons[Voice][0], elementAway );
+  
+  nickIcons[HalfOp][0] = overlayPixmaps( elementNormal, elementHalfOp );
+  nickIcons[HalfOp][1] = overlayPixmaps( nickIcons[HalfOp][0], elementAway );
+  
+  nickIcons[Op][0] = overlayPixmaps( elementNormal, elementOp );
+  nickIcons[Op][1] = overlayPixmaps( nickIcons[Op][0], elementAway );
+  
+  nickIcons[Owner][0] = overlayPixmaps( elementNormal, elementOwner );
+  nickIcons[Owner][1] = overlayPixmaps( nickIcons[Owner][0], elementAway );
+  
+  nickIcons[Admin][0] = overlayPixmaps( elementNormal, elementAdmin );
+  nickIcons[Admin][1] = overlayPixmaps( nickIcons[Admin][0], elementAway );
+  
+  /*
+  // why doesn't it work?
+  nickIcons[Op][0] = elementNormal;
+  bitBlt( &nickIcons[Op][0], 0, 0, &elementOp, 0, 0, -1, -1, Qt::CopyROP );
+  nickIcons[Op][1] = nickIcons[Op][0];
+  bitBlt( &nickIcons[Op][1], 0, 0, &elementAway, 0, 0, -1, -1, Qt::CopyROP );
+  */
+}

@@ -33,6 +33,7 @@
 #include "quickconnectdialog.h"
 #include "servergroupsettings.h"
 #include "serversettings.h"
+#include "images.h"
 
 // include static variables
 Preferences KonversationApplication::preferences;
@@ -44,6 +45,12 @@ KonversationApplication::KonversationApplication()
   prefsDialog=0;
   quickConnectDialog=0;
 
+  // Sound object used to play sound...
+  m_sound = new Konversation::Sound(this);
+  
+  // Images object providing LEDs, NickIcons
+  m_images = new Images();
+  
   // initialize OSD display here, so we can read the preferences properly
   osd = new OSDWidget( "Konversation" );
 
@@ -116,9 +123,6 @@ KonversationApplication::KonversationApplication()
 	    this,SLOT(dcopConnectToServer(const QString&, int,const QString&, const QString&)));
   }
 
-  // Sound object used to play sound...
-  m_sound = new Konversation::Sound(this);
-
   // take care of user style changes, setting back colors and stuff
   connect(KApplication::kApplication(),SIGNAL (appearanceChanged()),this,SLOT (appearanceChanged()) );
 
@@ -128,9 +132,15 @@ KonversationApplication::~KonversationApplication()
 {
   saveOptions(false);
 
+  delete m_images;
   delete dcopObject;
   delete prefsDCOP;
   delete identDCOP;
+}
+
+KonversationApplication* KonversationApplication::instance()  // static
+{
+  return static_cast<KonversationApplication*>( KApplication::kApplication() );
 }
 
 KonversationMainWindow *KonversationApplication::getMainWindow() {
@@ -1353,6 +1363,11 @@ void KonversationApplication::dcopConnectToServer(const QString& url, int port, 
 Konversation::Sound* KonversationApplication::sound()
 {
   return m_sound;
+}
+
+Images* KonversationApplication::images()
+{
+  return m_images;
 }
 
 // Returns list of pointers to Servers.

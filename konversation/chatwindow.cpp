@@ -84,9 +84,10 @@ ChatWindow::~ChatWindow()
 #ifdef USE_MDI
 void ChatWindow::setLedColor(int newColor)
 {
+  Images* images=KonversationApplication::instance()->images();
   ledColor=newColor;
-  iconOn=images.getLed(newColor,true,true);
-  iconOff=images.getLed(newColor,false,true);
+  iconOn=images->getLed(newColor,true,true);
+  iconOff=images->getLed(newColor,false,true);
 }
 
 void ChatWindow::setLabelColor(const QString& color)

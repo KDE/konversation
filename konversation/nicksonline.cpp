@@ -242,8 +242,8 @@ QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo, KABC::Addressee
 void NicksOnline::updateServerOnlineList(Server* servr)
 {
     // Get a green LED for flagging of joined channels.
-    Images leds;
-    QIconSet currentLeds = leds.getGreenLed(false);
+    Images* leds = KonversationApplication::instance()->images();
+    QIconSet currentLeds = leds->getGreenLed(false);
     QPixmap joinedLed = currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
     bool newNetworkRoot = false;
     QString serverName = servr->getServerName();

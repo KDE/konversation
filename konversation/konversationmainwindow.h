@@ -206,7 +206,6 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     virtual void resizeEvent(QResizeEvent* ev);
 
 #ifdef USE_MDI
-    Images images;
 #else
     LedTabWidget* getViewContainer();
     LedTabWidget* viewContainer;

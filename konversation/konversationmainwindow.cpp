@@ -366,11 +366,12 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
   // before the DCC tab. Maybe we should also make sure to order Channels
   // Queries and DCC chats in groups
 #ifdef USE_MDI
+  Images* images=KonversationApplication::instance()->images();
   addWindow(view);
   view->setLedColor(color);
-  if(tabWidget()) tabWidget()->setTabIconSet(view,images.getLed(color,false,true));
+  if(tabWidget()) tabWidget()->setTabIconSet(view,images->getLed(color,false,true));
   KMdiTaskBarButton* button=m_pTaskBar->getButton(view);
-  button->setIconSet(images.getLed(color,false,true));
+  button->setIconSet(images->getLed(color,false,true));
 #else
   viewContainer->addTab(view,label,color,on);
   viewContainer->show();

@@ -21,11 +21,7 @@
 
 #include <klistview.h>
 
-#include <qiconset.h>
-#include <qpixmap.h>
-#include <qobject.h>
-
-#include "nick.h"
+class Nick;
 
 /*
   @author Matthias Gierlings
@@ -57,15 +53,6 @@ class NickListViewItem : public QObject, public KListViewItem
     QString calculateLabel1();
     QString calculateLabel2();
     
-    static void initializeIcons();
-    
-    static bool s_bIconsInitialized;
-    static QPixmap *s_pIconNormal, *s_pIconNormalAway,
-                   *s_pIconVoice,  *s_pIconVoiceAway,
-                   *s_pIconHalfOp, *s_pIconHalfOpAway,
-                   *s_pIconOp,     *s_pIconOpAway,
-                   *s_pIconOwner,  *s_pIconOwnerAway,
-                   *s_pIconAdmin,  *s_pIconAdminAway;
 };
 
 #endif

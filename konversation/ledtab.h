@@ -20,8 +20,6 @@
 #include <qtabbar.h>
 #include <qtimer.h>
 
-#include "images.h"
-
 /*
   @author Dario Abatianni
 */
@@ -70,7 +68,6 @@ class LedTab : public QObject,public QTab
     bool online;    // if false label should be crossed out
 
     QWidget* widget;
-    Images images;
     QString labelColor;
 };
 

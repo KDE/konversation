@@ -31,6 +31,7 @@ class KonvDCOP;
 class Server;
 class PrefsDialog;
 class QuickConnectDialog;
+class Images;
 
 namespace Konversation {
   class Sound;
@@ -65,7 +66,9 @@ class KonversationApplication : public KApplication
 
     KonversationApplication();
     ~KonversationApplication();
-
+    
+    static KonversationApplication* instance();
+    
     void syncPrefs();
     Server* getServerByName(const QString& name);
     
@@ -92,6 +95,8 @@ class KonversationApplication : public KApplication
     OSDWidget* osd;
     
     Konversation::Sound* sound();
+    
+    Images* images();
     
     // Returns list of pointers to Servers.
     const QPtrList<Server> getServerList();
@@ -141,6 +146,7 @@ class KonversationApplication : public KApplication
     KonversationMainWindow* mainWindow;
     Konversation::Sound* m_sound;
     QuickConnectDialog* quickConnectDialog;
+    Images* m_images;
 
 };
 

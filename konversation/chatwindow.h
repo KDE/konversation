@@ -215,7 +215,6 @@ class ChatWindow : public BASE_CLASS
     StateType state;// if and how fast the LED should blink
     bool blinkOn;   // true, if blinking LED is on at this moment
 
-    Images images;
     QIconSet iconOn;
     QIconSet iconOff;
     QTimer blinkTimer;

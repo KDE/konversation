@@ -16,25 +16,47 @@
 #define IMAGES_H
 
 #include <qiconset.h>
+#include <qpixmap.h>
 
 /*
   @author Dario Abatianni
 */
 
+/**
+ * Do not create an instance of this class yourself.
+ * use KonversationApplication::instance()->images().
+ */
+
 class Images
 {
   public:
+    enum NickPrivilege
+    {
+      Normal=0,
+      Voice,
+      HalfOp,
+      Op,
+      Owner,
+      Admin,
+      _NickPrivilege_COUNT
+    };
+    
     Images();
-    ~Images();
+    virtual ~Images();
+    
+    QIconSet getLed(int color,bool on,bool big=false) const; // big for USE_MDI tab bar
+    
+    QIconSet getRedLed(bool on) const;
+    QIconSet getGreenLed(bool on) const;
+    QIconSet getBlueLed(bool on) const;
+    QIconSet getYellowLed(bool on) const;
 
-    QIconSet getLed(int color,bool on,bool big=false); // big for USE_MDI tab bar
-
-    QIconSet getRedLed(bool on);
-    QIconSet getGreenLed(bool on);
-    QIconSet getBlueLed(bool on);
-    QIconSet getYellowLed(bool on);
+    QPixmap getNickIcon(NickPrivilege privilege,bool isAway=false) const;
 
   protected:
+    void initializeLeds();
+    void initializeNickIcons();
+    
     QIconSet redLedOn;
     QIconSet redLedOff;
     QIconSet greenLedOn;
@@ -52,6 +74,8 @@ class Images
     QIconSet bigBlueLedOff;
     QIconSet bigYellowLedOn;
     QIconSet bigYellowLedOff;
+
+    QPixmap nickIcons[_NickPrivilege_COUNT][2];  // [privilege][away]
 };
 
 #endif
