@@ -378,7 +378,6 @@ class Server : public QObject
     void reconnect();
     void connectToNewServer(const QString& server, const QString& port, const QString& password);
     void showSSLDialog();
-    void startAwayTimer();
     void sendToAllChannels(const QString& text);
     void notifyTimeout();
     
@@ -386,6 +385,7 @@ class Server : public QObject
 
     void preShellCommandExited(KProcess*);
     void ircServerConnectionSuccess();
+    void startAwayTimer();
     void lockSending();
     void unlockSending();
     void incoming();

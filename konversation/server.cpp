@@ -2836,6 +2836,8 @@ void Server::scriptExecutionError(const QString& name)
 
 void Server::away()
 {
+  if(!m_isAway)
+    startAwayTimer(); //Don't start timer if we have already started it
   m_isAway=true;
   emit awayState(true);
 
@@ -3053,7 +3055,6 @@ QString Server::awayTime() const
 
 void Server::startAwayTimer()
 {
-  m_isAway = true;
   m_awayTime = QDateTime::currentDateTime().toTime_t();
 }
 

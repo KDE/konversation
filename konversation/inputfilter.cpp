@@ -1348,7 +1348,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           if(nickInfo)
             nickInfo->setAway(true);
 	  if(!server->isAway()) {
-            server->startAwayTimer();
             server->appendStatusMessage(i18n("Away"),i18n("You are now marked as being away."));
             emit away();
 	  } else {
@@ -1368,9 +1367,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           
           Identity identity = *(server->getIdentity());
 
-          if(identity.getShowAwayMessage() && server->isAway()) {
-            QString message = identity.getReturnMessage();
-            server->sendToAllChannels(message.replace(QRegExp("%t", false), server->awayTime()));
+          if(server->isAway()) {
+	    if(identity.getShowAwayMessage()) {
+              QString message = identity.getReturnMessage();
+              server->sendToAllChannels(message.replace(QRegExp("%t", false), server->awayTime()));
+	    }
             server->appendStatusMessage(i18n("Away"),i18n("You are no longer marked as being away."));
             emit unAway();
           } else {
