@@ -448,10 +448,13 @@ void KonversationMainWindow::updateFrontView()
 {
   ChatWindow* view=static_cast<ChatWindow*>(getViewContainer()->currentPage());
 
-  // Make sure that only views with info output get to be the frontView
-  if(view->frontView()) frontView=view;
-  // Make sure that only text views get to be the searchView
-  if(view->searchView()) searchView=view;
+  if(view)
+  {
+    // Make sure that only views with info output get to be the frontView
+    if(view->frontView()) frontView=view;
+    // Make sure that only text views get to be the searchView
+    if(view->searchView()) searchView=view;
+  }
 }
 
 void KonversationMainWindow::changeView(QWidget* viewToChange)
