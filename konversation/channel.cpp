@@ -1770,18 +1770,14 @@ void Channel::scheduleAutoWho()  // slot
 
 void Channel::autoWho()
 {
+  // don't use auto /WHO when the number of nicks is too large, or get banned.
   if(nicks>KonversationApplication::preferences.getAutoWhoNicksLimit())
   {
-    // don't use auto /WHO when the number of nicks is too large, or get banned.
-    kdDebug() << "Channel::autoWho(): " << getName() << ": nicks=" << nicks << " > " << KonversationApplication::preferences.getAutoWhoNicksLimit() << ". aborted." << endl;
+    scheduleAutoWho();
     return;
   }
   if(server->getInputFilter()->isWhoRequestUnderProcess(getName()))
-  {
-    kdDebug() << "Channel::autoWho(): " << getName() << ": already under process. aborted." << endl;
     return;
-  }
-  kdDebug() << "Channel::autoWho(): " << getName() << ": request" << endl;
   server->requestWho(getName());
 }
 
