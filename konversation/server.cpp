@@ -69,7 +69,9 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   rawLog=0;
   channelListPanel=0;
   alreadyConnected=false;
-  rejoinChannels = false;
+  rejoinChannels=false;
+  
+  timerInterval=1;  // flood protection
 
   QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
   setIdentity(KonversationApplication::preferences.getIdentityByName(serverEntry[7]));
@@ -119,8 +121,14 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   incomingTimer.setName("incoming_timer");
   incomingTimer.start(10);
 
+  outgoingTimer.setName("outgoing_timer");
+  outgoingTimer.start(timerInterval);
+  
   connect(&incomingTimer,SIGNAL(timeout()),
                     this,SLOT  (processIncomingData()) );
+
+  connect(&outgoingTimer,SIGNAL(timeout()),
+                    this,SLOT  (send()) );
 
   connect(&outputFilter,SIGNAL (openQuery(const QString&,const QString&)),
                    this,SLOT   (addQuery(const QString&,const QString&)) );
@@ -188,7 +196,6 @@ Server::~Server()
   // Make sure no signals get sent to a soon to be dying Server Window
   serverSocket.blockSignals(true);
   // Send out the last messages (usually the /QUIT)
-  serverSocket.enableWrite(true);
   send();
 
   closeRawLog();
@@ -660,6 +667,7 @@ void Server::incoming()
 
 void Server::queue(const QString& buffer)
 {
+  kdDebug() << "Queue: " << buffer << endl;
   // Only queue lines if we are connected
   if(isConnected() && buffer.length())
   {
@@ -668,12 +676,13 @@ void Server::queue(const QString& buffer)
     outputBuffer+=buffer;
     outputBuffer+="\n";
 
-    serverSocket.enableWrite(true);
+    timerInterval*=2;
   }
 }
 
 void Server::queueList(const QStringList& buffer)
 {
+  kdDebug() << "QueueList: " << buffer.join("\n") << endl;
   // Only queue lines if we are connected
   if(isConnected() && buffer.count())
   {
@@ -684,7 +693,7 @@ void Server::queueList(const QStringList& buffer)
       outputBuffer+=*buffer.at(i);
       outputBuffer+="\n";
 
-      serverSocket.enableWrite(true);
+      timerInterval*=2;
     }
   }
 }
@@ -692,16 +701,25 @@ void Server::queueList(const QStringList& buffer)
 void Server::send()
 {
   // Check if we are still online
-  if(isConnected())
+  if(isConnected() && !outputBuffer.isEmpty())
   {
+    kdDebug() << "Buffer: " << outputBuffer << endl;
+    
+    // TODO: Implement Flood-Protection here
+    QStringList outputLines=QStringList::split('\n',outputBuffer);
+    
+    QString outputLine=outputLines[0];
+    outputLines.pop_front();
+    outputBuffer=outputLines.join("\n");
+
+    kdDebug() << "Line: " << outputLine << endl;
+        
     // To make lag calculation more precise, we reset the timer here
-    if(outputBuffer.startsWith("ISON") ||
-       outputBuffer.startsWith("PING LAG")) notifySent.start();
+    if(outputLine.startsWith("ISON") ||
+       outputLine.startsWith("PING LAG")) notifySent.start();
 
     // Don't reconnect if we WANT to quit
-    else if(outputBuffer.startsWith("QUIT")) setDeliberateQuit(true);
-
-    // TODO: Implement Flood-Protection here
+    else if(outputLine.startsWith("QUIT")) setDeliberateQuit(true);
 
     // wrap server socket into a stream
     QTextStream serverStream(&serverSocket);
@@ -715,15 +733,23 @@ void Server::send()
       serverStream.setCodec(QTextCodec::codecForName(codecName.ascii()));
     }
 
-    serverStream << outputBuffer;
+    serverStream << outputLine << endl;
 
     // detach server stream
     serverStream.unsetDevice();
-
-    serverSocket.enableWrite(false);
   }
+    
+  if(timerInterval>1)
+  {
+    int time;
+    timerInterval/=2;
 
-  outputBuffer=QString::null;
+    if(timerInterval>40) time=4000;
+    else time=timerInterval*10+100;
+
+    outgoingTimer.changeInterval(time);
+    kdDebug() << timerInterval << endl;
+  }
 }
 
 void Server::dcopSay(const QString& target,const QString& command)

@@ -250,7 +250,10 @@ class Server : public QObject
 
     QTimer reconnectTimer;
     QTimer incomingTimer;
+    QTimer outgoingTimer;
 
+    int timerInterval;       // flood protection
+    
     QTimer notifyTimer;
     QTimer notifyCheckTimer; // Checks if the ISON reply needs too long
     QTime notifySent;
