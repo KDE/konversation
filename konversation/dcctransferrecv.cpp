@@ -153,6 +153,7 @@ bool DccTransferRecv::createDirs(const KURL &dirURL) const
 
 void DccTransferRecv::start()  // public slot
 {
+  KMessageBox::sorry(listView(), "Sorry, dcc is broken.  It should be fixed in a couple of days.  Dated 9/sept/2004.  Continuing for debugging, but this may not write the file correctly!  You have been warned.");
   if(getStatus() != Queued) return;
   kdDebug() << "DccTransferRecv::start()" << endl;
   //Check that we are saving it somewhere valid, and set up the directories.
@@ -184,7 +185,7 @@ void DccTransferRecv::start()  // public slot
     m_partialFileSize = partialFileInfo.size();
   }
   if(!m_saveToFileExists && !m_partialFileExists) {
-    if( !createDirs(m_fileURL.upURL()) || !createDirs(m_saveToTmpFileURL.upURL())) {
+    if( !createDirs(m_fileURL.upURL())) {
       abort();
       return;
     }
@@ -194,8 +195,8 @@ void DccTransferRecv::start()  // public slot
                         0 < m_partialFileSize &&
                         m_partialFileSize < m_fileSize;
   
-  kdDebug() << "DccTransferRecv::start(): the completed file is " << ( m_saveToFileExists ? QString("existing.") : QString("NOT existing.") ) << endl;
-  kdDebug() << "DccTransferRecv::start(): the partial file is " << ( m_partialFileExists ? QString("existing.") : QString("NOT existing.") ) << endl;
+  kdDebug() << "DccTransferRecv::start(): the completed file " << ( m_saveToFileExists ? QString("exists.") : QString("does NOT exist.") ) << endl;
+  kdDebug() << "DccTransferRecv::start(): the partial file " << ( m_partialFileExists ? QString("exists.") : QString("does NOT exist.") ) << endl;
                         
   if( !m_saveToFileExists && m_partialFileExists && KonversationApplication::preferences.getDccAutoResume() )
     requestResume();
@@ -293,7 +294,11 @@ void DccTransferRecv::connectToSender()
   
   // prepare local KIO
   KIO::TransferJob* transferJob = KIO::put( m_fileURL, -1, !m_resumed ? m_saveToFileExists : false, m_resumed, false );
-  
+  if(!transferJob) {
+    kdDebug() << "KIO::put failed!" << endl;
+    abort();
+    return;
+  }
   connect( transferJob, SIGNAL( canResume( KIO::Job*, KIO::filesize_t ) ), this, SLOT( slotCanResume( KIO::Job*, KIO::filesize_t ) ) );
   
   m_writeCacheHandler = new DccTransferRecvWriteCacheHandler( transferJob );
@@ -324,6 +329,8 @@ void DccTransferRecv::connectToSender()
   kdDebug() << "In connectToSender - attempting to connect to " << m_partnerIp << ":" << m_partnerPort << endl;
   if(!m_recvSocket->connect()) {
     kdDebug() << "connect failed immediately!! - " << m_recvSocket->errorString() << endl;
+    abort();
+    return;
   }
 }
 
@@ -360,7 +367,9 @@ void DccTransferRecv::readData()  // slot
     QByteArray ba;
     ba.duplicate( m_buffer, actual );
     m_writeCacheHandler->append( ba );
-    m_writeCacheHandler->write();
+    if(!m_writeCacheHandler->write()) {  //FIXME This will always fail.  Why do you do this shin?
+      kdDebug() << "m_writeCacheHandler->write() failed in readData()" << endl;
+    }
     m_recvSocket->enableWrite( true );
   }
 }
@@ -373,7 +382,6 @@ void DccTransferRecv::sendAck()  // slot
 
   m_recvSocket->enableWrite( false );
   m_recvSocket->writeBlock( (char*)&pos, 4 );
-
   if( m_transferringPosition == m_fileSize )
   {
     kdDebug() << "DccTransferRecv::sendAck(): done." << endl;
@@ -520,7 +528,8 @@ QByteArray DccTransferRecvWriteCacheHandler::popCache()
     QDataStream out( buffer, IO_WriteOnly );
     int sizeSum = 0;
     QValueList<QByteArray>::iterator it = m_cacheList.begin();
-    do { //Guarantee that at list one bytearray is written.. is this okay?
+    do { //It is guaranteed that at least one bytearray is written since m_cacheList is not empty
+      Q_ASSERT((*it).size() > 0);
       out.writeBytes( (*it).data(), (*it).size() );
       sizeSum+= (*it).size();
       it = m_cacheList.remove( it );
