@@ -1,5 +1,5 @@
 #ifndef EVENT_H
-#define EVENT_H "$Id$"
+#define EVENT_H
 
 enum EVENT_TYPE {
     ON_JOIN,

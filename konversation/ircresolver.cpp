@@ -10,8 +10,6 @@
   begin:     Fre Feb 28 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include <qapp.h>

@@ -10,8 +10,6 @@
   begin:     Die Jun 10 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include <qlayout.h>

@@ -10,8 +10,6 @@
   begin:     Sam Aug 31 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef NICKSONLINE_H

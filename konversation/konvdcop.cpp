@@ -1,6 +1,5 @@
 // Konversation DCOP interface class
 // by Alex Zepeda, March 7, 2003
-// $Id$
 
 #include "konversationapplication.h"
 #include "konvdcop.h"

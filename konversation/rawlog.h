@@ -10,8 +10,6 @@
   begin:     Die Mär 18 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef _RAWLOG_H_

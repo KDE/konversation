@@ -10,8 +10,6 @@
   begin:     Mon Jun 9 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include <qregexp.h>

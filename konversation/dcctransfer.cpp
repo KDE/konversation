@@ -10,8 +10,6 @@
   begin:     Mit Aug 7 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #include <stdlib.h>

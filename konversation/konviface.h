@@ -1,5 +1,5 @@
 #ifndef KONV_IFACE_H
-#define KONV_IFACE_H "$Id$"
+#define KONV_IFACE_H
 
 #include <qobject.h>
 #include <qstringlist.h>

@@ -10,8 +10,6 @@
   begin:     Die Mai 27 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef URLCATCHER_H

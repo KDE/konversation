@@ -1,5 +1,5 @@
 #ifndef KONV_DCOP_H
-#define KONV_DCOP_H "$Id$"
+#define KONV_DCOP_H
 
 #include <qobject.h>
 #include <dcopobject.h>
