@@ -217,6 +217,10 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   {
     server->queue("PONG "+trailing);
   }
+  else if(command=="error :closing link:")
+  {
+    kdDebug() << "link closed" << endl;
+  }
   else if(command==RPL_WELCOME || command==RPL_YOURHOST || command==RPL_CREATED)
   {
     if(command==RPL_WELCOME)
@@ -327,7 +331,7 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   {
     server->appendStatusMessage(i18n("MOTD"),i18n("End of Message Of The Day"));
     /* Autojoin (for now this must be enough) */
-    server->queue(server->getAutoJoinCommand());
+    if(server->getAutoJoin()) server->queue(server->getAutoJoinCommand());
   }
   else if(command==RPL_ISON)
   {

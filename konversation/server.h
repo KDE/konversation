@@ -45,9 +45,20 @@ class Server : public QObject
     Server(int number);
     ~Server();
 
+    QString getServerName();
+    int getPort();
+    bool getAutoJoin();
+    void setAutoJoin(bool on);
+    void setAutoJoinChannel(QString channel);
+    void setAutoJoinChannelKey(QString key);
+
+    void setDeliberateQuit(bool on);
+    bool getDeliberateQuit();
+
     QString getNextNickname();
 
     void setIrcName(QString& newIrcName);
+
     void addNickToChannel(QString& channelName,QString& nickname,QString& hostmask,bool op,bool voice);
     void addHostmaskToNick(QString& sourceNick,QString& sourceHostmask);
     void nickJoinsChannel(QString& channelName,QString& nickname,QString& hostmask);
@@ -60,6 +71,7 @@ class Server : public QObject
     QString& getNickname();
     OutputFilter& getOutputFilter();
 
+    void connectToIRCServer();
     void joinChannel(QString& name,QString& hostmask);
     void removeChannel(Channel* channel);
     void appendToChannel(const char* channel,const char* nickname,const char* message);
@@ -116,8 +128,6 @@ class Server : public QObject
   protected:
     void startNotifyCheckTimer();
 
-    void connectToIRCServer();
-
     unsigned int completeQueryPosition;
     unsigned int tryNickNumber;
 
@@ -127,6 +137,7 @@ class Server : public QObject
     bool autoJoin;
     bool autoRejoin;
     bool autoReconnect;
+    bool deliberateQuit;
 
     QString autoJoinChannel;
     QString autoJoinChannelKey;

@@ -50,6 +50,12 @@ class Preferences : public QObject
     QString getServerById(int);
     ServerEntry* getServerEntryById(int id);
     int getServerIdByIndex(unsigned int);
+
+    bool getAutoReconnect();
+    bool getAutoRejoin();
+    void setAutoReconnect(bool on);
+    void setAutoRejoin(bool on);
+
     void clearServerList();
     void changeServerProperty(int id,int property,const QString& value);
     void updateServer(int id,const QString& newDefinition);
@@ -147,6 +153,9 @@ class Preferences : public QObject
     bool log;
     bool blinkingTabs; /* Do we want the LEDs on the tabs to blink? */
 
+    bool autoReconnect;
+    bool autoRejoin;
+
     int notifyDelay;
     int opLedColor;
 		bool useNotify;
@@ -159,7 +168,7 @@ class Preferences : public QObject
     QSize ignoreSize;
     QSize notifySize;
     QSize nicknameSize;
-		QSize colorConfigurationSize;
+    QSize colorConfigurationSize;
 
     QList<ServerEntry> serverList;
     QPtrList<Highlight> hilightList;
@@ -170,7 +179,7 @@ class Preferences : public QObject
 
     QStringList nicknameList;
 
-		QString partReason;
+    QString partReason;
     QString kickReason;
 };
 

@@ -44,15 +44,16 @@ Server::Server(int id)
 
   if(serverEntry[4] && serverEntry[4]!="")
   {
-    autoJoin=true;
-    autoJoinChannel=serverEntry[4];
-    autoJoinChannelKey=serverEntry[5];
+    setAutoJoin(true);
+    setAutoJoinChannel(serverEntry[4]);
+    setAutoJoinChannelKey(serverEntry[5]);
   }
   else autoJoin=false;
 
-  autoRejoin=true;
-  autoReconnect=true;
+  autoReconnect=KonversationApplication::preferences.getAutoRejoin();
+  autoReconnect=KonversationApplication::preferences.getAutoReconnect();
 
+  serverSocket=0;
   connectToIRCServer();
 
   /* don't delete items when they are removed */
@@ -92,35 +93,66 @@ Server::~Server()
   send(serverSocket);
 }
 
+QString Server::getServerName()
+{
+  return serverName;
+}
+
+int Server::getPort()
+{
+  return serverPort;
+}
+
+bool Server::getAutoJoin()
+{
+  return autoJoin;
+}
+
+void Server::setAutoJoin(bool on) { autoJoin=on; }
+void Server::setAutoJoinChannel(QString channel) { autoJoinChannel=channel; }
+void Server::setAutoJoinChannelKey(QString key) { autoJoinChannelKey=key; }
+
 void Server::connectToIRCServer()
 {
-  serverWindow->appendToStatus(i18n("Info"),i18n("Connecting ..."));
-
-  serverSocket=new IRCServerSocket(serverName,serverPort,60);
-  if(serverSocket->socket()<=-1)
+  deliberateQuit=false;
+  /* Are we (still) connected (yet)? */
+  if(serverSocket)
   {
-    broken(serverSocket);
+    /* just join our autojoin-channel if desired */
+    if(getAutoJoin()) queue(getAutoJoinCommand());
+  /* (re)connect. Autojoin will be done by the input filter */
+  /* TODO: move autojoin here and use signals / slots */
   }
   else
   {
-    connect(serverSocket,SIGNAL (readEvent(KSocket *)),this,SLOT (incoming(KSocket *)) );
-    connect(serverSocket,SIGNAL (writeEvent(KSocket *)),this,SLOT (send(KSocket *)) );
-    connect(serverSocket,SIGNAL (closeEvent(KSocket *)),this,SLOT (broken(KSocket *)) );
+    serverWindow->appendToStatus(i18n("Info"),i18n("Connecting ..."));
 
-    connect(this,SIGNAL (nicknameChanged(const QString&)),serverWindow,SLOT (setNickname(const QString&)) );
+    serverSocket=new IRCServerSocket(getServerName(),getPort(),60);
+    if(serverSocket->socket()<=-1)
+    {
+      broken(serverSocket);
+    }
+    else
+    {
+      connect(serverSocket,SIGNAL (readEvent(KSocket *)),this,SLOT (incoming(KSocket *)) );
+      connect(serverSocket,SIGNAL (writeEvent(KSocket *)),this,SLOT (send(KSocket *)) );
+      connect(serverSocket,SIGNAL (closeEvent(KSocket *)),this,SLOT (broken(KSocket *)) );
 
-    serverWindow->appendToStatus(i18n("Info"),i18n("Connected! Logging in ..."));
+      connect(this,SIGNAL (nicknameChanged(const QString&)),serverWindow,SLOT (setNickname(const QString&)) );
 
-    QString connectString="USER " +
-                          KonversationApplication::preferences.ident +
-                          " 8 * :" +  /* 8 = +i; 4 = +w*/
-                          KonversationApplication::preferences.realname;
-    queue(connectString);
-    queue("NICK "+getNickname());
+      serverWindow->appendToStatus(i18n("Info"),i18n("Connected! Logging in ..."));
 
-    emit nicknameChanged(getNickname());
+      QString connectString="USER " +
+                            KonversationApplication::preferences.ident +
+                            " 8 * :" +  /* 8 = +i; 4 = +w*/
+                            KonversationApplication::preferences.realname;
+      queue(connectString);
+      queue("NICK "+getNickname());
 
-    serverSocket->enableRead(true);
+      emit nicknameChanged(getNickname());
+
+      serverSocket->enableRead(true);
+    }
   }
 }
 
@@ -211,10 +243,7 @@ void Server::notifyCheckTimeout()
 
 QString Server::getAutoJoinCommand()
 {
-  QString autoString("");
-
-  if(autoJoin) autoString="JOIN "+autoJoinChannel+" "+autoJoinChannelKey;
-
+  QString autoString("JOIN "+autoJoinChannel+" "+autoJoinChannelKey);
   return autoString;
 }
 
@@ -277,17 +306,30 @@ void Server::queue(const QString& buffer)
 void Server::send(KSocket* ksocket)
 {
   kdDebug() << "-> " << outputBuffer << endl;
+  /* To make lag calculation more precise, we reset the timer here */
+  if(outputBuffer.startsWith("ISON")) notifySent.start();
+  /* Don't reconnect if we WANT to quit */
+  else if(outputBuffer.startsWith("QUIT")) setDeliberateQuit(true);
   /* TODO: Implement Flood-Protection here */
   write(ksocket->socket(),outputBuffer.latin1(),outputBuffer.length());
   serverSocket->enableWrite(false);
-  /* To make lag calculation more precise, we reset the timer here */
-  if(outputBuffer.startsWith("ISON")) notifySent.start();
+
   outputBuffer="";
 }
 
 void Server::ctcpReply(QString& receiver,const QString& text)
 {
   queue("NOTICE "+receiver+" :"+'\x01'+text+'\x01');
+}
+
+bool Server::getDeliberateQuit()
+{
+  return deliberateQuit;
+}
+
+void Server::setDeliberateQuit(bool on)
+{
+  deliberateQuit=on;
 }
 
 void Server::broken(KSocket* ksocket)
@@ -297,13 +339,17 @@ void Server::broken(KSocket* ksocket)
   serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost.").arg(serverName));
   /* TODO: Close all queries and channels! */
   delete serverSocket;
+  serverSocket=0;
 
-  if(autoReconnect)
+  if(autoReconnect && !getDeliberateQuit())
   {
     serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName));
     connectToIRCServer();
   }
-  else serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost.").arg(serverName));
+  else
+  {
+    serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 closed.").arg(serverName));
+  }
 }
 
 void Server::addQuery(const QString& nickname,const QString& hostmask)

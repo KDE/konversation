@@ -1,1 +1,5 @@
-
+Make Auto-Reconnect configurable
+Write Config Dialog for Quit/Part/Kick messages
+Make Config Dialogs fit into one Tab-Dialog and throw out single windows
+Implement Notify window (or something similar)
+Write Application Description in main()

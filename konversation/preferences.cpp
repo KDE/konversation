@@ -189,6 +189,12 @@ void Preferences::clearServerList() { serverList.clear(); }
 void Preferences::setLog(bool state) { log=state; }
 bool Preferences::getLog() { return log; }
 
+void Preferences::setAutoReconnect(bool on) { autoReconnect=on; }
+bool Preferences::getAutoReconnect() { return autoReconnect; }
+
+void Preferences::setAutoRejoin(bool on) { autoRejoin=on; }
+bool Preferences::getAutoRejoin() { return autoRejoin; }
+
 int Preferences::getNotifyDelay() { return notifyDelay; }
 void Preferences::setNotifyDelay(int delay) { notifyDelay=delay; }
 bool Preferences::getUseNotify() { return useNotify; }

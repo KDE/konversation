@@ -65,7 +65,32 @@ void KonversationApplication::connectToAnotherServer(int id)
 {
   kdDebug() << "KonversationApplication::connectToAnotherServer(" << id << ")" << endl;
 
-  Server* newServer=new Server(id);
+  ServerEntry* chosenServer=preferences.getServerEntryById(id);
+
+  /* Check if a server window with same name and port is already open */
+  Server* newServer=serverList.first();
+  while(newServer)
+  {
+    if(chosenServer->getServerName()==newServer->getServerName() &&
+       chosenServer->getPort()==newServer->getPort())
+    {
+      QString autoJoinChannel=chosenServer->getChannelName();
+      if(autoJoinChannel!="")
+      {
+        newServer->setAutoJoin(true);
+        newServer->setAutoJoinChannel(autoJoinChannel);
+        newServer->setAutoJoinChannelKey(chosenServer->getChannelKey());
+      }
+      else newServer->setAutoJoin(false);
+
+      newServer->connectToIRCServer();
+      return;
+    }
+
+    newServer=serverList.next();
+  }
+  /* We came this far, so generate a new server */
+  newServer=new Server(id);
   serverList.append(newServer);
   connect(newServer->getServerWindow(),SIGNAL(prefsChanged()),this,SLOT(saveOptions()));
   connect(newServer->getServerWindow(),SIGNAL(openPrefsDialog()),this,SLOT(openPrefsDialog()));
@@ -194,6 +219,8 @@ void KonversationApplication::readOptions()
   config->setGroup("Flags");
   preferences.setLog(config->readBoolEntry("Log",true));
   preferences.setBlinkingTabs(config->readBoolEntry("BlinkingTabs",true));
+  preferences.setAutoReconnect(config->readBoolEntry("AutoReconnect",true));
+  preferences.setAutoRejoin(config->readBoolEntry("AutoRejoin",true));
 }
 
 void KonversationApplication::saveOptions()
@@ -297,6 +324,8 @@ void KonversationApplication::saveOptions()
   config->setGroup("Flags");
   config->writeEntry("Log",preferences.getLog());
   config->writeEntry("BlinkingTabs",preferences.getBlinkingTabs());
+  config->writeEntry("AutoReconnect",preferences.getAutoReconnect());
+  config->writeEntry("AutoRejoin",preferences.getAutoRejoin());
 
   config->sync();
 }

@@ -41,3 +41,28 @@ void ServerEntry::updateProperty(int property,const QString& value)
   properties[property]=value;
   setDefinition(properties.join(","));
 }
+
+QString ServerEntry::getServerName()
+{
+  QStringList definition(QStringList::split(',',getDefinition(),true));
+  return definition[1];
+}
+
+int ServerEntry::getPort()
+{
+  QStringList definition(QStringList::split(',',getDefinition(),true));
+  return definition[2].toInt();
+}
+
+QString ServerEntry::getChannelName()
+{
+  QStringList definition(QStringList::split(',',getDefinition(),true));
+  return definition[4];
+}
+
+QString ServerEntry::getChannelKey()
+{
+  QStringList definition(QStringList::split(',',getDefinition(),true));
+  return definition[5];
+}
+

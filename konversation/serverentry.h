@@ -28,7 +28,12 @@ class ServerEntry
   public:
     ServerEntry(const QString newDefinition);
     ~ServerEntry();
+    QString getServerName();
+    int getPort();
+    QString getChannelName();
+    QString getChannelKey();
     QString getDefinition() { return definition; };
+
     void setDefinition(const QString& newDefinition) { definition=newDefinition; };
     int getId() { return id; };
     void updateProperty(int property,const QString& value);
