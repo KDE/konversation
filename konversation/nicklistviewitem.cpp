@@ -70,6 +70,14 @@ void NickListViewItem::refresh()
   
   setPixmap( 0, icon );
   
+  KABC::Picture pic = nickInfo->getAddressee().photo();
+  if(!pic.isIntern())
+    pic = nickInfo->getAddressee().logo();
+  if(pic.isIntern())
+  {
+    QPixmap qpixmap(pic.data().scaleHeight(this->height()));
+    setPixmap(1,qpixmap);
+  }
   setText(1,calculateLabel1());
   setText(2,calculateLabel2());
   repaint();
