@@ -76,7 +76,8 @@ cat konversationapplication.cpp | while read line; do {
       else
         echo "      <default></default>"
       fi
-      echo "      <label></label>"
+      LABEL=$(egrep "cstring.*$ENTRY" *.ui -h -A 10 | grep "<string>" | head -n 1 | sed -n -e 's/^.*<string> *\([^ ].*\) *<\/string>.*$/\1/p')
+      echo "      <label>$LABEL</label>"
       echo "      <whatsthis></whatsthis>"
       echo "    </entry>"
     fi
