@@ -33,12 +33,14 @@
 #include <kpushbutton.h>
 #include <kdebug.h>
 #include <klistview.h>
+#include <qlabel.h>
 // used for its AddresseeItem class
 #include <kabc/addresseedialog.h>
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
 
 #include "linkaddressbookui.h"
+#include "addressbook.h"
 
 LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick )
 : LinkAddressbookUI_Base( parent, name )
@@ -56,10 +58,10 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
 			SLOT( slotAddresseeListClicked( QListViewItem * ) ) );
 
 	connect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
-	slotLoadAddressees();
 	m_ircnick = ircnick;
+	m_lower_ircnick = m_ircnick.lower();
 	Q_ASSERT(!ircnick.isEmpty());
-	
+	slotLoadAddressees();
 }
 
 
@@ -67,12 +69,30 @@ LinkAddressbookUI::~LinkAddressbookUI()
 {
 }
 
+/**  Read in contacts from addressbook, and select the contact that is for our nick. */
 void LinkAddressbookUI::slotLoadAddressees()
 {
 	addresseeListView->clear();
+
+	QString realname;
+	int num_contacts_with_nick=0;  //There shouldn't be more than 1 contact with this irc nick.  Warn the user if there is.
+
 	KABC::AddressBook::Iterator it;
 	for( it = m_addressBook->begin(); it != m_addressBook->end(); ++it )
-		/*KABC::AddresseeItem *item =*/ new KABC::AddresseeItem( addresseeListView, (*it) );
+		if(Konversation::Addressbook::hasNick(*it, m_lower_ircnick)) {
+			realname = (*it).realName();
+			num_contacts_with_nick++;
+			(new KABC::AddresseeItem( addresseeListView, (*it) ))->setSelected(true);
+		} else
+			/*KABC::AddresseeItem *item =*/ new KABC::AddresseeItem( addresseeListView, (*it) );
+	if(num_contacts_with_nick == 0)
+		lblHeader->setText(i18n("<qt><h1>Select Addressbook Entry</h1><p>From the list of contacts below, chose the person who '%2' is.</p></qt>").arg(m_ircnick));
+	else if(num_contacts_with_nick == 1 && realname.isEmpty())
+		lblHeader->setText(i18n("<qt><h1>Select Addressbook Entry</h1><p>'%2' is currently being listed as being a contact with no given name.</p></qt>").arg(m_ircnick));
+	else if(num_contacts_with_nick == 1 && !realname.isEmpty())
+		lblHeader->setText(i18n("<qt><h1>Select Addressbook Entry</h1><p>'%2' is currently being listed as belonging to the contact '%3'.</p></qt>").arg(m_ircnick).arg(realname));
+	else
+		lblHeader->setText(i18n("<qt><h1>Select Addressbook Entry</h1><p><b>Warning:</b> '%2' is currently being listed as belonging to multiple contacts.  Please select the correct contact.</p></qt>").arg(m_ircnick));
 }
 
 void LinkAddressbookUI::slotAddAddresseeClicked()
@@ -86,22 +106,7 @@ void LinkAddressbookUI::slotAddAddresseeClicked()
 	{
 		KABC::Addressee addr;
 		addr.setNameFromString( addresseeName );
-		m_addressBook->insertAddressee( addr );
-		KABC::Ticket *ticket = m_addressBook->requestSaveTicket();
-		if ( !ticket )
-		{
-			kdError() << "Resource is locked by other application!" << endl;
-		}
-		else
-		{
-			if ( !m_addressBook->save( ticket ) )
-			{
-				kdError() << "Saving failed!" << endl;
-#if KDE_IS_VERSION (3,1,90)
-				m_addressBook->releaseSaveTicket( ticket );
-#endif
-			}
-		}
+		Konversation::Addressbook::saveAddressee(addr);
 	}
 //this shouldn't be needed - why is it?
 	slotLoadAddressees();
@@ -119,30 +124,8 @@ void LinkAddressbookUI::accept()
 	KABC::AddresseeItem *item = 0L;
 	item = static_cast<KABC::AddresseeItem *>( addresseeListView->selectedItem() );
 	if ( item ) {
-		KABC::Addressee addressee(item->addressee());
-		addressee.insertCustom("messaging/irc", "All", m_ircnick);
-	    m_addressBook->insertAddressee(addressee);
-		
-		KABC::Ticket *ticket = m_addressBook->requestSaveTicket();
-        if ( !ticket )
-        {
-			//TODO:  tell the user
-            kdError() << "Resource is locked by other application!" << endl;
-	    }
-	    else
-	    {
-	        if ( !m_addressBook->save( ticket ) )
-	        {
-		        kdError() << "Saving failed!" << endl;
-#if KDE_IS_VERSION (3,1,90)
-			    m_addressBook->releaseSaveTicket( ticket );
-#endif
-			}
-        }
-    } else {
-		//??
+		Konversation::Addressbook::associateNickAndUnassociateFromEveryoneElseAndSave(item->addressee(), m_ircnick);
 	}
-	
     disconnect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
 	deleteLater();
 	

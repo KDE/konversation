@@ -22,8 +22,17 @@ namespace Konversation {
 class Addressbook
 {
   public:
-    Addressbook();
     static KABC::Addressee getKABCAddresseeFromNick(const QString &ircnick);
+    static bool hasNick(const KABC::Addressee &addressee, const QString &ircnick);
+    static void unassociateNick(KABC::Addressee addressee, const QString &ircnick, KABC::AddressBook* addressBook);
+    static void associateNick(KABC::Addressee addressee, const QString &ircnick, KABC::AddressBook* addressBook);
+    static bool associateNickAndUnassociateFromEveryoneElseAndSave(KABC::Addressee addressee, const QString &ircnick);
+
+    static bool saveAddressee(KABC::Addressee addressee);
+    static bool saveAddressbook(KABC::AddressBook* addressBook);
+	    
+  private:
+    Addressbook();
 };
 }
 

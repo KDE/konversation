@@ -32,11 +32,10 @@
                 </property>
                 <widget class="QLabel">
                     <property name="name">
-                        <cstring>textLabel1</cstring>
+                        <cstring>lblHeader</cstring>
                     </property>
                     <property name="text">
-                        <string>&lt;h2&gt;Select Address Book Entry&lt;/h2&gt;
-&lt;p&gt;Choose a contact to continue:&lt;/p&gt;</string>
+                        <string></string>
                     </property>
                 </widget>
                 <widget class="QListView">

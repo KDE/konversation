@@ -18,14 +18,17 @@
 #include <kdebug.h>
 
 #include "nicklistview.h"
+#include "linkaddressbook/addressbook.h"
 
-NickListView::NickListView(QWidget* parent) :
+NickListView::NickListView(QWidget* parent, Channel *chan) :
               KListView(parent)
 {
+  channel=chan;
   popup=new QPopupMenu(this,"nicklist_context_menu");
   modes=new QPopupMenu(this,"nicklist_modes_context_submenu");
   kickban=new QPopupMenu(this,"nicklist_kick_ban_context_submenu");
-
+  addressbook= new QPopupMenu(this,"nicklist_addressbook_context_submenu");
+  
   if(popup)
   {
     if(modes)
@@ -47,10 +50,11 @@ NickListView::NickListView(QWidget* parent) :
     popup->insertSeparator();
     popup->insertItem(i18n("Open Query"),Query);
     popup->insertItem(i18n("Send File..."),DccSend);
-    //if (user is not in addressbook already)
-    popup->insertItem(i18n("Link to addressbook..."),EditKABC);
-    //else
-    //popup->insertItem(i18n("Edit addressbook information..."),EditKABC);
+
+    if(addressbook) {
+          popup->insertSeparator();
+      popup->insertItem(i18n("Addressbook associations"), addressbook, AddressbookSub);
+    }
     popup->insertSeparator();
     if(kickban)
     {
@@ -89,10 +93,37 @@ void NickListView::contextMenuEvent(QContextMenuEvent* ce)
 
   if(selectedItems().count())
   {
+    insertAssociationSubMenu();
     int r=popup->exec(ce->globalPos());
     // Will be connected to Channel::popupCommand(int)
     emit popupCommand(r);
   }
 }
-
+void NickListView::insertAssociationSubMenu() {
+	
+  bool any_existing_associations=false;
+  bool any_not_having_associations=false;
+  addressbook->clear();
+  QStringList nickList=channel->getSelectedNicksList();
+  for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator)
+  {
+    if(Konversation::Addressbook::getKABCAddresseeFromNick(*nickIterator).isEmpty()) {
+      any_not_having_associations=true;
+      if(any_existing_associations) break;
+    } else {
+      any_existing_associations=true;
+      if(any_not_having_associations) break;
+    }
+  }
+  if(any_not_having_associations && any_existing_associations)
+    addressbook->insertItem(i18n("Chose/change associations..."), AddressbookChange);
+  else if(any_not_having_associations)
+    addressbook->insertItem(i18n("Chose contact..."), AddressbookChange);
+  else
+    addressbook->insertItem(i18n("Change association..."), AddressbookChange);
+  if(any_not_having_associations && !any_existing_associations)
+    addressbook->insertItem(i18n("Create new contact..."), AddressbookNew);
+  if(any_existing_associations)
+    addressbook->insertItem(i18n("Delete association"), AddressbookDelete);
+}
 #include "nicklistview.moc"

@@ -17,7 +17,7 @@
 #define NICKLISTVIEW_H
 
 #include <klistview.h>
-
+#include "channel.h"
 /*
   @author Dario Abatianni
 */
@@ -30,7 +30,7 @@ class NickListView : public KListView
   Q_OBJECT
 
   public:
-    NickListView(QWidget* parent);
+    NickListView(QWidget* parent, Channel *chan);
     ~NickListView();
 
     enum PopupIDs
@@ -40,7 +40,7 @@ class NickListView : public KListView
       Kick,KickBan,BanNick,BanHost,BanDomain,BanUserHost,BanUserDomain,
       KickBanHost,KickBanDomain,KickBanUserHost,KickBanUserDomain,
       Whois,Version,Ping,Query,DccSend,
-      CustomID, EditKABC
+      CustomID, AddressbookSub, AddressbookChange, AddressbookNew, AddressbookDelete
     };
 
   signals:
@@ -49,10 +49,13 @@ class NickListView : public KListView
 
   protected:
     void contextMenuEvent(QContextMenuEvent* ce);
-
+    void insertAssociationSubMenu();
+	
     QPopupMenu* popup;
     QPopupMenu* modes;
     QPopupMenu* kickban;
+    QPopupMenu* addressbook;
+    Channel *channel;
 };
 
 #endif

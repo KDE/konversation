@@ -102,6 +102,7 @@ class Channel : public ChatWindow
 
     bool allowNotifications() { return m_allowNotifications; }
 
+    QStringList getSelectedNicksList();
   signals:
     void newText(QWidget* channel,const QString& highlightColor, bool important);
     void prefsChanged();
@@ -147,7 +148,6 @@ class Channel : public ChatWindow
     void serverQuit(const QString& reason); // USE_MDI
 
   protected:
-    QStringList getSelectedNicksList();
     void showEvent(QShowEvent* event);
 
     // use with caution! does not check for duplicates

@@ -43,9 +43,11 @@
 #include "topiccombobox.h"
 #include "ircinput.h"
 #include "ircview.h"
+#include <kabc/addressbook.h>
+#include <kabc/stdaddressbook.h>
 
 #include "linkaddressbook/linkaddressbookui.h"
-
+#include "linkaddressbook/addressbook.h"
 #if QT_VERSION < 0x030100
 #include "main.h"
 #endif
@@ -170,7 +172,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicksOps=new QLabel(i18n("Nicks"),nickListButtons);
   nicksOps->setAlignment(AlignVCenter | AlignHCenter);
 
-  nicknameListView=new NickListView(nickListButtons);
+  nicknameListView=new NickListView(nickListButtons, this);
   nicknameListView->setSelectionModeExt(KListView::Extended);
   nicknameListView->setAllColumnsShowFocus(true);
   nicknameListView->setSorting(1,true);
@@ -352,18 +354,28 @@ void Channel::popupCommand(int id)
 
   QString args;
 
-  bool ok=false;
   switch(id)
   {
-    case NickListView::EditKABC:
+    case NickListView::AddressbookDelete:
+      {
+        KABC::AddressBook* addressBook = KABC::StdAddressBook::self( true );
+        QStringList nickList=getSelectedNicksList();
+        for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator)
+  	      Konversation::Addressbook::unassociateNick(Konversation::Addressbook::getKABCAddresseeFromNick(*nickIterator), *nickIterator, addressBook);
+        Konversation::Addressbook::saveAddressbook(addressBook);
+        break;
+      }
+    case NickListView::AddressbookNew:
+    case NickListView::AddressbookChange:
       {
         QStringList nickList=getSelectedNicksList();
         for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator)
-        {
-          (new LinkAddressbookUI(this, NULL, *nickIterator))->show();
-        }
+	          (new LinkAddressbookUI(this, NULL, *nickIterator))->show();
         break;
       }
+    case NickListView::AddressbookSub:
+      kdDebug() << "sub called" << endl;
+      break;
     case NickListView::GiveOp:
       pattern="MODE %c +o %u";
       raw=true;
