@@ -5,37 +5,49 @@ Comment=Konversation
 [message]
 Name=New message
 Name[sv]=Nytt meddelande
+Name[de]=Neue Nachricht
 Comment=New message arrived in a channel
 Comment[sv]=Nytt meddelande anlände i en kanal
+Comment[de]=Neue Nachricht in einem Kanal
 default_presentation=0
 
 [nick]
 Name=Nick written
 Name[sv]=Något skrivet till smeknamnet
+Name[de]=Nick geschrieben
 Comment=Someone wrote your nick in a message
 Comment[sv]=Någon skrev ett meddelande till ditt smeknamn
+Comment[de]=Jemand hat deinen Nick in einer Nachricht erwähnt
 default_presentation=0
 
 [nickchange]
 Name=Nick changed
+Name[de]=Nickwechsel
 Comment=Someone changed their nick
+Comment[de]=Jemand hat seinen Nick gewechselt
 default_presentation=0
 
 [dcc_incomming]
 Name=Incomming file
 Name[sv]=Inkommande fil
+Name[de]=Ankommende Datei
 Comment=Someone wants to transmit a file to you over DCC
 Comment[sv]=Någon vill skicka en fil till dig via direktkommunikation
+Comment[de]=Jemand bietet dir eine Datei zum DCC Download an
 default_prentation=0
 
 [join]
 Name=Nick joined channel
 Name[sv]=Någon med smeknamnet gick med i en kanal
+Name[de]=Nick betritt Kanal
 Comment=New nick joined a channel
 Comment[sv]=Någon med ett nytt smeknamn gick med i en kanal
+Comment[de]=Ein neuer Nick betritt einen Kanal
 defalt_presentation=0
 
 [part]
 Name=Nick left channel
+Name[de]=Nick verläßt Kanal
 Comment=A nick left a channel
+Comment[de]=Ein Nick verläßt einen Kanal
 defalt_presentation=0
