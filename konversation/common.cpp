@@ -67,7 +67,8 @@ QString tagURLs(const QString& text, const QString& fromNick)
   pos = 0;
   urlLen =0;
 
-  QRegExp urlPattern("((www\\.(?!\\.)|(fish|(f|ht)tp(|s))://)([\\d\\w\\./,\\':~\\?=;#@\\-\\+\\%\\*\\{\\}\\!]|&amp;)+)");
+  QRegExp urlPattern("((www\\.(?!\\.)|(fish|(f|ht)tp(|s))://)([\\d\\w\\./,\\':~\\?=;#@\\-\\+\\%\\*\\{\\}\\!]|&amp;)+)|"
+    "([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
   urlPattern.setCaseSensitive(false);
 
   while((pos = urlPattern.search(filteredLine, pos)) >= 0)
@@ -84,8 +85,10 @@ QString tagURLs(const QString& text, const QString& fromNick)
 
     QString protocol;
 
-    if(!urlPattern.cap(1).startsWith("http://",false) && urlPattern.cap(2).startsWith("www.", false)) {
+    if(urlPattern.cap(1).startsWith("www.", false)) {
       protocol = "http://";
+    } else if(urlPattern.cap(1).isEmpty()) {
+      protocol = "mailto:";
     }
 
     QString link = "<font color=\"#"+linkColor+"\"><u><a href=\"" + protocol + href + "\">" + href + "</a></u></font>";
@@ -93,25 +96,6 @@ QString tagURLs(const QString& text, const QString& fromNick)
     pos += link.length();
     KonversationApplication::instance()->storeUrl(fromNick, href);
   }
-
-  pos = 0;
-  urlLen = 0;
-
-  QRegExp mailPattern("([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
-  mailPattern.setCaseSensitive(false);
-
-  while((pos = mailPattern.search(filteredLine, pos)) >= 0)
-    {
-      urlLen = mailPattern.matchedLength();
-      QString href = filteredLine.mid( pos, urlLen );
-
-      QString link = "<font color=\"#"+linkColor+"\"><u><a href=\"mailto:" + href + "\">" + href + "</a></u></font>";
-      filteredLine.replace( pos, urlLen, link );
-      pos += link.length();
-      KonversationApplication::instance()->storeUrl(fromNick, href);
-    }
-
-  
 
   //kdDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine << endl;
   return filteredLine;
