@@ -31,6 +31,7 @@ class PrefsPageDialogs : public PrefsPage
   public:
     PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageDialogs();
+    QString flagNames;
 
   public slots:
     void applyPreferences();
@@ -38,6 +39,7 @@ class PrefsPageDialogs : public PrefsPage
   protected:
     KListView* dialogListView;
     QCheckListItem* item;
+    
 };
 
 #endif
