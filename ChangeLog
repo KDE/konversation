@@ -10,6 +10,7 @@ Changes from 0.8 to 0.9
 - Added support for background colors
 - Reduced flickering on blinking tabs
 - Added experimental support for foreign language characters
+- Added ignore list functionality
 - Added away / unaway messages
 - DCC folder can now be selected vial GUI
 
