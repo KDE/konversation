@@ -152,7 +152,7 @@ void DccPanel::selectionChanged()
 {
   bool accept            = true,
        abort             = false,
-       clear             = true,
+       clear             = false,
        clearAllCompleted = false,
        open              = true,
        remove            = true,
