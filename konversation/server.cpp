@@ -1217,15 +1217,14 @@ QString Server::parseWildcards(const QString &toParse, const QString &nickname, 
   // TODO: parameter handling.
   //       since parameters are not functional yet
 
-  // cut button name from definition
-  QString out(toParse.mid(toParse.find(',')+1));
+  // make a copy to work with
+  QString out(toParse);
   // define default separator and regular expression for definition
   QString separator(" ");
   QRegExp separatorRegExp("%s[^%]*%");
 
-  int pos;
   // separator definition found?
-  pos=out.find(separatorRegExp);
+  int pos=out.find(separatorRegExp);
   if(pos!=-1)
   {
     // skip "%s" at the beginning
