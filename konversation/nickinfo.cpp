@@ -68,8 +68,8 @@ bool NickInfo::isIdentified() const { return m_identified; }
 QString NickInfo::getPrettyOnlineSince() const { 
   QString prettyOnlineSince;
   int daysto = m_onlineSince.date().daysTo( QDate::currentDate());
-  if(daysto == 0) prettyOnlineSince = "Today";
-  else if(daysto == 1) prettyOnlineSince = "Yesterday";
+  if(daysto == 0) prettyOnlineSince = i18n("Today");
+  else if(daysto == 1) prettyOnlineSince = i18n("Yesterday");
   else prettyOnlineSince = m_onlineSince.toString("ddd d MMMM yyyy");
   //TODO - we should use KLocale for this
   prettyOnlineSince += ", " + m_onlineSince.toString("h:mm ap");
