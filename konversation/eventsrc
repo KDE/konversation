@@ -373,6 +373,7 @@ default_presentation=0
 
 [query]
 Name=Query
+Name[cy]=Ymholiad
 Name[es]=Consulta
 Name[it]=Conversazione privata
 Name[nl]=Aanvraag
