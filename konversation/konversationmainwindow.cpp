@@ -1151,7 +1151,7 @@ void KonversationMainWindow::slotPrefsChanged()
 
 void KonversationMainWindow::removeSSLIcon()
 {
-  QObject::disconnect(m_sslLabel,0,0,0);
+  m_sslLabel->disconnect();
   m_sslLabel->hide();
 }
 
