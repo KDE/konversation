@@ -27,6 +27,7 @@
 #include "server.h"
 #include "event.h"
 
+class KonversationMainWindow;
 class KonvDCOP;
 
 /*
@@ -75,7 +76,9 @@ class KonversationApplication : public KApplication
     PrefsDialog* prefsDialog;
     KonvDCOP* dcopObject;
 
-    ServerWindow* mainWindow;
+#ifdef NEW_MAIN_WINDOW
+    KonversationMainWindow* mainWindow;
+#endif
 };
 
 #endif

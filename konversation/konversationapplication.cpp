@@ -21,6 +21,7 @@
 #include "konversationapplication.h"
 #include "konvdcop.h"
 #include "serverwindow.h"
+#include "konversationmainwindow.h"
 
 // include static variables
 Preferences KonversationApplication::preferences;
@@ -37,10 +38,12 @@ KonversationApplication::KonversationApplication()
 
   readOptions();
 
+#ifdef NEW_MAIN_WINDOW
   // open main window
-//  mainWindow=new ServerWindow();
-  mainWindow=0;
-  
+  mainWindow=new KonversationMainWindow();
+  mainWindow->show();
+#endif
+
   // handle autoconnect on startup
   QValueList<int> list=preferences.getAutoConnectServerIDs();
   // if there is at least one autoconnect server, start connecting right away
@@ -88,7 +91,9 @@ KonversationApplication::~KonversationApplication()
   saveOptions(false);
 
   if(dcopObject) delete dcopObject;
+#ifdef NEW_MAIN_WINDOW
   if(mainWindow) delete mainWindow;
+#endif
 }
 
 void KonversationApplication::dcopSay(const QString& server,const QString& target,const QString& command)
