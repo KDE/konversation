@@ -12,6 +12,9 @@ MID-TERM:
 - Compute md5sum over DCCs and send / display the hash after transfer
 - Make separate Highlight lists for each identity
 - Text substitution list (aliases, dangerous commands) with ability to pop up messageboxes
+- /charset command and dcop interface for that
+- Ability define multiple commands (bug#88533)
+
 
 LONG-TERM:
 - Treeview with servers, list of channels / queries in a detachable window that also indicates new text
