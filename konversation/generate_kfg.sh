@@ -2,6 +2,16 @@
 
 
 GROUP=""
+echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+echo "<kcfg xmlns=\"http://www.kde.org/standards/kcfg/1.0\""
+echo "      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
+echo "      xsi:schemaLocation=\"http://www.kde.org/standards/kcfg/1.0"
+echo "      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd\" >"
+echo "  <include>qfont.h</include>"
+echo "  <include>qsize.h</include>"
+echo "  <include>kdialog.h</include>"
+echo "  <kcfgfile name=\"konversationrc\" />"
+
 cat konversationapplication.cpp | while read line; do {
   NEWGROUP2=$(echo "$line" | sed -n -e 's/^ *[^/].*setGroup.*\"\([^\"]*\)\".*/\1/p' )
   ENTRY=$(echo "$line" | sed -n -e 's/^ *[^/].*writeEntry.*\"\([^\"]*\)\".*/\1/p' )
@@ -86,8 +96,6 @@ cat konversationapplication.cpp | while read line; do {
 }
 done
 
-if [[ -n "$GROUP" ]]; then
-  echo "  </group>"
-fi
+echo "  </group>"
 
-
+echo "</kcfg>"
