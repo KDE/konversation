@@ -20,6 +20,7 @@
 #include <qcombobox.h>
 #include <qstringlist.h>
 #include <qtextcodec.h>
+#include <qregexp.h>
 
 #include <klineeditdlg.h>
 #include <kdebug.h>
@@ -319,10 +320,15 @@ void PrefsPageIdentity::updateIdentity(int number)
   realNameInput->setText(identity->getRealName());
 
   // find encoding and set combo box accordingly
-  QString encoding="( "+identity->getCodec().lower()+" )";
+  
+  QRegExp encoding("\\b"+identity->getCodec().lower()+"\\b");
+  
+  kdDebug() << "finding encoding " << identity->getCodec().lower() << endl;
+  
   for(unsigned int index=0;index<encodings.count();index++)
   {
-    if(encodings[index].lower().find(encoding)!=-1)
+    kdDebug() << "comparing with " << encodings[index].lower() << endl;
+    if(encoding.search(encodings[index].lower())!=-1)
     {
       codecComboBox->setCurrentItem(index);
       break;
