@@ -41,6 +41,7 @@ typedef unsigned long long __u64;
 using namespace KNetwork;
 #include <kstringhandler.h>
 #include <kdeversion.h>
+#include <kssl.h>
 
 #include "server.h"
 #include "query.h"
@@ -69,50 +70,25 @@ using namespace KNetwork;
 #endif
 
 
-Server::Server(KonversationMainWindow* mainWindow,int id)
+Server::Server(KonversationMainWindow* mainWindow, int id)
 {
-  identity=0;
-  tryNickNumber=0;
-  checkTime=0;
-  reconnectCounter=0;
-  currentLag=0;
-  rawLog=0;
-  channelListPanel=0;
-  alreadyConnected=false;
-  rejoinChannels=false;
-  connecting=false;
-  isAway = false;
-  m_serverISON = 0;
+  init(mainWindow);
   
-  // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
-  serverNickPrefixModes = "ov";
-  serverNickPrefixes = "@+";
-  channelPrefixes = "#&";
-  
-  serverSocket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
-
-  timerInterval=1;  // flood protection
-
   QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
   setIdentity(KonversationApplication::preferences.getIdentityByName(serverEntry[7]));
 
   setName(QString("server_"+serverEntry[1]).ascii());
-
-  setMainWindow(mainWindow);
 
   serverGroup=serverEntry[0];
   serverName=serverEntry[1];
   serverPort=serverEntry[2].toInt();
   serverKey=serverEntry[3];
 
-  lastDccDir=QString::null;
-
-  statusView=getMainWindow()->addStatusView(this);
-  if(KonversationApplication::preferences.getRawLog()) addRawLog(false);
-
+  statusView = getMainWindow()->addStatusView(this);
+  
   setNickname(getIdentity()->getNickname(tryNickNumber));
   obtainNickInfo(getNickname());
-
+  
   bot=getIdentity()->getBot();
   botPassword=getIdentity()->getPassword();
 
@@ -138,23 +114,8 @@ Server::Server(KonversationMainWindow* mainWindow,int id)
   else 
     connectToIRCServer();
 
-  // don't delete items when they are removed
-  channelList.setAutoDelete(false);
-  // For /msg query completion
-  completeQueryPosition=0;
-
-  inputFilter.setServer(this);
-  outputFilter = new Konversation::OutputFilter(this);
-
-  notifyTimer.setName("notify_timer");
-  incomingTimer.setName("incoming_timer");
-  incomingTimer.start(10);
-
-  outgoingTimer.setName("outgoing_timer");
-  outgoingTimer.start(timerInterval);
-
-  m_scriptLauncher = new ScriptLauncher(this);
-
+  initTimers();
+  
   if(KonversationApplication::preferences.getPreShellCommand().isEmpty())
   	connectSignals();
 	
@@ -162,69 +123,31 @@ Server::Server(KonversationMainWindow* mainWindow,int id)
 }
 
 //FIXME: remove code duplicates by introducing some new method
-Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,const QString& nick,const QString& password)
+Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
+  const QString& nick,const QString& password)
 {
-  autoJoin=false;
-  identity=0;
-  tryNickNumber=0;
-  checkTime=0;
-  reconnectCounter=0;
-  currentLag=0;
-  rawLog=0;
-  channelListPanel=0;
-  alreadyConnected=false;
-  rejoinChannels=false;
-  connecting=false;
-  m_serverISON = 0;
-
-  // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
-  serverNickPrefixModes = "ov";
-  serverNickPrefixes = "@+";
-  channelPrefixes = "#&";
+  init(mainWindow);
   
-  timerInterval=1;  // flood protection
-  
-  serverSocket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
-
   setIdentity(KonversationApplication::preferences.getIdentityByName("Default"));
   setName(hostName.ascii());
-  setMainWindow(mainWindow);
 
   serverGroup=hostName;
   serverName=hostName;
   serverPort=port.toInt();
   serverKey=password;
 
+  statusView = getMainWindow()->addStatusView(this);
   
-  lastDccDir=QString::null;
-
-  statusView=getMainWindow()->addStatusView(this);
-  if(KonversationApplication::preferences.getRawLog()) addRawLog(false);
   setNickname(nick);
-
+  
   if(!KonversationApplication::preferences.getPreShellCommand().isEmpty()) {
     doPreShellCommand();
   }
   else
     connectToIRCServer();
 
-   // don't delete items when they are removed
-  channelList.setAutoDelete(false);
-  // For /msg query completion
-  completeQueryPosition=0;
-
-  inputFilter.setServer(this);
-  outputFilter = new Konversation::OutputFilter(this);
-
-  notifyTimer.setName("notify_timer");
-  incomingTimer.setName("incoming_timer");
-  incomingTimer.start(10);
-
-  outgoingTimer.setName("outgoing_timer");
-  outgoingTimer.start(timerInterval);
-
-  m_scriptLauncher = new ScriptLauncher(this);
-
+  initTimers();
+  
   if(KonversationApplication::preferences.getPreShellCommand().isEmpty())
     connectSignals();
     
@@ -306,6 +229,61 @@ Server::~Server()
   // notify KonversationApplication that this server is gone
   emit deleted(this);
 }
+
+void Server::init(KonversationMainWindow* mainWindow)
+{
+  autoJoin = false;
+  identity = 0;
+  tryNickNumber = 0;
+  checkTime = 0;
+  reconnectCounter = 0;
+  currentLag = 0;
+  rawLog = 0;
+  channelListPanel = 0;
+  alreadyConnected = false;
+  rejoinChannels = false;
+  connecting = false;
+  m_serverISON = 0;
+  m_ssl = 0;
+  lastDccDir = QString::null;
+
+  // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
+  serverNickPrefixModes = "ov";
+  serverNickPrefixes = "@+";
+  channelPrefixes = "#&";
+
+  timerInterval = 1;  // flood protection
+
+  serverSocket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
+  
+  setMainWindow(mainWindow);
+
+  if(KonversationApplication::preferences.getRawLog())
+  {
+    addRawLog(false);
+  }
+
+  inputFilter.setServer(this);
+  outputFilter = new Konversation::OutputFilter(this);
+  m_scriptLauncher = new ScriptLauncher(this);
+
+  // don't delete items when they are removed
+  channelList.setAutoDelete(false);
+  // For /msg query completion
+  completeQueryPosition=0;
+}
+
+void Server::initTimers()
+{
+  notifyTimer.setName("notify_timer");
+  
+  incomingTimer.setName("incoming_timer");
+  incomingTimer.start(10);
+
+  outgoingTimer.setName("outgoing_timer");
+  outgoingTimer.start(timerInterval);
+}
+
 
 void Server::connectSignals()
 {
@@ -584,7 +562,21 @@ void Server::lookupFinished()
 void Server::ircServerConnectionSuccess()
 {
   reconnectCounter=0;
-
+/*  
+  if() {
+    if(KSSL::doesSSLWork()) {
+      if(!m_ssl) {
+        m_ssl = new KSSL();
+        m_ssl->connect(serverSocket->socketDevice());
+      } else {
+        m_ssl->reInitialize();
+      }
+    } else {
+      // FIXME show error msg and disconnect here!
+      kdDebug() << k_funcinfo << "SSL doesn't work!" << endl;
+    }
+  }
+*/
   connect(this,SIGNAL (nicknameChanged(const QString&)),statusView,SLOT (setNickname(const QString&)) );
   statusView->appendServerMessage(i18n("Info"),i18n("Connected; logging in..."));
 

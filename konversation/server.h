@@ -46,6 +46,7 @@ class RawLog;
 class ChannelListPanel;
 class ScriptLauncher;
 class ServerISON;
+class KSSL;
 
 class Server : public QObject
 {
@@ -392,6 +393,12 @@ class Server : public QObject
     // constants
     static const int BUFFER_LEN=513;
     
+    /// Initialize the class
+    void init(KonversationMainWindow* mainWindow);
+    
+    /// Initialize the timers
+    void initTimers();
+    
     /// Connect to the signals used in this class.
     void connectSignals();
 
@@ -565,7 +572,8 @@ class Server : public QObject
     ChannelMembershipMap m_unjoinedChannels;
     /// List of nicks in Queries.
     NickInfoMap m_queryNicks;
-
+    
+    KSSL* m_ssl;
 };
 
 #endif
