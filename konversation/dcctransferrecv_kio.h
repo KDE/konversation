@@ -35,7 +35,7 @@ namespace KNetwork
 }
 
 class DccTransferRecvWriteCacheHandler;
-
+/*
 class DccTransferRecv : public DccTransfer
 {
   Q_OBJECT
@@ -113,5 +113,5 @@ class DccTransferRecvWriteCacheHandler : public QObject, protected QThread
     bool bKIOWriteReady;
     bool bFinishing;
 };
-
+*/
 #endif // DCCTRANSFERRECV_H
