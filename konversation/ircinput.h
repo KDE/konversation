@@ -39,6 +39,7 @@ class IRCInput : public KTextEdit
     int getOldCursorPosition();
 
     virtual QSize sizeHint() const;
+    QString text() const;
 
   signals:
     void nickCompletion();

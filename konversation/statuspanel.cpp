@@ -56,7 +56,7 @@ StatusPanel::StatusPanel(QWidget* parent) :
   connect(statusInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );
   connect(statusInput,SIGNAL (pageDown()),getTextView(),SLOT (pageDown()) );
 
-  connect(statusInput,SIGNAL (returnPressed()),this,SLOT(statusTextEntered()) );
+  connect(statusInput,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
   connect(statusInput,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
 
   updateFonts();

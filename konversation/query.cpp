@@ -62,7 +62,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   setLogfileName(QString::null);
 
   // connect the signals and slots
-  connect(queryInput,SIGNAL (returnPressed()),this,SLOT (queryTextEntered()) );
+  connect(queryInput,SIGNAL (submit()),this,SLOT (queryTextEntered()) );
   connect(queryInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
 
   connect(queryInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );

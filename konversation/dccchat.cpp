@@ -64,7 +64,7 @@ DccChat::DccChat(QWidget* parent,const QString& myNickname,const QString& nickna
   dccChatInput->setEnabled(false);
 
   // connect the signals and slots
-  connect(dccChatInput,SIGNAL (returnPressed()),this,SLOT (dccChatTextEntered()) );
+  connect(dccChatInput,SIGNAL (submit()),this,SLOT (dccChatTextEntered()) );
   connect(dccChatInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
 
   connect(getTextView(),SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );

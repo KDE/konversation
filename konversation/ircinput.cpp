@@ -20,6 +20,7 @@
 
 #include <qclipboard.h>
 #include <qregexp.h>
+#include <qdom.h>
 
 #include "ircinput.h"
 #include "konversationapplication.h"
@@ -42,8 +43,9 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
   completionBox = new KCompletionBox(this);
   connect(completionBox, SIGNAL(activated(const QString&)), this, SLOT(insertCompletion(const QString&)));
 
-  // widget may not resize vertically  
+  // widget may not resize vertically
   setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
+//  setTextFormat(RichText);
 }
 
 IRCInput::~IRCInput()
@@ -59,6 +61,22 @@ QSize IRCInput::sizeHint() const
   int h=QMAX(fontMetrics().lineSpacing(),14)+f+4;
 
   return QSize(12*h,h);
+}
+
+QString IRCInput::text() const
+{
+  return KTextEdit::text();
+  /*
+  QString content=KTextEdit::text();
+  QDomDocument document;
+
+  document.setContent(content,false);
+  QDomNodeList nodes=document.elementsByTagName("p");
+  
+  kdDebug() << "IRCInput::text(): " << nodes.count() << endl;
+
+  return nodes.item(0).toText().nodeValue();
+*/
 }
 
 // Take care of Tab, Cursor and so on
@@ -213,6 +231,10 @@ void IRCInput::paste()
     bool signal=false;
     // replace \r with \n to make xterm pastes happy
     text.replace(QRegExp("\r"),"\n");
+
+    //  remove all trailing newlines
+    text.replace(QRegExp("\n+$"),"");
+
     // does the text contain at least one newline character?
     if(text.find('\n')!=-1)
     {
@@ -224,6 +246,11 @@ void IRCInput::paste()
       if(pos>0 && pos!=(text.length()-1)) signal=true;
       // emit the signal if there's more than one line break in the text
       if(pos!=rpos) signal=true;
+    }
+    else
+    {
+      insert(text);
+      return;
     }
 
     // should we signal the application due to newlines in the paste?
