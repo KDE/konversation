@@ -7,7 +7,6 @@
     </Menu>
     <Menu name="windows">
       <Text>Windows</Text>
-      <Action name="open_hilight_window" />
       <Action name="open_notify_window" />
       <Action name="open_nicksonline_window" />
       <Action name="open_ignore_window" />

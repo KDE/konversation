@@ -71,7 +71,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   new PrefsPageIdentity(identityPane,preferences);
 
 //  new PrefsPageNotify(notifyPane,preferences);
-  new PrefsPageHighlight(highlightPane,preferences);
+  highlightPage=new PrefsPageHighlight(highlightPane,preferences);
 //  new PrefsPageIgnore(ignorePane,preferences);
 
   new PrefsPageAppearance(appearancePane,preferences);
@@ -122,6 +122,7 @@ void PrefsDialog::slotOk()
 void PrefsDialog::slotApply()
 {
   preferences->setButtonList(buttonsPage->getButtonList());
+  preferences->setHilightList(highlightPage->getHighlightList());
   emit prefsChanged();
 }
 

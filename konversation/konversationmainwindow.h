@@ -38,8 +38,6 @@ class RawLog;
 class ChannelListPanel;
 class DccPanel;
 class DccTransferHandler;
-class Highlight;
-class HighlightDialog;
 class Ignore;
 class IgnoreDialog;
 class NicksOnline;
@@ -100,10 +98,6 @@ class KonversationMainWindow : public KMainWindow
 
     void newText(QWidget* view,const QString& highlightColor);
     void quitProgram();
-
-    void openHilight();
-    void applyHilight(QPtrList<Highlight> newList);
-    void closeHilight(QSize newSize);
 
     void openIgnore();
     void applyIgnore(QPtrList<Ignore> newList);
@@ -171,7 +165,6 @@ class KonversationMainWindow : public KMainWindow
     KToggleAction* showStatusBarAction;
     KToggleAction* showMenuBarAction;
 
-    HighlightDialog* hilightDialog;
     NotifyDialog* notifyDialog;
     IgnoreDialog* ignoreDialog;
     NicksOnline* nicksOnlineWindow;

@@ -35,7 +35,6 @@
 #include "channellistpanel.h"
 #include "dccpanel.h"
 #include "dcctransferhandler.h"
-#include "highlightdialog.h"
 #include "ignoredialog.h"
 #include "notifydialog.h"
 #include "nicksonline.h"
@@ -56,7 +55,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
   dccTransferHandler=new DccTransferHandler(this);
 
-  hilightDialog=0;
   ignoreDialog=0;
   notifyDialog=0;
   nicksOnlineWindow=0;
@@ -75,7 +73,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
   KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
-  new KAction(i18n("Highlight List"),0,0,this,SLOT (openHilight()),actionCollection(),"open_hilight_window");
   new KAction(i18n("Notify List"),0,0,this,SLOT (openNotify()),actionCollection(),"open_notify_window");
   new KAction(i18n("Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
   new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
@@ -523,32 +520,6 @@ void KonversationMainWindow::quitProgram()
   kdDebug() << "KonversationMainWindow::quitProgram()" << endl;
   // will call queryClose()
   close();
-}
-
-void KonversationMainWindow::openHilight()
-{
-  if(!hilightDialog)
-  {
-    hilightDialog=new HighlightDialog(this,KonversationApplication::preferences.getHilightList(),
-                                      KonversationApplication::preferences.getHilightSize());
-    connect(hilightDialog,SIGNAL (cancelClicked(QSize)),this,SLOT (closeHilight(QSize)) );
-    connect(hilightDialog,SIGNAL (applyClicked(QPtrList<Highlight>)),this,SLOT (applyHilight(QPtrList<Highlight>)) );
-  }
-}
-
-void KonversationMainWindow::applyHilight(QPtrList<Highlight> hilightList)
-{
-  KonversationApplication::preferences.setHilightList(hilightList);
-  emit prefsChanged();
-}
-
-void KonversationMainWindow::closeHilight(QSize newHilightSize)
-{
-  KonversationApplication::preferences.setHilightSize(newHilightSize);
-  emit prefsChanged();
-
-  delete hilightDialog;
-  hilightDialog=0;
 }
 
 void KonversationMainWindow::openIgnore()
