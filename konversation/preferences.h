@@ -92,6 +92,8 @@ class Preferences : public QObject
     const bool getLog();
     void setLowerLog(bool state);
     const bool getLowerLog();
+    void setAddHostnameToLog(bool state);
+    const bool getAddHostnameToLog();
     void setLogFollowsNick(bool state);
     const bool getLogFollowsNick();
     void setLogPath(const QString &path);
@@ -493,6 +495,7 @@ class Preferences : public QObject
 
     bool log;
     bool lowerLog;
+    bool addHostnameToLog;
     bool logFollowsNick;
     QString logPath;
     int scrollbackMax;

@@ -133,6 +133,7 @@ Preferences::Preferences()
 
   setLog(true);
   setLowerLog(true);
+  setAddHostnameToLog(false);
   setLogFollowsNick(true);
 
   setLogfileBufferSize(100);
@@ -355,6 +356,8 @@ const bool Preferences::getLog() { return log; }
 void Preferences::setLowerLog(bool state) { lowerLog=state; }
 const bool Preferences::getLowerLog() { return lowerLog; }
 void Preferences::setLogFollowsNick(bool state) { logFollowsNick=state; }
+void Preferences::setAddHostnameToLog(bool state) {addHostnameToLog=state; }
+const bool Preferences::getAddHostnameToLog() { return addHostnameToLog; }
 const bool Preferences::getLogFollowsNick() { return logFollowsNick; }
 void Preferences::setLogPath(const QString &path) { logPath=path; }
 const QString Preferences::getLogPath() { return logPath; }

@@ -852,6 +852,7 @@ void KonversationApplication::readOptions()
 
   preferences.setLog(config->readBoolEntry("Log",preferences.getLog()));
   preferences.setLowerLog(config->readBoolEntry("LowerLog",preferences.getLowerLog()));
+  preferences.setAddHostnameToLog(config->readBoolEntry("AddHostnameToLog",preferences.getAddHostnameToLog()));
   preferences.setLogFollowsNick(config->readBoolEntry("LogFollowsNick",preferences.getLogFollowsNick()));
 
   preferences.setTabPlacement(static_cast<Preferences::TabPlacement>(config->readNumEntry("TabPlacement",static_cast<int>(preferences.getTabPlacement()))));

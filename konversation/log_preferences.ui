@@ -34,6 +34,30 @@ the Free Software Foundation; either version 2 of the License, or
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
+                <widget class="KURLRequester" row="3" column="1">
+                    <property name="name">
+                        <cstring>kcfg_LogfilePath</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="3" column="0">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Logfile &amp;path:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kcfg_LogfilePath</cstring>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_LogFollowsNick</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Follow nick changes</string>
+                    </property>
+                </widget>
                 <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_LowerLog</cstring>
@@ -44,26 +68,10 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>kcfg_LogFollowsNick</cstring>
+                        <cstring>kcfg_AddHostnameToLog</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Follow nick changes</string>
-                    </property>
-                </widget>
-                <widget class="KURLRequester" row="2" column="1">
-                    <property name="name">
-                        <cstring>kcfg_LogfilePath</cstring>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="2" column="0">
-                    <property name="name">
-                        <cstring>textLabel1</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Logfile &amp;path:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_LogfilePath</cstring>
+                        <string>&amp;Append hostname to logfile names</string>
                     </property>
                 </widget>
             </grid>
