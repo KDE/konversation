@@ -25,6 +25,7 @@
 #include <kkeydialog.h>
 #include <kdeversion.h>
 #include <kedittoolbar.h>
+#include <kpopupmenu.h>
 
 #ifndef KDE_MAKE_VERSION
 #define KDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
@@ -98,7 +99,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 #endif
 
   KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
-  KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
+  KAction *preferencesAction = KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
   new KAction(i18n("Server List"), 0, 0, this, SLOT(openServerList()), actionCollection(), "open_server_list");
   new KAction(i18n("Quick Connect"), "connect_creating", 0, this, SLOT(openQuickConnectDialog()), actionCollection(), "quick_connect_dialog");
@@ -153,6 +154,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   connect(this, SIGNAL(startNotification(QWidget*)), tray, SLOT(startNotification(QWidget*)));
   connect(this, SIGNAL(endNotification(QWidget*)), tray, SLOT(endNotification(QWidget*)));
   connect(tray, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
+  KPopupMenu *trayMenu = tray->contextMenu();
+  preferencesAction->plug(trayMenu);
 
   // decide whether to show the tray icon or not
   updateTrayIcon();
