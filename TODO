@@ -1,5 +1,4 @@
 
-- Make [x] on tabs harder to click (1 second hover delay or similar)
 - Doxify the source ( berkus )
 - Docufy the app
 - Logrotate with timer or at shutdown, compress rotated logs ( berkus )
@@ -14,7 +13,6 @@ timestamp
 - DCC RESUME should start counting cps from the beginning
 - Context menu on nick in nick list should contain hostmask, realname, etc. infos (in a sub-menu)
 - Check for channel or user parameter in mode changes to take care of duplicate mode chars
-- History viewer
 - Option to disable %G, %C %B... expansion
 - Limit backlog to x lines or KB
 - Don't trigger events when we did highlight ourselves
@@ -42,8 +40,6 @@ timestamp
 - Make separate Highlight lists for each identity
 - Nick button in status pane does nothing
 - Measure away time and make it available via placeholder
-- privmsg (/msg) should be logged to the specific log file (if i do "/msg foo bar" i
-  want to have this in konversation-foo.log)
 - Mark the last point where the panel was active
 - Hide all "technical" messages from channels and queries or redirect them into the status view
 - Command Char must be present
