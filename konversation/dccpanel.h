@@ -65,8 +65,6 @@ class DccPanel : public ChatWindow
 #ifdef USE_MDI
     virtual void closeYourself(ChatWindow*);
 #endif
-    void setButtons(bool accept,bool abort,bool remove,bool open,bool info);
-
     KListView* dccListView;
 
     QPushButton* acceptButton;

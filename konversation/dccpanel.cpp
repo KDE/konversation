@@ -105,15 +105,6 @@ DccPanel::~DccPanel()
   kdDebug() << "DccPanel::~DccPanel()" << endl;
 }
 
-void DccPanel::setButtons(bool accept,bool abort,bool remove,bool open,bool info)
-{
-  acceptButton->setEnabled(accept);
-  abortButton->setEnabled(abort);
-  removeButton->setEnabled(remove);
-  openButton->setEnabled(open);
-  infoButton->setEnabled(info);
-}
-
 void DccPanel::dccStatusChanged(const DccTransfer *item)
 {
   // If the item is currently selected, update buttons.
@@ -123,36 +114,44 @@ void DccPanel::dccStatusChanged(const DccTransfer *item)
 void DccPanel::dccSelected()
 {
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
-
+  
   if(item)
   {
     DccTransfer::DccStatus status=item->getStatus();
-    switch(status)
-    {
-      case DccTransfer::Queued:
-      case DccTransfer::LookingUp:
-      case DccTransfer::Connecting:
-        setButtons(true,true,true,false,false);
-        break;
-      case DccTransfer::WaitingRemote:
-        setButtons(false,true,true,true,true);
-        break;
-      case DccTransfer::Sending:
-      case DccTransfer::Receiving:
-        setButtons(false,true,true,true,true);
-        break;
-      case DccTransfer::Aborted:
-      case DccTransfer::Failed:
-      case DccTransfer::Done:
-        setButtons(false,false,true,true,true);
-        break;
-      default:
-        setButtons(false,false,false,false,false);
-    }
+    
+    // Accept
+    acceptButton->setEnabled( status == DccTransfer::Queued );
+    
+    // Abort
+    abortButton->setEnabled( status != DccTransfer::Failed && 
+                             status != DccTransfer::Aborted && 
+                             status != DccTransfer::Done );
+    
+    // Remove
+    removeButton->setEnabled( true );
+    
+    // Open
+    openButton->setEnabled( item->getType() == DccTransfer::Send ||
+                            status == DccTransfer::Done );
+    
+    // Info
+    infoButton->setEnabled( false );  // disabled temporarily
+    
+    // Detail
+    detailButton->setEnabled( item->getType() == DccTransfer::Send ||
+                              status == DccTransfer::Done );
   }
-  else setButtons(false,false,false,false,false);
+  else
+  {
+    acceptButton->setEnabled( false );
+    abortButton->setEnabled( false );
+    removeButton->setEnabled( false );
+    openButton->setEnabled( false );
+    infoButton->setEnabled( false );
+    detailButton->setEnabled( false );
+  }
 }
-
+  
 void DccPanel::acceptDcc()
 {
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
@@ -166,8 +165,7 @@ void DccPanel::runDcc()
 {
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
   if(item)
-    if( item->getType()==DccTransfer::Send 
-        || ( item->getType()==DccTransfer::Receive && item->getStatus()==DccTransfer::Done ) )
+    if(item->getType()==DccTransfer::Send || item->getStatus()==DccTransfer::Done)
       new KRun(KURL(item->getFilePath()));
 }
 
