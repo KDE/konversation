@@ -117,7 +117,14 @@ void KonversationApplication::dcopSay(const QString& server,const QString& targe
     if(lookServer->getServerName()==server)
     {
       lookServer->dcopSay(target,command);
-      break; // leave while loop
+//      break; // leave while loop
+//FIXME:   <muesli> there's a reason for not breaking this loop, here (which would spent only some 
+//                  cpu cycles, anyways): i'm connected to two bouncers at the same time, which are
+//                  also named the same (same ip, no dns). if a dcopSay gets emerged, it will always
+//                  get the _same_ server name as its parameter (both are named the same). although 
+//                  the channel it gets sent to, is on the second server, it will always try to send
+//                  this information to a channel on the first server, which i didn't even join.
+//                  this is def. a quick-fix, we should probably handle server-id's instead of -names.
     }
     lookServer=serverList.next();
   }
