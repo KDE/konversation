@@ -98,10 +98,6 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
   setShowToolTips(false);
   m_tooltip = new Konversation::KonversationNickListViewToolTip(viewport(), this);
 
-#if KDE_IS_VERSION(3,3,90)
-  setShadeSortColumn(false);
-#endif
-
   m_resortTimer = new QTimer( this);
   connect(m_resortTimer, SIGNAL( timeout()), SLOT(resort()));
 }
