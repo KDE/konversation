@@ -150,26 +150,30 @@ void DccPanel::dccStatusChanged(const DccTransfer* /* item */)
 
 void DccPanel::selectionChanged()
 {
-  bool accept         = true,
-       abort          = false,
-       clear          = true,
-       open           = true,
-       remove         = true,
-       info           = true,
-       detail         = true,
-       removeAndClear = true;
-  bool itemfound = false;
+  bool accept            = true,
+       abort             = false,
+       clear             = true,
+       clearAllCompleted = false,
+       open              = true,
+       remove            = true,
+       info              = true,
+       detail            = true,
+       removeAndClear    = true;
+  bool selectedItemfound = false;
   QListViewItemIterator it( getListView() );
   while( it.current() )
   {
-    if( it.current()->isSelected() )
+    DccTransfer* item = static_cast<DccTransfer*>( it.current() );
+    if( item )
     {
-      DccTransfer* item = static_cast<DccTransfer*>( it.current() );
       DccTransfer::DccType type = item->getType();
       DccTransfer::DccStatus status = item->getStatus();
-      if( item )
+      
+      clearAllCompleted |= ( status >= DccTransfer::Done );
+      
+      if( it.current()->isSelected() )
       {
-        itemfound = true;
+        selectedItemfound = true;
         
         accept &= ( status == DccTransfer::Queued );
         
@@ -187,7 +191,7 @@ void DccPanel::selectionChanged()
     }
     ++it;
   }
-  if( !itemfound ) { accept = abort = clear = open = remove = info = detail = removeAndClear = false; }
+  if( !selectedItemfound ) { accept = abort = clear = open = remove = info = detail = removeAndClear = false; }
   
   acceptButton->setEnabled( accept );
   abortButton->setEnabled( abort );
@@ -196,14 +200,15 @@ void DccPanel::selectionChanged()
   removeButton->setEnabled( remove );
   detailButton->setEnabled( detail );
   
-  popup->setItemEnabled( Popup::Accept,         accept );
-  popup->setItemEnabled( Popup::Abort,          abort );
-  popup->setItemEnabled( Popup::Clear,          clear );
-  popup->setItemEnabled( Popup::RemoveAndClear, removeAndClear );
-  popup->setItemEnabled( Popup::Open,           open );
-  popup->setItemEnabled( Popup::Remove,         remove );
-  popup->setItemEnabled( Popup::Info,           info );
-  popup->setItemEnabled( Popup::Detail,         detail );
+  popup->setItemEnabled( Popup::Accept,            accept );
+  popup->setItemEnabled( Popup::Abort,             abort );
+  popup->setItemEnabled( Popup::Clear,             clear );
+  popup->setItemEnabled( Popup::ClearAllCompleted, clearAllCompleted );
+  popup->setItemEnabled( Popup::RemoveAndClear,    removeAndClear );
+  popup->setItemEnabled( Popup::Open,              open );
+  popup->setItemEnabled( Popup::Remove,            remove );
+  popup->setItemEnabled( Popup::Info,              info );
+  popup->setItemEnabled( Popup::Detail,            detail );
 }
 
 void DccPanel::selectMe(DccTransfer* item)
