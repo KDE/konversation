@@ -17,6 +17,12 @@ Conflict in Highlighting own lines and own nick
 CHECK: Replace "0.0.0.0" with QString::null in dccTransfer to allow other than IPv4
 Session management
 Make font for quick buttons configurable
+Different charsets / encodings for each channel / tab
+Fortunes
+"notices" tab for all notices that are no channel notices
+"snotices" tab for all server notices (prefix without "!")
+Indicate hilight on tab LED / label
+DCC port range
 
 <mETz[]> Eisfuchs: And why have the "Mitschnitt" button there? having it in the menubar is enough, no?
 

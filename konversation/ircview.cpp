@@ -30,6 +30,7 @@
 #endif
 
 #include <kdebug.h>
+#include <kmessagebox.h>
 
 #include "konversationapplication.h"
 #include "ircview.h"
@@ -541,7 +542,7 @@ void IRCView::search()
       if(forward)
       {
         findIndex++;
-        if(findIndex=paragraphLength(findParagraph))
+        if(findIndex==paragraphLength(findParagraph))
         {
           findIndex=0;
           findParagraph++;
@@ -573,11 +574,11 @@ void IRCView::search()
     }
 
     kdDebug() << "Looking for " << pattern << " from paragraph " << findParagraph << " line " << findIndex << endl;
-    
+
     if(find(pattern,caseSensitive,wholeWords,forward,&findParagraph,&findIndex))
       kdDebug() << "Found " << pattern << " on paragraph " << findParagraph << " line " << findIndex << endl;
     else
-      kdDebug() << "Pattern " << pattern << " not found." << endl;
+      KMessageBox::information(this,i18n("No matches found for \"%1\".").arg(pattern),i18n("Information"));
   }
 }
 
