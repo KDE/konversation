@@ -398,3 +398,4 @@ default_presentation=0
 [kick]
 Name=Kick
 Comment=Someone kicked you out of a channel
+default_presentation=0
