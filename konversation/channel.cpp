@@ -935,8 +935,9 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo) {
   Q_ASSERT(!oldNick.isEmpty());
   /* Did we change our nick name? */
   QString newNick = nickInfo.getNickname();
-  if(newNick==server->getNickname())
+  if(oldNick==server->getNickname())
   {
+    setNickname(newNick);
     appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.").arg(newNick),false);
   }
   /* No, must've been someone else */
@@ -1140,10 +1141,11 @@ void Channel::kickNick(const QString &nickname, const QString &kicker, const QSt
 #endif //USE_NICKINFO
 Nick* Channel::getNickByName(const QString &lookname)
 {
+  QString lcLookname = lookname.lower();
   Nick* nick=nicknameList.first();
   while(nick)
   {
-    if(nick->getNickname().lower()==lookname.lower()) return nick;
+    if(nick->getNickname().lower()==lcLookname) return nick;
     nick=nicknameList.next();
   }
   return 0;

@@ -2139,11 +2139,14 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
 {
   if (nickInfo)
   {
-    // Rename nickname in the NickInfo object.
+    // Get existing lowercase nickname and rename nickname in the NickInfo object.
+    LocaleString lcNickname = nickInfo->getNickname().lower();
     nickInfo->setNickname(newname);
-    // Rename key in the joined and unjoined lists.
-    LocaleString lcNickname = nickname.lower();
     LocaleString lcNewname = newname.lower();
+    // Rename the key in allNicks list.
+    allNicks.remove(lcNickname);
+    allNicks.insert(lcNewname, nickInfo);
+    // Rename key in the joined and unjoined lists.
     QStringList nickChannels = getNickChannels(lcNickname);
     for (unsigned int index=0;index<nickChannels.count();index++)
     {
@@ -2367,9 +2370,9 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
   while(channel)
   {
 #ifdef USE_NICKINFO
-//All we do is notify that the nick has been renamed.. we haven't actually renamed it yet
-
-    if(channel->getNickByName(nickname)) channel->nickRenamed(newNick, *nickInfo);
+    // All we do is notify that the nick has been renamed.. we haven't actually renamed it yet
+    // Note that NickPanel has already updated, so pass new nick to getNickByName.
+    if(channel->getNickByName(newNick)) channel->nickRenamed(nickname, *nickInfo);
 #else
     if(channel->getNickByName(nickname)) channel->renameNick(nickname,newNick);
 #endif
