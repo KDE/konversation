@@ -68,6 +68,8 @@ Server::Server(int id)
 Server::~Server()
 {
   cerr << "Server::~Server()" << endl;
+  serverSocket->enableWrite(true);
+  send(serverSocket);
 }
 
 void Server::connectToIRCServer()
@@ -170,6 +172,7 @@ void Server::queue(const QString& buffer)
 void Server::send(KSocket* ksocket)
 {
   cerr << "-> " << outputBuffer << endl;
+  /* TODO: Implement Flood-Protection here */
   write(ksocket->socket(),outputBuffer.latin1(),outputBuffer.length());
   serverSocket->enableWrite(false);
   outputBuffer="";

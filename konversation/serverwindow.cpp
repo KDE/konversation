@@ -237,6 +237,8 @@ void ServerWindow::saveOptions()
 bool ServerWindow::queryExit()
 {
   cerr << "ServerWindow::queryExit()" << endl;
+  QString command=filter.parse("/quit","");
+  server->queue(filter.getServerOutput());
   saveOptions();
   return true;
 }

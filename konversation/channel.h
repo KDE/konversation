@@ -29,6 +29,7 @@
 #include "chatwindow.h"
 #include "server.h"
 #include "quickbutton.h"
+#include "modebutton.h"
 #include "ircinput.h"
 
 /*
@@ -84,6 +85,7 @@ class Channel : public ChatWindow
   protected slots:
     void completeNick();
     void quickButtonClicked(int id);
+    void modeButtonClicked(int id,bool on);
     /* Will be connected to NickListView::popupCommand(int) */
     void popupCommand(int id);
 
@@ -102,17 +104,17 @@ class Channel : public ChatWindow
 
     QVBox* channelPane;
     QComboBox* topicLine;
-    /* Somehow we need the nickname to the corresponding topic displayed */
+    /* TODO: Somehow we need the nickname to the corresponding topic displayed */
     QStringList topicHistory;
 
-    QPushButton* modeT;
-    QPushButton* modeN;
-    QPushButton* modeS;
-    QPushButton* modeI;
-    QPushButton* modeP;
-    QPushButton* modeM;
-    QPushButton* modeK;
-    QPushButton* modeL;
+    ModeButton* modeT;
+    ModeButton* modeN;
+    ModeButton* modeS;
+    ModeButton* modeI;
+    ModeButton* modeP;
+    ModeButton* modeM;
+    ModeButton* modeK;
+    ModeButton* modeL;
 
     QLineEdit* limit;
 

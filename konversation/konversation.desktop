@@ -1,0 +1,12 @@
+# KDE Config File  
+[Desktop Entry]
+Type=Application
+Exec=konversation -caption "%c" %i %m
+Icon=konversation.png
+MiniIcon=konversation.png
+DocPath=konversation/index.html
+Comment=
+Comment[de]=
+Terminal=0
+Name=Konversation IRC Client
+Name[de]=Konversation IRC-Client

@@ -12,6 +12,9 @@
   email:     eisfuchs@tigress.com
 */
 
+// Comment this #define to try a different text widget
+#define TABLE_VERSION
+
 #include <iostream>
 
 // #include <qlabel.h>
@@ -47,6 +50,11 @@ IRCView::IRCView(QWidget* parent) : KTextBrowser(parent)
   setHScrollBarMode(AlwaysOff);
 
   installEventFilter(this);
+
+#ifndef TABLE_VERSION
+  setText("<qt><table cellpadding=\"0\" cellspacing=\"0\">\n"
+          "<tr><td>WWWWWWWWWW</td><td></td></tr>\n");
+#endif
 }
 
 IRCView::~IRCView()
@@ -318,8 +326,11 @@ void IRCView::doAppend(QString line)
 */
   emit newText();
 
-//  setText(buffer);
+#ifdef TABLE_VERSION
   setText("<qt><table cellpadding=\"0\" cellspacing=\"0\">"+buffer+"</table></qt>");
+#else
+  KTextBrowser::append(line);
+#endif
   ensureVisible(0,contentsHeight()); // contentsHeight() seems to return wrong values when the widget is hidden
 }
 
@@ -327,7 +338,9 @@ void IRCView::showEvent(QShowEvent* event)
 {
   /* Workaround to scroll to the end of the TextView when it's shown */
 //  setText(buffer);
+#ifdef TABLE_VERSION
   setText("<qt><table cellpadding=\"0\" cellspacing=\"0\">"+buffer+"</table></qt>");
+#endif
   ensureVisible(0,contentsHeight());
   /* Set focus to input line (must be connected) */
   emit gotFocus();

@@ -125,12 +125,14 @@ void KonversationApplication::readOptions()
   /* Quick Buttons List */
   config->setGroup("Button List");
   /* Read all buttons and overwrite default entries  */
+  QStringList buttonList(preferences.getButtonList());
   for(index=0;index<8;index++)
   {
-    QStringList buttonList(preferences.getButtonList());
     QString buttonKey(QString("Button%1").arg(index));
     if(config->hasKey(buttonKey)) buttonList[index]=config->readEntry(buttonKey);
   }
+  /* Put back the changed button list */
+  preferences.setButtonList(buttonList);
 
   /* Hilight List  */
   config->setGroup("Hilight List");

@@ -61,6 +61,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
     if     (line.startsWith("/join "))    parseJoin(parameter);
     else if(line.startsWith("/part "))    parsePart(parameter);
     else if(line.startsWith("/leave "))   parsePart(parameter);
+    else if(line.startsWith("/quit "))    parseQuit(parameter);
     else if(line.startsWith("/j "))       parseJoin(parameter);
     else if(line.startsWith("/msg "))     parseMsg(parameter);
     else if(line.startsWith("/query "))   parseQuery(parameter);
@@ -70,6 +71,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
     else if(line.startsWith("/unvoice ")) parseUnvoice(parameter);
 
     else if(line=="/part")                parsePart("");
+    else if(line=="/quit")                parseQuit("");
 
     /* Forward unknown commands to server */
     else toServer=inputLine.mid(1);
@@ -143,6 +145,13 @@ void OutputFilter::parsePart(QString parameter)
       if(destination.startsWith("#")) toServer="PART "+destination+" :"+parameter;
     }
   }
+}
+
+void OutputFilter::parseQuit(QString reason)
+{
+  /* if no reason given, take default reason */
+  if(reason=="") reason=KonversationApplication::preferences.getPartReason();
+  toServer="QUIT :"+reason;
 }
 
 void OutputFilter::parseMsg(QString parameter)

@@ -61,14 +61,24 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   /* The box holding the channel modes*/
   QHBox* modeBox=new QHBox(topicBox);
   modeBox->setSizePolicy(hfixed);
-  modeT=new QPushButton("T",modeBox);
-  modeN=new QPushButton("N",modeBox);
-  modeS=new QPushButton("S",modeBox);
-  modeI=new QPushButton("I",modeBox);
-  modeP=new QPushButton("P",modeBox);
-  modeM=new QPushButton("M",modeBox);
-  modeK=new QPushButton("K",modeBox);
-  modeL=new QPushButton("L",modeBox);
+  modeT=new ModeButton("T",modeBox,0);
+  modeN=new ModeButton("N",modeBox,1);
+  modeS=new ModeButton("S",modeBox,2);
+  modeI=new ModeButton("I",modeBox,3);
+  modeP=new ModeButton("P",modeBox,4);
+  modeM=new ModeButton("M",modeBox,5);
+  modeK=new ModeButton("K",modeBox,6);
+  modeL=new ModeButton("L",modeBox,7);
+
+  connect(modeT,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
+  connect(modeN,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
+  connect(modeS,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
+  connect(modeI,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
+  connect(modeP,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
+  connect(modeM,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
+  connect(modeK,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
+  connect(modeL,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
+
   limit=new QLineEdit(modeBox);
 
   nicksOps=new QLabel(i18n("Nicks"),topicViewNicksGrid);
@@ -152,6 +162,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 Channel::~Channel()
 {
   cerr << "Channel::~Channel()" << endl;
+
   /* Purge nickname list */
   Nick* nick=nicknameList.first();
   while(nick)
@@ -389,6 +400,14 @@ QStringList* Channel::getSelectedNicksList()
   }
 
   return selectedNicksList;
+}
+
+void Channel::modeButtonClicked(int id,bool on)
+{
+  char* modes="tnsipmkl";
+
+  QString command("MODE "+getChannelName()+" "+((on) ? "+" : "-")+modes[id]);
+  server->queue(command);
 }
 
 void Channel::quickButtonClicked(int id)
@@ -840,12 +859,13 @@ void Channel::updateMode(QString& sourceNick,char mode,bool plus,QString& parame
     break;
   }
   if(message!="") appendCommandMessage(i18n("Mode"),message);
+  updateModeWidgets(mode,plus,parameter);
 }
 
 void Channel::updateModeWidgets(char mode,bool plus,QString& parameter)
 {
-  QPushButton* widget=0;
-
+  ModeButton* widget=0;
+cerr << "Setting mode" << endl;
   if(mode=='t') widget=modeT;
   else if(mode=='n') widget=modeN;
   else if(mode=='s') widget=modeS;
@@ -860,7 +880,7 @@ void Channel::updateModeWidgets(char mode,bool plus,QString& parameter)
     else limit->clear();
   }
 
-  if(widget) widget->setDown(plus);
+  if(widget) widget->setOn(plus);
 }
 
 void Channel::updateQuickButtons(QStringList newButtonList)
