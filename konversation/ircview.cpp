@@ -58,6 +58,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 
   setAutoFormatting(QTextEdit::AutoNone);
   setUndoRedoEnabled(0);
+  setLinkUnderline(false);
 
   popup=new QPopupMenu(this,"ircview_context_menu");
 
@@ -178,7 +179,7 @@ void IRCView::highlightedSlot(const QString& link)
 
 void IRCView::urlClickSlot(const QString &url)
 {
-  if (!url.isEmpty())
+  if (!url.isEmpty() && !url.startsWith("#"))
   {
     // Always use KDE default mailer.
     if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.lower().startsWith("mailto:"))
@@ -200,6 +201,14 @@ void IRCView::urlClickSlot(const QString &url)
       delete proc;
     }
   }
+  else if(url.startsWith("#"))
+    {
+      QString recepient(url);
+      recepient.remove("#");
+      Query* query;
+      NickInfoPtr nickInfo = m_server->obtainNickInfo(recepient);
+      query = m_server->addQuery(nickInfo, true /*we initiated*/);
+    }
 }
 
 void IRCView::replaceDecoration(QString& line,char decoration,char replacement)
@@ -407,12 +416,12 @@ void IRCView::append(const QString& nick,const QString& message)
 {
   QString channelColor=KonversationApplication::preferences.getColor("ChannelMessage");
   QString line;
-  QString nickLine="%2";
+  QString nickLine="<a href=\"#"+nick+"\">%2</a>";
   
   if(KonversationApplication::preferences.getUseColoredNicks() && nick != m_server->getNickname())
     {
       NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
-      nickLine = "<font color=\""+ nickinfo->getNickColor() +"\"><b>%2</b></font>";
+      nickLine = "<font color=\""+ nickinfo->getNickColor() +"\"><a href=\"#"+nick+"\">"+"<b>%2</a></b></font></a>";
     }
     
   
@@ -589,12 +598,6 @@ void IRCView::removeSelectedText( int selNum )
     doc->removeSelectedText( selNum, QTextEdit::textCursor() );
 
     // ...snip...
-}
-
-void IRCView::scrollToBottom()
-{
-    //sync(); //sync freaks out the scrollview too
-    setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
 }
 
 void IRCView::doAppend(QString newLine, bool important, bool self)

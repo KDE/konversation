@@ -73,7 +73,6 @@ class IRCView : public KTextBrowser
     void search();
     void searchAgain();
 
-    virtual void scrollToBottom();
     virtual void removeSelectedText( int selNum = 0 );
 
   protected slots:
