@@ -385,7 +385,7 @@ void DccTransferRecv::sendAck()  // slot
 
   m_recvSocket->enableWrite( false );
   m_recvSocket->writeBlock( (char*)&pos, 4 );
-  if( m_transferringPosition == m_fileSize )
+  if( m_transferringPosition == (KIO::fileoffset_t)m_fileSize )
   {
     kdDebug() << "DccTransferRecv::sendAck(): done." << endl;
     m_writeCacheHandler->close();
