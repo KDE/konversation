@@ -169,9 +169,13 @@ void StatusPanel::updateFonts()
 
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
 
-  if(KonversationApplication::preferences.getShowBackgroundImage())
-      getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
-                                   KonversationApplication::preferences.getBackgroundImageName());
+  if(KonversationApplication::preferences.getShowBackgroundImage()) {
+    getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
+                                  KonversationApplication::preferences.getBackgroundImageName());
+  } else {
+    getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
+      QString::null);
+  }
 
   nicknameCombobox->setFont(KonversationApplication::preferences.getTextFont());
 }

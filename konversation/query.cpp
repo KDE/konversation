@@ -183,9 +183,13 @@ void Query::updateFonts()
 
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
 
-  if(KonversationApplication::preferences.getShowBackgroundImage())
-      getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
-                                   KonversationApplication::preferences.getBackgroundImageName());
+  if(KonversationApplication::preferences.getShowBackgroundImage()) {
+    getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
+                                  KonversationApplication::preferences.getBackgroundImageName());
+  } else {
+    getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
+      QString::null);
+  }
 }
 
 void Query::textPasted(const QString& text)
