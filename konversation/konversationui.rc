@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="9">
+<kpartgui name="konversation" version="10">
 
   <MenuBar>
     <Menu name="file">
@@ -28,7 +28,7 @@
     </Menu>
   </MenuBar>
 
-  <ToolBar fullWidth="true" name="mainToolBar">
+  <ToolBar fullWidth="true" hidden="true" name="mainToolBar">
     <Action name="options_configure_key_binding" />
     <Action name="options_configure" />
     <separator />
