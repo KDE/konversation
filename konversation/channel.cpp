@@ -642,8 +642,8 @@ void Channel::completeNick()
 
         if(!complete && !found.isEmpty()) {
           if(KonversationApplication::preferences.getNickCompletionMode() == 1) {
-            QString nicks = found.join(" ");
-            appendServerMessage(i18n("Completion"),i18n("Possible completions: %1.").arg(nicks));
+            QString nicksFound = found.join(" ");
+            appendServerMessage(i18n("Completion"),i18n("Possible completions: %1.").arg(nicksFound));
           } else {
             channelInput->showCompletionList(found);
           }
@@ -965,25 +965,36 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
   if(channelNick->getNickname() == m_server->getNickname())
   {
     //If in the future we can leave a channel, but not close the window, refreshModeButtons() has to be called.
-    if(quit) appendCommandMessage(i18n("Quit"),i18n("You have left this server. (%1)").arg(reason),false);
-    else appendCommandMessage(i18n("Part"),i18n("You have left channel %1. (%2)").arg(getName()).arg(reason),false);
+    if(quit) {
+      appendCommandMessage(i18n("Quit"),i18n("You have left this server. (%1)").arg(reason),false);
+    } else {
+      appendCommandMessage(i18n("Part"),i18n("You have left channel %1. (%2)").arg(getName()).arg(reason),false);
+    }
+
 #ifdef USE_MDI
     emit chatWindowCloseRequest(this);
 #else
     delete this;
 #endif
   } else {
-    if(quit) appendCommandMessage(i18n("Quit"),i18n("%1 has left this server. (%2)").arg(channelNick->getNickname()).arg(reason),false);
-    else appendCommandMessage(i18n("Part"),i18n("%1 has left this channel. (%2)").arg(channelNick->getNickname()).arg(reason),false);
-
-    if(channelNick->isOp() || channelNick->isOwner() || channelNick->isAdmin() || channelNick->isHalfOp()) adjustOps(-1);
-    adjustNicks(-1);
-    Nick* nick=getNickByName(channelNick->getNickname());
-    if(nick==0) kdWarning() << "Channel::kickNick(): Nickname " << channelNick->getNickname() << " not found!"<< endl;
-    else {
-      nicknameList.removeRef(nick);
+    if(quit) {
+      appendCommandMessage(i18n("Quit"),i18n("%1 has left this server. (%2)").arg(channelNick->getNickname()).arg(reason),false);
+    } else {
+      appendCommandMessage(i18n("Part"),i18n("%1 has left this channel. (%2)").arg(channelNick->getNickname()).arg(reason),false);
     }
 
+    if(channelNick->isOp() || channelNick->isOwner() || channelNick->isAdmin() || channelNick->isHalfOp()) {
+      adjustOps(-1);
+    }
+
+    adjustNicks(-1);
+    Nick* nick = getNickByName(channelNick->getNickname());
+
+    if(nick) {
+      nicknameList.removeRef(nick);
+    } else {
+      kdWarning() << "Channel::kickNick(): Nickname " << channelNick->getNickname() << " not found!"<< endl;
+    }
   }
 }
 void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, const QString &reason) {
@@ -1819,16 +1830,19 @@ void Channel::autoUserhost()
     int limit=5;
 
     QString nickString;
-    QPtrList<Nick> nicks=getNickList();
+    QPtrList<Nick> nickList = getNickList();
+    QPtrListIterator<Nick> it(nickList);
+    Nick* nick;
 
-    for(unsigned int index=0;index<nicks.count();index++)
+    while((nick = it.current()) != 0)
     {
-      if(nicks.at(index)->getHostmask().isEmpty())
+      if(nick->getHostmask().isEmpty())
       {
-        if(limit--) nickString=nickString+nicks.at(index)->getNickname()+" ";
+        if(limit--) nickString = nickString + nick->getNickname() + " ";
         else break;
       }
     }
+
     if(!nickString.isEmpty()) m_server->requestUserhost(nickString);
   }
 }
@@ -1885,7 +1899,7 @@ void Channel::scheduleAutoWho()  // slot
 void Channel::autoWho()
 {
   // don't use auto /WHO when the number of nicks is too large, or get banned.
-  if(nicks>KonversationApplication::preferences.getAutoWhoNicksLimit())
+  if(nicks > KonversationApplication::preferences.getAutoWhoNicksLimit())
   {
     scheduleAutoWho();
     return;

@@ -66,7 +66,7 @@ QString tagURLs(const QString& text, const QString& fromNick)
   urlLen =0;  
  
   QRegExp urlPattern("((www\\.(?!\\.)|(fish|(f|ht)tp(|s))://)[\\d\\w\\./,:_~\\?=&;#@\\-\\+\\%]+[\\d\\w/])|"
-      "((mailto:|)((([a-z]|\\d)+[\\w\\x2E\\x2D]+)\\x40([\\w\\x2E\\x2D]{2,})\\x2E(\\w{2,})))");
+      "((mailto:|)[-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
   urlPattern.setCaseSensitive(false);
 
   while((pos = urlPattern.search(filteredLine, pos)) >= 0) 
