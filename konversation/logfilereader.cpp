@@ -20,6 +20,7 @@
 #include <qlabel.h>
 #include <qregexp.h>
 #include <qspinbox.h>
+#include <qstylesheet.h>
 
 #include <kdialog.h>
 #include <ktoolbar.h>
@@ -89,9 +90,11 @@ void LogfileReader::updateView()
       stream.device()->at(stream.device()->size()-pos);
     // Skip first line, since it may be incomplete
     stream.readLine();
+    QString str;
 
     while(!stream.eof()) {
-      getTextView()->appendRaw(stream.readLine(), true);
+      str = QStyleSheet::escape(stream.readLine());
+      getTextView()->appendRaw(str, true);
     }
 
     stream.unsetDevice();
