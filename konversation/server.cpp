@@ -122,12 +122,8 @@ Server::~Server()
   // Make sure no signals get sent to a soon to be dying Server Window
   m_socket->blockSignals(true);
 
-  // Close socket but don't delete it. QObject will take care of delete
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-    m_socket->close();
-  
-  // For SSL socket we autoclose socket when the Server object is deleted
-  
+  // Don't delete socket now
+  m_socket->deleteLater();
 
 #ifdef USE_MDI
 /*
@@ -439,10 +435,10 @@ void Server::connectToIRCServer()
 
     // connect() will do a async lookup too
     if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled()) {
-      m_socket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
+      m_socket = new KNetwork::KBufferedSocket(QString::null, QString::null, 0L, "serverSocket");
       connect(m_socket,SIGNAL (connected(const KResolverEntry&)),this,SLOT (ircServerConnectionSuccess()));
     } else {
-      m_socket = new SSLSocket(mainWindow, this, "serverSSLSocket");
+      m_socket = new SSLSocket(mainWindow, 0L, "serverSSLSocket");
       connect(m_socket,SIGNAL (sslInitDone()),this,SLOT (ircServerConnectionSuccess()));
       connect(m_socket,SIGNAL (sslFailure(QString)),this,SIGNAL(sslInitFailure()));
       connect(m_socket,SIGNAL (sslFailure(QString)),this,SLOT(sslError(QString)));
