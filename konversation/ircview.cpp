@@ -565,7 +565,10 @@ void IRCView::appendServerMessage(const QString& type,const QString& message)
     line = "<p><font color=\"#" + m_serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font></p>\n";
   }
 
-  line = line.arg(timeStamp(), type, filter(message,m_serverColor));
+  if(type != "Notify")
+    line = line.arg(timeStamp(), type, filter(message,m_serverColor));
+  else
+    line = "<font color=\"#" + m_serverColor + "\">"+line.arg(timeStamp(), type, message)+"</font>";
 
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
 

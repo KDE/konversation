@@ -22,7 +22,6 @@ LONG-TERM:
 - Context menu on nick in nick list should contain hostmask, realname, etc. infos (in a sub-menu)
 - "notices" tab for all notices that are no channel notices, snotices go to server status tab
 - Ban List. A window in which the user can see the bans of a channel(and remove them).
-- Click on notify messages opens query
 - Use QCA for SSL when KNetwork natively supports it
 
 IDEAS:
