@@ -10,6 +10,7 @@ Make colors for nick list configurable via GUI
 Let the user decide how many quick buttons they want.
 Double click actions for nick list and notify list.
 Think about another way to get rid of the cut off "Custom" text in color combos ...
+Autojoin / User interaction on /invite
 
 <mETz[]> mainwindows don't need a huge border
 <mETz[]> Eisfuchs: And why have the "Mitschnitt" button there? having it in the menubar is enough, no?

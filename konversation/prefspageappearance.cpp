@@ -47,7 +47,21 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   QLabel* codecLabel=new QLabel(i18n("Encoding"),parentFrame);
   QComboBox* codecList=new QComboBox(parentFrame);
   codecList->insertItem(preferences->getCodec()+" "+i18n("(Current)"));
-  codecList->insertStringList(KGlobal::charsets()->descriptiveEncodingNames());
+
+  QStringList encodings=KGlobal::charsets()->descriptiveEncodingNames();
+
+  // from ksirc: remove utf16/ucs2 as it just doesn't work for IRC
+  QStringList::Iterator iterator=encodings.begin();
+  while(iterator!=encodings.end())
+  {
+    if((*iterator).find("utf16")!=-1 ||
+       (*iterator).find("iso-10646")!=-1)
+      iterator=encodings.remove(iterator);
+    else
+      ++iterator;
+  }
+
+  codecList->insertStringList(encodings);
 
   updateFonts();
 
@@ -169,7 +183,10 @@ void PrefsPageAppearance::showModeButtonsChanged(int state)
 
 void PrefsPageAppearance::encodingChanged(const QString& newEncoding)
 {
-  preferences->setCodec(KGlobal::charsets()->encodingForName(newEncoding));
+  if(newEncoding.startsWith("utf 16"))
+    preferences->setCodec(QString::null);
+  else
+    preferences->setCodec(KGlobal::charsets()->encodingForName(newEncoding));
 }
 
 #include "prefspageappearance.moc"
