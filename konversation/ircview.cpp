@@ -414,25 +414,25 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
 
 void IRCView::append(const QString& nick,const QString& message)
 {
-  QString channelColor=KonversationApplication::preferences.getColor("ChannelMessage");
+  QString channelColor = KonversationApplication::preferences.getColor("ChannelMessage");
+  QString nickColor = "#" + channelColor;
   QString line;
-  QString nickLine="<a href=\"#"+nick+"\">%2</a>";
   
-  if(KonversationApplication::preferences.getUseColoredNicks() && nick != m_server->getNickname())
-    {
-      NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
-      nickLine = "<font color=\""+ nickinfo->getNickColor() +"\"><a href=\"#"+nick+"\">"+"<b>%2</a></b></font></a>";
-    }
-    
+  if(KonversationApplication::preferences.getUseColoredNicks() && nick != m_server->getNickname()) {
+    NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
+    nickColor = nickinfo->getNickColor();
+  }
+  
+  QString nickLine = "<a href=\"#" + nick + "\"><font color=\"" + nickColor + "\">%2</font></a>";
   
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
-    line += "<p><font color=\"#" + channelColor + "\"><b>&lt;</b>"+nickLine+"<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
+    line += "<p><font color=\"#" + channelColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
   } else {
-    line = "<p><font color=\"#" + channelColor + "\">%1 <b>&lt;</b>"+nickLine+"<b>&gt;</b> %3</font></p>\n";
+    line = "<p><font color=\"#" + channelColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
   }
-
+  
   line = line.arg(timeStamp(), nick, filter(message,channelColor,nick,true));
 
   emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
@@ -458,20 +458,20 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 {
   QString queryColor=KonversationApplication::preferences.getColor("QueryMessage");
   QString line;
-  QString nickLine="%2";
+  QString nickLine = "%2";
 
   if(KonversationApplication::preferences.getUseColoredNicks())
-    {
-      NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
-      nickLine = "<font color=\""+ nickinfo->getNickColor() +"\"><b>%2</b></font>";
-    }
+  {
+    NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
+    nickLine = "<font color=\"" + nickinfo->getNickColor() + "\">%2</font>";
+  }
 
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
-    line += "<p><font color=\"#" + queryColor + "\"><b>*</b>"+nickLine+"<b>*</b> %1" + PDF + " %3</font></p>\n";
+    line += "<p><font color=\"#" + queryColor + "\"><b>*</b>" + nickLine + "<b>*</b> %1" + PDF + " %3</font></p>\n";
   } else {
-    line = "<p><font color=\"#" + queryColor + "\">%1 <b>*</b>"+nickLine+"<b>*</b> %3</font></p>\n";
+    line = "<p><font color=\"#" + queryColor + "\">%1 <b>*</b>" + nickLine + "<b>*</b> %3</font></p>\n";
   }
 
   line = line.arg(timeStamp(), nick, filter(message,queryColor,nick,true));
@@ -485,13 +485,20 @@ void IRCView::appendAction(const QString& nick,const QString& message)
 {
   QString actionColor=KonversationApplication::preferences.getColor("ActionMessage");
   QString line;
+  QString nickLine = "%2";
+
+  if(KonversationApplication::preferences.getUseColoredNicks())
+  {
+    NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
+    nickLine = "<font color=\"" + nickinfo->getNickColor() + "\">%2</font>";
+  }
 
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
-    line += "<p><font color=\"#"+actionColor+"\">%2 * %1" + PDF + " %3</font></p>\n";
+    line += "<p><font color=\"#" + actionColor + "\">" + nickLine + " * %1" + PDF + " %3</font></p>\n";
   } else {
-    line = "<p><font color=\"#"+actionColor+"\">%1 * %2 %3</font></p>\n";
+    line = "<p><font color=\"#" + actionColor + "\">%1 * " + nickLine + " %3</font></p>\n";
   }
 
   line = line.arg(timeStamp(), nick, filter(message,actionColor,nick,true));
