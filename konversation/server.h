@@ -258,12 +258,14 @@ class Server : public QObject
     // Adds a nickname to the joinedChannels list, removing it from unjoinedChannels list, if present.
     // Creates new NickInfo if necessary.
     // If needed, moves the channel from the unjoined list to the joined list.
+    // If needed, moves the nickname from the Offline to Online lists.
     // If mode != 99 sets the mode for this nick in this channel.
     // Returns the NickInfo for the nickname.
     NickInfo* addNickToJoinedChannelsList(const QString& channelName, const QString& nickname, unsigned int mode = 99);
     // Adds a nickname to the unjoinedChannels list, removing it from joinedChannels list, if present.
     // Creates new NickInfo if necessary.
     // If needed, moves the channel from the joined list to the unjoined list.
+    // If needed, moves the nickname from the Offline to the Online list.
     // If mode != 99 sets the mode for this nick in this channel.
     // Returns the NickInfo for the nickname.
     NickInfo* addNickToUnjoinedChannelsList(const QString& channelName, const QString& nickname, unsigned int mode = 99);
@@ -274,6 +276,12 @@ class Server : public QObject
     // Returns the NickInfo of the nickname or 0 if deleted altogether.
     // Creates new NickInfo if necessary.
     NickInfo* addNickToOfflineList(const QString& nickname, const QStringList& watchList);
+    // Remove nickname from a channel (on joined or unjoined lists).
+    // Delete the nickname altogether if no longer on any lists.
+    void removeChannelNick(const QString& channelName, const QString& nickname);
+    // Remove channel from the joined list.
+    // Nicknames in the channel are added to the unjoined list if they are in the watch list.
+    void removeJoinedChannel(const QString& channelName);
     // Renames a nickname in all NickInfo lists.
     // Returns pointer to the NickInfo object or 0 if nick not found.
     NickInfo* renameNickInfo(const QString& nickname, const QString& newname);
