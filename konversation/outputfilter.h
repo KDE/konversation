@@ -81,39 +81,40 @@ class OutputFilter : public QObject
     bool program;
     bool query;
 
-    void parseMsg(const QString &myNick,const QString &parameter);      // works
-    void parseSMsg(const QString &parameter);     // works
-    void parseQuery(const QString &parameter);    // works
-    void parseDescribe(const QString &parameter);
-    void parseNotice(const QString &parameter);   // works
-    void parseJoin(const QString &parameter);     // works
-    void parsePart(const QString &parameter);     // works
-    void parseQuit(const QString &parameter);     // works
-    void parseKick(const QString &parameter);     // works
-    void parseKickBan(const QString &parameter);
-    void parseBan(const QString &parameter);
-    void parseUnban(const QString &parameter);
-    void parseNames(const QString &parameter);
-    void parseList(const QString &parameter);
-    void parseOp(const QString &parameter);       // works
-    void parseDeop(const QString &parameter);     // works
-    void parseVoice(const QString &parameter);    // works
-    void parseUnvoice(const QString &parameter);  // works
-    void parseTopic(const QString &parameter);    // works
-    void parseAway(const QString &parameter);     // works
-    void parseCtcp(const QString &parameter);     // works
-    void parsePing(const QString &parameter);
-    void parseVersion(const QString &parameter);
-    void parseServer(const QString &parameter);
-    void parseConnect(const QString &parameter);
-    void parseDcc(const QString &parameter);
-    void parseInvite(const QString &parameter);
-    void parseExec(const QString &parameter);
-    void parseRaw(const QString &parameter);
-    void parseNotify(const QString &parameter);
+    void parseMsg(const QString& myNick,const QString& parameter);      // works
+    void parseSMsg(const QString& parameter);     // works
+    void parseQuery(const QString& parameter);    // works
+    void parseDescribe(const QString& parameter);
+    void parseNotice(const QString& parameter);   // works
+    void parseJoin(const QString& parameter);     // works
+    void parsePart(const QString& parameter);     // works
+    void parseQuit(const QString& parameter);     // works
+    void parseKick(const QString& parameter);     // works
+    void parseKickBan(const QString& parameter);
+    void parseBan(const QString& parameter);
+    void parseUnban(const QString& parameter);
+    void parseNames(const QString& parameter);
+    void parseList(const QString& parameter);
+    void parseOp(const QString& parameter);       // works
+    void parseDeop(const QString& parameter);     // works
+    void parseVoice(const QString& parameter);    // works
+    void parseUnvoice(const QString& parameter);  // works
+    void parseTopic(const QString& parameter);    // works
+    void parseAway(const QString& parameter);     // works
+    void parseCtcp(const QString& parameter);     // works
+    void parsePing(const QString& parameter);
+    void parseVersion(const QString& parameter);
+    void parseServer(const QString& parameter);
+    void parseConnect(const QString& parameter);
+    void parseDcc(const QString& parameter);
+    void parseInvite(const QString& parameter);
+    void parseExec(const QString& parameter);
+    void parseRaw(const QString& parameter);
+    void parseNotify(const QString& parameter);
+    void parseOper(const QString& myNick,const QString& parameter);
 
-    void changeMode(const QString &parameter,char mode,char giveTake);
-    bool isAChannel(const QString &check);
+    void changeMode(const QString& parameter,char mode,char giveTake);
+    bool isAChannel(const QString& check);
 };
 
 #endif

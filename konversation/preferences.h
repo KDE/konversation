@@ -265,7 +265,7 @@ class Preferences : public QObject
     int getSpacing();
     void setMargin(int newMargin);
     int getMargin();
-
+    
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();

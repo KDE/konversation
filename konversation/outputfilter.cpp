@@ -21,6 +21,7 @@
 
 #include <klocale.h>
 #include <kdebug.h>
+#include <kio/passdlg.h>
 
 #include "konversationapplication.h"
 #include "outputfilter.h"
@@ -103,6 +104,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("exec "))    parseExec(parameter);
     else if(line.startsWith("raw "))     parseRaw(parameter);
     else if(line.startsWith("notify "))  parseNotify(parameter);
+    else if(line.startsWith("oper "))    parseOper(myNick,parameter);
 
     else if(line=="join")                parseJoin(QString::null);
     else if(line=="part")                parsePart(QString::null);
@@ -118,6 +120,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="exec")                parseExec(QString::null);
     else if(line=="raw")                 parseRaw(QString::null);
     else if(line=="notify")              parseNotify(QString::null);
+    else if(line=="oper")                parseOper(myNick,QString::null);
 
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
@@ -618,6 +621,34 @@ void OutputFilter::parseNotify(const QString& parameter)
     output=i18n("Current notify list: %1").arg(list);
 
   program=true;
+}
+
+void OutputFilter::parseOper(const QString& myNick,const QString& parameter)
+{
+  QStringList parameterList=QStringList::split(' ',parameter);
+  
+  if(parameter.isEmpty() || parameterList.count()==1)
+  {
+    QString nick((parameterList.count()==1) ? parameterList[0] : myNick);
+    QString password;
+    bool keep=false;
+
+    int result=KIO::PasswordDialog::getNameAndPassword
+                                    (
+                                      nick,
+                                      password,
+                                      &keep,
+                                      i18n("Enter user name and password for IRC operator privileges"),
+                                      false,
+                                      i18n("IRC operator password")
+                                    );
+    
+    if(result==KIO::PasswordDialog::Accepted) toServer="OPER "+nick+" "+password;
+  }
+  else
+  {
+    toServer="OPER "+parameter;
+  }
 }
 
 // Accessors
