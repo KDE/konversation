@@ -11,9 +11,12 @@
 */
 #include "channeloptionsdialog.h"
 
+#include <qcheckbox.h>
+
 #include <klocale.h>
 #include <klistview.h>
 #include <ktextedit.h>
+#include <klineedit.h>
 
 #include "channeloptionsui.h"
 
@@ -51,6 +54,101 @@ void ChannelOptionsDialog::setTopicHistory(const QStringList& history)
 void ChannelOptionsDialog::topicHistoryItemClicked(QListViewItem* item)
 {
   m_widget->topicEdit->setText(item->text(1));
+}
+
+void ChannelOptionsDialog::setAllowedChannelModes(const QString& modes)
+{
+  QString modeString = modes;
+  // These modes are handled in a special way: ntimslk
+  modeString.remove('t');
+  modeString.remove('n');
+  modeString.remove('l');
+  modeString.remove('i');
+  modeString.remove('m');
+  modeString.remove('s');
+  modeString.remove('k');
+}
+
+void ChannelOptionsDialog::setModes(const QStringList& modes)
+{
+  m_widget->topicModeChBox->setChecked(false);
+  m_widget->messageModeChBox->setChecked(false);
+  m_widget->userLimitChBox->setChecked(false);
+  m_widget->userLimitEdit->clear();
+  m_widget->inviteModeChBox->setChecked(false);
+  m_widget->moderatedModeChBox->setChecked(false);
+  m_widget->secretModeChBox->setChecked(false);
+  m_widget->keyModeChBox->setChecked(false);
+  m_widget->keyModeEdit->clear();
+  
+  char mode;
+  
+  for(QStringList::const_iterator it = modes.begin(); it != modes.end(); ++it) {
+    mode = (*it)[0];
+
+    switch(mode) {
+      case 't':
+        m_widget->topicModeChBox->setChecked(true);
+        break;
+      case 'n':
+        m_widget->messageModeChBox->setChecked(true);
+        break;
+      case 'l':
+        m_widget->userLimitChBox->setChecked(true);
+        m_widget->userLimitEdit->setText((*it).mid(1));
+        break;
+      case 'i':
+        m_widget->inviteModeChBox->setChecked(true);
+        break;
+      case 'm':
+        m_widget->moderatedModeChBox->setChecked(true);
+        break;
+      case 's':
+        m_widget->secretModeChBox->setChecked(true);
+        break;
+      case 'k':
+        m_widget->keyModeChBox->setChecked(true);
+        m_widget->keyModeEdit->setText((*it).mid(1));
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+QStringList ChannelOptionsDialog::modes()
+{
+  QStringList modes;
+  
+  if(m_widget->topicModeChBox->isChecked()) {
+    modes.append("t");
+  }
+  
+  if(m_widget->messageModeChBox->isChecked()) {
+    modes.append("n");
+  }
+
+  if(m_widget->userLimitChBox->isChecked()) {
+    modes.append("l" + m_widget->userLimitEdit->text());
+  }
+  
+  if(m_widget->inviteModeChBox->isChecked()) {
+    modes.append("i");
+  }
+  
+  if(m_widget->moderatedModeChBox->isChecked()) {
+    modes.append("m");
+  }
+  
+  if(m_widget->secretModeChBox->isChecked()) {
+    modes.append("s");
+  }
+  
+  if(m_widget->keyModeChBox->isChecked()) {
+    modes.append("k" + m_widget->keyModeEdit->text());
+  }
+
+  return modes;
 }
 
 }

@@ -159,9 +159,9 @@ class Channel : public ChatWindow
     void doubleClickCommand(QListViewItem*);  // Will be connected to NickListView::doubleClicked()
     // Dialogs
     void changeNickname(const QString& newNickname);
-    // will be called when the user types a new topic in the topic line
     void changeOptions();
     void showOptionsDialog();
+    void closeOptionsDialog();
     // connected to IRCInput::textPasted() - used to handle large/multiline pastings
     void textPasted(const QString& text);
     // connected to IRCInput::sendFile()
@@ -251,5 +251,7 @@ class Channel : public ChatWindow
     QTimer* m_processingTimer;
 
     Konversation::ChannelOptionsDialog* m_optionsDialog;
+
+    QStringList m_modeList;
 };
 #endif

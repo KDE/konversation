@@ -19,6 +19,7 @@
 namespace Konversation {
 
 class ChannelOptionsUI;
+
 class ChannelOptionsDialog : public KDialogBase
 {
   Q_OBJECT
@@ -27,9 +28,12 @@ class ChannelOptionsDialog : public KDialogBase
     ~ChannelOptionsDialog();
 
     QString topic();
+    QStringList modes();
 
   public slots:
     void setTopicHistory(const QStringList& history);
+    void setAllowedChannelModes(const QString& modes);
+    void setModes(const QStringList& modes);
 
   protected slots:
     void topicHistoryItemClicked(QListViewItem* item);

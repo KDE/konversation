@@ -371,6 +371,41 @@ void Channel::changeOptions()
   if(newTopic != m_topicHistory.first().section(' ', 1)) {
     sendChannelText(KonversationApplication::preferences.getCommandChar() + "TOPIC " + getName() + " " + newTopic);
   }
+
+  QStringList modes = m_optionsDialog->modes();
+  QStringList rmModes = m_modeList;
+  QStringList addModes;
+  QStringList tmp;
+
+  for(QStringList::iterator it = modes.begin(); it != modes.end(); ++it) {
+    tmp = m_modeList.grep((*it));
+
+    if(tmp.isEmpty()) {
+      addModes.append((*it));
+      QStringList removable = rmModes.grep(QRegExp(QString("^%1.*").arg((*it)[0])));
+  
+      for(QStringList::iterator it2 = removable.begin(); it2 != removable.end(); ++it2) {
+        rmModes.remove(rmModes.find((*it2)));
+      }
+    } else {
+      for(QStringList::iterator it2 = tmp.begin(); it2 != tmp.end(); ++it2) {
+        rmModes.remove(rmModes.find((*it2)));
+      }
+    }
+  }
+
+  QString command("MODE %1 %2%3 %4");
+  kdDebug() << "Add modes: " << addModes << " Remove modes: " << rmModes << endl;
+
+  for(QStringList::iterator it = addModes.begin(); it != addModes.end(); ++it) {
+    m_server->queue(command.arg(getName()).arg("+").arg((*it)[0]).arg((*it).mid(1)));
+  }
+  
+  for(QStringList::iterator it = rmModes.begin(); it != rmModes.end(); ++it) {
+    m_server->queue(command.arg(getName()).arg("-").arg((*it)[0]).arg(""));
+  }
+
+  closeOptionsDialog();
 }
 
 void Channel::showOptionsDialog()
@@ -378,10 +413,20 @@ void Channel::showOptionsDialog()
   if(!m_optionsDialog) {
     m_optionsDialog = new Konversation::ChannelOptionsDialog(getName(), this);
     connect(m_optionsDialog, SIGNAL(okClicked()), this, SLOT(changeOptions()));
+    connect(m_optionsDialog, SIGNAL(cancelClicked()), this, SLOT(closeOptionsDialog()));
   }
 
   m_optionsDialog->setTopicHistory(m_topicHistory);
+  m_optionsDialog->setAllowedChannelModes(getServer()->allowedChannelModes());
+  m_optionsDialog->setModes(m_modeList);
+  kdDebug() << "MODES: " << m_modeList << endl;
   m_optionsDialog->show();
+}
+
+void Channel::closeOptionsDialog()
+{
+  m_optionsDialog->deleteLater();
+  m_optionsDialog = 0;
 }
 
 void Channel::textPasted(const QString& text)
@@ -1468,7 +1513,11 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
       }
     break;
   }
-  if(!message.isEmpty()) appendCommandMessage(i18n("Mode"),message);
+  
+  if(!message.isEmpty()) {
+    appendCommandMessage(i18n("Mode"),message);
+  }
+
   updateModeWidgets(mode,plus,parameter);
 }
 
@@ -1491,6 +1540,16 @@ void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
   }
 
   if(widget) widget->setOn(plus);
+
+  if(plus) {
+    m_modeList.append(QString(mode + parameter));
+  } else {
+    QStringList removable = m_modeList.grep(QRegExp(QString("^%1.*").arg(mode)));
+
+    for(QStringList::iterator it = removable.begin(); it != removable.end(); ++it) {
+      m_modeList.remove(m_modeList.find((*it)));
+    }
+  }
 }
 
 void Channel::updateQuickButtons(QStringList newButtonList)

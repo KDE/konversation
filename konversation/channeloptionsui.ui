@@ -106,13 +106,141 @@ the Free Software Foundation; either version 2 of the License, or
                     </widget>
                 </vbox>
             </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>modesPage</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Modes</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QCheckBox" row="0" column="0">
+                        <property name="name">
+                            <cstring>topicModeChBox</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&amp;Topic can only be changed by channel operators</string>
+                        </property>
+                    </widget>
+                    <widget class="QCheckBox" row="1" column="0">
+                        <property name="name">
+                            <cstring>messageModeChBox</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&amp;No messages from outside the channel</string>
+                        </property>
+                    </widget>
+                    <widget class="QCheckBox" row="3" column="0">
+                        <property name="name">
+                            <cstring>inviteModeChBox</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Only &amp;invited are allowed to join the channel</string>
+                        </property>
+                    </widget>
+                    <widget class="QCheckBox" row="4" column="0">
+                        <property name="name">
+                            <cstring>moderatedModeChBox</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&amp;Moderated channel, only people with voice can write to the channel</string>
+                        </property>
+                    </widget>
+                    <spacer row="6" column="0">
+                        <property name="name">
+                            <cstring>spacer8</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>20</width>
+                                <height>141</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QCheckBox" row="2" column="0">
+                        <property name="name">
+                            <cstring>secretModeChBox</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Secret channel, the channel isn't listed in the channel list</string>
+                        </property>
+                    </widget>
+                    <widget class="QLayoutWidget" row="5" column="0">
+                        <property name="name">
+                            <cstring>layout3</cstring>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QCheckBox" row="1" column="0">
+                                <property name="name">
+                                    <cstring>keyModeChBox</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Channel &amp;key:</string>
+                                </property>
+                            </widget>
+                            <widget class="KLineEdit" row="1" column="1">
+                                <property name="name">
+                                    <cstring>keyModeEdit</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>false</bool>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox" row="0" column="0">
+                                <property name="name">
+                                    <cstring>userLimitChBox</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>User &amp;limit:</string>
+                                </property>
+                            </widget>
+                            <widget class="KLineEdit" row="0" column="1">
+                                <property name="name">
+                                    <cstring>userLimitEdit</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>false</bool>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                </grid>
+            </widget>
         </widget>
     </vbox>
 </widget>
+<connections>
+    <connection>
+        <sender>userLimitChBox</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>userLimitEdit</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>keyModeChBox</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>keyModeEdit</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>klistview.h</includehint>
     <includehint>ktextedit.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>klineedit.h</includehint>
 </includehints>
 </UI>

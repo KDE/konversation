@@ -307,6 +307,9 @@ class Server : public QObject
      *  @return            The NickInfo for the nickname.
      */
     ChannelNickPtr addNickToJoinedChannelsList(const QString& channelName, const QString& nickname);
+
+    void setAllowedChannelModes(const QString& modes) { m_allowedChannelModes = modes; }
+    QString allowedChannelModes() const { return m_allowedChannelModes; }
     
   signals:
     void nicknameChanged(const QString&);
@@ -608,6 +611,8 @@ class Server : public QObject
     
     Konversation::ServerGroupSettings m_serverGroup;
     unsigned int m_currentServerIndex;
+
+    QString m_allowedChannelModes;
 };
 
 #endif
