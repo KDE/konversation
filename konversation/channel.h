@@ -217,7 +217,7 @@ class Channel : public ChatWindow
     
     QValueList<ChannelNickList> m_pendingChannelNickLists;
     int m_opsToAdd;
-    int m_currentIndex;
+    uint m_currentIndex;
     
     QTimer* m_processingTimer;
 };
