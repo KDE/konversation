@@ -23,6 +23,7 @@ Changes from 0.15 to 0.16
 - Added an option to use an IPv4 interface for IPv6 dcc sends
 - A new /google script added to search Google using Google SOAP api
 - Redesigned settings page
+- A new application icon
 - Lots of optimizations all around
 
 Changes from 0.14 to 0.15
