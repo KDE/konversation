@@ -23,6 +23,7 @@
 #include <qdom.h>
 #include <qevent.h>
 #include <qobject.h>
+#include <qregexp.h>
 #include <qwhatsthis.h>
 
 
@@ -329,8 +330,15 @@ void IRCInput::paste()
 bool IRCInput::checkPaste(QString& text)
 {
   int doPaste=KMessageBox::Yes;
-
-  text=text.stripWhiteSpace();
+  
+  // Don't use QString::stripWhiteSpace() because it deletes spaces in the first line too.
+  QRegExp reTopSpace("^ *\n");
+  while(text.contains(reTopSpace))
+    text.remove(reTopSpace);
+  QRegExp reBottomSpace("\n *$");
+  while(text.contains(reBottomSpace))
+    text.remove(reBottomSpace);
+  text += "\n";  // convenient to edit
   
   int lines=text.contains('\n');
 
