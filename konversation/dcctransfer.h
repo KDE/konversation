@@ -77,10 +77,10 @@ class DccTransfer : public QObject, public KListViewItem
     unsigned long getBufferSize();
 
   signals:
-    void send(QString partner,QString fileName,QString ip,QString port,unsigned long size);
-    void resumeGet(QString partner,QString fileName,QString port,int startAt);
-    void dccGetDone(QString fileName);
-    void dccSendDone(QString fileName);
+    void send(const QString& partner,const QString& fileName,const QString& ip,const QString& port,unsigned long size);
+    void resumeGet(const QString& partner,const QString& fileName,const QString& port,int startAt);
+    void dccGetDone(const QString& fileName);
+    void dccSendDone(const QString& fileName);
 
   public slots:
     void startGet();

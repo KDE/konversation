@@ -569,9 +569,9 @@ void Server::addDccSend(const QString &recipient,const QString &fileName)
                   ip,                  // ip
                   0);                  // port (will be set by DccTransfer)
 
-  connect(newDcc,SIGNAL (send(QString,QString,QString,QString,unsigned long)),
-    this,SLOT (dccSendRequest(QString,QString,QString,QString,unsigned long)) );
-  connect(newDcc,SIGNAL (dccSendDone(QString)),this,SLOT (dccSendDone(QString)) );
+  connect(newDcc,SIGNAL (send(const QString&,const QString&,const QString&,const QString&,unsigned long)),
+    this,SLOT (dccSendRequest(const QString&,const QString&,const QString&,const QString&,unsigned long)) );
+  connect(newDcc,SIGNAL (dccSendDone(const QString&)),this,SLOT (dccSendDone(const QString&)) );
   newDcc->startSend();
 }
 
@@ -601,8 +601,10 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
                   ip.toString(),       // ip
                   dccArguments[2]);    // port
 
-  connect(newDcc,SIGNAL (resumeGet(QString,QString,QString,int)),this,SLOT (dccResumeGetRequest(QString,QString,QString,int)) );
-  connect(newDcc,SIGNAL (dccGetDone(QString)),this,SLOT (dccGetDone(QString)) );
+  connect(newDcc,SIGNAL (resumeGet(const QString&,const QString&,const QString&,int)),this,
+         SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,int)) );
+  connect(newDcc,SIGNAL (dccGetDone(const QString&)),
+              this,SLOT (dccGetDone(const QString&)) );
 
   if(KonversationApplication::preferences.getDccAutoGet()) newDcc->startGet();
 }
