@@ -363,6 +363,7 @@ void OutputFilter::parseAway(const QString &reason)
   }
   // remove lines in output to prevent them sent twice in sending channel
   output=QString::null;
+  toServerList.clear();
 }
 
 void OutputFilter::parseQuit(const QString &reason)
