@@ -41,7 +41,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   ops=0;
   completionPosition=0;
   nickChangeDialog=0;
-  topic="";
+  topic=QString::null;
 
   quickButtonsChanged=false;
   quickButtonsState=false;
@@ -127,9 +127,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView->setSelectionModeExt(KListView::Extended);
   nicknameListView->setAllColumnsShowFocus(true);
   nicknameListView->setSorting(1,true);
-  nicknameListView->addColumn("",2);
-  nicknameListView->addColumn("");
-  nicknameListView->addColumn("");
+  nicknameListView->addColumn(QString::null,2);
+  nicknameListView->addColumn(QString::null);
+  nicknameListView->addColumn(QString::null);
   nicknameListView->header()->hide();
   nicknameListView->setFont(KonversationApplication::preferences.getListFont());
 
@@ -141,10 +141,10 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   for(int index=0;index<8;index++)
   {
     // generate empty buttons first, text will be added by updateQuickButtons() later
-    QuickButton* newQuickButton=new QuickButton("","",buttonsGrid);
+    QuickButton* newQuickButton=new QuickButton(QString::null,QString::null,buttonsGrid);
     buttonList.append(newQuickButton);
 
-    connect(newQuickButton,SIGNAL (clicked(QString)),this,SLOT (quickButtonClicked(QString)) );
+    connect(newQuickButton,SIGNAL (clicked(const QString &)),this,SLOT (quickButtonClicked(const QString &)) );
   }
 
   updateQuickButtons(KonversationApplication::preferences.getButtonList());
@@ -193,7 +193,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(channelInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
   
   connect(textView,SIGNAL (newText()),this,SLOT (newTextInView()) );
-  connect(textView,SIGNAL (newURL(QString)),this, SLOT (urlCatcher(QString)) );
+  connect(textView,SIGNAL (newURL(const QString &)),this, SLOT (urlCatcher(const QString &)) );
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
 
@@ -396,7 +396,7 @@ void Channel::completeNick()
     /* did we find any pattern? */
     if(pattern && pattern.length())
     {
-      QString foundNick="";
+      QString foundNick=QString::null;
       /* Try to find matching nickname in list of names */
       do
       {
@@ -450,7 +450,7 @@ void Channel::setKey(const QString& newKey)
   key=newKey;
 }
 
-const QString& Channel::getKey()
+QString Channel::getKey()
 {
   return key;
 }
@@ -479,7 +479,7 @@ void Channel::sendChannelText(const QString& sendLine)
 
   // Is there something we need to display for ourselves?
   QString output=filter.parse(server->getNickname(),line,getName());
-  if(output!="")
+  if(!output.isEmpty())
   {
     if(filter.isAction()) appendAction(server->getNickname(),output);
     else if(filter.isCommand()) appendCommandMessage(filter.getType(),output);
@@ -524,7 +524,7 @@ void Channel::modeButtonClicked(int id,bool on)
   server->queue(command);
 }
 
-void Channel::quickButtonClicked(QString buttonText)
+void Channel::quickButtonClicked(const QString &buttonText)
 {
   // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
   QString out=server->parseWildcards(buttonText,server->getNickname(),getName(),getKey(),getSelectedNicksList(),0,0);
@@ -542,12 +542,12 @@ void Channel::quickButtonClicked(QString buttonText)
   else channelInput->setText(out);
 }
 
-void Channel::urlCatcher(QString url)
+void Channel::urlCatcher(const QString &url)
 {
   KonversationApplication::storeURL(url);
 }
 
-void Channel::addNickname(QString& nickname,QString& hostmask,bool op,bool voice)
+void Channel::addNickname(const QString& nickname,const QString& hostmask,bool op,bool voice)
 {
   Nick* nick=0;
   Nick* lookNick=nicknameList.first();
@@ -583,7 +583,7 @@ void Channel::addNickname(QString& nickname,QString& hostmask,bool op,bool voice
   }
 }
 
-void Channel::renameNick(QString& nickname,QString& newNick)
+void Channel::renameNick(const QString& nickname,const QString& newNick)
 {
   /* Did we change our nick name? */
   if(nickname==server->getNickname())
@@ -600,7 +600,7 @@ void Channel::renameNick(QString& nickname,QString& newNick)
   else nick->setNickname(newNick);
 }
 
-void Channel::joinNickname(QString& nickname,QString& hostmask)
+void Channel::joinNickname(const QString& nickname,const QString& hostmask)
 {
   /* Did we join this channel ourselves? */
   if(nickname==server->getNickname())
@@ -615,7 +615,7 @@ void Channel::joinNickname(QString& nickname,QString& hostmask)
   }
 }
 
-void Channel::removeNick(QString& nickname,QString& reason,bool quit)
+void Channel::removeNick(const QString &nickname, const QString &reason, bool quit)
 {
   if(nickname==server->getNickname())
   {
@@ -641,7 +641,7 @@ void Channel::removeNick(QString& nickname,QString& reason,bool quit)
   }
 }
 
-void Channel::kickNick(QString& nickname,QString& kicker,QString& reason)
+void Channel::kickNick(const QString &nickname, const QString &kicker, const QString &reason)
 {
   if(nickname==server->getNickname())
   {
@@ -679,7 +679,7 @@ void Channel::kickNick(QString& nickname,QString& kicker,QString& reason)
   }
 }
 
-Nick* Channel::getNickByName(QString& lookname)
+Nick* Channel::getNickByName(const QString &lookname)
 {
   Nick* nick=nicknameList.first();
   while(nick)
@@ -707,7 +707,7 @@ void Channel::updateNicksOps()
   nicksOps->setText(i18n("%1 %2 / %3 %4").arg(nicks).arg((nicks==1) ? i18n("Nick") : i18n("Nicks")).arg(ops).arg((ops==1) ? i18n("Op") : i18n("Ops")));
 }
 
-void Channel::setTopic(QString& newTopic)
+void Channel::setTopic(const QString &newTopic)
 {
   appendCommandMessage(i18n("Topic"),i18n("The channel topic is \"%1\".").arg(newTopic));
   if(topic!=newTopic)
@@ -721,7 +721,8 @@ void Channel::setTopic(QString& newTopic)
 
     if(newTopic.length()>80)
     {
-      QString toolTip=newTopic.replace(QRegExp("&",false,true),"&amp;").
+      QString toolTip=newTopic;
+      toolTip.replace(QRegExp("&",false,true),"&amp;").
                                replace(QRegExp("<",false,true),"&lt;").
                                replace(QRegExp(">",false,true),"&gt;");
 
@@ -730,7 +731,7 @@ void Channel::setTopic(QString& newTopic)
   }
 }
 
-void Channel::setTopic(QString& nickname,QString& newTopic) // Overloaded
+void Channel::setTopic(const QString &nickname, const QString &newTopic) // Overloaded
 {
   if(nickname==server->getNickname())
     appendCommandMessage(i18n("Topic"),i18n("You set the channel topic to \"%1\".").arg(newTopic));
@@ -745,19 +746,18 @@ void Channel::setTopic(QString& nickname,QString& newTopic) // Overloaded
   QToolTip::remove(topicLine);
   if(newTopic.length()>80)
   {
-    QString toolTip=newTopic.replace(QRegExp("&",false,true),"&amp;").
+    QString toolTip=newTopic;
+    toolTip.replace(QRegExp("&",false,true),"&amp;").
                              replace(QRegExp("<",false,true),"&lt;").
                              replace(QRegExp(">",false,true),"&gt;");
 
     QToolTip::add(topicLine,"<qt>"+toolTip+"</qt>");
   }
-
-  if(newTopic.length()>80) QToolTip::add(topicLine,"<qt>"+newTopic+"</qt>");
 }
 
-void Channel::updateMode(QString& sourceNick,char mode,bool plus,QString& parameter)
+void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const QString &parameter)
 {
-  QString message="";
+  QString message=QString::null;
   Nick* nick;
 
   bool fromMe=false;
@@ -1010,11 +1010,11 @@ void Channel::updateMode(QString& sourceNick,char mode,bool plus,QString& parame
       }
     break;
   }
-  if(message!="") appendCommandMessage(i18n("Mode"),message);
+  if(!message.isEmpty()) appendCommandMessage(i18n("Mode"),message);
   updateModeWidgets(mode,plus,parameter);
 }
 
-void Channel::updateModeWidgets(char mode,bool plus,QString& parameter)
+void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
 {
   ModeButton* widget=0;
 

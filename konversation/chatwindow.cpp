@@ -27,6 +27,7 @@
 
 ChatWindow::ChatWindow(QWidget* parent)
 {
+  setName("ChatWindowObject");
   parentWidget=parent;
   firstLog=true;
 
@@ -74,12 +75,12 @@ void ChatWindow::setServer(Server* newServer)
              server,SLOT   (requestDccPanel()) );
     connect(&filter,SIGNAL (closeDccPanel()),
              server,SLOT   (requestCloseDccPanel()) );
-    connect(&filter,SIGNAL (openDccSend(QString,QString)),
-             server,SLOT   (addDccSend(QString,QString)) );
+    connect(&filter,SIGNAL (openDccSend(const QString &, const QString &)),
+             server,SLOT   (addDccSend(const QString &, const QString &)) );
     connect(&filter,SIGNAL (requestDccSend()),
              server,SLOT   (requestDccSend()) );
-    connect(&filter,SIGNAL (requestDccSend(QString)),
-             server,SLOT   (requestDccSend(QString)) );
+    connect(&filter,SIGNAL (requestDccSend(const QString &)),
+             server,SLOT   (requestDccSend(const QString &)) );
     connect(&filter,SIGNAL (away()),
              server,SLOT   (away()) );
     connect(&filter,SIGNAL (unAway()),

@@ -29,7 +29,7 @@
 class Nick
 {
   public:
-    Nick(KListView* listView,QString& nickname,QString& hostmask, bool op, bool voice);
+    Nick(KListView* listView, const QString &nickname, const QString &hostmask, bool op, bool voice);
     ~Nick();
 
     bool isOp() { return op; };
@@ -38,10 +38,10 @@ class Nick
     void setVoice(bool setvoice);
     bool isSelected() { return listViewItem->isSelected(); } ;
 
-    QString& getNickname() { return nickname; };
-    QString& getHostmask() { return hostmask; };
-    void setHostmask(QString& newMask) { hostmask=newMask; };
-    void setNickname(QString& newName);
+    QString getNickname() { return nickname; };
+    QString getHostmask() { return hostmask; };
+    void setHostmask(const QString& newMask) { hostmask=newMask; };
+    void setNickname(const QString& newName);
 
   protected:
     bool op;

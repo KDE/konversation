@@ -589,7 +589,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
 }
 
 
-void KonversationApplication::storeURL(QString& url)
+void KonversationApplication::storeURL(const QString &url)
 {
   urlList.append(url);
 }

@@ -19,6 +19,7 @@
 #define IRCRESOLVER_H
 
 #include <qthread.h>
+#include <qmutex.h>
 
 #include <kextendedsocket.h>
 
@@ -37,6 +38,7 @@ class IRCResolver : public QThread
     void run();
 
   protected:
+    QMutex resolver_lock;
     QObject* recipient;
     KExtendedSocket* socket;
 };

@@ -18,7 +18,7 @@
 
 #include "nick.h"
 
-Nick::Nick(KListView* listView,QString& nickname,QString& hostmask, bool op, bool voice)
+Nick::Nick(KListView* listView,const QString &nickname, const QString &hostmask, bool op, bool voice)
 {
   kdDebug() << "Nick::Nick(" << nickname << "," << hostmask << ")" << endl;
 
@@ -36,7 +36,7 @@ Nick::~Nick()
   delete listViewItem;
 }
 
-void Nick::setNickname(QString& newName)
+void Nick::setNickname(const QString &newName)
 {
   nickname=newName;
   listViewItem->setText(1,newName);

@@ -37,7 +37,7 @@ class KonversationApplication : public KApplication
     // URL-Catcher
     // TODO: Provide a list of seen URLs
     static QStringList urlList;
-    static void storeURL(QString& url);
+    static void storeURL(const QString &url);
 
     KonversationApplication();
     ~KonversationApplication();

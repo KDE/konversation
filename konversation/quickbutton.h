@@ -35,7 +35,7 @@ class QuickButton : public QPushButton
     
   signals:
     void clicked(int);
-    void clicked(QString definition);
+    void clicked(const QString &definition);
 
   public slots:
     void wasClicked();

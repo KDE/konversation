@@ -48,10 +48,12 @@ void IRCResolver::setSocket(KExtendedSocket* newSocket)
 
 void IRCResolver::run()
 {
+  resolver_lock.lock();
   if(socket && recipient)
     socket->lookup();
   else
     kdDebug() << "IRCResolver::run(): Resolver needs a socket and a recipient!" << endl;
 
   QApplication::postEvent(recipient,new QEvent(QEvent::User));
+  resolver_lock.unlock();
 }

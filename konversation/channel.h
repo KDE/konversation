@@ -47,24 +47,24 @@ class Channel : public ChatWindow
 
     void setName(const QString& newName);
     void setKey(const QString& newKey);
-    const QString& getKey();
+    QString getKey();
 
-    void joinNickname(QString& nickname,QString& hostname);
-    void renameNick(QString& nickname,QString& newName);
-    void addNickname(QString& nickname,QString& hostmask,bool op,bool voice);
-    void removeNick(QString& nickname,QString& reason,bool quit);
-    void kickNick(QString& nickname,QString& kicker,QString& reason);
-    Nick* getNickByName(QString& lookname);
+    void joinNickname(const QString &nickname,const QString &hostname);
+    void renameNick(const QString &nickname,const QString &newName);
+    void addNickname(const QString &nickname,const QString &hostmask, bool op, bool voice);
+    void removeNick(const QString &nickname, const QString &reason, bool quit);
+    void kickNick(const QString &nickname, const QString &kicker, const QString &reason);
+    Nick *getNickByName(const QString &lookname);
     QList<Nick> getNickList();
 
     void adjustNicks(int value);
     void adjustOps(int value);
     void updateNicksOps();
 
-    void setTopic(QString& topic);
-    void setTopic(QString& nickname,QString& topic); // Overloaded
-    void updateMode(QString& nick,char mode,bool plus,QString& parameter);
-    void updateModeWidgets(char mode,bool plus,QString& parameter);
+    void setTopic(const QString &topic);
+    void setTopic(const QString &nickname, const QString &topic); // Overloaded
+    void updateMode(const QString &nick,char mode,bool plus, const QString &parameter);
+    void updateModeWidgets(char mode, bool plus, const QString &parameter);
     void updateQuickButtons(QStringList newButtonList);
     void updateFonts();
 
@@ -78,14 +78,14 @@ class Channel : public ChatWindow
     void channelTextEntered();
     void sendChannelText(const QString& line);
     void newTextInView();
-    void urlCatcher(QString url);
+    void urlCatcher(const QString &url);
     void adjustFocus();
     void showQuickButtons(bool show);
     void showModeButtons(bool show);
 
   protected slots:
     void completeNick();
-    void quickButtonClicked(QString definition);
+    void quickButtonClicked(const QString &definition);
     void modeButtonClicked(int id,bool on);
 
     void popupCommand(int id);                // Will be connected to NickListView::popupCommand()

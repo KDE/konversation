@@ -47,7 +47,7 @@ class IRCView : public KTextBrowser
 
   signals:
     void newText();      // Notify container of new text
-    void newURL(QString url);
+    void newURL(const QString &url);
     void gotFocus();     // So we can set focus to input line
     void textToLog(const QString& text);
     void sendFile();

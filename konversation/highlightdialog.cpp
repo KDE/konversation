@@ -133,7 +133,7 @@ void HighlightDialog::addHighlight()
 {
 	if((selectedHighlightViewItem = HighlightBrowser->selectedItem()) == 0)
 	{
-		if((InputLine->text() != ""))
+		if(!InputLine->text().isEmpty())
 		{
 			if(HighlightBrowser->findItem(InputLine->text(), 0, Qt::ExactMatch) != 0)
 			{
@@ -144,7 +144,7 @@ void HighlightDialog::addHighlight()
 			currentHighlight = new Highlight(InputLine->text(), ColorSelection->color());
 			highlightList.append(currentHighlight);
 			currentHighlightViewItem = new HighlightViewItem(HighlightBrowser, currentHighlight);
-			InputLine->setText("");
+			InputLine->setText(QString::null);
 		}
 		else noEmptyPatterns();
 	}
@@ -179,7 +179,7 @@ void HighlightDialog::removeHighlight()
 	if(selectedHighlightViewItem != 0)
 	{
 		HighlightBrowser->removeItem(HighlightBrowser->selectedItem());
-		InputLine->setText("");
+		InputLine->setText(QString::null);
 	}
 }
 
@@ -188,7 +188,7 @@ void HighlightDialog::unselectHighlight(QListViewItem* passed_selectedHighlightV
 	if((selectedHighlightViewItem = (HighlightViewItem*) passed_selectedHighlightViewItem) == oldSelectedHighlightViewItem)
 	{
 		HighlightBrowser->clearSelection();
-		InputLine->setText("");
+		InputLine->setText(QString::null);
 		oldSelectedHighlightViewItem = 0;
 	}
 	else oldSelectedHighlightViewItem = selectedHighlightViewItem;
@@ -222,17 +222,17 @@ void HighlightDialog::changeHighlightText()
 // EIS: if-Bedingung für beide Abfragen schachteln, um den Segfault zu beheben
   if((selectedHighlightViewItem = HighlightBrowser->selectedItem()) != 0)
   {
-		if(selectedHighlightViewItem->getText() != "")
+		if(!selectedHighlightViewItem->getText().isEmpty())
   	{
   		highlightEdited = false;
 	  	InputLine->setText("");
 		  emit highlightChanged((QListViewItem*) selectedHighlightViewItem);
   	}
-  	else if(selectedHighlightViewItem->getText() == "") noEmptyPatterns();
+  	else noEmptyPatterns();
   }
 }
 
-void HighlightDialog::undoHighlightTextChange(QListViewItem* passed_selectedHighlightViewItem)
+void HighlightDialog::undoHighlightTextChange(QListViewItem* /* passed_selectedHighlightViewItem */)
 {
 	if(highlightEdited == true)
 	{

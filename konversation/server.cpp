@@ -35,6 +35,7 @@
 
 Server::Server(int id)
 {
+  setName("ServerObject");
   QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
   setIdentity(KonversationApplication::preferences.getIdentityByName(serverEntry[7]));
 
@@ -45,7 +46,7 @@ Server::Server(int id)
   resolver.setRecipient(this);
   installEventFilter(this);
 
-  lastDccDir="";
+  lastDccDir=QString::null;
 
   serverWindow=new ServerWindow(this);
   setNickname(identity.getNickname(tryNickNumber));
@@ -60,7 +61,7 @@ Server::Server(int id)
 
   serverSocket.setAddress(serverName,serverPort);
 
-  if(serverEntry[4] && serverEntry[4]!="")
+  if(serverEntry[4] && !serverEntry[4].isEmpty())
   {
     setAutoJoin(true);
     setAutoJoinChannel(serverEntry[4]);
@@ -90,8 +91,8 @@ Server::Server(int id)
                    this,SLOT   (addQuery(const QString&,const QString&)) );
   connect(&outputFilter,SIGNAL (requestDccSend()),
                    this,SLOT   (requestDccSend()) );
-  connect(&outputFilter,SIGNAL (requestDccSend(QString)),
-                   this,SLOT   (requestDccSend(QString)) );
+  connect(&outputFilter,SIGNAL (requestDccSend(const QString &)),
+                   this,SLOT   (requestDccSend(const QString &)) );
 
   connect(&notifyTimer,SIGNAL(timeout()),
                   this,SLOT  (notifyTimeout()) );
@@ -100,14 +101,14 @@ Server::Server(int id)
 
   connect(&inputFilter,SIGNAL(welcome()),
                   this,SLOT  (connectionEstablished()) );
-  connect(&inputFilter,SIGNAL(notifyResponse(QString)),
-                  this,SLOT  (notifyResponse(QString)) );
-  connect(&inputFilter,SIGNAL(addDccGet(QString,QStringList)),
-                  this,SLOT  (addDccGet(QString,QStringList)) );
-  connect(&inputFilter,SIGNAL(resumeDccGetTransfer(QString,QStringList)),
-                  this,SLOT  (resumeDccGetTransfer(QString,QStringList)) );
-  connect(&inputFilter,SIGNAL(resumeDccSendTransfer(QString,QStringList)),
-                  this,SLOT  (resumeDccSendTransfer(QString,QStringList)) );
+  connect(&inputFilter,SIGNAL(notifyResponse(const QString &)),
+                  this,SLOT  (notifyResponse(const QString &)) );
+  connect(&inputFilter,SIGNAL(addDccGet(const QString &, const QStringList &)),
+                  this,SLOT  (addDccGet(const QString &, const QStringList &)) );
+  connect(&inputFilter,SIGNAL(resumeDccGetTransfer(const QString &, const QStringList &)),
+                  this,SLOT  (resumeDccGetTransfer(const QString &, const QStringList &)) );
+  connect(&inputFilter,SIGNAL(resumeDccSendTransfer(const QString &, const QStringList &)),
+                  this,SLOT  (resumeDccSendTransfer(const QString &, const QStringList &)) );
 
   connect(this,SIGNAL(serverLag(int)),serverWindow,SLOT(updateLag(int)) );
   connect(this,SIGNAL(tooLongLag(int)),serverWindow,SLOT(tooLongLag(int)) );
@@ -154,8 +155,8 @@ bool Server::getAutoJoin()
 }
 
 void Server::setAutoJoin(bool on) { autoJoin=on; }
-void Server::setAutoJoinChannel(QString channel) { autoJoinChannel=channel; }
-void Server::setAutoJoinChannelKey(QString key) { autoJoinChannelKey=key; }
+void Server::setAutoJoinChannel(const QString &channel) { autoJoinChannel=channel; }
+void Server::setAutoJoinChannelKey(const QString &key) { autoJoinChannelKey=key; }
 
 void Server::connectToIRCServer()
 {
@@ -259,7 +260,7 @@ void Server::connectionEstablished()
     queue("PRIVMSG "+bot+" :identify "+botPassword);
 }
 
-void Server::notifyResponse(QString nicksOnline)
+void Server::notifyResponse(const QString &nicksOnline)
 {
   // We received a 303 or "PONG :LAG" notify message, so calculate server lag
   int lag=notifySent.elapsed();
@@ -330,7 +331,7 @@ void Server::notifyTimeout()
   {
     // But only if there actually are nicks in the notify list
     QString list=KonversationApplication::preferences.getNotifyString();
-    if(list!="")
+    if(!list.isEmpty())
     {
       queue("ISON "+list);
       // remember that we already sent out ISON
@@ -390,10 +391,10 @@ void Server::processIncomingData()
 
 void Server::incoming()
 {
-  char buffer[513];
+  char buffer[BUFFER_LEN];
   int len=0;
 
-  len=read(serverSocket.fd(),buffer,512);
+  len=read(serverSocket.fd(),buffer,BUFFER_LEN-1);
 
   buffer[len]=0;
 
@@ -402,7 +403,7 @@ void Server::incoming()
   if(len==0) broken(0);
 }
 
-void Server::queue(const QString& buffer)
+void Server::queue(const QString &buffer)
 {
   // Only queue lines if we are connected
   if(serverSocket.socketStatus()==KExtendedSocket::connected && buffer.length())
@@ -433,10 +434,10 @@ void Server::send()
     serverSocket.enableWrite(false);
   }
 
-  outputBuffer="";
+  outputBuffer=QString::null;
 }
 
-void Server::ctcpReply(QString& receiver,const QString& text)
+void Server::ctcpReply(const QString &receiver, const QString &text)
 {
   queue("NOTICE "+receiver+" :"+'\x01'+text+'\x01');
 }
@@ -451,7 +452,7 @@ void Server::setDeliberateQuit(bool on)
   deliberateQuit=on;
 }
 
-void Server::addQuery(const QString& nickname,const QString& hostmask)
+void Server::addQuery(const QString &nickname, const QString &hostmask)
 {
   // Only create new query object if there isn't already one with the same name
   Query* query=getQueryByName(nickname);
@@ -466,7 +467,7 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
 
     connect(query,SIGNAL (newText(QWidget*)),serverWindow,SLOT (newText(QWidget*)) );
     connect(query,SIGNAL (closed(Query*)),this,SLOT (removeQuery(Query*)) );
-    connect(query,SIGNAL (sendFile(QString)),this,SLOT (requestDccSend(QString)) );
+    connect(query,SIGNAL (sendFile(QString)),this,SLOT (requestDccSend(const QString &)) );
     // Append query to internal list
     queryList.append(query);
   }
@@ -474,13 +475,13 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
   query->setHostmask(hostmask);
 }
 
-void Server::closeQuery(const QString& name)
+void Server::closeQuery(const QString &name)
 {
   Query* query=getQueryByName(name);
   removeQuery(query);
 }
 
-void Server::closeChannel(const QString& name)
+void Server::closeChannel(const QString &name)
 {
   outputFilter.parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"PART",name);
   queue(outputFilter.getServerOutput());
@@ -491,8 +492,9 @@ void Server::requestDccSend()
   requestDccSend(QString::null);
 }
 
-void Server::requestDccSend(QString recipient)
+void Server::requestDccSend(const QString &a_recipient)
 {
+  QString recipient(a_recipient);
   // if we don't have a recipient yet, let the user select one
   if(!recipient)
   {
@@ -523,7 +525,7 @@ void Server::requestDccSend(QString recipient)
     recipient=DccRecipientDialog::getNickname(getServerWindow(),nickList);
   }
   // do we have a recipient *now*?
-  if(recipient && recipient!="")
+  if(recipient && !recipient.isEmpty())
   {
     QString fileName=KFileDialog::getOpenFileName(
                                                    lastDccDir,
@@ -531,7 +533,7 @@ void Server::requestDccSend(QString recipient)
                                                    getServerWindow(),
                                                    i18n("Select file to send to %1").arg(recipient)
                                                  );
-    if(fileName!="")
+    if(!fileName.isEmpty())
     {
       QFileInfo fileInfo(fileName);
 
@@ -545,7 +547,7 @@ void Server::requestDccSend(QString recipient)
   }
 }
 
-void Server::addDccSend(QString recipient,QString fileName)
+void Server::addDccSend(const QString &recipient,const QString &fileName)
 {
   emit addDccPanel();
 
@@ -574,7 +576,7 @@ void Server::addDccSend(QString recipient,QString fileName)
   newDcc->startSend();
 }
 
-void Server::addDccGet(QString sourceNick,QStringList dccArguments)
+void Server::addDccGet(const QString &sourceNick, const QStringList &dccArguments)
 {
   emit addDccPanel();
 
@@ -586,7 +588,7 @@ void Server::addDccGet(QString sourceNick,QStringList dccArguments)
                       QString("%1 offers the file \"%2\" (%3 bytes) for download (%4:%5).")
                               .arg(sourceNick)               // name
                               .arg(dccArguments[0])          // file
-                              .arg((dccArguments[3]=="") ? i18n("unknown") : dccArguments[3] )  // size
+                              .arg((dccArguments[3].isEmpty()) ? i18n("unknown") : dccArguments[3] )  // size
                               .arg(ip.toString())            // ip
                               .arg(dccArguments[2])          // port
                              );
@@ -616,7 +618,7 @@ void Server::requestCloseDccPanel()
   emit closeDccPanel();
 }
 
-void Server::dccSendRequest(QString partner,QString fileName,QString address,QString port,unsigned long size)
+void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)
 {
   kdDebug() << "Server::dccSendRequest()" << endl;
   outputFilter.sendRequest(partner,fileName,address,port,size);
@@ -624,7 +626,7 @@ void Server::dccSendRequest(QString partner,QString fileName,QString address,QSt
   appendStatusMessage(outputFilter.getType(),outputFilter.getOutput());
 }
 
-void Server::dccResumeGetRequest(QString sender,QString fileName,QString port,int startAt)
+void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, int startAt)
 {
   kdDebug() << "Server::dccResumeGetRequest()" << endl;
   outputFilter.resumeRequest(sender,fileName,port,startAt);
@@ -632,7 +634,7 @@ void Server::dccResumeGetRequest(QString sender,QString fileName,QString port,in
   appendStatusMessage(outputFilter.getType(),outputFilter.getOutput());
 }
 
-void Server::resumeDccGetTransfer(QString sourceNick,QStringList dccArguments)
+void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
   // Check if there actually is a transfer going on on that port
   DccTransfer* dccTransfer=serverWindow->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::ResumeGet);
@@ -655,7 +657,7 @@ void Server::resumeDccGetTransfer(QString sourceNick,QStringList dccArguments)
   }
 }
 
-void Server::resumeDccSendTransfer(QString recipient,QStringList dccArguments)
+void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &dccArguments)
 {
   // Check if there actually is a transfer going on on that port
   DccTransfer* dccTransfer=serverWindow->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::Send);
@@ -681,12 +683,12 @@ void Server::resumeDccSendTransfer(QString recipient,QStringList dccArguments)
   }
 }
 
-void Server::dccGetDone(QString fileName)
+void Server::dccGetDone(const QString &fileName)
 {
   appendStatusMessage(i18n("DCC"),i18n("DCC download of file \"%1\" finished.").arg(fileName));
 }
 
-void Server::dccSendDone(QString fileName)
+void Server::dccSendDone(const QString &fileName)
 {
   appendStatusMessage(i18n("DCC"),i18n("DCC upload of file \"%1\" finished.").arg(fileName));
 }
@@ -725,7 +727,7 @@ void Server::removeQuery(Query* query)
   delete query;
 }
 
-void Server::joinChannel(QString& name,QString& hostmask,QString& key)
+void Server::joinChannel(const QString& name,const QString& hostmask,const QString& /* key */)
 {
   // Make sure to delete stale Channel on rejoin.
   // FIXME: Hm ... Do we really have to? Wouldn't it be enough to just
@@ -759,13 +761,13 @@ void Server::removeChannel(Channel* channel)
   channelList.removeRef(channel);
 }
 
-void Server::updateChannelMode(QString& nick,QString& channelName,char mode,bool plus,QString& parameter)
+void Server::updateChannelMode(const QString &nick, const QString &channelName, char mode, bool plus, const QString &parameter)
 {
   Channel* channel=getChannelByName(channelName);
   if(channel) channel->updateMode(nick,mode,plus,parameter);
 }
 
-void Server::updateChannelModeWidgets(QString& channelName,char mode,QString& parameter)
+void Server::updateChannelModeWidgets(const QString &channelName, char mode, const QString &parameter)
 {
   Channel* channel=getChannelByName(channelName);
   if(channel) channel->updateModeWidgets(mode,true,parameter);
@@ -864,19 +866,19 @@ Query* Server::getQueryByName(const char* name)
   return 0;
 }
 
-void Server::addNickToChannel(QString& channelName,QString& nickname,QString& hostmask,bool op,bool voice)
+void Server::addNickToChannel(const QString &channelName, const QString &nickname, const QString &hostmask, bool op, bool voice)
 {
   Channel* outChannel=getChannelByName(channelName);
   if(outChannel) outChannel->addNickname(nickname,hostmask,op,voice);
 }
 
-void Server::nickJoinsChannel(QString& channelName,QString& nickname,QString& hostmask)
+void Server::nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask)
 {
   Channel* outChannel=getChannelByName(channelName);
   if(outChannel) outChannel->joinNickname(nickname,hostmask);
 }
 
-void Server::addHostmaskToNick(QString& sourceNick,QString& sourceHostmask)
+void Server::addHostmaskToNick(const QString &sourceNick, const QString &sourceHostmask)
 {
   Channel* channel=channelList.first();
 
@@ -891,7 +893,7 @@ void Server::addHostmaskToNick(QString& sourceNick,QString& sourceHostmask)
   if(query) query->setHostmask(sourceHostmask);
 }
 
-void Server::removeNickFromChannel(QString& channelName,QString& nickname,QString& reason,bool quit)
+void Server::removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit)
 {
   Channel* outChannel=getChannelByName(channelName);
   if(outChannel)
@@ -900,7 +902,7 @@ void Server::removeNickFromChannel(QString& channelName,QString& nickname,QStrin
   }
 }
 
-void Server::nickWasKickedFromChannel(QString& channelName,QString& nickname,QString& kicker,QString& reason)
+void Server::nickWasKickedFromChannel(const QString &channelName, const QString &nickname, const QString &kicker, const QString &reason)
 {
   Channel* outChannel=getChannelByName(channelName);
   if(outChannel)
@@ -909,7 +911,7 @@ void Server::nickWasKickedFromChannel(QString& channelName,QString& nickname,QSt
   }
 }
 
-void Server::removeNickFromServer(QString& nickname,QString& reason)
+void Server::removeNickFromServer(const QString &nickname,const QString &reason)
 {
   Channel* channel=channelList.first();
   while(channel)
@@ -919,7 +921,7 @@ void Server::removeNickFromServer(QString& nickname,QString& reason)
   }
 }
 
-void Server::renameNick(QString& nickname,QString& newNick)
+void Server::renameNick(const QString &nickname, const QString &newNick)
 {
   // Rename the nick in every channel they are in
   Channel* channel=channelList.first();
@@ -1000,13 +1002,13 @@ void Server::appendStatusMessage(const char* type,const char* message)
   serverWindow->appendToFrontmost(type,message);
 }
 
-void Server::setNickname(const QString& newNickname)
+void Server::setNickname(const QString &newNickname)
 {
   nickname=newNickname;
   serverWindow->setNickname(newNickname);
 }
 
-void Server::setChannelTopic(QString& channel,QString& newTopic)
+void Server::setChannelTopic(const QString &channel, const QString &newTopic)
 {
   Channel* outChannel=getChannelByName(channel);
   if(outChannel)
@@ -1017,7 +1019,7 @@ void Server::setChannelTopic(QString& channel,QString& newTopic)
   }
 }
 
-void Server::setChannelTopic(QString& nickname,QString& channel,QString& newTopic) // Overloaded
+void Server::setChannelTopic(const QString& nickname, const QString &channel, const QString &newTopic) // Overloaded
 {
   Channel* outChannel=getChannelByName(channel);
   if(outChannel)
@@ -1028,22 +1030,22 @@ void Server::setChannelTopic(QString& nickname,QString& channel,QString& newTopi
   }
 }
 
-bool Server::isNickname(QString& compare)
+bool Server::isNickname(const QString &compare)
 {
   return (nickname==compare);
 }
 
-QString& Server::getNickname()
+QString Server::getNickname()
 {
   return nickname;
 }
 
-QString Server::parseWildcards(const QString& toParse,const QString& nickname,const QString& channelName,const QString& channelKey,const QString& nick,const QString& queryName,const QString& parameter)
+QString Server::parseWildcards(const QString &toParse, const QString &nickname, const QString &channelName, const QString &channelKey, const QString &nick, const QString &queryName, const QString &parameter)
 {
   return parseWildcards(toParse,nickname,channelName,channelKey,QStringList::split(' ',nick),queryName,parameter);
 }
 
-QString Server::parseWildcards(const QString& toParse,const QString& nickname,const QString& channelName,const QString& channelKey,const QStringList& nickList,const QString& queryName,const QString& parameter)
+QString Server::parseWildcards(const QString &toParse, const QString &nickname, const QString &channelName, const QString &channelKey, const QStringList &nickList, const QString &queryName, const QString &parameter)
 {
   // TODO: parameter handling. this line is only to suppress a compiler warning
   //       since parameters are not functional yet
@@ -1064,7 +1066,7 @@ QString Server::parseWildcards(const QString& toParse,const QString& nickname,co
     // copy out all text to the next "%" as new separator
     separator=out.mid(pos,out.find("%",pos+1)-pos);
     // remove separator definition from string
-    out.replace(separatorRegExp,"");
+    out.replace(separatorRegExp,QString::null);
   }
 
   kdDebug() << "Replacing placeholders in: " << out << endl;
@@ -1084,12 +1086,12 @@ QString Server::parseWildcards(const QString& toParse,const QString& nickname,co
   return out;
 }
 
-void Server::setIrcName(QString newIrcName)
+void Server::setIrcName(const QString &newIrcName)
 {
   ircName=newIrcName;
 }
 
-const QString& Server::getIrcName()
+QString Server::getIrcName()
 {
   return ircName;
 }
@@ -1114,7 +1116,7 @@ void Server::away()
   isAway=true;
 }
 
-void Server::sendToAllChannels(const QString& text)
+void Server::sendToAllChannels(const QString &text)
 {
   // Send a message to all channels we are in
   Channel* channel=channelList.first();

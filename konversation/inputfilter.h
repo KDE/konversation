@@ -35,22 +35,22 @@ class InputFilter : public QObject
     ~InputFilter();
 
     void setServer(Server* newServer);
-    void parseLine(QString line);
+    void parseLine(const QString &line);
 
   signals:
     void welcome();
-    void notifyResponse(QString nicksOnline);
-    void addDccGet(QString sourceNick,QStringList dccArgument); // will be connected to Server->addDccGet()
-    void resumeDccGetTransfer(QString sourceNick,QStringList dccArgument); // will be connected to Server->resumeDccGetTransfer()
-    void resumeDccSendTransfer(QString sourceNick,QStringList dccArgument); // will be connected to Server->resumeDccSendTransfer()
+    void notifyResponse(const QString &nicksOnline);
+    void addDccGet(const QString &sourceNick, const QStringList &dccArgument); // will be connected to Server->addDccGet()
+    void resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArgument); // will be connected to Server->resumeDccGetTransfer()
+    void resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArgument); // will be connected to Server->resumeDccSendTransfer()
 
   protected:
-    void parseClientCommand(QString& prefix,QString& command,QStringList& parameterList,QString& trailing);
-    void parseServerCommand(QString& prefix,QString& command,QStringList& parameterList,QString& trailing);
-    void parseModes(QString sourceNick,QStringList parameterList);
+    void parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);
+    void parseServerCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);
+    void parseModes(const QString &sourceNick, const QStringList &parameterList);
 
-    bool isAChannel(QString check);
-    bool isIgnore(QString pattern,Ignore::Type type);
+    bool isAChannel(const QString &check);
+    bool isIgnore(const QString &pattern, Ignore::Type type);
 
     Server* server;
     bool welcomeSent;
