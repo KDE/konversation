@@ -99,11 +99,7 @@ void InputFilter::parseLine(const QString &a_newLine)
     // The rest of the string will be the parameter list
     parameterList=QStringList::split(" ",incomingLine);
   }
-  kdDebug() << "InputFilter::parseLine(): " << prefix << " "
-                                            << command << " "
-                                            << parameterList.join(" ") << " "
-                                            << trailing << " "
-                                            << endl;
+
   // Server command, if no "!" was found in prefix
   if(prefix.find('!')==-1 && prefix!=server->getNickname())
     parseServerCommand(prefix,command,parameterList,trailing);
@@ -171,7 +167,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
           // KNotify events...
           if(sourceNick != server->getNickname()) {
-            if(parameterList[0].lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
+            if(ctcpArgument.lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
             {
               KNotifyClient::event("nick");
             }
@@ -308,7 +304,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
           // KNotify events...
           if(sourceNick != server->getNickname()) {
-            if(parameterList[0].lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
+            if(trailing.lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
             {
               KNotifyClient::event("nick");
             }
