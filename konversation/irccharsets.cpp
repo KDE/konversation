@@ -53,7 +53,7 @@ QString descriptiveNameToShortName( const QString& descriptiveName )  // static
   return KGlobal::charsets()->encodingForName( descriptiveName );
 }
 
-QString IRCCharsets::ambiguousNameToShortName( const QString& ambiguousName )
+QString IRCCharsets::ambiguousNameToShortName( const QString& ambiguousName )  // static
 {
   private_init();
   
