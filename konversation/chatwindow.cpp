@@ -121,7 +121,6 @@ Server* ChatWindow::getServer()
 
 void ChatWindow::setIdentity(const Identity *newIdentity)
 {
-  kdDebug() << "ChatWindow::setIdentity(): " << newIdentity << endl;
   identity=*newIdentity;
   filter.setIdentity(newIdentity);
 }

@@ -42,8 +42,6 @@ KonversationApplication::KonversationApplication()
 
   connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
 
-  mainWindow->show();
-
   // handle autoconnect on startup
   QValueList<int> list=preferences.getAutoConnectServerIDs();
   // if there is at least one autoconnect server, start connecting right away
@@ -127,6 +125,8 @@ void KonversationApplication::connectToServer(int id)
 void KonversationApplication::connectToAnotherServer(int id)
 {
   kdDebug() << "KonversationApplication::connectToAnotherServer(" << id << ")" << endl;
+
+  mainWindow->show();
 
   ServerEntry* chosenServer=preferences.getServerEntryById(id);
 

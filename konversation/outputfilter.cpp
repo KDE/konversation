@@ -726,7 +726,6 @@ bool OutputFilter::isQuery() { return query; };
 void OutputFilter::setCommandChar() { commandChar=KonversationApplication::preferences.getCommandChar(); }
 void OutputFilter::setIdentity(const Identity *newIdentity)
 {
-  kdDebug() << "OutputFilter::setIdentity(): " << newIdentity << endl;
   identity=*newIdentity;
   // TODO: move this into copy constructor! THis does not work yet!
   identity.setNicknameList(newIdentity->getNicknameList());

@@ -167,7 +167,8 @@ void KonversationMainWindow::appendToFrontmost(const QString& type,const QString
   // TODO: Make it an option to direct all status stuff into the status panel
 
   updateFrontView();
-  if(frontView==0) // Check if the frontView can actually display text
+  if(frontView==0 ||              // Check if the frontView can actually display text or ...
+     serverView->getServer()!=frontView->getServer())  // if it does not belong to this server
   {
     // if not, take server specified fallback view instead
     serverView->appendServerMessage(type,message);
