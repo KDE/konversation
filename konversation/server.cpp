@@ -91,7 +91,7 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   m_serverSettings.setPassword(password);
   m_serverGroup.addServer(serverSettings);
 
-  if(nick.isEmpty())
+  if(nick.isEmpty()) // Happens when we are invoked from an irc:/ url
     nick = getIdentity()->getNickname(0);
 
   init(mainWindow, nick, channel);
