@@ -65,8 +65,11 @@ class DccTransferSend : public DccTransfer
      * Then this will be downloaded to /tmp.
      */
     QString m_tmpFile;
+    
     KNetwork::KServerSocket* m_serverSocket;
     KNetwork::KStreamSocket* m_sendSocket;
+    bool m_fastSend;
+    
     QTimer* m_connectionTimer;
 };
 

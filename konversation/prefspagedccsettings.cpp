@@ -64,6 +64,19 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
 
   dccSpinBoxes->setStretchFactor(dccRollbackLabel,10);
   
+  
+  dccAutoGet=new QCheckBox(i18n("Automatically accept &DCC download"),parentFrame,"dcc_autoget_checkbox");
+  connect(dccAutoGet, SIGNAL(stateChanged(int)), this, SLOT(autoGetStateChanged(int)));
+  dccAutoResume=new QCheckBox(i18n("Au&tomatically resume DCC download"), parentFrame,"dcc_autoresume_checkbox");
+  connect(dccAutoResume, SIGNAL(stateChanged(int)), this, SLOT(autoResumeStateChanged(int)));
+  dccAddSender=new QCheckBox(i18n("Add &sender to file name"),parentFrame,"dcc_sender_checkbox");
+  dccCreateFolder=new QCheckBox(i18n("Cr&eate folder for sender"),parentFrame,"dcc_create_folder_checkbox");
+
+  dccAddSender->setChecked(preferences->getDccAddPartner());
+  dccCreateFolder->setChecked(preferences->getDccCreateFolder());
+  dccAutoGet->setChecked(preferences->getDccAutoGet());
+  dccAutoResume->setChecked(preferences->getDccAutoResume());
+  
   // own IP
   QVGroupBox* dccOwnIpGroup = new QVGroupBox(i18n("Own IP"), parentFrame, "dcc_own_ip_group");
   
@@ -151,18 +164,8 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccChatPortsLastSpin->setValue(preferences->getDccChatPortsLast());
   // }
   
-  // misc
-  dccAutoGet=new QCheckBox(i18n("Automatically accept &DCC download"),parentFrame,"dcc_autoget_checkbox");
-  connect(dccAutoGet, SIGNAL(stateChanged(int)), this, SLOT(autoGetStateChanged(int)));
-  dccAutoResume=new QCheckBox(i18n("Au&tomatically resume DCC download"), parentFrame,"dcc_autoresume_checkbox");
-  connect(dccAutoResume, SIGNAL(stateChanged(int)), this, SLOT(autoResumeStateChanged(int)));
-  dccAddSender=new QCheckBox(i18n("Add &sender to file name"),parentFrame,"dcc_sender_checkbox");
-  dccCreateFolder=new QCheckBox(i18n("Cr&eate folder for sender"),parentFrame,"dcc_create_folder_checkbox");
-
-  dccAddSender->setChecked(preferences->getDccAddPartner());
-  dccCreateFolder->setChecked(preferences->getDccCreateFolder());
-  dccAutoGet->setChecked(preferences->getDccAutoGet());
-  dccAutoResume->setChecked(preferences->getDccAutoResume());
+  dccFastSend=new QCheckBox(i18n("Use fast DCC sending"),parentFrame,"dcc_fast_dcc_sending");
+  dccFastSend->setChecked(preferences->getDccFastSend());
 
   QHBox* dccSpacer=new QHBox(parentFrame);
 
@@ -175,12 +178,6 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
 
   dccSettingsLayout->addMultiCellWidget(dccSpinBoxes,row,row,0,2);
   row++;
-
-  dccSettingsLayout->addMultiCellWidget(dccOwnIpGroup,row,row,0,2);
-  row++;
-  
-  dccSettingsLayout->addMultiCellWidget(dccPortsGroup,row,row,0,2);
-  row++;
   
   dccSettingsLayout->addMultiCellWidget(dccAutoGet,row,row,0,2);
   row++;
@@ -190,6 +187,16 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   row++;
   dccSettingsLayout->addMultiCellWidget(dccCreateFolder,row,row,0,2);
   row++;
+
+  dccSettingsLayout->addMultiCellWidget(dccOwnIpGroup,row,row,0,2);
+  row++;
+  
+  dccSettingsLayout->addMultiCellWidget(dccPortsGroup,row,row,0,2);
+  row++;
+  
+  dccSettingsLayout->addMultiCellWidget(dccFastSend,row,row,0,2);
+  row++;
+  
   dccSettingsLayout->addMultiCellWidget(dccSpacer,row,row,0,2);
   dccSettingsLayout->setRowStretch(row,10);
 

@@ -52,6 +52,9 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
  
   m_serverSocket = 0;
   m_sendSocket = 0;
+  m_fastSend = KonversationApplication::preferences.getDccFastSend();
+  kdDebug() << "DccTransferSend::DccTransferSend(): Fast DCC send " << ( m_fastSend ? QString("Enabled.") : QString("Disabled.") ) << endl;
+  
   m_connectionTimer = new QTimer( this );
   connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
   //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
@@ -213,7 +216,8 @@ void DccTransferSend::heard()  // slot
   stopConnectionTimer();
   
   m_sendSocket = static_cast<KNetwork::KStreamSocket*>( m_serverSocket->accept() );
-  if(!m_sendSocket) {
+  if( !m_sendSocket )
+  {
     KMessageBox::sorry( listView(), QString( getErrorString( m_file.status() ) ).arg( m_file.name() ), i18n("DCC Send Error") );
     setStatus( Failed );
     cleanUp();
@@ -233,7 +237,7 @@ void DccTransferSend::heard()  // slot
     m_transferStartPosition = m_transferringPosition;
     
     setStatus( Sending );
-    m_sendSocket->enableRead( true );
+    m_sendSocket->enableRead( m_fastSend ? true : false );
     m_sendSocket->enableWrite( true );
     initTransferMeter();  // initialize CPS counter, ETA counter, etc...
   }
@@ -249,7 +253,12 @@ void DccTransferSend::heard()  // slot
 
 void DccTransferSend::writeData()  // slot
 {
-  //kdDebug() << "writeData()" << endl;
+  //kdDebug() << "DccTransferSend::writeData()" << endl;
+  if( !m_fastSend )
+  {
+    m_sendSocket->enableRead( true );
+    m_sendSocket->enableWrite( false );
+  }
   int actual = m_file.readBlock( m_buffer, m_bufferSize );
   if( actual > 0 )
   {
@@ -260,7 +269,12 @@ void DccTransferSend::writeData()  // slot
 
 void DccTransferSend::getAck()  // slot
 {
-  //kdDebug() << "getAck()" << endl;
+  //kdDebug() << "DccTransferSend::getAck()" << endl;
+  if( !m_fastSend )
+  {
+    m_sendSocket->enableRead( false );
+    m_sendSocket->enableWrite( true );
+  }
   unsigned long pos;
   while( m_sendSocket->bytesAvailable() >= 4 )
   {

@@ -553,6 +553,17 @@ unsigned long KonvPrefsDCOP::getDccChatPortsLast()
   return KonversationApplication::preferences.getDccChatPortsLast();
 }
 
+void KonvPrefsDCOP::setDccFastSend(bool state)
+{
+  KonversationApplication::preferences.setDccFastSend(state);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+bool KonvPrefsDCOP::getDccFastSend()
+{
+  return KonversationApplication::preferences.getDccFastSend();
+}
+
 void KonvPrefsDCOP::setBlinkingTabs(bool blink)
 {
   KonversationApplication::preferences.setBlinkingTabs(blink);

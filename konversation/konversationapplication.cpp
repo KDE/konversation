@@ -691,6 +691,7 @@ void KonversationApplication::readOptions()
   preferences.setDccCreateFolder(config->readBoolEntry("CreateFolder",preferences.getDccCreateFolder()));
   preferences.setDccAutoGet(config->readBoolEntry("AutoGet",preferences.getDccAutoGet()));
   preferences.setDccAutoResume(config->readBoolEntry("AutoResume",preferences.getDccAutoResume()));
+  preferences.setDccFastSend(config->readBoolEntry("FastSend",preferences.getDccFastSend()));
 
   // Path settings
   config->setGroup("Path Settings");
@@ -972,6 +973,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ChatPortsLast",preferences.getDccChatPortsLast());
   config->writeEntry("AutoGet",preferences.getDccAutoGet());
   config->writeEntry("AutoResume",preferences.getDccAutoResume());
+  config->writeEntry("FastSend",preferences.getDccFastSend());
 
  // Path Settings
   config->setGroup("Path Settings");

@@ -136,6 +136,8 @@ class Preferences : public QObject
     unsigned int getDccChatPortsFirst();
     void setDccChatPortsLast(unsigned long port);
     unsigned int getDccChatPortsLast();
+    void setDccFastSend(bool state);
+    bool getDccFastSend();
     
     TabPlacement getTabPlacement();
     void setTabPlacement(TabPlacement where);
@@ -476,6 +478,7 @@ class Preferences : public QObject
     unsigned long dccBufferSize;
     unsigned long dccRollback;  // Rollback for Resume
     QString dccPath;
+    bool dccFastSend;
 
     bool autoReconnect;
     bool autoRejoin;

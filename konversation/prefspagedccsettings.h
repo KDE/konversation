@@ -53,6 +53,10 @@ class PrefsPageDccSettings : public PrefsPage
     KLineEdit* dccFolderInput;
     QSpinBox* dccBufferSpin;
     QSpinBox* dccRollbackSpin;
+    QCheckBox* dccAutoGet;
+    QCheckBox* dccAutoResume;
+    QCheckBox* dccAddSender;
+    QCheckBox* dccCreateFolder;
     QComboBox* dccMethodToGetOwnIpComboBox;
     QFrame* dccSpecificOwnIpFrame;
     KLineEdit* dccSpecificOwnIpInput;
@@ -62,10 +66,7 @@ class PrefsPageDccSettings : public PrefsPage
     QCheckBox* dccSpecificChatPortsCheckBox;
     QSpinBox* dccChatPortsFirstSpin;
     QSpinBox* dccChatPortsLastSpin;
-    QCheckBox* dccAutoGet;
-    QCheckBox* dccAutoResume;
-    QCheckBox* dccAddSender;
-    QCheckBox* dccCreateFolder;
+    QCheckBox* dccFastSend;
 };
 
 #endif

@@ -133,6 +133,8 @@ class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
   unsigned long getDccChatPortsFirst();
   void setDccChatPortsLast(unsigned long port);
   unsigned long getDccChatPortsLast();
+  void setDccFastSend(bool state);
+  bool getDccFastSend();
   void setBlinkingTabs(bool blink);
   bool getBlinkingTabs();
   void setBringToFront(bool state);
