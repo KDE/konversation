@@ -161,7 +161,6 @@ namespace Konversation {
             else if(command == "back")    result = parseAway(QString::null);
             else if(command == "invite")  result = parseInvite(parameter);
             else if(command == "exec")    result = parseExec(parameter);
-	    else if(command == "script")  result = parseScript(parameter);
             else if(command == "notify")  result = parseNotify(parameter);
             else if(command == "oper")    result = parseOper(myNick,parameter);
             else if(command == "ban")     result = parseBan(parameter);
@@ -734,24 +733,6 @@ namespace Konversation {
                     result = error(i18n("Error: %1 is not a channel.").arg(channel));
                 }
             }
-        }
-
-        return result;
-    }
-
-    // The idea is that /exec will be parsed as when /script is complete enough
-    OutputFilterResult OutputFilter::parseScript(const QString& parameter)
-    {
-        OutputFilterResult result;
-
-        if(parameter.isEmpty())
-        {
-            result = usage(i18n("Usage: SCRIPT <script> [parameter list]"));
-        }
-        else
-        {
-            KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
-            konv_app->getMainWindow()->runScript(destination, parameter);
         }
 
         return result;

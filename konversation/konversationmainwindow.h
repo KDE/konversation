@@ -101,8 +101,6 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void updateFonts();
     void updateTabPlacement();
     
-    void runScript(const QString &destination, const QString &scriptname );
-
     Konversation::TrayIcon* systemTrayIcon() const { return tray; }
 
     ChatWindow* frontView() { return m_frontView; }
@@ -209,8 +207,6 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     void showJoinChannelDialog();
     
-    void runScript( int menuItemId);
-
     void reconnectCurrentServer();
 
     void openURL(const QString& url, const QString& title);
@@ -237,9 +233,6 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     virtual bool event(QEvent* e);
     virtual void resizeEvent(QResizeEvent* ev);
     
-    void setupScripts();
-
-       
 #ifdef USE_MDI
 #else
     LedTabWidget* getViewContainer();
@@ -267,9 +260,6 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     bool m_closeApp;
     
-    KActionMenu *m_scriptMenu;
-    KScriptManager* m_kscript;
-		
     SSLLabel* m_sslLabel;
     QLabel* m_channelInfoLabel;
 

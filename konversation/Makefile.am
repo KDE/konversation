@@ -43,7 +43,7 @@ konversation_SOURCES = konviface.skel\
 	 nicklistbehavior_preferences.ui prefspagenicklistbehavior.cpp \
 	 konvibookmarkhandler.cpp konvibookmarkmenu.cpp
 
-konversation_LDADD = $(COMPAT_LIBS) $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la -lkscript
+konversation_LDADD = $(COMPAT_LIBS) $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la 
 
 xdg_apps_DATA = konversation.desktop
 

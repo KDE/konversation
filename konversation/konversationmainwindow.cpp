@@ -142,12 +142,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
   new KAction(i18n("&New Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
 
-  m_kscript = new KScriptManager(this, "scriptmanager");
-  m_scriptMenu = new KActionMenu( i18n("&KDE Scripts"), actionCollection(), "scripts");
-  m_scriptMenu->setWhatsThis(i18n("This shows all available scripts and allows them to be executed."));
-  setupScripts();
-  connect( m_scriptMenu->popupMenu(), SIGNAL(activated( int)), this, SLOT(runScript( int )) );  
-  
   // Actions to navigate through the different pages
   KShortcut nextShortcut = KStdAccel::tabNext();
   nextShortcut.setSeq(1, KKeySequence("Alt+Right"));
@@ -275,67 +269,6 @@ KonversationMainWindow::~KonversationMainWindow()
 {
   deleteDccPanel();
   delete dccTransferHandler;
-  delete m_kscript;
-}
-
-void KonversationMainWindow::setupScripts()
-{
-  // locate all scripts, local as well as global.
-  // The script manager will do the nessecary sanity checking
-  QStringList scripts = KGlobal::dirs()->findAllResources("data", QString(kapp->name())+"/scripts/*.desktop", false, true );
-  for (QStringList::Iterator it = scripts.begin(); it != scripts.end(); ++it )
-    m_kscript->addScript( *it );
-  QStringList l ( m_kscript->scripts() );
-  for (QStringList::Iterator it=l.begin(); it != l.end(); ++it )
-    m_scriptMenu->popupMenu()->insertItem( *it );
-  
-  // Auto-alias scripts
-/*  QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/ *");
-  QFileInfo* fileInfo = new QFileInfo();
-  QStringList aliasList(KonversationApplication::preferences.getAliasList());
-  QString newAlias;
-
-  for ( QStringList::Iterator it = scripts.begin(); it != scripts.end(); ++it ) {
-    fileInfo->setFile( *it );
-  if ( fileInfo->isExecutable() ) {
-    newAlias = (*it).section('/',-1)+" "+"/exec "+(*it).section('/', -1 );
-    if(!aliasList.contains(newAlias))
-      aliasList.append(newAlias);
-  }*/
-//}
-//  KonversationApplication::preferences.setAliasList(aliasList);
-}
-
-void KonversationMainWindow::runScript(const QString &destination, const QString &scriptname )
-{
-  if(!frontServer) return; 
-
-  QStringList arguments;
-  arguments << frontServer->getServerName();
-  arguments << destination;
-
-#if KDE_IS_VERSION(3,3,92)  
-  m_kscript->runScript( scriptname, 0, arguments );
-#else // Don't crash for kdelibs < 3.3.92
-  if( m_kscript->scripts().contains( scriptname ) )
-    m_kscript->runScript( scriptname, 0, arguments );
-#endif
-
-}
-
-void KonversationMainWindow::runScript( int mIId )
-{
-  if(!frontServer) return;
-  kdDebug() << "Starting script engine..." << endl;
-  kdDebug()<<"runScript( "<<mIId<<" ) ["<<m_scriptMenu->popupMenu()->text( mIId )<<"]"<<endl;
-  QStringList arguments;
-  arguments << kapp->dcopClient()->appId();
-  arguments << frontServer->getServerName();
-  arguments << m_frontView->getName();
-  
-  kdDebug() << "with parameters " <<  frontServer->getServerName() << " and " << m_frontView->getName() << endl;
-  
-  m_kscript->runScript( m_scriptMenu->popupMenu()->text( mIId ), 0, arguments );
 }
 
 void KonversationMainWindow::switchToTabPageMode()

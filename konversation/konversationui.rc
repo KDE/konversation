@@ -11,8 +11,6 @@
       <Action name="join_channel" />
       <Separator />
       <Action name="toggle_away" /> 
-      <Separator />
-      <Action name="scripts"/>
     </Menu>
     <Menu name="edit">
       <Action name="clear_window" />
