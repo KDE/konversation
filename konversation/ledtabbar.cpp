@@ -21,6 +21,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kpopupmenu.h>
+#include <kiconloader.h>
 
 #include "ledtabbar.h"
 #include "ledtab.h"
@@ -80,7 +81,7 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
     popup->insertSeparator();
     popup->insertItem(i18n("Enable Notifications"), EnableNotifications);
     popup->insertSeparator();
-    popup->insertItem(i18n("Close Tab"),CloseTab);
+    popup->insertItem(SmallIcon("tab_remove"),i18n("Close Tab"),CloseTab);
   }
   else kdWarning() << "LedTabBar::LedTabBar(): Could not create popup!" << endl;
 }
@@ -126,7 +127,7 @@ void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
       iw = t->iconSet()->pixmap( QIconSet::Small, QIconSet::Normal ).width() + 4;
       ih = t->iconSet()->pixmap( QIconSet::Small, QIconSet::Normal ).height();
   }
-  
+
   // do we want close widgets on the tabs?
   if(KonversationApplication::preferences.getCloseButtonsOnTabs())
   {
@@ -352,7 +353,7 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
     {
       popup->changeTitle(Label,lookTab->text());
       ChatWindow* win = dynamic_cast<ChatWindow*>(static_cast<LedTab*>(lookTab)->getWidget());
-      
+
       if(win) {
         ChatWindow::WindowType viewType = win->getType();
         if(viewType == ChatWindow::Channel || viewType == ChatWindow::Query || viewType == ChatWindow::Status) {
@@ -364,7 +365,7 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
       } else {
         popup->setItemVisible(EnableNotifications, false);
       }
-      
+
       int r=popup->exec(ce->globalPos());
       if(r==CloseTab)
       {

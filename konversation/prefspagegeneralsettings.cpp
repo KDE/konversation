@@ -41,7 +41,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   commandCharInput->setMaxLength(1);
   commandCharLabel->setBuddy(commandCharInput);
 
-  QLabel* ctcpVersionLabel=new QLabel(i18n("Custom &Version Reply:"),commandCharBox);
+  QLabel* ctcpVersionLabel=new QLabel(i18n("Custom &version reply:"),commandCharBox);
   ctcpVersionInput=new KLineEdit(preferences->getVersionReply(),commandCharBox);
   ctcpVersionLabel->setBuddy(ctcpVersionInput);
   QString msg = i18n("<qt>Here you can set a custom reply for <b>CTCP <i>VERSION</i></b> requests.</qt>");

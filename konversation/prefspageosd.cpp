@@ -45,7 +45,7 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   QHBox* osdBox = new QHBox(parentFrame);
   osdBox->setSpacing(spacingHint());
 
-  useOSDCheck = new QCheckBox(i18n("&Use OnScreen Display"), osdBox, "use_osd_checkbox");
+  useOSDCheck = new QCheckBox(i18n("&Use On Screen Display"), osdBox, "use_osd_checkbox");
  
   
   // Set up osd widgets
@@ -69,7 +69,7 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdFontButton = new QPushButton(i18n("C&hoose..."), parentFrame, "osd_font_button");
   connect(osdFontButton, SIGNAL(clicked()), this, SLOT(osdFontClicked()));
   
-  drawShadowsCheck = new QCheckBox(i18n("&Draw Shadows"), parentFrame, "draw_shadows_checkbox");
+  drawShadowsCheck = new QCheckBox(i18n("&Draw shadows"), parentFrame, "draw_shadows_checkbox");
   drawShadowsCheck->setChecked(preferences->getOSDDrawShadow());
   
   //color box
@@ -78,13 +78,13 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   useCustomColorsCheck->setChecked(preferences->getOSDUseCustomColors());
 
   QHBox *osdTextColorBox = new QHBox(osdColorsBox);
-  osdTextColorLabel = new QLabel(i18n("Text Co&lor:"), osdTextColorBox);
+  osdTextColorLabel = new QLabel(i18n("Text co&lor:"), osdTextColorBox);
   osdTextColorChooser = new KColorCombo(osdTextColorBox, "osd_text_color");
   osdTextColorChooser->setColor(preferences->getOSDTextColor());
   osdTextColorLabel->setBuddy(osdTextColorChooser);
   
   QHBox *osdBackgroundColorBox = new QHBox(osdColorsBox);
-  osdBackgroundColorLabel = new QLabel(i18n("&Background Color:"), osdBackgroundColorBox);
+  osdBackgroundColorLabel = new QLabel(i18n("&Background color:"), osdBackgroundColorBox);
   osdBackgroundColorChooser = new KColorCombo(osdBackgroundColorBox, "osd_background_color");
   osdBackgroundColorChooser->setColor(preferences->getOSDBackgroundColor());
   osdBackgroundColorLabel->setBuddy(osdBackgroundColorChooser);

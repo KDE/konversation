@@ -56,7 +56,7 @@ DccResumeDialog::DccResumeDialog(QWidget* parent,QString filename,const KURL& ne
   nameInput=new KLineEdit(nameBox,"rename_input");
   nameInput->setText(newFilename);
 
-  QPushButton* suggestButton=new QPushButton(i18n("Suggest new name"),nameBox,"suggest_name_button");
+  QPushButton* suggestButton=new QPushButton(i18n("Suggest New Name"),nameBox,"suggest_name_button");
 
   connect(nameInput,SIGNAL (textChanged(const QString&)),this,SLOT (filenameChanged(const QString&)) );
   connect(suggestButton,SIGNAL (clicked()),this,SLOT (suggestNewName()) );

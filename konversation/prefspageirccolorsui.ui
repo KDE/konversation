@@ -8,12 +8,9 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>329</width>
+            <width>425</width>
             <height>297</height>
         </rect>
-    </property>
-    <property name="caption">
-        <string>PrefsPageIRCColorsUI</string>
     </property>
     <grid>
         <property name="name">
@@ -89,7 +86,7 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Dar&amp;k Gray:</string>
+                <string>Dar&amp;k gray:</string>
             </property>
             <property name="buddy" stdset="0">
                 <cstring>m_grayCBtn</cstring>

@@ -30,20 +30,20 @@ bool SearchDialog::forward=false;
 bool SearchDialog::fromCursor=false;
 
 SearchDialog::SearchDialog(QWidget* parent,QSize size) :
-               KDialogBase(parent,"search_dialog",true,i18n("Search Text"),
+               KDialogBase(parent,"search_dialog",true,i18n("Find Text"),
                            KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
 {
   // Create the top level widget
   QWidget* page=new QWidget(this);
   setMainWidget(page);
-  
+
   // Add the layout to the widget
   QGridLayout* dialogLayout=new QGridLayout(page,2,2);
   dialogLayout->setSpacing(spacingHint());
 
   QHBox* searchBox=new QHBox(page);
-  
-  new QLabel(i18n("Search text:"),searchBox,"search_label");
+
+  new QLabel(i18n("Text to find:"),searchBox,"search_label");
   searchPattern=new KComboBox(searchBox);
   searchPattern->setEditable(true);
   searchPattern->insertStringList(lastSearchPatterns);
@@ -53,10 +53,10 @@ SearchDialog::SearchDialog(QWidget* parent,QSize size) :
 
   caseSensitiveCheck=new QCheckBox(i18n("Case sensitive"),page,"case_sensitive_check");
   caseSensitiveCheck->setChecked(caseSensitive);
-  
+
   wholeWordsCheck=new QCheckBox(i18n("Whole words"),page,"whole_words_check");
   wholeWordsCheck->setChecked(wholeWords);
-  
+
   forwardCheck=new QCheckBox(i18n("Search forward"),page,"forward_check");
   forwardCheck->setChecked(forward);
 
@@ -64,7 +64,7 @@ SearchDialog::SearchDialog(QWidget* parent,QSize size) :
   fromCursorCheck->setChecked(fromCursor);
 
   int row=0;
-  
+
   dialogLayout->addMultiCellWidget(searchBox,row,0,row,1);
   row++;
   dialogLayout->addWidget(caseSensitiveCheck,row,0);
@@ -108,14 +108,14 @@ QString SearchDialog::search(QWidget* parent,bool* cs,bool* wo,bool* fw,bool* fc
     fromCursor=true;
     dlg.fromCursorCheck->setChecked(fromCursor);
   }
-  
+
   int returnCode=dlg.exec();
-    
+
   *cs=caseSensitive;
   *wo=wholeWords;
   *fw=forward;
   *fc=fromCursor;
-    
+
   return (returnCode==Accepted) ? dlg.getSearchText() : QString::null;
 }
 

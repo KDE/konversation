@@ -28,7 +28,7 @@ PrefsPageWebBrowser::PrefsPageWebBrowser(QFrame* newParent,Preferences* newPrefe
   QGridLayout* wbLayout=new QGridLayout(parentFrame,1,1,marginHint(),spacingHint(),"wb_settings_layout");
 
   // Set up web browser widgets
-  QVButtonGroup* wbActionsBox = new QVButtonGroup(i18n("When URL Is Clicked"), parentFrame, "wb_actions_group");
+  QVButtonGroup* wbActionsBox = new QVButtonGroup(i18n("When URL is Clicked"), parentFrame, "wb_actions_group");
   wbActionsBox->setRadioButtonExclusive(true);
   wbUseKdeDefault = new QRadioButton(i18n("Use default KDE web browser"), wbActionsBox, "wb_use_kde_default");
   QHBox* wbCustomBox = new QHBox(wbActionsBox);
@@ -45,7 +45,7 @@ PrefsPageWebBrowser::PrefsPageWebBrowser(QFrame* newParent,Preferences* newPrefe
     wbActionsBox -> setButton(wbActionsBox->id(wbUseCustomCmd));
     wbCustomCmd->setEnabled(true);
   }
-  
+
   // Define the layout
   // Position radio button group at top of frame, as wide as the frame.
   wbLayout->addWidget(wbActionsBox, 0, 0, Qt::AlignTop);

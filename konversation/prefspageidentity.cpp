@@ -119,7 +119,7 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   unAwayLabel=new QLabel(i18n("Re&turn message:"),parentFrame);
   unAwayInput=new KLineEdit(parentFrame);
   unAwayLabel->setBuddy(unAwayInput);
-  
+
   QLabel* awayNickLabel = new QLabel(i18n("Away nickname:"), parentFrame);
   awayNickInput = new KLineEdit(parentFrame);
   awayNickLabel->setBuddy(awayNickInput);
@@ -220,7 +220,7 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   connect(showAwayMessageCheck,SIGNAL (stateChanged(int)),this,SLOT (showAwayMessageChanged(int)) );
   connect(awayInput,SIGNAL (textChanged(const QString&)),this,SLOT (awayMessageChanged(const QString&)) );
   connect(unAwayInput,SIGNAL (textChanged(const QString&)),this,SLOT (unAwayMessageChanged(const QString&)) );
-  
+
   connect(awayNickInput, SIGNAL(textChanged(const QString&)), this, SLOT(awayNickChanged(const QString&)));
 
   connect(addIdentityButton,SIGNAL (clicked()),this,SLOT(addIdentity()) );
@@ -330,9 +330,9 @@ void PrefsPageIdentity::updateIdentity(int number)
   realNameInput->setText(identity->getRealName());
 
   // find encoding and set combo box accordingly
-  
+
   QRegExp encoding("\\b"+identity->getCodec().lower()+"\\b");
-  
+
   for(unsigned int index=0;index<encodings.count();index++)
   {
     if(encoding.search(encodings[index].lower())!=-1)
@@ -357,7 +357,7 @@ void PrefsPageIdentity::updateIdentity(int number)
   showAwayMessageCheck->setChecked(identity->getShowAwayMessage());
   awayInput->setText(identity->getAwayMessage());
   unAwayInput->setText(identity->getReturnMessage());
-  
+
   awayNickInput->setText(identity->getAwayNick());
 
   updateAwayWidgets(identity->getShowAwayMessage());
@@ -395,11 +395,10 @@ void PrefsPageIdentity::addIdentity()
 
 void PrefsPageIdentity::removeIdentity()
 {
-  if(KMessageBox::warningYesNo(parentFrame,
+  if(KMessageBox::warningContinueCancel(parentFrame,
                                i18n("Are you sure you want to delete all information for this identity?"),
                                i18n("Delete Identity"),
-                               KStdGuiItem::yes(),
-                               KStdGuiItem::no())==KMessageBox::Yes)
+                               KGuiItem(i18n("Delete"),"editdelete"))==KMessageBox::Continue)
   {
     // TODO: are you sure here
     int current=identityCombo->currentItem();

@@ -116,7 +116,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Next Tab"), "next",KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
   new KAction(i18n("Previous Tab"), "previous",KShortcut("Alt+Left"),
     this,SLOT(previousTab()),actionCollection(),"previous_tab");
-  new KAction(i18n("Close Tab"),"fileclose",KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
+  new KAction(i18n("Close Tab"),"tab_remove",KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
   new TabAction(i18n("Go to Tab Number %1").arg( 1),0,KShortcut("Alt+1"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_1");
   new TabAction(i18n("Go to Tab Number %1").arg( 2),1,KShortcut("Alt+2"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_2");
   new TabAction(i18n("Go to Tab Number %1").arg( 3),2,KShortcut("Alt+3"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_3");
@@ -298,9 +298,9 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
   {
     // if this view was the front view, delete the pointer
     if(view==frontView) frontView=0;
-    
+
     emit endNotification(viewToClose);
-    
+
     ChatWindow::WindowType viewType=view->getType();
 
     QString viewName=view->getName();
@@ -789,9 +789,9 @@ void KonversationMainWindow::insertRememberLine()
   {
     int total = getViewContainer()->count()-1;
     ChatWindow* nextPage;
-    
+
     for(int i = 0; i <= total; ++i)
-    {        
+    {
       nextPage = static_cast<ChatWindow*>(getViewContainer()->page(i));
       if(nextPage->getType() == ChatWindow::Channel ||
           nextPage->getType() == ChatWindow::Query)
@@ -800,7 +800,7 @@ void KonversationMainWindow::insertRememberLine()
       }
     }
   }
-    
+
   else
   {
     if(frontView->getType() == ChatWindow::Channel ||
@@ -883,14 +883,14 @@ void KonversationMainWindow::closeEvent(QCloseEvent* e)
 {
   KonversationApplication* konv_app=static_cast<KonversationApplication*>(KApplication::kApplication());
   if ( konv_app->sessionSaving() ) m_closeApp = true;
-  
+
   if(KonversationApplication::preferences.getShowTrayIcon() && !m_closeApp) {
     // Message copied from kopete...
     KMessageBox::information(this,
       i18n( "<qt>Closing the main window will keep Konversation running in the "
       "system tray. Use 'Quit' from the 'File' menu to quit the application.</qt>" ),
       i18n( "Docking in System Tray" ), "hideOnCloseInfo");
-  
+
     hide();
     e->ignore();
   } else {

@@ -45,7 +45,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   QFrame* nickCompletionPane =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Nickname Completion")));
           notifyPane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Nick Watch List")));
   QFrame* highlightPane      =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Highlight List")));
-  QFrame* OSDPane            =addPage(QStringList::split(',',i18n("Chat")+","+i18n("OnScreen Display")));
+  QFrame* OSDPane            =addPage(QStringList::split(',',i18n("Chat")+","+i18n("On Screen Display")));
   QFrame* ignorePane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Ignore List")));
   QFrame* aliasesPane        =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Aliases")));
 

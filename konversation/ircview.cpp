@@ -39,6 +39,7 @@
 #include <kstandarddirs.h>
 #include <krun.h>
 #include <kprocess.h>
+#include <kiconloader.h>
 
 #ifndef KDE_MAKE_VERSION
 #define KDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
@@ -71,10 +72,10 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 
   if(popup)
   {
-    popup->insertItem(i18n("&Copy"),Copy);
+    popup->insertItem(SmallIcon("editcopy"),i18n("&Copy"),Copy);
     popup->insertItem(i18n("Select All"),SelectAll);
     popup->insertSeparator();
-    popup->insertItem(i18n("Search Text..."),Search);
+    popup->insertItem(SmallIcon("find"),i18n("Find Text..."),Search);
     popup->insertSeparator();
     popup->insertItem(i18n("Send File..."),SendFile);
   }
@@ -361,7 +362,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
       KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
       konvApp->storeUrl(whoSent,href);
   }
-  
+
   // Hilight
 
   if(doHilight && whoSent!=server->getNickname())
@@ -407,7 +408,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
         {
           bool patternFound=0;
           Highlight* hilight=hilightList.at(index);
-          
+
           if(hilight->getRegExp())
           {
             QRegExp needle(hilight->getPattern().lower());
@@ -424,7 +425,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
           if(patternFound)
           {
             highlightColor=hilightList.at(index)->getColor().name();
-            
+
             if(KonversationApplication::preferences.getHilightSoundEnabled()) {
               KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
               konvApp->sound()->play(hilightList.at(index)->getSoundURL());
