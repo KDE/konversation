@@ -50,4 +50,9 @@ void TopicComboBox::insertStringList(const QStringList& list)
   setEditText(list[0].section(' ',1));
 }
 
+void TopicComboBox::wheelEvent(QWheelEvent *ev)
+{
+  ev->ignore();
+}
+
 #include "topiccombobox.moc"

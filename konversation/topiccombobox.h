@@ -33,6 +33,9 @@ class TopicComboBox : public KComboBox
     ~TopicComboBox();
     void insertStringList(const QStringList& list);
 
+  protected:
+    void wheelEvent(QWheelEvent *ev);
+
   signals:
     void topicChanged(const QString& newTopic);
 
