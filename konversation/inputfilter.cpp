@@ -983,9 +983,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_AWAY:
         {
-          NickInfo* nickInfo = server->obtainNickInfo(parameterList[1]);
-          nickInfo->setAway(true);
-          nickInfo->setAwayMessage(trailing);
+          NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
+	  if(nickInfo) {
+            nickInfo->setAway(true);
+            nickInfo->setAwayMessage(trailing);
+	  }
           server->appendStatusMessage(i18n("Away"),i18n("%1 is away: %2").arg(parameterList[1]).arg(trailing));
           break;
         }
@@ -1006,9 +1008,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 */
       case RPL_WHOISUSER:
         {
-          NickInfo* nickInfo = server->obtainNickInfo(parameterList[1]);
-          nickInfo->setHostmask(i18n("%1@%2").arg(parameterList[2]).arg(parameterList[3]));
-          nickInfo->setRealName(trailing);
+          NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
+	  if(nickInfo) {
+            nickInfo->setHostmask(i18n("%1@%2").arg(parameterList[2]).arg(parameterList[3]));
+            nickInfo->setRealName(trailing);
+	  }
           server->appendStatusMessage(i18n("Whois"),
                                       i18n("%1 is %2&#64;%3 (%4)").arg(parameterList[1]) // Use &#64; instead of @
                                       .arg(parameterList[2])                             // to avoid parsing as email
@@ -1124,13 +1128,15 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_WHOISSERVER:
         {
-          NickInfo* nickInfo = server->obtainNickInfo(parameterList[1]);
-          nickInfo->setNetServer(parameterList[2]);
-          nickInfo->setNetServerInfo(trailing);
-          // Clear the away state on assumption that if nick is away, this message will be followed
-          // by a 301 RPL_AWAY message.  Not necessary a invalid assumption, but what can we do?
-          nickInfo->setAway(false);
-          nickInfo->setAwayMessage(QString::null);
+          NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
+	  if(nickInfo)  {
+            nickInfo->setNetServer(parameterList[2]);
+            nickInfo->setNetServerInfo(trailing);
+            // Clear the away state on assumption that if nick is away, this message will be followed
+            // by a 301 RPL_AWAY message.  Not necessary a invalid assumption, but what can we do?
+            nickInfo->setAway(false);
+            nickInfo->setAwayMessage(QString::null);
+	  }
           server->appendStatusMessage(i18n("Whois"),
                                       i18n("%1 is online via %2 (%3)").arg(parameterList[1])
                                       .arg(parameterList[2])
@@ -1172,9 +1178,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           {
             QDateTime when;
             when.setTime_t(parameterList[3].toUInt());
-
-            NickInfo* nickInfo = server->obtainNickInfo(parameterList[1]);
-            nickInfo->setOnlineSince(when);
+            NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
+	    if(nickInfo) {
+              nickInfo->setOnlineSince(when);
+	    }
             server->appendStatusMessage(i18n("Whois"),i18n("%1 has been online since %2.").arg(parameterList[1]).arg(when.toString(Qt::LocalDate)));
             break;
           }
