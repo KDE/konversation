@@ -63,9 +63,9 @@ void KonvDCOP::insertRememberLine()
   emit dcopInsertRememberLine();
 }
 
-void KonvDCOP::connectToServer(const QString& url)
+void KonvDCOP::connectToServer(const QString& url, int port)
 {
-  emit dcopConnectToServer(url);
+  emit dcopConnectToServer(url, port);
 }
 
 /*

@@ -100,8 +100,8 @@ KonversationApplication::KonversationApplication()
                     this,SLOT (dcopInfo(const QString&)) );
     connect(dcopObject,SIGNAL (dcopInsertRememberLine()),
                     this,SLOT(insertRememberLine()));
-    connect(dcopObject,SIGNAL(dcopConnectToServer(const QString&)),
-                    this,SLOT(quickConnectToServer(const QString&)));
+    connect(dcopObject,SIGNAL(dcopConnectToServer(const QString&, int)),
+                    this,SLOT(dcopConnectToServer(const QString&, int)));
   }
 
   // Sound object used to play sound...
@@ -1028,6 +1028,11 @@ void KonversationApplication::sendMultiServerCommand(const QString& command, con
   for(Server* server = serverList.first(); server; server = serverList.next()) {
     server->executeMultiServerCommand(command, parameter);
   }
+}
+
+void KonversationApplication::dcopConnectToServer(const QString& url, int port)
+{
+  quickConnectToServer(url, QString::number(port));
 }
 
 Konversation::Sound* KonversationApplication::sound()

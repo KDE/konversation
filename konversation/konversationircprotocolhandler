@@ -2,6 +2,11 @@
 
 # A script for Konversation to call connectToServer for each instance of Konversation.
 
-server=`echo $1 | sed "s/irc:\/\///g"` 
-dcop "konversation*" | while read line; do dcop $line Konversation connectToServer $server; done
+server=`echo $1 | sed "s/irc:\/\///g"` #remove irc://
+server=`echo $server | sed "s/\///g"` #remove trailing slash(if there)
+port=`echo $server | sed -re "s/^[^:]*(:|$)//"` #get the (optional) port
+server=`echo $server | sed "s/:[0-9]*//g"` #remove the port from the server string
+if test -z "$port";then port=6667;fi;
+
+dcop "konversation*" | while read line; do dcop $line Konversation connectToServer $server $port; done
 

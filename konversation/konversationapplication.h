@@ -94,6 +94,7 @@ class KonversationApplication : public KApplication
     void insertRememberLine();
     void appearanceChanged();
     void sendMultiServerCommand(const QString& command, const QString& parameter);
+    void dcopConnectToServer(const QString& url, int port);
     
   protected:
     QPtrList<Server> serverList;
