@@ -7,7 +7,7 @@
 
 #include <kdialog.h>
 
-class QLabel;
+class KLineEdit;
 class KProgress;
 class KPushButton;
 class KURLRequester;
@@ -25,6 +25,7 @@ class DccDetailDialog : public KDialog
   
   protected slots:
     void slotLocalPathChanged( const QString& newFilePath );
+    void slotOpenFile();
     void slotAccept();
     void slotAbort();
     void slotClose();
@@ -33,12 +34,13 @@ class DccDetailDialog : public KDialog
     DccTransfer* m_item;
     
     // UI
-    QLabel* m_partner;
-    QLabel* m_self;
-    QLabel* m_status;
-    KProgress* m_progress;
-    QLabel* m_position;
     KURLRequester* m_localPath;
+    KPushButton* m_localPathOpen;
+    KLineEdit* m_partner;
+    KLineEdit* m_self;
+    KLineEdit* m_status;
+    KProgress* m_progress;
+    KLineEdit* m_position;
     
     KPushButton* m_buttonAccept;
     KPushButton* m_buttonAbort;

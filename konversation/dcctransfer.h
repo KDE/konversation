@@ -90,7 +90,7 @@ class DccTransfer : public QObject, public KListViewItem
     void startAutoUpdateView();
     void stopAutoUpdateView();
     
-    void setStatus(DccStatus status);
+    void setStatus(DccStatus status, const QString& statusDetail = QString::null);
     virtual void setFilePath(const QString& _filePath) = 0;
     
     // called from updateView()
@@ -112,6 +112,7 @@ class DccTransfer : public QObject, public KListViewItem
     // transfer information
     DccType dccType;
     DccStatus dccStatus;
+    QString dccStatusDetail;
     bool bResumed;
     unsigned long transferringPosition;
     unsigned long transferStartPosition;

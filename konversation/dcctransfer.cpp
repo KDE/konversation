@@ -155,10 +155,11 @@ void DccTransfer::closeDetailDialog()  // public
   }
 }
 
-void DccTransfer::setStatus(DccStatus status)
+void DccTransfer::setStatus(DccStatus status, const QString& statusDetail)
 {
   DccStatus oldStatus=dccStatus;
   dccStatus=status;
+  dccStatusDetail=statusDetail;
   if (oldStatus!=status) emit statusChanged(this);
 }
 

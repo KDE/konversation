@@ -108,10 +108,10 @@ void DccTransferSend::start()  // public slot
   
   kdDebug() << "DccTransferSend::start(): own Address=" << ownIp << ":" << ownPort << endl;
   
-  setStatus(WaitingRemote);
+  setStatus(WaitingRemote, i18n("Waiting the remote user's acceptance"));
   updateView();
   
-  startConnectionTimer(60);  // wait for 60 sec
+  startConnectionTimer(90);  // wait for 90 sec
   
   emit sendReady(partnerNick,fileName,getNumericalIpText(ownIp),ownPort,fileSize);
 }
@@ -251,7 +251,7 @@ void DccTransferSend::connectionTimeout()  // slot
 {
   kdDebug() << "DccTransferSend::connectionTimeout()" << endl;
   
-  setStatus(Failed);
+  setStatus(Failed, i18n("Timed out"));
   updateView();
   cleanUp();
 }

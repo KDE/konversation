@@ -146,7 +146,7 @@ void DccTransferRecv::requestResume()
   kdDebug() << "DccTransferRecv::requestResume()" << endl;
   
   bResumed = true;
-  setStatus(WaitingRemote);
+  setStatus(WaitingRemote, i18n("Requesting to accept resuming"));
   
   // Rollback for Resume
   unsigned long rb=KonversationApplication::preferences.getDccRollback();
@@ -299,7 +299,7 @@ void DccTransferRecv::connectionTimeout()  // slot
 {
   kdDebug() << "DccTransferRecv::connectionTimeout()" << endl;
   
-  setStatus(Failed);
+  setStatus(Failed, i18n("Timed out"));
   updateView();
   cleanUp();
 }
