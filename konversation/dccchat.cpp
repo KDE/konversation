@@ -105,7 +105,7 @@ void DccChat::listenForPartner()
     for( ; port <= KonversationApplication::preferences.getDccChatPortsLast() ; ++port )
     {
       kdDebug() << "DccChat::listenForPartner(): trying port " << port << endl;
-      listenSocket->setAddress("0", QString::number(port));
+      listenSocket->setAddress(QString::number(port));
       bool success = listenSocket->listen();
       if( found = ( success && listenSocket->error() == KNetwork::KSocketBase::NoError ) )
         break;
