@@ -650,7 +650,8 @@ void Channel::completeNick()
         QStringList found;
         foundNick = nicknameList.completeNick(pattern, complete, found,
           (KonversationApplication::preferences.getNickCompletionMode() == 2),
-          KonversationApplication::preferences.nickCompletionCaseSensitive());
+          KonversationApplication::preferences.nickCompletionCaseSensitive(),
+          getOwnChannelNick()->getNickname());
 
         if(!complete && !found.isEmpty()) {
           if(KonversationApplication::preferences.getNickCompletionMode() == 1) {
@@ -2108,7 +2109,7 @@ int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item
 }
 
 QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found,
-                               bool skipNonAlfaNum, bool caseSensitive)
+                               bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick)
 {
   found.clear();
   QString prefix = "^";
@@ -2127,10 +2128,11 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
   while(it.current() != 0) {
     newNick = it.current()->getNickname();
 
-    if ( !prefix.isEmpty() && newNick.contains(prefixCharacter) )
-       newNick = newNick.section( prefixCharacter,1 );
+    if(!prefix.isEmpty() && newNick.contains(prefixCharacter)) {
+      newNick = newNick.section( prefixCharacter,1 );
+    }
 
-    if(newNick.find(regexp) != -1) {
+    if((newNick.find(regexp) != -1) && (newNick != ownNick)) {
       found.append(newNick);
     }
 
