@@ -1,3 +1,5 @@
+// -*- mode: c++; c-file-style: "stroustrup"; c-basic-offset: 4; tabs-width: 4; indent-tabs-mode: nil -*-
+
 /*
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -851,6 +853,5 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& /*l
 
 #include "nicksonline.moc"
 
-// -*- mode: c++; c-basic-offset: 4; indent-tabs-mode: nil -*-
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:
