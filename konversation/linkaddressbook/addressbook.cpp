@@ -112,8 +112,10 @@ bool Addressbook::canRespond(const QString &uid) {
 		kdDebug() << "Addressbook::canRespond called with empty uid" << endl;
 		return false;
 	}
-	//FIXME:  Check with bille what to do when contact is offline
-	return true;
+	//this should return false if they are offline.
+	int result = presenceStatus(uid);
+	if(result == 3 || result == 4) return true;
+	return false;
 }
 QString Addressbook::locate(const QString &contactId, const QString &/*protocol*/) {
 	if(contactId.isEmpty()) {
