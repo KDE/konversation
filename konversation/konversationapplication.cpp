@@ -82,6 +82,8 @@ KonversationApplication::KonversationApplication()
   connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
   connect(&preferences,SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
   connect(this, SIGNAL(prefsChanged()), mainWindow, SLOT(slotPrefsChanged()));
+  // apply GUI settings
+  appearanceChanged();
   mainWindow->show();
 
   if(preferences.getShowServerList())
