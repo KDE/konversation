@@ -19,7 +19,9 @@
 #include <qstringlist.h>
 
 #ifdef USE_MDI
+#define protected public
 #include <kmdimainfrm.h>
+#undef protected
 #include "images.h"
 #define MAIN_TYPE KMdiMainFrm
 #else
@@ -165,7 +167,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void addIRCColor();
     void clearWindow();
     void closeQueries();
-    
+
     void insertCharacter();
     void insertChar(const QChar& chr);
 
@@ -218,7 +220,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     TrayIcon* tray;
 
     bool m_closeApp;
-    
+
     Konversation::InsertCharDialog* m_insertCharDialog;
 };
 

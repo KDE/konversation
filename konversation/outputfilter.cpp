@@ -48,7 +48,7 @@ namespace Konversation {
     {
         QStringList aliasList=KonversationApplication::preferences.getAliasList();
         QString cc(KonversationApplication::preferences.getCommandChar());
-
+kdDebug() << "####################" << endl << line << endl;
         // check if the line starts with a defined alias
         for(unsigned int index=0;index<aliasList.count();index++)
         {
@@ -59,8 +59,10 @@ namespace Konversation {
             // TODO: cc may be a regexp character here ... we should escape it then
             if(line.find(QRegExp("^"+cc+aliasPattern+"\\b"))!=-1)
             {
+kdDebug() << aliasPattern << endl;
                 // cut alias replacement from definition
-                QString aliasReplace(aliasList[index].section(' ',1)+" "+line.section(' ',1));
+                QString aliasReplace(aliasList[index].section(' ',1));
+kdDebug() << aliasReplace << endl;
                 // protect "%%"
                 aliasReplace.replace(QRegExp("%%"),"%\x01");
                 // replace %p placeholder with rest of line
@@ -69,6 +71,7 @@ namespace Konversation {
                 aliasReplace.replace(QRegExp("%\x01"),"%%");
                 // modify line
                 line=aliasReplace;
+kdDebug() << line << endl;
                 // return "replaced"
                 return true;
             }
@@ -1074,7 +1077,7 @@ namespace Konversation {
             KConfig* config=KApplication::kApplication()->config();
 
             QStringList splitted = KShell::splitArgs(parameter);
-            
+
             if (splitted.count() > 0)
             {
                 QString group = splitted[0];
