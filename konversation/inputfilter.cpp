@@ -888,7 +888,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       case RPL_TOPIC:
         {
           // Update channel window
-          server->setChannelTopic(parameterList[1],trailing);
+	  QString topic = Konversation::removeIrcMarkup(trailing);
+          server->setChannelTopic(parameterList[1],topic);
           break;
         }
       case RPL_TOPICSETBY:
