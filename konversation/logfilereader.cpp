@@ -104,12 +104,11 @@ void LogfileReader::updateView()
 
 void LogfileReader::clearLog()
 {
-  if(KMessageBox::questionYesNo(this,
+  if(KMessageBox::warningContinueCancel(this,
                                 i18n("Do you really want to permanently discard all log information of this file?"),
                                 i18n("Clear Logfile"),
-                                KStdGuiItem::yes(),
-                                KStdGuiItem::no(),
-                                "ClearLogfileQuestion")==KMessageBox::Yes)
+                                KStdGuiItem::del(),
+                                "ClearLogfileQuestion")==KMessageBox::Continue)
   {
     QFile::remove(fileName);
     updateView();

@@ -163,7 +163,7 @@ void PrefsPageThemes::removeTheme()
   int remove = KMessageBox::warningContinueCancel(0L,
 						  i18n("Do you want to remove %1 ?").arg(themeName),
 						  i18n("Remove Theme"),
-						  KStdGuiItem::cont(),
+						  KStdGuiItem::del(),
 						  "warningRemoveTheme"
 						  );
 
@@ -212,7 +212,7 @@ void PrefsPageThemes::updateList()
     {
 
       themeList->clear();
-      
+
       for(QStringList::ConstIterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
 	{
 	  if(!found)
@@ -222,17 +222,17 @@ void PrefsPageThemes::updateList()
 	      else
 		++index;
 	    }
-	  
+
 	  KDesktopFile themeRC(*it);
 	  themeName = themeRC.readName();
 	  themeComment = themeRC.readComment();
-	  
+
 	  if(!themeComment.isEmpty())
 	    themeName = themeName+" ( "+themeComment+" )";
-	  
+
 	  themeList->insertItem(themeName);
 	}
-      
+
       themeList->setSelected(index,TRUE);
       updatePreview(index);
     }
