@@ -23,10 +23,11 @@
 #include "images.h"
 
 NickListViewItem::NickListViewItem(KListView* parent,
-                                 const QString& passed_label,
-                                 const QString& passed_label2,
-				 Nick *n) :
-                   KListViewItem(parent,QString::null,passed_label,passed_label2)
+				   QListViewItem *after,
+				   const QString& passed_label,
+				   const QString& passed_label2,
+				   Nick *n) :
+  KListViewItem(parent,after,QString::null,passed_label,passed_label2)
 {
   Q_ASSERT(n);
   nick = n;

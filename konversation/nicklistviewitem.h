@@ -30,6 +30,7 @@ class NickListViewItem : public QObject, public KListViewItem
   Q_OBJECT
   public:
     NickListViewItem(KListView* parent,
+		     QListViewItem *after,
                     const QString &passed_label,
                     const QString &passed_label2,
                     Nick *n);

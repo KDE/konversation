@@ -29,7 +29,8 @@ Nick::Nick(KListView *listView,
   if(!channelnick) return;
   
     channelnickptr = channelnick;
-  listViewItem=new NickListViewItem(listView,channelnick->getNickname(),channelnick->getHostmask(),this);
+    listViewItem=new NickListViewItem(listView,listView->lastItem(),
+				      channelnick->getNickname(),channelnick->getHostmask(),this);
 
   QObject::connect(listViewItem,SIGNAL(refreshed()),listView,SLOT(startResortTimer()));
 
