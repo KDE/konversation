@@ -58,14 +58,14 @@ else
     {
 	$search = join(" ",$search,@ARGV);
 	
-	system 'dcop', $PORT, 'Konversation', 'info',  "Searching Google for %B$search%B ...";
+	system 'dcop', $PORT, 'Konversation', 'info',  "Searching Google for \x02$search\x02 ...";
 	
 	$googleSearch = SOAP::Lite->service("http://api.google.com/GoogleSearch.wsdl"); 
 	$result = $googleSearch->doGoogleSearch($key, $search, 0, 10, "false", "", "false", "", "UTF-8", "UTF-8"); 
 
 	if($result->{estimatedTotalResultsCount} > 0)
 	{
-	    system 'dcop', $PORT, 'Konversation', 'info', "Results %B1-10%B of about %B$result->{estimatedTotalResultsCount}%B for %B$search%B (%B$result->{searchTime}%B seconds)";
+	    system 'dcop', $PORT, 'Konversation', 'info', "Results \x021-10\x02 of about \x02$result->{estimatedTotalResultsCount}\x02 for \x02$search\x02 (\x02$result->{searchTime}\x02 seconds)";
 	}
 	else
 	{
@@ -75,21 +75,21 @@ else
 	foreach $result (@{$result->{resultElements}})
 	{
 	    $print = $result->{URL}." (".$result->{title}.")";
-	    $print =~ s/\<b\>/\%B/g;
-	    $print =~ s/\<\/b\>/\%B/g;
+	    $print =~ s/\<b\>/\x02/g;
+	    $print =~ s/\<\/b\>/\x02/g;
 	    system 'dcop', $PORT, 'Konversation', 'info', $print;
 	}
     }
     elsif($spellcheck)
     {
 	$spellcheck = join(" ",$spellcheck,@ARGV);
-	system 'dcop', $PORT, 'Konversation', 'info', "Spellchecking %B$spellcheck%B ...";
+	system 'dcop', $PORT, 'Konversation', 'info', "Spellchecking \x02$spellcheck\x02 ...";
 	$googleSearch = SOAP::Lite->service("http://api.google.com/GoogleSearch.wsdl"); 
 	$spell = $googleSearch->doSpellingSuggestion($key, $spellcheck);
 	
 	if($spell)
 	{
-	    $spell = "Spelling suggestion: %B$spell%B";
+	    $spell = "Spelling suggestion: \x02$spell\x02";
 	}
 	else
 	{
