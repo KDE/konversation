@@ -1840,7 +1840,7 @@ void Channel::autoUserhost()
 {
   if(KonversationApplication::preferences.getAutoUserhost())
   {
-    int limit=5;
+    int limit = 5;
 
     QString nickString;
     QPtrList<Nick> nickList = getNickList();
@@ -1854,6 +1854,8 @@ void Channel::autoUserhost()
         if(limit--) nickString = nickString + nick->getNickname() + " ";
         else break;
       }
+
+      ++it;
     }
 
     if(!nickString.isEmpty()) m_server->requestUserhost(nickString);
