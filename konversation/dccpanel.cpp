@@ -57,6 +57,7 @@ DccPanel::DccPanel(QWidget* parent) :
   connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (dccSelected()) );
 
   connect(acceptButton,SIGNAL (clicked()) ,this,SLOT (acceptDcc()) );
+  connect(sendButton,SIGNAL (clicked()) ,this,SLOT (sendDcc()) );
   connect(abortButton,SIGNAL (clicked()) ,this,SLOT (abortDcc()) );
   connect(removeButton,SIGNAL (clicked()) ,this,SLOT (removeDcc()) );
   connect(openButton,SIGNAL (clicked()) ,this,SLOT (runDcc()) );
@@ -118,6 +119,11 @@ void DccPanel::acceptDcc()
   {
     if(item->getType()==DccTransfer::Get && item->getStatus()==DccTransfer::Queued) item->startGet();
   }
+}
+
+void DccPanel::sendDcc()
+{
+ emit requestDccSend();
 }
 
 void DccPanel::runDcc()

@@ -51,7 +51,8 @@ class OutputFilter : public QObject
   signals:
     void openQuery(const QString& nick,const QString& hostmask); // hostmask currently unused
     void openDccSend(QString recipient,QString fileName);
-    void requestDccSend(QString recipient);       // Choose Recipient / File from requester
+    void requestDccSend();                        // Choose Recipient and File from requester
+    void requestDccSend(QString recipient);       // Choose File from requester
     void openDccPanel();
     void closeDccPanel();
     void away();

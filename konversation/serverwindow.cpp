@@ -257,6 +257,7 @@ void ServerWindow::addDccPanel()
     dccPanel=new DccPanel(getWindowContainer());
     addView(dccPanel,3,i18n("DCC Status"));
     dccPanelOpen=true;
+    connect(dccPanel,SIGNAL(requestDccSend()),getServer(),SLOT(requestDccSend()));
     kdDebug() << "ServerWindow::addDccPanel(): " << dccPanel << endl;
   }
   // show already opened panel

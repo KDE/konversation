@@ -88,6 +88,8 @@ Server::Server(int id)
 
   connect(&outputFilter,SIGNAL (openQuery(const QString&,const QString&)),
                    this,SLOT   (addQuery(const QString&,const QString&)) );
+  connect(&outputFilter,SIGNAL (requestDccSend()),
+                   this,SLOT   (requestDccSend()) );
   connect(&outputFilter,SIGNAL (requestDccSend(QString)),
                    this,SLOT   (requestDccSend(QString)) );
 
@@ -478,6 +480,11 @@ void Server::closeChannel(const QString& name)
 {
   outputFilter.parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"PART",name);
   queue(outputFilter.getServerOutput());
+}
+
+void Server::requestDccSend()
+{
+  requestDccSend(QString::null);
 }
 
 void Server::requestDccSend(QString recipient)

@@ -141,6 +141,7 @@ class Server : public QObject
     void connectionEstablished();
     void notifyResponse(QString nicksOnline);
     void addDccGet(QString sourceNick,QStringList dccArguments);
+    void requestDccSend();                                               // -> to outputFilter, dccPanel
     void requestDccSend(QString recipient);                                  // -> to outputFilter
     void resumeDccGetTransfer(QString sourceNick,QStringList dccArguments);  // -> to inputFilter
     void resumeDccSendTransfer(QString sourceNick,QStringList dccArguments); // -> to inputFilter

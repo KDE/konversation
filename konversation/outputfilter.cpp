@@ -449,7 +449,8 @@ void OutputFilter::parseDcc(QString parameter)
     {
       if(parameterList.count()==1)                 // DCC SEND
       {
-        emit requestDccSend(NULL);
+        emit requestDccSend();
+        kdDebug() << "Yo" << endl;
       }
       else if(parameterList.count()==2)            // DCC SEND <nickname>
       {
