@@ -2726,37 +2726,48 @@ QString Server::parseWildcards(const QString& toParse,
   // TODO: parameter handling.
   //       since parameters are not functional yet
 
-  // make a copy to work with
-  QString out(toParse);
-  // define default separator and regular expression for definition
+  // store the parsed version
+  QString out;
+
+  // default separator
   QString separator(" ");
-  QRegExp separatorRegExp("%s[^%]*%");
 
-  // separator definition found?
-  int pos=out.find(separatorRegExp);
-  if(pos!=-1)
-  {
-    // TODO: This could be better done with .cap() and proper RegExp ...
-    // skip "%s" at the beginning
-    pos+=2;
-    // copy out all text to the next "%" as new separator
-    separator=out.mid(pos,out.find("%",pos+1)-pos);
-    // remove separator definition from string
-    out.replace(separatorRegExp, QString::null);
+  int index = 0, found = 0;
+  QChar toExpand;
+
+  while ((found = toParse.find('%',index)) != -1) {
+    out.append(toParse.mid(index,found-index)); // append part before the %
+    index = found + 1; // skip the part before, including %
+    if (index >= toParse.length())
+      break; // % was the last char (not valid)
+    toExpand = toParse.at(index++);
+    if (toExpand == 's') {
+      found = toParse.find('%',index);
+      if (found == -1) // no other % (not valid)
+        break;
+      separator = toParse.mid(index,found-index);
+      index = found + 1; // skip separator, including %
+    } else if (toExpand == 'u') {
+      out.append(nickList.join(separator));
+    } else if (toExpand == 'c') {
+      if(!channelName.isEmpty())
+        out.append(channelName);
+    } else if (toExpand == 'o') {
+      out.append(sender);
+    } else if (toExpand == 'k') {
+      if(!channelKey.isEmpty())
+        out.append(channelKey);
+    } else if (toExpand == 'K') {
+       if(!m_serverGroup.serverByIndex(m_currentServerIndex).password().isEmpty())
+         out.append(m_serverGroup.serverByIndex(m_currentServerIndex).password());
+    } else if (toExpand == 'n') {
+      out.append("\n");
+    } else if (toExpand == 'p') {
+      out.append("%");
+   }
   }
 
-  out.replace("%u",nickList.join(separator));
-  if(!channelName.isEmpty()) out.replace("%c",channelName);
-  out.replace("%o",sender);
-  if(!channelKey.isEmpty()) out.replace("%k",channelKey);
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).password().isEmpty()) {
-    out.replace("%K", m_serverGroup.serverByIndex(m_currentServerIndex).password());
-  }
-
-  out.replace("%n","\n");
-  // finally replace all "%p" with "%"
-  out.replace("%p","%");
-
+  out.append(toParse.mid(index,toParse.length()-index)); // append last part
   return out;
 }
 
