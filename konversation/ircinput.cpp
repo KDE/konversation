@@ -151,6 +151,8 @@ void IRCInput::paste()
   if(!text.isEmpty())
   {
     bool signal=false;
+    // replace \r with \n to make xterm pastes happy
+    text.replace("\r","\n");
     // does the text contain at least one newline character?
     if(text.find('\n')!=-1)
     {

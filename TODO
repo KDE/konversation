@@ -51,3 +51,7 @@ Fix multiserver behaviour
 *nobs* noch ein Wunsch: die Reiter auf Wunsch an die Seite
 Automatically gzip files before DCC SEND
 Compute md5sum over DCCs and send / display the hash after transfer
+Import notify list from .ircrc
+Add /notify command
+Add addNotify() via dcop
+/oper <user> <pass> requires password typed in. We need a popup and type <user> only
