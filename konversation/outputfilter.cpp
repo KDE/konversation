@@ -474,10 +474,10 @@ namespace Konversation {
     {
         OutputFilterResult result;
         QString recipient = parameter.section(' ', 0, 0); // who is the recipient?
-        QString request = parameter.section(' ', 1, 1);   // what is the first word of the ctcp?
-        QString message = parameter.section(' ', 1);      // what is the complete ctcp command?
+        QString request = parameter.section(' ', 1, 1, QString::SectionSkipEmpty);   // what is the first word of the ctcp?
+        QString message = parameter.section(' ', 1, 0xffffff, QString::SectionSkipEmpty);      // what is the complete ctcp command?
 
-        if(request.lower() == "ping")
+        if(request.lower() == "ping") //Note that there may be locale problems with turkish with this
         {
             unsigned int time_t = QDateTime::currentDateTime().toTime_t();
             result.toServer = QString("PRIVMSG %1 :\x01PING %2\x01").arg(recipient).arg(time_t);
