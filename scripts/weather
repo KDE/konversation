@@ -26,11 +26,6 @@ foreach $station (@stations) {
   $detail = `dcop KWeatherService WeatherService weather $station`;
   $detail2 = `dcop KWeatherService WeatherService cover $station`;
 
-  if(utf8::valid($temperature))
-  {
-      utf8::decode($temperature);
-  }
-
   chomp $detail;
   $details = join ", ", split(/\n/,$detail);
   
