@@ -131,6 +131,30 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>lblSearch</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>1</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>S&amp;earch:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kListViewSearchLine</cstring>
+                    </property>
+                </widget>
+                <widget class="KListViewSearchLine">
+                    <property name="name">
+                        <cstring>kListViewSearchLine</cstring>
+                    </property>
+                </widget>
             </hbox>
         </widget>
     </grid>
@@ -142,5 +166,9 @@
 <includehints>
     <includehint>kactivelabel.h</includehint>
     <includehint>klistview.h</includehint>
+    <includehint>klistviewsearchline.h</includehint>
 </includehints>
+<includes>
+    <include>klistviewsearchline.h</include>
+</includes>
 </UI>

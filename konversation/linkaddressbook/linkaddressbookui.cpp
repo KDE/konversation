@@ -33,7 +33,7 @@
 #include <kactivelabel.h>
 #include <kdebug.h>
 #include <klistview.h>
-//#include <klistviewsearchline.h>
+#include <klistviewsearchline.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtooltip.h>
@@ -82,7 +82,7 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
   
   if(m_suggested_realname.isEmpty()) m_suggested_realname = suggested_realname;
   Q_ASSERT(!ircnick.isEmpty());
-//  m_mainWidget->kListViewSearchLine->setListView(m_mainWidget->addresseeListView);
+  m_mainWidget->kListViewSearchLine->setListView(m_mainWidget->addresseeListView);
   slotLoadAddressees();
   
   m_mainWidget->addresseeListView->setColumnWidthMode(0, QListView::Manual);
