@@ -56,7 +56,7 @@ elsif($browser)
 }
 
 eval { require SOAP::Lite; };
-   
+
 if($@)
 {
     exec 'dcop', $port, 'Konversation', 'error', "You need SOAP::Lite package installed. Try apt-get install libsoap-lite-perl.";
@@ -70,8 +70,6 @@ if($@)
 }
 
 use CGI qw(:standard);
-use SOAP::Lite;
-use HTML::Entities;
 
 if(!open(KEY, "$ENV{'HOME'}/.googlekey"))
 {
