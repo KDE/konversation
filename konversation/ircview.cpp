@@ -165,6 +165,11 @@ const QString& IRCView::getContextNick() const
   return m_currentNick;
 }
 
+void IRCView::clearNick()
+{
+  QTimer::singleShot(1*1000,this,SLOT(clearContextNick()));
+}
+
 void IRCView::clearContextNick()
 {
   m_currentNick = QString::null;
@@ -584,22 +589,36 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
   QString commandColor=KonversationApplication::preferences.getColor("CommandMessage");
   QString line;
   QString prefix="***";
-  
+  // QString height = QString::number(fontMetrics().height());
+
   if(type=="Join")
-    prefix="-->";
+    {
+      /*
+      QString image = KGlobal::dirs()->findResource("data","konversation/images/join.png");
+      prefix="<img width=\""+height+"\" height=\""+height+"\" src=\""+image+"\"></img>";
+      */
+      prefix="-->";
+    }
   else if(type=="Part")
-    prefix="<--";
-  prefix = QStyleSheet::escape(prefix);
+    {
+      /*
+      QString image = KGlobal::dirs()->findResource("data","konversation/images/part.png");
+      prefix="<img width=\""+height+"\" height=\""+height+"\" src=\""+image+"\"></img>";
+      */
+      prefix="<--";
+    }
+
+  prefix=QStyleSheet::escape(prefix);
 
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
-    line += "<p><font color=\"#" + commandColor + "\">"+prefix+" %1" + PDF + " %2</font></p>\n";
+    line += "<p><font color=\"#" + commandColor + "\">%2 %1" + PDF + " %3</font></p>\n";
   } else {
-    line = "<p><font color=\"#" + commandColor + "\">%1 "+prefix+" %2</font></p>\n";
+    line = "<p><font color=\"#" + commandColor + "\">%1 %2 %3</font></p>\n";
   }
 
-  line = line.arg(timeStamp(), filter(message,commandColor,0,true,parseURL));
+  line = line.arg(timeStamp(), prefix, filter(message,commandColor,0,true,parseURL));
  
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
@@ -849,7 +868,7 @@ void IRCView::setupNickPopupMenu()
   nickPopup->insertItem(i18n("Ignore"),Ignore);
   
   connect (nickPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
-  connect(nickPopup, SIGNAL(aboutToHide()), this, SLOT(clearContextNick()));
+  connect(nickPopup, SIGNAL(aboutToHide()), this, SLOT(clearNick()));
   connect (modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
   connect (kickban, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
 }
