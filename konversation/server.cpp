@@ -196,6 +196,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
   m_serverISON = 0;
   lastDccDir = QString::null;
   m_isAway = false;
+  m_isAutoAway = false;
   m_socket = 0;
 
   // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
