@@ -155,27 +155,18 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccChatPortsLastSpin->setValue(preferences->getDccChatPortsLast());
   // }
   
-  // buffer size & rollback {
-  QHBox* dccSpinBoxes=new QHBox(parentFrame);
-  dccSpinBoxes->setSpacing(spacingHint());
-
-  QLabel* dccBufferLabel=new QLabel(i18n("Buffer si&ze:"),dccSpinBoxes);
-  dccBufferSpin=new QSpinBox(512,16384,128,dccSpinBoxes,"dcc_buffer_spin");
+  // buffer size
+  QFrame* dccBufferSizeFrame=new QFrame(parentFrame);
+  QHBoxLayout* dccBufferSizeLayout=new QHBoxLayout(dccBufferSizeFrame);
+  dccBufferSizeLayout->setSpacing(spacingHint());
+  QLabel* dccBufferSizeLabel=new QLabel(i18n("Buffer si&ze:"),dccBufferSizeFrame);
+  dccBufferSpin=new QSpinBox(512,13684,128,dccBufferSizeFrame,"dcc_buffer_spin");
   dccBufferSpin->setSuffix(" "+i18n("bytes"));
   dccBufferSpin->setValue(preferences->getDccBufferSize());
-
-  dccBufferLabel->setBuddy(dccBufferSpin);
-
-  QLabel* dccRollbackLabel=new QLabel(i18n("&Rollback:"),dccSpinBoxes);
-  dccRollbackLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  dccRollbackSpin=new QSpinBox(0,65536,512,dccSpinBoxes,"dcc_rollback_spin");
-  dccRollbackSpin->setSuffix(" "+i18n("bytes"));
-  dccRollbackSpin->setValue(preferences->getDccRollback());
-
-  dccRollbackLabel->setBuddy(dccRollbackSpin);
-
-  dccSpinBoxes->setStretchFactor(dccRollbackLabel,10);
-  // }
+  dccBufferSizeLabel->setBuddy(dccBufferSpin);
+  dccBufferSizeLayout->addWidget(dccBufferSizeLabel);
+  dccBufferSizeLayout->addWidget(dccBufferSpin);
+  dccBufferSizeLayout->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
   
   dccFastSend=new QCheckBox(i18n("&Use fast DCC send"),parentFrame,"dcc_fast_dcc_sending");
   dccFastSend->setChecked(preferences->getDccFastSend());
@@ -207,7 +198,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSettingsLayout->addMultiCellWidget(dccPortsGroup,row,row,0,2);
   row++;
 
-  dccSettingsLayout->addMultiCellWidget(dccSpinBoxes,row,row,0,2);
+  dccSettingsLayout->addMultiCellWidget(dccBufferSizeFrame,row,row,0,2);
   row++;
   
   dccSettingsLayout->addMultiCellWidget(dccFastSend,row,row,0,2);
@@ -289,7 +280,6 @@ void PrefsPageDccSettings::applyPreferences()
 {
   preferences->setDccPath(dccFolderInput->text());
   preferences->setDccBufferSize(dccBufferSpin->value());
-  preferences->setDccRollback(dccRollbackSpin->value());
   preferences->setDccMethodToGetOwnIp(dccMethodToGetOwnIpComboBox->currentItem());
   preferences->setDccSpecificOwnIp(dccSpecificOwnIpInput->text());
   preferences->setDccSpecificSendPorts(dccSpecificSendPortsCheckBox->isChecked());

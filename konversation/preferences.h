@@ -118,8 +118,6 @@ class Preferences : public QObject
     unsigned long getDccBufferSize();
     void setDccPath(const QString &path);
     QString getDccPath();
-    void setDccRollback(unsigned long bytes);
-    unsigned long getDccRollback();
     void setDccMethodToGetOwnIp(int methodId);
     int getDccMethodToGetOwnIp();
     void setDccSpecificOwnIp(const QString& ip);
@@ -478,7 +476,6 @@ class Preferences : public QObject
     bool dccAutoGet;
     bool dccAutoResume;
     unsigned long dccBufferSize;
-    unsigned long dccRollback;  // Rollback for Resume
     QString dccPath;
     bool dccFastSend;
     int dccSendTimeout;

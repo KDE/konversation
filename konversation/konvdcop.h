@@ -115,8 +115,6 @@ class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
   unsigned long getDccBufferSize();
   void setDccPath(QString path);
   QString getDccPath();
-  void setDccRollback(unsigned long bytes);
-  unsigned long getDccRollback();
   void setDccMethodToGetOwnIp(int methodId);
   int getDccMethodToGetOwnIp();
   void setDccSpecificOwnIp(const QString& ip);

@@ -111,8 +111,6 @@ class KonvPreferencesIface : virtual public DCOPObject
     virtual unsigned long getDccBufferSize() = 0;
     virtual void setDccPath(QString path) = 0;
     virtual QString getDccPath() = 0;
-    virtual void setDccRollback(unsigned long bytes) = 0;
-    virtual unsigned long getDccRollback() = 0;
     virtual void setDccFastSend(bool state) = 0;
     virtual bool getDccFastSend() = 0;
     virtual void setDccSendTimeout(int sec) = 0;

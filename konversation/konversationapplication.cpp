@@ -678,7 +678,6 @@ void KonversationApplication::readOptions()
   // DCC Settings
   config->setGroup("DCC Settings");
   preferences.setDccBufferSize(config->readNumEntry("BufferSize",preferences.getDccBufferSize()));
-  preferences.setDccRollback(config->readNumEntry("Rollback",preferences.getDccRollback()));
   preferences.setDccMethodToGetOwnIp(config->readNumEntry("MethodToGetOwnIp",preferences.getDccMethodToGetOwnIp()));
   preferences.setDccSpecificOwnIp(config->readEntry("SpecificOwnIp",preferences.getDccSpecificOwnIp()));
   preferences.setDccSpecificSendPorts(config->readBoolEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts()));
@@ -963,7 +962,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("AddPartner",preferences.getDccAddPartner());
   config->writeEntry("CreateFolder",preferences.getDccCreateFolder());
   config->writeEntry("BufferSize",preferences.getDccBufferSize());
-  config->writeEntry("Rollback",preferences.getDccRollback());
   config->writeEntry("MethodToGetOwnIp",preferences.getDccMethodToGetOwnIp());
   config->writeEntry("SpecificOwnIp",preferences.getDccSpecificOwnIp());
   config->writeEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts());

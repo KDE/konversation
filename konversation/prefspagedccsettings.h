@@ -52,7 +52,6 @@ class PrefsPageDccSettings : public PrefsPage
   protected:
     KLineEdit* dccFolderInput;
     QSpinBox* dccBufferSpin;
-    QSpinBox* dccRollbackSpin;
     QCheckBox* dccAutoGet;
     QCheckBox* dccAutoResume;
     QCheckBox* dccAddSender;

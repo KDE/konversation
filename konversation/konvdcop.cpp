@@ -447,17 +447,6 @@ QString KonvPrefsDCOP::getDccPath()
   return KonversationApplication::preferences.getDccPath();
 }
 
-void KonvPrefsDCOP::setDccRollback(unsigned long bytes)
-{
-  KonversationApplication::preferences.setDccRollback(bytes);
-  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
-}
-
-unsigned long KonvPrefsDCOP::getDccRollback()
-{
-  return KonversationApplication::preferences.getDccRollback();
-}
-
 void KonvPrefsDCOP::setDccMethodToGetOwnIp(int methodId)
 {
   KonversationApplication::preferences.setDccMethodToGetOwnIp(methodId);

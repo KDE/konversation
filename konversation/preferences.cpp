@@ -114,7 +114,6 @@ Preferences::Preferences()
   setDccChatPortsLast(0);
   setDccAutoGet(false);
   setDccBufferSize(1024);
-  setDccRollback(1024);
   setDccFastSend(false);
   setDccSendTimeout(120);
 
@@ -382,9 +381,6 @@ bool Preferences::getDccCreateFolder() { return dccCreateFolder; }
 
 void Preferences::setDccBufferSize(unsigned long size) { dccBufferSize=size; }
 unsigned long Preferences::getDccBufferSize() { return dccBufferSize; }
-
-void Preferences::setDccRollback(unsigned long bytes) { dccRollback=bytes; }
-unsigned long Preferences::getDccRollback() { return dccRollback; }
 
 void Preferences::setDccMethodToGetOwnIp(int methodId) { dccMethodToGetOwnIp=methodId; }
 int Preferences::getDccMethodToGetOwnIp() { return dccMethodToGetOwnIp; }
