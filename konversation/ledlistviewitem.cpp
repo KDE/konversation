@@ -89,7 +89,7 @@ QString LedListViewItem::calculateLabel2() {
 }
 #else
 QString LedListViewItem::calculateLabel1() { return nick->getNickname();}
-QString LedListViewItem::calculateLabel2() { return nick->getHostmas();}
+QString LedListViewItem::calculateLabel2() { return nick->getHostmask();}
 #endif
 int LedListViewItem::compare(QListViewItem* item,int col,bool ascending) const
 {
