@@ -897,53 +897,95 @@ void Server::incoming()
   }
   buffer[len] = 0;
 
-  bool isUtf8 = KStringHandler::isUtf8(buffer);
-
-  if(isUtf8 || ((identity->getCodec() == "utf8") && !isUtf8))
+  static QCString qcsRemainBuffer;
+  QCString qcsBuffer = qcsRemainBuffer + QCString(buffer);
+  
+  // remove CR (\r)
+  while(qcsBuffer.contains('\r'))
+    qcsBuffer.remove(qcsBuffer.find('\r'),1);
+  
+  // split buffer to lines
+  QValueList<QCString> qcsBufferLines;
+  int lastLFposition = -1;
+  for( int nextLFposition ; ( nextLFposition = qcsBuffer.find('\n', lastLFposition+1) ) != -1 ; lastLFposition = nextLFposition )
+    qcsBufferLines << qcsBuffer.mid(lastLFposition+1, nextLFposition-lastLFposition-1);
+  
+  // remember an incompleted line (splitted by a packet)
+  qcsRemainBuffer = qcsBuffer.right(qcsBuffer.length()-lastLFposition-1);
+  
+  while(qcsBufferLines.count())
   {
-    inputBuffer += KStringHandler::from8Bit(buffer);
-  }
-  else
-  {
-    // set channel encoding if specified
-    // {
-    QString channelEncoding;
-    QTextCodec* tmpCodec = QTextCodec::codecForName(identity->getCodec().ascii());
-    QStringList lineSplitted = QStringList::split(" ",tmpCodec->toUnicode(buffer));
-    // remove prefix
-    QString senderNick;
-    if(1 <= lineSplitted.count())  // for safe
-      if(lineSplitted[0][0] == ':')
-      {
-        QRegExp re("^:(.+)\\!~.+@");
-        if(re.search(lineSplitted[0]) > -1)
-          senderNick = re.cap(1);
-        lineSplitted.pop_front();
-      }
-    // check setting
-    QString command = lineSplitted[0].lower();
-    if(2 <= lineSplitted.count())
+    bool isUtf8 = KStringHandler::isUtf8(qcsBufferLines.front());
+    if(isUtf8 || ((identity->getCodec() == "utf8") && !isUtf8))
+      inputBuffer += KStringHandler::from8Bit(qcsBufferLines.front()) + "\n";
+    else
     {
-      // query
-      if( ( command == "privmsg" ||
-            command == "notice"  ) &&
-          lineSplitted[1] == getNickname() )
-        channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), senderNick);
+      // set channel encoding if specified
+      // {
+      QString senderNick;
+      bool isServerMessage = false;
+      QString channelKey;
+      QTextCodec* tmpCodec = QTextCodec::codecForName(identity->getCodec().ascii());
+      QStringList lineSplitted = QStringList::split(" ",tmpCodec->toUnicode(qcsBufferLines.front()));
+      // remove prefix
+      if(1 <= lineSplitted.count())  // for safe
+        if(lineSplitted[0][0] == ':')
+        {
+          if(!lineSplitted[0].contains('!'))
+            isServerMessage = true;
+          else
+          {
+            QRegExp re("^:(.+)\\!~.+@");
+            if(re.search(lineSplitted[0]) > -1)
+              senderNick = re.cap(1);
+          }
+          lineSplitted.pop_front();
+        }
+      // set channel key
+      QString command = lineSplitted[0].lower();
+      if(isServerMessage)
+      {
+        if(3 <= lineSplitted.count())
+        {
+          if( command == "332" )  // RPL_TOPIC
+            channelKey = lineSplitted[2];
+        }
+      }
+      else
+      {
+        if(2 <= lineSplitted.count())
+        {
+          // query
+          if( ( command == "privmsg" ||
+                command == "notice"  ) &&
+              lineSplitted[1] == getNickname() )
+            channelKey = senderNick;
+          // channel message
+          else if( command == "privmsg" ||
+                   command == "notice"  ||
+                   command == "join"    ||
+                   command == "kick"    ||
+                   command == "part"    ||
+                   command == "topic"   )
+          channelKey = lineSplitted[1];
+        }
+      }
+      // check setting
+      QString channelEncoding;
+      if(!channelKey.isEmpty())
+        channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), channelKey);
+      // }
       
-      // channel message
-      else if( command == "privmsg" ||
-               command == "notice"  ||
-               command == "kick"    ||
-               command == "part"    ||
-               command == "topic"   )
-        channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), lineSplitted[1]);
+      QTextCodec* codec;
+      if(!channelEncoding.isEmpty())
+        codec=QTextCodec::codecForName(channelEncoding.ascii());
+      else
+        codec=QTextCodec::codecForName(identity->getCodec().ascii());
+      inputBuffer += codec->toUnicode(qcsBufferLines.front()) + "\n";
     }
-    // }
-    
-    QTextCodec* codec=QTextCodec::codecForName(channelEncoding.isEmpty() ? identity->getCodec().ascii() : channelEncoding.ascii());
-    inputBuffer += codec->toUnicode(buffer);
+    qcsBufferLines.pop_front();
   }
-
+  
   // refresh lock timer if it was still locked
   if(!sendUnlocked) lockSending();
 
