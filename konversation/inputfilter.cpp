@@ -782,7 +782,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_MOTDSTART:
         {
-          server->appendStatusMessage(i18n("MOTD"),i18n("Message Of The Day:"));
+          server->appendStatusMessage(i18n("MOTD"),i18n("Message of the day:"));
           break;
         }
       case RPL_MOTD:
@@ -792,7 +792,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_ENDOFMOTD:
         {
-          server->appendStatusMessage(i18n("MOTD"),i18n("End of Message Of The Day"));
+          server->appendStatusMessage(i18n("MOTD"),i18n("End of message of the day"));
           // Autojoin (for now this must be enough)
           if(server->getAutoJoin())
             server->queue(server->getAutoJoinCommand());

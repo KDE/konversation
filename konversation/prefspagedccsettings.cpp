@@ -40,7 +40,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
 
   QLabel* dccFolderLabel=new QLabel(i18n("DCC folder:"),parentFrame);
   dccFolderInput=new KLineEdit(preferences->getDccPath(),parentFrame);
-  QPushButton* dccFolderButton=new QPushButton(i18n("Browse"),parentFrame,"dcc_folder_button");
+  QPushButton* dccFolderButton=new QPushButton(i18n("Browse..."),parentFrame,"dcc_folder_button");
 
   QHBox* dccSpinBoxes=new QHBox(parentFrame);
   dccSpinBoxes->setSpacing(spacingHint());
@@ -100,14 +100,14 @@ void PrefsPageDccSettings::folderButtonClicked()
   QString folderName=KFileDialog::getExistingDirectory(
                                                         preferences->getDccPath(),
                                                         0,
-                                                        i18n("Select DCC download folder")
+                                                        i18n("Select DCC Download Folder")
                                                       );
   if(!folderName.isEmpty())
   {
     QFileInfo folderInfo(folderName);
 
     if(folderInfo.isDir()) dccFolderInput->setText(folderName);
-    else KMessageBox::sorry(0,i18n("<qt>Error: %1 is not a regular folder!</qt>").arg(folderName),i18n("Incorrect path"));
+    else KMessageBox::sorry(0,i18n("<qt>Error: %1 is not a regular folder!</qt>").arg(folderName),i18n("Incorrect Path"));
   }
 }
 

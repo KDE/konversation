@@ -657,9 +657,9 @@ void OutputFilter::parseOper(const QString& myNick,const QString& parameter)
                                       nick,
                                       password,
                                       &keep,
-                                      i18n("Enter user name and password for IRC operator privileges"),
+                                      i18n("Enter user name and password for IRC operator privileges:"),
                                       false,
-                                      i18n("IRC operator password")
+                                      i18n("IRC Operator Password")
                                     );
 
     if(result==KIO::PasswordDialog::Accepted) toServer="OPER "+nick+" "+password;

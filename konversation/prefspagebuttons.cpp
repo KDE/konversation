@@ -33,8 +33,8 @@ PrefsPageButtons::PrefsPageButtons(QFrame* newParent,Preferences* newPreferences
   // Set up the button list
   buttonListView=new KListView(parentFrame);
 
-  buttonListView->addColumn(i18n("Button name"));
-  buttonListView->addColumn(i18n("Button action"));
+  buttonListView->addColumn(i18n("Button Name"));
+  buttonListView->addColumn(i18n("Button Action"));
 
   buttonListView->setAllColumnsShowFocus(true);
   buttonListView->setItemsRenameable(true);

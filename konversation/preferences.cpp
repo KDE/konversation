@@ -41,7 +41,7 @@ Preferences::Preferences()
 
   // create default identity
   Identity* identity=new Identity();
-  identity->setName(i18n("Default identity"));
+  identity->setName(i18n("Default Identity"));
   addIdentity(identity);
 
   setIdent("konversation");

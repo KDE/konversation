@@ -165,8 +165,8 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   closeButtonsCheck->setChecked(preferences->getCloseButtonsOnTabs());
 
   // Sorting
-  QVGroupBox* sortOptionsGroup=new QVGroupBox(i18n("Sort options"),parentFrame,"sort_options_group");
-  sortOrderGroup=new QHGroupBox(i18n("Sorting order"),parentFrame,"sort_order_group");
+  QVGroupBox* sortOptionsGroup=new QVGroupBox(i18n("Sort Options"),parentFrame,"sort_options_group");
+  sortOrderGroup=new QHGroupBox(i18n("Sorting Order"),parentFrame,"sort_order_group");
 
   sortByStatusCheck=new QCheckBox(i18n("Sort by user status"),sortOptionsGroup,"sort_by_status_check");
   sortCaseInsensitiveCheck=new QCheckBox(i18n("Sort case insensitive"),sortOptionsGroup,"sort_case_insensitive_check");
@@ -187,7 +187,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   for(int index=4;index!=0;index>>=1)
   {
-    if(preferences->getNoRightsValue()==index) new ValueListViewItem(0,sortingOrder,i18n("Normal users"));
+    if(preferences->getNoRightsValue()==index) new ValueListViewItem(0,sortingOrder,i18n("Normal Users"));
     if(preferences->getVoiceValue()==index)    new ValueListViewItem(1,sortingOrder,i18n("Voice (+v)"));
     if(preferences->getOpValue()==index)       new ValueListViewItem(2,sortingOrder,i18n("Operators (+o)"));
   }

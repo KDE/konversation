@@ -52,7 +52,7 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString p
   buffer=new char[bufferSize];
 
   statusText.append(i18n("Queued"));
-  statusText.append(i18n("Negotiating Resume ..."));
+  statusText.append(i18n("Negotiating resume ..."));
   statusText.append(i18n("Lookup ..."));
   statusText.append(i18n("Connecting ..."));
   statusText.append(i18n("Offering ..."));
@@ -117,7 +117,7 @@ void DccTransfer::startGet()
   if(!dir.exists())
   {
     if(!KStandardDirs::makeDir(dir.path()))
-      KMessageBox::sorry(static_cast<QWidget*>(0),i18n("Cannot create received files directory %1").arg(dir.path()),i18n("DCC error"));
+      KMessageBox::sorry(static_cast<QWidget*>(0),i18n("Cannot create received files directory '%1'.").arg(dir.path()),i18n("DCC Error"));
   }
 
   QString fullName(dccFile);
@@ -140,8 +140,8 @@ void DccTransfer::startGet()
     int doResume=KMessageBox::questionYesNoCancel
                  (
                    0,
-                   i18n("<qt>The file \"%1\" already exists. Do you want to resume the transfer</qt>").arg(getFile()),
-                   i18n("Resume transfer"),
+                   i18n("<qt>The file \"%1\" already exists. Do you want to resume the transfer?</qt>").arg(getFile()),
+                   i18n("Resume Transfer"),
                    i18n("Resume"),
                    i18n("Overwrite"),
                    "ResumeTransfer"
@@ -242,7 +242,7 @@ void DccTransfer::heard()
     {
       QString errorString=getErrorString(file.status());
 
-      KMessageBox::sorry(0,QString(errorString).arg(file.name()),i18n("DCC Send error"));
+      KMessageBox::sorry(0,QString(errorString).arg(file.name()),i18n("DCC Send Error"));
       setStatus(Failed);
     }
   }
@@ -300,7 +300,7 @@ void DccTransfer::dccGetConnectionSuccess()
   {
     QString errorString=getErrorString(file.status());
 
-    KMessageBox::sorry (0,"<qt>"+QString(errorString).arg(file.name())+"</qt>",i18n("DCC Get error"));
+    KMessageBox::sorry (0,"<qt>"+QString(errorString).arg(file.name())+"</qt>",i18n("DCC Get Error"));
     setStatus(Failed);
   }
 }

@@ -54,11 +54,11 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   if(popup)
   {
     popup->insertItem(i18n("&Copy"),Copy);
-    popup->insertItem(i18n("Select all"),SelectAll);
+    popup->insertItem(i18n("Select All"),SelectAll);
     popup->insertSeparator();
-    popup->insertItem(i18n("Search text"),Search);
+    popup->insertItem(i18n("Search Text..."),Search);
     popup->insertSeparator();
-    popup->insertItem(i18n("Send file"),SendFile);
+    popup->insertItem(i18n("Send File..."),SendFile);
   }
   else kdWarning() << "IRCView::IRCView(): Could not create popup!" << endl;
 
@@ -145,7 +145,7 @@ void IRCView::highlightedSlot(const QString& link)
   }
   else if(!link.isEmpty() && !copyUrlMenu)
   {
-    popup->insertItem(i18n("Copy URL to clipboard"),CopyUrl,1);
+    popup->insertItem(i18n("Copy URL to Clipboard"),CopyUrl,1);
     copyUrlMenu=true;
     urlToCopy=link;
   }

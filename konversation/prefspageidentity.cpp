@@ -41,7 +41,7 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   identityCombo->setEditable(false);
 //  identityCombo->setInsertionPolicy(QComboBox::NoInsertion);
 
-  QPushButton* renameButton=new QPushButton(i18n("Rename"),parentFrame,"rename_identity_button");
+  QPushButton* renameButton=new QPushButton(i18n("Rename..."),parentFrame,"rename_identity_button");
   
   identities=preferences->getIdentityList();
 
@@ -84,8 +84,8 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   QHBox* buttonBox=new QHBox(parentFrame);
   buttonBox->setSpacing(spacingHint());
 
-  QPushButton* addIdentityButton=new QPushButton(i18n("Add new identity"),buttonBox,"add_identity_button");
-  removeIdentityButton=new QPushButton(i18n("Remove identity"),buttonBox,"remove_identity_button");
+  QPushButton* addIdentityButton=new QPushButton(i18n("Add New Identity"),buttonBox,"add_identity_button");
+  removeIdentityButton=new QPushButton(i18n("Remove Identity"),buttonBox,"remove_identity_button");
   
   QHBox* spacer=new QHBox(parentFrame);
 
@@ -284,7 +284,7 @@ void PrefsPageIdentity::updateIdentity(int number)
 void PrefsPageIdentity::renameIdentity()
 {
   bool ok;
-  QString newName=KLineEditDlg::getText(i18n("Rename identity"),
+  QString newName=KLineEditDlg::getText(i18n("Rename Identity"),
                                         i18n("Please enter a new name for this identity:"),
                                         identity->getName(),
                                         &ok,

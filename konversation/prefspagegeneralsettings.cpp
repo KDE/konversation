@@ -53,7 +53,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
 
   // nick completion special settings
   QVBox* suffixBox=new QVBox(parentFrame);
-  new QLabel(i18n("Characters to add on nick completion:"),suffixBox);
+  new QLabel(i18n("Characters to add on nick completion"),suffixBox);
 
   QHBox* suffixEditBox=new QHBox(suffixBox);
   suffixEditBox->setSpacing(spacingHint());
