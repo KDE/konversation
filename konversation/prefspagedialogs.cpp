@@ -12,18 +12,17 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <qlayout.h>
-
 #include <klistview.h>
 #include <klocale.h>
-#include <kdebug.h>
 
 #include "prefspagedialogs.h"
 #include "preferences.h"
 
 PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences) :
-                  PrefsPage(newParent,newPreferences)
+  Warnings_Config( newParent )
 {
+  preferences = newPreferences;
+
   QStringList dialogDefinitions;
   flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,QuitServerTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste";
 
@@ -39,12 +38,6 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
   dialogDefinitions.append(i18n("Warning on high traffic with channel list"));
   dialogDefinitions.append(i18n("Warning on pasting large portions of text"));
 
-  QVBoxLayout* dialogsLayout=new QVBoxLayout(parentFrame,marginHint(),spacingHint(),"dialogs_layout");
-
-  dialogListView=new KListView(parentFrame,"dialog_list_view");
-  dialogListView->addColumn(i18n("Select Warning Dialogs to Show"));
-  dialogListView->setAllColumnsShowFocus(true);
-
   for(unsigned int index=0; index<11 ;index++)
   {
     item=new QCheckListItem(dialogListView,dialogDefinitions[index],QCheckListItem::CheckBox);
@@ -53,7 +46,6 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
     if(preferences->getDialogFlag(flagNames.section(",",index,index))) item->setOn(true);
   } // endfor
 
-  dialogsLayout->addWidget(dialogListView);
 }
 
 PrefsPageDialogs::~PrefsPageDialogs()

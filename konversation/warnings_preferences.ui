@@ -1,0 +1,50 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>Warnings_Config</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>Warnings_Config</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>570</width>
+            <height>500</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Warnings_Config</string>
+    </property>
+    <widget class="KListView">
+        <column>
+            <property name="text">
+                <string>Warning dialogs to show</string>
+            </property>
+            <property name="clickable">
+                <bool>true</bool>
+            </property>
+            <property name="resizable">
+                <bool>true</bool>
+            </property>
+        </column>
+        <property name="name">
+            <cstring>dialogListView</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>30</x>
+                <y>20</y>
+                <width>510</width>
+                <height>440</height>
+            </rect>
+        </property>
+        <property name="allColumnsShowFocus">
+            <bool>true</bool>
+        </property>
+    </widget>
+</widget>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>klistview.h</includehint>
+</includehints>
+</UI>

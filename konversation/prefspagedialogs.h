@@ -15,16 +15,12 @@
 #ifndef PREFSPAGEDIALOGS_H
 #define PREFSPAGEDIALOGS_H
 
-#include "prefspage.h"
+#include "warnings_preferences.h"
 
-/*
-  @author Dario Abatianni
-*/
-
-class KListView;
+class Preferences;
 class QCheckListItem;
 
-class PrefsPageDialogs : public PrefsPage
+class PrefsPageDialogs : public Warnings_Config
 {
   Q_OBJECT
 
@@ -37,7 +33,7 @@ class PrefsPageDialogs : public PrefsPage
     void applyPreferences();
 
   protected:
-    KListView* dialogListView;
+    Preferences* preferences;
     QCheckListItem* item;
     
 };
