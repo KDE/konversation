@@ -25,3 +25,6 @@ gauge		Displays funny "beer load" meter. Author: Eisfuchs, Idea: berkus.
 noatun		Displays on the current channel what you are playing
 		in noatun right now.
 		usage: /exec noatun
+
+uptime          Displays the system uptime on the current channel.
+                usage: /exec uptime

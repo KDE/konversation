@@ -1,0 +1,38 @@
+#!/usr/bin/perl -w
+
+# Uptime script for Konversation
+# made by Magnus Romnes (gromnes@online.no)
+# The script might be uncompatible with other unix variants than linux.
+# only tested on Debian GNU/Linux Sid
+# use the code for whatever you wish :-)
+
+
+$PORT = shift;
+$SERVER = shift;
+$TARGET = shift;
+$UPTIME = `cat /proc/uptime2`;
+if($UPTIME)
+	{
+	@uparray = split(/\./, $UPTIME);
+	$seconds = $uparray[0];
+	if($seconds >= 86400)
+		{
+		$days = int($seconds/86400);
+		$seconds = $seconds-($days*86400);
+		}
+	if($seconds >= 3600)
+		{
+		$hours = int($seconds/3600);
+		$seconds = $seconds-($hours*3600);
+		}
+	if($seconds > 60)
+		{
+		$minutes = int($seconds/60);
+		}
+	exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"Uptime: $days days, $hours hours and $minutes minutes\"");
+	}
+else
+	{
+	exec ("dcop $PORT Konversation info \"Could not read uptime. Check that /proc/uptime exists.\"");
+	}
+
