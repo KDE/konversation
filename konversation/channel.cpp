@@ -129,8 +129,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   topicLayout->addWidget(m_topicButton, 0, 0);
   topicLayout->addMultiCellWidget(topicLine, 0, 1, 1, 1);
 
-  showTopic(KonversationApplication::preferences.getShowTopic());
-
   // The box holding the channel modes
   modeBox = new QHBox(topicWidget);
   modeBox->setSizePolicy(hfixed);
@@ -172,6 +170,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   topicLayout->setRowStretch(1, 10);
   topicLayout->setColStretch(1, 10);
 
+  showTopic(KonversationApplication::preferences.getShowTopic());
   showModeButtons(KonversationApplication::preferences.getShowModeButtons());
 
   // (this) The main Box, holding the channel view/topic and the input line
@@ -1586,10 +1585,16 @@ void Channel::showModeButtons(bool show)
   }
   else
   {
-    if(show)
+    if(show) {
       modeBox->show();
-    else
+      modeBox->parentWidget()->show();
+    } else {
       modeBox->hide();
+
+      if(topicLine->isHidden()) {
+        modeBox->parentWidget()->hide();
+      }
+    }
   }
 }
 
@@ -1936,9 +1941,14 @@ void Channel::showTopic(bool show)
   if(show) {
     topicLine->show();
     m_topicButton->show();
+    topicLine->parentWidget()->show();
   } else {
     topicLine->hide();
     m_topicButton->hide();
+
+    if(modeBox->isHidden()) {
+      topicLine->parentWidget()->hide();
+    }
   }
 }
 

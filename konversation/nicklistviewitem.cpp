@@ -158,7 +158,7 @@ int NickListViewItem::compare(QListViewItem* item,int col,bool ascending) const
       otherKey = otherItem->key(col, ascending);
     }
   }
-
+ 
   return thisKey.compare(otherKey);
 }
 
