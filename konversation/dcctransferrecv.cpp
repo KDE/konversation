@@ -153,7 +153,6 @@ bool DccTransferRecv::createDirs(const KURL &dirURL) const
 
 void DccTransferRecv::start()  // public slot
 {
-  KMessageBox::sorry(listView(), "Sorry, dcc is broken.  It should be fixed in a couple of days.  Dated 9/sept/2004.  Continuing for debugging, but this may not write the file correctly!  You have been warned.");
   if(getStatus() != Queued) return;
   kdDebug() << "DccTransferRecv::start()" << endl;
   //Check that we are saving it somewhere valid, and set up the directories.
