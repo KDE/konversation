@@ -31,6 +31,7 @@ NickListViewItem::NickListViewItem(KListView* parent,
 {
   Q_ASSERT(n);
   nick = n;
+  m_flags = 0;
   
   m_height = height();
   connect(nick->getChannelNick(), SIGNAL(channelNickChanged()), SLOT(refresh()));
@@ -46,34 +47,45 @@ NickListViewItem::~NickListViewItem()
 void NickListViewItem::refresh()
 {
   bool needResort = false;
+  int flags = 0;
   NickInfo* nickInfo = nick->getNickInfo();
   bool away = false;
   
   if ( nickInfo ) {
     away = nickInfo->isAway();
   }
-  
-  if(away != m_away) {
-    m_away = away;
-    needResort = true;
-  }
-  
+
+  if(away)
+    flags=1;
+
   Images* images = KonversationApplication::instance()->images();
   QPixmap icon;
   
   if ( nick->isAdmin() ) {
+    flags += 64;
     icon = images->getNickIcon( Images::Admin, away );
   } else if ( nick->isOwner() ) {
+    flags += 32;
     icon = images->getNickIcon( Images::Owner, away );
   } else if ( nick->isOp() ) {
+    flags += 16;
     icon = images->getNickIcon( Images::Op, away );
   } else if ( nick->isHalfop() ) {
+    flags += 8;
     icon = images->getNickIcon( Images::HalfOp, away );
   } else if ( nick->hasVoice() ) {
+    flags += 4;
     icon = images->getNickIcon( Images::Voice, away );
   } else {
+    flags += 2;
     icon = images->getNickIcon( Images::Normal, away );
   }
+
+  if(flags != m_flags)
+    {
+      needResort = true;
+      m_flags = flags;
+    }
   
   setPixmap( 0, icon );
   
@@ -90,18 +102,14 @@ void NickListViewItem::refresh()
   }
 
   QString newtext1 = calculateLabel1();
-
-  if(newtext1 != text(1)) {
+  if(newtext1 != text(1))
     setText(1,calculateLabel1());
-    needResort = true;
-  }
 
   setText(2,calculateLabel2());
   repaint();
 
-  if(needResort) {
+  if(needResort)
     emit refreshed(); // Resort nick list
-  }
 }
 
 QString NickListViewItem::calculateLabel1() {
