@@ -130,6 +130,7 @@ ColorConfiguration::ColorConfiguration(QString passed_actionTextColor, QString p
   row++;
   dialogLayout->addMultiCellWidget(pad,row,row,0,1);
   dialogLayout->setRowStretch(row,10);
+  dialogLayout->setColStretch(1,10);
 
   setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
   setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
