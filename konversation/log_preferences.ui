@@ -1,5 +1,9 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>Log_Config</class>
+<comment>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.</comment>
 <widget class="QWidget">
     <property name="name">
         <cstring>Log_Config</cstring>
@@ -11,6 +15,9 @@
             <width>528</width>
             <height>310</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>Log_Config</string>
     </property>
     <grid>
         <property name="name">

@@ -1,5 +1,9 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>TabBar_Config</class>
+<comment>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.</comment>
 <widget class="QWidget">
     <property name="name">
         <cstring>TabBar_Config</cstring>
@@ -11,6 +15,9 @@
             <width>409</width>
             <height>412</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>TabBar_Config</string>
     </property>
     <vbox>
         <property name="name">
