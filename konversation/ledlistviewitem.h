@@ -24,7 +24,6 @@
 #include <qpixmap.h>
 #include <qobject.h>
 
-#include "images.h"
 #include "nick.h"
 
 /*
@@ -44,28 +43,19 @@ class LedListViewItem : public QObject, public KListViewItem
     int getFlags() const;
     virtual int compare(QListViewItem* item,int col,bool ascending) const;
     Nick *getNick();
-	    
+
   protected:
     Nick *nick;
-    QPixmap adminLedOn;
-    QPixmap ownerLedOff;
-    QPixmap opLedOn;
-    QPixmap opLedOff;
-    QPixmap voiceLedOn;
-    QPixmap voiceLedOff;
 
-    QIconSet currentLeds;
     QString label;
 
-    Images leds;
 
     QString calculateLabel1();
     QString calculateLabel2();
+
   protected slots:
     //We will refresh ourselves, so make it protected.
     void refresh();
-
-    
 };
 
 #endif

@@ -20,6 +20,7 @@
 
 #include "ledlistviewitem.h"
 #include "konversationapplication.h"
+#include "nicklistview.h"
 
 LedListViewItem::LedListViewItem(KListView* parent,
                                  const QString& passed_label,
@@ -30,24 +31,6 @@ LedListViewItem::LedListViewItem(KListView* parent,
   Q_ASSERT(n);
   nick = n;
 
-  currentLeds=leds.getLed(0,true);
-  adminLedOn =currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
-
-  currentLeds=leds.getLed(0,false);
-  ownerLedOff=currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
-
-  currentLeds=leds.getLed(KonversationApplication::preferences.getOpLedColor(),false);
-  opLedOff   =currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
-
-  currentLeds=leds.getLed(KonversationApplication::preferences.getOpLedColor(),true);
-  opLedOn    =currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
-
-  currentLeds=leds.getLed(KonversationApplication::preferences.getNoRightsLedColor(),false);
-  voiceLedOff=currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::Off);
-
-  currentLeds=leds.getLed(KonversationApplication::preferences.getVoiceLedColor(),true);
-  voiceLedOn =currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
-
   connect(nick->getChannelNick(), SIGNAL(channelNickChanged()), SLOT(refresh()));
   connect(nick->getNickInfo(), SIGNAL(nickInfoChanged()), SLOT(refresh()));
   refresh();
@@ -56,19 +39,28 @@ LedListViewItem::LedListViewItem(KListView* parent,
 LedListViewItem::~LedListViewItem()
 {
 }
+
 void LedListViewItem::refresh() {
-  if(nick->isAdmin())
-    setPixmap(0,adminLedOn);
-  else if(nick->isOwner())
-    setPixmap(0,ownerLedOff);
-  else if(nick->isOp())
-    setPixmap(0,opLedOn);
-  else if(nick->isHalfop())
-    setPixmap(0,opLedOff);
-  else if(nick->hasVoice())
-    setPixmap(0,voiceLedOn);
-  else
-    setPixmap(0,voiceLedOff);
+  NickListView* lv = dynamic_cast<NickListView*>(listView());
+
+  if(lv) {
+    if(nick->isAdmin())
+      setPixmap(0, lv->images().getLed(0,true).pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On));
+    else if(nick->isOwner())
+      setPixmap(0, lv->images().getLed(0, false).pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On));
+    else if(nick->isOp())
+      setPixmap(0, lv->images().getLed(KonversationApplication::preferences.getOpLedColor(),
+        true).pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On));
+    else if(nick->isHalfop())
+      setPixmap(0, lv->images().getLed(KonversationApplication::preferences.getOpLedColor(),
+        false).pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On));
+    else if(nick->hasVoice())
+      setPixmap(0, lv->images().getLed(KonversationApplication::preferences.getVoiceLedColor(),
+        true).pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On));
+    else
+      setPixmap(0, lv->images().getLed(KonversationApplication::preferences.getNoRightsLedColor(),
+        false).pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::Off));
+  }
  
   setText(1,calculateLabel1());
   setText(2,calculateLabel2());

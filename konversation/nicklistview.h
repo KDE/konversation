@@ -19,6 +19,7 @@
 #include <klistview.h>
 #include "channel.h"
 #include "nicklisttooltip.h"
+#include "images.h"
 
 /*
   @author Dario Abatianni
@@ -45,6 +46,8 @@ class NickListView : public KListView
       CustomID, AddressbookSub, AddressbookChange, AddressbookNew, AddressbookDelete,
       AddressbookEdit, SendEmail
     };
+    
+    Images images() { return m_images; }
 
   signals:
     /* Will be connected to Channel::popupCommand(int) */
@@ -59,6 +62,7 @@ class NickListView : public KListView
     QPopupMenu* kickban;
     QPopupMenu* addressbook;
     Channel *channel;
+    Images m_images;
 };
 
 #endif
