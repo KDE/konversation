@@ -232,7 +232,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           // Incoming file?
           if(dccType=="send")
           {
-            konv_app->notificationHandler()->dccIncomming(server->getStatusView(), sourceNick);
+            konv_app->notificationHandler()->dccIncoming(server->getStatusView(), sourceNick);
             
             emit addDccGet(sourceNick,dccArgument);
           }

@@ -56,6 +56,7 @@
 #include "common.h"
 #include "topiclabel.h"
 #include "channeloptionsdialog.h"
+#include "notificationhandler.h"
 
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
@@ -1006,6 +1007,8 @@ void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, co
       appendCommandMessage(i18n("Kick"),i18n("You have been kicked from the channel by %1. (%2)").arg(kicker.getNickname()).arg(reason));
       /* This message lets the user see what had happened after the channel window went away */
       m_server->appendStatusMessage(i18n("Kick"),i18n("You have been kicked from channel %1 by %2. (%3)").arg(getName()).arg(kicker.getNickname()).arg(reason));
+      KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
+      konv_app->notificationHandler()->kick(this,getName(),kicker.getNickname());
     }
 #ifdef USE_MDI
     emit chatWindowCloseRequest(this);

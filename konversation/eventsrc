@@ -394,3 +394,7 @@ Comment[sv]=Någon startade en konversation med dig (ställde en fråga till dig
 Comment[ta]=ஒருவர் உங்களுடன் உரையாடலை துவக்கியிருக்கிறார் (கேள்வி)
 Comment[tr]=Birisi sizinle sohbet başlattı
 default_presentation=0
+
+[kick]
+Name=Kick
+Comment=Someone kicked you out of a channel

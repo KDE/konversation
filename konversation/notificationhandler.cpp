@@ -165,7 +165,7 @@ void NotificationHandler::nickChange(ChatWindow* chatWin, const QString& oldNick
   KNotifyClient::event(winId(), "nickchange", i18n("%1 changed nickname to %2").arg(oldNick, newNick));
 }
 
-void NotificationHandler::dccIncomming(ChatWindow* chatWin, const QString& fromNick)
+void NotificationHandler::dccIncoming(ChatWindow* chatWin, const QString& fromNick)
 {
   if(!chatWin || !chatWin->notificationsEnabled()) {
     return;
@@ -231,6 +231,16 @@ void NotificationHandler::nickOffline(ChatWindow* chatWin, const QString& nick)
   
   KNotifyClient::event(winId(), "notify",
     i18n("%1 went offline (%2).").arg(nick).arg(chatWin->getServer()->getServerName()));
+}
+
+void NotificationHandler::kick(ChatWindow* chatWin, const QString& channel,const QString& nick)
+{
+  if(!chatWin || !chatWin->notificationsEnabled()) {
+    return;
+  }
+
+  KNotifyClient::event(winId(), "kick",
+    i18n("You are kicked by %1 from %2").arg(nick).arg(channel));
 }
 
 }

@@ -51,6 +51,5 @@ DISCUSSING:
 - Watched nicks panel should have a "last seen" column so you can sort them
 
 NEW (15.08.2004):
-- KNotify for kicks / kills
 - Add common default aliases (Commands are auto-aliased now. Is that whats wanted here?)
 - Right click on email addresses to associate them to the address book entry of user posting it
