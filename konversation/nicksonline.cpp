@@ -520,7 +520,6 @@ void NicksOnline::doCommand(int id)
     case ciAddressbookDelete:
       {
         Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
-        //Handle all the selected nicks in one go.  Either they all save, or none do.
         if(addressbook->getAndCheckTicket())
         {
           if(id == ciAddressbookDelete) {
@@ -534,8 +533,7 @@ void NicksOnline::doCommand(int id)
           }
           if(addressbook->saveTicket())
           {
-            //Nicks have changed.  Refresh.
-            nickInfo->refreshAddressee();
+            //saveTicket will refresh the addressees for us.
             if(id == ciAddressbookNew)
               if(!editAddressee(nickInfo->getAddressee().uid())) break;
           }
