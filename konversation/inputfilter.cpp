@@ -403,8 +403,15 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-%1 reply from %2: %3").arg(replyReason).arg(sourceNick).arg(reply));
         }
         // No, so it was a normal notice
-        else
+        else {
+          if(trailing.lower() == "password accepted - you are now recognized"  ||
+             trailing.lower() == "you have already identified") {
+            NickInfoPtr nickInfo = server->getNickInfo(server->getNickname());
+	    Q_ASSERT(nickInfo);
+	    if(nickInfo) nickInfo->setIdentified(true);
+	  }
           server->appendStatusMessage(i18n("Notice"),i18n("-%1- %2").arg(sourceNick).arg(trailing));
+	}
       }
     }
   }
@@ -1021,6 +1028,23 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                                       .arg(trailing));
 	  break;
         }
+/* From a WHOIS. 
+[19:11] :zahn.freenode.net 320 PhantomsDad psn :is an identified user
+ */
+      case RPL_IDENTIFIED:
+	{
+	  NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
+	  if(nickInfo) {
+	    nickInfo->setIdentified(true); 
+	  }
+          if(getAutomaticRequest()==0) {
+		  // Prints "psn is an identified user"
+//	    server->appendStatusMessage(i18n("Whois"),parameterList.join(" ").section(' ',1)+" "+trailing);
+            //The above line works fine, but can't be i18n'ised. So use the below instead.. I hope this is okay.
+            server->appendStatusMessage(i18n("Whois"),parameterList[1] + i18n(" is an identified user"));
+	  }
+	  break;
+	}
 /* Sample WHO response
 /WHO #lounge
 [21:39] [352] #lounge jasmine bots.worldforge.org irc.worldforge.org jasmine H 0 jasmine

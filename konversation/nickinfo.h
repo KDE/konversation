@@ -58,29 +58,45 @@ class NickInfo : public QObject, public KShared
     QString getNetServer() const;
     QString getNetServerInfo() const;
     QDateTime getOnlineSince() const;
+    /** Whether this user is identified with nickserv.
+     *  Found only by doing /whois nick
+     */
+    bool isIdentified() const;
     /** This returns a string of the date and time that the user has been online since.
      *  It will return null if a /whois hasn't been issued yet for this nickinfo
-     *  @return a date-string in the form of "Today 4:23pm", "Yesteerday 12:32pm" or "Mon 3 Mar 2004 8:02am"
+     *  @return a date-string in the form of "Today, 4:23pm", "Yesterday, 12:32pm" or "Mon 3 Mar 2004, 8:02am"
      */
     QString getPrettyOnlineSince() const;
-    // Return the Server object that owns this NickInfo object.
+    /// Return the Server object that owns this NickInfo object.
     Server* getServer() const;
      
-    // Return the kabc (kaddressbook) contact for this nick
+    /// Return the kabc (kaddressbook) contact for this nick
     KABC::Addressee getAddressee() const;
     
-    // Set properties of NickInfo object.
-    // If any of these are called, call Server::nickInfoUpdated to let Server know about the change.
+    /** Set properties of NickInfo object. */
     void setNickname(const QString& newNickname);
+    /** Set properties of NickInfo object. */
     void setHostmask(const QString& newMask);
+    /** Set properties of NickInfo object. */
     void setAway(bool state);
+    /** Set properties of NickInfo object. */
     void setAwayMessage(const QString& newMessage);
+    /** Set properties of NickInfo object. */
     void setIdentdInfo(const QString& newIdentdInfo);
+    /** Set properties of NickInfo object. */
     void setVersionInfo(const QString& newVersionInfo);
+    /** Set properties of NickInfo object. */
     void setNotified(bool state);
+    /** Set properties of NickInfo object. */
     void setRealName(const QString& newRealName);
+    /** Set properties of NickInfo object. */
     void setNetServer(const QString& newNetServer);
+    /** Set properties of NickInfo object. */
     void setNetServerInfo(const QString& newNetServerInfo);
+    /** Whether this user is identified with nickserv.
+     *  Found only by doing /whois nick
+     */
+    void setIdentified(bool identified);
     /** Updates the time online since.
      *  This will be called from the results of a /whois
      *  This function also calculates and sets prettyOnlineSince
@@ -109,6 +125,10 @@ class NickInfo : public QObject, public KShared
     QString m_netServerInfo;
     QDateTime m_onlineSince;
     KABC::Addressee m_addressee;
+    /** Whether this user is identified with nickserv.
+     *  Found only by doing /whois nick
+     */
+    bool m_identified;
   private slots:
     void refreshAddressee();
   signals:

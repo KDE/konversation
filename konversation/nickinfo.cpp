@@ -36,7 +36,7 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
   m_owningServer = server;
   m_away = false;
   m_notified = false;
-
+  m_identified = false;
   if(!m_addressee.isEmpty())
     Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid(), 4);
 
@@ -63,6 +63,8 @@ QString NickInfo::getRealName() const { return m_realName; }
 QString NickInfo::getNetServer() const { return m_netServer; }
 QString NickInfo::getNetServerInfo() const { return m_netServerInfo; }
 QDateTime NickInfo::getOnlineSince() const { return m_onlineSince; }
+bool NickInfo::isIdentified() const { return m_identified; }
+
 QString NickInfo::getPrettyOnlineSince() const { 
   QString prettyOnlineSince;
   int daysto = m_onlineSince.date().daysTo( QDate::currentDate());
@@ -70,7 +72,7 @@ QString NickInfo::getPrettyOnlineSince() const {
   else if(daysto == 1) prettyOnlineSince = "Yesterday";
   else prettyOnlineSince = m_onlineSince.toString("ddd d MMMM yyyy");
   //TODO - we should use KLocale for this
-  prettyOnlineSince += " " + m_onlineSince.toString("h:mm ap");
+  prettyOnlineSince += ", " + m_onlineSince.toString("h:mm ap");
   
   return prettyOnlineSince; 
 }
@@ -115,6 +117,12 @@ void NickInfo::setAway(bool state) {
   emit nickInfoChanged();
   if(!m_addressee.isEmpty())
     Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid());
+}
+void NickInfo::setIdentified(bool identified) {
+  if(identified == m_identified) return;
+  m_identified = identified;
+  m_owningServer->emitNickInfoChanged(this);
+  emit nickInfoChanged();
 }
 void NickInfo::setAwayMessage(const QString& newMessage) { 
   if(m_awayMessage == newMessage) return;
@@ -245,6 +253,7 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const {
     tooltip << getNickname();
     //Don't set dirty if all we have is their nickname
   }
+  if(m_identified) tooltip << i18n("(identified)");
   tooltip << (isimage?"":"</center>") << "</b>";
   
 
