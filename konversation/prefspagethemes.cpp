@@ -122,6 +122,9 @@ void PrefsPageThemes::installTheme()
 					  i18n("Select Theme Package")
 					   );
 
+  if(themeURL.isEmpty())
+    return;
+
   QString themesDir(locateLocal("data", "konversation/themes/"));
   QString tmpThemeFile;
 
