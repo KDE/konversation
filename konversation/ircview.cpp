@@ -168,7 +168,7 @@ QString IRCView::filter(const QString& line,bool doHilight)
   /* URL Catcher */
   QString linkMessageColor = KonversationApplication::preferences.getLinkMessageColor();
 
-  QRegExp pattern("((http://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
+  QRegExp pattern("((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
                   /* IP Address */
                   "([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|"
                   /* Decimal IP address */

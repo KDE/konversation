@@ -144,7 +144,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   /* Set the widgets size policies */
   topicBox->setSizePolicy(greedy);
   topicLabel->setSizePolicy(hfixed);
-  topicLine->setSizePolicy(onlyHorizontal);
+  topicLine->setSizePolicy(modest);  // This should prevent the widget from growing too wide
 
   limit->setMaximumSize(40,100);
   limit->setSizePolicy(hfixed);
@@ -633,29 +633,37 @@ void Channel::updateNicksOps()
 
 void Channel::setTopic(QString& newTopic)
 {
-  /* Somehow we need the nickname to the corresponding topic displayed */
+  /* TODO: Somehow we need the nickname to the corresponding topic displayed */
   appendCommandMessage(i18n("Topic"),i18n("The channel topic is \"%1\".").arg(newTopic));
   if(topic!=newTopic)
   {
-    topicHistory.prepend(newTopic.left(80)); // FIXME! Window gets too big
+//    topicHistory.prepend(newTopic.left(80)); // FIXME! Window gets too big
+    topicHistory.prepend(newTopic);
     topicLine->clear();
     topicLine->insertStringList(topicHistory);
     topic=newTopic;
+    /* Add a tool tip to the topic line if it gets too long */
+    QToolTip::remove(topicLine);
+    if(newTopic.length()>80) QToolTip::add(topicLine,"<qt>"+newTopic+"</qt>");
   }
 }
 
 void Channel::setTopic(QString& nickname,QString& newTopic) // Overloaded
 {
-  /* Somehow we need the nickname to the corresponding topic displayed */
+  /* TODO: Somehow we need the nickname to the corresponding topic displayed */
   if(nickname==server->getNickname())
     appendCommandMessage(i18n("Topic"),i18n("You set the channel topic to \"%1\".").arg(newTopic));
   else
     appendCommandMessage(i18n("Topic"),i18n("%1 sets the channel topic to \"%2\".").arg(nickname).arg(newTopic));
 
-  topicHistory.prepend(newTopic.left(80)); // FIXME! Window gets too big
+//  topicHistory.prepend(newTopic.left(80)); // FIXME! Window gets too big
+  topicHistory.prepend(newTopic);
   topicLine->clear();
   topicLine->insertStringList(topicHistory);
   topic=newTopic;
+  /* Add a tool tip to the topic line if it gets too long */
+  QToolTip::remove(topicLine);
+  if(newTopic.length()>80) QToolTip::add(topicLine,"<qt>"+newTopic+"</qt>");
 }
 
 void Channel::updateMode(QString& sourceNick,char mode,bool plus,QString& parameter)
