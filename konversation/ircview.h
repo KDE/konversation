@@ -111,8 +111,6 @@ class IRCView : public KTextBrowser
     QString buffer;
     Server* m_server;
     QPopupMenu* popup;
-    QPixmap backgroundPixmap;
-    QBrush backgroundBrush;
     
     static QChar LRM;
     static QChar RLM;

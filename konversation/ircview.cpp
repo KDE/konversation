@@ -128,16 +128,17 @@ void IRCView::updateStyleSheet()
 void IRCView::setViewBackground(const QString& color,const QString& pixmapName)
 {
   QColor backgroundColor("#"+color);
+  QPixmap backgroundPixmap;
   backgroundPixmap.load(pixmapName);
 
-  if(pixmapName.isEmpty() || backgroundPixmap.isNull()) setPaper(backgroundColor);
-  else
-  {
+  if(backgroundPixmap.isNull()) {
+    setPaper(backgroundColor);
+  } else {
+    QBrush backgroundBrush;
     backgroundBrush.setColor(backgroundColor);
     backgroundBrush.setPixmap(backgroundPixmap);
 
     setPaper(backgroundBrush);
-//  setStaticBackground(true);
   }
 }
 
