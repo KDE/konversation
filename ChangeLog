@@ -6,6 +6,7 @@ Changes from 0.14 to 0.15
 - Improved bidi support.
 - Cleaned up settings dialog
 - Added option to get own IP from IRC server for DCC sending
+- "Open Watched Nicks Online panel on startup" option
 
 Changes from 0.13 to 0.14
 - Added irc "pseudo" command /prefs for changing settings without settings dialog.

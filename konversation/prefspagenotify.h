@@ -55,6 +55,7 @@ class PrefsPageNotify : public PrefsPage
     QLabel* notifyDelayLabel;
     QSpinBox* notifyDelaySpin;
     KLineEdit* notifyActionInput;
+    QCheckBox* showWatchedNicksAtStartup;
 };
 
 #endif

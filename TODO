@@ -47,7 +47,6 @@ DISCUSSING:
 - Different tab sortings
 - Import watched nicks list from .ircrc ( cartman: Need a sample ircrc for this )
 - Notify with more than 500 characters
-- "Open Watched Nicks Online panel on startup" option
 - Watched nicks editor should sort alphabetically, manual sorting makes no sense there
 - Watched nicks panel should have a "last seen" column so you can sort them
 

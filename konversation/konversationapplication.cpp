@@ -516,6 +516,7 @@ void KonversationApplication::readOptions()
   preferences.setUseNotify(config->readBoolEntry("UseNotify",true));
   QString notifyList=config->readEntry("NotifyList",QString::null);
   preferences.setNotifyList(QStringList::split(' ',notifyList));
+  preferences.setOpenWatchedNicksAtStartup(config->readBoolEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup()));
 
   // OnScreen Display
   config->setGroup("OSD");
@@ -832,6 +833,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("NotifyDelay",preferences.getNotifyDelay());
   config->writeEntry("UseNotify",preferences.getUseNotify());
   config->writeEntry("NotifyList",preferences.getNotifyString());
+  config->writeEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup());
 
   config->deleteGroup("Server List");
   config->setGroup("Server List");

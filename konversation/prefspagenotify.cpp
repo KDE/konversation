@@ -46,6 +46,9 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   notifyDelaySpin->setValue(preferences->getNotifyDelay());
   notifyDelaySpin->setSuffix(i18n(" seconds"));
   notifyDelayLabel->setBuddy(notifyDelaySpin);
+  
+  showWatchedNicksAtStartup = new QCheckBox(i18n("&Show Watched Nicks Online on startup"), parentFrame);
+  showWatchedNicksAtStartup->setChecked(preferences->getOpenWatchedNicksAtStartup());
 
   // Set up the notify list
   QHBox* listBox=new QHBox(parentFrame);
@@ -77,6 +80,7 @@ PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) 
   notifyActionLabel->setBuddy(notifyActionInput);
 
   notifyLayout->addWidget(delayBox);
+  notifyLayout->addWidget(showWatchedNicksAtStartup);
   notifyLayout->addWidget(listBox);
   notifyLayout->addWidget(actionEditBox);
 
@@ -152,6 +156,7 @@ void PrefsPageNotify::notifyCheckChanged(bool enable)
   notifyListView->setEnabled(enable);
   newButton->setEnabled(enable);
   removeButton->setEnabled(enable);
+  showWatchedNicksAtStartup->setEnabled(enable);
 }
 
 void PrefsPageNotify::applyPreferences()
@@ -160,6 +165,7 @@ void PrefsPageNotify::applyPreferences()
   preferences->setNotifyList(getNotifyList());
   preferences->setNotifyDelay(notifyDelaySpin->value());
   preferences->setNotifyDoubleClickAction(notifyActionInput->text());
+  preferences->setOpenWatchedNicksAtStartup(showWatchedNicksAtStartup->isChecked());
 }
 
 #include "prefspagenotify.moc"

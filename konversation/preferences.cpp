@@ -219,6 +219,8 @@ Preferences::Preferences()
   setWebBrowserCmd("mozilla \'%u\'");
 
   setRedirectToStatusPane(false);
+  
+  setOpenWatchedNicksAtStartup(false);
 }
 
 Preferences::~Preferences()
@@ -852,7 +854,7 @@ void Preferences::setFilterColors(bool filter) { filterColors = filter; }
 bool Preferences::getRedirectToStatusPane() { return redirectToStatusPane; }
 void Preferences::setRedirectToStatusPane(bool redirect) { redirectToStatusPane = redirect; }
 
+bool Preferences::getOpenWatchedNicksAtStartup() { return m_openWatchedNicksAtStartup; }
+void Preferences::setOpenWatchedNicksAtStartup(bool open) { m_openWatchedNicksAtStartup = open; }
+
 #include "preferences.moc"
-
-
-

@@ -432,6 +432,9 @@ class Preferences : public QObject
     
     bool getRedirectToStatusPane();
     void setRedirectToStatusPane(bool redirect);
+    
+    bool getOpenWatchedNicksAtStartup();
+    void setOpenWatchedNicksAtStartup(bool open);
 
   signals:
     void requestServerConnection(int number);
@@ -608,6 +611,8 @@ class Preferences : public QObject
     QString webBrowserCmd;
     
     bool redirectToStatusPane;
+    
+    bool m_openWatchedNicksAtStartup;
 };
 
 #endif

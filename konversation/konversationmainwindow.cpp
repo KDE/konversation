@@ -226,6 +226,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   // demo how to add additional dock windows
 //  QListView* dockList=new QListView(this);
 //  addToolWindow(dockList,KDockWidget::DockLeft,getMainDockWidget());
+  
+  if(KonversationApplication::preferences.getOpenWatchedNicksAtStartup()) {
+    openNicksOnlinePanel();
+  }
 }
 
 KonversationMainWindow::~KonversationMainWindow()
