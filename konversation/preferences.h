@@ -411,6 +411,8 @@ class Preferences : public QObject
     void setNickCompletionMode(int mode);
     QString getPrefixCharacter();
     void  setPrefixCharacter(QString prefix);
+    bool nickCompletionCaseSensitive() const;
+    void setNickCompletionCaseSensitive(bool caseSensitive);
 
     //User interface
     bool getShowMenuBar();
@@ -614,6 +616,7 @@ class Preferences : public QObject
     //Nick completion
     int nickCompletionMode;
     QString prefixCharacter;
+    bool m_nickCompletionCaseSensitive;
 
     //User interface
     bool showMenuBar;

@@ -778,6 +778,8 @@ void KonversationApplication::readOptions()
   preferences.setNickCompleteSuffixStart(config->readEntry("SuffixStart",preferences.getNickCompleteSuffixStart()));
   preferences.setNickCompleteSuffixMiddle(config->readEntry("SuffixMiddle",preferences.getNickCompleteSuffixMiddle()));
   preferences.setPrefixCharacter(config->readEntry("PrefixCharacter",preferences.getPrefixCharacter()));
+  preferences.setNickCompletionCaseSensitive(config->readBoolEntry("CaseSensitive",
+                                             preferences.nickCompletionCaseSensitive()));
 
   // DCC Settings
   config->setGroup("DCC Settings");
@@ -1145,6 +1147,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("Mode", preferences.getNickCompletionMode());
   config->writeEntry("SuffixStart",preferences.getNickCompleteSuffixStart());
   config->writeEntry("SuffixMiddle",preferences.getNickCompleteSuffixMiddle());
+  config->writeEntry("CaseSensitive", preferences.nickCompletionCaseSensitive());
 
   // DCC Settings
   config->setGroup("DCC Settings");

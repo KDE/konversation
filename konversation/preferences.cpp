@@ -213,6 +213,7 @@ Preferences::Preferences()
   setFilterColors(false);
 
   setNickCompletionMode(2);
+  setNickCompletionCaseSensitive(false);
 
   setShowMenuBar(true);
   setShowTabBarCloseButton(true);
@@ -870,6 +871,8 @@ int Preferences::getNickCompletionMode() { return nickCompletionMode; }
 void Preferences::setNickCompletionMode(int mode) { nickCompletionMode = mode; }
 QString Preferences::getPrefixCharacter() { return prefixCharacter; }
 void  Preferences::setPrefixCharacter(QString prefix) { prefixCharacter = prefix; }
+bool Preferences::nickCompletionCaseSensitive() const { return m_nickCompletionCaseSensitive; }
+void Preferences::setNickCompletionCaseSensitive(bool caseSensitive) { m_nickCompletionCaseSensitive = caseSensitive; }
 
 bool Preferences::getShowMenuBar() { return showMenuBar; }
 void Preferences::setShowMenuBar(bool s) { showMenuBar = s; }

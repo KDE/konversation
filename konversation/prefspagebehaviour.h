@@ -50,6 +50,7 @@ class PrefsPageBehaviour : public PrefsPage
     KLineEdit* suffixStartInput;
     KLineEdit* suffixMiddleInput;
     QComboBox* completionModeCBox;
+    QCheckBox* m_nickCompletionCaseChBox;
 };
 
 #endif

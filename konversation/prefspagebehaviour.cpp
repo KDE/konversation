@@ -126,6 +126,8 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   middleLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   suffixMiddleInput = new KLineEdit(preferences->getNickCompleteSuffixMiddle(), nickCompletionGroup);
   middleLabel->setBuddy(suffixMiddleInput);
+  m_nickCompletionCaseChBox = new QCheckBox(i18n("Case sensitive"), nickCompletionGroup);
+  m_nickCompletionCaseChBox->setChecked(preferences->nickCompletionCaseSensitive());
 
   row = 0;
   nickCompletionLayout->addWidget(modeLbl, row, 0);
@@ -135,6 +137,8 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   nickCompletionLayout->addWidget(suffixStartInput, row, 1);
   nickCompletionLayout->addWidget(middleLabel, row, 2);
   nickCompletionLayout->addWidget(suffixMiddleInput, row, 3);
+  row++;
+  nickCompletionLayout->addMultiCellWidget(m_nickCompletionCaseChBox, row, row, 0, 3);
 
   row = 0;
   generalLayout->addMultiCellWidget(trayIconCheck, row, row, 0, 1);
@@ -191,6 +195,7 @@ void PrefsPageBehaviour::applyPreferences()
   preferences->setNickCompletionMode(completionModeCBox->currentItem());
   preferences->setNickCompleteSuffixStart(suffixStartInput->text());
   preferences->setNickCompleteSuffixMiddle(suffixMiddleInput->text());
+  preferences->setNickCompletionCaseSensitive(m_nickCompletionCaseChBox->isChecked());
 }
 
 #include "prefspagebehaviour.moc"

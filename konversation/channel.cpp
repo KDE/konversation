@@ -601,7 +601,7 @@ void Channel::completeNick()
     // step back to last space or start of line
     while(pos && line[pos-1]!=' ') pos--;
     // copy search pattern (lowercase)
-    QString pattern=line.mid(pos,oldPos-pos).lower();
+    QString pattern=line.mid(pos,oldPos-pos);
     // copy line to newLine-buffer
     newLine=line;
     // did we find any pattern?
@@ -616,7 +616,8 @@ void Channel::completeNick()
       { // Shell like completion
         QStringList found;
         foundNick = nicknameList.completeNick(pattern, complete, found,
-          (KonversationApplication::preferences.getNickCompletionMode() == 2));
+          (KonversationApplication::preferences.getNickCompletionMode() == 2),
+          KonversationApplication::preferences.nickCompletionCaseSensitive());
 
         if(!complete && !found.isEmpty()) {
           if(KonversationApplication::preferences.getNickCompletionMode() == 1) {
@@ -633,14 +634,22 @@ void Channel::completeNick()
         {
           QString lookNick=nicknameList.at(completionPosition)->getNickname();
 
-          if ( !prefixCharacter.isEmpty() && lookNick.contains(prefixCharacter) )
+          if ( !prefixCharacter.isEmpty() && lookNick.contains(prefixCharacter) ) {
              lookNick = lookNick.section( prefixCharacter,1 );
+          }
 
-          if(lookNick.lower().startsWith(pattern)) foundNick=lookNick;
+          if(lookNick.startsWith(pattern, KonversationApplication::preferences.nickCompletionCaseSensitive())) {
+            foundNick=lookNick;
+          }
+
           // increment search position
           completionPosition++;
+
           // wrap around
-          if(completionPosition==nicknameList.count()) completionPosition=0;
+          if(completionPosition==nicknameList.count()) {
+            completionPosition=0;
+          }
+
           // the search ends when we either find a suitable nick or we end up at the
           // first search position
         } while(completionPosition!=oldCompletionPosition && foundNick.isEmpty());
@@ -1887,7 +1896,8 @@ int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item
     static_cast<Nick*>(item2)->getNickname());
 }
 
-QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found, bool skipNonAlfaNum)
+QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found,
+                               bool skipNonAlfaNum, bool caseSensitive)
 {
   found.clear();
   QString prefix = "^";
@@ -1899,7 +1909,8 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     prefix = "^([^\\d\\w]|[\\_]){0,}";
   }
 
-  QRegExp regexp(prefix + QRegExp::escape(pattern.lower()));
+  QRegExp regexp(prefix + QRegExp::escape(pattern));
+  regexp.setCaseSensitive(caseSensitive);
   QPtrListIterator<Nick> it(*this);
 
   while(it.current() != 0) {
@@ -1908,7 +1919,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     if ( !prefix.isEmpty() && newNick.contains(prefixCharacter) )
        newNick = newNick.section( prefixCharacter,1 );
 
-    if(newNick.lower().find(regexp) != -1) {
+    if(newNick.find(regexp) != -1) {
       found.append(newNick);
     }
 
@@ -1924,7 +1935,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
     while(ok && ((patternLength) < firstNickLength)) {
       ++patternLength;
-      QStringList tmp = found.grep(firstNick.left(patternLength), false);
+      QStringList tmp = found.grep(firstNick.left(patternLength), caseSensitive);
 
       if(tmp.count() != foundCount) {
         ok = false;
