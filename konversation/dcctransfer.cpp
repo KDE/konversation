@@ -40,6 +40,8 @@ DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partn
   m_partnerNick = partnerNick;
   
   m_fileName = QFileInfo( fileName ).fileName();  //Just incase anyone tries to do anything nasty
+  if ( m_fileName.startsWith(".") )
+    m_fileName.replace(0, 1, '_'); // Don't create hidden files
   if ( m_fileName.isEmpty() )
     m_fileName= "unnamed";
   
