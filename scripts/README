@@ -3,6 +3,9 @@ Here are some scripts that can help you in everyday life with konvi.
 They are usually put in ~/.kde/share/apps/konversation/scripts/ and executed by
 typing /exec <scriptname> in konversation.
 
+Since scripts are executed by system, they should have 'executable' flag on.
+This is most easily achieved by running chmod +x <scriptname>
+
 Please add descriptions here as new scripts appear:
 
 amarok		Displays on the current channel what you are playing
