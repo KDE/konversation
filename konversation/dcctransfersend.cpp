@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <netinet/in.h>
+#include <sys/socket.h>
 #include <net/if.h>
 #include <sys/ioctl.h>
 #include <arpa/inet.h>
