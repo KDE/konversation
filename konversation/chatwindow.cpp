@@ -392,7 +392,8 @@ void ChatWindow::logText(const QString& text)
       }
 
       QTime time=QTime::currentTime();
-      QString logLine(QString("[%1] %2\n").arg(time.toString("hh:mm:ss")).arg(text));
+      QString logLine(QString("[%1] [%2] %3\n").arg(QDate::currentDate(Qt::LocalTime).toString()).
+		      arg(time.toString("hh:mm:ss")).arg(text));
 
       logStream << logLine;
 
