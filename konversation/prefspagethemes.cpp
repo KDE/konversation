@@ -8,7 +8,6 @@
 /*
   (C) 2004 by İsmail Dönmez
 */
-#include "prefspagethemes.h"
 
 #include <qlabel.h>
 #include <qlayout.h>
@@ -33,6 +32,7 @@
 
 #include <unistd.h> // unlink()
 
+#include "prefspagethemes.h"
 #include "preferences.h"
 #include "common.h"
 #include "konversationapplication.h"
