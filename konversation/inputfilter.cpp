@@ -936,6 +936,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             // Get the next nick from the list
             QString newNick=server->getNextNickname();
             // Update Server window
+            server->obtainNickInfo(server->getNickname()) ;
             server->renameNick(server->getNickname(), newNick);
             // Show message
             server->appendStatusMessage(i18n("Nick"),i18n("Nickname already in use. Trying %1.").arg(newNick));
@@ -950,7 +951,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
         if ( !nickInfo ) { // We can't get our current nick ( happens with Dalnet Nick Enforcer )
             QString newNick = server->getNextNickname();
-            server->addToAllNicks( server->getNickname() ); // See Server::addToAllNicks
+            server->obtainNickInfo( server->getNickname() ); // Add our nick to m_allNicks
             server->renameNick( server->getNickname(), newNick );
             server->appendStatusMessage(i18n("Nick"), i18n("Erroneus nickname. Trying %1." ).arg(newNick)) ;
             server->queue( "NICK "+newNick );

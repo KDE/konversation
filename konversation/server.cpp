@@ -2344,13 +2344,6 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
   if(query) query->setHostmask(sourceHostmask);
 }
 
-void Server::addToAllNicks( const QString& nickname )
-{
-    QString lcNickname = nickname.lower();
-    NickInfoPtr nickInfo = new NickInfo( nickname,  this );
-    m_allNicks.insert( lcNickname, nickInfo );
-}
-
 void Server::removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit)
 {
   Channel* outChannel=getChannelByName(channelName);
