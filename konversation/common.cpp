@@ -82,7 +82,13 @@ QString tagURLs(const QString& text, const QString& fromNick)
       continue;
     }
 
-    QString link = "<font color=\"#"+linkColor+"\"><u><a href=\"" + href + "\">" + href + "</a></u></font>";
+    QString protocol;
+
+    if(!urlPattern.cap(1).startsWith("http://",false) && urlPattern.cap(2).startsWith("www.", false)) {
+      protocol = "http://";
+    }
+
+    QString link = "<font color=\"#"+linkColor+"\"><u><a href=\"" + protocol + href + "\">" + href + "</a></u></font>";
     filteredLine.replace( pos, urlLen, link );
     pos += link.length();
     KonversationApplication::instance()->storeUrl(fromNick, href);
