@@ -36,6 +36,6 @@ else
       CSEC="0$CSEC"
     fi
 
-    dcop $PORT Konversation say $SERVER "$TARGET" "/me plays $TEXT [$CMIN:$CSEC/$TMIN:$TSEC]"
+    dcop $PORT Konversation say $SERVER "$TARGET" "/me is playing $TEXT [$CMIN:$CSEC/$TMIN:$TSEC]"
   fi
 fi

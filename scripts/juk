@@ -28,7 +28,7 @@ else
     then
 	dcop $PORT Konversation error "Nothing's playing in JuK."
     else
-	dcop $PORT Konversation say $SERVER "$TARGET" "/me plays $TEXT"
+	dcop $PORT Konversation say $SERVER "$TARGET" "/me is playing $TEXT"
     fi
   fi
 fi
