@@ -81,7 +81,7 @@ Preferences::Preferences()
   buttonList.append("Quit,/QUIT Leaving...%n");
 
   setShowQuickButtons(false);
-  setShowModeButtons(true);
+  setShowModeButtons(false);
   setShowServerList(true);
   setShowTrayIcon(false);
   setShowBackgroundImage(false);
