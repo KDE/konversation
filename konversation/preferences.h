@@ -454,6 +454,10 @@ class Preferences : public QObject
     QStringList getChannelEncodingsServerList();
     QStringList getChannelEncodingsChannelList(const QString& server);
 
+    // Themes
+    void setIconTheme(const QString& name);
+    QString getIconTheme();
+
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();
@@ -638,6 +642,9 @@ class Preferences : public QObject
     bool redirectToStatusPane;
     
     bool m_openWatchedNicksAtStartup;
+
+    // Themes
+    QString iconTheme;
 };
 
 #endif

@@ -14,12 +14,14 @@
 
 #include <qbitmap.h>
 #include <qpainter.h>
+#include <qstringlist.h>
 
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 
 #include "images.h"
+#include "konversationapplication.h"
 
 Images::Images()
 {
@@ -138,16 +140,26 @@ void Images::initializeLeds()
 
 void Images::initializeNickIcons()
 {
-  KIconLoader* loader = KGlobal::instance()->iconLoader();
-  
-  QPixmap elementNormal = loader->loadIcon( "irc_normal", KIcon::Small, 16 );  // base
-  QPixmap elementAway   = loader->loadIcon( "irc_away",   KIcon::Small, 16 );
-  QPixmap elementVoice  = loader->loadIcon( "irc_voice",  KIcon::Small, 16 );
-  QPixmap elementHalfOp = loader->loadIcon( "irc_halfop", KIcon::Small, 16 );
-  QPixmap elementOp     = loader->loadIcon( "irc_op",     KIcon::Small, 16 );
-  QPixmap elementOwner  = loader->loadIcon( "irc_owner",  KIcon::Small, 16 );
-  QPixmap elementAdmin  = loader->loadIcon( "irc_admin",  KIcon::Small, 16 );
-  
+
+  QString iconTheme = KonversationApplication::preferences.getIconTheme();
+  QStringList icons = KGlobal::dirs()->findAllResources("data","konversation/themes/"+iconTheme+"/*.png");
+
+  QStringList::Iterator it = icons.begin();
+
+  QPixmap elementAdmin(*it); 
+  ++it;
+  QPixmap elementAway(*it);
+  ++it;
+  QPixmap elementHalfOp(*it);
+  ++it;
+  QPixmap elementNormal(*it);
+  ++it;
+  QPixmap elementOp(*it);
+  ++it;
+  QPixmap elementOwner(*it);
+  ++it;
+  QPixmap elementVoice(*it);
+    
   nickIcons[Normal][0] = elementNormal;
   nickIcons[Normal][1] = overlayPixmaps( nickIcons[Normal][0], elementAway );
   

@@ -232,6 +232,9 @@ Preferences::Preferences()
   setRedirectToStatusPane(true);
   
   setOpenWatchedNicksAtStartup(false);
+
+  // Themes
+  setIconTheme("default");
 }
 
 Preferences::~Preferences()
@@ -953,5 +956,8 @@ QStringList Preferences::getChannelEncodingsChannelList(const QString& server)
 {
   return channelEncodingsMap[server].keys();
 }
+
+void Preferences::setIconTheme(const QString& name) { iconTheme=name; }
+QString Preferences::getIconTheme() { return iconTheme; }
 
 #include "preferences.moc"

@@ -48,9 +48,6 @@ KonversationApplication::KonversationApplication()
   // Sound object used to play sound...
   m_sound = new Konversation::Sound(this);
   
-  // Images object providing LEDs, NickIcons
-  m_images = new Images();
-  
   // initialize OSD display here, so we can read the preferences properly
   osd = new OSDWidget( "Konversation" );
 
@@ -59,6 +56,9 @@ KonversationApplication::KonversationApplication()
   preferences.setListFont(font());
 
   readOptions();
+
+  // Images object providing LEDs, NickIcons
+  m_images = new Images();
 
   // Auto-alias scripts
   QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
@@ -799,6 +799,11 @@ void KonversationApplication::readOptions()
   for(unsigned int i=0; i<channelEncodingsEntry.count(); ++i)
     if(re.search(channelEncodingsEntryKeys[i]) > -1)
       preferences.setChannelEncoding(re.cap(1),re.cap(2),channelEncodingsEntry[channelEncodingsEntryKeys[i]]);
+
+  // Themes
+  config->setGroup("Themes");
+  preferences.setIconTheme(config->readEntry("IconTheme",preferences.getIconTheme()));
+
 }
 
 void KonversationApplication::saveOptions(bool updateGUI)
@@ -1173,6 +1178,10 @@ void KonversationApplication::saveOptions(bool updateGUI)
       if(!preferences.getChannelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]).isEmpty())
         config->writeEntry(channelEncodingsServerList[i]+" "+channelEncodingsChannelList[j],preferences.getChannelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]));
   }
+
+  // Themes
+  config->setGroup("Themes");
+  config->writeEntry("IconTheme", preferences.getIconTheme());
 
   config->sync();
 
