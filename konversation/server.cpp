@@ -105,10 +105,10 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   statusView=getMainWindow()->addStatusView(this);
   if(KonversationApplication::preferences.getRawLog()) addRawLog(false);
-  
+
   setNickname(getIdentity()->getNickname(tryNickNumber));
   obtainNickInfo(getNickname());
-  
+
   bot=getIdentity()->getBot();
   botPassword=getIdentity()->getPassword();
 
@@ -144,9 +144,9 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   outgoingTimer.setName("outgoing_timer");
   outgoingTimer.start(timerInterval);
-  
+
   m_scriptLauncher = new ScriptLauncher(this);
-  
+
   connectSignals();
 
   emit serverOnline(false);
@@ -205,7 +205,7 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   outgoingTimer.start(timerInterval);
 
   m_scriptLauncher = new ScriptLauncher(this);
-      
+
   connectSignals();
 
   emit serverOnline(false);
@@ -364,7 +364,7 @@ void Server::connectSignals()
 
   connect(outputFilter, SIGNAL(launchScript(const QString&, const QString&)),
     m_scriptLauncher, SLOT(launchScript(const QString&, const QString&)));
-  
+
   connect(m_scriptLauncher, SIGNAL(scriptNotFound(const QString&)),
                       this, SLOT(scriptNotFound(const QString&)));
   connect(m_scriptLauncher, SIGNAL(scriptExecutionError(const QString&)),
@@ -1202,7 +1202,7 @@ bool Server::isNickOnline(const QString &nickname) {
     lookChannel = channelList.next();
   }
 //Check queries as well
-  
+
   Query* lookQuery=queryList.first();
   while(lookQuery)
   {
@@ -1428,7 +1428,7 @@ void Server::addDccSend(const QString &recipient,const QString &fileName)
     ownIp=ownIpByServer;
   if(ownIp.isEmpty())
     ownIp=getIp();
-  
+
   // We already checked that the file exists in output filter / requestDccSend() resp.
   DccTransferSend* newDcc=new DccTransferSend(getMainWindow()->getDccPanel()->getListView(),
                                               recipient,
@@ -1640,7 +1640,7 @@ void Server::joinChannel(const QString &name, const QString &hostmask, const QSt
     nickInfo->setHostmask(hostmask);
   }
   channel->joinNickname(channelNick);
-#else 
+#else
   channel->joinNickname(getNickname(),hostmask);
 #endif
 }
@@ -1660,7 +1660,7 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
 
   Channel* channel=getChannelByName(channelName);
 #ifdef USE_NICKINFO
-  
+
   ChannelNickPtr updaterNick = getChannelNick(channelName, updater);
   if(!updaterNick) {
 	  kdDebug() << "in updateChannelMode, could not find updater nick " << updater << " for channel " << channelName << endl;
@@ -1687,7 +1687,7 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
     // Note that channel will be moved to joined list if necessary.
     addNickToJoinedChannelsList(channelName, parameter);
   }
-#else 
+#else
   if(channel) channel->updateMode(updater,mode,plus,parameter);
 #endif
 
@@ -1822,7 +1822,7 @@ void Server::addPendingNickList(const QString& channelName,const QStringList& ni
     }
   }
   if(outChannel) outChannel->addPendingNickList(pendingChannelNickList);
-#else 
+#else
   if(outChannel) outChannel->addPendingNickList(nickList);
 #endif
 }
@@ -2205,7 +2205,7 @@ void Server::addNickToChannel(const QString &channelName,const QString &nickname
     nickInfo->setHostmask(hostmask);
   }
 #else
-  
+
   if(outChannel) outChannel->addNickname(nickname,hostmask,admin,owner,op,halfop,voice);
 #endif
 }
@@ -2256,9 +2256,9 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
       ownIpByServer = res.first()->address()->nodeName();
 #endif
   }
-  
 
-  
+
+
 #ifdef USE_NICKINFO
   // Update NickInfo.
   NickInfoPtr nickInfo=getNickInfo(sourceNick);
@@ -2334,7 +2334,9 @@ void Server::removeNickFromServer(const QString &nickname,const QString &reason)
   Channel* channel=channelList.first();
   while(channel)
   {
-    removeNickFromChannel(channel->getName(),nickname,reason,true);
+    // Check if nick is this channel or not.
+    if( channel->getNickByName( nickname ) )
+      removeNickFromChannel(channel->getName(),nickname,reason,true);
     channel=channelList.next();
   }
 
@@ -2847,7 +2849,7 @@ void Server::startAwayTimer()
 }
 
 
-/** Intended to be called when the addressbook changes.  Cycles through all the nicks and 
+/** Intended to be called when the addressbook changes.  Cycles through all the nicks and
  *  calls 'refreshAddressee' on all of them.
  */
 void Server::slotLoadAddressees() {
@@ -2858,7 +2860,7 @@ void Server::slotLoadAddressees() {
     addressee->tooltip();
   }
 }
- 
+
 
 #include "server.moc"
 
