@@ -55,7 +55,7 @@ QString tagURLs(const QString& text, const QString& fromNick)
 	{
 	  urlLen = chanExp.matchedLength();
 	  QString href = filteredLine.mid( pos, urlLen );
-	  QString link = "#"+href;
+	  QString link = "#"+href.stripWhiteSpace();
 
 	  link = "<font color=\"#"+linkColor+"\"></u><a href=\""+link+"\">"+href+"</a><u></font>";
 	  filteredLine.replace( pos, urlLen, link );
