@@ -119,7 +119,8 @@ class OutputFilter : public QObject
     void parseDcc(const QString& parameter);
     void parseRaw(const QString& parameter);      // works
     void parseIgnore(const QString& parameter);
-    void parseQuote(const QString& parameter);
+    void parseQuote(const QString& parameter);    // works
+    void parseSay(const QString& parameter);      // works
     void parseKonsole();                          // works
 
     void changeMode(const QString& parameter,char mode,char giveTake);

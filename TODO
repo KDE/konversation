@@ -17,6 +17,7 @@ DCC RESUME should start counting cps from the beginning
 Joining large channels is very slow
 Close query on RMB Ignore ([x] don't ask again)
 Make coloring of list view and input lines an option
+Convert idle time in hours, minutes and seconds
 
 in channel list window the filter is not applied when one refresh the list
 and a "channel or topic" checkbox would be nice, or better, make the current checkboxes work as "or" not as "and"

@@ -150,6 +150,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("unban "))   parseUnban(parameter);
     else if(line.startsWith("ignore "))  parseIgnore(parameter);
     else if(line.startsWith("quote "))   parseQuote(parameter);
+    else if(line.startsWith("say "))     parseSay(parameter);
 
     else if(line.startsWith("raw "))     parseRaw(parameter);
     else if(line.startsWith("dcc "))     parseDcc(parameter);
@@ -172,6 +173,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="unban")               parseUnban(QString::null);
     else if(line=="ignore")              parseIgnore(QString::null);
     else if(line=="quote")               parseQuote(QString::null);
+    else if(line=="say")                 parseSay(QString::null);
 
     else if(line=="dcc")                 parseDcc(QString::null);
     else if(line=="raw")                 parseRaw(QString::null);
@@ -874,6 +876,17 @@ void OutputFilter::parseQuote(const QString& parameter)
     usage(i18n("Usage: QUOTE command list"));
   else
     toServer=parameter;
+}
+
+void OutputFilter::parseSay(const QString& parameter)
+{
+  if(parameter.isEmpty())
+    usage(i18n("Usage: SAY text"));
+  else
+  {
+    toServer="PRIVMSG "+destination+" :"+parameter;
+    output=parameter;
+  }
 }
 
 void OutputFilter::parseKonsole()
