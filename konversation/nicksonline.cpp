@@ -56,7 +56,6 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 #ifdef USE_NICKINFO
   m_nickListView->addColumn(i18n("Server/Nickname/Channel"));
   m_kabcIconSet = KGlobal::iconLoader()->loadIconSet("kaddressbook",KIcon::Small);
-  m_nickListView->addColumn(m_kabcIconSet, QString::null);
   m_nickListView->addColumn(i18n("Additional Information"));
   m_nickListView->setFullWidth(false);
   m_nickListView->setRootIsDecorated(true);
@@ -86,15 +85,18 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     this,SLOT(processDoubleClick(QListViewItem*)));
 
 #ifdef USE_NICKINFO
-  QLabel* addressbookLabel = new QLabel(i18n("Addressbook:"),
+  QLabel* addressbookLabel = new QLabel(i18n("Address Book:"),
     buttonBox, "nicksonline_addressbook_label");
   addressbookLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   m_editContactButton = new QPushButton(i18n("Edit C&ontact..."),
     buttonBox, "nicksonline_editcontact_button");
+  m_editContactButton->setIconSet(m_kabcIconSet);
   m_changeAssociationButton = new QPushButton(i18n("&Change Association..."),
     buttonBox, "nicksonline_changeassociation_button");
+  m_changeAssociationButton->setIconSet(m_kabcIconSet);
   m_deleteAssociationButton = new QPushButton(i18n("&Delete Association"),
     buttonBox, "nicksonline_deleteassociation_button");
+  m_deleteAssociationButton->setIconSet(m_kabcIconSet);
     
   connect(m_editContactButton, SIGNAL(clicked()),
     this, SLOT(slotEditContactButton_Clicked()));

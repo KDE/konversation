@@ -40,7 +40,7 @@ class NicksOnline : public ChatWindow
     enum NickListViewColumn {
       nlvcServerNickChannel = 0,
       nlvcKabc = 1,
-      nlvcAdditionalInfo = 2
+      nlvcAdditionalInfo = 1
     };
     // Ids associated with addressbook commands.
     enum CommandIDs
