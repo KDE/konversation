@@ -153,7 +153,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   new TabAction(i18n("Go to Tab Number %1").arg(10),9,KShortcut("Alt+0"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_0");
 
   new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
-  new KAction(i18n("Set &Away Globally"),"konversationaway",KShortcut("Alt+A"),static_cast<KonversationApplication *>(kapp),SLOT(toggleAway()),actionCollection(),"toggle_away");  //string must be the same as that used in server.cpp
+  KAction* awayAction = new KAction(i18n("Set &Away Globally"), "konversationaway", KShortcut("Alt+A"),
+    static_cast<KonversationApplication *>(kapp), SLOT(toggleAway()), actionCollection(),"toggle_away");  //string must be the same as that used in server.cpp
   new KAction(i18n("&Join Channel..."), 0, 0, this, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
 
   KStdAction::find(this, SLOT(findText()), actionCollection());
@@ -209,6 +210,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   configureNotificationsAction->plug(trayMenu);
 #endif
   preferencesAction->plug(trayMenu);
+  awayAction->plug(trayMenu);
 
   // decide whether to show the tray icon or not
   updateTrayIcon();
