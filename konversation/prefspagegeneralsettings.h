@@ -36,6 +36,8 @@ class PrefsPageGeneralSettings : public PrefsPage
     void commandCharChanged(const QString& newChar);
     void suffixStartChanged(const QString& newSuffix);
     void suffixMiddleChanged(const QString& newSuffix);
+    void channelActionChanged(const QString& newAction);
+    void notifyActionChanged(const QString& newAction);
     void autoReconnectChanged(int state);
     void autoRejoinChanged(int state);
     void blinkingTabsChanged(int state);

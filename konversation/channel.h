@@ -88,8 +88,9 @@ class Channel : public ChatWindow
     void completeNick();
     void quickButtonClicked(QString definition);
     void modeButtonClicked(int id,bool on);
-    // Will be connected to NickListView::popupCommand(int)
-    void popupCommand(int id);
+
+    void popupCommand(int id);                // Will be connected to NickListView::popupCommand()
+    void doubleClickCommand(QListViewItem*);  // Will be connected to NickListView::doubleClicked()
     // Dialogs
     void openNickChangeDialog();
     void changeNickname(QString newNickname);

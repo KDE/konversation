@@ -121,6 +121,8 @@ Preferences::Preferences()
   setCodec(QTextCodec::codecForLocale()->name());
 
   setCommandChar("/");
+  setChannelDoubleClickAction("/WHOIS %u%n");
+  setNotifyDoubleClickAction("/WHOIS %u%n");
 }
 
 Preferences::~Preferences()
@@ -440,5 +442,11 @@ QValueList<int> Preferences::getChannelSplitter() { return channelSplitter; }
 
 void Preferences::setCodec(QString newCodec) { codec=newCodec; }
 QString Preferences::getCodec() { return codec; }
+
+void Preferences::setChannelDoubleClickAction(QString action) { channelDoubleClickAction=action; }
+QString Preferences::getChannelDoubleClickAction() { return channelDoubleClickAction; }
+
+void Preferences::setNotifyDoubleClickAction(QString action) { notifyDoubleClickAction=action; }
+QString Preferences::getNotifyDoubleClickAction() { return notifyDoubleClickAction; }
 
 #include "preferences.moc"

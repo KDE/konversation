@@ -244,6 +244,12 @@ class Preferences : public QObject
     void setChannelSplitter(QValueList<int> sizes);
     QValueList<int> getChannelSplitter();
 
+    void setChannelDoubleClickAction(QString action);
+    QString getChannelDoubleClickAction();
+
+    void setNotifyDoubleClickAction(QString action);
+    QString getNotifyDoubleClickAction();
+
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();
@@ -289,6 +295,9 @@ class Preferences : public QObject
 
     QString nickCompleteSuffixStart;
     QString nickCompleteSuffixMiddle;
+
+    QString channelDoubleClickAction;
+    QString notifyDoubleClickAction;
 
     // rewrite these to use an array or list of some sort
     QString channelMessageColor;

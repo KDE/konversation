@@ -445,6 +445,7 @@ void ServerWindow::openNicksOnlineWindow()
   {
     nicksOnlineWindow=new NicksOnline(KonversationApplication::preferences.getNicksOnlineSize());
     connect(nicksOnlineWindow,SIGNAL (editClicked()),this,SLOT (openNotify()) );
+    connect(nicksOnlineWindow,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT (notifyAction(QListViewItem*)) );
     connect(nicksOnlineWindow,SIGNAL (closeClicked(QSize)),this,SLOT (closeNicksOnlineWindow(QSize)) );
     connect(server,SIGNAL (nicksNowOnline(QStringList)),nicksOnlineWindow,SLOT (setOnlineList(QStringList)) );
     nicksOnlineWindow->show();
@@ -458,6 +459,38 @@ void ServerWindow::closeNicksOnlineWindow(QSize newSize)
 
   delete nicksOnlineWindow;
   nicksOnlineWindow=0;
+}
+
+void ServerWindow::notifyAction(QListViewItem* item)
+{
+  if(item)
+  {
+  kdDebug() << item->text(0) << endl;
+
+  // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
+  QString out=server->parseWildcards(KonversationApplication::preferences.getNotifyDoubleClickAction(),
+                                     server->getNickname(),
+                                     QString::null,
+                                     QString::null,
+                                     item->text(0),
+                                     QString::null,
+                                     QString::null);
+  // are there any newlines in the definition?
+//  if(out.find('\n')!=-1)
+
+  {
+    // Send all strings, one after another
+    QStringList outList=QStringList::split('\n',out);
+    for(unsigned int index=0;index<outList.count();index++)
+    {
+      filter.parse(server->getNickname(),outList[index],QString::null);
+      server->queue(filter.getServerOutput());
+    }
+
+  }
+  // single line without newline needs to be copied into input line
+//  else channelInput->setText(out);
+  }
 }
 
 void ServerWindow::openColorConfiguration()

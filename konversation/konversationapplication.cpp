@@ -167,6 +167,10 @@ void KonversationApplication::readOptions()
   preferences.setNicknameSize(config->readSizeEntry("NicknameGeometry"));
   preferences.setColorConfigurationSize(config->readSizeEntry("ColorConfigurationGeometry"));
 
+  // Double click actions
+  preferences.setChannelDoubleClickAction(config->readEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction()));
+  preferences.setNotifyDoubleClickAction(config->readEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction()));
+
   // Appearance
   config->setGroup("Appearance");
   // Fonts
@@ -377,6 +381,9 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ServerWindowToolBarIconSize",preferences.serverWindowToolBarIconSize);
 
   config->writeEntry("ServerWindowStatusBarStatus",preferences.serverWindowStatusBarStatus);
+
+  config->writeEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction());
+  config->writeEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction());
 
   config->setGroup("Appearance");
 

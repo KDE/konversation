@@ -200,6 +200,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
 
   connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
+  connect(nicknameListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT (doubleClickCommand(QListViewItem*)) );
   connect(nicknameButton,SIGNAL (clicked()),this,SLOT (openNickChangeDialog()) );
 
   connect(topicLine,SIGNAL (topicChanged(const QString&)),this,SLOT (requestNewTopic(const QString&)) );
@@ -316,6 +317,16 @@ void Channel::popupCommand(int id)
     }
 
     delete nickList;
+  }
+}
+
+// Will be connected to NickListView::doubleClicked()
+void Channel::doubleClickCommand(QListViewItem* item)
+{
+  if(item)
+  {
+    // TODO: put the quick button code in another function to make reusal more legitimate
+    quickButtonClicked(KonversationApplication::preferences.getChannelDoubleClickAction());
   }
 }
 

@@ -982,9 +982,15 @@ QString& Server::getNickname()
   return nickname;
 }
 
+QString Server::parseWildcards(const QString& toParse,const QString& nickname,const QString& channelName,const QString& channelKey,const QString& nick,const QString& queryName,const QString& parameter)
+{
+  parseWildcards(toParse,nickname,channelName,channelKey,nick,queryName,parameter);
+}
+
 QString Server::parseWildcards(const QString& toParse,const QString& nickname,const QString& channelName,const QString& channelKey,QStringList* nickList,const QString& queryName,const QString& parameter)
 {
   // TODO: parameter handling. this line is only to suppress a compiler warning
+  //       since parameters are not functional yet
   parameter.lower();
   // cut button name from definition
   QString out(toParse.mid(toParse.find(',')+1));

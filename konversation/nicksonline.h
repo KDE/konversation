@@ -35,6 +35,7 @@ class NicksOnline : public QVBox
 
   signals:
     void editClicked();
+    void doubleClicked(QListViewItem* item);
     void closeClicked(QSize size);
 
   public slots:
@@ -43,6 +44,9 @@ class NicksOnline : public QVBox
     
   protected:
     void closeEvent(QCloseEvent* ce);
+
+  protected slots:
+    void processDoubleClick(QListViewItem* item);
 
     KListView* nickListView;
 };

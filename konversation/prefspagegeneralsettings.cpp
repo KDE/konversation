@@ -17,6 +17,7 @@
 #include <qlayout.h>
 #include <qvbox.h>
 #include <qhbox.h>
+#include <qgrid.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
 
@@ -34,8 +35,22 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   KLineEdit* commandCharInput=new KLineEdit(preferences->getCommandChar(),parentFrame);
   commandCharInput->setMaxLength(1);
 
+  // double click actions
+  QVBox* actionBox=new QVBox(parentFrame);
+  new QLabel(i18n("Commands to execute when doubleclicked in"),actionBox);
+
+  QGrid* actionEditBox=new QGrid(2,actionBox);
+  actionEditBox->setSpacing(spacingHint());
+
+  new QLabel(i18n("Nick list:"),actionEditBox);
+  KLineEdit* channelActionInput=new KLineEdit(preferences->getChannelDoubleClickAction(),actionEditBox);
+
+  new QLabel(i18n("Notify list:"),actionEditBox);
+  KLineEdit* notifyActionInput=new KLineEdit(preferences->getNotifyDoubleClickAction(),actionEditBox);
+
+  // nick completion special settings
   QVBox* suffixBox=new QVBox(parentFrame);
-/*  QLabel* suffixLabel= */ new QLabel(i18n("Characters to add on nick completion:"),suffixBox);
+  new QLabel(i18n("Characters to add on nick completion:"),suffixBox);
 
   QHBox* suffixEditBox=new QHBox(suffixBox);
   suffixEditBox->setSpacing(spacingHint());
@@ -66,6 +81,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   row++;
   generalSettingsLayout->addMultiCellWidget(suffixBox,row,row,0,1);
   row++;
+  generalSettingsLayout->addMultiCellWidget(actionBox,row,row,0,1);
+  row++;
   generalSettingsLayout->addMultiCellWidget(autoReconnectCheck,row,row,0,1);
   row++;
   generalSettingsLayout->addMultiCellWidget(autoRejoinCheck,row,row,0,1);
@@ -80,12 +97,19 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   generalSettingsLayout->setRowStretch(row,10);
 
   connect(commandCharInput,SIGNAL (textChanged(const QString&)),this,SLOT (commandCharChanged(const QString&)) );
+
   connect(suffixStartInput,SIGNAL (textChanged(const QString&)),this,SLOT (suffixStartChanged(const QString&)) );
   connect(suffixMiddleInput,SIGNAL (textChanged(const QString&)),this,SLOT (suffixMiddleChanged(const QString&)) );
+
+  connect(channelActionInput,SIGNAL (textChanged(const QString&)),this,SLOT (channelActionChanged(const QString&)) );
+  connect(notifyActionInput,SIGNAL (textChanged(const QString&)),this,SLOT (notifyActionChanged(const QString&)) );
+
   connect(autoReconnectCheck,SIGNAL (stateChanged(int)),this,SLOT (autoReconnectChanged(int)) );
   connect(autoRejoinCheck,SIGNAL (stateChanged(int)),this,SLOT (autoRejoinChanged(int)) );
+
   connect(bringToFrontCheck,SIGNAL (stateChanged(int)),this,SLOT (bringToFrontChanged(int)) );
   connect(blinkingTabsCheck,SIGNAL (stateChanged(int)),this,SLOT (blinkingTabsChanged(int)) );
+
   connect(fixedMOTDCheck,SIGNAL (stateChanged(int)),this,SLOT (fixedMOTDChanged(int)) );
 }
 
@@ -106,6 +130,16 @@ void PrefsPageGeneralSettings::suffixStartChanged(const QString& newSuffix)
 void PrefsPageGeneralSettings::suffixMiddleChanged(const QString& newSuffix)
 {
   preferences->setNickCompleteSuffixMiddle(newSuffix);
+}
+
+void PrefsPageGeneralSettings::channelActionChanged(const QString& newAction)
+{
+  preferences->setChannelDoubleClickAction(newAction);
+}
+
+void PrefsPageGeneralSettings::notifyActionChanged(const QString& newAction)
+{
+  preferences->setNotifyDoubleClickAction(newAction);
 }
 
 void PrefsPageGeneralSettings::autoReconnectChanged(int state)

@@ -41,6 +41,7 @@ NicksOnline::NicksOnline(QSize& newSize)
 
   connect(editButton,SIGNAL (clicked()),SIGNAL (editClicked()) );
   connect(closeButton,SIGNAL (clicked()),this,SLOT (closeButton()) );
+  connect(nickListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT(processDoubleClick(QListViewItem*)));
 
   resize(newSize);
 }
@@ -68,6 +69,11 @@ void NicksOnline::closeEvent(QCloseEvent* ce)
 void NicksOnline::closeButton()
 {
   emit closeClicked(size());
+}
+
+void NicksOnline::processDoubleClick(QListViewItem* item)
+{
+  emit doubleClicked(item);
 }
 
 #include "nicksonline.moc"
