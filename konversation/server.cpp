@@ -15,6 +15,8 @@
 */
 
 #include <unistd.h>
+#include <sys/socket.h>
+#include <linux/in.h>
 
 #include <qregexp.h>
 #include <qhostaddress.h>
@@ -722,16 +724,13 @@ void Server::addDccSend(const QString &recipient,const QString &fileName)
   emit addDccPanel();
 
   // Get our own IP address.
-  KSocketAddress* ipAdr=KExtendedSocket::localAddress(serverSocket.fd());
-  // Don't laugh! This works!
-  QString ip=ipAdr->pretty();
-  // FIXME: breaks on ipv6 ...
-  QRegExp ipRegExp("[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}");
-  // extract ip address from pretty string
-  ipRegExp.search(ip);
-  ip=ipRegExp.cap();
+  KSocketAddress* ipAddr=KExtendedSocket::localAddress(serverSocket.fd());
+  KInetSocketAddress inetSocket((const sockaddr_in*)ipAddr->address(),ipAddr->size());
+
+  struct in_addr in_addr=inetSocket.hostV4();
+  QString ip(KInetSocketAddress::addrToString(inetSocket.family(),&in_addr));
   // remove temporary object
-  delete ipAdr;
+  delete ipAddr;
 
   // We already checked that the file exists in output filter / requestDccSend() resp.
   QFile file(fileName);
