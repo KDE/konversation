@@ -402,8 +402,7 @@ void NicksOnline::processDoubleClick(QListViewItem* item)
   // a server name or channel name.
   QString serverName;
   QString nickname;
-  getItemServerAndNick(item, serverName, nickname);
-  if (!nickname.isNull())
+  if (getItemServerAndNick(item, serverName, nickname))
     emit doubleClicked(serverName, nickname);
 }
 
@@ -431,8 +430,10 @@ bool NicksOnline::getItemServerAndNick(const QListViewItem* item, QString& serve
     if (!parentItem) return false;
     if (parentItem->text(nlvcServerNickChannel) == i18n("Offline"))
         parentItem = parentItem->parent();
+    if (parentItem->parent()) return false;
     serverName = parentItem->text(nlvcServerNickChannel);
     nickname = item->text(nlvcServerNickChannel);
+    if (nickname == i18n("Offline")) return false;
     return true;
 }
 
