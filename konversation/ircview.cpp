@@ -568,27 +568,30 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps,bool important)
 #endif
   }
 
-  buffer+=line;
-  emit newText(highlightColor,important);
+  if(important || !KonversationApplication::preferences.getHideUnimportantEvents())
+  {
+    buffer+=line;
+    emit newText(highlightColor,important);
 
-  // scroll view only if the scroll bar is already at the bottom
+    // scroll view only if the scroll bar is already at the bottom
 #if QT_VERSION == 303
-  // Does not seem to work very well with QT 3.0.3
-  bool doScroll=true;
+    // Does not seem to work very well with QT 3.0.3
+    bool doScroll=true;
 #else
-  bool doScroll=((contentsHeight()-visibleHeight())==contentsY());
+    bool doScroll=((contentsHeight()-visibleHeight())==contentsY());
 #endif
 
 #ifdef TABLE_VERSION
-  setText("<qt><table cellpadding=\"0\" cellspacing=\"0\">"+buffer+"</table></qt>");
+    setText("<qt><table cellpadding=\"0\" cellspacing=\"0\">"+buffer+"</table></qt>");
 #else
-  KTextBrowser::append(line);
+    KTextBrowser::append(line);
 #endif
 
-  if(doScroll)
-  {
-    moveCursor(MoveEnd,false);
-    ensureVisible(0,contentsHeight());
+    if(doScroll)
+    {
+      moveCursor(MoveEnd,false);
+      ensureVisible(0,contentsHeight());
+    }
   }
 }
 

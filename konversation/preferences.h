@@ -335,11 +335,11 @@ class Preferences : public QObject
     // aliases
     QStringList getAliasList();
     void setAliasList(QStringList aliasList);
-    
+
     // Nick completion
     int getNickCompletionMode();
     void setNickCompletionMode(int mode);
-    
+
     //User interface
     bool getShowMenuBar();
     void setShowMenuBar(bool s);
@@ -358,7 +358,10 @@ class Preferences : public QObject
 
     bool getShowTopic();
     void setShowTopic(bool s);
-    
+
+    bool getHideUnimportantEvents();
+    void setHideUnimportantEvents(bool state);
+
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();
@@ -484,7 +487,7 @@ class Preferences : public QObject
     QStringList ircColorList;
     // aliases
     QStringList aliasList;
-    
+
     //Nick completion
     int nickCompletionMode;
 
@@ -499,8 +502,9 @@ class Preferences : public QObject
 #if QT_VERSION >= 0x030200
     bool showTabBarCloseButton;
 #endif
-  
+
     bool showTopic;
+    bool hideUnimportantEvents;
 };
 
 #endif

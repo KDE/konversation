@@ -183,6 +183,7 @@ Preferences::Preferences()
   setShowTabBarCloseButton(false);
 #endif
 
+  setHideUnimportantEvents(false);
   setShowTopic(true);
 }
 
@@ -690,5 +691,8 @@ void Preferences::setShowTabBarCloseButton(bool s) { showTabBarCloseButton = s; 
 
 bool Preferences::getShowTopic() { return showTopic; }
 void Preferences::setShowTopic(bool s) { showTopic = s; }
+
+bool Preferences::getHideUnimportantEvents()           { return hideUnimportantEvents; }
+void Preferences::setHideUnimportantEvents(bool state) { hideUnimportantEvents=state; }
 
 #include "preferences.moc"

@@ -62,8 +62,9 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   beepCheck=new QCheckBox(i18n("Bee&p on incoming ASCII BEL"),parentFrame,"beep_check");
   rawLogCheck=new QCheckBox(i18n("Show ra&w log window on startup"),parentFrame,"raw_log_check");
   trayIconCheck=new QCheckBox(i18n("Show icon in s&ystem tray"),parentFrame,"tray_icon_check");
-  trayNotifyCheck = new QCheckBox(i18n("Use system tray for new message notification"),
-    parentFrame, "tray_notify_check");
+  trayNotifyCheck=new QCheckBox(i18n("Use sys&tem tray for new message notification"),parentFrame,"tray_notify_check");
+  hideUnimportantCheck=new QCheckBox(i18n("&Hide Join/Part/Nick events"),parentFrame,"hide_unimportant_check");
+
   connect(trayIconCheck, SIGNAL(toggled(bool)), trayNotifyCheck, SLOT(setEnabled(bool)));
 
   reconnectTimeoutLabel=new QLabel(i18n("&Reconnect timeout:"),parentFrame);
@@ -84,6 +85,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   rawLogCheck->setChecked(preferences->getRawLog());
   trayIconCheck->setChecked(preferences->getShowTrayIcon());
   trayNotifyCheck->setChecked(preferences->getTrayNotify());
+  hideUnimportantCheck->setChecked(preferences->getHideUnimportantEvents());
 
   QHBox* generalSpacer=new QHBox(parentFrame);
 
@@ -109,6 +111,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   generalSettingsLayout->addMultiCellWidget(trayIconCheck,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(trayNotifyCheck,row,row,0,2);
+  row++;
+  generalSettingsLayout->addMultiCellWidget(hideUnimportantCheck,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(generalSpacer,row,row,0,2);
   generalSettingsLayout->setRowStretch(row,10);
@@ -140,6 +144,7 @@ void PrefsPageGeneralSettings::applyPreferences()
   preferences->setRawLog(rawLogCheck->isChecked());
   preferences->setShowTrayIcon(trayIconCheck->isChecked());
   preferences->setTrayNotify(trayNotifyCheck->isChecked());
+  preferences->setHideUnimportantEvents(hideUnimportantCheck->isChecked());
 
   preferences->setMaximumLagTime(reconnectTimeoutSpin->value());
 }

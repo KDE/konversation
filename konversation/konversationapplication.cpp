@@ -514,6 +514,8 @@ void KonversationApplication::readOptions()
   preferences.setBlinkingTabs(config->readBoolEntry("BlinkingTabs",preferences.getBlinkingTabs()));
   preferences.setBringToFront(config->readBoolEntry("BringToFront",preferences.getBringToFront()));
 
+  preferences.setHideUnimportantEvents(config->readBoolEntry("HideUnimportantEvents",preferences.getHideUnimportantEvents()));
+
   preferences.setAutoReconnect(config->readBoolEntry("AutoReconnect",preferences.getAutoReconnect()));
   preferences.setAutoRejoin(config->readBoolEntry("AutoRejoin",preferences.getAutoRejoin()));
   preferences.setAutojoinOnInvite(config->readBoolEntry("AutojoinOnInvite",preferences.getAutojoinOnInvite()));
@@ -736,6 +738,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("TabPlacement",static_cast<int>(preferences.getTabPlacement()));
   config->writeEntry("BlinkingTabs",preferences.getBlinkingTabs());
   config->writeEntry("BringToFront",preferences.getBringToFront());
+
+  config->writeEntry("HideUnimportantEvents",preferences.getHideUnimportantEvents());
 
   config->writeEntry("AutoReconnect",preferences.getAutoReconnect());
   config->writeEntry("AutoRejoin",preferences.getAutoRejoin());
