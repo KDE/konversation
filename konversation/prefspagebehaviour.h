@@ -33,6 +33,7 @@ class PrefsPageBehaviour : public PrefsPage
   
   private:
     QCheckBox* trayIconCheck;
+    QCheckBox* trayOnlyCheck;
     QCheckBox* trayNotifyCheck;
     QCheckBox* rawLogCheck;
     QCheckBox* showServerList;

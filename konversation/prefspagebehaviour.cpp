@@ -28,14 +28,21 @@
 PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPreferences)
   : PrefsPage(newParent, newPreferences)
 {
-  QGridLayout* generalLayout = new QGridLayout(parentFrame, 4, 2, marginHint(), spacingHint());
+  QGridLayout* generalLayout = new QGridLayout(parentFrame, 5, 2, marginHint(), spacingHint());
 
   trayIconCheck = new QCheckBox(i18n("Show icon in s&ystem tray"), parentFrame, "tray_icon_check");
   trayIconCheck->setChecked(preferences->getShowTrayIcon());
+  
   trayNotifyCheck = new QCheckBox(i18n("Use sys&tem tray for new message notification"), parentFrame,"tray_notify_check");
   trayNotifyCheck->setEnabled(trayIconCheck->isChecked());
   trayNotifyCheck->setChecked(preferences->getTrayNotify());
+  
+  trayOnlyCheck = new QCheckBox(i18n("Stay in system &tray all the time"), parentFrame,"tray_only");
+  trayOnlyCheck->setChecked(preferences->getSystrayOnly());
+  trayOnlyCheck->setEnabled(trayIconCheck->isChecked());
+
   connect(trayIconCheck, SIGNAL(toggled(bool)), trayNotifyCheck, SLOT(setEnabled(bool)));
+  connect(trayIconCheck, SIGNAL(toggled(bool)), trayOnlyCheck, SLOT(setEnabled(bool)));
 
   rawLogCheck = new QCheckBox(i18n("Show ra&w log window on application startup"), parentFrame, "raw_log_check");
   rawLogCheck->setChecked(preferences->getRawLog());
@@ -134,6 +141,8 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
   row++;
   generalLayout->addMultiCellWidget(trayNotifyCheck, row, row, 0, 1);
   row++;
+  generalLayout->addMultiCellWidget(trayOnlyCheck, row, row, 0, 1);
+  row++;
   generalLayout->addMultiCellWidget(rawLogCheck, row, row, 0, 1);
   row++;
   generalLayout->addMultiCellWidget(showServerList, row, row, 0, 1);
@@ -162,6 +171,7 @@ void PrefsPageBehaviour::applyPreferences()
 {
   preferences->setShowTrayIcon(trayIconCheck->isChecked());
   preferences->setTrayNotify(trayNotifyCheck->isChecked());
+  preferences->setSystrayOnly(trayOnlyCheck->isChecked());
   preferences->setRawLog(rawLogCheck->isChecked());
   preferences->setShowServerList(showServerList->isChecked());
   preferences->setWebBrowserUseKdeDefault(!useCustomBrowserCheck->isChecked());

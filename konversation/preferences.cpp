@@ -73,6 +73,7 @@ Preferences::Preferences()
   setShowTrayIcon(false);
   setShowBackgroundImage(false);
   setTrayNotify(false);
+  setSystrayOnly(false);
 
   setUseSpacing(false);
   setSpacing(2);
@@ -716,6 +717,13 @@ void Preferences::setShowTrayIcon(bool state)
   emit updateTrayIcon();
 }
 bool Preferences::getShowTrayIcon() { return showTrayIcon; }
+
+void Preferences::setSystrayOnly(bool state) 
+{ 
+  systrayOnly=state; 
+  emit updateTrayIcon();
+}
+bool Preferences::getSystrayOnly() { return systrayOnly; }
 
 void Preferences::setTrayNotify(bool state)
 {

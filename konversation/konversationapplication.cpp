@@ -335,6 +335,7 @@ void KonversationApplication::readOptions()
 
   // Tray icon settings
   preferences.setShowTrayIcon(config->readBoolEntry("ShowTrayIcon",preferences.getShowTrayIcon()));
+  preferences.setSystrayOnly(config->readBoolEntry("SystrayOnly",preferences.getSystrayOnly()));
   preferences.setTrayNotify(config->readBoolEntry("TrayNotify",preferences.getTrayNotify()));
   preferences.setShowBackgroundImage(config->readBoolEntry("ShowBackgroundImage",preferences.getShowBackgroundImage()));
 
@@ -835,6 +836,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ScrollbackMax",preferences.getScrollbackMax());
 
   config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon());
+  config->writeEntry("SystrayOnly",preferences.getSystrayOnly());
   config->writeEntry("TrayNotify",preferences.getTrayNotify());
 
   config->writeEntry("ShowBackgroundImage",preferences.getShowBackgroundImage());

@@ -27,6 +27,7 @@
 #include <kedittoolbar.h>
 #include <kpopupmenu.h>
 #include <kiconloader.h>
+#include <kwin.h>
 #include <qpainter.h>
 
 #include <kabc/addressbook.h>
@@ -1271,7 +1272,13 @@ void KonversationMainWindow::openNotifications()
 void KonversationMainWindow::updateTrayIcon()
 {
   if(KonversationApplication::preferences.getShowTrayIcon())
-    tray->show();
+    {
+      tray->show();
+      if(KonversationApplication::preferences.getSystrayOnly())
+	KWin::setState(winId(), NET::SkipTaskbar);
+      else
+	KWin::clearState(winId(), NET::SkipTaskbar);
+    }
   else
     tray->hide();
 

@@ -350,6 +350,9 @@ class Preferences : public QObject
     void setShowTrayIcon(bool state);
     bool getShowTrayIcon();
     
+    void setSystrayOnly(bool state);
+    bool getSystrayOnly();
+
     void setShowBackgroundImage(bool state);
     bool getShowBackgroundImage();
     
@@ -502,6 +505,7 @@ class Preferences : public QObject
     bool showModeButtons;
     bool showServerList;
     bool showTrayIcon;
+    bool systrayOnly;
     bool showBackgroundImage;
     bool trayNotify;
 

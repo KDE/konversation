@@ -31,7 +31,7 @@ class TrayIcon : public KSystemTray
     ~TrayIcon();
     
     bool notificationEnabled() { return m_notificationEnabled; }
-  
+
   public slots:
     void startNotification(QWidget* view);
     void endNotification(QWidget* view);
@@ -42,6 +42,11 @@ class TrayIcon : public KSystemTray
     void blinkTimeout();
   
   protected:
+    void mousePressEvent(QMouseEvent *e);
+
+  private:
+    QWidget* m_parent;
+
     QTimer* m_blinkTimer;
     bool m_blinkOn;
     

@@ -13,17 +13,20 @@
 */
 
 #include "trayicon.h"
+#include "konversationapplication.h"
 
 #include <qtimer.h>
 
 #include <kglobal.h>
 #include <kiconloader.h>
+#include <kwin.h>
 
 #include "server.h"
 #include "chatwindow.h"
 
 TrayIcon::TrayIcon(QWidget* parent) : KSystemTray(parent)
 {
+  m_parent = parent;
   m_notificationEnabled = false;
   m_nomessagePix = loadIcon("konversation");
   m_messagePix = loadIcon("konv_message");
@@ -31,6 +34,8 @@ TrayIcon::TrayIcon(QWidget* parent) : KSystemTray(parent)
   m_widgets.setAutoDelete(false);
   m_blinkTimer = new QTimer(this);
   connect(m_blinkTimer, SIGNAL(timeout()), SLOT(blinkTimeout()));
+  if(KonversationApplication::preferences.getSystrayOnly())
+    KWin::setState(m_parent->winId(), NET::SkipTaskbar);
 }
 
 TrayIcon::~TrayIcon()
@@ -84,6 +89,13 @@ void TrayIcon::removeServer(Server* server)
       endNotification(w);
     }
   }
+}
+
+void TrayIcon::mousePressEvent(QMouseEvent *e)
+{
+  if(KonversationApplication::preferences.getSystrayOnly())
+    KWin::setState(m_parent->winId(), NET::SkipTaskbar);
+  KSystemTray::mousePressEvent(e);
 }
 
 #include "trayicon.moc"
