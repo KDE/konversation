@@ -28,6 +28,12 @@
 #include "dccpanel.h"
 #include "dcctransfer.h"
 
+#ifdef KDE_IS_VERSION
+#if KDE_IS_VERSION(3,1,1)
+#define USE_INFOLIST
+#endif
+#endif
+
 DccPanel::DccPanel(QWidget* parent) :
           ChatWindow(parent)
 {
@@ -252,7 +258,7 @@ void DccPanel::showFileInfo()
     // display information list if any available
     if(infoList.count())
     {
-#if KDE_IS_VERSION(3,1,0)
+#ifdef USE_INFOLIST
       KMessageBox::informationList(
         this,
         i18n("Available information for file %1:").arg(path),
