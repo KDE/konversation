@@ -162,6 +162,7 @@ QPixmap DccTransfer::getStatusIcon() const
     case Queued:
       icon = "player_stop";
       break;
+    case LookingUp:
     case WaitingRemote:
       icon = "goto";
       break;

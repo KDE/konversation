@@ -127,6 +127,12 @@ class Preferences : public QObject
     unsigned int getDccSendPortsFirst();
     void setDccSendPortsLast(unsigned long port);
     unsigned int getDccSendPortsLast();
+    void setDccSpecificChatPorts(bool state);
+    bool getDccSpecificChatPorts();
+    void setDccChatPortsFirst(unsigned long port);
+    unsigned int getDccChatPortsFirst();
+    void setDccChatPortsLast(unsigned long port);
+    unsigned int getDccChatPortsLast();
     void setDccGetIpFromServer(bool state);
     bool getDccGetIpFromServer();
     
@@ -458,6 +464,9 @@ class Preferences : public QObject
     bool dccSpecificSendPorts;
     unsigned long dccSendPortsFirst;
     unsigned long dccSendPortsLast;
+    bool dccSpecificChatPorts;
+    unsigned long dccChatPortsFirst;
+    unsigned long dccChatPortsLast;
     bool dccGetIpFromServer;
     bool dccAutoGet;
     bool dccAutoResume;

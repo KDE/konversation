@@ -23,6 +23,7 @@
 #include <kextsock.h>
 #include <konversationapplication.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <kdebug.h>
 
 #include "ircview.h"
@@ -91,29 +92,54 @@ void DccChat::listenForPartner()
 {
   // Set up server socket
   listenSocket=new KExtendedSocket();
-  // Listen on all available interfaces
-  listenSocket->setHost("0.0.0.0");
-
-  listenSocket->setSocketFlags(KExtendedSocket::passiveSocket |
-                               KExtendedSocket::inetSocket |
-                               KExtendedSocket::streamSocket);
-
-  if(listenSocket->listen(5)==0)
+  
+  if(KonversationApplication::preferences.getDccSpecificChatPorts())  // user specifies ports
   {
-    // Get our own port number
-    const KSocketAddress* ipAddr=listenSocket->localAddress();
-    const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr->address();
-    port=ntohs(socketAddress->sin_port);
-
-    // remove temporary object
-    delete ipAddr;
-
-    connect(listenSocket,SIGNAL (readyAccept()),this,SLOT(heardPartner()) );
-
-    getTextView()->append(i18n("Info"),i18n("Offering DCC Chat connection to %1 on port %2...").arg(nick).arg(port));
-    sourceLine->setText(i18n("DCC chat with %1 on port %2").arg(nick).arg(port));
+    // set port
+    bool found = false;  // wheter succeeded to set port
+    unsigned long port = KonversationApplication::preferences.getDccChatPortsFirst();
+    for( ; port <= KonversationApplication::preferences.getDccChatPortsLast(); ++port )
+    {
+      listenSocket->setHost("0.0.0.0");
+      listenSocket->setSocketFlags(KExtendedSocket::passiveSocket |
+                                   KExtendedSocket::inetSocket |
+                                   KExtendedSocket::streamSocket);
+      listenSocket->setPort(port);
+      if(found = (listenSocket->listen(5) == 0))
+        break;
+      listenSocket->reset();
+    }
+    if(!found)
+    {
+      KMessageBox::sorry(static_cast<QWidget*>(0),i18n("There is no vacant port for DCC chat."));
+      return;
+    }
   }
-  else kdDebug() << this << "DccChat::listenForPartner(): listenSocket->listen() failed!" << endl;
+  else  // user doesn't specify ports
+  {
+    listenSocket->setHost("0.0.0.0");
+    listenSocket->setSocketFlags(KExtendedSocket::passiveSocket |
+                                 KExtendedSocket::inetSocket |
+                                 KExtendedSocket::streamSocket);
+    if(listenSocket->listen(5) != 0)
+    {
+      kdDebug() << this << "DccChat::listenForPartner(): listenSocket->listen() failed!" << endl;
+      return;
+    }
+  }
+  
+  // Get our own port number
+  const KSocketAddress* ipAddr=listenSocket->localAddress();
+  const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr->address();
+  port=ntohs(socketAddress->sin_port);
+  // remove temporary object
+  delete ipAddr;
+  
+  connect(listenSocket,SIGNAL (readyAccept()),this,SLOT(heardPartner()) );
+  
+  getTextView()->append(i18n("Info"),i18n("Offering DCC Chat connection to %1 on port %2...").arg(nick).arg(port));
+  sourceLine->setText(i18n("DCC chat with %1 on port %2").arg(nick).arg(port));
+  
 }
 
 void DccChat::newTextInView(const QString& highlightColor, bool important)

@@ -101,12 +101,15 @@ Preferences::Preferences()
   setRawLog(false);
 
   setVersionReply(i18n("Konversation %1 Build %2 (C)2002-2004 by the Konversation team").arg(VERSION).arg(COMMIT));
-  setDccPath(QString::null);
+  setDccPath(user.homeDir()+"/dccrecv");
   setDccAddPartner(true);
   setDccCreateFolder(false);
   setDccSpecificSendPorts(false);
   setDccSendPortsFirst(0);
   setDccSendPortsLast(0);
+  setDccSpecificChatPorts(false);
+  setDccChatPortsFirst(0);
+  setDccChatPortsLast(0);
   setDccGetIpFromServer(false);
   setDccAutoGet(false);
   setDccBufferSize(1024);
@@ -387,11 +390,40 @@ unsigned long Preferences::getDccRollback() { return dccRollback; }
 void Preferences::setDccSpecificSendPorts(bool state) { dccSpecificSendPorts=state; }
 bool Preferences::getDccSpecificSendPorts() { return dccSpecificSendPorts; }
 
-void Preferences::setDccSendPortsFirst(unsigned long port) { dccSendPortsFirst=port; }
+void Preferences::setDccSendPortsFirst(unsigned long port)
+{
+  dccSendPortsFirst=port;
+  if(getDccSendPortsLast() < port)
+    setDccSendPortsLast(port);
+}
 unsigned int Preferences::getDccSendPortsFirst() { return dccSendPortsFirst; }
 
-void Preferences::setDccSendPortsLast(unsigned long port) { dccSendPortsLast=port; }
+void Preferences::setDccSendPortsLast(unsigned long port)
+{
+  dccSendPortsLast=port;
+  if(port < getDccSendPortsFirst())
+    setDccSendPortsFirst(port);
+}
 unsigned int Preferences::getDccSendPortsLast() { return dccSendPortsLast; }
+
+void Preferences::setDccSpecificChatPorts(bool state) { dccSpecificChatPorts=state; }
+bool Preferences::getDccSpecificChatPorts() { return dccSpecificChatPorts; }
+
+void Preferences::setDccChatPortsFirst(unsigned long port)
+{
+  dccChatPortsFirst=port;
+  if(getDccChatPortsLast() < port)
+    setDccChatPortsLast(port);
+}
+unsigned int Preferences::getDccChatPortsFirst() { return dccChatPortsFirst; }
+
+void Preferences::setDccChatPortsLast(unsigned long port)
+{
+  dccChatPortsLast=port;
+  if(port < getDccChatPortsFirst())
+    setDccChatPortsFirst(port);
+}
+unsigned int Preferences::getDccChatPortsLast() { return dccChatPortsLast; }
 
 void Preferences::setDccGetIpFromServer(bool state) { dccGetIpFromServer=state; }
 bool Preferences::getDccGetIpFromServer() { return dccGetIpFromServer; }

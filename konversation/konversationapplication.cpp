@@ -616,6 +616,9 @@ void KonversationApplication::readOptions()
   preferences.setDccSpecificSendPorts(config->readBoolEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts()));
   preferences.setDccSendPortsFirst(config->readNumEntry("SendPortsFirst",preferences.getDccSendPortsFirst()));
   preferences.setDccSendPortsLast(config->readNumEntry("SendPortsLast",preferences.getDccSendPortsLast()));
+  preferences.setDccSpecificChatPorts(config->readBoolEntry("SpecificChatPorts",preferences.getDccSpecificChatPorts()));
+  preferences.setDccChatPortsFirst(config->readNumEntry("ChatPortsFirst",preferences.getDccChatPortsFirst()));
+  preferences.setDccChatPortsLast(config->readNumEntry("ChatPortsLast",preferences.getDccChatPortsLast()));
   preferences.setDccGetIpFromServer(config->readBoolEntry("GetIpFromServer",preferences.getDccGetIpFromServer()));
   preferences.setDccAddPartner(config->readBoolEntry("AddPartner",preferences.getDccAddPartner()));
   preferences.setDccCreateFolder(config->readBoolEntry("CreateFolder",preferences.getDccCreateFolder()));
@@ -886,6 +889,9 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts());
   config->writeEntry("SendPortsFirst",preferences.getDccSendPortsFirst());
   config->writeEntry("SendPortsLast",preferences.getDccSendPortsLast());
+  config->writeEntry("SpecificChatPorts",preferences.getDccSpecificChatPorts());
+  config->writeEntry("ChatPortsFirst",preferences.getDccChatPortsFirst());
+  config->writeEntry("ChatPortsLast",preferences.getDccChatPortsLast());
   config->writeEntry("GetIpFromServer",preferences.getDccGetIpFromServer());
   config->writeEntry("AutoGet",preferences.getDccAutoGet());
   config->writeEntry("AutoResume",preferences.getDccAutoResume());

@@ -495,6 +495,43 @@ unsigned long KonvPrefsDCOP::getDccSendPortsLast()
   return KonversationApplication::preferences.getDccSendPortsLast();
 }
 
+void KonvPrefsDCOP::setDccSpecificChatPorts(bool state)
+{
+  KonversationApplication::preferences.setDccSpecificChatPorts(state);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+bool KonvPrefsDCOP::getDccSpecificChatPorts()
+{
+  return KonversationApplication::preferences.getDccSpecificChatPorts();
+}
+
+void KonvPrefsDCOP::setDccChatPortsFirst(unsigned long port)
+{
+  KonversationApplication::preferences.setDccChatPortsFirst(port);
+  if(KonversationApplication::preferences.getDccChatPortsLast() < port)
+    KonversationApplication::preferences.setDccChatPortsLast(port);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+unsigned long KonvPrefsDCOP::getDccChatPortsFirst()
+{
+  return KonversationApplication::preferences.getDccChatPortsFirst();
+}
+
+void KonvPrefsDCOP::setDccChatPortsLast(unsigned long port)
+{
+  KonversationApplication::preferences.setDccChatPortsLast(port);
+  if(port < KonversationApplication::preferences.getDccChatPortsFirst())
+    KonversationApplication::preferences.setDccChatPortsFirst(port);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+unsigned long KonvPrefsDCOP::getDccChatPortsLast()
+{
+  return KonversationApplication::preferences.getDccChatPortsLast();
+}
+
 void KonvPrefsDCOP::setDccGetIpFromServer(bool state)
 {
   KonversationApplication::preferences.setDccGetIpFromServer(state);

@@ -93,6 +93,12 @@ class KonvPreferencesIface : virtual public DCOPObject
     virtual unsigned long getDccSendPortsFirst() = 0;
     virtual void setDccSendPortsLast(unsigned long port) = 0;
     virtual unsigned long getDccSendPortsLast() = 0;
+    virtual void setDccSpecificChatPorts(bool state) = 0;
+    virtual bool getDccSpecificChatPorts() = 0;
+    virtual void setDccChatPortsFirst(unsigned long port) = 0;
+    virtual unsigned long getDccChatPortsFirst() = 0;
+    virtual void setDccChatPortsLast(unsigned long port) = 0;
+    virtual unsigned long getDccChatPortsLast() = 0;
     virtual void setDccGetIpFromServer(bool state) = 0;
     virtual bool getDccGetIpFromServer() = 0;
     virtual void setDccAutoGet(bool state) = 0;
