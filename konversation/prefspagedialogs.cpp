@@ -34,6 +34,7 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
   dialogDefinitions.append("QuitServerTab "              +i18n("Quit server when you hit the tab's close button"));
   dialogDefinitions.append("CloseQueryAfterIgnore "      +i18n("Question on closing queries after ignoring the nickname"));
   dialogDefinitions.append("ClearLogfileQuestion "       +i18n("Question before deleting logfile contents"));
+  dialogDefinitions.append("SaveLogfileNote "            +i18n("Notice that saving logfiles will save whole file"));
   
   QVBoxLayout* dialogsLayout=new QVBoxLayout(parentFrame,marginHint(),spacingHint(),"dialogs_layout");
 
