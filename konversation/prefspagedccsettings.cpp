@@ -292,6 +292,7 @@ void PrefsPageDccSettings::applyPreferences()
   preferences->setDccAutoResume(dccAutoResume->isChecked());
   preferences->setDccAddPartner(dccAddSender->isChecked());
   preferences->setDccCreateFolder(dccCreateFolder->isChecked());
+  preferences->setDccFastSend(dccFastSend->isChecked());
 }
 
 #include "prefspagedccsettings.moc"

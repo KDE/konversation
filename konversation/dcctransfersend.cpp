@@ -84,11 +84,13 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   {
     bool pressedOk;
     m_fileName = KInputDialog::getText( i18n("Enter filename"), i18n("<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>").arg( getPartnerNick() ), "unknown", &pressedOk, listView() );
-    if( !pressedOk ) {
+    if( !pressedOk )
+    {
       setStatus( Failed, i18n("No filename was given") );
       updateView();
       cleanUp();
-      return;    
+      openDetailDialog();
+      return;
     }
   }
   m_file.setName( m_tmpFile );
@@ -225,6 +227,7 @@ void DccTransferSend::heard()  // slot
   if( !m_sendSocket )
   {
     setStatus( Failed, i18n("Could not accept the connection. (Socket Error)") );
+    updateView();
     cleanUp();
     openDetailDialog();
     return;
@@ -297,8 +300,8 @@ void DccTransferSend::getAck()  // slot
       kdDebug() << "DccTransferSend::getAck(): Done." << endl;
       
       setStatus( Done );
-      cleanUp();
       updateView();
+      cleanUp();
       emit done( m_fileURL.path() );
       break;  // for safe
     }
@@ -312,6 +315,7 @@ void DccTransferSend::socketError( int errorCode )
   setStatus( Failed, i18n("Socket error: %1").arg( m_serverSocket->errorString() ));
   updateView();
   cleanUp();
+  openDetailDialog();
 }
 
 void DccTransferSend::startConnectionTimer( int sec )
@@ -337,6 +341,7 @@ void DccTransferSend::connectionTimeout()  // slot
   setStatus( Failed, i18n("Timed out") );
   updateView();
   cleanUp();
+  openDetailDialog();
 }
 
 void DccTransferSend::slotServerSocketClosed()
@@ -352,6 +357,7 @@ void DccTransferSend::slotSendSocketClosed()
     setStatus( Failed, i18n("Remote user disconnected") );
     updateView();
     cleanUp();
+    openDetailDialog();
   }
 }
 
