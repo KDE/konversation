@@ -371,7 +371,7 @@ void Channel::popupCommand(int id)
       pattern=cc+"DCC SEND %u";
       break;
     case NickListView::Ignore:
-      pattern=cc+"IGNORE -ALL %u";
+      pattern=cc+"IGNORE -ALL %u!*";
       break;
   } // switch
 

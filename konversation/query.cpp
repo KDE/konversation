@@ -201,7 +201,7 @@ void Query::showEvent(QShowEvent*)
 void Query::popup(int id)
 {
   if(id==POPUP_IGNORE)
-    sendQueryText(KonversationApplication::preferences.getCommandChar()+"IGNORE -ALL "+getName());
+    sendQueryText(KonversationApplication::preferences.getCommandChar()+"IGNORE -ALL "+getName()+"!*");
   else
     kdDebug() << "Query::popup(): Popup id " << id << " does not belong to me!" << endl;
 }
