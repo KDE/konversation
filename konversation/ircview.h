@@ -58,6 +58,10 @@ class IRCView : public KTextBrowser
     void extendedPopup(int id);
     void autoText(const QString& text);
     void textPasted();
+    
+    /** Emitted when the users nickname is seen in the channel.
+     *  Lets the chatwindow use OSD to tell the user this. */
+    void nickSeenInView(const QString &whoSent, const QString &filteredLine);
 
   public slots:
     void append(const QString& nick,const QString& message);

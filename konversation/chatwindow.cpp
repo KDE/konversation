@@ -206,6 +206,7 @@ void ChatWindow::setTextView(IRCView* newView)
 {
   textView=newView;
   connect(textView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
+  connect(textView,SIGNAL (nickSeenInView(const QString&, const QString &)), this, SLOT( nickWasSeenInView(const QString&, const QString&)));
 }
 
 void ChatWindow::insertRememberLine()
@@ -546,6 +547,15 @@ void ChatWindow::emitUpdateInfo()
   emit updateInfo(info);
 }
 
+
+void ChatWindow::nickWasSeenInView(const QString &whoSent, const QString &filteredLine) {
+  KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+  if ( KonversationApplication::preferences.getOSDShowOwnNick() &&
+    !KonversationApplication::preferences.getOSDShowChannel() && notificationsEnabled())
+  {
+     konvApp->osd->showOSD(i18n("(HIGHLIGHT)") + " <" + whoSent + "> " + filteredLine);
+  }
+}
 
 #include "chatwindow.moc"
 
