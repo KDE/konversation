@@ -582,6 +582,7 @@ void DccTransferRecvWriteCacheHandler::close()  // public
 
 void DccTransferRecvWriteCacheHandler::closeNow()  // public
 {
+  write( true );  // flush
   if ( m_transferJob )
   {
     m_transferJob->kill();
