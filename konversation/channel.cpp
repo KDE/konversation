@@ -508,7 +508,13 @@ void Channel::completeNick()
 
       // try to find matching nickname in list of names
       if(KonversationApplication::preferences.getNickCompletionMode() == 1) { // Shell like completion
-        foundNick = nicknameList.completeNick(pattern, complete);
+        QStringList found;
+        foundNick = nicknameList.completeNick(pattern, complete, found);
+        
+        if(!complete && !found.isEmpty()) {
+          QString nicks = found.join(" ");
+          appendServerMessage(i18n("Completion"),i18n("Possible completions: %1.").arg(nicks));
+        }
       } else if(KonversationApplication::preferences.getNickCompletionMode() == 0) { // Cycle completion
         complete = true;
         
@@ -1591,9 +1597,9 @@ int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item
     static_cast<Nick*>(item2)->getNickname());
 }
 
-QString NickList::completeNick(const QString& pattern, bool& complete)
+QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found)
 {
-  QStringList found;
+  found.clear();
   
   for(Nick* n = first(); n; n = next()) {
     if(n->getNickname().lower().startsWith(pattern)) {

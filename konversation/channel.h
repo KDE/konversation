@@ -29,6 +29,7 @@ class QLabel;
 class QTimer;
 class QListViewItem;
 class QHBox;
+class QStringList;
 
 class KLineEdit;
 
@@ -43,7 +44,7 @@ class TopicComboBox;
 class NickList : public QPtrList<Nick>
 {
   public:
-    QString completeNick(const QString& pattern, bool& complete);
+    QString completeNick(const QString& pattern, bool& complete, QStringList& found);
   protected:
     virtual int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2);
 };
