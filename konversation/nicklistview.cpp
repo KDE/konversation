@@ -143,7 +143,7 @@ void NickListView::refresh()
 
   while (it.current()) 
     {
-      (static_cast<NickListViewItem*>(it.current()))->refresh();
+      static_cast<NickListViewItem*>(it.current())->refresh();
       ++it;
     }
 }
