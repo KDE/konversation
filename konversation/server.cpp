@@ -867,11 +867,11 @@ void Server::incoming()
   int max_bytes = serverSocket->bytesAvailable();
 
   Q_ASSERT(max_bytes>0);  //Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
-  char buffer[max_bytes];
+  QByteArray buffer(max_bytes+1);
   int len = 0;
 
   // Read at max "max_bytes" bytes into "buffer"
-  len = serverSocket->readBlock(buffer,max_bytes);
+  len = serverSocket->readBlock(buffer.data(),max_bytes);
 
   if(len <= 0 ) { // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
         statusView->appendServerMessage(i18n("Error"),i18n("There was an error reading the data from the server: %1").arg(serverSocket->errorString()));
