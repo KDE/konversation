@@ -6,6 +6,7 @@ berkus: Logrotate with timer or at shutdown, compress rotated logs
 
 Eisfuchs: Check KStringHandler::tagURLs for URL highlighting
 
+Support "CTCP-DCC reply from <nickname>: REJECT SEND <filename> <reason>"
 Treeview with servers, list of channels / queries in a detachable window that also indicates new text
 after being away a summary of lines with highlighting in its own window would be nice; a click on one line might jump to the according line in the channel/query-window
 additionally the text-search could offer a button "any highlight"
@@ -20,6 +21,7 @@ Make coloring of list view and input lines an option
 Context menu on nick in nick should contain hostmask, realname, etc. infos (in a sub-menu)
 Check for channel or user parameter in mode changes to take care of duplicate mode chars
 History viewer
+Hilight mailto: links
 
 Channel List Panel:
 Make URLs in topic clickable or at least selectable
