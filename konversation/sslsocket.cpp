@@ -166,13 +166,6 @@ int SSLSocket::verifyCertificate()
 	KSSLCertificate::KSSLValidationList validationList
             = peerCertificate.validateVerbose(KSSLCertificate::SSLServer);
 
-	_IPmatchesCN = kssl->peerInfo().certMatchesAddress();
-
-	if (!_IPmatchesCN)
-	{
-		validationList << KSSLCertificate::InvalidHost;
-	}
-
 	KSSLCertificate::KSSLValidation validation = KSSLCertificate::Ok;
 
         if (!validationList.isEmpty())
@@ -218,10 +211,26 @@ int SSLSocket::verifyCertificate()
 			permacache = cc->isPermanent(peerCertificate);
 		}
 
-		if (!_IPmatchesCN && cp == KSSLCertificateCache::Accept)
-		{
-			cp = KSSLCertificateCache::Prompt;
-		}
+		if (!_IPmatchesCN && cp == KSSLCertificateCache::Accept )
+		  {
+		    do 
+		      {
+			QString msg = i18n("The IP address of the host %1 "
+					   "does not match the one the "
+					   "certificate was issued to.");
+			result = KMessageBox::warningYesNo( 0L,
+							    msg.arg(remoteHost),
+							    i18n("Server Authentication"),
+							    KGuiItem(i18n("Details")),
+							    KGuiItem(i18n("Continue")),
+							    "SslIpCNMismatch");
+			if( result == KMessageBox::Yes )
+			  showInfoDialog();
+		      } 
+		    while ( result == KMessageBox::Yes );
+
+		  }
+
 
 		// Precondition: cp is one of Reject, Accept or Prompt
 		switch (cp)
@@ -325,7 +334,6 @@ int SSLSocket::verifyCertificate()
 		<< "| Subject: " << kssl->peerInfo().getPeerCertificate().getSubject() << endl
 		<< "| Issuer: " << kssl->peerInfo().getPeerCertificate().getIssuer() << endl
 		<< "| Validation: " << (int) validation << endl
-		<< "| Certificate matches IP: " << _IPmatchesCN << endl
 		<< "+-----------------------------------------------"
 		<< endl;
 
