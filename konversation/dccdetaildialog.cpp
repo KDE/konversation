@@ -260,10 +260,7 @@ void DccDetailDialog::updateView()  // public
     m_buttonAccept->setEnabled( m_item->dccStatus == DccTransfer::Queued );
   
   // Abort
-  m_buttonAbort->setEnabled( m_item->dccStatus != DccTransfer::Failed &&
-                             m_item->dccStatus != DccTransfer::Aborted &&
-                             m_item->dccStatus != DccTransfer::Done );
-  
+  m_buttonAbort->setEnabled( m_item->dccStatus < DccTransfer::Done );
 }
 
 void DccDetailDialog::slotLocalFileURLChanged( const QString& newURL )

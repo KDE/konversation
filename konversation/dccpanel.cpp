@@ -175,9 +175,7 @@ void DccPanel::selectionChanged()
         
         accept &= ( status == DccTransfer::Queued );
         
-        abort  |= ( status != DccTransfer::Failed && 
-                    status != DccTransfer::Aborted && 
-                    status != DccTransfer::Done );
+        abort  |= ( status < DccTransfer::Done );
         
         open   &= ( type == DccTransfer::Send ||
                     status == DccTransfer::Done );
@@ -235,7 +233,7 @@ void DccPanel::abortDcc()
     {
       DccTransfer* item=static_cast<DccTransfer*>( it.current() );
       if( item )
-        if( item->getStatus() != DccTransfer::Aborted && item->getStatus() != DccTransfer::Failed && item->getStatus() != DccTransfer::Done )
+        if( item->getStatus() < DccTransfer::Done )
           item->abort();
     }
     ++it;
@@ -328,7 +326,7 @@ void DccPanel::clearAllCompletedDcc()
   {
     DccTransfer* item = static_cast<DccTransfer*>(it.current());
     DccTransfer::DccStatus st = item->getStatus();
-    if( st == DccTransfer::Done || st == DccTransfer::Aborted || st == DccTransfer::Failed )
+    if( st >= DccTransfer::Done )
       lst.append( it.current() );
     ++it;
   }

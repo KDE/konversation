@@ -68,9 +68,9 @@ DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _p
   StatusText[Connecting]    = i18n("Connecting");
   StatusText[Sending]       = i18n("Sending");
   StatusText[Receiving]     = i18n("Receiving");
+  StatusText[Done]          = i18n("Done");
   StatusText[Failed]        = i18n("Failed");
   StatusText[Aborted]       = i18n("Aborted");
-  StatusText[Done]          = i18n("Done");
   StatusText[Removed]       = i18n("Removed");
 }
 
@@ -287,12 +287,12 @@ QPixmap DccTransfer::getStatusIcon() const
     case Receiving:
       icon = "player_play";
       break;
+    case Done:
+      icon = "ok";
+      break;
     case Aborted:
     case Failed:
       icon = "stop";
-      break;
-    case Done:
-      icon = "ok";
       break;
     case Removed:
       icon = "trashcan_full";

@@ -50,9 +50,9 @@ class DccTransfer : public QObject, public KListViewItem
       Connecting,    // RECV: trying to connect to the server
       Sending,       // Sending
       Receiving,     // Receiving
+      Done,          // Transfer done
       Failed,        // Transfer failed
       Aborted,       // Transfer aborted by user
-      Done,          // Transfer done
       Removed,       // The file was removed
       DccStatusCount
     };
