@@ -263,12 +263,12 @@ void StatusPanel::appendInputText(const QString& text)
 
 void StatusPanel::setChannelEncoding(const QString& encoding)  // virtual
 {
-  KonversationApplication::preferences.setChannelEncoding(server->getServerGroup(), "!status", encoding);
+  KonversationApplication::preferences.setChannelEncoding(server->getServerGroup(), ":server", encoding);
 }
 
 QString StatusPanel::getChannelEncoding()  // virtual
 {
-  return KonversationApplication::preferences.getChannelEncoding(server->getServerGroup(), "!status");
+  return KonversationApplication::preferences.getChannelEncoding(server->getServerGroup(), ":server");
 }
 
 QString StatusPanel::getChannelEncodingDefaultDesc()  // virtual

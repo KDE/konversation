@@ -1009,7 +1009,7 @@ void Server::incoming()
           if( command == "332" )  // RPL_TOPIC
             channelKey = lineSplit[2];
           if( command == "372" )  // RPL_MOTD
-            channelKey = "!status";
+            channelKey = ":server";
         }
       }
       else
