@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspagedialogs.cpp  -  description
+  prefspagedialogs.cpp  -  Page to manage "do not show again" dialogs
   begin:     Don Mai 29 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -19,7 +19,6 @@
 
 #include "prefspagedialogs.h"
 #include "preferences.h"
-
 
 PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences) :
                   PrefsPage(newParent,newPreferences)
@@ -46,10 +45,11 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
   for(unsigned int index=0;index<dialogDefinitions.count();index++)
   {
     QString flagName(dialogDefinitions[index].section(' ',0,0));
-    item=new ServerListItem(dialogListView,index,flagName,dialogDefinitions[index].section(' ',1));
+    item=new QCheckListItem(dialogListView,flagName,QCheckListItem::CheckBox);
+    item->setText(1,dialogDefinitions[index].section(' ',1));
 
     if(preferences->getDialogFlag(flagName)) item->setOn(true);
-  } // for
+  } // endfor
 
   dialogsLayout->addWidget(dialogListView);
 }
@@ -61,11 +61,11 @@ PrefsPageDialogs::~PrefsPageDialogs()
 
 void PrefsPageDialogs::applyPreferences()
 {
-  ServerListItem* item=static_cast<ServerListItem*>(dialogListView->itemAtIndex(0));
+  QCheckListItem* item=static_cast<QCheckListItem*>(dialogListView->itemAtIndex(0));
   while(item)
   {
-    preferences->setDialogFlag(item->text(1),item->isOn());
-    item=static_cast<ServerListItem*>(item->itemBelow());
+    preferences->setDialogFlag(item->text(0),item->isOn());
+    item=static_cast<QCheckListItem*>(item->itemBelow());
   }
 }
 

@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspagedialogs.h  -  description
+  prefspagedialogs.h  -  Page to manage "do not show again" dialogs
   begin:     Don Mai 29 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -16,13 +16,13 @@
 #define PREFSPAGEDIALOGS_H
 
 #include "prefspage.h"
-#include "serverlistitem.h"
 
 /*
   @author Dario Abatianni
 */
 
 class KListView;
+class QCheckListItem;
 
 class PrefsPageDialogs : public PrefsPage
 {
@@ -37,7 +37,7 @@ class PrefsPageDialogs : public PrefsPage
 
   protected:
     KListView* dialogListView;
-    ServerListItem* item;
+    QCheckListItem* item;
 };
 
 #endif

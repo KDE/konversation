@@ -6,7 +6,7 @@
 */
 
 /*
-  serverlistitem.h  -  description
+  serverlistitem.h  -  Holds the list items inside the server list preferences panel
   begin:     Sun Feb 10 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -18,6 +18,7 @@
 #define SERVERLISTITEM_H
 
 #include <qlistview.h>
+#include <qstring.h>
 
 /*
   @author Dario Abatianni
@@ -28,7 +29,9 @@ class ServerListItem : public QObject, public QCheckListItem
   Q_OBJECT
 
   public:
-    ServerListItem(QListView* parent,int newId,QString arg0,
+    ServerListItem(QListViewItem* parent,
+                   int newId,
+                   QString arg0,
                    QString arg1=QString::null,
                    QString arg2=QString::null,
                    QString arg3=QString::null,
@@ -36,7 +39,9 @@ class ServerListItem : public QObject, public QCheckListItem
                    QString arg5=QString::null,
                    QString arg6=QString::null);
     ~ServerListItem();
-    int getId() const { return id; };
+
+    int getId() const;
+    QString getGroup() const;
 
   signals:
     void stateChanged(ServerListItem* myself,bool state);
@@ -44,6 +49,7 @@ class ServerListItem : public QObject, public QCheckListItem
   protected:
     void stateChange(bool state);
     int id;
+    QString group;
 };
 
 #endif

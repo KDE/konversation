@@ -33,13 +33,13 @@ class PrefsPageServerList : public PrefsPage
 {
   Q_OBJECT
 
-  public: 
+  public:
     PrefsPageServerList(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageServerList();
 
   signals:
     void connectToServer(int id);
-    
+
   protected slots:
     void newServer();
     void editServer();
@@ -53,6 +53,8 @@ class PrefsPageServerList : public PrefsPage
     void showServerListChanged(int state);
 
   protected:
+    QListViewItem* findBranch(QString name,bool generate=true);
+
     QPushButton* connectButton;
     QPushButton* newServerButton;
     QPushButton* editServerButton;

@@ -27,7 +27,7 @@
 #include "editserverdialog.h"
 
 PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPreferences) :
-                     PrefsPage(newParent,newPreferences)                    
+                     PrefsPage(newParent,newPreferences)
 {
   // Add Layout to Server list pane
   QVBoxLayout* serverListLayout=new QVBoxLayout(parentFrame,marginHint(),spacingHint(),"server_list_layout");
@@ -36,33 +36,35 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
   serverListView=new KListView(parentFrame);
 
   serverListView->setItemsRenameable(true);
-  serverListView->addColumn(i18n("Auto"));
-  serverListView->addColumn(i18n("Group"));
-  serverListView->addColumn(i18n("Server"));
-  serverListView->addColumn(i18n("Port"));
-  serverListView->addColumn(i18n("Password"));
-  serverListView->addColumn(i18n("Channel"));
-  serverListView->addColumn(i18n("Password"));
-  serverListView->addColumn(i18n("Identity"));
+  serverListView->addColumn(i18n("Group"));    // 0
+  serverListView->addColumn(i18n("Server"));   // 1
+  serverListView->addColumn(i18n("Port"));     // 2
+  serverListView->addColumn(i18n("Password")); // 3
+  serverListView->addColumn(i18n("Channel"));  // 4
+  serverListView->addColumn(i18n("Password")); // 5
+  serverListView->addColumn(i18n("Identity")); // 6
 
   serverListView->setRenameable(0,false);
   serverListView->setRenameable(1,true);
   serverListView->setRenameable(2,true);
-  serverListView->setRenameable(3,true);
-  serverListView->setRenameable(5,true);
+  serverListView->setRenameable(4,true);
 
   serverListView->setAllColumnsShowFocus(true);
 
   // Fill in the servers from the preferences
   int index=0;
 
+  serverListView->setRootIsDecorated(true);
+
   QString serverString=preferences->getServerByIndex(index);
   while(!serverString.isEmpty())
   {
     int id=preferences->getServerIdByIndex(index);
     QStringList serverEntry=QStringList::split(',',serverString,true);
-    ServerListItem* item=new ServerListItem(serverListView,id,
-                                            serverEntry[0],
+
+    QListViewItem* branch=findBranch(serverEntry[0]);
+    ServerListItem* item=new ServerListItem(branch,id,
+                                            serverEntry[0],  // won't be shown, but stored inside
                                             serverEntry[1],
                                             serverEntry[2],
                                             (!serverEntry[3].isEmpty()) ? QString("********") : QString::null,
@@ -91,7 +93,7 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
 
   showServerList=new QCheckBox(i18n("&Show server list while autoconnecting"),parentFrame,"show_serverlist_check");
   showServerList->setChecked(preferences->getShowServerList());
-  
+
   serverListLayout->addWidget(serverListView);
   serverListLayout->addWidget(buttonBox);
   serverListLayout->addWidget(showServerList);
@@ -138,7 +140,7 @@ void PrefsPageServerList::connectClicked()
     itemId=item->getId();
     // now we can pass the integer variable as argument for the emitted
     // signal instead of a reference to the locally declared
-    // ServerListItems accessor function. [MG]
+    // ServerListItem's accessor function. [MG]
     emit connectToServer(itemId);
   }
 }
@@ -147,9 +149,11 @@ void PrefsPageServerList::newServer()
 {
   int newId=preferences->addServer("New,new.server.com,6667,,,,,");
 
-  ServerListItem* newItem=new ServerListItem(serverListView,newId,QString::null);
+  QListViewItem* branch=findBranch("New");
+  ServerListItem* newItem=new ServerListItem(branch,newId,"New");
 
   serverListView->setSelected(newItem,true);
+  serverListView->ensureItemVisible(newItem);
   editServer();
 }
 
@@ -172,8 +176,14 @@ void PrefsPageServerList::removeServer()
   ServerListItem* item=static_cast<ServerListItem*>(lv_item);
   if(item)
   {
+    // find branch this item belongs to
+    QListViewItem* branch=findBranch(item->getGroup());
+    // remove server from preferences
     preferences->removeServer(item->getId());
+    // remove item from view
     delete item;
+    // if the branch has no other items, remove it
+    if(branch->childCount()==0) delete branch;
   }
 }
 
@@ -218,18 +228,29 @@ void PrefsPageServerList::updateServer(const QString& groupName,
                                        const QString& channelKey,
                                        const QString& identity)
 {
-  QListViewItem* item=serverListView->selectedItems().first();
   // Need to find a better way without casting
-  ServerListItem* serverItem=static_cast<ServerListItem*>(item);
-  int id=serverItem->getId();
+  ServerListItem* item=static_cast<ServerListItem*>(serverListView->selectedItems().first());
+  // find branch the old item resides in
+  QListViewItem* branch=findBranch(item->getGroup());
+  // save server id of the old item
+  int id=item->getId();
+  // remove item from the list
+  delete item;
+  // if the branch is empty, remove it
+  if(branch->childCount()==0) delete branch;
 
-  serverItem->setText(1,groupName);
-  serverItem->setText(2,serverName);
-  serverItem->setText(3,serverPort);
-  serverItem->setText(4,(!serverKey || serverKey.isEmpty()) ? QString::null : QString("********"));
-  serverItem->setText(5,channelName);
-  serverItem->setText(6,(!channelKey || channelKey.isEmpty()) ? QString::null : QString("********"));
-  serverItem->setText(7,identity);
+  // find branch to insert the new item into
+  branch=findBranch(groupName);
+
+  item=new ServerListItem(branch,
+                          id,
+                          groupName,
+                          serverName,
+                          serverPort,
+                          (!serverKey || serverKey.isEmpty()) ? QString::null : QString("********"),
+                          channelName,
+                          (!channelKey || channelKey.isEmpty()) ? QString::null : QString("********"),
+                          identity);
 
   preferences->updateServer(id,groupName+","+
                                serverName+","+
@@ -237,8 +258,11 @@ void PrefsPageServerList::updateServer(const QString& groupName,
                                serverKey+","+
                                channelName+","+
                                channelKey+","+
-                               (serverItem->isOn() ? "1" : "0")+","+
+                               (item->isOn() ? "1" : "0")+","+
                                identity);
+
+  serverListView->setSelected(item,true);
+  serverListView->ensureItemVisible(item);
 }
 
 void PrefsPageServerList::updateServerProperty(QListViewItem* item,const QString& value,int property)
@@ -248,7 +272,9 @@ void PrefsPageServerList::updateServerProperty(QListViewItem* item,const QString
   int id=serverItem->getId();
 
   if(property==0) property=6;  // to keep old preferences working with auto connect checkbox
-  else property--;             // -1 because the first is the checkbox
+
+// No longer needed, since the group property was moved out
+//  else property--;             // -1 because the first is the checkbox
 
   preferences->changeServerProperty(id,property,value);
 }
@@ -260,14 +286,26 @@ void PrefsPageServerList::updateAutoState(ServerListItem* item,bool state)
 
 void PrefsPageServerList::serverDoubleClicked(QListViewItem* item)
 {
-  // Suppress a compiler warning
-  item->height();
-  connectClicked();
+  if(item->text(1).isEmpty()) item->setOpen(!item->isOpen());
+  else connectClicked();
 }
 
 void PrefsPageServerList::showServerListChanged(int state)
 {
   preferences->setShowServerList(state==2);
+}
+
+QListViewItem* PrefsPageServerList::findBranch(QString name,bool generate)
+{
+  QListViewItem* branch=serverListView->findItem(name,0);
+  if(branch==0 && generate==true)
+  {
+    branch=new QListViewItem(serverListView,name);
+    branch->setOpen(true);
+    branch->setSelectable(false);
+  }
+
+  return branch;
 }
 
 #include "prefspageserverlist.moc"
