@@ -12,6 +12,14 @@
   email:     eisfuchs@tigress.com
 */
 
+/*
+DCC TODOs (URGENT):
+  - Add an option to switch fast dcc sending
+  - Integrate error messages (we should use modal dialogs as less as possible)
+  - Reconsider the file-naming process at dcc receiving
+  - Check if the refactored dcc receiving function works well at all situations
+*/
+
 #include <qheader.h>
 #include <qhostaddress.h>
 #include <qstyle.h>
