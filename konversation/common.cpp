@@ -47,39 +47,23 @@ QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColo
 
   QString filteredLine = text;
   QString linkColor = KonversationApplication::preferences.getColor("LinkMessage");
-  int pos = 0;
-  int urlLen;
-  QString href;
   QString link;
-  QString insertText;
 
   if(useCustomColor) {
-    link = "<font color=\"#"+linkColor+"\"><a href=\"#%1\">%2</a></font>";
+    link = "\\1<font color=\"#"+linkColor+"\"><a href=\"#\\2\">\\2</a></font>";
   } else {
-    link = "<a href=\"#%1\">%2</a>";
+    link = "\\1<a href=\"#\\2\">\\2</a>";
   }
 
   if(filteredLine.contains("#")) {
-    QRegExp chanExp("(?:^|\\s)#[^\007\015\012,\\s]{2,}");
-
-    while((pos = chanExp.search(filteredLine, pos)) >= 0) {
-        urlLen = chanExp.matchedLength();
-        href = filteredLine.mid( pos, urlLen );
-
-        if(href.startsWith(" ")) {
-          pos++;
-          urlLen--;
-          href = href.mid(1);
-        }
-
-        insertText = link.arg(href, href);
-        filteredLine.replace(pos, urlLen, insertText);
-        pos += insertText.length() - 1;
-    }
+    QRegExp chanExp("(^|\\s)(#[\\w+-]{2,})");
+    filteredLine.replace(chanExp, link);
   }
-
-  pos = 0;
-  urlLen =0;
+  
+  int pos = 0;
+  int urlLen = 0;
+  QString href;
+  QString insertText;
 
   QRegExp urlPattern("((www\\.(?!\\.)|(fish|(f|ht)tp(|s))://)([\\d\\w\\./,\\':~\\?=;#@\\-\\+\\%\\*\\{\\}\\!]|&amp;)+)|"
     "([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
