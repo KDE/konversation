@@ -1,0 +1,31 @@
+#!/usr/bin/perl -w
+
+# Script to display output from any command for Konversation
+# Example: /exec cmd uname -a
+# made by Gary Cramblitt <garycramblitt@comcast.net>
+# The script might be uncompatible with other unix variants than linux.
+# only tested on Debian GNU/Linux Sid
+# use the code for whatever you wish :-)
+
+
+$PORT = shift;
+$SERVER = shift;
+$TARGET = shift;
+$CMDPART = shift;
+$CMD = $CMDPART;
+$CMDPART = shift;
+while($CMDPART)
+	{
+	$CMD .= " " . $CMDPART;
+	$CMDPART = shift;
+	}
+$CMDOUTPUT = `$CMD`;
+if($CMDOUTPUT)
+	{
+	exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$CMD: $CMDOUTPUT\"");
+	}
+else
+	{
+	exec ("dcop $PORT Konversation info \"Could not do $CMD.\"");
+	}
+
