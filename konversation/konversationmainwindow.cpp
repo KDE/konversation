@@ -65,6 +65,7 @@
 #include "trayicon.h"
 #include "tabaction.h"
 #include "dccchat.h"
+#include "serverlistdialog.h"
 
 #ifdef USE_MDI
 KonversationMainWindow::KonversationMainWindow() : KMdiMainFrm(0,"mdi_main_form")
@@ -899,7 +900,12 @@ void KonversationMainWindow::closeNicksOnlinePanel()
 
 void KonversationMainWindow::openServerList()
 {
-  emit openPrefsDialog(Preferences::ServerListPage);
+  //emit openPrefsDialog(Preferences::ServerListPage);
+  Konversation::ServerListDialog dialog;
+  KonversationApplication *konvApp = static_cast<KonversationApplication *>(KApplication::kApplication());
+  connect(&dialog, SIGNAL(connectToServer(int)), konvApp, SLOT(connectToAnotherServer(int)));
+  
+  dialog.exec();
 }
 
 void KonversationMainWindow::openQuickConnectDialog()
