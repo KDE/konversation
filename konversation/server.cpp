@@ -733,10 +733,10 @@ void Server::gotOwnResolvedHostByWelcome(KResolverResults res)
 {
   if ( res.error() == KResolver::NoError && !res.isEmpty() ) {
     ownIpByWelcome = res.first().address().nodeName();
-    kdDebug() << "ownIpByWelcome reply : " << ownIpByWelcome << endl;
+    kdDebug() << "Server::gotOwnResolvedHostByWelcome(): Success: " << ownIpByWelcome << endl;
   }
   else
-    kdDebug() << "Got error " << ( int )res.error() << endl;
+    kdDebug() << "Server::gotOwnResolvedHostByWelcome(): Got error: " << ( int )res.error() << endl;
 }
 
 void Server::quitServer()
@@ -2543,10 +2543,10 @@ void Server::gotOwnResolvedHostByUserhost(KResolverResults res)
 {
   if ( res.error() == KResolver::NoError && !res.isEmpty() ) {
     ownIpByUserhost = res.first().address().nodeName();
-    kdDebug() << "ownIpByUserhost reply : " << ownIpByUserhost << endl;
+    kdDebug() << "Server::gotOwnResolvedHostByUserhost(): Success: " << ownIpByUserhost << endl;
   }
   else
-    kdDebug() << "Got error " << ( int )res.error() << endl;
+    kdDebug() << "Server::gotOwnResolvedHostByUserhost(): Got error: " << ( int )res.error() << endl;
 }
 
 void Server::appendToChannel(const QString& channel,const QString& nickname,const QString& message)
