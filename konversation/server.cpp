@@ -939,8 +939,7 @@ void Server::lockSending()
 void Server::incoming()
 { 
   // If serverSocket->bytesAvailable() is zero we read 512 bytes ( BUFFER_LEN-1 ) else we read all bytes available
-  if( serverSocket->bytesAvailable() != 0 ) {
-    int max_bytes = serverSocket->bytesAvailable();
+  int max_bytes = serverSocket->bytesAvailable() ? serverSocket->bytesAvailable() : BUFFER_LEN-1;
   
   char buffer[max_bytes];
   int len = 0;
@@ -955,18 +954,20 @@ void Server::incoming()
   }
   buffer[len] = 0;
 
-  //kdDebug() << "Buffer is " << buffer << endl;
+  kdDebug() << "Before conversion " << buffer << endl;
   
   // convert IRC ascii data to selected encoding
   bool isUtf8 = KStringHandler::isUtf8(buffer);
 
   if(isUtf8 || ((identity->getCodec() == "utf8") && !isUtf8))
   {
+    kdDebug() << "After conversion 1 " <<  KStringHandler::from8Bit(buffer) << endl;
     inputBuffer += KStringHandler::from8Bit(buffer);
   }
   else
   {
     QTextCodec* codec=QTextCodec::codecForName(identity->getCodec().ascii());
+    kdDebug() << "After conversion 2 " <<  codec->toUnicode(buffer) << endl;
     inputBuffer += codec->toUnicode(buffer);
   }
 
@@ -974,7 +975,6 @@ void Server::incoming()
 
   // refresh lock timer if it was still locked
   if(!sendUnlocked) lockSending();
-  }
 }
 
 void Server::queue(const QString& buffer)
