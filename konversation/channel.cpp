@@ -1713,7 +1713,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
   QString prefix = "^";
   
   if(pattern.find(QRegExp("^(\\d|\\w)")) != -1) {
-    prefix = "(^|[^\\d\\w])";
+    prefix = "(^|[^\\d\\w]|[\\_])";
   }
   
   QRegExp regexp(prefix + QRegExp::escape(pattern.lower()));
