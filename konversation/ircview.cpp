@@ -535,8 +535,6 @@ void IRCView::doAppend(QString newLine,bool suppressTimestamps)
 // remember if scrollbar was positioned at the end of the text or not
 void IRCView::hideEvent(QHideEvent* /* event */)
 {
-  kdDebug() << "hide" << endl;
-
 #if QT_VERSION == 303
   // Does not seem to work very well with QT 3.0.3
   bool doScroll=true;
