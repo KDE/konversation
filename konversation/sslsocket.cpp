@@ -41,7 +41,6 @@ SSLSocket::SSLSocket(QWidget* serverParent, QObject* parent, const char* name)
 
 SSLSocket::~SSLSocket()
 {
-  kdDebug() << "In SSLSocket::~SSLSocket" << endl;
   // Close stream socket
   close();
   
@@ -96,7 +95,7 @@ void SSLSocket::slotConnected()
   
   if( KSSL::doesSSLWork() )
     {
-      kdDebug() << k_funcinfo << "Trying SSL connection..." << endl;
+      kdDebug() << "Trying SSL connection..." << endl;
       if( !kssl )
 	{
 	  kssl = new KSSL();
@@ -153,12 +152,19 @@ int SSLSocket::verifyCertificate()
   bool ipMatchesCN = false;
   bool doAddHost = false;
   QString hostname;
-  
+  KSSLCertificate::KSSLValidation validation;
   
   remoteHost = peerAddress().nodeName();
   url = "irc://"+remoteHost+":"+peerAddress().serviceName();
   
   KSSLCertificate& peerCertificate = kssl->peerInfo().getPeerCertificate();
+
+  validation = peerCertificate.validate();
+  if(validation == KSSLCertificate::Unknown ) {
+    emit sslFailure();
+    return 0;
+  }
+  
   KSSLX509Map certinfo(peerCertificate.getSubject());
   hostname = certinfo.getValue("CN");
     
@@ -167,7 +173,7 @@ int SSLSocket::verifyCertificate()
   
   ipMatchesCN = kssl->peerInfo().certMatchesAddress();
   
-  KSSLCertificate::KSSLValidation validation = KSSLCertificate::Ok;
+  validation = KSSLCertificate::Ok;
   
   if (!validationList.isEmpty())
     validation = validationList.first();
