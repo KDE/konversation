@@ -641,7 +641,7 @@ void Channel::completeNick()
         {
           QString lookNick=nicknameList.at(completionPosition)->getNickname();
 
-          if ( lookNick.contains(prefixCharacter) )
+          if ( prefixCharacter != QString::null && lookNick.contains(prefixCharacter) )
              lookNick = lookNick.section( prefixCharacter,1 );
 
           if(lookNick.lower().startsWith(pattern)) foundNick=lookNick;
