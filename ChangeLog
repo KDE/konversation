@@ -6,6 +6,7 @@ Changes from 0.13 to 0.14
 - Hilight mailto: links
 - Topic line can now be hidden
 - Added an away nickname
+- Added /aaway, /ame and /amsg
 - Added "Open URL" context menu to channel list entries
 - Implemented slower / faster blinking of tabs for more / less important events
 - Less important events like Join, Part and Nickchanges can now be hidden
