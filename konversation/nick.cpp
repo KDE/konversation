@@ -43,7 +43,7 @@ Nick::Nick(KListView* listView,
            bool halfop,
            bool voice)
 {
-  listViewItem=new LedListViewItem(listView,newName,newMask,admin,owner,op,halfop,voice, this);
+  listViewItem=new LedListViewItem(listView,newName,newMask,this);
   nickname=newName;
   hostmask=newMask;
 
