@@ -32,6 +32,7 @@
 #include "server.h"
 #include "linkaddressbookui.h"
 #include "addressbook.h"
+#include "query.h"
 
 #define LABEL_OFFSET 16
 
@@ -425,22 +426,20 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
 	if(viewType == ChatWindow::Query) {
           m_popup->setItemVisible(AddressbookSub, true);
 	  m_popup->setItemVisible(SendEmail, true);
-	  //Now.. how do we get a nickinfo from this query?  A good question!
-          Server *server = win->getServer();
-	  if(server) {
-	    NickInfoPtr nickinfo = server->getNickInfo(win->getName()); //I think.
-	    if(nickinfo) {
-              insertAssociationSubMenu(nickinfo);
-	      m_popup->setItemEnabled(AddressbookSub, true);
+
+	  Query *query = static_cast<Query*>(win);
+	  NickInfoPtr nickinfo = query->getNickInfo();
+	  if(nickinfo) {
+            insertAssociationSubMenu(nickinfo);
+	    m_popup->setItemEnabled(AddressbookSub, true);
+	    if(!nickinfo->getAddressee().preferredEmail().isEmpty())
 	      m_popup->setItemEnabled(SendEmail, true);
-	    } else {
-              m_popup->setItemEnabled(AddressbookSub, false); //This _does_ happen when the user goes offline!
-	      m_popup->setItemEnabled(SendEmail, false);
-	      m_popup->changeTitle(Label,lookTab->text() + " - Offline");
-	    }
+	    else
+	      m_popup->setItemEnabled(SendEmail, false); 
 	  } else {
-	    m_popup->setItemEnabled(AddressbookSub, false); //This shouldn't happen.  All queries have a server.
+            m_popup->setItemEnabled(AddressbookSub, false); //This _does_ happen when the user goes offline!
 	    m_popup->setItemEnabled(SendEmail, false);
+	    m_popup->changeTitle(Label,lookTab->text() + " - Offline");
 	  }
 	} else {	
 	  m_popup->setItemVisible(AddressbookSub, false);
