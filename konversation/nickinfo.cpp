@@ -171,11 +171,16 @@ KABC::Addressee NickInfo::getAddressee() const { return m_addressee;}
 
 void NickInfo::refreshAddressee() {
   //m_addressee might not have changed, but information inside it may have.
-  m_addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(m_nickname, m_owningServer->getServerName(), m_owningServer->getServerGroup());
+  KABC::Addressee addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(m_nickname, m_owningServer->getServerName(), m_owningServer->getServerGroup());
+  if(!addressee.isEmpty() && addressee.uid() != m_addressee.uid()) {
+    //This nick now belongs to a different addressee.  We need to update the status for both the old and new addressees.
+    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
+  }
+  m_addressee = addressee;
   emit nickInfoChanged();
   
   if(!m_addressee.isEmpty())
-    Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid(), 4);
+    Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid());
 }
 
 QString NickInfo::tooltip() const {
