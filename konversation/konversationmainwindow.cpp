@@ -87,6 +87,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   dccPanel=0;
   dccPanelOpen=false;
   m_closeApp = false;
+  m_insertCharDialog = 0;
 
   dccTransferHandler=new DccTransferHandler(this);
 
