@@ -54,9 +54,6 @@ QuickButtonsDialog::QuickButtonsDialog(QStringList buttonList,QSize size):
   // Insert buttons in reverse order to make them appear sorted correctly
   for(int index=8;index!=0;index--)
   {
-//    QStringList buttonText(QStringList::split(',',buttonList[index-1],true));
-//    new KListViewItem(buttonListView,buttonText[0],buttonText[1]);
-
     QString buttonText=buttonList[index-1];
     new KListViewItem(buttonListView,buttonText.section(',',0,0),buttonText.section(',',1));
   }
