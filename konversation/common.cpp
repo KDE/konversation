@@ -53,9 +53,14 @@ QString tagURLs(const QString& text, const QString& fromNick)
     
     // Extract channel
     QString channel = channelPattern.capturedTexts()[0];
+    QString space;
+
     QString href(channel.stripWhiteSpace());
+    if(href.length() != channel.length())
+      space=" "; // We eated some space so we will put it before channel link
+
     href = "#" + href;
-    QString link = "<font color=\"#" + linkColor + "\"><a href=\"" + href + "\">" + channel + "</a></font>";
+    QString link = "<font color=\"#" + linkColor + "\">"+space+"<a href=\"" + href + "\">" + channel.stripWhiteSpace() + "</a></font>";
 
     filteredLine.replace(pos,channel.length(),link);
     pos += link.length();
