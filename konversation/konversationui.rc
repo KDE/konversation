@@ -30,6 +30,7 @@
   </MenuBar>
 
   <ToolBar fullWidth="true" hidden="true" name="mainToolBar">
+    <Action name="quick_connect_dialog" />
     <Action name="options_configure_key_binding" />
     <Action name="options_configure" />
     <separator />
