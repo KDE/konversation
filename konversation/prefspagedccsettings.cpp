@@ -76,8 +76,8 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   QLabel* dccMethodToGetOwnIpLabel = new QLabel(i18n("&Method to get own IP:"), dccMethodToGetOwnIpBox);
   dccMethodToGetOwnIpComboBox = new QComboBox(dccMethodToGetOwnIpBox, "dcc_method_to_get_own_ip_combo");
   dccMethodToGetOwnIpComboBox->insertItem(i18n("Network Interface"));
-  dccMethodToGetOwnIpComboBox->insertItem(i18n("WHOIS Reply From IRC Server"));
-  dccMethodToGetOwnIpComboBox->insertItem(i18n("001 Reply From IRC Server"));
+  dccMethodToGetOwnIpComboBox->insertItem(i18n("USERHOST Reply From IRC Server"));
+  dccMethodToGetOwnIpComboBox->insertItem(i18n("WELCOME Reply From IRC Server"));
   dccMethodToGetOwnIpComboBox->insertItem(i18n("Specify Manually"));
   dccMethodToGetOwnIpLabel->setBuddy(dccMethodToGetOwnIpComboBox);
 

@@ -329,7 +329,7 @@ class Server : public QObject
   public slots:
     void lookupFinished();
     void connectToIRCServer();
-    void gotWhoisIpReply(KResolverResults res);
+    void gotOwnUserhostReply(KResolverResults res);
     void queue(const QString &buffer);
     void queueList(const QStringList &buffer);
     void queueAt(uint pos,const QString& buffer);
@@ -528,8 +528,8 @@ class Server : public QObject
     QStringList inputBuffer;
     QStringList outputBuffer;
     QString nickname;
-    QString ownIpByWHOIS;
-    QString ownIpBy001;
+    QString ownIpByUserhost;  // RPL_USERHOST
+    QString ownIpByWelcome;  // RPL_WELCOME
     QString serverKey;
     QString lastDccDir;
 

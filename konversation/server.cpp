@@ -651,7 +651,7 @@ void Server::connectionEstablished(const QString& ownHost)
 {
   KNetwork::KResolverResults res = KNetwork::KResolver::resolve(ownHost, "");
   if(res.size() > 0)
-    ownIpBy001 = res.first().address().nodeName();
+    ownIpByWelcome = res.first().address().nodeName();
 
   emit serverOnline(true);
 
@@ -666,6 +666,8 @@ void Server::connectionEstablished(const QString& ownHost)
     // register with services
     if(!botPassword.isEmpty() && !bot.isEmpty())
       queue("PRIVMSG "+bot+" :identify "+botPassword);
+    // get own ip by userhost
+    requestUserhost(nickname);
 
     if(rejoinChannels) {
       rejoinChannels = false;
@@ -1299,10 +1301,10 @@ QString Server::getIp(bool followDccSetting)
   {
     int methodId = KonversationApplication::preferences.getDccMethodToGetOwnIp();
 
-    if(methodId == 1)  // WHOIS reply
-      ip = ownIpByWHOIS;
-    else if(methodId == 2)  // 001 reply
-      ip = ownIpBy001;
+    if(methodId == 1)  // RPL_USERHOST
+      ip = ownIpByUserhost;
+    else if(methodId == 2)  // RPL_WELCOME
+      ip = ownIpByWelcome;
     else if(methodId == 3 && !KonversationApplication::preferences.getDccSpecificOwnIp().isEmpty())  // user specifies
     {
       KNetwork::KResolverResults res = KNetwork::KResolver::resolve(KonversationApplication::preferences.getDccSpecificOwnIp(), "");
@@ -2312,14 +2314,6 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
 
 void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceHostmask)
 {
-  // remember my IP for DCC sending
-  if(ownIpByWHOIS.isEmpty() && sourceNick==nickname)  // myself
-  {
-    QString myhost = sourceHostmask.section('@', 1);
-    // Use async lookup else you will be blocking GUI badly
-    KNetwork::KResolver::resolveAsync(this,SLOT(gotWhoisIpReply(KResolverResults)),myhost,"0");
-  }
-
   // Update NickInfo.
   NickInfoPtr nickInfo=getNickInfo(sourceNick);
   if (nickInfo)
@@ -2332,16 +2326,6 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
   // Set hostmask for query with the same name
   Query* query=getQueryByName(sourceNick);
   if(query) query->setHostmask(sourceHostmask);
-}
-
-void Server::gotWhoisIpReply(KResolverResults res)
-{
-    if ( res.error() == KResolver::NoError  ) {
-        ownIpByWHOIS = res.first().address().nodeName();
-        kdDebug() << "ownIpByWHOIS reply : " << ownIpByWHOIS << endl;
-    }
-    else
-        kdDebug() << "Got error " << ( int )res.error() << endl;
 }
 
 void Server::removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit)
@@ -2445,6 +2429,13 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
 void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool /* ircOp */)
 {
   addHostmaskToNick(nick,hostmask);
+  // remember my IP for DCC things
+  if(ownIpByUserhost.isEmpty() && nick==nickname)  // myself
+  {
+    QString myhost = hostmask.section('@', 1);
+    // Use async lookup else you will be blocking GUI badly
+    KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnUserhostReply(KResolverResults)),myhost,"0");
+  }
   NickInfoPtr nickInfo = getNickInfo(nick);
   if (nickInfo)
   {
@@ -2453,6 +2444,16 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool
       nickInfo->setAway(away);
     }
   }
+}
+
+void Server::gotOwnUserhostReply(KResolverResults res)
+{
+  if ( res.error() == KResolver::NoError && !res.isEmpty() ) {
+    ownIpByUserhost = res.first().address().nodeName();
+    kdDebug() << "ownIpByUserhost reply : " << ownIpByUserhost << endl;
+  }
+  else
+    kdDebug() << "Got error " << ( int )res.error() << endl;
 }
 
 void Server::appendToChannel(const QString& channel,const QString& nickname,const QString& message)
