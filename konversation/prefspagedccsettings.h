@@ -39,12 +39,15 @@ class PrefsPageDccSettings : public PrefsPage
 
   protected slots:
     void folderButtonClicked();
+    void autoResumeStateChanged(int state);
+    void autoGetStateChanged(int state);
 
   protected:
     KLineEdit* dccFolderInput;
     QSpinBox* dccBufferSpin;
     QSpinBox* dccRollbackSpin;
     QCheckBox* dccAutoGet;
+    QCheckBox* dccAutoResume;
     QCheckBox* dccAddSender;
     QCheckBox* dccCreateFolder;
 };

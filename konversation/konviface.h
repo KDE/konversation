@@ -87,6 +87,8 @@ class KonvPreferencesIface : virtual public DCOPObject
     virtual bool getDccCreateFolder() = 0;
     virtual void setDccAutoGet(bool state) = 0;
     virtual bool getDccAutoGet() = 0;
+    virtual void setDccAutoResume(bool state) = 0;
+    virtual bool getDccAutoResume() = 0;
     virtual void setDccBufferSize(unsigned long size) = 0;
     virtual unsigned long getDccBufferSize() = 0;
     virtual void setDccPath(QString path) = 0;

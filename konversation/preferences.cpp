@@ -368,6 +368,9 @@ unsigned long Preferences::getDccRollback() { return dccRollback; }
 void Preferences::setDccAutoGet(bool state) { dccAutoGet=state; }
 bool Preferences::getDccAutoGet() { return dccAutoGet; }
 
+void Preferences::setDccAutoResume(bool state) { dccAutoResume=state; }
+bool Preferences::getDccAutoResume() { return dccAutoResume; }
+
 void Preferences::setDccPath(const QString &path) { dccPath=path; }
 QString Preferences::getDccPath() { return dccPath; }
 

@@ -134,7 +134,16 @@ void DccTransfer::startGet()
     setPosition(fileSize);
 
     QString newName(fullName);
-    int doResume=DccResumeDialog::ask(0,newName,dir.path());
+    int doResume;
+
+    if(KonversationApplication::preferences.getDccAutoResume())
+    {
+    	doResume=KDialogBase::Ok;
+    }
+    else
+    {
+    	doResume=DccResumeDialog::ask(0,newName,dir.path());
+    }
     /*
     int doResume=KMessageBox::questionYesNoCancel
                  (

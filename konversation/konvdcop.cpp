@@ -388,12 +388,31 @@ bool KonvPrefsDCOP::getDccCreateFolder()
 void KonvPrefsDCOP::setDccAutoGet(bool state)
 {
   KonversationApplication::preferences.setDccAutoGet(state);
+  if(KonversationApplication::preferences.getDccAutoResume() == true && state == false)
+  {
+	  KonversationApplication::preferences.setDccAutoResume(false);
+  }
   static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
 bool KonvPrefsDCOP::getDccAutoGet()
 {
   return KonversationApplication::preferences.getDccAutoGet();
+}
+
+void KonvPrefsDCOP::setDccAutoResume(bool state)
+{
+  KonversationApplication::preferences.setDccAutoResume(state);
+  if(KonversationApplication::preferences.getDccAutoGet() == false && state == true)
+  {
+	  KonversationApplication::preferences.setDccAutoGet(true);
+  }
+  static_cast<KonversationApplication*>(kapp)->saveOptions(true);
+}
+
+bool KonvPrefsDCOP::getDccAutoResume()
+{
+  return KonversationApplication::preferences.getDccAutoResume();
 }
 
 void KonvPrefsDCOP::setDccBufferSize(unsigned long size)

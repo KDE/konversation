@@ -105,6 +105,8 @@ class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
   bool getDccCreateFolder();
   void setDccAutoGet(bool state);
   bool getDccAutoGet();
+  void setDccAutoResume(bool state);
+  bool getDccAutoResume();
   void setDccBufferSize(unsigned long size);
   unsigned long getDccBufferSize();
   void setDccPath(QString path);

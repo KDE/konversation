@@ -533,6 +533,7 @@ void KonversationApplication::readOptions()
   preferences.setDccAddPartner(config->readBoolEntry("AddPartner",preferences.getDccAddPartner()));
   preferences.setDccCreateFolder(config->readBoolEntry("CreateFolder",preferences.getDccCreateFolder()));
   preferences.setDccAutoGet(config->readBoolEntry("AutoGet",preferences.getDccAutoGet()));
+  preferences.setDccAutoResume(config->readBoolEntry("AutoResume",preferences.getDccAutoResume()));
 
   // Path settings
   config->setGroup("Path Settings");
@@ -777,6 +778,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("BufferSize",preferences.getDccBufferSize());
   config->writeEntry("Rollback",preferences.getDccRollback());
   config->writeEntry("AutoGet",preferences.getDccAutoGet());
+  config->writeEntry("AutoResume",preferences.getDccAutoResume());
 
  // Path Settings
   config->setGroup("Path Settings");

@@ -34,7 +34,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
 {
   setName("DCC Settings");
   // Add a Layout to the DCC settings pane
-  QGridLayout* dccSettingsLayout=new QGridLayout(parentFrame,5,3,marginHint(),spacingHint(),"dcc_settings_layout");
+  QGridLayout* dccSettingsLayout=new QGridLayout(parentFrame,6,3,marginHint(),spacingHint(),"dcc_settings_layout");
 
   QLabel* dccFolderLabel=new QLabel(i18n("DCC &folder:"),parentFrame);
   dccFolderInput=new KLineEdit(preferences->getDccPath(),parentFrame);
@@ -63,12 +63,16 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   dccSpinBoxes->setStretchFactor(dccRollbackLabel,10);
 
   dccAutoGet=new QCheckBox(i18n("&Automatically accept DCC download"),parentFrame,"dcc_autoget_checkbox");
+  connect(dccAutoGet, SIGNAL(stateChanged(int)), this, SLOT(autoGetStateChanged(int)));
+  dccAutoResume=new QCheckBox(i18n("&Automatically resume DCC download"), parentFrame,"dcc_autoresume_checkbox");
+  connect(dccAutoResume, SIGNAL(stateChanged(int)), this, SLOT(autoResumeStateChanged(int)));
   dccAddSender=new QCheckBox(i18n("Add &sender to file name"),parentFrame,"dcc_sender_checkbox");
   dccCreateFolder=new QCheckBox(i18n("&Create folder for sender"),parentFrame,"dcc_create_folder_checkbox");
 
   dccAddSender->setChecked(preferences->getDccAddPartner());
   dccCreateFolder->setChecked(preferences->getDccCreateFolder());
   dccAutoGet->setChecked(preferences->getDccAutoGet());
+  dccAutoResume->setChecked(preferences->getDccAutoResume());
 
   QHBox* dccSpacer=new QHBox(parentFrame);
 
@@ -83,6 +87,8 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   row++;
 
   dccSettingsLayout->addMultiCellWidget(dccAutoGet,row,row,0,2);
+  row++;
+  dccSettingsLayout->addMultiCellWidget(dccAutoResume,row,row,0,2);
   row++;
   dccSettingsLayout->addMultiCellWidget(dccAddSender,row,row,0,2);
   row++;
@@ -115,12 +121,29 @@ void PrefsPageDccSettings::folderButtonClicked()
   }
 }
 
+void PrefsPageDccSettings::autoResumeStateChanged(int state)
+{
+	if(state == QButton::On)
+	{
+		dccAutoGet->setChecked(true);
+	}
+}
+
+void PrefsPageDccSettings::autoGetStateChanged(int state)
+{
+	if(state == QButton::Off && dccAutoResume->isChecked())
+	{
+		dccAutoResume->setChecked(false);
+	}
+}
+
 void PrefsPageDccSettings::applyPreferences()
 {
   preferences->setDccPath(dccFolderInput->text());
   preferences->setDccBufferSize(dccBufferSpin->value());
   preferences->setDccRollback(dccRollbackSpin->value());
   preferences->setDccAutoGet(dccAutoGet->isChecked());
+  preferences->setDccAutoResume(dccAutoResume->isChecked());
   preferences->setDccAddPartner(dccAddSender->isChecked());
   preferences->setDccCreateFolder(dccCreateFolder->isChecked());
 }

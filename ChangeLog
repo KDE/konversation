@@ -1,4 +1,5 @@
 Changes from 0.13 to 0.14
+- Added DCC auto-resume feature by Michael Goettsche (BR 81740) (thanks!)
 - Added systray notification
 - Added shell like nick completion mode (aka uga mode)
 - Implemented a cleaner way of handling tab shortcuts

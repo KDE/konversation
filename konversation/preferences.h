@@ -111,6 +111,8 @@ class Preferences : public QObject
     bool getDccCreateFolder();
     void setDccAutoGet(bool state);
     bool getDccAutoGet();
+    void setDccAutoResume(bool state);
+    bool getDccAutoResume();
     void setDccBufferSize(unsigned long size);
     unsigned long getDccBufferSize();
     void setDccPath(const QString &path);
@@ -409,6 +411,7 @@ class Preferences : public QObject
     bool dccAddPartner;
     bool dccCreateFolder;   // create folders for each DCC partner?
     bool dccAutoGet;
+    bool dccAutoResume;
     unsigned long dccBufferSize;
     unsigned long dccRollback;  // Rollback for Resume
     QString dccPath;
