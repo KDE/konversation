@@ -57,6 +57,5 @@ NEW (15.08.2004):
 - KNotify for kicks / kills
 - Channel mode buttons should describe current state
 - Add common default aliases
-- Redirect kick reasons to status tab
 - Configure dialog should remember where it was when it closed
 - Right click on email addresses to associate them to the address book entry of user posting it
