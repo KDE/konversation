@@ -144,6 +144,11 @@ void ChatWindow::setTextView(IRCView* newView)
   connect(textView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
 }
 
+void ChatWindow::insertRememberLine()
+{
+  textView->appendRaw("<br><hr color=\"#"+KonversationApplication::preferences.getColor("CommandMessage")+"\" noshade>", true);
+}
+
 void ChatWindow::appendRaw(const QString& message, bool suppressTimestamps)
 {
   textView->appendRaw(message, suppressTimestamps);

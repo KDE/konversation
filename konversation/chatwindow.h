@@ -68,6 +68,7 @@ class ChatWindow : public QVBox
     void setType(WindowType newType);
     WindowType getType();
 
+    void insertRememberLine();
     void append(const QString& nickname,const QString& message);
     void appendRaw(const QString& message, bool suppressTimestamps=false);
     void appendQuery(const QString& nickname,const QString& message);

@@ -374,6 +374,9 @@ class Preferences : public QObject
 
     bool getShowTopic();
     void setShowTopic(bool s);
+    
+    bool getShowRememberLineInAllWindows();
+    void setShowRememberLineInAllWindows(bool s);
 
     bool getHideUnimportantEvents();
     void setHideUnimportantEvents(bool state);
@@ -534,6 +537,7 @@ class Preferences : public QObject
 #endif
 
     bool showTopic;
+    bool showRememberLineInAllWindows;
     bool hideUnimportantEvents;
     
     // Web Browser

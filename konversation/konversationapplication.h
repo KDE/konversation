@@ -103,7 +103,7 @@ class KonversationApplication : public KApplication
     KonvIdentDCOP* identDCOP;
     KonversationMainWindow* mainWindow;
     Konversation::Sound* m_sound;
-		QuickConnectDialog* quickConnectDialog;
+    QuickConnectDialog* quickConnectDialog;
 
 };
 

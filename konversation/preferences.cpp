@@ -732,6 +732,9 @@ void Preferences::setShowTabBarCloseButton(bool s) { showTabBarCloseButton = s; 
 bool Preferences::getShowTopic() { return showTopic; }
 void Preferences::setShowTopic(bool s) { showTopic = s; }
 
+bool Preferences::getShowRememberLineInAllWindows() { return showRememberLineInAllWindows; }
+void Preferences::setShowRememberLineInAllWindows(bool s) { showRememberLineInAllWindows = s; }
+
 bool Preferences::getHideUnimportantEvents()           { return hideUnimportantEvents; }
 void Preferences::setHideUnimportantEvents(bool state) { hideUnimportantEvents=state; }
 

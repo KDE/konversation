@@ -347,6 +347,8 @@ void KonversationApplication::readOptions()
 #endif
   
   preferences.setShowTopic(config->readBoolEntry("ShowTopic", preferences.getShowTopic()));
+  
+  preferences.setShowRememberLineInAllWindows(config->readBoolEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows()));
 
   // Colors are now handled in preferences
 
@@ -659,6 +661,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
 #endif
   
   config->writeEntry("ShowTopic", preferences.getShowTopic());
+  
+  config->writeEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows());
   config->writeEntry("FilterColorCodes", preferences.getFilterColors());
   
   // Colors are now handled in preferences

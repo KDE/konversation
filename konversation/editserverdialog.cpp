@@ -123,7 +123,7 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   QWhatsThis::add(channelNameInput, channelNameWT);
   channelNameLabel->setBuddy(channelNameInput);
   
-  QLabel* connectCommandsLabel = new QLabel(i18n("C&onnect Command(s):"), page);
+  QLabel* connectCommandsLabel = new QLabel(i18n("C&onnect command(s):"), page);
   QString connectCommandsWT = i18n("Enter the command(s) you want to execute on "
                                                                 "connection to the server (separated by semicolons.)");
   QWhatsThis::add(connectCommandsLabel, connectCommandsWT);

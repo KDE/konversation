@@ -69,6 +69,7 @@ class PrefsPageAppearance : public PrefsPage
     QCheckBox* showQuickButtons;
     QCheckBox* showModeButtons;
     QCheckBox* showTopic;
+    QCheckBox* showRememberLineInAllWindows;
 
     QLabel* formatLabel;
 

@@ -39,7 +39,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
                      PrefsPage(newParent,newPreferences)
 {
   // Add a Layout to the appearance pane
-  QGridLayout* appearanceLayout=new QGridLayout(parentFrame,3,3,marginHint(),spacingHint());
+  QGridLayout* appearanceLayout=new QGridLayout(parentFrame,4,3,marginHint(),spacingHint());
 
   // Font settings
   QLabel* textFontLabel=new QLabel(i18n("Text font:"),parentFrame);
@@ -98,6 +98,9 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   
   showTopic=new QCheckBox(i18n("Show channel topic"), showButtonsBox, "show_topic");
   showTopic->setChecked(preferences->getShowTopic());
+  
+  showRememberLineInAllWindows = new QCheckBox(i18n("Show remember line in all channels/queries"), parentFrame, "show_remember_line_in_all_windows");
+  showRememberLineInAllWindows->setChecked(preferences->getShowRememberLineInAllWindows());
 
   autoUserhostCheck=new QCheckBox(i18n("Show h&ostmasks in nick list"),parentFrame,"auto_userhost_check");
   autoUserhostCheck->setChecked(preferences->getAutoUserhost());
@@ -193,6 +196,8 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   appearanceLayout->addMultiCellWidget(timestampBox,row,row,0,2);
   row++;
   appearanceLayout->addMultiCellWidget(showButtonsBox,row,row,0,2);
+  row++;
+  appearanceLayout->addMultiCellWidget(showRememberLineInAllWindows,row,row,0,2);
   row++;
   appearanceLayout->addMultiCellWidget(autoUserhostCheck,row,row,0,2);
   row++;
@@ -321,6 +326,7 @@ void PrefsPageAppearance::applyPreferences()
   preferences->setSortByStatus(sortByStatusCheck->isChecked());
   preferences->setSortCaseInsensitive(sortCaseInsensitiveCheck->isChecked());
   preferences->setShowTopic(showTopic->isChecked());
+  preferences->setShowRememberLineInAllWindows(showRememberLineInAllWindows->isChecked());
 
   int flag=1;
 

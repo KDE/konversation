@@ -775,10 +775,30 @@ void KonversationMainWindow::addIRCColor()
 
 void KonversationMainWindow::insertRememberLine()
 {
-  if(frontView->getType() == ChatWindow::Channel ||
-     frontView->getType() == ChatWindow::Query)
+  if(KonversationApplication::preferences.getShowRememberLineInAllWindows())
   {
-    frontView->appendRaw("<br><hr color=\"#"+KonversationApplication::preferences.getColor("CommandMessage")+"\" noshade>", true);
+    int total = getViewContainer()->count()-1;
+    int operations = 0;
+    ChatWindow* nextPage;
+    
+    for(int i = 0; i <= total; ++i)
+    {        
+      nextPage = static_cast<ChatWindow*>(getViewContainer()->page(i));
+      if(nextPage->getType() == ChatWindow::Channel ||
+          nextPage->getType() == ChatWindow::Query)
+      {
+         nextPage->insertRememberLine();
+      }
+    }
+  }
+    
+  else
+  {
+    if(frontView->getType() == ChatWindow::Channel ||
+        frontView->getType() == ChatWindow::Query)
+    {
+      frontView->insertRememberLine();
+    }
   }
 }
 
