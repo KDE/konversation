@@ -126,13 +126,13 @@ void PrefsPageServerList::connectClicked()
   QListViewItem* lv_item=serverListView->selectedItems().first();
   // FIXME: Do I really need to cast here? Isn't there a better way?
   // Maybe inherit from serverListView to return proper type
-  ServerListItem* item=(ServerListItem*)lv_item;
+  ServerListItem* item=static_cast<ServerListItem*>(lv_item);
 
-  if (item)
+  if(item)
   {
     // copy the getId() accessor functions return value
     // into an integer variable.
-    itemId = item->getId();
+    itemId=item->getId();
     // now we can pass the integer variable as argument for the emitted
     // signal instead of a reference to the locally declared
     // ServerListItems accessor function. [MG]
@@ -166,7 +166,7 @@ void PrefsPageServerList::removeServer()
   QListViewItem* lv_item=serverListView->selectedItems().first();
   // FIXME: Do I really need to cast here? Isn't there a better way?
   // Yup, there is, I could override the serverListView to return the correct type
-  ServerListItem* item=(ServerListItem*)lv_item;
+  ServerListItem* item=static_cast<ServerListItem*>(lv_item);
   if(item)
   {
     preferences->removeServer(item->getId());
@@ -179,7 +179,7 @@ void PrefsPageServerList::editServer()
   QListViewItem* lv_item=serverListView->selectedItems().first();
   // FIXME: Do I really need to cast here? Isn't there a better way?
   // Yup, there is, I could override the serverListView to return the correct type
-  ServerListItem* item=(ServerListItem*)lv_item;
+  ServerListItem* item=static_cast<ServerListItem*>(lv_item);
   if(item)
   {
     QString server=preferences->getServerById(item->getId());
@@ -217,7 +217,7 @@ void PrefsPageServerList::updateServer(const QString& groupName,
 {
   QListViewItem* item=serverListView->selectedItems().first();
   // Need to find a better way without casting
-  ServerListItem* serverItem=(ServerListItem*) item;
+  ServerListItem* serverItem=static_cast<ServerListItem*>(item);
   int id=serverItem->getId();
 
   serverItem->setText(1,groupName);
@@ -241,7 +241,7 @@ void PrefsPageServerList::updateServer(const QString& groupName,
 void PrefsPageServerList::updateServerProperty(QListViewItem* item,const QString& value,int property)
 {
   // Need to find a better way without casting
-  ServerListItem* serverItem=(ServerListItem*) item;
+  ServerListItem* serverItem=static_cast<ServerListItem*>(item);
   int id=serverItem->getId();
 
   if(property==0) property=6;  // to keep old preferences working with auto connect checkbox

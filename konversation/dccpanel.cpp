@@ -114,7 +114,7 @@ void DccPanel::dccSelected()
 
 void DccPanel::acceptDcc()
 {
-  DccTransfer* item=(DccTransfer*) getListView()->selectedItem();
+  DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
   if(item)
   {
     if(item->getType()==DccTransfer::Get && item->getStatus()==DccTransfer::Queued) item->startGet();
@@ -128,7 +128,7 @@ void DccPanel::sendDcc()
 
 void DccPanel::runDcc()
 {
-  DccTransfer* item=(DccTransfer*) getListView()->selectedItem();
+  DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
   if(item)
   {
     if(item->getType()==DccTransfer::Send || item->getType()==DccTransfer::ResumeSend)
@@ -140,7 +140,7 @@ void DccPanel::runDcc()
 
 void DccPanel::abortDcc()
 {
-  DccTransfer* item=(DccTransfer*) getListView()->selectedItem();
+  DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
   item->abort();
 }
 
