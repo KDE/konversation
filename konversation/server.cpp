@@ -497,26 +497,31 @@ void Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwn
         {
             isAdmin=true;
 	    recognisedMode=true;
+	    break;
         }
         case '!':  // channel owner (RFC2811)
         {
           isOwner=true;
 	  recognisedMode=true;
+	  break;
         }
         case '@':  // channel operator (RFC1459)
         {
           isOp=true;
 	  recognisedMode=true;
+	  break;
         }
         case '%':  // halfop
         {
           isHalfop=true;
 	  recognisedMode=true;
+	  break;
         }
         case '+':  // voiced (RFC1459)
         {
           hasVoice=true;
 	  recognisedMode=true;
+	  break;
         }
         default:
         {
