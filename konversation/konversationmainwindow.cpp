@@ -1011,7 +1011,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 
 bool KonversationMainWindow::queryClose()
 {
-  KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
+  KonversationApplication* konv_app = static_cast<KonversationApplication*>(kapp);
 
   if(konv_app->sessionSaving()) {
     m_closeApp = true;

@@ -118,7 +118,11 @@ void Server::doPreShellCommand() {
 
 Server::~Server()
 {
+
+//send queued messages	
   kdDebug() << "Server::~Server(" << getServerName() << ")" << endl;
+  // Send out the last messages (usually the /QUIT)
+  send();
 
   // Delete helper object.
   delete m_serverISON;
@@ -134,8 +138,6 @@ Server::~Server()
   
   // For SSL socket we autoclose socket when the Server object is deleted
   
-  // Send out the last messages (usually the /QUIT)
-  send();
 
 #ifdef USE_MDI
 /*
@@ -781,7 +783,8 @@ void Server::gotOwnResolvedHostByWelcome(KResolverResults res)
 void Server::quitServer()
 {
   QString command(KonversationApplication::preferences.getCommandChar()+"QUIT");
-  Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command,QString::null);
+  Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command, QString::null);
+  kdDebug() << "in quitServer()" << endl;
   queue(result.toServer);
 }
 
@@ -1130,9 +1133,11 @@ void Server::queueList(const QStringList& buffer)
 void Server::send()
 {
   // Check if we are still online
-  if(!isConnected() && !outputBuffer[0]) return;
+  if(!isConnected() && outputBuffer.isEmpty()) {
+    return;
+  }
 
-  if(outputBuffer.count() && sendUnlocked)
+  if(!outputBuffer.isEmpty() && sendUnlocked)
   {
     // NOTE: It's important to add the linefeed here, so the encoding process does not trash it
     //       for some servers.
@@ -1145,7 +1150,7 @@ void Server::send()
        outputLine.startsWith("PING LAG")) notifySent.start();
     
     // remember the first arg of /WHO to identify responses
-    else if(outputLineSplit[0].upper()=="WHO")
+    else if(!outputLineSplit.isEmpty() && outputLineSplit[0].upper()=="WHO")
     {
       if(2<=outputLineSplit.count())
         inputFilter.addWhoRequest(outputLineSplit[1]);
