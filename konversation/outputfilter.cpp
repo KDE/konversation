@@ -454,14 +454,9 @@ void OutputFilter::parseDcc(const QString &parameter)
     else if(dccType=="send")
     {
       if(parameterList.count()==1)                 // DCC SEND
-      {
         emit requestDccSend();
-        kdDebug() << "Yo" << endl;
-      }
       else if(parameterList.count()==2)            // DCC SEND <nickname>
-      {
         emit requestDccSend(parameterList[1]);
-      }
       else if(parameterList.count()>2)             // DCC SEND <nickname> <file> [file] ...
       {
 // TODO: make sure this will work:
