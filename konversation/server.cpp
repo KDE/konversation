@@ -576,7 +576,7 @@ void Server::lookupFinished()
 
     serverSocket->resetStatus();
     // prevent retrying to connect
-//    autoReconnect=0;
+    autoReconnect=0;
     // broken connection
     broken(0);
   }
