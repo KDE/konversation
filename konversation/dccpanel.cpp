@@ -314,7 +314,7 @@ void DccPanel::removeFile()
   }
   
   int ret = KMessageBox::warningContinueCancel( this,
-                                                i18n( "Do you really want to remove the selected %1 file(s)?" ).arg( deletableFiles ),
+                                                i18n( "Do you really want to remove the selected file?", "Do you really want to remove the selected %n files?", deletableFiles ),
                                                 i18n( "Delete Confirmation" ),
                                                 i18n( "&Delete" ),
                                                 "RemoveDCCReceivedFile",

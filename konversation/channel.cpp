@@ -143,12 +143,12 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   QWhatsThis::add(modeT, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>The <b>T</b>opic mode means that only the channel operator can change the topic for the channel.</qt>"));
   QWhatsThis::add(modeN, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p><b>N</b>o messages from outside means that users that are not in the channel cannot sends messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.</qt>"));
-  QWhatsThis::add(modeS, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>S</b>ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the <em>WHOIS</em> command or anything similiar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.</qt>"));
+  QWhatsThis::add(modeS, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>S</b>ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the <em>WHOIS</em> command or anything similar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.</qt>"));
   QWhatsThis::add(modeI, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>An <b>I</b>nvite only channel means that people can only join the channel if they are invited.  To invite someone, a channel operator needs to issue the command <em>/invite nick</em> from within the channel.</qt>"));
   QWhatsThis::add(modeP, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>P</b>rivate channel is shown in a listing of all channels, but the topic is not shown.  A user's <em>WHOIS</e> may or may not show them as being in a private channel depending on the irc server.</qt>"));
   QWhatsThis::add(modeM, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>M</b>oderated channel is one where only operators, half-operators and those with voice can talk.</qt>"));
   QWhatsThis::add(modeK, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>P</b>rotected channel requires users to enter a password in order to join.</qt>"));
-  QWhatsThis::add(modeL, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>A chanel that has a user <b>L</b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.</qt>"));
+  QWhatsThis::add(modeL, i18n("<qt>These buttons control the <em>mode</em> of the channel.  Only an operator can change these.<p>A channel that has a user <b>L</b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.</qt>"));
   
   connect(modeT,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
   connect(modeN,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
@@ -1630,7 +1630,7 @@ void Channel::updateFonts()
                                    KonversationApplication::preferences.getBackgroundImageName());
 
   nicksOps->setFont(KonversationApplication::preferences.getListFont());
-  QWhatsThis::add(nicksOps, i18n("<qt>This shows the number of users in the channel, and the number of those that are operators (ops).<p>A channel operator is a user that has special privilages, such as the ability to kick and ban users, change the channel modes, make other users operators</qt>"));
+  QWhatsThis::add(nicksOps, i18n("<qt>This shows the number of users in the channel, and the number of those that are operators (ops).<p>A channel operator is a user that has special privileges, such as the ability to kick and ban users, change the channel modes, make other users operators</qt>"));
 
   nicknameListView->sort();
 

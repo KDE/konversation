@@ -1227,21 +1227,31 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           // Display message only if this was not an automatic request.
           if(getAutomaticRequest("WHOIS",parameterList[1])==0)
           {
-            if(days)
-              server->appendStatusMessage(i18n("Whois"),i18n("%1 has been idle for %2 days, %3 hours, %4 minutes and %5 seconds.").arg(parameterList[1])
-                                        .arg(days).arg(hours % 24).arg(minutes % 60).arg(seconds % 60));
+            if(days) {
+              const QString daysString = i18n("1 day", "%n days", days);
+              const QString hoursString = i18n("1 hour", "%n hours", (hours % 24));
+              const QString minutesString = i18n("1 minute", "%n minutes", (minutes % 60));
+              const QString secondsString = i18n("1 second", "%n seconds", (seconds % 60));
+
+              server->appendStatusMessage(i18n("Whois"),i18n("%1 = name of person, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = (x seconds)", "%1 has been idle for %2, %3, %4, and %5.").arg(parameterList[1])
+                                        .arg(daysString).arg(hoursString).arg(minutesString).arg(secondsString));
             // or longer than an hour
-            else if(hours)
-              server->appendStatusMessage(i18n("Whois"),i18n("%1 has been idle for %2 hours, %3 minutes and %4 seconds.").arg(parameterList[1])
-                                        .arg(hours).arg(minutes % 60).arg(seconds % 60));
+            } else if(hours) {
+              const QString hoursString = i18n("1 hour", "%n hours", hours);
+              const QString minutesString = i18n("1 minute", "%n minutes", (minutes % 60));
+              const QString secondsString = i18n("1 second", "%n seconds", (seconds % 60));
+              server->appendStatusMessage(i18n("Whois"),i18n("%1 = name of person, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)", "%1 has been idle for %2, %3, and %4.").arg(parameterList[1])
+                                        .arg(hoursString).arg(minutesString).arg(secondsString));
             // or longer than a minute
-            else if(minutes)
-              server->appendStatusMessage(i18n("Whois"),i18n("%1 has been idle for %2 minutes and %3 seconds.").arg(parameterList[1])
-                                        .arg(minutes).arg(seconds % 60));
+            } else if(minutes) {
+              const QString minutesString = i18n("1 minute", "%n minutes", minutes);
+              const QString secondsString = i18n("1 second", "%n seconds", (seconds % 60));
+              server->appendStatusMessage(i18n("Whois"),i18n("%1 = name of person, %2 = (x minutes), %3 = (x seconds)", "%1 has been idle for %2 and %3.").arg(parameterList[1])
+                                        .arg(minutesString).arg(secondsString));
             // or just some seconds
-            else
-              server->appendStatusMessage(i18n("Whois"),i18n("%1 has been idle for %2 seconds.").arg(parameterList[1])
-                                        .arg(seconds));
+            } else {
+              server->appendStatusMessage(i18n("Whois"),i18n("%1 has been idle for 1 second.", "%1 has been idle for %n seconds.", seconds).arg(parameterList[1]));
+            }
           }
 
           if(parameterList.count()==4)
