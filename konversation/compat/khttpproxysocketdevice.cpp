@@ -30,6 +30,7 @@
 #include <qsocketnotifier.h>
 #include <qcstring.h>
 
+#include <kdebug.h>
 #include "kresolver.h"
 #include "ksocketaddress.h"
 #include "ksocketdevice.h"
@@ -182,12 +183,12 @@ bool KHttpProxySocketDevice::parseServerReply()
       Q_LONG written = writeBlock(d->request, d->request.length());
       if (written < 0)
 	{
-	  qDebug("KHttpProxySocketDevice: would block writing request!");
+	  kdDebug() << "KHttpProxySocketDevice: would block writing request!" << endl;
 	  if (error() == WouldBlock)
 	    setError(IO_ConnectError, InProgress);
 	  return error() == WouldBlock; // error
 	}
-      qDebug("KHttpProxySocketDevice: request written");
+      kdDebug() << "KHttpProxySocketDevice: request written" << endl;
 
       d->request.remove(0, written);
 
@@ -206,7 +207,7 @@ bool KHttpProxySocketDevice::parseServerReply()
   if (!blocking())
     {
       Q_LONG avail = bytesAvailable();
-      qDebug("KHttpProxySocketDevice: %ld bytes available", avail);
+      kdDebug() << "KHttpProxySocketDevice: " <<  avail << " bytes available" << endl;
       setState(0);
       if (avail == 0)
 	{
@@ -264,8 +265,8 @@ bool KHttpProxySocketDevice::parseServerReply()
     }	    
 
   // now really parse the reply
-  qDebug("KHttpProxySocketDevice: get reply: %s\n",
-	 d->reply.left(d->reply.find('\r')).data());
+  kdDebug() << "KHttpProxySocketDevice: get reply: " << 
+	 d->reply.left(d->reply.find('\r')).data() << endl << endl;
   if (d->reply.left(7) != "HTTP/1." ||
       (index = d->reply.find(' ')) == -1 ||
       d->reply[index + 1] != '2')
