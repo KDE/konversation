@@ -1,67 +1,64 @@
 TODO-list for Konversation
 ==========================
 
-
 SHORT-TERM (URGENT):
-- /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
 - Show / Hide tab types (status tabs ect.)
 - Support "CTCP-DCC reply from <nickname>: REJECT SEND <filename> <reason>"
+- On connect konversation should check if the identity was set up correctly to satisfy USER command
 
 MID-TERM:
-- Make [x] on tabs harder to click (1 second hover delay or similar)
 - Doxify the source
 - Per nick coloring in channel discussion
-- Treeview with servers, list of channels / queries in a detachable window that also indicates new text
-- After being away a summary of lines with highlighting in its own window would be nice; a click on one line
-  might jump to the according line in the channel/query-window
-- In Nicks Online panel, show stats like "last spoken" "last seen"
+- In Watched Nicks panel, show stats like "last spoken" "last seen"
 - Compute md5sum over DCCs and send / display the hash after transfer
 - Make separate Highlight lists for each identity
+- Text substitution list (aliases, dangerous commands) with ability to pop up messageboxes
 
 LONG-TERM:
+- Treeview with servers, list of channels / queries in a detachable window that also indicates new text
 - Logrotate with timer or at shutdown, compress rotated logs
 - Context menu on nick in nick list should contain hostmask, realname, etc. infos (in a sub-menu)
-- Stats for server lag, words per session per person / channel, quits etc.
-- "notices" tab for all notices that are no channel notices
-- "snotices" tab for all server notices (prefix without "!" )
+- "notices" tab for all notices that are no channel notices, snotices go to server status tab
 - Make LED colors for nick list configurable via GUI
-- Detect shell commands and warn the user
 - Ban List. A window in which the user can see the bans of a channel(and remove them).
-- Usernames/channels are not clickable. Like you double click #foo on channel view and you join #foo channel
-
+- Usernames/channels are not clickable. Like you double click #foo on channel view and you join #foo channel.
+  Click on notify messages opens query
 
 IDEAS:
 - Automatically gzip files before DCC SEND
-- Multi line behaviour in input line with "little enter"
 
 TODO That Will Be Fixed When Kmdi interface is stable :
 - Tabs on left / right (?)
 - Detachable queries
-
+- Make [x] on tabs harder to click (1 second hover delay or similar)
 
 DISCUSSING:
-
 - The text-search could offer a button "any highlight"
-- Check for channel or user parameter in mode changes to take care of duplicate mode chars
-- Click on notify messages opens query
 - Events for Queries and DCC Chat
-- A "channel or topic" checkbox would be nice, or make the current checkboxes work as "or" not as "and"
+- Channel List: A "channel or topic" checkbox would be nice, or make the current checkboxes work as "or" not as "and"
 - Optionally copy log files to new location
 - Try to keep open views on kicks and stuff
 - Reverse-I-Search
 - Pasting into text views should trigger the paste mechanism
 - Let the user decide how many quick buttons they want, if at all.
-- Replace "0.0.0.0" with QString::null in dccTransfer to allow other than IPv4
-- Session management ( cartman: This works for me. Whats wrong with it? )
-- Make font for quick buttons configurable
-- cycle command
+- Check if DCC works with IPv6 (0.0.0.0 binding?)
+- cycle command (script)
 - Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated
 - Show away messages only once per nick
 - Different tab sortings
-- Import notify list from .ircrc ( cartman: Need a sample ircrc for this )
+- Import watched nicks list from .ircrc ( cartman: Need a sample ircrc for this )
 - Notify with more than 500 characters
-- "Open Nicks online panel on startup" option
-- Make Kick and Kill-Reasons available via popup so they don't disappear with the closing tab
+- "Open Watched Nicks Online panel on startup" option
 - Watched nicks editor should sort alphabetically, manual sorting makes no sense there
 - Watched nicks panel should have a "last seen" column so you can sort them
-- On connect konversation should check if the identity was set up correctly to satisfy USER command
+
+NEW (15.08.2004):
+- LED pixmaps should become customizable, or @ + ! ... signs in nick list
+- KNotify for kicks / kills
+- Tooltip for the (channel/query) tab shows which server it is on
+- Channel mode buttons should describe current state
+- Add common default aliases
+- Redirect kick reasons to status tab
+- MOTD should use standard font by default
+- Configure dialog should remember where it was when it closed
+- Right click on email addresses to associate them to the address book entry of user posting it
