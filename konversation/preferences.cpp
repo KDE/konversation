@@ -100,7 +100,7 @@ Preferences::Preferences()
   setAutoRejoin(true);
   setAutojoinOnInvite(false);
 
-  setMaximumLagTime(120);
+  setMaximumLagTime(180);
 
   setFixedMOTD(true);
   setBeep(false);
@@ -121,7 +121,7 @@ Preferences::Preferences()
   setDccAutoGet(false);
   setDccBufferSize(8192);
   setDccFastSend(true);
-  setDccSendTimeout(120);
+  setDccSendTimeout(180);
 
   KStandardDirs kstddir;
   setLogPath(kstddir.saveLocation("data","konversation/logs"));
