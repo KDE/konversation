@@ -1286,13 +1286,28 @@ void Channel::autoUserhostChanged(bool state)
 {
   if(state)
   {
+    // restart userhost timer
     userhostTimer.start(10000);
-    if(nicknameListView->columns()==2)nicknameListView->addColumn(QString::null);
+    // if the column was actually gone (just to be sure) ...
+    if(nicknameListView->columns()==2)
+    {
+      // re-add the hostmask column
+      nicknameListView->addColumn(QString::null);
+
+      // re-add already known hostmasks
+      QListViewItem* item=nicknameListView->itemAtIndex(0);
+      while(item)
+      {
+        Nick* lookNick=getNickByName(item->text(1));
+        if(lookNick) item->setText(2,lookNick->getHostmask());
+        item=item->itemBelow();
+      }
+    }
   }
   else
   {
     userhostTimer.stop();
-    if(nicknameListView->columns()==3)nicknameListView->removeColumn(2);
+    if(nicknameListView->columns()==3) nicknameListView->removeColumn(2);
   }
 }
 
