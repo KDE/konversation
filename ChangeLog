@@ -12,6 +12,7 @@ Changes from 0.14 to 0.15
 - SSL Support
 - KIO-fied local I/O on DCC send/receive
 - OSD Positioning Support
+- New network based server settings
 
 
 Changes from 0.13 to 0.14

@@ -39,7 +39,7 @@ DISCUSSING:
 - Optionally copy log files to new location
 - Try to keep open views on kicks and stuff
 - Reverse-I-Search
-- Pasting into text views should trigger the paste mechanism
+- Pasting into text views should trigger the paste mechanism (Partly implemented, MMB works. psn)
 - Let the user decide how many quick buttons they want, if at all.
 - Check if DCC works with IPv6 (0.0.0.0 binding?)
 - cycle command (script)
