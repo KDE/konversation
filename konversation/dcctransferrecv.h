@@ -54,11 +54,11 @@ class DccTransferRecv : public DccTransfer
     
     /** 
      * This function reads the member variables set in the constructor, and
-     * calls saveToFileURL() based on these, and konversation's preferences.
-     * It may not call saveToFileURL(), may not give it a valid url,
+     * calls @ref saveToFileURL() based on these, and konversation's preferences.
+     * It may not call @ref saveToFileURL(), may not give it a valid url,
      * and may set it to empty.
-     * Checking saveToFileURL isn't done until the user accepts the dcc
-     * and start() is called, which calls validateSaveToFileURL.
+     * Checking @ref saveToFileURL isn't done until the user accepts the dcc
+     * and @ref start() is called, which calls validateSaveToFileURL.
      * @param folderURL The directory url to save in.  The ircnick is added if needed.
      * @see validateSaveToFileURL()
      */
@@ -72,8 +72,17 @@ class DccTransferRecv : public DccTransfer
      * @see abort()
      */
     void validateSaveToFileURL();
-	
-    void createDirs(const KURL &fileURL) const;
+    /**
+     * This calls KIO::NetAccess::mkdir on all the subdirectories of dirURL, to
+     * create the given directory.  Note that a url like  file:/foo/bar  will
+     * make sure both foo and bar are created.  It assumes everything in the path is
+     * a directory.  
+     * Note: If the directory already exists, returns true.
+     * 
+     * @param A url for the directory to create.
+     * @return True if the directory now exists.  False if there was a problem and the directory doesn't exist.
+     */
+    bool createDirs(const KURL &dirURL) const;
   signals:
     void resumeRequest( const QString& partnerNick, const QString& fileName, const QString& partnerPort, KIO::filesize_t filePosition);  // emitted by requestResume()
     

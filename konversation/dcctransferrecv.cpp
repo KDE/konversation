@@ -120,31 +120,35 @@ void DccTransferRecv::validateSaveToFileURL() {
     calculateSaveToFileURL(saveToFileURL);
   }
 }
-void DccTransferRecv::createDirs(const KURL &fileURL) const
+bool DccTransferRecv::createDirs(const KURL &dirURL) const
 {
-        KURL kurl(fileURL);
-        QString surl;
+  KURL kurl(dirURL);
+  QString surl = kurl.url();
         
-        //First we split directories until we reach to the top,
-        //since we need to create directories one by one
+  //First we split directories until we reach to the top,
+  //since we need to create directories one by one
         
-        QStringList dirList;
-	kurl=kurl.upURL();
-	surl=kurl.url();
-        while (surl!=kurl.upURL().url())
-        {
-                dirList.prepend(surl);
-                kurl=kurl.upURL();
-                surl=kurl.url();
-        }       
-        
-        //Now we create the directories
-        
-        QStringList::Iterator it;
-        for (it=dirList.begin(); it!=dirList.end();++it)
-        {
-                if (!KIO::NetAccess::exists(*it,true,0)) KIO::NetAccess::mkdir(*it,0,-1);
-        }
+  QStringList dirList;
+  while (surl!=kurl.upURL().url())
+  {
+    dirList.prepend(surl);
+    kurl=kurl.upURL();
+    surl=kurl.url();
+  }       
+
+  //Now we create the directories
+
+  QStringList::Iterator it;
+  for (it=dirList.begin(); it!=dirList.end();++it)
+  {
+    if (!KIO::NetAccess::exists(*it,true,listView())) {
+      if(!KIO::NetAccess::mkdir(*it,listView(),-1)) {
+        KMessageBox::error(listView(), i18n("To save the sent file, the folder %1 needed to be created.  This failed, probably because you do not have permission to write there.  You can set where sent files are saved to by default in the Settings menu, under Configure Konversation, and choosing the Behaviour->dcc tab.").arg(dirURL.prettyURL()), i18n("Failed to create folder"));
+	return false;
+      }
+    }
+  }
+  return true;
 }
 
 void DccTransferRecv::start()  // public slot
@@ -180,8 +184,10 @@ void DccTransferRecv::start()  // public slot
     m_partialFileSize = partialFileInfo.size();
   }
   if(!m_saveToFileExists && !m_partialFileExists) {
-    createDirs(m_fileURL);
-    createDirs(m_saveToTmpFileURL);
+    if( !createDirs(m_fileURL.upURL()) || !createDirs(m_saveToTmpFileURL.upURL())) {
+      abort();
+      return;
+    }
   }
   
   m_partialFileExists = m_partialFileExists && 
@@ -337,7 +343,7 @@ void DccTransferRecv::connectionFailed( int errorCode )  // slot
 {
   kdDebug() << "DccTransferRecv::connectionFailed(): code = " << errorCode << ", string = " << m_recvSocket->errorString() << endl;
   
-  KMessageBox::sorry( 0, i18n("Connection failure: %1").arg( m_recvSocket->errorString() ),i18n("DCC Error") );
+  KMessageBox::sorry( listView(), i18n("Connection failure: %1").arg( m_recvSocket->errorString() ),i18n("DCC Error") );
   setStatus( Failed, i18n("Connection failure: %1").arg( m_recvSocket->errorString() ) );
   cleanUp();
   updateView();
@@ -388,7 +394,7 @@ void DccTransferRecv::gotWriteError( int /* errorCode */ )  // slot
 {
   Q_ASSERT(m_recvSocket); if(!m_recvSocket) return;
   
-  KMessageBox::sorry( 0, i18n("KIO Error: %1").arg( m_recvSocket->errorString() ), i18n("DCC Error") );
+  KMessageBox::sorry( listView(), i18n("KIO Error: %1").arg( m_recvSocket->errorString() ), i18n("DCC Error") );
   setStatus( Failed, i18n("KIO Error: %1").arg( m_recvSocket->errorString() ) );
   cleanUp();
   updateView();
