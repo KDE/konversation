@@ -448,7 +448,7 @@ namespace Konversation {
 	QString output;
 
         if(recipient.isEmpty()) {
-          result = error("You need to specify a recipient");
+          result = error("Error: You need to specify a recipient");
           return result;
         }
 
