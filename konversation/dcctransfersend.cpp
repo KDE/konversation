@@ -227,6 +227,9 @@ void DccTransferSend::heard()  // slot
   connect( m_sendSocket, SIGNAL( readyWrite() ), this, SLOT( writeData() )            );
   connect( m_sendSocket, SIGNAL( closed() ),     this, SLOT( slotSendSocketClosed() ) );
   
+  m_partnerIp = m_sendSocket->peerAddress().nodeName();
+  m_partnerPort = m_sendSocket->peerAddress().serviceName();
+  
   // we don't need ServerSocket anymore
   m_serverSocket->close();
   
