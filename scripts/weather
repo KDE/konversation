@@ -30,11 +30,11 @@ foreach $station (@stations) {
     chomp $det;
     if( $i==0 ) {
       $details = $det;
+      $i = 1;
     }
     else {
       $details = $details.", ".$det;
     }
-    ++$i;
   }
   
   $pressure =~ s/\"/\\\"/g; # Escape double quote
