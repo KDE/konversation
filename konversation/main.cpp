@@ -44,15 +44,18 @@ int main(int argc, char* argv[])
                        VERSION,
                        shortDescription,
                        KAboutData::License_GPL,
-                       "(C)2002, 2003 Dario Abatianni",
+                       "(C)2002, 2003 by the Konversation team",
                        I18N_NOOP("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
                                  "Meet friends on the net, make new acquaintances and lose yourself in\n"
                                  "talk about your favourite subject."),
                        "http://konversation.sourceforge.net/",
                        "eisfuchs@tigress.com");
 
-  aboutData.addAuthor("Dario Abatianni",0,"eisfuchs@tigress.com");
-  aboutData.addAuthor("Matthias Gierlings",0,"gismore@users.sourceforge.net");
+  // TODO: remove the comments after the i18n freeze
+  aboutData.addAuthor("Dario Abatianni",/* I18N_NOOP("Project founder, main programmer, release coordiator") */,"eisfuchs@tigress.com");
+  aboutData.addAuthor("Matthias Gierlings",/* I18N_NOOP("Color configurator, Highlight dialog") */,"gismore@users.sourceforge.net");
+  aboutData.addAuthor("Alex Zepeda",/* I18N_NOOP("DCOP interface") */,"garbanzo@hooked.net");
+  aboutData.addAuthor("Stanislav Karchebny",/* I18N_NOOP("Non-Latin1-Encodings, russian translation") */,"berk@inbox.ru");
 
   KCmdLineArgs::init(argc,argv,&aboutData);
 

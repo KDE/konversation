@@ -197,7 +197,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1 to channel %2.").arg(sourceNick).arg(parameterList[0]));
           else
             server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1.").arg(sourceNick));
-          server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002-2003 Dario Abatianni and Matthias Gierlings").arg(VERSION));
+          server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002-2003 by the Konversation team").arg(VERSION));
         }
       }
       // DCC request?
