@@ -17,13 +17,15 @@
 #include <kdebug.h>
 
 #include "nick.h"
+#include "konversationapplication.h"
 
 Nick::Nick(KListView* listView,QString& nickname,QString& hostmask,bool op,bool voice)
 {
   kdDebug() << "Nick::Nick(" << nickname << "," << hostmask << ")" << endl;
 
-  listViewItem=new KListViewItem(listView,(op) ? "@" : (voice) ?  "+" : "-",nickname);
-  setNickname(nickname);
+	//listViewItem=new KListViewItem(listView,(op) ? "@" : (voice) ?  "+" : "-",nickname);
+  listViewItem = new LedListViewItem(listView, op ? "" : (voice) ? "+" : "-", op, KonversationApplication::preferences.getOpLedColor(), 0);
+	setNickname(nickname);
   setHostmask(hostmask);
 
   setOp(op);
@@ -48,8 +50,9 @@ void Nick::setOp(bool setop)
   if(op==false)
   {
     listViewItem->setText(0, (hasVoice()) ? "+" : "-" );
-  }
-  else listViewItem->setText(0,"@");
+	}
+  listViewItem->setText(0, "");
+  listViewItem->setState(op);
 }
 
 void Nick::setVoice(bool setvoice)
@@ -57,10 +60,10 @@ void Nick::setVoice(bool setvoice)
   voice=setvoice;
   if(voice==true)
   {
-    listViewItem->setText(0, (isOp()) ? "@" : "+" );
+    listViewItem->setText(0, (op) ? "" : "+" );
   }
   else
   {
-    listViewItem->setText(0, (isOp()) ? "@" : "-" );
+    listViewItem->setText(0, (op) ? "" : "-" );
   }
 }

@@ -114,6 +114,8 @@ class Preferences : public QObject
 						defaultActionMessageColor, defaultBacklogMessageColor, defaultLinkMessageColor,
 						defaultCommandMessageColor;
 
+		int			defaultOpLedColor;		
+
 		QString getChannelMessageColor();
 		QString getQueryMessageColor();
 		QString getServerMessageColor();
@@ -130,6 +132,9 @@ class Preferences : public QObject
 		void setLinkMessageColor(QString color);
 		void setCommandMessageColor(QString color);
 
+  	int		getOpLedColor();
+		void 	setOpLedColor(int opLedColor);
+	
     QString ident;
     QString realname;
     QString logPath;
@@ -143,7 +148,8 @@ class Preferences : public QObject
     bool blinkingTabs; /* Do we want the LEDs on the tabs to blink? */
 
     int notifyDelay;
-    bool useNotify;
+    int opLedColor;
+		bool useNotify;
     QStringList notifyList;
 
     /* Geometries */

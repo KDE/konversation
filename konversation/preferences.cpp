@@ -39,6 +39,8 @@ Preferences::Preferences()
 	defaultLinkMessageColor = "0000ff";
 	defaultCommandMessageColor = "960096";
 
+	defaultOpLedColor = 1;
+
   nicknameList.append("KonvIRC");
   nicknameList.append("_KonvIRC");
   nicknameList.append("KonvIRC_");
@@ -237,6 +239,9 @@ void Preferences::setQueryMessageColor(QString passed_queryMessageColor) {queryM
 
 QString Preferences::getServerMessageColor() {return serverMessageColor;}
 void Preferences::setServerMessageColor(QString passed_serverMessageColor) {serverMessageColor = passed_serverMessageColor;}
+
+int Preferences::getOpLedColor() {return opLedColor;}
+void Preferences::setOpLedColor(int passed_color) {opLedColor = passed_color;}
 
 /* Geometry functions */
 QSize Preferences::getServerWindowSize() 				{ return serverWindowSize; };

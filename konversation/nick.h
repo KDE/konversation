@@ -15,6 +15,9 @@
 */
 
 #include <klistview.h>
+#include <ledlistviewitem.h>
+
+#include "preferences.h"
 
 #ifndef NICK_H
 #define NICK_H
@@ -43,11 +46,11 @@ class Nick
   protected:
     bool op;
     bool voice;
-
-    QString nickname;
-    QString hostmask;
-
-    KListViewItem* listViewItem;
+		
+		QString 	nickname;
+    QString 	hostmask;
+		
+    LedListViewItem* listViewItem;
 };
 
 #endif

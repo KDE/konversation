@@ -120,7 +120,12 @@ void KonversationApplication::readOptions()
   preferences.setQueryMessageColor(config->readEntry("QueryMessage", preferences.defaultQueryMessageColor));
   preferences.setServerMessageColor(config->readEntry("ServerMessage", preferences.defaultServerMessageColor));
 
-  /* User identity */
+	// Led Colors
+	config->setGroup("Led Colors");
+
+	preferences.setOpLedColor(config->readNumEntry("Operator LEDs", preferences.defaultOpLedColor));
+	
+	/* User identity */
   config->setGroup("User Identity");
   preferences.ident=config->readEntry("Ident",preferences.ident);
   preferences.realname=config->readEntry("Realname",preferences.realname);
@@ -223,6 +228,10 @@ void KonversationApplication::saveOptions()
   config->writeEntry("LinkMessage", preferences.getLinkMessageColor());
   config->writeEntry("QueryMessage", preferences.getQueryMessageColor());
   config->writeEntry("ServerMessage", preferences.getServerMessageColor());
+
+	config->setGroup("Led Colors");
+
+	config->writeEntry("Operator LEDs", preferences.getOpLedColor());
 
   config->setGroup("User Identity");
 
