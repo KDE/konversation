@@ -22,26 +22,45 @@
 #include <klocale.h>
 
 #include "editserverdialog.h"
+#include "konversationapplication.h"
 
-EditServerDialog::EditServerDialog(QWidget* parent,QString group,QString name,QString port,QString serverKey,QString channelName,QString channelKey) :
-//                  KDialog(parent,"editserver",true)
+EditServerDialog::EditServerDialog(QWidget* parent,
+                                   QString group,
+                                   QString name,
+                                   QString port,
+                                   QString serverKey,
+                                   QString channelName,
+                                   QString channelKey,
+                                   QString currentIdentity) :
+
                   KDialogBase(parent,"editserver",true,i18n("Edit Server"),
                               KDialogBase::Ok | KDialogBase::Cancel,
                               KDialogBase::Ok,true)
 
 {
-  kdDebug() << "EditServerDialog::EditServerDialog()" << endl;
+  kdDebug() << "EditServerDialog::EditServerDialog("<< currentIdentity <<")" << endl;
 
   QWidget* page=new QWidget(this);
   setMainWidget(page);
 
   QGridLayout* layout=new QGridLayout(page,3,4);
-  layout->setMargin(marginHint());
   layout->setSpacing(spacingHint());
   layout->setColStretch(1,10);
 
   QLabel* groupNameLabel=new QLabel(i18n("Group name:"),page);
   groupNameInput=new KLineEdit(group,page);
+
+  QLabel* identityLabel=new QLabel(i18n("Identity:"),page);
+  identityCombo=new KComboBox(page);
+
+  QPtrList<Identity> identities=KonversationApplication::preferences.getIdentityList();
+
+  for(unsigned int index=0;index<identities.count();index++)
+  {
+    QString name=identities.at(index)->getName();
+    identityCombo->insertItem(name);
+    if(name==currentIdentity) identityCombo->setCurrentItem(identityCombo->count()-1);
+  }
 
   QLabel* serverNameLabel=new QLabel(i18n("Server name:"),page);
 
@@ -61,20 +80,30 @@ EditServerDialog::EditServerDialog(QWidget* parent,QString group,QString name,QS
   channelKeyInput=new KLineEdit(channelKey,page);
   channelKeyInput->setEchoMode(QLineEdit::Password);
 
-  layout->addWidget(groupNameLabel,0,0);
-  layout->addMultiCellWidget(groupNameInput,0,0,1,3);
+  QHBox* spacer=new QHBox(page);
 
-  layout->addWidget(serverNameLabel,1,0);
-  layout->addWidget(serverBox,1,1);
-  layout->addWidget(serverKeyLabel,1,2);
-  layout->addWidget(serverKeyInput,1,3);
+  int row=0;
 
-  layout->addWidget(channelNameLabel,2,0);
-  layout->addWidget(channelNameInput,2,1);
-  layout->addWidget(channelKeyLabel,2,2);
-  layout->addWidget(channelKeyInput,2,3);
+  layout->addWidget(groupNameLabel,row,0);
+  layout->addWidget(groupNameInput,row,1);
+  layout->addWidget(identityLabel,row,2);
+  layout->addWidget(identityCombo,row,3);
 
-  layout->setRowStretch(3,10);
+  row++;
+  layout->addWidget(serverNameLabel,row,0);
+  layout->addWidget(serverBox,row,1);
+  layout->addWidget(serverKeyLabel,row,2);
+  layout->addWidget(serverKeyInput,row,3);
+
+  row++;
+  layout->addWidget(channelNameLabel,row,0);
+  layout->addWidget(channelNameInput,row,1);
+  layout->addWidget(channelKeyLabel,row,2);
+  layout->addWidget(channelKeyInput,row,3);
+
+  row++;
+  layout->addMultiCellWidget(spacer,row,row,0,3);
+  layout->setRowStretch(row,10);
 
   setButtonOKText(i18n("OK"),i18n("Change server information"));
   setButtonCancelText(i18n("Cancel"),i18n("Discards all changes made"));
@@ -92,7 +121,8 @@ void EditServerDialog::slotOk()
                      serverPortInput->text(),
                      serverKeyInput->text(),
                      channelNameInput->text(),
-                     channelKeyInput->text());
+                     channelKeyInput->text(),
+                     identityCombo->currentText());
   delayedDestruct();
 }
 

@@ -33,8 +33,9 @@ class ServerListItem : public QObject, public QCheckListItem
                    QString arg1=QString::null,
                    QString arg2=QString::null,
                    QString arg3=QString::null,
+                   QString arg4=QString::null,
                    QString arg5=QString::null,
-                   QString arg4=QString::null);
+                   QString arg6=QString::null);
     ~ServerListItem();
     int getId() { return id; };
 

@@ -1,6 +1,4 @@
 Make Config Dialogs fit into one Tab-Dialog and throw out single windows
-Implement different identities so user can choose which identity to use on which server
-Move Part / Kick Reasons into the Identity section in Preferences File
 Make sure, that lines don't get cleared while viewing the history
 Background color of Nicklist View
 Add a possibility to close the dcc panel via GUI
@@ -14,8 +12,6 @@ Autojoin/User interaction on /invite
 
 <mETz[]> mainwindows don't need a huge border
 <mETz[]> Eisfuchs: And why have the "Mitschnitt" button there? having it in the menubar is enough, no?
-
-
 
 -privmsg (/msg) should be logged to the specific log file (if i do /msg foo bar i want to have this in konversation-foo.log)
 

@@ -19,6 +19,7 @@
 
 #include <kdialogbase.h>
 #include <klineedit.h>
+#include <kcombobox.h>
 
 /*
   @author Dario Abatianni
@@ -34,7 +35,8 @@ class EditServerDialog : public KDialogBase
                                        QString port="6667",
                                        QString serverKey=QString::null,
                                        QString channel=QString::null,
-                                       QString channelKey=QString::null);
+                                       QString channelKey=QString::null,
+                                       QString currentIdentity=QString::null);
     ~EditServerDialog();
 
   signals:
@@ -43,7 +45,8 @@ class EditServerDialog : public KDialogBase
                        const QString& port,
                        const QString& serverKey,
                        const QString& channelName,
-                       const QString& channelKey);
+                       const QString& channelKey,
+                       const QString& identity);
   protected slots:
     void slotOk();
 
@@ -54,6 +57,7 @@ class EditServerDialog : public KDialogBase
     KLineEdit* serverKeyInput;
     KLineEdit* channelNameInput;
     KLineEdit* channelKeyInput;
+    KComboBox* identityCombo;
 };
 
 #endif

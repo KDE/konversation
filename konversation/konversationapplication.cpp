@@ -211,7 +211,7 @@ void KonversationApplication::readOptions()
 
     for(unsigned int index=0;index<identityList.count();index++)
     {
-      kdDebug() << "Reading identity " << identityList[index] << endl;
+//      kdDebug() << "Reading identity " << identityList[index] << endl;
       config->setGroup(identityList[index]);
 
       Identity* newIdentity=new Identity();
@@ -420,7 +420,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   QPtrList<Identity> identityList=preferences.getIdentityList();
   for(unsigned int index=0;index<identityList.count();index++)
   {
-    kdDebug() << "Writing identity " << index << endl;
+//    kdDebug() << "Writing identity " << index << endl;
 
     Identity* identity=identityList.at(index);
     config->setGroup(QString("Identity %1").arg(index));

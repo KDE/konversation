@@ -1,5 +1,6 @@
 Changes from 0.9 to 0.10
 - Font encodings are now set via KCharsets
+- Implemented different identities
 
 Changes from 0.8 to 0.9
 - Added strikeout support (untested yet)
