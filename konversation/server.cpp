@@ -130,6 +130,9 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   connect(&outgoingTimer,SIGNAL(timeout()),
                     this,SLOT  (send()) );
 
+  connect(&unlockTimer,SIGNAL(timeout()),
+                  this,SLOT  (unlockSending()) );
+
   connect(&outputFilter,SIGNAL (openQuery(const QString&,const QString&)),
                    this,SLOT   (addQuery(const QString&,const QString&)) );
   connect(&outputFilter,SIGNAL (requestDccSend()),
@@ -256,6 +259,9 @@ void Server::connectToIRCServer()
 {
   deliberateQuit=false;
   serverSocket.blockSignals(false);
+  
+  // prevent sending queue until server has sent something or the timeout is through
+  lockSending();
 
   // Are we (still) connected (yet)?
   if(isConnected())
@@ -411,6 +417,9 @@ void Server::ircServerConnectionSuccess()
   emit nicknameChanged(getNickname());
 
   serverSocket.enableRead(true);
+    
+  // wait at most 2 seconds for server to send something before sending the queue ourselves
+  unlockTimer.start(2000);
 }
 
 void Server::broken(int state)
@@ -473,7 +482,7 @@ void Server::connectionEstablished()
     // register with services
     if(!botPassword.isEmpty() && !bot.isEmpty())
       queue("PRIVMSG "+bot+" :identify "+botPassword);
-    
+
     if(rejoinChannels) {
       rejoinChannels = false;
       autoRejoinChannels();
@@ -724,6 +733,16 @@ void Server::processIncomingData()
   }
 }
 
+void Server::unlockSending()
+{
+  sendUnlocked=true;
+}
+
+void Server::lockSending()
+{
+  sendUnlocked=false;
+}
+
 void Server::incoming()
 {
   char buffer[BUFFER_LEN];
@@ -738,18 +757,17 @@ void Server::incoming()
   inputBuffer+=codec->toUnicode(buffer);
 
   if(len==0) broken(0);
+
+  // refresh lock timer if it was still locked
+  if(!sendUnlocked) lockSending();
 }
 
 void Server::queue(const QString& buffer)
 {
-  kdDebug() << "Queue: " << buffer << endl;
   // Only queue lines if we are connected
   if(isConnected() && buffer.length())
   {
-    if(rawLog) rawLog->appendRaw(buffer);
-
-    outputBuffer+=buffer;
-    outputBuffer+="\n";
+    outputBuffer.append(buffer);
 
     timerInterval*=2;
   }
@@ -757,37 +775,28 @@ void Server::queue(const QString& buffer)
 
 void Server::queueList(const QStringList& buffer)
 {
-  kdDebug() << "QueueList: " << buffer.join("\n") << endl;
   // Only queue lines if we are connected
   if(isConnected() && buffer.count())
   {
-    for (unsigned int i=0;i<buffer.count();i++)
+    for(unsigned int i=0;i<buffer.count();i++)
     {
-      if(rawLog) rawLog->appendRaw(*buffer.at(i));
-
-      outputBuffer+=*buffer.at(i);
-      outputBuffer+="\n";
-
+      outputBuffer.append(*buffer.at(i));
       timerInterval*=2;
-    }
+    } // for
   }
 }
 
 void Server::send()
 {
   // Check if we are still online
-  if(isConnected() && !outputBuffer.isEmpty())
+  if(!isConnected()) outputBuffer.clear();
+  
+  if(outputBuffer.count() && sendUnlocked)
   {
-    kdDebug() << "Buffer: " << outputBuffer << endl;
-    
-    // TODO: Implement Flood-Protection here
-    QStringList outputLines=QStringList::split('\n',outputBuffer);
-    
-    QString outputLine=outputLines[0];
-    outputLines.pop_front();
-    outputBuffer=outputLines.join("\n");
-
-    kdDebug() << "Line: " << outputLine << endl;
+    // NOTE: It's important to add the linefeed here, so the encoding process does not trash it
+    //       for some servers.
+    QString outputLine=outputBuffer[0]+"\n";
+    outputBuffer.pop_front();
         
     // To make lag calculation more precise, we reset the timer here
     if(outputLine.startsWith("ISON") ||
@@ -808,12 +817,14 @@ void Server::send()
       serverStream.setCodec(QTextCodec::codecForName(codecName.ascii()));
     }
 
-    serverStream << outputLine << endl;
+    serverStream << outputLine;
+    if(rawLog) rawLog->appendRaw(outputLine);
 
     // detach server stream
     serverStream.unsetDevice();
   }
     
+  // Flood-Protection
   if(timerInterval>1)
   {
     int time;
@@ -823,7 +834,6 @@ void Server::send()
     else time=timerInterval*10+100;
 
     outgoingTimer.changeInterval(time);
-    kdDebug() << timerInterval << endl;
   }
 }
 

@@ -248,6 +248,8 @@ class Server : public QObject
 
   protected slots:
     void ircServerConnectionSuccess();
+    void lockSending();
+    void unlockSending();
     void incoming();
     void processIncomingData();
     void send();
@@ -355,6 +357,7 @@ class Server : public QObject
     QTimer reconnectTimer;
     QTimer incomingTimer;
     QTimer outgoingTimer;
+    QTimer unlockTimer;      // timeout waiting for server to send initial messages
 
     int timerInterval;       // flood protection
     
@@ -367,7 +370,7 @@ class Server : public QObject
 
     QString ircName;
     QString inputBuffer;
-    QString outputBuffer;
+    QStringList outputBuffer;
     QString nickname;
     QString serverKey;
     QString lastDccDir;
@@ -386,6 +389,7 @@ class Server : public QObject
     bool isAway;
     bool alreadyConnected;
     bool rejoinChannels;
+    bool sendUnlocked;
     
     QString nonAwayNick;
     
