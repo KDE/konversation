@@ -325,9 +325,15 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   m_allowNotifications = true;
 
+
 //FIXME JOHNFLUX
 //  connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
 //  connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
+}
+
+void Channel::setServer(Server *server) {
+  ChatWindow::setServer(server);
+  m_ownChannelNick = m_server->getChannelNick(getName(), m_server->getIrcName());
 }
 
 Channel::~Channel()
@@ -345,6 +351,10 @@ Channel::~Channel()
 
   // Unlink this channel from channel list
   m_server->removeChannel(this);
+}
+
+ChannelNickPtr Channel::getOwnChannelNick() {
+  return m_ownChannelNick;
 }
 
 ChannelNickPtr Channel::getChannelNick(const QString &ircnick) {
@@ -1793,6 +1803,15 @@ QPtrList<Nick> Channel::getNickList()
 void Channel::childAdjustFocus()
 {
   channelInput->setFocus();
+  modeT->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
+  modeN->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
+  modeS->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
+  modeI->setEnabled(getOwnChannelNick()->isAnyTypeOfOp()); 
+  modeP->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
+  modeM->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
+  modeK->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
+  modeL->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
+  limit->setEnabled(getOwnChannelNick()->isAnyTypeOfOp());
 }
 
 

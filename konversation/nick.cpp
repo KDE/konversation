@@ -32,7 +32,7 @@ Nick::Nick(KListView *listView,
     channelnickptr = channelnick;
   listViewItem=new NickListViewItem(listView,channelnick->getNickname(),channelnick->getHostmask(),this);
 
-  QObject::connect(listViewItem,SIGNAL(refreshed()),listView,SLOT(resort()));
+  QObject::connect(listViewItem,SIGNAL(refreshed()),listView,SLOT(startResortTimer()));
 
 }
 Nick::~Nick()

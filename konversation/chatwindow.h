@@ -86,7 +86,7 @@ class ChatWindow : public BASE_CLASS
      *  @param newServer The server to set it to.
      *  @see setMainWindow(KonversationMainWindow *mainWindow)
      */
-    void setServer(Server* newServer);
+    virtual void setServer(Server* newServer);
     /** This should be called if setServer is not called - e.g.
      *  in the case of konsolepanel.  This should be set as soon
      *  as possible after creation.

@@ -16,6 +16,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <qtooltip.h>
+#include <qtimer.h>
 #include <kiconloader.h>
 #include <qwhatsthis.h>
 
@@ -130,6 +131,8 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
   setShadeSortColumn(false);
 #endif
 
+  m_resortTimer = new QTimer( this);
+  connect(m_resortTimer, SIGNAL( timeout()), SLOT(resort()));
 }
 
 NickListView::~NickListView()
@@ -146,6 +149,10 @@ void NickListView::refresh()
       static_cast<NickListViewItem*>(it.current())->refresh();
       ++it;
     }
+}
+
+void NickListView::startResortTimer() {
+  m_resortTimer->start(1000, TRUE /*single shot*/); 
 }
 
 void NickListView::resort()

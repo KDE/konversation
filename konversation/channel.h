@@ -78,6 +78,7 @@ class Channel : public ChatWindow
     void setKey(const QString& newKey);
     QString getKey();
 
+    ChannelNickPtr getOwnChannelNick();
     ChannelNickPtr getChannelNick(const QString &ircnick);
     void joinNickname(ChannelNickPtr channelNick);
     void removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit);
@@ -97,6 +98,8 @@ class Channel : public ChatWindow
     void adjustOps(int value);
     virtual void emitUpdateInfo();
 
+    virtual void setServer(Server* newServer);
+    
     void setTopic(const QString& topic);
     void setTopic(const QString& nickname,const QString& topic); // Overloaded
     void setTopicAuthor(const QString& author);
@@ -256,5 +259,6 @@ class Channel : public ChatWindow
     Konversation::ChannelOptionsDialog* m_optionsDialog;
 
     QStringList m_modeList;
+    ChannelNickPtr m_ownChannelNick;
 };
 #endif
