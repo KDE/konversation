@@ -37,6 +37,9 @@ rcdir = $(kde_datadir)/konversation
 rc_DATA = konversationui.rc eventsrc
 KDE_ICON = AUTO
 
+updatedir = $(kde_datadir)/kconf_update
+update_DATA = konversation-0.14-mainwindow.pl
+
 messages: rc.cpp
 	LIST=`find . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name \*.cxx -o -name \*.ecpp -o -name \*.C`; \
 	if test -n "$$LIST"; then \

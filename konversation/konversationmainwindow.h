@@ -135,8 +135,6 @@ class KonversationMainWindow : public KMainWindow
       StatusText,LagOMeter
     };
 
-    void readOptions();
-    void saveOptions();
     bool queryClose();
 
     void addView(ChatWindow* view,int color,const QString& label,bool on=true);

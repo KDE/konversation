@@ -23,6 +23,8 @@
 #include <qfont.h>
 #include <qcolor.h>
 
+#include <kdeversion.h>
+
 /*
   @author Dario Abatianni
 */
@@ -62,13 +64,6 @@ class Preferences : public QObject
 
     Preferences();
     ~Preferences();
-
-    int mainWindowToolBarPos;
-    int mainWindowToolBarStatus;
-    int mainWindowToolBarIconText;
-    int mainWindowToolBarIconSize;
-    bool mainWindowStatusBarStatus;
-    bool mainWindowMenuBarStatus;
 
     int addServer(const QString& serverString);
     void removeServer(int id);
@@ -147,14 +142,12 @@ class Preferences : public QObject
     void setNoRightsValue(int value);
 
     // Geometry functions
-    QSize getMainWindowSize();
     QSize getHilightSize();
     QSize getButtonsSize();
     QSize getIgnoreSize();
     QSize getNotifySize();
     QSize getNicksOnlineSize();
     QSize getNicknameSize();
-    void setMainWindowSize(QSize newSize);
     void setHilightSize(QSize newSize);
     void setButtonsSize(QSize newSize);
     void setIgnoreSize(QSize newSize);
@@ -341,6 +334,18 @@ class Preferences : public QObject
     // Nick completion
     int getNickCompletionMode();
     void setNickCompletionMode(int mode);
+    
+    //User interface
+    bool getShowMenuBar();
+    void setShowMenuBar(bool s);
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
+    bool getShowToolBar();
+    void setShowToolBar(bool s);
+#endif
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
+    bool getShowStatusBar();
+    void setShowStatusBar(bool s);
+#endif
 
   signals:
     void requestServerConnection(int number);
@@ -470,6 +475,15 @@ class Preferences : public QObject
     
     //Nick completion
     int nickCompletionMode;
+
+    //User interface
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
+    bool showToolBar;
+#endif
+    bool showMenuBar;
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
+    bool showStatusBar;
+#endif
 };
 
 #endif

@@ -31,9 +31,6 @@
 Preferences::Preferences()
 {
   // Presets
-  mainWindowToolBarPos=KToolBar::Top;
-  mainWindowStatusBarStatus=true;
-  mainWindowMenuBarStatus=true;
   serverList.setAutoDelete(true);
 
   // create default identity
@@ -174,6 +171,14 @@ Preferences::Preferences()
   ircColorList.append("#c0c0c0");
   
   setNickCompletionMode(0);
+  
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
+  setShowToolBar(true);
+#endif
+  setShowMenuBar(true);
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
+  setShowStatusBar(true);
+#endif
 }
 
 Preferences::~Preferences()
@@ -497,7 +502,6 @@ void Preferences::setVoiceLedColor(int passed_color)    { voiceLedColor=passed_c
 void Preferences::setNoRightsLedColor(int passed_color) { noRightsLedColor=passed_color; }
 
 // Geometry functions
-QSize Preferences::getMainWindowSize()         { return mainWindowSize; }
 QSize Preferences::getHilightSize()            { return hilightSize; }
 QSize Preferences::getButtonsSize()            { return buttonsSize; }
 QSize Preferences::getIgnoreSize()             { return ignoreSize; }
@@ -505,7 +509,6 @@ QSize Preferences::getNotifySize()             { return notifySize; }
 QSize Preferences::getNicksOnlineSize()        { return nicksOnlineSize; }
 QSize Preferences::getNicknameSize()           { return nicknameSize; }
 
-void Preferences::setMainWindowSize(QSize newSize)         { mainWindowSize=newSize; }
 void Preferences::setHilightSize(QSize newSize)            { hilightSize=newSize; }
 void Preferences::setButtonsSize(QSize newSize)            { buttonsSize=newSize; }
 void Preferences::setIgnoreSize(QSize newSize)             { ignoreSize=newSize; }
@@ -662,5 +665,17 @@ QStringList Preferences::getAliasList()             { return aliasList; }
 
 int Preferences::getNickCompletionMode() { return nickCompletionMode; }
 void Preferences::setNickCompletionMode(int mode) { nickCompletionMode = mode; }
+
+bool Preferences::getShowMenuBar() { return showMenuBar; }
+void Preferences::setShowMenuBar(bool s) { showMenuBar = s; }
+
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)  
+bool Preferences::getShowToolBar() { return showToolBar; }
+void Preferences::setShowToolBar(bool s) { showToolBar = s; }
+#endif
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
+bool Preferences::getShowStatusBar() { return showStatusBar; }
+void Preferences::setShowStatusBar(bool s) { showStatusBar = s; }
+#endif
 
 #include "preferences.moc"

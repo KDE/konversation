@@ -8,8 +8,8 @@
 /*
   konversationmainwindow.cpp  -  The main window where all other views go
   begin:     Don Apr 17 2003
-  copyright: (C) 2003 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  copyright: (C) 2003 by Dario Abatianni, Peter Simonsson
+  email:     eisfuchs@tigress.com, psn@linux.se
 */
 
 #include "konversationmainwindow.h"
@@ -79,8 +79,16 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
   KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); // file_quit
 
+#if KDE_IS_VERSION(3, 1, 0)
+  setStandardToolBarMenuEnabled(true);
+#else
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); // options_show_toolbar
+#endif
+#if KDE_IS_VERSION(3, 1, 90)
+  createStandardStatusBarAction();
+#else
   showStatusBarAction=KStdAction::showStatusbar(this,SLOT(showStatusbar()),actionCollection()); // options_show_statusbar
+#endif
   showMenuBarAction=KStdAction::showMenubar(this,SLOT(showMenubar()),actionCollection()); // options_show_menubar
   KStdAction::configureToolbars(this, SLOT(openToolbars()), actionCollection());
 #ifdef USE_KNOTIFY
@@ -140,7 +148,18 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   updateTrayIcon();
 
   createGUI();
-  readOptions();
+  resize(800, 600);  // Give the app a sane default size
+  setAutoSaveSettings();
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)  
+  showToolBarAction->setChecked(KonversationApplication::preferences.getShowToolBar());
+  showToolbar();
+#endif
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)  
+  showStatusBarAction->setChecked(KonversationApplication::preferences.getShowStatusBar());
+  showStatusbar();
+#endif
+  showMenuBarAction->setChecked(KonversationApplication::preferences.getShowMenuBar());
+  showMenubar();
 }
 
 KonversationMainWindow::~KonversationMainWindow()
@@ -171,10 +190,12 @@ void KonversationMainWindow::openKeyBindings()
 
 void KonversationMainWindow::showToolbar()
 {
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
   if(showToolBarAction->isChecked()) toolBar("mainToolBar")->show();
   else toolBar("mainToolBar")->hide();
-
-  KonversationApplication::preferences.mainWindowToolBarStatus=showToolBarAction->isChecked();
+  
+  KonversationApplication::preferences.setShowToolBar(showToolBarAction->isChecked());
+#endif
 }
 
 void KonversationMainWindow::showMenubar()
@@ -189,15 +210,17 @@ void KonversationMainWindow::showMenubar()
     menuBar()->hide();
   }
 
-  KonversationApplication::preferences.mainWindowMenuBarStatus=showMenuBarAction->isChecked();
+  KonversationApplication::preferences.setShowMenuBar(showMenuBarAction->isChecked());
 }
 
 void KonversationMainWindow::showStatusbar()
 {
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
   if(showStatusBarAction->isChecked()) statusBar()->show();
   else statusBar()->hide();
 
-  KonversationApplication::preferences.mainWindowStatusBarStatus=showStatusBarAction->isChecked();
+  KonversationApplication::preferences.setShowStatusBar(showStatusBarAction->isChecked());
+#endif
 }
 
 void KonversationMainWindow::appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView)
@@ -501,10 +524,9 @@ void KonversationMainWindow::newText(QWidget* view,const QString& highlightColor
   if(view!=getViewContainer()->currentPage())
   {
     getViewContainer()->changeTabState(view,true,highlightColor);
-
+    
     emit startNotification(view);
-  }
-  else if(!isActiveWindow() && static_cast<ChatWindow*>(view)->getServer() && static_cast<ChatWindow*>(view)->getServer()->connected())
+  } else if(!isActiveWindow() && static_cast<ChatWindow*>(view)->getServer()->connected())
   {
     emit startNotification(view);
   }
@@ -540,47 +562,12 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
   emit endNotification(viewToChange);
 }
 
-void KonversationMainWindow::readOptions()
-{
-  // Tool bar settings
-  showToolBarAction->setChecked(KonversationApplication::preferences.mainWindowToolBarStatus);
-  toolBar("mainToolBar")->setBarPos((KToolBar::BarPosition) KonversationApplication::preferences.mainWindowToolBarPos);
-  toolBar("mainToolBar")->setIconText((KToolBar::IconText) KonversationApplication::preferences.mainWindowToolBarIconText);
-  toolBar("mainToolBar")->setIconSize(KonversationApplication::preferences.mainWindowToolBarIconSize);
-  showToolbar();
-
-  // Status bar settings
-  showStatusBarAction->setChecked(KonversationApplication::preferences.mainWindowStatusBarStatus);
-  showStatusbar();
-
-  // Menu bar settings
-  showMenuBarAction->setChecked(KonversationApplication::preferences.mainWindowMenuBarStatus);
-  showMenubar();
-
-  QSize size=KonversationApplication::preferences.getMainWindowSize();
-  if(!size.isEmpty())
-  {
-    resize(size);
-  }
-}
-
-// Will not actually save the options but write them into the prefs structure
-void KonversationMainWindow::saveOptions()
-{
-  KonversationApplication::preferences.setMainWindowSize(size());
-
-  KonversationApplication::preferences.mainWindowToolBarPos=toolBar("mainToolBar")->barPos();
-  KonversationApplication::preferences.mainWindowToolBarIconText=toolBar("mainToolBar")->iconText();
-  KonversationApplication::preferences.mainWindowToolBarIconSize=toolBar("mainToolBar")->iconSize();
-}
-
 bool KonversationMainWindow::queryClose()
 {
   kdDebug() << "KonversationMainWindow::queryClose()" << endl;
 
   // send quit to all servers
   emit quitServer();
-  saveOptions();
 
   return true;
 }

@@ -18,6 +18,7 @@
 #include <kdebug.h>
 #include <kconfig.h>
 #include <dcopclient.h>
+#include <kdeversion.h>
 
 #include "konversationapplication.h"
 #include "konvdcop.h"
@@ -239,24 +240,11 @@ void KonversationApplication::readOptions()
   // Command char settings
   preferences.setCommandChar(config->readEntry("CommandChar",preferences.getCommandChar()));
 
-  // Tool bar position settings
-  preferences.mainWindowToolBarPos     =config->readNumEntry("ServerWindowToolBarPos",KToolBar::Top);
-  preferences.mainWindowToolBarStatus  =config->readNumEntry("ServerWindowToolBarStatus",KToolBar::Show);
-  preferences.mainWindowToolBarIconText=config->readNumEntry("ServerWindowToolBarIconText",KToolBar::IconTextBottom);
-  preferences.mainWindowToolBarIconSize=config->readNumEntry("ServerWindowToolBarIconSize",0);
-
-  // Status bar settings
-  preferences.mainWindowStatusBarStatus=config->readBoolEntry("ServerWindowStatusBarStatus",true);
-
-  // Menu bar settings
-  preferences.mainWindowMenuBarStatus=config->readBoolEntry("ServerWindowMenuBarStatus",true);
-
   // Tray icon settings
   preferences.setShowTrayIcon(config->readBoolEntry("ShowTrayIcon",preferences.getShowTrayIcon()));
   preferences.setTrayNotify(config->readBoolEntry("TrayNotify",preferences.getTrayNotify()));
 
   // Window geometries
-  preferences.setMainWindowSize(config->readSizeEntry("Geometry"));
   preferences.setHilightSize(config->readSizeEntry("HilightGeometry"));
   preferences.setButtonsSize(config->readSizeEntry("ButtonsGeometry"));
   preferences.setIgnoreSize(config->readSizeEntry("IgnoreGeometry"));
@@ -277,6 +265,15 @@ void KonversationApplication::readOptions()
   // Reconnection timeout
   preferences.setMaximumLagTime(config->readNumEntry("MaximumLag",preferences.getMaximumLagTime()));
 
+  //User interface
+  preferences.setShowMenuBar(config->readBoolEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar()));
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)  
+  preferences.setShowToolBar(config->readBoolEntry("ServerWindowToolBarStatus", preferences.getShowToolBar()));
+#endif
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
+  preferences.setShowStatusBar(config->readBoolEntry("ServerWindowStatusBarStatus", preferences.getShowStatusBar()));
+#endif
+  
   // Appearance
   config->setGroup("Appearance");
   // Fonts
@@ -536,7 +533,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->writeEntry("CommandChar",preferences.getCommandChar());
 
-  config->writeEntry("Geometry",preferences.getMainWindowSize());
   config->writeEntry("HilightGeometry",preferences.getHilightSize());
   config->writeEntry("ButtonsGeometry",preferences.getButtonsSize());
   config->writeEntry("IgnoreGeometry",preferences.getIgnoreSize());
@@ -544,14 +540,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("NicksOnlineGeometry",preferences.getNicksOnlineSize());
   config->writeEntry("NicknameGeometry",preferences.getNicknameSize());
 
-  config->writeEntry("ServerWindowToolBarPos",preferences.mainWindowToolBarPos);
-  config->writeEntry("ServerWindowToolBarStatus",preferences.mainWindowToolBarStatus);
-  config->writeEntry("ServerWindowToolBarIconText",preferences.mainWindowToolBarIconText);
-  config->writeEntry("ServerWindowToolBarIconSize",preferences.mainWindowToolBarIconSize);
-
-  config->writeEntry("ServerWindowStatusBarStatus",preferences.mainWindowStatusBarStatus);
-
-  config->writeEntry("ServerWindowMenuBarStatus",preferences.mainWindowMenuBarStatus);
   config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon());
   config->writeEntry("TrayNotify",preferences.getTrayNotify());
 
@@ -562,6 +550,15 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("RawLog",preferences.getRawLog());
 
   config->writeEntry("MaximumLag",preferences.getMaximumLagTime());
+  
+  //User interface
+  config->writeEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar());
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)  
+  config->writeEntry("ServerWindowToolBarStatus", preferences.getShowToolBar());
+#endif
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)  
+  config->writeEntry("ServerWindowStatusBarStatus", preferences.getShowStatusBar());
+#endif
 
   config->setGroup("Appearance");
 
