@@ -432,6 +432,7 @@ void Server::connectToIRCServer()
   {
     // This is needed to support server groups with mixed SSL and nonSSL servers
     delete m_socket;
+    tryNickNumber = 0;
 
     // connect() will do a async lookup too
     if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled()) {
