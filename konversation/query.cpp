@@ -92,7 +92,7 @@ void Query::queryTextEntered()
   queryInput->clear();
 }
 
-void Query::sendQueryText(QString sendLine)
+void Query::sendQueryText(const QString& sendLine)
 {
   QTextCodec* codec=QTextCodec::codecForLocale();
   QCString line=codec->fromUnicode(sendLine);

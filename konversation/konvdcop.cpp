@@ -10,10 +10,11 @@
 #include <qstring.h>
 
 
-KonvDCOP::KonvDCOP()
-  : QObject(0, "KonvDCOP"), DCOPObject("KonvDCOP")
+KonvDCOP::KonvDCOP() :
+           QObject(0,"Konversation"), DCOPObject("Konversation")
 {
-  if (!kapp->dcopClient()->isRegistered()) {
+  if(!kapp->dcopClient()->isRegistered())
+  {
     kapp->dcopClient()->registerAs("konversation");
     kapp->dcopClient()->setDefaultObject(objId());
   }
@@ -23,24 +24,32 @@ KonvDCOP::~KonvDCOP()
 {
 }
 
-void KonvDCOP::executeCommand (const QString& s)
+void KonvDCOP::raw(const QString& server,const QString& command)
 {
-  kdDebug() << "KonvDCOP::executeCommand(" << s << ")" << endl;
-  // Act as if the user typed it
+  kdDebug() << "KonvDCOP::raw()" << endl;
+  // send raw IRC protocol data
+  emit raw(server,command);
 }
 
-void KonvDCOP::registerEventHook (const QString &type, const QString &criteria, const QString &signal)
+void KonvDCOP::say(const QString& server,const QString& target,const QString& command)
+{
+  kdDebug() << "KonvDCOP::say()" << endl;
+  // Act as if the user typed it
+  emit dcopSay(server,target,command);
+}
+
+void KonvDCOP::registerEventHook(const QString& type,const QString& criteria,const QString& signal)
 {
   // append
   registered_events.append(new IRCEvent(type, criteria, signal));
 }
 
-void KonvDCOP::unregisterEventHook (int id)
+void KonvDCOP::unregisterEventHook(int id)
 {
   kdDebug() << "KonvDCOP::unregisterEventHook(" << id << ")" << endl;
 }
 
-IRCEvent::IRCEvent (const QString &a_type, const QString &a_criteria, const QString &a_signal)
+IRCEvent::IRCEvent(const QString& a_type,const QString& a_criteria,const QString& a_signal)
 {
   QString l_type = a_type.lower();
 

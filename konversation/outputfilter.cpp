@@ -21,6 +21,9 @@
 
 #include <klocale.h>
 #include <kdebug.h>
+#include <kstddirs.h>
+#include <kprocess.h>
+#include <dcopclient.h>
 
 #include "konversationapplication.h"
 #include "outputfilter.h"
@@ -100,6 +103,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("away "))    parseAway(parameter);
     else if(line.startsWith("dcc "))     parseDcc(parameter);
     else if(line.startsWith("invite "))  parseInvite(parameter);
+    else if(line.startsWith("exec "))    parseExec(parameter);
 
     else if(line=="join")                parseJoin(QString::null);
     else if(line=="part")                parsePart(QString::null);
@@ -112,6 +116,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="unaway")              parseAway(QString::null);
     else if(line=="dcc")                 parseDcc(QString::null);
     else if(line=="invite")              parseInvite(QString::null);
+    else if(line=="exec")                parseExec(QString::null);
 
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
@@ -551,6 +556,47 @@ void OutputFilter::parseInvite(const QString &parameter)
         output=i18n("Error: %1 is not a channel.").arg(channel);
         program=true;
       }
+    }
+  }
+}
+
+void OutputFilter::parseExec(const QString &parameter)
+{
+  if(parameter.isEmpty())
+  {
+    type=i18n("Usage");
+    output=i18n("Usage: EXEC <script> [parameter list]");
+    program=true;
+  }
+  else
+  {
+    KStandardDirs kstddir;
+    QString scriptPath(kstddir.saveLocation("data","konversation/scripts"));
+    KProcess process;
+    QStringList parameterList=QStringList::split(' ',parameter);
+    if(parameterList[0].find("../")==-1)
+    {
+      // TODO: This is in the making
+      // send the script all the information it will need
+      process << scriptPath+"/"+parameterList[0]  // script path / name
+              << kapp->dcopClient()->appId()      // our dcop port
+              << "my.server.de"                   // the server we are connected to
+              << "target";                        // the target where the call came from
+
+      // send remaining parameters to the script
+      for(unsigned int index=1;index<parameterList.count();index++)
+        process << parameterList[index];
+
+      process.setWorkingDirectory(scriptPath);
+      if(process.start()==false) kdDebug() << "exec() error" << endl;
+      process.detach(); // to free the script's stdin
+      kdDebug() << "Script running." << endl;
+    }
+    else
+    {
+      type=i18n("Error");
+      output=i18n("Error: Script name may not contain \"../\"!");
+      program=true;
     }
   }
 }

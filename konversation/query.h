@@ -50,18 +50,17 @@ class Query : public ChatWindow
 
   public slots:
     void adjustFocus();
+    void sendQueryText(const QString& text);
 
   protected slots:
-    void sendFileMenu();
     void queryTextEntered();
+    void sendFileMenu();
     void newTextInView();
     void close();
     // connected to IRCInput::textPasted() - used to handle large/multiline pastes
     void textPasted(QString text);
 
   protected:
-    void sendQueryText(QString line);
-
     QString queryName;
     QString hostmask;
     QString buffer;

@@ -63,15 +63,16 @@ class KonversationApplication : public KApplication
     void openPrefsDialog();
     void closePrefsDialog();
 
-    void emitDCOPSig(const QCString &signal, QByteArray &data);
+    void emitDCOPSig(const QCString &signal,QByteArray &data);
 
   protected slots:
     void removeServer(Server* server);
+    void dcopSay(const QString& server,const QString& target,const QString& command);
 
   protected:
     QPtrList<Server> serverList;
     PrefsDialog* prefsDialog;
-    KonvDCOP* dcop_object;
+    KonvDCOP* dcopObject;
 };
 
 #endif

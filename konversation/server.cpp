@@ -436,7 +436,26 @@ void Server::send()
   outputBuffer=QString::null;
 }
 
-void Server::ctcpReply(const QString &receiver, const QString &text)
+void Server::dcopSay(const QString& target,const QString& command)
+{
+  if(isAChannel(target))
+  {
+    Channel* channel=getChannelByName(target);
+    if(channel) channel->sendChannelText(command);
+  }
+  else
+  {
+    Query* query=getQueryByName(target);
+    if(query==0)
+    {
+      addQuery(target,QString::null);
+      query=getQueryByName(target);
+    }
+    if(query) query->sendQueryText(command);
+  }
+}
+
+void Server::ctcpReply(const QString &receiver,const QString &text)
 {
   queue("NOTICE "+receiver+" :"+'\x01'+text+'\x01');
 }
@@ -451,7 +470,7 @@ void Server::setDeliberateQuit(bool on)
   deliberateQuit=on;
 }
 
-void Server::addQuery(const QString &nickname, const QString &hostmask)
+void Server::addQuery(const QString &nickname,const QString &hostmask)
 {
   // Only create new query object if there isn't already one with the same name
   Query* query=getQueryByName(nickname);
@@ -471,7 +490,7 @@ void Server::addQuery(const QString &nickname, const QString &hostmask)
     queryList.append(query);
   }
   // Always set hostmask
-  query->setHostmask(hostmask);
+  if(query) query->setHostmask(hostmask);
 }
 
 void Server::closeQuery(const QString &name)
@@ -1132,6 +1151,13 @@ void Server::sendToAllChannels(const QString &text)
 void Server::unAway()
 {
   isAway=false;
+}
+
+bool Server::isAChannel(const QString &check)
+{
+  QChar initial=check.at(0);
+
+  return (initial=='#' || initial=='&' || initial=='+' || initial=='!');
 }
 
 void Server::setIdentity(Identity newIdentity) { identity=newIdentity; }

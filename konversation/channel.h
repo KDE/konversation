@@ -74,7 +74,7 @@ class Channel : public ChatWindow
     void sendFile();
 
   public slots:
-    void setNickname(const QString&);
+    void setNickname(const QString&ChannelTChannelT);
     void channelTextEntered();
     void sendChannelText(const QString& line);
     void newTextInView();

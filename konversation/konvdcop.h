@@ -11,7 +11,7 @@
 #include "konviface.h"
 #include "event.h"
 
-class KonvDCOP : public QObject, virtual public KonvIface
+class KonvDCOP : public QObject,virtual public KonvIface
 {
   Q_OBJECT
 
@@ -20,10 +20,14 @@ class KonvDCOP : public QObject, virtual public KonvIface
     ~KonvDCOP();
     QPtrList<IRCEvent> registered_events;
 
+  signals:
+    void dcopSay(const QString& server,const QString& target,const QString& command);
+
   public slots:
-    void executeCommand (const QString &);
-    void registerEventHook (const QString &type, const QString &criteria, const QString &signal);
-    void unregisterEventHook (int id);
+    void raw(const QString& server,const QString& command);
+    void say(const QString& server,const QString& target,const QString& command);
+    void registerEventHook(const QString& type,const QString& criteria,const QString& signal);
+    void unregisterEventHook(int id);
 };
 
 #endif

@@ -66,13 +66,37 @@ KonversationApplication::KonversationApplication()
     connect(&preferences,SIGNAL (requestSaveOptions()),this,SLOT (saveOptions()) );
   }
   // prepare dcop interface
-  dcop_object=new KonvDCOP;
+  dcopObject=new KonvDCOP;
+  if(dcopObject)
+  {
+    connect(dcopObject,SIGNAL (dcopSay(const QString&,const QString&,const QString&)),
+                    this,SLOT (dcopSay(const QString&,const QString&,const QString&)) );
+  }
 }
 
 KonversationApplication::~KonversationApplication()
 {
   kdDebug() << "KonversationApplication::~KonversationApplication()" << endl;
   saveOptions(false);
+  delete dcopObject;
+}
+
+void KonversationApplication::dcopSay(const QString& server,const QString& target,const QString& command)
+{
+  kdDebug() << server << target << command << endl;
+
+  Server* lookServer=serverList.first();
+  while(lookServer)
+  {
+    if(lookServer->getServerName()==server)
+    {
+      kdDebug() << "Server found: " << server << endl;
+      lookServer->dcopSay(target,command);
+      // break out of while loop
+      lookServer=0;
+    }
+    else lookServer=serverList.next();
+  }
 }
 
 void KonversationApplication::connectToServer(int id)
@@ -630,7 +654,7 @@ void KonversationApplication::closePrefsDialog()
 
 void KonversationApplication::emitDCOPSig(const QCString &signal, QByteArray &data)
 {
-  dcop_object->emitDCOPSignal(signal, data);
+  dcopObject->emitDCOPSignal(signal, data);
 }
 
 void KonversationApplication::processHooks (EVENT_TYPE a_type, const QString &a_criteria, const QString &a_sender, const QString &a_target, const QString &a_data)
@@ -639,12 +663,12 @@ void KonversationApplication::processHooks (EVENT_TYPE a_type, const QString &a_
 
   kdDebug() << "KonversationApplication::processHooks(): "<< a_criteria << a_sender << a_target << endl;
 
-  // And here we scan the list of events in dcop_object and for every one matching type,
+  // And here we scan the list of events in dcopObject and for every one matching type,
   // then check to see if the sender:target:data tuple matches
   // criteria (use regexp matching) and for each one that matches, append the appropriate
   // signal to dsig_list.  For each signal in dsig_list, emit emitDCOPSig(sig, data)
   IRCEvent *ev;
-  for (ev = dcop_object->registered_events.first(); ev; dcop_object->registered_events.next())
+  for (ev = dcopObject->registered_events.first(); ev; dcopObject->registered_events.next())
   {
     if (ev->type == a_type)
     {

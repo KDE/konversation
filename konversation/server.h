@@ -81,6 +81,7 @@ class Server : public QObject
     void appendCommandMessageToChannel(const char *channel, const char* command, const char *message);
     void appendStatusMessage(const char *type,const char *message);
 
+    void dcopSay(const QString& target,const QString& command);
     void ctcpReply(const QString &receiver, const QString &text);
 
     void setChannelTopic(const QString &channel, const QString &topic);
@@ -163,6 +164,7 @@ class Server : public QObject
 
     void lookupFinished();
     void startNotifyCheckTimer();
+    bool isAChannel(const QString &check);
     void setIdentity(Identity newIdentity);
 
     unsigned int completeQueryPosition;
