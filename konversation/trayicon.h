@@ -6,7 +6,7 @@
 */
 
 /*
-  trayicon.h  -  This class handles the system tray icon
+  This class handles the system tray icon
   begin:     Sun Nov 9 2003
   copyright: (C) 2003 by Peter Simonsson
   email:     psn@linux.se

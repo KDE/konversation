@@ -6,7 +6,7 @@
 */
 
 /*
-  dccrecipientdialog.h  -  lets the user choose a nick from the list
+  lets the user choose a nick from the list
   begin:     Sam Dez 7 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

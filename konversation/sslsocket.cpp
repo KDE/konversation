@@ -1,6 +1,4 @@
 /*
-    sslsocket.cpp
-
     Copyright (c) 2004      by İsmail Dönmez <ismail.donmez@boun.edu.tr>
 
     based on the code by :

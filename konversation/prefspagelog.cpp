@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspagelog.cpp  -  Provides a user interface to customize logfile settings
+  Provides a user interface to customize logfile settings
   begin:     Son Okt 27 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

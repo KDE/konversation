@@ -6,7 +6,7 @@
 */
 
 /*
-  statuspanel.cpp  -  The panel where the server status messages go
+  The panel where the server status messages go
   begin:     Sam Jan 18 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com

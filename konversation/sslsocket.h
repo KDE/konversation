@@ -1,7 +1,7 @@
 #ifndef SSL_SOCKET_H
 #define SSL_SOCKET_H
 /*
-    sslsocket.h - KDE SSL Socket
+    KDE SSL Socket
 
     Copyright (c) 2004      by İsmail Dönmez <ismail.donmez@boun.edu.tr>
 

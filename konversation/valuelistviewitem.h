@@ -6,7 +6,7 @@
 */
 
 /*
-  valuelistviewitem.h  -  List view item that carries an arbitrary value
+  List view item that carries an arbitrary value
   begin:     Fre Apr 25 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com

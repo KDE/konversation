@@ -6,7 +6,7 @@
 */
 
 /*
-  nicklistview.h  -  Channel Nick List, including context menu
+  Channel Nick List, including context menu
   begin:     Fre Jun 7 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspagealiases.cpp  -  The preferences GUI managing aliases
+  The preferences GUI managing aliases
   begin:     Mon Jul 14 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com

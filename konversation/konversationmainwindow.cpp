@@ -6,7 +6,7 @@
 */
 
 /*
-  konversationmainwindow.cpp  -  The main window where all other views go
+  The main window where all other views go
   begin:     Don Apr 17 2003
   copyright: (C) 2003 by Dario Abatianni, Peter Simonsson
   email:     eisfuchs@tigress.com, psn@linux.se

@@ -6,7 +6,7 @@
 */
 
 /*
-  tabaction.cpp  -  This class implements a special action for changing tab
+  This class implements a special action for changing tab
   begin:     Sun Nov 10 2003
   copyright: (C) 2003 by Peter Simonsson
   email:     psn@linux.se

@@ -6,7 +6,7 @@
 */
 
 /*
-    dccchat.cpp  -  The class that controls dcc chats
+    The class that controls dcc chats
     begin:     Sun Nov 16 2003
     copyright: (C) 2002 by Dario Abatianni
     email:     eisfuchs@tigress.com

@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspagenotify.cpp  -  Proivides an interface to the notify list
+  Proivides an interface to the notify list
   begin:     Fre Jun 13 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com

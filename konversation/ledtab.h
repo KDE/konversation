@@ -6,7 +6,7 @@
 */
 
 /*
-  ledtab.h  -  The tabs with LEDs on them
+  The tabs with LEDs on them
   begin:     Fri Feb 22 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

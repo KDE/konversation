@@ -6,11 +6,10 @@
 */
 
 /*
-  prefspagebuttons.h  -  Provides an interface to edit the quick buttons
+  Provides an interface to edit the quick buttons
   begin:     Mon Jun 9 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
 */
 
 #ifndef PREFSPAGEBUTTONS_H

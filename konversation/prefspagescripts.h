@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspagescripts.h  -  Provides a user interface to customize login scripts
+  Provides a user interface to customize login scripts
   begin:     Tue Sep 24 2002
   copyright: (C) 2002 by Matthias Gierlings
   email:     gismore@users.sourceforge.net

@@ -1,6 +1,5 @@
-// dcctransferrecv.h - receive a file on DCC protocol
 /*
-  dcctransfer.h  -  description
+  receive a file on DCC protocol
   begin:     Mit Aug 7 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

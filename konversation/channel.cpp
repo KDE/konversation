@@ -6,7 +6,7 @@
 */
 
 /*
-    channel.cpp  -  The class that controls a channel
+    The class that controls a channel
     begin:     Wed Jan 23 2002
     copyright: (C) 2002 by Dario Abatianni
                (C) 2004 by Peter Simonsson <psn@linux.se>
@@ -1979,7 +1979,7 @@ void Channel::processPendingNicks()
   // remove possible mode characters from nickname and store the resulting mode
   m_server->mangleNicknameWithModes(nickname,admin,owner,op,halfop,voice);
 
-  // TODO: make these an enumeration in KApplication or somewhere, we can use them from channel.cpp as well
+  // TODO: make these an enumeration in KApplication or somewhere, we can use them as well
   unsigned int mode=(admin  ? 16 : 0)+
                     (owner  ?  8 : 0)+
                     (op     ?  4 : 0)+

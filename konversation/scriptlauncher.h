@@ -6,7 +6,7 @@
 */
 
 /*
-  scriptlauncher.h  -  Launches shell scripts
+  Launches shell scripts
   begin:     Mit Mär 12 2003
   copyright: (C) 2003 by Dario Abatianni
              (C) 2004 by Peter Simonsson

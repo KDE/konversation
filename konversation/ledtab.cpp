@@ -6,7 +6,7 @@
 */
 
 /*
-  ledtab.cpp  -  Tab for QTabWidget with activity LED
+  Tab for QTabWidget with activity LED
   begin:     Fri Feb 22 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

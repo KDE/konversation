@@ -1,4 +1,3 @@
-// dccdetaildialog.h
 // Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
 
 /*

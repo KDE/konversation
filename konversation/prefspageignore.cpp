@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspageignore.cpp  -  Provides an interface to the ignore list
+  Provides an interface to the ignore list
   begin:     Fre Jun 13 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com

@@ -6,7 +6,7 @@
 */
 
 /*
-  channellistviewitem.h  -  item in the channel list
+  item in the channel list
   begin:     Die Apr 29 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com

@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspagedccsettings.cpp  -  Provides a user interface to customize DCC settings
+  Provides a user interface to customize DCC settings
   begin:     Wed Oct 23 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

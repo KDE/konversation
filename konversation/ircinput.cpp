@@ -6,7 +6,7 @@
 */
 
 /*
-  ircinput.cpp  -  The line input widget with chat enhanced functions
+  The line input widget with chat enhanced functions
   begin:     Tue Mar 5 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

@@ -1,4 +1,3 @@
-// irccharsets.cpp
 // A wrapper for KCharsets
 // Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
 

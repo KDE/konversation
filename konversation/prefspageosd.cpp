@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspageosd.cpp  -  Configuration tab for the OSD Widget
+  Configuration tab for the OSD Widget
   begin:     Fre Sep 26 2003
   copyright: (C) 2003 by Christian Muehlhaeuser
   email:     muesli@chareit.net

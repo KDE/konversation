@@ -6,7 +6,7 @@
 */
 
 /*
-  irccolorchooser.h - dialog used to add irc colors to your messages
+  dialog used to add irc colors to your messages
   begin:     Wed 9 July 2003
   copyright: (C) 2003 by Peter Simonsson
   email:     psn@linux.se

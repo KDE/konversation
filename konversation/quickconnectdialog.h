@@ -6,7 +6,7 @@
 */
 
 /*
-  quickconnectdialog.h  -  Dialog for quick connection to an IRC network without adding a server in the Server List.
+  Dialog for quick connection to an IRC network without adding a server in the Server List.
   begin:     Sat June 05 2004
   copyright: (C) 2004 by Michael Goettsche
   email:     mail@tuxipuxi.de

@@ -6,7 +6,7 @@
 */
 
 /*
-  ledtabwidget.h  -  Extension of QTabWidget to support status LEDs
+  Extension of QTabWidget to support status LEDs
   begin:     Fri Feb 22 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

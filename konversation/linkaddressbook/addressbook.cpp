@@ -6,7 +6,7 @@
 */
 
 /*
-  addressbook.cpp  - This class gives function that interact with kaddressbook.
+  This class gives function that interact with kaddressbook.
   begin:     Fri 2004-07-23
   copyright: (C) 2004 by John Tapsell
   email:     john@geola.co.uk

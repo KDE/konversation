@@ -6,7 +6,7 @@
 */
 
 /*
-  dcctransferhandler.h  -  This class manages everything DCC transfer related
+  This class manages everything DCC transfer related
   begin:     Mon Apr 21 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com

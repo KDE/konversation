@@ -6,7 +6,7 @@
 */
 
 /*
-  outputfilter.cpp  -  Converts input to RFC1459 output
+  Converts input to RFC1459 output
   begin:     Fri Feb 1 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

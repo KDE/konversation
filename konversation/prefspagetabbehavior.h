@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspagetabbehavior.h  -  Provides a GUI for tab behavior
+  Provides a GUI for tab behavior
   begin:     Sun Nov 16 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com

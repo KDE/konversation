@@ -1,5 +1,5 @@
 /*
-    linkaddressbookui.cpp - Kontact's Link IRC Nick to Addressbook contact Wizard
+   Kontact's Link IRC Nick to Addressbook contact Wizard
 
    This code was shamelessly stolen from kopete's add new contact wizard.
 

@@ -1,7 +1,4 @@
-// nicklistviewitem.h
 /***************************************************************************
-                          ledlistviewitem.h  -  A list view with led indicator
-                             -------------------
     begin                : Thu Jul 25 2002
     copyright            : (C) 2002 by Matthias Gierlings
     email                : gismore@users.sourceforge.net

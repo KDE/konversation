@@ -6,7 +6,7 @@
 */
 
 /*
-  identity.h  -  This class holds the various user identities
+  This class holds the various user identities
   begin:     Son Feb 9 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com

@@ -6,7 +6,7 @@
 */
 
 /*
-  ledtabwidget.cpp  -  A tab widget with support for status "LED"s
+  A tab widget with support for status "LED"s
   begin:     Fri Feb 22 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

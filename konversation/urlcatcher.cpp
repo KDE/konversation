@@ -6,7 +6,7 @@
 */
 
 /*
-  urlcatcher.cpp  -  shows all URLs found by the client
+  shows all URLs found by the client
   begin:     Die Mai 27 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com

@@ -6,7 +6,7 @@
 */
 
 /*
-  prefspagebehaviour.h  -  The preferences panel that holds the behaviour settings
+  The preferences panel that holds the behaviour settings
   copyright: (C) 2002 by Dario Abatianni
              (C) 2004 by Peter Simonsson
 */

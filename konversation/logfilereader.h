@@ -6,7 +6,7 @@
 */
 
 /*
-  logfilereader.h  -  Shows the content of a log file
+  Shows the content of a log file
   begin:     Fri Dec 5 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com

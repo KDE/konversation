@@ -6,7 +6,7 @@
 */
 
 /*
-  nicklistview.cpp  -  This is the class that shows the channel nick list
+  This is the class that shows the channel nick list
   begin:     Fre Jun 7 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

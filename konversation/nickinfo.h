@@ -6,7 +6,7 @@
 */
 
 /*
-  nickinfo.h    -  Nick Information
+  Nick Information
   begin:     Sat Jan 17 2004
   copyright: (C) 2004 by Gary Cramblitt
   email:     garycramblitt@comcast.net
