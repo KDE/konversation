@@ -2465,22 +2465,6 @@ void Server::noMorePendingNicks(const QString& channelName)
   if(outChannel) outChannel->setPendingNicks(false);
 }
 
-void Server::addNickToChannel(const QString &channelName,const QString &nickname,const QString &hostmask,
-                              bool admin,bool owner,bool op,bool halfop,bool voice)
-{
-  Channel* outChannel=getChannelByName(channelName);
-
-  // Update NickInfo.
-  ChannelNickPtr channelNick = addNickToJoinedChannelsList(channelName, nickname);
-  channelNick->setMode(admin,owner,op,halfop,voice);
-  if(outChannel) outChannel->addNickname(channelNick);
-  NickInfoPtr nickInfo = channelNick->getNickInfo();
-  if ((nickInfo->getHostmask() != hostmask) && !hostmask.isEmpty())
-  {
-    nickInfo->setHostmask(hostmask);
-  }
-}
-
 Channel* Server::nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask)
 {
   Channel* outChannel=getChannelByName(channelName);

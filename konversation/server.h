@@ -1,3 +1,6 @@
+#ifndef SERVER_H
+#define SERVER_H
+
 /*
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -11,10 +14,6 @@
   copyright: (C) 2002,2003,2004 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
-
-#ifndef SERVER_H
-#define SERVER_H
-
 
 #include <qtimer.h>
 #include <qdict.h>
@@ -30,17 +29,11 @@
 #include "channelnick.h"
 #include "inputfilter.h"
 #include "outputfilter.h"
-
 #include "dcctransfer.h"
 #include "nickinfo.h"
-
 #include "sslsocket.h"
 #include "serversettings.h"
 #include "servergroupsettings.h"
-
-/*
-  @author Dario Abatianni
-*/
 
 class Channel;
 class Query;
@@ -63,25 +56,31 @@ class Server : public QObject
     /** Constructor used for connecting to a known server.
      *  Read in the prefrences to get all the details about the server.
      */	  
-    Server(KonversationMainWindow* mainWindow,int number);
+    Server(KonversationMainWindow* mainWindow, int number);
+
     /** Constructor used for a 'fast connect' to a server.
      *  The details are passed in.  Used for example when the user does "/server irc.somewhere.net"
      */
     Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
-		   const QString& channel,const QString& nick, QString password, const bool& useSSL=FALSE);
+	   const QString& channel,const QString& nick, QString password, const bool& useSSL=FALSE);
     ~Server();
 
     QString getServerName() const;
     QString getServerGroup() const;
+
     IdentityPtr getIdentity() const;
+
     bool getUseSSL() const;
     QString getSSLInfo() const;
+
     int getPort() const;
     int getLag() const;
+
     bool getAutoJoin() const;
     void setAutoJoin(bool on);
     
-    /** This returns true when we have a socket connection.  Not necessarily 'online' and ready for commands.
+    /** This returns true when we have a socket connection.
+     *	Not necessarily 'online' and ready for commands.
      *  @see connected()
      */
     bool isConnected() const;
@@ -102,8 +101,6 @@ class Server : public QObject
     QString getIrcName() const;
 
     void addPendingNickList(const QString& channelName,const QStringList& nickList);
-    void addNickToChannel(const QString &channelName,const QString &nickname,const QString &hostmask,
-                          bool admin,bool owner,bool op,bool halfop,bool voice);
     void addHostmaskToNick(const QString &sourceNick, const QString &sourceHostmask);
     Channel* nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask);
     void renameNick(const QString &nickname,const QString &newNick);
