@@ -19,6 +19,8 @@
 #include <qlineedit.h>
 #include <qtextcodec.h>
 #include <qhbox.h>
+#include <qtooltip.h>
+#include <qtextstream.h>
 
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -300,6 +302,21 @@ void Query::nickInfoChanged() {
     } else {
       addresseeimage->hide();
     }
+  
+    QString strTooltip;
+    QTextStream tooltip( &strTooltip, IO_WriteOnly );
+
+    tooltip << "<qt>";
+
+    tooltip << "<table cellspacing=\"0\" cellpadding=\"0\">";
+
+    m_nickInfo->tooltipTableData(tooltip);
+    
+
+    tooltip << "</table></qt>";
+    QToolTip::add(addresseeimage, strTooltip);
+    QToolTip::add(queryHostmask, strTooltip);
+
   } else {
     addresseeimage->hide();
   }
