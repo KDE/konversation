@@ -22,6 +22,7 @@ class KonvDCOP : public QObject, virtual public KonvIface
   signals:
     void dcopSay(const QString& server,const QString& target,const QString& command);
     void dcopInfo(const QString& string);
+    void dcopInsertRememberLine();
 
   public slots:
     int registerEventHook(const QString& type,const QString& criteria,const QString& app,const QString& object,const QString& signal);
@@ -32,6 +33,7 @@ class KonvDCOP : public QObject, virtual public KonvIface
     void info(const QString& string);
     void debug(const QString& string);
     void error(const QString& string);
+    void insertRememberLine();
 
   protected:
     int hookId;

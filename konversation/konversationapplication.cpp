@@ -98,6 +98,8 @@ KonversationApplication::KonversationApplication()
                     this,SLOT (dcopSay(const QString&,const QString&,const QString&)) );
     connect(dcopObject,SIGNAL (dcopInfo(const QString&)),
                     this,SLOT (dcopInfo(const QString&)) );
+    connect(dcopObject,SIGNAL (dcopInsertRememberLine()),
+                    this,SLOT(insertRememberLine()));
   }
 
   // Sound object used to play sound...
@@ -141,6 +143,11 @@ void KonversationApplication::dcopInfo(const QString& string)
 {
   Server* lookServer=serverList.first();
   if(lookServer) lookServer->dcopInfo(string);
+}
+
+void KonversationApplication::insertRememberLine()
+{
+  mainWindow->insertRememberLine();
 }
 
 void KonversationApplication::connectToServer(int id)

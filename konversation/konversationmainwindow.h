@@ -83,6 +83,7 @@ class KonversationMainWindow : public KMainWindow
     void addKonsolePanel(); // connected in server class
     void addUrlCatcher();
     void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
+    void insertRememberLine();
 
     void resetLag();
     void updateLag(Server* lagServer,int msec);
@@ -129,7 +130,6 @@ class KonversationMainWindow : public KMainWindow
 
     void findTextShortcut();
     void addIRCColor();
-    void insertRememberLine();
     void clearWindow();
     void closeQueries();
 
