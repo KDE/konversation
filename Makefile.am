@@ -1,6 +1,6 @@
 ####### kdevelop will overwrite this part!!! (begin)##########
 
-SUBDIRS = konversation po doc 
+SUBDIRS = konversation po doc images
 
 EXTRA_DIST = konversation.kdevprj AUTHORS COPYING ChangeLog INSTALL README TODO 
 
