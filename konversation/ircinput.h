@@ -44,7 +44,7 @@ class IRCInput : public KTextEdit
     void nickCompletion();
     void endCompletion();   // tell channel that completion phase is over
     void history(bool up);
-    void textPasted(QString text);
+    void textPasted(const QString& text);
     void submit();
 
   public slots:

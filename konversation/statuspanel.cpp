@@ -70,7 +70,8 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
   connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendStatusText(const QString&)) );
 
   connect(statusInput,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
-  connect(statusInput,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
+  connect(statusInput,SIGNAL (textPasted(const QString&)),this,SLOT(textPasted(const QString&)) );
+  connect(getTextView(), SIGNAL(textPasted()), statusInput, SLOT(paste()));
 
   connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged(int)));
 
@@ -127,7 +128,7 @@ void StatusPanel::newTextInView(const QString& highlightColor,bool important)
   emit newText(this,highlightColor,important);
 }
 
-void StatusPanel::textPasted(QString text)
+void StatusPanel::textPasted(const QString& text)
 {
   if(server)
   {

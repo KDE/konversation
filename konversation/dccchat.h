@@ -67,7 +67,7 @@ class DccChat : public ChatWindow
     void readData();
     void dccChatTextEntered();
     void sendDccChatText(const QString& sendLine);
-    void textPasted(QString text);
+    void textPasted(const QString& text);
     void newTextInView(const QString& highlightColor, bool important);
     void heardPartner();
     void socketClosed();

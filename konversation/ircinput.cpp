@@ -263,10 +263,17 @@ void IRCInput::insert(const QString& textToInsert)
 
 void IRCInput::paste()
 {
-  QClipboard *cb=KApplication::kApplication()->clipboard();
+  QClipboard *cb = KApplication::kApplication()->clipboard();
 
   // Copy text from the clipboard (paste)
-  QString text = cb->text(QClipboard::Selection);
+  QString text;
+
+  if(cb->ownsSelection()) {
+    text = cb->text(QClipboard::Selection);
+  } else {
+    text = cb->text(QClipboard::Clipboard);
+  }
+
   // is there any text in the clipboard?
   if(!text.isEmpty())
   {

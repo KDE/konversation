@@ -72,7 +72,8 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
   // connect the signals and slots
   connect(queryInput,SIGNAL (submit()),this,SLOT (queryTextEntered()) );
-  connect(queryInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
+  connect(queryInput,SIGNAL (textPasted(const QString&)),this,SLOT (textPasted(const QString&)) );
+  connect(getTextView(), SIGNAL(textPasted()), queryInput, SLOT(paste()));
 
   connect(textView,SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
@@ -186,7 +187,7 @@ void Query::updateFonts()
                                    KonversationApplication::preferences.getBackgroundImageName());
 }
 
-void Query::textPasted(QString text)
+void Query::textPasted(const QString& text)
 {
   if(server)
   {

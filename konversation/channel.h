@@ -148,7 +148,7 @@ class Channel : public ChatWindow
     // will be called when the user types a new topic in the topic line
     void requestNewTopic(const QString& newTopic);
     // connected to IRCInput::textPasted() - used to handle large/multiline pastings
-    void textPasted(QString text);
+    void textPasted(const QString& text);
     // connected to IRCInput::sendFile()
     void sendFileMenu();
     void autoUserhost();

@@ -266,7 +266,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(channelInput,SIGNAL (submit()),this,SLOT (channelTextEntered()) );
   connect(channelInput,SIGNAL (nickCompletion()),this,SLOT (completeNick()) );
   connect(channelInput,SIGNAL (endCompletion()),this,SLOT (endCompleteNick()) );
-  connect(channelInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
+  connect(channelInput,SIGNAL (textPasted(const QString&)),this,SLOT (textPasted(const QString&)) );
+  connect(getTextView(), SIGNAL(textPasted()), channelInput, SLOT(paste()));
 
   connect(textView,SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
@@ -339,7 +340,7 @@ void Channel::requestNewTopic(const QString& newTopic)
   channelInput->setFocus();
 }
 
-void Channel::textPasted(QString text)
+void Channel::textPasted(const QString& text)
 {
   if(server)
   {

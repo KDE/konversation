@@ -70,7 +70,7 @@ class Query : public ChatWindow
     void sendFileMenu();
     void newTextInView(const QString& highlightColor,bool important);
     // connected to IRCInput::textPasted() - used to handle large/multiline pastes
-    void textPasted(QString text);
+    void textPasted(const QString& text);
     void popup(int id);
 #ifdef USE_MDI
     void serverQuit(const QString& reason);

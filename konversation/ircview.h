@@ -57,6 +57,7 @@ class IRCView : public KTextBrowser
     void sendFile();
     void extendedPopup(int id);
     void autoText(const QString& text);
+    void textPasted();
 
   public slots:
     void append(const QString& nick,const QString& message);

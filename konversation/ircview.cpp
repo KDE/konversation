@@ -696,22 +696,20 @@ void IRCView::focusInEvent(QFocusEvent*)
   emit gotFocus();
 }
 
-// Copy selected text into clipboard immediately
 bool IRCView::eventFilter(QObject* object,QEvent* event)
 {
-  if(event->type()==QEvent::MouseButtonRelease)
-  {
+  if(event->type()==QEvent::MouseButtonRelease) {
     QMouseEvent* me=(QMouseEvent*) event;
 
     if(me->button()==QMouseEvent::MidButton)
     {
       if(copyUrlMenu) {
         urlClickSlot(urlToCopy);
+      } else {
+        emit textPasted();
       }
     }
-  }
-  else if(event->type()==QEvent::ContextMenu)
-  {
+  } else if(event->type()==QEvent::ContextMenu) {
     return contextMenu((QContextMenuEvent*) event);
   }
 

@@ -70,7 +70,7 @@ class StatusPanel : public ChatWindow
     void statusTextEntered();
     void sendStatusText(const QString& line);
     // connected to IRCInput::textPasted() - used for large/multiline pastes
-    void textPasted(QString text);
+    void textPasted(const QString& text);
     void changeNickname(const QString& newNickname);
     void nicknameComboboxChanged(int index);
 
