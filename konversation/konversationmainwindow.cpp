@@ -80,6 +80,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
   new KAction(i18n("Ignore List"),0,0,this,SLOT (openIgnore()),actionCollection(),"open_ignore_window");
   new KAction(i18n("Configure Colors"), 0, 0, this, SLOT(openColorConfiguration()), actionCollection(), "open_colors_window");
+  new KAction(i18n("Channel List"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
 
   // Keyboard accelerators to navigate through the different pages
   KAccel* accelerator=accel();
@@ -208,21 +209,37 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
 //  kdDebug() << "KonversationMainWindow::closeView(" << viewToClose << ")" << endl;
 
   ChatWindow* view=static_cast<ChatWindow*>(viewToClose);
-  ChatWindow::WindowType viewType=view->getType();
+  if(view)
+  {
+    ChatWindow::WindowType viewType=view->getType();
 
-  QString viewName=view->getName();
-// the views should know by themselves how to close
+    QString viewName=view->getName();
+    // the views should know by themselves how to close
 
-  if(viewType==ChatWindow::Status)        view->closeYourself();
-  else if(viewType==ChatWindow::Channel)  view->closeYourself();
-  else if(viewType==ChatWindow::Query)    view->closeYourself();
-  else if(viewType==ChatWindow::DccPanel) closeDccPanel();
-  else if(viewType==ChatWindow::RawLog)   view->closeYourself();
+    if(viewType==ChatWindow::Status)            view->closeYourself();
+    else if(viewType==ChatWindow::Channel)      view->closeYourself();
+    else if(viewType==ChatWindow::ChannelList)  view->closeYourself();
+    else if(viewType==ChatWindow::Query)        view->closeYourself();
+    else if(viewType==ChatWindow::DccPanel)     closeDccPanel();
+    else if(viewType==ChatWindow::RawLog)       view->closeYourself();
 /*
-  else if(viewType==ChatWindow::DccChat);
-  else if(viewType==ChatWindow::Notice);
-  else if(viewType==ChatWindow::SNotice);
+    else if(viewType==ChatWindow::DccChat);
+    else if(viewType==ChatWindow::Notice);
+    else if(viewType==ChatWindow::SNotice);
 */
+  }
+}
+
+void KonversationMainWindow::openChannelList()
+{
+  if(frontServer)
+  {
+    ChannelListPanel* panel=frontServer->getChannelListPanel();
+    if(panel)
+      getViewContainer()->showPage(panel);
+    else
+      frontServer->addChannelListPanel();
+  }
 }
 
 void KonversationMainWindow::addDccPanel()
@@ -374,7 +391,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
   if(frontServer) updateLag(frontServer,frontServer->getLag());
 
   updateFrontView();
-  
+
   viewContainer->changeTabState(view,false);
 }
 

@@ -116,8 +116,9 @@ class Server : public QObject
     QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& queryName, const QString& parameter);
 
     QString getAutoJoinCommand();
-    
+
     void notifyAction(const QString& nick);
+    ChannelListPanel* getChannelListPanel();
 
   signals:
     void nicknameChanged(const QString&);

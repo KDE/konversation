@@ -13,6 +13,7 @@
       <Action name="open_nicksonline_window" />
       <Action name="open_ignore_window" />
       <Action name="open_colors_window" />
+      <Action name="open_channel_list" />
     </Menu>
   </MenuBar>
 

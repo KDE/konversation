@@ -121,6 +121,8 @@ class KonversationMainWindow : public KMainWindow
                                  QString serverTextColor, QString timeColor, QString backgroundColor);
     void closeColorConfiguration(QSize windowSize);
 
+    void openChannelList();
+
     void nextTab();
     void previousTab();
 

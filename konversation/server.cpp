@@ -145,8 +145,6 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
   connect(getMainWindow(),SIGNAL(openPrefsDialog()),KonversationApplication::kApplication(),SLOT(openPrefsDialog()));
-
-  // addChannelListPanel();
 }
 
 Server::~Server()
@@ -1319,6 +1317,8 @@ void Server::addChannelListPanel()
           channelListPanel,SLOT (addToChannelList(const QString&,int,const QString&)) );
   }
 }
+
+ChannelListPanel* Server::getChannelListPanel() { return channelListPanel; }
 
 void Server::closeChannelListPanel()
 {
