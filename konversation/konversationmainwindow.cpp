@@ -46,8 +46,7 @@
 #define KDE_IS_VERSION(a,b,c) ( KDE_VERSION >= KDE_MAKE_VERSION(a,b,c) )
 #endif
 
-#if KDE_IS_VERSION(3,1,1)
-#define USE_KNOTIFY
+#ifdef  USE_KNOTIFY
 #include <knotifydialog.h>
 #endif
 

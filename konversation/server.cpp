@@ -61,15 +61,12 @@ using namespace KNetwork;
 
 #include "addressbook.h"
 
-#ifdef KDE_IS_VERSION
-#if KDE_IS_VERSION(3,1,1)
-#define USE_KNOTIFY
-#endif
+#include <config.h>
 
 #ifdef USE_KNOTIFY
 #include <knotifyclient.h>
 #endif
-#endif
+
 
 Server::Server(KonversationMainWindow* mainWindow,int id)
 {

@@ -23,14 +23,10 @@
 #include <kdeversion.h>
 #include <kstringhandler.h>
 
-#ifdef KDE_IS_VERSION
-#if KDE_IS_VERSION(3,1,1)
-#define USE_KNOTIFY
-#endif
+#include <config.h>
 
 #ifdef USE_KNOTIFY
 #include <knotifyclient.h>
-#endif
 #endif
 
 #include "inputfilter.h"

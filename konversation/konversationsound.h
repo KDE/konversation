@@ -16,26 +16,23 @@
 
 #include <qobject.h>
 
-class KArtsServer;
-class KArtsDispatcher;
 class KURL;
 
 namespace Konversation {
+
   /**
-  Class that handles sounds*/
+  Class that handles sounds
+  */
   class Sound : public QObject
   {
     Q_OBJECT
     public:
-      Sound(QObject *parent = 0, const char *name = 0);
-      ~Sound();
+    Sound(QObject *parent = 0, const char *name = 0);
+    ~Sound();
     
     public slots:
       void play(const KURL& url);
-      
-    private:
-      KArtsServer* soundServer;
-      KArtsDispatcher* dispatcher;
+
   };
 }
 
