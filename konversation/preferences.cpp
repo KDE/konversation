@@ -427,11 +427,7 @@ QString Preferences::getColor(const QString& name)
   config->setGroup("Message Text Colors");
   QString color=config->readEntry(name,getDefaultColor(name));
 
-  if(color.isEmpty())
-  {
-    kdDebug() << "Color name " << name << " requested but does not exist!" << endl;
-    color="000000";
-  }
+  if(color.isEmpty()) color="000000";
 
   return color;
 }
@@ -445,7 +441,6 @@ void Preferences::setColor(const QString& name,const QString& color)
     KConfig* config=app->config();
 
     config->setGroup("Message Text Colors");
-
     config->writeEntry(name,color);
     config->sync();
   }

@@ -109,7 +109,7 @@ void PrefsPageColorsImages::selectBackground()
 
 void PrefsPageColorsImages::applyPreferences()
 {
-  for(unsigned int index=0;index<colorComboList.count()-1;index++)
+  for(unsigned int index=0;index<colorComboList.count();index++)
   {
     KColorCombo* combo=colorComboList.at(index);
     preferences->setColor(combo->name(),combo->color().name().mid(1));
