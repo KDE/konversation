@@ -45,6 +45,7 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString p
   buffer=new char[bufferSize];
 
   statusText.append(i18n("Queued"));
+  statusText.append(i18n("Negotiating Resume ..."));
   statusText.append(i18n("Lookup ..."));
   statusText.append(i18n("Connecting ..."));
   statusText.append(i18n("Offering ..."));
@@ -69,7 +70,6 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString p
   else
   {
     setStatus(Offering);
-//    startSend();
   }
 }
 
@@ -107,8 +107,31 @@ void DccTransfer::startGet()
   QString fullName(dccFile);
   if(KonversationApplication::preferences.getDccAddPartner()) fullName=dccPartner.lower()+"."+fullName;
   file.setName(dir.path()+"/"+fullName);
-  
-  kdDebug() << "Opening Socket to " << getIp() << " ..." << endl;
+
+  if(file.exists())
+  {
+    // TODO: Ask user if they want to resume
+    setType(Resume);
+
+    file.open(IO_ReadOnly);
+    int fileSize=file.size();
+    file.close();
+
+    emit resume(getFile(),getPort(),fileSize);
+  }
+  else connectToSender();
+}
+
+void DccTransfer::startResume()
+{
+  kdDebug() << "startResume(): calling connectToSender()" << endl;
+  setStatus(Resuming);
+  connectToSender();
+}
+
+void DccTransfer::connectToSender()
+{
+  kdDebug() << "connectToSender(): Opening Socket to " << getIp() << " ..." << endl;
   setStatus(Lookup);
 
   dccSocket=new KExtendedSocket(getIp(),getPort().toUInt(),KExtendedSocket::inetSocket);

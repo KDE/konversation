@@ -39,12 +39,14 @@ class DccTransfer : public QObject, public KListViewItem
     enum DccType
     {
       Send=0,
-      Get
+      Get,
+      Resume
     };
 
     enum DccStatus
     {
       Queued=0,    // Newly added DCC
+      Resuming,    // DCC-GET, trying to negotiate resume position
       Lookup,      // DCC-GET, trying to find ip address of sender
       Connecting,  // DCC-GET, trying to connect to sender
       Offering,    // DCC-SEND, waiting for receiver to connect to us
@@ -61,8 +63,12 @@ class DccTransfer : public QObject, public KListViewItem
     DccTransfer(KListView* parent,DccType type,QString folder,QString partner,QString name,QString size,QString ipString,QString portString);
     ~DccTransfer();
 
+  signals:
+    void resume(QString fileName,QString port,int startAt);
+
   public slots:
     void startGet();
+    void startResume();
 
   protected slots:
     void updateCPS();
@@ -75,6 +81,8 @@ class DccTransfer : public QObject, public KListViewItem
     void sendAck();
     
   protected:
+    void connectToSender();
+
     void setType(DccType type);
     void setStatus(DccStatus status);
 
