@@ -1065,8 +1065,9 @@ void Server::incoming()
 
       // if channel encoding is utf-8 and the string is definitely not utf-8
       // then try latin-1
-      if ( !isUtf8 && codec->mibEnum() == 106 )
-	codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
+      // Disabled for now -- cartman
+      //if ( !isUtf8 && codec->mibEnum() == 106 )
+      //	codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
 
       inputBuffer << codec->toUnicode(qcsBufferLines.front());
     }
