@@ -91,6 +91,13 @@ class Server : public QObject
     void addNickToChannel(const QString &channelName,const QString &nickname,const QString &hostmask,
                           bool admin,bool owner,bool op,bool halfop,bool voice);
     void addHostmaskToNick(const QString &sourceNick, const QString &sourceHostmask);
+    /**
+     * This function is needed to workaround Dalnet's Nick Enforcer problems where
+     * you can't /nick foo because its hold by Nick Enforcer but /whois foo will return
+     * nothing either.
+     * @param nickname           The nickname to add to m_allNicks NickInfoMap
+    */
+    void addToAllNicks(const QString& nickname);
     void nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask);
     void renameNick(const QString &nickname,const QString &newNick);
     void removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit=false);

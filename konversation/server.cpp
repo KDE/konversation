@@ -37,7 +37,7 @@ typedef unsigned long long __u64;
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kresolver.h>
-#include <ksocketdevice.h> 
+#include <ksocketdevice.h>
 using namespace KNetwork;
 #include <kstringhandler.h>
 #include <kdeversion.h>
@@ -72,7 +72,7 @@ using namespace KNetwork;
 Server::Server(KonversationMainWindow* mainWindow, int id)
 {
   init(mainWindow);
-  
+
   QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
   setIdentity(KonversationApplication::preferences.getIdentityByName(serverEntry[7]));
 
@@ -84,10 +84,10 @@ Server::Server(KonversationMainWindow* mainWindow, int id)
   serverKey=serverEntry[3];
 
   statusView = getMainWindow()->addStatusView(this);
-  
+
   setNickname(getIdentity()->getNickname(tryNickNumber));
   obtainNickInfo(getNickname());
-  
+
   bot=getIdentity()->getBot();
   botPassword=getIdentity()->getPassword();
 
@@ -110,14 +110,14 @@ Server::Server(KonversationMainWindow* mainWindow, int id)
   if(!KonversationApplication::preferences.getPreShellCommand().isEmpty()) {
     doPreShellCommand();
   }
-  else 
+  else
     connectToIRCServer();
 
   initTimers();
-  
+
   if(KonversationApplication::preferences.getPreShellCommand().isEmpty())
     connectSignals();
-	
+
   emit serverOnline(false);
 }
 
@@ -126,7 +126,7 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   const QString& nick,const QString& password)
 {
   init(mainWindow);
-  
+
   setIdentity(KonversationApplication::preferences.getIdentityByName("Default"));
   setName(hostName.ascii());
 
@@ -136,9 +136,9 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   serverKey=password;
 
   statusView = getMainWindow()->addStatusView(this);
-  
+
   setNickname(nick);
-  
+
   if(!KonversationApplication::preferences.getPreShellCommand().isEmpty()) {
     doPreShellCommand();
   }
@@ -146,7 +146,7 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
     connectToIRCServer();
 
   initTimers();
-  
+
   if(KonversationApplication::preferences.getPreShellCommand().isEmpty())
     connectSignals();
 
@@ -222,7 +222,7 @@ Server::~Server()
   for ( it = m_unjoinedChannels.begin(); it != m_unjoinedChannels.end(); ++it ) delete it.data();
   m_unjoinedChannels.clear();
   m_queryNicks.clear();
-  
+
   // notify KonversationApplication that this server is gone
   emit deleted(this);
 }
@@ -251,7 +251,7 @@ void Server::init(KonversationMainWindow* mainWindow)
   timerInterval = 1;  // flood protection
 
   serverSocket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
-  
+
   setMainWindow(mainWindow);
 
   if(KonversationApplication::preferences.getRawLog())
@@ -272,7 +272,7 @@ void Server::init(KonversationMainWindow* mainWindow)
 void Server::initTimers()
 {
   notifyTimer.setName("notify_timer");
-  
+
   incomingTimer.setName("incoming_timer");
   incomingTimer.start(10);
 
@@ -439,10 +439,10 @@ void Server::connectToIRCServer()
   {
     // clean up everything
     serverSocket->reset();
-    
+
     // connect() will do a async lookup too
     serverSocket->connect(serverName,QString::number(serverPort));
-    
+
     // set up the connection details
     setPrefixes("ov","@+");
     statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...").arg(serverName).arg(serverPort));
@@ -488,7 +488,7 @@ void Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwn
     // determine, whether status is like op or like voice
     while((modeIndex)<int(serverNickPrefixes.length()) && !recognisedMode)
     {
-      
+
       switch(serverNickPrefixes[modeIndex].latin1())
       {
         case '*':  // admin (EUIRC)
@@ -531,7 +531,7 @@ void Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwn
   } // loop through the name
 }
 
-/** 
+/**
 	When serverSocket emits hostFound() signal this slot is called.
 
  */
@@ -647,7 +647,7 @@ void Server::connectionEstablished(const QString& ownHost)
   KNetwork::KResolverResults res = KNetwork::KResolver::resolve(ownHost, "");
   if(res.size() > 0)
     ownIpBy001 = res.first().address().nodeName();
-  
+
   emit serverOnline(true);
 
   if(!alreadyConnected)
@@ -720,7 +720,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     // Get ISON list from preferences and addressbook.
     QString watchlist=getISONListString();
     // Create a case correct nick list from the watch list.
-    QStringList watchList=QStringList::split(' ',watchlist); 
+    QStringList watchList=QStringList::split(' ',watchlist);
     // Create a lower case nick list from the watch list.
     QStringList watchLowerList=QStringList::split(' ',watchlist.lower());
     // Any new watched nicks online?
@@ -778,7 +778,7 @@ void Server::notifyTimeout()
   {
     // But only if there actually are nicks in the notify list
     QString list=getISONListString();
-    
+
     if(!list.isEmpty())
     {
       queue("ISON "+list);
@@ -861,7 +861,7 @@ void Server::lockSending()
 }
 
 void Server::incoming()
-{ 
+{
   // We read all available bytes here because readyRead() signal will be emitted when there is new data
   // else we will stall when displaying MOTD etc.
   int max_bytes = serverSocket->bytesAvailable();
@@ -869,7 +869,7 @@ void Server::incoming()
   Q_ASSERT(max_bytes>0);  //Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
   char buffer[max_bytes];
   int len = 0;
-  
+
   // Read at max "max_bytes" bytes into "buffer"
   len = serverSocket->readBlock(buffer,max_bytes);
 
@@ -882,20 +882,20 @@ void Server::incoming()
 
   static QCString qcsRemainBuffer;
   QCString qcsBuffer = qcsRemainBuffer + QCString(buffer);
-  
+
   // remove CR (\r)
   while(qcsBuffer.contains('\r'))
     qcsBuffer.remove(qcsBuffer.find('\r'),1);
-  
+
   // split buffer to lines
   QValueList<QCString> qcsBufferLines;
   int lastLFposition = -1;
   for( int nextLFposition ; ( nextLFposition = qcsBuffer.find('\n', lastLFposition+1) ) != -1 ; lastLFposition = nextLFposition )
     qcsBufferLines << qcsBuffer.mid(lastLFposition+1, nextLFposition-lastLFposition-1);
-  
+
   // remember an incompleted line (splitted by a packet)
   qcsRemainBuffer = qcsBuffer.right(qcsBuffer.length()-lastLFposition-1);
-  
+
   while(qcsBufferLines.count())
   {
     bool isUtf8 = KStringHandler::isUtf8(qcsBufferLines.front());
@@ -956,7 +956,7 @@ void Server::incoming()
       if(!channelKey.isEmpty())
         channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), channelKey);
       // }
-      
+
       QTextCodec* codec;
       if(!channelEncoding.isEmpty())
         codec=QTextCodec::codecForName(channelEncoding.ascii());
@@ -966,7 +966,7 @@ void Server::incoming()
     }
     qcsBufferLines.pop_front();
   }
-  
+
   // refresh lock timer if it was still locked
   if(!sendUnlocked) lockSending();
 
@@ -1071,7 +1071,7 @@ void Server::send()
   }
 }
 
-void Server::closed() 
+void Server::closed()
 {
   broken(0);
 }
@@ -1284,11 +1284,11 @@ bool Server::isNickOnline(const QString &nickname)
 QString Server::getIp(bool followDccSetting)
 {
   QString ip;
-  
+
   if(followDccSetting)
   {
     int methodId = KonversationApplication::preferences.getDccMethodToGetOwnIp();
-    
+
     if(methodId == 1 && !ownIpByWHOIS.isEmpty())  // WHOIS reply
       ip = ownIpByWHOIS;
     else if(methodId == 2)  // 001 reply
@@ -1300,10 +1300,10 @@ QString Server::getIp(bool followDccSetting)
         ip = res.first().address().nodeName();
     }
   }
-  
+
   if(ip.isEmpty())
     ip = serverSocket->localAddress().nodeName();  // Return our ip using serverSocket
-  
+
   kdDebug() << "getIp() returned : " << ip << endl;
   return ip;
 }
@@ -1331,7 +1331,7 @@ void Server::addQuery(const QString& nickname,const QString& hostmask, bool wein
       nickInfo->setHostmask(hostmask);
     }
     m_queryNicks.insert(lcNickname, nickInfo);
-    
+
 #ifdef USE_KNOTIFY
     KNotifyClient::event(mainWindow->winId(), "query",
       i18n("%1 have started a conversation (query) with you.").arg(nickname));
@@ -1496,14 +1496,14 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
   emit addDccPanel();
 
   QString ownIp = getIp(true);
-  
+
   // We already checked that the file exists in output filter / requestDccSend() resp.
   DccTransferSend* newDcc=new DccTransferSend(getMainWindow()->getDccPanel(),
                                               recipient,
                                               fileURL,  // url to the sending file
                                               ownIp,    // ip
-					      altFileName,  
-					      fileSize);   
+					      altFileName,
+					      fileSize);
 
   connect(newDcc,SIGNAL (sendReady(const QString&,const QString&,const QString&,const QString&,unsigned long)),
     this,SLOT (dccSendRequest(const QString&,const QString&,const QString&,const QString&,unsigned long)) );
@@ -1708,7 +1708,7 @@ void Server::joinChannel(const QString &name, const QString &hostmask, const QSt
   }
   // Move channel from unjoined (if present) to joined list and add our own nickname to the joined list.
   ChannelNickPtr channelNick = addNickToJoinedChannelsList(name, getNickname());
-  
+
   if ((channelNick->getHostmask() != hostmask ) && !hostmask.isEmpty())
   {
     NickInfoPtr nickInfo = channelNick->getNickInfo();
@@ -1918,12 +1918,12 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
   {
     // Create a new list in the joined channels if not already present.
     if (!m_joinedChannels.contains(lcChannelName))
-    { 
+    {
       channel = new ChannelNickMap;
       m_joinedChannels.insert(lcChannelName, channel);
       doChannelJoinedSignal = true;
     }
-    else 
+    else
       channel = m_joinedChannels[lcChannelName];
   }
   // Add NickInfo to channel list if not already in the list.
@@ -2041,7 +2041,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
     KNotifyClient::event(mainWindow->winId(), "notify",
       i18n("%1 is online (%2).").arg(nickname).arg(getServerName()));
 #endif
-  }    
+  }
   return nickInfo;
 }
 
@@ -2158,7 +2158,7 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
 QStringList Server::getWatchList()
 {
   if (m_serverISON)
-    return m_serverISON->getWatchList(); 
+    return m_serverISON->getWatchList();
   else
     return QStringList();
 }
@@ -2167,7 +2167,7 @@ QString Server::getWatchListString() { return getWatchList().join(" "); }
 QStringList Server::getISONList()
 {
   if (m_serverISON)
-    return m_serverISON->getISONList(); 
+    return m_serverISON->getISONList();
   else
     return QStringList();
 }
@@ -2342,6 +2342,13 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
   // Set hostmask for query with the same name
   Query* query=getQueryByName(sourceNick);
   if(query) query->setHostmask(sourceHostmask);
+}
+
+void Server::addToAllNicks( const QString& nickname )
+{
+    QString lcNickname = nickname.lower();
+    NickInfoPtr nickInfo = new NickInfo( nickname,  this );
+    m_allNicks.insert( lcNickname, nickInfo );
 }
 
 void Server::removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit)
