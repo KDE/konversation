@@ -58,7 +58,8 @@ class KonvDCOP : public QObject, virtual public KonvIface
     void error(const QString& string);
     void insertRememberLine();
     void connectToServer(const QString& url, int port, const QString& channel, const QString& password);
-
+    QStringList listServers();
+    QStringList listConnectedServers();
   protected:
     int hookId;
 };

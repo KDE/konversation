@@ -30,6 +30,8 @@ class KonvIface : virtual public DCOPObject
     virtual void unregisterEventHook (int id) = 0;
     virtual bool isIgnore (int serverid, const QString &hostmask, int type) = 0;
     virtual QString getNickname (int serverid) = 0;
+    virtual QStringList listServers() = 0;
+    virtual QStringList listConnectedServers() = 0;
 };
 
 class KonvIdentityIface : virtual public DCOPObject

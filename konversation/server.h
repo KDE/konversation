@@ -79,7 +79,10 @@ class Server : public QObject
     int getLag() const;
     bool getAutoJoin() const;
     void setAutoJoin(bool on);
-
+    
+    /** This returns true when we have a socket connection.  Not necessarily 'online' and ready for commands.
+     *  @see connected()
+     */
     bool isConnected() const;
     bool isConnecting() const;
 
@@ -163,6 +166,8 @@ class Server : public QObject
 
     StatusPanel* getStatusView() const { return statusView; }
 
+    /** This returns true when we are 'online' - ready to take commands, join channels and so on.
+     */
     bool connected();
     QString getIp(bool followDccSetting = false);
     QString getNumericalIp(bool followDccSetting = false);

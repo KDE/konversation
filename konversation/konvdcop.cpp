@@ -23,6 +23,7 @@
 #include "konvdcop.h"
 #include "identity.h"
 #include "ircevent.h"
+#include "server.h"
 
 KonvDCOP::KonvDCOP()
       : DCOPObject("Konversation"),
@@ -56,6 +57,27 @@ void KonvDCOP::raw(const QString& server,const QString& command)
   kdDebug() << "KonvDCOP::raw()" << endl;
   // send raw IRC protocol data
   emit dcopRaw(server,command);
+}
+
+QStringList KonvDCOP::listServers()
+{
+  QStringList serverlist;
+  QPtrList<Server>servers = static_cast<KonversationApplication *>(kapp)->getServerList();
+  Server *server;
+  for ( server = servers.first(); server; server = servers.next() )
+    serverlist.append(server->getServerName());
+  return serverlist;
+}
+
+QStringList KonvDCOP::listConnectedServers()
+{
+  QStringList serverlist;
+  QPtrList<Server>servers = static_cast<KonversationApplication *>(kapp)->getServerList();
+  Server *server;
+  for ( server = servers.first(); server; server = servers.next() )
+    if(server->connected())
+      serverlist.append(server->getServerName());
+  return serverlist;
 }
 
 void KonvDCOP::setAway(const QString &awaymessage)
