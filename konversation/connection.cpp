@@ -19,6 +19,7 @@ Connection::Connection(const QString& server,
 		       const QString& password,
 		       const QString& interface)
 {
+    // FIXME SSL Support
 
     // Initialize our variables
     m_server = server;
@@ -33,7 +34,8 @@ Connection::Connection(const QString& server,
     QObject::connect(m_socket,SIGNAL(gotError(int)),this,SLOT(error(int)));
     QObject::connect(m_socket,SIGNAL(connected(const KResolverEntry&,bool&)),
                      this,SLOT(connected(const KResolverEntry&,bool&)));
-    QObject::connect(m_socket,SIGNAL(readyRead()),this,SLOT(readData()));
+    QObject::connect(m_socket,SIGNAL(readyRead()),this,SIGNAL(readyRead()));
+    QObject::connect(m_socket,SIGNAL(readyWrite()),this,SIGNAL(readyWrite()));
 
     // Ready to fire
     connect();
@@ -42,13 +44,14 @@ Connection::Connection(const QString& server,
 Connection::~Connection()
 {
     if(m_fatalError)
-        m_socket->deleteLater();
-    else
         delete m_socket;
+    else // Not fatal so KNetwork will clean this mess for us
+        m_socket->deleteLater();
 }
 
 void Connection::connect()
 {
+    // FIXME Bind to spesific interface (eth0,ppp0,...)
     m_socket->connect(m_server,m_port);
 }
 
@@ -70,10 +73,19 @@ void Connection::error(int error)
       m_fatalError = false;
 
   m_lastError = m_socket->errorString();
+  emit socketError( m_lastError );
 }
 
-void Connection::readData()
+void Connection::readData(QByteArray& buffer)
 {
+    // FIXME Do we need different thing for SSL?
+    int max_bytes = m_socket->bytesAvailable();
+    m_socket->readBlock( buffer.data(), max_bytes );
+}
+
+void Connection::writeData( const QCString& buffer )
+{
+    m_socket->writeBlock( buffer, buffer.length() );
 }
 
 

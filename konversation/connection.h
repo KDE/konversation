@@ -33,8 +33,8 @@ public:
     void connect();
     void reconnect();
     void disconnect();
-    void readData();
-    void writeData();
+    void readData(QByteArray& buffer);
+    void writeData(const QCString& buffer);
 
 protected slots:
 
@@ -43,7 +43,8 @@ protected slots:
 
 signals:
 
-  void disconnected();
+    void disconnected();
+    void socketError( const QString& );
 
 private:
 
