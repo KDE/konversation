@@ -12,11 +12,11 @@
             <height>310</height>
         </rect>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QGroupBox">
+        <widget class="QGroupBox" row="0" column="0">
             <property name="name">
                 <cstring>kcfg_Log</cstring>
             </property>
@@ -64,7 +64,7 @@
                 </widget>
             </grid>
         </widget>
-        <spacer>
+        <spacer row="1" column="0">
             <property name="name">
                 <cstring>spacer1</cstring>
             </property>
@@ -81,9 +81,10 @@
                 </size>
             </property>
         </spacer>
-    </vbox>
+    </grid>
 </widget>
 <layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
