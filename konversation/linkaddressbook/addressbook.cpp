@@ -88,9 +88,12 @@ void Addressbook::unassociateNick(KABC::Addressee &addressee, const QString &irc
 	
 	if(!getAndCheckTicket())
 		return;
-
-	addressee.insertCustom("messaging/irc", "All", addresses.join( QChar( 0xE000 )));
-	kdDebug() << "final irc address is '" << addresses.join( QChar( 0xE000 )) << "'" << endl;
+	QString new_custom = addresses.join( QChar( 0xE000 ));
+	if(new_custom.isEmpty())
+		addressee.removeCustom("messaging/irc", "All");
+	else
+		addressee.insertCustom("messaging/irc", "All", new_custom);
+	kdDebug() << "final irc address is '" << new_custom << "'" << endl;
 
 	addressBook->insertAddressee(addressee);
 	saveTicket();
