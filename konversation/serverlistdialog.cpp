@@ -134,14 +134,14 @@ namespace Konversation {
 
     int x = ((width - boxsize) / 2) + marg;
     
-    lv->style().drawPrimitive(QStyle::PE_CheckListIndicator, p,
-      QRect(x, y, boxsize, fm.height() + 2 + marg), _cg, styleflags, QStyleOption(this));
-/*    p->drawRect(x, y, boxsize, boxsize);
+/*    lv->style().drawPrimitive(QStyle::PE_CheckListIndicator, p,
+      QRect(x, y, boxsize, fm.height() + 2 + marg), _cg, styleflags, QStyleOption(this));*/
+    p->drawRect(x, y, boxsize, boxsize);
   
     if(autoConnect()) {
       p->drawLine(x, y, x + boxsize, y + boxsize);
       p->drawLine(x, y + boxsize, x + boxsize, y);
-    }*/
+    }
   }
   
   //
