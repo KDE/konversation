@@ -494,7 +494,11 @@ void IRCView::append(const QString& nick,const QString& message)
   
   if(KonversationApplication::preferences.getUseColoredNicks()) {
     
-    color = m_server->obtainNickInfo(nick)->getNickColor();
+    if(nick != m_server->getNickname())
+      color = m_server->obtainNickInfo(nick)->getNickColor();
+    else
+      color = KonversationApplication::preferences.getNickColorList()[8];
+
     nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
     
     if(color == "#000000") {
@@ -546,8 +550,12 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 
   if(KonversationApplication::preferences.getUseColoredNicks()) {
     
+    if(nick != m_server->getNickname())
+      color = m_server->obtainNickInfo(nick)->getNickColor();
+    else
+      color = KonversationApplication::preferences.getNickColorList()[8];
+
     nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
-    color = m_server->obtainNickInfo(nick)->getNickColor();
     
     if(color == "#000000") {
       color = "#000001"; // HACK Working around QTextBrowser's auto link coloring
