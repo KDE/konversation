@@ -25,10 +25,7 @@ namespace Konversation {
 	
 Addressbook *Addressbook::m_instance=0L;
 
-Addressbook::Addressbook()
-#if HAVE_KIMIFACE
-	: DCOPObject( "KIMIface")
-#endif
+Addressbook::Addressbook() : DCOPObject( "KIMIface")
 {
 	KABC::StdAddressBook::setAutomaticSave( false );
 	addressBook = KABC::StdAddressBook::self(true);

@@ -22,9 +22,7 @@
 #include <qobject.h>
 #include <qregexp.h>
 #include "config.h"
-#if HAVE_KIMIFACE
 #include "kimiface.h"
-#endif
 
 #include "../images.h"
 
