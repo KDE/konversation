@@ -121,6 +121,11 @@ class KonversationApplication : public KUniqueApplication
     QStringList& getColorList();
     QMap<QString,QString>& getColorMap();
 
+    // Intelligent nick completion stuff aka A.W.E.S.O.M.E-O 4000 --cartman
+    uint getKarma(const QString& nick) const;
+    void increaseKarma(const QString& nick, uint increase);
+    void decreaseKarma(const QString& nick); // A decrease is always -1 and its auto
+    
     int newInstance();
 
   signals:
@@ -148,6 +153,8 @@ class KonversationApplication : public KUniqueApplication
     void toggleAway();
     bool emitDCOPSig(const QString& appId, const QString& objId, const QString& signal, QByteArray& data);
 
+    void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
+
   protected slots:
     void openPrefsDialog();
     void openPrefsDialog(Preferences::Pages page);
@@ -162,7 +169,8 @@ class KonversationApplication : public KUniqueApplication
     void insertRememberLine();
     void appearanceChanged();
     void sendMultiServerCommand(const QString& command, const QString& parameter);
-    void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
+
+    void autoDemoteAllNicks(); // Auto decrease karmas for all nicks, this is a QTimer based operation
     
   private:
     QPtrList<Server> serverList;
@@ -181,6 +189,10 @@ class KonversationApplication : public KUniqueApplication
     uint colorOffSet;
     QStringList colorList;
     QMap<QString,QString> colorMap;
+
+    bool m_demoteInProgress;
+    QTimer* demoteTimer;
+    QMap<QString,uint> karmaMap;
 };
 
 #endif

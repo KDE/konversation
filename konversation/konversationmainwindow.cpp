@@ -13,6 +13,7 @@
 */
 
 #include "konversationmainwindow.h"
+#include "konvibookmarkhandler.h"
 
 #include <kaccel.h>
 #include <kstdaction.h>
@@ -183,9 +184,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   (new KAction(i18n("&Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line"))->setToolTip(i18n("Add a horizontal line that only you can see."));
   (new KAction(i18n("Special &Character..."), "char", KShortcut("Alt+Shift+C"), this, SLOT(insertCharacter()), actionCollection(), "insert_character"))->setToolTip(i18n("Insert any character into your current IRC message. "));
 
-  new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
+  (new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries"));
   
-
 #ifdef USE_MDI
   new KAction(i18n("Tabpage Mode"),"tabpage",0,this,SLOT (switchToTabPageMode()),actionCollection(),"mdi_tabpage_mode");
   new KAction(i18n("Toplevel Mode"),"toplevel",0,this,SLOT (switchToToplevelMode()),actionCollection(),"mdi_toplevel_mode");
@@ -246,6 +246,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 #else
   createGUI();
 #endif
+
+  // Bookmarks
+  m_bookmarkHandler = new KonviBookmarkHandler(this);
+  connect(m_bookmarkHandler,SIGNAL(openURL(const QString&,const QString&)),this,SLOT(openURL(const QString&,const QString&)));
 
   resize(700, 500);  // Give the app a sane default size
   setAutoSaveSettings();
@@ -1675,6 +1679,54 @@ void KonversationMainWindow::reconnectCurrentServer()
   if(frontServer && !frontServer->isConnected() && !frontServer->isConnecting()) {
     frontServer->reconnect();
   }
+}
+
+void KonversationMainWindow::openURL(const QString&url, const QString&/* title*/)
+{
+  QString nUrl = url;
+  
+  QString serverAndPort = nUrl.remove("irc://").section('/',0,0);
+  QString channelAndPassword = nUrl.section('/',1,1);
+
+  QString server = serverAndPort.section(':',0,0);
+  QString port = serverAndPort.section(':',1,1);
+
+  QString channel = channelAndPassword.section('?',0,0);
+  QString password = channelAndPassword.section('?',1,1);
+  
+  if(port.isEmpty())
+    port = "6667";
+
+  KonversationApplication::instance()->dcopConnectToServer(server,port.toInt(),channel,password);
+  
+}
+
+QString KonversationMainWindow::currentURL()
+{
+  QString url = QString::null;
+  QString channel = QString::null;
+
+  if(frontServer && m_frontView)
+    {
+      updateFrontView();
+      
+      if(m_frontView->getType() == ChatWindow::Channel)
+	channel = m_frontView->getName();
+
+      url = "irc://"+frontServer->getServerName()+":"+QString::number(frontServer->getPort())+"/"+channel;
+    }
+  
+  return url;
+}
+
+QString KonversationMainWindow::currentTitle()
+{
+  if(frontServer)
+    {
+      return frontServer->getServerName();
+    }
+  else
+    return QString::null;
 }
 
 #include "konversationmainwindow.moc"

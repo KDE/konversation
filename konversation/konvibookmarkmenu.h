@@ -1,10 +1,24 @@
 #ifndef KONVIBOOKMARKMENU_H
 #define KONVIBOOKMARKMENU_H
 
-#include <qptrlist.h>
-#include <qptrstack.h>
+/*
+  Copyright (c) 2005 by İsmail Dönmez <ismail@kde.org.tr>
+
+  *************************************************************************
+  *                                                                       *
+  * This program is free software; you can redistribute it and/or modify  *
+  * it under the terms of the GNU General Public License as published by  *
+  * the Free Software Foundation; either version 2 of the License, or     *
+  * (at your option) any later version.                                   *
+  *                                                                       *
+  *************************************************************************
+
+  Based on the code by:
+  Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
+
+*/
+
 #include <qobject.h>
-#include <sys/types.h>
 #include <kbookmark.h>
 #include <kbookmarkmenu.h>
 

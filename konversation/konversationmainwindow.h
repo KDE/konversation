@@ -44,6 +44,7 @@ class KMdiChildView; // USE_MDI
 class KActionMenu;
 class KScriptManager;
 
+class KonviBookmarkHandler;
 class Server;
 class StatusPanel;
 class ChatWindow;
@@ -105,6 +106,11 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     Konversation::TrayIcon* systemTrayIcon() const { return tray; }
 
     ChatWindow* frontView() { return m_frontView; }
+
+
+    // Bookmark related functions
+    QString currentURL();
+    QString currentTitle();
 
   signals:
     void prefsChanged();
@@ -207,6 +213,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     void reconnectCurrentServer();
 
+    void openURL(const QString& url, const QString& title);
+
   protected:
     enum StatusID
     {
@@ -230,7 +238,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     virtual void resizeEvent(QResizeEvent* ev);
     
     void setupScripts();
-    
+
+       
 #ifdef USE_MDI
 #else
     LedTabWidget* getViewContainer();
@@ -266,6 +275,9 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     Konversation::InsertCharDialog* m_insertCharDialog;
     Konversation::ServerListDialog* m_serverListDialog;
+
+    KPopupMenu* m_bookmarks;
+    KonviBookmarkHandler* m_bookmarkHandler;
 };
 
 #endif

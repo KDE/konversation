@@ -1,8 +1,24 @@
+/*
+  Copyright (c) 2005 by İsmail Dönmez <ismail@kde.org.tr>
+
+  *************************************************************************
+  *                                                                       *
+  * This program is free software; you can redistribute it and/or modify  *
+  * it under the terms of the GNU General Public License as published by  *
+  * the Free Software Foundation; either version 2 of the License, or     *
+  * (at your option) any later version.                                   *
+  *                                                                       *
+  *************************************************************************
+  
+  Based on the code by:
+  Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
+
+*/
+
+
 #include <kbookmarkimporter.h>
 #include <kbookmarkdombuilder.h>
-#include <kmimetype.h>
 #include <kpopupmenu.h>
-#include <ksavefile.h>
 #include <kstandarddirs.h>
 
 #include "konversationapplication.h"
@@ -14,21 +30,21 @@ KonviBookmarkHandler::KonviBookmarkHandler(KonversationMainWindow* mainWindow)
       KBookmarkOwner(),
       m_mainWindow(mainWindow)
 {
-    m_menu = new KPopupMenu( mainWindow, "bookmark menu" );
+  m_menu = static_cast<KPopupMenu*>(mainWindow->factory()->container("bookmarks", mainWindow));
 
-    m_file = locate( "data", "konversation/bookmarks.xml" );
-    if ( m_file.isEmpty() )
-        m_file = locateLocal( "data", "konversation/bookmarks.xml" );
-
-    KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, false);
-    manager->setEditorOptions(kapp->caption(), false);
-    manager->setUpdate( true );
-    manager->setShowNSBookmarks( false );
-    
-    connect( manager, SIGNAL( changed(const QString &, const QString &) ),
-             SLOT( slotBookmarksChanged(const QString &, const QString &) ) );
-
-    m_bookmarkMenu = new KonviBookmarkMenu( manager, this, m_menu,  mainWindow->actionCollection(), true );
+  m_file = locate( "data", "konversation/bookmarks.xml" );
+  if ( m_file.isEmpty() )
+    m_file = locateLocal( "data", "konversation/bookmarks.xml" );
+  
+  KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, false);
+  manager->setEditorOptions(kapp->caption(), false);
+  manager->setUpdate( true );
+  manager->setShowNSBookmarks( false );
+  
+  connect( manager, SIGNAL( changed(const QString &, const QString &) ),
+	   SLOT( slotBookmarksChanged(const QString &, const QString &) ) );
+  
+  m_bookmarkMenu = new KonviBookmarkMenu( manager, this, m_menu,  mainWindow->actionCollection(), true );
 }
 
 KonviBookmarkHandler::~KonviBookmarkHandler()
@@ -58,9 +74,14 @@ void KonviBookmarkHandler::openBookmarkURL(const QString& url, const QString& ti
   emit openURL(url,title);
 }
 
-KPopupMenu* KonviBookmarkHandler::menu() const
+QString KonviBookmarkHandler::currentURL() const
 {
-  return m_menu;
+  return m_mainWindow->currentURL();
+}
+
+QString KonviBookmarkHandler::currentTitle() const
+{
+  return m_mainWindow->currentTitle();
 }
 
 #include "konvibookmarkhandler.moc"

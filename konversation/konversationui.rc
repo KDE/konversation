@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="29">
+<kpartgui name="konversation" version="30">
 
   <MenuBar>
     <Menu name="file">
@@ -23,6 +23,9 @@
       <Action name="irc_colors" />
       <Action name="insert_remember_line" />
       <Action name="insert_character" />
+    </Menu>
+    <Menu name="bookmarks">
+      <Text>&amp;Bookmarks</Text>
     </Menu>
     <Menu name="settings">
       <Action name="identities_dialog" append="save_merge" />

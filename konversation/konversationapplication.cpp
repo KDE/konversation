@@ -50,6 +50,11 @@ KonversationApplication::KonversationApplication()
   prefsDialog = 0;
   quickConnectDialog = 0;
   colorOffSet = 0;
+  m_demoteInProgress = false;
+
+  demoteTimer = new QTimer(this);
+  connect(demoteTimer,SIGNAL(timeout()),this,SLOT(autoDemoteAllNicks()) );
+  demoteTimer->start(5*60*1000,false);
 }
 
 KonversationApplication::~KonversationApplication()
@@ -1502,6 +1507,39 @@ QStringList& KonversationApplication::getColorList()
 QMap<QString,QString>& KonversationApplication::getColorMap() 
 { 
   return colorMap;
+}
+
+uint KonversationApplication::getKarma(const QString& nick) const
+{
+  return karmaMap[nick];
+}
+
+void KonversationApplication::increaseKarma(const QString& nick, uint increase)
+{
+  if(!m_demoteInProgress)
+    karmaMap[nick] += increase;
+
+  //kdDebug() << "New karma for " << nick << " is " << karmaMap[nick] << endl;
+}
+
+void KonversationApplication::decreaseKarma(const QString& nick)
+{
+  if(karmaMap[nick] > 0)
+    karmaMap[nick] -= 1;
+
+  //kdDebug() << "New karma for " << nick << " is " << karmaMap[nick] << endl;
+}
+
+void KonversationApplication::autoDemoteAllNicks()
+{
+  m_demoteInProgress = true;
+  
+  for(QMap<QString,uint>::Iterator it = karmaMap.begin(); it != karmaMap.end(); ++it)
+    {
+      decreaseKarma(it.key());
+    }
+
+  m_demoteInProgress = false;
 }
 
 void KonversationApplication::splitNick_Server(QString nick_server, QString &ircnick, QString &serverOrGroup) {
