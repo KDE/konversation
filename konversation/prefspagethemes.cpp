@@ -31,6 +31,7 @@
 #include <kio/netaccess.h>
 #include <kfiledialog.h>
 #include <ktar.h>
+#include <kdesktopfile.h>
 
 #include <unistd.h> // unlink()
 
@@ -149,7 +150,7 @@ void PrefsPageThemes::installTheme()
 
   if(themeInstallDir.exists()) // We got a directory not a file
     {
-      if(themeInstallDir.exists("themerc"))
+      if(themeInstallDir.exists("index.desktop"))
 	  KIO::NetAccess::dircopy(KURL(tmpThemeFile),KURL(themesDir),0L);
       else
 	{
@@ -172,7 +173,7 @@ void PrefsPageThemes::installTheme()
 
       for(QStringList::Iterator it=allEntries.begin(); it != allEntries.end(); ++it)
 	{
-	  if(themeDir->entry(*it+"/themerc") == NULL)
+	  if(themeDir->entry(*it+"/index.desktop") == NULL)
 	    {
 	      KMessageBox::error(0L,
 				 i18n("Invalid Theme Archive"),
@@ -211,7 +212,7 @@ void PrefsPageThemes::removeTheme()
   if(remove == KMessageBox::Continue)
     {
       unlink(QFile::encodeName(dir));
-      KIO::del(KURL(dir.remove("themerc")));
+      KIO::del(KURL(dir.remove("index.desktop")));
       updateList();
       updateButtons();
     }
@@ -221,7 +222,7 @@ void PrefsPageThemes::updatePreview(int id)
 {
   QString dir;
   dir = m_dirs[id];
-  dir.remove("/themerc");
+  dir.remove("/index.desktop");
   QPixmap normal(dir+"/irc_normal.png");
 
   m_label[0]->setPixmap(normal);
@@ -244,13 +245,11 @@ void PrefsPageThemes::updatePreview(int id)
 void PrefsPageThemes::updateList()
 {
   QString themeName,themeComment;
-  QFile themeRC;
-  QTextStream stream;
   QString currentTheme = KonversationApplication::preferences.getIconTheme();
   int index = 0;
   bool found = false;
 
-  m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/themerc");
+  m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/index.desktop");
 
   if(m_dirs.count() > 0){
 
@@ -266,21 +265,15 @@ void PrefsPageThemes::updateList()
 	    ++index;
 	}
 
-      themeRC.setName(*it);
-      themeRC.open(IO_ReadOnly);
-      stream.setDevice(&themeRC);
-
-      themeName = stream.readLine();
-      themeName = themeName.section('=',1,1);
-
-      themeComment = stream.readLine();
-      themeComment = themeComment.section('=',1,1);
-
+      kdDebug() << "Got " << *it << endl;
+      KDesktopFile themeRC(*it);
+      themeName = themeRC.readName();
+      themeComment = themeRC.readComment();
+      
       if(!themeComment.isEmpty())
 	themeName = themeName+" ( "+themeComment+" )";
 
       m_themeList->insertItem(themeName);
-      themeRC.close();
     }
 
   m_themeList->setSelected(index,TRUE);
