@@ -72,3 +72,6 @@ Stats for server lag, words per session per person / channel, quits etc.
 "Open Nicks online panel on startup" option
 In Nicks Online panel, show stats like "last spoken" "last seen"
 Add ETA counter for DCC transfers
+After the connection is lost and the old nickname is still in use,
+the nickbutton in the channelwindows isn't updated to the new nick.
+
