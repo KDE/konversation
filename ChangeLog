@@ -2,7 +2,11 @@ Changes from 0.7 to 0.8:
 - DCCs can now be opened (started) using the 'open' button
 - DCCs can now be aborted using the 'abort' button
 - Added support for /users reply
+- Added support for /invite and 341 reply
+- Added support for 401 error reply
 - Added /smsg for "silent messages"
 - Text and Nicklist-Fonts can now be selected via GUI
 - Changed server ping response again to make dalnet ircd happy
 - Fixed nicklist sorting in channels
+- Switched to kdevelop 2.1.4 to hopefully fix some compile problems
+- Made Notices appear a bit different

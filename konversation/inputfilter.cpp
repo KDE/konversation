@@ -195,7 +195,7 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
   {
     // Channel notice?
     if(isAChannel(parameterList[0]))
-      server->appendServerMessageToChannel(parameterList[0],i18n("Notice"),i18n("from %1 to %2: %3").arg(sourceNick).arg(parameterList[0]).arg(trailing));
+      server->appendServerMessageToChannel(parameterList[0],i18n("Notice"),i18n("-%1 to %2- %3").arg(sourceNick).arg(parameterList[0]).arg(trailing));
     // Private notice
     else
     {
@@ -210,7 +210,7 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
       }
       // No, so it was a normal notice
       else
-        server->appendStatusMessage(i18n("Notice"),i18n("from %1 to %2: %3").arg(sourceNick).arg(parameterList[0]).arg(trailing));
+        server->appendStatusMessage(i18n("Notice"),i18n("-%1- %2").arg(sourceNick).arg(trailing));
     }
   }
   else if(command=="join")
@@ -263,6 +263,10 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
   else if(command=="mode") /* mode #channel -/+ mmm params */
   {
     parseModes(sourceNick,parameterList);
+  }
+  else if(command=="invite")
+  {
+    server->appendStatusMessage(i18n("Invite"),i18n("%1 invited you into channel %2").arg(sourceNick).arg(trailing));
   }
   else
   {
@@ -395,6 +399,10 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
     when.setTime_t(parameterList[3].toUInt());
     server->appendCommandMessageToChannel(parameterList[1],i18n("Topic"),i18n("Topic was set by %1 on %2.").arg(parameterList[2]).arg(when.toString(Qt::LocalDate)));
   }
+  else if(command==ERR_NOSUCHNICK)
+  {
+    server->appendStatusMessage(i18n("Error"),i18n("%1: No such nick/channel.").arg(parameterList[1]));
+  }
   // Nick already on the server, so try another one
   else if(command==ERR_NICKNAMEINUSE)
   {
@@ -447,7 +455,11 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   }
   else if(command==RPL_AWAY)
   {
-    server->appendStatusMessage(i18n("Away"),i18n("%1 is away: %2").arg(parameterList[1]).arg(trailing) );
+    server->appendStatusMessage(i18n("Away"),i18n("%1 is away: %2").arg(parameterList[1]).arg(trailing));
+  }
+  else if(command==RPL_INVITING)
+  {
+    server->appendStatusMessage(i18n("Invite"),i18n("You invited %1 into channel %2.").arg(parameterList[1]).arg(parameterList[2]));
   }
   else if(command=="mode")
   {
@@ -455,7 +467,7 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   }
   else if(command=="notice")
   {
-    server->appendStatusMessage(i18n("Notice"),i18n("from %1: %2").arg(prefix).arg(trailing));
+    server->appendStatusMessage(i18n("Notice"),i18n("-%1- %2").arg(prefix).arg(trailing));
   }
   // All yet unknown messages go into the frontmost window unaltered
   else
