@@ -359,8 +359,6 @@ void IRCView::appendBacklogMessage(const char* firstColumn,const char* message)
 void IRCView::doAppend(QString line)
 {
   /* Add line to buffer */
-//  line="qwrtrwetzrtzu qqwrtrwetzrtzqwrtrwetzrtzu u wrtqwrtrweqwrt rwetzrqqwrtrqwrtrwetzrtzu wetzrtzu  wrtrwetzrqwrtrwetzrtzu tzu tzu tzrtzu qwrtrqwrtrwetzrtzu qwqwrtrwetzrqwrtrwetzrtzu tzu qwrtrwetzrtzuqwrtrwetzrtzu  rtrwetzrqwrtrwetzrtzu tzu wetqwrtrwetzrtzu zrtzu rqwrtrwetzrtzu wetzqwrqwrtrwetzrtzu trweqwrtrwetqwrtrwetzrtzu zrtzu tzrtqwrtrwetzrtzu zu rtzu qqqwrtrwetzrtzu wrtrwetzrtzu wrtrwetzrtzu<br>";
-	kdDebug() << line << endl;
   buffer+=line;
 /*
 //  QLabel* newLine=new QLabel(line.left(line.length()-1),this->grid);

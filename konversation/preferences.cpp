@@ -16,6 +16,7 @@
 
 #include <ktoolbar.h>
 #include <kstddirs.h>
+#include <kdebug.h>
 
 #include "preferences.h"
 #include "prefsdialog.h"
@@ -134,6 +135,7 @@ QPtrList<Highlight> Preferences::getHilightList()
 
 void Preferences::setHilightList(QPtrList<Highlight> newList)
 {
+  kdDebug() << "Preferences::setHilightList(QPtrList<Highlight> newList)" << endl;
   hilightList.clear();
   hilightList=newList;
 }
