@@ -116,6 +116,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
   // Extract nickname fron prefix
   QString sourceNick=prefix.left(prefix.find("!"));
   QString sourceHostmask=prefix.mid(prefix.find("!")+1);
+          
+  // remember hostmask for this nick, it could have changed
+  server->addHostmaskToNick(sourceNick,sourceHostmask);
 
   if(command=="privmsg")
   {
@@ -164,15 +167,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         // Check if we ignore queries from this nick
         if(!isIgnore(prefix,Ignore::Query))
         {
-          // Check if this nick is already in a query with us
-          Query* query=server->getQueryByName(sourceNick);
-          // If not, create a new one
-          if(!query)
-            server->addQuery(sourceNick,sourceHostmask);
-          // else remember hostmask for this nick, it could have changed
-          else
-            server->addHostmaskToNick(sourceNick,sourceHostmask);
-
+          // create new query (server will check for dupes)
+          server->addQuery(sourceNick,sourceHostmask);
+          // send action to query
           server->appendActionToQuery(sourceNick,ctcpArgument);
         }
       }
@@ -284,8 +281,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         {
           // Create a new query (server will check for dupes)
           server->addQuery(sourceNick,sourceHostmask);
-          // else remember hostmask for this nick, it could have changed
-          server->addHostmaskToNick(sourceNick,sourceHostmask);
           // Append this message to the query
           server->appendToQuery(sourceNick,trailing);
         }

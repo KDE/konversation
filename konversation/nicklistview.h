@@ -37,8 +37,10 @@ class NickListView : public KListView
 
     enum PopupIDs
     {
-      Modes,GiveOp,TakeOp,GiveVoice,TakeVoice,
-      Kick,KickBan,BanNick,BanHostmask,
+      ModesSub,GiveOp,TakeOp,GiveVoice,TakeVoice,
+      KickBanSub,Kick,KickBan,BanNick,
+      BanHost,BanDomain,BanUserHost,BanUserDomain,
+      KickBanHost,KickBanDomain,KickBanUserHost,KickBanUserDomain,
       Whois,Version,Ping,Query,DccSend,
       CustomID
     };
@@ -52,6 +54,7 @@ class NickListView : public KListView
 
     QPopupMenu* popup;
     QPopupMenu* modes;
+    QPopupMenu* kickban;
 };
 
 #endif

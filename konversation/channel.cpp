@@ -253,6 +253,8 @@ void Channel::textPasted(QString text)
 void Channel::popupCommand(int id)
 {
   QString pattern;
+  QString cc=KonversationApplication::preferences.getCommandChar();
+  
   bool raw=false;
 
   switch(id)
@@ -292,33 +294,72 @@ void Channel::popupCommand(int id)
       }
       break;
     case NickListView::Kick:
-      pattern="KICK %c %u";
-      raw=true;
+      pattern=cc+"KICK %u";
+      break;
+    case NickListView::KickBan:
+      pattern=cc+"BAN %u\n"+
+              cc+"KICK %u";
+      break;
+    case NickListView::BanNick:
+      pattern=cc+"BAN %u";
+      break;
+    case NickListView::BanHost:
+      pattern=cc+"BAN -HOST %u";
+      break;
+    case NickListView::BanDomain:
+      pattern=cc+"BAN -DOMAIN %u";
+      break;
+    case NickListView::BanUserHost:
+      pattern=cc+"BAN -USERHOST %u";
+      break;
+    case NickListView::BanUserDomain:
+      pattern=cc+"BAN -USERDOMAIN %u";
+      break;
+    case NickListView::KickBanHost:
+      pattern=cc+"BAN -HOST %u\n"+
+              cc+"KICK %u";
+      break;
+    case NickListView::KickBanDomain:
+      pattern=cc+"BAN -DOMAIN %u\n"+
+              cc+"KICK %u";
+      break;
+    case NickListView::KickBanUserHost:
+      pattern=cc+"BAN -USERHOST %u\n"+
+              cc+"KICK %u";
+      break;
+    case NickListView::KickBanUserDomain:
+      pattern=cc+"BAN -USERDOMAIN %u\n"+
+              cc+"KICK %u";
       break;
     case NickListView::Query:
-      pattern=KonversationApplication::preferences.getCommandChar()+"QUERY %u";
+      pattern=cc+"QUERY %u";
       break;
     case NickListView::DccSend:
-      pattern=KonversationApplication::preferences.getCommandChar()+"DCC SEND %u";
+      pattern=cc+"DCC SEND %u";
       break;
   } // switch
 
   if(pattern.length())
   {
     pattern.replace(QRegExp("%c"),getName());
-
+    
     QStringList nickList=getSelectedNicksList();
 
     QString command;
-    for(QStringList::Iterator index=nickList.begin();index!=nickList.end();++index)
+    for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator)
     {
-      command=pattern;
-      command.replace(QRegExp("%u"),*index);
+      QStringList patternList=QStringList::split('\n',pattern);
+      
+      for(unsigned int index=0;index<patternList.count();index++)
+      {
+        command=patternList[index];
+        command.replace(QRegExp("%u"),*nickIterator);
 
-      if(raw)
-        server->queue(command);
-      else
-        sendChannelText(command);
+        if(raw)
+          server->queue(command);
+        else
+          sendChannelText(command);
+      }
     }
   }
 }

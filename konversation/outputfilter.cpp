@@ -467,7 +467,7 @@ void OutputFilter::parseDcc(const QString &parameter)
       else if(parameterList.count()>2)             // DCC SEND <nickname> <file> [file] ...
       {
 // TODO: make sure this will work:
-//        output=i18n("Usage: %1DCC SEND nickname [filename] [filename] ...").arg(commandChar);
+//        output=i18n("Usage: %1DCC SEND nickname [fi6lename] [filename] ...").arg(commandChar);
         QFile file(parameterList[2]);
         if(file.exists())
           emit openDccSend(parameterList[1],parameterList[2]);
@@ -667,11 +667,13 @@ void OutputFilter::parseBan(const QString& parameter)
     // check for option
     bool host=(parameterList[0].lower()=="-host");
     bool domain=(parameterList[0].lower()=="-domain");
+    bool uhost=(parameterList[0].lower()=="-userhost");
+    bool udomain=(parameterList[0].lower()=="-userdomain");
     
     // remove possible option
-    if(host || domain)
+    if(host || domain || uhost || udomain)
     {
-      option=parameterList[0];
+      option=parameterList[0].mid(1);
       parameterList.pop_front();
     }
     
@@ -697,7 +699,6 @@ void OutputFilter::parseBan(const QString& parameter)
       // signal server to ban this user if all went fine
       if(!channel.isEmpty())
       {
-        kdDebug() << "ban " << option << " " << channel << " " << parameterList.join(" ") << endl;
         emit banUsers(parameterList,channel,option);
         // syntax was correct, so reset flag
         showUsage=false;

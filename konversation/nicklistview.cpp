@@ -26,6 +26,7 @@ NickListView::NickListView(QWidget* parent) :
 {
   popup=new QPopupMenu(this,"nicklist_context_menu");
   modes=new QPopupMenu(this,"nicklist_modes_context_submenu");
+  kickban=new QPopupMenu(this,"nicklist_kick_ban_context_submenu");
 
   if(popup)
   {
@@ -35,7 +36,7 @@ NickListView::NickListView(QWidget* parent) :
       modes->insertItem(i18n("Take Op"),TakeOp);
       modes->insertItem(i18n("Give Voice"),GiveVoice);
       modes->insertItem(i18n("Take Voice"),TakeVoice);
-      popup->insertItem(i18n("Modes"),modes,Modes);
+      popup->insertItem(i18n("Modes"),modes,ModesSub);
     }
     else
     {
@@ -49,10 +50,23 @@ NickListView::NickListView(QWidget* parent) :
     popup->insertItem(i18n("Open Query"),Query);
     popup->insertItem(i18n("Send File"),DccSend);
     popup->insertSeparator();
-    popup->insertItem(i18n("Kick"),Kick);
-    popup->insertItem(i18n("Kickban"),KickBan);
-    popup->insertItem(i18n("Ban Nickname"),BanNick);
-    popup->insertItem(i18n("Ban Hostmask"),BanHostmask);
+    if(kickban)
+    {
+      kickban->insertItem(i18n("Kick"),Kick);
+      kickban->insertItem(i18n("Kickban"),KickBan);
+      kickban->insertItem(i18n("Ban Nickname"),BanNick);
+      kickban->insertSeparator();
+      kickban->insertItem(i18n("Ban *!*@*.host"),BanHost);
+      kickban->insertItem(i18n("Ban *!*@domain"),BanDomain);
+      kickban->insertItem(i18n("Ban *!user@*.host"),BanUserHost);
+      kickban->insertItem(i18n("Ban *!user@domain"),BanUserDomain);
+      kickban->insertSeparator();
+      kickban->insertItem(i18n("Kickban *!*@*.host"),KickBanHost);
+      kickban->insertItem(i18n("Kickban *!*@domain"),KickBanDomain);
+      kickban->insertItem(i18n("Kickban *!user@*.host"),KickBanUserHost);
+      kickban->insertItem(i18n("Kickban *!user@domain"),KickBanUserDomain);
+      popup->insertItem(i18n("Kick / Ban"),kickban,KickBanSub);
+    }
   }
   else
   {

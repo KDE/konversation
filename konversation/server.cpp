@@ -32,6 +32,7 @@
 #include "konversationapplication.h"
 #include "dcctransfer.h"
 #include "dccrecipientdialog.h"
+#include "nick.h"
 
 Server::Server(int id)
 {
@@ -507,13 +508,49 @@ void Server::closeChannel(const QString &name)
   queue(outputFilter.getServerOutput());
 }
 
-void Server::requestBan(const QStringList& users,const QString& channel,const QString& option)
+void Server::requestBan(const QStringList& users,const QString& channel,const QString& a_option)
 {
+  QString hostmask;
+  QString banCommand;
+  QString option=a_option.lower();
+
+  Channel* targetChannel=getChannelByName(channel);
+
   for(unsigned int index=0;index<users.count();index++)
   {
+    // first, set the ban mask to the specified nick
     QString mask=users[index];
-    emit execBan(mask,channel);
-    QString banCommand=outputFilter.getServerOutput();
+    // did we specify an option?
+    if(!option.isEmpty())
+    {
+      // try to find specified nick on the channel
+      Nick* targetNick=targetChannel->getNickByName(mask);
+      // if we found the nick try to find their hostmask
+      if(targetNick)
+      {
+        QString hostmask=targetNick->getHostmask();
+        // if we found the hostmask, add it to the ban mask
+        if(!hostmask.isEmpty())
+        {
+          mask=targetNick->getNickname()+"!"+hostmask;
+
+          // adapt ban mask to the option given
+          if(option=="host")
+            mask="*!*@*."+hostmask.section('.',1);
+          else if(option=="domain")
+            mask="*!*@"+hostmask.section('@',1);
+          else if(option=="userhost")
+            mask="*!"+hostmask.section('@',0,0)+"@*."+hostmask.section('.',1);
+          else if(option=="userdomain")
+            mask="*!"+hostmask.section('@',0,0)+"@"+hostmask.section('@',1);
+        }
+      }
+    }
+
+    outputFilter.execBan(mask,channel);
+
+    banCommand=outputFilter.getServerOutput();
+    
     queue(banCommand);
   }
 }
