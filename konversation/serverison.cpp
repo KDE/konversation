@@ -168,8 +168,11 @@ void ServerISON::slotPrefsChanged()
   m_ISONList_invalid = true;
 }
 
-void ServerISON::nickInfoChanged(Server* /*server*/, const NickInfoPtr /*nickInfo*/) {
+void ServerISON::nickInfoChanged(Server* /*server*/, const NickInfoPtr nickInfo) {
   //We need to call recalculateAddressees before returning m_ISONList
+  
+  //Maybe we could do something like:
+  //if(m_ISONList.contains(nickInfo->getNickName())) return;
   m_ISONList_invalid = true;
 }
 void ServerISON::addressbookChanged() {	

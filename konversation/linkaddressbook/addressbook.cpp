@@ -15,6 +15,7 @@
 #include "addressbook.h"
 #include <qstringlist.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include "../server.h"
 #include "../konversationapplication.h"
 #include <kapplication.h>
@@ -160,7 +161,7 @@ QString Addressbook::context(const QString &uid) {
 }
 QStringList Addressbook::protocols() {
 	QStringList protocols;
-	protocols.append("IRCProtocols");
+	protocols.append("messaging/irc");
 	return protocols;
 }
 
@@ -219,13 +220,25 @@ void Addressbook::chatWithContact( const QString &uid ) {
  */
 void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QString &altFileName, uint fileSize) {
 	if(uid.isEmpty()) {
-		 kdDebug() << "Addressbook::sendFile called with empty uid" << endl;
-		 return;
+		KMessageBox::sorry(0, i18n("You have requested to send a file to a contact, but not specified which contact."), i18n("Error sending file"));
+		kdDebug() << "Addressbook::sendFile called with empty uid" << endl;
+		return;
 	}
-	NickInfoPtr nickInfo = getNickInfo(addressBook->findByUid(uid));
+	KABC::Addressee addressee = addressBook->findByUid(uid);
+	if(addressee.isEmpty()) {
+ 		KMessageBox::sorry(0,i18n("You have requested to send a file to a contact, but the contact you specified couldn't be found."), i18n("Error sending file"));
+		kdDebug() << "Addressbook::sendFile called with uid '" << uid << "'" << endl;
+		return;
+	}
+	NickInfoPtr nickInfo = getNickInfo(addressee);
         if(!nickInfo) {
-            kdDebug() << "messageContact:  uid %1 not online\n" << endl;
-            return;
+		QString realname = addressee.realName();
+		if(!realname.isEmpty()) 
+			KMessageBox::sorry(0,i18n("You have requested to send a file to %1, but they do not appear to be online.").arg(realname), i18n("Error sending file"));
+		else
+			KMessageBox::sorry(0,i18n("You have requested to send a file to a contact, but they do not appear to be online."), i18n("Error sending file"));
+		kdDebug() << "messageContact:  uid " << addressee.uid() << " not online\n" << endl;
+        	return;
         }
         nickInfo->getServer()->addDccSend(nickInfo->getNickname(), sourceURL, altFileName, fileSize);
 }
@@ -240,7 +253,7 @@ void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QStr
  */
 bool Addressbook::addContact( const QString &/*contactId*/, const QString &/*protocol*/ ) {
 	return false;
-	//Nicks are auto added if they are put in the addressbook/
+	//Nicks are auto added if they are put in the addressbook - I don' think there is anything useful I can do.
 }
 
 void Addressbook::emitContactPresenceChanged(QString uid, int presence) {
