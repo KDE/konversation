@@ -96,6 +96,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   viewContainer=new LedTabWidget(this,"main_window_tab_widget");
   setCentralWidget(viewContainer);
   updateTabPlacement();
+  viewContainer->hide();
 #endif
 
   KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); // file_quit
@@ -364,6 +365,7 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
   button->setIconSet(images.getLed(color,false,true));
 #else
   viewContainer->addTab(view,label,color,on);
+  viewContainer->show();
 #endif
   // Check, if user was typing in old input line
   bool doBringToFront=true;
@@ -520,6 +522,8 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     ChatWindow::WindowType viewType=view->getType();
 
     QString viewName=view->getName();
+    
+    viewContainer->removePage(view);
     // the views should know by themselves how to close
 
     if(viewType==ChatWindow::Status)            view->closeYourself();
@@ -539,6 +543,9 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     else if(viewType==ChatWindow::Notice);
     else if(viewType==ChatWindow::SNotice);
 */
+    if(viewContainer->count() <= 0) {
+      viewContainer->hide();
+    }
   }
 #endif
 }
