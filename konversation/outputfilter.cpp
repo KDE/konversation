@@ -445,8 +445,13 @@ namespace Konversation {
 //        QString message = parameter.mid(recipient.length() + 1);
         QString recipient = parameter.section(" ", 0, 0, QString::SectionSkipEmpty);
 	QString message = parameter.section(" ", 1);
-
 	QString output;
+
+        if(recipient.isEmpty()) {
+          result = error("You need to specify a recipient");
+          return result;
+        }
+
 	if(message.stripWhiteSpace().isEmpty()) {
 	    //empty result - we don't want to send any message to the server
 	}
@@ -460,7 +465,9 @@ namespace Konversation {
             result.toServer = "PRIVMSG " + recipient + " :" + message;
             output = message;
         }
+
         ::Query *query;
+
 	if(isQuery || output.isEmpty()) {
 	  //if this is a /query, always open a query window.
 	  //treat "/msg nick" as "/query nick"
@@ -477,7 +484,7 @@ namespace Konversation {
 	}
 	else {
 	  //We have  "/msg nick message"
-          query=m_server->getQueryByName(recipient);
+          query = m_server->getQueryByName(recipient);
 	}
 
         if(query && !output.isEmpty()) {
