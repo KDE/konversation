@@ -109,7 +109,7 @@ void ChannelOptionsDialog::toggleAdvancedModes()
 
 QString ChannelOptionsDialog::topic()
 {
-  return m_widget->topicEdit->text();
+  return m_widget->topicEdit->text().replace("\n"," ");
 }
 
 void ChannelOptionsDialog::refreshTopicHistory()
