@@ -43,62 +43,20 @@
 using namespace Konversation;
 
 PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
- : PrefsPage(newParent, newPreferences)
+  : Theme_Config( newParent )
 {
 
-  QGridLayout* gridLayout = new QGridLayout(newParent,3,1,marginHint(),spacingHint());
-
-  QLabel* selectLabel = new QLabel(i18n("Select Nicklist Icon Theme to Use"),newParent,"selectLabel");
-  m_themeList = new KListBox(newParent,"themeList");
-  m_themeList->setSelectionMode(QListBox::Single);
-  QLabel* previewLabel = new QLabel(newParent);
-  previewLabel->setText("Preview :");
-
-
-  QFrame* previewFrame = new QFrame(newParent);
-  QHBoxLayout *previewLayout=new QHBoxLayout(previewFrame);
-
-  QFrame* buttonFrame = new QFrame(newParent);
-  QHBoxLayout *buttonLayout=new QHBoxLayout(buttonFrame,spacingHint());
-
-  QPushButton* installButton = new QPushButton(buttonFrame,"installButton");
-  m_removeButton = new QPushButton(buttonFrame,"removeButton");
-
-  installButton->setText(i18n("I&nstall Theme..."));
-  m_removeButton->setText(i18n("&Remove Theme"));
-  m_removeButton->setEnabled(false);
-
-  buttonLayout->addWidget(installButton);
-  buttonLayout->addWidget(m_removeButton);
-
-  previewLayout->addStretch(9);
-
-  for(int i=0; i <= 6; ++i) {
-
-    previewLayout->addStretch(1);
-
-    m_label[i] = new QLabel(previewFrame);
-    previewLayout->addWidget(m_label[i]);
-
-  }
-
-  previewLayout->addStretch(10);
-
-  gridLayout->addWidget(selectLabel, 1, 0);
-  gridLayout->addWidget(m_themeList, 2, 0);
-  gridLayout->addWidget(previewLabel, 3, 0);
-  gridLayout->addWidget(previewFrame, 4, 0);
-  gridLayout->addWidget(buttonFrame, 5, 0);
+  preferences = newPreferences;
 
   updateList();
   updateButtons();
 
   m_oldTheme = KonversationApplication::preferences.getIconTheme();
 
-  connect(m_themeList,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
-  connect(m_themeList,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
+  connect(themeList,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
+  connect(themeList,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
   connect(installButton,SIGNAL(clicked()),this,SLOT(installTheme()));
-  connect(m_removeButton,SIGNAL(clicked()),this,SLOT(removeTheme()));
+  connect(removeButton,SIGNAL(clicked()),this,SLOT(removeTheme()));
 }
 
 PrefsPageThemes::~PrefsPageThemes()
@@ -107,10 +65,10 @@ PrefsPageThemes::~PrefsPageThemes()
 
 void PrefsPageThemes::applyPreferences()
 {
-  if(m_themeList->count())
+  if(themeList->count())
     {
       QString theme;
-      theme = m_dirs[m_themeList->currentItem()];
+      theme = m_dirs[themeList->currentItem()];
       theme = theme.section('/',-2,-2);
       if(m_oldTheme != theme)
 	{
@@ -198,9 +156,9 @@ void PrefsPageThemes::installTheme()
 void PrefsPageThemes::removeTheme()
 {
   QString dir;
-  QString themeName = m_themeList->currentText();
+  QString themeName = themeList->currentText();
 
-  dir = m_dirs[m_themeList->currentItem()];
+  dir = m_dirs[themeList->currentItem()];
 
   int remove = KMessageBox::warningContinueCancel(0L,
 						  i18n("Do you want to remove %1 ?").arg(themeName),
@@ -225,23 +183,13 @@ void PrefsPageThemes::updatePreview(int id)
   dir.remove("/index.desktop");
   QPixmap normal(dir+"/irc_normal.png");
 
-  m_label[0]->setPixmap(normal);
-  QToolTip::add(m_label[0],i18n("Icon for normal users"));
-  m_label[1]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_away.png")));
-  QToolTip::add(m_label[1],i18n("Icon for away users"));
-  m_label[2]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_voice.png")));
-  QToolTip::add(m_label[2],i18n("Icon for users with voice"));
-  m_label[2]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_halfop.png")));
-  QToolTip::add(m_label[3],i18n("Icon for users with half-operator priviliges"));
-  m_label[3]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_op.png")));
-  QToolTip::add(m_label[4],i18n("Icon for users with operator priviliges"));
-  m_label[4]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_owner.png")));
-  QToolTip::add(m_label[5],i18n("Icon for users with owner privileges"));
-  m_label[5]->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_admin.png")));
-  QToolTip::add(m_label[6],i18n("Icon for users with admin privileges"));
-
-  for(int i=0; i <= 6; ++i)
-    m_label[i]->show();
+  previewLabel1->setPixmap(normal);
+  previewLabel2->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_away.png")));
+  previewLabel3->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_voice.png")));
+  previewLabel4->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_halfop.png")));
+  previewLabel5->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_op.png")));
+  previewLabel6->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_owner.png")));
+  previewLabel7->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_admin.png")));
 }
 
 void PrefsPageThemes::updateList()
@@ -260,51 +208,51 @@ void PrefsPageThemes::updateList()
 
   m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/index.desktop");
 
-  if(m_dirs.count() > 0){
-
-  m_themeList->clear();
-
-  for(QStringList::Iterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
+  if(m_dirs.count() > 0)
     {
-      if(!found)
+
+      themeList->clear();
+      
+      for(QStringList::Iterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
 	{
-	  if((*it).section('/',-2,-2) == currentTheme)
-	    found = true;
-	  else
-	    ++index;
+	  if(!found)
+	    {
+	      if((*it).section('/',-2,-2) == currentTheme)
+		found = true;
+	      else
+		++index;
+	    }
+	  
+	  KDesktopFile themeRC(*it);
+	  themeName = themeRC.readName();
+	  themeComment = themeRC.readComment();
+	  
+	  if(!themeComment.isEmpty())
+	    themeName = themeName+" ( "+themeComment+" )";
+	  
+	  themeList->insertItem(themeName);
 	}
-
-      KDesktopFile themeRC(*it);
-      themeName = themeRC.readName();
-      themeComment = themeRC.readComment();
-
-      if(!themeComment.isEmpty())
-	themeName = themeName+" ( "+themeComment+" )";
-
-      m_themeList->insertItem(themeName);
+      
+      themeList->setSelected(index,TRUE);
+      updatePreview(index);
     }
-
-  m_themeList->setSelected(index,TRUE);
-  updatePreview(index);
-
-  }
 }
 
 void PrefsPageThemes::updateButtons()
 {
-  if(m_themeList->count() < 2)
+  if(themeList->count() < 2)
     {
-      m_removeButton->setEnabled(false);
+      removeButton->setEnabled(false);
       return;
     }
 
-  QString dir = m_dirs[m_themeList->currentItem()];
+  QString dir = m_dirs[themeList->currentItem()];
   QFile themeRC(dir);
 
   if(!themeRC.open(IO_ReadOnly | IO_WriteOnly))
-    m_removeButton->setEnabled(false);
+    removeButton->setEnabled(false);
   else
-    m_removeButton->setEnabled(true);
+    removeButton->setEnabled(true);
 
   themeRC.close();
 }

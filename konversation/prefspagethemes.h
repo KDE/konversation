@@ -11,14 +11,12 @@
 #ifndef PREFSPAGETHEMES_H
 #define PREFSPAGETHEMES_H
 
-#include "prefspage.h"
+#include "theme_preferences.h"
 
+class Preferences;
 class QStringList;
-class QLabel;
-class QPushButton;
-class KListBox;
 
-class PrefsPageThemes : public PrefsPage
+class PrefsPageThemes : public Theme_Config
 {
   Q_OBJECT
   public:
@@ -35,14 +33,9 @@ class PrefsPageThemes : public PrefsPage
     void removeTheme();
 
  private:
-
-    /* Icon labels */
-    QLabel* m_label[7];
-
     QStringList m_dirs;
-    QPushButton* m_removeButton;
-    KListBox* m_themeList;
     QString m_oldTheme;
+    Preferences* preferences;
 
     void updateList();
 
