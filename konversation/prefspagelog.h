@@ -27,7 +27,7 @@ class PrefsPageLog : public Log_Config
   Q_OBJECT
 
   public:
-    PrefsPageLog(QFrame* newParent,Preferences* newPreferences);
+    PrefsPageLog(QWidget* newParent,Preferences* newPreferences);
 
   public slots:
     void applyPreferences();

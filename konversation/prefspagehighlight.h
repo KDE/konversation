@@ -27,7 +27,7 @@ class PrefsPageHighlight : public Highlight_Config
   Q_OBJECT
 
   public:
-    PrefsPageHighlight(QFrame* newParent,Preferences* newPreferences);
+    PrefsPageHighlight(QWidget* newParent,Preferences* newPreferences);
     ~PrefsPageHighlight();
 
     QPtrList<Highlight> getHighlightList();

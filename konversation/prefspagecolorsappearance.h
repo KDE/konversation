@@ -23,7 +23,7 @@ class PrefsPageColorsAppearance : public ColorsAppearance_Config
 {
   Q_OBJECT
   public:
-    PrefsPageColorsAppearance(QFrame* newParent,Preferences* newPreferences);
+    PrefsPageColorsAppearance(QWidget* newParent,Preferences* newPreferences);
     ~PrefsPageColorsAppearance();
 
   public slots:

@@ -28,7 +28,7 @@ class PrefsPageDccSettings : public DCC_Settings
   Q_OBJECT
 
   public:
-    PrefsPageDccSettings(QFrame* newParent,Preferences* newPreferences);
+    PrefsPageDccSettings(QWidget* newParent,Preferences* newPreferences);
 
   public slots:
     void applyPreferences();

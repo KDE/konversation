@@ -25,7 +25,7 @@
 
 #include "preferences.h"
 
-PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPreferences)
+PrefsPageBehaviour::PrefsPageBehaviour(QWidget* newParent, Preferences* newPreferences)
   : PrefsPage(newParent, newPreferences)
 {
   QGridLayout* generalLayout = new QGridLayout(parentFrame, 5, 2, marginHint(), spacingHint());

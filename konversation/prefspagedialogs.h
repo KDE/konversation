@@ -25,7 +25,7 @@ class PrefsPageDialogs : public Warnings_Config
   Q_OBJECT
 
   public:
-    PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences);
+    PrefsPageDialogs(QWidget* newParent,Preferences* newPreferences);
     ~PrefsPageDialogs();
     QString flagNames;
 

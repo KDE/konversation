@@ -26,7 +26,7 @@
 #include "ignorecheckbox.h"
 #include "ignorelistviewitem.h"
 
-PrefsPageIgnore::PrefsPageIgnore(QFrame* newParent,Preferences* newPreferences) :
+PrefsPageIgnore::PrefsPageIgnore(QWidget* newParent,Preferences* newPreferences) :
                  PrefsPage(newParent,newPreferences)
 {
   // Add the layout to the widget

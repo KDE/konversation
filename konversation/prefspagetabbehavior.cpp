@@ -20,7 +20,7 @@
 #include "prefspagetabbehavior.h"
 #include "preferences.h"
 
-PrefsPageTabBehavior::PrefsPageTabBehavior(QFrame* newParent,Preferences* newPreferences) :
+PrefsPageTabBehavior::PrefsPageTabBehavior(QWidget* newParent,Preferences* newPreferences) :
                       TabBar_Config(newParent)
 {
 	preferences = newPreferences;

@@ -25,7 +25,7 @@ class PrefsPageOSD : public OSD_Config
   Q_OBJECT
 
   public:
-    PrefsPageOSD(QFrame* newParent,Preferences* newPreferences);
+    PrefsPageOSD(QWidget* newParent,Preferences* newPreferences);
     ~PrefsPageOSD();
     
     void aboutToShow();  // called from PrefsDialog when the page is about to be shown

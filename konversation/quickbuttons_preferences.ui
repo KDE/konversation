@@ -12,70 +12,58 @@
             <height>608</height>
         </rect>
     </property>
-    <widget class="KListView">
-        <column>
-            <property name="text">
-                <string>Button Name</string>
-            </property>
-            <property name="clickable">
-                <bool>true</bool>
-            </property>
-            <property name="resizable">
-                <bool>true</bool>
-            </property>
-        </column>
-        <column>
-            <property name="text">
-                <string>Button Action</string>
-            </property>
-            <property name="clickable">
-                <bool>true</bool>
-            </property>
-            <property name="resizable">
-                <bool>true</bool>
-            </property>
-        </column>
+    <grid>
         <property name="name">
-            <cstring>buttonListView</cstring>
+            <cstring>unnamed</cstring>
         </property>
-        <property name="geometry">
-            <rect>
-                <x>30</x>
-                <y>20</y>
-                <width>521</width>
-                <height>401</height>
-            </rect>
-        </property>
-        <property name="acceptDrops">
-            <bool>true</bool>
-        </property>
-        <property name="allColumnsShowFocus">
-            <bool>true</bool>
-        </property>
-        <property name="defaultRenameAction">
-            <enum>Reject</enum>
-        </property>
-        <property name="itemsRenameable">
-            <bool>true</bool>
-        </property>
-        <property name="dragEnabled">
-            <bool>true</bool>
-        </property>
-    </widget>
-    <widget class="QLabel">
-        <property name="name">
-            <cstring>textLabel1</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>30</x>
-                <y>430</y>
-                <width>520</width>
-                <height>131</height>
-            </rect>
-        </property>
-        <property name="text">
-            <string>You can use the following placeholders:
+        <widget class="KListView" row="0" column="0">
+            <column>
+                <property name="text">
+                    <string>Button Name</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>Button Action</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>buttonListView</cstring>
+            </property>
+            <property name="acceptDrops">
+                <bool>true</bool>
+            </property>
+            <property name="allColumnsShowFocus">
+                <bool>true</bool>
+            </property>
+            <property name="defaultRenameAction">
+                <enum>Reject</enum>
+            </property>
+            <property name="itemsRenameable">
+                <bool>true</bool>
+            </property>
+            <property name="dragEnabled">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="QLabel" row="1" column="0">
+            <property name="name">
+                <cstring>textLabel1</cstring>
+            </property>
+            <property name="text">
+                <string>You can use the following placeholders:
 
 %c: Current channel
 %k: Channel password (not functional yet)
@@ -83,8 +71,9 @@
 %u: List of selected nicknames
 %s&lt;term&gt;%: term used to separate nicknames in %u
 %n: Send command directly to the server instead of your input line</string>
-        </property>
-    </widget>
+            </property>
+        </widget>
+    </grid>
 </widget>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>

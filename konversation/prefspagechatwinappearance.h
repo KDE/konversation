@@ -21,7 +21,7 @@ class PrefsPageChatWinAppearance : public ChatWindowAppearance_Config
 {
   Q_OBJECT
   public:
-    PrefsPageChatWinAppearance(QFrame* newParent,Preferences* newPreferences);
+    PrefsPageChatWinAppearance(QWidget* newParent,Preferences* newPreferences);
   
   public slots:
     void applyPreferences();

@@ -42,7 +42,7 @@
 
 using namespace Konversation;
 
-PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
+PrefsPageThemes::PrefsPageThemes(QWidget* newParent,Preferences* newPreferences)
   : Theme_Config( newParent )
 {
 

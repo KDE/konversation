@@ -24,7 +24,7 @@ class PrefsPageButtons : public QuickButtons_Config
   Q_OBJECT
 
   public:
-    PrefsPageButtons(QFrame* newParent,Preferences* newPreferences);
+    PrefsPageButtons(QWidget* newParent,Preferences* newPreferences);
     ~PrefsPageButtons();
 
   public slots:

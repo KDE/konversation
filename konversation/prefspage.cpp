@@ -16,7 +16,7 @@
 
 #include "prefspage.h"
 
-PrefsPage::PrefsPage(QFrame* newParent,Preferences* newPreferences)
+PrefsPage::PrefsPage(QWidget* newParent,Preferences* newPreferences)
 {
   preferences=newPreferences;
   parentFrame=newParent;

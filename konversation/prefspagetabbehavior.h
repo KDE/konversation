@@ -27,7 +27,7 @@ class PrefsPageTabBehavior : public TabBar_Config
   Q_OBJECT
 
   public:
-    PrefsPageTabBehavior(QFrame* newParent,Preferences* newPreferences);
+    PrefsPageTabBehavior(QWidget* newParent,Preferences* newPreferences);
 
   public slots:
     void applyPreferences();

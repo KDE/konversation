@@ -20,7 +20,7 @@
 #include "prefspagebuttons.h"
 #include "preferences.h"
 
-PrefsPageButtons::PrefsPageButtons(QFrame* newParent,Preferences* newPreferences) :
+PrefsPageButtons::PrefsPageButtons(QWidget* newParent,Preferences* newPreferences) :
   QuickButtons_Config( newParent )
 {
   preferences = newPreferences;

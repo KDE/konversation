@@ -15,14 +15,14 @@
 
 #include "chatwindowbehaviour_preferences.h"
 
-class QFrame;
+class QWidget;
 class Preferences;
 
 class PrefsPageChatWinBehavior : public ChatwindowBehaviour_Config
 {
   Q_OBJECT
   public:
-    PrefsPageChatWinBehavior(QFrame* newParent, Preferences* newPreferences);
+    PrefsPageChatWinBehavior(QWidget* newParent, Preferences* newPreferences);
     ~PrefsPageChatWinBehavior();
   public slots:
     void applyPreferences();

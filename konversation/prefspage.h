@@ -21,7 +21,7 @@
   @author Dario Abatianni
 */
 
-class QFrame;
+class QWidget;
 class Preferences;
 
 class PrefsPage : public QObject
@@ -29,14 +29,14 @@ class PrefsPage : public QObject
   Q_OBJECT
 
   public:
-    PrefsPage(QFrame* newParent,Preferences* preferences);
+    PrefsPage(QWidget* newParent,Preferences* preferences);
     ~PrefsPage();
 
     int marginHint() const;
     int spacingHint() const;
 
   protected:
-    QFrame* parentFrame;
+    QWidget* parentFrame;
     Preferences* preferences;
 };
 

@@ -35,7 +35,7 @@
  *@author Dario Abatianni
 */
 
-class QFrame;
+class QWidget;
 
 class PrefsDialog : public KDialogBase
 {
@@ -75,11 +75,11 @@ class PrefsDialog : public KDialogBase
     PrefsPageThemes*          themesPage;
 
     // for openPage();
-    QFrame* notifyPane;
-    QFrame* chatWinAppearancePane;
+    QWidget* notifyPane;
+    QWidget* chatWinAppearancePane;
     
     // for slotAboutToShowPage()
-    QFrame* OSDPane;
+    QWidget* OSDPane;
     
     QWidget* lastPane;
 

@@ -37,7 +37,7 @@ class PrefsPageIgnore : public PrefsPage
   Q_OBJECT
 
   public:
-    PrefsPageIgnore(QFrame* newParent,Preferences* newPreferences);
+    PrefsPageIgnore(QWidget* newParent,Preferences* newPreferences);
     ~PrefsPageIgnore();
 
   signals:

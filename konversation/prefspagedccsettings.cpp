@@ -31,7 +31,7 @@
 #include "prefspagedccsettings.h"
 #include "preferences.h"
 
-PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPreferences) :
+PrefsPageDccSettings::PrefsPageDccSettings(QWidget* newParent,Preferences* newPreferences) :
                       DCC_Settings(newParent)
 {
   preferences=newPreferences;

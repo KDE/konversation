@@ -19,7 +19,7 @@
 #include "prefspagelog.h"
 #include "preferences.h"
 
-PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
+PrefsPageLog::PrefsPageLog(QWidget* newParent,Preferences* newPreferences) :
               Log_Config(newParent)
 {
 	preferences = newPreferences;

@@ -39,7 +39,7 @@
 #include "konversationapplication.h"
 #include "konversationsound.h"
 
-PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPreferences) :
+PrefsPageHighlight::PrefsPageHighlight(QWidget* newParent,Preferences* newPreferences) :
   Highlight_Config(newParent)
 {
   preferences = newPreferences;

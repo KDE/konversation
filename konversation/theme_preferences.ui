@@ -12,225 +12,166 @@
             <height>556</height>
         </rect>
     </property>
-    <widget class="QPushButton">
+    <grid>
         <property name="name">
-            <cstring>removeButton</cstring>
+            <cstring>unnamed</cstring>
         </property>
-        <property name="enabled">
-            <bool>false</bool>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>270</x>
-                <y>510</y>
-                <width>240</width>
-                <height>25</height>
-            </rect>
-        </property>
-        <property name="text">
-            <string>&amp;RemoveTheme</string>
-        </property>
-    </widget>
-    <widget class="QPushButton">
-        <property name="name">
-            <cstring>installButton</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>16</x>
-                <y>510</y>
-                <width>250</width>
-                <height>25</height>
-            </rect>
-        </property>
-        <property name="text">
-            <string>I&amp;nstall Theme</string>
-        </property>
-    </widget>
-    <widget class="QLabel">
-        <property name="name">
-            <cstring>textLabel2</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>40</x>
-                <y>460</y>
-                <width>60</width>
-                <height>31</height>
-            </rect>
-        </property>
-        <property name="text">
-            <string>Preview:</string>
-        </property>
-    </widget>
-    <widget class="QFrame">
-        <property name="name">
-            <cstring>frame3_2</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>110</x>
-                <y>460</y>
-                <width>320</width>
-                <height>40</height>
-            </rect>
-        </property>
-        <property name="frameShape">
-            <enum>StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-            <enum>Plain</enum>
-        </property>
-        <widget class="QLabel">
+        <widget class="QPushButton" row="2" column="2">
             <property name="name">
-                <cstring>previewLabel1</cstring>
+                <cstring>removeButton</cstring>
             </property>
-            <property name="geometry">
-                <rect>
-                    <x>41</x>
-                    <y>11</y>
-                    <width>32</width>
-                    <height>16</height>
-                </rect>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="text">
+                <string>&amp;RemoveTheme</string>
+            </property>
+        </widget>
+        <widget class="QPushButton" row="2" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>installButton</cstring>
+            </property>
+            <property name="text">
+                <string>I&amp;nstall Theme</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="1" column="0">
+            <property name="name">
+                <cstring>textLabel2</cstring>
+            </property>
+            <property name="text">
+                <string>Preview:</string>
+            </property>
+        </widget>
+        <widget class="QFrame" row="1" column="1" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>frame3_2</cstring>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>0</width>
+                    <height>0</height>
+                </size>
             </property>
             <property name="frameShape">
-                <enum>NoFrame</enum>
+                <enum>StyledPanel</enum>
             </property>
-            <property name="text">
-                <string>a</string>
+            <property name="frameShadow">
+                <enum>Plain</enum>
             </property>
-            <property name="toolTip" stdset="0">
-                <string>Icon for normal users"</string>
-            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>previewLabel1</cstring>
+                    </property>
+                    <property name="frameShape">
+                        <enum>NoFrame</enum>
+                    </property>
+                    <property name="text">
+                        <string>a</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Icon for normal users"</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="1">
+                    <property name="name">
+                        <cstring>previewLabel2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>b</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Icon for away users</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="2">
+                    <property name="name">
+                        <cstring>previewLabel3</cstring>
+                    </property>
+                    <property name="text">
+                        <string>c</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Icon for users with voice</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="3">
+                    <property name="name">
+                        <cstring>previewLabel4</cstring>
+                    </property>
+                    <property name="text">
+                        <string>d</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Icon for users with half-operator priviliges</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="4">
+                    <property name="name">
+                        <cstring>previewLabel5</cstring>
+                    </property>
+                    <property name="text">
+                        <string>e</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Icon for users with operator priviliges</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="5">
+                    <property name="name">
+                        <cstring>previewLabel6</cstring>
+                    </property>
+                    <property name="text">
+                        <string>f</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Icon for users with owner privileges</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="6">
+                    <property name="name">
+                        <cstring>previewLabel7</cstring>
+                    </property>
+                    <property name="text">
+                        <string>g</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Icon for users with admin privileges</string>
+                    </property>
+                </widget>
+            </grid>
         </widget>
-        <widget class="QLabel">
+        <widget class="KListBox" row="0" column="0" rowspan="1" colspan="3">
             <property name="name">
-                <cstring>previewLabel2</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>79</x>
-                    <y>11</y>
-                    <width>31</width>
-                    <height>16</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>b</string>
-            </property>
-            <property name="toolTip" stdset="0">
-                <string>Icon for away users</string>
+                <cstring>themeList</cstring>
             </property>
         </widget>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>previewLabel3</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>116</x>
-                    <y>11</y>
-                    <width>32</width>
-                    <height>16</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>c</string>
-            </property>
-            <property name="toolTip" stdset="0">
-                <string>Icon for users with voice</string>
-            </property>
-        </widget>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>previewLabel4</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>154</x>
-                    <y>11</y>
-                    <width>32</width>
-                    <height>16</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>d</string>
-            </property>
-            <property name="toolTip" stdset="0">
-                <string>Icon for users with half-operator priviliges</string>
-            </property>
-        </widget>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>previewLabel5</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>192</x>
-                    <y>11</y>
-                    <width>32</width>
-                    <height>16</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>e</string>
-            </property>
-            <property name="toolTip" stdset="0">
-                <string>Icon for users with operator priviliges</string>
-            </property>
-        </widget>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>previewLabel6</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>230</x>
-                    <y>11</y>
-                    <width>31</width>
-                    <height>16</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>f</string>
-            </property>
-            <property name="toolTip" stdset="0">
-                <string>Icon for users with owner privileges</string>
-            </property>
-        </widget>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>previewLabel7</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>267</x>
-                    <y>11</y>
-                    <width>32</width>
-                    <height>16</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>g</string>
-            </property>
-            <property name="toolTip" stdset="0">
-                <string>Icon for users with admin privileges</string>
-            </property>
-        </widget>
-    </widget>
-    <widget class="KListBox">
-        <property name="name">
-            <cstring>themeList</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>10</x>
-                <y>10</y>
-                <width>501</width>
-                <height>430</height>
-            </rect>
-        </property>
-    </widget>
+    </grid>
 </widget>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>

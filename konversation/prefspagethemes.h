@@ -20,7 +20,7 @@ class PrefsPageThemes : public Theme_Config
 {
   Q_OBJECT
   public:
-    PrefsPageThemes(QFrame* newParent,Preferences* newPreferences);
+    PrefsPageThemes(QWidget* newParent,Preferences* newPreferences);
     ~PrefsPageThemes();
 
  public slots:

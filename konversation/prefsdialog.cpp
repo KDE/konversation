@@ -16,6 +16,7 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qhbox.h>
+#include <qvbox.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -40,41 +41,41 @@ PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
   lastPane = 0;
 
   setFolderIcon(QStringList::split(',', i18n("Appearance")), SmallIcon("looknfeel"));
-  chatWinAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("window_new"));
-  QFrame* colorsAppearancePane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Colors")),
+  chatWinAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("window_new"));
+  QWidget* colorsAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Colors")),
     QString::null, SmallIcon("colorize"));
-  QFrame* themesPane = addPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Themes")),
+  QWidget* themesPane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Themes")),
     QString::null, SmallIcon("iconthemes"));
 
   setFolderIcon(QStringList::split(',', i18n("Behavior")), SmallIcon("configure"));
-  QFrame* generalBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("General")),
+  QWidget* generalBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("General")),
     QString::null,SmallIcon("exec"));
-  QFrame* chatWinBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Chat Window")),QString::null, SmallIcon("window_new"));
-  QFrame* tabBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Tab Bar")),
+  QWidget* chatWinBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Chat Window")),QString::null, SmallIcon("window_new"));
+  QWidget* tabBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Tab Bar")),
     QString::null, SmallIcon("tab_new"));
-  QFrame* ignorePane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Ignored Nicknames")),
+  QWidget* ignorePane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Ignored Nicknames")),
     QString::null, SmallIcon("editdelete"));
-  QFrame* aliasesPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Command Aliases")),
+  QWidget* aliasesPane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Command Aliases")),
     QString::null,SmallIcon("editcopy"));
-  QFrame* buttonsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Quick Buttons")),
+  QWidget* buttonsPane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Quick Buttons")),
     QString::null, SmallIcon("keyboard"));
-  QFrame* logSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Logging")),
+  QWidget* logSettingsPane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Logging")),
     QString::null,SmallIcon("log"));
-  QFrame* dccSettingsPane = addPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("DCC")),
+  QWidget* dccSettingsPane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("DCC")),
     QString::null,SmallIcon("2rightarrow" ));
 
   setFolderIcon(QStringList::split(',', i18n("Notification")), SmallIcon("knotify"));
-  notifyPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Watched Nicknames")),
+  notifyPane = addVBoxPage(QStringList::split(',', i18n("Notification") + "," + i18n("Watched Nicknames")),
     QString::null,SmallIcon("kfind"));
-  QFrame* highlightPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Highlighting"))   ,QString::null,SmallIcon("paintbrush"));
-  OSDPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("On Screen Display")),
+  QWidget* highlightPane = addVBoxPage(QStringList::split(',', i18n("Notification") + "," + i18n("Highlighting"))   ,QString::null,SmallIcon("paintbrush"));
+  OSDPane = addVBoxPage(QStringList::split(',', i18n("Notification") + "," + i18n("On Screen Display")),
     QString::null, SmallIcon("tv"));
 
-  QFrame* dialogsPane = addPage(i18n("Warning Dialogs"), QString::null, SmallIcon("messagebox_warning"));
+  QWidget* dialogsPane = addVBoxPage(i18n("Warning Dialogs"), QString::null, SmallIcon("messagebox_warning"));
   
 
   // TODO: Uncomment this again when it's ready to go
-  // QFrame* scriptsPane        =addPage(i18n("Scripting"));
+  // QWidget* scriptsPane        =addPage(i18n("Scripting"));
 
   // Add pages to preferences dialog
   PrefsPageChatWinAppearance* chatWinAppearancePage = new PrefsPageChatWinAppearance(chatWinAppearancePane, preferences);

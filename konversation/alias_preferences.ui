@@ -12,91 +12,89 @@
             <height>464</height>
         </rect>
     </property>
-    <widget class="QPushButton">
+    <grid>
         <property name="name">
-            <cstring>removeButton</cstring>
+            <cstring>unnamed</cstring>
         </property>
-        <property name="geometry">
-            <rect>
-                <x>480</x>
-                <y>50</y>
-                <width>82</width>
-                <height>25</height>
-            </rect>
-        </property>
-        <property name="text">
-            <string>&amp;Remove</string>
-        </property>
-    </widget>
-    <widget class="QPushButton">
-        <property name="name">
-            <cstring>newButton</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>480</x>
-                <y>20</y>
-                <width>82</width>
-                <height>25</height>
-            </rect>
-        </property>
-        <property name="text">
-            <string>&amp;New...</string>
-        </property>
-    </widget>
-    <widget class="KListView">
-        <column>
+        <widget class="QPushButton" row="1" column="1">
+            <property name="name">
+                <cstring>removeButton</cstring>
+            </property>
             <property name="text">
-                <string>Alias</string>
+                <string>&amp;Remove</string>
             </property>
-            <property name="clickable">
-                <bool>true</bool>
+        </widget>
+        <widget class="QPushButton" row="0" column="1">
+            <property name="name">
+                <cstring>newButton</cstring>
             </property>
-            <property name="resizable">
-                <bool>true</bool>
-            </property>
-        </column>
-        <column>
             <property name="text">
-                <string>Replacement</string>
+                <string>&amp;New...</string>
             </property>
-            <property name="clickable">
+        </widget>
+        <widget class="KListView" row="0" column="0" rowspan="3" colspan="1">
+            <column>
+                <property name="text">
+                    <string>Alias</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>Replacement</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>aliasesListView</cstring>
+            </property>
+            <property name="acceptDrops">
                 <bool>true</bool>
             </property>
-            <property name="resizable">
+            <property name="hScrollBarMode">
+                <enum>Auto</enum>
+            </property>
+            <property name="allColumnsShowFocus">
                 <bool>true</bool>
             </property>
-        </column>
-        <property name="name">
-            <cstring>aliasesListView</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>10</x>
-                <y>20</y>
-                <width>460</width>
-                <height>431</height>
-            </rect>
-        </property>
-        <property name="acceptDrops">
-            <bool>true</bool>
-        </property>
-        <property name="hScrollBarMode">
-            <enum>Auto</enum>
-        </property>
-        <property name="allColumnsShowFocus">
-            <bool>true</bool>
-        </property>
-        <property name="fullWidth">
-            <bool>true</bool>
-        </property>
-        <property name="itemsRenameable">
-            <bool>true</bool>
-        </property>
-        <property name="dragEnabled">
-            <bool>true</bool>
-        </property>
-    </widget>
+            <property name="fullWidth">
+                <bool>true</bool>
+            </property>
+            <property name="itemsRenameable">
+                <bool>true</bool>
+            </property>
+            <property name="dragEnabled">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <spacer row="2" column="1">
+            <property name="name">
+                <cstring>spacer18</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>350</height>
+                </size>
+            </property>
+        </spacer>
+    </grid>
 </widget>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>

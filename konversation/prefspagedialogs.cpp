@@ -18,7 +18,7 @@
 #include "prefspagedialogs.h"
 #include "preferences.h"
 
-PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences) :
+PrefsPageDialogs::PrefsPageDialogs(QWidget* newParent,Preferences* newPreferences) :
   Warnings_Config( newParent )
 {
   preferences = newPreferences;

@@ -25,7 +25,7 @@ class PrefsPageBehaviour : public PrefsPage
 {
   Q_OBJECT
   public:
-    PrefsPageBehaviour(QFrame* newParent, Preferences* newPreferences);
+    PrefsPageBehaviour(QWidget* newParent, Preferences* newPreferences);
     ~PrefsPageBehaviour();
 
   public slots:

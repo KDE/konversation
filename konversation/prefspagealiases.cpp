@@ -23,7 +23,7 @@
 #include "preferences.h"
 #include "prefspagealiases.h"
 
-PrefsPageAliases::PrefsPageAliases(QFrame* newParent,Preferences* newPreferences) :
+PrefsPageAliases::PrefsPageAliases(QWidget* newParent,Preferences* newPreferences) :
   Alias_Config( newParent )
 {
   preferences = newPreferences;

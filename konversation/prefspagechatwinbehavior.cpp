@@ -30,7 +30,7 @@
 #include "preferences.h"
 #include "valuelistviewitem.h"
 
-PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preferences* newPreferences)
+PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QWidget* newParent, Preferences* newPreferences)
   : ChatwindowBehaviour_Config( newParent )
 {
   preferences = newPreferences;

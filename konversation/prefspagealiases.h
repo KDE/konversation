@@ -18,14 +18,14 @@
 #include "alias_preferences.h"
 
 class Preferences;
-class QFrame;
+class QWidget;
 
 class PrefsPageAliases : public Alias_Config
 {
   Q_OBJECT
 
   public:
-    PrefsPageAliases(QFrame* newParent,Preferences* newPreferences);
+    PrefsPageAliases(QWidget* newParent,Preferences* newPreferences);
     ~PrefsPageAliases();
 
   public slots:
@@ -37,7 +37,7 @@ class PrefsPageAliases : public Alias_Config
 
   protected:
     Preferences* preferences;
-    QFrame* parentFrame;
+    QWidget* parentFrame;
 
 };
 

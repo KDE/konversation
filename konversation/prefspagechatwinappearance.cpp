@@ -22,7 +22,7 @@
 
 #include "preferences.h"
 
-PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QFrame* newParent,Preferences* newPreferences)
+PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QWidget* newParent,Preferences* newPreferences)
  : ChatWindowAppearance_Config(newParent)
 {
   preferences = newPreferences;

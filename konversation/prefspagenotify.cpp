@@ -29,7 +29,7 @@
 #include "preferences.h"
 #include "editnotifydialog.h"
 
-PrefsPageNotify::PrefsPageNotify(QFrame* newParent,Preferences* newPreferences) :
+PrefsPageNotify::PrefsPageNotify(QWidget* newParent,Preferences* newPreferences) :
   WatchedNicknames_Config( newParent )
 {
   preferences = newPreferences;

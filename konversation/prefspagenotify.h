@@ -24,7 +24,7 @@ class PrefsPageNotify : public WatchedNicknames_Config
   Q_OBJECT
 
   public:
-    PrefsPageNotify(QFrame* newParent,Preferences* newPreferences);
+    PrefsPageNotify(QWidget* newParent,Preferences* newPreferences);
     ~PrefsPageNotify();
 
     QMap<QString, QStringList> getNotifyList();

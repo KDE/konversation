@@ -36,7 +36,7 @@
 #include "konversationapplication.h"
 #include "osd.h"
 
-PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
+PrefsPageOSD::PrefsPageOSD(QWidget* newParent,Preferences* newPreferences) :
   OSD_Config( newParent )
 {
   showingPage = false;

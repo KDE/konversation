@@ -21,7 +21,7 @@
 #include "colorsappearance_preferences.h"
 #include "preferences.h"
 
-PrefsPageColorsAppearance::PrefsPageColorsAppearance(QFrame* newParent,Preferences* newPreferences)
+PrefsPageColorsAppearance::PrefsPageColorsAppearance(QWidget* newParent,Preferences* newPreferences)
  : ColorsAppearance_Config(newParent)
 {
   preferences = newPreferences;
