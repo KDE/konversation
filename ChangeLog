@@ -5,6 +5,9 @@ Changes from 0.15 to 0.16
 - New topic widget
 - Added a channel dialog
 - Made the nickname box optional
+- Fix DCC resume when its set to auto-accept
+- Calculate DCC CPS more accurately
+
 
 Changes from 0.14 to 0.15
 - Ported socket code to KNetwork. Weird connection problems should be gone now
