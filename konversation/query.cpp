@@ -27,13 +27,15 @@
 Query::Query(QWidget* parent) : ChatWindow(parent)
 {
   kdDebug() << "Query::Query()" << endl;
-  /* This is the main box */
-  queryPane=new QVBox(parent);
-  queryPane->setMargin(margin());
-  queryPane->setSpacing(spacing());
+
+  setType(ChatWindow::Query);
+
+  /* (this) is the main box */
+  setMargin(margin());
+  setSpacing(spacing());
 
   /* This box holds the hostmask and the close button */
-  QHBox* maskQuitBox=new QHBox(queryPane);
+  QHBox* maskQuitBox=new QHBox(this);
   maskQuitBox->setSpacing(spacing());
 
   queryHostmask=new QLineEdit(maskQuitBox);
@@ -45,10 +47,10 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   closeButton->setPixmap(prefix+"close_pane.png");
   closeButton->setMaximumWidth(20);
 
-  setTextView(new IRCView(queryPane));
+  setTextView(new IRCView(this));
 
   /* This box holds the input line and the log checkbox */
-  QHBox* inputLogBox=new QHBox(queryPane);
+  QHBox* inputLogBox=new QHBox(this);
   inputLogBox->setSpacing(spacing());
 
   queryInput=new IRCInput(inputLogBox);
@@ -68,7 +70,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
 Query::~Query()
 {
-  kdDebug() << "Query::~Query(" << getQueryName() << ")" << endl;
+  kdDebug() << "Query::~Query(" << getName() << ")" << endl;
 }
 
 void Query::close()
@@ -76,10 +78,11 @@ void Query::close()
   emit closed(this);
 }
 
-void Query::setQueryName(const QString& newName)
+void Query::setName(const QString& newName)
 {
-  queryName=newName;
-  if(logName=="") setLogfileName("konversation_"+getQueryName().lower()+".log");
+  ChatWindow::setName(newName);
+  /* don't change logfile name if query name changes */
+  if(logName=="") setLogfileName("konversation_"+getName().lower()+".log");
 }
 
 void Query::queryTextEntered()
@@ -90,11 +93,12 @@ void Query::queryTextEntered()
 {
   if(line.length())
   {
-    QString output=filter.parse(line,getQueryName());
+    QString output=filter.parse(line,getName());
 
     if(output!="")
     {
       if(filter.isAction()) appendAction(server->getNickname(),output);
+      else if(filter.isCommand()) appendCommandMessage(filter.getType(),output);
       else appendQuery(server->getNickname(),output);
     }
 
@@ -106,23 +110,13 @@ void Query::queryTextEntered()
 
 void Query::newTextInView()
 {
-  emit newText(getQueryPane());
+  emit newText(this);
 }
 
 void Query::setHostmask(const QString& newHostmask)
 {
   hostmask=newHostmask;
   queryHostmask->setText(newHostmask);
-}
-
-QWidget* Query::getQueryPane()
-{
-  return queryPane;
-}
-
-QString& Query::getQueryName()
-{
-  return queryName;
 }
 
 int Query::spacing()

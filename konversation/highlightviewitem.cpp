@@ -36,3 +36,8 @@ void HighlightViewItem::paintCell(QPainter* p, const QColorGroup &cg, int column
   itemColorGroup.setColor(QColorGroup::Text, itemColor);
 	KListViewItem::paintCell(p, itemColorGroup, column, width, alignment);
 }
+
+HighlightViewItem* HighlightViewItem::itemBelow()
+{
+  return (HighlightViewItem*) KListViewItem::itemBelow();
+}

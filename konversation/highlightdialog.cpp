@@ -73,39 +73,16 @@ HighlightDialog::~HighlightDialog()
 
 void HighlightDialog::addHighlightList()
 {
-	for(unsigned int i = 0; i != highlightList.count(); i++)
-	{
-		currentHighlight = highlightList.at(i);
-		usedID[currentHighlight->getID()] = true;
-		if(highestID < currentHighlight->getID()) highestID = currentHighlight->getID();
-	  currentHighlightViewItem = new HighlightViewItem(HighlightBrowser, currentHighlight);
-		highlightItemList.append(currentHighlightViewItem);
-		ColorSelection->setColor(currentHighlightViewItem->getColor());
-	}
-}
-/*
-int	HighlightDialog::assignID()
-{
-	freeIDfound = false;
+  for(unsigned int i = 0; i < highlightList.count(); i++)
+  {
+    currentHighlight = highlightList.at(i);
+    currentHighlightViewItem = new HighlightViewItem(HighlightBrowser, currentHighlight);
 
-	for(int i = 0; i <= highestID; i++)
-	{
-		if(usedID[i] == 0)
-		{
-			usedID[i] = true;
-			freeID = i;
-			freeIDfound = true;
-		}
-   }
-	if(freeIDfound == false)
-	{
-		highestID++;
-		usedID[highestID] = true;
-		freeID = highestID;
-	}
-	return freeID;
+    highlightItemList.append(currentHighlightViewItem);
+    ColorSelection->setColor(currentHighlightViewItem->getColor());
+  }
 }
-*/
+
 void HighlightDialog::addHighlight()
 {
 	if((selectedHighlightViewItem = HighlightBrowser->selectedItem()) == 0)
@@ -114,9 +91,10 @@ void HighlightDialog::addHighlight()
 		{
 			if(HighlightBrowser->findItem(InputLine->text(), 0, Qt::ExactMatch) != 0)
 			{
-				emit duplicateItemDetected(InputLine->text());
+        KMessageBox::information(this,"<qt>An item called <b>\""+InputLine->text()+"\"</b> already exists in your "
+                                      "highlight list. You can safely do this, but only the first item "
+                                      "will be used for highlighting.</qt>","Hihglight pattern exists","DuplicateHighlightWarning");
 			}
-//			currentHighlight = new Highlight(InputLine->text(), ColorSelection->color(), this->assignID());
 			currentHighlight = new Highlight(InputLine->text(), ColorSelection->color());
 			highlightList.append(currentHighlight);
 			currentHighlightViewItem = new HighlightViewItem(HighlightBrowser, currentHighlight);
@@ -128,7 +106,7 @@ void HighlightDialog::addHighlight()
 
 void HighlightDialog::noEmptyPatterns()
 {
-  KMessageBox::sorry(this,i18n("You can not add an Highlight with empty pattern."),i18n("Empty Pattern"));
+  KMessageBox::sorry(this,i18n("You can not add a Highlight with empty pattern."),i18n("Empty Pattern"));
 }
 
 void HighlightDialog::changeHighlightColor(const QColor& passed_itemColor)
@@ -195,9 +173,8 @@ void HighlightDialog::updateHighlight(const QString& passed_InputLineText)
 
 void HighlightDialog::changeHighlightText()
 {
-
 // EIS: if-Bedingung für beide Abfragen schachteln, um den Segfault zu beheben
-  if((/*selectedHighlightViewItem = */HighlightBrowser->selectedItem()) != 0)
+  if((selectedHighlightViewItem = HighlightBrowser->selectedItem()) != 0)
   {
 		if(selectedHighlightViewItem->getText() != "")
   	{
@@ -223,21 +200,27 @@ void HighlightDialog::slotOk()
   slotApply();
   slotCancel();
 }
-/*
-void HighlightDialog::closeEvent(QCloseEvent *ev)
-{
-  ev->ignore();
-  slotCancel();
-}
-*/
+
 void HighlightDialog::slotApply()
 {
-  kdDebug() << "slotApply" << endl;
-  emit applyClicked(highlightList);
+  emit applyClicked(getHighlightList());
 }
   
 void HighlightDialog::slotCancel()
 {
-  kdDebug() << "slotCancel" << endl;
   emit cancelClicked(size());
+}
+
+QPtrList<Highlight> HighlightDialog::getHighlightList()
+{
+  QPtrList<Highlight> newList;
+
+  HighlightViewItem* item=HighlightBrowser->firstChild();
+  while(item)
+  {
+    newList.append(new Highlight(item->getText(),item->getColor()));
+    item=item->itemBelow();
+  }
+
+  return newList;
 }

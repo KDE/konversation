@@ -35,6 +35,7 @@ ServerWindow::ServerWindow(Server* server) : KMainWindow()
   notifyDialog=0;
   buttonsDialog=0;
   colorConfigurationDialog=0;
+  frontView=0;
 
 /*  KAction* quitAction= */ KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); /* file_quit */
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); /* options_show_toolbar */
@@ -100,6 +101,19 @@ void ServerWindow::appendToStatus(const QString& type,const QString& message)
   statusView->appendServerMessage(type,message);
   /* Show activity indicator */
   newText(statusPane);
+}
+
+void ServerWindow::appendToFrontmost(const QString& type,const QString& message)
+{
+  /* FIXME: Make Status Pane a Chat Window to get rid of exceptions */
+  if(frontView==0)
+  {
+    statusView->appendServerMessage(type,message);
+    /* Show activity indicator */
+    newText(statusPane);
+  }
+  else
+    frontView->appendServerMessage(type,message);
 }
 
 void ServerWindow::statusTextEntered()
@@ -202,6 +216,14 @@ void ServerWindow::newText(QWidget* view)
 
 void ServerWindow::changedView(QWidget* view)
 {
+  frontView=0;
+  if(view!=statusPane)
+  {
+    /* FIXME: Make status window a Chat Window to get rid of those exceptions */
+    ChatWindow* pane=(ChatWindow*) view;
+    if(pane->getType()==ChatWindow::Channel || pane->getType()==ChatWindow::Query) frontView=pane;
+  }
+
   windowContainer->changeTabState(view,false);
 }
 

@@ -41,6 +41,8 @@ class KonversationApplication : public KApplication
     KonversationApplication();
     ~KonversationApplication();
 
+    void syncPrefs();
+
   public slots:
     void connectToServer(int number);
     void connectToAnotherServer(int number);

@@ -14,9 +14,8 @@
   $Id$
 */
 
-#include <qobject.h>
-#include <qwidget.h>
 #include <qfile.h>
+#include <qvbox.h>
 
 #ifndef CHATWINDOW_H
 #define CHATWINDOW_H
@@ -30,7 +29,7 @@
 
 class Server;
 
-class ChatWindow : public QObject
+class ChatWindow : public QVBox
 {
   Q_OBJECT
 
@@ -38,10 +37,25 @@ class ChatWindow : public QObject
     ChatWindow(QWidget* parent);
     ~ChatWindow();
 
+    enum WindowType
+    {
+      Status=0,
+      Channel,
+      Query,
+      DCCChat,
+      DCCStatus
+    };
+
     void setServer(Server* newServer);
     void setTextView(IRCView* newView);
     IRCView* getTextView() { return textView; };
     void setLog(bool activate) { log=activate; };
+
+    void setName(QString newName);
+    QString& getName();
+
+    void setType(WindowType newType);
+    WindowType getType();
 
     void append(const char* nickname,const char* message);
     void appendQuery(const char* nickname,const char* message);
@@ -61,12 +75,14 @@ class ChatWindow : public QObject
     void setLogfileName(const QString& name);
     void cdIntoLogPath();
 
+    QString name;
     QString logName;
 
     IRCView* textView;
     Server* server;
     QFile logfile;
     OutputFilter filter;
+    WindowType type;
 };
 
 #endif

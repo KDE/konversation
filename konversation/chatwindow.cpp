@@ -33,6 +33,26 @@ ChatWindow::~ChatWindow()
 {
 }
 
+void ChatWindow::setName(QString newName)
+{
+  name=newName;
+}
+
+QString& ChatWindow::getName()
+{
+  return name;
+}
+
+void ChatWindow::setType(WindowType newType)
+{
+  type=newType;
+}
+
+ChatWindow::WindowType ChatWindow::getType()
+{
+  return type;
+}
+
 void ChatWindow::setServer(Server* newServer)
 {
   server=newServer;

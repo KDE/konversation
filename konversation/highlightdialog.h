@@ -60,8 +60,8 @@ class HighlightDialog : public KDialogBase
 		HighlightViewItem	*currentHighlightViewItem, *selectedHighlightViewItem,
 											*oldSelectedHighlightViewItem, *backupHighlightViewItem;
 		Highlight					*currentHighlight;
-		bool							usedID[16384], showDuplicateWarning, freeIDfound, highlightEdited;
-		int								freeID, highestID;
+		bool							/*usedID[16384], */ showDuplicateWarning, /* freeIDfound, */ highlightEdited;
+//		int								freeID, highestID;
 
 		QPtrList<Highlight>										highlightList;
 		QPtrList<HighlightViewItem>						highlightItemList;
@@ -69,6 +69,7 @@ class HighlightDialog : public KDialogBase
 		void addHighlightList();
 
 	protected:
+    QPtrList<Highlight> getHighlightList();
 //		int assignID();
 
 	protected slots:

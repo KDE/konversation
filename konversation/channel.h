@@ -44,17 +44,10 @@ class Channel : public ChatWindow
   Q_OBJECT
 
   public:
-//    Channel(Server* server,const QString& channelName,QWidget* parent);
     Channel(QWidget* parent);
     ~Channel();
 
-    QWidget* getChannelPane() { return channelPane; };
-    QString& getChannelName() { return channelName; };
-
-    void setChannelName(const QString& newName);
-
- // Will be inherited from ChatWindow()
-//    void setServer(Server* newServer) { server=newServer; };
+    void setName(const QString& newName);
 
     void joinNickname(QString& nickname,QString& hostname);
     void renameNick(QString& nickname,QString& newName);
@@ -101,14 +94,11 @@ class Channel : public ChatWindow
     int spacing() {  return KDialog::spacingHint(); };
     int margin() {  return KDialog::marginHint(); };
 
-    QString channelName;
-
     int nicks;
     int ops;
 
     unsigned int completionPosition;
 
-    QVBox* channelPane;
     QComboBox* topicLine;
     /* TODO: Somehow we need the nickname to the corresponding topic displayed */
     QStringList topicHistory;

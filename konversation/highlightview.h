@@ -35,6 +35,7 @@ class HighlightView : public KListView
 
 		HighlightViewItem* currentItem();
 		HighlightViewItem* selectedItem();
+		HighlightViewItem* firstChild();
 };
 
 #endif

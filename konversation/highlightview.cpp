@@ -27,10 +27,16 @@ HighlightView::~HighlightView()
 
 HighlightViewItem* HighlightView::currentItem()
 {
-	return (HighlightViewItem*) KListView::currentItem();
+  return (HighlightViewItem*) KListView::currentItem();
 }
 
 HighlightViewItem* HighlightView::selectedItem()
 {
-	return (HighlightViewItem*) KListView::selectedItem();
+  return (HighlightViewItem*) KListView::selectedItem();
 }
+
+HighlightViewItem* HighlightView::firstChild()
+{
+  return (HighlightViewItem*) KListView::firstChild();
+}
+

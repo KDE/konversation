@@ -36,6 +36,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   completionPosition=0;
   nickChangeDialog=0;
 
+  setType(ChatWindow::Channel);
+
   /* Build some size policies for the widgets */
   QSizePolicy hfixed=QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
   QSizePolicy hmodest=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
@@ -44,13 +46,12 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 //  QSizePolicy onlyVertical=QSizePolicy(QSizePolicy::Preferred,QSizePolicy::MinimumExpanding);
   QSizePolicy greedy=QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
 
-  /* The main Box, holding the channel view/topic and the input line */
-  channelPane=new QVBox(parent);
-  channelPane->setSpacing(spacing());
-  channelPane->setMargin(margin());
+  /* (this) The main Box, holding the channel view/topic and the input line */
+  setSpacing(spacing());
+  setMargin(margin());
 
   /* The grid for the topic line, Nicks/Ops label, Channel View and Nick list */
-  QGrid* topicViewNicksGrid=new QGrid(2,channelPane);
+  QGrid* topicViewNicksGrid=new QGrid(2,this);
   topicViewNicksGrid->setSpacing(spacing());
 
   /* The box holding the Topic label/line, and the channel modes */
@@ -112,7 +113,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   updateQuickButtons(KonversationApplication::preferences.getButtonList());
 
   /* The box holding the Nickname button, Channel input and Log Checkbox */
-  QHBox* commandLineBox=new QHBox(channelPane);
+  QHBox* commandLineBox=new QHBox(this);
   commandLineBox->setSpacing(spacing());
 
   nicknameButton=new QPushButton(i18n("Nickname"),commandLineBox);
@@ -160,7 +161,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameList.setAutoDelete(true);     // delete items when they are removed
 
   setLog(KonversationApplication::preferences.getLog());
-// if(mode==singleWindows) channelPane->show();
+// if(mode==singleWindows) show();
 }
 
 Channel::~Channel()
@@ -178,7 +179,6 @@ Channel::~Channel()
   }
   /* Unlink this channel from channel list */
   server->removeChannel(this);
-  delete channelPane;
 }
 
 /* Will be connected to NickListView::popupCommand(int) */
@@ -228,7 +228,7 @@ void Channel::popupCommand(int id)
 
   if(pattern.length())
   {
-    pattern.replace(QRegExp("%c"),getChannelName());
+    pattern.replace(QRegExp("%c"),getName());
 
     QStringList* nickList=getSelectedNicksList();
 
@@ -352,9 +352,9 @@ void Channel::completeNick()
   channelInput->setCursorPosition(pos);
 }
 
-void Channel::setChannelName(const QString& newName)
+void Channel::setName(const QString& newName)
 {
-  channelName=newName;
+  ChatWindow::setName(newName);
   setLogfileName("konversation_"+newName.lower()+".log");
 }
 
@@ -372,10 +372,11 @@ void Channel::channelTextEntered()
 void Channel::sendChannelText(const QString& line)
 {
   /* Is there something we need to display for ourselves? */
-  QString output=filter.parse(line,getChannelName());
+  QString output=filter.parse(line,getName());
   if(output!="")
   {
     if(filter.isAction()) appendAction(server->getNickname(),output);
+    else if(filter.isCommand()) appendCommandMessage(filter.getType(),output);
     else append(server->getNickname(),output);
   }
   /* Send anything else to the server */
@@ -384,7 +385,7 @@ void Channel::sendChannelText(const QString& line)
 
 void Channel::newTextInView()
 {
-  emit newText(getChannelPane());
+  emit newText(this);
 }
 
 void Channel::setNickname(const QString& newNickname)
@@ -410,7 +411,7 @@ void Channel::modeButtonClicked(int id,bool on)
 {
   char modes[]={'t','n','s','i','p','m','k','l'};
 
-  QString command("MODE "+getChannelName()+" "+((on) ? "+" : "-")+modes[id]);
+  QString command("MODE "+getName()+" "+((on) ? "+" : "-")+modes[id]);
   server->queue(command);
 }
 
@@ -419,7 +420,7 @@ void Channel::quickButtonClicked(int id)
   /* get button definition */
   QString buttonText=KonversationApplication::preferences.getButtonList()[id];
   /* parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter) */
-  QString out=server->parseWildcards(buttonText,server->getNickname(),getChannelName(),getSelectedNicksList(),0,0);
+  QString out=server->parseWildcards(buttonText,server->getNickname(),getName(),getSelectedNicksList(),0,0);
   /* does the return string end with a newline? */
   if(out.find('\n')!=-1)
   {
@@ -497,7 +498,7 @@ void Channel::joinNickname(QString& nickname,QString& hostmask)
   /* Did we join this channel ourselves? */
   if(nickname==server->getNickname())
   {
-    appendCommandMessage(i18n("Join"),i18n("You have joined channel %1. (%2)").arg(getChannelName()).arg(hostmask));
+    appendCommandMessage(i18n("Join"),i18n("You have joined channel %1. (%2)").arg(getName()).arg(hostmask));
   }
   /* No, it was somebody else */
   else
@@ -512,7 +513,7 @@ void Channel::removeNick(QString& nickname,QString& reason,bool quit)
   if(nickname==server->getNickname())
   {
     if(quit) appendCommandMessage(i18n("Quit"),i18n("You have left this server. (%2)").arg(nickname).arg(reason));
-    else appendCommandMessage(i18n("Part"),i18n("You have left channel %1. (%2)").arg(getChannelName()).arg(reason));
+    else appendCommandMessage(i18n("Part"),i18n("You have left channel %1. (%2)").arg(getName()).arg(reason));
 
     delete this;
   }
@@ -541,13 +542,13 @@ void Channel::kickNick(QString& nickname,QString& kicker,QString& reason)
     {
       appendCommandMessage(i18n("Kick"),i18n("You have kicked yourself from the channel. (%1)").arg(reason));
       /* This message lets the user see what he has done after the channel window went away */
-      server->appendStatusMessage(i18n("Kick"),i18n("You have kicked yourself from channel %1. (%2)").arg(getChannelName()).arg(reason));
+      server->appendStatusMessage(i18n("Kick"),i18n("You have kicked yourself from channel %1. (%2)").arg(getName()).arg(reason));
     }
     else
     {
       appendCommandMessage(i18n("Kick"),i18n("You have been kicked from the channel by %1. (%2)").arg(kicker).arg(reason));
       /* This message lets the user see what had happened after the channel window went away */
-      server->appendStatusMessage(i18n("Kick"),i18n("You have been kicked from channel %1 by %2. (%3)").arg(getChannelName()).arg(kicker).arg(reason));
+      server->appendStatusMessage(i18n("Kick"),i18n("You have been kicked from channel %1 by %2. (%3)").arg(getName()).arg(kicker).arg(reason));
     }
 
     delete this;
@@ -903,7 +904,7 @@ void Channel::openNickChangeDialog()
 {
   if(!nickChangeDialog)
   {
-    nickChangeDialog=new NickChangeDialog(channelPane,server->getNickname(),
+    nickChangeDialog=new NickChangeDialog(this,server->getNickname(),
                                           KonversationApplication::preferences.getNicknameList(),
                                           KonversationApplication::preferences.getNicknameSize());
     connect(nickChangeDialog,SIGNAL (closeDialog(QSize)),this,SLOT (closeNickChangeDialog(QSize)) );

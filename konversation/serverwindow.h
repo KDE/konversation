@@ -49,6 +49,7 @@
 #include "notifydialog.h"
 #include "ledtabwidget.h"
 #include "colorconfiguration.h"
+#include "chatwindow.h"
 
 class ServerWindow : public KMainWindow
 {
@@ -59,6 +60,7 @@ class ServerWindow : public KMainWindow
     ~ServerWindow();
 
     void appendToStatus(const QString& type,const QString& message);
+    void appendToFrontmost(const QString& type,const QString& message);
     void setServer(Server* server);
     void setLog(bool activated);
     LedTabWidget* getWindowContainer();
@@ -128,6 +130,7 @@ class ServerWindow : public KMainWindow
     LedTabWidget* windowContainer;
     QVBox* statusPane;
     IRCView* statusView;
+    ChatWindow* frontView;
 
     QPushButton* nicknameButton;
     IRCInput* statusInput;

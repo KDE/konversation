@@ -22,9 +22,9 @@
 #include <kdebug.h>
 
 #include "server.h"
-#include "serverwindow.h"
-#include "channel.h"
 #include "query.h"
+#include "channel.h"
+#include "serverwindow.h"
 #include "ircserversocket.h"
 #include "konversationapplication.h"
 
@@ -151,8 +151,7 @@ void Server::notifyResponse(QString nicksOnline)
   {
     if(notifyLowerCache.find(nickLowerList[index])==notifyLowerCache.end())
     {
-      /* TODO: Try to display notify message on the frontmost view */
-      appendStatusMessage(i18n("Notify"),i18n("%1 is online.").arg(nickList[index]));
+      serverWindow->appendToFrontmost(i18n("Notify"),i18n("%1 is online.").arg(nickList[index]));
     }
   }
 
@@ -161,8 +160,7 @@ void Server::notifyResponse(QString nicksOnline)
   {
     if(nickLowerList.find(notifyLowerCache[index])==nickLowerList.end())
     {
-      /* TODO: Try to display notify message on the frontmost view */
-      appendStatusMessage(i18n("Notify"),i18n("%1 went offline.").arg(notifyCache[index]));
+      serverWindow->appendToFrontmost(i18n("Notify"),i18n("%1 went offline.").arg(notifyCache[index]));
     }
   }
 
@@ -316,9 +314,9 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
   {
     query=new Query(serverWindow->getWindowContainer());
     query->setServer(this);
-    query->setQueryName(nickname);
+    query->setName(nickname);
     // Add new query pane to tabwidget
-    serverWindow->addView(query->getQueryPane(),0,nickname);
+    serverWindow->addView(query,0,nickname);
 
     connect(query,SIGNAL (newText(QWidget*)),serverWindow,SLOT (newText(QWidget*)) );
     connect(query,SIGNAL (closed(Query*)),this,SLOT (removeQuery(Query*)) );
@@ -334,7 +332,7 @@ QString Server::getNextQueryName()
   /* Check if completion position is out of range */
   if(completeQueryPosition>=queryList.count()) completeQueryPosition=0;
   /* return the next query in the list (for /msg completion) */
-  if(queryList.count()) return queryList.at(completeQueryPosition++)->getQueryName();
+  if(queryList.count()) return queryList.at(completeQueryPosition++)->getName();
 
   return QString::null;
 }
@@ -342,7 +340,7 @@ QString Server::getNextQueryName()
 void Server::removeQuery(Query* query)
 {
   /* Remove query page from container */
-  serverWindow->getWindowContainer()->removePage(query->getQueryPane());
+  serverWindow->getWindowContainer()->removePage(query);
 
   /* Traverse through list to find the query */
   Query* lookQuery=queryList.first();
@@ -380,10 +378,10 @@ void Server::joinChannel(QString& name,QString& hostmask)
   channel=new Channel(serverWindow->getWindowContainer());
 
   channel->setServer(this);
-  channel->setChannelName(name);
+  channel->setName(name);
   channel->setNickname(getNickname());
 
-  serverWindow->addView(channel->getChannelPane(),1,name);
+  serverWindow->addView(channel,1,name);
   channel->joinNickname(getNickname(),hostmask);
 //  serverWindow->showView(channel->getChannelPane());
   // endif
@@ -429,7 +427,7 @@ Channel* Server::getChannelByName(const char* name)
   Channel* lookChannel=channelList.first();
   while(lookChannel)
   {
-    if(lookChannel->getChannelName().lower()==wanted) return lookChannel;
+    if(lookChannel->getName().lower()==wanted) return lookChannel;
     lookChannel=channelList.next();
   }
   /* No channel by that name found? Return 0. Happens on first channel join */
@@ -447,7 +445,7 @@ Query* Server::getQueryByName(const char* name)
   Query* lookQuery=queryList.first();
   while(lookQuery)
   {
-    if(lookQuery->getQueryName().lower()==wanted) return lookQuery;
+    if(lookQuery->getName().lower()==wanted) return lookQuery;
     lookQuery=queryList.next();
   }
   /* No query by that name found? Must be a new query request. Return 0 */
@@ -498,7 +496,7 @@ void Server::removeNickFromServer(QString& nickname,QString& reason)
   Channel* channel=channelList.first();
   while(channel)
   {
-    removeNickFromChannel(channel->getChannelName(),nickname,reason,true);
+    removeNickFromChannel(channel->getName(),nickname,reason,true);
     channel=channelList.next();
   }
 }
@@ -518,10 +516,10 @@ void Server::renameNick(QString& nickname,QString& newNick)
   Query* query=queryList.first();
   while(query)
   {
-    if(query->getQueryName().lower()==nickname.lower())
+    if(query->getName().lower()==nickname.lower())
     {
-      query->setQueryName(newNick);
-      serverWindow->getWindowContainer()->changeTab(query->getQueryPane(),newNick);
+      query->setName(newNick);
+      serverWindow->getWindowContainer()->changeTab(query,newNick);
     }
     query=queryList.next();
   }
@@ -581,7 +579,7 @@ void Server::appendCommandMessageToQuery(const char* queryName,const char* comma
 
 void Server::appendStatusMessage(const char* type,const char* message)
 {
-  serverWindow->appendToStatus(type,message);
+  serverWindow->appendToFrontmost(type,message);
 }
 
 void Server::setNickname(const QString& newNickname)

@@ -33,11 +33,13 @@ class OutputFilter : public QObject
     ~OutputFilter();
 
     QString& parse(const QString& line,const QString& name);
-    bool isAction() { return action; };
 
-    QString& getOutput() { return output; };
-    QString& getServerOutput() { return toServer; };
-    QString& getType() { return type; };
+    bool isAction();
+    bool isCommand();
+
+    QString& getOutput();
+    QString& getServerOutput();
+    QString& getType();
 
   protected:
     QString output;
@@ -46,6 +48,7 @@ class OutputFilter : public QObject
     QString destination;
 
     bool action;
+    bool command;
     bool server;
 
     void parseMsg(QString parameter);

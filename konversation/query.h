@@ -22,8 +22,8 @@
 #ifndef QUERY_H
 #define QUERY_H
 
-#include "server.h"
 #include "chatwindow.h"
+#include "server.h"
 #include "ircinput.h"
 
 /*
@@ -40,10 +40,7 @@ class Query : public ChatWindow
     Query(QWidget* parent);
     ~Query();
 
-    QWidget* getQueryPane();
-    QString& getQueryName();
-
-    void setQueryName(const QString& newName);
+    void setName(const QString& newName);
     void setHostmask(const QString& newHostmask);
 
   signals:
@@ -62,7 +59,7 @@ class Query : public ChatWindow
     QString queryName;
     QString hostmask;
     QString buffer;
-    QVBox* queryPane;
+
     QLineEdit* queryHostmask;
     IRCInput* queryInput;
     QCheckBox* logCheckBox;

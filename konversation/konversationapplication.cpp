@@ -311,6 +311,11 @@ void KonversationApplication::openPrefsDialog()
   }
 }
 
+void KonversationApplication::syncPrefs()
+{
+  config->sync();
+}
+
 void KonversationApplication::closePrefsDialog()
 {
   delete prefsDialog;

@@ -17,7 +17,6 @@
 // Comment this #define to try a different text widget
 // #define TABLE_VERSION
 
-// #include <qlabel.h>
 #include <qstylesheet.h>
 #include <qtextcodec.h>
 #include <qstringlist.h>
@@ -30,32 +29,16 @@
 #include "ircview.h"
 #include "highlight.h"
 
-// IRCView::IRCView(QWidget* parent)
-//IRCView::IRCView(QWidget* parent) : QScrollView(parent)
 IRCView::IRCView(QWidget* parent) : KTextBrowser(parent)
 {
-//  grid=new QGrid(2,parent);
-
-
-// ScrollView stuff
-//  enableClipper(true);
-//  grid=new QGrid(2,this->viewport());
-//  addChild(grid);
-
-// QListView stuff
-//  addColumn("cerrNick");
-//  addColumn("Text");
-
   kdDebug() << "IRCView::IRCView()" << endl;
-  // setTextFormat(Qt::RichText);
+
   setVScrollBarMode(AlwaysOn);
   setHScrollBarMode(AlwaysOff);
 
   installEventFilter(this);
 
 #ifndef TABLE_VERSION
-//  setText("<qt><table cellpadding=\"0\" cellspacing=\"0\">\n"
-//          "<tr><td>WWWWWWWWWW</td><td></td></tr>\n");
   setText("<qt>\n");
 #endif
 }
@@ -85,20 +68,20 @@ void IRCView::replaceDecoration(QString& line,char decoration,char replacement)
 
 QString IRCView::filter(const QString& line,bool doHilight)
 {
-	QString linkMessageColor = KonversationApplication::preferences.getLinkMessageColor();
   QString filteredLine(line);
 
-  /* -1 to make next search work (pos+1) */
-  int pos=-1;
   /* Replace all & with &amp; */
-  while((pos=filteredLine.find('&',pos+1))!=-1) filteredLine.insert(pos+1,"amp;");
+  filteredLine.replace(QRegExp("&"),"&amp;");
   /* Replace all < with &lt; */
-  while((pos=filteredLine.find('<'))!=-1) filteredLine.replace(pos,1,"&lt;");
+  filteredLine.replace(QRegExp("\\<"),"&lt;");
   /* Replace all > with &gt; */
-  while((pos=filteredLine.find('>'))!=-1) filteredLine.replace(pos,1,"&gt;");
+  filteredLine.replace(QRegExp("\\>"),"&gt;");
   /* Replace all 0x0f (reset color) with \0x031,0 */
-  /* TODO: place default fore/background colors here */
-  while((pos=filteredLine.find('\017'))!=-1) filteredLine.replace(pos,1,"\0031,0");
+  filteredLine.replace(QRegExp("\017"),"\0031,0;");
+//  while((pos=filteredLine.find('\017'))!=-1) filteredLine.replace(pos,1,"\0031,0");
+
+  /* replace \003 codes with rich text color codes */
+  /* TODO: use QRegExp for this */
 
   /* How many chars to replace? */
   int replace;
@@ -106,15 +89,18 @@ QString IRCView::filter(const QString& line,bool doHilight)
   QChar colChar;
   QString colorString;
 
+  int pos;
   while((pos=filteredLine.find('\003'))!=-1)
   {
     int digitPos=pos;
-    int foregroundColor=1; /* TODO: replace with default foreground */
-    int backgroundColor=0; /* TODO: replace with default background */
+    int foregroundColor=1;
+    int backgroundColor=0;
+
+    /* TODO: make these configurable */
     const char* colorCodes[]={"ffffff","000000","000080","008000","ff0000","a52a2a","800080","ff8000",
                               "808000","00ff00","008080","00ffff","0000ff","ffc0cb","a0a0a0","c0c0c0"};
-    /* remove \003 */
 
+    /* remove leading \003 */
     filteredLine.replace(pos,1,"");
     replace=0;
     colorString="";
@@ -197,17 +183,58 @@ QString IRCView::filter(const QString& line,bool doHilight)
     }
   }
 
-  /* URL Catcher matches */
+  /* URL Catcher */
+  QString linkMessageColor = KonversationApplication::preferences.getLinkMessageColor();
+
+  QRegExp pattern("((http://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
+                  "([\\.@%a-z_-])+\\.[a-z]{2,}(/[^)>\"'!\\s]*)?|"
+                  /* eDonkey2000 links need special treatment */
+                  "ed2k://\\|([^|]+\\|){4})");
+
+  pos=0;
+  while(pattern.search(filteredLine,pos)!=-1)
+  {
+    /* Remember where we found the url */
+    pos=pattern.pos();
+
+    /* Extract url */
+    QString url=pattern.capturedTexts()[0];
+    QString href(url);
+
+    /* clean up href for browser */
+    if(href.startsWith("www.")) href="http://"+href;
+    else if(href.startsWith("ftp.")) href="ftp://"+href;
+
+    /* Fix &amp; back to & in href ... kludgy but I don't know a better way. */
+    href.replace(QRegExp("&amp;"),"&");
+    /* Replace all spaces with %20 in href */
+    href.replace(QRegExp(" "),"%20");
+    /* Build rich text link */
+    QString link("<font color=\"#"+linkMessageColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
+
+    /* replace found url with built link */
+    filteredLine.replace(pos,url.length(),link);
+    /* next search begins right after the link */
+    pos+=link.length();
+    /* tell the program that we have found a new url */
+    emit newURL(url);
+  }
+
+  /*
+
+***** Old URL Catcher. Remove when new routine proves itself stable *****
+
+  QString urlString=filteredLine;
+
   QStringList matchList;
   matchList.append("http://");
   matchList.append("www.");
   matchList.append("ftp://");
+  matchList.append("ftp.");
   matchList.append("news://");
   matchList.append("nntp://");
   matchList.append("gopher://");
   matchList.append("ed2k://");
-
-  QString urlString=filteredLine;
 
   bool foundSomething;
 
@@ -228,22 +255,23 @@ QString IRCView::filter(const QString& line,bool doHilight)
 
         QString url=urlString.mid(pos,len);
 
-        /* Try to clean up URLs by cutting off rightmost "junk" */
+        // Try to clean up URLs by cutting off rightmost "junk"
         QRegExp smartChars("[().,>=\"'-]$");
         while(url.find(smartChars)!=-1) url=url.left(url.length()-1);
 
-        /* Remove URL from search string*/
+        // Remove URL from search string
         urlString.replace(pos,url.length(),"");
 
         QString link="<font color=\"#"+linkMessageColor+"\"><u><a href=\"";
         if(url.startsWith("www")) link+="http://";
+        else if(url.startsWith("ftp")) link+="ftp://";
 
-        /* Fix &amp; back to & in link ... kludgy but I don't know a better way. */
+        // Fix &amp; back to & in link ... kludgy but I don't know a better way.
         link+=url;
         while((pos=link.find("&amp;"))!=-1) link.replace(pos,5,"&");
 
         link.append("\">"+url+"</a></u></font>");
-        /* Replace link in original line */
+        // Replace link in original line
         pos=filteredLine.find(url);
         filteredLine.replace(pos,url.length(),link);
 
@@ -253,7 +281,7 @@ QString IRCView::filter(const QString& line,bool doHilight)
       }
     }
   } while(foundSomething);
-
+*/
   /* Replace multiple Spaces with "<space>&nbsp;" */
   do
   {
@@ -261,7 +289,6 @@ QString IRCView::filter(const QString& line,bool doHilight)
     if(pos!=-1) filteredLine.replace(pos+1,1,"&nbsp;");
   } while(pos!=-1);
 
-//  cout << filteredLine << endl;
   return filteredLine;
 }
 
@@ -360,14 +387,6 @@ void IRCView::doAppend(QString line)
 {
   /* Add line to buffer */
   buffer+=line;
-/*
-//  QLabel* newLine=new QLabel(line.left(line.length()-1),this->grid);
-  QTextBrowser* x=new QTextBrowser(this->grid);
-  x->setText("X");
-  x=new QTextBrowser(this->grid);
-  x->setText(line.left(line.length()-1));
-//  QListViewItem* newLine=new QListViewItem(this,line.left(line.length()-1));
-*/
   emit newText();
 
 #ifdef TABLE_VERSION
@@ -375,15 +394,16 @@ void IRCView::doAppend(QString line)
 #else
   KTextBrowser::append(line);
 #endif
-  ensureVisible(0,contentsHeight()); // contentsHeight() seems to return wrong values when the widget is hidden
+  // contentsHeight() seems to return wrong values when the widget is hidden
+  ensureVisible(0,contentsHeight());
 }
 
+/* Workaround to scroll to the end of the TextView when it's shown */
 void IRCView::showEvent(QShowEvent* event)
 {
   /* Suppress Compiler Warning */
   event->type();
-  /* Workaround to scroll to the end of the TextView when it's shown */
-//  setText(buffer);
+
 #ifdef TABLE_VERSION
   setText("<qt><table cellpadding=\"0\" cellspacing=\"0\">"+buffer+"</table></qt>");
 #endif

@@ -138,6 +138,11 @@ void Preferences::setHilightList(QPtrList<Highlight> newList)
   kdDebug() << "Preferences::setHilightList(QPtrList<Highlight> newList)" << endl;
   hilightList.clear();
   hilightList=newList;
+  for(unsigned int index=0;index<newList.count();index++)
+  {
+    kdDebug() << index << " " << newList.at(index)->getText() <<
+                          " " << newList.at(index)->getColor().name() << endl;
+  }
 }
 
 void Preferences::addHilight(QString newHilight,QColor newColor)

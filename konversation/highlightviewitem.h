@@ -40,6 +40,8 @@ class HighlightViewItem : public KListViewItem
 		void	setColor(QColor passed_itemColor)	{itemColor = passed_itemColor;};
 		void	setID(int passed_itemID)					{itemID = passed_itemID;};
 
+    HighlightViewItem* itemBelow();
+
 	private:
 		QColor			itemColor;
 		QColorGroup itemColorGroup;

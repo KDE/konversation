@@ -40,6 +40,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
 
   action=false;
   server=false;
+  command=false;
   /* Action? */
   if(line.startsWith("/me ") && destination!="")
   {
@@ -96,6 +97,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
     toServer=inputLine;
     output=inputLine;
     type="Raw";
+    command=true;
   }
 
   return output;
@@ -127,6 +129,7 @@ void OutputFilter::parseJoin(QString channelName)
   {
     type=i18n("Usage");
     output=i18n("/JOIN <channel>");
+    command=true;
   }
   else
     toServer="JOIN "+channelName;
@@ -148,6 +151,7 @@ void OutputFilter::parseKick(QString parameter)
   {
     type=i18n("Error");
     output=i18n("/KICK does only work from within channels.");
+    command=true;
   }
 }
 
@@ -162,6 +166,7 @@ void OutputFilter::parsePart(QString parameter)
     {
       type=i18n("Error");
       output=i18n("/PART without parameters works only from within a channel.");
+      command=true;
     }
   }
   else
@@ -185,6 +190,7 @@ void OutputFilter::parsePart(QString parameter)
       {
         type=i18n("Error");
         output=i18n("/PART without channel name works only from within a channel.");
+        command=true;
       }
     }
   }
@@ -202,6 +208,7 @@ void OutputFilter::parseTopic(QString parameter)
     {
       type=i18n("Error");
       output=i18n("/TOPIC without parameters works only from within a channel.");
+      command=true;
     }
   }
   else
@@ -226,6 +233,7 @@ void OutputFilter::parseTopic(QString parameter)
       {
         type=i18n("Error");
         output=i18n("/TOPIC without channel name works only from within a channel.");
+        command=true;
       }
     }
   }
@@ -256,6 +264,7 @@ void OutputFilter::parseCtcp(QString parameter)
   
   output=i18n("Sending CTCP-%1 request to %2").arg(message).arg(recipient);
   type="CTCP";
+  command=true;
 }
 
 void OutputFilter::parseQuery(QString parameter)
@@ -299,3 +308,12 @@ void OutputFilter::changeMode(QString parameter,char mode,char giveTake)
     }
   }
 }
+
+/* Accessors */
+
+bool OutputFilter::isAction() { return action; };
+bool OutputFilter::isCommand() { return command; };
+
+QString& OutputFilter::getOutput() { return output; };
+QString& OutputFilter::getServerOutput() { return toServer; };
+QString& OutputFilter::getType() { return type; };

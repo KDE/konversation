@@ -327,7 +327,6 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   else if(command==RPL_ISON)
   {
     /* TODO: implement proper notify handling */
-  //  if(trailing!="") server->appendStatusMessage(i18n("Notify"),trailing);
     /* Tell server to start the next notify timer round */
     emit notifyResponse(trailing);
   }
@@ -335,7 +334,7 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   {
     parseModes(prefix,parameterList);
   }
-  /* All yet unknown messages go into the status window unaltered */
+  /* All yet unknown messages go into the frontmost window unaltered */
   else
   {
     server->appendStatusMessage(command,parameterList.join(" ")+" "+trailing);
