@@ -26,8 +26,8 @@
 #define VERSION 0.4
 #endif
 
-#include "server.h"
 #include "inputfilter.h"
+#include "server.h"
 #include "errorcodes.h"
 
 InputFilter::InputFilter()

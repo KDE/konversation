@@ -6,7 +6,7 @@
 */
 
 /*
-  server.h  -  description
+  server.h  -  Server Class to handle connection to the IRC server
   begin:     Sun Jan 20 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -20,16 +20,14 @@
 #include <qtimer.h>
 #include <qdatetime.h>
 
-#ifndef SERVER_H
-#define SERVER_H
-
 #include "inputfilter.h"
 #include "outputfilter.h"
 #include "ircserversocket.h"
-#include "server.h"
+
+#ifndef SERVER_H
+#define SERVER_H
 
 /*
-  Server Class to handle connection to the IRC server
   @author Dario Abatianni
 */
 
@@ -90,6 +88,7 @@ class Server : public QObject
 
     QString getNextQueryName();
     ServerWindow* getServerWindow();
+    void setServerWindow(ServerWindow* newWindow); // don't use this other than in ServerWindow!
 
     void appendToQuery(const char* queryName,const char* message);
     void appendActionToQuery(const char* queryName,const char* message);

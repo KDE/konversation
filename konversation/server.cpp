@@ -963,3 +963,7 @@ ServerWindow* Server::getServerWindow()
   return serverWindow;
 }
 
+void Server::setServerWindow(ServerWindow* newWindow)
+{
+  serverWindow=newWindow;
+}

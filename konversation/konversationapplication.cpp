@@ -49,12 +49,14 @@ KonversationApplication::~KonversationApplication()
   kdDebug() << "KonversationApplication::~KonversationApplication()" << endl;
   saveOptions();
 
-/*  kdDebug() << "Deleting Server list ..." << endl;
+/*
+  kdDebug() << "Deleting Server list ..." << endl;
   while(serverList.count())
   {
     kdDebug() << "deleted" << endl;
     delete serverList.first();
-  } */
+  }
+*/
 }
 
 void KonversationApplication::connectToServer(int id)

@@ -340,13 +340,17 @@ bool ServerWindow::queryExit()
   kdDebug() << "ServerWindow::queryExit()" << endl;
   QString command=filter.parse(server->getNickname(),"/quit","");
   server->queue(filter.getServerOutput());
+
   saveOptions();
+
+  server->setServerWindow(0);
   return true;
 }
 
 void ServerWindow::quitProgram()
 {
-  /* Calls queryExit() */
+  kdDebug() << "ServerWindow::quitProgram()" << endl;
+  // will call queryClose()
   close();
 }
 
