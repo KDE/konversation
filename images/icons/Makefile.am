@@ -1,2 +1,1 @@
-konversationicondir = $(kde_icondir)
-konversationicon_ICON = AUTO
+KDE_ICON = AUTO
