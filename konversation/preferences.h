@@ -16,7 +16,7 @@
 #define PREFERENCES_H
 
 #include <qobject.h>
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qsize.h>
 #include <qvaluelist.h>
 #include <qstringlist.h>

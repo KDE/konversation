@@ -12,7 +12,7 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <qapp.h>
+#include <qapplication.h>
 #include <qevent.h>
 
 #include <kdebug.h>

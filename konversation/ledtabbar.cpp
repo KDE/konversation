@@ -16,7 +16,7 @@
 #include <qpainter.h>
 #include <qstyle.h>
 #include <qcursor.h>
-#include <qapp.h>
+#include <qapplication.h>
 
 #include <kdebug.h>
 #include <klocale.h>
