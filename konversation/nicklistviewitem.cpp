@@ -183,7 +183,7 @@ void NickListViewItem::paintCell(QPainter * p, const QColorGroup & cg, int colum
     cg2.setColor(QColorGroup::Text, kapp->palette().disabled().text());
   }
 
-  QListViewItem::paintCell(p,cg2,column,width,align);
+  KListViewItem::paintCell(p,cg2,column,width,align);
 }
 
 int NickListViewItem::getFlags() const
