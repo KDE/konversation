@@ -999,8 +999,7 @@ void Server::incoming()
       inputBuffer << QString::fromUtf8(qcsBufferLines.front());
     else
     {
-      // set channel encoding if specified
-      // {
+      // BEGIN set channel encoding if specified
       QString senderNick;
       bool isServerMessage = false;
       QString channelKey;
@@ -1008,19 +1007,19 @@ void Server::incoming()
       // pre-parse to know which channel the message belongs to
       QStringList lineSplit = QStringList::split(" ",codec->toUnicode(qcsBufferLines.front()));
       
-      if(lineSplit.count() >= 1)  // for safe
-	{
-	  if(lineSplit[0][0] == ':')
-	    {
-	      if(!lineSplit[0].contains('!'))
-		isServerMessage = true;
-	      else
-		senderNick = lineSplit[0].mid(1, lineSplit[0].find('!')-1);
-	      lineSplit.pop_front();  // remove prefix
-	    }
-	}
+      if(lineSplit.count() >= 1)
+      {
+        if(lineSplit[0][0] == ':')
+        {
+          if(!lineSplit[0].contains('!'))
+            isServerMessage = true;
+          else
+            senderNick = lineSplit[0].mid(1, lineSplit[0].find('!')-1);
+          lineSplit.pop_front();  // remove prefix
+        }
+      }
 
-      // set channel key
+      // BEGIN pre-parse to know where the message belongs to
       QString command = lineSplit[0].lower();
       if(isServerMessage)
       {
@@ -1040,7 +1039,9 @@ void Server::incoming()
           if( ( command == "privmsg" ||
                 command == "notice"  ) &&
               lineSplit[1] == getNickname() )
+          {
             channelKey = senderNick;
+          }
           // channel message
           else if( command == "privmsg" ||
                    command == "notice"  ||
@@ -1048,24 +1049,28 @@ void Server::incoming()
                    command == "kick"    ||
                    command == "part"    ||
                    command == "topic"   )
+          {
             channelKey = lineSplit[1];
+          }
         }
       }
+      // END pre-parse to know where the message belongs to
       
       // check setting
       QString channelEncoding;
-      if(!channelKey.isEmpty()) {
+      if(!channelKey.isEmpty())
+      {
         channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), channelKey);
       }
-      // }
+      // END set channel encoding if specified
 
       if(!channelEncoding.isEmpty())
         codec = Konversation::IRCCharsets::self()->codecForName(channelEncoding);
-
+      
       // if channel encoding is utf-8 and the string is definitely not utf-8
       // then try latin-1
       if ( !isUtf8 && codec->mibEnum() == 106 )
-      	codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
+        codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
 
       inputBuffer << codec->toUnicode(qcsBufferLines.front());
     }
