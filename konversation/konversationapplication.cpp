@@ -571,7 +571,7 @@ void KonversationApplication::readOptions()
       if(!tmp[4].isEmpty()) {
         QStringList tmp2 = QStringList::split(" ", tmp[4], false);
         QStringList tmp3 = QStringList::split(" ", tmp[5], true);
-        for(int i = 0; i < tmp2.count(); i++) {
+        for(uint i = 0; i < tmp2.count(); i++) {
           Konversation::ChannelSettings channel;
           channel.setName(tmp2[i]);
 
