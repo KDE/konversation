@@ -17,21 +17,21 @@
 #ifndef PREFSPAGELOG_H
 #define PREFSPAGELOG_H
 
-#include <qcheckbox.h>
-
-#include <klineedit.h>
-
 #include "prefspage.h"
 
 /*
  *@author Dario Abatianni
 */
 
+class QCheckBox;
+class QLabel;
+class KLineEdit;
+
 class PrefsPageLog : public PrefsPage
 {
   Q_OBJECT
 
-  public: 
+  public:
     PrefsPageLog(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageLog();
 
@@ -42,9 +42,12 @@ class PrefsPageLog : public PrefsPage
     void logPathInputChanged(const QString& path);
 
   protected:
+    void updateLogWidgets(bool state);
+
     QCheckBox* useLog;
     QCheckBox* lowerLog;
     QCheckBox* logFollowsNick;
+    QLabel* logPathLabel;
     KLineEdit* logPathInput;
 
 };

@@ -29,6 +29,8 @@
   @author Dario Abatianni
 */
 
+class QHGroupBox;
+
 class PrefsPageAppearance : public PrefsPage
 {
   Q_OBJECT
@@ -87,6 +89,7 @@ class PrefsPageAppearance : public PrefsPage
     QCheckBox* useParagraphSpacingCheck;
     QSpinBox* paragraphSpacingSpin;
 
+    QHGroupBox* sortOrderGroup;
     KListView* sortingOrder;
 };
 

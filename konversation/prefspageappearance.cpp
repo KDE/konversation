@@ -157,12 +157,14 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   // Sorting
   QVGroupBox* sortOptionsGroup=new QVGroupBox(i18n("Sort options"),parentFrame,"sort_options_group");
-  QHGroupBox* sortOrderGroup=new QHGroupBox(i18n("Sorting order"),parentFrame,"sort_order_group");
+  sortOrderGroup=new QHGroupBox(i18n("Sorting order"),parentFrame,"sort_order_group");
 
   QCheckBox* sortByStatusCheck=new QCheckBox(i18n("Sort by user status"),sortOptionsGroup,"sort_by_status_check");
   QCheckBox* sortCaseInsensitiveCheck=new QCheckBox(i18n("Sort case insensitive"),sortOptionsGroup,"sort_case_insensitive_check");
 
   sortByStatusCheck->setChecked(preferences->getSortByStatus());
+  sortOrderGroup->setEnabled(preferences->getSortByStatus());
+
   sortCaseInsensitiveCheck->setChecked(preferences->getSortCaseInsensitive());
 
   sortingOrder=new KListView(sortOrderGroup,"sorting_order_view");
@@ -367,6 +369,7 @@ void PrefsPageAppearance::paragraphSpacingChanged(int newSpacing)
 void PrefsPageAppearance::sortByStatusChanged(int state)
 {
   preferences->setSortByStatus(state==2);
+  sortOrderGroup->setEnabled(state==2);
 }
 
 void PrefsPageAppearance::sortCaseInsensitiveChanged(int state)

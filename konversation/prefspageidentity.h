@@ -56,6 +56,7 @@ class PrefsPageIdentity : public PrefsPage
     void showAwayMessageChanged(int state);
     void awayMessageChanged(const QString& newMessage);
     void unAwayMessageChanged(const QString& newMessage);
+    void updateAwayWidgets(bool state);
 
     void updateIdentity(int number);
 //    void renameIdentity(const QString& newName);
@@ -87,9 +88,11 @@ class PrefsPageIdentity : public PrefsPage
     KLineEdit* kickInput;
 
     QCheckBox* showAwayMessageCheck;
+    QLabel* awayLabel;
+    QLabel* unAwayLabel;
     KLineEdit* awayInput;
     KLineEdit* unAwayInput;
-    
+
     QPushButton* removeIdentityButton;
 };
 

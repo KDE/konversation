@@ -63,10 +63,10 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
 
   showAwayMessageCheck=new QCheckBox(i18n("Show away messages"),parentFrame,"away_message_check");
 
-  QLabel* awayLabel=new QLabel(i18n("Away message:"),parentFrame);
+  awayLabel=new QLabel(i18n("Away message:"),parentFrame);
   awayInput=new KLineEdit(parentFrame);
 
-  QLabel* unAwayLabel=new QLabel(i18n("Return message:"),parentFrame);
+  unAwayLabel=new QLabel(i18n("Return message:"),parentFrame);
   unAwayInput=new KLineEdit(parentFrame);
 
   defaultText=new QLabel(i18n("<qt>This is the default identity used for all servers "
@@ -219,6 +219,7 @@ void PrefsPageIdentity::kickReasonChanged(const QString& newReason)
 void PrefsPageIdentity::showAwayMessageChanged(int state)
 {
   identity->setShowAwayMessage(state==2);
+  updateAwayWidgets(state==2);
 }
 
 void PrefsPageIdentity::awayMessageChanged(const QString& newMessage)
@@ -231,13 +232,21 @@ void PrefsPageIdentity::unAwayMessageChanged(const QString& newMessage)
   identity->setReturnMessage(newMessage);
 }
 
+void PrefsPageIdentity::updateAwayWidgets(bool enabled)
+{
+  awayLabel->setEnabled(enabled);
+  awayInput->setEnabled(enabled);
+  unAwayLabel->setEnabled(enabled);
+  unAwayInput->setEnabled(enabled);
+}
+
 void PrefsPageIdentity::updateIdentity(int number)
 {
   identity=identities.at(number);
 
   if(number==0) defaultText->show();
   else defaultText->hide();
-  
+
   // TODO: Enable the button when all's fine
   removeIdentityButton->setEnabled((number!=0));
 //  removeIdentityButton->setEnabled(false);
@@ -259,6 +268,8 @@ void PrefsPageIdentity::updateIdentity(int number)
   showAwayMessageCheck->setChecked(identity->getShowAwayMessage());
   awayInput->setText(identity->getAwayMessage());
   unAwayInput->setText(identity->getReturnMessage());
+
+  updateAwayWidgets(identity->getShowAwayMessage());
 }
 
 // void PrefsPageIdentity::renameIdentity(const QString& newName)

@@ -17,6 +17,8 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qhbox.h>
+#include <qcheckbox.h>
+#include <klineedit.h>
 
 #include "prefspagelog.h"
 
@@ -31,12 +33,14 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   logFollowsNick=new QCheckBox(i18n("Follow nick changes"),parentFrame,"follow_nickchanges_checkbox");
 
   QHBox* logPathBox=new QHBox(parentFrame);
-  new QLabel(i18n("Logfile path:"),logPathBox);
+  logPathLabel=new QLabel(i18n("Logfile path:"),logPathBox);
   logPathInput=new KLineEdit(preferences->getLogPath(),logPathBox,"log_path_input");
 
   useLog->setChecked(preferences->getLog());
   lowerLog->setChecked(preferences->getLowerLog());
   logFollowsNick->setChecked(preferences->getLogFollowsNick());
+
+  updateLogWidgets(preferences->getLog());
 
   QHBox* logSpacer=new QHBox(parentFrame);
 
@@ -60,8 +64,6 @@ PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
   connect(lowerLog,SIGNAL (stateChanged(int)),this,SLOT (lowerLogChanged(int)) );
   connect(logFollowsNick,SIGNAL (stateChanged(int)),this,SLOT (logFollowsNickChanged(int)) );
   connect(logPathInput,SIGNAL (textChanged(const QString&)),this,SLOT (logPathInputChanged(const QString&)) );
-
-  useLogChanged(useLog->state());
 }
 
 PrefsPageLog::~PrefsPageLog()
@@ -71,10 +73,15 @@ PrefsPageLog::~PrefsPageLog()
 void PrefsPageLog::useLogChanged(int state)
 {
   preferences->setLog(state==2);
+  updateLogWidgets(state==2);
+}
 
-  lowerLog->setEnabled(state==2);
-  logFollowsNick->setEnabled(state==2);
-  logPathInput->setEnabled(state==2);
+void PrefsPageLog::updateLogWidgets(bool enable)
+{
+  lowerLog->setEnabled(enable);
+  logFollowsNick->setEnabled(enable);
+  logPathLabel->setEnabled(enable);
+  logPathInput->setEnabled(enable);
 }
 
 void PrefsPageLog::lowerLogChanged(int state)
