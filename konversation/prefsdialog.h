@@ -38,40 +38,21 @@ class PrefsDialog : public KDialogBase
     ~PrefsDialog();
 
   signals:
-    void connectToServer(int);
+    void connectToServer(int id);
     void prefsChanged();
     void closed();
 
   protected slots:
-    void connectClicked();
-    void newServer();
-    void editServer();
-    void removeServer();
-    void serverSelected(QListViewItem* item);
-    void serverDoubleClicked(QListViewItem* item);
-    void updateServer(const QString&,const QString&,const QString&,const QString&,const QString&,const QString&);
-    void updateServerProperty(QListViewItem*,const QString&,int);
-    void realNameChanged(const QString& newRealName);
-    void loginChanged(const QString& newlogin);
-    void nick0Changed(const QString& newNick);
-    void nick1Changed(const QString& newNick);
-    void nick2Changed(const QString& newNick);
-    void nick3Changed(const QString& newNick);
+    void connectRequest(int id);
 
     void slotOk();
     void slotApply();
     void slotCancel();
 
   protected:
-    QTabWidget* prefsTabs;
-    QPushButton* connectButton;
-    QPushButton* newServerButton;
-    QPushButton* editServerButton;
-    QPushButton* removeServerButton;
-    KListView* serverListView;
     Preferences* preferences;
 
-    void setPreferences(Preferences* newPrefs) { preferences=newPrefs; };
+    void setPreferences(Preferences* newPrefs);
 };
 
 #endif
