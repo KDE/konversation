@@ -83,11 +83,11 @@ IgnoreDialog::IgnoreDialog(QPtrList<Ignore> newIgnoreList,QSize newSize):
   c=new IgnoreCheckBox(i18n("Exception"),flagBox,Ignore::Exception);
   checkList.append(c);
 
-  QLabel* note=new QLabel(i18n("<qt>Please note that the ignore function is not yet operational!</qt>"),page);
+//  QLabel* note=new QLabel(i18n("<qt>Please note that the ignore function is not yet operational!</qt>"),page);
 
   dialogLayout->addWidget(listBox);
   dialogLayout->addWidget(flagBox);
-  dialogLayout->addWidget(note);
+//  dialogLayout->addWidget(note);
 
   setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
   setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));

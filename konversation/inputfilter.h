@@ -19,6 +19,8 @@
 
 #include <qobject.h>
 
+#include "ignore.h"
+
 /*
   @author Dario Abatianni
 */
@@ -48,6 +50,7 @@ class InputFilter : public QObject
     void parseModes(QString sourceNick,QStringList parameterList);
 
     bool isAChannel(QString check);
+    bool isIgnore(QString pattern,Ignore::Type type);
 
     Server* server;
     bool welcomeSent;

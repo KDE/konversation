@@ -16,6 +16,7 @@
 
 #include <qstringlist.h>
 #include <qdatetime.h>
+#include <qregexp.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -29,6 +30,7 @@
 #include "inputfilter.h"
 #include "server.h"
 #include "errorcodes.h"
+#include "konversationapplication.h"
 
 InputFilter::InputFilter()
 {
@@ -49,63 +51,63 @@ void InputFilter::setServer(Server* newServer)
 void InputFilter::parseLine(QString newLine)
 {
   QString trailing="";
-  /* Remove white spaces at the end and beginning */
+  // Remove white spaces at the end and beginning
   newLine=newLine.stripWhiteSpace();
-  /* Find end of middle parameter list */
+  // Find end of middle parameter list
   int pos=newLine.find(" :");
-  /* Was there a trailing parameter? */
+  // Was there a trailing parameter?
   if(pos!=-1)
   {
-    /* Copy trailing parameter */
+    // Copy trailing parameter
     trailing=newLine.mid(pos+2);
-    /* Cut trailing parameter from string */
+    // Cut trailing parameter from string
     newLine=newLine.left(pos);
   }
-  /* Remove all unneccessary white spaces to make parsing easier */
+  // Remove all unneccessary white spaces to make parsing easier
   QString incomingLine=newLine.simplifyWhiteSpace();
 
   QString prefix="";
-  /* Do we have a prefix? */
+  // Do we have a prefix?
   if(incomingLine[0]==':')
   {
-    /* Find end of prefix */
+    // Find end of prefix
     pos=incomingLine.find(' ');
-    /* Copy prefix */
+    // Copy prefix
     prefix=incomingLine.mid(1,pos-1);
-    /* Remove prefix from line */
+    // Remove prefix from line
     incomingLine=incomingLine.mid(pos+1);
   }
 
-  /* Find end of command */
+  // Find end of command
   pos=incomingLine.find(' ');
-  /* Copy command (all lowercase to make parsing easier) */
+  // Copy command (all lowercase to make parsing easier)
   QString command=incomingLine.left(pos).lower();
-  /* Are there parameters left in the string? */
+  // Are there parameters left in the string?
   QStringList parameterList;
   if(pos!=-1)
   {
-    /* Cut out the command */
+    // Cut out the command
     incomingLine=incomingLine.mid(pos+1);
-    /* The rest of the string will be the parameter list */
+    // The rest of the string will be the parameter list
     parameterList=QStringList::split(" ",incomingLine);
   }
-  /* Server command, if no "!" was found in prefix */
+  // Server command, if no "!" was found in prefix
   if(prefix.find('!')==-1 && prefix!=server->getNickname()) parseServerCommand(prefix,command,parameterList,trailing);
   else parseClientCommand(prefix,command,parameterList,trailing);
 }
 
 void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringList& parameterList,QString& trailing)
 {
-  /* Extract nickname fron prefix */
+  // Extract nickname fron prefix
   QString sourceNick=prefix.left(prefix.find("!"));
   QString sourceHostmask=prefix.mid(prefix.find("!")+1);
 
   if(command=="privmsg")
   {
-    /* Channel message */
+    // Channel message
     if(isAChannel(parameterList[0]))
     {
-      /* CTCP message? */
+      // CTCP message?
       if(trailing[0]==1)
       {
         // cut out the CTCP command
@@ -116,17 +118,28 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
 
         // If it was a ctcp action, build an action string
         if(ctcpCommand=="action")
-          server->appendActionToChannel(parameterList[0],sourceNick,ctcpArgument);
+        {
+          if(!isIgnore(prefix,Ignore::Channel))
+            server->appendActionToChannel(parameterList[0],sourceNick,ctcpArgument);
+        }
         // No known CTCP request, give a general message
-        else server->appendServerMessageToChannel(parameterList[0],"CTCP",i18n("Received unknown CTCP-%1 request from %2 to Channel %3").arg(ctcp).arg(sourceNick).arg(parameterList[0]));
+        else
+        {
+          if(!isIgnore(prefix,Ignore::CTCP))
+            server->appendServerMessageToChannel(parameterList[0],"CTCP",i18n("Received unknown CTCP-%1 request from %2 to Channel %3").arg(ctcp).arg(sourceNick).arg(parameterList[0]));
+        }
       }
       // No CTCP, so it's an ordinary channel message
-      else server->appendToChannel(parameterList[0],sourceNick,trailing);
+      else
+      {
+        if(!isIgnore(prefix,Ignore::Channel))
+          server->appendToChannel(parameterList[0],sourceNick,trailing);
+      }
     }
     // No channel message
     else
     {
-      /* CTCP message? */
+      // CTCP message?
       if(trailing[0]==1)
       {
         // cut out the CTCP command
@@ -138,79 +151,101 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
         // If it was a ctcp action, build an action string
         if(ctcpCommand=="action")
         {
-          // Check if this nick is already in a query with us
-          Query* query=server->getQueryByName(sourceNick);
-          // If not, create a new one
-          if(!query) server->addQuery(sourceNick,sourceHostmask);
-          // else remember hostmask for this nick, it could have changed
-          else server->addHostmaskToNick(sourceNick,sourceHostmask);
+          // Check if we ignore queries from this nick
+          if(!isIgnore(prefix,Ignore::Channel))
+          {
+            // Check if this nick is already in a query with us
+            Query* query=server->getQueryByName(sourceNick);
+            // If not, create a new one
+            if(!query) server->addQuery(sourceNick,sourceHostmask);
+            // else remember hostmask for this nick, it could have changed
+            else server->addHostmaskToNick(sourceNick,sourceHostmask);
 
-          server->appendActionToQuery(sourceNick,ctcpArgument);
-        }
-        // Maybe it was a version request, so act appropriately
-        else if(ctcpCommand=="version")
-        {
-          server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1.").arg(sourceNick));
-          server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002 Dario Abatianni and Matthias Gierlings").arg(VERSION));
+            server->appendActionToQuery(sourceNick,ctcpArgument);
+          }
         }
         // DCC request?
         else if(ctcpCommand=="dcc")
         {
-          // Extract DCC type and argument list
-          QString dccType=ctcpArgument.lower().section(' ',0,0);
-          QStringList dccArgument=QStringList::split(' ',ctcpArgument.mid(ctcpArgument.find(" ")+1).lower());
+          if(!isIgnore(prefix,Ignore::DCC))
+          {
+            // Extract DCC type and argument list
+            QString dccType=ctcpArgument.lower().section(' ',0,0);
+            QStringList dccArgument=QStringList::split(' ',ctcpArgument.mid(ctcpArgument.find(" ")+1).lower());
 
-          // Incoming file?
-          if(dccType=="send")
-          {
-            emit addDccGet(sourceNick,dccArgument);
+            // Incoming file?
+            if(dccType=="send")
+            {
+              emit addDccGet(sourceNick,dccArgument);
+            }
+            // Incoming file that shall be resumed?
+            else if(dccType=="accept")
+              {
+              emit resumeDccGetTransfer(sourceNick,dccArgument);
+            }
+            // Remote client wants our sent file resumed
+            else if(dccType=="resume")
+            {
+              emit resumeDccSendTransfer(sourceNick,dccArgument);
+            }
           }
-          // Incoming file that shall be resumed?
-          else if(dccType=="accept")
+        }
+        // Maybe it was a version request, so act appropriately
+        else if(ctcpCommand=="version")
+        {
+          if(!isIgnore(prefix,Ignore::CTCP))
           {
-            emit resumeDccGetTransfer(sourceNick,dccArgument);
-          }
-          // Remote client wants our sent file resumed
-          else if(dccType=="resume")
-          {
-            emit resumeDccSendTransfer(sourceNick,dccArgument);
+            server->appendStatusMessage(i18n("CTCP"),i18n("Received Version request from %1.").arg(sourceNick));
+            server->ctcpReply(sourceNick,QString("VERSION Konversation %1 (C)2002 Dario Abatianni and Matthias Gierlings").arg(VERSION));
           }
         }
         // No known CTCP request, give a general message
-        else server->appendStatusMessage(i18n("CTCP"),i18n("Received unknown CTCP-%1 request from %2").arg(ctcp).arg(sourceNick));
+        else
+        {
+          if(!isIgnore(prefix,Ignore::CTCP))
+            server->appendStatusMessage(i18n("CTCP"),i18n("Received unknown CTCP-%1 request from %2").arg(ctcp).arg(sourceNick));
+        }
       }
-      /* No CTCP, so it's an ordinary query message */
+      // No CTCP, so it's an ordinary query message
       else
       {
-        /* Create a new query (server will check for dupes) */
-        server->addQuery(sourceNick,sourceHostmask);
-        /* else remember hostmask for this nick, it could have changed */
-        server->addHostmaskToNick(sourceNick,sourceHostmask);
-        /* Append this message to the query */
-        server->appendToQuery(sourceNick,trailing);
+        if(!isIgnore(prefix,Ignore::Query))
+        {
+          // Create a new query (server will check for dupes)
+          server->addQuery(sourceNick,sourceHostmask);
+          // else remember hostmask for this nick, it could have changed
+          server->addHostmaskToNick(sourceNick,sourceHostmask);
+          // Append this message to the query
+          server->appendToQuery(sourceNick,trailing);
+        }
       }
     }
   }
   else if(command=="notice")
   {
-    // Channel notice?
-    if(isAChannel(parameterList[0]))
-      server->appendServerMessageToChannel(parameterList[0],i18n("Notice"),i18n("-%1 to %2- %3").arg(sourceNick).arg(parameterList[0]).arg(trailing));
-    // Private notice
-    else
+    if(!isIgnore(prefix,Ignore::Notice))
     {
-      // Was this a CTCP reply?
-      if(trailing[0]==1)
+      // Channel notice?
+      if(isAChannel(parameterList[0]))
       {
-        // cut 0x01 bytes from trailing string
-        QString ctcp(trailing.mid(1,trailing.length()-2));
-        QString replyReason(ctcp.section(' ',0,0));
-        QString reply(ctcp.section(' ',1));
-        server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-%1 reply from %2: %3").arg(replyReason).arg(sourceNick).arg(reply));
+        server->appendServerMessageToChannel(parameterList[0],i18n("Notice"),i18n("-%1 to %2- %3").arg(sourceNick).arg(parameterList[0]).arg(trailing));
       }
-      // No, so it was a normal notice
+      // Private notice
       else
-        server->appendStatusMessage(i18n("Notice"),i18n("-%1- %2").arg(sourceNick).arg(trailing));
+      {
+        // Was this a CTCP reply?
+        if(trailing[0]==1)
+        {
+          // cut 0x01 bytes from trailing string
+          QString ctcp(trailing.mid(1,trailing.length()-2));
+          QString replyReason(ctcp.section(' ',0,0));
+          QString reply(ctcp.section(' ',1));
+          server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-%1 reply from %2: %3").arg(replyReason).arg(sourceNick).arg(reply));
+        }
+        // No, so it was a normal notice
+        else
+          server->appendStatusMessage(i18n("Notice"),i18n("-%1- %2").arg(sourceNick).arg(trailing));
+      }
     }
   }
   else if(command=="join")
@@ -260,7 +295,7 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
   {
     server->setChannelTopic(sourceNick,parameterList[0],trailing);
   }
-  else if(command=="mode") /* mode #channel -/+ mmm params */
+  else if(command=="mode") // mode #channel -/+ mmm params
   {
     parseModes(sourceNick,parameterList);
   }
@@ -577,6 +612,23 @@ bool InputFilter::isAChannel(QString check)
   QChar initial=check.at(0);
 
   return (initial=='#' || initial=='&' || initial=='+' || initial=='!');
+}
+
+bool InputFilter::isIgnore(QString sender,Ignore::Type type)
+{
+  bool doIgnore=false;
+
+  QPtrList<Ignore> list=KonversationApplication::preferences.getIgnoreList();
+
+  for(unsigned int index=0;index<list.count();index++)
+  {
+    Ignore* item=list.at(index);
+    QRegExp ignoreItem(item->getName(),false,true);
+    if(ignoreItem.exactMatch(sender) && (item->getFlags() & type)) doIgnore=true;
+    if(ignoreItem.exactMatch(sender) && (item->getFlags() & Ignore::Exception)) return false;
+  }
+
+  return doIgnore;
 }
 
 #include "inputfilter.moc"

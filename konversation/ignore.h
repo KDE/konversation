@@ -26,7 +26,7 @@
 class Ignore
 {
   public:
-    enum IgnoreTypes
+    enum Type
     {
       Channel=1,
       Query=2,
