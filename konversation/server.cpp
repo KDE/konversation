@@ -1264,6 +1264,8 @@ QString Server::parseWildcards(const QString &toParse, const QString &nickname, 
 {
   // TODO: parameter handling.
   //       since parameters are not functional yet
+  //       maybe put parseWildcards() into outputFilter()
+
 
   // make a copy to work with
   QString out(toParse);

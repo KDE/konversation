@@ -51,6 +51,8 @@ QString OutputFilter::replaceAliases(const QString& line)
     // pattern found?
     if(line.find(QRegExp("^/"+aliasPattern+"\\b"))!=-1)
     {
+      // TODO: use server->parseWildcards() here somehow
+
       // cut alias replacement from definition
       QString aliasReplace(aliasList[index].section(' ',1));
 
