@@ -1809,7 +1809,6 @@ void Channel::processPendingNicks()
     m_pendingChannelNickLists.pop_front();
     m_currentIndex = 0;
     m_opsToAdd = 0;
-    nicknameListView->triggerUpdate();
   }
 
   if(m_pendingChannelNickLists.isEmpty()) {
@@ -1817,6 +1816,7 @@ void Channel::processPendingNicks()
     nicknameListView->sort();
     nicknameList.sort();
     nicknameListView->setUpdatesEnabled(true);
+    nicknameListView->triggerUpdate();
   }
 }
 
