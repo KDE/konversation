@@ -388,9 +388,6 @@ class Preferences : public QObject
     QFont textFont;
     QFont listFont;
 
-    QPtrList<ServerEntry> serverList;
-    QPtrList<Highlight> hilightList;
-
     bool hilightNick;
     bool hilightOwnLines;
     QColor hilightNickColor;
@@ -400,9 +397,10 @@ class Preferences : public QObject
 
     QStringList buttonList;
 
+    QPtrList<ServerEntry> serverList;
     QPtrList<Ignore> ignoreList;
-
     QPtrList<Identity> identityList;
+    QPtrList<Highlight> hilightList;
 
     QString codec;
 };

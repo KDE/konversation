@@ -689,6 +689,9 @@ void KonversationApplication::storeUrl(const QString& who,const QString& newUrl)
   // clean up URL to help KRun() in URL catcher interface
   if(url.startsWith("www.")) url="http://"+url;
   else if(url.startsWith("ftp.")) url="ftp://"+url;
+
+  url=url.replace(QRegExp("&amp;"),"&");
+
   // check that we don't add the same URL twice
   deleteUrl(who,url);
   urlList.append(who+" "+url);
