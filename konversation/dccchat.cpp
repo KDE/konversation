@@ -44,7 +44,7 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
       ChatWindow(parent)
 #endif
 {
-  kdDebug() << k_funcinfo << " nickname = " << nickname << endl;
+  kdDebug() << "DccChat::DccChat() [BEGIN]" << endl;
   m_dccSocket=0;
   m_listenSocket=0;
   port=0;
@@ -69,7 +69,7 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
   mainBox->setSpacing(spacing());
 
   sourceLine=new KLineEdit(mainBox);
-  setTextView(new IRCView(mainBox,NULL));
+  setTextView(new IRCView(mainBox,newServer));
 
   dccChatInput=new IRCInput(mainBox);
 
@@ -87,6 +87,8 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
     listenForPartner();
   else
     connectToPartner();
+  
+  kdDebug() << "DccChat::DccChat() [END]" << endl;
 }
 
 DccChat::~DccChat()
@@ -100,6 +102,8 @@ DccChat::~DccChat()
 
 void DccChat::listenForPartner()
 {
+  kdDebug() << "DccChat::listenForPartner() [BEGIN]" << endl;
+  
   // Set up server socket
   m_listenSocket = new KNetwork::KServerSocket( this );
   m_listenSocket->setFamily(KNetwork::KResolver::InetFamily);
@@ -141,10 +145,12 @@ void DccChat::listenForPartner()
   const KNetwork::KSocketAddress ipAddr=m_listenSocket->localAddress();
   const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr.address();
   port=ntohs(socketAddress->sin_port);
+  kdDebug() << "DccChat::listenForPartner(): using port " << port << endl;
   
   getTextView()->append(i18n("Info"),i18n("Offering DCC Chat connection to %1 on port %2...").arg(nick).arg(port));
   sourceLine->setText(i18n("DCC chat with %1 on port %2").arg(nick).arg(port));
   
+  kdDebug() << "DccChat::listenForPartner() [END]" << endl;
 }
 
 void DccChat::newTextInView(const QString& highlightColor, bool important)
