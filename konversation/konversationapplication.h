@@ -76,6 +76,7 @@ class KonversationApplication : public KApplication
     void removeServer(Server* server);
     void dcopSay(const QString& server,const QString& target,const QString& command);
     void dcopInfo(const QString& string);
+    void appearanceChanged();
 
   protected:
     QPtrList<Server> serverList;

@@ -96,6 +96,9 @@ KonversationApplication::KonversationApplication()
     connect(dcopObject,SIGNAL (dcopInfo(const QString&)),
                     this,SLOT (dcopInfo(const QString&)) );
   }
+
+  // take care of user style changes, setting back colors and stuff
+  connect(KApplication::kApplication(),SIGNAL (appearanceChanged()),this,SLOT (appearanceChanged()) );
 }
 
 KonversationApplication::~KonversationApplication()
@@ -740,23 +743,26 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->sync();
 
-  if(updateGUI)
+  if(updateGUI) appearanceChanged();
+}
+
+void KonversationApplication::appearanceChanged()
+{
+  Server* lookServer=serverList.first();
+  while(lookServer)
   {
-    Server* lookServer=serverList.first();
-    while(lookServer)
-    {
-      // TODO: updateFonts() also updates the background color and more stuff! We must finally
-      // find a way to do all this with signals / slots!
-      lookServer->updateFonts();
-      lookServer->updateChannelQuickButtons();
+    // TODO: updateFonts() also updates the background color and more stuff! We must finally
+    // find a way to do all this with signals / slots!
+    lookServer->updateFonts();
+    lookServer->updateChannelQuickButtons();
 
-      lookServer->setShowQuickButtons(preferences.getShowQuickButtons());
-      lookServer->setShowModeButtons(preferences.getShowModeButtons());
-      lookServer=serverList.next();
-    }
+    lookServer->setShowQuickButtons(preferences.getShowQuickButtons());
+    lookServer->setShowModeButtons(preferences.getShowModeButtons());
 
-    mainWindow->updateTabPlacement();
+    lookServer=serverList.next();
   }
+
+  mainWindow->updateTabPlacement();
 }
 
 // FIXME: use KURL maybe?
