@@ -570,8 +570,7 @@ QString KResolver::errorString(int errorcode, int syserror)
     I18N_NOOP("requested service not supported for this socket type"), // UnsupportedService
     I18N_NOOP("requested socket type not supported"),	// UnsupportedSocketType
     I18N_NOOP("unknown error"),			// UnknownError
-    I18N_NOOP2("1: the i18n'ed system error code, from errno",
-	      "system error: %1")		// SystemError
+    I18N_NOOP("system error: %1")		// SystemError
   };
 
   // handle the special value
