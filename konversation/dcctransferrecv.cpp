@@ -123,6 +123,7 @@ void DccTransferRecv::validateSaveToFileURL() {
 
 void DccTransferRecv::start()  // public slot
 {
+  return;  // DCCRECV is disabled temporarily
   if(getStatus() != Queued) return;
   kdDebug() << "DccTransferRecv::start()" << endl;
   //Check that we are saving it somewhere valid, and set up the directories.
@@ -135,9 +136,10 @@ void DccTransferRecv::start()  // public slot
   // check whether the temporary file exists
   // if exists, ask user to resume/rename/overwrite/abort
   
+  setStatus( Queued, i18n("Checking local files...") );
+  
   m_saveToFileExists = ( KIO::NetAccess::exists( m_fileURL, false, listView() ) );
   m_partialFileExists = ( KIO::NetAccess::exists( m_saveToTmpFileURL, false, listView() ) );
-  
   
   if( m_saveToFileExists ) {
     KIO::UDSEntry saveToFileEntry;
@@ -156,7 +158,10 @@ void DccTransferRecv::start()  // public slot
   m_partialFileExists = m_partialFileExists && 
                         0 < m_partialFileSize &&
                         m_partialFileSize < m_fileSize;
-
+  
+  kdDebug() << "DccTransferRecv::start(): the completed file is " << ( m_saveToFileExists ? QString("existing.") : QString("NOT existing.") ) << endl;
+  kdDebug() << "DccTransferRecv::start(): the partial file is " << ( m_partialFileExists ? QString("existing.") : QString("NOT existing.") ) << endl;
+                        
   if( !m_saveToFileExists && m_partialFileExists && KonversationApplication::preferences.getDccAutoResume() )
     requestResume();
   else if( m_saveToFileExists || m_partialFileExists )
@@ -172,7 +177,7 @@ void DccTransferRecv::start()  // public slot
         break;
       case DccResumeDialog::Cancel:
       default:
-	abort();
+        abort();
         return;
     }
   }
@@ -242,6 +247,7 @@ void DccTransferRecv::requestResume()
   updateView();
   
   startConnectionTimer( 30 ); //Was only 5 seconds?
+  // <shin> john: because senders don't need to "accept" transfer. but, yes, it was too short.
   
   emit resumeRequest( m_partnerNick, m_fileName, m_partnerPort, m_transferringPosition );
 }
@@ -252,6 +258,8 @@ void DccTransferRecv::connectToSender()
   
   // prepare local KIO
   KIO::TransferJob* transferJob = KIO::put( m_fileURL, -1, !m_resumed ? m_saveToFileExists : false, m_resumed, false );
+  
+  connect( transferJob, SIGNAL( canResume( KIO::Job*, KIO::filesize_t ) ), this, SLOT( slotCanResume( KIO::Job*, KIO::filesize_t ) ) );
   
   m_writeCacheHandler = new DccTransferRecvWriteCacheHandler( transferJob );
   
@@ -396,6 +404,11 @@ void DccTransferRecv::slotSocketClosed()
   }
 }
 
+void DccTransferRecv::slotCanResume( KIO::Job* job, KIO::filesize_t size )
+{
+  kdDebug() << "DccTransferRecv::slotCanResume(): size = " << size << endl;
+}
+
 // WriteCacheHandler
 
 DccTransferRecvWriteCacheHandler::DccTransferRecvWriteCacheHandler( KIO::TransferJob* transferJob )
@@ -442,11 +455,11 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )  // public
 
 void DccTransferRecvWriteCacheHandler::close()  // public
 {
-  kdDebug() << "DccTransferRecvWriteCacheHandler::close()" << endl;
+  kdDebug() << "DTRWriteCacheHandler::close()" << endl;
   write( true );  // write once if kio is ready to write
   m_transferJob->setAsyncDataEnabled( m_writeAsyncMode = false );
-  kdDebug() << "DccTransferRecvWriteCacheHandler::close(): switched to synchronized mode." << endl;
-  kdDebug() << "DccTransferRecvWriteCacheHandler::close(): flushing... (remaining caches: " << m_cacheList.count() << ")" << endl;
+  kdDebug() << "DTRWriteCacheHandler::close(): switched to synchronized mode." << endl;
+  kdDebug() << "DTRWriteCacheHandler::close(): flushing... (remaining caches: " << m_cacheList.count() << ")" << endl;
 }
 
 void DccTransferRecvWriteCacheHandler::closeNow()  // public
@@ -465,23 +478,22 @@ QByteArray DccTransferRecvWriteCacheHandler::popCache()
   
   static const unsigned int maxWritePacketSize = 2 * 1024 * 1024;  // 2megs
   
-  
   QByteArray buffer;
   int number_written = 0; //purely for debug info
   if ( !m_cacheList.isEmpty() )
   {
-    QDataStream out(buffer,IO_WriteOnly);
+    QDataStream out( buffer, IO_WriteOnly );
     int sizeSum = 0;
     QValueList<QByteArray>::iterator it = m_cacheList.begin();
-    do {   //Guarantee that at list one bytearray is written.. is this okay?
-      out.writeBytes((*it).data(), (*it).size());
+    do { //Guarantee that at list one bytearray is written.. is this okay?
+      out.writeBytes( (*it).data(), (*it).size() );
       sizeSum+= (*it).size();
-      it = m_cacheList.remove(it);
+      it = m_cacheList.remove( it );
       number_written++; //for debug info
-    } while(it != m_cacheList.end() && maxWritePacketSize >= sizeSum + (*it).size());
+    } while( it != m_cacheList.end() && maxWritePacketSize >= sizeSum + (*it).size() );
     m_wholeCacheSize -= sizeSum;
   }
-  kdDebug() << "DccTransferRecvWriteCacheHandler::popCache(): caches in the packet: " << number_written << ", remaining caches: " << m_cacheList.count() << endl;
+  kdDebug() << "DTRWriteCacheHandler::popCache(): caches in the packet: " << number_written << ", remaining caches: " << m_cacheList.count() << endl;
   return buffer;
 }
 
@@ -502,7 +514,7 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
     else
     {
       //finally, no data left to write or read.
-      kdDebug() << "DccTransferRecvWriteCacheHandler::slotKIODataReq(): flushing done." << endl;
+      kdDebug() << "DTRWriteCacheHandler::slotKIODataReq(): flushing done." << endl;
       Q_ASSERT( m_wholeCacheSize == 0 );
       m_transferJob = 0;
       emit done();  // ->DccTransferRecv

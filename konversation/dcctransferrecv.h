@@ -99,6 +99,7 @@ class DccTransferRecv : public DccTransfer
     void writeDone();
     void gotWriteError( int errorCode );
     void slotSocketClosed();
+    void slotCanResume( KIO::Job* job, KIO::filesize_t size );
     
   protected:
     void requestResume();
@@ -137,13 +138,13 @@ class DccTransferRecvWriteCacheHandler : public QObject
     void closeNow();
     
   signals:
-    void dataFinished();             // will connect with transferJob->slotFinished()
-    void done();                     // will connect with DccTransferRecv::writeDone()
-    void gotError( int errorCode );  // will connect with DccTransferRecv::slotWriteError()
+    void dataFinished();             // ->  m_transferJob->slotFinished()
+    void done();                     // ->  DccTransferRecv::writeDone()
+    void gotError( int errorCode );  // ->  DccTransferRecv::slotWriteError()
     
   protected slots:
-    void slotKIODataReq( KIO::Job*, QByteArray& data );  // will connect with transferJob->dataReq()
-    void slotKIOResult();  // will connect with transferJob->result()
+    void slotKIODataReq( KIO::Job*, QByteArray& data );  // <-  m_transferJob->dataReq()
+    void slotKIOResult();                                // <-  m_transferJob->result()
     
   protected:
     QByteArray popCache();
