@@ -24,6 +24,7 @@ typedef unsigned long long __u64;
 #endif
 
 #include <netinet/in.h>
+#include <stdlib.h>
 
 #include <qregexp.h>
 #include <qhostaddress.h>
@@ -37,14 +38,17 @@ typedef unsigned long long __u64;
 #include <kmessagebox.h>
 #if KDE_IS_VERSION(3,2,90)
 #include <kresolver.h>
+#include <ksocketdevice.h> 
+using namespace KNetwork;
 #endif
+#include <kextendedsocket.h>
+#include <ksockaddr.h>
 #include <kstringhandler.h>
 #include <kdeversion.h>
 
 #include "server.h"
 #include "query.h"
 #include "channel.h"
-#include "ircserversocket.h"
 #include "konversationapplication.h"
 #include "dccpanel.h"
 #include "dcctransfer.h"
@@ -84,6 +88,8 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   rejoinChannels=false;
   connecting=false;
   isAway = false;
+  
+  serverSocket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
 
   timerInterval=1;  // flood protection
 
@@ -99,7 +105,6 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   serverPort=serverEntry[2].toInt();
   serverKey=serverEntry[3];
 
-  resolver.setRecipient(this);
   installEventFilter(this);
 
   lastDccDir=QString::null;
@@ -144,8 +149,8 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
     preShellCommand.start(); // Non blocking
   
   }
-  else
-    connectToIRCServer();
+  else 
+  	connectToIRCServer();
 
   // don't delete items when they are removed
   channelList.setAutoDelete(false);
@@ -165,8 +170,8 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   m_scriptLauncher = new ScriptLauncher(this);
 
   if(KonversationApplication::preferences.getPreShellCommand() == QString::null)
-    connectSignals();
-
+  	connectSignals();
+	
   emit serverOnline(false);
 }
 
@@ -186,6 +191,8 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   connecting=false;
 
   timerInterval=1;  // flood protection
+  
+  serverSocket = new KNetwork::KBufferedSocket(QString::null, QString::null, this, "serverSocket");
 
   setIdentity(KonversationApplication::preferences.getIdentityByName("Default"));
   setName(hostName.ascii());
@@ -196,7 +203,6 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   serverPort=port.toInt();
   serverKey=password;
 
-  resolver.setRecipient(this);
   installEventFilter(this);
 
   lastDccDir=QString::null;
@@ -242,7 +248,7 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
 
   if(KonversationApplication::preferences.getPreShellCommand() == QString::null)
     connectSignals();
-
+    
   emit serverOnline(false);
  
 }
@@ -254,7 +260,8 @@ Server::~Server()
   // clear nicks online
   emit nicksNowOnline(this,QStringList(),true);
   // Make sure no signals get sent to a soon to be dying Server Window
-  serverSocket.blockSignals(true);
+  serverSocket->blockSignals(true);
+  
   // Send out the last messages (usually the /QUIT)
   send();
 
@@ -285,13 +292,6 @@ Server::~Server()
   queryList.clear();
 #endif
 
-  // kill resolver thread if it's still running
-#if KDE_VERSION >= 310
-  if(resolver.running()) resolver.terminate();
-#else
-  if(resolver.running()) resolver.exit();
-#endif
-
   // Delete all the NickInfos and ChannelNick structures.
   allNicks.clear();
   ChannelMembershipMap::Iterator it;
@@ -302,6 +302,17 @@ Server::~Server()
   nicknamesOnline.clear();
   nicknamesOffline.clear();
   queryNicks.clear();
+  
+  // Clean up sockets
+  if( serverSocket->state() == KNetwork::KBufferedSocket::HostLookup ) {
+    kdDebug() << "Resolver is still running! " << endl;
+    // Kill the resolver cleanly here!
+  }
+  else {
+    kdDebug() << "Deleting server socket!" << endl;
+    serverSocket->closeNow();
+    delete serverSocket;
+  }
 
   // notify KonversationApplication that this server is gone
   emit deleted(this);
@@ -387,11 +398,12 @@ void Server::connectSignals()
   connect(this,SIGNAL(addDccPanel()),getMainWindow(),SLOT(addDccPanel()) );
   connect(this,SIGNAL(addKonsolePanel()),getMainWindow(),SLOT(addKonsolePanel()) );
 
-  connect(&serverSocket,SIGNAL (connectionSuccess())  ,this,SLOT (ircServerConnectionSuccess()) );
-  connect(&serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
-  connect(&serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
-  connect(&serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
-  connect(&serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
+  connect(serverSocket,SIGNAL(hostFound()),this,SLOT(lookupFinished()));
+  connect(serverSocket,SIGNAL (connected(const KResolverEntry&)),this,SLOT (ircServerConnectionSuccess()));
+  connect(serverSocket,SIGNAL (gotError(int)),this,SLOT (broken(int)) );
+  connect(serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
+  connect(serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
+
 
   connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
   connect(getMainWindow(),SIGNAL(openPrefsDialog()),KonversationApplication::kApplication(),SLOT(openPrefsDialog()));
@@ -428,7 +440,7 @@ void Server::setAutoJoinChannel(const QString &channel) { autoJoinChannel=channe
 QString Server::getAutoJoinChannelKey() const { return autoJoinChannelKey; }
 void Server::setAutoJoinChannelKey(const QString &key) { autoJoinChannelKey=key; }
 
-bool Server::isConnected()  const { return serverSocket.socketStatus()==KExtendedSocket::connected; }
+bool Server::isConnected()  const { return serverSocket->state()==KNetwork::KClientSocketBase::Connected; }
 bool Server::isConnecting() const { return connecting; }
 
 void Server::preShellCommandExited(KProcess* proc)
@@ -446,7 +458,7 @@ void Server::connectToIRCServer()
 {
   outputBuffer.clear();
   deliberateQuit=false;
-  serverSocket.blockSignals(false);
+  serverSocket->blockSignals(false);
   connecting=true;
 
   // prevent sending queue until server has sent something or the timeout is through
@@ -462,34 +474,14 @@ void Server::connectToIRCServer()
   else
   {
     // clean up everything
-    serverSocket.reset();
-    // set up the connection details
-    serverSocket.setAddress(serverName,serverPort);
-
-    // reset server/network properites to RFC1459 compatible modes as default.
-    setPrefixes("ov","@+");
-
-    // (re)connect. Autojoin will be done by the input filter
-    statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...").arg(serverSocket.host()).arg(serverSocket.port()));
-
+    serverSocket->reset();
     
-    // Okay, here's the deal.
-    // ASYNC look ups with KExtendedLookup are broke. See   http://bugs.kde.org/show_bug.cgi?id=50279
-    // The code before used to have a resolver class.  This runs in a seperate thread, and does a lookup.
-    // However, the serverSocket isn't thread safe, and now both the Server and IRCResolver are using
-    // the serverSocket in seperate threads.  This means you could call the resolver to do a lookup, but
-    // then modify the serverSocket in the server class, then when the resolver does the lookup, it is using
-    // the modified version.  Not to mention problems with the server and ircresolver modifying serversocket
-    // at the same instant.
-    // For now, I'm disabling the resolver code until either kde4 when hopefully async lookups are done, or until
-    // someone moves all the serversocket code into a seperate thread, so only one thread ever modifies or uses
-    // the serversocket.
-    serverSocket.lookup(); //sync lookup
-    lookupFinished();      //call this manually. with async code below, an event is called from resolver which is captured and runs lookupFinished()
-
-    // QDns is broken, so don't use async lookup, use own threaded class instead
-    //resolver.setSocket(&serverSocket);
-    //resolver.start();
+    // connect() will do a async lookup too
+    serverSocket->connect(serverName,QString::number(serverPort));
+    
+    // set up the connection details
+    setPrefixes("ov","@+");
+    statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...").arg(serverName).arg(serverPort));
   }
 }
 
@@ -582,20 +574,20 @@ bool Server::eventFilter(QObject* parent,QEvent* event)
   }
   return QObject::eventFilter(parent,event);
 }
-/** Called when the remote servers IP has been found.
- * connectToIRCServer does a lookup on the server name.
- * In async mode, lookups are done via the ircresolver class, which is a thread.  This does a blocking serverSocket->lookup
- * which send a QEvent::User when done, which inputfilter picks up, and calls this.
+/** 
+	When serverSocket emits hostFound() signal this slot is called.
+
  */
 void Server::lookupFinished()
 {
+  
   // error during lookup
-  if(serverSocket.status())
+  if(serverSocket->status())
   {
     // inform user about the error
-    statusView->appendServerMessage(i18n("Error"),i18n("Server %1 not found.  %2").arg(serverName).arg(serverSocket.strError(serverSocket.status(), serverSocket.systemError())));
+       statusView->appendServerMessage(i18n("Error"),i18n("Server %1 not found.  %2").arg(serverName).arg(serverSocket->errorString(serverSocket->error())));
 
-    serverSocket.resetStatus();
+    serverSocket->resetStatus();
     // prevent retrying to connect
 //    autoReconnect=0;
     // broken connection
@@ -604,7 +596,6 @@ void Server::lookupFinished()
   else
   {
     statusView->appendServerMessage(i18n("Info"),i18n("Server found, connecting..."));
-    serverSocket.startAsyncConnect();
   }
 }
 
@@ -639,7 +630,7 @@ void Server::ircServerConnectionSuccess()
 
   emit nicknameChanged(getNickname());
 
-  serverSocket.enableRead(true);
+  serverSocket->enableRead(true);
 
   // wait at most 2 seconds for server to send something before sending the queue ourselves
   unlockTimer.start(2000);
@@ -647,15 +638,15 @@ void Server::ircServerConnectionSuccess()
 
 void Server::broken(int state)
 {
-  serverSocket.enableRead(false);
-  serverSocket.enableWrite(false);
-  serverSocket.blockSignals(true);
+  serverSocket->enableRead(false);
+  serverSocket->enableWrite(false);
+  serverSocket->blockSignals(true);
 
   alreadyConnected=false;
   connecting=false;
   outputBuffer.clear();
 
-  kdDebug() << "Connection broken (Socket fd " << serverSocket.fd() << ") " << state << "!" << endl;
+  kdDebug() << "Connection broken (Socket fd " << serverSocket->socketDevice()->socket() << ") " << state << "!" << endl;
 
   // clear nicks online
   emit nicksNowOnline(this,QStringList(),true);
@@ -918,7 +909,7 @@ void Server::notifyCheckTimeout()
     if(KonversationApplication::preferences.getAutoReconnect() &&
       (checkTime/1000)==KonversationApplication::preferences.getMaximumLagTime())
     {
-      serverSocket.close();
+      serverSocket->close();
     }
   }
 }
@@ -973,18 +964,23 @@ void Server::lockSending()
 }
 
 void Server::incoming()
-{
-  char buffer[BUFFER_LEN];
+{ 
+  // If serverSocket->bytesAvailable() is zero we read 512 bytes ( BUFFER_LEN-1 ) else we read all bytes available
+  int max_bytes = serverSocket->bytesAvailable() ? serverSocket->bytesAvailable() : BUFFER_LEN-1;
+  
+  char buffer[max_bytes];
   int len = 0;
+  
+  // Read at max "max_bytes" bytes into "buffer"
+  len = serverSocket->readBlock(buffer,max_bytes);
 
-  len = read(serverSocket.fd(),buffer,BUFFER_LEN-1);
-  if(len==-1) {
-        statusView->appendServerMessage(i18n("Error"),i18n("There was an error reading the data from the server: %1").arg(strerror(errno)));
+  if(len <= 0 ) { // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
+        statusView->appendServerMessage(i18n("Error"),i18n("There was an error reading the data from the server: %1").arg(serverSocket->errorString()));
 	broken(0);
 	return;
   }
   buffer[len] = 0;
-
+  
   // convert IRC ascii data to selected encoding
   bool isUtf8 = KStringHandler::isUtf8(buffer);
 
@@ -1061,7 +1057,7 @@ void Server::send()
     else if(outputLine.startsWith("QUIT")) setDeliberateQuit(true);
 
     // wrap server socket into a stream
-    QTextStream serverStream(&serverSocket);
+    QTextStream serverStream(serverSocket);
 
     // init stream props
     serverStream.setEncoding(QTextStream::Locale);
@@ -1301,22 +1297,9 @@ const NickInfoMap* Server::getNicksOffline() { return &nicknamesOffline; }
 
 QString Server::getIp()
 {
-  //Below is the deprecated way.  Checking the docs, the correct way seems to be in 3.2
-//  KSocketAddress* ipAddr=KExtendedSocket::localAddress(serverSocket.fd());
-  const KSocketAddress*ipAddr = serverSocket.localAddress();
-  if(ipAddr)
-  {
-    KInetSocketAddress inetSocket((const sockaddr_in*)ipAddr->address(),ipAddr->size());
-
-    struct in_addr in_addr=inetSocket.hostV4();
-    QString ip(KInetSocketAddress::addrToString(inetSocket.family(),&in_addr));
-    // remove temporary object - only in deprecated way
-    //delete ipAddr;
-    kdDebug() << "in getIp(), serverSocket.localAddress() returns " << ip << endl;
-    return ip;
-  }
-  kdDebug() << "in getIp(), serverSocket.localAddress() is returning NULL" <<endl;
-  return QString::null;
+  // Return our ip using serverSocket
+  kdDebug() << "getIp() returned : " << serverSocket->localResults().nodeName() << endl;
+  return serverSocket->localResults().nodeName();
 }
 
 void Server::addQuery(const QString& nickname,const QString& hostmask, bool weinitiated )

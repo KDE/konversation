@@ -23,12 +23,12 @@
 
 #include <ksharedptr.h>
 #include <kprocess.h>
+#include <ksocketbase.h>
+#include <kbufferedsocket.h>
 
 #include "channelnick.h"
 #include "inputfilter.h"
 #include "outputfilter.h"
-#include "ircserversocket.h"
-#include "ircresolver.h"
 
 #include "dcctransfer.h"
 #include "nickinfo.h"
@@ -217,6 +217,7 @@ class Server : public QObject
 
   public slots:
     void preShellCommandExited(KProcess*);
+    void lookupFinished();
     void connectToIRCServer();
     void queue(const QString &buffer);
     void queueList(const QStringList &buffer);
@@ -296,7 +297,6 @@ class Server : public QObject
 
     bool eventFilter(QObject* parent, QEvent *event);
 
-    void lookupFinished();
     void startNotifyCheckTimer();
     bool isAChannel(const QString &check);
     void setIdentity(Identity *newIdentity);
@@ -349,7 +349,6 @@ class Server : public QObject
     QString serverNickPrefixes;     // Prefixes used by the server to indicate a mode
     QString serverNickPrefixModes;  // if supplied: modes related to those prefixes
 
-    IRCResolver resolver;
     Identity* identity;
 
     bool autoJoin;
@@ -363,7 +362,8 @@ class Server : public QObject
     QString autoJoinChannelKey;
 
     KonversationMainWindow* mainWindow;
-    IRCServerSocket serverSocket;
+    KNetwork::KBufferedSocket* serverSocket;
+    
 
     QTimer reconnectTimer;
     QTimer incomingTimer;

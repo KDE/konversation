@@ -11,3 +11,114 @@ KDE_CHECK_HEADER(kimiface.h,
 	AC_SUBST(LIB_KIMIFACE)
 	])
 
+dnl --------
+dnl KSocketAddress configuration
+dnl --------
+
+kde_safe_LIBS="$LIBS"
+LIBS="$LIBS $all_libraries $X_EXTRA_LIBS"
+AC_CHECK_FUNCS(inet_ntop inet_pton getpeername getsockname getsockopt gethostbyname2_r gethostbyname_r gethostbyname2)
+LIBS="$kde_safe_LIBS"
+AC_CHECK_HEADERS([netinet/in.h net/if.h],,,
+[#include <sys/types.h>
+#include <sys/socket.h>])
+AC_CHECK_FUNCS([usleep poll])
+
+dnl Check for struct addrinfo
+AC_CHECK_TYPES([struct addrinfo],,,[#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>])
+
+kde_safe_LIBS="$LIBS"
+LIBS="$LIBS $LIBSOCKET"
+AC_CHECK_FUNCS([getaddrinfo],
+  [
+    dnl Even though we now know that getaddrinfo is there, make sure getnameinfo is there too
+    kde_gai_ok=true
+    AC_CHECK_FUNCS([freeaddrinfo getnameinfo gai_strerror], : , 
+    [
+      kde_gai_ok=false
+      AC_DEFINE(HAVE_BROKEN_GETADDRINFO, 1, [Define if getaddrinfo is broken and should be replaced])
+      AC_DEFINE(GETADDRINFO_RETURNS_UNIX, 1, [Define if getaddrinfo returns AF_UNIX sockets])
+      break
+    ])
+
+    AC_MSG_CHECKING([if getaddrinfo works using numeric service with null host])
+    dnl On AIX (4.3), getaddrinfo returns NULL if the hint
+    dnl is AF_INET/SOCK_STREAM/AI_PASSIVE.
+    dnl The error code reports "Host not found".
+    dnl It only seems to return non-NULL if the port is known (eg. in
+    dnl /etc/services).
+    AC_TRY_RUN(dnl
+    [
+      #include <sys/types.h>
+      #include <sys/socket.h>
+      #include <netdb.h>
+      #include <string.h>
+      int main()
+      {
+        struct addrinfo hint, *res;
+        int err;
+        memset(&hint, 0, sizeof(hint));
+        hint.ai_family = AF_INET;
+        hint.ai_protocol = 0;
+        hint.ai_socktype = SOCK_STREAM;
+        hint.ai_flags = AI_PASSIVE;
+        err = getaddrinfo(0, "18300", &hint, &res); /* kxmlrpc tries this */
+        if (err != 0 || res == 0 || res->ai_family != AF_INET)
+          return 1;
+        return 0;
+      }
+    ],
+    [
+      AC_MSG_RESULT(yes)
+    ],
+    [
+      AC_MSG_RESULT(no)
+      AC_DEFINE(HAVE_BROKEN_GETADDRINFO, 1, [Define if getaddrinfo is broken and should be replaced])
+    ],
+    [
+      AC_MSG_RESULT(cross compiling. We hope so)
+    ])
+  ]
+)
+LIBS="$kde_safe_LIBS"
+
+AC_CHECK_MEMBERS([struct sockaddr.sa_len],,,[#include <sys/socket.h>])
+AC_CHECK_TYPES([struct sockaddr_in6],
+  [AC_CHECK_MEMBERS([struct sockaddr_in6.sin6_scope_id],,,[#include <netinet/in.h>])],,
+  [#include <sys/types.h>
+#include <netinet/in.h>])
+
+# -- Check for KDE 3.2 and enable the compat dir --------------------
+
+AC_MSG_CHECKING([for kdelibs newer than 3.2.x])
+
+AC_LANG_SAVE
+AC_LANG_CPLUSPLUS
+kcompat_save_CXXFLAGS="$CXXFLAGS"
+kcompat_safe_LIBS="$LIBS"
+LIBS="$LIBS $X_EXTRA_LIBS"
+CXXFLAGS="$CXXFLAGS $all_includes"
+
+AC_TRY_COMPILE([
+#include <kdeversion.h>
+#if !( KDE_IS_VERSION( 3, 2, 90 ) )
+#error Need to enable compat!
+#endif
+],
+[
+],
+	AC_MSG_RESULT(yes),	
+	KONVERSATION_COMPAT_INCLUDES='-I$(top_srcdir)/konversation/konversation/compat'
+	KONVERSATION_INCLUDES=$KONVERSATION_INCLUDES' $(KONVERSATION_COMPAT_INCLUDES)'
+	LIB_KONVERSATIONCOMPAT='$(top_builddir)/konversation/konversation/compat/libkonversationcompat.la'
+	AC_MSG_RESULT(no)
+)
+CXXFLAGS="$kcompat_save_CXXFLAGS"
+LIBS="$kcompat_safe_LIBS"
+AC_LANG_RESTORE
+
+AM_CONDITIONAL(compile_LIBKONVERSATION_COMPAT, test -n "$LIB_KONVERSATIONCOMPAT")
+
+# -- End KDE 3.2 check ----------------------------------------------

@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
   aboutData.addCredit("Tobias Olry",I18N_NOOP("Channel ownership mode patch"),"tobias.olry@web.de");
   aboutData.addCredit("Ruud Nabben",I18N_NOOP("Option to enable IRC color filtering"),"r.nabben@gawab.com");
   aboutData.addCredit("Michael Goettsche",I18N_NOOP("Quick connect, Ported new OSD, other features and bugfixes"),"michael.goettsche@kdemail.net");
-  aboutData.addCredit("İsmail Dönmez",I18N_NOOP("Bugfixes and features"),"kde@myrealbox.com");
+  aboutData.addCredit("İsmail Dönmez",I18N_NOOP("Ported to KNetwork, many bugfixes and features"),"kde@myrealbox.com");
   aboutData.addCredit("Luciash d' being",I18N_NOOP("Application icons"),"luci@sh.ground.cz");
   aboutData.addCredit("John Tapsell",I18N_NOOP("Refactoring and linking to kadddressbook"), "john@geola.co.uk");
   KCmdLineArgs::init(argc,argv,&aboutData);
