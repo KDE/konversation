@@ -86,6 +86,7 @@ DccTransferRecv::DccTransferRecv( KListView* parent, const QString& partnerNick,
   m_connectionTimer = 0;
   
   updateView();
+  
 }
 
 DccTransferRecv::~DccTransferRecv()
@@ -219,7 +220,7 @@ void DccTransferRecv::connectToSender()
   kdDebug() << "DccTransferRecv::connectToSender()" << endl;
   
   // prepare local KIO
-  KIO::TransferJob* transferJob = KIO::put( m_fileURL, -1, !m_resumed, m_resumed, false );
+  KIO::TransferJob* transferJob = KIO::put( m_fileURL, -1, !m_resumed ? m_saveToFileExists : false, m_resumed, false );
   
   m_writeCacheHandler = new DccTransferRecvWriteCacheHandler( transferJob );
   
