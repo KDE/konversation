@@ -74,6 +74,8 @@ class ChannelListPanel : public ChatWindow
     void contextMenu (KListView* l, QListViewItem* i, const QPoint& p);
 
     void serverQuit(const QString& reason); // USE_MDI
+    //Used to disable functions when not connected
+    virtual void serverOnline(bool online);
 
   protected:
 
@@ -135,6 +137,7 @@ class ChannelListPanel : public ChatWindow
 
     QPushButton* applyFilter;
     QPushButton* refreshListButton;
+    QPushButton* joinChannelButton;
 
     KListView* channelListView;
     

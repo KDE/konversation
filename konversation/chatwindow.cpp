@@ -550,7 +550,7 @@ void ChatWindow::adjustFocus() {
     if(action) { 
 	    action->setEnabled(m_server);
             if(m_server)
-	      action->setText(i18n("&Channel List for %1").arg(m_server->getServerName())); 
+	      action->setText(i18n("&Channel List for %1").arg(m_server->getServerGroup()));
 	    else {
 	      action->setText(i18n("&Channel List")); 
 	    }

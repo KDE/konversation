@@ -113,7 +113,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 
   refreshListButton=new QPushButton(i18n("Re&fresh List"),actionBox,"refresh_list_button");
   QPushButton* saveListButton=new QPushButton(i18n("&Save List..."),actionBox,"save_list_button");
-  QPushButton* joinChannelButton=new QPushButton(i18n("&Join Channel"),actionBox,"join_channel_button");
+  joinChannelButton=new QPushButton(i18n("&Join Channel"),actionBox,"join_channel_button");
 
   connect(&updateTimer,SIGNAL (timeout()),this,SLOT (updateDisplay()));
 
@@ -496,6 +496,13 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
 void ChannelListPanel::appendInputText(const QString& text)
 {
   filterInput->setText(filterInput->text() + text);
+}
+//Used to disable functions when not connected
+void ChannelListPanel::serverOnline(bool online)
+{
+  refreshListButton->setEnabled(online);
+  applyFilter->setEnabled(online);
+  joinChannelButton->setEnabled(online);
 }
 
 #include "channellistpanel.moc"
