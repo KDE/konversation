@@ -41,6 +41,7 @@
 #include "prefspageignore.h"
 #include "prefspagealiases.h"
 #include "prefspagenickcompletion.h"
+#include "prefspagetabbehavior.h"
 
 PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
              KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
@@ -55,6 +56,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   QFrame* identityPane       =addPage(i18n("Identity"));
 
   QFrame* appearancePane     =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("General")));
+  QFrame* tabBehaviorPane    =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Tab Behavior")));
   QFrame* colorsImagesPane   =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Colors & Images")));
   QFrame* ircColorsPane      =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("IRC Colors")));
   QFrame* buttonsPane        =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Quick Buttons")));
@@ -79,6 +81,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   PrefsPageIdentity*        identityPage       =new PrefsPageIdentity(identityPane,preferences); // FIXME: see class::applyPreferences()
 
   PrefsPageAppearance*      appearancePage     =new PrefsPageAppearance(appearancePane,preferences);
+  PrefsPageTabBehavior*     tabBehaviorPage    =new PrefsPageTabBehavior(tabBehaviorPane,preferences);
   PrefsPageColorsImages*    colorsImagesPage   =new PrefsPageColorsImages(colorsImagesPane,preferences);
   PrefsPageIRCColors*       ircColorsPage      =new PrefsPageIRCColors(ircColorsPane,preferences);
   PrefsPageButtons*         buttonsPage        =new PrefsPageButtons(buttonsPane,preferences);
@@ -115,6 +118,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   connect(this,SIGNAL (applyPreferences()),identityPage,SLOT (applyPreferences()) );
 
   connect(this,SIGNAL (applyPreferences()),appearancePage,SLOT (applyPreferences()) );
+  connect(this,SIGNAL (applyPreferences()),tabBehaviorPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),colorsImagesPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),ircColorsPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),buttonsPage,SLOT (applyPreferences()) );

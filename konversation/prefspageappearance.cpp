@@ -134,17 +134,6 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   // Take care of ghosting / unghosting paragraph spacing widgets
   useParagraphSpacingChanged(preferences->getUseParagraphSpacing() ? 2 : 0);
 
-  // close buttons on tabs
-  closeButtonsCheck=new QCheckBox(i18n("Show close &widgets on tabs"),parentFrame,"tab_close_widgets_check");
-  closeButtonsCheck->setChecked(preferences->getCloseButtonsOnTabs());
-
-  // Display close buttons on which side
-  closeButtonsAlignRight=new QCheckBox(i18n("Place close widgets on the &right side"),parentFrame,"tab_close_widgets_align_right");
-  closeButtonsAlignRight->setChecked(preferences->getCloseButtonsAlignRight());
-
-  // Take care of ghosting / unghosting close button checkboxes
-  closeButtonsChanged(preferences->getCloseButtonsOnTabs() ? 2 : 0);
-
   // Sorting
   QVGroupBox* sortOptionsGroup=new QVGroupBox(i18n("Sort Options"),parentFrame,"sort_options_group");
   sortOrderGroup=new QHGroupBox(i18n("Sorting Order"),parentFrame,"sort_order_group");
@@ -205,10 +194,6 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   row++;
   appearanceLayout->addMultiCellWidget(paragraphSpacingBox,row,row,0,2);
   row++;
-  appearanceLayout->addMultiCellWidget(closeButtonsCheck,row,row,0,2);
-  row++;
-  appearanceLayout->addMultiCellWidget(closeButtonsAlignRight,row,row,0,2);
-  row++;
   appearanceLayout->addWidget(sortOptionsGroup,row,0);
   appearanceLayout->addMultiCellWidget(sortOrderGroup,row,row,1,2);
   row++;
@@ -226,8 +211,6 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   connect(useSpacingCheck,SIGNAL (stateChanged(int)),this,SLOT (useSpacingChanged(int)) );
 
   connect(useParagraphSpacingCheck,SIGNAL (stateChanged(int)),this,SLOT (useParagraphSpacingChanged(int)) );
-
-  connect(closeButtonsCheck,SIGNAL (stateChanged(int)),this,SLOT (closeButtonsChanged(int)) );
 
   connect(sortByStatusCheck,SIGNAL (stateChanged(int)),this,SLOT (sortByStatusChanged(int)) );
 
@@ -282,12 +265,6 @@ void PrefsPageAppearance::useParagraphSpacingChanged(int state)
   paragraphSpacingSpin->setEnabled(state==2);
 }
 
-void PrefsPageAppearance::closeButtonsChanged(int state)
-{
-  closeButtonsCheck->setChecked(state);
-  closeButtonsAlignRight->setEnabled(state==2);
-}
-
 void PrefsPageAppearance::sortByStatusChanged(int state)
 {
   sortOrderGroup->setEnabled(state==2);
@@ -321,14 +298,12 @@ void PrefsPageAppearance::applyPreferences()
   preferences->setTimestampFormat(timestampFormat->currentText());
   preferences->setShowQuickButtons(showQuickButtons->isChecked());
   preferences->setShowModeButtons(showModeButtons->isChecked());
-  preferences->setCloseButtonsOnTabs(closeButtonsCheck->isChecked());
   preferences->setAutoUserhost(autoUserhostCheck->isChecked());
   preferences->setUseSpacing(useSpacingCheck->isChecked());
   preferences->setSpacing(spacingSpin->value());
   preferences->setMargin(marginSpin->value());
   preferences->setUseParagraphSpacing(useParagraphSpacingCheck->isChecked());
   preferences->setParagraphSpacing(paragraphSpacingSpin->value());
-  preferences->setCloseButtonsAlignRight(closeButtonsAlignRight->isChecked());
   preferences->setSortByStatus(sortByStatusCheck->isChecked());
   preferences->setSortCaseInsensitive(sortCaseInsensitiveCheck->isChecked());
 
