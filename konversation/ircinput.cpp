@@ -25,15 +25,15 @@
 
 IRCInput::IRCInput(QWidget* parent) : QLineEdit(parent)
 {
-  /* install eventFilter() function to trap TAB and cursor keys */
+  // install eventFilter() function to trap TAB and cursor keys
   installEventFilter(this);
-  /* connect history signal */
+  // connect history signal
   connect(this,SIGNAL (history(bool)) ,this,SLOT (getHistory(bool)) );
-  /* add one empty line to the history (will be overwritten with newest entry) */
+  // add one empty line to the history (will be overwritten with newest entry)
   historyList.prepend("");
-  /* reset history line counter */
+  // reset history line counter
   lineNum=0;
-  /* reset completion mode */
+  // reset completion mode
   setCompletionMode('\0');
 }
 
@@ -41,7 +41,7 @@ IRCInput::~IRCInput()
 {
 }
 
-/* Take care of Tab, Cursor and so on */
+// Take care of Tab, Cursor and so on
 bool IRCInput::eventFilter(QObject *object,QEvent *event)
 {
   switch(event->type())
@@ -84,6 +84,8 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
         default:
           // Check if the keystroke actually produced text. If not it was just a qualifier.
           if(keyEvent->text()!="") setCompletionMode('\0');
+          // support ASCII BEL
+          if(keyEvent->ascii()==7) insert("%G");
       }
     }
     // To prevent compiler warnings about unhandled case values

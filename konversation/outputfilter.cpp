@@ -33,11 +33,9 @@ OutputFilter::~OutputFilter()
 {
 }
 
-QString& OutputFilter::parse(const QString& myNick,const QString& inputLine,const QString& name)
+QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,const QString& name)
 {
   setCommandChar();
-
-  QString line=inputLine.lower();
 
   toServer="";
   output="";
@@ -48,6 +46,15 @@ QString& OutputFilter::parse(const QString& myNick,const QString& inputLine,cons
   program=false;
   command=false;
   query=false;
+  
+  QString inputLine=originalLine;
+
+  // replace placeholders
+  inputLine.replace(QRegExp("%%"),"%\x01");  // make sure to protect double %%
+  inputLine.replace(QRegExp("%G"),"\x07");   // replace %G with ASCII BEL 0x07
+  inputLine.replace(QRegExp("%\x01"),"%");   // restore double %% as single %
+
+  QString line=inputLine.lower();
 
   // Action?
   if(line.startsWith(commandChar+"me ") && destination!="")
