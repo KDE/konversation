@@ -1,6 +1,6 @@
 Here are some scripts that can help you in everyday life with konvi.
 
-They are usually put in ~/.kde/apps/share/konversation/scripts/ and executed by
+They are usually put in ~/.kde/share/apps/konversation/scripts/ and executed by
 typing /exec <scriptname> in konversation.
 
 Please add descriptions here as new scripts appear:
