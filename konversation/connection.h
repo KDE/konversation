@@ -26,8 +26,8 @@ public:
 
     Connection(const QString& server,
                const QString& port,
-               const QString& password,
-               const QString& interface);
+               const QString& password
+               );
     ~Connection();
 
     void connect();
@@ -51,7 +51,6 @@ private:
     QString m_server;
     QString m_port;
     QString m_password;
-    QString m_interface;
     QString m_lastError;
     bool m_fatalError;
 

@@ -16,8 +16,8 @@
 
 Connection::Connection(const QString& server,
 		       const QString& port,
-		       const QString& password,
-		       const QString& interface)
+		       const QString& password
+                       )
 {
     // FIXME SSL Support
 
@@ -25,7 +25,6 @@ Connection::Connection(const QString& server,
     m_server = server;
     m_port = port;
     m_password = password;
-    m_interface = interface;
     m_fatalError = false;
     m_lastError = QString::null;
     m_socket = new KBufferedSocket(m_server,m_port,this,"server_socket");
