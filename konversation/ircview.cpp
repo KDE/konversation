@@ -167,7 +167,7 @@ const QString& IRCView::getContextNick() const
 
 void IRCView::clearNick()
 {
-  QTimer::singleShot(1*1000,this,SLOT(clearContextNick()));
+  QTimer::singleShot(500,this,SLOT(clearContextNick()));
 }
 
 void IRCView::clearContextNick()
@@ -589,22 +589,20 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
   QString commandColor=KonversationApplication::preferences.getColor("CommandMessage");
   QString line;
   QString prefix="***";
-  // QString height = QString::number(fontMetrics().height());
+  //QString height = QString::number(fontMetrics().height());
 
   if(type=="Join")
-    {
-      /*
+    {/*
       QString image = KGlobal::dirs()->findResource("data","konversation/images/join.png");
       prefix="<img width=\""+height+"\" height=\""+height+"\" src=\""+image+"\"></img>";
-      */
+     */
       prefix="-->";
     }
   else if(type=="Part" || type=="Quit")
-    {
-      /*
+    {/*
       QString image = KGlobal::dirs()->findResource("data","konversation/images/part.png");
       prefix="<img width=\""+height+"\" height=\""+height+"\" src=\""+image+"\"></img>";
-      */
+     */
       prefix="<--";
     }
 
@@ -868,9 +866,9 @@ void IRCView::setupNickPopupMenu()
   nickPopup->insertItem(i18n("Ignore"),Ignore);
   
   connect (nickPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
-  connect(nickPopup, SIGNAL(aboutToHide()), this, SLOT(clearNick()));
   connect (modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
   connect (kickban, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+  connect(nickPopup, SIGNAL(aboutToHide()), this, SLOT(clearNick()));
 }
 
 void IRCView::search()
