@@ -73,6 +73,14 @@ the Free Software Foundation; either version 2 of the License, or
                             <property name="name">
                                 <cstring>topicHistoryList</cstring>
                             </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>7</hsizetype>
+                                    <vsizetype>7</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>1</verstretch>
+                                </sizepolicy>
+                            </property>
                             <property name="selectionMode" stdset="0">
                                 <enum>NoSelection</enum>
                             </property>
@@ -95,6 +103,14 @@ the Free Software Foundation; either version 2 of the License, or
                         <widget class="KTextEdit">
                             <property name="name">
                                 <cstring>topicEdit</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>7</hsizetype>
+                                    <vsizetype>7</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>2</verstretch>
+                                </sizepolicy>
                             </property>
                             <property name="textFormat">
                                 <enum>PlainText</enum>
@@ -121,6 +137,9 @@ the Free Software Foundation; either version 2 of the License, or
                         <property name="text">
                             <string>&amp;Topic can only be changed by channel operators</string>
                         </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;The &lt;b&gt;T&lt;/b&gt;opic mode means that only the channel operator can change the topic for the channel.&lt;/qt&gt;</string>
+                        </property>
                     </widget>
                     <widget class="QCheckBox" row="1" column="0">
                         <property name="name">
@@ -128,6 +147,9 @@ the Free Software Foundation; either version 2 of the License, or
                         </property>
                         <property name="text">
                             <string>&amp;No messages from outside the channel</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;&lt;b&gt;N&lt;/b&gt;o messages from outside means that users that are not in the channel cannot sends messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.&lt;/qt&gt;</string>
                         </property>
                     </widget>
                     <widget class="QCheckBox" row="3" column="0">
@@ -137,6 +159,9 @@ the Free Software Foundation; either version 2 of the License, or
                         <property name="text">
                             <string>Only &amp;invited are allowed to join the channel</string>
                         </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;An &lt;b&gt;I&lt;/b&gt;nvite only channel means that people can only join the channel if they are invited.  To invite someone, a channel operator needs to issue the command&lt;em&gt;/invite nick&lt;/em&gt; from within the channel.&lt;/qt&gt;</string>
+                        </property>
                     </widget>
                     <widget class="QCheckBox" row="4" column="0">
                         <property name="name">
@@ -145,13 +170,19 @@ the Free Software Foundation; either version 2 of the License, or
                         <property name="text">
                             <string>&amp;Moderated channel, only people with voice can write to the channel</string>
                         </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A &lt;b&gt;M&lt;/b&gt;oderated channel is one where only operators, half-operators and those with voice can talk.&lt;/qt&gt;</string>
+                        </property>
                     </widget>
                     <widget class="QCheckBox" row="2" column="0">
                         <property name="name">
                             <cstring>secretModeChBox</cstring>
                         </property>
                         <property name="text">
-                            <string>Secret channel, the channel isn't listed in the channel list</string>
+                            <string>&amp;Secret channel, the channel isn't listed in the channel list</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A &lt;b&gt;S&lt;/b&gt;ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the &lt;em&gt;WHOIS&lt;/em&gt; command or anything similar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.&lt;/qt&gt;</string>
                         </property>
                     </widget>
                     <widget class="KListView" row="6" column="0">
@@ -214,6 +245,9 @@ the Free Software Foundation; either version 2 of the License, or
                                 <property name="text">
                                     <string>Channel &amp;key:</string>
                                 </property>
+                                <property name="whatsThis" stdset="0">
+                                    <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A &lt;b&gt;P&lt;/b&gt;rotected channel requires users to enter a password in order to join.&lt;/qt&gt;</string>
+                                </property>
                             </widget>
                             <widget class="KIntNumInput" row="0" column="1">
                                 <property name="name">
@@ -225,6 +259,9 @@ the Free Software Foundation; either version 2 of the License, or
                                 <property name="minValue">
                                     <number>0</number>
                                 </property>
+                                <property name="whatsThis" stdset="0">
+                                    <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A channel that has a user &lt;b&gt;L&lt;/b&gt;imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channeland changes this automatically depending on how busy the channel is.&lt;/qt&gt;</string>
+                                </property>
                             </widget>
                             <widget class="QCheckBox" row="0" column="0">
                                 <property name="name">
@@ -232,6 +269,9 @@ the Free Software Foundation; either version 2 of the License, or
                                 </property>
                                 <property name="text">
                                     <string>User &amp;limit:</string>
+                                </property>
+                                <property name="whatsThis" stdset="0">
+                                    <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A channel that has a user &lt;b&gt;L&lt;/b&gt;imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channeland changes this automatically depending on how busy the channel is.&lt;/qt&gt;</string>
                                 </property>
                             </widget>
                             <spacer row="0" column="2">
@@ -258,6 +298,9 @@ the Free Software Foundation; either version 2 of the License, or
                                 <property name="enabled">
                                     <bool>false</bool>
                                 </property>
+                                <property name="whatsThis" stdset="0">
+                                    <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A &lt;b&gt;P&lt;/b&gt;rotected channel requires users to enter a password in order to join.&lt;/qt&gt;</string>
+                                </property>
                             </widget>
                         </grid>
                     </widget>
@@ -266,6 +309,8 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
     </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <connections>
     <connection>
         <sender>keyModeChBox</sender>

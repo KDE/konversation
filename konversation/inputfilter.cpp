@@ -1447,7 +1447,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
       }
       // Let the channel update its modes
       if(parameter.isEmpty())
-        kdDebug() << "in updateChannelMode.  sourceNick: '" << sourcenick << "'  parameterlist: '" << parameterList.join(", ") << "'" << endl;
+        kdDebug() << "in updateChannelMode.  sourceNick: '" << sourceNick << "'  parameterlist: '" << parameterList.join(", ") << "'" << endl;
     
       server->updateChannelMode(sourceNick,parameterList[0],mode,plus,parameter);
     }

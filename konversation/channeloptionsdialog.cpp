@@ -58,10 +58,24 @@ void ChannelOptionsDialog::setTopicHistory(const QStringList& history)
 void ChannelOptionsDialog::topicHistoryItemClicked(QListViewItem* item)
 {
   //if they didn't click on anything, item is null
-  if(item && m_widget && m_widget->topicEdit)
+  if(item)
     m_widget->topicEdit->setText(item->text(1));
 }
 
+void ChannelOptionsDialog::enableModes(bool enable) {
+  m_widget->otherModesList->setEnabled(enable);
+  m_widget->topicEdit->setEnabled(enable);
+
+  m_widget->topicModeChBox->setEnabled(enable);
+  m_widget->messageModeChBox->setEnabled(enable);
+  m_widget->userLimitChBox->setEnabled(enable);
+  m_widget->userLimitEdit->setEnabled(enable);
+  m_widget->inviteModeChBox->setEnabled(enable);
+  m_widget->moderatedModeChBox->setEnabled(enable);
+  m_widget->secretModeChBox->setEnabled(enable);
+  m_widget->keyModeChBox->setEnabled(enable);
+  m_widget->keyModeEdit->setEnabled(enable);
+}
 void ChannelOptionsDialog::setAllowedChannelModes(const QString& modes)
 {
   QString modeString = modes;

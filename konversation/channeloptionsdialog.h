@@ -35,6 +35,8 @@ class ChannelOptionsDialog : public KDialogBase
     void setAllowedChannelModes(const QString& modes);
     void setModes(const QStringList& modes);
 
+    void enableModes(bool enable);
+
   protected slots:
     void topicHistoryItemClicked(QListViewItem* item);
 
