@@ -269,7 +269,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(channelInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
 
   connect(textView,SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
-  connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
   connect(textView,SIGNAL (autoText(const QString&)),this,SLOT (sendChannelText(const QString&)) );
 

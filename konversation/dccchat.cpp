@@ -76,7 +76,6 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
   connect(dccChatInput,SIGNAL (submit()),this,SLOT (dccChatTextEntered()) );
   connect(dccChatInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
 
-  connect(getTextView(),SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
   connect(getTextView(),SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
   connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendDccChatText(const QString&)) );
 
