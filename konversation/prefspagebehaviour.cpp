@@ -160,9 +160,13 @@ void PrefsPageBehaviour::applyPreferences()
   preferences->setRawLog(rawLogCheck->isChecked());
   preferences->setWebBrowserUseKdeDefault(!useCustomBrowserCheck->isChecked());
   preferences->setWebBrowserCmd(browserCmdInput->text());
-  preferences->setCommandChar(commandCharInput->text());
-  preferences->setVersionReply(ctcpVersionInput->text());
 
+  if(!commandCharInput->text().isEmpty())
+      preferences->setCommandChar(commandCharInput->text());
+  else
+      preferences->setCommandChar("/");
+
+  preferences->setVersionReply(ctcpVersionInput->text());
   preferences->setAutoReconnect(autoReconnectCheck->isChecked());
   preferences->setAutoRejoin(autoRejoinCheck->isChecked());
   preferences->setAutojoinOnInvite(autojoinOnInviteCheck->isChecked());

@@ -1,9 +1,5 @@
 TODO-list for Konversation
 ==========================
-<nick>  == reported by
--->nick == assigned to
-#x      == sequential bug number,
-           #1 being the highest available (take this one for your next bug and increase here)
 
 
 SHORT-TERM (URGENT):
@@ -13,7 +9,7 @@ SHORT-TERM (URGENT):
 
 MID-TERM:
 - Make [x] on tabs harder to click (1 second hover delay or similar)
-- Doxify the source ( berkus )
+- Doxify the source
 - Per nick coloring in channel discussion
 - DCC RESUME should start counting cps from the beginning
 - Treeview with servers, list of channels / queries in a detachable window that also indicates new text
@@ -24,7 +20,7 @@ MID-TERM:
 - Make separate Highlight lists for each identity
 
 LONG-TERM:
-- Logrotate with timer or at shutdown, compress rotated logs ( berkus )
+- Logrotate with timer or at shutdown, compress rotated logs
 - Context menu on nick in nick list should contain hostmask, realname, etc. infos (in a sub-menu)
 - Stats for server lag, words per session per person / channel, quits etc.
 - "notices" tab for all notices that are no channel notices
@@ -54,18 +50,17 @@ DISCUSSING:
 - Pasting into text views should trigger the paste mechanism
 - Let the user decide how many quick buttons they want, if at all.
 - Replace "0.0.0.0" with QString::null in dccTransfer to allow other than IPv4
-- Session management
+- Session management ( cartman: This works for me. Whats wrong with it? )
 - Make font for quick buttons configurable
 - cycle command
 - privmsg (/msg) should be logged to the specific log file (if i do "/msg foo bar"
   i want to have this in konversation-foo.log)
 - Mark the last point where the panel was active
-- Command Char must be present
 - Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated
 - Show away messages only once per nick
 - Tabs on left / right (?)
 - Different tab sortings
-- Import notify list from .ircrc
+- Import notify list from .ircrc ( cartman: Need a sample ircrc for this )
 - Notify with more than 500 characters
 - "Open Nicks online panel on startup" option
 - Make Kick and Kill-Reasons available via popup so they don't disappear with the closing tab
