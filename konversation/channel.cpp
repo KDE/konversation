@@ -2041,7 +2041,10 @@ void Channel::processPendingNicks()
     nicknameListView->triggerUpdate();
     if(!m_firstAutoWhoDone)
     {
-      autoWho();
+      if(KonversationApplication::preferences.getAutoWhoContinuousEnabled())
+      {
+        autoWho();
+      }
       m_firstAutoWhoDone = true;
     }
   }
