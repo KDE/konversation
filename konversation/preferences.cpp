@@ -97,7 +97,7 @@ Preferences::Preferences()
   setBeep(false);
   setRawLog(false);
 
-  setVersionReply(i18n("Konversation %1 Build %2 (C)2002-2003 by the Konversation team").arg(VERSION).arg(COMMIT));
+  setVersionReply(i18n("Konversation %1 Build %2 (C)2002-2004 by the Konversation team").arg(VERSION).arg(COMMIT));
   setDccPath(QString::null);
   setDccAddPartner(true);
   setDccCreateFolder(false);
