@@ -83,7 +83,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   reconnectTimeoutLabel->setBuddy(reconnectTimeoutSpin);
 
   autoReconnectCheck->setChecked(preferences->getAutoReconnect());
-  // handle ghosing of timeout widget
+  // handle ghosting of timeout widget
   autoReconnectChanged(preferences->getAutoReconnect() ? 2 : 0);
 
   autoRejoinCheck->setChecked(preferences->getAutoRejoin());
