@@ -186,6 +186,8 @@ void DccTransferSend::cleanUp()
   m_tmpFile = QString::null;
   stopConnectionTimer();
   stopAutoUpdateView();
+  m_sendSocket->close();  // in case of aborting
+  m_serverSocket->close();
 }
 
 void DccTransferSend::heard()  // slot

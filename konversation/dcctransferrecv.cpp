@@ -205,6 +205,7 @@ void DccTransferRecv::cleanUp()
   
   stopConnectionTimer();
   stopAutoUpdateView();
+  m_recvSocket->close();  // in case of aborting
   if( m_writeCacheHandler )
   {
     m_writeCacheHandler->closeNow();
