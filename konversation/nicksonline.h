@@ -70,7 +70,7 @@ class NicksOnline : public ChatWindow
 
     // These are here for the benefit of NicksOnlineTooltip.    
     KListView* getNickListView();
-    NickInfoPtr NicksOnline::getNickInfo(const QListViewItem* item);
+    NickInfoPtr getNickInfo(const QListViewItem* item);
   
   signals:
     /**
