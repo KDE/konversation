@@ -47,8 +47,8 @@ int main(int argc, char* argv[])
                                  "talk about your favorite subject."),
                        "http://www.konversation.org/");
 
-  aboutData.addAuthor("Dario Abatianni",I18N_NOOP("Project founder, main programmer"),"eisfuchs@tigress.com");
-  aboutData.addAuthor("Peter Simonsson",I18N_NOOP("Color picker, IRC color preferences, KNotify events, Systray notification, Shell style completion, Sound support for highlights"),"psn@linux.se");
+  aboutData.addAuthor("Dario Abatianni",I18N_NOOP("Author"),"eisfuchs@tigress.com");
+  aboutData.addAuthor("Peter Simonsson",I18N_NOOP("Maintainer"),"psn@linux.se");
   aboutData.addAuthor("Christian Muehlhaeuser",I18N_NOOP("Multiple modes extension, Close widget placement, OSD functionality"),"chris@chris.de");
   aboutData.addAuthor("John Tapsell",I18N_NOOP("Refactoring, KAddressBook/Kontact integration"), "john@geola.co.uk");
   aboutData.addAuthor("İsmail Dönmez",I18N_NOOP("SSL Support, Ported to KNetwork, Colored Nicknames, Icon Theme Support"),"ismail@kde.org.tr");
