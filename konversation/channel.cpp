@@ -747,7 +747,6 @@ void Channel::addNickname(const QString& nickname,const QString& hostmask,
   {
     fastAddNickname(nickname,hostmask,admin,owner,op,halfop,voice);
 
-    nicknameListView->sort();
     nicknameList.sort();
 
     adjustNicks(1);
@@ -820,7 +819,6 @@ void Channel::joinNickname(const QString& nickname,const QString& hostmask)
     appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel. (%2)").arg(nickname).arg(hostmask),false);
     addNickname(nickname,hostmask,false,false,false,false,false);
   }
-  nicknameListView->sort();
 }
 
 void Channel::removeNick(const QString &nickname, const QString &reason, bool quit)
