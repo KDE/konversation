@@ -115,7 +115,14 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
   // Replace all 0x0f (reset color) with \0x031,0
   filteredLine.replace(QRegExp("\017"),"\0031,0");
 
-  if(filteredLine.find("\x07")!=-1) kapp->beep();
+  if(filteredLine.find("\x07")!=-1)
+  {
+    if(KonversationApplication::preferences.getBeep())
+    {
+    kapp->beep();
+    kdDebug() << "beep!" << endl;
+    }
+  }
 
   // replace \003 codes with rich text color codes
   // TODO: use QRegExp for this

@@ -171,6 +171,9 @@ void KonversationApplication::readOptions()
   preferences.setChannelDoubleClickAction(config->readEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction()));
   preferences.setNotifyDoubleClickAction(config->readEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction()));
 
+  // Beep
+  preferences.setBeep(config->readBoolEntry("Beep",preferences.getBeep()));
+  
   // Appearance
   config->setGroup("Appearance");
   // Fonts
@@ -385,6 +388,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction());
   config->writeEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction());
 
+  config->writeEntry("Beep",preferences.getBeep());
+  
   config->setGroup("Appearance");
 
   config->writeEntry("TextFont",preferences.getTextFont().toString());

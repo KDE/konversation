@@ -85,6 +85,7 @@ Preferences::Preferences()
   setAutoRejoin(true);
 
   setFixedMOTD(true);
+  setBeep(false);
 
   setDccPath("");
   setDccAddPartner(true);
@@ -270,14 +271,17 @@ bool Preferences::getDccAutoGet() { return dccAutoGet; }
 void Preferences::setDccPath(QString path) { dccPath=path; }
 QString Preferences::getDccPath() { return dccPath; }
 
-void Preferences::setFixedMOTD(bool fixed) { fixedMOTD=fixed; }
+void Preferences::setFixedMOTD(bool state) { fixedMOTD=state; }
 bool Preferences::getFixedMOTD() { return fixedMOTD; }
 
-void Preferences::setAutoReconnect(bool on) { autoReconnect=on; }
+void Preferences::setAutoReconnect(bool state) { autoReconnect=state; }
 bool Preferences::getAutoReconnect() { return autoReconnect; }
 
-void Preferences::setAutoRejoin(bool on) { autoRejoin=on; }
+void Preferences::setAutoRejoin(bool state) { autoRejoin=state; }
 bool Preferences::getAutoRejoin() { return autoRejoin; }
+
+void Preferences::setBeep(bool state) { beep=state; }
+bool Preferences::getBeep() { return beep; }
 
 int Preferences::getNotifyDelay() { return notifyDelay; }
 void Preferences::setNotifyDelay(int delay) { notifyDelay=delay; }

@@ -43,6 +43,7 @@ class PrefsPageGeneralSettings : public PrefsPage
     void blinkingTabsChanged(int state);
     void bringToFrontChanged(int state);
     void fixedMOTDChanged(int state);
+    void beepChanged(int state);
 };
 
 #endif

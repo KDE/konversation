@@ -66,12 +66,14 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   QCheckBox* blinkingTabsCheck=new QCheckBox(i18n("Blinking Tabs"),parentFrame,"blinking_tabs_check");
   QCheckBox* bringToFrontCheck=new QCheckBox(i18n("Bring new tabs to front"),parentFrame,"bring_to_front_check");
   QCheckBox* fixedMOTDCheck=new QCheckBox(i18n("Show MOTD in fixed font"),parentFrame,"fixed_motd_check");
+  QCheckBox* beepCheck=new QCheckBox(i18n("Beep on incoming ASCII BEL"),parentFrame,"beep_check");
 
   autoReconnectCheck->setChecked(preferences->getAutoReconnect());
   autoRejoinCheck->setChecked(preferences->getAutoRejoin());
   blinkingTabsCheck->setChecked(preferences->getBlinkingTabs());
   bringToFrontCheck->setChecked(preferences->getBringToFront());
   fixedMOTDCheck->setChecked(preferences->getFixedMOTD());
+  beepCheck->setChecked(preferences->getBeep());
 
   QHBox* generalSpacer=new QHBox(parentFrame);
 
@@ -93,6 +95,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   row++;
   generalSettingsLayout->addMultiCellWidget(fixedMOTDCheck,row,row,0,1);
   row++;
+  generalSettingsLayout->addMultiCellWidget(beepCheck,row,row,0,1);
+  row++;
   generalSettingsLayout->addMultiCellWidget(generalSpacer,row,row,0,1);
   generalSettingsLayout->setRowStretch(row,10);
 
@@ -111,6 +115,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   connect(blinkingTabsCheck,SIGNAL (stateChanged(int)),this,SLOT (blinkingTabsChanged(int)) );
 
   connect(fixedMOTDCheck,SIGNAL (stateChanged(int)),this,SLOT (fixedMOTDChanged(int)) );
+
+  connect(beepCheck,SIGNAL (stateChanged(int)),this,SLOT (beepChanged(int)) );
 }
 
 PrefsPageGeneralSettings::~PrefsPageGeneralSettings()
@@ -165,6 +171,11 @@ void PrefsPageGeneralSettings::bringToFrontChanged(int state)
 void PrefsPageGeneralSettings::fixedMOTDChanged(int state)
 {
   preferences->setFixedMOTD(state==2);
+}
+
+void PrefsPageGeneralSettings::beepChanged(int state)
+{
+  preferences->setBeep(state==2);
 }
 
 #include "prefspagegeneralsettings.moc"

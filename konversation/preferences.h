@@ -65,9 +65,11 @@ class Preferences : public QObject
     QValueList<int> getAutoConnectServerIDs();
 
     bool getAutoReconnect();
+    void setAutoReconnect(bool state);
     bool getAutoRejoin();
-    void setAutoReconnect(bool on);
-    void setAutoRejoin(bool on);
+    void setAutoRejoin(bool state);
+    bool getBeep();
+    void setBeep(bool state);
 
     void clearServerList();
     void changeServerProperty(int id,int property,const QString& value);
@@ -264,6 +266,7 @@ class Preferences : public QObject
     bool bringToFront;      // Do we want to see newly created tabs immediately?
 
     bool fixedMOTD;
+    bool beep;
 
     bool dccAddPartner;
     bool dccCreateFolder;   // create folders for each DCC partner?
