@@ -368,7 +368,6 @@ void Server::connectSignals()
   // signal KonversationApplication::prefsChanged -> KonversationMainWindow::slotPrefsChanged ->
   // signal KonversationMainWindow::prefsChanged -> rest of program.
 //  connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
-  connect(getMainWindow(),SIGNAL(openPrefsDialog()),KonversationApplication::kApplication(),SLOT(openPrefsDialog()));
 
   connect(this,SIGNAL (serverOnline(bool)),statusView,SLOT (serverOnline(bool)) );
 

@@ -212,11 +212,9 @@ bool KonversationApplication::connectToAnotherServer(int id)
                                   .arg(identity->getName())
                                   .arg(check),i18n("Check Identity Settings")
                             );
-    if(prefsDialog)
-      prefsDialog->openPage(Preferences::ChatWinAppearancePage);
-    else
-      openPrefsDialog(Preferences::ChatWinAppearancePage);
 
+    mainWindow->openIdentitiesDialog();
+    
     return false;
   }
 
