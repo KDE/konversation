@@ -40,6 +40,7 @@
 #include "version.h"
 #include "query.h"
 #include "channel.h"
+#include "statuspanel.h"
 
 #if QT_VERSION < 0x030100
 #include "main.h"
@@ -542,7 +543,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
     server->removeNickFromServer(sourceNick,trailing);
 #ifdef USE_KNOTIFY
     // KNotify events...
-    if(sourceNick != server->getNickname()) {
+    if(sourceNick != server->getNickname() && server->getStatusView()->notificationsEnabled()) {
       KNotifyClient::event(mainWindow->winId(), "part");
     }
 #endif
@@ -552,7 +553,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
     server->renameNick(sourceNick,trailing);
 #ifdef USE_KNOTIFY
     // KNotify events...
-    if(sourceNick != server->getNickname()) {
+    if(sourceNick != server->getNickname() && server->getStatusView()->notificationsEnabled()) {
       KNotifyClient::event(mainWindow->winId(), "nickchange");
     }
 #endif
