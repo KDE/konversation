@@ -31,6 +31,7 @@
 #include <kinputdialog.h>
 
 #include <kpushbutton.h>
+#include <kactivelabel.h>
 #include <kdebug.h>
 #include <klistview.h>
 #include <qlabel.h>
