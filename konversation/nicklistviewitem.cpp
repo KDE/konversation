@@ -179,9 +179,9 @@ void NickListViewItem::paintCell(QPainter * p, const QColorGroup & cg, int colum
   NickInfo* nickInfo = nick->getNickInfo();
 
   if(nickInfo->isAway())
-    {
-      cg2 = kapp->palette().disabled();
-    }
+  {
+    cg2 = kapp->palette().disabled();
+  }
 
   QListViewItem::paintCell(p,cg2,column,width,align);
 }

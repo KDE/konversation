@@ -603,50 +603,64 @@ QListViewItem* NicksOnline::getServerAndNickItem(const QString& serverName,
 */
 void NicksOnline::doCommand(int id)
 {
-    if (id < 0) return;
+    if(id < 0) {
+        return;
+    }
+
     QString serverName;
     QString nickname;
     QListViewItem* item = m_nickListView->selectedItem();
-    if (!getItemServerAndNick(item, serverName, nickname)) return;
+
+    if(!getItemServerAndNick(item, serverName, nickname)) {
+        return;
+    }
+
     // Get the server object corresponding to the server name.
-    KonversationApplication *konvApp =
-        static_cast<KonversationApplication *>(KApplication::kApplication());
+    KonversationApplication *konvApp = static_cast<KonversationApplication *>(kapp);
     Server* server = konvApp->getServerByName(serverName);
-    if (!server) return;
+
+    if(!server) {
+        return;
+    }
+
     // Get NickInfo object corresponding to the nickname.
     NickInfoPtr nickInfo = server->getNickInfo(nickname);
     // Get addressbook entry for the nick.
     KABC::Addressee addressee;
-    if (nickInfo)
+
+    if(nickInfo) {
         addressee = nickInfo->getAddressee();
-    else
+    } else {
         addressee = server->getOfflineNickAddressee(nickname);
+    }
 
     switch(id)
     {
-	case(ciSendEmail):
-          Konversation::Addressbook::self()->sendEmail(addressee);
-	  return; //no need to refresh item
-	case(ciAddressbookEdit):
-          Konversation::Addressbook::self()->editAddressee(addressee.uid());
-	  return; //no need to refresh item - nickinfo changed will be called anyway.
-	case(ciAddressbookChange):
-	  if(nickInfo)
-            nickInfo->showLinkAddressbookUI();
-	  else {
-            LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(server->getMainWindow(), NULL, nickname, server->getServerName(), server->getServerGroup(), addressee.realName());
-            linkaddressbookui->show();
-	  }
-	  break;
-
-	case ciAddressbookNew:
+        case ciSendEmail:
+            Konversation::Addressbook::self()->sendEmail(addressee);
+            return; //no need to refresh item
+        case ciAddressbookEdit:
+            Konversation::Addressbook::self()->editAddressee(addressee.uid());
+            return; //no need to refresh item - nickinfo changed will be called anyway.
+        case ciAddressbookChange:
+            if(nickInfo) {
+                nickInfo->showLinkAddressbookUI();
+            } else {
+                LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(server->getMainWindow(), NULL, nickname, server->getServerName(), server->getServerGroup(), addressee.realName());
+                linkaddressbookui->show();
+            }
+            break;
+        case ciAddressbookNew:
         case ciAddressbookDelete:
         {
             Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
-            if(addressbook->getAndCheckTicket())
-            {
+
+            if(addressbook && addressbook->getAndCheckTicket()) {
                 if(id == ciAddressbookDelete) {
-                    if (addressee.isEmpty()) return;
+                    if (addressee.isEmpty()) {
+                      return;
+                    }
+
                     addressbook->unassociateNick(addressee, nickname, server->getServerName(), server->getServerGroup());
                 } else {
                     addressee.setGivenName(nickname);
@@ -656,13 +670,14 @@ void NicksOnline::doCommand(int id)
                 if(addressbook->saveTicket())
                 {
                     //saveTicket will refresh the addressees for us.
-                    if(id == ciAddressbookNew)
-                       Konversation::Addressbook::self()->editAddressee(nickInfo->getAddressee().uid());
+                    if(id == ciAddressbookNew) {
+                        Konversation::Addressbook::self()->editAddressee(addressee.uid());
+                    }
                 }
             }
             break;
         }
-       case ciJoinChannel:
+        case ciJoinChannel:
         {
             // Channels have no nlvcServerName entry.
             // We test if it is empty to see if we really have a channel name.
@@ -677,6 +692,7 @@ void NicksOnline::doCommand(int id)
             server->queue("WHOIS "+nickname);
             return;
     }
+
     refreshItem(item);
 }
 
@@ -734,7 +750,7 @@ void NicksOnline::setupAddressbookButtons(int nickState)
         }
         case nsNoAddress:
         {
-            m_editContactButton->setText(i18n("New C&ontact..."));
+            m_editContactButton->setText(i18n("Create New C&ontact..."));
             m_editContactButton->setEnabled(true);
             m_changeAssociationButton->setText(i18n("&Choose Association..."));
             m_changeAssociationButton->setEnabled(true);
@@ -800,7 +816,7 @@ void NicksOnline::slotNickListView_RightButtonClicked(QListViewItem* item, const
         case nsNoAddress:
         {
             m_popupMenu->insertItem(i18n("&Choose Association..."), ciAddressbookChange);
-            m_popupMenu->insertItem(i18n("New C&ontact..."), ciAddressbookNew);
+            m_popupMenu->insertItem(i18n("Create New C&ontact..."), ciAddressbookNew);
             m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("&Whois"), ciWhois);
             if (item->text(nlvcServerName).isEmpty())
