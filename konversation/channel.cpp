@@ -454,9 +454,9 @@ void Channel::completeNick()
 {
   int pos; // = cursorPosition();
   int oldPos; // = cursorPosition();
-  
-  channelInput->getCursorPosition(&oldPos,&pos);
-  oldPos=pos;
+
+  channelInput->getCursorPosition(&oldPos,&pos);  // oldPos is a dummy here, taking the paragraph parameter
+  oldPos=channelInput->getOldCursorPosition();
 
   QString line=channelInput->text();
   QString newLine;
