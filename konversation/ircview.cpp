@@ -817,6 +817,7 @@ bool IRCView::eventFilter(QObject* object,QEvent* event)
     if (mousePressed && (pressPosition-me->pos()).manhattanLength() > QApplication::startDragDistance()) 
     {
         mousePressed=false;
+        removeSelection();
         KURLDrag* u=new KURLDrag(KURL(urlToDrag),viewport());	
         u->drag();
     }

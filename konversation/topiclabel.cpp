@@ -73,12 +73,14 @@ void TopicLabel::contentsMousePressEvent(QMouseEvent *e)
    pressPosition=e->pos();
    urlToDrag = anchorAt(pressPosition);
    if (!urlToDrag.isNull()) mousePressed=true;
-   }
+ }
+ KActiveLabel::contentsMousePressEvent(e);
 }
 
 void TopicLabel::contentsMouseReleaseEvent(QMouseEvent *e)
 {
  if (e->button()==QMouseEvent::LeftButton) mousePressed=false;
+ KActiveLabel::contentsMouseReleaseEvent(e);
 }
  
 void TopicLabel::contentsMouseMoveEvent(QMouseEvent *e)
@@ -86,9 +88,11 @@ void TopicLabel::contentsMouseMoveEvent(QMouseEvent *e)
  if (mousePressed && (pressPosition-e->pos()).manhattanLength() > QApplication::startDragDistance()) 
  {
    mousePressed=false;
+   removeSelection();
    KURLDrag* u=new KURLDrag(KURL(urlToDrag),viewport());	
    u->drag();
  }
+ KActiveLabel::contentsMouseMoveEvent(e);
 }
 
 void TopicLabel::openLink(const QString& link)
