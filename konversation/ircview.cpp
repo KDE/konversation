@@ -27,6 +27,8 @@
 #include <qmap.h>
 #include <qcolor.h>
 
+#include <dcopref.h>
+#include <dcopclient.h>
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kurl.h>
@@ -214,12 +216,44 @@ void IRCView::highlightedSlot(const QString& link)
 
 void IRCView::urlClickSlot(const QString &url)
 {
+  kdDebug() << "Called from a Qt signal " << endl;
+  urlClickSlot(url,false);
+}
+
+void IRCView::urlClickSlot(const QString &url, bool newTab)
+{
   if (!url.isEmpty() && !url.startsWith("#"))
   {
     // Always use KDE default mailer.
     if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.lower().startsWith("mailto:"))
     {
-      new KRun(KURL(url));
+      QCString konqueror_id = "";
+      
+      if(newTab)
+	{
+	  QCStringList appList = kapp->dcopClient()->registeredApplications();
+	  QCStringList::iterator it;
+	  
+	  for(it=appList.begin(); it != appList.end(); ++it)
+	    {
+	      kdDebug() << "Checking " << *it << endl;
+	      if((*it).contains("konqueror"))
+		{
+		  konqueror_id = *it;
+		  kdDebug() << "Matched " << konqueror_id << endl;
+		  break;
+		}
+	    }
+	}
+      
+      if(!konqueror_id.isEmpty())
+	{ 
+	  kdDebug() << "DCOPRef" << endl;
+	  DCOPRef konqueror( konqueror_id,"konqueror-mainwindow#1");
+	  konqueror.call( "newTab", url );
+	}
+      else
+	new KRun(KURL(url));
     }
     else
     {
@@ -764,7 +798,7 @@ bool IRCView::eventFilter(QObject* object,QEvent* event)
     if(me->button()==QMouseEvent::MidButton)
     {
       if(copyUrlMenu) {
-        urlClickSlot(urlToCopy);
+        urlClickSlot(urlToCopy,true);
       } else {
         emit textPasted();
       }
