@@ -946,12 +946,18 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
     case ERR_ERRONEUSNICKNAME:
     {
-        // Happens in Dalnet when NickEnforcer is currently holding a nick
-        QString newNick=server->getNextNickname();
-        server->addToAllNicks( server->getNickname().lower() ); // See Server::addToAllNicks
-        server->renameNick( server->getNickname(), newNick );
-        server->appendStatusMessage(i18n( "Nick" ), i18n("Erroneus nickname. Trying %1." ).arg(newNick)) ;
-        server->queue( "NICK "+newNick );
+        NickInfo* nickInfo = server->getNickInfo( server->getNickname() );
+
+        if ( !nickInfo ) { // We can't get our current nick ( happens with Dalnet Nick Enforcer )
+            QString newNick = server->getNextNickname();
+            server->addToAllNicks( server->getNickname() ); // See Server::addToAllNicks
+            server->renameNick( server->getNickname(), newNick );
+            server->appendStatusMessage(i18n("Nick"), i18n("Erroneus nickname. Trying %1." ).arg(newNick)) ;
+            server->queue( "NICK "+newNick );
+        }
+        else // We did /nick foo . But foo is on hold. So print server message
+            server->appendStatusMessage( i18n( "Nick" ), trailing );
+
         break;
     }
     case RPL_MOTDSTART:
@@ -1333,7 +1339,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           if(chatwindow)
               chatwindow->appendServerMessage(i18n("Channel"), trailing);
           else // We couldn't join the channel , so print the error. with [#channel] : <Error Message>
-              server->appendStatusMessage( i18n( parameterList[1].ascii() ),  trailing );
+              server->appendStatusMessage( i18n("Channel"),  trailing );
 
           break;
         }
