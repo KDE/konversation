@@ -39,7 +39,6 @@ class LedTabWidget : public QTabWidget
     void changeTabState(QWidget* child,bool state);
 
   signals:
-    void currentChanged(QWidget* view);
     void closeTab(QWidget* view);
 
   protected slots:
