@@ -140,7 +140,6 @@ class ServerWindow : public KMainWindow
       StatusText,LagOMeter
     };
 
-    // TODO: get rid of this filter. It's only used to pass the quit message on client close
     OutputFilter filter;
     LedTabWidget* windowContainer;
     StatusPanel* statusPanel;   // TODO: to be moved into Server class?
