@@ -169,7 +169,7 @@ void PrefsPageAppearance::showModeButtonsChanged(int state)
 
 void PrefsPageAppearance::encodingChanged(const QString& newEncoding)
 {
-  preferences->setCodec(newEncoding.section('(',0,0).stripWhiteSpace());
+  preferences->setCodec(KGlobal::charsets()->encodingForName(newEncoding));
 }
 
 #include "prefspageappearance.moc"
