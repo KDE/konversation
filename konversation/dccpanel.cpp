@@ -248,7 +248,7 @@ void DccPanel::showFileInfo()
       }
     } // endfor
 
-    // display informatio list if any available
+    // display information list if any available
     if(infoList.count())
     {
       KMessageBox::informationList(
