@@ -41,13 +41,26 @@
 #define UTF8_6Bytes(c) ( k6BytesLeadByte == ((c) & kLeft7BitsMask))
 #define UTF8_ValidTrialByte(c) ( kTrialByte == ((c) & kLeft2BitsMask))
  
-
 bool isUtf8(const QCString& text)
 {
   int i;
   int j;
   int clen = 0;
   int len = text.length();
+  
+  JapaneseCode* jc = new JapaneseCode();
+
+  JapaneseCode::Type result = jc->guess_jp(text, len);
+
+  switch(result) 
+    {
+    case JapaneseCode::EUC:
+    case JapaneseCode::SJIS:
+    case JapaneseCode::JIS:
+      return false;
+    default:
+      break;
+    }
 
   for(i=0; i < len; i += clen)
     {

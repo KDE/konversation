@@ -24,6 +24,7 @@
 
 namespace Konversation {
 
+#include "guess_ja.cpp"
 #include "unicode.cpp"
 
 QString removeIrcMarkup(const QString& text)
