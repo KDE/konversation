@@ -112,8 +112,8 @@ KonversationApplication::KonversationApplication()
                     this,SLOT (dcopInfo(const QString&)) );
     connect(dcopObject,SIGNAL (dcopInsertRememberLine()),
                     this,SLOT(insertRememberLine()));
-    connect(dcopObject,SIGNAL(dcopConnectToServer(const QString&, int)),
-                    this,SLOT(dcopConnectToServer(const QString&, int)));
+    connect(dcopObject,SIGNAL(dcopConnectToServer(const QString&, int,const QString&, const QString&)),
+	    this,SLOT(dcopConnectToServer(const QString&, int,const QString&, const QString&)));
   }
 
   // Sound object used to play sound...
@@ -272,11 +272,11 @@ bool KonversationApplication::connectToAnotherServer(int id)
   return true;
 }
 
-void KonversationApplication::quickConnectToServer(const QString& hostName, const QString& port, const QString& nick, const QString& password)
+void KonversationApplication::quickConnectToServer(const QString& hostName, const QString& port, const QString& nick, const QString& channel, const QString& password)
 {
   //used for the quick connect dialog and /server command
 
-  Server* newServer = new Server(mainWindow, hostName, port, nick, password);
+  Server* newServer = new Server(mainWindow, hostName, port, nick, channel, password);
 
   connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
   connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
@@ -1332,9 +1332,10 @@ void KonversationApplication::sendMultiServerCommand(const QString& command, con
   }
 }
 
-void KonversationApplication::dcopConnectToServer(const QString& url, int port)
+void KonversationApplication::dcopConnectToServer(const QString& url, int port, const QString& channel, 
+						  const QString& password)
 {
-  quickConnectToServer(url, QString::number(port));
+  quickConnectToServer(url, QString::number(port), channel, password);
 }
 
 Konversation::Sound* KonversationApplication::sound()

@@ -66,7 +66,8 @@ class Server : public QObject
     /** Constructor used for a 'fast connect' to a server.
      *  The details are passed in.  Used for example when the user does "/server irc.somewhere.net"
      */
-    Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,const QString& nick,const QString& password);
+    Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
+		   const QString& channel,const QString& password, QString nick);
     ~Server();
 
     QString getServerName() const;
@@ -419,7 +420,7 @@ class Server : public QObject
     static const int BUFFER_LEN=513;
     
     /// Initialize the class
-    void init(KonversationMainWindow* mainWindow, const QString& nick);
+    void init(KonversationMainWindow* mainWindow, const QString& nick, const QString& channel);
     
     /// Initialize the timers
     void initTimers();

@@ -76,11 +76,11 @@ Server::Server(KonversationMainWindow* mainWindow, int id)
   bot = getIdentity()->getBot();
   botPassword = getIdentity()->getPassword();
 
-  init(mainWindow, getIdentity()->getNickname(0));
+  init(mainWindow, getIdentity()->getNickname(0),"");
 }
 
 Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
-  const QString& nick,const QString& password)
+	       const QString& channel,const QString& password, QString nick)
 {
   m_serverGroup.setName(hostName);
   m_serverGroup.setIdentity(KonversationApplication::preferences.getIdentityByName("Default"));
@@ -91,7 +91,10 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
   m_serverSettings.setPassword(password);
   m_serverGroup.addServer(serverSettings);
 
-  init(mainWindow, nick);
+  if(nick.isEmpty())
+    nick = getIdentity()->getNickname(0);
+
+  init(mainWindow, nick, channel);
 }
 
 void Server::doPreShellCommand() {
@@ -171,7 +174,7 @@ Server::~Server()
   emit deleted(this);
 }
 
-void Server::init(KonversationMainWindow* mainWindow, const QString& nick)
+void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const QString& channel)
 {
   setName(QString("server_" + m_serverGroup.name()).ascii());
 
@@ -221,6 +224,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick)
   completeQueryPosition=0;
 
   Konversation::ChannelList tmpList = m_serverGroup.channelList();
+  tmpList.push_front(channel);
 
   if(!tmpList.isEmpty()) {
     setAutoJoin(true);

@@ -95,8 +95,9 @@ class KonversationApplication : public KApplication
     void connectToServer(int number);
     bool connectToAnotherServer(int number);
     void quickConnectToServer(const QString& hostName, const QString& port = "6667", 
-    						const QString& nick = KonversationApplication::preferences.getNickname(0),
-						const QString& password="");
+    			      const QString& nick = KonversationApplication::preferences.getNickname(0),
+			      const QString& channel="",
+			      const QString& password="");
     void readOptions();
     void saveOptions(bool updateGUI=true);
     void quitKonversation();
@@ -118,7 +119,7 @@ class KonversationApplication : public KApplication
     void insertRememberLine();
     void appearanceChanged();
     void sendMultiServerCommand(const QString& command, const QString& parameter);
-    void dcopConnectToServer(const QString& url, int port);
+    void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
     
   protected:
     QPtrList<Server> serverList;

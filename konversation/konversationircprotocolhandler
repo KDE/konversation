@@ -2,11 +2,18 @@
 
 # A script for Konversation to call connectToServer for each instance of Konversation.
 
-server=`echo $1 | sed "s/irc:\/\///g"` #remove irc://
-server=`echo $server | sed "s/\///g"` #remove trailing slash(if there)
-port=`echo $server | sed -re "s/^[^:]*(:|$)//"` #get the (optional) port
-server=`echo $server | sed "s/:[0-9]*//g"` #remove the port from the server string
+url=`echo $1 | sed -e "s,irc://,,"`
+server_and_port=`echo $url | sed -e "s,\b/.*,,"`
+server=`echo $server_and_port| awk -F":" '{print $1}'`
+port=`echo $server_and_port| awk -F":" '{print $2}'`
+channel_and_password=`echo $url | awk -F"/" '{print $2}'`
+channel=`echo $channel_and_password | awk -F"?" '{print $1}'`
+password=`echo $channel_and_password | awk -F"?" '{print $2}'`
+
 if test -z "$port";then port=6667;fi;
+if test -z "$password";then password="foo";fi;
+if test -z "$channel";then channel="#konversation";fi;
 
-dcop "konversation*" | while read line; do dcop $line Konversation connectToServer $server $port; done
+if test ! ${channel:0:1} == '#';then channel="#"$channel;fi 
 
+dcop "konversation*" | while read line; do dcop $line Konversation connectToServer $server $port $channel $password; done
