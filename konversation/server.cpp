@@ -251,6 +251,7 @@ void Server::init(KonversationMainWindow* mainWindow)
   connecting = false;
   m_serverISON = 0;
   lastDccDir = QString::null;
+  isAway = false;
 
   // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
   serverNickPrefixModes = "ov";
