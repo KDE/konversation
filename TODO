@@ -29,7 +29,6 @@ Optionally copy log files to new location
 DCC options on same file name should include "Rename" and maybe "Auto Rename"
 Events for scripting, auto-text and stuff
 Try to keep open views on server disconnects, kicks and stuff
-Remember server group in logfiles, make same channel names on different servers possible
 Reverse-I-Search
 Large pastes: Let the user decide if they want an Editor or paste immediately
 Multi line behaviour in input line with "little enter"

@@ -197,12 +197,12 @@ void ChatWindow::setLogfileName(const QString& name)
   // Only change name of logfile if the window was new.
   if(firstLog)
   {
-    // status panels start without a server set, so check for server 
-    if(server)
+    // status panels get special treatment here, since they have no server at the beginning
+    if(getType()==Status)
+      logName=name+".log";
+    else
       // make sure that no path delimiters are in the name
       logName=server->getServerGroup().lower().replace(QRegExp("/"),"_")+"_"+name+".log";
-    else
-      logName=name+".log";
     
     // "cd" into log path or create path, if it's not there
     cdIntoLogPath();
@@ -222,34 +222,34 @@ void ChatWindow::setLogfileName(const QString& name)
         backlog.device()->at(backlog.device()->size()-1024);
         // Skip first line, since it may be incomplete
         backlog.readLine();
-
-        // Loop until end of file reached
-        while(!backlog.atEnd())
-        {
-          // remember actual file position to check for deadlocks
-          filePosition=backlog.device()->at();
-          backlogLine=backlog.readLine();
-
-          // check for deadlocks
-          if(backlog.device()->at()==filePosition) backlog.device()->at(filePosition+1);
-          // if a tab character is present in the line
-          if(backlogLine.find('\t')!=-1)
-          {
-            // extract timestamp from log
-            QString backlogTime=backlogLine.left(backlogLine.find(' '));
-            // cut timestamp from line
-            backlogLine=backlogLine.mid(backlogLine.find(' ')+1);
-            // extract first column from log
-            QString backlogFirst=backlogLine.left(backlogLine.find('\t'));
-            // cut first column from line
-            backlogLine=backlogLine.mid(backlogLine.find('\t')+1);
-            // Logfile is in utf8 so we don't need to do encoding stuff here
-            // append backlog with time and first column to text view
-            appendBacklogMessage(backlogFirst,backlogTime+' '+backlogLine);
-          }
-        } // while
-        backlog.unsetDevice();
       }
+
+      // Loop until end of file reached
+      while(!backlog.atEnd())
+      {
+        // remember actual file position to check for deadlocks
+        filePosition=backlog.device()->at();
+        backlogLine=backlog.readLine();
+
+        // check for deadlocks
+        if(backlog.device()->at()==filePosition) backlog.device()->at(filePosition+1);
+        // if a tab character is present in the line
+        if(backlogLine.find('\t')!=-1)
+        {
+          // extract timestamp from log
+          QString backlogTime=backlogLine.left(backlogLine.find(' '));
+          // cut timestamp from line
+          backlogLine=backlogLine.mid(backlogLine.find(' ')+1);
+          // extract first column from log
+          QString backlogFirst=backlogLine.left(backlogLine.find('\t'));
+          // cut first column from line
+          backlogLine=backlogLine.mid(backlogLine.find('\t')+1);
+          // Logfile is in utf8 so we don't need to do encoding stuff here
+          // append backlog with time and first column to text view
+          appendBacklogMessage(backlogFirst,backlogTime+' '+backlogLine);
+        }
+      } // while
+      backlog.unsetDevice();
       logfile.close();
     }
   }
