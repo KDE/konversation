@@ -290,9 +290,9 @@ void Preferences::setHilightList(QPtrList<Highlight> newList)
   hilightList=newList;
 }
 
-void Preferences::addHilight(const QString &newHilight, QColor newColor, const QString& sound)
+void Preferences::addHilight(const QString& newHilight,bool regExp,QColor newColor,const QString& sound)
 {
-  hilightList.append(new Highlight(newHilight,newColor, KURL(sound)));
+  hilightList.append(new Highlight(newHilight,regExp,newColor,KURL(sound)));
 }
 
 void Preferences::setHilightSoundEnabled(bool enabled)

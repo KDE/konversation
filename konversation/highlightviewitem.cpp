@@ -19,12 +19,14 @@
 
 #include <kurl.h>
 
-HighlightViewItem::HighlightViewItem(KListView* parent, Highlight* passed_Highlight)
-  : KListViewItem(parent, passed_Highlight->getText())
+HighlightViewItem::HighlightViewItem(QListView* parent, Highlight* passed_Highlight)
+  : QCheckListItem(parent, QString::null,QCheckListItem::CheckBox)
 {
+  setText(1,passed_Highlight->getPattern());
   itemColor = passed_Highlight->getColor();
   itemID = passed_Highlight->getID();
   setSoundURL(passed_Highlight->getSoundURL());
+  setOn(passed_Highlight->getRegExp());
 }
 
 HighlightViewItem::~HighlightViewItem()
@@ -33,21 +35,27 @@ HighlightViewItem::~HighlightViewItem()
 
 void HighlightViewItem::paintCell(QPainter* p, const QColorGroup &cg, int column, int width, int alignment)
 {
-  // EIS: Kopiere die Farben aus der cg in deine eigene itemColorGroup, und
-  // ändere dann erst die Farben, wie du sie brauchst, sonst sind alle Farben
-  // die du nicht selber definiert hast, durchsichtig
+  // copy all colors from cg and only then change needed colors
   itemColorGroup=cg;
   itemColorGroup.setColor(QColorGroup::Text, itemColor);
-  KListViewItem::paintCell(p, itemColorGroup, column, width, alignment);
+  QCheckListItem::paintCell(p, itemColorGroup, column, width, alignment);
 }
 
 HighlightViewItem* HighlightViewItem::itemBelow()
 {
-  return (HighlightViewItem*) KListViewItem::itemBelow();
+  return (HighlightViewItem*) QCheckListItem::itemBelow();
 }
+
+void HighlightViewItem::setPattern(const QString& newPattern) { setText(1,newPattern); }
+QString HighlightViewItem::getPattern()                       { return text(1); }
 
 void HighlightViewItem::setSoundURL(const KURL& url)
 {
   soundURL = url;
-  setText(1, soundURL.prettyURL());
+  setText(2, soundURL.prettyURL());
+}
+
+bool HighlightViewItem::getRegExp()
+{
+  return isOn();
 }

@@ -50,6 +50,7 @@ PrefsPageHighlight::PrefsPageHighlight(QFrame* newParent,Preferences* newPrefere
 
   highlightListView=new KListView(highlightListBox,"highlight_list_view");
 
+  highlightListView->addColumn(i18n("RE"));
   highlightListView->addColumn(i18n("Highlights"));
   highlightListView->addColumn(i18n("Sound"));
   highlightListView->setAllColumnsShowFocus(true);
@@ -186,7 +187,7 @@ void PrefsPageHighlight::highlightSelected(QListViewItem* item)
     soundPlayBtn->setEnabled(true);
 
     patternColor->setColor(highlightItem->getColor());
-    patternInput->setText(highlightItem->getText());
+    patternInput->setText(highlightItem->getPattern());
     soundURL->setURL(highlightItem->getSoundURL().prettyURL());
   }
   else
@@ -202,9 +203,9 @@ void PrefsPageHighlight::highlightSelected(QListViewItem* item)
 
 void PrefsPageHighlight::highlightTextChanged(const QString& newPattern)
 {
-  QListViewItem* item=highlightListView->selectedItem();
+  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
 
-  if(item) item->setText(0,newPattern);
+  if(item) item->setPattern(newPattern);
 }
 
 void PrefsPageHighlight::highlightColorChanged(const QColor& newColor)
@@ -230,7 +231,7 @@ void PrefsPageHighlight::soundURLChanged(const QString& newURL)
 
 void PrefsPageHighlight::addHighlight()
 {
-  Highlight* newHighlight=new Highlight(i18n("New"),QColor("#ff0000"), KURL());
+  Highlight* newHighlight=new Highlight(i18n("New"),false,QColor("#ff0000"),KURL());
 
   HighlightViewItem* item=new HighlightViewItem(highlightListView,newHighlight);
   highlightListView->setSelected(item,true);
@@ -267,7 +268,7 @@ QPtrList<Highlight> PrefsPageHighlight::getHighlightList()
   HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->firstChild());
   while(item)
   {
-    newList.append(new Highlight(item->getText(),item->getColor(), item->getSoundURL()));
+    newList.append(new Highlight(item->getPattern(),item->getRegExp(),item->getColor(),item->getSoundURL()));
     item=item->itemBelow();
   }
 

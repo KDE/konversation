@@ -31,23 +31,27 @@
 class Highlight
 {
   public:
-    Highlight(const QString& itemText,const QColor& itemColor, const KURL& soundURL);
+    Highlight(const QString& itemPattern,bool regExp,const QColor& itemColor, const KURL& soundURL);
     ~Highlight();
 
-    QString getText();
+    QString getPattern();
     QColor getColor();
     int getID();
+    bool getRegExp();
     KURL getSoundURL();
 
-    void setText(const QString& itemText);
+    void setPattern(const QString& itemPattern);
     void setColor(const QColor& itemColor);
     void setSoundURL(const KURL& url);
+    void setRegExp(bool state);
 
   protected:
     static unsigned int s_id;
     
     int m_itemID;
-    QString m_itemText;
+    bool m_regExp;
+    
+    QString m_itemPattern;
     QColor m_itemColor;
     KURL m_soundURL;
 };

@@ -402,9 +402,27 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
 
         for(index=0;index<hilightList.count();index++)
         {
-          QString needle=hilightList.at(index)->getText().lower();
-          if(filteredLine.lower().find(needle)!=-1 ||   // hilight patterns in text
-             who.lower().find(needle)!=-1 )             // hilight patterns in nickname
+          bool patternFound=0;
+          Highlight* hilight=hilightList.at(index);
+          
+          if(hilight->getRegExp())
+          {
+            QRegExp needle(hilight->getPattern().lower());
+            patternFound=(filteredLine.lower().find(needle)!=-1 ||   // hilight regexp in text
+                          who.lower().find(needle)!=-1 );            // hilight regexp in nickname
+          }
+          else
+          {
+            QString needle(hilight->getPattern().lower());
+            patternFound=(filteredLine.lower().find(needle)!=-1 ||   // hilight patterns in text
+                          who.lower().find(needle)!=-1 );            // hilight patterns in nickname
+          }
+          
+          
+          
+          
+          
+          if(patternFound)
           {
             highlightColor=hilightList.at(index)->getColor().name();
             

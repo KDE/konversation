@@ -484,7 +484,7 @@ void KonversationApplication::readOptions()
     unsigned int hiIndex;
     for(hiIndex=0;hiIndex<hiList.count();hiIndex+=2)
     {
-      preferences.addHilight(hiList[hiIndex],"#"+hiList[hiIndex+1], "");
+      preferences.addHilight(hiList[hiIndex],false,"#"+hiList[hiIndex+1], "");
     }
     
     config->deleteEntry("Hilight");
@@ -493,7 +493,10 @@ void KonversationApplication::readOptions()
     
     while(config->hasGroup(QString("Highlight%1").arg(i))) {
       config->setGroup(QString("Highlight%1").arg(i));
-      preferences.addHilight(config->readEntry("Pattern"), config->readColorEntry("Color"), config->readPathEntry("Sound"));
+      preferences.addHilight(config->readEntry("Pattern"),
+                             config->readBoolEntry("RegExp"),
+                             config->readColorEntry("Color"),
+                             config->readPathEntry("Sound"));
       i++;
     }
   }
@@ -715,7 +718,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   
   for(Highlight* hl = hiList.first(); hl; hl = hiList.next()) {
     config->setGroup(QString("Highlight%1").arg(i));
-    config->writeEntry("Pattern", hl->getText());
+    config->writeEntry("Pattern", hl->getPattern());
+    config->writeEntry("RegExp", hl->getRegExp());
     config->writeEntry("Color", hl->getColor());
     config->writePathEntry("Sound", hl->getSoundURL().prettyURL());
     i++;

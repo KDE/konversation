@@ -18,8 +18,6 @@
 #ifndef HIGHLIGHTVIEWITEM_H
 #define HIGHLIGHTVIEWITEM_H
 
-#include <klistview.h>
-
 #include <qlistview.h>
 
 #include "highlight.h"
@@ -30,24 +28,26 @@
 
 class KURL;
 
-class HighlightViewItem : public KListViewItem
+class HighlightViewItem : public QCheckListItem
 {
   public:
-    HighlightViewItem(KListView* parent, Highlight* passed_Highlight);
+    HighlightViewItem(QListView* parent, Highlight* passed_Highlight);
     ~HighlightViewItem();
 
-    QString getText() { return text(0); }
+    QString getPattern();
     QColor getColor() { return itemColor; }
     int getID() { return itemID; }
+    bool getRegExp();
     KURL getSoundURL() { return soundURL; }
 
+    void setPattern(const QString& newPattern);
     void setColor(QColor passed_itemColor) { itemColor = passed_itemColor; }
     void setID(int passed_itemID) { itemID = passed_itemID; }
     void setSoundURL(const KURL& url);
 
     HighlightViewItem* itemBelow();
 
-  private:
+  protected:
     QColor itemColor;
     QColorGroup itemColorGroup;
     int itemID;
