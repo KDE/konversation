@@ -21,12 +21,18 @@
 #include <kstaticdeleter.h> 
 #include <qobject.h>
 #include <qregexp.h>
+#include "config.h"
+#if HAVE_KIMIFACE
 #include "kimiface.h"
+#endif
 
 #include "../images.h"
 
 namespace Konversation {
-class Addressbook : public QObject, public KIMIface
+class Addressbook : public QObject
+#ifdef HAVE_KIMIFACE
+	           ,public KIMIface
+#endif
 {
   Q_OBJECT
   public:
