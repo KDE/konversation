@@ -32,6 +32,7 @@
 #include "konversationapplication.h"
 #include "ircinput.h"
 #include "ircview.h"
+#include "common.h"
 
 const int POPUP_WHOIS =0xfe;
 const int POPUP_IGNORE=0xff;
@@ -295,7 +296,7 @@ void Query::nickInfoChanged() {
     if(!m_nickInfo->getHostmask().isEmpty() && !text.isEmpty())
       text += " - ";
     text += m_nickInfo->getHostmask();
-    queryHostmask->setText(text);
+    queryHostmask->setText(Konversation::removeIrcMarkup(text));
  
     KABC::Picture pic = m_nickInfo->getAddressee().photo();
     if(pic.isIntern())
