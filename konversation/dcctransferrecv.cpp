@@ -22,6 +22,7 @@
 #include <kstandarddirs.h>
 #include <kstreamsocket.h>
 #include <kdirselectdialog.h> 
+#include <kuser.h>
 
 #include <kio/job.h>
 #include <kio/jobclasses.h>
@@ -54,10 +55,6 @@
 DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort )
   : DccTransfer( panel, DccTransfer::Receive, partnerNick, fileName )
 {
-  m_connectionTimer = new QTimer(this);
-  connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
-  //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
- 
   kdDebug() << "DccTransferRecv::DccTransferRecv()" << endl
             << "DccTransferRecv::DccTransferRecv(): Partner=" << partnerNick << endl
             << "DccTransferRecv::DccTransferRecv(): File=" << fileName << endl
@@ -72,12 +69,23 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
   
   m_writeCacheHandler = 0;
   
+  m_connectionTimer = new QTimer( this );
+  connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
+  //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
+  
   m_recvSocket = 0;
+  
+  /*
+  // in case that the default folder is not specified
+  if( defaultFolderURL.isEmpty() )
+    defaultFolderURL.setPath( KUser( KUser::UseRealUserID ).homeDir() );
+  */
+  
   //The below function may not be valid, and may be empty.  Not checked until this user selects accept, and start() is called
   calculateSaveToFileURL(m_defaultFolderURL);
   updateView();
+  
   panel->selectMe( this );
-
 }
 
 DccTransferRecv::~DccTransferRecv()
@@ -109,7 +117,8 @@ void DccTransferRecv::calculateSaveToFileURL( const KURL& folderURL )
   kdDebug() << "DccTransferRecv::calculateSaveToFileURL(): saving to: '" << saveToFileURL.prettyURL() << "'" << endl;
 }
 
-bool DccTransferRecv::validateSaveToFileURL() {
+bool DccTransferRecv::validateSaveToFileURL()
+{
   KURL saveToFileURL;
   if(m_defaultFolderURL.isEmpty() || !m_defaultFolderURL.isValid()) {
     saveToFileURL = KDirSelectDialog::selectDirectory(QString::null, false, listView(), "Select directory to save to");
@@ -122,28 +131,28 @@ bool DccTransferRecv::validateSaveToFileURL() {
 
 bool DccTransferRecv::createDirs( const KURL& dirURL ) const
 {
-  KURL kurl(dirURL);
+  KURL kurl( dirURL );
   QString surl = kurl.url();
-        
+  
   //First we split directories until we reach to the top,
   //since we need to create directories one by one
-        
+  
   QStringList dirList;
-  while (surl!=kurl.upURL().url())
+  while ( surl != kurl.upURL().url() )
   {
-    dirList.prepend(surl);
-    kurl=kurl.upURL();
-    surl=kurl.url();
+    dirList.prepend( surl );
+    kurl = kurl.upURL();
+    surl = kurl.url();
   }       
-
+  
   //Now we create the directories
-
+  
   QStringList::Iterator it;
   for ( it=dirList.begin() ; it!=dirList.end() ; ++it )
     if ( !KIO::NetAccess::exists( *it, true, listView() ) )
       if( !KIO::NetAccess::mkdir( *it, listView(), -1 ) )
       {
-        KMessageBox::error(listView(), i18n("To save the sent file, the folder %1 needed to be created.  This failed, probably because you do not have permission to write there.  You can set where sent files are saved to by default in the Settings menu, under Configure Konversation, and choosing the Behavior->dcc tab.").arg(dirURL.prettyURL()), i18n("Failed to create folder"));
+        KMessageBox::error( listView(), i18n("To save the sent file, the folder %1 needed to be created.  This failed, probably because you do not have permission to write there.  You can set where sent files are saved to by default in the Settings menu, under Configure Konversation, and choosing the Behavior->dcc tab.").arg(dirURL.prettyURL()), i18n("Failed to create folder") );
         return false;
       }
   return true;
@@ -543,7 +552,7 @@ QByteArray DccTransferRecvWriteCacheHandler::popCache()
     m_wholeCacheSize -= sizeSum;
   }
   kdDebug() << "DTRWriteCacheHandler::popCache(): caches in the packet: " << number_written << ", remaining caches: " << m_cacheList.count() << ".  Size just written now: " << sizeSum << endl;
-  static unsigned long allPoppedSize = 0;
+  static unsigned long allPoppedSize = 0;  // for debug
   allPoppedSize += buffer.size();
   kdDebug() << "DTRWriteCacheHandler::popCache(): all popped size: " << allPoppedSize << endl;
   return buffer;

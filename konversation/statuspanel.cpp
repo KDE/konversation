@@ -36,7 +36,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 {
   setType(ChatWindow::Status);
   
-  setChannelEncodingEnabled(true);
+  setChannelEncodingSupported(true);
 
   awayChanged=false;
   awayState=false;

@@ -47,6 +47,7 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
   port=0;
 
   setType(ChatWindow::DccChat);
+  setChannelEncodingSupported(true);
   ChatWindow::setName("-"+nickname+"-");
   ChatWindow::setLogfileName("-"+nickname+"-");
 

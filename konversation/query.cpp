@@ -42,7 +42,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   //   setName("QueryWidget");
   setType(ChatWindow::Query);
   
-  setChannelEncodingEnabled(true);
+  setChannelEncodingSupported(true);
 
   awayChanged=false;
   awayState=false;

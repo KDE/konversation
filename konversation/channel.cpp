@@ -89,7 +89,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   setType(ChatWindow::Channel);
 
-  setChannelEncodingEnabled(true);
+  setChannelEncodingSupported(true);
   
   // Build some size policies for the widgets
   QSizePolicy hfixed=QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);

@@ -56,7 +56,7 @@ ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
   firstLog=true;
   server=0;
   m_notificationsEnabled = true;
-  m_channelEncodingEnabled = false;
+  m_channelEncodingSupported = false;
   
 #ifdef USE_MDI
   mainLayout=new QVBoxLayout(this);
@@ -371,14 +371,14 @@ void ChatWindow::logText(const QString& text)
   }
 }
 
-void ChatWindow::setChannelEncodingEnabled(bool enabled)
+void ChatWindow::setChannelEncodingSupported(bool enabled)
 {
-  m_channelEncodingEnabled = enabled;
+  m_channelEncodingSupported = enabled;
 }
 
-bool ChatWindow::getChannelEncodingEnabled() const
+bool ChatWindow::isChannelEncodingSupported() const
 {
-  return m_channelEncodingEnabled;
+  return m_channelEncodingSupported;
 }
 
 int ChatWindow::spacing()

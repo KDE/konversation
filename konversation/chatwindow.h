@@ -141,7 +141,7 @@ class ChatWindow : public BASE_CLASS
     virtual void setChannelEncoding(const QString& /* encoding */) {}
     virtual QString getChannelEncoding() { return QString::null; }
     virtual QString getChannelEncodingDefaultDesc() { return QString::null; }
-    bool getChannelEncodingEnabled() const;
+    bool isChannelEncodingSupported() const;
     
   signals:
     void nameChanged(ChatWindow* view,const QString& newName);
@@ -179,7 +179,7 @@ class ChatWindow : public BASE_CLASS
     virtual void childAdjustFocus() = 0;
     
     void setLogfileName(const QString& name);
-    void setChannelEncodingEnabled(bool enabled);
+    void setChannelEncodingSupported(bool enabled);
     void cdIntoLogPath();
 
     /** child classes have to override this and return true if they want the
@@ -231,7 +231,7 @@ class ChatWindow : public BASE_CLASS
 
     bool m_notificationsEnabled;
     
-    bool m_channelEncodingEnabled;
+    bool m_channelEncodingSupported;
   private:
     /** This should always be non-null.  Used to enable/disable mainWindow
      *  kactions.  Private because this shouldn't be modified directly

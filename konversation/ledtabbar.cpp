@@ -384,7 +384,7 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
         } else {
           popup->setItemEnabled(EnableNotifications, false);
         }
-        if(win->getChannelEncodingEnabled())
+        if(win->isChannelEncodingSupported())
         {
           popup->setItemEnabled(EncodingSub, true);
           popupEncoding->changeItem(POPUPID_ENCODING_OFFSET+0,win->getChannelEncodingDefaultDesc());
