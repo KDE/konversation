@@ -65,6 +65,7 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   connect(kcfg_SendPortsFirst, SIGNAL(valueChanged(int)), this, SLOT(sendPortsFirstSpinValueChanged(int)));
   connect(kcfg_SendPortsLast, SIGNAL(valueChanged(int)), this, SLOT(sendPortsLastSpinValueChanged(int)));
 
+  kcfg_SpecificSendPorts->setChecked(preferences->getDccSpecificSendPorts());
   kcfg_SendPortsFirst->setValue(preferences->getDccSendPortsFirst());
   kcfg_SendPortsLast->setValue(preferences->getDccSendPortsLast());
 
