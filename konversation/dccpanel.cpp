@@ -179,6 +179,8 @@ void DccPanel::selectionChanged()
         
         abort  |= ( status < DccTransfer::Done );
         
+        clear  |= ( status >= DccTransfer::Done );
+        
         open   &= ( type == DccTransfer::Send ||
                     status == DccTransfer::Done );
         
@@ -256,7 +258,9 @@ void DccPanel::clearDcc()
   QListViewItemIterator it( getListView() );
   while( it.current() )
   {
-    if( it.current()->isSelected() )
+    DccTransfer* item = static_cast<DccTransfer*>( it.current() );
+    // should we check that [item] is not null?
+    if( it.current()->isSelected() && item->getStatus() >= DccTransfer::Done )
       lst.append( it.current() );
     ++it;
   }
