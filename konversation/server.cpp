@@ -296,17 +296,6 @@ Server::~Server()
   nicknamesOffline.clear();
   queryNicks.clear();
   
-  // Clean up sockets
-  if( serverSocket->state() == KNetwork::KBufferedSocket::HostLookup ) {
-    kdDebug() << "Resolver is still running! " << endl;
-    // Kill the resolver cleanly here!
-  }
-  else {
-    kdDebug() << "Deleting server socket!" << endl;
-    serverSocket->closeNow();
-    delete serverSocket;
-  }
-
   // notify KonversationApplication that this server is gone
   emit deleted(this);
 }
