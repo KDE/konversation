@@ -14,6 +14,9 @@
   $Id$
 */
 
+#ifndef SERVER_H
+#define SERVER_H
+
 #include <kapplication.h>
 
 #include <qlist.h>
@@ -23,9 +26,6 @@
 #include "inputfilter.h"
 #include "outputfilter.h"
 #include "ircserversocket.h"
-
-#ifndef SERVER_H
-#define SERVER_H
 
 /*
   @author Dario Abatianni

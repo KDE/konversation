@@ -14,10 +14,10 @@
   $Id$
 */
 
-#include <qobject.h>
-
 #ifndef INPUTFILTER_H
 #define INPUTFILTER_H
+
+#include <qobject.h>
 
 /*
   @author Dario Abatianni

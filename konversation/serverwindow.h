@@ -14,6 +14,9 @@
   $Id$
 */
 
+#ifndef SERVERWINDOW_H
+#define SERVERWINDOW_H
+
 /* QT specific includes */
 #include <qtabwidget.h>
 #include <qpushbutton.h>
@@ -35,9 +38,6 @@
 
   @author Dario Abatianni
 */
-
-#ifndef SERVERWINDOW_H
-#define SERVERWINDOW_H
 
 #include "server.h"
 #include "ircview.h"

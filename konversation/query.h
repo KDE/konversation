@@ -14,13 +14,13 @@
   $Id$
 */
 
+#ifndef QUERY_H
+#define QUERY_H
+
 #include <qobject.h>
 #include <qvbox.h>
 #include <qiconset.h>
 #include <qcheckbox.h>
-
-#ifndef QUERY_H
-#define QUERY_H
 
 #include "chatwindow.h"
 #include "ircinput.h"

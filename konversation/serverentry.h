@@ -14,10 +14,10 @@
   $Id$
 */
 
-#include <qstring.h>
-
 #ifndef SERVERENTRY_H
 #define SERVERENTRY_H
+
+#include <qstring.h>
 
 /*
   @author Dario Abatianni

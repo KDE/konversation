@@ -14,14 +14,14 @@
   $Id$
 */
 
+#ifndef IRCVIEW_H
+#define IRCVIEW_H
+
 #include <qevent.h>
 
 #include <ktextbrowser.h>
 
 #include "server.h"
-
-#ifndef IRCVIEW_H
-#define IRCVIEW_H
 
 /*
   @author Dario Abatianni

@@ -14,6 +14,9 @@
   $Id$
 */
 
+#ifndef PREFSPAGESERVERLIST_H
+#define PREFSPAGESERVERLIST_H
+
 #include <qpushbutton.h>
 #include <qframe.h>
 #include <qcheckbox.h>
@@ -23,9 +26,6 @@
 #include "prefspage.h"
 #include "preferences.h"
 #include "serverlistitem.h"
-
-#ifndef PREFSPAGESERVERLIST_H
-#define PREFSPAGESERVERLIST_H
 
 /*
   @author Dario Abatianni

@@ -14,13 +14,13 @@
   $Id$
 */
 
+#ifndef NICK_H
+#define NICK_H
+
 #include <klistview.h>
 
 #include "ledlistviewitem.h"
 #include "preferences.h"
-
-#ifndef NICK_H
-#define NICK_H
 
 /*
   @author Dario Abatianni

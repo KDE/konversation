@@ -19,7 +19,9 @@
 #define HIGHLIGHTVIEWITEM_H
 
 #include <klistview.h>
+
 #include <qlistview.h>
+
 #include "highlight.h"
 
 /**

@@ -35,6 +35,7 @@ Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated
 Show away messages only once per nick
 Indicate own away status
 Try to fix the disconnect / no reconnect problem
+Fix multiserver behaviour
 <MarkTfx> Eisfuchs: Vorschlag für Konversation: Auf Wunsch (Konfig-Option) vor dem Pasten mehrerer Zeilen nach Bestätigung fragen.
 <Cheetah> PMP hat nen multi-line-editor, der aufpoppt, wenn man versucht mehr als eine zeile zu pasten.
 *nobs* noch ein Wunsch: die Reiter auf Wunsch an die Seite

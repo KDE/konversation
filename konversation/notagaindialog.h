@@ -20,6 +20,7 @@
 
 #include <kdialogbase.h>
 #include <klocale.h>
+
 #include <qvbox.h>
 #include <qlabel.h>
 #include <qstring.h>

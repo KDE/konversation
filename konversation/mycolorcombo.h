@@ -41,9 +41,9 @@
 #define _MyColorCombo_H__
 
 #include <qcombobox.h>
-#include <kcolordlg.h>
-#include "kselect.h"
 
+#include <kcolordlg.h>
+#include <kselect.h>
 
 class MyColorComboInternal;
 

@@ -6,13 +6,16 @@
 */
 
 /*
-    channel.h  -  description
+    channel.h  -  The class that controls a channel
     begin:     Wed Jan 23 2002
     copyright: (C) 2002 by Dario Abatianni
     email:     eisfuchs@tigress.com
 
     $Id$
 */
+
+#ifndef CHANNEL_H
+#define CHANNEL_H
 
 #include <qpushbutton.h>
 #include <qwidget.h>
@@ -21,10 +24,6 @@
 #include <qlabel.h>
 
 #include <kdialog.h>
-// #include <kcombobox.h>
-
-#ifndef CHANNEL_H
-#define CHANNEL_H
 
 #include "nick.h"
 #include "nicklistview.h"
@@ -48,7 +47,6 @@ class Channel : public ChatWindow
     Channel(QWidget* parent);
     ~Channel();
 
-//    void setServer(Server* server);
     void setName(const QString& newName);
     void setKey(const QString& newKey);
     const QString& getKey();

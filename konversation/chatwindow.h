@@ -6,7 +6,7 @@
 */
 
 /*
-  chatwindow.h  -  description
+  chatwindow.h  -  Base class for all chat panels
   begin:     Fri Feb 1 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -14,11 +14,11 @@
   $Id$
 */
 
-#include <qfile.h>
-#include <qvbox.h>
-
 #ifndef CHATWINDOW_H
 #define CHATWINDOW_H
+
+#include <qfile.h>
+#include <qvbox.h>
 
 #include "ircview.h"
 #include "outputfilter.h"

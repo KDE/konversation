@@ -18,9 +18,10 @@
 #ifndef PREFSPAGESCRIPTS_H
 #define PREFSPAGESCRIPTS_H
 
-#include <qlayout.h>
 #include <klistview.h>
 #include <keditcl.h>
+
+#include <qlayout.h>
 #include <qdir.h>
 #include <qstringlist.h>
 #include <qtextstream.h>

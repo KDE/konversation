@@ -6,7 +6,7 @@
 */
 
 /*
-  chatwindow.cpp  -  description
+  chatwindow.cpp  -  Base class for all chat panels
   begin:     Fri Feb 1 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

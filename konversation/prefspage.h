@@ -14,15 +14,15 @@
   $Id$
 */
 
+#ifndef PREFSPAGE_H
+#define PREFSPAGE_H
+
 #include <kdialog.h>
 #include <klocale.h>
 
 #include <qframe.h>
 
 #include "preferences.h"
-
-#ifndef PREFSPAGE_H
-#define PREFSPAGE_H
 
 /*
   @author Dario Abatianni

@@ -14,11 +14,10 @@
   $Id$
 */
 
-// #include "newkextsock.h"
-#include <kextsock.h>
-
 #ifndef IRCSERVERSOCKET_H
 #define IRCSERVERSOCKET_H
+
+#include <kextsock.h>
 
 /*
   @author Dario Abatianni

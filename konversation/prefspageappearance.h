@@ -14,12 +14,12 @@
   $Id$
 */
 
+#ifndef PREFSPAGEAPPEARANCE_H
+#define PREFSPAGEAPPEARANCE_H
+
 #include <qlabel.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
-
-#ifndef PREFSPAGEAPPEARANCE_H
-#define PREFSPAGEAPPEARANCE_H
 
 #include "prefspage.h"
 

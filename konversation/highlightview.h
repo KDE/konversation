@@ -19,7 +19,9 @@
 #define HIGHLIGHTVIEW_H
 
 #include <klistview.h>
+
 #include <qvgroupbox.h>
+
 #include "highlightviewitem.h"
 
 /**

@@ -14,11 +14,11 @@
   $Id$
 */
 
-#include <kapp.h>
-#include <ksimpleconfig.h>
-
 #ifndef KONVERSATIONAPPLICATION_H
 #define KONVERSATIONAPPLICATION_H
+
+#include <kapp.h>
+#include <ksimpleconfig.h>
 
 #include "preferences.h"
 #include "prefsdialog.h"
