@@ -208,8 +208,8 @@ bool KSocketDevice::create(int family, int type, int protocol)
       return false;
     }
 
-  setSocketOptions(socketOptions());
   d->af = family;
+  setSocketOptions(socketOptions());
   return true;		// successfully created
 }
 
