@@ -49,7 +49,7 @@ QString tagURLs(const QString& text, const QString& fromNick)
 
   if(filteredLine.contains("#"))
     {
-      QRegExp chanExp("#[\\S]+");
+      QRegExp chanExp("(^|)#[\\S]+");
 
       while((pos = chanExp.search(filteredLine, pos)) >= 0)
 	{
