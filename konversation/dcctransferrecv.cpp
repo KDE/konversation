@@ -287,7 +287,7 @@ void DccTransferRecv::slotLocalGotResult( KIO::Job* job )
     default:
       askAndPrepareLocalKio( i18n( "<b>Cannot open the file.<br>"
                                    "Error: %1</b><br>"
-                                   "File: %2<br>" )
+                                   "%2<br>" )
                                .arg( transferJob->error() )
                                .arg( m_fileURL.prettyURL() ),
                               DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
@@ -323,8 +323,8 @@ void DccTransferRecv::requestResume()
   setStatus( WaitingRemote, i18n("Waiting for remote host's acceptance") );
   updateView();
   
-  startConnectionTimer( 30 ); //Was only 5 seconds?
-  // <shin> john: because senders don't need to "accept" transfer. but, yes, it was too short.
+  startConnectionTimer( 30 );
+  
   kdDebug() << "DccTransferRecv::requestResume(): requesting resume for " << m_partnerNick << " file " << m_fileName << " partner " << m_partnerPort << endl;
 
   //TODO   m_filename could have been sanitized - will this effect this?
@@ -365,7 +365,7 @@ void DccTransferRecv::connectToSender()
   m_recvSocket->setBlocking( false );  // asynchronous mode
   m_recvSocket->setFamily( KNetwork::KResolver::InetFamily );
   m_recvSocket->setResolutionEnabled( false );
-  m_recvSocket->setTimeout( 50000 ); //Was only 5 secs.  Made 50 secs
+  m_recvSocket->setTimeout( 50000 );
   
   m_recvSocket->enableRead( false );
   m_recvSocket->enableWrite( false );
@@ -399,10 +399,10 @@ void DccTransferRecv::connectionFailed( int errorCode )  // slot
 {
   kdDebug() << "DccTransferRecv::connectionFailed(): code = " << errorCode << ", string = " << m_recvSocket->errorString() << endl;
   
-  KMessageBox::sorry( listView(), i18n("Connection failure: %1").arg( m_recvSocket->errorString() ),i18n("DCC Error") );
   setStatus( Failed, i18n("Connection failure: %1").arg( m_recvSocket->errorString() ) );
-  cleanUp();
   updateView();
+  cleanUp();
+  openDetailDialog();
 }
 
 void DccTransferRecv::readData()  // slot
@@ -442,20 +442,14 @@ void DccTransferRecv::slotLocalWriteDone()  // <-WriteCacheHandler::done()
   emit done( m_fileName );
 }
 
-void DccTransferRecv::slotLocalGotWriteError( const QString& errorString )  // <-WriteCacheHandler::gotError()
+void DccTransferRecv::slotLocalGotWriteError( const QString& errorString )  // <- WriteCacheHandler::gotError()
 {
   kdDebug() << "DccTransferRecv::slotLocalGotWriteError()" << endl;
-  
-  Q_ASSERT( m_recvSocket );
-  if( !m_recvSocket )
-    return;
   
   setStatus( Failed, i18n("KIO Error: %1").arg( errorString ) );
   updateView();
   cleanUp();
-  
-  // hmm shouldn't we use a modal dialog here?
-  KMessageBox::sorry( listView(), i18n("KIO Error: %1").arg( errorString ), i18n("DCC Error") );
+  openDetailDialog();
 }
 
 void DccTransferRecv::startConnectionTimer( int sec )
@@ -478,7 +472,7 @@ void DccTransferRecv::connectionTimeout()  // slot
 {
   kdDebug() << "DccTransferRecv::connectionTimeout()" << endl;
   
-  setStatus(Failed, i18n("Timed out"));
+  setStatus( Failed, i18n("Timed out") );
   updateView();
   cleanUp();
 }
@@ -504,7 +498,7 @@ DccTransferRecvWriteCacheHandler::DccTransferRecvWriteCacheHandler( KIO::Transfe
   
   connect( this,          SIGNAL( dataFinished() ),                    m_transferJob, SLOT( slotFinished() )                           );
   connect( m_transferJob, SIGNAL( dataReq( KIO::Job*, QByteArray& ) ), this,          SLOT( slotKIODataReq( KIO::Job*, QByteArray& ) ) );
-  connect( m_transferJob, SIGNAL( result( KIO::Job* ) ),               this,          SLOT( slotKIOResult( KIO::Job* ) )                          );
+  connect( m_transferJob, SIGNAL( result( KIO::Job* ) ),               this,          SLOT( slotKIOResult( KIO::Job* ) )               );
   
   m_transferJob->setAsyncDataEnabled( m_writeAsyncMode = true );
 }
@@ -592,7 +586,7 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
       //finally, no data left to write or read.
       kdDebug() << "DTRWriteCacheHandler::slotKIODataReq(): flushing done." << endl;
       m_transferJob = 0;
-      emit done();  // ->DccTransferRecv::slotLocalWriteDone()
+      emit done();  // -> DccTransferRecv::slotLocalWriteDone()
     }
   }
 }
@@ -608,7 +602,7 @@ void DccTransferRecvWriteCacheHandler::slotKIOResult( KIO::Job* job )
   {
     QString errorString = job->errorString();
     closeNow();
-    emit gotError( errorString );  // ->DccTransferRecv::slotLocalGotWriteError()
+    emit gotError( errorString );  // -> DccTransferRecv::slotLocalGotWriteError()
   }
 }
 

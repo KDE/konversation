@@ -45,7 +45,7 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   
   m_fileURL = fileURL;
   m_ownIp = ownIp;
-  if(altFileName.isEmpty())
+  if( altFileName.isEmpty() )
     m_fileName = m_fileURL.filename();
   else
     m_fileName = altFileName;
@@ -60,24 +60,28 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
 
   //Check the file exists 
-  if( !KIO::NetAccess::exists( m_fileURL, true, listView() ) ) {
-    KMessageBox::sorry(listView(), i18n("The url \"%1\" does not exist").arg( m_fileURL.prettyURL() ) );
+  if( !KIO::NetAccess::exists( m_fileURL, true, listView() ) )
+  {
     setStatus( Failed, i18n("The url \"%1\" does not exist").arg( m_fileURL.prettyURL() ) );
     updateView();
     cleanUp();
+    openDetailDialog();
     return;
   }
+  
   //Download the file.  Does nothing if it's local (file:/)
-  if( !KIO::NetAccess::download( m_fileURL, m_tmpFile, listView() ) ) {
-    KMessageBox::sorry(listView(), i18n("Could not retrieve \"%1\".").arg( m_fileURL.prettyURL() ) );
+  if( !KIO::NetAccess::download( m_fileURL, m_tmpFile, listView() ) )
+  {
     setStatus( Failed, i18n("Could not retrieve \"%1\"").arg( m_fileURL.prettyURL() ) );
     updateView();
     cleanUp();
+    openDetailDialog();
     return;
   }
 
   //Some protocols, like http, maybe not return a filename, and altFileName may be empty, So prompt the user for one.
-  if( m_fileName.isEmpty() ) {
+  if( m_fileName.isEmpty() )
+  {
     bool pressedOk;
     m_fileName = KInputDialog::getText( i18n("Enter filename"), i18n("<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>").arg( getPartnerNick() ), "unknown", &pressedOk, listView() );
     if( !pressedOk ) {
@@ -130,10 +134,10 @@ void DccTransferSend::start()  // public slot
     }
     if( !found )
     {
-      KMessageBox::sorry( listView(), i18n("There is no vacant port for DCC sending.") );
       setStatus( Failed, i18n("No vacant port") );
       updateView();
       cleanUp();
+      openDetailDialog();
       return;
     }
   }
@@ -220,9 +224,9 @@ void DccTransferSend::heard()  // slot
   m_sendSocket = static_cast<KNetwork::KStreamSocket*>( m_serverSocket->accept() );
   if( !m_sendSocket )
   {
-    KMessageBox::sorry( listView(), QString( getErrorString( m_file.status() ) ).arg( m_file.name() ), i18n("DCC Send Error") );
-    setStatus( Failed );
+    setStatus( Failed, i18n("Couldn't accept the connection. (Socket Error)") );
     cleanUp();
+    openDetailDialog();
     return;
   }
   connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() )               );
@@ -248,15 +252,15 @@ void DccTransferSend::heard()  // slot
     m_sendSocket->enableRead( m_fastSend ? true : false );
     m_sendSocket->enableWrite( true );
     initTransferMeter();  // initialize CPS counter, ETA counter, etc...
+    updateView();
   }
   else
   {
-    QString errorString = getErrorString( m_file.status() );
-    KMessageBox::sorry( listView(), QString( errorString ).arg( m_file.name() ), i18n("DCC Send Error") );
-    setStatus( Failed, i18n("File open failure") );
+    setStatus( Failed, i18n("File open failure: %1").arg( getErrorString( m_file.status() ) ) );
+    updateView();
     cleanUp();
+    openDetailDialog();
   }
-  updateView();
 }
 
 void DccTransferSend::writeData()  // slot
