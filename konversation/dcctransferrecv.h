@@ -70,8 +70,9 @@ class DccTransferRecv : public DccTransfer
      * This function will either return with saveToFileURL set to a valid,
      * existing directory, or will call abort() and return
      * @see abort()
+     * @return True if the URL is valid.  False if not.
      */
-    void validateSaveToFileURL();
+    bool validateSaveToFileURL();
     /**
      * This calls KIO::NetAccess::mkdir on all the subdirectories of dirURL, to
      * create the given directory.  Note that a url like  file:/foo/bar  will

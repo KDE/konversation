@@ -109,17 +109,17 @@ void DccTransferRecv::calculateSaveToFileURL(const KURL &folderURL) {
   kdDebug() << "DccTransferRecv::DccTransferRecv(): saving to: '" << saveToFileURL.prettyURL() << "'" << endl;
 }
 
-void DccTransferRecv::validateSaveToFileURL() {
+bool DccTransferRecv::validateSaveToFileURL() {
   KURL saveToFileURL;
   if(m_defaultFolderURL.isEmpty() || !m_defaultFolderURL.isValid()) {
     saveToFileURL = KDirSelectDialog::selectDirectory(QString::null, false, listView(), "Select directory to save to");
-    if(saveToFileURL.isEmpty()) {
-      setStatus(Failed);
-      return;
-    }
+    if(saveToFileURL.isEmpty())
+      return false;
     calculateSaveToFileURL(saveToFileURL);
   }
+  return true;
 }
+
 bool DccTransferRecv::createDirs(const KURL &dirURL) const
 {
   KURL kurl(dirURL);
@@ -156,7 +156,7 @@ void DccTransferRecv::start()  // public slot
   if(getStatus() != Queued) return;
   kdDebug() << "DccTransferRecv::start()" << endl;
   //Check that we are saving it somewhere valid, and set up the directories.
-  validateSaveToFileURL();
+  if( !validateSaveToFileURL() ) return;
   if(getStatus() != Queued) return;  //We might not have been able to find somewhere to save to.
   
   // check whether the file exists
