@@ -123,10 +123,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
   KAction *preferencesAction = KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
-  (new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()), actionCollection(), "open_server_list"))->setToolTip("HELLO!");
-  new KAction(i18n("Quick &Connect..."), "connect_creating", KShortcut("F7"), this, SLOT(openQuickConnectDialog()), actionCollection(), "quick_connect_dialog");
+  (new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()), actionCollection(), "open_server_list"))->setToolTip(i18n("Connect a new server..."));
+  (new KAction(i18n("Quick &Connect..."), "connect_creating", KShortcut("F7"), this, SLOT(openQuickConnectDialog()), actionCollection(), "quick_connect_dialog"))->setToolTip(i18n("Type in the address of a new irc server to connect to..."));
 
-  new KAction(i18n("&Identities..."), "identity", KShortcut("F8"), this, SLOT(openIdentitiesDialog()), actionCollection(), "identities_dialog");
+  (new KAction(i18n("&Identities..."), "identity", KShortcut("F8"), this, SLOT(openIdentitiesDialog()), actionCollection(), "identities_dialog"))->setToolTip(i18n("Set your nick, away message, etc..."));
 
   new KToggleAction(i18n("&Watched Nicks Online"), 0, KShortcut("F4"), this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
   new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), this, SLOT(openLogfile()), actionCollection(), "open_logfile");
@@ -172,9 +172,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   KStdAction::find(this, SLOT(findText()), actionCollection());
   KStdAction::findNext(this, SLOT(findNextText()), actionCollection());
 
-  (new KAction(i18n("&IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors"))->setToolTip("COLORS!");
-  new KAction(i18n("&Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line");
-  new KAction(i18n("Special &Character..."), "fonts", KShortcut("Alt+Shift+C"), this, SLOT(insertCharacter()), actionCollection(), "insert_character");
+  (new KAction(i18n("&IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors"))->setToolTip(i18n("Set the color of your current irc message."));
+  (new KAction(i18n("&Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line"))->setToolTip(i18n("Add a horizontal line that only you can see."));
+  (new KAction(i18n("Special &Character..."), "fonts", KShortcut("Alt+Shift+C"), this, SLOT(insertCharacter()), actionCollection(), "insert_character"))->setToolTip(i18n("Insert any character into your current irc message. "));
 
   new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
 
