@@ -62,6 +62,7 @@ int main(int argc, char* argv[])
   aboutData.addCredit("Tobias Olry",I18N_NOOP("Channel ownership mode patch"),"tobias.olry@web.de");
   aboutData.addCredit("Ruud Nabben",I18N_NOOP("Option to enable IRC color filtering"),"r.nabben@gawab.com");
   aboutData.addCredit("Michael Goettsche",I18N_NOOP("Various bugfixes"),"mail@tuxipuxi.de");
+  aboutData.addCredit("İsmail Dönmez",I18N_NOOP("Bugfixes and features"),"kde@myrealbox.com");
   KCmdLineArgs::init(argc,argv,&aboutData);
 
   KonversationApplication app;
