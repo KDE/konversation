@@ -6,10 +6,10 @@
       <Action name="open_server_list" />
     </Menu>
     <Menu name="actions">
-      <Text>Actions</Text>
+      <Text>&amp;Actions</Text>
     </Menu>
     <Menu name="windows">
-      <Text>Windows</Text>
+      <Text>&amp;Windows</Text>
       <Action name="open_nicksonline_window" />
       <Action name="open_channel_list" />
       <Action name="open_konsole" />
