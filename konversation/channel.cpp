@@ -1875,7 +1875,7 @@ void Channel::addPendingNickList(const QStringList& newNickList)
     if(count % 50 == 0) nicknameListView->setUpdatesEnabled(true);
     fastAddNickname(*it);
     if(count % 50 == 0) {
-      qApp->processEvents();
+      //      qApp->processEvents();
       nicknameListView->setUpdatesEnabled(false);
     }
     if((*it)->isAdmin() || (*it)->isOwner() || (*it)->isOp() || (*it)->isHalfOp())
