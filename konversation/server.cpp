@@ -647,7 +647,7 @@ void Server::broken(int state)
   
   // TODO: Close all queries and channels!
   //       Or at least make sure that all gets reconnected properly
-  if(autoReconnect && !getDeliberateQuit())
+  if(autoReconnect && !getDeliberateQuit() && state)
   {
     // TODO: Make retry counter configurable
     reconnectCounter++;
