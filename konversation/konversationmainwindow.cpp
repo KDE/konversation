@@ -293,6 +293,11 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
   ChatWindow* view=static_cast<ChatWindow*>(viewToClose);
   if(view)
   {
+    // if this view was the front view, delete the pointer
+    if(view==frontView) frontView=0;
+    
+    emit endNotification(viewToClose);
+    
     ChatWindow::WindowType viewType=view->getType();
 
     QString viewName=view->getName();
@@ -315,8 +320,6 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     else if(viewType==ChatWindow::SNotice);
 */
   }
-  // if this view was the front view, delete the pointer
-  if(view==frontView) frontView=0;
 }
 
 void KonversationMainWindow::openLogfile()

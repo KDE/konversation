@@ -1684,6 +1684,8 @@ void Channel::appendInputText(const QString& s)
 void Channel::closeYourself()
 {
   server->closeChannel(getName());
+  server->removeChannel(this);
+  delete this;
 }
 
 void Channel::showTopic(bool show)
@@ -1719,13 +1721,6 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
   QRegExp regexp(prefix + QRegExp::escape(pattern.lower()));
 
   for(Nick* n = first(); n; n = next()) {
-/*
-#if QT_VERSION >= 0x030200
-    if(n->getNickname().startsWith(pattern, false)) {
-#else
-    if(n->getNickname().lower().startsWith(pattern.lower())) {
-#endif
-*/
     if(n->getNickname().lower().find(regexp) != -1) {
       found.append(n->getNickname());
     }

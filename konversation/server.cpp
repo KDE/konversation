@@ -1602,12 +1602,12 @@ void Server::joinChannel(const QString &name, const QString &hostmask, const QSt
 
 void Server::removeChannel(Channel* channel)
 {
-  channelList.removeRef(channel);
-
 #ifdef USE_NICKINFO
   // Update NickInfo.
   removeJoinedChannel(channel->getName());
 #endif
+  
+  channelList.removeRef(channel);
 }
 
 void Server::updateChannelMode(const QString &nick, const QString &channelName, char mode, bool plus, const QString &parameter)
