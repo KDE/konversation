@@ -547,25 +547,6 @@ QListViewItem* NicksOnline::getServerAndNickItem(const QString& serverName,
 }
 
 /**
-* Invokes the KAddressBook contact editor for the specified contact id.
-* @param uid               Id of the contact.
-* @return                  False if unable to invoke the Contact editor.
-*/
-bool NicksOnline::editAddressee(const QString &uid)
-{
-    Q_ASSERT(!uid.isEmpty());
-    KProcess *proc = new KProcess;
-    *proc << "kaddressbook";
-    *proc << "--editor-only" << "--uid" << uid;
-    kdDebug() << "running kaddressbook --editor-only --uid " << uid << endl;
-    if(!proc->start()) {
-        KMessageBox::error(this, "Could not run your addressbook program (kaddressbook).  This is most likely because it isn't installed.  Please install the 'kdepim' packages.");
-        return false;
-    }
-    return true;
-}
-
-/**
 * Perform an addressbook command (edit contact, create new contact, 
 * change/delete association.)
 * @param id                The command id.  @ref CommandIDs.
@@ -602,7 +583,7 @@ void NicksOnline::doCommand(int id)
         case ciAddressbookEdit:
         {
             if (addressee.isEmpty()) return;
-            editAddressee(addressee.uid());
+	    Konversation::Addressbook::self()->editAddressee(nickInfo->getAddressee().uid());
             break;
         }
         case ciAddressbookNew:
@@ -623,7 +604,7 @@ void NicksOnline::doCommand(int id)
                 {
                     //saveTicket will refresh the addressees for us.
                     if(id == ciAddressbookNew)
-                        if(!editAddressee(addressee.uid())) break;
+                       Konversation::Addressbook::self()->editAddressee(nickInfo->getAddressee().uid());
                 }
             }
             break;

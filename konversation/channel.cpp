@@ -357,94 +357,6 @@ void Channel::textPasted(QString text)
   }
 }
 
-bool Channel::editAddressee(const QString &uid)
-{
-  Q_ASSERT(!uid.isEmpty());
-  KProcess *proc = new KProcess;
-  *proc << "kaddressbook";
-  *proc << "--editor-only" << "--uid" << uid;
-  kdDebug() << "running kaddressbook --editor-only --uid " << uid << endl;
-  if(!proc->start()) {
-    KMessageBox::error(this, "Could not run your addressbook program (kaddressbook).  This is most likely because it isn't installed.  Please install the 'kdepim' packages.");
-    return false;
-  }
-  return true;
-}
-
-bool Channel::sendEmail(const ChannelNickList &nickList) {
-  if(nickList.isEmpty()) return false;
-  KProcess *proc = new KProcess;
-  *proc << "kmail";
-  QStringList nicksWithoutAddressee;
-  QStringList nicksWithoutEmails;
-  QStringList nicksWithEmails;
-  for(ChannelNickList::ConstIterator it=nickList.begin();it!=nickList.end();++it) {
-    NickInfoPtr nickInfo = (*it)->getNickInfo();
-    Q_ASSERT(nickInfo);  if(!nickInfo) { delete proc; return false; }
-    KABC::Addressee addr = nickInfo->getAddressee();
-    if(addr.isEmpty()) {
-      nicksWithoutAddressee.append(nickInfo->getNickname());
-    } else if(addr.preferredEmail().isEmpty()) {
-      nicksWithoutEmails.append(nickInfo->getNickname());
-    } else {
-      nicksWithEmails.append(nickInfo->getNickname());
-      *proc << addr.fullEmail();
-    }
-  }
-  if(!nicksWithoutAddressee.isEmpty() || !nicksWithoutEmails.isEmpty()) {
-    QString message;
-    if(nicksWithoutEmails.isEmpty()) {
-      if(nicksWithEmails.isEmpty()) {
-        if(nicksWithoutAddressee.count() > 1)
-	  message = i18n("None of the contacts that you have selected were associated with an addressbook contacts. ");
-	else
-	  message = i18n("The contact that you have selected is not associated with an addressbook contact. ");
-      } else {
-         if(nicksWithoutAddressee.count() > 1)
-	  message = i18n("Some of the contacts (%1) that you have selected are not associated with addressbook contacts. ").arg(nicksWithoutAddressee.join(", "));
-	else
-	  message = i18n("One of the contacts (%1) that you have selected is not associated with an addressbook contact. ").arg(nicksWithoutAddressee.join(", "));
-      } 
-      message += i18n("You can right click on a contact, and chose to edit the Addressbook Associations to link them to a contact in your addressbook.");
-    } else if(nicksWithoutAddressee.isEmpty()) { 
-      if(nicksWithEmails.isEmpty()) {
-        if(nicksWithoutEmails.count() > 1)
-	  message = i18n("None of the contacts that you have selected had an email address associated with them. ");
-        else
-	  message = i18n("The contact that you have selected does not have an email address associated with them. ");
-      } else {
-        if(nicksWithoutEmails.count() > 1)
-	  message = i18n("Some of the contacts (%1) that you have selected do not have an email address associated with them. ").arg(nicksWithoutEmails.join(", "));
-        else
-	  message = i18n("One of the contacts (%1) that you have selected does not have an email address associated with them. ").arg(nicksWithoutEmails.join(", "));
-      }
-      message += i18n("You can right click on a contact, and chose to edit the addressbook contact, adding an email for them.");
-    } else {
-      message = i18n("Some of the contacts (%1) that you have selected are not associated with addressbook contacts, and some of the contacts (%1) do not have an email address associated with them.  ").arg(nicksWithoutAddressee.join(", ").arg(nicksWithoutEmails.join(", ")));
-      message += i18n("You can right click on a contact, and chose to edit the Addressbook Associations to link them to a contact in your addressbook, and chose to edit the addressbook contact, adding an email for them.");
-    }
-    if(nicksWithEmails.isEmpty()) {
-      KMessageBox::sorry(this, message, i18n("Cannot send email"));
-      delete proc;  //Can we do this?
-      return false;
-    } else {
-      message += i18n("\nDo you want to send an email anyway to the nicks that do have an email address?");
-      int result = KMessageBox::questionYesNo(this, message, i18n("Send Email"), KGuiItem(i18n("&Send email...")), KGuiItem(i18n("&Cancel")));
-      if(result == KMessageBox::No) {
-        delete proc;
-        return false;
-      }
-      
-    }
-  }
-  if(!proc->start()) {
-	  KMessageBox::error(this, "Could not run your email program (kmail).  This is possibly because it isn't installed.  Please install the 'kdepim' packages.");
-	  return false;
-  }
-  return true;
-  
-}
-
 // Will be connected to NickListView::popupCommand(int)
 void Channel::popupCommand(int id)
 {
@@ -461,7 +373,7 @@ void Channel::popupCommand(int id)
         ChannelNickList nickList=getSelectedChannelNicks();
 	for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
           NickInfoPtr nickInfo = (*it)->getNickInfo();
-	  if(!editAddressee(nickInfo->getAddressee().uid())) break;
+	  if(!Konversation::Addressbook::self()->editAddressee(nickInfo->getAddressee().uid())) break;
 	}
 	break;
       }
@@ -504,7 +416,7 @@ void Channel::popupCommand(int id)
       }
     case NickListView::SendEmail:
       {
-	sendEmail(getSelectedChannelNicks());
+        Konversation::Addressbook::self()->sendEmail(getSelectedChannelNicks());
         break;
       }
     case NickListView::AddressbookSub:

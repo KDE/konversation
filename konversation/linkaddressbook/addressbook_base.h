@@ -25,6 +25,7 @@
 
 #include "../images.h"
 #include "../nickinfo.h"
+#include "../channelnick.h"
 
 namespace Konversation {
 class AddressbookBase : public QObject, public KIMIface
@@ -71,6 +72,15 @@ class AddressbookBase : public QObject, public KIMIface
       */
     virtual void emitContactPresenceChanged(QString uid) = 0;
 
+    /**
+     *  Run kmail a single email addressed to all of the nicks passed in.
+     */
+    bool sendEmail(const ChannelNickList &nicklist); 
+    /**
+     *  Run kaddressbook to edit the addressee passed in.
+     */
+    bool editAddressee(const QString &uid);
+    
   signals:
     void addresseesChanged();
 
