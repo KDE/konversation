@@ -73,10 +73,10 @@ Preferences::Preferences()
   buttonList.append("Part,/PART %c KDE Rules!%n");
   buttonList.append("Quit,/QUIT KDE Rules!%n");
 
-  setShowQuickButtons(true);
+  setShowQuickButtons(false);
   setShowModeButtons(true);
   setShowServerList(true);
-  setShowTrayIcon(true);
+  setShowTrayIcon(false);
   setShowBackgroundImage(false);
   setTrayNotify(false);
 
@@ -145,7 +145,7 @@ Preferences::Preferences()
   setHilightSoundEnabled(true);
 
   // On Screen Display
-  setOSDUsage(true);
+  setOSDUsage(false);
   setOSDShowOwnNick(true);
   setOSDShowQuery(true);
   setOSDShowChannelEvent(false);
@@ -197,10 +197,10 @@ Preferences::Preferences()
   ircColorList.append("#c0c0c0");
   setFilterColors(false);
 
-  setNickCompletionMode(0);
+  setNickCompletionMode(2);
 
   setShowMenuBar(true);
-  setShowTabBarCloseButton(false);
+  setShowTabBarCloseButton(true);
 
   setHideUnimportantEvents(false);
   setShowTopic(true);
@@ -212,7 +212,7 @@ Preferences::Preferences()
   setWebBrowserUseKdeDefault(true);
   setWebBrowserCmd("mozilla \'%u\'");
 
-  setRedirectToStatusPane(false);
+  setRedirectToStatusPane(true);
   
   setOpenWatchedNicksAtStartup(false);
 }
