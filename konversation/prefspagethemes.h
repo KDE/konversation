@@ -11,12 +11,13 @@
 #ifndef PREFSPAGETHEMES_H
 #define PREFSPAGETHEMES_H
 
-#include <qlabel.h>
+#include <qstringlist.h>
 
 #include "prefspage.h"
 
+class QLabel;
+class QPushButton;
 class KListBox;
-class KURL;
 
 class PrefsPageThemes : public PrefsPage
 {
@@ -30,6 +31,9 @@ class PrefsPageThemes : public PrefsPage
 
  protected slots:
     void updatePreview(int id);
+    void updateButtons();
+    void installTheme();
+    void removeTheme();
 
  private:
 
@@ -37,6 +41,7 @@ class PrefsPageThemes : public PrefsPage
     QLabel* label[6];
 
     QStringList dirs;
+    QPushButton* removeButton;
     KListBox *themeList;
 
     void updateList();

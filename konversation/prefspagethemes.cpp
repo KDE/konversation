@@ -20,12 +20,16 @@
 #include <qbitmap.h>
 #include <qpainter.h>
 #include <qtooltip.h>
+#include <qpushbutton.h>
 
 #include <klistbox.h>
 #include <kurl.h>
 #include <kdebug.h>
+#include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
+#include <kio/job.h>
+#include <kio/netaccess.h>
 
 #include "preferences.h"
 #include "common.h"
@@ -45,9 +49,22 @@ PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
   QLabel* previewLabel = new QLabel(newParent);
   previewLabel->setText("Preview :");
   
+  
   QFrame* previewFrame = new QFrame(newParent);
-  QHBoxLayout *previewLayout=new QHBoxLayout( previewFrame );
+  QHBoxLayout *previewLayout=new QHBoxLayout(previewFrame);
 
+  QFrame* buttonFrame = new QFrame(newParent);
+  QHBoxLayout *buttonLayout=new QHBoxLayout(buttonFrame,spacingHint());
+  
+  QPushButton* installButton = new QPushButton(buttonFrame,"installButton");
+  removeButton = new QPushButton(buttonFrame,"removeButton");
+  
+  installButton->setText(i18n("I&nstall Theme"));
+  removeButton->setText(i18n("&Remove Theme"));
+  
+  buttonLayout->addWidget(installButton);
+  buttonLayout->addWidget(removeButton);
+  
   previewLayout->addStretch(9); 
   
   for(int i=0; i <= 5; ++i) {
@@ -65,11 +82,15 @@ PrefsPageThemes::PrefsPageThemes(QFrame* newParent,Preferences* newPreferences)
   gridLayout->addWidget(themeList, 2, 0);
   gridLayout->addWidget(previewLabel, 3, 0);
   gridLayout->addWidget(previewFrame, 4, 0);
+  gridLayout->addWidget(buttonFrame, 5, 0);
   
   updateList();
+  updateButtons();
   
   connect(themeList,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
-    
+  connect(themeList,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
+  connect(installButton,SIGNAL(clicked()),this,SLOT(installTheme()));
+  connect(removeButton,SIGNAL(clicked()),this,SLOT(removeTheme()));
 }
 
 PrefsPageThemes::~PrefsPageThemes()
@@ -83,6 +104,32 @@ void PrefsPageThemes::applyPreferences()
   theme = theme.section('/',-2,-2);
   kdDebug() << "Theme :" << theme << endl;
   preferences->setIconTheme( theme );
+}
+
+void PrefsPageThemes::installTheme()
+{
+}
+
+void PrefsPageThemes::removeTheme()
+{
+  QString dir;
+  QString themeName = themeList->currentText();
+
+  dir = dirs[themeList->currentItem()];
+  dir.remove("themerc");
+
+  int remove = KMessageBox::warningContinueCancel(0L,
+						  QString("Are you sure you want to remove %1 ?").arg(themeName),
+						  i18n("Remove Theme"),
+						  KStdGuiItem::cont(),
+						  "warningRemoveTheme"
+						  );
+
+  if( remove == KMessageBox::Continue ) 
+    {
+      KIO::del(KURL(dir));
+      updateList();
+    }
 }
 
 void PrefsPageThemes::updatePreview(int id)
@@ -122,7 +169,6 @@ void PrefsPageThemes::updateList()
 
   for(QStringList::Iterator it = dirs.begin(); it != dirs.end(); ++it)
     {
-
       if((*it).section('/',-2,-2) != currentTheme)
         ++index;
 
@@ -142,6 +188,19 @@ void PrefsPageThemes::updateList()
 
   themeList->setSelected(index,TRUE);
   updatePreview(index);
+}
+
+void PrefsPageThemes::updateButtons()
+{
+  QString dir = dirs[themeList->currentItem()];
+  QFile themeRC(dir);
+
+  if(!themeRC.open(IO_ReadOnly | IO_WriteOnly))
+    removeButton->setEnabled(false);
+  else
+    removeButton->setEnabled(true);
+
+  themeRC.close();
 }
 
 #include "prefspagethemes.moc"
