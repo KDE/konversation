@@ -15,21 +15,11 @@
 #ifndef PREFSPAGENOTIFY_H
 #define PREFSPAGENOTIFY_H
 
-#include "prefspage.h"
+#include "watchednicknames_preferences.h"
 
-/*
-  @author Dario Abatianni
-*/
+class Preferences;
 
-class KLineEdit;
-class QPushButton;
-class QCheckBox;
-class QLabel;
-class QSpinBox;
-
-class KListView;
-
-class PrefsPageNotify : public PrefsPage
+class PrefsPageNotify : public WatchedNicknames_Config
 {
   Q_OBJECT
 
@@ -50,17 +40,9 @@ class PrefsPageNotify : public PrefsPage
     void slotNotifyListView_SelectionChanged();
 
   private:
+    Preferences* preferences;
     QListViewItem* findBranch(QString name, bool generate);
     QListViewItem* findItemChild(const QListViewItem* parent, const QString& name);
-  
-    KListView* m_notifyListView;
-    QPushButton* m_newButton;
-    QPushButton* m_removeButton;
-    QCheckBox* m_useNotifyCheck;
-    QLabel* m_notifyDelayLabel;
-    QSpinBox* m_notifyDelaySpin;
-    KLineEdit* m_notifyActionInput;
-    QCheckBox* m_showWatchedNicksAtStartup;
 };
 
 #endif

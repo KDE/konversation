@@ -38,7 +38,7 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp \
 		joinchannelui.ui joinchanneldialog.cpp konversation_settings.kcfgc emoticon.cpp \
 		chatwindowbehaviour_preferences.ui alias_preferences.ui osd_preferences.ui \
 		theme_preferences.ui highlight_preferences.ui warnings_preferences.ui \
-		quickbuttons_preferences.ui
+		quickbuttons_preferences.ui watchednicknames_preferences.ui
 
 konversation_LDADD = $(COMPAT_LIBS) $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la -lkscript
 

@@ -1,0 +1,318 @@
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<class>WatchedNicknames_Config</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>WatchedNicknames_Config</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>550</width>
+            <height>578</height>
+        </rect>
+    </property>
+    <widget class="QSpinBox">
+        <property name="name">
+            <cstring>m_notifyDelaySpin</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>440</x>
+                <y>30</y>
+                <width>91</width>
+                <height>22</height>
+            </rect>
+        </property>
+        <property name="suffix">
+            <string> seconds</string>
+        </property>
+        <property name="maxValue">
+            <number>1000</number>
+        </property>
+        <property name="minValue">
+            <number>5</number>
+        </property>
+        <property name="whatsThis" stdset="0">
+            <string>Konversation will check the status of the nicknames listed below at this interval.</string>
+        </property>
+    </widget>
+    <widget class="KPushButton">
+        <property name="name">
+            <cstring>m_removeButton</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>460</x>
+                <y>140</y>
+                <width>80</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>&amp;Remove</string>
+        </property>
+        <property name="whatsThis" stdset="0">
+            <string>Click to remove the selected nickname from the list.</string>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>m_notifyDelayLabel</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>330</x>
+                <y>30</y>
+                <width>91</width>
+                <height>20</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Check &amp;interval:</string>
+        </property>
+        <property name="buddy" stdset="0">
+            <cstring>m_notifyDelaySpin</cstring>
+        </property>
+        <property name="whatsThis" stdset="0">
+            <string>Konversation will check the status of the nicknames listed below at this interval.</string>
+        </property>
+    </widget>
+    <widget class="KListView">
+        <column>
+            <property name="text">
+                <string>Watched Networks/Nicknames</string>
+            </property>
+            <property name="clickable">
+                <bool>true</bool>
+            </property>
+            <property name="resizable">
+                <bool>true</bool>
+            </property>
+        </column>
+        <property name="name">
+            <cstring>m_notifyListView</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>30</x>
+                <y>101</y>
+                <width>410</width>
+                <height>460</height>
+            </rect>
+        </property>
+        <property name="allColumnsShowFocus">
+            <bool>true</bool>
+        </property>
+        <property name="rootIsDecorated">
+            <bool>true</bool>
+        </property>
+        <property name="fullWidth">
+            <bool>true</bool>
+        </property>
+        <property name="itemsRenameable">
+            <bool>true</bool>
+        </property>
+        <property name="whatsThis" stdset="0">
+            <string>&lt;qt&gt;
+&lt;p&gt;
+When the nickname watcher is turned on, you will be notified when the nicknames appearing in the &lt;b&gt;Watched Networkss/Nicknames&lt;/b&gt; list come online or go offline.&lt;/p&gt;
+&lt;p&gt;You can also open the &lt;b&gt;Nicks Online&lt;/b&gt; window to see the status of all the watched nicknames.&lt;/p&gt;
+)
+&lt;/qt&gt;</string>
+        </property>
+    </widget>
+    <widget class="KPushButton">
+        <property name="name">
+            <cstring>m_newButton</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>460</x>
+                <y>100</y>
+                <width>80</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>&amp;New...</string>
+        </property>
+        <property name="whatsThis" stdset="0">
+            <string>Click to add a nickname to the list.</string>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>m_useNotifyCheck</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>30</x>
+                <y>30</y>
+                <width>160</width>
+                <height>20</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>&amp;Use nickname watcher</string>
+        </property>
+        <property name="whatsThis" stdset="0">
+            <string>&lt;qt&gt;
+&lt;p&gt;
+When the nickname watcher is turned on, you will be notified when the nicknamesappearing in the &lt;b&gt;Watched Networkss/Nicknames&lt;/b&gt; list come online or go offline.&lt;/p&gt;
+&lt;p&gt;You can also open the &lt;b&gt;Nicks Online&lt;/b&gt; window to see the status of all the watched nicknames.&lt;/p&gt;
+)
+&lt;/qt&gt;</string>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>m_showWatchedNicksAtStartup</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>30</x>
+                <y>50</y>
+                <width>250</width>
+                <height>20</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>&amp;Show watched nicks online on startup</string>
+        </property>
+        <property name="whatsThis" stdset="0">
+            <string>&lt;qt&gt;When checked, the &lt;b&gt;Nicks Online&lt;/b&gt; window will be automatically opened when starting Konversation.&lt;/qt&gt;</string>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>notifyActionLabel</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>30</x>
+                <y>70</y>
+                <width>340</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Command &amp;executed when nickname is double clicked:</string>
+        </property>
+        <property name="buddy" stdset="0">
+            <cstring>m_notifyActionInput</cstring>
+        </property>
+        <property name="whatsThis" stdset="0">
+            <string>&lt;qt&gt;
+&lt;p&gt;When you double click a nickname in the &lt;b&gt;Nicks Online&lt;/b&gt; window, this
+command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;/p&gt;
+&lt;p&gt;The following symbols can be used in the command:&lt;/p&gt;&lt;ul&gt;
+&lt;li&gt;%u: The nickname double clicked.&lt;/li&gt;
+&lt;li&gt;%K: Server password.&lt;/li&gt;
+&lt;li&gt;%n: Send command directly to the server instead of your input line.&lt;/li&gt;"
+&lt;/ul&gt;
+&lt;/qt&gt;</string>
+        </property>
+    </widget>
+    <widget class="KLineEdit">
+        <property name="name">
+            <cstring>m_notifyActionInput</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>380</x>
+                <y>70</y>
+                <width>160</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="whatsThis" stdset="0">
+            <string>&lt;qt&gt;
+&lt;p&gt;When you double click a nickname in the &lt;b&gt;Nicks Online&lt;/b&gt; window, this
+ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;/p&gt;
+&lt;p&gt;The following symbols can be used in the command:&lt;/p&gt;&lt;ul&gt;
+&lt;li&gt;%u: The nickname double clicked.&lt;/li&gt;
+&lt;li&gt;%K: Server password.&lt;/li&gt;
+&lt;li&gt;%n: Send command directly to the server instead of your input line.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/qt&gt;</string>
+        </property>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>m_useNotifyCheck</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>m_newButton</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>m_useNotifyCheck</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>m_showWatchedNicksAtStartup</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>m_useNotifyCheck</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>m_notifyDelaySpin</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>m_useNotifyCheck</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>m_notifyListView</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>m_useNotifyCheck</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>m_notifyDelayLabel</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>m_useNotifyCheck</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>notifyActionLabel</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>m_useNotifyCheck</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>m_notifyActionInput</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<includehints>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>klistview.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>klineedit.h</includehint>
+</includehints>
+</UI>
