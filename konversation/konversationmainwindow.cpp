@@ -487,6 +487,7 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
 
   connect(statusView,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
   connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );
+  connect(statusView,SIGNAL (prefsChanged()),this,SLOT (channelPrefsChanged()) );
   connect(server,SIGNAL (awayState(bool)),statusView,SLOT (indicateAway(bool)) );
 
   // make sure that frontServer gets set on adding the first status panel, too,

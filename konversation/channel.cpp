@@ -1539,8 +1539,9 @@ void Channel::openNickChangeDialog()
                                           KonversationApplication::preferences.getNicknameSize());
     connect(nickChangeDialog,SIGNAL (closeDialog(QSize)),this,SLOT (closeNickChangeDialog(QSize)) );
     connect(nickChangeDialog,SIGNAL (newNickname(const QString&)),this,SLOT (changeNickname(const QString&)) );
-    nickChangeDialog->show();
   }
+
+  nickChangeDialog->show();
 }
 
 void Channel::changeNickname(const QString& newNickname)

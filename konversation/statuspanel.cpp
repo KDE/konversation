@@ -24,6 +24,7 @@
 #include "ircinput.h"
 #include "ircview.h"
 #include "server.h"
+#include "nickchangedialog.h"
 
 StatusPanel::StatusPanel(QWidget* parent) :
               ChatWindow(parent)
@@ -32,6 +33,8 @@ StatusPanel::StatusPanel(QWidget* parent) :
 
   awayChanged=false;
   awayState=false;
+  
+  nickChangeDialog = 0;
 
   // set up text view, will automatically take care of logging
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer()
@@ -60,6 +63,8 @@ StatusPanel::StatusPanel(QWidget* parent) :
   connect(statusInput,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
   connect(statusInput,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
 
+  connect(nicknameButton,SIGNAL (clicked()),this,SLOT (openNickChangeDialog()) );
+  
   updateFonts();
 }
 
@@ -208,6 +213,34 @@ void StatusPanel::closeYourself()
     delete server;
     delete this;
   }
+}
+
+void StatusPanel::openNickChangeDialog()
+{
+  if(!nickChangeDialog)
+  {
+    nickChangeDialog=new NickChangeDialog(this,server->getNickname(),
+                                          identity.getNicknameList(),
+                                          KonversationApplication::preferences.getNicknameSize());
+    connect(nickChangeDialog,SIGNAL (closeDialog(QSize)),this,SLOT (closeNickChangeDialog(QSize)) );
+    connect(nickChangeDialog,SIGNAL (newNickname(const QString&)),this,SLOT (changeNickname(const QString&)) );
+  }
+
+  nickChangeDialog->show();
+}
+
+void StatusPanel::changeNickname(const QString& newNickname)
+{
+  server->queue("NICK "+newNickname);
+}
+
+void StatusPanel::closeNickChangeDialog(QSize newSize)
+{
+  KonversationApplication::preferences.setNicknameSize(newSize);
+  emit prefsChanged();
+
+  delete nickChangeDialog;
+  nickChangeDialog=0;
 }
 
 #include "statuspanel.moc"
