@@ -33,6 +33,11 @@
 #include "ksocketaddress.h"
 #include "kresolver.h"
 #include "ksockssocketdevice.h"
+#include "config.h"
+
+#ifndef kde_socklen_t
+#define kde_socklen_t socklen_t
+#endif
 
 using namespace KNetwork;
 
