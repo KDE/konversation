@@ -27,6 +27,7 @@
 #include <kstandarddirs.h>
 
 #include "dcctransfer.h"
+#include "dccresumedialog.h"
 #include "konversationapplication.h"
 
 DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString partner,QString name,QString size,QString ipString,QString portString) :
@@ -132,6 +133,9 @@ void DccTransfer::startGet()
 
     setPosition(fileSize);
 
+    QString newName(fullName);
+    int doResume=DccResumeDialog::ask(0,newName,dir.path());
+    /*
     int doResume=KMessageBox::questionYesNoCancel
                  (
                    0,
@@ -140,27 +144,41 @@ void DccTransfer::startGet()
                    i18n("Resume"),
                    i18n("Overwrite"),
                    "ResumeTransfer"
-                 );
+                 );  */
 
-    // If the file is empty we can forget about resuming
-    if(fileSize && doResume==KMessageBox::Yes)
+    kdDebug() << newName << " " << doResume << KDialogBase::Ok << " " << fileSize << endl;
+    switch(doResume)
     {
-      setType(ResumeGet);
-      setStatus(Resuming);
-      // Rollback for Resume
-      fileSize-=KonversationApplication::preferences.getDccRollback();
-      if(fileSize<0) fileSize=0;
-      setPosition(fileSize);
+      case KDialogBase::User1:
+        kdDebug() << 1 << endl;
+        file.setName(dir.path()+"/"+newName);
+        // fall through ...
 
-      emit resumeGet(getPartner(),getFile(),getPort(),getPosition());
-    }
-    else
-    {
-      setPosition(0);
-      // just overwrite the old file
-      if(doResume==KMessageBox::No) connectToSender();
-      // or abort
-      else abort();
+      case KDialogBase::Ok:
+        kdDebug() << 2 << endl;
+        if(fileSize)    // If the file is empty we can forget about resuming
+        {
+          kdDebug() << "2.1" << endl;
+          setType(ResumeGet);
+          setStatus(Resuming);
+          // Rollback for Resume
+          fileSize-=KonversationApplication::preferences.getDccRollback();
+          if(fileSize<0) fileSize=0;
+          setPosition(fileSize);
+
+          emit resumeGet(getPartner(),getFile(),getPort(),getPosition());
+        }
+        else abort();
+      break;
+      case KDialogBase::User2:
+        kdDebug() << 3 << endl;
+        setPosition(0);
+        // just overwrite the old file
+        connectToSender();
+      break;
+    // finally this can only mean that the user has clicked "cancel"
+      default:
+        abort();
     }
   }
   else connectToSender();
