@@ -11,7 +11,6 @@ MID-TERM:
 - Make [x] on tabs harder to click (1 second hover delay or similar)
 - Doxify the source
 - Per nick coloring in channel discussion
-- DCC RESUME should start counting cps from the beginning
 - Treeview with servers, list of channels / queries in a detachable window that also indicates new text
 - After being away a summary of lines with highlighting in its own window would be nice; a click on one line
   might jump to the according line in the channel/query-window
