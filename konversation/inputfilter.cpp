@@ -274,7 +274,11 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
 {
   if(command=="ping")
   {
-    server->queue("PONG "+trailing);
+    QString text;
+    text=(trailing.length()) ? trailing : parameterList.join(" ");
+    text=":"+text;
+    if(prefix.length()) text=prefix+" "+text;
+    server->queue("PONG "+text);
   }
   else if(command=="error :closing link:")
   {
