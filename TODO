@@ -9,7 +9,7 @@ after being away a summary of lines with highlighting in its own window would be
 additionally the text-search could offer a button "any highlight"
 additionally do some kind of marker to the lines that came in while being away; maybe with a special colour of the timestamp
 Per nick coloring in channel discussion
-Use checkForUtf8 to make non-UTF8-users able to at least read UTF8.
+Use KStringHandler::from8Bit to make non-UTF8-users able to at least read UTF8.
 DCC RESUME should start counting cps from the beginning
 Make coloring of list view and input lines an option
 Context menu on nick in nick should contain hostmask, realname, etc. infos (in a sub-menu)
