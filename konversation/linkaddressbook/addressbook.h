@@ -50,6 +50,7 @@ class Addressbook : public QObject,public KIMIface
     KABC::AddressBook *getAddressBook();
     
     static Addressbook *self();
+    QStringList allContactsNicks();	    
     QStringList allContacts();
     QStringList reachableContacts();
     QStringList onlineContacts();

@@ -696,9 +696,9 @@ void Server::notifyResponse(const QString& nicksOnline)
     // Create a lower case nick list from the notification reply
     QStringList nickLowerList=QStringList::split(' ',nicksOnline.lower());
     // Get watch list from preferences.
-    QString watchlist=KonversationApplication::preferences.getNotifyString();
+    QString watchlist=getNotifyString();
     // Create a case correct nick list from the watch list.
-    QStringList watchList=QStringList::split(' ',watchlist);
+    QStringList watchList=QStringList::split(' ',watchlist); 
     // Create a lower case nick list from the watch list.
     QStringList watchLowerList=QStringList::split(' ',watchlist.lower());
     // Any new watched nicks online?
@@ -820,7 +820,7 @@ void Server::notifyTimeout()
   if(KonversationApplication::preferences.getUseNotify())
   {
     // But only if there actually are nicks in the notify list
-    QString list=KonversationApplication::preferences.getNotifyString();
+    QString list=getNotifyString();
     if(!list.isEmpty())
     {
       queue("ISON "+list);
@@ -1160,7 +1160,7 @@ ChannelNickPtr Server::setChannelNick(const QString& channelName, const QString&
   if (!channelNick)
   {
     // Get watch list from preferences.
-    QString watchlist=KonversationApplication::preferences.getNotifyString();
+    QString watchlist=getNotifyString();
     // Create a lower case nick list from the watch list.
     QStringList watchLowerList=QStringList::split(' ',watchlist.lower());
     // If on the watch list, add channel and nick to unjoinedChannels list.
@@ -2098,13 +2098,17 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
 void Server::removeChannelNick(const QString&, const QString&) { }
 #endif
 
+QString Server::getNotifyString() {
+  return KonversationApplication::preferences.getNotifyString() +" " + Konversation::Addressbook::self()->allContactsNicks().join(" ");
+}
+
 // Remove channel from the joined list.
 // Nicknames in the channel are added to the unjoined list if they are in the watch list.
 #ifdef USE_NICKINFO
 void Server::removeJoinedChannel(const QString& channelName)
 {
   bool doSignal = false;
-  QString watchList = KonversationApplication::preferences.getNotifyString();
+  QString watchList = getNotifyString();
   QStringList watchListLower = QStringList::split(' ', watchList.lower());
   QString lcChannelName = channelName.lower();
   // Move the channel nick list from the joined to unjoined lists.
@@ -2359,7 +2363,7 @@ void Server::removeNickFromServer(const QString &nickname,const QString &reason)
 
 #ifdef USE_NICKINFO
   // Unless nick is in the watch list, delete it altogether, otherwise move it to nicknamesOffline list.
-  QString watchList = KonversationApplication::preferences.getNotifyString();
+  QString watchList = getNotifyString();
   QStringList watchListLower = QStringList::split(' ', watchList.lower());
   addNickToOfflineList(nickname, watchListLower);
 #endif

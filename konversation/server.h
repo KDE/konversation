@@ -179,7 +179,7 @@ class Server : public QObject
     void emitChannelNickChanged(const ChannelNickPtr channelNick);
     void emitNickInfoChanged(const NickInfoPtr nickInfo);
 	    
-    
+    QString Server::getNotifyString();
   signals:
     void nicknameChanged(const QString&);
     void serverLag(Server* server,int msec); // will be connected to KonversationMainWindow::updateLag()

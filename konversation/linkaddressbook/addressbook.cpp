@@ -63,6 +63,8 @@ bool Addressbook::hasNick(const KABC::Addressee &addressee, const QString &ircni
 	return false;
 
 }
+
+	
 QString Addressbook::getMainNick(const KABC::Addressee &addressee) {
 	//Get the first nick
 	//TODO: Strip off server part
@@ -275,6 +277,13 @@ QStringList Addressbook::allContacts() {
 		if(hasAnyNicks(*it,"")) contactUIDS.append((*it).uid());
 	return contactUIDS;
 }
+//Produces a string list of all the irc nicks that are known.
+QStringList Addressbook::allContactsNicks() {
+	QStringList contacts;
+	for( KABC::AddressBook::Iterator it = addressBook->begin(); it != addressBook->end(); ++it )
+		contacts += QStringList::split( QChar( 0xE000 ), (*it).custom("messaging/irc", "All") );
+	return contacts;
+}
 
 bool Addressbook::isOnline(KABC::Addressee &addressee) {
 	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
@@ -310,6 +319,10 @@ QString Addressbook::displayName(const QString &uid) {
 	return getMainNick(addressBook->findByUid(uid));
 }
 QString Addressbook::presenceString(const QString &uid) {
+	if(uid.isEmpty()) {
+	  kdDebug() << "Addressbook::presenceString() called with an empty uid" << endl;
+	  return QString("Error");
+	}
 	switch( presenceStatus(uid)) {
 	  case 0:
 		return i18n("On different servers to us");

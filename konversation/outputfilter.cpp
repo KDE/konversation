@@ -734,7 +734,7 @@ namespace Konversation {
         }
 
         // show (new) notify list to user
-        QString list = KonversationApplication::preferences.getNotifyString();
+        QString list = KonversationApplication::preferences.getNotifyString() + " " + Konversation::Addressbook::self()->allContacts().join(" ");
         result.typeString = i18n("Notify");
 
         if(list.isEmpty())
