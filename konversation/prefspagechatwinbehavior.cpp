@@ -55,7 +55,6 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QWidget* newParent, Preferenc
   kcfg_SortOrder->addColumn("");
   kcfg_SortOrder->header()->hide();
   kcfg_SortOrder->setSorting(-1);
-  kcfg_SortOrder->setMaximumHeight(kcfg_SortOrder->fontMetrics().height()*7);
 
   for(int index = 64; index != 0; index >>= 1)
   {
