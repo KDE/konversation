@@ -131,10 +131,22 @@ void DccTransfer::startGet()
       fileSize=file.size();
       file.close();
     }
+
+    setPosition(fileSize);
+
+    int doResume=KMessageBox::questionYesNoCancel
+                 (
+                   0,
+                   i18n("<qt>The file \"%1\" already exists. Do you want to resume the transfer</qt>").arg(getFile()),
+                   i18n("Resume transfer"),
+                   i18n("Resume"),
+                   i18n("Overwrite"),
+                   "ResumeTransfer"
+                 );
+
     // If the file is empty we can forget about resuming
-    if(fileSize)
+    if(fileSize && doResume==KMessageBox::Yes)
     {
-      // TODO: Ask user if they want to resume
       setType(ResumeGet);
       setStatus(Resuming);
       // Rollback for Resume
@@ -144,7 +156,14 @@ void DccTransfer::startGet()
 
       emit resumeGet(getPartner(),getFile(),getPort(),getPosition());
     }
-    else connectToSender();
+    else
+    {
+      setPosition(0);
+      // just overwrite the old file
+      if(doResume==KMessageBox::No) connectToSender();
+      // or abort
+      else abort();
+    }
   }
   else connectToSender();
 }
@@ -207,7 +226,7 @@ void DccTransfer::heard()
     {
       QString errorString=getErrorString(file.status());
 
-      KMessageBox::sorry (0,QString(errorString).arg(file.name()),i18n("DCC Send error"));
+      KMessageBox::sorry(0,QString(errorString).arg(file.name()),i18n("DCC Send error"));
       setStatus(Failed);
     }
   }

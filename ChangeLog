@@ -7,6 +7,7 @@ Changes from 0.10 to 0.11
 - Added prelimnary application icons
 - Send File in dcc panel now works
 - Added Send File context menu item in text views
+- Added dialog for Resume / Overwrite DCC Get files
 
 Changes from 0.9 to 0.10
 - Font encodings are now set via KCharsets
