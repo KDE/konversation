@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
   aboutData.addAuthor("John Tapsell",I18N_NOOP("Refactoring, KAddressBook/Kontact integration"), "john@geola.co.uk");
   aboutData.addAuthor("İsmail Dönmez",I18N_NOOP("SSL Support, Ported to KNetwork"),"ismail@kde.org.tr");
   aboutData.addAuthor("Shintaro Matsuoka",I18N_NOOP("DCC rewrite, Encodings improvements, OSD positioning"),"shin@shoegazed.org");
-  aboutData.addCredit("Gary Cramblitt",I18N_NOOP("Documentation, Watched nicks online improvements,Custom web browser extension"),"garycramblitt@comcast.net");
+  aboutData.addAuthor("Gary Cramblitt",I18N_NOOP("Documentation, Watched nicks online improvements,Custom web browser extension"),"garycramblitt@comcast.net");
   aboutData.addAuthor("Matthias Gierlings",I18N_NOOP("Color configurator, Highlight dialog"),"gismore@users.sourceforge.net");
   aboutData.addAuthor("Alex Zepeda",I18N_NOOP("DCOP interface"),"garbanzo@hooked.net");
   aboutData.addAuthor("Stanislav Karchebny",I18N_NOOP("Non-Latin1-Encodings"),"berkus@users.sourceforge.net");
