@@ -20,6 +20,7 @@
 #include <klocale.h>
 
 #include <qclipboard.h>
+#include <qregexp.h>
 
 #include "ircinput.h"
 
@@ -152,7 +153,7 @@ void IRCInput::paste()
   {
     bool signal=false;
     // replace \r with \n to make xterm pastes happy
-    text.replace("\r","\n");
+    text.replace(QRegExp("\r"),"\n");
     // does the text contain at least one newline character?
     if(text.find('\n')!=-1)
     {

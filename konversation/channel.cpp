@@ -809,8 +809,10 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
       nick=getNickByName(parameter);
       if(nick)
       {
+        // Only update counter if something has actually changed
+        if(plus && !nick->isOp()) adjustOps(1);
+        else if(!plus && nick->isOp()) adjustOps(-1);
         nick->setOp(plus);
-        adjustOps((plus) ? 1 : -1);
         updateNicksOps();
       }
     break;
