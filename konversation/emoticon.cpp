@@ -126,6 +126,10 @@ void EmotIcon::changeTheme(const QString& themeName)
 
 QString EmotIcon::filter(const QString& txt, const QFontMetrics& fm)
 {
+  if(!KonversationApplication::preferences.emotIconsEnabled()) {
+    return txt;
+  }
+
   QString filteredTxt = txt;
 
   for(EmotIconMap::iterator it = self()->m_emotIconMap.begin(); it != self()->m_emotIconMap.end(); ++it) {
