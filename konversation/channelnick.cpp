@@ -131,12 +131,35 @@ QString ChannelNick::tooltip() {
   QTextStream tooltip( &strTooltip, IO_WriteOnly );
 
   tooltip << "<qt>";
-  if(!addressee.formattedName().isEmpty())
-    tooltip << "<b><center>" << addressee.formattedName() << "</center></b>";
-  else
-    tooltip << "<b><center>" << getNickname() << "</center></b>";
 
-  tooltip << "<table>";
+  if(!addressee.formattedName().isEmpty())
+    tooltip << "<b><centre>" << addressee.formattedName() << "</centre></b>";
+  else
+    tooltip << "<b><centre>" << getNickname() << "</centre></b>";
+
+  KABC::Picture photo = addressee.photo();
+  KABC::Picture logo = addressee.logo();
+   if(photo.isIntern()) {
+    QMimeSourceFactory::defaultFactory()->setImage( "photo", photo.data() );
+    tooltip << "<img src=\"photo\">";
+  } else if(!photo.url().isEmpty()) {
+    //JOHNFLUX FIXME TODO:
+    //Are there security problems with this?  loading from an external refrence?
+    //Assuming not. 
+    tooltip << "<img src=\"" << photo.url() << "\">";
+  }
+  if(logo.isIntern()) {
+    QMimeSourceFactory::defaultFactory()->setImage( "logo", photo.data() );
+    tooltip << "<img src=\"logo\">";
+  } else if(!logo.url().isEmpty()) {
+    //JOHNFLUX FIXME TODO:
+    //Are there security problems with this?  loading from an external refrence?
+    //Assuming not. 
+    tooltip << "<img src=\"" << logo.url() << "\">";
+  }
+  
+ 
+   tooltip << "<table>";
  
   if(!addressee.emails().isEmpty()) {
     tooltip << "<tr><td><b>" << addressee.emailLabel() << ": </b></td><td>";
