@@ -245,7 +245,7 @@ void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QStr
         if(!nickInfo) {
 		QString user = addressee.fullEmail();
                 if(!user.isEmpty()) user = " (" + user + ")";
-                focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation to send a file to acontact, but the requested user%1 is not currently online.").arg(user));
+                focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation to send a file to a contact, but the requested user%1 is not currently online.").arg(user));
         	return;
         }
         nickInfo->getServer()->addDccSend(nickInfo->getNickname(), sourceURL, altFileName, fileSize);
@@ -265,7 +265,7 @@ void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QStr
  * @return whether the add succeeded.  False may signal already present, protocol not supported, or add operation not supported.
  */
 bool Addressbook::addContact( const QString &/*contactId*/, const QString &/*protocol*/ ) {
-	focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation to add contact.  Konversation does support this."));
+	focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation to add a contact.  Konversation does support this."));
 	return false;
 	//Nicks are auto added if they are put in the addressbook - I don' think there is anything useful I can do.
 }
