@@ -189,9 +189,9 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
         if(!isIgnore(prefix,Ignore::Query))
         {
           // create new query (server will check for dupes)
-          server->addQuery(sourceNick,sourceHostmask);
+          server->addQuery(sourceNick,sourceHostmask, false); //we didn't initiate this
           // send action to query
-          server->appendActionToQuery(sourceNick,ctcpArgument);
+	  server->appendActionToQuery(sourceNick,ctcpArgument);
 
 #ifdef USE_KNOTIFY
           // KNotify events...
@@ -339,8 +339,9 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
         if(!isIgnore(prefix,Ignore::Query))
         {
           // Create a new query (server will check for dupes)
-          server->addQuery(sourceNick,sourceHostmask);
+          server->addQuery(sourceNick,sourceHostmask, false/*we didn't initiate the add query*/);
           // Append this message to the query
+	  kdDebug() << "Query 2 inputfilter" << endl;
           server->appendToQuery(sourceNick,trailing);
 
 #ifdef USE_KNOTIFY

@@ -48,6 +48,7 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
    "show_remember_line_in_all_windows");
   showRememberLineInAllWindows->setChecked(preferences->getShowRememberLineInAllWindows());
 
+  
   redirectToStatusPaneCheck = new QCheckBox(i18n("&Redirect all status messages to the server status window"), parentFrame,
     "redirect_to_status_page_check");
   redirectToStatusPaneCheck->setChecked(preferences->getRedirectToStatusPane());

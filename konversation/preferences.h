@@ -398,6 +398,9 @@ class Preferences : public QObject
     bool getShowRememberLineInAllWindows();
     void setShowRememberLineInAllWindows(bool s);
 
+    bool getFocusNewQueries();
+    void setFocusNewQueries(bool s);
+    
     bool getHideUnimportantEvents();
     void setHideUnimportantEvents(bool state);
     
@@ -571,6 +574,7 @@ class Preferences : public QObject
 
     bool showTopic;
     bool showRememberLineInAllWindows;
+    bool focusNewQueries;
     bool hideUnimportantEvents;
     bool disableExpansion;
     

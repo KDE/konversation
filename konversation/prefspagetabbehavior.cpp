@@ -40,6 +40,11 @@ PrefsPageTabBehavior::PrefsPageTabBehavior(QFrame* newParent,Preferences* newPre
   bringToFrontCheck = new QCheckBox(i18n("Bring new tabs to &front"), parentFrame, "bring_to_front_check");
   bringToFrontCheck->setChecked(preferences->getBringToFront());
 
+  focusNewQueries = new QCheckBox(i18n("When someone queries you, focus new &query"), parentFrame, "focus_new_queries");
+  focusNewQueries->setChecked(preferences->getFocusNewQueries());
+  connect(bringToFrontCheck, SIGNAL(stateChanged(int)), this, SLOT(bringToFrontCheckChanged(int)));
+
+  
 #if QT_VERSION >= 0x030200
   tabBarCloseButtonCheck = new QCheckBox(i18n("&Show a close tab button to the right in the tab bar"),
     parentFrame, "tab_bar_close_button");
@@ -56,6 +61,8 @@ PrefsPageTabBehavior::PrefsPageTabBehavior(QFrame* newParent,Preferences* newPre
   tabsLayout->addMultiCellWidget(blinkingTabsCheck, row, row, 0, 1);
   row++;
   tabsLayout->addMultiCellWidget(bringToFrontCheck, row, row, 0, 1);
+  row++;
+  tabsLayout->addMultiCellWidget(focusNewQueries, row, row, 0, 2);
 #if QT_VERSION >= 0x030200
   row++;
   tabsLayout->addMultiCellWidget(tabBarCloseButtonCheck, row, row, 0, 1);
@@ -74,11 +81,18 @@ void PrefsPageTabBehavior::closeButtonsChanged(int state)
   closeButtonsAlignRight->setEnabled(state==2);
 }
 
+void PrefsPageTabBehavior::bringToFrontCheckChanged(int state)
+{
+  bringToFrontCheck->setChecked(state);
+  focusNewQueries->setEnabled(state==2);
+}
+
 void PrefsPageTabBehavior::applyPreferences()
 {
   preferences->setTabPlacement(tabPlacementCheck->isChecked() ? Preferences::Top : Preferences::Bottom);
   preferences->setBlinkingTabs(blinkingTabsCheck->isChecked());
   preferences->setBringToFront(bringToFrontCheck->isChecked());
+  preferences->setFocusNewQueries(focusNewQueries->isChecked());
   preferences->setCloseButtonsOnTabs(closeButtonsCheck->isChecked());
   preferences->setCloseButtonsAlignRight(closeButtonsAlignRight->isChecked());
 #if QT_VERSION >= 0x030200

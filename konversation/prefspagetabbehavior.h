@@ -36,11 +36,13 @@ class PrefsPageTabBehavior : public PrefsPage
 
   protected slots:
     void closeButtonsChanged(int state);
+    void bringToFrontCheckChanged(int state);
 
   protected:
     QCheckBox* tabPlacementCheck;
     QCheckBox* blinkingTabsCheck;
     QCheckBox* bringToFrontCheck;
+    QCheckBox* focusNewQueries;
     QCheckBox* closeButtonsCheck;
     QCheckBox* closeButtonsAlignRight;
 #if QT_VERSION >= 0x030200

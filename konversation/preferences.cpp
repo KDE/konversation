@@ -126,6 +126,7 @@ Preferences::Preferences()
   setNotifyDelay(20);
   setUseNotify(true);
 
+
   setHilightNick(true);
   setHilightOwnLines(false);
   setHilightNickColor("#ff0000");
@@ -201,6 +202,9 @@ Preferences::Preferences()
   setHideUnimportantEvents(false);
   setShowTopic(true);
 
+  setShowRememberLineInAllWindows(false);
+  setFocusNewQueries(true);
+  
   // Web Browser
   setWebBrowserUseKdeDefault(true);
   setWebBrowserCmd("mozilla \'%u\'");
@@ -774,6 +778,9 @@ void Preferences::setShowTopic(bool s) { showTopic = s; }
 
 bool Preferences::getShowRememberLineInAllWindows() { return showRememberLineInAllWindows; }
 void Preferences::setShowRememberLineInAllWindows(bool s) { showRememberLineInAllWindows = s; }
+
+bool Preferences::getFocusNewQueries() { return focusNewQueries; }
+void Preferences::setFocusNewQueries(bool s) { focusNewQueries = s; }
 
 bool Preferences::getHideUnimportantEvents()           { return hideUnimportantEvents; }
 void Preferences::setHideUnimportantEvents(bool state) { hideUnimportantEvents=state; }

@@ -268,7 +268,7 @@ class Server : public QObject
     void queueList(const QStringList &buffer);
     void queueAt(uint pos,const QString& buffer);
     void setNickname(const QString &newNickname);
-    void addQuery(const QString &nickname, const QString &hostmask);
+    void addQuery(const QString &nickname, const QString &hostmask, bool weinitiated = true);
     void closeQuery(const QString &name);
     void closeChannel(const QString &name);
     void quitServer();

@@ -366,6 +366,7 @@ void KonversationApplication::readOptions()
   preferences.setShowTopic(config->readBoolEntry("ShowTopic", preferences.getShowTopic()));
 
   preferences.setShowRememberLineInAllWindows(config->readBoolEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows()));
+  preferences.setFocusNewQueries(config->readBoolEntry("FocusNewQueries", preferences.getFocusNewQueries()));
 
   // Colors are now handled in preferences
 
@@ -707,6 +708,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ShowTopic", preferences.getShowTopic());
 
   config->writeEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows());
+  config->writeEntry("FocusNewQueries", preferences.getFocusNewQueries());
   config->writeEntry("FilterColorCodes", preferences.getFilterColors());
 
   // Colors are now handled in preferences

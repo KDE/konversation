@@ -319,9 +319,9 @@ void KonversationMainWindow::appendToFrontmost(const QString& type,const QString
 }
 
 #ifdef USE_MDI
-void KonversationMainWindow::addMdiView(ChatWindow* view,int color,bool on)
+void KonversationMainWindow::addMdiView(ChatWindow* view,int color,bool on, bool weinitiated)
 #else
-void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& label,bool on)
+void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& label,bool on, bool weinitiated)
 #endif
 {
   // TODO: Make sure to add DCC status tab at the end of the list and all others
@@ -343,6 +343,9 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
     if(!frontView->getTextInLine().isEmpty()) doBringToFront=false;
   }
 
+  if(!KonversationApplication::preferences.getFocusNewQueries() && view->getType()==ChatWindow::Query && !weinitiated)
+	  doBringToFront = false;
+  
   // bring view to front unless it's a raw log window or the user was typing
   if(KonversationApplication::preferences.getBringToFront() && doBringToFront &&
     view->getType()!=ChatWindow::RawLog)
@@ -720,7 +723,7 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
   return channel;
 }
 
-Query* KonversationMainWindow::addQuery(Server* server, const QString& name)
+Query* KonversationMainWindow::addQuery(Server* server, const QString& name, bool weinitiated)
 {
 #ifdef USE_MDI
   Query* query=new Query(name);
@@ -732,9 +735,9 @@ Query* KonversationMainWindow::addQuery(Server* server, const QString& name)
   query->setServer(server);
 
 #ifdef USE_MDI
-  addMdiView(query,0);
+  addMdiView(query,0, true, weinitiated);
 #else
-  addView(query,0,name);
+  addView(query,0,name, true, weinitiated);
 #endif
 
   connect(query,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );

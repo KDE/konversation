@@ -64,7 +64,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     RawLog* addRawLog(Server* server);
     ChannelListPanel* addChannelListPanel(Server* server);
     Channel* addChannel(Server* server,const QString& name);
-    Query* addQuery(Server* server,const QString& name);
+    Query* addQuery(Server* server,const QString& name, bool weinitiated=true);
 
     DccPanel* getDccPanel();
     void showView(ChatWindow* view);
@@ -158,9 +158,9 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     bool queryClose();
 
 #ifdef USE_MDI
-    void addMdiView(ChatWindow* view,int color,bool on=true);
+    void addMdiView(ChatWindow* view,int color,bool on=true, bool weinitiated=true);
 #else
-    void addView(ChatWindow* view,int color,const QString& label,bool on=true);
+    void addView(ChatWindow* view,int color,const QString& label,bool on=true, bool weinitiated=true);
 #endif
     void updateFrontView();
 

@@ -1203,13 +1203,13 @@ QString Server::getIp()
   return QString::null;
 }
 
-void Server::addQuery(const QString& nickname,const QString& hostmask)
+void Server::addQuery(const QString& nickname,const QString& hostmask, bool weinitiated )
 {
   // Only create new query object if there isn't already one with the same name
   Query* query=getQueryByName(nickname);
   if(!query)
   {
-    query=getMainWindow()->addQuery(this,nickname);
+    query=getMainWindow()->addQuery(this,nickname, weinitiated);
     query->setIdentity(getIdentity());
 
     connect(query,SIGNAL (sendFile(const QString&)),this,SLOT (requestDccSend(const QString &)) );
