@@ -18,6 +18,7 @@
 #include <ktextedit.h>
 #include <klineedit.h>
 #include <knuminput.h>
+#include <qpushbutton.h>
 
 #include "channeloptionsui.h"
 
@@ -31,12 +32,25 @@ ChannelOptionsDialog::ChannelOptionsDialog(const QString& channel, QWidget *pare
 
   m_widget->otherModesList->setRenameable(0, false);
   m_widget->otherModesList->setRenameable(1, true);
+  m_widget->otherModesList->hide();
 
   connect(m_widget->topicHistoryList, SIGNAL(clicked(QListViewItem*)), this, SLOT(topicHistoryItemClicked(QListViewItem*)));
+  connect(m_widget->toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
 }
 
 ChannelOptionsDialog::~ChannelOptionsDialog()
 {
+}
+
+void ChannelOptionsDialog::toggleAdvancedModes()
+{
+  bool ison = m_widget->toggleAdvancedModes->isOn();
+  m_widget->otherModesList->setShown(ison);
+  if(ison) {
+    m_widget->toggleAdvancedModes->setText("&Hide Advanced Modes <<");
+  } else {
+    m_widget->toggleAdvancedModes->setText("&Show Advanced Modes >>");
+  }
 }
 
 QString ChannelOptionsDialog::topic()

@@ -126,11 +126,11 @@ the Free Software Foundation; either version 2 of the License, or
                 <attribute name="title">
                     <string>Modes</string>
                 </attribute>
-                <grid>
+                <vbox>
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QCheckBox" row="0" column="0">
+                    <widget class="QCheckBox">
                         <property name="name">
                             <cstring>topicModeChBox</cstring>
                         </property>
@@ -141,7 +141,7 @@ the Free Software Foundation; either version 2 of the License, or
                             <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;The &lt;b&gt;T&lt;/b&gt;opic mode means that only the channel operator can change the topic for the channel.&lt;/qt&gt;</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="1" column="0">
+                    <widget class="QCheckBox">
                         <property name="name">
                             <cstring>messageModeChBox</cstring>
                         </property>
@@ -152,29 +152,7 @@ the Free Software Foundation; either version 2 of the License, or
                             <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;&lt;b&gt;N&lt;/b&gt;o messages from outside means that users that are not in the channel cannot sends messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.&lt;/qt&gt;</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="3" column="0">
-                        <property name="name">
-                            <cstring>inviteModeChBox</cstring>
-                        </property>
-                        <property name="text">
-                            <string>Only &amp;invited are allowed to join the channel</string>
-                        </property>
-                        <property name="whatsThis" stdset="0">
-                            <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;An &lt;b&gt;I&lt;/b&gt;nvite only channel means that people can only join the channel if they are invited.  To invite someone, a channel operator needs to issue the command&lt;em&gt;/invite nick&lt;/em&gt; from within the channel.&lt;/qt&gt;</string>
-                        </property>
-                    </widget>
-                    <widget class="QCheckBox" row="4" column="0">
-                        <property name="name">
-                            <cstring>moderatedModeChBox</cstring>
-                        </property>
-                        <property name="text">
-                            <string>&amp;Moderated channel, only people with voice can write to the channel</string>
-                        </property>
-                        <property name="whatsThis" stdset="0">
-                            <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A &lt;b&gt;M&lt;/b&gt;oderated channel is one where only operators, half-operators and those with voice can talk.&lt;/qt&gt;</string>
-                        </property>
-                    </widget>
-                    <widget class="QCheckBox" row="2" column="0">
+                    <widget class="QCheckBox">
                         <property name="name">
                             <cstring>secretModeChBox</cstring>
                         </property>
@@ -185,52 +163,29 @@ the Free Software Foundation; either version 2 of the License, or
                             <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A &lt;b&gt;S&lt;/b&gt;ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the &lt;em&gt;WHOIS&lt;/em&gt; command or anything similar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.&lt;/qt&gt;</string>
                         </property>
                     </widget>
-                    <widget class="KListView" row="6" column="0">
-                        <column>
-                            <property name="text">
-                                <string>Mode</string>
-                            </property>
-                            <property name="clickable">
-                                <bool>true</bool>
-                            </property>
-                            <property name="resizable">
-                                <bool>true</bool>
-                            </property>
-                        </column>
-                        <column>
-                            <property name="text">
-                                <string>Parameter</string>
-                            </property>
-                            <property name="clickable">
-                                <bool>true</bool>
-                            </property>
-                            <property name="resizable">
-                                <bool>true</bool>
-                            </property>
-                        </column>
+                    <widget class="QCheckBox">
                         <property name="name">
-                            <cstring>otherModesList</cstring>
+                            <cstring>inviteModeChBox</cstring>
                         </property>
-                        <property name="selectionMode" stdset="0">
-                            <enum>Single</enum>
+                        <property name="text">
+                            <string>Only &amp;invited are allowed to join the channel</string>
                         </property>
-                        <property name="allColumnsShowFocus">
-                            <bool>true</bool>
-                        </property>
-                        <property name="resizeMode">
-                            <enum>LastColumn</enum>
-                        </property>
-                        <property name="defaultRenameAction">
-                            <enum>Accept</enum>
-                        </property>
-                        <property name="itemsMovable">
-                            <bool>false</bool>
-                        </property>
-                        <property name="itemsRenameable">
-                            <bool>true</bool>
+                        <property name="whatsThis" stdset="0">
+                            <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;An &lt;b&gt;I&lt;/b&gt;nvite only channel means that people can only join the channel if they are invited.  To invite someone, a channel operator needs to issue the command&lt;em&gt;/invite nick&lt;/em&gt; from within the channel.&lt;/qt&gt;</string>
                         </property>
                     </widget>
-                    <widget class="QLayoutWidget" row="5" column="0">
+                    <widget class="QCheckBox">
+                        <property name="name">
+                            <cstring>moderatedModeChBox</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&amp;Moderated channel, only people with voice can write to the channel</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A &lt;b&gt;M&lt;/b&gt;oderated channel is one where only operators, half-operators and those with voice can talk.&lt;/qt&gt;</string>
+                        </property>
+                    </widget>
+                    <widget class="QLayoutWidget">
                         <property name="name">
                             <cstring>layout11</cstring>
                         </property>
@@ -304,7 +259,93 @@ the Free Software Foundation; either version 2 of the License, or
                             </widget>
                         </grid>
                     </widget>
-                </grid>
+                    <widget class="QLayoutWidget">
+                        <property name="name">
+                            <cstring>layout2</cstring>
+                        </property>
+                        <hbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QPushButton">
+                                <property name="name">
+                                    <cstring>toggleAdvancedModes</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Show &amp;Advanced Modes &gt;&gt;</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+A, Backspace, Tab, Backspace</string>
+                                </property>
+                                <property name="toggleButton">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                            <spacer>
+                                <property name="name">
+                                    <cstring>spacer3</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>301</width>
+                                        <height>31</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </hbox>
+                    </widget>
+                    <widget class="KListView">
+                        <column>
+                            <property name="text">
+                                <string>Mode</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>true</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property name="text">
+                                <string>Parameter</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>true</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <property name="name">
+                            <cstring>otherModesList</cstring>
+                        </property>
+                        <property name="selectionMode" stdset="0">
+                            <enum>Single</enum>
+                        </property>
+                        <property name="allColumnsShowFocus">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizeMode">
+                            <enum>LastColumn</enum>
+                        </property>
+                        <property name="defaultRenameAction">
+                            <enum>Accept</enum>
+                        </property>
+                        <property name="itemsMovable">
+                            <bool>false</bool>
+                        </property>
+                        <property name="itemsRenameable">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </vbox>
             </widget>
         </widget>
     </vbox>
@@ -330,9 +371,9 @@ the Free Software Foundation; either version 2 of the License, or
 <includehints>
     <includehint>klistview.h</includehint>
     <includehint>ktextedit.h</includehint>
-    <includehint>klistview.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>klineedit.h</includehint>
+    <includehint>klistview.h</includehint>
 </includehints>
 </UI>
