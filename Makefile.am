@@ -1,2 +1,2 @@
-SUBDIRS = konversation images scripts data
+SUBDIRS = konversation images scripts
 EXTRA_DIST = konversation.kdevprj AUTHORS COPYING ChangeLog INSTALL README TODO
