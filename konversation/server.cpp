@@ -395,7 +395,7 @@ void Server::ircServerConnectionSuccess()
   reconnectCounter=0;
 
   connect(this,SIGNAL (nicknameChanged(const QString&)),statusView,SLOT (setNickname(const QString&)) );
-  statusView->appendServerMessage(i18n("Info"),i18n("Connected! Logging in..."));
+  statusView->appendServerMessage(i18n("Info"),i18n("Connected; logging in..."));
 
   QString connectString="USER " +
                         identity->getIdent() +
