@@ -336,8 +336,9 @@ void KonversationMainWindow::showMenubar(bool dontShowWarning)
 void KonversationMainWindow::showStatusbar()
 {
 }
-/** Call this when you have already put a message in the serverView window, and want a message in the front most
- *  window if it's on the same server, but not put the message twice.
+
+/** Call this when you have already put a message in the serverView window, 
+ *   and want a message in the front most window if it's on the same server, but not put the message twice.
  */
 void KonversationMainWindow::appendToFrontmostIfDifferent(const QString& type,const QString& message,ChatWindow* serverView)
 {
@@ -952,7 +953,10 @@ void KonversationMainWindow::updateFrontView()
       connect(view, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
       view->emitUpdateInfo();
     } else {
-      m_channelInfoLabel->setText(view->getName());
+      if( view->getName() != "ChatWindowObject" )
+	m_channelInfoLabel->setText(view->getName());
+      else
+	m_channelInfoLabel->setText(QString::null);
     }
 
     // Make sure that only text views get to be the searchView
@@ -1197,7 +1201,7 @@ void KonversationMainWindow::updateSSLInfo(Server* server)
 {
   if(server == frontServer && server->getUseSSL() && server->isConnected())
     {
-      QObject::disconnect(m_sslLabel,0,0,0);
+      QObject::disconnect(m_sslLabel);
       QObject::connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
       QToolTip::add(m_sslLabel,server->getSSLInfo());
       m_sslLabel->show();
