@@ -97,7 +97,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   
   m_buttonAccept = new QPushButton(icon("player_play"), i18n("&Accept"), buttonsBox, "start_dcc");
   m_buttonAbort  = new QPushButton(icon("stop"),        i18n("A&bort"),  buttonsBox, "abort_dcc");
-  m_buttonClear  = new QPushButton(icon("editdelete"),  i18n("&Clear Item"),  buttonsBox, "clear_dcc");
+  m_buttonClear  = new QPushButton(icon("editdelete"),  i18n("&Clear"),  buttonsBox, "clear_dcc");
   m_buttonOpen   = new QPushButton(icon("exec"),        i18n("&Open File"),   buttonsBox, "open_dcc_file");
   m_buttonRemove = new QPushButton(icon("edittrash"),   i18n("&Remove File"), buttonsBox, "remove_dcc_file");
   m_buttonDetail = new QPushButton(icon("view_text"),   i18n("DCC &Detail"), buttonsBox, "detail_dcc");
@@ -125,7 +125,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   m_popup->insertItem(icon("player_play"),     i18n("&Accept"),                     Popup::Accept);
   m_popup->insertItem(icon("stop"),            i18n("A&bort"),                      Popup::Abort);
   m_popup->insertSeparator(); // -----
-  m_popup->insertItem(icon("editdelete"),      i18n("&Clear Item"),                 Popup::Clear);
+  m_popup->insertItem(icon("editdelete"),      i18n("&Clear"),                      Popup::Clear);
   m_popup->insertSeparator(); // -----
   m_popup->insertItem(icon("exec"),            i18n("&Open File"),                  Popup::Open);
   m_popup->insertItem(icon("edittrash"),       i18n("&Remove File"),                Popup::Remove);
