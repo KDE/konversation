@@ -326,14 +326,12 @@ void Server::incoming()
   int len=0;
   bool lost=false;
 
-  do
-  {
-    len=read(serverSocket->fd(),buffer,512);
-    if(len==0) lost=true;
-    buffer[len]=0;
+  len=read(serverSocket->fd(),buffer,512);
 
-    inputBuffer+=buffer;
-  } while(len==512);
+  if(len==0) lost=true;
+  buffer[len]=0;
+
+  inputBuffer+=buffer;
 
   if(lost) broken(0);
 }

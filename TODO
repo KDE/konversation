@@ -7,6 +7,8 @@ Add a possibility to close the dcc panel via GUI
 Pasting into text views should trigger the paste mechanism
 Make colors for nick list configurable via GUI
 <lizard> ich will nen sortcut haben das wenn ich irgendwo ssh eingebe das mit ne shell aufgeht ;)
+Let the user decide how many quick buttons they want.
+Double click actions for nick list and notify list.
 
 
 Hurga: ^G shall beep
