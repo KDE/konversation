@@ -31,6 +31,9 @@ QString removeIrcMarkup(const QString& text)
   // Escape text decoration
   escaped.remove(colorRegExp);
 
+  // Replace Mirc's 0x03 characters too, they show up us rectangles
+  escaped.remove(QChar(0x03));
+
   return escaped;
 }
 
