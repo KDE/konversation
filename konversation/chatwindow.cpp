@@ -29,8 +29,10 @@
 ChatWindow::ChatWindow(QWidget* parent)
 {
   setName("ChatWindowObject");
+  
   parentWidget=parent;
   firstLog=true;
+  server=0;
 
   setMargin(margin());
   setSpacing(spacing());
