@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="6">
+<kpartgui name="konversation" version="7">
 
   <MenuBar>
     <Menu name="file">
@@ -12,6 +12,7 @@
       <Action name="clear_window" />
       <Action name="previous_tab" />
       <Action name="next_tab" />
+      <Action name="close_tab" />
     </Menu>
     <Menu name="windows">
       <Text>&amp;Windows</Text>

@@ -73,6 +73,9 @@ void LedTabWidget::tabSelected(int id)
 
 void LedTabWidget::tabClosed(int id)
 {
+  //  if id is -1 then get identifier for currently visible tab
+  if(id==-1) id=tabBar()->tab(tabBar()->currentTab())->identifier();
+
   LedTab* tab=tabBar()->tab(id);
   if(tab==0) kdWarning() << "LedTabWidget::closeTab(): tab==0!" << endl;
   else emit closeTab(tab->getWidget());

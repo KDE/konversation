@@ -97,11 +97,12 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
           // support ^U (delete text in input box)
           if(keyEvent->ascii()==21) clear();
           // support ^W (delete word)
-          else if(keyEvent->ascii()==23)
-          {
-            cursorWordBackward(true);
-            cut();
-          }
+          // KDE has CTRL Backspace for that ...
+//          else if(keyEvent->ascii()==23)
+//          {
+//            cursorWordBackward(true);
+//            cut();
+//          }
 //          else kdDebug() << keyEvent->ascii() << endl;
       }
     }

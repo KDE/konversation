@@ -29,6 +29,7 @@ Changes from 0.12 to 0.13
 - Added /unban command
 - Applied a patch by Christian Muehlhaeuser for OSD functions (thanks)
 - Applied a patch by Sascha Cunz for extended user modes beyond @ and + (thanks)
+- Applied a patch by Steve Wollkind to close visible tab via shortcut (thanks)
 
 Changes from 0.11 to 0.12
 - Now handles multi server mode in one single window

@@ -57,6 +57,7 @@ int main(int argc, char* argv[])
   aboutData.addCredit("Frauke Oster",I18N_NOOP("System tray patch"),"frauke@frsv.de");
   aboutData.addCredit("Lucijan Busch",I18N_NOOP("Bug fixes"),"lucijan@kde.org");
   aboutData.addAuthor("Sascha Cunz",I18N_NOOP("Extended user modes patch"),"mail@sacu.de");
+  aboutData.addAuthor("Steve Wollkind",I18N_NOOP("Close visible tab with shortcut patch"),"steve@njord.org");
 
   KCmdLineArgs::init(argc,argv,&aboutData);
 

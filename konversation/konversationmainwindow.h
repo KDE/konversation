@@ -75,6 +75,7 @@ class KonversationMainWindow : public KMainWindow
     void openPrefsDialog(Preferences::Pages page);
     void quitServer();
     void nicksNowOnline(const QString& serverName,const QStringList& list);
+    void closeTab(int id);
 
   public slots:
     void addDccPanel();     // connected in server class
@@ -115,6 +116,7 @@ class KonversationMainWindow : public KMainWindow
 
     void nextTab();
     void previousTab();
+    void closeTab();
 
     // I hope we find a better way soon!
     void goToTab0();

@@ -96,6 +96,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   // Actions to navigate through the different pages
   new KAction(i18n("Next Tab"),0,KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
   new KAction(i18n("Previous Tab"),0,KShortcut("Alt+Left"),this,SLOT(previousTab()),actionCollection(),"previous_tab");
+// TODO: I18N() after freeze
+  new KAction(QString("Close Tab"),0,KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
   new KAction(i18n("Go to Tab Number %1").arg( 1),0,KShortcut("Alt+1"),this,SLOT(goToTab0()),actionCollection(),"go_to_tab_1");
   new KAction(i18n("Go to Tab Number %1").arg( 2),0,KShortcut("Alt+2"),this,SLOT(goToTab1()),actionCollection(),"go_to_tab_2");
   new KAction(i18n("Go to Tab Number %1").arg( 3),0,KShortcut("Alt+3"),this,SLOT(goToTab2()),actionCollection(),"go_to_tab_3");
@@ -124,6 +126,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 
   connect( viewContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changeView(QWidget*)) );
   connect( viewContainer,SIGNAL (closeTab(QWidget*)),this,SLOT (closeView(QWidget*)) );
+  connect(this, SIGNAL (closeTab(int)), viewContainer, SLOT (tabClosed(int)));
 
   // set up system tray
   tray=new KSystemTray(this);
@@ -657,6 +660,12 @@ void KonversationMainWindow::tooLongLag(Server* lagServer,int msec)
 void KonversationMainWindow::resetLag()
 {
   statusBar()->changeItem(i18n("Lag: not known"),LagOMeter);
+}
+
+void KonversationMainWindow::closeTab()
+{
+  // -1 = close currently visible tab
+  emit closeTab(-1);
 }
 
 void KonversationMainWindow::nextTab()
