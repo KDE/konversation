@@ -124,7 +124,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   new KAction(i18n("&Open Logfile"), "history", 0, this, SLOT(openLogfile()), actionCollection(), "open_logfile");
 
   new KAction(i18n("&Channel List"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
-  new KAction(i18n("&URL Catcher"), 0, 0, this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
+  new KToggleAction(i18n("&URL Catcher"), 0, 0, this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
 
   new KAction(i18n("&New Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
 
@@ -391,11 +391,12 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
   bool doBringToFront=true;
 
   // make sure that bring to front only works when the user wasn't typing something
-  if(frontView)
+  if(frontView && view->getType() != ChatWindow::UrlCatcher && 
+		  view->getType() != ChatWindow::Konsole)
   {
     if(!frontView->getTextInLine().isEmpty()) doBringToFront=false;
   }
-
+  
   if(!KonversationApplication::preferences.getFocusNewQueries() && view->getType()==ChatWindow::Query && !weinitiated)
 	  doBringToFront = false;
 
@@ -426,9 +427,10 @@ void KonversationMainWindow::showView(ChatWindow* view)
   if(viewContainer->isVisible())
   {
     // TODO: add adjustFocus() here?
-    viewContainer->showPage(view);
+    viewContainer->showPage(view);  //This does not appear to call changeView
   }
 #endif
+//  changeView(view);
 }
 
 #ifdef USE_MDI
@@ -691,6 +693,13 @@ void KonversationMainWindow::addUrlCatcher()
       QString urlItem=urlList[index];
       urlCatcherPanel->addUrl(urlItem.section(' ',0,0),urlItem.section(' ',1,1));
     } // for
+    (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(true);
+  } else if((ChatWindow *)frontView != (ChatWindow *)urlCatcherPanel){
+    showView(urlCatcherPanel);
+    (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(true);
+  } else {
+    closeUrlCatcher();
+    (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(false);
   }
 }
 

@@ -91,7 +91,9 @@ class ChatWindow : public BASE_CLASS
      *  in the case of konsolepanel.  This should be set as soon
      *  as possible after creation.
      */
-    void setMainWindow(KonversationMainWindow *mainWindow);
+    virtual void setMainWindow(KonversationMainWindow *mainWindow);
+
+    KonversationMainWindow *getMainWindow(void);
     /** Get the server this is linked to.
      *  @return The server it is associated with, or null if none.
      */
@@ -262,13 +264,13 @@ class ChatWindow : public BASE_CLASS
     bool m_notificationsEnabled;
     
     bool m_channelEncodingSupported;
-  private:
     /** This should always be non-null.  Used to enable/disable mainWindow
-     *  kactions.  Private because this shouldn't be modified directly
+     *  kactions.  This shouldn't be modified directly
      *  by anything by setMainWindow.
      *  @see setMainWindow
      */
     KonversationMainWindow *m_mainWindow;
+
 };
 
 #endif

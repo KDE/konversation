@@ -36,6 +36,10 @@ class UrlCatcher : public ChatWindow
     UrlCatcher(QWidget* parent);
 #endif
     ~UrlCatcher();
+    
+    virtual void setMainWindow(KonversationMainWindow *mainWindow);
+    
+    virtual bool canBeFrontView()   { return true; }
 
   signals:
     void deleteUrl(const QString& who,const QString& url);
@@ -53,7 +57,6 @@ class UrlCatcher : public ChatWindow
     void deleteUrlClicked();
     void saveListClicked();
     void clearListClicked();
-
   protected:
 #ifdef USE_MDI
     virtual void closeYourself(ChatWindow*);

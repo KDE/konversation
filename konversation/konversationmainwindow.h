@@ -79,6 +79,9 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     Query* addQuery(Server* server,const NickInfoPtr & name, bool weinitiated=true);
 
     DccPanel* getDccPanel();
+    /** 
+     * Bring this view to the front.
+     */
     void showView(ChatWindow* view);
 
     /** Some errors need to be shown, even when konversation is minimized.
@@ -152,7 +155,9 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void showToolbar();
     void showStatusbar();
     void showMenubar(bool dontShowWarning = false);
-
+    /**
+     * @see showView
+     */
     void changeView(QWidget* view);
     void closeView(QWidget* view);
 

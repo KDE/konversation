@@ -96,6 +96,11 @@ void ChatWindow::setLabelColor(const QString& color)
   labelColor=color;
 }
 
+KonversationMainWindow *ChatWindow::getMainWindow(void)
+{
+	return m_mainWindow;
+}
+
 void ChatWindow::setOn(bool on,bool important)
 {
   if(on)

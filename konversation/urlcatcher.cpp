@@ -19,6 +19,7 @@
 #include <qwhatsthis.h>
 
 #include <kapplication.h>
+#include <kactionclasses.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <klistview.h>
@@ -29,7 +30,9 @@
 #include <kshell.h>
 
 #include "urlcatcher.h"
+#include "server.h"
 #include "konversationapplication.h"
+#include "konversationmainwindow.h"
 
 #ifdef USE_MDI
 UrlCatcher::UrlCatcher(QString caption) : ChatWindow(caption)
@@ -88,12 +91,21 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
 
   saveListButton->setEnabled(false);
   clearListButton->setEnabled(false);
+ 
 
   urlSelected();
 }
 
+void UrlCatcher::setMainWindow(KonversationMainWindow *mainWindow) 
+{
+  ChatWindow::setMainWindow(mainWindow);
+  if(mainWindow)
+    (dynamic_cast<KToggleAction*>(mainWindow->actionCollection()->action("open_url_catcher")))->setChecked(true);
+}
 UrlCatcher::~UrlCatcher()
 {
+  if(m_mainWindow)
+    (dynamic_cast<KToggleAction*>(m_mainWindow->actionCollection()->action("open_url_catcher")))->setChecked(true);
 }
 
 void UrlCatcher::urlSelected()
