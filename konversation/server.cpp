@@ -1241,7 +1241,7 @@ void Server::dcopSay(const QString& target,const QString& command)
 
 void Server::dcopInfo(const QString& string)
 {
-  appendStatusMessage(i18n("DCOP"),string);
+  appendMessageToFrontmost(i18n("DCOP"),string);
 }
 
 void Server::ctcpReply(const QString &receiver,const QString &text)
@@ -1685,7 +1685,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 
   ip.setAddress(dccArguments[1].toULong());
 
-  appendStatusMessage(i18n("DCC"),
+  appendMessageToFrontmost(i18n("DCC"),
                       i18n("%1 offers the file \"%2\" (%3 bytes) for download (%4:%5).")
                               .arg(sourceNick)               // name
                               .arg(dccArguments[0])          // file
@@ -1737,7 +1737,7 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
   kdDebug() << "dccSendRequest sent" << endl;
   Konversation::OutputFilterResult result = outputFilter->sendRequest(partner,fileName,address,port,size);
   queue(result.toServer);
-  appendStatusMessage(result.typeString, result.output);
+  appendMessageToFrontmost(result.typeString, result.output);
 }
 
 void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, KIO::filesize_t startAt)
@@ -1745,7 +1745,7 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
   SHOW;
   Konversation::OutputFilterResult result = outputFilter->resumeRequest(sender,fileName,port,startAt);
   queue(result.toServer);
-  appendStatusMessage(result.typeString, result.output);
+  appendMessageToFrontmost(result.typeString, result.output);
 }
 
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
@@ -1763,12 +1763,12 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
   {
     // overcome mIRCs brain-dead "file.ext" substitution
     QString fileName=dccTransfer->getFileName();
-    appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(sourceNick).arg(dccArguments[2]));
+    appendMessageToFrontmost(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(sourceNick).arg(dccArguments[2]));
     dccTransfer->startResume(dccArguments[2].toULong());
   }
   else
   {
-    appendStatusMessage(i18n("Error"),i18n("No DCC download running on port %1.").arg(dccArguments[1]));
+    appendMessageToFrontmost(i18n("Error"),i18n("No DCC download running on port %1.").arg(dccArguments[1]));
   }
 }
 
@@ -1787,37 +1787,37 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
     QString fileName=dccTransfer->getFileName();
     if(dccTransfer->setResume(dccArguments[2].toULong()))
     {
-      appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(recipient).arg(dccArguments[2]));
+      appendMessageToFrontmost(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(recipient).arg(dccArguments[2]));
       Konversation::OutputFilterResult result = outputFilter->acceptRequest(recipient,
         fileName, dccArguments[1], dccArguments[2].toUInt());
       queue(result.toServer);
-      appendStatusMessage(result.typeString, result.output);
+      appendMessageToFrontmost(result.typeString, result.output);
     }
     else
     {
-      appendStatusMessage(i18n("Error"),i18n("Received invalid resume request for file \"%1\" (position %2) from %3.").arg(fileName).arg(dccArguments[2]).arg(recipient));
+      appendMessageToFrontmost(i18n("Error"),i18n("Received invalid resume request for file \"%1\" (position %2) from %3.").arg(fileName).arg(dccArguments[2]).arg(recipient));
     }
   }
   else
   {
-    appendStatusMessage(i18n("Error"),i18n("No DCC upload running on port %1.").arg(dccArguments[1]));
+    appendMessageToFrontmost(i18n("Error"),i18n("No DCC upload running on port %1.").arg(dccArguments[1]));
   }
 }
 
 void Server::dccGetDone(const QString &fileName, DccTransfer::DccStatus status, const QString &errorMessage)
 {
   if(status==DccTransfer::Done)
-    appendStatusMessage(i18n("DCC"),i18n("DCC download of file \"%1\" finished.").arg(fileName));
+    appendMessageToFrontmost(i18n("DCC"),i18n("DCC download of file \"%1\" finished.").arg(fileName));
   else if(status==DccTransfer::Failed)
-    appendStatusMessage(i18n("DCC"),i18n("DCC download of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
+    appendMessageToFrontmost(i18n("DCC"),i18n("DCC download of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
 }
 
 void Server::dccSendDone(const QString &fileName, DccTransfer::DccStatus status, const QString &errorMessage)
 {
   if(status==DccTransfer::Done)
-    appendStatusMessage(i18n("DCC"),i18n("DCC upload of file \"%1\" finished.").arg(fileName));
+    appendMessageToFrontmost(i18n("DCC"),i18n("DCC upload of file \"%1\" finished.").arg(fileName));
   else if(status==DccTransfer::Failed)
-    appendStatusMessage(i18n("DCC"),i18n("DCC upload of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
+    appendMessageToFrontmost(i18n("DCC"),i18n("DCC upload of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
 }
 
 void Server::dccStatusChanged(const DccTransfer *item)
@@ -2823,12 +2823,12 @@ void Server::invitation(const QString& nick,const QString& channel)
 
 void Server::scriptNotFound(const QString& name)
 {
-  appendStatusMessage(i18n("DCOP"),i18n("Error: Could not find script \"%1\".").arg(name));
+  appendMessageToFrontmost(i18n("DCOP"),i18n("Error: Could not find script \"%1\".").arg(name));
 }
 
 void Server::scriptExecutionError(const QString& name)
 {
-  appendStatusMessage(i18n("DCOP"),i18n("Error: Could not execute script \"%1\". Check file permissions.").arg(name));
+  appendMessageToFrontmost(i18n("DCOP"),i18n("Error: Could not execute script \"%1\". Check file permissions.").arg(name));
 }
 
 void Server::away()

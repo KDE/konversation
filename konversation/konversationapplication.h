@@ -184,3 +184,4 @@ class KonversationApplication : public KUniqueApplication
 };
 
 #endif
+

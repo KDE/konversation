@@ -258,8 +258,7 @@ void KonversationApplication::dcopSay(const QString& server,const QString& targe
 
 void KonversationApplication::dcopInfo(const QString& string)
 {
-  Server* lookServer=serverList.first();
-  if(lookServer) lookServer->dcopInfo(string);
+  mainWindow->appendToFrontmost(i18n("DCOP"), string, 0);
 }
 
 void KonversationApplication::insertRememberLine()
