@@ -62,7 +62,6 @@ class LedTab : public QObject,public QTab
     QWidget* widget;
     Images images;
     QString labelColor;
-
 };
 
 #endif

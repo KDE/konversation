@@ -182,24 +182,28 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
 {
   LedTab* t=static_cast<LedTab*>(tab);
 
-  // do we want close widgets on the tabs?
-  if(KonversationApplication::preferences.getCloseButtonsOnTabs())
-  {
-    QRect r = br;
-    bool selected = currentTab() == t->identifier();
-    if ( t->iconSet()) {
-        // the tab has an iconset, draw it in the right mode
-        QIconSet::Mode mode = (t->isEnabled() && isEnabled())
-            ? QIconSet::Normal : QIconSet::Disabled;
-        if ( mode == QIconSet::Normal && has_focus )
-            mode = QIconSet::Active;
-        QPixmap pixmap = t->iconSet()->pixmap( QIconSet::Small, mode );
-        QPixmap close_pixmap(remove_xpm);
-        int pixw = pixmap.width();
-        int pixh = pixmap.height();
-        int close_pixh = close_pixmap.height();
-        r.setLeft( r.left() + pixw + LABEL_OFFSET);
-        r.setRight( r.right() + 2 + LABEL_OFFSET);
+  QRect r = br;
+  bool selected = currentTab() == t->identifier();
+  if ( t->iconSet()) {
+      // the tab has an iconset, draw it in the right mode
+      QIconSet::Mode mode = (t->isEnabled() && isEnabled())
+          ? QIconSet::Normal : QIconSet::Disabled;
+      if ( mode == QIconSet::Normal && has_focus )
+          mode = QIconSet::Active;
+      QPixmap pixmap = t->iconSet()->pixmap( QIconSet::Small, mode );
+      QPixmap close_pixmap(remove_xpm);
+      int pixw = pixmap.width();
+      int pixh = pixmap.height();
+      int close_pixh = close_pixmap.height();
+
+      r.setLeft( r.left() + pixw);
+      r.setRight( r.right() + 2);
+
+      // do we want close widgets on the tabs?
+      if(KonversationApplication::preferences.getCloseButtonsOnTabs())
+      {
+        r.setLeft( r.left() + LABEL_OFFSET);
+        r.setRight( r.right() + LABEL_OFFSET);
         // ### the pixmap shift should probably not be hardcoded..
         p->drawPixmap( br.left() + 6 + LABEL_OFFSET /* + ((selected == TRUE) ? 0 : 1) */,
                        br.center().y()-pixh/2 + ((selected == TRUE) ? 0 : 1),
@@ -208,6 +212,14 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
         p->drawPixmap( br.left(),
                        br.center().y()-close_pixh/2,
                        close_pixmap );
+      }
+      else
+      {
+        // ### the pixmap shift should probably not be hardcoded..
+        p->drawPixmap( br.left() + 2 /* + ((selected == TRUE) ? 0 : 1) */,
+                       br.center().y()-pixh/2 + ((selected == TRUE) ? 0 : 1),
+                       pixmap );
+      }
     }
 
     QStyle::SFlags flags = QStyle::Style_Default;
@@ -217,7 +229,6 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
     if (has_focus)
         flags |= QStyle::Style_HasFocus;
 
-    // FIXME: Move this somewhere, where it also works with close buttons turned off!
     // set new label color if there is one
     QColorGroup  myColorGroup(colorGroup());
     if(!t->getLabelColor().isEmpty())
@@ -230,9 +241,6 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
     style().drawControl( QStyle::CE_TabBarLabel, p, this, r,
                          t->isEnabled() ? myColorGroup : palette().disabled(),
                          flags, QStyleOption(t) );
-  }
-  // otherwise call original code
-  else QTabBar::paintLabel( p, br, t, has_focus );
 }
 
 // reimplemented for close pixmap
