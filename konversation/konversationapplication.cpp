@@ -253,6 +253,7 @@ void KonversationApplication::readOptions()
 
   // Tray icon settings
   preferences.setShowTrayIcon(config->readBoolEntry("ShowTrayIcon",preferences.getShowTrayIcon()));
+  preferences.setTrayNotify(config->readBoolEntry("TrayNotify",preferences.getTrayNotify()));
 
   // Window geometries
   preferences.setMainWindowSize(config->readSizeEntry("Geometry"));
@@ -489,6 +490,7 @@ void KonversationApplication::readOptions()
 
   // Nick Completion
   config->setGroup("Nick Completion");
+  preferences.setNickCompletionMode(config->readNumEntry("Mode", preferences.getNickCompletionMode()));
   preferences.setNickCompleteSuffixStart(config->readEntry("SuffixStart",preferences.getNickCompleteSuffixStart()));
   preferences.setNickCompleteSuffixMiddle(config->readEntry("SuffixMiddle",preferences.getNickCompleteSuffixMiddle()));
 
@@ -551,6 +553,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->writeEntry("ServerWindowMenuBarStatus",preferences.mainWindowMenuBarStatus);
   config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon());
+  config->writeEntry("TrayNotify",preferences.getTrayNotify());
 
   config->writeEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction());
   config->writeEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction());
@@ -708,6 +711,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   // Nick Completion
   config->setGroup("Nick Completion");
+  config->writeEntry("Mode", preferences.getNickCompletionMode());
   config->writeEntry("SuffixStart",preferences.getNickCompleteSuffixStart());
   config->writeEntry("SuffixMiddle",preferences.getNickCompleteSuffixMiddle());
 

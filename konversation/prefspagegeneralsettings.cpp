@@ -55,21 +55,6 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   notifyActionInput=new KLineEdit(preferences->getNotifyDoubleClickAction(),actionEditBox);
   notifyListLabel->setBuddy(notifyActionInput);
 
-  // nick completion special settings
-  QVBox* suffixBox=new QVBox(parentFrame);
-  new QLabel(i18n("Characters to add on nick completion"),suffixBox);
-
-  QHBox* suffixEditBox=new QHBox(suffixBox);
-  suffixEditBox->setSpacing(spacingHint());
-  QLabel* startOfLineLabel=new QLabel(i18n("at &start of line:"),suffixEditBox);
-  suffixStartInput=new KLineEdit(preferences->getNickCompleteSuffixStart(),suffixEditBox);
-  startOfLineLabel->setBuddy(suffixStartInput);
-
-  QLabel* middleLabel=new QLabel(i18n("&Elsewhere:"),suffixEditBox);
-  middleLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  suffixMiddleInput=new KLineEdit(preferences->getNickCompleteSuffixMiddle(),suffixEditBox);
-  middleLabel->setBuddy(suffixMiddleInput);
-
   autoReconnectCheck=new QCheckBox(i18n("A&uto reconnect"),parentFrame,"auto_reconnect_check");
   autoRejoinCheck=new QCheckBox(i18n("Auto re&join"),parentFrame,"auto_rejoin_check");
   autojoinOnInviteCheck=new QCheckBox(i18n("Autojoin channel on &invite"),parentFrame,"autojoin_on_invite_check");
@@ -80,6 +65,9 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   beepCheck=new QCheckBox(i18n("Bee&p on incoming ASCII BEL"),parentFrame,"beep_check");
   rawLogCheck=new QCheckBox(i18n("Show ra&w log window on startup"),parentFrame,"raw_log_check");
   trayIconCheck=new QCheckBox(i18n("Show icon in s&ystem tray"),parentFrame,"tray_icon_check");
+  trayNotifyCheck = new QCheckBox(i18n("Use system tray for new message notification"),
+    parentFrame, "tray_notify_check");
+  connect(trayIconCheck, SIGNAL(toggled(bool)), trayNotifyCheck, SLOT(setEnabled(bool)));
 
   reconnectTimeoutLabel=new QLabel(i18n("&Reconnect timeout:"),parentFrame);
   reconnectTimeoutLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -101,13 +89,12 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   beepCheck->setChecked(preferences->getBeep());
   rawLogCheck->setChecked(preferences->getRawLog());
   trayIconCheck->setChecked(preferences->getShowTrayIcon());
+  trayNotifyCheck->setChecked(preferences->getTrayNotify());
 
   QHBox* generalSpacer=new QHBox(parentFrame);
 
   int row=0;
   generalSettingsLayout->addMultiCellWidget(commandCharBox,row,row,0,2);
-  row++;
-  generalSettingsLayout->addMultiCellWidget(suffixBox,row,row,0,2);
   row++;
   generalSettingsLayout->addMultiCellWidget(actionBox,row,row,0,2);
   row++;
@@ -133,6 +120,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   row++;
   generalSettingsLayout->addMultiCellWidget(trayIconCheck,row,row,0,2);
   row++;
+  generalSettingsLayout->addMultiCellWidget(trayNotifyCheck,row,row,0,2);
+  row++;
   generalSettingsLayout->addMultiCellWidget(generalSpacer,row,row,0,2);
   generalSettingsLayout->setRowStretch(row,10);
 
@@ -152,8 +141,6 @@ void PrefsPageGeneralSettings::autoReconnectChanged(int state)
 void PrefsPageGeneralSettings::applyPreferences()
 {
   preferences->setCommandChar(commandCharInput->text());
-  preferences->setNickCompleteSuffixStart(suffixStartInput->text());
-  preferences->setNickCompleteSuffixMiddle(suffixMiddleInput->text());
   preferences->setChannelDoubleClickAction(channelActionInput->text());
   preferences->setNotifyDoubleClickAction(notifyActionInput->text());
 
@@ -167,6 +154,7 @@ void PrefsPageGeneralSettings::applyPreferences()
   preferences->setBeep(beepCheck->isChecked());
   preferences->setRawLog(rawLogCheck->isChecked());
   preferences->setShowTrayIcon(trayIconCheck->isChecked());
+  preferences->setTrayNotify(trayNotifyCheck->isChecked());
 
   preferences->setMaximumLagTime(reconnectTimeoutSpin->value());
 }

@@ -29,7 +29,6 @@
 */
 
 class KToggleAction;
-class KSystemTray;
 
 class LedTabWidget;
 class Server;
@@ -45,6 +44,7 @@ class Ignore;
 class NicksOnline;
 class QuickButtonsDialog;
 class UrlCatcher;
+class TrayIcon;
 
 class KonversationMainWindow : public KMainWindow
 {
@@ -76,6 +76,8 @@ class KonversationMainWindow : public KMainWindow
     void quitServer();
     void nicksNowOnline(const QString& serverName,const QStringList& list);
     void closeTab(int id);
+    void startNotification(QWidget*);
+    void endNotification(QWidget*);
 
   public slots:
     void addDccPanel();     // connected in server class
@@ -88,6 +90,7 @@ class KonversationMainWindow : public KMainWindow
     void channelPrefsChanged();
     void setOnlineList(Server* notifyServer,const QStringList& list);
     void updateTrayIcon();
+    void serverQuit(Server* server);
 
   protected slots:
     void openPreferences();
@@ -118,17 +121,7 @@ class KonversationMainWindow : public KMainWindow
     void previousTab();
     void closeTab();
 
-    // I hope we find a better way soon!
-    void goToTab0();
-    void goToTab1();
-    void goToTab2();
-    void goToTab3();
-    void goToTab4();
-    void goToTab5();
-    void goToTab6();
-    void goToTab7();
-    void goToTab8();
-    void goToTab9();
+    void goToTab(int page);
 
     void findTextShortcut();
     void addIRCColor();
@@ -147,11 +140,11 @@ class KonversationMainWindow : public KMainWindow
     void addView(ChatWindow* view,int color,const QString& label,bool on=true);
     void updateFrontView();
 
-    void goToTab(int page);
-
     void closeUrlCatcher();
     void closeDccPanel();
     void deleteDccPanel();
+    
+    virtual void showEvent(QShowEvent* e);
 
     LedTabWidget* getViewContainer();
 
@@ -174,7 +167,7 @@ class KonversationMainWindow : public KMainWindow
 
     DccTransferHandler* dccTransferHandler;
 
-    KSystemTray* tray;
+    TrayIcon* tray;
 };
 
 #endif

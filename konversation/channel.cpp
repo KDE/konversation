@@ -503,19 +503,26 @@ void Channel::completeNick()
     // did we find any pattern?
     if(!pattern.isEmpty())
     {
-      QString foundNick(QString::null);
+      bool complete = false;
+      QString foundNick;
+
       // try to find matching nickname in list of names
-      do
-      {
-        QString lookNick=nicknameList.at(completionPosition)->getNickname();
-        if(lookNick.lower().startsWith(pattern)) foundNick=lookNick;
-        // increment search position
-        completionPosition++;
-        // wrap around
-        if(completionPosition==nicknameList.count()) completionPosition=0;
-        // the search ends when we either find a suitable nick or we end up at the
-        // first search position
-      } while(completionPosition!=oldCompletionPosition && foundNick.isEmpty());
+      if(KonversationApplication::preferences.getNickCompletionMode() == 1) { // Shell like completion
+        foundNick = nicknameList.completeNick(pattern, complete);
+      } else if(KonversationApplication::preferences.getNickCompletionMode() == 0) { // Cycle completion
+        do
+        {
+          QString lookNick=nicknameList.at(completionPosition)->getNickname();
+          if(lookNick.lower().startsWith(pattern)) foundNick=lookNick;
+          // increment search position
+          completionPosition++;
+          // wrap around
+          if(completionPosition==nicknameList.count()) completionPosition=0;
+          // the search ends when we either find a suitable nick or we end up at the
+          // first search position
+        } while(completionPosition!=oldCompletionPosition && foundNick.isEmpty());
+      }
+      
       // did we find a suitable nick?
       if(!foundNick.isEmpty())
       {
@@ -524,16 +531,22 @@ void Channel::completeNick()
         // remove pattern from line
         newLine.remove(pos,pattern.length());
         // did we find the nick in the middle of the line?
-        if(pos)
+        if(pos && complete)
         {
           newLine.insert(pos,foundNick+addMiddle);
           pos=pos+foundNick.length()+addMiddle.length();
         }
         // no, it was at the beginning
-        else
+        else if(complete)
         {
           newLine.insert(pos,foundNick+addStart);
           pos=pos+foundNick.length()+addStart.length();
+        }
+        // the nick wasn't complete
+        else
+        {
+          newLine.insert(pos,foundNick);
+          pos=pos+foundNick.length();
         }
       }
       // no pattern found, so restore old cursor position
@@ -1574,6 +1587,39 @@ int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item
 {
   return QString::localeAwareCompare(static_cast<Nick*>(item1)->getNickname(),
     static_cast<Nick*>(item2)->getNickname());
+}
+
+QString NickList::completeNick(const QString& pattern, bool& complete)
+{
+  QStringList found;
+  
+  for(Nick* n = first(); n; n = next()) {
+    if(n->getNickname().lower().startsWith(pattern)) {
+      found.append(n->getNickname().lower());
+    }
+  }
+  
+  if(found.count() > 1) {
+    bool ok = true;
+    int i = 0;
+    
+    while(ok && ((pattern.length() + i) < found[0].length())) {
+      i++;
+      QStringList tmp = found.grep(found[0].left(pattern.length() + i));
+      if(tmp.count() != found.count()) {
+        ok = false;
+        i -= 1;
+      }
+    }
+      
+    complete = false;
+    return found[0].left(pattern.length() + i);
+  } else if(found.count() == 1) {
+    complete = true;
+    return found[0];
+  }
+  
+  return QString::null;
 }
 
 #include "channel.moc"

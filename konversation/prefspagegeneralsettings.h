@@ -46,8 +46,6 @@ class PrefsPageGeneralSettings : public PrefsPage
     KLineEdit* commandCharInput;
     KLineEdit* channelActionInput;
     KLineEdit* notifyActionInput;
-    KLineEdit* suffixStartInput;
-    KLineEdit* suffixMiddleInput;
 
     QCheckBox* autoReconnectCheck;
     QCheckBox* autoRejoinCheck;
@@ -59,6 +57,7 @@ class PrefsPageGeneralSettings : public PrefsPage
     QCheckBox* beepCheck;
     QCheckBox* rawLogCheck;
     QCheckBox* trayIconCheck;
+    QCheckBox* trayNotifyCheck;
 
     QLabel* reconnectTimeoutLabel;
     QSpinBox* reconnectTimeoutSpin;

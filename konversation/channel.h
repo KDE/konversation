@@ -42,6 +42,8 @@ class TopicComboBox;
 
 class NickList : public QPtrList<Nick>
 {
+  public:
+    QString completeNick(const QString& pattern, bool& complete);
   protected:
     virtual int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2);
 };

@@ -40,6 +40,7 @@
 #include "prefspageosd.h"
 #include "prefspageignore.h"
 #include "prefspagealiases.h"
+#include "prefspagenickcompletion.h"
 
 PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
              KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
@@ -58,6 +59,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   QFrame* ircColorsPane      =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("IRC Colors")));
   QFrame* buttonsPane        =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Quick Buttons")));
 
+  QFrame* nickCompletionPane =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Nickname Completion")));
           notifyPane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Notify List")));
   QFrame* highlightPane      =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Highlight List")));
   QFrame* OSDPane            =addPage(QStringList::split(',',i18n("Chat")+","+i18n("OnScreen Display")));
@@ -81,6 +83,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   PrefsPageIRCColors*       ircColorsPage      =new PrefsPageIRCColors(ircColorsPane,preferences);
   PrefsPageButtons*         buttonsPage        =new PrefsPageButtons(buttonsPane,preferences);
 
+  PrefsPageNickCompletion*  nickCompletionPage =new PrefsPageNickCompletion(nickCompletionPane,preferences);
   PrefsPageNotify*          notifyPage         =new PrefsPageNotify(notifyPane,preferences);
   PrefsPageHighlight*       highlightPage      =new PrefsPageHighlight(highlightPane,preferences);
   PrefsPageOSD*             OSDPage            =new PrefsPageOSD(OSDPane,preferences);
@@ -116,6 +119,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   connect(this,SIGNAL (applyPreferences()),ircColorsPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),buttonsPage,SLOT (applyPreferences()) );
 
+  connect(this,SIGNAL (applyPreferences()),nickCompletionPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),notifyPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),highlightPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),OSDPage,SLOT (applyPreferences()) );

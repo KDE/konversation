@@ -185,9 +185,9 @@ Server::~Server()
   closeRawLog();
   closeChannelListPanel();
   channelList.setAutoDelete(true);
-  while(channelList.removeFirst());
+  channelList.clear();
   queryList.setAutoDelete(true);
-  while(queryList.removeFirst());
+  queryList.clear();
 
   // kill resolver thread if it's still running
 #if KDE_VERSION >= 310
@@ -406,6 +406,10 @@ void Server::broken(int state)
     else
       // TODO: Make timeout configurable
       QTimer::singleShot(5000,this,SLOT(connectToIRCServer()));
+  }
+  else if(getDeliberateQuit()) // If we quit the connection with the server
+  {
+    getMainWindow()->serverQuit(this);
   }
   else
   {

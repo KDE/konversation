@@ -74,6 +74,7 @@ Preferences::Preferences()
   setShowModeButtons(true);
   setShowServerList(true);
   setShowTrayIcon(true);
+  setTrayNotify(false);
 
   setUseSpacing(false);
   setSpacing(2);
@@ -171,6 +172,8 @@ Preferences::Preferences()
   ircColorList.append("#ffc0cb");
   ircColorList.append("#a0a0a0");
   ircColorList.append("#c0c0c0");
+  
+  setNickCompletionMode(0);
 }
 
 Preferences::~Preferences()
@@ -573,6 +576,14 @@ void Preferences::setShowTrayIcon(bool state)
 }
 bool Preferences::getShowTrayIcon() { return showTrayIcon; }
 
+void Preferences::setTrayNotify(bool state)
+{
+  trayNotify = state;
+  emit updateTrayIcon();
+}
+
+bool Preferences::getTrayNotify() { return trayNotify; }
+
 void Preferences::setChannelSplitter(QValueList<int> sizes) { channelSplitter=sizes; }
 QValueList<int> Preferences::getChannelSplitter() { return channelSplitter; }
 
@@ -648,5 +659,8 @@ QStringList Preferences::getIRCColorList()        { return ircColorList; }
 
 void Preferences::setAliasList(QStringList newList) { aliasList=newList; }
 QStringList Preferences::getAliasList()             { return aliasList; }
+
+int Preferences::getNickCompletionMode() { return nickCompletionMode; }
+void Preferences::setNickCompletionMode(int mode) { nickCompletionMode = mode; }
 
 #include "preferences.moc"

@@ -121,6 +121,8 @@ class Server : public QObject
 
     void notifyAction(const QString& nick);
     ChannelListPanel* getChannelListPanel() const;
+    
+    StatusPanel* getStatusView() const { return statusView; }
 
     bool connected();
 

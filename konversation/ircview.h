@@ -45,7 +45,8 @@ class IRCView : public KTextBrowser
     {
       Copy,CopyUrl,SelectAll,
       Search,
-      SendFile
+      SendFile,
+      Bookmark
     };
 
   signals:

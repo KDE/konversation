@@ -32,6 +32,11 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <klocale.h>
+#include <kurl.h>
+#include <kbookmark.h>
+#include <kbookmarkmanager.h>
+#include <kdeversion.h>
+#include <kstandarddirs.h>
 
 #include "konversationapplication.h"
 #include "ircview.h"
@@ -157,11 +162,13 @@ void IRCView::highlightedSlot(const QString& link)
   if(link.isEmpty() && copyUrlMenu)
   {
     popup->removeItem(CopyUrl);
+    popup->removeItem(Bookmark);
     copyUrlMenu=false;
   }
   else if(!link.isEmpty() && !copyUrlMenu)
   {
     popup->insertItem(i18n("Copy URL to Clipboard"),CopyUrl,1);
+    popup->insertItem(i18n("Add to bookmarks"),Bookmark,2);
     copyUrlMenu=true;
     urlToCopy=link;
   }
@@ -650,6 +657,23 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
     case SendFile:
       emit sendFile();
       break;
+    case Bookmark:
+    {
+#if KDE_IS_VERSION(3,1,90)
+      KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
+      KBookmarkGroup bg = bm->addBookmarkDialog(urlToCopy, QString::null);
+      bm->save();
+      bm->emitChanged(bg);
+#else
+      KBookmarkManager* bm = KBookmarkManager::managerForFile(locateLocal("data",
+        "/konqueror/bookmarks.xml"));
+      KBookmarkGroup bg = bm->root();
+      bg.addBookmark(bm, urlToCopy, KURL(urlToCopy));
+      bm->save();
+      bm->emitChanged(bg);
+#endif
+      break;
+    }
     default:
       emit extendedPopup(r);
   }

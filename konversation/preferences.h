@@ -296,6 +296,9 @@ class Preferences : public QObject
 
     void setShowTrayIcon(bool state);
     bool getShowTrayIcon();
+    
+    void setTrayNotify(bool state);
+    bool getTrayNotify();
 
     void setChannelSplitter(QValueList<int> sizes);
     QValueList<int> getChannelSplitter();
@@ -334,6 +337,10 @@ class Preferences : public QObject
     // aliases
     QStringList getAliasList();
     void setAliasList(QStringList aliasList);
+    
+    // Nick completion
+    int getNickCompletionMode();
+    void setNickCompletionMode(int mode);
 
   signals:
     void requestServerConnection(int number);
@@ -385,6 +392,7 @@ class Preferences : public QObject
     bool showModeButtons;
     bool showServerList;
     bool showTrayIcon;
+    bool trayNotify;
 
     QValueList<int> channelSplitter;
 
@@ -459,6 +467,9 @@ class Preferences : public QObject
     QStringList ircColorList;
     // aliases
     QStringList aliasList;
+    
+    //Nick completion
+    int nickCompletionMode;
 };
 
 #endif
