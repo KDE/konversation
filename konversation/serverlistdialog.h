@@ -35,6 +35,8 @@ namespace Konversation {
       void setAutoConnect(bool ac);
       virtual void paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int align);
       
+      virtual int rtti() const { return 10001; }
+      
     protected:
       virtual void activate();
     

@@ -237,7 +237,17 @@ namespace Konversation {
       return 0;
     }
 
-    QListViewItem* branch = m_serverList->findItem(name, 0);
+    QListViewItem* branch = m_serverList->firstChild();
+    bool found = false;
+    
+    while(branch && !found)
+    {
+      if((branch->rtti() != 10001) && (branch->text(0) == name)) {
+        found = true;
+      } else {
+        branch = branch->nextSibling();
+      }
+    }
 
     if(branch == 0 && generate == true)
     {
