@@ -130,7 +130,8 @@ class KonversationApplication : public KApplication
 
     void deleteUrl(const QString& who,const QString& url);
     void clearUrlList();
-
+    /** Send a message to all servers that you are away. */
+    void toggleAway();
     bool emitDCOPSig(const QString& appId, const QString& objId, const QString& signal, QByteArray& data);
 
   protected slots:
@@ -138,6 +139,9 @@ class KonversationApplication : public KApplication
     void openPrefsDialog(Preferences::Pages page);
     void openQuickConnectDialog();
     void removeServer(Server* server);
+
+    void dcopMultiServerRaw(const QString &command);
+    void dcopRaw(const QString& server, const QString &command);
     void dcopSay(const QString& server,const QString& target,const QString& command);
     void dcopInfo(const QString& string);
     void insertRememberLine();

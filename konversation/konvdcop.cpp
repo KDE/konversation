@@ -17,6 +17,7 @@
 #include <dcopclient.h>
 
 #include <qstring.h>
+#include <klocale.h>
 
 #include "konversationapplication.h"
 #include "konvdcop.h"
@@ -41,7 +42,27 @@ void KonvDCOP::raw(const QString& server,const QString& command)
 {
   kdDebug() << "KonvDCOP::raw()" << endl;
   // send raw IRC protocol data
-  emit raw(server,command);
+  emit dcopRaw(server,command);
+}
+
+void KonvDCOP::setAway(const QString &awaymessage)
+{
+  if(awaymessage.isEmpty())
+    emit dcopMultiServerRaw("away " + i18n("Gone away for now."));  //away messages can't be empty.
+  else
+    emit dcopMultiServerRaw("away " + awaymessage);
+}
+void KonvDCOP::setBack()
+{
+  emit dcopMultiServerRaw("away");
+}
+void KonvDCOP::sayToAll(const QString &message)
+{
+  emit dcopMultiServerRaw("msg " + message);
+}
+void KonvDCOP::actionToAll(const QString &message)
+{
+  emit dcopMultiServerRaw("me " + message);
 }
 
 void KonvDCOP::say(const QString& server,const QString& target,const QString& command)

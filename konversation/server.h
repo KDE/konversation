@@ -130,6 +130,7 @@ class Server : public QObject
     void appendMessageToFrontmost(const QString& type,const QString& message);
     
 
+    void dcopRaw(const QString& command);
     void dcopSay(const QString& target,const QString& command);
     void dcopInfo(const QString& string);
     void ctcpReply(const QString& receiver, const QString& text);

@@ -1207,6 +1207,14 @@ void Server::closed()
   broken(m_socket->error());
 }
 
+void Server::dcopRaw(const QString& command)
+{
+  if(command.startsWith(KonversationApplication::preferences.getCommandChar())) {
+    queue(command.section(KonversationApplication::preferences.getCommandChar(), 1));
+  }
+  else
+    queue(command);
+}
 void Server::dcopSay(const QString& target,const QString& command)
 {
   if(isAChannel(target))
@@ -2940,10 +2948,10 @@ void Server::sendMultiServerCommand(const QString& command, const QString& param
 
 void Server::executeMultiServerCommand(const QString& command, const QString& parameter)
 {
-  if(command == "away") {
+  if(command == "away" || command == "back") { //back is the same as away, since paramater is ""
     QString str = KonversationApplication::preferences.getCommandChar() + command;
 
-    if(!parameter.isEmpty()) {
+    if(!parameter.isEmpty() && command == "away") { //you cant have a message with 'back'
       str += " " + parameter;
     }
 

@@ -117,6 +117,11 @@ KonversationApplication::KonversationApplication()
   prefsDCOP=new KonvPrefsDCOP;
   if(dcopObject)
   {
+
+    connect(dcopObject,SIGNAL (dcopMultiServerRaw(const QString&)),
+                    this,SLOT (dcopMultiServerRaw(const QString&)) );
+    connect(dcopObject,SIGNAL (dcopRaw(const QString&,const QString&)),
+                    this,SLOT (dcopRaw(const QString&,const QString&)) );
     connect(dcopObject,SIGNAL (dcopSay(const QString&,const QString&,const QString&)),
                     this,SLOT (dcopSay(const QString&,const QString&,const QString&)) );
     connect(dcopObject,SIGNAL (dcopInfo(const QString&)),
@@ -149,6 +154,33 @@ KonversationApplication* KonversationApplication::instance()  // static
 
 KonversationMainWindow *KonversationApplication::getMainWindow() {
   return mainWindow;
+}
+
+void KonversationApplication::toggleAway()
+{
+  QString awaymessage ;
+  if(awaymessage.isEmpty()) awaymessage = "Away at the moment";
+  sendMultiServerCommand("away", awaymessage);
+}
+
+void KonversationApplication::dcopMultiServerRaw(const QString &command)
+{
+  sendMultiServerCommand(command.section(' ', 0,0), command.section(' ', 1));
+}
+void KonversationApplication::dcopRaw(const QString& server, const QString &command)
+{
+  Server* lookServer=serverList.first();
+  while(lookServer)
+  {
+    if(lookServer->getServerName()==server)
+    {
+      lookServer->dcopRaw(command);
+//      break; // leave while loop
+//FIXME:   <muesli> there's a reason for not breaking this loop...  [see comment for dcopSay]
+    }
+    lookServer=serverList.next();
+  }
+
 }
 
 void KonversationApplication::dcopSay(const QString& server,const QString& target,const QString& command)

@@ -13,6 +13,11 @@ class KonvIface : virtual public DCOPObject
     K_DCOP
 
   k_dcop:
+    virtual void setAway(const QString &awaymessage) = 0;
+    virtual void setBack() = 0;
+    virtual void sayToAll(const QString &message) = 0;
+    virtual void actionToAll(const QString &message) = 0;
+
     virtual void raw(const QString& server,const QString& command) = 0;
     virtual void say(const QString& server,const QString& target,const QString& command) = 0;
     virtual void info(const QString& string) = 0;
