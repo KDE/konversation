@@ -49,6 +49,6 @@ namespace Konversation {
       playObj->play();
     }
   }
-};
+}
 
 #include "konversationsound.moc"

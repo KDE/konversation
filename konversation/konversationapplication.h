@@ -32,7 +32,7 @@ class PrefsDialog;
 
 namespace Konversation {
   class Sound;
-};
+}
 
 /*
   @author Dario Abatianni

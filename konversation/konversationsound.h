@@ -37,6 +37,6 @@ namespace Konversation {
       KArtsServer* soundServer;
       KArtsDispatcher* dispatcher;
   };
-};
+}
 
 #endif
