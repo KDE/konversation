@@ -65,6 +65,7 @@ NickListView::NickListView(QWidget* parent) :
       kickban->insertItem(i18n("Kickban *!user@domain"),KickBanUserDomain);
       popup->insertItem(i18n("Kick / Ban"),kickban,KickBanSub);
     }
+    popup->insertItem(i18n("Ignore"),Ignore);
   }
   else
   {

@@ -31,7 +31,8 @@ class Ignore
       Notice=4,
       CTCP=8,
       DCC=16,
-      Exception=32
+      Exception=32,
+      All=31
     };
 
     Ignore(QString name,int flags);

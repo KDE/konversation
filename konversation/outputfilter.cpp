@@ -21,8 +21,9 @@
 #include <kdebug.h>
 #include <kio/passdlg.h>
 
-#include "konversationapplication.h"
 #include "outputfilter.h"
+#include "konversationapplication.h"
+#include "ignore.h"
 
 #if QT_VERSION < 0x030100
 #include "main.h"
@@ -147,6 +148,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line.startsWith("oper "))    parseOper(myNick,parameter);
     else if(line.startsWith("ban "))     parseBan(parameter);
     else if(line.startsWith("unban "))   parseUnban(parameter);
+    else if(line.startsWith("ignore "))  parseIgnore(parameter);
     else if(line.startsWith("quote "))   parseQuote(parameter);
 
     else if(line.startsWith("raw "))     parseRaw(parameter);
@@ -168,6 +170,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
     else if(line=="oper")                parseOper(myNick,QString::null);
     else if(line=="ban")                 parseBan(QString::null);
     else if(line=="unban")               parseUnban(QString::null);
+    else if(line=="ignore")              parseIgnore(QString::null);
     else if(line=="quote")               parseQuote(QString::null);
 
     else if(line=="dcc")                 parseDcc(QString::null);
@@ -820,6 +823,47 @@ void OutputFilter::parseUnban(const QString& parameter)
 void OutputFilter::execUnban(const QString& mask,const QString& channel)
 {
   toServer="MODE "+channel+" -b "+mask;
+}
+
+void OutputFilter::parseIgnore(const QString& parameter)
+{
+  // assume incorrect syntax first
+  bool showUsage=true;
+
+  // did the user give parameters at all?
+  if(!parameter.isEmpty())
+  {
+    QStringList parameterList=QStringList::split(' ',parameter);
+
+    // if nothing else said, only ignore channels and queries
+    Ignore::Type value=Ignore::Channel | Ignore::Query;
+
+    // user specified -all option
+    if(parameterList[0].lower()=="-all")
+    {
+      // ignore everything
+      value=Ignore::All;
+      parameterList.pop_front();
+    }
+
+    // were there enough parameters?
+    if(parameterList.count()==1)
+    {
+      for(unsigned int index=0;index<parameterList.count();index++)
+      {
+        KonversationApplication::preferences.addIgnore(parameterList[index]+","+QString::number(value));
+      } // endfor
+
+      output=i18n("Added %1 to your ignore list.").arg(parameterList.join(", "));
+      type=i18n("Ignore");
+      program=true;
+
+      // all went fine, so show no error message
+      showUsage=false;
+    }
+  }
+
+  if(showUsage) usage(i18n("Usage: IGNORE [ -ALL ] user list"));
 }
 
 void OutputFilter::parseQuote(const QString& parameter)

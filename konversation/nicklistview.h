@@ -36,8 +36,8 @@ class NickListView : public KListView
     enum PopupIDs
     {
       ModesSub,GiveOp,TakeOp,GiveVoice,TakeVoice,
-      KickBanSub,Kick,KickBan,BanNick,
-      BanHost,BanDomain,BanUserHost,BanUserDomain,
+      KickBanSub,Ignore,
+      Kick,KickBan,BanNick,BanHost,BanDomain,BanUserHost,BanUserDomain,
       KickBanHost,KickBanDomain,KickBanUserHost,KickBanUserDomain,
       Whois,Version,Ping,Query,DccSend,
       CustomID

@@ -14,7 +14,6 @@ Make a command that makes you goto away mode on all servers
 /amsg and /ame for sending messages/actions to all open channels/queries
 Per nick coloring
 Shortcut for /clear
-Ignore entry for RMB menu in queries
 Use checkForUtf8 to make non-UTF8-users able to at least read UTF8.
 
 Tab completion should work on an alphabetic list
