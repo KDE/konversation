@@ -254,6 +254,7 @@ KonversationMainWindow::~KonversationMainWindow()
 {
   deleteDccPanel();
   delete dccTransferHandler;
+  delete m_kscript;
 }
 
 void KonversationMainWindow::setupScripts()
