@@ -722,7 +722,9 @@ bool IRCView::eventFilter(QObject* object,QEvent* event)
     }
     else if(me->button()==QMouseEvent::MidButton)
     {
-      // TODO: maybe implement pasting here?
+      if(copyUrlMenu) {
+        urlClickSlot(urlToCopy);
+      }
     }
   }
   else if(event->type()==QEvent::ContextMenu)
