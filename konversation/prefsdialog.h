@@ -63,6 +63,8 @@ class PrefsDialog : public KDialogBase
     void slotOk();
     void slotApply();
     void slotCancel();
+    
+    void slotAboutToShowPage(QWidget* page);
 
   protected:
     Preferences* preferences;
@@ -84,6 +86,11 @@ class PrefsDialog : public KDialogBase
     QFrame* serverListPane;
     QFrame* notifyPane;
     QFrame* identityPane;
+    
+    // for slotAboutToShowPage()
+    QFrame* OSDPane;
+    
+    QWidget* lastPane;
 
     void setPreferences(Preferences* newPrefs);
 };

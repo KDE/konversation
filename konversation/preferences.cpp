@@ -151,6 +151,9 @@ Preferences::Preferences()
   setOSDShowChannelEvent(false);
   setOSDTextColor("#ffffff");
   setOSDDuration(3000);
+  setOSDOffsetX(30);
+  setOSDOffsetY(50);
+  setOSDAlignment(0);  // Left
 
   setColorInputFields(true);
   setBackgroundImageName(QString::null);
@@ -708,6 +711,15 @@ uint Preferences::getOSDScreen() { return OSDScreen; }
 
 void Preferences::setOSDDrawShadow(bool state) { OSDDrawShadow = state; }
 bool Preferences::getOSDDrawShadow() { return OSDDrawShadow; }
+
+void Preferences::setOSDOffsetX(int offset) { OSDOffsetX = offset; }
+int Preferences::getOSDOffsetX() { return OSDOffsetX; }
+
+void Preferences::setOSDOffsetY(int offset) { OSDOffsetY = offset; }
+int Preferences::getOSDOffsetY() { return OSDOffsetY; }
+
+void Preferences::setOSDAlignment(int alignment) { OSDAlignment = alignment; }
+int Preferences::getOSDAlignment() { return OSDAlignment; }
 
 QFont Preferences::getTextFont() { return textFont; }
 QFont Preferences::getListFont() { return listFont; }

@@ -249,6 +249,15 @@ class Preferences : public QObject
     
     void setOSDDrawShadow(bool state);
     bool getOSDDrawShadow();
+    
+    void setOSDOffsetX(int offset);
+    int getOSDOffsetX();
+    
+    void setOSDOffsetY(int offset);
+    int getOSDOffsetY();
+    
+    void setOSDAlignment(int alignment);
+    int getOSDAlignment();
 
     QStringList getButtonList();
     void setButtonList(QStringList newList);
@@ -569,6 +578,9 @@ class Preferences : public QObject
     uint OSDScreen;
     QColor osdTextColor;
     QColor osdBackgroundColor;
+    int OSDOffsetX;
+    int OSDOffsetY;
+    int OSDAlignment;         // 0: Left, 1: Middle, 2: Center, 3: Right
 
     bool colorInputFields;
     

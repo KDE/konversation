@@ -516,6 +516,9 @@ void KonversationApplication::readOptions()
   preferences.setOSDDuration(config->readNumEntry("OSDDuration",preferences.getOSDDuration()));
   preferences.setOSDScreen(config->readNumEntry("OSDScreen",preferences.getOSDScreen()));
   preferences.setOSDDrawShadow(config->readBoolEntry("OSDDrawShadow",preferences.getOSDDrawShadow()));
+  preferences.setOSDOffsetX(config->readNumEntry("OffsetX",preferences.getOSDOffsetX()));
+  preferences.setOSDOffsetY(config->readNumEntry("OffsetY",preferences.getOSDOffsetY()));
+  preferences.setOSDAlignment(config->readNumEntry("Alignment",preferences.getOSDAlignment()));
   // if osd object exists
   if(osd && preferences.getOSDUsage())
   {
@@ -524,6 +527,8 @@ void KonversationApplication::readOptions()
     osd->setDuration(preferences.getOSDDuration());
     osd->setScreen(preferences.getOSDScreen());
     osd->setShadow(preferences.getOSDDrawShadow());
+    osd->setOffset(preferences.getOSDOffsetX(),preferences.getOSDOffsetY());
+    osd->setAlignment((OSDWidget::Alignment)preferences.getOSDAlignment());
 
     if(preferences.getOSDUseCustomColors())
     {
@@ -933,6 +938,9 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("OSDDuration",preferences.getOSDDuration());
   config->writeEntry("OSDScreen",preferences.getOSDScreen());
   config->writeEntry("OSDDrawShadow",preferences.getOSDDrawShadow());
+  config->writeEntry("OffsetX",preferences.getOSDOffsetX());
+  config->writeEntry("OffsetY",preferences.getOSDOffsetY());
+  config->writeEntry("Alignment",preferences.getOSDAlignment());
 
   // Ignore List
   config->deleteGroup("Ignore List");

@@ -163,6 +163,12 @@ class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
   QString getNickCompleteSuffixMiddle();
   void setOSDUsage(bool state);
   bool getOSDUsage();
+  void setOSDOffsetX(int offset);
+  int getOSDOffsetX();
+  void setOSDOffsetY(int offset);
+  int getOSDOffsetY();
+  void setOSDAlignment(int alignment);
+  int getOSDAlignment();
 };
 
 #endif

@@ -37,11 +37,21 @@ class PrefsPageOSD : public PrefsPage
   public:
     PrefsPageOSD(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageOSD();
+    
+    void aboutToShow();  // called from PrefsDialog when the page is about to be shown
+    void aboutToHide();  // called from PrefsDialog when the page is about to be hidden
 
   protected slots:
+    void slotOSDEnabledChanged(bool on);
+    void slotCustomColorsChanged(bool on);
+    void slotTextColorChanged(const QColor& color);
+    void slotBackgroundColorChanged(const QColor& color);
+    void slotScreenChanged(int index);
+    void slotDrawShadowChanged(bool on);
+    
     void osdFontClicked();
-    void osdUsageChanged(int state);
-    void customColorsCheckStateChanged(int state);
+    
+    void slotPositionChanged();
 
   public slots:
     void applyPreferences();
@@ -75,6 +85,8 @@ class PrefsPageOSD : public PrefsPage
     QVGroupBox* osdActionsBox;
     
     OSDPreviewWidget* m_pOSDPreview;
+    
+    bool showingPage;
 };
 
 #endif

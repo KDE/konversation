@@ -143,6 +143,13 @@ class KonvPreferencesIface : virtual public DCOPObject
     virtual QString getNickCompleteSuffixMiddle() = 0;
     virtual void setOSDUsage(bool state) =0;
     virtual bool getOSDUsage() = 0;
+    virtual void setOSDOffsetX(int offset) = 0;
+    virtual int getOSDOffsetX() = 0;
+    virtual void setOSDOffsetY(int offset) = 0;
+    virtual int getOSDOffsetY() = 0;
+    virtual void setOSDAlignment(int alignment) = 0;
+    virtual int getOSDAlignment() = 0;
+    
 
 };
 

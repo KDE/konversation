@@ -38,6 +38,8 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 {
   setPreferences(preferences);
   setShowIconsInTreeList(true);
+  
+  lastPane = 0;
 
   serverListPane = addPage(i18n("Server List"),QString::null,SmallIcon("network_local" ));
   identityPane = addPage(i18n("Identity"),QString::null,SmallIcon("identity"));
@@ -68,7 +70,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   notifyPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Watched Nicknames")),
     QString::null,SmallIcon("kfind"));
   QFrame* highlightPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("Highlighting"))   ,QString::null,SmallIcon("paintbrush"));
-  QFrame* OSDPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("On Screen Display")),
+  OSDPane = addPage(QStringList::split(',', i18n("Notification") + "," + i18n("On Screen Display")),
     QString::null, SmallIcon("tv"));
 
   QFrame* dialogsPane = addPage(i18n("Warning Dialogs"), QString::null, SmallIcon("messagebox_warning"));
@@ -143,6 +145,8 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 // but ... is this really the way it's meant to be done?
 // scriptsPage should use applyPreferences()
 //  connect(this, SIGNAL(prefsChanged()), scriptsPage, SLOT(saveChanges()));
+
+  connect(this, SIGNAL(aboutToShowPage(QWidget*)), this, SLOT(slotAboutToShowPage(QWidget*)));
 }
 
 PrefsDialog::~PrefsDialog()
@@ -189,6 +193,16 @@ void PrefsDialog::openPage(Preferences::Pages page)
   if     (page==Preferences::ServerListPage) showPage(pageIndex(serverListPane));
   else if(page==Preferences::NotifyPage)     showPage(pageIndex(notifyPane));
   else if(page==Preferences::IdentityPage)   showPage(pageIndex(identityPane));
+}
+
+void PrefsDialog::slotAboutToShowPage(QWidget* page)
+{
+  if(lastPane == OSDPane)
+    OSDPage->aboutToHide();
+  else if(page == OSDPane)
+    OSDPage->aboutToShow();
+  
+  lastPane = page;
 }
 
 #include "prefsdialog.moc"

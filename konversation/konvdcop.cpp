@@ -708,4 +708,37 @@ bool KonvPrefsDCOP::getOSDUsage()
 	return KonversationApplication::preferences.getOSDUsage();
 }
 
+void KonvPrefsDCOP::setOSDOffsetX(int offset)
+{
+  KonversationApplication::preferences.setOSDOffsetX(offset);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+int KonvPrefsDCOP::getOSDOffsetX()
+{
+  return KonversationApplication::preferences.getOSDOffsetX();
+}
+
+void KonvPrefsDCOP::setOSDOffsetY(int offset)
+{
+  KonversationApplication::preferences.setOSDOffsetY(offset);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+int KonvPrefsDCOP::getOSDOffsetY()
+{
+  return KonversationApplication::preferences.getOSDOffsetY();
+}
+
+void KonvPrefsDCOP::setOSDAlignment(int alignment)
+{
+  KonversationApplication::preferences.setOSDAlignment(alignment);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+int KonvPrefsDCOP::getOSDAlignment()
+{
+  return KonversationApplication::preferences.getOSDAlignment();
+}
+
 #include "konvdcop.moc"
