@@ -46,6 +46,9 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 
   // widget may not resize vertically
   setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
+  setWordWrap(NoWrap);
+  setHScrollBarMode(AlwaysOff);
+  setVScrollBarMode(AlwaysOff);
 #if RICHTEXT == 1
   setTextFormat(RichText);
 #else
