@@ -41,8 +41,10 @@ class PrefsPageChatWinBehavior : public PrefsPage
     QCheckBox* showRememberLineInAllWindows;
     QCheckBox* redirectToStatusPaneCheck;
     QSpinBox* scrollbackMaxSpin;
-    QSpinBox* autoWhoNicksLimitSpin;
     
+    QSpinBox* autoWhoNicksLimitSpin;
+    QCheckBox* autoWhoContinuousEnabledCheck;
+    QSpinBox* autoWhoContinuousIntervalSpin;
     KLineEdit* channelActionInput;
     QCheckBox* sortByStatusCheck;
     QCheckBox* sortCaseInsensitiveCheck;

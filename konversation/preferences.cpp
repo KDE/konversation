@@ -118,7 +118,9 @@ Preferences::Preferences()
   setLogPath(kstddir.saveLocation("data","konversation/logs"));
   setScrollbackMax(1000);
   
-  setAutoWhoNicksLimit(300);
+  setAutoWhoNicksLimit(150);
+  setAutoWhoContinuousEnabled(true);
+  setAutoWhoContinuousInterval(300);
 
   setLog(true);
   setLowerLog(true);
@@ -337,6 +339,10 @@ int Preferences::getScrollbackMax() { return scrollbackMax; }
 
 void Preferences::setAutoWhoNicksLimit(int limit) { autoWhoNicksLimit=limit; }
 int Preferences::getAutoWhoNicksLimit() { return autoWhoNicksLimit; }
+void Preferences::setAutoWhoContinuousEnabled(bool state) { autoWhoContinuousEnabled=state; }
+bool Preferences::getAutoWhoContinuousEnabled() { return autoWhoContinuousEnabled; }
+void Preferences::setAutoWhoContinuousInterval(int interval) { autoWhoContinuousInterval=interval; }
+int Preferences::getAutoWhoContinuousInterval() { return autoWhoContinuousInterval; }
 
 void Preferences::setDccAddPartner(bool state) { dccAddPartner=state; }
 bool Preferences::getDccAddPartner() { return dccAddPartner; }

@@ -291,7 +291,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   autoUserhostChanged(KonversationApplication::preferences.getAutoUserhost());
   userhostTimer.start(10000);
   
-  connect(&whoTimer,SIGNAL (timeout()),this,SLOT (autoWho()));
+  m_firstAutoWhoDone = false;
+  connect(&m_whoTimer,SIGNAL (timeout()),this,SLOT (autoWho()));
 
   m_allowNotifications = true;
 
@@ -1733,7 +1734,15 @@ void Channel::autoUserhostChanged(bool state)
 
 void Channel::autoWho()
 {
-  //FIXME: make it configurable
+  if(m_whoTimer.isActive())  // continuous auto /WHO
+  {
+    // is continuous auto /WHO enabled?
+    if(!KonversationApplication::preferences.getAutoWhoContinuousEnabled())
+      return;
+    // update the setting
+    m_whoTimer.changeInterval(KonversationApplication::preferences.getAutoWhoContinuousInterval() * 1000);
+  }
+  
   if(nicks>KonversationApplication::preferences.getAutoWhoNicksLimit())
   {
     // don't use auto /WHO when the number of nicks is too large, or get banned.
@@ -1745,7 +1754,7 @@ void Channel::autoWho()
     kdDebug() << "Channel::autoWho(): " << getName() << ": already under process. aborted." << endl;
     return;
   }
-  kdDebug() << "Channel::autoWho(): " << getName() << ": requesting" << endl;
+  kdDebug() << "Channel::autoWho(): " << getName() << ": request" << endl;
   server->requestWho(getName());
 }
 
@@ -1841,11 +1850,15 @@ void Channel::processPendingNicks()
     nicknameList.sort();
     nicknameListView->setUpdatesEnabled(true);
     nicknameListView->triggerUpdate();
-    if(!whoTimer.isActive())
+    if(!m_firstAutoWhoDone)
     {
-      kdDebug() << "Channel::processPendingNicks(): " << getName() << ": start auto-WHO" << endl;
       autoWho();
-      whoTimer.start(60000);
+      m_firstAutoWhoDone = true;
+    }
+    if(!m_whoTimer.isActive())
+    {
+      kdDebug() << "Channel::processPendingNicks(): " << getName() << ": start auto Who" << endl;
+      m_whoTimer.start(KonversationApplication::preferences.getAutoWhoContinuousInterval() * 1000);
     }
   }
 }

@@ -101,6 +101,10 @@ class Preferences : public QObject
     
     void setAutoWhoNicksLimit(int limit);
     int getAutoWhoNicksLimit();
+    void setAutoWhoContinuousEnabled(bool state);
+    bool getAutoWhoContinuousEnabled();
+    void setAutoWhoContinuousInterval(int interval);
+    int getAutoWhoContinuousInterval();
 
     void setDccAddPartner(bool state);
     bool getDccAddPartner();
@@ -460,7 +464,10 @@ class Preferences : public QObject
     bool logFollowsNick;
     QString logPath;
     int scrollbackMax;
+    
     int autoWhoNicksLimit;
+    bool autoWhoContinuousEnabled;
+    int autoWhoContinuousInterval;
 
     TabPlacement tabPlacement;   // where do the tabs go?
     bool blinkingTabs;           // Do we want the LEDs on the tabs to blink?

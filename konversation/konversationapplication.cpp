@@ -355,6 +355,8 @@ void KonversationApplication::readOptions()
   preferences.setScrollbackMax(config->readUnsignedNumEntry("ScrollbackMax",preferences.getScrollbackMax()));
   
   preferences.setAutoWhoNicksLimit(config->readUnsignedNumEntry("AutoWhoNicksLimit",preferences.getAutoWhoNicksLimit()));
+  preferences.setAutoWhoContinuousEnabled(config->readBoolEntry("AutoWhoContinuousEnabled",preferences.getAutoWhoContinuousEnabled()));
+  preferences.setAutoWhoContinuousInterval(config->readUnsignedNumEntry("AutoWhoContinuousInterval",preferences.getAutoWhoContinuousInterval()));
 
   // Double click actions
   preferences.setChannelDoubleClickAction(config->readEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction()));
@@ -842,6 +844,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ScrollbackMax",preferences.getScrollbackMax());
   
   config->writeEntry("AutoWhoNicksLimit",preferences.getAutoWhoNicksLimit());
+  config->writeEntry("AutoWhoContinuousEnabled",preferences.getAutoWhoContinuousEnabled());
+  config->writeEntry("AutoWhoContinuousInterval",preferences.getAutoWhoContinuousInterval());
 
   config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon());
   config->writeEntry("SystrayOnly",preferences.getSystrayOnly());

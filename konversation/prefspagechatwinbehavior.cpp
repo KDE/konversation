@@ -63,10 +63,10 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
   QToolTip::add(scrollbackMaxSpin,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
   QToolTip::add(scrollbackMaxLabel,i18n("How many lines to keep in buffers; 0=all (Unlimited)"));
   
-  QVGroupBox* sortOptionsGroup = new QVGroupBox(i18n("&Nickname List"), parentFrame, "sort_options_group");
-
-  QFrame* autoWhoNicksLimitFrame=new QFrame(sortOptionsGroup);
-  QHBoxLayout* autoWhoNicksLimitLayout=new QHBoxLayout(autoWhoNicksLimitFrame);
+  QVGroupBox* autoWhoGroup = new QVGroupBox(i18n("&Auto /WHO"), parentFrame, "auto_who_group");
+  
+  QFrame* autoWhoNicksLimitFrame = new QFrame(autoWhoGroup);
+  QHBoxLayout* autoWhoNicksLimitLayout = new QHBoxLayout(autoWhoNicksLimitFrame);
   autoWhoNicksLimitLayout->setSpacing(spacingHint());
   QLabel* autoWhoNicksLimitLabel = new QLabel(i18n("Nicks limit for auto /&WHO:"), autoWhoNicksLimitFrame);
   autoWhoNicksLimitSpin = new QSpinBox(0, 1000, 1, autoWhoNicksLimitFrame, "auto_who_nicks_limit_spin");
@@ -75,6 +75,26 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
   autoWhoNicksLimitLayout->addWidget(autoWhoNicksLimitLabel);
   autoWhoNicksLimitLayout->addWidget(autoWhoNicksLimitSpin);
   autoWhoNicksLimitLayout->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+  
+  autoWhoContinuousEnabledCheck = new QCheckBox(i18n("Request /WHO &continually"), autoWhoGroup);
+  autoWhoContinuousEnabledCheck->setChecked(preferences->getAutoWhoContinuousEnabled());
+  QFrame* autoWhoContinuousIntervalFrame = new QFrame(autoWhoGroup);
+  QHBoxLayout* autoWhoContinuousIntervalLayout = new QHBoxLayout(autoWhoContinuousIntervalFrame);
+  autoWhoContinuousIntervalLayout->setSpacing(spacingHint());
+  QLabel* autoWhoContinuousIntervalLabel = new QLabel(i18n("&Interval:"), autoWhoContinuousIntervalFrame);
+  autoWhoContinuousIntervalSpin = new QSpinBox(30, 10000, 10, autoWhoContinuousIntervalFrame, "auto_who_continuous_interval_spin");
+  autoWhoContinuousIntervalSpin->setSuffix(" "+i18n("sec"));
+  autoWhoContinuousIntervalSpin->setValue(preferences->getAutoWhoContinuousInterval());
+  autoWhoContinuousIntervalLabel->setBuddy(autoWhoContinuousIntervalSpin);
+  autoWhoContinuousIntervalLayout->addWidget(autoWhoContinuousIntervalLabel);
+  autoWhoContinuousIntervalLayout->addWidget(autoWhoContinuousIntervalSpin);
+  autoWhoContinuousIntervalLayout->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+  autoWhoContinuousIntervalSpin->setEnabled(preferences->getAutoWhoContinuousEnabled());
+  connect(autoWhoContinuousEnabledCheck, SIGNAL(toggled(bool)), autoWhoContinuousIntervalSpin, SLOT(setEnabled(bool)));
+  connect(autoWhoContinuousEnabledCheck, SIGNAL(toggled(bool)), autoWhoContinuousIntervalLabel, SLOT(setEnabled(bool)));
+  new QLabel(i18n("Continuous auto /WHO can cause a heavy traffic, so be careful not to get banned."),autoWhoGroup);
+
+  QVGroupBox* sortOptionsGroup = new QVGroupBox(i18n("&Nickname List"), parentFrame, "sort_options_group");
   
   QHBox* actionEditBox = new QHBox(sortOptionsGroup);
   actionEditBox->setSpacing(spacingHint());
@@ -141,6 +161,8 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QFrame* newParent, Preference
   chatLayout->addWidget(scrollbackMaxLabel, row, 0);
   chatLayout->addWidget(scrollbackMaxSpin, row, 1);
   row++;
+  chatLayout->addMultiCellWidget(autoWhoGroup, row, row, 0, 2);
+  row++;
   chatLayout->addMultiCellWidget(sortOptionsGroup, row, row, 0, 2);
   row++;
   chatLayout->setRowStretch(row, 10);
@@ -183,6 +205,8 @@ void PrefsPageChatWinBehavior::applyPreferences()
   preferences->setRedirectToStatusPane(redirectToStatusPaneCheck->isChecked());
   preferences->setScrollbackMax(scrollbackMaxSpin->value());
   preferences->setAutoWhoNicksLimit(autoWhoNicksLimitSpin->value());
+  preferences->setAutoWhoContinuousEnabled(autoWhoContinuousEnabledCheck->isChecked());
+  preferences->setAutoWhoContinuousInterval(autoWhoContinuousIntervalSpin->value());
   preferences->setChannelDoubleClickAction(channelActionInput->text());
   preferences->setSortByStatus(sortByStatusCheck->isChecked());
   preferences->setSortCaseInsensitive(sortCaseInsensitiveCheck->isChecked());

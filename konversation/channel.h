@@ -223,7 +223,9 @@ class Channel : public ChatWindow
     NickList nicknameList;
     QPtrList<QuickButton> buttonList;
     QTimer userhostTimer;
-    QTimer whoTimer;
+    
+    bool m_firstAutoWhoDone;
+    QTimer m_whoTimer;  // for continuous auto /WHO
 
     bool m_allowNotifications;
     
