@@ -470,7 +470,7 @@ void Channel::sendChannelText(const QString& sendLine)
     else append(server->getNickname(),output);
   }
   // Send anything else to the server
-  server->queue(filter.getServerOutput());
+  if(!filter.isSilent()) server->queue(filter.getServerOutput());
 }
 
 void Channel::newTextInView()

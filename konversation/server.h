@@ -140,6 +140,8 @@ class Server : public QObject
     void dccResumeGetRequest(QString sender,QString fileName,QString port,int startAt);
     void dccGetDone(QString fileName);
     void dccSendDone(QString fileName);
+    void away(const QString& reason);
+    void unAway();
 
   protected:
     void startNotifyCheckTimer();
@@ -164,10 +166,10 @@ class Server : public QObject
     QTimer incomingTimer;
 
     QTimer notifyTimer;
-    QTimer notifyCheckTimer; /* Checks if the ISON reply needs too long */
+    QTimer notifyCheckTimer; // Checks if the ISON reply needs too long
     QTime notifySent;
-    QStringList notifyCache; /* List of users found with ISON */
-    int checkTime;           /* Time elapsed while waiting for server 303 response */
+    QStringList notifyCache; // List of users found with ISON
+    int checkTime;           // Time elapsed while waiting for server 303 response
 
     QString ircName;
     QString inputBuffer;
@@ -181,6 +183,9 @@ class Server : public QObject
 
     InputFilter inputFilter;
     OutputFilter outputFilter;
+
+    QDateTime awayTime;
+    bool isAway;
 };
 
 #endif

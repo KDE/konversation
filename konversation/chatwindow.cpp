@@ -60,21 +60,25 @@ void ChatWindow::setServer(Server* newServer)
   if(newServer==0) kdDebug("ChatWindow::setServer(0)!") << endl;
   else
   {
-  server=newServer;
+    server=newServer;
 
-  if(textView) textView->setServer(newServer);
-  else kdDebug() << "ChatWindow::setServer(): textView==0!" << endl;
+    if(textView) textView->setServer(newServer);
+    else kdDebug() << "ChatWindow::setServer(): textView==0!" << endl;
   
-  connect(&filter,SIGNAL (openQuery(const QString&,const QString&)),
-           server,SLOT   (addQuery(const QString&,const QString&)) );
-  connect(&filter,SIGNAL (openDccPanel()),
-           server,SLOT   (requestDccPanel()) );
-  connect(&filter,SIGNAL (closeDccPanel()),
-           server,SLOT   (requestCloseDccPanel()) );
-  connect(&filter,SIGNAL (openDccSend(QString,QString)),
-           server,SLOT   (addDccSend(QString,QString)) );
-  connect(&filter,SIGNAL (requestDccSend(QString)),
-           server,SLOT   (requestDccSend(QString)) );
+    connect(&filter,SIGNAL (openQuery(const QString&,const QString&)),
+             server,SLOT   (addQuery(const QString&,const QString&)) );
+    connect(&filter,SIGNAL (openDccPanel()),
+             server,SLOT   (requestDccPanel()) );
+    connect(&filter,SIGNAL (closeDccPanel()),
+             server,SLOT   (requestCloseDccPanel()) );
+    connect(&filter,SIGNAL (openDccSend(QString,QString)),
+             server,SLOT   (addDccSend(QString,QString)) );
+    connect(&filter,SIGNAL (requestDccSend(QString)),
+             server,SLOT   (requestDccSend(QString)) );
+    connect(&filter,SIGNAL (away(const QString&)),
+             server,SLOT   (away(const QString&)) );
+    connect(&filter,SIGNAL (unAway()),
+             server,SLOT   (unAway()) );
   }
 }
 

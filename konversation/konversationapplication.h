@@ -47,7 +47,7 @@ class KonversationApplication : public KApplication
     void connectToServer(int number);
     void connectToAnotherServer(int number);
     void readOptions();
-    void saveOptions();
+    void saveOptions(bool updateGUI=true);
     void quitKonversation();
 
     void openPrefsDialog();

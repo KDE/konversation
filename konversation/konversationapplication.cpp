@@ -71,7 +71,7 @@ KonversationApplication::KonversationApplication()
 KonversationApplication::~KonversationApplication()
 {
   kdDebug() << "KonversationApplication::~KonversationApplication()" << endl;
-  saveOptions();
+  saveOptions(false);
 
 /*
   kdDebug() << "Deleting Server list ..." << endl;
@@ -320,7 +320,7 @@ void KonversationApplication::readOptions()
   preferences.setShowServerList(config->readBoolEntry("ShowServerList",preferences.getShowServerList()));
 }
 
-void KonversationApplication::saveOptions()
+void KonversationApplication::saveOptions(bool updateGUI)
 {
   kdDebug() << "KonversationApplication::saveOptions()" << endl;
 
@@ -475,15 +475,18 @@ void KonversationApplication::saveOptions()
 
   config->sync();
 
-  Server* lookServer=serverList.first();
-  while(lookServer)
+  if(updateGUI)
   {
-    // TODO: This also updates the background color! We must finally
-    // find a way to do all this with signals / slots!
-    lookServer->updateFonts();
-    lookServer->setShowQuickButtons(preferences.getShowQuickButtons());
-    lookServer->setShowModeButtons(preferences.getShowModeButtons());
-    lookServer=serverList.next();
+    Server* lookServer=serverList.first();
+    while(lookServer)
+    {
+      // TODO: This also updates the background color! We must finally
+      // find a way to do all this with signals / slots!
+      lookServer->updateFonts();
+      lookServer->setShowQuickButtons(preferences.getShowQuickButtons());
+      lookServer->setShowModeButtons(preferences.getShowModeButtons());
+      lookServer=serverList.next();
+    }
   }
 }
 

@@ -47,6 +47,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& inputLine,cons
   program=false;
   command=false;
   query=false;
+  silent=false;
 
   // Action?
   if(line.startsWith(commandChar+"me ") && destination!="")
@@ -267,7 +268,18 @@ void OutputFilter::parseTopic(QString parameter)
 
 void OutputFilter::parseAway(QString reason)
 {
-  toServer="AWAY :"+reason;
+  silent=true;
+
+  if(reason=="")
+  {
+    toServer="AWAY";
+    emit unAway();
+  }
+  else
+  {
+    toServer="AWAY :"+reason;
+    emit away(reason);
+  }
 }
 
 void OutputFilter::parseQuit(QString reason)
@@ -512,6 +524,7 @@ bool OutputFilter::isAction() { return action; };
 bool OutputFilter::isCommand() { return command; };
 bool OutputFilter::isProgram() { return program; };
 bool OutputFilter::isQuery() { return query; };
+bool OutputFilter::isSilent() { return silent; };
 
 void OutputFilter::setCommandChar() { commandChar=KonversationApplication::preferences.getCommandChar(); }
 
