@@ -88,6 +88,20 @@ void NotificationHandler::startTrayNotification(ChatWindow* chatWin)
   }
 }
 
+void NotificationHandler::join(ChatWindow* chatWin, const QString& nick)
+{
+  if(chatWin && chatWin->notificationsEnabled()) {
+    KNotifyClient::event(m_mainWindow->winId(), "join", i18n("%1 joined %2").arg(nick, chatWin->getName()));
+  }
+}
+
+void NotificationHandler::part(ChatWindow* chatWin, const QString& nick)
+{
+  if(chatWin && chatWin->notificationsEnabled()) {
+    KNotifyClient::event(m_mainWindow->winId(), "part", i18n("%1 parted %2").arg(nick, chatWin->getName()));
+  }
+}
+
 }
 
 #include "notificationhandler.moc"

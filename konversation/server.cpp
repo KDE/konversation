@@ -2457,7 +2457,7 @@ void Server::addNickToChannel(const QString &channelName,const QString &nickname
   }
 }
 
-void Server::nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask)
+Channel* Server::nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask)
 {
   Channel* outChannel=getChannelByName(channelName);
   if(outChannel)
@@ -2480,6 +2480,8 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
     }
     outChannel->joinNickname(channelNick);
   }
+  
+  return outChannel;
 }
 
 void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceHostmask)
@@ -2495,7 +2497,7 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
   }
 }
 
-void Server::removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit)
+Channel* Server::removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit)
 {
   Channel* outChannel=getChannelByName(channelName);
   if(outChannel)
@@ -2521,6 +2523,8 @@ void Server::removeNickFromChannel(const QString &channelName, const QString &ni
     QString nicky = nickname;
     deleteNickIfUnlisted(nicky);
   }
+  
+  return outChannel;
 }
 
 void Server::nickWasKickedFromChannel(const QString &channelName, const QString &nickname, const QString &kicker, const QString &reason)

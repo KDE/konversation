@@ -463,14 +463,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     else
     {
-      server->nickJoinsChannel(channelName,sourceNick,sourceHostmask);
-#ifdef USE_KNOTIFY
-      Channel* channel = server->getChannelByName(channelName);
-
-      if(channel && channel->notificationsEnabled()) {
-        KNotifyClient::event(mainWindow->winId(), "join");
-      }
-#endif
+      Channel* channel = server->nickJoinsChannel(channelName,sourceNick,sourceHostmask);
+      konv_app->notificationHandler()->join(channel, sourceNick);
     }
   }
   else if(command=="kick")
@@ -514,15 +508,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         return; // if they return false, stop processing
     }
     // ******
-    server->removeNickFromChannel(parameterList[0],sourceNick,trailing);
-#ifdef USE_KNOTIFY
-    // KNotify events...
-    Channel* channel = server->getChannelByName(parameterList[0]);
-
-    if(channel && sourceNick != server->getNickname() && channel->notificationsEnabled()) {
-      KNotifyClient::event(mainWindow->winId(), "part");
+    Channel* channel = server->removeNickFromChannel(parameterList[0],sourceNick,trailing);
+    
+    if(sourceNick != server->getNickname()) {
+      konv_app->notificationHandler()->part(channel, sourceNick);
     }
-#endif
   }
   else if(command=="quit")
   {

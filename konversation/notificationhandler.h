@@ -30,6 +30,8 @@ class NotificationHandler : public QObject
   public slots:
     void message(ChatWindow* chatWin, const QString& fromNick, const QString& message);
     void nick(ChatWindow* chatWin, const QString& fromNick, const QString& message);
+    void join(ChatWindow* chatWin, const QString& nick);
+    void part(ChatWindow* chatWin, const QString& nick);
   
   protected:
     void startTrayNotification(ChatWindow* chatWin);

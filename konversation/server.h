@@ -101,9 +101,9 @@ class Server : public QObject
     void addNickToChannel(const QString &channelName,const QString &nickname,const QString &hostmask,
                           bool admin,bool owner,bool op,bool halfop,bool voice);
     void addHostmaskToNick(const QString &sourceNick, const QString &sourceHostmask);
-    void nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask);
+    Channel* nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask);
     void renameNick(const QString &nickname,const QString &newNick);
-    void removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit=false);
+    Channel* removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit=false);
     void nickWasKickedFromChannel(const QString &channelName, const QString &nickname, const QString &kicker, const QString &reason);
     void removeNickFromServer(const QString &nickname, const QString &reason);
     void noMorePendingNicks(const QString& channel);
