@@ -1,110 +1,79 @@
+TODO-list for Konversation
+======================
+<nick>  == reported by
+-->nick == assigned to
+#x      == sequential bug number,
+           #1 being the highest available (take this one for your next bug and increase here)
 
-1. Doxify the source ( berkus )
+SHORT-TERM (URGENT):
+- Limit backlog to x lines or KB
+- Docufy the app
+- Option to disable %G, %C %B... expansion
+- Make URLs like http://user@somedomain.com/ work
+- /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
+- Don't trigger events when we did highlight ourselves
+- Add ETA counter for DCC transfers
+- Show / Hide tab types (status tabs ect.)
+- "/part" may close Queries, too.
+- Hide all "technical" messages from channels and queries or redirect them into the status view
+- Measure away time and make it available via placeholder
+- Support "CTCP-DCC reply from <nickname>: REJECT SEND <filename> <reason>"
 
-2. Limit backlog to x lines or KB (important)
+MID-TERM:
+- Make [x] on tabs harder to click (1 second hover delay or similar)
+- Doxify the source ( berkus )
+- Per nick coloring in channel discussion
+- DCC RESUME should start counting cps from the beginning
+- History viewer
+- Treeview with servers, list of channels / queries in a detachable window that also indicates new text
+- After being away a summary of lines with highlighting in its own window would be nice; a click on one line
+  might jump to the according line in the channel/query-window
+- DCC port range
+- In Nicks Online panel, show stats like "last spoken" "last seen"
+- Compute md5sum over DCCs and send / display the hash after transfer
+- Make separate Highlight lists for each identity
 
-3. Logrotate with timer or at shutdown, compress rotated logs ( berkus )
+LONG-TERM:
+- Logrotate with timer or at shutdown, compress rotated logs ( berkus )
+- Context menu on nick in nick list should contain hostmask, realname, etc. infos (in a sub-menu)
+- Stats for server lag, words per session per person / channel, quits etc.
+- "notices" tab for all notices that are no channel notices
+- "snotices" tab for all server notices (prefix without "!" )
+- Make LED colors for nick list configurable via GUI
+- Detect shell commands and warn the user
 
-4. Support "CTCP-DCC reply from <nickname>: REJECT SEND <filename> <reason>"
 
-5. Treeview with servers, list of channels / queries in a detachable window that also indicates new text
+IDEAS:
+- Automatically gzip files before DCC SEND
+- Fortunes
+- Multi line behaviour in input line with "little enter"
 
-6. After being away a summary of lines with highlighting in its own window would be nice; a click on one line
-might jump to the according line in the channel/query-window
- 
-7. The text-search could offer a button "any highlight"
 
-8. Do some kind of marker to the lines that came in while being away; maybe with a special color of the 
-timestamp
+DISCUSSING:
 
-9. Per nick coloring in channel discussion
-
-10. DCC RESUME should start counting cps from the beginning
-
-11. Context menu on nick in nick list should contain hostmask, realname, etc. infos (in a sub-menu)
-
-12. Check for channel or user parameter in mode changes to take care of duplicate mode chars
-
-13. Option to disable %G, %C %B... expansion
-
-14. Don't trigger events when we did highlight ourselves
-
-15. Click on notify messages opens query
-
-16. Make URLs like http://user@somedomain.com/ work
-
-17. Events for Queries and DCC Chat
-
-18. A "channel or topic" checkbox would be nice, or make the current checkboxes work as "or" not as "and"
-
-19. /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
-
-20. Optionally copy log files to new location
-
-21. Try to keep open views on kicks and stuff
-
-22. Reverse-I-Search
-
-23. Multi line behaviour in input line with "little enter"
-
-24- Pasting into text views should trigger the paste mechanism
-
-25. Make LED colors for nick list configurable via GUI
-
-26. Detect shell commands and warn the user
-
-27. Let the user decide how many quick buttons they want, if at all.
-
-28. Replace "0.0.0.0" with QString::null in dccTransfer to allow other than IPv4
-
-29. Session management
-
-30. Make font for quick buttons configurable
-
-31. Fortunes
-
-32. "notices" tab for all notices that are no channel notices
-
-33. "snotices" tab for all server notices (prefix without "!" )
-
-34. DCC port range
-
-35. cycle command
-
-36. Make separate Highlight lists for each identity
-
-37. Measure away time and make it available via placeholder
-
-38. Mark the last point where the panel was active
-
-39. Hide all "technical" messages from channels and queries or redirect them into the status view
-
-40. Command Char must be present
-
-41. "/part" may close Queries, too.
-
-42. Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated
-
-43. Show away messages only once per nick
-
-44. Tabs on left / right (?)
-
-45. Show / Hide tab types (status tabs ect.)
-
-46. Different tab sortings
-
-47. Automatically gzip files before DCC SEND
-
-48. Compute md5sum over DCCs and send / display the hash after transfer
-
-49. Import notify list from .ircrc
-
-50. Notify with more than 500 characters
-
-51. Stats for server lag, words per session per person / channel, quits etc.
-
-52. "Open Nicks online panel on startup" option
-
-53. In Nicks Online panel, show stats like "last spoken" "last seen"
-
-54. Add ETA counter for DCC transfers
+- The text-search could offer a button "any highlight"
+- Check for channel or user parameter in mode changes to take care of duplicate mode chars
+- Click on notify messages opens query
+- Events for Queries and DCC Chat
+- A "channel or topic" checkbox would be nice, or make the current checkboxes work as "or" not as "and"
+- Optionally copy log files to new location
+- Try to keep open views on kicks and stuff
+- Reverse-I-Search
+- Pasting into text views should trigger the paste mechanism
+- Let the user decide how many quick buttons they want, if at all.
+- Replace "0.0.0.0" with QString::null in dccTransfer to allow other than IPv4
+- Session management
+- Make font for quick buttons configurable
+- cycle command
+- Nick button in status pane does nothing
+- privmsg (/msg) should be logged to the specific log file (if i do "/msg foo bar"
+  i want to have this in konversation-foo.log)
+- Mark the last point where the panel was active
+- Command Char must be present
+- Make %k (Channel Key Wildcard) work ... Seems to be a bit complicated
+- Show away messages only once per nick
+- Tabs on left / right (?)
+- Different tab sortings
+- Import notify list from .ircrc
+- Notify with more than 500 characters
+- "Open Nicks online panel on startup" option
