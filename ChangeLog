@@ -1,6 +1,7 @@
 $Id$
 
 Changes from 0.11 to 0.12
+- Now handles multi server mode in one single window
 - Fixed the wrong Ops counter
 - Added /notify command and respective dcop calls
 - Added support for /oper command
