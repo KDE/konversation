@@ -24,11 +24,14 @@ Connection::Connection(const QString& server,
   m_password = password;
   m_interface = interface;
   m_fatalError = false;
+  m_lastError = QString::null;
   m_socket = new KBufferedSocket(this,"server_socket");
   
   // Catch the signals
-  connect(m_socket,SIGNAL(gotError(int)),this,SLOT(error()));
-  connect(m_socket,SIGNAL(connected(const KResolverEntry&)),this,SLOT(connected(const KResolverEntry&)));
+  connect(m_socket,SIGNAL(gotError(int)),this,SLOT(error(int)));
+  connect(m_socket,SIGNAL(connected(const KResolverEntry&,bool&)),
+	  this,SLOT(connected(const KResolverEntry&,bool&)));
+  connect(m_socket,SIGNAL(readyRead()),this,SLOT(readData()));
   
   // Ready to fire
   connect();
@@ -36,7 +39,10 @@ Connection::Connection(const QString& server,
 
 Connection::~Connection()
 {
-  m_socket->deleteLater();
+  if(m_fatalError)
+    m_socket->deleteLater();
+  else
+    delete m_socket;
 }
 
 void Connection::connect()
@@ -44,7 +50,7 @@ void Connection::connect()
   m_socket->connect(m_servername,m_port);
 }
  
-void Connection::connected(const KResolverEntry& remote)
+void Connection::connected(const KResolverEntry& remote, bool& /*skip*/)
 {
   m_serverIp = remote->address()->toString();
 }
@@ -54,4 +60,19 @@ void Connection::disconnect()
   m_server->close();
 }
 
+void Connection::error(int error)
+{
+  if( m_socket->isFatalError(error) )
+    m_fatalError = true;
+  else
+    m_fatalError = false;
+  
+  m_lastError = m_socket->errorString();
+}
+
+void Connection::readData()
+{
+}
+  
+  
 #include "connection.moc"

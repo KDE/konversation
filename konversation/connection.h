@@ -27,6 +27,10 @@ class Connection
   void reconnect();
   void disconnect();
 
+ protected slots:
+  
+  void connected(const KResolverEntry &remote,bool& /*skip*/);
+
  signals:
   
   void disconnected();
