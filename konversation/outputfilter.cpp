@@ -17,6 +17,7 @@
 #include <qstringlist.h>
 #include <qfile.h>
 #include <qfileinfo.h>
+#include <qregexp.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -279,7 +280,7 @@ void OutputFilter::parseAway(QString reason)
   else
   {
     if(KonversationApplication::preferences.getShowAwayMessage())
-      sendToAllChannels(KonversationApplication::preferences.getAwayMessage().replace("%s",reason));
+      sendToAllChannels(KonversationApplication::preferences.getAwayMessage().replace(QRegExp("%s",false),reason));
 
     emit away();
     toServer="AWAY :"+reason;
