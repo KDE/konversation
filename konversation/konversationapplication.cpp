@@ -38,7 +38,7 @@ KonversationApplication::KonversationApplication()
   prefsDialog=0;
 
   // initialize OSD display here, so we can read the preferences properly
-  osd = new OSDWidget();
+  osd = new OSDWidget( "Konversation" );
 
   preferences.setOSDFont(font());
   preferences.setTextFont(font());
@@ -432,7 +432,7 @@ void KonversationApplication::readOptions()
     else
       preferences.setOSDColor("#" + osdColor);
 
-    osd->setColor(preferences.getOSDColor());
+    osd->setTextColor(preferences.getOSDColor());
   }
 
   // Server List

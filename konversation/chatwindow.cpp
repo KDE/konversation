@@ -14,6 +14,7 @@
 
 #include <qdatetime.h>
 #include <qdir.h>
+#include <qregexp.h>
 #include <qtextcodec.h>
 
 #include <klocale.h>

@@ -128,7 +128,7 @@ void PrefsPageOSD::applyPreferences()
   if (preferences->getOSDUsage())
   {
     konvApp->osd->setFont(osdFont);
-    konvApp->osd->setColor(osdColorChooser->color());
+    konvApp->osd->setTextColor(osdColorChooser->color());
   }
 
 }

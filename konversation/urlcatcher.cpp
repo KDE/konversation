@@ -14,6 +14,7 @@
 
 #include <qhbox.h>
 #include <qpushbutton.h>
+#include <qregexp.h>
 #include <qclipboard.h>
 
 #include <kapp.h>

@@ -18,6 +18,7 @@
 #include <qdockarea.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
+#include <qregexp.h>
 #include <qspinbox.h>
 
 #include <kdialog.h>
