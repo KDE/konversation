@@ -272,7 +272,11 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // If no additional info available, request a WHOIS on the nick.
             if (!m_whoisRequested)
             {
-                if (nickAdditionalInfo.isEmpty()) requestWhois(groupName, nickname);
+                if (nickAdditionalInfo.isEmpty())
+                {
+                    requestWhois(groupName, nickname);
+                    m_whoisRequested = true;
+                }
             }
             // Set Kabc icon if the nick is associated with an addressbook entry.
             if (!nickInfo->getAddressee().isEmpty())
