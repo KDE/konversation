@@ -9,6 +9,7 @@ Changes from 0.9 to 0.10
 - Switched to kapp->config() to properly remember dialog status
 - Color code parsing now works with QRegExp
 - CTCP-Ping now works
+- Removed files that are no longer needed
 
 Changes from 0.8 to 0.9
 - Added strikeout support (untested yet)
