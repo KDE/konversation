@@ -621,7 +621,7 @@ void NicksOnline::doCommand(int id)
         case ciAddressbookEdit:
         {
             if (addressee.isEmpty()) return;
-	    Konversation::Addressbook::self()->editAddressee(nickInfo->getAddressee().uid());
+            Konversation::Addressbook::self()->editAddressee(addressee.uid());
             break;
         }
         case ciAddressbookNew:
