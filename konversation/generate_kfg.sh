@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 
 
 GROUP=""
@@ -46,8 +46,13 @@ while read line; do {
     
       echo "    <entry key=\"$ENTRY\" type=\"$TYPE\">"
       DEFAULT=$( grep -i "[^:]set$ENTRY *(" preferences.cpp | sed -n -e 's/.*set[^(]*[(]\(.*\)[)][^)]*/\1/p' )
-  
-      echo "      <default>$DEFAULT</default>"
+      
+      DEFAULT2=$(echo "$DEFAULT" | sed -n -e "s/^\(\"\(.*\)\"\|\([0-9][0-9]*\|true\|false\)\)$/\2\3/p" )
+      if [[ -n "${DEFAULT2}" ]] ; then 
+        echo "      <default>${DEFAULT2}</default>"
+      else 
+        echo "      <default code=\"true\">${DEFAULT}</default>"
+      fi
       echo "      <label></label>"
       echo "      <whatsthis></whatsthis>"
       echo "    </entry>"
