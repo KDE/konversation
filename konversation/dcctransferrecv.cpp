@@ -170,6 +170,7 @@ void DccTransferRecv::start()  // public slot
         break;
       case DccResumeDialog::Cancel:
       default:
+	abort();
         return;
     }
   }
