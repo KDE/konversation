@@ -15,9 +15,25 @@ foreach $station (@stations) {
 
   $city = `dcop KWeatherService WeatherService stationName $station`;
   $temperature = `dcop KWeatherService WeatherService temperature $station`;
-  $pressure = `dcop KWeatherService WeatherService pressure $station`;
+  $pressure = `dcop KWeatherService WeatherService pressure $station`; 
   $wind = `dcop KWeatherService WeatherService wind $station`;
   $detail = `dcop KWeatherService WeatherService weather $station`;
+
+  # Fix details
+  
+  $i = 0;
+  foreach $det (split(/\n/,$detail)) {
+    chomp $det;
+    if( $i==0 ) {
+      $details = $det;
+    }
+    else {
+      $details = $details.", ".$det;
+    }
+    ++$i;
+  }
+  
+  $pressure = s/\"/\\\"/g; # Escape double quote
 
   chomp $station;
   chomp $city;
@@ -27,12 +43,12 @@ foreach $station (@stations) {
   chomp $detail;
 
   if( $detail ) {
-  $MESSAGE = "Current Weather for %B$city%B : %B$detail%B, Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
+  $MESSAGE = "Current Weather for %B$city%B : %B$details%B, Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
   }
   else {
   $MESSAGE = "Current Weather for %B$city%B : Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
   }
-
+  
   system ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"$MESSAGE\" ");
-    
+
 }
