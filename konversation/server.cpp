@@ -1004,23 +1004,27 @@ void Server::incoming()
       QString senderNick;
       bool isServerMessage = false;
       QString channelKey;
-      QTextCodec* tmpCodec = getIdentity()->getCodec();
+      QTextCodec* codec = getIdentity()->getCodec();
       // pre-parse to know which channel the message belongs to
-      QStringList lineSplit = QStringList::split(" ",tmpCodec->toUnicode(qcsBufferLines.front()));
-      if(1 <= lineSplit.count())  // for safe
-        if(lineSplit[0][0] == ':')
-        {
-          if(!lineSplit[0].contains('!'))
-            isServerMessage = true;
-          else
-            senderNick = lineSplit[0].mid(1, lineSplit[0].find('!')-1);
-          lineSplit.pop_front();  // remove prefix
-        }
+      QStringList lineSplit = QStringList::split(" ",codec->toUnicode(qcsBufferLines.front()));
+      
+      if(lineSplit.count() >= 1)  // for safe
+	{
+	  if(lineSplit[0][0] == ':')
+	    {
+	      if(!lineSplit[0].contains('!'))
+		isServerMessage = true;
+	      else
+		senderNick = lineSplit[0].mid(1, lineSplit[0].find('!')-1);
+	      lineSplit.pop_front();  // remove prefix
+	    }
+	}
+
       // set channel key
       QString command = lineSplit[0].lower();
       if(isServerMessage)
       {
-        if(3 <= lineSplit.count())
+        if(lineSplit.count() >= 3)
         {
           if( command == "332" )  // RPL_TOPIC
             channelKey = lineSplit[2];
@@ -1030,7 +1034,7 @@ void Server::incoming()
       }
       else
       {
-        if(2 <= lineSplit.count())
+        if(lineSplit.count() >= 2)
         {
           // query
           if( ( command == "privmsg" ||
@@ -1047,6 +1051,7 @@ void Server::incoming()
             channelKey = lineSplit[1];
         }
       }
+      
       // check setting
       QString channelEncoding;
       if(!channelKey.isEmpty()) {
@@ -1054,11 +1059,9 @@ void Server::incoming()
       }
       // }
 
-      QTextCodec* codec;
       if(!channelEncoding.isEmpty())
         codec = IRCCharsets::codecForName(channelEncoding);
-      else
-        codec = getIdentity()->getCodec();
+
 
       // if channel encoding is utf-8 and the string is definitely not utf-8
       // then try latin-1
