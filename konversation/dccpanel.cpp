@@ -43,17 +43,36 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   setType(ChatWindow::DccPanel);
 
   dccListView=new KListView(this,"dcc_control_panel");
-
-  dccListView->addColumn(i18n("Partner"));
-  dccListView->addColumn(i18n("File"));
-  dccListView->addColumn(i18n("Size"));
-  dccListView->addColumn(i18n("Position"));
-  dccListView->addColumn(i18n("% Done"));
-  dccListView->addColumn(i18n("CPS"));
-  dccListView->addColumn(i18n("IP Address"));
-  dccListView->addColumn(i18n("Port"));
-  dccListView->addColumn(i18n("Status"));
-
+  
+  for(unsigned int i=0 ; i < Column::COUNT ; ++i)
+    dccListView->addColumn("");
+  
+  //dccListView->setColumnText(Column::StatusIcon,    "");
+  //dccListView->setColumnText(Column::TypeIcon,      "");
+  dccListView->setColumnText(Column::OfferDate,     i18n("Date"));
+  dccListView->setColumnText(Column::Status,        i18n("Status"));
+  dccListView->setColumnText(Column::FileName,      i18n("File"));
+  dccListView->setColumnText(Column::PartnerNick,   i18n("Partner"));
+  dccListView->setColumnText(Column::Progress,      i18n("Progress"));
+  dccListView->setColumnText(Column::Position,      i18n("Position"));
+  dccListView->setColumnText(Column::TimeRemaining, i18n("Remain"));
+  dccListView->setColumnText(Column::CPS,           i18n("Speed"));
+  
+  dccListView->setColumnWidth(Column::OfferDate,      70);
+  dccListView->setColumnWidth(Column::Status,         80);
+  dccListView->setColumnWidth(Column::FileName,      120);
+  dccListView->setColumnWidth(Column::PartnerNick,    70);
+  dccListView->setColumnWidth(Column::Progress,       90);
+  dccListView->setColumnWidth(Column::Position,      120);
+  dccListView->setColumnWidth(Column::TimeRemaining,  80);
+  dccListView->setColumnWidth(Column::CPS,            70);
+  
+  dccListView->setColumnAlignment(Column::OfferDate,     AlignHCenter);
+  dccListView->setColumnAlignment(Column::Progress,      AlignHCenter);
+  dccListView->setColumnAlignment(Column::Position,      AlignRight);
+  dccListView->setColumnAlignment(Column::TimeRemaining, AlignRight);
+  dccListView->setColumnAlignment(Column::CPS,           AlignRight);
+  
   dccListView->setDragEnabled(true);
   dccListView->setAcceptDrops(true);
   dccListView->setSorting(-1,false);
@@ -106,17 +125,15 @@ void DccPanel::dccSelected()
     switch(status)
     {
       case DccTransfer::Queued:
-      case DccTransfer::Lookup:
+      case DccTransfer::LookingUp:
       case DccTransfer::Connecting:
         setButtons(true,true,true,false,false);
         break;
-      case DccTransfer::Offering:
-      case DccTransfer::Resuming:
+      case DccTransfer::WaitingRemote:
         setButtons(false,true,true,true,true);
         break;
       case DccTransfer::Sending:
       case DccTransfer::Receiving:
-      case DccTransfer::Stalled:
         setButtons(false,true,true,true,true);
         break;
       case DccTransfer::Aborted:
@@ -136,18 +153,19 @@ void DccPanel::acceptDcc()
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
   if(item)
   {
-    if(item->getType()==DccTransfer::Get && item->getStatus()==DccTransfer::Queued) item->startGet();
+    if(item->getType()==DccTransfer::Receive && item->getStatus()==DccTransfer::Queued) item->start();
   }
 }
 
 void DccPanel::runDcc()
 {
+  /*
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
   if(item)
   {
-    if(item->getType()==DccTransfer::Send || item->getType()==DccTransfer::ResumeSend)
+    if(item->getType()==DccTransfer::Send)
       new KRun(KURL(item->getFile()));
-    else if(item->getType()==DccTransfer::Get || item->getType()==DccTransfer::ResumeGet)
+    else if(item->getType()==DccTransfer::Get)
     {
       KURL kurl;
       QDir dir;
@@ -155,6 +173,7 @@ void DccPanel::runDcc()
       new KRun(kurl);
     }
   }
+  */
 }
 
 void DccPanel::abortDcc()
@@ -165,6 +184,7 @@ void DccPanel::abortDcc()
 
 void DccPanel::removeDcc()
 {
+  /*
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
 
   if(item)
@@ -190,9 +210,10 @@ void DccPanel::removeDcc()
       if(item) getListView()->setSelected(item,true);
     }
   }
+  */
 }
 
-DccTransfer* DccPanel::getTransferByPort(QString port,DccTransfer::DccType type)
+DccTransfer* DccPanel::getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed)
 {
   int index=0;
   DccTransfer* item;
@@ -202,16 +223,18 @@ DccTransfer* DccPanel::getTransferByPort(QString port,DccTransfer::DccType type)
     item=static_cast<DccTransfer*>(getListView()->itemAtIndex(index++));
     if(item)
     {
-      if(item->getStatus()<DccTransfer::Failed &&
+      if( (item->getStatus()==DccTransfer::Queued || item->getStatus()==DccTransfer::WaitingRemote) &&
          item->getType()==type &&
-         item->getPort()==port) return item;
+         !(resumed && !item->isResumed()) &&
+         item->getOwnPort()==port) return item;
     }
   } while(item);
 
   return 0;
 }
+
 // To find the resuming dcc over firewalls that change the port numbers
-DccTransfer* DccPanel::getTransferByName(QString name,DccTransfer::DccType type)
+DccTransfer* DccPanel::getTransferByName(const QString& name,DccTransfer::DccType type,bool resumed)
 {
   int index=0;
   DccTransfer* item;
@@ -221,9 +244,10 @@ DccTransfer* DccPanel::getTransferByName(QString name,DccTransfer::DccType type)
     item=static_cast<DccTransfer*>(getListView()->itemAtIndex(index++));
     if(item)
     {
-      if(item->getStatus()<DccTransfer::Failed &&
+      if( (item->getStatus()==DccTransfer::Queued || item->getStatus()==DccTransfer::WaitingRemote) &&
          item->getType()==type &&
-         item->getFile()==name) return item;
+         !(resumed && !item->isResumed()) &&
+         item->getFileName()==name) return item;
     }
   } while(item);
 
@@ -232,6 +256,7 @@ DccTransfer* DccPanel::getTransferByName(QString name,DccTransfer::DccType type)
 
 void DccPanel::showFileInfo()
 {
+  /*
   QStringList infoList;
 
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
@@ -294,6 +319,7 @@ void DccPanel::showFileInfo()
     KMessageBox::sorry(this,i18n("No detailed information for this file found."),i18n("File information"));
   }
   delete fileInfo;
+  */
 }
 
 #ifdef USE_MDI

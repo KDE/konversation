@@ -12,134 +12,128 @@
   email:     eisfuchs@tigress.com
 */
 
-
 #ifndef DCCTRANSFER_H
 #define DCCTRANSFER_H
 
+#include <qdatetime.h>
+#include <qfile.h>
+
 #include <klistview.h>
 
-#include <qdir.h>
-#include <qfile.h>
-#include <qdatetime.h>
-#include <qstringlist.h>
+class QDateTime;
+class QStringList;
+class QTimer;
+class KProgress;
 
 /*
   @author Dario Abatianni
 */
 
-class KExtendedSocket;
-
 class DccTransfer : public QObject, public KListViewItem
 {
   Q_OBJECT
-
+  
   public:
     enum DccType
     {
-      Send=0,
-      Get,
-      ResumeSend,
-      ResumeGet
+      Send,
+      Receive,
+      DccTypeCount
     };
-
+    
     enum DccStatus
     {
-      Queued=0,    // Newly added DCC
-      Resuming,    // DCC-GET, trying to negotiate resume position
-      Lookup,      // DCC-GET, trying to find ip address of sender
-      Connecting,  // DCC-GET, trying to connect to sender
-      Offering,    // DCC-SEND, waiting for receiver to connect to us
-      Sending,     // Sending data
-      Receiving,   // Receiving data
-      Stalled,     // Transfer stalls
-      Failed,      // Transfer failed
-      Aborted,     // Transfer aborted by user
-      Done         // Transfer done
+      Queued=0,      // Newly added DCC, RECV: Waiting for local user's response
+      WaitingRemote, // SEND: Waiting for remote host's response
+      LookingUp,     // RECV: looking up the server
+      Connecting,    // RECV: trying to connect to the server
+      Sending,       // Sending
+      Receiving,     // Receiving
+      Failed,        // Transfer failed
+      Aborted,       // Transfer aborted by user
+      Done,          // Transfer done
+      DccStatusCount
     };
-
-    DccType getType();
-    DccStatus getStatus();
-
-    DccTransfer(KListView* parent,DccType type,QString folder,QString partner,QString name,QString size,QString ipString,QString portString);
-    ~DccTransfer();
-
-    QString getPort();
-    unsigned long getSize();
-    unsigned long getPosition();
-    QString getIp();
-    QString getNumericalIp();
-    QString getPartner();
-    QString getFile();
-    QString getFullPath();
-    QString getFolder();
-    unsigned long getBufferSize();
-
+    
+    DccTransfer(KListView* _parent, DccType _dccType, const QString& _partnerNick);
+    virtual ~DccTransfer();
+    
+    virtual void paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment);
+    
+    DccType getType() const { return dccType; }
+    DccStatus getStatus() const { return dccStatus; }
+    QString getOwnPort() const { return ownPort; }
+    QString getPartnerNick() const { return partnerNick; }
+    QString getFileName() const { return fileName; }
+    QString getFilePath() const { return filePath; }
+    bool isResumed() const { return bResumed; }
+    
   signals:
-    void send(const QString& partner,const QString& fileName,const QString& ip,const QString& port,unsigned long size);
-    void resumeGet(const QString& partner,const QString& fileName,const QString& port,int startAt);
-    void dccGetDone(const QString& fileName);
-    void dccSendDone(const QString& fileName);
-    void dccStatusChanged(const DccTransfer* item);
-
+    void done(const QString& filename);
+    void statusChanged(const DccTransfer* item);
+    
   public slots:
-    void startGet();
-    void startSend();
-    void startResumeGet(QString position);
-    void startResumeSend(QString position);
-    void abort();
-
+    virtual void start() = 0;
+    virtual void abort() = 0;
+    
   protected slots:
-    void updateCPS();
-    void lookupFinished(int numOfResults);
-    void dccGetConnectionSuccess();
-    void dccGetBroken(int errorCode);
-    void readData();
-    void writeData();
-    void getAck();
-    void sendAck();
-/*
-    void dccSendConnectionSuccess();
-    void dccSendBroken(int errorCode);
-*/
-    void heard();
-
+    void updateView();
+    
   protected:
-    void connectToSender();
-
-    void setType(DccType type);
+    void startAutoUpdateView();
+    void stopAutoUpdateView();
+    
     void setStatus(DccStatus status);
-    void setSize(unsigned long size);
-    void setPosition(unsigned long pos);
-    void setIp(QString ip);
-    void setPort(QString port);
-    void setPartner(QString partner);
-    void setFile(QString file);
-    void setFolder(QString folder);
-    void setBufferSize(unsigned long size);
-    QString getErrorString(int code);
-
+    
+    // called by updateView()
+    QString getTypeText() const;
+    QPixmap getTypeIcon() const;
+    QPixmap getStatusIcon() const;
+    QString getStatusText() const;
+    QString getFileSizePrettyText() const;
+    QString getPositionPrettyText() const;
+    QString getProgressPrettyText() const;
+    QString getTimeRemainingPrettyText() const;
+    QString getCPSPrettyText() const;
+    
+    unsigned long getCPS() const;
+    
+    static QString getNumericalIpText(const QString& _ip);
+    static QString getErrorString(int code);
+    static unsigned long intel(unsigned long value);
+    
+    // transfer information
     DccType dccType;
     DccStatus dccStatus;
-    QStringList statusText;
-    QString dccPartner;
-    QString dccFolder;
-    QString dccFile;
-    QString dccIp;
-    QString dccPort;
-
+    bool bResumed;
+    unsigned long transferringPosition;
+    unsigned long transferStartPosition;
+    QString partnerNick;
+    QString partnerIp;  // null when unknown
+    QString partnerPort;
+    QString ownIp;
+    QString ownPort;
+    QDateTime timeOffer;
+    QDateTime timeTransferStarted;
+    QDateTime timeLastActive;
+    
     unsigned long bufferSize;
-    unsigned long fileSize;
-    unsigned long transferred;
-
-    KExtendedSocket* dccSocket;
-    KExtendedSocket* sendSocket;  // accept() needs a new socket
-    QDir dir;
-    QFile file;
-
-    QDateTime transferStarted;
-    QDateTime lastActive;         // To find out if the transfer stalled
-
     char* buffer;
+    
+    QTimer* autoUpdateViewTimer;
+    
+    // file information
+    QFile file;
+    QString fileName;
+    QString filePath;
+    unsigned long fileSize;
+    
+    // for interface
+    KProgress* progressBar;
+    
+    static QString TypeText[DccTypeCount];
+    static QString StatusText[DccStatusCount];
+    
 };
 
 #endif

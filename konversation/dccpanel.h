@@ -31,6 +31,12 @@ class DccPanel : public ChatWindow
   Q_OBJECT
 
   public:
+    class Column
+    {
+      public:
+        enum { TypeIcon, OfferDate, Status, FileName, PartnerNick, Progress, Position, TimeRemaining, CPS, COUNT };
+    };
+    
 #ifdef USE_MDI
     DccPanel(QString caption);
 #else
@@ -39,8 +45,8 @@ class DccPanel : public ChatWindow
     ~DccPanel();
 
     KListView* getListView();
-    DccTransfer* getTransferByPort(QString port,DccTransfer::DccType type);
-    DccTransfer* getTransferByName(QString name,DccTransfer::DccType type);
+    DccTransfer* getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed=false);
+    DccTransfer* getTransferByName(const QString& name,DccTransfer::DccType type,bool resumed=false);
     void dccStatusChanged(const DccTransfer* item);
 
   public slots:

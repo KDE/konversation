@@ -12,404 +12,134 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <stdlib.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-
-#include <qtimer.h>
 #include <qhostaddress.h>
-#include <qregexp.h>
+#include <qstyle.h>
+#include <qtimer.h>
 
-#include <klocale.h>
 #include <kdebug.h>
-#include <kextsock.h>
-#include <kmessagebox.h>
-#include <kstandarddirs.h>
+#include <kglobal.h>
+#include <kiconloader.h>
+#include <klocale.h>
+#include <kprogress.h>
 
+#include "dccpanel.h"
 #include "dcctransfer.h"
-#include "dccresumedialog.h"
 #include "konversationapplication.h"
 
-DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString partner,QString name,QString size,QString ipString,QString portString) :
-             KListViewItem(parent)
+DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _partnerNick)
+  : KListViewItem(_parent)
 {
-  dccSocket=0;
-  sendSocket=0;
-
-  setType(type);
-  setPartner(partner);
-  setFile(name);
-  setSize(size.toUInt());
-  setPosition(0);
-  setIp(ipString);
-  setPort(portString);
-  setStatus(Queued);
-  setFolder(folder);
-
-  setBufferSize(KonversationApplication::preferences.getDccBufferSize());
-  buffer=new char[bufferSize];
-
-  statusText.append(i18n("Queued"));
-  statusText.append(i18n("Negotiating resume..."));
-  statusText.append(i18n("Lookup..."));
-  statusText.append(i18n("Connecting..."));
-  statusText.append(i18n("Offering..."));
-  statusText.append(i18n("Sending"));
-  statusText.append(i18n("Receiving"));
-  statusText.append(i18n("Stalled"));
-  statusText.append(i18n("Failed"));
-  statusText.append(i18n("Aborted"));
-  statusText.append(i18n("Done"));
-
-  transferStarted=QDateTime::currentDateTime();
-
-  updateCPS();
-
-  if(getType()==Send)
-  {
-    setText(6,i18n("unknown"));
-    setText(7,i18n("unknown"));
-    setStatus(Offering);
-  }
+  dccType = _dccType;
+  partnerNick = _partnerNick;
+  
+  dccStatus = Queued;
+  bResumed = false;
+  transferringPosition = 0;
+  transferStartPosition = 0;
+  partnerIp = QString::null;
+  partnerPort = QString::null;
+  ownIp = QString::null;
+  ownPort = QString::null;
+  timeOffer = QDateTime::currentDateTime();
+  
+  bufferSize = KonversationApplication::preferences.getDccBufferSize();
+  buffer = new char[bufferSize];
+  
+  autoUpdateViewTimer = 0;
+  
+  progressBar = new KProgress(100);
+  progressBar->setCenterIndicator(true);
+  progressBar->setPercentageVisible(true);
+  
+  // FIXME: we shouldn't do these init in the instance constructer
+  TypeText[Send]    = i18n("Send");
+  TypeText[Receive] = i18n("Receive");
+  
+  StatusText[Queued]        = i18n("Queued");
+  StatusText[WaitingRemote] = i18n("Offering");
+  StatusText[LookingUp]     = i18n("Lookup");
+  StatusText[Connecting]    = i18n("Connecting");
+  StatusText[Sending]       = i18n("Sending");
+  StatusText[Receiving]     = i18n("Receiving");
+  StatusText[Failed]        = i18n("Failed");
+  StatusText[Aborted]       = i18n("Aborted");
+  StatusText[Done]          = i18n("Done");
 }
 
 DccTransfer::~DccTransfer()
 {
   delete[] buffer;
-
-  if(dccSocket)
-  {
-    dccSocket->close();
-    delete dccSocket;
-  }
+  delete progressBar;
+  stopAutoUpdateView();
 }
 
-void DccTransfer::abort()
+void DccTransfer::updateView()  // slot
 {
-  if(dccSocket)
-  {
-    dccSocket->closeNow();
-    delete dccSocket;
-    dccSocket=0;
-  }
-  if(sendSocket)
-  {
-    sendSocket->closeNow();
-    delete sendSocket;
-    sendSocket=0;
-  }
-
-  setStatus(Aborted);
-}
-
-void DccTransfer::startGet()
-{
-  // Append folder with partner's name if wanted
-  if(KonversationApplication::preferences.getDccCreateFolder())
-    dir.setPath(dccFolder+"/"+dccPartner.lower());
-  else
-    dir.setPath(dccFolder);
-
-  if(!dir.exists())
-  {
-    if(!KStandardDirs::makeDir(dir.path()))
-      KMessageBox::sorry(static_cast<QWidget*>(0),i18n("Cannot create received files directory '%1'.").arg(dir.path()),i18n("DCC Error"));
-  }
-
-  QString fullName(dccFile);
-  // Append partner's name to file name if wanted
-  if(KonversationApplication::preferences.getDccAddPartner()) fullName=dccPartner.lower()+"."+fullName;
-  file.setName(dir.path()+"/"+fullName);
-
-  if(file.exists())
-  {
-    long fileSize=0;
-
-    if(file.open(IO_ReadOnly))
-    {
-      fileSize=file.size();
-      file.close();
-    }
-
-    setPosition(fileSize);
-
-    QString newName(fullName);
-    int doResume;
-
-    if(KonversationApplication::preferences.getDccAutoResume())
-    {
-    	doResume=KDialogBase::Ok;
-    }
-    else
-    {
-    	doResume=DccResumeDialog::ask(0,newName,dir.path());
-    }
-    /*
-    int doResume=KMessageBox::questionYesNoCancel
-                 (
-                   0,
-                   i18n("<qt>The file \"%1\" already exists. Do you want to resume the transfer?</qt>").arg(getFile()),
-                   i18n("Resume Transfer"),
-                   i18n("Resume"),
-                   i18n("Overwrite"),
-                   "ResumeTransfer"
-                 );  */
-
-    kdDebug() << newName << " " << doResume << KDialogBase::Ok << " " << fileSize << endl;
-    switch(doResume)
-    {
-      case KDialogBase::User1:
-        kdDebug() << 1 << endl;
-        file.setName(dir.path()+"/"+newName);
-        // fall through ...
-
-      case KDialogBase::Ok:
-        kdDebug() << 2 << endl;
-        if(fileSize)    // If the file is empty we can forget about resuming
-        {
-          kdDebug() << "2.1" << endl;
-          setType(ResumeGet);
-          setStatus(Resuming);
-          // Rollback for Resume
-          fileSize-=KonversationApplication::preferences.getDccRollback();
-          if(fileSize<0) fileSize=0;
-          setPosition(fileSize);
-
-          emit resumeGet(getPartner(),getFile(),getPort(),getPosition());
-        }
-        else abort();
-      break;
-      case KDialogBase::User2:
-        kdDebug() << 3 << endl;
-        setPosition(0);
-        // just overwrite the old file
-        connectToSender();
-      break;
-    // finally this can only mean that the user has clicked "cancel"
-      default:
-        abort();
-    }
-  }
-  else connectToSender();
-}
-
-void DccTransfer::startSend()
-{
-  kdDebug() << "DccTransfer::startSend(): my IP = " << getIp() << endl;
-
-  // Set up server socket
-  dccSocket=new KExtendedSocket();
-
-  if(KonversationApplication::preferences.getDccSpecificSendPorts())  // user specifies ports
-  {
-    // set port
-    bool found = false;  // wheter succeeded to set port
-    unsigned long port = KonversationApplication::preferences.getDccSendPortsFirst();
-    for( ; port <= KonversationApplication::preferences.getDccSendPortsLast(); ++port )
-    {
-      dccSocket->setHost("0.0.0.0");
-      dccSocket->setSocketFlags(KExtendedSocket::passiveSocket |
-                                KExtendedSocket::inetSocket |
-                                KExtendedSocket::streamSocket);
-      dccSocket->setPort(port);
-      if(found = (dccSocket->listen(5) == 0))
-        break;
-      dccSocket->reset();
-    }
-    if(!found)
-    {
-      KMessageBox::sorry(static_cast<QWidget*>(0),i18n("There is no vacant port for DCC sending."));
-      return;
-    }
-  }
-  else  // user doesn't specify ports
-  {
-    dccSocket->setHost("0.0.0.0");
-    dccSocket->setSocketFlags(KExtendedSocket::passiveSocket |
-                              KExtendedSocket::inetSocket |
-                              KExtendedSocket::streamSocket);
-    if(dccSocket->listen(5) != 0)
-    {
-      kdDebug() << this << "DccTransfer::startSend(): listen() failed!" << endl;
-      return;
-    }
-  }
+  setPixmap(DccPanel::Column::TypeIcon, getTypeIcon());
+  setPixmap(DccPanel::Column::Status,   getStatusIcon());
   
-  // Get our own port number
-  const KSocketAddress* ipAddr=dccSocket->localAddress();
-  const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr->address();
+  setText(DccPanel::Column::OfferDate,     timeOffer.toString("hh:mm:ss"));
+  setText(DccPanel::Column::Status,        getStatusText());
+  setText(DccPanel::Column::FileName,      fileName);
+  setText(DccPanel::Column::PartnerNick,   partnerNick);
+  //setText(DccPanel::Column::Progress,      getProgressPrettyText());
+  setText(DccPanel::Column::Position,      getPositionPrettyText());
+  setText(DccPanel::Column::TimeRemaining, getTimeRemainingPrettyText());
+  setText(DccPanel::Column::CPS,           getCPSPrettyText());
+}
 
-  setPort(QString::number(ntohs(socketAddress->sin_port)));
+void DccTransfer::paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment)
+{
+  KListViewItem::paintCell(painter, colorgroup, column, width, alignment);
   
-  connect(dccSocket,SIGNAL (readyAccept()),this,SLOT(heard()) );
-
-  file.setName(getFile());
+  if(column==DccPanel::Column::Progress)  // Render progress bar
+  {
+    kdDebug() << "progress: " << (int)(100*transferringPosition/fileSize) << endl;
+    progressBar->setProgress((int)(100*transferringPosition/fileSize));
+    progressBar->setFixedWidth(width);
+    progressBar->setFixedHeight(height());
+    QRect rectangle = progressBar->contentsRect();
+    
+    int styleflags = QStyle::Style_Default;
+    if ( isSelected() )
+      styleflags |= QStyle::Style_Selected;
   
-  emit send(getPartner(),getFile(),getNumericalIp(),getPort(),getSize());
-}
-
-void DccTransfer::startResumeSend(QString position)
-{
-  setType(ResumeSend);
-  setStatus(Resuming);
-  setPosition(position.toULong());
-}
-
-void DccTransfer::heard()
-{
-  int fail=dccSocket->accept(sendSocket);
-
-  connect(sendSocket,SIGNAL (readyRead()),this,SLOT (getAck()) );
-  connect(sendSocket,SIGNAL (readyWrite()),this,SLOT (writeData()) );
-
-  if(!fail)
-  {
-    if(file.open(IO_ReadOnly))
-    {
-      // seek to file position to make resume work
-      file.at(getPosition());
-      setStatus(Sending);
-      sendSocket->enableRead(true);
-      sendSocket->enableWrite(true);
-    }
-    else
-    {
-      QString errorString=getErrorString(file.status());
-
-      KMessageBox::sorry(0,QString(errorString).arg(file.name()),i18n("DCC Send Error"));
-      setStatus(Failed);
-    }
-  }
-  else
-  {
-    setStatus(Failed);
-    dccSocket->close();
+    progressBar->style().drawControl( QStyle::CE_ProgressBarGroove,
+                                      painter,
+                                      progressBar,
+                                      rectangle,
+                                      progressBar->colorGroup(),
+                                      styleflags );
+    progressBar->style().drawControl( QStyle::CE_ProgressBarContents,
+                                      painter,
+                                      progressBar,
+                                      rectangle,
+                                      progressBar->colorGroup(),
+                                      styleflags );
+    progressBar->style().drawControl( QStyle::CE_ProgressBarLabel,
+                                      painter,
+                                      progressBar,
+                                      rectangle,
+                                      progressBar->colorGroup(),
+                                      styleflags );
   }
 }
 
-void DccTransfer::startResumeGet(QString position)
+void DccTransfer::startAutoUpdateView()
 {
-  setPosition(position.toULong());
-  connectToSender();
+  stopAutoUpdateView();
+  autoUpdateViewTimer = new QTimer(this);
+  connect(autoUpdateViewTimer, SIGNAL(timeout()), this, SLOT(updateView()));
+  autoUpdateViewTimer->start(1000);
 }
 
-void DccTransfer::connectToSender()
+void DccTransfer::stopAutoUpdateView()
 {
-  setStatus(Lookup);
-
-  dccSocket=new KExtendedSocket(getIp(),getPort().toUInt(),KExtendedSocket::inetSocket);
-
-  dccSocket->enableRead(false);
-  dccSocket->enableWrite(false);
-  dccSocket->setTimeout(5);
-
-  connect(dccSocket,SIGNAL (lookupFinished(int))  ,this,SLOT (lookupFinished(int)) );
-  connect(dccSocket,SIGNAL (connectionSuccess())  ,this,SLOT (dccGetConnectionSuccess()) );
-  connect(dccSocket,SIGNAL (connectionFailed(int)),this,SLOT (dccGetBroken(int)) );
-
-  connect(dccSocket,SIGNAL (readyRead()),this,SLOT (readData()) );
-  connect(dccSocket,SIGNAL (readyWrite()),this,SLOT (sendAck()) );
-
-  dccSocket->startAsyncConnect();
-}
-
-void DccTransfer::lookupFinished(int /* numOfResults */)
-{
-  setStatus(Connecting);
-}
-
-void DccTransfer::dccGetConnectionSuccess()
-{
-  if(file.open(IO_ReadWrite))
+  if(autoUpdateViewTimer)
   {
-    // Set position for DCC Resume Get
-    file.at(getPosition());
-
-    setStatus(Receiving);
-    dccSocket->enableRead(true);
-
-//   if (getType()==ResumeGet) sendAck(); // seems not to work ...
-  }
-  else
-  {
-    QString errorString=getErrorString(file.status());
-
-    KMessageBox::sorry (0,"<qt>"+QString(errorString).arg(file.name())+"</qt>",i18n("DCC Get Error"));
-    setStatus(Failed);
-  }
-}
-
-void DccTransfer::dccGetBroken(int errNo)
-{
-  kdDebug() << this << "DccTransfer: Error " << errNo << endl;
-
-  setStatus(Failed);
-  file.close();
-}
-
-void DccTransfer::readData()
-{
-  int actual=dccSocket->readBlock(buffer,bufferSize);
-  if(actual>0)
-  {
-    setPosition(getPosition()+actual);
-    dccSocket->enableWrite(true);
-    file.writeBlock(buffer,actual);
-    updateCPS();
-  }
-}
-
-void DccTransfer::writeData()
-{
-  int actual=file.readBlock(buffer,bufferSize);
-  if(actual>0)
-  {
-    sendSocket->enableWrite(true);
-    sendSocket->writeBlock(buffer,actual);
-    setPosition(getPosition()+actual);
-  }
-  updateCPS();
-}
-
-unsigned long intel(unsigned long value)
-{
-  value=((value & 0xff000000) >> 24) +
-        ((value & 0xff0000) >> 8) +
-        ((value & 0xff00) << 8) +
-        ((value & 0xff) << 24);
-
-  return value;
-}
-
-void DccTransfer::getAck()
-{
-  unsigned long pos;
-  sendSocket->readBlock((char *) &pos,4);
-  pos=intel(pos);
-
-  if(pos==getSize())
-  {
-    setStatus(Done);
-    sendSocket->close();
-    dccSocket->close();
-    file.close();
-    emit dccSendDone(getFile());
-  }
-}
-
-void DccTransfer::sendAck()
-{
-  unsigned long pos=intel(getPosition());
-
-  dccSocket->enableWrite(false);
-  dccSocket->writeBlock((char*) &pos,4);
-
-  if(getPosition()==getSize())
-  {
-    setStatus(Done);
-    dccSocket->close();
-    file.close();
-    emit dccGetDone(getFile());
+    autoUpdateViewTimer->stop();
+    delete autoUpdateViewTimer;
+    autoUpdateViewTimer = 0;
   }
 }
 
@@ -417,88 +147,121 @@ void DccTransfer::setStatus(DccStatus status)
 {
   DccStatus oldStatus=dccStatus;
   dccStatus=status;
-  setText(8,statusText[status]);
-  if (oldStatus!=status) emit dccStatusChanged(this);
+  if (oldStatus!=status) emit statusChanged(this);
 }
 
-void DccTransfer::setSize(unsigned long size)
+QString DccTransfer::getTypeText() const
 {
-  fileSize=size;
-  setText(2,QString::number(fileSize));
+  return TypeText[dccType];
 }
 
-void DccTransfer::setPosition(unsigned long pos)
+QPixmap DccTransfer::getTypeIcon() const
 {
-  transferred=pos;
-  setText(3,QString::number(transferred));
-  // some clients fail to send the file size
-  if(fileSize)
-    setText(4,QString::number((int) (transferred*100.0/fileSize))+"%");
+  QString icon;
+  if(dccType == Send)
+    icon = "up";
+  else if(dccType == Receive)
+    icon = "down";
+  return KGlobal::iconLoader()->loadIcon(icon, KIcon::Small);
+}
+
+QPixmap DccTransfer::getStatusIcon() const
+{
+  QString icon;
+  switch(dccStatus)
+  {
+    case Queued:
+      icon = "player_stop";
+      break;
+    case WaitingRemote:
+      icon = "goto";
+      break;
+    case Sending:
+    case Receiving:
+      icon = "player_play";
+      break;
+    case Aborted:
+    case Failed:
+      icon = "stop";
+      break;
+    case Done:
+      icon = "ok";
+      break;
+    default: ; // sugar
+  }
+  return KGlobal::iconLoader()->loadIcon(icon, KIcon::Small);
+}
+
+QString DccTransfer::getStatusText() const
+{
+  return StatusText[dccStatus];
+}
+
+QString DccTransfer::getFileSizePrettyText() const
+{
+  // TODO: make it pretty!
+  return QString::number(fileSize) + "bytes";
+}
+
+QString DccTransfer::getPositionPrettyText() const
+{
+  return QString::number(transferringPosition) + " / " + QString::number(fileSize);
+}
+
+QString DccTransfer::getProgressPrettyText() const
+{
+  return QString::number((int)(100*transferringPosition/fileSize)) + "%";
+}
+
+QString DccTransfer::getTimeRemainingPrettyText() const
+{
+  if(dccStatus != Sending && dccStatus != Receiving )
+    return QString::null;
+  // not use getCPS() for exact result
+  int trnsfdTime = timeTransferStarted.secsTo(QDateTime::currentDateTime());
+  unsigned long trnsfdBytes = transferringPosition - transferStartPosition;
+  if(!trnsfdBytes)
+    return QString::null;  // anyway we cannot anticipate exactly
+  unsigned long remBytes = fileSize - transferringPosition;
+  int remTime = (int)((double)remBytes / (double)trnsfdBytes * trnsfdTime);
+  int remHour = remTime / 3600; remTime -= remHour * 3600;
+  int remMin = remTime / 60; remTime -= remMin * 60;
+  QString text;
+  if(remHour)
+    text += QString::number(remHour) + ":";
+  if(remMin)
+    text += QString::number(remMin) + ":";
+  if(text.isEmpty())
+    text = QString::number(remTime) + i18n(" sec");
   else
-    setText(4,i18n("unknown"));
+    text += QString::number(remTime);
+  return text;
 }
 
-void DccTransfer::setPartner(QString partner)
+QString DccTransfer::getCPSPrettyText() const
 {
-  dccPartner=partner;
-  setText(0,dccPartner);
+  // TODO: make it pretty!
+  return QString::number(getCPS()) + " B/s";
 }
 
-QString DccTransfer::getPartner()
+unsigned long DccTransfer::getCPS() const
 {
-  return dccPartner;
-}
-
-void DccTransfer::setFile(QString file)
-{
-  dccFile=file;
-  setText(1,dccFile);
-}
-
-QString DccTransfer::getFile()
-{
-  return dccFile;
-}
-
-void DccTransfer::updateCPS()
-{
-  int elapsed=transferStarted.secsTo(QDateTime::currentDateTime());
+  int elapsed=timeTransferStarted.secsTo(QDateTime::currentDateTime());
+  if(elapsed == 0 && transferringPosition-transferStartPosition > 0)
+    elapsed = 1;
   // prevent division by zero
-  int cps=(elapsed) ? transferred/elapsed : 0;
-  setText(5,QString::number(cps));
-  lastActive=QDateTime::currentDateTime();
+  return elapsed ? (transferringPosition-transferStartPosition)/elapsed : 0;
 }
 
-DccTransfer::DccStatus DccTransfer::getStatus() { return dccStatus; }
-unsigned long DccTransfer::getPosition() { return transferred; }
-unsigned long DccTransfer::getSize() { return fileSize; }
-
-void DccTransfer::setType(DccType type) { dccType=type; }
-DccTransfer::DccType DccTransfer::getType() { return dccType; }
-
-void DccTransfer::setIp(QString ip)
-{
-  dccIp=ip;
-  setText(6,ip);
-}
-
-QString DccTransfer::getIp() { return dccIp; }
-
-QString DccTransfer::getNumericalIp()
+QString DccTransfer::getNumericalIpText(const QString& _ip)  // static
 {
   QHostAddress ip;
-  ip.setAddress(getIp());
+  ip.setAddress(_ip);
   
   return QString::number(ip.ip4Addr());
 }
 
-void DccTransfer::setPort(QString port)
-{
-  dccPort=port;
-  setText(7,port);
-}
-
-QString DccTransfer::getErrorString(int code)
+QString DccTransfer::getErrorString(int code)  // static
 {
   QString errorString(QString::null);
 
@@ -542,13 +305,17 @@ QString DccTransfer::getErrorString(int code)
   return errorString;
 }
 
-QString DccTransfer::getPort() { return dccPort; }
-QString DccTransfer::getFullPath() { return file.name(); }
+unsigned long DccTransfer::intel(unsigned long value)  // static
+{
+  value=((value & 0xff000000) >> 24) +
+        ((value & 0xff0000) >> 8) +
+        ((value & 0xff00) << 8) +
+        ((value & 0xff) << 24);
 
-void DccTransfer::setBufferSize(unsigned long size) { bufferSize=size; }
-unsigned long DccTransfer::getBufferSize() { return bufferSize; }
+  return value;
+}
 
-void DccTransfer::setFolder(QString folder) { dccFolder=folder; }
-QString DccTransfer::getFolder() { return dccFolder; }
+QString DccTransfer::TypeText[DccTransfer::DccTypeCount];
+QString DccTransfer::StatusText[DccTransfer::DccStatusCount];
 
 #include "dcctransfer.moc"

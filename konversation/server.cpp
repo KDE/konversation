@@ -47,6 +47,8 @@ typedef unsigned long long __u64;
 #include "konversationapplication.h"
 #include "dccpanel.h"
 #include "dcctransfer.h"
+#include "dcctransfersend.h"
+#include "dcctransferrecv.h"
 #include "dccrecipientdialog.h"
 #include "nick.h"
 #include "konversationmainwindow.h"
@@ -1417,29 +1419,22 @@ void Server::addDccSend(const QString &recipient,const QString &fileName)
 {
   emit addDccPanel();
 
-  QString ip;
+  QString ownIp;
   if(KonversationApplication::preferences.getDccGetIpFromServer())
-    ip=ownIpByServer;
-  if(ip.isEmpty())
-    ip=getIp();
+    ownIp=ownIpByServer;
+  if(ownIp.isEmpty())
+    ownIp=getIp();
   
   // We already checked that the file exists in output filter / requestDccSend() resp.
-  QFile file(fileName);
-  QString size=QString::number(file.size());
+  DccTransferSend* newDcc=new DccTransferSend(getMainWindow()->getDccPanel()->getListView(),
+                                              recipient,
+                                              fileName,  // path to the sending file
+                                              ownIp);    // ip
 
-  DccTransfer* newDcc=new DccTransfer(getMainWindow()->getDccPanel()->getListView(),
-                  DccTransfer::Send,
-                  KonversationApplication::preferences.getDccPath(),
-                  recipient,
-                  fileName,            // name
-                  size,                // size (will be set by DccTransfer)
-                  ip,                  // ip
-                  0);                  // port (will be set by DccTransfer)
-
-  connect(newDcc,SIGNAL (send(const QString&,const QString&,const QString&,const QString&,unsigned long)),
+  connect(newDcc,SIGNAL (sendReady(const QString&,const QString&,const QString&,const QString&,unsigned long)),
     this,SLOT (dccSendRequest(const QString&,const QString&,const QString&,const QString&,unsigned long)) );
-  connect(newDcc,SIGNAL (dccSendDone(const QString&)),this,SLOT (dccSendDone(const QString&)) );
-  newDcc->startSend();
+  connect(newDcc,SIGNAL (done(const QString&)),this,SLOT (dccSendDone(const QString&)) );
+  newDcc->start();
 }
 
 void Server::addDccGet(const QString &sourceNick, const QStringList &dccArguments)
@@ -1459,23 +1454,22 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
                               .arg(dccArguments[2])          // port
                              );
 
-  DccTransfer* newDcc=new DccTransfer(getMainWindow()->getDccPanel()->getListView(),
-                  DccTransfer::Get,
-                  KonversationApplication::preferences.getDccPath(),
-                  sourceNick,
-                  dccArguments[0],     // name
-                  dccArguments[3],     // size
-                  ip.toString(),       // ip
-                  dccArguments[2]);    // port
+  DccTransferRecv* newDcc=new DccTransferRecv(getMainWindow()->getDccPanel()->getListView(),
+                      sourceNick,
+                      KonversationApplication::preferences.getDccPath(),
+                      dccArguments[0],     // name
+                      dccArguments[3].isEmpty() ? 0 : dccArguments[3].toULong(),  // size
+                      ip.toString(),       // ip
+                      dccArguments[2]);    // port
 
-  connect(newDcc,SIGNAL (resumeGet(const QString&,const QString&,const QString&,int)),this,
+  connect(newDcc,SIGNAL (resumeRequest(const QString&,const QString&,const QString&,int)),this,
          SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,int)) );
-  connect(newDcc,SIGNAL (dccGetDone(const QString&)),
+  connect(newDcc,SIGNAL (done(const QString&)),
               this,SLOT (dccGetDone(const QString&)) );
-  connect(newDcc,SIGNAL (dccStatusChanged(const DccTransfer* )), this,
+  connect(newDcc,SIGNAL (statusChanged(const DccTransfer* )), this,
          SLOT(dccStatusChanged(const DccTransfer*)) );
 
-  if(KonversationApplication::preferences.getDccAutoGet()) newDcc->startGet();
+  if(KonversationApplication::preferences.getDccAutoGet()) newDcc->start();
 }
 
 void Server::requestKonsolePanel()
@@ -1515,19 +1509,19 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
   // Check if there actually is a transfer going on on that port
-  DccTransfer* dccTransfer=getMainWindow()->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::ResumeGet);
+  DccTransferRecv* dccTransfer=static_cast<DccTransferRecv*>(getMainWindow()->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::Receive,true));
   if(!dccTransfer)
     // Check if there actually is a transfer going on with that name, could be behind a NAT
     // so the port number may get changed
     // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-    dccTransfer=getMainWindow()->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::ResumeGet);
+    dccTransfer=static_cast<DccTransferRecv*>(getMainWindow()->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::Receive,true));
 
   if(dccTransfer)
   {
     // overcome mIRCs brain-dead "file.ext" substitution
-    QString fileName=dccTransfer->getFile();
+    QString fileName=dccTransfer->getFileName();
     appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(sourceNick).arg(dccArguments[2]));
-    dccTransfer->startResumeGet(dccArguments[2]);
+    dccTransfer->startResume(dccArguments[2].toULong());
   }
   else
   {
@@ -1538,18 +1532,18 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
 void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &dccArguments)
 {
   // Check if there actually is a transfer going on on that port
-  DccTransfer* dccTransfer=getMainWindow()->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::Send);
+  DccTransferSend* dccTransfer=static_cast<DccTransferSend*>(getMainWindow()->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::Send));
   if(!dccTransfer)
     // Check if there actually is a transfer going on with that name, could be behind a NAT
     // so the port number may get changed
     // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-    dccTransfer=getMainWindow()->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::Send);
+    dccTransfer=static_cast<DccTransferSend*>(getMainWindow()->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::Send));
 
-  if(dccTransfer)
+  if(dccTransfer && dccTransfer->getStatus() == DccTransfer::WaitingRemote)
   {
-    QString fileName=dccTransfer->getFile();
+    QString fileName=dccTransfer->getFileName();
     appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(recipient).arg(dccArguments[2]));
-    dccTransfer->startResumeSend(dccArguments[2]);
+    dccTransfer->setResume(dccArguments[2].toULong());
     Konversation::OutputFilterResult result = outputFilter->acceptRequest(recipient,
       fileName, dccArguments[1], dccArguments[2].toUInt());
     queue(result.toServer);

@@ -19,6 +19,8 @@
   @author Dario Abatianni
 */
 
+class KLineEdit;
+
 class DccResumeDialog : public KDialogBase
 {
   Q_OBJECT
