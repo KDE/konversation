@@ -60,6 +60,7 @@ SSLSocket::~SSLSocket()
   
   delete d->kssl;
   delete d->cc;
+  delete d;
 }
 
 Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
