@@ -39,10 +39,10 @@ class Ignore
     Ignore(QString name,int flags);
     ~Ignore();
 
-    void setName(QString newName) { name=newName; };
-    void setFlags(int newFlags) { flags=newFlags; };
-    QString getName() { return name; };
-    int getFlags() { return flags; };
+    void setName(QString newName);
+    void setFlags(int newFlags);
+    QString getName();
+    int getFlags();
 
   protected:
     QString name;

@@ -14,10 +14,11 @@
   $Id$
 */
 
-#include <kdebug.h>
-
 #include <qapp.h>
 #include <qevent.h>
+
+#include <kdebug.h>
+#include <kextendedsocket.h>
 
 #include "ircresolver.h"
 

@@ -19,13 +19,15 @@
 
 #include <qpushbutton.h>
 #include <qcheckbox.h>
+#include <qlabel.h>
 
 #include "chatwindow.h"
-#include "ircinput.h"
 
 /*
   @author Dario Abatianni
 */
+
+class IRCInput;
 
 class StatusPanel : public ChatWindow
 {
@@ -35,16 +37,21 @@ class StatusPanel : public ChatWindow
     StatusPanel(QWidget* parent);
     ~StatusPanel();
 
+    void closeYourself();
+
   signals:
     void newText(QWidget* widget);
     void sendFile();
+    // will be connected to KonversationMainWindow::updateLag()
+    void lag(Server* server,int msec);
     
   public slots:
     void adjustFocus();
     void setNickname(const QString& newNickname);
     void newTextInView();
     void updateFonts();
-
+    void updateLag(int msec);
+  
   protected slots:
     void sendFileMenu();
     void statusTextEntered();
@@ -57,6 +64,7 @@ class StatusPanel : public ChatWindow
     QPushButton* nicknameButton;
     IRCInput* statusInput;
     QCheckBox* logCheckBox;
+    QLabel* lagOMeter;
 };
 
 #endif

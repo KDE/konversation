@@ -6,7 +6,7 @@
 */
 
 /*
-  konversationapplication.cpp  -  description
+  konversationapplication.cpp  -  The main application
   begin:     Mon Jan 28 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -20,7 +20,6 @@
 
 #include "konversationapplication.h"
 #include "konvdcop.h"
-#include "serverwindow.h"
 #include "konversationmainwindow.h"
 
 // include static variables
@@ -38,11 +37,12 @@ KonversationApplication::KonversationApplication()
 
   readOptions();
 
-#ifdef NEW_MAIN_WINDOW
   // open main window
   mainWindow=new KonversationMainWindow();
+
+  connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
+
   mainWindow->show();
-#endif
 
   // handle autoconnect on startup
   QValueList<int> list=preferences.getAutoConnectServerIDs();
@@ -64,8 +64,6 @@ KonversationApplication::KonversationApplication()
     connect(prefsDialog,SIGNAL (connectToServer(int)),this,SLOT (connectToServer(int)) );
     connect(prefsDialog,SIGNAL (cancelClicked()),this,SLOT (quitKonversation()) );
     connect(prefsDialog,SIGNAL (prefsChanged()),this,SLOT (saveOptions()) );
-
-    serverList.setAutoDelete(false);     // don't delete items when they are removed
 
     prefsDialog->show();
 
@@ -91,9 +89,6 @@ KonversationApplication::~KonversationApplication()
   saveOptions(false);
 
   if(dcopObject) delete dcopObject;
-#ifdef NEW_MAIN_WINDOW
-  if(mainWindow) delete mainWindow;
-#endif
 }
 
 void KonversationApplication::dcopSay(const QString& server,const QString& target,const QString& command)
@@ -114,8 +109,7 @@ void KonversationApplication::dcopSay(const QString& server,const QString& targe
 void KonversationApplication::dcopInfo(const QString& string)
 {
   Server* lookServer=serverList.first();
-  if(lookServer)
-    lookServer->dcopInfo(string);
+  if(lookServer) lookServer->dcopInfo(string);
 }
 
 void KonversationApplication::connectToServer(int id)
@@ -169,33 +163,46 @@ void KonversationApplication::connectToAnotherServer(int id)
   } // endwhile
   // We came this far, so generate a new server
 
-#if NEW_MAIN_WINDOW
   newServer=new Server(mainWindow,id);
-#else
-  newServer=new Server(id);
-#endif
+
+  connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
+  connect(mainWindow,SIGNAL (channelQuickButtonsChanged()),newServer,SLOT (updateChannelQuickButtons()) );
+  connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
+
+  connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&)) );
+  
+  connect(newServer,SIGNAL (deleted(Server*)),this,SLOT (removeServer(Server*)) );
+
   serverList.append(newServer);
-
-  connect(newServer,SIGNAL(deleted(Server*)),this,SLOT(removeServer(Server*)));
-
-  connect(newServer->getServerWindow(),SIGNAL(prefsChanged()),this,SLOT(saveOptions()));
-  connect(newServer->getServerWindow(),SIGNAL(openPrefsDialog()),this,SLOT(openPrefsDialog()));
 }
 
-void KonversationApplication::removeServer(Server* server)
+Server* KonversationApplication::getServerByName(const QString& name)
 {
   Server* lookServer=serverList.first();
   while(lookServer)
   {
-    if(lookServer==server) serverList.remove();
+    if(lookServer->getServerName()==name) return lookServer;
     else lookServer=serverList.next();
   }
+  return 0;
+}
+
+void KonversationApplication::removeServer(Server* server)
+{
+  kdDebug() << "KonversationApplication::removeServer()" << endl;
+
+  serverList.setAutoDelete(false);     // don't delete items when they are removed
+  if(!serverList.remove(server))
+    kdDebug() << "Could not remove " << server->getServerName() << endl;
 }
 
 void KonversationApplication::quitKonversation()
 {
   kdDebug() << "KonversationApplication::quitKonversation()" << endl;
-  delete prefsDialog;
+
+  if(prefsDialog) delete prefsDialog;
+  prefsDialog=0;
+  
   this->exit();
 }
 
@@ -203,7 +210,9 @@ void KonversationApplication::readOptions()
 {
   kdDebug() << "KonversationApplication::readOptions()" << endl;
 
+  // get standard config file
   KConfig* config=kapp->config();
+  
   // Read configuration and provide the default values
   config->setGroup("General Options");
 
@@ -211,19 +220,19 @@ void KonversationApplication::readOptions()
   preferences.setCommandChar(config->readEntry("CommandChar",preferences.getCommandChar()));
 
   // Tool bar position settings
-  preferences.serverWindowToolBarPos     =config->readNumEntry("ServerWindowToolBarPos",KToolBar::Top);
-  preferences.serverWindowToolBarStatus  =config->readNumEntry("ServerWindowToolBarStatus",KToolBar::Show);
-  preferences.serverWindowToolBarIconText=config->readNumEntry("ServerWindowToolBarIconText",KToolBar::IconTextBottom);
-  preferences.serverWindowToolBarIconSize=config->readNumEntry("ServerWindowToolBarIconSize",0);
+  preferences.mainWindowToolBarPos     =config->readNumEntry("ServerWindowToolBarPos",KToolBar::Top);
+  preferences.mainWindowToolBarStatus  =config->readNumEntry("ServerWindowToolBarStatus",KToolBar::Show);
+  preferences.mainWindowToolBarIconText=config->readNumEntry("ServerWindowToolBarIconText",KToolBar::IconTextBottom);
+  preferences.mainWindowToolBarIconSize=config->readNumEntry("ServerWindowToolBarIconSize",0);
 
   // Status bar settings
-  preferences.serverWindowStatusBarStatus=config->readBoolEntry("ServerWindowStatusBarStatus",true);
+  preferences.mainWindowStatusBarStatus=config->readBoolEntry("ServerWindowStatusBarStatus",true);
 
   // Menu bar settings
-  preferences.serverWindowMenuBarStatus=config->readBoolEntry("ServerWindowMenuBarStatus",true);
+  preferences.mainWindowMenuBarStatus=config->readBoolEntry("ServerWindowMenuBarStatus",true);
 
   // Window geometries
-  preferences.setServerWindowSize(config->readSizeEntry("Geometry"));
+  preferences.setMainWindowSize(config->readSizeEntry("Geometry"));
   preferences.setHilightSize(config->readSizeEntry("HilightGeometry"));
   preferences.setButtonsSize(config->readSizeEntry("ButtonsGeometry"));
   preferences.setIgnoreSize(config->readSizeEntry("IgnoreGeometry"));
@@ -450,7 +459,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->writeEntry("CommandChar",preferences.getCommandChar());
 
-  config->writeEntry("Geometry",preferences.getServerWindowSize());
+  config->writeEntry("Geometry",preferences.getMainWindowSize());
   config->writeEntry("HilightGeometry",preferences.getHilightSize());
   config->writeEntry("ButtonsGeometry",preferences.getButtonsSize());
   config->writeEntry("IgnoreGeometry",preferences.getIgnoreSize());
@@ -459,14 +468,14 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("NicknameGeometry",preferences.getNicknameSize());
   config->writeEntry("ColorConfigurationGeometry", preferences.getColorConfigurationSize());
 
-  config->writeEntry("ServerWindowToolBarPos",preferences.serverWindowToolBarPos);
-  config->writeEntry("ServerWindowToolBarStatus",preferences.serverWindowToolBarStatus);
-  config->writeEntry("ServerWindowToolBarIconText",preferences.serverWindowToolBarIconText);
-  config->writeEntry("ServerWindowToolBarIconSize",preferences.serverWindowToolBarIconSize);
+  config->writeEntry("ServerWindowToolBarPos",preferences.mainWindowToolBarPos);
+  config->writeEntry("ServerWindowToolBarStatus",preferences.mainWindowToolBarStatus);
+  config->writeEntry("ServerWindowToolBarIconText",preferences.mainWindowToolBarIconText);
+  config->writeEntry("ServerWindowToolBarIconSize",preferences.mainWindowToolBarIconSize);
 
-  config->writeEntry("ServerWindowStatusBarStatus",preferences.serverWindowStatusBarStatus);
+  config->writeEntry("ServerWindowStatusBarStatus",preferences.mainWindowStatusBarStatus);
 
-  config->writeEntry("ServerWindowMenuBarStatus",preferences.serverWindowMenuBarStatus);
+  config->writeEntry("ServerWindowMenuBarStatus",preferences.mainWindowMenuBarStatus);
 
   config->writeEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction());
   config->writeEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction());

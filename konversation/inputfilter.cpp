@@ -25,7 +25,7 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #else
-#define VERSION "$Id$"
+#define VERSION 0.12
 #endif
 
 #include "inputfilter.h"
@@ -550,9 +550,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
     {
       QString text;
       text=(trailing.length()) ? trailing : parameterList.join(" ");
-      text=":"+text;
-      if(prefix.length())
-        text=prefix+" "+text;
+      if(prefix.length()) text=prefix+" :"+text;
       server->queue("PONG "+text);
     }
     else if(command=="error :closing link:")

@@ -6,7 +6,7 @@
 */
 
 /*
-  nicksonline.cpp  -  description
+  nicksonline.cpp  -  shows a user tree of friends per server
   begin:     Sam Aug 31 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -28,8 +28,15 @@
 NicksOnline::NicksOnline(const QSize& newSize)
 {
   kdDebug() << "NicksOnline::NicksOnline()" << endl;
+  
+  setCaption(i18n("Nicks online - Konversation"));
+  
   nickListView=new KListView(this);
+  
   nickListView->addColumn(i18n("Nickname"));
+  nickListView->setRootIsDecorated(false);
+  nickListView->setFullWidth(true);
+  
   setMargin(KDialog::marginHint());
   setSpacing(KDialog::spacingHint());
 
@@ -53,11 +60,17 @@ NicksOnline::~NicksOnline()
   delete nickListView;
 }
 
-void NicksOnline::setOnlineList(const QStringList& list)
+void NicksOnline::setOnlineList(const QString& serverName,const QStringList& list)
 {
-  nickListView->clear();
+  QListViewItem* serverRoot=nickListView->findItem(serverName,0);
+  delete serverRoot;  
+  
+  KListViewItem* newServerRoot=new KListViewItem(nickListView,serverName);
   for(unsigned int i=list.count();i!=0;i--)
-    new KListViewItem(nickListView,list[i-1]);
+  {
+    new KListViewItem(newServerRoot,list[i-1]);
+  }
+  newServerRoot->setOpen(true);
 }
 
 void NicksOnline::closeEvent(QCloseEvent* ce)
@@ -73,7 +86,9 @@ void NicksOnline::closeButton()
 
 void NicksOnline::processDoubleClick(QListViewItem* item)
 {
-  emit doubleClicked(item);
+  // only emit signal when the user double clicked a nickname rather than a server name
+  if(item->parent())
+    emit doubleClicked(item->parent()->text(0),item->text(0));
 }
 
 #include "nicksonline.moc"

@@ -20,12 +20,13 @@
 #include <qtabwidget.h>
 
 #include "ledtabbar.h"
-#include "chatwindow.h"
 #include "images.h"
 
 /*
   @author Dario Abatianni
 */
+
+class ChatWindow;
 
 class LedTabWidget : public QTabWidget
 {
@@ -35,9 +36,10 @@ class LedTabWidget : public QTabWidget
     LedTabWidget(QWidget* parent,const char* name);
     ~LedTabWidget();
 
-    void addTab(QWidget* child,const QString& label,int color,bool on);
+    void addTab(ChatWindow* child,const QString& label,int color,bool on);
     void changeTabState(QWidget* child,bool state);
     void connectTabUpdate(QObject* object);
+    void updateTabs();
 
   signals:
     void closeTab(QWidget* view);
@@ -45,7 +47,7 @@ class LedTabWidget : public QTabWidget
   protected slots:
     void tabSelected(int id);
     void tabClosed(int id);
-    void updateTabs();
+    void changeName(ChatWindow* view,const QString& newName);
 
   protected:
     LedTabBar* tabBar();

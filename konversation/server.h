@@ -27,13 +27,7 @@
 #include "inputfilter.h"
 #include "outputfilter.h"
 #include "ircserversocket.h"
-#include "identity.h"
 #include "ircresolver.h"
-
-#ifdef NEW_MAIN_WINDOW
-#include "konversationmainwindow.h"
-class KonversationMainWindow;
-#endif
 
 /*
   @author Dario Abatianni
@@ -41,24 +35,23 @@ class KonversationMainWindow;
 
 class Channel;
 class Query;
-class ServerWindow;
 class StatusPanel;
+class Identity;
+class KonversationMainWindow;
+class RawLog;
 
 class Server : public QObject
 {
   Q_OBJECT
 
   public:
-#ifdef NEW_MAIN_WINDOW
     Server(KonversationMainWindow* mainWindow,int number);
-#else
-    Server(int number);
-#endif
     ~Server();
 
     QString getServerName();
     const Identity *getIdentity();
     int getPort();
+    int getLag();
     bool getAutoJoin();
     void setAutoJoin(bool on);
 
@@ -106,15 +99,11 @@ class Server : public QObject
     void setChannelTopic(const QString& nickname, const QString& channel, const QString& topic); // Overloaded
     void updateChannelMode(const QString& nick, const QString& channel, char mode, bool plus, const QString& parameter);
     void updateChannelModeWidgets(const QString& channel, char mode, const QString& parameter);
-    void updateChannelQuickButtons(QStringList newButtons);
     void updateFonts();
     void setShowQuickButtons(bool state);
     void setShowModeButtons(bool state);
 
     QString getNextQueryName();
-    ServerWindow* getServerWindow();
-    void setServerWindow(ServerWindow* newWindow); // don't use this other than in ServerWindow!
-
     void appendToQuery(const char* queryName,const char* message);
     void appendActionToQuery(const char* queryName,const char* message);
     void appendServerMessageToQuery(const char* queryName, const char* type, const char* message);
@@ -126,17 +115,19 @@ class Server : public QObject
     QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& queryName, const QString& parameter);
 
     QString getAutoJoinCommand();
+    
+    void notifyAction(const QString& nick);
 
   signals:
     void nicknameChanged(const QString&);
-    void serverLag(int msec);
-    void tooLongLag(int msec); // waiting too long for 303 response
+    void serverLag(int msec); // will be connected to StatusPanel::updateLag()
+    void serverLag(Server* server,int msec); // will be connected to KonversationMainWindow::updateLag()
+    void tooLongLag(Server* server, int msec); // will be connected to KonversationMainWindow::updateLag()
     void resetLag();
-    void nicksNowOnline(const QStringList& list); // Will be emitted when new 303 came in
-    void addDccPanel(); // will be connected to ServerWindow::addDccPanel()
-    void closeDccPanel(); // will be connected to ServerWindow::closeDccPanel()
+    void nicksNowOnline(Server* server,const QStringList& list); // Will be emitted when new 303 came in
+    void addDccPanel(); // will be connected to MainWindow::addDccPanel()
+    void closeDccPanel(); // will be connected to MainWindow::closeDccPanel()
     void deleted(Server* myself); // will be connected to KonversationApplication::removeServer()
-    void repaintTabs(); // will be connected to LedTabBar::repaintTabs();
 
   public slots:
     void connectToIRCServer();
@@ -145,6 +136,7 @@ class Server : public QObject
     void addQuery(const QString &nickname, const QString &hostmask);
     void closeQuery(const QString &name);
     void closeChannel(const QString &name);
+    void quitServer();
     void requestDccPanel();
     void requestCloseDccPanel();
     void requestBan(const QStringList& users,const QString& channel,const QString& option);
@@ -152,10 +144,11 @@ class Server : public QObject
     void removeQuery(Query *query);
     void startNotifyTimer(int msec=0);
     void requestUserhost(const QString& nicks);
+    void addRawLog(bool show);
+    void closeRawLog();
+    void updateChannelQuickButtons();
 
   protected slots:
-    void addRawLog();
-    void closeRawLog();
     void ircServerConnectionSuccess();
     void incoming();
     void processIncomingData();
@@ -164,7 +157,6 @@ class Server : public QObject
     void notifyTimeout();
     void notifyCheckTimeout();
     void connectionEstablished();
-    void notifyAction(QListViewItem* item);
     void notifyResponse(const QString &nicksOnline);
     void addDccGet(const QString &sourceNick, const QStringList &dccArguments);
     void requestDccSend();                                               // -> to outputFilter, dccPanel
@@ -186,6 +178,9 @@ class Server : public QObject
     // constants
     static const int BUFFER_LEN=513;
 
+    KonversationMainWindow* getMainWindow();
+    void setMainWindow(KonversationMainWindow* newMainWindow);
+
     bool eventFilter(QObject* parent, QEvent *event);
 
     void lookupFinished();
@@ -203,7 +198,7 @@ class Server : public QObject
     int serverPort;
 
     IRCResolver resolver;
-    const Identity *identity;
+    const Identity* identity;
 
     bool autoJoin;
     bool autoRejoin;
@@ -213,10 +208,7 @@ class Server : public QObject
     QString autoJoinChannel;
     QString autoJoinChannelKey;
 
-#ifdef NEW_MAIN_WINDOW
     KonversationMainWindow* mainWindow;
-#endif
-    ServerWindow* serverWindow;
     IRCServerSocket serverSocket;
 
     QTimer reconnectTimer;
@@ -227,6 +219,7 @@ class Server : public QObject
     QTime notifySent;
     QStringList notifyCache; // List of users found with ISON
     int checkTime;           // Time elapsed while waiting for server 303 response
+    int currentLag;
 
     QString ircName;
     QString inputBuffer;
@@ -241,10 +234,8 @@ class Server : public QObject
     InputFilter inputFilter;
     OutputFilter outputFilter;
 
-#ifdef NEW_MAIN_WINDOW    
     StatusPanel* statusView;
-#endif
-    StatusPanel* statusPanel_old;
+    RawLog* rawLog;
 
     QDateTime awayTime;
     bool isAway;

@@ -69,6 +69,8 @@ class Channel : public ChatWindow
     void updateQuickButtons(QStringList newButtonList);
     void updateFonts();
 
+    void closeYourself();
+
   signals:
     void newText(QWidget* channel);
     void prefsChanged();

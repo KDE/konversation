@@ -21,11 +21,10 @@
 #include <qthread.h>
 #include <qmutex.h>
 
-#include <kextendedsocket.h>
-
 /*
   @author Dario Abatianni
 */
+class KExtendedSocket;
 
 class IRCResolver : public QThread
 {

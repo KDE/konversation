@@ -16,11 +16,13 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 
 #include <qtextcodec.h>
 
 #include "statuspanel.h"
 #include "konversationapplication.h"
+#include "ircinput.h"
 
 StatusPanel::StatusPanel(QWidget* parent) :
               ChatWindow(parent)
@@ -28,7 +30,6 @@ StatusPanel::StatusPanel(QWidget* parent) :
   kdDebug() << "StatusPanel::StatusPanel()" << endl;
 
   setType(ChatWindow::Status);
-  setName(QString::null);      // empty name so scripts can tell that this is a status panel
 
   // set up text view, will automatically take care of logging
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer()
@@ -40,8 +41,8 @@ StatusPanel::StatusPanel(QWidget* parent) :
   nicknameButton=new QPushButton(i18n("Nickname"),commandLineBox);
   statusInput=new IRCInput(commandLineBox);
 
-  logCheckBox=new QCheckBox(i18n("Log"),commandLineBox);
-  logCheckBox->setChecked(KonversationApplication::preferences.getLog());
+  lagOMeter=new QLabel(i18n("Lag: not known"),commandLineBox,"status_panel_lagometer");
+  
   setLog(KonversationApplication::preferences.getLog());
   setLogfileName("konversation.log");
 
@@ -131,6 +132,30 @@ void StatusPanel::updateFonts()
 void StatusPanel::sendFileMenu()
 {
   emit sendFile();
+}
+
+void StatusPanel::updateLag(int msec)
+{
+  lagOMeter->setText(i18n("Lag: %1 ms").arg(msec));
+  emit lag(getServer(),msec);
+}
+
+void StatusPanel::closeYourself()
+{
+  int result=KMessageBox::warningYesNo(
+                this,
+                i18n("Do you really want to disconnect from %1?").arg(server->getServerName()),
+                i18n("Quit server"),
+                KStdGuiItem::yes(),
+                KStdGuiItem::no(),
+                "QuitServerOnTabClose");
+
+  if(result==KMessageBox::Yes)
+  {
+    server->quitServer();
+    delete server;
+    delete this;
+  }
 }
 
 #include "statuspanel.moc"

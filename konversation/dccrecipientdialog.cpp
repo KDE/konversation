@@ -41,7 +41,10 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent,QStringList list,QSize si
   nicknameList->insertStringList(list);
   nicknameList->sort(true);
 
+  nicknameInput=new KLineEdit(page,"nickname_input");
+  
   dialogLayout->addWidget(nicknameList);
+  dialogLayout->addWidget(nicknameInput);
 
   connect(nicknameList,SIGNAL (highlighted(QListBoxItem*)),this,SLOT (newNicknameSelected(QListBoxItem*)) );
   connect(nicknameList,SIGNAL (doubleClicked(QListBoxItem*)),this,SLOT (newNicknameSelectedQuit(QListBoxItem*)) );
@@ -65,12 +68,14 @@ QString DccRecipientDialog::getSelectedNickname()
 
 void DccRecipientDialog::newNicknameSelected(QListBoxItem* item)
 {
-  selectedNickname=item->text();
+  nicknameInput->setText(item->text());
 }
 
 void DccRecipientDialog::newNicknameSelectedQuit(QListBoxItem* item)
 {
-  selectedNickname=item->text();
+  newNicknameSelected(item);
+  selectedNickname=nicknameInput->text();
+  
   delayedDestruct();
 }
 
@@ -78,6 +83,12 @@ void DccRecipientDialog::slotCancel()
 {
   selectedNickname=QString::null;
   KDialogBase::slotCancel();
+}
+
+void DccRecipientDialog::slotOk()
+{
+  selectedNickname=nicknameInput->text();
+  KDialogBase::slotOk();
 }
 
 QString DccRecipientDialog::getNickname(QWidget* parent,QStringList list)

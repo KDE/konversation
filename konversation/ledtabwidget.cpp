@@ -18,6 +18,7 @@
 
 #include "ledtabwidget.h"
 #include "ledtab.h"
+#include "chatwindow.h"
 
 LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :
               QTabWidget(parent,name)
@@ -31,13 +32,16 @@ LedTabWidget::~LedTabWidget()
 {
 }
 
-void LedTabWidget::addTab(QWidget* child,const QString& label,int color,bool on)
+void LedTabWidget::addTab(ChatWindow* child,const QString& label,int color,bool on)
 {
   LedTab* tab=new LedTab(child,label,color,on);
 
   QTabWidget::addTab(child,tab);
   // This signal will be emitted when the tab is blinking
   connect(tab,SIGNAL(repaintTab(LedTab*)),tabBar(),SLOT(repaintLED(LedTab*)));
+  // This signal will be emitted when the chat window changes its name
+  connect(child,SIGNAL (nameChanged(ChatWindow*,const QString&)),
+              this,SLOT (changeName(ChatWindow*,const QString&)) );
 }
 
 void LedTabWidget::changeTabState(QWidget* child,bool state)
@@ -82,6 +86,11 @@ void LedTabWidget::updateTabs()
   changeTab(page(0),label(0));
   tabBar()->updateTabs();
   update();
+}
+
+void LedTabWidget::changeName(ChatWindow* view,const QString& newName)
+{
+  changeTab(view,newName);
 }
 
 #include "ledtabwidget.moc"

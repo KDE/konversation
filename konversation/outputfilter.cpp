@@ -25,6 +25,7 @@
 
 #include "konversationapplication.h"
 #include "outputfilter.h"
+#include "identity.h"
 
 #if QT_VERSION < 0x030100
 #include "main.h"
@@ -584,7 +585,7 @@ void OutputFilter::parseExec(const QString& parameter)
 void OutputFilter::parseRaw(const QString& parameter)
 {
   if(parameter.isEmpty() || parameter=="open")
-    emit openRawLog();
+    emit openRawLog(true);
   else if(parameter=="close")
     emit closeRawLog();
   else

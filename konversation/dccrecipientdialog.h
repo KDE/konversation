@@ -18,6 +18,7 @@
 #define DCCRECIPIENTDIALOG_H
 
 #include <kdialogbase.h>
+#include <klineedit.h>
 
 /*
   @author Dario Abatianni
@@ -37,12 +38,14 @@ class DccRecipientDialog : public KDialogBase
     void newNicknameSelected(QListBoxItem* item);
     void newNicknameSelectedQuit(QListBoxItem* item);  // KDE double click
 
+    void slotOk();
     void slotCancel();
 
-  protected:
+  protected:  
     QString getSelectedNickname();
     static QString selectedNickname;
 
+    KLineEdit* nicknameInput;
 };
 
 #endif

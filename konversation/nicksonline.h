@@ -6,7 +6,7 @@
 */
 
 /*
-  nicksonline.h  -  description
+  nicksonline.h  -  shows a user tree of friends per server
   begin:     Sam Aug 31 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -35,11 +35,11 @@ class NicksOnline : public QVBox
 
   signals:
     void editClicked();
-    void doubleClicked(QListViewItem* item);
+    void doubleClicked(const QString& server,const QString& nick);
     void closeClicked(QSize size);
 
   public slots:
-    void setOnlineList(const QStringList& list);
+    void setOnlineList(const QString& serverName,const QStringList& list);
     void closeButton();
     
   protected slots:

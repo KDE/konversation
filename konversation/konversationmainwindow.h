@@ -18,6 +18,8 @@
 #ifndef _KONVERSATIONMAINWINDOW_H_
 #define _KONVERSATIONMAINWINDOW_H_
 
+#include <qstringlist.h>
+
 #include <kmainwindow.h>
 
 /*
@@ -29,35 +31,153 @@ class KToggleAction;
 class LedTabWidget;
 class Server;
 class StatusPanel;
+class ChatWindow;
+class Channel;
+class Query;
+class RawLog;
+class DccPanel;
+class DccTransferHandler;
+class Highlight;
+class HighlightDialog;
+class Ignore;
+class IgnoreDialog;
+class NicksOnline;
+class NotifyDialog;
+class QuickButtonsDialog;
+class ColorConfiguration;
 
 class KonversationMainWindow : public KMainWindow
 {
   Q_OBJECT
-  
+
   public:
     KonversationMainWindow();
     ~KonversationMainWindow();
 
     StatusPanel* addStatusView(Server* server);
+    RawLog* addRawLog(Server* server);
+    Channel* addChannel(Server* server,const QString& name);
+    Query* addQuery(Server* server,const QString& name);
+
+    DccPanel* getDccPanel();
+    void showView(ChatWindow* view);
+
+    void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView);
+
+    void updateFonts();
+
+  signals:
+    void prefsChanged();
+    void channelQuickButtonsChanged();
+    void startNotifyTimer(int msec);
+    void openPrefsDialog();
+    void quitServer();
+    void nicksNowOnline(const QString& serverName,const QStringList& list);
+
+  public slots:
+    // connected in server class
+    void addDccPanel();
+
+    void resetLag();
+    void updateLag(Server* lagServer,int msec);
+    void tooLongLag(Server* lagServer,int msec);
+    void channelPrefsChanged();
+    void setOnlineList(Server* notifyServer,const QStringList& list);
 
   protected slots:
+    void openPreferences();
     void showToolbar();
     void showStatusbar();
     void showMenubar();
-  
-  protected:
-    void readOptions();
-    void addView(QWidget* view,int color,const QString& label,bool on=true);
-    void showView(QWidget* view);
+    void changeView(QWidget* view);
+    void closeView(QWidget* view);
     void newText(QWidget* view);
+    void quitProgram();
+
+    void openHilight();
+    void applyHilight(QPtrList<Highlight> newList);
+    void closeHilight(QSize newSize);
+
+    void openIgnore();
+    void applyIgnore(QPtrList<Ignore> newList);
+    void closeIgnore(QSize newSize);
+
+    void openNotify();
+    void applyNotify(QStringList newList,bool use,int delay);
+    void closeNotify(QSize newSize);
+    void notifyAction(const QString& serverName,const QString& nick);
+
+    void openNicksOnlineWindow();
+    void closeNicksOnlineWindow(QSize newSize);
+    void openButtons();
+    void applyButtons(QStringList newList);
+    void closeButtons(QSize newSize);
+
+    void openColorConfiguration();
+    void applyColorConfiguration(QString actionTextColor, QString backlogTextColor, QString channelTextColor,
+                                 QString commandTextColor, QString linkTextColor, QString queryTextColor,
+                                 QString serverTextColor, QString timeColor, QString backgroundColor);
+    void closeColorConfiguration(QSize windowSize);
+
+    void nextTab();
+    void previousTab();
+
+    // I hope we find a better way soon!
+    void goToTab0();
+    void goToTab1();
+    void goToTab2();
+    void goToTab3();
+    void goToTab4();
+    void goToTab5();
+    void goToTab6();
+    void goToTab7();
+    void goToTab8();
+    void goToTab9();
+
+    void findTextShortcut();
+
+  protected:
+    enum StatusID
+    {
+      StatusText,LagOMeter
+    };
+
+    void readOptions();
+    void saveOptions();
+    bool queryClose();
+
+    void addView(ChatWindow* view,int color,const QString& label,bool on=true);
+    void updateFrontView();
+
+    void goToTab(int page);
+
+    void closeDccPanel();
+    void deleteDccPanel();
 
     LedTabWidget* getViewContainer();
 
     LedTabWidget* viewContainer;
 
+    Server* frontServer;
+    ChatWindow* frontView;
+    ChatWindow* searchView;
+
+    DccPanel* dccPanel;
+    bool dccPanelOpen;
+
     KToggleAction* showToolBarAction;
     KToggleAction* showStatusBarAction;
     KToggleAction* showMenuBarAction;
+
+    HighlightDialog* hilightDialog;
+    NotifyDialog* notifyDialog;
+    IgnoreDialog* ignoreDialog;
+    QuickButtonsDialog* buttonsDialog;
+    ColorConfiguration* colorConfigurationDialog;
+    NicksOnline* nicksOnlineWindow;
+    QStringList nicksOnlineList;
+
+    DccTransferHandler* dccTransferHandler;
 };
 
 #endif

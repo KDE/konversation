@@ -20,6 +20,7 @@
 #include <qhostaddress.h>
 #include <qtextcodec.h>
 
+#include <kapp.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
@@ -27,29 +28,31 @@
 #include "server.h"
 #include "query.h"
 #include "channel.h"
-#include "serverwindow.h"
 #include "ircserversocket.h"
 #include "konversationapplication.h"
+#include "dccpanel.h"
 #include "dcctransfer.h"
 #include "dccrecipientdialog.h"
 #include "nick.h"
-
-#ifdef NEW_MAIN_WINDOW
 #include "konversationmainwindow.h"
 #include "statuspanel.h"
+#include "rawlog.h"
 
-Server::Server(KonversationMainWindow* mainWindow,int id)
-#else
-Server::Server(int id)
-#endif
+Server::Server(KonversationMainWindow* newMainWindow,int id)
 {
-  setName("server");
-  QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
-  setIdentity(KonversationApplication::preferences.getIdentityByName(serverEntry[7]));
-
+  identity=0;
+  rawLog=0;
   tryNickNumber=0;
   checkTime=0;
   reconnectCounter=0;
+  currentLag=0;
+  
+  QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
+  setIdentity(KonversationApplication::preferences.getIdentityByName(serverEntry[7]));
+
+  setName("server_"+serverEntry[1]);
+
+  setMainWindow(newMainWindow);
 
   serverName=serverEntry[1];
   serverPort=serverEntry[2].toInt();
@@ -60,18 +63,12 @@ Server::Server(int id)
 
   lastDccDir=QString::null;
 
-  serverWindow=new ServerWindow(this);
-  setNickname(identity->getNickname(tryNickNumber));
-  bot=identity->getBot();
-  botPassword=identity->getPassword();
-  serverWindow->setIdentity(getIdentity());
-  serverWindow->show();
-  statusPanel_old=serverWindow->getStatusView();
+  statusView=getMainWindow()->addStatusView(this);
+  if(KonversationApplication::preferences.getRawLog()) addRawLog(false);
+  setNickname(getIdentity()->getNickname(tryNickNumber));
+  bot=getIdentity()->getBot();
+  botPassword=getIdentity()->getPassword();
 
-#ifdef NEW_MAIN_WINDOW
-  statusView=mainWindow->addStatusView(this);
-#endif
-  
   serverSocket.setAddress(serverName,serverPort);
 
   if(serverEntry[4] && !serverEntry[4].isEmpty())
@@ -93,7 +90,7 @@ Server::Server(int id)
   completeQueryPosition=0;
 
   inputFilter.setServer(this);
-  outputFilter.setIdentity(identity);
+  outputFilter.setIdentity(getIdentity());
 
   notifyTimer.setName("notifyTimer");
   incomingTimer.setName("incomingTimer");
@@ -127,17 +124,20 @@ Server::Server(int id)
   connect(&inputFilter,SIGNAL(userhost(const QString&,const QString&,bool,bool)),
                   this,SLOT  (userhost(const QString&,const QString&,bool,bool)) );
 
-  connect(this,SIGNAL(serverLag(int)),serverWindow,SLOT(updateLag(int)) );
-  connect(this,SIGNAL(tooLongLag(int)),serverWindow,SLOT(tooLongLag(int)) );
-  connect(this,SIGNAL(resetLag()),serverWindow,SLOT(resetLag()) );
-  connect(this,SIGNAL(addDccPanel()),serverWindow,SLOT(addDccPanel()) );
-  connect(this,SIGNAL(closeDccPanel()),serverWindow,SLOT(closeDccPanel()) );
+  connect(this,SIGNAL(serverLag(int)),statusView,SLOT(updateLag(int)) );
+  connect(this,SIGNAL(serverLag(Server*,int)),getMainWindow(),SLOT(updateLag(Server*,int)) );
+  connect(this,SIGNAL(tooLongLag(Server*,int)),getMainWindow(),SLOT(tooLongLag(Server*,int)) );
+  connect(this,SIGNAL(resetLag()),getMainWindow(),SLOT(resetLag()) );
+  connect(this,SIGNAL(addDccPanel()),getMainWindow(),SLOT(addDccPanel()) );
 
   connect(&serverSocket,SIGNAL (connectionSuccess())  ,this,SLOT (ircServerConnectionSuccess()) );
   connect(&serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
   connect(&serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
   connect(&serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
   connect(&serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
+
+  connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
+  connect(getMainWindow(),SIGNAL(openPrefsDialog()),KonversationApplication::kApplication(),SLOT(openPrefsDialog()));
 }
 
 Server::~Server()
@@ -149,15 +149,19 @@ Server::~Server()
   // Send out the last messages (usually the /QUIT)
   serverSocket.enableWrite(true);
   send();
-
+  
+  closeRawLog();
+  channelList.setAutoDelete(true);
+  while(channelList.removeFirst());
+  
   // notify KonversationApplication that this server is gone
   emit deleted(this);
-  
-  delete serverWindow;
 }
 
 QString Server::getServerName() { return serverName; }
 int Server::getPort() { return serverPort; }
+
+int Server::getLag() { return currentLag; }
 
 bool Server::getAutoJoin() { return autoJoin; }
 void Server::setAutoJoin(bool on) { autoJoin=on; }
@@ -184,8 +188,7 @@ void Server::connectToIRCServer()
   else
   {
     // (re)connect. Autojoin will be done by the input filter
-    serverWindow->appendToStatus(i18n("Info"),i18n("Looking for server %1 ...").arg(serverSocket.host()));
-
+    statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1 ...").arg(serverSocket.host()));
     // QDns is broken, so don't use async lookup, use own threaded class instead
     resolver.setSocket(&serverSocket);
     resolver.start();
@@ -204,7 +207,7 @@ bool Server::eventFilter(QObject* parent,QEvent* event)
 
 void Server::lookupFinished()
 {
-  serverWindow->appendToStatus(i18n("Info"),i18n("Server found, connecting ..."));
+  statusView->appendServerMessage(i18n("Info"),i18n("Server found, connecting ..."));
   serverSocket.startAsyncConnect();
 }
 
@@ -212,9 +215,8 @@ void Server::ircServerConnectionSuccess()
 {
   reconnectCounter=0;
 
-  connect(this,SIGNAL (nicknameChanged(const QString&)),serverWindow,SLOT (setNickname(const QString&)) );
-
-  serverWindow->appendToStatus(i18n("Info"),i18n("Connected! Logging in ..."));
+  connect(this,SIGNAL (nicknameChanged(const QString&)),statusView,SLOT (setNickname(const QString&)) );
+  statusView->appendServerMessage(i18n("Info"),i18n("Connected! Logging in ..."));
 
   QString connectString="USER " +
                         identity->getIdent() +
@@ -243,12 +245,11 @@ void Server::broken(int state)
 
   if(autoReconnect && !getDeliberateQuit())
   {
-    serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName));
-
+    statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName));
     // TODO: Make retry counter configurable
     if(++reconnectCounter==10)
     {
-      serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 failed.").arg(serverName));
+      statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 failed.").arg(serverName));
       reconnectCounter=0;
     }
     else
@@ -257,7 +258,7 @@ void Server::broken(int state)
   }
   else
   {
-    serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 closed.").arg(serverName));
+    statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 closed.").arg(serverName));
   }
 }
 
@@ -271,33 +272,41 @@ void Server::connectionEstablished()
     queue("PRIVMSG "+bot+" :identify "+botPassword);
 }
 
-void Server::notifyAction(QListViewItem* item)
+void Server::quitServer()
 {
-  if(item)
+  QString command(KonversationApplication::preferences.getCommandChar()+"QUIT");
+  outputFilter.parse(getNickname(),command,QString::null);
+  queue(outputFilter.getServerOutput());
+}
+
+void Server::notifyAction(const QString& nick)
+{
+  // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
+  QString out=parseWildcards(KonversationApplication::preferences.getNotifyDoubleClickAction(),
+                             getNickname(),
+                             QString::null,
+                             QString::null,
+                             nick,
+                             QString::null,
+                             QString::null);
+  // Send all strings, one after another
+  QStringList outList=QStringList::split('\n',out);
+  for(unsigned int index=0;index<outList.count();index++)
   {
-    // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
-    QString out=parseWildcards(KonversationApplication::preferences.getNotifyDoubleClickAction(),
-                               getNickname(),
-                               QString::null,
-                               QString::null,
-                               item->text(0),
-                               QString::null,
-                               QString::null);
-    // Send all strings, one after another
-    QStringList outList=QStringList::split('\n',out);
-    for(unsigned int index=0;index<outList.count();index++)
-    {
-      outputFilter.parse(getNickname(),outList[index],QString::null);
-      queue(outputFilter.getServerOutput());
-    } // endfor
-  }
+    outputFilter.parse(getNickname(),outList[index],QString::null);
+    queue(outputFilter.getServerOutput());
+  } // endfor
 }
 
 void Server::notifyResponse(const QString& nicksOnline)
 {
   // We received a 303 or "PONG :LAG" notify message, so calculate server lag
   int lag=notifySent.elapsed();
+  currentLag=lag;
+  // inform status panel ...
   emit serverLag(lag);
+  // ... and main window
+  emit serverLag(this,lag);
   // Stop check timer
   notifyCheckTimer.stop();
 
@@ -316,7 +325,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     {
       if(notifyLowerCache.find(nickLowerList[index])==notifyLowerCache.end())
       {
-        serverWindow->appendToFrontmost(i18n("Notify"),i18n("%1 is online.").arg(nickList[index]));
+        getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 is online.").arg(nickList[index]),statusView);
       }
     }
 
@@ -325,13 +334,13 @@ void Server::notifyResponse(const QString& nicksOnline)
     {
       if(nickLowerList.find(notifyLowerCache[index])==nickLowerList.end())
       {
-        serverWindow->appendToFrontmost(i18n("Notify"),i18n("%1 went offline.").arg(notifyCache[index]));
+        getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 went offline.").arg(notifyCache[index]),statusView);
       }
     }
 
     // Finally copy the new ISON list with correct case to our notify cache
     notifyCache=nickList;
-    emit nicksNowOnline(nickList);
+    emit nicksNowOnline(this,nickList);
   }
   // Next round
   startNotifyTimer();
@@ -378,10 +387,15 @@ void Server::notifyTimeout()
   startNotifyCheckTimer();
 }
 
+// waiting too long for 303 response
 void Server::notifyCheckTimeout()
 {
   checkTime+=500;
-  if(isConnected()) emit tooLongLag(checkTime);
+  if(isConnected())
+  {
+    currentLag=checkTime;
+    emit tooLongLag(this,checkTime);
+  }
 }
 
 QString Server::getAutoJoinCommand()
@@ -418,7 +432,7 @@ void Server::processIncomingData()
 
     inputBuffer=inputBuffer.mid(pos+1);
 
-    getServerWindow()->appendToRaw(line);
+    if(rawLog) rawLog->appendRaw(line);
     inputFilter.parseLine(line);
   }
 }
@@ -442,7 +456,8 @@ void Server::queue(const QString& buffer)
   // Only queue lines if we are connected
   if(isConnected() && buffer.length())
   {
-    getServerWindow()->appendToRaw(buffer);
+    if(rawLog) rawLog->appendRaw(buffer);
+    
     outputBuffer+=buffer;
     outputBuffer+="\n";
 
@@ -458,10 +473,10 @@ void Server::send()
     // To make lag calculation more precise, we reset the timer here
     if(outputBuffer.startsWith("ISON") ||
        outputBuffer.startsWith("PING LAG")) notifySent.start();
-    
+
     // Don't reconnect if we WANT to quit
     else if(outputBuffer.startsWith("QUIT")) setDeliberateQuit(true);
-    
+
     // TODO: Implement Flood-Protection here
     write(serverSocket.fd(),outputBuffer,outputBuffer.length());
     serverSocket.enableWrite(false);
@@ -509,21 +524,15 @@ void Server::setDeliberateQuit(bool on)
   deliberateQuit=on;
 }
 
-void Server::addQuery(const QString &nickname,const QString &hostmask)
+void Server::addQuery(const QString& nickname,const QString& hostmask)
 {
   // Only create new query object if there isn't already one with the same name
   Query* query=getQueryByName(nickname);
   if(!query)
   {
-    query=new Query(serverWindow->getWindowContainer());
-    query->setServer(this);
+    query=getMainWindow()->addQuery(this,nickname);
     query->setIdentity(getIdentity());
-    query->setName(nickname);
-    // Add new query pane to tabwidget
-    serverWindow->addView(query,0,nickname);
 
-    connect(query,SIGNAL (newText(QWidget*)),serverWindow,SLOT (newText(QWidget*)) );
-    connect(query,SIGNAL (closed(Query*)),this,SLOT (removeQuery(Query*)) );
     connect(query,SIGNAL (sendFile(const QString&)),this,SLOT (requestDccSend(const QString &)) );
     // Append query to internal list
     queryList.append(query);
@@ -596,7 +605,7 @@ void Server::requestBan(const QStringList& users,const QString& channel,const QS
     outputFilter.execBan(mask,channel);
 
     banCommand=outputFilter.getServerOutput();
-    
+
     queue(banCommand);
   }
 }
@@ -636,7 +645,7 @@ void Server::requestDccSend(const QString &a_recipient)
       lookQuery=queryList.next();
     }
 
-    recipient=DccRecipientDialog::getNickname(getServerWindow(),nickList);
+    recipient=DccRecipientDialog::getNickname(getMainWindow(),nickList);
   }
   // do we have a recipient *now*?
   if(recipient && !recipient.isEmpty())
@@ -644,7 +653,7 @@ void Server::requestDccSend(const QString &a_recipient)
     QString fileName=KFileDialog::getOpenFileName(
                                                    lastDccDir,
                                                    QString::null,
-                                                   getServerWindow(),
+                                                   getMainWindow(),
                                                    i18n("Select file to send to %1").arg(recipient)
                                                  );
     if(!fileName.isEmpty())
@@ -675,7 +684,7 @@ void Server::addDccSend(const QString &recipient,const QString &fileName)
 
 //  kdDebug() << ip << endl;
 
-  DccTransfer* newDcc=new DccTransfer(serverWindow->getDccPanel()->getListView(),
+  DccTransfer* newDcc=new DccTransfer(getMainWindow()->getDccPanel()->getListView(),
                   DccTransfer::Send,
                   KonversationApplication::preferences.getDccPath(),
                   recipient,
@@ -707,7 +716,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
                               .arg(dccArguments[2])          // port
                              );
 
-  DccTransfer* newDcc=new DccTransfer(serverWindow->getDccPanel()->getListView(),
+  DccTransfer* newDcc=new DccTransfer(getMainWindow()->getDccPanel()->getListView(),
                   DccTransfer::Get,
                   KonversationApplication::preferences.getDccPath(),
                   sourceNick,
@@ -753,12 +762,12 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
   // Check if there actually is a transfer going on on that port
-  DccTransfer* dccTransfer=serverWindow->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::ResumeGet);
+  DccTransfer* dccTransfer=getMainWindow()->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::ResumeGet);
   if(!dccTransfer)
     // Check if there actually is a transfer going on with that name, could be behind a NAT
     // so the port number may get changed
     // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-    dccTransfer=serverWindow->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::ResumeGet);
+    dccTransfer=getMainWindow()->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::ResumeGet);
 
   if(dccTransfer)
   {
@@ -776,12 +785,12 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
 void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &dccArguments)
 {
   // Check if there actually is a transfer going on on that port
-  DccTransfer* dccTransfer=serverWindow->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::Send);
+  DccTransfer* dccTransfer=getMainWindow()->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::Send);
   if(!dccTransfer)
     // Check if there actually is a transfer going on with that name, could be behind a NAT
     // so the port number may get changed
     // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-    dccTransfer=serverWindow->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::Send);
+    dccTransfer=getMainWindow()->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::Send);
 
   if(dccTransfer)
   {
@@ -821,9 +830,6 @@ QString Server::getNextQueryName()
 
 void Server::removeQuery(Query* query)
 {
-  // Remove query page from container
-  serverWindow->getWindowContainer()->removePage(query);
-
   // Traverse through list to find the query
   Query* lookQuery=queryList.first();
   while(lookQuery)
@@ -855,20 +861,14 @@ void Server::joinChannel(const QString &name, const QString &hostmask, const QSt
     delete channel;
   }
 
-  channel=new Channel(serverWindow->getWindowContainer());
-
-  channel->setServer(this);
+  channel=getMainWindow()->addChannel(this,name);
   channel->setIdentity(getIdentity());
-  channel->setName(name);
   channel->setNickname(getNickname());
   //channel->setKey(key);
 
-  serverWindow->addView(channel,1,name);
+  channelList.append(channel);
   channel->joinNickname(getNickname(),hostmask);
 
-  channelList.append(channel);
-  connect(channel,SIGNAL (newText(QWidget*)),serverWindow,SLOT (newText(QWidget*)) );
-  connect(channel,SIGNAL (prefsChanged()),serverWindow,SLOT (channelPrefsChanged()) );
   connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
 }
 
@@ -889,12 +889,12 @@ void Server::updateChannelModeWidgets(const QString &channelName, char mode, con
   if(channel) channel->updateModeWidgets(mode,true,parameter);
 }
 
-void Server::updateChannelQuickButtons(QStringList newButtons)
+void Server::updateChannelQuickButtons()
 {
   Channel* channel=channelList.first();
   while(channel)
   {
-    channel->updateQuickButtons(newButtons);
+    channel->updateQuickButtons(KonversationApplication::preferences.getButtonList());
     channel=channelList.next();
   }
 }
@@ -904,11 +904,6 @@ void Server::updateFonts()
 {
   kdDebug() << "Server::updateFonts()" << endl;
 
-  statusPanel_old->updateFonts();
-#ifdef NEW_MAIN_WINDOW
-  statusView->updateFonts();
-#endif
-  
   Channel* channel=channelList.first();
   while(channel)
   {
@@ -922,14 +917,11 @@ void Server::updateFonts()
     query->updateFonts();
     query=queryList.next();
   }
-  
-  // TODO: To be revised. Why should the server update the serverWindow?
-  //       This must be done with signals / slots ASAP
-  if(serverWindow)
-  {
-    serverWindow->updateFonts();
-    emit repaintTabs();
-  }
+
+  statusView->updateFonts();
+  getMainWindow()->updateFonts();
+
+  if(rawLog) rawLog->updateFonts();
 }
 
 // TODO: Maybe use a Signal / Slot mechanism for these things?
@@ -1061,7 +1053,6 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
     if(query->getName().lower()==nickname.lower())
     {
       query->setName(newNick);
-      serverWindow->getWindowContainer()->changeTab(query,newNick);
     }
     query=queryList.next();
   }
@@ -1126,13 +1117,13 @@ void Server::appendCommandMessageToQuery(const char* queryName,const char* comma
 
 void Server::appendStatusMessage(const char* type,const char* message)
 {
-  serverWindow->appendToFrontmost(type,message);
+  getMainWindow()->appendToFrontmost(type,message,statusView);
 }
 
 void Server::setNickname(const QString &newNickname)
 {
   nickname=newNickname;
-  serverWindow->setNickname(newNickname);
+  statusView->setNickname(newNickname);
 }
 
 void Server::setChannelTopic(const QString &channel, const QString &newTopic)
@@ -1228,16 +1219,6 @@ OutputFilter& Server::getOutputFilter()
   return outputFilter;
 }
 
-ServerWindow* Server::getServerWindow()
-{
-  return serverWindow;
-}
-
-void Server::setServerWindow(ServerWindow* newWindow)
-{
-  serverWindow=newWindow;
-}
-
 void Server::away()
 {
   isAway=true;
@@ -1277,17 +1258,26 @@ bool Server::isAChannel(const QString &check)
   return (initial=='#' || initial=='&' || initial=='+' || initial=='!');
 }
 
-void Server::addRawLog()
+void Server::addRawLog(bool show)
 {
-  getServerWindow()->addRawLog();
+  if(!rawLog) rawLog=getMainWindow()->addRawLog(this);
+  // bring raw log to front since the main window does not do this for us
+  if(show) getMainWindow()->showView(rawLog);
 }
 
 void Server::closeRawLog()
 {
-  getServerWindow()->closeRawLog();
+  if(rawLog)
+  {
+    delete rawLog;
+    rawLog=0;
+  }
 }
 
-void Server::setIdentity(const Identity *newIdentity) { identity=newIdentity; }
-const Identity *Server::getIdentity() { return identity; }
+void Server::setIdentity(const Identity* newIdentity) { identity=newIdentity; }
+const Identity* Server::getIdentity() { return identity; }
+
+void Server::setMainWindow(KonversationMainWindow* newMainWindow) { mainWindow=newMainWindow; }
+KonversationMainWindow* Server::getMainWindow() { return mainWindow; }
 
 #include "server.moc"

@@ -23,7 +23,6 @@
 #include <krootpixmap.h>
 
 #include "server.h"
-#include "serverwindow.h"
 #include "chatwindow.h"
 #include "konversationapplication.h"
 
@@ -44,10 +43,11 @@ ChatWindow::~ChatWindow()
 {
 }
 
-void ChatWindow::setName(QString newName)
+void ChatWindow::setName(const QString& newName)
 {
   name=newName;
   scriptLauncher.setTargetName(newName);
+  emit nameChanged(this,newName);
 }
 
 QString& ChatWindow::getName()
@@ -96,7 +96,7 @@ void ChatWindow::setServer(Server* newServer)
     connect(&filter,SIGNAL (banUsers(const QStringList&,const QString&,const QString&)),
              server,SLOT   (requestBan(const QStringList&,const QString&,const QString&)) );
 
-    connect(&filter,SIGNAL (openRawLog()), server,SLOT (addRawLog()) );
+    connect(&filter,SIGNAL (openRawLog(bool)), server,SLOT (addRawLog(bool)) );
     connect(&filter,SIGNAL (closeRawLog()),server,SLOT (closeRawLog()) );
     
     scriptLauncher.setServerName(server->getServerName());
@@ -107,6 +107,11 @@ void ChatWindow::setServer(Server* newServer)
                        server,SLOT (scriptExecutionError(const QString&)) );
 
   }
+}
+
+Server* ChatWindow::getServer()
+{
+  return server;
 }
 
 void ChatWindow::setIdentity(const Identity *newIdentity)
@@ -268,5 +273,10 @@ int ChatWindow::margin()
 
 IRCView* ChatWindow::getTextView()     { return textView; }
 void ChatWindow::setLog(bool activate) { log=activate; }
+
+// reimplement this if your window needs special close treatment
+void ChatWindow::closeYourself()
+{
+}
 
 #include "chatwindow.moc"

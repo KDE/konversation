@@ -6,7 +6,7 @@
 */
 
 /*
-  konversationapplication.h  -  description
+  konversationapplication.h  -  The main application
   begin:     Mon Jan 28 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -44,7 +44,7 @@ class KonversationApplication : public KApplication
     // URL-Catcher
     // TODO: Provide a list of seen URLs
     static QStringList urlList;
-    static void storeURL(const QString &url);
+    static void storeURL(const QString& url);
 
     // Returns a list of signals we should emit
     QPtrList<IRCEvent> retreiveHooks (EVENT_TYPE type);
@@ -53,6 +53,7 @@ class KonversationApplication : public KApplication
     ~KonversationApplication();
 
     void syncPrefs();
+    Server* getServerByName(const QString& name);
 
   public slots:
     void connectToServer(int number);
@@ -64,7 +65,7 @@ class KonversationApplication : public KApplication
     void openPrefsDialog();
     void closePrefsDialog();
 
-    bool emitDCOPSig(const QString &appId, const QString &objId, const QString &signal, QByteArray &data);
+    bool emitDCOPSig(const QString& appId, const QString& objId, const QString& signal, QByteArray& data);
 
   protected slots:
     void removeServer(Server* server);
@@ -75,10 +76,7 @@ class KonversationApplication : public KApplication
     QPtrList<Server> serverList;
     PrefsDialog* prefsDialog;
     KonvDCOP* dcopObject;
-
-#ifdef NEW_MAIN_WINDOW
     KonversationMainWindow* mainWindow;
-#endif
 };
 
 #endif

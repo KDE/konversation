@@ -22,11 +22,11 @@
 
 #include <ktextbrowser.h>
 
-#include "server.h"
-
 /*
   @author Dario Abatianni
 */
+
+class Server;
 
 class IRCView : public KTextBrowser
 {

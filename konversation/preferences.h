@@ -50,12 +50,12 @@ class Preferences : public QObject
     Preferences();
     ~Preferences();
 
-    int serverWindowToolBarPos;
-    int serverWindowToolBarStatus;
-    int serverWindowToolBarIconText;
-    int serverWindowToolBarIconSize;
-    bool serverWindowStatusBarStatus;
-    bool serverWindowMenuBarStatus;
+    int mainWindowToolBarPos;
+    int mainWindowToolBarStatus;
+    int mainWindowToolBarIconText;
+    int mainWindowToolBarIconSize;
+    bool mainWindowStatusBarStatus;
+    bool mainWindowMenuBarStatus;
 
     int addServer(const QString& serverString);
     void removeServer(int id);
@@ -108,7 +108,7 @@ class Preferences : public QObject
     bool getCloseButtonsOnTabs();
 
     // Geometry functions
-    QSize getServerWindowSize();
+    QSize getMainWindowSize();
     QSize getHilightSize();
     QSize getButtonsSize();
     QSize getIgnoreSize();
@@ -116,7 +116,7 @@ class Preferences : public QObject
     QSize getNicksOnlineSize();
     QSize getNicknameSize();
     QSize getColorConfigurationSize();
-    void setServerWindowSize(QSize newSize);
+    void setMainWindowSize(QSize newSize);
     void setHilightSize(QSize newSize);
     void setButtonsSize(QSize newSize);
     void setIgnoreSize(QSize newSize);
@@ -335,7 +335,7 @@ class Preferences : public QObject
     QString textViewBackground;
 
     // Geometries
-    QSize serverWindowSize;
+    QSize mainWindowSize;
     QSize buttonsSize;
     QSize hilightSize;
     QSize ignoreSize;

@@ -20,11 +20,11 @@
 #include <qobject.h>
 #include <qstring.h>
 
-#include "identity.h"
-
 /*
   @author Dario Abatianni
 */
+
+class Identity;
 
 class OutputFilter : public QObject
 {
@@ -55,7 +55,7 @@ class OutputFilter : public QObject
     void requestDccSend(const QString &recipient);       // Choose File from requester
     void openDccPanel();
     void closeDccPanel();
-    void openRawLog();
+    void openRawLog(bool show);
     void closeRawLog();
     void away();
     void unAway();

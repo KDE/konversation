@@ -28,3 +28,8 @@ Ignore::~Ignore()
 {
   kdDebug() << "Ignore::~Ignore(" << name << ")" << endl;
 }
+    
+void Ignore::setName(QString newName) { name=newName; }
+void Ignore::setFlags(int newFlags)   { flags=newFlags; }
+QString Ignore::getName()             { return name; }
+int Ignore::getFlags()                { return flags; }

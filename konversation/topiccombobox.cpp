@@ -19,7 +19,6 @@
 #include <qtextcodec.h>
 
 #include "topiccombobox.h"
-#include "konversationapplication.h"
 
 TopicComboBox::TopicComboBox(QWidget* parent) :
                    KComboBox(parent)

@@ -15,6 +15,7 @@
 */
 
 #include <klocale.h>
+#include <kdebug.h>
 
 #include "rawlog.h"
 #include "konversationapplication.h"
@@ -39,6 +40,13 @@ void RawLog::updateFonts()
 {
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setPaper(QColor("#"+KonversationApplication::preferences.getTextViewBackground()));
+}
+
+void RawLog::closeYourself()
+{
+  // make the server delete us so server can reset the pointer to us
+  server->closeRawLog();
+  kdDebug() << "RawLog::closeYourself()" << endl;
 }
 
 #include "rawlog.moc"

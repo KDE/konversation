@@ -21,9 +21,9 @@
 #include <qvbox.h>
 #include <qiconset.h>
 #include <qcheckbox.h>
+#include <qlineedit.h>
 
 #include "chatwindow.h"
-#include "ircinput.h"
 
 /*
   @author Dario Abatianni
@@ -31,6 +31,9 @@
 
 /* TODO: Idle counter to close query after XXX minutes of inactivity */
 /* TODO: Use /USERHOST to check if queries are still valid */
+
+class IRCInput;
+
 class Query : public ChatWindow
 {
   Q_OBJECT
@@ -42,6 +45,7 @@ class Query : public ChatWindow
     void setName(const QString& newName);
     void setHostmask(const QString& newHostmask);
     void updateFonts();
+    void closeYourself();
 
   signals:
     void newText(QWidget* query);

@@ -52,12 +52,13 @@ class ChatWindow : public QVBox
     };
 
     void setServer(Server* newServer);
+    Server* getServer();
     void setIdentity(const Identity *newIdentity);
     void setTextView(IRCView* newView);
     IRCView* getTextView();
     void setLog(bool activate);
 
-    void setName(QString newName);
+    void setName(const QString& newName);
     QString& getName();
 
     void setType(WindowType newType);
@@ -72,6 +73,11 @@ class ChatWindow : public QVBox
     void appendBacklogMessage(const char* firstColumn,const char* message);
 
     QWidget* parentWidget;
+
+    virtual void closeYourself();
+
+  signals:
+    void nameChanged(ChatWindow* view,const QString& newName);
 
   public slots:
     void logText(const QString& text);

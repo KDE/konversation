@@ -23,6 +23,7 @@
 
 #include "query.h"
 #include "konversationapplication.h"
+#include "ircinput.h"
 
 Query::Query(QWidget* parent) : ChatWindow(parent)
 {
@@ -158,5 +159,11 @@ void Query::sendFileMenu()
 {
   emit sendFile(getName());
 }
+
+void Query::closeYourself()
+{
+  server->removeQuery(this);
+}
+
 
 #include "query.moc"

@@ -30,7 +30,9 @@ class RawLog : public ChatWindow
   public:
     RawLog(QWidget* parent);
     ~RawLog();
-  
+
+    void closeYourself();
+
   public slots:
     virtual void adjustFocus();
     void updateFonts();

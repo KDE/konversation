@@ -27,9 +27,9 @@
 Preferences::Preferences()
 {
   // Presets
-  serverWindowToolBarPos=KToolBar::Top;
-  serverWindowStatusBarStatus=true;
-  serverWindowMenuBarStatus=true;
+  mainWindowToolBarPos=KToolBar::Top;
+  mainWindowStatusBarStatus=true;
+  mainWindowMenuBarStatus=true;
   serverList.setAutoDelete(true);
 
   // create default identity
@@ -430,7 +430,7 @@ void Preferences::setVoiceLedColor(int passed_color)    { voiceLedColor=passed_c
 void Preferences::setNoRightsLedColor(int passed_color) { noRightsLedColor=passed_color; }
 
 // Geometry functions
-QSize Preferences::getServerWindowSize()  { return serverWindowSize; };
+QSize Preferences::getMainWindowSize()         { return mainWindowSize; };
 QSize Preferences::getHilightSize()            { return hilightSize; };
 QSize Preferences::getButtonsSize()            { return buttonsSize; };
 QSize Preferences::getIgnoreSize()             { return ignoreSize; };
@@ -439,7 +439,7 @@ QSize Preferences::getNicksOnlineSize()        { return nicksOnlineSize; };
 QSize Preferences::getNicknameSize()           { return nicknameSize; };
 QSize Preferences::getColorConfigurationSize() { return colorConfigurationSize; }
 
-void Preferences::setServerWindowSize(QSize newSize)       { serverWindowSize=newSize; };
+void Preferences::setMainWindowSize(QSize newSize)         { mainWindowSize=newSize; };
 void Preferences::setHilightSize(QSize newSize)            { hilightSize=newSize; };
 void Preferences::setButtonsSize(QSize newSize)            { buttonsSize=newSize; };
 void Preferences::setIgnoreSize(QSize newSize)             { ignoreSize=newSize; };

@@ -1260,4 +1260,9 @@ void Channel::autoUserhost()
   if(!nickString.isEmpty()) server->requestUserhost(nickString);
 }
 
+void Channel::closeYourself()
+{
+  server->closeChannel(getName());
+}
+
 #include "channel.moc"
