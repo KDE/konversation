@@ -26,6 +26,10 @@
 #include "server.h"
 #include "konversationapplication.h"
 
+#ifdef USE_NICKINFO
+#include "images.h"
+#endif
+
 NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 {  
   setName(i18n("Watched Nicks Online"));
@@ -69,31 +73,49 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
       nickListView->setColumnText(0, i18n("Server/Nickname/Channel"));
     }
     KListViewItem* newServerRoot=new KListViewItem(nickListView,serverName);
+    // Get a green LED for flagging of joined channels.
+    Images leds;
+    QIconSet currentLeds = leds.getGreenLed(false);
+    QPixmap joinedLed = currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
+    // Get the server object corresponding to the server name.
     KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
     Server* server = konvApp->getServerByName(serverName);
+    // List online nicknames.
     const NickInfoList* nickInfoList = server->getNicksOnline();
     NickInfoListIterator itOnline(*nickInfoList);
-    // Online nicknames.
     NickInfo* nickInfo;
     for ( ; (nickInfo=itOnline.current()) ; ++itOnline)
     {
       QString lcNickName = itOnline.currentKey();
       QString nickname = nickInfo->getNickname();
+      // Construct additional information string for nick.
       QString nickAdditionalInfo;
       if (nickInfo->isAway())
       {
         nickAdditionalInfo = nickAdditionalInfo + i18n("Away");
-        QString awayMsg = nickInfo->getAwayMessage();
-        if (!awayMsg.isEmpty()) nickAdditionalInfo = nickAdditionalInfo + "(" + awayMsg + ")";
+        if (!nickInfo->getAwayMessage().isEmpty())
+          nickAdditionalInfo = nickAdditionalInfo + "(" + nickInfo->getAwayMessage() + ")";
       }
-      nickAdditionalInfo = nickAdditionalInfo + " ";
-      nickAdditionalInfo = nickAdditionalInfo + nickInfo->getHostmask();
+      if (!nickInfo->getHostmask().isEmpty())
+        nickAdditionalInfo = nickAdditionalInfo + " " + nickInfo->getHostmask();
+      if (!nickInfo->getRealName().isEmpty())
+        nickAdditionalInfo = nickAdditionalInfo + " (" + nickInfo->getRealName() + ")";
+      if (!nickInfo->getNetServer().isEmpty())
+      {
+        nickAdditionalInfo = nickAdditionalInfo + " online via " + nickInfo->getNetServer();
+        if (!nickInfo->getNetServerInfo().isEmpty())
+          nickAdditionalInfo = nickAdditionalInfo + " (" + nickInfo->getNetServerInfo() + ")";
+      }
+      if (!nickInfo->getOnlineSince().isNull())
+        nickAdditionalInfo = nickAdditionalInfo + " since " + nickInfo->getOnlineSince().toString(Qt::LocalDate);
+        
       KListViewItem* nickRoot = new KListViewItem(newServerRoot, nickname, nickAdditionalInfo);
       QStringList channelList = server->getNickChannels(nickname);
       for ( unsigned int index=0; index<channelList.count(); index++ )
       {
         // Known channels where nickname is online and mode in each channel.
-        ChannelNick* channelNick = server->getChannelNick(channelList[index].lower(), lcNickName);
+        QString channelName = channelList[index];
+        ChannelNick* channelNick = server->getChannelNick(channelName, lcNickName);
         unsigned int nickModeWord = channelNick->mode;
         QString nickMode;
         if (nickModeWord & 1) nickMode = nickMode + i18n(" Voice");
@@ -105,11 +127,15 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
         if (nickModeWord & 1) nickMode = nickMode + i18n(" Owner");
         nickModeWord >>= 1;
         if (nickModeWord & 1) nickMode = nickMode + i18n(" Admin");
-        new KListViewItem(nickRoot, channelList[index], nickMode);
+        KListViewItem* channelItem = new KListViewItem(nickRoot, channelName, nickMode);
+        if (server->getJoinedChannelMembers(channelName) != 0)
+        {
+          channelItem->setPixmap(0, joinedLed);
+        }
       }
       nickRoot->setOpen(true);
     }
-    // Offline nicknames.
+    // List offline nicknames.
     KListViewItem* offlineRoot = new KListViewItem(newServerRoot, i18n("Offline"));
     nickInfoList = server->getNicksOffline();
     NickInfoListIterator itOffline(*nickInfoList);
@@ -120,6 +146,7 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
     newServerRoot->setOpen(true);
     offlineRoot->setOpen(true);
     nickListView->adjustColumn(0);
+    nickListView->adjustColumn(1);
   }
 
 #else

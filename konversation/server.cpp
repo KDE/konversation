@@ -881,21 +881,44 @@ NickInfo* Server::getNickInfo(const QString& nickname)
   return allNicks.find(lcNickname);
 }
 
-// Returns the list of members for a channel in the joinedChannels list.  0 if channel is not in the joinedChannels list.
+// Anyone who changes the contents of a NickInfo should call this method to let server
+// know that it has changed.
+void Server::nickInfoUpdated(const NickInfo* nickInfo)
+{
+  if (nickInfo) emit nickInfoChanged(this, nickInfo);
+}
+
+// Given a nickname, returns an existing NickInfo object, or creates a new NickInfo object.
+// Returns pointer to the found or created NickInfo object.
+NickInfo* Server::obtainNickInfo(const QString& nickname)
+{
+  NickInfo* nickInfo = getNickInfo(nickname);
+  if (!nickInfo)
+  {
+    nickInfo = new NickInfo(nickname, this);
+    allNicks.insert(nickname.lower(), nickInfo);
+  }
+  return nickInfo;
+}
+
+// Returns the list of members for a channel in the joinedChannels list.
+// 0 if channel is not in the joinedChannels list.
 // Using code must not alter the list.
 const ChannelNickList* Server::getJoinedChannelMembers(const QString& channelName) const
 {
   return joinedChannels.find(channelName);
 }
 
-// Returns the list of members for a channel in the unjoinedChannels list.  0 if channel is not in the unjoinedChannels list.
+// Returns the list of members for a channel in the unjoinedChannels list.
+// 0 if channel is not in the unjoinedChannels list.
 // Using code must not alter the list.
 const ChannelNickList* Server::getUnjoinedChannelMembers(const QString& channelName) const
 {
   return unjoinedChannels.find(channelName);
 }
 
-// Searches the Joined and Unjoined lists for the given channel and returns the member list.  0 if channel is not in either list.
+// Searches the Joined and Unjoined lists for the given channel and returns the member list.
+// 0 if channel is not in either list.
 // Using code must not alter the list.
 const ChannelNickList* Server::getChannelMembers(const QString& channelName) const
 {
@@ -918,6 +941,35 @@ ChannelNick* Server::getChannelNick(const QString& channelName, const QString& n
   else
   {
     return 0;
+  }
+}
+
+// Updates a nickname in a channel.  If not on the joined or unjoined lists, and nick
+// is in the watch list, adds the channel and nick to the unjoinedChannels list.
+// If mode != 99, sets the mode for the nick in the channel.
+// Returns the NickInfo object if nick is on any lists, otherwise 0.
+NickInfo* Server::setChannelNick(const QString& channelName, const QString& nickname, unsigned int mode)
+{
+  QString lcNickname = nickname.lower();
+  // If already on a list, update mode.
+  ChannelNick* channelNick = getChannelNick(channelName, lcNickname);
+  if (channelNick)
+  {
+    if (mode != 99) channelNick->mode = mode;
+    return channelNick->nickInfo;
+  }
+  else
+  {
+    // Get watch list from preferences.
+    QString watchlist=KonversationApplication::preferences.getNotifyString();
+    // Create a lower case nick list from the watch list.
+    QStringList watchLowerList=QStringList::split(' ',watchlist.lower());
+    // If on the watch list, add channel and nick to unjoinedChannels list.
+    if (watchLowerList.find(lcNickname) != watchLowerList.end())
+    { 
+      return addNickToUnjoinedChannelsList(channelName, nickname, mode);
+    }
+    else return 0;
   }
 }
 
@@ -1597,7 +1649,7 @@ NickInfo* Server::addNickToUnjoinedChannelsList(const QString& channelName, cons
   }
   // Move the channel from joined list (if present) to unjoined list.
   QString lcChannelName = channelName.lower();
-  ChannelNickList* members=joinedChannels.find(lcChannelName);
+  ChannelNickList* members = joinedChannels.find(lcChannelName);
   if (members) 
   {
     joinedChannels.remove(lcChannelName);
@@ -1606,18 +1658,18 @@ NickInfo* Server::addNickToUnjoinedChannelsList(const QString& channelName, cons
   else
   {
     // Create a new list in the unjoined channels if not already present.
-    members=unjoinedChannels.find(lcChannelName);
+    members = unjoinedChannels.find(lcChannelName);
     if (!members) 
     {
       members = new ChannelNickList;
       unjoinedChannels.insert(lcChannelName, members);
     }
   }
-  // Add NickInfo to joinedChannels list if not already in the list.
-  ChannelNick* channelNick=members->find(lcNickname);
+  // Add NickInfo to unjoinedChannels list if not already in the list.
+  ChannelNick* channelNick = members->find(lcNickname);
   if (!channelNick)
   {
-    ChannelNick* channelNick = new ChannelNick;
+    channelNick = new ChannelNick;
     channelNick->nickInfo = nickInfo;
     channelNick->mode = 0;
     members->insert(lcNickname, channelNick);
@@ -1636,7 +1688,8 @@ NickInfo* Server::addNickToUnjoinedChannelsList(const QString& channelName, cons
 NickInfo* Server::addNickToUnjoinedChannelsList(const QString&, const QString&, unsigned int) { return 0; }
 #endif
 
-// Adds a nickname to the Online list, removing it from the Offline list, if present.  Returns the NickInfo of the nickname.
+// Adds a nickname to the Online list, removing it from the Offline list, if present.
+// Returns the NickInfo of the nickname.
 // Creates new NickInfo if necessary.
 #ifdef USE_NICKINFO
 NickInfo* Server::addNickToOnlineList(const QString& nickname)
@@ -1659,7 +1712,8 @@ NickInfo* Server::addNickToOnlineList(const QString& nickname)
 NickInfo* Server::addNickToOnlineList(const QString&) { return 0; }
 #endif
 
-// Adds a nickname to the Offline list provided it is on the watch list, removing it from the Online list, if present.
+// Adds a nickname to the Offline list provided it is on the watch list,
+// removing it from the Online list, if present.
 // Also removes it from all channels on the joined and unjoined lists.
 // Returns the NickInfo of the nickname or 0 if deleted altogether.
 // Creates new NickInfo if necessary.
@@ -1843,7 +1897,11 @@ void Server::addNickToChannel(const QString &channelName,const QString &nickname
 
 #ifdef USE_NICKINFO
   // Update NickInfo.
-  unsigned int mode = (admin << 4) | (owner << 3) | (op << 2) | (halfop << 1) | voice;
+  unsigned int mode = (admin  ? 16 : 0)+
+                      (owner  ?  8 : 0)+
+                      (op     ?  4 : 0)+
+                      (halfop ?  2 : 0)+
+                      (voice  ?  1 : 0);
   NickInfo* nickInfo = addNickToJoinedChannelsList(channelName, nickname, mode);
   nickInfo->setHostmask(hostmask);
 #endif

@@ -45,6 +45,10 @@ QString NickInfo::getAwayMessage() { return awayMessage; }
 QString NickInfo::getIdentdInfo() { return identdInfo; }
 QString NickInfo::getVersionInfo() { return versionInfo; }
 bool NickInfo::isNotified() { return notified; }
+QString NickInfo::getRealName() { return realName; }
+QString NickInfo::getNetServer() { return netServer; }
+QString NickInfo::getNetServerInfo() { return netServerInfo; }
+QDateTime NickInfo::getOnlineSince() { return onlineSince; }
      
 // Return the Server object that owns this NickInfo object.
 Server* NickInfo::getServer() { return owningServer; }
@@ -52,13 +56,13 @@ Server* NickInfo::getServer() { return owningServer; }
 // Set properties of NickInfo object.
 // If any of these are called, call Server::nickInfoUpdated to let Server know about the change.
 void NickInfo::setNickname(const QString& newNickname) { nickname = newNickname; }
-void NickInfo::setHostmask(const QString& newMask)
-{
-  if (!newMask.isEmpty()) hostmask = newMask;
-}
+void NickInfo::setHostmask(const QString& newMask) { if (!newMask.isEmpty()) hostmask = newMask; }
 void NickInfo::setAway(bool state) { away = state; }
 void NickInfo::setAwayMessage(const QString& newMessage) { awayMessage = newMessage; }
 void NickInfo::setIdentdInfo(const QString& newIdentdInfo) {identdInfo = newIdentdInfo; }
 void NickInfo::setVersionInfo(const QString& newVersionInfo) { versionInfo = newVersionInfo; }
 void NickInfo::setNotified(bool state) { notified = state; }
-
+void NickInfo::setRealName(const QString& newRealName) { if (!newRealName.isEmpty()) realName = newRealName; }
+void NickInfo::setNetServer(const QString& newNetServer) { if (!newNetServer.isEmpty()) netServer = newNetServer; }
+void NickInfo::setNetServerInfo(const QString& newNetServerInfo) { if (!newNetServerInfo.isEmpty()) netServerInfo = newNetServerInfo; }
+void NickInfo::setOnlineSince(const QDateTime& datetime) { if (!datetime.isNull()) onlineSince = datetime; }

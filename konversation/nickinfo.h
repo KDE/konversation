@@ -20,6 +20,7 @@
 */
 
 #include <qstringlist.h>
+#include <qdatetime.h>
 
 class Server;
 
@@ -44,6 +45,10 @@ class NickInfo
     QString getIdentdInfo();
     QString getVersionInfo();
     bool isNotified();
+    QString getRealName();
+    QString getNetServer();
+    QString getNetServerInfo();
+    QDateTime getOnlineSince();
      
     // Return the Server object that owns this NickInfo object.
     Server* getServer();
@@ -57,6 +62,10 @@ class NickInfo
     void setIdentdInfo(const QString& newIdentdInfo);
     void setVersionInfo(const QString& newVersionInfo);
     void setNotified(bool state);
+    void setRealName(const QString& newRealName);
+    void setNetServer(const QString& newNetServer);
+    void setNetServerInfo(const QString& newNetServerInfo);
+    void setOnlineSince(const QDateTime& datetime);
 
   protected:
     QString nickname;
@@ -67,6 +76,10 @@ class NickInfo
     QString identdInfo;
     QString versionInfo;
     bool notified;
+    QString realName;
+    QString netServer;
+    QString netServerInfo;
+    QDateTime onlineSince;
 };
 
 #endif

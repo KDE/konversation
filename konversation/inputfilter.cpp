@@ -972,6 +972,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_AWAY:
         {
+#ifdef USE_NICKINFO
+          NickInfo* nickInfo = server->obtainNickInfo(parameterList[1]);
+          nickInfo->setAway(true);
+          nickInfo->setAwayMessage(trailing);
+#endif
           server->appendStatusMessage(i18n("Away"),i18n("%1 is away: %2").arg(parameterList[1]).arg(trailing));
           break;
         }
@@ -980,8 +985,23 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           server->appendStatusMessage(i18n("Invite"),i18n("You invited %1 into channel %2.").arg(parameterList[1]).arg(parameterList[2]));
           break;
         }
+/* Sample WHOIS response
+/WHOIS psn 
+[19:11] :zahn.freenode.net 311 PhantomsDad psn ~psn h106n2fls23o1068.bredband.comhem.se * :Peter Simonsson 
+[19:11] :zahn.freenode.net 319 PhantomsDad psn :#kde-devel #koffice 
+[19:11] :zahn.freenode.net 312 PhantomsDad psn irc.freenode.net :http://freenode.net/ 
+[19:11] :zahn.freenode.net 301 PhantomsDad psn :away 
+[19:11] :zahn.freenode.net 320 PhantomsDad psn :is an identified user 
+[19:11] :zahn.freenode.net 317 PhantomsDad psn 4921 1074973024 :seconds idle, signon time 
+[19:11] :zahn.freenode.net 318 PhantomsDad psn :End of /WHOIS list.
+*/
       case RPL_WHOISUSER:
         {
+#ifdef USE_NICKINFO
+          NickInfo* nickInfo = server->obtainNickInfo(parameterList[1]);
+          nickInfo->setHostmask(i18n("%1@%2").arg(parameterList[2]).arg(parameterList[3]));
+          nickInfo->setRealName(trailing);
+#endif
           server->appendStatusMessage(i18n("Whois"),
                                       i18n("%1 is %2&#64;%3 (%4)").arg(parameterList[1]) // Use &#64; instead of @
                                       .arg(parameterList[2])                             // to avoid parsing as email
@@ -1002,17 +1022,47 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           {
             QString lookChannel=channelList[index];
             if(lookChannel.startsWith("*"))
+            {
               adminChannels.append(lookChannel.mid(1));
+#ifdef USE_NICKINFO
+              server->setChannelNick(lookChannel.mid(1), parameterList[1], 16);
+#endif
+            }
             else if(lookChannel.startsWith("!"))
+            {
               ownerChannels.append(lookChannel.mid(1));
+#ifdef USE_NICKINFO
+              server->setChannelNick(lookChannel.mid(1), parameterList[1], 8); 
+#endif
+            }
             else if(lookChannel.startsWith("@"))
+            {
               opChannels.append(lookChannel.mid(1));
+#ifdef USE_NICKINFO
+              server->setChannelNick(lookChannel.mid(1), parameterList[1], 4);
+#endif
+            }
             else if(lookChannel.startsWith("%"))
+            {
               halfopChannels.append(lookChannel.mid(1));
+#ifdef USE_NICKINFO
+              server->setChannelNick(lookChannel.mid(1), parameterList[1], 2); 
+#endif
+            }
             else if(lookChannel.startsWith("+"))
+            {
               voiceChannels.append(lookChannel.mid(1));
+#ifdef USE_NICKINFO
+              server->setChannelNick(lookChannel.mid(1), parameterList[1], 1); 
+#endif
+            }
             else
+            {
               userChannels.append(lookChannel);
+#ifdef USE_NICKINFO
+              server->setChannelNick(lookChannel, parameterList[1], 0); 
+#endif
+            }
           } // endfor
           if(userChannels.count())
           {
@@ -1054,6 +1104,15 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_WHOISSERVER:
         {
+#ifdef USE_NICKINFO
+          NickInfo* nickInfo = server->obtainNickInfo(parameterList[1]);
+          nickInfo->setNetServer(parameterList[2]);
+          nickInfo->setNetServerInfo(trailing);
+          // Clear the away state on assumption that if nick is away, this message will be followed
+          // by a 301 RPL_AWAY message.  Not necessary a invalid assumption, but what can we do?
+          nickInfo->setAway(false);
+          nickInfo->setAwayMessage(QString::null);
+#endif
           server->appendStatusMessage(i18n("Whois"),
                                       i18n("%1 is online via %2 (%3)").arg(parameterList[1])
                                       .arg(parameterList[2])
@@ -1096,12 +1155,20 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             QDateTime when;
             when.setTime_t(parameterList[3].toUInt());
 
+#ifdef USE_NICKINFO
+            NickInfo* nickInfo = server->obtainNickInfo(parameterList[1]);
+            nickInfo->setOnlineSince(when);
+#endif
             server->appendStatusMessage(i18n("Whois"),i18n("%1 is online since %2.").arg(parameterList[1]).arg(when.toString(Qt::LocalDate)));
             break;
           }
         }
       case RPL_ENDOFWHOIS:
         {
+#ifdef USE_NICKINFO
+          NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
+          if (nickInfo) server->nickInfoUpdated(nickInfo);
+#endif
           server->appendStatusMessage(i18n("Whois"),i18n("End of WHOIS list."));
           break;
         }
@@ -1124,7 +1191,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             mask=mask.mid(1);
             if(ircOp) nick=nick.left(nick.length()-1);
 
-            // inform serer of this user's data
+            // inform server of this user's data
             emit userhost(nick,mask,away,ircOp);
 
             // display message only if this was no automatic request
