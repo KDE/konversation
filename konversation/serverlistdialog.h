@@ -28,6 +28,11 @@ namespace Konversation {
       int serverId() const { return m_serverId; }
       QString group() const { return m_group; }
       bool autoConnect() const { return m_autoConnect; }
+      void setAutoConnect(bool ac);
+      virtual void paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int align);
+      
+    protected:
+      virtual void activate();
     
     private:
       int m_serverId;
@@ -47,6 +52,7 @@ namespace Konversation {
       
     protected slots:
       virtual void slotOk();
+      virtual void slotApply();
       
       void slotAdd();
       void slotEdit();

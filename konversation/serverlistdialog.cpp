@@ -15,8 +15,17 @@
 #include <qframe.h>
 #include <qlayout.h>
 #include <qstringlist.h>
+#include <qstyle.h>
+#include <qrect.h>
+#include <qpoint.h>
+#include <qsize.h>
+#include <qheader.h>
+#include <qpalette.h>
+#include <qpixmap.h>
+#include <qpainter.h>
 
 #include <klocale.h>
+#include <kdebug.h>
 #include <kguiitem.h>
 
 #include "preferences.h"
@@ -30,11 +39,109 @@ namespace Konversation {
   
   ServerListItem::ServerListItem(QListViewItem* parent, int serverId, const QString& group, const QString& server, 
     const QString& port, const QString& identity, bool autoConnect)
-    : KListViewItem(parent, server + ":" + port, identity, autoConnect ? i18n("Yes") : i18n("No"))
+    : KListViewItem(parent, server + ":" + port, identity)
   {
     m_serverId = serverId;
     m_autoConnect = autoConnect;
     m_group = group;
+  }
+
+  void ServerListItem::setAutoConnect(bool ac)
+  {
+    m_autoConnect = ac;
+    repaint();
+  }
+  
+  void ServerListItem::activate()
+  {
+    QPoint pos;
+    
+    if(activatedPos(pos)) {
+      QListView* lv = listView();
+      QRect r;
+      //pos = pos + r.topLeft();
+      int boxsize = lv->style().pixelMetric(QStyle::PM_CheckListButtonSize, lv);
+      int marg = lv->itemMargin();
+      int x = lv->header()->sectionPos(2) - (lv->treeStepSize() * (depth() + 1));
+      x += ((lv->header()->sectionSize(2) - boxsize) / 2) + marg;
+      r.setTopLeft(QPoint(x, 0));
+      r.setWidth(boxsize);
+      r.setHeight(boxsize);
+      
+      if(!r.contains(pos)) {
+        return;
+      }
+    }
+    
+    setAutoConnect(!autoConnect());
+  }
+
+  void ServerListItem::paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int align)
+  {
+    if(column != 2) {
+      KListViewItem::paintCell(p, cg, column, width, align);
+      return;
+    }
+    
+    QListView* lv = listView();
+    
+    if(!lv) return;
+    
+    // Copied from KListViewItem::paintCell()
+    QColorGroup _cg = cg;
+    const QPixmap *pm = lv->viewport()->backgroundPixmap();
+    
+    if (pm && !pm->isNull()) {
+      _cg.setBrush(QColorGroup::Base, QBrush(backgroundColor(), *pm));
+      QPoint o = p->brushOrigin();
+      p->setBrushOrigin( o.x()-lv->contentsX(), o.y()-lv->contentsY() );
+    } else if (isAlternate()) {
+      if (lv->viewport()->backgroundMode() == Qt::FixedColor) {
+        _cg.setColor(QColorGroup::Background, static_cast<KListView*>(lv)->alternateBackground());
+      } else {
+        _cg.setColor(QColorGroup::Base, static_cast<KListView*>(lv)->alternateBackground());
+      }
+    }
+    // End copy
+    
+    // Copied from QCheckListItem::paintCell()
+    const BackgroundMode bgmode = lv->viewport()->backgroundMode();
+    const QColorGroup::ColorRole crole = QPalette::backgroundRoleFromMode(bgmode);    
+    p->fillRect(0, 0, width, height(), _cg.brush(crole));
+    
+    QFontMetrics fm(lv->fontMetrics());
+    int boxsize = lv->style().pixelMetric(QStyle::PM_CheckListButtonSize, lv);
+    int marg = lv->itemMargin();
+    
+    int styleflags = QStyle::Style_Default;
+    
+    if(autoConnect()) {
+      styleflags |= QStyle::Style_On;
+    } else {
+      styleflags |= QStyle::Style_Off;
+    }
+    
+    if(isSelected()) {
+      styleflags |= QStyle::Style_Selected;
+    }
+    
+    if(isEnabled() && lv->isEnabled()) {
+      styleflags |= QStyle::Style_Enabled;
+    }
+    
+    int y = ((height() - boxsize) / 2) + marg;
+    // End copy
+
+    int x = ((width - boxsize) / 2) + marg;
+    
+    /*lv->style().drawPrimitive(QStyle::PE_CheckListIndicator, p,
+      QRect(x, y, boxsize, fm.height() + 2 + marg), _cg, styleflags, QStyleOption(this));*/
+    p->drawRect(x, y, boxsize, boxsize);
+  
+    if(autoConnect()) {
+      p->drawLine(x, y, x + boxsize, y + boxsize);
+      p->drawLine(x, y + boxsize, x + boxsize, y);
+    }
   }
   
   //
@@ -45,7 +152,7 @@ namespace Konversation {
     : KDialogBase(Plain, i18n("Server List"), Ok|Apply|Cancel, Ok, parent, name)
   {
     m_preferences = &KonversationApplication::preferences;
-    setButtonOK(KGuiItem(i18n("&Connect"), "connect_creating", i18n("Connect to the server")));
+    setButtonOK(KGuiItem(i18n("C&onnect"), "connect_creating", i18n("Connect to the server")));
     
     QFrame* mainWidget = plainPage();
     
@@ -56,7 +163,7 @@ namespace Konversation {
     m_serverList->addColumn(i18n("Identity"));
     m_serverList->addColumn(i18n("Auto Connect"));
     
-    m_addButton = new QPushButton(i18n("&Add..."), mainWidget);
+    m_addButton = new QPushButton(i18n("A&dd..."), mainWidget);
     m_editButton = new QPushButton(i18n("&Edit..."), mainWidget);
     m_delButton = new QPushButton(i18n("&Delete"), mainWidget);
     
@@ -78,12 +185,12 @@ namespace Konversation {
       QStringList serverEntry = QStringList::split(',', serverString, true);
   
       QListViewItem* branch = findBranch(serverEntry[0]);
-      ServerListItem* item = new ServerListItem(branch, id,
-                                              serverEntry[0],
-                                              serverEntry[1],
-                                              serverEntry[2],
-                                              serverEntry[7],
-                                              serverEntry[6] == "1");
+      new ServerListItem(branch, id,
+                        serverEntry[0],
+                        serverEntry[1],
+                        serverEntry[2],
+                        serverEntry[7],
+                        serverEntry[6] == "1");
   
       serverString = m_preferences->getServerByIndex(++index);
     }
@@ -126,9 +233,27 @@ namespace Konversation {
       server = static_cast<ServerListItem*>(selected.next());
     }
     
+    slotApply();
     accept();
   }
 
+  void ServerListDialog::slotApply()
+  {
+    QListViewItem* branch = m_serverList->firstChild();
+    ServerListItem* item;
+    
+    while(branch) {
+      item = static_cast<ServerListItem*>(branch->firstChild());
+      
+      while(item) {
+        m_preferences->changeServerProperty(item->serverId(), 6, item->autoConnect() ? "1" : "0");
+        item = static_cast<ServerListItem*>(item->nextSibling());
+      }
+      
+      branch = branch->nextSibling();
+    }
+  }
+  
   void ServerListDialog::slotAdd()
   {
     EditServerDialog editServerDialog(this, i18n("New"), QString::null, "6667", QString::null, QString::null,
