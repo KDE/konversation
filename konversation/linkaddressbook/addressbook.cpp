@@ -189,8 +189,7 @@ void Addressbook::messageContact( const QString &uid, const QString& message ) {
 	nickInfo->getServer()->dcopSay(nickInfo->getNickname(), message);
 	QWidget *widget = nickInfo->getServer()->getMainWindow();
 	KWin::demandAttention(widget->winId());
-	KWin::activateWindow(widget->winId());
-	
+	KWin::activateWindow(widget->winId());	
 }
 
 /**
@@ -224,6 +223,10 @@ void Addressbook::chatWithContact( const QString &uid ) {
  * @param fileSize file size in bytes
  */
 void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QString &altFileName, uint fileSize) {
+
+	//FIXME: If there is an error, we won't be focused.  This could be a problem.
+	//But how can we get a QWidget?
+	
 	if(uid.isEmpty()) {
 		KMessageBox::sorry(0, i18n("You have requested to send a file to a contact, but not specified which contact."), i18n("Error Sending File"));
 		kdDebug() << "Addressbook::sendFile called with empty uid" << endl;
@@ -246,6 +249,11 @@ void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QStr
         	return;
         }
         nickInfo->getServer()->addDccSend(nickInfo->getNickname(), sourceURL, altFileName, fileSize);
+	QWidget *widget = nickInfo->getServer()->getMainWindow();
+	KWin::demandAttention(widget->winId()); //If activeWindow request is denied, at least demand attention!
+	KWin::activateWindow(widget->winId());  //May or may not work, depending on focus stealing prevention.
+
+
 }
 
 // MUTATORS
