@@ -19,7 +19,7 @@
 #include <qregexp.h>
 
 #include <klocale.h>
-#include <kdebug.h>
+#include "konvidebug.h"
 #include <kdeversion.h>
 #include <kstringhandler.h>
 
@@ -1324,6 +1324,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           server->appendStatusMessage(command,parameterList.join(" ").section(' ',1) + " " + trailing);
           break;
         }
+      case ERR_NOSUCHSERVER:
+      { //Some servers don't know their name, so they return an error instead of the PING data
+        if (getLagMeasuring() && trailing.startsWith(prefix)) {
+          emit notifyResponse("###");
+          break;
+        }
+      // FALLTHROUGH to default to let the error display otherwise  
+      }
       default:
         {
           // All yet unknown messages go into the frontmost window without the
