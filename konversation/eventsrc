@@ -193,3 +193,8 @@ Comment[sr]=Корисник или режим канала је промење�
 Comment[sv]=Tillståndet för en användare eller kanal ändrades
 Comment[xx]=xxA user or channel mode was changedxx
 default_presentation=0
+
+[notify]
+Name=Notify
+Comment=A user on your notification list went online
+default_presentation=0

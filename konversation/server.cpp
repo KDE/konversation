@@ -49,6 +49,16 @@ typedef unsigned long long __u64;
 #include "rawlog.h"
 #include "channellistpanel.h"
 
+#ifdef KDE_IS_VERSION
+#if KDE_IS_VERSION(3,1,1)
+#define USE_KNOTIFY
+#endif
+
+#ifdef USE_KNOTIFY
+#include <knotifyclient.h>
+#endif
+#endif
+
 Server::Server(KonversationMainWindow* newMainWindow,int id)
 {
   identity=0;
@@ -458,6 +468,11 @@ void Server::notifyResponse(const QString& nicksOnline)
       if(notifyLowerCache.find(nickLowerList[index])==notifyLowerCache.end())
       {
         getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 is online (%2).").arg(nickList[index]).arg(getServerName()),statusView);
+        
+#ifdef USE_KNOTIFY
+        KNotifyClient::event(mainWindow->winId(), "notify",
+          i18n("%1 is online (%2).").arg(nickList[index]).arg(getServerName()));
+#endif
       }
     }
 
