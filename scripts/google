@@ -8,7 +8,6 @@ use warnings;
 use strict;
 use Getopt::Long;
 use CGI qw(:standard);
-use HTML::Entities;
 
 my $port=shift;
 my $server=shift;
@@ -32,10 +31,18 @@ eval { require SOAP::Lite; };
    
 if($@)
 {
-    exec 'dcop', $port, 'Konversation', 'error', "You need SOAP::Lite package installed. Try apt-get install libsoap-lite-perl";
+    exec 'dcop', $port, 'Konversation', 'error', "You need SOAP::Lite package installed. Try apt-get install libsoap-lite-perl.";
+}
+
+eval { require HTML::Entities; };
+
+if($@)
+{
+    exec 'dcop', $port, 'Konversation', 'error', "You need HTML::Entities package installed.";
 }
 
 use SOAP::Lite;
+use HTML::Entities;
 
 
 if(!open(KEY, "$ENV{'HOME'}/.googlekey"))
