@@ -1,3 +1,7 @@
+if compile_LIBKONVERSATION_COMPAT
+COMPAT_DIR=../compat
+endif
+
 METASOURCES = AUTO
 
 AM_CPPFLAGS = $(all_includes)
@@ -9,5 +13,5 @@ liblinkaddressbookui_la_SOURCES = linkaddressbookui_base.ui linkaddressbookui.cp
 kimiface_DIR = $(kde_includes)
 liblinkaddressbookui_la_LDFLAGS = $(all_libraries) -no-undefined
 liblinkaddressbookui_la_LIBADD = $(LIB_KDEUI) $(LIB_KABC)
-INCLUDES=-DUSE_NICKINFO
+INCLUDES= -I$(COMPAT_DIR) -DUSE_NICKINFO
 # vim: set noet:
