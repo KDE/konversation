@@ -340,4 +340,11 @@ LedTab* LedTabBar::tabAt (int index) const
   return static_cast<LedTab*>(QTabBar::tabAt(index));
 }
 
+#ifndef QT_NO_WHEELEVENT
+void LedTabBar::wheelEvent( QWheelEvent *e )
+{
+	emit(wheel(e));
+}
+#endif
+
 #include "ledtabbar.moc"

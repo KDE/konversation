@@ -45,7 +45,11 @@ class LedTabBar : public QTabBar
     void moveTabLeft(int id);
     void moveTabRight(int id);
     void closeTab(int id);
-
+    
+#ifndef QT_NO_WHEELEVENT
+    void wheel(QWheelEvent *e);
+#endif
+    
   public slots:
     void repaintLED(LedTab* tab);
 
@@ -65,6 +69,10 @@ class LedTabBar : public QTabBar
     void mouseReleaseEvent(QMouseEvent* e);
 
     KPopupMenu* popup;
+
+#ifndef QT_NO_WHEELEVENT
+    void wheelEvent( QWheelEvent *e );
+#endif
 };
 
 #endif

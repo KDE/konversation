@@ -32,6 +32,10 @@ LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :
   connect(tabBar(),SIGNAL (moveTabRight(int)), this,SLOT (moveTabRight(int)) );
   connect(tabBar(),SIGNAL (closeTab(int)), this,SLOT (tabClosed(int)) );
 
+#ifndef QT_NO_WHEELEVENT
+  connect(tabBar(),SIGNAL (wheel(QWheelEvent*)), this,SLOT (processWheelEvent(QWheelEvent*)) );
+#endif
+  
 #if QT_VERSION >= 0x030200
   KPushButton* closeBtn = new KPushButton(this);
   closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));
@@ -150,6 +154,13 @@ void LedTabWidget::changeName(ChatWindow* view,const QString& newName)
 
 #ifndef QT_NO_WHEELEVENT
 void LedTabWidget::wheelEvent( QWheelEvent *e )
+{
+	processWheelEvent(e);
+}
+#endif
+
+#ifndef QT_NO_WHEELEVENT
+void LedTabWidget::processWheelEvent(QWheelEvent *e)
 {
 	if (e->delta() > 0)
 	{

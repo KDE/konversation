@@ -48,7 +48,11 @@ class LedTabWidget : public QTabWidget
     void tabClosed(int id);
     void tabClosed();
     void changeName(ChatWindow* view,const QString& newName);
-
+    
+#ifndef QT_NO_WHEELEVENT
+    void processWheelEvent(QWheelEvent *e);
+#endif
+    
   protected:
     void moveTabToIndex(int oldIndex,int newIndex);
     LedTabBar* tabBar();
@@ -56,7 +60,7 @@ class LedTabWidget : public QTabWidget
     Images images;
 
 #ifndef QT_NO_WHEELEVENT
-    void wheelEvent( QWheelEvent *e );
+    void wheelEvent(QWheelEvent *e);
 #endif
 
 };
