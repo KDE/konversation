@@ -11,10 +11,9 @@
 #ifndef PREFSPAGETHEMES_H
 #define PREFSPAGETHEMES_H
 
-#include <qstringlist.h>
-
 #include "prefspage.h"
 
+class QStringList;
 class QLabel;
 class QPushButton;
 class KListBox;

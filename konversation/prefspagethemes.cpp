@@ -119,13 +119,13 @@ void PrefsPageThemes::installTheme()
 					   );
   
   QString tmpThemeFile;
-  if(!KIO::NetAccess::download( themeURL, tmpThemeFile, NULL ))
+  if(!KIO::NetAccess::download(themeURL, tmpThemeFile, NULL))
     {
-      KMessageBox::error( NULL,
-			  KIO::NetAccess::lastErrorString(),
-			  i18n("Failed to download theme"),
-			  KMessageBox::Notify
-			  );
+      KMessageBox::error(NULL,
+			 KIO::NetAccess::lastErrorString(),
+			 i18n("Failed to download theme"),
+			 KMessageBox::Notify
+			 );
       return;
     }
   
@@ -141,13 +141,13 @@ void PrefsPageThemes::installTheme()
       if(themeDir->entry(*it+"/themerc") == NULL)
 	{
 	  
-	  KMessageBox::error( NULL,
-			      i18n("Invalid Theme Archieve"),
-			      i18n("Cannot install theme"),
-			      KMessageBox::Notify
-			      );
+	  KMessageBox::error(NULL,
+			     i18n("Invalid Theme Archieve"),
+			     i18n("Cannot install theme"),
+			     KMessageBox::Notify
+			     );
 
-	  KIO::NetAccess::removeTempFile( tmpThemeFile );
+	  KIO::NetAccess::removeTempFile(tmpThemeFile);
 	  themeArchieve.close();
 	  return;
 	}
@@ -155,8 +155,8 @@ void PrefsPageThemes::installTheme()
 	{
 	  QString themesDir(locateLocal("data", "konversation/themes/"));
 	  
-	  themeDir->copyTo( themesDir );
-	  KIO::NetAccess::removeTempFile( tmpThemeFile );
+	  themeDir->copyTo(themesDir);
+	  KIO::NetAccess::removeTempFile(tmpThemeFile);
 	  themeArchieve.close();
 	  
 	  updateList();
