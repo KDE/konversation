@@ -16,6 +16,7 @@
 #include <qhostaddress.h>
 #include <qstyle.h>
 #include <qtimer.h>
+#include <qfileinfo.h>
 
 #include <kdebug.h>
 #include <kfilemetainfo.h>
