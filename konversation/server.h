@@ -430,7 +430,7 @@ class Server : public QObject
     QString inputBuffer;
     QStringList outputBuffer;
     QString nickname;
-    QString myIpByServer;
+    QString ownIpByServer;
     QString serverKey;
     QString lastDccDir;
 

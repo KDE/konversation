@@ -66,13 +66,13 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   connect(dccSpecificSendPorts, SIGNAL(stateChanged(int)), this, SLOT(specificSendPortsStateChanged(int)));
   dccSendPortsFirstLabel=new QLabel(i18n("First DCC send port:"),parentFrame);
   dccSendPortsFirstLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  dccSendPortsFirstSpin=new QSpinBox(0,65536,1,parentFrame,"dcc_send_ports_first_spin");
+  dccSendPortsFirstSpin=new QSpinBox(0,65535,1,parentFrame,"dcc_send_ports_first_spin");
   connect(dccSendPortsFirstSpin, SIGNAL(valueChanged(int)), this, SLOT(sendPortsFirstSpinValueChanged(int)));
   dccSendPortsFirstSpin->setMaximumWidth(100);
   dccSendPortsFirstLabel->setBuddy(dccSendPortsFirstSpin);
   dccSendPortsLastLabel=new QLabel(i18n("Last DCC send port:"),parentFrame);
   dccSendPortsLastLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  dccSendPortsLastSpin=new QSpinBox(0,65536,1,parentFrame,"dcc_send_ports_last_spin");
+  dccSendPortsLastSpin=new QSpinBox(0,65535,1,parentFrame,"dcc_send_ports_last_spin");
   connect(dccSendPortsLastSpin, SIGNAL(valueChanged(int)), this, SLOT(sendPortsLastSpinValueChanged(int)));
   dccSendPortsLastSpin->setMaximumWidth(100);
   dccSendPortsLastLabel->setBuddy(dccSendPortsLastSpin);

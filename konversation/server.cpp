@@ -1421,7 +1421,7 @@ void Server::addDccSend(const QString &recipient,const QString &fileName)
 
   QString ip;
   if(KonversationApplication::preferences.getDccGetIpFromServer())
-    ip=myIpByServer;
+    ip=ownIpByServer;
   if(ip.isEmpty())
     ip=getIp();
   
@@ -1502,7 +1502,9 @@ void Server::requestDccChat(const QString& nickname)
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)
 {
+  kdDebug() << "Server::dccSendRequest()" << endl;
   outputFilter->sendRequest(partner,fileName,address,port,size);
+  kdDebug() << "Server::dccSendRequest(): outputFilter->getServerOutput() returns: " << outputFilter->getServerOutput() << endl;
   queue(outputFilter->getServerOutput());
   appendStatusMessage(outputFilter->getType(),outputFilter->getOutput());
 }
@@ -2220,13 +2222,13 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
 
 void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceHostmask)
 {
-  // for DCC sending
-  if(!myIpByServer && sourceNick==nickname)  // myself
+  // remember my IP for DCC sending
+  if(ownIpByServer.isEmpty() && sourceNick==nickname)  // myself
   {
     QString myhost = sourceHostmask.section('@',1);
     KNetwork::KResolverResults res = KNetwork::KResolver::resolve(myhost, "");
     if(res.size() > 0)
-      myIpByServer = res.first().address().nodeName();
+      ownIpByServer = res.first().address().nodeName();
   }
   
   Channel* channel=channelList.first();
