@@ -48,7 +48,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   highlightColor=QString::null;
   copyUrlMenu=false;
   urlToCopy=QString::null;
-  resetScrollbar=false;
+  resetScrollbar=TRUE;
   autoTextToSend=QString::null;
 
   setAutoFormatting(0);
