@@ -20,6 +20,7 @@
 
 #include <qptrlist.h>
 
+#include "dccresumedialog.h"
 #include "dcctransfer.h"
 
 class QFile;
@@ -98,7 +99,8 @@ class DccTransferRecv : public DccTransfer
      */
     void calculateSaveToFileURL( const KURL& defaultFolderURL );
     
-    void prepareLocalKio( bool overwrite, KIO::fileoffset_t startPosition );  // (startPosition == 0) means "don't resume"
+    void prepareLocalKio( bool overwrite, bool resume, KIO::fileoffset_t startPosition = 0 );  // (startPosition == 0) means "don't resume"
+    void askAndPrepareLocalKio( const QString& message, int enabledActions, DccResumeDialog::ReceiveAction defaultAction, KIO::fileoffset_t startPosition = 0 );
     
     /**
      * This calls KIO::NetAccess::mkdir on all the subdirectories of dirURL, to
