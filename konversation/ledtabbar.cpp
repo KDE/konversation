@@ -220,7 +220,11 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
     // set new label color if there is one
     QColorGroup  myColorGroup(colorGroup());
     if(!t->getLabelColor().isEmpty())
+    {
       myColorGroup.setColor(QColorGroup::Foreground,t->getLabelColor());
+      // most styles use Foreground, dotNET up to 1.4 uses Mid  ...
+      myColorGroup.setColor(QColorGroup::Mid,t->getLabelColor());
+    }
 
     style().drawControl( QStyle::CE_TabBarLabel, p, this, r,
                          t->isEnabled() ? myColorGroup : palette().disabled(),
