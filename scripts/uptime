@@ -19,7 +19,7 @@ if($PLATFORM eq "FreeBSD") {
 	$TIMENOW = `date +%s`;
 	$seconds = $TIMENOW - $BOOTTIME;
 } else {
-	@UPTIME = `cat /proc/uptime`;
+	$UPTIME = `cat /proc/uptime`;
 	if (not $UPTIME) {
 		exec ("dcop $PORT Konversation info \"Could not read uptime. Check that /proc/uptime exists.\"");
 	}
