@@ -1136,10 +1136,10 @@ void Server::setDeliberateQuit(bool on)
   deliberateQuit=on;
 }
 
-QString Server::getNumericalIp(bool getFromServer)
+QString Server::getNumericalIp(bool followDccSetting)
 {
   QHostAddress ip;
-  QString sip = getIp(getFromServer);
+  QString sip = getIp(followDccSetting);
   if(sip.isEmpty()) return sip;
   ip.setAddress(sip);
 
@@ -1298,13 +1298,27 @@ const NickInfoMap* Server::getNicksOnline() { return &nicknamesOnline; }
 // Returns a list of the nicks on the watch list that are offline.
 const NickInfoMap* Server::getNicksOffline() { return &nicknamesOffline; }
 
-QString Server::getIp(bool getFromServer)
+QString Server::getIp(bool followDccSetting)
 {
-  if(getFromServer && !ownIpByServer.isEmpty())
-    return ownIpByServer;
-  // Return our ip using serverSocket
-  kdDebug() << "getIp() returned : " << serverSocket->localAddress().nodeName() << endl;
-  return serverSocket->localAddress().nodeName();
+  QString ip;
+  
+  if(followDccSetting)
+  {
+    int methodId = KonversationApplication::preferences.getDccMethodToGetOwnIp();
+    
+    if(methodId == 1 && !ownIpByServer.isEmpty())  // WHOIS reply
+      ip = ownIpByServer;
+    else if(methodId == 2)  // 001 reply
+      ;  // not implemented yet
+    else if(methodId == 3 && !KonversationApplication::preferences.getDccSpecificOwnIp().isEmpty())  // user specifies
+      ip = KonversationApplication::preferences.getDccSpecificOwnIp();
+  }
+  
+  if(ip.isEmpty())
+    ip = serverSocket->localAddress().nodeName();  // Return our ip using serverSocket
+  
+  kdDebug() << "getIp() returned : " << ip << endl;
+  return ip;
 }
 
 void Server::addQuery(const QString& nickname,const QString& hostmask, bool weinitiated )
@@ -1490,7 +1504,7 @@ void Server::addDccSend(const QString &recipient,KURL fileURL)
 {
   emit addDccPanel();
 
-  QString ownIp = getIp(KonversationApplication::preferences.getDccMethodToGetOwnIp()==1);
+  QString ownIp = getIp(true);
   
   // We already checked that the file exists in output filter / requestDccSend() resp.
   DccTransferSend* newDcc=new DccTransferSend(getMainWindow()->getDccPanel(),
@@ -1558,7 +1572,7 @@ void Server::requestCloseDccPanel()
 
 void Server::requestDccChat(const QString& nickname)
 {
-  getMainWindow()->addDccChat(getNickname(),nickname,getNumericalIp(KonversationApplication::preferences.getDccMethodToGetOwnIp()==1),QStringList(),true);
+  getMainWindow()->addDccChat(getNickname(),nickname,getNumericalIp(true),QStringList(),true);
 }
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)
