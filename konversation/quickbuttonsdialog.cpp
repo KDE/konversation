@@ -52,11 +52,13 @@ QuickButtonsDialog::QuickButtonsDialog(QStringList buttonList,QSize size):
   buttonListView->setAcceptDrops(true);
 
   // Insert buttons in reverse order to make them appear sorted correctly
-  int index;
-  for(index=8;index!=0;index--)
+  for(int index=8;index!=0;index--)
   {
-    QStringList buttonText(QStringList::split(',',buttonList[index-1],true));
-    new KListViewItem(buttonListView,buttonText[0],buttonText[1]);
+//    QStringList buttonText(QStringList::split(',',buttonList[index-1],true));
+//    new KListViewItem(buttonListView,buttonText[0],buttonText[1]);
+
+    QString buttonText=buttonList[index-1];
+    new KListViewItem(buttonListView,buttonText.section(',',0,0),buttonText.section(',',1));
   }
 
   QLabel* instructions=new QLabel(i18n("You can use the following placeholders:\n"
