@@ -703,11 +703,7 @@ bool IRCView::eventFilter(QObject* object,QEvent* event)
   {
     QMouseEvent* me=(QMouseEvent*) event;
 
-    if(me->button()==QMouseEvent::LeftButton)
-    {
-      if(hasSelectedText()) copy();
-    }
-    else if(me->button()==QMouseEvent::MidButton)
+    if(me->button()==QMouseEvent::MidButton)
     {
       if(copyUrlMenu) {
         urlClickSlot(urlToCopy);
