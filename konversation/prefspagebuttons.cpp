@@ -54,8 +54,8 @@ PrefsPageButtons::PrefsPageButtons(QFrame* newParent,Preferences* newPreferences
 
   QLabel* instructions=new QLabel(i18n("You can use the following placeholders:\n"
                                        "%c: Current channel\n"
-                                       "%k: Channel key (not functional yet)\n"
-                                       "%K: Server key\n"
+                                       "%k: Channel password (not functional yet)\n"
+                                       "%K: Server password\n"
                                        "%u: List of selected nicknames\n"
                                        "%s<term>%: term used to separate nicknames in %u\n"
                                        "%n: Send command directly to the server instead of your input line"),parentFrame);

@@ -68,7 +68,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   // Add pages to preferences dialog
   PrefsPage* serverListPage=new PrefsPageServerList(serverListPane,preferences);
 
-  new PrefsPageGeneralSettings(generalSettingsPane,preferences);
+  generalSettingsPage=new PrefsPageGeneralSettings(generalSettingsPane,preferences);
   new PrefsPageIdentity(identityPane,preferences);
 
   notifyPage=new PrefsPageNotify(notifyPane,preferences);
@@ -99,6 +99,8 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   // connect standard signals and slots
   // TODO: not implemented in all pages yet!
+  connect(this,SIGNAL (applyPreferences()),generalSettingsPage,SLOT (applyPreferences()) );
+
   connect(this,SIGNAL (applyPreferences()),buttonsPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),notifyPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),highlightPage,SLOT (applyPreferences()) );

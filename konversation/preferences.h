@@ -289,6 +289,9 @@ class Preferences : public QObject
     bool getDialogFlag(const QString& flagName);
     void setDialogFlag(const QString& flagName,bool state);
 
+    int getMaximumLagTime();
+    void setMaximumLagTime(int maxLag);
+
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();
@@ -321,6 +324,8 @@ class Preferences : public QObject
     bool autoReconnect;
     bool autoRejoin;
     bool autojoinOnInvite;
+
+    int maximumLag;     // ask for reconnect
 
     int notifyDelay;
     int opLedColor;

@@ -185,7 +185,7 @@ void OutputFilter::parseJoin(const QString &channelName)
   if(channelName.isEmpty())
   {
     type=i18n("Usage");
-    output=i18n("Usage: %1JOIN <channel> [key]").arg(commandChar);
+    output=i18n("Usage: %1JOIN <channel> [password]").arg(commandChar);
     program=true;
   }
   else
@@ -426,7 +426,7 @@ void OutputFilter::parseQuery(const QString &parameter)
 
 void OutputFilter::changeMode(const QString &parameter,char mode,char giveTake)
 {
-  // TODO: Make sure this works with +l <limit> and +k <keyword> also!
+  // TODO: Make sure this works with +l <limit> and +k <password> also!
   QStringList nickList=QStringList::split(' ',parameter);
   if(nickList.count())
   {

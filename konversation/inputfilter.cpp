@@ -695,7 +695,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
               else if(mode=='k')
               {
                 parameter=parameterList[parameterCount++];
-                modesAre+=i18n("keyword protected");
+                modesAre+=i18n("password protected");
               }
               else if(mode=='a')
                 modesAre+=i18n("anonymous");

@@ -42,9 +42,9 @@ PrefsPageServerList::PrefsPageServerList(QFrame* newParent,Preferences* newPrefe
   serverListView->addColumn(i18n("Group"));
   serverListView->addColumn(i18n("Server"));
   serverListView->addColumn(i18n("Port"));
-  serverListView->addColumn(i18n("Keyword"));
+  serverListView->addColumn(i18n("Password"));
   serverListView->addColumn(i18n("Channel"));
-  serverListView->addColumn(i18n("Keyword"));
+  serverListView->addColumn(i18n("Password"));
   serverListView->addColumn(i18n("Identity"));
 
   serverListView->setRenameable(0,false);

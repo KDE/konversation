@@ -24,6 +24,7 @@
 */
 
 class Preferences;
+class PrefsPageGeneralSettings;
 class PrefsPageButtons;
 class PrefsPageHighlight;
 class PrefsPageNotify;
@@ -52,6 +53,7 @@ class PrefsDialog : public KDialogBase
 
   protected:
     Preferences* preferences;
+    PrefsPageGeneralSettings* generalSettingsPage;
     PrefsPageButtons* buttonsPage;
     PrefsPageHighlight* highlightPage;
     PrefsPageNotify* notifyPage;

@@ -91,6 +91,8 @@ Preferences::Preferences()
   setAutoRejoin(true);
   setAutojoinOnInvite(false);
 
+  setMaximumLagTime(120);
+
   setFixedMOTD(true);
   setBeep(false);
   setRawLog(false);
@@ -572,5 +574,8 @@ void Preferences::setDialogFlag(const QString& flagName,bool state)
   config->writeEntry(flagName,state);
   config->sync();
 }
+
+void Preferences::setMaximumLagTime(int lag) { maximumLag=lag; }
+int Preferences::getMaximumLagTime()         { return maximumLag; }
 
 #include "preferences.moc"

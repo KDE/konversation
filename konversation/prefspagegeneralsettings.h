@@ -24,6 +24,12 @@
   @author Dario Abatianni
 */
 
+class QLabel;
+class QCheckBox;
+class QSpinBox;
+
+class KLineEdit;
+
 class PrefsPageGeneralSettings : public PrefsPage
 {
   Q_OBJECT
@@ -32,21 +38,31 @@ class PrefsPageGeneralSettings : public PrefsPage
     PrefsPageGeneralSettings(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageGeneralSettings();
 
+  public slots:
+    void applyPreferences();
+
   protected slots:
-    void commandCharChanged(const QString& newChar);
-    void suffixStartChanged(const QString& newSuffix);
-    void suffixMiddleChanged(const QString& newSuffix);
-    void channelActionChanged(const QString& newAction);
-    void notifyActionChanged(const QString& newAction);
     void autoReconnectChanged(int state);
-    void autoRejoinChanged(int state);
-    void autojoinOnInviteChanged(int state);
-    void tabPlacementChanged(int position);
-    void blinkingTabsChanged(int state);
-    void bringToFrontChanged(int state);
-    void fixedMOTDChanged(int state);
-    void beepChanged(int state);
-    void rawLogChanged(int state);
+
+  protected:
+    KLineEdit* commandCharInput;
+    KLineEdit* channelActionInput;
+    KLineEdit* notifyActionInput;
+    KLineEdit* suffixStartInput;
+    KLineEdit* suffixMiddleInput;
+
+    QCheckBox* autoReconnectCheck;
+    QCheckBox* autoRejoinCheck;
+    QCheckBox* autojoinOnInviteCheck;
+    QCheckBox* tabPlacementCheck;
+    QCheckBox* blinkingTabsCheck;
+    QCheckBox* bringToFrontCheck;
+    QCheckBox* fixedMOTDCheck;
+    QCheckBox* beepCheck;
+    QCheckBox* rawLogCheck;
+
+    QLabel* reconnectTimeoutLabel;
+    QSpinBox* reconnectTimeoutSpin;
 };
 
 #endif

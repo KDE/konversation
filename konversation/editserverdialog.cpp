@@ -73,13 +73,13 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   new QLabel(i18n("Port:"),serverBox);
   serverPortInput=new KLineEdit(port,serverBox);
 
-  QLabel* serverKeyLabel=new QLabel(i18n("Keyword:"),page);
+  QLabel* serverKeyLabel=new QLabel(i18n("Password:"),page);
   serverKeyInput=new KLineEdit(serverKey,page);
   serverKeyInput->setEchoMode(QLineEdit::Password);
 
   QLabel* channelNameLabel=new QLabel(i18n("Channel name:"),page);
   channelNameInput=new KLineEdit(channelName,page);
-  QLabel* channelKeyLabel=new QLabel(i18n("Keyword:"),page);
+  QLabel* channelKeyLabel=new QLabel(i18n("Password:"),page);
   channelKeyInput=new KLineEdit(channelKey,page);
   channelKeyInput->setEchoMode(QLineEdit::Password);
 

@@ -113,7 +113,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   QToolTip::add(modeI, i18n("Invite only channel."));
   QToolTip::add(modeP, i18n("Private channel."));
   QToolTip::add(modeM, i18n("Moderated channel."));
-  QToolTip::add(modeK, i18n("Protect channel with a keyword."));
+  QToolTip::add(modeK, i18n("Protect channel with a password."));
   QToolTip::add(modeL, i18n("Set user limit to channel."));
 
   connect(modeT,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
@@ -605,7 +605,7 @@ void Channel::modeButtonClicked(int id,bool on)
     {
       QCString key;
 
-      int result=KPasswordDialog::getPassword(key,i18n("Channel keyword:"));
+      int result=KPasswordDialog::getPassword(key,i18n("Channel password:"));
 
       if(result==KPasswordDialog::Accepted && !key.isEmpty()) setKey(key);
     }

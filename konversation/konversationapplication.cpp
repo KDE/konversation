@@ -259,6 +259,9 @@ void KonversationApplication::readOptions()
   // Raw log window
   preferences.setRawLog(config->readBoolEntry("RawLog",preferences.getRawLog()));
 
+  // Reconnection timeout
+  preferences.setMaximumLagTime(config->readNumEntry("MaximumLag",preferences.getMaximumLagTime()));
+
   // Appearance
   config->setGroup("Appearance");
   // Fonts
@@ -491,6 +494,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->writeEntry("Beep",preferences.getBeep());
   config->writeEntry("RawLog",preferences.getRawLog());
+
+  config->writeEntry("MaximumLag",preferences.getMaximumLagTime());
 
   config->setGroup("Appearance");
 
