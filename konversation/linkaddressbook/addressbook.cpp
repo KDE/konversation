@@ -424,7 +424,7 @@ bool Addressbook::addContact( const QString &contactId, const QString &protocol 
 }
 
 void Addressbook::emitContactPresenceChanged( QString uid, int presence) {
-	emit contactPresenceChanged(uid, kapp->dcopClient()->appId(), presence);
+	contactPresenceChanged(uid, kapp->dcopClient()->appId(), presence);
 	kdDebug() << "Presence changed for uid " << uid << " to " << presence << endl;
 }
 

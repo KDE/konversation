@@ -99,8 +99,6 @@ class Addressbook : public QObject,public KIMIface
 // MUTATORS
 // Contact list
     bool addContact( const QString &contactId, const QString &protocolId );
-  signals:
-    void contactPresenceChanged( QString uid, QCString appId, int presence );
     
   private:
     Addressbook();
