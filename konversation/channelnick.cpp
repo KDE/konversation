@@ -33,6 +33,8 @@ bool ChannelNick::isAdmin() const {return isadmin; }
 bool ChannelNick::isOwner() const {return isowner; }
 bool ChannelNick::isHalfOp() const {return ishalfop; }
 bool ChannelNick::hasVoice() const {return hasvoice; }
+
+bool ChannelNick::isAnyTypeOfOp() const { return isop || isadmin || isowner || ishalfop; }
 NickInfoPtr ChannelNick::getNickInfo() const { return nickInfo; }
 /** @param mode 'v' to set voice, 'a' to set admin, 'h' to set halfop, 'o' to set op.
  *  @param state what to set the mode to.

@@ -32,6 +32,11 @@ class ChannelNick :  public QObject, public KShared
     bool isAdmin() const;
     bool isOwner() const;
     bool isHalfOp() const;
+
+    /** Return true if the may have any privillages at all
+     * @return true if isOp() || isAdmin() || isOwner() || isHalfOp()
+     */
+    bool isAnyTypeOfOp() const;
     bool hasVoice() const;
 
     bool setVoice(bool state);
