@@ -28,7 +28,7 @@
 #include <kpopupmenu.h>
 
 #include <kabc/addressbook.h>
-#include <kabc/errorhandler.h> 
+#include <kabc/errorhandler.h>
 #include "linkaddressbook/addressbook.h"
 
 #ifdef USE_MDI
@@ -212,7 +212,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
 #endif
   showMenuBarAction->setChecked(KonversationApplication::preferences.getShowMenuBar());
   showMenubar();
- 
+
   // set up KABC with a nice gui error dialog
   KABC::GuiErrorHandler *m_guiErrorHandler = new KABC::GuiErrorHandler(this);
   Konversation::Addressbook::self()->getAddressBook()->setErrorHandler(m_guiErrorHandler);
@@ -347,7 +347,7 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
 
   if(!KonversationApplication::preferences.getFocusNewQueries() && view->getType()==ChatWindow::Query && !weinitiated)
 	  doBringToFront = false;
-  
+
   // bring view to front unless it's a raw log window or the user was typing
   if(KonversationApplication::preferences.getBringToFront() && doBringToFront &&
     view->getType()!=ChatWindow::RawLog)
@@ -406,10 +406,10 @@ void KonversationMainWindow::closeWindow(ChatWindow*) // USE_MDI
   if(view)
   {
     // if this view was the front view, delete the pointer
-    // JOHNFLUX - move to previous view 
+    // JOHNFLUX - move to previous view
     if(view==previousFrontView) previousFrontView=0
     if(view==frontView) frontView=previousFrontView;
-    
+
     emit endNotification(viewToClose);
 
     ChatWindow::WindowType viewType=view->getType();
@@ -461,7 +461,7 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     // if this view was the front view, delete the pointer
     if(view==previousFrontView) previousFrontView=0;
     if(view==frontView) frontView=previousFrontView;
-    
+
     emit endNotification(viewToClose);
 
     ChatWindow::WindowType viewType=view->getType();
@@ -886,7 +886,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 bool KonversationMainWindow::queryClose()
 {
   KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
-  
+
   if(konv_app->sessionSaving()) {
     m_closeApp = true;
   }
@@ -901,7 +901,7 @@ bool KonversationMainWindow::queryClose()
     hide();
     return false;
   }
-  
+
   // send quit to all servers
   emit quitServer();
 
@@ -1054,12 +1054,17 @@ void KonversationMainWindow::previousTab()
 void KonversationMainWindow::goToTab(int page)
 {
 #ifndef USE_MDI
-  if(page>=0 && page<getViewContainer()->count())
-  {
-    getViewContainer()->setCurrentPage(page);
-    ChatWindow* newPage=static_cast<ChatWindow*>(getViewContainer()->page(page));
-    newPage->adjustFocus();
-  }
+    if ( page >= getViewContainer()->count() )
+        page = 0;
+    else if ( page < 0 )
+        page = getViewContainer()->count() - 1;
+
+    if(page>=0)
+    {
+        getViewContainer()->setCurrentPage(page);
+        ChatWindow* newPage=static_cast<ChatWindow*>(getViewContainer()->page(page));
+        newPage->adjustFocus();
+    }
 #endif
 }
 
