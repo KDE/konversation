@@ -23,6 +23,7 @@
 #include <qsplitter.h>
 #include <qcheckbox.h>
 #include <qtimer.h>
+#include <qcombobox.h>
 
 #include <klineedit.h>
 #include <kinputdialog.h>
@@ -202,7 +203,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   commandLineBox=new QHBox(this);
   commandLineBox->setSpacing(spacing());
 
-  nicknameButton=new QPushButton(i18n("Nickname"),commandLineBox);
+  nicknameCombobox=new QComboBox(commandLineBox);
+  nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
   awayLabel=new QLabel(i18n("(away)"),commandLineBox);
   awayLabel->hide();
   channelInput=new IRCInput(commandLineBox);
@@ -253,7 +255,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
   connect(nicknameListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT (doubleClickCommand(QListViewItem*)) );
-  connect(nicknameButton,SIGNAL (clicked()),this,SLOT (openNickChangeDialog()) );
+  connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged(int)));
 
   connect(topicLine,SIGNAL (topicChanged(const QString&)),this,SLOT (requestNewTopic(const QString&)) );
 
@@ -659,7 +661,7 @@ void Channel::newTextInView(const QString& highlightColor,bool important)
 
 void Channel::setNickname(const QString& newNickname)
 {
-  nicknameButton->setText(newNickname);
+  nicknameCombobox->setCurrentText(newNickname);
 }
 
 QStringList Channel::getSelectedNicksList()
@@ -1477,7 +1479,7 @@ void Channel::showEvent(QShowEvent*)
 
 void Channel::updateFonts()
 {
-  nicknameButton->setFont(KonversationApplication::preferences.getTextFont());
+  nicknameCombobox->setFont(KonversationApplication::preferences.getTextFont());
 
   QString fgString;
   QString bgString;
@@ -1532,18 +1534,9 @@ void Channel::updateStyleSheet()
   getTextView()->updateStyleSheet();
 }
 
-void Channel::openNickChangeDialog()
+void Channel::nicknameComboboxChanged(int index)
 {
-  if(!nickChangeDialog)
-  {
-    nickChangeDialog=new NickChangeDialog(this,server->getNickname(),
-                                          identity.getNicknameList(),
-                                          KonversationApplication::preferences.getNicknameSize());
-    connect(nickChangeDialog,SIGNAL (closeDialog(QSize)),this,SLOT (closeNickChangeDialog(QSize)) );
-    connect(nickChangeDialog,SIGNAL (newNickname(const QString&)),this,SLOT (changeNickname(const QString&)) );
-  }
-
-  nickChangeDialog->show();
+  server->queue("NICK "+nicknameCombobox->currentText());
 }
 
 void Channel::changeNickname(const QString& newNickname)
@@ -1551,14 +1544,6 @@ void Channel::changeNickname(const QString& newNickname)
   server->queue("NICK "+newNickname);
 }
 
-void Channel::closeNickChangeDialog(QSize newSize)
-{
-  KonversationApplication::preferences.setNicknameSize(newSize);
-  emit prefsChanged();
-
-  delete nickChangeDialog;
-  nickChangeDialog=0;
-}
 
 void Channel::addPendingNickList(const QStringList& newNickList)
 {

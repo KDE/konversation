@@ -300,7 +300,7 @@ void PrefsPageServerList::serverDoubleClicked(QListViewItem* item)
   if(!item) {
     return;
   }
-  
+
   if(item->text(1).isEmpty()) item->setOpen(!item->isOpen());
   else connectClicked();
 }

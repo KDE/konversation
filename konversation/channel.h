@@ -32,6 +32,7 @@ class QHBox;
 class QStringList;
 class QSplitter;
 class QGrid;
+class QComboBox;
 
 class KLineEdit;
 
@@ -126,9 +127,7 @@ class Channel : public ChatWindow
     void popupCommand(int id);                // Will be connected to NickListView::popupCommand()
     void doubleClickCommand(QListViewItem*);  // Will be connected to NickListView::doubleClicked()
     // Dialogs
-    void openNickChangeDialog();
     void changeNickname(const QString& newNickname);
-    void closeNickChangeDialog(QSize newSize);
     // will be called when the user types a new topic in the topic line
     void requestNewTopic(const QString& newTopic);
     // connected to IRCInput::textPasted() - used to handle large/multiline pastings
@@ -137,6 +136,7 @@ class Channel : public ChatWindow
     void sendFileMenu();
     void autoUserhost();
     void autoUserhostChanged(bool state);
+    void nicknameComboboxChanged(int index);
 
   protected:
     QStringList getSelectedNicksList();
@@ -189,7 +189,8 @@ class Channel : public ChatWindow
     NickListView* nicknameListView;
     QString abgCache;                   // caches the alternate background color
     QHBox* commandLineBox;
-    QPushButton* nicknameButton;
+    //QPushButton* nicknameButton;
+    QComboBox* nicknameCombobox;
     QLabel* awayLabel;
     QGrid* buttonsGrid;
     IRCInput* channelInput;
