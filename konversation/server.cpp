@@ -704,15 +704,14 @@ void Server::notifyResponse(const QString& nicksOnline)
       }
     }
     // Any watched nicks now offline?
-    NickInfoMap::Iterator it;
-    it = nicknamesOnline.begin();
+    NickInfoMap::Iterator it = nicknamesOnline.begin();
     while (it != nicknamesOnline.end())
     {
       QString lcNickName = it.key();
+      NickInfoPtr nickInfo = *it;
       ++it;
       if (nickLowerList.find(lcNickName) == nickLowerList.end())
       {
-        NickInfoPtr nickInfo = getNickInfo(lcNickName);
         QString nickName = nickInfo->getNickname();
         nicksOnlineChanged = true;
         addNickToOfflineList(nickName, watchLowerList);
