@@ -44,6 +44,8 @@
 #include "ircinput.h"
 #include "ircview.h"
 
+#include "linkaddressbook/linkaddressbookui.h"
+
 #if QT_VERSION < 0x030100
 #include "main.h"
 #endif
@@ -346,11 +348,22 @@ void Channel::popupCommand(int id)
 {
   QString pattern;
   QString cc=KonversationApplication::preferences.getCommandChar();
-
   bool raw=false;
 
+  QString args;
+
+  bool ok=false;
   switch(id)
   {
+    case NickListView::EditKABC:
+      {
+        QStringList nickList=getSelectedNicksList();
+        for(QStringList::Iterator nickIterator=nickList.begin();nickIterator!=nickList.end();++nickIterator)
+        {
+          (new LinkAddressbookUI(this, NULL, *nickIterator))->show();
+        }
+        break;
+      }
     case NickListView::GiveOp:
       pattern="MODE %c +o %u";
       raw=true;

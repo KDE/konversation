@@ -47,6 +47,10 @@ NickListView::NickListView(QWidget* parent) :
     popup->insertSeparator();
     popup->insertItem(i18n("Open Query"),Query);
     popup->insertItem(i18n("Send File..."),DccSend);
+    //if (user is not in addressbook already)
+    popup->insertItem(i18n("Link to addressbook..."),EditKABC);
+    //else
+    //popup->insertItem(i18n("Edit addressbook information..."),EditKABC);
     popup->insertSeparator();
     if(kickban)
     {
