@@ -16,13 +16,18 @@
 
 // Comment this #define to try a different text widget
 // #define TABLE_VERSION
-// #define OLD_QT
 
 #include <qstylesheet.h>
 #include <qtextcodec.h>
 #include <qstringlist.h>
 #include <qregexp.h>
 #include <qtextbrowser.h>
+
+// Check if we use special QT versions to keep text widget from displaying
+// all lines after another without line breaks
+#if QT_VERSION == 303
+#define ADD_LINE_BREAKS
+#endif
 
 #include <kdebug.h>
 
@@ -248,7 +253,7 @@ void IRCView::append(const char* nick,const char* message)
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+channelMessageColor()+"\">%1:</font></td><td><font color=\"#"+channelMessageColor()+"\">%2</font></td></tr>\n").arg(filter(nick,false)).arg(filter(message));
 #else
-#ifdef OLD_QT
+#ifdef ADD_LINE_BREAKS
   QString line=QString("<font color=\"#"+channelMessageColor+"\"><b>&lt;%1&gt;</b> %2</font><br>\n").arg(filter(nick,false)).arg(filter(message));
 #else
   QString line=QString("<font color=\"#"+channelMessageColor+"\"><b>&lt;%1&gt;</b> %2</font>\n").arg(filter(nick,false)).arg(filter(message));
@@ -267,7 +272,7 @@ void IRCView::appendQuery(const char* nick,const char* message)
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+queryMessageColor+"\">*%1*</font></td><td><font color=\"#"+queryMessageColor+"\">%2</font></td></tr>\n").arg(filter(nick,false)).arg(filter(message));
 #else
-#ifdef OLD_QT
+#ifdef ADD_LINE_BREAKS
   QString line=QString("<font color=\"#"+queryMessageColor+"\"><b>*%1*</b> %2</font><br>\n").arg(filter(nick,false)).arg(filter(message));
 #else
   QString line=QString("<font color=\"#"+queryMessageColor+"\"><b>*%1*</b> %2</font>\n").arg(filter(nick,false)).arg(filter(message));
@@ -286,7 +291,7 @@ void IRCView::appendAction(const char* nick,const char* message)
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td>&nbsp;</td><td><font color=\"#"+actionMessageColor+"\">* %1 %2</font></td></tr>\n").arg(filter(nick,false)).arg(filter(message));
 #else
-#ifdef OLD_QT
+#ifdef ADD_LINE_BREAKS
   QString line=QString("<font color=\"#"+actionMessageColor+"\">* %1 %2</font><br>\n").arg(filter(nick,false)).arg(filter(message));
 #else
   QString line=QString("<font color=\"#"+actionMessageColor+"\">* %1 %2</font>\n").arg(filter(nick,false)).arg(filter(message));
@@ -312,7 +317,7 @@ void IRCView::appendServerMessage(const char* type,const char* message)
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+serverMessageColor+"\">%1</font></td><td><font color=\"#"+serverMessageColor+"\""+fixed+">%2</font></td></tr>\n").arg(type).arg(filter(message));
 #else
-#ifdef OLD_QT
+#ifdef ADD_LINE_BREAKS
   QString line=QString("<font color=\"#"+serverMessageColor+"\""+fixed+"><b>[%1]</b> %2</font><br>\n").arg(type).arg(filter(message));
 #else
   QString line=QString("<font color=\"#"+serverMessageColor+"\""+fixed+"><b>[%1]</b> %2</font>\n").arg(type).arg(filter(message));
@@ -330,7 +335,7 @@ void IRCView::appendCommandMessage(const char* type,const char* message)
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+commandMessageColor+"\">%1</font></td><td><font color=\"#"+commandMessageColor+"\">%2</font></td></tr>\n").arg(type).arg(filter(message));
 #else
-#ifdef OLD_QT
+#ifdef ADD_LINE_BREAKS
   QString line=QString("<font color=\"#"+commandMessageColor+"\">*** %2</font><br>\n").arg(filter(message));
 #else
   QString line=QString("<font color=\"#"+commandMessageColor+"\">*** %2</font>\n").arg(filter(message));
@@ -348,7 +353,7 @@ void IRCView::appendBacklogMessage(const char* firstColumn,const char* message)
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+backlogMessageColor+"\">%1</font></td><td><font color=\"#"+backlogMessageColor+"\">%2</font></td></tr>\n").arg(firstColumn).arg(filter(message));
 #else
-#ifdef OLD_QT
+#ifdef ADD_LINE_BREAKS
   QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2</font><br>\n").arg(firstColumn).arg(filter(message));
 #else
   QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2</font>\n").arg(firstColumn).arg(filter(message));
