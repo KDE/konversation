@@ -51,7 +51,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
   destination=name;
 
   action=false;
-  server=false;
+  program=false;
   command=false;
 
   // Action?
@@ -118,7 +118,7 @@ QString& OutputFilter::parse(const QString& inputLine,const QString& name)
     toServer=inputLine;
     output=inputLine;
     type=i18n("Raw");
-    command=true;
+    program=true;
   }
 
   return output;
@@ -150,7 +150,7 @@ void OutputFilter::parseJoin(QString channelName)
   {
     type=i18n("Usage");
     output=i18n("Usage: %1JOIN <channel>").arg(commandChar);
-    command=true;
+    program=true;
   }
   else
     toServer="JOIN "+channelName;
@@ -172,7 +172,7 @@ void OutputFilter::parseKick(QString parameter)
   {
     type=i18n("Error");
     output=i18n("%1KICK does only work from within channels.").arg(commandChar);
-    command=true;
+    program=true;
   }
 }
 
@@ -187,7 +187,7 @@ void OutputFilter::parsePart(QString parameter)
     {
       type=i18n("Error");
       output=i18n("%1PART without parameters works only from within a channel.").arg(commandChar);
-      command=true;
+      program=true;
     }
   }
   else
@@ -211,7 +211,7 @@ void OutputFilter::parsePart(QString parameter)
       {
         type=i18n("Error");
         output=i18n("%1PART without channel name works only from within a channel.").arg(commandChar);
-        command=true;
+        program=true;
       }
     }
   }
@@ -228,7 +228,7 @@ void OutputFilter::parseTopic(QString parameter)
     {
       type=i18n("Error");
       output=i18n("%1TOPIC without parameters works only from within a channel.").arg(commandChar);
-      command=true;
+      program=true;
     }
   }
   else
@@ -253,7 +253,7 @@ void OutputFilter::parseTopic(QString parameter)
       {
         type=i18n("Error");
         output=i18n("%1TOPIC without channel name works only from within a channel.").arg(commandChar);
-        command=true;
+        program=true;
       }
     }
   }
@@ -280,13 +280,13 @@ void OutputFilter::parseNotice(QString parameter)
   {
     type=i18n("Usage");
     output=i18n("Usage: %1NOTICE <recipient> <message>").arg(commandChar);
-    command=true;
+    program=true;
   }
   else
   {
     toServer="NOTICE "+recipient+" :"+message;
     output=i18n("Sending notice \"%1\" to %2.").arg(message).arg(recipient);
-    command=true;
+    program=true;
   }
 }
 
@@ -308,7 +308,7 @@ void OutputFilter::parseCtcp(QString parameter)
   
   output=i18n("Sending CTCP-%1 request to %2").arg(message).arg(recipient);
   type=i18n("CTCP");
-  command=true;
+  program=true;
 }
 
 void OutputFilter::parseQuery(QString parameter)
@@ -364,22 +364,26 @@ void OutputFilter::parseDcc(QString parameter)
     QStringList parameterList=QStringList::split(' ',parameter);
     if(parameterList[0]=="send")
     {
-      if(parameterList.count()<2)
+      if(parameterList.count()<3)
       {
         type=i18n("Usage");
         output=i18n("Usage: %1DCC [SEND nickname filename]").arg(commandChar);
 // TODO: make sure this will work:
 //        output=i18n("Usage: %1DCC [SEND nickname [filename] [filename] ...]").arg(commandChar);
-        command=true;
+        program=true;
       }
       else
       {
         // TODO: Check if file is available
-        type=i18n("DCC");
-        output=i18n("Offering the file \"%1\" to %2").arg(parameterList[2]).arg(parameterList[1]);
-        command=true;
         emit openDccSend(parameterList[1],parameterList[2]);
       }
+    }
+    // TODO: DCC Chat etc. comes here
+    else
+    {
+      type=i18n("Error");
+      output=i18n("Error: Unrecognized command DCC %1.").arg(parameterList[0]);
+      program=true;
     }
   }
 }
@@ -388,6 +392,8 @@ void OutputFilter::parseDcc(QString parameter)
 
 bool OutputFilter::isAction() { return action; };
 bool OutputFilter::isCommand() { return command; };
+bool OutputFilter::isProgram() { return program; };
+
 void OutputFilter::setCommandChar() { commandChar=KonversationApplication::preferences.getCommandChar(); }
 
 QString& OutputFilter::getOutput() { return output; };

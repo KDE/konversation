@@ -14,7 +14,7 @@
   $Id$
 */
 
-#include <ksock.h>
+#include <kextsock.h>
 
 #ifndef IRCSERVERSOCKET_H
 #define IRCSERVERSOCKET_H
@@ -23,10 +23,10 @@
   @author Dario Abatianni
 */
 
-class IRCServerSocket : public KSocket
+class IRCServerSocket : public KExtendedSocket
 {
   public:
-    IRCServerSocket(const char *server,unsigned short int port,int timeout);
+    IRCServerSocket(const char *server,unsigned short int port,int timeout=30);
     ~IRCServerSocket();
 };
 

@@ -15,6 +15,8 @@
 */
 
 #include <unistd.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
 
 #include <qregexp.h>
 #include <qhostaddress.h>
@@ -106,7 +108,7 @@ Server::~Server()
     serverSocket->blockSignals(true);
     // Send out the last messages (usually the /QUIT)
     serverSocket->enableWrite(true);
-    send(serverSocket);
+    send();
     delete serverSocket;
   }
 
@@ -148,16 +150,18 @@ void Server::connectToIRCServer()
     // (re)connect. Autojoin will be done by the input filter
     serverWindow->appendToStatus(i18n("Info"),i18n("Connecting ..."));
 
-    serverSocket=new IRCServerSocket(getServerName(),getPort(),60);
-    if(serverSocket->socket()<=-1)
+    serverSocket=new IRCServerSocket(getServerName(),getPort());
+    serverSocket->connect();
+
+    if(serverSocket->fd()<=-1)
     {
-      broken(serverSocket);
+      broken();
     }
     else
     {
-      connect(serverSocket,SIGNAL (readEvent(KSocket *)),this,SLOT (incoming(KSocket *)) );
-      connect(serverSocket,SIGNAL (writeEvent(KSocket *)),this,SLOT (send(KSocket *)) );
-      connect(serverSocket,SIGNAL (closeEvent(KSocket *)),this,SLOT (broken(KSocket *)) );
+      connect(serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
+      connect(serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
+      connect(serverSocket,SIGNAL (closed()),this,SLOT (broken()) );
 
       connect(this,SIGNAL (nicknameChanged(const QString&)),serverWindow,SLOT (setNickname(const QString&)) );
 
@@ -309,14 +313,14 @@ void Server::processIncomingData()
   }
 }
 
-void Server::incoming(KSocket* ksocket)
+void Server::incoming()
 {
   char buffer[513];
   int len=0;
 
   do
   {
-    len=read(ksocket->socket(),buffer,512);
+    len=read(serverSocket->fd(),buffer,512);
     buffer[len]=0;
 
     inputBuffer+=buffer;
@@ -337,7 +341,7 @@ void Server::queue(const QString& buffer)
   }
 }
 
-void Server::send(KSocket* ksocket)
+void Server::send()
 {
   // Check if we are still online
   if(serverSocket)
@@ -349,7 +353,7 @@ void Server::send(KSocket* ksocket)
     // Don't reconnect if we WANT to quit
     else if(outputBuffer.startsWith("QUIT")) setDeliberateQuit(true);
     // TODO: Implement Flood-Protection here
-    write(ksocket->socket(),outputBuffer.latin1(),outputBuffer.length());
+    write(serverSocket->fd(),outputBuffer.latin1(),outputBuffer.length());
     serverSocket->enableWrite(false);
   }
 
@@ -371,9 +375,9 @@ void Server::setDeliberateQuit(bool on)
   deliberateQuit=on;
 }
 
-void Server::broken(KSocket* ksocket)
+void Server::broken()
 {
-  kdWarning() << "Connection broken (Socket " << ksocket->socket() << ")!" << endl;
+  kdWarning() << "Connection broken (Socket fd " << serverSocket->fd() << ")!" << endl;
 
   serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost.").arg(serverName));
   // TODO: Close all queries and channels!
@@ -415,6 +419,35 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
 
 void Server::addDccSend(QString recipient,QString file)
 {
+  emit addDccPanel();
+
+  appendStatusMessage(i18n("DCC"),
+                      QString("Offering the file \"%1\" to %2 for upload.")
+                              .arg(file).arg(recipient)
+                     );
+
+// can we use KInetSocketAddress?
+
+  QString ip;
+
+  struct sockaddr sa;
+  unsigned int salen=sizeof(sa);
+  getsockname(serverSocket->fd(),&sa,&salen);
+  struct sockaddr_in* sin=(sockaddr_in*) &sa;
+  QHostAddress addr(sin->sin_addr.s_addr);  // IP holen, unter der man von auﬂen erreichbar ist
+
+  ip=addr.toString();
+  kdDebug() << ip << endl;
+/*
+  DccTransfer* newDcc=new DccTransfer(serverWindow->getDccPanel()->getListView(),
+                  DccTransfer::Send,
+                  KonversationApplication::preferences.getDccPath(),
+                  recipient,
+                  file,                // name
+                  0,                   // size (will be set by DccTransfer)
+                  ip,                  // ip
+                  0);                  // port (will be set by DccTransfer)
+*/
 }
 
 void Server::addDccGet(QString sourceNick,QStringList dccArguments)
@@ -425,12 +458,14 @@ void Server::addDccGet(QString sourceNick,QStringList dccArguments)
 
   ip.setAddress(dccArguments[1].toULong());
 
-  appendStatusMessage("DCC",QString("%1 offers the file \"%2\" (%3 bytes) for download (%4:%5).")
-                            .arg(sourceNick)               // name
-                            .arg(dccArguments[0])          // file
-                            .arg((dccArguments[3]=="") ? i18n("unknown") : dccArguments[3] )  // size
-                            .arg(ip.toString())            // ip
-                            .arg(dccArguments[2]) );       // port
+  appendStatusMessage(i18n("DCC"),
+                      QString("%1 offers the file \"%2\" (%3 bytes) for download (%4:%5).")
+                              .arg(sourceNick)               // name
+                              .arg(dccArguments[0])          // file
+                              .arg((dccArguments[3]=="") ? i18n("unknown") : dccArguments[3] )  // size
+                              .arg(ip.toString())            // ip
+                              .arg(dccArguments[2])          // port
+                             );
 
   DccTransfer* newDcc=new DccTransfer(serverWindow->getDccPanel()->getListView(),
                   DccTransfer::Get,

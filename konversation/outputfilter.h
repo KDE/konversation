@@ -37,6 +37,7 @@ class OutputFilter : public QObject
 
     bool isAction();
     bool isCommand();
+    bool isProgram();
 
     QString& getOutput();
     QString& getServerOutput();
@@ -58,9 +59,10 @@ class OutputFilter : public QObject
 
     QString commandChar;
 
+    // message types
     bool action;
     bool command;
-    bool server;
+    bool program;
 
     void parseMsg(QString parameter);      // works
     void parseQuery(QString parameter);    // works
@@ -81,7 +83,7 @@ class OutputFilter : public QObject
     void parseUnvoice(QString parameter);  // works
     void parseTopic(QString parameter);    // works
     void parseAway(QString parameter);     // works
-    void parseCtcp(QString parameter);
+    void parseCtcp(QString parameter);     // works
     void parsePing(QString parameter);
     void parseVersion(QString parameter);
     void parseServer(QString parameter);

@@ -120,10 +120,10 @@ class Server : public QObject
     void startNotifyTimer(int msec=0);
 
   protected slots:
-    void incoming(KSocket* socket);
+    void incoming();
     void processIncomingData();
-    void send(KSocket* socket);
-    void broken(KSocket* socket);
+    void send();
+    void broken();
     void notifyTimeout();
     void notifyCheckTimeout();
     void connectionEstablished();

@@ -416,6 +416,7 @@ void Channel::sendChannelText(const QString& line)
   {
     if(filter.isAction()) appendAction(server->getNickname(),output);
     else if(filter.isCommand()) appendCommandMessage(filter.getType(),output);
+    else if(filter.isProgram()) appendServerMessage(filter.getType(),output);
     else append(server->getNickname(),output);
   }
   /* Send anything else to the server */
