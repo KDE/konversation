@@ -407,7 +407,7 @@ void KonversationMainWindow::closeWindow(ChatWindow*) // USE_MDI
   {
     // if this view was the front view, delete the pointer
     // JOHNFLUX - move to previous view
-    if(view==previousFrontView) previousFrontView=0
+    if(view==previousFrontView) previousFrontView=0;
     if(view==frontView) frontView=previousFrontView;
 
     emit endNotification(viewToClose);
