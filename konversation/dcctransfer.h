@@ -72,6 +72,7 @@ class DccTransfer : public QObject, public KListViewItem
     QString getNumericalIp();
     QString getPartner();
     QString getFile();
+    QString getFullPath();
     QString getFolder();
     unsigned long getBufferSize();
 

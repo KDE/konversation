@@ -131,7 +131,7 @@ void DccPanel::runDcc()
     if(item->getType()==DccTransfer::Send || item->getType()==DccTransfer::ResumeSend)
       new KRun(item->getFile());
     else if(item->getType()==DccTransfer::Get || item->getType()==DccTransfer::ResumeGet)
-      new KRun(item->getFolder()+"/"+item->getFile());
+      new KRun(item->getFullPath());
   }
 }
 

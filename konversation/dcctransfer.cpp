@@ -397,6 +397,7 @@ void DccTransfer::setPort(QString port)
 }
 
 QString DccTransfer::getPort() { return dccPort; }
+QString DccTransfer::getFullPath() { return file.name(); }
 
 void DccTransfer::setBufferSize(unsigned long size) { bufferSize=size; }
 unsigned long DccTransfer::getBufferSize() { return bufferSize; }
