@@ -660,7 +660,6 @@ void Server::sslError(QString reason) {
 // Will be called from InputFilter as soon as the Welcome message was received
 void Server::connectionEstablished(const QString& ownHost) {
     if(!ownHost.isEmpty()) {
-        kdDebug() << "Server::connectionEstablished(): start resolving the hostname by RPL_WELCOME: " << ownHost << endl;
         KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByWelcome(KResolverResults)),ownHost,"0");
     }
 
@@ -697,7 +696,6 @@ void Server::registerWithServices() {
 void Server::gotOwnResolvedHostByWelcome(KResolverResults res) {
     if ( res.error() == KResolver::NoError && !res.isEmpty() ) {
         ownIpByWelcome = res.first().address().nodeName();
-        kdDebug() << "Server::gotOwnResolvedHostByWelcome(): Success: " << ownIpByWelcome << endl;
     }
     else {
         kdDebug() << "Server::gotOwnResolvedHostByWelcome(): Got error: " << ( int )res.error() << endl;
@@ -2505,7 +2503,6 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool
   if(ownIpByUserhost.isEmpty() && nick==nickname)  // myself
   {
     QString myhost = hostmask.section('@', 1);
-    kdDebug() << "Server::userhost(): start resolving the hostname by RPL_USERHOST: " << myhost << endl;
     // Use async lookup else you will be blocking GUI badly
     KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByUserhost(KResolverResults)),myhost,"0");
   }
@@ -2523,7 +2520,6 @@ void Server::gotOwnResolvedHostByUserhost(KResolverResults res)
 {
   if ( res.error() == KResolver::NoError && !res.isEmpty() ) {
     ownIpByUserhost = res.first().address().nodeName();
-    kdDebug() << "Server::gotOwnResolvedHostByUserhost(): Success: " << ownIpByUserhost << endl;
   }
   else
     kdDebug() << "Server::gotOwnResolvedHostByUserhost(): Got error: " << ( int )res.error() << endl;
