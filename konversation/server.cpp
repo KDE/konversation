@@ -2901,7 +2901,7 @@ void Server::startAwayTimer()
 }
 
 
-/** Intended to be called when the addressbook changes.  Cycles through all the nicks and
+/** Intended to be called when the addressbook changes by us, or by another app.  Cycles through all the nicks and
  *  calls 'refreshAddressee' on all of them.
  */
 void Server::slotLoadAddressees() {

@@ -151,7 +151,11 @@ void NickInfo::setOnlineSince(const QDateTime& datetime) {
 KABC::Addressee NickInfo::getAddressee() { return addressee;}
 
 void NickInfo::refreshAddressee() {
+  addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname);
   emit nickInfoChanged();
+  
+  if(!addressee.isEmpty())
+    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 4);
 }
 
 
