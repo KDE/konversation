@@ -18,6 +18,9 @@
 #define PREFSPAGECOLORSIMAGES_H
 
 #include <qstringlist.h>
+#include <qptrlist.h>
+
+#include <kcolorcombo.h>
 
 #include "prefspage.h"
 
@@ -36,14 +39,16 @@ class PrefsPageColorsImages : public PrefsPage
     PrefsPageColorsImages(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageColorsImages();
 
+  public slots:
+    void applyPreferences();
+
   protected slots:
-    void colorChanged(const QColor& color);
-    void backgroundNameChanged(const QString& newName);
     void selectBackground();
 
   protected:
     QStringList colorList;
     KLineEdit* backgroundName;
+    QPtrList<KColorCombo> colorComboList;
 };
 
 #endif

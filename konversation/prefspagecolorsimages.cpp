@@ -19,7 +19,6 @@
 #include <qhbox.h>
 #include <qpushbutton.h>
 
-#include <kcolorcombo.h>
 #include <kdebug.h>
 #include <klineedit.h>
 #include <kfiledialog.h>
@@ -52,6 +51,7 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
     QLabel* colorLabel=new QLabel(label,parentFrame);
 
     KColorCombo* colorCombo=new KColorCombo(parentFrame);
+    colorComboList.append(colorCombo);
 
     QString color=preferences->getColor(name);
     // check if we found an undefined TextViewBackground color
@@ -69,7 +69,6 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
     colorSettingsLayout->addWidget(colorLabel,row,0);
     colorSettingsLayout->addMultiCellWidget(colorCombo,row,row,1,2);
 
-    connect(colorCombo,SIGNAL (activated(const QColor&)),this,SLOT (colorChanged(const QColor&)) );
     row++;
   }
 
@@ -89,24 +88,11 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
   colorSettingsLayout->addWidget(spacer,row,0);
   colorSettingsLayout->setRowStretch(row,10);
 
-  connect(backgroundName,SIGNAL (textChanged(const QString&)),this,SLOT (backgroundNameChanged(const QString&)) );
   connect(backgroundSelect,SIGNAL (clicked()),this,SLOT (selectBackground()) );
 }
 
 PrefsPageColorsImages::~PrefsPageColorsImages()
 {
-}
-
-void PrefsPageColorsImages::colorChanged(const QColor& color)
-{
-  kdDebug() << "PrefsPageColorsImages::colorChanged()" << endl;
-  QString name(static_cast<const QWidget*>(sender())->name());
-  preferences->setColor(name,color.name().mid(1));
-}
-
-void PrefsPageColorsImages::backgroundNameChanged(const QString& newName)
-{
-  preferences->setBackgroundImageName(newName);
 }
 
 void PrefsPageColorsImages::selectBackground()
@@ -119,6 +105,17 @@ void PrefsPageColorsImages::selectBackground()
                                                );
 
   if(!fileName.isEmpty()) backgroundName->setText(fileName);
+}
+
+void PrefsPageColorsImages::applyPreferences()
+{
+  for(unsigned int index=0;index<colorComboList.count()-1;index++)
+  {
+    KColorCombo* combo=colorComboList.at(index);
+    preferences->setColor(combo->name(),combo->color().name().mid(1));
+  }
+
+  preferences->setBackgroundImageName(backgroundName->text());
 }
 
 #include "prefspagecolorsimages.moc"
