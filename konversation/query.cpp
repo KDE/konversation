@@ -33,7 +33,8 @@ const int POPUP_IGNORE=0xff;
 
 Query::Query(QWidget* parent) : ChatWindow(parent)
 {
-  setName("QueryWidget");
+  // don't setName here! It will break logfiles!
+  //   setName("QueryWidget");
   setType(ChatWindow::Query);
 
   awayChanged=false;
