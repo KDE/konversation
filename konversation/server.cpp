@@ -644,12 +644,12 @@ void Server::broken(int state)
   if(autoReconnect && !getDeliberateQuit())
   {
     statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName));
-    getMainWindow()->appendToFrontmost(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName),statusView);
+    getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName),statusView);
     // TODO: Make retry counter configurable
     if(++reconnectCounter==10)
     {
       statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 failed.").arg(serverName));
-      getMainWindow()->appendToFrontmost(i18n("Error"),i18n("Connection to Server %1 failed.").arg(serverName),statusView);
+      getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 failed.").arg(serverName),statusView);
       reconnectCounter=0;
       rejoinChannels = false;
     }
@@ -667,7 +667,7 @@ void Server::broken(int state)
   else
   {
     statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 closed.").arg(serverName));
-    getMainWindow()->appendToFrontmost(i18n("Error"),i18n("Connection to Server %1 closed.").arg(serverName),statusView);
+    getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 closed.").arg(serverName),statusView);
   }
 
   emit serverOnline(false);

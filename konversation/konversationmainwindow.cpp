@@ -338,11 +338,20 @@ void KonversationMainWindow::showStatusbar()
   KonversationApplication::preferences.setShowStatusBar(showStatusBarAction->isChecked());
 #endif
 }
-
+/** Call this when you have already put a message in the serverView window, and want a message in the front most
+ *  window if it's on the same server, but not put the message twice.
+ */
+void KonversationMainWindow::appendToFrontmostIfDifferent(const QString& type,const QString& message,ChatWindow* serverView)
+{
+  Q_ASSERT(serverView); if(!serverView) return;
+  updateFrontView();
+  if(frontView && (ChatWindow *)frontView != serverView && frontView->getServer()==serverView->getServer())
+    frontView->appendServerMessage(type,message);
+}
 void KonversationMainWindow::appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView)
 {
   // TODO: Make it an option to direct all status stuff into the status panel
-
+  Q_ASSERT(serverView); if(!serverView) return;
   updateFrontView();
   if(!frontView ||                                                  // Check if the frontView can actually display text or ...
      serverView->getServer()!=frontView->getServer() ||             // if it does not belong to this server or...
