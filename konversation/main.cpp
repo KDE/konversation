@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
                                  "talk about your favorite subject."),
                        "http://www.konversation.org/");
 
-  aboutData.addAuthor("Dario Abatianni",I18N_NOOP("Author"),"eisfuchs@tigress.com");
+  aboutData.addAuthor("Dario Abatianni",I18N_NOOP("Original Author/Project Founder"),"eisfuchs@tigress.com");
   aboutData.addAuthor("Peter Simonsson",I18N_NOOP("Maintainer"),"psn@linux.se");
   aboutData.addAuthor("Christian Muehlhaeuser",I18N_NOOP("Multiple modes extension, Close widget placement, OSD functionality"),"chris@chris.de");
   aboutData.addAuthor("John Tapsell",I18N_NOOP("Refactoring, KAddressBook/Kontact integration"), "john@geola.co.uk");
