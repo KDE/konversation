@@ -37,11 +37,11 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
   dialogDefinitions.append(i18n("Warning on hiding the main window menu"));
   dialogDefinitions.append(i18n("Warning on high traffic with channel list"));
   dialogDefinitions.append(i18n("Warning on pasting large portions of text"));
-  
+
   QVBoxLayout* dialogsLayout=new QVBoxLayout(parentFrame,marginHint(),spacingHint(),"dialogs_layout");
 
   dialogListView=new KListView(parentFrame,"dialog_list_view");
-  dialogListView->addColumn(i18n("Select warning dialogs to show"));
+  dialogListView->addColumn(i18n("Select Warning Dialogs to Show"));
   dialogListView->setAllColumnsShowFocus(true);
 
   for(unsigned int index=0; index<10 ;index++)
