@@ -916,7 +916,7 @@ void Server::incoming()
   while(qcsBufferLines.count())
   {
     bool isUtf8 = KStringHandler::isUtf8(qcsBufferLines.front());
-    if(isUtf8 || ((identity->getCodec() == "utf8") && !isUtf8))
+    if(isUtf8)
       inputBuffer += KStringHandler::from8Bit(qcsBufferLines.front()) + "\n";
     else
     {
