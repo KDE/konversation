@@ -788,40 +788,47 @@ void IRCView::focusInEvent(QFocusEvent*)
 
 bool IRCView::eventFilter(QObject* object,QEvent* event)
 {
-  if(event->type()==QEvent::MouseButtonRelease) {
-    QMouseEvent* me=(QMouseEvent*) event;
-
-    if(me->button()==QMouseEvent::MidButton)
+  if(event->type()==QEvent::MouseButtonRelease) 
     {
-      if(copyUrlMenu) {
-        urlClickSlot(urlToCopy,true);
-      } else {
-        emit textPasted();
-      }
-    }
-    if (me->button()==QMouseEvent::LeftButton) mousePressed=false;
-  } else if(event->type()==QEvent::ContextMenu) {
+      QMouseEvent* me=(QMouseEvent*) event;
+      
+      if(me->button()==QMouseEvent::MidButton)
+	{
+	  if(copyUrlMenu) 
+	    urlClickSlot(urlToCopy,true);
+	  else 
+	    emit textPasted();
+	}
+      
+      if (me->button()==QMouseEvent::LeftButton) 
+	mousePressed=false;
+    } 
+  else if(event->type()==QEvent::ContextMenu) 
     return contextMenu((QContextMenuEvent*) event);
-  } else if(event->type()==QEvent::MouseButtonPress) {
-    QMouseEvent* me=(QMouseEvent*) event;
-    if (me->button()==QMouseEvent::LeftButton)
+  else if(event->type()==QEvent::MouseButtonPress) 
     {
-      urlToDrag = anchorAt(viewportToContents(me->pos()));
-      if (!urlToDrag.isNull()) {
-        mousePressed=true;
-        pressPosition=me->pos();
+      QMouseEvent* me=(QMouseEvent*) event;
+      if (me->button()==QMouseEvent::LeftButton)
+	{
+	  urlToDrag = anchorAt(viewportToContents(me->pos()));
+	  if (!urlToDrag.isNull()) 
+	    {
+	      mousePressed=true;
+	      pressPosition=me->pos();
+	    }
 	}
     }
-  } else if(event->type()==QEvent::MouseMove) {
-    QMouseEvent* me=(QMouseEvent*) event;
-    if (mousePressed && (pressPosition-me->pos()).manhattanLength() > QApplication::startDragDistance()) 
+  else if(event->type()==QEvent::MouseMove) 
     {
-        mousePressed=false;
-        removeSelection();
-        KURLDrag* u=new KURLDrag(KURL(urlToDrag),viewport());	
-        u->drag();
+      QMouseEvent* me=(QMouseEvent*) event;
+      if (mousePressed && (pressPosition-me->pos()).manhattanLength() > QApplication::startDragDistance()) 
+	{
+	  mousePressed=false;
+	  removeSelection();
+	  KURLDrag* u=new KURLDrag(KURL(urlToDrag),viewport());	
+	  u->drag();
+	}
     }
-  }
   return KTextBrowser::eventFilter(object,event);
 }
 
