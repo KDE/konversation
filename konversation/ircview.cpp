@@ -462,13 +462,33 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 {
   QString queryColor=KonversationApplication::preferences.getColor("QueryMessage");
   QString line;
+  QString nickLine="%2";
+
+  if(KonversationApplication::preferences.getUseColoredNicks())
+    {
+      if(!colorMap.contains(nick))
+        {
+          if(offset >= 8)
+            offset=0;
+
+          colorList = KonversationApplication::preferences.getNickColorList();
+          QString backgroundColor=KonversationApplication::preferences.getColor("TextViewBackground");
+
+          if(backgroundColor==colorList[offset])
+            offset = (offset+1)%8;
+
+          colorMap[nick] = colorList[offset];
+          ++offset;
+        }
+      nickLine = "<font color=\""+colorMap[nick]+"\"><b>%2</b></font>";
+    }
 
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
-    line += "<p><font color=\"#" + queryColor + "\"><b>*</b>%2<b>*</b> %1" + PDF + " %3</font></p>\n";
+    line += "<p><font color=\"#" + queryColor + "\"><b>*</b>"+nickLine+"<b>*</b> %1" + PDF + " %3</font></p>\n";
   } else {
-    line = "<p><font color=\"#" + queryColor + "\">%1 <b>*</b>%2<b>*</b> %3</font></p>\n";
+    line = "<p><font color=\"#" + queryColor + "\">%1 <b>*</b>"+nickLine+"<b>*</b> %3</font></p>\n";
   }
 
   line = line.arg(timeStamp(), nick, filter(message,queryColor,nick,true));
