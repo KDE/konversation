@@ -23,6 +23,7 @@
 #include <krun.h>
 #include <kfilemetainfo.h>
 #include <kmessagebox.h>
+#include <kdeversion.h>
 
 #include "dccpanel.h"
 #include "dcctransfer.h"
@@ -251,11 +252,20 @@ void DccPanel::showFileInfo()
     // display information list if any available
     if(infoList.count())
     {
+#if KDE_VERSION >= 310
       KMessageBox::informationList(
         this,
         i18n("Available information for file %1:").arg(path),
         infoList,
-        i18n("File information"));
+        i18n("File information")
+      );
+#else
+      KMessageBox::information(
+        this,
+        "<qt>"+infoList.join("<br>")+"</qt>",
+        i18n("File information")
+      );
+#endif
     }
   }
   else
