@@ -237,7 +237,7 @@ bool IRCInput::checkPaste(QString& text)
                    "Do you really want to continue?</qt>").arg(text.length()).arg(lines+1),
               i18n("Large Paste Warning"),
               KStdGuiItem::yes(),
-              i18n("&Edit ..."),
+              i18n("&Edit..."),
               "LargePaste"
             );
   }
