@@ -356,12 +356,12 @@ namespace Konversation {
   void ServerListDialog::updateButtons()
   {
     int count = m_serverList->selectedItems().count();
-    bool enable = count > 0;
+    bool enable = (count > 0);
 
     enableButtonOK(enable);
     m_delButton->setEnabled(enable);
 
-    enable = count == 1;
+    enable = (count == 1);
     m_editButton->setEnabled(enable);
   }
 
