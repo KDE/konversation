@@ -134,6 +134,8 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   
   // misc.
   connect(dccListView, SIGNAL(doubleClicked(QListViewItem*,const QPoint&,int)), this, SLOT(doubleClicked(QListViewItem*,const QPoint&,int)));
+  
+  selectionChanged();
 }
 
 DccPanel::~DccPanel()
