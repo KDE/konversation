@@ -23,7 +23,7 @@
 
 Preferences::Preferences()
 {
-  /* Presets */
+  // Presets
   serverWindowToolBarPos=KToolBar::Top;
   serverWindowStatusBarStatus=true;
   serverList.setAutoDelete(true);
@@ -31,17 +31,13 @@ Preferences::Preferences()
   ident="konversation";
   realname="Konversation User";
 
-	defaultChannelMessageColor = "000000";
+  defaultChannelMessageColor = "000000";
   defaultQueryMessageColor = "0000ff";
-	defaultServerMessageColor = "91640a";
-	defaultActionMessageColor = "0000ff";
-	defaultBacklogMessageColor = "aaaaaa";
-	defaultLinkMessageColor = "0000ff";
-	defaultCommandMessageColor = "960096";
-
-  opLedColor=1;
-  voiceLedColor=2;
-  noRightsLedColor=3;
+  defaultServerMessageColor = "91640a";
+  defaultActionMessageColor = "0000ff";
+  defaultBacklogMessageColor = "aaaaaa";
+  defaultLinkMessageColor = "0000ff";
+  defaultCommandMessageColor = "960096";
 
   nicknameList.append("KonvIRC");
   nicknameList.append("_KonvIRC");
@@ -62,26 +58,33 @@ Preferences::Preferences()
   buttonList.append("Part,/PART %c :KDE Rules!%n");
   buttonList.append("Quit,/QUIT :KDE Rules!%n");
 
-  partReason="Konversation terminated!";
-  kickReason="User terminated!";
+  setPartReason("Konversation terminated!");
+  setKickReason("User terminated!");
 
   KStandardDirs kstddir;
 
-  dccPath="";
+  setDccPath("");
   setDccAddPartner(true);
   setDccCreateFolder(false);
   setDccAutoGet(false);
   setDccBufferSize(1024);
   setDccRollback(1024);
 
-  logPath=kstddir.saveLocation("data","konversation/logs");
-  log=true;
-  lowerLog=true;
-  logFollowsNick=true;
-  blinkingTabs=true;
+  setLogPath(kstddir.saveLocation("data","konversation/logs"));
+  setLog(true);
+  setLowerLog(true);
+  setLogFollowsNick(true);
 
-  notifyDelay=20;
-  useNotify=true;
+  setBlinkingTabs(true);
+
+  setNotifyDelay(20);
+  setUseNotify(true);
+
+  setOpLedColor(1);
+  setVoiceLedColor(2);
+  setNoRightsLedColor(3);
+
+  setCommandChar("/");
 }
 
 Preferences::~Preferences()
@@ -251,8 +254,11 @@ void Preferences::setNicknameList(QStringList newList) { nicknameList=newList; }
 void Preferences::setBlinkingTabs(bool blink) { blinkingTabs=blink; }
 bool Preferences::getBlinkingTabs() { return blinkingTabs; }
 
-/* TODO: Make this a little simpler (use an array and enum)
-   get/set message font colors */
+void Preferences::setCommandChar(QString newCommandChar) { commandChar=newCommandChar; }
+QString Preferences::getCommandChar() { return commandChar; }
+
+// TODO: Make this a little simpler (use an array and enum)
+//       get/set message font colors
 
 QString Preferences::getActionMessageColor() {return actionMessageColor;}
 void Preferences::setActionMessageColor(QString passed_actionMessageColor) {actionMessageColor = passed_actionMessageColor;}
@@ -282,7 +288,7 @@ void Preferences::setOpLedColor(int passed_color)       { opLedColor=passed_colo
 void Preferences::setVoiceLedColor(int passed_color)    { voiceLedColor=passed_color; }
 void Preferences::setNoRightsLedColor(int passed_color) { noRightsLedColor=passed_color; }
 
-/* Geometry functions */
+// Geometry functions
 QSize Preferences::getServerWindowSize()  { return serverWindowSize; };
 QSize& Preferences::getHilightSize()      { return hilightSize; };
 QSize& Preferences::getButtonsSize()      { return buttonsSize; };

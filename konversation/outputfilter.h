@@ -45,11 +45,16 @@ class OutputFilter : public QObject
   signals:
     void openQuery(const QString& nick,const QString& hostmask); // hostmask currently unused
 
+  public slots:
+    void setCommandChar();
+
   protected:
     QString output;
     QString toServer;
     QString type;
     QString destination;
+
+    QString commandChar;
 
     bool action;
     bool command;

@@ -59,9 +59,9 @@ Server::Server(int id)
   serverSocket=0;
   connectToIRCServer();
 
-  /* don't delete items when they are removed */
+  // don't delete items when they are removed
   channelList.setAutoDelete(false);
-  /* For /msg query completion */
+  // For /msg query completion
   completeQueryPosition=0;
 
   inputFilter.setServer(this);
@@ -136,16 +136,16 @@ void Server::setAutoJoinChannelKey(QString key) { autoJoinChannelKey=key; }
 void Server::connectToIRCServer()
 {
   deliberateQuit=false;
-  /* Are we (still) connected (yet)? */
+  // Are we (still) connected (yet)?
   if(serverSocket)
   {
-    /* just join our autojoin-channel if desired */
+    // just join our autojoin-channel if desired
     if(getAutoJoin()) queue(getAutoJoinCommand());
-  /* (re)connect. Autojoin will be done by the input filter */
-  /* TODO: move autojoin here and use signals / slots */
+    // TODO: move autojoin here and use signals / slots
   }
   else
   {
+    // (re)connect. Autojoin will be done by the input filter
     serverWindow->appendToStatus(i18n("Info"),i18n("Connecting ..."));
 
     serverSocket=new IRCServerSocket(getServerName(),getPort(),60);
@@ -179,10 +179,10 @@ void Server::connectToIRCServer()
   }
 }
 
-/* Will be called from InputFilter as soon as the Welcome message was received */
+// Will be called from InputFilter as soon as the Welcome message was received
 void Server::connectionEstablished()
 {
-  /* get first notify very early */
+  // get first notify very early
   startNotifyTimer(1000);
 }
 
@@ -376,7 +376,8 @@ void Server::broken(KSocket* ksocket)
   kdWarning() << "Connection broken (Socket " << ksocket->socket() << ")!" << endl;
 
   serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost.").arg(serverName));
-  /* TODO: Close all queries and channels! */
+  // TODO: Close all queries and channels!
+  // Or at least make sure that all gets reconnected properly
   delete serverSocket;
   serverSocket=0;
 
@@ -451,23 +452,27 @@ void Server::sendResumeRequest(QString sender,QString fileName,QString port,int 
 
 void Server::resumeDccTransfer(QString sourceNick,QStringList dccArguments)
 {
-  appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\" from position %2").arg(dccArguments[0]).arg(dccArguments[2]));
+  // Check if there actually is a transfer going on on that port
   DccTransfer* dccTransfer=serverWindow->getDccPanel()->getTransferByPort(dccArguments[1]);
+
   if(dccTransfer)
   {
+    // overcome mIRCs brain-dead "file.ext" substitution
+    QString fileName=dccTransfer->getFile();
+    appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3").arg(fileName).arg(sourceNick).arg(dccArguments[2]));
     dccTransfer->startResume(dccArguments[2]);
   }
   else
   {
-    appendStatusMessage(i18n("Error"),i18n("No transfer running on port %1!").arg(dccArguments[1]));
+    appendStatusMessage(i18n("Error"),i18n("No DCC transfer running on port %1!").arg(dccArguments[1]));
   }
 }
 
 QString Server::getNextQueryName()
 {
-  /* Check if completion position is out of range */
+  // Check if completion position is out of range
   if(completeQueryPosition>=queryList.count()) completeQueryPosition=0;
-  /* return the next query in the list (for /msg completion) */
+  // return the next query in the list (for /msg completion)
   if(queryList.count()) return queryList.at(completeQueryPosition++)->getName();
 
   return QString::null;
@@ -475,25 +480,25 @@ QString Server::getNextQueryName()
 
 void Server::removeQuery(Query* query)
 {
-  /* Remove query page from container */
+  // Remove query page from container
   serverWindow->getWindowContainer()->removePage(query);
 
-  /* Traverse through list to find the query */
+  // Traverse through list to find the query
   Query* lookQuery=queryList.first();
   while(lookQuery)
   {
-    /* Did we find our query? */
+    // Did we find our query?
     if(lookQuery==query)
     {
-      /* Remove it from the query list */
+      // Remove it from the query list
       queryList.remove(lookQuery);
-      /* break out of the loop */
+      // break out of the loop
       lookQuery=0;
     }
-    /* else select next query */
+    // else select next query
     else lookQuery=queryList.next();
   }
-  /* Free the query object */
+  // Free the query object
   delete query;
 }
 
@@ -503,7 +508,9 @@ void Server::joinChannel(QString& name,QString& hostmask)
   //   Channel* channel=new Channel(this,name,0);
   // else
 
-  /* Make sure to delete stale Channel on rejoin */
+  // Make sure to delete stale Channel on rejoin.
+  // FIXME: Hm ... Do we really have to? Wouldn't it be enough to just
+  // keep the channel and set channel->setServer(server)?
   Channel* channel=getChannelByName(name);
   if(channel)
   {
@@ -555,36 +562,35 @@ void Server::updateChannelQuickButtons(QStringList newButtons)
 
 Channel* Server::getChannelByName(const char* name)
 {
-  /* Convert wanted channel name to lowercase */
+  // Convert wanted channel name to lowercase
   QString wanted=name;
   wanted=wanted.lower();
 
-  /* Traverse through list to find the channel named "name" */
+  // Traverse through list to find the channel named "name"
   Channel* lookChannel=channelList.first();
   while(lookChannel)
   {
     if(lookChannel->getName().lower()==wanted) return lookChannel;
     lookChannel=channelList.next();
   }
-  /* No channel by that name found? Return 0. Happens on first channel join */
-  kdWarning() << "Server::getChannelByName(" << name << "): Channel name not found!" << endl;
+  // No channel by that name found? Return 0. Happens on first channel join
   return 0;
 }
 
 Query* Server::getQueryByName(const char* name)
 {
-  /* Convert wanted query name to lowercase */
+  // Convert wanted query name to lowercase
   QString wanted=name;
   wanted=wanted.lower();
 
-  /* Traverse through list to find the query with "name" */
+  // Traverse through list to find the query with "name"
   Query* lookQuery=queryList.first();
   while(lookQuery)
   {
     if(lookQuery->getName().lower()==wanted) return lookQuery;
     lookQuery=queryList.next();
   }
-  /* No query by that name found? Must be a new query request. Return 0 */
+  // No query by that name found? Must be a new query request. Return 0
   return 0;
 }
 
@@ -610,7 +616,7 @@ void Server::addHostmaskToNick(QString& sourceNick,QString& sourceHostmask)
     if(nick) nick->setHostmask(sourceHostmask);
     channel=channelList.next();
   }
-  /* Set hostmask for query with the same name */
+  // Set hostmask for query with the same name
   Query* query=getQueryByName(sourceNick);
   if(query) query->setHostmask(sourceHostmask);
 }
@@ -639,16 +645,16 @@ void Server::removeNickFromServer(QString& nickname,QString& reason)
 
 void Server::renameNick(QString& nickname,QString& newNick)
 {
-  /* Rename the nick in every channel they are in */
+  // Rename the nick in every channel they are in
   Channel* channel=channelList.first();
   while(channel)
   {
     channel->renameNick(nickname,newNick);
     channel=channelList.next();
   }
-  /* If this was our own nickchange, tell our server object about it */
+  // If this was our own nickchange, tell our server object about it
   if(nickname==getNickname()) setNickname(newNick);
-  /* If we had a query with this nick, change that name, too */
+  // If we had a query with this nick, change that name, too
   Query* query=queryList.first();
   while(query)
   {
@@ -748,24 +754,24 @@ QString& Server::getNickname()
 
 QString Server::parseWildcards(const QString& toParse,const QString& nickname,const QString& channelName,QStringList* nickList,const QString& queryName,const QString& parameter)
 {
-  /* TODO: parameter handling. this line is only to suppress a compiler warning */
+  // TODO: parameter handling. this line is only to suppress a compiler warning
   parameter.lower();
-  /* cut button name from definition */
+  // cut button name from definition
   QString out(toParse.mid(toParse.find(',')+1));
-  /* define default separator and regular expression for definition */
+  // define default separator and regular expression for definition
   QString separator(" ");
   QRegExp separatorRegExp("%s[^%]*%");
 
   int pos;
-  /* separator definition found? */
+  // separator definition found?
   pos=out.find(separatorRegExp);
   if(pos!=-1)
   {
-    /* skip "%s" at the beginning */
+    // skip "%s" at the beginning
     pos+=2;
-    /* copy out all text to the next "%" as new separator */
+    // copy out all text to the next "%" as new separator
     separator=out.mid(pos,out.find("%",pos+1)-pos);
-    /* remove separator definition from string */
+    // remove separator definition from string
     out.replace(separatorRegExp,"");
   }
 
@@ -777,7 +783,7 @@ QString Server::parseWildcards(const QString& toParse,const QString& nickname,co
 //  out.replace(QRegExp("%p"),parameter);
   if(queryName) out.replace(QRegExp("%q"),queryName);
 
-  /* finally replace all "%p" with "%" */
+  // finally replace all "%p" with "%"
   out.replace(QRegExp("%p"),"%");
 
   delete nickList;

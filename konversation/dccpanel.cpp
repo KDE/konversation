@@ -50,7 +50,6 @@ DccPanel::DccPanel(QWidget* parent) :
   QHBox* buttonsBox=new QHBox(this);
   buttonsBox->setSpacing(spacing());
   acceptButton=new QPushButton(i18n("Accept"),buttonsBox,"start_dcc");
-  resumeButton=new QPushButton(i18n("Resume"),buttonsBox,"resume_dcc");
   abortButton =new QPushButton(i18n("Abort"),buttonsBox,"abort_dcc");
   removeButton=new QPushButton(i18n("Remove"),buttonsBox,"remove_dcc");
   openButton  =new QPushButton(i18n("Open"),buttonsBox,"open_dcc_file");

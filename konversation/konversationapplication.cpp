@@ -117,6 +117,9 @@ void KonversationApplication::readOptions()
   // Read configuration and provide the default values
   config->setGroup("General Options");
 
+  // Command char settings
+  preferences.setCommandChar(config->readEntry("CommandChar",preferences.getCommandChar()));
+
   // Tool bar position settings
   preferences.serverWindowToolBarPos     =config->readNumEntry("ServerWindowToolBarPos",KToolBar::Top);
   preferences.serverWindowToolBarStatus  =config->readNumEntry("ServerWindowToolBarStatus",KToolBar::Show);
@@ -250,7 +253,9 @@ void KonversationApplication::saveOptions()
 
   config->setGroup("General Options");
 
-  config->writeEntry("Geometry", preferences.getServerWindowSize());
+  config->writeEntry("CommandChar",preferences.getCommandChar());
+
+  config->writeEntry("Geometry",preferences.getServerWindowSize());
   config->writeEntry("HilightGeometry",preferences.getHilightSize());
   config->writeEntry("ButtonsGeometry",preferences.getButtonsSize());
   config->writeEntry("IgnoreGeometry",preferences.getIgnoreSize());

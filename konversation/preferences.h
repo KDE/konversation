@@ -181,6 +181,9 @@ class Preferences : public QObject
     bool getFixedMOTD();
     void setFixedMOTD(bool fixed);
 
+    void setCommandChar(QString newCommandChar);
+    QString getCommandChar();
+
     QString ident;
     QString realname;
 
@@ -212,7 +215,9 @@ class Preferences : public QObject
     int voiceLedColor;
     int noRightsLedColor;
     bool useNotify;
+
     QStringList notifyList;
+    QString commandChar;
 
     // Geometries
     QSize serverWindowSize;
