@@ -60,8 +60,10 @@ else
     
     if(!$browser && !$search && !$spellcheck && !@ARGV)
     {
-	$info = "/google (-s) <keyword> : Search for keyword at Google, /google -s|--spell <word> : Spellcheck word using Google, /google -b <keyword> : Show results in konqueror";
-	exec 'dcop', $PORT, 'Konversation', 'info', $info;
+	system 'dcop', $PORT, 'Konversation', 'info', "\x02Google Search Script Usage:\x02";
+	system 'dcop', $PORT, 'Konversation', 'info', '/google (--max <number>) (--search) <keyword> : Search for keyword at Google';
+	system 'dcop', $PORT, 'Konversation', 'info', '/google --spell <word> : Spellcheck word using Google';
+	exec   'dcop', $PORT, 'Konversation', 'info', '/google -b <keyword> : Show results in konqueror';
     }
     elsif($browser)
     {
