@@ -934,11 +934,7 @@ void Server::incoming()
           if(!lineSplitted[0].contains('!'))
             isServerMessage = true;
           else
-          {
-            QRegExp re("^:(.+)\\!~.+@");
-            if(re.search(lineSplitted[0]) > -1)
-              senderNick = re.cap(1);
-          }
+            senderNick = lineSplitted[0].mid(1, lineSplitted[0].find('!')-1);
           lineSplitted.pop_front();  // remove prefix
         }
       // set channel key
