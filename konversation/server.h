@@ -330,6 +330,7 @@ class Server : public QObject
     ///Fires when the user switches his state to away and has enabled "Insert Remember Line on away" in his identity.
     void awayInsertRememberLine();
     void sslInitFailure();
+    void sslConnected(Server* server);
 
   public slots:
     void lookupFinished();
@@ -518,7 +519,7 @@ class Server : public QObject
     KNetwork::KBufferedSocket* serverSocket;
     SSLSocket*   m_serverSSLSocket;
     bool         m_useSSL;
-    
+    bool         m_tryReconnect;
 
     QTimer reconnectTimer;
     QTimer incomingTimer;

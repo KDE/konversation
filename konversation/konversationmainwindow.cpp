@@ -752,7 +752,7 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
 
   // SSL icon stuff
   QObject::connect(server,SIGNAL(sslInitFailure()),this,SLOT(removeSSLIcon()));
-  updateSSLInfo(server);
+  QObject::connect(server,SIGNAL(sslConnected(Server*)),this,SLOT(updateSSLInfo(Server*)));
 
   // ... then put it into the tab widget, otherwise we'd have a race with server member
 #ifdef USE_MDI
@@ -1132,7 +1132,7 @@ void KonversationMainWindow::updateLag(Server* lagServer,int msec)
 
 void KonversationMainWindow::updateSSLInfo(Server* server)
 {
-  if(server->getUseSSL())
+  if(server->getUseSSL() && server->isConnected())
     {
       QObject::disconnect(m_sslLabel,0,0,0);
       QObject::connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));

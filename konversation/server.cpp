@@ -237,6 +237,7 @@ Server::~Server()
 
 void Server::init(KonversationMainWindow* mainWindow)
 {
+  m_tryReconnect=true;
   autoJoin = false;
   identity = 0;
   tryNickNumber = 0;
@@ -686,7 +687,7 @@ void Server::broken(int state)
 
   // TODO: Close all queries and channels!
   //       Or at least make sure that all gets reconnected properly
-  if(autoReconnect && !getDeliberateQuit())
+  if(m_tryReconnect && autoReconnect && !getDeliberateQuit())
   {
     statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName));
     getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.").arg(serverName),statusView);
@@ -721,8 +722,8 @@ void Server::broken(int state)
 void Server::sslError()
 {
   statusView->appendServerMessage(i18n("Error"),i18n("An SSL error happened. Maybe the server does not support SSL?"));
-  
-  emit serverOnline(false);
+  m_tryReconnect=false;
+
 }
 
 // Will be called from InputFilter as soon as the Welcome message was received
@@ -958,6 +959,9 @@ void Server::lockSending()
 
 void Server::incoming()
 {
+  if(m_useSSL)
+    emit sslConnected(this);
+
   // We read all available bytes here because readyRead() signal will be emitted when there is new data
   // else we will stall when displaying MOTD etc.
   int max_bytes;
