@@ -30,6 +30,7 @@
 #include <kwin.h>
 #include <qpainter.h>
 #include <qnamespace.h>
+#include <qwhatsthis.h>
 
 #include <kabc/addressbook.h>
 #include <kabc/errorhandler.h>
@@ -171,10 +172,12 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   m_sslLabel = new SSLLabel(statusBar(),"sslLabel");
   m_sslLabel->setPixmap(SmallIcon("encrypted"));
   m_sslLabel->hide();
+  QWhatsThis::add(m_sslLabel, i18n("All communication with the server is encrypted.  This makes it harder for someone to listen in on your communications."));
 
   statusBar()->insertItem(i18n("Ready."),StatusText,1);
   statusBar()->insertItem("lagometer",LagOMeter,0,true);
   statusBar()->addWidget(m_sslLabel,0,true);
+  QWhatsThis::add(statusBar(), i18n("<qt>The status bar shows various messages, including any problems connecting to the server.  On the far right the current delay to the server is shown.  The delay is the time it takes for messages from you to reach the server, and from the server back to you.</qt>"));
 
   // Show "Lag unknown"
   resetLag();

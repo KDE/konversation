@@ -21,6 +21,7 @@
 #include <qclipboard.h>
 #include <qbrush.h>
 #include <qpopupmenu.h>
+#include <qwhatsthis.h>
 
 #include "konvidebug.h"
 #include <kmessagebox.h>
@@ -45,7 +46,7 @@
 
 IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 {
-  QWhatsThis::add(this, i18n("<qt>The text for the channel, server or query is shown here.  You can view the history by choosing <em>Open logfile</em> from the Window menu.</qt>"))
+  QWhatsThis::add(this, i18n("<qt>The text for the channel, server or query is shown here.  You can view the history by choosing <em>Open logfile</em> from the Window menu.</qt>"));
   copyUrlMenu=false;
   resetScrollbar=TRUE;
 
