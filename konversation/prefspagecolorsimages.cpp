@@ -29,15 +29,15 @@
 PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newPreferences) :
                        PrefsPage(newParent,newPreferences)
 {
-  colorList.append(i18n("Action text color")+",ActionMessage");
-  colorList.append(i18n("Backlog text color")+",BacklogMessage");
-  colorList.append(i18n("Channel message text color")+",ChannelMessage");
-  colorList.append(i18n("Command message text color")+",CommandMessage");
-  colorList.append(i18n("Hyperlink text color")+",LinkMessage");
-  colorList.append(i18n("Query message text color")+",QueryMessage");
-  colorList.append(i18n("Server message text color")+",ServerMessage");
-  colorList.append(i18n("Timestamp color")+",Time");
-  colorList.append(i18n("Background color")+",TextViewBackground");
+  colorList.append(i18n("Action text color:")+",ActionMessage");
+  colorList.append(i18n("Backlog text color:")+",BacklogMessage");
+  colorList.append(i18n("Channel message text color:")+",ChannelMessage");
+  colorList.append(i18n("Command message text color:")+",CommandMessage");
+  colorList.append(i18n("Hyperlink text color:")+",LinkMessage");
+  colorList.append(i18n("Query message text color:")+",QueryMessage");
+  colorList.append(i18n("Server message text color:")+",ServerMessage");
+  colorList.append(i18n("Timestamp color:")+",Time");
+  colorList.append(i18n("Background color:")+",TextViewBackground");
 
   QGridLayout* colorSettingsLayout=new QGridLayout(parentFrame,4,3,marginHint(),spacingHint(),"log_settings_layout");
 
@@ -71,7 +71,7 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
     row++;
   }
 
-  QLabel* backgroundLabel=new QLabel(i18n("Background image"),parentFrame);
+  QLabel* backgroundLabel=new QLabel(i18n("Background image:"),parentFrame);
   backgroundName=new KLineEdit(parentFrame,"background_image_name");
   QPushButton* backgroundSelect=new QPushButton(i18n("Choose..."),parentFrame,"background_image_choose_button");
 
@@ -116,11 +116,8 @@ void PrefsPageColorsImages::selectBackground()
                                                  parentFrame,
                                                  i18n("Select background image")
                                                );
-  if(!fileName.isEmpty())
-  {
-    backgroundName->setText(fileName);
-//    backgroundNameChanged(fileName);
-  }
+
+  if(!fileName.isEmpty()) backgroundName->setText(fileName);
 }
 
 #include "prefspagecolorsimages.moc"

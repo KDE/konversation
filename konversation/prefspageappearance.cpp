@@ -51,7 +51,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   QPushButton* textFontButton=new QPushButton(i18n("Choose..."),parentFrame,"text_font_button");
   QPushButton* listFontButton=new QPushButton(i18n("Choose..."),parentFrame,"list_font_button");
 
-  QLabel* codecLabel=new QLabel(i18n("Encoding"),parentFrame);
+  QLabel* codecLabel=new QLabel(i18n("Encoding:"),parentFrame);
   codecList=new QComboBox(parentFrame);
 
   QStringList encodings=KGlobal::charsets()->descriptiveEncodingNames();
@@ -139,7 +139,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   QHBox* paragraphSpacingBox=new QHBox(parentFrame);
   paragraphSpacingBox->setSpacing(spacingHint());
 
-  useParagraphSpacingCheck=new QCheckBox(i18n("Use paragraph spacing"),paragraphSpacingBox,"use_paragraph_spacing_check");
+  useParagraphSpacingCheck=new QCheckBox(i18n("Use paragraph spacing:"),paragraphSpacingBox,"use_paragraph_spacing_check");
 
   paragraphSpacingSpin=new QSpinBox(0,10,1,paragraphSpacingBox,"paragraph_spacing_spin_box");
 
