@@ -1041,7 +1041,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 		  // Prints "psn is an identified user"
 //	    server->appendStatusMessage(i18n("Whois"),parameterList.join(" ").section(' ',1)+" "+trailing);
             //The above line works fine, but can't be i18n'ised. So use the below instead.. I hope this is okay.
-            server->appendStatusMessage(i18n("Whois"),parameterList[1] + i18n(" is an identified user"));
+            server->appendStatusMessage(i18n("Whois"), i18n("%1 is an identified user").arg(parameterList[1]));
 	  }
 	  break;
 	}
