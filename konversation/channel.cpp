@@ -266,7 +266,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   // every few seconds try to get more userhosts
   autoUserhostChanged(KonversationApplication::preferences.getAutoUserhost());
   userhostTimer.start(10000);
-  
+
   m_allowNotifications = true;
 }
 
@@ -527,7 +527,7 @@ void Channel::completeNick()
       { // Shell like completion
         QStringList found;
         foundNick = nicknameList.completeNick(pattern, complete, found);
-        
+
         if(!complete && !found.isEmpty()) {
           if(KonversationApplication::preferences.getNickCompletionMode() == 1) {
             QString nicks = found.join(" ");
@@ -538,7 +538,7 @@ void Channel::completeNick()
         }
       } else if(KonversationApplication::preferences.getNickCompletionMode() == 0) { // Cycle completion
         complete = true;
-        
+
         do
         {
           QString lookNick=nicknameList.at(completionPosition)->getNickname();
@@ -551,7 +551,7 @@ void Channel::completeNick()
           // first search position
         } while(completionPosition!=oldCompletionPosition && foundNick.isEmpty());
       }
-      
+
       // did we find a suitable nick?
       if(!foundNick.isEmpty())
       {
@@ -1647,6 +1647,13 @@ void Channel::autoUserhostChanged(bool state)
 {
   if(state)
   {
+    // we can't have automatic resizing with three columns; the hostname column is too wide
+    nicknameListView->setResizeMode(QListView::NoColumn);
+    // shrink the first column and let it re-expand, otherwise it stays
+    // maximum width, leaving the hostmask column off the screen
+    nicknameListView->setColumnWidth(1,32);
+    nicknameListView->setColumnWidthMode(1,KListView::Maximum);
+
     // restart userhost timer
     userhostTimer.start(10000);
     // if the column was actually gone (just to be sure) ...
@@ -1669,6 +1676,9 @@ void Channel::autoUserhostChanged(bool state)
   {
     userhostTimer.stop();
     if(nicknameListView->columns()==3) nicknameListView->removeColumn(2);
+
+    // make the nick column resize itself automatically to prevent horizontal scrollbar
+    nicknameListView->setResizeMode(QListView::LastColumn);
   }
 }
 
@@ -1714,11 +1724,11 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 {
   found.clear();
   QString prefix = "^";
-  
+
   if(pattern.find(QRegExp("^(\\d|\\w)")) != -1) {
     prefix = "(^|[^\\d\\w]|[\\_])";
   }
-  
+
   QRegExp regexp(prefix + QRegExp::escape(pattern.lower()));
 
   for(Nick* n = first(); n; n = next()) {
@@ -1739,14 +1749,14 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
         i -= 1;
       }
     }
-      
+
     complete = false;
     return found[0].left(pattern.length() + i);
   } else if(found.count() == 1) {
     complete = true;
     return found[0];
   }
-  
+
   return QString::null;
 }
 

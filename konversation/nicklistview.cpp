@@ -22,8 +22,6 @@
 NickListView::NickListView(QWidget* parent) :
               KListView(parent)
 {
-  setResizeMode(QListView::LastColumn);
-
   popup=new QPopupMenu(this,"nicklist_context_menu");
   modes=new QPopupMenu(this,"nicklist_modes_context_submenu");
   kickban=new QPopupMenu(this,"nicklist_kick_ban_context_submenu");
