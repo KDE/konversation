@@ -39,17 +39,13 @@ class DccPanel : public ChatWindow
     KListView* getListView();
     DccTransfer* getTransferByPort(QString port,DccTransfer::DccType type);
     DccTransfer* getTransferByName(QString name,DccTransfer::DccType type);
-/*
-  signals:
-    void requestDccSend();
-*/
+  
   public slots:
     void adjustFocus();
 
   protected slots:
     void acceptDcc();
     void runDcc();
-//    void sendDcc();
     void abortDcc();
     void removeDcc();
     void dccSelected();
@@ -60,7 +56,6 @@ class DccPanel : public ChatWindow
     KListView* dccListView;
 
     QPushButton* acceptButton;
-//    QPushButton* sendButton;
     QPushButton* abortButton;
     QPushButton* removeButton;
     QPushButton* openButton;

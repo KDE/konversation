@@ -123,6 +123,9 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
                   this,SLOT  (resumeDccSendTransfer(const QString&, const QStringList&)) );
   connect(&inputFilter,SIGNAL(userhost(const QString&,const QString&,bool,bool)),
                   this,SLOT  (userhost(const QString&,const QString&,bool,bool)) );
+  connect(&inputFilter,SIGNAL(topicAuthor(const QString&,const QString&)),
+                  this,SLOT  (setTopicAuthor(const QString&,const QString&)) );
+
 
   connect(this,SIGNAL(serverLag(int)),statusView,SLOT(updateLag(int)) );
   connect(this,SIGNAL(serverLag(Server*,int)),getMainWindow(),SLOT(updateLag(Server*,int)) );
@@ -1148,6 +1151,15 @@ void Server::setChannelTopic(const QString& nickname, const QString &channel, co
   }
 }
 
+void Server::setTopicAuthor(const QString& channel,const QString& author)
+{
+  Channel* outChannel=getChannelByName(channel);
+  if(outChannel)
+  {
+    outChannel->setTopicAuthor(author);
+  }
+}
+
 bool Server::isNickname(const QString &compare)
 {
   return (nickname==compare);
@@ -1187,7 +1199,6 @@ QString Server::parseWildcards(const QString &toParse, const QString &nickname, 
     out.replace(separatorRegExp, QString::null);
   }
 
-  kdDebug() << "Replacing placeholders in: " << out << endl;
   out.replace(QRegExp("%u"),nickList.join(separator));
   if(channelName) out.replace(QRegExp("%c"),channelName);
   out.replace(QRegExp("%o"),nickname);

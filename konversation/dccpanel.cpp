@@ -48,7 +48,6 @@ DccPanel::DccPanel(QWidget* parent) :
   QHBox* buttonsBox=new QHBox(this);
   buttonsBox->setSpacing(spacing());
   acceptButton=new QPushButton(i18n("Accept"),buttonsBox,"start_dcc");
-//  sendButton  =new QPushButton(i18n("Send File"),buttonsBox,"send_dcc");
   abortButton =new QPushButton(i18n("Abort"),buttonsBox,"abort_dcc");
   removeButton=new QPushButton(i18n("Remove"),buttonsBox,"remove_dcc");
   openButton  =new QPushButton(i18n("Open"),buttonsBox,"open_dcc_file");
@@ -57,7 +56,6 @@ DccPanel::DccPanel(QWidget* parent) :
   connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (dccSelected()) );
 
   connect(acceptButton,SIGNAL (clicked()) ,this,SLOT (acceptDcc()) );
-//  connect(sendButton,SIGNAL (clicked()) ,this,SLOT (sendDcc()) );
   connect(abortButton,SIGNAL (clicked()) ,this,SLOT (abortDcc()) );
   connect(removeButton,SIGNAL (clicked()) ,this,SLOT (removeDcc()) );
   connect(openButton,SIGNAL (clicked()) ,this,SLOT (runDcc()) );
@@ -79,7 +77,6 @@ void DccPanel::setButtons(bool accept,bool abort,bool remove,bool open,bool info
 void DccPanel::dccSelected()
 {
   DccTransfer* item=(DccTransfer*) getListView()->selectedItem();
-  kdDebug() << "(item)" << item << endl;
 
   if(item)
   {
@@ -120,12 +117,7 @@ void DccPanel::acceptDcc()
     if(item->getType()==DccTransfer::Get && item->getStatus()==DccTransfer::Queued) item->startGet();
   }
 }
-/*
-void DccPanel::sendDcc()
-{
- emit requestDccSend();
-}
-*/
+
 void DccPanel::runDcc()
 {
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
@@ -177,7 +169,6 @@ DccTransfer* DccPanel::getTransferByPort(QString port,DccTransfer::DccType type)
     item=static_cast<DccTransfer*>(getListView()->itemAtIndex(index++));
     if(item)
     {
-      kdDebug() << item->getType() << endl;
       if(item->getStatus()<DccTransfer::Failed &&
          item->getType()==type &&
          item->getPort()==port) return item;
@@ -197,7 +188,6 @@ DccTransfer* DccPanel::getTransferByName(QString name,DccTransfer::DccType type)
     item=static_cast<DccTransfer*>(getListView()->itemAtIndex(index++));
     if(item)
     {
-      kdDebug() << name << " == " << item->getFile() << endl;
       if(item->getStatus()<DccTransfer::Failed &&
          item->getType()==type &&
          item->getFile()==name) return item;

@@ -49,7 +49,6 @@ class Query : public ChatWindow
 
   signals:
     void newText(QWidget* query);
-    void closed(Query* query);
     void sendFile(const QString& recipient);
 
   public slots:
@@ -60,7 +59,6 @@ class Query : public ChatWindow
     void queryTextEntered();
     void sendFileMenu();
     void newTextInView();
-    void close();
     // connected to IRCInput::textPasted() - used to handle large/multiline pastes
     void textPasted(QString text);
 

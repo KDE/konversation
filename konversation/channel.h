@@ -62,8 +62,9 @@ class Channel : public ChatWindow
     void adjustOps(int value);
     void updateNicksOps();
 
-    void setTopic(const QString &topic);
-    void setTopic(const QString &nickname, const QString &topic); // Overloaded
+    void setTopic(const QString& topic);
+    void setTopic(const QString& nickname,const QString& topic); // Overloaded
+    void setTopicAuthor(const QString& author);
     void updateMode(const QString &nick,char mode,bool plus, const QString &parameter);
     void updateModeWidgets(char mode, bool plus, const QString &parameter);
     void updateQuickButtons(QStringList newButtonList);
@@ -117,6 +118,8 @@ class Channel : public ChatWindow
     bool modeButtonsChanged;  // to take care of redraw problem if hidden
     bool modeButtonsState;
     bool splitterChanged;
+    
+    bool topicAuthorUnknown;
 
     unsigned int completionPosition;
 

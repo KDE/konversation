@@ -65,11 +65,6 @@ Query::~Query()
   kdDebug() << "Query::~Query(" << getName() << ")" << endl;
 }
 
-void Query::close()
-{
-  emit closed(this);
-}
-
 void Query::setName(const QString& newName)
 {
   ChatWindow::setName(newName);

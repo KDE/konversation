@@ -173,6 +173,7 @@ class Server : public QObject
     void scriptNotFound(const QString& name);
     void scriptExecutionError(const QString& name);
     void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
+    void setTopicAuthor(const QString& channel,const QString& author);
 
   protected:
     // constants

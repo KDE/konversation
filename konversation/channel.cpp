@@ -49,6 +49,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   splitterChanged=true;
   modeButtonsChanged=false;
   modeButtonsState=false;
+  
+  // flag for first seen topic
+  topicAuthorUnknown=true;
 
   setType(ChatWindow::Channel);
 
@@ -772,7 +775,7 @@ void Channel::setTopic(const QString &newTopic)
     topicLine->clear();
     topicLine->insertStringList(topicHistory);
     topic=newTopic;
-    /* Add a tool tip to the topic line if it gets too long */
+    // Add a tool tip to the topic line if it gets too long
     QToolTip::remove(topicLine);
 
     if(newTopic.length()>80)
@@ -798,7 +801,7 @@ void Channel::setTopic(const QString &nickname, const QString &newTopic) // Over
   topicLine->clear();
   topicLine->insertStringList(topicHistory);
   topic=newTopic;
-  /* Add a tool tip to the topic line if it gets too long */
+  // Add a tool tip to the topic line if it gets too long
   QToolTip::remove(topicLine);
   if(newTopic.length()>80)
   {
@@ -808,6 +811,18 @@ void Channel::setTopic(const QString &nickname, const QString &newTopic) // Over
                              replace(QRegExp(">",false,true),"&gt;");
 
     QToolTip::add(topicLine,"<qt>"+toolTip+"</qt>");
+  }
+}
+
+void Channel::setTopicAuthor(const QString& newAuthor)
+{
+  if(topicAuthorUnknown)
+  {
+    kdDebug() << "adding unknown topic author " << newAuthor << endl;
+    topicHistory[0]="<"+newAuthor+"> "+topicHistory[0].section(' ',1);
+    topicLine->clear();
+    topicLine->insertStringList(topicHistory);
+    topicAuthorUnknown=false;
   }
 }
 

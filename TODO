@@ -24,7 +24,6 @@ Indicate hilight on tab LED / label
 DCC port range
 /cycle command
 Move Encoding into identity
-Font update does not affect Raw Log and nick button in status pane
 Nick button in status pane does nothing
 Measure away time and make it available via placeholder
 
