@@ -270,6 +270,8 @@ QValueList<int> Preferences::getAutoConnectServerIDs()
   return list;
 }
 
+QPtrList<ServerEntry> Preferences::getServerList() { return serverList; }
+
 int Preferences::addServer(const QString& serverString)
 {
   ServerEntry* newEntry=new ServerEntry(serverString);
@@ -456,20 +458,47 @@ int Preferences::getNotifyDelay() { return notifyDelay; }
 void Preferences::setNotifyDelay(int delay) { notifyDelay=delay; }
 bool Preferences::getUseNotify() { return useNotify; }
 void Preferences::setUseNotify(bool use) { useNotify=use; }
-void Preferences::setNotifyList(const QStringList &newList) { notifyList=newList; }
-QStringList Preferences::getNotifyList() { return notifyList; }
-QString Preferences::getNotifyString() { return notifyList.join(" "); }
-bool Preferences::addNotify(const QString& newPattern)
+void Preferences::setNotifyList(const QMap<QString, QStringList> &newList)
+  { notifyList=newList; }
+QMap<QString, QStringList> Preferences::getNotifyList() { return notifyList; }
+QStringList Preferences::getNotifyListByGroup(const QString& groupName)
+{
+  if (notifyList.find(groupName) != notifyList.end())
+    return notifyList[groupName];
+  else
+    return QStringList();
+}
+QString Preferences::getNotifyStringByGroup(const QString& groupName)
+{
+  return getNotifyListByGroup(groupName).join(" ");
+}
+bool Preferences::addNotify(const QString& groupName, const QString& newPattern)
 {
   // don't add duplicates
-  if(notifyList.findIndex(newPattern)==-1)
+  if (groupName.isEmpty() || newPattern.isEmpty()) return false;
+  if (!notifyList[groupName].contains(newPattern))
   {
-    notifyList.append(newPattern);
+    QStringList nicknameList = notifyList[groupName];
+    nicknameList.append(newPattern);
+    notifyList[groupName] = nicknameList;
     return true;
   }
   return false;
 }
-bool Preferences::removeNotify(const QString& pattern) { return (notifyList.remove(pattern)); }
+bool Preferences::removeNotify(const QString& groupName, const QString& pattern)
+{
+  if (notifyList.find(groupName) != notifyList.end())
+  {
+    QStringList nicknameList = notifyList[groupName];
+    nicknameList.remove(pattern);
+    if (nicknameList.isEmpty())
+        notifyList.remove(groupName);
+    else
+        notifyList[groupName] = nicknameList;
+    return true;
+  } else
+    return false;
+}
 
 QStringList Preferences::getButtonList() { return buttonList; }
 

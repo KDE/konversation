@@ -44,6 +44,12 @@ void ServerEntry::updateProperty(int property,const QString& value)
   setDefinition(properties.join(","));
 }
 
+QString ServerEntry::getGroupName() const
+{
+  QStringList definition(QStringList::split(',',getDefinition(),true));
+  return definition[0];
+}
+
 QString ServerEntry::getServerName() const
 {
   QStringList definition(QStringList::split(',',getDefinition(),true));

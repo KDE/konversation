@@ -2122,8 +2122,10 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
 }
 
 QString Server::getNotifyString() {
-  if( KonversationApplication::preferences.getNotifyString() != QString::null ) 
-    return KonversationApplication::preferences.getNotifyString() +" " + Konversation::Addressbook::self()->allContactsNicks().join(" ");
+  if( KonversationApplication::preferences.getNotifyStringByGroup(getServerGroup())
+    != QString::null ) 
+    return KonversationApplication::preferences.getNotifyStringByGroup(getServerGroup())
+      + " " + Konversation::Addressbook::self()->allContactsNicks().join(" ");
   else
     return Konversation::Addressbook::self()->allContactsNicks().join(" ");
 }

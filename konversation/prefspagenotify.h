@@ -37,25 +37,30 @@ class PrefsPageNotify : public PrefsPage
     PrefsPageNotify(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageNotify();
 
-    QStringList getNotifyList();
+    QMap<QString, QStringList> getNotifyList();
 
   public slots:
     void applyPreferences();
 
-  protected slots:
+  private slots:
     void newNotify();
+    void createNotify(const QString& groupName, const QString& nickname);
     void removeNotify();
     void notifyCheckChanged(bool enable);
+    void slotNotifyListView_SelectionChanged();
 
-  protected:
-    KListView* notifyListView;
-    QPushButton* newButton;
-    QPushButton* removeButton;
-    QCheckBox* useNotifyCheck;
-    QLabel* notifyDelayLabel;
-    QSpinBox* notifyDelaySpin;
-    KLineEdit* notifyActionInput;
-    QCheckBox* showWatchedNicksAtStartup;
+  private:
+    QListViewItem* findBranch(QString name, bool generate);
+    QListViewItem* findItemChild(const QListViewItem* parent, const QString& name);
+  
+    KListView* m_notifyListView;
+    QPushButton* m_newButton;
+    QPushButton* m_removeButton;
+    QCheckBox* m_useNotifyCheck;
+    QLabel* m_notifyDelayLabel;
+    QSpinBox* m_notifyDelaySpin;
+    KLineEdit* m_notifyActionInput;
+    QCheckBox* m_showWatchedNicksAtStartup;
 };
 
 #endif

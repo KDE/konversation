@@ -503,14 +503,6 @@ void KonversationApplication::readOptions()
 
     config->deleteGroup("User Identity");
   }
-  // Notify Settings and list
-  config->setGroup("Notify List");
-  preferences.setNotifyDelay(config->readNumEntry("NotifyDelay",20));
-  preferences.setUseNotify(config->readBoolEntry("UseNotify",true));
-  QString notifyList=config->readEntry("NotifyList",QString::null);
-  preferences.setNotifyList(QStringList::split(' ',notifyList));
-  preferences.setOpenWatchedNicksAtStartup(config->readBoolEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup()));
-
   // OnScreen Display
   config->setGroup("OSD");
   preferences.setOSDUsage(config->readBoolEntry("UseOSD",preferences.getOSDUsage()));
@@ -564,6 +556,46 @@ void KonversationApplication::readOptions()
     preferences.addServer(config->readEntry(QString("Server%1").arg(index++)));
   }
 
+  // Notify Settings and lists.  Must follow Server List.
+  config->setGroup("Notify List");
+  preferences.setNotifyDelay(config->readNumEntry("NotifyDelay",20));
+  preferences.setUseNotify(config->readBoolEntry("UseNotify",true));
+//  QString notifyList=config->readEntry("NotifyList",QString::null);
+//  preferences.setNotifyList(QStringList::split(' ',notifyList));
+  preferences.setOpenWatchedNicksAtStartup(config->readBoolEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup()));
+  index = 0;
+  QMap<QString, QStringList> notifyList;
+  QMap<QString, QString> notifyGroups = config->entryMap("Notify Group Lists");
+  if (!notifyGroups.empty())
+  {
+    QMapConstIterator<QString, QString> groupItEnd = notifyGroups.constEnd();
+    for (QMapConstIterator<QString, QString> groupIt = notifyGroups.constBegin();
+      groupIt != groupItEnd; ++groupIt)
+      notifyList[groupIt.key()] = QStringList::split(" ", groupIt.data(), false);
+  }
+  else
+  {
+    // Retrieve old Notify List.
+    config->setGroup("Notify List");
+    QString oldNotifyNicknames = config->readEntry("NotifyList", QString::null);
+    if (!oldNotifyNicknames.isEmpty())
+    {
+      QStringList oldNotifyNicknameList = QStringList::split(" ", oldNotifyNicknames, false);
+      // Build a list of unique server group names.
+      QPtrList<ServerEntry> serverEntries = preferences.getServerList();
+      QStringList groupNames;
+      for(unsigned int index=0;index<serverEntries.count();index++)
+      {
+        QString name=serverEntries.at(index)->getGroupName();
+        if (!groupNames.contains(name)) groupNames.append(name);
+      }
+      // Apply the old Notify List to all groups.
+      for (QStringList::Iterator groupIt = groupNames.begin(); groupIt != groupNames.end(); ++groupIt)
+        notifyList[*groupIt] = oldNotifyNicknameList;
+    }
+  }
+  preferences.setNotifyList(notifyList);
+  
   // Quick Buttons List
   config->setGroup("Button List");
   // Read all buttons and overwrite default entries
@@ -825,8 +857,16 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->writeEntry("NotifyDelay",preferences.getNotifyDelay());
   config->writeEntry("UseNotify",preferences.getUseNotify());
-  config->writeEntry("NotifyList",preferences.getNotifyString());
+//  config->writeEntry("NotifyList",preferences.getNotifyString());
   config->writeEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup());
+  
+  config->deleteGroup("Notify Group Lists");
+  config->setGroup("Notify Group Lists");
+  QMap<QString, QStringList> notifyList = preferences.getNotifyList();
+  QMapConstIterator<QString, QStringList> groupItEnd = notifyList.constEnd();
+  for (QMapConstIterator<QString, QStringList> groupIt = notifyList.constBegin();
+    groupIt != groupItEnd; ++groupIt)
+    config->writeEntry(groupIt.key(), groupIt.data().join(" "));
 
   config->deleteGroup("Server List");
   config->setGroup("Server List");

@@ -141,11 +141,12 @@ class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
   void setNotifyDelay(int delay);
   bool getUseNotify();
   void setUseNotify(bool use);
-  QStringList getNotifyList();
-  QString getNotifyString();
-  void setNotifyList(QStringList newList);
-  bool addNotify(QString newPattern);
-  bool removeNotify(QString pattern);
+  QMap<QString, QStringList> getNotifyList();
+  QStringList getNotifyListByGroup(QString groupName);
+  QString getNotifyStringByGroup(QString groupName);
+  void setNotifyList(QMap<QString, QStringList> newList);
+  bool addNotify(QString groupName, QString newPattern);
+  bool removeNotify(QString groupName, QString pattern);
   void addIgnore(QString newIgnore);
   void clearIgnoreList();
   //QPtrList<Ignore> getIgnoreList();

@@ -705,6 +705,7 @@ namespace Konversation {
     {
         OutputFilterResult result;
 
+        QString groupName = m_server->getServerGroup();
         if(!parameter.isEmpty())
         {
             QStringList list = QStringList::split(' ', parameter);
@@ -712,10 +713,10 @@ namespace Konversation {
             for(unsigned int index = 0; index < list.count(); index++)
             {
                 // Try to remove current pattern
-                if(!KonversationApplication::preferences.removeNotify(list[index]))
+                if(!KonversationApplication::preferences.removeNotify(groupName, list[index]))
                 {
                     // If remove failed, try to add it instead
-                    if(!KonversationApplication::preferences.addNotify(list[index])) {
+                    if(!KonversationApplication::preferences.addNotify(groupName, list[index])) {
                         kdDebug() << "OutputFilter::parseNotify(): Adding failed!" << endl;
                     }
                 }
@@ -723,7 +724,7 @@ namespace Konversation {
         }
 
         // show (new) notify list to user
-        QString list = KonversationApplication::preferences.getNotifyString() + " " + Konversation::Addressbook::self()->allContacts().join(" ");
+        QString list = KonversationApplication::preferences.getNotifyStringByGroup(groupName) + " " + Konversation::Addressbook::self()->allContacts().join(" ");
         result.typeString = i18n("Notify");
 
         if(list.isEmpty())

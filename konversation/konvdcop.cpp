@@ -598,30 +598,35 @@ void KonvPrefsDCOP::setUseNotify(bool use)
   static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
-QStringList KonvPrefsDCOP::getNotifyList()
+QMap<QString, QStringList> KonvPrefsDCOP::getNotifyList()
 {
   return KonversationApplication::preferences.getNotifyList();
 }
 
-QString KonvPrefsDCOP::getNotifyString()
+QStringList KonvPrefsDCOP::getNotifyListByGroup(QString groupName)
 {
-  return KonversationApplication::preferences.getNotifyString();
+  return KonversationApplication::preferences.getNotifyListByGroup(groupName);
 }
 
-void KonvPrefsDCOP::setNotifyList(QStringList newList)
+QString KonvPrefsDCOP::getNotifyStringByGroup(QString groupName)
+{
+  return KonversationApplication::preferences.getNotifyStringByGroup(groupName);
+}
+
+void KonvPrefsDCOP::setNotifyList(QMap<QString, QStringList> newList)
 {
   KonversationApplication::preferences.setNotifyList(newList);
   static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
-bool KonvPrefsDCOP::addNotify(QString newPattern)
+bool KonvPrefsDCOP::addNotify(QString groupName, QString newPattern)
 {
-  return KonversationApplication::preferences.addNotify(newPattern);
+  return KonversationApplication::preferences.addNotify(groupName, newPattern);
 }
 
-bool KonvPrefsDCOP::removeNotify(QString pattern)
+bool KonvPrefsDCOP::removeNotify(QString groupName, QString pattern)
 {
-  return KonversationApplication::preferences.removeNotify(pattern);
+  return KonversationApplication::preferences.removeNotify(groupName, pattern);
 }
 
 void KonvPrefsDCOP::addIgnore(QString newIgnore)

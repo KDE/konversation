@@ -67,6 +67,7 @@ class Preferences : public QObject
     Preferences();
     ~Preferences();
 
+    QPtrList<ServerEntry> getServerList();
     int addServer(const QString& serverString);
     void removeServer(int id);
     QString getServerByIndex(unsigned int);
@@ -182,11 +183,12 @@ class Preferences : public QObject
     void setNotifyDelay(int delay);
     bool getUseNotify();
     void setUseNotify(bool use);
-    QStringList getNotifyList();
-    QString getNotifyString();
-    void setNotifyList(const QStringList& newList);
-    bool addNotify(const QString& newPattern);
-    bool removeNotify(const QString& pattern);
+    QMap<QString, QStringList> getNotifyList();
+    QStringList getNotifyListByGroup(const QString& groupName);
+    QString getNotifyStringByGroup(const QString& groupName);
+    void setNotifyList(const QMap<QString, QStringList>& newList);
+    bool addNotify(const QString& groupName, const QString& newPattern);
+    bool removeNotify(const QString& groupName, const QString& pattern);
 
     QPtrList<Highlight> getHilightList();
     void setHilightList(QPtrList<Highlight> newList);
@@ -497,7 +499,7 @@ class Preferences : public QObject
 
     QValueList<int> channelSplitter;
 
-    QStringList notifyList;
+    QMap<QString, QStringList> notifyList;
     QString commandChar;
     QString preShellCommandStr;
 

@@ -27,6 +27,7 @@ class ServerEntry
   public:
     ServerEntry(const QString &newDefinition);
     ~ServerEntry();
+    QString getGroupName() const;
     QString getServerName() const;
     int getPort() const;
     QString getChannelName() const;
