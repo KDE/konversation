@@ -26,12 +26,14 @@
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <kdeversion.h>
 
 #include "prefspagedccsettings.h"
 
 PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPreferences) :
                       PrefsPage(newParent,newPreferences)
 {
+  kdDebug() << KDE_VERSION << endl;
   // Add a Layout to the DCC settings pane
   QGridLayout* dccSettingsLayout=new QGridLayout(parentFrame,5,3,marginHint(),spacingHint(),"dcc_settings_layout");
 
@@ -105,11 +107,18 @@ void PrefsPageDccSettings::folderInputChanged(const QString& newFolder)
 
 void PrefsPageDccSettings::folderButtonClicked()
 {
+  QString folderName=getExistingDirectory(
+                                           preferences->getDccPath(),
+                                           0,
+                                           i18n("Select DCC download folder")
+                                         );
+/*
   QString folderName=KFileDialog::getExistingDirectory(
                                                         preferences->getDccPath(),
                                                         0,
                                                         i18n("Select DCC download folder")
                                                       );
+*/
   if(folderName!="")
   {
     QFileInfo folderInfo(folderName);
@@ -146,6 +155,28 @@ void PrefsPageDccSettings::addSenderChanged(int state)
 void PrefsPageDccSettings::createFolderChanged(int state)
 {
   preferences->setDccCreateFolder(state==2);
+}
+
+QString PrefsPageDccSettings::getExistingDirectory(const QString& startDir,
+                                                   QWidget *parent,
+                                                   const QString& caption)
+{
+#if KDE_VERSION < 0x030100
+  KFileDialog dlg(startDir, QString::null, parent, "filedialog", true);
+  dlg.setMode(KFile::Directory | KFile::LocalOnly | KFile::ExistingOnly);
+  // to get "All Directories" instead of "All Files" in the combo
+  dlg.setFilter( QString::null );
+  dlg.setCaption(caption.isNull() ? i18n("Select Directory") : caption);
+  dlg.exec();
+
+  return dlg.selectedFile();
+#else
+  return KFileDialog::getExistingDirectory(
+                                            preferences->getDccPath(),
+                                            0,
+                                            i18n("Select DCC download folder")
+                                          );
+#endif
 }
 
 #include "prefspagedccsettings.moc"

@@ -41,6 +41,8 @@ class PrefsPageDccSettings : public PrefsPage
     void addSenderChanged(int state);
     void createFolderChanged(int state);
 
+    QString getExistingDirectory(const QString& startDir,QWidget* parent,const QString& caption);
+
   protected:
     KLineEdit* dccFolderInput;
 };
