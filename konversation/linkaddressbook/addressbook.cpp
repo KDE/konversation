@@ -217,11 +217,17 @@ void Addressbook::chatWithContact( const QString &uid ) {
  * @param altFileName an alternate filename describing the file
  * @param fileSize file size in bytes
  */
-void Addressbook::sendFile(const QString &uid, const KURL &/*sourceURL*/, const QString &/*altFileName*/, uint /*fileSize*/) {
+void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QString &altFileName, uint fileSize) {
 	if(uid.isEmpty()) {
 		 kdDebug() << "Addressbook::sendFile called with empty uid" << endl;
 		 return;
 	}
+	NickInfoPtr nickInfo = getNickInfo(addressBook->findByUid(uid));
+        if(!nickInfo) {
+            kdDebug() << "messageContact:  uid %1 not online\n" << endl;
+            return;
+        }
+        nickInfo->getServer()->addDccSend(nickInfo->getNickname(), sourceURL, altFileName, fileSize);
 }
 
 // MUTATORS

@@ -36,7 +36,7 @@
 #include "dcctransfersend.h"
 #include "konversationapplication.h"
 
-DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, const KURL& fileURL, const QString& ownIp )
+DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName, uint fileSize  )
   : DccTransfer( panel, DccTransfer::Send, partnerNick, fileURL.filename() )
 {
   kdDebug() << "DccTransferSend::DccTransferSend()" << endl
@@ -45,8 +45,10 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   
   m_fileURL = fileURL;
   m_ownIp = ownIp;
-  
-  m_fileName = m_fileURL.filename();
+  if(altFileName.isEmpty())
+    m_fileName = m_fileURL.filename();
+  else
+    m_fileName = altFileName;
  
   m_serverSocket = 0;
   m_sendSocket = 0;
@@ -71,7 +73,7 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
     return;
   }
 
-  //Some protocols, like http, maybe not return a filename.  So prompt the user for one.
+  //Some protocols, like http, maybe not return a filename, and altFileName may be empty, So prompt the user for one.
   if( m_fileName.isEmpty() ) {
     bool pressedOk;
     m_fileName = KInputDialog::getText( i18n("Enter filename"), i18n("<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>").arg( getPartnerNick() ), "unknown", &pressedOk, listView() );
@@ -83,7 +85,10 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
     }
   }
   m_file.setName( m_tmpFile );
-  m_fileSize = m_file.size();
+  if(fileSize > 0)
+    m_fileSize = fileSize;
+  else
+    m_fileSize = m_file.size();
 
   updateView();
   panel->selectMe( this );

@@ -1501,7 +1501,7 @@ void Server::requestDccSend(const QString &a_recipient)
   }
 }
 
-void Server::addDccSend(const QString &recipient,KURL fileURL)
+void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &altFileName, uint fileSize)
 {
   emit addDccPanel();
 
@@ -1511,7 +1511,9 @@ void Server::addDccSend(const QString &recipient,KURL fileURL)
   DccTransferSend* newDcc=new DccTransferSend(getMainWindow()->getDccPanel(),
                                               recipient,
                                               fileURL,  // url to the sending file
-                                              ownIp);          // ip
+                                              ownIp,    // ip
+					      altFileName,  
+					      fileSize);   
 
   connect(newDcc,SIGNAL (sendReady(const QString&,const QString&,const QString&,const QString&,unsigned long)),
     this,SLOT (dccSendRequest(const QString&,const QString&,const QString&,const QString&,unsigned long)) );

@@ -310,7 +310,8 @@ class Server : public QObject
     void requestCloseDccPanel();
     void requestBan(const QStringList& users,const QString& channel,const QString& option);
     void requestUnban(const QString& mask,const QString& channel);
-    void addDccSend(const QString &recipient,KURL fileURL);
+
+    void addDccSend(const QString &recipient,KURL fileURL, const QString &altFileName = QString::null, uint fileSize = 0);
     void removeQuery(Query *query);
     void startNotifyTimer(int msec=0);
     void sendJoinCommand(const QString& channelName);

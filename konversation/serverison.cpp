@@ -34,6 +34,12 @@ ServerISON::ServerISON(Server* server) : m_server(server) {
   m_useNotify = false;
   m_ISONList_invalid = false;
   slotPrefsChanged();
+  //We need to know when the addressbook changes because if the info for an offline nick changes, 
+  //we won't get a nickInfoChanged signal.
+  connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), 
+    this, SLOT( addressbookChanged() ) );
+  connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()),
+    this, SLOT(addressbookChanged()));
   connect( m_server, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
     this, SLOT(nickInfoChanged(Server*, const NickInfoPtr)));
   connect(m_server->getMainWindow(), SIGNAL(prefsChanged()),
@@ -191,6 +197,10 @@ void ServerISON::nickInfoChanged(Server* /*server*/, const NickInfoPtr /*nickInf
   //We need to call recalculateAddressees before returning m_ISONList
   m_ISONList_invalid = true;
 }
- 
+void ServerISON::addressbookChanged() {	
+  //We need to call recalculateAddressees before returning m_ISONList
+  m_ISONList_invalid = true;
+}
+
 #include "serverison.moc"
 

@@ -72,6 +72,7 @@ class ServerISON : public QObject
 
   
   private slots:
+    void addressbookChanged();
     void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);
     void slotPrefsChanged();
        
