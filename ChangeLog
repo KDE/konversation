@@ -7,6 +7,7 @@ Changes from 0.8 to 0.9
 - Added #include "sourcefile.moc" to all Q_OBJECTS to speed up compiles
 - Added support for autoconnect to server
 - Inserted a QSplitter between channel text and nick list
+- Added support for background colors
 
 Changes from 0.7 to 0.8:
 - DCCs can now be opened (started) using the 'open' button

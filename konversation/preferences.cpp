@@ -18,6 +18,8 @@
 #include <kstddirs.h>
 #include <kdebug.h>
 
+#include <qpalette.h>
+
 #include "preferences.h"
 #include "prefsdialog.h"
 
@@ -39,7 +41,7 @@ Preferences::Preferences()
   setLinkMessageColor("0000ff");
   setCommandMessageColor("960096");
   setTimeColor("709070");
-
+  setTextViewBackground("");        // will be set on the first run of an ircview
   setNickCompleteSuffixStart(": ");
   setNickCompleteSuffixMiddle(" ");
 
@@ -299,14 +301,15 @@ QString Preferences::getCommandChar() { return commandChar; }
 // TODO: Make this a little simpler (use an array and enum)
 //       get/set message font colors
 
-QString Preferences::getActionMessageColor() {return actionMessageColor;}
-QString Preferences::getBacklogMessageColor() {return backlogMessageColor;}
-QString Preferences::getChannelMessageColor() {return channelMessageColor;}
-QString Preferences::getCommandMessageColor() {return commandMessageColor;}
-QString Preferences::getLinkMessageColor() {return linkMessageColor;}
-QString Preferences::getQueryMessageColor() {return queryMessageColor;}
-QString Preferences::getServerMessageColor() {return serverMessageColor;}
-QString Preferences::getTimeColor() {return timeColor;}
+QString Preferences::getActionMessageColor()  { return actionMessageColor; }
+QString Preferences::getBacklogMessageColor() { return backlogMessageColor; }
+QString Preferences::getChannelMessageColor() { return channelMessageColor; }
+QString Preferences::getCommandMessageColor() { return commandMessageColor; }
+QString Preferences::getLinkMessageColor()    { return linkMessageColor; }
+QString Preferences::getQueryMessageColor()   { return queryMessageColor; }
+QString Preferences::getServerMessageColor()  { return serverMessageColor; }
+QString Preferences::getTimeColor()           { return timeColor; }
+QString Preferences::getTextViewBackground()  { return textViewBackground; }
 
 void Preferences::setActionMessageColor(QString passed_actionMessageColor) {actionMessageColor = passed_actionMessageColor;}
 void Preferences::setBacklogMessageColor(QString passed_backlogMessageColor) {backlogMessageColor = passed_backlogMessageColor;}
@@ -316,6 +319,7 @@ void Preferences::setLinkMessageColor(QString passed_linkMessageColor) {linkMess
 void Preferences::setQueryMessageColor(QString passed_queryMessageColor) {queryMessageColor = passed_queryMessageColor;}
 void Preferences::setServerMessageColor(QString passed_serverMessageColor) {serverMessageColor = passed_serverMessageColor;}
 void Preferences::setTimeColor(QString passed_timeColor) { timeColor = passed_timeColor; }
+void Preferences::setTextViewBackground(QString passed_background) { textViewBackground = passed_background; }
 
 QString Preferences::getNickCompleteSuffixStart() {return nickCompleteSuffixStart; }
 QString Preferences::getNickCompleteSuffixMiddle() {return nickCompleteSuffixMiddle; }
@@ -347,7 +351,7 @@ void Preferences::setIgnoreSize(QSize newSize)             { ignoreSize=newSize;
 void Preferences::setNotifySize(QSize newSize)             { notifySize=newSize; };
 void Preferences::setNicksOnlineSize(QSize newSize)        { nicksOnlineSize=newSize; };
 void Preferences::setNicknameSize(QSize newSize)           { nicknameSize=newSize; };
-void Preferences::setColorConfigurationSize(QSize newSize) {colorConfigurationSize = newSize;}
+void Preferences::setColorConfigurationSize(QSize newSize) { colorConfigurationSize = newSize; }
 
 void Preferences::setHilightNick(bool state) { hilightNick=state; }
 bool Preferences::getHilightNick() { return hilightNick; }

@@ -200,6 +200,7 @@ void KonversationApplication::readOptions()
   preferences.setQueryMessageColor(config->readEntry("QueryMessage", preferences.getQueryMessageColor()));
   preferences.setServerMessageColor(config->readEntry("ServerMessage", preferences.getServerMessageColor()));
   preferences.setTimeColor(config->readEntry("Time", preferences.getTimeColor()));
+  preferences.setTextViewBackground(config->readEntry("TextViewBackground", preferences.getTextViewBackground()));
 
   // Led Colors
   config->setGroup("Led Colors");
@@ -366,6 +367,7 @@ void KonversationApplication::saveOptions()
   config->writeEntry("QueryMessage", preferences.getQueryMessageColor());
   config->writeEntry("ServerMessage", preferences.getServerMessageColor());
   config->writeEntry("Time", preferences.getTimeColor());
+  config->writeEntry("TextViewBackground", preferences.getTextViewBackground());
 
   config->setGroup("Led Colors");
   config->writeEntry("OperatorColor", preferences.getOpLedColor());
@@ -474,6 +476,8 @@ void KonversationApplication::saveOptions()
   Server* lookServer=serverList.first();
   while(lookServer)
   {
+    // TODO: This also updates the background color! We must finally
+    // find a way to do all this with signals / slots!
     lookServer->updateFonts();
     lookServer->setShowQuickButtons(preferences.getShowQuickButtons());
     lookServer->setShowModeButtons(preferences.getShowModeButtons());

@@ -108,7 +108,8 @@ void StatusPanel::updateFonts()
 {
   kdDebug() << "StatusPanel::updateFonts()" << endl;
 
-  textView->setFont(KonversationApplication::preferences.getTextFont());
+  getTextView()->setFont(KonversationApplication::preferences.getTextFont());
+  getTextView()->setPaper(QColor("#"+KonversationApplication::preferences.getTextViewBackground()));
 }
 
 #include "statuspanel.moc"

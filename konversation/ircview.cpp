@@ -47,6 +47,15 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 
   setServer(newServer);
   setFont(KonversationApplication::preferences.getTextFont());
+
+  QString bgColor=KonversationApplication::preferences.getTextViewBackground();
+  if(bgColor=="")
+  {
+    bgColor=palette().color(QPalette::Active,QColorGroup::Base).name().mid(1);
+    KonversationApplication::preferences.setTextViewBackground(bgColor);
+  }
+  setPaper(QColor("#"+bgColor));
+
 #if QT_VERSION >= 0x030100
   setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
 #endif

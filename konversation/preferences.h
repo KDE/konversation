@@ -160,9 +160,6 @@ class Preferences : public QObject
     void setNickname(int index,QString newName);
     void setNicknameList(QStringList newList);
 
-    QString channelMessageColor, queryMessageColor, serverMessageColor, actionMessageColor,
-            backlogMessageColor, linkMessageColor, commandMessageColor,timeColor;
-
     QString getChannelMessageColor();
     QString getQueryMessageColor();
     QString getServerMessageColor();
@@ -171,6 +168,7 @@ class Preferences : public QObject
     QString getLinkMessageColor();
     QString getCommandMessageColor();
     QString getTimeColor();
+    QString getTextViewBackground();
 
     void setChannelMessageColor(QString color);
     void setQueryMessageColor(QString color);
@@ -180,6 +178,7 @@ class Preferences : public QObject
     void setLinkMessageColor(QString color);
     void setCommandMessageColor(QString color);
     void setTimeColor(QString color);
+    void setTextViewBackground(QString color);
 
     void setNickCompleteSuffixStart(QString suffix);
     void setNickCompleteSuffixMiddle(QString suffix);
@@ -271,6 +270,17 @@ class Preferences : public QObject
 
     QString nickCompleteSuffixStart;
     QString nickCompleteSuffixMiddle;
+
+    // rewrite these to use an array or list of some sort
+    QString channelMessageColor;
+    QString queryMessageColor;
+    QString serverMessageColor;
+    QString actionMessageColor;
+    QString backlogMessageColor;
+    QString linkMessageColor;
+    QString commandMessageColor;
+    QString timeColor;
+    QString textViewBackground;
 
     // Geometries
     QSize serverWindowSize;

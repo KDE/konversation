@@ -23,6 +23,7 @@ ColorConfiguration::ColorConfiguration(QString passed_actionTextColor, QString p
 																			 QString passed_channelTextColor, QString passed_commandTextColor,
 																			 QString passed_linkTextColor, QString passed_queryTextColor,
 																			 QString passed_serverTextColor, QString passed_timeColor,
+                                       QString passed_backgroundColor,
                                        QSize passed_windowSize)
                    : KDialogBase(0, 0, false, i18n("Color Configuration"), Ok|Apply|Cancel, Default, true)
 {
@@ -91,6 +92,12 @@ ColorConfiguration::ColorConfiguration(QString passed_actionTextColor, QString p
 	timeColorSelection->setMinimumWidth(50);
 	timeColorSelection->setMaximumWidth(50);
 
+	backgroundBox = new QHBox(centerBox);
+	backgroundLabel = new QLabel(i18n("Background color"), backgroundBox);
+	backgroundColorSelection = new MyColorCombo(backgroundBox);
+	backgroundColorSelection->setMinimumWidth(50);
+	backgroundColorSelection->setMaximumWidth(50);
+
 	setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
   setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
   setButtonCancelText(i18n("Cancel"),i18n("Discards all changes made"));
@@ -111,6 +118,8 @@ ColorConfiguration::ColorConfiguration(QString passed_actionTextColor, QString p
 	linkMessageColorSelection->setColor(linkTextColor);
 	timeColor = QColor(passed_timeColor.prepend("#"));
 	timeColorSelection->setColor(timeColor);
+	backgroundColor = QColor(passed_backgroundColor.prepend("#"));
+	backgroundColorSelection->setColor(backgroundColor);
 
 	connect(actionMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setActionTextColor(const QColor&)));
 	connect(backlogMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setBacklogTextColor(const QColor&)));
@@ -120,6 +129,7 @@ ColorConfiguration::ColorConfiguration(QString passed_actionTextColor, QString p
 	connect(queryMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setQueryTextColor(const QColor&)));
 	connect(serverMessageColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setServerTextColor(const QColor&)));
 	connect(timeColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setTimeColor(const QColor&)));
+	connect(backgroundColorSelection, SIGNAL(activated(const QColor&)), this, SLOT(setBackgroundColor(const QColor&)));
 
 	this->resize(windowSize);
 }
@@ -162,26 +172,19 @@ void ColorConfiguration::slotOk()
 
 void ColorConfiguration::slotApply()
 {
-	actionTextColorString = actionTextColor.name();
-	actionTextColorString = actionTextColorString.right(6);
-	backlogTextColorString = backlogTextColor.name();
-	backlogTextColorString = backlogTextColorString.right(6);
-	channelTextColorString = channelTextColor.name();
-	channelTextColorString = channelTextColorString.right(6);
-	commandTextColorString = commandTextColor.name();
-	commandTextColorString = commandTextColorString.right(6);
-	linkTextColorString = linkTextColor.name();
-	linkTextColorString = linkTextColorString.right(6);
-	queryTextColorString = queryTextColor.name();
-	queryTextColorString = queryTextColorString.right(6);
-	serverTextColorString = serverTextColor.name();
-	serverTextColorString = serverTextColorString.right(6);
-	timeColorString = timeColor.name();
-	timeColorString = timeColorString.right(6);
+	actionTextColorString = actionTextColor.name().mid(1);
+	backlogTextColorString = backlogTextColor.name().mid(1);
+	channelTextColorString = channelTextColor.name().mid(1);
+	commandTextColorString = commandTextColor.name().mid(1);
+	linkTextColorString = linkTextColor.name().mid(1);
+	queryTextColorString = queryTextColor.name().mid(1);
+	serverTextColorString = serverTextColor.name().mid(1);
+	timeColorString = timeColor.name().mid(1);
+	backgroundColorString = backgroundColor.name().mid(1);
 
 	emit saveFontColorSettings(actionTextColorString, backlogTextColorString, channelTextColorString,
 														 commandTextColorString, linkTextColorString, queryTextColorString,
-														 serverTextColorString, timeColorString);
+														 serverTextColorString, timeColorString, backgroundColorString);
 }
 
 void ColorConfiguration::slotCancel()

@@ -145,6 +145,7 @@ void Query::updateFonts()
   kdDebug() << "Query::updateFonts()" << endl;
 
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
+  getTextView()->setPaper(QColor("#"+KonversationApplication::preferences.getTextViewBackground()));
 }
 
 void Query::textPasted(QString text)

@@ -1112,6 +1112,7 @@ void Channel::updateFonts()
   kdDebug() << "Channel::updateFonts()" << endl;
 
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
+  getTextView()->setPaper(QColor("#"+KonversationApplication::preferences.getTextViewBackground()));
   nicknameListView->setFont(KonversationApplication::preferences.getListFont());
 }
 
