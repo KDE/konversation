@@ -676,8 +676,11 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
       QClipboard *cb=KApplication::kApplication()->clipboard();
 #if QT_VERSION >= 0x030100
       cb->setText(urlToCopy,QClipboard::Selection);
+      cb->setText(urlToCopy,QClipboard::Clipboard);
 #else
       cb->setSelectionMode(true);
+      cb->setText(urlToCopy);
+      cb->setSelectionMode(false);
       cb->setText(urlToCopy);
 #endif
       break;
