@@ -107,7 +107,7 @@ class DccTransferRecv : public DccTransfer
     void sendAck();
     void connectionTimeout();
     void writeDone();
-    void gotWriteError( int errorCode );
+    void gotWriteError( QString errorString );
     void slotSocketClosed();
     void slotCanResume( KIO::Job* job, KIO::filesize_t size );
     
@@ -148,9 +148,9 @@ class DccTransferRecvWriteCacheHandler : public QObject
     void closeNow();
     
   signals:
-    void dataFinished();             // ->  m_transferJob->slotFinished()
-    void done();                     // ->  DccTransferRecv::writeDone()
-    void gotError( int errorCode );  // ->  DccTransferRecv::slotWriteError()
+    void dataFinished();                   // ->  m_transferJob->slotFinished()
+    void done();                           // ->  DccTransferRecv::writeDone()
+    void gotError( QString errorString );  // ->  DccTransferRecv::slotWriteError()
     
   protected slots:
     void slotKIODataReq( KIO::Job*, QByteArray& data );  // <-  m_transferJob->dataReq()

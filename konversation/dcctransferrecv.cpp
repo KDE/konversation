@@ -399,12 +399,12 @@ void DccTransferRecv::writeDone()  // slot
   emit done( m_fileName );
 }
 
-void DccTransferRecv::gotWriteError( int /* errorCode */ )  // slot
+void DccTransferRecv::gotWriteError( QString errorString )  // slot
 {
   Q_ASSERT(m_recvSocket); if(!m_recvSocket) return;
   
-  KMessageBox::sorry( listView(), i18n("KIO Error: %1").arg( m_recvSocket->errorString() ), i18n("DCC Error") );
-  setStatus( Failed, i18n("KIO Error: %1").arg( m_recvSocket->errorString() ) );
+  KMessageBox::sorry( listView(), i18n("KIO Error: %1").arg( errorString ), i18n("DCC Error") );
+  setStatus( Failed, i18n("KIO Error: %1").arg( errorString ) );
   cleanUp();
   updateView();
 }
@@ -512,7 +512,7 @@ void DccTransferRecvWriteCacheHandler::closeNow()  // public
 {
   if ( m_transferJob )
   {
-    emit dataFinished();  // tell KIO to close file
+    m_transferJob->kill();
     m_transferJob = 0;
   }
   m_cacheList.clear();
@@ -580,9 +580,9 @@ void DccTransferRecvWriteCacheHandler::slotKIOResult()
   Q_ASSERT(m_transferJob);
   if( m_transferJob->error() )
   {
-    m_transferJob->showErrorDialog(0);
-    emit gotError( m_transferJob->error() );
-    m_transferJob = 0;
+    QString errorString = m_transferJob->errorString();
+    closeNow();
+    emit gotError( errorString );
   }
 }
 
