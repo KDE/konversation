@@ -294,9 +294,9 @@ namespace Konversation {
 
     if(item)
     {
-      Konversation::ServerGroupSettings serverGroup = m_preferences->serverGroupById(item->serverId());
+      Konversation::ServerGroupSettingsPtr serverGroup = m_preferences->serverGroupById(item->serverId());
 
-      if(!serverGroup.name().isEmpty()) {
+      if(serverGroup) {
         ServerGroupDialog dlg(i18n("Edit Network"), this);
         QStringList groups = createGroupList();
         dlg.setAvailableGroups(groups);
@@ -313,13 +313,9 @@ namespace Konversation {
             delete branch;
           }
 
-          ServerGroupSettings serverGroup = dlg.serverGroupSettings();
-          m_preferences->removeServerGroup(serverGroup.id());
-          addServerGroup(serverGroup);
+          *serverGroup = *(dlg.serverGroupSettings()); // TODO [SERVER] Make this work!
 
-          if(dlg.identitiesNeedsUpdate()) {
-            updateServerGroupList();
-          }
+          updateServerGroupList();
         }
       }
     }
@@ -364,7 +360,7 @@ namespace Konversation {
     m_editButton->setEnabled(enable);
   }
 
-  void ServerListDialog::addServerGroup(const ServerGroupSettings& serverGroup)
+  void ServerListDialog::addServerGroup(ServerGroupSettingsPtr serverGroup)
   {
     m_preferences->addServerGroup(serverGroup);
     QListViewItem* item = addListItem(serverGroup);
@@ -400,10 +396,10 @@ namespace Konversation {
     }
   }
 
-  QListViewItem* ServerListDialog::addListItem(const ServerGroupSettings& serverGroup)
+  QListViewItem* ServerListDialog::addListItem(ServerGroupSettingsPtr serverGroup)
   {
-    QListViewItem* branch = findBranch(serverGroup.group());
-    Konversation::ChannelList tmpList = serverGroup.channelList();
+    QListViewItem* branch = findBranch(serverGroup->group());
+    Konversation::ChannelList tmpList = serverGroup->channelList();
     Konversation::ChannelList::iterator it;
     Konversation::ChannelList::iterator begin = tmpList.begin();
     QString channels;
@@ -419,17 +415,17 @@ namespace Konversation {
     QListViewItem* item = 0;
 
     if(branch) {
-      item = new ServerListItem(branch, serverGroup.id(),
-                         serverGroup.name(),
-                         serverGroup.identity()->getName(),
+      item = new ServerListItem(branch, serverGroup->id(),
+                         serverGroup->name(),
+                         serverGroup->identity()->getName(),
                          channels,
-                         serverGroup.autoConnectEnabled());
+                         serverGroup->autoConnectEnabled());
     } else {
-      item = new ServerListItem(m_serverList, serverGroup.id(),
-                         serverGroup.name(),
-                         serverGroup.identity()->getName(),
+      item = new ServerListItem(m_serverList, serverGroup->id(),
+                         serverGroup->name(),
+                         serverGroup->identity()->getName(),
                          channels,
-                         serverGroup.autoConnectEnabled());
+                         serverGroup->autoConnectEnabled());
     }
 
     return item;

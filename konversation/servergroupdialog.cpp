@@ -167,15 +167,15 @@ ServerGroupDialog::~ServerGroupDialog()
 {
 }
 
-void ServerGroupDialog::setServerGroupSettings(const ServerGroupSettings& settings)
+void ServerGroupDialog::setServerGroupSettings(ServerGroupSettingsPtr settings)
 {
-  m_id = settings.id();
-  m_nameEdit->setText(settings.name());
-  m_groupCBox->setCurrentText(settings.group());
-  m_identityCBox->setCurrentText(settings.identity()->getName());
-  m_commandEdit->setText(settings.connectCommands());
-  m_autoConnectCBox->setChecked(settings.autoConnectEnabled());
-  m_serverList = settings.serverList();
+  m_id = settings->id();
+  m_nameEdit->setText(settings->name());
+  m_groupCBox->setCurrentText(settings->group());
+  m_identityCBox->setCurrentText(settings->identity()->getName());
+  m_commandEdit->setText(settings->connectCommands());
+  m_autoConnectCBox->setChecked(settings->autoConnectEnabled());
+  m_serverList = settings->serverList();
   ServerList::iterator it;
   m_serverLBox->clear();
 
@@ -183,7 +183,7 @@ void ServerGroupDialog::setServerGroupSettings(const ServerGroupSettings& settin
     m_serverLBox->insertItem((*it).server());
   }
 
-  m_channelList = settings.channelList();
+  m_channelList = settings->channelList();
   ChannelList::iterator it2;
 
   for(it2 = m_channelList.begin(); it2 != m_channelList.end(); ++it2) {
@@ -191,17 +191,17 @@ void ServerGroupDialog::setServerGroupSettings(const ServerGroupSettings& settin
   }
 }
 
-ServerGroupSettings ServerGroupDialog::serverGroupSettings()
+ServerGroupSettingsPtr ServerGroupDialog::serverGroupSettings()
 {
-  ServerGroupSettings settings(m_id);
-  settings.setName(m_nameEdit->text());
-  settings.setGroup(m_groupCBox->currentText());
+  ServerGroupSettingsPtr settings = new ServerGroupSettings(m_id);
+  settings->setName(m_nameEdit->text());
+  settings->setGroup(m_groupCBox->currentText());
   QValueList<IdentityPtr> identities = KonversationApplication::preferences.getIdentityList();
-  settings.setIdentityId(identities[m_identityCBox->currentItem()]->id());
-  settings.setConnectCommands(m_commandEdit->text());
-  settings.setAutoConnectEnabled(m_autoConnectCBox->isChecked());
-  settings.setServerList(m_serverList);
-  settings.setChannelList(m_channelList);
+  settings->setIdentityId(identities[m_identityCBox->currentItem()]->id());
+  settings->setConnectCommands(m_commandEdit->text());
+  settings->setAutoConnectEnabled(m_autoConnectCBox->isChecked());
+  settings->setServerList(m_serverList);
+  settings->setChannelList(m_channelList);
 
   return settings;
 }

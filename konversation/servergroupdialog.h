@@ -31,8 +31,8 @@ class ServerGroupDialog : public KDialogBase
     ServerGroupDialog(const QString& title, QWidget* parent = 0, const char* name = 0);
     ~ServerGroupDialog();
 
-    void setServerGroupSettings(const ServerGroupSettings& settings);
-    ServerGroupSettings serverGroupSettings();
+    void setServerGroupSettings(ServerGroupSettingsPtr settings);
+    ServerGroupSettingsPtr serverGroupSettings();
 
     void setAvailableGroups(const QStringList& groups);
     

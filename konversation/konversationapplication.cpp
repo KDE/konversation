@@ -136,8 +136,8 @@ int KonversationApplication::newInstance()
     Konversation::ServerGroupList serverGroups = preferences.serverGroupList();
 
     for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it) {
-      if((*it).autoConnectEnabled()) {
-        connectToServer((*it).id());
+      if((*it)->autoConnectEnabled()) {
+        connectToServer((*it)->id());
       }
     }
 
@@ -283,8 +283,8 @@ void KonversationApplication::insertRememberLine()
 
 void KonversationApplication::connectToServer(int id)
 {
-  Konversation::ServerGroupSettings serverGroup = preferences.serverGroupById(id);
-  IdentityPtr identity = serverGroup.identity();
+  Konversation::ServerGroupSettingsPtr serverGroup = preferences.serverGroupById(id);
+  IdentityPtr identity = serverGroup->identity();
   
   if(!identity) {
     return;
@@ -323,7 +323,7 @@ void KonversationApplication::connectToServer(int id)
   mainWindow->show();
   
   // Check if a server window with same name and port is already open
-  Server* newServer = new Server(mainWindow,id);
+  Server* newServer = new Server(mainWindow, id);
 
   connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
   connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
@@ -643,18 +643,18 @@ void KonversationApplication::readOptions()
     {
       QString serverStr = config->readEntry(QString("Server%1").arg(index++));
 
-      Konversation::ServerGroupSettings serverGroup;
+      Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
       QStringList tmp = QStringList::split(',', serverStr, true);
-      serverGroup.setName(tmp[1]);
-      serverGroup.setGroup(tmp[0]);
+      serverGroup->setName(tmp[1]);
+      serverGroup->setGroup(tmp[0]);
       Konversation::ServerSettings server;
       server.setServer(tmp[1]);
       server.setPort(tmp[2].toInt());
       server.setPassword(tmp[3]);
-      serverGroup.addServer(server);
-      serverGroup.setIdentityId(preferences.getIdentityByName(tmp[7])->id());
-      serverGroup.setAutoConnectEnabled(tmp[6].toInt());
-      serverGroup.setConnectCommands(tmp[8]);
+      serverGroup->addServer(server);
+      serverGroup->setIdentityId(preferences.getIdentityByName(tmp[7])->id());
+      serverGroup->setAutoConnectEnabled(tmp[6].toInt());
+      serverGroup->setConnectCommands(tmp[8]);
 
       if(!tmp[4].isEmpty()) {
         QStringList tmp2 = QStringList::split(" ", tmp[4], false);
@@ -667,7 +667,7 @@ void KonversationApplication::readOptions()
             channel.setPassword(tmp3[i]);
           }
 
-          serverGroup.addChannel(channel);
+          serverGroup->addChannel(channel);
         }
       }
 
@@ -687,12 +687,12 @@ void KonversationApplication::readOptions()
   
       for(it = groups.begin(); it != groups.end(); ++it) {
         config->setGroup((*it));
-        Konversation::ServerGroupSettings serverGroup;
-        serverGroup.setName(config->readEntry("Name"));
-        serverGroup.setGroup(config->readEntry("Group"));
-        serverGroup.setIdentityId(preferences.getIdentityByName(config->readEntry("Identity"))->id());
-        serverGroup.setConnectCommands(config->readEntry("ConnectCommands"));
-        serverGroup.setAutoConnectEnabled(config->readBoolEntry("AutoConnect"));
+        Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
+        serverGroup->setName(config->readEntry("Name"));
+        serverGroup->setGroup(config->readEntry("Group"));
+        serverGroup->setIdentityId(preferences.getIdentityByName(config->readEntry("Identity"))->id());
+        serverGroup->setConnectCommands(config->readEntry("ConnectCommands"));
+        serverGroup->setAutoConnectEnabled(config->readBoolEntry("AutoConnect"));
         tmp1 = config->readListEntry("ServerList");
         tmp2 = config->readListEntry("AutoJoinChannels");
   
@@ -703,7 +703,7 @@ void KonversationApplication::readOptions()
           server.setPort(config->readNumEntry("Port"));
           server.setPassword(config->readEntry("Password"));
           server.setSSLEnabled(config->readBoolEntry("SSLEnabled"));
-          serverGroup.addServer(server);
+          serverGroup->addServer(server);
         }
   
   
@@ -714,7 +714,7 @@ void KonversationApplication::readOptions()
           if(!config->readEntry("Name").isEmpty()) {
             channel.setName(config->readEntry("Name"));
             channel.setPassword(config->readEntry("Password"));
-            serverGroup.addChannel(channel);
+            serverGroup->addChannel(channel);
           }
         }
   
@@ -756,7 +756,7 @@ void KonversationApplication::readOptions()
 
       for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it)
       {
-        QString name = (*it).name();
+        QString name = (*it)->name();
 
         if (!groupNames.contains(name)) {
           groupNames.append(name);
@@ -1113,7 +1113,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   QStringList channels;
 
   for(it = serverGroupList.begin(); it != serverGroupList.end(); ++it) {
-    serverlist = (*it).serverList();
+    serverlist = (*it)->serverList();
     servers.clear();
 
     for(it2 = serverlist.begin(); it2 != serverlist.end(); ++it2) {
@@ -1127,7 +1127,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
       index2++;
     }
 
-    channelList = (*it).channelList();
+    channelList = (*it)->channelList();
     channels.clear();
 
     for(it3 = channelList.begin(); it3 != channelList.end(); ++it3) {
@@ -1140,13 +1140,13 @@ void KonversationApplication::saveOptions(bool updateGUI)
     }
 
     config->setGroup(QString("ServerGroup %1").arg(index));
-    config->writeEntry("Name", (*it).name());
-    config->writeEntry("Group", (*it).group());
-    config->writeEntry("Identity", (*it).identity()->getName());
+    config->writeEntry("Name", (*it)->name());
+    config->writeEntry("Group", (*it)->group());
+    config->writeEntry("Identity", (*it)->identity()->getName());
     config->writeEntry("ServerList", servers);
     config->writeEntry("AutoJoinChannels", channels);
-    config->writeEntry("ConnectCommands", (*it).connectCommands());
-    config->writeEntry("AutoConnect", (*it).autoConnectEnabled());
+    config->writeEntry("ConnectCommands", (*it)->connectCommands());
+    config->writeEntry("AutoConnect", (*it)->autoConnectEnabled());
     index++;
   }
 

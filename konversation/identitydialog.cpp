@@ -461,7 +461,7 @@ void IdentityDialog::deleteIdentity()
   bool found = false;
   
   while((it != serverGroups.end()) && !found) {
-    if((*it).identityId() == m_currentIdentity->id()) {
+    if((*it)->identityId() == m_currentIdentity->id()) {
       found = true;
     }
     

@@ -636,7 +636,7 @@ class Server : public QObject
     /// List of nicks in Queries.
     NickInfoMap m_queryNicks;
     
-    Konversation::ServerGroupSettings m_serverGroup;
+    Konversation::ServerGroupSettingsPtr m_serverGroup;
     unsigned int m_currentServerIndex;
 
     QString m_allowedChannelModes;

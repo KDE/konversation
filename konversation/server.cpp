@@ -74,15 +74,16 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
 	       const QString& channel,const QString& _nick, QString password,const bool& useSSL)
 {
   QString nick( _nick );
-  m_serverGroup.setName(hostName);
-  m_serverGroup.setIdentityId(KonversationApplication::preferences.getIdentityByName("Default")->id());
+  m_serverGroup = new Konversation::ServerGroupSettings;
+  m_serverGroup->setName(hostName);
+  m_serverGroup->setIdentityId(KonversationApplication::preferences.getIdentityByName("Default")->id());
 
   Konversation::ServerSettings serverSettings;
   serverSettings.setServer(hostName);
   serverSettings.setPort(port.toInt());
   serverSettings.setPassword(password);
   serverSettings.setSSLEnabled(useSSL);
-  m_serverGroup.addServer(serverSettings);
+  m_serverGroup->addServer(serverSettings);
 
   if(nick.isEmpty()) // Happens when we are invoked from an irc:/ url
     nick = getIdentity()->getNickname(0);
@@ -170,7 +171,7 @@ Server::~Server()
 
 void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const QString& channel)
 {
-  setName(QString("server_" + m_serverGroup.name()).ascii());
+  setName(QString("server_" + m_serverGroup->name()).ascii());
 
   m_currentServerIndex = 0;
   m_tryReconnect=true;
@@ -218,7 +219,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
   // For /msg query completion
   completeQueryPosition=0;
 
-  Konversation::ChannelList tmpList = m_serverGroup.channelList();
+  Konversation::ChannelList tmpList = m_serverGroup->channelList();
 
   if(!channel.isEmpty())
     tmpList.push_front(channel);
@@ -245,9 +246,9 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
     setAutoJoin(false);
   }
 
-  if(!m_serverGroup.connectCommands().isEmpty())
+  if(!m_serverGroup->connectCommands().isEmpty())
   {
-    connectCommands = QStringList::split(";", m_serverGroup.connectCommands());
+    connectCommands = QStringList::split(";", m_serverGroup->connectCommands());
   }
 
   if(!getIdentity()->getShellCommand().isEmpty()) {
@@ -373,10 +374,10 @@ void Server::connectSignals()
 
 }
 
-QString Server::getServerName()  const { return m_serverGroup.serverByIndex(m_currentServerIndex).server(); }
-int Server::getPort() const { return m_serverGroup.serverByIndex(m_currentServerIndex).port(); }
+QString Server::getServerName()  const { return m_serverGroup->serverByIndex(m_currentServerIndex).server(); }
+int Server::getPort() const { return m_serverGroup->serverByIndex(m_currentServerIndex).port(); }
 
-QString Server::getServerGroup() const { return m_serverGroup.name(); }
+QString Server::getServerGroup() const { return m_serverGroup->name(); }
 
 int Server::getLag()  const { return currentLag; }
 
@@ -439,7 +440,7 @@ void Server::connectToIRCServer()
     tryNickNumber = 0;
 
     // connect() will do a async lookup too
-    if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled()) {
+    if(!m_serverGroup->serverByIndex(m_currentServerIndex).SSLEnabled()) {
       m_socket = new KNetwork::KBufferedSocket(QString::null, QString::null, 0L, "serverSocket");
       connect(m_socket,SIGNAL (connected(const KResolverEntry&)),this,SLOT (ircServerConnectionSuccess()));
     } else {
@@ -455,14 +456,14 @@ void Server::connectToIRCServer()
     connect(m_socket,SIGNAL (readyWrite()),this,SLOT (send()) );
     connect(m_socket,SIGNAL (closed()),this,SLOT(closed()));
 
-    m_socket->connect(m_serverGroup.serverByIndex(m_currentServerIndex).server(),
-                      QString::number(m_serverGroup.serverByIndex(m_currentServerIndex).port()));
+    m_socket->connect(m_serverGroup->serverByIndex(m_currentServerIndex).server(),
+                      QString::number(m_serverGroup->serverByIndex(m_currentServerIndex).port()));
 
     // set up the connection details
     setPrefixes("ov","@+");
     statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...")
-        .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
-        .arg(m_serverGroup.serverByIndex(m_currentServerIndex).port()));
+        .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
+        .arg(m_serverGroup->serverByIndex(m_currentServerIndex).port()));
     // Flash taskbar
     KWin::demandAttention(KonversationApplication::instance()->getMainWindow()->winId());
     // reset InputFilter (auto request info, /WHO request info)
@@ -564,11 +565,11 @@ void Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwn
 void Server::lookupFinished()
 {
   // error during lookup
-  if(m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled() && m_socket->status())
+  if(m_serverGroup->serverByIndex(m_currentServerIndex).SSLEnabled() && m_socket->status())
   {
     // inform user about the error
     statusView->appendServerMessage(i18n("Error"),i18n("Server %1 not found.  %2")
-        .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
+        .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
         .arg(m_socket->errorString(m_socket->error())));
 
     m_socket->resetStatus();
@@ -593,8 +594,8 @@ void Server::ircServerConnectionSuccess()
       " 8 * :" +  // 8 = +i; 4 = +w
       getIdentity()->getRealName();
 
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).password().isEmpty()) {
-    queueAt(0, "PASS " + m_serverGroup.serverByIndex(m_currentServerIndex).password());
+  if(!m_serverGroup->serverByIndex(m_currentServerIndex).password().isEmpty()) {
+    queueAt(0, "PASS " + m_serverGroup->serverByIndex(m_currentServerIndex).password());
   }
 
   queueAt(1,"NICK "+getNickname());
@@ -659,7 +660,7 @@ void Server::broken(int state)
     if(reconnectCounter >= 10 || !m_tryReconnect)
     {
       QString error = i18n("Connection to Server %1 failed.  %2")
-          .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
+          .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
 	  .arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
 
       statusView->appendServerMessage(i18n("Error"),error);
@@ -668,10 +669,10 @@ void Server::broken(int state)
       reconnectCounter = 0;
       rejoinChannels = false;
 
-      if(m_currentServerIndex < (m_serverGroup.serverList().count() - 1)) {
+      if(m_currentServerIndex < (m_serverGroup->serverList().count() - 1)) {
         m_currentServerIndex++;
 	error = i18n("Trying server %1 instead.")
-            .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server());
+            .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server());
         statusView->appendServerMessage(i18n("Error"),error );
 
 //  Uncomment below if you want the server error message to be in the current window.
@@ -684,7 +685,7 @@ void Server::broken(int state)
     else
     {
       QString error = i18n("Connection to Server %1 lost.  %2.  Trying to reconnect.")
-	                .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
+	                .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
 			.arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
       
       statusView->appendServerMessage(i18n("Error"), error);
@@ -704,7 +705,7 @@ void Server::broken(int state)
   else
   {
     QString error = i18n("Connection to Server %1 failed.")
-	              .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server());
+	              .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server());
     statusView->appendServerMessage(i18n("Error"),error);
 
 //  Uncomment below if you want the server error message to be in the current window.
@@ -717,8 +718,8 @@ void Server::broken(int state)
 void Server::sslError(QString reason)
 {
   QString error = i18n("Could not connect to %1:%2 using SSL encryption.  Maybe the server does not support SSL, or perhaps you have the wrong port? %3")
-	             .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
-		     .arg(m_serverGroup.serverByIndex(m_currentServerIndex).port())
+	             .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
+		     .arg(m_serverGroup->serverByIndex(m_currentServerIndex).port())
 		     .arg(reason);
   statusView->appendServerMessage(i18n("SSL Connection Error"),error);
   m_tryReconnect=false;
@@ -968,7 +969,7 @@ void Server::lockSending()
 
 void Server::incoming()
 {
-  if(m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
+  if(m_serverGroup->serverByIndex(m_currentServerIndex).SSLEnabled())
     emit sslConnected(this);
 
   // We read all available bytes here because readyRead() signal will be emitted when there is new data
@@ -981,7 +982,7 @@ void Server::incoming()
   // Read at max "max_bytes" bytes into "buffer"
   len = m_socket->readBlock(buffer.data(),max_bytes);
   
-  if( len <=0 && m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled() )
+  if( len <=0 && m_serverGroup->serverByIndex(m_currentServerIndex).SSLEnabled() )
     return;
 
   if( len <= 0 ) // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
@@ -2783,8 +2784,8 @@ QString Server::parseWildcards(const QString& toParse,
       if(!channelKey.isEmpty())
         out.append(channelKey);
     } else if (toExpand == 'K') {
-       if(!m_serverGroup.serverByIndex(m_currentServerIndex).password().isEmpty())
-         out.append(m_serverGroup.serverByIndex(m_currentServerIndex).password());
+       if(!m_serverGroup->serverByIndex(m_currentServerIndex).password().isEmpty())
+         out.append(m_serverGroup->serverByIndex(m_currentServerIndex).password());
     } else if (toExpand == 'n') {
       out.append("\n");
     } else if (toExpand == 'p') {
@@ -2985,14 +2986,14 @@ void Server::autoRejoinChannels()
   queue(joinString);
 }
 
-IdentityPtr Server::getIdentity() const { return m_serverGroup.identity(); }
+IdentityPtr Server::getIdentity() const { return m_serverGroup->identity(); }
 
 void Server::setMainWindow(KonversationMainWindow* newMainWindow) { mainWindow=newMainWindow; }
 KonversationMainWindow* Server::getMainWindow() const { return mainWindow; }
 
 bool Server::getUseSSL() const
 {
-  return m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled();
+  return m_serverGroup->serverByIndex(m_currentServerIndex).SSLEnabled();
 }
 
 QString Server::getSSLInfo() const

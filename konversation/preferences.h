@@ -69,8 +69,8 @@ class Preferences : public QObject
 
     const Konversation::ServerGroupList serverGroupList();
     void setServerGroupList(const Konversation::ServerGroupList& list);
-    void addServerGroup(const Konversation::ServerGroupSettings& serverGroup);
-    const Konversation::ServerGroupSettings serverGroupById(int id);
+    void addServerGroup(Konversation::ServerGroupSettingsPtr serverGroup);
+    const Konversation::ServerGroupSettingsPtr serverGroupById(int id);
     void removeServerGroup(int id);
 
     const bool getAutoReconnect();

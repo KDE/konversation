@@ -15,19 +15,21 @@
 #include <qvaluelist.h>
 #include <qstringlist.h>
 
+#include <ksharedptr.h>
+
 #include "serversettings.h"
 #include "identity.h"
 
 namespace Konversation {
 
-class ChannelSettings;
 class ServerGroupSettings;
-
-typedef QValueList<ServerGroupSettings> ServerGroupList;
+class ChannelSettings;
+typedef KSharedPtr<ServerGroupSettings> ServerGroupSettingsPtr;
+typedef QValueList<ServerGroupSettingsPtr> ServerGroupList;
 typedef QValueList<ServerSettings> ServerList;
 typedef QValueList<ChannelSettings> ChannelList;
 
-class ServerGroupSettings
+class ServerGroupSettings : public KShared
 {
   public:
     ServerGroupSettings();

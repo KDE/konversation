@@ -66,7 +66,7 @@ EditNotifyDialog::EditNotifyDialog(QWidget* parent,
 
   for(Konversation::ServerGroupList::iterator it = serverNetworks.begin(); it != serverNetworks.end(); ++it)
   {
-    QString name = (*it).name();
+    QString name = (*it)->name();
 
     if (!networkNames.contains(name)) {
       networkNames.append(name);

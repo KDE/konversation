@@ -61,15 +61,15 @@ Preferences::Preferences()
   setNickCompleteSuffixStart(": ");
   setNickCompleteSuffixMiddle(" ");
 
-  Konversation::ServerGroupSettings serverGroup;
-  serverGroup.setName("Freenode");
+  Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
+  serverGroup->setName("Freenode");
   Konversation::ServerSettings server;
   server.setServer("irc.freenode.org");
-  serverGroup.addServer(server);
-  serverGroup.setIdentityId(identity->id());
+  serverGroup->addServer(server);
+  serverGroup->setIdentityId(identity->id());
   Konversation::ChannelSettings channel;
   channel.setName("#kde");
-  serverGroup.addChannel(channel);
+  serverGroup->addChannel(channel);
   m_serverGroupList.append(serverGroup);
 
   buttonList.append("Op,/OP %u%n");
@@ -267,26 +267,26 @@ void Preferences::setServerGroupList(const Konversation::ServerGroupList& list)
   m_serverGroupList = list;
 }
 
-void Preferences::addServerGroup(const Konversation::ServerGroupSettings& serverGroup)
+void Preferences::addServerGroup(Konversation::ServerGroupSettingsPtr serverGroup)
 {
   m_serverGroupList.append(serverGroup);
 }
 
-const Konversation::ServerGroupSettings Preferences::serverGroupById(int id)
+const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
 {
   if(!m_serverGroupList.count()) {
-    return Konversation::ServerGroupSettings();
+    return 0;
   }
   
   Konversation::ServerGroupList::iterator it;
   
   for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it) {
-    if((*it).id() == id) {
+    if((*it)->id() == id) {
       return (*it);
     }
   }
 
-  return Konversation::ServerGroupSettings();
+  return 0;
 }
 
 void Preferences::removeServerGroup(int id)
@@ -298,7 +298,7 @@ void Preferences::removeServerGroup(int id)
   Konversation::ServerGroupList::iterator it;
   
   for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it) {
-    if((*it).id() == id) {
+    if((*it)->id() == id) {
       m_serverGroupList.remove(it);
       return;
     }

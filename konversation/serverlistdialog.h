@@ -15,12 +15,13 @@
 #include <kdialogbase.h>
 #include <klistview.h>
 
+#include "servergroupsettings.h"
+
 class Preferences;
 class QPushButton;
 class QStringList;
 
 namespace Konversation {
-  class ServerGroupSettings;
   
   class ServerListItem : public KListViewItem
   {
@@ -71,9 +72,9 @@ namespace Konversation {
     protected:
       QListViewItem* findBranch(QString name, bool generate = true);
       QStringList createGroupList();
-      QListViewItem* addListItem(const ServerGroupSettings& serverGroup); /// Adds a list item to the list view
+      QListViewItem* addListItem(ServerGroupSettingsPtr serverGroup); /// Adds a list item to the list view
 
-      void addServerGroup(const ServerGroupSettings& serverGroup);
+      void addServerGroup(ServerGroupSettingsPtr serverGroup);
 
     private:
       KListView* m_serverList;
