@@ -124,6 +124,11 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
   // We have our own tooltips, don't use the default QListView ones
   setShowToolTips(false);
   m_tooltip = new Konversation::KonversationNickListViewToolTip(viewport(), this);
+
+#if KDE_IS_VERSION(3,3,90)
+  setShadeSortColumn(false);
+#endif
+
 }
 
 NickListView::~NickListView()
