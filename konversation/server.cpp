@@ -248,7 +248,10 @@ Server::~Server()
   emit nicksNowOnline(this,QStringList(),true);
   // Make sure no signals get sent to a soon to be dying Server Window
   serverSocket->blockSignals(true);
-  
+
+  // Close socket but don't delete it. QObject will take care of delete
+  serverSocket->close();
+
   // Send out the last messages (usually the /QUIT)
   send();
 
@@ -379,6 +382,7 @@ void Server::connectSignals()
   connect(serverSocket,SIGNAL (gotError(int)),this,SLOT (broken(int)) );
   connect(serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
   connect(serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
+  connect(serverSocket,SIGNAL (closed()),this,SLOT(closed()));
 
 
   connect(getMainWindow(),SIGNAL(prefsChanged()),KonversationApplication::kApplication(),SLOT(saveOptions()));
@@ -1052,6 +1056,11 @@ void Server::send()
 
     outgoingTimer.changeInterval(time);
   }
+}
+
+void Server::closed() 
+{
+  broken(0);
 }
 
 void Server::dcopSay(const QString& target,const QString& command)

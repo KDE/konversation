@@ -287,6 +287,10 @@ class Server : public QObject
     void incoming();
     void processIncomingData();
     void send();
+    /** 
+	Because KBufferedSocket has no closed(int) signal we use this slot to call broken(0)
+    */
+    void closed();
     void broken(int state);
     void notifyCheckTimeout();
     void connectionEstablished();
