@@ -848,12 +848,13 @@ void OutputFilter::parseIgnore(const QString& parameter)
     }
 
     // were there enough parameters?
-    if(parameterList.count()==1)
+    if(parameterList.count()>=1)
     {
       for(unsigned int index=0;index<parameterList.count();index++)
       {
+        if(parameterList[index].contains('!')==0) parameterList[index] += "!*";
         KonversationApplication::preferences.addIgnore(parameterList[index]+","+QString::number(value));
-      } // endfor
+      }
 
       output=i18n("Added %1 to your ignore list.").arg(parameterList.join(", "));
       type=i18n("Ignore");
