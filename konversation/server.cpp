@@ -1082,7 +1082,7 @@ void Server::dcopSay(const QString& target,const QString& command)
       addQuery(target,QString::null);
       query=getQueryByName(target);
     }
-    if(query) query->sendQueryText(command);
+    if(query && !command.isEmpty()) query->sendQueryText(command);
   }
 }
 
