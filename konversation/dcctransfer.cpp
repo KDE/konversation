@@ -367,8 +367,10 @@ void DccTransfer::sendAck()
 
 void DccTransfer::setStatus(DccStatus status)
 {
+  DccStatus oldStatus=dccStatus;
   dccStatus=status;
   setText(8,statusText[status]);
+  if (oldStatus!=status) emit dccStatusChanged(this);
 }
 
 void DccTransfer::setSize(unsigned long size)

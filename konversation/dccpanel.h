@@ -37,6 +37,7 @@ class DccPanel : public ChatWindow
     KListView* getListView();
     DccTransfer* getTransferByPort(QString port,DccTransfer::DccType type);
     DccTransfer* getTransferByName(QString name,DccTransfer::DccType type);
+    void dccStatusChanged(const DccTransfer* item);
   
   public slots:
     void adjustFocus();

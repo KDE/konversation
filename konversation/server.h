@@ -23,6 +23,8 @@
 #include "ircserversocket.h"
 #include "ircresolver.h"
 
+#include "dcctransfer.h"
+
 /*
   @author Dario Abatianni
 */
@@ -191,6 +193,7 @@ class Server : public QObject
     void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,int startAt);
     void dccGetDone(const QString& fileName);
     void dccSendDone(const QString& fileName);
+    void dccStatusChanged(const DccTransfer* item);
     void away();
     void unAway();
     void sendToAllChannels(const QString& text);

@@ -14,6 +14,7 @@ Changes from 0.13 to 0.14
 - Added a shortcut to close all open queries
 - Added a patch by Thomas Nagy to cycle tabs with mouse scroll wheel
 - Added logfile reader
+- Added patch by Gary Cramblitt to enhance DCC panel
 
 Changes from 0.12 to 0.13
 - Added an option to hide hostmasks in channel nick lists

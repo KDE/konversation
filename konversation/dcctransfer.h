@@ -79,6 +79,7 @@ class DccTransfer : public QObject, public KListViewItem
     void resumeGet(const QString& partner,const QString& fileName,const QString& port,int startAt);
     void dccGetDone(const QString& fileName);
     void dccSendDone(const QString& fileName);
+    void dccStatusChanged(const DccTransfer* item);
 
   public slots:
     void startGet();

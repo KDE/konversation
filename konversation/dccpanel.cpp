@@ -86,6 +86,12 @@ void DccPanel::setButtons(bool accept,bool abort,bool remove,bool open,bool info
   infoButton->setEnabled(info);
 }
 
+void DccPanel::dccStatusChanged(const DccTransfer *item)
+{
+  // If the item is currently selected, update buttons.
+  if (item->isSelected()) dccSelected();
+}
+
 void DccPanel::dccSelected()
 {
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
@@ -138,7 +144,12 @@ void DccPanel::runDcc()
     if(item->getType()==DccTransfer::Send || item->getType()==DccTransfer::ResumeSend)
       new KRun(item->getFile());
     else if(item->getType()==DccTransfer::Get || item->getType()==DccTransfer::ResumeGet)
-      new KRun(item->getFullPath());
+    {
+      KURL kurl;
+      QDir dir;
+      kurl.setPath(dir.cleanDirPath(dir.absFilePath(item->getFullPath(), TRUE)));
+      new KRun(kurl);
+    }
   }
 }
 

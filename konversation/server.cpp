@@ -992,6 +992,8 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
          SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,int)) );
   connect(newDcc,SIGNAL (dccGetDone(const QString&)),
               this,SLOT (dccGetDone(const QString&)) );
+  connect(newDcc,SIGNAL (dccStatusChanged(const DccTransfer* )), this, 
+         SLOT(dccStatusChanged(const DccTransfer*)) );
 
   if(KonversationApplication::preferences.getDccAutoGet()) newDcc->startGet();
 }
@@ -1086,6 +1088,11 @@ void Server::dccGetDone(const QString &fileName)
 void Server::dccSendDone(const QString &fileName)
 {
   appendStatusMessage(i18n("DCC"),i18n("DCC upload of file \"%1\" finished.").arg(fileName));
+}
+
+void Server::dccStatusChanged(const DccTransfer *item)
+{
+  getMainWindow()->getDccPanel()->dccStatusChanged(item);
 }
 
 QString Server::getNextQueryName()
