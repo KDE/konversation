@@ -165,23 +165,24 @@ class Server : public QObject
     void notifyTimeout();
     void notifyCheckTimeout();
     void connectionEstablished();
-    void notifyResponse(const QString &nicksOnline);
-    void addDccGet(const QString &sourceNick, const QStringList &dccArguments);
-    void requestDccSend();                                               // -> to outputFilter, dccPanel
-    void requestDccSend(const QString &recipient);                                  // -> to outputFilter
-    void resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments);  // -> to inputFilter
-    void resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArguments); // -> to inputFilter
-    void dccSendRequest(const QString &recipient, const QString &fileName, const QString &address, const QString &port, unsigned long size);
-    void dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, int startAt);
-    void dccGetDone(const QString &fileName);
-    void dccSendDone(const QString &fileName);
+    void notifyResponse(const QString& nicksOnline);
+    void addDccGet(const QString& sourceNick,const QStringList& dccArguments);
+    void requestDccSend();                           // -> to outputFilter, dccPanel
+    void requestDccSend(const QString& recipient);   // -> to outputFilter
+    void resumeDccGetTransfer(const QString& sourceNick,const QStringList& dccArguments);  // -> to inputFilter
+    void resumeDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments); // -> to inputFilter
+    void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,const QString& port,unsigned long size);
+    void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,int startAt);
+    void dccGetDone(const QString& fileName);
+    void dccSendDone(const QString& fileName);
     void away();
     void unAway();
-    void sendToAllChannels(const QString &text);
+    void sendToAllChannels(const QString& text);
     void scriptNotFound(const QString& name);
     void scriptExecutionError(const QString& name);
     void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
     void setTopicAuthor(const QString& channel,const QString& author);
+    void invitation(const QString& nick,const QString& channel);
 
   protected:
     // constants

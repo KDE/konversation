@@ -24,6 +24,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
+#include <kmessagebox.h>
 
 #include "server.h"
 #include "query.h"
@@ -129,6 +130,8 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
                   this,SLOT  (setTopicAuthor(const QString&,const QString&)) );
   connect(&inputFilter,SIGNAL(addChannelListPanel()),
                   this,SLOT  (addChannelListPanel()) );
+  connect(&inputFilter,SIGNAL(invitation(const QString&,const QString&)),
+                  this,SLOT  (invitation(const QString&,const QString&)) );
 
 
   connect(this,SIGNAL(serverLag(int)),statusView,SLOT(updateLag(int)) );
@@ -1290,6 +1293,21 @@ void Server::sendToAllChannels(const QString &text)
   {
     channel->sendChannelText(text);
     channel=channelList.next();
+  }
+}
+
+void Server::invitation(const QString& nick,const QString& channel)
+{
+  if(KonversationApplication::preferences.getAutojoinOnInvite() &&
+     KMessageBox::questionYesNo(static_cast<QWidget*>(0),
+                                i18n("You were invited by %1 to join channel %2. "
+                                     "Do you accept the invitation?").arg(nick).arg(channel),
+                                i18n("Invitation"),
+                                KStdGuiItem::yes(),
+                                KStdGuiItem::no(),
+                                "Invitation")==KMessageBox::Yes)
+  {
+    sendJoinCommand(channel);
   }
 }
 

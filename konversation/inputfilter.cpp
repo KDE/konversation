@@ -25,7 +25,7 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #else
-#define VERSION 0.12
+#define VERSION 0.13
 #endif
 
 #include "inputfilter.h"
@@ -535,6 +535,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     // ******
     server->appendStatusMessage(i18n("Invite"),i18n("%1 invited you into channel %2").arg(sourceNick).arg(trailing));
+    emit invitation(sourceNick,trailing);
   }
   else
   {

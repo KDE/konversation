@@ -63,6 +63,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
 
   QCheckBox* autoReconnectCheck=new QCheckBox(i18n("Auto reconnect"),parentFrame,"auto_reconnect_check");
   QCheckBox* autoRejoinCheck=new QCheckBox(i18n("Auto rejoin"),parentFrame,"auto_rejoin_check");
+  QCheckBox* autojoinOnInviteCheck=new QCheckBox(i18n("Autojoin channel on invite"),parentFrame,"autojoin_on_invite_check");
   QCheckBox* blinkingTabsCheck=new QCheckBox(i18n("Blinking tabs"),parentFrame,"blinking_tabs_check");
   QCheckBox* bringToFrontCheck=new QCheckBox(i18n("Bring new tabs to front"),parentFrame,"bring_to_front_check");
   QCheckBox* fixedMOTDCheck=new QCheckBox(i18n("Show MOTD in fixed font"),parentFrame,"fixed_motd_check");
@@ -71,6 +72,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
 
   autoReconnectCheck->setChecked(preferences->getAutoReconnect());
   autoRejoinCheck->setChecked(preferences->getAutoRejoin());
+  autojoinOnInviteCheck->setChecked(preferences->getAutojoinOnInvite());
   blinkingTabsCheck->setChecked(preferences->getBlinkingTabs());
   bringToFrontCheck->setChecked(preferences->getBringToFront());
   fixedMOTDCheck->setChecked(preferences->getFixedMOTD());
@@ -90,6 +92,8 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   generalSettingsLayout->addMultiCellWidget(autoReconnectCheck,row,row,0,1);
   row++;
   generalSettingsLayout->addMultiCellWidget(autoRejoinCheck,row,row,0,1);
+  row++;
+  generalSettingsLayout->addMultiCellWidget(autojoinOnInviteCheck,row,row,0,1);
   row++;
   generalSettingsLayout->addMultiCellWidget(blinkingTabsCheck,row,row,0,1);
   row++;
@@ -114,6 +118,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
 
   connect(autoReconnectCheck,SIGNAL (stateChanged(int)),this,SLOT (autoReconnectChanged(int)) );
   connect(autoRejoinCheck,SIGNAL (stateChanged(int)),this,SLOT (autoRejoinChanged(int)) );
+  connect(autojoinOnInviteCheck,SIGNAL (stateChanged(int)),this,SLOT (autojoinOnInviteChanged(int)) );
 
   connect(bringToFrontCheck,SIGNAL (stateChanged(int)),this,SLOT (bringToFrontChanged(int)) );
   connect(blinkingTabsCheck,SIGNAL (stateChanged(int)),this,SLOT (blinkingTabsChanged(int)) );
@@ -121,7 +126,7 @@ PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences
   connect(fixedMOTDCheck,SIGNAL (stateChanged(int)),this,SLOT (fixedMOTDChanged(int)) );
 
   connect(beepCheck,SIGNAL (stateChanged(int)),this,SLOT (beepChanged(int)) );
-  
+
   connect(rawLogCheck,SIGNAL (stateChanged(int)),this,SLOT (rawLogChanged(int)) );
 }
 

@@ -52,6 +52,7 @@ class InputFilter : public QObject
     void topicAuthor(const QString& channel,const QString& author); // will be connected to Server::setTopicAuthor()
     void addChannelListPanel();
     void addToChannelList(const QString& channel,int users,const QString& topic);
+    void invitation(const QString& nick,const QString& channel);
 
   protected:
     void parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);

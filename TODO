@@ -10,6 +10,7 @@ Eisfuchs: URL catcher user interface
 Nick completion should remember last position
 Reverse-I-Search
 Large pastes: Let the user decide if they want an Editor or paste immediately
+Multi line behaviour in input line with "little enter"
 Make Config Dialogs fit into one Tab-Dialog and throw out single windows
 Background color of Nicklist View
 Pasting into text views should trigger the paste mechanism
@@ -32,9 +33,11 @@ Make separate Highlight lists for each identity
 Nick button in status pane does nothing
 Measure away time and make it available via placeholder
 
-<mETz[]> Eisfuchs: And why have the "Mitschnitt" button there? having it in the menubar is enough, no?
+<mETz[]> Eisfuchs: And why have the "Mitschnitt" button there? having it in the menubar is
+  enough, no?
 
--privmsg (/msg) should be logged to the specific log file (if i do "/msg foo bar" i want to have this in konversation-foo.log)
+-privmsg (/msg) should be logged to the specific log file (if i do "/msg foo bar" i
+  want to have this in konversation-foo.log)
 
 Mark the last point where the panel was active
 Hide all "technical" messages from channels and queries or redirect them into the status view
