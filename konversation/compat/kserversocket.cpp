@@ -125,6 +125,8 @@ void KServerSocket::setAddress(const QString& service)
   d->resolver.setNodeName(QString::null);
   d->resolver.setServiceName(service);
   d->resolverResults.empty();
+  if (d->state <= KServerSocketPrivate::LookupDone)
+    d->state = KServerSocketPrivate::None;
 }
 
 void KServerSocket::setAddress(const QString& node, const QString& service)
@@ -132,6 +134,8 @@ void KServerSocket::setAddress(const QString& node, const QString& service)
   d->resolver.setNodeName(node);
   d->resolver.setServiceName(service);
   d->resolverResults.empty();
+  if (d->state <= KServerSocketPrivate::LookupDone)
+    d->state = KServerSocketPrivate::None;
 }
 
 void KServerSocket::setTimeout(int msec)
@@ -208,21 +212,21 @@ bool KServerSocket::bind()
 
   if (d->state < KServerSocketPrivate::LookupDone)
     {
-      d->bindWhenFound = true;
-      bool ok = lookup();	// will call bind again
-      if (d->state >= KServerSocketPrivate::Bound)
-	d->bindWhenFound = false;
-      return ok;
+      if (!blocking())
+	{
+	  d->bindWhenFound = true;
+	  bool ok = lookup();	// will call doBind
+	  if (d->state >= KServerSocketPrivate::Bound)
+	    d->bindWhenFound = false;
+	  return ok;
+	}
+
+      // not blocking
+      if (!lookup())
+	return false;
     }
 
-  if (!doBind())
-    {
-      setError(NotSupported);
-      emit gotError(NotSupported);
-      return false;
-    }
-  
-  return true;;
+  return doBind();
 }
 
 bool KServerSocket::listen(int backlog)
@@ -381,6 +385,8 @@ bool KServerSocket::doBind()
 	  return doListen();
 	return true;
       }
+    else
+      socketDevice()->close();	// didn't work, try again
 
   // failed to bind
   emit gotError(error());
