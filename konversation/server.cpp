@@ -1262,8 +1262,8 @@ const NickInfoMap* Server::getNicksOffline() { return &nicknamesOffline; }
 QString Server::getIp()
 {
   // Return our ip using serverSocket
-    kdDebug() << "getIp() returned : " << serverSocket->localResults().nodeName() << endl;
-    return serverSocket->localResults().nodeName();
+    kdDebug() << "getIp() returned : " << serverSocket->localAddress().nodeName() << endl;
+    return serverSocket->localAddress().nodeName();
 }
 
 void Server::addQuery(const QString& nickname,const QString& hostmask, bool weinitiated )
