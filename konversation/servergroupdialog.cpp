@@ -24,6 +24,7 @@
 
 #include <klocale.h>
 #include <kiconloader.h>
+#include <kmessagebox.h>
 
 #include "identity.h"
 #include "konversationapplication.h"
@@ -39,6 +40,7 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
  : KDialogBase(Plain, title, Ok|Cancel, Ok, parent, name)
 {
   m_id = -1;
+  m_identitiesNeedsUpdate = false;
   
   QFrame* mainWidget = plainPage();
   QGridLayout* mainLayout = new QGridLayout(mainWidget, 1, 2, 0, spacingHint());
@@ -149,8 +151,8 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   groupLayout->addWidget(serverGBox, 0, 0);
   groupLayout->addWidget(channelGBox, 0, 1);
 
-  setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Change server information")));
-  setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Discards all changes made")));
+  setButtonOK(KGuiItem(i18n("&OK"), "button_ok", i18n("Change network information")));
+  setButtonCancel(KGuiItem(i18n("&Cancel"), "button_cancel", i18n("Discards all changes made")));
   
   m_nameEdit->setFocus();
 }
@@ -346,7 +348,7 @@ void ServerGroupDialog::editIdentity()
   int identityId = identities[m_identityCBox->currentItem()]->id();
 
   if(dlg.exec() == KDialog::Accepted) {
-    QValueList<IdentityPtr> identities = KonversationApplication::preferences.getIdentityList();
+    identities = KonversationApplication::preferences.getIdentityList();
     m_identityCBox->clear();
 
     for(QValueList<IdentityPtr>::iterator it = identities.begin(); it != identities.end(); ++it)
@@ -355,6 +357,16 @@ void ServerGroupDialog::editIdentity()
     }
 
     m_identityCBox->setCurrentText(KonversationApplication::preferences.getIdentityById(identityId)->getName());
+    m_identitiesNeedsUpdate = true;
+  }
+}
+
+void ServerGroupDialog::slotOk()
+{
+  if(m_serverList.count() == 0) {
+    KMessageBox::error(this, i18n("You need to add at least one server to the network."));
+  } else {
+    accept();
   }
 }
 

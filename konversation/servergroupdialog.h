@@ -34,8 +34,12 @@ class ServerGroupDialog : public KDialogBase
     ServerGroupSettings serverGroupSettings();
 
     void setAvailableGroups(const QStringList& groups);
+    
+    bool identitiesNeedsUpdate() const { return m_identitiesNeedsUpdate; }
   
   protected slots:
+    virtual void slotOk();
+    
     void addServer();
     void editServer();
     void deleteServer();
@@ -62,6 +66,8 @@ class ServerGroupDialog : public KDialogBase
     ChannelList m_channelList;
 
     int m_id;
+    
+    bool m_identitiesNeedsUpdate;
 };
 
 };

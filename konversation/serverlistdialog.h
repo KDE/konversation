@@ -17,6 +17,7 @@
 
 class Preferences;
 class QPushButton;
+class QStringList;
 
 namespace Konversation {
   class ServerGroupSettings;
@@ -68,7 +69,11 @@ namespace Konversation {
 
     protected:
       QListViewItem* findBranch(QString name, bool generate = true);
+      QStringList createGroupList();
+      
       void addServerGroup(const ServerGroupSettings& serverGroup);
+      
+      void updateServerGroupList();
 
     private:
       KListView* m_serverList;

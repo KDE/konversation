@@ -243,6 +243,9 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
 
   // Set up signals / slots for identity page
   connect(m_identityCBox, SIGNAL(activated(int)), this, SLOT(updateIdentity(int)));
+
+  setButtonOK(KGuiItem(i18n("&OK"), "button_ok", i18n("Change identity information")));
+  setButtonCancel(KGuiItem(i18n("&Cancel"), "button_cancel", i18n("Discards all changes made")));
 }
 
 IdentityDialog::~IdentityDialog()
@@ -251,6 +254,12 @@ IdentityDialog::~IdentityDialog()
 
 void IdentityDialog::updateIdentity(int index)
 {
+  if(m_currentIdentity && (m_nicknameLBox->count() == 0)) {
+    KMessageBox::error(this, i18n("You must add at least one nick to the identity."));
+    m_identityCBox->setCurrentText(m_currentIdentity->getName());
+    return;
+  }
+  
   refreshCurrentIdentity();
 
   m_currentIdentity = m_identityList[index];
@@ -361,6 +370,12 @@ void IdentityDialog::refreshCurrentIdentity()
 
 void IdentityDialog::slotOk()
 {
+  if(m_nicknameLBox->count() == 0) {
+    KMessageBox::error(this, i18n("You must add at least one nick to the identity."));
+    m_identityCBox->setCurrentText(m_currentIdentity->getName());
+    return;
+  }
+  
   refreshCurrentIdentity();
   KonversationApplication::preferences.setIdentityList(m_identityList);
   accept();
@@ -401,19 +416,40 @@ void IdentityDialog::renameIdentity()
 
 void IdentityDialog::deleteIdentity()
 {
-  if(KMessageBox::warningContinueCancel(this,
-     i18n("Are you sure you want to delete all information for this identity?"),
-     i18n("Delete Identity"),
+  int current = m_identityCBox->currentItem();
+  
+  if(current <= 0) {
+    return;
+  }
+  
+  ServerGroupList serverGroups = KonversationApplication::preferences.serverGroupList();
+  ServerGroupList::iterator it = serverGroups.begin();
+  bool found = false;
+  
+  while((it != serverGroups.end()) && !found) {
+    if((*it).identityId() == m_currentIdentity->id()) {
+      found = true;
+    }
+    
+    ++it;
+  }
+  
+  QString warningTxt;
+  
+  if(found) {
+    warningTxt = i18n("This identity is in use, if you remove it the network settings using it will"
+      " fall back to the default identity. Should it be deleted anyway?");
+  } else {
+    warningTxt = i18n("Are you sure you want to delete all information for this identity?");
+  }
+  
+  if(KMessageBox::warningContinueCancel(this, warningTxt, i18n("Delete Identity"),
      KGuiItem(i18n("Delete"), "editdelete")) == KMessageBox::Continue)
   {
-    int current = m_identityCBox->currentItem();
-
-    if(current > 0) {
-      m_identityCBox->removeItem(current);
-      m_identityList.remove(m_currentIdentity);
-      m_currentIdentity = 0;
-      updateIdentity(m_identityCBox->currentItem());
-    }
+    m_identityCBox->removeItem(current);
+    m_identityList.remove(m_currentIdentity);
+    m_currentIdentity = 0;
+    updateIdentity(m_identityCBox->currentItem());
   }
 }
 
