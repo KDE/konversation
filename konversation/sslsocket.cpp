@@ -24,7 +24,6 @@
 #include <ksslcertificatecache.h>
 #include <kmessagebox.h>
 #include <ksocketdevice.h>
-#include <unistd.h>
 
 #include "sslsocket.h"
 
