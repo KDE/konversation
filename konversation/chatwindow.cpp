@@ -27,6 +27,12 @@ ChatWindow::ChatWindow(QWidget* parent)
 {
   parentWidget=parent;
   firstLog=true;
+
+  // FIXME: Make this configurable!
+//  font.setFamily("Arial");
+//  font.setPointSize(24);
+  
+//  setFont(font);
 }
 
 ChatWindow::~ChatWindow()

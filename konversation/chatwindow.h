@@ -78,6 +78,8 @@ class ChatWindow : public QVBox
     QString name;
     QString logName;
 
+    QFont font;
+    
     IRCView* textView;
     Server* server;
     QFile logfile;
