@@ -39,8 +39,8 @@ namespace Konversation {
   //
   // ServerListItem
   //
-  
-  ServerListItem::ServerListItem(QListViewItem* parent, int serverId, const QString& serverGroup, 
+
+  ServerListItem::ServerListItem(QListViewItem* parent, int serverId, const QString& serverGroup,
                                  const QString& identity, const QString& channels, bool autoConnect)
     : KListViewItem(parent, serverGroup, identity, channels)
   {
@@ -48,7 +48,7 @@ namespace Konversation {
     m_autoConnect = autoConnect;
   }
 
-  ServerListItem::ServerListItem(QListView* parent, int serverId, const QString& serverGroup, 
+  ServerListItem::ServerListItem(QListView* parent, int serverId, const QString& serverGroup,
                                  const QString& identity, const QString& channels, bool autoConnect)
     : KListViewItem(parent, serverGroup, identity, channels)
   {
@@ -61,11 +61,11 @@ namespace Konversation {
     m_autoConnect = ac;
     repaint();
   }
-  
+
   void ServerListItem::activate()
   {
     QPoint pos;
-    
+
     if(activatedPos(pos)) {
       QListView* lv = listView();
       QRect r;
@@ -77,12 +77,12 @@ namespace Konversation {
       r.setTopLeft(QPoint(x, 0));
       r.setWidth(boxsize);
       r.setHeight(boxsize);
-      
+
       if(!r.contains(pos)) {
         return;
       }
     }
-    
+
     setAutoConnect(!autoConnect());
   }
 
@@ -92,15 +92,15 @@ namespace Konversation {
       KListViewItem::paintCell(p, cg, column, width, align);
       return;
     }
-    
+
     QListView* lv = listView();
-    
+
     if(!lv) return;
-    
+
     // Copied from KListViewItem::paintCell()
     QColorGroup _cg = cg;
     const QPixmap *pm = lv->viewport()->backgroundPixmap();
-    
+
     if (pm && !pm->isNull()) {
       _cg.setBrush(QColorGroup::Base, QBrush(backgroundColor(), *pm));
       QPoint o = p->brushOrigin();
@@ -113,60 +113,60 @@ namespace Konversation {
       }
     }
     // End copy
-    
+
     // Copied from QCheckListItem::paintCell()
     const BackgroundMode bgmode = lv->viewport()->backgroundMode();
-    const QColorGroup::ColorRole crole = QPalette::backgroundRoleFromMode(bgmode);    
+    const QColorGroup::ColorRole crole = QPalette::backgroundRoleFromMode(bgmode);
     p->fillRect(0, 0, width, height(), _cg.brush(crole));
-    
+
     QFontMetrics fm(lv->fontMetrics());
     int boxsize = lv->style().pixelMetric(QStyle::PM_CheckListButtonSize, lv);
     int marg = lv->itemMargin();
-    
+
     int styleflags = QStyle::Style_Default;
-    
+
     if(autoConnect()) {
       styleflags |= QStyle::Style_On;
     } else {
       styleflags |= QStyle::Style_Off;
     }
-    
+
     if(isSelected()) {
       styleflags |= QStyle::Style_Selected;
     }
-    
+
     if(isEnabled() && lv->isEnabled()) {
       styleflags |= QStyle::Style_Enabled;
     }
-    
+
     int y = ((height() - boxsize) / 2) + marg;
     // End copy
 
     int x = ((width - boxsize) / 2) + marg;
-    
+
 //    lv->style().drawPrimitive(QStyle::PE_CheckListIndicator, p,
 //      QRect(x, y, boxsize, fm.height() + 2 + marg), _cg, styleflags, QStyleOption(this));
     p->drawRect(x, y, boxsize, boxsize);
-  
+
     if(autoConnect()) {
       p->drawLine(x, y, x + boxsize, y + boxsize);
       p->drawLine(x, y + boxsize, x + boxsize, y);
     }
   }
 */
-  
+
   //
   // ServerListDialog
   //
-  
+
   ServerListDialog::ServerListDialog(QWidget *parent, const char *name)
     : KDialogBase(Plain, i18n("Server List"), Ok|/*Apply|*/Cancel, Ok, parent, name, false)
   {
     m_preferences = &KonversationApplication::preferences;
     setButtonOK(KGuiItem(i18n("C&onnect"), "connect_creating", i18n("Connect to the server")));
-    
+
     QFrame* mainWidget = plainPage();
-    
+
     m_serverList = new KListView(mainWidget);
     m_serverList->setAllColumnsShowFocus(true);
     m_serverList->setRootIsDecorated(true);
@@ -174,39 +174,39 @@ namespace Konversation {
     m_serverList->addColumn(i18n("Network"));
     m_serverList->addColumn(i18n("Identity"));
     m_serverList->addColumn(i18n("Channels"));
-    m_serverList->setSelectionMode(QListView::Multi);
+    m_serverList->setSelectionModeExt(KListView::Extended);
     //m_serverList->addColumn(i18n("Auto Connect"));
-    
+
     m_addButton = new QPushButton(i18n("A&dd..."), mainWidget);
     m_editButton = new QPushButton(i18n("&Edit..."), mainWidget);
     m_delButton = new QPushButton(i18n("&Delete"), mainWidget);
-    
+
     QGridLayout* layout = new QGridLayout(mainWidget, 1, 2, 0, spacingHint());
-    
+
     layout->addMultiCellWidget(m_serverList, 0, 3, 0, 0);
     layout->addWidget(m_addButton, 0, 1);
     layout->addWidget(m_editButton, 1, 1);
     layout->addWidget(m_delButton, 2, 1);
     layout->setRowStretch(3, 10);
-  
+
     // Load server list
     updateServerGroupList();
-    
+
     connect(m_serverList, SIGNAL(doubleClicked(QListViewItem *, const QPoint&, int)), this, SLOT(slotOk()));
     connect(m_serverList, SIGNAL(selectionChanged()), this, SLOT(updateButtons()));
     connect(m_addButton, SIGNAL(clicked()), this, SLOT(slotAdd()));
     connect(m_editButton, SIGNAL(clicked()), this, SLOT(slotEdit()));
     connect(m_delButton, SIGNAL(clicked()), this, SLOT(slotDelete()));
-    
+
     updateButtons();
-  
+
     KConfig* config = kapp->config();
     config->setGroup("ServerListDialog");
     QSize newSize = size();
     newSize = config->readSizeEntry("Size", &newSize);
     resize(newSize);
   }
-  
+
   ServerListDialog::~ServerListDialog()
   {
     KConfig* config = kapp->config();
@@ -222,7 +222,7 @@ namespace Konversation {
 
     QListViewItem* branch = m_serverList->firstChild();
     bool found = false;
-    
+
     while(branch && !found)
     {
       if((branch->rtti() != 10001) && (branch->text(0) == name)) {
@@ -261,19 +261,19 @@ namespace Konversation {
   {
 /*    QListViewItem* branch = m_serverList->firstChild();
     ServerListItem* item;
-    
+
     while(branch) {
       item = static_cast<ServerListItem*>(branch->firstChild());
-      
+
       while(item) {
         m_preferences->changeServerProperty(item->serverId(), 6, item->autoConnect() ? "1" : "0");
         item = static_cast<ServerListItem*>(item->nextSibling());
       }
-      
+
       branch = branch->nextSibling();
   }*/
   }
-  
+
   void ServerListDialog::slotAdd()
   {
     ServerGroupDialog dlg(i18n("Add Network"), this);
@@ -282,7 +282,7 @@ namespace Konversation {
 
     if(dlg.exec() == KDialog::Accepted) {
       addServerGroup(dlg.serverGroupSettings());
-      
+
       if(dlg.identitiesNeedsUpdate()) {
         updateServerGroupList();
       }
@@ -386,7 +386,7 @@ namespace Konversation {
 
       branch = branch->nextSibling();
     }
-    
+
     return groups;
   }
 
@@ -432,7 +432,7 @@ namespace Konversation {
                          channels,
                          serverGroup.autoConnectEnabled());
     }
-    
+
     return item;
   }
 
