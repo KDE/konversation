@@ -66,7 +66,7 @@ class Server : public QObject
     /** Constructor used for a 'fast connect' to a server.
      *  The details are passed in.  Used for example when the user does "/server irc.somewhere.net"
      */
-    Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
+    Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
 		   const QString& channel,const QString& password, QString nick, const bool& useSSL=FALSE);
     ~Server();
 
