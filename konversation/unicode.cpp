@@ -42,13 +42,12 @@
 #define UTF8_ValidTrialByte(c) ( kTrialByte == ((c) & kLeft2BitsMask))
  
 
-bool isUtf8(const QString& text)
+bool isUtf8(const QCString& utf8)
 {
   int i;
   int j;
-  int clen;
-  int len = text.length();
-  QCString utf8 = text.ascii();
+  int clen = 0;
+  int len = utf8.length();
 
   for(i=0; i < len; i += clen)
     {

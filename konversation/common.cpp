@@ -12,6 +12,7 @@
 
 #include "common.h"
 
+#include <qcstring.h>
 #include <qstring.h>
 #include <qregexp.h>
 #include <qpixmap.h>

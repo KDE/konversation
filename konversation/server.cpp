@@ -993,8 +993,7 @@ void Server::incoming()
 
   while(!qcsBufferLines.isEmpty())
   {
-    const QString testString = qcsBufferLines.front();
-    bool isUtf8 = Konversation::isUtf8(Konversation::removeIrcMarkup(testString));
+    bool isUtf8 = Konversation::isUtf8(qcsBufferLines.front());
 
     if(isUtf8)
       inputBuffer << QString::fromUtf8(qcsBufferLines.front());
@@ -1065,9 +1064,8 @@ void Server::incoming()
 
       // if channel encoding is utf-8 and the string is definitely not utf-8
       // then try latin-1
-      // Disabled for now -- cartman
-      //if ( !isUtf8 && codec->mibEnum() == 106 )
-      //	codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
+      if ( !isUtf8 && codec->mibEnum() == 106 )
+      	codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
 
       inputBuffer << codec->toUnicode(qcsBufferLines.front());
     }
