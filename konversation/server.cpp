@@ -129,23 +129,6 @@ Server::~Server()
   // Don't delete socket now
   m_socket->deleteLater();
 
-#ifdef USE_MDI
-/*
-  while(channelList.count())
-  {
-    Channel* lookChannel=channelList.at(0);
-    lookChannel->removeNick(getNickname(),getIdentity()->getPartReason(),true);
-  }
-  kdDebug() << "Server::~Server(): channel list count now: " << channelList.count() << endl;
-
-  while(queryList.count())
-  {
-    queryList.at(0)->closeYourself();
-  }
-*/
-
-  emit serverQuit(getIdentity()->getPartReason());
-#else
   closeRawLog();
   closeChannelListPanel();
 
@@ -154,7 +137,6 @@ Server::~Server()
 
   queryList.setAutoDelete(true);
   queryList.clear();
-#endif
 
   // Delete all the NickInfos and ChannelNick structures.
   m_allNicks.clear();
@@ -1871,10 +1853,6 @@ void Server::removeQuery(class Query* query)
     // else select next query
     else lookQuery=queryList.next();
   }
-#ifndef USE_MDI
-  // Free the query object
-  delete query;
-#endif
 }
 
 void Server::sendJoinCommand(const QString& name, const QString& password)
@@ -2906,15 +2884,13 @@ void Server::addRawLog(bool show)
   if(show) getMainWindow()->showView(rawLog);
 }
 
-// in MDI mode thiis function may only be run from the raw log panel itself!
+
 void Server::closeRawLog()
 {
   if(rawLog)
   {
-#ifndef USE_MDI
     delete rawLog;
-#endif
-    rawLog=0;
+    rawLog = 0;
   }
 }
 
@@ -2943,10 +2919,8 @@ void Server::closeChannelListPanel()
 {
   if(channelListPanel)
   {
-#ifndef USE_MDI
     delete channelListPanel;
-#endif
-    channelListPanel=0;
+    channelListPanel = 0;
   }
 }
 
