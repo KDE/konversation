@@ -72,14 +72,20 @@ void TopicLabel::contentsMousePressEvent(QMouseEvent *e)
  {
    pressPosition=e->pos();
    urlToDrag = anchorAt(pressPosition);
-   if (!urlToDrag.isNull()) mousePressed=true;
- }
+   if (!urlToDrag.isNull()) {
+     mousePressed=true; 
+     return;
+     }
+ } 
  KActiveLabel::contentsMousePressEvent(e);
 }
 
 void TopicLabel::contentsMouseReleaseEvent(QMouseEvent *e)
 {
- if (e->button()==QMouseEvent::LeftButton) mousePressed=false;
+ if (e->button()==QMouseEvent::LeftButton) {
+   if (mousePressed) openLink(urlToDrag);
+   mousePressed=false;
+ }
  KActiveLabel::contentsMouseReleaseEvent(e);
 }
  

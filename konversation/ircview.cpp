@@ -801,8 +801,10 @@ bool IRCView::eventFilter(QObject* object,QEvent* event)
 	    emit textPasted();
 	}
       
-      if (me->button()==QMouseEvent::LeftButton) 
+      if (me->button()==QMouseEvent::LeftButton) {
+        if (mousePressed) urlClickSlot(urlToDrag);
 	mousePressed=false;
+	}
     } 
   else if(event->type()==QEvent::ContextMenu) 
     return contextMenu((QContextMenuEvent*) event);
@@ -816,6 +818,7 @@ bool IRCView::eventFilter(QObject* object,QEvent* event)
 	    {
 	      mousePressed=true;
 	      pressPosition=me->pos();
+	      return true;
 	    }
 	}
     }
