@@ -18,6 +18,7 @@
 
 #include <qregexp.h>
 #include <qhostaddress.h>
+#include <qtextcodec.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -945,16 +946,26 @@ void Server::setNickname(const QString& newNickname)
   serverWindow->setNickname(newNickname);
 }
 
-void Server::setChannelTopic(QString& channel,QString &topic)
+void Server::setChannelTopic(QString& channel,QString& newTopic)
 {
   Channel* outChannel=getChannelByName(channel);
-  if(outChannel) outChannel->setTopic(topic);
+  if(outChannel)
+  {
+    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
+    QString topic=codec->toUnicode(newTopic);
+    outChannel->setTopic(topic);
+  }
 }
 
-void Server::setChannelTopic(QString& nickname,QString& channel,QString &topic) // Overloaded
+void Server::setChannelTopic(QString& nickname,QString& channel,QString& newTopic) // Overloaded
 {
   Channel* outChannel=getChannelByName(channel);
-  if(outChannel) outChannel->setTopic(nickname,topic);
+  if(outChannel)
+  {
+    QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
+    QString topic=codec->toUnicode(newTopic);
+    outChannel->setTopic(newTopic,nickname);
+  }
 }
 
 bool Server::isNickname(QString& compare)

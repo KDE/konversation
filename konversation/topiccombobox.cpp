@@ -51,7 +51,9 @@ void TopicComboBox::insertStringList(const QStringList& list)
   QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec());
 
   KComboBox::insertStringList(list);
-  setEditText(codec->toUnicode(list[0]).section(' ',1));
+
+  setEditText(list[0].section(' ',1));
+//  setEditText(codec->toUnicode(list[0]).section(' ',1));
 }
 
 #include "topiccombobox.moc"
