@@ -1066,8 +1066,13 @@ void KonversationMainWindow::updateLag(Server* lagServer,int msec)
   if(lagServer==frontServer)
   {
     statusBar()->changeItem(i18n("Ready."),StatusText);
+    QString lagString;
 
-    QString lagString(i18n("Lag: %1 ms").arg(msec));
+    if(msec>1000) {
+      lagString = i18n("Lag: %1 ms").arg(msec);
+    } else {
+      lagString = i18n("Lag: %1 s").arg(msec/1000);
+    }
     statusBar()->changeItem(lagString,LagOMeter);
   }
 }
@@ -1104,9 +1109,11 @@ void KonversationMainWindow::tooLongLag(Server* lagServer,int msec)
     QString lagString(i18n("No answer from server %1 for more than %2").arg(lagServer->getServerName(), timestring));
     statusBar()->changeItem(lagString,StatusText);
   }
-
-  QString lagString(i18n("Lag: %1 s").arg(msec/1000));
-  statusBar()->changeItem(lagString,LagOMeter);
+  if(lagServer==frontServer) {
+    //show lag only of actual server
+    QString lagString(i18n("Lag: %1 s").arg(msec/1000));
+    statusBar()->changeItem(lagString,LagOMeter);
+  }
 }
 
 // TODO: Make this server dependant
