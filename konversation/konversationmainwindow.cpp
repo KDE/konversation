@@ -26,16 +26,17 @@
 #include <kdeversion.h>
 #include <kedittoolbar.h>
 
-#ifdef KDE_IS_VERSION
-#if KDE_IS_VERSION(3,1,1)
-#define USE_KNOTIFY
+#ifndef KDE_MAKE_VERSION
+#define KDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
 #endif
 
-#ifdef USE_KNOTIFY
-#include <knotifydialog.h>
+#ifndef KDE_IS_VERSION
+#define KDE_IS_VERSION(a,b,c) ( KDE_VERSION >= KDE_MAKE_VERSION(a,b,c) )
 #endif
-#else
-#define KDE_IS_VERSION(a,b,c) (0)
+
+#if KDE_IS_VERSION(3,1,1)
+#define USE_KNOTIFY
+#include <knotifydialog.h>
 #endif
 
 #include "ledtabwidget.h"
@@ -150,11 +151,11 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   createGUI();
   resize(700, 500);  // Give the app a sane default size
   setAutoSaveSettings();
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)  
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
   showToolBarAction->setChecked(KonversationApplication::preferences.getShowToolBar());
   showToolbar();
 #endif
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)  
+#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
   showStatusBarAction->setChecked(KonversationApplication::preferences.getShowStatusBar());
   showStatusbar();
 #endif
@@ -191,7 +192,7 @@ void KonversationMainWindow::showToolbar()
 #if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
   if(showToolBarAction->isChecked()) toolBar("mainToolBar")->show();
   else toolBar("mainToolBar")->hide();
-  
+
   KonversationApplication::preferences.setShowToolBar(showToolBarAction->isChecked());
 #endif
 }
