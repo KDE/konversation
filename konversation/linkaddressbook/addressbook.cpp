@@ -124,7 +124,7 @@ QString Addressbook::locate(const QString &contactId, const QString &protocol) {
 		return QString::null;
 	}
 	if(protocol != "messaging/irc")
-		return false;
+		return QString::null;
 	
 	return getKABCAddresseeFromNick(contactId).uid();
 }
