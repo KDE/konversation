@@ -31,130 +31,129 @@
 #include "dcctransfer.h"
 #include "konversationapplication.h"
 
-DccTransfer::DccTransfer(KListView* _parent, DccType _dccType, const QString& _partnerNick, const QString& _fileName)
-  : KListViewItem(_parent)
+DccTransfer::DccTransfer( KListView* parent, DccType dccType, const QString& partnerNick, const QString& fileName )
+  : KListViewItem( parent )
 {
-  dccType = _dccType;
-  partnerNick = _partnerNick;
-  fileName = _fileName;
+  m_dccType = dccType;
+  m_partnerNick = partnerNick;
+  m_fileName = fileName;
   
-  dccStatus = Queued;
-  bResumed = false;
-  transferringPosition = 0;
-  transferStartPosition = 0;
-  partnerIp = QString::null;
-  partnerPort = QString::null;
-  ownIp = QString::null;
-  ownPort = QString::null;
-  timeOffer = QDateTime::currentDateTime();
+  m_dccStatus = Queued;
+  m_resumed = false;
+  m_transferringPosition = 0;
+  m_transferStartPosition = 0;
+  m_partnerIp = QString::null;
+  m_partnerPort = QString::null;
+  m_ownIp = QString::null;
+  m_ownPort = QString::null;
+  m_timeOffer = QDateTime::currentDateTime();
   
-  bufferSize = KonversationApplication::preferences.getDccBufferSize();
-  buffer = new char[bufferSize];
+  m_bufferSize = KonversationApplication::preferences.getDccBufferSize();
+  m_buffer = new char[ m_bufferSize ];
   
-  autoUpdateViewTimer = 0;
+  m_autoUpdateViewTimer = 0;
   
-  progressBar = new KProgress(100, listView()->viewport());
-  progressBar->setCenterIndicator(true);
-  progressBar->setPercentageVisible(true);
+  m_progressBar = new KProgress( 100, listView()->viewport() );
+  m_progressBar->setCenterIndicator(true);
+  m_progressBar->setPercentageVisible(true);
   
-  detailDialog = 0;
+  m_detailDialog = 0;
   
   // FIXME: we shouldn't do these init in the instance constructer
-  TypeText[Send]    = i18n("Send");
-  TypeText[Receive] = i18n("Receive");
+  s_dccTypeText[ Send    ] = i18n("Send");
+  s_dccTypeText[ Receive ] = i18n("Receive");
   
-  StatusText[Queued]        = i18n("Queued");
-  StatusText[WaitingRemote] = i18n("Offering");
-  StatusText[Connecting]    = i18n("Connecting");
-  StatusText[Sending]       = i18n("Sending");
-  StatusText[Receiving]     = i18n("Receiving");
-  StatusText[Done]          = i18n("Done");
-  StatusText[Failed]        = i18n("Failed");
-  StatusText[Aborted]       = i18n("Aborted");
-  StatusText[Removed]       = i18n("Removed");
+  s_dccStatusText[ Queued        ] = i18n("Queued");
+  s_dccStatusText[ WaitingRemote ] = i18n("Offering");
+  s_dccStatusText[ Connecting    ] = i18n("Connecting");
+  s_dccStatusText[ Sending       ] = i18n("Sending");
+  s_dccStatusText[ Receiving     ] = i18n("Receiving");
+  s_dccStatusText[ Done          ] = i18n("Done");
+  s_dccStatusText[ Failed        ] = i18n("Failed");
+  s_dccStatusText[ Aborted       ] = i18n("Aborted");
+  s_dccStatusText[ Removed       ] = i18n("Removed");
 }
 
 DccTransfer::~DccTransfer()
 {
   stopAutoUpdateView();
   closeDetailDialog();
-  delete[] buffer;
-  delete progressBar;
+  delete[] m_buffer;
+  delete m_progressBar;
 }
 
 void DccTransfer::updateView()  // slot
 {
-  setPixmap(DccPanel::Column::TypeIcon, getTypeIcon());
-  setPixmap(DccPanel::Column::Status,   getStatusIcon());
+  setPixmap( DccPanel::Column::TypeIcon, getTypeIcon() );
+  setPixmap( DccPanel::Column::Status,   getStatusIcon() );
   
-  setText(DccPanel::Column::OfferDate,     timeOffer.toString("hh:mm:ss"));
-  setText(DccPanel::Column::Status,        getStatusText());
-  setText(DccPanel::Column::FileName,      fileName);
-  setText(DccPanel::Column::PartnerNick,   partnerNick);
-  setText(DccPanel::Column::Position,      getPositionPrettyText());
-  setText(DccPanel::Column::TimeRemaining, getTimeRemainingPrettyText());
-  setText(DccPanel::Column::CPS,           getCPSPrettyText());
+  setText( DccPanel::Column::OfferDate,     m_timeOffer.toString("hh:mm:ss") );
+  setText( DccPanel::Column::Status,        getStatusText() );
+  setText( DccPanel::Column::FileName,      m_fileName );
+  setText( DccPanel::Column::PartnerNick,   m_partnerNick );
+  setText( DccPanel::Column::Position,      getPositionPrettyText() );
+  setText( DccPanel::Column::TimeRemaining, getTimeRemainingPrettyText() );
+  setText( DccPanel::Column::CPS,           getCPSPrettyText() );
   
-  if(m_fileSize)
-    progressBar->setProgress( getProgress() );
+  if( m_fileSize )
+    m_progressBar->setProgress( getProgress() );
   else  // filesize is unknown
-    setText(DccPanel::Column::Progress, i18n("unknown"));
+    setText( DccPanel::Column::Progress, i18n("unknown") );
   
-  if(detailDialog)
-    detailDialog->updateView();
+  if( m_detailDialog )
+    m_detailDialog->updateView();
 }
 
 void DccTransfer::startAutoUpdateView()
 {
   stopAutoUpdateView();
-  autoUpdateViewTimer = new QTimer(this);
-  connect(autoUpdateViewTimer, SIGNAL(timeout()), this, SLOT(updateView()));
-  autoUpdateViewTimer->start(500);
+  m_autoUpdateViewTimer = new QTimer(this);
+  connect(m_autoUpdateViewTimer, SIGNAL(timeout()), this, SLOT(updateView()));
+  m_autoUpdateViewTimer->start(500);
 }
 
 void DccTransfer::stopAutoUpdateView()
 {
-  if(autoUpdateViewTimer)
+  if(m_autoUpdateViewTimer)
   {
-    autoUpdateViewTimer->stop();
-    delete autoUpdateViewTimer;
-    autoUpdateViewTimer = 0;
+    m_autoUpdateViewTimer->stop();
+    delete m_autoUpdateViewTimer;
+    m_autoUpdateViewTimer = 0;
   }
 }
 
-void DccTransfer::paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment)  // public virtual
+void DccTransfer::paintCell( QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment )  // public virtual
 {
-  KListViewItem::paintCell(painter, colorgroup, column, width, alignment);
-  if(column==DccPanel::Column::Progress)
+  KListViewItem::paintCell( painter, colorgroup, column, width, alignment );
+  if( column == DccPanel::Column::Progress )
     showProgressBar();
 }
 
 void DccTransfer::showProgressBar()
 {  
   // I've referenced the Apollon's code for progressbar things. Thank you, the Apollon team! (shin)
-  if(m_fileSize)
+  if( m_fileSize )
   {
-    QRect rect = listView()->itemRect(this);
+    QRect rect = listView()->itemRect( this );
     QHeader *head = listView()->header();
-    rect.setLeft(head->sectionPos(DccPanel::Column::Progress) - head->offset());
-    rect.setWidth(head->sectionSize(DccPanel::Column::Progress));
-    progressBar->setGeometry(rect);
-    
-    progressBar->show();
+    rect.setLeft( head->sectionPos( DccPanel::Column::Progress ) - head->offset() );
+    rect.setWidth( head->sectionSize( DccPanel::Column::Progress ) );
+    m_progressBar->setGeometry( rect );
+    m_progressBar->show();
   }
 }
 
 void DccTransfer::runFile()  // public
 {
-  if ( dccType == Send || dccStatus == Done )
+  if( m_dccType == Send || m_dccStatus == Done )
     new KRun( m_fileURL );
 }
 
 bool DccTransfer::removeFile()  // public
 {
-  if ( dccType != Receive || dccStatus != Done )
+  if( m_dccType != Receive || m_dccStatus != Done )
     return false;
-  if ( !QFile( m_fileURL.path() ).remove() )
+  if( !QFile( m_fileURL.path() ).remove() )
   {
     KMessageBox::sorry( 0, i18n("Cannot remove file '%1'.").arg( m_fileURL.url() ), i18n("DCC Error") );
     return false;
@@ -166,7 +165,7 @@ bool DccTransfer::removeFile()  // public
 
 void DccTransfer::openFileInfoDialog()
 {
-  if( dccType == Send || dccStatus == Done )
+  if( m_dccType == Send || m_dccStatus == Done )
   {
     QStringList infoList;
     
@@ -234,47 +233,48 @@ void DccTransfer::openFileInfoDialog()
 
 void DccTransfer::openDetailDialog()  // public
 {
-  if(!detailDialog)
-    detailDialog = new DccDetailDialog(this);
-  detailDialog->show();
+  if( !m_detailDialog )
+    m_detailDialog = new DccDetailDialog( this );
+  m_detailDialog->show();
 }
 
 void DccTransfer::closeDetailDialog()  // public
 {
-  if(detailDialog)
+  if( m_detailDialog )
   {
-    delete detailDialog;
-    detailDialog = 0;
+    delete m_detailDialog;
+    m_detailDialog = 0;
   }
 }
 
-void DccTransfer::setStatus(DccStatus status, const QString& statusDetail)
+void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )
 {
-  DccStatus oldStatus=dccStatus;
-  dccStatus=status;
-  dccStatusDetail=statusDetail;
-  if (oldStatus!=status) emit statusChanged(this);
+  bool changed = ( status != m_dccStatus );
+  m_dccStatus = status;
+  m_dccStatusDetail = statusDetail;
+  if( changed )
+    emit statusChanged(this);
 }
 
 QString DccTransfer::getTypeText() const
 {
-  return TypeText[dccType];
+  return s_dccTypeText[ m_dccType ];
 }
 
 QPixmap DccTransfer::getTypeIcon() const
 {
   QString icon;
-  if(dccType == Send)
+  if( m_dccType == Send )
     icon = "up";
-  else if(dccType == Receive)
+  else if( m_dccType == Receive )
     icon = "down";
-  return KGlobal::iconLoader()->loadIcon(icon, KIcon::Small);
+  return KGlobal::iconLoader()->loadIcon( icon, KIcon::Small );
 }
 
 QPixmap DccTransfer::getStatusIcon() const
 {
   QString icon;
-  switch(dccStatus)
+  switch( m_dccStatus )
   {
     case Queued:
       icon = "player_stop";
@@ -299,80 +299,80 @@ QPixmap DccTransfer::getStatusIcon() const
       break;
     default: ;  // sugar
   }
-  return KGlobal::iconLoader()->loadIcon(icon, KIcon::Small);
+  return KGlobal::iconLoader()->loadIcon( icon, KIcon::Small );
 }
 
 QString DccTransfer::getStatusText() const
 {
-  return StatusText[dccStatus];
+  return s_dccStatusText[ m_dccStatus ];
 }
 
 QString DccTransfer::getFileSizePrettyText() const
 {
-  return KIO::convertSize(m_fileSize);
+  return KIO::convertSize( m_fileSize );
 }
 
 int DccTransfer::getProgress() const
 {
-  return (int)( ( (double)transferringPosition / (double)m_fileSize ) * 100 );
+  return (int)( ( (double)m_transferringPosition / (double)m_fileSize ) * 100 );
 }
 
 QString DccTransfer::getPositionPrettyText() const
 {
-  // TODO: make it pretty!
-  return KIO::convertSize(transferringPosition) + " / " + KIO::convertSize(m_fileSize);
+  return KIO::convertSize( m_transferringPosition ) + " / " + KIO::convertSize( m_fileSize );
 }
+
 QString DccTransfer::getTimeRemainingPrettyText() const
 {
-  if(dccStatus != Sending && dccStatus != Receiving )
+  if ( m_dccStatus != Sending && m_dccStatus != Receiving )
     return QString::null;
-  if(!m_fileSize)
+  if( !m_fileSize )
     return i18n("unknown");
   // not use getCPS() for exact result
-  int trnsfdTime = timeTransferStarted.secsTo(QDateTime::currentDateTime());
-  KIO::fileoffset_t trnsfdBytes = transferringPosition - transferStartPosition;
-  if(trnsfdBytes == 0)
+  int trnsfdTime = m_timeTransferStarted.secsTo( QDateTime::currentDateTime() );
+  KIO::fileoffset_t trnsfdBytes = m_transferringPosition - m_transferStartPosition;
+  if( trnsfdBytes == 0 )
     return QString::null;
-  KIO::fileoffset_t remBytes = m_fileSize - transferringPosition;
-  int remTime = (int)((double)remBytes / (double)trnsfdBytes * trnsfdTime);
+  KIO::fileoffset_t remBytes = m_fileSize - m_transferringPosition;
+  int remTime = (int)( (double)remBytes / (double)trnsfdBytes * trnsfdTime );
   int remHour = remTime / 3600; remTime -= remHour * 3600;
   int remMin = remTime / 60; remTime -= remMin * 60;
   QString text;
-  if(remHour)
-    text += QString::number(remHour) + ":";
-  if(remMin)
-    text += QString::number(remMin) + ":";
-  if(text.isEmpty())
-    text = QString::number(remTime) + i18n(" sec");
+  if( remHour )
+    text += QString::number( remHour ) + ":";
+  if( remMin )
+    text += QString::number( remMin ) + ":";
+  if( text.isEmpty() )
+    text = QString::number( remTime ) + i18n(" sec");
   else
-    text += QString::number(remTime);
+    text += QString::number( remTime );
   return text;
 }
 
 QString DccTransfer::getCPSPrettyText() const
 {
-  // TODO: make it pretty!
-  return QString::number(getCPS()) + " B/s";
+  return QString( i18n("%1/sec") ).arg( KIO::convertSize( getCPS() ) );
 }
 
 unsigned long DccTransfer::getCPS() const
 {
-  int elapsed=timeTransferStarted.secsTo(QDateTime::currentDateTime());
-  if(elapsed == 0 && transferringPosition-transferStartPosition > 0)
+  int elapsed = m_timeTransferStarted.secsTo( QDateTime::currentDateTime() );
+  if( elapsed == 0 && m_transferringPosition - m_transferStartPosition > 0 )
     elapsed = 1;
   // prevent division by zero
-  return elapsed ? (transferringPosition-transferStartPosition)/elapsed : 0;
+  return elapsed ? ( m_transferringPosition - m_transferStartPosition ) / elapsed : 0;
 }
 
-QString DccTransfer::getNumericalIpText(const QString& _ip)  // static
+//FIXME: IPv6 support
+QString DccTransfer::getNumericalIpText( const QString& ipString )  // static
 {
   QHostAddress ip;
-  ip.setAddress(_ip);
+  ip.setAddress( ipString );
   
-  return QString::number(ip.ip4Addr());
+  return QString::number( ip.ip4Addr() );
 }
 
-QString DccTransfer::getErrorString(int code)  // static
+QString DccTransfer::getErrorString( int code )  // static
 {
   QString errorString(QString::null);
 
@@ -416,30 +416,30 @@ QString DccTransfer::getErrorString(int code)  // static
   return errorString;
 }
 
-unsigned long DccTransfer::intel(unsigned long value)  // static
+unsigned long DccTransfer::intel( unsigned long value )  // static
 {
-  value=((value & 0xff000000) >> 24) +
-        ((value & 0xff0000) >> 8) +
-        ((value & 0xff00) << 8) +
-        ((value & 0xff) << 24);
+  value = ( (value & 0xff000000) >> 24 ) +
+          ( (value & 0xff0000) >> 8 ) +
+          ( (value & 0xff00) << 8 ) +
+          ( (value & 0xff) << 24 );
 
   return value;
 }
 
+// public functions
+DccTransfer::DccType    DccTransfer::getType()          const { return m_dccType; }
+DccTransfer::DccStatus  DccTransfer::getStatus()        const { return m_dccStatus; }
+QString                 DccTransfer::getOwnIp()         const { return m_ownIp; }
+QString                 DccTransfer::getOwnPort()       const { return m_ownPort; }
+QString                 DccTransfer::getPartnerNick()   const { return m_partnerNick; }
+QString                 DccTransfer::getFileName()      const { return m_fileName; }
+KIO::filesize_t         DccTransfer::getFileSize()      const { return m_fileSize; }
+KURL                    DccTransfer::getFileURL()       const { return m_fileURL; }
+bool                    DccTransfer::isResumed()        const { return m_resumed; }
 
-DccTransfer::DccType DccTransfer::getType() const { return dccType; }
-DccTransfer::DccStatus DccTransfer::getStatus() const { return dccStatus; }
-QString DccTransfer::getOwnIp() const { return ownIp; }
-QString DccTransfer::getOwnPort() const { return ownPort; }
-QString DccTransfer::getPartnerNick() const { return partnerNick; }
-QString DccTransfer::getFileName() const { return fileName; }
-KIO::filesize_t DccTransfer::getFileSize() const { return m_fileSize; }
-KURL DccTransfer::getFileURL() const { return m_fileURL; }
-bool DccTransfer::isResumed() const { return bResumed; }
 
-QString DccTransfer::TypeText[DccTransfer::DccTypeCount];
-QString DccTransfer::StatusText[DccTransfer::DccStatusCount];
-
+QString DccTransfer::s_dccTypeText[ DccTransfer::DccTypeCount ];
+QString DccTransfer::s_dccStatusText[ DccTransfer::DccStatusCount ];
 
 
 #include "dcctransfer.moc"

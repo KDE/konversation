@@ -1,16 +1,13 @@
+// dcctransfersend.h - send a file on DCC protocol
+// Copyright (C) 2002-2004 Dario Abatianni <eisfuchs@tigress.com>
+// Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
+// Copyright (C) 2004 John Tapsell <john@geola.co.uk>
+
 /*
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
-*/
-
-// dcctransfersend.h : separated from dcctransfer.h
-/*
-  dcctransfer.h  -  description
-  begin:     Mit Aug 7 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
 */
 
 #ifndef DCCTRANSFERSEND_H
@@ -31,13 +28,13 @@ class DccTransferSend : public DccTransfer
   Q_OBJECT
   
   public:
-    DccTransferSend(KListView* _parent, const QString& _partnerNick, const KURL& _fileURL, const QString& _ownIp);
+    DccTransferSend( KListView* parent, const QString& partnerNick, const KURL& fileURL, const QString& ownIp );
     virtual ~DccTransferSend();
     
-    void setResume(unsigned long _position);
+    void setResume( unsigned long position );
     
   signals:
-    void sendReady(const QString& partner, const QString& fileName, const QString& ownIp, const QString& ownPort, unsigned long fileSize);
+    void sendReady( const QString& partner, const QString& fileName, const QString& ownIp, const QString& ownPort, unsigned long fileSize );
     
   public slots:
     virtual void start();
@@ -47,22 +44,22 @@ class DccTransferSend : public DccTransfer
     void heard();
     void writeData();
     void getAck();
-    void socketError(int errorCode);
+    void socketError( int errorCode );
     void connectionTimeout();
     
   protected:
     void cleanUp();
-    void startConnectionTimer(int sec);
+    void startConnectionTimer( int sec );
     void stopConnectionTimer();
-    QFile file;
+    QFile m_file;
 
     /*The filename of the temporary file that we downloaded.  So if send a file ftp://somewhere/file.txt
      * Then this will be downloaded to /tmp.
      */
-    QString tmpFile;
-    KNetwork::KServerSocket* serverSocket;
-    KNetwork::KStreamSocket* sendSocket;
-    QTimer* connectionTimer;
+    QString m_tmpFile;
+    KNetwork::KServerSocket* m_serverSocket;
+    KNetwork::KStreamSocket* m_sendSocket;
+    QTimer* m_connectionTimer;
 };
 
 #endif // DCCTRANSFERSEND_H

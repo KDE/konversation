@@ -46,7 +46,7 @@ class DccTransfer : public QObject, public KListViewItem
     
     enum DccStatus
     {
-      Queued=0,      // Newly added DCC, RECV: Waiting for local user's response
+      Queued = 0,    // Newly added DCC, RECV: Waiting for local user's response
       WaitingRemote, // Waiting for remote host's response
       Connecting,    // RECV: trying to connect to the server
       Sending,       // Sending
@@ -58,7 +58,7 @@ class DccTransfer : public QObject, public KListViewItem
       DccStatusCount
     };
     
-    DccTransfer(KListView* _parent, DccType _dccType, const QString& _partnerNick, const QString& _fileName);
+    DccTransfer( KListView* parent, DccType dccType, const QString& partnerNick, const QString& fileName );
     virtual ~DccTransfer();
     
     virtual void paintCell(QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment);
@@ -82,8 +82,8 @@ class DccTransfer : public QObject, public KListViewItem
     void closeDetailDialog();
     
   signals:
-    void done(const QString& filename);
-    void statusChanged(const DccTransfer* item);
+    void done( const QString& filename );
+    void statusChanged( const DccTransfer* item );
     
   public slots:
     virtual void start() = 0;
@@ -98,7 +98,7 @@ class DccTransfer : public QObject, public KListViewItem
     void startAutoUpdateView();
     void stopAutoUpdateView();
     
-    void setStatus(DccStatus status, const QString& statusDetail = QString::null);
+    void setStatus( DccStatus status, const QString& statusDetail = QString::null );
     
     // called from updateView()
     QString getTypeText()                   const;
@@ -113,45 +113,46 @@ class DccTransfer : public QObject, public KListViewItem
     
     unsigned long getCPS() const;
     
-    static QString getNumericalIpText(const QString& _ip);
-    static QString getErrorString(int code);
-    static unsigned long intel(unsigned long value);
+    static QString getNumericalIpText( const QString& ipString );
+    static QString getErrorString( int code );
+    static unsigned long intel( unsigned long value );
     
     // transfer information
-    DccType dccType;
-    DccStatus dccStatus;
-    QString dccStatusDetail;
-    bool bResumed;
-    KIO::fileoffset_t transferringPosition;
-    KIO::fileoffset_t transferStartPosition;
-    QString partnerNick;
-    QString partnerIp;  // null when unknown
-    QString partnerPort;
-    QString ownIp;
-    QString ownPort;
-    QDateTime timeOffer;
-    QDateTime timeTransferStarted;
-    QDateTime timeLastActive;
+    DccType m_dccType;
+    DccStatus m_dccStatus;
+    QString m_dccStatusDetail;
+    bool m_resumed;
+    KIO::fileoffset_t m_transferringPosition;
+    KIO::fileoffset_t m_transferStartPosition;
+    QString m_partnerNick;
+    QString m_partnerIp;  // null when unknown
+    QString m_partnerPort;
+    QString m_ownIp;
+    QString m_ownPort;
+    QDateTime m_timeOffer;
+    QDateTime m_timeTransferStarted;
+    QDateTime m_timeLastActive;
     
-    unsigned long bufferSize;
-    char* buffer;
+    unsigned long m_bufferSize;
+    char* m_buffer;
     
     // file information
-    QString fileName;
+    QString m_fileName;
     /* The file size of the complete file sending/recieving. */
     KIO::filesize_t  m_fileSize;
     /* If we are sending a file, this is the url of the file we are sending.
      * If we are recieving a file, this is the url of the file we are saving
      * to in the end (Temporararily it will be filename+".part" ).
      */
-    KURL m_fileURL;  
-    // UI
-    QTimer* autoUpdateViewTimer;
-    KProgress* progressBar;
-    DccDetailDialog* detailDialog;
+    KURL m_fileURL;
     
-    static QString TypeText[DccTypeCount];
-    static QString StatusText[DccStatusCount];
+    // UI
+    QTimer* m_autoUpdateViewTimer;
+    KProgress* m_progressBar;
+    DccDetailDialog* m_detailDialog;
+    
+    static QString s_dccTypeText[ DccTypeCount ];
+    static QString s_dccStatusText[ DccStatusCount ];
     
 };
 
