@@ -1814,6 +1814,7 @@ void Server::addPendingNickList(const QString& channelName,const QStringList& ni
       if (!nickname.isEmpty()) {
 	      ChannelNickPtr channelNick = addNickToJoinedChannelsList(channelName, nickname);
 	      Q_ASSERT(channelNick);
+	      KX << _S(channelName) << _S(nickname) << _S(mode) << endl;
 	      channelNick->setMode(mode);
 	      pendingChannelNickList.append(channelNick);
       }
