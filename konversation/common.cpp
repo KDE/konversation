@@ -21,8 +21,9 @@
 #include "konversationapplication.h"
 #include "preferences.h"
 
-namespace Konversation
-{
+namespace Konversation {
+
+#include "unicode.cpp"
 
 QString removeIrcMarkup(const QString& text)
 {
