@@ -17,6 +17,9 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <netinet/in.h>
+#include <net/if.h>
+#include <sys/ioctl.h>
+#include <arpa/inet.h>
 
 #include <qfile.h>
 #include <qtimer.h>
@@ -35,6 +38,8 @@
 #include "dcctransfersend.h"
 #include "konversationapplication.h"
 
+using namespace KNetwork;
+
 DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName, uint fileSize  )
   : DccTransfer( panel, DccTransfer::Send, partnerNick )
 {
@@ -45,6 +50,24 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   m_fileName = fileURL.fileName();
   m_fileURL = fileURL;
   m_ownIp = ownIp;
+
+  if(KonversationApplication::preferences.getIPv4Fallback())
+    {
+      KIpAddress ip(m_ownIp);
+      if(ip.isIPv6Addr())
+	{
+	  /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
+	  struct ifreq ifr;
+	  const char* address = KonversationApplication::preferences.getIPv4FallbackIface().ascii();
+	  int sock = socket(AF_INET, SOCK_DGRAM, 0);
+	  strncpy( ifr.ifr_name, address, IF_NAMESIZE );
+	  ifr.ifr_addr.sa_family = AF_INET;
+	  if( ioctl( sock, SIOCGIFADDR, &ifr ) >= 0 )
+	    m_ownIp =  inet_ntoa( ((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr );
+	  kdDebug() << "Falling back to IPv4 address " << m_ownIp << endl;
+	}
+    }
+
   if ( altFileName.isEmpty() )
     m_fileName = m_fileURL.fileName();
   else
@@ -78,6 +101,7 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   {
     bool pressedOk;
     m_fileName = KInputDialog::getText( i18n( "Enter Filename" ), i18n( "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>" ).arg( getPartnerNick() ), "unknown", &pressedOk, listView() );
+
     if ( !pressedOk )
     {
       failed( i18n( "No filename was given" ) );

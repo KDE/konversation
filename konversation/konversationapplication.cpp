@@ -841,6 +841,8 @@ void KonversationApplication::readOptions()
   preferences.setDccAutoResume(config->readBoolEntry("AutoResume",preferences.getDccAutoResume()));
   preferences.setDccFastSend(config->readBoolEntry("FastSend",preferences.getDccFastSend()));
   preferences.setDccSendTimeout(config->readNumEntry("SendTimeout",preferences.getDccSendTimeout()));
+  preferences.setIPv4Fallback(config->readBoolEntry("IPv4Fallback",preferences.getIPv4Fallback()));
+  preferences.setIPv4FallbackIface(config->readEntry("IPv4FallbackInterface",preferences.getIPv4FallbackIface()));
 
   // Path settings
   config->setGroup("Path Settings");
@@ -1211,18 +1213,21 @@ void KonversationApplication::saveOptions(bool updateGUI)
   
   config->writeEntry("SendTimeout",preferences.getDccSendTimeout());
 	
-	config->writeEntry("MethodToGetOwnIp",preferences.getDccMethodToGetOwnIp());
+  config->writeEntry("MethodToGetOwnIp",preferences.getDccMethodToGetOwnIp());
   config->writeEntry("SpecificOwnIp",preferences.getDccSpecificOwnIp());
   
-	config->writeEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts());
+  config->writeEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts());
   config->writeEntry("SendPortsFirst",preferences.getDccSendPortsFirst());
   config->writeEntry("SendPortsLast",preferences.getDccSendPortsLast());
   config->writeEntry("SpecificChatPorts",preferences.getDccSpecificChatPorts());
   config->writeEntry("ChatPortsFirst",preferences.getDccChatPortsFirst());
   config->writeEntry("ChatPortsLast",preferences.getDccChatPortsLast());
   
-	config->writeEntry("BufferSize",preferences.getDccBufferSize());
+  config->writeEntry("BufferSize",preferences.getDccBufferSize());
   config->writeEntry("FastSend",preferences.getDccFastSend());
+
+  config->writeEntry("IPv4Fallback",preferences.getIPv4Fallback());
+  config->writeEntry("IPv4FallbackInterface",preferences.getIPv4FallbackIface());
 
  // Path Settings
   config->setGroup("Path Settings");

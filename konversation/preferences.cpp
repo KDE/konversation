@@ -122,6 +122,8 @@ Preferences::Preferences()
   setDccBufferSize(8192);
   setDccFastSend(true);
   setDccSendTimeout(180);
+  setIPv4Fallback(false);
+  setIPv4FallbackIface("eth0");
 
   KStandardDirs kstddir;
   setLogPath(kstddir.saveLocation("data","konversation/logs"));
@@ -444,6 +446,12 @@ const bool Preferences::getDccFastSend() { return dccFastSend; }
 
 void Preferences::setDccSendTimeout(int sec) { dccSendTimeout=sec; }
 const int Preferences::getDccSendTimeout() { return dccSendTimeout; }
+
+void Preferences::setIPv4Fallback(bool fallback) { ipv4Fallback=fallback;}
+bool Preferences::getIPv4Fallback() { return ipv4Fallback; }
+
+void Preferences::setIPv4FallbackIface(const QString& interface) { ipv4Interface=interface; }
+const QString& Preferences::getIPv4FallbackIface() { return ipv4Interface; }
 
 void Preferences::setFixedMOTD(bool state) { fixedMOTD=state; }
 const bool Preferences::getFixedMOTD() { return fixedMOTD; }

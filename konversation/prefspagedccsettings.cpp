@@ -73,6 +73,10 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   connect(kcfg_ChatPortsFirst, SIGNAL(valueChanged(int)), this, SLOT(chatPortsFirstSpinValueChanged(int)));
   connect(kcfg_ChatPortsLast, SIGNAL(valueChanged(int)), this, SLOT(chatPortsLastSpinValueChanged(int)));
 
+  // IPv4 Fallback
+  kcfg_IPv4Fallback->setChecked(preferences->getIPv4Fallback());
+  kcfg_IPv4FallbackInterface->setText(preferences->getIPv4FallbackIface());
+
   kcfg_SpecificChatPorts->setChecked(preferences->getDccSpecificChatPorts());
   kcfg_ChatPortsFirst->setValue(preferences->getDccChatPortsFirst());
   kcfg_ChatPortsLast->setValue(preferences->getDccChatPortsLast());
@@ -164,6 +168,8 @@ void PrefsPageDccSettings::applyPreferences()
   preferences->setDccAddPartner(kcfg_AddPartner->isChecked());
   preferences->setDccCreateFolder(kcfg_CreateFolder->isChecked());
   preferences->setDccFastSend(kcfg_FastSend->isChecked());
+  preferences->setIPv4Fallback(kcfg_IPv4Fallback->isChecked());
+  preferences->setIPv4FallbackIface(kcfg_IPv4FallbackInterface->text());
 }
 
 #include "prefspagedccsettings.moc"

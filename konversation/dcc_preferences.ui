@@ -16,409 +16,567 @@ the Free Software Foundation; either version 2 of the License, or
             <height>501</height>
         </rect>
     </property>
-    <grid>
+    <widget class="QCheckBox">
         <property name="name">
-            <cstring>unnamed</cstring>
+            <cstring>kcfg_AddPartner</cstring>
         </property>
-        <widget class="QLayoutWidget" row="0" column="0">
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>61</y>
+                <width>528</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Add &amp;sender to file name</string>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>kcfg_AutoGet</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>115</y>
+                <width>528</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Automatically accept &amp;DCC download</string>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>kcfg_FastSend</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>169</y>
+                <width>528</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Use fast DCC send (Might not work with all clients)</string>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>kcfg_CreateFolder</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>88</y>
+                <width>528</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Cr&amp;eate folder for sender</string>
+        </property>
+    </widget>
+    <spacer>
+        <property name="name">
+            <cstring>spacer3</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Horizontal</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Expanding</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>171</width>
+                <height>20</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>380</x>
+                <y>240</y>
+                <width>171</width>
+                <height>20</height>
+            </rect>
+        </property>
+    </spacer>
+    <spacer>
+        <property name="name">
+            <cstring>spacer4_2</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Vertical</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Expanding</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>20</width>
+                <height>40</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>230</x>
+                <y>460</y>
+                <width>20</width>
+                <height>40</height>
+            </rect>
+        </property>
+    </spacer>
+    <spacer>
+        <property name="name">
+            <cstring>spacer5</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Horizontal</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Expanding</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>111</width>
+                <height>20</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>440</x>
+                <y>200</y>
+                <width>111</width>
+                <height>20</height>
+            </rect>
+        </property>
+    </spacer>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>kcfg_AutoResume</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>142</y>
+                <width>528</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Au&amp;tomatically resume DCC download</string>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabel1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>12</x>
+                <y>22</y>
+                <width>74</width>
+                <height>25</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>DDC &amp;folder:</string>
+        </property>
+        <property name="buddy" stdset="0">
+            <cstring>kcfg_DccPath</cstring>
+        </property>
+    </widget>
+    <widget class="QLineEdit">
+        <property name="name">
+            <cstring>kcfg_DccPath</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>92</x>
+                <y>23</y>
+                <width>356</width>
+                <height>23</height>
+            </rect>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>dccFolderButton</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>454</x>
+                <y>22</y>
+                <width>86</width>
+                <height>25</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Browse...</string>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabel1_3</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>299</x>
+                <y>201</y>
+                <width>58</width>
+                <height>23</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>&amp;Interface:</string>
+        </property>
+        <property name="buddy" stdset="0">
+            <cstring>kcfg_IPv4FallbackInterface</cstring>
+        </property>
+    </widget>
+    <widget class="KLineEdit">
+        <property name="name">
+            <cstring>kcfg_IPv4FallbackInterface</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>363</x>
+                <y>201</y>
+                <width>76</width>
+                <height>23</height>
+            </rect>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabel7</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>231</y>
+                <width>109</width>
+                <height>23</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>DCC send t&amp;imout:</string>
+        </property>
+        <property name="buddy" stdset="0">
+            <cstring>kcfg_SendTimeout</cstring>
+        </property>
+    </widget>
+    <widget class="QSpinBox">
+        <property name="name">
+            <cstring>kcfg_SendTimeout</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>126</x>
+                <y>231</y>
+                <width>72</width>
+                <height>23</height>
+            </rect>
+        </property>
+        <property name="suffix">
+            <string> sec</string>
+        </property>
+        <property name="maxValue">
+            <number>300</number>
+        </property>
+        <property name="minValue">
+            <number>1</number>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabel6</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>204</x>
+                <y>231</y>
+                <width>70</width>
+                <height>23</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Buffer si&amp;ze:</string>
+        </property>
+        <property name="buddy" stdset="0">
+            <cstring>kcfg_BufferSize</cstring>
+        </property>
+    </widget>
+    <widget class="QSpinBox">
+        <property name="name">
+            <cstring>kcfg_BufferSize</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>280</x>
+                <y>231</y>
+                <width>99</width>
+                <height>23</height>
+            </rect>
+        </property>
+        <property name="suffix">
+            <string> bytes</string>
+        </property>
+        <property name="maxValue">
+            <number>65536</number>
+        </property>
+        <property name="minValue">
+            <number>512</number>
+        </property>
+        <property name="lineStep">
+            <number>128</number>
+        </property>
+    </widget>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>261</y>
+                <width>528</width>
+                <height>96</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>IP</string>
+        </property>
+        <grid>
             <property name="name">
-                <cstring>layout12</cstring>
+                <cstring>unnamed</cstring>
             </property>
-            <hbox>
+            <widget class="QLineEdit" row="1" column="1">
                 <property name="name">
-                    <cstring>unnamed</cstring>
+                    <cstring>kcfg_SpecificOwnIp</cstring>
                 </property>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel1</cstring>
-                    </property>
-                    <property name="text">
-                        <string>DDC &amp;folder:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_DccPath</cstring>
-                    </property>
-                </widget>
-                <widget class="QLineEdit">
-                    <property name="name">
-                        <cstring>kcfg_DccPath</cstring>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>dccFolderButton</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Browse...</string>
-                    </property>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QCheckBox" row="1" column="0">
-            <property name="name">
-                <cstring>kcfg_AddPartner</cstring>
-            </property>
-            <property name="text">
-                <string>Add &amp;sender to file name</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="2" column="0">
-            <property name="name">
-                <cstring>kcfg_CreateFolder</cstring>
-            </property>
-            <property name="text">
-                <string>Cr&amp;eate folder for sender</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="3" column="0">
-            <property name="name">
-                <cstring>kcfg_AutoGet</cstring>
-            </property>
-            <property name="text">
-                <string>Automatically accept &amp;DCC download</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="4" column="0">
-            <property name="name">
-                <cstring>kcfg_AutoResume</cstring>
-            </property>
-            <property name="text">
-                <string>Au&amp;tomatically resume DCC download</string>
-            </property>
-        </widget>
-        <widget class="QLayoutWidget" row="5" column="0">
-            <property name="name">
-                <cstring>layout2</cstring>
-            </property>
-            <hbox>
+            </widget>
+            <widget class="QLabel" row="0" column="0">
                 <property name="name">
-                    <cstring>unnamed</cstring>
+                    <cstring>textLabel4</cstring>
                 </property>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel7</cstring>
-                    </property>
-                    <property name="text">
-                        <string>DCC send t&amp;imout:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_SendTimeout</cstring>
-                    </property>
-                </widget>
-                <widget class="QSpinBox">
-                    <property name="name">
-                        <cstring>kcfg_SendTimeout</cstring>
-                    </property>
-                    <property name="suffix">
-                        <string> sec</string>
-                    </property>
-                    <property name="maxValue">
-                        <number>300</number>
-                    </property>
-                    <property name="minValue">
-                        <number>1</number>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>212</width>
-                            <height>21</height>
-                        </size>
-                    </property>
-                </spacer>
-            </hbox>
-        </widget>
-        <widget class="QGroupBox" row="6" column="0">
-            <property name="name">
-                <cstring>groupBox1</cstring>
-            </property>
-            <property name="title">
-                <string>IP</string>
-            </property>
-            <grid>
+                <property name="text">
+                    <string>&amp;Method to get own IP:</string>
+                </property>
+                <property name="buddy" stdset="0">
+                    <cstring>kcfg_MethodToGetOwnIp</cstring>
+                </property>
+            </widget>
+            <widget class="QLabel" row="1" column="0">
                 <property name="name">
-                    <cstring>unnamed</cstring>
+                    <cstring>ownIP</cstring>
                 </property>
-                <widget class="QLineEdit" row="1" column="1">
-                    <property name="name">
-                        <cstring>kcfg_SpecificOwnIp</cstring>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>textLabel4</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Method to get own IP:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_MethodToGetOwnIp</cstring>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>ownIP</cstring>
-                    </property>
-                    <property name="text">
-                        <string>O&amp;wn IP:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_SpecificOwnIp</cstring>
-                    </property>
-                </widget>
-                <widget class="QComboBox" row="0" column="1">
-                    <property name="name">
-                        <cstring>kcfg_MethodToGetOwnIp</cstring>
-                    </property>
-                </widget>
-            </grid>
-        </widget>
-        <widget class="QLayoutWidget" row="8" column="0">
-            <property name="name">
-                <cstring>layout3</cstring>
-            </property>
-            <hbox>
+                <property name="text">
+                    <string>O&amp;wn IP:</string>
+                </property>
+                <property name="buddy" stdset="0">
+                    <cstring>kcfg_SpecificOwnIp</cstring>
+                </property>
+            </widget>
+            <widget class="QComboBox" row="0" column="1">
                 <property name="name">
-                    <cstring>unnamed</cstring>
+                    <cstring>kcfg_MethodToGetOwnIp</cstring>
                 </property>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel6</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Buffer si&amp;ze:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_BufferSize</cstring>
-                    </property>
-                </widget>
-                <widget class="QSpinBox">
-                    <property name="name">
-                        <cstring>kcfg_BufferSize</cstring>
-                    </property>
-                    <property name="suffix">
-                        <string> bytes</string>
-                    </property>
-                    <property name="maxValue">
-                        <number>65536</number>
-                    </property>
-                    <property name="minValue">
-                        <number>512</number>
-                    </property>
-                    <property name="lineStep">
-                        <number>128</number>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer3</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>330</width>
-                            <height>21</height>
-                        </size>
-                    </property>
-                </spacer>
-            </hbox>
-        </widget>
-        <widget class="QCheckBox" row="9" column="0">
+            </widget>
+        </grid>
+    </widget>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>363</y>
+                <width>528</width>
+                <height>96</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>Port</string>
+        </property>
+        <grid>
             <property name="name">
-                <cstring>kcfg_FastSend</cstring>
+                <cstring>unnamed</cstring>
             </property>
-            <property name="text">
-                <string>Use fast DCC send (Might not work with all clients)</string>
-            </property>
-        </widget>
-        <spacer row="10" column="0">
-            <property name="name">
-                <cstring>spacer1</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>21</width>
-                    <height>16</height>
-                </size>
-            </property>
-        </spacer>
-        <widget class="QGroupBox" row="7" column="0">
-            <property name="name">
-                <cstring>groupBox2</cstring>
-            </property>
-            <property name="title">
-                <string>Port</string>
-            </property>
-            <grid>
+            <widget class="QLayoutWidget" row="1" column="0">
                 <property name="name">
-                    <cstring>unnamed</cstring>
+                    <cstring>layout7</cstring>
                 </property>
-                <widget class="QLayoutWidget" row="1" column="0">
+                <hbox>
                     <property name="name">
-                        <cstring>layout7</cstring>
+                        <cstring>unnamed</cstring>
                     </property>
-                    <hbox>
+                    <widget class="QCheckBox">
                         <property name="name">
-                            <cstring>unnamed</cstring>
+                            <cstring>kcfg_SpecificChatPorts</cstring>
                         </property>
-                        <widget class="QCheckBox">
-                            <property name="name">
-                                <cstring>kcfg_SpecificChatPorts</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Use specific p&amp;orts for DCC chat:</string>
-                            </property>
-                        </widget>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacer6</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>50</width>
-                                    <height>21</height>
-                                </size>
-                            </property>
-                        </spacer>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>kcfg_ChatPortsFirst</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="maxValue">
-                                <number>65535</number>
-                            </property>
-                        </widget>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel2_2</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="text">
-                                <string>to</string>
-                            </property>
-                            <property name="alignment">
-                                <set>AlignCenter</set>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>kcfg_ChatPortsLast</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="maxValue">
-                                <number>65535</number>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QLayoutWidget" row="0" column="0">
-                    <property name="name">
-                        <cstring>layout6</cstring>
-                    </property>
-                    <hbox>
+                        <property name="text">
+                            <string>Use specific p&amp;orts for DCC chat:</string>
+                        </property>
+                    </widget>
+                    <spacer>
                         <property name="name">
-                            <cstring>unnamed</cstring>
+                            <cstring>spacer6</cstring>
                         </property>
-                        <widget class="QCheckBox">
-                            <property name="name">
-                                <cstring>kcfg_SpecificSendPorts</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Use specific &amp;ports for DCC send:</string>
-                            </property>
-                        </widget>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacer4</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>80</width>
-                                    <height>21</height>
-                                </size>
-                            </property>
-                        </spacer>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>kcfg_SendPortsFirst</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="maxValue">
-                                <number>65535</number>
-                            </property>
-                        </widget>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel1_2</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="text">
-                                <string>to</string>
-                            </property>
-                            <property name="alignment">
-                                <set>AlignCenter</set>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>kcfg_SendPortsLast</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="maxValue">
-                                <number>65535</number>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-            </grid>
-        </widget>
-    </grid>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>50</width>
+                                <height>21</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QSpinBox">
+                        <property name="name">
+                            <cstring>kcfg_ChatPortsFirst</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>false</bool>
+                        </property>
+                        <property name="maxValue">
+                            <number>65535</number>
+                        </property>
+                    </widget>
+                    <widget class="QLabel">
+                        <property name="name">
+                            <cstring>textLabel2_2</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>false</bool>
+                        </property>
+                        <property name="text">
+                            <string>to</string>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignCenter</set>
+                        </property>
+                    </widget>
+                    <widget class="QSpinBox">
+                        <property name="name">
+                            <cstring>kcfg_ChatPortsLast</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>false</bool>
+                        </property>
+                        <property name="maxValue">
+                            <number>65535</number>
+                        </property>
+                    </widget>
+                </hbox>
+            </widget>
+            <widget class="QLayoutWidget" row="0" column="0">
+                <property name="name">
+                    <cstring>layout6</cstring>
+                </property>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QCheckBox">
+                        <property name="name">
+                            <cstring>kcfg_SpecificSendPorts</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Use specific &amp;ports for DCC send:</string>
+                        </property>
+                    </widget>
+                    <spacer>
+                        <property name="name">
+                            <cstring>spacer4</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>80</width>
+                                <height>21</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QSpinBox">
+                        <property name="name">
+                            <cstring>kcfg_SendPortsFirst</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>false</bool>
+                        </property>
+                        <property name="maxValue">
+                            <number>65535</number>
+                        </property>
+                    </widget>
+                    <widget class="QLabel">
+                        <property name="name">
+                            <cstring>textLabel1_2</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>false</bool>
+                        </property>
+                        <property name="text">
+                            <string>to</string>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignCenter</set>
+                        </property>
+                    </widget>
+                    <widget class="QSpinBox">
+                        <property name="name">
+                            <cstring>kcfg_SendPortsLast</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>false</bool>
+                        </property>
+                        <property name="maxValue">
+                            <number>65535</number>
+                        </property>
+                    </widget>
+                </hbox>
+            </widget>
+        </grid>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>kcfg_IPv4Fallback</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>202</y>
+                <width>282</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Fallback to an IPv4 interface for dcc send</string>
+        </property>
+        <property name="whatsThis" stdset="0">
+            <string>If this option enabled dcc transfers for IPv6 connections will be done over IPv4 interface set here</string>
+        </property>
+    </widget>
 </widget>
 <connections>
     <connection>
@@ -457,6 +615,18 @@ the Free Software Foundation; either version 2 of the License, or
         <receiver>kcfg_ChatPortsLast</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
+    <connection>
+        <sender>kcfg_IPv4Fallback</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_IPv4FallbackInterface</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_IPv4Fallback</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>textLabel1_3</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
 </connections>
 <tabstops>
     <tabstop>kcfg_AddPartner</tabstop>
@@ -476,4 +646,7 @@ the Free Software Foundation; either version 2 of the License, or
     <tabstop>kcfg_FastSend</tabstop>
 </tabstops>
 <layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>klineedit.h</includehint>
+</includehints>
 </UI>

@@ -140,6 +140,10 @@ class Preferences : public QObject
     const bool getDccFastSend();
     void setDccSendTimeout(int sec);
     const int getDccSendTimeout();
+    bool getIPv4Fallback();
+    void setIPv4Fallback(bool fallback);
+    const QString& getIPv4FallbackIface();
+    void setIPv4FallbackIface(const QString& interface);
     
     const TabPlacement getTabPlacement();
     void setTabPlacement(TabPlacement where);
@@ -532,6 +536,8 @@ class Preferences : public QObject
     QString dccPath;
     bool dccFastSend;
     int dccSendTimeout;
+    bool ipv4Fallback;
+    QString ipv4Interface;
 
     bool autoReconnect;
     bool autoRejoin;
