@@ -9,6 +9,7 @@
   inputfilter.cpp  -  description
   begin:     Fri Jan 25 2002
   copyright: (C) 2002 by Dario Abatianni
+             (C) 2004 by Peter Simonsson
   email:     eisfuchs@tigress.com
 */
 
@@ -1272,6 +1273,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           server->appendStatusMessage(i18n("Away"),i18n("You are no longer marked as being away."));
           emit unAway();
 
+          break;
+        }
+      case ERR_NOCHANMODES:
+        {
+          server->getChannelByName(parameterList[1])->appendServerMessage(i18n("Channel"), trailing);
           break;
         }
       default:
