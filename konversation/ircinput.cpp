@@ -16,6 +16,8 @@
 
 #include <kdebug.h>
 #include <kapplication.h>
+#include <kmessagebox.h>
+#include <klocale.h>
 
 #include <qclipboard.h>
 
@@ -135,12 +137,10 @@ void IRCInput::getHistory(bool up)
 
 void IRCInput::paste()
 {
-  // TODO: prompt user on large / multiline pastes
   QClipboard *cb=KApplication::kApplication()->clipboard();
-  QString text;
 
   // Copy text from the clipboard (paste)
-  text=cb->text();
+  QString text=cb->text();
   // is there any text in the clipboard?
   if(text)
   {
@@ -159,7 +159,26 @@ void IRCInput::paste()
     }
 
     if(signal)
-      emit textPasted(text);
+    {
+      int doPaste=KMessageBox::Yes;
+
+      if(text.length()>512)
+      {
+        doPaste=KMessageBox::warningYesNo
+                (
+                  0,
+                  i18n("<qt>You are attempting to paste a large portion of text into"
+                       "the chat. This can cause connection resets or flood kills."
+                       "Do you really want to continue?"),
+                  i18n("Large paste warning"),
+                  KStdGuiItem::yes(),
+                  KStdGuiItem::no(),
+                  "LargePaste"
+                );
+      }
+
+      if(doPaste==KMessageBox::Yes) emit textPasted(text);
+    }
     else
       QLineEdit::paste();
   }
