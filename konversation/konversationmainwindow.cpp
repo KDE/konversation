@@ -105,6 +105,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("Channel List"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
   new KAction(i18n("Open Konsole"), 0, 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
   new KAction(i18n("Open URL Catcher"), 0, 0, this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
+  new KAction(i18n("Open Logfile"), 0, 0, this, SLOT(openLogfile()), actionCollection(), "open_logfile");
 
   // Actions to navigate through the different pages
   new KAction(i18n("Next Tab"),0,KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
@@ -306,6 +307,24 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
   if(view==frontView) frontView=0;
 }
 
+void KonversationMainWindow::openLogfile()
+{
+  if(frontView)
+  {
+    ChatWindow* view=static_cast<ChatWindow*>(frontView);
+    ChatWindow::WindowType viewType=view->getType();
+    if(viewType==ChatWindow::Channel ||
+       viewType==ChatWindow::Query ||
+       viewType==ChatWindow::Status)
+    {
+      view->openLogfile();
+    }
+    else
+    {
+    }
+  }
+}
+
 void KonversationMainWindow::addKonsolePanel()
 {
   KonsolePanel* panel=new KonsolePanel(getViewContainer());
@@ -448,6 +467,7 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
   // first set up internal data ...
   statusView->setServer(server);
   statusView->setIdentity(server->getIdentity());
+  statusView->setName(server->getServerName());
 
   // ... then put it into the tab widget, otherwise we'd have a race with server member
   addView(statusView,2,server->getServerName(),false);

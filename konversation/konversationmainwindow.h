@@ -100,6 +100,7 @@ class KonversationMainWindow : public KMainWindow
     void openServerList();
     void openChannelList();
     void openNotify();
+    void openLogfile();
     void openNicksOnlineWindow();
     void closeNicksOnlineWindow(QSize newSize);
     // it seems that moc does not honor #ifs in compile so we create an

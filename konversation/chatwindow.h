@@ -87,6 +87,7 @@ class ChatWindow : public QVBox
 
   public slots:
     void logText(const QString& text);
+    void openLogfile();
     virtual void adjustFocus()=0;
     virtual void appendInputText(const QString&);
     virtual void indicateAway(bool away);

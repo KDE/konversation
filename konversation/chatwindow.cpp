@@ -24,6 +24,7 @@
 #include "ircview.h"
 #include "server.h"
 #include "konversationapplication.h"
+#include "logfilereader.h"
 
 ChatWindow::ChatWindow(QWidget* parent)
 {
@@ -224,8 +225,8 @@ void ChatWindow::setLogfileName(const QString& name)
         // check for deadlocks
         if(backlog.device()->at()==filePosition) backlog.device()->at(filePosition+1);
          // if a tab character is present in the line
-         if(backlogLine.find('\t')!=-1)
-         {
+        if(backlogLine.find('\t')!=-1)
+        {
           // extract timestamp from log
           QString backlogTime=backlogLine.left(backlogLine.find(' '));
           // cut timestamp from line
@@ -313,6 +314,15 @@ bool ChatWindow::searchView()          { return false; }
 // reimplement this in all panels that have user input
 void ChatWindow::indicateAway(bool)
 {
+}
+
+void ChatWindow::openLogfile()
+{
+  if(!logfile.name().isEmpty())
+  {
+    LogfileReader* reader=new LogfileReader(name,logfile.name());
+    reader->show();
+  }
 }
 
 // reimplement this in all panels that have user input

@@ -20,6 +20,7 @@
       <Action name="open_channel_list" />
       <Action name="open_konsole" />
       <Action name="open_url_catcher" />
+      <Action name="open_logfile" />
     </Menu>
   </MenuBar>
 
