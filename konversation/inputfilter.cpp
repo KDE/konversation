@@ -852,7 +852,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
           } // endfor
           if(!modesAre.isEmpty())
-            server->appendCommandMessageToChannel(parameterList[1],i18n("Mode"),"Channel modes: "+modesAre);
+            server->appendCommandMessageToChannel(parameterList[1],i18n("Mode"),i18n("Channel modes: ")+modesAre);
           break;
         }
       case RPL_CHANNELCREATED:
