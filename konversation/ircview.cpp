@@ -42,10 +42,12 @@
 #include <kiconloader.h>
 #include <kshell.h>
 #include <kpopupmenu.h>
+#include <kaction.h>
 
 #include "channel.h"
 #include "konvidebug.h"
 #include "konversationapplication.h"
+#include "konversationmainwindow.h"
 #include "ircview.h"
 #include "highlight.h"
 #include "server.h"
@@ -79,7 +81,10 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
     popup->insertSeparator();
     popup->insertItem(SmallIcon("find"),i18n("Find Text..."),Search);
     popup->insertSeparator();
-    popup->insertItem(i18n("Send File..."),SendFile);
+    if(newServer) {
+      KAction *action = newServer->getMainWindow()->actionCollection()->action("open_logfile");
+      action->plug(popup);
+    }
   }
   else kdWarning() << "IRCView::IRCView(): Could not create popup!" << endl;
 
