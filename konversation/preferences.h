@@ -102,6 +102,8 @@ class Preferences : public QObject
     bool getBlinkingTabs();
     void setBringToFront(bool state);
     bool getBringToFront();
+    void setCloseButtonsOnTabs(bool state);
+    bool getCloseButtonsOnTabs();
 
     // Geometry functions
     QSize getServerWindowSize();
@@ -270,8 +272,9 @@ class Preferences : public QObject
     bool logFollowsNick;
     QString logPath;
 
-    bool blinkingTabs;      // Do we want the LEDs on the tabs to blink?
-    bool bringToFront;      // Do we want to see newly created tabs immediately?
+    bool blinkingTabs;       // Do we want the LEDs on the tabs to blink?
+    bool closeButtonsOnTabs; // Do we want close widgets on the tabs?
+    bool bringToFront;       // Do we want to see newly created tabs immediately?
 
     bool fixedMOTD;
     bool beep;

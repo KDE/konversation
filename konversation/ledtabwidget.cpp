@@ -76,4 +76,12 @@ LedTabBar* LedTabWidget::tabBar()
   return (LedTabBar*) QTabWidget::tabBar();
 }
 
+void LedTabWidget::updateTabs()
+{
+  // reliably redraw the tab bar by resetting the label of the first tab
+  changeTab(page(0),label(0));
+  tabBar()->updateTabs();
+  update();
+}
+
 #include "ledtabwidget.moc"

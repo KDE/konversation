@@ -115,6 +115,9 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   // Take care of ghosting / unghosting spacing widgets
   useSpacingChanged(preferences->getUseSpacing() ? 2 : 0);
 
+  QCheckBox* closeButtonsCheck=new QCheckBox(i18n("Show close widgets on tabs"),parentFrame,"tab_close_widgets_check");
+  closeButtonsCheck->setChecked(preferences->getCloseButtonsOnTabs());
+
   // Layout
   int row=0;
   appearanceLayout->addWidget(textFontLabel,row,0);
@@ -136,6 +139,8 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   row++;
   appearanceLayout->addMultiCellWidget(spacingMarginBox,row,row,0,2);
   row++;
+  appearanceLayout->addMultiCellWidget(closeButtonsCheck,row,row,0,2);
+  row++;
   appearanceLayout->setRowStretch(row,10);
   appearanceLayout->setColStretch(1,10);
 
@@ -155,6 +160,8 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   connect(useSpacingCheck,SIGNAL (stateChanged(int)),this,SLOT (useSpacingChanged(int)) );
   connect(spacing,SIGNAL (valueChanged(int)),this,SLOT (spacingChanged(int)));
   connect(margin,SIGNAL (valueChanged(int)),this,SLOT (marginChanged(int)));
+
+  connect(closeButtonsCheck,SIGNAL (stateChanged(int)),this,SLOT (showCloseButtonsChanged(int)) );
 }
 
 PrefsPageAppearance::~PrefsPageAppearance()
@@ -211,6 +218,11 @@ void PrefsPageAppearance::showQuickButtonsChanged(int state)
 void PrefsPageAppearance::showModeButtonsChanged(int state)
 {
   preferences->setShowModeButtons(state==2);
+}
+
+void PrefsPageAppearance::showCloseButtonsChanged(int state)
+{
+  preferences->setCloseButtonsOnTabs(state==2);
 }
 
 void PrefsPageAppearance::encodingChanged(const QString& newEncoding)

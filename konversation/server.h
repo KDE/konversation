@@ -117,6 +117,7 @@ class Server : public QObject
     void addDccPanel(); // will be connected to ServerWindow::addDccPanel()
     void closeDccPanel(); // will be connected to ServerWindow::closeDccPanel()
     void deleted(Server* myself); // will be connected to KonversationApplication::removeServer()
+    void repaintTabs(); // will be connected to LedTabBar::repaintTabs();
 
   public slots:
     void connectToIRCServer();

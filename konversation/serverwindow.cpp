@@ -45,6 +45,8 @@ ServerWindow::ServerWindow(Server* newServer) : KMainWindow()
   windowContainer=new LedTabWidget(this,"server_window_tab_widget");
   windowContainer->setTabPosition(QTabWidget::Bottom);
 
+  connect(getServer(),SIGNAL(repaintTabs()),getWindowContainer(),SLOT(updateTabs()) );
+
 /*  KAction* quitAction= */ KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); /* file_quit */
   showToolBarAction=KStdAction::showToolbar(this,SLOT(showToolbar()),actionCollection()); /* options_show_toolbar */
   showStatusBarAction=KStdAction::showStatusbar(this,SLOT(showStatusbar()),actionCollection()); /* options_show_statusbar */

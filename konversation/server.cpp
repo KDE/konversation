@@ -801,7 +801,11 @@ void Server::updateFonts()
   }
 
   // TODO: To be revised
-  if(serverWindow) serverWindow->updateFonts();
+  if(serverWindow)
+  {
+    serverWindow->updateFonts();
+    emit repaintTabs();
+  }
 }
 
 // TODO: Maybe use a Signal / Slot mechanism for these things?

@@ -193,6 +193,7 @@ void KonversationApplication::readOptions()
   preferences.setTimestampFormat(config->readEntry("TimestampFormat",preferences.getTimestampFormat()));
   preferences.setShowQuickButtons(config->readBoolEntry("ShowQuickButtons",preferences.getShowQuickButtons()));
   preferences.setShowModeButtons(config->readBoolEntry("ShowModeButtons",preferences.getShowModeButtons()));
+  preferences.setCloseButtonsOnTabs(config->readBoolEntry("CloseButtonsOnTabs",preferences.getCloseButtonsOnTabs()));
   preferences.setCodec(config->readEntry("Codec",preferences.getCodec()));
 
   preferences.setUseSpacing(config->readBoolEntry("UseSpacing",preferences.getUseSpacing()));
@@ -419,6 +420,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("TimestampFormat",preferences.getTimestampFormat());
   config->writeEntry("ShowQuickButtons",preferences.getShowQuickButtons());
   config->writeEntry("ShowModeButtons",preferences.getShowModeButtons());
+  config->writeEntry("CloseButtonsOnTabs",preferences.getCloseButtonsOnTabs());
   config->writeEntry("Codec",preferences.getCodec());
 
   config->writeEntry("UseSpacing",preferences.getUseSpacing());
@@ -575,9 +577,10 @@ void KonversationApplication::saveOptions(bool updateGUI)
     Server* lookServer=serverList.first();
     while(lookServer)
     {
-      // TODO: This also updates the background color! We must finally
+      // TODO: updateFonts() also updates the background color and more stuff! We must finally
       // find a way to do all this with signals / slots!
       lookServer->updateFonts();
+
       lookServer->setShowQuickButtons(preferences.getShowQuickButtons());
       lookServer->setShowModeButtons(preferences.getShowModeButtons());
       lookServer=serverList.next();

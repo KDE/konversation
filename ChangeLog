@@ -9,6 +9,7 @@ Changes from 0.10 to 0.11
 - Added Send File context menu item in text views
 - Added dialog for Resume / Overwrite DCC Get files
 - Added large paste warning dialog
+- Close Buttons on tabs are now an option
 
 Changes from 0.9 to 0.10
 - Font encodings are now set via KCharsets

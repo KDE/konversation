@@ -37,6 +37,7 @@ class LedTabWidget : public QTabWidget
 
     void addTab(QWidget* child,const QString& label,int color,bool on);
     void changeTabState(QWidget* child,bool state);
+    void connectTabUpdate(QObject* object);
 
   signals:
     void closeTab(QWidget* view);
@@ -44,6 +45,7 @@ class LedTabWidget : public QTabWidget
   protected slots:
     void tabSelected(int id);
     void tabClosed(int id);
+    void updateTabs();
 
   protected:
     LedTabBar* tabBar();

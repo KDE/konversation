@@ -107,6 +107,7 @@ Preferences::Preferences()
   setLogFollowsNick(true);
 
   setBlinkingTabs(true);
+  setCloseButtonsOnTabs(true);
   setBringToFront(true);
 
   setNotifyDelay(20);
@@ -351,6 +352,9 @@ void Preferences::setNicknameList(QStringList newList) { identityList.at(0)->set
 
 void Preferences::setBlinkingTabs(bool blink) { blinkingTabs=blink; }
 bool Preferences::getBlinkingTabs() { return blinkingTabs; }
+
+void Preferences::setCloseButtonsOnTabs(bool state) { closeButtonsOnTabs=state; }
+bool Preferences::getCloseButtonsOnTabs() { return closeButtonsOnTabs; }
 
 void Preferences::setBringToFront(bool state) { bringToFront=state; }
 bool Preferences::getBringToFront() { return bringToFront; }

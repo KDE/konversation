@@ -148,15 +148,4 @@ void PrefsPageDccSettings::createFolderChanged(int state)
   preferences->setDccCreateFolder(state==2);
 }
 
-QString PrefsPageDccSettings::getExistingDirectory(const QString& startDir,
-                                                   QWidget *parent,
-                                                   const QString& caption)
-{
-  return KFileDialog::getExistingDirectory(
-                                            preferences->getDccPath(),
-                                            0,
-                                            i18n("Select DCC download folder")
-                                          );
-}
-
 #include "prefspagedccsettings.moc"

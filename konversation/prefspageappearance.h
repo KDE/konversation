@@ -41,6 +41,7 @@ class PrefsPageAppearance : public PrefsPage
     void timestampingChanged(int state);
     void showQuickButtonsChanged(int state);
     void showModeButtonsChanged(int state);
+    void showCloseButtonsChanged(int state);
     void formatChanged(const QString& newFormat);
     void encodingChanged(const QString& newEncoding);
     void useSpacingChanged(int state);

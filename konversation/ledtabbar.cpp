@@ -23,6 +23,7 @@
 #include <kdebug.h>
 
 #include "ledtabbar.h"
+#include "konversationapplication.h"
 
 // const char* LedTabBar::remove_xpm[]; // static
 
@@ -122,6 +123,9 @@ void LedTabBar::repaintLED(LedTab* tab)
 // original code by Trolltech, adapted for close pixmap
 void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
 {
+  // do we want close widgets on the tabs?
+  if(KonversationApplication::preferences.getCloseButtonsOnTabs())
+  {
     QStyle::SFlags flags = QStyle::Style_Default;
 
     if (isEnabled() && t->isEnabled())
@@ -159,12 +163,17 @@ void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
     paintLabel( p, QRect( r.left() + (r.width()-w)/2 - 3,
                           r.top() + (r.height()-h)/2,
                           w, h ), t, t->identifier() == keyboardFocusTab() );
+  }
+  // otherwise call original code
+  else QTabBar::paint( p, t, selected );
 }
 
 // original code by Trolltech, adapted for close pixmap
-void LedTabBar::paintLabel( QPainter* p, const QRect& br,
-                          QTab* t, bool has_focus ) const
+void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* t, bool has_focus ) const
 {
+  // do we want close widgets on the tabs?
+  if(KonversationApplication::preferences.getCloseButtonsOnTabs())
+  {
     QRect r = br;
     bool selected = currentTab() == t->identifier();
     if ( t->iconSet()) {
@@ -200,6 +209,9 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br,
     style().drawControl( QStyle::CE_TabBarLabel, p, this, r,
                          t->isEnabled() ? colorGroup(): palette().disabled(),
                          flags, QStyleOption(t) );
+  }
+  // otherwise call original code
+  else QTabBar::paintLabel( p, br, t, has_focus );
 }
 
 // reimplemented for close pixmap
@@ -210,36 +222,50 @@ void LedTabBar::layoutTabs()
   // at first let QT layout our tabs
   QTabBar::layoutTabs();
 
-  // make neccessary modifications
-  int offset=0;
-  for(int index=0;index<count();index++)
+  // do we want close widgets on the tabs?
+  if(KonversationApplication::preferences.getCloseButtonsOnTabs())
   {
-    QTab* ltab=tabAt(index);
-    QRect r=ltab->rect();
-    r.setWidth(r.width()+LABEL_OFFSET);
-    r.moveBy(offset,0);
-    offset+=LABEL_OFFSET;
+    // make neccessary modifications
+    int offset=0;
+    for(int index=0;index<count();index++)
+    {
+      QTab* ltab=tabAt(index);
+      QRect r=ltab->rect();
+      r.setWidth(r.width()+LABEL_OFFSET);
+      r.moveBy(offset,0);
+      offset+=LABEL_OFFSET;
 
-    ltab->setRect(r);
+      ltab->setRect(r);
+    } // endfor
   }
 }
 
 void LedTabBar::mouseReleaseEvent(QMouseEvent* e)
 {
-  if(e->button()==LeftButton)
+  // do we have close widgets on the tabs?
+  if(KonversationApplication::preferences.getCloseButtonsOnTabs())
   {
-    LedTab* t=tab(currentTab());
+    if(e->button()==LeftButton)
+    {
+      LedTab* t=tab(currentTab());
 
-    // get physical position of QTab* t
-    QRect target(t->rect());
-    // set size of target area
-    target.setWidth(16);
-    target.setHeight(16);
-    // move target area to final place
-    target.moveBy(8,4);
+      // get physical position of QTab* t
+      QRect target(t->rect());
+      // set size of target area
+      target.setWidth(16);
+      target.setHeight(16);
+      // move target area to final place
+      target.moveBy(8,4);
 
-    if(target.contains(e->pos())) emit closeTab(t->identifier());
+      if(target.contains(e->pos())) emit closeTab(t->identifier());
+    }
   }
+}
+
+void LedTabBar::updateTabs()
+{
+  layoutTabs();
+  update();
 }
 
 #include "ledtabbar.moc"

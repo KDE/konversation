@@ -38,6 +38,7 @@ class LedTabBar : public QTabBar
     LedTab* tab(QWidget* widget);
 
     virtual void layoutTabs();
+    void updateTabs();
 
   signals:
     void closeTab(int id);
