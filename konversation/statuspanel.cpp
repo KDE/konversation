@@ -226,11 +226,13 @@ void StatusPanel::closeYourself(ChatWindow*)
   if(result==KMessageBox::Yes)
   {
     server->quitServer();
+     //Why are these seperate?  why would deleting the server not quit it? FIXME
     delete server;
+    server=0;
 #ifdef USE_MDI
     emit chatWindowCloseRequest(this);
 #else
-    delete this;
+    this->deleteLater(); //NO NO!  Deleting the server should delete this! FIXME
 #endif
   }
 }
