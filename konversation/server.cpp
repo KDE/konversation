@@ -885,21 +885,26 @@ void Server::lockSending()
 void Server::incoming()
 {
   char buffer[BUFFER_LEN];
-  int len=0;
+  int len = 0;
 
-  len=read(serverSocket.fd(),buffer,BUFFER_LEN-1);
+  len = read(serverSocket.fd(),buffer,BUFFER_LEN-1);
 
-  buffer[len]=0;
+  buffer[len] = 0;
 
   // convert IRC ascii data to selected encoding
-  QTextCodec* codec=QTextCodec::codecForName(identity->getCodec().ascii());
+  bool isUtf8 = KStringHandler::isUtf8(buffer);
 
-  if(KStringHandler::isUtf8(buffer))
-    inputBuffer+=KStringHandler::from8Bit(buffer);
+  if(isUtf8 || ((identity->getCodec() == "utf8") && !isUtf8))
+    inputBuffer += KStringHandler::from8Bit(buffer);
   else
-    inputBuffer+=codec->toUnicode(buffer);
+  {
+    QTextCodec* codec=QTextCodec::codecForName(identity->getCodec().ascii());
+    inputBuffer += codec->toUnicode(buffer);
+    delete codec;
+    codec = 0;
+  }
 
-  if(len==0) broken(0);
+  if(len == 0) broken(0);
 
   // refresh lock timer if it was still locked
   if(!sendUnlocked) lockSending();
