@@ -23,6 +23,7 @@
 #include <qpalette.h>
 #include <qpixmap.h>
 #include <qpainter.h>
+#include <qsize.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -159,7 +160,7 @@ namespace Konversation {
   //
   
   ServerListDialog::ServerListDialog(QWidget *parent, const char *name)
-    : KDialogBase(Plain, i18n("Server List"), Ok|Apply|Cancel, Ok, parent, name)
+    : KDialogBase(Plain, i18n("Server List"), Ok|/*Apply|*/Cancel, Ok, parent, name)
   {
     m_preferences = &KonversationApplication::preferences;
     setButtonOK(KGuiItem(i18n("C&onnect"), "connect_creating", i18n("Connect to the server")));
@@ -214,10 +215,18 @@ namespace Konversation {
     connect(m_delButton, SIGNAL(clicked()), this, SLOT(slotDelete()));
     
     updateButtons();
+  
+    KConfig* config = kapp->config();
+    config->setGroup("ServerListDialog");
+    QSize newSize = config->readSizeEntry("Size", &size());
+    resize(newSize);
   }
   
   ServerListDialog::~ServerListDialog()
   {
+    KConfig* config = kapp->config();
+    config->setGroup("ServerListDialog");
+    config->writeEntry("Size", size());
   }
 
   QListViewItem* ServerListDialog::findBranch(QString name, bool generate)
