@@ -173,6 +173,20 @@ int NickListViewItem::compare(QListViewItem* item,int col,bool ascending) const
   return thisKey.compare(otherKey);
 }
 
+void NickListViewItem::paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align )
+{
+  QColorGroup cg2 = cg;
+  NickInfo* nickInfo = nick->getNickInfo();
+
+  if(nickInfo->isAway())
+    {
+      QPalette palet = kapp->palette();
+      cg2 = palet.disabled();
+    }
+
+  QListViewItem::paintCell(p,cg2,column,width,align);
+}
+
 int NickListViewItem::getFlags() const
 {
   NickInfo* nickInfo = nick->getNickInfo();

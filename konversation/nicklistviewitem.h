@@ -35,9 +35,12 @@ class NickListViewItem : public QObject, public KListViewItem
                     const QString &passed_label2,
                     Nick *n);
     ~NickListViewItem();
+
     int getFlags() const;
-    virtual int compare(QListViewItem* item,int col,bool ascending) const;
     Nick *getNick();
+
+    virtual void paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align);
+    virtual int compare(QListViewItem* item,int col,bool ascending) const;
 
   public slots:
     void refresh();
