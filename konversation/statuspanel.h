@@ -54,6 +54,7 @@ class StatusPanel : public ChatWindow
   protected slots:
     void sendFileMenu();
     void statusTextEntered();
+    void sendStatusText(const QString& line);
     // connected to IRCInput::textPasted() - used for large/multiline pastes
     void textPasted(QString text);
 
@@ -62,7 +63,6 @@ class StatusPanel : public ChatWindow
     bool awayState;
 
     void showEvent(QShowEvent* event);
-    void sendStatusText(QString line);
 
     QPushButton* nicknameButton;
     QLabel* awayLabel;

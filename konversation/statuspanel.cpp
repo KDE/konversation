@@ -52,7 +52,7 @@ StatusPanel::StatusPanel(QWidget* parent) :
 
   connect(getTextView(),SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
   connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
-  connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendChannelText(const QString&)) );
+  connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendStatusText(const QString&)) );
 
   connect(statusInput,SIGNAL (pageUp()),getTextView(),SLOT (pageUp()) );
   connect(statusInput,SIGNAL (pageDown()),getTextView(),SLOT (pageDown()) );
