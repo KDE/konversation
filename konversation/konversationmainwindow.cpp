@@ -71,6 +71,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection()); // options_configure_key_binding
   KStdAction::preferences(this,SLOT(openPreferences()),actionCollection()); // options_configure
 
+  new KAction(i18n("Server list"), 0, 0, this, SLOT(openServerList()), actionCollection(), "open_server_list");
+
   new KAction(i18n("Nicks Online"), 0, 0, this, SLOT(openNicksOnlineWindow()), actionCollection(), "open_nicksonline_window");
   new KAction(i18n("Channel list"), 0, 0, this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
   new KAction(i18n("Open a Konsole"), 0, 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
@@ -542,6 +544,11 @@ void KonversationMainWindow::closeNicksOnlineWindow(QSize newSize)
 
   delete nicksOnlineWindow;
   nicksOnlineWindow=0;
+}
+
+void KonversationMainWindow::openServerList()
+{
+  emit openPrefsDialog(Preferences::ServerListPage);
 }
 
 void KonversationMainWindow::openNotify()

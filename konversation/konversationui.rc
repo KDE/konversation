@@ -2,6 +2,9 @@
 <kpartgui name="konversation" version="0.4 $Id$">
 
   <MenuBar>
+    <Menu name="file">
+      <Action name="open_server_list" />
+    </Menu>
     <Menu name="actions">
       <Text>Actions</Text>
     </Menu>

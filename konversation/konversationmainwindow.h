@@ -22,6 +22,8 @@
 
 #include <kmainwindow.h>
 
+#include "preferences.h"
+
 /*
  Dario Abatianni
 */
@@ -69,7 +71,7 @@ class KonversationMainWindow : public KMainWindow
     void prefsChanged();
     void startNotifyTimer(int msec);
     void openPrefsDialog();
-    void openPrefsDialog(int page);
+    void openPrefsDialog(Preferences::Pages page);
     void quitServer();
     void nicksNowOnline(const QString& serverName,const QStringList& list);
 
@@ -87,6 +89,12 @@ class KonversationMainWindow : public KMainWindow
   protected slots:
     void openPreferences();
     void openKeyBindings();
+    void openServerList();
+    void openChannelList();
+    void openNotify();
+    void openNicksOnlineWindow();
+    void closeNicksOnlineWindow(QSize newSize);
+
     void showToolbar();
     void showStatusbar();
     void showMenubar();
@@ -99,12 +107,6 @@ class KonversationMainWindow : public KMainWindow
     void quitProgram();
 
     void notifyAction(const QString& serverName,const QString& nick);
-
-    void openNicksOnlineWindow();
-    void closeNicksOnlineWindow(QSize newSize);
-
-    void openChannelList();
-    void openNotify();
 
     void nextTab();
     void previousTab();

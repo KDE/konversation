@@ -72,7 +72,7 @@ class KonversationApplication : public KApplication
 
   protected slots:
     void openPrefsDialog();
-    void openPrefsDialog(int page);
+    void openPrefsDialog(Preferences::Pages page);
     void removeServer(Server* server);
     void dcopSay(const QString& server,const QString& target,const QString& command);
     void dcopInfo(const QString& string);

@@ -47,7 +47,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   kdDebug() << "PrefsDialog::PrefsDialog()" << endl;
   setPreferences(preferences);
 
-  QFrame* serverListPane     =addPage(i18n("Server list"));
+          serverListPane     =addPage(i18n("Server list"));
   QFrame* generalSettingsPane=addPage(i18n("General settings"));
   QFrame* identityPane       =addPage(i18n("Identity"));
 
@@ -55,7 +55,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   QFrame* colorsImagesPane   =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Colors and images")));
   QFrame* buttonsPane        =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Quick buttons")));
 
-  QFrame* notifyPane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Notify list")));
+          notifyPane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Notify list")));
   QFrame* highlightPane      =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Highlight list")));
   QFrame* ignorePane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Ignore list")));
 
@@ -102,6 +102,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   connect(this,SIGNAL (applyPreferences()),generalSettingsPage,SLOT (applyPreferences()) );
 
   connect(this,SIGNAL (applyPreferences()),buttonsPage,SLOT (applyPreferences()) );
+
   connect(this,SIGNAL (applyPreferences()),notifyPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),highlightPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),ignorePage,SLOT (applyPreferences()) );
@@ -112,7 +113,6 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 // TODO: Uncomment this again when it's ready to go
 // but ... is this really the way it's meant to be done?
 //  connect(this, SIGNAL(prefsChanged()), scriptsPage, SLOT(saveChanges()));
-
 }
 
 PrefsDialog::~PrefsDialog()
@@ -155,7 +155,8 @@ void PrefsDialog::setPreferences(Preferences* newPrefs)
 
 void PrefsDialog::openPage(Preferences::Pages page)
 {
-  kdDebug() << "PrefsDialog::openPage(" << page << ")" << endl;
+  if     (page==Preferences::ServerListPage) showPage(pageIndex(serverListPane));
+  else if(page==Preferences::NotifyPage)     showPage(pageIndex(notifyPane));
 }
 
 #include "prefsdialog.moc"

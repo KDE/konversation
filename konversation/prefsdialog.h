@@ -25,6 +25,8 @@
  *@author Dario Abatianni
 */
 
+class QFrame;
+
 class PrefsPageGeneralSettings;
 class PrefsPageButtons;
 class PrefsPageHighlight;
@@ -61,6 +63,10 @@ class PrefsDialog : public KDialogBase
     PrefsPageHighlight* highlightPage;
     PrefsPageNotify* notifyPage;
     PrefsPageIgnore* ignorePage;
+
+    // for openPage();
+    QFrame* serverListPane;
+    QFrame* notifyPane;
 
     void setPreferences(Preferences* newPrefs);
 };
