@@ -144,7 +144,12 @@ void Images::initializeNickIcons()
   QString iconTheme = KonversationApplication::preferences.getIconTheme();
   QStringList icons = KGlobal::dirs()->findAllResources("data","konversation/themes/"+iconTheme+"/*.png");
 
+  if( icons.count() < 7 ) // Sanity
+    icons = KGlobal::dirs()->findAllResources("data","konversation/themes/default/*.png");
+
   QStringList::Iterator it = icons.begin();
+
+  /* The list is sorted alphabetically. */
 
   QPixmap elementAdmin(*it); 
   ++it;
