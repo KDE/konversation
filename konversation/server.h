@@ -360,6 +360,7 @@ class Server : public QObject
     void sendJoinCommand(const QString& channelName);
     void requestChannelList();
     void requestWhois(const QString& nickname);
+    void requestWho(const QString& channel);
     void requestUserhost(const QString& nicks);
     void addRawLog(bool show);
     void closeRawLog();

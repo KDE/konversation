@@ -1056,28 +1056,37 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 [21:39] [352] #lounge ~Nottingha worldforge.org irc.worldforge.org SherwoodSpirit H 0 Arboreal Entity
 */
       case RPL_WHOREPLY:
-	{
-	  NickInfo* nickInfo = server->getNickInfo(parameterList[5]);
-	  if(nickInfo) {
-	    nickInfo->setHostmask(i18n("%1@%2").arg(parameterList[2]).arg(parameterList[3]));
-	    nickInfo->setRealName(trailing.section(" ", 1)); //Strip off the "0 "
-	    nickInfo->setAway(parameterList[6].upper() == "G");
-	  }
+        {
+          NickInfo* nickInfo = server->getNickInfo(parameterList[5]);
+          bool bAway = parameterList[6].upper().startsWith("G"); // G=away G@=away,op G+=away,voice
+          if(nickInfo)
+          {
+            nickInfo->setHostmask(i18n("%1@%2").arg(parameterList[2]).arg(parameterList[3]));
+            nickInfo->setRealName(trailing.section(" ", 1)); //Strip off the "0 "
+            nickInfo->setAway(bAway);
+            if(!bAway)
+              nickInfo->setAwayMessage(QString::null);
+          }
           // Display message only if this was not an automatic request.
           if(getAutomaticRequest()==0)
-	    server->appendStatusMessage(i18n("Who"),
-			                i18n("%1 is %2&#64;%3 (%4)").arg(parameterList[5]) // Use &#64; instead of @
-				        .arg(parameterList[2])
-				        .arg(parameterList[3])
-				        .arg(trailing.section(" ", 1)));
-	  break;
-
-	}
+          {
+            server->appendStatusMessage(i18n("Who"),
+                                        i18n("%1 is %2&#64;%3 (%4)%5").arg(parameterList[5]) // Use &#64; instead of @
+                                          .arg(parameterList[2])
+                                          .arg(parameterList[3])
+                                          .arg(trailing.section(" ", 1))
+                                          .arg(bAway?i18n(" (Away)"):QString::null));
+          }
+          break;
+        }
       case RPL_ENDOFWHO:
-	{
-	  server->appendStatusMessage(i18n("Who"), i18n("End of /WHO list for %1").arg(parameterList[1]));
-	  break;
-	}
+        {
+          if(getAutomaticRequest()==0)
+            server->appendStatusMessage(i18n("Who"), i18n("End of /WHO list for %1").arg(parameterList[1]));
+          else
+            setAutomaticRequest(false);
+          break;
+        }
       case RPL_WHOISCHANNELS:
         {
           QStringList userChannels,voiceChannels,opChannels,halfopChannels,ownerChannels,adminChannels;

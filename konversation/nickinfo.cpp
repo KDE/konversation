@@ -287,7 +287,9 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const {
     tooltip << "<tr><td><b>" << i18n("Hostmask") << ": </b></td><td>" << getHostmask() << "</td></tr>";
     dirty=true;
   }
-  if(isAway() && !getAwayMessage().isEmpty()) {
+  if(isAway()) {
+    // TODO: make it pretty
+    // there is a case that we know his away but not his away message. e.g. RPL_WHOREPLY informs only whether he is away or not. (strm)
     tooltip << "<tr><td><b>" << i18n("Away Message") << ": </b></td><td>" << getAwayMessage() << "</td></tr>";
     dirty=true;
   }

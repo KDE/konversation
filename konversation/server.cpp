@@ -1492,6 +1492,13 @@ void Server::requestWhois(const QString& nickname)
   queue("WHOIS "+nickname);
 }
 
+void Server::requestWho(const QString& channel)
+{
+  kdDebug() << "Server::requestWho: " << channel << endl;
+  inputFilter.setAutomaticRequest(true);
+  queue("WHO "+channel);
+}
+
 void Server::requestUserhost(const QString& nicks)
 {
   inputFilter.setAutomaticRequest(true);
