@@ -597,6 +597,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
       prefix="<img width=\""+height+"\" height=\""+height+"\" src=\""+image+"\"></img>";
      */
       prefix="-->";
+      parseURL=false;
     }
   else if(type=="Part" || type=="Quit")
     {/*
