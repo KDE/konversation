@@ -996,7 +996,7 @@ void Server::incoming()
     bool isUtf8 = KStringHandler::isUtf8((Konversation::removeIrcMarkup(testString)).ascii());
 
     if(isUtf8)
-      inputBuffer << KStringHandler::from8Bit(qcsBufferLines.front());
+      inputBuffer << QString::fromUtf8(qcsBufferLines.front());
     else
     {
       // set channel encoding if specified
