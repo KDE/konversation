@@ -14,6 +14,7 @@
 
 #include <qstringlist.h>
 #include <qfile.h>
+#include <qfileinfo.h>
 
 #include <kdebug.h>
 #include <kstddirs.h>
@@ -46,25 +47,31 @@ void ScriptLauncher::setTargetName(const QString& newName)
 void ScriptLauncher::launchScript(const QString &parameter)
 {
   KStandardDirs kstddir;
-  QString scriptPath(kstddir.saveLocation("data",QString("konversation/scripts")));
+//  QString scriptPath(kstddir.saveLocation("data",QString("konversation/scripts")));
   KProcess process;
 
   // send the script all the information it will need
   QStringList parameterList=QStringList::split(' ',parameter);
 
-  process << scriptPath+QString("/")+parameterList[0]  // script path / name
-          << kapp->dcopClient()->appId()      // our dcop port
-          << server                           // the server we are connected to
-          << target;                          // the target where the call came from
+  // find script path (could be installed for all users in $KDEDIR/share/apps/ or
+  // for one user alone in $HOME/.kde/share/apps/
+  QString scriptPath(kstddir.findResource("data","konversation/scripts/"+parameterList[0]));
+
+  process << scriptPath                    // script path and name
+          << kapp->dcopClient()->appId()   // our dcop port
+          << server                        // the server we are connected to
+          << target;                       // the target where the call came from
 
   // send remaining parameters to the script
   for(unsigned int index=1;index<parameterList.count();index++)
     process << parameterList[index];
 
-  process.setWorkingDirectory(scriptPath);
+  QFileInfo fileInfo(scriptPath);
+
+  process.setWorkingDirectory(fileInfo.dirPath());
   if(process.start()==false)
   {
-    QFile file(scriptPath+QString("/")+parameterList[0]);
+    QFile file(parameterList[0]);
     if(!file.exists()) emit scriptNotFound(file.name());
     else emit scriptExecutionError(file.name());
   }
