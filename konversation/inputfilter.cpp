@@ -621,7 +621,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
         return; // if they return false, stop processing
     }
     // ******
-    server->appendStatusMessage(i18n("Invite"),i18n("%1 invited you into channel %2").arg(sourceNick).arg(trailing));
+    server->appendStatusMessage(i18n("Invite"),i18n("%1 invited you to channel %2").arg(sourceNick).arg(trailing));
     emit invitation(sourceNick,trailing);
   }
   else
@@ -848,7 +848,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           QDateTime when;
           when.setTime_t(parameterList[2].toUInt());
 
-          server->appendCommandMessageToChannel(parameterList[1],i18n("Created"),i18n("This channel has been created on %1.").arg(when.toString(Qt::LocalDate)));
+          server->appendCommandMessageToChannel(parameterList[1],i18n("Created"),i18n("This channel was created on %1.").arg(when.toString(Qt::LocalDate)));
           break;
         }
       case RPL_NAMREPLY:
@@ -919,7 +919,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           // if we are already connected, don't try tro find another nick ourselves
           if(server->connected())
             // Show message
-            server->appendStatusMessage(i18n("Nick"),i18n("Nickname already in use, try another nick."));
+            server->appendStatusMessage(i18n("Nick"),i18n("Nickname already in use, try a different one."));
           // not connected yet, so try to find a nick that's not in use
           else
           {
@@ -984,7 +984,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_INVITING:
         {
-          server->appendStatusMessage(i18n("Invite"),i18n("You invited %1 into channel %2.").arg(parameterList[1]).arg(parameterList[2]));
+          server->appendStatusMessage(i18n("Invite"),i18n("You invited %1 to channel %2.").arg(parameterList[1]).arg(parameterList[2]));
           break;
         }
 /* Sample WHOIS response
@@ -1069,7 +1069,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           if(userChannels.count())
           {
             server->appendStatusMessage(i18n("Whois"),
-                                        i18n("%1 is user on channels: %2").arg(parameterList[1])
+                                        i18n("%1 is a user on channels: %2").arg(parameterList[1])
                                         .arg(userChannels.join(" ")) );
           }
           if(voiceChannels.count())
@@ -1081,13 +1081,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           if(halfopChannels.count())
           {
             server->appendStatusMessage(i18n("Whois"),
-                                        i18n("%1 is halfop on channels: %2").arg(parameterList[1])
+                                        i18n("%1 is a halfop on channels: %2").arg(parameterList[1])
                                         .arg(halfopChannels.join(" ")) );
           }
           if(opChannels.count())
           {
             server->appendStatusMessage(i18n("Whois"),
-                                        i18n("%1 is operator on channels: %2").arg(parameterList[1])
+                                        i18n("%1 is an operator on channels: %2").arg(parameterList[1])
                                         .arg(opChannels.join(" ")) );
           }
           if(ownerChannels.count())
@@ -1161,7 +1161,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             NickInfo* nickInfo = server->obtainNickInfo(parameterList[1]);
             nickInfo->setOnlineSince(when);
 #endif
-            server->appendStatusMessage(i18n("Whois"),i18n("%1 is online since %2.").arg(parameterList[1]).arg(when.toString(Qt::LocalDate)));
+            server->appendStatusMessage(i18n("Whois"),i18n("%1 has been online since %2.").arg(parameterList[1]).arg(when.toString(Qt::LocalDate)));
             break;
           }
         }
