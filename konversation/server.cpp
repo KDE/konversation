@@ -918,7 +918,7 @@ void Server::processIncomingData()
   {
     QString front(inputBuffer.front());
     inputBuffer.pop_front();
-    if(rawLog) rawLog->appendRaw(front);
+    if(rawLog) rawLog->appendRaw(front.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
     inputFilter.parseLine(front, mainWindow);
   }
 
@@ -1150,7 +1150,7 @@ void Server::send()
     }
 
     serverStream << outputLine;
-    if(rawLog) rawLog->appendRaw(outputLine);
+    if(rawLog) rawLog->appendRaw(outputLine.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
 
     // detach server stream
     serverStream.unsetDevice();
