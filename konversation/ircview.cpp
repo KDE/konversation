@@ -294,7 +294,6 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
       href.replace(QRegExp(" "),"%20");
       // Build rich text link
       QString link("<font color=\"#"+linkColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
-      kdDebug() << "LINK: " << link << endl;
   
       // replace found url with built link
       filteredLine.replace(pos,url.length(),link);
@@ -316,7 +315,6 @@ QString IRCView::filter(const QString& line,const QString& whoSent,bool doHiligh
       }
       
       QString link("<font color=\"#"+linkColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
-      kdDebug() << "LINK: " << link << endl;
   
       // replace found url with built link
       filteredLine.replace(pos,url.length(),link);
