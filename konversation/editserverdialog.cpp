@@ -91,7 +91,7 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   serverNameLabel->setBuddy(serverNameInput);
   QWhatsThis::add(serverNameLabel, serverNameWT);
 
-  QLabel* serverPortLabel=new QLabel(i18n("P&ort:"),serverBox);
+  QLabel* serverPortLabel=new QLabel(i18n("Po&rt:"),serverBox);
   QString serverPortWT = i18n("Enter the port number on which the IRC "
                               "server listens.  (The default IRC port is "
                               "6667 and usually need not be changed.)\n\n"
@@ -123,7 +123,7 @@ EditServerDialog::EditServerDialog(QWidget* parent,
   QWhatsThis::add(channelNameInput, channelNameWT);
   channelNameLabel->setBuddy(channelNameInput);
 
-  QLabel* connectCommandsLabel = new QLabel(i18n("C&onnect command(s):"), page);
+  QLabel* connectCommandsLabel = new QLabel(i18n("Co&nnect command(s):"), page);
   QString connectCommandsWT = i18n("Enter the command(s) you want to execute on "
                                                                 "connection to the server (separated by semicolons).");
   QWhatsThis::add(connectCommandsLabel, connectCommandsWT);
