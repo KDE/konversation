@@ -135,22 +135,36 @@ void KonversationApplication::connectToAnotherServer(int id)
     if(chosenServer->getServerName()==newServer->getServerName() &&
        chosenServer->getPort()==newServer->getPort())
     {
-      QString autoJoinChannel=chosenServer->getChannelName();
-      if(!autoJoinChannel.isEmpty())
-      {
-        newServer->setAutoJoin(true);
-        newServer->setAutoJoinChannel(autoJoinChannel);
-        newServer->setAutoJoinChannelKey(chosenServer->getChannelKey());
-      }
-      else newServer->setAutoJoin(false);
+      kdDebug() << "Using existing Server " << id << endl;
 
-      newServer->connectToIRCServer();
+      QString autoJoinChannel=chosenServer->getChannelName();
+
+      if(newServer->isConnected())
+      {
+        if(!autoJoinChannel.isEmpty())
+          newServer->queue("JOIN "+autoJoinChannel+" "+chosenServer->getChannelKey());
+      }
+      else
+      {
+        if(!autoJoinChannel.isEmpty())
+        {
+          newServer->setAutoJoin(true);
+          newServer->setAutoJoinChannel(newServer->getAutoJoinChannel()+" "+autoJoinChannel);
+          newServer->setAutoJoinChannelKey(newServer->getAutoJoinChannelKey()+" "+chosenServer->getChannelKey());
+        }
+        else newServer->setAutoJoin(false);
+
+        newServer->connectToIRCServer();
+      }
       return;
     }
 
     newServer=serverList.next();
-  }
+  } // endwhile
   // We came this far, so generate a new server
+
+  kdDebug() << "Creating new Server " << id << endl;
+
   newServer=new Server(id);
   serverList.append(newServer);
 

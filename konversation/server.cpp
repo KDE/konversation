@@ -141,31 +141,26 @@ Server::~Server()
   delete serverWindow;
 }
 
-QString Server::getServerName()
-{
-  return serverName;
-}
+QString Server::getServerName() { return serverName; }
+int Server::getPort() { return serverPort; }
 
-int Server::getPort()
-{
-  return serverPort;
-}
-
-bool Server::getAutoJoin()
-{
-  return autoJoin;
-}
-
+bool Server::getAutoJoin() { return autoJoin; }
 void Server::setAutoJoin(bool on) { autoJoin=on; }
+
+QString Server::getAutoJoinChannel() { return autoJoinChannel; }
 void Server::setAutoJoinChannel(const QString &channel) { autoJoinChannel=channel; }
+
+QString Server::getAutoJoinChannelKey() { return autoJoinChannelKey; }
 void Server::setAutoJoinChannelKey(const QString &key) { autoJoinChannelKey=key; }
+
+bool Server::isConnected() { return serverSocket.socketStatus()==KExtendedSocket::connected; }
 
 void Server::connectToIRCServer()
 {
   deliberateQuit=false;
   serverSocket.blockSignals(false);
   // Are we (still) connected (yet)?
-  if(serverSocket.socketStatus()==KExtendedSocket::connected)
+  if(isConnected())
   {
     // just join our autojoin-channel if desired
     if (getAutoJoin()) queue(getAutoJoinCommand());
@@ -349,7 +344,7 @@ void Server::notifyTimeout()
 void Server::notifyCheckTimeout()
 {
   checkTime+=500;
-  if(serverSocket.socketStatus()==KExtendedSocket::connected) emit tooLongLag(checkTime);
+  if(isConnected()) emit tooLongLag(checkTime);
 }
 
 QString Server::getAutoJoinCommand()
@@ -407,7 +402,7 @@ void Server::incoming()
 void Server::queue(const QString &buffer)
 {
   // Only queue lines if we are connected
-  if(serverSocket.socketStatus()==KExtendedSocket::connected && buffer.length())
+  if(isConnected() && buffer.length())
   {
     kdDebug() << "Q: " << buffer << endl;
 
@@ -421,7 +416,7 @@ void Server::queue(const QString &buffer)
 void Server::send()
 {
   // Check if we are still online
-  if(serverSocket.socketStatus()==KExtendedSocket::connected)
+  if(isConnected())
   {
 //    kdDebug() << "-> " << outputBuffer << endl;
     // To make lag calculation more precise, we reset the timer here

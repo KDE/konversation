@@ -104,6 +104,13 @@ void InputFilter::parseLine(const QString &a_newLine)
 
 void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing)
 {
+/*
+  kdDebug() << "InputFilter::parseClientCommand(): " << prefix << " "
+                                                     << command << " "
+                                                     << parameterList.join(" ") << " "
+                                                     << trailing << " "
+                                                     << endl;
+*/
   // Extract nickname fron prefix
   QString sourceNick=prefix.left(prefix.find("!"));
   QString sourceHostmask=prefix.mid(prefix.find("!")+1);
@@ -446,7 +453,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QString)").arg(e->signal).ascii(), args))
 	return; // if they return false, stop processing
     }
-    // ******    server->removeNickFromServer(sourceNick,trailing);
+    // ******
+    server->removeNickFromServer(sourceNick,trailing);
   }
   else if(command=="nick")
   {
@@ -492,7 +500,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
       if (!konv_app->emitDCOPSig(e->appId, e->objectId, QString("%1(QString, QStringList)").arg(e->signal).ascii(), args))
 	return; // if they return false, stop processing
     }
-    // ******    parseModes(sourceNick,parameterList);
+    // ******
+    parseModes(sourceNick,parameterList);
   }
   else if(command=="invite")
   {

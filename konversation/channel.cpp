@@ -773,7 +773,13 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
     case 'o':
       if(plus)
       {
-        if(fromMe) message=i18n("You give channel operator privileges to %1.").arg(parameter);
+        if(fromMe)
+        {
+          if(toMe)
+            message=i18n("You give channel operator privileges to yourself.");
+          else
+            message=i18n("You give channel operator privileges to %1.").arg(parameter);
+        }
         else
         {
           if(toMe)
@@ -791,7 +797,13 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
           else
             message=i18n("You take channel operator privileges from %1.").arg(parameter);
         }
-        else message=i18n("%1 takes channel operator privileges from %2.").arg(sourceNick).arg(parameter);
+        else
+        {
+          if(toMe)
+            message=i18n("%1 takes channel operator privileges from you.").arg(sourceNick);
+          else
+            message=i18n("%1 takes channel operator privileges from %2.").arg(sourceNick).arg(parameter);
+        }
       }
       nick=getNickByName(parameter);
       if(nick)
@@ -807,30 +819,28 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
     case 'v':
       if(plus)
       {
-        if(fromMe) message=i18n("You give %1 the permission to talk.").arg(parameter);
+        if(fromMe)
+        {
+          if(toMe) message=i18n("You give yourself the permission to talk.");
+          else     message=i18n("You give %1 the permission to talk.").arg(parameter);
+        }
         else
         {
-          if(toMe)
-            message=i18n("%1 gives you the permission to talk.").arg(sourceNick);
-          else
-            message=i18n("%1 gives %2 the permission to talk.").arg(sourceNick).arg(parameter);
+          if(toMe) message=i18n("%1 gives you the permission to talk.").arg(sourceNick);
+          else     message=i18n("%1 gives %2 the permission to talk.").arg(sourceNick).arg(parameter);
         }
       }
       else
       {
         if(fromMe)
         {
-          if(toMe)
-            message=i18n("You take the permission to talk from yourself.");
-          else
-            message=i18n("You take the permission to talk from %1.").arg(parameter);
+          if(toMe) message=i18n("You take the permission to talk from yourself.");
+          else     message=i18n("You take the permission to talk from %1.").arg(parameter);
         }
         else
         {
-          if(toMe)
-            message=i18n("%1 takes the permission to talk from you.").arg(sourceNick);
-          else
-            message=i18n("%1 takes the permission to talk from %2.").arg(sourceNick).arg(parameter);
+          if(toMe) message=i18n("%1 takes the permission to talk from you.").arg(sourceNick);
+          else     message=i18n("%1 takes the permission to talk from %2.").arg(sourceNick).arg(parameter);
         }
       }
       nick=getNickByName(parameter);
@@ -904,7 +914,7 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
         if(fromMe) message=i18n("You remove the 'quiet' channel mode.");
         else message=i18n("%1 removes the 'quiet' channel mode.").arg(sourceNick);
       }
-/*      modeQ->setDown(plus); */
+
     break;
 
     case 'p':

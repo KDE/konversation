@@ -50,7 +50,13 @@ class Server : public QObject
     int getPort();
     bool getAutoJoin();
     void setAutoJoin(bool on);
+
+    bool isConnected();
+
+    QString getAutoJoinChannel();
     void setAutoJoinChannel(const QString &channel);
+
+    QString getAutoJoinChannelKey();
     void setAutoJoinChannelKey(const QString &key);
 
     void setDeliberateQuit(bool on);
@@ -69,26 +75,26 @@ class Server : public QObject
     void nickWasKickedFromChannel(const QString &channelName, const QString &nickname, const QString &kicker, const QString &reason);
     void removeNickFromServer(const QString &nickname, const QString &reason);
 
-    bool isNickname(const QString &compare);
+    bool isNickname(const QString& compare);
     QString getNickname();
     OutputFilter& getOutputFilter();
 
-    void joinChannel(const QString &name, const QString &hostmask, const QString &key);
-    void removeChannel(Channel *channel);
-    void appendToChannel(const char *channel,const char *nickname, const char *message);
-    void appendActionToChannel(const char *channel, const char *nickname, const char *message);
-    void appendServerMessageToChannel(const char *channel, const char* type, const char *message);
-    void appendCommandMessageToChannel(const char *channel, const char* command, const char *message);
-    void appendStatusMessage(const char *type,const char *message);
+    void joinChannel(const QString& name, const QString& hostmask, const QString& key);
+    void removeChannel(Channel* channel);
+    void appendToChannel(const char* channel,const char* nickname, const char* message);
+    void appendActionToChannel(const char* channel, const char* nickname, const char* message);
+    void appendServerMessageToChannel(const char* channel, const char* type, const char* message);
+    void appendCommandMessageToChannel(const char* channel, const char* command, const char* message);
+    void appendStatusMessage(const char* type,const char* message);
 
     void dcopSay(const QString& target,const QString& command);
     void dcopError(const QString& string);
-    void ctcpReply(const QString &receiver, const QString &text);
+    void ctcpReply(const QString& receiver, const QString& text);
 
-    void setChannelTopic(const QString &channel, const QString &topic);
-    void setChannelTopic(const QString &nickname, const QString &channel, const QString &topic); // Overloaded
-    void updateChannelMode(const QString &nick, const QString &channel, char mode, bool plus, const QString &parameter);
-    void updateChannelModeWidgets(const QString &channel, char mode, const QString &parameter);
+    void setChannelTopic(const QString& channel, const QString& topic);
+    void setChannelTopic(const QString& nickname, const QString& channel, const QString& topic); // Overloaded
+    void updateChannelMode(const QString& nick, const QString& channel, char mode, bool plus, const QString& parameter);
+    void updateChannelModeWidgets(const QString& channel, char mode, const QString& parameter);
     void updateChannelQuickButtons(QStringList newButtons);
     void updateFonts();
     void setShowQuickButtons(bool state);
@@ -96,17 +102,17 @@ class Server : public QObject
 
     QString getNextQueryName();
     ServerWindow* getServerWindow();
-    void setServerWindow(ServerWindow *newWindow); // don't use this other than in ServerWindow!
+    void setServerWindow(ServerWindow* newWindow); // don't use this other than in ServerWindow!
 
-    void appendToQuery(const char *queryName,const char *message);
-    void appendActionToQuery(const char *queryName,const char *message);
-    void appendServerMessageToQuery(const char *queryName, const char *type, const char *message);
-    void appendCommandMessageToQuery(const char *queryName, const char *command, const char *message);
+    void appendToQuery(const char* queryName,const char* message);
+    void appendActionToQuery(const char* queryName,const char* message);
+    void appendServerMessageToQuery(const char* queryName, const char* type, const char* message);
+    void appendCommandMessageToQuery(const char* queryName, const char* command, const char* message);
 
-    Channel *getChannelByName(const char *name);
-    Query *getQueryByName(const char *name);
-    QString parseWildcards(const QString &toParse, const QString &nickname, const QString &channelName, const QString &channelKey, const QStringList &nickList, const QString &queryName, const QString &parameter);
-    QString parseWildcards(const QString &toParse, const QString &nickname, const QString &channelName, const QString &channelKey, const QString &nick, const QString &queryName, const QString &parameter);
+    Channel* getChannelByName(const char* name);
+    Query* getQueryByName(const char* name);
+    QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QStringList& nickList, const QString& queryName, const QString& parameter);
+    QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& queryName, const QString& parameter);
 
     QString getAutoJoinCommand();
 
