@@ -138,7 +138,7 @@ void SSLSocket::connected()
   else
     {
       kdError() << "SSL not functional!" << endl;
-      emit sslFailure();
+      emit sslFailure(i18n("The functionality to connect to servers using encrypted SSL communications is not available to Konversation because OpenSSL support was not enabled at compile time.  You will need to get new version of KDE that has SSL support."));
       close();
     }
 }
@@ -180,7 +180,7 @@ int SSLSocket::verifyCertificate()
 
   validation = peerCertificate.validate();
   if(validation == KSSLCertificate::Unknown ) {
-    emit sslFailure();
+    emit sslFailure(i18n("The SSL certificate returned from the server was not recognized.  Maybe this server does not support SSL on the given port?  If this server supports normal, non-SSL communications as well, then SSL will be on a different port."));
     return 0;
   }
   

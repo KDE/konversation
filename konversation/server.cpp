@@ -450,8 +450,8 @@ void Server::connectToIRCServer()
     } else {
       m_socket = new SSLSocket(mainWindow, this, "serverSSLSocket");
       connect(m_socket,SIGNAL (sslInitDone()),this,SLOT (ircServerConnectionSuccess()));
-      connect(m_socket,SIGNAL (sslFailure()),this,SIGNAL(sslInitFailure()));
-      connect(m_socket,SIGNAL (sslFailure()),this,SLOT(sslError()));
+      connect(m_socket,SIGNAL (sslFailure(QString)),this,SIGNAL(sslInitFailure()));
+      connect(m_socket,SIGNAL (sslFailure(QString)),this,SLOT(sslError(QString)));
     }
 
     connect(m_socket,SIGNAL (hostFound()),this,SLOT(lookupFinished()));
@@ -647,28 +647,40 @@ void Server::broken(int state)
   // clear nicks online
   emit nicksNowOnline(this,QStringList(),true);
 
+  
   // TODO: Close all queries and channels!
   //       Or at least make sure that all gets reconnected properly
   if(autoReconnect && !getDeliberateQuit())
   {
     // TODO: Make retry counter configurable
     reconnectCounter++;
+    bool cancelReconnect = false;
+    if(state != KNetwork::KSocketBase::LookupFailure &&
+       state != KNetwork::KSocketBase::ConnectionTimedOut &&
+       state != KNetwork::KSocketBase::NetFailure &&
+       state != KNetwork::KSocketBase::Timeout &&
+       state != KNetwork::KSocketBase::UnknownError) cancelReconnect = true;
 
-    if(reconnectCounter == 10 || !m_tryReconnect)
+    if(cancelReconnect || reconnectCounter >= 10 || !m_tryReconnect)
     {
-      statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 failed.")
-          .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()));
-      getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 failed.")
-          .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()),statusView);
+      QString error = i18n("Connection to Server %1 failed.  %2")
+          .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
+	  .arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
+
+      statusView->appendServerMessage(i18n("Error"),error);
+//  Uncomment below if you want the server error message to be in the current window.
+//      getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),error, statusView);
       reconnectCounter = 0;
       rejoinChannels = false;
 
       if(m_currentServerIndex < (m_serverGroup.serverList().count() - 1)) {
         m_currentServerIndex++;
-        statusView->appendServerMessage(i18n("Error"),i18n("Trying server %1 instead.")
-            .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()));
-        getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Trying server %1 instead.")
-            .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()),statusView);
+	error = i18n("Trying server %1 instead.")
+            .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server());
+        statusView->appendServerMessage(i18n("Error"),error );
+
+//  Uncomment below if you want the server error message to be in the current window.
+//        getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),error,statusView);
 
         connectToIRCServer();
       } else {
@@ -676,10 +688,14 @@ void Server::broken(int state)
     }
     else
     {
-      statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.")
-          .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()));
-      getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.")
-          .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()),statusView);
+      QString error = i18n("Connection to Server %1 lost.  %2.  Trying to reconnect.")
+	                .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
+			.arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
+      
+      statusView->appendServerMessage(i18n("Error"), error);
+
+//  Uncomment below if you want the server error message to be in the current window.
+//      getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),error,statusView);
 
       // TODO: Make timeout configurable
       QTimer::singleShot(5000,this,SLOT(connectToIRCServer()));
@@ -692,18 +708,24 @@ void Server::broken(int state)
   }
   else
   {
-    statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 closed.")
-        .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()));
-    getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 closed.")
-        .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()),statusView);
+    QString error = i18n("Connection to Server %1 failed.")
+	              .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server());
+    statusView->appendServerMessage(i18n("Error"),error);
+
+//  Uncomment below if you want the server error message to be in the current window.
+//    getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),error, statusView);
   }
 
   emit serverOnline(false);
 }
 
-void Server::sslError()
+void Server::sslError(QString reason)
 {
-  statusView->appendServerMessage(i18n("Error"),i18n("An SSL error happened. Maybe the server does not support SSL?"));
+  QString error = i18n("<qt>Could not connect to %1:%2 using SSL encryption.  Maybe the server does not support SSL, or perhaps you have the wrong port?<p>%s</qt>")
+	             .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server())
+		     .arg(m_serverGroup.serverByIndex(m_currentServerIndex).port())
+		     .arg(reason);
+  statusView->appendServerMessage(i18n("SSL Connection Error"),error);
   m_tryReconnect=false;
 
 }

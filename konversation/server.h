@@ -404,7 +404,10 @@ class Server : public QObject
      */
     void closed();
     void broken(int state);
-    void sslError();
+    /** This is connected to the SSLSocket failed.
+     * @param reason The reason why this failed.  This is already translated, ready to show the user.
+     */
+    void sslError(QString reason);
     void notifyCheckTimeout();
     void connectionEstablished(const QString& ownHost);
     void notifyResponse(const QString& nicksOnline);
