@@ -176,11 +176,6 @@ const QString& IRCView::getContextNick() const
   return m_currentNick;
 }
 
-void IRCView::clearNick()
-{
-  QTimer::singleShot(500,this,SLOT(clearContextNick()));
-}
-
 void IRCView::clearContextNick()
 {
   m_currentNick = QString::null;
@@ -951,7 +946,6 @@ void IRCView::setupNickPopupMenu()
   connect (nickPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
   connect (modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
   connect (kickban, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
-  connect(nickPopup, SIGNAL(aboutToHide()), this, SLOT(clearNick()));
 }
 
 void IRCView::search()

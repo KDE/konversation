@@ -84,6 +84,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   ops = 0;
   completionPosition = 0;
   nickChangeDialog = 0;
+  channelCommand = false;
 
   quickButtonsChanged = false;
   quickButtonsState = false;
@@ -188,7 +189,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 #endif
 
   setTextView(new IRCView(splitter, NULL));  // Server will be set later in setServer()
-  connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupCommand(int)));
+  connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
   // The box that holds the Nick List and the quick action buttons
   QVBox* nickListButtons = new QVBox(splitter);
   nickListButtons->setSpacing(spacing());
@@ -402,7 +403,16 @@ void Channel::textPasted(const QString& text)
   }
 }
 
-// Will be connected to NickListView::popupCommand(int) and IRCView::popupCommand(int)
+// Will be connected to IRCView::popupCommand(int)
+void Channel::popupChannelCommand(int id)
+{
+  channelCommand = true; // Context menu executed from ircview
+  popupCommand(id);
+  textView->clearContextNick();
+  channelCommand = false;
+}
+
+// Will be connected to NickListView::popupCommand(int)
 void Channel::popupCommand(int id)
 {
   QString pattern;
@@ -411,18 +421,9 @@ void Channel::popupCommand(int id)
 
   QString args;
 
-  if(!textView->getContextNick().isEmpty())
-    {
-      nicknameListView->clearSelection();
-      QListViewItem* item = nicknameListView->findItem(textView->getContextNick(),1);
-      nicknameListView->setSelected(item,true);
-      nicknameListView->ensureItemVisible(item);
-      textView->clearContextNick();
-    }
-
   switch(id)
-  {
-  case Konversation::AddressbookEdit:
+    {
+    case Konversation::AddressbookEdit:
       {
         ChannelNickList nickList=getSelectedChannelNicks();
 	for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
@@ -430,8 +431,8 @@ void Channel::popupCommand(int id)
 	}
 	break;
       }
-  case Konversation::AddressbookNew:
-  case Konversation::AddressbookDelete:
+    case Konversation::AddressbookNew:
+    case Konversation::AddressbookDelete:
       {
 	Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
         ChannelNickList nickList=getSelectedChannelNicks();
@@ -457,7 +458,7 @@ void Channel::popupCommand(int id)
         }
         break;
       }
-  case Konversation::AddressbookChange:
+    case Konversation::AddressbookChange:
       {
         ChannelNickList nickList=getSelectedChannelNicks();
         for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
@@ -465,119 +466,119 @@ void Channel::popupCommand(int id)
 	}
         break;
       }
-  case Konversation::SendEmail:
+    case Konversation::SendEmail:
       {
         Konversation::Addressbook::self()->sendEmail(getSelectedChannelNicks());
         break;
       }
-  case Konversation::AddressbookSub:
+    case Konversation::AddressbookSub:
       kdDebug() << "sub called" << endl;
       break;
-  case Konversation::GiveOp:
+    case Konversation::GiveOp:
       pattern="MODE %c +o %u";
       raw=true;
       break;
-  case Konversation::TakeOp:
+    case Konversation::TakeOp:
       pattern="MODE %c -o %u";
       raw=true;
       break;
-  case Konversation::GiveVoice:
+    case Konversation::GiveVoice:
       pattern="MODE %c +v %u";
       raw=true;
       break;
-  case Konversation::TakeVoice:
+    case Konversation::TakeVoice:
       pattern="MODE %c -v %u";
       raw=true;
       break;
-  case Konversation::Version:
+    case Konversation::Version:
       pattern="PRIVMSG %u :\x01VERSION\x01";
       raw=true;
       break;
-  case Konversation::Whois:
+    case Konversation::Whois:
       pattern="WHOIS %u %u";
       raw=true;
       break;
-  case Konversation::Ping:
+    case Konversation::Ping:
       {
         unsigned int time_t = QDateTime::currentDateTime().toTime_t();
         pattern=QString(KonversationApplication::preferences.getCommandChar()+"CTCP %u PING %1").arg(time_t);
       }
       break;
-  case Konversation::Kick:
+    case Konversation::Kick:
       pattern=cc+"KICK %u";
       break;
-  case Konversation::KickBan:
+    case Konversation::KickBan:
       pattern=cc+"BAN %u\n"+
-              cc+"KICK %u";
+	cc+"KICK %u";
       break;
-  case Konversation::BanNick:
+    case Konversation::BanNick:
       pattern=cc+"BAN %u";
       break;
-  case Konversation::BanHost:
+    case Konversation::BanHost:
       pattern=cc+"BAN -HOST %u";
       break;
-  case Konversation::BanDomain:
+    case Konversation::BanDomain:
       pattern=cc+"BAN -DOMAIN %u";
       break;
-  case Konversation::BanUserHost:
+    case Konversation::BanUserHost:
       pattern=cc+"BAN -USERHOST %u";
       break;
-  case Konversation::BanUserDomain:
+    case Konversation::BanUserDomain:
       pattern=cc+"BAN -USERDOMAIN %u";
       break;
-  case Konversation::KickBanHost:
+    case Konversation::KickBanHost:
       pattern=cc+"BAN -HOST %u\n"+
-              cc+"KICK %u";
+	cc+"KICK %u";
       break;
-  case Konversation::KickBanDomain:
+    case Konversation::KickBanDomain:
       pattern=cc+"BAN -DOMAIN %u\n"+
-              cc+"KICK %u";
+	cc+"KICK %u";
       break;
-  case Konversation::KickBanUserHost:
+    case Konversation::KickBanUserHost:
       pattern=cc+"BAN -USERHOST %u\n"+
-              cc+"KICK %u";
+	cc+"KICK %u";
       break;
-  case Konversation::KickBanUserDomain:
+    case Konversation::KickBanUserDomain:
       pattern=cc+"BAN -USERDOMAIN %u\n"+
-              cc+"KICK %u";
+	cc+"KICK %u";
       break;
-  case Konversation::OpenQuery:
+    case Konversation::OpenQuery:
       pattern=cc+"QUERY %u";
       break;
-  case Konversation::StartDccChat:
+    case Konversation::StartDccChat:
       pattern=cc+"DCC CHAT %u";
       break;
-  case Konversation::DccSend:
+    case Konversation::DccSend:
       pattern=cc+"DCC SEND %u";
       break;
-  case Konversation::IgnoreNick:
+    case Konversation::IgnoreNick:
       pattern=cc+"IGNORE -ALL %u!*";
       break;
-  } // switch
+    } // switch
 
   if(!pattern.isEmpty())
-  {
-    pattern.replace("%c",getName());
-
-    ChannelNickList nickList=getSelectedChannelNicks();
-
-    QString command;
-    for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it)
     {
-      QStringList patternList=QStringList::split('\n',pattern);
-
-      for(unsigned int index=0;index<patternList.count();index++)
-      {
-        command=patternList[index];
-        command.replace("%u",(*it)->getNickname());
-
-        if(raw)
-          m_server->queue(command);
-        else
-          sendChannelText(command);
-      }
+      pattern.replace("%c",getName());
+      
+      ChannelNickList nickList=getSelectedChannelNicks();
+      
+      QString command;
+      for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it)
+	{
+	  QStringList patternList=QStringList::split('\n',pattern);
+	  
+	  for(unsigned int index=0;index<patternList.count();index++)
+	    {
+	      command=patternList[index];
+	      command.replace("%u",(*it)->getNickname());
+	      
+	      if(raw)
+		m_server->queue(command);
+	      else
+		sendChannelText(command);
+	    }
+	}
     }
-  }
 }
 
 // Will be connected to NickListView::doubleClicked()
@@ -825,7 +826,17 @@ ChannelNickList Channel::getSelectedChannelNicks()
 
   while(nick)
   {
-    if(nick->isSelected()) result.append(nick->getChannelNick());
+    if(channelCommand)
+      {
+	if(nick->getNickname() == textView->getContextNick())
+	  {
+	    result.append(nick->getChannelNick());
+	    return result;
+	  }
+      }
+    else if(nick->isSelected()) 
+      result.append(nick->getChannelNick());
+    
     nick=nicknameList.next();
   }
 

@@ -88,8 +88,6 @@ class IRCView : public KTextBrowser
 
     virtual void scrollToBottom(); // Overwritten for internal reasons
 
-    // Calls clearContextNick() in a QTimer::singleShot
-    void clearNick();
     // Resets context nick
     void clearContextNick();
 

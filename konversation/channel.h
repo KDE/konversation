@@ -185,6 +185,7 @@ class Channel : public ChatWindow
     void modeButtonClicked(int id,bool on);
     void channelLimitChanged();
 
+    void popupChannelCommand(int id);         // Will be connected to IRCView::popupCommand()
     void popupCommand(int id);                // Will be connected to NickListView::popupCommand()
     void doubleClickCommand(QListViewItem*);  // Will be connected to NickListView::doubleClicked()
     // Dialogs
@@ -229,6 +230,9 @@ class Channel : public ChatWindow
 
     int nicks;
     int ops;
+
+    // True if nick context menu is executed from IRCView
+    bool channelCommand;
 
     // are there still nicks to be added by /names reply?
     bool pendingNicks;
