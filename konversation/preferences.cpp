@@ -216,6 +216,7 @@ Preferences::Preferences()
   nickColorList.append("#9E54B3");
   nickColorList.append("#0FB39A");
   nickColorList.append("#3176B3");
+  nickColorList.append("#000000");
   setUseColoredNicks(false);
   setUseBoldNicks(false);
   setUseLiteralModes(false);

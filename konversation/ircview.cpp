@@ -495,13 +495,19 @@ void IRCView::append(const QString& nick,const QString& message)
   QString channelColor = KonversationApplication::preferences.getColor("ChannelMessage");
   QString line;
   QString nickLine = "%2";
+  QString color;
 
   if(KonversationApplication::preferences.getUseBoldNicks())
     nickLine = "<b>%2</b>";
   
-  if(KonversationApplication::preferences.getUseColoredNicks() && nick != m_server->getNickname()) {
-    NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
-    nickLine = "<a href=\"#" + nick + "\"><font color=\"" + nickinfo->getNickColor() + "\">"+nickLine+"</font></a>";
+  if(KonversationApplication::preferences.getUseColoredNicks()) {
+
+    if(nick != m_server->getNickname())
+      color = m_server->obtainNickInfo(nick)->getNickColor();
+    else
+      color = KonversationApplication::preferences.getNickColorList()[8];
+
+    nickLine = "<a href=\"#" + nick + "\"><font color=\"" + color + "\">"+nickLine+"</font></a>";
   }
   
   if(basicDirection(message) == QChar::DirR) {
@@ -538,14 +544,19 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
   QString queryColor=KonversationApplication::preferences.getColor("QueryMessage");
   QString line;
   QString nickLine = "%2";
+  QString color;
 
   if(KonversationApplication::preferences.getUseBoldNicks())
     nickLine = "<b>%2</b>";
 
-  if(KonversationApplication::preferences.getUseColoredNicks() && nick != m_server->getNickname())
-  {
-    NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
-    nickLine = "<font color=\"" + nickinfo->getNickColor() + "\">"+nickLine+"</font>";
+  if(KonversationApplication::preferences.getUseColoredNicks()) {
+    
+    if(nick != m_server->getNickname())
+      color = m_server->obtainNickInfo(nick)->getNickColor();
+    else
+      color = KonversationApplication::preferences.getNickColorList()[8];
+    
+    nickLine = "<a href=\"#" + nick + "\"><font color=\"" + color + "\">"+nickLine+"</font></a>";
   }
 
   if(basicDirection(message) == QChar::DirR) {
@@ -568,14 +579,19 @@ void IRCView::appendAction(const QString& nick,const QString& message)
   QString actionColor=KonversationApplication::preferences.getColor("ActionMessage");
   QString line;
   QString nickLine = "%2";
+  QString color;
 
   if(KonversationApplication::preferences.getUseBoldNicks())
     nickLine = "<b>%2</b>";
 
-  if(KonversationApplication::preferences.getUseColoredNicks() && nick != m_server->getNickname())
-  {
-    NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
-    nickLine = "<a href=\"#" + nick + "\"><font color=\"" + nickinfo->getNickColor() + "\">"+nickLine+"</font></a>";
+  if(KonversationApplication::preferences.getUseColoredNicks()) {
+    
+    if(nick != m_server->getNickname())
+      QString color = m_server->obtainNickInfo(nick)->getNickColor();
+    else
+      QString color = KonversationApplication::preferences.getNickColorList()[8];
+    
+    nickLine = "<a href=\"#" + nick + "\"><font color=\"" + color + "\">"+nickLine+"</font></a>";
   }
 
   if(basicDirection(message) == QChar::DirR) {

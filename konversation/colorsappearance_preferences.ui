@@ -250,139 +250,297 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="title">
                 <string>Nick Colors</string>
             </property>
-            <grid>
+            <widget class="KColorButton">
                 <property name="name">
-                    <cstring>unnamed</cstring>
+                    <cstring>kcfg_NickColor7</cstring>
                 </property>
-                <widget class="KColorButton" row="1" column="7">
-                    <property name="name">
-                        <cstring>kcfg_NickColor7</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="2">
-                    <property name="name">
-                        <cstring>textLabel6</cstring>
-                    </property>
-                    <property name="text">
-                        <string>2:</string>
-                    </property>
-                </widget>
-                <widget class="KColorButton" row="1" column="3">
-                    <property name="name">
-                        <cstring>kcfg_NickColor3</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="2">
-                    <property name="name">
-                        <cstring>textLabel7</cstring>
-                    </property>
-                    <property name="text">
-                        <string>3:</string>
-                    </property>
-                </widget>
-                <widget class="KColorButton" row="3" column="3">
-                    <property name="name">
-                        <cstring>kcfg_NickColor4</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="4">
-                    <property name="name">
-                        <cstring>textLabel8</cstring>
-                    </property>
-                    <property name="text">
-                        <string>4:</string>
-                    </property>
-                </widget>
-                <widget class="KColorButton" row="1" column="5" rowspan="2" colspan="1">
-                    <property name="name">
-                        <cstring>kcfg_NickColor5</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="4">
-                    <property name="name">
-                        <cstring>textLabel9</cstring>
-                    </property>
-                    <property name="text">
-                        <string>5:</string>
-                    </property>
-                </widget>
-                <widget class="KColorButton" row="3" column="5">
-                    <property name="name">
-                        <cstring>kcfg_NickColor6</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="6">
-                    <property name="name">
-                        <cstring>textLabel10</cstring>
-                    </property>
-                    <property name="text">
-                        <string>6:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="6">
-                    <property name="name">
-                        <cstring>textLabel11</cstring>
-                    </property>
-                    <property name="text">
-                        <string>7:</string>
-                    </property>
-                </widget>
-                <widget class="KColorButton" row="3" column="7">
-                    <property name="name">
-                        <cstring>kcfg_NickColor8</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="2" column="0" rowspan="2" colspan="1">
-                    <property name="name">
-                        <cstring>textLabel5_2</cstring>
-                    </property>
-                    <property name="text">
-                        <string>1:</string>
-                    </property>
-                </widget>
-                <widget class="KColorButton" row="1" column="1">
-                    <property name="name">
-                        <cstring>kcfg_NickColor1</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>textLabel4_2</cstring>
-                    </property>
-                    <property name="text">
-                        <string>0:</string>
-                    </property>
-                </widget>
-                <widget class="KColorButton" row="3" column="1">
-                    <property name="name">
-                        <cstring>kcfg_NickColor2</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-            </grid>
+                <property name="geometry">
+                    <rect>
+                        <x>465</x>
+                        <y>22</y>
+                        <width>69</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string></string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel6</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>143</x>
+                        <y>22</y>
+                        <width>52</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>2:</string>
+                </property>
+            </widget>
+            <widget class="KColorButton">
+                <property name="name">
+                    <cstring>kcfg_NickColor3</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>201</x>
+                        <y>22</y>
+                        <width>69</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string></string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel7</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>143</x>
+                        <y>58</y>
+                        <width>52</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>3:</string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel8</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>276</x>
+                        <y>22</y>
+                        <width>51</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>4:</string>
+                </property>
+            </widget>
+            <widget class="KColorButton">
+                <property name="name">
+                    <cstring>kcfg_NickColor5</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>333</x>
+                        <y>25</y>
+                        <width>69</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string></string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel9</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>276</x>
+                        <y>58</y>
+                        <width>51</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>5:</string>
+                </property>
+            </widget>
+            <widget class="KColorButton">
+                <property name="name">
+                    <cstring>kcfg_NickColor6</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>333</x>
+                        <y>58</y>
+                        <width>69</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string></string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel10</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>408</x>
+                        <y>22</y>
+                        <width>51</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>6:</string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel11</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>408</x>
+                        <y>58</y>
+                        <width>51</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>7:</string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel5_2</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>11</x>
+                        <y>52</y>
+                        <width>51</width>
+                        <height>30</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>1:</string>
+                </property>
+            </widget>
+            <widget class="KColorButton">
+                <property name="name">
+                    <cstring>kcfg_NickColor1</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>68</x>
+                        <y>22</y>
+                        <width>69</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string></string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel4_2</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>11</x>
+                        <y>22</y>
+                        <width>51</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>0:</string>
+                </property>
+            </widget>
+            <widget class="KColorButton">
+                <property name="name">
+                    <cstring>kcfg_NickColor4</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>201</x>
+                        <y>58</y>
+                        <width>69</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string></string>
+                </property>
+            </widget>
+            <widget class="KColorButton">
+                <property name="name">
+                    <cstring>kcfg_NickColor2</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>68</x>
+                        <y>58</y>
+                        <width>69</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string></string>
+                </property>
+            </widget>
+            <widget class="KColorButton">
+                <property name="name">
+                    <cstring>kcfg_NickColor8</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>465</x>
+                        <y>58</y>
+                        <width>69</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string></string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel1_3</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>10</x>
+                        <y>100</y>
+                        <width>100</width>
+                        <height>21</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>&amp;Own nick color</string>
+                </property>
+                <property name="buddy" stdset="0">
+                    <cstring>kcfg_NickColor9</cstring>
+                </property>
+            </widget>
+            <widget class="KColorButton">
+                <property name="name">
+                    <cstring>kcfg_NickColor9</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>120</x>
+                        <y>100</y>
+                        <width>80</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string></string>
+                </property>
+            </widget>
         </widget>
         <widget class="QCheckBox">
             <property name="name">
@@ -686,6 +844,7 @@ the Free Software Foundation; either version 2 of the License, or
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
+    <includehint>kcolorbutton.h</includehint>
     <includehint>kcolorbutton.h</includehint>
     <includehint>kcolorbutton.h</includehint>
     <includehint>kcolorbutton.h</includehint>

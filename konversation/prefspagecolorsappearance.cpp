@@ -53,6 +53,9 @@ PrefsPageColorsAppearance::PrefsPageColorsAppearance(QFrame* newParent,Preferenc
   kcfg_NickColor6->setColor(colorList[5]);
   kcfg_NickColor7->setColor(colorList[6]);
   kcfg_NickColor8->setColor(colorList[7]);
+  if(colorList[8].isEmpty())
+    colorList[8]="#000000";
+  kcfg_NickColor9->setColor(colorList[8]);
 
   // IRC Color Codes
   QStringList ircColorList = preferences->getIRCColorList();
@@ -105,6 +108,7 @@ void PrefsPageColorsAppearance::applyPreferences()
   nickColorList.append(kcfg_NickColor6->color().name());
   nickColorList.append(kcfg_NickColor7->color().name());
   nickColorList.append(kcfg_NickColor8->color().name());
+  nickColorList.append(kcfg_NickColor9->color().name());
   preferences->setNickColorList(nickColorList);
   
 
