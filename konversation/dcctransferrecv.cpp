@@ -61,7 +61,14 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
             << "DccTransferRecv::DccTransferRecv(): Sanitised Filename: " << m_fileName << endl
             << "DccTransferRecv::DccTransferRecv(): FileSize: " << fileSize << endl
             << "DccTransferRecv::DccTransferRecv(): Partner Address: " << partnerIp << ":" << partnerPort << endl;
-    
+  
+  // TODO: should we support it?
+  if ( fileSize == 0 )
+  {
+    failed( i18n( "Unsupported negotiation (filesize=0)" ) );
+    return;
+  }
+  
   m_fileSize = fileSize;
   m_partnerIp = partnerIp;
   m_partnerPort = partnerPort;
@@ -113,6 +120,25 @@ DccTransferRecv::~DccTransferRecv()
   cleanUp();
 }
 
+void DccTransferRecv::cleanUp()
+{
+  kdDebug() << "DccTransferRecv::cleanUp()" << endl;
+  
+  stopConnectionTimer();
+  finishTransferMeter();
+  if ( m_recvSocket )
+  {
+    m_recvSocket->close();
+    m_recvSocket = 0;  // the instance will be deleted automatically by its parent
+  }
+  if ( m_writeCacheHandler )
+  {
+    m_writeCacheHandler->closeNow();
+    m_writeCacheHandler->deleteLater();
+    m_writeCacheHandler = 0;
+  }
+}
+
 // just for convenience
 void DccTransferRecv::failed( const QString& errorMessage )
 {
@@ -131,25 +157,6 @@ void DccTransferRecv::abort()  // public slot
   updateView();
   cleanUp();
   emit done( m_fileURL.path(), Aborted );
-}
-
-void DccTransferRecv::cleanUp()
-{
-  kdDebug() << "DccTransferRecv::cleanUp()" << endl;
-  
-  stopConnectionTimer();
-  finishTransferMeter();
-  if ( m_recvSocket )
-  {
-    m_recvSocket->close();
-    m_recvSocket = 0;  // the instance will be deleted automatically by its parent
-  }
-  if ( m_writeCacheHandler )
-  {
-    m_writeCacheHandler->closeNow();
-    m_writeCacheHandler->deleteLater();
-    m_writeCacheHandler = 0;
-  }
 }
 
 void DccTransferRecv::start()  // public slot
@@ -433,8 +440,14 @@ void DccTransferRecv::sendAck()  // slot
   m_recvSocket->writeBlock( (char*)&pos, 4 );
   if ( m_transferringPosition == (KIO::fileoffset_t)m_fileSize )
   {
-    kdDebug() << "DccTransferRecv::sendAck(): done." << endl;
+    kdDebug() << "DccTransferRecv::sendAck(): Sent final ACK." << endl;
+    m_recvSocket->enableRead( false );
     m_writeCacheHandler->close();  // WriteCacheHandler will send the signal done()
+  }
+  else if ( m_transferringPosition > (KIO::fileoffset_t)m_fileSize )
+  {
+    kdDebug() << "DccTransferRecv::sendAck(): wtf? the remote host sent larger data than expected: " << m_transferringPosition << endl;
+    failed( i18n( "Transferring error" ) );
   }
 }
 

@@ -102,6 +102,27 @@ DccTransferSend::~DccTransferSend()
   cleanUp();
 }
 
+void DccTransferSend::cleanUp()
+{
+  kdDebug() << "DccTransferSend::cleanUp()" << endl;
+  stopConnectionTimer();
+  finishTransferMeter();
+  if ( !m_tmpFile.isEmpty() )
+    KIO::NetAccess::removeTempFile( m_tmpFile );
+  m_tmpFile = QString::null;
+  m_file.close();
+  if ( m_sendSocket )
+  {
+    m_sendSocket->close();
+    m_sendSocket = 0;  // the instance will be deleted automatically by its parent
+  }
+  if ( m_serverSocket )
+  {
+    m_serverSocket->close();
+    m_serverSocket = 0;  // the instance will be deleted automatically by its parent
+  }
+}
+
 // just for convenience
 void DccTransferSend::failed( const QString& errorMessage )
 {
@@ -110,6 +131,16 @@ void DccTransferSend::failed( const QString& errorMessage )
   cleanUp();
   emit done( m_fileURL.path(), Failed, errorMessage );
   openDetailDialog();
+}
+
+void DccTransferSend::abort()  // public slot
+{
+  kdDebug() << "DccTransferSend::abort()" << endl;
+  
+  setStatus( Aborted );
+  updateView();
+  cleanUp();
+  emit done( m_fileURL.path(), Aborted );
 }
 
 void DccTransferSend::start()  // public slot
@@ -126,7 +157,7 @@ void DccTransferSend::start()  // public slot
   if ( KonversationApplication::preferences.getDccSpecificSendPorts() )  // user is specifing ports
   {
     // set port
-    bool found = false;  // wheter succeeded to set port
+    bool found = false;  // whether succeeded to set port
     unsigned long port = KonversationApplication::preferences.getDccSendPortsFirst();
     for ( ; port <= KonversationApplication::preferences.getDccSendPortsLast() ; ++port )
     {
@@ -175,44 +206,22 @@ void DccTransferSend::start()  // public slot
   emit sendReady( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_ownPort, m_fileSize );
 }
 
-void DccTransferSend::abort()  // public slot
+bool DccTransferSend::setResume( unsigned long position )  // public
 {
-  kdDebug() << "DccTransferSend::abort()" << endl;
+  kdDebug() << "DccTransferSend::setResume(): position=" << position << endl;
   
-  setStatus( Aborted );
-  updateView();
-  cleanUp();
-  emit done( m_fileURL.path(), Aborted );
-}
-
-void DccTransferSend::setResume( unsigned long position )  // public
-{
-  kdDebug() << "DccTransferSend::setResume( position=" << position << " )" << endl;
-  
-  m_resumed = true;
-  m_transferringPosition = position;
-  
-  updateView();
-}
-
-void DccTransferSend::cleanUp()
-{
-  kdDebug() << "DccTransferSend::cleanUp()" << endl;
-  stopConnectionTimer();
-  finishTransferMeter();
-  if ( !m_tmpFile.isEmpty() )
-    KIO::NetAccess::removeTempFile( m_tmpFile );
-  m_tmpFile = QString::null;
-  m_file.close();
-  if ( m_sendSocket )
+  if ( position < m_fileSize )
   {
-    m_sendSocket->close();
-    m_sendSocket = 0;  // the instance will be deleted automatically by its parent
+    m_resumed = true;
+    m_transferringPosition = position;
+    updateView();
+    return true;
   }
-  if ( m_serverSocket )
+  else
   {
-    m_serverSocket->close();
-    m_serverSocket = 0;  // the instance will be deleted automatically by its parent
+    kdDebug() << "DccTransferSend::setResume(): Invalid position. (greater than filesize=" << m_fileSize << ")" << endl;
+    updateView();
+    return false;  
   }
 }
 
@@ -271,13 +280,19 @@ void DccTransferSend::writeData()  // slot
   {
     m_sendSocket->writeBlock( m_buffer, actual );
     m_transferringPosition += actual;
+    if ( (KIO::fileoffset_t)m_fileSize <= m_transferringPosition )
+    {
+      Q_ASSERT( (KIO::fileoffset_t)m_fileSize == m_transferringPosition );
+      kdDebug() << "DccTransferSend::writeData(): Done." << endl;
+      m_sendSocket->enableWrite( false );  // there is no need to call this function anymore
+    }
   }
 }
 
 void DccTransferSend::getAck()  // slot
 {
   //kdDebug() << "DccTransferSend::getAck()" << endl;
-  if ( !m_fastSend )
+  if ( !m_fastSend && m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
   {
     m_sendSocket->enableWrite( true );
     m_sendSocket->enableRead( false );
@@ -289,7 +304,7 @@ void DccTransferSend::getAck()  // slot
     pos = intel( pos );
     if ( pos == m_fileSize )
     {
-      kdDebug() << "DccTransferSend::getAck(): Done." << endl;
+      kdDebug() << "DccTransferSend::getAck(): Received final ACK." << endl;
       setStatus( Done );
       updateView();
       cleanUp();

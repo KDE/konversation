@@ -1757,12 +1757,18 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
   if(dccTransfer && dccTransfer->getStatus() == DccTransfer::WaitingRemote)
   {
     QString fileName=dccTransfer->getFileName();
-    appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(recipient).arg(dccArguments[2]));
-    dccTransfer->setResume(dccArguments[2].toULong());
-    Konversation::OutputFilterResult result = outputFilter->acceptRequest(recipient,
-      fileName, dccArguments[1], dccArguments[2].toUInt());
-    queue(result.toServer);
-    appendStatusMessage(result.typeString, result.output);
+    if(dccTransfer->setResume(dccArguments[2].toULong()))
+    {
+      appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(recipient).arg(dccArguments[2]));
+      Konversation::OutputFilterResult result = outputFilter->acceptRequest(recipient,
+        fileName, dccArguments[1], dccArguments[2].toUInt());
+      queue(result.toServer);
+      appendStatusMessage(result.typeString, result.output);
+    }
+    else
+    {
+      appendStatusMessage(i18n("Error"),i18n("Received invalid resume request for file \"%1\" (position %2) from %3.").arg(fileName).arg(dccArguments[2]).arg(recipient));
+    }
   }
   else
   {
