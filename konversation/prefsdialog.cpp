@@ -29,6 +29,7 @@
 #include "prefspagechatwinbehavior.h"
 #include "prefspagechatwinappearance.h"
 #include "prefspagecolorsappearance.h"
+#include "prefspageconnectionbehavior.h"
 
 PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
              KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
@@ -48,8 +49,10 @@ PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
     QString::null, SmallIcon("iconthemes"));
 
   setFolderIcon(QStringList::split(',', i18n("Behavior")), SmallIcon("configure"));
-  QWidget* generalBehaviorPane = addPage(QStringList::split(',', i18n("Behavior") + "," + i18n("General")),
+  QWidget* generalBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("General")),
     QString::null,SmallIcon("exec"));
+  QWidget* connectionBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Connection")),
+    QString::null,SmallIcon("connect_creating"));
   QWidget* chatWinBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Chat Window")),QString::null, SmallIcon("window_new"));
   QWidget* tabBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Tab Bar")),
     QString::null, SmallIcon("tab_new"));
@@ -82,6 +85,7 @@ PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
   PrefsPageColorsAppearance* colorsAppearancePage = new PrefsPageColorsAppearance(colorsAppearancePane, preferences);
 
   PrefsPageBehaviour* generalBehaviorPage = new PrefsPageBehaviour(generalBehaviorPane, preferences);
+  PrefsPageConnectionBehavior* connectionBehaviorPage = new PrefsPageConnectionBehavior(connectionBehaviorPane, preferences);
   PrefsPageChatWinBehavior* chatWinBehaviorPage = new PrefsPageChatWinBehavior(chatWinBehaviorPane, preferences);
   tabBehaviorPage = new PrefsPageTabBehavior(tabBehaviorPane, preferences);
   ignorePage = new PrefsPageIgnore(ignorePane, preferences);
@@ -111,6 +115,7 @@ PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
   connect(this, SIGNAL(applyPreferences()), themesPage, SLOT(applyPreferences()));
 
   connect(this, SIGNAL(applyPreferences()), generalBehaviorPage, SLOT(applyPreferences()));
+  connect(this, SIGNAL(applyPreferences()), connectionBehaviorPage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), chatWinBehaviorPage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), tabBehaviorPage, SLOT(applyPreferences()));
   connect(this, SIGNAL(applyPreferences()), buttonsPage, SLOT(applyPreferences()));

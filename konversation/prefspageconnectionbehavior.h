@@ -6,23 +6,21 @@
 */
 
 /*
-  The preferences panel that holds the behaviour settings
-  copyright: (C) 2002 by Dario Abatianni
-             (C) 2004 by Peter Simonsson
+  copyright: (C) 2005 by Peter Simonsson <psn@linux.se>
 */
-#ifndef PREFSPAGEBEHAVIOUR_H
-#define PREFSPAGEBEHAVIOUR_H
+#ifndef PREFSPAGECONNECTIONBEHAVIOR_H
+#define PREFSPAGECONNECTIONBEHAVIOR_H
 
-#include "generalbehavior_preferences.h"
+#include "connectionbehavior_preferences.h"
 
 class Preferences;
 
-class PrefsPageBehaviour : public GeneralBehavior_Config
+class PrefsPageConnectionBehavior : public ConnectionBehavior_Config
 {
   Q_OBJECT
   public:
-    PrefsPageBehaviour(QWidget* newParent, Preferences* newPreferences);
-    ~PrefsPageBehaviour();
+    PrefsPageConnectionBehavior(QWidget* newParent, Preferences* newPreferences);
+    ~PrefsPageConnectionBehavior();
 
   public slots:
     void applyPreferences();
