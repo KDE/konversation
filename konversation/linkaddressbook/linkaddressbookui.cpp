@@ -56,10 +56,10 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
 
   enableButtonOK(false);
   setHelp("linkaddressbook");
-	m_addressBook = Konversation::Addressbook::self()->getAddressBook();
+  m_addressBook = Konversation::Addressbook::self()->getAddressBook();
 
-	// Addressee validation connections
-	connect( m_mainWidget->addAddresseeButton, SIGNAL( clicked() ), SLOT( slotAddAddresseeClicked() ) );
+  // Addressee validation connections
+  connect( m_mainWidget->addAddresseeButton, SIGNAL( clicked() ), SLOT( slotAddAddresseeClicked() ) );
   connect( m_mainWidget->addresseeListView, SIGNAL( clicked(QListViewItem * ) ),
 			SLOT( slotAddresseeListClicked( QListViewItem * ) ) );
   connect( m_mainWidget->addresseeListView, SIGNAL( selectionChanged( QListViewItem * ) ),
