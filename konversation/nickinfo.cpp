@@ -177,7 +177,9 @@ void NickInfo::refreshAddressee() {
     Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
   }
   m_addressee = addressee;
+
   emit nickInfoChanged();
+  m_owningServer->emitNickInfoChanged(this);
   
   if(!m_addressee.isEmpty())
     Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid());
