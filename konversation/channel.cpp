@@ -414,16 +414,7 @@ void Channel::popupCommand(int id)
 	      addressbook->associateNickAndUnassociateFromEveryoneElse(addr, (*it)->getNickname(), server->getServerName(), server->getServerGroup());
 	    }
           }
-	  if(addressbook->saveTicket()) {
-            //Nicks have changed.  Refresh.
-	    for(ChannelNickList::Iterator it=nickList.begin();it!=nickList.end();++it) {
-	      NickInfoPtr nickInfo = (*it)->getNickInfo();
-	      nickInfo->refreshAddressee();
-	      if(id == NickListView::AddressbookNew) {
-		if(!editAddressee(nickInfo->getAddressee().uid())) break;
-	      }
-	    }
-	  }
+	  addressbook->saveTicket();  //This will refresh the nicks automatically for us. At least, if it doesn't, it's a bug :)
         }
         break;
       }
@@ -434,7 +425,6 @@ void Channel::popupCommand(int id)
 	  NickInfoPtr nickInfo = (*it)->getNickInfo();
 	  LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, (*it)->getNickname(), server->getServerName(), server->getServerGroup(), nickInfo->getRealName());
 	  linkaddressbookui->show();
-	  nickInfo->refreshAddressee();
 	}
         break;
       }

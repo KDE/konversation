@@ -544,7 +544,6 @@ void NicksOnline::doCommand(int id)
       {
         LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, NULL, nickname, server->getServerName(), server->getServerGroup(), nickInfo->getRealName());
         linkaddressbookui->show();
-        nickInfo->refreshAddressee();
         break;
       }
   }
