@@ -21,6 +21,7 @@
 #include <kdebug.h>
 
 #include "konversationapplication.h"
+#include "server.h"
 #include "common.h"
 
 #include <kdeversion.h>
@@ -57,12 +58,23 @@ QSize TopicLabel::sizeHint() const
   return QSize(0, 0);
 }
 
+void TopicLabel::setServer(Server* server)
+{
+  m_server = server;
+}
+
 void TopicLabel::openLink(const QString& link)
 {
   if (!link.isEmpty())
   {
+    if(link.startsWith("#")) // channel link
+      {
+	QString channel(link);
+	channel.replace("##","#");
+	m_server->sendJoinCommand(channel);
+      }
     // Always use KDE default mailer.
-    if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || link.lower().startsWith("mailto:"))
+    else if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || link.lower().startsWith("mailto:"))
     {
       new KRun(KURL(link));
     }

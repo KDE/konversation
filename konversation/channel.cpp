@@ -323,6 +323,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
 void Channel::setServer(Server *server) {
   ChatWindow::setServer(server);
+  topicLine->setServer(server);
   refreshModeButtons();
 }
 

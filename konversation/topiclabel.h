@@ -14,6 +14,7 @@
 #include <kactivelabel.h>
 
 class QFontMetrics;
+class Server;
 
 namespace Konversation {
 
@@ -26,6 +27,7 @@ class TopicLabel : public KActiveLabel
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
+    void setServer(Server* server);
 
   public slots:
     virtual void openLink(const QString& link);
@@ -40,6 +42,7 @@ class TopicLabel : public KActiveLabel
 
   private:
     QString m_fullText;
+    Server* m_server;
 };
 
 };
