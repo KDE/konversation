@@ -3,19 +3,21 @@
 
 GROUP=""
 while read line; do {
-  NEWGROUP=$(echo "$line" | sed -n -e 's/.*setGroup.*\"\([^\"]*\)\".*/\1/p' )
+  NEWGROUP2=$(echo "$line" | sed -n -e 's/.*setGroup.*\"\([^\"]*\)\".*/\1/p' )
   ENTRY=$(echo "$line" | sed -n -e 's/.*writeEntry.*\"\([^\"]*\)\".*/\1/p' )
-  if [[ -n "$NEWGROUP" ]];  then
-    
-    if [[ -n "$GROUP" ]]; then
-      echo "  </group>"
-    fi
-    
-    GROUP="$NEWGROUP"
-    
-    echo "  <group name=\"$GROUP\">"
-  elif [[ -n "$ENTRY" ]] ; then 
 
+  if [[ -n "${NEWGROUP2}" ]]; then
+    NEWGROUP="${NEWGROUP2}"
+  elif [[ -n "$ENTRY" ]] ; then 
+    if [[ -n "$NEWGROUP" ]] ; then
+      if [[ -n "$GROUP" ]]; then
+        echo "  </group>"
+      fi
+      GROUP="$NEWGROUP"
+      NEWGROUP=""
+      echo "  <group name=\"$GROUP\">"
+    fi
+     
     PREFERENCESENTRY=$(echo "$line" | sed -n -e 's/.*preferences.\(.*\)().*/\1/p' )
     if [[ -z "$PREFERENCESENTRY" ]] ; then 
       echo "<!--  Could not understand:  \"$line\" -->"
