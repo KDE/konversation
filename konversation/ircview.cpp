@@ -589,9 +589,9 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
   QString line;
   
   if(basicDirection(message) == QChar::DirR) {
-    line = "<p><font color=\"#"+backlogColor+"\">%1 %2 %3</font></p>\n";
+    line = "<p><font color=\"#" + backlogColor + "\">%2 %1 %3</font></p>\n";
   } else {
-    line = "<p><font color=\"#"+backlogColor+"\">%2 %1 %3</font></p>\n";
+    line = "<p><font color=\"#" + backlogColor + "\">%1 %2 %3</font></p>\n";
   }
   
   line = line.arg(time, first, filter(message, backlogColor, NULL, false));
