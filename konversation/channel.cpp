@@ -38,7 +38,6 @@
 #include "server.h"
 #include "nick.h"
 #include "nicklistview.h"
-#include "nickchangedialog.h"
 #include "quickbutton.h"
 #include "modebutton.h"
 #include "topiccombobox.h"

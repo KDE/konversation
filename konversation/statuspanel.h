@@ -24,6 +24,7 @@
 class QPushButton;
 class QCheckBox;
 class QLabel;
+class QComboBox;
 
 class IRCInput;
 class NickChangeDialog;
@@ -59,9 +60,8 @@ class StatusPanel : public ChatWindow
     void sendStatusText(const QString& line);
     // connected to IRCInput::textPasted() - used for large/multiline pastes
     void textPasted(QString text);
-    void openNickChangeDialog();
     void changeNickname(const QString& newNickname);
-    void closeNickChangeDialog(QSize newSize);
+    void nicknameComboboxActivated(int index);
 
   protected:
     bool awayChanged;
@@ -69,11 +69,10 @@ class StatusPanel : public ChatWindow
 
     void showEvent(QShowEvent* event);
 
-    QPushButton* nicknameButton;
+    QComboBox* nicknameCombobox;
     QLabel* awayLabel;
     IRCInput* statusInput;
     QCheckBox* logCheckBox;
-    NickChangeDialog* nickChangeDialog;
 };
 
 #endif

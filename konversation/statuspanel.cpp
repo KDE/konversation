@@ -13,6 +13,7 @@
 */
 
 #include <qpushbutton.h>
+#include <qcombobox.h>
 #include <qlabel.h>
 
 #include <kdebug.h>
@@ -24,7 +25,6 @@
 #include "ircinput.h"
 #include "ircview.h"
 #include "server.h"
-#include "nickchangedialog.h"
 
 StatusPanel::StatusPanel(QWidget* parent) :
               ChatWindow(parent)
@@ -33,8 +33,6 @@ StatusPanel::StatusPanel(QWidget* parent) :
 
   awayChanged=false;
   awayState=false;
-  
-  nickChangeDialog = 0;
 
   // set up text view, will automatically take care of logging
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer()
@@ -43,7 +41,8 @@ StatusPanel::StatusPanel(QWidget* parent) :
   commandLineBox->setSpacing(spacing());
   commandLineBox->setMargin(0);
 
-  nicknameButton=new QPushButton(i18n("Nickname"),commandLineBox);
+  nicknameCombobox=new QComboBox(commandLineBox);
+  nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
   awayLabel=new QLabel(i18n("(away)"),commandLineBox);
   awayLabel->hide();
   statusInput=new IRCInput(commandLineBox);
@@ -63,8 +62,8 @@ StatusPanel::StatusPanel(QWidget* parent) :
   connect(statusInput,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
   connect(statusInput,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
 
-  connect(nicknameButton,SIGNAL (clicked()),this,SLOT (openNickChangeDialog()) );
-  
+  connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxActivated(int)));
+
   updateFonts();
 }
 
@@ -74,7 +73,7 @@ StatusPanel::~StatusPanel()
 
 void StatusPanel::setNickname(const QString& newNickname)
 {
-  nicknameButton->setText(newNickname);
+  nicknameCombobox->setCurrentText(newNickname);
 }
 
 void StatusPanel::adjustFocus()
@@ -156,7 +155,7 @@ void StatusPanel::updateFonts()
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
                                    KonversationApplication::preferences.getBackgroundImageName());
-  nicknameButton->setFont(KonversationApplication::preferences.getTextFont());
+  nicknameCombobox->setFont(KonversationApplication::preferences.getTextFont());
 }
 
 void StatusPanel::sendFileMenu()
@@ -215,18 +214,9 @@ void StatusPanel::closeYourself()
   }
 }
 
-void StatusPanel::openNickChangeDialog()
+void StatusPanel::nicknameComboboxActivated(int index)
 {
-  if(!nickChangeDialog)
-  {
-    nickChangeDialog=new NickChangeDialog(this,server->getNickname(),
-                                          identity.getNicknameList(),
-                                          KonversationApplication::preferences.getNicknameSize());
-    connect(nickChangeDialog,SIGNAL (closeDialog(QSize)),this,SLOT (closeNickChangeDialog(QSize)) );
-    connect(nickChangeDialog,SIGNAL (newNickname(const QString&)),this,SLOT (changeNickname(const QString&)) );
-  }
-
-  nickChangeDialog->show();
+  changeNickname(nicknameCombobox->currentText());
 }
 
 void StatusPanel::changeNickname(const QString& newNickname)
@@ -234,13 +224,5 @@ void StatusPanel::changeNickname(const QString& newNickname)
   server->queue("NICK "+newNickname);
 }
 
-void StatusPanel::closeNickChangeDialog(QSize newSize)
-{
-  KonversationApplication::preferences.setNicknameSize(newSize);
-  emit prefsChanged();
-
-  delete nickChangeDialog;
-  nickChangeDialog=0;
-}
 
 #include "statuspanel.moc"
