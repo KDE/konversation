@@ -1,6 +1,7 @@
 Changes from 0.16 to 0.17
 - Add an option to hide realnames in nicklist
 - Show away users as disabled ala Xchat
+- Remove sort by away status
 
 Changes from 0.15 to 0.16
 - Dropping URLs onto nick on nicklist or onto query initiates DCC send

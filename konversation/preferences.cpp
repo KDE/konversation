@@ -187,8 +187,7 @@ Preferences::Preferences()
   setOpValue(4);
   setHalfopValue(8);
   setVoiceValue(16);
-  setAwayValue(32);
-  setNoRightsValue(64);
+  setNoRightsValue(32);
 
   setSortCaseInsensitive(true);
   setSortByStatus(false);
@@ -855,7 +854,6 @@ void Preferences::setOwnerValue(int value)           { ownerValue=value; }
 void Preferences::setOpValue(int value)              { opValue=value; }
 void Preferences::setHalfopValue(int value)          { halfopValue=value; }
 void Preferences::setVoiceValue(int value)           { voiceValue=value; }
-void Preferences::setAwayValue(int value)            { awayValue=value; }
 void Preferences::setNoRightsValue(int value)        { noRightsValue=value; }
 
 const int Preferences::getAdminValue()                     { return adminValue; }
@@ -863,7 +861,6 @@ const int Preferences::getOwnerValue()                     { return ownerValue; 
 const int Preferences::getOpValue()                        { return opValue; }
 const int Preferences::getHalfopValue()                    { return halfopValue; }
 const int Preferences::getVoiceValue()                     { return voiceValue; }
-const int Preferences::getAwayValue()                      { return awayValue; }
 const int Preferences::getNoRightsValue()                  { return noRightsValue; }
 
 void Preferences::setSortCaseInsensitive(bool state) { sortCaseInsensitive=state; }

@@ -188,7 +188,6 @@ void NickListViewItem::paintCell(QPainter * p, const QColorGroup & cg, int colum
 
 int NickListViewItem::getFlags() const
 {
-  NickInfo* nickInfo = nick->getNickInfo();
   int flags;
 
   if(nick->isAdmin()) {
@@ -201,8 +200,6 @@ int NickListViewItem::getFlags() const
     flags = KonversationApplication::preferences.getHalfopValue();
   } else if(nick->hasVoice()) {
     flags = KonversationApplication::preferences.getVoiceValue();
-  } else if(nickInfo->isAway()) {
-    flags = KonversationApplication::preferences.getAwayValue();
   } else {
     flags = KonversationApplication::preferences.getNoRightsValue();
   }

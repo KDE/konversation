@@ -175,8 +175,6 @@ class Preferences : public QObject
     void setHalfopValue(int value);
     const int getVoiceValue();
     void setVoiceValue(int value);
-    const int getAwayValue();
-    void setAwayValue(int value); // ends here
     const int getNoRightsValue();
     void setNoRightsValue(int value);
 

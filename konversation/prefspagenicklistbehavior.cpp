@@ -34,15 +34,14 @@ PrefsPageNicklistBehavior::PrefsPageNicklistBehavior(QWidget* newParent, Prefere
   kcfg_SortOrder->header()->hide();
   kcfg_SortOrder->setSorting(-1);
 
-  for(int index = 64; index != 0; index >>= 1)
+  for(int index = 32; index != 0; index >>= 1)
   {
     if(preferences->getNoRightsValue() == index) new ValueListViewItem(0, kcfg_SortOrder, i18n("Normal Users"));
-    if(preferences->getAwayValue() == index)     new ValueListViewItem(1, kcfg_SortOrder, i18n("Away Users"));
-    if(preferences->getVoiceValue() == index)    new ValueListViewItem(2, kcfg_SortOrder, i18n("Voice (+v)"));
-    if(preferences->getHalfopValue() == index)   new ValueListViewItem(3, kcfg_SortOrder, i18n("Halfops (+h)"));
-    if(preferences->getOpValue() == index)       new ValueListViewItem(4, kcfg_SortOrder, i18n("Operators (+o)"));
-    if(preferences->getOwnerValue() == index)    new ValueListViewItem(5, kcfg_SortOrder, i18n("Channel Owners"));
-    if(preferences->getAdminValue() == index)    new ValueListViewItem(6, kcfg_SortOrder, i18n("Channel Admins"));
+    if(preferences->getVoiceValue() == index)    new ValueListViewItem(1, kcfg_SortOrder, i18n("Voice (+v)"));
+    if(preferences->getHalfopValue() == index)   new ValueListViewItem(2, kcfg_SortOrder, i18n("Halfops (+h)"));
+    if(preferences->getOpValue() == index)       new ValueListViewItem(3, kcfg_SortOrder, i18n("Operators (+o)"));
+    if(preferences->getOwnerValue() == index)    new ValueListViewItem(4, kcfg_SortOrder, i18n("Channel Owners"));
+    if(preferences->getAdminValue() == index)    new ValueListViewItem(5, kcfg_SortOrder, i18n("Channel Admins"));
   }
 
   kcfg_UpButton->setIconSet(SmallIconSet("up"));
@@ -61,18 +60,17 @@ void PrefsPageNicklistBehavior::applyPreferences()
 
   int flag = 1;
 
-  for(int index = 0; index < 7; index++)
+  for(int index = 0; index < 6; index++)
   {
     ValueListViewItem* item = static_cast<ValueListViewItem*>(kcfg_SortOrder->itemAtIndex(index));
     int value = item->getValue();
 
     if(value == 0) preferences->setNoRightsValue(flag);
-    else if(value == 1) preferences->setAwayValue(flag);
-    else if(value == 2) preferences->setVoiceValue(flag);
-    else if(value == 3) preferences->setHalfopValue(flag);
-    else if(value == 4) preferences->setOpValue(flag);
-    else if(value == 5) preferences->setOwnerValue(flag);
-    else if(value == 6) preferences->setAdminValue(flag);
+    else if(value == 1) preferences->setVoiceValue(flag);
+    else if(value == 2) preferences->setHalfopValue(flag);
+    else if(value == 3) preferences->setOpValue(flag);
+    else if(value == 4) preferences->setOwnerValue(flag);
+    else if(value == 5) preferences->setAdminValue(flag);
 
     flag <<= 1;
   }
