@@ -97,6 +97,9 @@ class KonversationApplication : public KApplication
     Konversation::Sound* sound();
     
     Images* images();
+
+    /* Updates all nick icons according to new theme */
+    void updateNickIcons();
     
     // Returns list of pointers to Servers.
     const QPtrList<Server> getServerList();

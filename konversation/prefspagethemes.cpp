@@ -36,6 +36,7 @@
 
 #include "prefspagethemes.h"
 #include "preferences.h"
+#include "images.h"
 #include "common.h"
 #include "konversationapplication.h"
 
@@ -111,6 +112,8 @@ void PrefsPageThemes::applyPreferences()
       theme = theme.section('/',-2,-2);
       kdDebug() << "Theme :" << theme << endl;
       preferences->setIconTheme(theme);
+      KonversationApplication::instance()->images()->initializeNickIcons();
+      KonversationApplication::instance()->updateNickIcons();
     }
 }
 

@@ -36,6 +36,8 @@ class NickListView : public KListView
     NickListView(QWidget* parent, Channel *chan);
     ~NickListView();
 
+    void refresh();
+
     enum PopupIDs
     {
       ModesSub,GiveOp,TakeOp,GiveVoice,TakeVoice,

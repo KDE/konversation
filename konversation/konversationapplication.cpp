@@ -33,6 +33,8 @@
 #include "quickconnectdialog.h"
 #include "servergroupsettings.h"
 #include "serversettings.h"
+#include "channel.h"
+#include "nicklistview.h"
 #include "images.h"
 
 // include static variables
@@ -1206,6 +1208,23 @@ void KonversationApplication::appearanceChanged()
 
   mainWindow->updateTabPlacement();
   mainWindow->setShowTabBarCloseButton(preferences.getShowTabBarCloseButton());
+}
+
+void KonversationApplication::updateNickIcons()
+{
+  Server* lookServer=serverList.first();
+
+  while(lookServer)
+    {
+      QPtrList<Channel> channelList = lookServer->getChannelList();
+      Channel* channel=channelList.first();
+      while(channel)
+	{
+	  channel->getNickListView()->refresh();
+	  channel=channelList.next();
+	}
+      lookServer=serverList.next();
+    }
 }
 
 // FIXME: use KURL maybe?

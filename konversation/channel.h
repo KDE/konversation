@@ -126,6 +126,8 @@ class Channel : public ChatWindow
     virtual QString getChannelEncoding();
     virtual QString getChannelEncodingDefaultDesc();
 
+    NickListView* getNickListView() const { return nicknameListView; }
+
     int numberOfNicks() const { return nicks; }
     int numberOfOps() const { return ops; }
     

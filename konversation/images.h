@@ -52,10 +52,10 @@ class Images
     QIconSet getYellowLed(bool on) const;
 
     QPixmap getNickIcon(NickPrivilege privilege,bool isAway=false) const;
+    void initializeNickIcons();
 
   protected:
     void initializeLeds();
-    void initializeNickIcons();
     
     QIconSet redLedOn;
     QIconSet redLedOff;

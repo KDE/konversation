@@ -23,6 +23,7 @@
 
 #include "konversationapplication.h"
 #include "nicklistview.h"
+#include "nicklistviewitem.h"
 #include "linkaddressbook/addressbook.h"
 
 NickListView::NickListView(QWidget* parent, Channel *chan) :
@@ -135,6 +136,17 @@ NickListView::~NickListView()
 {
 }
 
+void NickListView::refresh()
+{
+  QPtrList<QListViewItem> nicklist;
+  QListViewItemIterator it(this);
+
+  while (it.current()) 
+    {
+      (static_cast<NickListViewItem*>(it.current()))->refresh();
+      ++it;
+    }
+}
 void NickListView::contextMenuEvent(QContextMenuEvent* ce)
 {
   ce->accept();

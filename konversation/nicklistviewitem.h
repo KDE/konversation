@@ -41,8 +41,7 @@ class NickListViewItem : public QObject, public KListViewItem
     virtual int compare(QListViewItem* item,int col,bool ascending) const;
     Nick *getNick();
 
-  protected slots:
-    //We will refresh ourselves, so make it protected.
+  public slots:
     void refresh();
   
   protected:

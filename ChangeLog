@@ -1,5 +1,6 @@
 Changes from 0.15 to 0.16
 - You can now do SSL connections from Quick Connect Dialog
+- Nicklist Icon Themes
 
 Changes from 0.14 to 0.15
 - Ported socket code to KNetwork. Weird connection problems should be gone now

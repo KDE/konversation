@@ -270,6 +270,11 @@ class Server : public QObject
      */
     KABC::Addressee getOfflineNickAddressee(QString& nickname);
     
+    /**
+     * Returns a QPtrList of all channels
+     */
+    QPtrList<Channel> getChannelList() const { return channelList; }
+    
     /** Returns the time we have been away for.
      *  If we are not away, returns 00:00:00
      */
