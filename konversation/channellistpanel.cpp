@@ -260,42 +260,34 @@ void ChannelListPanel::addToChannelList(const QString& channel,int users,const Q
   setNumChannels(getNumChannels()+1);
   setNumUsers(getNumUsers()+users);
 
-  if (!updateTimer.isActive())
+  if(!updateTimer.isActive())
   {
-    updateTimer.start(500);
+    updateTimer.start(0);
+    channelListView->setUpdatesEnabled(false);
   }
 }
 
 void ChannelListPanel::updateDisplay()
 {
-  if(pendingChannels.count())
+  if(!pendingChannels.isEmpty())
   {
-    // stop list view from updating
-    channelListView->setUpdatesEnabled(false);
-    QStringList::iterator it;
-
-    for(it = pendingChannels.begin(); it != pendingChannels.end(); ++it)
-    {
-      // fetch next channel line
-      QString channelLine = (*it);
-      // split it up into the single parts we need
-      QString channel=channelLine.section(' ',0,0);
-      QString users=channelLine.section(' ',1,1);
-      QString topic=channelLine.section(' ',2);
-      ChannelListViewItem* item=new ChannelListViewItem(channelListView,channel,users,topic);
-      applyFilterToItem(item);
-    }
-
-    channelListView->setUpdatesEnabled(true);
-    channelListView->triggerUpdate();
-    // clear list of pending inserts
-    pendingChannels.clear();
-    // update display
-    updateUsersChannels();
+    // fetch next channel line
+    QString channelLine = pendingChannels.first();
+    // split it up into the single parts we need
+    QString channel = channelLine.section(' ',0,0);
+    QString users = channelLine.section(' ',1,1);
+    QString topic = channelLine.section(' ',2);
+    ChannelListViewItem* item = new ChannelListViewItem(channelListView, channel, users, topic);
+    applyFilterToItem(item);
+    pendingChannels.pop_front();
   }
-  else
+
+  if(pendingChannels.isEmpty())
   {
     updateTimer.stop();
+    updateUsersChannels();
+    channelListView->setUpdatesEnabled(true);
+    channelListView->triggerUpdate();
     applyFilter->setEnabled(true);
     refreshListButton->setEnabled(true);
   }

@@ -1279,11 +1279,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
       case RPL_LISTSTART:
         {
-          if(getAutomaticRequest()==0)
-          {
+          if(getAutomaticRequest()==0) {
             server->appendStatusMessage(i18n("List"),i18n("List of channels:"));
+          } else {
+            emit addChannelListPanel();
+            //kdDebug() << "Start of channel list... " << QTime::currentTime().toString() << endl;
           }
-          else emit addChannelListPanel();
           break;
         }
       case RPL_LIST:
@@ -1304,10 +1305,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       case RPL_LISTEND:
         {
           // was this an automatic request?
-          if(getAutomaticRequest()==0)
+          if(getAutomaticRequest()==0) {
             server->appendStatusMessage(i18n("List"),i18n("End of channel list."));
-          else
+          } else {
             setAutomaticRequest(false);
+            //kdDebug() << "End of channel list... " << QTime::currentTime().toString() << endl;
+          }
 
           break;
         }
