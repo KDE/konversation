@@ -150,6 +150,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   tray = new TrayIcon(this);
   connect(this, SIGNAL(startNotification(QWidget*)), tray, SLOT(startNotification(QWidget*)));
   connect(this, SIGNAL(endNotification(QWidget*)), tray, SLOT(endNotification(QWidget*)));
+  connect(tray, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
 
   // decide whether to show the tray icon or not
   updateTrayIcon();
