@@ -152,16 +152,10 @@ void SSLSocket::showSSLInfoDialog()
             sslCert->chain().setChain( newChainList );
 		    
         sslInfoDlg->setCertState( m_sslCertErrors );
-        sslInfoDlg->setup( sslCert,
-                           remoteHost,
-                           url,
-                           kssl->connectionInfo().getCipher(),
-                           kssl->connectionInfo().getCipherDescription(),
-                           kssl->connectionInfo().getCipherVersion(),
-                           kssl->connectionInfo().getCipherUsedBits(),
-                           kssl->connectionInfo().getCipherBits(),
-                           KSSLCertificate::KSSLValidation(m_sslCertState)
-            );
+        sslInfoDlg->setup( *kssl,
+                           (const QString&) remoteHost,
+                           (const QString&) url
+                           );
 
         sslInfoDlg->exec();
     }
