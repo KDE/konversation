@@ -70,10 +70,10 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   codecList->insertStringList(encodings);
 
   // find actual encoding and set combo box accordingly
-  QString actualEncoding="( "+preferences->getCodec()+" )";
+  QString actualEncoding="( "+preferences->getCodec().lower()+" )";
   for(unsigned int index=0;index<encodings.count();index++)
   {
-    if(encodings[index].find(actualEncoding)!=-1)
+    if(encodings[index].lower().find(actualEncoding)!=-1)
     {
       codecList->setCurrentItem(index);
       break;
