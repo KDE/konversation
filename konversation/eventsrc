@@ -4,12 +4,16 @@ Comment=Konversation
 
 [message]
 Name=New message
+Name[sv]=Nytt meddelande
 Comment=New message arrived in a channel
+Comment[sv]=Nytt meddelande anlände i en kanal
 default_presentation=0
 
 [nick]
 Name=Nick written
+Name[sv]=Något skrivet till smeknamnet
 Comment=Someone wrote your nick in a message
+Comment[sv]=Någon skrev ett meddelande till ditt smeknamn
 default_presentation=0
 
 [nickchange]
@@ -19,12 +23,16 @@ default_presentation=0
 
 [dcc_incomming]
 Name=Incomming file
+Name[sv]=Inkommande fil
 Comment=Someone wants to transmit a file to you over DCC
+Comment[sv]=Någon vill skicka en fil till dig via direktkommunikation
 default_prentation=0
 
 [join]
 Name=Nick joined channel
+Name[sv]=Någon med smeknamnet gick med i en kanal
 Comment=New nick joined a channel
+Comment[sv]=Någon med ett nytt smeknamn gick med i en kanal
 defalt_presentation=0
 
 [part]
