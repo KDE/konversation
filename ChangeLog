@@ -1,4 +1,5 @@
 Changes from 0.13 to 0.14
+- Measure away time and make it available via placeholder (%t)
 - (Very much) Improved OSD.
 - New application icons by luciash d' being <luci@sh.ground.cz>. Thanks!
 - Added /server command for connecting to a server.

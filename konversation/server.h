@@ -16,7 +16,6 @@
 #define SERVER_H
 
 #include <qtimer.h>
-#include <qdatetime.h>
 #include <qdict.h>
 #include <ksharedptr.h>
 
@@ -218,6 +217,8 @@ class Server : public QObject
     const NickInfoMap* getNicksOnline();
     // Returns a list of the nicks on the watch list that are offline.
     const NickInfoMap* getNicksOffline();
+    
+    QString awayTime();
 
   signals:
     void nicknameChanged(const QString&);
@@ -283,6 +284,9 @@ class Server : public QObject
     void executeMultiServerCommand(const QString& command, const QString& parameter);
     void reconnect();
     void connectToNewServer(const QString& server, const QString& port, const QString& password);
+    
+    void startAwayTimer();
+    void sendToAllChannels(const QString& text);
 
   protected slots:
     void ircServerConnectionSuccess();
@@ -308,7 +312,6 @@ class Server : public QObject
     void dccStatusChanged(const DccTransfer* item);
     void away();
     void unAway();
-    void sendToAllChannels(const QString& text);
     void scriptNotFound(const QString& name);
     void scriptExecutionError(const QString& name);
     void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
@@ -425,7 +428,6 @@ class Server : public QObject
     RawLog* rawLog;
     ChannelListPanel* channelListPanel;
 
-    QDateTime awayTime;
     bool isAway;
     bool alreadyConnected;
     bool rejoinChannels;
@@ -448,6 +450,8 @@ class Server : public QObject
     NickInfoMap nicknamesOffline;
     // List of nicks in Queries.
     NickInfoMap queryNicks;
+    
+    int m_awayTime;
 };
 
 #endif

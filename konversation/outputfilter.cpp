@@ -363,9 +363,6 @@ void OutputFilter::parseAway(const QString &reason)
 {
   if(reason.isEmpty())
   {
-    if(identity.getShowAwayMessage())
-      emit sendToAllChannels(identity.getReturnMessage());
-
     toServer="AWAY";
   }
   else

@@ -11,7 +11,6 @@ SHORT-TERM (URGENT):
 - /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
 - Add ETA counter for DCC transfers
 - Show / Hide tab types (status tabs ect.)
-- Measure away time and make it available via placeholder
 - Support "CTCP-DCC reply from <nickname>: REJECT SEND <filename> <reason>"
 
 MID-TERM:

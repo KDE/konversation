@@ -27,6 +27,7 @@ typedef unsigned long long __u64;
 #include <qregexp.h>
 #include <qhostaddress.h>
 #include <qtextcodec.h>
+#include <qdatetime.h>
 
 #include <kapp.h>
 #include <klocale.h>
@@ -72,6 +73,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   alreadyConnected=false;
   rejoinChannels=false;
   connecting=false;
+  isAway = false;
 
   timerInterval=1;  // flood protection
 
@@ -2689,6 +2691,47 @@ void Server::connectToNewServer(const QString& server, const QString& port, cons
 {
   KonversationApplication *konvApp = static_cast<KonversationApplication*>(KApplication::kApplication());
   konvApp->quickConnectToServer(server, port, KonversationApplication::preferences.getNickname(0), password);
+}
+
+QString Server::awayTime()
+{
+  QString retVal;
+  
+  if(isAway) {
+    int diff = QDateTime::currentDateTime().toTime_t() - m_awayTime;
+    int num = diff / 3600;
+    
+    if(num < 10) {
+      retVal = "0" + QString::number(num) + ":";
+    } else {
+      retVal = QString::number(num) + ":";
+    }
+    
+    num = (diff % 3600) / 60;
+    
+    if(num < 10) {
+      retVal += "0";
+    }
+    
+    retVal += QString::number(num) + ":";
+    
+    num = (diff % 3600) % 60;
+    
+    if(num < 10) {
+      retVal += "0";
+    }
+    
+    retVal += QString::number(num);
+  } else {
+    retVal = "00:00:00";
+  }
+  
+  return retVal;
+}
+
+void Server::startAwayTimer()
+{
+  m_awayTime = QDateTime::currentDateTime().toTime_t();
 }
 
 #include "server.moc"
