@@ -25,6 +25,7 @@ Name[sv]=Nytt meddelande
 Name[tr]=Yeni mesaj
 Name[uz]=Янги хабар
 Name[xx]=xxNew messagexx
+Name[zh_CN]=新消息
 Comment=New message arrived in a channel
 Comment[ca]=Ha arribat un nou missatge a un canal
 Comment[da]=Ny besked ankom i kanal
@@ -41,6 +42,7 @@ Comment[sr]=Нова порука је стигла у каналу
 Comment[sv]=Nytt meddelande anlände i en kanal
 Comment[tr]=Bir kanala yeni mesaj geldi
 Comment[xx]=xxNew message arrived in a channelxx
+Comment[zh_CN]=频道中有新消息
 default_presentation=0
 
 [nick]
@@ -60,6 +62,7 @@ Name[sr]=Надимак уписан
 Name[sv]=Något skrivet till smeknamnet
 Name[tr]=Rumuz yazıldı
 Name[xx]=xxNick writtenxx
+Name[zh_CN]=昵称写入
 Comment=Someone wrote your nick in a message
 Comment[ca]=Algú ha escrit el vostre sobrenom en un missatge
 Comment[da]=Nogen skrev dit alias i en besked
@@ -96,6 +99,7 @@ Name[sr]=Надимак промењен
 Name[sv]=Smeknamn ändrat
 Name[tr]=Rumuz değiştirildi
 Name[xx]=xxNick changedxx
+Name[zh_CN]=昵称改变
 Comment=Someone changed their nick
 Comment[ca]=Algú ha canviat el seu sobrenom
 Comment[da]=Nogen ændrede deres alias
@@ -112,6 +116,7 @@ Comment[sr]=Неко је променио свој надимак
 Comment[sv]=Någon ändrade sitt smeknamn
 Comment[tr]=Biri onların rumuzunu değiştirdi
 Comment[xx]=xxSomeone changed their nickxx
+Comment[zh_CN]=有人改变了昵称
 default_presentation=0
 
 [dcc_incoming]
@@ -132,6 +137,7 @@ Name[sr]=Долазећи фајл
 Name[sv]=Inkommande fil
 Name[tr]=Gelen dosya
 Name[xx]=xxIncoming filexx
+Name[zh_CN]=收到的文件
 Comment=Someone wants to transmit a file to you over DCC
 Comment[ca]=Algú desitja enviar-vos un fitxer sobre DCC
 Comment[da]=Nogen ønsker at transmittere en fil til dig over DCC
@@ -147,6 +153,7 @@ Comment[pt_BR]=Alguém deseja transmitir um arquivo para você via DCC
 Comment[sr]=Неко жели да вам пошаље фајл потем DCC-а
 Comment[sv]=Någon vill skicka en fil till dig via direktkommunikation
 Comment[xx]=xxSomeone wants to transmit a file to you over DCCxx
+Comment[zh_CN]=有人希望通过 DCC 向你传输文件
 default_prentation=0
 
 [join]
@@ -166,6 +173,7 @@ Name[sr]=Надимак се прикључуо каналу
 Name[sv]=Någon med smeknamnet gick med i en kanal
 Name[tr]=Rumuz kanala girdi
 Name[xx]=xxNick joined channelxx
+Name[zh_CN]=昵称加入频道
 Comment=New nick joined a channel
 Comment[ca]=Un nou sobrenom ha accedit a un canal
 Comment[da]=Nyt alias gik med i en kanal
@@ -182,6 +190,7 @@ Comment[sr]=Нови надимак је прикључен каналу
 Comment[sv]=Någon med ett nytt smeknamn gick med i en kanal
 Comment[tr]=Yeni rumuz bir kanala girdi
 Comment[xx]=xxNew nick joined a channelxx
+Comment[zh_CN]=新昵称加入了频道
 default_presentation=0
 
 [part]
@@ -201,6 +210,7 @@ Name[sr]=Надимак је напустио канал
 Name[sv]=Någon med smeknamnet lämnade en kanal
 Name[tr]=Rumuz kanaldan ayrıldı
 Name[xx]=xxNick left channelxx
+Name[zh_CN]=昵称离开频道
 Comment=A nick left a channel
 Comment[ca]=Un sobrenom ha deixat un canal
 Comment[da]=Et alias forlod en kanal
@@ -216,6 +226,7 @@ Comment[sr]=Надимак је напустио канал
 Comment[sv]=Någon med ett smeknamn lämnade en kanal
 Comment[tr]=Bir rumuz bir kanaldan ayrıldı
 Comment[xx]=xxA nick left a channelxx
+Comment[zh_CN]=一个昵称离开了频道
 default_presentation=0
 
 [mode]
@@ -235,6 +246,7 @@ Name[sr]=Режим је измењен
 Name[sv]=Tillståndsändring
 Name[tr]=Biçim değiştir
 Name[xx]=xxMode changexx
+Name[zh_CN]=模式改变
 Comment=A user or channel mode was changed
 Comment[ca]=A mode d'usuari o de canal ha estat canviat
 Comment[da]=En bruger- eller kanaltilstand blev ændret
@@ -251,6 +263,7 @@ Comment[sr]=Корисник или режим канала је промење�
 Comment[sv]=Tillståndet för en användare eller kanal ändrades
 Comment[tr]=Bir kullanıcı veya kanal biçimi değiştirildi
 Comment[xx]=xxA user or channel mode was changedxx
+Comment[zh_CN]=一个用户或频道模式改变了
 default_presentation=0
 
 [notify]
@@ -268,5 +281,11 @@ Name[pt_BR]=Notificar
 Name[sv]=Underrättelse
 Name[tr]=Bildirim
 Name[xx]=xxNotifyxx
+Name[zh_CN]=通告
 Comment=A user on your watched nicks list has come online
+Comment[da]=En bruger på din liaste af aliasser gik online
+Comment[et]=Jälgitavate hüüdnimede nimekirjas olev kasutaja tuli võrku
+Comment[sr]=Корисник са ваше листе обавештења је дошао на везу
+Comment[sv]=En användare i din lista med bevakade smeknamn har kopplat upp
+Comment[zh_CN]=一名在您的监视昵称列表上的用户已经上线
 default_presentation=0
