@@ -24,18 +24,30 @@
 #include "scriptlauncher.h"
 #include "konversationapplication.h"
 
-ScriptLauncher::ScriptLauncher(const QString& newServer,const QString& newTarget)
+ScriptLauncher::ScriptLauncher()
 {
-  server=newServer;
-  target=newTarget;
+  server=QString::null;
+  target=QString::null;
 }
 
 ScriptLauncher::~ScriptLauncher()
 {
 }
 
+void ScriptLauncher::setServerName(const QString& newName)
+{
+  server=newName;
+}
+
+void ScriptLauncher::setTargetName(const QString& newName)
+{
+  target=newName;
+}
+
 void ScriptLauncher::launchScript(const QString &parameter)
 {
+  kdDebug() << target << endl;
+
   KStandardDirs kstddir;
   QString scriptPath(kstddir.saveLocation("data","konversation/scripts"));
   KProcess process;

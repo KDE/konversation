@@ -33,16 +33,19 @@ ChatWindow::ChatWindow(QWidget* parent)
 
   setMargin(margin());
   setSpacing(spacing());
+
+  connect(&filter,SIGNAL(launchScript(const QString&)),
+    &scriptLauncher,SLOT(launchScript(const QString&)) );
 }
 
 ChatWindow::~ChatWindow()
 {
-  delete scriptLauncher;
 }
 
 void ChatWindow::setName(QString newName)
 {
   name=newName;
+  scriptLauncher.setTargetName(newName);
 }
 
 QString& ChatWindow::getName()
@@ -89,9 +92,7 @@ void ChatWindow::setServer(Server* newServer)
     connect(&filter,SIGNAL (sendToAllChannels(const QString&)),
              server,SLOT   (sendToAllChannels(const QString&)) );
 
-    scriptLauncher=new ScriptLauncher(server->getServerName(),getName());
-    connect(&filter,SIGNAL(launchScript(const QString&)),
-       scriptLauncher,SLOT(launchScript(const QString&)) );
+    scriptLauncher.setServerName(server->getServerName());
   }
 }
 

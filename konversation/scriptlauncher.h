@@ -28,8 +28,11 @@ class ScriptLauncher : public QObject
   Q_OBJECT
 
   public:
-    ScriptLauncher(const QString& server,const QString& target);
+    ScriptLauncher();
     ~ScriptLauncher();
+
+    void setServerName(const QString& newServerName);
+    void setTargetName(const QString& newName);
 
   public slots:
     void launchScript(const QString& parameter);

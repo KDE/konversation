@@ -455,6 +455,11 @@ void Server::dcopSay(const QString& target,const QString& command)
   }
 }
 
+void Server::dcopError(const QString& string)
+{
+  appendStatusMessage(i18n("DCOP"),string);
+}
+
 void Server::ctcpReply(const QString &receiver,const QString &text)
 {
   queue("NOTICE "+receiver+" :"+'\x01'+text+'\x01');

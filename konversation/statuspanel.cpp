@@ -28,6 +28,7 @@ StatusPanel::StatusPanel(QWidget* parent) :
   kdDebug() << "StatusPanel::StatusPanel()" << endl;
 
   setType(ChatWindow::Status);
+  setName(QString::null);             // empty name for scripts
 
   // set up text view, will automatically take care of logging
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer()

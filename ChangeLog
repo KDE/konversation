@@ -13,6 +13,7 @@ Changes from 0.10 to 0.11
 - Added context menu on tabs with close item
 - Added ALT+1 - ALT+9 for switching tabs
 - Applied a big patch by Alex Zepeda. Thanks!
+- First working DCOP implementation
 
 Changes from 0.9 to 0.10
 - Font encodings are now set via KCharsets

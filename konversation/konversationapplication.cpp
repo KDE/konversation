@@ -71,6 +71,8 @@ KonversationApplication::KonversationApplication()
   {
     connect(dcopObject,SIGNAL (dcopSay(const QString&,const QString&,const QString&)),
                     this,SLOT (dcopSay(const QString&,const QString&,const QString&)) );
+    connect(dcopObject,SIGNAL (dcopError(const QString&)),
+                    this,SLOT (dcopError(const QString&)) );
   }
 }
 
@@ -97,6 +99,13 @@ void KonversationApplication::dcopSay(const QString& server,const QString& targe
     }
     else lookServer=serverList.next();
   }
+}
+
+void KonversationApplication::dcopError(const QString& string)
+{
+  Server* lookServer=serverList.first();
+  if(lookServer)
+    lookServer->dcopError(string);
 }
 
 void KonversationApplication::connectToServer(int id)

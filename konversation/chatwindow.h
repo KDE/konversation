@@ -93,7 +93,7 @@ class ChatWindow : public QVBox
     QFile logfile;
     OutputFilter filter;
     WindowType type;
-    ScriptLauncher* scriptLauncher;
+    ScriptLauncher scriptLauncher;
 };
 
 #endif

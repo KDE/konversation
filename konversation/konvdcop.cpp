@@ -38,6 +38,12 @@ void KonvDCOP::say(const QString& server,const QString& target,const QString& co
   emit dcopSay(server,target,command);
 }
 
+void KonvDCOP::error(const QString& string)
+{
+  kdDebug() << "KonvDCOP::error()" << endl;
+  emit dcopError(string);
+}
+
 void KonvDCOP::registerEventHook(const QString& type,const QString& criteria,const QString& signal)
 {
   // append
