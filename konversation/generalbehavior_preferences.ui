@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>GeneralBehavior_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,6 +17,9 @@ the Free Software Foundation; either version 2 of the License, or
             <width>522</width>
             <height>463</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>GeneralBehavior_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -251,15 +254,18 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>m_disableNotifyWhileAwayCheck</cstring>
                     </property>
                     <property name="text">
-                        <string>Disable notifications while away</string>
+                        <string>Disable notifications while &amp;away</string>
                     </property>
                     <property name="accel">
-                        <string></string>
+                        <string>Alt+A</string>
                     </property>
                 </widget>
                 <widget class="KLineEdit" row="4" column="1">
                     <property name="name">
                         <cstring>ctcpVersionInput</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
                     </property>
                     <property name="whatsThis" stdset="0">
                         <string>&lt;qt&gt;Here you can set a custom reply for &lt;b&gt;CTCP &lt;i&gt;VERSION&lt;/i&gt;&lt;/b&gt; requests.&lt;/qt&gt;</string>
@@ -271,14 +277,6 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="2" column="0">
-                    <property name="name">
-                        <cstring>useCustomBrowserCheck</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Use custom Web &amp;browser:</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
@@ -300,18 +298,26 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>commandCharInput</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="4" column="0">
+                <widget class="QCheckBox" row="2" column="0">
                     <property name="name">
-                        <cstring>ctcpVersionLabel</cstring>
+                        <cstring>useCustomBrowserCheck</cstring>
                     </property>
                     <property name="text">
-                        <string>Custom &amp;version reply:</string>
+                        <string>Use custom Web &amp;browser:</string>
                     </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>ctcpVersionInput</cstring>
+                    <property name="accel">
+                        <string>Alt+B</string>
                     </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>&lt;qt&gt;Here you can set a custom reply for &lt;b&gt;CTCP &lt;i&gt;VERSION&lt;/i&gt;&lt;/b&gt; requests.&lt;/qt&gt;</string>
+                </widget>
+                <widget class="QCheckBox" row="4" column="0">
+                    <property name="name">
+                        <cstring>useCustomVersionReplyCheck</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use custom &amp;version reply:</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+V</string>
                     </property>
                 </widget>
             </grid>
@@ -329,6 +335,12 @@ the Free Software Foundation; either version 2 of the License, or
         <sender>useCustomBrowserCheck</sender>
         <signal>toggled(bool)</signal>
         <receiver>browserCmdInput</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>useCustomVersionReplyCheck</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>ctcpVersionInput</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>

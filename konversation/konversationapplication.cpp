@@ -433,7 +433,8 @@ void KonversationApplication::readOptions()
   preferences.setRawLog(config->readBoolEntry("RawLog",preferences.getRawLog()));
 
   // Custom CTCP Version Reply
-  preferences.setVersionReply(config->readEntry("VersionReply",preferences.getVersionReply()));
+  preferences.setCustomVersionReplyEnabled(config->readBoolEntry("CustomVersionReplyEnabled",preferences.getCustomVersionReplyEnabled()));
+  preferences.setCustomVersionReply(config->readEntry("CustomVersionReply",preferences.getCustomVersionReply()));
 
   // Reconnection timeout
   preferences.setMaximumLagTime(config->readNumEntry("MaximumLag",preferences.getMaximumLagTime()));
@@ -973,7 +974,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("Beep",preferences.getBeep());
   config->writeEntry("RawLog",preferences.getRawLog());
 
-  config->writeEntry("VersionReply",preferences.getVersionReply());
+  config->writeEntry("CustomVersionReplyEnabled",preferences.getCustomVersionReplyEnabled());
+  config->writeEntry("CustomVersionReply",preferences.getCustomVersionReply());
 
   config->writeEntry("MaximumLag",preferences.getMaximumLagTime());
 

@@ -39,7 +39,8 @@ PrefsPageBehaviour::PrefsPageBehaviour(QWidget* newParent, Preferences* newPrefe
 
   commandCharInput->setText(preferences->getCommandChar());
 
-  ctcpVersionInput->setText(preferences->getVersionReply());
+  useCustomVersionReplyCheck->setChecked(preferences->getCustomVersionReplyEnabled());
+  ctcpVersionInput->setText(preferences->getCustomVersionReply());
 
   autojoinOnInviteCheck->setChecked(preferences->getAutojoinOnInvite());
 
@@ -71,7 +72,8 @@ void PrefsPageBehaviour::applyPreferences()
     preferences->setCommandChar("/");
   }
 
-  preferences->setVersionReply(ctcpVersionInput->text());
+  preferences->setCustomVersionReplyEnabled(useCustomVersionReplyCheck->isChecked());
+  preferences->setCustomVersionReply(ctcpVersionInput->text());
   preferences->setAutojoinOnInvite(autojoinOnInviteCheck->isChecked());
 
   preferences->setNickCompletionMode(completionModeCBox->currentItem());

@@ -214,7 +214,19 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                                 .arg(sourceNick)
                         );
                     }
-                    QString reply = KonversationApplication::preferences.getVersionReply();
+
+                    QString reply;
+                    if(KonversationApplication::preferences.getCustomVersionReplyEnabled())
+                    {
+                        reply = KonversationApplication::preferences.getCustomVersionReply().stripWhiteSpace();
+                    }
+                    else
+                    {
+                        // Do not internationalize the below version string
+                        reply = QString("VERSION Konversation %1 Build %2 (C) 2002-2005 by the Konversation team")
+                                       .arg(QString(KONVI_VERSION))
+                                       .arg(QString::number(COMMIT));
+                    }
                     server->ctcpReply(sourceNick,"VERSION "+reply);
                 }
             }

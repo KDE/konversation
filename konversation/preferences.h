@@ -85,8 +85,10 @@ class Preferences : public QObject
     const bool getRawLog();
     void setRawLog(bool state);
 
-    QString getVersionReply();
-    void setVersionReply(const QString &reply);
+    const bool getCustomVersionReplyEnabled();
+    void setCustomVersionReplyEnabled(bool state);
+    QString getCustomVersionReply();
+    void setCustomVersionReply(const QString &reply);
 
     void setLog(bool state);
     const bool getLog();
@@ -519,7 +521,8 @@ class Preferences : public QObject
     bool beep;
     bool rawLog;
 
-    QString versionReply;
+    bool customVersionReplyEnabled;
+    QString customVersionReply;
 
     bool dccAddPartner;
     bool dccCreateFolder;   // create folders for each DCC partner?

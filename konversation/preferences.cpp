@@ -476,21 +476,10 @@ const bool Preferences::getBeep() { return beep; }
 void Preferences::setRawLog(bool state) { rawLog=state; }
 const bool Preferences::getRawLog() { return rawLog; }
 
-void Preferences::setVersionReply(const QString &reply) 
-{
-  if(!versionReply.isEmpty())
-    versionReply = reply;
-}
-
-QString Preferences::getVersionReply()
-{
-  QRegExp r("Konversation 0\\.\\d* .* \\d* \\(C\\) 2002-200[345].*");
-
-  if (r.exactMatch(versionReply) || versionReply.isEmpty())
-    versionReply = i18n("Konversation %1 Build %2 (C) 2002-2005 by the Konversation team").arg(QString(KONVI_VERSION)).arg(QString::number(COMMIT));
-
-    return versionReply;
-}
+void Preferences::setCustomVersionReplyEnabled(bool state) { customVersionReplyEnabled=state; }
+const bool Preferences::getCustomVersionReplyEnabled() { return customVersionReplyEnabled; }
+void Preferences::setCustomVersionReply(const QString &reply) { customVersionReply=reply; }
+QString Preferences::getCustomVersionReply() { return customVersionReply; }
 
 const int Preferences::getNotifyDelay() { return notifyDelay; }
 void Preferences::setNotifyDelay(int delay) { notifyDelay=delay; }
