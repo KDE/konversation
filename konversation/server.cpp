@@ -243,15 +243,12 @@ void Server::setPrefixes(const QString &modes, const QString& prefixes)
   // modes which relates to the network's nick-prefixes
   serverNickPrefixModes=modes;
   serverNickPrefixes=prefixes;
-
-  kdDebug() << "Setting Prefixes to '" << prefixes << "' and modes to '" << modes << "'" << endl;
 }
 
 // return a nickname without possible mode character at the beginning
 bool Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwner,
                                      bool& isOp,bool& isHalfop,bool& hasVoice,char* realMode )
 {
-  kdDebug() << "mangleNicknameWithModes(" << nickname << ")" << endl;
   isAdmin=false;
   isOwner=false;
   isOp=false;
@@ -299,7 +296,6 @@ bool Server::mangleNicknameWithModes(QString& nickname,bool& isAdmin,bool& isOwn
       case '%':  // halfop
         {
           isHalfop=true;
-          kdDebug() << "Halfop" << endl;
           return true;
         }
       case '+':  // voiced (RFC1459)
@@ -995,7 +991,6 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
   {
     QString fileName=dccTransfer->getFile();
     appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\", offered by %2 from position %3.").arg(fileName).arg(recipient).arg(dccArguments[2]));
-    kdDebug() << "Sending ACCEPT" << endl;
     dccTransfer->startResumeSend(dccArguments[2]);
     outputFilter.acceptRequest(recipient,fileName,dccArguments[1],dccArguments[2].toUInt());
     queue(outputFilter.getServerOutput());

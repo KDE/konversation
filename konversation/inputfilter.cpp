@@ -786,7 +786,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             else
             {
-              kdDebug() << "Ignored server-capability: " << property << " with value '" << value << "'" << endl;
+//              kdDebug() << "Ignored server-capability: " << property << " with value '" << value << "'" << endl;
             }
           } // endfor
           break;
