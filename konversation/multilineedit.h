@@ -24,6 +24,8 @@ class QTextEdit;
 
 class MultilineEdit : public KDialogBase
 {
+  Q_OBJECT
+
   public:
     MultilineEdit(QWidget* parent,QString text);
     ~MultilineEdit();

@@ -66,3 +66,5 @@ QString MultilineEdit::edit(QWidget* parent,QString text)
 
   return returnText.stripWhiteSpace();
 }
+
+#include "multilineedit.moc"
