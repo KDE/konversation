@@ -689,6 +689,7 @@ Nick* Channel::getNickByName(const QString &lookname)
   }
   return 0;
 }
+
 void Channel::adjustNicks(int value)
 {
   nicks+=value;

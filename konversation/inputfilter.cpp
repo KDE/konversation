@@ -733,10 +733,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             bool voice=false;
             QString nick=nickList[index];
 
-            if(nick[0]=='@')
-              op=true;
-            if(nick[0]=='+')
-              voice=true;
+            op=(nick[0]=='@');
+            voice=(nick[0]=='+');
 
             QString nickname=(op || voice) ? nick.mid(1) : nick;
             QString hostmask(QString::null);

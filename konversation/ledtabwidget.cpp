@@ -73,7 +73,7 @@ void LedTabWidget::tabClosed(int id)
 // reimplemented to avoid casts in active code
 LedTabBar* LedTabWidget::tabBar()
 {
-  return (LedTabBar*) QTabWidget::tabBar();
+  return static_cast<LedTabBar*>(QTabWidget::tabBar());
 }
 
 void LedTabWidget::updateTabs()

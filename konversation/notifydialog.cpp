@@ -21,6 +21,7 @@
 #include <klocale.h>
 #include <klistview.h>
 #include <kdebug.h>
+#include <klineeditdlg.h>
 
 #include "notifydialog.h"
 
@@ -30,14 +31,14 @@ NotifyDialog::NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int 
                            KDialogBase::Ok,true)
 {
   kdDebug() << "NotifyDialog::NotifyDialog()" << endl;
-  /* Create the top level widget */
+  // Create the top level widget
   QWidget* page=new QWidget(this);
   setMainWidget(page);
-  /* Add the layout to the widget */
+  // Add the layout to the widget
   QVBoxLayout* dialogLayout=new QVBoxLayout(page);
   dialogLayout->setSpacing(spacingHint());
 
-  /* Set up notify delay widgets */
+  // Set up notify delay widgets
   QHBox* delayBox=new QHBox(page);
   delayBox->setSpacing(spacingHint());
 
@@ -48,7 +49,7 @@ NotifyDialog::NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int 
   notifyDelaySpin->setValue(delay);
   notifyDelaySpin->setSuffix(i18n(" seconds"));
 
-  /* Set up the ignore list */
+  // Set up the notify list
   QHBox* listBox=new QHBox(page);
   listBox->setSpacing(spacingHint());
   notifyListView=new KListView(listBox);
@@ -63,21 +64,14 @@ NotifyDialog::NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int 
   notifyListView->setDragEnabled(true);
   notifyListView->setAcceptDrops(true);
 
-  /* Set up the buttons to the right of the list */
+  // Set up the buttons to the right of the list
   QGrid* buttonBox=new QGrid(3,QGrid::Vertical,listBox);
   buttonBox->setSpacing(spacingHint());
   newButton=new QPushButton(i18n("New"),buttonBox);
   removeButton=new QPushButton(i18n("Remove"),buttonBox);
 
-/* No longer needed!
-  // Set up instructions
-  QLabel* instructions=new QLabel(i18n("<b>Note:</b> If you switch off the notify function or remove all "
-                                       "entries from the list the Lag-O-Meter will stop working."),page);
- 
-*/
   dialogLayout->addWidget(delayBox);
   dialogLayout->addWidget(listBox);
-//  dialogLayout->addWidget(instructions);
 
   setButtonOKText(i18n("OK"),i18n("Keep changes made to configuration and close the window"));
   setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
@@ -88,7 +82,7 @@ NotifyDialog::NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int 
   connect(removeButton,SIGNAL(clicked()),
                     this,SLOT(removeNotify()));
 
-  /* Insert Notify items backwards to get them sorted properly */
+  // Insert Notify items backwards to get them sorted properly
   int index=newNotifyList.count()-1;
 
   while(index!=-1)
@@ -106,13 +100,25 @@ NotifyDialog::~NotifyDialog()
 
 void NotifyDialog::newNotify()
 {
-  KListViewItem* newItem=new KListViewItem(notifyListView,i18n("New"));
-  notifyListView->setSelected(newItem,true);
+  bool ok=false;
+  QString newPattern=KLineEditDlg::getText(i18n("Add notify"),i18n("New"),&ok,this);
+  if(ok)
+  {
+    KListViewItem* newItem=new KListViewItem(notifyListView,newPattern);
+    notifyListView->setSelected(newItem,true);
+  }
 }
 
 void NotifyDialog::removeNotify()
 {
-  delete notifyListView->selectedItem();
+  QListViewItem* selected=notifyListView->selectedItem();
+  if(selected)
+  {
+    if(selected->itemBelow()) notifyListView->setSelected(selected->itemBelow(),true);
+    else notifyListView->setSelected(selected->itemAbove(),true);
+  
+    delete selected;
+  }
 }
 
 void NotifyDialog::slotOk()

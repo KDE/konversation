@@ -107,11 +107,11 @@ LedTab* LedTabBar::tab(QWidget* widget)
   QPtrList<QTab>* list=tabList();
 
   // These casts can't be helped, templates don't like casting
-  LedTab* tab=(LedTab*) list->first();
+  LedTab* tab=static_cast<LedTab*>(list->first());
   while(tab)
   {
     if(tab->getWidget()==widget) return tab;
-    tab=(LedTab*) list->next();
+    tab=static_cast<LedTab*>(list->next());
   }
 
   return 0;
@@ -120,7 +120,7 @@ LedTab* LedTabBar::tab(QWidget* widget)
 // reimplemented to avoid casts in active code
 LedTab* LedTabBar::tab(int id)
 {
-  return (LedTab*) QTabBar::tab(id);
+  return static_cast<LedTab*>(QTabBar::tab(id));
 }
 
 // repaint only the needed tab region to avoid flickering

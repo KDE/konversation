@@ -167,7 +167,7 @@ void HighlightDialog::changeHighlightColor(const QColor& passed_itemColor)
 
 void HighlightDialog::changeColorSelectionColor(QListViewItem* passed_selectedHighlightViewItem)
 {
-	selectedHighlightViewItem = (HighlightViewItem*) passed_selectedHighlightViewItem;
+	selectedHighlightViewItem = static_cast<HighlightViewItem*>(passed_selectedHighlightViewItem);
 	if(selectedHighlightViewItem != 0)
 	{
 		ColorSelection->setColor(selectedHighlightViewItem->getColor());
@@ -185,7 +185,7 @@ void HighlightDialog::removeHighlight()
 
 void HighlightDialog::unselectHighlight(QListViewItem* passed_selectedHighlightViewItem)
 {
-	if((selectedHighlightViewItem = (HighlightViewItem*) passed_selectedHighlightViewItem) == oldSelectedHighlightViewItem)
+	if((selectedHighlightViewItem = static_cast<HighlightViewItem*>(passed_selectedHighlightViewItem)) == oldSelectedHighlightViewItem)
 	{
 		HighlightBrowser->clearSelection();
 		InputLine->setText(QString::null);
@@ -196,7 +196,7 @@ void HighlightDialog::unselectHighlight(QListViewItem* passed_selectedHighlightV
 
 void HighlightDialog::updateInputLine(QListViewItem* passed_selectedHighlightViewItem)
 {
-	selectedHighlightViewItem = (HighlightViewItem*) passed_selectedHighlightViewItem;
+	selectedHighlightViewItem = static_cast<HighlightViewItem*>(passed_selectedHighlightViewItem);
 	if(selectedHighlightViewItem != 0)
 	{
 		InputLine->setText(selectedHighlightViewItem->getText());
@@ -225,7 +225,7 @@ void HighlightDialog::changeHighlightText()
     {
       highlightEdited = false;
       InputLine->setText(QString::null);
-      emit highlightChanged((QListViewItem*) selectedHighlightViewItem);
+      emit highlightChanged(static_cast<QListViewItem*>(selectedHighlightViewItem));
     }
     else noEmptyPatterns();
   }
