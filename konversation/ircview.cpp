@@ -492,15 +492,19 @@ void IRCView::append(const QString& nick,const QString& message)
   if(KonversationApplication::preferences.getUseColoredNicks()) {
 
     if(nick != m_server->getNickname())
-      color = m_server->obtainNickInfo(nick)->getNickColor();
+	{
+	  color = m_server->obtainNickInfo(nick)->getNickColor();
+	  nickLine = "<font color=\"" + color + "\"><a href=\"#" + nick + "\">"+nickLine+"</a></font>";
+	}
     else
-      color = KonversationApplication::preferences.getNickColorList()[8];
+	{
+	  color = KonversationApplication::preferences.getNickColorList()[8];
+	  nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
+	}
 
     if(color == "#000000") {
       color = "#000001"; // HACK Working around QTextBrowser's auto link coloring
     }
-
-    nickLine = "<font color=\"" + color + "\"><a href=\"#" + nick + "\">"+nickLine+"</a></font>";
   }
   
   if(basicDirection(message) == QChar::DirR) {
@@ -545,15 +549,21 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
   if(KonversationApplication::preferences.getUseColoredNicks()) {
     
     if(nick != m_server->getNickname())
-      color = m_server->obtainNickInfo(nick)->getNickColor();
+      {
+	nickLine = "<a href=\"#" + nick + "\"><font color=\"" + color + "\">"+nickLine+"</font></a>";
+	color = m_server->obtainNickInfo(nick)->getNickColor();
+      }
     else
-      color = KonversationApplication::preferences.getNickColorList()[8];
+      {
+	nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
+	color = KonversationApplication::preferences.getNickColorList()[8];
+      }
 
     if(color == "#000000") {
       color = "#000001"; // HACK Working around QTextBrowser's auto link coloring
     }
 
-    nickLine = "<a href=\"#" + nick + "\"><font color=\"" + color + "\">"+nickLine+"</font></a>";
+    
   }
 
   if(basicDirection(message) == QChar::DirR) {
