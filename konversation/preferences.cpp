@@ -59,7 +59,6 @@ Preferences::Preferences()
   logPath=kstddir.saveLocation("data","konversation/logs");
   log=true;
   blinkingTabs=true;
-  prefsDialog=0;
 }
 
 Preferences::~Preferences()
@@ -177,40 +176,90 @@ void Preferences::clearServerList()
   serverList.clear();
 }
 
-void Preferences::openPrefsDialog()
+void Preferences::setLog(bool state)
 {
-  if(prefsDialog==0)
-  {
-    prefsDialog=new PrefsDialog(this,false);
-
-    connect(prefsDialog,SIGNAL (connectToServer(int)),this,SLOT (connectToServer(int)) );
-    connect(prefsDialog,SIGNAL (cancelClicked()),this,SLOT (closePrefsDialog()) );
-    connect(prefsDialog,SIGNAL (closed()),this,SLOT (clearPrefsDialog()) );
-    connect(prefsDialog,SIGNAL (prefsChanged()),this,SLOT (saveOptions()) );
-
-    serverList.setAutoDelete(true);     // delete items when they are removed
-
-    prefsDialog->show();
-  }
+  log=state;
 }
 
-void Preferences::connectToServer(int number)
+bool Preferences::getLog()
 {
-  emit requestServerConnection(number);
+  return log;
 }
 
-void Preferences::saveOptions()
+QStringList Preferences::getButtonList()
 {
-  emit requestSaveOptions();
+  return buttonList;
 }
 
-void Preferences::closePrefsDialog()
+void Preferences::clearIgnoreList()
 {
-  delete prefsDialog;
-  clearPrefsDialog();
+  ignoreList.clear();
 }
 
-void Preferences::clearPrefsDialog()
+QString Preferences::getPartReason()
 {
-  prefsDialog=0;
+  return partReason;
 }
+
+void Preferences::setPartReason(QString newReason)
+{
+  partReason=newReason;
+}
+
+QString Preferences::getKickReason()
+{
+  return kickReason;
+}
+
+void Preferences::setKickReason(QString newReason)
+{
+  kickReason=newReason;
+}
+
+QPtrList<Ignore> Preferences::getIgnoreList()
+{
+  return ignoreList;
+}
+
+QString Preferences::getNickname(int index)
+{
+  return nicknameList[index];
+}
+
+QStringList Preferences::getNicknameList()
+{
+  return nicknameList;
+}
+
+void Preferences::setNickname(int index,QString newName)
+{
+  nicknameList[index]=newName;
+}
+
+void Preferences::setNicknameList(QStringList newList)
+{
+  nicknameList=newList;
+}
+
+void Preferences::setBlinkingTabs(bool blink)
+{
+  blinkingTabs=blink;
+}
+
+bool Preferences::getBlinkingTabs()
+{
+  return blinkingTabs;
+}
+
+/* Geometry functions */
+QSize Preferences::getServerWindowSize() { return serverWindowSize; };
+QSize& Preferences::getHilightSize()     { return hilightSize; };
+QSize& Preferences::getButtonsSize()     { return buttonsSize; };
+QSize& Preferences::getIgnoreSize()      { return ignoreSize; };
+QSize& Preferences::getNicknameSize()    { return nicknameSize; };
+
+void Preferences::setServerWindowSize(QSize newSize) { serverWindowSize=newSize; };
+void Preferences::setHilightSize(QSize newSize)      { hilightSize=newSize; };
+void Preferences::setButtonsSize(QSize newSize)      { buttonsSize=newSize; };
+void Preferences::setIgnoreSize(QSize newSize)       { ignoreSize=newSize; };
+void Preferences::setNicknameSize(QSize newSize)     { nicknameSize=newSize; };

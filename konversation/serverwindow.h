@@ -62,6 +62,7 @@ class ServerWindow : public KMainWindow
 
   signals:
     void prefsChanged();
+    void openPrefsDialog();
 
   public slots:
     void setNickname(const QString&);

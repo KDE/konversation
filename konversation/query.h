@@ -16,8 +16,6 @@
 #include <qvbox.h>
 #include <qiconset.h>
 
-#include <kdialog.h>
-
 #ifndef QUERY_H
 #define QUERY_H
 
@@ -31,8 +29,6 @@
 
 /* TODO: Idle counter to close query after XXX minutes of inactivity */
 
-class Server;
-
 class Query : public ChatWindow
 {
   Q_OBJECT
@@ -41,8 +37,8 @@ class Query : public ChatWindow
     Query(QWidget* parent);
     ~Query();
 
-    QWidget* getQueryPane() { return queryPane; };
-    QString& getQueryName() { return queryName; };
+    QWidget* getQueryPane();
+    QString& getQueryName();
 
     void setQueryName(const QString& newName);
     void setHostmask(const QString& newHostmask);
@@ -57,8 +53,8 @@ class Query : public ChatWindow
     void close();
 
   protected:
-    int spacing() {  return KDialog::spacingHint(); };
-    int margin() {  return KDialog::marginHint(); };
+    int spacing();
+    int margin();
 
     QString queryName;
     QString hostmask;

@@ -55,7 +55,8 @@ ServerWindow::~ServerWindow()
 
 void ServerWindow::openPreferences()
 {
-  KonversationApplication::preferences.openPrefsDialog();
+//  KonversationApplication::preferences.openPrefsDialog();
+  emit openPrefsDialog();
 }
 
 void ServerWindow::showToolbar()
@@ -214,7 +215,7 @@ void ServerWindow::readOptions()
 // initialize the recent file list
 //  fileOpenRecent->loadEntries(config,"Recent Files");
 
-  QSize size=KonversationApplication::preferences.serverWindowSize;
+  QSize size=KonversationApplication::preferences.getServerWindowSize();
   if(!size.isEmpty())
   {
     resize(size);
@@ -223,7 +224,7 @@ void ServerWindow::readOptions()
 /* Will not actually save the options but write them into the prefs structure */
 void ServerWindow::saveOptions()
 {
-  KonversationApplication::preferences.serverWindowSize=size();
+  KonversationApplication::preferences.setServerWindowSize(size());
 
 //  config->writeEntry("Show Toolbar", viewToolBar->isChecked());
 //  config->writeEntry("Show Statusbar",viewStatusBar->isChecked());

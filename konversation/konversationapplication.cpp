@@ -32,6 +32,7 @@ KonversationApplication::KonversationApplication()
   connect(prefsDialog,SIGNAL (cancelClicked()),this,SLOT (quitKonversation()) );
   connect(prefsDialog,SIGNAL (prefsChanged()),this,SLOT (saveOptions()) );
 
+  /* TODO: Check if this serverList is needed anyway */
   serverList.setAutoDelete(true);     // delete items when they are removed
 
   prefsDialog->show();
@@ -64,6 +65,7 @@ void KonversationApplication::connectToAnotherServer(int id)
   Server* newServer=new Server(id);
   serverList.append(newServer);
   connect(newServer->getServerWindow(),SIGNAL(prefsChanged()),this,SLOT(saveOptions()));
+  connect(newServer->getServerWindow(),SIGNAL(openPrefsDialog()),this,SLOT(openPrefsDialog()));
 }
 
 void KonversationApplication::quitKonversation()
@@ -91,10 +93,11 @@ void KonversationApplication::readOptions()
   preferences.serverWindowToolBarIconSize=config->readNumEntry("ServerWindowToolBarIconSize",0);
 
   /* Window geometries */
-  preferences.serverWindowSize=config->readSizeEntry("Geometry");
+  preferences.setServerWindowSize(config->readSizeEntry("Geometry"));
   preferences.setHilightSize(config->readSizeEntry("HilightGeometry"));
   preferences.setButtonsSize(config->readSizeEntry("ButtonsGeometry"));
   preferences.setIgnoreSize(config->readSizeEntry("IgnoreGeometry"));
+  preferences.setNicknameSize(config->readSizeEntry("NicknameGeometry"));
 
   /* Reasons */
   QString reason;
@@ -179,10 +182,11 @@ void KonversationApplication::saveOptions()
 
   config->setGroup("General Options");
 
-  config->writeEntry("Geometry", preferences.serverWindowSize);
+  config->writeEntry("Geometry", preferences.getServerWindowSize());
   config->writeEntry("HilightGeometry",preferences.getHilightSize());
   config->writeEntry("ButtonsGeometry",preferences.getButtonsSize());
   config->writeEntry("IgnoreGeometry",preferences.getIgnoreSize());
+  config->writeEntry("NicknameGeometry",preferences.getNicknameSize());
 
 //  config->writeEntry("Show Statusbar",viewStatusBar->isChecked());
   config->writeEntry("ServerWindowToolBarPos",preferences.serverWindowToolBarPos);
@@ -255,4 +259,24 @@ void KonversationApplication::saveOptions()
 void KonversationApplication::storeURL(QString& url)
 {
   urlList.append(url);
+}
+
+void KonversationApplication::openPrefsDialog()
+{
+  if(prefsDialog==0)
+  {
+    prefsDialog=new PrefsDialog(&preferences,false);
+
+    connect(prefsDialog,SIGNAL (connectToServer(int)),this,SLOT (connectToAnotherServer(int)) );
+    connect(prefsDialog,SIGNAL (cancelClicked()),this,SLOT (closePrefsDialog()) );
+    connect(prefsDialog,SIGNAL (prefsChanged()),this,SLOT (saveOptions()) );
+
+    prefsDialog->show();
+  }
+}
+
+void KonversationApplication::closePrefsDialog()
+{
+  delete prefsDialog;
+  prefsDialog=0;
 }

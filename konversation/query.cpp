@@ -16,6 +16,7 @@
 
 #include <qhbox.h>
 
+#include <kdialog.h>
 #include <klocale.h>
 #include <kstddirs.h>
 
@@ -111,4 +112,24 @@ void Query::setHostmask(const QString& newHostmask)
 {
   hostmask=newHostmask;
   queryHostmask->setText(newHostmask);
+}
+
+QWidget* Query::getQueryPane()
+{
+  return queryPane;
+}
+
+QString& Query::getQueryName()
+{
+  return queryName;
+}
+
+int Query::spacing()
+{
+  return KDialog::spacingHint();
+}
+
+int Query::margin()
+{
+  return KDialog::marginHint();
 }

@@ -27,7 +27,6 @@
   @author Dario Abatianni
 */
 
-class PrefsDialog;
 class Preferences : public QObject
 {
   Q_OBJECT
@@ -50,45 +49,50 @@ class Preferences : public QObject
     void clearServerList();
     void changeServerProperty(int id,int property,const QString& value);
     void updateServer(int id,const QString& newDefinition);
-    void setLog(bool state) { log=state; };
-    bool getLog() { return log; };
-    void setBlinkingTabs(bool blink) { blinkingTabs=blink; };
-    bool getBlinkingTabs() { return blinkingTabs; };
-    /* Hilight list functions */
+
+    void setLog(bool state);
+    bool getLog();
+
+    void setBlinkingTabs(bool blink);
+    bool getBlinkingTabs();
+
+    /* Geometry functions */
+    QSize getServerWindowSize();
+    QSize& getHilightSize();
+    QSize& getButtonsSize();
+    QSize& getIgnoreSize();
+    QSize& getNicknameSize();
+    void setServerWindowSize(QSize newSize);
+    void setHilightSize(QSize newSize);
+    void setButtonsSize(QSize newSize);
+    void setIgnoreSize(QSize newSize);
+    void setNicknameSize(QSize newSize);
+
     QStringList& getHilightList();
     void setHilightList(QStringList& newList);
-    QSize& getHilightSize() { return hilightSize; };
-    void setHilightSize(QSize newSize) { hilightSize=newSize; };
     void addHilight(QString& newHilight);
     QString getHilightColor();
     void setHilightColor(const QString& color);
-    /* Button list functions */
-    QSize& getButtonsSize() { return buttonsSize; };
-    void setButtonsSize(QSize newSize) { buttonsSize=newSize; };
-    QStringList getButtonList() { return buttonList; };
-    void setButtonList(QStringList newList);
-    /* Ignore list functions */
-    void clearIgnoreList() { ignoreList.clear(); };
-    void addIgnore(QString newIgnore);
-    QSize& getIgnoreSize() { return ignoreSize; };
-    void setIgnoreSize(QSize newSize) { ignoreSize=newSize; };
-    QPtrList<Ignore> getIgnoreList() { return ignoreList; };
-    void setIgnoreList(QPtrList<Ignore> newList);
-    /* Part reason */
-    QString getPartReason() { return partReason; };
-    void setPartReason(QString newReason) { partReason=newReason; };
-    /* Kick reason */
-    QString getKickReason() { return kickReason; };
-    void setKickReason(QString newReason) { kickReason=newReason; };
-    /* Nickname List Functions */
-    QString getNickname(int index) { return nicknameList[index]; };
-    void setNickname(int index,QString newName) { nicknameList[index]=newName; };
-    QStringList getNicknameList() { return nicknameList; };
-    void setNicknameList(QStringList newList) { nicknameList=newList; };
-    QSize& getNicknameSize() { return nicknameSize; };
-    void setNicknameSize(QSize newSize) { nicknameSize=newSize; };
 
-    QSize serverWindowSize;
+    QStringList getButtonList();
+    void setButtonList(QStringList newList);
+
+    void addIgnore(QString newIgnore);
+    void clearIgnoreList();
+    QPtrList<Ignore> getIgnoreList();
+    void setIgnoreList(QPtrList<Ignore> newList);
+
+    QString getPartReason();
+    void setPartReason(QString newReason);
+
+    QString getKickReason();
+    void setKickReason(QString newReason);
+
+    QString getNickname(int index);
+    QStringList getNicknameList();
+    void setNickname(int index,QString newName);
+    void setNicknameList(QStringList newList);
+
     QString ident;
     QString realname;
     QString logPath;
@@ -97,38 +101,29 @@ class Preferences : public QObject
     void requestServerConnection(int number);
     void requestSaveOptions();
 
-  public slots:
-    void openPrefsDialog();
-
   protected:
     bool log;
     bool blinkingTabs; /* Do we want the LEDs on the tabs to blink? */
 
-    QList<ServerEntry> serverList;
+    /* Geometries */
+    QSize serverWindowSize;
+    QSize buttonsSize;
+    QSize hilightSize;
+    QSize ignoreSize;
+    QSize nicknameSize;
 
+    QList<ServerEntry> serverList;
     QStringList hilightList;
     QString hilightColor;
-    QSize hilightSize;
 
     QStringList buttonList;
-    QSize buttonsSize;
 
     QPtrList<Ignore> ignoreList;
-    QSize ignoreSize;
 
     QStringList nicknameList;
-    QSize nicknameSize;
 
     QString partReason;
     QString kickReason;
-
-    PrefsDialog* prefsDialog;
-
-  protected slots:
-    void connectToServer(int number);
-    void saveOptions();
-    void closePrefsDialog();
-    void clearPrefsDialog();
 };
 
 #endif

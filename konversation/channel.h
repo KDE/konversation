@@ -37,8 +37,6 @@
   @author Dario Abatianni
 */
 
-class ChatWindow;
-
 class Channel : public ChatWindow
 {
   Q_OBJECT
