@@ -14,15 +14,31 @@
   $Id$
 */
 
+#include <kdebug.h>
+
+#include <qapp.h>
+#include <qevent.h>
+
 #include "ircresolver.h"
+
+/*
+  We use postEvent for messaging here rather than signals/slots since signals
+  don't work well with threads
+*/
 
 IRCResolver::IRCResolver()
 {
   socket=0;
+  recipient=0;
 }
 
 IRCResolver::~IRCResolver()
 {
+}
+
+void IRCResolver::setRecipient(QObject* newRecipient)
+{
+  recipient=newRecipient;
 }
 
 void IRCResolver::setSocket(KExtendedSocket* newSocket)
@@ -32,12 +48,10 @@ void IRCResolver::setSocket(KExtendedSocket* newSocket)
 
 void IRCResolver::run()
 {
-  if(socket)
-  {
-    int num=socket->lookup();
-    emit lookupFinished(num);
-  }
-  else emit lookupFinished(-1);
-}
+  if(socket && recipient)
+    socket->lookup();
+  else
+    kdDebug() << "IRCResolver::run(): Resolver needs a socket and a recipient!" << endl;
 
-#include "ircresolver.moc"
+  QApplication::postEvent(recipient,new QEvent(QEvent::User));
+}

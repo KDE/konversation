@@ -42,6 +42,9 @@ Server::Server(int id)
   checkTime=0;
   reconnectCounter=0;
 
+  resolver.setRecipient(this);
+  installEventFilter(this);
+
   lastDccDir="";
 
   serverWindow=new ServerWindow(this);
@@ -68,7 +71,6 @@ Server::Server(int id)
   autoRejoin=KonversationApplication::preferences.getAutoRejoin();
   autoReconnect=KonversationApplication::preferences.getAutoReconnect();
 
-//  serverSocket=0;
   connectToIRCServer();
 
   // don't delete items when they are removed
@@ -111,14 +113,11 @@ Server::Server(int id)
   connect(this,SIGNAL(addDccPanel()),serverWindow,SLOT(addDccPanel()) );
   connect(this,SIGNAL(closeDccPanel()),serverWindow,SLOT(closeDccPanel()) );
 
-//  connect(&serverSocket,SIGNAL (lookupFinished(int))  ,this,SLOT (lookupFinished(int)) );
   connect(&serverSocket,SIGNAL (connectionSuccess())  ,this,SLOT (ircServerConnectionSuccess()) );
   connect(&serverSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
   connect(&serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
   connect(&serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
   connect(&serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
-
-  connect(&resolver,SIGNAL(lookupFinished(int)),this,SLOT(lookupFinished(int)));
 }
 
 Server::~Server()
@@ -130,7 +129,6 @@ Server::~Server()
   // Send out the last messages (usually the /QUIT)
   serverSocket.enableWrite(true);
   send();
-//  delete serverSocket;
 
   delete serverWindow;
 }
@@ -169,25 +167,26 @@ void Server::connectToIRCServer()
   {
     // (re)connect. Autojoin will be done by the input filter
     serverWindow->appendToStatus(i18n("Info"),i18n("Looking for server %1 ...").arg(serverSocket.host()));
-//    serverSocket=new IRCServerSocket(getServerName(),getPort());
 
     // QDns is broken, so don't use async lookup, use own threaded class instead
     resolver.setSocket(&serverSocket);
     resolver.start();
-/*
-    serverSocket.lookup();
-    serverSocket.startAsyncConnect();
-    */
   }
 }
 
-void Server::lookupFinished(int number)
+bool Server::eventFilter(QObject* parent,QEvent* event)
 {
-  // suppress compiler warning
-  number=number;
+  if(event->type()==QEvent::User)
+  {
+    lookupFinished();
+    return true;
+  }
+  return QObject::eventFilter(parent,event);
+}
 
+void Server::lookupFinished()
+{
   serverWindow->appendToStatus(i18n("Info"),i18n("Server found, connecting ..."));
-
   serverSocket.startAsyncConnect();
 }
 
@@ -221,16 +220,8 @@ void Server::broken(int state)
 
   kdDebug() << "Connection broken (Socket fd " << serverSocket.fd() << ") " << state << "!" << endl;
 
-//  serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost.").arg(serverName));
   // TODO: Close all queries and channels!
   //       Or at least make sure that all gets reconnected properly
-
-  // This seems to crash randomly. So we just rely on QT disconnecting all on delete
-  // disconnect(serverSocket,0,0,0);
-
-//  delete serverSocket;
-//  serverSocket=0;
-//  kdDebug() << "Socket deleted" << endl;
 
   if(autoReconnect && !getDeliberateQuit())
   {

@@ -131,7 +131,6 @@ class Server : public QObject
     void startNotifyTimer(int msec=0);
 
   protected slots:
-    void lookupFinished(int);
     void ircServerConnectionSuccess();
     void incoming();
     void processIncomingData();
@@ -154,6 +153,8 @@ class Server : public QObject
     void sendToAllChannels(const QString& text);
 
   protected:
+    bool eventFilter(QObject* parent,QEvent* event);
+    void lookupFinished();
     void startNotifyCheckTimer();
     void setIdentity(Identity newIdentity);
 

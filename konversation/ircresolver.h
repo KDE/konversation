@@ -19,7 +19,6 @@
 #define IRCRESOLVER_H
 
 #include <qthread.h>
-#include <qobject.h>
 
 #include <kextendedsocket.h>
 
@@ -27,21 +26,18 @@
   @author Dario Abatianni
 */
 
-class IRCResolver : public QObject, public QThread
+class IRCResolver : public QThread
 {
-  Q_OBJECT
-
-  public: 
+  public:
     IRCResolver();
     ~IRCResolver();
 
+    void setRecipient(QObject* recipient);
     void setSocket(KExtendedSocket* newSocket);
     void run();
 
-  signals:
-    void lookupFinished(int num);
-
   protected:
+    QObject* recipient;
     KExtendedSocket* socket;
 };
 
