@@ -192,44 +192,45 @@ QListViewItem* NicksOnline::findItemChild(const QListViewItem* parent, const QSt
 * @param addressee         Addressbook entry for the nick.  May be empty.
 * @return                  A string formatted for display containing the information
 *                          about the nick.
+* @return needWhois        True if a WHOIS needs to be performed on the nick
+*                          to get additional information.
 */
-QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo, KABC::Addressee addressee)
+QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo, KABC::Addressee addressee, 
+    bool& needWhois)
 {
     QString info;
     if (!addressee.isEmpty())
     {
-        info += addressee.realName();
-        if (!addressee.preferredEmail().isEmpty())
-            info += " <" + addressee.preferredEmail() + ">";
+        if (addressee.fullEmail().isEmpty())
+            info += addressee.realName();
         else
-        {
-            if (!addressee.fullEmail().isEmpty())
-                info += " <" + addressee.fullEmail() + ">";
-        }
+            info += addressee.fullEmail();
     }
+    QString niInfo;
     if (nickInfo)
     {
-        if (!info.isEmpty()) info += " ";
         if (nickInfo->isAway())
         {
-            info += i18n("Away");
+            niInfo += i18n("Away");
             if (!nickInfo->getAwayMessage().isEmpty())
-                info += "(" + nickInfo->getAwayMessage() + ")";
+                niInfo += "(" + nickInfo->getAwayMessage() + ")";
         }
         if (!nickInfo->getHostmask().isEmpty())
-            info += " " + nickInfo->getHostmask();
+            niInfo += " " + nickInfo->getHostmask();
         if (!nickInfo->getRealName().isEmpty())
-            info += " (" + nickInfo->getRealName() + ")";
+            niInfo += " (" + nickInfo->getRealName() + ")";
         if (!nickInfo->getNetServer().isEmpty())
         {
-            info += " online via " + nickInfo->getNetServer();
+            niInfo += " online via " + nickInfo->getNetServer();
             if (!nickInfo->getNetServerInfo().isEmpty())
-                info += " (" + nickInfo->getNetServerInfo() + ")";
+                niInfo += " (" + nickInfo->getNetServerInfo() + ")";
         }
         if (!nickInfo->getOnlineSince().isNull())
-            info += " since " + nickInfo->getOnlineSince().toString(Qt::LocalDate);
+            niInfo += " since " + nickInfo->getOnlineSince().toString(Qt::LocalDate);
     }
-    return info;
+    needWhois = niInfo.isEmpty();
+    if (!info.isEmpty() && !needWhois) info += " ";
+    return info + niInfo;
 }
 
 /**
@@ -279,7 +280,8 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // Get addressbook entry (if any) for the nick.
             KABC::Addressee addressee = nickInfo->getAddressee();
             // Construct additional information string for nick.
-            QString nickAdditionalInfo = getNickAdditionalInfo(nickInfo, addressee);
+            bool needWhois = false;
+            QString nickAdditionalInfo = getNickAdditionalInfo(nickInfo, addressee, needWhois);
             // Remove from offline branch if present.
             QListViewItem* item = findItemChild(offlineRoot, nickname);
             if (item) delete item;
@@ -291,7 +293,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // If no additional info available, request a WHOIS on the nick.
             if (!m_whoisRequested)
             {
-                if (nickAdditionalInfo.isEmpty())
+                if (needWhois)
                 {
                     requestWhois(groupName, nickname);
                     m_whoisRequested = true;
@@ -352,7 +354,8 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // Get addressbook entry for the nick.
             KABC::Addressee addressee = servr->getOfflineNickAddressee(nickname);
             // Format additional information for the nick.
-            QString nickAdditionalInfo = getNickAdditionalInfo(0, addressee);
+            bool needWhois = false;
+            QString nickAdditionalInfo = getNickAdditionalInfo(0, addressee, needWhois);
             nickRoot->setText(nlvcAdditionalInfo, nickAdditionalInfo);
             // Set Kabc icon if the nick is associated with an addressbook entry.
             if (!addressee.isEmpty())
@@ -847,7 +850,9 @@ void NicksOnline::refreshItem(QListViewItem* item)
                         QIconSet::Small, QIconSet::Normal, QIconSet::On)); break; }
             }
             QString nickAdditionalInfo;
-            if (nickInfo) nickAdditionalInfo = getNickAdditionalInfo(nickInfo, addressee);
+            bool needWhois = false;
+            if (nickInfo) nickAdditionalInfo = getNickAdditionalInfo(nickInfo, addressee,
+                needWhois);
             item->setText(nlvcAdditionalInfo, nickAdditionalInfo);
             if (item == m_nickListView->selectedItem()) setupAddressbookButtons(nickState);
         }

@@ -153,8 +153,11 @@ class NicksOnline : public ChatWindow
     * @param nickInfo          A pointer to NickInfo structure for the nick.
     * @return                  A string formatted for display containing the information
     *                          about the nick.
+    * @return needWhois        True if a WHOIS needs to be performed on the nick
+    *                          to get additional information.
     */
-    QString getNickAdditionalInfo(NickInfoPtr nickInfo, KABC::Addressee addressee);
+    QString getNickAdditionalInfo(NickInfoPtr nickInfo, KABC::Addressee addressee,
+        bool& needWhois);
     /**
     * Invokes the KAddressBook contact editor for the specified contact id.
     * @param uid               Id of the contact.
