@@ -10,8 +10,6 @@
   begin:     Don Mai 29 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef PREFSPAGEDIALOGS_H

@@ -213,6 +213,7 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
   // Check, if user was typing in old input line
   bool doBringToFront=true;
 
+  // make sure that bring to front only works when the user wasn't typing something
   if(frontView)
   {
     if(!frontView->getTextInLine().isEmpty()) doBringToFront=false;
@@ -292,6 +293,17 @@ void KonversationMainWindow::openChannelList()
       getViewContainer()->showPage(panel);
     else
       frontServer->addChannelListPanel();
+  }
+  else
+  {
+    KMessageBox::information(this,
+                             i18n(
+                                  "The channel list can only be opened from a "
+                                  "query, channel or status window to find out, "
+                                  "which server this list belongs to."
+                                 ),
+                             i18n("Channel list"),
+                             "ChannelListNoServerSelected");
   }
 }
 
@@ -392,6 +404,10 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
   connect(statusView,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
   connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );
   connect(server,SIGNAL (awayState(bool)),statusView,SLOT (indicateAway(bool)) );
+
+  // make sure that frontServer gets set on adding the first status panel, too,
+  // since there won't be a changeView happening
+  if(!frontServer) frontServer=server;
 
   return statusView;
 }
