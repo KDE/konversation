@@ -38,12 +38,17 @@ class InputFilter : public QObject
     void setServer(Server* newServer);
     void parseLine(const QString &line);
 
+    // use this when the client does automatics, like userhost for finding hostmasks
+    void setAutomaticRequest(bool yes);
+    int getAutomaticRequest();
+
   signals:
     void welcome();
     void notifyResponse(const QString &nicksOnline);
-    void addDccGet(const QString &sourceNick, const QStringList &dccArgument); // will be connected to Server->addDccGet()
-    void resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArgument); // will be connected to Server->resumeDccGetTransfer()
-    void resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArgument); // will be connected to Server->resumeDccSendTransfer()
+    void addDccGet(const QString &sourceNick, const QStringList &dccArgument); // will be connected to Server::addDccGet()
+    void resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArgument); // will be connected to Server::resumeDccGetTransfer()
+    void resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArgument); // will be connected to Server::resumeDccSendTransfer()
+    void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp); // will be connected to Server::userhost()
 
   protected:
     void parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);
@@ -55,6 +60,7 @@ class InputFilter : public QObject
 
     Server* server;
     bool welcomeSent;
+    int automaticRequest;
 };
 
 #endif

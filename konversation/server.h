@@ -141,6 +141,7 @@ class Server : public QObject
     void addDccSend(const QString &recipient,const QString &file);
     void removeQuery(Query *query);
     void startNotifyTimer(int msec=0);
+    void requestUserhost(const QString& nicks);
 
   protected slots:
     void addRawLog();
@@ -169,6 +170,7 @@ class Server : public QObject
     void sendToAllChannels(const QString &text);
     void scriptNotFound(const QString& name);
     void scriptExecutionError(const QString& name);
+    void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
 
   protected:
     // constants

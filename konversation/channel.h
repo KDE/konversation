@@ -22,6 +22,7 @@
 #include <qcheckbox.h>
 #include <qvbox.h>
 #include <qlabel.h>
+#include <qtimer.h>
 
 #include "nick.h"
 #include "nicklistview.h"
@@ -100,6 +101,7 @@ class Channel : public ChatWindow
     void textPasted(QString text);
     // connected to IRCInput::sendFile()
     void sendFileMenu();
+    void autoUserhost();
 
   protected:
     QStringList getSelectedNicksList();
@@ -146,6 +148,7 @@ class Channel : public ChatWindow
     QList<Nick> nicknameList;
     QStringList selectedNicksList;
     QList<QuickButton> buttonList;
+    QTimer userhostTimer;
 };
 
 #endif

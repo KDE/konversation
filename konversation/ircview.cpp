@@ -128,16 +128,12 @@ void IRCView::highlightedSlot(const QString& link)
   {
     popup->removeItem(CopyUrl);
     copyUrlMenu=false;
-    
-  kdDebug() << "cleared" << endl;
   }
   else if(!link.isEmpty() && !copyUrlMenu)
   {
     popup->insertItem(i18n("Copy URL to clipboard"),CopyUrl,1);
     copyUrlMenu=true;
     urlToCopy=link;
-    
-  kdDebug() << link << endl;
   }
 }
 
@@ -558,7 +554,6 @@ bool IRCView::eventFilter(QObject* object,QEvent* event)
     else if(me->button()==QMouseEvent::MidButton)
     {
       // TODO: maybe implement pasting here?
-      kdDebug() << "MMouse" << endl;
     }
   }
   else if(event->type()==QEvent::ContextMenu)

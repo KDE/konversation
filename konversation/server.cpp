@@ -94,9 +94,9 @@ Server::Server(int id)
                    this,SLOT   (addQuery(const QString&,const QString&)) );
   connect(&outputFilter,SIGNAL (requestDccSend()),
                    this,SLOT   (requestDccSend()) );
-  connect(&outputFilter,SIGNAL (requestDccSend(const QString &)),
-                   this,SLOT   (requestDccSend(const QString &)) );
-  
+  connect(&outputFilter,SIGNAL (requestDccSend(const QString&)),
+                   this,SLOT   (requestDccSend(const QString&)) );
+
   connect(&notifyTimer,SIGNAL(timeout()),
                   this,SLOT  (notifyTimeout()) );
   connect(&notifyCheckTimer,SIGNAL(timeout()),
@@ -104,14 +104,16 @@ Server::Server(int id)
 
   connect(&inputFilter,SIGNAL(welcome()),
                   this,SLOT  (connectionEstablished()) );
-  connect(&inputFilter,SIGNAL(notifyResponse(const QString &)),
-                  this,SLOT  (notifyResponse(const QString &)) );
-  connect(&inputFilter,SIGNAL(addDccGet(const QString &, const QStringList &)),
-                  this,SLOT  (addDccGet(const QString &, const QStringList &)) );
-  connect(&inputFilter,SIGNAL(resumeDccGetTransfer(const QString &, const QStringList &)),
-                  this,SLOT  (resumeDccGetTransfer(const QString &, const QStringList &)) );
-  connect(&inputFilter,SIGNAL(resumeDccSendTransfer(const QString &, const QStringList &)),
-                  this,SLOT  (resumeDccSendTransfer(const QString &, const QStringList &)) );
+  connect(&inputFilter,SIGNAL(notifyResponse(const QString&)),
+                  this,SLOT  (notifyResponse(const QString&)) );
+  connect(&inputFilter,SIGNAL(addDccGet(const QString&, const QStringList&)),
+                  this,SLOT  (addDccGet(const QString&, const QStringList&)) );
+  connect(&inputFilter,SIGNAL(resumeDccGetTransfer(const QString&, const QStringList&)),
+                  this,SLOT  (resumeDccGetTransfer(const QString&, const QStringList&)) );
+  connect(&inputFilter,SIGNAL(resumeDccSendTransfer(const QString&, const QStringList&)),
+                  this,SLOT  (resumeDccSendTransfer(const QString&, const QStringList&)) );
+  connect(&inputFilter,SIGNAL(userhost(const QString&,const QString&,bool,bool)),
+                  this,SLOT  (userhost(const QString&,const QString&,bool,bool)) );
 
   connect(this,SIGNAL(serverLag(int)),serverWindow,SLOT(updateLag(int)) );
   connect(this,SIGNAL(tooLongLag(int)),serverWindow,SLOT(tooLongLag(int)) );
@@ -514,6 +516,10 @@ void Server::addQuery(const QString &nickname,const QString &hostmask)
     // Append query to internal list
     queryList.append(query);
   }
+
+  // try to get hostmask if there's none yet
+  if(hostmask.isEmpty()) requestUserhost(nickname);
+
   // Always set hostmask
   if(query) query->setHostmask(hostmask);
 }
@@ -528,6 +534,12 @@ void Server::closeChannel(const QString &name)
 {
   outputFilter.parse(getNickname(),KonversationApplication::preferences.getCommandChar()+"PART",name);
   queue(outputFilter.getServerOutput());
+}
+
+void Server::requestUserhost(const QString& nicks)
+{
+  inputFilter.setAutomaticRequest(true);
+  queue("USERHOST "+nicks);
 }
 
 void Server::requestBan(const QStringList& users,const QString& channel,const QString& a_option)
@@ -1035,6 +1047,11 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
     }
     query=queryList.next();
   }
+}
+
+void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp)
+{
+  addHostmaskToNick(nick,hostmask);
 }
 
 void Server::appendToChannel(const char* channel,const char* nickname,const char* message)

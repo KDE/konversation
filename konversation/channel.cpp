@@ -209,6 +209,10 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   updateFonts();
   setLog(KonversationApplication::preferences.getLog());
+
+  connect(&userhostTimer,SIGNAL (timeout()),this,SLOT (autoUserhost()));
+  // every few seconds try to get more userhosts
+  userhostTimer.start(10000);
 }
 
 Channel::~Channel()
@@ -1230,6 +1234,24 @@ QList<Nick> Channel::getNickList()
 void Channel::adjustFocus()
 {
   channelInput->setFocus();
+}
+
+void Channel::autoUserhost()
+{
+  int limit=5;
+
+  QString nickString;
+  QList<Nick> nicks=getNickList();
+
+  for(unsigned int index=0;index<nicks.count();index++)
+  {
+    if(nicks.at(index)->getHostmask().isEmpty())
+    {
+      if(limit--) nickString=nickString+nicks.at(index)->getNickname()+" ";
+      else break;
+    }
+  }
+  if(!nickString.isEmpty()) server->requestUserhost(nickString);
 }
 
 #include "channel.moc"

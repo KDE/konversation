@@ -41,6 +41,7 @@ InputFilter::InputFilter()
 {
   kdDebug() << "InputFilter::InputFilter()" << endl;
   welcomeSent=false;
+  automaticRequest=0;
 }
 
 InputFilter::~InputFilter()
@@ -903,6 +904,45 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           server->appendStatusMessage(i18n("Whois"),i18n("End of WHOIS list."));
           break;
         }
+      case RPL_USERHOST:
+        {
+          // iterate over all nick/masks in reply
+          QStringList uhosts=QStringList::split(" ",trailing);
+
+          for(unsigned int index=0;index<uhosts.count();index++)
+          {
+            // extract nickname and hostmask from reply
+            QString nick(uhosts[index].section('=',0,0));
+            QString mask(uhosts[index].section('=',1));
+
+            // get away and IRC operator flags
+            bool away=(mask[0]=='-');
+            bool ircOp=(nick[nick.length()-1]=='*');
+
+            // cut flags from nick/hostmask
+            mask=mask.mid(1);
+            if(ircOp) nick=nick.left(nick.length()-1);
+
+            // inform serer of this user's data
+            emit userhost(nick,mask,away,ircOp);
+
+            // display message only if this was no automatic request
+            if(getAutomaticRequest()==0)
+            {
+              server->appendStatusMessage(i18n("Userhost"),
+                                          i18n("%1%2 is %3%4")
+                                               .arg(nick)
+                                               .arg((ircOp) ? i18n(" (IRC Operator)") : QString::null)
+                                               .arg(mask)
+                                               .arg((away) ? i18n(" (away)") : QString::null));
+            }
+          } // for
+
+          // was this an automatic request?
+          if(getAutomaticRequest()!=0) setAutomaticRequest(false);
+
+          break;
+        }
       default:
         {
           // All yet unknown messages go into the frontmost window without the
@@ -976,5 +1016,16 @@ bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)
 
   return doIgnore;
 }
+
+void InputFilter::setAutomaticRequest(bool yes)
+{
+  automaticRequest+=(yes) ? 1 : -1;
+  if(automaticRequest<0)
+  {
+    kdDebug() << "InputFilter::automaticRequest was negative! Resetting!" << endl;
+    automaticRequest=0;
+  }
+}
+int InputFilter::getAutomaticRequest() { return automaticRequest; }
 
 #include "inputfilter.moc"
