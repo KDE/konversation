@@ -992,7 +992,52 @@ void Channel::updateMode(const QString &sourceNick, char mode, bool plus, const 
 
   switch(mode)
   {
-    case 'a': break;
+    case 'a':
+      if(plus)
+      {
+        if(fromMe)
+        {
+          if(toMe)
+            message=i18n("You give channel owner privileges to yourself.");
+          else
+            message=i18n("You give channel owner privileges to %1.").arg(parameter);
+        }
+        else
+        {
+          if(toMe)
+            message=i18n("%1 gives channel owner privileges to you.").arg(sourceNick);
+          else
+            message=i18n("%1 gives channel owner privileges to %2.").arg(sourceNick).arg(parameter);
+        }
+      }
+      else
+      {
+        if(fromMe)
+        {
+          if(toMe)
+            message=i18n("You take channel owner privileges from yourself.");
+          else
+            message=i18n("You take channel owner privileges from %1.").arg(parameter);
+        }
+        else
+        {
+          if(toMe)
+            message=i18n("%1 takes channel owner privileges from you.").arg(sourceNick);
+          else
+            message=i18n("%1 takes channel owner privileges from %2.").arg(sourceNick).arg(parameter);
+        }
+      }
+      nick=getNickByName(parameter);
+      if(nick)
+      {
+        // Only update counter if something has actually changed
+        if(plus && !nick->isOwner() && !nick->isOp()) adjustOps(1);
+        else if(!plus && nick->isOwner() && !nick->isOp()) adjustOps(-1);
+        nick->setOwner(plus);
+        updateNicksOps();
+        nicknameListView->sort();
+      }
+    break;
 
     case 'o':
       if(plus)

@@ -59,6 +59,7 @@ int main(int argc, char* argv[])
   aboutData.addCredit("Steve Wollkind",I18N_NOOP("Close visible tab with shortcut patch"),"steve@njord.org");
   aboutData.addCredit("Thomas Nagy",I18N_NOOP("Cycle tabs with mouse scroll wheel"),"thomas.nagy@eleve.emn.fr");
   aboutData.addCredit("Gary Cramblitt",I18N_NOOP("DCC panel fixes, custom web browser extension"),"garycramblitt@comcast.net");
+  aboutData.addCredit("Tobias Olry",I18N_NOOP("Channel ownership mode patch"),"tobias.olry@web.de");
 
   KCmdLineArgs::init(argc,argv,&aboutData);
 
