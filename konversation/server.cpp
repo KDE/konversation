@@ -580,7 +580,7 @@ void Server::lookupFinished()
     // prevent retrying to connect
     m_tryReconnect = false;
     // broken connection
-    broken(0);
+    broken(m_socket->error());
   } else {
     statusView->appendServerMessage(i18n("Info"),i18n("Server found, connecting..."));
   }
@@ -988,7 +988,7 @@ void Server::incoming()
                                     i18n("There was an error reading the data from the server: %1").
                                     arg(m_socket->errorString()));
 
-    broken(0);
+    broken(m_socket->error());
     return;
   }
 
@@ -1204,7 +1204,7 @@ void Server::send()
 
 void Server::closed()
 {
-  broken(0);
+  broken(m_socket->error());
 }
 
 void Server::dcopSay(const QString& target,const QString& command)
