@@ -204,7 +204,7 @@ public:
 // a thread will try maxThreadRetries to get data, waiting at most
 // maxThreadWaitTime milliseconds between each attempt. After that, it'll
 // exit
-static const int maxThreadWaitTime = 20000; // 20 seconds
+static const int maxThreadWaitTime = ULONG_MAX; // wait forever
 static const int maxThreads = 5;
 
 static pid_t pid;		// FIXME -- disable when everything is ok
