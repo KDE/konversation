@@ -19,8 +19,6 @@
 #include <qstringlist.h>
 
 #include <kmainwindow.h>
-#include <kdeversion.h>
-#include <kdeversion.h>
 
 #include "preferences.h"
 
