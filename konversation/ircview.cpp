@@ -6,7 +6,7 @@
 */
 
 /*
-  ircview.cpp  -  description
+  ircview.cpp  -  the text widget used for all text based panels
   begin:     Sun Jan 20 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -76,19 +76,19 @@ QString IRCView::filter(const QString& line,bool doHilight)
 {
   QString filteredLine(line);
 
-  /* Replace all & with &amp; */
+  // Replace all & with &amp;
   filteredLine.replace(QRegExp("&"),"&amp;");
-  /* Replace all < with &lt; */
+  // Replace all < with &lt;
   filteredLine.replace(QRegExp("\\<"),"&lt;");
-  /* Replace all > with &gt; */
+  // Replace all > with &gt;
   filteredLine.replace(QRegExp("\\>"),"&gt;");
-  /* Replace all 0x0f (reset color) with \0x031,0 */
+  // Replace all 0x0f (reset color) with \0x031,0
   filteredLine.replace(QRegExp("\017"),"\0031,0;");
 
-  /* replace \003 codes with rich text color codes */
-  /* TODO: use QRegExp for this */
+  // replace \003 codes with rich text color codes
+  // TODO: use QRegExp for this
 
-  /* How many chars to replace? */
+  // How many chars to replace?
   int replace;
   bool firstColor=true;
   QChar colChar;
@@ -101,31 +101,31 @@ QString IRCView::filter(const QString& line,bool doHilight)
     int foregroundColor=1;
     int backgroundColor=0;
 
-    /* TODO: make these configurable */
+    // TODO: make these configurable
     const char* colorCodes[]={"ffffff","000000","000080","008000","ff0000","a52a2a","800080","ff8000",
                               "808000","00ff00","008080","00ffff","0000ff","ffc0cb","a0a0a0","c0c0c0"};
 
-    /* remove leading \003 */
+    // remove leading \003
     filteredLine.replace(pos,1,"");
     replace=0;
     colorString="";
 
-    colChar=filteredLine[digitPos];          /* get first char */
-    if(colChar.isDigit())                    /* is this a digit? */
+    colChar=filteredLine[digitPos];          // get first char
+    if(colChar.isDigit())                    // is this a digit?
     {
-      foregroundColor=colChar.digitValue();  /* take this digit as color */
+      foregroundColor=colChar.digitValue();  // take this digit as color
       replace++;
 
-      colChar=filteredLine[++digitPos];      /* get next char */
-      if(foregroundColor<2)                  /* maybe a two digit color? */
+      colChar=filteredLine[++digitPos];      // get next char
+      if(foregroundColor<2)                  // maybe a two digit color?
       {
-        if(colChar.isDigit())                /* is this a digit? */
+        if(colChar.isDigit())                // is this a digit?
         {
-          if(colChar.digitValue()<6)         /* would this be a color from 10 to 15?  */
+          if(colChar.digitValue()<6)         // would this be a color from 10 to 15?
           {
             foregroundColor=foregroundColor*10+colChar.digitValue();
             replace++;
-            colChar=filteredLine[++digitPos];  /* get next char */
+            colChar=filteredLine[++digitPos];  // get next char
           }
         }
       }
@@ -133,18 +133,18 @@ QString IRCView::filter(const QString& line,bool doHilight)
     if(colChar==',')
     {
       replace++;
-      colChar=filteredLine[++digitPos];        /* get first char */
-      if(colChar.isDigit())                    /* is this a digit? */
+      colChar=filteredLine[++digitPos];        // get first char
+      if(colChar.isDigit())                    // is this a digit?
       {
-        backgroundColor=colChar.digitValue();  /* take this digit as color */
+        backgroundColor=colChar.digitValue();  // take this digit as color
         replace++;
 
-        if(backgroundColor<2)                  /* maybe a two digit color? */
+        if(backgroundColor<2)                  // maybe a two digit color?
         {
-          colChar=filteredLine[++digitPos];    /* get next char */
-          if(colChar.isDigit())                /* is this a digit? */
+          colChar=filteredLine[++digitPos];    // get next char
+          if(colChar.isDigit())                // is this a digit?
           {
-            if(colChar.digitValue()<6)         /* would this be a color from 10 to 15?  */
+            if(colChar.digitValue()<6)         // would this be a color from 10 to 15?
             {
               backgroundColor=backgroundColor*10+colChar.digitValue();
               replace++;
@@ -163,7 +163,7 @@ QString IRCView::filter(const QString& line,bool doHilight)
 
   if(!firstColor) filteredLine+="</font>";
 
-  /* Replace all text decorations */
+  // Replace all text decorations
   replaceDecoration(filteredLine,'\x02','b');
   replaceDecoration(filteredLine,'\x09','i');
   replaceDecoration(filteredLine,'\x13','u'); // should be strikethru
@@ -171,19 +171,19 @@ QString IRCView::filter(const QString& line,bool doHilight)
   replaceDecoration(filteredLine,'\x16','b'); // should be reverse
   replaceDecoration(filteredLine,'\x1f','u');
 
-  /* URL Catcher */
+  // URL Catcher
   QString linkMessageColor = KonversationApplication::preferences.getLinkMessageColor();
 
   QRegExp pattern("((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
-                  /* IP Address */
+                  // IP Address
                   "([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|"
-                  /* Decimal IP address */
+                  // Decimal IP address
                   "[0-9]{1,12}|"
-                  /* Standard host name */
+                  // Standard host name
                   "([\\.@%a-z0-9_-])+\\.[a-z]{2,}"
-                  /* Port number, path to document */
-                  ")(:[0-9]{1,5})?(/[^)>\"'!\\s]*)?|"
-                  /* eDonkey2000 links need special treatment */
+                  // Port number, path to document
+                  ")(:[0-9]{1,5})?(/[^)>\"'\\s]*)?|"
+                  // eDonkey2000 links need special treatment
                   "ed2k://\\|([^|]+\\|){4})");
 
   pattern.setCaseSensitive(false);
@@ -191,33 +191,33 @@ QString IRCView::filter(const QString& line,bool doHilight)
   pos=0;
   while(pattern.search(filteredLine,pos)!=-1)
   {
-    /* Remember where we found the url */
+    // Remember where we found the url
     pos=pattern.pos();
 
-    /* Extract url */
+    // Extract url
     QString url=pattern.capturedTexts()[0];
     QString href(url);
 
-    /* clean up href for browser */
+    // clean up href for browser
     if(href.startsWith("www.")) href="http://"+href;
     else if(href.startsWith("ftp.")) href="ftp://"+href;
 
-    /* Fix &amp; back to & in href ... kludgy but I don't know a better way. */
+    // Fix &amp; back to & in href ... kludgy but I don't know a better way.
     href.replace(QRegExp("&amp;"),"&");
-    /* Replace all spaces with %20 in href */
+    // Replace all spaces with %20 in href
     href.replace(QRegExp(" "),"%20");
-    /* Build rich text link */
+    // Build rich text link
     QString link("<font color=\"#"+linkMessageColor+"\"><a href=\""+href+"\">"+url+"</a></font>");
 
-    /* replace found url with built link */
+    // replace found url with built link
     filteredLine.replace(pos,url.length(),link);
-    /* next search begins right after the link */
+    // next search begins right after the link
     pos+=link.length();
-    /* tell the program that we have found a new url */
+    // tell the program that we have found a new url
     emit newURL(url);
   }
 
-  /* Hilight */
+  // Hilight
   if(doHilight)
   {
     QPtrList<Highlight> hilightList=KonversationApplication::preferences.getHilightList();
@@ -235,14 +235,13 @@ QString IRCView::filter(const QString& line,bool doHilight)
     }
   }
 
-  /* Replace multiple Spaces with "<space>&nbsp;" */
+  // Replace multiple Spaces with "<space>&nbsp;"
   do
   {
     pos=filteredLine.find("  ");
     if(pos!=-1) filteredLine.replace(pos+1,1,"&nbsp;");
   } while(pos!=-1);
 
-//  kdDebug() << filteredLine << endl;
   return filteredLine;
 }
 
@@ -307,7 +306,7 @@ void IRCView::appendServerMessage(const char* type,const char* message)
 {
   QString serverMessageColor = KonversationApplication::preferences.getServerMessageColor();
 
-  /* Fixed width font option for MOTD */
+  // Fixed width font option for MOTD
   QString fixed;
   if(KonversationApplication::preferences.getFixedMOTD())
   {
@@ -346,17 +345,26 @@ void IRCView::appendCommandMessage(const char* type,const char* message)
   doAppend(line);
 }
 
-void IRCView::appendBacklogMessage(const char* firstColumn,const char* message)
+void IRCView::appendBacklogMessage(const char* firstColumn,const char* rawMessage)
 {
+  QString time;
+  QString message(rawMessage);
   QString backlogMessageColor = KonversationApplication::preferences.getBacklogMessageColor();
 
+  // extract timestamp from message string
+  if(message.startsWith("["))
+  {
+    time=message.section(' ',0,0);
+    message=message.section(' ',1);
+  }
+
 #ifdef TABLE_VERSION
-  QString line=QString("<tr><td><font color=\"#"+backlogMessageColor+"\">%1</font></td><td><font color=\"#"+backlogMessageColor+"\">%2</font></td></tr>\n").arg(firstColumn).arg(filter(message));
+  QString line=QString("<tr><td><font color=\"#"+backlogMessageColor+"\">%1</font></td><td><font color=\"#"+backlogMessageColor+"\">%2 %3</font></td></tr>\n").arg(time).arg(firstColumn).arg(filter(message,false));
 #else
 #ifdef ADD_LINE_BREAKS
-  QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2</font><br>\n").arg(firstColumn).arg(filter(message));
+  QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2 %3</font><br>\n").arg(time).arg(firstColumn).arg(filter(message,false));
 #else
-  QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2</font>\n").arg(firstColumn).arg(filter(message));
+  QString line=QString("<font color=\"#"+backlogMessageColor+"\">%1 %2 %3</font>\n").arg(time).arg(firstColumn).arg(filter(message,false));
 #endif
 #endif
 
@@ -365,7 +373,7 @@ void IRCView::appendBacklogMessage(const char* firstColumn,const char* message)
 
 void IRCView::doAppend(QString line)
 {
-  /* Add line to buffer */
+  // Add line to buffer
   buffer+=line;
   emit newText();
 
@@ -378,29 +386,29 @@ void IRCView::doAppend(QString line)
   ensureVisible(0,contentsHeight());
 }
 
-/* Workaround to scroll to the end of the TextView when it's shown */
+// Workaround to scroll to the end of the TextView when it's shown
 void IRCView::showEvent(QShowEvent* event)
 {
-  /* Suppress Compiler Warning */
+  // Suppress Compiler Warning
   event->type();
 
 #ifdef TABLE_VERSION
   setText("<qt><table cellpadding=\"0\" cellspacing=\"0\">"+buffer+"</table></qt>");
 #endif
   ensureVisible(0,contentsHeight());
-  /* Set focus to input line (must be connected) */
+  // Set focus to input line (must be connected)
   emit gotFocus();
 }
 
 void IRCView::focusInEvent(QFocusEvent* event)
 {
-  /* Suppress Compiler Warning */
+  // Suppress Compiler Warning
   event->type();
-  /* Set focus to input line (must be connected) */
+  // Set focus to input line (must be connected)
   emit gotFocus();
 }
 
-/* Copy selected text into clipboard immediately */
+// Copy selected text into clipboard immediately
 bool IRCView::eventFilter(QObject* object,QEvent* event)
 {
   if(event->type()==QEvent::MouseButtonRelease)

@@ -6,7 +6,7 @@
 */
 
 /*
-  ircview.h  -  description
+  ircview.h  -  the text widget used for all text based panels
   begin:     Sun Jan 20 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -14,14 +14,10 @@
   $Id$
 */
 
-// #include <qlistview.h>
-// #include <qlabel.h>
-// #include <qscrollview.h>
-// #include <qgrid.h>
 #include <qevent.h>
 
 #include <ktextbrowser.h>
-//#include "preferences.h"
+
 #ifndef IRCVIEW_H
 #define IRCVIEW_H
 
@@ -29,10 +25,7 @@
   @author Dario Abatianni
 */
 
-// class IRCView : public QWidget
-// class IRCView : public QScrollView
 class IRCView : public KTextBrowser
-// class IRCView : public QListView, public QLabel
 {
   Q_OBJECT
 
@@ -43,9 +36,9 @@ class IRCView : public KTextBrowser
     void clear();
 
   signals:
-    void newText();      /* Notify container of new text */
+    void newText();      // Notify container of new text
     void newURL(QString url);
-    void gotFocus();     /* So we can set focus to input line */
+    void gotFocus();     // So we can set focus to input line
     void textToLog(const QString& text);
 
   public slots:
@@ -67,8 +60,6 @@ class IRCView : public KTextBrowser
     bool eventFilter(QObject* object,QEvent* event);
 
     QString buffer;
-// QScrollView stuff
-//    QGrid* grid;
 };
 
 #endif
