@@ -128,7 +128,7 @@ void ChatWindow::setLogfileName(const QString& name)
     if(logfile.open(IO_ReadOnly))
     {
       QString backlogLine;
-      /* Ste file pointer to 1 kB from the end */
+      /* Set file pointer to 1 kB from the end */
       logfile.at(logfile.size()-1024);
       /* Skip first line, since it may be incomplete */
       logfile.readLine(backlogLine,1024);

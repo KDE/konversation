@@ -82,7 +82,10 @@ void Query::setName(const QString& newName)
 {
   ChatWindow::setName(newName);
   /* don't change logfile name if query name changes */
-  if(logName=="") setLogfileName("konversation_"+getName().lower()+".log");
+  if(logName=="") setLogfileName("konversation_"+
+                                  ((KonversationApplication::preferences.getLowerLog())
+                                  ? getName()
+                                  : getName().lower())+".log");
 }
 
 void Query::queryTextEntered()

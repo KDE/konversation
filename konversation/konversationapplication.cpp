@@ -234,7 +234,9 @@ void KonversationApplication::readOptions()
 
   // Miscellaneous Flags
   config->setGroup("Flags");
-  preferences.setLog(config->readBoolEntry("Log",true));
+  preferences.setLog(config->readBoolEntry("Log",preferences.getLog()));
+  preferences.setLowerLog(config->readBoolEntry("LowerLog",preferences.getLowerLog()));
+  preferences.setLogFollowsNick(config->readBoolEntry("LogFollowsNick",preferences.getLogFollowsNick()));
   preferences.setBlinkingTabs(config->readBoolEntry("BlinkingTabs",true));
   preferences.setAutoReconnect(config->readBoolEntry("AutoReconnect",true));
   preferences.setAutoRejoin(config->readBoolEntry("AutoRejoin",true));
@@ -351,6 +353,8 @@ void KonversationApplication::saveOptions()
 
   config->setGroup("Flags");
   config->writeEntry("Log",preferences.getLog());
+  config->writeEntry("LowerLog",preferences.getLowerLog());
+  config->writeEntry("LogFollowsNick",preferences.getLogFollowsNick());
   config->writeEntry("BlinkingTabs",preferences.getBlinkingTabs());
   config->writeEntry("AutoReconnect",preferences.getAutoReconnect());
   config->writeEntry("AutoRejoin",preferences.getAutoRejoin());

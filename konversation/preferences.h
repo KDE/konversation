@@ -62,6 +62,10 @@ class Preferences : public QObject
 
     void setLog(bool state);
     bool getLog();
+    void setLowerLog(bool state);
+    bool getLowerLog();
+    void setLogFollowsNick(bool state);
+    bool getLogFollowsNick();
 
     void setDccAddPartner(bool state);
     bool getDccAddPartner();
@@ -169,6 +173,8 @@ class Preferences : public QObject
 
   protected:
     bool log;
+    bool lowerLog;
+    bool logFollowsNick;
     bool blinkingTabs;      // Do we want the LEDs on the tabs to blink?
     bool fixedMOTD;
 

@@ -75,6 +75,8 @@ Preferences::Preferences()
 
   logPath=kstddir.saveLocation("data","konversation/logs");
   log=true;
+  lowerLog=true;
+  logFollowsNick=true;
   blinkingTabs=true;
 
   notifyDelay=20;
@@ -187,6 +189,10 @@ void Preferences::clearServerList() { serverList.clear(); }
 
 void Preferences::setLog(bool state) { log=state; }
 bool Preferences::getLog() { return log; }
+void Preferences::setLowerLog(bool state) { lowerLog=state; }
+bool Preferences::getLowerLog() { return lowerLog; }
+void Preferences::setLogFollowsNick(bool state) { logFollowsNick=state; }
+bool Preferences::getLogFollowsNick() { return logFollowsNick; }
 
 void Preferences::setDccAddPartner(bool state) { dccAddPartner=state; }
 bool Preferences::getDccAddPartner() { return dccAddPartner; }
