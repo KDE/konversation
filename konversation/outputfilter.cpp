@@ -521,7 +521,7 @@ namespace Konversation {
                 QString modes;
                 modes.fill(mode, modeCount);
 
-                token += " " + giveTake + modes;
+                token += QString(" ") + QChar(giveTake) + modes;
                 tmpToken = token;
 
                 for(unsigned int index = 0; index < modeCount; index++)
