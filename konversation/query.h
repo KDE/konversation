@@ -53,10 +53,13 @@ class Query : public ChatWindow
     void queryTextEntered();
     void newTextInView();
     void close();
+    // connected to IRCInput::textPasted() - used to handle large/multiline pastes
+    void textPasted(QString text);
 
   protected:
     int spacing();
     int margin();
+    void sendQueryText(QString line);
 
     QString queryName;
     QString hostmask;

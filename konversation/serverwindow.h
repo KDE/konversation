@@ -121,12 +121,15 @@ class ServerWindow : public KMainWindow
                                  QString commandTextColor, QString linkTextColor, QString queryTextColor,
                                  QString serverTextColor);
     void closeColorConfiguration(QSize windowSize);
+    // connected to IRCInput::textPasted() - used for large/multiline pastes
+    void textPasted(QString text);
 
   protected:
     int spacing();
     int margin();
 
     void setLogfileName(const QString& name);
+    void sendStatusText(QString line);
 
     void readOptions();
     void saveOptions();

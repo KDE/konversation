@@ -6,7 +6,7 @@
 */
 
 /*
-  ircinput.cpp  -  description
+  ircinput.cpp  -  The line input widget with chat enhanced functions
   begin:     Tue Mar 5 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -15,6 +15,9 @@
 */
 
 #include <kdebug.h>
+#include <kapplication.h>
+
+#include <qclipboard.h>
 
 #include "ircinput.h"
 
@@ -128,3 +131,41 @@ void IRCInput::getHistory(bool up)
   setText(historyList[lineNum]);
 }
 
+void IRCInput::paste()
+{
+  // TODO: prompt user on large / multiline pastes
+  QClipboard *cb=KApplication::kApplication()->clipboard();
+  QString text;
+
+  // Copy text from the clipboard (paste)
+  text=cb->text();
+  // is there any text in the clipboard?
+  if(text)
+  {
+    bool signal=false;
+    // does the text contain at least one newline character?
+    if(text.find('\n')!=-1)
+    {
+      // make comparisons easier (avoid signed / unsigned warnings)
+      unsigned int pos=text.find('\n');
+      unsigned int rpos=text.findRev('\n');
+
+      // emit the signal if there's a line break in the middle of the text
+      if(pos>0 && pos!=(text.length()-1)) signal=true;
+      // emit the signal if there's more than one line break in the text
+      if(pos!=rpos) signal=true;
+    }
+
+    if(signal)
+      emit textPasted(text);
+    else
+      QLineEdit::paste();
+  }
+}
+
+// Accessor methods
+
+void IRCInput::setCompletionMode(char mode) { completionMode=mode; }
+char IRCInput::getCompletionMode() { return completionMode; }
+void IRCInput::setOldCursorPosition(int pos) { oldPos=pos; }
+int IRCInput::getOldCursorPosition() { return oldPos; }

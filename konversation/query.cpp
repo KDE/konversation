@@ -61,7 +61,10 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
   /* connect the signals and slots */
   connect(closeButton,SIGNAL (clicked()),this,SLOT (close()) );
+
   connect(queryInput,SIGNAL (returnPressed()),this,SLOT (queryTextEntered()) );
+  connect(queryInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
+
   connect(textView,SIGNAL (newText()),this,SLOT (newTextInView()) );
   connect(textView,SIGNAL (gotFocus()),queryInput,SLOT (setFocus()) );
 
@@ -101,25 +104,26 @@ void Query::setServer(Server* newServer)
 void Query::queryTextEntered()
 {
   QString line=queryInput->text();
-  if(line.lower()=="/clear") textView->clear();  // FIXME: to get rid of too wide lines
+  if(line.lower()=="/clear") textView->clear();
   else
-{
-  if(line.length())
   {
-    QString output=filter.parse(server->getNickname(),line,getName());
-
-    if(output!="")
-    {
-      if(filter.isAction()) appendAction(server->getNickname(),output);
-      else if(filter.isCommand()) appendCommandMessage(filter.getType(),output);
-      else if(filter.isProgram()) appendServerMessage(filter.getType(),output);
-      else appendQuery(server->getNickname(),output);
-    }
-
-    server->queue(filter.getServerOutput());
+    if(line.length()) sendQueryText(line);
   }
-}
   queryInput->clear();
+}
+
+void Query::sendQueryText(QString line)
+{
+  QString output=filter.parse(server->getNickname(),line,getName());
+
+  if(output!="")
+  {
+    if(filter.isAction()) appendAction(server->getNickname(),output);
+    else if(filter.isCommand()) appendCommandMessage(filter.getType(),output);
+    else if(filter.isProgram()) appendServerMessage(filter.getType(),output);
+    else appendQuery(server->getNickname(),output);
+  }
+  server->queue(filter.getServerOutput());
 }
 
 void Query::newTextInView()
@@ -146,4 +150,13 @@ int Query::margin()
 void Query::updateFonts()
 {
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
+}
+
+void Query::textPasted(QString text)
+{
+  if(server)
+  {
+    QStringList multiline=QStringList::split('\n',text);
+    for(unsigned int index=0;index<multiline.count();index++) sendQueryText(multiline[index]);
+  }
 }

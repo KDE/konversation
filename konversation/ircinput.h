@@ -32,17 +32,21 @@ class IRCInput : public QLineEdit
     IRCInput(QWidget* parent);
     ~IRCInput();
 
-    void setCompletionMode(char mode) { completionMode=mode; };
-    char getCompletionMode() { return completionMode; };
-    void setOldCursorPosition(int pos) { oldPos=pos; };
-    int getOldCursorPosition() { return oldPos; };
+    void setCompletionMode(char mode);
+    char getCompletionMode();
+    void setOldCursorPosition(int pos);
+    int getOldCursorPosition();
 
   signals:
     void nickCompletion();
     void history(bool up);
     void pageUp();
     void pageDown();
+    void textPasted(QString text);
 
+  public slots:
+    void paste();
+  
   protected slots:
     void getHistory(bool up);
 

@@ -182,11 +182,15 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
   connect(channelInput,SIGNAL (returnPressed()),this,SLOT (channelTextEntered()) );
   connect(channelInput,SIGNAL (nickCompletion()),this,SLOT (completeNick()) );
+  connect(channelInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
+  
   connect(textView,SIGNAL (newText()),this,SLOT (newTextInView()) );
   connect(textView,SIGNAL (newURL(QString)),this, SLOT (urlCatcher(QString)) );
   connect(textView,SIGNAL (gotFocus()),channelInput,SLOT (setFocus()) );
+
   connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
   connect(nicknameButton,SIGNAL (clicked()),this,SLOT (openNickChangeDialog()) );
+
   connect(topicLine,SIGNAL (topicChanged(const QString&)),this,SLOT (requestNewTopic(const QString&)) );
 
   nicknameList.setAutoDelete(true);     // delete items when they are removed
@@ -229,7 +233,16 @@ void Channel::requestNewTopic(const QString& newTopic)
   channelInput->setFocus();
 }
 
-/* Will be connected to NickListView::popupCommand(int) */
+void Channel::textPasted(QString text)
+{
+  if(server)
+  {
+    QStringList multiline=QStringList::split('\n',text);
+    for(unsigned int index=0;index<multiline.count();index++) sendChannelText(multiline[index]);
+  }
+}
+
+// Will be connected to NickListView::popupCommand(int)
 void Channel::popupCommand(int id)
 {
   QString pattern;
@@ -426,7 +439,7 @@ void Channel::channelTextEntered()
 {
   QString line=channelInput->text();
   if(line.lower()=="/clear")
-    textView->clear();  // FIXME: to get rid of too wide lines
+    textView->clear();
   else
     if(line.length()) sendChannelText(line);
 

@@ -95,6 +95,8 @@ class Channel : public ChatWindow
     void closeNickChangeDialog(QSize newSize);
     // will be called when the user types a new topic in the topic line
     void requestNewTopic(const QString& newTopic);
+    // connected to IRCInput::textPasted() - used to handle large/multiline pastings
+    void textPasted(QString text);
 
   protected:
     QStringList* getSelectedNicksList();

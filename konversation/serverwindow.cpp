@@ -139,17 +139,20 @@ void ServerWindow::appendToFrontmost(const QString& type,const QString& message)
 void ServerWindow::statusTextEntered()
 {
   QString line=statusInput->text();
+
   if(line.lower()=="/clear") statusView->clear();  // FIXME: to get rid of too wide lines
-  else
-  {
-    QString output=filter.parse(server->getNickname(),line,"");
-
-    if(output!="") appendToStatus(filter.getType(),output);
-
-    server->queue(filter.getServerOutput());
-  }
+  else sendStatusText(line);
 
   statusInput->clear();
+}
+
+void ServerWindow::sendStatusText(QString line)
+{
+  QString output=filter.parse(server->getNickname(),line,"");
+
+  if(output!="") appendToStatus(filter.getType(),output);
+
+  server->queue(filter.getServerOutput());
 }
 
 void ServerWindow::addView(QWidget* pane,int color,const QString& label)
@@ -241,6 +244,8 @@ void ServerWindow::addStatusView()
   windowContainer->addTab(statusPane,i18n("Status"),2,false);
 
   connect(statusInput,SIGNAL (returnPressed()),this,SLOT(statusTextEntered()) );
+  connect(statusInput,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
+
   connect(statusView,SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
   connect(statusView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
 
@@ -588,4 +593,13 @@ void ServerWindow::tooLongLag(int msec)
 void ServerWindow::resetLag()
 {
   statusBar()->changeItem(i18n("Lag: not known"),LagOMeter);
+}
+
+void ServerWindow::textPasted(QString text)
+{
+  if(getServer())
+  {
+    QStringList multiline=QStringList::split('\n',text);
+    for(unsigned int index=0;index<multiline.count();index++) sendStatusText(multiline[index]);
+  }
 }
