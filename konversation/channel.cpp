@@ -890,13 +890,15 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo) {
   Q_ASSERT(!oldNick.isEmpty());
   /* Did we change our nick name? */
   QString newNick = nickInfo.getNickname();
-  if(oldNick==server->getNickname())
-  {
+  if(oldNick==server->getNickname()) {
     setNickname(newNick);
     appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.").arg(newNick), false, true, true);
+  } else {
+    /* No, must've been someone else */
+    appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.").arg(oldNick).arg(newNick),false);
   }
-  /* No, must've been someone else */
-   else appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.").arg(oldNick).arg(newNick),false);
+  
+  nicknameListView->sort();
 
 }
 void Channel::joinNickname(ChannelNickPtr channelNick) {
