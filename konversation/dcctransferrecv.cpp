@@ -384,9 +384,9 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )  // public
   
   // do write
   m_writeReady = false;
-  QByteArray* cache = popCache();
+  QByteArray cache = popCache();
   m_transferJob->sendAsyncData( *cache );
-  delete cache;
+  delete cache;  //FIXME double check that it's okay to do this :\
   return true;
 }
 
@@ -456,7 +456,7 @@ QByteArray* DccTransferRecvWriteCacheHandler::popCache()
       memcpy( data, one->data(), one->size() );
       data += one->size();
       m_cacheList.removeFirst();
-      delete one;
+      delete one; 
     }
     
     kdDebug() << "DccTransferRecvWriteCacheHandler::popCache(): caches in the packet: " << numCacheToWrite << ", remaining caches: " << m_cacheList.count() << endl;
@@ -468,14 +468,18 @@ QByteArray* DccTransferRecvWriteCacheHandler::popCache()
 
 void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& data )
 {
+  //We are in writeAsyncMode if there is more data to be read in from dcc
   if ( m_writeAsyncMode )
-    m_writeReady = true;
+    m_writeReady = true;  
   else
   {
+    //No more data left to read from incomming dcctransfer
     if ( !m_cacheList.isEmpty() )
-      data = *( popCache() );
+      data = *( popCache() );  //once we write everything in cache, the file is complete.
+                               //This function will be called once more after this last data is written.
     else
     {
+      //finally, no data left to write or read.
       kdDebug() << "DccTransferRecvWriteCacheHandler::slotKIODataReq(): flushing done." << endl;
       m_transferJob = 0;
       emit done();  // ->DccTransferRecv
@@ -487,6 +491,7 @@ void DccTransferRecvWriteCacheHandler::slotKIOResult()
 {
   if( m_transferJob->error() )
   {
+    m_transferJob->showErrorDialog(0);
     emit gotError( m_transferJob->error() );
     m_transferJob = 0;
   }
