@@ -836,7 +836,7 @@ void OutputFilter::parseIgnore(const QString& parameter)
     QStringList parameterList=QStringList::split(' ',parameter);
 
     // if nothing else said, only ignore channels and queries
-    Ignore::Type value=Ignore::Channel | Ignore::Query;
+    int value=Ignore::Channel | Ignore::Query;
 
     // user specified -all option
     if(parameterList[0].lower()=="-all")
