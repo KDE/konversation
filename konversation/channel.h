@@ -74,7 +74,7 @@ class Channel : public ChatWindow
     void sendFile();
 
   public slots:
-    void setNickname(const QString&ChannelTChannelT);
+    void setNickname(const QString& newNickname);
     void channelTextEntered();
     void sendChannelText(const QString& line);
     void newTextInView();
@@ -85,14 +85,14 @@ class Channel : public ChatWindow
 
   protected slots:
     void completeNick();
-    void quickButtonClicked(const QString &definition);
+    void quickButtonClicked(const QString& definition);
     void modeButtonClicked(int id,bool on);
 
     void popupCommand(int id);                // Will be connected to NickListView::popupCommand()
     void doubleClickCommand(QListViewItem*);  // Will be connected to NickListView::doubleClicked()
     // Dialogs
     void openNickChangeDialog();
-    void changeNickname(const QString &newNickname);
+    void changeNickname(const QString& newNickname);
     void closeNickChangeDialog(QSize newSize);
     // will be called when the user types a new topic in the topic line
     void requestNewTopic(const QString& newTopic);

@@ -23,7 +23,7 @@ Make font for quick buttons configurable
 -privmsg (/msg) should be logged to the specific log file (if i do /msg foo bar i want to have this in konversation-foo.log)
 
 nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  das markieren
-      des letzten Zeitpunkts wo das Fenster aktiv war  und  die Text-Suche "
+      des letzten Zeitpunkts wo das Fenster aktiv war"
 *nobs* noch ein Feature-Request: alle "technischen" Meldungen aus # und query ausblenden können;
        entweder ins Status-Fenster umleiten oder ganz verwerfen optional 
 

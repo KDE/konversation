@@ -29,13 +29,13 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent,QStringList list,QSize si
 {
   kdDebug() << "DccRecipientDialog::DccRecipientDialog()" << endl;
 
-  /* Create the top level widget */
+  // Create the top level widget
   QWidget* page=new QWidget(this);
   setMainWidget(page);
-  /* Add the layout to the widget */
+  // Add the layout to the widget
   QVBoxLayout* dialogLayout=new QVBoxLayout(page);
   dialogLayout->setSpacing(spacingHint());
-  /* Add the nickname list widget */
+  // Add the nickname list widget
   KListBox* nicknameList=new KListBox(page,"recipient_list");
 
   nicknameList->insertStringList(list);

@@ -36,7 +36,7 @@ class NickChangeDialog : public KDialogBase
     ~NickChangeDialog();
 
   signals:
-    void newNickname(QString newNick);
+    void newNickname(const QString& newNick);
     void closeDialog(QSize newSize);
 
   protected slots:

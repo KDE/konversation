@@ -1155,12 +1155,12 @@ void Channel::openNickChangeDialog()
                                           identity->getNicknameList(),
                                           KonversationApplication::preferences.getNicknameSize());
     connect(nickChangeDialog,SIGNAL (closeDialog(QSize)),this,SLOT (closeNickChangeDialog(QSize)) );
-    connect(nickChangeDialog,SIGNAL (newNickname(QString)),this,SLOT (changeNickname(QString)) );
+    connect(nickChangeDialog,SIGNAL (newNickname(const QString&)),this,SLOT (changeNickname(const QString&)) );
     nickChangeDialog->show();
   }
 }
 
-void Channel::changeNickname(const QString &newNickname)
+void Channel::changeNickname(const QString& newNickname)
 {
   server->queue("NICK "+newNickname);
 }

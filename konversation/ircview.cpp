@@ -35,6 +35,7 @@
 #include "ircview.h"
 #include "highlight.h"
 #include "server.h"
+#include "searchdialog.h"
 
 IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 {
@@ -47,11 +48,15 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
     popup->insertItem(i18n("&Copy"),Copy);
     popup->insertItem(i18n("Select All"),SelectAll);
     popup->insertSeparator();
+    popup->insertItem(i18n("Search text"),Search);
+    popup->insertSeparator();
     popup->insertItem(i18n("Send File"),SendFile);
   }
   else kdWarning() << "IRCView::IRCView(): Could not create popup!" << endl;
 
-  
+  findParagraph=0;
+  findIndex=0;
+
   setVScrollBarMode(AlwaysOn);
   setHScrollBarMode(AlwaysOff);
 
@@ -507,14 +512,70 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
     case SelectAll:
       selectAll();
       break;
+    case Search:
+      search();
+      break;
     case SendFile:
       emit sendFile();
       break;
   }
-  // Will be connected to Channel::popupCommand(int)
-//    emit popupCommand(r);
 
   return true;
+}
+
+void IRCView::search()
+{
+  bool caseSensitive=false;
+  bool wholeWords=false;
+  bool forward=false;
+  bool fromCursor=false;
+
+  QString pattern=SearchDialog::search(this,&caseSensitive,&wholeWords,&forward,&fromCursor);
+  if(!pattern.isEmpty())
+  {
+    // don't change search variables if fromCursor
+    if(fromCursor)
+    {
+      if(forward)
+      {
+        findIndex++;
+        if(findIndex=paragraphLength(findParagraph))
+        {
+          findIndex=0;
+          findParagraph++;
+        }
+      }
+      else
+      {
+        if(findIndex) findIndex--;
+        else
+        {
+          findParagraph--;
+          findIndex=paragraphLength(findParagraph);
+        }
+      }
+    }
+    else
+    {
+      if(forward)
+      {
+        findParagraph=1;
+        findIndex=1;
+      }
+      else
+      {
+        findParagraph=paragraphs();
+        findIndex=paragraphLength(paragraphs());
+      }
+    }
+
+    kdDebug() << "Looking for " << pattern << " from paragraph " << findParagraph << " line " << findIndex << endl;
+    
+    if(find(pattern,caseSensitive,wholeWords,forward,&findParagraph,&findIndex))
+      kdDebug() << "Found " << pattern << " on paragraph " << findParagraph << " line " << findIndex << endl;
+    else
+      kdDebug() << "Pattern " << pattern << " not found." << endl;
+  }
 }
 
 #include "ircview.moc"

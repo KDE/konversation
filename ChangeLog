@@ -14,6 +14,7 @@ Changes from 0.10 to 0.11
 - Added ALT+1 - ALT+9 for switching tabs
 - Applied a big patch by Alex Zepeda. Thanks!
 - First working DCOP implementation
+- Implemented a simple search dialog
 
 Changes from 0.9 to 0.10
 - Font encodings are now set via KCharsets

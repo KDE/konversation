@@ -42,6 +42,7 @@ class IRCView : public KTextBrowser
     enum PopupIDs
     {
       Copy,SelectAll,
+      Search,
       SendFile
     };
 
@@ -71,6 +72,11 @@ class IRCView : public KTextBrowser
     bool eventFilter(QObject* object,QEvent* event);
 
     bool contextMenu(QContextMenuEvent* ce);
+    void search();
+
+    // used by search function
+    int findParagraph;
+    int findIndex;
     
     QString buffer;
     Server *server;
