@@ -16,7 +16,6 @@
 
 #include <qlabel.h>
 #include <qpixmap.h>
-#include <qcheckbox.h>
 
 #include <klocale.h>
 #include <kcombobox.h>
@@ -33,9 +32,9 @@ IRCColorChooser::IRCColorChooser(QWidget* parent, Preferences* p, const char* na
   setMainWidget(m_view);
   initColors(m_view->m_fgColorCBox);
   initColors(m_view->m_bgColorCBox);
+  m_view->m_bgColorCBox->insertItem(i18n("None"), 0);
 
   connect(m_view->m_fgColorCBox, SIGNAL(activated(int)), this, SLOT(updatePreview()));
-  connect(m_view->m_bgColorChBox, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
   connect(m_view->m_bgColorCBox, SIGNAL(activated(int)), this, SLOT(updatePreview()));
   m_view->m_fgColorCBox->setCurrentItem(1);
   m_view->m_bgColorCBox->setCurrentItem(0);
@@ -47,8 +46,8 @@ QString IRCColorChooser::color()
   QString s;
   s = "%C" + QString::number(m_view->m_fgColorCBox->currentItem());
 
-  if(m_view->m_bgColorChBox->isChecked()) {
-    s += "," + QString::number(m_view->m_bgColorCBox->currentItem());
+  if(m_view->m_bgColorCBox->currentItem() > 0) {
+    s += "," + QString::number(m_view->m_bgColorCBox->currentItem() - 1);
   }
 
   return s;
@@ -59,8 +58,8 @@ void IRCColorChooser::updatePreview()
   QStringList colors = m_preferences->getIRCColorList();
   QColor bgc;
 
-  if(m_view->m_bgColorChBox->isChecked()) {
-    bgc = QColor(colors[m_view->m_bgColorCBox->currentItem()]);
+  if(m_view->m_bgColorCBox->currentItem() > 0) {
+    bgc = QColor(colors[m_view->m_bgColorCBox->currentItem() - 1]);
   } else {
     bgc = QColor("#" + m_preferences->getColor("TextViewBackground"));
   }

@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>IRCColorChooserUI</class>
 <widget class="QWidget">
     <property name="name">
@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>246</width>
-            <height>94</height>
+            <width>249</width>
+            <height>108</height>
         </rect>
     </property>
     <property name="caption">
@@ -19,33 +19,34 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QCheckBox" row="1" column="0">
+        <widget class="QLabel" row="2" column="0" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>m_bgColorChBox</cstring>
+                <cstring>m_previewLbl</cstring>
             </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>4</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
+            <property name="frameShape">
+                <enum>Panel</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
             </property>
             <property name="text">
-                <string>&amp;Background color:</string>
+                <string>Preview</string>
+            </property>
+            <property name="alignment">
+                <set>AlignCenter</set>
             </property>
         </widget>
         <widget class="KComboBox" row="0" column="1">
             <property name="name">
                 <cstring>m_fgColorCBox</cstring>
             </property>
-        </widget>
-        <widget class="KComboBox" row="1" column="1">
-            <property name="name">
-                <cstring>m_bgColorCBox</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
         </widget>
         <widget class="QLabel" row="0" column="0">
@@ -67,33 +68,35 @@
                 <cstring>m_fgColorCBox</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="2" column="0" rowspan="1" colspan="2">
+        <widget class="KComboBox" row="1" column="1">
             <property name="name">
-                <cstring>m_previewLbl</cstring>
+                <cstring>m_bgColorCBox</cstring>
             </property>
-            <property name="frameShape">
-                <enum>Panel</enum>
+            <property name="enabled">
+                <bool>true</bool>
             </property>
-            <property name="frameShadow">
-                <enum>Sunken</enum>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+        </widget>
+        <widget class="QLabel" row="1" column="0">
+            <property name="name">
+                <cstring>m_bgColorLbl</cstring>
             </property>
             <property name="text">
-                <string>Preview</string>
+                <string>&amp;Background color:</string>
             </property>
-            <property name="alignment">
-                <set>AlignCenter</set>
+            <property name="buddy" stdset="0">
+                <cstring>m_bgColorCBox</cstring>
             </property>
         </widget>
     </grid>
 </widget>
-<connections>
-    <connection>
-        <sender>m_bgColorChBox</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>m_bgColorCBox</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-</connections>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kcombobox.h</includehint>
