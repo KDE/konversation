@@ -53,16 +53,8 @@ PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newP
     colorComboList.append(colorCombo);
 
     QString color=preferences->getColor(name);
-    // check if we found an undefined TextViewBackground color
-    if(color=="#")
-    {
-      // get default base color for text widgets and put it in preferences
-      color=colorCombo->palette().color(QPalette::Active,QColorGroup::Base).name().mid(1);
-      preferences->setColor(name,color);
-    }
-
     colorCombo->setColor(color.prepend('#'));
-    // give this color combo a name so we can see what color has changed in the signal
+    // give this color combo a name so we can save colors with their appropriate name later
     colorCombo->setName(name.latin1());
 
     colorSettingsLayout->addWidget(colorLabel,row,0);

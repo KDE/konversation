@@ -452,15 +452,16 @@ void Preferences::setColor(const QString& name,const QString& color)
 
 QString Preferences::getDefaultColor(const QString& name)
 {
-  if(name=="ChannelMessage")     return "000000";
-  if(name=="QueryMessage")       return "0000ff";
-  if(name=="ServerMessage")      return "91640a";
-  if(name=="ActionMessage")      return "0000ff";
-  if(name=="BacklogMessage")     return "aaaaaa";
-  if(name=="LinkMessage")        return "0000ff";
-  if(name=="CommandMessage")     return "960096";
-  if(name=="Time")               return "709070";
-  if(name=="TextViewBackground") return "#";        // will be set on the first run of an ircview
+  if(name=="ChannelMessage")      return "000000";
+  if(name=="QueryMessage")        return "0000ff";
+  if(name=="ServerMessage")       return "91640a";
+  if(name=="ActionMessage")       return "0000ff";
+  if(name=="BacklogMessage")      return "aaaaaa";
+  if(name=="LinkMessage")         return "0000ff";
+  if(name=="CommandMessage")      return "960096";
+  if(name=="Time")                return "709070";
+  if(name=="TextViewBackground")  return "ffffff";
+  if(name=="AlternateBackground") return "ffffff";
 
   return QString::null;
 }
