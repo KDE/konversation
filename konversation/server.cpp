@@ -502,7 +502,7 @@ void Server::send()
     QTextCodec* codec=QTextCodec::codecForName(KonversationApplication::preferences.getCodec().ascii());
     QCString line=codec->fromUnicode(outputBuffer);
 
-    stream << outputBuffer;
+    stream << line;
 
     serverSocket.enableWrite(false);
   }
