@@ -69,6 +69,7 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   rawLog=0;
   channelListPanel=0;
   alreadyConnected=false;
+  rejoinChannels = false;
 
   QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
   setIdentity(KonversationApplication::preferences.getIdentityByName(serverEntry[7]));
@@ -226,7 +227,7 @@ void Server::connectToIRCServer()
   if(isConnected())
   {
     // just join our autojoin-channel if desired
-    if (getAutoJoin()) queue(getAutoJoinCommand());
+    if (getAutoJoin() && !rejoinChannels) queue(getAutoJoinCommand());
     // TODO: move autojoin here and use signals / slots
   }
   else
@@ -401,10 +402,14 @@ void Server::broken(int state)
     {
       statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 failed.").arg(serverName));
       reconnectCounter=0;
+      rejoinChannels = false;
     }
     else
+    {
       // TODO: Make timeout configurable
       QTimer::singleShot(5000,this,SLOT(connectToIRCServer()));
+      rejoinChannels = true;
+    }
   }
   else if(getDeliberateQuit()) // If we quit the connection with the server
   {
@@ -427,6 +432,11 @@ void Server::connectionEstablished()
     // register with services
     if(!botPassword.isEmpty() && !bot.isEmpty())
       queue("PRIVMSG "+bot+" :identify "+botPassword);
+    
+    if(rejoinChannels) {
+      rejoinChannels = false;
+      autoRejoinChannels();
+    }
   }
   else
     kdDebug() << "alreadyConnected==true! How did that happen?" << endl;
@@ -1643,6 +1653,20 @@ void Server::closeChannelListPanel()
     delete channelListPanel;
     channelListPanel=0;
   }
+}
+
+void Server::autoRejoinChannels()
+{
+  QStringList channels;
+  QStringList keys;
+  
+  for(Channel* ch = channelList.first(); ch; ch = channelList.next()) {
+    channels.append(ch->getName());
+    keys.append(ch->getKey());
+  }
+  
+  QString joinString("JOIN "+channels.join(",")+" "+keys.join(","));
+  queue(joinString);
 }
 
 void Server::setIdentity(const Identity* newIdentity) { identity=newIdentity; }

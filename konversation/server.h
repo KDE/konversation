@@ -209,6 +209,8 @@ class Server : public QObject
     void startNotifyCheckTimer();
     bool isAChannel(const QString &check);
     void setIdentity(const Identity *newIdentity);
+    
+    void autoRejoinChannels();
 
     unsigned int completeQueryPosition;
     unsigned int tryNickNumber;
@@ -266,6 +268,7 @@ class Server : public QObject
     QDateTime awayTime;
     bool isAway;
     bool alreadyConnected;
+    bool rejoinChannels;
 };
 
 #endif
