@@ -589,10 +589,10 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
     QString line;
     QString prefix="***";
 
-    if(type=="Join") {
+    if(type == i18n("Join")) {
         prefix="-->";
         parseURL=false;
-    } else if(type=="Part" || type=="Quit") {
+    } else if(type == i18n("Part") || type == i18n("Quit")) {
         prefix="<--";
     }
 
