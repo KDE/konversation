@@ -131,9 +131,15 @@ void NicksOnline::setOnlineList(const QString& serverName,const QStringList& lis
 
 void NicksOnline::processDoubleClick(QListViewItem* item)
 {
-  // only emit signal when the user double clicked a nickname rather than a server name
-  if(item->parent())
-    emit doubleClicked(item->parent()->text(0),item->text(0));
+  // only emit signal when the user double clicked a nickname rather than a server name or channel name.
+  QListViewItem* parentItem = item->parent();
+  if(parentItem)
+  {
+    if (!parentItem->parent())
+    {
+      emit doubleClicked(parentItem->text(0),item->text(0));
+    }
+  }
 }
 
 void NicksOnline::adjustFocus()
