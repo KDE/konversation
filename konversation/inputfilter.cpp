@@ -412,13 +412,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
   }
   else
   {
-    switch (numeric)
+    switch(numeric)
     {
       case RPL_WELCOME:
       case RPL_YOURHOST:
       case RPL_CREATED:
       {
-        if(command==RPL_WELCOME)
+        if(numeric==RPL_WELCOME)
         {
           // Remember server's insternal name
           server->setIrcName(prefix);

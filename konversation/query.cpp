@@ -124,6 +124,9 @@ void Query::updateFonts()
 {
   kdDebug() << "Query::updateFonts()" << endl;
 
+  queryHostmask->setFont(KonversationApplication::preferences.getTextFont());
+  queryInput->setFont(KonversationApplication::preferences.getTextFont());
+  logCheckBox->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setPaper(QColor("#"+KonversationApplication::preferences.getTextViewBackground()));
 }

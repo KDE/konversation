@@ -156,7 +156,7 @@ void OutputFilter::parseUnvoice(const QString &parameter)
 
 void OutputFilter::parseJoin(const QString &channelName)
 {
-  if(!channelName.isEmpty())
+  if(channelName.isEmpty())
   {
     type=i18n("Usage");
     output=i18n("Usage: %1JOIN <channel> [key]").arg(commandChar);

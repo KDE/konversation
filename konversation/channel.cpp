@@ -1123,9 +1123,15 @@ void Channel::updateFonts()
 {
   kdDebug() << "Channel::updateFonts()" << endl;
 
+  topicLine->setFont(KonversationApplication::preferences.getTextFont());
+  limit->setFont(KonversationApplication::preferences.getTextFont());
+  nicknameButton->setFont(KonversationApplication::preferences.getTextFont());
+  channelInput->setFont(KonversationApplication::preferences.getTextFont());
+  logCheckBox->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setPaper(QColor("#"+KonversationApplication::preferences.getTextViewBackground()));
 
+  nicksOps->setFont(KonversationApplication::preferences.getListFont());
   nicknameListView->setFont(KonversationApplication::preferences.getListFont());
 }
 

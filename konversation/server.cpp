@@ -254,7 +254,6 @@ void Server::connectionEstablished()
 {
   // get first notify very early
   startNotifyTimer(1000);
-
   // register with services
   if(!botPassword.isEmpty() && !bot.isEmpty())
     queue("PRIVMSG "+bot+" :identify "+botPassword);
@@ -467,7 +466,7 @@ void Server::addQuery(const QString &nickname, const QString &hostmask)
 
     connect(query,SIGNAL (newText(QWidget*)),serverWindow,SLOT (newText(QWidget*)) );
     connect(query,SIGNAL (closed(Query*)),this,SLOT (removeQuery(Query*)) );
-    connect(query,SIGNAL (sendFile(QString)),this,SLOT (requestDccSend(const QString &)) );
+    connect(query,SIGNAL (sendFile(const QString&)),this,SLOT (requestDccSend(const QString &)) );
     // Append query to internal list
     queryList.append(query);
   }

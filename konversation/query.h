@@ -46,7 +46,7 @@ class Query : public ChatWindow
   signals:
     void newText(QWidget* query);
     void closed(Query* query);
-    void sendFile(QString recipient);
+    void sendFile(const QString& recipient);
 
   public slots:
     void adjustFocus();
