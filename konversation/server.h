@@ -27,8 +27,7 @@
 #include "channelnick.h"
 #include "inputfilter.h"
 #include "outputfilter.h"
-#include "ircserversocket.h"
-#include "ircresolver.h"
+
 
 #include "dcctransfer.h"
 #include "nickinfo.h"
@@ -45,6 +44,7 @@ class KonversationMainWindow;
 class RawLog;
 class ChannelListPanel;
 class ScriptLauncher;
+class KExtendedSocket;
 
 class Server : public QObject
 {
@@ -218,6 +218,7 @@ class Server : public QObject
   public slots:
     void preShellCommandExited(KProcess*);
     void connectToIRCServer();
+    void lookupFinished();
     void queue(const QString &buffer);
     void queueList(const QStringList &buffer);
     void queueAt(uint pos,const QString& buffer);
@@ -296,7 +297,6 @@ class Server : public QObject
 
     bool eventFilter(QObject* parent, QEvent *event);
 
-    void lookupFinished();
     void startNotifyCheckTimer();
     bool isAChannel(const QString &check);
     void setIdentity(Identity *newIdentity);
@@ -349,7 +349,6 @@ class Server : public QObject
     QString serverNickPrefixes;     // Prefixes used by the server to indicate a mode
     QString serverNickPrefixModes;  // if supplied: modes related to those prefixes
 
-    IRCResolver resolver;
     Identity* identity;
 
     bool autoJoin;
@@ -363,7 +362,7 @@ class Server : public QObject
     QString autoJoinChannelKey;
 
     KonversationMainWindow* mainWindow;
-    IRCServerSocket serverSocket;
+    KExtendedSocket* serverSocket;
 
     QTimer reconnectTimer;
     QTimer incomingTimer;
