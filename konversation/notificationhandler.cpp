@@ -41,7 +41,7 @@ void NotificationHandler::message(ChatWindow* chatWin, const QString& fromNick, 
   }
   
   QString cutup = KStringHandler::rsqueeze(Konversation::removeIrcMarkup(message), 50);
-  KNotifyClient::event(m_mainWindow->winId(), "message", QString("<%1> %2").arg(fromNick).arg(cutup));
+  KNotifyClient::event(winId(), "message", QString("<%1> %2").arg(fromNick).arg(cutup));
   
   if(!KonversationApplication::preferences.trayNotifyOnlyOwnNick()) {
     startTrayNotification(chatWin);
@@ -61,7 +61,7 @@ void NotificationHandler::nick(ChatWindow* chatWin, const QString& fromNick, con
   }
   
   QString cutup = KStringHandler::rsqueeze(Konversation::removeIrcMarkup(message), 50);
-  KNotifyClient::event(m_mainWindow->winId(), "nick", QString("<%1> %2").arg(fromNick).arg(cutup));
+  KNotifyClient::event(winId(), "nick", QString("<%1> %2").arg(fromNick).arg(cutup));
   
   startTrayNotification(chatWin);
 
@@ -91,15 +91,24 @@ void NotificationHandler::startTrayNotification(ChatWindow* chatWin)
 void NotificationHandler::join(ChatWindow* chatWin, const QString& nick)
 {
   if(chatWin && chatWin->notificationsEnabled()) {
-    KNotifyClient::event(m_mainWindow->winId(), "join", i18n("%1 joined %2").arg(nick, chatWin->getName()));
+    KNotifyClient::event(winId(), "join", i18n("%1 joined %2").arg(nick, chatWin->getName()));
   }
 }
 
 void NotificationHandler::part(ChatWindow* chatWin, const QString& nick)
 {
   if(chatWin && chatWin->notificationsEnabled()) {
-    KNotifyClient::event(m_mainWindow->winId(), "part", i18n("%1 parted %2").arg(nick, chatWin->getName()));
+    KNotifyClient::event(winId(), "part", i18n("%1 parted %2").arg(nick, chatWin->getName()));
   }
+}
+
+int NotificationHandler::winId() const
+{
+  if(m_mainWindow->systemTrayIcon() && m_mainWindow->systemTrayIcon()->isShown()) {
+    return m_mainWindow->systemTrayIcon()->winId();
+  }
+  
+  return m_mainWindow->winId();
 }
 
 }

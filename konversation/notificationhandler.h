@@ -35,6 +35,7 @@ class NotificationHandler : public QObject
   
   protected:
     void startTrayNotification(ChatWindow* chatWin);
+    int winId() const;
   
   private:
     KonversationMainWindow* m_mainWindow;
