@@ -1,4 +1,6 @@
-Logfile reader
+Doxify the source (resp: berkus)
+Docufy the app (resp: berkus)
+Logfile reader (resp: berkus)
 Reverse-I-Search
 Large pastes: Let the user decide if they want an Editor or paste immediately
 Make Config Dialogs fit into one Tab-Dialog and throw out single windows
@@ -22,7 +24,7 @@ Queries should get a Whois menu item
 "snotices" tab for all server notices (prefix without "!" )
 DCC port range
 cycle command
-Move Encoding into identity
+Move Encoding into identity (resp: berkus)
 Make separate Highlight lists for each identity
 Nick button in status pane does nothing
 Measure away time and make it available via placeholder
@@ -51,7 +53,7 @@ Automatically gzip files before DCC SEND
 Compute md5sum over DCCs and send / display the hash after transfer
 Import notify list from .ircrc
 Notify with more than 500 characters
-Logrotate with timer or at shutdown, compress rotated logs
+Logrotate with timer or at shutdown, compress rotated logs (resp: berkus)
 Stats for server lag, words per session per person / channel, quits etc.
 
 *nobs* feature-request:   in der History suchen können, so wie in der Bash mit ctrl-r vielleicht
