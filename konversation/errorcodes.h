@@ -66,6 +66,7 @@
 #define RPL_AWAY               "301"
 #define RPL_UNAWAY             "305"
 #define RPL_NOWAWAY            "306"
+#define RPL_WHOISIDENTIFY      "307"  // DALNet NickServ
 #define RPL_WHOISUSER          "311"
 #define RPL_WHOISSERVER        "312"
 #define RPL_WHOISOPERATOR      "313"
@@ -81,7 +82,7 @@
 #define RPL_CHANNELCREATED     "329"
 #define RPL_NOTOPIC            "331"
 #define RPL_TOPIC              "332"
-#define RPL_TOPICSETBY         "333"
+#define RPL_TOPICSETBY         "333"  // Extended ircd
 #define RPL_INVITING           "341"
 #define RPL_SUMMONING          "342"
 #define RPL_VERSION            "351"
@@ -138,4 +139,3 @@
 #define RPL_ADMINEMAIL         "259"
 #define RPL_LOCALUSERS         "265"
 #define RPL_GLOBALUSERS        "266"
-

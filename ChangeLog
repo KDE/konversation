@@ -12,3 +12,4 @@ Changes from 0.7 to 0.8:
 - Made Notices appear a bit different
 - DCC recipient list now gets sorted
 - Made text widget not scroll when scroll bar isn't completely down
+- Parsed WHOIS messages into human readable form

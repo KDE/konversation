@@ -469,6 +469,65 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
   {
     server->appendStatusMessage(i18n("Notice"),i18n("-%1- %2").arg(prefix).arg(trailing));
   }
+  else if(command==RPL_WHOISUSER)
+  {
+    server->appendStatusMessage(i18n("Whois"),i18n("%1 is %2@%3 (%4)").arg(parameterList[1])
+                                                                      .arg(parameterList[2])
+                                                                      .arg(parameterList[3])
+                                                                      .arg(trailing));
+  }
+  else if(command==RPL_WHOISCHANNELS)
+  {
+    QStringList userChannels;
+    QStringList voiceChannels;
+    QStringList opChannels;
+
+    // get a list of all channels the user is in
+    QStringList channelList=QStringList::split(' ',trailing);
+    channelList.sort();
+
+    // split up the list in channels where they are operator / user / voice
+    for(unsigned int index=0;index<channelList.count();index++)
+    {
+      QString lookChannel=channelList[index];
+      if(lookChannel.startsWith("@")) opChannels.append(lookChannel.mid(1));
+      else if(lookChannel.startsWith("+")) voiceChannels.append(lookChannel.mid(1));
+      else userChannels.append(lookChannel);
+    }
+    if(userChannels.count())
+      server->appendStatusMessage(i18n("Whois"),i18n("%1 is user on channels: %2").arg(parameterList[1]).arg(userChannels.join(" ")) );
+    if(voiceChannels.count())
+      server->appendStatusMessage(i18n("Whois"),i18n("%1 has voice on channels: %2").arg(parameterList[1]).arg(voiceChannels.join(" ")) );
+    if(opChannels.count())
+      server->appendStatusMessage(i18n("Whois"),i18n("%1 is operator on channels: %2").arg(parameterList[1]).arg(opChannels.join(" ")) );
+  }
+  else if(command==RPL_WHOISSERVER)
+  {
+    server->appendStatusMessage(i18n("Whois"),i18n("%1 is online via %2 (%3)").arg(parameterList[1])
+                                                                              .arg(parameterList[2])
+                                                                              .arg(trailing) );
+  }
+  else if(command==RPL_WHOISIDENTIFY)
+  {
+    server->appendStatusMessage(i18n("Whois"),i18n("%1 has identified for this nick.").arg(parameterList[1]));
+  }
+  else if(command==RPL_WHOISIDLE)
+  {
+    server->appendStatusMessage(i18n("Whois"),i18n("%1 is idle since %2 seconds.").arg(parameterList[1])
+                                                                                  .arg(parameterList[2]));
+    if(parameterList.count()==4)
+    {
+      QDateTime when;
+      when.setTime_t(parameterList[3].toUInt());
+
+      server->appendStatusMessage(i18n("Whois"),i18n("%1 is online since %2.").arg(parameterList[1])
+                                                                              .arg(when.toString(Qt::LocalDate)));
+    }
+  }
+  else if(command==RPL_ENDOFWHOIS)
+  {
+    server->appendStatusMessage(i18n("Whois"),i18n("End of WHOIS list."));
+  }
   // All yet unknown messages go into the frontmost window unaltered
   else
   {
