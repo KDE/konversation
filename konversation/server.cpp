@@ -1733,7 +1733,9 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
 	  channel->updateMode(updater, mode, plus, parameter);
   // TODO: What is mode character for owner?
   // Answer from JOHNFLUX - I think that admin is the same as owner.  Channel.h has owner as "a"
-  QString userModes="vho?a";    // voice halfop op owner admin
+  // "q" is the likely answer.. UnrealIRCd and euIRCd use it.
+  // TODO these need to become dynamic
+  QString userModes="vhoqa";    // voice halfop op owner admin
   int modePos = userModes.find(mode);
   if (modePos > 0)
   {
