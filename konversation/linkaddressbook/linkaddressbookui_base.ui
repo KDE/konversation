@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>LinkAddressbookUI_Base</class>
 <widget class="QWidget">
     <property name="name">
@@ -8,7 +8,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>600</width>
+            <width>596</width>
             <height>480</height>
         </rect>
     </property>
@@ -20,9 +20,6 @@
             <verstretch>0</verstretch>
         </sizepolicy>
     </property>
-    <property name="caption">
-        <string>LinkAddressbookUI_Base</string>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -30,7 +27,48 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="KListView" row="1" column="0" rowspan="1" colspan="2">
+        <spacer row="3" column="1">
+            <property name="name">
+                <cstring>spacer11</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>405</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QPushButton" row="3" column="0">
+            <property name="name">
+                <cstring>addAddresseeButton</cstring>
+            </property>
+            <property name="text">
+                <string>Create New &amp;Entry...</string>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Create a new entry in your address book</string>
+            </property>
+        </widget>
+        <widget class="KActiveLabel" row="0" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>lblHeader</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>4</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+        </widget>
+        <widget class="KListView" row="2" column="0" rowspan="1" colspan="2">
             <column>
                 <property name="text">
                     <string>Name</string>
@@ -74,46 +112,39 @@
                 <string>Select the contact you want to communicate with via Instant Messaging</string>
             </property>
         </widget>
-        <spacer row="2" column="1">
+        <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>spacer11</cstring>
+                <cstring>layout1</cstring>
             </property>
-            <property name="orientation">
-                <enum>Horizontal</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>405</width>
-                    <height>20</height>
-                </size>
-            </property>
-        </spacer>
-        <widget class="QPushButton" row="2" column="0">
-            <property name="name">
-                <cstring>addAddresseeButton</cstring>
-            </property>
-            <property name="text">
-                <string>Create New &amp;Entry...</string>
-            </property>
-            <property name="toolTip" stdset="0">
-                <string>Create a new entry in your address book</string>
-            </property>
-        </widget>
-        <widget class="KActiveLabel" row="0" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>lblHeader</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>7</hsizetype>
-                    <vsizetype>4</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>lblSearch</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>1</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>S&amp;earch:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kListViewSearchLine</cstring>
+                    </property>
+                </widget>
+                <widget class="KListViewSearchLine">
+                    <property name="name">
+                        <cstring>kListViewSearchLine</cstring>
+                    </property>
+                </widget>
+            </hbox>
         </widget>
     </grid>
 </widget>
@@ -124,5 +155,6 @@
 <includehints>
     <includehint>kactivelabel.h</includehint>
     <includehint>klistview.h</includehint>
+    <includehint>klistviewsearchline.h</includehint>
 </includehints>
 </UI>

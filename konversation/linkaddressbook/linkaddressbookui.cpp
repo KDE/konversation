@@ -36,6 +36,8 @@
 #include <klistviewsearchline.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qtooltip.h>
+#include <qwhatsthis.h>
 // used for its AddresseeItem class
 #include <kabc/addresseedialog.h>
 #include <kabc/addressbook.h>
@@ -69,6 +71,8 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
   connect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
   connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
 
+//We should add a clear KAction here.  But we can't really do that with a designer file :\  this sucks
+  
   m_ircnick = ircnick;
   m_lower_ircnick = m_ircnick.lower();
   m_servername = servername;
@@ -76,7 +80,7 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
   m_suggested_realname = suggested_realname;
   if(m_suggested_realname.isEmpty()) m_suggested_realname = suggested_realname;
   Q_ASSERT(!ircnick.isEmpty());
-//m_mainWidget->kListViewSearchLine->setListView(m_mainWidget->addresseeListView);
+  m_mainWidget->kListViewSearchLine->setListView(m_mainWidget->addresseeListView);
   slotLoadAddressees();
   
 }
