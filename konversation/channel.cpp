@@ -1602,8 +1602,8 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
   found.clear();
   
   for(Nick* n = first(); n; n = next()) {
-    if(n->getNickname().lower().startsWith(pattern)) {
-      found.append(n->getNickname().lower());
+    if(n->getNickname().startsWith(pattern, false)) {
+      found.append(n->getNickname());
     }
   }
   
@@ -1613,7 +1613,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     
     while(ok && ((pattern.length() + i) < found[0].length())) {
       i++;
-      QStringList tmp = found.grep(found[0].left(pattern.length() + i));
+      QStringList tmp = found.grep(found[0].left(pattern.length() + i), false);
       if(tmp.count() != found.count()) {
         ok = false;
         i -= 1;
