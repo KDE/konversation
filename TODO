@@ -20,7 +20,6 @@ MID-TERM:
 - Treeview with servers, list of channels / queries in a detachable window that also indicates new text
 - After being away a summary of lines with highlighting in its own window would be nice; a click on one line
   might jump to the according line in the channel/query-window
-- DCC port range
 - In Nicks Online panel, show stats like "last spoken" "last seen"
 - Compute md5sum over DCCs and send / display the hash after transfer
 - Make separate Highlight lists for each identity
