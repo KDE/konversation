@@ -174,9 +174,9 @@ void Server::connectToIRCServer()
       serverWindow->appendToStatus(i18n("Info"),i18n("Connected! Logging in ..."));
 
       QString connectString="USER " +
-                            KonversationApplication::preferences.ident +
+                            KonversationApplication::preferences.getIdent() +
                             " 8 * :" +  // 8 = +i; 4 = +w
-                            KonversationApplication::preferences.realname;
+                            KonversationApplication::preferences.getRealName();
 
       if(serverKey) queue("PASS "+serverKey);
       queue("NICK "+getNickname());

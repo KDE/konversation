@@ -18,8 +18,6 @@
 #include <qlabel.h>
 #include <qcheckbox.h>
 
-#include <klineedit.h>
-
 #include "prefspageidentity.h"
 
 PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferences) :
@@ -29,17 +27,17 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   QGridLayout* identityLayout=new QGridLayout(parentFrame,4,4,marginHint(),spacingHint());
 
   QLabel* realNameLabel=new QLabel(i18n("Real name:"),parentFrame);
-  KLineEdit* realNameInput=new KLineEdit(preferences->realname,parentFrame);
+  KLineEdit* realNameInput=new KLineEdit(preferences->getRealName(),parentFrame);
 
   QLabel* loginLabel=new QLabel(i18n("Ident:"),parentFrame);
-  KLineEdit* loginInput=new KLineEdit(preferences->ident,parentFrame);
+  KLineEdit* loginInput=new KLineEdit(preferences->getIdent(),parentFrame);
 
   QStringList nicknameList=preferences->getNicknameList();
 
-  KLineEdit* nick0=new KLineEdit(nicknameList[0],parentFrame);
-  KLineEdit* nick1=new KLineEdit(nicknameList[1],parentFrame);
-  KLineEdit* nick2=new KLineEdit(nicknameList[2],parentFrame);
-  KLineEdit* nick3=new KLineEdit(nicknameList[3],parentFrame);
+  nick0=new KLineEdit(nicknameList[0],parentFrame);
+  nick1=new KLineEdit(nicknameList[1],parentFrame);
+  nick2=new KLineEdit(nicknameList[2],parentFrame);
+  nick3=new KLineEdit(nicknameList[3],parentFrame);
 
   QLabel* partLabel=new QLabel(i18n("Part Reason:"),parentFrame);
   KLineEdit* partInput=new KLineEdit(preferences->getPartReason(),parentFrame);
@@ -114,12 +112,12 @@ PrefsPageIdentity::~PrefsPageIdentity()
 
 void PrefsPageIdentity::realNameChanged(const QString& newRealName)
 {
-  preferences->realname=newRealName;
+  preferences->setRealName(newRealName);
 }
 
 void PrefsPageIdentity::loginChanged(const QString& newLogin)
 {
-  preferences->ident=newLogin;
+  preferences->setIdent(newLogin);
 }
 
 // TODO: derive from QLineEdit and submit an index in the signal to

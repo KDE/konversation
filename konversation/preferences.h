@@ -27,6 +27,7 @@
 #include "serverentry.h"
 #include "ignore.h"
 #include "highlight.h"
+#include "identity.h"
 
 /*
   @author Dario Abatianni
@@ -149,6 +150,16 @@ class Preferences : public QObject
     QPtrList<Ignore> getIgnoreList();
     void setIgnoreList(QPtrList<Ignore> newList);
 
+    void addIdentity(Identity* identity);
+    void clearIdentityList();
+    QPtrList<Identity> getIdentityList();
+
+    QString getIdent();
+    void setIdent(QString ident);
+
+    QString getRealName();
+    void setRealName(QString name);
+
     QString getPartReason();
     void setPartReason(QString newReason);
 
@@ -232,9 +243,6 @@ class Preferences : public QObject
     void setChannelSplitter(QValueList<int> sizes);
     QValueList<int> getChannelSplitter();
 
-    QString ident;
-    QString realname;
-
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();
@@ -265,10 +273,6 @@ class Preferences : public QObject
     int voiceLedColor;
     int noRightsLedColor;
     bool useNotify;
-    
-    bool showAwayMessage;
-    QString awayMessage;
-    QString unAwayMessage;
 
     bool timestamping;
     QString timestampFormat;
@@ -308,8 +312,8 @@ class Preferences : public QObject
 
     QFont textFont;
     QFont listFont;
-    
-    QList<ServerEntry> serverList;
+
+    QPtrList<ServerEntry> serverList;
     QPtrList<Highlight> hilightList;
 
     bool hilightNick;
@@ -321,10 +325,7 @@ class Preferences : public QObject
 
     QPtrList<Ignore> ignoreList;
 
-    QStringList nicknameList;
-
-    QString partReason;
-    QString kickReason;
+    QPtrList<Identity> identityList;
 
     QString codec;
 };

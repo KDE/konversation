@@ -31,8 +31,11 @@ Preferences::Preferences()
   serverWindowStatusBarStatus=true;
   serverList.setAutoDelete(true);
 
-  ident="konversation";
-  realname="Konversation User";
+  // create default identity for pre 0.10 settings import
+  addIdentity(new Identity());
+
+  setIdent("konversation");
+  setRealName("Konversation User");
 
   setChannelMessageColor("000000");
   setQueryMessageColor("0000ff");
@@ -50,10 +53,10 @@ Preferences::Preferences()
   setAwayMessage("/me is away: %s");
   setUnAwayMessage("/me is back.");
 
-  nicknameList.append("KonvIRC");
-  nicknameList.append("_KonvIRC");
-  nicknameList.append("KonvIRC_");
-  nicknameList.append("_KonvIRC_");
+  setNickname(0,"KonvIRC");
+  setNickname(1,"_KonvIRC");
+  setNickname(2,"KonvIRC_");
+  setNickname(3,"_KonvIRC_");
 
   addServer("IRCNet,irc.kde.org,6667,,#kde-users,,0");
 
@@ -282,27 +285,38 @@ QString Preferences::getNotifyString() { return notifyList.join(" "); }
 
 QStringList Preferences::getButtonList() { return buttonList; }
 
-QString Preferences::getPartReason() { return partReason; }
-void Preferences::setPartReason(QString newReason) { partReason=newReason; }
+// Default identity functions
+void Preferences::addIdentity(Identity* identity) { identityList.append(identity); }
+void Preferences::clearIdentityList() { identityList.clear(); }
+QPtrList<Identity> Preferences::getIdentityList() { return identityList; }
 
-QString Preferences::getKickReason() { return kickReason; }
-void Preferences::setKickReason(QString newReason) { kickReason=newReason; }
+QString Preferences::getRealName() { return identityList.at(0)->getRealName(); }
+void Preferences::setRealName(QString name) { identityList.at(0)->setRealName(name); }
 
-void Preferences::setShowAwayMessage(bool state) { showAwayMessage=state; }
-bool Preferences::getShowAwayMessage() { return showAwayMessage; }
+QString Preferences::getIdent() { return identityList.at(0)->getIdent(); }
+void Preferences::setIdent(QString ident) { identityList.at(0)->setIdent(ident); }
 
-QString Preferences::getAwayMessage() { return awayMessage; }
-void Preferences::setAwayMessage(QString newMessage) { awayMessage=newMessage; }
-QString Preferences::getUnAwayMessage() { return unAwayMessage; }
-void Preferences::setUnAwayMessage(QString newMessage) { unAwayMessage=newMessage; }
+QString Preferences::getPartReason() { return identityList.at(0)->getPartReason(); }
+void Preferences::setPartReason(QString newReason) { identityList.at(0)->setPartReason(newReason); }
+
+QString Preferences::getKickReason() { return identityList.at(0)->getKickReason(); }
+void Preferences::setKickReason(QString newReason) { identityList.at(0)->setKickReason(newReason); }
+
+bool Preferences::getShowAwayMessage() { return identityList.at(0)->getShowAwayMessage(); }
+void Preferences::setShowAwayMessage(bool state) { identityList.at(0)->setShowAwayMessage(state); }
+
+QString Preferences::getAwayMessage() { return identityList.at(0)->getAwayMessage(); }
+void Preferences::setAwayMessage(QString newMessage) { identityList.at(0)->setAwayMessage(newMessage); }
+QString Preferences::getUnAwayMessage() { return identityList.at(0)->getReturnMessage(); }
+void Preferences::setUnAwayMessage(QString newMessage) { identityList.at(0)->setReturnMessage(newMessage); }
 
 void Preferences::clearIgnoreList() { ignoreList.clear(); }
 QPtrList<Ignore> Preferences::getIgnoreList() { return ignoreList; }
 
-QString Preferences::getNickname(int index) { return nicknameList[index]; }
-QStringList Preferences::getNicknameList() { return nicknameList; }
-void Preferences::setNickname(int index,QString newName) { nicknameList[index]=newName; }
-void Preferences::setNicknameList(QStringList newList) { nicknameList=newList; }
+QString Preferences::getNickname(int index) { return identityList.at(0)->getNickname(index); }
+QStringList Preferences::getNicknameList() { return identityList.at(0)->getNicknameList(); }
+void Preferences::setNickname(int index,QString newName) { identityList.at(0)->setNickname(index,newName); }
+void Preferences::setNicknameList(QStringList newList) { identityList.at(0)->setNicknameList(newList); }
 
 void Preferences::setBlinkingTabs(bool blink) { blinkingTabs=blink; }
 bool Preferences::getBlinkingTabs() { return blinkingTabs; }

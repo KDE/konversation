@@ -167,13 +167,6 @@ void KonversationApplication::readOptions()
   preferences.setNicknameSize(config->readSizeEntry("NicknameGeometry"));
   preferences.setColorConfigurationSize(config->readSizeEntry("ColorConfigurationGeometry"));
 
-  // Reasons
-  QString reason;
-  reason=config->readEntry("PartReason","");
-  if(reason!="") preferences.setPartReason(reason);
-  reason=config->readEntry("KickReason","");
-  if(reason!="") preferences.setKickReason(reason);
-
   // Appearance
   config->setGroup("Appearance");
   // Fonts
@@ -210,25 +203,53 @@ void KonversationApplication::readOptions()
   preferences.setVoiceLedColor(config->readNumEntry("VoiceColor",preferences.getVoiceLedColor()));
   preferences.setNoRightsLedColor(config->readNumEntry("NoRightsColor",preferences.getNoRightsLedColor()));
 
-  // Default user identity
-  config->setGroup("User Identity");
-  preferences.ident=config->readEntry("Ident",preferences.ident);
-  preferences.realname=config->readEntry("Realname",preferences.realname);
-
-  QString nickList=config->readEntry("Nicknames",preferences.getNicknameList().join(","));
-  preferences.setNicknameList(QStringList::split(",",nickList));
-
-  preferences.setShowAwayMessage(config->readBoolEntry("ShowAwayMessage",preferences.getShowAwayMessage()));
-  preferences.setAwayMessage(config->readEntry("AwayMessage",preferences.getAwayMessage()));
-  preferences.setUnAwayMessage(config->readEntry("UnAwayMessage",preferences.getUnAwayMessage()));
-
   // Identity list
   QStringList identityList=config->groupList().grep(QRegExp("Identity [0-9]+"));
-  for(unsigned int index=0;index<identityList.count();index++)
+  if(identityList.count())
   {
-    kdDebug() << "Reading identity " << identityList[index] << endl;
-  }
+    preferences.clearIdentityList();
 
+    for(unsigned int index=0;index<identityList.count();index++)
+    {
+      kdDebug() << "Reading identity " << identityList[index] << endl;
+      config->setGroup(identityList[index]);
+
+      Identity* newIdentity=new Identity();
+
+      newIdentity->setIdent(config->readEntry("Ident"));
+      newIdentity->setRealName(config->readEntry("Realname"));
+
+      QString nickList=config->readEntry("Nicknames");
+      newIdentity->setNicknameList(QStringList::split(",",nickList));
+
+      newIdentity->setShowAwayMessage(config->readBoolEntry("ShowAwayMessage"));
+      newIdentity->setAwayMessage(config->readEntry("AwayMessage"));
+      newIdentity->setReturnMessage(config->readEntry("ReturnMessage"));
+
+      newIdentity->setPartReason(config->readEntry("PartReason"));
+      newIdentity->setKickReason(config->readEntry("KickReason"));
+
+      preferences.addIdentity(newIdentity);
+    } // endfor
+  }
+  else
+  {
+    kdDebug() << "Importing pre 0.10 identity settings ..." << endl;
+
+    // Default user identity for pre 0.10 preferences files
+    config->setGroup("User Identity");
+    preferences.setIdent(config->readEntry("Ident",preferences.getIdent()));
+    preferences.setRealName(config->readEntry("Realname",preferences.getRealName()));
+
+    QString nickList=config->readEntry("Nicknames",preferences.getNicknameList().join(","));
+    preferences.setNicknameList(QStringList::split(",",nickList));
+
+    preferences.setShowAwayMessage(config->readBoolEntry("ShowAwayMessage",preferences.getShowAwayMessage()));
+    preferences.setAwayMessage(config->readEntry("AwayMessage",preferences.getAwayMessage()));
+    preferences.setUnAwayMessage(config->readEntry("UnAwayMessage",preferences.getUnAwayMessage()));
+
+    config->deleteGroup("User Identity");
+  }
   // Notify Settings and list
   config->setGroup("Notify List");
   preferences.setNotifyDelay(config->readNumEntry("NotifyDelay",20));
@@ -356,9 +377,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
   config->writeEntry("ServerWindowStatusBarStatus",preferences.serverWindowStatusBarStatus);
 
-  config->writeEntry("PartReason",preferences.getPartReason());
-  config->writeEntry("KickReason",preferences.getKickReason());
-
   config->setGroup("Appearance");
 
   config->writeEntry("TextFont",preferences.getTextFont().toString());
@@ -389,14 +407,32 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("VoiceColor", preferences.getVoiceLedColor());
   config->writeEntry("NoRightsColor", preferences.getNoRightsLedColor());
 
-  config->setGroup("User Identity");
+  // Clean up identity list
+  QStringList identities=config->groupList().grep(QRegExp("Identity [0-9]+"));
+  if(identities.count())
+  {
+    // remove old identity list from preferences file to keep numbering under control
+    for(unsigned int index=0;index<identities.count();index++)
+      config->deleteGroup(identities[index]);
+  }
 
-  config->writeEntry("Ident",preferences.ident);
-  config->writeEntry("Realname",preferences.realname);
-  config->writeEntry("Nicknames",preferences.getNicknameList());
-  config->writeEntry("ShowAwayMessage",preferences.getShowAwayMessage());
-  config->writeEntry("AwayMessage",preferences.getAwayMessage());
-  config->writeEntry("UnAwayMessage",preferences.getUnAwayMessage());
+  QPtrList<Identity> identityList=preferences.getIdentityList();
+  for(unsigned int index=0;index<identityList.count();index++)
+  {
+    kdDebug() << "Writing identity " << index << endl;
+
+    Identity* identity=identityList.at(index);
+    config->setGroup(QString("Identity %1").arg(index));
+
+    config->writeEntry("Ident",identity->getIdent());
+    config->writeEntry("Realname",identity->getRealName());
+    config->writeEntry("Nicknames",identity->getNicknameList());
+    config->writeEntry("ShowAwayMessage",identity->getShowAwayMessage());
+    config->writeEntry("AwayMessage",identity->getAwayMessage());
+    config->writeEntry("ReturnMessage",identity->getReturnMessage());
+    config->writeEntry("PartReason",identity->getPartReason());
+    config->writeEntry("KickReason",identity->getKickReason());
+  } // endfor
 
   config->setGroup("Notify List");
 

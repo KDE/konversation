@@ -17,6 +17,8 @@
 #ifndef PREFSPAGEIDENTITY_H
 #define PREFSPAGEIDENTITY_H
 
+#include <klineedit.h>
+
 #include "prefspage.h"
 
 /*
@@ -30,6 +32,12 @@ class PrefsPageIdentity : public PrefsPage
   public:
     PrefsPageIdentity(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageIdentity();
+
+  protected:
+    KLineEdit* nick0;
+    KLineEdit* nick1;
+    KLineEdit* nick2;
+    KLineEdit* nick3;
 
   protected slots:
     void realNameChanged(const QString& newRealName);

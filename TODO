@@ -2,7 +2,7 @@ Make Config Dialogs fit into one Tab-Dialog and throw out single windows
 Implement different identities so user can choose which identity to use on which server
 Move Part / Kick Reasons into the Identity section in Preferences File
 Make sure, that lines don't get cleared while viewing the history
-Background color of Channel window / Nicklist View
+Background color of Nicklist View
 Add a possibility to close the dcc panel via GUI
 Pasting into text views should trigger the paste mechanism
 Make colors for nick list configurable via GUI
@@ -10,7 +10,7 @@ Make colors for nick list configurable via GUI
 Let the user decide how many quick buttons they want.
 Double click actions for nick list and notify list.
 Think about another way to get rid of the cut off "Custom" text in color combos ...
-Autojoin / User interaction on /invite
+Autojoin/User interaction on /invite
 
 <mETz[]> mainwindows don't need a huge border
 <mETz[]> Eisfuchs: And why have the "Mitschnitt" button there? having it in the menubar is enough, no?
