@@ -22,6 +22,7 @@
 
 #include <qiconset.h>
 #include <qpixmap.h>
+#include <qobject.h>
 
 #include "images.h"
 #include "nick.h"
@@ -31,8 +32,9 @@
   @author Dario Abatianni (sorting code)
 */
 
-class LedListViewItem : public KListViewItem
+class LedListViewItem : public QObject, public KListViewItem
 {
+  Q_OBJECT
   public:
     LedListViewItem(KListView* parent,
                     const QString &passed_label,
@@ -42,7 +44,9 @@ class LedListViewItem : public KListViewItem
     int getFlags() const;
     virtual int compare(QListViewItem* item,int col,bool ascending) const;
     Nick *getNick();
+#ifndef USE_NICKINFO
     void refresh();
+#endif
   protected:
     Nick *nick;
     QPixmap adminLedOn;
@@ -56,7 +60,13 @@ class LedListViewItem : public KListViewItem
     QString label;
 
     Images leds;
-
+#ifdef USE_NICKINFO
+  protected slots:
+    //We will refresh ourselves, so make it protected.
+    void refresh();
+#endif
+    
 };
 
 #endif
+

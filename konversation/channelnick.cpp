@@ -72,6 +72,7 @@ bool ChannelNick::setMode(bool admin,bool owner,bool op,bool halfop,bool voice) 
   ishalfop=halfop;
   hasvoice=voice;
   nickInfo->getServer()->emitChannelNickChanged(this);
+  emit channelNickChanged();
   return true;  
 }
 
@@ -83,24 +84,28 @@ bool ChannelNick::setVoice(bool state) {
   if(hasvoice==state) return false;
   hasvoice=state;
   nickInfo->getServer()->emitChannelNickChanged(this);
+  emit channelNickChanged();
   return true;
 }
 bool ChannelNick::setAdmin(bool state) {
   if(isadmin==state) return false;
   isadmin=state;
   nickInfo->getServer()->emitChannelNickChanged(this);
+  emit channelNickChanged();
   return true;  
 }
 bool ChannelNick::setHalfOp(bool state) {
   if(ishalfop==state) return false;
   ishalfop=state;
   nickInfo->getServer()->emitChannelNickChanged(this);
+  emit channelNickChanged();
   return true;
 }
 bool ChannelNick::setOp(bool state) {
   if(isop==state) return false;
   isop=state;
   nickInfo->getServer()->emitChannelNickChanged(this);
+  emit channelNickChanged();
   return true;
 }
 
@@ -109,4 +114,5 @@ bool ChannelNick::setOp(bool state) {
 QString ChannelNick::getNickname() const { return nickInfo->getNickname(); }
 QString ChannelNick::getHostmask() const { return nickInfo->getHostmask(); }
 
+#include "channelnick.moc"
 

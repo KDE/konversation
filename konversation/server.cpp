@@ -2331,9 +2331,17 @@ void Server::removeNickFromServer(const QString &nickname,const QString &reason)
 
 void Server::renameNick(const QString &nickname, const QString &newNick)
 {
+  if(nickname.isEmpty() || newNick.isEmpty()) {
+    kdDebug() << "server::renameNick called with empty strings!  Trying to rename '" << nickname << "' to '" << newNick << "'" << endl;
+    return;
+  }
 #ifdef USE_NICKINFO
   //Actually do the rename.
   NickInfoPtr nickInfo = getNickInfo(nickname);
+  if(!nickInfo) {
+    kdDebug() << "server::renameNick called for nickname '" << nickname << "' to '" << newNick << " but getNickInfo(" << nickname << ") returned no results." << endl;
+    return;
+  }
   renameNickInfo(nickInfo, newNick);
   //The rest of the code below allows the channels to echo to the user to tell them that the nick has changed.
 #endif

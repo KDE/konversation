@@ -65,31 +65,41 @@ Nick::~Nick()
 void Nick::setAdmin(bool state)
 {
   admin=state;
+#ifndef USE_NICKINFO
   listViewItem->refresh();
+#endif
 }
 
 void Nick::setOwner(bool state)
 {
   owner=state;
+#ifndef USE_NICKINFO
   listViewItem->refresh();
+#endif
 }
 
 void Nick::setOp(bool state)
 {
   op=state;
+#ifndef USE_NICKINFO
   listViewItem->refresh();
+#endif
 }
 
 void Nick::setHalfop(bool state)
 {
   halfop=state;
+#ifndef USE_NICKINFO
   listViewItem->refresh();
+#endif
 }
 
 void Nick::setVoice(bool state)
 {
   voice=state;
+#ifndef USE_NICKINFO
   listViewItem->refresh();
+#endif
 }
 
 
@@ -105,6 +115,10 @@ bool Nick::hasVoice() { return voice; }
 
 NickInfoPtr Nick::getNickInfo() {
   return channelnickptr->getNickInfo();
+}
+
+ChannelNickPtr Nick::getChannelNick() {
+  return channelnickptr;
 }
 
 QString Nick::getNickname() { return channelnickptr->getNickname(); }

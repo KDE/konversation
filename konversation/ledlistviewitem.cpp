@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include <kdebug.h>
+#include <qobject.h>
 
 #include "ledlistviewitem.h"
 #include "konversationapplication.h"
@@ -47,6 +48,10 @@ LedListViewItem::LedListViewItem(KListView* parent,
   currentLeds=leds.getLed(KonversationApplication::preferences.getVoiceLedColor(),true);
   voiceLedOn =currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
 
+#ifdef USE_NICKINFO
+  connect(nick->getChannelNick(), SIGNAL(channelNickChanged()), SLOT(refresh()));
+#endif
+  
 }
 
 LedListViewItem::~LedListViewItem()
@@ -110,4 +115,6 @@ int LedListViewItem::getFlags() const
 Nick *LedListViewItem::getNick() {
   return nick;
 }
+
+#include "ledlistviewitem.moc"
 

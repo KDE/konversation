@@ -929,6 +929,8 @@ void Channel::fastAddNickname(const QString& nickname,const QString& hostmask,
 
 #ifdef USE_NICKINFO
 void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo) {
+  Q_ASSERT(&nickInfo);
+  Q_ASSERT(!oldNick.isEmpty());
   /* Did we change our nick name? */
   QString newNick = nickInfo.getNickname();
   if(newNick==server->getNickname())

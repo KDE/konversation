@@ -20,8 +20,10 @@
 #include "nickinfo.h"
 
 /** An instance of ChannelNick is made for each nick in each channel.  So for a person in multiple channels, they will have one NickInfo, and multiple ChannelNicks.  It contains a pointer to the NickInfo, and the mode of that person in the channel.*/
-class ChannelNick : public KShared
+class ChannelNick :  public QObject, public KShared
 {
+  Q_OBJECT
+	  
   public:
     ChannelNick(NickInfoPtr nickinfo, bool isop, bool isadmin, bool isowner, bool ishalfop, bool hasvoice);
     bool isOp() const;
@@ -51,7 +53,8 @@ class ChannelNick : public KShared
     bool isowner;
     bool ishalfop;
     bool hasvoice;
-
+  signals:
+    void channelNickChanged();
 };
 
 /** A ChannelNickPtr is a pointer to a ChannelNick.  Since it is a KSharedPtr,
