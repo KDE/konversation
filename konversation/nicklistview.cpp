@@ -37,8 +37,12 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
   QMimeSourceFactory::defaultFactory()->setImage( "voice", images->getNickIcon( Images::Voice, false ).convertToImage() );
   QMimeSourceFactory::defaultFactory()->setImage( "normal", images->getNickIcon( Images::Normal, false ).convertToImage() );
   QMimeSourceFactory::defaultFactory()->setImage( "normalaway", images->getNickIcon( Images::Normal, true).convertToImage() );
+  
+  if(images->getNickIcon( Images::Normal, false).isNull()) {
+    QWhatsThis::add(this, i18n("<qt>This shows all the people in the channel.  The nick for each person is shown.<br>Usually an icon is shown showing the status of each person, but you do not seem to have any icon theme installed.  See the Konversation settings - <i>Configure Konversation</i> under the <i>Settings</i> menu.  Then view the page for <i>Themes</i> under <i>Appearence</i>.</qt>"));
+  } else {
 	  
-  QWhatsThis::add(this, i18n("<qt>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.<p>"
+    QWhatsThis::add(this, i18n("<qt>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.<p>"
 			  "<table>"
 			  
 			  "<tr><th><img src=\"admin\"></th><td>This person has administrator privileges.</td></tr>"
@@ -53,6 +57,7 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
 			  "Hovering over any nick shows their current status, as well as any information in the addressbook for this person.  See the Konversation Handbook for more information."
 			  "</qt>"
 			  ));
+  }
   channel=chan;
   popup=new KPopupMenu(this,"nicklist_context_menu");
   modes=new KPopupMenu(this,"nicklist_modes_context_submenu");
