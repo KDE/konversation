@@ -233,7 +233,7 @@ void IRCView::urlClickSlot(const QString &url, bool newTab)
 	  QCStringList appList = kapp->dcopClient()->registeredApplications();
 	  QCStringList::iterator it;
 	  
-	  for(it=appList.begin(); it != appList.end(); ++it)
+	  for(it=appList.end(); it != appList.begin(); --it)
 	    {
 	      if((*it).contains("konqueror"))
 		{
