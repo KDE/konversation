@@ -174,6 +174,9 @@ namespace Konversation {
             else if(command == "aback")   parseAaway(QString::null);
             else if(command == "ame")     result = parseAme(parameter);
             else if(command == "amsg")    result = parseAmsg(parameter);
+	    
+	    else if(command == "omsg")    result = parseOmsg(parameter);
+	    else if(command == "onotice") result = parseOnotice(parameter);
 
             else if(command == "server")  parseServer(parameter);
 
@@ -1251,8 +1254,32 @@ namespace Konversation {
 
         return result;
     }
+  
+  OutputFilterResult OutputFilter::parseOmsg(const QString& parameter)
+  {
+    OutputFilterResult result;
+    
+    if(!parameter.isEmpty())
+      result.toServer = "PRIVMSG @"+destination+" :"+parameter;
+    else
+      result = error(i18n("%1omsg needs a message parameter").arg(commandChar));
 
-  void OutputFilter::parseCharset(const QString charset)
+    return result;
+  }
+
+  OutputFilterResult OutputFilter::parseOnotice(const QString& parameter)
+  {
+    OutputFilterResult result;
+
+    if(!parameter.isEmpty())
+      result.toServer = "NOTICE @"+destination+" "+parameter;
+    else
+      result = error(i18n("%1onotice needs a message parameter").arg(commandChar));
+
+    return result;
+  }
+
+  void OutputFilter::parseCharset(const QString& charset)
   {
     QString shortName = Konversation::IRCCharsets::self()->ambiguousNameToShortName(charset);
     if(!shortName.isEmpty())
