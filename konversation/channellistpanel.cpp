@@ -39,8 +39,6 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
 {
   setType(ChatWindow::ChannelList);
 
-  doApply=false;
-
   setNumChannels(0);
   setNumUsers(0);
   setVisibleChannels(0);
@@ -112,8 +110,6 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) :
   QPushButton* saveListButton=new QPushButton(i18n("&Save List..."),actionBox,"save_list_button");
   QPushButton* joinChannelButton=new QPushButton(i18n("&Join Channel"),actionBox,"join_channel_button");
 
-  // update list view every 0.5 seconds
-  updateTimer.start(500);
   connect(&updateTimer,SIGNAL (timeout()),this,SLOT (updateDisplay()));
 
   // double click on channel entry joins the channel
@@ -163,6 +159,10 @@ void ChannelListPanel::refreshList()
   setVisibleUsers(0);
 
   updateUsersChannels();
+
+  // update list view every 0.5 seconds
+  updateTimer.start(500);
+
   emit refreshChannelList();
 }
 
@@ -284,9 +284,10 @@ void ChannelListPanel::updateDisplay()
   }
   else
   {
-  kdDebug() << "Else" << endl;
+    kdDebug() << "Else" << endl;
     // no more channels to insert, so check if we should apply the filter
-    if(doApply) applyFilterClicked();
+    applyFilterClicked();
+    updateTimer.stop();
   }
 }
 
@@ -341,15 +342,10 @@ void ChannelListPanel::applyFilterClicked()
 
   if(!getNumChannels())
   {
-    // tell refreshList() to apply filter when done
-    doApply=true;
     refreshList();
   }
   else
   {
-    // filter was applied
-    doApply=false;
-
     QListViewItem* item=channelListView->itemAtIndex(0);
 
     setVisibleChannels(0);
