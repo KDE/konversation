@@ -743,7 +743,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 //    case RPL_BOUNCE:   // RFC 1459 name, now seems to be obsoleted by ...
       case RPL_ISUPPORT: // ... DALnet RPL_ISUPPORT
         {
-          server->appendStatusMessage(i18n("Bounce"),parameterList.join(" "));
+          server->appendStatusMessage(i18n("Support"),parameterList.join(" "));
 
           // The following behavoiur is neither documented in RFC 1459 nor in 2810-2813
           // Nowadays, most ircds send server capabilities out via 005 (BOUNCE).
