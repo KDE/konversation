@@ -911,6 +911,8 @@ void Channel::addNickname(const QString& nickname,const QString& hostmask,
 #ifdef USE_NICKINFO
 // Use with caution! Does not sort or check for duplicates!
 void Channel::fastAddNickname(ChannelNickPtr channelnick) {
+  Q_ASSERT(channelnick);
+  if(!channelnick) return;
   Nick* nick=new Nick(nicknameListView, channelnick);
   // nicks get sorted later
   nicknameList.append(nick);

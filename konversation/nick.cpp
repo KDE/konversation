@@ -114,10 +114,13 @@ bool Nick::hasVoice() { return voice; }
 #ifdef USE_NICKINFO
 
 NickInfoPtr Nick::getNickInfo() {
+  Q_ASSERT(channelnickptr);
+  if(!channelnickptr) return NULL;
   return channelnickptr->getNickInfo();
 }
 
 ChannelNickPtr Nick::getChannelNick() {
+  Q_ASSERT(channelnickptr);
   return channelnickptr;
 }
 
