@@ -14,17 +14,19 @@
 
 #include <qhbox.h>
 #include <qheader.h>
-#include <qvbox.h>
 #include <qpushbutton.h>
+#include <qvbox.h>
 
-#include <klistview.h>
-#include <kdialog.h>
-#include <klocale.h>
 #include <kdebug.h>
-#include <krun.h>
-#include <kfilemetainfo.h>
-#include <kmessagebox.h>
 #include <kdeversion.h>
+#include <kdialog.h>
+#include <kfilemetainfo.h>
+#include <kglobal.h>
+#include <kiconloader.h>
+#include <klistview.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <krun.h>
 
 #include "dccpanel.h"
 #include "dcctransfer.h"
@@ -85,12 +87,15 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   
   QHBox* buttonsBox=new QHBox(this);
   buttonsBox->setSpacing(spacing());
-  acceptButton=new QPushButton(i18n("Accept"),buttonsBox,"start_dcc");
-  abortButton =new QPushButton(i18n("Abort"),buttonsBox,"abort_dcc");
-  removeButton=new QPushButton(i18n("Remove"),buttonsBox,"remove_dcc");
-  openButton  =new QPushButton(i18n("Open"),buttonsBox,"open_dcc_file");
-  infoButton  =new QPushButton(i18n("Information"),buttonsBox,"info_on_dcc_file");
-  detailButton=new QPushButton(i18n("Detail"),buttonsBox,"detail_dcc");
+  
+  #define icon(s) KGlobal::iconLoader()->loadIcon( s, KIcon::Small )
+  
+  acceptButton=new QPushButton(icon("player_play"),i18n("Accept"),buttonsBox,"start_dcc");
+  abortButton =new QPushButton(icon("stop"),i18n("Abort"),buttonsBox,"abort_dcc");
+  removeButton=new QPushButton(icon("editdelete"), i18n("Remove"),buttonsBox,"remove_dcc");
+  openButton  =new QPushButton(icon("exec"), i18n("Open"),buttonsBox,"open_dcc_file");
+  infoButton  =new QPushButton(icon("messagebox_info"), i18n("Information"),buttonsBox,"info_on_dcc_file");
+  detailButton=new QPushButton(icon("view_text"), i18n("Detail"),buttonsBox,"detail_dcc");
 
   connect(dccListView,SIGNAL (selectionChanged()),this,SLOT (selectionChanged()) );
   
@@ -115,7 +120,7 @@ void DccPanel::dccStatusChanged(const DccTransfer *item)
 
 void DccPanel::selectionChanged()
 {
-  bool accept=true, abort=false, remove=true, open=true, info=false, detail=true;
+  bool accept=true, abort=false, remove=true, open=true, info=true, detail=true;
   bool itemfound = false;
   QListViewItemIterator it( getListView() );
   while( it.current() )
@@ -130,10 +135,15 @@ void DccPanel::selectionChanged()
         itemfound = true;
         
         accept &= ( status == DccTransfer::Queued );
+        
         abort  |= ( status != DccTransfer::Failed && 
                     status != DccTransfer::Aborted && 
                     status != DccTransfer::Done );
+        
         open   &= ( type == DccTransfer::Send ||
+                    status == DccTransfer::Done );
+        
+        info   &= ( type == DccTransfer::Send ||
                     status == DccTransfer::Done );
       }
     }
@@ -192,7 +202,7 @@ void DccPanel::removeDcc()
     ++it;
   }
   lst.setAutoDelete( true );
-  while( lst.remove() );  // whoa! what a smart and weird code!
+  while( lst.remove() );
 }
 
 void DccPanel::runDcc()
@@ -211,72 +221,82 @@ void DccPanel::runDcc()
   }
 }
 
-void DccPanel::showFileInfo()  // disabled temporarily
+void DccPanel::showFileInfo()
 {
-  /*
-  QStringList infoList;
-
-  DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
-  QString path=item->getFile();
-
-  // get meta info object
-  KFileMetaInfo* fileInfo=new KFileMetaInfo(path,QString::null,KFileMetaInfo::Everything);
-
-  // is there any info for this file?
-  if(fileInfo && !fileInfo->isEmpty())
+  QListViewItemIterator it( getListView() );
+  while( it.current() )
   {
-    // get list of meta information groups
-    QStringList groupList=fileInfo->groups();
-    // look inside for keys
-    for(unsigned int index=0;index<groupList.count();index++)
+    if( it.current()->isSelected() )
     {
-      // get next group
-      KFileMetaInfoGroup group=fileInfo->group(groupList[index]);
-      // check if there are keys in this group at all
-      if(!group.isEmpty())
-      {
-        // append group name to list
-        infoList.append(groupList[index]);
-        // get list of keys in this group
-        QStringList keys=group.keys();
-        for(unsigned keyIndex=0;keyIndex<keys.count();keyIndex++)
+      DccTransfer* item=static_cast<DccTransfer*>( it.current() );
+      if( item )
+        if( item->getType() == DccTransfer::Send || item->getStatus() == DccTransfer::Done )
         {
-          // get meta information item for this key
-          KFileMetaInfoItem item=group.item(keys[keyIndex]);
-          if(item.isValid())
+          QStringList infoList;
+        
+          QString path=item->getFilePath();
+          
+          // get meta info object
+          KFileMetaInfo* fileInfo=new KFileMetaInfo(path,QString::null,KFileMetaInfo::Everything);
+        
+          // is there any info for this file?
+          if(fileInfo && !fileInfo->isEmpty())
           {
-            // append item information to list
-            infoList.append("- "+item.translatedKey()+" "+item.string());
-          }
-        } // endfor
-      }
-    } // endfor
+            // get list of meta information groups
+            QStringList groupList=fileInfo->groups();
+            // look inside for keys
+            for(unsigned int index=0;index<groupList.count();index++)
+            {
+              // get next group
+              KFileMetaInfoGroup group=fileInfo->group(groupList[index]);
+              // check if there are keys in this group at all
+              if(!group.isEmpty())
+              {
+                // append group name to list
+                infoList.append(groupList[index]);
+                // get list of keys in this group
+                QStringList keys=group.keys();
+                for(unsigned keyIndex=0;keyIndex<keys.count();keyIndex++)
+                {
+                  // get meta information item for this key
+                  KFileMetaInfoItem item=group.item(keys[keyIndex]);
+                  if(item.isValid())
+                  {
+                    // append item information to list
+                    infoList.append("- "+item.translatedKey()+" "+item.string());
+                  }
+                } // endfor
+              }
+            } // endfor
 
-    // display information list if any available
-    if(infoList.count())
-    {
+            // display information list if any available
+            if(infoList.count())
+            {
 #ifdef USE_INFOLIST
-      KMessageBox::informationList(
-        this,
-        i18n("Available information for file %1:").arg(path),
-        infoList,
-        i18n("File information")
-      );
+              KMessageBox::informationList(
+                this,
+                i18n("Available information for file %1:").arg(path),
+                infoList,
+                i18n("File information")
+              );
 #else
-      KMessageBox::information(
-        this,
-        "<qt>"+infoList.join("<br>")+"</qt>",
-        i18n("File information")
-      );
+              KMessageBox::information(
+                this,
+                "<qt>"+infoList.join("<br>")+"</qt>",
+                i18n("File information")
+              );
 #endif
+            }
+          }
+          else
+          {
+            KMessageBox::sorry(this,i18n("No detailed information for this file found."),i18n("File information"));
+          }
+          delete fileInfo;
+        }
     }
+    ++it;
   }
-  else
-  {
-    KMessageBox::sorry(this,i18n("No detailed information for this file found."),i18n("File information"));
-  }
-  delete fileInfo;
-  */
 }
 
 void DccPanel::openDetail()
