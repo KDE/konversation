@@ -8,7 +8,7 @@ $OPTION = shift;
 @stations = `dcop KWeatherService WeatherService listStations`;
 
 if( ! @stations ) {
-  exec ("dcop $PORT Konversation say $SERVER \"$TARGET\" \"KWeather is not installed or not running!\" ");
+  exec ("dcop $PORT Konversation error $SERVER \"$TARGET\" \"KWeather is not installed or not running!\" ");
 } 
 
 if( $OPTION && $stations[$OPTION-1] ) {
