@@ -23,7 +23,7 @@
   @author Dario Abatianni
 */
 
-class ServerListItem;
+class KListView;
 
 class PrefsPageDialogs : public PrefsPage
 {
@@ -33,8 +33,11 @@ class PrefsPageDialogs : public PrefsPage
     PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences);
     ~PrefsPageDialogs();
 
-  protected slots:
-    void stateChanged(ServerListItem* item,bool state);
+  public slots:
+    void applyPreferences();
+
+  protected:
+    KListView* dialogListView;
 };
 
 #endif

@@ -37,7 +37,7 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
 
   QVBoxLayout* dialogsLayout=new QVBoxLayout(parentFrame,marginHint(),spacingHint(),"dialogs_layout");
 
-  KListView* dialogListView=new KListView(parentFrame,"dialog_list_view");
+  dialogListView=new KListView(parentFrame,"dialog_list_view");
 
   dialogListView->addColumn(i18n("Show"));
   dialogListView->addColumn(i18n("Name"));
@@ -50,9 +50,6 @@ PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences
     QString flagName(dialogDefinitions[index].section(' ',0,0));
     ServerListItem* item=new ServerListItem(dialogListView,index,flagName,dialogDefinitions[index].section(' ',1));
 
-    connect(item,SIGNAL(stateChanged(ServerListItem*,bool)),
-            this,SLOT  (stateChanged(ServerListItem*,bool)) );
-
     if(preferences->getDialogFlag(flagName)) item->setOn(true);
   } // for
 
@@ -63,9 +60,14 @@ PrefsPageDialogs::~PrefsPageDialogs()
 {
 }
 
-void PrefsPageDialogs::stateChanged(ServerListItem* item,bool state)
+void PrefsPageDialogs::applyPreferences()
 {
-  preferences->setDialogFlag(item->text(1),state);
+  ServerListItem* item=static_cast<ServerListItem*>(dialogListView->itemAtIndex(0));
+  while(item)
+  {
+    preferences->setDialogFlag(item->text(1),item->isOn());
+    item=static_cast<ServerListItem*>(item->itemBelow());
+  }
 }
 
 #include "prefspagedialogs.moc"
