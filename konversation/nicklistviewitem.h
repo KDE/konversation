@@ -44,6 +44,9 @@ class NickListViewItem : public QObject, public KListViewItem
   public slots:
     void refresh();
   
+  signals:
+    void refreshed();
+
   protected:
     Nick *nick;
 

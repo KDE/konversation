@@ -48,7 +48,10 @@ class NickListView : public KListView
       CustomID, AddressbookSub, AddressbookChange, AddressbookNew, AddressbookDelete,
       AddressbookEdit, SendEmail
     };
-    
+
+  public slots:
+    void resort();
+
   signals:
     /* Will be connected to Channel::popupCommand(int) */
     void popupCommand(int id);

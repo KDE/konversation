@@ -147,6 +147,12 @@ void NickListView::refresh()
       ++it;
     }
 }
+
+void NickListView::resort()
+{
+  sort();
+}
+
 void NickListView::contextMenuEvent(QContextMenuEvent* ce)
 {
   ce->accept();

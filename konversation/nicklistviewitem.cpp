@@ -83,6 +83,7 @@ void NickListViewItem::refresh()
   setText(1,calculateLabel1());
   setText(2,calculateLabel2());
   repaint();
+  emit refreshed(); // Resort nick list
 }
 
 QString NickListViewItem::calculateLabel1() {
