@@ -11,8 +11,6 @@
   copyright: (C) 2002 by Dario Abatianni
              in parts (C) by Trolltech
   email:     eisfuchs@tigress.com
-
-  $Id$
 */
 
 #ifndef LEDTABBAR_H
