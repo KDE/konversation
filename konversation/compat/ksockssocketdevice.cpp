@@ -174,7 +174,7 @@ KSocksSocketDevice* KSocksSocketDevice::accept()
   return new KSocksSocketDevice(newfd);
 }
 
-static int socks_read_common(int sockfd, char *data, Q_ULONG maxlen, KSocketAddress* from, ssize_t &retval, bool peek = false)
+static int socks_read_common(int sockfd, char *data, Q_ULONG maxlen, KNetwork::KSocketAddress* from, ssize_t &retval, bool peek = false)
 {
   kde_socklen_t len;
   if (from)
