@@ -43,7 +43,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
   setTextView(new IRCView(this,NULL));  // Server will be set later in setServer();
 
-  // link "Ignore" menu item into ircview popup
+  // link "Whois" and "Ignore" menu items into ircview popup
   QPopupMenu* popup=textView->getPopup();
   popup->insertItem(i18n("Whois"),POPUP_WHOIS);  // TODO: let the ircview give the id back rather than specifying it ourselves?
   popup->insertItem(i18n("Ignore"),POPUP_IGNORE);
