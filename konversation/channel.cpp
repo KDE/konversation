@@ -385,17 +385,18 @@ void Channel::changeOptions()
       QStringList removable = rmModes.grep(QRegExp(QString("^%1.*").arg((*it)[0])));
   
       for(QStringList::iterator it2 = removable.begin(); it2 != removable.end(); ++it2) {
-        rmModes.remove(rmModes.find((*it2)));
+        QStringList::iterator foundIt = rmModes.find((*it2));
+        rmModes.remove(foundIt);
       }
     } else {
       for(QStringList::iterator it2 = tmp.begin(); it2 != tmp.end(); ++it2) {
-        rmModes.remove(rmModes.find((*it2)));
+        QStringList::iterator foundIt = rmModes.find((*it2));
+        rmModes.remove(foundIt);
       }
     }
   }
 
   QString command("MODE %1 %2%3 %4");
-  kdDebug() << "Add modes: " << addModes << " Remove modes: " << rmModes << endl;
 
   for(QStringList::iterator it = addModes.begin(); it != addModes.end(); ++it) {
     m_server->queue(command.arg(getName()).arg("+").arg((*it)[0]).arg((*it).mid(1)));
@@ -1086,16 +1087,32 @@ Nick* Channel::getNickByName(const QString &lookname)
 }
 void Channel::adjustNicks(int value)
 {
-  nicks+=value;
+  if((nicks == 0) && (value <= 0)) {
+    return;
+  }
+  
+  nicks += value;
+
+  if(nicks < 0) {
+    nicks = 0;
+  }
+  
   emitUpdateInfo();
 }
 
 void Channel::adjustOps(int value)
 {
-  if(ops == 0 && value < 0) {
-    ops+=value;
-    emitUpdateInfo();
+  if((ops == 0) && (value <= 0)) {
+    return;
   }
+
+  ops += value;
+
+  if(ops < 0) {
+    ops = 0;
+  }
+
+  emitUpdateInfo();
 }
 
 void Channel::emitUpdateInfo()
