@@ -895,7 +895,7 @@ void Server::incoming()
   // remember an incompleted line (split by a packet)
   qcsRemainBuffer = qcsBuffer.right(qcsBuffer.length()-lastLFposition-1);
 
-  while(qcsBufferLines.count())
+  while(!qcsBufferLines.isEmpty())
   {
     bool isUtf8 = KStringHandler::isUtf8(qcsBufferLines.front());
     if(isUtf8)
@@ -1034,15 +1034,15 @@ void Server::send()
     QTextStream serverStream(serverSocket);
 
     // set channel encoding if specified
-    QStringList outputLineSplitted=QStringList::split(" ",outputLine);
+    QStringList outputLineSplit=QStringList::split(" ",outputLine);
     QString channelCodecName;
-    if(2<=outputLineSplitted.count())  // for safe
-      if(outputLineSplitted[0]=="PRIVMSG" ||
-         outputLineSplitted[0]=="NOTICE" ||
-         outputLineSplitted[0]=="KICK" ||
-         outputLineSplitted[0]=="PART" ||
-         outputLineSplitted[0]=="TOPIC")
-        channelCodecName=KonversationApplication::preferences.getChannelEncoding(getServerGroup(),outputLineSplitted[1]);
+    if(2<=outputLineSplit.count())  // for safe
+      if(outputLineSplit[0]=="PRIVMSG" ||
+         outputLineSplit[0]=="NOTICE" ||
+         outputLineSplit[0]=="KICK" ||
+         outputLineSplit[0]=="PART" ||
+         outputLineSplit[0]=="TOPIC")
+        channelCodecName=KonversationApplication::preferences.getChannelEncoding(getServerGroup(),outputLineSplit[1]);
 
     // init stream props
     serverStream.setEncoding(QTextStream::Locale);
