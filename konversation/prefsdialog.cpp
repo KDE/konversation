@@ -35,6 +35,7 @@
 #include "editserverdialog.h"
 #include "konversationapplication.h"
 #include "prefspagedialogs.h"
+#include "prefspagehighlight.h"
 
 PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
              KDialogBase (KDialogBase::TreeList,i18n("Edit preferences"),
@@ -52,32 +53,33 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   QFrame* colorsImagesPane   =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Colors and images")));
   QFrame* buttonsPane        =addPage(QStringList::split(',',i18n("Appearance")+","+i18n("Quick buttons")));
 
+//  QFrame* notifyPane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Notify list")));
+  QFrame* highlightPane      =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Highlight list")));
+//  QFrame* ignorePane         =addPage(QStringList::split(',',i18n("Chat")+","+i18n("Ignore list")));
+
   QFrame* logSettingsPane    =addPage(i18n("Log settings"));
   QFrame* dccSettingsPane    =addPage(i18n("DCC settings"));
   QFrame* dialogsPane        =addPage(i18n("Dialogs"));
   // TODO: Uncomment this again when it's ready to go
   //  QFrame* scriptsPane        =addPage(i18n("Scripting"));
 
-  // Add Server List page
+  // Add pages to preferences dialog
   PrefsPage* serverListPage=new PrefsPageServerList(serverListPane,preferences);
   connect(serverListPage,SIGNAL(connectToServer(int)),this,SLOT(connectRequest(int)) );
-  // Add General Settings page
+
   new PrefsPageGeneralSettings(generalSettingsPane,preferences);
-  // Add Identity page
   new PrefsPageIdentity(identityPane,preferences);
-  // Add Appearance page
+
+//  new PrefsPageNotify(notifyPane,preferences);
+  new PrefsPageHighlight(highlightPane,preferences);
+//  new PrefsPageIgnore(ignorePane,preferences);
+
   new PrefsPageAppearance(appearancePane,preferences);
-  // Add Colors and images page
   new PrefsPageColorsImages(colorsImagesPane,preferences);
-  // Add Quick buttons page
   buttonsPage=new PrefsPageButtons(buttonsPane,preferences);
-  // Add Log Settings page
   new PrefsPageLog(logSettingsPane,preferences);
-  // Add Dcc Settings page
   new PrefsPageDccSettings(dccSettingsPane,preferences);
-  // Add Dialogs page
   new PrefsPageDialogs(dialogsPane,preferences);
-  // Add scripts page
   // TODO: Uncomment this again when it's ready to go
   // new PrefsPageScripts(scriptsPane, preferences);
 
