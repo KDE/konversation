@@ -88,6 +88,13 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
           if(keyEvent->text()!="") setCompletionMode('\0');
           // support ASCII BEL
           if(keyEvent->ascii()==7) insert("%G");
+          // support ^W (delete word)
+          else if(keyEvent->ascii()==23)
+          {
+            cursorWordBackward(true);
+            cut();
+          }
+          else kdDebug() << keyEvent->ascii() << endl;
       }
     }
     // To prevent compiler warnings about unhandled case values
