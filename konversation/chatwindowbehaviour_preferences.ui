@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>ChatwindowBehaviour_Config</class>
 <widget class="QWidget">
     <property name="name">
@@ -11,9 +11,6 @@
             <width>496</width>
             <height>494</height>
         </rect>
-    </property>
-    <property name="caption">
-        <string>ChatwindowBehaviour_Config</string>
     </property>
     <property name="whatsThis" stdset="0">
         <string>Keep channel mode string as a combination of characters instead of translating them into human readable words. E.g. '*** Channel modes: no messages from outside' will become '*** Channel modes: n'</string>
@@ -180,9 +177,6 @@
                     <property name="text">
                         <string>Enable s&amp;ystem bell on incoming ASCII BEL</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+Y</string>
-                    </property>
                     <property name="whatsThis" stdset="0">
                         <string>Sounds the system bell when you recieve a ASCII BEL (0x07) control character</string>
                     </property>
@@ -209,9 +203,6 @@
                     </property>
                     <property name="text">
                         <string>Show remember line in all channels and &amp;queries</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+Q</string>
                     </property>
                 </widget>
                 <spacer row="6" column="2">

@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>TabBar_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,9 +15,6 @@ the Free Software Foundation; either version 2 of the License, or
             <width>409</width>
             <height>336</height>
         </rect>
-    </property>
-    <property name="caption">
-        <string>TabBar_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -44,9 +41,6 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>&amp;Blink the led on the label when something have changed in the tab</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+B</string>
-                    </property>
                 </widget>
                 <widget class="QCheckBox" row="0" column="0">
                     <property name="name">
@@ -54,9 +48,6 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="text">
                         <string>Place tab labels on &amp;top</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+T</string>
                     </property>
                 </widget>
             </grid>
@@ -82,9 +73,6 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>Place close button on the &amp;right side of the tab</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+R</string>
-                    </property>
                 </widget>
                 <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
@@ -92,9 +80,6 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="text">
                         <string>Show close b&amp;utton on tabs</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+U</string>
                     </property>
                 </widget>
                 <spacer row="1" column="0">
@@ -121,9 +106,6 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>&amp;Show a close tab button to the right in the tab bar</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+S</string>
-                    </property>
                 </widget>
             </grid>
         </widget>
@@ -145,9 +127,6 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>Bring new tabs to &amp;front</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+F</string>
-                    </property>
                 </widget>
                 <widget class="QCheckBox" row="1" column="0">
                     <property name="name">
@@ -155,9 +134,6 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="text">
                         <string>When someone queries you, focus new &amp;query</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+Q</string>
                     </property>
                 </widget>
             </grid>
