@@ -80,7 +80,7 @@ Preferences::Preferences()
 
   setUseSpacing(false);
   setSpacing(2);
-  setMargin(2);
+  setMargin(3);
 
   channelSplitter.append(10);
   channelSplitter.append(1);

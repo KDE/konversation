@@ -1,7 +1,6 @@
 Make Config Dialogs fit into one Tab-Dialog and throw out single windows
 Make sure, that lines don't get cleared while viewing the history
 Background color of Nicklist View
-Add a possibility to close the dcc panel via GUI
 Pasting into text views should trigger the paste mechanism
 Make colors for nick list configurable via GUI
 <lizard> ich will nen sortcut haben das wenn ich irgendwo ssh eingebe das mit ne shell aufgeht ;)
