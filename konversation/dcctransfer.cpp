@@ -14,9 +14,10 @@
   $Id$
 */
 
-#include "stdlib.h"
+#include <stdlib.h>
 
 #include <qtimer.h>
+#include <qhostaddress.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -62,11 +63,11 @@ DccTransfer::DccTransfer(KListView* parent,DccType type,QString folder,QString p
 
   if(getType()==Get)
   {
-    setText(6,getIp());
-    setText(7,getPort());
   }
   else
   {
+    setText(6,i18n("unknown"));
+    setText(7,i18n("unknown"));
     setStatus(Offering);
   }
 }
@@ -131,6 +132,33 @@ void DccTransfer::startGet()
   else connectToSender();
 }
 
+void DccTransfer::startSend()
+{
+  // Set up server socket
+  dccSocket=new KExtendedSocket();
+  dccSocket->setHost("0.0.0.0");
+  dccSocket->setSocketFlags(KExtendedSocket::passiveSocket |
+                            KExtendedSocket::inetSocket |
+                            KExtendedSocket::streamSocket);
+
+  int listenRc;
+  listenRc=dccSocket->listen(5);
+  if(listenRc==0)
+  {
+    // FIXME: This seems to be a laugh but it works ...
+    setPort(dccSocket->localAddress()->pretty().section(' ',1,1));
+    connect(dccSocket,SIGNAL (readyAccept()),this,SLOT(heard()) );
+
+    emit send(getPartner(),getFile(),getNumericalIp(),getPort(),getSize());
+  }
+  else kdDebug() << "DccTransfer::startSend(): listen() failed!" << endl;
+}
+
+void DccTransfer::heard()
+{
+  kdDebug() << "DccTransfer::heard()" << endl;
+}
+
 void DccTransfer::startResume(QString position)
 {
   kdDebug() << "startResume(): calling connectToSender()" << endl;
@@ -140,7 +168,7 @@ void DccTransfer::startResume(QString position)
 
 void DccTransfer::connectToSender()
 {
-  kdDebug() << "connectToSender(): Opening Socket to " << getIp() << " ..." << endl;
+  kdDebug() << "connectToSender(): Opening Socket to " << getIp() << ":" << getPort() << " ..." << endl;
   setStatus(Lookup);
 
   dccSocket=new KExtendedSocket(getIp(),getPort().toUInt(),KExtendedSocket::inetSocket);
@@ -156,8 +184,8 @@ void DccTransfer::connectToSender()
   kdDebug() << "Socket created." << endl;
 
   connect(dccSocket,SIGNAL (lookupFinished(int))  ,this,SLOT (lookupFinished(int)) );
-  connect(dccSocket,SIGNAL (connectionSuccess())  ,this,SLOT (connectionSuccess()) );
-  connect(dccSocket,SIGNAL (connectionFailed(int)),this,SLOT (broken(int)) );
+  connect(dccSocket,SIGNAL (connectionSuccess())  ,this,SLOT (dccGetConnectionSuccess()) );
+  connect(dccSocket,SIGNAL (connectionFailed(int)),this,SLOT (dccGetBroken(int)) );
 
   connect(dccSocket,SIGNAL (readyRead()),this,SLOT (readData()) );
   connect(dccSocket,SIGNAL (readyWrite()),this,SLOT (sendAck()) );
@@ -179,7 +207,7 @@ void DccTransfer::lookupFinished(int numOfResults)
   numOfResults=0; // suppress compiler warning
 }
 
-void DccTransfer::connectionSuccess()
+void DccTransfer::dccGetConnectionSuccess()
 {
   kdDebug() << "Connected! Starting transfer ..." << endl;
   setStatus(Running);
@@ -192,7 +220,7 @@ void DccTransfer::connectionSuccess()
   sendAck();
 }
 
-void DccTransfer::broken(int errNo)
+void DccTransfer::dccGetBroken(int errNo)
 {
   kdDebug() << "DccTransfer: Error " << errNo << endl;
 
@@ -301,10 +329,28 @@ unsigned long DccTransfer::getSize() { return fileSize; }
 void DccTransfer::setType(DccType type) { dccType=type; }
 DccTransfer::DccType DccTransfer::getType() { return dccType; }
 
-void DccTransfer::setIp(QString ip) { dccIp=ip; }
+void DccTransfer::setIp(QString ip)
+{
+  dccIp=ip;
+  setText(6,ip);
+}
+
 QString DccTransfer::getIp() { return dccIp; }
 
-void DccTransfer::setPort(QString port) { dccPort=port; }
+QString DccTransfer::getNumericalIp()
+{
+  QHostAddress ip;
+  ip.setAddress(getIp());
+  
+  return QString::number(ip.ip4Addr());
+}
+
+void DccTransfer::setPort(QString port)
+{
+  dccPort=port;
+  setText(7,port);
+}
+
 QString DccTransfer::getPort() { return dccPort; }
 
 void DccTransfer::setBufferSize(unsigned long size) { bufferSize=size; }

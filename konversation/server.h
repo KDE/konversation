@@ -123,14 +123,15 @@ class Server : public QObject
     void incoming();
     void processIncomingData();
     void send();
-    void broken();
+    void broken(int state);
     void notifyTimeout();
     void notifyCheckTimeout();
     void connectionEstablished();
     void notifyResponse(QString nicksOnline);
     void addDccGet(QString sourceNick,QStringList dccArguments);
     void resumeDccTransfer(QString sourceNick,QStringList dccArguments);
-    void sendResumeRequest(QString sender,QString fileName,QString port,int startAt);
+    void dccSendRequest(QString recipient,QString fileName,QString address,QString port,unsigned long size);
+    void dccResumeRequest(QString sender,QString fileName,QString port,int startAt);
 
   protected:
     void startNotifyCheckTimer();

@@ -30,15 +30,6 @@ OutputFilter::~OutputFilter()
 {
 }
 
-void OutputFilter::resumeRequest(QString sender,QString fileName,QString port,int startAt)
-{
-  setCommandChar();
-
-  toServer="PRIVMSG "+sender+" :"+'\x01'+"DCC RESUME "+fileName+" "+port+" "+QString::number(startAt)+'\x01';
-  output=i18n("Sending DCC Resume request to \"%1\" for file \"%2\".").arg(sender).arg(fileName);
-  type=i18n("Resume");
-}
-
 QString& OutputFilter::parse(const QString& inputLine,const QString& name)
 {
   setCommandChar();
@@ -343,6 +334,7 @@ void OutputFilter::changeMode(QString parameter,char mode,char giveTake)
         output=i18n("Modes can only take a certain number of nick names at the same time."
                     "The server may truncate your mode list.");
         type=i18n("Warning");
+        program=true;
       }
 
       QString modes;
@@ -362,7 +354,10 @@ void OutputFilter::parseDcc(QString parameter)
   else
   {
     QStringList parameterList=QStringList::split(' ',parameter);
-    if(parameterList[0]=="send")
+
+    QString dccType=parameterList[0].lower();
+
+    if(dccType=="send")
     {
       if(parameterList.count()<3)
       {
@@ -386,6 +381,22 @@ void OutputFilter::parseDcc(QString parameter)
       program=true;
     }
   }
+}
+
+void OutputFilter::sendRequest(QString recipient,QString fileName,QString address,QString port,unsigned long size)
+{
+  toServer="PRIVMSG "+recipient+" :"+'\x01'+"DCC SEND "+fileName+" "+address+" "+port+" "+QString::number(size)+'\x01';
+  output=i18n("Offering \"%1\" to %2 for upload.").arg(fileName).arg(recipient);
+  type=i18n("DCC");
+  program=true;
+}
+
+void OutputFilter::resumeRequest(QString sender,QString fileName,QString port,int startAt)
+{
+  toServer="PRIVMSG "+sender+" :"+'\x01'+"DCC RESUME "+fileName+" "+port+" "+QString::number(startAt)+'\x01';
+  output=i18n("Sending DCC Resume request to \"%1\" for file \"%2\".").arg(sender).arg(fileName);
+  type=i18n("DCC");
+  program=true;
 }
 
 // Accessors

@@ -33,6 +33,7 @@ class OutputFilter : public QObject
     ~OutputFilter();
 
     QString& parse(const QString& line,const QString& name);
+    void sendRequest(QString recipient,QString fileName,QString address,QString port,unsigned long size);
     void resumeRequest(QString sender,QString fileName,QString port,int startAt);
 
     bool isAction();

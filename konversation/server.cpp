@@ -15,8 +15,6 @@
 */
 
 #include <unistd.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
 
 #include <qregexp.h>
 #include <qhostaddress.h>
@@ -155,13 +153,13 @@ void Server::connectToIRCServer()
 
     if(serverSocket->fd()<=-1)
     {
-      broken();
+      broken(0);
     }
     else
     {
       connect(serverSocket,SIGNAL (readyRead()),this,SLOT (incoming()) );
       connect(serverSocket,SIGNAL (readyWrite()),this,SLOT (send()) );
-      connect(serverSocket,SIGNAL (closed()),this,SLOT (broken()) );
+      connect(serverSocket,SIGNAL (closed(int)),this,SLOT (broken(int)) );
 
       connect(this,SIGNAL (nicknameChanged(const QString&)),serverWindow,SLOT (setNickname(const QString&)) );
 
@@ -375,13 +373,13 @@ void Server::setDeliberateQuit(bool on)
   deliberateQuit=on;
 }
 
-void Server::broken()
+void Server::broken(int state)
 {
-  kdWarning() << "Connection broken (Socket fd " << serverSocket->fd() << ")!" << endl;
+  kdWarning() << "Connection broken (Socket fd " << serverSocket->fd() << ") " << state << "!" << endl;
 
   serverWindow->appendToStatus(i18n("Error"),i18n("Connection to Server %1 lost.").arg(serverName));
   // TODO: Close all queries and channels!
-  // Or at least make sure that all gets reconnected properly
+  //       Or at least make sure that all gets reconnected properly
   delete serverSocket;
   serverSocket=0;
 
@@ -417,37 +415,31 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
   query->setHostmask(hostmask);
 }
 
-void Server::addDccSend(QString recipient,QString file)
+void Server::addDccSend(QString recipient,QString fileName)
 {
   emit addDccPanel();
 
-  appendStatusMessage(i18n("DCC"),
-                      QString("Offering the file \"%1\" to %2 for upload.")
-                              .arg(file).arg(recipient)
-                     );
+  QString ip=KExtendedSocket::localAddress(serverSocket->fd())->pretty();
+  ip=ip.section('-',0,0);
+//  if(ip.startsWith("192.168.")) ip="127.0.0.1";
 
-// can we use KInetSocketAddress?
+  QFile file(fileName);
+  QString size=QString::number(file.size());
 
-  QString ip;
+//  kdDebug() << ip << endl;
 
-  struct sockaddr sa;
-  unsigned int salen=sizeof(sa);
-  getsockname(serverSocket->fd(),&sa,&salen);
-  struct sockaddr_in* sin=(sockaddr_in*) &sa;
-  QHostAddress addr(sin->sin_addr.s_addr);  // IP holen, unter der man von auﬂen erreichbar ist
-
-  ip=addr.toString();
-  kdDebug() << ip << endl;
-/*
   DccTransfer* newDcc=new DccTransfer(serverWindow->getDccPanel()->getListView(),
                   DccTransfer::Send,
                   KonversationApplication::preferences.getDccPath(),
                   recipient,
-                  file,                // name
-                  0,                   // size (will be set by DccTransfer)
+                  fileName,            // name
+                  size,                // size (will be set by DccTransfer)
                   ip,                  // ip
                   0);                  // port (will be set by DccTransfer)
-*/
+
+  connect(newDcc,SIGNAL (send(QString,QString,QString,QString,unsigned long)),
+    this,SLOT (dccSendRequest(QString,QString,QString,QString,unsigned long)) );
+  newDcc->startSend();
 }
 
 void Server::addDccGet(QString sourceNick,QStringList dccArguments)
@@ -476,7 +468,7 @@ void Server::addDccGet(QString sourceNick,QStringList dccArguments)
                   ip.toString(),       // ip
                   dccArguments[2]);    // port
 
-  connect(newDcc,SIGNAL (resume(QString,QString,QString,int)),this,SLOT (sendResumeRequest(QString,QString,QString,int)) );
+  connect(newDcc,SIGNAL (resume(QString,QString,QString,int)),this,SLOT (dccResumeRequest(QString,QString,QString,int)) );
 
   if(KonversationApplication::preferences.getDccAutoGet()) newDcc->startGet();
 }
@@ -486,7 +478,15 @@ void Server::requestDccPanel()
   emit addDccPanel();
 }
 
-void Server::sendResumeRequest(QString sender,QString fileName,QString port,int startAt)
+void Server::dccSendRequest(QString partner,QString fileName,QString address,QString port,unsigned long size)
+{
+  kdDebug() << "Server::dccSendRequest()" << endl;
+  outputFilter.sendRequest(partner,fileName,address,port,size);
+  queue(outputFilter.getServerOutput());
+  appendStatusMessage(outputFilter.getType(),outputFilter.getOutput());
+}
+
+void Server::dccResumeRequest(QString sender,QString fileName,QString port,int startAt)
 {
   kdDebug() << "Server::sendResumeRequest()" << endl;
   outputFilter.resumeRequest(sender,fileName,port,startAt);

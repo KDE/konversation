@@ -67,27 +67,35 @@ class DccTransfer : public QObject, public KListViewItem
     unsigned long getSize();
     unsigned long getPosition();
     QString getIp();
+    QString getNumericalIp();
     QString getPartner();
     QString getFile();
     QString getFolder();
     unsigned long getBufferSize();
 
   signals:
+    void send(QString partner,QString fileName,QString ip,QString port,unsigned long size);
     void resume(QString partner,QString fileName,QString port,int startAt);
 
   public slots:
     void startGet();
+    void startSend();
     void startResume(QString position);
 
   protected slots:
     void updateCPS();
     void lookupFinished(int numOfResults);
-    void connectionSuccess();
-    void broken(int errorCode);
+    void dccGetConnectionSuccess();
+    void dccGetBroken(int errorCode);
     void check();
     void readData();
     void writeData();
     void sendAck();
+/*
+    void dccSendConnectionSuccess();
+    void dccSendBroken(int errorCode);
+*/
+    void heard();
 
   protected:
     void connectToSender();

@@ -157,7 +157,7 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
         else if(ctcpCommand=="dcc")
         {
           // Extract DCC type and argument list
-          QString dccType=ctcpArgument.left(ctcpArgument.find(" ")).lower();
+          QString dccType=ctcpArgument.lower().section(' ',0,0);
           QStringList dccArgument=QStringList::split(' ',ctcpArgument.mid(ctcpArgument.find(" ")+1).lower());
 
           // Incoming file?
@@ -170,7 +170,6 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
           {
             emit resumeDccTransfer(sourceNick,dccArgument);
           }
-//          server->appendStatusMessage("DCC",QString("Incoming DCC %1 %2").arg(dccType).arg(dccArgument.join(" ")));
         }
         // No known CTCP request, give a general message
         else server->appendStatusMessage(i18n("CTCP"),i18n("Received unknown CTCP-%1 request from %2").arg(ctcp).arg(sourceNick));
