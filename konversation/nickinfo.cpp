@@ -31,148 +31,148 @@
 
 NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 {
-  addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nick, server->getServerName(), server->getServerGroup());
-  nickname = nick;
-  owningServer = server;
-  away = false;
-  notified = false;
+  m_addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nick, server->getServerName(), server->getServerGroup());
+  m_nickname = nick;
+  m_owningServer = server;
+  m_away = false;
+  m_notified = false;
 
-  if(!addressee.isEmpty())
-    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 4);
+  if(!m_addressee.isEmpty())
+    Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid(), 4);
 }
 NickInfo::~NickInfo()
 {
-  if(!addressee.isEmpty())
-    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
+  if(!m_addressee.isEmpty())
+    Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid(), 1);
 }
 
 
 // Get properties of NickInfo object.
-QString NickInfo::getNickname() const { return nickname; }
-QString NickInfo::getHostmask() const { return hostmask; }
+QString NickInfo::getNickname() const { return m_nickname; }
+QString NickInfo::getHostmask() const { return m_hostmask; }
 
-bool NickInfo::isAway() { return away; }
-QString NickInfo::getAwayMessage() { return awayMessage; }
-QString NickInfo::getIdentdInfo() { return identdInfo; }
-QString NickInfo::getVersionInfo() { return versionInfo; }
-bool NickInfo::isNotified() { return notified; }
-QString NickInfo::getRealName() { return realName; }
-QString NickInfo::getNetServer() { return netServer; }
-QString NickInfo::getNetServerInfo() { return netServerInfo; }
-QDateTime NickInfo::getOnlineSince() { return onlineSince; }
+bool NickInfo::isAway() { return m_away; }
+QString NickInfo::getAwayMessage() { return m_awayMessage; }
+QString NickInfo::getIdentdInfo() { return m_identdInfo; }
+QString NickInfo::getVersionInfo() { return m_versionInfo; }
+bool NickInfo::isNotified() { return m_notified; }
+QString NickInfo::getRealName() { return m_realName; }
+QString NickInfo::getNetServer() { return m_netServer; }
+QString NickInfo::getNetServerInfo() { return m_netServerInfo; }
+QDateTime NickInfo::getOnlineSince() { return m_onlineSince; }
 QString NickInfo::getPrettyOnlineSince() { 
   QString prettyOnlineSince;
-  int daysto = onlineSince.date().daysTo( QDate::currentDate());
+  int daysto = m_onlineSince.date().daysTo( QDate::currentDate());
   if(daysto == 0) prettyOnlineSince = "Today";
   else if(daysto == 1) prettyOnlineSince = "Yesterday";
-  else prettyOnlineSince = onlineSince.toString("ddd d MMMM yyyy");
+  else prettyOnlineSince = m_onlineSince.toString("ddd d MMMM yyyy");
+  //TODO - we should use KLocale for this
+  prettyOnlineSince += " " + m_onlineSince.toString("h:mm ap");
   
-  prettyOnlineSince += " " + onlineSince.toString("h:mm ap");
-  
-
-	return prettyOnlineSince; 
+  return prettyOnlineSince; 
 }
      
 // Return the Server object that owns this NickInfo object.
-Server* NickInfo::getServer() { return owningServer; }
+Server* NickInfo::getServer() { return m_owningServer; }
  
 // Set properties of NickInfo object.
 void NickInfo::setNickname(const QString& newNickname) {
   Q_ASSERT(!newNickname.isEmpty());
-  if(newNickname == nickname) return;
+  if(newNickname == m_nickname) return;
 
-  KABC::Addressee newaddressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(newNickname, owningServer->getServerName(), owningServer->getServerGroup());
+  KABC::Addressee newaddressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(newNickname, m_owningServer->getServerName(), m_owningServer->getServerGroup());
 
-  if(addressee.isEmpty() && !newaddressee.isEmpty()) { //We now know who this person is
-    Konversation::Addressbook::self()->associateNick(newaddressee,nickname, owningServer->getServerName(), owningServer->getServerGroup());  //Associate the old nickname with new contact
+  if(m_addressee.isEmpty() && !newaddressee.isEmpty()) { //We now know who this person is
+    Konversation::Addressbook::self()->associateNick(newaddressee,m_nickname, m_owningServer->getServerName(), m_owningServer->getServerGroup());  //Associate the old nickname with new contact
     Konversation::Addressbook::self()->saveAddressee(newaddressee);
-  } else if(!addressee.isEmpty() && newaddressee.isEmpty()) {
-    Konversation::Addressbook::self()->associateNick(addressee, newNickname, owningServer->getServerName(), owningServer->getServerGroup());
+  } else if(!m_addressee.isEmpty() && newaddressee.isEmpty()) {
+    Konversation::Addressbook::self()->associateNick(m_addressee, newNickname, m_owningServer->getServerName(), m_owningServer->getServerGroup());
     Konversation::Addressbook::self()->saveAddressee(newaddressee);	
-    newaddressee = addressee;
+    newaddressee = m_addressee;
   }
 
-  addressee = newaddressee;
-  nickname = newNickname; 
+  m_addressee = newaddressee;
+  m_nickname = newNickname; 
   
-  QString realname = addressee.realName();
-  owningServer->emitNickInfoChanged(this);
+  QString realname = m_addressee.realName();
+  m_owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
 
 }
 void NickInfo::setHostmask(const QString& newMask) { 
-  if (newMask.isEmpty() || newMask == hostmask) return;
-  hostmask = newMask;
-  owningServer->emitNickInfoChanged(this);
+  if (newMask.isEmpty() || newMask == m_hostmask) return;
+  m_hostmask = newMask;
+  m_owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
 }
 void NickInfo::setAway(bool state) { 
-  if(state == away) return;
-  away = state; 
-  owningServer->emitNickInfoChanged(this);
+  if(state == m_away) return;
+  m_away = state; 
+  m_owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
-  if(!addressee.isEmpty())
-    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
+  if(!m_addressee.isEmpty())
+    Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid());
 }
 void NickInfo::setAwayMessage(const QString& newMessage) { 
-  if(awayMessage == newMessage) return;
-  awayMessage = newMessage; 
-  owningServer->emitNickInfoChanged(this);
+  if(m_awayMessage == newMessage) return;
+  m_awayMessage = newMessage; 
+  m_owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
 }
 void NickInfo::setIdentdInfo(const QString& newIdentdInfo) {
-  if(identdInfo == newIdentdInfo) return;
-  identdInfo = newIdentdInfo;
-  owningServer->emitNickInfoChanged(this);
+  if(m_identdInfo == newIdentdInfo) return;
+  m_identdInfo = newIdentdInfo;
+  m_owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
 }
 void NickInfo::setVersionInfo(const QString& newVersionInfo) {
-  if(versionInfo == newVersionInfo) return;
-  versionInfo = newVersionInfo; 
-  owningServer->emitNickInfoChanged(this);
+  if(m_versionInfo == newVersionInfo) return;
+  m_versionInfo = newVersionInfo; 
+  m_owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
 }
 void NickInfo::setNotified(bool state) { 
-  if(state == notified) return;
-  notified = state; 
-  owningServer->emitNickInfoChanged(this);
+  if(state == m_notified) return;
+  m_notified = state; 
+  m_owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
 }
 void NickInfo::setRealName(const QString& newRealName) { 
-  if (newRealName.isEmpty() || realName == newRealName) return;
-  realName = newRealName; 
-  owningServer->emitNickInfoChanged(this);
+  if (newRealName.isEmpty() || m_realName == newRealName) return;
+  m_realName = newRealName; 
+  m_owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
 }
 void NickInfo::setNetServer(const QString& newNetServer) { 
-  if (newNetServer.isEmpty() || netServer == newNetServer) return;
-  netServer = newNetServer; 
-  owningServer->emitNickInfoChanged(this);
+  if (newNetServer.isEmpty() || m_netServer == newNetServer) return;
+  m_netServer = newNetServer; 
+  m_owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
 }
 void NickInfo::setNetServerInfo(const QString& newNetServerInfo) {
-  if (newNetServerInfo.isEmpty() || newNetServerInfo == netServerInfo) return;
-  netServerInfo = newNetServerInfo;
-  owningServer->emitNickInfoChanged(this);
+  if (newNetServerInfo.isEmpty() || newNetServerInfo == m_netServerInfo) return;
+  m_netServerInfo = newNetServerInfo;
+  m_owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
 }
 void NickInfo::setOnlineSince(const QDateTime& datetime) {
-  if (datetime.isNull() || datetime == onlineSince) return;
-  onlineSince = datetime; 
+  if (datetime.isNull() || datetime == m_onlineSince) return;
+  m_onlineSince = datetime; 
 
 
-  owningServer->emitNickInfoChanged(this);
+  m_owningServer->emitNickInfoChanged(this);
   emit nickInfoChanged();
 }
 
-KABC::Addressee NickInfo::getAddressee() { return addressee;}
+KABC::Addressee NickInfo::getAddressee() { return m_addressee;}
 
 void NickInfo::refreshAddressee() {
-  addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname, owningServer->getServerName(), owningServer->getServerGroup());
+  //m_addressee might not have changed, but information inside it may have.
+  m_addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(m_nickname, m_owningServer->getServerName(), m_owningServer->getServerGroup());
   emit nickInfoChanged();
   
-  if(!addressee.isEmpty())
-    Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 4);
+  if(!m_addressee.isEmpty())
+    Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid(), 4);
 }
 
 QString NickInfo::tooltip() {
@@ -191,8 +191,8 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) {
   tooltip << "<tr><td colspan=\"2\" valign=\"top\">";
 
   bool dirty = false;
-  KABC::Picture photo = addressee.photo();
-  KABC::Picture logo = addressee.logo();
+  KABC::Picture photo = m_addressee.photo();
+  KABC::Picture logo = m_addressee.logo();
   bool isimage=false;
    if(photo.isIntern()) {
     QMimeSourceFactory::defaultFactory()->setImage( "photo", photo.data() );
@@ -221,11 +221,11 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) {
     isimage=true;
   }
   tooltip << "<b>" << (isimage?"":"<center>");
-  if(!addressee.formattedName().isEmpty()) {
-    tooltip << addressee.formattedName();
+  if(!m_addressee.formattedName().isEmpty()) {
+    tooltip << m_addressee.formattedName();
     dirty = true;
-  } else if(!addressee.realName().isEmpty()) {
-    tooltip << addressee.realName();
+  } else if(!m_addressee.realName().isEmpty()) {
+    tooltip << m_addressee.realName();
     dirty = true;
   } else if(!getRealName().isEmpty() && getRealName().lower() != getNickname().lower()) {
     tooltip << getRealName();
@@ -240,28 +240,28 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) {
 
   
   tooltip << "</td></tr>";
-  if(!addressee.emails().isEmpty()) {
+  if(!m_addressee.emails().isEmpty()) {
     tooltip << "<tr><td><b>" << i18n("Email") << ": </b></td><td>";
-    tooltip << addressee.emails().join(", ");
+    tooltip << m_addressee.emails().join(", ");
     tooltip << "</td></tr>";
     dirty=true;
   }
 
-  if(!addressee.organization().isEmpty()) {
-    tooltip << "<tr><td><b>" << addressee.organizationLabel() << ": </b></td><td>" << addressee.organization() << "</td></tr>";
+  if(!m_addressee.organization().isEmpty()) {
+    tooltip << "<tr><td><b>" << m_addressee.organizationLabel() << ": </b></td><td>" << m_addressee.organization() << "</td></tr>";
     dirty=true;
   }
-  if(!addressee.role().isEmpty()) {
-    tooltip << "<tr><td><b>" << addressee.roleLabel() << ": </b></td><td>" << addressee.role() << "</td></tr>";
+  if(!m_addressee.role().isEmpty()) {
+    tooltip << "<tr><td><b>" << m_addressee.roleLabel() << ": </b></td><td>" << m_addressee.role() << "</td></tr>";
     dirty=true;
   }
-  KABC::PhoneNumber::List numbers = addressee.phoneNumbers();
+  KABC::PhoneNumber::List numbers = m_addressee.phoneNumbers();
   for( KABC::PhoneNumber::List::Iterator it = numbers.begin(); it != numbers.end(); ++it) {
     tooltip << "<tr><td><b>" << (*it).label() << ": </b></td><td>" << (*it).number() << "</td></tr>";
     dirty=true;
   }
-  if(!addressee.birthday().toString().isEmpty() ) {
-    tooltip << "<tr><td><b>" << addressee.birthdayLabel() << ": </b></td><td>" << addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
+  if(!m_addressee.birthday().toString().isEmpty() ) {
+    tooltip << "<tr><td><b>" << m_addressee.birthdayLabel() << ": </b></td><td>" << m_addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
     dirty=true;
   }
   if(!getHostmask().isEmpty()) {
@@ -281,3 +281,4 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) {
     
 
 #include "nickinfo.moc"
+

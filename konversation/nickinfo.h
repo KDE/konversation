@@ -95,20 +95,20 @@ class NickInfo : public QObject, public KShared
      *  Used so that channelNick->tooltip()  can call this, then append on its own information.
      */
     void tooltipTableData(QTextStream &tooltip);
-  protected:
-    QString nickname;
-    Server* owningServer;
-    QString hostmask;
-    bool away;
-    QString awayMessage;
-    QString identdInfo;
-    QString versionInfo;
-    bool notified;
-    QString realName;
-    QString netServer;
-    QString netServerInfo;
-    QDateTime onlineSince;
-    KABC::Addressee addressee;
+  private:
+    QString m_nickname;
+    Server* m_owningServer;
+    QString m_hostmask;
+    bool m_away;
+    QString m_awayMessage;
+    QString m_identdInfo;
+    QString m_versionInfo;
+    bool m_notified;
+    QString m_realName;
+    QString m_netServer;
+    QString m_netServerInfo;
+    QDateTime m_onlineSince;
+    KABC::Addressee m_addressee;
   signals:
     void nickInfoChanged(void);
 };
