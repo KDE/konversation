@@ -117,6 +117,7 @@ class DccTransfer : public QObject, public KListViewItem
     void setFile(QString file);
     void setFolder(QString folder);
     void setBufferSize(unsigned long size);
+    QString getErrorString(int code);
 
     DccType dccType;
     DccStatus dccStatus;

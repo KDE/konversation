@@ -16,3 +16,6 @@ Changes from 0.7 to 0.8:
 - Pasting multiline text into input lines now behaves as expected
 - Hilights now honor the sending nick, too (patch by Suran. Thanks!)
 - You can now hilight all your own lines independantly
+- Fixed the problem in the appearance dialog with font names
+- Added DCC error dialogs
+

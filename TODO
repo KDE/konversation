@@ -6,7 +6,6 @@ Make sure, that lines don't get cleared while viewing the history
 Background color of Channel window / Nicklist View
 Add a possibility to close the dcc panel via GUI
 Pasting into text views should trigger the paste mechanism
-DCC / File system errors have to be caught!
 
 Hurga: ^G shall beep
 

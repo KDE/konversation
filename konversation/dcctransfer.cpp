@@ -21,6 +21,7 @@
 
 #include <klocale.h>
 #include <kdebug.h>
+#include <kmessagebox.h>
 
 #include "dcctransfer.h"
 #include "konversationapplication.h"
@@ -111,9 +112,13 @@ void DccTransfer::startGet()
 
   if(file.exists())
   {
-    file.open(IO_ReadOnly);
-    long fileSize=file.size();
-    file.close();
+    long fileSize=0;
+
+    if(file.open(IO_ReadOnly))
+    {
+      fileSize=file.size();
+      file.close();
+    }
     // If the file is empty we can forget about resuming
     if(fileSize)
     {
@@ -165,25 +170,34 @@ void DccTransfer::startResumeSend(QString position)
 
 void DccTransfer::heard()
 {
-  kdDebug() << this << "DccTransfer::heard(): accepting ..." << endl;
+//  kdDebug() << this << "DccTransfer::heard(): accepting ..." << endl;
 
   int fail=dccSocket->accept(sendSocket);
 
   connect(sendSocket,SIGNAL (readyRead()),this,SLOT (getAck()) );
   connect(sendSocket,SIGNAL (readyWrite()),this,SLOT (writeData()) );
-
+/*
   kdDebug() << this << "DccTransfer::heard(): accept() returned " << fail << endl;
   kdDebug() << this << "DccTransfer::heard(): getType() returns " << getType() << endl;
   kdDebug() << this << "DccTransfer::heard(): getPosition() returns " << getPosition() << endl;
-
+*/
   if(!fail)
   {
-    file.open(IO_ReadOnly);
-    if(getType()==ResumeSend) kdDebug() << this << "Seeking to " << getPosition() << endl;
+    if(file.open(IO_ReadOnly))
+    {
+      if(getType()==ResumeSend) kdDebug() << this << "Seeking to " << getPosition() << endl;
 /*    if(getType()==ResumeSend) */ file.at(getPosition());
-    setStatus(Sending);
-    sendSocket->enableRead(true);
-    sendSocket->enableWrite(true);
+      setStatus(Sending);
+      sendSocket->enableRead(true);
+      sendSocket->enableWrite(true);
+    }
+    else
+    {
+      QString errorString=getErrorString(file.status());
+
+      KMessageBox::sorry (0,QString(errorString).arg(file.name()),i18n("DCC Send error"));
+      setStatus(Failed);
+    }
   }
   else
   {
@@ -231,13 +245,24 @@ void DccTransfer::lookupFinished(int numOfResults)
 void DccTransfer::dccGetConnectionSuccess()
 {
   kdDebug() << this << "Connected! Starting transfer ..." << endl;
-  setStatus(Receiving);
-  dccSocket->enableRead(true);
 
-  file.open(IO_ReadWrite);
-  // Set position for DCC Resume Get
-  file.at(getPosition());
+  if(file.open(IO_ReadWrite))
+  {
+    // Set position for DCC Resume Get
+    file.at(getPosition());
+
+    setStatus(Receiving);
+    dccSocket->enableRead(true);
+
 //   if (getType()==ResumeGet) sendAck(); // seems not to work ...
+  }
+  else
+  {
+    QString errorString=getErrorString(file.status());
+
+    KMessageBox::sorry (0,"<qt>"+QString(errorString).arg(file.name())+"</qt>",i18n("DCC Get error"));
+    setStatus(Failed);
+  }
 }
 
 void DccTransfer::dccGetBroken(int errNo)
@@ -394,6 +419,50 @@ void DccTransfer::setPort(QString port)
 {
   dccPort=port;
   setText(7,port);
+}
+
+QString DccTransfer::getErrorString(int code)
+{
+  QString errorString="";
+
+  switch(code)
+  {
+    case IO_Ok:
+      errorString=i18n("The operation was successful. Should never happen in an error dialog.");
+    break;
+    case IO_ReadError:
+      errorString=i18n("Could not read from file \"%1\".");
+    break;
+    case IO_WriteError:
+      errorString=i18n("Could not write to file \"%1\".");
+    break;
+    case IO_FatalError:
+      errorString=i18n("A fatal unrecoverable error occurred.");
+    break;
+    case IO_OpenError:
+      errorString=i18n("Could not open file \"%1\".");
+    break;
+
+        // Same case value? Damn!
+//        case IO_ConnectError:
+//          errorString="Could not connect to the device.";
+//        break;
+
+    case IO_AbortError:
+      errorString=i18n("The operation was unexpectedly aborted.");
+    break;
+    case IO_TimeOutError:
+      errorString=i18n("The operation timed out.");
+    break;
+    case IO_UnspecifiedError:
+      errorString=i18n("An unspecified error happened on close.");
+    break;
+    default:
+      errorString=i18n("Unknown error. Code %1").arg(code);
+    break;
+  }
+
+  return errorString;
 }
 
 QString DccTransfer::getPort() { return dccPort; }

@@ -716,6 +716,8 @@ void Server::updateChannelQuickButtons(QStringList newButtons)
 
 void Server::updateFonts()
 {
+  kdDebug() << "Server::updateFonts()" << endl;
+
   Channel* channel=channelList.first();
   while(channel)
   {

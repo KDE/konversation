@@ -149,6 +149,8 @@ int Query::margin()
 
 void Query::updateFonts()
 {
+  kdDebug() << "Query::updateFonts()" << endl;
+
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
 }
 

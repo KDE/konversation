@@ -567,6 +567,8 @@ int ServerWindow::margin()
 
 void ServerWindow::updateFonts()
 {
+  kdDebug() << "ServerWindow::updateFonts()" << endl;
+
   statusView->setFont(KonversationApplication::preferences.getTextFont());
 }
 

@@ -1031,6 +1031,8 @@ void Channel::updateQuickButtons(QStringList newButtonList)
 
 void Channel::updateFonts()
 {
+  kdDebug() << "Channel::updateFonts()" << endl;
+
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   nicknameListView->setFont(KonversationApplication::preferences.getListFont());
 }
