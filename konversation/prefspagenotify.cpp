@@ -34,6 +34,7 @@ PrefsPageNotify::PrefsPageNotify(QWidget* newParent,Preferences* newPreferences)
 {
   preferences = newPreferences;
 
+  m_useNotifyCheck->setChecked(preferences->getUseNotify());
   m_showWatchedNicksAtStartup->setChecked(preferences->getOpenWatchedNicksAtStartup());
   m_notifyActionInput->setText(preferences->getNotifyDoubleClickAction());
 
