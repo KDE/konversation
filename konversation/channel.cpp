@@ -437,11 +437,7 @@ const QString& Channel::getKey()
 
 void Channel::channelTextEntered()
 {
-//  QString line=channelInput->text();
-  QTextCodec *codec=QTextCodec::codecForName("ISO8859-15");
-  QCString line=codec->fromUnicode(channelInput->text());
-
-// kdDebug() << (char) l2[0] << endl;
+  QString line=channelInput->text();
 
   if(line.lower()=="/clear")
     textView->clear();
@@ -451,8 +447,11 @@ void Channel::channelTextEntered()
   channelInput->clear();
 }
 
-void Channel::sendChannelText(const QString& line)
+void Channel::sendChannelText(const QString& sendLine)
 {
+  QTextCodec *codec=QTextCodec::codecForName("ISO8859-15");
+  QCString line=codec->fromUnicode(sendLine);
+
   /* Is there something we need to display for ourselves? */
   QString output=filter.parse(server->getNickname(),line,getName());
   if(output!="")

@@ -285,7 +285,7 @@ void IRCView::append(const char* nick,const char* message)
 #endif
 #endif
 
-  emit textToLog(QString("%1:\t%2").arg(nick).arg(message));
+  emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
 
   doAppend(line);
 }

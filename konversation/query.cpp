@@ -15,6 +15,7 @@
 */
 
 #include <qhbox.h>
+#include <qtextcodec.h>
 
 #include <kdialog.h>
 #include <klocale.h>
@@ -112,8 +113,11 @@ void Query::queryTextEntered()
   queryInput->clear();
 }
 
-void Query::sendQueryText(QString line)
+void Query::sendQueryText(QString sendLine)
 {
+  QTextCodec *codec=QTextCodec::codecForName("ISO8859-15");
+  QCString line=codec->fromUnicode(sendLine);
+
   QString output=filter.parse(server->getNickname(),line,getName());
 
   if(output!="")
