@@ -14,7 +14,6 @@
     $Id$
 */
 
-#include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qwidget.h>
 #include <qcheckbox.h>
@@ -22,6 +21,7 @@
 #include <qlabel.h>
 
 #include <kdialog.h>
+#include <kcombobox.h>
 
 #ifndef CHANNEL_H
 #define CHANNEL_H
@@ -87,6 +87,8 @@ class Channel : public ChatWindow
     void openNickChangeDialog();
     void changeNickname(QString newNickname);
     void closeNickChangeDialog(QSize newSize);
+    /* will be called when the user types a new topic in the topic line */
+    void requestNewTopic(const QString& newTopic);
 
   protected:
     QStringList* getSelectedNicksList();
@@ -99,7 +101,8 @@ class Channel : public ChatWindow
 
     unsigned int completionPosition;
 
-    QComboBox* topicLine;
+    QString topic; /* Caches actual topic */
+    KComboBox* topicLine;
     /* TODO: Somehow we need the nickname to the corresponding topic displayed */
     QStringList topicHistory;
 

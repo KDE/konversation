@@ -89,8 +89,11 @@ Server::Server(int id)
 Server::~Server()
 {
   kdDebug() << "Server::~Server()" << endl;
-  serverSocket->enableWrite(true);
-  send(serverSocket);
+  if(serverSocket)
+  {
+    serverSocket->enableWrite(true);
+    send(serverSocket);
+  }
 }
 
 QString Server::getServerName()
@@ -292,7 +295,8 @@ void Server::incoming(KSocket* ksocket)
 
 void Server::queue(const QString& buffer)
 {
-  if(buffer.length())
+  /* Only queue lines if we are connected */
+  if(serverSocket && buffer.length())
   {
     kdDebug() << "Q: " << buffer << endl;
 
@@ -305,14 +309,18 @@ void Server::queue(const QString& buffer)
 
 void Server::send(KSocket* ksocket)
 {
-  kdDebug() << "-> " << outputBuffer << endl;
-  /* To make lag calculation more precise, we reset the timer here */
-  if(outputBuffer.startsWith("ISON")) notifySent.start();
-  /* Don't reconnect if we WANT to quit */
-  else if(outputBuffer.startsWith("QUIT")) setDeliberateQuit(true);
-  /* TODO: Implement Flood-Protection here */
-  write(ksocket->socket(),outputBuffer.latin1(),outputBuffer.length());
-  serverSocket->enableWrite(false);
+  /* Check if we are still online */
+  if(serverSocket)
+  {
+    kdDebug() << "-> " << outputBuffer << endl;
+    /* To make lag calculation more precise, we reset the timer here */
+    if(outputBuffer.startsWith("ISON")) notifySent.start();
+    /* Don't reconnect if we WANT to quit */
+    else if(outputBuffer.startsWith("QUIT")) setDeliberateQuit(true);
+    /* TODO: Implement Flood-Protection here */
+    write(ksocket->socket(),outputBuffer.latin1(),outputBuffer.length());
+    serverSocket->enableWrite(false);
+  }
 
   outputBuffer="";
 }

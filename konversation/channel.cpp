@@ -36,6 +36,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   ops=0;
   completionPosition=0;
   nickChangeDialog=0;
+  topic="";
 
   setType(ChatWindow::Channel);
 
@@ -60,8 +61,10 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   topicBox->setSpacing(spacing());
 
   QLabel* topicLabel=new QLabel(i18n("Topic:"),topicBox);
-  topicLine=new QComboBox(topicBox);
+  topicLine=new KComboBox(topicBox);
   topicLine->setEditable(true);
+  topicLine->setAutoCompletion(false);
+  topicLine->setInsertionPolicy(QComboBox::NoInsertion);
 
   /* The box holding the channel modes*/
   QHBox* modeBox=new QHBox(topicBox);
@@ -75,16 +78,15 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   modeK=new ModeButton("K",modeBox,6);
   modeL=new ModeButton("L",modeBox,7);
 
-
-	// Tooltips for the ModeButtons
-	QToolTip::add(modeT, i18n("Topic settable by channel operator only."));
-	QToolTip::add(modeN, i18n("No messages to channel from clients on the outside."));
+  // Tooltips for the ModeButtons
+  QToolTip::add(modeT, i18n("Topic can be changed by channel operator only."));
+  QToolTip::add(modeN, i18n("No messages to channel from clients on the outside."));
   QToolTip::add(modeS, i18n("Secret channel."));
-	QToolTip::add(modeI, i18n("Invite only channel."));
-	QToolTip::add(modeP, i18n("Private channel."));
-	QToolTip::add(modeM, i18n("Moderated channel."));
-	QToolTip::add(modeK, i18n("Protect channel with a keyword."));
-	QToolTip::add(modeL, i18n("Set user limit to channel."));
+  QToolTip::add(modeI, i18n("Invite only channel."));
+  QToolTip::add(modeP, i18n("Private channel."));
+  QToolTip::add(modeM, i18n("Moderated channel."));
+  QToolTip::add(modeK, i18n("Protect channel with a keyword."));
+  QToolTip::add(modeL, i18n("Set user limit to channel."));
 
   connect(modeT,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
   connect(modeN,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
@@ -112,21 +114,21 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView->setSorting(1,false);
   nicknameListView->addColumn("",2);
   nicknameListView->addColumn("");
-	nicknameListView->addColumn("");
+  nicknameListView->addColumn("");
   nicknameListView->header()->hide();
 
   /* The grid that holds the quick action buttons */
   QGrid* buttonsGrid=new QGrid(2,nickListButtons);
-	for(int index=0;index<8;index++)
+  for(int index=0;index<8;index++)
   {
     QuickButton* newQuickButton=new QuickButton("",buttonsGrid,index);
     buttonList.append(newQuickButton);
-   	// Get the button definition to set tooltips
-	  QString buttonText=KonversationApplication::preferences.getButtonList()[index];
-		buttonText = buttonText.section(",", -1);
-		// Create tooltip for current button
-		QToolTip::add(buttonList.at(index), buttonText);
-		connect(newQuickButton,SIGNAL (clicked(int)),this,SLOT (quickButtonClicked(int)) );
+    // Get the button definition to set tooltips
+    QString buttonText=KonversationApplication::preferences.getButtonList()[index];
+    buttonText = buttonText.section(",", -1);
+    // Create tooltip for current button
+    QToolTip::add(buttonList.at(index), buttonText);
+    connect(newQuickButton,SIGNAL (clicked(int)),this,SLOT (quickButtonClicked(int)) );
   }
   updateQuickButtons(KonversationApplication::preferences.getButtonList());
 
@@ -175,6 +177,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(textView,SIGNAL (gotFocus()),channelInput,SLOT (setFocus()) );
   connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
   connect(nicknameButton,SIGNAL (clicked()),this,SLOT (openNickChangeDialog()) );
+  connect(topicLine,SIGNAL (activated(const QString&)),this,SLOT (requestNewTopic(const QString&)) );
 
   nicknameList.setAutoDelete(true);     // delete items when they are removed
 
@@ -197,6 +200,15 @@ Channel::~Channel()
   }
   /* Unlink this channel from channel list */
   server->removeChannel(this);
+}
+
+void Channel::requestNewTopic(const QString& newTopic)
+{
+  topicLine->setCurrentText(topic);
+
+  if(newTopic!=topic) sendChannelText("/TOPIC "+newTopic);
+
+  channelInput->setFocus();
 }
 
 /* Will be connected to NickListView::popupCommand(int) */
@@ -619,26 +631,31 @@ void Channel::updateNicksOps()
   nicksOps->setText(i18n("%1 %2 / %3 %4").arg(nicks).arg((nicks==1) ? i18n("Nick") : i18n("Nicks")).arg(ops).arg((ops==1) ? i18n("Op") : i18n("Ops")));
 }
 
-void Channel::setTopic(QString& topic)
+void Channel::setTopic(QString& newTopic)
 {
   /* Somehow we need the nickname to the corresponding topic displayed */
-  appendCommandMessage(i18n("Topic"),i18n("The channel topic is \"%1\".").arg(topic));
-  topicHistory.prepend(topic.left(80)); // FIXME! Window gets too big
-  topicLine->clear();
-  topicLine->insertStringList(topicHistory);
+  appendCommandMessage(i18n("Topic"),i18n("The channel topic is \"%1\".").arg(newTopic));
+  if(topic!=newTopic)
+  {
+    topicHistory.prepend(newTopic.left(80)); // FIXME! Window gets too big
+    topicLine->clear();
+    topicLine->insertStringList(topicHistory);
+    topic=newTopic;
+  }
 }
 
-void Channel::setTopic(QString& nickname,QString& topic) // Overloaded
+void Channel::setTopic(QString& nickname,QString& newTopic) // Overloaded
 {
   /* Somehow we need the nickname to the corresponding topic displayed */
   if(nickname==server->getNickname())
-    appendCommandMessage(i18n("Topic"),i18n("You set the channel topic to \"%1\".").arg(topic));
+    appendCommandMessage(i18n("Topic"),i18n("You set the channel topic to \"%1\".").arg(newTopic));
   else
-    appendCommandMessage(i18n("Topic"),i18n("%1 sets the channel topic to \"%2\".").arg(nickname).arg(topic));
+    appendCommandMessage(i18n("Topic"),i18n("%1 sets the channel topic to \"%2\".").arg(nickname).arg(newTopic));
 
-  topicHistory.prepend(topic.left(80)); // FIXME! Window gets too big
+  topicHistory.prepend(newTopic.left(80)); // FIXME! Window gets too big
   topicLine->clear();
   topicLine->insertStringList(topicHistory);
+  topic=newTopic;
 }
 
 void Channel::updateMode(QString& sourceNick,char mode,bool plus,QString& parameter)
