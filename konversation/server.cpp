@@ -721,15 +721,21 @@ void Server::addDccSend(const QString &recipient,const QString &fileName)
 {
   emit addDccPanel();
 
-  // Get our own IP address. Don't laugh! This works!
-  QString ip=KExtendedSocket::localAddress(serverSocket.fd())->pretty();
-  ip=ip.section('-',0,0);
+  // Get our own IP address.
+  KSocketAddress* ipAdr=KExtendedSocket::localAddress(serverSocket.fd());
+  // Don't laugh! This works!
+  QString ip=ipAdr->pretty();
+  // FIXME: breaks on ipv6 ...
+  QRegExp ipRegExp("[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}");
+  // extract ip address from pretty string
+  ipRegExp.search(ip);
+  ip=ipRegExp.cap();
+  // remove temporary object
+  delete ipAdr;
 
   // We already checked that the file exists in output filter / requestDccSend() resp.
   QFile file(fileName);
   QString size=QString::number(file.size());
-
-//  kdDebug() << ip << endl;
 
   DccTransfer* newDcc=new DccTransfer(getMainWindow()->getDccPanel()->getListView(),
                   DccTransfer::Send,
