@@ -1968,6 +1968,8 @@ void Channel::serverQuit(const QString& reason)
 #ifdef USE_MDI
   ChannelNickPtr channelNick=m_server->getChannelNick(getName(),m_server->getNickname());
   if(channelNick)  removeNick(channelNick,reason,true);
+#else
+  Q_UNUSED(reason);
 #endif
 }
 

@@ -35,7 +35,7 @@ class InputFilter : public QObject
     ~InputFilter();
 
     void setServer(Server* newServer);
-    void parseLine(const QString &line, QWidget *mainWindow);
+    void parseLine(const QString &line);
     
     void reset();  // reset AutomaticRequest, WhoRequestList
 
@@ -65,7 +65,7 @@ class InputFilter : public QObject
     void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
 
   protected:
-    void parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing, QWidget *mainWindow);
+    void parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);
     void parseServerCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);
     void parseModes(const QString &sourceNick, const QStringList &parameterList);
 

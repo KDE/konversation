@@ -49,7 +49,7 @@ void InputFilter::setServer(Server* newServer)
     server=newServer;
 }
 
-void InputFilter::parseLine(const QString& a_newLine, QWidget* mainWindow)
+void InputFilter::parseLine(const QString& a_newLine)
 {
     QString trailing;
     QString newLine(a_newLine);
@@ -104,11 +104,11 @@ void InputFilter::parseLine(const QString& a_newLine, QWidget* mainWindow)
     {
         parseServerCommand(prefix, command, parameterList, trailing);
     } else {
-        parseClientCommand(prefix, command, parameterList, trailing, mainWindow);
+        parseClientCommand(prefix, command, parameterList, trailing);
     }
 }
 
-void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing, QWidget *mainWindow)
+void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing)
 {
     KonversationApplication* konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
     Q_ASSERT(konv_app);

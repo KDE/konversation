@@ -126,7 +126,7 @@ namespace Konversation {
         {
             result.toServer = "PRIVMSG " + name + " :" + inputLine.mid(1);
 
-            for(int i = 508; i < result.toServer.length(); i += 509) {
+            for(uint i = 508; i < result.toServer.length(); i += 509) {
                 result.toServer.insert(i, "\nPRIVMSG " + destination + " :");
             }
 
@@ -202,7 +202,7 @@ namespace Konversation {
         {
             result.toServer = "PRIVMSG " + destination + " :" + inputLine;
 
-            for(int i = 508; i < result.toServer.length(); i += 509) {
+            for(uint i = 508; i < result.toServer.length(); i += 509) {
                 result.toServer.insert(i, "\nPRIVMSG " + destination + " :");
             }
 
