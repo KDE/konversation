@@ -543,6 +543,8 @@ void KonversationApplication::readOptions()
 
       osd->setBackgroundColor(preferences.getOSDBackgroundColor());
     }
+  } else if(osd && !preferences.getOSDUsage()) {
+    osd->setEnabled(false);
   }
 
   // Check if there is old server list config
