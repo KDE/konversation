@@ -79,7 +79,6 @@ class KonversationApplication : public KApplication
      *  @return A nickinfo for this user and server if one is found.
      */
     NickInfoPtr getNickInfo(const QString &ircnick, const QString &serverOrGroup);
-    NickInfoPtr getOnlineNickInfo(const QString &ircnick, const QString &serverOrGroup);
     
     OSDWidget* osd;
     

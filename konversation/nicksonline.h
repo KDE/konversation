@@ -198,12 +198,13 @@ class NicksOnline : public ChatWindow
     */
     void setupAddressbookButtons(int nickState);
     /**
-    * Determines if a nick is online in any of the servers in a group.
+    * Determines if a nick is online in any of the servers in a group and returns
+    * a NickInfo if found, otherwise 0.
     * @param groupName          Server group name.
     * @param nickname           Nick name.
-    * @return                   True if the nick is online in any of the servers in the group.
+    * @return                   NickInfo if nick is online in any server, otherwise 0.
     */
-    bool isNickOnline(QString& groupName, QString& nickname);
+    NickInfoPtr getOnlineNickInfo(QString& groupName, QString& nickname);
     /**
     * Requests a WHOIS in all servers for a specified server group and nickname.
     * @param groupName          Server group name.

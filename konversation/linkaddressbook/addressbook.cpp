@@ -177,7 +177,7 @@ void Addressbook::messageContact( const QString &uid, const QString& message ) {
 	        kdDebug() << "Addressbook::messageContact called with empty uid or message" << endl;
 		return;
 	}
-	NickInfoPtr nickInfo = getNickInfo(addressBook->findByUid(uid), true);
+	NickInfoPtr nickInfo = getNickInfo(addressBook->findByUid(uid));
 	if(!nickInfo) {
 		kdDebug() << "messageContact:  uid %1 not online\n" << endl;
 		return;

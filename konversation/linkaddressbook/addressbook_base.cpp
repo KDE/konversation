@@ -93,7 +93,7 @@ bool AddressbookBase::hasNick(const KABC::Addressee &addressee, const QString &n
 
 QString AddressbookBase::getBestNick(const KABC::Addressee &addressee) {
 	//Look for a nickinfo for this nick, and use that.  That way we turn a nick that is online.
-	NickInfoPtr nickInfo = getNickInfo(addressee, true);
+	NickInfoPtr nickInfo = getNickInfo(addressee);
 	if(nickInfo)
 		return nickInfo->getNickname();
 	//No online nickinfo - not connected to server maybe.  just return the first nick.
@@ -106,9 +106,7 @@ QString AddressbookBase::getBestNick(const KABC::Addressee &addressee) {
 	return QString::null;
 }
 
-
-
-NickInfoPtr AddressbookBase::getNickInfo(const KABC::Addressee &addressee, bool onlineOnlyNicks)
+NickInfoPtr AddressbookBase::getNickInfo(const KABC::Addressee &addressee)
 {
 	NickInfoPtr lastNickInfo;
 	QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
@@ -117,20 +115,14 @@ NickInfoPtr AddressbookBase::getNickInfo(const KABC::Addressee &addressee, bool 
 		QString ircnick;
 		QString serverOrGroup;
 		KonversationApplication::splitNick_Server(*it, ircnick, serverOrGroup);
-		NickInfoPtr nickInfo;
-		
-		if(onlineOnlyNicks) {
-			nickInfo = dynamic_cast<KonversationApplication*>(kapp)->getOnlineNickInfo(ircnick, serverOrGroup);
-			if(nickInfo) {
-				if(!nickInfo->isAway())
-					return nickInfo;
-				//This nick is away.  Keep looking, but use it if we can't find one that's on
-				lastNickInfo = nickInfo;
-			}
-		} else {
-			nickInfo = dynamic_cast<KonversationApplication*>(kapp)->getNickInfo(ircnick, serverOrGroup);
-			if(nickInfo) return nickInfo;
-		}
+		NickInfoPtr nickInfo =
+                        dynamic_cast<KonversationApplication*>(kapp)->getNickInfo(ircnick, serverOrGroup);
+                if(nickInfo) {
+                        if(!nickInfo->isAway())
+                                return nickInfo;
+                        //This nick is away.  Keep looking, but use it if we can't find one that's on
+                        lastNickInfo = nickInfo;
+                }
 	}
 	//Use a nick that's either away, or non-existant.
 	return lastNickInfo;
@@ -296,14 +288,14 @@ bool AddressbookBase::saveAddressee(KABC::Addressee &addressee) {
  */
 int AddressbookBase::presenceStatusByAddressee(const KABC::Addressee &addressee) {
 	Q_ASSERT(&addressee);
-	NickInfoPtr nickInfo = getNickInfo(addressee, true /*online only*/);
+	NickInfoPtr nickInfo = getNickInfo(addressee);
 	if(!nickInfo) return 1; //either offline, or we aren't on the same server.  returning 0 not supported at the moment.  FIXME
 	if(nickInfo->isAway()) return 3;
 	return 4;
 
 }
 bool AddressbookBase::isOnline(KABC::Addressee &addressee) {
-	return !!getNickInfo(addressee, true);
+	return !!getNickInfo(addressee);
 }
 
 

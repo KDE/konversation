@@ -50,9 +50,6 @@ class NickInfo : public QObject, public KShared
      *  "|away" or "|afk"  or something.
      */
     bool isAway();
-    /** A helper function.  Searches the server it is on to see if it's online.
-      */
-    bool isOnline();
     QString getAwayMessage();
     QString getIdentdInfo();
     QString getVersionInfo();

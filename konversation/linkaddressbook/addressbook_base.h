@@ -59,10 +59,9 @@ class AddressbookBase : public QObject, public KIMIface
     /** Return a NickInfo for this addressee.
       *  If there are multiple matches, it tries to pick one that is not away.
       *  @param addressee The addressee to get a nickInfo for
-      *  @param onlineOnlyNicks If true, then return only a nick that is online, otherwise return 0
       *  @return A nickInfo.  It tries hard to return a nickInfo that is not away if one exists.
       */
-    static NickInfoPtr getNickInfo(const KABC::Addressee &addressee, bool onlineOnlyNicks);
+    static NickInfoPtr getNickInfo(const KABC::Addressee &addressee);
     /**
       * Lets outsiders tell us to emit presenceChanged signal.
       */

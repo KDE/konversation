@@ -1198,20 +1198,4 @@ NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const Q
   return 0;
 }
 
-NickInfoPtr KonversationApplication::getOnlineNickInfo(const QString &ircnick, const QString &serverOrGroup) {
-  NickInfoPtr nickInfo;
-  QString lserverOrGroup = serverOrGroup.lower();
-  for(Server* lookServer = serverList.first(); lookServer; lookServer = serverList.next()) {
-    if(lserverOrGroup.isEmpty()
-       || lookServer->getServerName().lower()==lserverOrGroup
-       || lookServer->getServerGroup().lower()==lserverOrGroup)
-    {
-      nickInfo = lookServer->getOnlineNickInfo(ircnick);
-      if(nickInfo) return nickInfo; //If we found one
-    }
-  }
-  return 0;
-}
-
-
 #include "konversationapplication.moc"
