@@ -1084,16 +1084,16 @@ void KonversationMainWindow::tooLongLag(Server* lagServer,int msec)
 	    timeString.push_front(i18n("1 second", "%n seconds", secsleft%60));
 	    secsleft -= secsleft%60;
     }
-    if(secsleft % 360) {
-	    timeString.push_front(i18n("1 minute", "%n minutes", (secsleft%360)/60));
-	    secsleft -= secsleft%360;
+    if(secsleft % 3600) {
+	    timeString.push_front(i18n("1 minute", "%n minutes", (secsleft%3600)/60));
+	    secsleft -= secsleft%3600;
     }
-    if(secsleft % (360*24)) {
-            timeString.push_front(i18n("1 hour", "%n hours", (secsleft%(360*24))/360));
-            secsleft -= secsleft%(360*24);
+    if(secsleft % (3600*24)) {
+            timeString.push_front(i18n("1 hour", "%n hours", (secsleft%(3600*24))/3600));
+            secsleft -= secsleft%(3600*24);
     }
     if(secsleft) {
-            timeString.push_front(i18n("1 day", "%n days", secsleft/(360*24)));
+            timeString.push_front(i18n("1 day", "%n days", secsleft/(3600*24)));
     }
     Q_ASSERT(!timeString.empty()); if(timeString.empty()) return;
     QString timestring = timeString.last();
