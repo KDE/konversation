@@ -487,7 +487,7 @@ void Server::processIncomingData()
     inputBuffer=inputBuffer.mid(pos+1);
 
     if(rawLog) rawLog->appendRaw(line);
-    inputFilter.parseLine(line);
+    inputFilter.parseLine(line, mainWindow);
   }
 }
 

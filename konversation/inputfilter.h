@@ -24,6 +24,7 @@
 */
 
 class Server;
+class QWidget;
 
 class InputFilter : public QObject
 {
@@ -34,7 +35,7 @@ class InputFilter : public QObject
     ~InputFilter();
 
     void setServer(Server* newServer);
-    void parseLine(const QString &line);
+    void parseLine(const QString &line, QWidget *mainWindow);
 
     // use this when the client does automatics, like userhost for finding hostmasks
     void setAutomaticRequest(bool yes);
@@ -57,7 +58,7 @@ class InputFilter : public QObject
     void unAway();
 
   protected:
-    void parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);
+    void parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing, QWidget *mainWindow);
     void parseServerCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);
     void parseModes(const QString &sourceNick, const QStringList &parameterList);
 

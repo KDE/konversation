@@ -48,7 +48,7 @@ void InputFilter::setServer(Server* newServer)
   server=newServer;
 }
 
-void InputFilter::parseLine(const QString &a_newLine)
+void InputFilter::parseLine(const QString &a_newLine, QWidget *mainWindow)
 {
   QString trailing(QString::null);
   QString newLine(a_newLine);
@@ -97,10 +97,10 @@ void InputFilter::parseLine(const QString &a_newLine)
   if(prefix.find('!')==-1 && prefix!=server->getNickname())
     parseServerCommand(prefix,command,parameterList,trailing);
   else
-    parseClientCommand(prefix,command,parameterList,trailing);
+    parseClientCommand(prefix,command,parameterList,trailing, mainWindow);
 }
 
-void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing)
+void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing, QWidget *mainWindow)
 {
   /*
     kdDebug() << "InputFilter::parseClientCommand(): " << prefix << " "
@@ -162,11 +162,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           if(sourceNick != server->getNickname()) {
             if(ctcpArgument.lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
             {
-              KNotifyClient::event("nick");
+              KNotifyClient::event(mainWindow->winId(), "nick");
             }
             else
             {
-              KNotifyClient::event("message");
+              KNotifyClient::event(mainWindow->winId(), "message");
             }
           }
         }
@@ -184,7 +184,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
           // KNotify events...
           if(sourceNick != server->getNickname()) {
-            KNotifyClient::event("nick");
+            KNotifyClient::event(mainWindow->winId(), "nick");
           }
         }
       }
@@ -230,7 +230,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           // Incoming file?
           if(dccType=="send")
           {
-            KNotifyClient::event("dcc_incoming");
+            KNotifyClient::event(mainWindow->winId(), "dcc_incoming");
             emit addDccGet(sourceNick,dccArgument);
           }
           // Incoming file that shall be resumed?
@@ -299,11 +299,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
           if(sourceNick != server->getNickname()) {
             if(trailing.lower().find(QRegExp("\\b"+server->getNickname().lower()+"\\b"))!=-1)
             {
-              KNotifyClient::event("nick");
+              KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(trailing));
             }
             else
             {
-              KNotifyClient::event("message");
+              KNotifyClient::event(mainWindow->winId(), "message");
             }
           }
       }
@@ -318,7 +318,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
           // KNotify events...
           if(sourceNick != server->getNickname()) {
-            KNotifyClient::event("nick");
+           KNotifyClient::event(mainWindow->winId(), "nick", QString::fromLatin1("<%1> %2").arg(sourceNick).arg(trailing));
           }
         }
       }
@@ -434,7 +434,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     else
     {
       server->nickJoinsChannel(channelName,sourceNick,sourceHostmask);
-      KNotifyClient::event("join");
+      KNotifyClient::event(mainWindow->winId(), "join");
     }
   }
   else if(command=="kick")
@@ -483,7 +483,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     server->removeNickFromChannel(parameterList[0],sourceNick,trailing);
     // KNotify events...
     if(sourceNick != server->getNickname()) {
-      KNotifyClient::event("part");
+      KNotifyClient::event(mainWindow->winId(), "part");
     }
   }
   else if(command=="quit")
@@ -508,7 +508,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     server->removeNickFromServer(sourceNick,trailing);
     // KNotify events...
     if(sourceNick != server->getNickname()) {
-      KNotifyClient::event("part");
+      KNotifyClient::event(mainWindow->winId(), "part");
     }
   }
   else if(command=="nick")
@@ -516,7 +516,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     server->renameNick(sourceNick,trailing);
     // KNotify events...
     if(sourceNick != server->getNickname()) {
-      KNotifyClient::event("nickchange");
+      KNotifyClient::event(mainWindow->winId(), "nickchange");
     }
   }
   else if(command=="topic")
@@ -563,7 +563,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     parseModes(sourceNick,parameterList);
     // KNotify events...
     if(sourceNick != server->getNickname()) {
-      KNotifyClient::event("mode");
+      KNotifyClient::event(mainWindow->winId(), "mode");
     }
   }
   else if(command=="invite")
