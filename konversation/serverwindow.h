@@ -84,6 +84,7 @@ class ServerWindow : public KMainWindow
   protected slots:
     void statusTextEntered();
     void addStatusView();
+    void addDccPanel();
     void showToolbar();
     void showStatusbar();
     void openPreferences();

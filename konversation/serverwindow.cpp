@@ -22,6 +22,7 @@
 
 #include "serverwindow.h"
 #include "konversationapplication.h"
+#include "dccpanel.h"
 
 ServerWindow::ServerWindow(Server* server) : KMainWindow()
 {
@@ -57,6 +58,8 @@ ServerWindow::ServerWindow(Server* server) : KMainWindow()
   statusBar()->setItemAlignment(StatusText,QLabel::AlignLeft);
 
   addStatusView();
+
+//  addDccPanel();
   connect( windowContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changedView(QWidget*)) );
 
   createGUI();
@@ -134,12 +137,21 @@ void ServerWindow::statusTextEntered()
 
 void ServerWindow::addView(QWidget* pane,int color,const QString& label)
 {
+  /* TODO: Make sure to add DCC status tab at the end of the list and all others */
+  /* before the DCC tab. Maybe we should also make sure to order Channels */
+  /* Queries and DCC chats in groups */
   windowContainer->addTab(pane,label,color,true,KonversationApplication::preferences.getBlinkingTabs());
 }
 
 void ServerWindow::showView(QWidget* pane)
 {
   windowContainer->showPage(pane);
+}
+
+void ServerWindow::addDccPanel()
+{
+  ChatWindow* panel=new DccPanel(getWindowContainer());
+  addView(panel,3,i18n("DCC Status"));
 }
 
 void ServerWindow::addStatusView()

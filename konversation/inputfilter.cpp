@@ -276,11 +276,14 @@ void InputFilter::parseServerCommand(QString& prefix,QString& command,QStringLis
         }
         else if(mode=='a') modesAre+=i18n("anonymous");
         else if(mode=='r') modesAre+=i18n("server reop");
+        else if(mode=='c') modesAre+=i18n("no colors allowed");
         else if(mode=='l')
         {
           parameter=parameterList[parameterCount++];
           modesAre+=i18n("limited to %1 users").arg(parameter);
         }
+        else modesAre+=mode;
+
         server->updateChannelModeWidgets(parameterList[1],mode,parameter);
       }
     } // endfor

@@ -740,6 +740,20 @@ void Channel::updateMode(QString& sourceNick,char mode,bool plus,QString& parame
       if(nick) nick->setVoice(plus);
     break;
 
+    case 'c':
+      if(plus)
+      {
+        if(fromMe) message=i18n("You set the channel mode to 'no colors allowed'.");
+        else message=i18n("%1 sets the channel mode to 'no colors allowed'.").arg(sourceNick);
+      }
+      else
+      {
+        if(fromMe) message=i18n("You set the channel mode to 'allow color codes'.");
+        else message=i18n("%1 sets the channel mode to 'allow color codes'.").arg(sourceNick);
+      }
+      modeM->setDown(plus);
+    break;
+
     case 'i':
       if(plus)
       {

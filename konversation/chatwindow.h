@@ -42,8 +42,8 @@ class ChatWindow : public QVBox
       Status=0,
       Channel,
       Query,
-      DCCChat,
-      DCCStatus
+      DccChat,
+      DccPanel
     };
 
     void setServer(Server* newServer);

@@ -169,7 +169,14 @@ QString IRCView::filter(const QString& line,bool doHilight)
   QString linkMessageColor = KonversationApplication::preferences.getLinkMessageColor();
 
   QRegExp pattern("((http://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
-                  "([\\.@%a-z0-9_-])+\\.[a-z]{2,}(:[0-9]{1,5})?(/[^)>\"'!\\s]*)?|"
+                  /* IP Address */
+                  "([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|"
+                  /* Decimal IP address */
+                  "[0-9]{1,12}|"
+                  /* Standard host name */
+                  "([\\.@%a-z0-9_-])+\\.[a-z]{2,}"
+                  /* Port number, path to document */
+                  ")(:[0-9]{1,5})?(/[^)>\"'!\\s]*)?|"
                   /* eDonkey2000 links need special treatment */
                   "ed2k://\\|([^|]+\\|){4})");
 
@@ -240,7 +247,7 @@ void IRCView::append(const char* nick,const char* message)
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+channelMessageColor()+"\">%1:</font></td><td><font color=\"#"+channelMessageColor()+"\">%2</font></td></tr>\n").arg(filter(nick,false)).arg(filter(message));
 #else
-  QString line=QString("<font color=\"#"+channelMessageColor+"\">&lt;%1&gt; %2</font><br>\n").arg(filter(nick,false)).arg(filter(message));
+  QString line=QString("<font color=\"#"+channelMessageColor+"\"><b>&lt;%1&gt;</b> %2</font><br>\n").arg(filter(nick,false)).arg(filter(message));
 #endif
 
   emit textToLog(QString("%1:\t%2").arg(nick).arg(message));
@@ -255,7 +262,7 @@ void IRCView::appendQuery(const char* nick,const char* message)
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+queryMessageColor+"\">*%1*</font></td><td><font color=\"#"+queryMessageColor+"\">%2</font></td></tr>\n").arg(filter(nick,false)).arg(filter(message));
 #else
-  QString line=QString("<font color=\"#"+queryMessageColor+"\">*%1* %2</font><br>\n").arg(filter(nick,false)).arg(filter(message));
+  QString line=QString("<font color=\"#"+queryMessageColor+"\"><b>*%1*</b> %2</font><br>\n").arg(filter(nick,false)).arg(filter(message));
 #endif
 
   emit textToLog(QString("*%1*\t%2").arg(nick).arg(message));
@@ -292,7 +299,7 @@ void IRCView::appendServerMessage(const char* type,const char* message)
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+serverMessageColor+"\">%1</font></td><td><font color=\"#"+serverMessageColor+"\""+fixed+">%2</font></td></tr>\n").arg(type).arg(filter(message));
 #else
-  QString line=QString("<font color=\"#"+serverMessageColor+"\""+fixed+">[%1] %2</font></td></tr><br>\n").arg(type).arg(filter(message));
+  QString line=QString("<font color=\"#"+serverMessageColor+"\""+fixed+"><b>[%1]</b> %2</font></td></tr><br>\n").arg(type).arg(filter(message));
 #endif
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
