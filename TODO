@@ -6,6 +6,10 @@ Make sure, that lines don't get cleared while viewing the history
 Background color of Channel window / Nicklist View
 Add a possibility to close the dcc panel via GUI
 
+owolf: Make text widget not scroll when scroll bar isn't completely down
+Hurga: ^G shall beep
+Hurga: make font sizes configurable
+
 nobs: "nette mirc- Features im normalen text-Fenster:  paragraph-spacing  und  das markieren
 des letzten Zeitpunkts wo das Fenster aktiv war  und  die Text-Suche "
 
