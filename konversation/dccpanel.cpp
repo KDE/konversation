@@ -114,7 +114,6 @@ void DccPanel::dccStatusChanged(const DccTransfer *item)
 void DccPanel::dccSelected()
 {
   DccTransfer* item=static_cast<DccTransfer*>(getListView()->selectedItem());
-  
   if(item)
   {
     DccTransfer::DccStatus status=item->getStatus();
@@ -138,8 +137,7 @@ void DccPanel::dccSelected()
     infoButton->setEnabled( false );  // disabled temporarily
     
     // Detail
-    detailButton->setEnabled( item->getType() == DccTransfer::Send ||
-                              status == DccTransfer::Done );
+    detailButton->setEnabled( true );
   }
   else
   {
