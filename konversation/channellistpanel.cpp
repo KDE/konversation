@@ -504,5 +504,10 @@ void ChannelListPanel::serverOnline(bool online)
   applyFilter->setEnabled(online);
   joinChannelButton->setEnabled(online);
 }
-
+void ChannelListPanel::emitUpdateInfo()
+{
+  QString info;
+  info = i18n("Channel List for %1").arg(m_server->getServerGroup());
+  emit updateInfo(info);
+}
 #include "channellistpanel.moc"

@@ -42,6 +42,7 @@ class ChannelListPanel : public ChatWindow
     ~ChannelListPanel();
 
     virtual bool closeYourself();
+    virtual void emitUpdateInfo();
 
   signals:
     void refreshChannelList();
