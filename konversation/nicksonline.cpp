@@ -592,7 +592,6 @@ void NicksOnline::doCommand(int id)
     QString serverName;
     QString nickname;
     QListViewItem* item = m_nickListView->selectedItem();
-    QString channelName = m_nickListView->selectedItem()->text(nlvcChannel);
     if (!getItemServerAndNick(item, serverName, nickname)) return;
     // Get the server object corresponding to the server name.
     KonversationApplication *konvApp = 
@@ -660,9 +659,9 @@ void NicksOnline::doCommand(int id)
             if (m_nickListView->selectedItem()->text(nlvcServerName).isEmpty())
             {
                 QString contactChannel = m_nickListView->selectedItem()->text(nlvcChannel);
-                
                 server->queue( "JOIN "+contactChannel );
             }
+            break;
         }
         case ciWhois:
             server->queue("WHOIS "+nickname);
