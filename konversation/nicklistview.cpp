@@ -54,7 +54,7 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
 
     if(addressbook) {
       popup->insertSeparator();
-      popup->insertItem(i18n("Addressbook associations"), addressbook, AddressbookSub);
+      popup->insertItem(i18n("Addressbook Associations"), addressbook, AddressbookSub);
     }
     popup->insertSeparator();
     if(kickban)

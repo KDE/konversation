@@ -90,7 +90,7 @@ PrefsPageOSD::PrefsPageOSD(QFrame* newParent,Preferences* newPreferences) :
   osdBackgroundColorLabel->setBuddy(osdBackgroundColorChooser);
 
    //others box
-  osdOthersBox = new QVGroupBox("O&ther settings", parentFrame, "osd_others_group");
+  osdOthersBox = new QVGroupBox("O&ther Settings", parentFrame, "osd_others_group");
   QHBox* durationBox = new QHBox(osdOthersBox);
   QLabel *osdDurationLabel = new QLabel(i18n("Du&ration:"), durationBox);
   osdDurationSpin = new KIntSpinBox(durationBox);
