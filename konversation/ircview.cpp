@@ -390,12 +390,11 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
     } else {
       QPtrList<Highlight> hilightList = KonversationApplication::preferences.getHilightList();
       QPtrListIterator<Highlight> it(hilightList);
-      Highlight* hilight;
+      Highlight* hilight = it.current();
       bool patternFound = false;
 
-      while(((hilight = it.current()) != 0) && !patternFound)
+      while(hilight != 0)
       {
-
         if(hilight->getRegExp())
         {
           QRegExp needle(hilight->getPattern().lower());
@@ -408,7 +407,13 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
           patternFound = ((filteredLine.lower().find(needle) != -1) ||   // hilight patterns in text
                           (whoSent.lower().find(needle) != -1));            // hilight patterns in nickname
         }
-	++it;
+
+        if(!patternFound) {
+          ++it;
+          hilight = it.current();
+        } else {
+          break;
+        }
       }
       
       if(patternFound)
