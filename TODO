@@ -15,6 +15,7 @@ Make a command that makes you goto away mode on all servers
 Per nick coloring
 Shortcut for /clear
 Use checkForUtf8 to make non-UTF8-users able to at least read UTF8.
+Joining large channels is very slow
 
 Tab completion should work on an alphabetic list
 /WHOWAS after /WHOIS if /WHOIS returns unknown nickname
