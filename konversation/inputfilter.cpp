@@ -966,6 +966,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             server->queue(server->getAutoJoinCommand());
           break;
         }
+    case ERR_NOMOTD:
+      {
+	if(server->getAutoJoin())
+            server->queue(server->getAutoJoinCommand());
+          break;
+      }
       case RPL_GLOBALUSERS: // Current global users: 589 Max: 845
         {
           QString current(trailing.section(' ',3,3));
