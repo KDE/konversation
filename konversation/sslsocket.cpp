@@ -1,10 +1,11 @@
 /*
-    sslsocket.cpp - KDE SSL Socket
+    sslsocket.cpp
 
-    Copyright (c) 2004      by Jason Keirstead <jason@keirstead.org>
-    Kopete    (c) 2002-2003 by the Kopete developers <kopete-devel@kde.org>
     Copyright (c) 2004      by İsmail Dönmez <ismail.donmez@boun.edu.tr>
 
+    based on the code by :
+    Copyright (c) 2004      by Jason Keirstead <jason@keirstead.org>
+    Kopete    (c) 2002-2003 by the Kopete developers <kopete-devel@kde.org>
 
     *************************************************************************
     *                                                                       *
@@ -60,7 +61,9 @@ Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
 {
   //kdDebug() << "SSLSocket::readBlock : " << QCString(data) << endl;
   int err;
-  
+
+  /* Default KSSL timeout is 0.2 seconds so we loop here until socket times out */
+
   do {
     err = kssl->read( data, maxlen );
     if (err == 0) {
@@ -110,8 +113,7 @@ void SSLSocket::slotConnected()
     }
   else
     {
-      kdError() << k_funcinfo << "SSL not functional!" << endl;
-      kssl = 0L;
+      kdError() << "SSL not functional!" << endl;
       emit sslFailure();
       close();
     }
@@ -127,6 +129,8 @@ void SSLSocket::showInfoDialog()
 
 void SSLSocket::showSSLInfoDialog()
 {
+  /* We don't delete sslInfoDlg here as code in kio/misc/uiserver.cpp says not to do so*/
+
   KSSLInfoDlg* sslInfoDlg = new KSSLInfoDlg(true, 0L, 0L, true);
   sslInfoDlg->setCertState( m_sslCertErrors );
   sslInfoDlg->setup( *kssl,
@@ -138,194 +142,194 @@ void SSLSocket::showSSLInfoDialog()
 
 int SSLSocket::verifyCertificate()
 {
-	int rc = 0;
-	bool permacache = false;
-	bool _IPmatchesCN = false;
-	int result;
-	bool doAddHost = false;
-
-        remoteHost = peerAddress().nodeName();
-        url = "irc://"+remoteHost+":"+peerAddress().serviceName();
-
-	KSSLCertificate& peerCertificate = kssl->peerInfo().getPeerCertificate();
-	
-	KSSLCertificate::KSSLValidationList validationList
-            = peerCertificate.validateVerbose(KSSLCertificate::SSLServer);
-
-	_IPmatchesCN = kssl->peerInfo().certMatchesAddress();
-
-	KSSLCertificate::KSSLValidation validation = KSSLCertificate::Ok;
-
-        if (!validationList.isEmpty())
-            validation = validationList.first();
-
-
-	for(KSSLCertificate::KSSLValidationList::ConstIterator it = validationList.begin();
-		it != validationList.end(); ++it)
+  int rc = 0;
+  int result;
+  bool permacache = false;
+  bool ipMatchesCN = false;
+  
+  bool doAddHost = false;
+  
+  remoteHost = peerAddress().nodeName();
+  url = "irc://"+remoteHost+":"+peerAddress().serviceName();
+  
+  KSSLCertificate& peerCertificate = kssl->peerInfo().getPeerCertificate();
+  
+  KSSLCertificate::KSSLValidationList validationList
+    = peerCertificate.validateVerbose(KSSLCertificate::SSLServer);
+  
+  ipMatchesCN = kssl->peerInfo().certMatchesAddress();
+  
+  KSSLCertificate::KSSLValidation validation = KSSLCertificate::Ok;
+  
+  if (!validationList.isEmpty())
+    validation = validationList.first();
+  
+  
+  for(KSSLCertificate::KSSLValidationList::ConstIterator it = validationList.begin();
+      it != validationList.end(); ++it)
+    {
+      m_sslCertErrors += QString::number(*it)+":";
+    }
+  
+  if (peerCertificate.chain().isValid() && peerCertificate.chain().depth() > 1)
+    {
+      QString theChain;
+      QPtrList<KSSLCertificate> chain = peerCertificate.chain().getChain();
+      for (KSSLCertificate *c = chain.first(); c; c = chain.next())
 	{
-		m_sslCertErrors += QString::number(*it)+":";
+	  theChain += c->toString();
+	  theChain += "\n";
 	}
+    }
 
-
-	if (peerCertificate.chain().isValid() && peerCertificate.chain().depth() > 1)
+  m_sslCertState = validation;
+  
+  if (validation == KSSLCertificate::Ok)
+    rc = 1;
+  
+  //  - Read from cache and see if there is a policy for this
+  KSSLCertificateCache::KSSLCertificatePolicy cp = cc->getPolicyByCertificate(peerCertificate);
+  
+  //  - validation code
+  if (validation != KSSLCertificate::Ok)
+    {
+      if( cp == KSSLCertificateCache::Unknown || cp == KSSLCertificateCache::Ambiguous)
 	{
-		QString theChain;
-		QPtrList<KSSLCertificate> chain = peerCertificate.chain().getChain();
-		for (KSSLCertificate *c = chain.first(); c; c = chain.next())
-		{
-			theChain += c->toString();
-			theChain += "\n";
-		}
-        }
-
-	m_sslCertState = validation;
-
-	if (validation == KSSLCertificate::Ok)
-            rc = 1;
-
-	//  - Read from cache and see if there is a policy for this
-	KSSLCertificateCache::KSSLCertificatePolicy cp = cc->getPolicyByCertificate(peerCertificate);
-
-	//  - validation code
-	if (validation != KSSLCertificate::Ok)
+	  cp = KSSLCertificateCache::Prompt;
+	}
+      else
 	{
-		if( cp == KSSLCertificateCache::Unknown || cp == KSSLCertificateCache::Ambiguous)
-		{
-			cp = KSSLCertificateCache::Prompt;
-		}
-		else
-		{
-			// A policy was already set so let's honor that.
-			permacache = cc->isPermanent(peerCertificate);
-		}
+	  // A policy was already set so let's honor that.
+	  permacache = cc->isPermanent(peerCertificate);
+	}
+      
+      if (!ipMatchesCN && cp == KSSLCertificateCache::Accept )
+	{
+	  do 
+	    {
+	      QString msg = i18n("The IP address of the host %1 "
+				 "does not match the one the "
+				 "certificate was issued to.");
+	      result = KMessageBox::warningYesNo( 0L,
+						  msg.arg(remoteHost),
+						  i18n("Server Authentication"),
+						  KGuiItem(i18n("Details")),
+						  KGuiItem(i18n("Continue")),
+						  "SslIpCNMismatch");
+	      if( result == KMessageBox::Yes )
+		showInfoDialog();
+	    } 
+	  while ( result == KMessageBox::Yes );
+	  
+	}
+      
 
-		if (!_IPmatchesCN && cp == KSSLCertificateCache::Accept )
+      // Precondition: cp is one of Reject, Accept or Prompt
+      switch (cp)
+	{
+	case KSSLCertificateCache::Accept:
+	  rc = 1;
+	  break;
+				
+	case KSSLCertificateCache::Reject:
+	  rc = -1;
+	  break;
+	  
+	case KSSLCertificateCache::Prompt:
+	  {
+	    do
+	      {
+		if (validation == KSSLCertificate::InvalidHost)
 		  {
-		    do 
-		      {
-			QString msg = i18n("The IP address of the host %1 "
-					   "does not match the one the "
-					   "certificate was issued to.");
-			result = KMessageBox::warningYesNo( 0L,
-							    msg.arg(remoteHost),
-							    i18n("Server Authentication"),
-							    KGuiItem(i18n("Details")),
-							    KGuiItem(i18n("Continue")),
-							    "SslIpCNMismatch");
-			if( result == KMessageBox::Yes )
-			  showInfoDialog();
-		      } 
-		    while ( result == KMessageBox::Yes );
-
+		    QString msg = i18n("The IP address of the host %1 "
+				       "does not match the one the "
+				       "certificate was issued to.");
+		    result = KMessageBox::warningYesNo( 0L,
+							msg.arg(remoteHost),
+							i18n("Server Authentication"),
+							KGuiItem(i18n("Details")),
+							KGuiItem(i18n("Continue")),
+							"SslInvalidHost");
 		  }
-
-
-		// Precondition: cp is one of Reject, Accept or Prompt
-		switch (cp)
-		{
-			case KSSLCertificateCache::Accept:
-				rc = 1;
-				break;
-
-			case KSSLCertificateCache::Reject:
-				rc = -1;
-				break;
-
-			case KSSLCertificateCache::Prompt:
-			{
-				do
-				{
-					if (validation == KSSLCertificate::InvalidHost)
-					{
-						QString msg = i18n("The IP address of the host %1 "
-								"does not match the one the "
-								"certificate was issued to.");
-						result = KMessageBox::warningYesNo( 0L,
-						msg.arg(remoteHost),
-						i18n("Server Authentication"),
-                                                KGuiItem(i18n("Details")),
-                                                KGuiItem(i18n("Continue")),
-						"SslInvalidHost");
-					}
-					else
-					{
-						QString msg = i18n("The server certificate failed the "
-                                                                   "authenticity test (%1).");
-						result = KMessageBox::warningYesNo( 0L,
-                                                msg.arg(remoteHost),
-						i18n("Server Authentication"),
-                                                KGuiItem(i18n("Details")),
-                                                KGuiItem(i18n("Continue")),
-                                                "SslCertificateNotAuthentic" );
-					}
-
-					if (result == KMessageBox::Yes)
-					{
-						showInfoDialog();
-					}
-				}
-				while (result == KMessageBox::Yes);
-
-				if (result == KMessageBox::No)
-				{
-                                    rc = 1;
-                                    cp = KSSLCertificateCache::Accept;
-                                    doAddHost = true;
-                                    result = KMessageBox::warningYesNo( 0L,
-                                                           i18n("Would you like to accept this "
-                                                                "certificate forever without "
-                                                                "being prompted?"),
-                                                           i18n("Server Authentication"),
-                                                           KGuiItem(i18n("&Forever")),
-                                                           KGuiItem(i18n("&Current Sessions Only"))
-                                        );
-
-					if (result == KMessageBox::Yes)
-						permacache = true;
-					else
-						permacache = false;
-				}
-				else
-				{
-					rc = -1;
-					cp = KSSLCertificateCache::Prompt;
-				}
-
-				break;
-		}
-		default:
-                    kdDebug() << "SSL error in cert code." << endl;
-                    break;
-		}
+		else
+		  {
+		    QString msg = i18n("The server certificate failed the "
+				       "authenticity test (%1).");
+		    result = KMessageBox::warningYesNo( 0L,
+							msg.arg(remoteHost),
+							i18n("Server Authentication"),
+							KGuiItem(i18n("Details")),
+							KGuiItem(i18n("Continue")),
+							"SslCertificateNotAuthentic" );
+		  }
+		
+		if (result == KMessageBox::Yes)
+		  {
+		    showInfoDialog();
+		  }
+	      }
+	    while (result == KMessageBox::Yes);
+	    
+	    if (result == KMessageBox::No)
+	      {
+		rc = 1;
+		cp = KSSLCertificateCache::Accept;
+		doAddHost = true;
+		result = KMessageBox::warningYesNo( 0L,
+						    i18n("Would you like to accept this "
+							 "certificate forever without "
+							 "being prompted?"),
+						    i18n("Server Authentication"),
+						    KGuiItem(i18n("&Forever")),
+						    KGuiItem(i18n("&Current Sessions Only"))
+						    );
+		
+		if (result == KMessageBox::Yes)
+		  permacache = true;
+		else
+		  permacache = false;
+	      }
+	    else
+	      {
+		rc = -1;
+		cp = KSSLCertificateCache::Prompt;
+	      }
+	    
+	    break;
+	  }
+	default:
+	  kdDebug() << "SSL error in cert code." << endl;
+	  break;
 	}
-
-	//  - cache the results
-	cc->addCertificate(peerCertificate, cp, permacache);
-	if (doAddHost)
-	  cc->addHost(peerCertificate, remoteHost);
-	 
-
-
-	if (rc == -1)
-		return rc;
-
-
-	kdDebug() << "SSL connection information follows:" << endl
-		<< "+-----------------------------------------------" << endl
-		<< "| Cipher: " << kssl->connectionInfo().getCipher() << endl
-		<< "| Description: " << kssl->connectionInfo().getCipherDescription() << endl
-		<< "| Version: " << kssl->connectionInfo().getCipherVersion() << endl
-		<< "| Strength: " << kssl->connectionInfo().getCipherUsedBits()
-		<< " of " << kssl->connectionInfo().getCipherBits()
-		<< " bits used." << endl
-		<< "| PEER:" << endl
-		<< "| Subject: " << kssl->peerInfo().getPeerCertificate().getSubject() << endl
-		<< "| Issuer: " << kssl->peerInfo().getPeerCertificate().getIssuer() << endl
-		<< "| Validation: " << (int) validation << endl
-		<< "+-----------------------------------------------"
-		<< endl;
-
-	return rc;
+    }
+  
+  //  - cache the results
+  cc->addCertificate(peerCertificate, cp, permacache);
+  if (doAddHost)
+    cc->addHost(peerCertificate, remoteHost);
+  
+  
+  
+  if (rc == -1)
+    return rc;
+  
+  
+  kdDebug() << "SSL connection information follows:" << endl
+	    << "+-----------------------------------------------" << endl
+	    << "| Cipher: " << kssl->connectionInfo().getCipher() << endl
+	    << "| Description: " << kssl->connectionInfo().getCipherDescription() << endl
+	    << "| Version: " << kssl->connectionInfo().getCipherVersion() << endl
+	    << "| Strength: " << kssl->connectionInfo().getCipherUsedBits()
+	    << " of " << kssl->connectionInfo().getCipherBits()
+	    << " bits used." << endl
+	    << "| PEER:" << endl
+	    << "| Subject: " << kssl->peerInfo().getPeerCertificate().getSubject() << endl
+	    << "| Issuer: " << kssl->peerInfo().getPeerCertificate().getIssuer() << endl
+	    << "| Validation: " << (int) validation << endl
+	    << "+-----------------------------------------------"
+	    << endl;
+  
+  return rc;
 }
 
 

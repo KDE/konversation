@@ -1,12 +1,13 @@
 #ifndef SSL_SOCKET_H
 #define SSL_SOCKET_H
-
 /*
     sslsocket.h - KDE SSL Socket
 
+    Copyright (c) 2004      by İsmail Dönmez <ismail.donmez@boun.edu.tr>
+
+    based on the code by:
     Copyright (c) 2004      by Jason Keirstead <jason@keirstead.org>
     Kopete    (c) 2002-2003 by the Kopete developers <kopete-devel@kde.org>
-    Copyright (c) 2004      by İsmail Dönmez <ismail.donmez@boun.edu.tr>
 
     *************************************************************************
     *                                                                       *
@@ -18,15 +19,11 @@
     *************************************************************************
 */
 
-#include <qvariant.h>
-
 #include <kstreamsocket.h>
 using namespace KNetwork;
 
 class KSSL;
 class KSSLCertificateCache;
-class KSSLInfoDlg;
-class KSSLCertificate;
 
 class SSLSocket : public KStreamSocket
 {
@@ -53,9 +50,9 @@ class SSLSocket : public KStreamSocket
 		int verifyCertificate();
 		void showSSLInfoDialog();
 
+		int m_sslCertState;
 		QString remoteHost;
 		QString url;
-		int m_sslCertState;
 		QString m_sslCertErrors;
 
 		KSSL* kssl;
