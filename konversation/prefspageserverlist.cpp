@@ -149,14 +149,26 @@ void PrefsPageServerList::connectClicked()
 
 void PrefsPageServerList::newServer()
 {
-  int newId=preferences->addServer("New,new.server.com,6667,,,,,");
+  EditServerDialog editServerDialog(parentFrame, "New", "new.server.com", "6667", QString::null, QString::null,
+    QString::null, QString::null, QString::null);
 
-  QListViewItem* branch=findBranch("New");
-  ServerListItem* newItem=new ServerListItem(branch,newId,"New");
-
-  serverListView->setSelected(newItem,true);
-  serverListView->ensureItemVisible(newItem);
-  editServer();
+  connect(&editServerDialog,SIGNAL (serverChanged(const QString&,
+                                                  const QString&,
+                                                  const QString&,
+                                                  const QString&,
+                                                  const QString&,
+                                                  const QString&,
+                                                  const QString&,
+                                                  const QString&)),
+                          this,SLOT (createServer(const QString&,
+                                                  const QString&,
+                                                  const QString&,
+                                                  const QString&,
+                                                  const QString&,
+                                                  const QString&,
+                                                  const QString&,
+                                                  const QString&)) );
+  editServerDialog.exec();
 }
 
 void PrefsPageServerList::serverSelected(QListViewItem* item)
@@ -233,8 +245,8 @@ void PrefsPageServerList::updateServer(const QString& groupName,
                                        const QString& identity,
                                        const QString& connectCommands)
 {
-  // Need to find a better way without casting
-  ServerListItem* item=static_cast<ServerListItem*>(serverListView->selectedItems().first());
+  // Need to find a better way without casting (psn: why?)
+  ServerListItem* item = static_cast<ServerListItem*>(serverListView->selectedItems().first());
   // save state of autoconnect checkbox
   bool autoConnect = item->isOn();
   // find branch the old item resides in
@@ -271,6 +283,46 @@ void PrefsPageServerList::updateServer(const QString& groupName,
                                (item->isOn() ? "1" : "0")+","+
                                identity+","+
                                connectCommands);
+
+  serverListView->setSelected(item,true);
+  serverListView->ensureItemVisible(item);
+}
+
+void PrefsPageServerList::createServer(const QString& groupName,
+                                       const QString& serverName,
+                                       const QString& serverPort,
+                                       const QString& serverKey,
+                                       const QString& channelName,
+                                       const QString& channelKey,
+                                       const QString& identity,
+                                       const QString& connectCommands)
+{
+  
+  int id = preferences->addServer(groupName+","+
+                                  serverName+","+
+                                  serverPort+","+
+                                  serverKey+","+
+                                  channelName+","+
+                                  channelKey+","+
+                                  "0,"+ //auto connect
+                                  identity+","+
+                                  connectCommands);
+  
+  // find branch to insert the new item into
+  QListViewItem* branch=findBranch(groupName);
+
+  ServerListItem* item = new ServerListItem(branch,
+                            id,
+                            groupName,
+                            serverName,
+                            serverPort,
+                            (!serverKey || serverKey.isEmpty()) ? QString::null : QString("********"),
+                            channelName,
+                            (!channelKey || channelKey.isEmpty()) ? QString::null : QString("********"),
+                            identity,
+                            connectCommands);
+
+  item->setOn(false);
 
   serverListView->setSelected(item,true);
   serverListView->ensureItemVisible(item);
