@@ -38,3 +38,7 @@ kdeversion	Displays the Qt/KDE version.
 cmd		Prints the output of a given command.
 		usage: /exec cmd command
 
+sayclip         Prints the contents of the clipboard on the current channel 
+                with flood protection.  Klipper must be running.
+                usage: /exec sayclip [pause-time]
+

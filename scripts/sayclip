@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Prints the contents of the clipbaord into Konversation with flood protection.
+# Klipper must be running.
+# Usage: /exec sayclip [pause-time]
+# Pause time defaults to 1 second.
+# By Gary Cramblitt (garycramblitt@comcast.net)
+# Use however you wish.
+
+PORT=$1;
+SERVER=$2;
+TARGET=$3;
+PAUSETIME="1s";
+if [ -n "$4" ]
+then
+  PAUSETIME="$4"
+fi
+
+dcop klipper klipper getClipboardContents | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" " $line"; sleep $PAUSETIME; done 
