@@ -296,6 +296,8 @@ void Query::nickInfoChanged() {
     if(!m_nickInfo->getHostmask().isEmpty() && !text.isEmpty())
       text += " - ";
     text += m_nickInfo->getHostmask();
+    if(m_nickInfo->isAway() )
+      text += " (" + m_nickInfo->getAwayMessage() + ") ";
     queryHostmask->setText(Konversation::removeIrcMarkup(text));
  
     KABC::Picture pic = m_nickInfo->getAddressee().photo();
@@ -333,7 +335,6 @@ void Query::nickInfoChanged() {
     tooltip << "<table cellspacing=\"0\" cellpadding=\"0\">";
 
     m_nickInfo->tooltipTableData(tooltip);
-    
 
     tooltip << "</table></qt>";
     QToolTip::add(queryHostmask, strTooltip);
@@ -402,9 +403,9 @@ void Query::emitUpdateInfo()
     info = i18n("Talking to yourself");
   else if(m_nickInfo)
     info = m_nickInfo->getBestAddresseeName();
-  else  
+  else
     info = getName();
-  
+
   emit updateInfo(info);
 }
 
