@@ -659,8 +659,16 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
     if(command=="ping")
     {
       QString text;
-      text=(trailing.length()) ? trailing : parameterList.join(" ");
-      if(trailing.length()) text=prefix+" :"+text;
+      text = (!trailing.isEmpty()) ? trailing : parameterList.join(" ");
+
+      if(!trailing.isEmpty()) {
+        text = prefix + " :" + text;
+      }
+
+      if(!text.startsWith(" ")) {
+        text.prepend(' ');
+      }
+
       // queue the reply to send it as soon as possible
       server->queueAt(0,"PONG"+text);
     }
