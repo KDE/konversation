@@ -70,11 +70,9 @@ KonversationApplication::KonversationApplication()
 
   KonversationApplication::preferences.setAliasList(aliasList);
 
-#if QT_VERSION >= 0x030100
   // Setup system codec
   // TODO: check if this works now as intended
   QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
-#endif
 
   // open main window
   mainWindow=new KonversationMainWindow();
@@ -421,9 +419,7 @@ void KonversationApplication::readOptions()
 
   preferences.setFilterColors(config->readBoolEntry("FilterColorCodes",preferences.getFilterColors()));  //FIXME
 
-#if QT_VERSION >= 0x030200
   preferences.setShowTabBarCloseButton(config->readBoolEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton()));
-#endif
 
   preferences.setShowTopic(config->readBoolEntry("ShowTopic", preferences.getShowTopic()));
 
@@ -772,9 +768,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ChannelSplitter",sizesString);
   config->writeEntry("BackgroundImage",preferences.getBackgroundImageName());
   config->writeEntry("IRCColors", preferences.getIRCColorList());
-#if QT_VERSION >= 0x030200
   config->writeEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton());
-#endif
 
   config->writeEntry("ShowTopic", preferences.getShowTopic());
 
@@ -996,9 +990,7 @@ void KonversationApplication::appearanceChanged()
   }
 
   mainWindow->updateTabPlacement();
-#if QT_VERSION >= 0x030200
   mainWindow->setShowTabBarCloseButton(preferences.getShowTabBarCloseButton());
-#endif
 }
 
 // FIXME: use KURL maybe?

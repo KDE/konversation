@@ -197,16 +197,8 @@ Preferences::Preferences()
 
   setNickCompletionMode(0);
 
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
-  setShowToolBar(true);
-#endif
   setShowMenuBar(true);
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
-  setShowStatusBar(true);
-#endif
-#if QT_VERSION >= 0x030200
   setShowTabBarCloseButton(false);
-#endif
 
   setHideUnimportantEvents(false);
   setShowTopic(true);
@@ -816,18 +808,8 @@ void  Preferences::setPrefixCharacter(QString prefix) { prefixCharacter = prefix
 bool Preferences::getShowMenuBar() { return showMenuBar; }
 void Preferences::setShowMenuBar(bool s) { showMenuBar = s; }
 
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
-bool Preferences::getShowToolBar() { return showToolBar; }
-void Preferences::setShowToolBar(bool s) { showToolBar = s; }
-#endif
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
-bool Preferences::getShowStatusBar() { return showStatusBar; }
-void Preferences::setShowStatusBar(bool s) { showStatusBar = s; }
-#endif
-#if QT_VERSION >= 0x030200
 bool Preferences::getShowTabBarCloseButton() { return showTabBarCloseButton; }
 void Preferences::setShowTabBarCloseButton(bool s) { showTabBarCloseButton = s; }
-#endif
 
 bool Preferences::getShowTopic() { return showTopic; }
 void Preferences::setShowTopic(bool s) { showTopic = s; }

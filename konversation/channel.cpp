@@ -51,15 +51,8 @@
 
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
-#if QT_VERSION < 0x030100
-#include "main.h"
-#endif
 
-#ifdef KDE_IS_VERSION
-#if KDE_IS_VERSION(3,1,92)
 #define OPAQUE_CONF
-#endif
-#endif
 
 #ifdef USE_MDI
 Channel::Channel(QString caption) : ChatWindow(caption)
@@ -475,11 +468,7 @@ void Channel::popupCommand(int id)
       break;
     case NickListView::Ping:
       {
-#if QT_VERSION < 0x030100
-        unsigned int time_t=toTime_t(QDateTime::currentDateTime());
-#else
-        unsigned int time_t=QDateTime::currentDateTime().toTime_t();
-#endif
+        unsigned int time_t = QDateTime::currentDateTime().toTime_t();
         pattern=QString(KonversationApplication::preferences.getCommandChar()+"CTCP %u PING %1").arg(time_t);
       }
       break;

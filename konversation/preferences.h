@@ -398,18 +398,8 @@ class Preferences : public QObject
     //User interface
     bool getShowMenuBar();
     void setShowMenuBar(bool s);
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
-    bool getShowToolBar();
-    void setShowToolBar(bool s);
-#endif
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
-    bool getShowStatusBar();
-    void setShowStatusBar(bool s);
-#endif
-#if QT_VERSION >= 0x030200
     bool getShowTabBarCloseButton();
     void setShowTabBarCloseButton(bool s);
-#endif
 
     bool getShowTopic();
     void setShowTopic(bool s);
@@ -592,16 +582,8 @@ class Preferences : public QObject
     QString prefixCharacter;
 
     //User interface
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 0)
-    bool showToolBar;
-#endif
     bool showMenuBar;
-#if KDE_VERSION < KDE_MAKE_VERSION(3, 1, 90)
-    bool showStatusBar;
-#endif
-#if QT_VERSION >= 0x030200
     bool showTabBarCloseButton;
-#endif
 
     bool showTopic;
     bool showRememberLineInAllWindows;

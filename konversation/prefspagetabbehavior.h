@@ -45,9 +45,7 @@ class PrefsPageTabBehavior : public PrefsPage
     QCheckBox* focusNewQueries;
     QCheckBox* closeButtonsCheck;
     QCheckBox* closeButtonsAlignRight;
-#if QT_VERSION >= 0x030200
     QCheckBox* tabBarCloseButtonCheck;
-#endif
 };
 
 #endif

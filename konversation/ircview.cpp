@@ -97,9 +97,7 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   QString bgColor=KonversationApplication::preferences.getColor("TextViewBackground");
   setViewBackground(bgColor,QString::null);
 
-#if QT_VERSION >= 0x030100
   setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
-#endif
 
   setNotifyClick(true);
 
@@ -378,11 +376,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
       // FIXME: We got to get rid of server dependance here
       if(server && KonversationApplication::preferences.getHilightNick() &&
          filteredLine.lower().find(QRegExp("(^|[^\\d\\w])"+
-#if QT_VERSION >= 0x030100
          QRegExp::escape(server->getNickname().lower())+
-#else
-         QString(server->getNickname().lower())+
-#endif
          "([^\\d\\w]|$)"))!=-1)
       {
         // hilight current nickname
@@ -680,12 +674,7 @@ void IRCView::doAppend(QString newLine, bool important, bool self)
 // remember if scrollbar was positioned at the end of the text or not
 void IRCView::hideEvent(QHideEvent* /* event */)
 {
-#if QT_VERSION == 303
-  // Does not seem to work very well with QT 3.0.3
-  bool doScroll=true;
-#else
-  resetScrollbar=((contentsHeight()-visibleHeight())==contentsY());
-#endif
+  resetScrollbar = ((contentsHeight()-visibleHeight()) == contentsY());
 }
 
 // Workaround to scroll to the end of the TextView when it's shown
@@ -753,15 +742,8 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
     case CopyUrl:
     {
       QClipboard *cb=KApplication::kApplication()->clipboard();
-#if QT_VERSION >= 0x030100
       cb->setText(urlToCopy,QClipboard::Selection);
       cb->setText(urlToCopy,QClipboard::Clipboard);
-#else
-      cb->setSelectionMode(true);
-      cb->setText(urlToCopy);
-      cb->setSelectionMode(false);
-      cb->setText(urlToCopy);
-#endif
       break;
     }
     case SelectAll:

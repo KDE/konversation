@@ -247,7 +247,6 @@ void KonversationMainWindow::switchToTabPageMode()
   tabWidget()->setHoverCloseButton(true);
   updateTabPlacement();
   m_pTaskBar->switchOn(false);
-#if QT_VERSION >= 0x030200
   KPushButton* closeBtn = new KPushButton(this);
   closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));
   closeBtn->resize(22, 22);
@@ -255,7 +254,6 @@ void KonversationMainWindow::switchToTabPageMode()
   closeBtn->hide();
   tabWidget()->setCornerWidget(closeBtn);
   connect(closeBtn, SIGNAL(clicked()), this, SLOT(closeActiveWindow()));
-#endif
 #endif
 }
 
@@ -1347,7 +1345,6 @@ void KonversationMainWindow::openToolbars()
   }
 }
 
-#if QT_VERSION >= 0x030200
 void KonversationMainWindow::setShowTabBarCloseButton(bool s)
 {
 #ifdef USE_MDI
@@ -1365,9 +1362,6 @@ void KonversationMainWindow::setShowTabBarCloseButton(bool s)
   }
 #endif
 }
-#else
-void KonversationMainWindow::setShowTabBarCloseButton(bool) {}
-#endif
 
 void KonversationMainWindow::resizeEvent(QResizeEvent* ev)
 {

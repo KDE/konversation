@@ -36,7 +36,6 @@ LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :
   connect(tabBar(),SIGNAL (wheel(QWheelEvent*)), this,SLOT (processWheelEvent(QWheelEvent*)) );
 #endif
 
-#if QT_VERSION >= 0x030200
   KPushButton* closeBtn = new KPushButton(this);
   closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));
   closeBtn->resize(22, 22);
@@ -44,7 +43,6 @@ LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :
   closeBtn->hide();
   setCornerWidget(closeBtn);
   connect(closeBtn, SIGNAL(clicked()), this, SLOT(tabClosed()));
-#endif
 }
 
 LedTabWidget::~LedTabWidget()

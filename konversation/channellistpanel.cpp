@@ -483,12 +483,8 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
       else if(href.startsWith("ftp.")) href="ftp://"+href;
 
       // Replace all spaces with %20 in href
-      href.replace(QRegExp(" "),"%20");
-#if QT_VERSION >= 0x030100
+      href.replace(" ","%20");
       href.replace("&","&&");
-#else
-      href.replace(QRegExp("&"),"&&");
-#endif
 
       // next search begins right after the link
       pos+=url.length();
@@ -509,11 +505,7 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
   int selected = showURLmenu->exec(p);
   if (selected!=-1) {
     QMenuItem* item = showURLmenu->findItem( selected );
-#if QT_VERSION >= 0x030100
     new KRun(KURL(item->text().replace("&&","&")));
-#else
-    new KRun(KURL(item->text().replace(QRegExp("&&"),"&")));
-#endif
   }
 
   delete showURLmenu;

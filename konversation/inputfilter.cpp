@@ -39,10 +39,6 @@
 #include "channel.h"
 #include "statuspanel.h"
 
-#if QT_VERSION < 0x030100
-#include "main.h"
-#endif
-
 InputFilter::InputFilter()
 {
   automaticRequest=0;
@@ -398,13 +394,7 @@ mainWindow  // get rid of a compiler warning under KDE 3.0.x
           // pong reply, calculate turnaround time
           if(replyReason.lower()=="ping")
           {
-#if QT_VERSION < 0x030100
-            int dateArrived=toTime_t(QDateTime::currentDateTime());
-#else
-
             int dateArrived=QDateTime::currentDateTime().toTime_t();
-#endif
-
             int dateSent=reply.toInt();
 
             server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-PING reply from %1: %2 seconds").arg(sourceNick).arg(dateArrived-dateSent));

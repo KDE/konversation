@@ -147,12 +147,7 @@ void UrlCatcher::copyUrlClicked()
   if(item)
   {
     QClipboard *cb=KApplication::kApplication()->clipboard();
-#if QT_VERSION >= 0x030100
     cb->setText(item->text(1),QClipboard::Selection);
-#else
-    cb->setSelectionMode(true);
-    cb->setText(item->text(1));
-#endif
   }
 }
 

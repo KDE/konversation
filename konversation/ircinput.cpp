@@ -142,11 +142,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
         case Key_V:
         {
             if ( keyEvent->state() & ControlButton ) {
-#if QT_VERSION >= 0x030100
                 insert( kapp->clipboard()->text( QClipboard::Clipboard ) );
-#else
-                insert( kapp->clipboard()->text() );
-#endif
                return true;
             }
         }
@@ -242,11 +238,7 @@ void IRCInput::paste()
   QClipboard *cb=KApplication::kApplication()->clipboard();
 
   // Copy text from the clipboard (paste)
-#if QT_VERSION >= 0x030100
-  QString text=cb->text(QClipboard::Selection);
-#else
-  QString text=cb->text();
-#endif
+  QString text = cb->text(QClipboard::Selection);
   // is there any text in the clipboard?
   if(!text.isEmpty())
   {

@@ -465,11 +465,7 @@ namespace Konversation {
 
         if(request.lower() == "ping")
         {
-#if QT_VERSION < 0x030100
-            unsigned int time_t = toTime_t(QDateTime::currentDateTime());
-#else
             unsigned int time_t = QDateTime::currentDateTime().toTime_t();
-#endif
             result.toServer = QString("PRIVMSG %1 :\x01PING %2\x01").arg(recipient).arg(time_t);
             result.output = i18n("Sending CTCP-%1 request to %2").arg("PING").arg(recipient);
         }
