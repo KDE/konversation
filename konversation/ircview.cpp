@@ -317,12 +317,13 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
 //  filteredLine=KStringHandler::tagURLs(filteredLine);
 
   QRegExp pattern("(((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
+                  "(([-_.%\\d\\w]*(:[-_.%\\d\\w]*)?@)|)"
                   // IP Address
                   "([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}|"
                   // Decimal IP address
                   "[0-9]{1,12}|"
                   // Standard host name
-                  "[a-z0-9][\\.@%a-z0-9_-]+\\.[a-z]{2,}"
+                  "[a-z0-9][\\.%a-z0-9_-]+\\.[a-z]{2,}"
                   // Port number, path to document
                   ")(:[0-9]{1,5})?(/[^)>\"\\s]*)?|"
                   // eDonkey2000 links need special treatment
