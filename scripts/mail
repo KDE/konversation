@@ -8,6 +8,14 @@ PORT=$1;
 SERVER=$2;
 TARGET=$3;
 
+FOLDER=$4;
+
+
+if [ "$FOLDER" = "" ] ; then
+  FOLDER="inbox"
+fi
+
+
 getmails()
 {
 
@@ -16,11 +24,16 @@ getmails()
     exit
   }
 
-  for f in $(dcop kmail KMailIface folderList | grep -i inbox) ; do 
-   MAILCOUNT=$(dcop $(dcop kmail KMailIface getFolder $f ) "unreadMessages()" )
-   if [ "$MAILCOUNT" != 0 ] ;  then
-     MAILFOLDER=$(dcop $(dcop kmail KMailIface getFolder $f) "displayPath")
-     echo Email folder $MAILFOLDER has $MAILCOUNT unread messages
+  for f in $(dcop kmail KMailIface folderList) ; do
+   MAILFOLDER=$(dcop $(dcop kmail KMailIface getFolder $f) "displayPath" | grep -i $FOLDER)
+   if [ "$MAILFOLDER" != "" ] ; then
+   
+     MAILCOUNT=$(dcop $(dcop kmail KMailIface getFolder $f ) "unreadMessages()" )
+     MAILTOTALCOUNT=$(dcop $(dcop kmail KMailIface getFolder $f ) "messages()" )
+     if [ "$MAILCOUNT" = "" ] ; then MAILCOUNT = "0" ; fi
+     if [ "$MAILCOUNT" != 0 ] ;  then
+       echo "Email folder %C2$MAILFOLDER%C1 has %C2$MAILCOUNT%C1 unread messages, out of %C2$MAILTOTALCOUNT%C1"
+     fi
    fi
   done
 
