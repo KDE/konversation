@@ -139,7 +139,7 @@ Preferences::Preferences()
   setLogfileReaderSize(QSize(400,200));
 
   setTabPlacement(Bottom);
-  setBlinkingTabs(true);
+  setBlinkingTabs(false);
   setCloseButtonsOnTabs(false);
   setCloseButtonsAlignRight(false);
   setBringToFront(true);
