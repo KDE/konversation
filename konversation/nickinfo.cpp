@@ -253,7 +253,7 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const {
     tooltip << getNickname();
     //Don't set dirty if all we have is their nickname
   }
-  if(m_identified) tooltip << i18n("(identified)");
+  if(m_identified) tooltip << i18n(" (identified)");
   tooltip << (isimage?"":"</center>") << "</b>";
   
 
