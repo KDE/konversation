@@ -37,7 +37,6 @@
 #include <kprocess.h>
 #include <kiconloader.h>
 #include <kshell.h>
-#include <krandomsequence.h>
 
 #include "konversationapplication.h"
 #include "ircview.h"
@@ -417,6 +416,7 @@ void IRCView::append(const QString& nick,const QString& message)
 	{
 	  if(offset >= 8)
 	    offset=0;
+
 	  colorList = KonversationApplication::preferences.getNickColorList();
 	  QString backgroundColor=KonversationApplication::preferences.getColor("TextViewBackground");
 	  
