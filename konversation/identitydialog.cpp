@@ -91,18 +91,19 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   QPushButton* addNicknameBtn = new QPushButton(i18n("Add..."), nicknameGBox);
   QPushButton* changeNicknameBtn = new QPushButton(i18n("Edit..."), nicknameGBox);
   QPushButton* removeNicknameBtn = new QPushButton(i18n("Delete"), nicknameGBox);
-  QToolButton* upNicknameBtn = new QToolButton(nicknameGBox);
-  upNicknameBtn->setIconSet(SmallIconSet("up"));
-  upNicknameBtn->setAutoRepeat(true);
-  QToolButton* downNicknameBtn = new QToolButton(nicknameGBox);
-  downNicknameBtn->setIconSet(SmallIconSet("down"));
-  downNicknameBtn->setAutoRepeat(true);
+  m_upNicknameBtn = new QToolButton(nicknameGBox);
+  m_upNicknameBtn->setIconSet(SmallIconSet("up"));
+  m_upNicknameBtn->setAutoRepeat(true);
+  m_downNicknameBtn = new QToolButton(nicknameGBox);
+  m_downNicknameBtn->setIconSet(SmallIconSet("down"));
+  m_downNicknameBtn->setAutoRepeat(true);
 
   connect(addNicknameBtn, SIGNAL(clicked()), this, SLOT(addNickname()));
   connect(changeNicknameBtn, SIGNAL(clicked()), this, SLOT(editNickname()));
   connect(removeNicknameBtn, SIGNAL(clicked()), this, SLOT(deleteNickname()));
-  connect(upNicknameBtn, SIGNAL(clicked()), this, SLOT(moveNicknameUp()));
-  connect(downNicknameBtn, SIGNAL(clicked()), this, SLOT(moveNicknameDown()));
+  connect(m_nicknameLBox, SIGNAL(selectionChanged()), this, SLOT(updateArrows()));
+  connect(m_upNicknameBtn, SIGNAL(clicked()), this, SLOT(moveNicknameUp()));
+  connect(m_downNicknameBtn, SIGNAL(clicked()), this, SLOT(moveNicknameDown()));
 
   nicknameLayout->setColStretch(0, 10);
   nicknameLayout->setRowStretch(4, 10);
@@ -110,8 +111,8 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   nicknameLayout->addMultiCellWidget(addNicknameBtn, 0, 0, 1, 4);
   nicknameLayout->addMultiCellWidget(changeNicknameBtn, 1, 1, 1, 4);
   nicknameLayout->addMultiCellWidget(removeNicknameBtn, 2, 2, 1, 4);
-  nicknameLayout->addWidget(upNicknameBtn, 3, 2);
-  nicknameLayout->addWidget(downNicknameBtn, 3, 3);
+  nicknameLayout->addWidget(m_upNicknameBtn, 3, 2);
+  nicknameLayout->addWidget(m_downNicknameBtn, 3, 3);
 
   QGroupBox* autoIdentifyGBox = new QGroupBox(0, Qt::Horizontal, i18n("Auto Identify"), generalWidget);
   autoIdentifyGBox->setMargin(marginHint());
@@ -318,6 +319,14 @@ void IdentityDialog::deleteNickname()
   m_nicknameLBox->removeItem(m_nicknameLBox->currentItem());
 }
 
+void IdentityDialog::updateArrows()
+{
+  m_upNicknameBtn->setEnabled( m_nicknameLBox->count()>1 && m_nicknameLBox->currentItem()>0 );
+
+  m_downNicknameBtn->setEnabled( m_nicknameLBox->count()>1 && m_nicknameLBox->currentItem()<m_nicknameLBox->count()-1 );
+
+}
+
 void IdentityDialog::moveNicknameUp()
 {
   uint current = m_nicknameLBox->currentItem();
@@ -328,6 +337,8 @@ void IdentityDialog::moveNicknameUp()
     m_nicknameLBox->insertItem(txt, current - 1);
     m_nicknameLBox->setCurrentItem(current - 1);
   }
+
+  updateArrows();
 }
 
 void IdentityDialog::moveNicknameDown()
@@ -340,6 +351,8 @@ void IdentityDialog::moveNicknameDown()
     m_nicknameLBox->insertItem(txt, current + 1);
     m_nicknameLBox->setCurrentItem(current + 1);
   }
+
+  updateArrows();
 }
 
 void IdentityDialog::refreshCurrentIdentity()
@@ -403,6 +416,7 @@ void IdentityDialog::newIdentity()
     KMessageBox::error(this, i18n("You need to give the identity a name."));
     newIdentity();
   }
+  updateArrows();
 }
 
 void IdentityDialog::renameIdentity()
@@ -456,6 +470,7 @@ void IdentityDialog::deleteIdentity()
     m_identityList.remove(m_currentIdentity);
     m_currentIdentity = 0;
     updateIdentity(m_identityCBox->currentItem());
+    updateArrows();
   }
 }
 

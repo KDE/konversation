@@ -39,6 +39,7 @@ class IdentityDialog : public KDialogBase
     void addNickname();
     void editNickname();
     void deleteNickname();
+    void updateArrows();
     void moveNicknameUp();
     void moveNicknameDown();
 
@@ -69,6 +70,8 @@ class IdentityDialog : public KDialogBase
     QCheckBox* m_showAwayMessage;
     QToolButton* m_editBtn;
     QToolButton* m_delBtn;
+    QToolButton* m_upNicknameBtn;
+    QToolButton* m_downNicknameBtn;
 
     QValueList<IdentityPtr> m_identityList;
     IdentityPtr m_currentIdentity;
