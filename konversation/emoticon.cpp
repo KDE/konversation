@@ -140,7 +140,8 @@ QString EmotIcon::filter(const QString& txt, const QFontMetrics& fm)
 
   for(EmotIconMap::iterator it = self()->m_emotIconMap.begin(); it != self()->m_emotIconMap.end(); ++it) {
     QRegExp regExp(QString("(^|\\s)%1($|\\s)").arg(it.data()));
-    filteredTxt.replace(regExp, " <img width=\"" + QString::number(fm.height()) + "\" height=\"" + QString::number(fm.height()) + "\" src=\"" + it.key() + "\"> ");
+    filteredTxt.replace(regExp, " <img width=\"" + QString::number(fm.height()) + "\" height=\"" + QString::number(fm.height())
+                        + "\" src=\"" + it.key() + "\" alt=\"" + it.data() + "\">&nbsp;");
   }
 
   return filteredTxt;
