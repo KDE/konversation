@@ -5,6 +5,7 @@ Changes from 0.12 to 0.13
 - Autojoin on invite with user interaction implemented
 - Added URL catcher interface
 - Added user interface for "don't show again" dialogs
+- Added slovenian translation by Barko (thanks!)
 
 Changes from 0.11 to 0.12
 - Now handles multi server mode in one single window
