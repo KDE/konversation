@@ -1640,6 +1640,7 @@ void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
   m_pendingChannelNickLists.append(pendingChannelNickList);
 
   if(!m_processingTimer->isActive()) {
+    nicknameListView->setUpdatesEnabled(false);
     m_processingTimer->start(0);
   }
 }
@@ -1808,12 +1809,14 @@ void Channel::processPendingNicks()
     m_pendingChannelNickLists.pop_front();
     m_currentIndex = 0;
     m_opsToAdd = 0;
+    nicknameListView->triggerUpdate();
   }
 
   if(m_pendingChannelNickLists.isEmpty()) {
     m_processingTimer->stop();
     nicknameListView->sort();
     nicknameList.sort();
+    nicknameListView->setUpdatesEnabled(true);
   }
 }
 
