@@ -702,10 +702,14 @@ void Preferences::setDialogFlag(const QString& flagName,bool state)
   config->setGroup("Notification Messages");
 
   if(state)
-  {
-      config->deleteEntry(flagName);
-      config->sync();
+    config->deleteEntry(flagName);
+  else
+  { 
+    if ( config->readEntry(flagName) == QString::null )
+      config->writeEntry(flagName,"no");
   }
+
+  config->sync();
 }
 
 void Preferences::setMaximumLagTime(int lag) { maximumLag=lag; }
