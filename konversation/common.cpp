@@ -42,7 +42,7 @@ QString tagURLs(const QString& text, const QString& fromNick)
 
   if(!fromNick.isEmpty()) // Don't put channel links in topic label
     {
-      QRegExp channelPattern("^#(\\S)+$|"
+      QRegExp channelPattern("^#(\\S)+|"
 			     "\\s#(\\S)+"
 			     );
       
