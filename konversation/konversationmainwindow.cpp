@@ -154,11 +154,13 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   connect(this, SIGNAL(startNotification(QWidget*)), tray, SLOT(startNotification(QWidget*)));
   connect(this, SIGNAL(endNotification(QWidget*)), tray, SLOT(endNotification(QWidget*)));
   connect(tray, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
+#if KDE_VERSION >= KDE_MAKE_VERSION(3, 2, 0)
   KPopupMenu *trayMenu = tray->contextMenu();
 #ifdef USE_KNOTIFY
   configureNotificationsAction->plug(trayMenu);
 #endif
   preferencesAction->plug(trayMenu);
+#endif
 
   // decide whether to show the tray icon or not
   updateTrayIcon();
@@ -371,7 +373,7 @@ void KonversationMainWindow::openChannelList()
                                          "enough, it is possible that your client will be "
                                          "disconnected by the server."), i18n("Channel List Warning"),
                                          KStdGuiItem::cont(), "ChannelListWarning");
-      
+
       if(ret == KMessageBox::Continue) {
         frontServer->addChannelListPanel();
       }
