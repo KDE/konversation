@@ -4,7 +4,8 @@
 // Description: 
 //
 //
-// Author: Dario Abatianni <eisfuchs@tigress.com>, (C) 2004
+// Authors: Dario Abatianni <eisfuchs@tigress.com>, (C) 2004
+//          Shintaro Matsuoka <shin@shoegazed.org>, (C) 2004
 //
 // Copyright: See COPYING file that comes with this distribution
 //
@@ -13,34 +14,48 @@
 #define DCCRESUMEDIALOG_H
 
 #include <kdialogbase.h>
-#include <kurl.h>
 
 /*
   @author Dario Abatianni
 */
 
-class KLineEdit;
+class KURLRequester;
+class DccTransferRecv;
 
 class DccResumeDialog : public KDialogBase
 {
   Q_OBJECT
 
   public:
-    DccResumeDialog(QWidget *parent,QString filename,const KURL& baseURL);
+    enum ReceiveAction
+    {
+      Overwrite,
+      Rename,
+      Resume,
+      Cancel
+    };
+  
     ~DccResumeDialog();
 
-    static int ask(QWidget* parent,QString& filename,const KURL& url);
+    static ReceiveAction ask(DccTransferRecv* parentItem);
 
   protected slots:
+    void slotOkClicked();
+    void slotUser1Clicked();
     void suggestNewName();
-    void filenameChanged(const QString& newName);
-    void renameClicked();
-    void overwriteClicked();
-
+    void setDefaultName();
+    void updateDialogButtons();
+        
   protected:
-    static QString newFilename;
-    KURL baseURL;
-    KLineEdit* nameInput;
+    DccResumeDialog(DccTransferRecv* item);
+    
+    // UI
+    KURLRequester* urlreqFilePath;
+    
+    // data
+    DccTransferRecv* item;
+    ReceiveAction action;
+  
 };
 
 #endif

@@ -24,7 +24,8 @@ class KExtendedSocket;
 class DccTransferRecv : public DccTransfer
 {
   Q_OBJECT
-
+  friend class DccResumeDialog;
+  
   public:
     DccTransferRecv(KListView* _parent, const QString& _partnerNick, const QString& _fileFolder, const QString& _fileName, unsigned long _fileSize, const QString& _partnerIp, const QString& _partnerPort);
     virtual ~DccTransferRecv();
@@ -56,6 +57,8 @@ class DccTransferRecv : public DccTransfer
     QString fileTmpPath;
     QTimer* connectionTimer;
     KExtendedSocket* recvSocket;
+    bool bTemporaryFileExists;
+    bool bCompletedFileExists;
 };
 
 #endif // DCCTRANSFERRECV_H

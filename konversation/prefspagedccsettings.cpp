@@ -74,11 +74,11 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   QLabel* dccSendPortsLabel=new QLabel(i18n("DCC Se&nd ports:"),dccSpecificSendPortsFrame);
   dccSendPortsFirstSpin=new QSpinBox(0,65535,1,dccSpecificSendPortsFrame,"dcc_send_ports_first_spin");
   connect(dccSendPortsFirstSpin, SIGNAL(valueChanged(int)), this, SLOT(sendPortsFirstSpinValueChanged(int)));
-  dccSendPortsFirstSpin->setFixedWidth(100);
-  QLabel* dccSendPortsCenterLabel=new QLabel(i18n(" to "),dccSpecificSendPortsFrame);
+  dccSendPortsFirstSpin->setFixedWidth(90);
+  QLabel* dccSendPortsCenterLabel=new QLabel(i18n("to"),dccSpecificSendPortsFrame);
   dccSendPortsLastSpin=new QSpinBox(0,65535,1,dccSpecificSendPortsFrame,"dcc_send_ports_last_spin");
   connect(dccSendPortsLastSpin, SIGNAL(valueChanged(int)), this, SLOT(sendPortsLastSpinValueChanged(int)));
-  dccSendPortsLastSpin->setFixedWidth(100);
+  dccSendPortsLastSpin->setFixedWidth(90);
   
   dccSendPortsLabel->setBuddy(dccSendPortsFirstSpin);
   dccSpecificSendPortsLayout->addWidget(dccSendPortsLabel);
@@ -102,11 +102,11 @@ PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPre
   QLabel* dccChatPortsLabel=new QLabel(i18n("DCC &Chat ports:"),dccSpecificChatPortsFrame);
   dccChatPortsFirstSpin=new QSpinBox(0,65535,1,dccSpecificChatPortsFrame,"dcc_chat_ports_first_spin");
   connect(dccChatPortsFirstSpin, SIGNAL(valueChanged(int)), this, SLOT(chatPortsFirstSpinValueChanged(int)));
-  dccChatPortsFirstSpin->setFixedWidth(100);
-  QLabel* dccChatPortsCenterLabel=new QLabel(i18n(" to "),dccSpecificChatPortsFrame);
+  dccChatPortsFirstSpin->setFixedWidth(90);
+  QLabel* dccChatPortsCenterLabel=new QLabel(i18n("to"),dccSpecificChatPortsFrame);
   dccChatPortsLastSpin=new QSpinBox(0,65535,1,dccSpecificChatPortsFrame,"dcc_chat_ports_last_spin");
   connect(dccChatPortsLastSpin, SIGNAL(valueChanged(int)), this, SLOT(chatPortsLastSpinValueChanged(int)));
-  dccChatPortsLastSpin->setFixedWidth(100);
+  dccChatPortsLastSpin->setFixedWidth(90);
   
   dccChatPortsLabel->setBuddy(dccChatPortsFirstSpin);
   dccSpecificChatPortsLayout->addWidget(dccChatPortsLabel);

@@ -83,53 +83,32 @@ void DccTransferRecv::start()  // public slot
       cleanUp();
       updateView();
     }
-        
+  
   // check whether the file exists
   // if exists, ask user to rename/overwrite/abort
-  if(QFile::exists(filePath))
-  {
-    kdDebug() << "DccTransferRecv::start(): File " << fileTmpPath << " exists." << endl;
-    
-    
-      
-  }
+  bCompletedFileExists = QFile::exists(filePath);
   // check whether the temporary file exists
-  // if exists, ask user to rename/resume/overwrite/abort
-  else if(file.exists() && file.size()>0)
+  // if exists, ask user to resume/rename/overwrite/abort
+  bTemporaryFileExists = file.exists() && (0 < file.size());
+  
+  if(!bCompletedFileExists && bTemporaryFileExists && KonversationApplication::preferences.getDccAutoResume())
+    requestResume();
+  else if(bCompletedFileExists || bTemporaryFileExists)
   {
-    kdDebug() << "DccTransferRecv::start(): Temporary File " << fileTmpPath << " exists." << endl;
-    if(KonversationApplication::preferences.getDccAutoResume())
-      requestResume();
-    else
+    switch(DccResumeDialog::ask(this))
     {
-      QString newName(filePath.section("/",-1));
-      int userRes = DccResumeDialog::ask(0,newName,filePath.section("/",0,-2));
-      switch(userRes)
-      {
-        case KDialogBase::User1:
-          kdDebug() << 1 << endl;
-          filePath=filePath.section("/",0,-2)+"/"+newName;
-          fileTmpPath=filePath+".part";
-          file.setName(fileTmpPath);
-          // fall through ...
-
-        case KDialogBase::Ok:
-          kdDebug() << 2 << endl;
-          requestResume();
-          break;
-          
-        case KDialogBase::User2:
-          kdDebug() << 3 << endl;
-          // just overwrite the old file
-          connectToSender();
-          break;
-        // finally this can only mean that the user has clicked "cancel"
-        default:
-          abort();
-      }
+      case DccResumeDialog::Overwrite:
+      case DccResumeDialog::Rename:
+        connectToSender();
+        break;
+      case DccResumeDialog::Resume:
+        requestResume();
+        break;
+      case DccResumeDialog::Cancel:
+      default:
+        return;
     }
   }
-  // not having completed file, nor part file
   else
     connectToSender();
 }
@@ -165,8 +144,9 @@ void DccTransferRecv::cleanUp()
   stopAutoUpdateView();
   if(recvSocket)
   {
+    recvSocket->enableRead(false);
+    recvSocket->enableWrite(false);
     recvSocket->cancelAsyncConnect();
-    recvSocket->flush();
     recvSocket->closeNow();
     disconnect(recvSocket, 0, 0, 0);
     delete recvSocket;
