@@ -49,61 +49,62 @@ void InputFilter::setServer(Server* newServer)
   server=newServer;
 }
 
-void InputFilter::parseLine(const QString &a_newLine, QWidget *mainWindow)
+void InputFilter::parseLine(const QString& a_newLine, QWidget* mainWindow)
 {
-  QString trailing(QString::null);
+  QString trailing;
   QString newLine(a_newLine);
 
   // Remove white spaces at the end and beginning
-  newLine=newLine.stripWhiteSpace();
+  newLine = newLine.stripWhiteSpace();
   // Find end of middle parameter list
-  int pos=newLine.find(" :");
+  int pos = newLine.find(" :");
   // Was there a trailing parameter?
-  if(pos!=-1)
+  if(pos != -1)
   {
     // Copy trailing parameter
-    trailing=newLine.mid(pos+2);
+    trailing = newLine.mid(pos + 2);
 
     // Cut trailing parameter from string
-    newLine=newLine.left(pos);
+    newLine = newLine.left(pos);
   }
   // Remove all unnecessary white spaces to make parsing easier
-  QString incomingLine=newLine.simplifyWhiteSpace();
+  newLine = newLine.simplifyWhiteSpace();
 
-  QString prefix(QString::null);
+  QString prefix;
+
   // Do we have a prefix?
-  if(incomingLine[0]==':')
+  if(newLine[0] == ':')
   {
     // Find end of prefix
-    pos=incomingLine.find(' ');
+    pos = newLine.find(' ');
     // Copy prefix
-    prefix=incomingLine.mid(1,pos-1);
+    prefix = newLine.mid(1, pos - 1);
     // Remove prefix from line
-    incomingLine=incomingLine.mid(pos+1);
+    newLine = newLine.mid(pos + 1);
   }
 
   // Find end of command
-  pos=incomingLine.find(' ');
+  pos = newLine.find(' ');
   // Copy command (all lowercase to make parsing easier)
-  QString command=incomingLine.left(pos).lower();
+  QString command = newLine.left(pos).lower();
   // Are there parameters left in the string?
   QStringList parameterList;
   
-  if(pos!=-1)
+  if(pos != -1)
   {
     // Cut out the command
-    incomingLine=incomingLine.mid(pos+1);
+    newLine = newLine.mid(pos + 1);
     // The rest of the string will be the parameter list
-    parameterList=QStringList::split(" ",incomingLine);
+    parameterList = QStringList::split(" ", newLine);
   }
   
   Q_ASSERT(server);
   
   // Server command, if no "!" was found in prefix
-  if(prefix.find('!')==-1 && prefix!=server->getNickname()) {
-    parseServerCommand(prefix,command,parameterList,trailing);
+  if((prefix.find('!') == -1) && (prefix != server->getNickname())) {
+    parseServerCommand(prefix, command, parameterList, trailing);
   } else {
-    parseClientCommand(prefix,command,parameterList,trailing, mainWindow);
+    parseClientCommand(prefix, command, parameterList, trailing, mainWindow);
   }
 }
 
