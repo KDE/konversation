@@ -648,7 +648,7 @@ void KonversationApplication::readOptions()
   preferences.setAutoRejoin(config->readBoolEntry("AutoRejoin",preferences.getAutoRejoin()));
   preferences.setAutojoinOnInvite(config->readBoolEntry("AutojoinOnInvite",preferences.getAutojoinOnInvite()));
 
-  preferences.setFixedMOTD(config->readBoolEntry("FixedMOTD",preferences.getFixedMOTD()));
+  preferences.setFixedMOTD(config->readBoolEntry("FixedMOTD")); // Default is false
   preferences.setShowServerList(config->readBoolEntry("ShowServerList",preferences.getShowServerList()));
 
   preferences.setColorInputFields(config->readBoolEntry("InputFieldsBackgroundColor",preferences.getColorInputFields()));
