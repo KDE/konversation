@@ -400,4 +400,4 @@ void DccTransferRecvWriteCacheHandler::slotKIOResult()
   }
 }
 
-#include "dcctransferrecv.moc"
+//#include "dcctransferrecv.moc"
