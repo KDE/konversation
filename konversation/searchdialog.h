@@ -17,14 +17,15 @@
 #ifndef SEARCHDIALOG_H
 #define SEARCHDIALOG_H
 
-#include <qcheckbox.h>
-
 #include <kdialogbase.h>
-#include <kcombobox.h>
 
 /*
  Dario Abatianni
 */
+
+class QCheckBox;
+
+class KComboBox;
 
 class SearchDialog : public KDialogBase
 {

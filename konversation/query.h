@@ -17,11 +17,7 @@
 #ifndef QUERY_H
 #define QUERY_H
 
-#include <qobject.h>
-#include <qvbox.h>
-#include <qiconset.h>
-#include <qcheckbox.h>
-#include <qlineedit.h>
+#include <qstring.h>
 
 #include "chatwindow.h"
 
@@ -31,6 +27,9 @@
 
 /* TODO: Idle counter to close query after XXX minutes of inactivity */
 /* TODO: Use /USERHOST to check if queries are still valid */
+
+class QLineEdit;
+class QCheckBox;
 
 class IRCInput;
 

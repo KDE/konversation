@@ -18,11 +18,12 @@
 #define DCCRECIPIENTDIALOG_H
 
 #include <kdialogbase.h>
-#include <klineedit.h>
 
 /*
   @author Dario Abatianni
 */
+
+class KLineEdit;
 
 class DccRecipientDialog : public KDialogBase
 {

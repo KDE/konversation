@@ -17,18 +17,17 @@
 #ifndef IGNOREDIALOG_H
 #define IGNOREDIALOG_H
 
-#include <qlineedit.h>
-#include <qcheckbox.h>
-
 #include <kdialogbase.h>
-
-#include "ignore.h"
-#include "ignorelistviewitem.h"
-#include "ignorecheckbox.h"
 
 /*
   @author Dario Abatianni
 */
+
+class QLineEdit;
+
+class Ignore;
+class IgnoreListViewItem;
+class IgnoreCheckBox;
 
 class IgnoreDialog : public KDialogBase
 {

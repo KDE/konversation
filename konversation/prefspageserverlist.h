@@ -17,19 +17,19 @@
 #ifndef PREFSPAGESERVERLIST_H
 #define PREFSPAGESERVERLIST_H
 
-#include <qpushbutton.h>
-#include <qframe.h>
-#include <qcheckbox.h>
-
-#include <klistview.h>
-
 #include "prefspage.h"
-#include "preferences.h"
-#include "serverlistitem.h"
 
 /*
   @author Dario Abatianni
 */
+
+class QListViewItem;
+class QPushButton;
+class QCheckBox;
+
+class KListView;
+
+class ServerListItem;
 
 class PrefsPageServerList : public PrefsPage
 {

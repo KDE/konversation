@@ -19,8 +19,10 @@
 #include <qhbox.h>
 #include <qcheckbox.h>
 #include <klineedit.h>
+#include <klocale.h>
 
 #include "prefspagelog.h"
+#include "preferences.h"
 
 PrefsPageLog::PrefsPageLog(QFrame* newParent,Preferences* newPreferences) :
               PrefsPage(newParent,newPreferences)

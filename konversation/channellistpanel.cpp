@@ -15,13 +15,16 @@
 */
 
 #include <qhbox.h>
+#include <qvbox.h>
 #include <qgrid.h>
 #include <qlabel.h>
 #include <qspinbox.h>
 #include <qpushbutton.h>
 #include <qhgroupbox.h>
 #include <qregexp.h>
+#include <qcheckbox.h>
 
+#include <klistview.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kdebug.h>

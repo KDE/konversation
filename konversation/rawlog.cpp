@@ -18,6 +18,8 @@
 #include <kdebug.h>
 
 #include "rawlog.h"
+#include "ircview.h"
+#include "server.h"
 #include "konversationapplication.h"
 
 RawLog::RawLog(QWidget* parent) : ChatWindow(parent)

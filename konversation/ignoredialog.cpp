@@ -24,8 +24,10 @@
 #include <klistview.h>
 #include <kdebug.h>
 
-#include "ignore.h"
 #include "ignoredialog.h"
+#include "ignore.h"
+#include "ignorecheckbox.h"
+#include "ignorelistviewitem.h"
 
 IgnoreDialog::IgnoreDialog(QPtrList<Ignore> newIgnoreList,QSize newSize):
                KDialogBase(static_cast<QWidget*>(0),"ignoredialog",false,i18n("Edit ignore list"),

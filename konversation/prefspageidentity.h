@@ -17,18 +17,20 @@
 #ifndef PREFSPAGEIDENTITY_H
 #define PREFSPAGEIDENTITY_H
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-
-#include <klineedit.h>
-#include <kcombobox.h>
-
 #include "prefspage.h"
 
 /*
   @author Dario Abatianni
 */
+
+class QLabel;
+class QCheckBox;
+class QPushButton;
+
+class KLineEdit;
+class KComboBox;
+
+class Identity;
 
 class PrefsPageIdentity : public PrefsPage
 {

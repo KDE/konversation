@@ -14,13 +14,14 @@
   $Id$
 */
 
-#include <klocale.h>
-#include <kcombobox.h>
-#include <kdebug.h>
-
+#include <qcheckbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qhbox.h>
+
+#include <klocale.h>
+#include <kcombobox.h>
+#include <kdebug.h>
 
 #include "searchdialog.h"
 

@@ -18,11 +18,16 @@
 #include <qregexp.h>
 
 #include <kdebug.h>
+#include <kconfig.h>
 #include <dcopclient.h>
 
 #include "konversationapplication.h"
 #include "konvdcop.h"
 #include "konversationmainwindow.h"
+#include "prefsdialog.h"
+#include "highlight.h"
+#include "server.h"
+#include "serverentry.h"
 
 // include static variables
 Preferences KonversationApplication::preferences;

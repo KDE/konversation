@@ -17,8 +17,6 @@
 #ifndef URLCATCHER_H
 #define URLCATCHER_H
 
-#include <qobject.h>
-
 #include "chatwindow.h"
 
 /*

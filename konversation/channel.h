@@ -17,26 +17,29 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
 
-#include <qpushbutton.h>
-#include <qwidget.h>
-#include <qcheckbox.h>
-#include <qvbox.h>
-#include <qlabel.h>
 #include <qtimer.h>
 
-#include "nick.h"
-#include "nicklistview.h"
 #include "chatwindow.h"
-#include "server.h"
-#include "quickbutton.h"
-#include "modebutton.h"
-#include "ircinput.h"
-#include "nickchangedialog.h"
-#include "topiccombobox.h"
 
 /*
   @author Dario Abatianni
 */
+
+class QPushButton;
+class QCheckBox;
+class QLabel;
+class QTimer;
+class QListViewItem;
+
+class KLineEdit;
+
+class Nick;
+class NickListView;
+class QuickButton;
+class ModeButton;
+class IRCInput;
+class NickChangeDialog;
+class TopicComboBox;
 
 class Channel : public ChatWindow
 {
@@ -144,7 +147,7 @@ class Channel : public ChatWindow
     ModeButton* modeK;
     ModeButton* modeL;
 
-    QLineEdit* limit;
+    KLineEdit* limit;
 
     QLabel* nicksOps;
     NickListView* nicknameListView;

@@ -20,13 +20,13 @@
 
 #include <qtabbar.h>
 
-#include <kpopupmenu.h>
-
-#include "ledtab.h"
-
 /*
   @author Dario Abatianni
 */
+
+class KPopupMenu;
+
+class LedTab;
 
 class LedTabBar : public QTabBar
 {

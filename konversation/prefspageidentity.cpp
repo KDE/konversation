@@ -14,13 +14,21 @@
   $Id$
 */
 
+#include <qlabel.h>
 #include <qlayout.h>
 #include <qhbox.h>
+#include <qpushbutton.h>
+#include <qcheckbox.h>
 
 #include <klineeditdlg.h>
 #include <kdebug.h>
+#include <klocale.h>
+#include <kcombobox.h>
+#include <klineedit.h>
 
 #include "prefspageidentity.h"
+#include "preferences.h"
+#include "identity.h"
 
 PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferences) :
                    PrefsPage(newParent,newPreferences)

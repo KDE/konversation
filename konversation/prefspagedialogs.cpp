@@ -17,9 +17,11 @@
 #include <qlayout.h>
 
 #include <klistview.h>
+#include <klocale.h>
 
-#include "serverlistitem.h"
 #include "prefspagedialogs.h"
+#include "preferences.h"
+#include "serverlistitem.h"
 
 PrefsPageDialogs::PrefsPageDialogs(QFrame* newParent,Preferences* newPreferences) :
                   PrefsPage(newParent,newPreferences)

@@ -14,10 +14,11 @@
   $Id$
 */
 
-#include "ignorelistviewitem.h"
-
 #include <klocale.h>
 #include <kdebug.h>
+
+#include "ignorelistviewitem.h"
+#include "ignore.h"
 
 IgnoreListViewItem::IgnoreListViewItem(QListView* parent,QString name,int newFlags):
         KListViewItem(parent,name)

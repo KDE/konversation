@@ -15,13 +15,17 @@
 */
 
 #include <qhbox.h>
+#include <qvbox.h>
+#include <qpushbutton.h>
 
+#include <klistview.h>
 #include <kdialog.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <krun.h>
 
 #include "dccpanel.h"
+#include "dcctransfer.h"
 
 DccPanel::DccPanel(QWidget* parent) :
           ChatWindow(parent)

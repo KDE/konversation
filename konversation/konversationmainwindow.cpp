@@ -28,6 +28,8 @@
 #include "chatwindow.h"
 #include "konversationmainwindow.h"
 #include "konversationapplication.h"
+#include "ircview.h"
+#include "server.h"
 #include "statuspanel.h"
 #include "channel.h"
 #include "query.h"

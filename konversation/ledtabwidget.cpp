@@ -18,6 +18,7 @@
 
 #include "ledtabwidget.h"
 #include "ledtab.h"
+#include "ledtabbar.h"
 #include "chatwindow.h"
 
 LedTabWidget::LedTabWidget(QWidget* parent,const char* name) :

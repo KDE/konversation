@@ -17,15 +17,15 @@
 #ifndef _CHANNELLISTPANEL_H_
 #define _CHANNELLISTPANEL_H_
 
-#include <qcheckbox.h>
-
-#include <klistview.h>
-
 #include "chatwindow.h"
 
 /*
   Dario Abatianni
 */
+
+class QCheckBox;
+
+class KListView;
 
 class ChannelListPanel : public ChatWindow
 {

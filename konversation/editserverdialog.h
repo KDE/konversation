@@ -18,12 +18,13 @@
 #define EDITSERVERDIALOG_H
 
 #include <kdialogbase.h>
-#include <klineedit.h>
-#include <kcombobox.h>
 
 /*
   @author Dario Abatianni
 */
+
+class KLineEdit;
+class KComboBox;
 
 class EditServerDialog : public KDialogBase
 {

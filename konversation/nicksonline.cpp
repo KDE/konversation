@@ -22,6 +22,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kdialog.h>
+#include <klistview.h>
 
 #include "nicksonline.h"
 

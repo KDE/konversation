@@ -14,6 +14,7 @@
     $Id$
 */
 
+#include <qlabel.h>
 #include <qvbox.h>
 #include <qhbox.h>
 #include <qgrid.h>
@@ -22,12 +23,24 @@
 #include <qregexp.h>
 #include <qtooltip.h>
 #include <qsplitter.h>
+#include <qcheckbox.h>
+#include <qtimer.h>
 
+#include <klineedit.h>
 #include <klocale.h>
 #include <kdebug.h>
 
 #include "konversationapplication.h"
 #include "channel.h"
+#include "server.h"
+#include "nick.h"
+#include "nicklistview.h"
+#include "nickchangedialog.h"
+#include "quickbutton.h"
+#include "modebutton.h"
+#include "topiccombobox.h"
+#include "ircinput.h"
+#include "ircview.h"
 
 #if QT_VERSION < 0x030100
 #include "main.h"
@@ -111,7 +124,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(modeK,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
   connect(modeL,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
 
-  limit=new QLineEdit(modeBox);
+  limit=new KLineEdit(modeBox);
 
   showModeButtons(KonversationApplication::preferences.getShowModeButtons());
 

@@ -17,8 +17,6 @@
 #ifndef PREFSPAGEHIGHLIGHT_H
 #define PREFSPAGEHIGHLIGHT_H
 
-#include <qvaluelist.h>
-
 #include "prefspage.h"
 
 /*

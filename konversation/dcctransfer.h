@@ -19,17 +19,17 @@
 #define DCCTRANSFER_H
 
 #include <klistview.h>
-#include <kextsock.h>
 
 #include <qdir.h>
 #include <qfile.h>
 #include <qdatetime.h>
 #include <qstringlist.h>
-#include <qthread.h>
 
 /*
   @author Dario Abatianni
 */
+
+class KExtendedSocket;
 
 class DccTransfer : public QObject, public KListViewItem
 {

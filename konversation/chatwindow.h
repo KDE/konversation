@@ -20,7 +20,6 @@
 #include <qfile.h>
 #include <qvbox.h>
 
-#include "ircview.h"
 #include "outputfilter.h"
 #include "identity.h"
 #include "scriptlauncher.h"
@@ -29,6 +28,9 @@
   @author Dario Abatianni
 */
 
+class QFile;
+
+class IRCView;
 class Server;
 
 class ChatWindow : public QVBox

@@ -26,8 +26,6 @@
 
 #include <klistview.h>
 
-#include "ignore.h"
-
 class IgnoreListViewItem : public KListViewItem
 {
   public:

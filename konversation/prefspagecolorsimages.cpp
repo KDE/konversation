@@ -23,8 +23,10 @@
 #include <kdebug.h>
 #include <klineedit.h>
 #include <kfiledialog.h>
+#include <klocale.h>
 
 #include "prefspagecolorsimages.h"
+#include "preferences.h"
 
 PrefsPageColorsImages::PrefsPageColorsImages(QFrame* newParent,Preferences* newPreferences) :
                        PrefsPage(newParent,newPreferences)

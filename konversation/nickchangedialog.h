@@ -18,14 +18,14 @@
 #ifndef NICKCHANGEDIALOG_H
 #define NICKCHANGEDIALOG_H
 
-#include <qstringlist.h>
-#include <qcombobox.h>
-
 #include <kdialogbase.h>
 
 /*
   @author Dario Abatianni
 */
+
+class QComboBox;
+class QStringList;
 
 class NickChangeDialog : public KDialogBase
 {

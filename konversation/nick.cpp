@@ -15,7 +15,9 @@
 */
 
 #include <kdebug.h>
+#include <klistview.h>
 
+#include "ledlistviewitem.h"
 #include "nick.h"
 
 Nick::Nick(KListView* listView,const QString& nickname, const QString& hostmask, bool op, bool voice)

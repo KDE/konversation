@@ -17,19 +17,18 @@
 #ifndef PREFSPAGEAPPEARANCE_H
 #define PREFSPAGEAPPEARANCE_H
 
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qspinbox.h>
-
-#include <klistview.h>
-
 #include "prefspage.h"
 
 /*
   @author Dario Abatianni
 */
 
+class QLabel;
+class QCheckBox;
+class QSpinBox;
 class QHGroupBox;
+
+class KListView;
 
 class PrefsPageAppearance : public PrefsPage
 {

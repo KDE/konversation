@@ -15,14 +15,17 @@
 */
 
 #include <qhbox.h>
+#include <qcheckbox.h>
 
 #include <klocale.h>
 #include <kstddirs.h>
 #include <kdebug.h>
 
 #include "query.h"
+#include "server.h"
 #include "konversationapplication.h"
 #include "ircinput.h"
+#include "ircview.h"
 
 Query::Query(QWidget* parent) : ChatWindow(parent)
 {

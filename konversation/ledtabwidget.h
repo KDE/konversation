@@ -19,7 +19,6 @@
 
 #include <qtabwidget.h>
 
-#include "ledtabbar.h"
 #include "images.h"
 
 /*
@@ -27,6 +26,7 @@
 */
 
 class ChatWindow;
+class LedTabBar;
 
 class LedTabWidget : public QTabWidget
 {

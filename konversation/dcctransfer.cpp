@@ -23,6 +23,7 @@
 
 #include <klocale.h>
 #include <kdebug.h>
+#include <kextsock.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 

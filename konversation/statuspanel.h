@@ -17,15 +17,15 @@
 #ifndef STATUSPANEL_H
 #define STATUSPANEL_H
 
-#include <qpushbutton.h>
-#include <qcheckbox.h>
-#include <qlabel.h>
-
 #include "chatwindow.h"
 
 /*
   @author Dario Abatianni
 */
+
+class QPushButton;
+class QCheckBox;
+class QLabel;
 
 class IRCInput;
 

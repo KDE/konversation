@@ -18,11 +18,14 @@
 #include <qlayout.h>
 #include <qlabel.h>
 
+#include <klineedit.h>
+#include <kcombobox.h>
 #include <kdebug.h>
 #include <klocale.h>
 
 #include "editserverdialog.h"
 #include "konversationapplication.h"
+#include "identity.h"
 
 EditServerDialog::EditServerDialog(QWidget* parent,
                                    QString group,

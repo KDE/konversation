@@ -14,25 +14,23 @@
   $Id$
 */
 
+#include "qobject.h"
+
 #ifndef PREFSPAGE_H
 #define PREFSPAGE_H
-
-#include <kdialog.h>
-#include <klocale.h>
-
-#include <qframe.h>
-
-#include "preferences.h"
 
 /*
   @author Dario Abatianni
 */
 
+class QFrame;
+class Preferences;
+
 class PrefsPage : public QObject
 {
   Q_OBJECT
 
-  public: 
+  public:
     PrefsPage(QFrame* newParent,Preferences* preferences);
     ~PrefsPage();
 

@@ -14,6 +14,9 @@
   $Id$
 */
 
+#include <qpushbutton.h>
+#include <qlabel.h>
+
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -21,6 +24,8 @@
 #include "statuspanel.h"
 #include "konversationapplication.h"
 #include "ircinput.h"
+#include "ircview.h"
+#include "server.h"
 
 StatusPanel::StatusPanel(QWidget* parent) :
               ChatWindow(parent)

@@ -18,17 +18,16 @@
 #define KONVERSATIONAPPLICATION_H
 
 #include <kapp.h>
-#include <ksimpleconfig.h>
-
-#include <qcstring.h>
 
 #include "preferences.h"
-#include "prefsdialog.h"
-#include "server.h"
 #include "event.h"
+
+class QCString;
 
 class KonversationMainWindow;
 class KonvDCOP;
+class Server;
+class PrefsDialog;
 
 /*
   @author Dario Abatianni

@@ -17,11 +17,7 @@
 #ifndef PREFSDIALOG_H
 #define PREFSDIALOG_H
 
-#include <qpushbutton.h>
-#include <qtabwidget.h>
-
 #include <kdialogbase.h>
-#include <klistview.h>
 
 /*
  *@author Dario Abatianni

@@ -14,6 +14,8 @@
   $Id$
 */
 
+#include <kdialog.h>
+
 #include "prefspage.h"
 
 PrefsPage::PrefsPage(QFrame* newParent,Preferences* newPreferences)

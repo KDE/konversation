@@ -14,8 +14,6 @@
   $Id$
 */
 
-#include <kdebug.h>
-
 #include "ignore.h"
 
 Ignore::Ignore(QString newName,int newFlags)
@@ -26,9 +24,8 @@ Ignore::Ignore(QString newName,int newFlags)
 
 Ignore::~Ignore()
 {
-  kdDebug() << "Ignore::~Ignore(" << name << ")" << endl;
 }
-    
+
 void Ignore::setName(QString newName) { name=newName; }
 void Ignore::setFlags(int newFlags)   { flags=newFlags; }
 QString Ignore::getName()             { return name; }

@@ -18,14 +18,14 @@
 #ifndef NICKLISTVIEW_H
 #define NICKLISTVIEW_H
 
-#include <qevent.h>
-#include <qpopupmenu.h>
-
 #include <klistview.h>
 
 /*
   @author Dario Abatianni
 */
+
+class QPopupMenu;
+class QContextMenuEvent;
 
 class NickListView : public KListView
 {

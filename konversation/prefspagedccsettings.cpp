@@ -26,8 +26,10 @@
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <klocale.h>
 
 #include "prefspagedccsettings.h"
+#include "preferences.h"
 
 PrefsPageDccSettings::PrefsPageDccSettings(QFrame* newParent,Preferences* newPreferences) :
                       PrefsPage(newParent,newPreferences)

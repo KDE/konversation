@@ -17,19 +17,20 @@
 #ifndef NOTIFYDIALOG_H
 #define NOTIFYDIALOG_H
 
-#include <qlineedit.h>
-#include <qcheckbox.h>
-#include <qstringlist.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qspinbox.h>
-
 #include <kdialogbase.h>
 
 /*
   @author Dario Abatianni
 */
+
+class QLineEdit;
+class QPushButton;
+class QPushButton;
+class QCheckBox;
+class QLabel;
+class QSpinBox;
+
+class KListView;
 
 class NotifyDialog : public KDialogBase
 {

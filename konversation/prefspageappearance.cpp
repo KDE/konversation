@@ -14,6 +14,7 @@
   $Id$
 */
 
+#include <qlabel.h>
 #include <qlayout.h>
 #include <qhbox.h>
 #include <qpushbutton.h>
@@ -24,12 +25,17 @@
 #include <qvgroupbox.h>
 #include <qvbox.h>
 #include <qtoolbutton.h>
+#include <qspinbox.h>
+#include <qcheckbox.h>
 
 #include <kfontdialog.h>
 #include <kdebug.h>
 #include <kcharsets.h>
+#include <klistview.h>
+#include <klocale.h>
 
 #include "prefspageappearance.h"
+#include "preferences.h"
 #include "valuelistviewitem.h"
 
 PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPreferences) :

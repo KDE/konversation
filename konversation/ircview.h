@@ -17,17 +17,16 @@
 #ifndef IRCVIEW_H
 #define IRCVIEW_H
 
-#include <qevent.h>
-#include <qpopupmenu.h>
-
 #include <ktextbrowser.h>
 
 /*
   @author Dario Abatianni
 */
 
-class Server;
 class QPixmap;
+class QEvent;
+
+class Server;
 
 class IRCView : public KTextBrowser
 {

@@ -17,12 +17,8 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include <kapplication.h>
-
-#include <qlist.h>
 #include <qtimer.h>
 #include <qdatetime.h>
-#include <qlistview.h>
 
 #include "inputfilter.h"
 #include "outputfilter.h"

@@ -22,8 +22,10 @@
 #include <qlabel.h>
 
 #include <klineedit.h>
+#include <klocale.h>
 
 #include "prefspagegeneralsettings.h"
+#include "preferences.h"
 
 PrefsPageGeneralSettings::PrefsPageGeneralSettings(QFrame* newParent,Preferences* newPreferences) :
                    PrefsPage(newParent,newPreferences)

@@ -19,8 +19,10 @@
 #include <qlabel.h>
 
 #include <klistview.h>
+#include <klocale.h>
 
 #include "prefspagebuttons.h"
+#include "preferences.h"
 
 PrefsPageButtons::PrefsPageButtons(QFrame* newParent,Preferences* newPreferences) :
                   PrefsPage(newParent,newPreferences)

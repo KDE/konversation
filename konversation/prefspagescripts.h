@@ -14,24 +14,23 @@
   $Id$
 */
 
-
 #ifndef PREFSPAGESCRIPTS_H
 #define PREFSPAGESCRIPTS_H
 
-#include <klistview.h>
-#include <keditcl.h>
-
-#include <qlayout.h>
-#include <qdir.h>
-#include <qstringlist.h>
-#include <qtextstream.h>
-
 #include "prefspage.h"
-#include "preferences.h"
 
 /*
   @author Matthias Gierlings
 */
+
+class QBoxLayout;
+class QListViewItem;
+
+class KListView;
+class KListViewItem;
+class KEdit;
+
+class Preferences;
 
 class PrefsPageScripts : public PrefsPage
 {

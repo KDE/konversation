@@ -23,6 +23,7 @@
 #include <qtextbrowser.h>
 #include <qclipboard.h>
 #include <qbrush.h>
+#include <qpopupmenu.h>
 
 // Check if we use special QT versions to keep text widget from displaying
 // all lines after another without line breaks

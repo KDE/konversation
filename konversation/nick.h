@@ -17,14 +17,12 @@
 #ifndef NICK_H
 #define NICK_H
 
-#include <klistview.h>
-
-#include "ledlistviewitem.h"
-#include "preferences.h"
-
 /*
   @author Dario Abatianni
 */
+
+class KListView;
+class LedListViewItem;
 
 class Nick
 {

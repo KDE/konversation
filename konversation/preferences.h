@@ -23,11 +23,7 @@
 #include <qvaluelist.h>
 #include <qstringlist.h>
 #include <qfont.h>
-
-#include "serverentry.h"
-#include "ignore.h"
-#include "highlight.h"
-#include "identity.h"
+#include <qcolor.h>
 
 /*
   @author Dario Abatianni
@@ -41,6 +37,11 @@ OperatorColor (int)
 VoiceColor (int)
 NoRightsColor (int)
 */
+
+class ServerEntry;
+class Ignore;
+class Highlight;
+class Identity;
 
 class Preferences : public QObject
 {

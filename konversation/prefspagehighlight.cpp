@@ -26,8 +26,10 @@
 #include <klistview.h>
 #include <klineedit.h>
 #include <kdebug.h>
+#include <klocale.h>
 
 #include "prefspagehighlight.h"
+#include "preferences.h"
 #include "highlight.h"
 #include "highlightviewitem.h"
 

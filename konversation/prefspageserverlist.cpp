@@ -14,12 +14,17 @@
   $Id$
 */
 
-#include <kdebug.h>
-
 #include <qlayout.h>
 #include <qhbox.h>
+#include <qpushbutton.h>
+#include <qcheckbox.h>
+
+#include <kdebug.h>
+#include <klocale.h>
+#include <klistview.h>
 
 #include "prefspageserverlist.h"
+#include "preferences.h"
 #include "serverlistitem.h"
 #include "editserverdialog.h"
 

@@ -19,11 +19,11 @@
 
 #include <qvbox.h>
 
-#include <klistview.h>
-
 /*
   @author Dario Abatianni
 */
+
+class KListView;
 
 class NicksOnline : public QVBox
 {

@@ -26,6 +26,10 @@
 
 #include "preferences.h"
 #include "prefsdialog.h"
+#include "identity.h"
+#include "ignore.h"
+#include "highlight.h"
+#include "serverentry.h"
 
 Preferences::Preferences()
 {

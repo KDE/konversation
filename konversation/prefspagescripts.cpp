@@ -15,8 +15,16 @@
 */
 
 #include <qfile.h>
+#include <qdir.h>
+#include <qlayout.h>
+
 #include <kdebug.h>
+#include <klistview.h>
+#include <klocale.h>
+#include <keditcl.h>
+
 #include "prefspagescripts.h"
+#include "preferences.h"
 
 PrefsPageScripts::PrefsPageScripts(QFrame *passedParent, Preferences *passedPreferences)
                  :PrefsPage(passedParent, passedPreferences)

@@ -21,10 +21,10 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <kdebug.h>
-#include <krootpixmap.h>
 
-#include "server.h"
 #include "chatwindow.h"
+#include "ircview.h"
+#include "server.h"
 #include "konversationapplication.h"
 
 ChatWindow::ChatWindow(QWidget* parent)

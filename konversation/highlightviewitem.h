@@ -18,15 +18,13 @@
 #ifndef HIGHLIGHTVIEWITEM_H
 #define HIGHLIGHTVIEWITEM_H
 
-#include <klistview.h>
-
-#include <qlistview.h>
-
-#include "highlight.h"
+#include "klistview.h"
 
 /**
   *@author Matthias Gierlings
   */
+
+class Highlight;
 
 class HighlightViewItem : public KListViewItem
 {

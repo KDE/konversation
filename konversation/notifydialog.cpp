@@ -17,6 +17,10 @@
 #include <qlayout.h>
 #include <qhbox.h>
 #include <qgrid.h>
+#include <qlabel.h>
+#include <qcheckbox.h>
+#include <qspinbox.h>
+#include <qpushbutton.h>
 
 #include <klocale.h>
 #include <klistview.h>

@@ -16,6 +16,7 @@
 
 #include <qlayout.h>
 
+#include <klineedit.h>
 #include <klocale.h>
 #include <kdebug.h>
 

@@ -17,16 +17,16 @@
 #ifndef DCCPANEL_H
 #define DCCPANEL_H
 
-#include <qpushbutton.h>
-
-#include <klistview.h>
+/*
+  @author Dario Abatianni
+*/
 
 #include "chatwindow.h"
 #include "dcctransfer.h"
 
-/*
-  @author Dario Abatianni
-*/
+class QPushButton;
+
+class KListView;
 
 class DccPanel : public ChatWindow
 {
