@@ -70,6 +70,7 @@ class DccChat : public ChatWindow
     void textPasted(QString text);
     void newTextInView(const QString& highlightColor, bool important);
     void heardPartner();
+    void socketClosed();
 
   protected:
     void listenForPartner();

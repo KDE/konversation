@@ -34,6 +34,8 @@
 #include "ircinput.h"
 #include "dccchat.h"
 
+#define DCCCHAT_BUFFER_SIZE 1024
+
 #ifdef USE_MDI
 DccChat::DccChat(QString caption,Server* newServer,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen) :
       ChatWindow(caption)
@@ -170,10 +172,11 @@ void DccChat::connectToPartner()
   m_dccSocket->enableWrite(false);
   m_dccSocket->setTimeout(5000);
 
-  connect( m_dccSocket, SIGNAL( hostFound() ),                        this, SLOT( lookupFinished() ) );
+  connect( m_dccSocket, SIGNAL( hostFound() ),                        this, SLOT( lookupFinished() )           );
   connect( m_dccSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( dccChatConnectionSuccess() ) );
-  connect( m_dccSocket, SIGNAL( gotError( int ) ),                    this, SLOT( dccChatBroken( int ) ) );
-  connect( m_dccSocket, SIGNAL( readyRead() ),                        this, SLOT( readData() ) );
+  connect( m_dccSocket, SIGNAL( gotError( int ) ),                    this, SLOT( dccChatBroken( int ) )       );
+  connect( m_dccSocket, SIGNAL( readyRead() ),                        this, SLOT( readData() )                 );
+  connect( m_dccSocket, SIGNAL( closed() ),                           this, SLOT( socketClosed() )             );
 
   m_dccSocket->connect();
 
@@ -201,39 +204,22 @@ void DccChat::dccChatBroken(int error)
 void DccChat::readData()
 {
   kdDebug() << k_funcinfo << " BEGIN" << endl;
+  int available=0;
   int actual=0;
   char* buffer=0;
   QString line;
   QTextCodec* codec = QTextCodec::codecForName(m_encoding.isEmpty() ? IRCDefaultCodec::getDefaultLocaleCodec().ascii() : m_encoding.ascii());
-
-  do
+  
+  available = m_dccSocket->bytesAvailable();
+  if( available > 0 )
   {
-    buffer = new char[ 1025 ];
-    if(buffer)
-    {
-      actual=m_dccSocket->readBlock(buffer,1024);
-      if(actual==-1)
-        kdDebug() << "Error while reading from DCC chat connection: " << m_dccSocket->errorString() << endl;
-      else if(actual>0)
-      {
-        buffer[actual]=0;
-        line.append(codec->toUnicode(buffer));
-      }
-      else
-      {
-        kdDebug() << "Read 0 bytes from DCC Chat: " << m_dccSocket->errorString() << endl;
-        getTextView()->appendServerMessage(i18n("Info"),"Connection closed.");
-        dccChatInput->setEnabled(false);
-        m_dccSocket->enableRead(false);
-        m_dccSocket->close();
-        m_dccSocket = 0;
-      }
-      delete[] buffer;
-    }
-    else kdDebug() << "DCC Chat input buffer broken." << endl;
-
-  } while(buffer && actual==1024);
-
+    buffer = new char[ available + 1 ];
+    actual = m_dccSocket->readBlock( buffer, available );
+    buffer[ actual ] = 0;
+    line.append( codec->toUnicode( buffer ) );
+    delete buffer;
+  }
+  
   if(!line.isEmpty())
   {
     QStringList lines=QStringList::split('\n',line);
@@ -330,7 +316,9 @@ void DccChat::heardPartner()
     return;
   }
   
-  connect(m_dccSocket,SIGNAL (readyRead()),this,SLOT (readData()) );
+  connect( m_dccSocket, SIGNAL( readyRead() ),     this, SLOT( readData() )           );
+  connect( m_dccSocket, SIGNAL( closed() ),        this, SLOT( socketClosed() )       );
+  connect( m_dccSocket, SIGNAL( gotError( int ) ), this, SLOT( dccChatBroken( int ) ) );
   
   m_listenSocket->close();
   m_listenSocket = 0;
@@ -339,6 +327,13 @@ void DccChat::heardPartner()
   dccChatInput->setEnabled(true);
 
   getTextView()->append(i18n("Info"),i18n("Connection established."));
+}
+
+void DccChat::socketClosed()
+{
+  getTextView()->appendServerMessage(i18n("Info"),"Connection closed.");
+  dccChatInput->setEnabled(false);
+  m_dccSocket = 0;
 }
 
 void DccChat::textPasted(QString text)
