@@ -56,9 +56,13 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
     popup->insertItem(i18n("&Version"),Version);
     popup->insertItem(i18n("&Ping"),Ping);
     popup->insertSeparator();
-    popup->insertItem(i18n("Open Query"),Query);
-    popup->insertItem(i18n("Open DCC Chat"),DccChat);
-    popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),DccSend);
+    int newitem;
+    newitem = popup->insertItem(i18n("Open &Query"),Query);
+    popup->setWhatsThis(newitem, "<qt>Start a private chat between you and this person.<p/><em>Technical note:</em><br>The conversation between you and this person will be sent via the server.  This means that the conversation will be affected by server lag, server stability, and will be terminated when you disconnect from the server.</qt>");
+    newitem = popup->insertItem(i18n("Open DCC &Chat"),DccChat);
+    popup->setWhatsThis(newitem, "<qt>Start a private <em>D</em>irect <em>C</em>lient <em>C</em>onnection chat between you and this person.<p/><em>Technical note:</em><br />The conversation between you and this person will be sent directly.  This means it is independent from the server - so if the server connection fails, or use disconnect, your DCC Chat will be unaffected.  It also means that no irc server admin can view or spy on this chat.</qt>");
+    newitem = popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),DccSend);
+    popup->setWhatsThis(newitem, "<qt>Send a file to this person.  If you are having problem sending files, or they are sending slowly, see the Konversation Handbook and DCC preferences page.</qt>");
     popup->insertItem(SmallIconSet("mail_generic"),i18n("&Send Email..."), SendEmail);
     if(addressbook) {
       popup->insertSeparator();
