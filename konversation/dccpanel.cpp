@@ -134,8 +134,6 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
     
   connect(dccListView, SIGNAL(contextMenuRequested(QListViewItem*,const QPoint&,int)), this, SLOT(popupRequested(QListViewItem*,const QPoint&,int)));
   connect(popup, SIGNAL(activated(int)), this, SLOT(popupActivated(int)));
-  connect(popup, SIGNAL(aboutToShow()), this, SLOT(popupAboutToShow()));
-  connect(popup, SIGNAL(aboutToHide()), this, SLOT(popupAboutToHide()));
   
   // misc.
   connect(dccListView, SIGNAL(doubleClicked(QListViewItem*,const QPoint&,int)), this, SLOT(doubleClicked(QListViewItem*,const QPoint&,int)));
