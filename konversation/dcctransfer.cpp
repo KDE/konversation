@@ -401,15 +401,10 @@ unsigned long DccTransfer::getCPS() const
 
 QString DccTransfer::getSenderAddressPrettyText() const
 {
-  if( m_dccType == Send && ( !m_ownIp.isEmpty() || m_ownPort.isEmpty() ) )
-    return QString( "%1:%2" )
-             .arg( !m_ownIp.isEmpty() ? m_ownIp : QString( "?" ) )
-             .arg( !m_ownPort.isEmpty() ? m_ownPort : QString( "?" ) );
-  if( m_dccType == Receive && ( !m_partnerIp.isEmpty() || m_partnerPort.isEmpty() ) )
-    return QString( "%1:%2" )
-             .arg( !m_partnerIp.isEmpty() ? m_partnerIp : QString( "?" ) )
-             .arg( !m_partnerPort.isEmpty() ? m_partnerPort : QString( "?" ) );
-  return QString::null;
+  if( m_dccType == Send )
+    return QString( "%1:%2" ).arg( m_ownIp ).arg( m_ownPort );
+  else
+    return QString( "%1:%2" ).arg( m_partnerIp ).arg( m_partnerPort );
 }
 
 //FIXME: IPv6 support
