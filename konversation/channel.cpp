@@ -1096,11 +1096,7 @@ void Channel::removeNick(const QString &nickname, const QString &reason, bool qu
     if(nick==0) kdWarning() << "Channel::removeNick(): Nickname " << nickname << " not found!" << endl;
     else
     {
-#ifdef USE_NICKINFO
-      if(nick->isOp() || nick->isOwner() || nick->isAdmin() || nick->isHalfOp()) adjustOps(-1);
-#else
       if(nick->isOp() || nick->isOwner() || nick->isAdmin() || nick->isHalfop()) adjustOps(-1);
-#endif
       adjustNicks(-1);
 
       nicknameList.removeRef(nick);
