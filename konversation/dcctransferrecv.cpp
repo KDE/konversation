@@ -446,7 +446,7 @@ void DccTransferRecv::sendAck()  // slot
   }
   else if ( m_transferringPosition > (KIO::fileoffset_t)m_fileSize )
   {
-    kdDebug() << "DccTransferRecv::sendAck(): wtf? the remote host sent larger data than expected: " << m_transferringPosition << endl;
+    kdDebug() << "DccTransferRecv::sendAck(): wtf? the remote host sent larger data than expected: " << QString::number( m_transferringPosition ) << endl;
     failed( i18n( "Transferring error" ) );
   }
 }
