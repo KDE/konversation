@@ -365,13 +365,13 @@ void IRCInput::paste()
   QString html;
   QCString subtype("html");
   if(useSelection) { 
-    html = cb->text(subtype, QClipboard::Selection);
-    if(html.isEmpty())
+/*    html = cb->text(subtype, QClipboard::Selection); Enable again when it actually works as expected
+    if(html.isEmpty())*/
       text = cb->text( QClipboard::Selection);
   }
   else {
-    html = cb->text(subtype, QClipboard::Clipboard);
-    if(html.isEmpty())
+/*    html = cb->text(subtype, QClipboard::Clipboard); Enable again when it actually works as expected
+    if(html.isEmpty())*/
       text = cb->text( QClipboard::Clipboard);
   }
   kdDebug() << "subtype " << subtype << ", html is " << html << endl;
