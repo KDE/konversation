@@ -22,8 +22,11 @@
 #include <klistview.h>
 #include <krun.h>
 #include <kfiledialog.h>
+#include <kshell.h>
+#include <kprocess.h>
 
 #include "urlcatcher.h"
+#include "konversationapplication.h"
 
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
 {
@@ -90,7 +93,24 @@ void UrlCatcher::addUrl(const QString& who,const QString& url)
 
 void UrlCatcher::openUrl(QListViewItem* item)
 {
-  new KRun(item->text(1));
+  if (KonversationApplication::preferences.getWebBrowserUseKdeDefault())
+    new KRun(item->text(1));
+  else
+  {
+    QString url = item->text(1);
+    QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
+    cmd.replace("%u", url);
+    KProcess *proc = new KProcess;
+    QStringList cmdAndArgs = KShell::splitArgs(cmd);
+    kdDebug() << "UrlCatcher::openUrl(): cmd = " << cmdAndArgs << endl;
+    *proc << cmdAndArgs;
+//    This code will also work, but starts an extra shell process.
+//    kdDebug() << "UrlCatcher::openUrl(): cmd = " << cmd << endl;
+//    *proc << cmd;
+//    proc->setUseShell(true);
+    proc->start(KProcess::DontCare);
+    delete proc;
+  }
 }
 
 void UrlCatcher::openUrlClicked()

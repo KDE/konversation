@@ -37,6 +37,8 @@
 #include <kbookmarkmanager.h>
 #include <kdeversion.h>
 #include <kstandarddirs.h>
+#include <kprocess.h>
+#include <kshell.h>
 
 #ifndef KDE_MAKE_VERSION
 #define KDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
@@ -95,10 +97,14 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
   setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
 #endif
 
+  // Use default KDE web browser or custom command?
+  setNotifyClick(!KonversationApplication::preferences.getWebBrowserUseKdeDefault());
+
 #ifndef TABLE_VERSION
   setText("<qt>\n");
 #endif
   connect(this,SIGNAL (highlighted(const QString&)),this,SLOT (highlightedSlot(const QString&)));
+  connect(this,SIGNAL (urlClick (const QString&)),this,SLOT(urlClickSlot(const QString&)));
 }
 
 IRCView::~IRCView()
@@ -112,7 +118,6 @@ void IRCView::updateStyleSheet()
   QStyleSheet* sheet=styleSheet();
   if(sheet==0)
   {
-    kdDebug() << "IRCView::updateStyleSheet(): sheet==0!" << endl;
     return;
   }
 
@@ -175,6 +180,25 @@ void IRCView::highlightedSlot(const QString& link)
     popup->insertItem(i18n("Add to Bookmarks"),Bookmark,2);
     copyUrlMenu=true;
     urlToCopy=link;
+  }
+}
+
+void IRCView::urlClickSlot(const QString &url)
+{
+  if (!url.isEmpty())
+  {
+    QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
+    cmd.replace("%u", url);
+    KProcess *proc = new KProcess;
+    QStringList cmdAndArgs = KShell::splitArgs(cmd);
+    kdDebug() << "IRCView::urlClickSlot(): cmd = " << cmdAndArgs << endl;
+    *proc << cmdAndArgs;
+//    This code will also work, but starts an extra shell process.
+//    kdDebug() << "IRCView::urlClickSlot(): cmd = " << cmd << endl;
+//    *proc << cmd;
+//    proc->setUseShell(true);
+    proc->start(KProcess::DontCare);
+    delete proc;
   }
 }
 

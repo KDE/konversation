@@ -51,6 +51,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   QFrame* logSettingsPane    =addPage(i18n("Log Settings"));
   QFrame* dccSettingsPane    =addPage(i18n("DCC Settings"));
+  QFrame* webBrowserPane   =addPage(i18n("Web Browser"));
   QFrame* dialogsPane        =addPage(i18n("Dialogs"));
   // TODO: Uncomment this again when it's ready to go
   // QFrame* scriptsPane        =addPage(i18n("Scripting"));
@@ -76,6 +77,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   logSettingsPage    =new PrefsPageLog(logSettingsPane,preferences);
   dccSettingsPage    =new PrefsPageDccSettings(dccSettingsPane,preferences);
+  webBrowserPage   =new PrefsPageWebBrowser(webBrowserPane,preferences);
   dialogsPage        =new PrefsPageDialogs(dialogsPane,preferences);
 
   // TODO: Uncomment this again when it's ready to go
@@ -113,6 +115,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 
   connect(this,SIGNAL (applyPreferences()),logSettingsPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),dccSettingsPage,SLOT (applyPreferences()) );
+  connect(this,SIGNAL (applyPreferences()),webBrowserPage,SLOT (applyPreferences()) );
   connect(this,SIGNAL (applyPreferences()),dialogsPage,SLOT (applyPreferences()) );
 
   // connect all individual signals and slots

@@ -193,6 +193,10 @@ Preferences::Preferences()
 
   setHideUnimportantEvents(false);
   setShowTopic(true);
+  
+  // Web Browser
+  setWebBrowserUseKdeDefault(true);
+  setWebBrowserCmd("mozilla \'%u\'");
 }
 
 Preferences::~Preferences()
@@ -705,5 +709,11 @@ void Preferences::setShowTopic(bool s) { showTopic = s; }
 
 bool Preferences::getHideUnimportantEvents()           { return hideUnimportantEvents; }
 void Preferences::setHideUnimportantEvents(bool state) { hideUnimportantEvents=state; }
+
+// Web Browser
+bool Preferences::getWebBrowserUseKdeDefault() { return webBrowserUseKdeDefault; }
+void Preferences::setWebBrowserUseKdeDefault(bool state) { webBrowserUseKdeDefault = state; }
+QString Preferences::getWebBrowserCmd() { return webBrowserCmd; }
+void Preferences::setWebBrowserCmd(const QString &cmd) { webBrowserCmd=cmd; }
 
 #include "preferences.moc"

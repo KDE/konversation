@@ -36,6 +36,7 @@
 #include "prefspagealiases.h"
 #include "prefspagenickcompletion.h"
 #include "prefspagetabbehavior.h"
+#include "prefspagewebbrowser.h"
 // TODO: uncomment this when it's ready to go
 // #include "prefspagescripts.h"
 
@@ -88,6 +89,7 @@ class PrefsDialog : public KDialogBase
     PrefsPageAliases*         aliasesPage;
     PrefsPageLog*             logSettingsPage;
     PrefsPageDccSettings*     dccSettingsPage;
+    PrefsPageWebBrowser*    webBrowserPage;
     PrefsPageDialogs*         dialogsPage;
 
 

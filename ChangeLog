@@ -12,9 +12,10 @@ Changes from 0.13 to 0.14
 - Less important events like Join, Part and Nickchanges can now be hidden
 - Custom CTCP Version Reply Support
 - Added a shortcut to close all open queries
-- Added a patch by Thomas Nagy to cycle tabs with mouse scroll wheel
+- Added a patch by Thomas Nagy to cycle tabs with mouse scroll wheel (thanks!)
 - Added logfile reader
-- Added patch by Gary Cramblitt to enhance DCC panel
+- Added patch by Gary Cramblitt to enhance DCC panel (thanks!)
+- Added patch by Gary Cramblitt to select custom web browser command (thanks!)
 
 Changes from 0.12 to 0.13
 - Added an option to hide hostmasks in channel nick lists

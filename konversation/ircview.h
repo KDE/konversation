@@ -72,7 +72,8 @@ class IRCView : public KTextBrowser
 
   protected slots:
     void highlightedSlot(const QString& link);
-
+    void urlClickSlot(const QString &url);
+    
   protected:
     QString filter(const QString& line,const QString& who=NULL,bool doHilight=true);
     void doAppend(QString line,bool suppressTimestamps=false,bool important=true);

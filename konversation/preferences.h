@@ -365,6 +365,12 @@ class Preferences : public QObject
 
     bool getHideUnimportantEvents();
     void setHideUnimportantEvents(bool state);
+    
+    // Web Browser
+    bool getWebBrowserUseKdeDefault();
+    void setWebBrowserUseKdeDefault(bool state);
+    QString getWebBrowserCmd();
+    void setWebBrowserCmd(const QString &cmd);
 
   signals:
     void requestServerConnection(int number);
@@ -512,6 +518,10 @@ class Preferences : public QObject
 
     bool showTopic;
     bool hideUnimportantEvents;
+    
+    // Web Browser
+    bool webBrowserUseKdeDefault;
+    QString webBrowserCmd;
 };
 
 #endif

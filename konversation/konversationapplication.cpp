@@ -535,6 +535,11 @@ void KonversationApplication::readOptions()
   preferences.setShowServerList(config->readBoolEntry("ShowServerList",preferences.getShowServerList()));
 
   preferences.setColorInputFields(config->readBoolEntry("InputFieldsBackgroundColor",preferences.getColorInputFields()));
+  
+  // Web Browser
+  config->setGroup("Web Browser Settings");
+  preferences.setWebBrowserUseKdeDefault(config->readBoolEntry("UseKdeDefault",preferences.getWebBrowserUseKdeDefault()));
+  preferences.setWebBrowserCmd(config->readEntry("WebBrowserCmd",preferences.getWebBrowserCmd()));
 }
 
 void KonversationApplication::saveOptions(bool updateGUI)
@@ -763,6 +768,11 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ShowServerList",preferences.getShowServerList());
 
   config->writeEntry("InputFieldsBackgroundColor",preferences.getColorInputFields());
+  
+  // Web Browser settings
+  config->setGroup("Web Browser Settings");
+  config->writeEntry("UseKdeDefault", preferences.getWebBrowserUseKdeDefault());
+  config->writeEntry("WebBrowserCmd", preferences.getWebBrowserCmd());
   
   config->sync();
 
