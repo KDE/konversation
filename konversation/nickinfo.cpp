@@ -29,6 +29,12 @@ NickInfo::NickInfo(const QString& nick, Server* server)
 {
   nickname = nick;
   owningServer = server;
+  away = false;
+  awayMessage = "";
+  hostmask = "";
+  identdInfo = "";
+  versionInfo = "";
+  notified = false;
 }
 NickInfo::~NickInfo()
 {
