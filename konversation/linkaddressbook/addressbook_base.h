@@ -71,11 +71,11 @@ class AddressbookBase : public QObject, public KIMIface
     /**
       * Lets outsiders tell us to emit presenceChanged signal.
       */
-    virtual void emitContactPresenceChanged( QString uid, int presence) = 0;
+    virtual void emitContactPresenceChanged(const QString &uid, int presence) = 0;
     /**
       * Lets outsiders tell us to emit presenceChanged signal.
       */
-    virtual void emitContactPresenceChanged(QString uid) = 0;
+    virtual void emitContactPresenceChanged(const QString &uid) = 0;
 
     /**
      *  Run kmail (or whatever the users email client is)

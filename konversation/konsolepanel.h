@@ -12,7 +12,7 @@ class KonsolePanel : public ChatWindow {
 
 	public:
 #ifdef USE_MDI
-		KonsolePanel(QString caption);
+		KonsolePanel(const QString &caption);
 #else
 		KonsolePanel(QWidget *p);
 #endif

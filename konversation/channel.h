@@ -68,7 +68,7 @@ class Channel : public ChatWindow
 
   public:
 #ifdef USE_MDI
-    Channel(QString caption);
+    Channel(const QString &caption);
 #else
     Channel(QWidget* parent);
 #endif
@@ -109,7 +109,7 @@ class Channel : public ChatWindow
      */
     void updateMode(QString sourceNick, char mode, bool plus, const QString &parameter);
     void updateModeWidgets(char mode, bool plus, const QString &parameter);
-    void updateQuickButtons(QStringList newButtonList);
+    void updateQuickButtons(const QStringList &newButtonList);
     void updateFonts();
     void updateStyleSheet();
 

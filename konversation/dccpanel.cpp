@@ -36,7 +36,7 @@
 #define USE_INFOLIST
 
 #ifdef USE_MDI
-DccPanel::DccPanel(QString caption) : ChatWindow(caption)
+DccPanel::DccPanel(const QString &caption) : ChatWindow(caption)
 #else
 DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
 #endif

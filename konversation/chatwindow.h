@@ -119,7 +119,7 @@ class ChatWindow : public BASE_CLASS
     void appendBacklogMessage(const QString& firstColumn,const QString& message);
     
 #ifdef USE_MDI
-    void setIconSet(QIconSet newIconSet);
+    void setIconSet(const QIconSet &newIconSet);
     const QIconSet& getIconSet();
     void setLabelColor(const QString& color);
     void setLedColor(int color);

@@ -309,7 +309,7 @@ void Preferences::setHighlightList(QPtrList<Highlight> newList)
 
 void Preferences::addHighlight(const QString& newHighlight,
                              bool regExp,
-                             QColor newColor,
+                             const QColor &newColor,
                              const QString& sound,
                              const QString& autoText)
 {
@@ -455,7 +455,7 @@ const bool Preferences::getBeep() { return beep; }
 void Preferences::setRawLog(bool state) { rawLog=state; }
 const bool Preferences::getRawLog() { return rawLog; }
 
-void Preferences::setVersionReply(QString reply) { versionReply = reply; }
+void Preferences::setVersionReply(const QString &reply) { versionReply = reply; }
 
 /**
   Get the version custom version response, or the default if none has been configured.
@@ -677,10 +677,10 @@ const QSize Preferences::getNicknameSize()           { return nicknameSize; }
 const QSize Preferences::getLogfileReaderSize()      { return logfileReaderSize; }
 const QSize Preferences::getMultilineEditSize()      { return multilineEditSize; }
 
-void Preferences::setNicksOnlineSize(QSize newSize)        { nicksOnlineSize=newSize; }
-void Preferences::setNicknameSize(QSize newSize)           { nicknameSize=newSize; }
-void Preferences::setLogfileReaderSize(QSize newSize)      { logfileReaderSize=newSize; }
-void Preferences::setMultilineEditSize(QSize newSize)      { multilineEditSize=newSize; }
+void Preferences::setNicksOnlineSize(const QSize &newSize)     { nicksOnlineSize=newSize; }
+void Preferences::setNicknameSize(const QSize &newSize)        { nicknameSize=newSize; }
+void Preferences::setLogfileReaderSize(const QSize &newSize)   { logfileReaderSize=newSize; }
+void Preferences::setMultilineEditSize(const QSize &newSize)   { multilineEditSize=newSize; }
 
 void Preferences::setHighlightNick(bool state) { highlightNick=state; }
 const bool Preferences::getHighlightNick() { return highlightNick; }
@@ -711,7 +711,7 @@ void Preferences::setOSDShowChannelEvent(bool state) { OSDShowChannelEvent=state
 const bool Preferences::getOSDShowChannelEvent() { return OSDShowChannelEvent; }
 
 const QFont Preferences::getOSDFont() { return osdFont; }
-void Preferences::setOSDFont(QFont newFont) { osdFont=newFont; }
+void Preferences::setOSDFont(const QFont &newFont) { osdFont=newFont; }
 void Preferences::setOSDFontRaw(const QString &rawFont) { osdFont.fromString(rawFont); }
 
 /*void Preferences::setOSDColor(const QString &newColor) { osdColor.setNamedColor(newColor); }
@@ -746,8 +746,8 @@ const int Preferences::getOSDAlignment() { return OSDAlignment; }
 
 const QFont Preferences::getTextFont() { return textFont; }
 const QFont Preferences::getListFont() { return listFont; }
-void Preferences::setTextFont(QFont newFont) { textFont=newFont; }
-void Preferences::setListFont(QFont newFont) { listFont=newFont; }
+void Preferences::setTextFont(const QFont &newFont) { textFont=newFont; }
+void Preferences::setListFont(const QFont &newFont) { listFont=newFont; }
 void Preferences::setTextFontRaw(const QString &rawFont) { textFont.fromString(rawFont); }
 void Preferences::setListFontRaw(const QString &rawFont) { listFont.fromString(rawFont); }
 
@@ -895,16 +895,16 @@ void Preferences::setDialogFlag(const QString& flagName,bool state)
 void Preferences::setMaximumLagTime(int lag) { maximumLag=lag; }
 const int Preferences::getMaximumLagTime()         { return maximumLag; }
 
-void Preferences::setIRCColorList(QStringList cl) { ircColorList=cl; }
+void Preferences::setIRCColorList(const QStringList &cl) { ircColorList=cl; }
 const QStringList Preferences::getIRCColorList()        { return ircColorList; }
 
-void Preferences::setAliasList(QStringList newList) { aliasList=newList; }
+void Preferences::setAliasList(const QStringList &newList) { aliasList=newList; }
 const QStringList Preferences::getAliasList()             { return aliasList; }
 
 const int Preferences::getNickCompletionMode() { return nickCompletionMode; }
 void Preferences::setNickCompletionMode(int mode) { nickCompletionMode = mode; }
 const QString Preferences::getPrefixCharacter() { return prefixCharacter; }
-void  Preferences::setPrefixCharacter(QString prefix) { prefixCharacter = prefix; }
+void  Preferences::setPrefixCharacter(const QString &prefix) { prefixCharacter = prefix; }
 const bool Preferences::nickCompletionCaseSensitive() const { return m_nickCompletionCaseSensitive; }
 void Preferences::setNickCompletionCaseSensitive(bool caseSensitive) { m_nickCompletionCaseSensitive = caseSensitive; }
 
@@ -941,7 +941,7 @@ void Preferences::setFilterColors(bool filter) { filterColors = filter; }
 const bool Preferences::getUseColoredNicks() { return useColoredNicks; }
 void Preferences::setUseColoredNicks(bool useColor) { useColoredNicks=useColor; }
 
-void Preferences::setNickColorList(QStringList cl) { nickColorList=cl; }
+void Preferences::setNickColorList(const QStringList &cl) { nickColorList=cl; }
 const QStringList Preferences::getNickColorList() { return nickColorList; }
 
 const bool Preferences::getRedirectToStatusPane() { return redirectToStatusPane; }

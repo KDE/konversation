@@ -6,7 +6,7 @@
 #include <klibloader.h>
 
 #ifdef USE_MDI
-KonsolePanel::KonsolePanel(QString caption) : ChatWindow(caption)
+KonsolePanel::KonsolePanel(const QString &caption) : ChatWindow(caption)
 #else
 KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p )
 #endif

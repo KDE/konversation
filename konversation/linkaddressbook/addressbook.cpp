@@ -272,7 +272,7 @@ bool Addressbook::addContact( const QString &/*contactId*/, const QString &/*pro
 	//Nicks are auto added if they are put in the addressbook - I don' think there is anything useful I can do.
 }
 
-void Addressbook::emitContactPresenceChanged(QString uid, int presence) {
+void Addressbook::emitContactPresenceChanged(const QString &uid, int presence) {
 	if(uid.isEmpty()) {
 		//This warning below is annoying.  FIXME - disabled because it's too verbose
 //		kdDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
@@ -283,7 +283,7 @@ void Addressbook::emitContactPresenceChanged(QString uid, int presence) {
 //	kdDebug() << "Presence changed for uid " << uid << " to " << presence << endl;
 }
 
-void Addressbook::emitContactPresenceChanged(QString uid) {
+void Addressbook::emitContactPresenceChanged(const QString &uid) {
 	if(uid.isEmpty()) {
 		kdDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
 		return;

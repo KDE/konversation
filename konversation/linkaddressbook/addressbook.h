@@ -78,11 +78,11 @@ class Addressbook : public AddressbookBase
     /**
      * Lets outsiders tell us to emit presenceChanged signal.
      */
-    void emitContactPresenceChanged( QString uid, int presence);
+    void emitContactPresenceChanged( const QString &uid, int presence);
     /**
      * Lets outsiders tell us to emit presenceChanged signal.
      */
-    void emitContactPresenceChanged(QString uid);
+    void emitContactPresenceChanged(const QString &uid);
 
     bool addContact( const QString &contactId, const QString &protocolId );
 

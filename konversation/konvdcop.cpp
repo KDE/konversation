@@ -6,7 +6,7 @@
 */
 
 /*
-  konvdcop.cpp  -  The konversation DCOP interface class
+  The konversation DCOP interface class
   begin:     Mar 7 2003
   copyright: (C) 2003 by Alex Zepeda
   email:     zipzippy@sonic.net

@@ -14,7 +14,7 @@
 
 #include "ignore.h"
 
-Ignore::Ignore(QString newName,int newFlags)
+Ignore::Ignore(const QString &newName,int newFlags)
 {
   setFlags(newFlags);
   setName(newName);
@@ -24,7 +24,7 @@ Ignore::~Ignore()
 {
 }
 
-void Ignore::setName(QString newName) { name=newName; }
+void Ignore::setName(const QString &newName) { name=newName; }
 void Ignore::setFlags(int newFlags)   { flags=newFlags; }
 QString Ignore::getName()             { return name; }
 int Ignore::getFlags()                { return flags; }

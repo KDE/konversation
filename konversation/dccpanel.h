@@ -68,7 +68,7 @@ class DccPanel : public ChatWindow
     };
     
 #ifdef USE_MDI
-    DccPanel(QString caption);
+    DccPanel(const QString &caption);
 #else
     DccPanel(QWidget* parent);
 #endif

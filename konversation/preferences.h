@@ -86,7 +86,7 @@ class Preferences : public QObject
     void setRawLog(bool state);
 
     const QString getVersionReply(bool forRC=FALSE) const;
-    void    setVersionReply(QString reply);
+    void    setVersionReply(const QString &reply);
 
     void setLog(bool state);
     const bool getLog();
@@ -177,10 +177,10 @@ class Preferences : public QObject
     const QSize getLogfileReaderSize();
     const QSize getMultilineEditSize();
     
-    void setNicksOnlineSize(QSize newSize);
-    void setNicknameSize(QSize newSize);
-    void setLogfileReaderSize(QSize newSize);
-    void setMultilineEditSize(QSize newSize);
+    void setNicksOnlineSize(const QSize &newSize);
+    void setNicknameSize(const QSize &newSize);
+    void setLogfileReaderSize(const QSize &newSize);
+    void setMultilineEditSize(const QSize &newSize);
 
     const int getLogfileBufferSize();
     void setLogfileBufferSize(int newSize);
@@ -198,7 +198,7 @@ class Preferences : public QObject
 
     const QPtrList<Highlight> getHighlightList();
     void setHighlightList(QPtrList<Highlight> newList);
-    void addHighlight(const QString& newHighlight,bool regExp,QColor color,const QString& sound,const QString& autoText);
+    void addHighlight(const QString& newHighlight,bool regExp, const QColor &color,const QString& sound,const QString& autoText);
     void setHighlightSoundEnabled(bool enabled);
     const bool getHighlightSoundEnabled();
 
@@ -231,7 +231,7 @@ class Preferences : public QObject
     const bool getOSDShowChannelEvent();
 
     const QFont getOSDFont();
-    void setOSDFont(QFont newFont);
+    void setOSDFont(const QFont &newFont);
     void setOSDFontRaw(const QString &rawFont);
 
     void setOSDUseCustomColors(bool state);
@@ -311,7 +311,7 @@ class Preferences : public QObject
     void setUseColoredNicks(bool usecolor);
 
     const QStringList getNickColorList();
-    void setNickColorList(QStringList cl);
+    void setNickColorList(const QStringList &cl);
 
     const bool getFilterColors();
     void setFilterColors(bool filter);
@@ -338,8 +338,8 @@ class Preferences : public QObject
 
     const QFont getTextFont();
     const QFont getListFont();
-    void setTextFont(QFont newFont);
-    void setListFont(QFont newFont);
+    void setTextFont(const QFont &newFont);
+    void setListFont(const QFont &newFont);
     void setTextFontRaw(const QString &rawFont);
     void setListFontRaw(const QString &newFont);
 
@@ -408,17 +408,17 @@ class Preferences : public QObject
 
     // IRC colors
     const QStringList getIRCColorList();
-    void setIRCColorList(QStringList cl);
+    void setIRCColorList(const QStringList &cl);
 
     // aliases
     const QStringList getAliasList();
-    void setAliasList(QStringList aliasList);
+    void setAliasList(const QStringList &aliasList);
 
     // Nick completion
     const int getNickCompletionMode();
     void setNickCompletionMode(int mode);
     const QString getPrefixCharacter();
-    void  setPrefixCharacter(QString prefix);
+    void  setPrefixCharacter(const QString &prefix);
     const bool nickCompletionCaseSensitive() const;
     void setNickCompletionCaseSensitive(bool caseSensitive);
 

@@ -63,7 +63,7 @@
 #define OPAQUE_CONF
 
 #ifdef USE_MDI
-Channel::Channel(QString caption) : ChatWindow(caption)
+Channel::Channel(const QString &caption) : ChatWindow(caption)
 #else
 Channel::Channel(QWidget* parent) : ChatWindow(parent)
 #endif
@@ -1566,7 +1566,7 @@ void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
   }
 }
 
-void Channel::updateQuickButtons(QStringList newButtonList)
+void Channel::updateQuickButtons(const QStringList &newButtonList)
 {
   for(int index=0;index<8;index++)
   {

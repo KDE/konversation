@@ -35,10 +35,10 @@ class Ignore
       All=31
     };
 
-    Ignore(QString name,int flags);
+    Ignore(const QString &name,int flags);
     ~Ignore();
 
-    void setName(QString newName);
+    void setName(const QString &newName);
     void setFlags(int newFlags);
     QString getName();
     int getFlags();
