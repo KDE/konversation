@@ -109,6 +109,7 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   kickInput=new KLineEdit(parentFrame);
   kickLabel->setBuddy(kickInput);
 
+  insertRememberLineOnAwayCheck=new QCheckBox(i18n("&Insert remember line when switching state to away"),parentFrame);
   showAwayMessageCheck=new QCheckBox(i18n("Show a&way messages"),parentFrame,"away_message_check");
 
   awayLabel=new QLabel(i18n("Away &message:"),parentFrame);
@@ -172,6 +173,8 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   identityLayout->addWidget(kickLabel,row,0);
   identityLayout->addMultiCellWidget(kickInput,row,row,1,3);
   row++;
+  identityLayout->addMultiCellWidget(insertRememberLineOnAwayCheck,row,row,0,3);
+  row++;
   identityLayout->addMultiCellWidget(showAwayMessageCheck,row,row,0,3);
   row++;
   identityLayout->addWidget(awayLabel,row,0);
@@ -213,6 +216,7 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   connect(partInput,SIGNAL (textChanged(const QString&)),this,SLOT (partReasonChanged(const QString&)) );
   connect(kickInput,SIGNAL (textChanged(const QString&)),this,SLOT (kickReasonChanged(const QString&)) );
 
+  connect(insertRememberLineOnAwayCheck,SIGNAL (stateChanged(int)),this,SLOT(insertRememberLineOnAwayChanged(int)) );
   connect(showAwayMessageCheck,SIGNAL (stateChanged(int)),this,SLOT (showAwayMessageChanged(int)) );
   connect(awayInput,SIGNAL (textChanged(const QString&)),this,SLOT (awayMessageChanged(const QString&)) );
   connect(unAwayInput,SIGNAL (textChanged(const QString&)),this,SLOT (unAwayMessageChanged(const QString&)) );
@@ -284,6 +288,11 @@ void PrefsPageIdentity::kickReasonChanged(const QString& newReason)
   identity->setKickReason(newReason);
 }
 
+void PrefsPageIdentity::insertRememberLineOnAwayChanged(int state)
+{
+  identity->setInsertRememberLineOnAway(state==2);
+};
+
 void PrefsPageIdentity::showAwayMessageChanged(int state)
 {
   identity->setShowAwayMessage(state==2);
@@ -344,6 +353,7 @@ void PrefsPageIdentity::updateIdentity(int number)
   partInput->setText(identity->getPartReason());
   kickInput->setText(identity->getKickReason());
 
+  insertRememberLineOnAwayCheck->setChecked(identity->getInsertRememberLineOnAway());
   showAwayMessageCheck->setChecked(identity->getShowAwayMessage());
   awayInput->setText(identity->getAwayMessage());
   unAwayInput->setText(identity->getReturnMessage());

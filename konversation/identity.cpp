@@ -54,6 +54,8 @@ QString Identity::getPartReason() const                 { return partReason; }
 void Identity::setKickReason(const QString& reason)     { kickReason=reason; }
 QString Identity::getKickReason() const                 { return kickReason; }
 
+void Identity::setInsertRememberLineOnAway(bool state) { insertRememberLineOnAway = state; }
+bool Identity::getInsertRememberLineOnAway() { return insertRememberLineOnAway; }
 void Identity::setShowAwayMessage(bool state)           { showAwayMessages=state; }
 bool Identity::getShowAwayMessage() const               { return showAwayMessages; }
 

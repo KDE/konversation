@@ -2539,6 +2539,10 @@ void Server::away()
     queue("NICK " + getIdentity()->getAwayNick());
   }
 
+  if(identity->getInsertRememberLineOnAway())
+  {
+    emit awayInsertRememberLine();
+  }
   // TODO: call renameNickInfo ?
 }
 

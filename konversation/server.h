@@ -248,6 +248,8 @@ class Server : public QObject
     void channelJoinedOrUnjoined(Server* server, const QString& channelName, bool joined);
     // Fires when a nick on the watch list goes online or offline.
     void watchedNickChanged(Server* server, const NickInfoPtr nickInfo, bool online);
+    //Fires when the user switches his state to away and has enabled "Insert Remember Line on away" in his identity.
+    void awayInsertRememberLine();
 
   public slots:
     void connectToIRCServer();

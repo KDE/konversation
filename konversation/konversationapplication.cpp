@@ -211,6 +211,7 @@ void KonversationApplication::connectToAnotherServer(int id)
   
   connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
     this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
+  connect(newServer, SIGNAL(awayInsertRememberLine()), this, SLOT(insertRememberLine()));
 
   serverList.append(newServer);
 }
@@ -230,6 +231,7 @@ void KonversationApplication::quickConnectToServer(const QString& hostName, cons
   
   connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
     this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
+  connect(newServer, SIGNAL(awayInsertRememberLine()), this, SLOT(insertRememberLine()));
 
   serverList.append(newServer);
   
@@ -407,6 +409,7 @@ void KonversationApplication::readOptions()
       newIdentity->setBot(config->readEntry("Bot"));
       newIdentity->setPassword(config->readEntry("Password"));
 
+      newIdentity->setInsertRememberLineOnAway(config->readBoolEntry("InsertRememberLineOnAway"));
       newIdentity->setShowAwayMessage(config->readBoolEntry("ShowAwayMessage"));
       newIdentity->setAwayMessage(config->readEntry("AwayMessage"));
       newIdentity->setReturnMessage(config->readEntry("ReturnMessage"));
@@ -712,6 +715,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->writeEntry("Nicknames",identity->getNicknameList());
     config->writeEntry("Bot",identity->getBot());
     config->writeEntry("Password",identity->getPassword());
+    config->writeEntry("InsertRememberLineOnAway", identity->getInsertRememberLineOnAway());
     config->writeEntry("ShowAwayMessage",identity->getShowAwayMessage());
     config->writeEntry("AwayMessage",identity->getAwayMessage());
     config->writeEntry("ReturnMessage",identity->getReturnMessage());

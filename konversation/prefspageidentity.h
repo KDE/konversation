@@ -59,6 +59,7 @@ class PrefsPageIdentity : public PrefsPage
     void partReasonChanged(const QString& newReason);
     void kickReasonChanged(const QString& newReason);
 
+    void insertRememberLineOnAwayChanged(int state);
     void showAwayMessageChanged(int state);
     void awayMessageChanged(const QString& newMessage);
     void unAwayMessageChanged(const QString& newMessage);
@@ -99,6 +100,7 @@ class PrefsPageIdentity : public PrefsPage
     KLineEdit* partInput;
     KLineEdit* kickInput;
 
+    QCheckBox* insertRememberLineOnAwayCheck;
     QCheckBox* showAwayMessageCheck;
     QLabel* awayLabel;
     QLabel* unAwayLabel;

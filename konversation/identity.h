@@ -51,6 +51,8 @@ class Identity
     void setKickReason(const QString& reason);
     QString getKickReason() const;
 
+    void setInsertRememberLineOnAway(bool state);
+    bool getInsertRememberLineOnAway();
     void setShowAwayMessage(bool state);
     bool getShowAwayMessage() const;
 
@@ -79,6 +81,7 @@ class Identity
     QString partReason;
     QString kickReason;
 
+    bool insertRememberLineOnAway;
     bool showAwayMessages;
     QString awayMessage;
     QString returnMessage;
