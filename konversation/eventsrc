@@ -197,8 +197,10 @@ default_presentation=0
 [notify]
 Name=Notify
 Name[da]=Bekendtgør
+Name[pt_BR]=Notificar
 Name[sv]=Underrättelse
 Comment=A user on your notification list went online
 Comment[da]=En bruger på din bekendtgørelsesliste gik online
+Comment[pt_BR]=Um usuário de sua lista de notificações ficou online
 Comment[sv]=En användare i din underrättelselista kopplade upp
 default_presentation=0
