@@ -18,9 +18,6 @@ the Free Software Foundation; either version 2 of the License, or
             <height>480</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>Form1</string>
-    </property>
     <widget class="KListView">
         <column>
             <property name="text">
