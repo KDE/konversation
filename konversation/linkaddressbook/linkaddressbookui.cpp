@@ -100,13 +100,13 @@ void LinkAddressbookUI::slotLoadAddressees()
 		} else
 			/*KABC::AddresseeItem *item =*/ new KABC::AddresseeItem( m_mainWidget->addresseeListView, (*it) );
 	if(num_contacts_with_nick == 0)
-    m_mainWidget->lblHeader->setText(i18n("<qt><h1>Select Addressbook Entry</h1><p>From the list of contacts below, choose the person who '%2' is.</p></qt>").arg(m_ircnick));
+    m_mainWidget->lblHeader->setText(i18n("Choose the person who '%2' is.").arg(m_ircnick));
 	else if(num_contacts_with_nick == 1 && realname.isEmpty())
-    m_mainWidget->lblHeader->setText(i18n("<qt><h1>Select Addressbook Entry</h1><p>'%2' is currently being listed as being a contact with no given name.</p></qt>").arg(m_ircnick));
+    m_mainWidget->lblHeader->setText(i18n("Currently '%2' is associated with a contact.").arg(m_ircnick));
 	else if(num_contacts_with_nick == 1 && !realname.isEmpty())
-    m_mainWidget->lblHeader->setText(i18n("<qt><h1>Select Addressbook Entry</h1><p>'%2' is currently being listed as belonging to the contact '%3'.</p></qt>").arg(m_ircnick).arg(realname));
+    m_mainWidget->lblHeader->setText(i18n("Currently '%2' is associated with contact '%3'.").arg(m_ircnick).arg(realname));
 	else
-    m_mainWidget->lblHeader->setText(i18n("<qt><h1>Select Addressbook Entry</h1><p><b>Warning:</b> '%2' is currently being listed as belonging to multiple contacts.  Please select the correct contact.</p></qt>").arg(m_ircnick));
+    m_mainWidget->lblHeader->setText(i18n("<qt><b>Warning:</b> '%2' is currently being listed as belonging to multiple contacts.  Please select the correct contact.</qt>").arg(m_ircnick));
 }
 
 void LinkAddressbookUI::slotAddAddresseeClicked()
