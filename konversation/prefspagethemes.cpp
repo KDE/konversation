@@ -125,13 +125,37 @@ void PrefsPageThemes::installTheme()
   QString tmpThemeFile;
   if(!KIO::NetAccess::download(themeURL, tmpThemeFile, NULL))
     {
-      KMessageBox::error(NULL,
+      KMessageBox::error(0L,
 			 KIO::NetAccess::lastErrorString(),
 			 i18n("Failed to download theme"),
 			 KMessageBox::Notify
 			 );
       return;
     }
+  
+  QString themesDir(locateLocal("data", "konversation/themes/"));
+  QDir themeInstallDir(tmpThemeFile);
+
+  if(themeInstallDir.exists()) // We got a directory not a file
+    {
+      if(themeInstallDir.exists("themerc"))
+	{
+	  KIO::NetAccess::dircopy(KURL(tmpThemeFile),KURL(themesDir),0L);
+	  updateList();
+	  updateButtons();
+	}
+      else
+	{
+	  KMessageBox::error(0L,
+                             i18n("Invalid Theme Archieve"),
+                             i18n("Cannot install theme"),
+                             KMessageBox::Notify
+                             );
+	}
+      KIO::NetAccess::removeTempFile(tmpThemeFile);
+      return;
+    }
+      
   
   KTar themeArchieve(tmpThemeFile);
   themeArchieve.open(IO_ReadOnly);
@@ -145,7 +169,7 @@ void PrefsPageThemes::installTheme()
       if(themeDir->entry(*it+"/themerc") == NULL)
 	{
 	  
-	  KMessageBox::error(NULL,
+	  KMessageBox::error(0L,
 			     i18n("Invalid Theme Archieve"),
 			     i18n("Cannot install theme"),
 			     KMessageBox::Notify
@@ -157,8 +181,6 @@ void PrefsPageThemes::installTheme()
 	}
       else
 	{
-	  QString themesDir(locateLocal("data", "konversation/themes/"));
-	  
 	  themeDir->copyTo(themesDir);
 	  KIO::NetAccess::removeTempFile(tmpThemeFile);
 	  themeArchieve.close();
