@@ -29,10 +29,10 @@
 #include "prefspagechatwinappearance.h"
 #include "prefspagecolorsappearance.h"
 
-PrefsDialog::PrefsDialog(Preferences* preferences) :
+PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
              KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
                           KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
-                          KDialogBase::Ok,0,"edit_prefs",false,true)
+                          KDialogBase::Ok, parent, "edit_prefs", false, true)
 {
   setPreferences(preferences);
   setShowIconsInTreeList(true);

@@ -232,9 +232,20 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </grid>
         </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_UseColoredNicks</cstring>
+            </property>
+            <property name="text">
+                <string>Use colored nicks</string>
+            </property>
+        </widget>
         <widget class="QGroupBox">
             <property name="name">
                 <cstring>groupBox2</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
             </property>
             <property name="title">
                 <string>Nick Colors</string>
@@ -243,14 +254,6 @@ the Free Software Foundation; either version 2 of the License, or
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="4">
-                    <property name="name">
-                        <cstring>kcfg_UseColoredNicks</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Use colored nicks</string>
-                    </property>
-                </widget>
                 <widget class="KColorButton" row="1" column="7">
                     <property name="name">
                         <cstring>kcfg_NickColor7</cstring>
@@ -381,9 +384,23 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </grid>
         </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_ParseIrcColors</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Allow colored text</string>
+            </property>
+            <property name="whatsThis" stdset="0">
+                <string>Allow color codes added to the irc messages to be applied to the text</string>
+            </property>
+        </widget>
         <widget class="QGroupBox">
             <property name="name">
                 <cstring>groupBox3</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
             </property>
             <property name="title">
                 <string>IRC Colors</string>
@@ -392,14 +409,6 @@ the Free Software Foundation; either version 2 of the License, or
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_ParseIrcColors</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Parse color codes</string>
-                    </property>
-                </widget>
                 <widget class="KColorButton" row="2" column="1">
                     <property name="name">
                         <cstring>kcfg_IrcColorCode2</cstring>
@@ -660,8 +669,20 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
     </vbox>
 </widget>
-<customwidgets>
-</customwidgets>
+<connections>
+    <connection>
+        <sender>kcfg_ParseIrcColors</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>groupBox3</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_UseColoredNicks</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>groupBox2</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>

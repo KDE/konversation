@@ -45,7 +45,7 @@ class PrefsDialog : public KDialogBase
   Q_OBJECT
 
   public:
-    PrefsDialog(Preferences* preferences);
+    PrefsDialog(QWidget* parent, Preferences* preferences);
     ~PrefsDialog();
 
     void openPage(Preferences::Pages page);

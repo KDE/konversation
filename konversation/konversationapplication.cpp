@@ -1352,11 +1352,11 @@ void KonversationApplication::clearUrlList()
   urlList.clear();
 }
 
-void KonversationApplication::openPrefsDialog()
+void KonversationApplication::openPrefsDialog() // TODO Move this function into KonversationMainWindow
 {
   if(prefsDialog==0)
   {
-    prefsDialog=new PrefsDialog(&preferences);
+    prefsDialog = new PrefsDialog(mainWindow, &preferences);
 
     connect(prefsDialog,SIGNAL (cancelClicked()),this,SLOT (closePrefsDialog()) );
     connect(prefsDialog,SIGNAL (prefsChanged()),this,SLOT (saveOptions()) );
