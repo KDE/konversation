@@ -16,10 +16,12 @@
 #include "konversationapplication.h"
 
 #include <qtimer.h>
+#include <qtooltip.h>
 
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <kwin.h>
+#include <klocale.h>
 
 #include "server.h"
 #include "chatwindow.h"
@@ -37,6 +39,8 @@ TrayIcon::TrayIcon(QWidget* parent) : KSystemTray(parent)
   if(KonversationApplication::preferences.getShowTrayIcon() &&
      KonversationApplication::preferences.getSystrayOnly())
     KWin::setState(m_parent->winId(), NET::SkipTaskbar);
+
+  QToolTip::add(this,i18n("Konversation - IRC Client"));
 }
 
 TrayIcon::~TrayIcon()
