@@ -1310,22 +1310,37 @@ QString Server::getIp(bool followDccSetting)
   {
     int methodId = KonversationApplication::preferences.getDccMethodToGetOwnIp();
 
-    if(methodId == 1)  // RPL_USERHOST
-      ip = ownIpByUserhost;
-    else if(methodId == 2)  // RPL_WELCOME
-      ip = ownIpByWelcome;
-    else if(methodId == 3 && !KonversationApplication::preferences.getDccSpecificOwnIp().isEmpty())  // user specifies
+    if(methodId == 1)  // Reply from IRC server
+    {
+      if(!ownIpByWelcome.isEmpty())
+      {
+        kdDebug() << "Server::getIp(): using RPL_WELCOME" << endl;
+        ip = ownIpByWelcome;
+      }
+      else if(!ownIpByUserhost.isEmpty())
+      {
+        kdDebug() << "Server::getIp(): using RPL_USERHOST" << endl;
+        ip = ownIpByUserhost;
+      }
+    }
+    else if(methodId == 2 && !KonversationApplication::preferences.getDccSpecificOwnIp().isEmpty())  // user specifies
     {
       KNetwork::KResolverResults res = KNetwork::KResolver::resolve(KonversationApplication::preferences.getDccSpecificOwnIp(), "");
-      if(res.size() > 0)
+      if(res.error() == KResolver::NoError && res.size() > 0)
+      {
+        kdDebug() << "Server::getIp(): using IP specified by user" << endl;
         ip = res.first().address().nodeName();
+      }
     }
   }
 
   if(ip.isEmpty())
+  {
+    kdDebug() << "Server::getIp(): using the network interface" << endl;
     ip = serverSocket->localAddress().nodeName();  // Return our ip using serverSocket
-
-  kdDebug() << "getIp() returned : " << ip << endl;
+  }
+  
+  kdDebug() << "Server::getIp(): returned: " << ip << endl;
   return ip;
 }
 
