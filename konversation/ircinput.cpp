@@ -226,16 +226,10 @@ bool IRCInput::checkPaste(QString& text)
   int doPaste=KMessageBox::Yes;
 
   int lines=text.contains('\n');
-  
-  if(lines)
-  {
-    text=MultilineEdit::edit(this,text);
-    lines=text.contains('\n');
-  }
-  
+
   if(text.length()>256 || lines)
   {
-    doPaste=KMessageBox::warningYesNo
+    doPaste=KMessageBox::warningYesNoCancel
             (
               0,
               i18n("<qt>You are attempting to paste a large portion of text (%1 bytes or %2 lines) into "
@@ -243,10 +237,17 @@ bool IRCInput::checkPaste(QString& text)
                    "Do you really want to continue?</qt>").arg(text.length()).arg(lines+1),
               i18n("Large Paste Warning"),
               KStdGuiItem::yes(),
-              KStdGuiItem::no(),
+              i18n("&Edit ..."),
               "LargePaste"
             );
   }
+
+  if(doPaste==KMessageBox::No)
+  {
+    text=MultilineEdit::edit(this,text);
+    return true;
+  }
+  
   return(doPaste==KMessageBox::Yes);
 }
 

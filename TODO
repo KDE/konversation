@@ -31,7 +31,6 @@ DCC options on same file name should include "Rename" and maybe "Auto Rename"
 Events for scripting, auto-text and stuff
 Try to keep open views on kicks and stuff
 Reverse-I-Search
-Large pastes: Let the user decide if they want an Editor or paste immediately
 Multi line behaviour in input line with "little enter"
 Pasting into text views should trigger the paste mechanism
 Make LED colors for nick list configurable via GUI
