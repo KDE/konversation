@@ -237,6 +237,7 @@ class Server : public QObject
     void startNotifyTimer(int msec=0);
     void sendJoinCommand(const QString& channelName);
     void requestChannelList();
+    void requestWhois(const QString& nickname);
     void requestUserhost(const QString& nicks);
     void addRawLog(bool show);
     void closeRawLog();
@@ -294,14 +295,14 @@ class Server : public QObject
     
     void autoRejoinChannels();
     
-    // Adds a nickname to the joinedChannels list, removing it from unjoinedChannels list, if present.
+    // Adds a nickname to the joinedChannels list.
     // Creates new NickInfo if necessary.
     // If needed, moves the channel from the unjoined list to the joined list.
     // If needed, moves the nickname from the Offline to Online lists.
     // If mode != 99 sets the mode for this nick in this channel.
     // Returns the NickInfo for the nickname.
     NickInfo* addNickToJoinedChannelsList(const QString& channelName, const QString& nickname, unsigned int mode = 99);
-    // Adds a nickname to the unjoinedChannels list, removing it from joinedChannels list, if present.
+    // Adds a nickname to the unjoinedChannels list.
     // Creates new NickInfo if necessary.
     // If needed, moves the channel from the joined list to the unjoined list.
     // If needed, moves the nickname from the Offline to the Online list.

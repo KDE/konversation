@@ -82,6 +82,7 @@ NicksOnline::~NicksOnline()
 #ifdef USE_NICKINFO
 void NicksOnline::updateServerOnlineList(Server* server, bool changed)
 {
+  bool whoisRequested = false;
   QString serverName = server->getServerName();
   QListViewItem* serverRoot=nickListView->findItem(serverName,0);
   // If server is not in our list, or if the list changed, then display the new list.
@@ -118,6 +119,15 @@ void NicksOnline::updateServerOnlineList(Server* server, bool changed)
         nickAdditionalInfo = nickAdditionalInfo + " online via " + nickInfo->getNetServer();
         if (!nickInfo->getNetServerInfo().isEmpty())
           nickAdditionalInfo = nickAdditionalInfo + " (" + nickInfo->getNetServerInfo() + ")";
+      }
+      else
+      {
+        // Request additional info on the nick, but only one at a time.
+        if (!whoisRequested)
+        {
+          server->requestWhois(nickname);
+          whoisRequested = true;
+        }
       }
       if (!nickInfo->getOnlineSince().isNull())
         nickAdditionalInfo = nickAdditionalInfo + " since " + nickInfo->getOnlineSince().toString(Qt::LocalDate);
