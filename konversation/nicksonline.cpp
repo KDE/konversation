@@ -200,17 +200,19 @@ void NicksOnline::updateServerOnlineList(Server* server, bool)
         child = nextChild;
       }
     }
+    QString i18nOffline = i18n("Offline");
     // Remove nicks from list if no longer online.
     child = serverRoot->firstChild();
     while (child)
     {
       nextChild = child->nextSibling();
-      if (!nickInfoList->contains(child->text(0).lower())) delete child;
+      if (!nickInfoList->contains(child->text(0).lower()) && (child->text(0) != i18nOffline))
+        delete child;
       child = nextChild;
     }
     // List offline nicknames.
-    QListViewItem* offlineRoot = findItemChild(serverRoot, i18n("Offline"));
-    if (!offlineRoot) offlineRoot = new KListViewItem(serverRoot, i18n("Offline"));
+    QListViewItem* offlineRoot = findItemChild(serverRoot, i18nOffline);
+    if (!offlineRoot) offlineRoot = new KListViewItem(serverRoot, i18nOffline);
     nickInfoList = server->getNicksOffline();
     NickInfoMap::ConstIterator itOffline;
     for ( itOffline = nickInfoList->begin(); itOffline != nickInfoList->end() ; ++itOffline)
