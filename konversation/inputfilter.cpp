@@ -160,9 +160,15 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
           QString dccType=ctcpArgument.left(ctcpArgument.find(" ")).lower();
           QStringList dccArgument=QStringList::split(' ',ctcpArgument.mid(ctcpArgument.find(" ")+1).lower());
 
+          // Incoming file?
           if(dccType=="send")
           {
             emit addDccTransfer(sourceNick,dccArgument);
+          }
+          // Incoming file that shall be resumed?
+          else if(dccType=="accept")
+          {
+            emit resumeDccTransfer(sourceNick,dccArgument);
           }
 //          server->appendStatusMessage("DCC",QString("Incoming DCC %1 %2").arg(dccType).arg(dccArgument.join(" ")));
         }

@@ -63,12 +63,21 @@ class DccTransfer : public QObject, public KListViewItem
     DccTransfer(KListView* parent,DccType type,QString folder,QString partner,QString name,QString size,QString ipString,QString portString);
     ~DccTransfer();
 
+    QString getPort();
+    unsigned long getSize();
+    unsigned long getPosition();
+    QString getIp();
+    QString getPartner();
+    QString getFile();
+    QString getFolder();
+    unsigned long getBufferSize();
+
   signals:
     void resume(QString partner,QString fileName,QString port,int startAt);
 
   public slots:
     void startGet();
-    void startResume();
+    void startResume(QString position);
 
   protected slots:
     void updateCPS();
@@ -79,36 +88,20 @@ class DccTransfer : public QObject, public KListViewItem
     void readData();
     void writeData();
     void sendAck();
-    
+
   protected:
     void connectToSender();
 
     void setType(DccType type);
     void setStatus(DccStatus status);
-
     void setSize(unsigned long size);
-    unsigned long getSize();
-
     void setPosition(unsigned long pos);
-    unsigned long getPosition();
-
     void setIp(QString ip);
-    QString getIp();
-
     void setPort(QString port);
-    QString getPort();
-
     void setPartner(QString partner);
-    QString getPartner();
-
     void setFile(QString file);
-    QString getFile();
-
     void setFolder(QString folder);
-    QString getFolder();
-
     void setBufferSize(unsigned long size);
-    unsigned long getBufferSize();
 
     DccType dccType;
     DccStatus dccStatus;

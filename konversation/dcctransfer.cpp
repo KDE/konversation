@@ -108,24 +108,33 @@ void DccTransfer::startGet()
 
   if(file.exists())
   {
-    kdDebug() << "File exists ... Resuming." << endl;
-    // TODO: Ask user if they want to resume
-    setType(Resume);
-    setStatus(Resuming);
-
     file.open(IO_ReadOnly);
-    int fileSize=file.size();
+    long fileSize=file.size();
     file.close();
-    setPosition(fileSize);
-    emit resume(getPartner(),getFile(),getPort(),fileSize);
-    kdDebug() << "Sent resume signal" << endl;
+    // If the file is empty we can forget resuming
+    if(fileSize)
+    {
+      kdDebug() << "File exists ... Resuming." << endl;
+      // TODO: Ask user if they want to resume
+      setType(Resume);
+      setStatus(Resuming);
+      // Rollback
+      fileSize-=KonversationApplication::preferences.getDccRollback();
+      if(fileSize<0) fileSize=0;
+      setPosition(fileSize);
+
+      emit resume(getPartner(),getFile(),getPort(),getPosition());
+      kdDebug() << "Sent resume signal" << endl;
+    }
+    else connectToSender();
   }
   else connectToSender();
 }
 
-void DccTransfer::startResume()
+void DccTransfer::startResume(QString position)
 {
   kdDebug() << "startResume(): calling connectToSender()" << endl;
+  setPosition(position.toULong());
   connectToSender();
 }
 
@@ -175,7 +184,12 @@ void DccTransfer::connectionSuccess()
   kdDebug() << "Connected! Starting transfer ..." << endl;
   setStatus(Running);
   dccSocket->enableRead(true);
+  // Rollback for Resume
   file.open(IO_WriteOnly);
+  // Set position
+  file.at(getPosition());
+  // for DCC Resume
+  sendAck();
 }
 
 void DccTransfer::broken(int errNo)

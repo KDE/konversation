@@ -72,6 +72,7 @@ Preferences::Preferences()
   setDccCreateFolder(false);
   setDccAutoGet(false);
   setDccBufferSize(1024);
+  setDccRollback(1024);
 
   logPath=kstddir.saveLocation("data","konversation/logs");
   log=true;
@@ -204,6 +205,9 @@ bool Preferences::getDccCreateFolder() { return dccCreateFolder; }
 
 void Preferences::setDccBufferSize(unsigned long size) { dccBufferSize=size; }
 unsigned long Preferences::getDccBufferSize() { return dccBufferSize; }
+
+void Preferences::setDccRollback(unsigned long bytes) { dccRollback=bytes; }
+unsigned long Preferences::getDccRollback() { return dccRollback; }
 
 void Preferences::setDccAutoGet(bool state) { dccAutoGet=state; }
 bool Preferences::getDccAutoGet() { return dccAutoGet; }

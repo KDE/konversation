@@ -93,6 +93,8 @@ class Preferences : public QObject
     unsigned long getDccBufferSize();
     void setDccPath(QString path);
     QString getDccPath();
+    void setDccRollback(unsigned long bytes);
+    unsigned long getDccRollback();
 
     void setBlinkingTabs(bool blink);
     bool getBlinkingTabs();
@@ -199,6 +201,7 @@ class Preferences : public QObject
     bool dccCreateFolder;   // create folders for each DCC partner?
     bool dccAutoGet;
     unsigned long dccBufferSize;
+    unsigned long dccRollback;  // Rollback for Resume
     QString dccPath;
 
     bool autoReconnect;

@@ -21,7 +21,6 @@
 #include <kdebug.h>
 
 #include "dccpanel.h"
-#include "dcctransfer.h"
 
 DccPanel::DccPanel(QWidget* parent) :
           ChatWindow(parent)
@@ -140,6 +139,23 @@ void DccPanel::removeDcc()
 
     if(doDelete) delete item;
   }
+}
+
+DccTransfer* DccPanel::getTransferByPort(QString port)
+{
+  int index=0;
+  DccTransfer* item;
+  do
+  {
+    // TODO: Get rid of this cast
+    item=(DccTransfer*) getListView()->itemAtIndex(index);
+    if(item)
+    {
+      if(item->getPort()==port) return item;
+    }
+  } while(item);
+
+  return 0;
 }
 
 int DccPanel::spacing() { return KDialog::spacingHint(); }

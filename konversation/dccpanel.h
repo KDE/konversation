@@ -22,6 +22,7 @@
 #include <klistview.h>
 
 #include "chatwindow.h"
+#include "dcctransfer.h"
 
 /*
   @author Dario Abatianni
@@ -36,6 +37,7 @@ class DccPanel : public ChatWindow
     ~DccPanel();
 
     KListView* getListView();
+    DccTransfer* getTransferByPort(QString port);
 
   protected slots:
     void acceptDcc();

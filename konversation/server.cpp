@@ -85,7 +85,9 @@ Server::Server(int id)
                   this,SLOT  (notifyResponse(QString)) );
   connect(&inputFilter,SIGNAL(addDccTransfer(QString,QStringList)),
                   this,SLOT  (addDccTransfer(QString,QStringList)) );
-          
+  connect(&inputFilter,SIGNAL(resumeDccTransfer(QString,QStringList)),
+                  this,SLOT  (resumeDccTransfer(QString,QStringList)) );
+
   connect(this,SIGNAL(serverLag(int)),serverWindow,SLOT(updateLag(int)) );
   connect(this,SIGNAL(tooLongLag(int)),serverWindow,SLOT(tooLongLag(int)) );
   connect(this,SIGNAL(resetLag()),serverWindow,SLOT(resetLag()) );
@@ -230,16 +232,16 @@ void Server::notifyResponse(QString nicksOnline)
 
 void Server::startNotifyTimer(int msec)
 {
-  if(msec==0) msec=KonversationApplication::preferences.getNotifyDelay()*1000 /* msec! */;
-  /* start the timer in one shot mode */
+  if(msec==0) msec=KonversationApplication::preferences.getNotifyDelay()*1000; // msec!
+  // start the timer in one shot mode
   notifyTimer.start(msec,true);
-  /* reset check time */
+  // reset check time
   checkTime=0;
 }
 
 void Server::startNotifyCheckTimer()
 {
-  /* start the timer in interval mode */
+  // start the timer in interval mode
   notifyCheckTimer.start(500);
 }
 
@@ -445,6 +447,20 @@ void Server::sendResumeRequest(QString sender,QString fileName,QString port,int 
   outputFilter.resumeRequest(sender,fileName,port,startAt);
   queue(outputFilter.getServerOutput());
   appendStatusMessage(outputFilter.getType(),outputFilter.getOutput());
+}
+
+void Server::resumeDccTransfer(QString sourceNick,QStringList dccArguments)
+{
+  appendStatusMessage(i18n("DCC"),i18n("Resuming file \"%1\" from position %2").arg(dccArguments[0]).arg(dccArguments[2]));
+  DccTransfer* dccTransfer=serverWindow->getDccPanel()->getTransferByPort(dccArguments[1]);
+  if(dccTransfer)
+  {
+    dccTransfer->startResume(dccArguments[2]);
+  }
+  else
+  {
+    appendStatusMessage(i18n("Error"),i18n("No transfer running on port %1!").arg(dccArguments[1]));
+  }
 }
 
 QString Server::getNextQueryName()
