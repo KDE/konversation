@@ -73,14 +73,13 @@ class DccTransferRecv : public DccTransfer
     void setLocalFileURL(const KURL& _url);
     
   protected:
-    KURL localTmpFileURL;
-    unsigned long localTmpFileSize;
-    DccTransferRecvWriteCacheHandler* writeCacheHandler;
-    bool bTemporaryFileExists;
-    bool bCompletedFileExists;
+    KURL m_saveToFileURL;
+    unsigned long m_saveToFileSize;
+    DccTransferRecvWriteCacheHandler* m_writeCacheHandler;
+    bool m_saveToFileExists;
     
-    QTimer* connectionTimer;
-    KNetwork::KStreamSocket* recvSocket;
+    QTimer* m_connectionTimer;
+    KNetwork::KStreamSocket* m_recvSocket;
 };
 
 class DccTransferRecvWriteCacheHandler : public QObject, protected QThread

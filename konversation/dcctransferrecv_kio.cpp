@@ -41,29 +41,29 @@ DccTransferRecv::DccTransferRecv(KListView* _parent, const QString& _partnerNick
   
   // set default path
   // Append folder with partner's name if wanted
-  KURL localFileURLTmp(_defaultFolderURL);
-  localFileURLTmp.adjustPath(1);  // add a slash if there is none
+  KURL saveToFileURL(_defaultFolderURL);
+  saveToFileURL.adjustPath(1);  // add a slash if there is none
   if(KonversationApplication::preferences.getDccCreateFolder())
-    localFileURLTmp.addPath(_partnerNick.lower()+"/");
+    saveToFileURL.addPath(_partnerNick.lower()+"/");
   
   // determine default filename
   // Append partner's name to file name if wanted
   if(KonversationApplication::preferences.getDccAddPartner())
-    localFileURLTmp.addPath(_partnerNick.lower()+"."+_fileName);
+    saveToFileURL.addPath(_partnerNick.lower()+"."+_fileName);
   else
-    localFileURLTmp.addPath(_fileName);
+    saveToFileURL.addPath(_fileName);
   
-  setLocalFileURL(localFileURLTmp);
+  setSaveToFileURL(saveToFileURL);
   
-  fileSize=_fileSize;
+  m_fileSize=_fileSize;
   
-  partnerIp=_partnerIp;
-  partnerPort=_partnerPort;
+  m_partnerIp=_partnerIp;
+  m_partnerPort=_partnerPort;
   
-  writeCacheHandler = 0;
+  m_writeCacheHandler = 0;
   
-  recvSocket = 0;
-  connectionTimer = 0;
+  m_recvSocket = 0;
+  m_connectionTimer = 0;
   
   updateView();
 }
@@ -79,20 +79,21 @@ void DccTransferRecv::start()  // public slot
   
   // check whether the file exists
   // if exists, ask user to rename/overwrite/abort
-  bCompletedFileExists = KIO::NetAccess::exists(localFileURL, false, listView());
+  bCompletedFileExists = KIO::NetAccess::exists(m_saveToFileURL, false, listView());
   
   // check whether the temporary file exists
   // if exists, ask user to resume/rename/overwrite/abort
-  KIO::UDSEntry tmpFileEntry;
-  KIO::NetAccess::stat(localTmpFileURL, tmpFileEntry, listView());
-  KFileItem tmpFileInfo(tmpFileEntry, localTmpFileURL);
-  localTmpFileSize = tmpFileInfo.size();
-  bTemporaryFileExists = ( KIO::NetAccess::exists(localTmpFileURL, false, listView()) &&
-                           0 < localTmpFileSize &&
-                           localTmpFileSize < fileSize );
+  KIO::UDSEntry saveToFileEntry;
+  KIO::NetAccess::stat(m_saveToFileURL, saveToFileEntry, listView());
+  KFileItem saveToFileInfo(saveToFileEntry, m_saveToFileURL);
+  m_currentFileSize = saveToFileInfo.size();
+  m_saveToFileExists = ( KIO::NetAccess::exists(m_saveToFileURL, false, listView()) &&
+                           0 < m_currentFileSize &&
+                           m_currentFileSize < m_fileSize );
   
-  if(!bCompletedFileExists && bTemporaryFileExists && KonversationApplication::preferences.getDccAutoResume())
+  if(!m_saveToFileExists && KonversationApplication::preferences.getDccAutoResume())
     requestResume();
+  //CONTINUE FROM HERE
   else if(bCompletedFileExists || bTemporaryFileExists)
   {
     switch(DccResumeDialog::ask(this))
