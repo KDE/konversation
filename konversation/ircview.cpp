@@ -331,7 +331,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
   pattern.setCaseSensitive(false);
   KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
   pos = 0;
-  
+
   while((pattern.search(filteredLine,pos) != -1) && parseURL) {
       // Remember where we found the url
       pos = pattern.pos();
@@ -390,7 +390,6 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
     } else {
       QPtrList<Highlight> hilightList = KonversationApplication::preferences.getHilightList();
       QPtrListIterator<Highlight> it(hilightList);
-      unsigned int index;
       Highlight* hilight;
       bool patternFound = false;
 
@@ -457,7 +456,7 @@ void IRCView::append(const QString& nick,const QString& message)
     line = "<p><font color=\"#" + channelColor + "\">%1 <b>&lt;%2&gt;</b> %3</font></p>\n";
   }
 
-  line = line.arg(timeStamp(), filter(nick,channelColor,NULL,false), filter(message,channelColor,nick,true));
+  line = line.arg(timeStamp(), nick, filter(message,channelColor,nick,true));
 
   emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
 
@@ -491,7 +490,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
     line = "<p><font color=\"#" + queryColor + "\">%1 <b>*%2*</b> %3</font></p>\n";
   }
 
-  line = line.arg(timeStamp(), filter(nick,queryColor,NULL,false), filter(message,queryColor,nick,true));
+  line = line.arg(timeStamp(), nick, filter(message,queryColor,nick,true));
 
   emit textToLog(QString("*%1*\t%2").arg(nick).arg(message));
 
@@ -511,7 +510,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
     line = "<p><font color=\"#"+actionColor+"\">%1 * %2 %3</font></p>\n";
   }
 
-  line = line.arg(timeStamp(), filter(nick,actionColor,NULL,false), filter(message,actionColor,nick,true));
+  line = line.arg(timeStamp(), nick, filter(message,actionColor,nick,true));
 
   emit textToLog(QString("\t * %1 %2").arg(nick).arg(message));
 
