@@ -7,7 +7,6 @@
 use warnings;
 use strict;
 use Getopt::Long;
-use CGI qw(:standard);
 
 my $port=shift;
 my $server=shift;
@@ -62,9 +61,9 @@ if($@)
     exec 'dcop', $port, 'Konversation', 'error', "You need HTML::Entities package installed.";
 }
 
+use CGI qw(:standard);
 use SOAP::Lite;
 use HTML::Entities;
-
 
 if(!open(KEY, "$ENV{'HOME'}/.googlekey"))
 {
