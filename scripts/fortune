@@ -44,7 +44,6 @@ while (<FORTUNES>) {
 	}
 	else {
 	    chomp;
-	    s/\"/\\\"/g; # Escape double quote
 	    s/(\s)+/$1/g;
 	    $MESSAGE .= $_." ";
 	}
