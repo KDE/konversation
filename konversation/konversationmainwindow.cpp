@@ -152,7 +152,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   new TabAction(i18n("Go to Tab Number %1").arg(10),9,KShortcut("Alt+0"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_0");
 
   new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
-  new KAction(i18n("&Set to Away"),0,KShortcut("Alt+A"),static_cast<KonversationApplication *>(kapp),SLOT(toggleAway()),actionCollection(),"set_away");
+  new KAction(i18n("Set to &Away"),0,KShortcut("Alt+A"),static_cast<KonversationApplication *>(kapp),SLOT(toggleAway()),actionCollection(),"toggle_away");
 
   KStdAction::find(this, SLOT(findText()), actionCollection());
   KStdAction::findNext(this, SLOT(findNextText()), actionCollection());

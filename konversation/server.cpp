@@ -38,6 +38,7 @@ typedef unsigned long long __u64;
 #include <kmessagebox.h>
 #include <kresolver.h>
 #include <ksocketdevice.h>
+#include <kaction.h>
 using namespace KNetwork;
 #include <kstringhandler.h>
 #include <kdeversion.h>
@@ -2834,6 +2835,14 @@ void Server::away()
     emit awayInsertRememberLine();
   }
   // TODO: call renameNickInfo ?
+  
+  if(getMainWindow()) {
+    KAction *action = getMainWindow()->actionCollection()->action("toggle_away");
+    if(action) {
+      action->setText(i18n("Set to not &away"));
+    }
+  }
+  
 }
 
 void Server::unAway()
@@ -2846,6 +2855,14 @@ void Server::unAway()
   }
 
   // TODO: call renameNickInfo ?
+
+  if(getMainWindow()) {
+    KAction *action = getMainWindow()->actionCollection()->action("toggle_away");
+    if(action) {
+      action->setText(i18n("Set to &away"));  //this may be wrong if other servers are still away
+    }
+  }
+
 }
 
 bool Server::isAChannel(const QString &check)

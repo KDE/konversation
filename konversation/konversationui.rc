@@ -7,6 +7,8 @@
       <Action name="quick_connect_dialog" />
       <Separator />
       <Action name="identities_dialog" />
+      <Separator />
+      <Action name="toggle_away" />
     </Menu>
     <Menu name="edit">
       <Action name="clear_window" />
@@ -45,6 +47,8 @@
   <ToolBar fullWidth="true" hidden="true" name="mainToolBar">
     <Action name="quick_connect_dialog" />
     <Action name="options_configure_key_binding" />
+    <separator />
+    <Action name="toggle_away" />
     <separator />
     <Action name="irc_colors" />
   </ToolBar>

@@ -158,9 +158,32 @@ KonversationMainWindow *KonversationApplication::getMainWindow() {
 
 void KonversationApplication::toggleAway()
 {
-  QString awaymessage ;
-  if(awaymessage.isEmpty()) awaymessage = "Away at the moment";
-  sendMultiServerCommand("away", awaymessage);
+  kdDebug() << "toggleAway()" << endl;
+    
+  bool anyservers = false;
+  bool alreadyaway = false;
+  
+  Server* lookServer=serverList.first();
+  while(lookServer)
+  {
+    if(lookServer->isConnected()) {
+      anyservers = true;
+      if(lookServer->isAway()) {
+        alreadyaway= true;
+	break;
+      }
+    }
+    lookServer=serverList.next();
+  }
+  //alreadyaway is true if _any_ servers are away
+  if(alreadyaway) {
+    sendMultiServerCommand("away", QString::null);  //toggle as not away
+  } else {
+    QString awaymessage ; //get default awaymessage
+    if(awaymessage.isEmpty()) awaymessage = "Away at the moment";
+
+    sendMultiServerCommand("away", awaymessage);
+  }
 }
 
 void KonversationApplication::dcopMultiServerRaw(const QString &command)
