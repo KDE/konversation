@@ -482,6 +482,11 @@ void Server::notifyResponse(const QString& nicksOnline)
       if(nickLowerList.find(notifyLowerCache[index])==nickLowerList.end())
       {
         getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 went offline. (%2)").arg(notifyCache[index]).arg(getServerName()),statusView);
+      
+#ifdef USE_KNOTIFY
+        KNotifyClient::event(mainWindow->winId(), "notify",
+          i18n("%1 went offline. (%2)").arg(notifyCache[index]).arg(getServerName()));
+#endif
       }
     }
 
