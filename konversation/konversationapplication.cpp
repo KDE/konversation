@@ -46,6 +46,8 @@ KonversationApplication::KonversationApplication()
   // make sure all vars are initialized properly
   prefsDialog=0;
   quickConnectDialog=0;
+  colorOffSet=0;
+  colorList = KonversationApplication::preferences.getNickColorList();
 
   // Sound object used to play sound...
   m_sound = new Konversation::Sound(this);

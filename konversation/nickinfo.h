@@ -59,6 +59,7 @@ class NickInfo : public QObject, public KShared
     QString getNetServer() const;
     QString getNetServerInfo() const;
     QDateTime getOnlineSince() const;
+    QString getNickColor() const;
     /** Whether this user is identified with nickserv.
      *  Found only by doing /whois nick
      */

@@ -412,22 +412,10 @@ void IRCView::append(const QString& nick,const QString& message)
   
   if(KonversationApplication::preferences.getUseColoredNicks() && nick != m_server->getNickname())
     {
-      if(!colorMap.contains(nick))
-	{
-	  if(offset >= 8)
-	    offset=0;
-
-	  colorList = KonversationApplication::preferences.getNickColorList();
-	  QString backgroundColor=KonversationApplication::preferences.getColor("TextViewBackground");
-	  
-	  if(backgroundColor==colorList[offset])
-	    offset = (offset+1)%8;
-
-	  colorMap[nick] = colorList[offset];
-	  ++offset;
-	}
-      nickLine = "<font color=\""+colorMap[nick]+"\"><b>%2</b></font>";
+      NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
+      nickLine = "<font color=\""+ nickinfo->getNickColor() +"\"><b>%2</b></font>";
     }
+    
   
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
@@ -466,21 +454,8 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 
   if(KonversationApplication::preferences.getUseColoredNicks())
     {
-      if(!colorMap.contains(nick))
-        {
-          if(offset >= 8)
-            offset=0;
-
-          colorList = KonversationApplication::preferences.getNickColorList();
-          QString backgroundColor=KonversationApplication::preferences.getColor("TextViewBackground");
-
-          if(backgroundColor==colorList[offset])
-            offset = (offset+1)%8;
-
-          colorMap[nick] = colorList[offset];
-          ++offset;
-        }
-      nickLine = "<font color=\""+colorMap[nick]+"\"><b>%2</b></font>";
+      NickInfoPtr nickinfo = m_server->obtainNickInfo(nick);
+      nickLine = "<font color=\""+ nickinfo->getNickColor() +"\"><b>%2</b></font>";
     }
 
   if(basicDirection(message) == QChar::DirR) {

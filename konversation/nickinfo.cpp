@@ -17,9 +17,12 @@
 #include <qtooltip.h>
 #include "server.h"
 #include <klocale.h>
+
+#include "konversationapplication.h"
 #include "linkaddressbook/addressbook.h"
 #include "linkaddressbook/linkaddressbookui.h"
 #include "konversationmainwindow.h"
+
 /*
   @author Gary Cramblitt
 */
@@ -64,6 +67,29 @@ QString NickInfo::getRealName() const { return m_realName; }
 QString NickInfo::getNetServer() const { return m_netServer; }
 QString NickInfo::getNetServerInfo() const { return m_netServerInfo; }
 QDateTime NickInfo::getOnlineSince() const { return m_onlineSince; }
+
+QString NickInfo::getNickColor() const
+{
+  uint& offset = KonversationApplication::instance()->getColorOffset();
+  QMap<QString,QString>& colorMap = KonversationApplication::instance()->getColorMap();
+  QStringList& colorList = KonversationApplication::instance()->getColorList();
+
+  if(!colorMap.contains(m_nickname))
+    {
+      if(offset >= 8)
+	offset=0;
+
+      QString backgroundColor=KonversationApplication::preferences.getColor("TextViewBackground");
+
+      if(backgroundColor==colorList[offset])
+	offset = (offset+1)%8;
+
+      colorMap[m_nickname]=colorList[offset];
+      ++offset;
+    }
+  return colorMap[m_nickname];
+}
+
 bool NickInfo::isIdentified() const { return m_identified; }
 
 QString NickInfo::getPrettyOnlineSince() const { 

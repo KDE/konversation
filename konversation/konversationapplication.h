@@ -103,7 +103,12 @@ class KonversationApplication : public KApplication
     
     // Returns list of pointers to Servers.
     const QPtrList<Server> getServerList();
-    
+
+    // Nick color stuff
+    uint& getColorOffset() { return colorOffSet;}
+    QStringList& getColorList() { return colorList; }
+    QMap<QString,QString>& getColorMap() { return colorMap;}
+
   signals:
     void catchUrl(const QString& who,const QString& url);
     void prefsChanged();
@@ -140,7 +145,7 @@ class KonversationApplication : public KApplication
     void sendMultiServerCommand(const QString& command, const QString& parameter);
     void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
     
-  protected:
+  private:
     QPtrList<Server> serverList;
     QStringList urlList;
     PrefsDialog* prefsDialog;
@@ -151,6 +156,9 @@ class KonversationApplication : public KApplication
     Konversation::Sound* m_sound;
     QuickConnectDialog* quickConnectDialog;
     Images* m_images;
+    uint colorOffSet;
+    QStringList colorList;
+    QMap<QString,QString> colorMap;
 
 };
 
