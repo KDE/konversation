@@ -19,6 +19,7 @@
 #include <kconfig.h>
 #include <klocale.h>
 #include <kurl.h>
+#include <kuser.h>
 
 #include <qpalette.h>
 
@@ -42,13 +43,14 @@ Preferences::Preferences()
   identity->setName(i18n("Default Identity"));
   addIdentity(identity);
 
-  setIdent("konversation");
-  setRealName("Konversation User");
+  KUser user(KUser::UseRealUserID);
+  setIdent(user.loginName());
+  setRealName(user.fullName());
 
-  setNickname(0,"KonvIRC");
-  setNickname(1,"_KonvIRC");
-  setNickname(2,"KonvIRC_");
-  setNickname(3,"_KonvIRC_");
+  setNickname(0,user.loginName());
+  setNickname(1,"_" + user.loginName());
+  setNickname(2,user.loginName() + "_");
+  setNickname(3,"_" + user.loginName() + "_");
 
   setPartReason("Konversation terminated!");
   setKickReason("User terminated!");
