@@ -145,12 +145,12 @@ void KonversationApplication::readOptions()
   preferences.setQueryMessageColor(config->readEntry("QueryMessage", preferences.defaultQueryMessageColor));
   preferences.setServerMessageColor(config->readEntry("ServerMessage", preferences.defaultServerMessageColor));
 
-	// Led Colors
-	config->setGroup("Led Colors");
-
-	preferences.setOpLedColor(config->readNumEntry("Operator LEDs", preferences.defaultOpLedColor));
-	
-	/* User identity */
+  // Led Colors
+  config->setGroup("Led Colors");
+  preferences.setOpLedColor(config->readNumEntry("OperatorColor",preferences.getOpLedColor()));
+  preferences.setVoiceLedColor(config->readNumEntry("VoiceColor",preferences.getVoiceLedColor()));
+  preferences.setNoRightsLedColor(config->readNumEntry("NoRightsColor",preferences.getNoRightsLedColor()));
+  /* User identity */
   config->setGroup("User Identity");
   preferences.ident=config->readEntry("Ident",preferences.ident);
   preferences.realname=config->readEntry("Realname",preferences.realname);
@@ -221,6 +221,7 @@ void KonversationApplication::readOptions()
   preferences.setBlinkingTabs(config->readBoolEntry("BlinkingTabs",true));
   preferences.setAutoReconnect(config->readBoolEntry("AutoReconnect",true));
   preferences.setAutoRejoin(config->readBoolEntry("AutoRejoin",true));
+  preferences.setFixedMOTD(config->readBoolEntry("FixedMOTD",true));
 }
 
 void KonversationApplication::saveOptions()
@@ -256,9 +257,10 @@ void KonversationApplication::saveOptions()
   config->writeEntry("QueryMessage", preferences.getQueryMessageColor());
   config->writeEntry("ServerMessage", preferences.getServerMessageColor());
 
-	config->setGroup("Led Colors");
-
-	config->writeEntry("Operator LEDs", preferences.getOpLedColor());
+  config->setGroup("Led Colors");
+  config->writeEntry("OperatorColor", preferences.getOpLedColor());
+  config->writeEntry("VoiceColor", preferences.getVoiceLedColor());
+  config->writeEntry("NoRightsColor", preferences.getNoRightsLedColor());
 
   config->setGroup("User Identity");
 
@@ -326,6 +328,7 @@ void KonversationApplication::saveOptions()
   config->writeEntry("BlinkingTabs",preferences.getBlinkingTabs());
   config->writeEntry("AutoReconnect",preferences.getAutoReconnect());
   config->writeEntry("AutoRejoin",preferences.getAutoRejoin());
+  config->writeEntry("FixedMOTD",preferences.getFixedMOTD());
 
   config->sync();
 }

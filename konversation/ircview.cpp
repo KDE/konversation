@@ -204,69 +204,6 @@ QString IRCView::filter(const QString& line,bool doHilight)
     emit newURL(url);
   }
 
-  /*
-
-***** Old URL Catcher. Remove when new routine proves itself stable *****
-
-  QString urlString=filteredLine;
-
-  QStringList matchList;
-  matchList.append("http://");
-  matchList.append("www.");
-  matchList.append("ftp://");
-  matchList.append("ftp.");
-  matchList.append("news://");
-  matchList.append("nntp://");
-  matchList.append("gopher://");
-  matchList.append("ed2k://");
-
-  bool foundSomething;
-
-  pos=0;
-  do
-  {
-    foundSomething=false;
-
-    for(int index=0;matchList[index]!=0;index++)
-    {
-      pos=urlString.find(matchList[index]);
-      if(pos!=-1)
-      {
-        int end=urlString.find(' ',pos);
-
-        if(end==-1) end=urlString.length();
-        int len=end-pos;
-
-        QString url=urlString.mid(pos,len);
-
-        // Try to clean up URLs by cutting off rightmost "junk"
-        QRegExp smartChars("[().,>=\"'-]$");
-        while(url.find(smartChars)!=-1) url=url.left(url.length()-1);
-
-        // Remove URL from search string
-        urlString.replace(pos,url.length(),"");
-
-        QString link="<font color=\"#"+linkMessageColor+"\"><u><a href=\"";
-        if(url.startsWith("www")) link+="http://";
-        else if(url.startsWith("ftp")) link+="ftp://";
-
-        // Fix &amp; back to & in link ... kludgy but I don't know a better way.
-        link+=url;
-        while((pos=link.find("&amp;"))!=-1) link.replace(pos,5,"&");
-
-        link.append("\">"+url+"</a></u></font>");
-        // Replace link in original line
-        pos=filteredLine.find(url);
-        filteredLine.replace(pos,url.length(),link);
-
-        emit newURL(url);
-
-        foundSomething=true;
-      }
-    }
-  } while(foundSomething);
-*/
-
   /* Hilight */
   if(doHilight)
   {
@@ -346,10 +283,12 @@ void IRCView::appendServerMessage(const char* type,const char* message)
   QString serverMessageColor = KonversationApplication::preferences.getServerMessageColor();
 
   /* Fixed width font option for MOTD */
-  /* TODO: Make this configurable */
-  QString motd("MOTD");
   QString fixed;
-  if(motd==type) fixed=" face=\"courier\"";
+  if(KonversationApplication::preferences.getFixedMOTD())
+  {
+    if(QString("MOTD")==type) fixed=" face=\"courier\"";
+  }
+
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+serverMessageColor+"\">%1</font></td><td><font color=\"#"+serverMessageColor+"\""+fixed+">%2</font></td></tr>\n").arg(type).arg(filter(message));
 #else

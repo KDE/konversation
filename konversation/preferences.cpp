@@ -39,7 +39,9 @@ Preferences::Preferences()
 	defaultLinkMessageColor = "0000ff";
 	defaultCommandMessageColor = "960096";
 
-	defaultOpLedColor = 1;
+  opLedColor=1;
+  voiceLedColor=2;
+  noRightsLedColor=3;
 
   nicknameList.append("KonvIRC");
   nicknameList.append("_KonvIRC");
@@ -137,14 +139,8 @@ QPtrList<Highlight> Preferences::getHilightList()
 
 void Preferences::setHilightList(QPtrList<Highlight> newList)
 {
-  kdDebug() << "Preferences::setHilightList(QPtrList<Highlight> newList)" << endl;
   hilightList.clear();
   hilightList=newList;
-  for(unsigned int index=0;index<newList.count();index++)
-  {
-    kdDebug() << index << " " << newList.at(index)->getText() <<
-                          " " << newList.at(index)->getColor().name() << endl;
-  }
 }
 
 void Preferences::addHilight(QString newHilight,QColor newColor)
@@ -188,6 +184,9 @@ void Preferences::clearServerList() { serverList.clear(); }
 
 void Preferences::setLog(bool state) { log=state; }
 bool Preferences::getLog() { return log; }
+
+void Preferences::setFixedMOTD(bool fixed) { fixedMOTD=fixed; }
+bool Preferences::getFixedMOTD() { return fixedMOTD; }
 
 void Preferences::setAutoReconnect(bool on) { autoReconnect=on; }
 bool Preferences::getAutoReconnect() { return autoReconnect; }
@@ -246,8 +245,12 @@ void Preferences::setQueryMessageColor(QString passed_queryMessageColor) {queryM
 QString Preferences::getServerMessageColor() {return serverMessageColor;}
 void Preferences::setServerMessageColor(QString passed_serverMessageColor) {serverMessageColor = passed_serverMessageColor;}
 
-int Preferences::getOpLedColor() {return opLedColor;}
-void Preferences::setOpLedColor(int passed_color) {opLedColor = passed_color;}
+int Preferences::getOpLedColor()       { return opLedColor; }
+int Preferences::getVoiceLedColor()    { return voiceLedColor; }
+int Preferences::getNoRightsLedColor() { return noRightsLedColor; }
+void Preferences::setOpLedColor(int passed_color)       { opLedColor=passed_color; }
+void Preferences::setVoiceLedColor(int passed_color)    { voiceLedColor=passed_color; }
+void Preferences::setNoRightsLedColor(int passed_color) { noRightsLedColor=passed_color; }
 
 /* Geometry functions */
 QSize Preferences::getServerWindowSize() 				{ return serverWindowSize; };
