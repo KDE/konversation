@@ -419,7 +419,7 @@ QString IRCView::filter(const QString& line,const QString& defaultColor,const QS
   // Replace multiple Spaces with "<space>&nbsp;"
   while((pos = filteredLine.find("  ")) != -1)
   {
-    filteredLine.replace(pos+1,1,"&nbsp;");
+    filteredLine.replace(pos + (pos == 0 ? 0 : 1), 1, "&nbsp;");
   }
 
   return filteredLine;

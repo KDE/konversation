@@ -57,6 +57,7 @@ void InputFilter::parseLine(const QString &a_newLine, QWidget *mainWindow)
 {
   QString trailing(QString::null);
   QString newLine(a_newLine);
+  
   // Remove white spaces at the end and beginning
   newLine=newLine.stripWhiteSpace();
   // Find end of middle parameter list
