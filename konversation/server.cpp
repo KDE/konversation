@@ -34,7 +34,7 @@ typedef unsigned long long __u64;
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
-#include <kresolver.h>
+//#include <kresolver.h> //<-KDE3.3 or later
 #include <kstringhandler.h>
 #include <kdeversion.h>
 
@@ -2223,6 +2223,8 @@ void Server::nickJoinsChannel(const QString &channelName, const QString &nicknam
 void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceHostmask)
 {
   // remember my IP for DCC sending
+  // FIXME: replace the following lines with ordinaly resolving code
+  /*
   if(ownIpByServer.isEmpty() && sourceNick==nickname)  // myself
   {
     QString myhost = sourceHostmask.section('@',1);
@@ -2230,7 +2232,8 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
     if(res.size() > 0)
       ownIpByServer = res.first().address().nodeName();
   }
-  
+  */
+
   Channel* channel=channelList.first();
 
   while(channel)
