@@ -367,3 +367,8 @@ Comment[ta]=A user on your watched nicks list has come online உங்கள்
 Comment[xx]=xxA user on your watched nicks list has come onlinexx
 Comment[zh_CN]=一名在您的监视昵称列表上的用户已经上线
 default_presentation=0
+
+[query]
+Name=Query
+Comment=Someone started a conversation (query) with you
+default_presentation=0

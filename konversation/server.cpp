@@ -1313,6 +1313,11 @@ void Server::addQuery(const QString& nickname,const QString& hostmask, bool wein
     }
     queryNicks.insert(lcNickname, nickInfo);
 #endif
+    
+#ifdef USE_KNOTIFY
+    KNotifyClient::event(mainWindow->winId(), "query",
+      i18n("%1 have started a conversation (query) with you.").arg(nickname));
+#endif
   }
 
   // try to get hostmask if there's none yet
