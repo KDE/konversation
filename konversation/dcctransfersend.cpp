@@ -143,15 +143,11 @@ void DccTransferSend::cleanUp()
   stopAutoUpdateView();
   if(sendSocket)
   {
-    sendSocket->closeNow();
-    disconnect(sendSocket, 0, 0, 0);
-    delete sendSocket;
+    sendSocket->deleteLater();
     sendSocket = 0;
   }
   if(serverSocket)
   {
-    serverSocket->closeNow();
-    disconnect(serverSocket, 0, 0, 0);
     delete serverSocket;
     serverSocket = 0;
   }
