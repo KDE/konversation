@@ -154,7 +154,7 @@ class NicksOnline : public ChatWindow
     * @return                  A string formatted for display containing the information
     *                          about the nick.
     */
-    QString getNickAdditionalInfo(NickInfoPtr nickInfo);
+    QString getNickAdditionalInfo(NickInfoPtr nickInfo, KABC::Addressee addressee);
     /**
     * Invokes the KAddressBook contact editor for the specified contact id.
     * @param uid               Id of the contact.
