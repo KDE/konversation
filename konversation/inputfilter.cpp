@@ -926,7 +926,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             // Get the next nick from the list
             QString newNick=server->getNextNickname();
             // Update Server window
-            server->setNickname(newNick);
+            server->renameNick(server->getNickname(), newNick);
             // Show message
             server->appendStatusMessage(i18n("Nick"),i18n("Nickname already in use. Trying %1.").arg(newNick));
             // Send nickchange request to the server
