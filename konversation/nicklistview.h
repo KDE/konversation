@@ -48,7 +48,7 @@ class NickListView : public KListView
     void popupCommand(int id);
 
   protected:
-    void contextMenuEvent(QContextMenuEvent *ce);
+    void contextMenuEvent(QContextMenuEvent* ce);
 
     QPopupMenu* popup;
     QPopupMenu* modes;

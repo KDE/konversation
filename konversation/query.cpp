@@ -51,6 +51,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
   connect(textView,SIGNAL (newText()),this,SLOT (newTextInView()) );
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
+  connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
 
   setLog(KonversationApplication::preferences.getLog());
 }
@@ -138,6 +139,11 @@ void Query::textPasted(QString text)
 void Query::adjustFocus()
 {
   queryInput->setFocus();
+}
+
+void Query::sendFileMenu()
+{
+  emit sendFile(getName());
 }
 
 #include "query.moc"

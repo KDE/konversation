@@ -46,11 +46,13 @@ class Query : public ChatWindow
   signals:
     void newText(QWidget* query);
     void closed(Query* query);
+    void sendFile(QString recipient);
 
   public slots:
     void adjustFocus();
 
   protected slots:
+    void sendFileMenu();
     void queryTextEntered();
     void newTextInView();
     void close();

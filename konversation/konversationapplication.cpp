@@ -57,8 +57,7 @@ KonversationApplication::KonversationApplication()
     connect(prefsDialog,SIGNAL (cancelClicked()),this,SLOT (quitKonversation()) );
     connect(prefsDialog,SIGNAL (prefsChanged()),this,SLOT (saveOptions()) );
 
-    // TODO: Check if this serverList is needed at all
-    serverList.setAutoDelete(true);     // delete items when they are removed
+    serverList.setAutoDelete(false);     // don't delete items when they are removed
 
     prefsDialog->show();
 
@@ -116,8 +115,26 @@ void KonversationApplication::connectToAnotherServer(int id)
   // We came this far, so generate a new server
   newServer=new Server(id);
   serverList.append(newServer);
+
+  connect(newServer,SIGNAL(deleted(Server*)),this,SLOT(removeServer(Server*)));
+
   connect(newServer->getServerWindow(),SIGNAL(prefsChanged()),this,SLOT(saveOptions()));
   connect(newServer->getServerWindow(),SIGNAL(openPrefsDialog()),this,SLOT(openPrefsDialog()));
+}
+
+void KonversationApplication::removeServer(Server* server)
+{
+  Server* lookServer=serverList.first();
+  while(lookServer)
+  {
+    if(lookServer==server)
+    {
+      serverList.remove();
+      kdDebug() << "server removed." << endl;
+    }
+    else
+      lookServer=serverList.next();
+  }
 }
 
 void KonversationApplication::quitKonversation()

@@ -71,6 +71,7 @@ class Channel : public ChatWindow
   signals:
     void newText(QWidget* channel);
     void prefsChanged();
+    void sendFile();
 
   public slots:
     void setNickname(const QString&);
@@ -97,6 +98,8 @@ class Channel : public ChatWindow
     void requestNewTopic(const QString& newTopic);
     // connected to IRCInput::textPasted() - used to handle large/multiline pastings
     void textPasted(QString text);
+    // connected to IRCInput::sendFile()
+    void sendFileMenu();
 
   protected:
     const QStringList& getSelectedNicksList();

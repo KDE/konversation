@@ -40,6 +40,18 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 {
   kdDebug() << "IRCView::IRCView()" << endl;
 
+  popup=new QPopupMenu(this,"ircview_context_menu");
+
+  if(popup)
+  {
+    popup->insertItem(i18n("Copy"),Copy);
+    popup->insertItem(i18n("Select all"),SelectAll);
+    popup->insertSeparator();
+    popup->insertItem(i18n("Send file"),SendFile);
+  }
+  else kdWarning() << "IRCView::IRCView(): Could not create popup!" << endl;
+
+  
   setVScrollBarMode(AlwaysOn);
   setHScrollBarMode(AlwaysOff);
 
@@ -68,6 +80,8 @@ IRCView::IRCView(QWidget* parent,Server* newServer) : KTextBrowser(parent)
 IRCView::~IRCView()
 {
   kdDebug() << "IRCView::~IRCView()" << endl;
+
+  if(popup) delete popup;
 }
 
 void IRCView::setServer(Server* newServer)
@@ -459,10 +473,46 @@ bool IRCView::eventFilter(QObject* object,QEvent* event)
 {
   if(event->type()==QEvent::MouseButtonRelease)
   {
-    if(hasSelectedText()) copy();
+    QMouseEvent* me=(QMouseEvent*) event;
+
+    if(me->button()==QMouseEvent::LeftButton)
+    {
+      if(hasSelectedText()) copy();
+    }
+    else if(me->button()==QMouseEvent::MidButton)
+    {
+      // TODO: maybe implement pasting here?
+      kdDebug() << "MMouse" << endl;
+    }
+  }
+  else if(event->type()==QEvent::ContextMenu)
+  {
+    return contextMenu((QContextMenuEvent*) event);
   }
 
   return KTextBrowser::eventFilter(object,event);
+}
+
+bool IRCView::contextMenu(QContextMenuEvent* ce)
+{
+  popup->setItemEnabled(Copy,(hasSelectedText()));
+
+  int r=popup->exec(ce->globalPos());
+
+  switch(r)
+  {
+    case Copy:
+      break;
+    case SelectAll:
+      break;
+    case SendFile:
+      emit sendFile();
+      break;
+  }
+  // Will be connected to Channel::popupCommand(int)
+//    emit popupCommand(r);
+
+  return true;
 }
 
 #include "ircview.moc"

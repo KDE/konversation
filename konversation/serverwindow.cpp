@@ -306,6 +306,7 @@ void ServerWindow::addStatusView()
   statusPanel->setIdentity(getServer()->getIdentity());
 
   connect(statusPanel,SIGNAL (newText(QWidget*)),this,SLOT (newText(QWidget*)) );
+  connect(statusPanel,SIGNAL (sendFile()),getServer(),SLOT (requestDccSend()) );
 }
 
 void ServerWindow::setNickname(const QString& newNickname)

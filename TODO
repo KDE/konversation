@@ -11,7 +11,6 @@ URL catcher user interface
 User interface for dialog options (don't show again dialogs)
 Show the proper name of who set the topic on /join
 Implement sophisticated sorting options for nicklist
-Context menu entry "Send DCC file" in queries
 Border changes on-the-fly using some kind of "redraw-pointer-list"
 Conflict in Highlighting own lines and own nick
 

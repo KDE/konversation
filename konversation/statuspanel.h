@@ -37,6 +37,7 @@ class StatusPanel : public ChatWindow
 
   signals:
     void newText(QWidget* widget);
+    void sendFile();
     
   public slots:
     void adjustFocus();
@@ -45,6 +46,7 @@ class StatusPanel : public ChatWindow
     void updateFonts();
 
   protected slots:
+    void sendFileMenu();
     void statusTextEntered();
     // connected to IRCInput::textPasted() - used for large/multiline pastes
     void textPasted(QString text);

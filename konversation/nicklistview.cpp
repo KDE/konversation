@@ -39,7 +39,7 @@ NickListView::NickListView(QWidget* parent) :
     }
     else
     {
-      kdWarning() << "NickListView::contextMenuEvent(): Could not create modes popup!" << endl;
+      kdWarning() << "NickListView::NickListView(): Could not create modes popup!" << endl;
     }
     popup->insertSeparator();
     popup->insertItem(i18n("Whois"),Whois);
@@ -56,7 +56,7 @@ NickListView::NickListView(QWidget* parent) :
   }
   else
   {
-    kdWarning() << "NickListView::contextMenuEvent(): Could not create popup!" << endl;
+    kdWarning() << "NickListView::NickListView(): Could not create popup!" << endl;
   }
 }
 
@@ -66,7 +66,7 @@ NickListView::~NickListView()
   delete popup;
 }
 
-void NickListView::contextMenuEvent(QContextMenuEvent *ce)
+void NickListView::contextMenuEvent(QContextMenuEvent* ce)
 {
   ce->accept();
 

@@ -54,6 +54,9 @@ class KonversationApplication : public KApplication
     void openPrefsDialog();
     void closePrefsDialog();
 
+  protected slots:
+    void removeServer(Server* server);
+
   protected:
     QPtrList<Server> serverList;
     PrefsDialog* prefsDialog;

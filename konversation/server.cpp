@@ -132,6 +132,9 @@ Server::~Server()
   serverSocket.enableWrite(true);
   send();
 
+  // notify KonversationApplication that this server is gone
+  emit deleted(this);
+  
   delete serverWindow;
 }
 
@@ -463,6 +466,7 @@ void Server::addQuery(const QString& nickname,const QString& hostmask)
 
     connect(query,SIGNAL (newText(QWidget*)),serverWindow,SLOT (newText(QWidget*)) );
     connect(query,SIGNAL (closed(Query*)),this,SLOT (removeQuery(Query*)) );
+    connect(query,SIGNAL (sendFile(QString)),this,SLOT (requestDccSend(QString)) );
     // Append query to internal list
     queryList.append(query);
   }
@@ -723,10 +727,6 @@ void Server::removeQuery(Query* query)
 
 void Server::joinChannel(QString& name,QString& hostmask,QString& key)
 {
-  // if(mode==singleWindows)
-  //   Channel* channel=new Channel(this,name,0);
-  // else
-
   // Make sure to delete stale Channel on rejoin.
   // FIXME: Hm ... Do we really have to? Wouldn't it be enough to just
   // keep the channel and set channel->setServer(server)?
@@ -747,11 +747,11 @@ void Server::joinChannel(QString& name,QString& hostmask,QString& key)
 
   serverWindow->addView(channel,1,name);
   channel->joinNickname(getNickname(),hostmask);
-//  serverWindow->showView(channel->getChannelPane());
-  // endif
+
   channelList.append(channel);
   connect(channel,SIGNAL (newText(QWidget*)),serverWindow,SLOT (newText(QWidget*)) );
   connect(channel,SIGNAL (prefsChanged()),serverWindow,SLOT (channelPrefsChanged()) );
+  connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
 }
 
 void Server::removeChannel(Channel* channel)

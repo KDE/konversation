@@ -18,6 +18,7 @@
 #define IRCVIEW_H
 
 #include <qevent.h>
+#include <qpopupmenu.h>
 
 #include <ktextbrowser.h>
 
@@ -38,11 +39,18 @@ class IRCView : public KTextBrowser
     void clear();
     void setServer(Server* server);
 
+    enum PopupIDs
+    {
+      Copy,SelectAll,
+      SendFile
+    };
+
   signals:
     void newText();      // Notify container of new text
     void newURL(QString url);
     void gotFocus();     // So we can set focus to input line
     void textToLog(const QString& text);
+    void sendFile();
 
   public slots:
     void append(const char* nick,const char* message);
@@ -62,8 +70,11 @@ class IRCView : public KTextBrowser
 
     bool eventFilter(QObject* object,QEvent* event);
 
+    bool contextMenu(QContextMenuEvent* ce);
+    
     QString buffer;
     Server *server;
+    QPopupMenu* popup;
 };
 
 #endif

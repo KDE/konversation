@@ -45,6 +45,8 @@ StatusPanel::StatusPanel(QWidget* parent) :
   setLogfileName("konversation.log");
 
   connect(getTextView(),SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
+
+  connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
 //  connect(getTextView(),SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
 
   connect(statusInput,SIGNAL (returnPressed()),this,SLOT(statusTextEntered()) );
@@ -112,6 +114,11 @@ void StatusPanel::updateFonts()
 
   getTextView()->setFont(KonversationApplication::preferences.getTextFont());
   getTextView()->setPaper(QColor("#"+KonversationApplication::preferences.getTextViewBackground()));
+}
+
+void StatusPanel::sendFileMenu()
+{
+  emit sendFile();
 }
 
 #include "statuspanel.moc"

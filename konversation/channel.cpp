@@ -195,6 +195,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   connect(textView,SIGNAL (newText()),this,SLOT (newTextInView()) );
   connect(textView,SIGNAL (newURL(QString)),this, SLOT (urlCatcher(QString)) );
   connect(textView,SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
+  connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
 
   connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
   connect(nicknameListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT (doubleClickCommand(QListViewItem*)) );
@@ -452,6 +453,11 @@ void Channel::setKey(const QString& newKey)
 const QString& Channel::getKey()
 {
   return key;
+}
+
+void Channel::sendFileMenu()
+{
+  emit sendFile();
 }
 
 void Channel::channelTextEntered()
