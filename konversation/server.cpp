@@ -705,18 +705,22 @@ void Server::notifyResponse(const QString& nicksOnline)
     }
     // Any watched nicks now offline?
     NickInfoMap::Iterator it;
-    NickInfoPtr nickInfo;
-    for( it = nicknamesOnline.begin() ; it != nicknamesOnline.end(); ++it )
+    it = nicknamesOnline.begin();
+    while (it != nicknamesOnline.end())
     {
-      if (nickLowerList.find(it.key()) == nickLowerList.end())
+      QString lcNickName = it.key();
+      ++it;
+      if (nickLowerList.find(lcNickName) == nickLowerList.end())
       {
+        NickInfoPtr nickInfo = getNickInfo(lcNickName);
+        QString nickName = nickInfo->getNickname();
         nicksOnlineChanged = true;
-        addNickToOfflineList(nickInfo->getNickname(), watchLowerList);
-        getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 went offline. (%2)").arg(nickInfo->getNickname()).arg(getServerName()),statusView);
+        addNickToOfflineList(nickName, watchLowerList);
+        getMainWindow()->appendToFrontmost(i18n("Notify"),i18n("%1 went offline. (%2)").arg(nickName).arg(getServerName()),statusView);
 
 #ifdef USE_KNOTIFY
         KNotifyClient::event(mainWindow->winId(), "notify",
-          i18n("%1 went offline. (%2)").arg(nickInfo->getNickname()).arg(getServerName()));
+          i18n("%1 went offline. (%2)").arg(nickName).arg(getServerName()));
 #endif
       }
     }
