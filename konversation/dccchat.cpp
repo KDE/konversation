@@ -311,17 +311,19 @@ void DccChat::sendDccChatText(const QString& sendLine)
 void DccChat::heardPartner()
 {
   dccSocket = static_cast<KNetwork::KStreamSocket*>(listenSocket->accept());
+  
   if(!dccSocket)
-    delete this;
-  else
   {
-    connect(dccSocket,SIGNAL (readyRead()),this,SLOT (readData()) );
-
-    dccSocket->enableRead(true);
-    dccChatInput->setEnabled(true);
-
-    getTextView()->append(i18n("Info"),i18n("Connection established."));
+    this->deleteLater();
+    return;
   }
+  
+  connect(dccSocket,SIGNAL (readyRead()),this,SLOT (readData()) );
+    
+  dccSocket->enableRead(true);
+  dccChatInput->setEnabled(true);
+
+  getTextView()->append(i18n("Info"),i18n("Connection established."));
 }
 
 void DccChat::textPasted(QString text)

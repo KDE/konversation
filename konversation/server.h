@@ -146,8 +146,8 @@ class Server : public QObject
     StatusPanel* getStatusView() const { return statusView; }
 
     bool connected();
-    QString getIp();
-    QString getNumericalIp();
+    QString getIp(bool getFromServer = false);
+    QString getNumericalIp(bool getFromServer = false);
     bool isNickOnline(const QString &nickname);
     /** Given a nickname, returns NickInfo object.
      *  @param nickname    The desired nickname.  Case insensitive.

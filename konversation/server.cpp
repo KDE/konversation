@@ -1099,10 +1099,10 @@ void Server::setDeliberateQuit(bool on)
   deliberateQuit=on;
 }
 
-QString Server::getNumericalIp()
+QString Server::getNumericalIp(bool getFromServer)
 {
   QHostAddress ip;
-  QString sip = getIp();
+  QString sip = getIp(getFromServer);
   if(sip.isEmpty()) return sip;
   ip.setAddress(sip);
 
@@ -1281,11 +1281,13 @@ const NickInfoMap* Server::getNicksOnline() { return &nicknamesOnline; }
 // Returns a list of the nicks on the watch list that are offline.
 const NickInfoMap* Server::getNicksOffline() { return &nicknamesOffline; }
 
-QString Server::getIp()
+QString Server::getIp(bool getFromServer)
 {
+  if(getFromServer && !ownIpByServer.isEmpty())
+    return ownIpByServer;
   // Return our ip using serverSocket
-    kdDebug() << "getIp() returned : " << serverSocket->localAddress().nodeName() << endl;
-    return serverSocket->localAddress().nodeName();
+  kdDebug() << "getIp() returned : " << serverSocket->localAddress().nodeName() << endl;
+  return serverSocket->localAddress().nodeName();
 }
 
 void Server::addQuery(const QString& nickname,const QString& hostmask, bool weinitiated )
@@ -1481,12 +1483,8 @@ void Server::addDccSend(const QString &recipient,const QString &fileName)
 {
   emit addDccPanel();
 
-  QString ownIp;
-  if(KonversationApplication::preferences.getDccGetIpFromServer())
-    ownIp=ownIpByServer;
-  if(ownIp.isEmpty())
-    ownIp=getIp();
-
+  QString ownIp = getIp(KonversationApplication::preferences.getDccGetIpFromServer());
+  
   // We already checked that the file exists in output filter / requestDccSend() resp.
   DccTransferSend* newDcc=new DccTransferSend(getMainWindow()->getDccPanel()->getListView(),
                                               recipient,
@@ -1551,7 +1549,7 @@ void Server::requestCloseDccPanel()
 
 void Server::requestDccChat(const QString& nickname)
 {
-  getMainWindow()->addDccChat(getNickname(),nickname,getNumericalIp(),QStringList(),true);
+  getMainWindow()->addDccChat(getNickname(),nickname,getNumericalIp(KonversationApplication::preferences.getDccGetIpFromServer()),QStringList(),true);
 }
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)
