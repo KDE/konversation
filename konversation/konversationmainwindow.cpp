@@ -972,7 +972,7 @@ bool KonversationMainWindow::queryClose()
       const int WIDTH   = 3;
       int ax = g.x() - x - MARGINS -1;
       int ay = g.y() - y - MARGINS -1;
-      painter.setPen(  QPen( KApplication::palette().active().highlight(),  WIDTH ) );
+      painter.setPen(  QPen( Qt::red,  WIDTH ) );
       painter.drawArc( ax,  ay,  tw + 2*MARGINS,  th + 2*MARGINS,  0,  16*360 );
       painter.end();
 
