@@ -1123,6 +1123,7 @@ void KonversationMainWindow::updateSSLInfo(Server* server)
 {
   if(server->getUseSSL())
     {
+      QObject::disconnect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
       QObject::connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
       QToolTip::add(m_sslLabel,server->getSSLInfo());
       m_sslLabel->show();

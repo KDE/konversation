@@ -30,7 +30,7 @@
 #include "sslsocket.h"
 
 SSLSocket::SSLSocket(QObject* parent,const char* name)
-  : KStreamSocket("","",parent,name), kssl(0L), sslInfoDlg(0L)
+  : KStreamSocket("","",parent,name), kssl(0L)
 {
 	cc = new KSSLCertificateCache;
 	cc->reload();
@@ -48,7 +48,6 @@ SSLSocket::~SSLSocket()
 
     delete kssl;
     delete cc;
-    delete sslInfoDlg;
 }
 
 Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
@@ -79,7 +78,7 @@ QString SSLSocket::details()
 
   details = "Connection is secured with ";
   details += QString::number(strength);
-  details += "bit SSL";
+  details += " bit SSL";
 
   return details;
 }
@@ -122,47 +121,19 @@ void SSLSocket::showInfoDialog()
 {
     if( state() == KNetwork::KClientSocketBase::Connected )
     {
-        showSSLInfoDialog();
+      showSSLInfoDialog();
     }
 }
 
 void SSLSocket::showSSLInfoDialog()
 {
-    // Taken from kio/misc/uiserver.cpp
-    // Variable names changed and adopted to our usage for Konversation
-    // Copyright ( C ) 2000 Matej Koss <koss@miesto.sk>
-    // Copyright ( C ) David Faure <faure@kde.org>
-    // Copyright ( C ) 2001 George Staikos <staikos@kde.org>
-
-  if( !sslInfoDlg ) sslInfoDlg = new KSSLInfoDlg(true, 0L, 0L, false);
-    KSSLCertificate *sslCert = KSSLCertificate::fromString(m_sslPeerCertificate.local8Bit());
-
-    if ( sslCert ) {
-        QStringList chainList = QStringList::split("\n", m_sslPeerChain );
-        QPtrList<KSSLCertificate> newChainList;
-
-        newChainList.setAutoDelete(true);
-
-        for ( QStringList::Iterator it = chainList.begin(); it != chainList.end(); ++it ) {
-            KSSLCertificate *tmpCert = KSSLCertificate::fromString( ( *it ).local8Bit() );
-            if ( tmpCert ) newChainList.append( tmpCert );
-        }
-
-        if ( newChainList.count() > 0 )
-            sslCert->chain().setChain( newChainList );
-		    
-        sslInfoDlg->setCertState( m_sslCertErrors );
-        sslInfoDlg->setup( *kssl,
-                           (const QString&) remoteHost,
-                           (const QString&) url
-                           );
-
-        sslInfoDlg->exec();
-    }
-    else
-        KMessageBox::information(0L,
-                                 i18n( "The peer SSL certificate appears to be corrupt." ),
-                                 i18n( "SSL" ) );
+  KSSLInfoDlg* sslInfoDlg = new KSSLInfoDlg(true, 0L, 0L, true);
+  sslInfoDlg->setCertState( m_sslCertErrors );
+  sslInfoDlg->setup( *kssl,
+		     (const QString&) remoteHost,
+		     (const QString&) url
+		     );
+  sslInfoDlg->exec();
 }
 
 int SSLSocket::verifyCertificate()
@@ -177,8 +148,7 @@ int SSLSocket::verifyCertificate()
         url = "irc://"+remoteHost+":"+peerAddress().serviceName();
 
 	KSSLCertificate& peerCertificate = kssl->peerInfo().getPeerCertificate();
-	m_sslPeerCertificate = peerCertificate.toString();
-
+	
 	KSSLCertificate::KSSLValidationList validationList
             = peerCertificate.validateVerbose(KSSLCertificate::SSLServer);
 

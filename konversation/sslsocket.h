@@ -26,6 +26,7 @@ using namespace KNetwork;
 class KSSL;
 class KSSLCertificateCache;
 class KSSLInfoDlg;
+class KSSLCertificate;
 
 class SSLSocket : public KStreamSocket
 {
@@ -55,15 +56,10 @@ class SSLSocket : public KStreamSocket
 		QString remoteHost;
 		QString url;
 		int m_sslCertState;
-		QString m_sslInUse;
-		QString m_sslPeerCertificate;
-		QString m_sslPeerChain;
 		QString m_sslCertErrors;
 
 		KSSL* kssl;
 		KSSLCertificateCache* cc;
-		KSSLInfoDlg *sslInfoDlg;
-
 };
 
 #endif
