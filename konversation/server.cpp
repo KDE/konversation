@@ -1111,6 +1111,7 @@ void Server::send()
     // NOTE: It's important to add the linefeed here, so the encoding process does not trash it
     //       for some servers.
     QString outputLine=outputBuffer[0]+"\n";
+    QStringList outputLineSplit=QStringList::split(" ",outputBuffer[0]);
     outputBuffer.pop_front();
 
     // To make lag calculation more precise, we reset the timer here
@@ -1118,8 +1119,13 @@ void Server::send()
        outputLine.startsWith("PING LAG")) notifySent.start();
     
     // remember the first arg of /WHO to identify responses
-    else if(outputLine.upper().startsWith("WHO "))
-      inputFilter.addWhoRequest(outputLine.section(" ",1,1,QString::SectionSkipEmpty).stripWhiteSpace());
+    else if(outputLineSplit[0].upper()=="WHO")
+    {
+      if(2<=outputLineSplit.count())
+        inputFilter.addWhoRequest(outputLineSplit[1]);
+      else  // no argument (servers recognize it as "*")
+        inputFilter.addWhoRequest("*");
+    }
 
     // Don't reconnect if we WANT to quit
     else if(outputLine.startsWith("QUIT")) setDeliberateQuit(true);
@@ -1130,7 +1136,6 @@ void Server::send()
     serverStream.setDevice(m_socket);
 
     // set channel encoding if specified
-    QStringList outputLineSplit=QStringList::split(" ",outputLine);
     QString channelCodecName;
     if(2<=outputLineSplit.count())  // for safe
       if(outputLineSplit[0]=="PRIVMSG" ||
