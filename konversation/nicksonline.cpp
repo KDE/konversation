@@ -53,7 +53,7 @@ NicksOnline::~NicksOnline()
   delete nickListView;
 }
 
-void NicksOnline::setOnlineList(QStringList list)
+void NicksOnline::setOnlineList(const QStringList& list)
 {
   nickListView->clear();
   for(unsigned int i=list.count();i!=0;i--)

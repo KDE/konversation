@@ -39,7 +39,7 @@ class NicksOnline : public QVBox
     void closeClicked(QSize size);
 
   public slots:
-    void setOnlineList(QStringList list);
+    void setOnlineList(const QStringList& list);
     void closeButton();
     
   protected slots:

@@ -499,7 +499,7 @@ void ServerWindow::openNicksOnlineWindow()
     connect(nicksOnlineWindow,SIGNAL (editClicked()),this,SLOT (openNotify()) );
     connect(nicksOnlineWindow,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT (notifyAction(QListViewItem*)) );
     connect(nicksOnlineWindow,SIGNAL (closeClicked(QSize)),this,SLOT (closeNicksOnlineWindow(QSize)) );
-    connect(server,SIGNAL (nicksNowOnline(QStringList)),nicksOnlineWindow,SLOT (setOnlineList(QStringList)) );
+    connect(server,SIGNAL (nicksNowOnline(const QStringList&)),nicksOnlineWindow,SLOT (setOnlineList(const QStringList&)) );
     nicksOnlineWindow->show();
   }
 }

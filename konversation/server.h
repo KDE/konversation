@@ -113,7 +113,7 @@ class Server : public QObject
     void serverLag(int msec);
     void tooLongLag(int msec); // waiting too long for 303 response
     void resetLag();
-    void nicksNowOnline(const QStringList &list); // Will be emitted when new 303 came in
+    void nicksNowOnline(const QStringList& list); // Will be emitted when new 303 came in
     void addDccPanel(); // will be connected to ServerWindow::addDccPanel()
     void closeDccPanel(); // will be connected to ServerWindow::closeDccPanel()
     void deleted(Server* myself); // will be connected to KonversationApplication::removeServer()
