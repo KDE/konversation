@@ -43,6 +43,9 @@ class KStreamSocketPrivate;
  * sockets. In the case of Internet (IP) sockets, this class creates and
  * uses TCP/IP sockets.
  *
+ * Objects of this class start, by default, on non-blocking mode. Call
+ * setBlocking if you wish to change that.
+ *
  * Sample usage:
  * \code
  *   QByteArray httpGet(const QString& hostname)
