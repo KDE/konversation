@@ -69,7 +69,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   
   dccListView->setColumnAlignment(Column::OfferDate,     AlignHCenter);
   dccListView->setColumnAlignment(Column::Progress,      AlignHCenter);
-  dccListView->setColumnAlignment(Column::Position,      AlignRight);
+  dccListView->setColumnAlignment(Column::Position,      AlignHCenter);
   dccListView->setColumnAlignment(Column::TimeRemaining, AlignRight);
   dccListView->setColumnAlignment(Column::CPS,           AlignRight);
   

@@ -94,8 +94,8 @@ void DccTransfer::paintCell(QPainter* painter, const QColorGroup& colorgroup, in
   
   if(column==DccPanel::Column::Progress)  // Render progress bar
   {
-    kdDebug() << "progress: " << (int)(100*transferringPosition/fileSize) << endl;
     progressBar->setProgress((int)(100*transferringPosition/fileSize));
+    
     progressBar->setFixedWidth(width);
     progressBar->setFixedHeight(height());
     QRect rectangle = progressBar->contentsRect();
@@ -217,6 +217,8 @@ QString DccTransfer::getTimeRemainingPrettyText() const
 {
   if(dccStatus != Sending && dccStatus != Receiving )
     return QString::null;
+  if(!fileSize)
+    return i18n("unknown");
   // not use getCPS() for exact result
   int trnsfdTime = timeTransferStarted.secsTo(QDateTime::currentDateTime());
   unsigned long trnsfdBytes = transferringPosition - transferStartPosition;
