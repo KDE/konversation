@@ -6,7 +6,7 @@
 */
 
 /*
-  preferences.cpp  -  description
+  preferences.cpp  -  Class for application wide preferences
   begin:     Tue Feb 5 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -92,7 +92,7 @@ Preferences::Preferences()
   setOpLedColor(1);
   setVoiceLedColor(2);
   setNoRightsLedColor(3);
-
+ 
   setCommandChar("/");
 }
 
@@ -325,3 +325,10 @@ QColor Preferences::getHilightNickColor() { return hilightNickColor; }
 
 void Preferences::setHilightNick(bool state) { hilightNick=state; }
 bool Preferences::getHilightNick() { return hilightNick; }
+
+QFont Preferences::getTextFont() { return textFont; }
+QFont Preferences::getListFont() { return listFont; }
+void Preferences::setTextFont(QFont newFont) { textFont=newFont; }
+void Preferences::setListFont(QFont newFont) { listFont=newFont; }
+void Preferences::setTextFontRaw(QString rawFont) { textFont.setRawName(rawFont); }
+void Preferences::setListFontRaw(QString rawFont) { listFont.setRawName(rawFont); }

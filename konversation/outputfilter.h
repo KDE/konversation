@@ -71,7 +71,7 @@ class OutputFilter : public QObject
     bool query;
 
     void parseMsg(QString myNick,QString parameter);      // works
-    void parseSMsg(QString myNick,QString parameter);     // works
+    void parseSMsg(QString parameter);     // works
     void parseQuery(QString parameter);    // works
     void parseDescribe(QString parameter);
     void parseNotice(QString parameter);   // works

@@ -49,6 +49,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
   installEventFilter(this);
 
   setServer(newServer);
+  setFont(KonversationApplication::preferences.getTextFont());
 
 #ifndef TABLE_VERSION
   setText("<qt>\n");

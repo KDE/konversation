@@ -27,6 +27,9 @@ KonversationApplication::KonversationApplication()
 {
   kdDebug() << "KonversationApplication::KonversationApplication()" << endl;
 
+  preferences.setTextFont(font());
+  preferences.setListFont(font());
+
   config=new KSimpleConfig("konversationrc");
   readOptions();
   prefsDialog=new PrefsDialog(&preferences,true);
@@ -147,6 +150,12 @@ void KonversationApplication::readOptions()
   if(reason!="") preferences.setPartReason(reason);
   reason=config->readEntry("KickReason","");
   if(reason!="") preferences.setKickReason(reason);
+
+  // Appearance
+  config->setGroup("Appearance");
+  // Fonts
+  preferences.setTextFontRaw(config->readEntry("TextFont",preferences.getTextFont().rawName()));
+  preferences.setListFontRaw(config->readEntry("ListFont",preferences.getListFont().rawName()));
 
   // Colors
   config->setGroup("Message Text Colors");
@@ -294,6 +303,10 @@ void KonversationApplication::saveOptions()
   config->writeEntry("PartReason",preferences.getPartReason());
   config->writeEntry("KickReason",preferences.getKickReason());
 
+  config->setGroup("Appearance");
+  config->writeEntry("TextFont",preferences.getTextFont().rawName());
+  config->writeEntry("ListFont",preferences.getListFont().rawName());
+
   config->setGroup("Message Text Colors");
 
   config->writeEntry("ActionMessage", preferences.getActionMessageColor());
@@ -403,6 +416,13 @@ void KonversationApplication::saveOptions()
   config->writeEntry("FixedMOTD",preferences.getFixedMOTD());
 
   config->sync();
+
+  Server* lookServer=serverList.first();
+  while(lookServer)
+  {
+    lookServer->updateFonts();
+    lookServer=serverList.next();
+  }
 }
 
 

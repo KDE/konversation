@@ -70,6 +70,7 @@ class Channel : public ChatWindow
     void updateMode(QString& nick,char mode,bool plus,QString& parameter);
     void updateModeWidgets(char mode,bool plus,QString& parameter);
     void updateQuickButtons(QStringList newButtonList);
+    void updateFonts();
 
   signals:
     void newText(QWidget* channel);

@@ -142,3 +142,8 @@ int Query::margin()
 {
   return KDialog::marginHint();
 }
+
+void Query::updateFonts()
+{
+  getTextView()->setFont(KonversationApplication::preferences.getTextFont());
+}

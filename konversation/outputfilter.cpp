@@ -76,7 +76,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& inputLine,cons
     else if(line.startsWith("notice "))  parseNotice(parameter);
     else if(line.startsWith("j "))       parseJoin(parameter);
     else if(line.startsWith("msg "))     parseMsg(myNick,parameter);
-    else if(line.startsWith("smsg "))    parseSMsg(myNick,parameter);
+    else if(line.startsWith("smsg "))    parseSMsg(parameter);
     else if(line.startsWith("query "))   parseQuery(parameter);
     else if(line.startsWith("op "))      parseOp(parameter);
     else if(line.startsWith("deop "))    parseDeop(parameter);
@@ -314,7 +314,7 @@ void OutputFilter::parseMsg(QString myNick,QString parameter)
   query=true;
 }
 
-void OutputFilter::parseSMsg(QString myNick,QString parameter)
+void OutputFilter::parseSMsg(QString parameter)
 {
   QString recipient=parameter.left(parameter.find(" "));
   QString message=parameter.mid(recipient.length()+1);

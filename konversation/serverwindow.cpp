@@ -560,6 +560,11 @@ int ServerWindow::margin()
   return KDialog::marginHint();
 }
 
+void ServerWindow::updateFonts()
+{
+  statusView->setFont(KonversationApplication::preferences.getTextFont());
+}
+
 void ServerWindow::updateLag(int msec)
 {
   statusBar()->changeItem(i18n("Ready."),StatusText);

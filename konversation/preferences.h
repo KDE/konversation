@@ -6,7 +6,7 @@
 */
 
 /*
-  preferences.h  -  description
+  preferences.h  -  Class for application wide preferences
   begin:     Tue Feb 5 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -18,6 +18,7 @@
 #include <qlist.h>
 #include <qsize.h>
 #include <qstringlist.h>
+#include <qfont.h>
 
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
@@ -32,11 +33,6 @@
 
 /*
 Options still to be GUIfied:
-
-AutoReconnect (bool)
-AutoRejoin (bool)
-BlinkingTabs (bool)
-FixedMOTD (bool)
 
 Operator LEDs (int)
 OperatorColor (int)
@@ -197,6 +193,13 @@ class Preferences : public QObject
     void setCommandChar(QString newCommandChar);
     QString getCommandChar();
 
+    QFont getTextFont();
+    QFont getListFont();
+    void setTextFont(QFont newFont);
+    void setListFont(QFont newFont);
+    void setTextFontRaw(QString rawFont);
+    void setListFontRaw(QString newFont);
+    
     QString ident;
     QString realname;
 
@@ -247,6 +250,9 @@ class Preferences : public QObject
     QSize nicknameSize;
     QSize colorConfigurationSize;
 
+    QFont textFont;
+    QFont listFont;
+    
     QList<ServerEntry> serverList;
     QPtrList<Highlight> hilightList;
 

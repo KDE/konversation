@@ -25,6 +25,7 @@
 #include "prefspageserverlist.h"
 #include "prefspagegeneralsettings.h"
 #include "prefspageidentity.h"
+#include "prefspageappearance.h"
 #include "prefspagelog.h"
 #include "prefspagedccsettings.h"
 #include "prefspagescripts.h"
@@ -43,6 +44,7 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
   QFrame* serverListPane     =addPage(i18n("Server List"));
   QFrame* generalSettingsPane=addPage(i18n("General Settings"));
   QFrame* identityPane       =addPage(i18n("Identity"));
+  QFrame* appearancePane     =addPage(i18n("Appearance"));
   QFrame* logSettingsPane    =addPage(i18n("Log Settings"));
   QFrame* dccSettingsPane    =addPage(i18n("DCC Settings"));
 // TODO: Uncomment this again when it's ready to go
@@ -55,6 +57,8 @@ PrefsDialog::PrefsDialog(Preferences* preferences,bool noServer) :
 /*  PrefsPage* generalSettingsPage= */ new PrefsPageGeneralSettings(generalSettingsPane,preferences);
   // Add Identity page
 /*  PrefsPage* identityPage= */ new PrefsPageIdentity(identityPane,preferences);
+  // Add Appearance page
+/*  PrefsPage* identityPage= */ new PrefsPageAppearance(appearancePane,preferences);
   // Add Log Settings page
 /*  PrefsPage* logSettingsPage= */ new PrefsPageLog(logSettingsPane, preferences);
   // Add Dcc Settings page

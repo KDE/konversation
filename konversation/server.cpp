@@ -714,6 +714,25 @@ void Server::updateChannelQuickButtons(QStringList newButtons)
   }
 }
 
+void Server::updateFonts()
+{
+  Channel* channel=channelList.first();
+  while(channel)
+  {
+    channel->updateFonts();
+    channel=channelList.next();
+  }
+
+  Query* query=queryList.first();
+  while(query)
+  {
+    query->updateFonts();
+    query=queryList.next();
+  }
+
+  if(serverWindow) serverWindow->updateFonts();
+}
+
 Channel* Server::getChannelByName(const char* name)
 {
   // Convert wanted channel name to lowercase

@@ -116,6 +116,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
   nicknameListView->addColumn("");
   nicknameListView->addColumn("");
   nicknameListView->header()->hide();
+  nicknameListView->setFont(KonversationApplication::preferences.getListFont());
 
   // The grid that holds the quick action buttons
   QGrid* buttonsGrid=new QGrid(2,nickListButtons);
@@ -1013,6 +1014,12 @@ void Channel::updateQuickButtons(QStringList newButtonList)
 
     QToolTip::add(quickButton,toolTip);
   }
+}
+
+void Channel::updateFonts()
+{
+  getTextView()->setFont(KonversationApplication::preferences.getTextFont());
+  nicknameListView->setFont(KonversationApplication::preferences.getListFont());
 }
 
 void Channel::openNickChangeDialog()

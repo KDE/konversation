@@ -83,6 +83,7 @@ class ServerWindow : public KMainWindow
     void channelPrefsChanged();
     void resetLag();
     void updateLag(int msec);
+    void updateFonts();
     void tooLongLag(int msec);
 
   protected slots:
