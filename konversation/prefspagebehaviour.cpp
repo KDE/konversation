@@ -43,7 +43,6 @@ PrefsPageBehaviour::PrefsPageBehaviour(QFrame* newParent, Preferences* newPrefer
 
   connect(trayIconCheck, SIGNAL(toggled(bool)), trayNotifyCheck, SLOT(setEnabled(bool)));
   connect(trayIconCheck, SIGNAL(toggled(bool)), trayOnlyCheck, SLOT(setEnabled(bool)));
-  connect(trayIconCheck, SIGNAL(toggled(bool)), trayOnlyCheck, SLOT(setChecked(bool)));
 
   rawLogCheck = new QCheckBox(i18n("Show ra&w log window on application startup"), parentFrame, "raw_log_check");
   rawLogCheck->setChecked(preferences->getRawLog());
@@ -175,7 +174,12 @@ PrefsPageBehaviour::~PrefsPageBehaviour()
 void PrefsPageBehaviour::applyPreferences()
 {
   preferences->setShowTrayIcon(trayIconCheck->isChecked());
-  preferences->setSystrayOnly(trayOnlyCheck->isChecked());
+
+  if (trayIconCheck->isChecked())
+      preferences->setSystrayOnly(trayOnlyCheck->isChecked());
+  else
+      preferences->setSystrayOnly(false);
+
   preferences->setRawLog(rawLogCheck->isChecked());
   preferences->setShowServerList(showServerList->isChecked());
   preferences->setWebBrowserUseKdeDefault(!useCustomBrowserCheck->isChecked());
