@@ -1867,7 +1867,7 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
   ChannelNickPtr channelNick;
   if (!channel->contains(lcNickname))
   { SHOW;
-    channelNick = ChannelNickPtr(new ChannelNick(nickInfo, false, false, false, false, false));
+    channelNick = new ChannelNick(nickInfo, false, false, false, false, false);
     Q_ASSERT(channelNick);
     channel->insert(lcNickname, channelNick);
     doChannelMembersChangedSignal = true;
@@ -1952,7 +1952,7 @@ ChannelNickPtr Server::addNickToUnjoinedChannelsList(const QString& channelName,
   ChannelNickPtr channelNick;
   if (!channel->contains(lcNickname))
   {
-    channelNick = ChannelNickPtr(new ChannelNick(nickInfo, false, false, false, false, false));
+    channelNick = new ChannelNick(nickInfo, false, false, false, false, false);
     channel->insert(lcNickname, channelNick);
     doChannelMembersChangedSignal = true;
   }
@@ -2160,22 +2160,18 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
       const_cast<ChannelNickMap *>(channel)->insert(lcNewname, member);
     }
     // Rename key in the Online, Offline, and Query lists.
-    NickInfoPtr nickInfo;
     if (nicknamesOnline.contains(lcNickname))
     {
-      nickInfo = nicknamesOnline[lcNickname];
       nicknamesOnline.remove(lcNickname);
       nicknamesOnline.insert(lcNewname, nickInfo);
     }
     if (nicknamesOffline.contains(lcNickname))
     {
-      nickInfo = nicknamesOffline[lcNickname];
       nicknamesOffline.remove(lcNickname);
       nicknamesOffline.insert(lcNewname, nickInfo);
     }
     if (queryNicks.contains(lcNickname))
     {
-      nickInfo = queryNicks[lcNickname];
       queryNicks.remove(lcNickname);
       queryNicks.insert(lcNewname, nickInfo);
     }

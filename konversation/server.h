@@ -46,8 +46,6 @@ class ChannelListPanel;
 class ScriptLauncher;
 class LocaleString;
 
-typedef QMap<LocaleString,ChannelNickPtr> ChannelNickMap;
-
 class Server : public QObject
 {
   Q_OBJECT
