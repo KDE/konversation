@@ -88,11 +88,10 @@ class Server : public QObject
 
     QString getAutoJoinCommand();
 
-    void startNotifyTimer(int msec=0);
-
   signals:
     void nicknameChanged(const QString&);
     void serverLag(int msec);
+    void tooLongLag(int msec); /* waiting too long for 303 response */
     void resetLag();
 
   public slots:
@@ -107,10 +106,14 @@ class Server : public QObject
     void send(KSocket* socket);
     void broken(KSocket* socket);
     void notifyTimeout();
+    void notifyCheckTimeout();
     void connectionEstablished();
     void notifyResponse(QString nicksOnline);
 
   protected:
+    void startNotifyTimer(int msec=0);
+    void startNotifyCheckTimer();
+
     void connectToIRCServer();
 
     unsigned int completeQueryPosition;
@@ -132,8 +135,10 @@ class Server : public QObject
     QTimer incomingTimer;
 
     QTimer notifyTimer;
+    QTimer notifyCheckTimer; /* Checks if the ISON reply needs too long */
     QTime notifySent;
     QStringList notifyCache; /* List of users found with ISON */
+    int checkTime;           /* Time elapsed while waiting for server 303 response */
 
     QString ircName;
     QString inputBuffer;

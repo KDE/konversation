@@ -31,6 +31,7 @@ Server::Server(int id)
   QStringList serverEntry=QStringList::split(',',KonversationApplication::preferences.getServerById(id),true);
 
   tryNickNumber=0;
+  checkTime=0;
 
   serverWindow=new ServerWindow(this);
   setNickname(KonversationApplication::preferences.getNickname(tryNickNumber));
@@ -69,6 +70,8 @@ Server::Server(int id)
 
   connect(&notifyTimer,SIGNAL(timeout()),
                   this,SLOT  (notifyTimeout()) );
+  connect(&notifyCheckTimer,SIGNAL(timeout()),
+                  this,SLOT  (notifyCheckTimeout()) );
 
   connect(&inputFilter,SIGNAL(welcome()),
                   this,SLOT  (connectionEstablished()) );
@@ -76,6 +79,7 @@ Server::Server(int id)
                   this,SLOT  (notifyResponse(QString)) );
 
   connect(this,SIGNAL(serverLag(int)),serverWindow,SLOT(updateLag(int)) );
+  connect(this,SIGNAL(tooLongLag(int)),serverWindow,SLOT(tooLongLag(int)) );
   connect(this,SIGNAL(resetLag()),serverWindow,SLOT(resetLag()) );
 }
 
@@ -127,9 +131,11 @@ void Server::connectionEstablished()
 
 void Server::notifyResponse(QString nicksOnline)
 {
-  /* We received a notify message, so calculate server lag */
+  /* We received a 303 notify message, so calculate server lag */
   int lag=notifySent.elapsed();
   emit serverLag(lag);
+  /* Stop check timer */
+  notifyCheckTimer.stop();
 
   /* First copy the old notify cache to a new cache, but all in lowercase */
   QStringList notifyLowerCache=QStringList::split(' ',notifyCache.join(" ").lower());
@@ -169,6 +175,14 @@ void Server::startNotifyTimer(int msec)
   if(msec==0) msec=KonversationApplication::preferences.getNotifyDelay()*1000 /* msec! */;
   /* start the timer in one shot mode */
   notifyTimer.start(msec,true);
+  /* reset check time */
+  checkTime=0;
+}
+
+void Server::startNotifyCheckTimer()
+{
+  /* start the timer in interval mode */
+  notifyCheckTimer.start(500);
 }
 
 void Server::notifyTimeout()
@@ -178,10 +192,21 @@ void Server::notifyTimeout()
   {
     /* But only if there actually are nicks in the notify list */
     QString list=KonversationApplication::preferences.getNotifyList();
-    if(list!="") queue("ISON "+list);
+    if(list!="")
+    {
+      queue("ISON "+list);
+      /* start check timer waiting for 303 response */
+      startNotifyCheckTimer();
+    }
   }
   /* show unknown lag time if no notify is used */
   else emit resetLag();
+}
+
+void Server::notifyCheckTimeout()
+{
+  checkTime+=500;
+  emit tooLongLag(checkTime);
 }
 
 QString Server::getAutoJoinCommand()

@@ -74,6 +74,7 @@ class ServerWindow : public KMainWindow
     void channelPrefsChanged();
     void resetLag();
     void updateLag(int msec);
+    void tooLongLag(int msec);
 
   protected slots:
     void statusTextEntered();

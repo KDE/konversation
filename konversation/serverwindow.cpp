@@ -354,7 +354,21 @@ int ServerWindow::margin()
 
 void ServerWindow::updateLag(int msec)
 {
+  statusBar()->changeItem(i18n("Ready."),StatusText);
+
   QString lagString(i18n("Lag: %1 ms").arg(msec));
+  statusBar()->changeItem(lagString,LagOMeter);
+}
+
+void ServerWindow::tooLongLag(int msec)
+{
+  if((msec % 5000)==0)
+  {
+    QString lagString(i18n("No answer from server for more than %1 seconds").arg(msec/1000));
+    statusBar()->changeItem(lagString,StatusText);
+  }
+
+  QString lagString(i18n("Lag: %1 s").arg(msec/1000));
   statusBar()->changeItem(lagString,LagOMeter);
 }
 
