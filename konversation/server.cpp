@@ -1603,12 +1603,21 @@ void Server::away()
 {
   isAway=true;
   emit awayState(isAway);
+  
+  if(!getIdentity()->getAwayNick().isEmpty()) {
+    nonAwayNick = getNickname();
+    queue("NICK " + getIdentity()->getAwayNick());
+  }
 }
 
 void Server::unAway()
 {
   isAway=false;
   emit awayState(isAway);
+  
+  if(!getIdentity()->getAwayNick().isEmpty() && !nonAwayNick.isEmpty()) {
+    queue("NICK " + nonAwayNick);
+  }
 }
 
 bool Server::isAChannel(const QString &check)
@@ -1673,8 +1682,8 @@ void Server::autoRejoinChannels()
   queue(joinString);
 }
 
-void Server::setIdentity(const Identity* newIdentity) { identity=newIdentity; }
-const Identity* Server::getIdentity() { return identity; }
+void Server::setIdentity(Identity* newIdentity) { identity=newIdentity; }
+Identity* Server::getIdentity() { return identity; }
 
 void Server::setMainWindow(KonversationMainWindow* newMainWindow) { mainWindow=newMainWindow; }
 KonversationMainWindow* Server::getMainWindow() const { return mainWindow; }

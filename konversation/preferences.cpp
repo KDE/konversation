@@ -386,7 +386,7 @@ void Preferences::removeIdentity(Identity* identity) { identityList.remove(ident
 void Preferences::clearIdentityList() { identityList.clear(); }
 QPtrList<Identity> Preferences::getIdentityList() { return identityList; }
 
-const Identity * Preferences::getIdentityByName(const QString& name)
+Identity * Preferences::getIdentityByName(const QString& name)
 {
   QPtrList<Identity> identities=getIdentityList();
   Identity* identity=identities.first();

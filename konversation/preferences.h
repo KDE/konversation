@@ -220,7 +220,7 @@ class Preferences : public QObject
     void removeIdentity(Identity* identity);
     void clearIdentityList();
     QPtrList<Identity> getIdentityList();
-    const Identity *getIdentityByName(const QString& name);
+    Identity *getIdentityByName(const QString& name);
     Identity* identity;
 
     QString getIdent();
@@ -358,7 +358,7 @@ class Preferences : public QObject
 
     bool getShowTopic();
     void setShowTopic(bool s);
-
+    
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();

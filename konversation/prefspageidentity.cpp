@@ -116,6 +116,10 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   unAwayLabel=new QLabel(i18n("Re&turn message:"),parentFrame);
   unAwayInput=new KLineEdit(parentFrame);
   unAwayLabel->setBuddy(unAwayInput);
+  
+  QLabel* awayNickLabel = new QLabel(i18n("Away nickname:"), parentFrame);
+  awayNickInput = new KLineEdit(parentFrame);
+  awayNickLabel->setBuddy(awayNickInput);
 
   defaultText=new QLabel(i18n("<qt>This is the default identity used for all servers "
                               "where no separate identity was selected.</qt>"),
@@ -174,6 +178,9 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   identityLayout->addWidget(unAwayLabel,row,0);
   identityLayout->addMultiCellWidget(unAwayInput,row,row,1,3);
   row++;
+  identityLayout->addWidget(awayNickLabel, row, 0);
+  identityLayout->addMultiCellWidget(awayNickInput, row, row, 1, 3);
+  row++;
   identityLayout->addMultiCellWidget(defaultText,row,row,0,3);
   row++;
   identityLayout->addMultiCellWidget(buttonBox,row,row,0,3);
@@ -207,6 +214,8 @@ PrefsPageIdentity::PrefsPageIdentity(QFrame* newParent,Preferences* newPreferenc
   connect(showAwayMessageCheck,SIGNAL (stateChanged(int)),this,SLOT (showAwayMessageChanged(int)) );
   connect(awayInput,SIGNAL (textChanged(const QString&)),this,SLOT (awayMessageChanged(const QString&)) );
   connect(unAwayInput,SIGNAL (textChanged(const QString&)),this,SLOT (unAwayMessageChanged(const QString&)) );
+  
+  connect(awayNickInput, SIGNAL(textChanged(const QString&)), this, SLOT(awayNickChanged(const QString&)));
 
   connect(addIdentityButton,SIGNAL (clicked()),this,SLOT(addIdentity()) );
   connect(removeIdentityButton,SIGNAL (clicked()),this,SLOT(removeIdentity()) );
@@ -334,6 +343,8 @@ void PrefsPageIdentity::updateIdentity(int number)
   showAwayMessageCheck->setChecked(identity->getShowAwayMessage());
   awayInput->setText(identity->getAwayMessage());
   unAwayInput->setText(identity->getReturnMessage());
+  
+  awayNickInput->setText(identity->getAwayNick());
 
   updateAwayWidgets(identity->getShowAwayMessage());
 }
@@ -392,6 +403,11 @@ void PrefsPageIdentity::removeIdentity()
 void PrefsPageIdentity::applyPreferences()
 {
   // FIXME: keep a copy of all identities and save them only here!
+}
+
+void PrefsPageIdentity::awayNickChanged(const QString& newNick)
+{
+  identity->setAwayNick(newNick);
 }
 
 #include "prefspageidentity.moc"

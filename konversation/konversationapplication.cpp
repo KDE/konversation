@@ -364,6 +364,8 @@ void KonversationApplication::readOptions()
       newIdentity->setKickReason(config->readEntry("KickReason"));
 
       newIdentity->setCodec(config->readEntry("Codec"));
+      
+      newIdentity->setAwayNick(config->readEntry("AwayNick"));
 
       preferences.addIdentity(newIdentity);
 
@@ -629,6 +631,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->writeEntry("PartReason",identity->getPartReason());
     config->writeEntry("KickReason",identity->getKickReason());
     config->writeEntry("Codec",identity->getCodec().stripWhiteSpace());
+    config->writeEntry("AwayNick", identity->getAwayNick());
   } // endfor
 
   config->setGroup("Notify List");

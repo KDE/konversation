@@ -77,3 +77,6 @@ void Identity::setCodec(const QString &newCodec)
   // never set an empty codec!
   if(!newCodec.isEmpty()) codec=newCodec;
 }
+
+QString Identity::getAwayNick() { return awayNick; }
+void Identity::setAwayNick(const QString& n) { awayNick = n; }

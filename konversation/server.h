@@ -44,7 +44,7 @@ class Server : public QObject
     ~Server();
 
     QString getServerName() const;
-    const Identity *getIdentity();
+    Identity *getIdentity();
     int getPort() const;
     int getLag() const;
     bool getAutoJoin() const;
@@ -212,7 +212,7 @@ class Server : public QObject
     void lookupFinished();
     void startNotifyCheckTimer();
     bool isAChannel(const QString &check);
-    void setIdentity(const Identity *newIdentity);
+    void setIdentity(Identity *newIdentity);
     
     void autoRejoinChannels();
 
@@ -229,7 +229,7 @@ class Server : public QObject
     QString serverNickPrefixModes;  // if supplied: modes related to those prefixes
 
     IRCResolver resolver;
-    const Identity* identity;
+    Identity* identity;
 
     bool autoJoin;
     bool autoRejoin;
@@ -273,6 +273,8 @@ class Server : public QObject
     bool isAway;
     bool alreadyConnected;
     bool rejoinChannels;
+    
+    QString nonAwayNick;
 };
 
 #endif

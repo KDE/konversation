@@ -70,6 +70,8 @@ class PrefsPageIdentity : public PrefsPage
 
     void addIdentity();
     void removeIdentity();
+    
+    void awayNickChanged(const QString& newNick);
 
   protected:
     QPtrList<Identity> identities;
@@ -102,6 +104,8 @@ class PrefsPageIdentity : public PrefsPage
     QLabel* unAwayLabel;
     KLineEdit* awayInput;
     KLineEdit* unAwayInput;
+    
+    KLineEdit* awayNickInput;
 
     QPushButton* removeIdentityButton;
 };

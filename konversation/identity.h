@@ -61,6 +61,9 @@ class Identity
 
     void setCodec(const QString &newCodec);
     QString getCodec() const;
+    
+    QString getAwayNick();
+    void setAwayNick(const QString& n);
 
   protected:
     QString name;
@@ -80,6 +83,8 @@ class Identity
     QString awayMessage;
     QString returnMessage;
     QString codec;
+    
+    QString awayNick;
 };
 
 #endif

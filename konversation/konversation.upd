@@ -1,0 +1,5 @@
+# Update mainwindow settings
+Id=0.14-mainwindow
+File=konversationrc
+Group=General Settings
+Script=konversation-0.14-mainwindow.pl,perl
