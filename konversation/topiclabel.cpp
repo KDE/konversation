@@ -28,6 +28,7 @@ namespace Konversation {
 TopicLabel::TopicLabel(QWidget *parent, const char *name)
  : KActiveLabel(parent, name)
 {
+  setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
 }
 
 TopicLabel::~TopicLabel()
