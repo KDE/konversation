@@ -138,7 +138,14 @@ void Query::textPasted(QString text)
   if(server)
   {
     QStringList multiline=QStringList::split('\n',text);
-    for(unsigned int index=0;index<multiline.count();index++) sendQueryText(multiline[index]);
+    for(unsigned int index=0;index<multiline.count();index++)
+    {
+      QString line=multiline[index];
+      QString cChar(KonversationApplication::preferences.getCommandChar());
+      // make sure that lines starting with command char get escaped
+      if(line.startsWith(cChar)) line=cChar+line;
+      sendQueryText(line);
+    }
   }
 }
 

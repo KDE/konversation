@@ -250,9 +250,15 @@ void Channel::textPasted(QString text)
 {
   if(server)
   {
-    // TODO: make sure that lines starting with / get extended to //
     QStringList multiline=QStringList::split('\n',text);
-    for(unsigned int index=0;index<multiline.count();index++) sendChannelText(multiline[index]);
+    for(unsigned int index=0;index<multiline.count();index++)
+    {
+      QString line=multiline[index];
+      QString cChar(KonversationApplication::preferences.getCommandChar());
+      // make sure that lines starting with command char get escaped
+      if(line.startsWith(cChar)) line=cChar+line;
+      sendChannelText(line);
+    }
   }
 }
 
