@@ -155,7 +155,13 @@ void DccPanel::removeDcc()
       doDelete=false;
     }
 
-    if(doDelete) delete item;
+    if(doDelete)
+    {
+      delete item;
+      // select next item so the user can clean up the list quickly
+      item=static_cast<DccTransfer*>(getListView()->currentItem());
+      if(item) getListView()->setSelected(item,true);
+    }
   }
 }
 

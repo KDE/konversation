@@ -107,7 +107,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
 
     else if(line.startsWith("raw "))     parseRaw(parameter);
     else if(line.startsWith("dcc "))     parseDcc(parameter);
-    else if(line.startsWith("konsole ")) parseKonsole(parameter);
+    else if(line.startsWith("konsole ")) parseKonsole();
 
     else if(line=="join")                parseJoin(QString::null);
     else if(line=="part")                parsePart(QString::null);
@@ -126,7 +126,7 @@ QString& OutputFilter::parse(const QString& myNick,const QString& originalLine,c
 
     else if(line=="dcc")                 parseDcc(QString::null);
     else if(line=="raw")                 parseRaw(QString::null);
-    else if(line=="konsole")             parseKonsole(QString::null);
+    else if(line=="konsole")             parseKonsole();
 
     // Forward unknown commands to server
     else toServer=inputLine.mid(1);
@@ -719,7 +719,7 @@ void OutputFilter::execBan(const QString& mask,const QString& channel)
   toServer="MODE "+channel+" +b "+mask;
 }
 
-void OutputFilter::parseKonsole(const QString &parameter)
+void OutputFilter::parseKonsole()
 {
   emit openKonsolePanel();
 }
