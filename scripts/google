@@ -105,7 +105,7 @@ else
 
 	$search_escape = $search;
 	# Encode "&", "<", ">", and "'" . See http://groups.yahoo.com/group/soaplite/message/3037
-	encode_entities($search_escape, "&<>'");
+	HTML::Entities::encode_entities($search_escape, "&<>'");
 	if($limit > 10) { $limit=10; }
 	$result = $googleSearch->doGoogleSearch($key, $search_escape, 0, $limit, "false", "", "false", "", "UTF-8", "UTF-8"); 
 	
@@ -123,7 +123,7 @@ else
 	    $print = $result->{URL}." (".$result->{title}.")";
 	    $print =~ s/\<b\>/\x02/g;
 	    $print =~ s/\<\/b\>/\x02/g;
-	    decode_entities($print);
+	    HTML::Entities::decode_entities($print);
 	    system 'dcop', $port, 'Konversation', 'info', $print;
 	}
     }
