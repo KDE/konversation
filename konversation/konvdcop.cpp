@@ -13,7 +13,9 @@
 #include <qstring.h>
 
 
-KonvDCOP::KonvDCOP() : QObject(0,"Konversation"), DCOPObject("Konversation")
+KonvDCOP::KonvDCOP()
+      : DCOPObject("Konversation"),
+        QObject(0,"Konversation")
 {
   if(!kapp->dcopClient()->isRegistered())
   {
@@ -122,7 +124,8 @@ QString KonvDCOP::getNickname (int /*serverid*/)
 
 // Identity stuff
 KonvIdentDCOP::KonvIdentDCOP()
-  : QObject(0, "KonvDCOPIdentity"), DCOPObject("KonvDCOPIdentity")
+             : DCOPObject("KonvDCOPIdentity"),
+               QObject(0, "KonvDCOPIdentity")
 {
   if (!kapp->dcopClient()->isRegistered()) {
     kapp->dcopClient()->registerAs("konversation");
@@ -270,7 +273,8 @@ QString KonvIdentDCOP::getReturnMessage(const QString &identity)
 
 // Prefs class stuff
 KonvPrefsDCOP::KonvPrefsDCOP ()
-  : QObject(0, "KonvDCOPPreferences"), DCOPObject("KonvDCOPPreferences")
+             : DCOPObject("KonvDCOPPreferences"),
+               QObject(0, "KonvDCOPPreferences")
 {
   if (!kapp->dcopClient()->isRegistered()) {
     kapp->dcopClient()->registerAs("konversation");

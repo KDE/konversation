@@ -16,6 +16,10 @@
 
 #include <unistd.h>
 #include <sys/socket.h>
+#include <linux/version.h>
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,50)
+typedef unsigned long long __u64;
+#endif
 #include <linux/in.h>
 
 #include <qregexp.h>
