@@ -173,10 +173,16 @@ QStringList Addressbook::protocols() {
  * @param message the message to send them.
  */
 void Addressbook::messageContact( const QString &uid, const QString& message ) {
-	if(uid.isEmpty() || message.isEmpty()) {
+	if(uid.isEmpty()) {
 	        kdDebug() << "Addressbook::messageContact called with empty uid or message" << endl;
 		return;
 	}
+	NickInfoPtr nickInfo = getNickInfo(addressBook->findByUid(uid), true);
+	if(!nickInfo) {
+		kdDebug() << "messageContact:  uid %1 not online\n" << endl;
+		return;
+	}
+	nickInfo->getServer()->dcopSay(nickInfo->getNickname(), message);
 	
 	
 }
@@ -189,6 +195,7 @@ void Addressbook::messageNewContact( const QString &contactId, const QString &/*
 	        kdDebug() << "Addressbook::messageNewContact called with empty contactid" << endl;
 		return;
 	}
+	messageContact(contactId, QString::null);
 }
 
 /**
@@ -200,6 +207,7 @@ void Addressbook::chatWithContact( const QString &uid ) {
 		kdDebug() << "Addressbook::chatWithContact called with empty uid" << endl;
 		return;
 	}
+	messageContact(uid, QString::null);
 }
 
 /**
@@ -235,7 +243,6 @@ void Addressbook::emitContactPresenceChanged(QString uid, int presence) {
 //		kdDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
 		return;
 	}
-	Q_ASSERT(kapp);
 	Q_ASSERT(kapp->dcopClient());
 	emit contactPresenceChanged(uid, kapp->dcopClient()->appId(), presence);
 	kdDebug() << "Presence changed for uid " << uid << " to " << presence << endl;
