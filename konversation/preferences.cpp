@@ -77,8 +77,8 @@ Preferences::Preferences()
   buttonList.append("Version,/CTCP %s,%%u VERSION%n");
   buttonList.append("Kick,/KICK %u%n");
   buttonList.append("Ban,/BAN %u%n");
-  buttonList.append("Part,/PART %c KDE Rules!%n");
-  buttonList.append("Quit,/QUIT KDE Rules!%n");
+  buttonList.append("Part,/PART %c Leaving...%n");
+  buttonList.append("Quit,/QUIT Leaving...%n");
 
   setShowQuickButtons(false);
   setShowModeButtons(true);
