@@ -66,7 +66,7 @@ Preferences::Preferences()
   setNickCompleteSuffixStart(": ");
   setNickCompleteSuffixMiddle(" ");
 
-  addServer("IRCNet,irc.kde.org,6667,,#kde-users,,0,");
+  addServer("Freenode,irc.kde.org,6667,,#kde-users,,0,");
 
   buttonList.append("Op,/OP %u%n");
   buttonList.append("DeOp,/DEOP %u%n");
