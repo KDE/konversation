@@ -16,6 +16,7 @@ Changes from 0.11 to 0.12
 - Added nickname sorting options
 - Sorting now has up/down arrows
 - Added channel list panel
+- Added russian translation by Stanislav Karchebny (thanks!)
 
 Changes from 0.10 to 0.11
 - Added a patch by Bart Verwilst to provide automatic service registration (thanks!)
