@@ -1060,7 +1060,7 @@ void Server::incoming()
       // }
 
       if(!channelEncoding.isEmpty())
-        codec = IRCCharsets::codecForName(channelEncoding);
+        codec = Konversation::IRCCharsets::self()->codecForName(channelEncoding);
 
       // if channel encoding is utf-8 and the string is definitely not utf-8
       // then try latin-1
@@ -1168,7 +1168,7 @@ void Server::send()
     QTextCodec* codec = getIdentity()->getCodec();
 
     if(!channelCodecName.isEmpty()) {
-       codec = IRCCharsets::codecForName(channelCodecName);
+       codec = Konversation::IRCCharsets::self()->codecForName(channelCodecName);
     }
 
     // convert encoded data to IRC ascii only when we don't have the same codec locally

@@ -1254,7 +1254,7 @@ namespace Konversation {
 
   void OutputFilter::parseCharset(const QString charset)
   {
-    QString shortName = IRCCharsets::ambiguousNameToShortName(charset);
+    QString shortName = Konversation::IRCCharsets::self()->ambiguousNameToShortName(charset);
     if(!shortName.isEmpty())
       m_server->getIdentity()->setCodecName(shortName);
   }

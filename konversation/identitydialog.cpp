@@ -204,7 +204,7 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   m_codecCBox = new KComboBox(advancedWidget,"codec_combo_box");
   codecLabel->setBuddy(m_codecCBox);
   // add encodings to combo box
-  m_codecCBox->insertStringList(IRCCharsets::availableEncodingDescriptiveNames());
+  m_codecCBox->insertStringList(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
 
 
   QLabel* partLabel = new QLabel(i18n("&Part reason:"), advancedWidget);
@@ -279,7 +279,7 @@ void IdentityDialog::updateIdentity(int index)
   m_awayEdit->setText(m_currentIdentity->getAwayMessage());
   m_unAwayEdit->setText(m_currentIdentity->getReturnMessage());
 
-  m_codecCBox->setCurrentItem(IRCCharsets::shortNameToIndex(m_currentIdentity->getCodecName()));
+  m_codecCBox->setCurrentItem(Konversation::IRCCharsets::self()->shortNameToIndex(m_currentIdentity->getCodecName()));
   m_loginEdit->setText(m_currentIdentity->getIdent());
   m_partEdit->setText(m_currentIdentity->getPartReason());
   m_kickEdit->setText(m_currentIdentity->getKickReason());
@@ -365,7 +365,7 @@ void IdentityDialog::refreshCurrentIdentity()
   m_currentIdentity->setAwayMessage(m_awayEdit->text());
   m_currentIdentity->setReturnMessage(m_unAwayEdit->text());
 
-  m_currentIdentity->setCodecName(IRCCharsets::availableEncodingShortNames()[m_codecCBox->currentItem()]);
+  m_currentIdentity->setCodecName(Konversation::IRCCharsets::self()->availableEncodingShortNames()[m_codecCBox->currentItem()]);
   m_currentIdentity->setIdent(m_loginEdit->text());
   m_currentIdentity->setPartReason(m_partEdit->text());
   m_currentIdentity->setKickReason(m_kickEdit->text());

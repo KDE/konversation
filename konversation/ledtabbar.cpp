@@ -87,7 +87,7 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
     // Encoding {
     m_popupEncoding=new KPopupMenu(this,"ledtabbar_context_menu_encoding");
     m_popupEncoding->setCheckable(true);
-    QStringList encodingDescs=IRCCharsets::availableEncodingDescriptiveNames();
+    QStringList encodingDescs=Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames();
     unsigned int j=0;
     for(QStringList::Iterator it=encodingDescs.begin(); it!=encodingDescs.end(); ++it)
     {
@@ -449,9 +449,9 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
           m_popup->setItemEnabled(EncodingSub, true);
           m_popupEncoding->changeItem(POPUPID_ENCODING_OFFSET+0,win->getChannelEncodingDefaultDesc());
           QString encoding=win->getChannelEncoding();
-          int encodingIndex=IRCCharsets::shortNameToIndex(encoding);
+          int encodingIndex=Konversation::IRCCharsets::self()->shortNameToIndex(encoding);
           m_popupEncoding->setItemChecked(POPUPID_ENCODING_OFFSET+0, (encoding.isEmpty())); // identity default
-          for(int i=0; i<IRCCharsets::availableEncodingsCount(); ++i)
+          for(int i=0; i<Konversation::IRCCharsets::self()->availableEncodingsCount(); ++i)
             m_popupEncoding->setItemChecked(POPUPID_ENCODING_OFFSET+i+1, (encodingIndex == i));
         }
       } else {
@@ -509,14 +509,14 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
           }
         }
       }
-      else if(POPUPID_ENCODING_OFFSET <= r && r <= POPUPID_ENCODING_OFFSET+IRCCharsets::availableEncodingsCount()+1)
+      else if(POPUPID_ENCODING_OFFSET <= r && r <= POPUPID_ENCODING_OFFSET+Konversation::IRCCharsets::self()->availableEncodingsCount()+1)
       {
         if(win)
         {
           if(POPUPID_ENCODING_OFFSET == r)
             win->setChannelEncoding(QString::null);
           else
-            win->setChannelEncoding(IRCCharsets::availableEncodingShortNames()[r-POPUPID_ENCODING_OFFSET-1]);
+            win->setChannelEncoding(Konversation::IRCCharsets::self()->availableEncodingShortNames()[r-POPUPID_ENCODING_OFFSET-1]);
         }
       }
     }

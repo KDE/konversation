@@ -21,68 +21,74 @@
 #include <kcharsets.h>
 #include <kdebug.h>
 #include <kglobal.h>
+#include <kstaticdeleter.h>
 
 #include "irccharsets.h"
 
-QStringList IRCCharsets::availableEncodingShortNames()  // static
-{
-  private_init();
-  return s_shortNames;
+namespace Konversation {
+
+IRCCharsets* IRCCharsets::s_self = 0;
+static KStaticDeleter<IRCCharsets> staticIRCCharsetDeleter;
+
+IRCCharsets *IRCCharsets::self() {
+  if(!s_self)
+    staticIRCCharsetDeleter.setObject(s_self, new IRCCharsets());
+  return s_self;
 }
 
-QStringList IRCCharsets::availableEncodingDescriptiveNames()  // static
+    
+QStringList IRCCharsets::availableEncodingShortNames()
 {
-  private_init();
-  return s_descriptiveNames;
+  return m_shortNames;
 }
 
-int IRCCharsets::availableEncodingsCount()  // static
+QStringList IRCCharsets::availableEncodingDescriptiveNames()
 {
-  private_init();
-  return s_shortNames.count();
+  return m_descriptiveNames;
 }
 
-QString IRCCharsets::shortNameToDescriptiveName( const QString& shortName ) // static
+int IRCCharsets::availableEncodingsCount()
 {
-  private_init();
-  return s_descriptiveNames[ shortNameToIndex( shortName ) ];
+  return m_shortNames.count();
 }
 
-QString descriptiveNameToShortName( const QString& descriptiveName )  // static
+QString IRCCharsets::shortNameToDescriptiveName( const QString& shortName )
+{
+  return m_descriptiveNames[ shortNameToIndex( shortName ) ];
+}
+
+QString descriptiveNameToShortName( const QString& descriptiveName )
 {
   return KGlobal::charsets()->encodingForName( descriptiveName );
 }
 
-QString IRCCharsets::ambiguousNameToShortName( const QString& ambiguousName )  // static
+QString IRCCharsets::ambiguousNameToShortName( const QString& ambiguousName )
 {
-  private_init();
-  
   // simplify ambiguousName
   QString simplifiedAmbiguousName( ambiguousName.lower() );
   simplifiedAmbiguousName.replace( QRegExp( "[^a-z0-9]" ), "" );
   
-  // search s_simplifiedShortNames
+  // search m_simplifiedShortNames
   int index = 0;
-  for ( QStringList::iterator it = s_simplifiedShortNames.begin() ; it != s_simplifiedShortNames.end() ; ++it )
+  for ( QStringList::iterator it = m_simplifiedShortNames.begin() ; it != m_simplifiedShortNames.end() ; ++it )
   {
     if ( (*it) == simplifiedAmbiguousName )
-      return s_shortNames[index];
+      return m_shortNames[index];
     ++index;
   }
   
-  // search s_shortNameAliases
-  if ( s_shortNameAliases.contains( simplifiedAmbiguousName ) )
-    return s_shortNameAliases[ simplifiedAmbiguousName ];
+  // search m_shortNameAliases
+  if ( m_shortNameAliases.contains( simplifiedAmbiguousName ) )
+    return m_shortNameAliases[ simplifiedAmbiguousName ];
   
   // failed
   return QString::null;
 }
 
-int IRCCharsets::shortNameToIndex( const QString& shortName )  // static
+int IRCCharsets::shortNameToIndex( const QString& shortName ) 
 {
-  private_init();
   int index = 0;
-  for ( QStringList::iterator it = s_shortNames.begin() ; it != s_shortNames.end() ; ++it )
+  for ( QStringList::iterator it = m_shortNames.begin() ; it != m_shortNames.end() ; ++it )
   {
     if ( (*it) == shortName )
       return index;
@@ -91,15 +97,13 @@ int IRCCharsets::shortNameToIndex( const QString& shortName )  // static
   return -1;
 }
 
-bool IRCCharsets::isValidEncoding( const QString& shortName )  // static
+bool IRCCharsets::isValidEncoding( const QString& shortName )
 {
-  private_init();
-  return ( s_shortNames.contains( shortName ) > 0 );
+  return ( m_shortNames.contains( shortName ) > 0 );
 }
 
-QString IRCCharsets::encodingForLocale()  // static
+QString IRCCharsets::encodingForLocale() 
 {
-  private_init();
 #if QT_VERSION < 0x030300
   QString locale = KLocale::defaultLanguage();
 #else
@@ -112,7 +116,7 @@ QString IRCCharsets::encodingForLocale()  // static
     return "jis7";
   
   // it's a little hacky..
-  for ( QStringList::iterator it = s_shortNames.begin() ; it != s_shortNames.end() ; ++it )
+  for ( QStringList::iterator it = m_shortNames.begin() ; it != m_shortNames.end() ; ++it )
     if ( QTextCodec::codecForName( (*it).ascii() ) == QTextCodec::codecForLocale() )
       return *it;
   
@@ -124,37 +128,31 @@ QTextCodec* IRCCharsets::codecForName( const QString& shortName )
   return QTextCodec::codecForName( shortName.ascii() );
 }
 
-void IRCCharsets::private_init()  // static, private
+IRCCharsets::IRCCharsets()
 {
-  if ( s_initialized )
-    return;
-  s_initialized = true;
+  s_self = this;
   
-  // setup s_shortNameAliases
+  // setup m_shortNameAliases
   // use only [a-z0-9] for keys!
-  s_shortNameAliases[ "unicode" ] = "utf8";
+  m_shortNameAliases[ "unicode" ] = "utf8";
   
-  // setup s_shortNames, s_descriptiveNames, s_simplifiedShortNames
+  // setup m_shortNames, m_descriptiveNames, m_simplifiedShortNames
   QRegExp reSimplify( "[^a-zA-Z0-9]" );
-  s_descriptiveNames = KGlobal::charsets()->descriptiveEncodingNames();
-  QStringList::Iterator it = s_descriptiveNames.begin();
-  while ( it != s_descriptiveNames.end() )
+  m_descriptiveNames = KGlobal::charsets()->descriptiveEncodingNames();
+  QStringList::Iterator it = m_descriptiveNames.begin();
+  while ( it != m_descriptiveNames.end() )
   {
     QString encodingName = KGlobal::charsets()->encodingForName( *it );
     // exclude utf16 and ucs2
     if ( encodingName == "utf16" || encodingName == "iso-10646-ucs-2" )
-      it = s_descriptiveNames.remove( it );
+      it = m_descriptiveNames.remove( it );
     else
     {
-      s_shortNames.append( encodingName );
-      s_simplifiedShortNames.append( encodingName.replace( reSimplify, "" ) );
+      m_shortNames.append( encodingName );
+      m_simplifiedShortNames.append( encodingName.replace( reSimplify, "" ) );
       ++it;
     }
   }
 }
 
-bool IRCCharsets::s_initialized = false;
-QStringList IRCCharsets::s_shortNames;
-QStringList IRCCharsets::s_descriptiveNames;
-QStringList IRCCharsets::s_simplifiedShortNames;
-QMap<QString,QString> IRCCharsets::s_shortNameAliases;
+}

@@ -215,7 +215,7 @@ void DccChat::readData()
   int actual=0;
   char* buffer=0;
   QString line;
-  QTextCodec* codec = IRCCharsets::codecForName(m_encoding.isEmpty() ? IRCCharsets::encodingForLocale() : m_encoding);
+  QTextCodec* codec = Konversation::IRCCharsets::self()->codecForName(m_encoding.isEmpty() ? Konversation::IRCCharsets::self()->encodingForLocale() : m_encoding);
 
   available = m_dccSocket->bytesAvailable();
   if( available > 0 )
@@ -276,7 +276,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
     // wrap socket into a stream
     QTextStream stream(m_dccSocket);
     // init stream props
-    stream.setCodec(IRCCharsets::codecForName(m_encoding.isEmpty() ? IRCCharsets::encodingForLocale() : m_encoding));
+    stream.setCodec(Konversation::IRCCharsets::self()->codecForName(m_encoding.isEmpty() ? Konversation::IRCCharsets::self()->encodingForLocale() : m_encoding));
 
     for(unsigned int index=0;index<lines.count();index++)
     {
@@ -375,7 +375,7 @@ QString DccChat::getChannelEncoding()  // virtual
 
 QString DccChat::getChannelEncodingDefaultDesc()  // virtual
 {
-  return i18n("Default ( %1 )").arg(IRCCharsets::encodingForLocale());
+  return i18n("Default ( %1 )").arg(Konversation::IRCCharsets::self()->encodingForLocale());
 }
 
 #ifdef USE_MDI

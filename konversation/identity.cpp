@@ -27,7 +27,7 @@ Identity::Identity() : KShared()
 {
   m_id = s_availableId;
   s_availableId++;
-  setCodecName(IRCCharsets::encodingForLocale());
+  setCodecName(Konversation::IRCCharsets::self()->encodingForLocale());
 }
 
 Identity::Identity(int id) : KShared()
@@ -116,11 +116,11 @@ void Identity::setCodecName(const QString &newCodecName)
   
   // never set an empty or borked codec!
   QString codecName=newCodecName.lower();
-  if(!IRCCharsets::isValidEncoding(codecName))
-    codecName=IRCCharsets::encodingForLocale();
+  if(!Konversation::IRCCharsets::self()->isValidEncoding(codecName))
+    codecName=Konversation::IRCCharsets::self()->encodingForLocale();
   
   m_codecName=codecName;
-  m_codec=IRCCharsets::codecForName(codecName);
+  m_codec=Konversation::IRCCharsets::self()->codecForName(codecName);
 }
 
 QString Identity::getAwayNick() { return awayNick; }

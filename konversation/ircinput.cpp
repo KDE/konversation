@@ -324,7 +324,8 @@ void IRCInput::insertHtml(const QString& htmlTextToInsert)
     if(checkPaste(text)) emit textPasted(text); //TODO this should not be synchronous
   }
   // otherwise let KLineEdit handle the new text
-  else KTextEdit::insert(text);
+  else 
+     KTextEdit::insert(text);
 }
 
 void IRCInput::insert(const QString& textToInsert)
