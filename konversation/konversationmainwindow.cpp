@@ -135,8 +135,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("&New Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
 
   // Actions to navigate through the different pages
-  new KAction(i18n("&Next Tab"), "next",KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
-  new KAction(i18n("&Previous Tab"), "previous",KShortcut("Alt+Left"),
+  new KAction(i18n("&Next Tab"), "next",KShortcut("Shift+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
+  new KAction(i18n("&Previous Tab"), "previous",KShortcut("Shift+Left"),
     this,SLOT(previousTab()),actionCollection(),"previous_tab");
   new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
   new TabAction(i18n("Go to Tab Number %1").arg( 1),0,KShortcut("Alt+1"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_1");
@@ -151,14 +151,14 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new TabAction(i18n("Go to Tab Number %1").arg(10),9,KShortcut("Alt+0"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_0");
 
   new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
-  
+
   KStdAction::find(this, SLOT(findText()), actionCollection());
   KStdAction::findNext(this, SLOT(findNextText()), actionCollection());
-  
+
   new KAction(i18n("&IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors");
   new KAction(i18n("&Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line");
   new KAction(i18n("&Character..."), 0, 0, this, SLOT(insertCharacter()), actionCollection(), "insert_character");
-  
+
   new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
 
   new KAction(i18n("Tabpage Mode"),"tabpage",0,this,SLOT (switchToTabPageMode()),actionCollection(),"mdi_tabpage_mode");
@@ -227,7 +227,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   // demo how to add additional dock windows
 //  QListView* dockList=new QListView(this);
 //  addToolWindow(dockList,KDockWidget::DockLeft,getMainDockWidget());
-  
+
   if(KonversationApplication::preferences.getOpenWatchedNicksAtStartup()) {
     openNicksOnlinePanel();
   }
@@ -1106,7 +1106,7 @@ void KonversationMainWindow::tooLongLag(Server* lagServer,int msec)
   {
     int secsleft = msec/1000;
     QStringList timeString;
-    
+
     if(secsleft%60 == 1) {
 	    timeString.push_front(i18n("1 second"));
 	    secsleft -= 1;
@@ -1383,7 +1383,7 @@ void KonversationMainWindow::insertCharacter()
     m_insertCharDialog = new Konversation::InsertCharDialog(frontView->getTextView()->font().family(), this);
     connect(m_insertCharDialog, SIGNAL(insertChar(const QChar&)), this, SLOT(insertChar(const QChar&)));
   }
-  
+
   m_insertCharDialog->show();
 }
 
