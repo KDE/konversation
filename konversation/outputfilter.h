@@ -24,7 +24,6 @@
   @author Dario Abatianni
 */
 
-class Identity;
 class Server;
 
 namespace Konversation
@@ -76,7 +75,6 @@ namespace Konversation
   
     public slots:
       void setCommandChar();
-      void setIdentity(const Identity *newIdentity);
       void execBan(const QString& mask,const QString& channels);
       void execUnban(const QString& mask,const QString& channels);
   
@@ -89,7 +87,6 @@ namespace Konversation
       QString unknownCommand;
   
       QString commandChar;
-      Identity identity;
   
       // message types
       bool action;

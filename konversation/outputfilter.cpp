@@ -255,7 +255,7 @@ namespace Konversation {
         // get kick reason (if any)
         QString reason=parameter.mid(victim.length()+1);
         // if no reason given, take default reason
-        if(reason.isEmpty()) reason=identity.getKickReason();
+        if(reason.isEmpty()) reason = m_server->getIdentity()->getKickReason();
         toServer="KICK "+destination+" "+victim+" :"+reason;
       }
     }
@@ -273,7 +273,7 @@ namespace Konversation {
     if(parameter.isEmpty())
     {
       // But only if we actually are in a channel
-      if(isAChannel(destination)) toServer="PART "+destination+" :"+identity.getPartReason();
+      if(isAChannel(destination)) toServer = "PART " + destination + " :" + m_server->getIdentity()->getPartReason();
       else
       {
         type=i18n("Error");
@@ -291,7 +291,7 @@ namespace Konversation {
         // get part reason (if any)
         QString reason=parameter.mid(channel.length()+1);
         // if no reason given, take default reason
-        if(reason.isEmpty()) reason=identity.getPartReason();
+        if(reason.isEmpty()) reason = m_server->getIdentity()->getPartReason();
         toServer="PART "+channel+" :"+reason;
       }
       // part this channel with a given reason
@@ -358,9 +358,9 @@ namespace Konversation {
     }
     else
     {
-      if(identity.getShowAwayMessage())
+      if(m_server->getIdentity()->getShowAwayMessage())
       {
-        QString message=identity.getAwayMessage();
+        QString message = m_server->getIdentity()->getAwayMessage();
         emit sendToAllChannels(message.replace(QRegExp("%s",false),reason));
       }
   
@@ -376,9 +376,9 @@ namespace Konversation {
     toServer = "QUIT :";
     // if no reason given, take default reason
     if(reason.isEmpty())
-      toServer+=identity.getPartReason();
+      toServer += m_server->getIdentity()->getPartReason();
     else
-      toServer+=reason;
+      toServer += reason;
   }
   
   void OutputFilter::parseNotice(const QString &parameter)
@@ -920,12 +920,6 @@ namespace Konversation {
   bool OutputFilter::isQuery() { return query; }
   
   void OutputFilter::setCommandChar() { commandChar=KonversationApplication::preferences.getCommandChar(); }
-  void OutputFilter::setIdentity(const Identity *newIdentity)
-  {
-    identity=*newIdentity;
-    // TODO: move this into copy constructor! THis does not work yet!
-    identity.setNicknameList(newIdentity->getNicknameList());
-  }
   
   QString& OutputFilter::getOutput() { return output; }
   QString& OutputFilter::getServerOutput() { return toServer; }

@@ -126,7 +126,6 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   inputFilter.setServer(this);
   outputFilter = new Konversation::OutputFilter(this);
-  outputFilter->setIdentity(getIdentity());
 
   notifyTimer.setName("notify_timer");
   incomingTimer.setName("incoming_timer");
@@ -186,7 +185,6 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
 
   inputFilter.setServer(this);
   outputFilter = new Konversation::OutputFilter(this);
-  outputFilter->setIdentity(getIdentity());
 
   notifyTimer.setName("notify_timer");
   incomingTimer.setName("incoming_timer");
