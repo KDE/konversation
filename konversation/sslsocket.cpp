@@ -70,17 +70,7 @@ Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
 Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
 {
   //kdDebug() << "SSLSocket::readBlock : " << QCString(data) << endl;
-  int err = 0;
-
-  /* Default KSSL timeout is 0.2 seconds so we loop here until socket times out */
-
-  while(state() == KNetwork::KClientSocketBase::Connected && err == 0) {
-    err = d->kssl->read( data, maxlen );
-    if (err == 0) {
-      ::sleep(1);
-    }
-  }
-
+  int err = d->kssl->read( data, maxlen );
   return err;
 }
 

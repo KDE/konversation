@@ -957,18 +957,16 @@ void Server::incoming()
 
   // We read all available bytes here because readyRead() signal will be emitted when there is new data
   // else we will stall when displaying MOTD etc.
-  int max_bytes;
-
-  if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
-    max_bytes = m_socket->bytesAvailable();
-  else
-    max_bytes = 512;
+  int max_bytes = m_socket->bytesAvailable();
 
   QByteArray buffer(max_bytes+1);
   int len = 0;
 
   // Read at max "max_bytes" bytes into "buffer"
   len = m_socket->readBlock(buffer.data(),max_bytes);
+  
+  if( len <=0 && m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled() )
+    return;
 
   if(len <= 0 ) { // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
     statusView->appendServerMessage(i18n("Error"),
