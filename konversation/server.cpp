@@ -153,8 +153,8 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
 
   connect(&inputFilter,SIGNAL (away()),this,SLOT (away()) );
   connect(&inputFilter,SIGNAL (unAway()),this,SLOT (unAway()) );
-  connect(&inputFilter,SIGNAL (addDccChat(const QString&,const QStringList&,bool)),
-         getMainWindow(),SLOT (addDccChat(const QString&,const QStringList&,bool)) );
+  connect(&inputFilter,SIGNAL (addDccChat(const QString&,const QString&,const QStringList&,bool)),
+         getMainWindow(),SLOT (addDccChat(const QString&,const QString&,const QStringList&,bool)) );
 
   connect(this,SIGNAL(serverLag(Server*,int)),getMainWindow(),SLOT(updateLag(Server*,int)) );
   connect(this,SIGNAL(tooLongLag(Server*,int)),getMainWindow(),SLOT(tooLongLag(Server*,int)) );

@@ -406,12 +406,14 @@ void KonversationMainWindow::deleteDccPanel()
   }
 }
 
-void KonversationMainWindow::addDccChat(const QString& nick,const QStringList& arguments,bool listen)
+void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen)
 {
   kdDebug() << "KonversationMainWindow::addDccChat(" << nick << " " << arguments.join(" ") << " " << listen << ")" << endl;
 
-  DccChat* dccChatPanel=new DccChat(getViewContainer(),nick,arguments,listen);
+  DccChat* dccChatPanel=new DccChat(getViewContainer(),myNick,nick,arguments,listen);
   addView(dccChatPanel,3,dccChatPanel->getName());
+
+  connect(dccChatPanel,SIGNAL (newText(QWidget*,const QString&)),this,SLOT (newText(QWidget*,const QString&)) );
 }
 
 StatusPanel* KonversationMainWindow::addStatusView(Server* server)
@@ -494,9 +496,10 @@ void KonversationMainWindow::newText(QWidget* view,const QString& highlightColor
   if(view!=getViewContainer()->currentPage())
   {
     getViewContainer()->changeTabState(view,true,highlightColor);
-    
+
     emit startNotification(view);
-  } else if(!isActiveWindow() && static_cast<ChatWindow*>(view)->getServer()->connected())
+  }
+  else if(!isActiveWindow() && static_cast<ChatWindow*>(view)->getServer() && static_cast<ChatWindow*>(view)->getServer()->connected())
   {
     emit startNotification(view);
   }

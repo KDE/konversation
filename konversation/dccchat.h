@@ -30,7 +30,7 @@ class DccChat : public ChatWindow
   Q_OBJECT
 
   public:
-    DccChat(QWidget* parent,const QString& nickname,const QStringList& parameters,bool listen);
+    DccChat(QWidget* parent,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen);
     ~DccChat();
 
     virtual QString getTextInLine();
@@ -42,6 +42,9 @@ class DccChat : public ChatWindow
     void appendInputText(const QString& s);
     virtual void adjustFocus();
 
+  signals:
+    void newText(QWidget* query,const QString& highlightColor);
+
   protected slots:
     void lookupFinished(int numberOfResults);
     void dccChatConnectionSuccess();
@@ -49,11 +52,13 @@ class DccChat : public ChatWindow
     void readData();
     void dccChatTextEntered();
     void textPasted(QString text);
+    void newTextInView(const QString& highlightColor);
 
   protected:
     void connectToPartner();
     void sendDccChatText(const QString& sendLine);
 
+    QString myNick;
     QString nick;
     QString host;
     int port;

@@ -57,7 +57,7 @@ class InputFilter : public QObject
     void away();
     void unAway();
     // will be connected via Server to KonversationMainWindow::addDccChat()
-    void addDccChat(const QString& nick,const QStringList& arguments,bool listen);
+    void addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen);
 
   protected:
     void parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing, QWidget *mainWindow);

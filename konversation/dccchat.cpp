@@ -19,6 +19,7 @@
 
 #include <klineedit.h>
 #include <kextsock.h>
+#include <konversationapplication.h>
 #include <klocale.h>
 #include <kdebug.h>
 
@@ -26,7 +27,8 @@
 #include "ircinput.h"
 #include "dccchat.h"
 
-DccChat::DccChat(QWidget* parent,const QString& nickname,const QStringList& parameters,bool listen) : ChatWindow(parent)
+DccChat::DccChat(QWidget* parent,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen) :
+      ChatWindow(parent)
 {
   kdDebug() << "DccChat::DccChat()" << endl;
 
@@ -35,6 +37,7 @@ DccChat::DccChat(QWidget* parent,const QString& nickname,const QStringList& para
   setType(ChatWindow::DccChat);
   setName("-"+nickname+"-");
 
+  myNick=myNickname;
   nick=nickname;
   host=parameters[1];
   port=parameters[2].toInt();
@@ -54,6 +57,9 @@ DccChat::DccChat(QWidget* parent,const QString& nickname,const QStringList& para
   connect(dccChatInput,SIGNAL (returnPressed()),this,SLOT (dccChatTextEntered()) );
   connect(dccChatInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
 
+  connect(getTextView(),SIGNAL (gotFocus()),this,SLOT (adjustFocus()) );
+  connect(getTextView(),SIGNAL (newText(const QString&)),this,SLOT (newTextInView(const QString&)) );
+
   if(listen);
   else
   {
@@ -65,6 +71,11 @@ DccChat::~DccChat()
 {
   kdDebug() << "DccChat::~DccChat()" << endl;
   if(dccSocket) delete dccSocket;
+}
+
+void DccChat::newTextInView(const QString& highlightColor)
+{
+  emit newText(this,highlightColor);
 }
 
 void DccChat::connectToPartner()
@@ -142,7 +153,22 @@ void DccChat::readData()
     QStringList lines=QStringList::split('\n',line);
 
     for(unsigned int index=0;index<lines.count();index++)
-      getTextView()->append(getName(),lines[index]);
+    {
+      if(line.startsWith("\x01"))
+      {
+        // cut out the CTCP command
+        QString ctcp=line.mid(1,line.find(1,1)-1);
+
+        QString ctcpCommand=ctcp.section(" ",0,0);
+        QString ctcpArgument=ctcp.section(" ",1);
+
+        if(ctcpCommand.lower()=="action")
+          getTextView()->appendAction(nick,ctcpArgument);
+        else
+          getTextView()->append(i18n("CTCP"),i18n("Received unknown CTCP-%1 request from %2").arg(ctcp).arg(nick));
+      }
+      else getTextView()->append(nick,lines[index]);
+    }
   }
 }
 
@@ -161,34 +187,46 @@ void DccChat::sendDccChatText(const QString& sendLine)
 {
   // create a work copy
   QString output(sendLine);
-  // replace aliases and wildcards
-  //  if(filter.replaceAliases(output)) output=server->parseWildcards(output,server->getNickname(),getName(),QString::null,QString::null,QString::null);
-
-  //  output=filter.parse(server->getNickname(),output,getName());
+  QString cc=KonversationApplication::preferences.getCommandChar();
 
   if(!output.isEmpty())
   {
     QStringList lines=QStringList::split('\n',output);
+    // wrap socket into a stream
+    QTextStream stream(dccSocket);
+    // init stream props
+    stream.setEncoding(QTextStream::Locale);
 
-    for(unsigned int index=0;index<lines.count();index++)
-    {
-      // wrap socket into a stream
-      QTextStream stream(dccSocket);
 /*
-      // init stream props
-      serverStream.setEncoding(QTextStream::Locale);
       QString codecName=identity->getCodec();
       // convert encoded data to IRC ascii only when we don't have the same codec locally
       if(QString(QTextCodec::codecForLocale()->name()).lower()!=codecName.lower())
       {
-        serverStream.setCodec(QTextCodec::codecForName(codecName.ascii()));
+        stream.setCodec(QTextCodec::codecForName(codecName.ascii()));
       }
 */
-      stream << output << endl;
+    for(unsigned int index=0;index<lines.count();index++)
+    {
+      QString line(lines[index]);
 
-      // detach stream
-      stream.unsetDevice();
+  // replace aliases and wildcards
+  //  if(filter.replaceAliases(line)) line=server->parseWildcards(line,nick,getName(),QString::null,QString::null,QString::null);
+
+  //  line=filter.parse(nick,line,getName());
+
+      // convert /me actions
+      if(line.lower().startsWith(cc+"me "))
+      {
+        getTextView()->appendAction(myNick,line.section(" ",1));
+        line=QString("\x01%1 %2\x01").arg("ACTION").arg(line.section(" ",1));
+      }
+      else getTextView()->append(myNick,line);
+
+      stream << line << endl;
     } // endfor
+
+    // detach stream
+    stream.unsetDevice();
   }
 }
 
@@ -198,7 +236,7 @@ void DccChat::textPasted(QString /* text */ )
 
 void DccChat::adjustFocus()
 {
-  // empty for now
+  dccChatInput->setFocus();
 }
 
 bool DccChat::frontView()        { return true; }
