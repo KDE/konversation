@@ -228,7 +228,7 @@ void IRCView::replaceDecoration(QString& line,char decoration,char replacement)
 QString IRCView::filter(const QString& line,const QString& defaultColor,const QString& whoSent,bool doHilight, bool parseURL)
 {
   QString filteredLine(line);
-  
+
   // TODO: Use QStyleSheet::escape() here
 
   // Replace all & with &amp;   We use QRegExp here because of pre 3.1 compatibility!
@@ -450,7 +450,7 @@ void IRCView::append(const QString& nick,const QString& message)
 {
   QString channelColor=KonversationApplication::preferences.getColor("ChannelMessage");
   QString line;
-  
+
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
@@ -458,7 +458,7 @@ void IRCView::append(const QString& nick,const QString& message)
   } else {
     line = "<p><font color=\"#" + channelColor + "\">%1 <b>&lt;%2&gt;</b> %3</font></p>\n";
   }
-  
+
   line = line.arg(timeStamp(), filter(nick,channelColor,NULL,false), filter(message,channelColor,nick,true));
 
   emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
@@ -470,7 +470,7 @@ void IRCView::appendRaw(const QString& message, bool suppressTimestamps)
 {
   QString channelColor=KonversationApplication::preferences.getColor("ChannelMessage");
   QString line;
-  
+
   if(suppressTimestamps) {
     line = QString("<p><font color=\"#" + channelColor + "\">" + message + "</font></p>\n");
   } else {
@@ -484,7 +484,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 {
   QString queryColor=KonversationApplication::preferences.getColor("QueryMessage");
   QString line;
-  
+
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
@@ -492,7 +492,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
   } else {
     line = "<p><font color=\"#" + queryColor + "\">%1 <b>*%2*</b> %3</font></p>\n";
   }
-  
+
   line = line.arg(timeStamp(), filter(nick,queryColor,NULL,false), filter(message,queryColor,nick,true));
 
   emit textToLog(QString("*%1*\t%2").arg(nick).arg(message));
@@ -504,7 +504,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
 {
   QString actionColor=KonversationApplication::preferences.getColor("ActionMessage");
   QString line;
-  
+
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
@@ -512,7 +512,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
   } else {
     line = "<p><font color=\"#"+actionColor+"\">%1 * %2 %3</font></p>\n";
   }
-  
+
   line = line.arg(timeStamp(), filter(nick,actionColor,NULL,false), filter(message,actionColor,nick,true));
 
   emit textToLog(QString("\t * %1 %2").arg(nick).arg(message));
@@ -532,7 +532,7 @@ void IRCView::appendServerMessage(const QString& type,const QString& message)
   }
 
   QString line;
-  
+
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
@@ -540,9 +540,9 @@ void IRCView::appendServerMessage(const QString& type,const QString& message)
   } else {
     line = "<p><font color=\"#" + serverColor + "\"" + fixed + ">%1 <b>[%2]</b> %3</font></p>\n";
   }
-  
+
   line = line.arg(timeStamp(), type, filter(message,serverColor));
-  
+
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
   doAppend(line);
@@ -552,7 +552,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
 {
   QString commandColor=KonversationApplication::preferences.getColor("CommandMessage");
   QString line;
-  
+
   if(basicDirection(message) == QChar::DirR) {
     line = RLO;
     line += LRE;
@@ -560,9 +560,9 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
   } else {
     line = "<p><font color=\"#" + commandColor + "\">%1 *** %2</font></p>\n";
   }
-  
+
   line = line.arg(timeStamp(), filter(message,commandColor,0,true,parseURL));
-  
+
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
   doAppend(line, important);
@@ -587,13 +587,13 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
   }
 
   QString line;
-  
+
   if(basicDirection(message) == QChar::DirR) {
     line = "<p><font color=\"#" + backlogColor + "\">%2 %1 %3</font></p>\n";
   } else {
     line = "<p><font color=\"#" + backlogColor + "\">%1 %2 %3</font></p>\n";
   }
-  
+
   line = line.arg(time, first, filter(message, backlogColor, NULL, false));
 
   doAppend(line);
@@ -635,9 +635,11 @@ void IRCView::doAppend(QString newLine, bool important)
 
     line.remove('\n');// TODO why have newlines? we get <p>, so the \n are unnecessary...
 
-    bool up=KTextBrowser::isUpdatesEnabled();
-    KTextBrowser::setUpdatesEnabled(FALSE);
+    bool up=KTextBrowser::viewport()->isUpdatesEnabled();
+
+    KTextBrowser::viewport()->setUpdatesEnabled(FALSE);
     KTextBrowser::append(line);
+
     document()->lastParagraph()->format();
     resizeContents(contentsWidth(), document()->height());
 
@@ -653,7 +655,9 @@ void IRCView::doAppend(QString newLine, bool important)
         resizeContents(contentsWidth(), document()->height());
       }
     }
-    KTextBrowser::setUpdatesEnabled(up);
+
+    KTextBrowser::viewport()->setUpdatesEnabled(up);
+
     if (doScroll)
     {
       setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
@@ -811,7 +815,7 @@ void IRCView::search()
       findIndex = paragraphLength(paragraphs());
     }
   }
-  
+
   searchAgain();
 }
 
@@ -882,7 +886,7 @@ QChar::Direction IRCView::basicDirection(const QString &string)
   {
     pos++;
   }
-  
+
   if ((string.at(pos).direction() == QChar::DirR) ||
     (string.at(pos).direction() == QChar::DirAL) ||
     (string.at(pos) == RLE) ||
@@ -890,7 +894,7 @@ QChar::Direction IRCView::basicDirection(const QString &string)
   {
     return QChar::DirR;
   }
-  
+
   return QChar::DirL;
 }
 
@@ -902,7 +906,7 @@ QString IRCView::timeStamp()
     QString timeColor = KonversationApplication::preferences.getColor("Time");
     QString timeFormat = KonversationApplication::preferences.getTimestampFormat();
     QString timeString;
-    
+
     if(!KonversationApplication::preferences.getShowDate())
     {
       timeString = QString("<font color=\"#" + timeColor + "\">[%1]</font> ").arg(time.toString(timeFormat));
@@ -913,10 +917,10 @@ QString IRCView::timeStamp()
       timeString = QString("<font color=\"#" + timeColor + "\">[%1 %2]</font> ").arg(
         date.toString(Qt::ISODate), time.toString(timeFormat));
     }
-    
+
     return timeString;
   }
-  
+
   return QString::null;
 }
 
