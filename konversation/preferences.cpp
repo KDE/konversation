@@ -69,6 +69,7 @@ Preferences::Preferences()
 
   dccPath="";
   setDccAddPartner(true);
+  setDccCreateFolder(false);
   setDccAutoGet(false);
   setDccBufferSize(1024);
 
@@ -190,11 +191,17 @@ bool Preferences::getLog() { return log; }
 void Preferences::setDccAddPartner(bool state) { dccAddPartner=state; }
 bool Preferences::getDccAddPartner() { return dccAddPartner; }
 
+void Preferences::setDccCreateFolder(bool state) { dccCreateFolder=state; }
+bool Preferences::getDccCreateFolder() { return dccCreateFolder; }
+
 void Preferences::setDccBufferSize(unsigned long size) { dccBufferSize=size; }
 unsigned long Preferences::getDccBufferSize() { return dccBufferSize; }
 
 void Preferences::setDccAutoGet(bool state) { dccAutoGet=state; }
 bool Preferences::getDccAutoGet() { return dccAutoGet; }
+
+void Preferences::setDccPath(QString path) { dccPath=path; }
+QString Preferences::getDccPath() { return dccPath; }
 
 void Preferences::setFixedMOTD(bool fixed) { fixedMOTD=fixed; }
 bool Preferences::getFixedMOTD() { return fixedMOTD; }

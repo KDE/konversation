@@ -174,31 +174,31 @@ void KonversationApplication::readOptions()
   QString notifyList=config->readEntry("NotifyList","");
   preferences.setNotifyList(QStringList::split(' ',notifyList));
 
-  /* Server List */
+  // Server List
   config->setGroup("Server List");
 
   int index=0;
-  /* Remove all default entries if there is at least one Server in the preferences file */
+  // Remove all default entries if there is at least one Server in the preferences file
   if(config->hasKey("Server0")) preferences.clearServerList();
-  /* Read all servers */
+  // Read all servers
   while(config->hasKey(QString("Server%1").arg(index)))
   {
     preferences.addServer(config->readEntry(QString("Server%1").arg(index++)));
   }
 
-  /* Quick Buttons List */
+  // Quick Buttons List
   config->setGroup("Button List");
-  /* Read all buttons and overwrite default entries  */
+  // Read all buttons and overwrite default entries
   QStringList buttonList(preferences.getButtonList());
   for(index=0;index<8;index++)
   {
     QString buttonKey(QString("Button%1").arg(index));
     if(config->hasKey(buttonKey)) buttonList[index]=config->readEntry(buttonKey);
   }
-  /* Put back the changed button list */
+  // Put back the changed button list
   preferences.setButtonList(buttonList);
 
-  /* Hilight List  */
+  // Hilight List
   config->setGroup("Hilight List");
   QString hilight=config->readEntry("Hilight");
   QStringList hiList=QStringList::split(' ',hilight);
@@ -209,11 +209,11 @@ void KonversationApplication::readOptions()
     preferences.addHilight(hiList[hiIndex],"#"+hiList[hiIndex+1]);
   }
 
-  /* Ignore List  */
+  // Ignore List
   config->setGroup("Ignore List");
-  /* Remove all default entries if there is at least one Ignore in the preferences file */
+  // Remove all default entries if there is at least one Ignore in the preferences file
   if(config->hasKey("Ignore0")) preferences.clearIgnoreList();
-  /* Read all ignores */
+  // Read all ignores
   index=0;
   while(config->hasKey(QString("Ignore%1").arg(index)))
   {
@@ -224,14 +224,15 @@ void KonversationApplication::readOptions()
   config->setGroup("DCC Settings");
   preferences.setDccBufferSize(config->readNumEntry("BufferSize",preferences.getDccBufferSize()));
   preferences.setDccAddPartner(config->readBoolEntry("AddPartner",preferences.getDccAddPartner()));
+  preferences.setDccCreateFolder(config->readBoolEntry("CreateFolder",preferences.getDccCreateFolder()));
   preferences.setDccAutoGet(config->readBoolEntry("AutoGet",preferences.getDccAutoGet()));
 
-  /* Path settings */
+  // Path settings
   config->setGroup("Path Settings");
   preferences.logPath=config->readEntry("LogfilePath",preferences.logPath);
-  preferences.dccPath=config->readEntry("DccPath",preferences.dccPath);
+  preferences.setDccPath(config->readEntry("DccPath",preferences.getDccPath()));
 
-  /* Miscellaneous Flags */
+  // Miscellaneous Flags
   config->setGroup("Flags");
   preferences.setLog(config->readBoolEntry("Log",true));
   preferences.setBlinkingTabs(config->readBoolEntry("BlinkingTabs",true));
@@ -340,11 +341,12 @@ void KonversationApplication::saveOptions()
 
   config->setGroup("DCC Settings");
   config->writeEntry("AddPartner",preferences.getDccAddPartner());
+  config->writeEntry("CreateFolder",preferences.getDccCreateFolder());
   config->writeEntry("BufferSize",preferences.getDccBufferSize());
   config->writeEntry("AutoGet",preferences.getDccAutoGet());
 
   config->setGroup("Path Settings");
-  config->writeEntry("DccPath",preferences.dccPath);
+  config->writeEntry("DccPath",preferences.getDccPath());
   config->writeEntry("LogfilePath",preferences.logPath);
 
   config->setGroup("Flags");

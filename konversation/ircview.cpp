@@ -299,7 +299,7 @@ void IRCView::appendServerMessage(const char* type,const char* message)
 #ifdef TABLE_VERSION
   QString line=QString("<tr><td><font color=\"#"+serverMessageColor+"\">%1</font></td><td><font color=\"#"+serverMessageColor+"\""+fixed+">%2</font></td></tr>\n").arg(type).arg(filter(message));
 #else
-  QString line=QString("<font color=\"#"+serverMessageColor+"\""+fixed+"><b>[%1]</b> %2</font></td></tr>\n").arg(type).arg(filter(message));
+  QString line=QString("<font color=\"#"+serverMessageColor+"\""+fixed+"><b>[%1]</b> %2</font>\n").arg(type).arg(filter(message));
 #endif
   emit textToLog(QString("%1\t%2").arg(type).arg(message));
 

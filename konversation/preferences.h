@@ -65,15 +65,19 @@ class Preferences : public QObject
 
     void setDccAddPartner(bool state);
     bool getDccAddPartner();
+    void setDccCreateFolder(bool state);
+    bool getDccCreateFolder();
     void setDccAutoGet(bool state);
     bool getDccAutoGet();
     void setDccBufferSize(unsigned long size);
     unsigned long getDccBufferSize();
+    void setDccPath(QString path);
+    QString getDccPath();
 
     void setBlinkingTabs(bool blink);
     bool getBlinkingTabs();
 
-    /* Geometry functions */
+    // Geometry functions
     QSize getServerWindowSize();
     QSize& getHilightSize();
     QSize& getButtonsSize();
@@ -121,29 +125,29 @@ class Preferences : public QObject
     QStringList getNicknameList();
     void setNickname(int index,QString newName);
     void setNicknameList(QStringList newList);
-	
-  	QString channelMessageColor, queryMessageColor, serverMessageColor, actionMessageColor,
-				 		backlogMessageColor, linkMessageColor, commandMessageColor;
 
-		QString defaultChannelMessageColor, defaultQueryMessageColor, defaultServerMessageColor,
-						defaultActionMessageColor, defaultBacklogMessageColor, defaultLinkMessageColor,
-						defaultCommandMessageColor;
+    QString channelMessageColor, queryMessageColor, serverMessageColor, actionMessageColor,
+            backlogMessageColor, linkMessageColor, commandMessageColor;
 
-		QString getChannelMessageColor();
-		QString getQueryMessageColor();
-		QString getServerMessageColor();
-		QString getActionMessageColor();
-		QString getBacklogMessageColor();
-		QString getLinkMessageColor();
-		QString getCommandMessageColor();
-		
-		void setChannelMessageColor(QString color);
-		void setQueryMessageColor(QString color);
-		void setServerMessageColor(QString color);
-		void setActionMessageColor(QString color);
-		void setBacklogMessageColor(QString color);
-		void setLinkMessageColor(QString color);
-		void setCommandMessageColor(QString color);
+    QString defaultChannelMessageColor, defaultQueryMessageColor, defaultServerMessageColor,
+            defaultActionMessageColor, defaultBacklogMessageColor, defaultLinkMessageColor,
+            defaultCommandMessageColor;
+
+    QString getChannelMessageColor();
+    QString getQueryMessageColor();
+    QString getServerMessageColor();
+    QString getActionMessageColor();
+    QString getBacklogMessageColor();
+    QString getLinkMessageColor();
+    QString getCommandMessageColor();
+
+    void setChannelMessageColor(QString color);
+    void setQueryMessageColor(QString color);
+    void setServerMessageColor(QString color);
+    void setActionMessageColor(QString color);
+    void setBacklogMessageColor(QString color);
+    void setLinkMessageColor(QString color);
+    void setCommandMessageColor(QString color);
 
     int getOpLedColor();
     int getVoiceLedColor();
@@ -158,7 +162,6 @@ class Preferences : public QObject
     QString ident;
     QString realname;
     QString logPath;
-    QString dccPath;
 
   signals:
     void requestServerConnection(int number);
@@ -166,12 +169,14 @@ class Preferences : public QObject
 
   protected:
     bool log;
-    bool blinkingTabs; // Do we want the LEDs on the tabs to blink?
+    bool blinkingTabs;      // Do we want the LEDs on the tabs to blink?
     bool fixedMOTD;
 
     bool dccAddPartner;
+    bool dccCreateFolder;   // create folders for each DCC partner?
     bool dccAutoGet;
     unsigned long dccBufferSize;
+    QString dccPath;
 
     bool autoReconnect;
     bool autoRejoin;
@@ -183,7 +188,7 @@ class Preferences : public QObject
     bool useNotify;
     QStringList notifyList;
 
-    /* Geometries */
+    // Geometries
     QSize serverWindowSize;
     QSize buttonsSize;
     QSize hilightSize;

@@ -91,7 +91,7 @@ Server::Server(int id)
   connect(this,SIGNAL(resetLag()),serverWindow,SLOT(resetLag()) );
   connect(this,SIGNAL(addDccPanel()),serverWindow,SLOT(addDccPanel()) );
 
-  emit addDccPanel();
+//  emit addDccPanel();
 }
 
 Server::~Server()
@@ -417,7 +417,7 @@ void Server::addDccTransfer(QString sourceNick,QStringList dccArguments)
 
   DccTransfer* newDcc=new DccTransfer(serverWindow->getDccPanel()->getListView(),
                   DccTransfer::Get,
-                  KonversationApplication::preferences.dccPath,
+                  KonversationApplication::preferences.getDccPath(),
                   sourceNick,
                   dccArguments[0],     // name
                   dccArguments[3],     // size

@@ -89,12 +89,18 @@ DccTransfer::~DccTransfer()
 void DccTransfer::startGet()
 {
   kdDebug() << dccFolder << endl;
-  dir.setPath(dccFolder);
+
+  if(KonversationApplication::preferences.getDccAddPartner())
+    dir.setPath(dccFolder+"/"+dccPartner);
+  else
+    dir.setPath(dccFolder);
+  
+  kdDebug() << dir.path() << endl;
 
   if(!dir.exists())
   {
     kdDebug() << dir.path() << " does not exist. Creating ..." << endl;
-    // QT's mkdir() is too stupid to do this alone, so we take the shell command
+    // QT's mkdir() is too stupid to do this alone, so we use the shell command
     system(QString("mkdir -p "+dir.path()).latin1());
   }
 
