@@ -82,8 +82,6 @@ Server::Server(KonversationMainWindow* newMainWindow,int id)
   bot=getIdentity()->getBot();
   botPassword=getIdentity()->getPassword();
 
-  serverSocket.setAddress(serverName,serverPort);
-
   if(!serverEntry[4].isEmpty())
   {
     setAutoJoin(true);
@@ -204,6 +202,7 @@ void Server::connectToIRCServer()
 {
   deliberateQuit=false;
   serverSocket.blockSignals(false);
+
   // Are we (still) connected (yet)?
   if(isConnected())
   {
@@ -213,6 +212,11 @@ void Server::connectToIRCServer()
   }
   else
   {
+    // clean up everything
+    serverSocket.reset();
+    // set up the connection details
+    serverSocket.setAddress(serverName,serverPort);
+
     // (re)connect. Autojoin will be done by the input filter
     statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1 ...").arg(serverSocket.host()));
     // QDns is broken, so don't use async lookup, use own threaded class instead
@@ -234,7 +238,9 @@ bool Server::eventFilter(QObject* parent,QEvent* event)
 void Server::lookupFinished()
 {
   statusView->appendServerMessage(i18n("Info"),i18n("Server found, connecting ..."));
+kdDebug() << serverSocket.status() << endl;
   serverSocket.startAsyncConnect();
+kdDebug() << "0" << endl;
 }
 
 void Server::ircServerConnectionSuccess()
@@ -243,19 +249,25 @@ void Server::ircServerConnectionSuccess()
 
   connect(this,SIGNAL (nicknameChanged(const QString&)),statusView,SLOT (setNickname(const QString&)) );
   statusView->appendServerMessage(i18n("Info"),i18n("Connected! Logging in ..."));
-
+kdDebug() << "1" << endl;
   QString connectString="USER " +
                         identity->getIdent() +
                         " 8 * :" +  // 8 = +i; 4 = +w
                         identity->getRealName();
+kdDebug() << "2" << endl;
 
   if(!serverKey.isEmpty()) queue("PASS "+serverKey);
+kdDebug() << "3" << endl;
   queue("NICK "+getNickname());
+kdDebug() << "4" << endl;
   queue(connectString);
+kdDebug() << "5" << endl;
 
   emit nicknameChanged(getNickname());
+kdDebug() << "6" << endl;
 
   serverSocket.enableRead(true);
+kdDebug() << "7" << endl;
 }
 
 void Server::broken(int state)
@@ -263,7 +275,6 @@ void Server::broken(int state)
   serverSocket.enableRead(false);
   serverSocket.enableWrite(false);
   serverSocket.blockSignals(true);
-  serverSocket.reset();
 
   kdDebug() << "Connection broken (Socket fd " << serverSocket.fd() << ") " << state << "!" << endl;
 
@@ -406,7 +417,7 @@ void Server::notifyTimeout()
     QString list=KonversationApplication::preferences.getNotifyString();
     if(!list.isEmpty())
     {
-      queue("ISiON "+list);
+      queue("ISON "+list);
       // remember that we already sent out ISON
       sent=true;
     }
