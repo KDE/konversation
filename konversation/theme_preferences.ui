@@ -98,7 +98,7 @@
                         <enum>NoFrame</enum>
                     </property>
                     <property name="text">
-                        <string>a</string>
+                        <string></string>
                     </property>
                     <property name="alignment">
                         <set>AlignCenter</set>
@@ -112,7 +112,7 @@
                         <cstring>previewLabel2</cstring>
                     </property>
                     <property name="text">
-                        <string>b</string>
+                        <string></string>
                     </property>
                     <property name="alignment">
                         <set>AlignCenter</set>
@@ -126,7 +126,7 @@
                         <cstring>previewLabel3</cstring>
                     </property>
                     <property name="text">
-                        <string>c</string>
+                        <string></string>
                     </property>
                     <property name="alignment">
                         <set>AlignCenter</set>
@@ -140,7 +140,7 @@
                         <cstring>previewLabel4</cstring>
                     </property>
                     <property name="text">
-                        <string>d</string>
+                        <string></string>
                     </property>
                     <property name="alignment">
                         <set>AlignCenter</set>
@@ -154,7 +154,7 @@
                         <cstring>previewLabel5</cstring>
                     </property>
                     <property name="text">
-                        <string>e</string>
+                        <string></string>
                     </property>
                     <property name="alignment">
                         <set>AlignCenter</set>
@@ -168,7 +168,7 @@
                         <cstring>previewLabel6</cstring>
                     </property>
                     <property name="text">
-                        <string>f</string>
+                        <string></string>
                     </property>
                     <property name="alignment">
                         <set>AlignCenter</set>
@@ -182,7 +182,7 @@
                         <cstring>previewLabel7</cstring>
                     </property>
                     <property name="text">
-                        <string>g</string>
+                        <string></string>
                     </property>
                     <property name="alignment">
                         <set>AlignCenter</set>

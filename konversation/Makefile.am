@@ -40,7 +40,7 @@ konversation_SOURCES = konviface.skel konversationmainwindow.cpp \
 		highlight_preferences.ui warnings_preferences.ui 		quickbuttons_preferences.ui \
 		watchednicknames_preferences.ui generalbehavior_preferences.ui connectionbehavior_preferences.ui \
 		prefspageconnectionbehavior.cpp fontappearance_preferences.ui prefspagefontsappearance.cpp \
-	nicklistbehavior_preferences.ui prefspagenicklistbehavior.cpp ignorebehavior_preferences.ui
+	nicklistbehavior_preferences.ui prefspagenicklistbehavior.cpp
 
 konversation_LDADD = $(COMPAT_LIBS) $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la -lkscript
 
