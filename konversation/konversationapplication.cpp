@@ -458,8 +458,8 @@ void KonversationApplication::readOptions()
 
   // Path settings
   config->setGroup("Path Settings");
-  preferences.setLogPath(config->readEntry("LogfilePath",preferences.getLogPath()));
-  preferences.setDccPath(config->readEntry("DccPath",preferences.getDccPath()));
+  preferences.setLogPath(config->readPathEntry("LogfilePath",preferences.getLogPath()));
+  preferences.setDccPath(config->readPathEntry("DccPath",preferences.getDccPath()));
 
   // Miscellaneous Flags
   config->setGroup("Flags");
@@ -664,8 +664,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
  // Path Settings
   config->setGroup("Path Settings");
-  config->writeEntry("DccPath",preferences.getDccPath());
-  config->writeEntry("LogfilePath",preferences.getLogPath());
+  config->writePathEntry("DccPath",preferences.getDccPath());
+  config->writePathEntry("LogfilePath",preferences.getLogPath());
 
   // Flags
   config->setGroup("Flags");
