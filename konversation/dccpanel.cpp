@@ -82,7 +82,7 @@ DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
   m_listView->setColumnAlignment(Column::TimeRemaining, AlignRight);
   m_listView->setColumnAlignment(Column::CPS,           AlignRight);
   
-  connect(m_listView,SIGNAL (selectionChanged()),this,SLOT (selectionChanged()) );
+  connect(m_listView,SIGNAL (selectionChanged()),this,SLOT (updateButton()) );
   
   // button
   
