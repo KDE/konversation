@@ -59,10 +59,10 @@ void PrefsPageNicklistBehavior::applyPreferences()
   preferences->setSortCaseInsensitive(kcfg_SortCaseInsensitive->isChecked());
 
   int flag = 1;
+  ValueListViewItem* item = static_cast<ValueListViewItem*>(kcfg_SortOrder->firstChild());
 
-  for(int index = 0; index < 6; index++)
+  while(item)
   {
-    ValueListViewItem* item = static_cast<ValueListViewItem*>(kcfg_SortOrder->itemAtIndex(index));
     int value = item->getValue();
 
     if(value == 0) preferences->setNoRightsValue(flag);
@@ -73,6 +73,7 @@ void PrefsPageNicklistBehavior::applyPreferences()
     else if(value == 5) preferences->setAdminValue(flag);
 
     flag <<= 1;
+    item = static_cast<ValueListViewItem*>(item->nextSibling());
   }
 }
 
