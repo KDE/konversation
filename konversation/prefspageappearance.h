@@ -58,6 +58,9 @@ class PrefsPageAppearance : public PrefsPage
     void sortCaseInsensitiveChanged(int state);
     void sortingOrderChanged();
 
+    void moveUp();
+    void moveDown();
+
   protected:
     void updateFonts();
 

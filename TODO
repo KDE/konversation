@@ -3,7 +3,7 @@ Make Config Dialogs fit into one Tab-Dialog and throw out single windows
 Background color of Nicklist View
 Pasting into text views should trigger the paste mechanism
 Make colors for nick list configurable via GUI
-<lizard> ich will nen sortcut haben das wenn ich irgendwo ssh eingebe das mit ne shell aufgeht ;)
+<lizard> ich will nen shortcut haben das wenn ich irgendwo ssh eingebe das mit ne shell aufgeht ;)
 Let the user decide how many quick buttons they want.
 Think about another way to get rid of the cut off "Custom" text in color combos ...
 Autojoin/User interaction on /invite

@@ -6,7 +6,7 @@
 */
 
 /*
-  images.h  -  description
+  images.h  -  provides images
   begin:     Fri Feb 22 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com

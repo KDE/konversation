@@ -6,7 +6,7 @@
 */
 
 /*
-  images.cpp  -  description
+  images.cpp  -  provides images
   begin:     Fri Feb 22 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
@@ -21,13 +21,13 @@
 
 Images::Images()
 {
-  /* Get standard directories */
+  // Get standard directories
   KStandardDirs kstd;
 
-  /* Find our image directory */
-  QString prefix=kstd.findResource("data","konversation/images/");
+  // Find our own image directory
+  QString prefix=kstd.findResource("appdata","images/");
 
-  /* Setup pixmaps for the LEDs */
+  // Setup pixmaps for the LEDs
   redLedOn.setPixmap(prefix+"led_red_on.png",QIconSet::Automatic);
   redLedOff.setPixmap(prefix+"led_red_off.png",QIconSet::Automatic);
   greenLedOn.setPixmap(prefix+"led_green_on.png",QIconSet::Automatic);
@@ -46,8 +46,8 @@ QIconSet Images::getLed(int color,bool on)
 {
   QIconSet led;
 
-  /* Return a QIconSet for the desired color and state (on/off) */
-  if(color>3) kdWarning() << "Images::getLed(): color " << color << " out of range!" << endl;
+  // Return a QIconSet for the desired color and state (on/off)
+  if(color <0 || color>3) kdWarning() << "Images::getLed(): color " << color << " out of range!" << endl;
   else
   {
     if(color==0 && on) led=redLedOn;
@@ -63,22 +63,7 @@ QIconSet Images::getLed(int color,bool on)
   return led;
 }
 
-QIconSet Images::getRedLed(bool on)
-{
-  return getLed(0,on);
-}
-
-QIconSet Images::getGreenLed(bool on)
-{
-  return getLed(1,on);
-}
-
-QIconSet Images::getBlueLed(bool on)
-{
-  return getLed(2,on);
-}
-
-QIconSet Images::getYellowLed(bool on)
-{
-  return getLed(3,on);
-}
+QIconSet Images::getRedLed(bool on)     { return getLed(0,on); }
+QIconSet Images::getGreenLed(bool on)   { return getLed(1,on); }
+QIconSet Images::getBlueLed(bool on)    { return getLed(2,on); }
+QIconSet Images::getYellowLed(bool on)  { return getLed(3,on); }

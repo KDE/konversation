@@ -14,6 +14,7 @@ Changes from 0.11 to 0.12
 - Implemented background hostmask scanning
 - Recognises now who set the first topic
 - Added nickname sorting options
+- Sorting now has up/down arrows
 
 Changes from 0.10 to 0.11
 - Added a patch by Bart Verwilst to provide automatic service registration (thanks!)

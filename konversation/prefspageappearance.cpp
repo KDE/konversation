@@ -15,12 +15,15 @@
 */
 
 #include <qlayout.h>
-#include <qpushbutton.h>
 #include <qhbox.h>
+#include <qpushbutton.h>
 #include <qcombobox.h>
 #include <qtextcodec.h>
 #include <qheader.h>
+#include <qhgroupbox.h>
 #include <qvgroupbox.h>
+#include <qvbox.h>
+#include <qtoolbutton.h>
 
 #include <kfontdialog.h>
 #include <kdebug.h>
@@ -152,7 +155,7 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
 
   // Sorting
   QVGroupBox* sortOptionsGroup=new QVGroupBox(i18n("Sort options"),parentFrame,"sort_options_group");
-  QVGroupBox* sortOrderGroup=new QVGroupBox(i18n("Sorting order"),parentFrame,"sort_order_group");
+  QHGroupBox* sortOrderGroup=new QHGroupBox(i18n("Sorting order"),parentFrame,"sort_order_group");
 
   QCheckBox* sortByStatusCheck=new QCheckBox(i18n("Sort by user status"),sortOptionsGroup,"sort_by_status_check");
   QCheckBox* sortCaseInsensitiveCheck=new QCheckBox(i18n("Sort case insensitive"),sortOptionsGroup,"sort_case_insensitive_check");
@@ -167,7 +170,6 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   sortingOrder->setSorting(-1);
   sortingOrder->setDragEnabled(true);
   sortingOrder->setAcceptDrops(true);
-
   sortingOrder->setMaximumHeight(sortingOrder->fontMetrics().height()*4);
 
   for(int index=4;index!=0;index>>=1)
@@ -176,6 +178,13 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
     if(preferences->getVoiceValue()==index)    new ValueListViewItem(1,sortingOrder,i18n("Voice (+v)"));
     if(preferences->getOpValue()==index)       new ValueListViewItem(2,sortingOrder,i18n("Operators (+o)"));
   }
+
+  QVBox* sortOrderUpDownBox=new QVBox(sortOrderGroup);
+
+  QToolButton* sortMoveUp=new QToolButton(Qt::UpArrow,sortOrderUpDownBox,"sort_move_up_button");
+  QToolButton* sortMoveDown=new QToolButton(Qt::DownArrow,sortOrderUpDownBox,"sort_move_up_button");
+  sortMoveUp->setFixedWidth(16);
+  sortMoveDown->setFixedWidth(16);
 
   // Layout
   int row=0;
@@ -234,6 +243,9 @@ PrefsPageAppearance::PrefsPageAppearance(QFrame* newParent,Preferences* newPrefe
   connect(sortByStatusCheck,SIGNAL (stateChanged(int)),this,SLOT (sortByStatusChanged(int)) );
   connect(sortCaseInsensitiveCheck,SIGNAL (stateChanged(int)),this,SLOT (sortCaseInsensitiveChanged(int)) );
   connect(sortingOrder,SIGNAL (moved()),this,SLOT (sortingOrderChanged()) );
+
+  connect(sortMoveUp,SIGNAL (clicked()),this,SLOT (moveUp()) );
+  connect(sortMoveDown,SIGNAL (clicked()),this,SLOT (moveDown()) );
 }
 
 PrefsPageAppearance::~PrefsPageAppearance()
@@ -365,6 +377,26 @@ void PrefsPageAppearance::sortingOrderChanged()
     else if(value==2) preferences->setOpValue(flag);
 
     flag<<=1;
+  }
+}
+
+void PrefsPageAppearance::moveUp()
+{
+  QListViewItem* item=sortingOrder->selectedItem();
+  if(item)
+  {
+    int pos=sortingOrder->itemIndex(item);
+    if(pos) item->itemAbove()->moveItem(item);
+  }
+}
+
+void PrefsPageAppearance::moveDown()
+{
+  QListViewItem* item=sortingOrder->selectedItem();
+  if(item)
+  {
+    int pos=sortingOrder->itemIndex(item);
+    if(pos!=2) item->moveItem(item->itemBelow());
   }
 }
 
