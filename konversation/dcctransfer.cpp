@@ -83,7 +83,6 @@ DccTransfer::~DccTransfer()
   stopAutoUpdateView();
   closeDetailDialog();
   delete[] m_buffer;
-  delete m_progressBar;
 }
 
 void DccTransfer::updateView()  // slot
@@ -150,7 +149,7 @@ void DccTransfer::showProgressBar()
 void DccTransfer::runFile()  // public
 {
   if( m_dccType == Send || m_dccStatus == Done )
-    new KRun( m_fileURL );
+    new KRun( m_fileURL, listView() );
 }
 
 void DccTransfer::removeFile()  // public
@@ -191,18 +190,18 @@ void DccTransfer::openFileInfoDialog()
     QString path=m_fileURL.path();
     
     // get meta info object
-    KFileMetaInfo* fileInfo=new KFileMetaInfo(path,QString::null,KFileMetaInfo::Everything);
+    KFileMetaInfo fileInfo(path,QString::null,KFileMetaInfo::Everything);
     
     // is there any info for this file?
-    if(fileInfo && !fileInfo->isEmpty())
+    if(fileInfo.isEmpty())
     {
       // get list of meta information groups
-      QStringList groupList=fileInfo->groups();
+      QStringList groupList=fileInfo.groups();
       // look inside for keys
       for(unsigned int index=0;index<groupList.count();index++)
       {
         // get next group
-        KFileMetaInfoGroup group=fileInfo->group(groupList[index]);
+        KFileMetaInfoGroup group=fileInfo.group(groupList[index]);
         // check if there are keys in this group at all
         if(!group.isEmpty())
         {
@@ -246,7 +245,6 @@ void DccTransfer::openFileInfoDialog()
     {
       KMessageBox::sorry(listView(),i18n("No detailed information for this file found."),i18n("File information"));
     }
-    delete fileInfo;
   }
 }
 

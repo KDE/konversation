@@ -205,12 +205,6 @@ void DccTransferRecv::cleanUp()
   
   stopConnectionTimer();
   stopAutoUpdateView();
-  if( m_recvSocket )
-  {
-    m_recvSocket->close();
-    m_recvSocket->deleteLater();
-    m_recvSocket = 0;
-  }
   if( m_writeCacheHandler )
   {
     m_writeCacheHandler->closeNow();
@@ -262,7 +256,7 @@ void DccTransferRecv::connectToSender()
   setStatus( Connecting );
   updateView();
   
-  m_recvSocket = new KNetwork::KStreamSocket( m_partnerIp, m_partnerPort );
+  m_recvSocket = new KNetwork::KStreamSocket( m_partnerIp, m_partnerPort, this);
   
   m_recvSocket->setBlocking( false );  // asynchronous mode
   m_recvSocket->setFamily( KNetwork::KResolver::InetFamily );

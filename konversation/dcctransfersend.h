@@ -65,3 +65,4 @@ class DccTransferSend : public DccTransfer
 };
 
 #endif // DCCTRANSFERSEND_H
+

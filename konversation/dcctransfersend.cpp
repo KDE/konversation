@@ -99,7 +99,7 @@ void DccTransferSend::start()  // public slot
   if(getStatus() != Queued) return; //setStatus(Failed) or something has been called.
 
      // Set up server socket
-  m_serverSocket = new KNetwork::KServerSocket();
+  m_serverSocket = new KNetwork::KServerSocket(this);
   m_serverSocket->setFamily(KNetwork::KResolver::InetFamily);
   
   if( KonversationApplication::preferences.getDccSpecificSendPorts() )  // user specifies ports
@@ -186,19 +186,6 @@ void DccTransferSend::cleanUp()
   m_tmpFile = QString::null;
   stopConnectionTimer();
   stopAutoUpdateView();
-  if( m_sendSocket )
-  {
-    m_sendSocket->close();
-    m_sendSocket->deleteLater();
-    m_sendSocket = 0;
-  }
-  if( m_serverSocket )
-  {
-    m_serverSocket->close();
-    m_serverSocket->deleteLater();
-    m_serverSocket = 0;
-  }
-  
 }
 
 void DccTransferSend::heard()  // slot
@@ -208,7 +195,12 @@ void DccTransferSend::heard()  // slot
   stopConnectionTimer();
   
   m_sendSocket = static_cast<KNetwork::KStreamSocket*>( m_serverSocket->accept() );
-  
+  if(!m_sendSocket) {
+    KMessageBox::sorry( listView(), QString( getErrorString( m_file.status() ) ).arg( m_file.name() ), i18n("DCC Send Error") );
+    setStatus( Failed );
+    cleanUp();
+    return;
+  }
   connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() )    );
   connect( m_sendSocket, SIGNAL( readyWrite() ), this, SLOT( writeData() ) );
   
