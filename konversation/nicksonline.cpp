@@ -243,7 +243,7 @@ void NicksOnline::updateServerOnlineList(Server* server)
       nickRoot->setText(nlvcAdditionalInfo, nickAdditionalInfo);
       
       // Set Kabc icon if the nick is associated with an addressbook entry.
-      if (!Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname).isEmpty())
+      if (!nickInfo->getAddressee().isEmpty())
         nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
           QIconSet::Small, QIconSet::Normal, QIconSet::On));
       else
@@ -517,7 +517,7 @@ void NicksOnline::doCommand(int id)
         if(addressbook->getAndCheckTicket())
         {
           if(id == ciAddressbookDelete) {
-            KABC::Addressee addr = addressbook->getKABCAddresseeFromNick(nickname);
+            KABC::Addressee addr = nickInfo->getAddressee();
             addressbook->unassociateNick(addr, nickname, server->getServerName(), server->getServerGroup());
           } else {
             KABC::Addressee addr;
@@ -572,11 +572,13 @@ int NicksOnline::getNickAddressbookState(QListViewItem* item)
   if (getItemServerAndNick(item, serverName, nickname))
   {
     Server *server = static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
-    if(!server) return 0;
-    if (Konversation::Addressbook::self()->getKABCAddresseeFromNick(nickname, serverName, server->getServerGroup()).isEmpty())
+    if (!server) return 0;
+    NickInfoPtr nickInfo = server->getNickInfo(nickname);
+    if (!nickInfo) return 0;
+    if (nickInfo->getAddressee().isEmpty())
       nickState = 1;
     else
-      nickState = 2;
+      nickState =2;
   }
   return nickState;
 }
