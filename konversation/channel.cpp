@@ -261,7 +261,7 @@ void Channel::popupCommand(int id)
       raw=true;
       break;
     case NickListView::Query:
-      pattern="/QUERY %u";
+      pattern=KonversationApplication::preferences.getCommandChar()+"QUERY %u";
       break;
   } /* switch */
 
