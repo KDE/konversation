@@ -135,8 +135,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow()
   new KAction(i18n("&New Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
 
   // Actions to navigate through the different pages
-  new KAction(i18n("&Next Tab"), "next",KShortcut("Shift+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
-  new KAction(i18n("&Previous Tab"), "previous",KShortcut("Shift+Left"),
+  new KAction(i18n("&Next Tab"), "next",KShortcut("Alt+Right"),this,SLOT(nextTab()),actionCollection(),"next_tab");
+  new KAction(i18n("&Previous Tab"), "previous",KShortcut("Alt+Left"),
     this,SLOT(previousTab()),actionCollection(),"previous_tab");
   new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
   new TabAction(i18n("Go to Tab Number %1").arg( 1),0,KShortcut("Alt+1"),this,SLOT(goToTab(int)),actionCollection(),"go_to_tab_1");
