@@ -467,10 +467,13 @@ void Server::connectToIRCServer()
   else
   {
     // clean up everything
-    if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
+    if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled()) {
       serverSocket->reset();
-    else
+      serverSocket->resetStatus();
+    } else {
       m_serverSSLSocket->reset();
+      m_serverSSLSocket->resetStatus();
+    }
 
     // connect() will do a async lookup too
     if(!m_serverGroup.serverByIndex(m_currentServerIndex).SSLEnabled())
@@ -692,14 +695,12 @@ void Server::broken(int state)
 
   // TODO: Close all queries and channels!
   //       Or at least make sure that all gets reconnected properly
-  if(m_tryReconnect && autoReconnect && !getDeliberateQuit())
+  if(autoReconnect && !getDeliberateQuit())
   {
-    statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.")
-        .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()));
-    getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.")
-        .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()),statusView);
     // TODO: Make retry counter configurable
-    if(++reconnectCounter==10)
+    reconnectCounter++;
+
+    if(reconnectCounter == 10 || !m_tryReconnect)
     {
       statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 failed.")
           .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()));
@@ -707,9 +708,25 @@ void Server::broken(int state)
           .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()),statusView);
       reconnectCounter=0;
       rejoinChannels = false;
+
+      if(m_currentServerIndex < (m_serverGroup.serverList().count() - 1)) {
+        m_currentServerIndex++;
+        statusView->appendServerMessage(i18n("Error"),i18n("Trying server %1 instead.")
+            .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()));
+        getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Trying server %1 instead.")
+            .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()),statusView);
+
+        connectToIRCServer();
+      } else {
+      }
     }
     else
     {
+      statusView->appendServerMessage(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.")
+          .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()));
+      getMainWindow()->appendToFrontmostIfDifferent(i18n("Error"),i18n("Connection to Server %1 lost. Trying to reconnect.")
+          .arg(m_serverGroup.serverByIndex(m_currentServerIndex).server()),statusView);
+
       // TODO: Make timeout configurable
       QTimer::singleShot(5000,this,SLOT(connectToIRCServer()));
       rejoinChannels = true;

@@ -238,20 +238,22 @@ void ServerGroupDialog::deleteServer()
 void ServerGroupDialog::moveServerUp()
 {
   uint current = m_serverLBox->currentItem();
-  
-  ServerSettings server = m_serverList[current];
-  m_serverLBox->removeItem(current);
-  m_serverLBox->insertItem(server.server(), current - 1);
-  m_serverLBox->setCurrentItem(current - 1);
-  ServerList::iterator it = m_serverList.remove(m_serverList.at(current));
-  --it;
-  m_serverList.insert(it, server);
+
+  if(current > 0) {
+    ServerSettings server = m_serverList[current];
+    m_serverLBox->removeItem(current);
+    m_serverLBox->insertItem(server.server(), current - 1);
+    m_serverLBox->setCurrentItem(current - 1);
+    ServerList::iterator it = m_serverList.remove(m_serverList.at(current));
+    --it;
+    m_serverList.insert(it, server);
+  }
 }
 
 void ServerGroupDialog::moveServerDown()
 {
   uint current = m_serverLBox->currentItem();
-  
+
   if(current < (m_serverList.count() - 1)) {
     ServerSettings server = m_serverList[current];
     m_serverLBox->removeItem(current);
@@ -266,7 +268,7 @@ void ServerGroupDialog::moveServerDown()
 void ServerGroupDialog::addChannel()
 {
   ChannelDialog dlg(i18n("Add Channel"), this);
-  
+
   if(dlg.exec() == KDialog::Accepted) {
     ChannelSettings channel = dlg.channelSettings();
     m_channelLBox->insertItem(channel.name());
@@ -277,7 +279,7 @@ void ServerGroupDialog::addChannel()
 void ServerGroupDialog::editChannel()
 {
   uint current = m_channelLBox->currentItem();
-  
+
   if(current < m_channelList.count()) {
     ChannelDialog dlg(i18n("Edit Channel"), this);
     dlg.setChannelSettings(m_channelList[current]);
@@ -293,7 +295,7 @@ void ServerGroupDialog::editChannel()
 void ServerGroupDialog::deleteChannel()
 {
   uint current = m_channelLBox->currentItem();
-  
+
   if(current < m_channelList.count()) {
     m_channelList.remove(m_channelList.at(current));
     m_channelLBox->removeItem(current);
@@ -303,20 +305,22 @@ void ServerGroupDialog::deleteChannel()
 void ServerGroupDialog::moveChannelUp()
 {
   uint current = m_channelLBox->currentItem();
-  
-  ChannelSettings channel = m_channelList[current];
-  m_channelLBox->removeItem(current);
-  m_channelLBox->insertItem(channel.name(), current - 1);
-  m_channelLBox->setCurrentItem(current - 1);
-  ChannelList::iterator it = m_channelList.remove(m_channelList.at(current));
-  --it;
-  m_channelList.insert(it, channel);
+
+  if(current > 0) {
+    ChannelSettings channel = m_channelList[current];
+    m_channelLBox->removeItem(current);
+    m_channelLBox->insertItem(channel.name(), current - 1);
+    m_channelLBox->setCurrentItem(current - 1);
+    ChannelList::iterator it = m_channelList.remove(m_channelList.at(current));
+    --it;
+    m_channelList.insert(it, channel);
+  }
 }
 
 void ServerGroupDialog::moveChannelDown()
 {
   uint current = m_channelLBox->currentItem();
-  
+
   if(current < (m_channelList.count() - 1)) {
     ChannelSettings channel = m_channelList[current];
     m_channelLBox->removeItem(current);
