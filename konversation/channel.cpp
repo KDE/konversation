@@ -955,6 +955,9 @@ void Channel::updateQuickButtons(QStringList newButtonList)
     QStringList buttonText=QStringList::split(',',newButtonList[index]);
     quickButton=buttonList.at(index);
     quickButton->setText(buttonText[0]);
+    // Update tool tips
+    QToolTip::remove(quickButton);
+    QToolTip::add(quickButton,buttonText[1]);
   }
 }
 

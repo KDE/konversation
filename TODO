@@ -4,4 +4,3 @@ Implement Notify window (or something similar)
 Write Application Description in main()
 Add option to highlight current nick independantly
 Implement different identities so user can choose which identity to use on which server
-Buttons must update their tool tips if changed
