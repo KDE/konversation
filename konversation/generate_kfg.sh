@@ -40,18 +40,22 @@ cat konversationapplication.cpp | while read line; do {
     
       if [[ "$TYPE" == "int" ]] ; then TYPE="Int";
       elif [[ "$TYPE" == "unsigned int" ]] ; then TYPE="UInt";
+      elif [[ "$TYPE" == "uint" ]] ; then TYPE="UInt";
       elif [[ "$TYPE" == "unsigned long" ]] ; then TYPE="UInt64";
+      elif [[ "$TYPE" == "ulong" ]] ; then TYPE="UInt64";
       elif [[ "$TYPE" == "long" ]] ; then TYPE="Int64";
       elif [[ "$TYPE" == "QString" ]] ; then TYPE="String";
       elif [[ "$TYPE" == "bool" ]] ; then TYPE="Bool";
       elif [[ "$TYPE" == "QValueList<int>" ]] ; then TYPE="IntList";
       elif [[ "$TYPE" == "QValueList<bool>" ]] ; then TYPE="BoolList";
       elif [[ "$TYPE" == "QValueList<QString>" ]] ; then TYPE="StringList";
+      elif [[ "$TYPE" == "QStringList" ]] ; then TYPE="StringList";
       elif [[ "$TYPE" == "QFont" ]] ; then TYPE="Font";
       elif [[ "$TYPE" == "QSize" ]] ; then TYPE="Size";
       elif [[ "$TYPE" == "QRect" ]] ; then TYPE="Rect";
       elif [[ "$TYPE" == "QColor" ]] ; then TYPE="Color";
       elif [[ "$TYPE" == "QPoint" ]] ; then TYPE="Point";
+      else TYPE="";
       fi
     
       echo "$PREFERENCESENTRY" | grep .toString > /dev/null && TYPE="String"
