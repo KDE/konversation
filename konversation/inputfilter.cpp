@@ -122,6 +122,16 @@ void InputFilter::parseClientCommand(QString& prefix,QString& command,QStringLis
           if(!isIgnore(prefix,Ignore::Channel))
             server->appendActionToChannel(parameterList[0],sourceNick,ctcpArgument);
         }
+        // Answer ping requests
+        else if(ctcpCommand=="ping")
+        {
+          if(!isIgnore(prefix,Ignore::CTCP))
+          {
+            server->appendStatusMessage(i18n("CTCP"),i18n("Received CTCP-PING request from %1 to channel %2, sending answer.").arg(sourceNick).arg(parameterList[0]));
+            server->ctcpReply(sourceNick,QString("PING %1").arg(ctcpArgument));
+          }
+        }
+
         // No known CTCP request, give a general message
         else
         {

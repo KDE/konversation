@@ -365,9 +365,16 @@ void OutputFilter::parseCtcp(QString parameter)
   QString recipient=parameter.left(parameter.find(" "));
   QString message=parameter.mid(recipient.length()+1);
 
-  toServer=QString("PRIVMSG "+recipient+" :"+'\x01'+message+'\x01');
-  
-  output=i18n("Sending CTCP-%1 request to %2").arg(message).arg(recipient);
+  if(message.lower().startsWith("ping"))
+  {
+    toServer=QString("PRIVMSG "+recipient+" :\x01PING %1\x01").arg(QString::number(QDateTime::currentDateTime().toTime_t()));
+    output=i18n("Sending CTCP-%1 request to %2").arg("PING").arg(recipient);
+  }
+  else
+  {
+    toServer=QString("PRIVMSG "+recipient+" :"+'\x01'+message+'\x01');
+    output=i18n("Sending CTCP-%1 request to %2").arg(message).arg(recipient);
+  }
   type=i18n("CTCP");
   program=true;
 }
