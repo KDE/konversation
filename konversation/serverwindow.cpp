@@ -168,10 +168,12 @@ void ServerWindow::nextTab()
   kdDebug() << "ServerWindow::nextTab()" << endl;
 
   int page=windowContainer->currentPageIndex()+1;
-  if(page<windowContainer->count()) windowContainer->setCurrentPage(page);
-
-  ChatWindow* newPage=(ChatWindow*) windowContainer->page(page);
-  newPage->adjustFocus();
+  if(page<windowContainer->count())
+  {
+    windowContainer->setCurrentPage(page);
+    ChatWindow* newPage=(ChatWindow*) windowContainer->page(page);
+    newPage->adjustFocus();
+  }
 }
 
 void ServerWindow::previousTab()
@@ -179,10 +181,12 @@ void ServerWindow::previousTab()
   kdDebug() << "ServerWindow::previousTab()" << endl;
 
   int page=windowContainer->currentPageIndex()-1;
-  if(page!=-1) windowContainer->setCurrentPage(page);
-
-  ChatWindow* newPage=(ChatWindow*) windowContainer->page(page);
-  newPage->adjustFocus();
+  if(page!=-1)
+  {
+    windowContainer->setCurrentPage(page);
+    ChatWindow* newPage=(ChatWindow*) windowContainer->page(page);
+    newPage->adjustFocus();
+  }
 }
 
 void ServerWindow::addDccPanel()
