@@ -18,7 +18,7 @@
 namespace Konversation {
 
 InsertCharDialog::InsertCharDialog(const QString& font, QWidget *parent, const char *name)
-  : KDialogBase(parent, name, true, i18n("Insert Character"), 
+  : KDialogBase(parent, name, false, i18n("Insert Character"), 
   KDialogBase::Ok | KDialogBase::Close,
   KDialogBase::Ok, false)
 {
