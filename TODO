@@ -4,6 +4,7 @@ berkus: Logfile reader
 berkus: Move Encoding into identity
 berkus: Logrotate with timer or at shutdown, compress rotated logs
 
+Optionally copy log files to new location
 DCC options on same file name should include "Rename" and maybe "Auto Rename"
 Events for sounds, scripting, auto-text and stuff
 Try to keep open views on server disconnects, kicks and stuff

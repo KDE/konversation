@@ -44,7 +44,7 @@ NotifyDialog::NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int 
 
   useNotifyCheck=new QCheckBox(i18n("Use notify"),delayBox,"use_notify_checkbox");
   useNotifyCheck->setChecked(use);
-  new QLabel(i18n("Notify interval:"),delayBox,"interval_label");
+  notifyDelayLabel=new QLabel(i18n("Notify interval:"),delayBox,"interval_label");
   notifyDelaySpin=new QSpinBox(5,1000,1,delayBox,"delay_spin");
   notifyDelaySpin->setValue(delay);
   notifyDelaySpin->setSuffix(i18n(" seconds"));
@@ -77,10 +77,9 @@ NotifyDialog::NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int 
   setButtonApplyText(i18n("Apply"),i18n("Keep changes made to configuration"));
   setButtonCancelText(i18n("Cancel"),i18n("Discards all changes made"));
 
-  connect(newButton,SIGNAL(clicked()),
-                 this,SLOT(newNotify()));
-  connect(removeButton,SIGNAL(clicked()),
-                    this,SLOT(removeNotify()));
+  connect(useNotifyCheck,SIGNAL (stateChanged(int)),this,SLOT (notifyCheckChanged(int)));
+  connect(newButton,SIGNAL (clicked()),this,SLOT (newNotify()) );
+  connect(removeButton,SIGNAL (clicked()),this,SLOT (removeNotify()) );
 
   // Insert Notify items backwards to get them sorted properly
   int index=newNotifyList.count()-1;
@@ -92,6 +91,7 @@ NotifyDialog::NotifyDialog(QStringList newNotifyList,QSize newSize,bool use,int 
   }
 
   setInitialSize(newSize);
+  notifyCheckChanged(use ? 2 : 0);
 }
 
 NotifyDialog::~NotifyDialog()
@@ -150,6 +150,16 @@ QStringList NotifyDialog::getNotifyList()
   }
 
   return newList;
+}
+
+void NotifyDialog::notifyCheckChanged(int state)
+{
+  bool enable=(state==2);
+  notifyDelayLabel->setEnabled(enable);
+  notifyDelaySpin->setEnabled(enable);
+  notifyListView->setEnabled(enable);
+  newButton->setEnabled(enable);
+  removeButton->setEnabled(enable);
 }
 
 #include "notifydialog.moc"

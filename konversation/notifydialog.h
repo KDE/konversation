@@ -52,6 +52,7 @@ class NotifyDialog : public KDialogBase
     void slotCancel();
     void newNotify();
     void removeNotify();
+    void notifyCheckChanged(int state);
 
   protected:
     KListView* notifyListView;
@@ -59,6 +60,7 @@ class NotifyDialog : public KDialogBase
     QPushButton* newButton;
     QPushButton* removeButton;
     QCheckBox* useNotifyCheck;
+    QLabel* notifyDelayLabel;
     QSpinBox* notifyDelaySpin;
 };
 
