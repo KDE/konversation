@@ -105,9 +105,9 @@ class KonversationApplication : public KApplication
     const QPtrList<Server> getServerList();
 
     // Nick color stuff
-    uint& getColorOffset() { return colorOffSet;}
-    QStringList& getColorList() { return colorList; }
-    QMap<QString,QString>& getColorMap() { return colorMap;}
+    uint& getColorOffset();
+    QStringList& getColorList();
+    QMap<QString,QString>& getColorMap();
 
   signals:
     void catchUrl(const QString& who,const QString& url);
