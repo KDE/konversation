@@ -109,6 +109,8 @@ class Channel : public ChatWindow
     
     virtual void setChannelEncoding(const QString& encoding);
     virtual QString getChannelEncoding();
+    virtual QString getChannelEncodingDefaultDesc();
+    
   signals:
     void newText(QWidget* channel,const QString& highlightColor, bool important);
     void prefsChanged();

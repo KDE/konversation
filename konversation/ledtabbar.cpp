@@ -91,7 +91,7 @@ LedTabBar::LedTabBar(QWidget* parent,const char* name) :
     for(unsigned int j=0; j<encodingsList.count(); ++j)
       popupEncoding->insertItem(encodingsListDesc[j],POPUPID_ENCODING_OFFSET+j+1);
     popupEncoding->insertSeparator();
-    popupEncoding->insertItem(i18n("Identity Default"),POPUPID_ENCODING_OFFSET+0);
+    popupEncoding->insertItem(i18n("Default"),POPUPID_ENCODING_OFFSET+0);
     // }
     
     popup->insertTitle(i18n("Tab"),Label);
@@ -387,7 +387,7 @@ void LedTabBar::contextMenuEvent(QContextMenuEvent* ce)
         if(win->getChannelEncodingEnabled())
         {
           popup->setItemEnabled(EncodingSub, true);
-          popupEncoding->changeItem(POPUPID_ENCODING_OFFSET+0,i18n("Identity Default")+" ( "+win->getServer()->getIdentity()->getCodec()+" )");
+          popupEncoding->changeItem(POPUPID_ENCODING_OFFSET+0,win->getChannelEncodingDefaultDesc());
           QString encoding=win->getChannelEncoding();
           popupEncoding->setItemChecked(POPUPID_ENCODING_OFFSET+0, (encoding == QString::null)); // identity default
           for(unsigned int i=0; i<encodingsList.count(); ++i)

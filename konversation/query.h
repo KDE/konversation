@@ -54,6 +54,7 @@ class Query : public ChatWindow
 
     virtual void setChannelEncoding(const QString& encoding);
     virtual QString getChannelEncoding();
+    virtual QString getChannelEncodingDefaultDesc();
 
   signals:
     void newText(QWidget* query,const QString& highlightColor,bool important);

@@ -281,6 +281,11 @@ QString Query::getChannelEncoding()  // virtual
   return KonversationApplication::preferences.getChannelEncoding(server->getServerGroup(), getName());
 }
 
+QString Query::getChannelEncodingDefaultDesc()  // virtual
+{
+  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodec());
+}
+
 void Query::closeYourself()
 {
 #ifndef USE_MDI

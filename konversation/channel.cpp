@@ -1841,6 +1841,11 @@ QString Channel::getChannelEncoding()  // virtual
   return KonversationApplication::preferences.getChannelEncoding(server->getServerGroup(), getName());
 }
 
+QString Channel::getChannelEncodingDefaultDesc()  // virtual
+{
+  return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodec());
+}
+
 //
 // NickList
 //

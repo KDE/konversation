@@ -123,6 +123,7 @@ class ChatWindow : public BASE_CLASS
     
     virtual void setChannelEncoding(const QString& /* encoding */) {}
     virtual QString getChannelEncoding() { return QString::null; }
+    virtual QString getChannelEncodingDefaultDesc() { return QString::null; }
     bool getChannelEncodingEnabled() const;
     
   signals:
