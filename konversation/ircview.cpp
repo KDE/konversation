@@ -216,7 +216,6 @@ void IRCView::highlightedSlot(const QString& link)
 
 void IRCView::urlClickSlot(const QString &url)
 {
-  kdDebug() << "Called from a Qt signal " << endl;
   urlClickSlot(url,false);
 }
 
@@ -227,7 +226,7 @@ void IRCView::urlClickSlot(const QString &url, bool newTab)
     // Always use KDE default mailer.
     if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.lower().startsWith("mailto:"))
     {
-      QCString konqueror_id = "";
+      QCString konqueror_id;
       
       if(newTab)
 	{
@@ -236,11 +235,9 @@ void IRCView::urlClickSlot(const QString &url, bool newTab)
 	  
 	  for(it=appList.begin(); it != appList.end(); ++it)
 	    {
-	      kdDebug() << "Checking " << *it << endl;
 	      if((*it).contains("konqueror"))
 		{
 		  konqueror_id = *it;
-		  kdDebug() << "Matched " << konqueror_id << endl;
 		  break;
 		}
 	    }
@@ -248,7 +245,6 @@ void IRCView::urlClickSlot(const QString &url, bool newTab)
       
       if(!konqueror_id.isEmpty())
 	{ 
-	  kdDebug() << "DCOPRef" << endl;
 	  DCOPRef konqueror( konqueror_id,"konqueror-mainwindow#1");
 	  konqueror.call( "newTab", url );
 	}
