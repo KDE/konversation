@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # A script for Konversation to call connectToServer for each instance of Konversation.
 
