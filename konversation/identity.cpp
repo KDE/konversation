@@ -14,7 +14,9 @@
 
 #include <qtextcodec.h>
 
+#include <kcharsets.h>
 #include <kdebug.h>
+#include <kglobal.h>
 
 #include "ircdefaultcodec.h"
 
@@ -82,11 +84,13 @@ void Identity::setCodecName(const QString &newCodecName)
   // NOTE: codecName should be based on KCharsets::availableEncodingNames() / descriptiveEncodingNames()
   // We can get a QTextCodec from QString based on them, but can't do the reverse of that.
   
-  // never set an empty codec!
-  if(!newCodecName.isEmpty()){
-    m_codecName = newCodecName;
-    m_codec = QTextCodec::codecForName(newCodecName.ascii());
-  }
+  // never set an empty or borked codec!
+  QString codecName=newCodecName;
+  if(!KGlobal::charsets()->availableEncodingNames().contains(codecName))
+    codecName=IRCDefaultCodec::getDefaultLocaleCodec();
+  
+  m_codecName=codecName;
+  m_codec=QTextCodec::codecForName(codecName.ascii());
 }
 
 QString Identity::getAwayNick() { return awayNick; }
