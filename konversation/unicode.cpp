@@ -54,53 +54,76 @@ bool isUtf8(const QString& text)
       if(UTF8_1Byte(utf8[i]))
 	{
 	  clen = 1;
-	} else if(UTF8_2Bytes(utf8[i])) {
-	clen = 2;
-	/* No enough trail bytes */
-	if( (i + clen) > len) 
-	  return false;
-	/* 0000 0000 - 0000 007F : should encode in less bytes */
-	if(0 ==  (utf8[i] & 0x1E )) 
-	  return false;
-      } else if(UTF8_3Bytes(utf8[i])) {
-	clen = 3;
-	/* No enough trail bytes */
-	if( (i + clen) > len) 
-	  return false;
-	/* a single Surrogate should not show in 3 bytes UTF8, instead, the pair should be intepreted
-	   as one single UCS4 char and encoded UTF8 in 4 bytes */
-	if((QChar(0xED) == utf8[i] ) && (0xA0 == (utf8[i+1] & 0xA0 ) )) 
-	  return false;
-	/* 0000 0000 - 0000 07FF : should encode in less bytes */
-	if((0 ==  (utf8[i] & 0x0F )) && (0 ==  (utf8[i+1] & 0x20 ) )) 
-	  return false;
-      } else if(UTF8_4Bytes(utf8[i])) {
-	clen = 4;
-	/* No enough trail bytes */
-	if( (i + clen) > len) 
-	  return false;
-	/* 0000 0000 - 0000 FFFF : should encode in less bytes */
-	if((0 ==  (utf8[i] & 0x07 )) && (0 ==  (utf8[i+1] & 0x30 )) ) 
-	  return false;
-      } else if(UTF8_5Bytes(utf8[i])) {
+	} 
+      else if(UTF8_2Bytes(utf8[i])) 
+	{
+	  clen = 2;
+	
+	  /* No enough trail bytes */
+	  if( (i + clen) > len) 
+	    return false;
+	  
+	  /* 0000 0000 - 0000 007F : should encode in less bytes */
+	  if(0 ==  (utf8[i] & 0x1E )) 
+	    return false;
+	} 
+      else if(UTF8_3Bytes(utf8[i])) 
+	{
+	  clen = 3;
+	  
+	  /* No enough trail bytes */
+	  if( (i + clen) > len) 
+	    return false;
+	  
+	  /* a single Surrogate should not show in 3 bytes UTF8, instead, the pair should be intepreted
+	     as one single UCS4 char and encoded UTF8 in 4 bytes */
+	  if((QChar(0xED) == utf8[i] ) && (0xA0 == (utf8[i+1] & 0xA0 ) )) 
+	    return false;
+	  
+	  /* 0000 0000 - 0000 07FF : should encode in less bytes */
+	  if((0 ==  (utf8[i] & 0x0F )) && (0 ==  (utf8[i+1] & 0x20 ) )) 
+	    return false;
+      } 
+      else if(UTF8_4Bytes(utf8[i])) 
+	{
+	  clen = 4;
+	  
+	  /* No enough trail bytes */
+	  if( (i + clen) > len) 
+	    return false;
+	  
+	  /* 0000 0000 - 0000 FFFF : should encode in less bytes */
+	  if((0 ==  (utf8[i] & 0x07 )) && (0 ==  (utf8[i+1] & 0x30 )) ) 
+	    return false;
+      } 
+      else if(UTF8_5Bytes(utf8[i])) {
 	clen = 5;
+	
 	/* No enough trail bytes */
 	if( (i + clen) > len) 
 	  return false;
+	
 	/* 0000 0000 - 001F FFFF : should encode in less bytes */
 	if((0 ==  (utf8[i] & 0x03 )) && (0 ==  (utf8[i+1] & 0x38 )) ) 
 	  return false;
-      } else if(UTF8_6Bytes(utf8[i])) {
-	clen = 6;
-	/* No enough trail bytes */
-	if( (i + clen) > len) 
+      } 
+      else if(UTF8_6Bytes(utf8[i])) 
+	{
+	  clen = 6;
+	  
+	  /* No enough trail bytes */
+	  if( (i + clen) > len) 
+	    return false;
+	  
+	  /* 0000 0000 - 03FF FFFF : should encode in less bytes */
+	  if((0 ==  (utf8[i] & 0x01 )) && (0 ==  (utf8[i+1] & 0x3E )) ) 
+	    return false;
+      } 
+      else 
+	{
 	  return false;
-	/* 0000 0000 - 03FF FFFF : should encode in less bytes */
-	if((0 ==  (utf8[i] & 0x01 )) && (0 ==  (utf8[i+1] & 0x3E )) ) 
-	  return false;
-      } else {
-        return false;
-      }
+	}
+      
       for(j = 1; j<clen ;++j)
 	{
 	  if(! UTF8_ValidTrialByte(utf8[i+j])) /* Trail bytes invalid */
