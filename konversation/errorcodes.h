@@ -42,6 +42,7 @@
 #define RPL_STATSUPTIME        242
 #define RPL_STATSOLINE         243
 #define RPL_STATSHLINE         244
+#define RPL_HIGHCONNECTCOUNT   250
 #define RPL_LUSERCLIENT        251
 #define RPL_LUSEROP            252
 #define RPL_LUSERUNKNOWN       253

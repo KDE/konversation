@@ -1383,8 +1383,16 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           emit notifyResponse("###");
           break;
         }
-      // FALLTHROUGH to default to let the error display otherwise  
       }
+      case RPL_HIGHCONNECTCOUNT:
+      case RPL_LUSERCLIENT:
+      case RPL_LUSEROP:
+      case RPL_LUSERUNKNOWN:
+      case RPL_LUSERCHANNELS:
+      case RPL_LUSERME:
+        server->appendStatusMessage(i18n("Users"),parameterList.join(" ").section(' ',1)+" "+trailing);
+        break;
+      // FALLTHROUGH to default to let the error display otherwise  
       default:
         {
           // All yet unknown messages go into the frontmost window without the
