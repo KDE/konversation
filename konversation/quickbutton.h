@@ -25,10 +25,10 @@ class QuickButton : public QPushButton
   Q_OBJECT
 
   public:
-    QuickButton(QString label,QString newDefinition,QWidget* parent);
+    QuickButton(const QString &label,const QString &newDefinition,QWidget* parent);
     ~QuickButton();
 
-    void setDefinition(QString newDefinition);
+    void setDefinition(const QString &newDefinition);
     
   signals:
     void clicked(int);

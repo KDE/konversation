@@ -16,25 +16,19 @@
 #ifndef PREFSPAGEDCCSETTINGS_H
 #define PREFSPAGEDCCSETTINGS_H
 
-#include "prefspage.h"
+#include "dcc_preferences.h"
+class Preferences;
 
 /*
   @author Dario Abatianni
 */
 
-class QFrame;
-class QSpinBox;
-class QVGroupBox;
-
-class KLineEdit;
-
-class PrefsPageDccSettings : public PrefsPage
+class PrefsPageDccSettings : public DCC_Settings
 {
   Q_OBJECT
 
   public:
     PrefsPageDccSettings(QFrame* newParent,Preferences* newPreferences);
-    ~PrefsPageDccSettings();
 
   public slots:
     void applyPreferences();
@@ -49,24 +43,8 @@ class PrefsPageDccSettings : public PrefsPage
     void autoResumeStateChanged(int state);
     void autoGetStateChanged(int state);
 
-  protected:
-    KLineEdit* dccFolderInput;
-    QSpinBox* dccBufferSpin;
-    QCheckBox* dccAutoGet;
-    QCheckBox* dccAutoResume;
-    QCheckBox* dccAddSender;
-    QCheckBox* dccCreateFolder;
-    QComboBox* dccMethodToGetOwnIpComboBox;
-    QFrame* dccSpecificOwnIpFrame;
-    KLineEdit* dccSpecificOwnIpInput;
-    QCheckBox* dccSpecificSendPortsCheckBox;
-    QSpinBox* dccSendPortsFirstSpin;
-    QSpinBox* dccSendPortsLastSpin;
-    QCheckBox* dccSpecificChatPortsCheckBox;
-    QSpinBox* dccChatPortsFirstSpin;
-    QSpinBox* dccChatPortsLastSpin;
-    QCheckBox* dccFastSend;
-    QSpinBox* dccSendTimeoutSpin;
+protected:
+		Preferences* preferences;
 };
 
 #endif

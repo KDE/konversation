@@ -13,7 +13,7 @@
 
 #include "quickbutton.h"
 
-QuickButton::QuickButton(QString label,QString newDefinition,QWidget* parent) :
+QuickButton::QuickButton(const QString &label,const QString &newDefinition,QWidget* parent) :
              QPushButton::QPushButton(label,parent)
 {
   setDefinition(newDefinition);
@@ -29,7 +29,7 @@ void QuickButton::wasClicked()
   emit clicked(definition);
 }
 
-void QuickButton::setDefinition(QString newDefinition)
+void QuickButton::setDefinition(const QString &newDefinition)
 {
   definition=newDefinition;
 }

@@ -1194,19 +1194,23 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->setGroup("DCC Settings");
   config->writeEntry("AddPartner",preferences.getDccAddPartner());
   config->writeEntry("CreateFolder",preferences.getDccCreateFolder());
-  config->writeEntry("BufferSize",preferences.getDccBufferSize());
-  config->writeEntry("MethodToGetOwnIp",preferences.getDccMethodToGetOwnIp());
+  config->writeEntry("AutoGet",preferences.getDccAutoGet());
+  config->writeEntry("AutoResume",preferences.getDccAutoResume());
+  
+  config->writeEntry("SendTimeout",preferences.getDccSendTimeout());
+	
+	config->writeEntry("MethodToGetOwnIp",preferences.getDccMethodToGetOwnIp());
   config->writeEntry("SpecificOwnIp",preferences.getDccSpecificOwnIp());
-  config->writeEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts());
+  
+	config->writeEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts());
   config->writeEntry("SendPortsFirst",preferences.getDccSendPortsFirst());
   config->writeEntry("SendPortsLast",preferences.getDccSendPortsLast());
   config->writeEntry("SpecificChatPorts",preferences.getDccSpecificChatPorts());
   config->writeEntry("ChatPortsFirst",preferences.getDccChatPortsFirst());
   config->writeEntry("ChatPortsLast",preferences.getDccChatPortsLast());
-  config->writeEntry("AutoGet",preferences.getDccAutoGet());
-  config->writeEntry("AutoResume",preferences.getDccAutoResume());
+  
+	config->writeEntry("BufferSize",preferences.getDccBufferSize());
   config->writeEntry("FastSend",preferences.getDccFastSend());
-  config->writeEntry("SendTimeout",preferences.getDccSendTimeout());
 
  // Path Settings
   config->setGroup("Path Settings");

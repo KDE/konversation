@@ -38,7 +38,7 @@ class Query : public ChatWindow
 
   public:
 #ifdef USE_MDI
-    Query(QString caption);
+    Query(const QString &caption);
 #else
     Query(QWidget* parent);
 #endif

@@ -36,7 +36,7 @@ const int POPUP_WHOIS =0xfe;
 const int POPUP_IGNORE=0xff;
 
 #ifdef USE_MDI
-Query::Query(QString caption) : ChatWindow(caption)
+Query::Query(const QString &caption) : ChatWindow(caption)
 #else
 Query::Query(QWidget* parent) : ChatWindow(parent)
 #endif
