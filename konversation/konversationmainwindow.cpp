@@ -362,10 +362,19 @@ void KonversationMainWindow::openChannelList()
   if(frontServer)
   {
     ChannelListPanel* panel=frontServer->getChannelListPanel();
-    if(panel)
+    if(panel) {
       getViewContainer()->showPage(panel);
-    else
-      frontServer->addChannelListPanel();
+    } else {
+      int ret = KMessageBox::warningContinueCancel(this,i18n("Using this function may result in a lot "
+                                         "of network traffic. If your connection is not fast "
+                                         "enough, it is possible that your client will be "
+                                         "disconnected by the server."), i18n("Channel List Warning"),
+                                         KStdGuiItem::cont(), "ChannelListWarning");
+      
+      if(ret == KMessageBox::Continue) {
+        frontServer->addChannelListPanel();
+      }
+    }
   }
   else
   {
