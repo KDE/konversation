@@ -370,5 +370,7 @@ default_presentation=0
 
 [query]
 Name=Query
+Name[pt]=Procura
+Name[pt_BR]=Procura
 Comment=Someone started a conversation (query) with you
 default_presentation=0
