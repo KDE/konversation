@@ -368,7 +368,7 @@ namespace Konversation {
       // remove item from view
       delete server;
       // if the branch has no other items, remove it
-      if(branch->childCount() == 0) {
+      if(branch && branch->childCount() == 0) {
         delete branch;
       }
       
