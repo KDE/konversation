@@ -93,6 +93,9 @@ ServerWindow::ServerWindow(Server* newServer) : KMainWindow()
 
   connect( windowContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changedView(QWidget*)) );
   connect( windowContainer,SIGNAL (closeTab(QWidget*)),this,SLOT (closeTab(QWidget*)) );
+  
+  connect(&filter,SIGNAL (openQuery(const QString&,const QString&)),
+         getServer(),SLOT (addQuery(const QString&,const QString&)) );
 
   createGUI();
   readOptions();

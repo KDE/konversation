@@ -399,7 +399,6 @@ void OutputFilter::parseCtcp(const QString &parameter)
 void OutputFilter::parseQuery(const QString &parameter)
 {
   QStringList queryList=QStringList::split(' ',parameter);
-
   for(unsigned int index=0;index<queryList.count();index++) emit openQuery(queryList[index],QString::null);
 }
 
