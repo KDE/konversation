@@ -52,6 +52,8 @@ class PrefsPageAppearance : public PrefsPage
 
     void useParagraphSpacingChanged(int state);
 
+    void closeButtonsChanged(int state);
+
     void sortByStatusChanged(int state);
 
     void moveUp();
@@ -77,6 +79,7 @@ class PrefsPageAppearance : public PrefsPage
 
     QCheckBox* autoUserhostCheck;
     QCheckBox* closeButtonsCheck;
+    QCheckBox* closeButtonsAlignRight;
     QCheckBox* useSpacingCheck;
 
     QLabel* spacingLabel;

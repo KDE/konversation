@@ -276,6 +276,7 @@ void KonversationApplication::readOptions()
   preferences.setShowQuickButtons(config->readBoolEntry("ShowQuickButtons",preferences.getShowQuickButtons()));
   preferences.setShowModeButtons(config->readBoolEntry("ShowModeButtons",preferences.getShowModeButtons()));
   preferences.setCloseButtonsOnTabs(config->readBoolEntry("CloseButtonsOnTabs",preferences.getCloseButtonsOnTabs()));
+  preferences.setCloseButtonsAlignRight(config->readBoolEntry("CloseButtonsAlignRight",preferences.getCloseButtonsAlignRight()));
 
   preferences.setAutoUserhost(config->readBoolEntry("AutoUserhost",preferences.getAutoUserhost()));
 
@@ -524,6 +525,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ShowQuickButtons",preferences.getShowQuickButtons());
   config->writeEntry("ShowModeButtons",preferences.getShowModeButtons());
   config->writeEntry("CloseButtonsOnTabs",preferences.getCloseButtonsOnTabs());
+  config->writeEntry("CloseButtonsAlignRight",preferences.getCloseButtonsAlignRight());
 
   config->writeEntry("AutoUserhost",preferences.getAutoUserhost());
 
@@ -779,7 +781,7 @@ bool KonversationApplication::emitDCOPSig(const QString &appId, const QString &o
   QByteArray replyData;
   QCString replyType;
   if (!KApplication::dcopClient()->call(appId.ascii(), objId.ascii(), signal.ascii() /*must have prototype*/,
-					data, replyType, replyData)) {
+                                        data, replyType, replyData)) {
     qDebug("there was some error using DCOP.");
     return true; // Keep processing filters
   } else {

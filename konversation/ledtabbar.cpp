@@ -151,6 +151,7 @@ void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
     fw += t->text().contains("&&") * fm.width('&');
     int w = iw + fw + 4;
     int h = QMAX(fm.height() + 4, ih );
+
     paintLabel( p, QRect( r.left() + (r.width()-w)/2 - 3,
                           r.top() + (r.height()-h)/2,
                           w, h ), t, t->identifier() == keyboardFocusTab() );
@@ -184,16 +185,37 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
       // do we want close widgets on the tabs?
       if(KonversationApplication::preferences.getCloseButtonsOnTabs())
       {
-        r.setLeft( r.left() + LABEL_OFFSET);
-        r.setRight( r.right() + LABEL_OFFSET);
-        // ### the pixmap shift should probably not be hardcoded..
-        p->drawPixmap( br.left() + 6 + LABEL_OFFSET /* + ((selected == TRUE) ? 0 : 1) */,
-                       br.center().y()-pixh/2 + ((selected == TRUE) ? 0 : 1),
-                       pixmap );
+        if (!KonversationApplication::preferences.getCloseButtonsAlignRight())
+        {
+          // Shift the text to the right
+          r.setLeft( r.left() + LABEL_OFFSET);
+          r.setRight( r.right() + LABEL_OFFSET);
 
-        p->drawPixmap( br.left(),
-                       br.center().y()-close_pixh/2,
-                       close_pixmap );
+          // Draw iconset on the left side
+          p->drawPixmap( br.left() + 6 + LABEL_OFFSET /* + ((selected == TRUE) ? 0 : 1) */,
+                         br.center().y()-pixh/2 + ((selected == TRUE) ? 0 : 1),
+                         pixmap );
+
+          // Draw close button on the left side
+          p->drawPixmap( br.left(),
+                         br.center().y() - close_pixh/2,
+                         close_pixmap );
+        }
+        else
+        {
+          // Shift the text to the left
+          r.setLeft( r.left() - 6);
+
+          // Draw iconset on the left side
+          p->drawPixmap( br.left() + 2,
+                         br.center().y()-pixh/2 + ((selected == TRUE) ? 0 : 1),
+                         pixmap );
+
+          // Draw close button on the right side
+          p->drawPixmap( br.right() - 7,
+                         br.center().y() - close_pixh/2,
+                         close_pixmap );
+        }
       }
       else
       {
@@ -243,6 +265,7 @@ void LedTabBar::layoutTabs()
       QTab* ltab=tabAt(index);
       QRect r=ltab->rect();
       r.setWidth(r.width()+LABEL_OFFSET);
+
       r.moveBy(offset,0);
       offset+=LABEL_OFFSET;
 
@@ -262,11 +285,16 @@ void LedTabBar::mouseReleaseEvent(QMouseEvent* e)
 
       // get physical position of QTab* t
       QRect target(t->rect());
+
+      // move target area to aprop. place
+      if(KonversationApplication::preferences.getCloseButtonsAlignRight())
+        target.moveBy(target.width() - 20,4);
+      else
+        target.moveBy(8,4);
+
       // set size of target area
       target.setWidth(16);
       target.setHeight(16);
-      // move target area to final place
-      target.moveBy(8,4);
 
       if(target.contains(e->pos())) emit closeTab(t->identifier());
     }

@@ -124,6 +124,8 @@ class Preferences : public QObject
     bool getBringToFront();
     void setCloseButtonsOnTabs(bool state);
     bool getCloseButtonsOnTabs();
+    void setCloseButtonsAlignRight(bool state);
+    bool getCloseButtonsAlignRight();
 
     // sorting stuff
     bool getSortByStatus();
@@ -318,10 +320,11 @@ class Preferences : public QObject
     bool logFollowsNick;
     QString logPath;
 
-    TabPlacement tabPlacement; // where do the tabs go?
-    bool blinkingTabs;         // Do we want the LEDs on the tabs to blink?
-    bool closeButtonsOnTabs;   // Do we want close widgets on the tabs?
-    bool bringToFront;         // Do we want to see newly created tabs immediately?
+    TabPlacement tabPlacement;   // where do the tabs go?
+    bool blinkingTabs;           // Do we want the LEDs on the tabs to blink?
+    bool closeButtonsOnTabs;     // Do we want close widgets on the tabs?
+    bool closeButtonsAlignRight; // Display close widgets on the right side?
+    bool bringToFront;           // Do we want to see newly created tabs immediately?
 
     bool fixedMOTD;
     bool beep;

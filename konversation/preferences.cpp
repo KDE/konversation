@@ -112,6 +112,7 @@ Preferences::Preferences()
   setTabPlacement(Bottom);
   setBlinkingTabs(true);
   setCloseButtonsOnTabs(true);
+  setCloseButtonsAlignRight(false);
   setBringToFront(true);
 
   setNotifyDelay(20);
@@ -410,6 +411,9 @@ bool Preferences::getBlinkingTabs() { return blinkingTabs; }
 
 void Preferences::setCloseButtonsOnTabs(bool state) { closeButtonsOnTabs=state; }
 bool Preferences::getCloseButtonsOnTabs() { return closeButtonsOnTabs; }
+
+void Preferences::setCloseButtonsAlignRight(bool state) { closeButtonsAlignRight=state; }
+bool Preferences::getCloseButtonsAlignRight() { return closeButtonsAlignRight; }
 
 void Preferences::setBringToFront(bool state) { bringToFront=state; }
 bool Preferences::getBringToFront() { return bringToFront; }
