@@ -421,8 +421,8 @@ void Server::addDccSend(QString recipient,QString fileName)
 
   QString ip=KExtendedSocket::localAddress(serverSocket->fd())->pretty();
   ip=ip.section('-',0,0);
-//  if(ip.startsWith("192.168.")) ip="127.0.0.1";
 
+  // We already checked that the file exists in output filter
   QFile file(fileName);
   QString size=QString::number(file.size());
 

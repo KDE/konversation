@@ -91,6 +91,7 @@ void DccPanel::dccSelected()
         setButtons(true,false,true,false,false);
         break;
       case DccTransfer::Offering:
+      case DccTransfer::Resuming:
         setButtons(false,true,true,true,true);
         break;
       case DccTransfer::Running:

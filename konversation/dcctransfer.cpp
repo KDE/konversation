@@ -112,7 +112,7 @@ void DccTransfer::startGet()
     file.open(IO_ReadOnly);
     long fileSize=file.size();
     file.close();
-    // If the file is empty we can forget resuming
+    // If the file is empty we can forget about resuming
     if(fileSize)
     {
       kdDebug() << "File exists ... Resuming." << endl;
@@ -148,6 +148,8 @@ void DccTransfer::startSend()
     setPort(dccSocket->localAddress()->pretty().section(' ',1,1));
     connect(dccSocket,SIGNAL (readyAccept()),this,SLOT(heard()) );
 
+    file.setName(getFile());
+
     emit send(getPartner(),getFile(),getNumericalIp(),getPort(),getSize());
   }
   else kdDebug() << "DccTransfer::startSend(): listen() failed!" << endl;
@@ -155,7 +157,27 @@ void DccTransfer::startSend()
 
 void DccTransfer::heard()
 {
-  kdDebug() << "DccTransfer::heard()" << endl;
+  kdDebug() << "DccTransfer::heard(): accepting ..." << endl;
+
+  int fail=dccSocket->accept(sendSocket);
+
+  connect(sendSocket,SIGNAL (readyRead()),this,SLOT (getAck()) );
+  connect(sendSocket,SIGNAL (readyWrite()),this,SLOT (writeData()) );
+
+  kdDebug() << "DccTransfer::heard(): accept() returned " << fail << endl;
+
+  if(fail==0)
+  {
+    file.open(IO_ReadOnly);
+    setStatus(Running);
+    sendSocket->enableRead(true);
+    sendSocket->enableWrite(true);
+  }
+  else
+  {
+    setStatus(Failed);
+    dccSocket->close();
+  }
 }
 
 void DccTransfer::startResume(QString position)
@@ -239,6 +261,18 @@ void DccTransfer::readData()
   }
 }
 
+void DccTransfer::writeData()
+{
+  int actual=file.readBlock(buffer,bufferSize);
+  if(actual>0)
+  {
+    sendSocket->enableWrite(true);
+    sendSocket->writeBlock(buffer,actual);
+    setPosition(getPosition()+actual);
+  }
+  updateCPS();
+}
+
 unsigned long intel(unsigned long value)
 {
   value=((value & 0xff000000) >> 24) +
@@ -249,12 +283,26 @@ unsigned long intel(unsigned long value)
   return value;
 }
 
+void DccTransfer::getAck()
+{
+  unsigned long pos;
+  sendSocket->readBlock((char *) &pos,4);
+  pos=intel(pos);
+
+  if(pos==getSize())
+  {
+    setStatus(Done);
+    sendSocket->close();
+    file.close();
+  }
+}
+
 void DccTransfer::sendAck()
 {
   unsigned long pos=intel(getPosition());
   
   dccSocket->enableWrite(false);
-  dccSocket->writeBlock((char*) &pos,(unsigned long) 4);
+  dccSocket->writeBlock((char*) &pos,4);
 
   if(getPosition()==getSize())
   {
@@ -262,10 +310,6 @@ void DccTransfer::sendAck()
     dccSocket->close();
     file.close();
   }
-}
-
-void DccTransfer::writeData()
-{
 }
 
 void DccTransfer::setStatus(DccStatus status)

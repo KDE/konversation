@@ -90,6 +90,7 @@ class DccTransfer : public QObject, public KListViewItem
     void check();
     void readData();
     void writeData();
+    void getAck();
     void sendAck();
 /*
     void dccSendConnectionSuccess();
@@ -125,6 +126,7 @@ class DccTransfer : public QObject, public KListViewItem
     unsigned long transferred;
 
     KExtendedSocket* dccSocket;
+    KExtendedSocket* sendSocket;  // accept() needs a new socket
     QDir dir;
     QFile file;
 

@@ -15,6 +15,8 @@
 */
 
 #include <qstringlist.h>
+#include <qfile.h>
+#include <qfileinfo.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -379,7 +381,15 @@ void OutputFilter::parseDcc(QString parameter)
       else
       {
         // TODO: Check if file is available
-        emit openDccSend(parameterList[1],parameterList[2]);
+        QFile file(parameterList[2]);
+        if(file.exists())
+          emit openDccSend(parameterList[1],parameterList[2]);
+        else
+        {
+          type=i18n("Error");
+          output=i18n("Error: File \"%1\" does not exist.").arg(parameterList[2]);
+          program=true;
+        }
       }
     }
     // TODO: DCC Chat etc. comes here
@@ -394,7 +404,10 @@ void OutputFilter::parseDcc(QString parameter)
 
 void OutputFilter::sendRequest(QString recipient,QString fileName,QString address,QString port,unsigned long size)
 {
-  toServer="PRIVMSG "+recipient+" :"+'\x01'+"DCC SEND "+fileName+" "+address+" "+port+" "+QString::number(size)+'\x01';
+  QFile file(fileName);
+  QFileInfo info(file);
+
+  toServer="PRIVMSG "+recipient+" :"+'\x01'+"DCC SEND "+info.fileName()+" "+address+" "+port+" "+QString::number(size)+'\x01';
   output=i18n("Offering \"%1\" to %2 for upload.").arg(fileName).arg(recipient);
   type=i18n("DCC");
   program=true;
