@@ -39,8 +39,10 @@ class InputFilter : public QObject
     void parseLine(const QString &line, QWidget *mainWindow);
 
     // use this when the client does automatics, like userhost for finding hostmasks
-    void setAutomaticRequest(bool yes);
-    int getAutomaticRequest();
+    void setAutomaticRequest(const QString& command, const QString& name, bool yes);
+    int getAutomaticRequest(const QString& command, const QString& name);
+    void addWhoRequest(const QString& name);  // called from Server::send()
+    bool isWhoRequestUnderProcess(const QString& name);  // to avoid duplicate requests
     void setLagMeasuring(bool yes);
     bool getLagMeasuring();
 
@@ -69,7 +71,8 @@ class InputFilter : public QObject
     bool isIgnore(const QString &pattern, Ignore::Type type);
 
     Server* server;
-    int automaticRequest;
+    QMap< QString, QMap<QString,int> > automaticRequest; // automaticRequest[command][channel or nick]=count
+    QStringList whoRequestList;
     int lagMeasuring;
 
 

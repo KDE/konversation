@@ -1111,6 +1111,10 @@ void Server::send()
     // To make lag calculation more precise, we reset the timer here
     if(outputLine.startsWith("ISON") ||
        outputLine.startsWith("PING LAG")) notifySent.start();
+    
+    // remember the arg for /WHO to identify the responses
+    else if(outputLine.upper().startsWith("WHO"))
+      inputFilter.addWhoRequest(outputLine.section(" ",1,1,QString::SectionSkipEmpty).stripWhiteSpace());
 
     // Don't reconnect if we WANT to quit
     else if(outputLine.startsWith("QUIT")) setDeliberateQuit(true);
@@ -1492,26 +1496,28 @@ void Server::closeChannel(const QString& name)
 
 void Server::requestChannelList()
 {
-  inputFilter.setAutomaticRequest(true);
+  inputFilter.setAutomaticRequest("LIST", QString::null, true);
   queue("LIST");
 }
 
 void Server::requestWhois(const QString& nickname)
 {
-  inputFilter.setAutomaticRequest(true);
+  inputFilter.setAutomaticRequest("WHOIS", nickname, true);
   queue("WHOIS "+nickname);
 }
 
 void Server::requestWho(const QString& channel)
 {
   kdDebug() << "Server::requestWho: " << channel << endl;
-  inputFilter.setAutomaticRequest(true);
+  inputFilter.setAutomaticRequest("WHO", channel, true);
   queue("WHO "+channel);
 }
 
 void Server::requestUserhost(const QString& nicks)
 {
-  inputFilter.setAutomaticRequest(true);
+  QStringList nicksList = QStringList::split(" ", nicks);
+  for(QStringList::Iterator it=nicksList.begin() ; it!=nicksList.end() ; ++it)
+    inputFilter.setAutomaticRequest("USERHOST", *it, true);
   queue("USERHOST "+nicks);
 }
 

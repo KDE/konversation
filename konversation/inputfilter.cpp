@@ -42,7 +42,6 @@
 
 InputFilter::InputFilter()
 {
-  automaticRequest=0;
 }
 
 InputFilter::~InputFilter()
@@ -1025,7 +1024,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             nickInfo->setRealName(trailing);
 	  }
           // Display message only if this was not an automatic request.
-          if(getAutomaticRequest()==0)
+          if(getAutomaticRequest("WHOIS",parameterList[1])==0)
             server->appendStatusMessage(i18n("Whois"),
                                       i18n("%1 is %2&#64;%3 (%4)").arg(parameterList[1]) // Use &#64; instead of @
                                       .arg(parameterList[2])                             // to avoid parsing as email
@@ -1042,7 +1041,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 	  if(nickInfo) {
 	    nickInfo->setIdentified(true); 
 	  }
-          if(getAutomaticRequest()==0) {
+          if(getAutomaticRequest("WHOIS",parameterList[1])==0) {
 		  // Prints "psn is an identified user"
 //	    server->appendStatusMessage(i18n("Whois"),parameterList.join(" ").section(' ',1)+" "+trailing);
             //The above line works fine, but can't be i18n'ised. So use the below instead.. I hope this is okay.
@@ -1068,23 +1067,39 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
               nickInfo->setAwayMessage(QString::null);
           }
           // Display message only if this was not an automatic request.
-          if(getAutomaticRequest()==0)
-          {
-            server->appendStatusMessage(i18n("Who"),
-                                        i18n("%1 is %2&#64;%3 (%4)%5").arg(parameterList[5]) // Use &#64; instead of @
-                                          .arg(parameterList[2])
-                                          .arg(parameterList[3])
-                                          .arg(trailing.section(" ", 1))
-                                          .arg(bAway?i18n(" (Away)"):QString::null));
-          }
+          if(!whoRequestList.isEmpty())  // for safe
+            if(getAutomaticRequest("WHO",whoRequestList.front())==0)
+            {
+              server->appendStatusMessage(i18n("Who"),
+                                          i18n("%1 is %2&#64;%3 (%4)%5").arg(parameterList[5]) // Use &#64; instead of @
+                                            .arg(parameterList[2])
+                                            .arg(parameterList[3])
+                                            .arg(trailing.section(" ", 1))
+                                            .arg(bAway?i18n(" (Away)"):QString::null));
+            }
           break;
         }
       case RPL_ENDOFWHO:
         {
-          if(getAutomaticRequest()==0)
-            server->appendStatusMessage(i18n("Who"), i18n("End of /WHO list for %1").arg(parameterList[1]));
+          if(!whoRequestList.isEmpty())  // for safe
+          {
+            if(parameterList[1].lower()==whoRequestList.front())
+            {
+              if(getAutomaticRequest("WHO",whoRequestList.front())==0)
+                server->appendStatusMessage(i18n("Who"), i18n("End of /WHO list for %1").arg(parameterList[1]));
+              else
+                setAutomaticRequest("WHO",whoRequestList.front(),false);
+              whoRequestList.pop_front();
+            }
+            else
+            {
+              // whoReauestList seems to be broken.
+              kdDebug() << "InputFilter::parseServerCommand(): RPL_ENDOFWHO: malformed ENDOFWHO. retrieved: " << parameterList[1] << " expected: " << whoRequestList.front() << endl;
+              whoRequestList.clear();
+            }
+          }
           else
-            setAutomaticRequest(false);
+            kdDebug() << "InputFilter::parseServerCommand(): RPL_ENDOFWHO: unexpected ENDOFWHO. retrieved: " << parameterList[1] << endl;
           break;
         }
       case RPL_WHOISCHANNELS:
@@ -1131,7 +1146,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
           } // endfor
           // Display message only if this was not an automatic request.
-          if(getAutomaticRequest()==0)
+          if(getAutomaticRequest("WHOIS",parameterList[1])==0)
           {
             if(userChannels.count())
             {
@@ -1184,7 +1199,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             nickInfo->setAwayMessage(QString::null);
 	  }
           // Display message only if this was not an automatic request.
-          if(getAutomaticRequest()==0)
+          if(getAutomaticRequest("WHOIS",parameterList[1])==0)
             server->appendStatusMessage(i18n("Whois"),
                                         i18n("%1 is online via %2 (%3)").arg(parameterList[1])
                                         .arg(parameterList[2])
@@ -1194,7 +1209,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       case RPL_WHOISIDENTIFY:
         {
           // Display message only if this was not an automatic request.
-          if(getAutomaticRequest()==0)
+          if(getAutomaticRequest("WHOIS",parameterList[1])==0)
             server->appendStatusMessage(i18n("Whois"),i18n("%1 has identified for this nick.").arg(parameterList[1]));
           break;
         }
@@ -1209,7 +1224,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
           // TODO: replace QString()s with i18n()s after i18n-freeze!
           // if idle time is longer than a day
           // Display message only if this was not an automatic request.
-          if(getAutomaticRequest()==0)
+          if(getAutomaticRequest("WHOIS",parameterList[1])==0)
           {
             if(days)
               server->appendStatusMessage(i18n("Whois"),QString("%1 has been idle for %2 days, %3 hours, %4 minutes and %5 seconds.").arg(parameterList[1])
@@ -1237,7 +1252,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
               nickInfo->setOnlineSince(when);
 	    }
             // Display message only if this was not an automatic request.
-            if(getAutomaticRequest()==0)
+            if(getAutomaticRequest("WHOIS",parameterList[1])==0)
               server->appendStatusMessage(i18n("Whois"),i18n("%1 has been online since %2.").arg(parameterList[1]).arg(when.toString(Qt::LocalDate)));
             break;
           }
@@ -1246,10 +1261,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         {
 //          NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
           // Display message only if this was not an automatic request.
-          if(getAutomaticRequest()==0)
+          if(getAutomaticRequest("WHOIS",parameterList[1])==0)
             server->appendStatusMessage(i18n("Whois"),i18n("End of WHOIS list."));
           // was this an automatic request?
-          if(getAutomaticRequest()!=0) setAutomaticRequest(false);
+          if(getAutomaticRequest("WHOIS",parameterList[1])!=0) setAutomaticRequest("WHOIS",parameterList[1],false);
           break;
         }
       case RPL_USERHOST:
@@ -1275,7 +1290,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             emit userhost(nick,mask,away,ircOp);
 
             // display message only if this was no automatic request
-            if(getAutomaticRequest()==0)
+            if(getAutomaticRequest("USERHOST",nick)==0)
             {
               server->appendStatusMessage(i18n("Userhost"),
                                           i18n("%1%2 is %3%4")
@@ -1284,23 +1299,25 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                                                .arg(mask)
                                                .arg((away) ? i18n(" (away)") : QString::null));
             }
-          } // for
+            
+            // was this an automatic request?
+            if(getAutomaticRequest("USERHOST",nick)!=0)
+              setAutomaticRequest("USERHOST",nick,false);
 
-          // was this an automatic request?
-          if(getAutomaticRequest()!=0) setAutomaticRequest(false);
+          } // for
 
           break;
         }
       case RPL_LISTSTART: //FIXME This reply is obsolete!!!
         {
-          if(getAutomaticRequest()==0) {
+          if(getAutomaticRequest("LIST",parameterList[1])==0) {
             server->appendStatusMessage(i18n("List"),i18n("List of channels:"));
           }
           break;
         }
       case RPL_LIST:
         {
-          if(getAutomaticRequest()==0)
+          if(getAutomaticRequest("LIST",parameterList[1])==0)
           {
             QString message;
 
@@ -1316,10 +1333,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
       case RPL_LISTEND:
         {
           // was this an automatic request?
-          if(getAutomaticRequest()==0) {
+          if(getAutomaticRequest("LIST",parameterList[1])==0) {
             server->appendStatusMessage(i18n("List"),i18n("End of channel list."));
           } else {
-            setAutomaticRequest(false);
+            setAutomaticRequest("LIST",parameterList[1],false);
           }
 
           break;
@@ -1443,16 +1460,22 @@ bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)
   return doIgnore;
 }
 
-void InputFilter::setAutomaticRequest(bool yes)
+void InputFilter::setAutomaticRequest(const QString& command, const QString& name, bool yes)
 {
-  automaticRequest+=(yes) ? 1 : -1;
-  if(automaticRequest<0)
+  automaticRequest[command][name.lower()] += (yes) ? 1 : -1;
+  if(automaticRequest[command][name.lower()]<0)
   {
-    kdDebug() << "InputFilter::automaticRequest was negative! Resetting!" << endl;
-    automaticRequest=0;
+    kdDebug() << "InputFilter::automaticRequest( " << command << ", " << name << " ) was negative! Resetting!" << endl;
+    automaticRequest[command][name.lower()]=0;
   }
 }
-int InputFilter::getAutomaticRequest() { return automaticRequest; }
+int InputFilter::getAutomaticRequest(const QString& command, const QString& name)
+{
+  return automaticRequest[command][name.lower()];
+}
+
+void InputFilter::addWhoRequest(const QString& name) { whoRequestList << name.lower(); }
+bool InputFilter::isWhoRequestUnderProcess(const QString& name) { return (whoRequestList.contains(name.lower())>0); }
 
 void InputFilter::setLagMeasuring(bool state) { lagMeasuring=state; }
 bool InputFilter::getLagMeasuring()           { return lagMeasuring; }
