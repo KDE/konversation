@@ -1,4 +1,5 @@
 Changes from 0.17 to 0.18
+- All nicks were blue when colored nicks are disabled with some setups
 
 Changes from 0.16 to 0.17
 - Add an option to hide realnames in nicklist
