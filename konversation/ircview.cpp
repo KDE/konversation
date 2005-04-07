@@ -439,6 +439,11 @@ void IRCView::append(const QString& nick,const QString& message) {
             color = "#000001"; // HACK Working around QTextBrowser's auto link coloring
         }
     }
+    else {
+        if(channelColor  == "000000") {
+            channelColor = "000001"; // HACK Working around QTextBrowser's auto link coloring
+        }
+    }
 
     if(basicDirection(message) == QChar::DirR) {
         line = RLO;
@@ -495,6 +500,12 @@ void IRCView::appendQuery(const QString& nick,const QString& message) {
             color = "#000001"; // HACK Working around QTextBrowser's auto link coloring
         }
     }
+    else {
+        if(queryColor  == "000000") {
+            queryColor = "000001"; // HACK Working around QTextBrowser's auto link coloring
+        }
+    }
+
 
     if(basicDirection(message) == QChar::DirR) {
         line = RLO;
@@ -537,6 +548,11 @@ void IRCView::appendAction(const QString& nick,const QString& message) {
         }
 
         nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
+    }
+    else {
+        if(actionColor  == "000000") {
+            actionColor = "000001"; // HACK Working around QTextBrowser's auto link coloring
+        }
     }
 
     if(basicDirection(message) == QChar::DirR) {
