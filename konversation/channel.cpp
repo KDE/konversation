@@ -8,9 +8,8 @@
 /*
     The class that controls a channel
     begin:     Wed Jan 23 2002
-    copyright: (C) 2002 by Dario Abatianni
-               (C) 2004 by Peter Simonsson <psn@linux.se>
-    email:     eisfuchs@tigress.com
+    copyright: (C) 2002 by Dario Abatianni <eisfuchs@tigress.com>
+               (C) 2004-2005 by Peter Simonsson <psn@linux.se>
 */
 
 #include <qlabel.h>
@@ -214,7 +213,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   // separate LED from Text a little more
   nicknameListView->setColumnWidth(0, 10);
   nicknameListView->setColumnAlignment(0, Qt::AlignHCenter);
-  nicknameListView->installEventFilter(this);
 
   // the grid that holds the quick action buttons
   buttonsGrid = new QGrid(2, nickListButtons);
@@ -321,7 +319,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
 
   m_allowNotifications = true;
 
-
 //FIXME JOHNFLUX
 //  connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
 //  connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
@@ -339,12 +336,6 @@ void Channel::setServer(Server *server) {
 Channel::~Channel()
 {
   kdDebug() << "Channel::~Channel(" << getName() << ")" << endl;
-
-  KonversationApplication::preferences.setChannelSplitter(splitter->sizes());
-  KonversationApplication::preferences.setTopicSplitterSizes(m_vertSplitter->sizes());
-  KConfig* config = kapp->config();
-  config->setGroup("Appearance");
-  config->writeEntry("TopicSplitterSizes", m_vertSplitter->sizes());
 
   // Purge nickname list
   purgeNicks();
@@ -1682,6 +1673,8 @@ void Channel::showEvent(QShowEvent*)
     }
 
     m_vertSplitter->setSizes(sizes);
+
+    nicknameListView->installEventFilter(this);
   }
   if(awayChanged)
   {
@@ -2176,6 +2169,28 @@ void Channel::setIdentity(const Identity *newIdentity)
   ChatWindow::setIdentity(newIdentity);
   nicknameCombobox->clear();
   nicknameCombobox->insertStringList(newIdentity->getNicknameList());
+}
+
+bool Channel::eventFilter(QObject* watched, QEvent* e)
+{
+  if((watched == nicknameListView) && (e->type() == QEvent::Resize) && !splitterChanged && isShown()) {
+    KonversationApplication::preferences.setChannelSplitter(splitter->sizes());
+    KonversationApplication::preferences.setTopicSplitterSizes(m_vertSplitter->sizes());
+
+    emit splitterMoved(this);
+  }
+
+  return ChatWindow::eventFilter(watched, e);
+}
+
+void Channel::updateSplitters(Channel* channel)
+{
+  if(channel == this) {
+    return;
+  }
+
+  splitter->setSizes(KonversationApplication::preferences.getChannelSplitter());
+  m_vertSplitter->setSizes(KonversationApplication::preferences.topicSplitterSizes());
 }
 
 #include "channel.moc"

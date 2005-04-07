@@ -906,6 +906,9 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
   // connect(channel,SIGNAL (prefsChanged()),this,SLOT (channelPrefsChanged()) );
   connect(server,SIGNAL (awayState(bool)),channel,SLOT (indicateAway(bool)) );
 
+  connect(channel, SIGNAL(splitterMoved(Channel*)), this, SIGNAL(channelSplittersMoved(Channel*)));
+  connect(this, SIGNAL(channelSplittersMoved(Channel*)), channel, SLOT(updateSplitters(Channel*)));
+
   return channel;
 }
 

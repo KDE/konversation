@@ -121,6 +121,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void closeTab(int id);
     void endNotification();
 
+    void channelSplittersMoved(Channel*);
+
   public slots:
     void addDccPanel();     // connected in server class
     void addKonsolePanel(); // connected in server class

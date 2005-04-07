@@ -155,12 +155,15 @@ class Channel : public ChatWindow
 
     int numberOfNicks() const { return nicks; }
     int numberOfOps() const { return ops; }
+
+    virtual bool eventFilter(QObject* watched, QEvent* e);
     
   signals:
     void newText(QWidget* channel,const QString& highlightColor, bool important);
     void sendFile();
     void topicHistoryChanged();
     void modesChanged();
+    void splitterMoved(Channel*);
 
   public slots:
     void setNickname(const QString& newNickname);
@@ -176,6 +179,8 @@ class Channel : public ChatWindow
     void setShowNicknameBox(bool show);
 
     void setAllowNotifications(bool allow) { m_allowNotifications = allow; }
+
+    void updateSplitters(Channel* channel);
 
   protected slots:
     void purgeNicks();
