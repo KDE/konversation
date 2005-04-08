@@ -362,13 +362,7 @@ void KResolverManager::releaseData(KResolverThread *, RequestData* data)
 
   if (data->obj)
     {
-      if (data->nRequests > 0)
-	// PostProcessing means "we're done with our blocking stuff, but we're waiting
-	// for some child request to finish"
-	data->obj->status = KResolver::PostProcessing;	
-      else
-	// this may change after post-processing
-	data->obj->status = data->worker->results.isEmpty() ? KResolver::Failed : KResolver::Success;
+      data->obj->status = KResolver::PostProcessing;	
     }
       
   data->worker->m_finished = true;
@@ -433,7 +427,7 @@ bool KResolverManager::handleFinishedItem(RequestData* curr)
     {
       // this one has finished
       if (curr->obj)
-	curr->obj->status = KResolver::Success; // this may change after the post-processing
+	curr->obj->status = KResolver::PostProcessing; // post-processing is run in doNotifying()
 
       if (curr->requestor)
 	--curr->requestor->nRequests;
@@ -480,8 +474,7 @@ KResolverWorkerBase* KResolverManager::findWorker(KResolverPrivate* p)
 	{
 	  // good, this one says it can process
 	  if (worker->m_finished)	   
-	    p->status = !worker->results.isEmpty() ?
-	      KResolver::Success : KResolver::Failed;
+	    p->status = KResolver::PostProcessing;
 	  else
 	    p->status = KResolver::Queued;
 	  return worker;
