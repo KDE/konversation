@@ -215,9 +215,6 @@ class Channel : public ChatWindow
      */
     void refreshModeButtons();
     
-    // Connected to OutputFilter::cycleChannel
-    void cycleChannel();
-
     ///Request a delayed nicklist sorting
     void requestNickListSort();
 
@@ -233,6 +230,8 @@ class Channel : public ChatWindow
     void fastAddNickname(ChannelNickPtr channelnick);
     /** Called from ChatWindow adjustFocus */
     virtual void childAdjustFocus();
+    
+    void cycleChannel();
 
     int nicks;
     int ops;

@@ -80,8 +80,7 @@ namespace Konversation
       void multiServerCommand(const QString& command, const QString& parameter);
       void reconnectServer();
       void connectToServer(const QString& server, const QString& port, const QString& password);
-      void cycleChannel();
-  
+
     public slots:
       void setCommandChar();
       OutputFilterResult execBan(const QString& mask,const QString& channels);

@@ -330,7 +330,6 @@ void Channel::setServer(Server *server) {
   refreshModeButtons();
   setIdentity(server->getIdentity());
 
-  connect(server->getOutputFilter(),SIGNAL(cycleChannel()),this,SLOT(cycleChannel()));
 }
 
 Channel::~Channel()
@@ -751,10 +750,16 @@ void Channel::channelTextEntered()
   QString line = channelInput->text();
   channelInput->clear();
 
-  if(line.lower()=="/clear")
+  if(line.lower().stripWhiteSpace() == "/clear") {
     textView->clear();
-  else
-    if(!line.isEmpty()) sendChannelText(line);
+  }
+  else if(line.lower().stripWhiteSpace() == "/cycle") {
+    cycleChannel();
+  }
+  else {
+    if(!line.isEmpty()) 
+      sendChannelText(line);
+  }
 }
 
 void Channel::sendChannelText(const QString& sendLine)

@@ -188,8 +188,6 @@ namespace Konversation {
 
 	    else if(command == "charset") parseCharset(parameter);
 
-	    else if(command == "cycle")   parseCycle();
-
             // Forward unknown commands to server
             else {
                 result.toServer = inputLine.mid(1);
@@ -1274,12 +1272,6 @@ namespace Konversation {
     if(!shortName.isEmpty())
       m_server->getIdentity()->setCodecName(shortName);
   }
-
-  void OutputFilter::parseCycle()
-  {
-    emit cycleChannel();
-  }
-
 
 }
 
