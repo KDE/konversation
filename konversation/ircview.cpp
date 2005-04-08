@@ -261,20 +261,22 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     filteredLine.replace(">","&gt;");
 
 
-    QRegExp boldRe("\\*(\\w+)\\*");
-    QRegExp underRe("\\_(\\w+)\\_");
-    int position;
-    QString old,replacement;
-
-    position = boldRe.search(filteredLine);
-    old = boldRe.capturedTexts()[0];
-    replacement = "\x02"+boldRe.capturedTexts()[1]+"\x02";
-    filteredLine.replace(position,old.length(),replacement);
-
-    position = underRe.search(filteredLine);
-    old = underRe.capturedTexts()[0];
-    replacement = "\x1f"+underRe.capturedTexts()[1]+"\x1f";
-    filteredLine.replace(position,old.length(),replacement);
+    if(!KonversationApplication::preferences.getDisableExpansion()) {
+        QRegExp boldRe("\\*(\\w+)\\*");
+        QRegExp underRe("\\_(\\w+)\\_");
+        int position;
+        QString old,replacement;
+        
+        position = boldRe.search(filteredLine);
+        old = boldRe.capturedTexts()[0];
+        replacement = "\x02"+boldRe.capturedTexts()[1]+"\x02";
+        filteredLine.replace(position,old.length(),replacement);
+        
+        position = underRe.search(filteredLine);
+        old = underRe.capturedTexts()[0];
+        replacement = "\x1f"+underRe.capturedTexts()[1]+"\x1f";
+        filteredLine.replace(position,old.length(),replacement);
+    }
     
 
 
