@@ -163,10 +163,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   QSignalMapper* tabSelectionMapper = new QSignalMapper(this);
   connect(tabSelectionMapper, SIGNAL(mapped(int)), this, SLOT(goToTab(int)));
   
-  for(uint i = 0; i < 10; ++i) {
+  for(uint i = 1; i <= 10; ++i) {
     KAction* tabSelectionAction = new KAction(i18n("Go to Tab %1").arg(i), 0, KShortcut(QString("Alt+%1").arg(i)),
       tabSelectionMapper, SLOT(map()), actionCollection(), QString("go_to_tab_%1").arg(i).local8Bit());
-    tabSelectionMapper->setMapping( tabSelectionAction, i);
+    tabSelectionMapper->setMapping( tabSelectionAction, i-1);
   }
   
   action = new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
