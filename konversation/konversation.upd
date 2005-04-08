@@ -9,3 +9,9 @@ Id=0.17-versionreply
 File=konversationrc
 Group=General Options
 RemoveKey=VersionReply
+
+# Update Lag timeout
+Id=0.18-lagtimeout
+File=konversationrc
+Group=General Options
+RemoveKey=MaximumLag
