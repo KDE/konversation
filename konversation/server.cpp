@@ -679,7 +679,7 @@ void Server::connectionEstablished(const QString& ownHost) {
       // TODO: Give the object a kick to get it started?
       m_serverISON = new ServerISON(this);
       // get first notify very early
-      startNotifyTimer(0);
+      startNotifyTimer(1000);
       // Register with services
       registerWithServices();
       // get own ip by userhost
