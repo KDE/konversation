@@ -260,24 +260,33 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     // Replace all > with &gt;
     filteredLine.replace(">","&gt;");
 
-#if 0
     if(!KonversationApplication::preferences.getDisableExpansion()) {
         QRegExp boldRe("\\*(\\w+)\\*");
         QRegExp underRe("\\_(\\w+)\\_");
-        int position;
-        QString old,replacement;
-        
-        position = boldRe.search(filteredLine);
-        old = boldRe.capturedTexts()[0];
-        replacement = "\x02"+boldRe.capturedTexts()[1]+"\x02";
-        filteredLine.replace(position,old.length(),replacement);
-        
-        position = underRe.search(filteredLine);
-        old = underRe.capturedTexts()[0];
-        replacement = "\x1f"+underRe.capturedTexts()[1]+"\x1f";
-        filteredLine.replace(position,old.length(),replacement);
+        int position = 0;
+        QString replacement;
+
+        while( position >= 0) {
+            position = boldRe.search(filteredLine, position);
+            if( position > -1) {
+                replacement = boldRe.cap(1);
+                replacement = "\x02"+replacement+"\x02";
+                filteredLine.replace(position,replacement.length(),replacement);
+            }
+            position += boldRe.matchedLength();
+        }
+
+        position = 0;
+        while( position >= 0) {
+            position = underRe.search(filteredLine, position);
+            if( position > -1) {
+                replacement = underRe.cap(1);
+                replacement = "\x1f"+replacement+"\x1f";
+                filteredLine.replace(position,replacement.length(),replacement);
+            }
+            position += underRe.matchedLength();
+        }
     }
-#endif
     
     // Replace all 0x03 without color number (reset color) with \0x031,0 or \0x030,1, depending on which one fits
     // with the users chosen colours, based on the relative brightness. TODO defaultColor needs explanation
