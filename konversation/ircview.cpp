@@ -261,8 +261,8 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     filteredLine.replace(">","&gt;");
 
     if(!KonversationApplication::preferences.getDisableExpansion()) {
-        QRegExp boldRe("\\*(\\w+)\\*");
-        QRegExp underRe("\\_(\\w+)\\_");
+        QRegExp boldRe("\\*([a-zA-Z0-9]+)\\*");
+        QRegExp underRe("\\_([a-zA-Z0-9]+)\\_");
         int position = 0;
         QString replacement;
 
