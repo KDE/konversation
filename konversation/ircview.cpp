@@ -260,7 +260,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     // Replace all > with &gt;
     filteredLine.replace(">","&gt;");
 
-
+#if 0
     if(!KonversationApplication::preferences.getDisableExpansion()) {
         QRegExp boldRe("\\*(\\w+)\\*");
         QRegExp underRe("\\_(\\w+)\\_");
@@ -277,9 +277,8 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
         replacement = "\x1f"+underRe.capturedTexts()[1]+"\x1f";
         filteredLine.replace(position,old.length(),replacement);
     }
+#endif
     
-
-
     // Replace all 0x03 without color number (reset color) with \0x031,0 or \0x030,1, depending on which one fits
     // with the users chosen colours, based on the relative brightness. TODO defaultColor needs explanation
 
