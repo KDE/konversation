@@ -95,6 +95,10 @@ namespace Konversation {
         destination=name;
 
         QString inputLine(originalLine);
+	inputLine.remove("\n");
+
+	if(inputLine.isEmpty())
+	  return result;
 
         if(!KonversationApplication::preferences.getDisableExpansion())
         {
