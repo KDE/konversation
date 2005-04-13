@@ -262,8 +262,8 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
 
 #if 0
     if(!KonversationApplication::preferences.getDisableExpansion()) {
-        QRegExp boldRe("\\*([a-zA-Z0-9]+)\\*");
-        QRegExp underRe("\\_([a-zA-Z0-9]+)\\_");
+        QRegExp boldRe("\\*\\*([a-zA-Z0-9]+)\\*\\*");
+        QRegExp underRe("\\_\\_([a-zA-Z0-9]+)\\_\\_");
         int position = 0;
         QString replacement;
 
@@ -272,7 +272,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
             if( position > -1) {
                 replacement = boldRe.cap(1);
                 replacement = "\x02"+replacement+"\x02";
-                filteredLine.replace(position,replacement.length(),replacement);
+                filteredLine.replace(position,replacement.length()+2,replacement);
             }
             position += boldRe.matchedLength();
         }
@@ -283,7 +283,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
             if( position > -1) {
                 replacement = underRe.cap(1);
                 replacement = "\x1f"+replacement+"\x1f";
-                filteredLine.replace(position,replacement.length(),replacement);
+                filteredLine.replace(position,replacement.length()+2,replacement);
             }
             position += underRe.matchedLength();
         }
