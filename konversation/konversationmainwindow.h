@@ -202,6 +202,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void addIRCColor();
     void clearWindow();
     void closeQueries();
+    void hideNicknameList();
     void clearTabs();
 
     void insertCharacter();
@@ -255,7 +256,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     KToggleAction* showToolBarAction;
     KToggleAction* showStatusBarAction;
     KToggleAction* showMenuBarAction;
-
+    KToggleAction* hideNicklistAction;
+    
     NicksOnline* nicksOnlinePanel;
 
     DccTransferHandler* dccTransferHandler;

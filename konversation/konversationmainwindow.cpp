@@ -198,6 +198,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   action->setEnabled(false);
 
   new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
+  hideNicklistAction = new KToggleAction(i18n("Hide Nicklist"), 0, KShortcut("Ctrl+N"), this, SLOT(hideNicknameList()), actionCollection(), "hide_nicknamelist");
   
 #ifdef USE_MDI
   new KAction(i18n("Tabpage Mode"),"tabpage",0,this,SLOT (switchToTabPageMode()),actionCollection(),"mdi_tabpage_mode");
@@ -1588,6 +1589,21 @@ void KonversationMainWindow::closeQueries()
   }
 #endif
 }
+
+void KonversationMainWindow::hideNicknameList()
+{
+    if (m_frontView && m_frontView->getType() == ChatWindow::Channel) {
+        Channel* channel = static_cast<Channel*>((ChatWindow*) m_frontView);
+        if (hideNicklistAction->isChecked()) {
+            channel->showNicknameList(false);
+            hideNicklistAction->setChecked(true);
+        } else {
+            channel->showNicknameList(true);
+            hideNicklistAction->setChecked(false);
+        }
+    }
+}
+
 
 void KonversationMainWindow::clearTabs()
 {

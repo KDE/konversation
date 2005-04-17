@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="30">
+<kpartgui name="konversation" version="31">
 
   <MenuBar>
     <Menu name="file">
@@ -34,6 +34,7 @@
       <Action name="next_tab" />
       <Action name="close_tab" />
       <Action name="close_queries" />
+      <Action name="hide_nicknamelist" />
       <Separator />
       <!-- only used with KMDI
       <Menu name="mdi_subwindow_mode">

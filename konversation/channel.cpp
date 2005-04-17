@@ -190,7 +190,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   setTextView(new IRCView(splitter, NULL));  // Server will be set later in setServer()
   connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
   // The box that holds the Nick List and the quick action buttons
-  QVBox* nickListButtons = new QVBox(splitter);
+  nickListButtons = new QVBox(splitter);
   nickListButtons->setSpacing(spacing());
 
   nicknameListView=new NickListView(nickListButtons, this);
@@ -2072,6 +2072,15 @@ void Channel::setShowNicknameBox(bool show)
   } else {
     nicknameCombobox->hide();
   }
+}
+
+void Channel::showNicknameList(bool show)
+{
+    if (show) {
+        nickListButtons->show();
+    } else {
+        nickListButtons->hide();
+    }
 }
 
 void Channel::requestNickListSort()

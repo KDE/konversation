@@ -177,6 +177,7 @@ class Channel : public ChatWindow
     void showTopic(bool show);
     void scheduleAutoWho();
     void setShowNicknameBox(bool show);
+    void showNicknameList(bool show);
 
     void setAllowNotifications(bool allow) { m_allowNotifications = allow; }
 
@@ -278,6 +279,7 @@ class Channel : public ChatWindow
     NickListView* nicknameListView;
     QString abgCache;                   // caches the alternate background color
     QHBox* commandLineBox;
+    QVBox* nickListButtons;
     QComboBox* nicknameCombobox;
     QString oldNick;
     QLabel* awayLabel;
