@@ -18,7 +18,6 @@
 
 #include <qmap.h>
 
-#define QT_TEXTEDIT_OPTIMIZATION
 #include <ktextbrowser.h>
 
 #include "common.h"
