@@ -1,16 +1,29 @@
 [Desktop Entry]
 Type=Theme
 Name=Default Theme
+Name[da]=Standardtema
+Name[es]=Tema por defecto
+Name[et]=Vaiketeema
+Name[hi]=डिफ़ॉल्ट प्रसंग
 Name[it]=Tema predefinito
 Name[nl]=Standaardthema
 Name[pt]=Tema Predefinido
 Name[pt_BR]=Tema Predefinido
+Name[ru]=Стандартная
 Name[sv]=Standardtema
+Name[ta]=முன்னிருப்பு தலைப்பு
+Name[xx]=xxDefault Themexx
 Comment="Simplistic" by Shintaro Matsuoka
+Comment[da]="Simplistic" af Shintaro Matsuoka
+Comment[es]="Simplistic" por Shintaro Matsuoka
+Comment[et]="Simplistic" (autor Shintaro Matsuoka)
+Comment[hi]="सिम्प्लिस्टिक" शिनतारो मात्सुओका द्वारा
 Comment[it]="Simplistic" di Shintaro Matsuoka
 Comment[nl]="Simplistic", door Shintaro Matsuoka
 Comment[pt]="Simplistic" por Shintaro Matsuoka
 Comment[pt_BR]="Simplistic" por Shintaro Matsuoka
 Comment[sv]="Förenklat" av Shintaro Matsuoka
+Comment[ta]="Simplistic" ஷிண்டாரோ மாட்சொக்கா
+Comment[xx]=xx"Simplistic" by Shintaro Matsuokaxx
 Encoding=UTF-8
 
