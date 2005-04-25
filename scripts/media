@@ -41,7 +41,7 @@ sub pretty_print
     my $artist=shift;
     my $album=shift;
 
-    if(!is_empty($artist) && !is_empty($album))
+    if(!is_empty($artist) && !is_empty($album) && $artist ne $album)
     {
 	return "/me is playing \"$title\" by $artist on $album";
     }
@@ -102,7 +102,7 @@ if($amarok)
 
     if(!is_empty($title))
     {
-	my $string=pretty_print($title,$artist,$album);
+	my $string = pretty_print($title,$artist,$album)." [amaroK]";
 	exec 'dcop', $port, 'Konversation', 'say', $server, $target, $string;
     }
     else
@@ -118,7 +118,7 @@ if($juk)
 
     if(!is_empty($string))
     {
-        exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing $string";
+        exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing $string \[JuK\]";
     }
     else
     {
@@ -133,7 +133,7 @@ if($kaffeine)
     
     if(!is_empty($string))
     {
-	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing $string";
+	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing $string \[Kaffeine\]";
     }
     else
     {
@@ -148,7 +148,7 @@ if($noatun)
 
     if(!is_empty($string))
     {
-	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing $string";
+	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing $string \[NOatun\]";
     }
     else
     {
