@@ -92,7 +92,7 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
   if (!kapp->authorize("dcc_recv_file")) {
     //note we have this after the initialisations so that item looks okay
     //Do not have the rights to send the file.  Shouldn't have gotten this far anyway
-    failed(i18n("The admin has restricted the right to recieve files"));
+    failed(i18n("The admin has restricted the right to receive files"));
     return;
   }
 
