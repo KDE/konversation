@@ -30,7 +30,6 @@ namespace Konversation {
 QString removeIrcMarkup(const QString& text)
 {
   QString escaped = text;
-  QRegExp colorRegExp("((\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)|\x02|\x09|\x13|\x16|\x1f)");
   // Escape text decoration
   escaped.remove(colorRegExp);
 
@@ -65,8 +64,6 @@ QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColo
   QString href;
   QString insertText;
 
-  QRegExp urlPattern("((www\\.(?!\\.)|(fish|(f|ht)tp(|s))://)([\\d\\w\\./,\\':~\\?=;#@\\-\\+\\%\\*\\{\\}\\!]|&amp;)+)|"
-    "([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
   urlPattern.setCaseSensitive(false);
   QString protocol;
 
