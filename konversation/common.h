@@ -18,7 +18,6 @@ class QString;
 class QBitmap;
 class QPixmap;
 
-#include <qregexp.h>
 #include "guess_ja.h"
 
 namespace Konversation
@@ -29,10 +28,6 @@ namespace Konversation
   QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
   bool isUtf8(const QCString& text);
   JapaneseCode::Type guess_ja(const char* text, int length);
-
-  static QRegExp colorRegExp("((\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)|\x02|\x09|\x13|\x16|\x1f)");
-  static QRegExp urlPattern("((www\\.(?!\\.)|(fish|(f|ht)tp(|s))://)([\\d\\w\\./,\\':~\\?=;#@\\-\\+\\%\\*\\{\\}\\!]|&amp;)+)|"
-			    "([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
 }
 
 #endif
