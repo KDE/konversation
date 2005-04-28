@@ -18,9 +18,6 @@ the Free Software Foundation; either version 2 of the License, or
             <height>463</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>GeneralBehavior_Config</string>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -256,9 +253,6 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>Disable notifications while &amp;away</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+A</string>
-                    </property>
                 </widget>
                 <widget class="KLineEdit" row="4" column="1">
                     <property name="name">
@@ -305,9 +299,6 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>Use custom Web &amp;browser:</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+B</string>
-                    </property>
                 </widget>
                 <widget class="QCheckBox" row="4" column="0">
                     <property name="name">
@@ -315,9 +306,6 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="text">
                         <string>Use custom &amp;version reply:</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+V</string>
                     </property>
                 </widget>
             </grid>
