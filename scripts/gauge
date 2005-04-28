@@ -22,12 +22,12 @@ else
     LEFT=$(($PERCENTAGE/5))
     RIGHT=$((20-$LEFT))
 
-    if [ $PERCENTAGE -lt 0]; then
+    if [[ $PERCENTAGE -lt 0 ]]; then
       dcop $PORT Konversation error "Percentage has to be bigger than 0"
       exit
     fi
     
-    if [ $PERCENTAGE -gt 100]; then
+    if [[ $PERCENTAGE -gt 100 ]]; then
       dcop $PORT Konversation error "Percentage has to be smaller than 100"
       exit
     fi
@@ -37,7 +37,7 @@ else
     then
       METER="|"
     else
-      if [ $PERCENTAGE -lt 50 ]
+      if [[ $PERCENTAGE -lt 50 ]]
       then
         METER="\\"
       else
