@@ -2,6 +2,7 @@ Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
 - /cycle now works as expected
 - /gauge script was not working correctly when given a bigger than 100 argument
+- Button to invoke Regular Expression Editor (if installed) in Settings -> Highlight.
 
 Changes from 0.16 to 0.17
 - Add an option to hide realnames in nicklist

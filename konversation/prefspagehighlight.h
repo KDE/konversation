@@ -39,6 +39,7 @@ class PrefsPageHighlight : public Highlight_Config
     void highlightSelected(QListViewItem* item);
 
     void highlightTextChanged(const QString& newPattern);
+    void highlightTextEditButtonClicked();
     void highlightColorChanged(const QColor& newColor);
     void soundURLChanged(const QString& newURL);
     void autoTextChanged(const QString& newURL);

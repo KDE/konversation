@@ -31,6 +31,8 @@
 #include <kfiledialog.h>
 #include <kiconloader.h>
 #include <kpushbutton.h>
+#include <kregexpeditorinterface.h>
+#include <kparts/componentfactory.h>
 
 #include "prefspagehighlight.h"
 #include "preferences.h"
@@ -92,6 +94,7 @@ PrefsPageHighlight::PrefsPageHighlight(QWidget* newParent,Preferences* newPrefer
   connect(highlightListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
 
   connect(patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (highlightTextChanged(const QString&)) );
+  connect(patternButton,SIGNAL (clicked()),this,SLOT(highlightTextEditButtonClicked()));
   connect(patternColor,SIGNAL (activated(const QColor&)),this,SLOT (highlightColorChanged(const QColor&)) );
   connect(soundURL, SIGNAL(textChanged(const QString&)), this, SLOT(soundURLChanged(const QString&)));
   connect(soundPlayBtn, SIGNAL(clicked()), this, SLOT(playSound()));
@@ -124,6 +127,9 @@ void PrefsPageHighlight::highlightSelected(QListViewItem* item)
     autoTextLabel->setEnabled(true);
     autoTextInput->setEnabled(true);
 
+    // Determine if kdeutils Regular Expression Editor is installed.  If so, enable edit button.
+    patternButton->setEnabled(!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty());
+
     patternColor->setColor(highlightItem->getColor());
     patternInput->setText(highlightItem->getPattern());
     soundURL->setURL(highlightItem->getSoundURL().prettyURL());
@@ -133,6 +139,7 @@ void PrefsPageHighlight::highlightSelected(QListViewItem* item)
   {
     patternLabel->setEnabled(false);
     patternInput->setEnabled(false);
+    patternButton->setEnabled(false);
     patternColor->setEnabled(false);
     soundURL->setEnabled(false);
     soundLabel->setEnabled(false);
@@ -145,6 +152,29 @@ void PrefsPageHighlight::highlightTextChanged(const QString& newPattern)
   HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
 
   if(item) item->setPattern(newPattern);
+}
+
+void PrefsPageHighlight::highlightTextEditButtonClicked()
+{
+    QDialog *editorDialog = 
+        KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor" );
+    if (editorDialog)
+    {
+        // kdeutils was installed, so the dialog was found.  Fetch the editor interface.
+        KRegExpEditorInterface *reEditor =
+            static_cast<KRegExpEditorInterface *>(editorDialog->qt_cast( "KRegExpEditorInterface" ) );
+        Q_ASSERT( reEditor ); // This should not fail!// now use the editor.
+        reEditor->setRegExp(patternInput->text());
+        int dlgResult = editorDialog->exec();
+        if ( dlgResult == QDialog::Accepted )
+        {
+            QString re = reEditor->regExp();
+            patternInput->setText(re);
+            HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
+            if(item) item->setPattern(re);
+        }
+        delete editorDialog;
+    }
 }
 
 void PrefsPageHighlight::highlightColorChanged(const QColor& newColor)
@@ -202,6 +232,7 @@ void PrefsPageHighlight::removeHighlight()
     {
       patternLabel->setEnabled(false);
       patternInput->setEnabled(false);
+      patternButton->setEnabled(false);
       patternColor->setEnabled(false);
       soundURL->setEnabled(false);
       soundLabel->setEnabled(false);
