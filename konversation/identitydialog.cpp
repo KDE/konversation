@@ -144,7 +144,7 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   generalLayout->addMultiCellWidget(autoIdentifyGBox, row, row, 0, 1);
 
   QWidget* awayWidget = new QWidget(tabWidget);
-  tabWidget->addTab(awayWidget, i18n("Away"));
+  tabWidget->addTab(awayWidget, i18n("Tab name", "Away"));
   QGridLayout* awayLayout = new QGridLayout(awayWidget, 1, 2, marginHint(), spacingHint());
 
   m_insertRememberLineOnAwayChBox = new QCheckBox(i18n("Insert remember &line when switching state to away"), awayWidget);
