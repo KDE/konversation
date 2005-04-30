@@ -52,14 +52,17 @@ void OSDWidget::renderOSDText( const QString &txt )
 
     static QBitmap mask;
 
+    //This is various spacings and margins, based on the font to look "just right"
+    const uint METRIC = fontMetrics().width( 'x' );
+
     // Set a sensible maximum size, don't cover the whole desktop or cross the screen
-    QSize max = QApplication::desktop() ->screen( m_screen ) ->size() - QSize( MARGIN*2 + 20, 100 );
+    QSize max = QApplication::desktop()->screen( m_screen )->size() - QSize( MARGIN*2 + METRIC*2, 100 );
     QFont titleFont( "Arial", 12, QFont::Bold );
     QFontMetrics titleFm( titleFont );
 
     // The title cannnot be taller than one line
     // AlignAuto = align Arabic to the right, etc.
-    QRect titleRect = titleFm.boundingRect( 0, 0, max.width(), titleFm.height(), AlignAuto, m_appName );
+    QRect titleRect = titleFm.boundingRect( 0, 0, max.width() - METRIC, titleFm.height(), AlignAuto, m_appName );
     // The osd cannot be larger than the screen
     QRect textRect = fontMetrics().boundingRect( 0, 0, max.width(), max.height(), AlignAuto | WordBreak, text );
 
@@ -67,7 +70,7 @@ void OSDWidget::renderOSDText( const QString &txt )
         textRect.setWidth( titleRect.width() );
 
     //this should still be within the screen bounds
-    textRect.addCoords( 0, 0, 20, titleRect.height() );
+    textRect.addCoords( 0, 0, METRIC*2, titleRect.height() + METRIC );
 
     osdBuffer.resize( textRect.size() );
     mask.resize( textRect.size() );
@@ -77,9 +80,12 @@ void OSDWidget::renderOSDText( const QString &txt )
     QPainter maskPainter( &mask );
 
     // Draw backing rectangle
+    const uint xround = (METRIC * 200) / textRect.width();
+    const uint yround = (METRIC * 200) / textRect.height();
+
     bufferPainter.setPen( Qt::black );
     bufferPainter.setBrush( backgroundColor() );
-    bufferPainter.drawRoundRect( textRect, 1500 / textRect.width(), 1500 / textRect.height() );
+    bufferPainter.drawRoundRect( textRect, xround, yround );
     bufferPainter.setFont( font() );
 
     const uint w = textRect.width()  - 1;
@@ -88,21 +94,21 @@ void OSDWidget::renderOSDText( const QString &txt )
     // Draw the text shadow
     if ( m_shadow ) {
         bufferPainter.setPen( backgroundColor().dark( 175 ) );
-        bufferPainter.drawText( 13, titleFm.height() + 1, w, h, AlignLeft | WordBreak, text );
+        bufferPainter.drawText( METRIC + 3, (METRIC/2) + titleFm.height() + 1, w, h, AlignLeft | WordBreak, text );
     }
 
     // Draw the text
     bufferPainter.setPen( foregroundColor() );
-    bufferPainter.drawText( 10, titleFm.height() - 1, w, h, AlignLeft | WordBreak, text );
+    bufferPainter.drawText( METRIC, (METRIC/2) + titleFm.height() - 1, w, h, AlignLeft | WordBreak, text );
 
     // Draw the title text
     bufferPainter.setFont( titleFont );
-    bufferPainter.drawText( 10, 3, w, h, AlignLeft, m_appName );
+    bufferPainter.drawText( METRIC * 2, (METRIC/2), w, h, AlignLeft, m_appName );
 
     // Masking for transparency
     mask.fill( Qt::black );
     maskPainter.setBrush( Qt::white );
-    maskPainter.drawRoundRect( textRect, 1500 / textRect.width(), 1500 / textRect.height() );
+    maskPainter.drawRoundRect( textRect, xround, yround );
     setMask( mask );
 
     //do last to reduce noticeable change when showing multiple OSDs in succession
