@@ -43,15 +43,15 @@ sub pretty_print
 
     if(!is_empty($artist) && !is_empty($album) && $artist ne $album)
     {
-	return "/me is playing \"$title\" by $artist on $album";
+	return "/me is playing \x{266B} $title \x{266B} by $artist on $album";
     }
     elsif(!is_empty($artist))
     {
-	return "/me is playing \"$title\" by $artist";
+	return "/me is playing \x{266B} $title \x{266B} by $artist";
     }
     elsif(!is_empty($album))
     {
-	return "/me is playing \"$title\" on $album";
+	return "/me is playing \x{266B} $title \x{266B} on $album";
     }
     else
     {
@@ -118,11 +118,18 @@ if($juk)
 
     if(!is_empty($string))
     {
-        exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing $string \[JuK\]";
+        exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing \x{266B} $string \x{266B} \[JuK\]";
     }
     else
     {
-	$error=join(',',$error,"JuK");
+	if(!is_empty($error))
+	{
+	    $error=join(',',$error,"JuK");
+	}
+	else
+	{
+	    $error="JuK";
+	}
     }
 }
 
@@ -133,11 +140,18 @@ if($kaffeine)
     
     if(!is_empty($string))
     {
-	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing $string \[Kaffeine\]";
+	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing \x{266B} $string \x{266B} \[Kaffeine\]";
     }
     else
     {
-	$error=join(',',$error,"Kaffeine");
+	if(!is_empty($error))
+	{
+	    $error=join(',',$error,"JuK");
+	}
+        else
+        {
+            $error="Kaffeine";
+        }
     }
 }
 
@@ -148,11 +162,18 @@ if($noatun)
 
     if(!is_empty($string))
     {
-	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing $string \[NOatun\]";
+	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing \x{266B} $string \x{266B} \[NOatun\]";
     }
     else
     {
-        $error=join(',',$error,"Noatun");
+	if(!is_empty($error))
+	{
+	    $error=join(',',$error,"JuK");
+	}
+        else
+        {
+            $error="NOatun";
+        }
     }
 }
 
