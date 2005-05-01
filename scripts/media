@@ -126,7 +126,7 @@ if($kaffeine)
     {
 	if($error)
 	{
-	    $error=join(',',$error,"JuK");
+	    $error=join(',',$error,"Kaffeine");
 	}
         else
         {
@@ -143,17 +143,17 @@ if($noatun)
     if($string)
     {
 	utf8::decode($string);
-	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing \x{266B} $string \x{266B} \[NOatun\]";
+	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing \x{266B} $string \x{266B} \[Noatun\]";
     }
     else
     {
 	if($error)
 	{
-	    $error=join(',',$error,"JuK");
+	    $error=join(',',$error,"Noatun");
 	}
         else
         {
-            $error="NOatun";
+            $error="Noatun";
         }
     }
 }
