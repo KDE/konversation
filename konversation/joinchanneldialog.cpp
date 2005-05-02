@@ -66,7 +66,13 @@ JoinChannelDialog::~JoinChannelDialog()
 
 QString JoinChannelDialog::channel() const
 {
-  return m_widget->channelCombo->currentText();
+  QString channel = m_widget->channelCombo->currentText();
+
+  if(!m_server->isAChannel(channel)) {
+    channel = '#' + channel;
+  }
+
+  return channel;
 }
 
 QString JoinChannelDialog::password() const
