@@ -1,4 +1,4 @@
-SUBDIRS = konversation images scripts 
+SUBDIRS = src images scripts 
 EXTRA_DIST = AUTHORS COPYING ChangeLog INSTALL README TODO
 
 messages: rc.cpp
