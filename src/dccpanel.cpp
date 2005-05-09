@@ -212,7 +212,7 @@ void DccPanel::updateButton()
     open = false;
     remove = false;
   }
-  if (!kapp->authorize("dcc_recv_file")) {
+  if (!kapp->authorize("allow_downloading")) {
     accept = false;
   }
 

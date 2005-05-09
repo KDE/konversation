@@ -889,7 +889,7 @@ void IRCView::setupNickPopupMenu() {
     m_nickPopup->insertItem(i18n("&Ping"),Konversation::Ping);
     m_nickPopup->insertSeparator();
     m_nickPopup->insertItem(i18n("Open Query"),Konversation::OpenQuery);
-    if (kapp->authorize("dcc_send_file")) {
+    if (kapp->authorize("allow_downloading")) {
       m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
     }
     m_nickPopup->insertSeparator();

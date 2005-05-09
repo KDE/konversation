@@ -66,7 +66,7 @@ NickListView::NickListView(QWidget* parent, Channel *chan) :
     newitem = popup->insertItem(i18n("Open DCC &Chat"),Konversation::StartDccChat);
     popup->setWhatsThis(newitem, "<qt>Start a private <em>D</em>irect <em>C</em>lient <em>C</em>onnection chat between you and this person.<p/><em>Technical note:</em><br />The conversation between you and this person will be sent directly.  This means it is independent from the server - so if the server connection fails, or use disconnect, your DCC Chat will be unaffected.  It also means that no irc server admin can view or spy on this chat.</qt>");
   
-    if (kapp->authorize("dcc_send_file")) {
+    if (kapp->authorize("allow_downloading")) {
       newitem = popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
       popup->setWhatsThis(newitem, "<qt>Send a file to this person.  If you are having problem sending files, or they are sending slowly, see the Konversation Handbook and DCC preferences page.</qt>");
     }

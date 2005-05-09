@@ -81,7 +81,7 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
   
   m_connectionTimer = new QTimer( this );
 
-  if (!kapp->authorize("dcc_send_file")) {
+  if (!kapp->authorize("allow_downloading")) {
     //Do not have the rights to send the file.  Shouldn't have gotten this far anyway
     //Note this is after the initialisation so the view looks correct still
     failed(i18n("The admin has restricted the right to send files"));
