@@ -7,7 +7,7 @@
 
 /*
   copyright: (C) 2002 by Dario Abatianni
-             (C) 2004-1005 by Peter Simonsson
+             (C) 2004-2005 by Peter Simonsson
 */
 #ifndef PREFSPAGECHATWINAPPERANCE_H
 #define PREFSPAGECHATWINAPPERANCE_H
