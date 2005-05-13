@@ -176,7 +176,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   action->setToolTip(i18n("Clear contents of all windows"));
   action->setEnabled(false);
 
-  KAction* awayAction = new KAction(i18n("Set &Away Globally")/*, "konversationaway"*/, KShortcut("Alt+A"),
+  KAction* awayAction = new KAction(i18n("Set &Away Globally")/*, "konversationaway"*/, KShortcut("Ctrl+Alt+A"),
     static_cast<KonversationApplication *>(kapp), SLOT(toggleAway()), actionCollection(),"toggle_away");  //string must be the same as that used in server.cpp
   awayAction->setEnabled(false);
   action = new KAction(i18n("&Join Channel..."), 0, KShortcut("Ctrl+J"), this, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
