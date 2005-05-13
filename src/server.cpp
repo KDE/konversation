@@ -1810,6 +1810,7 @@ void Server::joinChannel(const QString& name, const QString& hostmask)
     Q_ASSERT(channel);
     channel->setIdentity(getIdentity());
     channel->setNickname(getNickname());
+    channel->indicateAway(isAway());
     Konversation::ChannelSettings channelSettings = m_serverGroup->channelByNameFromHistory(name);
     channel->setNotificationsEnabled(channelSettings.enableNotifications());
 
