@@ -625,6 +625,9 @@ void Server::broken(int state) {
                 
                 connectToIRCServer();
             } else {
+                error = i18n("Waiting for 2 minutes before another reconnection attempt...");
+                statusView->appendServerMessage(i18n("Info"),error);
+                QTimer::singleShot(2*60*1000,this,SLOT(connectToIRCServer()));
             }
         }
         else {
