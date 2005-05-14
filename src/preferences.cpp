@@ -160,6 +160,8 @@ Preferences::Preferences()
   setHighlightOwnLinesColor("#ff0000");
   setHighlightSoundEnabled(true);
 
+  setUseClickableNicks(true);
+
   // On Screen Display
   setOSDUsage(false);
   setOSDShowOwnNick(false);
@@ -704,6 +706,9 @@ const bool Preferences::getHighlightOwnLines() { return highlightOwnLines; }
 
 void Preferences::setHighlightOwnLinesColor(const QString &newColor) { highlightOwnLinesColor.setNamedColor(newColor); }
 const QColor Preferences::getHighlightOwnLinesColor() { return highlightOwnLinesColor; }
+
+void Preferences::setUseClickableNicks(bool state) { clickableNicks=state; }
+const bool Preferences::getUseClickableNicks() { return clickableNicks;}
 
 // On Screen Display
 void Preferences::setOSDUsage(bool state) { OSDUsage=state; }

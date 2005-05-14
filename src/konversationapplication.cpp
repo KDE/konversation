@@ -424,7 +424,8 @@ void KonversationApplication::readOptions()
   preferences.setAutoWhoContinuousInterval(config->readUnsignedNumEntry("AutoWhoContinuousInterval",preferences.getAutoWhoContinuousInterval()));
   preferences.setShowRealNames(config->readBoolEntry("ShowRealNames",preferences.getShowRealNames()));
 
-  // Double click actions
+  // Double click actions & clickable nicks
+  preferences.setUseClickableNicks(config->readBoolEntry("ClickableNicks",preferences.getUseClickableNicks()));
   preferences.setChannelDoubleClickAction(config->readEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction()));
   preferences.setNotifyDoubleClickAction(config->readEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction()));
 
@@ -968,6 +969,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("TrayNotifyOnlyOwnNick", preferences.trayNotifyOnlyOwnNick());
 
   config->writeEntry("ShowBackgroundImage",preferences.getShowBackgroundImage());
+
+  config->writeEntry("ClickableNicks",preferences.getUseClickableNicks());
 
   if ( preferences.getChannelDoubleClickAction() == "/QUERY %u%n" )
       config->deleteEntry("ChannelDoubleClickAction");

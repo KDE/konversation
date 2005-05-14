@@ -214,6 +214,9 @@ class Preferences : public QObject
     void setHighlightNick(bool state);      // shall we highlight the current nick?
     const bool getHighlightNick();
 
+    void setUseClickableNicks(bool state);
+    const bool getUseClickableNicks();
+
     void setHighlightNickColor(const QString &color);
     const QColor getHighlightNickColor();
 
@@ -619,6 +622,8 @@ class Preferences : public QObject
     QColor highlightNickColor;
     QColor highlightOwnLinesColor;
     bool highlightSoundEnabled;
+
+    bool clickableNicks;
 
     // On Screen Display
     bool OSDUsage;            // Use OSD?

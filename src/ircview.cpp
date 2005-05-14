@@ -449,7 +449,9 @@ void IRCView::append(const QString& nick,const QString& message) {
     QString color;
 
     if(nick != m_server->getNickname()) {
-        nickLine = "<a href=\"#" + nick + "\">%2</a>";
+        bool linkNicks = KonversationApplication::preferences.getUseClickableNicks();
+        if(linkNicks)
+            nickLine = "<a href=\"#" + nick + "\">%2</a>";
         KonversationApplication::instance()->increaseKarma(nick,1);
     }
 
@@ -510,7 +512,9 @@ void IRCView::appendQuery(const QString& nick,const QString& message) {
     QString color;
 
     if(nick != m_server->getNickname()) {
-        nickLine = "<a href=\"#" + nick + "\">%2</a>";
+        bool linkNicks = KonversationApplication::preferences.getUseClickableNicks();
+        if(linkNicks)
+            nickLine = "<a href=\"#" + nick + "\">%2</a>";
         KonversationApplication::instance()->increaseKarma(nick,2);
     }
 
@@ -559,7 +563,9 @@ void IRCView::appendAction(const QString& nick,const QString& message) {
     QString color;
 
     if(nick != m_server->getNickname()) {
-        nickLine = "<a href=\"#" + nick + "\">%2</a>";
+        bool linkNicks = KonversationApplication::preferences.getUseClickableNicks();
+        if(linkNicks)
+            nickLine = "<a href=\"#" + nick + "\">%2</a>";
         KonversationApplication::instance()->increaseKarma(nick,1);
     }
 
