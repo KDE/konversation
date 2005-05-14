@@ -3,6 +3,8 @@ Changes from 0.17 to 0.18
 - /cycle now works as expected
 - /gauge script was not working correctly when given a bigger than 100 argument
 - Button to invoke Regular Expression Editor (if installed) in Settings -> Highlight.
+- Complete command line argument system for connection
+- An option to disable clickable nicks
 
 Changes from 0.16 to 0.17
 - Add an option to hide realnames in nicklist
