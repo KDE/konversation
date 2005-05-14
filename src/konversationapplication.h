@@ -128,6 +128,14 @@ class KonversationApplication : public KUniqueApplication
     
     int newInstance();
 
+    void delayedConnectToServer(const QString& hostName,
+				const QString& port = "6667",
+				const QString& channel="",
+				const QString& nick = KonversationApplication::preferences.getNickname(0),
+				const QString& password="",
+				const bool& useSSL=FALSE
+				);
+
   signals:
     void catchUrl(const QString& who,const QString& url);
     void prefsChanged();
@@ -193,6 +201,15 @@ class KonversationApplication : public KUniqueApplication
     bool m_demoteInProgress;
     QTimer* demoteTimer;
     QMap<QString,uint> karmaMap;
+
+    // For command line arguments
+    QString m_hostName;
+    QString m_port;
+    QString m_channel;
+    QString m_nick;
+    QString m_password;
+    bool m_useSSL;
+    bool m_connectDelayed;
 };
 
 #endif

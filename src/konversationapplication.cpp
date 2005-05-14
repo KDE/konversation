@@ -51,10 +51,12 @@ KonversationApplication::KonversationApplication()
   quickConnectDialog = 0;
   colorOffSet = 0;
   m_demoteInProgress = false;
+  m_connectDelayed=false;
 
   demoteTimer = new QTimer(this);
   connect(demoteTimer,SIGNAL(timeout()),this,SLOT(autoDemoteAllNicks()) );
   demoteTimer->start(5*60*1000,false);
+
 }
 
 KonversationApplication::~KonversationApplication()
@@ -65,6 +67,19 @@ KonversationApplication::~KonversationApplication()
   delete dcopObject;
   delete prefsDCOP;
   delete identDCOP;
+}
+
+void KonversationApplication::delayedConnectToServer(const QString& hostname, const QString& port, const QString& channel,
+						     const QString& nick, const QString& password, 
+						     const bool& useSSL)
+{
+  m_hostName=hostname;
+  m_port=port;
+  m_channel=channel;
+  m_nick=nick;
+  m_password=password;
+  m_useSSL=useSSL;
+  m_connectDelayed=true;
 }
 
 int KonversationApplication::newInstance()
@@ -135,11 +150,16 @@ int KonversationApplication::newInstance()
     // handle autoconnect on startup
     Konversation::ServerGroupList serverGroups = preferences.serverGroupList();
 
-    for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it) {
-      if((*it)->autoConnectEnabled()) {
-        connectToServer((*it)->id());
+    if(!m_connectDelayed)
+      {
+	for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it) {
+	  if((*it)->autoConnectEnabled()) {
+	    connectToServer((*it)->id());
+	  }
+	}
       }
-    }
+    else
+      quickConnectToServer(m_hostName, m_port, m_channel, m_nick, m_password, m_useSSL);
 
     // prepare dcop interface
     dcopObject = new KonvDCOP;
