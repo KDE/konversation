@@ -58,6 +58,7 @@ DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partn
   m_buffer = new char[ m_bufferSize ];
   
   m_autoUpdateViewTimer = 0;
+  m_transferLoggerTimer = 0;
   
   m_progressBar = new KProgress( 100, listView()->viewport() );
   m_progressBar->setCenterIndicator( true );
@@ -157,7 +158,12 @@ int DccTransfer::compare( QListViewItem* i, int col, bool ascending ) const  // 
 
 void DccTransfer::initTransferMeter()  // protected
 {
+  kdDebug() << "DccTransfer::initTransferMeter()" << endl;
+  m_transferLoggerTimer = new QTimer( this );
+  connect( m_transferLoggerTimer, SIGNAL( timeout() ), this, SLOT( slotLogTransfer() ) );
   m_timeTransferStarted = QDateTime::currentDateTime();
+  m_transferTime.start();
+  m_transferLoggerTimer->start( 100 );
   startAutoUpdateView();
 }
 
@@ -165,6 +171,12 @@ void DccTransfer::finishTransferMeter()  // protected
 {
   if ( m_timeTransferFinished.isNull() )
     m_timeTransferFinished = QDateTime::currentDateTime();
+  if ( m_transferLoggerTimer )
+  {
+    m_transferLoggerTimer->stop();
+    delete m_transferLoggerTimer;
+    m_transferLoggerTimer = 0;
+  }
   stopAutoUpdateView();
 }
 
@@ -186,6 +198,17 @@ void DccTransfer::stopAutoUpdateView()
   }
 }
 
+void DccTransfer::slotLogTransfer()  // private
+{
+  // *************************************************************
+  // TODO: URGENT:
+  // QTime can't handle a longer time more than a day
+  // *************************************************************
+  kdDebug() << "transfer logger: " <<  m_transferTime.elapsed() << " " << m_transferringPosition << endl;
+  m_transferLogTime.append( m_transferTime.elapsed() );
+  m_transferLogPosition.append( m_transferringPosition );
+}
+
 void DccTransfer::paintCell( QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment )  // public virtual
 {
   KListViewItem::paintCell( painter, colorgroup, column, width, alignment );
@@ -194,8 +217,7 @@ void DccTransfer::paintCell( QPainter* painter, const QColorGroup& colorgroup, i
 }
 
 void DccTransfer::showProgressBar()
-{  
-  // I referenced Apollon's code for the progressbar. Thank you the Apollon team! (shin)
+{
   if ( m_fileSize )
   {
     QRect rect = listView()->itemRect( this );
@@ -331,18 +353,16 @@ void DccTransfer::updateTransferMeters()
   if ( m_dccStatus == Sending || m_dccStatus == Receiving )
   {
     // update CPS
-    QValueList<QDateTime>::iterator itTime = m_transferTimeLog.begin();
-    QValueList<KIO::fileoffset_t>::iterator itPos = m_transferPositionLog.begin();
-    while ( itTime != m_transferTimeLog.end() && (*itTime).secsTo( QDateTime::currentDateTime() ) > timeToCalc )
+    QValueList<int>::iterator itTime = m_transferLogTime.begin();
+    QValueList<KIO::fileoffset_t>::iterator itPos = m_transferLogPosition.begin();
+    while ( itTime != m_transferLogTime.end() && ( m_transferLogTime.last() - (*itTime) > timeToCalc * 1000 ) )
     {
-      itTime = m_transferTimeLog.remove( itTime );
-      itPos = m_transferPositionLog.remove( itPos );
+      itTime = m_transferLogTime.remove( itTime );
+      itPos = m_transferLogPosition.remove( itPos );
     }
     int timeElapsed = m_timeTransferStarted.secsTo( QDateTime::currentDateTime() );
-    if ( timeElapsed >= timeToCalc )
-      m_cps = (double)( m_transferringPosition - m_transferPositionLog.front() ) / (double)timeToCalc;
-    else if ( timeElapsed > 0 )
-      m_cps = (double)( m_transferringPosition - m_transferPositionLog.front() ) / (double)timeElapsed;
+    if ( m_transferLogTime.count() >= 2 )
+      m_cps = (double)( m_transferLogPosition.last() - m_transferLogPosition.front() ) / (double)( m_transferLogTime.last() - m_transferLogTime.front() ) * 1000;
     else  // avoid zero devision
       m_cps = CPS_UNKNOWN;
     
@@ -519,7 +539,7 @@ KURL                    DccTransfer::getFileURL()               const { return m
 bool                    DccTransfer::isResumed()                const { return m_resumed; }
 unsigned long           DccTransfer::getCPS()                   const { return (unsigned long)m_cps; }
 int                     DccTransfer::getTimeRemaining()         const { return m_timeRemaining; }
-    
+
 QString DccTransfer::s_dccTypeText[ DccTransfer::DccTypeCount ];
 QString DccTransfer::s_dccStatusText[ DccTransfer::DccStatusCount ];
 

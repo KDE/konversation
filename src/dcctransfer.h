@@ -120,8 +120,12 @@ class DccTransfer : public QObject, public KListViewItem
     bool m_resumed;
     KIO::fileoffset_t m_transferringPosition;
     KIO::fileoffset_t m_transferStartPosition;
+
+    /*
     QValueList<QDateTime> m_transferTimeLog;  // write per packet to calc CPS
     QValueList<KIO::fileoffset_t> m_transferPositionLog;  // write per packet to calc CPS
+    */
+    
     QString m_partnerNick;
     QString m_partnerIp;  // null when unknown
     QString m_partnerPort;
@@ -150,6 +154,8 @@ class DccTransfer : public QObject, public KListViewItem
     
   private slots:
     void slotRemoveFileDone( KIO::Job* job );
+
+    void slotLogTransfer();
   
   private:
     void updateTransferMeters();
@@ -157,7 +163,7 @@ class DccTransfer : public QObject, public KListViewItem
     void showProgressBar();  // called from printCell()
     
     void startAutoUpdateView();
-    void stopAutoUpdateView();    
+    void stopAutoUpdateView();
     
     // called from updateView()
     QString         getTypeText()                                  const;
@@ -176,6 +182,11 @@ class DccTransfer : public QObject, public KListViewItem
     //QDateTime m_timeLastActive;
     QDateTime m_timeTransferFinished;
     
+    QTimer* m_transferLoggerTimer;
+    QTime m_transferTime;  // it's used for calculating CPS
+    QValueList<int> m_transferLogTime;
+    QValueList<KIO::fileoffset_t> m_transferLogPosition;
+
     // transfer meters;
     double m_cps;  // bytes(characters) per second
     int m_timeRemaining;

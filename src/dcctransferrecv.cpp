@@ -453,8 +453,6 @@ void DccTransferRecv::readData()  // slot
   {
     //actual is the size we read in, and is guaranteed to be less than m_bufferSize
     m_transferringPosition += actual;
-    m_transferTimeLog.append( QDateTime::currentDateTime() );
-    m_transferPositionLog.append( m_transferringPosition );
     m_writeCacheHandler->append( m_buffer, actual );
     m_writeCacheHandler->write( false );
     m_recvSocket->enableWrite( true );
@@ -609,7 +607,7 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
 {
   //We are in writeAsyncMode if there is more data to be read in from dcc
   if ( m_writeAsyncMode )
-    m_writeReady = true;  
+    m_writeReady = true;
   else
   {
     //No more data left to read from incomming dcctransfer
