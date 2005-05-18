@@ -4,8 +4,8 @@
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
-// Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
-// Copyright (C) 2004 John Tapsell <john@geola.co.uk>
+// Copyright (C) 2004,2005 Shintaro Matsuoka <shin@shoegazed.org>
+// Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
 
 /*
   This program is free software; you can redistribute it and/or modify

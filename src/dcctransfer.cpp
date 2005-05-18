@@ -1,14 +1,16 @@
 /*
+  begin:     Mit Aug 7 2002
+  copyright: (C) 2002 by Dario Abatianni
+  email:     eisfuchs@tigress.com
+*/
+// Copyright (C) 2004,2005 Shintaro Matsuoka <shin@shoegazed.org>
+// Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
+
+/*
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
-*/
-
-/*
-  begin:     Mit Aug 7 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
 */
 
 #include <qheader.h>
@@ -169,6 +171,7 @@ void DccTransfer::initTransferMeter()  // protected
 
 void DccTransfer::finishTransferMeter()  // protected
 {
+  stopAutoUpdateView();
   if ( m_timeTransferFinished.isNull() )
     m_timeTransferFinished = QDateTime::currentDateTime();
   if ( m_transferLoggerTimer )
@@ -177,7 +180,6 @@ void DccTransfer::finishTransferMeter()  // protected
     delete m_transferLoggerTimer;
     m_transferLoggerTimer = 0;
   }
-  stopAutoUpdateView();
 }
 
 void DccTransfer::startAutoUpdateView()
@@ -360,7 +362,6 @@ void DccTransfer::updateTransferMeters()
       itTime = m_transferLogTime.remove( itTime );
       itPos = m_transferLogPosition.remove( itPos );
     }
-    int timeElapsed = m_timeTransferStarted.secsTo( QDateTime::currentDateTime() );
     if ( m_transferLogTime.count() >= 2 )
       m_cps = (double)( m_transferLogPosition.last() - m_transferLogPosition.front() ) / (double)( m_transferLogTime.last() - m_transferLogTime.front() ) * 1000;
     else  // avoid zero devision
