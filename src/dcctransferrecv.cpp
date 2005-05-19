@@ -575,7 +575,7 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )  // public
   
   m_writeReady = false;
   m_transferJob->sendAsyncData( m_cacheList.front() );
-  kdDebug() << "DTRWriteCacheHandler::write(): wrote " << m_cacheList.front().size() << " bytes." << endl;
+  //kdDebug() << "DTRWriteCacheHandler::write(): wrote " << m_cacheList.front().size() << " bytes." << endl;
   m_cacheList.pop_front();
   
   return true;

@@ -202,7 +202,6 @@ void DccTransfer::stopAutoUpdateView()
 
 void DccTransfer::slotLogTransfer()  // private
 {
-  kdDebug() << "DccTransfer::slotLogTransfer(): transfer logger: " <<  m_transferLoggerBaseTime.elapsed() << " " << m_transferringPosition << endl;
   m_transferLogTime.append( m_transferLoggerBaseTime.elapsed() );
   m_transferLogPosition.append( m_transferringPosition );
 }
