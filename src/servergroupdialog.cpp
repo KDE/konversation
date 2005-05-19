@@ -21,6 +21,7 @@
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
 #include <qcheckbox.h>
+#include <qwhatsthis.h>
 
 #include <klocale.h>
 #include <kiconloader.h>
@@ -48,14 +49,17 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
 
   QLabel* nameLbl = new QLabel(i18n("&Network:"), mainWidget);
   m_nameEdit = new QLineEdit(mainWidget);
+  QWhatsThis::add(m_nameEdit, i18n("Enter the name of the Network here. You may create as many entries in the Server List screen with the same Network as you like."));
   nameLbl->setBuddy(m_nameEdit);
 
   QLabel* groupLbl = new QLabel(i18n("&Group:"), mainWidget);
   m_groupCBox = new QComboBox(true, mainWidget);
+  QWhatsThis::add(m_groupCBox, i18n("Optional. If you enter something here, all the Networks with the same Group will be listed together in the Server List screen."));
   groupLbl->setBuddy(m_groupCBox);
 
   QLabel* identityLbl = new QLabel(i18n("&Identity:"), mainWidget);
   m_identityCBox = new QComboBox(mainWidget);
+  QWhatsThis::add(m_identityCBox,i18n("Choose an existing Identity or click the Edit button to add a new Identity or edit an existing one. The Identity will identify you and determine your nickname when you connect to the network."));
   identityLbl->setBuddy(m_identityCBox);
   QPushButton* editIdentityBtn = new QPushButton(i18n("Edit..."), mainWidget);
   connect(editIdentityBtn, SIGNAL(clicked()), this, SLOT(editIdentity()));
@@ -69,9 +73,12 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
 
   QLabel* commandLbl = new QLabel(i18n("Co&mmands:"), mainWidget);
   m_commandEdit = new QLineEdit(mainWidget);
+  QWhatsThis::add(m_commandEdit, i18n("Optional. This command will be sent to the server after connecting. Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is for the freenode network, which requires users to register their nickname with a password and login when connecting. <i>konvirocks<i> is the password for the nickname given in Identity. You may enter more than one command by separating them with semicolons."));
   commandLbl->setBuddy(m_commandEdit);
 
   m_autoConnectCBox = new QCheckBox(i18n("Connect on &application start up"), mainWidget);
+  QWhatsThis::add(m_autoConnectCBox, i18n("Check here if you want Konversation to automatically connect to this network whenever you open Konversation."));
+
 
   QWidget* groupWidget = new QWidget(mainWidget);
   QGridLayout* groupLayout = new QGridLayout(groupWidget, 1, 2, 0, spacingHint());
@@ -81,6 +88,7 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   QGridLayout* serverLayout = new QGridLayout(serverGBox->layout(), 1, 2, spacingHint());
 
   m_serverLBox = new QListBox(serverGBox);
+  QWhatsThis::add(m_serverLBox, i18n("This is a list of IRC Servers in the network. When connecting to the network, Konversation will attempt to connect to the top server first. If this fails, it will attempt the second server. If this fails, it will attempt the third, and so on. At least one server must be specified. Click a server to highlight it."));
   QPushButton* addServerBtn = new QPushButton(i18n("Add..."), serverGBox);
   QPushButton* changeServerBtn = new QPushButton(i18n("Edit..."), serverGBox);
   QPushButton* removeServerBtn = new QPushButton(i18n("Delete"), serverGBox);
@@ -114,6 +122,7 @@ ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, cons
   QGridLayout* channelLayout = new QGridLayout(channelGBox->layout(), 1, 2, spacingHint());
 
   m_channelLBox = new QListBox(channelGBox);
+  QWhatsThis::add(m_channelLBox, i18n("Optional. This is a list of the channels that will be automatically joined once Konversation has connected to a server. You may leave this blank if you wish to not automatically join any channels."));
   QPushButton* addChannelBtn = new QPushButton(i18n("Add..."), channelGBox);
   QPushButton* changeChannelBtn = new QPushButton(i18n("Edit..."), channelGBox);
   QPushButton* removeChannelBtn = new QPushButton(i18n("Delete"), channelGBox);

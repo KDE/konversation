@@ -22,6 +22,7 @@
 #include <qregexp.h>
 #include <qcheckbox.h>
 #include <qtimer.h>
+#include <qwhatsthis.h>
 
 #include <krun.h>
 #include <klistview.h>
@@ -67,7 +68,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
   QLabel* minLabel=new QLabel(i18n("M&inimum users:"),mainGrid);
   QLabel* maxLabel=new QLabel(i18n("Ma&ximum users:"),mainGrid);
   QSpinBox* minUsersSpin=new QSpinBox(mainGrid,"min_users_spin");
+  QWhatsThis::add(minUsersSpin, i18n("You can limit the channel list to those channels with a minimum number of users here. Choosing 0 disables this criterium."));
   QSpinBox* maxUsersSpin=new QSpinBox(mainGrid,"max_users_spin");
+  QWhatsThis::add(maxUsersSpin, i18n("You can limit the channel list to those channels with a maximum number of users here. Choosing 0 disables this criterium."));
   minUsersSpin->setValue(getMinUsers());
   maxUsersSpin->setValue(getMaxUsers());
   minLabel->setBuddy(minUsersSpin);
@@ -77,6 +80,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
   new QLabel(i18n("Filter target:"),mainGrid);
 
   filterInput=new KLineEdit(mainGrid,"channel_list_filter_input");
+  QWhatsThis::add(filterInput, i18n("Enter a filter string here."));
   filterInput->setText(getFilterText());
 
   patternLabel->setBuddy(filterInput);
@@ -88,6 +92,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
   topicFilter=new QCheckBox(i18n("&Topic"),targetBox,"filter_target_topic_check");
   regexpCheck=new QCheckBox(i18n("&Regular expression"),targetBox,"regexp_check");
   applyFilter=new QPushButton(i18n("Appl&y Filter"),targetBox,"apply_filter_button");
+  QWhatsThis::add(applyFilter, i18n("Click here to retrieve the list of channels from the server and apply the filter."));
 
   channelFilter->setChecked(getChannelTarget());
   topicFilter->setChecked(getTopicTarget());
@@ -96,6 +101,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
   targetBox->setStretchFactor(topicFilter,10);
 
   channelListView=new KListView(this,"channel_list_view");
+  QWhatsThis::add(channelListView, i18n("The filtered list of channels is displayed here. Notice that if you don't use regular expressions, Konversation lists any channel whose name contains the filter string you entered. The channel name does not have to start with the string you entered.\n\nSelect a channel you want to join by clicking on it. Right click on the channel to get a list of all web addresses mentioned in the channel's topic."));
   channelListView->addColumn(i18n("Channel Name"));
   channelListView->addColumn(i18n("Users"));
   channelListView->addColumn(i18n("Channel Topic"));
@@ -116,6 +122,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
   refreshListButton=new QPushButton(i18n("Re&fresh List"),actionBox,"refresh_list_button");
   QPushButton* saveListButton=new QPushButton(i18n("&Save List..."),actionBox,"save_list_button");
   joinChannelButton=new QPushButton(i18n("&Join Channel"),actionBox,"join_channel_button");
+  QWhatsThis::add(joinChannelButton, i18n("Click here to join the channel. A new tab is created for the channel."));
 
   connect(&updateTimer,SIGNAL (timeout()),this,SLOT (updateDisplay()));
 

@@ -21,6 +21,7 @@
 #include <qregexp.h>
 #include <qspinbox.h>
 #include <qstylesheet.h>
+#include <qwhatsthis.h>
 
 #include <kdialog.h>
 #include <ktoolbar.h>
@@ -52,6 +53,7 @@ LogfileReader::LogfileReader(QWidget* parent, QString log) : ChatWindow(parent)
 
   new QLabel(i18n("Show last:"),toolBar,"logfile_size_label");
   sizeSpin = new QSpinBox(10,1000,10,toolBar,"logfile_size_spinbox");
+  QWhatsThis::add(sizeSpin, i18n("Use this box to set the maximum size of the log file. This setting does not take effect until you restart Konversation. Each log file may have a separate setting."));
   sizeSpin->setValue(KonversationApplication::preferences.getLogfileBufferSize());
   sizeSpin->setSuffix(i18n(" KB"));
 
@@ -59,6 +61,7 @@ LogfileReader::LogfileReader(QWidget* parent, QString log) : ChatWindow(parent)
   toolBar->insertButton("editdelete",0,SIGNAL(clicked()),this,SLOT(clearLog()),true,i18n("Clear Logfile"));
 
   setTextView(new IRCView(this, 0));
+  QWhatsThis::add(getTextView(), i18n("The messages in the log file are displayed here. The oldest messages are at the top and the most recent are at the bottom."));
 
   updateView();
   resize(KonversationApplication::preferences.getLogfileReaderSize());

@@ -54,7 +54,7 @@
 #include <knotifydialog.h>
 #endif
 
-#include "ledtabwidget.h"
+#include "konvitabwidget.h"
 #include "chatwindow.h"
 #include "konversationapplication.h"
 #include "ircview.h"
@@ -105,7 +105,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 #ifdef USE_MDI
   switchToTabPageMode();
 #else
-  viewContainer=new LedTabWidget(this,"main_window_tab_widget");
+  viewContainer=new KonviTabWidget(this,"main_window_tab_widget");
   setCentralWidget(viewContainer);
   updateTabPlacement();
   viewContainer->hide();
@@ -1329,7 +1329,7 @@ void KonversationMainWindow::channelPrefsChanged()
 }
 
 #ifndef USE_MDI
-LedTabWidget* KonversationMainWindow::getViewContainer()
+KonviTabWidget* KonversationMainWindow::getViewContainer()
 {
   return viewContainer;
 }
@@ -1338,7 +1338,7 @@ LedTabWidget* KonversationMainWindow::getViewContainer()
 void KonversationMainWindow::updateFonts()
 {
 #ifndef USE_MDI
-  getViewContainer()->updateTabs();
+  //  getViewContainer()->updateTabs();
 #endif
 }
 
@@ -1660,20 +1660,6 @@ void KonversationMainWindow::openToolbars()
 
 void KonversationMainWindow::setShowTabBarCloseButton(bool s)
 {
-#ifdef USE_MDI
-  // looks really strange ...
-  if(tabWidget())
-  {
-    if(s) tabWidget()->cornerWidget()->show();
-    else  tabWidget()->cornerWidget()->hide();
-  }
-#else
-  if(s) {
-    viewContainer->cornerWidget()->show();
-  } else {
-    viewContainer->cornerWidget()->hide();
-  }
-#endif
 }
 
 void KonversationMainWindow::resizeEvent(QResizeEvent* ev)

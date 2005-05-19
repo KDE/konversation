@@ -23,6 +23,7 @@
 #include <qpalette.h>
 #include <qpixmap.h>
 #include <qpainter.h>
+#include <qwhatsthis.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -162,11 +163,12 @@ namespace Konversation {
     : KDialogBase(Plain, i18n("Server List"), Ok|Close, Ok, parent, name, false)
   {
     m_preferences = &KonversationApplication::preferences;
-    setButtonOK(KGuiItem(i18n("C&onnect"), "connect_creating", i18n("Connect to the server")));
+    setButtonOK(KGuiItem(i18n("C&onnect"), "connect_creating", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
 
     QFrame* mainWidget = plainPage();
 
     m_serverList = new KListView(mainWidget);
+    QWhatsThis::add(m_serverList, i18n("The list of configured IRC Networks are listed here. An IRC network is a collection of cooperating servers. You need only connect to one of the servers in the network to be connected to the entire IRC network. Once connected, Konversation will automatically join the Channels shown. When Konversation is started for the first time, the Freenode network and <i>#kde</i> channel are already entered for you. Click on a network to select it."));
     m_serverList->setAllColumnsShowFocus(true);
     m_serverList->setRootIsDecorated(true);
     m_serverList->setResizeMode(QListView::AllColumns);
@@ -177,6 +179,7 @@ namespace Konversation {
     //m_serverList->addColumn(i18n("Auto Connect"));
 
     m_addButton = new QPushButton(i18n("A&dd..."), mainWidget);
+    QWhatsThis::add(m_addButton, i18n("Click here to define a new Network, including the server to connect to, and the Channels to automatically join once connected."));
     m_editButton = new QPushButton(i18n("&Edit..."), mainWidget);
     m_delButton = new QPushButton(i18n("&Delete"), mainWidget);
 

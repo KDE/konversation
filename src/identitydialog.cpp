@@ -81,6 +81,7 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
 
   QLabel* realNameLabel = new QLabel(i18n("&Real name:"), generalWidget);
   m_realNameEdit = new KLineEdit(generalWidget);
+  QWhatsThis::add(m_realNameEdit, i18n("Enter your real name here. IRC is not intended to keep you hidden from your friends or enemies. Keep this in mind if you are tempted to behave maliciously. A fake \"real name\" can be a good way to mask your gender from all the nerds out there, but the PC you use can always be traced so you will never be truly anonymous."));
   realNameLabel->setBuddy(m_realNameEdit);
 
   QGroupBox* nicknameGBox = new QGroupBox(0, Qt::Horizontal, i18n("Nickname"), generalWidget);
@@ -88,6 +89,7 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   QGridLayout* nicknameLayout = new QGridLayout(nicknameGBox->layout(), 1, 2, spacingHint());
 
   m_nicknameLBox = new QListBox(nicknameGBox);
+  QWhatsThis::add(m_nicknameLBox, i18n("This is your list of nicknames. A nickname is the name that other users will know you by. You may use any name you desire. The first character must be a letter.\n\nSince nicknames must be unique across an entire IRC network, your desired name may be rejected by the server because someone else is already using that nickname. Enter alternate nicknames for yourself. If your first choice is rejected by the server, Konversation will try the alternate nicknames."));
   QPushButton* addNicknameBtn = new QPushButton(i18n("Add..."), nicknameGBox);
   QPushButton* changeNicknameBtn = new QPushButton(i18n("Edit..."), nicknameGBox);
   QPushButton* removeNicknameBtn = new QPushButton(i18n("Delete"), nicknameGBox);
@@ -148,9 +150,11 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   QGridLayout* awayLayout = new QGridLayout(awayWidget, 1, 2, marginHint(), spacingHint());
 
   m_insertRememberLineOnAwayChBox = new QCheckBox(i18n("Insert remember &line when switching state to away"), awayWidget);
+  QWhatsThis::add(m_insertRememberLineOnAwayChBox, i18n("If you check this box, whenever you perform an <b>/away</b> command, a horizontal line will appear in the channel, marking the point where you went away. Other IRC users do not see this horizontal line."));
 
   QLabel* awayNickLabel = new QLabel(i18n("Away nickname:"), awayWidget);
   m_awayNickEdit = new KLineEdit(awayWidget);
+  QWhatsThis::add(m_awayNickEdit, i18n("Enter a nickname that indicates you are away. Whenever you perform an <b>/away msg</b> command in any channel joined with this Identity, Konversation will automatically change your nickname to the Away nickname. Other users will be able to tell you are away from your computer. Whenever you perform an <b>/away</b> command in any channel in which you are away, Konversation will automatically change your nickname back to the original. If you do not wish to automatically change your nickname when going away, leave blank."));
   awayNickLabel->setBuddy(m_awayNickEdit);
 
   QGroupBox* m_awayMessageGBox = new QGroupBox(i18n("Messages"), awayWidget);
@@ -160,6 +164,7 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   QGridLayout* messagesLayout = new QGridLayout(m_awayMessageGBox->layout(), 1, 2, spacingHint());
 
   m_showAwayMessage = new QCheckBox(i18n("Show a&way messages"), m_awayMessageGBox);
+  QWhatsThis::add(m_showAwayMessage, i18n("If you check this box, Konversation will automatically send the Away message to all channels joined with this Identity. <b>%s</b> is replaced with <b>msg</b>. Whenever you perform an <b>/away</b> command, the Return message will be displayed in all channels joined with this Identity."));
   m_showAwayMessage->setChecked(true);
 
   QLabel* awayLabel = new QLabel(i18n("Away &message:"), m_awayMessageGBox);
@@ -199,17 +204,19 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   QGridLayout* advancedLayout = new QGridLayout(advancedWidget, 1, 2, marginHint(), spacingHint());
 
   QLabel* commandLabel = new QLabel(i18n("&Pre-Shell Command:"), advancedWidget);
-  QWhatsThis::add(commandLabel,i18n("Here you can enter a command to be executed before connection to server starts<br>If you have multiple servers in this identity this command will be executed for each server"));
   m_sCommandEdit = new KLineEdit(advancedWidget);
+  QWhatsThis::add(m_sCommandEdit,i18n("Here you can enter a command to be executed before connection to server starts<br>If you have multiple servers in this identity this command will be executed for each server"));
   commandLabel->setBuddy(m_sCommandEdit);
 
   QLabel* loginLabel = new QLabel(i18n("I&dent:"), advancedWidget);
   m_loginEdit = new KLineEdit(advancedWidget);
+  QWhatsThis::add(m_loginEdit, i18n("When you connect, many servers query your computer for an IDENT response. If you computer is not running an IDENT server, this response is sent by Konversation. No spaces are allowed."));
   loginLabel->setBuddy(m_loginEdit);
 
   // encoding combo box
   QLabel* codecLabel = new QLabel(i18n("&Encoding:"), advancedWidget);
   m_codecCBox = new KComboBox(advancedWidget,"codec_combo_box");
+  QWhatsThis::add(m_codecCBox, i18n("This setting affects how characters you type are encoded for sending to the server. It also affects how messages are displayed. When you first open Konversation, it automatically retrieves this setting from the operating system. If you seem to be having trouble seeing other user's messages correctly, try changing this setting."));
   codecLabel->setBuddy(m_codecCBox);
   // add encodings to combo box
   m_codecCBox->insertStringList(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
@@ -217,10 +224,12 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
 
   QLabel* partLabel = new QLabel(i18n("&Part reason:"), advancedWidget);
   m_partEdit = new KLineEdit(advancedWidget);
+  QWhatsThis::add(m_partEdit, i18n("Whenever you leave a channel, this message is sent to the channel."));
   partLabel->setBuddy(m_partEdit);
 
   QLabel* kickLabel = new QLabel(i18n("&Kick reason:"), advancedWidget);
   m_kickEdit = new KLineEdit(advancedWidget);
+  QWhatsThis::add(m_kickEdit, i18n("Whenever you are kicked from a channel (usually by an IRC operator), this message is sent to the channel."));
   kickLabel->setBuddy(m_kickEdit);
 
   row = 0;
