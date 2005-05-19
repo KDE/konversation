@@ -383,7 +383,7 @@ void DccTransferRecv::startResume( unsigned long position )  // public slot
   
   stopConnectionTimer();
   
-  if ( m_transferringPosition != position )
+  if ( (unsigned long)m_transferringPosition != position )
   {
     kdDebug() << "DccTransferRecv::startResume(): remote responsed an unexpected position" << endl
               << "DccTransferRecv::startResume(): expected: " << QString::number( m_transferringPosition ) << endl
