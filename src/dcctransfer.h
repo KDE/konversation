@@ -185,7 +185,7 @@ class DccTransfer : public QObject, public KListViewItem
     QDateTime m_timeTransferFinished;
     
     QTimer* m_transferLoggerTimer;
-    QTime m_transferTime;  // it's used for calculating CPS
+    QTime m_transferLoggerBaseTime;  // it's used for calculating CPS
     QValueList<int> m_transferLogTime;
     QValueList<KIO::fileoffset_t> m_transferLogPosition;
 

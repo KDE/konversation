@@ -164,7 +164,7 @@ void DccTransfer::initTransferMeter()  // protected
   m_transferLoggerTimer = new QTimer( this );
   connect( m_transferLoggerTimer, SIGNAL( timeout() ), this, SLOT( slotLogTransfer() ) );
   m_timeTransferStarted = QDateTime::currentDateTime();
-  m_transferTime.start();
+  m_transferLoggerBaseTime.start();
   m_transferLoggerTimer->start( 100 );
   startAutoUpdateView();
 }
@@ -202,12 +202,8 @@ void DccTransfer::stopAutoUpdateView()
 
 void DccTransfer::slotLogTransfer()  // private
 {
-  // *************************************************************
-  // TODO: URGENT:
-  // QTime can't handle a longer time more than a day
-  // *************************************************************
-  kdDebug() << "transfer logger: " <<  m_transferTime.elapsed() << " " << m_transferringPosition << endl;
-  m_transferLogTime.append( m_transferTime.elapsed() );
+  kdDebug() << "DccTransfer::slotLogTransfer(): transfer logger: " <<  m_transferLoggerBaseTime.elapsed() << " " << m_transferringPosition << endl;
+  m_transferLogTime.append( m_transferLoggerBaseTime.elapsed() );
   m_transferLogPosition.append( m_transferringPosition );
 }
 
@@ -355,6 +351,8 @@ void DccTransfer::updateTransferMeters()
   if ( m_dccStatus == Sending || m_dccStatus == Receiving )
   {
     // update CPS
+    
+    // remove too old data
     QValueList<int>::iterator itTime = m_transferLogTime.begin();
     QValueList<KIO::fileoffset_t>::iterator itPos = m_transferLogPosition.begin();
     while ( itTime != m_transferLogTime.end() && ( m_transferLogTime.last() - (*itTime) > timeToCalc * 1000 ) )
@@ -362,6 +360,14 @@ void DccTransfer::updateTransferMeters()
       itTime = m_transferLogTime.remove( itTime );
       itPos = m_transferLogPosition.remove( itPos );
     }
+    
+    // shift the base of the time (m_transferLoggerBaseTime)
+    // why: QTime can't handle a longer time than 24 hours
+    int shiftOffset = m_transferLoggerBaseTime.restart();
+    itTime = m_transferLogTime.begin();
+    for ( ; itTime != m_transferLogTime.end() ; ++itTime )
+      (*itTime) = (*itTime) - shiftOffset;
+    
     if ( m_transferLogTime.count() >= 2 )
       m_cps = (double)( m_transferLogPosition.last() - m_transferLogPosition.front() ) / (double)( m_transferLogTime.last() - m_transferLogTime.front() ) * 1000;
     else  // avoid zero devision
