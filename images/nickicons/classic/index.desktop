@@ -1,6 +1,8 @@
 [Desktop Entry]
 Type=Theme
 Name=Classic Theme
+Name[ca]=Tema clàssic
+Name[cs]=Klasické téma
 Name[da]=Klassisk tema
 Name[es]=Tema clásico
 Name[et]=Klassikaline teema
@@ -15,6 +17,7 @@ Name[sr@Latn]=Klasična tema
 Name[sv]=Klassiskt tema
 Name[ta]=சிறந்த தலைப்பு
 Comment="LED" by Dario Abatianni
+Comment[ca]="LED" per Dario Abatianni
 Comment[da]="LED" af Dario Abatianni
 Comment[es]="LED" por Dario Abatianni
 Comment[et]="LED" (autor Dario Abatianni)

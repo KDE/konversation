@@ -4,6 +4,7 @@ Exec=konversation -caption "%c" %i %m
 Icon=konversation
 DocPath=konversation/index.html
 GenericName=IRC Chat
+GenericName[cs]=IRC pokec
 GenericName[da]=IRC-chat
 GenericName[es]=Charla IRC
 GenericName[et]=IRC vestlus
