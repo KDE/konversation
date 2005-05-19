@@ -59,7 +59,7 @@ class NicksOnline;
 class QuickButtonsDialog;
 class UrlCatcher;
 #ifndef USE_MDI
-class KonviTabWidget;
+class LedTabWidget;
 #endif
 
 namespace Konversation
@@ -240,8 +240,8 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     
 #ifdef USE_MDI
 #else
-    KonviTabWidget* getViewContainer();
-    KonviTabWidget* viewContainer;
+    LedTabWidget* getViewContainer();
+    LedTabWidget* viewContainer;
 #endif
 
     Server* frontServer;
