@@ -544,14 +544,14 @@ void IRCView::appendQuery(const QString& nick,const QString& message) {
     if(basicDirection(message) == QChar::DirR) {
         line = RLO;
         line += LRE;
-        line += "<p><font color=\"#" + queryColor + "\"><b>*</b>" + nickLine + "<b>*</b> %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"#" + queryColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
     } else {
-        line = "<p><font color=\"#" + queryColor + "\">%1 <b>*</b>" + nickLine + "<b>*</b> %3</font></p>\n";
+        line = "<p><font color=\"#" + queryColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
     }
 
     line = line.arg(timeStamp(), nick, filter(message, queryColor, nick, true));
 
-    emit textToLog(QString("*%1*\t%2").arg(nick).arg(message));
+    emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
 
     doAppend(line);
 }
