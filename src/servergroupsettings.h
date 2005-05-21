@@ -22,8 +22,33 @@
 
 namespace Konversation {
 
+class ChannelSettings
+{
+  public:
+    ChannelSettings();
+    ChannelSettings(const ChannelSettings& settings);
+    ChannelSettings(const QString& name);
+    ChannelSettings(const QString& name, const QString& password);
+    ChannelSettings(const QString& name, const QString& password, bool enableNotifications);
+    ~ChannelSettings();
+
+    void setName(const QString& name) { m_name = name; }
+    QString name() const { return m_name; }
+
+    void setPassword(const QString& password) { m_password = password; }
+    QString password() const { return m_password; }
+
+    void setNotificationsEnabled(bool enable) { m_enableNotifications = enable; }
+    bool enableNotifications() const { return m_enableNotifications; }
+
+  private:
+    QString m_name;
+    QString m_password;
+
+    bool m_enableNotifications;
+};
+
 class ServerGroupSettings;
-class ChannelSettings;
 typedef KSharedPtr<ServerGroupSettings> ServerGroupSettingsPtr;
 typedef QValueList<ServerGroupSettingsPtr> ServerGroupList;
 typedef QValueList<ServerSettings> ServerList;
@@ -85,32 +110,6 @@ class ServerGroupSettings : public KShared
     QString m_group;
     int m_id;
     static int s_availableId;
-
-    bool m_enableNotifications;
-};
-
-class ChannelSettings
-{
-  public:
-    ChannelSettings();
-    ChannelSettings(const ChannelSettings& settings);
-    ChannelSettings(const QString& name);
-    ChannelSettings(const QString& name, const QString& password);
-    ChannelSettings(const QString& name, const QString& password, bool enableNotifications);
-    ~ChannelSettings();
-
-    void setName(const QString& name) { m_name = name; }
-    QString name() const { return m_name; }
-
-    void setPassword(const QString& password) { m_password = password; }
-    QString password() const { return m_password; }
-
-    void setNotificationsEnabled(bool enable) { m_enableNotifications = enable; }
-    bool enableNotifications() const { return m_enableNotifications; }
-
-  private:
-    QString m_name;
-    QString m_password;
 
     bool m_enableNotifications;
 };
