@@ -28,7 +28,7 @@ the Free Software Foundation; either version 2 of the License, or
 
 
 OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name )
-        : QWidget( parent, name, WType_TopLevel | WNoAutoErase | WStyle_Customize | WX11BypassWM | WStyle_StaysOnTop )
+        : QWidget( parent, name, WNoAutoErase | WStyle_Customize | WX11BypassWM | WStyle_StaysOnTop | WStyle_Tool )
         , m_appName( appName )
         , m_duration( 5000 )
         , m_shadow( true )
