@@ -45,8 +45,8 @@ QString removeIrcMarkup(const QString& text)
 
 QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColor)
 {
-  //QTime timer;
-  //timer.start();
+  // QTime timer;
+  // timer.start();
 
   QString filteredLine = text;
   QString linkColor = KonversationApplication::preferences.getColor("LinkMessage");
@@ -99,7 +99,12 @@ QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColo
     KonversationApplication::instance()->storeUrl(fromNick, href);
   }
 
-  //kdDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine << endl;
+  // Make [[foo]] a link to http://en.wikipedia.org/wiki/foo
+  QRegExp wikipedia("\\[\\[([^\\]]+)\\]\\]");
+  wikipedia.setMinimal(true);
+  filteredLine.replace(wikipedia,"<font color=\"#" + linkColor + "\"><a href=\"http://en.wikipedia.org/wiki/\\1\">[[\\1]]</a></font>");
+
+  // kdDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine << endl;
   return filteredLine;
 }
 
