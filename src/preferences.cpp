@@ -98,6 +98,7 @@ Preferences::Preferences()
   setParagraphSpacing(2);
 
   setAutoReconnect(true);
+  setReconnectCount(10);
   setAutoRejoin(true);
   setAutojoinOnInvite(false);
 
@@ -465,6 +466,9 @@ const bool Preferences::getFixedMOTD() { return fixedMOTD; }
 
 void Preferences::setAutoReconnect(bool state) { autoReconnect=state; }
 const bool Preferences::getAutoReconnect() { return autoReconnect; }
+
+void Preferences::setReconnectCount (unsigned int count) { reconnectCounter=count; }
+const unsigned int Preferences::getReconnectCount() { return reconnectCounter; }
 
 void Preferences::setAutoRejoin(bool state) { autoRejoin=state; }
 const bool Preferences::getAutoRejoin() { return autoRejoin; }

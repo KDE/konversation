@@ -934,6 +934,7 @@ void KonversationApplication::readOptions()
   preferences.setDisableExpansion(config->readBoolEntry("DisableExpansion", preferences.getDisableExpansion()));
 
   preferences.setAutoReconnect(config->readBoolEntry("AutoReconnect",preferences.getAutoReconnect()));
+  preferences.setReconnectCount(config->readNumEntry("ReconnectCount",preferences.getReconnectCount()));
   preferences.setAutoRejoin(config->readBoolEntry("AutoRejoin",preferences.getAutoRejoin()));
   preferences.setAutojoinOnInvite(config->readBoolEntry("AutojoinOnInvite",preferences.getAutojoinOnInvite()));
 
@@ -1338,6 +1339,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("DisableExpansion",preferences.getDisableExpansion());
 
   config->writeEntry("AutoReconnect",preferences.getAutoReconnect());
+  config->writeEntry("ReconnectCount",preferences.getReconnectCount());
   config->writeEntry("AutoRejoin",preferences.getAutoRejoin());
   config->writeEntry("AutojoinOnInvite",preferences.getAutojoinOnInvite());
 

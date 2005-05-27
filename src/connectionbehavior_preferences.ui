@@ -14,7 +14,7 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>497</width>
+            <width>533</width>
             <height>480</height>
         </rect>
     </property>
@@ -25,6 +25,23 @@ the Free Software Foundation; either version 2 of the License, or
         <property name="margin">
             <number>0</number>
         </property>
+        <spacer row="0" column="0">
+            <property name="name">
+                <cstring>spacer53_2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>241</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
         <widget class="QGroupBox" row="0" column="0">
             <property name="name">
                 <cstring>reconnectGBox</cstring>
@@ -70,6 +87,36 @@ the Free Software Foundation; either version 2 of the License, or
                         <string> s</string>
                     </property>
                 </widget>
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>autoRejoinCheck</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Automaticaly re&amp;join channels on reconnect</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Reconnection attempts:</string>
+                    </property>
+                </widget>
+                <widget class="QSpinBox" row="1" column="1">
+                    <property name="name">
+                        <cstring>reconnectCountSpin</cstring>
+                    </property>
+                    <property name="maxValue">
+                        <number>9999</number>
+                    </property>
+                    <property name="minValue">
+                        <number>1</number>
+                    </property>
+                    <property name="value">
+                        <number>100</number>
+                    </property>
+                </widget>
                 <spacer row="0" column="2">
                     <property name="name">
                         <cstring>spacer53</cstring>
@@ -87,14 +134,23 @@ the Free Software Foundation; either version 2 of the License, or
                         </size>
                     </property>
                 </spacer>
-                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="3">
+                <spacer row="1" column="2">
                     <property name="name">
-                        <cstring>autoRejoinCheck</cstring>
+                        <cstring>spacer53_3</cstring>
                     </property>
-                    <property name="text">
-                        <string>Automaticaly re&amp;join channels on reconnect</string>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
                     </property>
-                </widget>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>241</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
             </grid>
         </widget>
         <widget class="QGroupBox" row="1" column="0">
@@ -131,7 +187,7 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="sizeHint">
                 <size>
                     <width>21</width>
-                    <height>281</height>
+                    <height>250</height>
                 </size>
             </property>
         </spacer>

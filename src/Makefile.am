@@ -4,6 +4,8 @@ COMPAT_INCLUDE = -Icompat
 COMPAT_LIBS = compat/libkonversationcompat.la
 endif
 
+CXXFLAGS=-fprofile-arcs -ftest-coverage
+
 SUBDIRS = $(COMPAT_DIR) linkaddressbook
 
 METASOURCES = AUTO

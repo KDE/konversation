@@ -75,6 +75,8 @@ class Preferences : public QObject
 
     const bool getAutoReconnect();
     void setAutoReconnect(bool state);
+    const unsigned int getReconnectCount();
+    void setReconnectCount(unsigned int count);
     const bool getAutoRejoin();
     void setAutoRejoin(bool state);
     const bool getAutojoinOnInvite();
@@ -547,6 +549,7 @@ class Preferences : public QObject
     QString ipv4Interface;
 
     bool autoReconnect;
+    unsigned int reconnectCounter;
     bool autoRejoin;
     bool autojoinOnInvite;
 

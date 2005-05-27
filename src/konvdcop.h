@@ -111,6 +111,8 @@ class KonvPrefsDCOP : public QObject, virtual public KonvPreferencesIface
 
   bool getAutoReconnect();
   void setAutoReconnect(bool state);
+  unsigned int getReconnectCount();
+  void setReconnectCount(unsigned int count);
   bool getAutoRejoin();
   void setAutoRejoin(bool state);
   bool getBeep();

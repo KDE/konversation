@@ -1111,6 +1111,15 @@
       <!-- konversationapplication.cpp:1239 -->
       <!--   config->writeEntry("AutoReconnect",preferences.getAutoReconnect()); -->
     </entry>
+    <entry key="ReconnectCount" type="UInt">
+      <default></default>
+      <label></label>
+      <whatsthis></whatsthis>
+      <!-- konversationapplication.cpp:916 -->
+      <!--   preferences.setReconnectCount(config->readNumEntry("ReconnectCount",preferences.getReconnectCount())); -->
+      <!-- konversationapplication.cpp:1319 -->
+      <!--   config->writeEntry("ReconnectCount",preferences.getReconnectCount()); -->
+    </entry>
     <entry key="AutoRejoin" type="Bool">
       <default></default>
       <label></label>

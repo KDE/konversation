@@ -607,7 +607,7 @@ void Server::broken(int state) {
         // TODO: Make retry counter configurable
         ++reconnectCounter;
 
-        if(reconnectCounter >= 10 || !m_tryReconnect)
+        if(reconnectCounter >= KonversationApplication::preferences.getReconnectCount() || !m_tryReconnect)
         {
             QString error = i18n("Connection to Server %1 failed.  %2")
                 .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())

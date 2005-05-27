@@ -78,6 +78,8 @@ class KonvPreferencesIface : virtual public DCOPObject
 
     virtual bool getAutoReconnect() = 0;
     virtual void setAutoReconnect(bool state) = 0;
+    virtual unsigned int getReconnectCount() = 0;
+    virtual void setReconnectCount(unsigned int count) = 0;
     virtual bool getAutoRejoin() = 0;
     virtual void setAutoRejoin(bool state) = 0;
     virtual bool getBeep() = 0;

@@ -373,6 +373,17 @@ void KonvPrefsDCOP::setAutoReconnect(bool state)
   static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
+unsigned int KonvPrefsDCOP::getReconnectCount()
+{
+  return KonversationApplication::preferences.getReconnectCount();
+}
+
+void KonvPrefsDCOP::setReconnectCount(unsigned int count)
+{
+  KonversationApplication::preferences.setReconnectCount(count);
+  static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
 bool KonvPrefsDCOP::getAutoRejoin()
 {
   return KonversationApplication::preferences.getAutoRejoin();

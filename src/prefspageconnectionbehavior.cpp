@@ -25,6 +25,7 @@ PrefsPageConnectionBehavior::PrefsPageConnectionBehavior(QWidget* newParent, Pre
   rawLogCheck->setChecked(preferences->getRawLog());
 
   reconnectGBox->setChecked(preferences->getAutoReconnect());
+  reconnectCountSpin->setValue(preferences->getReconnectCount());
   reconnectTimeoutSpin->setValue(preferences->getMaximumLagTime());
   autoRejoinCheck->setChecked(preferences->getAutoRejoin());
 }
@@ -38,6 +39,7 @@ void PrefsPageConnectionBehavior::applyPreferences()
   preferences->setRawLog(rawLogCheck->isChecked());
 
   preferences->setAutoReconnect(reconnectGBox->isChecked());
+  preferences->setReconnectCount(reconnectCountSpin->value());
   preferences->setAutoRejoin(autoRejoinCheck->isChecked());
   preferences->setMaximumLagTime(reconnectTimeoutSpin->value());
 }
