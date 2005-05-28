@@ -38,6 +38,8 @@ ChannelOptionsDialog::ChannelOptionsDialog(Channel *channel)
   m_widget->otherModesList->setRenameable(1, true);
   m_widget->otherModesList->hide();
 
+  m_widget->topicHistoryList->setSortColumn(-1);
+
   m_channel = channel;
 
   connect(m_widget->topicHistoryList, SIGNAL(clicked(QListViewItem*)), this, SLOT(topicHistoryItemClicked(QListViewItem*)));
@@ -49,7 +51,7 @@ ChannelOptionsDialog::ChannelOptionsDialog(Channel *channel)
 
   connect(this, SIGNAL(cancelClicked()), this, SLOT(closeOptionsDialog()));
   connect(this, SIGNAL(okClicked()), this, SLOT(changeOptions()));
-  
+
   refreshTopicHistory();
   refreshAllowedChannelModes();
   refreshModes();
@@ -249,28 +251,36 @@ void ChannelOptionsDialog::refreshModes()
 QStringList ChannelOptionsDialog::modes()
 {
   QStringList modes;
-  QString sign;
+  QString mode;
 
-  sign = (m_widget->topicModeChBox->isChecked() ? "+" : "-");
-  modes.append(sign + "t");
-  sign = (m_widget->messageModeChBox->isChecked() ? "+" : "-");
-  modes.append(sign + "n");
-  sign = (m_widget->userLimitChBox->isChecked() ? "+" : "-");
-  modes.append(sign + "l" + m_widget->userLimitEdit->value());
-  sign = (m_widget->inviteModeChBox->isChecked() ? "+" : "-");
-  modes.append(sign + "i");
-  sign = (m_widget->moderatedModeChBox->isChecked() ? "+" : "-");
-  modes.append(sign + "m");
-  sign = (m_widget->secretModeChBox->isChecked() ? "+" : "-");
-  modes.append(sign + "s");
-  sign = (m_widget->keyModeChBox->isChecked() ? "+" : "-");
-  modes.append(sign + "k" + m_widget->keyModeEdit->text());
+  mode = (m_widget->topicModeChBox->isChecked() ? "+" : "-");
+  mode += "t";
+  modes.append(mode);
+  mode = (m_widget->messageModeChBox->isChecked() ? "+" : "-");
+  mode += "n";
+  modes.append(mode);
+  mode = (m_widget->userLimitChBox->isChecked() ? "+" : "-");
+  mode += "l" + m_widget->userLimitEdit->value();
+  modes.append(mode);
+  mode = (m_widget->inviteModeChBox->isChecked() ? "+" : "-");
+  mode += "i";
+  modes.append(mode);
+  mode = (m_widget->moderatedModeChBox->isChecked() ? "+" : "-");
+  mode += "m";
+  modes.append(mode);
+  mode = (m_widget->secretModeChBox->isChecked() ? "+" : "-");
+  mode += "s";
+  modes.append(mode);
+  mode = (m_widget->keyModeChBox->isChecked() ? "+" : "-");
+  mode += "k" + m_widget->keyModeEdit->text();
+  modes.append(mode);
 
   QListViewItem* item = m_widget->otherModesList->firstChild();
 
   while(item) {
-    sign = (static_cast<QCheckListItem*>(item)->isOn() ? "+" : "-");
-    modes.append(sign + item->text(0) + item->text(1));
+    mode = (static_cast<QCheckListItem*>(item)->isOn() ? "+" : "-");
+    mode += item->text(0) + item->text(1);
+    modes.append(mode);
     item = item->nextSibling();
   }
 
