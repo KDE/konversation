@@ -297,11 +297,9 @@ QString NotificationHandler::addLineBreaks(const QString& string)
   QString cutup = string;
   int offset = 0;
 
-  for(int i = 0; i < string.length(); ++i) {
-    if((i % 50) == 0) {
-      cutup.insert(i + (offset * 4), "<br>");
-      ++offset;
-    }
+  for(int i = 0; i < string.length(); i += 50) {
+    cutup.insert(i + (offset * 4), "<br>");
+    ++offset;
   }
 
   return cutup;
