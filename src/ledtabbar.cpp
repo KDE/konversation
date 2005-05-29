@@ -135,7 +135,7 @@ void LedTabBar::insertAssociationSubMenu(const NickInfoPtr &nickinfo) {
     m_popupAddressbook->insertItem(SmallIcon("editdelete"), i18n("&Delete Association"), AddressbookDelete);
     if(addr.preferredEmail().isEmpty()) {
       m_popup->setItemEnabled(SendEmail, false);
-      m_popup->setWhatsThis(SendEmail, "Sends an email to this contact using the preferred email address set in the contact's addressbook association.  This is currently disabled because the associated contact does not have any preferred email address set.");
+      m_popup->setWhatsThis(SendEmail, i18n("Sends an email to this contact using the preferred email address set in the contact's addressbook association.  This is currently disabled because the associated contact does not have any preferred email address set."));
     } else {
       m_popup->setItemEnabled(SendEmail, true);
       m_popup->setWhatsThis(SendEmail, i18n("Sends an email to this contact using the preferred email address (%1) set in the contact's addressbook association").arg(addr.preferredEmail()));
