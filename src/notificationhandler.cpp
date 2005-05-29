@@ -44,8 +44,11 @@ void NotificationHandler::message(ChatWindow* chatWin, const QString& fromNick, 
     return;
   }
 
-  QString cutup = KStringHandler::rsqueeze(Konversation::removeIrcMarkup(message), 50);
-  KNotifyClient::event(winId(), "message", QString("<%1> %2").arg(fromNick).arg(cutup));
+  QString cleanedMessage = Konversation::removeIrcMarkup(message);
+  QString cutup = addLineBreaks(cleanedMessage);
+
+
+  KNotifyClient::event(winId(), "message", QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup));
 
   if(!KonversationApplication::preferences.trayNotifyOnlyOwnNick()) {
     startTrayNotification(chatWin);
@@ -55,7 +58,7 @@ void NotificationHandler::message(ChatWindow* chatWin, const QString& fromNick, 
      (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
   {
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-    konvApp->osd->showOSD("(" + chatWin->getName() + ") <" + fromNick + "> " + message);
+    konvApp->osd->showOSD("(" + chatWin->getName() + ") <" + fromNick + "> " + cleanedMessage);
   }
 }
 
@@ -68,10 +71,12 @@ void NotificationHandler::nick(ChatWindow* chatWin, const QString& fromNick, con
   if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway()) {
     return;
   }
-    
-  QString cutup = KStringHandler::rsqueeze(Konversation::removeIrcMarkup(message), 50);
-  KNotifyClient::event(winId(), "nick", QString("<%1> %2").arg(fromNick).arg(cutup));
-  
+
+  QString cleanedMessage = Konversation::removeIrcMarkup(message);
+  QString cutup = addLineBreaks(cleanedMessage);
+
+  KNotifyClient::event(winId(), "nick", QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup));
+
   startTrayNotification(chatWin);
 
   KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
@@ -81,13 +86,13 @@ void NotificationHandler::nick(ChatWindow* chatWin, const QString& fromNick, con
        KonversationApplication::preferences.getOSDShowOwnNick()) &&
        (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
     {
-      konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(message));
+      konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(cleanedMessage));
     }
   } else if(chatWin->getType() == ChatWindow::Query) {
     if(KonversationApplication::preferences.getOSDShowQuery() &&
        (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
     {
-      konvApp->osd->showOSD(i18n("(Query) <%1> %2").arg(fromNick).arg(message));
+      konvApp->osd->showOSD(i18n("(Query) <%1> %2").arg(fromNick).arg(cleanedMessage));
     }
   }
 }
@@ -285,6 +290,21 @@ void NotificationHandler::highlight(ChatWindow* chatWin, const QString& fromNick
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
     konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(message));
   }
+}
+
+QString NotificationHandler::addLineBreaks(const QString& string)
+{
+  QString cutup = string;
+  int offset = 0;
+
+  for(int i = 0; i < string.length(); ++i) {
+    if((i % 50) == 0) {
+      cutup.insert(i + (offset * 4), "<br>");
+      ++offset;
+    }
+  }
+
+  return cutup;
 }
 
 }
