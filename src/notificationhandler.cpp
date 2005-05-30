@@ -19,6 +19,7 @@
 #include "chatwindow.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
+#include "popup.h"
 #include "trayicon.h"
 #include "server.h"
 
@@ -47,8 +48,9 @@ void NotificationHandler::message(ChatWindow* chatWin, const QString& fromNick, 
   QString cleanedMessage = Konversation::removeIrcMarkup(message);
   QString cutup = addLineBreaks(cleanedMessage);
 
-
-  KNotifyClient::event(winId(), "message", QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup));
+//  KNotifyClient::event(winId(), "message", QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup));
+  Popup *pop = new Popup(m_mainWindow,chatWin,
+    QString("<qt>&lt;%2&gt; %3</qt>").arg(chatWin->getName()).arg(fromNick).arg(cutup));
 
   if(!KonversationApplication::preferences.trayNotifyOnlyOwnNick()) {
     startTrayNotification(chatWin);
@@ -75,7 +77,9 @@ void NotificationHandler::nick(ChatWindow* chatWin, const QString& fromNick, con
   QString cleanedMessage = Konversation::removeIrcMarkup(message);
   QString cutup = addLineBreaks(cleanedMessage);
 
-  KNotifyClient::event(winId(), "nick", QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup));
+//  KNotifyClient::event(winId(), "nick", QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup));
+  Popup *pop = new Popup(m_mainWindow,chatWin,
+    QString("<qt>&lt;%2&gt; %3</qt>").arg(chatWin->getName()).arg(fromNick).arg(cutup));
 
   startTrayNotification(chatWin);
 

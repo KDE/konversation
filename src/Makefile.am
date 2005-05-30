@@ -43,7 +43,7 @@ konversation_SOURCES = konviface.skel\
 	 watchednicknames_preferences.ui generalbehavior_preferences.ui connectionbehavior_preferences.ui \
 	 prefspageconnectionbehavior.cpp fontappearance_preferences.ui prefspagefontsappearance.cpp \
 	 nicklistbehavior_preferences.ui prefspagenicklistbehavior.cpp \
-	 konvibookmarkhandler.cpp konvibookmarkmenu.cpp
+	 konvibookmarkhandler.cpp konvibookmarkmenu.cpp popup.cpp
 
 konversation_LDADD = $(COMPAT_LIBS) $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la 
 
@@ -77,5 +77,5 @@ noinst_HEADERS = prefspagebehaviour.h prefspagechatwinbehavior.h 	 		 \
 		dcctransferrecv.h dccdetaildialog.h insertchardialog.h editnotifydialog.h serverison.h 		 \
 		servergroupsettings.h serversettings.h	servergroupdialog.h serverdialog.h channeldialog.h 		 \
 		identitydialog.h topiclabel.h channeloptionsdialog.h joinchanneldialog.h \
-		prefspageconnectionbehavior.h prefspagefontsappearance.h prefspagenicklistbehavior.h
+		prefspageconnectionbehavior.h prefspagefontsappearance.h prefspagenicklistbehavior.h popup.h
 
