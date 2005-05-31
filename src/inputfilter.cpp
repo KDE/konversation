@@ -223,7 +223,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     else
                     {
                         // Do not internationalize the below version string
-                        reply = QString("VERSION Konversation %1 Build %2 (C) 2002-2005 by the Konversation team")
+                        reply = QString("Konversation %1 Build %2 (C) 2002-2005 by the Konversation team")
                                        .arg(QString(KONVI_VERSION))
                                        .arg(QString::number(COMMIT));
                     }
