@@ -203,7 +203,7 @@ IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
   tabWidget->addTab(advancedWidget, i18n("Advanced"));
   QGridLayout* advancedLayout = new QGridLayout(advancedWidget, 1, 2, marginHint(), spacingHint());
 
-  QLabel* commandLabel = new QLabel(i18n("&Pre-Shell Command:"), advancedWidget);
+  QLabel* commandLabel = new QLabel(i18n("&Pre-shell command:"), advancedWidget);
   m_sCommandEdit = new KLineEdit(advancedWidget);
   QWhatsThis::add(m_sCommandEdit,i18n("Here you can enter a command to be executed before connection to server starts<br>If you have multiple servers in this identity this command will be executed for each server"));
   commandLabel->setBuddy(m_sCommandEdit);
