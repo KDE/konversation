@@ -68,9 +68,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
   QLabel* minLabel=new QLabel(i18n("M&inimum users:"),mainGrid);
   QLabel* maxLabel=new QLabel(i18n("Ma&ximum users:"),mainGrid);
   QSpinBox* minUsersSpin=new QSpinBox(mainGrid,"min_users_spin");
-  QWhatsThis::add(minUsersSpin, i18n("You can limit the channel list to those channels with a minimum number of users here. Choosing 0 disables this criterium."));
+  QWhatsThis::add(minUsersSpin, i18n("You can limit the channel list to those channels with a minimum number of users here. Choosing 0 disables this criterion."));
   QSpinBox* maxUsersSpin=new QSpinBox(mainGrid,"max_users_spin");
-  QWhatsThis::add(maxUsersSpin, i18n("You can limit the channel list to those channels with a maximum number of users here. Choosing 0 disables this criterium."));
+  QWhatsThis::add(maxUsersSpin, i18n("You can limit the channel list to those channels with a maximum number of users here. Choosing 0 disables this criterion."));
   minUsersSpin->setValue(getMinUsers());
   maxUsersSpin->setValue(getMaxUsers());
   minLabel->setBuddy(minUsersSpin);
@@ -101,7 +101,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
   targetBox->setStretchFactor(topicFilter,10);
 
   channelListView=new KListView(this,"channel_list_view");
-  QWhatsThis::add(channelListView, i18n("The filtered list of channels is displayed here. Notice that if you don't use regular expressions, Konversation lists any channel whose name contains the filter string you entered. The channel name does not have to start with the string you entered.\n\nSelect a channel you want to join by clicking on it. Right click on the channel to get a list of all web addresses mentioned in the channel's topic."));
+  QWhatsThis::add(channelListView, i18n("The filtered list of channels is displayed here. Notice that if you do not use regular expressions, Konversation lists any channel whose name contains the filter string you entered. The channel name does not have to start with the string you entered.\n\nSelect a channel you want to join by clicking on it. Right click on the channel to get a list of all web addresses mentioned in the channel's topic."));
   channelListView->addColumn(i18n("Channel Name"));
   channelListView->addColumn(i18n("Users"));
   channelListView->addColumn(i18n("Channel Topic"));
