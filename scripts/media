@@ -91,13 +91,14 @@ if($amarok)
 
 if($juk)
 {
-    my $string=`dcop juk Player playingString`;
-    chomp $string;
-
-    if($string)
+    $title=`dcop juk Player trackProperty Title`;
+    $artist=`dcop juk Player trackProperty Artist`;
+    $album=`dcop juk Player trackProperty Album`;
+    
+    if($title)
     {
-	utf8::decode($string);
-        exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing \x{266B} $string \x{266B} \[JuK\]";
+	my $string = pretty_print($title,$artist,$album)." [JuK]";
+	exec 'dcop', $port, 'Konversation', 'say', $server, $target, $string;
     }
     else
     {
