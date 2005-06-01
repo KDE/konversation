@@ -6,6 +6,9 @@ Changes from 0.17 to 0.18
 - Button to invoke Regular Expression Editor (if installed) in Settings -> Highlight.
 - Complete command line argument system for connection
 - An option to disable clickable nicks
+- Fixed a big memory leak in message processing
+- Nicklist slider now correctly resizes in all channels when its resized and correctly restores on startup
+
 
 Changes from 0.16 to 0.17
 - Add an option to hide realnames in nicklist
