@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+# Copyright (c) 2005 Stanislav Karchenny <stanislav.karchenny@kdemail.net>
+# Licensed under MIT License.
+
 require 'net/http'
 require 'cgi'
 
