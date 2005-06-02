@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+require 'net/http'
+require 'cgi'
+
+$port = ARGV[0]
+$server = ARGV[1]
+$target = ARGV[2]
+url = ARGV[3]
+
+def dcoperr msg
+    `dcop #{$port} Konversation error #{msg}`
+end
+
+def dcopsay msg
+    `dcop #{$port} Konversation say #{$server} #{$target} #{msg}`
+end
+
+
+unless $target
+    dcoperr "Can't write into status view."
+    exit
+end
+
+unless url
+    dcoperr "Please provide url to shorten"
+    exit
+end
+
+Net::HTTP.start('qurl.net',80) do |http|
+    response = http.post("/", "action=#{CGI::escape("Create qURL")}&url=#{CGI::escape(url)}", {'User-Agent'=>'konversation'})
+    if response.code != "200"
+	dcoperr "Request to qurl.net failed, #{response.code} #{response.message}"
+	exit
+    else
+	if response.body =~ /<link\s+rel="bookmark"\s+title="Generated qURL"\s+href="([^"]+)"/
+	    dcopsay $1
+	elsif response.body =~ /<p\s+class="error">([^>]+)<\/p>/
+	    dcoperr "qurl returned error: #{$1}"
+	    dcoperr "Maybe your URL was not well-formed?"
+	else
+	    dcoperr "nothing parsable found in qurl reply"
+	end
+    end
+end

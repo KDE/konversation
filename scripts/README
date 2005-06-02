@@ -50,4 +50,6 @@ google		Use Google services
 		       /google --spell <word> # Spellcheck <word> using Google
 		       /google -b|--browser <query> # Launch konqueror with google search for <query>
 
-
+qurl            Display a short version of the url using qurl.net
+                Requires Ruby.
+		usage: /qurl http://some.very.long.url.com/
