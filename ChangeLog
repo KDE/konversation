@@ -8,6 +8,7 @@ Changes from 0.17 to 0.18
 - An option to disable clickable nicks
 - Fixed a big memory leak in message processing
 - Nicklist slider now correctly resizes in all channels when its resized and correctly restores on startup
+- [[foo]] is now a link to http://en.wikipedia.org/wiki/foo . We will expand this to local wikipedia's in a later release
 
 
 Changes from 0.16 to 0.17
