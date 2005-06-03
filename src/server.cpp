@@ -938,10 +938,11 @@ void Server::incoming()
 
   while( !qcsBufferLines.isEmpty() )
   {
-    bool isUtf8 = Konversation::isUtf8(qcsBufferLines.front());
+    QCString front = qcsBufferLines.front();
+    bool isUtf8 = Konversation::isUtf8(front);
 
     if( isUtf8 )
-      inputBuffer << QString::fromUtf8(qcsBufferLines.front());
+      inputBuffer << QString::fromUtf8(front);
     else
     {
       // BEGIN set channel encoding if specified
@@ -950,7 +951,7 @@ void Server::incoming()
       QString channelKey;
       QTextCodec* codec = getIdentity()->getCodec();
 
-      QStringList lineSplit = QStringList::split(" ",codec->toUnicode(qcsBufferLines.front()));
+      QStringList lineSplit = QStringList::split(" ",codec->toUnicode(front));
 
       if( lineSplit.count() >= 1 )
       {
@@ -1018,7 +1019,7 @@ void Server::incoming()
       if ( !isUtf8 && codec->mibEnum() == 106 )
         codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
 
-      inputBuffer << codec->toUnicode(qcsBufferLines.front());
+      inputBuffer << codec->toUnicode(front);
     }
     qcsBufferLines.pop_front();
   }
