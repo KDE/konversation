@@ -5,7 +5,7 @@ Changes from 0.17 to 0.18
 - /mail script has been added
 - Button to invoke Regular Expression Editor (if installed) in Settings -> Highlight.
 - Complete command line argument system for connection
-- An option to disable clickable nicks
+- An option to disable clickable nicks . Add ClickableNicks=false to konversationrc to disable it.
 - Fixed a big memory leak in message processing
 - Nicklist slider now correctly resizes in all channels when its resized and correctly restores on startup
 - [[foo]] is now a link to http://en.wikipedia.org/wiki/foo . We will expand this to local wikipedia's in a later release
