@@ -28,6 +28,7 @@
 #include "konversationapplication.h"
 #include "ircinput.h"
 #include "ircview.h"
+#include "ircviewbox.h"
 #include "server.h"
 
 
@@ -45,7 +46,8 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
   awayState=false;
 
   // set up text view, will automatically take care of logging
-  setTextView(new IRCView(this,NULL));  // Server will be set later in setServer()
+  IRCViewBox* ircBox = new IRCViewBox(this, 0); // Server will be set later in setServer()
+  setTextView(ircBox->ircView());  
 
   QHBox* commandLineBox=new QHBox(this);
   commandLineBox->setSpacing(spacing());

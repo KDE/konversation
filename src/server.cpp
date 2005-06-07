@@ -51,6 +51,7 @@
 #include "serverison.h"
 #include "common.h"
 #include "notificationhandler.h"
+#include "blowfish.h"
 
 #include <config.h>
 
@@ -702,6 +703,16 @@ void Server::registerWithServices() {
         queue("PRIVMSG "+bot+" :identify "+botPassword);
 }
 
+QCString Server::getKeyForRecepient(const QString& recepient) const
+{
+    return keyMap[recepient];
+}
+
+void Server::setKeyForRecepient(const QString& recepient, const QCString& key)
+{
+    keyMap[recepient] = key;
+}
+
 void Server::gotOwnResolvedHostByWelcome(KResolverResults res) {
     if ( res.error() == KResolver::NoError && !res.isEmpty() ) {
         ownIpByWelcome = res.first().address().nodeName();
@@ -936,92 +947,102 @@ void Server::incoming()
   // remember the incomplete line (split by packets)
   inputBufferIncomplete = qcsBuffer.right(qcsBuffer.length()-lastLFposition-1);
 
-  while( !qcsBufferLines.isEmpty() )
+  while(!qcsBufferLines.isEmpty())
   {
-    QCString front = qcsBufferLines.front();
-    bool isUtf8 = Konversation::isUtf8(front);
-
-    if( isUtf8 )
-      inputBuffer << QString::fromUtf8(front);
-    else
-    {
+      // Pre parsing is needed in case encryption/decryption is needed
       // BEGIN set channel encoding if specified
       QString senderNick;
       bool isServerMessage = false;
       QString channelKey;
       QTextCodec* codec = getIdentity()->getCodec();
-
+      QCString front = qcsBufferLines.front();
+      
       QStringList lineSplit = QStringList::split(" ",codec->toUnicode(front));
-
+      
       if( lineSplit.count() >= 1 )
       {
-        if( lineSplit[0][0] == ':' )  // does this message have a prefix?
-        {
-          if( !lineSplit[0].contains('!') )  // is this a server(global) message?
-            isServerMessage = true;
-          else
-            senderNick = lineSplit[0].mid(1, lineSplit[0].find('!')-1);
-
-          lineSplit.pop_front();  // remove prefix
-        }
+          if( lineSplit[0][0] == ':' )  // does this message have a prefix?
+          {
+              if( !lineSplit[0].contains('!') )  // is this a server(global) message?
+                  isServerMessage = true;
+              else
+                  senderNick = lineSplit[0].mid(1, lineSplit[0].find('!')-1);
+              
+              lineSplit.pop_front();  // remove prefix
+          }
       }
 
       // BEGIN pre-parse to know where the message belongs to
       QString command = lineSplit[0].lower();
       if( isServerMessage )
       {
-        if( lineSplit.count() >= 3 )
-        {
-          if( command == "332" )  // RPL_TOPIC
-            channelKey = lineSplit[2];
-          if( command == "372" )  // RPL_MOTD
-            channelKey = ":server";
-        }
+          if( lineSplit.count() >= 3 )
+          {
+              if( command == "332" )  // RPL_TOPIC
+                  channelKey = lineSplit[2];
+              if( command == "372" )  // RPL_MOTD
+                  channelKey = ":server";
+          }
       }
       else  // NOT a global message
       {
-        if( lineSplit.count() >= 2 )
-        {
-          // query
-          if( ( command == "privmsg" ||
-                command == "notice"  ) &&
-              lineSplit[1] == getNickname() )
+          if( lineSplit.count() >= 2 )
           {
-            channelKey = senderNick;
+              // query
+              if( ( command == "privmsg" ||
+                    command == "notice"  ) &&
+                  lineSplit[1] == getNickname() )
+              {
+                  channelKey = senderNick;
+              }
+              // channel message
+              else if( command == "privmsg" ||
+                       command == "notice"  ||
+                       command == "join"    ||
+                       command == "kick"    ||
+                       command == "part"    ||
+                       command == "topic"   )
+              {
+                  channelKey = lineSplit[1];
+              }
           }
-          // channel message
-          else if( command == "privmsg" ||
-                   command == "notice"  ||
-                   command == "join"    ||
-                   command == "kick"    ||
-                   command == "part"    ||
-                   command == "topic"   )
-          {
-            channelKey = lineSplit[1];
-          }
-        }
       }
       // END pre-parse to know where the message belongs to
 
-      // check setting
-      QString channelEncoding;
-      if( !channelKey.isEmpty() )
+
+      // Decrypt if necessary
+      if(command == "privmsg")
+          Konversation::decrypt(channelKey,front,this);
+      else if(command == "332")
       {
-        channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), channelKey);
+          Konversation::decryptTopic(channelKey,front,this);
       }
-      // END set channel encoding if specified
+      
+      bool isUtf8 = Konversation::isUtf8(front);
 
-      if( !channelEncoding.isEmpty() )
-        codec = Konversation::IRCCharsets::self()->codecForName(channelEncoding);
+      if( isUtf8 )
+          inputBuffer << QString::fromUtf8(front);
+      else
+      {
+          // check setting
+          QString channelEncoding;
+          if( !channelKey.isEmpty() )
+          {
+              channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), channelKey);
+          }
+          // END set channel encoding if specified
+          
+          if( !channelEncoding.isEmpty() )
+              codec = Konversation::IRCCharsets::self()->codecForName(channelEncoding);
+                 
+          // if channel encoding is utf-8 and the string is definitely not utf-8
+          // then try latin-1
+          if ( !isUtf8 && codec->mibEnum() == 106 )
+              codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
 
-      // if channel encoding is utf-8 and the string is definitely not utf-8
-      // then try latin-1
-      if ( !isUtf8 && codec->mibEnum() == 106 )
-        codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
-
-      inputBuffer << codec->toUnicode(front);
-    }
-    qcsBufferLines.pop_front();
+          inputBuffer << codec->toUnicode(front);
+      }
+      qcsBufferLines.pop_front();
   }
 
   // refresh lock timer if it was still locked
@@ -1127,6 +1148,11 @@ void Server::send()
     if(QString(QTextCodec::codecForLocale()->name()).lower() != QString(codec->name()).lower())
     {
       serverStream.setCodec(codec);
+    }
+
+    if(outputLineSplit[0]=="PRIVMSG" || outputLineSplit[0]=="TOPIC") // Blowfish
+    {
+        Konversation::encrypt(outputLineSplit[1],outputLine,this);
     }
 
     serverStream << outputLine;

@@ -336,6 +336,10 @@ class Server : public QObject
 
     void registerWithServices();
     
+    // Blowfish stuff
+    QCString getKeyForRecepient(const QString& recepient) const;
+    void setKeyForRecepient(const QString& recepient, const QCString& key);
+    
   signals:
     void nicknameChanged(const QString&);
     void serverLag(Server* server,int msec); /// will be connected to KonversationMainWindow::updateLag()
@@ -642,6 +646,9 @@ class Server : public QObject
     unsigned int m_currentServerIndex;
 
     QString m_allowedChannelModes;
+    
+    // Blowfish key map
+    QMap<QString,QCString> keyMap;
 };
 
 #endif

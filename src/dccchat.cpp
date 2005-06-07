@@ -31,6 +31,7 @@
 
 #include "irccharsets.h"
 #include "ircview.h"
+#include "ircviewbox.h"
 #include "ircinput.h"
 #include "dccchat.h"
 
@@ -66,7 +67,9 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
   mainBox->setSpacing(spacing());
 
   sourceLine=new KLineEdit(mainBox);
-  setTextView(new IRCView(mainBox,NULL));
+
+  IRCViewBox* ircViewBox = new IRCViewBox(mainBox, 0);
+  setTextView(ircViewBox->ircView());
 
   dccChatInput=new IRCInput(mainBox);
 

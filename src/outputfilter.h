@@ -129,10 +129,13 @@ namespace Konversation
       OutputFilterResult parseOnotice(const QString& parameter);
       void parseCharset(const QString& charset);
       void parseCycle();
+      OutputFilterResult parseSetKey(const QString& parameter);
+      OutputFilterResult parseDelKey(const QString& parameter);
   
       OutputFilterResult changeMode(const QString& parameter,char mode,char giveTake);
       bool isAChannel(const QString& check);
       OutputFilterResult usage(const QString& check);
+      OutputFilterResult info(const QString& check);
       OutputFilterResult error(const QString& check);
     
     private:

@@ -18,6 +18,7 @@
 #include "rawlog.h"
 #include "channel.h"
 #include "ircview.h"
+#include "ircviewbox.h"
 #include "server.h"
 #include "konversationapplication.h"
 
@@ -29,7 +30,8 @@ RawLog::RawLog(QWidget* parent) : ChatWindow(parent)
 {
   setName(i18n("Raw Log"));
   setType(ChatWindow::RawLog);
-  setTextView(new IRCView(this,NULL));  // Server will be set later in setServer()
+  IRCViewBox* ircBox = new IRCViewBox(this, 0);
+  setTextView(ircBox->ircView());  // Server will be set later in setServer()
 }
 
 RawLog::~RawLog()

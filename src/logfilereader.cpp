@@ -35,6 +35,7 @@
 #include "logfilereader.h"
 #include "konversationapplication.h"
 #include "ircview.h"
+#include "ircviewbox.h"
 
 #ifdef USE_MDI
 LogfileReader::LogfileReader(QString caption, QString log) : ChatWindow(caption)
@@ -60,7 +61,8 @@ LogfileReader::LogfileReader(QWidget* parent, QString log) : ChatWindow(parent)
   toolBar->insertButton("reload",0,SIGNAL(clicked()),this,SLOT(updateView()),true,i18n("Reload"));
   toolBar->insertButton("editdelete",0,SIGNAL(clicked()),this,SLOT(clearLog()),true,i18n("Clear Logfile"));
 
-  setTextView(new IRCView(this, 0));
+  IRCViewBox* ircBox = new IRCViewBox(this, 0);
+  setTextView(ircBox->ircView());
   QWhatsThis::add(getTextView(), i18n("The messages in the log file are displayed here. The oldest messages are at the top and the most recent are at the bottom."));
 
   updateView();

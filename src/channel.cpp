@@ -54,6 +54,7 @@
 #include "quickbutton.h"
 #include "modebutton.h"
 #include "ircinput.h"
+#include "ircviewbox.h"
 #include "ircview.h"
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
@@ -187,7 +188,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   splitter->setOpaqueResize(true);
 #endif
 
-  setTextView(new IRCView(splitter, NULL));  // Server will be set later in setServer()
+  IRCViewBox* ircViewBox = new IRCViewBox(splitter, NULL); // Server will be set later in setServer()
+  setTextView(ircViewBox->ircView());  
   connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
   // The box that holds the Nick List and the quick action buttons
   nickListButtons = new QVBox(splitter);

@@ -32,6 +32,7 @@
 #include "konversationapplication.h"
 #include "ircinput.h"
 #include "ircview.h"
+#include "ircviewbox.h"
 #include "common.h"
 
 const int POPUP_WHOIS =0xfe;
@@ -69,7 +70,8 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   QWhatsThis::add(addresseelogoimage, whatsthis);
   QWhatsThis::add(queryHostmask, whatsthis);
 
-  setTextView(new IRCView(this,NULL));  // Server will be set later in setServer();
+  IRCViewBox* ircBox = new IRCViewBox(this,0);
+  setTextView(ircBox->ircView());  // Server will be set later in setServer();
   textView->setAcceptDrops(true);
   connect(textView,SIGNAL(filesDropped(const QStrList&)),this,SLOT(filesDropped(const QStrList&)));
 

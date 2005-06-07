@@ -33,6 +33,7 @@ class KPopupMenu;
 
 class Server;
 class ChatWindow;
+class SearchBar;
 
 class IRCView : public KTextBrowser
 {
@@ -63,6 +64,10 @@ class IRCView : public KTextBrowser
 
     void setChatWin(ChatWindow* chatWin);
 
+    bool search(const QString& pattern, bool caseSensitive,
+                bool wholeWords, bool forward, bool fromCursor);
+    bool searchNext();
+    
   signals:
     // Notify container of new text and highlight state
     void newText(const QString& highlightColor, bool important);
@@ -74,6 +79,7 @@ class IRCView : public KTextBrowser
     void textPasted();
     void popupCommand(int);
     void filesDropped(const QStrList&);
+    void doSearch();
 
   public slots:
     void append(const QString& nick, const QString& message);

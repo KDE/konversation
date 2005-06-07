@@ -1,3 +1,8 @@
+Changes from 0.18 to 0.19
+- Blowfish support added ( Mircryption & FiSH compatible )
+- Konversation now depends on KDE 3.3+
+- Added Firefox style searchbar courtesy of Renchi Raju
+
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
 - /cycle now works as expected

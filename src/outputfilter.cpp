@@ -192,6 +192,9 @@ namespace Konversation {
 
 	    else if(command == "charset") parseCharset(parameter);
 
+	    else if(command == "setkey")     result = parseSetKey(parameter);
+	    else if(command == "delkey")     result = parseDelKey(parameter);
+
             // Forward unknown commands to server
             else {
                 result.toServer = inputLine.mid(1);
@@ -1073,6 +1076,15 @@ namespace Konversation {
         return result;
     }
 
+    OutputFilterResult OutputFilter::info(const QString& string)
+    {
+      OutputFilterResult result;
+      result.typeString = i18n("Info");
+      result.output = string;
+      result.type = Program;
+      return result;
+    }
+
     OutputFilterResult OutputFilter::error(const QString& string)
     {
         OutputFilterResult result;
@@ -1275,6 +1287,41 @@ namespace Konversation {
     QString shortName = Konversation::IRCCharsets::self()->ambiguousNameToShortName(charset);
     if(!shortName.isEmpty())
       m_server->getIdentity()->setCodecName(shortName);
+  }
+
+  OutputFilterResult OutputFilter::parseSetKey(const QString& parameter)
+  {
+    OutputFilterResult result;
+    
+    if(parameter.isEmpty())
+      {
+	result = usage(i18n("Show help here"));
+      }
+    else
+      {
+	QStringList tmp = QStringList::split(" ",parameter);
+	m_server->setKeyForRecepient(tmp[0], tmp[1].local8Bit());
+	result = info(i18n("The key for %1 is successfully set!").arg(tmp[0]));
+      }
+      
+    return result;
+  }
+
+  OutputFilterResult OutputFilter::parseDelKey(const QString& parameter)
+  {
+    OutputFilterResult result;
+
+    if(parameter.isEmpty())
+      {
+        result = usage(i18n("Show help here"));
+      }
+    else
+      {
+	m_server->setKeyForRecepient(parameter, "");
+        result = info(i18n("The key for %1 is now deleted!").arg(parameter));
+      }
+
+    return result;
   }
 
 }

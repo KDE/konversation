@@ -1,11 +1,6 @@
-if compile_LIBKONVERSATION_COMPAT
-COMPAT_INCLUDE=-I../compat
-COMPAT_LIBS = ../compat/libkonversationcompat.la
-endif
-
 METASOURCES = AUTO
 
-AM_CPPFLAGS = $(COMPAT_INCLUDE) $(all_includes)
+AM_CPPFLAGS = $(all_includes)
 
 noinst_LTLIBRARIES = liblinkaddressbookui.la
 noinst_HEADERS = linkaddressbookui.h kimiface.h

@@ -1,12 +1,4 @@
-if compile_LIBKONVERSATION_COMPAT
-COMPAT_DIR = compat
-COMPAT_INCLUDE = -Icompat
-COMPAT_LIBS = compat/libkonversationcompat.la
-endif
-
-CXXFLAGS=-fprofile-arcs -ftest-coverage
-
-SUBDIRS = $(COMPAT_DIR) linkaddressbook
+SUBDIRS = blowfish linkaddressbook
 
 METASOURCES = AUTO
 
@@ -43,14 +35,14 @@ konversation_SOURCES = konviface.skel\
 	 watchednicknames_preferences.ui generalbehavior_preferences.ui connectionbehavior_preferences.ui \
 	 prefspageconnectionbehavior.cpp fontappearance_preferences.ui prefspagefontsappearance.cpp \
 	 nicklistbehavior_preferences.ui prefspagenicklistbehavior.cpp \
-	 konvibookmarkhandler.cpp konvibookmarkmenu.cpp popup.cpp
+	 konvibookmarkhandler.cpp konvibookmarkmenu.cpp popup.cpp ircviewbox.cpp searchbar.cpp
 
-konversation_LDADD = $(COMPAT_LIBS) $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la 
+konversation_LDADD = $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la blowfish/libblowfish.la
 
 xdg_apps_DATA = konversation.desktop
 
 # set the include path for X, qt and KDE
-INCLUDES= $(COMPAT_INCLUDE) -Ilinkaddressbook -I$(srcdir)/linkaddressbook $(all_includes)
+INCLUDES= -Ilinkaddressbook -I$(srcdir)/linkaddressbook -Iblowfish -I$(srcdir)/blowfish $(all_includes)
 # the library search path.
 konversation_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 

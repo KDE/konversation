@@ -921,7 +921,7 @@ void IRCView::setupNickPopupMenu() {
 }
 
 void IRCView::search() {
-    m_caseSensitive = false;
+/*    m_caseSensitive = false;
     m_wholeWords = false;
     m_forward = false;
     m_fromCursor = false;
@@ -938,10 +938,13 @@ void IRCView::search() {
         }
     }
 
-    searchAgain();
+    searchAgain(); */
+
+    emit doSearch();
 }
 
 void IRCView::searchAgain() {
+
     if(!m_pattern.isEmpty()) {
         // next search must begin one index before / after the last search
         // depending on the search direction.
@@ -963,8 +966,70 @@ void IRCView::searchAgain() {
         if(!find(m_pattern, m_caseSensitive, m_wholeWords, m_forward, &m_findParagraph, &m_findIndex)) {
             KMessageBox::information(this,i18n("No matches found for \"%1\".").arg(m_pattern),i18n("Information"));
         }
+
     }
 }
+
+bool IRCView::search(const QString& pattern, bool caseSensitive,
+                     bool wholeWords, bool forward, bool fromCursor)
+{
+    m_pattern       = pattern;
+    m_caseSensitive = caseSensitive;
+    m_wholeWords    = wholeWords;
+    m_forward       = forward;
+    m_fromCursor    = fromCursor;
+
+    if (m_pattern.isEmpty())
+        return true;
+
+    if (!m_fromCursor)
+    {
+        if(m_forward)
+        {
+            m_findParagraph = 1;
+            m_findIndex = 1;
+        } else {
+            m_findParagraph = paragraphs();
+            m_findIndex = paragraphLength(paragraphs());
+        }
+    }
+
+    return searchNext();
+}
+
+bool IRCView::searchNext()
+{
+    if (m_pattern.isEmpty())
+        return true;
+
+    // next search must begin one index before / after the last search
+    // depending on the search direction.
+    if (m_forward)
+    {
+        ++m_findIndex;
+        if(m_findIndex == paragraphLength(m_findParagraph))
+        {
+            m_findIndex = 0;
+            ++m_findParagraph;
+        }
+    }
+    else
+    {
+        if (m_findIndex)
+        {
+            --m_findIndex;
+        }
+        else
+        {
+            --m_findParagraph;
+            m_findIndex = paragraphLength(m_findParagraph);
+        }
+    }
+
+    return find(m_pattern, m_caseSensitive, m_wholeWords, m_forward,
+                &m_findParagraph, &m_findIndex);
+}
+
 
 // other windows can link own menu entries here
 QPopupMenu* IRCView::getPopup() const {
@@ -1039,7 +1104,9 @@ void IRCView::setChatWin(ChatWindow* chatWin) {
     m_chatWin = chatWin;
 }
 
+
 #include "ircview.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:
+
