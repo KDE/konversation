@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
                        I18N_NOOP("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
                                  "Meet friends on the net, make new acquaintances and lose yourself in\n"
                                  "talk about your favorite subject."),
-                       "http://www.konversation.org/");
+                       "http://konversation.kde.org/");
 
   aboutData.addAuthor("Dario Abatianni",I18N_NOOP("Original Author/Project Founder"),"eisfuchs@tigress.com");
   aboutData.addAuthor("Peter Simonsson",I18N_NOOP("Maintainer"),"psn@linux.se");
