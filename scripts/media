@@ -47,7 +47,14 @@ sub pretty_print
 
     if($artist && $album && $artist ne $album)
     {
-	return "/me is playing \x{266B} $title \x{266B} by $artist on $album";
+	if($ENV{"LANG"} =~ /UTF-8$/ || $ENV{"LC_ALL"} =~ /UTF-8$/)
+	{
+	    return "/me is playing \x{266B} $title \x{266B} by $artist on $album";
+	}
+	else
+	{
+	    return "/me is playing \"$title\" by $artist on $album";
+	}
     }
     elsif($artist)
     {
