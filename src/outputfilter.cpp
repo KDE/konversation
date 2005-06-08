@@ -1300,7 +1300,7 @@ namespace Konversation {
       {
 	QStringList tmp = QStringList::split(" ",parameter);
 	m_server->setKeyForRecepient(tmp[0], tmp[1].local8Bit());
-	result = info(i18n("The key for %1 is successfully set!").arg(tmp[0]));
+	result = info(i18n("The key for %1 is successfully set.").arg(tmp[0]));
       }
       
     return result;
@@ -1317,7 +1317,7 @@ namespace Konversation {
     else
       {
 	m_server->setKeyForRecepient(parameter, "");
-        result = info(i18n("The key for %1 is now deleted!").arg(parameter));
+        result = info(i18n("The key for %1 is now deleted.").arg(parameter));
       }
 
     return result;
