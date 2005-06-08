@@ -69,7 +69,7 @@ sub pretty_print
     }
     else
     {
-	return "/me is playing $title";
+	return "/me is playing $musichar$title$musichar";
     }
 }
 
