@@ -20,6 +20,7 @@ my $title;
 my $artist;
 my $album;
 my $error;
+my $musichar;
 
 sub check_running 
 {
@@ -45,24 +46,26 @@ sub pretty_print
     utf8::decode($artist);
     utf8::decode($album);
 
+    if($ENV{"LANG"} =~ /UTF-8$/ || $ENV{"LC_ALL"} =~ /UTF-8$/)
+    {
+	$musichar=" \x{266B} ";
+    }
+    else
+    {
+	$musichar="\"";
+    }
+	
     if($artist && $album && $artist ne $album)
     {
-	if($ENV{"LANG"} =~ /UTF-8$/ || $ENV{"LC_ALL"} =~ /UTF-8$/)
-	{
-	    return "/me is playing \x{266B} $title \x{266B} by $artist on $album";
-	}
-	else
-	{
-	    return "/me is playing \"$title\" by $artist on $album";
-	}
+	    return "/me is playing $musichar$title$musichar by $artist on $album";
     }
     elsif($artist)
     {
-	return "/me is playing \x{266B} $title \x{266B} by $artist";
+	return "/me is playing $musichar$title$musichar by $artist";
     }
     elsif($album)
     {
-	return "/me is playing \x{266B} $title \x{266B} on $album";
+	return "/me is playing $musichar$title$musichar on $album";
     }
     else
     {
