@@ -35,11 +35,7 @@
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
 
-#ifdef USE_MDI
-UrlCatcher::UrlCatcher(QString caption) : ChatWindow(caption)
-#else
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
-#endif
 {
   setName(i18n("URL Catcher"));
   setType(ChatWindow::UrlCatcher);
@@ -229,14 +225,6 @@ void UrlCatcher::saveListClicked()
     } // while
   }
 }
-
-#ifdef USE_MDI
-bool UrlCatcher::closeYourself(ChatWindow*)
-{
-  emit chatWindowCloseRequest(this);
-  return true;
-}
-#endif
 
 void UrlCatcher::childAdjustFocus()
 {

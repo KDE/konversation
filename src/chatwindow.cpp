@@ -17,12 +17,7 @@
 #include <qregexp.h>
 #include <qtextcodec.h>
 #include <qtooltip.h>
-
-#ifdef USE_MDI
-#include <kmdichildview.h>
-#else
 #include <qlayout.h>
-#endif
 
 #include <klocale.h>
 #include <kdialog.h>
@@ -38,109 +33,22 @@
 #include "konversationmainwindow.h"
 #include "logfilereader.h"
 
-#ifdef USE_MDI
-ChatWindow::ChatWindow(QString caption) : KMdiChildView(caption)
-#else
 ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
-#endif
 {
-#ifdef USE_MDI
-  setName(caption);
-  setLedColor(0);
-  setLabelColor(QString::null);
-  setOn(0);
-  state=Off;
-  blinkOn=false;
-#else
   setName("ChatWindowObject");
   parentWidget=parent;
-#endif
   firstLog=true;
   m_server=0;
   m_notificationsEnabled = true;
   m_channelEncodingSupported = false;
-
-#ifdef USE_MDI
-  mainLayout=new QVBoxLayout(this);
-  mainLayout->setAutoAdd(true);
-  mainLayout->setMargin(margin());
-  mainLayout->setSpacing(spacing());
-#else
-  setMargin(margin());
-  setSpacing(spacing());
-#endif
-
-#ifdef USE_MDI
-  connect(this,SIGNAL(childWindowCloseRequest(KMdiChildView*)),this,SLOT(closeRequest(KMdiChildView*)));
-  connect(&blinkTimer,SIGNAL(timeout()),this,SLOT(blinkTimeout()));
-  blinkTimer.start(500);
-#endif
   m_mainWindow=NULL;
 
+  setMargin(margin());
+  setSpacing(spacing());
 }
 
 ChatWindow::~ChatWindow()
 {
-}
-
-#ifdef USE_MDI
-void ChatWindow::setLedColor(int newColor)
-{
-  Images* images=KonversationApplication::instance()->images();
-  ledColor=newColor;
-  iconOn=images->getLed(newColor,true,true);
-  iconOff=images->getLed(newColor,false,true);
-}
-
-void ChatWindow::setLabelColor(const QString& color)
-{
-  labelColor=color;
-}
-
-KonversationMainWindow *ChatWindow::getMainWindow(void)
-{
-	return m_mainWindow;
-}
-
-void ChatWindow::setOn(bool on,bool important)
-{
-  if(on)
-  {
-    if(important)         blinkTimer.changeInterval(500);
-    else if(state!=Fast)  blinkTimer.changeInterval(1000);
-    state=important ? Fast : Slow;
-  }
-  else state=Off;
-
-  emit setNotification(this,(state!=Off) ? iconOn : iconOff,QString::null);
-}
-#endif
-
-void ChatWindow::blinkTimeout() // USE_MDI
-{
-#ifdef USE_MDI
-  if(state!=Off)
-  {
-    // if the user wants us to blink, toggle LED blink status
-    if(KonversationApplication::preferences.getBlinkingTabs())
-    {
-      blinkOn=!blinkOn;
-      // draw the new LED
-      emit setNotification(this,(blinkOn) ? iconOn : iconOff,(blinkOn) ? labelColor : QString::null);
-    }
-    // else LED should be always on
-    else
-    {
-      // only change state when LED was off until now
-      if(!blinkOn)
-      {
-        // switch LED on
-        blinkOn=true;
-        emit setNotification(this,iconOn,labelColor);
-      }
-    }
-  }
-#endif
 }
 
 void ChatWindow::setName(const QString& newName)
@@ -172,10 +80,6 @@ void ChatWindow::setServer(Server* newServer)
 
     m_server=newServer;
     setMainWindow(m_server->getMainWindow());
-#ifdef USE_MDI
-    connect(m_server,SIGNAL(serverQuit(const QString&)),this,SLOT(serverQuit(const QString&)));
-#endif
-    
     connect(m_server,SIGNAL (serverOnline(bool)),this,SLOT (serverOnline(bool)) );
     
     // check if we need to set up the signals
@@ -440,25 +344,6 @@ bool ChatWindow::closeYourself()
   return true;
 }
 
-#ifdef USE_MDI
-// reimplement this if your window needs special close treatment
-void ChatWindow::closeYourself(ChatWindow*)
-{
-}
-#endif
-
-void ChatWindow::serverQuit(const QString&) // USE_MDI
-{
-}
-
-#ifdef USEMDI
-void ChatWindow::closeRequest(KMdiChildView* view) // USE_MDI
-{
-  closeYourself(static_cast<ChatWindow*>(view));
-}
-#else
-void ChatWindow::closeRequest(KMdiChildView*) {}
-#endif
 bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 {
   if(e->type() == QEvent::KeyPress) {
@@ -497,11 +382,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 
   }
 
-#ifdef USE_MDI
-  return KMdiChildView::eventFilter(watched, e);
-#else
   return QVBox::eventFilter(watched, e);
-#endif
 }
 
 void ChatWindow::adjustFocus() {

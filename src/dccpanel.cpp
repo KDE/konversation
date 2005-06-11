@@ -35,11 +35,8 @@
 
 #define USE_INFOLIST
 
-#ifdef USE_MDI
-DccPanel::DccPanel(const QString &caption) : ChatWindow(caption)
-#else
-DccPanel::DccPanel(QWidget* parent) : ChatWindow(parent)
-#endif
+DccPanel::DccPanel(QWidget* parent) 
+  : ChatWindow(parent)
 {
   setType(ChatWindow::DccPanel);
 
@@ -461,13 +458,6 @@ DccTransfer* DccPanel::getTransferByName(const QString& name,DccTransfer::DccTyp
 
   return 0;
 }
-
-#ifdef USE_MDI
-void DccPanel::closeYourself(ChatWindow*)
-{
-  emit chatWindowCloseRequest(this);
-}
-#endif
 
 // virtual
 void DccPanel::childAdjustFocus()

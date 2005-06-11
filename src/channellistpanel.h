@@ -34,11 +34,7 @@ class ChannelListPanel : public ChatWindow
   Q_OBJECT
 
   public:
-#ifdef USE_MDI
-    ChannelListPanel(QString caption);
-#else
     ChannelListPanel(QWidget* parent);
-#endif
     ~ChannelListPanel();
 
     virtual bool closeYourself();
@@ -74,7 +70,6 @@ class ChannelListPanel : public ChatWindow
 
     void contextMenu (KListView* l, QListViewItem* i, const QPoint& p);
 
-    void serverQuit(const QString& reason); // USE_MDI
     //Used to disable functions when not connected
     virtual void serverOnline(bool online);
 
@@ -111,9 +106,6 @@ class ChannelListPanel : public ChatWindow
     void  applyFilterToItem(QListViewItem* item);
 
     void updateUsersChannels();
-#ifdef USE_MDI
-    virtual void closeYourself(ChatWindow* view);
-#endif
 
     int numChannels;
     int numUsers;

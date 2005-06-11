@@ -163,11 +163,7 @@ void PrefsPageThemes::removeTheme()
   int remove = KMessageBox::warningContinueCancel(0L,
 						  i18n("Do you want to remove %1 ?").arg(themeName),
 						  i18n("Remove Theme"),
-#if !KDE_IS_VERSION(3,3,0)
-                          KStdGuiItem::cont(),
-#else
 						  KStdGuiItem::del(),
-#endif
 						  "warningRemoveTheme"
 						  );
 

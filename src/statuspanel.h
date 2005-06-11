@@ -36,11 +36,7 @@ class StatusPanel : public ChatWindow
   Q_OBJECT
 
   public:
-#ifdef USE_MDI
-    StatusPanel(QString caption);
-#else
     StatusPanel(QWidget* parent);
-#endif
     ~StatusPanel();
 
     virtual QString getTextInLine();
@@ -94,9 +90,6 @@ class StatusPanel : public ChatWindow
     bool awayState;
 
     void showEvent(QShowEvent* event);
-#ifdef USE_MDI
-    virtual void closeYourself(ChatWindow* view);
-#endif
 
     QComboBox* nicknameCombobox;
     QLabel* awayLabel;

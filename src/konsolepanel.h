@@ -8,31 +8,23 @@
 #include <kparts/part.h>
 
 class KonsolePanel : public ChatWindow {
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
-#ifdef USE_MDI
-		KonsolePanel(const QString &caption);
-#else
-		KonsolePanel(QWidget *p);
-#endif
-		~KonsolePanel();
+    public:
+      KonsolePanel(QWidget *p);
+      ~KonsolePanel();
 
-	signals:
-		void deleted(ChatWindow* myself);
+    signals:
+      void deleted(ChatWindow* myself);
 
-        public slots:
-		void partDestroyed();
+     public slots:
+      void partDestroyed();
 
-#ifdef USE_MDI
-        protected:
-                virtual void closeYourself(ChatWindow*);
-#endif
-
-             	/** Called from ChatWindow adjustFocus */
-		virtual void childAdjustFocus();
-	private:
-		KParts::ReadOnlyPart *k_part;
+      /** Called from ChatWindow adjustFocus */
+      virtual void childAdjustFocus();
+      
+     private:
+      KParts::ReadOnlyPart *k_part;
 };
 
 #endif /* KONSOLE_PANEL_H */

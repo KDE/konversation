@@ -43,13 +43,6 @@
 #include <kabc/errorhandler.h>
 #include "linkaddressbook/addressbook.h"
 
-#ifdef USE_MDI
-#include <ktabwidget.h>
-#include <kpushbutton.h>
-#include <kiconloader.h>
-#endif
-
-
 #ifdef  USE_KNOTIFY
 #include <knotifydialog.h>
 #endif
@@ -80,11 +73,7 @@
 #include "notificationhandler.h"
 #include "common.h"
 
-#ifdef USE_MDI
-KonversationMainWindow::KonversationMainWindow() : KMdiMainFrm(0,"mdi_main_form")
-#else
 KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", WStyle_ContextHelp | WType_TopLevel | WDestructiveClose)
-#endif
 {
   // Init variables before anything else can happen
   m_frontView=0;
@@ -102,14 +91,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
   nicksOnlinePanel=0;
 
-#ifdef USE_MDI
-  switchToTabPageMode();
-#else
   viewContainer=new LedTabWidget(this,"main_window_tab_widget");
   setCentralWidget(viewContainer);
   updateTabPlacement();
   viewContainer->hide();
-#endif
 
   KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); // file_quit
 
@@ -200,13 +185,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
   hideNicklistAction = new KToggleAction(i18n("Hide Nicklist"), 0, KShortcut("Ctrl+H"), this, SLOT(hideNicknameList()), actionCollection(), "hide_nicknamelist");
   
-#ifdef USE_MDI
-  new KAction(i18n("Tabpage Mode"),"tabpage",0,this,SLOT (switchToTabPageMode()),actionCollection(),"mdi_tabpage_mode");
-  new KAction(i18n("Toplevel Mode"),"toplevel",0,this,SLOT (switchToToplevelMode()),actionCollection(),"mdi_toplevel_mode");
-  new KAction(i18n("Childframe Mode"),"childframe",0,this,SLOT (switchToChildframeMode()),actionCollection(),"mdi_childframe_mode");
-  new KAction(i18n("IDEAl Mode"),"ideal",0,this,SLOT (switchToIDEAlMode()),actionCollection(),"mdi_ideal_mode");
-#endif
-
   // Initialize KMainWindow->statusBar()
   statusBar();
   m_sslLabel = new SSLLabel(statusBar(),"sslLabel");
@@ -233,13 +211,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   connect(actionCollection(), SIGNAL( clearStatusText() ),
                  statusBar(), SLOT( clear() ) );
 
-#ifdef USE_MDI
-  connect(this,SIGNAL (viewActivated(KMdiChildView*)),this,SLOT (changeToView(KMdiChildView*)) );
-#else
   connect( viewContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changeView(QWidget*)) );
   connect( viewContainer,SIGNAL (closeTab(QWidget*)),this,SLOT (closeView(QWidget*)) );
   connect(this, SIGNAL (closeTab(int)), viewContainer, SLOT (tabClosed(int)));
-#endif
 
   // set up system tray
   tray = new Konversation::TrayIcon(this);
@@ -255,11 +229,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   // decide whether to show the tray icon or not
   updateTrayIcon();
 
-#ifdef USE_MDI
-  createGUI(0);
-#else
   createGUI();
-#endif
 
   // Bookmarks
   m_bookmarkHandler = new KonviBookmarkHandler(this);
@@ -291,58 +261,10 @@ KonversationMainWindow::~KonversationMainWindow()
   delete dccTransferHandler;
 }
 
-void KonversationMainWindow::switchToTabPageMode()
-{
-#ifdef USE_MDI
-  KMdiMainFrm::switchToTabPageMode();
-  tabWidget()->setTabReorderingEnabled(true);
-  tabWidget()->setHoverCloseButton(true);
-  updateTabPlacement();
-  m_pTaskBar->switchOn(false);
-  KPushButton* closeBtn = new KPushButton(this);
-  closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));
-  closeBtn->resize(22, 22);
-  closeBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-  closeBtn->hide();
-  tabWidget()->setCornerWidget(closeBtn);
-  connect(closeBtn, SIGNAL(clicked()), this, SLOT(closeActiveWindow()));
-#endif
-}
-
-void KonversationMainWindow::switchToIDEAlMode()
-{
-#ifdef USE_MDI
-  KMdiMainFrm::switchToIDEAlMode();
-  m_pTaskBar->switchOn(true);
-#endif
-}
-
-void KonversationMainWindow::switchToChildframeMode()
-{
-#ifdef USE_MDI
-  KMdiMainFrm::switchToChildframeMode();
-  m_pTaskBar->switchOn(true);
-#endif
-}
-
-void KonversationMainWindow::switchToToplevelMode()
-{
-#ifdef USE_MDI
-  KMdiMainFrm::switchToToplevelMode();
-  m_pTaskBar->switchOn(true);
-#endif
-}
-
 void KonversationMainWindow::updateTabPlacement()
 {
-#ifdef USE_MDI
-  if(tabWidget())
-    tabWidget()->setTabPosition((KonversationApplication::preferences.getTabPlacement()==Preferences::Top) ?
-                                 QTabWidget::Top : QTabWidget::Bottom);
-#else
   viewContainer->setTabPosition((KonversationApplication::preferences.getTabPlacement()==Preferences::Top) ?
                                  QTabWidget::Top : QTabWidget::Bottom);
-#endif
 }
 
 void KonversationMainWindow::openPreferences()
@@ -423,23 +345,11 @@ void KonversationMainWindow::appendToFrontmost(const QString& type,const QString
     m_frontView->appendServerMessage(type,message);
 }
 
-#ifdef USE_MDI
-void KonversationMainWindow::addMdiView(ChatWindow* view,int color,bool on, bool weinitiated)
-#else
 void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& label,bool on, bool weinitiated)
-#endif
 {
   // TODO: Make sure to add DCC status tab at the end of the list and all others
   // before the DCC tab. Maybe we should also make sure to order Channels
   // Queries and DCC chats in groups
-#ifdef USE_MDI
-  Images* images=KonversationApplication::instance()->images();
-  addWindow(view);
-  view->setLedColor(color);
-  if(tabWidget()) tabWidget()->setTabIconSet(view,images->getLed(color,false,true));
-  KMdiTaskBarButton* button=m_pTaskBar->getButton(view);
-  button->setIconSet(images->getLed(color,false,true));
-#else
   ChatWindow *tmp_ChatWindow;
   int placed = 0;
   ChatWindow::WindowType wtype;
@@ -543,9 +453,10 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
        break;
   }
 
-  if (!placed) viewContainer->addTab(view,label,color,on);
+  if (!placed) 
+    viewContainer->addTab(view,label,color,on);
   viewContainer->show();
-#endif
+
   // Check, if user was typing in old input line
   bool doBringToFront=true;
 
@@ -566,21 +477,11 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
     showView(view);
   }
 
-#ifdef USE_MDI
-  connect(view,SIGNAL (online(ChatWindow*,bool)),this,SLOT (setTabOnline(ChatWindow*,bool)) );
-  connect(view,SIGNAL (chatWindowCloseRequest(ChatWindow*)),this,SLOT (closeWindow(ChatWindow*)) );
-  connect(view,SIGNAL (setNotification(ChatWindow*,const QIconSet&,const QString&)),this,SLOT (setWindowNotification(ChatWindow*,const QIconSet&,const QString&)) );
-#else
   connect(view,SIGNAL (online(ChatWindow*,bool)),viewContainer,SLOT (setTabOnline(ChatWindow*,bool)) );
-#endif
 }
 
 void KonversationMainWindow::showView(ChatWindow* view)
 {
-#ifdef USE_MDI
-  view->raise();
-  if(tabWidget()) tabWidget()->showPage(view);
-#else
   // Don't bring Tab to front if TabWidget is hidden. Otherwise QT gets confused
   // and shows the Tab as active but will display the wrong pane
   if(viewContainer->isVisible())
@@ -588,102 +489,10 @@ void KonversationMainWindow::showView(ChatWindow* view)
     // TODO: add adjustFocus() here?
     viewContainer->showPage(view);  //This does will changeView(view) via slots
   }
-#endif
-}
-
-#ifdef USE_MDI
-void KonversationMainWindow::setWindowNotification(ChatWindow* view,const QIconSet& iconSet,const QString& color) // USE_MDI
-#else
-void KonversationMainWindow::setWindowNotification(ChatWindow*,const QIconSet&,const QString&) // USE_MDI
-#endif
-{
-#ifdef USE_MDI
-  if(tabWidget())
-  {
-    tabWidget()->setTabIconSet(view,iconSet);
-    tabWidget()->setTabColor(view,QColor(color));
-  }
-  KMdiTaskBarButton* button=m_pTaskBar->getButton(view);
-  button->setIconSet(iconSet);
-  button->setPaletteForegroundColor(QColor(color));
-#endif
-}
-
-#ifdef USE_MDI
-
-void KonversationMainWindow::setTabOnline(ChatWindow* view,bool online)
-{
-/*
-  // just testing here... ignore this bit for now
-  KMdiTaskBarButton* button=m_pTaskBar->getButton(view);
-  if(tabWidget()) tabWidget()->setTabColor(view,QColor("#eeeeee"));
-  button->setText("<qt><b>fgfg</b></qt>");
-*/
-}
-#else
-void KonversationMainWindow::setTabOnline(ChatWindow* ,bool ) {}
-#endif
-#ifdef USE_MDI
-void KonversationMainWindow::closeWindow(ChatWindow* viewToClose) // USE_MDI
-#else
-void KonversationMainWindow::closeWindow(ChatWindow*) // USE_MDI
-#endif
-{
-#ifdef USE_MDI
-  ChatWindow* view=static_cast<ChatWindow*>(viewToClose);
-  if(view)
-  {
-    // if this view was the front view, delete the pointer
-    // JOHNFLUX - move to previous view
-    if(view==previousFrontView) previousFrontView=0;
-    if(view==m_frontView) m_frontView=previousFrontView;
-
-    ChatWindow::WindowType viewType=view->getType();
-
-    QString viewName=view->getName();
-    // the views should know by themselves how to close
-
-    if(viewType==ChatWindow::Status)            ;
-    else if(viewType==ChatWindow::Channel)      ;
-    else if(viewType==ChatWindow::ChannelList)  ;
-    else if(viewType==ChatWindow::Query)        ;
-    else if(viewType==ChatWindow::RawLog)       ;
-    else if(viewType==ChatWindow::DccChat)      ;
-
-    else if(viewType==ChatWindow::DccPanel)     ;
-    else if(viewType==ChatWindow::Konsole)      ;
-    else if(viewType==ChatWindow::UrlCatcher)   urlCatcherPanel=0;
-    else if(viewType==ChatWindow::NicksOnline)  nicksOnlinePanel=0;
-
-    // FIXME: don't delete dcc panel until we know how to safely hide
-    //        and show it
-    if(viewType==ChatWindow::DccPanel)
-    {
-      /*
-//    according to the documentation this should remove the panel, but it does not work.
-      removeWindowFromMdi(viewToClose);
-      dccPanelOpen=false;
-      */
-    }
-    else
-    {
-      KMdiMainFrm::closeWindow(viewToClose);
-      viewToClose->deleteLater();
-    }
-  }
-#endif
-}
-
-void KonversationMainWindow::closeActiveWindow() // USE_MDI
-{
-#ifdef USE_MDI
-  closeWindow(static_cast<ChatWindow*>(activeWindow()));
-#endif
 }
 
 void KonversationMainWindow::closeView(QWidget* viewToClose)
 {
-#ifndef USE_MDI
   ChatWindow* view=static_cast<ChatWindow*>(viewToClose);
   if(view)
   {
@@ -721,7 +530,6 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
       viewContainer->hide();
     }
   }
-#endif
 }
 
 void KonversationMainWindow::openLogfile()
@@ -742,37 +550,25 @@ void KonversationMainWindow::openLogfile()
 void KonversationMainWindow::openLogFile(const QString& caption, const QString& file)
 {
   if(!file.isEmpty()) {
-#ifdef USE_MDI
-    LogfileReader* logReader = new LogfileReader(i18n("Logfile of %1").arg(caption), file);
-    addMdiView(LogFileReader, 3);
-#else
     LogfileReader* logReader = new LogfileReader(getViewContainer(), file);
     addView(logReader, 3, i18n("Logfile of %1").arg(caption));
-#endif
     logReader->setServer(frontServer);
   }
 }
 
 void KonversationMainWindow::addKonsolePanel()
 {
-#ifdef USE_MDI
-  KonsolePanel* panel=new KonsolePanel(i18n("Konsole"));
-  addMdiView(panel,3);
-#else
   KonsolePanel* panel=new KonsolePanel(getViewContainer());
   addView(panel,3,i18n("Konsole"));
   connect(panel,SIGNAL (deleted(ChatWindow*)),this,SLOT (closeKonsolePanel(ChatWindow*)) );
-#endif
   panel->setMainWindow(this);
 }
 
 void KonversationMainWindow::closeKonsolePanel(ChatWindow* konsolePanel)
 {
-#ifndef USE_MDI
   getViewContainer()->removePage(konsolePanel);
   // tell QT to delete the panel during the next event loop since we are inside a signal here
   konsolePanel->deleteLater();
-#endif
 }
 
 void KonversationMainWindow::openChannelList()
@@ -781,12 +577,7 @@ void KonversationMainWindow::openChannelList()
   {
     ChannelListPanel* panel=frontServer->getChannelListPanel();
     if(panel) {
-#ifdef USE_MDI
-      panel->show();
-      if(tabWidget()) tabWidget()->showPage(panel);
-#else
       getViewContainer()->showPage(panel);
-#endif
     } else {
       int ret = KMessageBox::warningContinueCancel(this,i18n("Using this function may result in a lot "
                                          "of network traffic. If your connection is not fast "
@@ -817,13 +608,8 @@ void KonversationMainWindow::addUrlCatcher()
   // if the panel wasn't open yet
   if(urlCatcherPanel==0)
   {
-#ifdef USE_MDI
-    urlCatcherPanel=new UrlCatcher(i18n("URL Catcher"));
-    addMdiView(urlCatcherPanel,2,true);
-#else
     urlCatcherPanel=new UrlCatcher(getViewContainer());
     addView(urlCatcherPanel,2,i18n("URL Catcher"),true);
-#endif
     urlCatcherPanel->setMainWindow(this);
     KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
     connect(konvApp,SIGNAL (catchUrl(const QString&,const QString&)),
@@ -864,13 +650,8 @@ void KonversationMainWindow::addDccPanel()
   // if the panel wasn't open yet
   if(dccPanel==0)
   {
-#ifdef USE_MDI
-    dccPanel=new DccPanel(i18n("DCC Status"));
-    addMdiView(dccPanel,3);
-#else
     dccPanel=new DccPanel(getViewContainer());
     addView(dccPanel,3,i18n("DCC Status"));
-#endif
     dccPanel->setMainWindow(this);
     dccPanelOpen=true;
   }
@@ -879,11 +660,7 @@ void KonversationMainWindow::addDccPanel()
   {
     if(!dccPanelOpen)
     {
-#ifdef USE_MDI
-      addMdiView(dccPanel,3);
-#else
       addView(dccPanel,3,i18n("DCC Status"));
-#endif
       dccPanelOpen=true;
     }
     // no highlight color for DCC panels
@@ -902,9 +679,7 @@ void KonversationMainWindow::closeDccPanel()
   if(dccPanel)
   {
      // hide it from view, does not delete it
-#ifndef USE_MDI
     getViewContainer()->removePage(dccPanel);
-#endif
     dccPanelOpen=false;
   }
 }
@@ -929,26 +704,17 @@ void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nic
     
   if(frontServer)
   {
-#ifdef USE_MDI
-    DccChat* dccChatPanel=new DccChat(QString("-"+nick+"-"),frontServer,myNick,nick,arguments,listen);
-    addMdiView(dccChatPanel,3);
-#else
     DccChat* dccChatPanel=new DccChat(getViewContainer(),frontServer,myNick,nick,arguments,listen);
     addView(dccChatPanel,3,dccChatPanel->getName());
-#endif
-
     connect(dccChatPanel,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
-    if(listen) frontServer->queue(QString("PRIVMSG %1 :\x01%2 CHAT chat %3 %4\x01").arg(nick).arg("DCC").arg(numericalIp).arg(dccChatPanel->getPort()));
+    if(listen) 
+      frontServer->queue(QString("PRIVMSG %1 :\x01%2 CHAT chat %3 %4\x01").arg(nick).arg("DCC").arg(numericalIp).arg(dccChatPanel->getPort()));
   }
 }
 
 StatusPanel* KonversationMainWindow::addStatusView(Server* server)
 {
-#ifdef USE_MDI
-  StatusPanel* statusView=new StatusPanel(server->getServerName());
-#else
   StatusPanel* statusView=new StatusPanel(getViewContainer());
-#endif
 
   // first set up internal data ...
   statusView->setServer(server);
@@ -960,11 +726,7 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
   QObject::connect(server,SIGNAL(sslConnected(Server*)),this,SLOT(updateSSLInfo(Server*)));
 
   // ... then put it into the tab widget, otherwise we'd have a race with server member
-#ifdef USE_MDI
-  addMdiView(statusView,2,false);
-#else
   addView(statusView,2,server->getServerName(),false);
-#endif
 
   connect(statusView,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
   connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );
@@ -989,20 +751,10 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
   QString newname = name;
   newname.replace('&', "&&");
 
-#ifdef USE_MDI
-  Channel* channel=new Channel(name);
-#else
   Channel* channel=new Channel(getViewContainer());
-#endif
-
   channel->setServer(server);
   channel->setName(name);
-
-#ifdef USE_MDI
-  addMdiView(channel,1);
-#else
   addView(channel,1,newname);
-#endif
 
   connect(channel,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
   // TODO: Why is this here?  Delete channelPrefsChanged as it does not appear to
@@ -1019,20 +771,10 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
 Query* KonversationMainWindow::addQuery(Server* server, const NickInfoPtr& nickInfo, bool weinitiated)
 {
   QString name = nickInfo->getNickname();
-#ifdef USE_MDI
-  Query* query=new Query(name);
-#else
   Query* query=new Query(getViewContainer());
-#endif
-
   query->setServer(server);
   query->setNickInfo(nickInfo);
-
-#ifdef USE_MDI
-  addMdiView(query,0, true, weinitiated);
-#else
   addView(query,0,name, true, weinitiated);
-#endif
 
   connect(query,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
   connect(server,SIGNAL (awayState(bool)),query,SLOT (indicateAway(bool)) );
@@ -1042,39 +784,19 @@ Query* KonversationMainWindow::addQuery(Server* server, const NickInfoPtr& nickI
 
 RawLog* KonversationMainWindow::addRawLog(Server* server)
 {
-#ifdef USE_MDI
-  RawLog* rawLog=new RawLog(i18n("Raw Log"));
-#else
   RawLog* rawLog=new RawLog(getViewContainer());
-#endif
-
   rawLog->setServer(server);
   rawLog->setLog(false);
-
-#ifdef USE_MDI
-  addMdiView(rawLog,2,false);
-#else
   addView(rawLog,2,i18n("Raw Log"),false);
-#endif
 
   return rawLog;
 }
 
 ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
 {
-#ifdef USE_MDI
-  ChannelListPanel* channelListPanel=new ChannelListPanel(i18n("Channel List"));
-#else
   ChannelListPanel* channelListPanel=new ChannelListPanel(getViewContainer());
-#endif
-
   channelListPanel->setServer(server);
-
-#ifdef USE_MDI
-  addMdiView(channelListPanel,2);
-#else
   addView(channelListPanel,2,i18n("Channel List"));
-#endif
 
   return channelListPanel;
 }
@@ -1083,28 +805,14 @@ void KonversationMainWindow::newText(QWidget* widget,const QString& highlightCol
 {
   ChatWindow* view=static_cast<ChatWindow*>(widget);
 
-#ifdef USE_MDI
-  if(view!=activeWindow())
-#else
   if(view!=getViewContainer()->currentPage())
-#endif
-  {
-#ifdef USE_MDI
-    view->setOn(true,important);
-    if(!highlightColor.isNull()) view->setLabelColor(highlightColor);
-#else
     getViewContainer()->changeTabState(view,true,important,highlightColor);
-#endif
-  }
+
 }
 
 void KonversationMainWindow::updateFrontView()
 {
-#ifdef USE_MDI
-  ChatWindow* view = static_cast<ChatWindow*>(activeWindow());
-#else
   ChatWindow* view = static_cast<ChatWindow*>(getViewContainer()->currentPage());
-#endif
   KAction* action;
 
   if(view) {
@@ -1226,35 +934,9 @@ void KonversationMainWindow::updateFrontView()
     if(action) action->setEnabled(false);
   }
 }
-#ifdef USE_MDI
-void KonversationMainWindow::changeToView(KMdiChildView* viewToChange) // USE_MDI
-{
-  ChatWindow* view=static_cast<ChatWindow*>(viewToChange);
-  if(m_frontView) {
-    previousFrontView = m_frontView;
-    disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
-  }
-  m_frontView=0;
-  searchView=0;
 
-
-  // display this server's lag time
-  frontServer=view->getServer();
-  if(frontServer) updateLag(frontServer,frontServer->getLag());
-  updateFrontView();
-
-  view->setOn(false);
-  view->setLabelColor(QString::null);
-}
-#else
-void KonversationMainWindow::changeToView(KMdiChildView* /*viewToChange*/)
-{
-}
-#endif
-// this function will not be used in USE_MDI mode but moc will complain if it's not there
 void KonversationMainWindow::changeView(QWidget* viewToChange)
 {
-#ifndef USE_MDI
   ChatWindow* view = static_cast<ChatWindow*>(viewToChange);
   
   if(m_frontView) {
@@ -1277,7 +959,6 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 
   viewContainer->changeTabState(view, false, false, QString::null);
   view->adjustFocus();
-#endif
 }
 
 bool KonversationMainWindow::queryClose()
@@ -1345,13 +1026,8 @@ void KonversationMainWindow::openNicksOnlinePanel()
 {
   if(!nicksOnlinePanel)
   {
-#ifdef USE_MDI
-    nicksOnlinePanel=new NicksOnline( i18n("Nicks Online"));
-    addMdiView(nicksOnlinePanel,2,true);
-#else
     nicksOnlinePanel=new NicksOnline(getViewContainer());
     addView(nicksOnlinePanel, 2, i18n("Nicks Online"), true);
-#endif
     nicksOnlinePanel->setMainWindow(this);
     connect(nicksOnlinePanel,SIGNAL (editClicked()),this,SLOT (openNotify()) );
 
@@ -1431,18 +1107,14 @@ void KonversationMainWindow::channelPrefsChanged()
   emit prefsChanged();
 }
 
-#ifndef USE_MDI
 LedTabWidget* KonversationMainWindow::getViewContainer()
 {
   return viewContainer;
 }
-#endif
 
 void KonversationMainWindow::updateFonts()
 {
-#ifndef USE_MDI
   getViewContainer()->updateTabs();
-#endif
 }
 
 void KonversationMainWindow::updateLag(Server* lagServer,int msec)
@@ -1538,30 +1210,16 @@ void KonversationMainWindow::closeTab()
 
 void KonversationMainWindow::nextTab()
 {
-#ifdef USE_MDI
-  activateNextWin();
-#else
   goToTab(getViewContainer()->currentPageIndex()+1);
-#endif
 }
 
 void KonversationMainWindow::previousTab()
 {
-#ifdef USE_MDI
-  activatePrevWin();
-#else
   goToTab(getViewContainer()->currentPageIndex()-1);
-#endif
 }
 
 void KonversationMainWindow::goToTab(int page)
 {
-#ifdef USE_MDI
-  if(tabWidget())
-  {
-    if(page>=0 && page<tabWidget()->count()) activateView(page);
-  }
-#else
     if ( page >= getViewContainer()->count() )
         page = 0;
     else if ( page < 0 )
@@ -1573,7 +1231,6 @@ void KonversationMainWindow::goToTab(int page)
         ChatWindow* newPage=static_cast<ChatWindow*>(getViewContainer()->page(page));
         newPage->adjustFocus();
     }
-#endif
 }
 
 void KonversationMainWindow::findText()
@@ -1641,7 +1298,6 @@ void KonversationMainWindow::addIRCColor()
 
 void KonversationMainWindow::insertRememberLine()
 {
-#ifndef USE_MDI
   kdDebug() << "insertRememberLine in konversationMainWindow" << endl;
   if(KonversationApplication::preferences.getShowRememberLineInAllWindows())
   {
@@ -1667,12 +1323,10 @@ void KonversationMainWindow::insertRememberLine()
       m_frontView->insertRememberLine();
     }
   }
-#endif
 }
 
 void KonversationMainWindow::closeQueries()
 {
-#ifndef USE_MDI
   int total=getViewContainer()->count()-1;
   int operations=0;
   ChatWindow* nextPage;
@@ -1690,7 +1344,6 @@ void KonversationMainWindow::closeQueries()
     }
     ++operations;
   }
-#endif
 }
 
 void KonversationMainWindow::hideNicknameList()
@@ -1724,11 +1377,9 @@ void KonversationMainWindow::clearTabs()
 
 bool KonversationMainWindow::event(QEvent* e)
 {
-#ifndef USE_MDI
   if(e->type() == QEvent::WindowActivate) {
     emit endNotification();
   }
-#endif
 
   return KMainWindow::event(e);
 }
@@ -1752,41 +1403,16 @@ void KonversationMainWindow::openToolbars()
   KEditToolbar dlg(actionCollection());
 
   if(dlg.exec())
-  {
-#ifdef USE_MDI
-    createGUI(0);
-#else
     createGUI();
-#endif
-  }
 }
 
 void KonversationMainWindow::setShowTabBarCloseButton(bool s)
 {
-#ifdef USE_MDI
-  // looks really strange ...
-  if(tabWidget())
-  {
-    if(s) tabWidget()->cornerWidget()->show();
-    else  tabWidget()->cornerWidget()->hide();
-  }
-#else
   if(s) {
     viewContainer->cornerWidget()->show();
   } else {
     viewContainer->cornerWidget()->hide();
   }
-#endif
-}
-
-void KonversationMainWindow::resizeEvent(QResizeEvent* ev)
-{
-#ifdef USE_MDI
-  setSysButtonsAtMenuPosition();
-  KMdiMainFrm::resizeEvent(ev);
-#else
-  KMainWindow::resizeEvent(ev);
-#endif
 }
 
 void KonversationMainWindow::insertCharacter()

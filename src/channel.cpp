@@ -68,11 +68,7 @@
 
 #define OPAQUE_CONF
 
-#ifdef USE_MDI
-Channel::Channel(const QString &caption) : ChatWindow(caption)
-#else
 Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
-#endif
 {
   // init variables
   m_processingTimer = 0;
@@ -991,12 +987,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
     } else {
       appendCommandMessage(i18n("Part"),i18n("You have left channel %1. (%2)").arg(getName()).arg(reason),false);
     }
-
-#ifdef USE_MDI
-    emit chatWindowCloseRequest(this);
-#else
     delete this;
-#endif
   } else {
     if(quit) {
       appendCommandMessage(i18n("Quit"),i18n("%1 has left this server. (%2)").arg(channelNick->getNickname()).arg(reason),false);
@@ -1035,11 +1026,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, co
       KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
       konv_app->notificationHandler()->kick(this,getName(),kicker.getNickname());
     }
-#ifdef USE_MDI
-    emit chatWindowCloseRequest(this);
-#else
     delete this;
-#endif
   }
   else
   {
@@ -1947,29 +1934,10 @@ void Channel::appendInputText(const QString& s)
 
 bool Channel::closeYourself()
 {
-#ifndef USE_MDI
   m_server->closeChannel(getName());
   m_server->removeChannel(this);
   delete this;
   return true;
-#endif
-}
-
-void Channel::closeYourself(ChatWindow* /* view */)
-{
-#ifdef USE_MDI
-  m_server->closeChannel(getName());
-#endif
-}
-
-void Channel::serverQuit(const QString& reason)
-{
-#ifdef USE_MDI
-  ChannelNickPtr channelNick=m_server->getChannelNick(getName(),m_server->getNickname());
-  if(channelNick)  removeNick(channelNick,reason,true);
-#else
-  Q_UNUSED(reason);
-#endif
 }
 
 //Used to disable functions when not connected

@@ -5,11 +5,7 @@
 #include <kdebug.h>
 #include <klibloader.h>
 
-#ifdef USE_MDI
-KonsolePanel::KonsolePanel(const QString &caption) : ChatWindow(caption)
-#else
 KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p )
-#endif
 {
   setType(ChatWindow::Konsole);
   KLibFactory *fact = KLibLoader::self()->factory("libkonsolepart");
@@ -40,19 +36,8 @@ void KonsolePanel::childAdjustFocus() {
 void KonsolePanel::partDestroyed()
 {
   k_part = 0;
-#ifdef USE_MDI
-  emit chatWindowCloseRequest(this);
-#else
   // tell the main window to delete us
   emit deleted(this);
-#endif
 }
-
-#ifdef USE_MDI
-void KonsolePanel::closeYourself(ChatWindow*)
-{
-  emit chatWindowCloseRequest(this);
-}
-#endif
 
 #include "konsolepanel.moc"

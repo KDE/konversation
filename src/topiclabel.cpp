@@ -28,16 +28,6 @@
 
 #include <kdeversion.h>
 
-#if !KDE_IS_VERSION(3,3,0)
-template<class T>
-inline const T& kClamp( const T& x, const T& low, const T& high )
-{
-	    if ( x < low )       return low;
-	        else if ( high < x ) return high;
-		    else                 return x;
-}
-#endif
-
 namespace Konversation {
 
 TopicLabel::TopicLabel(QWidget *parent, const char *name)

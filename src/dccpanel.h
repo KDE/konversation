@@ -49,6 +49,7 @@ class DccPanel : public ChatWindow
           COUNT
         };
     };
+
     class Popup
     {
       public:
@@ -66,11 +67,7 @@ class DccPanel : public ChatWindow
         };
     };
     
-#ifdef USE_MDI
-    DccPanel(const QString &caption);
-#else
     DccPanel(QWidget* parent);
-#endif
     ~DccPanel();
 
     KListView* getListView();
@@ -101,10 +98,6 @@ class DccPanel : public ChatWindow
     void updateButton();
 
   protected:
-#ifdef USE_MDI
-    virtual void closeYourself(ChatWindow*);
-#endif
-    
     /** Called from ChatWindow adjustFocus */
     virtual void childAdjustFocus();
     

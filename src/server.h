@@ -355,8 +355,7 @@ class Server : public QObject
     
     /// Emitted when the server gains/loses connection.
     void serverOnline(bool state); /// will be connected to all server dependant tabs
-    void serverQuit(const QString& reason);  // USE_MDI
-
+    
     /// Note that these signals haven't been implemented yet.
     /// Fires when the information in a NickInfo object changes.
     void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);

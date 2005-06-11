@@ -15,51 +15,26 @@
 #ifndef CHATWINDOW_H
 #define CHATWINDOW_H
 
+#include <qvbox.h>
 #include <qfile.h>
 
-#ifdef USE_MDI
-#include <kmdichildview.h>
-#include <qtimer.h>
-#else
-#include <qvbox.h>
-#endif
-
 #include "identity.h"
-
-#ifdef USE_MDI
-#include "images.h"
-#endif
 
 /*
   @author Dario Abatianni
 */
 
-class QFile;
-
 class IRCView;
 class Server;
 class KonversationMainWindow;
-#include "konvidebug.h"
 
-#ifdef USE_MDI
-#define BASE_CLASS KMdiChildView
-class QVBoxLayout;
-#else
-#define BASE_CLASS QVBox
-class KMdiChildView;
-class QIconSet;
-#endif
 
-class ChatWindow : public BASE_CLASS
+class ChatWindow : public QVBox
 {
   Q_OBJECT
 
   public:
-#ifdef USE_MDI
-    ChatWindow(QString caption);
-#else
     ChatWindow(QWidget* parent);
-#endif
     ~ChatWindow();
 
     enum WindowType
@@ -118,15 +93,7 @@ class ChatWindow : public BASE_CLASS
       bool parseURL = true, bool self = false);
     void appendBacklogMessage(const QString& firstColumn,const QString& message);
     
-#ifdef USE_MDI
-    void setIconSet(const QIconSet &newIconSet);
-    const QIconSet& getIconSet();
-    void setLabelColor(const QString& color);
-    void setLedColor(int color);
-    void setOn(bool on, bool important=true);
-#else
     QWidget* parentWidget;
-#endif
 
     virtual QString getTextInLine();
     /** Clean up and close this tab.  Return false if you want to cancel the close. */
@@ -172,8 +139,6 @@ class ChatWindow : public BASE_CLASS
   signals:
     void nameChanged(ChatWindow* view,const QString& newName);
     void online(ChatWindow* myself,bool state);
-    void chatWindowCloseRequest(ChatWindow* view); // USE_MDI
-    void setNotification(ChatWindow* view,const QIconSet& newIconSet,const QString& color);   // USE_MDI - used for blinking tabs
     /** Emit this signal when you want to change the status bar text for this tab.
      *  It is ignored if this tab isn't focused.
      */
@@ -195,12 +160,8 @@ class ChatWindow : public BASE_CLASS
 
     virtual void setNotificationsEnabled(bool enable) { m_notificationsEnabled = enable; }
 
-    void closeRequest(KMdiChildView* view); // USE_MDI
-
-  protected slots:  // USE_MDI
-    void serverQuit(const QString& reason);  // USE_MDI
-    void blinkTimeout();  // USE_MDI
-
+    
+  protected slots:
     ///Used to disable functions when not connected
     virtual void serverOnline(bool online);
 
@@ -229,26 +190,6 @@ class ChatWindow : public BASE_CLASS
     QString logName;
 
     QFont font;
-#ifdef USE_MDI
-    enum StateType
-    {
-      Off=0,
-      Slow,
-      Fast
-    };
-
-    QVBoxLayout* mainLayout;
-    virtual void closeYourself(ChatWindow* view);
-
-    QString labelColor;
-    int ledColor;      // color of the LED
-    StateType state;// if and how fast the LED should blink
-    bool blinkOn;   // true, if blinking LED is on at this moment
-
-    QIconSet iconOn;
-    QIconSet iconOff;
-    QTimer blinkTimer;
-#endif
 
     IRCView* textView;
     /** A pointer to the server this chatwindow is part of.

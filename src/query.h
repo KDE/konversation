@@ -38,11 +38,7 @@ class Query : public ChatWindow
   Q_OBJECT
 
   public:
-#ifdef USE_MDI
-    Query(const QString &caption);
-#else
     Query(QWidget* parent);
-#endif
     ~Query();
 
 
@@ -86,9 +82,7 @@ class Query : public ChatWindow
     void textPasted(const QString& text);
     void popup(int id);
     void nickInfoChanged();
-#ifdef USE_MDI
-    void serverQuit(const QString& reason);
-#endif
+
   protected:
     void setName(const QString& newName);
     void showEvent(QShowEvent* event);
@@ -97,10 +91,6 @@ class Query : public ChatWindow
     
     bool awayChanged;
     bool awayState;
-
-#ifdef USE_MDI
-    virtual void closeYourself(ChatWindow* view);
-#endif
 
     QString queryName;
     QString buffer;

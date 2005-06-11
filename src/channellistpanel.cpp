@@ -39,11 +39,7 @@
 #include "channellistviewitem.h"
 #include "server.h"
 
-#ifdef USE_MDI
-ChannelListPanel::ChannelListPanel(QString caption) : ChatWindow(caption)
-#else
 ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
-#endif
 {
   setType(ChatWindow::ChannelList);
 
@@ -414,21 +410,6 @@ bool ChannelListPanel::closeYourself()
   // make the server delete us so server can reset the pointer to us
   m_server->closeChannelListPanel();
   return true;
-}
-
-#ifdef USE_MDI
-void ChannelListPanel::closeYourself(ChatWindow*)
-{
-  m_server->closeChannelListPanel();
-  emit chatWindowCloseRequest(this);
-}
-#endif
-
-void ChannelListPanel::serverQuit(const QString&)
-{
-#ifdef USE_MDI
-  closeYourself(this);
-#endif
 }
 
 void ChannelListPanel::childAdjustFocus()

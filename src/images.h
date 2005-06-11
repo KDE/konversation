@@ -43,8 +43,8 @@ class Images
     
     Images();
     virtual ~Images();
-    
-    QIconSet getLed(int color,bool on,bool big=false) const; // big for USE_MDI tab bar
+
+    QIconSet getLed(int color,bool on) const;
     
     QIconSet getRedLed(bool on) const;
     QIconSet getGreenLed(bool on) const;
@@ -70,15 +70,6 @@ class Images
     QIconSet blueLedOff;
     QIconSet yellowLedOn;
     QIconSet yellowLedOff;
-
-    QIconSet bigRedLedOn;
-    QIconSet bigRedLedOff;
-    QIconSet bigGreenLedOn;
-    QIconSet bigGreenLedOff;
-    QIconSet bigBlueLedOn;
-    QIconSet bigBlueLedOff;
-    QIconSet bigYellowLedOn;
-    QIconSet bigYellowLedOff;
 
     QIconSet kimproxyAway;
     QIconSet kimproxyOnline;

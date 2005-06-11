@@ -37,13 +37,8 @@
 
 #define DCCCHAT_BUFFER_SIZE 1024
 
-#ifdef USE_MDI
-DccChat::DccChat(QString caption,Server* newServer,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen) :
-      ChatWindow(caption)
-#else
-DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen) :
-      ChatWindow(parent)
-#endif
+DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen) 
+  : ChatWindow(parent)
 {
   kdDebug() << "DccChat::DccChat() [BEGIN]" << endl;
   m_dccSocket=0;
@@ -380,12 +375,5 @@ QString DccChat::getChannelEncodingDefaultDesc()  // virtual
 {
   return i18n("Default ( %1 )").arg(Konversation::IRCCharsets::self()->encodingForLocale());
 }
-
-#ifdef USE_MDI
-void DccChat::closeYourself(ChatWindow*)
-{
-  emit chatWindowCloseRequest(this);
-}
-#endif
 
 #include "dccchat.moc"

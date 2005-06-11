@@ -1720,7 +1720,6 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
 
 void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, KIO::filesize_t startAt)
 {
-  SHOW;
   Konversation::OutputFilterResult result = outputFilter->resumeRequest(sender,fileName,port,startAt);
   queue(result.toServer);
   appendMessageToFrontmost(result.typeString, result.output);
@@ -1728,7 +1727,6 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
 
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-  SHOW;
   // Check if there actually is a transfer going on on that port
   DccTransferRecv* dccTransfer=static_cast<DccTransferRecv*>(getMainWindow()->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::Receive,true));
   if(!dccTransfer)

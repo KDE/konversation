@@ -18,17 +18,7 @@
 
 #include <qstringlist.h>
 
-
-#ifdef USE_MDI
-#define protected public
-#include <kmdimainfrm.h>
-#undef protected
-#include "images.h"
-#define MAIN_TYPE KMdiMainFrm
-#else
 #include <kmainwindow.h>
-#define MAIN_TYPE KMainWindow
-#endif
 
 #include "channel.h"
 #include "preferences.h"
@@ -41,7 +31,6 @@
 */
 
 class KToggleAction;
-class KMdiChildView; // USE_MDI
 class KActionMenu;
 class KScriptManager;
 
@@ -58,9 +47,7 @@ class Ignore;
 class NicksOnline;
 class QuickButtonsDialog;
 class UrlCatcher;
-#ifndef USE_MDI
 class LedTabWidget;
-#endif
 
 namespace Konversation
 {
@@ -69,7 +56,7 @@ namespace Konversation
   class TrayIcon;
 }
 
-class KonversationMainWindow : public MAIN_TYPE // USE_MDI
+class KonversationMainWindow : public KMainWindow
 {
   Q_OBJECT
 
@@ -142,11 +129,6 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     
     void openLogFile(const QString& caption, const QString& file);
 
-    virtual void switchToTabPageMode();    // USE_MDI
-    virtual void switchToIDEAlMode();      // USE_MDI
-    virtual void switchToChildframeMode(); // USE_MDI
-    virtual void switchToToplevelMode();   // USE_MDI
-    
     void removeSSLIcon();
     void slotPrefsChanged();
 
@@ -177,12 +159,6 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
      */
     void changeView(QWidget* view);
     void closeView(QWidget* view);
-
-    void changeToView(KMdiChildView* view); // USE_MDI
-    void setWindowNotification(ChatWindow* view,const QIconSet& iconSet,const QString& color); // USE_MDI
-    void closeWindow(ChatWindow* view); // USE_MDI
-    void closeActiveWindow(); // USE_MDI
-    void setTabOnline(ChatWindow* view,bool online); // USE_MDI
 
     void closeKonsolePanel(ChatWindow* konsolePanel);
 
@@ -224,11 +200,7 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
 
     bool queryClose();
 
-#ifdef USE_MDI
-    void addMdiView(ChatWindow* view,int color,bool on=true, bool weinitiated=true);
-#else
     void addView(ChatWindow* view,int color,const QString& label,bool on=true, bool weinitiated=true);
-#endif
     void updateFrontView();
 
     void closeUrlCatcher();
@@ -236,13 +208,9 @@ class KonversationMainWindow : public MAIN_TYPE // USE_MDI
     void deleteDccPanel();
 
     virtual bool event(QEvent* e);
-    virtual void resizeEvent(QResizeEvent* ev);
     
-#ifdef USE_MDI
-#else
     LedTabWidget* getViewContainer();
     LedTabWidget* viewContainer;
-#endif
 
     Server* frontServer;
     QGuardedPtr<ChatWindow> m_frontView;

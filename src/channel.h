@@ -68,11 +68,7 @@ class Channel : public ChatWindow
   Q_OBJECT
 
   public:
-#ifdef USE_MDI
-    Channel(const QString &caption);
-#else
     Channel(QWidget* parent);
-#endif
     ~Channel();
 
     void setName(const QString& newName);
@@ -207,9 +203,6 @@ class Channel : public ChatWindow
     void autoWho();
     void nicknameComboboxChanged();
 
-    void closeYourself(ChatWindow* view); // USE_MDI
-    void serverQuit(const QString& reason); // USE_MDI
-    
     void processPendingNicks();
     virtual void serverOnline(bool online);
     /** Enable/disable the mode buttons depending on whether you are op or not.

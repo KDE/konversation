@@ -60,12 +60,7 @@ class NicksOnline : public ChatWindow
       nsHasAddress = 2          // Nick has an associated addressbook entry.
     };
 
-    
-#ifdef USE_MDI
-    NicksOnline(QString caption);
-#else
     NicksOnline(QWidget* parent);
-#endif
     ~NicksOnline();
 
     // These are here for the benefit of NicksOnlineTooltip.    
@@ -130,9 +125,6 @@ class NicksOnline : public ChatWindow
     void slotPopupMenu_Activated(int id);
 
   protected:
-#ifdef USE_MDI
-    virtual void closeYourself(ChatWindow*);
-#endif
     /** Called from ChatWindow adjustFocus */
     virtual void childAdjustFocus();
 

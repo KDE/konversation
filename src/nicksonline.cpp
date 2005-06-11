@@ -44,11 +44,7 @@
 #include "linkaddressbook/nicksonlinetooltip.h"
 #include "konversationmainwindow.h"
 
-#ifdef USE_MDI
-NicksOnline::NicksOnline(QString caption): ChatWindow(caption)
-#else
 NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
-#endif
 {
     setName(i18n("Watched Nicks Online"));
     setType(ChatWindow::NicksOnline);
@@ -86,10 +82,8 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_tooltip = new Konversation::KonversationNicksOnlineToolTip(m_nickListView->viewport(), this);
 
 
-#ifndef USE_MDI
     setMargin(margin());
     setSpacing(spacing());
-#endif
 
     QHBox* buttonBox=new QHBox(this);
     buttonBox->setSpacing(spacing());
@@ -495,12 +489,6 @@ void NicksOnline::processDoubleClick(QListViewItem* item) {
     if (getItemServerAndNick(item, serverName, nickname))
         emit doubleClicked(serverName, nickname);
 }
-
-#ifdef USE_MDI
-void NicksOnline::closeYourself(ChatWindow*) {
-    emit chatWindowCloseRequest(this);
-}
-#endif
 
 /**
 * Returns the server name and nickname of the specified nicklistview item.

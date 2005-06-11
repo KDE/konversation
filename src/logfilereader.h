@@ -31,11 +31,7 @@ class LogfileReader : public ChatWindow
   Q_OBJECT
 
   public:
-#ifdef USE_MDI
-    LogfileReader(QString caption, QString log);
-#else
     LogfileReader(QWidget* parent, QString log);
-#endif
     ~LogfileReader();
 
     virtual bool closeYourself() { closeLog(); return true; }

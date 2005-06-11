@@ -37,36 +37,23 @@ Images::~Images()
 {
 }
 
-QIconSet Images::getLed(int color,bool on,bool big) const
+QIconSet Images::getLed(int color,bool on) const
 {
   QIconSet led;
 
   // Return a QIconSet for the desired color and state (on/off)
-  if(color <0 || color>3) kdWarning() << "Images::getLed(): color " << color << " out of range!" << endl;
+  if(color <0 || color>3) 
+    kdWarning() << "Images::getLed(): color " << color << " out of range!" << endl;
   else
   {
-    if(big)
-    {
-      if(color==0 && on) led=bigRedLedOn;
-      if(color==0 && !on) led=bigRedLedOff;
-      if(color==1 && on) led=bigGreenLedOn;
-      if(color==1 && !on) led=bigGreenLedOff;
-      if(color==2 && on) led=bigBlueLedOn;
-      if(color==2 && !on) led=bigBlueLedOff;
-      if(color==3 && on) led=bigYellowLedOn;
-      if(color==3 && !on) led=bigYellowLedOff;
-    }
-    else
-    {
-      if(color==0 && on) led=redLedOn;
-      if(color==0 && !on) led=redLedOff;
-      if(color==1 && on) led=greenLedOn;
-      if(color==1 && !on) led=greenLedOff;
-      if(color==2 && on) led=blueLedOn;
-      if(color==2 && !on) led=blueLedOff;
-      if(color==3 && on) led=yellowLedOn;
-      if(color==3 && !on) led=yellowLedOff;
-    }
+    if(color==0 && on) led=redLedOn;
+    if(color==0 && !on) led=redLedOff;
+    if(color==1 && on) led=greenLedOn;
+    if(color==1 && !on) led=greenLedOff;
+    if(color==2 && on) led=blueLedOn;
+    if(color==2 && !on) led=blueLedOff;
+    if(color==3 && on) led=yellowLedOn;
+    if(color==3 && !on) led=yellowLedOff;
   }
 
   return led;
@@ -105,14 +92,6 @@ void Images::initializeLeds()
   yellowLedOn.setPixmap(prefix+"led_yellow_on.png",QIconSet::Automatic);
   yellowLedOff.setPixmap(prefix+"led_yellow_off.png",QIconSet::Automatic);
 
-  bigRedLedOn.setPixmap(prefix+"big_led_red_on.png",QIconSet::Automatic);  // USE_MDI
-  bigRedLedOff.setPixmap(prefix+"big_led_red_off.png",QIconSet::Automatic);  // USE_MDI
-  bigGreenLedOn.setPixmap(prefix+"big_led_green_on.png",QIconSet::Automatic);  // USE_MDI
-  bigGreenLedOff.setPixmap(prefix+"big_led_green_off.png",QIconSet::Automatic);  // USE_MDI
-  bigBlueLedOn.setPixmap(prefix+"big_led_blue_on.png",QIconSet::Automatic);  // USE_MDI
-  bigBlueLedOff.setPixmap(prefix+"big_led_blue_off.png",QIconSet::Automatic);  // USE_MDI
-  bigYellowLedOn.setPixmap(prefix+"big_led_yellow_on.png",QIconSet::Automatic);  // USE_MDI
-  bigYellowLedOff.setPixmap(prefix+"big_led_yellow_off.png",QIconSet::Automatic);  // USE_MDI
 }
 
 void Images::initializeKimifaceIcons()

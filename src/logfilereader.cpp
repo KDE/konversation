@@ -37,13 +37,8 @@
 #include "ircview.h"
 #include "ircviewbox.h"
 
-#ifdef USE_MDI
-LogfileReader::LogfileReader(QString caption, QString log) : ChatWindow(caption)
-#else
 LogfileReader::LogfileReader(QWidget* parent, QString log) : ChatWindow(parent)
-#endif
 {
-  //setName(i18n("Logfile of %1").arg(caption));
   setType(ChatWindow::LogFileReader);
 
   fileName = log;
@@ -109,20 +104,11 @@ void LogfileReader::updateView()
 
 void LogfileReader::clearLog()
 {
-#if !KDE_IS_VERSION(3,3,0)
-  if(KMessageBox::questionYesNo(this,
-                                i18n("Do you really want to permanently discard all log information of this file?"),
-                                i18n("Clear Logfile"),
-                                KStdGuiItem::yes(),
-                                KStdGuiItem::no(),
-                                "ClearLogfileQuestion")==KMessageBox::Yes)
-#else
   if(KMessageBox::warningContinueCancel(this,
                                 i18n("Do you really want to permanently discard all log information of this file?"),
                                 i18n("Clear Logfile"),
                                 KStdGuiItem::del(),
                                 "ClearLogfileQuestion")==KMessageBox::Continue)
-#endif
   {
     QFile::remove(fileName);
     updateView();

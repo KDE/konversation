@@ -32,11 +32,7 @@
 #include "server.h"
 
 
-#ifdef USE_MDI
-StatusPanel::StatusPanel(QString caption) : ChatWindow(caption)
-#else
 StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
-#endif
 {
   setType(ChatWindow::Status);
 
@@ -214,7 +210,7 @@ void StatusPanel::indicateAway(bool show)
   }
 }
 
-// fix QTs broken behavior on hidden QListView pages
+// fix Qt's broken behavior on hidden QListView pages
 void StatusPanel::showEvent(QShowEvent*)
 {
   if(awayChanged)
@@ -230,12 +226,6 @@ bool StatusPanel::canBeFrontView()        { return true; }
 bool StatusPanel::searchView()       { return true; }
 
 bool StatusPanel::closeYourself()
-#ifdef USE_MDI
-{
-	return true;
-}
-void StatusPanel::closeYourself(ChatWindow*)
-#endif
 {
   int result=KMessageBox::warningYesNo(
                 this,
@@ -252,12 +242,8 @@ void StatusPanel::closeYourself(ChatWindow*)
      //Why are these seperate?  why would deleting the server not quit it? FIXME
     delete m_server;
     m_server=0;
-#ifdef USE_MDI
-    emit chatWindowCloseRequest(this);
-#else
     deleteLater(); //NO NO!  Deleting the server should delete this! FIXME
     return true;
-#endif
   }
   return false;
 }
