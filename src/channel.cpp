@@ -10,6 +10,7 @@
     begin:     Wed Jan 23 2002
     copyright: (C) 2002 by Dario Abatianni <eisfuchs@tigress.com>
                (C) 2004-2005 by Peter Simonsson <psn@linux.se>
+               (C) 2005 by Ian Monroe <ian@monroe.nu>
 */
 
 #include <qlabel.h>
@@ -539,7 +540,15 @@ void Channel::popupCommand(int id)
       pattern=cc+"DCC SEND %u";
       break;
     case Konversation::IgnoreNick:
-      pattern=cc+"IGNORE -ALL %u!*";
+      QString question;
+      ChannelNickList nickList=getSelectedChannelNicks();
+      if( nickList.size() == 1)
+            question=i18n("Do you want to ignore %1?").arg(nickList.first()->getNickname());
+      else
+        question = i18n("Do you want to ignore the selected users?");
+      if(KMessageBox::questionYesNo(0, question, i18n("Ignore"), i18n("Ignore"), KStdGuiItem::cancel(), QString("ignoreNick")) ==
+        KMessageBox::Yes)
+            pattern=cc+"IGNORE -ALL %u!*";
       break;
     } // switch
 
