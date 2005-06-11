@@ -187,6 +187,11 @@ QString KonvDCOP::getAnyNickname ()
   return server->getNickname();
 }
 
+QString KonvDCOP::getChannelEncoding(const QString& server, const QString& channel)
+{
+  return KonversationApplication::preferences.getChannelEncoding(server,channel);
+}
+
 // Identity stuff
 KonvIdentDCOP::KonvIdentDCOP()
              : DCOPObject("KonvDCOPIdentity"),

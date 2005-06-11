@@ -44,6 +44,7 @@ class KonvIface : virtual public DCOPObject
     virtual QString getAnyNickname () = 0; 
     virtual QStringList listServers() = 0;
     virtual QStringList listConnectedServers() = 0;
+    virtual QString getChannelEncoding(const QString& server, const QString& channel) = 0;
 };
 
 class KonvIdentityIface : virtual public DCOPObject

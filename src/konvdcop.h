@@ -31,6 +31,7 @@ class KonvDCOP : public QObject, virtual public KonvIface
 
     QString getNickname (const QString &server);
     QString getAnyNickname ();
+    QString getChannelEncoding(const QString& server, const QString& channel);
 	    
   signals:
     void dcopSay(const QString& server,const QString& target,const QString& command);
