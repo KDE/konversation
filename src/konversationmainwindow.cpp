@@ -440,7 +440,110 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
   KMdiTaskBarButton* button=m_pTaskBar->getButton(view);
   button->setIconSet(images->getLed(color,false,true));
 #else
-  viewContainer->addTab(view,label,color,on);
+  ChatWindow *tmp_ChatWindow;
+  int placed = 0;
+  ChatWindow::WindowType wtype;
+
+  switch (view->getType())
+  {
+    case ChatWindow::Channel:
+      for (int sindex = 0; sindex < viewContainer->count(); sindex++)
+      {
+        tmp_ChatWindow = static_cast<ChatWindow *>(viewContainer->page(sindex));
+  
+        if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
+        {
+          for (int index = sindex + 1; index < viewContainer->count(); index++)
+          {
+            tmp_ChatWindow = static_cast<ChatWindow *>(viewContainer->page(index));
+            wtype = tmp_ChatWindow->getType();
+
+            if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog)
+            {
+              viewContainer->addTab(view,label,color,on, index);
+              placed = 1;
+              break;
+            }
+          }
+
+          break;
+        }
+      }
+
+      break;
+
+    case ChatWindow::RawLog:
+      for (int sindex = 0; sindex < viewContainer->count(); sindex++)
+      {
+        tmp_ChatWindow = static_cast<ChatWindow *>(viewContainer->page(sindex));
+  
+        if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
+        {
+          viewContainer->addTab(view,label,color,on, sindex + 1);
+          placed = 1;
+
+          break;
+        }
+      }
+
+      break;
+
+    case ChatWindow::Query:
+      for (int sindex = 0; sindex < viewContainer->count(); sindex++)
+      {
+        tmp_ChatWindow = static_cast<ChatWindow *>(viewContainer->page(sindex));
+  
+        if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
+        {
+          for (int index = sindex + 1; index < viewContainer->count(); index++)
+          {
+            tmp_ChatWindow = static_cast<ChatWindow *>(viewContainer->page(index));
+            wtype = tmp_ChatWindow->getType();
+
+            if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog && wtype != ChatWindow::Query)
+            {
+              viewContainer->addTab(view,label,color,on, index);
+              placed = 1;
+              break;
+            }
+          }
+
+          break;
+        }
+      }
+
+      break;
+
+    case ChatWindow::DccChat:
+      for (int sindex = 0; sindex < viewContainer->count(); sindex++)
+      {
+        tmp_ChatWindow = static_cast<ChatWindow *>(viewContainer->page(sindex));
+  
+        if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
+        {
+          for (int index = sindex + 1; index < viewContainer->count(); index++)
+          {
+            tmp_ChatWindow = static_cast<ChatWindow *>(viewContainer->page(index));
+            wtype = tmp_ChatWindow->getType();
+
+            if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog &&
+                wtype != ChatWindow::Query && wtype != ChatWindow::DccChat)
+            {
+              viewContainer->addTab(view,label,color,on, index);
+              placed = 1;
+              break;
+            }
+          }
+
+          break;
+        }
+      }
+
+     default:
+       break;
+  }
+
+  if (!placed) viewContainer->addTab(view,label,color,on);
   viewContainer->show();
 #endif
   // Check, if user was typing in old input line
