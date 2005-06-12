@@ -21,6 +21,7 @@ my $artist;
 my $album;
 my $error;
 my $musichar;
+my $pid;
 my $supportsutf8;
 
 sub check_running 
@@ -47,8 +48,17 @@ sub pretty_print
     utf8::decode($artist);
     utf8::decode($album);
     
-    $supportsutf8 = `dcop konversation Konversation getChannelEncoding $server $target`;
-
+    # Secure backticks : an exec call which returns unlike real exec
+    die "Can't fork: $!" unless defined($pid = open(KID, "-|"));
+    if ($pid) { # parent
+	$supportsutf8 = <KID>;
+	chomp $supportsutf8;
+	close KID;
+    }
+    else {
+	exec 'dcop', 'konversation', 'Konversation', 'getChannelEncoding', $server, $target; 
+    }
+    
     if(($ENV{"LANG"} =~ /UTF-8$/ || $ENV{"LC_ALL"} =~ /UTF-8$/) && ($supportsutf8 eq "utf8") )
     {
 	$musichar=" \x{266B} ";
