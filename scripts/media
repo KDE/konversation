@@ -48,7 +48,7 @@ sub pretty_print
     utf8::decode($artist);
     utf8::decode($album);
     
-    # Secure backticks : an exec call which returns unlike real exec
+    # Emulated backticks using secure exec call
     die "Can't fork: $!" unless defined($pid = open(KID, "-|"));
     if ($pid) { # parent
 	$encoding = <KID>;
