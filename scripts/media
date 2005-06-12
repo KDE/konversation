@@ -50,7 +50,8 @@ sub pretty_print
     
     # Emulated backticks using secure exec call
     die "Can't fork: $!" unless defined($pid = open(KID, "-|"));
-    if ($pid) { # parent
+    if ($pid) # parent
+    {
 	$encoding = <KID>;
 	chomp $encoding;
 	close KID;
