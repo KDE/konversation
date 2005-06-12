@@ -22,7 +22,7 @@ my $album;
 my $error;
 my $musichar;
 my $pid;
-my $supportsutf8;
+my $encoding;
 
 sub check_running 
 {
@@ -51,15 +51,15 @@ sub pretty_print
     # Secure backticks : an exec call which returns unlike real exec
     die "Can't fork: $!" unless defined($pid = open(KID, "-|"));
     if ($pid) { # parent
-	$supportsutf8 = <KID>;
-	chomp $supportsutf8;
+	$encoding = <KID>;
+	chomp $encoding;
 	close KID;
     }
     else {
 	exec 'dcop', 'konversation', 'Konversation', 'getChannelEncoding', $server, $target; 
     }
     
-    if(($ENV{"LANG"} =~ /UTF-8$/ || $ENV{"LC_ALL"} =~ /UTF-8$/) && ($supportsutf8 eq "utf8") )
+    if(($ENV{"LANG"} =~ /UTF-8$/ || $ENV{"LC_ALL"} =~ /UTF-8$/) && ($encoding eq "utf8") )
     {
 	$musichar=" \x{266B} ";
     }
