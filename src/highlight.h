@@ -36,7 +36,6 @@ class Highlight
               const QColor& itemColor,
               const KURL& soundURL,
               const QString& autoText);
-    ~Highlight();
 
     QString getPattern();
     QString getAutoText();

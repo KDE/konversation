@@ -33,10 +33,6 @@ Highlight::Highlight(const QString& itemPattern,
   m_itemID = s_id++;
 }
 
-Highlight::~Highlight()
-{
-}
-
 int Highlight::getID() { return m_itemID; }
 QString Highlight::getPattern() { return m_itemPattern; }
 QString Highlight::getAutoText() { return m_autoText; }
