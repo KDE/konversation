@@ -55,11 +55,11 @@ namespace Konversation
             else
                 cipher = cipher.mid(4);
 
-            char ckey[key.length()+2];
-            char result[cipher.length()+1];
-            qstrncpy(result, cipher, cipher.length());
-            qstrncpy(ckey, key, key.length()+1);
-            tmp2 = decrypt_string(ckey,result);
+            QCString ckey( key.length()+2 );
+            QCString result( cipher.length()+1 );
+            qstrncpy(result.data(), cipher.data(), cipher.length());
+            qstrncpy(ckey.data(), key.data(), key.length()+1);
+            tmp2 = decrypt_string(ckey.data(),result.data());
             cipher = backup+"(e) "+tmp2+" "+"\n";
             free(tmp2);
         }
@@ -81,11 +81,11 @@ namespace Konversation
             else
                 return;
                         
-            char result[cipher.length()+1];
-            char ckey[key.length()+2];
-            qstrncpy(ckey, key, key.length()+1);
-            qstrncpy(result, cipher, cipher.length());
-            tmp2 = decrypt_string(ckey,result);
+            QCString result( cipher.length()+1 );
+            QCString ckey( key.length()+2 );
+            qstrncpy(ckey.data(), key.data(), key.length()+1);
+            qstrncpy(result.data(), cipher.data(), cipher.length());
+            tmp2 = decrypt_string(ckey.data(),result.data());
             cipher = tmp2;
                        
             if(cipher.mid(0,2) == "@@") // Mcps style topic
@@ -112,12 +112,12 @@ namespace Konversation
 
             char* tmp;
             int size = cipher.utf8().length();
-            char encrypted[size+1];
-            char ckey[key.length()+1];
+            QCString encrypted( size+1 );
+            QCString ckey( key.length()+1 );
             
-            strcpy(ckey,key.local8Bit());
-            strcpy(encrypted,cipher.utf8());
-            tmp = encrypt_string(ckey,encrypted);
+            strcpy(ckey.data(),key.local8Bit());
+            strcpy(encrypted.data(),cipher.utf8());
+            tmp = encrypt_string(ckey.data(),encrypted.data());
             cipher = backup +"+OK " + tmp +"\n";
             free(tmp);
         }
