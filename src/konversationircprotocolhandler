@@ -1,4 +1,5 @@
 #!/bin/sh
+# Copyright 2004-2005 by İsmail Dönmez <ismail@kde.org.tr>
 
 # A script for Konversation to call connectToServer for each instance of Konversation.
 
@@ -11,6 +12,9 @@ channel=`echo $channel_and_password | awk -F"?" '{print $1}'`
 password=`echo $channel_and_password | awk -F"?" '{print $2}'`
 
 if test -z "$port";then port=6667;fi;
+
+if test ${channel:0:3} == '&23' ;then channel="#"${channel:3};fi
 if test ! ${channel:0:1} == '#' && test ! -z $channel ;then channel="#"$channel;fi 
 
-dcop "konversation*" | while read line; do dcop $line Konversation connectToServer $server $port "$channel" "$password"; done
+dcop konversation Konversation connectToServer $server $port "$channel" "$password"
+
