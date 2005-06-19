@@ -39,7 +39,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   infoLayout->setSpacing( spacingHint() );
 
   // Filename
-  QLabel* fileNameHeader = new QLabel( i18n("File"), infoFrame );
+  QLabel* fileNameHeader = new QLabel( i18n("File:"), infoFrame );
   fileNameHeader->setAlignment( AlignHCenter | AlignVCenter );
   KLineEdit* fileName = new KLineEdit( m_item->m_fileName, infoFrame );
   fileName->setFocusPolicy( ClickFocus );
@@ -51,9 +51,9 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   QLabel* localFileURLHeader = new QLabel( infoFrame );
   localFileURLHeader->setAlignment( AlignHCenter | AlignVCenter );
   if ( m_item->m_dccType == DccTransfer::Send )
-    localFileURLHeader->setText( i18n("Local Path") );
+    localFileURLHeader->setText( i18n("Local Path:") );
   else
-    localFileURLHeader->setText( i18n("Save to") );
+    localFileURLHeader->setText( i18n("Save to:") );
   QHBox* localFileURLBox = new QHBox( infoFrame );
   localFileURLBox->setSpacing( spacingHint() );
   m_localFileURL = new KURLRequester( m_item->getFileURL().prettyURL(), localFileURLBox );
@@ -69,9 +69,9 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   QLabel* partnerHeader = new QLabel( infoFrame );
   partnerHeader->setAlignment( AlignHCenter | AlignVCenter );
   if ( m_item->m_dccType == DccTransfer::Send )
-    partnerHeader->setText( i18n("Receiver") );
+    partnerHeader->setText( i18n("Receiver:") );
   else
-    partnerHeader->setText( i18n("Sender") );
+    partnerHeader->setText( i18n("Sender:") );
   m_partner = new KLineEdit( infoFrame );
   m_partner->setFocusPolicy( ClickFocus );
   m_partner->setReadOnly( true );
@@ -93,7 +93,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   }
 
   // Status
-  QLabel* statusHeader = new QLabel( i18n("Status"), infoFrame );
+  QLabel* statusHeader = new QLabel( i18n("Status:"), infoFrame );
   statusHeader->setAlignment( AlignHCenter | AlignVCenter );
   m_status = new KLineEdit( infoFrame );
   m_status->setFocusPolicy( ClickFocus );
@@ -102,13 +102,13 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
   m_status->setAlignment( AlignHCenter );
 
   // Progres
-  QLabel* progressHeader = new QLabel( i18n("Progress"), infoFrame );
+  QLabel* progressHeader = new QLabel( i18n("Progress:"), infoFrame );
   progressHeader->setAlignment( AlignHCenter | AlignVCenter );
   m_progress = new KProgress( 100, infoFrame );
   m_progress->setCenterIndicator( true );
 
   // Position
-  QLabel* positionHeader = new QLabel( i18n("Position"), infoFrame );
+  QLabel* positionHeader = new QLabel( i18n("Position:"), infoFrame );
   positionHeader->setAlignment( AlignHCenter | AlignVCenter );
   m_position = new KLineEdit( infoFrame );
   m_position->setFocusPolicy( ClickFocus );
