@@ -127,7 +127,6 @@ QPixmap overlayPixmaps( const QPixmap &under, const QPixmap &over )
   if ( over.isNull() ) return under;
 
   QPixmap result = under;
-  result.setMask( overlayMasks( under.mask(), over.mask() ) );
 
   QPainter p( &result );
   p.drawPixmap( 0, 0, over );
