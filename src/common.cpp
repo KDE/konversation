@@ -126,10 +126,12 @@ QPixmap overlayPixmaps( const QPixmap &under, const QPixmap &over )
 {
   if ( over.isNull() ) return under;
 
-  QPixmap result = under;
-
-  QPainter p( &result );
-  p.drawPixmap( 0, 0, over );
+  QImage imResult; imResult=under;
+  QImage imOver; imOver=over;
+  QPixmap result;
+  
+  bitBlt(&imResult,0,0,&imOver,0,0,imOver.width(),imOver.height(),0);
+  result=imResult;
   return result;
 }
 

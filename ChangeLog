@@ -4,6 +4,7 @@ Changes from 0.18 to 0.19
 - Added Firefox style searchbar, courtesy of Renchi Raju
 - Tab grouping added so that new tabs will be after the server tab they belong and not at the end. Courtesy of Michael Kreitzer
 - Implemented sending commands as messages on Ctrl+Enter, courtesy of Eike Hein
+- Fixed alpha blending of nick icons
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
