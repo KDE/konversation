@@ -49,6 +49,7 @@ class IRCInput : public KTextEdit
     void history(bool up);
     void textPasted(const QString& text);
     void submit();
+    void envelopeCommand();
 
   public slots:
     void paste();

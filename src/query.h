@@ -75,6 +75,7 @@ class Query : public ChatWindow
 
   protected slots:
     void queryTextEntered();
+    void queryPassthroughCommand();
     void sendFileMenu();
     void newTextInView(const QString& highlightColor,bool important);
     void filesDropped(const QStrList& files);

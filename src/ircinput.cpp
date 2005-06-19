@@ -149,7 +149,12 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
           {
             if(text().length()) addHistory(text());
             if(completionBox->isHidden()) {
-              emit submit();
+              // Ctrl+Enter is a special case in which commands should be send as normal messages
+              if ( keyEvent->state() & ControlButton ) {
+                emit envelopeCommand();
+              } else {
+                emit submit();
+              }
             } else {
               insertCompletion(completionBox->currentText());
               completionBox->hide();

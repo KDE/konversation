@@ -164,6 +164,7 @@ class Channel : public ChatWindow
   public slots:
     void setNickname(const QString& newNickname);
     void channelTextEntered();
+    void channelPassthroughCommand();
     void sendChannelText(const QString& line);
     void newTextInView(const QString& highlightColor, bool important);
     void showQuickButtons(bool show);

@@ -280,6 +280,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   abgCache=nicknameListView->alternateBackground().name();
 
   connect(channelInput,SIGNAL (submit()),this,SLOT (channelTextEntered()) );
+  connect(channelInput,SIGNAL (envelopeCommand()),this,SLOT (channelPassthroughCommand()) );
   connect(channelInput,SIGNAL (nickCompletion()),this,SLOT (completeNick()) );
   connect(channelInput,SIGNAL (endCompletion()),this,SLOT (endCompleteNick()) );
   connect(channelInput,SIGNAL (textPasted(const QString&)),this,SLOT (textPasted(const QString&)) );
@@ -766,6 +767,18 @@ void Channel::channelTextEntered()
   else {
     if(!line.isEmpty()) 
       sendChannelText(line);
+  }
+}
+
+void Channel::channelPassthroughCommand()
+{
+  QString line = channelInput->text();
+  channelInput->clear();
+
+  if(!line.isEmpty()) {
+    // Envelope line in /say command on Ctrl+Enter
+    line = "/say " + line;
+    sendChannelText(line);
   }
 }
 

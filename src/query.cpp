@@ -89,6 +89,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
   // connect the signals and slots
   connect(queryInput,SIGNAL (submit()),this,SLOT (queryTextEntered()) );
+  connect(queryInput,SIGNAL (envelopeCommand()),this,SLOT (queryPassthroughCommand()) );
   connect(queryInput,SIGNAL (textPasted(const QString&)),this,SLOT (textPasted(const QString&)) );
   connect(getTextView(), SIGNAL(textPasted()), queryInput, SLOT(paste()));
   connect(getTextView(),SIGNAL (gotFocus()),queryInput,SLOT (setFocus()) );
@@ -139,6 +140,18 @@ void Query::queryTextEntered()
   else
   {
     if(line.length()) sendQueryText(line);
+  }
+}
+
+void Query::queryPassthroughCommand()
+{
+  QString line = queryInput->text();
+  queryInput->clear();
+
+  if(!line.isEmpty()) {
+    // Envelope line in /say command on Ctrl+Enter
+    line = "/say " + line;
+    sendQueryText(line);
   }
 }
 
