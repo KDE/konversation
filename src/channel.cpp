@@ -772,12 +772,16 @@ void Channel::channelTextEntered()
 
 void Channel::channelPassthroughCommand()
 {
+  QString commandChar = KonversationApplication::preferences.getCommandChar();
   QString line = channelInput->text();
+
   channelInput->clear();
 
   if(!line.isEmpty()) {
-    // Envelope line in /say command on Ctrl+Enter
-    line = "/say " + line;
+    // Prepend commandChar on Ctrl+Enter to bypass outputfilter command recognition
+    if (line.startsWith(commandChar)) {
+      line = commandChar + line;
+    }
     sendChannelText(line);
   }
 }

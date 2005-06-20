@@ -145,12 +145,16 @@ void Query::queryTextEntered()
 
 void Query::queryPassthroughCommand()
 {
+  QString commandChar = KonversationApplication::preferences.getCommandChar();
   QString line = queryInput->text();
+
   queryInput->clear();
 
   if(!line.isEmpty()) {
-    // Envelope line in /say command on Ctrl+Enter
-    line = "/say " + line;
+    // Prepend commandChar on Ctrl+Enter to bypass outputfilter command recognition
+    if (line.startsWith(commandChar)) {
+      line = commandChar + line;
+    }
     sendQueryText(line);
   }
 }
