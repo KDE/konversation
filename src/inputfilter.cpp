@@ -461,7 +461,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         server->removeNickFromServer(sourceNick,trailing);
         if(sourceNick != server->getNickname())
         {
-            konv_app->notificationHandler()->quit(server->getStatusView(), server->getNickname());
+            konv_app->notificationHandler()->quit(server->getStatusView(), sourceNick);
         }
     }
     else if(command=="nick")
