@@ -759,44 +759,49 @@ void Server::notifyResponse(const QString& nicksOnline) {
     inputFilter.setLagMeasuring(false);
 
     // only update Nicks Online list if we got a 303 response, not a PONG
-    if(nicksOnline!="###")
+    if(nicksOnline != "###")
     {
 
         bool nicksOnlineChanged = false;
         // Create a case correct nick list from the notification reply
         QStringList nickList = QStringList::split(' ',nicksOnline);
-        // Create a lower case nick list from the notification reply
-        QStringList nickLowerList = QStringList::split(' ',nicksOnline.lower());
-        // Get ISON list from preferences and addressbook.
-        QString watchlist = getISONListString();
-        // Create a case correct nick list from the watch list.
-        QStringList watchList = QStringList::split(' ',watchlist);
-        // Create a lower case nick list from the watch list.
-        QStringList watchLowerList = QStringList::split(' ',watchlist.lower());
+
+        QStringList::iterator it;
+        QStringList::iterator itEnd = nickList.end();
+
         // Any new watched nicks online?
-        unsigned int index;
-        
-        for(index=0; index<nickList.count(); ++index) {
-            QString nickname = nickList[index];
+        for(it = nickList.begin(); it != itEnd; ++it) {
+            QString nickname = (*it);
+
             if (!isNickOnline(nickname)) {
                 setWatchedNickOnline(nickname);
                 nicksOnlineChanged = true;
             }
         }
 
+        // Create a lower case nick list from the notification reply
+        QStringList nickLowerList = QStringList::split(' ',nicksOnline.lower());
+        // Get ISON list from preferences and addressbook.
+        QString watchlist = getISONListString();
+        // Create a case correct nick list from the watch list.
+        QStringList watchList = QStringList::split(' ',watchlist);
+        itEnd = watchList.end();
+
         // Any watched nicks now offline?
-        for (index=0; index < watchList.count(); ++index) {
-            QString lcNickName = watchList[index].lower();
+        for(it = watchList.begin(); it != itEnd; ++it) {
+            QString lcNickName = (*it).lower();
             if (nickLowerList.find(lcNickName) == nickLowerList.end())
             {
-                QString nickname = watchList[index];
+                QString nickname = (*it);
                 if (setNickOffline(nickname)) 
                     nicksOnlineChanged = true;
             }
         }
+
         // Note: The list emitted in this signal does not include nicks in joined channels.
         emit nicksNowOnline(this,nickList,nicksOnlineChanged);
     }
+
     // Next round
     startNotifyTimer();
 }
