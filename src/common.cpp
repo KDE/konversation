@@ -78,6 +78,7 @@ QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColo
   }
 
   while((pos = urlPattern.search(filteredLine, pos)) >= 0) {
+    protocol="";
     urlLen = urlPattern.matchedLength();
     href = filteredLine.mid( pos, urlLen );
 
