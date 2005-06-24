@@ -61,6 +61,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
   statusInput=new IRCInput(commandLineBox);
 
   getTextView()->installEventFilter(statusInput);
+  statusInput->installEventFilter(this);
 
   setLog(KonversationApplication::preferences.getLog());
   setLogfileName("konversation");

@@ -84,6 +84,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   queryInput=new IRCInput(inputBox);
 
   getTextView()->installEventFilter(queryInput);
+  queryInput->installEventFilter(this);
 
   setLogfileName(QString::null);
 
