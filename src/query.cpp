@@ -59,7 +59,6 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   
   queryHostmask=new QLabel(box, "query_hostmask"); 
   queryHostmask->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-//  queryHostmask->installEventFilter(this);
 
   QString whatsthis = i18n("<qt>Some details of the person you are talking to in this query is shown in this bar.  The full name and hostmask is shown, along with any image or logo this person has associated with them in the KDE Addressbook.<p>See the <i>Konversation Handbook</i> for information on associating a nick with a contact in the Addressbook, and for an explanation of what the hostmask is.</qt>");
   QWhatsThis::add(addresseeimage, whatsthis); 
@@ -83,7 +82,6 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   awayLabel=new QLabel(i18n("(away)"),inputBox);
   awayLabel->hide();
   queryInput=new IRCInput(inputBox);
-  queryInput->installEventFilter(this);
 
   setLogfileName(QString::null);
 
@@ -91,7 +89,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   connect(queryInput,SIGNAL (submit()),this,SLOT (queryTextEntered()) );
   connect(queryInput,SIGNAL (envelopeCommand()),this,SLOT (queryPassthroughCommand()) );
   connect(queryInput,SIGNAL (textPasted(const QString&)),this,SLOT (textPasted(const QString&)) );
-  connect(getTextView(), SIGNAL(textPasted()), queryInput, SLOT(paste()));
+  connect(getTextView(), SIGNAL(textPasted(bool)), queryInput, SLOT(paste(bool)));
   connect(getTextView(),SIGNAL (gotFocus()),queryInput,SLOT (setFocus()) );
 
   connect(textView,SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );

@@ -62,16 +62,6 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
   setTextFormat(PlainText);
 #endif
 
-
-  QObject *p=static_cast<QObject*>(parent);
-  //find our parent ChatWindow derivative, if there is one
-  while(p && !p->inherits("ChatWindow")) {
-    p=p->parent();
-  }
-  //put an event handler on it to forward text
-  if (p) {
-    static_cast<ChatWindow*>(p)->getTextView()->installEventFilter(this);
-  }
   QWhatsThis::add(this, i18n("<qt>The input line is where you type messages to be sent the channel, query, or server.  A message sent to a channel is seen by everyone on the channel, whereas a message in a query is sent only to the person in the query with you.<p>You can also send special commands:<br><table><tr><th>/me <i>action</i></th><td>shows up as an action in the channel or query.  For example:  <em>/me sings a song</em> will show up in the channel as 'Nick sings a song'.</td></tr><tr><th>/whois <i>nickname</i></th><td>shows information about this person, including what channels they are in.</td></tr></table><p>For more commands, see the Konversation Handbook.<p>A message can be a maximum of 512 letters long, and cannot contain multiple lines.</qt>"));
 }
 
@@ -120,7 +110,7 @@ void IRCInput::setText(const QString& text)
 
 // Take care of Tab, Cursor and so on
 bool IRCInput::eventFilter(QObject *object,QEvent *event)
-{
+{ // TODO Rewrite in the proper event handlers
   if (object==this) {
     switch(event->type())
     {
@@ -353,10 +343,17 @@ void IRCInput::insert(const QString& textToInsert)
 */
 void IRCInput::contentsMouseReleaseEvent( QMouseEvent *ev) {
   if (ev->button() == Qt::MidButton) {
-    useSelection=TRUE;
+    m_useSelection=true;
   }
   KTextEdit::contentsMouseReleaseEvent(ev);
-  useSelection=FALSE;
+  m_useSelection=false;
+}
+
+void IRCInput::paste(bool useSelection)
+{
+  m_useSelection = useSelection;
+  paste();
+  m_useSelection = false;
 }
 
 void IRCInput::paste()
@@ -369,7 +366,7 @@ void IRCInput::paste()
   QString text;
   QString html;
   QCString subtype("html");
-  if(useSelection) { 
+  if(m_useSelection) {
 /*    html = cb->text(subtype, QClipboard::Selection); Enable again when it actually works as expected
     if(html.isEmpty())*/
       text = cb->text( QClipboard::Selection);

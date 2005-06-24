@@ -52,7 +52,6 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
   nicknameCombobox=new QComboBox(commandLineBox);
   nicknameCombobox->setEditable(true);
   nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
-  nicknameCombobox->installEventFilter(this);
   oldNick=nicknameCombobox->currentText();
   
   setShowNicknameBox(KonversationApplication::preferences.showNicknameBox());
@@ -60,7 +59,6 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
   awayLabel=new QLabel(i18n("(away)"),commandLineBox);
   awayLabel->hide();
   statusInput=new IRCInput(commandLineBox);
-  statusInput->installEventFilter(this);
 
 
   setLog(KonversationApplication::preferences.getLog());
@@ -74,7 +72,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 
   connect(statusInput,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
   connect(statusInput,SIGNAL (textPasted(const QString&)),this,SLOT(textPasted(const QString&)) );
-  connect(getTextView(), SIGNAL(textPasted()), statusInput, SLOT(paste()));
+  connect(getTextView(), SIGNAL(textPasted(bool)), statusInput, SLOT(paste(bool)));
 
   connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
   Q_ASSERT(nicknameCombobox->lineEdit());  //it should be editedable.  if we design it so it isn't, remove these lines.

@@ -53,7 +53,7 @@ class IRCInput : public KTextEdit
 
   public slots:
     void paste();
-
+    void paste(bool useSelection);
     void insertHtml(const QString& htmlTextToInsert);
     void insert(const QString& text);
     void showCompletionList(const QStringList& nicks);
@@ -76,7 +76,7 @@ class IRCInput : public KTextEdit
     char completionMode;
     KCompletionBox* completionBox;
     QString m_lastCompletion;
-    bool useSelection;
+    bool m_useSelection;
 };
 
 #endif

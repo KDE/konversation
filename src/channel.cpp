@@ -167,7 +167,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   QWhatsThis::add(limit, i18n("<qt>This is the channel user limit - the maximum number of users that can be in the channel at a time.  If you are an operator, you can set this.  The channel mode <b>T</b>opic (button to left) will automatically be set if set this.</qt>"));
   connect(limit,SIGNAL (returnPressed()),this,SLOT (channelLimitChanged()) );
   connect(limit,SIGNAL (lostFocus()), this, SLOT(channelLimitChanged()) );
-  limit->installEventFilter(this);
 
   topicLayout->addWidget(modeBox, 0, 2);
   topicLayout->setRowStretch(1, 10);
@@ -236,7 +235,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   nicknameCombobox = new QComboBox(commandLineBox);
   nicknameCombobox->setEditable(true);
   nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
-  nicknameCombobox->installEventFilter(this);
   QWhatsThis::add(nicknameCombobox, i18n("<qt>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.<p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</qt>"));
   oldNick = nicknameCombobox->currentText();
   
@@ -245,8 +243,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   awayLabel = new QLabel(i18n("(away)"), commandLineBox);
   awayLabel->hide();
   channelInput = new IRCInput(commandLineBox);
-  channelInput->installEventFilter(this);
-  nicknameListView->installEventFilter(channelInput);
 
   // Set the widgets size policies
   m_topicButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
@@ -285,7 +281,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   connect(channelInput,SIGNAL (endCompletion()),this,SLOT (endCompleteNick()) );
   connect(channelInput,SIGNAL (textPasted(const QString&)),this,SLOT (textPasted(const QString&)) );
 
-  connect(getTextView(), SIGNAL(textPasted()), channelInput, SLOT(paste()));
+  connect(getTextView(), SIGNAL(textPasted(bool)), channelInput, SLOT(paste(bool)));
   connect(getTextView(),SIGNAL (gotFocus()),channelInput,SLOT (setFocus()) );
   connect(getTextView(),SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
   connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
@@ -1693,8 +1689,6 @@ void Channel::showEvent(QShowEvent*)
     }
 
     m_vertSplitter->setSizes(sizes);
-
-    nicknameListView->installEventFilter(this);
   }
   if(awayChanged)
   {

@@ -81,6 +81,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent) {
     setHScrollBarMode(AlwaysOff);
     setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
     setNotifyClick(true);
+    setFocusPolicy(QWidget::ClickFocus);
 
     // set basic style sheet for <p> to make paragraph spacing possible
     QStyleSheet* sheet=new QStyleSheet(this,"ircview_style_sheet");
@@ -782,56 +783,72 @@ void IRCView::showEvent(QShowEvent* /* event */) {
         moveCursor(MoveEnd,false);
         ensureVisible(0,contentsHeight());
     }
-    // Set focus to input line (must be connected)
-    emit gotFocus();
 }
 
-void IRCView::focusInEvent(QFocusEvent*) {
-    // Set focus to input line (must be connected)
-    emit gotFocus();
-}
-
-bool IRCView::eventFilter(QObject* object,QEvent* event) {
-    if(event->type() == QEvent::MouseButtonRelease) {
-        QMouseEvent* me = (QMouseEvent*)event;
-
-        if(me->button() == QMouseEvent::MidButton) {
-            if(m_copyUrlMenu)
-                urlClickSlot(m_urlToCopy,true);
-            else
-                emit textPasted();
-        }
-
-        if (me->button() == QMouseEvent::LeftButton) {
-            if (m_mousePressed)
-                urlClickSlot(m_urlToDrag);
-            m_mousePressed = false;
-        }
-    } else if(event->type() == QEvent::ContextMenu) {
-        return contextMenu((QContextMenuEvent*) event);
-    } else if(event->type()==QEvent::MouseButtonPress) {
-        QMouseEvent* me = (QMouseEvent*)event;
-        if (me->button() == QMouseEvent::LeftButton) {
-            m_urlToDrag = anchorAt(viewportToContents(me->pos()));
-            if (!m_urlToDrag.isNull()) {
-                m_mousePressed = true;
-                m_pressPosition = me->pos();
-                return true;
-            }
-        }
-    } else if(event->type() == QEvent::MouseMove) {
-        QMouseEvent* me = (QMouseEvent*)event;
-        if (m_mousePressed && (m_pressPosition-me->pos()).manhattanLength() > QApplication::startDragDistance()) {
-            m_mousePressed = false;
-            removeSelection();
-            KURL ux(m_urlToDrag);
-            if (m_urlToDrag.startsWith("##"))
-                ux=QString("irc://%1:%2/%3").arg(m_server->getServerName()).arg(m_server->getPort()).arg(m_urlToDrag.mid(2));
-            KURLDrag* u=new KURLDrag(ux,viewport());
-            u->drag();
+void IRCView::contentsMouseReleaseEvent(QMouseEvent *ev) {
+    if (ev->button() == Qt::MidButton) {
+        if(m_copyUrlMenu) {
+            urlClickSlot(m_urlToCopy,true);
+            return;
+        } else {
+            emit textPasted(true);
+            return;
         }
     }
-    return KTextBrowser::eventFilter(object,event);
+
+    if (ev->button() == QMouseEvent::LeftButton) {
+        if (m_mousePressed) {
+            urlClickSlot(m_urlToDrag);
+            return;
+        }
+
+        m_mousePressed = false;
+    }
+
+    KTextBrowser::contentsMouseReleaseEvent(ev);
+}
+
+void IRCView::contentsMousePressEvent(QMouseEvent* ev)
+{
+    if (ev->button() == QMouseEvent::LeftButton) {
+        m_urlToDrag = anchorAt(viewportToContents(ev->pos()));
+
+        if (!m_urlToDrag.isNull()) {
+            m_mousePressed = true;
+            m_pressPosition = ev->pos();
+            return;
+        }
+    }
+
+    KTextBrowser::contentsMousePressEvent(ev);
+}
+
+void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
+{
+    if (m_mousePressed && (m_pressPosition - ev->pos()).manhattanLength() > QApplication::startDragDistance()) {
+        m_mousePressed = false;
+        removeSelection();
+        KURL ux(m_urlToDrag);
+
+        if (m_urlToDrag.startsWith("##")) {
+            ux = QString("irc://%1:%2/%3").arg(m_server->getServerName()).arg(m_server->getPort()).arg(m_urlToDrag.mid(2));
+        }
+
+        KURLDrag* u = new KURLDrag(ux, viewport());
+        u->drag();
+        return;
+    }
+
+    KTextBrowser::contentsMouseMoveEvent(ev);
+}
+
+void IRCView::contentsContextMenuEvent(QContextMenuEvent* ev)
+{
+    bool block = contextMenu(ev);
+
+    if(!block) {
+        KTextBrowser::contentsContextMenuEvent(ev);
+    }
 }
 
 bool IRCView::contextMenu(QContextMenuEvent* ce) {
@@ -1103,7 +1120,6 @@ QString IRCView::timeStamp() {
 void IRCView::setChatWin(ChatWindow* chatWin) {
     m_chatWin = chatWin;
 }
-
 
 #include "ircview.moc"
 

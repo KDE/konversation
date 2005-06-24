@@ -76,7 +76,7 @@ class IRCView : public KTextBrowser
     void sendFile();
     void extendedPopup(int id);
     void autoText(const QString& text);
-    void textPasted();
+    void textPasted(bool useSelection);
     void popupCommand(int);
     void filesDropped(const QStrList&);
     void doSearch();
@@ -112,12 +112,13 @@ class IRCView : public KTextBrowser
     void replaceDecoration(QString& line,char decoration,char replacement);
     virtual void contentsDragMoveEvent(QDragMoveEvent* e);
     virtual void contentsDropEvent(QDropEvent* e);
+    virtual void contentsMouseReleaseEvent(QMouseEvent* ev);
+    virtual void contentsMousePressEvent(QMouseEvent* ev);
+    virtual void contentsMouseMoveEvent(QMouseEvent* ev);
+    virtual void contentsContextMenuEvent(QContextMenuEvent* ev);
 
     void hideEvent(QHideEvent* event);
     void showEvent(QShowEvent* event);
-    void focusInEvent(QFocusEvent* event);
-
-    bool eventFilter(QObject* object,QEvent* event);
 
     bool contextMenu(QContextMenuEvent* ce);
     
