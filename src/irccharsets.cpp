@@ -125,7 +125,10 @@ QString IRCCharsets::encodingForLocale()
 
 QTextCodec* IRCCharsets::codecForName( const QString& shortName )
 {
-  return QTextCodec::codecForName( shortName.ascii() );
+  if(shortName == "iso-2022-jp")
+    return QTextCodec::codecForName( "jis7" );
+  else
+    return QTextCodec::codecForName( shortName.ascii() );
 }
 
 IRCCharsets::IRCCharsets()
@@ -150,8 +153,17 @@ IRCCharsets::IRCCharsets()
     {
       m_shortNames.append( encodingName );
       m_simplifiedShortNames.append( encodingName.replace( reSimplify, "" ) );
+      
+       if(encodingName == "jis7") // Add iso-2022-jp which is same as jis7 but not in Qt
+	{
+	  it = m_descriptiveNames.insert(it, "Japanese (iso-2022-jp)");
+	  m_shortNames.append( "iso-2022-jp" );
+	  m_simplifiedShortNames.append( "ISO-2022-JP" );
+	  ++it;
+	}
       ++it;
     }
+    
   }
 }
 
