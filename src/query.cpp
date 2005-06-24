@@ -83,6 +83,8 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   awayLabel->hide();
   queryInput=new IRCInput(inputBox);
 
+  getTextView()->installEventFilter(queryInput);
+
   setLogfileName(QString::null);
 
   // connect the signals and slots

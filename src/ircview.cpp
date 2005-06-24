@@ -1121,6 +1121,16 @@ void IRCView::setChatWin(ChatWindow* chatWin) {
     m_chatWin = chatWin;
 }
 
+void IRCView::keyPressEvent(QKeyEvent* e)
+{
+    if((e->key() == Qt::Key_V) && (e->state() == Qt::ControlButton)) {
+        emit textPasted(false);
+        return;
+    }
+
+    KTextBrowser::keyPressEvent(e);
+}
+
 #include "ircview.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;

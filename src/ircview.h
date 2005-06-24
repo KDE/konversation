@@ -117,6 +117,8 @@ class IRCView : public KTextBrowser
     virtual void contentsMouseMoveEvent(QMouseEvent* ev);
     virtual void contentsContextMenuEvent(QContextMenuEvent* ev);
 
+    virtual void keyPressEvent(QKeyEvent* e);
+
     void hideEvent(QHideEvent* event);
     void showEvent(QShowEvent* event);
 

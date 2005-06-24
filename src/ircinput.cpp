@@ -200,9 +200,10 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
       }
     }
   }
-  else if (object->isA("IRCView") || object->isA("NickListView")) {
+  else if (object->isA("IRCView")) {
     if (event->type() == QEvent::KeyPress) {
       QKeyEvent* ke = static_cast<QKeyEvent*>(event);
+
       if (QChar(ke->ascii()).isPrint()) {
         setFocus();
         KonversationApplication::sendEvent(this,event);

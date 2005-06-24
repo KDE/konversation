@@ -60,6 +60,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
   awayLabel->hide();
   statusInput=new IRCInput(commandLineBox);
 
+  getTextView()->installEventFilter(statusInput);
 
   setLog(KonversationApplication::preferences.getLog());
   setLogfileName("konversation");

@@ -244,6 +244,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   awayLabel->hide();
   channelInput = new IRCInput(commandLineBox);
 
+  getTextView()->installEventFilter(channelInput);
+
   // Set the widgets size policies
   m_topicButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
   topicLine->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum));
