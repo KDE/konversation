@@ -37,8 +37,6 @@
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
-  // install eventFilter() function to trap TAB and cursor keys
-  installEventFilter(this);
   // connect history signal
   connect(this,SIGNAL (history(bool)) ,this,SLOT (getHistory(bool)) );
   // add one empty line to the history (will be overwritten with newest entry)
@@ -108,110 +106,96 @@ void IRCInput::setText(const QString& text)
   setCursorPosition(0,text.length()+1);
 }
 
-// Take care of Tab, Cursor and so on
 bool IRCInput::eventFilter(QObject *object,QEvent *event)
-{ // TODO Rewrite in the proper event handlers
-  if (object==this) {
-    switch(event->type())
-    {
-      case QEvent::KeyPress:
-      {
-        QKeyEvent* keyEvent=(QKeyEvent*) event;
-        switch(keyEvent->key())
-        {
-          case Key_Tab:
-            emit nickCompletion();
-            return true;
-          break;
-
-          case Key_Up:
-            emit history(true);
-            return true;
-          break;
-
-          case Key_Down:
-            emit history(false);
-            return true;
-          break;
-          // page up / down keys are now handled in chatwindow.cpp
-          case Key_Enter:
-          case Key_Return:
-          {
-            if(text().length()) addHistory(text());
-            if(completionBox->isHidden()) {
-              // Ctrl+Enter is a special case in which commands should be send as normal messages
-              if ( keyEvent->state() & ControlButton ) {
-                emit envelopeCommand();
-              } else {
-                emit submit();
-              }
-            } else {
-              insertCompletion(completionBox->currentText());
-              completionBox->hide();
-            }
-            // prevent widget from adding lines
-            return true;
-          }
-          break;
-
-          case Key_V:
-          {
-              if ( keyEvent->state() & ControlButton ) {
-/*		QCString subtype("html");
-                QString html =  kapp->clipboard()->text(subtype, QClipboard::Clipboard );
-		if(!html.isEmpty() && subtype == "html")
-		  insertHtml(html);
-		else*/
-		  insert( kapp->clipboard()->text(QClipboard::Clipboard));
-		
-                return true;
-              }
-          }
-          break;
-
-          default:
-            // Check if the keystroke actually produced text. If not it was just a qualifier.
-            if(!keyEvent->text().isEmpty())
-            {
-              if(getCompletionMode()!='\0')
-              {
-                setCompletionMode('\0');
-                emit endCompletion();
-              }
-              completionBox->hide();
-            }
-            // support ASCII BEL
-            if(keyEvent->ascii()==7) insert("%G");
-            // support ^U (delete text in input box)
-            if(keyEvent->ascii()==21) clear();
-            // support ^W (delete word)
-            // KDE has CTRL Backspace for that ...
-  //          else if(keyEvent->ascii()==23)
-  //          {
-  //            cursorWordBackward(true);
-  //            cut();
-  //          }
-  //          else kdDebug() << keyEvent->ascii() << endl;
-        }
-      }
-      // To prevent compiler warnings about unhandled case values
-      default:
-      {
-      }
-    }
-  }
-  else if (object->isA("IRCView")) {
+{
+  if (object->isA("IRCView")) {
     if (event->type() == QEvent::KeyPress) {
       QKeyEvent* ke = static_cast<QKeyEvent*>(event);
 
       if (QChar(ke->ascii()).isPrint()) {
         setFocus();
         KonversationApplication::sendEvent(this,event);
-        return TRUE;
+        return true;
       }
     }
   }
-  return KTextEdit::eventFilter(object,event); //XXX any reason to skip KTextEdit?
+
+  return KTextEdit::eventFilter(object,event);
+}
+
+// Take care of Tab, Cursor and so on
+void IRCInput::keyPressEvent(QKeyEvent* e)
+{
+  switch(e->key())
+  {
+    case Key_Tab:
+      emit nickCompletion();
+      return;
+      break;
+
+    case Key_Up:
+      emit history(true);
+      return;
+      break;
+
+    case Key_Down:
+      emit history(false);
+      return;
+      break;
+
+    case Key_Enter:
+    case Key_Return:
+    {
+      if(text().length()) addHistory(text());
+      if(completionBox->isHidden()) {
+        // Ctrl+Enter is a special case in which commands should be send as normal messages
+        if ( e->state() & ControlButton ) {
+          emit envelopeCommand();
+        } else {
+          emit submit();
+        }
+      } else {
+        insertCompletion(completionBox->currentText());
+        completionBox->hide();
+      }
+      // prevent widget from adding lines
+      return;
+    }
+    break;
+
+    case Key_V:
+    {
+      if ( e->state() & ControlButton ) {
+/*        QCString subtype("html");
+        QString html =  kapp->clipboard()->text(subtype, QClipboard::Clipboard );
+        if(!html.isEmpty() && subtype == "html")
+        insertHtml(html);
+        else*/
+        insert( kapp->clipboard()->text(QClipboard::Clipboard));
+
+        return;
+      }
+    }
+    break;
+
+    default:
+      // Check if the keystroke actually produced text. If not it was just a qualifier.
+      if(!e->text().isEmpty())
+      {
+        if(getCompletionMode()!='\0')
+        {
+          setCompletionMode('\0');
+          emit endCompletion();
+        }
+        completionBox->hide();
+      }
+      // support ASCII BEL
+      if(e->ascii()==7) insert("%G");
+      // support ^U (delete text in input box)
+      if(e->ascii()==21) clear();
+  }
+
+  QTextEdit::keyPressEvent(e);
 }
 
 void IRCInput::addHistory(const QString& line)
