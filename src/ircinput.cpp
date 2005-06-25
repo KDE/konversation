@@ -163,20 +163,20 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
     }
     break;
 
-    case Key_V:
-    {
-      if ( e->state() & ControlButton ) {
-/*        QCString subtype("html");
-        QString html =  kapp->clipboard()->text(subtype, QClipboard::Clipboard );
-        if(!html.isEmpty() && subtype == "html")
-        insertHtml(html);
-        else*/
-        insert( kapp->clipboard()->text(QClipboard::Clipboard));
-
-        return;
-      }
-    }
-    break;
+//     case Key_V:
+//     {
+//       if ( e->state() & ControlButton ) {
+//         QCString subtype("html");
+//         QString html =  kapp->clipboard()->text(subtype, QClipboard::Clipboard );
+//         if(!html.isEmpty() && subtype == "html")
+//         insertHtml(html);
+//         else
+//         insert( kapp->clipboard()->text(QClipboard::Clipboard));
+// 
+//         return;
+//       }
+//     }
+//     break;
 
     default:
       // Check if the keystroke actually produced text. If not it was just a qualifier.
