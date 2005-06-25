@@ -2403,15 +2403,18 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
     m_allNicks.insert(lcNewname, nickInfo);
     // Rename key in the joined and unjoined lists.
     QStringList nickChannels = getNickChannels(lcNickname);
-    for (unsigned int index=0;index<nickChannels.count();index++)
+    QStringList::iterator itEnd = nickChannels.end();
+
+    for(QStringList::iterator it = nickChannels.begin(); it != itEnd; ++it)
     {
-      const ChannelNickMap *channel = getChannelMembers(nickChannels[index]);
+      const ChannelNickMap *channel = getChannelMembers(*it);
       Q_ASSERT(channel);
       ChannelNickPtr member = (*channel)[lcNickname];
       Q_ASSERT(member);
       const_cast<ChannelNickMap *>(channel)->remove(lcNickname);
       const_cast<ChannelNickMap *>(channel)->insert(lcNewname, member);
     }
+
     // Rename key in Query list.
     if (m_queryNicks.contains(lcNickname))
     {

@@ -127,8 +127,11 @@ void ServerISON::recalculateAddressees()
         if (addresseeToOnlineNickMap.contains(uid))
         {
           QStringList nicknames = addresseeToOnlineNickMap[uid];
-          for (unsigned int index=0; index<nicknames.count(); index++)
-            ISONMap.insert(nicknames[index].lower(), nicknames[index], true);
+          QStringList::iterator itEnd = nicknames.end();
+
+          for(QStringList::iterator it = nicknames.begin(); it != itEnd; ++it) {
+            ISONMap.insert((*it).lower(), (*it), true);
+          }
         }
         else
         {
@@ -154,7 +157,7 @@ void ServerISON::recalculateAddressees()
             }
           }
         }
-      }    
+      }
     }
     // The part of the ISON list due to the addressbook.
     m_addresseesISON = ISONMap.values();
@@ -163,22 +166,31 @@ void ServerISON::recalculateAddressees()
     // under a different nickname?
     QStringList prefsWatchList =
       KonversationApplication::preferences.getNotifyListByGroup(m_server->getServerGroup());
-    for (unsigned int index=0; index<prefsWatchList.count(); index++)
-      ISONMap.insert(prefsWatchList[index].lower(), prefsWatchList[index], true);
+    QStringList::iterator itEnd = prefsWatchList.end();
+
+    for(QStringList::iterator it = prefsWatchList.begin(); it != itEnd; ++it) {
+      ISONMap.insert((*it).lower(), (*it), true);
+    }
+
     // Build final watch list.
     m_watchList = ISONMap.values();
     // Eliminate nicks that are online in a joined channel, since there is no point
     // in doing an ISON on such nicks.
     m_ISONList.clear();
-    for (unsigned int index=0; index<m_watchList.count(); index++)
-      if (m_server->getNickJoinedChannels(m_watchList[index]).isEmpty())
-        m_ISONList.append(m_watchList[index]);
+    itEnd = m_watchList.end();
+
+    for(QStringList::iterator it = m_watchList.begin(); it != itEnd; ++it) {
+      if (m_server->getNickJoinedChannels(*it).isEmpty()) {
+        m_ISONList.append(*it);
+      }
+    }
   }
   else
   {
     m_addresseesISON.clear();
     m_ISONList.clear();
   }
+
   m_ISONList_invalid = false;
 }
 
