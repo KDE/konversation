@@ -7,6 +7,8 @@ Changes from 0.18 to 0.19
 - Fixed alpha blending of nick icons
 - Fixed handling of multiple URLs in one message
 - Added support for iso-2022-jp encoding
+- Nickname watcher was not working in some setups
+- Let keyboard search work in nicklist ( Qt 3.3.4 seems to broken with this < Qt 3.3.4 works fine )
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
