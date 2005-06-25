@@ -33,6 +33,8 @@
 #include <kstandarddirs.h>
 #include <dcopclient.h>
 #include <scriptmanager.h>
+#include <ktabwidget.h>
+#include <kpushbutton.h>
 
 #include <qpainter.h>
 #include <qnamespace.h>
@@ -91,10 +93,21 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
   nicksOnlinePanel=0;
 
-  viewContainer=new LedTabWidget(this,"main_window_tab_widget");
+  viewContainer = new KTabWidget(this, "main_window_tab_widget");
+  viewContainer->setTabReorderingEnabled(true);
+  viewContainer->setTabCloseActivatePrevious(true);
+  viewContainer->setAutomaticResizeTabs(true);
+//  viewContainer->setHoverCloseButtonDelayed(false);
   setCentralWidget(viewContainer);
   updateTabPlacement();
   viewContainer->hide();
+  KPushButton* closeBtn = new KPushButton(viewContainer);
+  closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));
+  closeBtn->resize(22, 22);
+  closeBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  viewContainer->setCornerWidget(closeBtn);
+  closeBtn->hide();
+  connect(closeBtn, SIGNAL(clicked()), this, SLOT(closeTab()));
 
   KStdAction::quit(this,SLOT(quitProgram()),actionCollection()); // file_quit
 
@@ -212,8 +225,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
                  statusBar(), SLOT( clear() ) );
 
   connect( viewContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changeView(QWidget*)) );
-  connect( viewContainer,SIGNAL (closeTab(QWidget*)),this,SLOT (closeView(QWidget*)) );
-  connect(this, SIGNAL (closeTab(int)), viewContainer, SLOT (tabClosed(int)));
+  connect( viewContainer, SIGNAL(closeRequest(QWidget*)), this, SLOT(closeView(QWidget*)));
 
   // set up system tray
   tray = new Konversation::TrayIcon(this);
@@ -265,6 +277,7 @@ void KonversationMainWindow::updateTabPlacement()
 {
   viewContainer->setTabPosition((KonversationApplication::preferences.getTabPlacement()==Preferences::Top) ?
                                  QTabWidget::Top : QTabWidget::Bottom);
+//  getViewContainer()->setHoverCloseButton(KonversationApplication::preferences.getCloseButtonsOnTabs());
 }
 
 void KonversationMainWindow::openPreferences()
@@ -370,7 +383,7 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
 
             if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog)
             {
-              viewContainer->addTab(view,label,color,on, index);
+              viewContainer->insertTab(view, label, index);
               placed = 1;
               break;
             }
@@ -389,7 +402,7 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
   
         if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
         {
-          viewContainer->addTab(view,label,color,on, sindex + 1);
+          viewContainer->insertTab(view, label, sindex + 1);
           placed = 1;
 
           break;
@@ -412,7 +425,7 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
 
             if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog && wtype != ChatWindow::Query)
             {
-              viewContainer->addTab(view,label,color,on, index);
+              viewContainer->insertTab(view, label, index);
               placed = 1;
               break;
             }
@@ -439,7 +452,7 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
             if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog &&
                 wtype != ChatWindow::Query && wtype != ChatWindow::DccChat)
             {
-              viewContainer->addTab(view,label,color,on, index);
+              viewContainer->insertTab(view, label, index);
               placed = 1;
               break;
             }
@@ -454,7 +467,7 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
   }
 
   if (!placed) 
-    viewContainer->addTab(view,label,color,on);
+    viewContainer->insertTab(view, label);
   viewContainer->show();
 
   // Check, if user was typing in old input line
@@ -477,7 +490,7 @@ void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& l
     showView(view);
   }
 
-  connect(view,SIGNAL (online(ChatWindow*,bool)),viewContainer,SLOT (setTabOnline(ChatWindow*,bool)) );
+// FIXME  connect(view,SIGNAL (online(ChatWindow*,bool)),viewContainer,SLOT (setTabOnline(ChatWindow*,bool)) );
 }
 
 void KonversationMainWindow::showView(ChatWindow* view)
@@ -805,8 +818,8 @@ void KonversationMainWindow::newText(QWidget* widget,const QString& highlightCol
 {
   ChatWindow* view=static_cast<ChatWindow*>(widget);
 
-  if(view!=getViewContainer()->currentPage())
-    getViewContainer()->changeTabState(view,true,important,highlightColor);
+  if(view != getViewContainer()->currentPage())
+    getViewContainer()->setTabColor(view, QColor(highlightColor));
 
 }
 
@@ -957,7 +970,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 
   updateFrontView();
 
-  viewContainer->changeTabState(view, false, false, QString::null);
+  viewContainer->setTabColor(view, QColor());
   view->adjustFocus();
 }
 
@@ -1107,14 +1120,14 @@ void KonversationMainWindow::channelPrefsChanged()
   emit prefsChanged();
 }
 
-LedTabWidget* KonversationMainWindow::getViewContainer()
+KTabWidget* KonversationMainWindow::getViewContainer()
 {
   return viewContainer;
 }
 
 void KonversationMainWindow::updateFonts()
 {
-  getViewContainer()->updateTabs();
+// FIXME  getViewContainer()->updateTabs();
 }
 
 void KonversationMainWindow::updateLag(Server* lagServer,int msec)
@@ -1204,8 +1217,7 @@ void KonversationMainWindow::resetLag()
 
 void KonversationMainWindow::closeTab()
 {
-  // -1 = close currently visible tab
-  emit closeTab(-1);
+  closeView(getViewContainer()->currentPage());
 }
 
 void KonversationMainWindow::nextTab()

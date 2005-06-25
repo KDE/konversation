@@ -96,11 +96,6 @@ void ChatWindow::setServer(Server* newServer)
 
 void ChatWindow::setMainWindow(KonversationMainWindow *mainWindow) {
   m_mainWindow = mainWindow;
-  //setMainWindow may be called in a constructor, so make sure we call adjust
-  //focus after it is set up.
-
-  // FIXME: Please double-check if this is really needed. It steals focus to a hidden tab!
-  //  QTimer::singleShot(0, this, SLOT(adjustFocus()));
 }
 
 Server* ChatWindow::getServer()

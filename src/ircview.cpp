@@ -723,6 +723,12 @@ void IRCView::doAppend(QString newLine, bool important, bool self) {
 
     if(important || !KonversationApplication::preferences.getHideUnimportantEvents()) {
         if(!self) {
+            if(m_highlightColor.isEmpty() && important) {
+                m_highlightColor = "#0000ff";
+            } else if(m_highlightColor.isEmpty() && !important) {
+                m_highlightColor = "#00ff00";
+            }
+
             emit newText(m_highlightColor,important);
         }
 

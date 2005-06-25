@@ -33,6 +33,7 @@
 class KToggleAction;
 class KActionMenu;
 class KScriptManager;
+class KTabWidget;
 
 class KonviBookmarkHandler;
 class StatusPanel;
@@ -47,7 +48,6 @@ class Ignore;
 class NicksOnline;
 class QuickButtonsDialog;
 class UrlCatcher;
-class LedTabWidget;
 
 namespace Konversation
 {
@@ -209,8 +209,8 @@ class KonversationMainWindow : public KMainWindow
 
     virtual bool event(QEvent* e);
     
-    LedTabWidget* getViewContainer();
-    LedTabWidget* viewContainer;
+    KTabWidget* getViewContainer();
+    KTabWidget* viewContainer;
 
     Server* frontServer;
     QGuardedPtr<ChatWindow> m_frontView;
