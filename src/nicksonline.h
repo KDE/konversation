@@ -81,9 +81,11 @@ class NicksOnline : public ChatWindow
 
   public slots:
   
-    // Called from KonversationMainWindow when server informs it of a change
-    // in the watched nicks.
-    void setOnlineList(const QString& serverName,const QStringList& list,bool changed);
+    /**
+    * Refresh the nicklistview for a single server.
+    * @param server            The server to be refreshed.
+    */
+    void updateServerOnlineList(Server* server);
 
   protected slots:
     /**
@@ -129,11 +131,6 @@ class NicksOnline : public ChatWindow
     virtual void childAdjustFocus();
 
   private:
-    /**
-    * Refresh the nicklistview for a single server.
-    * @param server            The server to be refreshed.
-    */
-    void updateServerOnlineList(Server* server);
     /**
     * Returns the named child of parent item in a KListView.
     * @param parent            Pointer to a QListViewItem.

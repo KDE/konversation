@@ -104,7 +104,7 @@ class KonversationMainWindow : public KMainWindow
     void openPrefsDialog(Preferences::Pages page);
     void showQuickConnectDialog();
     void quitServer();
-    void nicksNowOnline(const QString& serverName,const QStringList& list,bool changed);
+    void nicksNowOnline(Server*);
     void closeTab(int id);
     void endNotification();
 

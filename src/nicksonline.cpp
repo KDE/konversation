@@ -255,12 +255,17 @@ void NicksOnline::updateServerOnlineList(Server* servr) {
     QListViewItem* offlineRoot = findItemChild(networkRoot, c_i18nOffline);
     if (!offlineRoot) offlineRoot = new KListViewItem(networkRoot, c_i18nOffline);
     offlineRoot->setText(nlvcServerName, serverName);
+
     // Get watch list.
     QStringList watchList = servr->getWatchList();
-    for (unsigned int nickIndex = 0; nickIndex<watchList.count(); nickIndex++) {
-        QString nickname = watchList[nickIndex];
+    QStringList::iterator itEnd = watchList.end();
+    QString nickname;
+
+    for (QStringList::iterator it = watchList.begin(); it != itEnd; ++it) {
+        nickname = (*it);
         NickInfoPtr nickInfo = getOnlineNickInfo(networkName, nickname);
-        if (nickInfo) {
+
+        if (nickInfo && nickInfo->getPrintedOnline()) {
             // Nick is online.
             // Which server did NickInfo come from?
             Server* server=nickInfo->getServer();
@@ -291,14 +296,17 @@ void NicksOnline::updateServerOnlineList(Server* servr) {
             else
                 nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
                                         QIconSet::Small, QIconSet::Disabled, QIconSet::Off));
+
             QStringList channelList = server->getNickChannels(nickname);
-            for (unsigned int channelIndex=0; channelIndex<channelList.count(); channelIndex++) {
+            QStringList::iterator itEnd2 = channelList.end();
+
+            for (QStringList::iterator it2 = channelList.begin(); it2 != itEnd2; ++it2) {
                 // Known channels where nickname is online and mode in each channel.
                 // FIXME: If user connects to multiple servers in same network, the
                 // channel info will differ between the servers, resulting in inaccurate
                 // mode and led info displayed.
 
-                QString channelName = channelList[channelIndex];
+                QString channelName = (*it2);
 
                 ChannelNickPtr channelNick = server->getChannelNick(channelName, nickname);
                 QString nickMode;
@@ -832,12 +840,6 @@ void NicksOnline::refreshItem(QListViewItem* item) {
 }
 
 void NicksOnline::childAdjustFocus() {}
-
-void NicksOnline::setOnlineList(const QString& serverName,const QStringList& /*list*/,
-                                bool /*changed*/) {
-    Server *server = static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
-    updateServerOnlineList(server);
-}
 
 #include "nicksonline.moc"
 

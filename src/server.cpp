@@ -799,7 +799,7 @@ void Server::notifyResponse(const QString& nicksOnline) {
         }
 
         // Note: The list emitted in this signal does not include nicks in joined channels.
-        emit nicksNowOnline(this,nickList,nicksOnlineChanged);
+        emit nicksNowOnline(this, nickList, nicksOnlineChanged);
     }
 
     // Next round
@@ -2210,26 +2210,34 @@ bool Server::setNickOffline(const QString& nickname)
     if (m_queryNicks.contains(lcNickname)) m_queryNicks.remove(lcNickname);
     // Delete the nickname from all channels (joined or unjoined).
     QStringList nickChannels = getNickChannels(lcNickname);
-    for (unsigned int index=0; index<nickChannels.count(); index++)
+    QStringList::iterator itEnd = nickChannels.end();
+
+    for(QStringList::iterator it = nickChannels.begin(); it != itEnd; ++it)
     {
-      QString channel = nickChannels[index];
+      QString channel = (*it);
       removeChannelNick(channel, lcNickname);
     }
+
     // Delete NickInfo.
     if (m_allNicks.contains(lcNickname)) m_allNicks.remove(lcNickname);
     // If the nick was in the watch list, emit various signals and messages.
     if (isWatchedNick(nickname))
     {
       emit watchedNickChanged(this, nickname, false);
-      if (!addressee.isEmpty())
+
+      if (!addressee.isEmpty()) {
         Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
+      }
+
       getMainWindow()->appendToFrontmost(i18n("Notify"),
         i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()),statusView);
 
       static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOffline(getStatusView(), nickname);
-      nickInfo->setPrintedOnline(false);
     }
+
+    nickInfo->setPrintedOnline(false);
   }
+
   return (nickInfo != 0);
 }
 

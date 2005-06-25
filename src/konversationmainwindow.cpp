@@ -1033,7 +1033,7 @@ void KonversationMainWindow::openNicksOnlinePanel()
 
     connect(nicksOnlinePanel,SIGNAL (doubleClicked(const QString&,const QString&)),this,SLOT (notifyAction(const QString&,const QString&)) );
 
-    connect(this,SIGNAL (nicksNowOnline(const QString&,const QStringList&,bool)),nicksOnlinePanel,SLOT (setOnlineList(const QString&,const QStringList&,bool)) );
+    connect(this,SIGNAL (nicksNowOnline(Server*)),nicksOnlinePanel,SLOT (updateServerOnlineList(Server*)) );
     (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(true);
   } else if((ChatWindow *)m_frontView != (ChatWindow *)nicksOnlinePanel){
     showView(nicksOnlinePanel);
@@ -1079,7 +1079,7 @@ void KonversationMainWindow::openNotify()
 // TODO: Let an own class handle notify things
 void KonversationMainWindow::setOnlineList(Server* notifyServer,const QStringList& list, bool changed)
 {
-  emit nicksNowOnline(notifyServer->getServerName(),list,changed);
+  emit nicksNowOnline(notifyServer);
   if (changed && nicksOnlinePanel) newText(nicksOnlinePanel, QString::null, true);
 }
 
