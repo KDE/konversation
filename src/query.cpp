@@ -95,7 +95,8 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   connect(getTextView(), SIGNAL(textPasted(bool)), queryInput, SLOT(paste(bool)));
   connect(getTextView(),SIGNAL (gotFocus()),queryInput,SLOT (setFocus()) );
 
-  connect(textView,SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
+  connect(textView, SIGNAL(updateTabNotification(Konversation::TabNotifyType)),
+          this, SLOT(activateTabNotification(Konversation::TabNotifyType)));
   connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
   connect(textView,SIGNAL (extendedPopup(int)),this,SLOT (popup(int)) );
   connect(textView,SIGNAL (autoText(const QString&)),this,SLOT (sendQueryText(const QString&)) );
@@ -186,7 +187,7 @@ void Query::sendQueryText(const QString& sendLine)
 
 void Query::newTextInView(const QString& highlightColor,bool important)
 {
-  emit newText(this,highlightColor,important);
+//   emit newText(this,highlightColor,important);
 }
 
 void Query::updateFonts()

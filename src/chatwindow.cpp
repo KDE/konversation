@@ -42,6 +42,7 @@ ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
   m_notificationsEnabled = true;
   m_channelEncodingSupported = false;
   m_mainWindow=NULL;
+  m_currentTabNotify = Konversation::tnfNone;
 
   setMargin(margin());
   setSpacing(spacing());
@@ -392,6 +393,45 @@ void ChatWindow::emitUpdateInfo()
 {
   QString info = getName();
   emit updateInfo(info);
+}
+
+void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
+{
+  if(type >= m_currentTabNotify) {
+    return;
+  }
+
+  m_currentTabNotify = type;
+
+  QString colorString;
+
+  switch(type) {
+    case Konversation::tnfNick:
+      colorString = KonversationApplication::preferences.getHighlightNickColor().name();
+      break;
+
+    case Konversation::tnfHighlight:
+      colorString = "#55c8c0";
+      break;
+
+    case Konversation::tnfNormal:
+      colorString = "#0000ff";
+      break;
+
+    case Konversation::tnfControl:
+      colorString = "#4eb959";
+      break;
+
+    default:
+      break;
+  }
+
+  emit updateTabNotification(this, colorString);
+}
+
+void ChatWindow::resetTabNotification()
+{
+  m_currentTabNotify = Konversation::tnfNone;
 }
 
 #include "chatwindow.moc"

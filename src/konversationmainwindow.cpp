@@ -352,7 +352,7 @@ void KonversationMainWindow::appendToFrontmost(const QString& type,const QString
     // FIXME: this signal should be sent from the status panel instead, so it
     //        can be using the correct highlight color, would be more consistent
     //        anyway!
-    newText(serverView,QString::null,true);
+    // FIXME newText(serverView,QString::null,true);
   }
   else
     m_frontView->appendServerMessage(type,message);
@@ -677,7 +677,7 @@ void KonversationMainWindow::addDccPanel()
       dccPanelOpen=true;
     }
     // no highlight color for DCC panels
-    newText(dccPanel,QString::null,true);
+    // FIXME newText(dccPanel,QString::null,true);
   }
 }
 
@@ -719,7 +719,7 @@ void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nic
   {
     DccChat* dccChatPanel=new DccChat(getViewContainer(),frontServer,myNick,nick,arguments,listen);
     addView(dccChatPanel,3,dccChatPanel->getName());
-    connect(dccChatPanel,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
+    connect(dccChatPanel, SIGNAL(updateTabNotification(QWidget*, const QString&)), this, SLOT(newText(QWidget*, const QString&)));
     if(listen) 
       frontServer->queue(QString("PRIVMSG %1 :\x01%2 CHAT chat %3 %4\x01").arg(nick).arg("DCC").arg(numericalIp).arg(dccChatPanel->getPort()));
   }
@@ -741,7 +741,7 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
   // ... then put it into the tab widget, otherwise we'd have a race with server member
   addView(statusView,2,server->getServerName(),false);
 
-  connect(statusView,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
+  connect(statusView, SIGNAL(updateTabNotification(QWidget*, const QString&)), this, SLOT(newText(QWidget*,const QString&)));
   connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );
   // TODO: Why was this here?  Delete channelPrefsChanged method as it does not
   // appear to do anything since statusView never emits signal prefsChanged.
@@ -769,7 +769,7 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
   channel->setName(name);
   addView(channel,1,newname);
 
-  connect(channel,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
+  connect(channel, SIGNAL(updateTabNotification(QWidget*, const QString&)), this, SLOT(newText(QWidget*, const QString&)));
   // TODO: Why is this here?  Delete channelPrefsChanged as it does not appear to
   // do anything since channel never emits prefsChanged.
   // connect(channel,SIGNAL (prefsChanged()),this,SLOT (channelPrefsChanged()) );
@@ -789,7 +789,7 @@ Query* KonversationMainWindow::addQuery(Server* server, const NickInfoPtr& nickI
   query->setNickInfo(nickInfo);
   addView(query,0,name, true, weinitiated);
 
-  connect(query,SIGNAL (newText(QWidget*,const QString&,bool)),this,SLOT (newText(QWidget*,const QString&,bool)) );
+  connect(query, SIGNAL(updateTabNotification(QWidget*, const QString&)), this, SLOT(newText(QWidget*,const QString&)));
   connect(server,SIGNAL (awayState(bool)),query,SLOT (indicateAway(bool)) );
 
   return query;
@@ -814,13 +814,13 @@ ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
   return channelListPanel;
 }
 
-void KonversationMainWindow::newText(QWidget* widget,const QString& highlightColor,bool important)
+void KonversationMainWindow::newText(QWidget* widget, const QString& highlightColor)
 {
-  ChatWindow* view=static_cast<ChatWindow*>(widget);
+  ChatWindow* view = static_cast<ChatWindow*>(widget);
 
-  if(view != getViewContainer()->currentPage())
+  if(view != getViewContainer()->currentPage()) {
     getViewContainer()->setTabColor(view, QColor(highlightColor));
-
+  }
 }
 
 void KonversationMainWindow::updateFrontView()
@@ -951,6 +951,7 @@ void KonversationMainWindow::updateFrontView()
 void KonversationMainWindow::changeView(QWidget* viewToChange)
 {
   ChatWindow* view = static_cast<ChatWindow*>(viewToChange);
+  view->resetTabNotification();
   
   if(m_frontView) {
     previousFrontView = m_frontView;
@@ -1093,7 +1094,7 @@ void KonversationMainWindow::openNotify()
 void KonversationMainWindow::setOnlineList(Server* notifyServer,const QStringList& list, bool changed)
 {
   emit nicksNowOnline(notifyServer);
-  if (changed && nicksOnlinePanel) newText(nicksOnlinePanel, QString::null, true);
+// FIXME  if (changed && nicksOnlinePanel) newText(nicksOnlinePanel, QString::null, true);
 }
 
 void KonversationMainWindow::notifyAction(const QString& serverName,const QString& nick)

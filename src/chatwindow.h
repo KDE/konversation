@@ -19,6 +19,7 @@
 #include <qfile.h>
 
 #include "identity.h"
+#include "common.h"
 
 /*
   @author Dario Abatianni
@@ -143,6 +144,7 @@ class ChatWindow : public QVBox
      *  It is ignored if this tab isn't focused.
      */
     void updateInfo(const QString &info);
+    void updateTabNotification(QWidget* chatWin, const QString& highlightColor);
     
   public slots:
     void logText(const QString& text);
@@ -160,10 +162,15 @@ class ChatWindow : public QVBox
 
     virtual void setNotificationsEnabled(bool enable) { m_notificationsEnabled = enable; }
 
+    void resetTabNotification();
+
     
   protected slots:
     ///Used to disable functions when not connected
     virtual void serverOnline(bool online);
+
+    ///Checks if we should update tab notification or not
+    void activateTabNotification(Konversation::TabNotifyType type);
 
   protected:
     
@@ -210,6 +217,7 @@ class ChatWindow : public QVBox
      */
     KonversationMainWindow *m_mainWindow;
 
+    Konversation::TabNotifyType m_currentTabNotify;
 };
 
 #endif

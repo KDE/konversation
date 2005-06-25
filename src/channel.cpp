@@ -286,7 +286,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
 
   connect(getTextView(), SIGNAL(textPasted(bool)), channelInput, SLOT(paste(bool)));
   connect(getTextView(),SIGNAL (gotFocus()),channelInput,SLOT (setFocus()) );
-  connect(getTextView(),SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
+  connect(getTextView(), SIGNAL(updateTabNotification(Konversation::TabNotifyType)),
+          this, SLOT(activateTabNotification(Konversation::TabNotifyType)));
   connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
   connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendChannelText(const QString&)) );
 
@@ -817,7 +818,7 @@ void Channel::sendChannelText(const QString& sendLine)
 
 void Channel::newTextInView(const QString& highlightColor,bool important)
 {
-  emit newText(this,highlightColor,important);
+//   emit newText(this,highlightColor,important);
 }
 
 void Channel::setNickname(const QString& newNickname)

@@ -379,7 +379,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     }
 
     if(doHighlight && m_server && (whoSent != ownNick) && !self) {
-        m_highlightColor = QString::null;
+        QString highlightColor;
 
         // FIXME: We got to get rid of m_server dependance here
         if(KonversationApplication::preferences.getHighlightNick() &&
@@ -387,12 +387,14 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
                                                   QRegExp::escape(ownNick.lower()) +
                                                   "([^\\d\\w]|$)")) != -1) {
             // highlight current nickname
-            m_highlightColor = KonversationApplication::preferences.getHighlightNickColor().name();
+            highlightColor = KonversationApplication::preferences.getHighlightNickColor().name();
+            m_tabNotification = Konversation::tnfNick;
         } else {
             QPtrList<Highlight> highlightList = KonversationApplication::preferences.getHighlightList();
             QPtrListIterator<Highlight> it(highlightList);
             Highlight* highlight = it.current();
             bool patternFound = false;
+            int index = 0;
 
             while(highlight) {
                 if(highlight->getRegExp()) {
@@ -408,13 +410,15 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
                 if(!patternFound) {
                     ++it;
                     highlight = it.current();
+                    ++index;
                 } else {
                     break;
                 }
             }
 
             if(patternFound) {
-                m_highlightColor = highlight->getColor().name();
+                highlightColor = highlight->getColor().name();
+                m_tabNotification = Konversation::tnfHighlight;
 
                 if(KonversationApplication::preferences.getHighlightSoundEnabled()) {
                     konvApp->sound()->play(highlight->getSoundURL());
@@ -426,8 +430,8 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
         }
 
         // apply found highlight color to line
-        if(!m_highlightColor.isEmpty()) {
-            filteredLine = "<font color=\"" + m_highlightColor + "\">" + filteredLine + "</font>";
+        if(!highlightColor.isEmpty()) {
+            filteredLine = "<font color=\"" + highlightColor + "\">" + filteredLine + "</font>";
         }
     } else if(doHighlight && (whoSent == ownNick) && KonversationApplication::preferences.getHighlightOwnLines()) {
         // highlight own lines
@@ -448,6 +452,7 @@ void IRCView::append(const QString& nick,const QString& message) {
     QString line;
     QString nickLine = "%2";
     QString color;
+    m_tabNotification = Konversation::tnfNormal;
 
     if(nick != m_server->getNickname()) {
         bool linkNicks = KonversationApplication::preferences.getUseClickableNicks();
@@ -496,6 +501,7 @@ void IRCView::append(const QString& nick,const QString& message) {
 void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool self) {
     QString channelColor=KonversationApplication::preferences.getColor("ChannelMessage");
     QString line;
+    m_tabNotification = Konversation::tnfNone;
 
     if(suppressTimestamps) {
         line = QString("<p><font color=\"#" + channelColor + "\">" + message + "</font></p>\n");
@@ -511,6 +517,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message) {
     QString line;
     QString nickLine = "%2";
     QString color;
+    m_tabNotification = Konversation::tnfNormal;
 
     if(nick != m_server->getNickname()) {
         bool linkNicks = KonversationApplication::preferences.getUseClickableNicks();
@@ -562,6 +569,7 @@ void IRCView::appendAction(const QString& nick,const QString& message) {
     QString line;
     QString nickLine = "%2";
     QString color;
+    m_tabNotification = Konversation::tnfNormal;
 
     if(nick != m_server->getNickname()) {
         bool linkNicks = KonversationApplication::preferences.getUseClickableNicks();
@@ -609,6 +617,7 @@ void IRCView::appendAction(const QString& nick,const QString& message) {
 
 void IRCView::appendServerMessage(const QString& type, const QString& message) {
     QString m_serverColor = KonversationApplication::preferences.getColor("ServerMessage");
+    m_tabNotification = Konversation::tnfControl;
 
     // Fixed width font option for MOTD
     QString fixed;
@@ -641,6 +650,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
     QString commandColor = KonversationApplication::preferences.getColor("CommandMessage");
     QString line;
     QString prefix="***";
+    m_tabNotification = Konversation::tnfControl;
 
     if(type == i18n("Join")) {
         prefix="-->";
@@ -671,6 +681,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     QString message = rawMessage;
     QString nick = firstColumn;
     QString backlogColor = KonversationApplication::preferences.getColor("BacklogMessage");
+    m_tabNotification = Konversation::tnfNone;
 
     time = nick.section(' ', 0, 4);
     nick = nick.section(' ', 5);
@@ -723,13 +734,7 @@ void IRCView::doAppend(QString newLine, bool important, bool self) {
 
     if(important || !KonversationApplication::preferences.getHideUnimportantEvents()) {
         if(!self) {
-            if(m_highlightColor.isEmpty() && important) {
-                m_highlightColor = "#0000ff";
-            } else if(m_highlightColor.isEmpty() && !important) {
-                m_highlightColor = "#00ff00";
-            }
-
-            emit newText(m_highlightColor,important);
+            emit updateTabNotification(m_tabNotification);
         }
 
         // scroll view only if the scroll bar is already at the bottom

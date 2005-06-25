@@ -81,7 +81,8 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
 
   connect(getTextView(), SIGNAL(textPasted()), dccChatInput, SLOT(paste()));
   connect(getTextView(),SIGNAL (gotFocus()),dccChatInput,SLOT (setFocus()) );
-  connect(getTextView(),SIGNAL (newText(const QString&,bool)),this,SLOT (newTextInView(const QString&,bool)) );
+  connect(getTextView(), SIGNAL(updateTabNotification(Konversation::TabNotifyType)),
+          this, SLOT(activateTabNotification(Konversation::TabNotifyType)));
   connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendDccChatText(const QString&)) );
 
   if(listen)
@@ -156,7 +157,7 @@ void DccChat::listenForPartner()
 
 void DccChat::newTextInView(const QString& highlightColor, bool important)
 {
-  emit newText(this,highlightColor,important);
+//   emit newText(this,highlightColor,important);
 }
 
 void DccChat::connectToPartner()
