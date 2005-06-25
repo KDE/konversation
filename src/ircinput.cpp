@@ -174,10 +174,13 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
         }
         completionBox->hide();
       }
+      
       // support ASCII BEL
-      if(e->ascii()==7) insert("%G");
+      if(e->ascii() == 7) 
+	insert("%G");
       // support ^U (delete text in input box)
-      if(e->ascii()==21) clear();
+      else if(e->ascii() == 21) 
+	clear();
   }
 
   QTextEdit::keyPressEvent(e);
