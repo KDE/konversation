@@ -799,6 +799,7 @@ void IRCView::contentsMouseReleaseEvent(QMouseEvent *ev) {
     if (ev->button() == QMouseEvent::LeftButton) {
         if (m_mousePressed) {
             urlClickSlot(m_urlToDrag);
+            m_mousePressed = false;
             return;
         }
 
