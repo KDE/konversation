@@ -57,7 +57,7 @@ void Popup::focusTab(){
     m_mainWindow->show();
   m_mainWindow->showView(m_view);
   KWin::WindowInfo winInfo = KWin::windowInfo(m_mainWindow->winId());
-  int desktop = winInfo.desktop();
+  //  int desktop = winInfo.desktop();
   KWin::setCurrentDesktop(winInfo.desktop());
   KWin::activateWindow(m_mainWindow->winId());
 }
