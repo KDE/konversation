@@ -131,11 +131,6 @@ void StatusPanel::statusTextEntered()
   }
 }
 
-void StatusPanel::newTextInView(const QString& highlightColor,bool important)
-{
-//  emit newText(this,highlightColor,important);
-}
-
 void StatusPanel::textPasted(const QString& text)
 {
   if(m_server)

@@ -155,11 +155,6 @@ void DccChat::listenForPartner()
   kdDebug() << "DccChat::listenForPartner() [END]" << endl;
 }
 
-void DccChat::newTextInView(const QString& highlightColor, bool important)
-{
-//   emit newText(this,highlightColor,important);
-}
-
 void DccChat::connectToPartner()
 {
   QHostAddress ip;

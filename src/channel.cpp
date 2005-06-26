@@ -816,15 +816,11 @@ void Channel::sendChannelText(const QString& sendLine)
   }
 }
 
-void Channel::newTextInView(const QString& highlightColor,bool important)
-{
-//   emit newText(this,highlightColor,important);
-}
-
 void Channel::setNickname(const QString& newNickname)
 {
   nicknameCombobox->setCurrentText(newNickname);
 }
+
 QStringList Channel::getSelectedNickList() {
   QStringList result;
   Nick* nick=nicknameList.first();

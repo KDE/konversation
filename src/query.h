@@ -65,7 +65,6 @@ class Query : public ChatWindow
     virtual bool areIRCColorsSupported() {return true; }
     virtual bool isInsertCharacterSupported() { return true; }
   signals:
-    void newText(QWidget* query,const QString& highlightColor,bool important);
     void sendFile(const QString& recipient);
 
   public slots:
@@ -77,7 +76,6 @@ class Query : public ChatWindow
     void queryTextEntered();
     void queryPassthroughCommand();
     void sendFileMenu();
-    void newTextInView(const QString& highlightColor,bool important);
     void filesDropped(const QStrList& files);
     // connected to IRCInput::textPasted() - used to handle large/multiline pastes
     void textPasted(const QString& text);

@@ -155,7 +155,6 @@ class Channel : public ChatWindow
     virtual bool eventFilter(QObject* watched, QEvent* e);
     
   signals:
-    void newText(QWidget* channel,const QString& highlightColor, bool important);
     void sendFile();
     void topicHistoryChanged();
     void modesChanged();
@@ -166,7 +165,6 @@ class Channel : public ChatWindow
     void channelTextEntered();
     void channelPassthroughCommand();
     void sendChannelText(const QString& line);
-    void newTextInView(const QString& highlightColor, bool important);
     void showQuickButtons(bool show);
     void showModeButtons(bool show);
     void appendInputText(const QString& s);

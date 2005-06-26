@@ -203,7 +203,7 @@ class KonversationMainWindow : public KMainWindow
 
     bool queryClose();
 
-    void addView(ChatWindow* view,int color,const QString& label,bool on=true, bool weinitiated=true);
+    void addView(ChatWindow* view, const QString& label, bool weinitiated=true);
     void updateFrontView();
 
     void closeUrlCatcher();

@@ -56,13 +56,11 @@ class StatusPanel : public ChatWindow
     virtual bool isInsertCharacterSupported() { return true; }
 
   signals:
-    void newText(QWidget* widget,const QString& highlightColor,bool important);
     void sendFile();
     // void prefsChanged();
 
   public slots:
     void setNickname(const QString& newNickname);
-    void newTextInView(const QString& highlightColor,bool important);
     void updateFonts();
     virtual void indicateAway(bool show);
     void setShowNicknameBox(bool show);

@@ -185,11 +185,6 @@ void Query::sendQueryText(const QString& sendLine)
   m_server->queue(result.toServer);
 }
 
-void Query::newTextInView(const QString& highlightColor,bool important)
-{
-//   emit newText(this,highlightColor,important);
-}
-
 void Query::updateFonts()
 {
   QString fgString;

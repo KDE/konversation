@@ -53,9 +53,6 @@ class DccChat : public ChatWindow
   public slots:
     void appendInputText(const QString& s);
 
-  signals:
-    void newText(QWidget* query,const QString& highlightColor,bool important);
-
   protected slots:
     void lookupFinished();
     void dccChatConnectionSuccess();
@@ -64,7 +61,6 @@ class DccChat : public ChatWindow
     void dccChatTextEntered();
     void sendDccChatText(const QString& sendLine);
     void textPasted(const QString& text);
-    void newTextInView(const QString& highlightColor, bool important);
     void heardPartner();
     void socketClosed();
 

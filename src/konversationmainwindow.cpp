@@ -360,7 +360,7 @@ void KonversationMainWindow::appendToFrontmost(const QString& type,const QString
     m_frontView->appendServerMessage(type,message);
 }
 
-void KonversationMainWindow::addView(ChatWindow* view,int color,const QString& label,bool on, bool weinitiated)
+void KonversationMainWindow::addView(ChatWindow* view, const QString& label, bool weinitiated)
 {
   // TODO: Make sure to add DCC status tab at the end of the list and all others
   // before the DCC tab. Maybe we should also make sure to order Channels
@@ -566,7 +566,7 @@ void KonversationMainWindow::openLogFile(const QString& caption, const QString& 
 {
   if(!file.isEmpty()) {
     LogfileReader* logReader = new LogfileReader(getViewContainer(), file);
-    addView(logReader, 3, i18n("Logfile of %1").arg(caption));
+    addView(logReader, i18n("Logfile of %1").arg(caption));
     logReader->setServer(frontServer);
   }
 }
@@ -574,7 +574,7 @@ void KonversationMainWindow::openLogFile(const QString& caption, const QString& 
 void KonversationMainWindow::addKonsolePanel()
 {
   KonsolePanel* panel=new KonsolePanel(getViewContainer());
-  addView(panel,3,i18n("Konsole"));
+  addView(panel, i18n("Konsole"));
   connect(panel,SIGNAL (deleted(ChatWindow*)),this,SLOT (closeKonsolePanel(ChatWindow*)) );
   panel->setMainWindow(this);
 }
@@ -624,7 +624,7 @@ void KonversationMainWindow::addUrlCatcher()
   if(urlCatcherPanel==0)
   {
     urlCatcherPanel=new UrlCatcher(getViewContainer());
-    addView(urlCatcherPanel,2,i18n("URL Catcher"),true);
+    addView(urlCatcherPanel, i18n("URL Catcher"));
     urlCatcherPanel->setMainWindow(this);
     KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
     connect(konvApp,SIGNAL (catchUrl(const QString&,const QString&)),
@@ -666,7 +666,7 @@ void KonversationMainWindow::addDccPanel()
   if(dccPanel==0)
   {
     dccPanel=new DccPanel(getViewContainer());
-    addView(dccPanel,3,i18n("DCC Status"));
+    addView(dccPanel, i18n("DCC Status"));
     dccPanel->setMainWindow(this);
     dccPanelOpen=true;
   }
@@ -675,7 +675,7 @@ void KonversationMainWindow::addDccPanel()
   {
     if(!dccPanelOpen)
     {
-      addView(dccPanel,3,i18n("DCC Status"));
+      addView(dccPanel, i18n("DCC Status"));
       dccPanelOpen=true;
     }
     // no highlight color for DCC panels
@@ -720,7 +720,7 @@ void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nic
   if(frontServer)
   {
     DccChat* dccChatPanel=new DccChat(getViewContainer(),frontServer,myNick,nick,arguments,listen);
-    addView(dccChatPanel,3,dccChatPanel->getName());
+    addView(dccChatPanel, dccChatPanel->getName());
     connect(dccChatPanel, SIGNAL(updateTabNotification(QWidget*, const QString&)), this, SLOT(newText(QWidget*, const QString&)));
     if(listen) 
       frontServer->queue(QString("PRIVMSG %1 :\x01%2 CHAT chat %3 %4\x01").arg(nick).arg("DCC").arg(numericalIp).arg(dccChatPanel->getPort()));
@@ -741,7 +741,7 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
   QObject::connect(server,SIGNAL(sslConnected(Server*)),this,SLOT(updateSSLInfo(Server*)));
 
   // ... then put it into the tab widget, otherwise we'd have a race with server member
-  addView(statusView,2,server->getServerName(),false);
+  addView(statusView, server->getServerName());
 
   connect(statusView, SIGNAL(updateTabNotification(QWidget*, const QString&)), this, SLOT(newText(QWidget*,const QString&)));
   connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );
@@ -769,7 +769,7 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
   Channel* channel=new Channel(getViewContainer());
   channel->setServer(server);
   channel->setName(name);
-  addView(channel,1,newname);
+  addView(channel, newname);
 
   connect(channel, SIGNAL(updateTabNotification(QWidget*, const QString&)), this, SLOT(newText(QWidget*, const QString&)));
   // TODO: Why is this here?  Delete channelPrefsChanged as it does not appear to
@@ -789,7 +789,7 @@ Query* KonversationMainWindow::addQuery(Server* server, const NickInfoPtr& nickI
   Query* query=new Query(getViewContainer());
   query->setServer(server);
   query->setNickInfo(nickInfo);
-  addView(query,0,name, true, weinitiated);
+  addView(query, name, weinitiated);
 
   connect(query, SIGNAL(updateTabNotification(QWidget*, const QString&)), this, SLOT(newText(QWidget*,const QString&)));
   connect(server,SIGNAL (awayState(bool)),query,SLOT (indicateAway(bool)) );
@@ -802,7 +802,7 @@ RawLog* KonversationMainWindow::addRawLog(Server* server)
   RawLog* rawLog=new RawLog(getViewContainer());
   rawLog->setServer(server);
   rawLog->setLog(false);
-  addView(rawLog,2,i18n("Raw Log"),false);
+  addView(rawLog, i18n("Raw Log"));
 
   return rawLog;
 }
@@ -811,7 +811,7 @@ ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
 {
   ChannelListPanel* channelListPanel=new ChannelListPanel(getViewContainer());
   channelListPanel->setServer(server);
-  addView(channelListPanel,2,i18n("Channel List"));
+  addView(channelListPanel, i18n("Channel List"));
 
   return channelListPanel;
 }
@@ -1043,7 +1043,7 @@ void KonversationMainWindow::openNicksOnlinePanel()
   if(!nicksOnlinePanel)
   {
     nicksOnlinePanel=new NicksOnline(getViewContainer());
-    addView(nicksOnlinePanel, 2, i18n("Nicks Online"), true);
+    addView(nicksOnlinePanel, i18n("Nicks Online"));
     nicksOnlinePanel->setMainWindow(this);
     connect(nicksOnlinePanel,SIGNAL (editClicked()),this,SLOT (openNotify()) );
 
