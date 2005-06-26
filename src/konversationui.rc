@@ -36,15 +36,6 @@
       <Action name="close_queries" />
       <Action name="hide_nicknamelist" />
       <Separator />
-      <!-- only used with KMDI
-      <Menu name="mdi_subwindow_mode">
-        <Text>Child Window Mode</Text>
-        <Action name="mdi_tabpage_mode" />
-        <Action name="mdi_toplevel_mode" />
-        <Action name="mdi_childframe_mode" />
-        <Action name="mdi_ideal_mode" />
-      </Menu>
-      <Separator />-->
       <Action name="open_nicksonline_window" />
       <Action name="open_channel_list" />
       <Action name="open_url_catcher" />
@@ -62,6 +53,10 @@
     <separator />
     <Action name="irc_colors" />
   </ToolBar>
+
+  <Menu name="tabContextMenu">
+    <Action name="close_tab" />
+  </Menu>
 
 </kpartgui>
 

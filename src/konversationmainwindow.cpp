@@ -40,6 +40,7 @@
 #include <qnamespace.h>
 #include <qwhatsthis.h>
 #include <qsignalmapper.h>
+#include <qpoint.h>
 
 #include <kabc/addressbook.h>
 #include <kabc/errorhandler.h>
@@ -226,6 +227,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
   connect( viewContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changeView(QWidget*)) );
   connect( viewContainer, SIGNAL(closeRequest(QWidget*)), this, SLOT(closeView(QWidget*)));
+  connect(viewContainer, SIGNAL(contextMenu(QWidget*, const QPoint&)), this, SLOT(showTabContextMenu(QWidget*, const QPoint&)));
 
   // set up system tray
   tray = new Konversation::TrayIcon(this);
@@ -1550,6 +1552,17 @@ void KonversationMainWindow::serverStateChanged(Server* server, Server::State st
       action->setEnabled(true);
     }
   }
+}
+
+void KonversationMainWindow::showTabContextMenu(QWidget* tab, const QPoint& pos)
+{
+  QPopupMenu* menu = static_cast<QPopupMenu*>(factory()->container("tabContextMenu", this));
+
+  if(!menu) {
+    return;
+  }
+
+  menu->popup(pos);
 }
 
 #include "konversationmainwindow.moc"

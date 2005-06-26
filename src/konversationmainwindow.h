@@ -34,6 +34,7 @@ class KToggleAction;
 class KActionMenu;
 class KScriptManager;
 class KTabWidget;
+class QPoint;
 
 class KonviBookmarkHandler;
 class StatusPanel;
@@ -191,6 +192,8 @@ class KonversationMainWindow : public KMainWindow
     void reconnectCurrentServer();
 
     void openURL(const QString& url, const QString& title);
+
+    void showTabContextMenu(QWidget* tab, const QPoint& pos);
 
   protected:
     enum StatusID
