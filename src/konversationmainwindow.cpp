@@ -160,8 +160,12 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     this,SLOT(previousTab()),actionCollection(),"previous_tab");
   new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
 
-  new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"), this, SLOT(moveTabLeft()), actionCollection(), "move_tab_left");
-  new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"), this, SLOT(moveTabRight()), actionCollection(), "move_tab_right");
+  action = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"),
+                       this, SLOT(moveTabLeft()), actionCollection(), "move_tab_left");
+  action->setEnabled(false);
+  action = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"),
+                       this, SLOT(moveTabRight()), actionCollection(), "move_tab_right");
+  action->setEnabled(false);
 
   QSignalMapper* tabSelectionMapper = new QSignalMapper(this);
   connect(tabSelectionMapper, SIGNAL(mapped(int)), this, SLOT(goToTab(int)));
@@ -496,6 +500,8 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
     showView(view);
   }
 
+  updateTabMoveActions();
+
 // FIXME  connect(view,SIGNAL (online(ChatWindow*,bool)),viewContainer,SLOT (setTabOnline(ChatWindow*,bool)) );
 }
 
@@ -549,6 +555,8 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
       viewContainer->hide();
     }
   }
+
+  updateTabMoveActions();
 }
 
 void KonversationMainWindow::openLogfile()
@@ -957,9 +965,9 @@ void KonversationMainWindow::updateFrontView()
 void KonversationMainWindow::changeView(QWidget* viewToChange)
 {
   ChatWindow* view = static_cast<ChatWindow*>(viewToChange);
-  view->resetTabNotification();
   
   if(m_frontView) {
+    m_frontView->resetTabNotification();
     previousFrontView = m_frontView;
     disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
   }
@@ -978,7 +986,10 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
   updateFrontView();
 
   viewContainer->setTabColor(view, QColor());
+  view->resetTabNotification();
   view->adjustFocus();
+
+  updateTabMoveActions();
 }
 
 bool KonversationMainWindow::queryClose()
@@ -1602,6 +1613,39 @@ void KonversationMainWindow::moveTabRight()
   }
 
   m_popupTabIndex = -1;
+}
+
+void KonversationMainWindow::updateTabMoveActions()
+{
+  KAction* action;
+
+  if(getViewContainer()->count() > 0) {
+    int index = getViewContainer()->currentPageIndex();
+
+    action = actionCollection()->action("move_tab_left");
+
+    if(action) {
+      action->setEnabled(index > 0);
+    }
+
+    action = actionCollection()->action("move_tab_right");
+
+    if(action) {
+      action->setEnabled(index < (getViewContainer()->count() - 1));
+    }
+  } else {
+    action = actionCollection()->action("move_tab_left");
+
+    if(action) {
+      action->setEnabled(false);
+    }
+
+    action = actionCollection()->action("move_tab_right");
+
+    if(action) {
+      action->setEnabled(false);
+    }
+  }
 }
 
 #include "konversationmainwindow.moc"

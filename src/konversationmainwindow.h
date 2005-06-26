@@ -212,6 +212,8 @@ class KonversationMainWindow : public KMainWindow
     void closeDccPanel();
     void deleteDccPanel();
 
+    void updateTabMoveActions();
+
     virtual bool event(QEvent* e);
     
     KTabWidget* getViewContainer();
