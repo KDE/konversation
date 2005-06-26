@@ -89,6 +89,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   m_closeApp = false;
   m_insertCharDialog = 0;
   m_serverListDialog = 0;
+  m_popupTabIndex = -1;
 
   dccTransferHandler=new DccTransferHandler(this);
 
@@ -158,7 +159,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     QApplication::reverseLayout() ? nextShortcut : prevShortcut,
     this,SLOT(previousTab()),actionCollection(),"previous_tab");
   new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
-  
+
+  new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"), this, SLOT(moveTabLeft()), actionCollection(), "move_tab_left");
+  new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"), this, SLOT(moveTabRight()), actionCollection(), "move_tab_right");
+
   QSignalMapper* tabSelectionMapper = new QSignalMapper(this);
   connect(tabSelectionMapper, SIGNAL(mapped(int)), this, SLOT(goToTab(int)));
   
@@ -1557,12 +1561,47 @@ void KonversationMainWindow::serverStateChanged(Server* server, Server::State st
 void KonversationMainWindow::showTabContextMenu(QWidget* tab, const QPoint& pos)
 {
   QPopupMenu* menu = static_cast<QPopupMenu*>(factory()->container("tabContextMenu", this));
+  m_popupTabIndex = getViewContainer()->indexOf(tab);
 
   if(!menu) {
     return;
   }
 
   menu->popup(pos);
+}
+
+void KonversationMainWindow::moveTabLeft()
+{
+  int index;
+
+  if(m_popupTabIndex == -1) {
+    index = getViewContainer()->currentPageIndex();
+  } else {
+    index = m_popupTabIndex;
+  }
+
+  if(index) {
+    getViewContainer()->moveTab(index, index - 1);
+  }
+
+  m_popupTabIndex = -1;
+}
+
+void KonversationMainWindow::moveTabRight()
+{
+  int index;
+
+  if(m_popupTabIndex == -1) {
+    index = getViewContainer()->currentPageIndex();
+  } else {
+    index = m_popupTabIndex;
+  }
+
+  if(index < (getViewContainer()->count() - 1)) {
+    getViewContainer()->moveTab(index, index + 1);
+  }
+
+  m_popupTabIndex = -1;
 }
 
 #include "konversationmainwindow.moc"

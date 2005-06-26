@@ -171,6 +171,8 @@ class KonversationMainWindow : public KMainWindow
     void nextTab();
     void previousTab();
     void closeTab();
+    void moveTabLeft();
+    void moveTabRight();
 
     void goToTab(int page);
 
@@ -214,6 +216,7 @@ class KonversationMainWindow : public KMainWindow
     
     KTabWidget* getViewContainer();
     KTabWidget* viewContainer;
+    int m_popupTabIndex;
 
     Server* frontServer;
     QGuardedPtr<ChatWindow> m_frontView;

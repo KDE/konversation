@@ -36,6 +36,9 @@
       <Action name="close_queries" />
       <Action name="hide_nicknamelist" />
       <Separator />
+      <Action name="move_tab_left" />
+      <Action name="move_tab_right" />
+      <Separator />
       <Action name="open_nicksonline_window" />
       <Action name="open_channel_list" />
       <Action name="open_url_catcher" />
@@ -48,13 +51,16 @@
   <ToolBar fullWidth="true" hidden="true" name="mainToolBar">
     <Action name="open_server_list" />
     <Action name="quick_connect_dialog" />
-    <separator />
+    <Separator />
     <Action name="toggle_away" />
-    <separator />
+    <Separator />
     <Action name="irc_colors" />
   </ToolBar>
 
   <Menu name="tabContextMenu">
+    <Action name="move_tab_left" />
+    <Action name="move_tab_right" />
+    <Separator />
     <Action name="close_tab" />
   </Menu>
 
