@@ -197,6 +197,8 @@ class KonversationMainWindow : public KMainWindow
 
     void showTabContextMenu(QWidget* tab, const QPoint& pos);
 
+    void toggleTabNotifications();
+
   protected:
     enum StatusID
     {

@@ -166,6 +166,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
                        this, SLOT(moveTabRight()), actionCollection(), "move_tab_right");
   action->setEnabled(false);
 
+  action = new KToggleAction(i18n("Enable Notifications"), 0, 0, this, SLOT(toggleTabNotifications()), actionCollection(), "tab_notifications");
+
   QSignalMapper* tabSelectionMapper = new QSignalMapper(this);
   connect(tabSelectionMapper, SIGNAL(mapped(int)), this, SLOT(goToTab(int)));
   
@@ -989,6 +991,8 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
   view->adjustFocus();
 
   updateTabMoveActions();
+  KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+  if(action) action->setChecked(view->notificationsEnabled());
 }
 
 bool KonversationMainWindow::queryClose()
@@ -1583,8 +1587,15 @@ void KonversationMainWindow::showTabContextMenu(QWidget* tab, const QPoint& pos)
     return;
   }
 
+  ChatWindow* view = static_cast<ChatWindow*>(tab);
+  KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+  if(action && view) action->setChecked(view->notificationsEnabled());
+
   if(menu->exec(pos) == -1) {
     m_popupTabIndex = -1;
+    view = static_cast<ChatWindow*>(getViewContainer()->currentPage());
+    action = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+    if(action && view) action->setChecked(view->notificationsEnabled());
   }
 }
 
@@ -1640,6 +1651,12 @@ void KonversationMainWindow::updateTabMoveActions()
     if(action) {
       action->setEnabled(index < (getViewContainer()->count() - 1));
     }
+
+    action = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+
+    if(action) {
+      action->setEnabled(true);
+    }
   } else {
     action = actionCollection()->action("move_tab_left");
 
@@ -1652,7 +1669,32 @@ void KonversationMainWindow::updateTabMoveActions()
     if(action) {
       action->setEnabled(false);
     }
+
+    action = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+
+    if(action) {
+      action->setEnabled(false);
+    }
   }
+}
+
+void KonversationMainWindow::toggleTabNotifications()
+{
+  ChatWindow* chatWin;
+
+  if(m_popupTabIndex == -1) {
+    chatWin = static_cast<ChatWindow*>(getViewContainer()->currentPage());
+  } else {
+    chatWin = static_cast<ChatWindow*>(getViewContainer()->page(m_popupTabIndex));
+  }
+
+  if(chatWin) {
+    chatWin->setNotificationsEnabled(!chatWin->notificationsEnabled());
+    KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+    if(action) action->setChecked(static_cast<ChatWindow*>(getViewContainer()->currentPage())->notificationsEnabled());
+  }
+
+  m_popupTabIndex = -1;
 }
 
 #include "konversationmainwindow.moc"
