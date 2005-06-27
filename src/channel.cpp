@@ -198,6 +198,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   nicknameListView->addColumn(QString::null);
   nicknameListView->addColumn(QString::null);
   nicknameListView->setColumnWidthMode(1,KListView::Maximum);
+
   if (KonversationApplication::preferences.getAutoUserhost()) {
     nicknameListView->addColumn(QString::null);
     nicknameListView->setColumnWidthMode(2,KListView::Maximum);
@@ -211,6 +212,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   // separate LED from Text a little more
   nicknameListView->setColumnWidth(0, 10);
   nicknameListView->setColumnAlignment(0, Qt::AlignHCenter);
+
+  nicknameListView->installEventFilter(this);
 
   // the grid that holds the quick action buttons
   buttonsGrid = new QGrid(2, nickListButtons);
@@ -1068,10 +1071,8 @@ void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, co
       nicknameList.removeRef(nick);
     }
   }
-
-
-
 }
+
 Nick* Channel::getNickByName(const QString &lookname)
 {
 //FIXME I don't think this works
@@ -1160,6 +1161,7 @@ QStringList Channel::getTopicHistory() {
 QString Channel::getTopic() {
   return m_topicHistory[0];
 }
+
 void Channel::setTopicAuthor(const QString& newAuthor)
 {
   if(topicAuthorUnknown)
@@ -1168,6 +1170,7 @@ void Channel::setTopicAuthor(const QString& newAuthor)
     topicAuthorUnknown = false;
   }
 }
+
 void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString &parameter)
 {
   //Note for future expansion: doing m_server->getChannelNick(getName(), sourceNick);  may not return a valid channelNickPtr if the
@@ -1672,7 +1675,7 @@ void Channel::showEvent(QShowEvent*)
   }
   if(splitterChanged)
   {
-    splitterChanged=false;
+    splitterChanged = false;
     QValueList<int> sizes = KonversationApplication::preferences.getChannelSplitter();
 
     if(sizes.isEmpty()) {
@@ -1680,7 +1683,7 @@ void Channel::showEvent(QShowEvent*)
       sizes << (width() - listWidth) << listWidth;
       KonversationApplication::preferences.setChannelSplitter(sizes);
     }
-    
+
     splitter->setSizes(sizes);
     sizes = KonversationApplication::preferences.topicSplitterSizes();
 
@@ -1690,6 +1693,7 @@ void Channel::showEvent(QShowEvent*)
 
     m_vertSplitter->setSizes(sizes);
   }
+
   if(awayChanged)
   {
     awayChanged=false;
