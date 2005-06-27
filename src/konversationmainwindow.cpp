@@ -50,7 +50,6 @@
 #include <knotifydialog.h>
 #endif
 
-#include "ledtabwidget.h"
 #include "chatwindow.h"
 #include "konversationapplication.h"
 #include "ircview.h"
