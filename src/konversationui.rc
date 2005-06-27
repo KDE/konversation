@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="32">
+<kpartgui name="konversation" version="33">
 
   <MenuBar>
     <Menu name="file">
