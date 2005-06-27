@@ -202,18 +202,18 @@ void ChatWindow::setLogfileName(const QString& name)
   if(firstLog)
   {
     // status panels get special treatment here, since they have no server at the beginning
-    if(getType()==Status) {
-      logName=name+".log";
+    if(getType() == Status) {
+      logName = name + ".log";
     } else if(m_server) {
       // make sure that no path delimiters are in the name
-      logName=QString(m_server->getServerGroup().lower()).append('_').append(name).append(".log").replace('/','_');
+      logName = QString(m_server->getServerGroup().lower()).append('_').append(name).append(".log").replace('/','_');
     }
 
     // "cd" into log path or create path, if it's not there
     cdIntoLogPath();
     // Show last log lines. This idea was stole ... um ... inspired by PMP :)
     // Don't do this for the server status windows, though
-    if(getType()!=Status && logfile.open(IO_ReadOnly))
+    if((getType() != Status) && logfile.open(IO_ReadOnly))
     {
       unsigned long filePosition;
 
@@ -221,10 +221,10 @@ void ChatWindow::setLogfileName(const QString& name)
       QTextStream backlog(&logfile);
       backlog.setEncoding(QTextStream::UnicodeUTF8);
       // Check if the log is actually big enough
-      if(backlog.device()->size()>1024)
+      if(backlog.device()->size() > 1024)
       {
         // Set file pointer to 1 kB from the end
-        backlog.device()->at(backlog.device()->size()-1024);
+        backlog.device()->at(backlog.device()->size() - 1024);
         // Skip first line, since it may be incomplete
         backlog.readLine();
       }
@@ -233,23 +233,25 @@ void ChatWindow::setLogfileName(const QString& name)
       while(!backlog.atEnd())
       {
         // remember actual file position to check for deadlocks
-        filePosition=backlog.device()->at();
-        backlogLine=backlog.readLine();
+        filePosition = backlog.device()->at();
+        backlogLine = backlog.readLine();
 
         // check for deadlocks
-        if(backlog.device()->at()==filePosition) backlog.device()->at(filePosition+1);
+        if(backlog.device()->at() == filePosition) backlog.device()->at(filePosition + 1);
+
         // if a tab character is present in the line
-        if(backlogLine.find('\t')!=-1)
+        if(backlogLine.find('\t') != -1)
         {
           // extract first column from log
-          QString backlogFirst=backlogLine.left(backlogLine.find('\t'));
+          QString backlogFirst = backlogLine.left(backlogLine.find('\t'));
           // cut first column from line
-          backlogLine=backlogLine.mid(backlogLine.find('\t')+1);
+          backlogLine = backlogLine.mid(backlogLine.find('\t') + 1);
           // Logfile is in utf8 so we don't need to do encoding stuff here
           // append backlog with time and first column to text view
           appendBacklogMessage(backlogFirst, backlogLine);
         }
       } // while
+
       backlog.unsetDevice();
       logfile.close();
     }

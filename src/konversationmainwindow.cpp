@@ -1234,7 +1234,13 @@ void KonversationMainWindow::resetLag()
 
 void KonversationMainWindow::closeTab()
 {
-  closeView(getViewContainer()->currentPage());
+  if(m_popupTabIndex == -1) {
+    closeView(getViewContainer()->currentPage());
+  } else {
+    closeView(getViewContainer()->page(m_popupTabIndex));
+  }
+
+  m_popupTabIndex = -1;
 }
 
 void KonversationMainWindow::nextTab()
@@ -1577,7 +1583,9 @@ void KonversationMainWindow::showTabContextMenu(QWidget* tab, const QPoint& pos)
     return;
   }
 
-  menu->popup(pos);
+  if(menu->exec(pos) == -1) {
+    m_popupTabIndex = -1;
+  }
 }
 
 void KonversationMainWindow::moveTabLeft()
