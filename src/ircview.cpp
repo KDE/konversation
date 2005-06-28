@@ -1149,12 +1149,11 @@ void IRCView::resizeEvent(QResizeEvent* e)
 {
     KTextBrowser::resizeEvent(e);
 
-    updateScrollBarPos();
+    QTimer::singleShot(0, this, SLOT(updateScrollBarPos()));
 }
 
 void IRCView::updateScrollBarPos()
 {
-//     verticalScrollBar()->setValue(verticalScrollBar()->maxValue());
     ensureVisible(contentsX(), contentsHeight());
     repaintContents(false);
 }

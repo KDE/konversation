@@ -199,8 +199,6 @@ class KonversationMainWindow : public KMainWindow
 
     void toggleTabNotifications();
 
-    void updateScrollBarPos();
-
   protected:
     enum StatusID
     {

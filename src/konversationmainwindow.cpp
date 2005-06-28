@@ -1422,12 +1422,6 @@ bool KonversationMainWindow::event(QEvent* e)
     emit endNotification();
   }
 
-  if(e->type() == QEvent::WindowStateChange) {
-    if((windowState() == Qt::WindowActive) || (windowState() == 0)) {
-      QTimer::singleShot(0, this, SLOT(updateScrollBarPos()));
-    }
-  }
-
   return KMainWindow::event(e);
 }
 
@@ -1703,19 +1697,6 @@ void KonversationMainWindow::toggleTabNotifications()
   }
 
   m_popupTabIndex = -1;
-}
-
-void KonversationMainWindow::updateScrollBarPos()
-{
-  uint count = getViewContainer()->count();
-
-  for(uint i = 0; i < count; ++i) {
-    IRCView* ircView = static_cast<ChatWindow*>(getViewContainer()->page(i))->getTextView();
-
-    if(ircView) {
-      ircView->updateScrollBarPos();
-    }
-  }
 }
 
 #include "konversationmainwindow.moc"
