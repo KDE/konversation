@@ -103,6 +103,8 @@ class IRCView : public KTextBrowser
   protected slots:
     void highlightedSlot(const QString& link);
     void urlClickSlot(const QString &url);
+
+    void contentsAboutToMove(int x, int y);
     
   protected:
     void urlClickSlot(const QString &url, bool newTab);
@@ -118,6 +120,7 @@ class IRCView : public KTextBrowser
     virtual void contentsContextMenuEvent(QContextMenuEvent* ev);
 
     virtual void keyPressEvent(QKeyEvent* e);
+    virtual void resizeEvent(QResizeEvent* e);
 
     void hideEvent(QHideEvent* event);
     void showEvent(QShowEvent* event);
@@ -177,6 +180,9 @@ class IRCView : public KTextBrowser
     int m_popupId;
 
     ChatWindow* m_chatWin;
+
+    bool m_doScroll;
+    bool m_automaticScroll;
 };
 
 #endif
