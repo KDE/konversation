@@ -48,6 +48,7 @@
 #include <kpopupmenu.h>
 #include <kaction.h>
 #include <kglobalsettings.h>
+#include <kdebug.h>
 
 #include "channel.h"
 #include "konvidebug.h"
@@ -74,8 +75,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent) {
     m_chatWin = 0;
     m_findParagraph=0;
     m_findIndex=0;
-    m_doScroll = true;
-    m_automaticScroll = false;
 
     setAutoFormatting(QTextEdit::AutoNone);
     setUndoRedoEnabled(0);
@@ -1146,23 +1145,17 @@ void IRCView::keyPressEvent(QKeyEvent* e)
     KTextBrowser::keyPressEvent(e);
 }
 
-void IRCView::contentsAboutToMove(int /*x*/, int y)
-{
-    if(!m_automaticScroll) {
-        m_doScroll = (y == (contentsHeight() - visibleHeight()));
-    }
-}
-
 void IRCView::resizeEvent(QResizeEvent* e)
 {
     KTextBrowser::resizeEvent(e);
 
-    if(m_doScroll) {
-        m_automaticScroll = true;
-        verticalScrollBar()->setValue(verticalScrollBar()->maxValue());
-        repaintContents(false);
-        m_automaticScroll = false;
-    }
+    updateScrollBarPos();
+}
+
+void IRCView::updateScrollBarPos()
+{
+    verticalScrollBar()->setValue(verticalScrollBar()->maxValue());
+    repaintContents(false);
 }
 
 #include "ircview.moc"

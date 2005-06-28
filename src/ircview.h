@@ -100,16 +100,17 @@ class IRCView : public KTextBrowser
     // Clears context nick
     void clearContextNick();
 
+    /// Updates the scrollbar position
+    void updateScrollBarPos();
+
   protected slots:
     void highlightedSlot(const QString& link);
     void urlClickSlot(const QString &url);
 
-    void contentsAboutToMove(int x, int y);
-    
   protected:
     void urlClickSlot(const QString &url, bool newTab);
     QString filter(const QString& line, const QString& defaultColor, const QString& who=NULL,
-		   bool doHighlight=true, bool parseURL=true, bool self=false);
+                   bool doHighlight=true, bool parseURL=true, bool self=false);
     void doAppend(QString line, bool important=true, bool self=false);
     void replaceDecoration(QString& line,char decoration,char replacement);
     virtual void contentsDragMoveEvent(QDragMoveEvent* e);
@@ -180,9 +181,6 @@ class IRCView : public KTextBrowser
     int m_popupId;
 
     ChatWindow* m_chatWin;
-
-    bool m_doScroll;
-    bool m_automaticScroll;
 };
 
 #endif
