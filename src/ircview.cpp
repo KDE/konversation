@@ -1154,7 +1154,8 @@ void IRCView::resizeEvent(QResizeEvent* e)
 
 void IRCView::updateScrollBarPos()
 {
-    verticalScrollBar()->setValue(verticalScrollBar()->maxValue());
+//     verticalScrollBar()->setValue(verticalScrollBar()->maxValue());
+    ensureVisible(contentsX(), contentsHeight());
     repaintContents(false);
 }
 
