@@ -74,6 +74,7 @@
 #include "joinchanneldialog.h"
 #include "notificationhandler.h"
 #include "common.h"
+#include "irccharsets.h"
 
 KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", WStyle_ContextHelp | WType_TopLevel | WDestructiveClose)
 {
@@ -169,6 +170,15 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   action->setEnabled(false);
 
   action = new KToggleAction(i18n("Enable Notifications"), 0, 0, this, SLOT(toggleTabNotifications()), actionCollection(), "tab_notifications");
+  action->setEnabled(false);
+
+  KSelectAction* encodingAction = new KSelectAction(i18n("Set Encoding"), "charset", 0, actionCollection(), "tab_encoding");
+  encodingAction->setEditable(false);
+  QStringList encodingDescs = Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames();
+  encodingDescs.prepend(i18n("Default"));
+  encodingAction->setItems(encodingDescs);
+  connect(encodingAction, SIGNAL(activated(int)), this, SLOT(changeTabCharset(int)));
+
 
   QSignalMapper* tabSelectionMapper = new QSignalMapper(this);
   connect(tabSelectionMapper, SIGNAL(mapped(int)), this, SLOT(goToTab(int)));
@@ -993,8 +1003,28 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
   view->adjustFocus();
 
   updateTabMoveActions();
-  KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
-  if(action) action->setChecked(view->notificationsEnabled());
+
+  if(view) {
+    KToggleAction* notifyAction = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+    if(notifyAction) {
+      ChatWindow::WindowType viewType = view->getType();
+      notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query || viewType == ChatWindow::Status);
+      notifyAction->setChecked(view->notificationsEnabled());
+    }
+
+    KSelectAction* codecAction = static_cast<KSelectAction*>(actionCollection()->action("tab_encoding"));
+
+    if(codecAction) {
+      codecAction->setEnabled(view->isChannelEncodingSupported());
+      QString encoding = view->getChannelEncoding();
+
+      if(encoding.isEmpty()) {
+        codecAction->setCurrentItem(0);
+      } else {
+        codecAction->setCurrentItem(Konversation::IRCCharsets::self()->shortNameToIndex(encoding) + 1);
+      }
+    }
+  }
 }
 
 bool KonversationMainWindow::queryClose()
@@ -1590,14 +1620,54 @@ void KonversationMainWindow::showTabContextMenu(QWidget* tab, const QPoint& pos)
   }
 
   ChatWindow* view = static_cast<ChatWindow*>(tab);
-  KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
-  if(action && view) action->setChecked(view->notificationsEnabled());
+
+  if(view) {
+    KToggleAction* notifyAction = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+    if(notifyAction) {
+      ChatWindow::WindowType viewType = view->getType();
+      notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query || viewType == ChatWindow::Status);
+      notifyAction->setChecked(view->notificationsEnabled());
+    }
+
+    KSelectAction* codecAction = static_cast<KSelectAction*>(actionCollection()->action("tab_encoding"));
+
+    if(codecAction) {
+      codecAction->setEnabled(view->isChannelEncodingSupported());
+      QString encoding = view->getChannelEncoding();
+
+      if(encoding.isEmpty()) {
+        codecAction->setCurrentItem(0);
+      } else {
+        codecAction->setCurrentItem(Konversation::IRCCharsets::self()->shortNameToIndex(encoding) + 1);
+      }
+    }
+  }
 
   if(menu->exec(pos) == -1) {
     m_popupTabIndex = -1;
     view = static_cast<ChatWindow*>(getViewContainer()->currentPage());
-    action = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
-    if(action && view) action->setChecked(view->notificationsEnabled());
+
+    if(view) {
+      KToggleAction* notifyAction = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+      if(notifyAction) {
+        ChatWindow::WindowType viewType = view->getType();
+        notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query || viewType == ChatWindow::Status);
+        notifyAction->setChecked(view->notificationsEnabled());
+      }
+
+      KSelectAction* codecAction = static_cast<KSelectAction*>(actionCollection()->action("tab_encoding"));
+
+      if(codecAction) {
+        codecAction->setEnabled(view->isChannelEncodingSupported());
+        QString encoding = view->getChannelEncoding();
+
+        if(encoding.isEmpty()) {
+          codecAction->setCurrentItem(0);
+        } else {
+          codecAction->setCurrentItem(Konversation::IRCCharsets::self()->shortNameToIndex(encoding) + 1);
+        }
+      }
+    }
   }
 }
 
@@ -1697,6 +1767,26 @@ void KonversationMainWindow::toggleTabNotifications()
   }
 
   m_popupTabIndex = -1;
+}
+
+void KonversationMainWindow::changeTabCharset(int index)
+{
+  ChatWindow* chatWin;
+
+  if(m_popupTabIndex == -1) {
+    chatWin = static_cast<ChatWindow*>(getViewContainer()->currentPage());
+  } else {
+    chatWin = static_cast<ChatWindow*>(getViewContainer()->page(m_popupTabIndex));
+  }
+
+  if(chatWin)
+  {
+    if(index == 0) {
+      chatWin->setChannelEncoding(QString::null);
+    } else {
+      chatWin->setChannelEncoding(Konversation::IRCCharsets::self()->availableEncodingShortNames()[index - 1]);
+    }
+  }
 }
 
 #include "konversationmainwindow.moc"
