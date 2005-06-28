@@ -97,7 +97,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   viewContainer = new KTabWidget(this, "main_window_tab_widget");
   viewContainer->setTabReorderingEnabled(true);
   viewContainer->setTabCloseActivatePrevious(true);
-//  viewContainer->setAutomaticResizeTabs(true);
+#if KDE_IS_VERSION(3,4,0)
+  viewContainer->setAutomaticResizeTabs(true);
+#endif
 //  viewContainer->setHoverCloseButtonDelayed(false);
   setCentralWidget(viewContainer);
   updateTabPlacement();

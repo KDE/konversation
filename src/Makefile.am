@@ -13,8 +13,8 @@ konversation_SOURCES = konviface.skel\
 	 statuspanel.cpp dccrecipientdialog.cpp topiccombobox.cpp prefspagelog.cpp prefspagedccsettings.cpp \
 	 nicksonline.cpp prefspage.cpp dccpanel.cpp dcctransfer.cpp nicklistviewitem.cpp \
 	 highlight.cpp highlightviewitem.cpp modebutton.cpp ignorelistviewitem.cpp \
-	 ignorecheckbox.cpp ignore.cpp nicklistview.cpp ircinput.cpp ledtabbar.cpp ledtab.cpp \
-	 ledtabwidget.cpp images.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp \
+	 ignorecheckbox.cpp ignore.cpp nicklistview.cpp ircinput.cpp \
+	 images.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp \
 	 chatwindow.cpp outputfilter.cpp query.cpp konversationapplication.cpp nick.cpp \
          inputfilter.cpp channel.cpp ircview.cpp server.cpp main.cpp dcc_preferences.ui \
 	 log_preferences.ui tabbar_preferences.ui chatwindowappearance_preferences.ui \
