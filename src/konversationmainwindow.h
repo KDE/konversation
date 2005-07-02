@@ -199,6 +199,7 @@ class KonversationMainWindow : public KMainWindow
 
     void toggleTabNotifications();
     void changeTabCharset(int index);
+    void updateSwitchTabAction();
 
   protected:
     enum StatusID

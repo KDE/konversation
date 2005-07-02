@@ -172,12 +172,17 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   action = new KToggleAction(i18n("Enable Notifications"), 0, 0, this, SLOT(toggleTabNotifications()), actionCollection(), "tab_notifications");
   action->setEnabled(false);
 
-  KSelectAction* encodingAction = new KSelectAction(i18n("Set Encoding"), "charset", 0, actionCollection(), "tab_encoding");
-  encodingAction->setEditable(false);
+  KSelectAction* selectAction = new KSelectAction(i18n("Set Encoding"), "charset", 0, actionCollection(), "tab_encoding");
+  selectAction->setEditable(false);
   QStringList encodingDescs = Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames();
   encodingDescs.prepend(i18n("Default"));
-  encodingAction->setItems(encodingDescs);
-  connect(encodingAction, SIGNAL(activated(int)), this, SLOT(changeTabCharset(int)));
+  selectAction->setItems(encodingDescs);
+  selectAction->setEnabled(false);
+  connect(selectAction, SIGNAL(activated(int)), this, SLOT(changeTabCharset(int)));
+
+  selectAction = new KSelectAction(i18n("Switch To"), 0, 0, actionCollection(), "switch_to_tab");
+  selectAction->setEditable(false);
+  connect(selectAction, SIGNAL(activated(int)), this, SLOT(goToTab(int)));
 
 
   QSignalMapper* tabSelectionMapper = new QSignalMapper(this);
@@ -514,6 +519,7 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
   }
 
   updateTabMoveActions();
+  updateSwitchTabAction();
 
 // FIXME  connect(view,SIGNAL (online(ChatWindow*,bool)),viewContainer,SLOT (setTabOnline(ChatWindow*,bool)) );
 }
@@ -1685,6 +1691,7 @@ void KonversationMainWindow::moveTabLeft()
     getViewContainer()->moveTab(index, index - 1);
   }
 
+  updateSwitchTabAction();
   m_popupTabIndex = -1;
 }
 
@@ -1702,6 +1709,7 @@ void KonversationMainWindow::moveTabRight()
     getViewContainer()->moveTab(index, index + 1);
   }
 
+  updateSwitchTabAction();
   m_popupTabIndex = -1;
 }
 
@@ -1786,6 +1794,22 @@ void KonversationMainWindow::changeTabCharset(int index)
     } else {
       chatWin->setChannelEncoding(Konversation::IRCCharsets::self()->availableEncodingShortNames()[index - 1]);
     }
+  }
+}
+
+void KonversationMainWindow::updateSwitchTabAction()
+{
+  QStringList tabList;
+
+  for(int i = 0; i < getViewContainer()->count(); ++i) {
+    tabList << static_cast<ChatWindow*>(getViewContainer()->page(i))->getName();
+  }
+
+  KSelectAction* action = static_cast<KSelectAction*>(actionCollection()->action("switch_to_tab"));
+
+  if(action) {
+    action->setItems(tabList);
+    action->setCurrentItem(getViewContainer()->currentPageIndex());
   }
 }
 
