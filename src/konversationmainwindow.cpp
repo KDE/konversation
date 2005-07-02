@@ -1184,11 +1184,6 @@ KTabWidget* KonversationMainWindow::getViewContainer()
   return viewContainer;
 }
 
-void KonversationMainWindow::updateFonts()
-{
-// FIXME  getViewContainer()->updateTabs();
-}
-
 void KonversationMainWindow::updateLag(Server* lagServer,int msec)
 {
   // show lag only of actual server
@@ -1308,6 +1303,8 @@ void KonversationMainWindow::goToTab(int page)
         ChatWindow* newPage=static_cast<ChatWindow*>(getViewContainer()->page(page));
         newPage->adjustFocus();
     }
+
+    m_popupTabIndex = -1;
 }
 
 void KonversationMainWindow::findText()
@@ -1795,6 +1792,8 @@ void KonversationMainWindow::changeTabCharset(int index)
       chatWin->setChannelEncoding(Konversation::IRCCharsets::self()->availableEncodingShortNames()[index - 1]);
     }
   }
+
+  m_popupTabIndex = -1;
 }
 
 void KonversationMainWindow::updateSwitchTabAction()

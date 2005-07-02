@@ -1949,7 +1949,6 @@ void Server::updateFonts()
   }
 
   statusView->updateFonts();
-  getMainWindow()->updateFonts();
 
   if(rawLog) rawLog->updateFonts();
 }

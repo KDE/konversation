@@ -86,7 +86,6 @@ class KonversationMainWindow : public KMainWindow
     void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView);
     void appendToFrontmostIfDifferent(const QString& type,const QString& message,ChatWindow* serverView);
 
-    void updateFonts();
     void updateTabPlacement();
     
     Konversation::TrayIcon* systemTrayIcon() const { return tray; }
