@@ -448,6 +448,7 @@ default_presentation=0
 
 [kick]
 Name=Kick
+Name[cs]=Vykopnutí
 Name[cy]=Lluchio
 Name[es]=Expulsar
 Name[et]=Väljaviskamine
@@ -457,6 +458,7 @@ Name[pa]=ਠੁੱਢਾ
 Name[sr]=Избачени
 Name[sr@Latn]=Izbačeni
 Comment=Someone kicked you out of a channel
+Comment[cs]=Někdo vás vykopnul z kanálu
 Comment[da]=Nogen sparkede dig ud af kanalen
 Comment[es]=Un usuario le ha expulsado de un canal
 Comment[et]=Keegi viskas su kanalilt välja
