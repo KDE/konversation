@@ -324,7 +324,7 @@ bool IRCInput::checkPaste(QString& text)
                    "the chat. This can cause connection resets or flood kills. "
                    "Do you really want to continue?</qt>").arg(text.length()).arg(lines+1),
               i18n("Large Paste Warning"),
-              KStdGuiItem::yes(),
+              i18n("Paste"),
               i18n("&Edit..."),
               "LargePaste"
             );

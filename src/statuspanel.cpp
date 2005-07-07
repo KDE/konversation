@@ -223,15 +223,14 @@ bool StatusPanel::searchView()       { return true; }
 
 bool StatusPanel::closeYourself()
 {
-  int result=KMessageBox::warningYesNo(
+  int result=KMessageBox::warningContinueCancel(
                 this,
                 i18n("Do you want to disconnect from '%1'?").arg(m_server->getServerName()),
                 i18n("Disconnect From Server"),
-                KStdGuiItem::yes(),
-                KStdGuiItem::cancel(),
+                i18n("Disconnect"),
                 "QuitServerTab");
 
-  if(result==KMessageBox::Yes)
+  if(result==KMessageBox::Continue)
   {
     m_server->serverGroupSettings()->setNotificationsEnabled(notificationsEnabled());
     m_server->quitServer();

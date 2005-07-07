@@ -2742,8 +2742,8 @@ void Server::invitation(const QString& nick,const QString& channel) {
                                   i18n("You were invited by %1 to join channel %2. "
                                        "Do you accept the invitation?").arg(nick).arg(channel),
                                   i18n("Invitation"),
-                                  KStdGuiItem::yes(),
-                                  KStdGuiItem::no(),
+                                  i18n("Join"),
+                                  i18n("Ignore"),
                                   "Invitation")==KMessageBox::Yes)
     {
         sendJoinCommand(channel);
