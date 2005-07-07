@@ -281,7 +281,7 @@ void Query::popup(int id)
                                       KStdGuiItem::no(),
                                       "CloseQueryAfterIgnore");
 
-    if(rc==KStdGuiItem::Yes) closeYourself();
+    if(rc==KMessageBox::Yes) closeYourself();
   }
   else
     kdDebug() << "Query::popup(): Popup id " << id << " does not belong to me!" << endl;
