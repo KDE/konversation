@@ -580,7 +580,7 @@ void Server::ircServerConnectionSuccess() {
 }
 
 void Server::broken(int state) {
-    kdDebug() << kdBacktrace() << endl;
+    //kdDebug() << kdBacktrace() << endl;
 
     m_socket->enableRead(false);
     m_socket->enableWrite(false);
