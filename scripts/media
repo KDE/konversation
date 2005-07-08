@@ -118,6 +118,10 @@ if($juk)
     $title=`dcop juk Player trackProperty Title`;
     $artist=`dcop juk Player trackProperty Artist`;
     $album=`dcop juk Player trackProperty Album`;
+
+    chomp $title;
+    chomp $artist;
+    chomp $album;
     
     if($title)
     {
