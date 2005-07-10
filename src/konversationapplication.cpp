@@ -65,7 +65,7 @@ KonversationApplication::~KonversationApplication()
 
   delete m_images;
   delete dcopObject;
-  delete prefsDCOP;
+  //delete prefsDCOP;
   delete identDCOP;
 }
 
@@ -165,7 +165,6 @@ int KonversationApplication::newInstance()
     dcopObject = new KonvDCOP;
     kapp->dcopClient()->setDefaultObject(dcopObject->objId());
     identDCOP = new KonvIdentDCOP;
-    prefsDCOP = new KonvPrefsDCOP;
 
     if(dcopObject) {
       connect(dcopObject,SIGNAL (dcopMultiServerRaw(const QString&)),

@@ -185,7 +185,6 @@ class KonversationApplication : public KUniqueApplication
     QStringList urlList;
     PrefsDialog* prefsDialog;
     KonvDCOP* dcopObject;
-    KonvPrefsDCOP* prefsDCOP;
     KonvIdentDCOP* identDCOP;
     KonversationMainWindow* mainWindow;
     Konversation::Sound* m_sound;
