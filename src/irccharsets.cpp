@@ -111,7 +111,7 @@ QString IRCCharsets::encodingForLocale()
 #endif  
   
   // Special cases
-  // don't add conditions for the languages which QTextCodec::codecForLocale() returns a correct codec for.
+  // don't add conditions for the languages for which QTextCodec::codecForLocale() returns a correct codec.
   if ( locale == "ja_JP" )
     return "jis7";
   
@@ -156,7 +156,7 @@ IRCCharsets::IRCCharsets()
       
        if(encodingName == "jis7") // Add iso-2022-jp which is same as jis7 but not in Qt
 	{
-	  it = m_descriptiveNames.insert(it, "Japanese (iso-2022-jp)");
+	  it = m_descriptiveNames.insert(it, "Japanese ( iso-2022-jp )");
 	  m_shortNames.append( "iso-2022-jp" );
 	  m_simplifiedShortNames.append( "ISO-2022-JP" );
 	  ++it;
