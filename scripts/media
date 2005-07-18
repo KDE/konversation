@@ -71,19 +71,19 @@ sub pretty_print
 	
     if($artist && $album && $artist ne $album)
     {
-	    return "/me is playing $musichar$title$musichar by $artist on $album";
+	    return "/me is listening to $musichar$title$musichar by $artist on $album";
     }
     elsif($artist)
     {
-	return "/me is playing $musichar$title$musichar by $artist";
+	return "/me is listening to $musichar$title$musichar by $artist";
     }
     elsif($album)
     {
-	return "/me is playing $musichar$title$musichar on $album";
+	return "/me is listening to $musichar$title$musichar on $album";
     }
     else
     {
-	return "/me is playing $musichar$title$musichar";
+	return "/me is listening to $musichar$title$musichar";
     }
 }
 
