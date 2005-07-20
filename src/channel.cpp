@@ -1675,7 +1675,9 @@ void Channel::showEvent(QShowEvent*)
     showModeButtons(modeButtonsState);
   }
   
-  if(splitterChanged) initializeSplitters();
+  if(splitterChanged) {
+    initializeSplitters();
+  }
 
   if(awayChanged)
   {
