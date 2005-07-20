@@ -248,7 +248,7 @@ class Channel : public ChatWindow
 
     unsigned int completionPosition;
 
-    QSplitter* splitter;
+    QSplitter* m_horizSplitter;
     QSplitter* m_vertSplitter;
     QToolButton* m_topicButton;
     Konversation::TopicLabel* topicLine;

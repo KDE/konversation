@@ -176,19 +176,19 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   showModeButtons(KonversationApplication::preferences.getShowModeButtons());
 
   // (this) The main Box, holding the channel view/topic and the input line
-  splitter = new QSplitter(m_vertSplitter);
+  m_horizSplitter = new QSplitter(m_vertSplitter);
 
 #ifdef OPAQUE_CONF
-  splitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
+  m_horizSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 #else
-  splitter->setOpaqueResize(true);
+  m_horizSplitter->setOpaqueResize(true);
 #endif
 
-  IRCViewBox* ircViewBox = new IRCViewBox(splitter, NULL); // Server will be set later in setServer()
+  IRCViewBox* ircViewBox = new IRCViewBox(m_horizSplitter, NULL); // Server will be set later in setServer()
   setTextView(ircViewBox->ircView());  
   connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
   // The box that holds the Nick List and the quick action buttons
-  nickListButtons = new QVBox(splitter);
+  nickListButtons = new QVBox(m_horizSplitter);
   nickListButtons->setSpacing(spacing());
 
   nicknameListView=new NickListView(nickListButtons, this);
@@ -1676,6 +1676,7 @@ void Channel::showEvent(QShowEvent*)
   if(splitterChanged)
   {
     splitterChanged = false;
+
     QValueList<int> sizes = KonversationApplication::preferences.getChannelSplitter();
 
     if(sizes.isEmpty()) {
@@ -1684,7 +1685,8 @@ void Channel::showEvent(QShowEvent*)
       KonversationApplication::preferences.setChannelSplitter(sizes);
     }
 
-    splitter->setSizes(sizes);
+    m_horizSplitter->setSizes(sizes);
+
     sizes = KonversationApplication::preferences.topicSplitterSizes();
 
     if(sizes.isEmpty()) {
@@ -2182,7 +2184,7 @@ void Channel::setIdentity(const Identity *newIdentity)
 bool Channel::eventFilter(QObject* watched, QEvent* e)
 {
   if((watched == nicknameListView) && (e->type() == QEvent::Resize) && !splitterChanged && isShown()) {
-    KonversationApplication::preferences.setChannelSplitter(splitter->sizes());
+    KonversationApplication::preferences.setChannelSplitter(m_horizSplitter->sizes());
     KonversationApplication::preferences.setTopicSplitterSizes(m_vertSplitter->sizes());
 
     emit splitterMoved(this);
@@ -2197,7 +2199,7 @@ void Channel::updateSplitters(Channel* channel)
     return;
   }
 
-  splitter->setSizes(KonversationApplication::preferences.getChannelSplitter());
+  m_horizSplitter->setSizes(KonversationApplication::preferences.getChannelSplitter());
   m_vertSplitter->setSizes(KonversationApplication::preferences.topicSplitterSizes());
 }
 
