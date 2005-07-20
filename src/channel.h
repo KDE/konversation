@@ -251,6 +251,7 @@ class Channel : public ChatWindow
 
     QSplitter* m_horizSplitter;
     QSplitter* m_vertSplitter;
+    QWidget* topicWidget; 
     QToolButton* m_topicButton;
     Konversation::TopicLabel* topicLine;
     QStringList m_topicHistory;

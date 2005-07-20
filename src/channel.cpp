@@ -120,8 +120,10 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
 #endif
   
   QWidget* topicWidget = new QWidget(m_vertSplitter);
+  m_vertSplitter->setResizeMode(topicWidget,QSplitter::KeepSize);
+  
   QGridLayout* topicLayout = new QGridLayout(topicWidget, 2, 3, 0, 0);
-
+ 
   m_topicButton = new QToolButton(topicWidget);
   m_topicButton->setIconSet(SmallIconSet("edit", 16));
   QToolTip::add(m_topicButton, i18n("Edit topic"));
@@ -189,8 +191,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
   connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
   // The box that holds the Nick List and the quick action buttons
   nickListButtons = new QVBox(m_horizSplitter);
+  m_horizSplitter->setResizeMode(nickListButtons,QSplitter::KeepSize);
   nickListButtons->setSpacing(spacing());
-
+    
   nicknameListView=new NickListView(nickListButtons, this);
   nicknameListView->setSelectionModeExt(KListView::Extended);
   nicknameListView->setAllColumnsShowFocus(true);
@@ -1703,8 +1706,8 @@ void Channel::initializeSplitters()
     
     if (vertSizes.isEmpty()) {
         vertSizes << m_topicButton->height() << (m_vertSplitter->height() - m_topicButton->height());
-    }       
-
+    }
+    
     m_horizSplitter->setSizes(horizSizes);
     m_vertSplitter->setSizes(vertSizes);
 }
