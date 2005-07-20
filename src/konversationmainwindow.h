@@ -216,6 +216,7 @@ class KonversationMainWindow : public KMainWindow
     void deleteDccPanel();
 
     void updateTabMoveActions();
+    void updateTabEncoding(ChatWindow* view);
 
     virtual bool event(QEvent* e);
     

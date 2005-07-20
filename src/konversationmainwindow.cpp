@@ -1018,18 +1018,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
       notifyAction->setChecked(view->notificationsEnabled());
     }
 
-    KSelectAction* codecAction = static_cast<KSelectAction*>(actionCollection()->action("tab_encoding"));
-
-    if(codecAction) {
-      codecAction->setEnabled(view->isChannelEncodingSupported());
-      QString encoding = view->getChannelEncoding();
-
-      if(encoding.isEmpty()) {
-        codecAction->setCurrentItem(0);
-      } else {
-        codecAction->setCurrentItem(Konversation::IRCCharsets::self()->shortNameToIndex(encoding) + 1);
-      }
-    }
+    updateTabEncoding(view);
   }
 }
 
@@ -1632,18 +1621,7 @@ void KonversationMainWindow::showTabContextMenu(QWidget* tab, const QPoint& pos)
       notifyAction->setChecked(view->notificationsEnabled());
     }
 
-    KSelectAction* codecAction = static_cast<KSelectAction*>(actionCollection()->action("tab_encoding"));
-
-    if(codecAction) {
-      codecAction->setEnabled(view->isChannelEncodingSupported());
-      QString encoding = view->getChannelEncoding();
-
-      if(encoding.isEmpty()) {
-        codecAction->setCurrentItem(0);
-      } else {
-        codecAction->setCurrentItem(Konversation::IRCCharsets::self()->shortNameToIndex(encoding) + 1);
-      }
-    }
+    updateTabEncoding(view);
   }
 
   if(menu->exec(pos) == -1) {
@@ -1658,18 +1636,7 @@ void KonversationMainWindow::showTabContextMenu(QWidget* tab, const QPoint& pos)
         notifyAction->setChecked(view->notificationsEnabled());
       }
 
-      KSelectAction* codecAction = static_cast<KSelectAction*>(actionCollection()->action("tab_encoding"));
-
-      if(codecAction) {
-        codecAction->setEnabled(view->isChannelEncodingSupported());
-        QString encoding = view->getChannelEncoding();
-
-        if(encoding.isEmpty()) {
-          codecAction->setCurrentItem(0);
-        } else {
-          codecAction->setCurrentItem(Konversation::IRCCharsets::self()->shortNameToIndex(encoding) + 1);
-        }
-      }
+      updateTabEncoding(view);
     }
   }
 }
@@ -1809,6 +1776,33 @@ void KonversationMainWindow::updateSwitchTabAction()
   if(action) {
     action->setItems(tabList);
     action->setCurrentItem(getViewContainer()->currentPageIndex());
+  }
+}
+
+void KonversationMainWindow::updateTabEncoding(ChatWindow* view)
+{
+  if(view) {
+    ChatWindow::WindowType viewType = view->getType();
+    KSelectAction* codecAction = static_cast<KSelectAction*>(actionCollection()->action("tab_encoding"));
+
+    if(codecAction) {
+      if(viewType == ChatWindow::Channel || viewType == ChatWindow::Query || viewType == ChatWindow::Status) {
+        codecAction->setEnabled(view->isChannelEncodingSupported());
+        QString encoding = view->getChannelEncoding();
+
+        if(frontServer) {
+          codecAction->changeItem(0, i18n("Default encoding", "Default (%1)").arg(frontServer->getIdentity()->getCodecName()));
+        }
+
+        if(encoding.isEmpty()) {
+          codecAction->setCurrentItem(0);
+        } else {
+          codecAction->setCurrentItem(Konversation::IRCCharsets::self()->shortNameToIndex(encoding) + 1);
+        }
+      } else {
+        codecAction->setEnabled(false);
+      }
+    }
   }
 }
 
