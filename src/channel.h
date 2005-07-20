@@ -219,6 +219,7 @@ class Channel : public ChatWindow
     
   protected:
     void showEvent(QShowEvent* event);
+    void initializeSplitters();
     // use with caution! does not check for duplicates
     void fastAddNickname(ChannelNickPtr channelnick);
     /** Called from ChatWindow adjustFocus */

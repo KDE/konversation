@@ -1,3 +1,9 @@
+# Rename ChannelSplitter
+Id=0.19-channelsplitter
+File=konversationrc
+Group=Appearance
+Key=ChannelSplitter,ChannelSplitterSizes
+
 # Update mainwindow settings
 Id=0.14-mainwindow
 File=konversationrc

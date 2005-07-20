@@ -1668,39 +1668,43 @@ void Channel::showEvent(QShowEvent*)
     quickButtonsChanged=false;
     showQuickButtons(quickButtonsState);
   }
+  
   if(modeButtonsChanged)
   {
     modeButtonsChanged=false;
     showModeButtons(modeButtonsState);
   }
-  if(splitterChanged)
-  {
-    splitterChanged = false;
-
-    QValueList<int> sizes = KonversationApplication::preferences.getChannelSplitter();
-
-    if(sizes.isEmpty()) {
-      int listWidth = nicknameListView->columnWidth(0) + nicknameListView->columnWidth(1);
-      sizes << (width() - listWidth) << listWidth;
-      KonversationApplication::preferences.setChannelSplitter(sizes);
-    }
-
-    m_horizSplitter->setSizes(sizes);
-
-    sizes = KonversationApplication::preferences.topicSplitterSizes();
-
-    if(sizes.isEmpty()) {
-      sizes << m_topicButton->height() << (m_vertSplitter->height() - m_topicButton->height());
-    }
-
-    m_vertSplitter->setSizes(sizes);
-  }
+  
+  if(splitterChanged) initializeSplitters();
 
   if(awayChanged)
   {
     awayChanged=false;
     indicateAway(awayState);
   }
+}
+
+void Channel::initializeSplitters()
+{
+    splitterChanged = false;
+
+    QValueList<int> horizSizes, vertSizes;
+    
+    horizSizes = KonversationApplication::preferences.channelSplitterSizes();
+    vertSizes = KonversationApplication::preferences.topicSplitterSizes();
+    
+    if (horizSizes.isEmpty()) {
+        int listWidth = nicknameListView->columnWidth(0) + nicknameListView->columnWidth(1);
+        horizSizes << (width() - listWidth) << listWidth;
+        KonversationApplication::preferences.setChannelSplitterSizes(horizSizes);
+    }
+    
+    if (vertSizes.isEmpty()) {
+        vertSizes << m_topicButton->height() << (m_vertSplitter->height() - m_topicButton->height());
+    }       
+
+    m_horizSplitter->setSizes(horizSizes);
+    m_vertSplitter->setSizes(vertSizes);
 }
 
 void Channel::updateFonts()
@@ -2184,7 +2188,7 @@ void Channel::setIdentity(const Identity *newIdentity)
 bool Channel::eventFilter(QObject* watched, QEvent* e)
 {
   if((watched == nicknameListView) && (e->type() == QEvent::Resize) && !splitterChanged && isShown()) {
-    KonversationApplication::preferences.setChannelSplitter(m_horizSplitter->sizes());
+    KonversationApplication::preferences.setChannelSplitterSizes(m_horizSplitter->sizes());
     KonversationApplication::preferences.setTopicSplitterSizes(m_vertSplitter->sizes());
 
     emit splitterMoved(this);
@@ -2199,7 +2203,7 @@ void Channel::updateSplitters(Channel* channel)
     return;
   }
 
-  m_horizSplitter->setSizes(KonversationApplication::preferences.getChannelSplitter());
+  m_horizSplitter->setSizes(KonversationApplication::preferences.channelSplitterSizes());
   m_vertSplitter->setSizes(KonversationApplication::preferences.topicSplitterSizes());
 }
 

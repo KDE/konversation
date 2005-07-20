@@ -391,11 +391,11 @@ class Preferences : public QObject
     void setTrayNotifyOnlyOwnNick(bool onlyOwnNick);
     bool trayNotifyOnlyOwnNick() const;
 
-    void setChannelSplitter(QValueList<int> sizes);
-    const QValueList<int> getChannelSplitter();
+    void setChannelSplitterSizes(QValueList<int> sizes);
+    const QValueList<int> channelSplitterSizes();
 
     void setTopicSplitterSizes(QValueList<int> sizes);
-    const QValueList<int> topicSplitterSizes() const;
+    const QValueList<int> topicSplitterSizes();
 
     void setChannelDoubleClickAction(const QString &action);
     const QString getChannelDoubleClickAction();

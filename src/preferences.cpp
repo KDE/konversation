@@ -822,18 +822,11 @@ bool Preferences::trayNotifyOnlyOwnNick() const
   return m_trayNotifyOnlyOwnNick;
 }
 
-void Preferences::setChannelSplitter(QValueList<int> sizes) { channelSplitter=sizes; }
-const QValueList<int> Preferences::getChannelSplitter() { return channelSplitter; }
+void Preferences::setChannelSplitterSizes(QValueList<int> sizes) { channelSplitter=sizes; }
+const QValueList<int> Preferences::channelSplitterSizes() { return channelSplitter; }
 
-void Preferences::setTopicSplitterSizes(QValueList<int> sizes)
-{
-  m_topicSplitterSizes = sizes;
-}
-
-const QValueList<int> Preferences::topicSplitterSizes() const
-{
-  return m_topicSplitterSizes;
-}
+void Preferences::setTopicSplitterSizes(QValueList<int> sizes) { m_topicSplitterSizes=sizes; }
+const QValueList<int> Preferences::topicSplitterSizes() { return m_topicSplitterSizes; }
 
 void Preferences::setChannelDoubleClickAction(const QString &action) { channelDoubleClickAction=action; }
 const QString Preferences::getChannelDoubleClickAction() { return channelDoubleClickAction; }

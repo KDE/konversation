@@ -492,7 +492,7 @@ void KonversationApplication::readOptions()
   preferences.setUseParagraphSpacing(config->readBoolEntry("UseParagraphSpacing",preferences.getUseParagraphSpacing()));
   preferences.setParagraphSpacing(config->readNumEntry("ParagraphSpacing",preferences.getParagraphSpacing()));
 
-  preferences.setChannelSplitter(config->readIntListEntry("ChannelSplitter"));
+  preferences.setChannelSplitterSizes(config->readIntListEntry("ChannelSplitterSizes"));
   preferences.setTopicSplitterSizes(config->readIntListEntry("TopicSplitterSizes"));
 
   preferences.setBackgroundImageName(config->readEntry("BackgroundImage",preferences.getBackgroundImageName()));
@@ -1034,7 +1034,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("UseParagraphSpacing",preferences.getUseParagraphSpacing());
   config->writeEntry("ParagraphSpacing",preferences.getParagraphSpacing());
 
-  config->writeEntry("ChannelSplitter",preferences.getChannelSplitter());
+  config->writeEntry("ChannelSplitterSizes",preferences.channelSplitterSizes());
   config->writeEntry("TopicSplitterSizes", preferences.topicSplitterSizes());
   config->writeEntry("BackgroundImage",preferences.getBackgroundImageName());
   config->writeEntry("IRCColors", preferences.getIRCColorList());

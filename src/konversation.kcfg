@@ -161,9 +161,9 @@
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:455 -->
-      <!--   preferences.setChannelSplitter(config->readIntListEntry("ChannelSplitter")); -->
+      <!--   preferences.setChannelSplitterSizes(config->readIntListEntry("ChannelSplitterSizes")); -->
       <!-- konversationapplication.cpp:957 -->
-      <!--   config->writeEntry("ChannelSplitter",preferences.getChannelSplitter()); -->
+      <!--   config->writeEntry("ChannelSplitter",preferences.channelSplitterSizes()); -->
     </entry>
     <entry key="BackgroundImage" type="String">
       <default></default>
