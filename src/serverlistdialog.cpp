@@ -207,6 +207,8 @@ namespace Konversation {
     QSize newSize = size();
     newSize = config->readSizeEntry("Size", &newSize);
     resize(newSize);
+
+    m_serverList->setSelected(m_serverList->firstChild(), true);
   }
 
   ServerListDialog::~ServerListDialog()
