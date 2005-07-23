@@ -82,7 +82,7 @@ void KonviBookmarkHandler::openBookmarkURL(const QString& url, const QString& ti
 
 QString KonviBookmarkHandler::currentURL() const
 {
-  return m_mainWindow->currentURL();
+  return m_mainWindow->currentURL(true);
 }
 
 QString KonviBookmarkHandler::currentTitle() const

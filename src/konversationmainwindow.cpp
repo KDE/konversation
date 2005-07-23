@@ -1566,48 +1566,63 @@ void KonversationMainWindow::openURL(const QString&url, const QString&/* title*/
   QString channel = channelAndPassword.section('?',0,0);
   QString password = channelAndPassword.section('?',1,1);
   
-  if(port.isEmpty())
+  if(port.isEmpty()) {
     port = "6667";
-
-  KonversationApplication::instance()->dcopConnectToServer(server,port.toInt(),channel,password);
+  }
   
+  if (KonversationApplication::preferences.isServerGroup(server)) {
+    Server* newServer = KonversationApplication::instance()->connectToServerGroup(server);
+    newServer->setAutoJoin(true);
+    newServer->setAutoJoinChannel(channel);
+    newServer->setAutoJoinChannelKey(password);
+  } else {
+    KonversationApplication::instance()->dcopConnectToServer(server,port.toInt(),channel,password);
+  }  
 }
 
-QString KonversationMainWindow::currentURL()
+QString KonversationMainWindow::currentURL(bool passNetwork)
 {
   QString url = QString::null;
   QString channel = QString::null;
+  QString port = QString::null;
+  QString server = QString::null;
 
-  if(frontServer && m_frontView)
-    {
-      updateFrontView();
+  if(frontServer && m_frontView) {
+    updateFrontView();
       
-      if(m_frontView->getType() == ChatWindow::Channel)
-	channel = m_frontView->getName();
+    if(m_frontView->getType() == ChatWindow::Channel) {
+      channel = m_frontView->getName();
+    }           
+          
+    if (passNetwork) {
+      server = frontServer->getServerGroup();
+    } else {
+      server = frontServer->getServerName();
+      port = ":"+QString::number(frontServer->getPort());
+    }      
 
-      url = "irc://"+frontServer->getServerName()+":"+QString::number(frontServer->getPort())+"/"+channel;
-    }
+    url = "irc://"+server+port+"/"+channel;
+  }
   
   return url;
 }
 
 QString KonversationMainWindow::currentTitle()
 {
-  if (frontServer) 
-    {
-      if(m_frontView && m_frontView->getType() == ChatWindow::Channel) 
-        {
-          return m_frontView->getName();
-        } 
-      else 
-        {
-          return frontServer->getServerName();
-        }
-    } 
-  else 
-    {
-      return QString::null;
+  if (frontServer) {
+    if(m_frontView && m_frontView->getType() == ChatWindow::Channel) {
+      return m_frontView->getName();
+    } else {
+      QString serverGroup = frontServer->getServerGroup();
+      if (!serverGroup.isEmpty()) {
+        return serverGroup;
+      } else {
+        return frontServer->getServerName();
+      }
     }
+  } else {
+    return QString::null;
+  }
 }
 
 void KonversationMainWindow::serverStateChanged(Server* server, Server::State state)

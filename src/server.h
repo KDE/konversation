@@ -419,6 +419,7 @@ class Server : public QObject
     void sendMultiServerCommand(const QString& command, const QString& parameter);
     void executeMultiServerCommand(const QString& command, const QString& parameter);
     void reconnect();
+    void connectToServerGroup(const QString& serverGroup);
     void connectToNewServer(const QString& server, const QString& port, const QString& password);
     void showSSLDialog();
     void sendToAllChannels(const QString& text);

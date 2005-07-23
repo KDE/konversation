@@ -79,6 +79,7 @@ namespace Konversation
       void unbanUsers(const QString& mask,const QString& channel);
       void multiServerCommand(const QString& command, const QString& parameter);
       void reconnectServer();
+      void connectToServerGroup(const QString& serverGroup);
       void connectToServer(const QString& server, const QString& port, const QString& password);
 
     public slots:

@@ -1129,27 +1129,31 @@ namespace Konversation {
         } else {
             QStringList splitted = QStringList::split(" ", parameter);
             QString password;
-	    QStringList splitAddress;
+	        QStringList splitAddress;
 
             if(splitted.count() > 1) {
                 password = splitted[1];
             }
 
-	    splitAddress= QStringList::split(":", splitted[0], TRUE);
+	        splitAddress= QStringList::split(":", splitted[0], TRUE);
             QString port = "6667";
 
             if(splitAddress.count() == 2) { // IPv4 address with a port
-	      port = splitAddress[1];
-	      splitted[0] = splitAddress[0];
+	            port = splitAddress[1];
+	            splitted[0] = splitAddress[0];
             }
-	    else if(splitAddress.count() > 6) { // IPv6 address with a port
-	      port = splitAddress[splitAddress.count()-1];
-	      splitted[0] = splitted[0].section(':',0,5);
-	    }
+	        else if(splitAddress.count() > 6) { // IPv6 address with a port
+	           port = splitAddress[splitAddress.count()-1];
+	           splitted[0] = splitted[0].section(':',0,5);
+	        }
 
-	    kdDebug() << "Server : " << splitted[0] << " Port : " << port << endl;
+	        kdDebug() << "Server : " << splitted[0] << " Port : " << port << endl;
 
-            emit connectToServer(splitted[0], port, password);
+            if (KonversationApplication::preferences.isServerGroup(splitted[0])) {
+                emit connectToServerGroup(splitted[0]);
+            } else {
+                emit connectToServer(splitted[0], port, password);
+            }
         }
     }
 

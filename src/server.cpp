@@ -271,6 +271,8 @@ void Server::connectSignals() {
     connect(outputFilter, SIGNAL(requestDccChat(const QString &)), this, SLOT(requestDccChat(const QString &)));
     connect(outputFilter, SIGNAL(connectToServer(const QString&, const QString&, const QString&)),
             this, SLOT(connectToNewServer(const QString&, const QString&, const QString&)));
+    connect(outputFilter, SIGNAL(connectToServerGroup(const QString&)),
+            this, SLOT(connectToServerGroup(const QString&)));
     connect(outputFilter, SIGNAL(openKonsolePanel()), this, SLOT(requestKonsolePanel()));
     connect(outputFilter, SIGNAL(sendToAllChannels(const QString&)), this, SLOT(sendToAllChannels(const QString&)));
     connect(outputFilter, SIGNAL(banUsers(const QStringList&,const QString&,const QString&)),
@@ -2944,6 +2946,11 @@ void Server::reconnect() {
     } else {
         getStatusView()->appendServerMessage("Error", i18n("Server already connected."));
     }
+}
+
+void Server::connectToServerGroup(const QString& serverGroup) {
+    KonversationApplication *konvApp = static_cast<KonversationApplication*>(KApplication::kApplication());
+    konvApp->connectToServerGroup(serverGroup);
 }
 
 void Server::connectToNewServer(const QString& server, const QString& port, const QString& password) {

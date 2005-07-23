@@ -94,7 +94,7 @@ class KonversationMainWindow : public KMainWindow
 
 
     // Bookmark related functions
-    QString currentURL();
+    QString currentURL(bool passNetwork);
     QString currentTitle();
 
   signals:

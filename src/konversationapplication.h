@@ -141,7 +141,8 @@ class KonversationApplication : public KUniqueApplication
     void prefsChanged();
 
   public slots:
-    void connectToServer(int number);
+    Server* connectToServerGroup(const QString& serverGroup);
+    Server* connectToServer(int number);
     void quickConnectToServer(const QString& hostName, 
 			      const QString& port = "6667", 
 			      const QString& channel="",

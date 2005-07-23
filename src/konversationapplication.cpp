@@ -300,13 +300,20 @@ void KonversationApplication::insertRememberLine()
   mainWindow->insertRememberLine();
 }
 
-void KonversationApplication::connectToServer(int id)
+Server* KonversationApplication::connectToServerGroup(const QString& serverGroup)
+{
+  int serverGroupId = preferences.serverGroupIdByName(serverGroup);
+  
+  return connectToServer(serverGroupId);
+}
+
+Server* KonversationApplication::connectToServer(int id)
 {
   Konversation::ServerGroupSettingsPtr serverGroup = preferences.serverGroupById(id);
   IdentityPtr identity = serverGroup->identity();
   
   if(!identity) {
-    return;
+    return 0;
   }
 
   // sanity check for identity
@@ -334,7 +341,7 @@ void KonversationApplication::connectToServer(int id)
 
     mainWindow->openIdentitiesDialog();
     
-    return;
+    return 0;
   }
 
   // identity ok, carry on
@@ -358,6 +365,8 @@ void KonversationApplication::connectToServer(int id)
   connect(newServer, SIGNAL(awayInsertRememberLine()), this, SLOT(insertRememberLine()));
 
   serverList.append(newServer);
+  
+  return newServer;
 }
 
 void KonversationApplication::quickConnectToServer(const QString& hostName, const QString& port, const QString& channel, const QString& nick, const QString& password, const bool& useSSL)
