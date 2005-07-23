@@ -761,20 +761,24 @@ void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nic
 StatusPanel* KonversationMainWindow::addStatusView(Server* server)
 {
   StatusPanel* statusView=new StatusPanel(getViewContainer());
-
+  
   // first set up internal data ...
   statusView->setServer(server);
   statusView->setIdentity(server->getIdentity());
   statusView->setName(server->getServerName());
 
+  // Get group name for tab if available
+  QString label = server->getServerGroup();
+  if (label.isEmpty()) {
+    label = server->getServerName();
+  }
+    
   // SSL icon stuff
   QObject::connect(server,SIGNAL(sslInitFailure()),this,SLOT(removeSSLIcon()));
   QObject::connect(server,SIGNAL(sslConnected(Server*)),this,SLOT(updateSSLInfo(Server*)));
-  
-  QObject::connect(server,SIGNAL(updateTabLabel(QWidget*, const QString&)),this,SLOT(updateTabLabel(QWidget*, const QString&)));
 
   // ... then put it into the tab widget, otherwise we'd have a race with server member
-  addView(statusView, server->getServerName());
+  addView(statusView,label);
 
   connect(statusView, SIGNAL(updateTabNotification(QWidget*, const QString&)), this, SLOT(newText(QWidget*,const QString&)));
   connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );

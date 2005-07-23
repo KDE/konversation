@@ -631,8 +631,7 @@ void Server::broken(int state) {
                 error = i18n("Trying server %1 instead.")
                    .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server());
                 statusView->appendServerMessage(i18n("Error"),error );
-                
-                emit updateTabLabel(statusView,getServerName());
+
                 connectToIRCServer();
             } else {
                 if (autoReconnect) {
