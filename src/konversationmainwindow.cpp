@@ -770,6 +770,8 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
   // SSL icon stuff
   QObject::connect(server,SIGNAL(sslInitFailure()),this,SLOT(removeSSLIcon()));
   QObject::connect(server,SIGNAL(sslConnected(Server*)),this,SLOT(updateSSLInfo(Server*)));
+  
+  QObject::connect(server,SIGNAL(updateTabLabel(QWidget*, const QString&)),this,SLOT(updateTabLabel(QWidget*, const QString&)));
 
   // ... then put it into the tab widget, otherwise we'd have a race with server member
   addView(statusView, server->getServerName());
@@ -854,6 +856,13 @@ void KonversationMainWindow::newText(QWidget* widget, const QString& highlightCo
   if(view != getViewContainer()->currentPage()) {
     getViewContainer()->setTabColor(view, QColor(highlightColor));
   }
+}
+
+void KonversationMainWindow::updateTabLabel(QWidget* widget, const QString& newName)
+{
+  ChatWindow* view = static_cast<ChatWindow*>(widget);
+
+  getViewContainer()->changeTab(view,newName);
 }
 
 void KonversationMainWindow::updateFrontView()
