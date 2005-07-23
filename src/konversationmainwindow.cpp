@@ -1580,12 +1580,21 @@ QString KonversationMainWindow::currentURL()
 
 QString KonversationMainWindow::currentTitle()
 {
-  if(frontServer)
+  if (frontServer) 
     {
-      return frontServer->getServerName();
+      if(m_frontView && m_frontView->getType() == ChatWindow::Channel) 
+        {
+          return m_frontView->getName();
+        } 
+      else 
+        {
+          return frontServer->getServerName();
+        }
+    } 
+  else 
+    {
+      return QString::null;
     }
-  else
-    return QString::null;
 }
 
 void KonversationMainWindow::serverStateChanged(Server* server, Server::State state)
