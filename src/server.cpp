@@ -602,37 +602,13 @@ void Server::broken(int state) {
     emit nicksNowOnline(this,QStringList(),true);
 
 
-  // TODO: Close all queries and channels! Or at least make sure that all gets reconnected properly
-    if(autoReconnect && !getDeliberateQuit())
+  // TODO: Close all queries and channels! Or at least make sure that all gets reconnected properly   
+    if(!getDeliberateQuit())
     {
-        // TODO: Make retry counter configurable
-        ++reconnectCounter;
-
-        if(reconnectCounter >= KonversationApplication::preferences.getReconnectCount() || !m_tryReconnect)
-        {
-            QString error = i18n("Connection to Server %1 failed.  %2")
-                .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
-                .arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
-
-            statusView->appendServerMessage(i18n("Error"),error);
-            reconnectCounter = 0;
-            rejoinChannels = false;
-
-            if(m_currentServerIndex < (m_serverGroup->serverList().count() - 1)) {
-                m_currentServerIndex++;
-                error = i18n("Trying server %1 instead.")
-                    .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server());
-                statusView->appendServerMessage(i18n("Error"),error );
-                
-                connectToIRCServer();
-            } else {
-                error = i18n("Waiting for 2 minutes before another reconnection attempt...");
-                statusView->appendServerMessage(i18n("Info"),error);
-                QTimer::singleShot(2*60*1000,this,SLOT(connectToIRCServer()));
-            }
-        }
-        else {
-            QString error = i18n("Connection to Server %1 lost.  %2.  Trying to reconnect.")
+        ++reconnectCounter;        
+             
+        if (autoReconnect && reconnectCounter <= KonversationApplication::preferences.getReconnectCount()) {    
+            QString error = i18n("Connection to Server %1 lost: %2. Trying to reconnect.")
                 .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
                 .arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
 
@@ -640,16 +616,38 @@ void Server::broken(int state) {
 
             // TODO: Make timeout configurable
             QTimer::singleShot(5000,this,SLOT(connectToIRCServer()));
-            rejoinChannels = true;
-        }
-    }
-    else if(getDeliberateQuit()) { // If we quit the connection with the server
+            rejoinChannels = true;            
+        } else if ((!autoReconnect || reconnectCounter >= KonversationApplication::preferences.getReconnectCount())) {
+            QString error = i18n("Connection to Server %1 failed: %2.")
+                .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
+                .arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
+
+            statusView->appendServerMessage(i18n("Error"),error);
+            reconnectCounter = 0;
+            rejoinChannels = false;
+                
+            if(m_currentServerIndex < (m_serverGroup->serverList().count() - 1)) {
+                m_currentServerIndex++;
+                error = i18n("Trying server %1 instead.")
+                   .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server());
+                statusView->appendServerMessage(i18n("Error"),error );
+                
+                connectToIRCServer();
+            } else {
+                if (autoReconnect) {
+                    error = i18n("Waiting for 2 minutes before another reconnection attempt...");
+                    statusView->appendServerMessage(i18n("Info"),error);
+                    m_currentServerIndex = 0;
+                    QTimer::singleShot(2*60*1000,this,SLOT(connectToIRCServer()));
+                }
+            }          
+        } else {
+            QString error = i18n("Connection to Server %1 failed: %2.")
+                .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server());
+            statusView->appendServerMessage(i18n("Error"),error);
+        }            
+    } else { // If we quit the connection with the server
         getMainWindow()->serverQuit(this);
-    }
-    else {
-        QString error = i18n("Connection to Server %1 failed.")
-            .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server());
-        statusView->appendServerMessage(i18n("Error"),error);
     }
 
   emit serverOnline(false);
