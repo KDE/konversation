@@ -65,21 +65,29 @@ Server::Server(KonversationMainWindow* mainWindow, int id) {
 
 Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
 	       const QString& channel,const QString& _nick, QString password,const bool& useSSL)
-{
-    QString nick( _nick );
-    m_serverGroup = new Konversation::ServerGroupSettings;
-    m_serverGroup->setName(hostName);
-    m_serverGroup->setIdentityId(KonversationApplication::preferences.getIdentityByName("Default")->id());
-
-    Konversation::ServerSettings serverSettings;
-    serverSettings.setServer(hostName);
-    serverSettings.setPort(port.toInt());
-    serverSettings.setPassword(password);
-    serverSettings.setSSLEnabled(useSSL);
-    m_serverGroup->addServer(serverSettings);
-
-    if(nick.isEmpty()) // Happens when we are invoked from an irc:/ url
+{ 
+    QString nick( _nick );   
+    
+    // If server is in an existing group, use that group (first group if server is in multiple groups)
+    Konversation::ServerGroupSettingsPtr serverGroupOfServer;  
+    if (serverGroupOfServer = KonversationApplication::preferences.serverGroupByServer(hostName)) {
+        m_serverGroup = serverGroupOfServer;
+    } else {
+        m_serverGroup = new Konversation::ServerGroupSettings;
+        m_serverGroup->setIdentityId(KonversationApplication::preferences.getIdentityByName("Default")->id());
+        m_serverGroup->setName(hostName);
+    
+        Konversation::ServerSettings serverSettings;
+        serverSettings.setServer(hostName);
+        serverSettings.setPort(port.toInt());
+        serverSettings.setPassword(password);
+        serverSettings.setSSLEnabled(useSSL);
+        m_serverGroup->addServer(serverSettings);
+    }
+    
+    if(nick.isEmpty()) { // Happens when we are invoked from an irc:/ url
         nick = getIdentity()->getNickname(0);
+    }
 
     init(mainWindow, nick, channel);
 }

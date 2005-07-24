@@ -163,7 +163,7 @@ class KonversationMainWindow : public KMainWindow
     void closeKonsolePanel(ChatWindow* konsolePanel);
 
     void newText(QWidget* view, const QString& highlightColor);
-    void updateTabLabel(QWidget* widget, const QString& newName);
+    void changeTabLabel(QWidget* widget, const QString& newLabel);
     void quitProgram();
 
     void notifyAction(const QString& serverName,const QString& nick);

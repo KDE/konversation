@@ -862,11 +862,11 @@ void KonversationMainWindow::newText(QWidget* widget, const QString& highlightCo
   }
 }
 
-void KonversationMainWindow::updateTabLabel(QWidget* widget, const QString& newName)
+void KonversationMainWindow::changeTabLabel(QWidget* widget, const QString& newLabel)
 {
   ChatWindow* view = static_cast<ChatWindow*>(widget);
 
-  getViewContainer()->changeTab(view,newName);
+  getViewContainer()->changeTab(view,newLabel);
 }
 
 void KonversationMainWindow::updateFrontView()

@@ -292,6 +292,27 @@ const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
   return 0;
 }
 
+const Konversation::ServerGroupSettingsPtr Preferences::serverGroupByServer(const QString& server)
+{
+  if(!m_serverGroupList.count()) {
+    return 0;
+  }
+  
+  Konversation::ServerGroupList::iterator it;
+  
+  for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it) {
+    for (int i = 0; i != (*it)->serverList().count(); i++)
+    {
+      if ((*it)->serverByIndex(i).server().lower() == server)
+      {
+        return (*it);
+      } 
+    }
+  }
+
+  return 0;
+}
+
 int Preferences::serverGroupIdByName(const QString& serverGroup)
 {
   Konversation::ServerGroupList::iterator it;
