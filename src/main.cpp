@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
   aboutData.addCredit("Sebastian Sariego",I18N_NOOP("Artwork"),"segfault@kde.cl");
   aboutData.addCredit("Olivier Bédard",I18N_NOOP("www.konversation.org hosting"));
   aboutData.addCredit("Renchi Raju",I18N_NOOP("Firefox style searchbar"));
-  aboutData.addCredit("Eike Hein",I18N_NOOP("Bugfixes & CTRL-Enter patch"),"sho@eikehein.com");
+  aboutData.addCredit("Eike Hein",I18N_NOOP("Bookmarking, network semantics, CTRL+Enter, bugfixes"),"sho@eikehein.com");
   aboutData.addCredit("Michael Kreitzer",I18N_NOOP("Raw modes,Tab grouping per server"),"mrgrim@gr1m.org");
   aboutData.addCredit("Frauke Oster",I18N_NOOP("System tray patch"),"frauke@frsv.de");
   aboutData.addCredit("Lucijan Busch",I18N_NOOP("Bug fixes"),"lucijan@kde.org");
