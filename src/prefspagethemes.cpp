@@ -76,6 +76,7 @@ void PrefsPageThemes::applyPreferences()
 	  preferences->setIconTheme(theme);
 	  KonversationApplication::instance()->images()->initializeNickIcons();
 	  KonversationApplication::instance()->updateNickIcons();
+	  m_oldTheme = theme;
 	}
     }
 }
