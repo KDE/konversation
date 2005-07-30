@@ -154,13 +154,16 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   nextShortcut.setSeq(1, KKeySequence("Alt+Right"));
   KShortcut prevShortcut = KStdAccel::tabPrev();
   prevShortcut.setSeq(1, KKeySequence("Alt+Left"));
-  new KAction(i18n("&Next Tab"), QApplication::reverseLayout() ? "previous" : "next",
+  action = new KAction(i18n("&Next Tab"), QApplication::reverseLayout() ? "previous" : "next",
     QApplication::reverseLayout() ? prevShortcut : nextShortcut,
     this,SLOT(nextTab()), actionCollection(), "next_tab");
-  new KAction(i18n("&Previous Tab"), QApplication::reverseLayout() ? "next" : "previous",
+  action->setEnabled(false);
+  action = new KAction(i18n("&Previous Tab"), QApplication::reverseLayout() ? "next" : "previous",
     QApplication::reverseLayout() ? nextShortcut : prevShortcut,
     this,SLOT(previousTab()),actionCollection(),"previous_tab");
-  new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
+  action->setEnabled(false);
+  action = new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"),this,SLOT(closeTab()),actionCollection(),"close_tab");
+  action->setEnabled(false);
 
   action = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"),
                        this, SLOT(moveTabLeft()), actionCollection(), "move_tab_left");
@@ -1733,7 +1736,25 @@ void KonversationMainWindow::updateTabMoveActions()
       action->setEnabled(index < (getViewContainer()->count() - 1));
     }
 
-    action = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+    action = actionCollection()->action("tab_notifications");
+
+    if(action) {
+      action->setEnabled(true);
+    }
+
+    action = actionCollection()->action("next_tab");
+
+    if(action) {
+      action->setEnabled(true);
+    }
+
+    action = actionCollection()->action("previous_tab");
+
+    if(action) {
+      action->setEnabled(true);
+    }
+
+    action = actionCollection()->action("close_tab");
 
     if(action) {
       action->setEnabled(true);
@@ -1751,11 +1772,65 @@ void KonversationMainWindow::updateTabMoveActions()
       action->setEnabled(false);
     }
 
-    action = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+    action = actionCollection()->action("tab_notifications");
 
     if(action) {
       action->setEnabled(false);
     }
+
+    action = actionCollection()->action("next_tab");
+
+    if(action) {
+      action->setEnabled(false);
+    }
+
+    action = actionCollection()->action("previous_tab");
+
+    if(action) {
+      action->setEnabled(false);
+    }
+
+    action = actionCollection()->action("close_tab");
+
+    if(action) {
+      action->setEnabled(false);
+    }
+
+    action = actionCollection()->action("insert_remember_line");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("insert_character");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("irc_colors");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("clear_window");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("clear_tabs");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("edit_find");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("edit_find_next");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("open_channel_list");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("open_logfile");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("toggle_away");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("join_channel");
+    if(action) action->setEnabled(false);
+
+    action = actionCollection()->action("reconnect_server");
+    if(action) action->setEnabled(false);
   }
 }
 
