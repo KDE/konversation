@@ -185,6 +185,7 @@ void ServerGroupDialog::setServerGroupSettings(ServerGroupSettingsPtr settings)
   m_commandEdit->setText(settings->connectCommands());
   m_autoConnectCBox->setChecked(settings->autoConnectEnabled());
   m_serverList = settings->serverList();
+  m_channelHistory = settings->channelHistory();
   ServerList::iterator it;
   m_serverLBox->clear();
 
@@ -211,6 +212,7 @@ ServerGroupSettingsPtr ServerGroupDialog::serverGroupSettings()
   settings->setAutoConnectEnabled(m_autoConnectCBox->isChecked());
   settings->setServerList(m_serverList);
   settings->setChannelList(m_channelList);
+  settings->setChannelHistory(m_channelHistory);
 
   return settings;
 }

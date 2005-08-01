@@ -67,6 +67,7 @@ class ServerGroupDialog : public KDialogBase
     QCheckBox* m_autoConnectCBox;
     ServerList m_serverList;
     ChannelList m_channelList;
+    ChannelList m_channelHistory;
     QToolButton* m_upServerBtn;
     QToolButton* m_downServerBtn;
     QToolButton* m_upChannelBtn;
