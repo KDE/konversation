@@ -601,7 +601,7 @@ void KonversationMainWindow::openLogFile(const QString& caption, const QString& 
   if(!file.isEmpty()) {
     LogfileReader* logReader = new LogfileReader(getViewContainer(), file);
     addView(logReader, i18n("Logfile of %1").arg(caption));
-    logReader->setServer(frontServer);
+    logReader->setServer(0);
   }
 }
 
@@ -1297,19 +1297,19 @@ void KonversationMainWindow::previousTab()
 
 void KonversationMainWindow::goToTab(int page)
 {
-    if ( page >= getViewContainer()->count() )
-        page = 0;
-    else if ( page < 0 )
-        page = getViewContainer()->count() - 1;
+  if(page >= getViewContainer()->count())
+    page = 0;
+  else if(page < 0)
+    page = getViewContainer()->count() - 1;
 
-    if(page>=0)
-    {
-        getViewContainer()->setCurrentPage(page);
-        ChatWindow* newPage=static_cast<ChatWindow*>(getViewContainer()->page(page));
-        newPage->adjustFocus();
-    }
+  if(page >= 0)
+  {
+    getViewContainer()->setCurrentPage(page);
+    ChatWindow* newPage=static_cast<ChatWindow*>(getViewContainer()->page(page));
+    newPage->adjustFocus();
+  }
 
-    m_popupTabIndex = -1;
+  m_popupTabIndex = -1;
 }
 
 void KonversationMainWindow::findText()
