@@ -914,7 +914,11 @@ void KonversationMainWindow::updateFrontView()
     if(action) action->setEnabled(view->getTextView() != 0);
 
     action = actionCollection()->action("edit_find");
-    if(action) action->setEnabled(view->searchView());
+    if(action) 
+      {
+	action->setText(i18n("Find Text..."));
+	action->setEnabled(view->searchView());
+      }
 
     action = actionCollection()->action("edit_find_next");
     if(action) action->setEnabled(view->searchView());
