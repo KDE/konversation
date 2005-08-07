@@ -16,7 +16,8 @@ Changes from 0.18 to 0.19
 - Implement /server <network>
 - Recognize server as being part of a network and use respective identity
 - Fix networks losing their channel history upon changes to their settings
-- Tabs gets a redesign and notifications are now color based.
+- Tab bar redesigned; uses label text color for notifications.
+
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
