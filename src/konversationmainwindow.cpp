@@ -395,12 +395,17 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
   // before the DCC tab. Maybe we should also make sure to order Channels
   // Queries and DCC chats in groups
   ChatWindow *tmp_ChatWindow;
-  int placed = 0;
+  int placement = -1;
   ChatWindow::WindowType wtype;
+  QIconSet iconSet;
 
   switch (view->getType())
   {
     case ChatWindow::Channel:
+      if(KonversationApplication::preferences.getCloseButtonsOnTabs()) {
+        iconSet = UserIconSet("led_green_on");
+      }
+
       for (int sindex = 0; sindex < viewContainer->count(); sindex++)
       {
         tmp_ChatWindow = static_cast<ChatWindow *>(viewContainer->page(sindex));
@@ -414,8 +419,7 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
 
             if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog)
             {
-              viewContainer->insertTab(view, label, index);
-              placed = 1;
+              placement = index;
               break;
             }
           }
@@ -427,15 +431,17 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
       break;
 
     case ChatWindow::RawLog:
+      if(KonversationApplication::preferences.getCloseButtonsOnTabs()) {
+        iconSet = UserIconSet("led_blue_on");
+      }
+
       for (int sindex = 0; sindex < viewContainer->count(); sindex++)
       {
         tmp_ChatWindow = static_cast<ChatWindow *>(viewContainer->page(sindex));
-  
+
         if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
         {
-          viewContainer->insertTab(view, label, sindex + 1);
-          placed = 1;
-
+          placement = sindex;
           break;
         }
       }
@@ -443,10 +449,14 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
       break;
 
     case ChatWindow::Query:
+      if(KonversationApplication::preferences.getCloseButtonsOnTabs()) {
+        iconSet = UserIconSet("led_red_on");
+      }
+
       for (int sindex = 0; sindex < viewContainer->count(); sindex++)
       {
         tmp_ChatWindow = static_cast<ChatWindow *>(viewContainer->page(sindex));
-  
+
         if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
         {
           for (int index = sindex + 1; index < viewContainer->count(); index++)
@@ -456,8 +466,7 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
 
             if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog && wtype != ChatWindow::Query)
             {
-              viewContainer->insertTab(view, label, index);
-              placed = 1;
+              placement = index;
               break;
             }
           }
@@ -469,10 +478,14 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
       break;
 
     case ChatWindow::DccChat:
+      if(KonversationApplication::preferences.getCloseButtonsOnTabs()) {
+        iconSet = UserIconSet("led_blue_on");
+      }
+
       for (int sindex = 0; sindex < viewContainer->count(); sindex++)
       {
         tmp_ChatWindow = static_cast<ChatWindow *>(viewContainer->page(sindex));
-  
+
         if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
         {
           for (int index = sindex + 1; index < viewContainer->count(); index++)
@@ -483,8 +496,7 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
             if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog &&
                 wtype != ChatWindow::Query && wtype != ChatWindow::DccChat)
             {
-              viewContainer->insertTab(view, label, index);
-              placed = 1;
+              placement = index;
               break;
             }
           }
@@ -494,11 +506,13 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
       }
 
      default:
+       if(KonversationApplication::preferences.getCloseButtonsOnTabs()) {
+         iconSet = UserIconSet("led_blue_on");
+       }
        break;
   }
 
-  if (!placed) 
-    viewContainer->insertTab(view, label);
+  viewContainer->insertTab(view, iconSet, label, placement);
   viewContainer->show();
 
   // Check, if user was typing in old input line
@@ -1158,7 +1172,7 @@ void KonversationMainWindow::openNotify()
 }
 
 // TODO: Let an own class handle notify things
-void KonversationMainWindow::setOnlineList(Server* notifyServer,const QStringList& list, bool changed)
+void KonversationMainWindow::setOnlineList(Server* notifyServer,const QStringList& /*list*/, bool /*changed*/)
 {
   emit nicksNowOnline(notifyServer);
 // FIXME  if (changed && nicksOnlinePanel) newText(nicksOnlinePanel, QString::null, true);
@@ -1174,6 +1188,31 @@ void KonversationMainWindow::notifyAction(const QString& serverName,const QStrin
 void KonversationMainWindow::slotPrefsChanged()
 {
   kdDebug() << "KonversationMainWindow::slotPrefsChanged()" << endl;
+
+  for(int i = 0; i < viewContainer->count(); ++i) {
+    ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
+    QIconSet iconSet;
+
+    if(KonversationApplication::preferences.getCloseButtonsOnTabs()) {
+      switch (view->getType())
+      {
+        case ChatWindow::Channel:
+          iconSet = UserIconSet("led_green_on");
+          break;
+
+        case ChatWindow::Query:
+          iconSet = UserIconSet("led_red_on");
+          break;
+
+        default:
+          iconSet = UserIconSet("led_blue_on");
+          break;
+      }
+    }
+
+    viewContainer->setTabIconSet(view, iconSet);
+  }
+
   emit prefsChanged();
 }
 
