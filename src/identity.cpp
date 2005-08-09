@@ -63,6 +63,7 @@ void Identity::copy(const Identity& original)
   setInsertRememberLineOnAway(original.getInsertRememberLineOnAway());
   setShowAwayMessage(original.getShowAwayMessage());
   setAwayMessage(original.getAwayMessage());
+  setAwayNick(original.getAwayNick());
   setReturnMessage(original.getReturnMessage());
   setShellCommand(original.getShellCommand());
   setCodecName(original.getCodecName());
@@ -128,5 +129,5 @@ void Identity::setCodecName(const QString &newCodecName)
   m_codec=Konversation::IRCCharsets::self()->codecForName(codecName);
 }
 
-QString Identity::getAwayNick() { return awayNick; }
+QString Identity::getAwayNick() const { return awayNick; }
 void Identity::setAwayNick(const QString& n) { awayNick = n; }

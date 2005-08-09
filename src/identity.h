@@ -79,7 +79,7 @@ class Identity : public KShared
     QString getCodecName() const;
     QTextCodec* getCodec() const;
 
-    QString getAwayNick();
+    QString getAwayNick() const;
     void setAwayNick(const QString& n);
 
     int id() const { return m_id; }
