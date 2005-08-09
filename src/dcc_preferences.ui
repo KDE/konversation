@@ -28,7 +28,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_AddPartner</cstring>
             </property>
             <property name="text">
-                <string>Add &amp;sender to file name</string>
+                <string>&amp;Add sender to file name</string>
             </property>
         </widget>
         <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="6">
@@ -36,7 +36,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_AutoGet</cstring>
             </property>
             <property name="text">
-                <string>Automaticall&amp;y accept DCC download</string>
+                <string>Automaticall&amp;y accept download request</string>
             </property>
         </widget>
         <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="6">
@@ -44,7 +44,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_FastSend</cstring>
             </property>
             <property name="text">
-                <string>Enable fast DCC send (Might not work with all clients)</string>
+                <string>Enable fast DCC send (Might &amp;not work with all clients)</string>
             </property>
         </widget>
         <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="6">
@@ -60,15 +60,15 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_AutoResume</cstring>
             </property>
             <property name="text">
-                <string>Au&amp;tomatically resume DCC download</string>
+                <string>Au&amp;tomatically resume download</string>
             </property>
         </widget>
         <widget class="QLabel" row="0" column="0">
             <property name="name">
-                <cstring>textLabel1</cstring>
+                <cstring>dccPathLbl</cstring>
             </property>
             <property name="text">
-                <string>DCC &amp;folder:</string>
+                <string>Download &amp;folder:</string>
             </property>
             <property name="buddy" stdset="0">
                 <cstring>kcfg_DccPath</cstring>
@@ -407,6 +407,8 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <connections>
     <connection>
         <sender>kcfg_SpecificSendPorts</sender>
