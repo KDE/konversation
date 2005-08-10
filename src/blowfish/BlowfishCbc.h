@@ -8,7 +8,7 @@
 //---------------------------------------------------------------------------
 // Mouser 1/14/05
 //  I'm not sure this implementation of cbc is exactly the same as other cbc
-//   algorithms you may find, though the different is insignificant and just
+//   algorithms you may find, though the difference is insignificant and just
 //   requires you to call your other algorithm slightly differently.
 //  This blowfish cbc class basically pretends that the IV is 00000000 but
 //   but that the first 8byte block of the plaintext to encrypt is treated
