@@ -35,6 +35,7 @@
 #include <scriptmanager.h>
 #include <ktabwidget.h>
 #include <kpushbutton.h>
+#include <ksqueezedtextlabel.h>
 
 #include <qpainter.h>
 #include <qnamespace.h>
@@ -238,7 +239,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
   m_channelInfoLabel = new QLabel(statusBar(), "channelInfoLabel");
   QWhatsThis::add(m_channelInfoLabel, i18n("<qt>This shows the number of users in the channel, and the number of those that are operators (ops).<p>A channel operator is a user that has special privileges, such as the ability to kick and ban users, change the channel modes, make other users operators</qt>"));
 
-  statusBar()->insertItem(i18n("Ready."), StatusText, 1);
+  m_generalInfoLabel = new KSqueezedTextLabel(i18n("Ready."), statusBar());
+
+  statusBar()->addWidget(m_generalInfoLabel, 1, true);
   statusBar()->addWidget(m_channelInfoLabel, 0, true);
   statusBar()->insertItem("lagometer", LagOMeter, 0, true);
   statusBar()->addWidget(m_sslLabel, 0, true);
@@ -246,7 +249,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
   // Show "Lag unknown"
   resetLag();
-  statusBar()->setItemAlignment(StatusText,QLabel::AlignLeft);
 
   actionCollection()->setHighlightingEnabled(true);
   connect(actionCollection(), SIGNAL( actionStatusText( const QString & ) ),
@@ -1237,7 +1239,7 @@ void KonversationMainWindow::updateLag(Server* lagServer,int msec)
   // show lag only of actual server
   if(lagServer==frontServer)
   {
-    statusBar()->changeItem(i18n("Ready."),StatusText);
+    m_generalInfoLabel->setText(i18n("Ready."));
     QString lagString = lagServer->getServerName() + " - ";
 
     if (msec == -1) {
@@ -1302,7 +1304,7 @@ void KonversationMainWindow::tooLongLag(Server* lagServer,int msec)
       lagString = i18n("No answer from server %1 for more than 1 second.", "No answer from server %1 for more than %n seconds.", seconds).arg(lagServer->getServerName());
     }
 
-    statusBar()->changeItem(lagString,StatusText);
+    m_generalInfoLabel->setText(lagString);
   }
   if(lagServer==frontServer) {
     //show lag only of actual server
