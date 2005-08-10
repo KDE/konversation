@@ -1946,7 +1946,7 @@ void KonversationMainWindow::updateTabEncoding(ChatWindow* view)
         QString encoding = view->getChannelEncoding();
 
         if(frontServer) {
-          codecAction->changeItem(0, i18n("Default encoding", "Default (%1)").arg(frontServer->getIdentity()->getCodecName()));
+          codecAction->changeItem(0, i18n("Default encoding", "Default ( %1 )").arg(frontServer->getIdentity()->getCodecName()));
         }
 
         if(encoding.isEmpty()) {
