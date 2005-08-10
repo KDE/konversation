@@ -105,6 +105,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 //  viewContainer->setHoverCloseButtonDelayed(false);
   setCentralWidget(viewContainer);
   updateTabPlacement();
+  viewContainer->setHoverCloseButton(KonversationApplication::preferences.getCloseButtonsOnTabs());
   viewContainer->hide();
   KPushButton* closeBtn = new KPushButton(viewContainer);
   closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));
@@ -906,10 +907,13 @@ void KonversationMainWindow::updateFrontView()
       connect(view, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
       view->emitUpdateInfo();
     } else {
-      if( view->getName() != "ChatWindowObject" )
-        m_channelInfoLabel->setText(Konversation::removeIrcMarkup(view->getName()));
-      else
+      QString tabName = Konversation::removeIrcMarkup(view->getName());
+
+      if( tabName != "ChatWindowObject" ) {
+        m_channelInfoLabel->setText(tabName);
+      } else {
         m_channelInfoLabel->setText(QString::null);
+      }
     }
 
     // Make sure that only text views get to be the searchView
@@ -1055,6 +1059,14 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
     }
 
     updateTabEncoding(view);
+  }
+
+  QString tabName = Konversation::removeIrcMarkup(view->getName());
+
+  if( tabName != "ChatWindowObject" ) {
+    setCaption(tabName);
+  } else {
+    setCaption(QString::null);
   }
 }
 
@@ -1214,6 +1226,8 @@ void KonversationMainWindow::slotPrefsChanged()
 
     viewContainer->setTabIconSet(view, iconSet);
   }
+
+  viewContainer->setHoverCloseButton(KonversationApplication::preferences.getCloseButtonsOnTabs());
 
   emit prefsChanged();
 }
@@ -1578,7 +1592,8 @@ void KonversationMainWindow::openIdentitiesDialog()
 
 void KonversationMainWindow::updateChannelInfo(const QString &info)
 {
-  m_channelInfoLabel->setText(Konversation::removeIrcMarkup(info));
+  QString tabInfo = Konversation::removeIrcMarkup(info);
+  m_channelInfoLabel->setText(tabInfo);
 }
 
 void KonversationMainWindow::showJoinChannelDialog()
