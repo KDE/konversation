@@ -1676,22 +1676,23 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 
   ip.setAddress(dccArguments[1].toULong());
 
-  appendMessageToFrontmost(i18n("DCC"),
-                      i18n("%1 offers the file \"%2\" (%3 bytes) for download (%4:%5).")
-                              .arg(sourceNick)               // name
-                              .arg(dccArguments[0])          // file
-                              .arg((dccArguments[3].isEmpty()) ? i18n("unknown number of") : dccArguments[3] ) // size
-                              .arg(ip.toString())            // ip
-                              .arg(dccArguments[2])          // port
-                             );
+  DccTransferRecv* newDcc=new DccTransferRecv( getMainWindow()->getDccPanel(),
+                                               sourceNick,
+                                               KURL(KonversationApplication::preferences.getDccPath()),
+                                               dccArguments[0],     // name
+                                               dccArguments[3].isEmpty() ? 0 : dccArguments[3].toULong(),  // size
+                                               ip.toString(),       // ip
+                                               dccArguments[2] );   // port
 
-  DccTransferRecv* newDcc=new DccTransferRecv(getMainWindow()->getDccPanel(),
-                      sourceNick,
-                      KURL(KonversationApplication::preferences.getDccPath()),
-                      dccArguments[0],     // name
-                      dccArguments[3].isEmpty() ? 0 : dccArguments[3].toULong(),  // size
-                      ip.toString(),       // ip
-                      dccArguments[2]);    // port
+
+  appendMessageToFrontmost( i18n("DCC"),
+                            i18n("%1 (%2:%3) offers the file \"%4\" (%5) for download.")
+                              .arg( newDcc->getPartnerNick() )          // name
+                              .arg( newDcc->getPartnerIp() )            // ip
+                              .arg( newDcc->getPartnerPort() )          // port
+                              .arg( newDcc->getFileName() )             // file
+                              .arg( ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) // size
+                          );
 
   connect(newDcc,SIGNAL (resumeRequest(const QString&,const QString&,const QString&,KIO::filesize_t)),this,
          SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,KIO::filesize_t)) );

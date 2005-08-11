@@ -563,7 +563,7 @@ void DccTransferRecvWriteCacheHandler::append( char* data, int size )  // public
 
 bool DccTransferRecvWriteCacheHandler::write( bool force )  // public
 {
-  // force == false: return without doing anything when the whole cache size is less than maxWritePacketSize
+  // force == false: return without doing anything when the whole cache size is smaller than maxWritePacketSize
   
   if ( m_cacheList.isEmpty() || !m_transferJob || !m_writeReady || !m_writeAsyncMode )
     return false;
@@ -605,23 +605,23 @@ void DccTransferRecvWriteCacheHandler::closeNow()  // public
 
 void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& data )
 {
-  //We are in writeAsyncMode if there is more data to be read in from dcc
+  // We are in writeAsyncMode if there is more data to be read in from dcc
   if ( m_writeAsyncMode )
     m_writeReady = true;
   else
   {
-    //No more data left to read from incomming dcctransfer
+    // No more data left to read from incomming dcctransfer
     if ( !m_cacheList.isEmpty() )
     {
-      //once we write everything in cache, the file is complete.
-      //This function will be called once more after this last data is written.
+      // once we write everything in cache, the file is complete.
+      // This function will be called once more after this last data is written.
       data = m_cacheList.front();
       kdDebug() << "DccTransferRecvWriteCacheHandler::slotKIODataReq(): will write " << m_cacheList.front().size() << " bytes." << endl;
       m_cacheList.pop_front();
     }
     else
     {
-      //finally, no data left to write or read.
+      // finally, no data left to write or read.
       kdDebug() << "DTRWriteCacheHandler::slotKIODataReq(): flushing done." << endl;
       m_transferJob = 0;
       emit done();  // -> DccTransferRecv::slotLocalWriteDone()

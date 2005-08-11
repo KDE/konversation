@@ -361,7 +361,7 @@ void DccTransfer::updateTransferMeters()
     }
     
     // shift the base of the time (m_transferLoggerBaseTime)
-    // why: QTime can't handle a longer time than 24 hours
+    // reason: QTime can't handle a time longer than 24 hours
     int shiftOffset = m_transferLoggerBaseTime.restart();
     itTime = m_transferLogTime.begin();
     for ( ; itTime != m_transferLogTime.end() ; ++itTime )
@@ -538,6 +538,8 @@ QDateTime               DccTransfer::getTimeOffer()             const { return m
 QString                 DccTransfer::getOwnIp()                 const { return m_ownIp; }
 QString                 DccTransfer::getOwnPort()               const { return m_ownPort; }
 QString                 DccTransfer::getPartnerNick()           const { return m_partnerNick; }
+QString                 DccTransfer::getPartnerIp()             const { return m_partnerIp; }
+QString                 DccTransfer::getPartnerPort()           const { return m_partnerPort; }
 QString                 DccTransfer::getFileName()              const { return m_fileName; }
 KIO::filesize_t         DccTransfer::getFileSize()              const { return m_fileSize; }
 KIO::fileoffset_t       DccTransfer::getTransferringPosition()  const { return m_transferringPosition; }

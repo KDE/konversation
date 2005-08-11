@@ -80,6 +80,8 @@ class DccTransfer : public QObject, public KListViewItem
     QString            getOwnIp()                 const;
     QString            getOwnPort()               const;
     QString            getPartnerNick()           const;
+    QString            getPartnerIp()             const;
+    QString            getPartnerPort()           const;
     QString            getFileName()              const;
     KIO::filesize_t    getFileSize()              const;
     KIO::fileoffset_t  getTransferringPosition()  const;
