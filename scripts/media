@@ -1,198 +1,118 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # Copyright 2005 İsmail Dönmez (Resistence is futile, turn on unicode!)
 # Licensed under GPLv2 or later at your option
 #
 # One media command to rule them all, inspired from Kopete's now listening plugin
 
-use strict;
-use warnings;
+import os
+import sys
+from subprocess import *
 
-my $port=shift;
-my $server=shift;
-my $target=shift;
+global port;
+global server;
+global target;
 
-# Variables
-my $amarok;
-my $kaffeine;
-my $juk;
-my $noatun;
-my $title;
-my $artist;
-my $album;
-my $error;
-my $musichar;
-my $pid;
-my $encoding;
-
-sub check_running 
-{
-    my $application=shift;
+def check_running(application):
+    running = Popen(["dcop", application], stdout=PIPE).communicate()[0]
     
-    if (`dcop $application`)
-    {
-	return 1;
-    }
-    else
-    {
-	return 0;
-    }
-}
+    if running:
+        return 1
+    else:
+        return 0
 
-sub pretty_print
-{
-    my $title=shift;
-    my $artist=shift;
-    my $album=shift;
+def pretty_print(title, artist, album):
+    title.decode('utf-8')
+    artist.decode('utf-8')
+    album.decode('utf-8')
 
-    utf8::decode($title);
-    utf8::decode($artist);
-    utf8::decode($album);
+    encoding = Popen(["dcop", port, 'Konversation', 'getChannelEncoding', server, target], stdout=PIPE).communicate()[0]
+    lang = os.environ.get("LANG")
+    lcall = os.environ.get("LC_ALL")
+
+    if (artist and album ) and (artist != album):
+        return "/me is listening to \"%s\" by %s on %s"%(title,artist,album)
+    elif artist:
+	return "/me is listening to \"%s\" by %s"%(title,artist)
+    elif album:
+	return "/me is listening to \"%s\" on %s"%(title,album)
+    else:
+	return "/me is listening to \"%s\" "%(title)
+
+
+if __name__ == "__main__":
+
+    port = sys.argv[1]
+    server = sys.argv[2]
+    target = sys.argv[3]
     
-    # Emulated backticks using secure exec call
-    die "Can't fork: $!" unless defined($pid = open(KID, "-|"));
-    if ($pid) # parent
-    {
-	$encoding = <KID>;
-	chomp $encoding;
-	close KID;
-    }
-    else {
-	exec 'dcop', 'konversation', 'Konversation', 'getChannelEncoding', $server, $target; 
-    }
+    bad_apps = None;
+
+    amarok = check_running('amarok')
+    juk = check_running('juk')
+    kaffeine = check_running('kaffeine')
+    noatun = check_running('noatun')
+
+    if amarok:
+        title = os.popen('dcop amarok player title').readline().rstrip('\n')
+        artist = os.popen('dcop amarok player artist').readline().rstrip('\n')
+        album = os.popen('dcop amarok player album').readline().rstrip('\n')
+
+        if title:
+            string = pretty_print(title,artist,album)+' [amaroK]'
+            Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
+            sys.exit(0)
+        else:
+            bad_apps = ['amaroK']
+
+    if juk:
+        title = os.popen('dcop juk Player trackProperty Title').readline().rstrip('\n')
+        artist = os.popen('dcop juk Player trackProperty Artist').readline().rstrip('\n')
+        album = os.popen('dcop juk Player trackProperty Album').readline().rstrip('\n')
+
+        if title:
+            string = pretty_print(title,artist,album)+' [JuK]';
+            Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
+            sys.exit(0)
+        else:
+            if error:
+                bad_apps.append('JuK')
+            else:
+                bad.apps = ['JuK']
+
+    if kaffeine:
+        string = os.popen('dcop kaffeine KaffeineIface title').readline().rstrip('\n')
     
-    if(($ENV{"LANG"} =~ /UTF-8$/ || $ENV{"LC_ALL"} =~ /UTF-8$/) && ($encoding eq "utf8") )
-    {
-	$musichar=" \x{266B} ";
-    }
-    else
-    {
-	$musichar="\"";
-    }
-	
-    if($artist && $album && $artist ne $album)
-    {
-	    return "/me is listening to $musichar$title$musichar by $artist on $album";
-    }
-    elsif($artist)
-    {
-	return "/me is listening to $musichar$title$musichar by $artist";
-    }
-    elsif($album)
-    {
-	return "/me is listening to $musichar$title$musichar on $album";
-    }
-    else
-    {
-	return "/me is listening to $musichar$title$musichar";
-    }
-}
+        if string:
+            string.decode('utf-8')
+            Popen(['dcop', port, 'Konversation', 'say', server, target, '"/me is playing', string,' [Kaffeine]\"']).communicate()
+            sys.exit(0)
+        else:
+            if error:
+                bad_apps.append('Kaffeine')
+            else:
+                bad_apps = ['Kaffeine']
 
-$amarok=check_running("amarok");
-$juk=check_running("juk");
-$kaffeine=check_running("kaffeine");
-$noatun=check_running("noatun");
+    if noatun:
+        string = popen('dcop noatun Noatun title').readline().rstrip('\n');
 
-if($amarok)
-{
-    $title=`dcop amarok player title`;
-    $artist=`dcop amarok player artist`;
-    $album=`dcop amarok player album`;
-       
-    chomp $title;
-    chomp $artist;
-    chomp $album;
+        if string:
+            string.decode('utf-8')
+            Popen(['dcop', port, 'Konversation', 'say', server, target, '"/me is playing', string, ' [Noatun]"']).communicate();
+            sys.exit(0)
+        else:
+            if error:
+                bad_apps.append('Noatun')
+            else:
+                bad_apps = ['Noatun']
 
-    if($title)
-    {
-	my $string = pretty_print($title,$artist,$album)." [amaroK]";
-	exec 'dcop', $port, 'Konversation', 'say', $server, $target, $string;
-    }
-    else
-    {
-	$error="amaroK";
-    }
-}
 
-if($juk)
-{
-    $title=`dcop juk Player trackProperty Title`;
-    $artist=`dcop juk Player trackProperty Artist`;
-    $album=`dcop juk Player trackProperty Album`;
+    if not amarok and not juk and not kaffeine and not noatun:
+	os.popen("dcop %s Konversation error \"No supported media player is running\""%(port))
 
-    chomp $title;
-    chomp $artist;
-    chomp $album;
-    
-    if($title)
-    {
-	my $string = pretty_print($title,$artist,$album)." [JuK]";
-	exec 'dcop', $port, 'Konversation', 'say', $server, $target, $string;
-    }
-    else
-    {
-	if($error)
-	{
-	    $error=join(',',$error,"JuK");
-	}
-	else
-	{
-	    $error="JuK";
-	}
-    }
-}
+    if bad_apps and bad_apps.__len__:
+        error = ','.join(bad_apps)
+        print "Error is %s"%(error)
+	os.popen("dcop %s Konversation error \"Nothing is playing in %s\""%(port,error))
+        sys.exit(1)
 
-if($kaffeine)
-{
-    my $string=`dcop kaffeine KaffeineIface title`;
-    chomp $string;
-    
-    if($string)
-    {
-	utf8::decode($string);
-	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing \x{266B} $string \x{266B} \[Kaffeine\]";
-    }
-    else
-    {
-	if($error)
-	{
-	    $error=join(',',$error,"Kaffeine");
-	}
-        else
-        {
-            $error="Kaffeine";
-        }
-    }
-}
-
-if($noatun)
-{
-    my $string=`dcop noatun Noatun title`;
-    chomp $string;
-
-    if($string)
-    {
-	utf8::decode($string);
-	exec 'dcop', $port, 'Konversation', 'say', $server, $target, "/me is playing \x{266B} $string \x{266B} \[Noatun\]";
-    }
-    else
-    {
-	if($error)
-	{
-	    $error=join(',',$error,"Noatun");
-	}
-        else
-        {
-            $error="Noatun";
-        }
-    }
-}
-
-if(!$amarok && !$juk && !$kaffeine && !$noatun)
-{
-	exec 'dcop', $port, 'Konversation', 'error', 'No supported media player is running';
-}
-
-if($error)
-{
-	exec 'dcop', $port, 'Konversation', 'error', "Nothing is playing in $error";
-}
