@@ -26,7 +26,6 @@ def pretty_print(title, artist, album):
     artist.decode('utf-8')
     album.decode('utf-8')
 
-    encoding = Popen(["dcop", port, 'Konversation', 'getChannelEncoding', server, target], stdout=PIPE).communicate()[0]
     lang = os.environ.get("LANG")
     lcall = os.environ.get("LC_ALL")
 
