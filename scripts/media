@@ -110,7 +110,7 @@ if __name__ == "__main__":
     if not amarok and not juk and not kaffeine and not noatun:
 	os.popen("dcop %s Konversation error \"No supported media player is running\""%(port))
 
-    if bad_apps and bad_apps.__len__:
+    if bad_apps != None:
         error = ','.join(bad_apps)
         print "Error is %s"%(error)
 	os.popen("dcop %s Konversation error \"Nothing is playing in %s\""%(port,error))
