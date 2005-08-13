@@ -496,6 +496,9 @@ class Preferences : public QObject
     bool disableNotifyWhileAway() const { return m_disableNotifyWhileAway; }
     void setDisableNotifyWhileAway(bool disable) { m_disableNotifyWhileAway = disable; }
 
+    QString getWikiUrl() const;
+    void setWikiUrl(const QString& url);
+
   signals:
     void requestServerConnection(int number);
     void requestSaveOptions();
@@ -701,6 +704,8 @@ class Preferences : public QObject
     QString iconTheme;
     bool m_emotIconsEnabled;
     QString m_emotIconsTheme;
+
+    QString wikiUrl;
 };
 
 #endif

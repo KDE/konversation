@@ -100,10 +100,12 @@ QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColo
     KonversationApplication::instance()->storeUrl(fromNick, href);
   }
 
-  // Make [[foo]] a link to http://en.wikipedia.org/wiki/foo
+  // Make [[foo]] a link to $wikiurl
+  QString wikiUrl = KonversationApplication::preferences.getWikiUrl();
+
   QRegExp wikipedia("\\[\\[([^\\]]+)\\]\\]");
   wikipedia.setMinimal(true);
-  filteredLine.replace(wikipedia,"<font color=\"#" + linkColor + "\"><a href=\"http://en.wikipedia.org/wiki/\\1\">[[<u>\\1</u>]]</a></font>");
+  filteredLine.replace(wikipedia,"<font color=\"#" + linkColor + "\"><a href=\""+wikiUrl+"\\1\">[[<u>\\1</u>]]</a></font>");
 
   // kdDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine << endl;
   return filteredLine;

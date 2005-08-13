@@ -96,6 +96,9 @@ namespace Konversation {
 
         QString inputLine(originalLine);
 
+	if(inputLine.stripWhiteSpace().startsWith("/nickserv"))
+	  inputLine = inputLine.stripWhiteSpace();
+
 	if(inputLine.isEmpty() || inputLine == "\n")
 	  return result;
 

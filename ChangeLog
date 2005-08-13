@@ -17,6 +17,7 @@ Changes from 0.18 to 0.19
 - Recognize server as being part of a network and use respective identity
 - Fix networks losing their channel history upon changes to their settings
 - Tab bar redesigned; uses label text color for notifications.
+- Wiki address for [[foo]] can now be customized via WikiUrl config option under [General Options] in konversationrc
 
 
 Changes from 0.17 to 0.18

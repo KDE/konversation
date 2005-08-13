@@ -252,6 +252,8 @@ Preferences::Preferences()
   setIconTheme("default");
   
   setDisableNotifyWhileAway(false);
+
+  setWikiUrl("http://en.wikipedia.org/wiki/");
 }
 
 Preferences::~Preferences()
@@ -1050,5 +1052,9 @@ const QString Preferences::getIconTheme() { return iconTheme; }
 
 bool Preferences::showNicknameBox() const { return m_showNicknameBox; }
 void Preferences::setShowNicknameBox(bool show) { m_showNicknameBox = show; }
+
+QString Preferences::getWikiUrl() const { return wikiUrl; }
+void Preferences::setWikiUrl(const QString& url) { wikiUrl=url; }
+  
 
 #include "preferences.moc"

@@ -479,6 +479,9 @@ void KonversationApplication::readOptions()
   preferences.setDisableNotifyWhileAway(config->readBoolEntry("DisableNotifyWhileAway",
     preferences.disableNotifyWhileAway()));
 
+  // Wiki
+  preferences.setWikiUrl(config->readEntry("WikiUrl", "http://en.wikipedia.org/wiki/"));
+
   // Appearance
   config->setGroup("Appearance");
   // Fonts
@@ -969,6 +972,7 @@ void KonversationApplication::readOptions()
   preferences.setIconTheme(config->readEntry("IconTheme",preferences.getIconTheme()));
   preferences.setEmotIconsEnabled(config->readBoolEntry("EnableEmotIcons", false));
   preferences.setEmotIconsTheme(config->readEntry("EmotIconTheme", "Default"));
+
 }
 
 void KonversationApplication::saveOptions(bool updateGUI)
@@ -1021,6 +1025,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar());
   
   config->writeEntry("DisableNotifyWhileAway", preferences.disableNotifyWhileAway());
+  
+  config->writeEntry("WikiUrl", preferences.getWikiUrl());
 
   config->setGroup("Appearance");
 
