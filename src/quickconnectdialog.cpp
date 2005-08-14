@@ -57,7 +57,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 	nickLabel->setBuddy(nickInput);
 
 	QLabel* passwordLabel = new QLabel(i18n("P&assword:"), page);
-	QString passwordWT = i18n("If your IRC server requires a password, enter it here (most servers do not require a password.)");
+	QString passwordWT = i18n("If the IRC server requires a password, enter it here (most servers do not require a password.)");
 	QWhatsThis::add(passwordLabel, passwordWT);
 	passwordInput = new KLineEdit(page);
 	QWhatsThis::add(passwordInput, passwordWT);
