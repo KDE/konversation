@@ -78,6 +78,8 @@ namespace Konversation
             
             if(tmp.mid(0,4) == "+OK ") // FiSH style topic
                 cipher = tmp.mid(4);
+            else if(tmp.left(5) == "«m«")
+                cipher = tmp.mid(5,tmp.length()-10);
             else
                 return;
                         
@@ -88,8 +90,6 @@ namespace Konversation
             tmp2 = decrypt_string(ckey.data(),result.data());
             cipher = tmp2;
                        
-            if(cipher.mid(0,2) == "@@") // Mcps style topic
-                cipher = cipher.mid(2);
             cipher = backup+"(e) "+cipher;
             free(tmp2);
         }
