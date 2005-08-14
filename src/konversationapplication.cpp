@@ -481,6 +481,7 @@ void KonversationApplication::readOptions()
 
   // Wiki
   preferences.setWikiUrl(config->readEntry("WikiUrl", "http://en.wikipedia.org/wiki/"));
+  preferences.setExpandWikiUrl(config->readBoolEntry("WikiUrlExpand", false));
 
   // Appearance
   config->setGroup("Appearance");
@@ -1027,6 +1028,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   config->writeEntry("DisableNotifyWhileAway", preferences.disableNotifyWhileAway());
   
   config->writeEntry("WikiUrl", preferences.getWikiUrl());
+  config->writeEntry("WikiUrlExpand", preferences.getExpandWikiUrl());
 
   config->setGroup("Appearance");
 

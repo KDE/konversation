@@ -254,6 +254,7 @@ Preferences::Preferences()
   setDisableNotifyWhileAway(false);
 
   setWikiUrl("http://en.wikipedia.org/wiki/");
+  setExpandWikiUrl(false);
 }
 
 Preferences::~Preferences()
@@ -1055,6 +1056,8 @@ void Preferences::setShowNicknameBox(bool show) { m_showNicknameBox = show; }
 
 QString Preferences::getWikiUrl() const { return wikiUrl; }
 void Preferences::setWikiUrl(const QString& url) { wikiUrl=url; }
-  
+
+bool Preferences::getExpandWikiUrl() const { return expandWikiUrl;}
+void Preferences::setExpandWikiUrl(bool expandUrl) { expandWikiUrl=expandUrl; }
 
 #include "preferences.moc"

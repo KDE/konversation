@@ -102,10 +102,15 @@ QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColo
 
   // Make [[foo]] a link to $wikiurl
   QString wikiUrl = KonversationApplication::preferences.getWikiUrl();
+  bool expandWikiUrl = KonversationApplication::preferences.getExpandWikiUrl();
 
   QRegExp wikipedia("\\[\\[([^\\]]+)\\]\\]");
   wikipedia.setMinimal(true);
-  filteredLine.replace(wikipedia,"<font color=\"#" + linkColor + "\"><a href=\""+wikiUrl+"\\1\">[[<u>\\1</u>]]</a></font>");
+
+  if(expandWikiUrl)
+    filteredLine.replace(wikipedia,"<font color=\"#" + linkColor + "\"><a href=\""+wikiUrl+"\\1\"><u>"+wikiUrl+"\\1</u></a></font>");
+  else
+    filteredLine.replace(wikipedia,"<font color=\"#" + linkColor + "\"><a href=\""+wikiUrl+"\\1\">[[<u>\\1</u>]]</a></font>");
 
   // kdDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine << endl;
   return filteredLine;

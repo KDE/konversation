@@ -498,6 +498,9 @@ class Preferences : public QObject
 
     QString getWikiUrl() const;
     void setWikiUrl(const QString& url);
+    
+    bool getExpandWikiUrl() const;
+    void setExpandWikiUrl(bool expandUrl);
 
   signals:
     void requestServerConnection(int number);
@@ -706,6 +709,7 @@ class Preferences : public QObject
     QString m_emotIconsTheme;
 
     QString wikiUrl;
+    bool expandWikiUrl;
 };
 
 #endif
