@@ -304,7 +304,7 @@ const Konversation::ServerGroupSettingsPtr Preferences::serverGroupByServer(cons
   Konversation::ServerGroupList::iterator it;
   
   for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it) {
-    for (int i = 0; i != (*it)->serverList().count(); i++)
+    for (uint i = 0; i != (*it)->serverList().count(); i++)
     {
       if ((*it)->serverByIndex(i).server().lower() == server)
       {
