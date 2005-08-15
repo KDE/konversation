@@ -298,11 +298,11 @@ int base64dec(char c)
 		for (i=0;i<255;++i)
 			base64unmap[i]=0;
 		for (i=0;i<64;++i)
-			base64unmap[base64[i]]=i;
+		        base64unmap[(int)base64[i]]=i;
 		didinit=true;
 		}
 
-	return base64unmap[c];
+	return base64unmap[(int)c];
 }
 
 void blowfish_encrypt_pass(char *text, char *str)

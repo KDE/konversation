@@ -98,7 +98,8 @@ static char b64revtb[256] = {
 
 static unsigned int raw_base64_decode(unsigned char *in, unsigned char *out,
                                      int strict, int *err) {
-  unsigned int  result = 0, x;
+  unsigned int  result = 0;
+  int x;
   unsigned char buf[3], *p = in, pad = 0;
 
   *err = 0;
