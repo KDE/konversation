@@ -1,5 +1,4 @@
 AM_CPPFLAGS = $(all_includes) -I$(srcdir)/../
-#KDE_CXXFLAGS = -w
 
 noinst_LTLIBRARIES = libblowfish.la
 noinst_HEADERS = b64stuff.h  BlowfishCbc.h  blowfish.h  mc_blowfish.h  newblowfish.h  oldblowfish1.h  oldblowfish2.h
