@@ -25,6 +25,7 @@
 
 class Server;
 class QWidget;
+class Query;
 
 class InputFilter : public QObject
 {
@@ -77,6 +78,7 @@ class InputFilter : public QObject
     QStringList whoRequestList;
     int lagMeasuring;
 
+    Query* query;
 
     QStringList newNickList;
     int m_debugCount;

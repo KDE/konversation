@@ -165,7 +165,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     nickinfo->setHostmask(sourceHostmask);
         
                     // create new query (server will check for dupes)
-                    Query *query = server->addQuery(nickinfo, false /* we didn't initiate this*/ );
+                    query = server->addQuery(nickinfo, false /* we didn't initiate this*/ );
                     // send action to query
                     query->appendAction(sourceNick,ctcpArgument, true /*use notifications if enabled - e.g. OSD */);
 
@@ -336,7 +336,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     nickinfo->setHostmask(sourceHostmask);
 
                     // Create a new query (server will check for dupes)
-                    Query *query = server->addQuery(nickinfo, false /*we didn't initiate this*/ );
+                    query = server->addQuery(nickinfo, false /*we didn't initiate this*/ );
                     // send action to query
                     query->appendQuery(sourceNick,trailing, true /*use notifications if enabled - e.g. OSD */ );
 
