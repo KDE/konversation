@@ -216,8 +216,17 @@ void IRCInput::getHistory(bool up)
   // no, it was cursor down
   else
   {
+    // If we are at the top of the lest, arrow-down shall add the text to the history and clear the field for new input
+    if(lineNum==0)
+    {
+      if(text().length()) addHistory(text());
+      clear();
+    }
     // If we aren't at the top of the list, decrement the line counter
-    if(lineNum!=0) lineNum--;
+    else
+    {
+      lineNum--;
+    }
   }
   // replace the text in the input field with history
   setText(historyList[lineNum]);
