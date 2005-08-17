@@ -18,8 +18,9 @@ Changes from 0.18 to 0.19
 - Fix networks losing their channel history upon changes to their settings
 - Tab bar redesigned; uses label text color for notifications.
 - Wiki address for [[foo]] can now be customized via WikiUrl config option under [General Options] in konversationrc
-- [[Foo]] now can automatically expanded to http://<wiki url>/foo using WikiExpandUrl=true in konversationrc
-
+- [[Foo]] can now be automatically expanded to http://<wiki url>/foo using WikiExpandUrl=true in konversationrc
+- Pressing arrow down in the input line now preserves input by adding it to
+  the history and subsequently clears the input line.
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
