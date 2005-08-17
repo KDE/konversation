@@ -34,8 +34,6 @@
 #include "dcctransferrecv.h"
 #include "konversationapplication.h"
 
-#include "konvidebug.h"
-
 /*
  *flow chart*
 
@@ -499,7 +497,7 @@ void DccTransferRecv::startConnectionTimer( int sec )
 {
   stopConnectionTimer();
   kdDebug() << "DccTransferRecv::startConnectionTimer()" << endl;
-  m_connectionTimer->start( sec*1000, TRUE );
+  m_connectionTimer->start( sec*1000, true );
 }
 
 void DccTransferRecv::stopConnectionTimer()

@@ -145,7 +145,7 @@ void NickInfo::emitNickInfoChanged() {
 
 void NickInfo::startNickInfoChangedTimer() {
   if(!m_changedTimer->isActive());
-    m_changedTimer->start(3000, TRUE /*single shot*/); 
+    m_changedTimer->start(3000, true /*single shot*/); 
 }
 
 void NickInfo::setHostmask(const QString& newMask) { 

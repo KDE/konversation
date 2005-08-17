@@ -361,7 +361,7 @@ void DccTransferSend::startConnectionTimer( int sec )
 {
   kdDebug() << "DccTransferSend::startConnectionTimer()"<< endl;
   stopConnectionTimer();
-  m_connectionTimer->start( sec*1000, TRUE );
+  m_connectionTimer->start( sec*1000, true );
 }
 
 void DccTransferSend::stopConnectionTimer()

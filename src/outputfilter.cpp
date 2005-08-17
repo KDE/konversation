@@ -1138,7 +1138,7 @@ namespace Konversation {
                 password = splitted[1];
             }
 
-	        splitAddress= QStringList::split(":", splitted[0], TRUE);
+	    splitAddress= QStringList::split(":", splitted[0], true);
             QString port = "6667";
 
             if(splitAddress.count() == 2) { // IPv4 address with a port

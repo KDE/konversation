@@ -21,9 +21,8 @@
 #include "popup.h"
 #include "trayicon.h"
 
-Popup::Popup(KonversationMainWindow* mainWindow,ChatWindow* view,
-  QString message):
-  KPassivePopup(mainWindow->systemTrayIcon()->winId()),m_mainWindow(mainWindow),
+Popup::Popup(KonversationMainWindow* mainWindow,ChatWindow* view, const QString& message)
+  : KPassivePopup(mainWindow->systemTrayIcon()->winId()),m_mainWindow(mainWindow),
   m_view(view)
 {
   QPixmap pix = KGlobal::iconLoader()->loadIcon("konversation",KIcon::Panel);

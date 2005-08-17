@@ -98,7 +98,7 @@ void QuickConnectDialog::slotOk()
 			      "",
 			      nickInput->text(),
 			      passwordInput->text(),
-			      sslCheckBox->isChecked() ? TRUE : FALSE);
+			      sslCheckBox->isChecked() ? true : false);
 	  delayedDestruct();
 	}
 }

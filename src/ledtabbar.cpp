@@ -279,8 +279,8 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
           r.setRight( r.right() + LABEL_OFFSET);
 
           // Draw iconset on the left side
-          p->drawPixmap( br.left() + 6 + LABEL_OFFSET /* + ((selected == TRUE) ? 0 : 1) */,
-                         br.center().y()-pixh/2 + ((selected == TRUE) ? 0 : 1),
+          p->drawPixmap( br.left() + 6 + LABEL_OFFSET /* + ((selected == true) ? 0 : 1) */,
+                         br.center().y()-pixh/2 + ((selected == true) ? 0 : 1),
                          pixmap );
 
           // Draw close button on the left side
@@ -295,7 +295,7 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
 
           // Draw iconset on the left side
           p->drawPixmap( br.left() + 2,
-                         br.center().y()-pixh/2 + ((selected == TRUE) ? 0 : 1),
+                         br.center().y()-pixh/2 + ((selected == true) ? 0 : 1),
                          pixmap );
 
           // Draw close button on the right side
@@ -307,8 +307,8 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
       else
       {
         // ### the pixmap shift should probably not be hardcoded..
-        p->drawPixmap( br.left() + 2 /* + ((selected == TRUE) ? 0 : 1) */,
-                       br.center().y()-pixh/2 + ((selected == TRUE) ? 0 : 1),
+        p->drawPixmap( br.left() + 2 /* + ((selected == true) ? 0 : 1) */,
+                       br.center().y()-pixh/2 + ((selected == true) ? 0 : 1),
                        pixmap );
       }
     }

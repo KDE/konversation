@@ -156,8 +156,8 @@ E73214A2822139CA62B343CC5B65587310DD908D0C241B2263C2CF80DA
 //---------------------------------------------------------------------------
 
 
-#ifndef __BLOWFISH_H__
-#define __BLOWFISH_H__
+#ifndef BLOWFISH_H
+#define BLOWFISH_H
 
 //Block Structure
 struct SBlock

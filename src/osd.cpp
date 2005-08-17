@@ -150,7 +150,7 @@ void OSDWidget::minReached() //SLOT
 
         if( m_duration )
             //timerMin is still running
-            timer.start( m_duration, TRUE );
+            timer.start( m_duration, true );
     }
     else timerMin.stop();
 }
@@ -222,7 +222,7 @@ bool OSDWidget::event( QEvent *e )
     {
     case QEvent::Paint:
         bitBlt( this, 0, 0, &osdBuffer );
-        return TRUE;
+        return true;
 
     default:
         return QWidget::event( e );
@@ -242,7 +242,7 @@ void OSDWidget::show()
 
     if ( m_duration ) //duration 0 -> stay forever
     {
-        timer.start( m_duration, TRUE ); //calls hide()
+        timer.start( m_duration, true ); //calls hide()
         timerMin.start( 150 ); //calls minReached()
     }
 }

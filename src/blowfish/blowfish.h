@@ -11,7 +11,7 @@ class Server;
 namespace Konversation 
 {
 
-  int findOccurrence(QCString input, QCString seperator, int nth);
+  int findOccurrence(const QCString& input, const QCString& seperator, int nth);
   void decrypt(const QString& recepient, QCString& cipher, Server* server);
   void decryptTopic(const QString& recepient, QCString& cipher, Server* server);
   void encrypt(const QString& recepient, QString& cipher, Server* server);

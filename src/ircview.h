@@ -111,7 +111,7 @@ class IRCView : public KTextBrowser
     void urlClickSlot(const QString &url, bool newTab);
     QString filter(const QString& line, const QString& defaultColor, const QString& who=NULL,
                    bool doHighlight=true, bool parseURL=true, bool self=false);
-    void doAppend(QString line, bool important=true, bool self=false);
+    void doAppend(const QString& line, bool important=true, bool self=false);
     void replaceDecoration(QString& line,char decoration,char replacement);
     virtual void contentsDragMoveEvent(QDragMoveEvent* e);
     virtual void contentsDropEvent(QDropEvent* e);

@@ -51,7 +51,6 @@
 #include <kdebug.h>
 
 #include "channel.h"
-#include "konvidebug.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
 #include "ircview.h"
@@ -730,7 +729,7 @@ void IRCView::scrollToBottom() {
     setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
 }
 
-void IRCView::doAppend(QString newLine, bool important, bool self) {
+void IRCView::doAppend(const QString& newLine, bool important, bool self) {
     // Add line to buffer
     QString line(newLine);
 
@@ -746,7 +745,7 @@ void IRCView::doAppend(QString newLine, bool important, bool self) {
 
         bool up = KTextBrowser::viewport()->isUpdatesEnabled();
 
-        KTextBrowser::viewport()->setUpdatesEnabled(FALSE);
+        KTextBrowser::viewport()->setUpdatesEnabled(false);
         KTextBrowser::append(line);
 
         document()->lastParagraph()->format();
@@ -769,7 +768,7 @@ void IRCView::doAppend(QString newLine, bool important, bool self) {
 
         if(doScroll) {
             setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
-            repaintContents(FALSE);
+            repaintContents(false);
         }
     }
 

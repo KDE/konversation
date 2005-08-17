@@ -28,7 +28,7 @@ class Popup: public KPassivePopup
   Q_OBJECT
 
   public:
-    Popup(KonversationMainWindow* mainWindow, ChatWindow* view, QString message);
+    Popup(KonversationMainWindow* mainWindow, ChatWindow* view, const QString& message);
     ~Popup();
     
   private slots:

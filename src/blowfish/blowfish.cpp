@@ -16,7 +16,7 @@
 namespace Konversation
 {
     // Find n'th occurrence of seperator in input and return the index
-    int findOccurrence(QCString input, QCString seperator, int nth)
+    int findOccurrence(const QCString& input, const QCString& seperator, int nth)
     {
         int j=1;
         uint i;

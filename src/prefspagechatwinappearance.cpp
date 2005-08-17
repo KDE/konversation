@@ -64,16 +64,16 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QWidget* newParent,Prefer
 void PrefsPageChatWinAppearance::setBackgroundImageConfig(bool state )
 {
     if( !state )
-        preferences->setShowBackgroundImage(FALSE );
+        preferences->setShowBackgroundImage(false);
     else {
         preferences->setBackgroundImageName(kcfg_BackgroundImage->url());
-        preferences->setShowBackgroundImage(TRUE);
+        preferences->setShowBackgroundImage(true);
     }
 }
 
 void PrefsPageChatWinAppearance::saveBackgroundImage(const QString& url)
 {
-    preferences->setShowBackgroundImage(TRUE);
+    preferences->setShowBackgroundImage(true);
     preferences->setBackgroundImageName(url);
 }
 

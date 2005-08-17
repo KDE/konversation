@@ -234,7 +234,7 @@ void PrefsPageThemes::updateList()
 	  themeList->insertItem(themeName);
 	}
 
-      themeList->setSelected(index,TRUE);
+      themeList->setSelected(index, true);
       updatePreview(index);
     }
 }
