@@ -20,7 +20,6 @@
 #include <qregexp.h>
 
 #include <klocale.h>
-#include "konvidebug.h"
 #include <kdeversion.h>
 #include <kstringhandler.h>
 

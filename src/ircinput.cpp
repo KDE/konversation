@@ -12,7 +12,6 @@
   email:     eisfuchs@tigress.com
 */
 
-#include "konvidebug.h"
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <klocale.h>
