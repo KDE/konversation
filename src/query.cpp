@@ -86,8 +86,6 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
   getTextView()->installEventFilter(queryInput);
   queryInput->installEventFilter(this);
 
-  setLogfileName(QString::null);
-
   // connect the signals and slots
   connect(queryInput,SIGNAL (submit()),this,SLOT (queryTextEntered()) );
   connect(queryInput,SIGNAL (envelopeCommand()),this,SLOT (queryPassthroughCommand()) );
