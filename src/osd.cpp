@@ -19,6 +19,8 @@ the Free Software Foundation; either version 2 of the License, or
 #include <qpainter.h>
 #include <qregexp.h>
 
+#include <dcopclient.h>
+#include <kapplication.h>
 #include <kdebug.h>
 #include <kglobalsettings.h> //unsetColors()
 
@@ -121,7 +123,7 @@ void OSDWidget::renderOSDText( const QString &txt )
 }
 
 
-void OSDWidget::showOSD( const QString &text, bool preemptive )
+void OSDWidget::showOSD( const QString &text, bool preemptive )  // slot
 {
     if ( isEnabled() && !text.isEmpty() ) {
 
@@ -236,6 +238,13 @@ void OSDWidget::mousePressEvent( QMouseEvent* )
 
 void OSDWidget::show()
 {
+    // Don't show the OSD widget when the desktop is locked
+    if ( isKDesktopLockRunning() )
+    {
+        minReached();  // don't queue the message
+        return;
+    }
+ 
     if ( m_dirty ) renderOSDText( m_currentText );
 
     QWidget::show();
@@ -385,6 +394,49 @@ void OSDPreviewWidget::mouseMoveEvent( QMouseEvent *e )
         destination += screen.topLeft();
 
         move( destination );
+    }
+}
+
+
+
+// the code was taken from pilotDaemon.cc in KPilot
+OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()  // static
+{
+    DCOPClient *dcopptr = KApplication::kApplication()->dcopClient();
+
+    // Can't tell, very weird, err on the side of safety.
+    if (!dcopptr || !dcopptr->isAttached())
+    {
+        kdWarning() << k_funcinfo << ": Could not make DCOP connection. "
+                    << "Assuming screensaver is active." << endl;
+        return DCOPError;
+    }
+
+    QByteArray data,returnValue;
+    QCString returnType;
+
+    if (!dcopptr->call("kdesktop","KScreensaverIface","isBlanked()",
+         data,returnType,returnValue,true))
+    {
+        kdWarning() << k_funcinfo << ": Check for screensaver failed."
+                    << "Assuming screensaver is active." << endl;
+        // Err on the side of safety again.
+        return DCOPError;
+    }
+
+    if (returnType == "bool")
+    {
+        bool b;
+        QDataStream reply(returnValue,IO_ReadOnly);
+        reply >> b;
+        return (b ? Locked : NotLocked);
+    }
+    else
+    {
+        kdWarning() << k_funcinfo << ": Strange return value from screensaver. "
+                    << "Assuming screensaver is active." << endl;
+        // Err on the side of safety.
+        return DCOPError;
     }
 }
 

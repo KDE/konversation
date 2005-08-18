@@ -70,6 +70,9 @@ class OSDWidget : public QWidget
         /* called after most set*() calls to update the OSD */
         void refresh();
 
+        enum KDesktopLockStatus { NotLocked=0, Locked=1, DCOPError=2 };
+        static KDesktopLockStatus isKDesktopLockRunning();
+
         static const int MARGIN = 15;
 
         QString     m_appName;
