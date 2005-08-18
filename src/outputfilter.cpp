@@ -153,6 +153,7 @@ namespace Konversation {
             else if(command == "notice")  result = parseNotice(parameter);
             else if(command == "j")       result = parseJoin(parameter);
             else if(command == "msg")     result = parseMsg(myNick,parameter, false);
+	    else if(command == "m")       result = parseMsg(myNick,parameter, false);
             else if(command == "smsg")    result = parseSMsg(parameter);
             else if(command == "query")   result = parseMsg(myNick,parameter, true);
             else if(command == "op")      result = parseOp(parameter);
