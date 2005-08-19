@@ -1,4 +1,4 @@
-// -*- mode: c++; c-file-style: "bsd"; c-basic-offset: 4; tabs-width: 4; indent-tabs-mode: nil -*-
+// -*- mode: c++; c-file-style: "stroustrup"; c-basic-offset: 4; tabs-width: 4; indent-tabs-mode: nil -*-
 /*
   Copyright (c) 2005 by İsmail Dönmez <ismail.donmez@boun.edu.tr>
   Licensed under GNU GPLv2 or later at your option

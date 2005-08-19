@@ -13,6 +13,8 @@ char *encrypt_string_new(char *key, char *str);
 char *decrypt_string_new(char *key, char *str);
 //---------------------------------------------------------------------------
 
+
+
 //---------------------------------------------------------------------------
 // header guard
 #endif
