@@ -624,6 +624,9 @@ class Server : public QObject
     KProcess preShellCommand;
     
   private:
+    /// The server we're going to connect to initially.
+    Konversation::ServerSettings m_quickServer;
+    
     /// Helper object to construct ISON (notify) list and map offline nicks to
     /// addressbook.
     ServerISON* m_serverISON;

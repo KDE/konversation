@@ -37,4 +37,13 @@ ServerSettings::~ServerSettings()
 {
 }
 
+bool ServerSettings::operator== (const ServerSettings& settings) const
+{
+  if (m_server==settings.server() && m_port==settings.port() && m_password==settings.password() && m_SSLEnabled==settings.SSLEnabled()) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 }

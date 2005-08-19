@@ -1178,7 +1178,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
   QStringList channelHistory;
 
   for(it = serverGroupList.begin(); it != serverGroupList.end(); ++it) {
-    serverlist = (*it)->serverList();
+    serverlist = (*it)->serverList(true);
     servers.clear();
 
     for(it2 = serverlist.begin(); it2 != serverlist.end(); ++it2) {

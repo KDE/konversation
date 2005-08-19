@@ -71,6 +71,15 @@ ServerGroupSettings::~ServerGroupSettings()
 {
 }
 
+ServerList ServerGroupSettings::serverList(bool hideQuickServer) const 
+{ 
+  if (!m_quickServerList.isEmpty() && !hideQuickServer) {
+    return m_quickServerList+m_serverList; 
+  } else {
+    return m_serverList;    
+  }
+}
+
 void ServerGroupSettings::setServerList(const ServerList& list)
 {
   m_serverList.clear();
@@ -79,8 +88,10 @@ void ServerGroupSettings::setServerList(const ServerList& list)
 
 ServerSettings ServerGroupSettings::serverByIndex(unsigned int index) const
 {
-  if(index < m_serverList.count()) {
-    return m_serverList[index];
+  ServerList servers = serverList();
+  
+  if(index < servers.count()) {
+    return servers[index];
   }
 
   return ServerSettings();

@@ -57,6 +57,7 @@
 
 Server::Server(KonversationMainWindow* mainWindow, int id) {
     m_serverGroup = KonversationApplication::preferences.serverGroupById(id);
+    m_serverGroup->clearQuickServerList(); // In case we already did a quick connect to this network
     bot = getIdentity()->getBot();
     botPassword = getIdentity()->getPassword();
 
@@ -68,21 +69,22 @@ Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const 
 { 
     QString nick( _nick );   
     
-    // If server is in an existing group, use that group (first group if server is in multiple groups)
-    Konversation::ServerGroupSettingsPtr serverGroupOfServer;  
+    m_quickServer.setServer(hostName);
+    m_quickServer.setPort(port.toInt());
+    m_quickServer.setPassword(password);
+    m_quickServer.setSSLEnabled(useSSL);    
+    
+    Konversation::ServerGroupSettingsPtr serverGroupOfServer;     
+    
+    // If server is in an existing group, use that group (first group if server is in multiple groups) 
     if (serverGroupOfServer = KonversationApplication::preferences.serverGroupByServer(hostName)) {
         m_serverGroup = serverGroupOfServer;
+        m_serverGroup->setQuickServerList(m_quickServer);
     } else {
         m_serverGroup = new Konversation::ServerGroupSettings;
         m_serverGroup->setIdentityId(KonversationApplication::preferences.getIdentityByName("Default")->id());
         m_serverGroup->setName(hostName);
-    
-        Konversation::ServerSettings serverSettings;
-        serverSettings.setServer(hostName);
-        serverSettings.setPort(port.toInt());
-        serverSettings.setPassword(password);
-        serverSettings.setSSLEnabled(useSSL);
-        m_serverGroup->addServer(serverSettings);
+        m_serverGroup->addServer(m_quickServer);
     }
     
     if(nick.isEmpty()) { // Happens when we are invoked from an irc:/ url
@@ -117,7 +119,7 @@ Server::~Server() {
     kdDebug() << "Server::~Server(" << getServerName() << ")" << endl;
     // Send out the last messages (usually the /QUIT)
     send();
-
+    
     // Delete helper object.
     delete m_serverISON;
     m_serverISON = 0;
@@ -635,9 +637,20 @@ void Server::broken(int state) {
             statusView->appendServerMessage(i18n("Error"),error);
             reconnectCounter = 0;
             rejoinChannels = false;
-                
-            if(m_currentServerIndex < (m_serverGroup->serverList().count() - 1)) {
-                m_currentServerIndex++;
+                                                  
+            // Broke on a temp. server, so remove it from serverList; otherwise increment the index
+            if (!m_serverGroup->quickServerList().isEmpty()) {
+                m_serverGroup->clearQuickServerList();
+            } else {
+                m_currentServerIndex++;                   
+            }            
+            
+            // The next server in the list is actually identical to our original quickserver, so skip it
+            if (m_serverGroup->serverByIndex(m_currentServerIndex)==m_quickServer) {
+                m_currentServerIndex++; 
+            }            
+            
+            if(m_currentServerIndex <= (m_serverGroup->serverList().count() - 1)) {                                                                             
                 error = i18n("Trying server %1 instead.")
                    .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server());
                 statusView->appendServerMessage(i18n("Error"),error );

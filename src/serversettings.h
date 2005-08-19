@@ -34,6 +34,8 @@ class ServerSettings{
 
     void setSSLEnabled(bool enabled) { m_SSLEnabled = enabled; }
     bool SSLEnabled() const { return m_SSLEnabled; }
+    
+    bool operator== (const ServerSettings& settings) const;
 
   private:
     QString m_server;

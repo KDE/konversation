@@ -184,7 +184,7 @@ void ServerGroupDialog::setServerGroupSettings(ServerGroupSettingsPtr settings)
   m_identityCBox->setCurrentText(settings->identity()->getName());
   m_commandEdit->setText(settings->connectCommands());
   m_autoConnectCBox->setChecked(settings->autoConnectEnabled());
-  m_serverList = settings->serverList();
+  m_serverList = settings->serverList(true);
   m_channelHistory = settings->channelHistory();
   ServerList::iterator it;
   m_serverLBox->clear();

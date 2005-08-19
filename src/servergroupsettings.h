@@ -68,9 +68,13 @@ class ServerGroupSettings : public KShared
 
     void setServerList(const ServerList& list);
     void addServer(const ServerSettings& settings) { m_serverList.append(settings); }
-    ServerList serverList() const { return m_serverList; }
+    ServerList serverList(bool hideQuickServer=false) const;
     ServerSettings serverByIndex(unsigned int index) const;
 
+    ServerList quickServerList() const { return m_quickServerList; }
+    void setQuickServerList(const ServerSettings& settings) { m_quickServerList.append(settings); }
+    void clearQuickServerList() { m_quickServerList.clear(); }
+    
     void setIdentityId(int identityId) { m_identityId = identityId; }
     int identityId() const { return m_identityId; }
     IdentityPtr identity() const;
@@ -102,6 +106,7 @@ class ServerGroupSettings : public KShared
   private:
     QString m_name;
     ServerList m_serverList;
+    ServerList m_quickServerList;
     int m_identityId;
     ChannelList m_channelList;
     ChannelList m_channelHistory;
