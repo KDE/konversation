@@ -1216,41 +1216,56 @@ namespace Konversation
         else
         {
             QStringList splitted = QStringList::split(" ", parameter);
-            QString address;
+            QString address = splitted[0];
             QString port = "6667";
             QString password;
 
-            if (splitted.count()==3)              // 'hostname port password' syntax
+            if (splitted.count()==3) // 'hostname port password'
             {
-                address = splitted[0];
                 port = splitted[1];
                 password = splitted[2];
-            }                                     // 'hostname:port password' or 'hostname port' syntax
-            else if (splitted.count()==2)
-            {
-                address = splitted[0];
-
-                QStringList splitAddress = QStringList::split(":", address, true);
-
-                if(splitAddress.count() == 2)     // IPv4 address with a port
+            }
+            else if (splitted.count()==2) // 'hostname:port password' or 'hostname port'
+            { 
+                // IPv6 '[ip]:port password' according to RFC 2732
+                if (address.contains(':')>1 && address.section(':',0,-2).startsWith("[") && address.section(':',0,-2).endsWith("]"))
+                {                                       
+                    port = address.section(':',-1);
+                    address = address.section(':',0,-2).remove("[").remove("]");                                                
+                    password = splitted[1]; 
+                } 
+                // IPv6 'ip port' password according to RFC 2732
+                if (address.contains(':')>1 && !address.section(':',0,-2).startsWith("[") && !address.section(':',0,-2).endsWith("]"))
+                {                                                                                      
+                    port = splitted[1]; 
+                } 
+                else if (address.contains(':')==1) // 'hostname:port password'
                 {
-                    address = splitAddress[0];
-                    port = splitAddress[1];
-                    password = splitted[1];
+                    port = address.section(':',-1);
+                    address = address.section(':',0,-2);
+                    password = splitted[1];                                                                
                 }
-                else if(splitAddress.count() > 6) // IPv6 address with a port
-                {
-                    address = address.section(':',0,5);
-                    port = splitAddress[splitAddress.count()-1];
-                    password = splitted[1];
-                }
-                else
+                else // 'hostname port'
                 {
                     port = splitted[1];
-                }
+                }             
+            }
+            else // 'hostname:port' or 'hostname'
+            {
+                // IPv6 '[ip]:port' according to RFC 2732
+                if (parameter.contains(':')>1 && parameter.section(':',0,-2).startsWith("[") && parameter.section(':',0,-2).endsWith("]"))
+                {                                       
+                    address = parameter.section(':',0,-2).remove("[").remove("]");
+                    port = parameter.section(':',-1);       
+                }                 
+                else if (parameter.contains(':')==1)  // 'hostname:port'
+                {                                       
+                    address = parameter.section(':',0,-2);                
+                    port = parameter.section(':',-1);       
+                }         
             }
 
-            kdDebug() << "Server : " << splitted[0] << " Port : " << port << endl;
+            kdDebug() << "Server : " << address << " Port : " << port << " Password : " << password << endl;
 
             if (KonversationApplication::preferences.isServerGroup(address))
             {

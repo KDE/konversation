@@ -1773,8 +1773,14 @@ QString KonversationMainWindow::currentURL(bool passNetwork)
         }
         else
         {
-            server = frontServer->getServerName();
+            server = frontServer->getServerName();            
+            
             port = ":"+QString::number(frontServer->getPort());
+        }
+
+        if (server.contains(':')) // IPv6
+        {
+            server = "["+server+"]";
         }
 
         url = "irc://"+server+port+"/"+channel;
