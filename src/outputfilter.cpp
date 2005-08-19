@@ -1132,32 +1132,40 @@ namespace Konversation {
             emit reconnectServer();
         } else {
             QStringList splitted = QStringList::split(" ", parameter);
-            QString password;
-	        QStringList splitAddress;
-
-            if(splitted.count() > 1) {
-                password = splitted[1];
-            }
-
-	    splitAddress= QStringList::split(":", splitted[0], true);
+            QString address;
             QString port = "6667";
+	        QString password;
 
-            if(splitAddress.count() == 2) { // IPv4 address with a port
-	            port = splitAddress[1];
-	            splitted[0] = splitAddress[0];
+            if (splitted.count()==3) { // 'hostname port password' syntax
+                address = splitted[0];
+                port = splitted[1];
+                password = splitted[2];           
+            } else if (splitted.count()==2) { // 'hostname:port password' or 'hostname port' syntax
+                address = splitted[0];
+                
+                QStringList splitAddress = QStringList::split(":", address, true);
+            
+                if(splitAddress.count() == 2) { // IPv4 address with a port
+	                address = splitAddress[0];
+	                port = splitAddress[1];
+                    password = splitted[1];
+                }
+	            else if(splitAddress.count() > 6) { // IPv6 address with a port
+	                address = address.section(':',0,5);
+	                port = splitAddress[splitAddress.count()-1];
+	                password = splitted[1];
+	            } else {
+	                port = splitted[1];
+	            }               
             }
-	        else if(splitAddress.count() > 6) { // IPv6 address with a port
-	           port = splitAddress[splitAddress.count()-1];
-	           splitted[0] = splitted[0].section(':',0,5);
-	        }
-
-	        kdDebug() << "Server : " << splitted[0] << " Port : " << port << endl;
-
-            if (KonversationApplication::preferences.isServerGroup(splitted[0])) {
-                emit connectToServerGroup(splitted[0]);
+        
+            kdDebug() << "Server : " << splitted[0] << " Port : " << port << endl;
+            
+            if (KonversationApplication::preferences.isServerGroup(address)) {
+                emit connectToServerGroup(address);
             } else {
-                emit connectToServer(splitted[0], port, password);
-            }
+                emit connectToServer(address, port, password);
+            }        
         }
     }
 
