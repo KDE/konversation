@@ -31,115 +31,115 @@ bool SearchDialog::forward=false;
 bool SearchDialog::fromCursor=false;
 
 SearchDialog::SearchDialog(QWidget* parent,QSize size) :
-               KDialogBase(parent,"search_dialog",true,i18n("Find Text"),
-                           KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
+KDialogBase(parent,"search_dialog",true,i18n("Find Text"),
+KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
 {
-  setButtonOK(KGuiItem(i18n("&Find"),"find"));
+    setButtonOK(KGuiItem(i18n("&Find"),"find"));
 
-  // Create the top level widget
-  QWidget* page=new QWidget(this);
-  setMainWidget(page);
+    // Create the top level widget
+    QWidget* page=new QWidget(this);
+    setMainWidget(page);
 
-  // Add the layout to the widget
-  QGridLayout* dialogLayout=new QGridLayout(page,2,2);
-  dialogLayout->setSpacing(spacingHint());
+    // Add the layout to the widget
+    QGridLayout* dialogLayout=new QGridLayout(page,2,2);
+    dialogLayout->setSpacing(spacingHint());
 
-  QHBox* searchBox=new QHBox(page);
+    QHBox* searchBox=new QHBox(page);
 
-  new QLabel(i18n("Text to find:"),searchBox,"search_label");
-  searchPattern=new KComboBox(searchBox,"search_pattern_combo");
-  searchPattern->setEditable(true);
-  searchPattern->insertStringList(lastSearchPatterns);
+    new QLabel(i18n("Text to find:"),searchBox,"search_label");
+    searchPattern=new KComboBox(searchBox,"search_pattern_combo");
+    searchPattern->setEditable(true);
+    searchPattern->insertStringList(lastSearchPatterns);
 
-  searchBox->setStretchFactor(searchPattern,10);
-  searchBox->setSpacing(spacingHint());
+    searchBox->setStretchFactor(searchPattern,10);
+    searchBox->setSpacing(spacingHint());
 
-  caseSensitiveCheck=new QCheckBox(i18n("Case sensitive"),page,"case_sensitive_check");
-  caseSensitiveCheck->setChecked(caseSensitive);
+    caseSensitiveCheck=new QCheckBox(i18n("Case sensitive"),page,"case_sensitive_check");
+    caseSensitiveCheck->setChecked(caseSensitive);
 
-  wholeWordsCheck=new QCheckBox(i18n("Whole words"),page,"whole_words_check");
-  wholeWordsCheck->setChecked(wholeWords);
+    wholeWordsCheck=new QCheckBox(i18n("Whole words"),page,"whole_words_check");
+    wholeWordsCheck->setChecked(wholeWords);
 
-  forwardCheck=new QCheckBox(i18n("Search forward"),page,"forward_check");
-  forwardCheck->setChecked(forward);
+    forwardCheck=new QCheckBox(i18n("Search forward"),page,"forward_check");
+    forwardCheck->setChecked(forward);
 
-  fromCursorCheck=new QCheckBox(i18n("From cursor"),page,"from_cursor_check");
-  fromCursorCheck->setChecked(fromCursor);
+    fromCursorCheck=new QCheckBox(i18n("From cursor"),page,"from_cursor_check");
+    fromCursorCheck->setChecked(fromCursor);
 
-  int row=0;
+    int row=0;
 
-  dialogLayout->addMultiCellWidget(searchBox,row,0,row,1);
-  row++;
-  dialogLayout->addWidget(caseSensitiveCheck,row,0);
-  dialogLayout->addWidget(wholeWordsCheck,row,1);
-  row++;
-  dialogLayout->addWidget(forwardCheck,row,0);
-  dialogLayout->addWidget(fromCursorCheck,row,1);
+    dialogLayout->addMultiCellWidget(searchBox,row,0,row,1);
+    row++;
+    dialogLayout->addWidget(caseSensitiveCheck,row,0);
+    dialogLayout->addWidget(wholeWordsCheck,row,1);
+    row++;
+    dialogLayout->addWidget(forwardCheck,row,0);
+    dialogLayout->addWidget(fromCursorCheck,row,1);
 
-//  connect(searchPattern,SIGNAL (returnPressed(const QString&)),this,SLOT (newPattern(const QString&)));
-  connect(caseSensitiveCheck,SIGNAL (stateChanged(int)),this,SLOT (caseSensitiveChanged(int)));
-  connect(wholeWordsCheck,SIGNAL (stateChanged(int)),this,SLOT (wholeWordsChanged(int)));
-  connect(forwardCheck,SIGNAL (stateChanged(int)),this,SLOT (forwardChanged(int)));
-  connect(fromCursorCheck,SIGNAL (stateChanged(int)),this,SLOT (fromCursorChanged(int)));
+    //  connect(searchPattern,SIGNAL (returnPressed(const QString&)),this,SLOT (newPattern(const QString&)));
+    connect(caseSensitiveCheck,SIGNAL (stateChanged(int)),this,SLOT (caseSensitiveChanged(int)));
+    connect(wholeWordsCheck,SIGNAL (stateChanged(int)),this,SLOT (wholeWordsChanged(int)));
+    connect(forwardCheck,SIGNAL (stateChanged(int)),this,SLOT (forwardChanged(int)));
+    connect(fromCursorCheck,SIGNAL (stateChanged(int)),this,SLOT (fromCursorChanged(int)));
 
-  setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Search for text")));
-  setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Close the window")));
+    setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Search for text")));
+    setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Close the window")));
 
-  setInitialSize(size);
-  searchPattern->setFocus();
-  show();
+    setInitialSize(size);
+    searchPattern->setFocus();
+    show();
 }
 
 SearchDialog::~SearchDialog()
 {
-  if(lastSearchPatterns[0]!=getSearchText()) lastSearchPatterns.prepend(getSearchText());
+    if(lastSearchPatterns[0]!=getSearchText()) lastSearchPatterns.prepend(getSearchText());
 }
 
 QString SearchDialog::getSearchText()
 {
-  return searchPattern->currentText();
+    return searchPattern->currentText();
 }
 
 QString SearchDialog::search(QWidget* parent,bool* cs,bool* wo,bool* fw,bool* fc)
 {
-  QSize size; // TODO: get it from KonversationApplication::preferences
-  SearchDialog dlg(parent,size);
+    QSize size;                                   // TODO: get it from KonversationApplication::preferences
+    SearchDialog dlg(parent,size);
 
-  if(!dlg.getSearchText().isEmpty())
-  {
-    // make subsequent searches easier
-    fromCursor=true;
-    dlg.fromCursorCheck->setChecked(fromCursor);
-  }
+    if(!dlg.getSearchText().isEmpty())
+    {
+        // make subsequent searches easier
+        fromCursor=true;
+        dlg.fromCursorCheck->setChecked(fromCursor);
+    }
 
-  int returnCode=dlg.exec();
+    int returnCode=dlg.exec();
 
-  *cs=caseSensitive;
-  *wo=wholeWords;
-  *fw=forward;
-  *fc=fromCursor;
+    *cs=caseSensitive;
+    *wo=wholeWords;
+    *fw=forward;
+    *fc=fromCursor;
 
-  return (returnCode==Accepted) ? dlg.getSearchText() : QString::null;
+    return (returnCode==Accepted) ? dlg.getSearchText() : QString::null;
 }
 
 void SearchDialog::caseSensitiveChanged(int state)
 {
-  caseSensitive=(state==2);
+    caseSensitive=(state==2);
 }
 
 void SearchDialog::wholeWordsChanged(int state)
 {
-  wholeWords=(state==2);
+    wholeWords=(state==2);
 }
 
 void SearchDialog::forwardChanged(int state)
 {
-  forward=(state==2);
+    forward=(state==2);
 }
 
 void SearchDialog::fromCursorChanged(int state)
 {
-  fromCursor=(state==2);
+    fromCursor=(state==2);
 }
 
 #include "searchdialog.moc"

@@ -13,8 +13,8 @@
   *                                                                       *
   *************************************************************************
 
-  Based on the code by :
-  Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
+Based on the code by :
+Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 */
 
@@ -29,30 +29,28 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
 {
     Q_OBJECT
 
-public:
-  KonviBookmarkHandler(KonversationMainWindow *mainWindow);
-  ~KonviBookmarkHandler();
+        public:
+        KonviBookmarkHandler(KonversationMainWindow *mainWindow);
+        ~KonviBookmarkHandler();
 
-  KPopupMenu* popupMenu();
+        KPopupMenu* popupMenu();
 
-  // KBookmarkOwner interface:
-  virtual void openBookmarkURL(const QString& url, const QString& title);
-  virtual QString currentURL() const;
-  virtual QString currentTitle() const;
+        // KBookmarkOwner interface:
+        virtual void openBookmarkURL(const QString& url, const QString& title);
+        virtual QString currentURL() const;
+        virtual QString currentTitle() const;
 
-private slots:
-    void slotBookmarksChanged(const QString &, const QString & caller);
-    void slotEditBookmarks();
+    private slots:
+        void slotBookmarksChanged(const QString &, const QString & caller);
+        void slotEditBookmarks();
 
-signals:
-    void openURL(const QString& url, const QString& title);
+        signals:
+        void openURL(const QString& url, const QString& title);
 
-private:
-    KonversationMainWindow* m_mainWindow;
-    KPopupMenu *m_menu;
-    KonviBookmarkMenu *m_bookmarkMenu;
-    QString m_file;
+    private:
+        KonversationMainWindow* m_mainWindow;
+        KPopupMenu *m_menu;
+        KonviBookmarkMenu *m_bookmarkMenu;
+        QString m_file;
 };
-
-
-#endif // KONVIBOOKMARKHANDLER_H
+#endif                                            // KONVIBOOKMARKHANDLER_H

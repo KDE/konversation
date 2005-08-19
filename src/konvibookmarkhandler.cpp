@@ -9,9 +9,9 @@
   * (at your option) any later version.                                   *
   *                                                                       *
   *************************************************************************
-  
-  Based on the code by:
-  Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
+
+Based on the code by:
+Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 */
 
@@ -27,30 +27,31 @@
 #include "konvibookmarkmenu.h"
 
 KonviBookmarkHandler::KonviBookmarkHandler(KonversationMainWindow* mainWindow)
-    : QObject( mainWindow, "KonviBookmarkHandler" ),
-      KBookmarkOwner(),
-      m_mainWindow(mainWindow)
+: QObject( mainWindow, "KonviBookmarkHandler" ),
+KBookmarkOwner(),
+m_mainWindow(mainWindow)
 {
-  m_menu = static_cast<KPopupMenu*>(mainWindow->factory()->container("bookmarks", mainWindow));
+    m_menu = static_cast<KPopupMenu*>(mainWindow->factory()->container("bookmarks", mainWindow));
 
-  m_file = locate( "data", "konversation/bookmarks.xml" );
+    m_file = locate( "data", "konversation/bookmarks.xml" );
 
-  if ( m_file.isEmpty() )
-    m_file = locateLocal( "data", "konversation/bookmarks.xml" );
+    if ( m_file.isEmpty() )
+        m_file = locateLocal( "data", "konversation/bookmarks.xml" );
 
-  if(!m_menu) {
-    m_bookmarkMenu = 0;
-    return;
-  }
+    if(!m_menu)
+    {
+        m_bookmarkMenu = 0;
+        return;
+    }
 
-  KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, false);
-  manager->setEditorOptions(kapp->caption(), false);
-  manager->setUpdate( true );
-  manager->setShowNSBookmarks( false );
-  
-  connect( manager, SIGNAL(changed(const QString &,const QString &)), SLOT(slotBookmarksChanged(const QString &,const QString &)));
-  
-  m_bookmarkMenu = new KonviBookmarkMenu( manager, this, m_menu,  mainWindow->actionCollection(), true );
+    KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, false);
+    manager->setEditorOptions(kapp->caption(), false);
+    manager->setUpdate( true );
+    manager->setShowNSBookmarks( false );
+
+    connect( manager, SIGNAL(changed(const QString &,const QString &)), SLOT(slotBookmarksChanged(const QString &,const QString &)));
+
+    m_bookmarkMenu = new KonviBookmarkMenu( manager, this, m_menu,  mainWindow->actionCollection(), true );
 }
 
 KonviBookmarkHandler::~KonviBookmarkHandler()
@@ -69,7 +70,7 @@ void KonviBookmarkHandler::slotEditBookmarks()
 }
 
 void KonviBookmarkHandler::slotBookmarksChanged( const QString &,
-						 const QString &)
+const QString &)
 {
     // This is called when someone changes bookmarks in konversation
     m_bookmarkMenu->slotBookmarksChanged("");
@@ -77,17 +78,17 @@ void KonviBookmarkHandler::slotBookmarksChanged( const QString &,
 
 void KonviBookmarkHandler::openBookmarkURL(const QString& url, const QString& title)
 {
-  emit openURL(url,title);
+    emit openURL(url,title);
 }
 
 QString KonviBookmarkHandler::currentURL() const
 {
-  return m_mainWindow->currentURL(true);
+    return m_mainWindow->currentURL(true);
 }
 
 QString KonviBookmarkHandler::currentTitle() const
 {
-  return m_mainWindow->currentTitle();
+    return m_mainWindow->currentTitle();
 }
 
 #include "konvibookmarkhandler.moc"

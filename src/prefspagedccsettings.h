@@ -13,7 +13,6 @@
   email:     eisfuchs@tigress.com
 */
 
-
 #ifndef PREFSPAGEDCCSETTINGS_H
 #define PREFSPAGEDCCSETTINGS_H
 
@@ -26,25 +25,24 @@ class Preferences;
 
 class PrefsPageDccSettings : public DCC_Settings
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    PrefsPageDccSettings(QWidget* newParent,Preferences* newPreferences);
+        public:
+        PrefsPageDccSettings(QWidget* newParent,Preferences* newPreferences);
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  protected slots:
-    void methodToGetOwnIpComboBoxActivated(int methodId);
-    void sendPortsFirstSpinValueChanged(int port);
-    void sendPortsLastSpinValueChanged(int port);
-    void chatPortsFirstSpinValueChanged(int port);
-    void chatPortsLastSpinValueChanged(int port);
-    void autoResumeStateChanged(int state);
-    void autoGetStateChanged(int state);
+    protected slots:
+        void methodToGetOwnIpComboBoxActivated(int methodId);
+        void sendPortsFirstSpinValueChanged(int port);
+        void sendPortsLastSpinValueChanged(int port);
+        void chatPortsFirstSpinValueChanged(int port);
+        void chatPortsLastSpinValueChanged(int port);
+        void autoResumeStateChanged(int state);
+        void autoGetStateChanged(int state);
 
-  protected:
-    Preferences* preferences;
+    protected:
+        Preferences* preferences;
 };
-
 #endif

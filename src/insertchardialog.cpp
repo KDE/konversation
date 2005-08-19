@@ -15,33 +15,34 @@
 #include <klocale.h>
 #include <kguiitem.h>
 
-namespace Konversation {
-
-InsertCharDialog::InsertCharDialog(const QString& font, QWidget *parent, const char *name)
-  : KDialogBase(parent, name, false, i18n("Insert Character"), 
-  KDialogBase::Ok | KDialogBase::Close,
-  KDialogBase::Ok, false)
+namespace Konversation
 {
-  setButtonOK(KGuiItem(i18n("&Insert"), "ok", i18n("Insert a character")));
-  
-  m_charTable = new KCharSelect(this, "charTable", font);
-  m_charTable->enableFontCombo(false);
-  setMainWidget(m_charTable);
-}
 
-InsertCharDialog::~InsertCharDialog()
-{
-}
+    InsertCharDialog::InsertCharDialog(const QString& font, QWidget *parent, const char *name)
+        : KDialogBase(parent, name, false, i18n("Insert Character"),
+        KDialogBase::Ok | KDialogBase::Close,
+        KDialogBase::Ok, false)
+    {
+        setButtonOK(KGuiItem(i18n("&Insert"), "ok", i18n("Insert a character")));
 
-QChar InsertCharDialog::chr()
-{
-  return m_charTable->chr();
-}
+        m_charTable = new KCharSelect(this, "charTable", font);
+        m_charTable->enableFontCombo(false);
+        setMainWidget(m_charTable);
+    }
 
-void InsertCharDialog::slotOk()
-{
-  emit insertChar(m_charTable->chr());
-}
+    InsertCharDialog::~InsertCharDialog()
+    {
+    }
+
+    QChar InsertCharDialog::chr()
+    {
+        return m_charTable->chr();
+    }
+
+    void InsertCharDialog::slotOk()
+    {
+        emit insertChar(m_charTable->chr());
+    }
 
 }
 

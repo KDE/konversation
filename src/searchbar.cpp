@@ -1,8 +1,8 @@
 /* ============================================================
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2005-06-02
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2005 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -10,12 +10,12 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include <qlineedit.h>
@@ -32,10 +32,10 @@
 #include "searchbar.h"
 
 SearchBar::SearchBar(QWidget* parent)
-    : QHBox(parent)
+: QHBox(parent)
 {
     setMargin(4);
-    
+
     m_hideBtn    = new QToolButton(this);
     m_lineEdit   = new QLineEdit(this);
     m_nextBtn    = new QToolButton(this);
@@ -51,7 +51,7 @@ SearchBar::SearchBar(QWidget* parent)
     setStretchFactor(m_caseSenBtn, 1);
     setStretchFactor(m_statusPixLabel, 0);
     setStretchFactor(m_statusTextLabel, 3);
-    
+
     KIconLoader* iconLoader = kapp->iconLoader();
     m_hideBtn->setIconSet(iconLoader->loadIconSet("stop", KIcon::Toolbar, 16));
     m_nextBtn->setIconSet(iconLoader->loadIconSet("next", KIcon::Toolbar, 16));
@@ -75,37 +75,37 @@ SearchBar::SearchBar(QWidget* parent)
     m_nextBtn->setAutoRaise(true);
     m_fwdBtn->setAutoRaise(true);
     m_caseSenBtn->setAutoRaise(true);
-    
+
     m_fwdBtn->setToggleButton(true);
     m_caseSenBtn->setToggleButton(true);
-    
+
     m_nextBtn->setEnabled(false);
 
     m_timer = new QTimer(this);
 
     QAccel* accel = new QAccel(this);
     accel->connectItem( accel->insertItem(Qt::Key_Escape),
-                        this, SLOT(hide()));
-    
+        this, SLOT(hide()));
+
     connect(m_timer, SIGNAL(timeout()),
-            SLOT(slotFind()));
+        SLOT(slotFind()));
     connect(m_lineEdit, SIGNAL(textChanged(const QString&)),
-            SLOT(slotTextChanged()));
+        SLOT(slotTextChanged()));
     connect(m_lineEdit, SIGNAL(returnPressed()),
-            SLOT(slotFindNext()));
+        SLOT(slotFindNext()));
     connect(m_nextBtn, SIGNAL(clicked()),
-            SLOT(slotFindNext()));
+        SLOT(slotFindNext()));
     connect(m_hideBtn, SIGNAL(clicked()),
-            SLOT(hide()));
+        SLOT(hide()));
     connect(m_fwdBtn, SIGNAL(clicked()),
-            SLOT(slotTextChanged()));
+        SLOT(slotTextChanged()));
     connect(m_caseSenBtn, SIGNAL(clicked()),
-            SLOT(slotTextChanged()));
+        SLOT(slotTextChanged()));
 }
 
 SearchBar::~SearchBar()
 {
-    
+
 }
 
 void SearchBar::focusInEvent(QFocusEvent* e)
@@ -122,7 +122,7 @@ void SearchBar::hide()
 
 void SearchBar::slotTextChanged()
 {
-    m_timer->start(50, true);    
+    m_timer->start(50, true);
 }
 
 void SearchBar::slotFind()
@@ -134,7 +134,7 @@ void SearchBar::slotFind()
         setStatus(QPixmap(), "");
         return;
     }
-    
+
     m_nextBtn->setEnabled(true);
     emit signalSearchChanged(m_lineEdit->text());
 }
@@ -147,7 +147,7 @@ void SearchBar::slotFindNext()
         m_nextBtn->setEnabled(false);
         return;
     }
-    
+
     m_nextBtn->setEnabled(true);
     emit signalSearchNext();
 }
@@ -156,14 +156,14 @@ void SearchBar::setHasMatch(bool value)
 {
     QPalette pal = palette();
     pal.setColor(QPalette::Active, QColorGroup::Base,
-                 value ? Qt::green : Qt::red);
+        value ? Qt::green : Qt::red);
     setPalette(pal);
 }
 
 void SearchBar::setStatus(const QPixmap& pix, const QString& text)
 {
     m_statusPixLabel->setPixmap(pix);
-    m_statusTextLabel->setText(text);    
+    m_statusTextLabel->setText(text);
 }
 
 QString SearchBar::pattern() const
@@ -173,7 +173,7 @@ QString SearchBar::pattern() const
 
 bool SearchBar::searchForward() const
 {
-    return m_fwdBtn->isOn();    
+    return m_fwdBtn->isOn();
 }
 
 bool SearchBar::caseSensitive() const

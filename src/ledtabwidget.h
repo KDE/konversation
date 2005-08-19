@@ -26,42 +26,41 @@ class LedTabBar;
 
 class LedTabWidget : public KTabWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    LedTabWidget(QWidget* parent,const char* name);
-    ~LedTabWidget();
+        public:
+        LedTabWidget(QWidget* parent,const char* name);
+        ~LedTabWidget();
 
-    void addTab(ChatWindow* child,const QString& label,int color,bool on,int index=-1);
-    void changeTabState(QWidget* child,bool state,bool important,const QString& labelColor);
-    void updateTabs();
+        void addTab(ChatWindow* child,const QString& label,int color,bool on,int index=-1);
+        void changeTabState(QWidget* child,bool state,bool important,const QString& labelColor);
+        void updateTabs();
 
-  signals:
-    void closeTab(QWidget* view);
+        signals:
+        void closeTab(QWidget* view);
 
-  public slots:
-    void setTabOnline(ChatWindow* child,bool state);
+    public slots:
+        void setTabOnline(ChatWindow* child,bool state);
 
-  protected slots:
-    void moveTabLeft(int id);
-    void moveTabRight(int id);
-    void moveTabToIndex(int oldIndex,int newIndex);
-    void tabSelected(int id);
-    void tabClosed(int id);
-    void tabClosed();
-    void changeName(ChatWindow* view,const QString& newName);
+    protected slots:
+        void moveTabLeft(int id);
+        void moveTabRight(int id);
+        void moveTabToIndex(int oldIndex,int newIndex);
+        void tabSelected(int id);
+        void tabClosed(int id);
+        void tabClosed();
+        void changeName(ChatWindow* view,const QString& newName);
 
-#ifndef QT_NO_WHEELEVENT
-    void processWheelEvent(QWheelEvent *e);
-#endif
+    #ifndef QT_NO_WHEELEVENT
+        void processWheelEvent(QWheelEvent *e);
+    #endif
 
-  protected:
-    LedTabBar* tabBar();
+    protected:
+        LedTabBar* tabBar();
 
-#ifndef QT_NO_WHEELEVENT
-    void wheelEvent(QWheelEvent *e);
-#endif
+    #ifndef QT_NO_WHEELEVENT
+        void wheelEvent(QWheelEvent *e);
+    #endif
 
 };
-
 #endif

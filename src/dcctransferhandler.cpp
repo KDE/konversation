@@ -17,7 +17,7 @@
 
 DccTransferHandler::DccTransferHandler(KonversationMainWindow* newMainWindow)
 {
-  mainWindow=newMainWindow;
+    mainWindow=newMainWindow;
 }
 
 DccTransferHandler::~DccTransferHandler()

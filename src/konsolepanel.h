@@ -7,24 +7,24 @@
 #include "chatwindow.h"
 #include <kparts/part.h>
 
-class KonsolePanel : public ChatWindow {
-  Q_OBJECT
+class KonsolePanel : public ChatWindow
+{
+    Q_OBJECT
 
-    public:
-      KonsolePanel(QWidget *p);
-      ~KonsolePanel();
+        public:
+        KonsolePanel(QWidget *p);
+        ~KonsolePanel();
 
-    signals:
-      void deleted(ChatWindow* myself);
+        signals:
+        void deleted(ChatWindow* myself);
 
-     public slots:
-      void partDestroyed();
+    public slots:
+        void partDestroyed();
 
-      /** Called from ChatWindow adjustFocus */
-      virtual void childAdjustFocus();
-      
-     private:
-      KParts::ReadOnlyPart *k_part;
+        /** Called from ChatWindow adjustFocus */
+        virtual void childAdjustFocus();
+
+    private:
+        KParts::ReadOnlyPart *k_part;
 };
-
-#endif /* KONSOLE_PANEL_H */
+#endif                                            /* KONSOLE_PANEL_H */

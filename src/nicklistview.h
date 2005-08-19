@@ -12,7 +12,6 @@
   email:     eisfuchs@tigress.com
 */
 
-
 #ifndef NICKLISTVIEW_H
 #define NICKLISTVIEW_H
 
@@ -32,49 +31,48 @@ class QTimer;
 
 class NickListView : public KListView
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    NickListView(QWidget* parent, Channel *chan);
-    ~NickListView();
+        public:
+        NickListView(QWidget* parent, Channel *chan);
+        ~NickListView();
 
-    /** Call when the icons have been changed.
-     */
-    void refresh();
-    void setWhatsThis();
+        /** Call when the icons have been changed.
+         */
+        void refresh();
+        void setWhatsThis();
 
-    virtual void setSorting(int column, bool ascending);
+        virtual void setSorting(int column, bool ascending);
 
-  public slots:
-    /** When this is called, resort is guaranteed to be called within a hard-coded time (a few seconds).
-     *  This prevents lots of calls to resort.
-     */
-    void startResortTimer();
+    public slots:
+        /** When this is called, resort is guaranteed to be called within a hard-coded time (a few seconds).
+         *  This prevents lots of calls to resort.
+         */
+        void startResortTimer();
 
-    /** Resort the listview.
-     *  It is better to call startResortTimer() which will resort with a minimum of a
-     *  1 second delay.
-     */
-    void resort();
+        /** Resort the listview.
+         *  It is better to call startResortTimer() which will resort with a minimum of a
+         *  1 second delay.
+         */
+        void resort();
 
-  signals:
-    /* Will be connected to Channel::popupCommand(int) */
-    void popupCommand(int id);
+        signals:
+        /* Will be connected to Channel::popupCommand(int) */
+        void popupCommand(int id);
 
-  protected:
-    void contextMenuEvent(QContextMenuEvent* ce);
-    virtual bool acceptDrag (QDropEvent* event) const;
-    void insertAssociationSubMenu();
-    Konversation::KonversationNickListViewToolTip *m_tooltip;
-    QPopupMenu* popup;
-    QPopupMenu* modes;
-    QPopupMenu* kickban;
-    QPopupMenu* addressbook;
-    Channel *channel;
-    QTimer *m_resortTimer;
+    protected:
+        void contextMenuEvent(QContextMenuEvent* ce);
+        virtual bool acceptDrag (QDropEvent* event) const;
+        void insertAssociationSubMenu();
+        Konversation::KonversationNickListViewToolTip *m_tooltip;
+        QPopupMenu* popup;
+        QPopupMenu* modes;
+        QPopupMenu* kickban;
+        QPopupMenu* addressbook;
+        Channel *channel;
+        QTimer *m_resortTimer;
 
-    int m_column;
-    bool m_ascending;
+        int m_column;
+        bool m_ascending;
 };
-
 #endif

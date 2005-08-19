@@ -15,8 +15,8 @@
 
 Ignore::Ignore(const QString &newName,int newFlags)
 {
-  setFlags(newFlags);
-  setName(newName);
+    setFlags(newFlags);
+    setName(newName);
 }
 
 Ignore::~Ignore()

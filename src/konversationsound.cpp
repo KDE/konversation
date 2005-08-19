@@ -20,21 +20,21 @@
 #include <knotifyclient.h>
 #endif
 
-namespace Konversation {
-  Sound::Sound(QObject* parent, const char* name)
-    : QObject(parent, name)
-  {}
-  
-  Sound::~Sound()
-  {}
+namespace Konversation
+{
+    Sound::Sound(QObject* parent, const char* name)
+        : QObject(parent, name)
+        {}
 
-  void Sound::play(const KURL& url)
-  {
-    #ifdef USE_KNOTIFY
-    KNotifyClient::userEvent(0,QString::null,1,1,url.path());
-    #endif
-  }
+    Sound::~Sound()
+        {}
+
+    void Sound::play(const KURL& url)
+    {
+        #ifdef USE_KNOTIFY
+        KNotifyClient::userEvent(0,QString::null,1,1,url.path());
+        #endif
+    }
 }
 
 #include "konversationsound.moc"
-

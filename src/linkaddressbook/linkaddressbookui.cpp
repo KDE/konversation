@@ -9,16 +9,16 @@
     Copyright (c) 2002 by Nick Betcher           <nbetcher@kde.org>
     Copyright (c) 2002 by Duncan Mac-Vicar Prett <duncan@kde.org>
 
-    Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
+Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 
-    *************************************************************************
-    *                                                                       *
-    * This program is free software; you can redistribute it and/or modify  *
-    * it under the terms of the GNU General Public License as published by  *
-    * the Free Software Foundation; either version 2 of the License, or     *
-    * (at your option) any later version.                                   *
-    *                                                                       *
-    *************************************************************************
+*************************************************************************
+*                                                                       *
+* This program is free software; you can redistribute it and/or modify  *
+* it under the terms of the GNU General Public License as published by  *
+* the Free Software Foundation; either version 2 of the License, or     *
+* (at your option) any later version.                                   *
+*                                                                       *
+*************************************************************************
 */
 #include <qcheckbox.h>
 #include <kapplication.h>
@@ -47,49 +47,49 @@
 #include "addresseeitem.h"
 
 LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick, const QString &servername, const QString &servergroup, const QString &suggested_realname )
-  : KDialogBase(Plain, i18n("Link IRC Nick to Addressbook Contact"), Ok|Cancel|Help, Ok, parent, name)
+: KDialogBase(Plain, i18n("Link IRC Nick to Addressbook Contact"), Ok|Cancel|Help, Ok, parent, name)
 {
-  QFrame* page = plainPage();
-  QGridLayout* pageLayout = new QGridLayout(page, 1, 1, 0, 0);
-  m_mainWidget = new LinkAddressbookUI_Base(page);
-  pageLayout->addWidget(m_mainWidget, 0, 0);
+    QFrame* page = plainPage();
+    QGridLayout* pageLayout = new QGridLayout(page, 1, 1, 0, 0);
+    m_mainWidget = new LinkAddressbookUI_Base(page);
+    pageLayout->addWidget(m_mainWidget, 0, 0);
 
-  enableButtonOK(false);
-  setHelp("linkaddressbook");
-  m_addressBook = Konversation::Addressbook::self()->getAddressBook();
+    enableButtonOK(false);
+    setHelp("linkaddressbook");
+    m_addressBook = Konversation::Addressbook::self()->getAddressBook();
 
-  // Addressee validation connections
-  connect( m_mainWidget->addAddresseeButton, SIGNAL( clicked() ), SLOT( slotAddAddresseeClicked() ) );
-  connect( m_mainWidget->addresseeListView, SIGNAL( clicked(QListViewItem * ) ),
-			SLOT( slotAddresseeListClicked( QListViewItem * ) ) );
-  connect( m_mainWidget->addresseeListView, SIGNAL( selectionChanged( QListViewItem * ) ),
-			SLOT( slotAddresseeListClicked( QListViewItem * ) ) );
-  connect( m_mainWidget->addresseeListView, SIGNAL( spacePressed( QListViewItem * ) ),
-			SLOT( slotAddresseeListClicked( QListViewItem * ) ) );
+    // Addressee validation connections
+    connect( m_mainWidget->addAddresseeButton, SIGNAL( clicked() ), SLOT( slotAddAddresseeClicked() ) );
+    connect( m_mainWidget->addresseeListView, SIGNAL( clicked(QListViewItem * ) ),
+        SLOT( slotAddresseeListClicked( QListViewItem * ) ) );
+    connect( m_mainWidget->addresseeListView, SIGNAL( selectionChanged( QListViewItem * ) ),
+        SLOT( slotAddresseeListClicked( QListViewItem * ) ) );
+    connect( m_mainWidget->addresseeListView, SIGNAL( spacePressed( QListViewItem * ) ),
+        SLOT( slotAddresseeListClicked( QListViewItem * ) ) );
 
-  connect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
-  connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
+    connect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
+    connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
 
-//We should add a clear KAction here.  But we can't really do that with a designer file :\  this sucks
-  
-  m_ircnick = ircnick;
-  m_lower_ircnick = m_ircnick.lower();
-  m_servername = servername;
-  m_servergroup = servergroup;
-  m_suggested_realname = suggested_realname;
-  
-  m_mainWidget->addresseeListView->setColumnText(2, SmallIconSet("email"), i18n("Email") );
-  
-  if(m_suggested_realname.isEmpty()) m_suggested_realname = suggested_realname;
-  Q_ASSERT(!ircnick.isEmpty());
-  m_mainWidget->kListViewSearchLine->setListView(m_mainWidget->addresseeListView);
-  slotLoadAddressees();
-  
-  m_mainWidget->addresseeListView->setColumnWidthMode(0, QListView::Manual);
-  m_mainWidget->addresseeListView->setColumnWidth(0, 63); //Photo is 60, and it's nice to have a small gap, imho
- 
+    //We should add a clear KAction here.  But we can't really do that with a designer file :\  this sucks
+
+    m_ircnick = ircnick;
+    m_lower_ircnick = m_ircnick.lower();
+    m_servername = servername;
+    m_servergroup = servergroup;
+    m_suggested_realname = suggested_realname;
+
+    m_mainWidget->addresseeListView->setColumnText(2, SmallIconSet("email"), i18n("Email") );
+
+    if(m_suggested_realname.isEmpty()) m_suggested_realname = suggested_realname;
+    Q_ASSERT(!ircnick.isEmpty());
+    m_mainWidget->kListViewSearchLine->setListView(m_mainWidget->addresseeListView);
+    slotLoadAddressees();
+
+    m_mainWidget->addresseeListView->setColumnWidthMode(0, QListView::Manual);
+                                                  //Photo is 60, and it's nice to have a small gap, imho
+    m_mainWidget->addresseeListView->setColumnWidth(0, 63);
+
 }
-
 
 LinkAddressbookUI::~LinkAddressbookUI()
 {
@@ -98,88 +98,93 @@ LinkAddressbookUI::~LinkAddressbookUI()
 /**  Read in contacts from addressbook, and select the contact that is for our nick. */
 void LinkAddressbookUI::slotLoadAddressees()
 {
-  m_mainWidget->addresseeListView->clear();
+    m_mainWidget->addresseeListView->clear();
 
-  QString realname;
-  int num_contacts_with_nick=0;  //There shouldn't be more than 1 contact with this irc nick.  Warn the user if there is.
+    QString realname;
+    int num_contacts_with_nick=0;                 //There shouldn't be more than 1 contact with this irc nick.  Warn the user if there is.
 
-  KABC::AddressBook::Iterator it;
-  for( it = m_addressBook->begin(); it != m_addressBook->end(); ++it )
-	if(Konversation::Addressbook::self()->hasNick(*it, m_lower_ircnick, m_servername, m_servergroup)) {
-		realname = (*it).realName();
-		num_contacts_with_nick++;
-		(new AddresseeItem( m_mainWidget->addresseeListView, (*it) ))->setSelected(true);
-	} else
-      /*AddresseeItem *item =*/ new AddresseeItem( m_mainWidget->addresseeListView, (*it));
-  
-  if(num_contacts_with_nick == 0)
-    m_mainWidget->lblHeader->setText(i18n("Choose the person who '%1' is.").arg(m_ircnick));
-  else if(num_contacts_with_nick == 1 && realname.isEmpty())
-    m_mainWidget->lblHeader->setText(i18n("Currently '%1' is associated with a contact.").arg(m_ircnick));
-  else if(num_contacts_with_nick == 1 && !realname.isEmpty())
-    m_mainWidget->lblHeader->setText(i18n("Currently '%1' is associated with contact '%2'.").arg(m_ircnick).arg(realname));
-  else
-    m_mainWidget->lblHeader->setText(i18n("<qt><b>Warning:</b> '%1' is currently being listed as belonging to multiple contacts.  Please select the correct contact.</qt>").arg(m_ircnick));
- 
+    KABC::AddressBook::Iterator it;
+    for( it = m_addressBook->begin(); it != m_addressBook->end(); ++it )
+        if(Konversation::Addressbook::self()->hasNick(*it, m_lower_ircnick, m_servername, m_servergroup))
+    {
+        realname = (*it).realName();
+        num_contacts_with_nick++;
+        (new AddresseeItem( m_mainWidget->addresseeListView, (*it) ))->setSelected(true);
+    } else
+    /*AddresseeItem *item =*/ new AddresseeItem( m_mainWidget->addresseeListView, (*it));
+
+    if(num_contacts_with_nick == 0)
+        m_mainWidget->lblHeader->setText(i18n("Choose the person who '%1' is.").arg(m_ircnick));
+    else if(num_contacts_with_nick == 1 && realname.isEmpty())
+        m_mainWidget->lblHeader->setText(i18n("Currently '%1' is associated with a contact.").arg(m_ircnick));
+    else if(num_contacts_with_nick == 1 && !realname.isEmpty())
+        m_mainWidget->lblHeader->setText(i18n("Currently '%1' is associated with contact '%2'.").arg(m_ircnick).arg(realname));
+    else
+        m_mainWidget->lblHeader->setText(i18n("<qt><b>Warning:</b> '%1' is currently being listed as belonging to multiple contacts.  Please select the correct contact.</qt>").arg(m_ircnick));
+
 }
 
 void LinkAddressbookUI::slotAddAddresseeClicked()
 {
-	// Pop up add addressee dialog
-  if(!Konversation::Addressbook::self()->getAndCheckTicket()) return;
-  QString addresseeName = KInputDialog::getText( i18n( "New Address Book Entry" ),
-						 i18n( "Name the new entry:" ),
-						 m_suggested_realname, 0, this );
+    // Pop up add addressee dialog
+    if(!Konversation::Addressbook::self()->getAndCheckTicket()) return;
+    QString addresseeName = KInputDialog::getText( i18n( "New Address Book Entry" ),
+        i18n( "Name the new entry:" ),
+        m_suggested_realname, 0, this );
 
-  if ( !addresseeName.isEmpty() )
-  {
-	KABC::Addressee addr;
-	addr.setNameFromString( addresseeName );
-	m_addressBook->insertAddressee(addr);
-	Konversation::Addressbook::self()->saveTicket();
-	slotLoadAddressees();
-  } else {
- 	Konversation::Addressbook::self()->releaseTicket();
-  }
+    if ( !addresseeName.isEmpty() )
+    {
+        KABC::Addressee addr;
+        addr.setNameFromString( addresseeName );
+        m_addressBook->insertAddressee(addr);
+        Konversation::Addressbook::self()->saveTicket();
+        slotLoadAddressees();
+    }
+    else
+    {
+        Konversation::Addressbook::self()->releaseTicket();
+    }
 }
 
 void LinkAddressbookUI::slotAddresseeListClicked( QListViewItem *addressee )
 {
-	// enable ok if a valid addressee is selected
-	enableButtonOK(addressee ? addressee->isSelected() : false);
+    // enable ok if a valid addressee is selected
+    enableButtonOK(addressee ? addressee->isSelected() : false);
 }
 
 void LinkAddressbookUI::slotOk()
 {
-	//// set the KABC uid in the metacontact
-  AddresseeItem *item = 0L;
-  item = static_cast<AddresseeItem *>( m_mainWidget->addresseeListView->selectedItem() );
+    //// set the KABC uid in the metacontact
+    AddresseeItem *item = 0L;
+    item = static_cast<AddresseeItem *>( m_mainWidget->addresseeListView->selectedItem() );
 
-  KABC::Addressee addr;
-  if ( item ) {
+    KABC::Addressee addr;
+    if ( item )
+    {
 
-    addr = item->addressee();
-  	if(!Konversation::Addressbook::self()->getAndCheckTicket()) {
-      return;
-	}
-	Konversation::Addressbook::self()->associateNickAndUnassociateFromEveryoneElse(addr, m_ircnick, m_servername, m_servergroup);
-	if(!Konversation::Addressbook::self()->saveTicket()) {
-      return;
-	}
-  }
-  disconnect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
-  deleteLater();
-  accept();
+        addr = item->addressee();
+        if(!Konversation::Addressbook::self()->getAndCheckTicket())
+        {
+            return;
+        }
+        Konversation::Addressbook::self()->associateNickAndUnassociateFromEveryoneElse(addr, m_ircnick, m_servername, m_servergroup);
+        if(!Konversation::Addressbook::self()->saveTicket())
+        {
+            return;
+        }
+    }
+    disconnect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
+    deleteLater();
+    accept();
 }
 
 void LinkAddressbookUI::slotCancel()
 {
-  disconnect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
-  deleteLater();
-  reject();
+    disconnect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
+    deleteLater();
+    reject();
 }
 
 #include "linkaddressbookui.moc"
 
 // vim: set noet ts=4 sts=4 sw=4:
-

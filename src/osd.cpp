@@ -22,22 +22,21 @@ the Free Software Foundation; either version 2 of the License, or
 #include <dcopclient.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kglobalsettings.h> //unsetColors()
+#include <kglobalsettings.h>                      //unsetColors()
 
-#include <X11/Xlib.h> //reposition()
+#include <X11/Xlib.h>                             //reposition()
 
 #include "common.h"
 
-
 OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name )
-        : QWidget( parent, name, WNoAutoErase | WStyle_Customize | WX11BypassWM | WStyle_StaysOnTop | WStyle_Tool )
-        , m_appName( appName )
-        , m_duration( 5000 )
-        , m_shadow( true )
-        , m_alignment( Middle )
-        , m_screen( 0 )
-        , m_y( MARGIN )
-        , m_dirty( false )
+: QWidget( parent, name, WNoAutoErase | WStyle_Customize | WX11BypassWM | WStyle_StaysOnTop | WStyle_Tool )
+, m_appName( appName )
+, m_duration( 5000 )
+, m_shadow( true )
+, m_alignment( Middle )
+, m_screen( 0 )
+, m_y( MARGIN )
+, m_dirty( false )
 {
     setFocusPolicy( NoFocus );
     setBackgroundMode( NoBackground );
@@ -47,10 +46,10 @@ OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name 
     connect( &timerMin,  SIGNAL( timeout() ), SLOT( minReached() ) );
 }
 
-
 void OSDWidget::renderOSDText( const QString &txt )
 {
-    QString text = Konversation::removeIrcMarkup(txt); // Escaped text
+                                                  // Escaped text
+    QString text = Konversation::removeIrcMarkup(txt);
 
     static QBitmap mask;
 
@@ -94,7 +93,8 @@ void OSDWidget::renderOSDText( const QString &txt )
     const uint h = textRect.height() - 1;
 
     // Draw the text shadow
-    if ( m_shadow ) {
+    if ( m_shadow )
+    {
         bufferPainter.setPen( backgroundColor().dark( 175 ) );
         bufferPainter.drawText( METRIC + 3, (METRIC/2) + titleFm.height() + 1, w, h, AlignLeft | WordBreak, text );
     }
@@ -122,10 +122,11 @@ void OSDWidget::renderOSDText( const QString &txt )
     update();
 }
 
-
-void OSDWidget::showOSD( const QString &text, bool preemptive )  // slot
+                                                  // slot
+void OSDWidget::showOSD( const QString &text, bool preemptive )
 {
-    if ( isEnabled() && !text.isEmpty() ) {
+    if ( isEnabled() && !text.isEmpty() )
+    {
 
         QString plaintext = text.copy();
         plaintext.replace(QRegExp("</?(?:font|a|b|i)\\b[^>]*>"), QString(""));
@@ -133,20 +134,21 @@ void OSDWidget::showOSD( const QString &text, bool preemptive )  // slot
         plaintext.replace(QString("&gt;"), QString(">"));
         plaintext.replace(QString("&amp;"), QString("&"));
 
-        if ( preemptive || !timerMin.isActive() ) {
+        if ( preemptive || !timerMin.isActive() )
+        {
             m_currentText = plaintext;
             m_dirty = true;
 
             show();
         }
-        else textBuffer.append( plaintext ); //queue
+        else textBuffer.append( plaintext );      //queue
     }
 }
 
-
-void OSDWidget::minReached() //SLOT
+void OSDWidget::minReached()                      //SLOT
 {
-    if ( !textBuffer.isEmpty() ) {
+    if ( !textBuffer.isEmpty() )
+    {
         renderOSDText( textBuffer.front() );
         textBuffer.pop_front();
 
@@ -156,7 +158,6 @@ void OSDWidget::minReached() //SLOT
     }
     else timerMin.stop();
 }
-
 
 void OSDWidget::setDuration( int ms )
 {
@@ -217,17 +218,16 @@ void OSDWidget::setScreen( uint screen )
     reposition();
 }
 
-
 bool OSDWidget::event( QEvent *e )
 {
     switch( e->type() )
     {
-    case QEvent::Paint:
-        bitBlt( this, 0, 0, &osdBuffer );
-        return true;
+        case QEvent::Paint:
+            bitBlt( this, 0, 0, &osdBuffer );
+            return true;
 
-    default:
-        return QWidget::event( e );
+        default:
+            return QWidget::event( e );
     }
 }
 
@@ -241,18 +241,18 @@ void OSDWidget::show()
     // Don't show the OSD widget when the desktop is locked
     if ( isKDesktopLockRunning() )
     {
-        minReached();  // don't queue the message
+        minReached();                             // don't queue the message
         return;
     }
- 
+
     if ( m_dirty ) renderOSDText( m_currentText );
 
     QWidget::show();
 
-    if ( m_duration ) //duration 0 -> stay forever
+    if ( m_duration )                             //duration 0 -> stay forever
     {
-        timer.start( m_duration, true ); //calls hide()
-        timerMin.start( 150 ); //calls minReached()
+        timer.start( m_duration, true );          //calls hide()
+        timerMin.start( 150 );                    //calls minReached()
     }
 }
 
@@ -263,7 +263,7 @@ void OSDWidget::refresh()
         //we need to update the buffer
         renderOSDText( m_currentText );
     }
-    else m_dirty = true; //ensure we are re-rendered before we are shown
+    else m_dirty = true;                          //ensure we are re-rendered before we are shown
 }
 
 void OSDWidget::reposition( QSize newSize )
@@ -275,22 +275,23 @@ void OSDWidget::reposition( QSize newSize )
 
     //TODO m_y is the middle of the OSD, and don't exceed screen margins
 
-    switch ( m_alignment ) {
-    case Left:
-        break;
+    switch ( m_alignment )
+    {
+        case Left:
+            break;
 
-    case Right:
-        newPos.rx() = screen.width() - MARGIN - newSize.width();
-        break;
+        case Right:
+            newPos.rx() = screen.width() - MARGIN - newSize.width();
+            break;
 
-    case Center:
-        newPos.ry() = (screen.height() - newSize.height()) / 2;
+        case Center:
+            newPos.ry() = (screen.height() - newSize.height()) / 2;
 
-        //FALL THROUGH
+            //FALL THROUGH
 
-    case Middle:
-        newPos.rx() = (screen.width() - newSize.width()) / 2;
-        break;
+        case Middle:
+            newPos.rx() = (screen.width() - newSize.width()) / 2;
+            break;
     }
 
     //ensure we don't dip below the screen
@@ -306,27 +307,25 @@ void OSDWidget::reposition( QSize newSize )
     XMoveResizeWindow( x11Display(), winId(), newPos.x(), newPos.y(), newSize.width(), newSize.height() );
 }
 
-
-
 //////  OSDPreviewWidget below /////////////////////
 
-#include <kcursor.h>         //previewWidget
+#include <kcursor.h>                              //previewWidget
 #include <klocale.h>
 
 OSDPreviewWidget::OSDPreviewWidget( const QString &appName, QWidget *parent, const char *name )
-    : OSDWidget( appName, parent, name )
-    , m_dragging( false )
+: OSDWidget( appName, parent, name )
+, m_dragging( false )
 {
     m_currentText = i18n( "OSD Preview - drag to reposition" );
     m_duration    = 0;
 }
 
-
 void OSDPreviewWidget::mousePressEvent( QMouseEvent *event )
 {
     m_dragOffset = event->pos();
 
-    if ( event->button() == LeftButton && !m_dragging ) {
+    if ( event->button() == LeftButton && !m_dragging )
+    {
         grabMouse( KCursor::sizeAllCursor() );
         m_dragging = true;
     }
@@ -334,7 +333,8 @@ void OSDPreviewWidget::mousePressEvent( QMouseEvent *event )
 
 void OSDPreviewWidget::mouseReleaseEvent( QMouseEvent * /*event*/ )
 {
-    if ( m_dragging ) {
+    if ( m_dragging )
+    {
         m_dragging = false;
         releaseMouse();
 
@@ -342,7 +342,8 @@ void OSDPreviewWidget::mouseReleaseEvent( QMouseEvent * /*event*/ )
         QDesktopWidget *desktop = QApplication::desktop();
         int currentScreen = desktop->screenNumber( pos() );
 
-        if ( currentScreen != -1 ) {
+        if ( currentScreen != -1 )
+        {
             // set new data
             m_screen = currentScreen;
             m_y      = QWidget::y();
@@ -397,10 +398,9 @@ void OSDPreviewWidget::mouseMoveEvent( QMouseEvent *e )
     }
 }
 
-
-
 // the code was taken from pilotDaemon.cc in KPilot
-OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()  // static
+                                                  // static
+OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
 {
     DCOPClient *dcopptr = KApplication::kApplication()->dcopClient();
 
@@ -408,7 +408,7 @@ OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()  // static
     if (!dcopptr || !dcopptr->isAttached())
     {
         kdWarning() << k_funcinfo << ": Could not make DCOP connection. "
-                    << "Assuming screensaver is active." << endl;
+            << "Assuming screensaver is active." << endl;
         return DCOPError;
     }
 
@@ -416,10 +416,10 @@ OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()  // static
     QCString returnType;
 
     if (!dcopptr->call("kdesktop","KScreensaverIface","isBlanked()",
-         data,returnType,returnValue,true))
+        data,returnType,returnValue,true))
     {
         kdWarning() << k_funcinfo << ": Check for screensaver failed."
-                    << "Assuming screensaver is active." << endl;
+            << "Assuming screensaver is active." << endl;
         // Err on the side of safety again.
         return DCOPError;
     }
@@ -434,7 +434,7 @@ OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()  // static
     else
     {
         kdWarning() << k_funcinfo << ": Strange return value from screensaver. "
-                    << "Assuming screensaver is active." << endl;
+            << "Assuming screensaver is active." << endl;
         // Err on the side of safety.
         return DCOPError;
     }

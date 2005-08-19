@@ -31,112 +31,111 @@ class ChannelListViewItem;
 
 class ChannelListPanel : public ChatWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    ChannelListPanel(QWidget* parent);
-    ~ChannelListPanel();
+        public:
+        ChannelListPanel(QWidget* parent);
+        ~ChannelListPanel();
 
-    virtual bool closeYourself();
-    virtual void emitUpdateInfo();
+        virtual bool closeYourself();
+        virtual void emitUpdateInfo();
 
-  signals:
-    void refreshChannelList();
-    void joinChannel(const QString& channelName);
-    void adjustMinValue(int num);
-    void adjustMaxValue(int num);
-    void updateNumUsers(const QString& num);
-    void updateNumChannels(const QString& num);
+        signals:
+        void refreshChannelList();
+        void joinChannel(const QString& channelName);
+        void adjustMinValue(int num);
+        void adjustMaxValue(int num);
+        void updateNumUsers(const QString& num);
+        void updateNumChannels(const QString& num);
 
-  public slots:
-    void addToChannelList(const QString& channel,int users,const QString& topic);
+    public slots:
+        void addToChannelList(const QString& channel,int users,const QString& topic);
 
-    virtual void appendInputText(const QString&);
-    
-  protected slots:
-    void applyFilterClicked();
-    void refreshList();
-    void updateDisplay();      // will be called by a timer to update regularly
-    void saveList();
-    void joinChannelClicked();
+        virtual void appendInputText(const QString&);
 
-    void setMinUsers(int num);
-    void setMaxUsers(int num);
+    protected slots:
+        void applyFilterClicked();
+        void refreshList();
+        void updateDisplay();                     // will be called by a timer to update regularly
+        void saveList();
+        void joinChannelClicked();
 
-    void filterTextChanged(const QString& newText);
-    void channelTargetClicked();
-    void topicTargetClicked();
-    void regExpClicked();
+        void setMinUsers(int num);
+        void setMaxUsers(int num);
 
-    void contextMenu (KListView* l, QListViewItem* i, const QPoint& p);
+        void filterTextChanged(const QString& newText);
+        void channelTargetClicked();
+        void topicTargetClicked();
+        void regExpClicked();
 
-    //Used to disable functions when not connected
-    virtual void serverOnline(bool online);
+        void contextMenu (KListView* l, QListViewItem* i, const QPoint& p);
 
-  protected:
+        //Used to disable functions when not connected
+        virtual void serverOnline(bool online);
 
-    /** Called from ChatWindow adjustFocus */
-    virtual void childAdjustFocus();
-    
-    virtual bool isInsertCharacterSupported() { return true; }
+    protected:
 
-    int getNumChannels();
-    int getNumUsers();
-    int getVisibleChannels();
-    int getVisibleUsers();
+        /** Called from ChatWindow adjustFocus */
+        virtual void childAdjustFocus();
 
-    void setNumChannels(int num);
-    void setNumUsers(int num);
-    void setVisibleChannels(int num);
-    void setVisibleUsers(int num);
+        virtual bool isInsertCharacterSupported() { return true; }
 
-    void setChannelTarget(bool state);
-    bool getChannelTarget();
+        int getNumChannels();
+        int getNumUsers();
+        int getVisibleChannels();
+        int getVisibleUsers();
 
-    void setTopicTarget(bool state);
-    bool getTopicTarget();
+        void setNumChannels(int num);
+        void setNumUsers(int num);
+        void setVisibleChannels(int num);
+        void setVisibleUsers(int num);
 
-    void setRegExp(bool state);
-    bool getRegExp();
+        void setChannelTarget(bool state);
+        bool getChannelTarget();
 
-    int getMinUsers();
-    int getMaxUsers();
+        void setTopicTarget(bool state);
+        bool getTopicTarget();
 
-    const QString& getFilterText();
-    void  applyFilterToItem(QListViewItem* item);
+        void setRegExp(bool state);
+        bool getRegExp();
 
-    void updateUsersChannels();
+        int getMinUsers();
+        int getMaxUsers();
 
-    int numChannels;
-    int numUsers;
-    int visibleChannels;
-    int visibleUsers;
+        const QString& getFilterText();
+        void  applyFilterToItem(QListViewItem* item);
 
-    int minUsers;
-    int maxUsers;
+        void updateUsersChannels();
 
-    bool channelTarget;
-    bool topicTarget;
+        int numChannels;
+        int numUsers;
+        int visibleChannels;
+        int visibleUsers;
 
-    bool regExp;
+        int minUsers;
+        int maxUsers;
 
-    // store channels to be inserted in ListView here first
-    QStringList pendingChannels;
-    QTimer updateTimer;
+        bool channelTarget;
+        bool topicTarget;
 
-    QCheckBox* channelFilter;
-    QCheckBox* topicFilter;
-    QCheckBox* regexpCheck;
+        bool regExp;
 
-    QPushButton* applyFilter;
-    QPushButton* refreshListButton;
-    QPushButton* joinChannelButton;
+        // store channels to be inserted in ListView here first
+        QStringList pendingChannels;
+        QTimer updateTimer;
 
-    KListView* channelListView;
-    
-    KLineEdit* filterInput;
+        QCheckBox* channelFilter;
+        QCheckBox* topicFilter;
+        QCheckBox* regexpCheck;
 
-    QString filterText;
+        QPushButton* applyFilter;
+        QPushButton* refreshListButton;
+        QPushButton* joinChannelButton;
+
+        KListView* channelListView;
+
+        KLineEdit* filterInput;
+
+        QString filterText;
 };
-
 #endif

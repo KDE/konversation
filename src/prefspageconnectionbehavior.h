@@ -17,16 +17,15 @@ class Preferences;
 
 class PrefsPageConnectionBehavior : public ConnectionBehavior_Config
 {
-  Q_OBJECT
-  public:
-    PrefsPageConnectionBehavior(QWidget* newParent, Preferences* newPreferences);
-    ~PrefsPageConnectionBehavior();
+    Q_OBJECT
+        public:
+        PrefsPageConnectionBehavior(QWidget* newParent, Preferences* newPreferences);
+        ~PrefsPageConnectionBehavior();
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  private:
-    Preferences* preferences;
+    private:
+        Preferences* preferences;
 };
-
 #endif

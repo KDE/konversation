@@ -24,28 +24,26 @@
 #include "prefspagealiases.h"
 
 PrefsPageAliases::PrefsPageAliases(QWidget* newParent,Preferences* newPreferences) :
-  Alias_Config( newParent )
+Alias_Config( newParent )
 {
-  preferences = newPreferences;
-  parentFrame = newParent;
+    preferences = newPreferences;
+    parentFrame = newParent;
 
-  aliasesListView->setRenameable(0,true);
-  aliasesListView->setRenameable(1,true);
-  aliasesListView->setSorting(-1,false);
+    aliasesListView->setRenameable(0,true);
+    aliasesListView->setRenameable(1,true);
+    aliasesListView->setSorting(-1,false);
 
+    QStringList aliasList(preferences->getAliasList());
+    // Insert alias items backwards to get them sorted properly
+    for(int index=aliasList.count();index!=0;index--)
+    {
+        QString item=aliasList[index-1];
+        new KListViewItem(aliasesListView,item.section(' ',0,0),item.section(' ',1));
+    }
 
-  QStringList aliasList(preferences->getAliasList());
-  // Insert alias items backwards to get them sorted properly
-  for(int index=aliasList.count();index!=0;index--)
-  {
-    QString item=aliasList[index-1];
-    new KListViewItem(aliasesListView,item.section(' ',0,0),item.section(' ',1));
-  }
-
-  connect(newButton,SIGNAL (clicked()),this,SLOT (newAlias()) );
-  connect(removeButton,SIGNAL (clicked()),this,SLOT (removeAlias()) );
+    connect(newButton,SIGNAL (clicked()),this,SLOT (newAlias()) );
+    connect(removeButton,SIGNAL (clicked()),this,SLOT (removeAlias()) );
 }
-
 
 PrefsPageAliases::~PrefsPageAliases()
 {
@@ -53,39 +51,39 @@ PrefsPageAliases::~PrefsPageAliases()
 
 void PrefsPageAliases::newAlias()
 {
-  bool ok=false;
-  QString newPattern=KInputDialog::getText(i18n("New Alias"),i18n("Add alias:"),i18n("New"),&ok,parentFrame);
-  if(ok)
-  {
-    KListViewItem* newItem=new KListViewItem(aliasesListView,newPattern);
-    aliasesListView->setSelected(newItem,true);
-  }
+    bool ok=false;
+    QString newPattern=KInputDialog::getText(i18n("New Alias"),i18n("Add alias:"),i18n("New"),&ok,parentFrame);
+    if(ok)
+    {
+        KListViewItem* newItem=new KListViewItem(aliasesListView,newPattern);
+        aliasesListView->setSelected(newItem,true);
+    }
 }
 
 void PrefsPageAliases::removeAlias()
 {
-  QListViewItem* selected=aliasesListView->selectedItem();
-  if(selected)
-  {
-    if(selected->itemBelow()) aliasesListView->setSelected(selected->itemBelow(),true);
-    else aliasesListView->setSelected(selected->itemAbove(),true);
+    QListViewItem* selected=aliasesListView->selectedItem();
+    if(selected)
+    {
+        if(selected->itemBelow()) aliasesListView->setSelected(selected->itemBelow(),true);
+        else aliasesListView->setSelected(selected->itemAbove(),true);
 
-    delete selected;
-  }
+        delete selected;
+    }
 }
 
 void PrefsPageAliases::applyPreferences()
 {
-  QStringList newList;
+    QStringList newList;
 
-  QListViewItem* item=aliasesListView->itemAtIndex(0);
-  while(item)
-  {
-    newList.append(item->text(0)+" "+item->text(1));
-    item=item->itemBelow();
-  }
+    QListViewItem* item=aliasesListView->itemAtIndex(0);
+    while(item)
+    {
+        newList.append(item->text(0)+" "+item->text(1));
+        item=item->itemBelow();
+    }
 
-  preferences->setAliasList(newList);
+    preferences->setAliasList(newList);
 }
 
 #include "prefspagealiases.moc"

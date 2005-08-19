@@ -26,21 +26,20 @@ class Server;
 
 class ScriptLauncher : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    ScriptLauncher(Server* server);
-    ~ScriptLauncher();
+        public:
+        ScriptLauncher(Server* server);
+        ~ScriptLauncher();
 
-  signals:
-    void scriptNotFound(const QString& name);
-    void scriptExecutionError(const QString& name);
+        signals:
+        void scriptNotFound(const QString& name);
+        void scriptExecutionError(const QString& name);
 
-  public slots:
-    void launchScript(const QString& target, const QString& parameter);
+    public slots:
+        void launchScript(const QString& target, const QString& parameter);
 
-  protected:
-    Server* m_server;
+    protected:
+        Server* m_server;
 };
-
 #endif

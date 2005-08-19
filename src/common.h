@@ -22,20 +22,20 @@ class QPixmap;
 
 namespace Konversation
 {
-  QString removeIrcMarkup(const QString& text);
-  QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColor = true);
-  QBitmap overlayMasks( const QBitmap *under, const QBitmap *over );
-  QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
-  bool isUtf8(const QCString& text);
-  JapaneseCode::Type guess_ja(const char* text, int length);
+    QString removeIrcMarkup(const QString& text);
+    QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColor = true);
+    QBitmap overlayMasks( const QBitmap *under, const QBitmap *over );
+    QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
+    bool isUtf8(const QCString& text);
+    JapaneseCode::Type guess_ja(const char* text, int length);
 
-  enum TabNotifyType {
-    tnfNick,
-    tnfHighlight,
-    tnfNormal,
-    tnfControl,
-    tnfNone
-  };
+    enum TabNotifyType
+    {
+        tnfNick,
+        tnfHighlight,
+        tnfNormal,
+        tnfControl,
+        tnfNone
+    };
 }
-
 #endif

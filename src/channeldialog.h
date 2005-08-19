@@ -16,26 +16,26 @@
 
 class QLineEdit;
 
-namespace Konversation {
-
-class ChannelSettings;
-
-class ChannelDialog : public KDialogBase
+namespace Konversation
 {
-  Q_OBJECT
-  public:
-    ChannelDialog(const QString& title, QWidget *parent = 0, const char *name = 0);
-    ~ChannelDialog();
-    
-    void setChannelSettings(const ChannelSettings& channel);
-    ChannelSettings channelSettings();
-  
-  private:
-    QLineEdit* m_channelEdit;
-    QLineEdit* m_passwordEdit;
 
-};
+    class ChannelSettings;
+
+    class ChannelDialog : public KDialogBase
+    {
+        Q_OBJECT
+            public:
+            ChannelDialog(const QString& title, QWidget *parent = 0, const char *name = 0);
+            ~ChannelDialog();
+
+            void setChannelSettings(const ChannelSettings& channel);
+            ChannelSettings channelSettings();
+
+        private:
+            QLineEdit* m_channelEdit;
+            QLineEdit* m_passwordEdit;
+
+    };
 
 }
-
 #endif

@@ -27,42 +27,41 @@ class QPushButton;
 
 class UrlCatcher : public ChatWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    UrlCatcher(QWidget* parent);
-    ~UrlCatcher();
-    
-    virtual void setMainWindow(KonversationMainWindow *mainWindow);
-    
-    virtual bool canBeFrontView()   { return true; }
+        public:
+        UrlCatcher(QWidget* parent);
+        ~UrlCatcher();
 
-  signals:
-    void deleteUrl(const QString& who,const QString& url);
-    void clearUrlList();
+        virtual void setMainWindow(KonversationMainWindow *mainWindow);
 
-  public slots:
-    void addUrl(const QString& who,const QString& url);
+        virtual bool canBeFrontView()   { return true; }
 
-  protected slots:
-    void urlSelected();
-    void openUrl(QListViewItem* item);
+        signals:
+        void deleteUrl(const QString& who,const QString& url);
+        void clearUrlList();
 
-    void openUrlClicked();
-    void copyUrlClicked();
-    void deleteUrlClicked();
-    void saveListClicked();
-    void clearListClicked();
-  protected:
-    KListView* urlListView;
+    public slots:
+        void addUrl(const QString& who,const QString& url);
 
-    /** Called from ChatWindow adjustFocus */
-    virtual void childAdjustFocus();
-    QPushButton* openUrlButton;
-    QPushButton* copyUrlButton;
-    QPushButton* deleteUrlButton;
-    QPushButton* saveListButton;
-    QPushButton* clearListButton;
+    protected slots:
+        void urlSelected();
+        void openUrl(QListViewItem* item);
+
+        void openUrlClicked();
+        void copyUrlClicked();
+        void deleteUrlClicked();
+        void saveListClicked();
+        void clearListClicked();
+    protected:
+        KListView* urlListView;
+
+        /** Called from ChatWindow adjustFocus */
+        virtual void childAdjustFocus();
+        QPushButton* openUrlButton;
+        QPushButton* copyUrlButton;
+        QPushButton* deleteUrlButton;
+        QPushButton* saveListButton;
+        QPushButton* clearListButton;
 };
-
 #endif

@@ -17,39 +17,38 @@
 #include <qstringlist.h>
 #include "channel.h"
 
-namespace Konversation {
-
-class ChannelOptionsUI;
-
-class ChannelOptionsDialog : public KDialogBase
+namespace Konversation
 {
-  Q_OBJECT
-  public:
-    ChannelOptionsDialog(Channel *channel);
-    ~ChannelOptionsDialog();
 
+    class ChannelOptionsUI;
 
-    QString topic();
-    QStringList modes();
+    class ChannelOptionsDialog : public KDialogBase
+    {
+        Q_OBJECT
+            public:
+            ChannelOptionsDialog(Channel *channel);
+            ~ChannelOptionsDialog();
 
-  public slots:
-    void refreshTopicHistory();
-    void refreshAllowedChannelModes();
-    void refreshModes();
-    void refreshEnableModes();
-    void toggleAdvancedModes();
+            QString topic();
+            QStringList modes();
 
-    void closeOptionsDialog();
-    void changeOptions();
+        public slots:
+            void refreshTopicHistory();
+            void refreshAllowedChannelModes();
+            void refreshModes();
+            void refreshEnableModes();
+            void toggleAdvancedModes();
 
-  protected slots:
-    void topicHistoryItemClicked(QListViewItem* item);
+            void closeOptionsDialog();
+            void changeOptions();
 
-  private:
-    ChannelOptionsUI* m_widget;
-    Channel *m_channel;
-};
+        protected slots:
+            void topicHistoryItemClicked(QListViewItem* item);
+
+        private:
+            ChannelOptionsUI* m_widget;
+            Channel *m_channel;
+    };
 
 }
-
 #endif

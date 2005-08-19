@@ -33,67 +33,65 @@ class NickChangeDialog;
 
 class StatusPanel : public ChatWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    StatusPanel(QWidget* parent);
-    ~StatusPanel();
+        public:
+        StatusPanel(QWidget* parent);
+        ~StatusPanel();
 
-    virtual QString getTextInLine();
-    virtual bool closeYourself();
-    virtual bool canBeFrontView();
-    virtual bool searchView();
+        virtual QString getTextInLine();
+        virtual bool closeYourself();
+        virtual bool canBeFrontView();
+        virtual bool searchView();
 
-    virtual void setChannelEncoding(const QString& encoding);
-    virtual QString getChannelEncoding();
-    virtual QString getChannelEncodingDefaultDesc();
-    virtual void setName(const QString& newName) { ChatWindow::setName(newName); }
-    virtual void emitUpdateInfo();
+        virtual void setChannelEncoding(const QString& encoding);
+        virtual QString getChannelEncoding();
+        virtual QString getChannelEncodingDefaultDesc();
+        virtual void setName(const QString& newName) { ChatWindow::setName(newName); }
+        virtual void emitUpdateInfo();
 
-    virtual void setIdentity(const Identity *newIdentity);
+        virtual void setIdentity(const Identity *newIdentity);
 
-    virtual bool areIRCColorsSupported() {return true; }
-    virtual bool isInsertCharacterSupported() { return true; }
+        virtual bool areIRCColorsSupported() {return true; }
+        virtual bool isInsertCharacterSupported() { return true; }
 
-  signals:
-    void sendFile();
-    // void prefsChanged();
+        signals:
+        void sendFile();
+        // void prefsChanged();
 
-  public slots:
-    void setNickname(const QString& newNickname);
-    void updateFonts();
-    virtual void indicateAway(bool show);
-    void setShowNicknameBox(bool show);
+    public slots:
+        void setNickname(const QString& newNickname);
+        void updateFonts();
+        virtual void indicateAway(bool show);
+        void setShowNicknameBox(bool show);
 
-    virtual void appendInputText(const QString&);
+        virtual void appendInputText(const QString&);
 
-  protected slots:
-    void sendFileMenu();
-    void statusTextEntered();
-    void sendStatusText(const QString& line);
-    // connected to IRCInput::textPasted() - used for large/multiline pastes
-    void textPasted(const QString& text);
-    void changeNickname(const QString& newNickname);
-    void nicknameComboboxChanged();
-    //Used to disable functions when not connected
-    virtual void serverOnline(bool online);
+    protected slots:
+        void sendFileMenu();
+        void statusTextEntered();
+        void sendStatusText(const QString& line);
+        // connected to IRCInput::textPasted() - used for large/multiline pastes
+        void textPasted(const QString& text);
+        void changeNickname(const QString& newNickname);
+        void nicknameComboboxChanged();
+        //Used to disable functions when not connected
+        virtual void serverOnline(bool online);
 
+    protected:
 
-  protected:
+        /** Called from ChatWindow adjustFocus */
+        virtual void childAdjustFocus();
 
-    /** Called from ChatWindow adjustFocus */
-    virtual void childAdjustFocus();
+        bool awayChanged;
+        bool awayState;
 
-    bool awayChanged;
-    bool awayState;
+        void showEvent(QShowEvent* event);
 
-    void showEvent(QShowEvent* event);
-
-    QComboBox* nicknameCombobox;
-    QLabel* awayLabel;
-    IRCInput* statusInput;
-    QCheckBox* logCheckBox;
-    QString oldNick;
+        QComboBox* nicknameCombobox;
+        QLabel* awayLabel;
+        IRCInput* statusInput;
+        QCheckBox* logCheckBox;
+        QString oldNick;
 };
-
 #endif

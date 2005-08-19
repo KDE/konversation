@@ -16,10 +16,10 @@
 #include "topiccombobox.h"
 
 TopicComboBox::TopicComboBox(QWidget* parent) :
-                   KComboBox(parent,"topic_combo_box")
+KComboBox(parent,"topic_combo_box")
 {
-  connect(this,SIGNAL(activated(int)),this,SLOT(topicActivated(int)));
-  connect(this,SIGNAL(returnPressed(const QString&)),this,SLOT(topicActivated(const QString&)));
+    connect(this,SIGNAL(activated(int)),this,SLOT(topicActivated(int)));
+    connect(this,SIGNAL(returnPressed(const QString&)),this,SLOT(topicActivated(const QString&)));
 }
 
 TopicComboBox::~TopicComboBox()
@@ -28,24 +28,24 @@ TopicComboBox::~TopicComboBox()
 
 void TopicComboBox::topicActivated(const QString& newTopic)
 {
-  emit topicChanged(newTopic);
+    emit topicChanged(newTopic);
 }
 
 void TopicComboBox::topicActivated(int index)
 {
-  emit topicChanged(text(index).section(' ',1));
+    emit topicChanged(text(index).section(' ',1));
 }
 
 void TopicComboBox::insertStringList(const QStringList& list)
 {
-  KComboBox::insertStringList(list);
+    KComboBox::insertStringList(list);
 
-  setEditText(list[0].section(' ',1));
+    setEditText(list[0].section(' ',1));
 }
 
 void TopicComboBox::wheelEvent(QWheelEvent *ev)
 {
-  ev->ignore();
+    ev->ignore();
 }
 
 #include "topiccombobox.moc"

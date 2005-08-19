@@ -21,7 +21,7 @@
   notify.  A notify consists of a server network name and a nickname.
   User must pick the server network name from existing network names
   in the server list.
-  
+
   @author Gary Cramblitt <garycramblitt@comcast.net>
 */
 
@@ -30,21 +30,21 @@ class KComboBox;
 
 class EditNotifyDialog : public KDialogBase
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    EditNotifyDialog(QWidget* parent=0,QString network=QString::null,
-                                       QString nickname=QString::null);
-    ~EditNotifyDialog();
+        public:
+        EditNotifyDialog(QWidget* parent=0,QString network=QString::null,
+            QString nickname=QString::null);
+        ~EditNotifyDialog();
 
-  signals:
-    void notifyChanged(const QString& network,
-                       const QString& nickname);
-  protected slots:
-    void slotOk();
+        signals:
+        void notifyChanged(const QString& network,
+            const QString& nickname);
+    protected slots:
+        void slotOk();
 
-  protected:
-    KComboBox* m_networkNameCombo;
-    KLineEdit* m_nicknameInput;
+    protected:
+        KComboBox* m_networkNameCombo;
+        KLineEdit* m_nicknameInput;
 };
 #endif

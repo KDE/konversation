@@ -17,7 +17,7 @@
 #include "channellistviewitem.h"
 
 ChannelListViewItem::ChannelListViewItem(KListView* parent,QString channel,QString users,QString topic)
-                         : KListViewItem(parent,channel,users,topic)
+: KListViewItem(parent,channel,users,topic)
 {
 }
 
@@ -27,15 +27,15 @@ ChannelListViewItem::~ChannelListViewItem()
 
 int ChannelListViewItem::compare(QListViewItem* item, int col, bool ascending) const
 {
-  if(col==1)
-  {
-    bool ok;
-    int i=text(col).toInt(&ok);
-    if(ok)
+    if(col==1)
     {
-      int j=item->text(col).toInt(&ok);
-      if(ok) return (i<j) ? -1 : (i>j) ? 1 : 0;
+        bool ok;
+        int i=text(col).toInt(&ok);
+        if(ok)
+        {
+            int j=item->text(col).toInt(&ok);
+            if(ok) return (i<j) ? -1 : (i>j) ? 1 : 0;
+        }
     }
-  }
-  return KListViewItem::compare(item,col,ascending);
+    return KListViewItem::compare(item,col,ascending);
 }

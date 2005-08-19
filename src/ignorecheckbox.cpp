@@ -14,12 +14,12 @@
 #include "ignorecheckbox.h"
 
 IgnoreCheckBox::IgnoreCheckBox(QString name,QWidget* parent,int newId):
-                QCheckBox(name,parent)
+QCheckBox(name,parent)
 {
-  id=newId;
+    id=newId;
 
-  connect(this,SIGNAL(clicked()),
-          this,SLOT(wasClicked()));
+    connect(this,SIGNAL(clicked()),
+        this,SLOT(wasClicked()));
 }
 
 IgnoreCheckBox::~IgnoreCheckBox()
@@ -28,7 +28,7 @@ IgnoreCheckBox::~IgnoreCheckBox()
 
 void IgnoreCheckBox::wasClicked()
 {
-  emit flagChanged(id,isChecked());
+    emit flagChanged(id,isChecked());
 }
 
 #include "ignorecheckbox.moc"

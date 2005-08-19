@@ -21,40 +21,39 @@
 #include "highlight.h"
 
 /**
-  *@author Matthias Gierlings
-  */
+ *@author Matthias Gierlings
+ */
 
 class KURL;
 
 class HighlightViewItem : public QCheckListItem
 {
-  public:
-    HighlightViewItem(QListView* parent, Highlight* passed_Highlight);
-    ~HighlightViewItem();
+    public:
+        HighlightViewItem(QListView* parent, Highlight* passed_Highlight);
+        ~HighlightViewItem();
 
-    QString getPattern();
-    QString getAutoText();
-    QColor getColor() { return itemColor; }
-    int getID() { return itemID; }
-    bool getRegExp();
-    KURL getSoundURL() { return soundURL; }
+        QString getPattern();
+        QString getAutoText();
+        QColor getColor() { return itemColor; }
+        int getID() { return itemID; }
+        bool getRegExp();
+        KURL getSoundURL() { return soundURL; }
 
-    void setPattern(const QString& newPattern);
-    void setAutoText(const QString& newAutoText);
-    void setColor(QColor passed_itemColor) { itemColor = passed_itemColor; }
-    void setID(int passed_itemID) { itemID = passed_itemID; }
-    void setSoundURL(const KURL& url);
+        void setPattern(const QString& newPattern);
+        void setAutoText(const QString& newAutoText);
+        void setColor(QColor passed_itemColor) { itemColor = passed_itemColor; }
+        void setID(int passed_itemID) { itemID = passed_itemID; }
+        void setSoundURL(const KURL& url);
 
-    HighlightViewItem* itemBelow();
+        HighlightViewItem* itemBelow();
 
-  protected:
-    QColor itemColor;
-    QColorGroup itemColorGroup;
-    int itemID;
-    KURL soundURL;
-    QString autoText;
+    protected:
+        QColor itemColor;
+        QColorGroup itemColorGroup;
+        int itemID;
+        KURL soundURL;
+        QString autoText;
 
-    void paintCell(QPainter* p, const QColorGroup &cg, int column, int width, int alignment);
+        void paintCell(QPainter* p, const QColorGroup &cg, int column, int width, int alignment);
 };
-
 #endif

@@ -8,7 +8,7 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -27,25 +27,24 @@ class Server;
 class IRCViewBox : public QVBox
 {
     Q_OBJECT
-    
-public:
 
-    IRCViewBox(QWidget* parent, Server* newServer);
-    ~IRCViewBox();
+        public:
 
-    IRCView*   ircView() const;
+        IRCViewBox(QWidget* parent, Server* newServer);
+        ~IRCViewBox();
 
-public slots:
+        IRCView*   ircView() const;
 
-    void slotSearch();
-    void slotSearchNext();
-    void slotSearchChanged(const QString& pattern);
-    
-private:
+    public slots:
 
-    IRCView*   m_ircView;
-    SearchBar* m_searchBar;
-    bool       m_matchedOnce;
+        void slotSearch();
+        void slotSearchNext();
+        void slotSearchChanged(const QString& pattern);
+
+    private:
+
+        IRCView*   m_ircView;
+        SearchBar* m_searchBar;
+        bool       m_matchedOnce;
 };
-
-#endif /* IRCVIEWBOX_H */
+#endif                                            /* IRCVIEWBOX_H */

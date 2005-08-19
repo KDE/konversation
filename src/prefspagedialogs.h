@@ -22,20 +22,19 @@ class QCheckListItem;
 
 class PrefsPageDialogs : public Warnings_Config
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    PrefsPageDialogs(QWidget* newParent,Preferences* newPreferences);
-    ~PrefsPageDialogs();
-    QString flagNames;
+        public:
+        PrefsPageDialogs(QWidget* newParent,Preferences* newPreferences);
+        ~PrefsPageDialogs();
+        QString flagNames;
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  protected:
-    Preferences* preferences;
-    QCheckListItem* item;
-    
+    protected:
+        Preferences* preferences;
+        QCheckListItem* item;
+
 };
-
 #endif

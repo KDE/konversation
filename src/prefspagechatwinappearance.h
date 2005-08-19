@@ -19,19 +19,18 @@ class Preferences;
 
 class PrefsPageChatWinAppearance : public ChatWindowAppearance_Config
 {
-  Q_OBJECT
-  public:
-    PrefsPageChatWinAppearance(QWidget* newParent,Preferences* newPreferences);
+    Q_OBJECT
+        public:
+        PrefsPageChatWinAppearance(QWidget* newParent,Preferences* newPreferences);
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  protected slots:
-    void setBackgroundImageConfig(bool state);
-    void saveBackgroundImage(const QString&);
+    protected slots:
+        void setBackgroundImageConfig(bool state);
+        void saveBackgroundImage(const QString&);
 
-  protected:
-    Preferences* preferences;
+    protected:
+        Preferences* preferences;
 };
-
 #endif

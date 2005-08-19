@@ -22,36 +22,35 @@ class Preferences;
 
 class PrefsPageOSD : public OSD_Config
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    PrefsPageOSD(QWidget* newParent,Preferences* newPreferences);
-    ~PrefsPageOSD();
-    
-    void aboutToShow();  // called from PrefsDialog when the page is about to be shown
-    void aboutToHide();  // called from PrefsDialog when the page is about to be hidden
+        public:
+        PrefsPageOSD(QWidget* newParent,Preferences* newPreferences);
+        ~PrefsPageOSD();
 
-  protected slots:
-    void slotOSDEnabledChanged(bool on);
-    void slotCustomColorsChanged(bool on);
-    void slotTextColorChanged(const QColor& color);
-    void slotBackgroundColorChanged(const QColor& color);
-    void slotScreenChanged(int index);
-    void slotDrawShadowChanged(bool on);
-    
-    void osdFontClicked();
-    
-    void slotPositionChanged();
+        void aboutToShow();                       // called from PrefsDialog when the page is about to be shown
+        void aboutToHide();                       // called from PrefsDialog when the page is about to be hidden
 
-  public slots:
-    void applyPreferences();
+    protected slots:
+        void slotOSDEnabledChanged(bool on);
+        void slotCustomColorsChanged(bool on);
+        void slotTextColorChanged(const QColor& color);
+        void slotBackgroundColorChanged(const QColor& color);
+        void slotScreenChanged(int index);
+        void slotDrawShadowChanged(bool on);
 
-  protected:
-    Preferences* preferences;
-    void updateFonts();
-    QFont osdFont;
-    OSDPreviewWidget* m_pOSDPreview;
-    bool showingPage;
+        void osdFontClicked();
+
+        void slotPositionChanged();
+
+    public slots:
+        void applyPreferences();
+
+    protected:
+        Preferences* preferences;
+        void updateFonts();
+        QFont osdFont;
+        OSDPreviewWidget* m_pOSDPreview;
+        bool showingPage;
 };
-
 #endif

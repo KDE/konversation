@@ -21,68 +21,69 @@ class Preferences;
 class QPushButton;
 class QStringList;
 
-namespace Konversation {
-  
-  class ServerListItem : public KListViewItem
-  {
-    public:
-      ServerListItem(QListViewItem* parent, int serverId, const QString& serverGroup, 
-                     const QString& identity, const QString& channels, bool autoConnect);
-      ServerListItem(QListView* parent, int serverId, const QString& serverGroup, 
-                     const QString& identity, const QString& channels, bool autoConnect);
+namespace Konversation
+{
 
-      int serverId() const { return m_serverId; }
-      bool autoConnect() const { return m_autoConnect; }
-      void setAutoConnect(bool ac);
-//      virtual void paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int align);
-      
-      virtual int rtti() const { return 10001; }
-      
-    protected:
-      virtual void activate();
-    
-    private:
-      int m_serverId;
-      bool m_autoConnect;
-  };
-  
-  class ServerListDialog : public KDialogBase
-  {
-    Q_OBJECT
-    public:
-      ServerListDialog(QWidget *parent = 0, const char *name = 0);
-      ~ServerListDialog();
+    class ServerListItem : public KListViewItem
+    {
+        public:
+            ServerListItem(QListViewItem* parent, int serverId, const QString& serverGroup,
+                const QString& identity, const QString& channels, bool autoConnect);
+            ServerListItem(QListView* parent, int serverId, const QString& serverGroup,
+                const QString& identity, const QString& channels, bool autoConnect);
 
-    public slots:
-      void updateServerGroupList();
+            int serverId() const { return m_serverId; }
+            bool autoConnect() const { return m_autoConnect; }
+            void setAutoConnect(bool ac);
+            //      virtual void paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int align);
 
-    signals:
-      void connectToServer(int serverId);
+            virtual int rtti() const { return 10001; }
 
-    protected slots:
-      virtual void slotOk();
-      virtual void slotApply();
+        protected:
+            virtual void activate();
 
-      void slotAdd();
-      void slotEdit();
-      void slotDelete();
+        private:
+            int m_serverId;
+            bool m_autoConnect;
+    };
 
-      void updateButtons();
+    class ServerListDialog : public KDialogBase
+    {
+        Q_OBJECT
+            public:
+            ServerListDialog(QWidget *parent = 0, const char *name = 0);
+            ~ServerListDialog();
 
-    protected:
-      QListViewItem* findBranch(QString name, bool generate = true);
-      QStringList createGroupList();
-      QListViewItem* addListItem(ServerGroupSettingsPtr serverGroup); /// Adds a list item to the list view
+        public slots:
+            void updateServerGroupList();
 
-      void addServerGroup(ServerGroupSettingsPtr serverGroup);
+            signals:
+            void connectToServer(int serverId);
 
-    private:
-      KListView* m_serverList;
-      QPushButton* m_addButton;
-      QPushButton* m_editButton;
-      QPushButton* m_delButton;
-      Preferences* m_preferences;
-  };
+        protected slots:
+            virtual void slotOk();
+            virtual void slotApply();
+
+            void slotAdd();
+            void slotEdit();
+            void slotDelete();
+
+            void updateButtons();
+
+        protected:
+            QListViewItem* findBranch(QString name, bool generate = true);
+            QStringList createGroupList();
+                                                  /// Adds a list item to the list view
+            QListViewItem* addListItem(ServerGroupSettingsPtr serverGroup);
+
+            void addServerGroup(ServerGroupSettingsPtr serverGroup);
+
+        private:
+            KListView* m_serverList;
+            QPushButton* m_addButton;
+            QPushButton* m_editButton;
+            QPushButton* m_delButton;
+            Preferences* m_preferences;
+    };
 }
-
 #endif

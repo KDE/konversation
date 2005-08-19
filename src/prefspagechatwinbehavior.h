@@ -20,15 +20,14 @@ class Preferences;
 
 class PrefsPageChatWinBehavior : public ChatwindowBehaviour_Config
 {
-  Q_OBJECT
-  public:
-    PrefsPageChatWinBehavior(QWidget* newParent, Preferences* newPreferences);
-    ~PrefsPageChatWinBehavior();
-  public slots:
-    void applyPreferences();
+    Q_OBJECT
+        public:
+        PrefsPageChatWinBehavior(QWidget* newParent, Preferences* newPreferences);
+        ~PrefsPageChatWinBehavior();
+    public slots:
+        void applyPreferences();
 
-  private:
-    Preferences* preferences;
+    private:
+        Preferences* preferences;
 };
-
 #endif

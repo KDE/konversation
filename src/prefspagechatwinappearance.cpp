@@ -24,40 +24,42 @@
 #include "preferences.h"
 
 PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QWidget* newParent,Preferences* newPreferences)
- : ChatWindowAppearance_Config(newParent)
+: ChatWindowAppearance_Config(newParent)
 {
-  preferences = newPreferences;
+    preferences = newPreferences;
 
-  kcfg_Timestamping->setChecked(preferences->getTimestamping());
-  kcfg_ShowDate->setChecked(preferences->getShowDate());
+    kcfg_Timestamping->setChecked(preferences->getTimestamping());
+    kcfg_ShowDate->setChecked(preferences->getShowDate());
 
-  kcfg_TimestampFormat->insertItem("hh");
-  kcfg_TimestampFormat->insertItem("hh:mm");
-  kcfg_TimestampFormat->insertItem("hh:mm:ss");
-  kcfg_TimestampFormat->insertItem("hh ap");
-  kcfg_TimestampFormat->insertItem("hh:mm ap");
-  kcfg_TimestampFormat->insertItem("hh:mm:ss ap");
+    kcfg_TimestampFormat->insertItem("hh");
+    kcfg_TimestampFormat->insertItem("hh:mm");
+    kcfg_TimestampFormat->insertItem("hh:mm:ss");
+    kcfg_TimestampFormat->insertItem("hh ap");
+    kcfg_TimestampFormat->insertItem("hh:mm ap");
+    kcfg_TimestampFormat->insertItem("hh:mm:ss ap");
 
-  // find actual timestamp format
-  for(int index=0; index < kcfg_TimestampFormat->count(); index++) {
-    if(kcfg_TimestampFormat->text(index) == preferences->getTimestampFormat()) {
-      kcfg_TimestampFormat->setCurrentItem(index);
+    // find actual timestamp format
+    for(int index=0; index < kcfg_TimestampFormat->count(); index++)
+    {
+        if(kcfg_TimestampFormat->text(index) == preferences->getTimestampFormat())
+        {
+            kcfg_TimestampFormat->setCurrentItem(index);
+        }
     }
-  }
 
-  kcfg_ShowTopic->setChecked(preferences->getShowTopic());
-  kcfg_ShowModeButtons->setChecked(preferences->getShowModeButtons());
-  kcfg_ShowQuickButtons->setChecked(preferences->getShowQuickButtons());
-  kcfg_AutoUserhost->setChecked(preferences->getAutoUserhost());
-  kcfg_ShowNicknameBox->setChecked(preferences->showNicknameBox());
+    kcfg_ShowTopic->setChecked(preferences->getShowTopic());
+    kcfg_ShowModeButtons->setChecked(preferences->getShowModeButtons());
+    kcfg_ShowQuickButtons->setChecked(preferences->getShowQuickButtons());
+    kcfg_AutoUserhost->setChecked(preferences->getAutoUserhost());
+    kcfg_ShowNicknameBox->setChecked(preferences->showNicknameBox());
 
-  kcfg_ShowBackgroundImage->setChecked(preferences->getShowBackgroundImage());
+    kcfg_ShowBackgroundImage->setChecked(preferences->getShowBackgroundImage());
 
-  kcfg_BackgroundImage->setCaption(i18n("Select Background Image"));
-  kcfg_BackgroundImage->setURL(preferences->getBackgroundImageName());
+    kcfg_BackgroundImage->setCaption(i18n("Select Background Image"));
+    kcfg_BackgroundImage->setURL(preferences->getBackgroundImageName());
 
-  connect(kcfg_ShowBackgroundImage,SIGNAL(toggled(bool)),this, SLOT(setBackgroundImageConfig(bool)));
-  connect(kcfg_BackgroundImage,SIGNAL(textChanged(const QString&)),this,SLOT(saveBackgroundImage(const QString&)));
+    connect(kcfg_ShowBackgroundImage,SIGNAL(toggled(bool)),this, SLOT(setBackgroundImageConfig(bool)));
+    connect(kcfg_BackgroundImage,SIGNAL(textChanged(const QString&)),this,SLOT(saveBackgroundImage(const QString&)));
 }
 
 // This really shouldn't be here...
@@ -65,7 +67,8 @@ void PrefsPageChatWinAppearance::setBackgroundImageConfig(bool state )
 {
     if( !state )
         preferences->setShowBackgroundImage(false);
-    else {
+    else
+    {
         preferences->setBackgroundImageName(kcfg_BackgroundImage->url());
         preferences->setShowBackgroundImage(true);
     }
@@ -79,14 +82,14 @@ void PrefsPageChatWinAppearance::saveBackgroundImage(const QString& url)
 
 void PrefsPageChatWinAppearance::applyPreferences()
 {
-  preferences->setTimestamping(kcfg_Timestamping->isChecked());
-  preferences->setShowDate(kcfg_ShowDate->isChecked());
-  preferences->setTimestampFormat(kcfg_TimestampFormat->currentText());
-  preferences->setShowQuickButtons(kcfg_ShowQuickButtons->isChecked());
-  preferences->setShowModeButtons(kcfg_ShowModeButtons->isChecked());
-  preferences->setAutoUserhost(kcfg_AutoUserhost->isChecked());
-  preferences->setShowTopic(kcfg_ShowTopic->isChecked());
-  preferences->setShowNicknameBox(kcfg_ShowNicknameBox->isChecked());
+    preferences->setTimestamping(kcfg_Timestamping->isChecked());
+    preferences->setShowDate(kcfg_ShowDate->isChecked());
+    preferences->setTimestampFormat(kcfg_TimestampFormat->currentText());
+    preferences->setShowQuickButtons(kcfg_ShowQuickButtons->isChecked());
+    preferences->setShowModeButtons(kcfg_ShowModeButtons->isChecked());
+    preferences->setAutoUserhost(kcfg_AutoUserhost->isChecked());
+    preferences->setShowTopic(kcfg_ShowTopic->isChecked());
+    preferences->setShowNicknameBox(kcfg_ShowNicknameBox->isChecked());
 }
 
 #include "prefspagechatwinappearance.moc"

@@ -37,7 +37,8 @@
 
 #include "query.h"
 
-namespace Konversation {
+namespace Konversation
+{
     OutputFilter::OutputFilter(Server* server)
         : QObject(server)
     {
@@ -82,7 +83,7 @@ namespace Konversation {
                 // return "replaced"
                 return true;
             }
-        } // for
+        }                                         // for
 
         return false;
     }
@@ -96,26 +97,26 @@ namespace Konversation {
 
         QString inputLine(originalLine);
 
-	if(inputLine.stripWhiteSpace().startsWith("/nickserv"))
-	  inputLine = inputLine.stripWhiteSpace();
+        if(inputLine.stripWhiteSpace().startsWith("/nickserv"))
+            inputLine = inputLine.stripWhiteSpace();
 
-	if(inputLine.isEmpty() || inputLine == "\n")
-	  return result;
+        if(inputLine.isEmpty() || inputLine == "\n")
+            return result;
 
         if(!KonversationApplication::preferences.getDisableExpansion())
         {
             // replace placeholders
-            inputLine.replace("%%","%\x01");  // make sure to protect double %%
-            inputLine.replace("%B","\x02");   // replace %B with bold char
-            inputLine.replace("%C","\x03");   // replace %C with color char
-            inputLine.replace("%G","\x07");   // replace %G with ASCII BEL 0x07
-            inputLine.replace("%I","\x09");   // replace %I with italics char
-            inputLine.replace("%O","\x0f");   // replace %O with reset to default char
-            inputLine.replace("%S","\x13");   // replace %S with strikethru char
+            inputLine.replace("%%","%\x01");      // make sure to protect double %%
+            inputLine.replace("%B","\x02");       // replace %B with bold char
+            inputLine.replace("%C","\x03");       // replace %C with color char
+            inputLine.replace("%G","\x07");       // replace %G with ASCII BEL 0x07
+            inputLine.replace("%I","\x09");       // replace %I with italics char
+            inputLine.replace("%O","\x0f");       // replace %O with reset to default char
+            inputLine.replace("%S","\x13");       // replace %S with strikethru char
             //  inputLine.replace(QRegExp("%?"),"\x15");
-            inputLine.replace("%R","\x16");   // replace %R with reverse char
-            inputLine.replace("%U","\x1f");   // replace %U with underline char
-            inputLine.replace("%\x01","%");   // restore double %% as single %
+            inputLine.replace("%R","\x16");       // replace %R with reverse char
+            inputLine.replace("%U","\x1f");       // replace %U with underline char
+            inputLine.replace("%\x01","%");       // restore double %% as single %
         }
 
         QString line=inputLine.lower();
@@ -132,7 +133,8 @@ namespace Konversation {
         {
             result.toServer = "PRIVMSG " + name + " :" + inputLine.mid(1);
 
-            for(uint i = 508; i < result.toServer.length(); i += 509) {
+            for(uint i = 508; i < result.toServer.length(); i += 509)
+            {
                 result.toServer.insert(i, "\nPRIVMSG " + destination + " :");
             }
 
@@ -153,7 +155,7 @@ namespace Konversation {
             else if(command == "notice")  result = parseNotice(parameter);
             else if(command == "j")       result = parseJoin(parameter);
             else if(command == "msg")     result = parseMsg(myNick,parameter, false);
-	    else if(command == "m")       result = parseMsg(myNick,parameter, false);
+            else if(command == "m")       result = parseMsg(myNick,parameter, false);
             else if(command == "smsg")    result = parseSMsg(parameter);
             else if(command == "query")   result = parseMsg(myNick,parameter, true);
             else if(command == "op")      result = parseOp(parameter);
@@ -161,7 +163,7 @@ namespace Konversation {
             else if(command == "voice")   result = parseVoice(parameter);
             else if(command == "unvoice") result = parseUnvoice(parameter);
             else if(command == "ctcp")    result = parseCtcp(parameter);
-	    else if(command == "ping")    result = parseCtcp(parameter.section(' ', 0, 0) + " ping");
+            else if(command == "ping")    result = parseCtcp(parameter.section(' ', 0, 0) + " ping");
             else if(command == "kick")    result = parseKick(parameter);
             else if(command == "topic")   result = parseTopic(parameter);
             else if(command == "away")    result = parseAway(parameter);
@@ -185,21 +187,22 @@ namespace Konversation {
             else if(command == "aback")   parseAaway(QString::null);
             else if(command == "ame")     result = parseAme(parameter);
             else if(command == "amsg")    result = parseAmsg(parameter);
-	    
-	    else if(command == "omsg")    result = parseOmsg(parameter);
-	    else if(command == "onotice") result = parseOnotice(parameter);
+
+            else if(command == "omsg")    result = parseOmsg(parameter);
+            else if(command == "onotice") result = parseOnotice(parameter);
 
             else if(command == "server")  parseServer(parameter);
 
             else if(command == "prefs")   result = parsePrefs(parameter);
 
-	    else if(command == "charset") parseCharset(parameter);
+            else if(command == "charset") parseCharset(parameter);
 
-	    else if(command == "setkey")     result = parseSetKey(parameter);
-	    else if(command == "delkey")     result = parseDelKey(parameter);
+            else if(command == "setkey")     result = parseSetKey(parameter);
+            else if(command == "delkey")     result = parseDelKey(parameter);
 
             // Forward unknown commands to server
-            else {
+            else
+            {
                 result.toServer = inputLine.mid(1);
                 result.type = Message;
             }
@@ -209,7 +212,8 @@ namespace Konversation {
         {
             result.toServer = "PRIVMSG " + destination + " :" + inputLine;
 
-            for(uint i = 508; i < result.toServer.length(); i += 509) {
+            for(uint i = 508; i < result.toServer.length(); i += 509)
+            {
                 result.toServer.insert(i, "\nPRIVMSG " + destination + " :");
             }
 
@@ -255,11 +259,13 @@ namespace Konversation {
         if(channelName.isEmpty())
         {
             result = usage(i18n("Usage: %1JOIN <channel> [password]").arg(commandChar));
-        } else {
-	  if(!isAChannel(channelName))
-	    result.toServer = "JOIN #" + channelName.stripWhiteSpace();
-	  else
-	    result.toServer = "JOIN " + channelName;
+        }
+        else
+        {
+            if(!isAChannel(channelName))
+                result.toServer = "JOIN #" + channelName.stripWhiteSpace();
+            else
+                result.toServer = "JOIN " + channelName;
         }
 
         return result;
@@ -284,7 +290,8 @@ namespace Konversation {
                 QString reason = parameter.mid(victim.length() + 1);
 
                 // if no reason given, take default reason
-                if(reason.isEmpty()) {
+                if(reason.isEmpty())
+                {
                     reason = m_server->getIdentity()->getKickReason();
                 }
 
@@ -307,12 +314,17 @@ namespace Konversation {
         if(parameter.isEmpty())
         {
             // But only if we actually are in a channel
-            if(isAChannel(destination)) {
+            if(isAChannel(destination))
+            {
                 result.toServer = "PART " + destination + " :" + m_server->getIdentity()->getPartReason();
-            } else {
+            }
+            else
+            {
                 result = error(i18n("%1PART without parameters only works from within a channel or a query.").arg(commandChar));
             }
-        } else {
+        }
+        else
+        {
             // part a given channel
             if(isAChannel(parameter))
             {
@@ -322,7 +334,8 @@ namespace Konversation {
                 QString reason = parameter.mid(channel.length() + 1);
 
                 // if no reason given, take default reason
-                if(reason.isEmpty()) {
+                if(reason.isEmpty())
+                {
                     reason = m_server->getIdentity()->getPartReason();
                 }
 
@@ -331,9 +344,12 @@ namespace Konversation {
             // part this channel with a given reason
             else
             {
-                if(isAChannel(destination)) {
+                if(isAChannel(destination))
+                {
                     result.toServer = "PART " + destination + " :" + parameter;
-                } else {
+                }
+                else
+                {
                     result = error(i18n("%1PART without channel name only works from within a channel.").arg(commandChar));
                 }
             }
@@ -350,9 +366,12 @@ namespace Konversation {
         if(parameter.isEmpty())
         {
             // But only if we actually are in a channel
-            if(isAChannel(destination)) {
+            if(isAChannel(destination))
+            {
                 result.toServer = "TOPIC " + destination;
-            } else {
+            }
+            else
+            {
                 result = error(i18n("%1TOPIC without parameters only works from within a channel.").arg(commandChar));
             }
         }
@@ -366,7 +385,8 @@ namespace Konversation {
                 // get topic (if any)
                 QString topic=parameter.mid(channel.length()+1);
                 // if no topic given, retrieve topic
-                if(topic.isEmpty()) {
+                if(topic.isEmpty())
+                {
                     result.toServer = "TOPIC " + channel;
                 }
                 // otherwise set topic there
@@ -378,9 +398,12 @@ namespace Konversation {
             // set this channel's topic
             else
             {
-                if(isAChannel(destination)) {
+                if(isAChannel(destination))
+                {
                     result.toServer = "TOPIC " + destination + " :" + parameter;
-                } else {
+                }
+                else
+                {
                     result = error(i18n("%1TOPIC without channel name only works from within a channel.").arg(commandChar));
                 }
             }
@@ -411,13 +434,16 @@ namespace Konversation {
         return result;
     }
 
-    OutputFilterResult OutputFilter::parseNames(const QString &parameter) {
+    OutputFilterResult OutputFilter::parseNames(const QString &parameter)
+    {
         OutputFilterResult result;
         result.toServer = "NAMES ";
-        if (parameter.isNull()) {
+        if (parameter.isNull())
+        {
             return error(i18n("NAMES with no target may disconnect you from the server. Specify '*' if you really want this."));
         }
-        else if (parameter != QChar('*')) {
+        else if (parameter != QChar('*'))
+        {
             result.toServer.append(parameter);
         }
         return result;
@@ -462,18 +488,20 @@ namespace Konversation {
     {
         OutputFilterResult result;
         QString recipient = parameter.section(" ", 0, 0, QString::SectionSkipEmpty);
-	QString message = parameter.section(" ", 1);
-	QString output;
+        QString message = parameter.section(" ", 1);
+        QString output;
 
-        if(recipient.isEmpty()) {
-          result = error("Error: You need to specify a recipient");
-          return result;
+        if(recipient.isEmpty())
+        {
+            result = error("Error: You need to specify a recipient");
+            return result;
         }
 
-	if(message.stripWhiteSpace().isEmpty()) {
-	    //empty result - we don't want to send any message to the server
-	}
-	else if(message.startsWith(commandChar+"me"))
+        if(message.stripWhiteSpace().isEmpty())
+        {
+            //empty result - we don't want to send any message to the server
+        }
+        else if(message.startsWith(commandChar+"me"))
         {
             result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "ACTION " + message.mid(4) + '\x01';
             output = QString("* %1 %2").arg(myNick).arg(message.mid(4));
@@ -486,35 +514,41 @@ namespace Konversation {
 
         ::Query *query;
 
-	if(isQuery || output.isEmpty()) {
-	  //if this is a /query, always open a query window.
-	  //treat "/msg nick" as "/query nick"
+        if(isQuery || output.isEmpty())
+        {
+            //if this is a /query, always open a query window.
+            //treat "/msg nick" as "/query nick"
 
-          //Note we have to be a bit careful here.
-	  //We only want to create ('obtain') a new nickinfo if we have done /query
-	  //or "/msg nick".  Not "/msg nick message".
-          NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
-          query = m_server->addQuery(nickInfo, true /*we initiated*/);
-	  if(output.isEmpty()) { //force focus if the user did not specify any message
-            KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
-            konv_app->getMainWindow()->showView(query);
-	  }
-	}
-	else {
-	  //We have  "/msg nick message"
-          query = m_server->getQueryByName(recipient);
-	}
+            //Note we have to be a bit careful here.
+            //We only want to create ('obtain') a new nickinfo if we have done /query
+            //or "/msg nick".  Not "/msg nick message".
+            NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
+            query = m_server->addQuery(nickInfo, true /*we initiated*/);
+            if(output.isEmpty())                  //force focus if the user did not specify any message
+            {
+                KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
+                konv_app->getMainWindow()->showView(query);
+            }
+        }
+        else
+        {
+            //We have  "/msg nick message"
+            query = m_server->getQueryByName(recipient);
+        }
 
-        if(query && !output.isEmpty()) {
-	  if(message.startsWith(commandChar+"me"))
-	    query->appendAction(m_server->getNickname(), message.mid(4)); //log if and only if the query open
-	  else
-	    query->appendQuery(m_server->getNickname(), output); //log if and only if the query open
-	}
+        if(query && !output.isEmpty())
+        {
+            if(message.startsWith(commandChar+"me"))
+                                                  //log if and only if the query open
+                query->appendAction(m_server->getNickname(), message.mid(4));
+            else
+                                                  //log if and only if the query open
+                query->appendQuery(m_server->getNickname(), output);
+        }
 
-	if(output.isEmpty()) return result; //result should be completely empty;
-	//FIXME - don't do below line if query is focussed
-	result.output = output;
+        if(output.isEmpty()) return result;       //result should be completely empty;
+        //FIXME - don't do below line if query is focussed
+        result.output = output;
         result.typeString= "-> " + recipient;
         result.type = Query;
         return result;
@@ -541,9 +575,12 @@ namespace Konversation {
     OutputFilterResult OutputFilter::parseCtcp(const QString &parameter)
     {
         OutputFilterResult result;
-        QString recipient = parameter.section(' ', 0, 0); // who is the recipient?
-        QString request = parameter.section(' ', 1, 1, QString::SectionSkipEmpty);   // what is the first word of the ctcp?
-        QString message = parameter.section(' ', 1, 0xffffff, QString::SectionSkipEmpty);      // what is the complete ctcp command?
+                                                  // who is the recipient?
+        QString recipient = parameter.section(' ', 0, 0);
+                                                  // what is the first word of the ctcp?
+        QString request = parameter.section(' ', 1, 1, QString::SectionSkipEmpty);
+                                                  // what is the complete ctcp command?
+        QString message = parameter.section(' ', 1, 0xffffff, QString::SectionSkipEmpty);
 
         if(request.lower() == "ping")
         {
@@ -580,7 +617,8 @@ namespace Konversation {
                 nickList.remove(nickList.begin());
             }
             // Add default destination if it is a channel
-            else if(isAChannel(destination)) {
+            else if(isAChannel(destination))
+            {
                 token = "MODE " + destination;
             }
 
@@ -604,7 +642,8 @@ namespace Konversation {
                     token += " " + nickList[index];
                 }
 
-                if(token != tmpToken) {
+                if(token != tmpToken)
+                {
                     result.toServerList.append(token);
                 }
             }
@@ -618,35 +657,48 @@ namespace Konversation {
         OutputFilterResult result;
 
         // No parameter, just open DCC panel
-        if(parameter.isEmpty()) {
+        if(parameter.isEmpty())
+        {
             emit openDccPanel();
-        } else {
+        }
+        else
+        {
             QStringList parameterList = QStringList::split(' ', parameter);
 
             QString dccType = parameterList[0].lower();
 
-            if(dccType=="close") {
+            if(dccType=="close")
+            {
                 emit closeDccPanel();
-            } else if(dccType=="send") {
-                if(parameterList.count()==1) {                // DCC SEND
+            }
+            else if(dccType=="send")
+            {
+                if(parameterList.count()==1)      // DCC SEND
+                {
                     emit requestDccSend();
-                } else if(parameterList.count()==2) {         // DCC SEND <nickname>
+                }                                 // DCC SEND <nickname>
+                else if(parameterList.count()==2)
+                {
                     emit requestDccSend(parameterList[1]);
-                } else if(parameterList.count()>2) {          // DCC SEND <nickname> <file> [file] ...
+                }                                 // DCC SEND <nickname> <file> [file] ...
+                else if(parameterList.count()>2)
+                {
                     // TODO: make sure this will work:
                     //output=i18n("Usage: %1DCC SEND nickname [fi6lename] [filename] ...").arg(commandChar);
-		    KURL fileURL(parameterList[2]);
+                    KURL fileURL(parameterList[2]);
 
-
-		   //We could easily check if the remote file exists, but then we might
-		   //end up asking for creditionals twice, so settle for only checking locally
-                   if(!fileURL.isLocalFile() || QFile::exists( fileURL.path() )) {
-                     emit openDccSend(parameterList[1],fileURL);
-                   } else {
-                      result = error(i18n("Error: File \"%1\" does not exist.").arg(parameterList[2]));
-                   }
+                    //We could easily check if the remote file exists, but then we might
+                    //end up asking for creditionals twice, so settle for only checking locally
+                    if(!fileURL.isLocalFile() || QFile::exists( fileURL.path() ))
+                    {
+                        emit openDccSend(parameterList[1],fileURL);
+                    }
+                    else
+                    {
+                        result = error(i18n("Error: File \"%1\" does not exist.").arg(parameterList[2]));
+                    }
                 }
-                else   // Don't know how this should happen, but ...
+                else                              // Don't know how this should happen, but ...
                 {
                     result = usage(i18n("Usage: %1DCC [SEND nickname filename]").arg(commandChar));
                 }
@@ -654,9 +706,12 @@ namespace Konversation {
             // TODO: DCC Chat etc. comes here
             else if(dccType=="chat")
             {
-                if(parameterList.count()==2) {
+                if(parameterList.count()==2)
+                {
                     emit requestDccChat(parameterList[1]);
-                } else {
+                }
+                else
+                {
                     result = usage(i18n("Usage: %1DCC [CHAT nickname]").arg(commandChar));
                 }
             }
@@ -676,8 +731,8 @@ namespace Konversation {
         QFileInfo info(file);
 
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
-                          + info.fileName().replace(" ","_")
-                          + " " + address + " " + port + " " + QString::number(size) + '\x01';
+            + info.fileName().replace(" ","_")
+            + " " + address + " " + port + " " + QString::number(size) + '\x01';
         result.output = i18n("Offering \"%1\" to %2 for upload...").arg(fileName).arg(recipient);
         result.typeString = i18n("DCC");
         result.type = Program;
@@ -690,7 +745,7 @@ namespace Konversation {
     {
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + " " + port
-                          + " " + QString::number(startAt) + '\x01';
+            + " " + QString::number(startAt) + '\x01';
         result.output = i18n("Accepting DCC Resume request from \"%1\" for file \"%2\".").arg(recipient).arg(fileName);
         result.typeString = i18n("DCC");
         result.type = Program;
@@ -704,7 +759,7 @@ namespace Konversation {
         QString newFileName(fileName);
         newFileName.replace(" ", "_");
         result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + newFileName + " " + port + " "
-                          + QString::number(startAt) + '\x01';
+            + QString::number(startAt) + '\x01';
         result.output = i18n("Sending DCC Resume request to \"%1\" for file \"%2\".").arg(sender).arg(fileName);
         result.typeString = i18n("DCC");
         result.type = Program;
@@ -726,18 +781,24 @@ namespace Konversation {
 
             if(channel.isEmpty())
             {
-                if(isAChannel(destination)) {
+                if(isAChannel(destination))
+                {
                     channel = destination;
-                } else {
+                }
+                else
+                {
                     result = error(i18n("Error: INVITE without channel name works only from within channels."));
                 }
             }
 
             if(!channel.isEmpty())
             {
-                if(isAChannel(channel)) {
+                if(isAChannel(channel))
+                {
                     result.toServer = "INVITE " + nick + " " + channel;
-                } else {
+                }
+                else
+                {
                     result = error(i18n("Error: %1 is not a channel.").arg(channel));
                 }
             }
@@ -775,11 +836,16 @@ namespace Konversation {
     {
         OutputFilterResult result;
 
-        if(parameter.isEmpty() || parameter == "open") {
+        if(parameter.isEmpty() || parameter == "open")
+        {
             emit openRawLog(true);
-        } else if(parameter == "close") {
+        }
+        else if(parameter == "close")
+        {
             emit closeRawLog();
-        } else {
+        }
+        else
+        {
             result = usage(i18n("Usage: RAW [OPEN | CLOSE]"));
         }
 
@@ -801,11 +867,12 @@ namespace Konversation {
                 if(!KonversationApplication::preferences.removeNotify(groupName, list[index]))
                 {
                     // If remove failed, try to add it instead
-                    if(!KonversationApplication::preferences.addNotify(groupName, list[index])) {
+                    if(!KonversationApplication::preferences.addNotify(groupName, list[index]))
+                    {
                         kdDebug() << "OutputFilter::parseNotify(): Adding failed!" << endl;
                     }
                 }
-            } // endfor
+            }                                     // endfor
         }
 
         // show (new) notify list to user
@@ -834,16 +901,17 @@ namespace Konversation {
             bool keep = false;
 
             int ret = KIO::PasswordDialog::getNameAndPassword
-                      (
-                          nick,
-                          password,
-                          &keep,
-                          i18n("Enter user name and password for IRC operator privileges:"),
-                          false,
-                          i18n("IRC Operator Password")
-                          );
+                (
+                nick,
+                password,
+                &keep,
+                i18n("Enter user name and password for IRC operator privileges:"),
+                false,
+                i18n("IRC Operator Password")
+                );
 
-            if(ret == KIO::PasswordDialog::Accepted) {
+            if(ret == KIO::PasswordDialog::Accepted)
+            {
                 result.toServer = "OPER " + nick + " " + password;
             }
         }
@@ -908,7 +976,8 @@ namespace Konversation {
             }
         }
 
-        if(showUsage) {
+        if(showUsage)
+        {
             result = usage(i18n("Usage: BAN [-HOST | -DOMAIN] [channel] <user|mask>"));
         }
 
@@ -962,7 +1031,8 @@ namespace Konversation {
             }
         }
 
-        if(showUsage) {
+        if(showUsage)
+        {
             result = usage(i18n("Usage: UNBAN [channel] pattern"));
         }
 
@@ -1003,7 +1073,8 @@ namespace Konversation {
             {
                 for(unsigned int index=0;index<parameterList.count();index++)
                 {
-                    if(parameterList[index].contains('!') == 0) {
+                    if(parameterList[index].contains('!') == 0)
+                    {
                         parameterList[index] += "!*";
                     }
 
@@ -1019,7 +1090,8 @@ namespace Konversation {
             }
         }
 
-        if(showUsage) {
+        if(showUsage)
+        {
             result = usage(i18n("Usage: IGNORE [ -ALL ] user list"));
         }
 
@@ -1030,9 +1102,12 @@ namespace Konversation {
     {
         OutputFilterResult result;
 
-        if(parameter.isEmpty()) {
+        if(parameter.isEmpty())
+        {
             result = usage(i18n("Usage: QUOTE command list"));
-        } else {
+        }
+        else
+        {
             result.toServer = parameter;
         }
 
@@ -1043,9 +1118,12 @@ namespace Konversation {
     {
         OutputFilterResult result;
 
-        if(parameter.isEmpty()) {
+        if(parameter.isEmpty())
+        {
             result = usage(i18n("Usage: SAY text"));
-        } else {
+        }
+        else
+        {
             result.toServer = "PRIVMSG " + destination + " :" + parameter;
             result.output = parameter;
         }
@@ -1067,7 +1145,8 @@ namespace Konversation {
     bool OutputFilter::isAChannel(const QString &check)
     {
         Q_ASSERT(m_server);
-        return m_server? m_server->isAChannel(check) : QString("#&").contains(check.at(0)); // XXX if we ever see the assert, we need the ternary
+                                                  // XXX if we ever see the assert, we need the ternary
+        return m_server? m_server->isAChannel(check) : QString("#&").contains(check.at(0));
     }
 
     OutputFilterResult OutputFilter::usage(const QString& string)
@@ -1081,11 +1160,11 @@ namespace Konversation {
 
     OutputFilterResult OutputFilter::info(const QString& string)
     {
-      OutputFilterResult result;
-      result.typeString = i18n("Info");
-      result.output = string;
-      result.type = Program;
-      return result;
+        OutputFilterResult result;
+        result.typeString = i18n("Info");
+        result.output = string;
+        result.type = Program;
+        return result;
     }
 
     OutputFilterResult OutputFilter::error(const QString& string)
@@ -1106,7 +1185,8 @@ namespace Konversation {
     {
         OutputFilterResult result;
 
-        if(parameter.isEmpty()) {
+        if(parameter.isEmpty())
+        {
             result = usage(i18n("Usage: %1AME text").arg(commandChar));
         }
 
@@ -1118,7 +1198,8 @@ namespace Konversation {
     {
         OutputFilterResult result;
 
-        if(parameter.isEmpty()) {
+        if(parameter.isEmpty())
+        {
             result = usage(i18n("Usage: %1AMSG text").arg(commandChar));
         }
 
@@ -1128,44 +1209,57 @@ namespace Konversation {
 
     void OutputFilter::parseServer(const QString& parameter)
     {
-        if(parameter.isEmpty()) {
+        if(parameter.isEmpty())
+        {
             emit reconnectServer();
-        } else {
+        }
+        else
+        {
             QStringList splitted = QStringList::split(" ", parameter);
             QString address;
             QString port = "6667";
-	        QString password;
+            QString password;
 
-            if (splitted.count()==3) { // 'hostname port password' syntax
+            if (splitted.count()==3)              // 'hostname port password' syntax
+            {
                 address = splitted[0];
                 port = splitted[1];
-                password = splitted[2];           
-            } else if (splitted.count()==2) { // 'hostname:port password' or 'hostname port' syntax
+                password = splitted[2];
+            }                                     // 'hostname:port password' or 'hostname port' syntax
+            else if (splitted.count()==2)
+            {
                 address = splitted[0];
-                
+
                 QStringList splitAddress = QStringList::split(":", address, true);
-            
-                if(splitAddress.count() == 2) { // IPv4 address with a port
-	                address = splitAddress[0];
-	                port = splitAddress[1];
+
+                if(splitAddress.count() == 2)     // IPv4 address with a port
+                {
+                    address = splitAddress[0];
+                    port = splitAddress[1];
                     password = splitted[1];
                 }
-	            else if(splitAddress.count() > 6) { // IPv6 address with a port
-	                address = address.section(':',0,5);
-	                port = splitAddress[splitAddress.count()-1];
-	                password = splitted[1];
-	            } else {
-	                port = splitted[1];
-	            }               
+                else if(splitAddress.count() > 6) // IPv6 address with a port
+                {
+                    address = address.section(':',0,5);
+                    port = splitAddress[splitAddress.count()-1];
+                    password = splitted[1];
+                }
+                else
+                {
+                    port = splitted[1];
+                }
             }
-        
+
             kdDebug() << "Server : " << splitted[0] << " Port : " << port << endl;
-            
-            if (KonversationApplication::preferences.isServerGroup(address)) {
+
+            if (KonversationApplication::preferences.isServerGroup(address))
+            {
                 emit connectToServerGroup(address);
-            } else {
+            }
+            else
+            {
                 emit connectToServer(address, port, password);
-            }        
+            }
         }
     }
 
@@ -1253,91 +1347,98 @@ namespace Konversation {
                                 {
                                     result = usage(group + "/" + option + " = " + options[option]);
                                 }
-                            } else {
+                            }
+                            else
+                            {
                                 showUsage = true;
                             }
                         }
-                    } else {
+                    }
+                    else
+                    {
                         showUsage = true;
                     }
                 }
-            } else {
+            }
+            else
+            {
                 showUsage = true;
             }
         }
 
-        if (showUsage) {
+        if (showUsage)
+        {
             result = usage(i18n("Usage: %1PREFS group option value or %2PREFS LIST to list groups or %3PREFS group LIST to list options in group.  Quote parameters if they contain spaces.").arg(commandChar, commandChar, commandChar));
         }
 
         return result;
     }
-  
-  OutputFilterResult OutputFilter::parseOmsg(const QString& parameter)
-  {
-    OutputFilterResult result;
-    
-    if(!parameter.isEmpty())
-      result.toServer = "PRIVMSG @"+destination+" :"+parameter;
-    else
-      result = error(i18n("%1omsg needs a message parameter").arg(commandChar));
 
-    return result;
-  }
+    OutputFilterResult OutputFilter::parseOmsg(const QString& parameter)
+    {
+        OutputFilterResult result;
 
-  OutputFilterResult OutputFilter::parseOnotice(const QString& parameter)
-  {
-    OutputFilterResult result;
+        if(!parameter.isEmpty())
+            result.toServer = "PRIVMSG @"+destination+" :"+parameter;
+        else
+            result = error(i18n("%1omsg needs a message parameter").arg(commandChar));
 
-    if(!parameter.isEmpty())
-      result.toServer = "NOTICE @"+destination+" "+parameter;
-    else
-      result = error(i18n("%1onotice needs a message parameter").arg(commandChar));
+        return result;
+    }
 
-    return result;
-  }
+    OutputFilterResult OutputFilter::parseOnotice(const QString& parameter)
+    {
+        OutputFilterResult result;
 
-  void OutputFilter::parseCharset(const QString& charset)
-  {
-    QString shortName = Konversation::IRCCharsets::self()->ambiguousNameToShortName(charset);
-    if(!shortName.isEmpty())
-      m_server->getIdentity()->setCodecName(shortName);
-  }
+        if(!parameter.isEmpty())
+            result.toServer = "NOTICE @"+destination+" "+parameter;
+        else
+            result = error(i18n("%1onotice needs a message parameter").arg(commandChar));
 
-  OutputFilterResult OutputFilter::parseSetKey(const QString& parameter)
-  {
-    OutputFilterResult result;
-    
-    if(parameter.isEmpty())
-      {
-	result = usage(i18n("Show help here"));
-      }
-    else
-      {
-	QStringList tmp = QStringList::split(" ",parameter);
-	m_server->setKeyForRecepient(tmp[0], tmp[1].local8Bit());
-	result = info(i18n("The key for %1 is successfully set.").arg(tmp[0]));
-      }
-      
-    return result;
-  }
+        return result;
+    }
 
-  OutputFilterResult OutputFilter::parseDelKey(const QString& parameter)
-  {
-    OutputFilterResult result;
+    void OutputFilter::parseCharset(const QString& charset)
+    {
+        QString shortName = Konversation::IRCCharsets::self()->ambiguousNameToShortName(charset);
+        if(!shortName.isEmpty())
+            m_server->getIdentity()->setCodecName(shortName);
+    }
 
-    if(parameter.isEmpty())
-      {
-        result = usage(i18n("Show help here"));
-      }
-    else
-      {
-	m_server->setKeyForRecepient(parameter, "");
-        result = info(i18n("The key for %1 is now deleted.").arg(parameter));
-      }
+    OutputFilterResult OutputFilter::parseSetKey(const QString& parameter)
+    {
+        OutputFilterResult result;
 
-    return result;
-  }
+        if(parameter.isEmpty())
+        {
+            result = usage(i18n("Show help here"));
+        }
+        else
+        {
+            QStringList tmp = QStringList::split(" ",parameter);
+            m_server->setKeyForRecepient(tmp[0], tmp[1].local8Bit());
+            result = info(i18n("The key for %1 is successfully set.").arg(tmp[0]));
+        }
+
+        return result;
+    }
+
+    OutputFilterResult OutputFilter::parseDelKey(const QString& parameter)
+    {
+        OutputFilterResult result;
+
+        if(parameter.isEmpty())
+        {
+            result = usage(i18n("Show help here"));
+        }
+        else
+        {
+            m_server->setKeyForRecepient(parameter, "");
+            result = info(i18n("The key for %1 is now deleted.").arg(parameter));
+        }
+
+        return result;
+    }
 
 }
 

@@ -12,14 +12,14 @@
 */
 
 #ifndef ERRORCODES_H
-#define ERRORCODES_H 
+#define ERRORCODES_H
 
 #define RPL_WELCOME            001
 #define RPL_YOURHOST           002
 #define RPL_CREATED            003
 #define RPL_MYINFO             004
-#define RPL_BOUNCE             005  // old RFC1459 definition
-#define RPL_ISUPPORT           005  // new DALnet definition
+#define RPL_BOUNCE             005                // old RFC1459 definition
+#define RPL_ISUPPORT           005                // new DALnet definition
 
 #define RPL_TRACELINK          200
 #define RPL_TRACECONNECTING    201
@@ -62,7 +62,7 @@
 #define RPL_ISON               303
 #define RPL_UNAWAY             305
 #define RPL_NOWAWAY            306
-#define RPL_WHOISIDENTIFY      307  // DALNet NickServ
+#define RPL_WHOISIDENTIFY      307                // DALNet NickServ
 #define RPL_WHOISUSER          311
 #define RPL_WHOISSERVER        312
 #define RPL_WHOISOPERATOR      313
@@ -71,7 +71,7 @@
 #define RPL_WHOISIDLE          317
 #define RPL_ENDOFWHOIS         318
 #define RPL_WHOISCHANNELS      319
-#define RPL_IDENTIFIED         320  // when you do /whois you can get  [320] JohnFlux is an identified user
+#define RPL_IDENTIFIED         320                // when you do /whois you can get  [320] JohnFlux is an identified user
 #define RPL_LISTSTART          321
 #define RPL_LIST               322
 #define RPL_LISTEND            323
@@ -79,7 +79,7 @@
 #define RPL_CHANNELCREATED     329
 #define RPL_NOTOPIC            331
 #define RPL_TOPIC              332
-#define RPL_TOPICSETBY         333  // Extended ircd
+#define RPL_TOPICSETBY         333                // Extended ircd
 #define RPL_INVITING           341
 #define RPL_SUMMONING          342
 #define RPL_VERSION            351
@@ -149,6 +149,4 @@
 #define ERR_NOOPERHOST         491
 #define ERR_UMODEUNKNOWNFLAG   501
 #define ERR_USERSDONTMATCH     502
-
 #endif
-

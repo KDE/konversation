@@ -23,85 +23,83 @@
 
 class KonvDCOP : public QObject, virtual public KonvIface
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    KonvDCOP();
-    QPtrList<IRCEvent> registered_events;
+        public:
+        KonvDCOP();
+        QPtrList<IRCEvent> registered_events;
 
-    QString getNickname (const QString &server);
-    QString getAnyNickname ();
-    QString getChannelEncoding(const QString& server, const QString& channel);
-	    
-  signals:
-    void dcopSay(const QString& server,const QString& target,const QString& command);
-    void dcopInfo(const QString& string);
-    void dcopInsertRememberLine();
-    void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
-    void dcopRaw(const QString& server, const QString& command);
-    void dcopMultiServerRaw(const QString& command);
-    void dcopSetAutoAway();
+        QString getNickname (const QString &server);
+        QString getAnyNickname ();
+        QString getChannelEncoding(const QString& server, const QString& channel);
 
-  public slots:
-    int registerEventHook(const QString& type,const QString& criteria,const QString& app,const QString& object,const QString& signal);
-    void unregisterEventHook (int id);
+        signals:
+        void dcopSay(const QString& server,const QString& target,const QString& command);
+        void dcopInfo(const QString& string);
+        void dcopInsertRememberLine();
+        void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
+        void dcopRaw(const QString& server, const QString& command);
+        void dcopMultiServerRaw(const QString& command);
+        void dcopSetAutoAway();
 
-    void setAway(const QString &awaymessage);
-    void setAutoAway();
-    void setBack();
-    void sayToAll(const QString &message);
-    void actionToAll(const QString &message);
-    void raw(const QString& server,const QString& command);
-    void say(const QString& server,const QString& target,const QString& command);
-    void info(const QString& string);
-    void debug(const QString& string);
-    void error(const QString& string);
-    void insertRememberLine();
-    void connectToServer(const QString& url, int port, const QString& channel, const QString& password);
-    QStringList listServers();
-    QStringList listConnectedServers();
-  protected:
-    int hookId;
+    public slots:
+        int registerEventHook(const QString& type,const QString& criteria,const QString& app,const QString& object,const QString& signal);
+        void unregisterEventHook (int id);
+
+        void setAway(const QString &awaymessage);
+        void setAutoAway();
+        void setBack();
+        void sayToAll(const QString &message);
+        void actionToAll(const QString &message);
+        void raw(const QString& server,const QString& command);
+        void say(const QString& server,const QString& target,const QString& command);
+        void info(const QString& string);
+        void debug(const QString& string);
+        void error(const QString& string);
+        void insertRememberLine();
+        void connectToServer(const QString& url, int port, const QString& channel, const QString& password);
+        QStringList listServers();
+        QStringList listConnectedServers();
+    protected:
+        int hookId;
 };
 
 class KonvIdentDCOP : public QObject, virtual public KonvIdentityIface
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-  KonvIdentDCOP();
+        public:
+        KonvIdentDCOP();
 
-  void setrealName(const QString &identity, const QString& name);
-  QString getrealName(const QString &identity);
-  void setIdent(const QString &identity, const QString& ident);
-  QString getIdent(const QString &identity);
+        void setrealName(const QString &identity, const QString& name);
+        QString getrealName(const QString &identity);
+        void setIdent(const QString &identity, const QString& ident);
+        QString getIdent(const QString &identity);
 
-  void setNickname(const QString &identity, int index,const QString& nick);
-  QString getNickname(const QString &identity, int index);
+        void setNickname(const QString &identity, int index,const QString& nick);
+        QString getNickname(const QString &identity, int index);
 
-  void setBot(const QString &identity, const QString& bot);
-  QString getBot(const QString &identity);
-  void setPassword(const QString &identity, const QString& password);
-  QString getPassword(const QString &identity);
+        void setBot(const QString &identity, const QString& bot);
+        QString getBot(const QString &identity);
+        void setPassword(const QString &identity, const QString& password);
+        QString getPassword(const QString &identity);
 
-  void setNicknameList(const QString &identity, const QStringList& newList);
-  QStringList getNicknameList(const QString &identity);
+        void setNicknameList(const QString &identity, const QStringList& newList);
+        QStringList getNicknameList(const QString &identity);
 
-  void setPartReason(const QString &identity, const QString& reason);
-  QString getPartReason(const QString &identity);
-  void setKickReason(const QString &identity, const QString& reason);
-  QString getKickReason(const QString &identity);
+        void setPartReason(const QString &identity, const QString& reason);
+        QString getPartReason(const QString &identity);
+        void setKickReason(const QString &identity, const QString& reason);
+        QString getKickReason(const QString &identity);
 
-  void setShowAwayMessage(const QString &identity, bool state);
-  bool getShowAwayMessage(const QString &identity);
+        void setShowAwayMessage(const QString &identity, bool state);
+        bool getShowAwayMessage(const QString &identity);
 
-  void setAwayMessage(const QString &identity, const QString& message);
-  QString getAwayMessage(const QString &identity);
-  void setReturnMessage(const QString &identity, const QString& message);
-  QString getReturnMessage(const QString &identity);
+        void setAwayMessage(const QString &identity, const QString& message);
+        QString getAwayMessage(const QString &identity);
+        void setReturnMessage(const QString &identity, const QString& message);
+        QString getReturnMessage(const QString &identity);
 
-  QStringList listIdentities();
+        QStringList listIdentities();
 };
-
-
 #endif

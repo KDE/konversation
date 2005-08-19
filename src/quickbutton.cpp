@@ -14,10 +14,10 @@
 #include "quickbutton.h"
 
 QuickButton::QuickButton(const QString &label,const QString &newDefinition,QWidget* parent) :
-             QPushButton::QPushButton(label,parent)
+QPushButton::QPushButton(label,parent)
 {
-  setDefinition(newDefinition);
-  connect(this,SIGNAL (clicked()),this,SLOT (wasClicked()) );
+    setDefinition(newDefinition);
+    connect(this,SIGNAL (clicked()),this,SLOT (wasClicked()) );
 }
 
 QuickButton::~QuickButton()
@@ -26,12 +26,12 @@ QuickButton::~QuickButton()
 
 void QuickButton::wasClicked()
 {
-  emit clicked(definition);
+    emit clicked(definition);
 }
 
 void QuickButton::setDefinition(const QString &newDefinition)
 {
-  definition=newDefinition;
+    definition=newDefinition;
 }
 
 #include "quickbutton.moc"

@@ -30,68 +30,74 @@
 namespace Konversation
 {
 
-TrayIcon::TrayIcon(QWidget* parent) : KSystemTray(parent)
-{
-  m_notificationEnabled = false;
-  m_nomessagePix = loadIcon("konversation");
-  m_messagePix = loadIcon("konv_message");
-  setPixmap(m_nomessagePix);
-  m_blinkTimer = new QTimer(this);
-  connect(m_blinkTimer, SIGNAL(timeout()), SLOT(blinkTimeout()));
-  
-  if(KonversationApplication::preferences.getShowTrayIcon() &&
-     KonversationApplication::preferences.getSystrayOnly())
-    KWin::setState(parent->winId(), NET::SkipTaskbar);
+    TrayIcon::TrayIcon(QWidget* parent) : KSystemTray(parent)
+    {
+        m_notificationEnabled = false;
+        m_nomessagePix = loadIcon("konversation");
+        m_messagePix = loadIcon("konv_message");
+        setPixmap(m_nomessagePix);
+        m_blinkTimer = new QTimer(this);
+        connect(m_blinkTimer, SIGNAL(timeout()), SLOT(blinkTimeout()));
 
-  QToolTip::add(this,i18n("Konversation - IRC Client"));
-}
+        if(KonversationApplication::preferences.getShowTrayIcon() &&
+            KonversationApplication::preferences.getSystrayOnly())
+            KWin::setState(parent->winId(), NET::SkipTaskbar);
 
-TrayIcon::~TrayIcon()
-{
-}
+        QToolTip::add(this,i18n("Konversation - IRC Client"));
+    }
 
-void TrayIcon::startNotification()
-{
-  if(!m_notificationEnabled) {
-    return;
-  }
-  
-  if(!m_blinkTimer->isActive()) {
-    setPixmap(m_messagePix);
-    m_blinkOn = true;
-    m_blinkTimer->start(500);
-  }
-}
+    TrayIcon::~TrayIcon()
+    {
+    }
 
-void TrayIcon::endNotification()
-{
-  if(m_blinkTimer->isActive()) {
-    m_blinkTimer->stop();
-    setPixmap(m_nomessagePix);
-  }
-}
+    void TrayIcon::startNotification()
+    {
+        if(!m_notificationEnabled)
+        {
+            return;
+        }
 
-void TrayIcon::blinkTimeout()
-{
-  m_blinkOn = !m_blinkOn;
-  
-  if(m_blinkOn) {
-    setPixmap(m_messagePix);
-  } else {
-    setPixmap(m_nomessagePix);
-  }
-}
+        if(!m_blinkTimer->isActive())
+        {
+            setPixmap(m_messagePix);
+            m_blinkOn = true;
+            m_blinkTimer->start(500);
+        }
+    }
 
-void TrayIcon::mousePressEvent(QMouseEvent *e)
-{
-  if(KonversationApplication::preferences.getShowTrayIcon() &&
-     KonversationApplication::preferences.getSystrayOnly())
-  {
-    KWin::setState(static_cast<QWidget*>(parent())->winId(), NET::SkipTaskbar);
-  }
-  
-  KSystemTray::mousePressEvent(e);
-}
+    void TrayIcon::endNotification()
+    {
+        if(m_blinkTimer->isActive())
+        {
+            m_blinkTimer->stop();
+            setPixmap(m_nomessagePix);
+        }
+    }
+
+    void TrayIcon::blinkTimeout()
+    {
+        m_blinkOn = !m_blinkOn;
+
+        if(m_blinkOn)
+        {
+            setPixmap(m_messagePix);
+        }
+        else
+        {
+            setPixmap(m_nomessagePix);
+        }
+    }
+
+    void TrayIcon::mousePressEvent(QMouseEvent *e)
+    {
+        if(KonversationApplication::preferences.getShowTrayIcon() &&
+            KonversationApplication::preferences.getSystrayOnly())
+        {
+            KWin::setState(static_cast<QWidget*>(parent())->winId(), NET::SkipTaskbar);
+        }
+
+        KSystemTray::mousePressEvent(e);
+    }
 
 }
 

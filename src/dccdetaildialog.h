@@ -20,37 +20,36 @@ class DccTransfer;
 
 class DccDetailDialog : public KDialog
 {
-  Q_OBJECT
-  
-  public:
-    DccDetailDialog( DccTransfer* item );
-    virtual ~DccDetailDialog();
-    
-    void updateView();
-  
-  protected slots:
-    void slotLocalFileURLChanged( const QString& newURL );
-    void slotOpenFile();
-    void slotRemoveFile();
-    void slotAccept();
-    void slotAbort();
-    void slotClose();
-    
-  protected:
-    DccTransfer* m_item;
-    
-    // UI
-    KPushButton* m_buttonOpenFile;
-    KPushButton* m_buttonRemoveFile;
-    KURLRequester* m_localFileURL;
-    KLineEdit* m_partner;
-    KLineEdit* m_self;
-    KLineEdit* m_status;
-    KProgress* m_progress;
-    KLineEdit* m_position;
-    
-    KPushButton* m_buttonAccept;
-    KPushButton* m_buttonAbort;
-};
+    Q_OBJECT
 
-#endif // DCCDETAILDIALOG_H
+        public:
+        DccDetailDialog( DccTransfer* item );
+        virtual ~DccDetailDialog();
+
+        void updateView();
+
+    protected slots:
+        void slotLocalFileURLChanged( const QString& newURL );
+        void slotOpenFile();
+        void slotRemoveFile();
+        void slotAccept();
+        void slotAbort();
+        void slotClose();
+
+    protected:
+        DccTransfer* m_item;
+
+        // UI
+        KPushButton* m_buttonOpenFile;
+        KPushButton* m_buttonRemoveFile;
+        KURLRequester* m_localFileURL;
+        KLineEdit* m_partner;
+        KLineEdit* m_self;
+        KLineEdit* m_status;
+        KProgress* m_progress;
+        KLineEdit* m_position;
+
+        KPushButton* m_buttonAccept;
+        KPushButton* m_buttonAbort;
+};
+#endif                                            // DCCDETAILDIALOG_H

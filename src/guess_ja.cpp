@@ -45,40 +45,50 @@ enum JapaneseCode::Type JapaneseCode::guess_jp(const char *buf, int buflen)
     int i;
     guess_dfa *top = NULL;
 
-    for (i=0; i<buflen; i++) {
+    for (i=0; i<buflen; i++)
+    {
         int c = (unsigned char)buf[i];
 
         /* special treatment of jis escape sequence */
-        if (c == 0x1b || last_JIS_escape) {
-            if (i < buflen-1) {
+        if (c == 0x1b || last_JIS_escape)
+        {
+            if (i < buflen-1)
+            {
                 if (last_JIS_escape)
                     c = (unsigned char)buf[i];
                 else
                     c = (unsigned char)buf[++i];
                 last_JIS_escape = false;
 
-                if (c == '$' || c == '(') {
+                if (c == '$' || c == '(')
+                {
                     return JapaneseCode::JIS;
                 }
-            } else {
+            }
+            else
+            {
                 last_JIS_escape = true;
             }
         }
 
-        if (DFA_ALIVE(eucj)) {
+        if (DFA_ALIVE(eucj))
+        {
             if (!DFA_ALIVE(sjis) && !DFA_ALIVE(utf8)) return JapaneseCode::EUC;
             DFA_NEXT(eucj, c);
         }
-        if (DFA_ALIVE(sjis)) {
+        if (DFA_ALIVE(sjis))
+        {
             if (!DFA_ALIVE(eucj) && !DFA_ALIVE(utf8)) return JapaneseCode::SJIS;
             DFA_NEXT(sjis, c);
         }
-        if (DFA_ALIVE(utf8)) {
+        if (DFA_ALIVE(utf8))
+        {
             if (!DFA_ALIVE(sjis) && !DFA_ALIVE(eucj)) return JapaneseCode::UTF8;
             DFA_NEXT(utf8, c);
         }
 
-        if (!DFA_ALIVE(eucj) && !DFA_ALIVE(sjis) && !DFA_ALIVE(utf8)) {
+        if (!DFA_ALIVE(eucj) && !DFA_ALIVE(sjis) && !DFA_ALIVE(utf8))
+        {
             /* we ran out the possibilities */
             return JapaneseCode::ASCII;
         }
@@ -91,17 +101,25 @@ enum JapaneseCode::Type JapaneseCode::guess_jp(const char *buf, int buflen)
     /* Now, we have ambigous code.  Pick the highest score.  If more than
        one candidate tie, pick the default encoding. */
     if (DFA_ALIVE(eucj)) top = eucj;
-    if (DFA_ALIVE(utf8)) {
-        if (top) {
+    if (DFA_ALIVE(utf8))
+    {
+        if (top)
+        {
             if (top->score <  utf8->score) top = utf8;
-        } else {
+        }
+        else
+        {
             top = utf8;
         }
     }
-    if (DFA_ALIVE(sjis)) {
-        if (top) {
+    if (DFA_ALIVE(sjis))
+    {
+        if (top)
+        {
             if (top->score <= sjis->score) top = sjis;
-        } else {
+        }
+        else
+        {
             top = sjis;
         }
     }

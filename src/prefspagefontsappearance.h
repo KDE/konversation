@@ -17,15 +17,14 @@ class Preferences;
 
 class PrefsPageFontsAppearance : public FontAppearance_Config
 {
-  Q_OBJECT
-  public:
-    PrefsPageFontsAppearance(QWidget* newParent, Preferences* newPreferences);
+    Q_OBJECT
+        public:
+        PrefsPageFontsAppearance(QWidget* newParent, Preferences* newPreferences);
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  protected:
-    Preferences* preferences;
+    protected:
+        Preferences* preferences;
 };
-
 #endif

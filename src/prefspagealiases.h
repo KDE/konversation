@@ -22,23 +22,22 @@ class QWidget;
 
 class PrefsPageAliases : public Alias_Config
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    PrefsPageAliases(QWidget* newParent,Preferences* newPreferences);
-    ~PrefsPageAliases();
+        public:
+        PrefsPageAliases(QWidget* newParent,Preferences* newPreferences);
+        ~PrefsPageAliases();
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  protected slots:
-    void newAlias();
-    void removeAlias();
+    protected slots:
+        void newAlias();
+        void removeAlias();
 
-  protected:
-    Preferences* preferences;
-    QWidget* parentFrame;
+    protected:
+        Preferences* preferences;
+        QWidget* parentFrame;
 
 };
-
 #endif

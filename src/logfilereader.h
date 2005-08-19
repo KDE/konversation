@@ -28,32 +28,31 @@ class QSpinBox;
 
 class LogfileReader : public ChatWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    LogfileReader(QWidget* parent, QString log);
-    ~LogfileReader();
+        public:
+        LogfileReader(QWidget* parent, QString log);
+        ~LogfileReader();
 
-    virtual bool closeYourself() { closeLog(); return true; }
-    virtual bool searchView();
-  
-  protected slots:
-    void updateView();
-    void clearLog();
-    void saveLog();
-    void closeLog();
-    void copyResult(KIO::Job* job);
-  
-  protected:
-    int margin();
-    int spacing();
+        virtual bool closeYourself() { closeLog(); return true; }
+        virtual bool searchView();
 
-    /** Called from ChatWindow adjustFocus */
-    virtual void childAdjustFocus();
+    protected slots:
+        void updateView();
+        void clearLog();
+        void saveLog();
+        void closeLog();
+        void copyResult(KIO::Job* job);
 
-    KToolBar* toolBar;
-    QSpinBox* sizeSpin;
-    QString fileName;
+    protected:
+        int margin();
+        int spacing();
+
+        /** Called from ChatWindow adjustFocus */
+        virtual void childAdjustFocus();
+
+        KToolBar* toolBar;
+        QSpinBox* sizeSpin;
+        QString fileName;
 };
-
 #endif

@@ -11,7 +11,6 @@
   email:     eisfuchs@tigress.com
 */
 
-
 #ifndef IGNORELISTVIEWITEM_H
 #define IGNORELISTVIEWITEM_H
 
@@ -25,21 +24,20 @@
 
 class IgnoreListViewItem : public KListViewItem
 {
-  public:
-    IgnoreListViewItem(QListView* parent,QString name,int flags);
-    ~IgnoreListViewItem();
+    public:
+        IgnoreListViewItem(QListView* parent,QString name,int flags);
+        ~IgnoreListViewItem();
 
-    void setFlag(int flag,bool active);
-    bool getFlag(int flag) { return flags & flag; };
-    int getFlags() { return flags; };
-    IgnoreListViewItem* itemBelow();
+        void setFlag(int flag,bool active);
+        bool getFlag(int flag) { return flags & flag; };
+        int getFlags() { return flags; };
+        IgnoreListViewItem* itemBelow();
 
-  protected:
-    void setFlags(int flags);
-    QString yes;
-    QString no;
+    protected:
+        void setFlags(int flags);
+        QString yes;
+        QString no;
 
-    int flags;
+        int flags;
 };
-
 #endif

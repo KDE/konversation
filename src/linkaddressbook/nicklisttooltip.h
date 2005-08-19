@@ -24,20 +24,19 @@
 
 class NickListView;
 
-namespace Konversation {
-	
-class KonversationNickListViewToolTip : public QToolTip
+namespace Konversation
 {
-  public:
-	KonversationNickListViewToolTip(QWidget *parent, NickListView *lv);
-        virtual ~KonversationNickListViewToolTip();
-    
-        void maybeTip( const QPoint &pos );
-        
-  private:
-        NickListView *m_listView;
-};
+
+    class KonversationNickListViewToolTip : public QToolTip
+    {
+        public:
+            KonversationNickListViewToolTip(QWidget *parent, NickListView *lv);
+            virtual ~KonversationNickListViewToolTip();
+
+            void maybeTip( const QPoint &pos );
+
+        private:
+            NickListView *m_listView;
+    };
 }
-
 #endif
-

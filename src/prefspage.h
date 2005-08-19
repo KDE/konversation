@@ -26,18 +26,17 @@ class Preferences;
 
 class PrefsPage : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    PrefsPage(QWidget* newParent,Preferences* preferences);
-    ~PrefsPage();
+        public:
+        PrefsPage(QWidget* newParent,Preferences* preferences);
+        ~PrefsPage();
 
-    int marginHint() const;
-    int spacingHint() const;
+        int marginHint() const;
+        int spacingHint() const;
 
-  protected:
-    QWidget* parentFrame;
-    Preferences* preferences;
+    protected:
+        QWidget* parentFrame;
+        Preferences* preferences;
 };
-
 #endif

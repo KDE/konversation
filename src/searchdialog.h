@@ -29,33 +29,32 @@ class SearchDialog : public KDialogBase
 {
     Q_OBJECT
 
-  public:
-    SearchDialog(QWidget* parent,QSize size);
-    ~SearchDialog();
+        public:
+        SearchDialog(QWidget* parent,QSize size);
+        ~SearchDialog();
 
-    static QString search(QWidget* parent,bool* cs,bool* wo,bool* fw,bool* fc);
+        static QString search(QWidget* parent,bool* cs,bool* wo,bool* fw,bool* fc);
 
-  protected slots:
-    void caseSensitiveChanged(int cs);
-    void wholeWordsChanged(int wo);
-    void forwardChanged(int fw);
-    void fromCursorChanged(int fw);
-    
-  protected:
-    QString getSearchText();
+    protected slots:
+        void caseSensitiveChanged(int cs);
+        void wholeWordsChanged(int wo);
+        void forwardChanged(int fw);
+        void fromCursorChanged(int fw);
 
-    static QStringList lastSearchPatterns;
-    static bool caseSensitive;
-    static bool wholeWords;
-    static bool forward;
-    static bool fromCursor;
+    protected:
+        QString getSearchText();
 
-    KComboBox* searchPattern;
+        static QStringList lastSearchPatterns;
+        static bool caseSensitive;
+        static bool wholeWords;
+        static bool forward;
+        static bool fromCursor;
 
-    QCheckBox* caseSensitiveCheck;
-    QCheckBox* wholeWordsCheck;
-    QCheckBox* forwardCheck;
-    QCheckBox* fromCursorCheck;
+        KComboBox* searchPattern;
+
+        QCheckBox* caseSensitiveCheck;
+        QCheckBox* wholeWordsCheck;
+        QCheckBox* forwardCheck;
+        QCheckBox* fromCursorCheck;
 };
-
 #endif

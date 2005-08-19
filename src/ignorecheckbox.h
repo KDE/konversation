@@ -22,20 +22,19 @@
 
 class IgnoreCheckBox : public QCheckBox
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    IgnoreCheckBox(QString name,QWidget* parent,int newId);
-    ~IgnoreCheckBox();
+        public:
+        IgnoreCheckBox(QString name,QWidget* parent,int newId);
+        ~IgnoreCheckBox();
 
-  signals:
-    void flagChanged(int flag,bool active);
+        signals:
+        void flagChanged(int flag,bool active);
 
-  protected slots:
-    void wasClicked();
+    protected slots:
+        void wasClicked();
 
-  protected:
-    int id;
+    protected:
+        int id;
 };
-
 #endif

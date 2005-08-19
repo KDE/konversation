@@ -24,42 +24,40 @@
 #include <kurl.h>
 
 /**
-  *@author Matthias Gierlings
-  */
-
+ *@author Matthias Gierlings
+ */
 
 class Highlight
 {
-  public:
-    Highlight(const QString& itemPattern,
-              bool regExp,
-              const QColor& itemColor,
-              const KURL& soundURL,
-              const QString& autoText);
+    public:
+        Highlight(const QString& itemPattern,
+            bool regExp,
+            const QColor& itemColor,
+            const KURL& soundURL,
+            const QString& autoText);
 
-    QString getPattern();
-    QString getAutoText();
-    QColor getColor();
-    int getID();
-    bool getRegExp();
-    KURL getSoundURL();
+        QString getPattern();
+        QString getAutoText();
+        QColor getColor();
+        int getID();
+        bool getRegExp();
+        KURL getSoundURL();
 
-    void setPattern(const QString& itemPattern);
-    void setColor(const QColor& itemColor);
-    void setSoundURL(const KURL& url);
-    void setAutoText(const QString& autoText);
-    void setRegExp(bool state);
+        void setPattern(const QString& itemPattern);
+        void setColor(const QColor& itemColor);
+        void setSoundURL(const KURL& url);
+        void setAutoText(const QString& autoText);
+        void setRegExp(bool state);
 
-  protected:
-    static unsigned int s_id;
-    
-    int m_itemID;
-    bool m_regExp;
-    
-    QString m_itemPattern;
-    QString m_autoText;
-    QColor m_itemColor;
-    KURL m_soundURL;
+    protected:
+        static unsigned int s_id;
+
+        int m_itemID;
+        bool m_regExp;
+
+        QString m_itemPattern;
+        QString m_autoText;
+        QColor m_itemColor;
+        KURL m_soundURL;
 };
-
 #endif

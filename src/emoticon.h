@@ -16,29 +16,30 @@
 
 class QFontMetrics;
 
-namespace Konversation {
+namespace Konversation
+{
 
-typedef QMap<QString, QString> EmotIconMap;
+    typedef QMap<QString, QString> EmotIconMap;
 
-class EmotIcon{
-  public:
-    ~EmotIcon();
-    static EmotIcon* self();
+    class EmotIcon
+    {
+        public:
+            ~EmotIcon();
+            static EmotIcon* self();
 
-    static void changeTheme(const QString& themeName);
-    static QString filter(const QString& txt, const QFontMetrics& fm);
+            static void changeTheme(const QString& themeName);
+            static QString filter(const QString& txt, const QFontMetrics& fm);
 
-  protected:
-    EmotIcon();
-    static EmotIcon* s_self;
+        protected:
+            EmotIcon();
+            static EmotIcon* s_self;
 
-    static QString findIcon(const QString& filename);
+            static QString findIcon(const QString& filename);
 
-  private:
-    QString m_themeName;
-    EmotIconMap m_emotIconMap;
-};
+        private:
+            QString m_themeName;
+            EmotIconMap m_emotIconMap;
+    };
 
 }
-
 #endif

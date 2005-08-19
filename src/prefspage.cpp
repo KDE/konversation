@@ -18,8 +18,8 @@
 
 PrefsPage::PrefsPage(QWidget* newParent,Preferences* newPreferences)
 {
-  preferences=newPreferences;
-  parentFrame=newParent;
+    preferences=newPreferences;
+    parentFrame=newParent;
 }
 
 PrefsPage::~PrefsPage()
@@ -28,12 +28,12 @@ PrefsPage::~PrefsPage()
 
 int PrefsPage::marginHint() const
 {
-  return KDialog::marginHint();
+    return KDialog::marginHint();
 }
 
 int PrefsPage::spacingHint() const
 {
-  return KDialog::spacingHint();
+    return KDialog::spacingHint();
 }
 
 #include "prefspage.moc"

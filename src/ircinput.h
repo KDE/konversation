@@ -28,54 +28,53 @@ class QMouseEvent;
 
 class IRCInput : public KTextEdit
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    IRCInput(QWidget* parent);
-    ~IRCInput();
+        public:
+        IRCInput(QWidget* parent);
+        ~IRCInput();
 
-    void setCompletionMode(char mode);
-    char getCompletionMode();
-    void setOldCursorPosition(int pos);
-    int getOldCursorPosition();
-    QString lastCompletion() const { return m_lastCompletion; }
+        void setCompletionMode(char mode);
+        char getCompletionMode();
+        void setOldCursorPosition(int pos);
+        int getOldCursorPosition();
+        QString lastCompletion() const { return m_lastCompletion; }
 
-    virtual QSize sizeHint() const;
-    QString text() const;
+        virtual QSize sizeHint() const;
+        QString text() const;
 
-  signals:
-    void nickCompletion();
-    void endCompletion();   // tell channel that completion phase is over
-    void history(bool up);
-    void textPasted(const QString& text);
-    void submit();
-    void envelopeCommand();
+        signals:
+        void nickCompletion();
+        void endCompletion();                     // tell channel that completion phase is over
+        void history(bool up);
+        void textPasted(const QString& text);
+        void submit();
+        void envelopeCommand();
 
-  public slots:
-    void paste();
-    void paste(bool useSelection);
-    void showCompletionList(const QStringList& nicks);
-    void setText(const QString& text);
-    void setLastCompletion(const QString& completion);
+    public slots:
+        void paste();
+        void paste(bool useSelection);
+        void showCompletionList(const QStringList& nicks);
+        void setText(const QString& text);
+        void setLastCompletion(const QString& completion);
 
-  protected slots:
-    void getHistory(bool up);
-    void insertCompletion(const QString& nick);
+    protected slots:
+        void getHistory(bool up);
+        void insertCompletion(const QString& nick);
 
-  protected:
-    bool eventFilter(QObject *object,QEvent *event);
-    void addHistory(const QString& text);
-    bool checkPaste(QString& text);
-    void contentsMouseReleaseEvent(QMouseEvent *);
-    virtual void keyPressEvent(QKeyEvent* e);
+    protected:
+        bool eventFilter(QObject *object,QEvent *event);
+        void addHistory(const QString& text);
+        bool checkPaste(QString& text);
+        void contentsMouseReleaseEvent(QMouseEvent *);
+        virtual void keyPressEvent(QKeyEvent* e);
 
-    QStringList historyList;
-    unsigned int lineNum;
-    unsigned int oldPos;
-    char completionMode;
-    KCompletionBox* completionBox;
-    QString m_lastCompletion;
-    bool m_useSelection;
+        QStringList historyList;
+        unsigned int lineNum;
+        unsigned int oldPos;
+        char completionMode;
+        KCompletionBox* completionBox;
+        QString m_lastCompletion;
+        bool m_useSelection;
 };
-
 #endif

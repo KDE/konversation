@@ -21,11 +21,10 @@
 
 class ChannelListViewItem : public KListViewItem
 {
-  public:
-    ChannelListViewItem(KListView* parent,QString channel,QString users,QString topic);
-    ~ChannelListViewItem();
+    public:
+        ChannelListViewItem(KListView* parent,QString channel,QString users,QString topic);
+        ~ChannelListViewItem();
 
-    int compare(QListViewItem* item, int col, bool ascending) const;
+        int compare(QListViewItem* item, int col, bool ascending) const;
 };
-
 #endif

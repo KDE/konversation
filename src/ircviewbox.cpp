@@ -1,8 +1,8 @@
 /* ============================================================
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2005-06-02
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2005 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -10,12 +10,12 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include <klocale.h>
@@ -34,7 +34,7 @@ static QPixmap getIcon(const QString& name)
 }
 
 IRCViewBox::IRCViewBox(QWidget* parent, Server* newServer)
-    : QVBox(parent)
+: QVBox(parent)
 {
     m_ircView = new IRCView(this, newServer);
     m_searchBar = new SearchBar(this);
@@ -42,11 +42,11 @@ IRCViewBox::IRCViewBox(QWidget* parent, Server* newServer)
     m_matchedOnce = false;
 
     connect(m_searchBar, SIGNAL(signalSearchChanged(const QString&)),
-            this, SLOT(slotSearchChanged(const QString&)));
+        this, SLOT(slotSearchChanged(const QString&)));
     connect(m_searchBar, SIGNAL(signalSearchNext()),
-            this, SLOT(slotSearchNext()));
+        this, SLOT(slotSearchNext()));
     connect(m_ircView, SIGNAL(doSearch()),
-            SLOT(slotSearch()));
+        SLOT(slotSearch()));
 }
 
 IRCViewBox::~IRCViewBox()
@@ -84,38 +84,37 @@ void IRCViewBox::slotSearchNext()
     {
         m_searchBar->setHasMatch(false);
         m_searchBar->setStatus(getIcon("messagebox_warning"),
-                               i18n("Phrase not found"));
+            i18n("Phrase not found"));
         return;
     }
-    
+
     match = m_ircView->search(m_searchBar->pattern(),
-                              m_searchBar->caseSensitive(),
-                              false,
-                              m_searchBar->searchForward(),
-                              false);
-    
+        m_searchBar->caseSensitive(),
+        false,
+        m_searchBar->searchForward(),
+        false);
+
     if (!match)
     {
         m_searchBar->setHasMatch(false);
         m_searchBar->setStatus(getIcon("messagebox_warning"),
-                               i18n("Phrase not found"));
+            i18n("Phrase not found"));
         return;
     }
 
     m_searchBar->setHasMatch(true);
     m_searchBar->setStatus(getIcon("messagebox_info"),
-                           i18n("Wrapped search"));
+        i18n("Wrapped search"));
 
 }
 
 void IRCViewBox::slotSearchChanged(const QString& pattern)
 {
     bool match = m_ircView->search(pattern,
-                                   m_searchBar->caseSensitive(),
-                                   false,
-                                   m_searchBar->searchForward(),
-                                   false);
-
+        m_searchBar->caseSensitive(),
+        false,
+        m_searchBar->searchForward(),
+        false);
 
     if (match)
     {
@@ -126,7 +125,7 @@ void IRCViewBox::slotSearchChanged(const QString& pattern)
     {
         m_searchBar->setHasMatch(false);
         m_searchBar->setStatus(getIcon("messagebox_warning"),
-                               i18n("Phrase not found"));
+            i18n("Phrase not found"));
     }
 
     m_matchedOnce = match;

@@ -21,18 +21,17 @@ class Preferences;
 
 class PrefsPageButtons : public QuickButtons_Config
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    PrefsPageButtons(QWidget* newParent,Preferences* newPreferences);
-    ~PrefsPageButtons();
+        public:
+        PrefsPageButtons(QWidget* newParent,Preferences* newPreferences);
+        ~PrefsPageButtons();
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  protected:
-    Preferences* preferences;
-    QStringList getButtonList();
+    protected:
+        Preferences* preferences;
+        QStringList getButtonList();
 };
-
 #endif

@@ -21,28 +21,27 @@ class Preferences;
 
 class PrefsPageNotify : public WatchedNicknames_Config
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    PrefsPageNotify(QWidget* newParent,Preferences* newPreferences);
-    ~PrefsPageNotify();
+        public:
+        PrefsPageNotify(QWidget* newParent,Preferences* newPreferences);
+        ~PrefsPageNotify();
 
-    QMap<QString, QStringList> getNotifyList();
+        QMap<QString, QStringList> getNotifyList();
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  private slots:
-    void newNotify();
-    void createNotify(const QString& networkName, const QString& nickname);
-    void removeNotify();
-    void notifyCheckChanged(bool enable);
-    void slotNotifyListView_SelectionChanged();
+    private slots:
+        void newNotify();
+        void createNotify(const QString& networkName, const QString& nickname);
+        void removeNotify();
+        void notifyCheckChanged(bool enable);
+        void slotNotifyListView_SelectionChanged();
 
-  private:
-    Preferences* preferences;
-    QListViewItem* findBranch(QString name, bool generate);
-    QListViewItem* findItemChild(const QListViewItem* parent, const QString& name);
+    private:
+        Preferences* preferences;
+        QListViewItem* findBranch(QString name, bool generate);
+        QListViewItem* findItemChild(const QListViewItem* parent, const QString& name);
 };
-
 #endif

@@ -3,7 +3,7 @@
 
 /*
   Copyright (c) 2004 by İsmail Dönmez <ismail.donmez@boun.edu.tr>
-  
+
   *************************************************************************
   *                                                                       *
   * This program is free software; you can redistribute it and/or modify  *
@@ -12,23 +12,22 @@
   * (at your option) any later version.                                   *
   *                                                                       *
   *************************************************************************
-  
-*/
+
+ */
 
 #include <qlabel.h>
 
 class SSLLabel : public QLabel
 {
-  Q_OBJECT
- 
- public:
-  SSLLabel(QWidget* parent, const char* name);
+    Q_OBJECT
 
- protected:
-  void mouseReleaseEvent(QMouseEvent *e);
+        public:
+        SSLLabel(QWidget* parent, const char* name);
 
- signals:
-  void clicked();
+    protected:
+        void mouseReleaseEvent(QMouseEvent *e);
+
+        signals:
+        void clicked();
 };
-
 #endif

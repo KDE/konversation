@@ -22,25 +22,24 @@
 
 class QuickButton : public QPushButton
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    QuickButton(const QString &label,const QString &newDefinition,QWidget* parent);
-    ~QuickButton();
+        public:
+        QuickButton(const QString &label,const QString &newDefinition,QWidget* parent);
+        ~QuickButton();
 
-    void setDefinition(const QString &newDefinition);
-    
-  signals:
-    void clicked(int);
-    void clicked(const QString &definition);
+        void setDefinition(const QString &newDefinition);
 
-  public slots:
-    void wasClicked();
+        signals:
+        void clicked(int);
+        void clicked(const QString &definition);
 
-  protected:
-    int id;
+    public slots:
+        void wasClicked();
 
-    QString definition;
+    protected:
+        int id;
+
+        QString definition;
 };
-
 #endif

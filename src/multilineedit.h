@@ -24,22 +24,21 @@ class QTextEdit;
 
 class MultilineEdit : public KDialogBase
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    MultilineEdit(QWidget* parent,QString text);
-    ~MultilineEdit();
+        public:
+        MultilineEdit(QWidget* parent,QString text);
+        ~MultilineEdit();
 
-    static QString edit(QWidget* parent,QString text);
+        static QString edit(QWidget* parent,QString text);
 
-  protected slots:
-    void slotOk();
-    void slotCancel();
-    void slotUser1();
+    protected slots:
+        void slotOk();
+        void slotCancel();
+        void slotUser1();
 
-  protected:
-    QTextEdit* textEditor;
-    static QString returnText;
+    protected:
+        QTextEdit* textEditor;
+        static QString returnText;
 };
-
 #endif

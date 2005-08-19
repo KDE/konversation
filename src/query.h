@@ -35,71 +35,69 @@ class IRCInput;
 
 class Query : public ChatWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    Query(QWidget* parent);
-    ~Query();
+        public:
+        Query(QWidget* parent);
+        ~Query();
 
+        /** This will always be called soon after this object is created.
+         *  @param nickInfo A nickinfo that must exist.
+         */
+        void setNickInfo(const NickInfoPtr & nickInfo);
+        /** It seems that this does _not_ guaranttee to return non null.
+         *  The problem is when you open a query to someone, then the go offline.
+         *  This should be fixed maybe?  I don't know.
+         */
+        NickInfoPtr getNickInfo();
+        void updateFonts();
+        virtual QString getTextInLine();
+        virtual bool closeYourself();
+        virtual bool canBeFrontView();
+        virtual bool searchView();
 
-    /** This will always be called soon after this object is created.
-     *  @param nickInfo A nickinfo that must exist.
-     */
-    void setNickInfo(const NickInfoPtr & nickInfo);
-    /** It seems that this does _not_ guaranttee to return non null.
-     *  The problem is when you open a query to someone, then the go offline.
-     *  This should be fixed maybe?  I don't know.
-     */
-    NickInfoPtr getNickInfo();
-    void updateFonts();
-    virtual QString getTextInLine();
-    virtual bool closeYourself();
-    virtual bool canBeFrontView();
-    virtual bool searchView();
+        virtual void setChannelEncoding(const QString& encoding);
+        virtual QString getChannelEncoding();
+        virtual QString getChannelEncodingDefaultDesc();
+        virtual void emitUpdateInfo();
 
-    virtual void setChannelEncoding(const QString& encoding);
-    virtual QString getChannelEncoding();
-    virtual QString getChannelEncodingDefaultDesc();
-    virtual void emitUpdateInfo();
+        virtual bool areIRCColorsSupported() {return true; }
+        virtual bool isInsertCharacterSupported() { return true; }
+        signals:
+        void sendFile(const QString& recipient);
 
-    virtual bool areIRCColorsSupported() {return true; }
-    virtual bool isInsertCharacterSupported() { return true; }
-  signals:
-    void sendFile(const QString& recipient);
+    public slots:
+        void sendQueryText(const QString& text);
+        void appendInputText(const QString& s);
+        virtual void indicateAway(bool show);
 
-  public slots:
-    void sendQueryText(const QString& text);
-    void appendInputText(const QString& s);
-    virtual void indicateAway(bool show);
+    protected slots:
+        void queryTextEntered();
+        void queryPassthroughCommand();
+        void sendFileMenu();
+        void filesDropped(const QStrList& files);
+        // connected to IRCInput::textPasted() - used to handle large/multiline pastes
+        void textPasted(const QString& text);
+        void popup(int id);
+        void nickInfoChanged();
 
-  protected slots:
-    void queryTextEntered();
-    void queryPassthroughCommand();
-    void sendFileMenu();
-    void filesDropped(const QStrList& files);
-    // connected to IRCInput::textPasted() - used to handle large/multiline pastes
-    void textPasted(const QString& text);
-    void popup(int id);
-    void nickInfoChanged();
+    protected:
+        void setName(const QString& newName);
+        void showEvent(QShowEvent* event);
+        /** Called from ChatWindow adjustFocus */
+        virtual void childAdjustFocus();
 
-  protected:
-    void setName(const QString& newName);
-    void showEvent(QShowEvent* event);
-    /** Called from ChatWindow adjustFocus */
-    virtual void childAdjustFocus();
-    
-    bool awayChanged;
-    bool awayState;
+        bool awayChanged;
+        bool awayState;
 
-    QString queryName;
-    QString buffer;
+        QString queryName;
+        QString buffer;
 
-    QLabel* queryHostmask;
-    QLabel* addresseeimage;
-    QLabel* addresseelogoimage;
-    QLabel* awayLabel;
-    IRCInput* queryInput;
-    NickInfoPtr m_nickInfo;
+        QLabel* queryHostmask;
+        QLabel* addresseeimage;
+        QLabel* addresseelogoimage;
+        QLabel* awayLabel;
+        IRCInput* queryInput;
+        NickInfoPtr m_nickInfo;
 };
-
 #endif

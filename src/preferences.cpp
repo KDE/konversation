@@ -32,378 +32,388 @@
 #include "commit.h"
 #include "version.h"
 
-
 Preferences::Preferences()
 {
-  // create default identity
-  identity=new Identity();
-  identity->setName(i18n("Default Identity"));
-  addIdentity(identity);
+    // create default identity
+    identity=new Identity();
+    identity->setName(i18n("Default Identity"));
+    addIdentity(identity);
 
-  KUser user(KUser::UseRealUserID);
-  setIdent(user.loginName());
-  setRealName(user.fullName());
+    KUser user(KUser::UseRealUserID);
+    setIdent(user.loginName());
+    setRealName(user.fullName());
 
-  QStringList nickList;
-  nickList.append(user.loginName());
-  nickList.append("_" + user.loginName());
-  nickList.append(user.loginName() + "_");
-  nickList.append("_" + user.loginName() + "_");
-  identity->setNicknameList(nickList);
+    QStringList nickList;
+    nickList.append(user.loginName());
+    nickList.append("_" + user.loginName());
+    nickList.append(user.loginName() + "_");
+    nickList.append("_" + user.loginName() + "_");
+    identity->setNicknameList(nickList);
 
-  setPartReason("Konversation terminated!");
-  setKickReason("User terminated!");
+    setPartReason("Konversation terminated!");
+    setKickReason("User terminated!");
 
-  setShowAwayMessage(false);
-  setAwayMessage("/me is away: %s");
-  setUnAwayMessage("/me is back.");
+    setShowAwayMessage(false);
+    setAwayMessage("/me is away: %s");
+    setUnAwayMessage("/me is back.");
 
-  setNickCompleteSuffixStart(": ");
-  setNickCompleteSuffixMiddle(" ");
+    setNickCompleteSuffixStart(": ");
+    setNickCompleteSuffixMiddle(" ");
 
-  Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
-  serverGroup->setName("Freenode");
-  Konversation::ServerSettings server;
-  server.setServer("irc.freenode.org");
-  serverGroup->addServer(server);
-  serverGroup->setIdentityId(identity->id());
-  Konversation::ChannelSettings channel;
-  channel.setName("#kde");
-  serverGroup->addChannel(channel);
-  m_serverGroupList.append(serverGroup);
+    Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
+    serverGroup->setName("Freenode");
+    Konversation::ServerSettings server;
+    server.setServer("irc.freenode.org");
+    serverGroup->addServer(server);
+    serverGroup->setIdentityId(identity->id());
+    Konversation::ChannelSettings channel;
+    channel.setName("#kde");
+    serverGroup->addChannel(channel);
+    m_serverGroupList.append(serverGroup);
 
-  buttonList.append("Op,/OP %u%n");
-  buttonList.append("DeOp,/DEOP %u%n");
-  buttonList.append("WhoIs,/WHOIS %s,%%u%n");
-  buttonList.append("Version,/CTCP %s,%%u VERSION%n");
-  buttonList.append("Kick,/KICK %u%n");
-  buttonList.append("Ban,/BAN %u%n");
-  buttonList.append("Part,/PART %c Leaving...%n");
-  buttonList.append("Quit,/QUIT Leaving...%n");
+    buttonList.append("Op,/OP %u%n");
+    buttonList.append("DeOp,/DEOP %u%n");
+    buttonList.append("WhoIs,/WHOIS %s,%%u%n");
+    buttonList.append("Version,/CTCP %s,%%u VERSION%n");
+    buttonList.append("Kick,/KICK %u%n");
+    buttonList.append("Ban,/BAN %u%n");
+    buttonList.append("Part,/PART %c Leaving...%n");
+    buttonList.append("Quit,/QUIT Leaving...%n");
 
-  setShowQuickButtons(false);
-  setShowModeButtons(false);
-  setShowServerList(true);
-  setShowTrayIcon(false);
-  setShowBackgroundImage(false);
-  setTrayNotify(false);
-  setSystrayOnly(false);
-  setTrayNotifyOnlyOwnNick(false);
+    setShowQuickButtons(false);
+    setShowModeButtons(false);
+    setShowServerList(true);
+    setShowTrayIcon(false);
+    setShowBackgroundImage(false);
+    setTrayNotify(false);
+    setSystrayOnly(false);
+    setTrayNotifyOnlyOwnNick(false);
 
-  setUseSpacing(false);
-  setSpacing(2);
-  setMargin(3);
+    setUseSpacing(false);
+    setSpacing(2);
+    setMargin(3);
 
-  setUseParagraphSpacing(false);
-  setParagraphSpacing(2);
+    setUseParagraphSpacing(false);
+    setParagraphSpacing(2);
 
-  setAutoReconnect(true);
-  setReconnectCount(10);
-  setAutoRejoin(true);
-  setAutojoinOnInvite(false);
+    setAutoReconnect(true);
+    setReconnectCount(10);
+    setAutoRejoin(true);
+    setAutojoinOnInvite(false);
 
-  setMaximumLagTime(180);
+    setMaximumLagTime(180);
 
-  setFixedMOTD(true);
-  setBeep(false);
-  setRawLog(false);
+    setFixedMOTD(true);
+    setBeep(false);
+    setRawLog(false);
 
-  setDccPath(user.homeDir()+"/dccrecv");
-  setDccAddPartner(false);
-  setDccCreateFolder(false);
-  setDccMethodToGetOwnIp(1);
-  setDccSpecificOwnIp("0.0.0.0");
-  setDccSpecificSendPorts(false);
-  setDccSendPortsFirst(0);
-  setDccSendPortsLast(0);
-  setDccSpecificChatPorts(false);
-  setDccChatPortsFirst(0);
-  setDccChatPortsLast(0);
-  setDccAutoGet(false);
-  setDccBufferSize(8192);
-  setDccFastSend(true);
-  setDccSendTimeout(180);
-  setIPv4Fallback(false);
-  setIPv4FallbackIface("eth0");
+    setDccPath(user.homeDir()+"/dccrecv");
+    setDccAddPartner(false);
+    setDccCreateFolder(false);
+    setDccMethodToGetOwnIp(1);
+    setDccSpecificOwnIp("0.0.0.0");
+    setDccSpecificSendPorts(false);
+    setDccSendPortsFirst(0);
+    setDccSendPortsLast(0);
+    setDccSpecificChatPorts(false);
+    setDccChatPortsFirst(0);
+    setDccChatPortsLast(0);
+    setDccAutoGet(false);
+    setDccBufferSize(8192);
+    setDccFastSend(true);
+    setDccSendTimeout(180);
+    setIPv4Fallback(false);
+    setIPv4FallbackIface("eth0");
 
-  KStandardDirs kstddir;
-  setLogPath(kstddir.saveLocation("data","konversation/logs"));
-  setScrollbackMax(1000);
-  
-  setAutoWhoNicksLimit(200);
-  setAutoWhoContinuousEnabled(true);
-  setAutoWhoContinuousInterval(90);
+    KStandardDirs kstddir;
+    setLogPath(kstddir.saveLocation("data","konversation/logs"));
+    setScrollbackMax(1000);
 
-  setShowRealNames(false);
+    setAutoWhoNicksLimit(200);
+    setAutoWhoContinuousEnabled(true);
+    setAutoWhoContinuousInterval(90);
 
-  setLog(true);
-  setLowerLog(true);
-  setAddHostnameToLog(false);
-  setLogFollowsNick(true);
+    setShowRealNames(false);
 
-  setLogfileBufferSize(100);
-  setLogfileReaderSize(QSize(400,200));
+    setLog(true);
+    setLowerLog(true);
+    setAddHostnameToLog(false);
+    setLogFollowsNick(true);
 
-  setTabPlacement(Bottom);
-  setBlinkingTabs(false);
-  setCloseButtonsOnTabs(false);
-  setCloseButtonsAlignRight(false);
-  setBringToFront(false);
-  setFocusNewQueries(false);
+    setLogfileBufferSize(100);
+    setLogfileReaderSize(QSize(400,200));
 
-  setNotifyDelay(20);
-  setUseNotify(true);
+    setTabPlacement(Bottom);
+    setBlinkingTabs(false);
+    setCloseButtonsOnTabs(false);
+    setCloseButtonsAlignRight(false);
+    setBringToFront(false);
+    setFocusNewQueries(false);
 
+    setNotifyDelay(20);
+    setUseNotify(true);
 
-  setHighlightNick(true);
-  setHighlightOwnLines(false);
-  setHighlightNickColor("#ff0000");
-  setHighlightOwnLinesColor("#ff0000");
-  setHighlightSoundEnabled(true);
+    setHighlightNick(true);
+    setHighlightOwnLines(false);
+    setHighlightNickColor("#ff0000");
+    setHighlightOwnLinesColor("#ff0000");
+    setHighlightSoundEnabled(true);
 
-  setUseClickableNicks(true);
+    setUseClickableNicks(true);
 
-  // On Screen Display
-  setOSDUsage(false);
-  setOSDShowOwnNick(false);
-  setOSDShowQuery(false);
-  setOSDShowChannelEvent(false);
-  setOSDTextColor("#ffffff");
-  setOSDDuration(3000);
-  setOSDOffsetX(30);
-  setOSDOffsetY(50);
-  setOSDAlignment(0);  // Left
+    // On Screen Display
+    setOSDUsage(false);
+    setOSDShowOwnNick(false);
+    setOSDShowQuery(false);
+    setOSDShowChannelEvent(false);
+    setOSDTextColor("#ffffff");
+    setOSDDuration(3000);
+    setOSDOffsetX(30);
+    setOSDOffsetY(50);
+    setOSDAlignment(0);                           // Left
 
-  setColorInputFields(true);
-  setBackgroundImageName(QString::null);
+    setColorInputFields(true);
+    setBackgroundImageName(QString::null);
 
-  setTimestamping(true);
-  setShowDate(false);
-  setTimestampFormat("hh:mm");
+    setTimestamping(true);
+    setShowDate(false);
+    setTimestampFormat("hh:mm");
 
-  setCommandChar("/");
-  setChannelDoubleClickAction("/QUERY %u%n");
-  setNotifyDoubleClickAction("/WHOIS %u%n");
+    setCommandChar("/");
+    setChannelDoubleClickAction("/QUERY %u%n");
+    setNotifyDoubleClickAction("/WHOIS %u%n");
 
-  setAdminValue(1);
-  setOwnerValue(2);
-  setOpValue(4);
-  setHalfopValue(8);
-  setVoiceValue(16);
-  setNoRightsValue(32);
+    setAdminValue(1);
+    setOwnerValue(2);
+    setOpValue(4);
+    setHalfopValue(8);
+    setVoiceValue(16);
+    setNoRightsValue(32);
 
-  setSortCaseInsensitive(true);
-  setSortByStatus(false);
+    setSortCaseInsensitive(true);
+    setSortByStatus(false);
 
-  setAutoUserhost(false);
+    setAutoUserhost(false);
 
-  ircColorList.append("#ffffff");
-  ircColorList.append("#000000");
-  ircColorList.append("#000080");
-  ircColorList.append("#008000");
-  ircColorList.append("#ff0000");
-  ircColorList.append("#a52a2a");
-  ircColorList.append("#800080");
-  ircColorList.append("#ff8000");
-  ircColorList.append("#808000");
-  ircColorList.append("#00ff00");
-  ircColorList.append("#008080");
-  ircColorList.append("#00ffff");
-  ircColorList.append("#0000ff");
-  ircColorList.append("#ffc0cb");
-  ircColorList.append("#a0a0a0");
-  ircColorList.append("#c0c0c0");
-  setFilterColors(false);
+    ircColorList.append("#ffffff");
+    ircColorList.append("#000000");
+    ircColorList.append("#000080");
+    ircColorList.append("#008000");
+    ircColorList.append("#ff0000");
+    ircColorList.append("#a52a2a");
+    ircColorList.append("#800080");
+    ircColorList.append("#ff8000");
+    ircColorList.append("#808000");
+    ircColorList.append("#00ff00");
+    ircColorList.append("#008080");
+    ircColorList.append("#00ffff");
+    ircColorList.append("#0000ff");
+    ircColorList.append("#ffc0cb");
+    ircColorList.append("#a0a0a0");
+    ircColorList.append("#c0c0c0");
+    setFilterColors(false);
 
-  nickColorList.append("#E90E7F");
-  nickColorList.append("#8E55E9");
-  nickColorList.append("#B30E0E");
-  nickColorList.append("#18B33C");
-  nickColorList.append("#58ADB3");
-  nickColorList.append("#9E54B3");
-  nickColorList.append("#0FB39A");
-  nickColorList.append("#3176B3");
-  nickColorList.append("#000000");
-  setUseColoredNicks(false);
-  setUseBoldNicks(false);
-  setUseLiteralModes(false);
+    nickColorList.append("#E90E7F");
+    nickColorList.append("#8E55E9");
+    nickColorList.append("#B30E0E");
+    nickColorList.append("#18B33C");
+    nickColorList.append("#58ADB3");
+    nickColorList.append("#9E54B3");
+    nickColorList.append("#0FB39A");
+    nickColorList.append("#3176B3");
+    nickColorList.append("#000000");
+    setUseColoredNicks(false);
+    setUseBoldNicks(false);
+    setUseLiteralModes(false);
 
-  setNickCompletionMode(2);
-  setNickCompletionCaseSensitive(false);
+    setNickCompletionMode(2);
+    setNickCompletionCaseSensitive(false);
 
-  setShowMenuBar(true);
-  setShowTabBarCloseButton(true);
+    setShowMenuBar(true);
+    setShowTabBarCloseButton(true);
 
-  setHideUnimportantEvents(false);
-  setShowTopic(true);
-  setShowNicknameBox(true);
+    setHideUnimportantEvents(false);
+    setShowTopic(true);
+    setShowNicknameBox(true);
 
-  setShowRememberLineInAllWindows(false);
+    setShowRememberLineInAllWindows(false);
 
-  // Web Browser
-  setWebBrowserUseKdeDefault(true);
-  setWebBrowserCmd("mozilla \'%u\'");
+    // Web Browser
+    setWebBrowserUseKdeDefault(true);
+    setWebBrowserCmd("mozilla \'%u\'");
 
-  setRedirectToStatusPane(false);
-  
-  setOpenWatchedNicksAtStartup(false);
+    setRedirectToStatusPane(false);
 
-  // Themes
-  setIconTheme("default");
-  
-  setDisableNotifyWhileAway(false);
+    setOpenWatchedNicksAtStartup(false);
 
-  setWikiUrl("http://en.wikipedia.org/wiki/");
-  setExpandWikiUrl(false);
+    // Themes
+    setIconTheme("default");
+
+    setDisableNotifyWhileAway(false);
+
+    setWikiUrl("http://en.wikipedia.org/wiki/");
+    setExpandWikiUrl(false);
 }
 
 Preferences::~Preferences()
 {
-  clearIdentityList();
+    clearIdentityList();
 }
 
 const Konversation::ServerGroupList Preferences::serverGroupList()
 {
-  return m_serverGroupList;
+    return m_serverGroupList;
 }
 
 void Preferences::setServerGroupList(const Konversation::ServerGroupList& list)
 {
-  m_serverGroupList.clear();
-  m_serverGroupList = list;
+    m_serverGroupList.clear();
+    m_serverGroupList = list;
 }
 
 void Preferences::addServerGroup(Konversation::ServerGroupSettingsPtr serverGroup)
 {
-  m_serverGroupList.append(serverGroup);
+    m_serverGroupList.append(serverGroup);
 }
 
 const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
 {
-  if(!m_serverGroupList.count()) {
-    return 0;
-  }
-  
-  Konversation::ServerGroupList::iterator it;
-  
-  for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it) {
-    if((*it)->id() == id) {
-      return (*it);
+    if(!m_serverGroupList.count())
+    {
+        return 0;
     }
-  }
 
-  return 0;
+    Konversation::ServerGroupList::iterator it;
+
+    for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it)
+    {
+        if((*it)->id() == id)
+        {
+            return (*it);
+        }
+    }
+
+    return 0;
 }
 
 const Konversation::ServerGroupSettingsPtr Preferences::serverGroupByServer(const QString& server)
 {
-  if(!m_serverGroupList.count()) {
-    return 0;
-  }
-  
-  Konversation::ServerGroupList::iterator it;
-  
-  for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it) {
-    for (uint i = 0; i != (*it)->serverList().count(); i++)
+    if(!m_serverGroupList.count())
     {
-      if ((*it)->serverByIndex(i).server().lower() == server)
-      {
-        return (*it);
-      } 
+        return 0;
     }
-  }
 
-  return 0;
+    Konversation::ServerGroupList::iterator it;
+
+    for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it)
+    {
+        for (uint i = 0; i != (*it)->serverList().count(); i++)
+        {
+            if ((*it)->serverByIndex(i).server().lower() == server)
+            {
+                return (*it);
+            }
+        }
+    }
+
+    return 0;
 }
 
 int Preferences::serverGroupIdByName(const QString& serverGroup)
 {
-  Konversation::ServerGroupList::iterator it;
-  
-  for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it) {
-    if((*it)->name().lower() == serverGroup.lower()) {
-      return (*it)->id();
+    Konversation::ServerGroupList::iterator it;
+
+    for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it)
+    {
+        if((*it)->name().lower() == serverGroup.lower())
+        {
+            return (*it)->id();
+        }
     }
-  }
-  
-  return 0;
+
+    return 0;
 }
 
 bool Preferences::isServerGroup(const QString& server)
 {
-  Konversation::ServerGroupList::iterator it;
-  
-  for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it) {
-    if((*it)->name().lower() == server.lower()) {
-      return true;
+    Konversation::ServerGroupList::iterator it;
+
+    for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it)
+    {
+        if((*it)->name().lower() == server.lower())
+        {
+            return true;
+        }
     }
-  }
-  
-  return false;
+
+    return false;
 }
 
 void Preferences::removeServerGroup(int id)
 {
-  if(!m_serverGroupList.count()) {
-    return;
-  }
-  
-  Konversation::ServerGroupList::iterator it;
-  
-  for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it) {
-    if((*it)->id() == id) {
-      m_serverGroupList.remove(it);
-      return;
+    if(!m_serverGroupList.count())
+    {
+        return;
     }
-  }
+
+    Konversation::ServerGroupList::iterator it;
+
+    for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it)
+    {
+        if((*it)->id() == id)
+        {
+            m_serverGroupList.remove(it);
+            return;
+        }
+    }
 }
 
 const QPtrList<Highlight> Preferences::getHighlightList()
 {
-  return highlightList;
+    return highlightList;
 }
 
 void Preferences::setHighlightList(QPtrList<Highlight> newList)
 {
-  highlightList.clear();
-  highlightList=newList;
+    highlightList.clear();
+    highlightList=newList;
 }
 
 void Preferences::addHighlight(const QString& newHighlight,
-                             bool regExp,
-                             const QColor &newColor,
-                             const QString& sound,
-                             const QString& autoText)
+bool regExp,
+const QColor &newColor,
+const QString& sound,
+const QString& autoText)
 {
-  highlightList.append(new Highlight(newHighlight,regExp,newColor,KURL(sound),autoText));
+    highlightList.append(new Highlight(newHighlight,regExp,newColor,KURL(sound),autoText));
 }
 
 void Preferences::setHighlightSoundEnabled(bool enabled)
 {
-  highlightSoundEnabled = enabled;
+    highlightSoundEnabled = enabled;
 }
 
 const bool Preferences::getHighlightSoundEnabled()
 {
-  return highlightSoundEnabled;
+    return highlightSoundEnabled;
 }
 
 void Preferences::setButtonList(QStringList newList)
 {
-  buttonList.clear();
-  buttonList=newList;
+    buttonList.clear();
+    buttonList=newList;
 }
 
 void Preferences::setIgnoreList(QPtrList<Ignore> newList)
 {
-  ignoreList.clear();
-  ignoreList=newList;
+    ignoreList.clear();
+    ignoreList=newList;
 }
 
 void Preferences::addIgnore(const QString &newIgnore)
 {
-  QStringList ignore=QStringList::split(',',newIgnore);
-  ignoreList.append(new Ignore(ignore[0],ignore[1].toInt()));
+    QStringList ignore=QStringList::split(',',newIgnore);
+    ignoreList.append(new Ignore(ignore[0],ignore[1].toInt()));
 }
 
 // Accessor methods
@@ -425,14 +435,14 @@ const int Preferences::getScrollbackMax() { return scrollbackMax; }
 void Preferences::setAutoWhoNicksLimit(int limit) { autoWhoNicksLimit=limit; }
 const int Preferences::getAutoWhoNicksLimit() { return autoWhoNicksLimit; }
 void Preferences::setAutoWhoContinuousEnabled(bool state)
-{ 
-  autoWhoContinuousEnabled=state;
-  emit autoContinuousWhoChanged();
+{
+    autoWhoContinuousEnabled=state;
+    emit autoContinuousWhoChanged();
 }
+
 const bool Preferences::getAutoWhoContinuousEnabled() { return autoWhoContinuousEnabled; }
 void Preferences::setAutoWhoContinuousInterval(int interval) { autoWhoContinuousInterval=interval; }
 const int Preferences::getAutoWhoContinuousInterval() { return autoWhoContinuousInterval; }
-
 
 const bool Preferences::getShowRealNames() { return showRealNames;}
 void Preferences::setShowRealNames(bool show) { showRealNames=show; }
@@ -457,18 +467,20 @@ const bool Preferences::getDccSpecificSendPorts() { return dccSpecificSendPorts;
 
 void Preferences::setDccSendPortsFirst(unsigned long port)
 {
-  dccSendPortsFirst=port;
-  if(getDccSendPortsLast() < port)
-    setDccSendPortsLast(port);
+    dccSendPortsFirst=port;
+    if(getDccSendPortsLast() < port)
+        setDccSendPortsLast(port);
 }
+
 const unsigned int Preferences::getDccSendPortsFirst() { return dccSendPortsFirst; }
 
 void Preferences::setDccSendPortsLast(unsigned long port)
 {
-  dccSendPortsLast=port;
-  if(port < getDccSendPortsFirst())
-    setDccSendPortsFirst(port);
+    dccSendPortsLast=port;
+    if(port < getDccSendPortsFirst())
+        setDccSendPortsFirst(port);
 }
+
 const unsigned int Preferences::getDccSendPortsLast() { return dccSendPortsLast; }
 
 void Preferences::setDccSpecificChatPorts(bool state) { dccSpecificChatPorts=state; }
@@ -476,18 +488,20 @@ const bool Preferences::getDccSpecificChatPorts() { return dccSpecificChatPorts;
 
 void Preferences::setDccChatPortsFirst(unsigned long port)
 {
-  dccChatPortsFirst=port;
-  if(getDccChatPortsLast() < port)
-    setDccChatPortsLast(port);
+    dccChatPortsFirst=port;
+    if(getDccChatPortsLast() < port)
+        setDccChatPortsLast(port);
 }
+
 const unsigned int Preferences::getDccChatPortsFirst() { return dccChatPortsFirst; }
 
 void Preferences::setDccChatPortsLast(unsigned long port)
 {
-  dccChatPortsLast=port;
-  if(port < getDccChatPortsFirst())
-    setDccChatPortsFirst(port);
+    dccChatPortsLast=port;
+    if(port < getDccChatPortsFirst())
+        setDccChatPortsFirst(port);
 }
+
 const unsigned int Preferences::getDccChatPortsLast() { return dccChatPortsLast; }
 
 void Preferences::setDccAutoGet(bool state) { dccAutoGet=state; }
@@ -542,44 +556,47 @@ void Preferences::setNotifyDelay(int delay) { notifyDelay=delay; }
 const bool Preferences::getUseNotify() { return useNotify; }
 void Preferences::setUseNotify(bool use) { useNotify=use; }
 void Preferences::setNotifyList(const QMap<QString, QStringList> &newList)
-  { notifyList=newList; }
+{ notifyList=newList; }
 const QMap<QString, QStringList> Preferences::getNotifyList() { return notifyList; }
 const QStringList Preferences::getNotifyListByGroup(const QString& groupName)
 {
-  if (notifyList.find(groupName) != notifyList.end())
-    return notifyList[groupName];
-  else
-    return QStringList();
+    if (notifyList.find(groupName) != notifyList.end())
+        return notifyList[groupName];
+    else
+        return QStringList();
 }
+
 const QString Preferences::getNotifyStringByGroup(const QString& groupName)
 {
-  return getNotifyListByGroup(groupName).join(" ");
+    return getNotifyListByGroup(groupName).join(" ");
 }
+
 const bool Preferences::addNotify(const QString& groupName, const QString& newPattern)
 {
-  // don't add duplicates
-  if (groupName.isEmpty() || newPattern.isEmpty()) return false;
-  if (!notifyList[groupName].contains(newPattern))
-  {
-    QStringList nicknameList = notifyList[groupName];
-    nicknameList.append(newPattern);
-    notifyList[groupName] = nicknameList;
-    return true;
-  }
-  return false;
+    // don't add duplicates
+    if (groupName.isEmpty() || newPattern.isEmpty()) return false;
+    if (!notifyList[groupName].contains(newPattern))
+    {
+        QStringList nicknameList = notifyList[groupName];
+        nicknameList.append(newPattern);
+        notifyList[groupName] = nicknameList;
+        return true;
+    }
+    return false;
 }
+
 const bool Preferences::removeNotify(const QString& groupName, const QString& pattern)
 {
-  if (notifyList.find(groupName) != notifyList.end())
-  {
-    QStringList nicknameList = notifyList[groupName];
-    nicknameList.remove(pattern);
-    if (nicknameList.isEmpty())
-        notifyList.remove(groupName);
-    else
-        notifyList[groupName] = nicknameList;
-    return true;
-  } else
+    if (notifyList.find(groupName) != notifyList.end())
+    {
+        QStringList nicknameList = notifyList[groupName];
+        nicknameList.remove(pattern);
+        if (nicknameList.isEmpty())
+            notifyList.remove(groupName);
+        else
+            notifyList[groupName] = nicknameList;
+        return true;
+    } else
     return false;
 }
 
@@ -591,45 +608,48 @@ void Preferences::removeIdentity(IdentityPtr identity) { identityList.remove(ide
 
 void Preferences::clearIdentityList()
 {
-  identityList.clear();
+    identityList.clear();
 }
 
 const QValueList<IdentityPtr> Preferences::getIdentityList() { return identityList; }
 
 void Preferences::setIdentityList(const QValueList<IdentityPtr>& list)
 {
-  identityList.clear();
-  identityList = list;
+    identityList.clear();
+    identityList = list;
 }
 
 const IdentityPtr Preferences::getIdentityByName(const QString& name)
 {
-  QValueList<IdentityPtr> identities = getIdentityList();
-  QValueList<IdentityPtr>::iterator it = identities.begin();
+    QValueList<IdentityPtr> identities = getIdentityList();
+    QValueList<IdentityPtr>::iterator it = identities.begin();
 
-  while(it != identities.end())
-  {
-    if((*it)->getName() == name) {
-      return (*it);
+    while(it != identities.end())
+    {
+        if((*it)->getName() == name)
+        {
+            return (*it);
+        }
+
+        ++it;
     }
 
-    ++it;
-  }
-
-  // no matching identity found, return default identity
-  return identities.first();
+    // no matching identity found, return default identity
+    return identities.first();
 }
 
 const IdentityPtr Preferences::getIdentityById(int id)
 {
-  QValueList<IdentityPtr> identityList = getIdentityList();
-  for(QValueList<IdentityPtr>::iterator it = identityList.begin(); it != identityList.end(); ++it) {
-    if((*it)->id() == id) {
-      return (*it);
+    QValueList<IdentityPtr> identityList = getIdentityList();
+    for(QValueList<IdentityPtr>::iterator it = identityList.begin(); it != identityList.end(); ++it)
+    {
+        if((*it)->id() == id)
+        {
+            return (*it);
+        }
     }
-  }
 
-  return identityList.first();
+    return identityList.first();
 }
 
 const QString Preferences::getRealName() { return identityList[0]->getRealName(); }
@@ -683,44 +703,44 @@ const QString Preferences::getCommandChar() { return commandChar; }
 
 const QString Preferences::getColor(const QString& name)
 {
-  KConfig* config=KApplication::kApplication()->config();
+    KConfig* config=KApplication::kApplication()->config();
 
-  config->setGroup("Message Text Colors");
-  QString color=config->readEntry(name,getDefaultColor(name));
+    config->setGroup("Message Text Colors");
+    QString color=config->readEntry(name,getDefaultColor(name));
 
-  if(color.isEmpty()) color="000000";
+    if(color.isEmpty()) color="000000";
 
-  return color;
+    return color;
 }
 
 void Preferences::setColor(const QString& name,const QString& color)
 {
-  // if we get called from the KonversationApplication constructor kApplication is NULL
-  KApplication* app=KApplication::kApplication();
-  if(app)
-  {
-    KConfig* config=app->config();
+    // if we get called from the KonversationApplication constructor kApplication is NULL
+    KApplication* app=KApplication::kApplication();
+    if(app)
+    {
+        KConfig* config=app->config();
 
-    config->setGroup("Message Text Colors");
-    config->writeEntry(name,color);
-    config->sync();
-  }
+        config->setGroup("Message Text Colors");
+        config->writeEntry(name,color);
+        config->sync();
+    }
 }
 
 const QString Preferences::getDefaultColor(const QString& name)
 {
-  if(name=="ChannelMessage")      return "000000";
-  if(name=="QueryMessage")        return "0000ff";
-  if(name=="ServerMessage")       return "91640a";
-  if(name=="ActionMessage")       return "0000ff";
-  if(name=="BacklogMessage")      return "aaaaaa";
-  if(name=="LinkMessage")         return "0000ff";
-  if(name=="CommandMessage")      return "960096";
-  if(name=="Time")                return "709070";
-  if(name=="TextViewBackground")  return "ffffff";
-  if(name=="AlternateBackground") return "ffffff";
+    if(name=="ChannelMessage")      return "000000";
+    if(name=="QueryMessage")        return "0000ff";
+    if(name=="ServerMessage")       return "91640a";
+    if(name=="ActionMessage")       return "0000ff";
+    if(name=="BacklogMessage")      return "aaaaaa";
+    if(name=="LinkMessage")         return "0000ff";
+    if(name=="CommandMessage")      return "960096";
+    if(name=="Time")                return "709070";
+    if(name=="TextViewBackground")  return "ffffff";
+    if(name=="AlternateBackground") return "ffffff";
 
-  return QString::null;
+    return QString::null;
 }
 
 void Preferences::setColorInputFields(bool state) { colorInputFields=state; }
@@ -842,34 +862,36 @@ const bool Preferences::getShowBackgroundImage() { return showBackgroundImage; }
 
 void Preferences::setShowTrayIcon(bool state)
 {
-  showTrayIcon=state;
-  emit updateTrayIcon();
+    showTrayIcon=state;
+    emit updateTrayIcon();
 }
+
 const bool Preferences::getShowTrayIcon() { return showTrayIcon; }
 
-void Preferences::setSystrayOnly(bool state) 
-{ 
-  systrayOnly=state; 
-  emit updateTrayIcon();
+void Preferences::setSystrayOnly(bool state)
+{
+    systrayOnly=state;
+    emit updateTrayIcon();
 }
+
 const bool Preferences::getSystrayOnly() { return systrayOnly; }
 
 void Preferences::setTrayNotify(bool state)
 {
-  trayNotify = state;
-  emit updateTrayIcon();
+    trayNotify = state;
+    emit updateTrayIcon();
 }
 
 const bool Preferences::getTrayNotify() const { return trayNotify; }
 
 void Preferences::setTrayNotifyOnlyOwnNick(bool onlyOwnNick)
 {
-  m_trayNotifyOnlyOwnNick = onlyOwnNick;
+    m_trayNotifyOnlyOwnNick = onlyOwnNick;
 }
 
 bool Preferences::trayNotifyOnlyOwnNick() const
 {
-  return m_trayNotifyOnlyOwnNick;
+    return m_trayNotifyOnlyOwnNick;
 }
 
 void Preferences::setChannelSplitterSizes(QValueList<int> sizes) { channelSplitter=sizes; }
@@ -920,37 +942,37 @@ const bool Preferences::getSortByStatus()                  { return sortByStatus
 const bool Preferences::getAutoUserhost()                  { return autoUserhost; }
 void Preferences::setAutoUserhost(bool state)
 {
-  autoUserhost=state;
-  emit autoUserhostChanged(state);
+    autoUserhost=state;
+    emit autoUserhostChanged(state);
 }
 
 const bool Preferences::getDialogFlag(const QString& flagName)
 {
-  KConfig* config=KApplication::kApplication()->config();
+    KConfig* config=KApplication::kApplication()->config();
 
-  config->setGroup("Notification Messages");
+    config->setGroup("Notification Messages");
 
-  if( !config->readEntry(flagName).isEmpty() )
-    return false;
-  else
-    return true;
+    if( !config->readEntry(flagName).isEmpty() )
+        return false;
+    else
+        return true;
 }
 
 void Preferences::setDialogFlag(const QString& flagName,bool state)
 {
-  KConfig* config=KApplication::kApplication()->config();
+    KConfig* config=KApplication::kApplication()->config();
 
-  config->setGroup("Notification Messages");
+    config->setGroup("Notification Messages");
 
-  if(state)
-    config->deleteEntry(flagName);
-  else
-  {
-    if ( config->readEntry(flagName).isEmpty() )
-      config->writeEntry(flagName,"no");
-  }
+    if(state)
+        config->deleteEntry(flagName);
+    else
+    {
+        if ( config->readEntry(flagName).isEmpty() )
+            config->writeEntry(flagName,"no");
+    }
 
-  config->sync();
+    config->sync();
 }
 
 void Preferences::setMaximumLagTime(int lag) { maximumLag=lag; }
@@ -1020,32 +1042,32 @@ void Preferences::setOpenWatchedNicksAtStartup(bool open) { m_openWatchedNicksAt
 // Channel Encodings
 const QString Preferences::getChannelEncoding(const QString& server,const QString& channel)
 {
-  if(channelEncodingsMap.contains(server))
-    if(channelEncodingsMap[server].contains(channel.lower()))
-      return channelEncodingsMap[server][channel.lower()];
-  return QString::null;
+    if(channelEncodingsMap.contains(server))
+        if(channelEncodingsMap[server].contains(channel.lower()))
+            return channelEncodingsMap[server][channel.lower()];
+    return QString::null;
 }
 
 void Preferences::setChannelEncoding(const QString& server,const QString& channel,const QString& encoding)
 {
-  if(!encoding.isEmpty())
-    channelEncodingsMap[server][channel.lower()]=encoding;
-  else
-  {
-    channelEncodingsMap[server].remove(channel.lower());
-    if(channelEncodingsMap[server].count()==0)
-      channelEncodingsMap.remove(server);
-  }
+    if(!encoding.isEmpty())
+        channelEncodingsMap[server][channel.lower()]=encoding;
+    else
+    {
+        channelEncodingsMap[server].remove(channel.lower());
+        if(channelEncodingsMap[server].count()==0)
+            channelEncodingsMap.remove(server);
+    }
 }
 
 const QStringList Preferences::getChannelEncodingsServerList()
 {
-  return channelEncodingsMap.keys();
+    return channelEncodingsMap.keys();
 }
 
 const QStringList Preferences::getChannelEncodingsChannelList(const QString& server)
 {
-  return channelEncodingsMap[server].keys();
+    return channelEncodingsMap[server].keys();
 }
 
 void Preferences::setIconTheme(const QString& name) { iconTheme=name; }

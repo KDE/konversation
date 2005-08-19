@@ -1,7 +1,7 @@
 //
 // C++ Interface: dccresumedialog
 //
-// Description: 
+// Description:
 //
 //
 // Authors: Dario Abatianni <eisfuchs@tigress.com>, (C) 2004
@@ -24,40 +24,39 @@ class DccTransferRecv;
 
 class DccResumeDialog : public KDialogBase
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    enum ReceiveAction
-    {
-      RA_Rename    = 0x01,
-      RA_Overwrite = 0x02,
-      RA_Resume    = 0x04,
-      RA_Cancel    = 0x08
-    };
-  
-    virtual ~DccResumeDialog();
+        public:
+        enum ReceiveAction
+        {
+            RA_Rename    = 0x01,
+            RA_Overwrite = 0x02,
+            RA_Resume    = 0x04,
+            RA_Cancel    = 0x08
+        };
 
-    static ReceiveAction ask(DccTransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction);
+        virtual ~DccResumeDialog();
 
-  protected slots:
-    void slotOk();
-    void slotUser1();
-    void slotCancel();
-    void suggestNewName();
-    void setDefaultName();
-    void updateDialogButtons();
-    
-  protected:
-    DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, int enabledButtonCodes, KDialogBase::ButtonCode defaultButtonCode);
-    
-    // UI
-    KURLRequester* m_urlreqFileURL;
-    
-    // data
-    DccTransferRecv* m_item;
-    int m_enabledActions;
-    ReceiveAction m_selectedAction;
-  
+        static ReceiveAction ask(DccTransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction);
+
+    protected slots:
+        void slotOk();
+        void slotUser1();
+        void slotCancel();
+        void suggestNewName();
+        void setDefaultName();
+        void updateDialogButtons();
+
+    protected:
+        DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, int enabledButtonCodes, KDialogBase::ButtonCode defaultButtonCode);
+
+        // UI
+        KURLRequester* m_urlreqFileURL;
+
+        // data
+        DccTransferRecv* m_item;
+        int m_enabledActions;
+        ReceiveAction m_selectedAction;
+
 };
-
 #endif

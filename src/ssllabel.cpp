@@ -10,19 +10,19 @@
   *                                                                       *
   *************************************************************************
 
-*/
+ */
 
 #include "ssllabel.h"
 
 SSLLabel::SSLLabel(QWidget* parent,const char* name)
-  : QLabel(parent,name)
+: QLabel(parent,name)
 {
 }
 
 void SSLLabel::mouseReleaseEvent(QMouseEvent *e)
 {
-  Q_UNUSED(e);
-  emit clicked();
+    Q_UNUSED(e);
+    emit clicked();
 }
 
 #include "ssllabel.moc"

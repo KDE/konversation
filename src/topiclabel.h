@@ -16,41 +16,41 @@
 class QFontMetrics;
 class Server;
 
-namespace Konversation {
-
-class TopicLabel : public KActiveLabel
+namespace Konversation
 {
-  Q_OBJECT
-  public:
-    TopicLabel(QWidget *parent = 0, const char *name = 0);
-    ~TopicLabel();
 
-    QSize minimumSizeHint() const;
-    QSize sizeHint() const;
-    void setServer(Server* server);
+    class TopicLabel : public KActiveLabel
+    {
+        Q_OBJECT
+            public:
+            TopicLabel(QWidget *parent = 0, const char *name = 0);
+            ~TopicLabel();
 
-  public slots:
-    virtual void openLink(const QString& link);
-    void setText(const QString& text);
+            QSize minimumSizeHint() const;
+            QSize sizeHint() const;
+            void setServer(Server* server);
 
-  protected:
-    void updateSqueezedText();
-    QString rPixelSqueeze(const QString& text, uint maxPixels);
-    uint textWidth(const QString& text, const QFontMetrics& fm);
-    virtual void contentsMousePressEvent(QMouseEvent *e);
-    virtual void contentsMouseReleaseEvent(QMouseEvent *e);
-    virtual void contentsMouseMoveEvent(QMouseEvent *e);
+        public slots:
+            virtual void openLink(const QString& link);
+            void setText(const QString& text);
 
-    void resizeEvent(QResizeEvent*);
+        protected:
+            void updateSqueezedText();
+            QString rPixelSqueeze(const QString& text, uint maxPixels);
+            uint textWidth(const QString& text, const QFontMetrics& fm);
+            virtual void contentsMousePressEvent(QMouseEvent *e);
+            virtual void contentsMouseReleaseEvent(QMouseEvent *e);
+            virtual void contentsMouseMoveEvent(QMouseEvent *e);
 
-  private:
-    QString m_fullText;
-    Server* m_server;
-    bool mousePressed;
-    QString urlToDrag;
-    QPoint pressPosition;
-};
+            void resizeEvent(QResizeEvent*);
+
+        private:
+            QString m_fullText;
+            Server* m_server;
+            bool mousePressed;
+            QString urlToDrag;
+            QPoint pressPosition;
+    };
 
 }
-
 #endif

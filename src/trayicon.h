@@ -26,36 +26,35 @@ class Server;
 namespace Konversation
 {
 
-class TrayIcon : public KSystemTray
-{
-  Q_OBJECT
-  public:
-    TrayIcon(QWidget* parent = 0);
-    ~TrayIcon();
-    
-    bool notificationEnabled() { return m_notificationEnabled; }
+    class TrayIcon : public KSystemTray
+    {
+        Q_OBJECT
+            public:
+            TrayIcon(QWidget* parent = 0);
+            ~TrayIcon();
 
-  public slots:
-    void startNotification();
-    void endNotification();
-    void setNotificationEnabled(bool notify) { m_notificationEnabled = notify; }
-  
-  protected slots:
-    void blinkTimeout();
-  
-  protected:
-    void mousePressEvent(QMouseEvent *e);
+            bool notificationEnabled() { return m_notificationEnabled; }
 
-  private:
-    QTimer* m_blinkTimer;
-    bool m_blinkOn;
-    
-    bool m_notificationEnabled;
-    
-    QPixmap m_nomessagePix;
-    QPixmap m_messagePix;
-};
+        public slots:
+            void startNotification();
+            void endNotification();
+            void setNotificationEnabled(bool notify) { m_notificationEnabled = notify; }
+
+        protected slots:
+            void blinkTimeout();
+
+        protected:
+            void mousePressEvent(QMouseEvent *e);
+
+        private:
+            QTimer* m_blinkTimer;
+            bool m_blinkOn;
+
+            bool m_notificationEnabled;
+
+            QPixmap m_nomessagePix;
+            QPixmap m_messagePix;
+    };
 
 }
-
 #endif

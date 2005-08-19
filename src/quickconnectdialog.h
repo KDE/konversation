@@ -18,38 +18,36 @@
 #include <kdialogbase.h>
 
 /*
-	@author Michael Goettsche
+    @author Michael Goettsche
 */
 
 class KLineEdit;
 
 class QuickConnectDialog : public KDialogBase
 {
-	Q_OBJECT
-	
-	public:
-		QuickConnectDialog(QWidget* parent=0);
-		~QuickConnectDialog();
-		
-	signals:
-		void connectClicked(const QString& hostName, 
-				    const QString& port,
-				    const QString& channel,
-				    const QString& nick,
-				    const QString& password,
-				    const bool& useSSL
-				    );
-				
-	protected slots:
-		void slotOk();
-		
-	protected:
-		KLineEdit*	hostNameInput;
-		KLineEdit*	portInput;
-		KLineEdit*	passwordInput;
-		KLineEdit*	nickInput;
-		QCheckBox*      sslCheckBox; 
+    Q_OBJECT
+
+        public:
+        QuickConnectDialog(QWidget* parent=0);
+        ~QuickConnectDialog();
+
+        signals:
+        void connectClicked(const QString& hostName,
+            const QString& port,
+            const QString& channel,
+            const QString& nick,
+            const QString& password,
+            const bool& useSSL
+            );
+
+    protected slots:
+        void slotOk();
+
+    protected:
+        KLineEdit*  hostNameInput;
+        KLineEdit*  portInput;
+        KLineEdit*  passwordInput;
+        KLineEdit*  nickInput;
+        QCheckBox*      sslCheckBox;
 };
-
-#endif 
-
+#endif

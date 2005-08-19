@@ -12,7 +12,6 @@
   email:     eisfuchs@tigress.com
 */
 
-
 #ifndef _KONVERSATIONMAINWINDOW_H_
 #define _KONVERSATIONMAINWINDOW_H_
 
@@ -53,210 +52,208 @@ class UrlCatcher;
 
 namespace Konversation
 {
-  class InsertCharDialog;
-  class ServerListDialog;
-  class TrayIcon;
+    class InsertCharDialog;
+    class ServerListDialog;
+    class TrayIcon;
 }
 
 class KonversationMainWindow : public KMainWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    KonversationMainWindow();
-    ~KonversationMainWindow();
+        public:
+        KonversationMainWindow();
+        ~KonversationMainWindow();
 
-    StatusPanel* addStatusView(Server* server);
-    RawLog* addRawLog(Server* server);
-    ChannelListPanel* addChannelListPanel(Server* server);
-    Channel* addChannel(Server* server,const QString& name);
-    Query* addQuery(Server* server,const NickInfoPtr & name, bool weinitiated=true);
+        StatusPanel* addStatusView(Server* server);
+        RawLog* addRawLog(Server* server);
+        ChannelListPanel* addChannelListPanel(Server* server);
+        Channel* addChannel(Server* server,const QString& name);
+        Query* addQuery(Server* server,const NickInfoPtr & name, bool weinitiated=true);
 
-    DccPanel* getDccPanel();
-    /** 
-     * Bring this view to the front.
-     */
-    void showView(ChatWindow* view);
+        DccPanel* getDccPanel();
+        /**
+         * Bring this view to the front.
+         */
+        void showView(ChatWindow* view);
 
-    /** Some errors need to be shown, even when konversation is minimized.
-     *  For example, when a kimiface call is recieved to query a person,
-     *  (e.g. the user choses "Chat with X" in kmail) but that person isn't
-     *  recognised, we need to give immediate feedback to the user.
-     */
-    void focusAndShowErrorMessage(const QString &errorMsg);
-    void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView);
-    void appendToFrontmostIfDifferent(const QString& type,const QString& message,ChatWindow* serverView);
+        /** Some errors need to be shown, even when konversation is minimized.
+         *  For example, when a kimiface call is recieved to query a person,
+         *  (e.g. the user choses "Chat with X" in kmail) but that person isn't
+         *  recognised, we need to give immediate feedback to the user.
+         */
+        void focusAndShowErrorMessage(const QString &errorMsg);
+        void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView);
+        void appendToFrontmostIfDifferent(const QString& type,const QString& message,ChatWindow* serverView);
 
-    void updateTabPlacement();
-    
-    Konversation::TrayIcon* systemTrayIcon() const { return tray; }
+        void updateTabPlacement();
 
-    ChatWindow* frontView() { return m_frontView; }
+        Konversation::TrayIcon* systemTrayIcon() const { return tray; }
 
+        ChatWindow* frontView() { return m_frontView; }
 
-    // Bookmark related functions
-    QString currentURL(bool passNetwork);
-    QString currentTitle();
+        // Bookmark related functions
+        QString currentURL(bool passNetwork);
+        QString currentTitle();
 
-  signals:
-    void prefsChanged();
-    void startNotifyTimer(int msec);
-    void openPrefsDialog();
-    void openPrefsDialog(Preferences::Pages page);
-    void showQuickConnectDialog();
-    void quitServer();
-    void nicksNowOnline(Server*);
-    void closeTab(int id);
-    void endNotification();
+        signals:
+        void prefsChanged();
+        void startNotifyTimer(int msec);
+        void openPrefsDialog();
+        void openPrefsDialog(Preferences::Pages page);
+        void showQuickConnectDialog();
+        void quitServer();
+        void nicksNowOnline(Server*);
+        void closeTab(int id);
+        void endNotification();
 
-    void channelSplittersMoved(Channel*);
+        void channelSplittersMoved(Channel*);
 
-  public slots:
-    void addDccPanel();     // connected in server class
-    void addKonsolePanel(); // connected in server class
-    void addUrlCatcher();
-    void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
-    void insertRememberLine();
+    public slots:
+        void addDccPanel();                       // connected in server class
+        void addKonsolePanel();                   // connected in server class
+        void addUrlCatcher();
+        void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
+        void insertRememberLine();
 
-    void resetLag();
-    void updateLag(Server* lagServer,int msec);
-    void updateSSLInfo(Server* server);
-    void tooLongLag(Server* lagServer,int msec);
-    void channelPrefsChanged();
-    void setOnlineList(Server* notifyServer,const QStringList& list, bool changed);
-    void updateTrayIcon();
-    void serverQuit(Server* server);
-    void setShowTabBarCloseButton(bool s);
-    
-    void openLogFile(const QString& caption, const QString& file);
+        void resetLag();
+        void updateLag(Server* lagServer,int msec);
+        void updateSSLInfo(Server* server);
+        void tooLongLag(Server* lagServer,int msec);
+        void channelPrefsChanged();
+        void setOnlineList(Server* notifyServer,const QStringList& list, bool changed);
+        void updateTrayIcon();
+        void serverQuit(Server* server);
+        void setShowTabBarCloseButton(bool s);
 
-    void removeSSLIcon();
-    void slotPrefsChanged();
+        void openLogFile(const QString& caption, const QString& file);
 
-    void openServerList();
-    void openIdentitiesDialog();
+        void removeSSLIcon();
+        void slotPrefsChanged();
 
-    void serverStateChanged(Server* server, Server::State state);
+        void openServerList();
+        void openIdentitiesDialog();
 
-  protected slots:
-    void openPreferences();
-    void openKeyBindings();
-    void openQuickConnectDialog();
-    void openChannelList();
-    void openNotify();
-    void openLogfile();
-    void openNicksOnlinePanel();
-    void closeNicksOnlinePanel();
-    // it seems that moc does not honor #ifs in compile so we create an
-    // empty slot in our .cpp file rather than #if this slot out
-    void openNotifications();
-    void openToolbars();
+        void serverStateChanged(Server* server, Server::State state);
 
-    void showToolbar();
-    void showStatusbar();
-    void showMenubar(bool dontShowWarning = false);
-    /**
-     * @see showView
-     */
-    void changeView(QWidget* view);
-    void closeView(QWidget* view);
+    protected slots:
+        void openPreferences();
+        void openKeyBindings();
+        void openQuickConnectDialog();
+        void openChannelList();
+        void openNotify();
+        void openLogfile();
+        void openNicksOnlinePanel();
+        void closeNicksOnlinePanel();
+        // it seems that moc does not honor #ifs in compile so we create an
+        // empty slot in our .cpp file rather than #if this slot out
+        void openNotifications();
+        void openToolbars();
 
-    void closeKonsolePanel(ChatWindow* konsolePanel);
+        void showToolbar();
+        void showStatusbar();
+        void showMenubar(bool dontShowWarning = false);
+        /**
+         * @see showView
+         */
+        void changeView(QWidget* view);
+        void closeView(QWidget* view);
 
-    void newText(QWidget* view, const QString& highlightColor);
-    void changeTabLabel(QWidget* widget, const QString& newLabel);
-    void quitProgram();
+        void closeKonsolePanel(ChatWindow* konsolePanel);
 
-    void notifyAction(const QString& serverName,const QString& nick);
+        void newText(QWidget* view, const QString& highlightColor);
+        void changeTabLabel(QWidget* widget, const QString& newLabel);
+        void quitProgram();
 
-    void nextTab();
-    void previousTab();
-    void closeTab();
-    void moveTabLeft();
-    void moveTabRight();
+        void notifyAction(const QString& serverName,const QString& nick);
 
-    void goToTab(int page);
+        void nextTab();
+        void previousTab();
+        void closeTab();
+        void moveTabLeft();
+        void moveTabRight();
 
-    void findText();
-    void findNextText();
-    void addIRCColor();
-    void clearWindow();
-    void closeQueries();
-    void hideNicknameList();
-    void clearTabs();
+        void goToTab(int page);
 
-    void insertCharacter();
-    void insertChar(const QChar& chr);
+        void findText();
+        void findNextText();
+        void addIRCColor();
+        void clearWindow();
+        void closeQueries();
+        void hideNicknameList();
+        void clearTabs();
 
-    void updateChannelInfo(const QString& info);
+        void insertCharacter();
+        void insertChar(const QChar& chr);
 
-    void showJoinChannelDialog();
-    
-    void reconnectCurrentServer();
+        void updateChannelInfo(const QString& info);
 
-    void openURL(const QString& url, const QString& title);
+        void showJoinChannelDialog();
 
-    void showTabContextMenu(QWidget* tab, const QPoint& pos);
+        void reconnectCurrentServer();
 
-    void toggleTabNotifications();
-    void changeTabCharset(int index);
-    void updateSwitchTabAction();
+        void openURL(const QString& url, const QString& title);
 
-  protected:
-    enum StatusID
-    {
-      StatusText,LagOMeter
-    };
+        void showTabContextMenu(QWidget* tab, const QPoint& pos);
 
-    bool queryClose();
+        void toggleTabNotifications();
+        void changeTabCharset(int index);
+        void updateSwitchTabAction();
 
-    void addView(ChatWindow* view, const QString& label, bool weinitiated=true);
-    void updateFrontView();
+    protected:
+        enum StatusID
+        {
+            StatusText,LagOMeter
+        };
 
-    void closeUrlCatcher();
-    void closeDccPanel();
-    void deleteDccPanel();
+        bool queryClose();
 
-    void updateTabMoveActions();
-    void updateTabEncoding(ChatWindow* view);
+        void addView(ChatWindow* view, const QString& label, bool weinitiated=true);
+        void updateFrontView();
 
-    virtual bool event(QEvent* e);
-    
-    KTabWidget* getViewContainer();
-    KTabWidget* viewContainer;
-    int m_popupTabIndex;
+        void closeUrlCatcher();
+        void closeDccPanel();
+        void deleteDccPanel();
 
-    Server* frontServer;
-    QGuardedPtr<ChatWindow> m_frontView;
-    QGuardedPtr<ChatWindow> previousFrontView;
-    ChatWindow* searchView;
+        void updateTabMoveActions();
+        void updateTabEncoding(ChatWindow* view);
 
-    UrlCatcher* urlCatcherPanel;
-    DccPanel* dccPanel;
-    bool dccPanelOpen;
+        virtual bool event(QEvent* e);
 
-    KToggleAction* showToolBarAction;
-    KToggleAction* showStatusBarAction;
-    KToggleAction* showMenuBarAction;
-    KToggleAction* hideNicklistAction;
-    
-    NicksOnline* nicksOnlinePanel;
+        KTabWidget* getViewContainer();
+        KTabWidget* viewContainer;
+        int m_popupTabIndex;
 
-    DccTransferHandler* dccTransferHandler;
+        Server* frontServer;
+        QGuardedPtr<ChatWindow> m_frontView;
+        QGuardedPtr<ChatWindow> previousFrontView;
+        ChatWindow* searchView;
 
-    Konversation::TrayIcon* tray;
+        UrlCatcher* urlCatcherPanel;
+        DccPanel* dccPanel;
+        bool dccPanelOpen;
 
-    bool m_closeApp;
-    
-    SSLLabel* m_sslLabel;
-    QLabel* m_channelInfoLabel;
-    KSqueezedTextLabel* m_generalInfoLabel;
+        KToggleAction* showToolBarAction;
+        KToggleAction* showStatusBarAction;
+        KToggleAction* showMenuBarAction;
+        KToggleAction* hideNicklistAction;
 
-    Konversation::InsertCharDialog* m_insertCharDialog;
-    Konversation::ServerListDialog* m_serverListDialog;
+        NicksOnline* nicksOnlinePanel;
 
-    KPopupMenu* m_bookmarks;
-    KonviBookmarkHandler* m_bookmarkHandler;
+        DccTransferHandler* dccTransferHandler;
+
+        Konversation::TrayIcon* tray;
+
+        bool m_closeApp;
+
+        SSLLabel* m_sslLabel;
+        QLabel* m_channelInfoLabel;
+        KSqueezedTextLabel* m_generalInfoLabel;
+
+        Konversation::InsertCharDialog* m_insertCharDialog;
+        Konversation::ServerListDialog* m_serverListDialog;
+
+        KPopupMenu* m_bookmarks;
+        KonviBookmarkHandler* m_bookmarkHandler;
 };
-
 #endif

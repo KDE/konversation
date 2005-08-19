@@ -11,7 +11,6 @@
   email:     isaac@warp.es
 */
 
-
 #ifndef POPUP_H
 #define POPUP_H
 
@@ -25,18 +24,17 @@
 
 class Popup: public KPassivePopup
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    Popup(KonversationMainWindow* mainWindow, ChatWindow* view, const QString& message);
-    ~Popup();
-    
-  private slots:
-    void focusTab();
-  
-  private:
-    KonversationMainWindow* m_mainWindow;
-    ChatWindow* m_view;
+        public:
+        Popup(KonversationMainWindow* mainWindow, ChatWindow* view, const QString& message);
+        ~Popup();
+
+    private slots:
+        void focusTab();
+
+    private:
+        KonversationMainWindow* m_mainWindow;
+        ChatWindow* m_view;
 };
-
 #endif

@@ -21,14 +21,13 @@ class KonversationMainWindow;
 
 class DccTransferHandler : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    DccTransferHandler(KonversationMainWindow* mainWindow);
-    ~DccTransferHandler();
+        public:
+        DccTransferHandler(KonversationMainWindow* mainWindow);
+        ~DccTransferHandler();
 
-  protected:
-    KonversationMainWindow* mainWindow;
+    protected:
+        KonversationMainWindow* mainWindow;
 };
-
 #endif

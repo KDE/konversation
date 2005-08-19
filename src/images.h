@@ -29,54 +29,53 @@
 
 class Images
 {
-  public:
-    enum NickPrivilege
-    {
-      Normal=0,
-      Voice,
-      HalfOp,
-      Op,
-      Owner,
-      Admin,
-      _NickPrivilege_COUNT
-    };
-    
-    Images();
-    virtual ~Images();
+    public:
+        enum NickPrivilege
+        {
+            Normal=0,
+            Voice,
+            HalfOp,
+            Op,
+            Owner,
+            Admin,
+            _NickPrivilege_COUNT
+        };
 
-    QIconSet getLed(int color,bool on) const;
-    
-    QIconSet getRedLed(bool on) const;
-    QIconSet getGreenLed(bool on) const;
-    QIconSet getBlueLed(bool on) const;
-    QIconSet getYellowLed(bool on) const;
+        Images();
+        virtual ~Images();
 
-    QIconSet getKimproxyAway() const;
-    QIconSet getKimproxyOnline() const;
-    QIconSet getKimproxyOffline() const;
-    
-    QPixmap getNickIcon(NickPrivilege privilege,bool isAway=false) const;
-    void initializeNickIcons();
+        QIconSet getLed(int color,bool on) const;
 
-  protected:
-    void initializeLeds();
-    void initializeKimifaceIcons();
-    
-    QIconSet redLedOn;
-    QIconSet redLedOff;
-    QIconSet greenLedOn;
-    QIconSet greenLedOff;
-    QIconSet blueLedOn;
-    QIconSet blueLedOff;
-    QIconSet yellowLedOn;
-    QIconSet yellowLedOff;
+        QIconSet getRedLed(bool on) const;
+        QIconSet getGreenLed(bool on) const;
+        QIconSet getBlueLed(bool on) const;
+        QIconSet getYellowLed(bool on) const;
 
-    QIconSet kimproxyAway;
-    QIconSet kimproxyOnline;
-    QIconSet kimproxyOffline;
-    
+        QIconSet getKimproxyAway() const;
+        QIconSet getKimproxyOnline() const;
+        QIconSet getKimproxyOffline() const;
 
-    QPixmap nickIcons[_NickPrivilege_COUNT][2];  // [privilege][away]
+        QPixmap getNickIcon(NickPrivilege privilege,bool isAway=false) const;
+        void initializeNickIcons();
+
+    protected:
+        void initializeLeds();
+        void initializeKimifaceIcons();
+
+        QIconSet redLedOn;
+        QIconSet redLedOff;
+        QIconSet greenLedOn;
+        QIconSet greenLedOff;
+        QIconSet blueLedOn;
+        QIconSet blueLedOff;
+        QIconSet yellowLedOn;
+        QIconSet yellowLedOff;
+
+        QIconSet kimproxyAway;
+        QIconSet kimproxyOnline;
+        QIconSet kimproxyOffline;
+
+                                                  // [privilege][away]
+        QPixmap nickIcons[_NickPrivilege_COUNT][2];
 };
-
 #endif

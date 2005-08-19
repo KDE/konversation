@@ -9,13 +9,13 @@
 
     This library is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Library General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
 
-    You should have received a copy of the GNU Library General Public License
-    along with this library; see the file COPYING.LIB.  If not, write to
-    the Free Software Foundation, Inc., 51 Franklin Steet, Fifth Floor,
-    Boston, MA 02110-1301, USA.
+You should have received a copy of the GNU Library General Public License
+along with this library; see the file COPYING.LIB.  If not, write to
+the Free Software Foundation, Inc., 51 Franklin Steet, Fifth Floor,
+Boston, MA 02110-1301, USA.
 */
 
 #ifndef KABC_ADDRESSEEDIALOG_H
@@ -34,35 +34,34 @@
 */
 class AddresseeItem : public KListViewItem
 {
-  public:
+    public:
 
-    /**
-      Type of column
-      @li @p Name -  Name in Addressee
-      @li @p Email - Email in Addressee
-    */
-    enum columns { Photo =0, Name = 1, Email = 2 };
+        /**
+          Type of column
+          @li @p Name -  Name in Addressee
+          @li @p Email - Email in Addressee
+        */
+        enum columns { Photo =0, Name = 1, Email = 2 };
 
-    /**
-      Constructor.
+        /**
+          Constructor.
 
-      @param parent    The parent listview.
-      @param addressee The associated addressee.
-    */
-    AddresseeItem( QListView *parent, const KABC::Addressee &addressee );
-   
-    /**
-      Returns the addressee.
-    */
-    KABC::Addressee addressee() const { return mAddressee; }
+          @param parent    The parent listview.
+          @param addressee The associated addressee.
+        */
+        AddresseeItem( QListView *parent, const KABC::Addressee &addressee );
 
-    /**
-      Method used by QListView to sort the items.
-    */
-    virtual QString key( int column, bool ascending ) const;
+        /**
+          Returns the addressee.
+        */
+        KABC::Addressee addressee() const { return mAddressee; }
 
-  private:
-    KABC::Addressee mAddressee;
+        /**
+          Method used by QListView to sort the items.
+        */
+        virtual QString key( int column, bool ascending ) const;
+
+    private:
+        KABC::Addressee mAddressee;
 };
-
 #endif

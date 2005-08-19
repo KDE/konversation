@@ -23,14 +23,13 @@
 
 class ValueListViewItem : public KListViewItem
 {
-  public:
-    ValueListViewItem(int newValue,KListView* parent,QString label);
-    ~ValueListViewItem();
+    public:
+        ValueListViewItem(int newValue,KListView* parent,QString label);
+        ~ValueListViewItem();
 
-    const int getValue() const;
+        const int getValue() const;
 
-  protected:
-    int value;
+    protected:
+        int value;
 };
-
 #endif

@@ -18,40 +18,40 @@ class ChatWindow;
 class KonversationApplication;
 class KonversationMainWindow;
 
-namespace Konversation {
-
-class NotificationHandler : public QObject
+namespace Konversation
 {
-  Q_OBJECT
-  public:
-    NotificationHandler(KonversationApplication* parent = 0, const char* name = 0);
-    ~NotificationHandler();
 
-  public slots:
-    void message(ChatWindow* chatWin, const QString& fromNick, const QString& message);
-    void nick(ChatWindow* chatWin, const QString& fromNick, const QString& message);
-    void join(ChatWindow* chatWin, const QString& nick);
-    void part(ChatWindow* chatWin, const QString& nick);
-    void quit(ChatWindow* chatWin, const QString& nick);
-    void nickChange(ChatWindow* chatWin, const QString& oldNick, const QString& newNick);
-    void dccIncoming(ChatWindow* chatWin, const QString& fromNick);
-    void mode(ChatWindow* chatWin, const QString& nick);
-    void query(ChatWindow* chatWin, const QString& fromNick);
-    void nickOnline(ChatWindow* chatWin, const QString& nick);
-    void nickOffline(ChatWindow* chatWin, const QString& nick);
-    void kick(ChatWindow* chatWin, const QString& channel,const QString& nick);
-    void dccChat(ChatWindow* chatWin, const QString& nick);
-    void highlight(ChatWindow* chatWin, const QString& fromNick, const QString& message);
+    class NotificationHandler : public QObject
+    {
+        Q_OBJECT
+            public:
+            NotificationHandler(KonversationApplication* parent = 0, const char* name = 0);
+            ~NotificationHandler();
 
-  protected:
-    void startTrayNotification(ChatWindow* chatWin);
-    int winId() const;
-    QString addLineBreaks(const QString& string);
+        public slots:
+            void message(ChatWindow* chatWin, const QString& fromNick, const QString& message);
+            void nick(ChatWindow* chatWin, const QString& fromNick, const QString& message);
+            void join(ChatWindow* chatWin, const QString& nick);
+            void part(ChatWindow* chatWin, const QString& nick);
+            void quit(ChatWindow* chatWin, const QString& nick);
+            void nickChange(ChatWindow* chatWin, const QString& oldNick, const QString& newNick);
+            void dccIncoming(ChatWindow* chatWin, const QString& fromNick);
+            void mode(ChatWindow* chatWin, const QString& nick);
+            void query(ChatWindow* chatWin, const QString& fromNick);
+            void nickOnline(ChatWindow* chatWin, const QString& nick);
+            void nickOffline(ChatWindow* chatWin, const QString& nick);
+            void kick(ChatWindow* chatWin, const QString& channel,const QString& nick);
+            void dccChat(ChatWindow* chatWin, const QString& nick);
+            void highlight(ChatWindow* chatWin, const QString& fromNick, const QString& message);
 
-  private:
-    KonversationMainWindow* m_mainWindow;
-};
+        protected:
+            void startTrayNotification(ChatWindow* chatWin);
+            int winId() const;
+            QString addLineBreaks(const QString& string);
+
+        private:
+            KonversationMainWindow* m_mainWindow;
+    };
 
 }
-
 #endif

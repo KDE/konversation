@@ -25,25 +25,28 @@ int Identity::s_availableId = 0;
 
 Identity::Identity() : KShared()
 {
-  m_id = s_availableId;
-  s_availableId++;
-  setCodecName(Konversation::IRCCharsets::self()->encodingForLocale());
+    m_id = s_availableId;
+    s_availableId++;
+    setCodecName(Konversation::IRCCharsets::self()->encodingForLocale());
 }
 
 Identity::Identity(int id) : KShared()
 {
-  if(id < 0) {
-    m_id = s_availableId;
-    s_availableId++;
-  } else {
-    m_id = id;
-  }
+    if(id < 0)
+    {
+        m_id = s_availableId;
+        s_availableId++;
+    }
+    else
+    {
+        m_id = id;
+    }
 }
 
 Identity::Identity(const Identity& original) : KShared()
 {
-  copy(original);
-  m_id = original.id();
+    copy(original);
+    m_id = original.id();
 }
 
 Identity::~Identity()
@@ -52,21 +55,21 @@ Identity::~Identity()
 
 void Identity::copy(const Identity& original)
 {
-  setName(original.getName());
-  setRealName(original.getRealName());
-  setIdent(original.getIdent());
-  setNicknameList(original.getNicknameList());
-  setBot(original.getBot());
-  setPassword(original.getPassword());
-  setPartReason(original.getPartReason());
-  setKickReason(original.getKickReason());
-  setInsertRememberLineOnAway(original.getInsertRememberLineOnAway());
-  setShowAwayMessage(original.getShowAwayMessage());
-  setAwayMessage(original.getAwayMessage());
-  setAwayNick(original.getAwayNick());
-  setReturnMessage(original.getReturnMessage());
-  setShellCommand(original.getShellCommand());
-  setCodecName(original.getCodecName());
+    setName(original.getName());
+    setRealName(original.getRealName());
+    setIdent(original.getIdent());
+    setNicknameList(original.getNicknameList());
+    setBot(original.getBot());
+    setPassword(original.getPassword());
+    setPartReason(original.getPartReason());
+    setKickReason(original.getKickReason());
+    setInsertRememberLineOnAway(original.getInsertRememberLineOnAway());
+    setShowAwayMessage(original.getShowAwayMessage());
+    setAwayMessage(original.getAwayMessage());
+    setAwayNick(original.getAwayNick());
+    setReturnMessage(original.getReturnMessage());
+    setShellCommand(original.getShellCommand());
+    setCodecName(original.getCodecName());
 }
 
 void Identity::setName(const QString& newName)          { name=newName; }
@@ -103,12 +106,11 @@ QString Identity::getReturnMessage() const              { return returnMessage; 
 
 void Identity::setNicknameList(const QStringList& newList)
 {
-  nicknameList.clear();
-  nicknameList = newList;
+    nicknameList.clear();
+    nicknameList = newList;
 }
 
 QStringList Identity::getNicknameList() const           { return nicknameList; }
-
 
 QString Identity::getShellCommand() const { return m_shellCommand;}
 void Identity::setShellCommand(const QString& command) { m_shellCommand=command;}
@@ -117,16 +119,16 @@ QTextCodec* Identity::getCodec() const                  { return m_codec; }
 QString Identity::getCodecName() const                  { return m_codecName; }
 void Identity::setCodecName(const QString &newCodecName)
 {
-  // NOTE: codecName should be based on KCharsets::availableEncodingNames() / descriptiveEncodingNames()
-  // We can get a QTextCodec from QString based on them, but can't do the reverse of that.
-  
-  // never set an empty or borked codec!
-  QString codecName=newCodecName.lower();
-  if(!Konversation::IRCCharsets::self()->isValidEncoding(codecName))
-    codecName=Konversation::IRCCharsets::self()->encodingForLocale();
-  
-  m_codecName=codecName;
-  m_codec=Konversation::IRCCharsets::self()->codecForName(codecName);
+    // NOTE: codecName should be based on KCharsets::availableEncodingNames() / descriptiveEncodingNames()
+    // We can get a QTextCodec from QString based on them, but can't do the reverse of that.
+
+    // never set an empty or borked codec!
+    QString codecName=newCodecName.lower();
+    if(!Konversation::IRCCharsets::self()->isValidEncoding(codecName))
+        codecName=Konversation::IRCCharsets::self()->encodingForLocale();
+
+    m_codecName=codecName;
+    m_codec=Konversation::IRCCharsets::self()->codecForName(codecName);
 }
 
 QString Identity::getAwayNick() const { return awayNick; }

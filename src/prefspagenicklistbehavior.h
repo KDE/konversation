@@ -18,20 +18,19 @@ class Preferences;
 
 class PrefsPageNicklistBehavior : public NicklistBehavior_Config
 {
-  Q_OBJECT
-  public:
-    PrefsPageNicklistBehavior(QWidget* newParent, Preferences* newPreferences);
+    Q_OBJECT
+        public:
+        PrefsPageNicklistBehavior(QWidget* newParent, Preferences* newPreferences);
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  protected slots:
-    void updateArrows();
-    void moveUp();
-    void moveDown();
+    protected slots:
+        void updateArrows();
+        void moveUp();
+        void moveDown();
 
-  private:
-    Preferences* preferences;
+    private:
+        Preferences* preferences;
 };
-
 #endif

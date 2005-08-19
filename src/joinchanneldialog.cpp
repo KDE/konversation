@@ -21,72 +21,78 @@
 #include "channel.h"
 #include "servergroupsettings.h"
 
-namespace Konversation {
-
-JoinChannelDialog::JoinChannelDialog(Server* server, QWidget *parent, const char *name)
-  : KDialogBase(parent, name, true, i18n("Join Channel on %1").arg(server->getServerGroup()), Ok|Cancel, Ok)
+namespace Konversation
 {
-  m_server = server;
-  m_widget = new JoinChannelUI(this);
-  setMainWidget(m_widget);
 
-  m_widget->serverLbl->setText(server->getServerGroup());
+    JoinChannelDialog::JoinChannelDialog(Server* server, QWidget *parent, const char *name)
+        : KDialogBase(parent, name, true, i18n("Join Channel on %1").arg(server->getServerGroup()), Ok|Cancel, Ok)
+    {
+        m_server = server;
+        m_widget = new JoinChannelUI(this);
+        setMainWidget(m_widget);
 
-  ChannelList history = server->serverGroupSettings()->channelHistory();
-  ChannelList::iterator endIt = history.end();
-  QPtrList<Channel> channels = server->getChannelList();
-  QPtrListIterator<Channel> chanIt(channels);
-  Channel* chan = 0;
-  bool joined = false;
+        m_widget->serverLbl->setText(server->getServerGroup());
 
-  for(ChannelList::iterator it = history.begin(); it != endIt; ++it) {
-    chan = chanIt.toFirst();
-    joined = false;
+        ChannelList history = server->serverGroupSettings()->channelHistory();
+        ChannelList::iterator endIt = history.end();
+        QPtrList<Channel> channels = server->getChannelList();
+        QPtrListIterator<Channel> chanIt(channels);
+        Channel* chan = 0;
+        bool joined = false;
 
-    while(chan) {
-      if(chan->getName() == (*it).name()) {
-        joined = true;
-      }
+        for(ChannelList::iterator it = history.begin(); it != endIt; ++it)
+        {
+            chan = chanIt.toFirst();
+            joined = false;
 
-      ++chanIt;
-      chan = chanIt.current();
+            while(chan)
+            {
+                if(chan->getName() == (*it).name())
+                {
+                    joined = true;
+                }
+
+                ++chanIt;
+                chan = chanIt.current();
+            }
+
+            if(!joined)
+            {
+                m_widget->channelCombo->addToHistory((*it).name());
+            }
+        }
+
+        m_widget->channelCombo->setCurrentText("");
     }
 
-    if(!joined) {
-      m_widget->channelCombo->addToHistory((*it).name());
+    JoinChannelDialog::~JoinChannelDialog()
+    {
     }
-  }
 
-  m_widget->channelCombo->setCurrentText("");
-}
+    QString JoinChannelDialog::channel() const
+    {
+        QString channel = m_widget->channelCombo->currentText();
 
-JoinChannelDialog::~JoinChannelDialog()
-{
-}
+        if(!m_server->isAChannel(channel))
+        {
+            channel = '#' + channel;
+        }
 
-QString JoinChannelDialog::channel() const
-{
-  QString channel = m_widget->channelCombo->currentText();
+        return channel;
+    }
 
-  if(!m_server->isAChannel(channel)) {
-    channel = '#' + channel;
-  }
+    QString JoinChannelDialog::password() const
+    {
+        return m_widget->passwordEdit->text();
+    }
 
-  return channel;
-}
+    void JoinChannelDialog::slotOk()
+    {
+        // If the channel already exist in the history only the password will be updated.
+        m_server->serverGroupSettings()->appendChannelHistory(ChannelSettings(channel(), password()));
 
-QString JoinChannelDialog::password() const
-{
-  return m_widget->passwordEdit->text();
-}
-
-void JoinChannelDialog::slotOk()
-{
-  // If the channel already exist in the history only the password will be updated.
-  m_server->serverGroupSettings()->appendChannelHistory(ChannelSettings(channel(), password()));
-
-  accept();
-}
+        accept();
+    }
 
 }
 

@@ -17,22 +17,22 @@
 #include "preferences.h"
 
 PrefsPageFontsAppearance::PrefsPageFontsAppearance(QWidget* newParent, Preferences* newPreferences)
- : FontAppearance_Config(newParent)
+: FontAppearance_Config(newParent)
 {
-  preferences = newPreferences;
+    preferences = newPreferences;
 
-  kcfg_TextFont->setFont(preferences->getTextFont());
-  kcfg_ListFont->setFont(preferences->getListFont());
-  kcfg_FixedMOTD->setChecked(preferences->getFixedMOTD());
-  kcfg_UseBoldNicks->setChecked(preferences->getUseBoldNicks());
+    kcfg_TextFont->setFont(preferences->getTextFont());
+    kcfg_ListFont->setFont(preferences->getListFont());
+    kcfg_FixedMOTD->setChecked(preferences->getFixedMOTD());
+    kcfg_UseBoldNicks->setChecked(preferences->getUseBoldNicks());
 }
 
 void PrefsPageFontsAppearance::applyPreferences()
 {
-  preferences->setTextFont(kcfg_TextFont->font());
-  preferences->setListFont(kcfg_ListFont->font());
-  preferences->setFixedMOTD(kcfg_FixedMOTD->isChecked());
-  preferences->setUseBoldNicks(kcfg_UseBoldNicks->isChecked());
+    preferences->setTextFont(kcfg_TextFont->font());
+    preferences->setListFont(kcfg_ListFont->font());
+    preferences->setFixedMOTD(kcfg_FixedMOTD->isChecked());
+    preferences->setUseBoldNicks(kcfg_UseBoldNicks->isChecked());
 }
 
 #include "prefspagefontsappearance.moc"

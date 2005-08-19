@@ -23,20 +23,19 @@ class Preferences;
 
 class IRCColorChooser : public KDialogBase
 {
-  Q_OBJECT
-  public:
-    IRCColorChooser(QWidget* parent, Preferences* p, const char* name = 0);
-    QString color();
+    Q_OBJECT
+        public:
+        IRCColorChooser(QWidget* parent, Preferences* p, const char* name = 0);
+        QString color();
 
-  protected slots:
-    void updatePreview();
+    protected slots:
+        void updatePreview();
 
-  protected:
-    void initColors(KComboBox* combo);
+    protected:
+        void initColors(KComboBox* combo);
 
-  protected:
-    IRCColorChooserUI* m_view;
-    Preferences* m_preferences;
+    protected:
+        IRCColorChooserUI* m_view;
+        Preferences* m_preferences;
 };
-
 #endif

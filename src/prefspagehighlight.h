@@ -24,36 +24,35 @@ class Preferences;
 
 class PrefsPageHighlight : public Highlight_Config
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    PrefsPageHighlight(QWidget* newParent,Preferences* newPreferences);
-    ~PrefsPageHighlight();
+        public:
+        PrefsPageHighlight(QWidget* newParent,Preferences* newPreferences);
+        ~PrefsPageHighlight();
 
-    QPtrList<Highlight> getHighlightList();
+        QPtrList<Highlight> getHighlightList();
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  protected slots:
-    void highlightSelected(QListViewItem* item);
+    protected slots:
+        void highlightSelected(QListViewItem* item);
 
-    void highlightTextChanged(const QString& newPattern);
-    void highlightTextEditButtonClicked();
-    void highlightColorChanged(const QColor& newColor);
-    void soundURLChanged(const QString& newURL);
-    void autoTextChanged(const QString& newURL);
+        void highlightTextChanged(const QString& newPattern);
+        void highlightTextEditButtonClicked();
+        void highlightColorChanged(const QColor& newColor);
+        void soundURLChanged(const QString& newURL);
+        void autoTextChanged(const QString& newURL);
 
-    void addHighlight();
-    void removeHighlight();
+        void addHighlight();
+        void removeHighlight();
 
-    void currentNickChanged(int state);
-    void ownLinesChanged(int state);
-    
-    void playSound();
+        void currentNickChanged(int state);
+        void ownLinesChanged(int state);
 
-  protected:
-    Preferences* preferences;
+        void playSound();
+
+    protected:
+        Preferences* preferences;
 };
-
 #endif

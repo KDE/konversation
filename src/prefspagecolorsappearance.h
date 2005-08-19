@@ -8,7 +8,7 @@
 /*
   copyright: (C) 2002 by Dario Abatianni
              (C) 2004 by Peter Simonsson
-	     (C) 2004 by İsmail Dönmez
+         (C) 2004 by İsmail Dönmez
 */
 #ifndef PREFSPAGECOLORSAPPEARANCE_H
 #define PREFSPAGECOLORSAPPEARANCE_H
@@ -21,16 +21,15 @@ class Preferences;
 
 class PrefsPageColorsAppearance : public ColorsAppearance_Config
 {
-  Q_OBJECT
-  public:
-    PrefsPageColorsAppearance(QWidget* newParent,Preferences* newPreferences);
-    ~PrefsPageColorsAppearance();
+    Q_OBJECT
+        public:
+        PrefsPageColorsAppearance(QWidget* newParent,Preferences* newPreferences);
+        ~PrefsPageColorsAppearance();
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  protected:
-    Preferences* preferences;
+    protected:
+        Preferences* preferences;
 };
-
 #endif

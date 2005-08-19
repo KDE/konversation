@@ -30,60 +30,58 @@
 #include "prefspagetabbehavior.h"
 #include "prefspagethemes.h"
 
-
 /*
  *@author Dario Abatianni
-*/
+ */
 
 class QWidget;
 
 class PrefsDialog : public KDialogBase
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    PrefsDialog(QWidget* parent, Preferences* preferences);
-    ~PrefsDialog();
+        public:
+        PrefsDialog(QWidget* parent, Preferences* preferences);
+        ~PrefsDialog();
 
-    void openPage(Preferences::Pages page);
+        void openPage(Preferences::Pages page);
 
-  signals:
-    void applyPreferences();
-    void prefsChanged();
-    void closed();
+        signals:
+        void applyPreferences();
+        void prefsChanged();
+        void closed();
 
-  protected slots:
-    void slotOk();
-    void slotApply();
-    void slotCancel();
-    
-    void slotAboutToShowPage(QWidget* page);
+    protected slots:
+        void slotOk();
+        void slotApply();
+        void slotCancel();
 
-  protected:
-    Preferences* preferences;
+        void slotAboutToShowPage(QWidget* page);
 
-    PrefsPageTabBehavior*     tabBehaviorPage;
-    PrefsPageButtons*         buttonsPage;
-    PrefsPageNotify*          notifyPage;
-    PrefsPageHighlight*       highlightPage;
-    PrefsPageOSD*             OSDPage;
-    PrefsPageIgnore*          ignorePage;
-    PrefsPageAliases*         aliasesPage;
-    PrefsPageLog*             logSettingsPage;
-    PrefsPageDccSettings*     dccSettingsPage;
-    PrefsPageDialogs*         dialogsPage;
-    PrefsPageThemes*          themesPage;
+    protected:
+        Preferences* preferences;
 
-    // for openPage();
-    QWidget* notifyPane;
-    QWidget* chatWinAppearancePane;
-    
-    // for slotAboutToShowPage()
-    QWidget* OSDPane;
-    
-    QWidget* lastPane;
+        PrefsPageTabBehavior*     tabBehaviorPage;
+        PrefsPageButtons*         buttonsPage;
+        PrefsPageNotify*          notifyPage;
+        PrefsPageHighlight*       highlightPage;
+        PrefsPageOSD*             OSDPage;
+        PrefsPageIgnore*          ignorePage;
+        PrefsPageAliases*         aliasesPage;
+        PrefsPageLog*             logSettingsPage;
+        PrefsPageDccSettings*     dccSettingsPage;
+        PrefsPageDialogs*         dialogsPage;
+        PrefsPageThemes*          themesPage;
 
-    void setPreferences(Preferences* newPrefs);
+        // for openPage();
+        QWidget* notifyPane;
+        QWidget* chatWinAppearancePane;
+
+        // for slotAboutToShowPage()
+        QWidget* OSDPane;
+
+        QWidget* lastPane;
+
+        void setPreferences(Preferences* newPrefs);
 };
-
 #endif

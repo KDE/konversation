@@ -20,21 +20,20 @@ class Preferences;
 
 /*
  *@author Dario Abatianni
-*/
+ */
 
 class PrefsPageLog : public Log_Config
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    PrefsPageLog(QWidget* newParent,Preferences* newPreferences);
+        public:
+        PrefsPageLog(QWidget* newParent,Preferences* newPreferences);
 
-  public slots:
-    void applyPreferences();
-    
-protected:
-    Preferences* preferences;
+    public slots:
+        void applyPreferences();
+
+    protected:
+        Preferences* preferences;
 
 };
-
 #endif

@@ -42,70 +42,73 @@
 #include "konversationsound.h"
 
 PrefsPageHighlight::PrefsPageHighlight(QWidget* newParent,Preferences* newPreferences) :
-  Highlight_Config(newParent)
+Highlight_Config(newParent)
 {
-  preferences = newPreferences;
+    preferences = newPreferences;
 
-  highlightListView->setSorting(-1);
+    highlightListView->setSorting(-1);
 
-  QPtrList<Highlight> highlightList=preferences->getHighlightList();
-  // fill in the highlight patterns backwards to keep the right sorting order
-  for(unsigned int i=highlightList.count();i!=0;i--)
-  {
-    Highlight* currentHighlight=highlightList.at(i-1);
-    new HighlightViewItem(highlightListView,currentHighlight);
-  }
-
-  soundPlayBtn->setIconSet(SmallIconSet( "player_play" ));
-  soundURL->setCaption(i18n("Select Sound File"));
-
-  // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]
-  // find the first "sound"-resource that contains files
-  QStringList soundDirs = KGlobal::dirs()->resourceDirs( "sound" );
-
-  if ( !soundDirs.isEmpty() ) {
-    KURL url;
-    QDir dir;
-    dir.setFilter( QDir::Files | QDir::Readable );
-    QStringList::ConstIterator it = soundDirs.begin();
-    while ( it != soundDirs.end() ) {
-      dir = *it;
-      if ( dir.isReadable() && dir.count() > 2 ) {
-        url.setPath( *it );
-        soundURL->fileDialog()->setURL( url );
-        break;
-      }
-      ++it;
+    QPtrList<Highlight> highlightList=preferences->getHighlightList();
+    // fill in the highlight patterns backwards to keep the right sorting order
+    for(unsigned int i=highlightList.count();i!=0;i--)
+    {
+        Highlight* currentHighlight=highlightList.at(i-1);
+        new HighlightViewItem(highlightListView,currentHighlight);
     }
-  }
-  // End copy
 
-  enableSoundCheck->setChecked(preferences->getHighlightSoundEnabled());
+    soundPlayBtn->setIconSet(SmallIconSet( "player_play" ));
+    soundURL->setCaption(i18n("Select Sound File"));
 
-  currentNickCheck->setChecked(preferences->getHighlightNick());
-  currentNickColor->setColor(preferences->getHighlightNickColor());
-  currentNickChanged(preferences->getHighlightNick() ? 2 : 0);
+    // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]
+    // find the first "sound"-resource that contains files
+    QStringList soundDirs = KGlobal::dirs()->resourceDirs( "sound" );
 
-  ownLinesCheck->setChecked(preferences->getHighlightOwnLines());
-  ownLinesColor->setColor(preferences->getHighlightOwnLinesColor());
-  ownLinesChanged(preferences->getHighlightOwnLines() ? 2 : 0);
+    if ( !soundDirs.isEmpty() )
+    {
+        KURL url;
+        QDir dir;
+        dir.setFilter( QDir::Files | QDir::Readable );
+        QStringList::ConstIterator it = soundDirs.begin();
+        while ( it != soundDirs.end() )
+        {
+            dir = *it;
+            if ( dir.isReadable() && dir.count() > 2 )
+            {
+                url.setPath( *it );
+                soundURL->fileDialog()->setURL( url );
+                break;
+            }
+            ++it;
+        }
+    }
+    // End copy
 
-  connect(highlightListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
-  connect(highlightListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
+    enableSoundCheck->setChecked(preferences->getHighlightSoundEnabled());
 
-  connect(patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (highlightTextChanged(const QString&)) );
-  connect(patternButton,SIGNAL (clicked()),this,SLOT(highlightTextEditButtonClicked()));
-  connect(patternColor,SIGNAL (activated(const QColor&)),this,SLOT (highlightColorChanged(const QColor&)) );
-  connect(soundURL, SIGNAL(textChanged(const QString&)), this, SLOT(soundURLChanged(const QString&)));
-  connect(soundPlayBtn, SIGNAL(clicked()), this, SLOT(playSound()));
+    currentNickCheck->setChecked(preferences->getHighlightNick());
+    currentNickColor->setColor(preferences->getHighlightNickColor());
+    currentNickChanged(preferences->getHighlightNick() ? 2 : 0);
 
-  connect(autoTextInput, SIGNAL(textChanged(const QString&)), this, SLOT(autoTextChanged(const QString&)));
+    ownLinesCheck->setChecked(preferences->getHighlightOwnLines());
+    ownLinesColor->setColor(preferences->getHighlightOwnLinesColor());
+    ownLinesChanged(preferences->getHighlightOwnLines() ? 2 : 0);
 
-  connect(newButton,SIGNAL (clicked()),this,SLOT (addHighlight()) );
-  connect(removeButton,SIGNAL (clicked()),this,SLOT (removeHighlight()) );
+    connect(highlightListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
+    connect(highlightListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
 
-  connect(currentNickCheck,SIGNAL(stateChanged(int)),this,SLOT(currentNickChanged(int)));
-  connect(ownLinesCheck,SIGNAL(stateChanged(int)),this,SLOT(ownLinesChanged(int)));
+    connect(patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (highlightTextChanged(const QString&)) );
+    connect(patternButton,SIGNAL (clicked()),this,SLOT(highlightTextEditButtonClicked()));
+    connect(patternColor,SIGNAL (activated(const QColor&)),this,SLOT (highlightColorChanged(const QColor&)) );
+    connect(soundURL, SIGNAL(textChanged(const QString&)), this, SLOT(soundURLChanged(const QString&)));
+    connect(soundPlayBtn, SIGNAL(clicked()), this, SLOT(playSound()));
+
+    connect(autoTextInput, SIGNAL(textChanged(const QString&)), this, SLOT(autoTextChanged(const QString&)));
+
+    connect(newButton,SIGNAL (clicked()),this,SLOT (addHighlight()) );
+    connect(removeButton,SIGNAL (clicked()),this,SLOT (removeHighlight()) );
+
+    connect(currentNickCheck,SIGNAL(stateChanged(int)),this,SLOT(currentNickChanged(int)));
+    connect(ownLinesCheck,SIGNAL(stateChanged(int)),this,SLOT(ownLinesChanged(int)));
 }
 
 PrefsPageHighlight::~PrefsPageHighlight()
@@ -114,56 +117,56 @@ PrefsPageHighlight::~PrefsPageHighlight()
 
 void PrefsPageHighlight::highlightSelected(QListViewItem* item)
 {
-  if(item)
-  {
-    HighlightViewItem* highlightItem=static_cast<HighlightViewItem*>(item);
+    if(item)
+    {
+        HighlightViewItem* highlightItem=static_cast<HighlightViewItem*>(item);
 
-    patternLabel->setEnabled(true);
-    patternInput->setEnabled(true);
-    patternColor->setEnabled(true);
-    soundURL->setEnabled(true);
-    soundLabel->setEnabled(true);
-    soundPlayBtn->setEnabled(true);
-    autoTextLabel->setEnabled(true);
-    autoTextInput->setEnabled(true);
+        patternLabel->setEnabled(true);
+        patternInput->setEnabled(true);
+        patternColor->setEnabled(true);
+        soundURL->setEnabled(true);
+        soundLabel->setEnabled(true);
+        soundPlayBtn->setEnabled(true);
+        autoTextLabel->setEnabled(true);
+        autoTextInput->setEnabled(true);
 
-    // Determine if kdeutils Regular Expression Editor is installed.  If so, enable edit button.
-    patternButton->setEnabled(!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty());
+        // Determine if kdeutils Regular Expression Editor is installed.  If so, enable edit button.
+        patternButton->setEnabled(!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty());
 
-    patternColor->setColor(highlightItem->getColor());
-    patternInput->setText(highlightItem->getPattern());
-    soundURL->setURL(highlightItem->getSoundURL().prettyURL());
-    autoTextInput->setText(highlightItem->getAutoText());
-  }
-  else
-  {
-    patternLabel->setEnabled(false);
-    patternInput->setEnabled(false);
-    patternButton->setEnabled(false);
-    patternColor->setEnabled(false);
-    soundURL->setEnabled(false);
-    soundLabel->setEnabled(false);
-    soundPlayBtn->setEnabled(false);
-  }
+        patternColor->setColor(highlightItem->getColor());
+        patternInput->setText(highlightItem->getPattern());
+        soundURL->setURL(highlightItem->getSoundURL().prettyURL());
+        autoTextInput->setText(highlightItem->getAutoText());
+    }
+    else
+    {
+        patternLabel->setEnabled(false);
+        patternInput->setEnabled(false);
+        patternButton->setEnabled(false);
+        patternColor->setEnabled(false);
+        soundURL->setEnabled(false);
+        soundLabel->setEnabled(false);
+        soundPlayBtn->setEnabled(false);
+    }
 }
 
 void PrefsPageHighlight::highlightTextChanged(const QString& newPattern)
 {
-  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
+    HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
 
-  if(item) item->setPattern(newPattern);
+    if(item) item->setPattern(newPattern);
 }
 
 void PrefsPageHighlight::highlightTextEditButtonClicked()
 {
-    QDialog *editorDialog = 
+    QDialog *editorDialog =
         KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor" );
     if (editorDialog)
     {
         // kdeutils was installed, so the dialog was found.  Fetch the editor interface.
         KRegExpEditorInterface *reEditor =
             static_cast<KRegExpEditorInterface *>(editorDialog->qt_cast( "KRegExpEditorInterface" ) );
-        Q_ASSERT( reEditor ); // This should not fail!// now use the editor.
+        Q_ASSERT( reEditor );                     // This should not fail!// now use the editor.
         reEditor->setRegExp(patternInput->text());
         int dlgResult = editorDialog->exec();
         if ( dlgResult == QDialog::Accepted )
@@ -179,112 +182,112 @@ void PrefsPageHighlight::highlightTextEditButtonClicked()
 
 void PrefsPageHighlight::highlightColorChanged(const QColor& newColor)
 {
-  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
+    HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
 
-  if(item)
-  {
-    item->setColor(newColor);
-    item->repaint();
-  }
+    if(item)
+    {
+        item->setColor(newColor);
+        item->repaint();
+    }
 }
 
 void PrefsPageHighlight::soundURLChanged(const QString& newURL)
 {
-  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
+    HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
 
-  if(item)
-  {
-    item->setSoundURL(KURL(newURL));
-  }
+    if(item)
+    {
+        item->setSoundURL(KURL(newURL));
+    }
 }
 
 void PrefsPageHighlight::autoTextChanged(const QString& newAutoText)
 {
-  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
+    HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
 
-  if(item)
-  {
-    item->setAutoText(newAutoText);
-  }
+    if(item)
+    {
+        item->setAutoText(newAutoText);
+    }
 }
 
 void PrefsPageHighlight::addHighlight()
 {
-  Highlight* newHighlight=new Highlight(i18n("New"),false,QColor("#ff0000"),KURL(),QString::null);
+    Highlight* newHighlight=new Highlight(i18n("New"),false,QColor("#ff0000"),KURL(),QString::null);
 
-  HighlightViewItem* item=new HighlightViewItem(highlightListView,newHighlight);
-  highlightListView->setSelected(item,true);
+    HighlightViewItem* item=new HighlightViewItem(highlightListView,newHighlight);
+    highlightListView->setSelected(item,true);
 }
 
 void PrefsPageHighlight::removeHighlight()
 {
-  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
-
-  if(item)
-  {
-    delete item;
-
-    item=static_cast<HighlightViewItem*>(highlightListView->currentItem());
+    HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
 
     if(item)
-      highlightListView->setSelected(item,true);
-    else
     {
-      patternLabel->setEnabled(false);
-      patternInput->setEnabled(false);
-      patternButton->setEnabled(false);
-      patternColor->setEnabled(false);
-      soundURL->setEnabled(false);
-      soundLabel->setEnabled(false);
-      soundPlayBtn->setEnabled(false);
-      autoTextLabel->setEnabled(false);
-      autoTextInput->setEnabled(false);
+        delete item;
+
+        item=static_cast<HighlightViewItem*>(highlightListView->currentItem());
+
+        if(item)
+            highlightListView->setSelected(item,true);
+        else
+        {
+            patternLabel->setEnabled(false);
+            patternInput->setEnabled(false);
+            patternButton->setEnabled(false);
+            patternColor->setEnabled(false);
+            soundURL->setEnabled(false);
+            soundLabel->setEnabled(false);
+            soundPlayBtn->setEnabled(false);
+            autoTextLabel->setEnabled(false);
+            autoTextInput->setEnabled(false);
+        }
     }
-  }
 }
 
 QPtrList<Highlight> PrefsPageHighlight::getHighlightList()
 {
-  QPtrList<Highlight> newList;
+    QPtrList<Highlight> newList;
 
-  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->firstChild());
-  while(item)
-  {
-    newList.append(new Highlight(item->getPattern(),
-                                 item->getRegExp(),
-                                 item->getColor(),
-                                 item->getSoundURL(),
-                                 item->getAutoText()));
-    item=item->itemBelow();
-  }
+    HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->firstChild());
+    while(item)
+    {
+        newList.append(new Highlight(item->getPattern(),
+            item->getRegExp(),
+            item->getColor(),
+            item->getSoundURL(),
+            item->getAutoText()));
+        item=item->itemBelow();
+    }
 
-  return newList;
+    return newList;
 }
 
 void PrefsPageHighlight::currentNickChanged(int state)
 {
-  currentNickColor->setEnabled(state==2);
+    currentNickColor->setEnabled(state==2);
 }
 
 void PrefsPageHighlight::ownLinesChanged(int state)
 {
-  ownLinesColor->setEnabled(state==2);
+    ownLinesColor->setEnabled(state==2);
 }
 
 void PrefsPageHighlight::applyPreferences()
 {
-  preferences->setHighlightList(getHighlightList());
-  preferences->setHighlightNick(currentNickCheck->isChecked());
-  preferences->setHighlightOwnLines(ownLinesCheck->isChecked());
-  preferences->setHighlightNickColor(currentNickColor->color().name());
-  preferences->setHighlightOwnLinesColor(ownLinesColor->color().name());
-  preferences->setHighlightSoundEnabled(enableSoundCheck->isChecked());
+    preferences->setHighlightList(getHighlightList());
+    preferences->setHighlightNick(currentNickCheck->isChecked());
+    preferences->setHighlightOwnLines(ownLinesCheck->isChecked());
+    preferences->setHighlightNickColor(currentNickColor->color().name());
+    preferences->setHighlightOwnLinesColor(ownLinesColor->color().name());
+    preferences->setHighlightSoundEnabled(enableSoundCheck->isChecked());
 }
 
 void PrefsPageHighlight::playSound()
 {
-  KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-  konvApp->sound()->play(KURL(soundURL->url()));
+    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+    konvApp->sound()->play(KURL(soundURL->url()));
 }
 
 #include "prefspagehighlight.moc"

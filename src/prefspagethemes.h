@@ -18,27 +18,26 @@ class QStringList;
 
 class PrefsPageThemes : public Theme_Config
 {
-  Q_OBJECT
-  public:
-    PrefsPageThemes(QWidget* newParent,Preferences* newPreferences);
-    ~PrefsPageThemes();
+    Q_OBJECT
+        public:
+        PrefsPageThemes(QWidget* newParent,Preferences* newPreferences);
+        ~PrefsPageThemes();
 
- public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
- protected slots:
-    void updatePreview(int id);
-    void updateButtons();
-    void installTheme();
-    void removeTheme();
+    protected slots:
+        void updatePreview(int id);
+        void updateButtons();
+        void installTheme();
+        void removeTheme();
 
- private:
-    QStringList m_dirs;
-    QString m_oldTheme;
-    Preferences* preferences;
+    private:
+        QStringList m_dirs;
+        QString m_oldTheme;
+        Preferences* preferences;
 
-    void updateList();
+        void updateList();
 
 };
-
 #endif

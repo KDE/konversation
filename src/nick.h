@@ -25,28 +25,27 @@ class NickListViewItem;
 
 class Nick
 {
-  public:
-    Nick(KListView *listView,
-	 const ChannelNickPtr& channelnick);
-    ~Nick();
+    public:
+        Nick(KListView *listView,
+            const ChannelNickPtr& channelnick);
+        ~Nick();
 
-    bool isAdmin() const;
-    bool isOwner() const;
-    bool isOp() const;
-    bool isHalfop() const;
-    bool hasVoice() const;
+        bool isAdmin() const;
+        bool isOwner() const;
+        bool isOp() const;
+        bool isHalfop() const;
+        bool hasVoice() const;
 
-    bool isSelected() const;
+        bool isSelected() const;
 
-    QString getNickname() const;
-    QString loweredNickname() const;
-    QString getHostmask() const;
-    NickInfoPtr getNickInfo() const;
-    ChannelNickPtr getChannelNick() const;
-    
-  protected:
-    ChannelNickPtr channelnickptr;
-    NickListViewItem* listViewItem;
+        QString getNickname() const;
+        QString loweredNickname() const;
+        QString getHostmask() const;
+        NickInfoPtr getNickInfo() const;
+        ChannelNickPtr getChannelNick() const;
+
+    protected:
+        ChannelNickPtr channelnickptr;
+        NickListViewItem* listViewItem;
 };
-
 #endif

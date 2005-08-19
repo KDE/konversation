@@ -10,8 +10,8 @@
   *                                                                       *
   *************************************************************************
 
-  Based on the code by:
-  Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
+Based on the code by:
+Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 */
 
@@ -25,21 +25,21 @@
 #include "konvibookmarkhandler.h"
 
 KonviBookmarkMenu::KonviBookmarkMenu( KBookmarkManager* mgr,
-				      KonviBookmarkHandler * _owner, KPopupMenu * _parentMenu,
-				      KActionCollection *collec, bool _isRoot, bool _add,
-				      const QString & parentAddress )
-  : KBookmarkMenu( mgr, _owner, _parentMenu, collec, _isRoot, _add, parentAddress),
-    m_kOwner(_owner)
+KonviBookmarkHandler * _owner, KPopupMenu * _parentMenu,
+KActionCollection *collec, bool _isRoot, bool _add,
+const QString & parentAddress )
+: KBookmarkMenu( mgr, _owner, _parentMenu, collec, _isRoot, _add, parentAddress),
+m_kOwner(_owner)
 {
-  /*
-   * First, we disconnect KBookmarkMenu::slotAboutToShow()
-   * Then,  we connect    KonviBookmarkMenu::slotAboutToShow().
-   * They are named differently because the SLOT() macro thinks we want
-   * KonviBookmarkMenu::KBookmarkMenu::slotAboutToShow()
-   * Could this be solved if slotAboutToShow() is virtual in KBookmarMenu?
-   */
-  disconnect(_parentMenu, SIGNAL(aboutToShow()), this, SLOT(slotAboutToShow()));
-  connect(_parentMenu, SIGNAL(aboutToShow()), SLOT(slotAboutToShow2()));
+    /*
+     * First, we disconnect KBookmarkMenu::slotAboutToShow()
+     * Then,  we connect    KonviBookmarkMenu::slotAboutToShow().
+     * They are named differently because the SLOT() macro thinks we want
+     * KonviBookmarkMenu::KBookmarkMenu::slotAboutToShow()
+     * Could this be solved if slotAboutToShow() is virtual in KBookmarMenu?
+     */
+    disconnect(_parentMenu, SIGNAL(aboutToShow()), this, SLOT(slotAboutToShow()));
+    connect(_parentMenu, SIGNAL(aboutToShow()), SLOT(slotAboutToShow2()));
 }
 
 /*
@@ -53,100 +53,102 @@ KonviBookmarkMenu::KonviBookmarkMenu( KBookmarkManager* mgr,
  */
 void KonviBookmarkMenu::slotAboutToShow2()
 {
-  // Did the bookmarks change since the last time we showed them ?
-  if ( m_bDirty )
-  {
-    m_bDirty = false;
-    refill();
-  }
+    // Did the bookmarks change since the last time we showed them ?
+    if ( m_bDirty )
+    {
+        m_bDirty = false;
+        refill();
+    }
 }
 
 void KonviBookmarkMenu::refill()
 {
-  m_lstSubMenus.clear();
-  QPtrListIterator<KAction> it( m_actions );
-  for (; it.current(); ++it )
-    it.current()->unplug( m_parentMenu );
-  m_parentMenu->clear();
-  m_actions.clear();
-  fillBookmarkMenu();
-  m_parentMenu->adjustSize();
+    m_lstSubMenus.clear();
+    QPtrListIterator<KAction> it( m_actions );
+    for (; it.current(); ++it )
+        it.current()->unplug( m_parentMenu );
+    m_parentMenu->clear();
+    m_actions.clear();
+    fillBookmarkMenu();
+    m_parentMenu->adjustSize();
 }
 
 void KonviBookmarkMenu::fillBookmarkMenu()
 {
-  if ( m_bIsRoot )
-  {
-    if ( m_bAddBookmark )
-      addAddBookmark();
+    if ( m_bIsRoot )
+    {
+        if ( m_bAddBookmark )
+            addAddBookmark();
 
-    addEditBookmarks();
+        addEditBookmarks();
 
-    if ( m_bAddBookmark )
-      addNewFolder();
-  }
+        if ( m_bAddBookmark )
+            addNewFolder();
+    }
 
-  KBookmarkGroup parentBookmark = m_pManager->findByAddress( m_parentAddress ).toGroup();
-  Q_ASSERT(!parentBookmark.isNull());
-  bool separatorInserted = false;
-  for ( KBookmark bm = parentBookmark.first(); !bm.isNull();
+    KBookmarkGroup parentBookmark = m_pManager->findByAddress( m_parentAddress ).toGroup();
+    Q_ASSERT(!parentBookmark.isNull());
+    bool separatorInserted = false;
+    for ( KBookmark bm = parentBookmark.first(); !bm.isNull();
         bm = parentBookmark.next(bm) )
-  {
-    QString text = bm.text();
-    text.replace( '&', "&&" );
-    if ( !separatorInserted && m_bIsRoot) { // inserted before the first konq bookmark, to avoid the separator if no konq bookmark
-      m_parentMenu->insertSeparator();
-      separatorInserted = true;
-    }
-    if ( !bm.isGroup() )
     {
-      if ( bm.isSeparator() )
-      {
-        m_parentMenu->insertSeparator();
-      }
-      else
-      {
-        // kdDebug(1203) << "Creating URL bookmark menu item for " << bm.text() << endl;
-        // create a normal URL item, with ID as a name
-        KAction * action = new KAction( text, bm.icon(), 0,
-                                        this, SLOT( slotBookmarkSelected() ),
-                                        m_actionCollection, bm.url().url().utf8() );
+        QString text = bm.text();
+        text.replace( '&', "&&" );
+        if ( !separatorInserted && m_bIsRoot)     // inserted before the first konq bookmark, to avoid the separator if no konq bookmark
+        {
+            m_parentMenu->insertSeparator();
+            separatorInserted = true;
+        }
+        if ( !bm.isGroup() )
+        {
+            if ( bm.isSeparator() )
+            {
+                m_parentMenu->insertSeparator();
+            }
+            else
+            {
+                // kdDebug(1203) << "Creating URL bookmark menu item for " << bm.text() << endl;
+                // create a normal URL item, with ID as a name
+                KAction * action = new KAction( text, bm.icon(), 0,
+                    this, SLOT( slotBookmarkSelected() ),
+                    m_actionCollection, bm.url().url().utf8() );
 
-        action->setStatusText( bm.url().prettyURL() );
+                action->setStatusText( bm.url().prettyURL() );
 
-        action->plug( m_parentMenu );
-        m_actions.append( action );
-      }
+                action->plug( m_parentMenu );
+                m_actions.append( action );
+            }
+        }
+        else
+        {
+            // kdDebug(1203) << "Creating bookmark submenu named " << bm.text() << endl;
+            KActionMenu * actionMenu = new KActionMenu( text, bm.icon(),
+                m_actionCollection, 0L );
+            actionMenu->plug( m_parentMenu );
+            m_actions.append( actionMenu );
+            KonviBookmarkMenu *subMenu = new KonviBookmarkMenu( m_pManager,
+                m_kOwner, actionMenu->popupMenu(),
+                m_actionCollection, false,
+                m_bAddBookmark, bm.address() );
+            m_lstSubMenus.append( subMenu );
+        }
     }
-    else
+
+    if ( !m_bIsRoot && m_bAddBookmark )
     {
-      // kdDebug(1203) << "Creating bookmark submenu named " << bm.text() << endl;
-      KActionMenu * actionMenu = new KActionMenu( text, bm.icon(),
-                                                  m_actionCollection, 0L );
-      actionMenu->plug( m_parentMenu );
-      m_actions.append( actionMenu );
-      KonviBookmarkMenu *subMenu = new KonviBookmarkMenu( m_pManager,
-                                         m_kOwner, actionMenu->popupMenu(),
-                                         m_actionCollection, false,
-                                         m_bAddBookmark, bm.address() );
-      m_lstSubMenus.append( subMenu );
+        if ( m_parentMenu->count() > 0 )
+            m_parentMenu->insertSeparator();
+        addAddBookmark();
+        addNewFolder();
     }
-  }
-
-  if ( !m_bIsRoot && m_bAddBookmark )
-  {
-      if ( m_parentMenu->count() > 0 )
-          m_parentMenu->insertSeparator();
-    addAddBookmark();
-    addNewFolder();
-  }
 }
 
 void KonviBookmarkMenu::slotBookmarkSelected()
 {
-    if ( !m_pOwner ) return; // this view doesn't handle bookmarks...
-    m_kOwner->openBookmarkURL( QString::fromUtf8(sender()->name()), /* URL */
-                               ( (KAction *)sender() )->text() /* Title */ );
+    if ( !m_pOwner ) return;                      // this view doesn't handle bookmarks...
+                                                  /* URL */
+    m_kOwner->openBookmarkURL( QString::fromUtf8(sender()->name()),
+        ( (KAction *)sender() )->text() /* Title */ );
 }
 
 #include "konvibookmarkmenu.moc"

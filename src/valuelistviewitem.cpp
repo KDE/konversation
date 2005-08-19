@@ -16,11 +16,10 @@
 #include "valuelistviewitem.h"
 
 ValueListViewItem::ValueListViewItem(int newValue,KListView* parent,QString label)
-                 : KListViewItem(parent,label)
+: KListViewItem(parent,label)
 {
-  value=newValue;
+    value=newValue;
 }
-
 
 ValueListViewItem::~ValueListViewItem()
 {
@@ -28,5 +27,5 @@ ValueListViewItem::~ValueListViewItem()
 
 const int ValueListViewItem::getValue() const
 {
-  return value;
+    return value;
 }

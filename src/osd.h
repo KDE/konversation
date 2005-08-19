@@ -15,9 +15,9 @@
 #ifndef OSD_H
 #define OSD_H
 
-#include <qpixmap.h> //stack allocated
-#include <qtimer.h>  //stack allocated
-#include <qwidget.h> //baseclass
+#include <qpixmap.h>                              //stack allocated
+#include <qtimer.h>                               //stack allocated
+#include <qwidget.h>                              //baseclass
 
 class QFont;
 class QString;
@@ -28,7 +28,7 @@ class MetaBundle;
 class OSDWidget : public QWidget
 {
     Q_OBJECT
-      public:
+        public:
         enum Alignment { Left, Middle, Center, Right };
 
         OSDWidget(const QString &appName, QWidget *parent = 0, const char *name = "osd");
@@ -48,15 +48,18 @@ class OSDWidget : public QWidget
         int alignment() { return m_alignment; }
         int y()         { return m_y; }
 
-      public slots:
+    public slots:
         //TODO rename show, scrap removeOSD, just use hide() <- easier to learn
         void showOSD(const QString&, bool preemptive=false );
-        void removeOSD() { hide(); } //inlined as is convenience function
+        void removeOSD()                          //inlined as is convenience function
+        {
+            hide();
+        }
 
-      protected slots:
+    protected slots:
         void minReached();
 
-      protected:
+    protected:
         /* render text into osdBuffer */
         void renderOSDText(const QString &text);
         void mousePressEvent( QMouseEvent* );
@@ -88,31 +91,28 @@ class OSDWidget : public QWidget
         int         m_screen;
         uint        m_y;
 
-        bool m_dirty; //if dirty we will be re-rendered before we are shown
+        bool m_dirty;                             //if dirty we will be re-rendered before we are shown
 };
-
-
 
 // do not pollute OSDWidget with this preview stuff
 class OSDPreviewWidget : public OSDWidget
 {
     Q_OBJECT
-public:
-    OSDPreviewWidget( const QString &appName, QWidget *parent = 0, const char *name = "osdpreview" );
+        public:
+        OSDPreviewWidget( const QString &appName, QWidget *parent = 0, const char *name = "osdpreview" );
 
-    static QPoint m_previewOffset;
+        static QPoint m_previewOffset;
 
-signals:
-    void positionChanged();
+        signals:
+        void positionChanged();
 
-protected:
-    void mousePressEvent( QMouseEvent * );
-    void mouseReleaseEvent( QMouseEvent * );
-    void mouseMoveEvent( QMouseEvent * );
+    protected:
+        void mousePressEvent( QMouseEvent * );
+        void mouseReleaseEvent( QMouseEvent * );
+        void mouseMoveEvent( QMouseEvent * );
 
-private:
-    bool   m_dragging;
-    QPoint m_dragOffset;
+    private:
+        bool   m_dragging;
+        QPoint m_dragOffset;
 };
-
-#endif /*OSD_H*/
+#endif                                            /*OSD_H*/

@@ -21,24 +21,24 @@
 #include "preferences.h"
 
 PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QWidget* newParent, Preferences* newPreferences)
-  : ChatwindowBehaviour_Config( newParent )
+: ChatwindowBehaviour_Config( newParent )
 {
-  preferences = newPreferences;
+    preferences = newPreferences;
 
-  kcfg_BeepOnAsciiBel->setChecked(preferences->getBeep());
-  kcfg_HideJoinPart->setChecked(preferences->getHideUnimportantEvents());
-  kcfg_DisableExpansions->setChecked(preferences->getDisableExpansion());
-  kcfg_ShowRememberLine->setChecked(preferences->getShowRememberLineInAllWindows());
-  kcfg_RedirectStatusMessages->setChecked(preferences->getRedirectToStatusPane());
-  kcfg_UseLiteralModes->setChecked(preferences->getUseLiteralModes());
+    kcfg_BeepOnAsciiBel->setChecked(preferences->getBeep());
+    kcfg_HideJoinPart->setChecked(preferences->getHideUnimportantEvents());
+    kcfg_DisableExpansions->setChecked(preferences->getDisableExpansion());
+    kcfg_ShowRememberLine->setChecked(preferences->getShowRememberLineInAllWindows());
+    kcfg_RedirectStatusMessages->setChecked(preferences->getRedirectToStatusPane());
+    kcfg_UseLiteralModes->setChecked(preferences->getUseLiteralModes());
 
-  kcfg_ScrollBackLimit->setValue(preferences->getScrollbackMax());
-  kcfg_AutoWhoLimit->setValue(preferences->getAutoWhoNicksLimit());
+    kcfg_ScrollBackLimit->setValue(preferences->getScrollbackMax());
+    kcfg_AutoWhoLimit->setValue(preferences->getAutoWhoNicksLimit());
 
-  kcfg_autoWhoContinuous->setChecked(preferences->getAutoWhoContinuousEnabled());
-  kcfg_WhoInterval->setValue(preferences->getAutoWhoContinuousInterval());
+    kcfg_autoWhoContinuous->setChecked(preferences->getAutoWhoContinuousEnabled());
+    kcfg_WhoInterval->setValue(preferences->getAutoWhoContinuousInterval());
 
-  kcfg_ShowRealNames->setChecked(preferences->getShowRealNames());
+    kcfg_ShowRealNames->setChecked(preferences->getShowRealNames());
 }
 
 PrefsPageChatWinBehavior::~PrefsPageChatWinBehavior()
@@ -47,17 +47,17 @@ PrefsPageChatWinBehavior::~PrefsPageChatWinBehavior()
 
 void PrefsPageChatWinBehavior::applyPreferences()
 {
-  preferences->setBeep(kcfg_BeepOnAsciiBel->isChecked());
-  preferences->setHideUnimportantEvents(kcfg_HideJoinPart->isChecked());
-  preferences->setDisableExpansion(kcfg_DisableExpansions->isChecked());
-  preferences->setShowRememberLineInAllWindows(kcfg_ShowRememberLine->isChecked());
-  preferences->setRedirectToStatusPane(kcfg_RedirectStatusMessages->isChecked());
-  preferences->setUseLiteralModes(kcfg_UseLiteralModes->isChecked());
-  preferences->setScrollbackMax(kcfg_ScrollBackLimit->value());
-  preferences->setAutoWhoNicksLimit(kcfg_AutoWhoLimit->value());
-  preferences->setAutoWhoContinuousEnabled(kcfg_autoWhoContinuous->isChecked());
-  preferences->setAutoWhoContinuousInterval(kcfg_WhoInterval->value());
-  preferences->setShowRealNames(kcfg_ShowRealNames->isChecked());
+    preferences->setBeep(kcfg_BeepOnAsciiBel->isChecked());
+    preferences->setHideUnimportantEvents(kcfg_HideJoinPart->isChecked());
+    preferences->setDisableExpansion(kcfg_DisableExpansions->isChecked());
+    preferences->setShowRememberLineInAllWindows(kcfg_ShowRememberLine->isChecked());
+    preferences->setRedirectToStatusPane(kcfg_RedirectStatusMessages->isChecked());
+    preferences->setUseLiteralModes(kcfg_UseLiteralModes->isChecked());
+    preferences->setScrollbackMax(kcfg_ScrollBackLimit->value());
+    preferences->setAutoWhoNicksLimit(kcfg_AutoWhoLimit->value());
+    preferences->setAutoWhoContinuousEnabled(kcfg_autoWhoContinuous->isChecked());
+    preferences->setAutoWhoContinuousInterval(kcfg_WhoInterval->value());
+    preferences->setShowRealNames(kcfg_ShowRealNames->isChecked());
 }
 
 #include "prefspagechatwinbehavior.moc"

@@ -24,61 +24,66 @@
 #include "preferences.h"
 
 IRCColorChooser::IRCColorChooser(QWidget* parent, Preferences* p, const char* name)
-  : KDialogBase(parent, name, true, i18n("IRC Color Chooser"), Ok|Cancel, Ok)
+: KDialogBase(parent, name, true, i18n("IRC Color Chooser"), Ok|Cancel, Ok)
 {
-  m_preferences = p;
+    m_preferences = p;
 
-  m_view = new IRCColorChooserUI(this);
-  setMainWidget(m_view);
-  initColors(m_view->m_fgColorCBox);
-  initColors(m_view->m_bgColorCBox);
-  m_view->m_bgColorCBox->insertItem(i18n("None"), 0);
+    m_view = new IRCColorChooserUI(this);
+    setMainWidget(m_view);
+    initColors(m_view->m_fgColorCBox);
+    initColors(m_view->m_bgColorCBox);
+    m_view->m_bgColorCBox->insertItem(i18n("None"), 0);
 
-  connect(m_view->m_fgColorCBox, SIGNAL(activated(int)), this, SLOT(updatePreview()));
-  connect(m_view->m_bgColorCBox, SIGNAL(activated(int)), this, SLOT(updatePreview()));
-  m_view->m_fgColorCBox->setCurrentItem(1);
-  m_view->m_bgColorCBox->setCurrentItem(0);
-  updatePreview();
+    connect(m_view->m_fgColorCBox, SIGNAL(activated(int)), this, SLOT(updatePreview()));
+    connect(m_view->m_bgColorCBox, SIGNAL(activated(int)), this, SLOT(updatePreview()));
+    m_view->m_fgColorCBox->setCurrentItem(1);
+    m_view->m_bgColorCBox->setCurrentItem(0);
+    updatePreview();
 }
 
 QString IRCColorChooser::color()
 {
-  QString s;
-  s = "%C" + QString::number(m_view->m_fgColorCBox->currentItem());
+    QString s;
+    s = "%C" + QString::number(m_view->m_fgColorCBox->currentItem());
 
-  if(m_view->m_bgColorCBox->currentItem() > 0) {
-    s += "," + QString::number(m_view->m_bgColorCBox->currentItem() - 1);
-  }
+    if(m_view->m_bgColorCBox->currentItem() > 0)
+    {
+        s += "," + QString::number(m_view->m_bgColorCBox->currentItem() - 1);
+    }
 
-  return s;
+    return s;
 }
 
 void IRCColorChooser::updatePreview()
 {
-  QStringList colors = m_preferences->getIRCColorList();
-  QColor bgc;
+    QStringList colors = m_preferences->getIRCColorList();
+    QColor bgc;
 
-  if(m_view->m_bgColorCBox->currentItem() > 0) {
-    bgc = QColor(colors[m_view->m_bgColorCBox->currentItem() - 1]);
-  } else {
-    bgc = QColor("#" + m_preferences->getColor("TextViewBackground"));
-  }
+    if(m_view->m_bgColorCBox->currentItem() > 0)
+    {
+        bgc = QColor(colors[m_view->m_bgColorCBox->currentItem() - 1]);
+    }
+    else
+    {
+        bgc = QColor("#" + m_preferences->getColor("TextViewBackground"));
+    }
 
-  m_view->m_previewLbl->setBackgroundColor(bgc);
-  m_view->m_previewLbl->setPaletteForegroundColor(QColor(colors[m_view->m_fgColorCBox->currentItem()]));
+    m_view->m_previewLbl->setBackgroundColor(bgc);
+    m_view->m_previewLbl->setPaletteForegroundColor(QColor(colors[m_view->m_fgColorCBox->currentItem()]));
 }
 
 void IRCColorChooser::initColors(KComboBox* combo)
 {
-  QPixmap pix(width(), combo->fontMetrics().height() + 4);
-  int i = 0;
-  QStringList colors = m_preferences->getIRCColorList();
+    QPixmap pix(width(), combo->fontMetrics().height() + 4);
+    int i = 0;
+    QStringList colors = m_preferences->getIRCColorList();
 
-  for (QStringList::iterator it = colors.begin(); it != colors.end(); ++it ) {
-    QString c = *it;
-    pix.fill(QColor(c));
-    combo->insertItem(pix, i++);
-  }
+    for (QStringList::iterator it = colors.begin(); it != colors.end(); ++it )
+    {
+        QString c = *it;
+        pix.fill(QColor(c));
+        combo->insertItem(pix, i++);
+    }
 }
 
 #include "irccolorchooser.moc"

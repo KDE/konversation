@@ -12,7 +12,6 @@
   email:     eisfuchs@tigress.com
 */
 
-
 #ifndef LEDTAB_H
 #define LEDTAB_H
 
@@ -26,49 +25,48 @@
 
 class LedTab : public QObject,public QTab
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    LedTab(QWidget* newWidget,const QString& text,int newColor,bool on);
-    ~LedTab();
-    
-    void setOn(bool on, bool important=true);
-    void setLabelColor(const QString& newLabelColor);
-    const QString& getLabelColor();
+        public:
+        LedTab(QWidget* newWidget,const QString& text,int newColor,bool on);
+        ~LedTab();
 
-    QWidget* getWidget();
-    int getColor();
+        void setOn(bool on, bool important=true);
+        void setLabelColor(const QString& newLabelColor);
+        const QString& getLabelColor();
 
-    bool getOnline();
-    void setOnline(bool state);
+        QWidget* getWidget();
+        int getColor();
 
-    QIconSet iconOn;
-    QIconSet iconOff;
-    QTimer blinkTimer;
+        bool getOnline();
+        void setOnline(bool state);
 
-  signals:
-    void repaintTab(LedTab* myself);
+        QIconSet iconOn;
+        QIconSet iconOff;
+        QTimer blinkTimer;
 
-  protected slots:
-    void blinkTimeout();
+        signals:
+        void repaintTab(LedTab* myself);
 
-  protected:
-    enum StateType
-    {
-      Off=0,
-      Slow,
-      Fast
-    };
+    protected slots:
+        void blinkTimeout();
 
-    void setIconSet(const QIconSet& icon);
+    protected:
+        enum StateType
+        {
+            Off=0,
+            Slow,
+            Fast
+        };
 
-    int color;      // color of the LED
-    StateType state;// if and how fast the LED should blink
-    bool blinkOn;   // true, if blinking LED is on at this moment
-    bool online;    // if false label should be crossed out
+        void setIconSet(const QIconSet& icon);
 
-    QWidget* widget;
-    QString labelColor;
+        int color;                                // color of the LED
+        StateType state;                          // if and how fast the LED should blink
+        bool blinkOn;                             // true, if blinking LED is on at this moment
+        bool online;                              // if false label should be crossed out
+
+        QWidget* widget;
+        QString labelColor;
 };
-
 #endif

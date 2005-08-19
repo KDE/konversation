@@ -14,36 +14,37 @@
 
 #include <qstring.h>
 
-namespace Konversation {
+namespace Konversation
+{
 
-class ServerSettings{
-  public:
-    ServerSettings();
-    ServerSettings(const ServerSettings& settings);
-    ServerSettings(const QString& server);
-    ~ServerSettings();
+    class ServerSettings
+    {
+        public:
+            ServerSettings();
+            ServerSettings(const ServerSettings& settings);
+            ServerSettings(const QString& server);
+            ~ServerSettings();
 
-    void setServer(const QString& server) { m_server = server; }
-    QString server() const { return m_server; }
+            void setServer(const QString& server) { m_server = server; }
+            QString server() const { return m_server; }
 
-    void setPort(int port) { m_port = port; }
-    int port() const { return m_port;}
+            void setPort(int port) { m_port = port; }
+            int port() const { return m_port;}
 
-    void setPassword(const QString& password) { m_password = password; }
-    QString password() const { return m_password; }
+            void setPassword(const QString& password) { m_password = password; }
+            QString password() const { return m_password; }
 
-    void setSSLEnabled(bool enabled) { m_SSLEnabled = enabled; }
-    bool SSLEnabled() const { return m_SSLEnabled; }
-    
-    bool operator== (const ServerSettings& settings) const;
+            void setSSLEnabled(bool enabled) { m_SSLEnabled = enabled; }
+            bool SSLEnabled() const { return m_SSLEnabled; }
 
-  private:
-    QString m_server;
-    int m_port;
-    QString m_password;
-    bool m_SSLEnabled;
-};
+            bool operator== (const ServerSettings& settings) const;
+
+        private:
+            QString m_server;
+            int m_port;
+            QString m_password;
+            bool m_SSLEnabled;
+    };
 
 }
-
 #endif

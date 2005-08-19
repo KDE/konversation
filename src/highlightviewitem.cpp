@@ -18,14 +18,14 @@
 #include <kurl.h>
 
 HighlightViewItem::HighlightViewItem(QListView* parent, Highlight* passed_Highlight)
-  : QCheckListItem(parent, QString::null,QCheckListItem::CheckBox)
+: QCheckListItem(parent, QString::null,QCheckListItem::CheckBox)
 {
-  setText(1,passed_Highlight->getPattern());
-  itemColor = passed_Highlight->getColor();
-  itemID = passed_Highlight->getID();
-  setSoundURL(passed_Highlight->getSoundURL());
-  setAutoText(passed_Highlight->getAutoText());
-  setOn(passed_Highlight->getRegExp());
+    setText(1,passed_Highlight->getPattern());
+    itemColor = passed_Highlight->getColor();
+    itemID = passed_Highlight->getID();
+    setSoundURL(passed_Highlight->getSoundURL());
+    setAutoText(passed_Highlight->getAutoText());
+    setOn(passed_Highlight->getRegExp());
 }
 
 HighlightViewItem::~HighlightViewItem()
@@ -34,15 +34,15 @@ HighlightViewItem::~HighlightViewItem()
 
 void HighlightViewItem::paintCell(QPainter* p, const QColorGroup &cg, int column, int width, int alignment)
 {
-  // copy all colors from cg and only then change needed colors
-  itemColorGroup=cg;
-  itemColorGroup.setColor(QColorGroup::Text, itemColor);
-  QCheckListItem::paintCell(p, itemColorGroup, column, width, alignment);
+    // copy all colors from cg and only then change needed colors
+    itemColorGroup=cg;
+    itemColorGroup.setColor(QColorGroup::Text, itemColor);
+    QCheckListItem::paintCell(p, itemColorGroup, column, width, alignment);
 }
 
 HighlightViewItem* HighlightViewItem::itemBelow()
 {
-  return (HighlightViewItem*) QCheckListItem::itemBelow();
+    return (HighlightViewItem*) QCheckListItem::itemBelow();
 }
 
 void HighlightViewItem::setPattern(const QString& newPattern) { setText(1,newPattern); }
@@ -50,22 +50,22 @@ QString HighlightViewItem::getPattern()                       { return text(1); 
 
 void HighlightViewItem::setSoundURL(const KURL& url)
 {
-  soundURL = url;
-  setText(2, soundURL.prettyURL());
+    soundURL = url;
+    setText(2, soundURL.prettyURL());
 }
 
 void HighlightViewItem::setAutoText(const QString& newAutoText)
 {
-  autoText = newAutoText;
-  setText(3,newAutoText);
+    autoText = newAutoText;
+    setText(3,newAutoText);
 }
 
 bool HighlightViewItem::getRegExp()
 {
-  return isOn();
+    return isOn();
 }
 
 QString HighlightViewItem::getAutoText()
 {
-  return autoText;
+    return autoText;
 }

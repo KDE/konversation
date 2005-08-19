@@ -14,12 +14,12 @@
 #include "modebutton.h"
 
 ModeButton::ModeButton(QString label,QWidget* parent,int newId) :
-            QPushButton::QPushButton(label,parent)
+QPushButton::QPushButton(label,parent)
 {
-  id=newId;
-  on=false;
-  setToggleButton(true);
-  connect(this,SIGNAL (clicked()),this,SLOT (wasClicked()) );
+    id=newId;
+    on=false;
+    setToggleButton(true);
+    connect(this,SIGNAL (clicked()),this,SLOT (wasClicked()) );
 }
 
 ModeButton::~ModeButton()
@@ -28,16 +28,16 @@ ModeButton::~ModeButton()
 
 void ModeButton::setOn(bool state)
 {
-  on=state;
-  QPushButton::setOn(state);
+    on=state;
+    QPushButton::setOn(state);
 }
 
 void ModeButton::wasClicked()
 {
-  emit clicked(id,!on);
-  // Keep button in old state, since we don't know if mode change will
-  // eventually work. If we aren't channel operator, it won't.
-  setOn(on);
+    emit clicked(id,!on);
+    // Keep button in old state, since we don't know if mode change will
+    // eventually work. If we aren't channel operator, it won't.
+    setOn(on);
 }
 
 #include "modebutton.moc"

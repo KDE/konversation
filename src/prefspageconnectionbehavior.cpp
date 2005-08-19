@@ -18,16 +18,16 @@
 #include "preferences.h"
 
 PrefsPageConnectionBehavior::PrefsPageConnectionBehavior(QWidget* newParent, Preferences* newPreferences)
-  : ConnectionBehavior_Config(newParent)
+: ConnectionBehavior_Config(newParent)
 {
-  preferences = newPreferences;
+    preferences = newPreferences;
 
-  rawLogCheck->setChecked(preferences->getRawLog());
+    rawLogCheck->setChecked(preferences->getRawLog());
 
-  reconnectGBox->setChecked(preferences->getAutoReconnect());
-  reconnectCountSpin->setValue(preferences->getReconnectCount());
-  reconnectTimeoutSpin->setValue(preferences->getMaximumLagTime());
-  autoRejoinCheck->setChecked(preferences->getAutoRejoin());
+    reconnectGBox->setChecked(preferences->getAutoReconnect());
+    reconnectCountSpin->setValue(preferences->getReconnectCount());
+    reconnectTimeoutSpin->setValue(preferences->getMaximumLagTime());
+    autoRejoinCheck->setChecked(preferences->getAutoRejoin());
 }
 
 PrefsPageConnectionBehavior::~PrefsPageConnectionBehavior()
@@ -36,12 +36,12 @@ PrefsPageConnectionBehavior::~PrefsPageConnectionBehavior()
 
 void PrefsPageConnectionBehavior::applyPreferences()
 {
-  preferences->setRawLog(rawLogCheck->isChecked());
+    preferences->setRawLog(rawLogCheck->isChecked());
 
-  preferences->setAutoReconnect(reconnectGBox->isChecked());
-  preferences->setReconnectCount(reconnectCountSpin->value());
-  preferences->setAutoRejoin(autoRejoinCheck->isChecked());
-  preferences->setMaximumLagTime(reconnectTimeoutSpin->value());
+    preferences->setAutoReconnect(reconnectGBox->isChecked());
+    preferences->setReconnectCount(reconnectCountSpin->value());
+    preferences->setAutoRejoin(autoRejoinCheck->isChecked());
+    preferences->setMaximumLagTime(reconnectTimeoutSpin->value());
 }
 
 #include "prefspageconnectionbehavior.moc"

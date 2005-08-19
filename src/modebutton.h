@@ -22,23 +22,22 @@
 
 class ModeButton : public QPushButton
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    ModeButton(QString label,QWidget* parent,int id);
-    ~ModeButton();
+        public:
+        ModeButton(QString label,QWidget* parent,int id);
+        ~ModeButton();
 
-    void setOn(bool state);
+        void setOn(bool state);
 
-  signals:
-    void clicked(int id,bool on);
+        signals:
+        void clicked(int id,bool on);
 
-  public slots:
-    void wasClicked();
+    public slots:
+        void wasClicked();
 
-  protected:
-    int id;
-    bool on;
+    protected:
+        int id;
+        bool on;
 };
-
 #endif

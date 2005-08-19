@@ -24,10 +24,10 @@
 
 RawLog::RawLog(QWidget* parent) : ChatWindow(parent)
 {
-  setName(i18n("Raw Log"));
-  setType(ChatWindow::RawLog);
-  IRCViewBox* ircBox = new IRCViewBox(this, 0);
-  setTextView(ircBox->ircView());  // Server will be set later in setServer()
+    setName(i18n("Raw Log"));
+    setType(ChatWindow::RawLog);
+    IRCViewBox* ircBox = new IRCViewBox(this, 0);
+    setTextView(ircBox->ircView());               // Server will be set later in setServer()
 }
 
 RawLog::~RawLog()
@@ -40,22 +40,25 @@ void RawLog::childAdjustFocus()
 
 void RawLog::updateFonts()
 {
-  getTextView()->setFont(KonversationApplication::preferences.getTextFont());
+    getTextView()->setFont(KonversationApplication::preferences.getTextFont());
 
-  if(KonversationApplication::preferences.getShowBackgroundImage()) {
-    getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
-                                  KonversationApplication::preferences.getBackgroundImageName());
-  } else {
-    getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
-      QString::null);
-  }
+    if(KonversationApplication::preferences.getShowBackgroundImage())
+    {
+        getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
+            KonversationApplication::preferences.getBackgroundImageName());
+    }
+    else
+    {
+        getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
+            QString::null);
+    }
 }
 
 bool RawLog::closeYourself()
 {
-  // make the server delete us so server can reset the pointer to us
-  m_server->closeRawLog();
-  return true;
+    // make the server delete us so server can reset the pointer to us
+    m_server->closeRawLog();
+    return true;
 }
 
 bool RawLog::searchView() { return true; }

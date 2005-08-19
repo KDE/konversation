@@ -20,27 +20,27 @@
 #include "preferences.h"
 
 PrefsPageLog::PrefsPageLog(QWidget* newParent,Preferences* newPreferences) :
-              Log_Config(newParent)
+Log_Config(newParent)
 {
-	preferences = newPreferences;
+    preferences = newPreferences;
 
-  kcfg_Log->setChecked(preferences->getLog());
-  
-  kcfg_LogfilePath->setURL(preferences->getLogPath());
-	kcfg_LogfilePath->setMode( KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly );
+    kcfg_Log->setChecked(preferences->getLog());
 
-  kcfg_LowerLog->setChecked(preferences->getLowerLog());
-  kcfg_AddHostnameToLog->setChecked(preferences->getAddHostnameToLog());
-  kcfg_LogFollowsNick->setChecked(preferences->getLogFollowsNick());
+    kcfg_LogfilePath->setURL(preferences->getLogPath());
+    kcfg_LogfilePath->setMode( KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly );
+
+    kcfg_LowerLog->setChecked(preferences->getLowerLog());
+    kcfg_AddHostnameToLog->setChecked(preferences->getAddHostnameToLog());
+    kcfg_LogFollowsNick->setChecked(preferences->getLogFollowsNick());
 }
 
 void PrefsPageLog::applyPreferences()
 {
-  preferences->setLog(kcfg_Log->isChecked());
-  preferences->setLowerLog(kcfg_LowerLog->isChecked());
-  preferences->setAddHostnameToLog(kcfg_AddHostnameToLog->isChecked());
-  preferences->setLogFollowsNick(kcfg_LogFollowsNick->isChecked());
-  preferences->setLogPath(kcfg_LogfilePath->url());
+    preferences->setLog(kcfg_Log->isChecked());
+    preferences->setLowerLog(kcfg_LowerLog->isChecked());
+    preferences->setAddHostnameToLog(kcfg_AddHostnameToLog->isChecked());
+    preferences->setLogFollowsNick(kcfg_LogFollowsNick->isChecked());
+    preferences->setLogPath(kcfg_LogfilePath->url());
 }
 
 #include "prefspagelog.moc"

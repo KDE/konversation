@@ -18,62 +18,62 @@
 #include "multilineedit.h"
 #include "konversationapplication.h"
 
-QString MultilineEdit::returnText; // static
+QString MultilineEdit::returnText;                // static
 
 MultilineEdit::MultilineEdit(QWidget* parent,QString text) :
-               KDialogBase(parent,"multiline_edit_dialog",true,i18n("Edit Multiline Paste"),
-                           KDialogBase::User1 | KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true,
-                           KGuiItem(i18n("Add &Quotation Indicators")))
+KDialogBase(parent,"multiline_edit_dialog",true,i18n("Edit Multiline Paste"),
+KDialogBase::User1 | KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true,
+KGuiItem(i18n("Add &Quotation Indicators")))
 {
-  // Create the top level widget
-  QWidget* page=new QWidget(this);
-  setMainWidget(page);
-  // Add the layout to the widget
-  QVBoxLayout* dialogLayout=new QVBoxLayout(page);
-  dialogLayout->setSpacing(spacingHint());
-  // add the text editor
-  textEditor=new QTextEdit(page,"multiline_text_editor");
-  textEditor->setTextFormat(PlainText);
-  textEditor->setText(text);
-  returnText=text;
+    // Create the top level widget
+    QWidget* page=new QWidget(this);
+    setMainWidget(page);
+    // Add the layout to the widget
+    QVBoxLayout* dialogLayout=new QVBoxLayout(page);
+    dialogLayout->setSpacing(spacingHint());
+    // add the text editor
+    textEditor=new QTextEdit(page,"multiline_text_editor");
+    textEditor->setTextFormat(PlainText);
+    textEditor->setText(text);
+    returnText=text;
 
-  dialogLayout->addWidget(textEditor);
+    dialogLayout->addWidget(textEditor);
 
-  setInitialSize(KonversationApplication::preferences.getMultilineEditSize());
-  show();
+    setInitialSize(KonversationApplication::preferences.getMultilineEditSize());
+    show();
 }
 
 MultilineEdit::~MultilineEdit()
 {
-  KonversationApplication::preferences.setMultilineEditSize(size());
+    KonversationApplication::preferences.setMultilineEditSize(size());
 }
 
 void MultilineEdit::slotCancel()
 {
-  returnText=QString::null;
-  KDialogBase::slotCancel();
+    returnText=QString::null;
+    KDialogBase::slotCancel();
 }
 
 void MultilineEdit::slotOk()
 {
-  returnText=textEditor->text();
-  KDialogBase::slotOk();
+    returnText=textEditor->text();
+    KDialogBase::slotOk();
 }
 
 void MultilineEdit::slotUser1()
 {
-  QStringList lines=QStringList::split("\n",textEditor->text(),true);
-  for( QStringList::iterator it=lines.begin() ; it!=lines.end() ; ++it )
-    (*it) = "> " + (*it);
-  textEditor->setText(lines.join("\n"));
+    QStringList lines=QStringList::split("\n",textEditor->text(),true);
+    for( QStringList::iterator it=lines.begin() ; it!=lines.end() ; ++it )
+        (*it) = "> " + (*it);
+    textEditor->setText(lines.join("\n"));
 }
 
 QString MultilineEdit::edit(QWidget* parent,QString text)
 {
-  MultilineEdit dlg(parent,text);
-  dlg.exec();
+    MultilineEdit dlg(parent,text);
+    dlg.exec();
 
-  return returnText;
+    return returnText;
 }
 
 #include "multilineedit.moc"

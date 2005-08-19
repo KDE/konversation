@@ -17,27 +17,27 @@
 class KCharSelect;
 class QChar;
 
-namespace Konversation {
-
-class InsertCharDialog : public KDialogBase
+namespace Konversation
 {
-  Q_OBJECT
-  public:
-    InsertCharDialog(const QString& font = QString::null, QWidget *parent = 0, const char *name = 0);
-    ~InsertCharDialog();
-    
-    QChar chr();
-  
-  protected slots:
-    virtual void slotOk();
-  
-  signals:
-    void insertChar(const QChar&);
-  
-  private:
-    KCharSelect* m_charTable;
-};
+
+    class InsertCharDialog : public KDialogBase
+    {
+        Q_OBJECT
+            public:
+            InsertCharDialog(const QString& font = QString::null, QWidget *parent = 0, const char *name = 0);
+            ~InsertCharDialog();
+
+            QChar chr();
+
+        protected slots:
+            virtual void slotOk();
+
+            signals:
+            void insertChar(const QChar&);
+
+        private:
+            KCharSelect* m_charTable;
+    };
 
 }
-
 #endif

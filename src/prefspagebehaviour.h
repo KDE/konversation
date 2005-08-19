@@ -19,16 +19,15 @@ class Preferences;
 
 class PrefsPageBehaviour : public GeneralBehavior_Config
 {
-  Q_OBJECT
-  public:
-    PrefsPageBehaviour(QWidget* newParent, Preferences* newPreferences);
-    ~PrefsPageBehaviour();
+    Q_OBJECT
+        public:
+        PrefsPageBehaviour(QWidget* newParent, Preferences* newPreferences);
+        ~PrefsPageBehaviour();
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  private:
-    Preferences* preferences;
+    private:
+        Preferences* preferences;
 };
-
 #endif

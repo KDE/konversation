@@ -27,37 +27,36 @@ class Nick;
 
 class NickListViewItem : public QObject, public KListViewItem
 {
-  Q_OBJECT
-  public:
-    NickListViewItem(KListView* parent,
-		     QListViewItem *after,
-                    const QString &passed_label,
-                    const QString &passed_label2,
-                    Nick *n);
-    ~NickListViewItem();
+    Q_OBJECT
+        public:
+        NickListViewItem(KListView* parent,
+            QListViewItem *after,
+            const QString &passed_label,
+            const QString &passed_label2,
+            Nick *n);
+        ~NickListViewItem();
 
-    int getFlags() const;
-    Nick *getNick();
+        int getFlags() const;
+        Nick *getNick();
 
-    virtual void paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align);
-    virtual int compare(QListViewItem* item,int col,bool ascending) const;
+        virtual void paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align);
+        virtual int compare(QListViewItem* item,int col,bool ascending) const;
 
-  public slots:
-    void refresh();
-  
-  signals:
-    void refreshed();
+    public slots:
+        void refresh();
 
-  protected:
-    Nick *nick;
+        signals:
+        void refreshed();
 
-    QString label;
+    protected:
+        Nick *nick;
 
-    QString calculateLabel1();
-    QString calculateLabel2();
-    int m_height;
-    int m_flags;
-    bool m_away;
+        QString label;
+
+        QString calculateLabel1();
+        QString calculateLabel2();
+        int m_height;
+        int m_flags;
+        bool m_away;
 };
-
 #endif

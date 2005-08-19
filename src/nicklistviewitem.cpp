@@ -23,21 +23,21 @@
 #include "images.h"
 
 NickListViewItem::NickListViewItem(KListView* parent,
-				   QListViewItem *after,
-				   const QString& passed_label,
-				   const QString& passed_label2,
-				   Nick *n) :
-  KListViewItem(parent,after,QString::null,passed_label,passed_label2)
+QListViewItem *after,
+const QString& passed_label,
+const QString& passed_label2,
+Nick *n) :
+KListViewItem(parent,after,QString::null,passed_label,passed_label2)
 {
-  Q_ASSERT(n);
-  nick = n;
-  m_flags = 0;
-  
-  m_height = height();
-  connect(nick->getChannelNick(), SIGNAL(channelNickChanged()), SLOT(refresh()));
-  connect(nick->getNickInfo(), SIGNAL(nickInfoChanged()), SLOT(refresh()));
-  
-  refresh();
+    Q_ASSERT(n);
+    nick = n;
+    m_flags = 0;
+
+    m_height = height();
+    connect(nick->getChannelNick(), SIGNAL(channelNickChanged()), SLOT(refresh()));
+    connect(nick->getNickInfo(), SIGNAL(nickInfoChanged()), SLOT(refresh()));
+
+    refresh();
 }
 
 NickListViewItem::~NickListViewItem()
@@ -46,169 +46,204 @@ NickListViewItem::~NickListViewItem()
 
 void NickListViewItem::refresh()
 {
-  int flags = 0;
-  NickInfo* nickInfo = nick->getNickInfo();
-  bool away = false;
-  
-  if ( nickInfo )
-    away = nickInfo->isAway();
+    int flags = 0;
+    NickInfo* nickInfo = nick->getNickInfo();
+    bool away = false;
 
-  if(away)
-    flags=1;
+    if ( nickInfo )
+        away = nickInfo->isAway();
 
-  Images* images = KonversationApplication::instance()->images();
-  QPixmap icon;
-  
-  if ( nick->isAdmin() ) {
-    flags += 128;
-    icon = images->getNickIcon( Images::Admin, away );
-  } else if ( nick->isOwner() ) {
-    flags += 64;
-    icon = images->getNickIcon( Images::Owner, away );
-  } else if ( nick->isOp() ) {
-    flags += 32;
-    icon = images->getNickIcon( Images::Op, away );
-  } else if ( nick->isHalfop() ) {
-    flags += 16;
-    icon = images->getNickIcon( Images::HalfOp, away );
-  } else if ( nick->hasVoice() ) {
-    flags += 8;
-    icon = images->getNickIcon( Images::Voice, away );
-  } else {
-    flags += 4;
-    icon = images->getNickIcon( Images::Normal, away );
-  }
+    if(away)
+        flags=1;
 
-  setPixmap( 0, icon );
-  
-  KABC::Picture pic = nickInfo->getAddressee().photo();
+    Images* images = KonversationApplication::instance()->images();
+    QPixmap icon;
 
-  if(!pic.isIntern()) {
-    pic = nickInfo->getAddressee().logo();
-  }
-
-  if(pic.isIntern())
-  {
-    QPixmap qpixmap(pic.data().scaleHeight(m_height));
-    setPixmap(1,qpixmap);
-  }
-
-  QString newtext1 = calculateLabel1();
-  if(newtext1 != text(1))
+    if ( nick->isAdmin() )
     {
-      setText(1,calculateLabel1());
-      flags += 2;
+        flags += 128;
+        icon = images->getNickIcon( Images::Admin, away );
+    }
+    else if ( nick->isOwner() )
+    {
+        flags += 64;
+        icon = images->getNickIcon( Images::Owner, away );
+    }
+    else if ( nick->isOp() )
+    {
+        flags += 32;
+        icon = images->getNickIcon( Images::Op, away );
+    }
+    else if ( nick->isHalfop() )
+    {
+        flags += 16;
+        icon = images->getNickIcon( Images::HalfOp, away );
+    }
+    else if ( nick->hasVoice() )
+    {
+        flags += 8;
+        icon = images->getNickIcon( Images::Voice, away );
+    }
+    else
+    {
+        flags += 4;
+        icon = images->getNickIcon( Images::Normal, away );
     }
 
-  setText(2,calculateLabel2());
-  repaint();
+    setPixmap( 0, icon );
 
-  if(m_flags != flags)
+    KABC::Picture pic = nickInfo->getAddressee().photo();
+
+    if(!pic.isIntern())
     {
-      m_flags = flags;
-      emit refreshed(); // Resort nick list
+        pic = nickInfo->getAddressee().logo();
+    }
+
+    if(pic.isIntern())
+    {
+        QPixmap qpixmap(pic.data().scaleHeight(m_height));
+        setPixmap(1,qpixmap);
+    }
+
+    QString newtext1 = calculateLabel1();
+    if(newtext1 != text(1))
+    {
+        setText(1,calculateLabel1());
+        flags += 2;
+    }
+
+    setText(2,calculateLabel2());
+    repaint();
+
+    if(m_flags != flags)
+    {
+        m_flags = flags;
+        emit refreshed();                         // Resort nick list
     }
 }
 
-QString NickListViewItem::calculateLabel1() {
-  NickInfoPtr nickinfo = nick->getNickInfo();
-  KABC::Addressee addressee = nickinfo->getAddressee();
+QString NickListViewItem::calculateLabel1()
+{
+    NickInfoPtr nickinfo = nick->getNickInfo();
+    KABC::Addressee addressee = nickinfo->getAddressee();
 
-  if(!addressee.realName().isEmpty()) //if no addressee, realName will be empty
+    if(!addressee.realName().isEmpty())           //if no addressee, realName will be empty
     {
-      return nick->getNickInfo()->getNickname() + " (" + addressee.realName() + ")";
-    } 
-  else if(KonversationApplication::preferences.getShowRealNames() && !nick->getNickInfo()->getRealName().isEmpty())
+        return nick->getNickInfo()->getNickname() + " (" + addressee.realName() + ")";
+    }
+    else if(KonversationApplication::preferences.getShowRealNames() && !nick->getNickInfo()->getRealName().isEmpty())
     {
-      return nick->getNickInfo()->getNickname() + " (" + nick->getNickInfo()->getRealName() + ")";
+        return nick->getNickInfo()->getNickname() + " (" + nick->getNickInfo()->getRealName() + ")";
     }
 
-  return nick->getNickInfo()->getNickname();
+    return nick->getNickInfo()->getNickname();
 }
 
-QString NickListViewItem::calculateLabel2() {
-  return nick->getNickInfo()->getHostmask();
+QString NickListViewItem::calculateLabel2()
+{
+    return nick->getNickInfo()->getHostmask();
 }
 
 int NickListViewItem::compare(QListViewItem* item,int col,bool ascending) const
 {
-  NickListViewItem* otherItem = static_cast<NickListViewItem*>(item);
+    NickListViewItem* otherItem = static_cast<NickListViewItem*>(item);
 
-  if(KonversationApplication::preferences.getSortByStatus())
-  {
-    int thisFlags = getFlags();
-    int otherFlags = otherItem->getFlags();
-
-    if(thisFlags > otherFlags) {
-      return 1;
-    }
-    if(thisFlags < otherFlags) {
-      return -1;
-    }
-  }
-
-  QString thisKey;
-  QString otherKey;
-
-  if(col > 1) {
-    if(KonversationApplication::preferences.getSortCaseInsensitive())
+    if(KonversationApplication::preferences.getSortByStatus())
     {
-      thisKey = thisKey.lower();
-      otherKey = otherKey.lower();
-    } else {
-      thisKey = key(col, ascending);
-      otherKey = otherItem->key(col, ascending);
+        int thisFlags = getFlags();
+        int otherFlags = otherItem->getFlags();
+
+        if(thisFlags > otherFlags)
+        {
+            return 1;
+        }
+        if(thisFlags < otherFlags)
+        {
+            return -1;
+        }
     }
-  } else if(col == 1) {
-    if(KonversationApplication::preferences.getSortCaseInsensitive())
+
+    QString thisKey;
+    QString otherKey;
+
+    if(col > 1)
     {
-      thisKey = nick->loweredNickname();
-      otherKey = otherItem->getNick()->loweredNickname();
-    } else {
-      thisKey = key(col, ascending);
-      otherKey = otherItem->key(col, ascending);
+        if(KonversationApplication::preferences.getSortCaseInsensitive())
+        {
+            thisKey = thisKey.lower();
+            otherKey = otherKey.lower();
+        }
+        else
+        {
+            thisKey = key(col, ascending);
+            otherKey = otherItem->key(col, ascending);
+        }
     }
-  }
- 
-  return thisKey.compare(otherKey);
+    else if(col == 1)
+    {
+        if(KonversationApplication::preferences.getSortCaseInsensitive())
+        {
+            thisKey = nick->loweredNickname();
+            otherKey = otherItem->getNick()->loweredNickname();
+        }
+        else
+        {
+            thisKey = key(col, ascending);
+            otherKey = otherItem->key(col, ascending);
+        }
+    }
+
+    return thisKey.compare(otherKey);
 }
 
 void NickListViewItem::paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align )
 {
-  QColorGroup cg2 = cg;
-  NickInfo* nickInfo = nick->getNickInfo();
+    QColorGroup cg2 = cg;
+    NickInfo* nickInfo = nick->getNickInfo();
 
-  if(nickInfo->isAway())
-  {
-    cg2.setColor(QColorGroup::Text, kapp->palette().disabled().text());
-  }
+    if(nickInfo->isAway())
+    {
+        cg2.setColor(QColorGroup::Text, kapp->palette().disabled().text());
+    }
 
-  KListViewItem::paintCell(p,cg2,column,width,align);
+    KListViewItem::paintCell(p,cg2,column,width,align);
 }
 
 int NickListViewItem::getFlags() const
 {
-  int flags;
+    int flags;
 
-  if(nick->isAdmin()) {
-    flags = KonversationApplication::preferences.getAdminValue();
-  } else if(nick->isOwner()) {
-    flags = KonversationApplication::preferences.getOwnerValue();
-  } else if(nick->isOp()) {
-    flags = KonversationApplication::preferences.getOpValue();
-  } else if(nick->isHalfop()) {
-    flags = KonversationApplication::preferences.getHalfopValue();
-  } else if(nick->hasVoice()) {
-    flags = KonversationApplication::preferences.getVoiceValue();
-  } else {
-    flags = KonversationApplication::preferences.getNoRightsValue();
-  }
+    if(nick->isAdmin())
+    {
+        flags = KonversationApplication::preferences.getAdminValue();
+    }
+    else if(nick->isOwner())
+    {
+        flags = KonversationApplication::preferences.getOwnerValue();
+    }
+    else if(nick->isOp())
+    {
+        flags = KonversationApplication::preferences.getOpValue();
+    }
+    else if(nick->isHalfop())
+    {
+        flags = KonversationApplication::preferences.getHalfopValue();
+    }
+    else if(nick->hasVoice())
+    {
+        flags = KonversationApplication::preferences.getVoiceValue();
+    }
+    else
+    {
+        flags = KonversationApplication::preferences.getNoRightsValue();
+    }
 
-  return flags;
+    return flags;
 }
 
-Nick *NickListViewItem::getNick() {
-  return nick;
+Nick *NickListViewItem::getNick()
+{
+    return nick;
 }
 
 #include "nicklistviewitem.moc"

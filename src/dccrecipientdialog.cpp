@@ -20,37 +20,37 @@
 
 #include "dccrecipientdialog.h"
 
-QString DccRecipientDialog::selectedNickname;  // static
+QString DccRecipientDialog::selectedNickname;     // static
 
 DccRecipientDialog::DccRecipientDialog(QWidget* parent, const QStringList &list,const QSize &size) :
-                    KDialogBase(parent,"dcc_recipient_dialog",true,i18n("Select Recipient"),
-                    KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
+KDialogBase(parent,"dcc_recipient_dialog",true,i18n("Select Recipient"),
+KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
 {
-  // Create the top level widget
-  QWidget* page=new QWidget(this);
-  setMainWidget(page);
-  // Add the layout to the widget
-  QVBoxLayout* dialogLayout=new QVBoxLayout(page);
-  dialogLayout->setSpacing(spacingHint());
-  // Add the nickname list widget
-  KListBox* nicknameList=new KListBox(page,"recipient_list");
+    // Create the top level widget
+    QWidget* page=new QWidget(this);
+    setMainWidget(page);
+    // Add the layout to the widget
+    QVBoxLayout* dialogLayout=new QVBoxLayout(page);
+    dialogLayout->setSpacing(spacingHint());
+    // Add the nickname list widget
+    KListBox* nicknameList=new KListBox(page,"recipient_list");
 
-  nicknameList->insertStringList(list);
-  nicknameList->sort(true);
+    nicknameList->insertStringList(list);
+    nicknameList->sort(true);
 
-  nicknameInput=new KLineEdit(page,"nickname_input");
-  
-  dialogLayout->addWidget(nicknameList);
-  dialogLayout->addWidget(nicknameInput);
+    nicknameInput=new KLineEdit(page,"nickname_input");
 
-  connect(nicknameList,SIGNAL (highlighted(QListBoxItem*)),this,SLOT (newNicknameSelected(QListBoxItem*)) );
-  connect(nicknameList,SIGNAL (doubleClicked(QListBoxItem*)),this,SLOT (newNicknameSelectedQuit(QListBoxItem*)) );
+    dialogLayout->addWidget(nicknameList);
+    dialogLayout->addWidget(nicknameInput);
 
-  setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Select nickname and close the window")));
-  setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Close the window without changes")));
+    connect(nicknameList,SIGNAL (highlighted(QListBoxItem*)),this,SLOT (newNicknameSelected(QListBoxItem*)) );
+    connect(nicknameList,SIGNAL (doubleClicked(QListBoxItem*)),this,SLOT (newNicknameSelectedQuit(QListBoxItem*)) );
 
-  setInitialSize(size);
-  show();
+    setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Select nickname and close the window")));
+    setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Close the window without changes")));
+
+    setInitialSize(size);
+    show();
 }
 
 DccRecipientDialog::~DccRecipientDialog()
@@ -59,41 +59,41 @@ DccRecipientDialog::~DccRecipientDialog()
 
 QString DccRecipientDialog::getSelectedNickname()
 {
-  return selectedNickname;
+    return selectedNickname;
 }
 
 void DccRecipientDialog::newNicknameSelected(QListBoxItem* item)
 {
-  nicknameInput->setText(item->text());
+    nicknameInput->setText(item->text());
 }
 
 void DccRecipientDialog::newNicknameSelectedQuit(QListBoxItem* item)
 {
-  newNicknameSelected(item);
-  selectedNickname=nicknameInput->text();
-  
-  delayedDestruct();
+    newNicknameSelected(item);
+    selectedNickname=nicknameInput->text();
+
+    delayedDestruct();
 }
 
 void DccRecipientDialog::slotCancel()
 {
-  selectedNickname=QString::null;
-  KDialogBase::slotCancel();
+    selectedNickname=QString::null;
+    KDialogBase::slotCancel();
 }
 
 void DccRecipientDialog::slotOk()
 {
-  selectedNickname=nicknameInput->text();
-  KDialogBase::slotOk();
+    selectedNickname=nicknameInput->text();
+    KDialogBase::slotOk();
 }
 
 QString DccRecipientDialog::getNickname(QWidget* parent,QStringList list)
 {
-  QSize size; // TODO: get it from KonversationApplication::preferences
-  DccRecipientDialog dlg(parent,list,size);
-  dlg.exec();
+    QSize size;                                   // TODO: get it from KonversationApplication::preferences
+    DccRecipientDialog dlg(parent,list,size);
+    dlg.exec();
 
-  return dlg.getSelectedNickname();
+    return dlg.getSelectedNickname();
 }
 
 #include "dccrecipientdialog.moc"

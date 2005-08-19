@@ -26,94 +26,93 @@ class QTextCodec;
 
 class Identity : public KShared
 {
-  public:
-    /// Create an Identity with a new id.
-    Identity();
-    /// Create a new Identity with a set id.
-    Identity(int id);
-    /// Copy all of @param original including the id.
-    Identity(const Identity& original);
-    ~Identity();
+    public:
+        /// Create an Identity with a new id.
+        Identity();
+        /// Create a new Identity with a set id.
+        Identity(int id);
+        /// Copy all of @param original including the id.
+        Identity(const Identity& original);
+        ~Identity();
 
-    /// This function copies all of @param original but the id
-    void copy(const Identity& original);
+        /// This function copies all of @param original but the id
+        void copy(const Identity& original);
 
-    void setName(const QString& name);   // the name of this identity
-    QString getName() const;
+        void setName(const QString& name);        // the name of this identity
+        QString getName() const;
 
-    void setRealName(const QString& name);
-    QString getRealName() const;
-    void setIdent(const QString& ident);
-    QString getIdent() const;
+        void setRealName(const QString& name);
+        QString getRealName() const;
+        void setIdent(const QString& ident);
+        QString getIdent() const;
 
-    void setNickname(int index,const QString& nick);
-    QString getNickname(int index) const;
+        void setNickname(int index,const QString& nick);
+        QString getNickname(int index) const;
 
-    void setBot(const QString& bot);
-    QString getBot() const;
-    void setPassword(const QString& password);
-    QString getPassword() const;
+        void setBot(const QString& bot);
+        QString getBot() const;
+        void setPassword(const QString& password);
+        QString getPassword() const;
 
-    void setNicknameList(const QStringList& newList);
-    QStringList getNicknameList() const;
+        void setNicknameList(const QStringList& newList);
+        QStringList getNicknameList() const;
 
-    void setPartReason(const QString& reason);
-    QString getPartReason() const;
-    void setKickReason(const QString& reason);
-    QString getKickReason() const;
+        void setPartReason(const QString& reason);
+        QString getPartReason() const;
+        void setKickReason(const QString& reason);
+        QString getKickReason() const;
 
-    void setInsertRememberLineOnAway(bool state);
-    bool getInsertRememberLineOnAway() const;
-    void setShowAwayMessage(bool state);
-    bool getShowAwayMessage() const;
+        void setInsertRememberLineOnAway(bool state);
+        bool getInsertRememberLineOnAway() const;
+        void setShowAwayMessage(bool state);
+        bool getShowAwayMessage() const;
 
-    void setAwayMessage(const QString& message);
-    QString getAwayMessage() const;
-    void setReturnMessage(const QString& message);
-    QString getReturnMessage() const;
+        void setAwayMessage(const QString& message);
+        QString getAwayMessage() const;
+        void setReturnMessage(const QString& message);
+        QString getReturnMessage() const;
 
-    void setShellCommand(const QString &command);
-    QString getShellCommand() const;
+        void setShellCommand(const QString &command);
+        QString getShellCommand() const;
 
-    void setCodecName(const QString &newCodecName);
-    QString getCodecName() const;
-    QTextCodec* getCodec() const;
+        void setCodecName(const QString &newCodecName);
+        QString getCodecName() const;
+        QTextCodec* getCodec() const;
 
-    QString getAwayNick() const;
-    void setAwayNick(const QString& n);
+        QString getAwayNick() const;
+        void setAwayNick(const QString& n);
 
-    int id() const { return m_id; }
+        int id() const { return m_id; }
 
-  protected:
-    QString name;
+    protected:
+        QString name;
 
-    QString bot;
-    QString password;
+        QString bot;
+        QString password;
 
-    QString realName;
-    QString ident;
+        QString realName;
+        QString ident;
 
-    QStringList nicknameList;
+        QStringList nicknameList;
 
-    QString partReason;
-    QString kickReason;
+        QString partReason;
+        QString kickReason;
 
-    bool insertRememberLineOnAway;
-    bool showAwayMessages;
-    QString awayMessage;
-    QString returnMessage;
-    QString m_codecName;
-    QTextCodec* m_codec;
+        bool insertRememberLineOnAway;
+        bool showAwayMessages;
+        QString awayMessage;
+        QString returnMessage;
+        QString m_codecName;
+        QTextCodec* m_codec;
 
-    QString m_shellCommand;
+        QString m_shellCommand;
 
-    QString awayNick;
+        QString awayNick;
 
-  private:
-    int m_id;
-    static int s_availableId;
+    private:
+        int m_id;
+        static int s_availableId;
 };
 
 typedef KSharedPtr<Identity> IdentityPtr;
-
 #endif

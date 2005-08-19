@@ -23,21 +23,20 @@
 
 class RawLog : public ChatWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    RawLog(QWidget* parent);
-    ~RawLog();
+        public:
+        RawLog(QWidget* parent);
+        ~RawLog();
 
-    virtual bool closeYourself();
-    virtual bool searchView();
+        virtual bool closeYourself();
+        virtual bool searchView();
 
-  public slots:
-    void updateFonts();
+    public slots:
+        void updateFonts();
 
-  protected:
-    /** Called from ChatWindow adjustFocus */
-    virtual void childAdjustFocus();
+    protected:
+        /** Called from ChatWindow adjustFocus */
+        virtual void childAdjustFocus();
 };
-
 #endif

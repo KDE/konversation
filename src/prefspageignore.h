@@ -34,34 +34,33 @@ class IgnoreCheckBox;
 
 class PrefsPageIgnore : public PrefsPage
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    PrefsPageIgnore(QWidget* newParent,Preferences* newPreferences);
-    ~PrefsPageIgnore();
+        public:
+        PrefsPageIgnore(QWidget* newParent,Preferences* newPreferences);
+        ~PrefsPageIgnore();
 
-  signals:
-    void applyClicked(QPtrList<Ignore> newList);
-    void cancelClicked(QSize newSize);
+        signals:
+        void applyClicked(QPtrList<Ignore> newList);
+        void cancelClicked(QSize newSize);
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  protected slots:
-    void newIgnore();
-    void removeIgnore();
-    void select(QListViewItem* item);
-    void checked(int flag,bool active);
+    protected slots:
+        void newIgnore();
+        void removeIgnore();
+        void select(QListViewItem* item);
+        void checked(int flag,bool active);
 
-  protected:
-    QPtrList<Ignore> getIgnoreList();
+    protected:
+        QPtrList<Ignore> getIgnoreList();
 
-    KListView* ignoreListView;
-    QLineEdit* ignoreInput;
-    QPushButton* newButton;
-    QPushButton* removeButton;
-    QPushButton* clearButton;
-    QPtrList<IgnoreCheckBox> checkList;
+        KListView* ignoreListView;
+        QLineEdit* ignoreInput;
+        QPushButton* newButton;
+        QPushButton* removeButton;
+        QPushButton* clearButton;
+        QPtrList<IgnoreCheckBox> checkList;
 };
-
 #endif

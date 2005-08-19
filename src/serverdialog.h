@@ -18,27 +18,27 @@ class QLineEdit;
 class QSpinBox;
 class QCheckBox;
 
-namespace Konversation {
-
-class ServerSettings;
-
-class ServerDialog : public KDialogBase
+namespace Konversation
 {
-  Q_OBJECT
-  public:
-    ServerDialog(const QString& title, QWidget *parent = 0, const char *name = 0);
-    ~ServerDialog();
-    
-    void setServerSettings(const ServerSettings& server);
-    ServerSettings serverSettings();
-  
-  private:
-    QLineEdit* m_serverEdit;
-    QSpinBox* m_portSBox;
-    QLineEdit* m_passwordEdit;
-    QCheckBox* m_sslChBox;
-};
+
+    class ServerSettings;
+
+    class ServerDialog : public KDialogBase
+    {
+        Q_OBJECT
+            public:
+            ServerDialog(const QString& title, QWidget *parent = 0, const char *name = 0);
+            ~ServerDialog();
+
+            void setServerSettings(const ServerSettings& server);
+            ServerSettings serverSettings();
+
+        private:
+            QLineEdit* m_serverEdit;
+            QSpinBox* m_portSBox;
+            QLineEdit* m_passwordEdit;
+            QCheckBox* m_sslChBox;
+    };
 
 }
-
 #endif

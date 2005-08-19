@@ -18,7 +18,7 @@
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
 
-#include <kstaticdeleter.h> 
+#include <kstaticdeleter.h>
 #include <qobject.h>
 #include <qregexp.h>
 #include "config.h"
@@ -28,74 +28,72 @@
 #include "../nickinfo.h"
 #include "addressbook_base.h"
 
-namespace Konversation {
-class Addressbook : public AddressbookBase
+namespace Konversation
 {
-  Q_OBJECT
-  public:
-    
-    virtual ~Addressbook(); // This needs to be public so it can be deleted by our static pointer
-    static Addressbook *self();
-    QStringList allContactsNicks();	    
-    QStringList allContacts();
-    QStringList reachableContacts();
-    QStringList onlineContacts();
-    QStringList fileTransferContacts();
-    bool isPresent( const QString &uid );
-    QString displayName( const QString &uid );
-    QString presenceString( const QString &uid );
-    bool canReceiveFiles( const QString &uid );
-    bool canRespond( const QString &uid );
-    QString locate( const QString &contactId, const QString &protocol );
-// metadata
-    QPixmap icon( const QString &uid );
-    QString context( const QString &uid );
-    virtual int presenceStatus(const QString &uid);
-// App capabilities
-    QStringList protocols();
-    
-    /**
-     * Message a contact by their metaContactId, aka their uid in KABC.
-     */
-    void messageContact( const QString &uid, const QString& message );
+    class Addressbook : public AddressbookBase
+    {
+        Q_OBJECT
+            public:
 
-    /**
-     * Open a chat to a contact, and optionally set some initial text
-     */
-    void messageNewContact(  const QString &contactId, const QString &protocolId );
+            virtual ~Addressbook();               // This needs to be public so it can be deleted by our static pointer
+            static Addressbook *self();
+            QStringList allContactsNicks();
+            QStringList allContacts();
+            QStringList reachableContacts();
+            QStringList onlineContacts();
+            QStringList fileTransferContacts();
+            bool isPresent( const QString &uid );
+            QString displayName( const QString &uid );
+            QString presenceString( const QString &uid );
+            bool canReceiveFiles( const QString &uid );
+            bool canRespond( const QString &uid );
+            QString locate( const QString &contactId, const QString &protocol );
+            // metadata
+            QPixmap icon( const QString &uid );
+            QString context( const QString &uid );
+            virtual int presenceStatus(const QString &uid);
+            // App capabilities
+            QStringList protocols();
 
-    /**
-     * Message a contact by their metaContactId, aka their uid in KABC.
-     */
-    void chatWithContact( const QString &uid );
+            /**
+             * Message a contact by their metaContactId, aka their uid in KABC.
+             */
+            void messageContact( const QString &uid, const QString& message );
 
-    /**
-     * Send the file to the contact
-     */
-    void sendFile(const QString &uid, const KURL &sourceURL,
-    const QString &altFileName = QString::null, uint fileSize = 0);
+            /**
+             * Open a chat to a contact, and optionally set some initial text
+             */
+            void messageNewContact(  const QString &contactId, const QString &protocolId );
 
-    /**
-     * Lets outsiders tell us to emit presenceChanged signal.
-     */
-    void emitContactPresenceChanged( const QString &uid, int presence);
-    /**
-     * Lets outsiders tell us to emit presenceChanged signal.
-     */
-    void emitContactPresenceChanged(const QString &uid);
+            /**
+             * Message a contact by their metaContactId, aka their uid in KABC.
+             */
+            void chatWithContact( const QString &uid );
 
-    bool addContact( const QString &contactId, const QString &protocolId );
+            /**
+             * Send the file to the contact
+             */
+            void sendFile(const QString &uid, const KURL &sourceURL,
+                const QString &altFileName = QString::null, uint fileSize = 0);
 
-  protected: 
-    Addressbook();
+            /**
+             * Lets outsiders tell us to emit presenceChanged signal.
+             */
+            void emitContactPresenceChanged( const QString &uid, int presence);
+            /**
+             * Lets outsiders tell us to emit presenceChanged signal.
+             */
+            void emitContactPresenceChanged(const QString &uid);
 
-    static Addressbook *m_instance;
-};
+            bool addContact( const QString &contactId, const QString &protocolId );
 
+        protected:
+            Addressbook();
 
-static KStaticDeleter<Addressbook> sd;
+            static Addressbook *m_instance;
+    };
+
+    static KStaticDeleter<Addressbook> sd;
 
 }
-
 #endif
-

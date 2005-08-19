@@ -1,4 +1,4 @@
-// -*- mode: c++; c-file-style: "stroustrup"; c-basic-offset: 4; tabs-width: 4; indent-tabs-mode: nil -*-
+// -*- mode: c++; c-file-style: "bsd"; c-basic-offset: 4; tabs-width: 4; indent-tabs-mode: nil -*-
 
 /*
   This program is free software; you can redistribute it and/or modify
@@ -64,7 +64,8 @@
 #include "emoticon.h"
 #include "notificationhandler.h"
 
-IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent) {
+IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
+{
     m_copyUrlMenu = false;
     m_resetScrollbar = true;
     m_offset = 0;
@@ -100,7 +101,8 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent) {
     m_popup->insertItem(SmallIcon("find"),i18n("Find Text..."),Search);
     m_popup->insertSeparator();
 
-    if(newServer) { // ## This is not working --cartman
+    if(newServer)                                 // ## This is not working --cartman
+    {
         KAction *action = newServer->getMainWindow()->actionCollection()->action("open_logfile");
         action->plug(m_popup);
     }
@@ -111,11 +113,13 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent) {
     connect(this, SIGNAL(linkClicked(const QString&)), this, SLOT(urlClickSlot(const QString&)));
 }
 
-IRCView::~IRCView() {
+IRCView::~IRCView()
+{
     delete m_popup;
 }
 
-void IRCView::updateStyleSheet() {
+void IRCView::updateStyleSheet()
+{
     // set style sheet for <p> to define paragraph spacing
     QStyleSheet* sheet = styleSheet();
 
@@ -131,7 +135,8 @@ void IRCView::updateStyleSheet() {
 
     QStyleSheetItem* style=sheet->item("p");
 
-    if(!sheet) {
+    if(!sheet)
+    {
         kdDebug() << "IRCView::updateStyleSheet(): style == 0!" << endl;
         return;
     }
@@ -141,14 +146,18 @@ void IRCView::updateStyleSheet() {
     style->setSelfNesting(false);
 }
 
-void IRCView::setViewBackground(const QString& color, const QString& pixmapName) {
+void IRCView::setViewBackground(const QString& color, const QString& pixmapName)
+{
     QColor backgroundColor("#"+color);
     QPixmap backgroundPixmap;
     backgroundPixmap.load(pixmapName);
 
-    if(backgroundPixmap.isNull()) {
+    if(backgroundPixmap.isNull())
+    {
         setPaper(backgroundColor);
-    } else {
+    }
+    else
+    {
         QBrush backgroundBrush;
         backgroundBrush.setColor(backgroundColor);
         backgroundBrush.setPixmap(backgroundPixmap);
@@ -156,37 +165,48 @@ void IRCView::setViewBackground(const QString& color, const QString& pixmapName)
     }
 }
 
-void IRCView::setServer(Server* newServer) {
+void IRCView::setServer(Server* newServer)
+{
     m_server = newServer;
 }
 
-const QString& IRCView::getContextNick() const {
+const QString& IRCView::getContextNick() const
+{
     return m_currentNick;
 }
 
-void IRCView::clearContextNick() {
+void IRCView::clearContextNick()
+{
     m_currentNick = QString::null;
 }
 
-void IRCView::clear() {
+void IRCView::clear()
+{
     m_buffer = QString::null;
     KTextBrowser::clear();
 }
 
-void IRCView::highlightedSlot(const QString& link) {
-    if(!link.startsWith("#")) {
+void IRCView::highlightedSlot(const QString& link)
+{
+    if(!link.startsWith("#"))
+    {
         m_isOnNick = false;
-        if(link.isEmpty() && m_copyUrlMenu) {
+        if(link.isEmpty() && m_copyUrlMenu)
+        {
             m_popup->removeItem(CopyUrl);
             m_popup->removeItem(Bookmark);
             m_copyUrlMenu = false;
-        } else if(!link.isEmpty() && !m_copyUrlMenu) {
+        }
+        else if(!link.isEmpty() && !m_copyUrlMenu)
+        {
             m_popup->insertItem(i18n("Copy URL to Clipboard"),CopyUrl,1);
             m_popup->insertItem(i18n("Add to Bookmarks"),Bookmark,2);
             m_copyUrlMenu = true;
             m_urlToCopy = link;
         }
-    } else if(link.startsWith("#") && !link.startsWith("##")) {
+    }
+    else if(link.startsWith("#") && !link.startsWith("##"))
+    {
         m_currentNick = link;
         m_currentNick.remove("#");
         m_nickPopup->changeTitle(m_popupId,m_currentNick);
@@ -194,26 +214,34 @@ void IRCView::highlightedSlot(const QString& link) {
     }
 }
 
-void IRCView::urlClickSlot(const QString &url) {
+void IRCView::urlClickSlot(const QString &url)
+{
     urlClickSlot(url,false);
 }
 
-void IRCView::urlClickSlot(const QString &url, bool newTab) {
-    if (!url.isEmpty() && !url.startsWith("#")) {
+void IRCView::urlClickSlot(const QString &url, bool newTab)
+{
+    if (!url.isEmpty() && !url.startsWith("#"))
+    {
         // Always use KDE default mailer.
-        if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.startsWith("mailto:")) {
-            if(newTab && !url.startsWith("mailto:")) {
+        if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.startsWith("mailto:"))
+        {
+            if(newTab && !url.startsWith("mailto:"))
+            {
                 QCString foundApp, foundObj;
                 QByteArray data;
                 QDataStream str(data, IO_WriteOnly);
                 if( KApplication::dcopClient()->findObject("konqueror*", "konqueror-mainwindow*",
-                        "windowCanBeUsedForTab()", data, foundApp, foundObj, false, 3000)) {
+                    "windowCanBeUsedForTab()", data, foundApp, foundObj, false, 3000))
+                {
                     DCOPRef ref(foundApp, foundObj);
                     ref.call("newTab", url);
                 }
             } else
-                new KRun(KURL(url));
-        } else {
+            new KRun(KURL(url));
+        }
+        else
+        {
             QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
             cmd.replace("%u", url);
             KProcess *proc = new KProcess;
@@ -226,12 +254,12 @@ void IRCView::urlClickSlot(const QString &url, bool newTab) {
             proc->start(KProcess::DontCare);
             delete proc;
         }
-    } else if(url.startsWith("##")) // Channel
+    } else if(url.startsWith("##"))               // Channel
     {
         QString channel(url);
         channel.replace("##", "#");
         m_server->sendJoinCommand(channel);
-    } else if(url.startsWith("#")) // Nick
+    } else if(url.startsWith("#"))                // Nick
     {
         QString recepient(url);
         recepient.remove("#");
@@ -240,18 +268,21 @@ void IRCView::urlClickSlot(const QString &url, bool newTab) {
     }
 }
 
-void IRCView::replaceDecoration(QString& line, char decoration, char replacement) {
+void IRCView::replaceDecoration(QString& line, char decoration, char replacement)
+{
     int pos;
     bool decorated = false;
 
-    while((pos=line.find(decoration))!=-1) {
+    while((pos=line.find(decoration))!=-1)
+    {
         line.replace(pos,1,(decorated) ? QString("</%1>").arg(replacement) : QString("<%1>").arg(replacement));
         decorated = !decorated;
     }
 }
 
 QString IRCView::filter(const QString& line, const QString& defaultColor, const QString& whoSent,
-                        bool doHighlight, bool parseURL, bool self) {
+bool doHighlight, bool parseURL, bool self)
+{
     QString filteredLine(line);
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
@@ -262,16 +293,19 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     // Replace all > with &gt;
     filteredLine.replace(">","&gt;");
 
-#if 0
-    if(!KonversationApplication::preferences.getDisableExpansion()) {
+    #if 0
+    if(!KonversationApplication::preferences.getDisableExpansion())
+    {
         QRegExp boldRe("\\*\\*([a-zA-Z0-9]+)\\*\\*");
         QRegExp underRe("\\_\\_([a-zA-Z0-9]+)\\_\\_");
         int position = 0;
         QString replacement;
 
-        while( position >= 0) {
+        while( position >= 0)
+        {
             position = boldRe.search(filteredLine, position);
-            if( position > -1) {
+            if( position > -1)
+            {
                 replacement = boldRe.cap(1);
                 replacement = "\x02"+replacement+"\x02";
                 filteredLine.replace(position,replacement.length()+2,replacement);
@@ -280,9 +314,11 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
         }
 
         position = 0;
-        while( position >= 0) {
+        while( position >= 0)
+        {
             position = underRe.search(filteredLine, position);
-            if( position > -1) {
+            if( position > -1)
+            {
                 replacement = underRe.cap(1);
                 replacement = "\x1f"+replacement+"\x1f";
                 filteredLine.replace(position,replacement.length()+2,replacement);
@@ -290,12 +326,12 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
             position += underRe.matchedLength();
         }
     }
-#endif
-    
+    #endif
+
     // Replace all 0x03 without color number (reset color) with \0x031,0 or \0x030,1, depending on which one fits
     // with the users chosen colours, based on the relative brightness. TODO defaultColor needs explanation
 
-    bool inverted = false; // TODO this flag should be stored somewhere
+    bool inverted = false;                        // TODO this flag should be stored somewhere
     {
         QColor fg("#"+KonversationApplication::preferences.getColor("ChannelMessage"));
         QColor  bg("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
@@ -304,22 +340,28 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
         fg.getHsv(&h,&s,&fv);
         bg.getHsv(&h,&s,&bv);
 
-        if (bv <= fv) {
+        if (bv <= fv)
+        {
             inverted = false;
         }
     }
 
-    if(inverted) {
+    if(inverted)
+    {
         filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0030,1\\1");
-    } else {
+    }
+    else
+    {
         filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0031,0\\1");
     }
 
     // Hack to allow for whois info hostmask info to not be parsed as email
     filteredLine.replace("&amp;#64;","&#64;");
 
-    if(filteredLine.find("\x07") != -1) {
-        if(KonversationApplication::preferences.getBeep()) {
+    if(filteredLine.find("\x07") != -1)
+    {
+        if(KonversationApplication::preferences.getBeep())
+        {
             kapp->beep();
         }
     }
@@ -334,16 +376,21 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     QString colorString;
     QStringList colorCodes = KonversationApplication::preferences.getIRCColorList();
 
-    while((pos=colorRegExp.search(filteredLine))!=-1) {
-        if(filterColors) {
+    while((pos=colorRegExp.search(filteredLine))!=-1)
+    {
+        if(filterColors)
+        {
             colorString = QString::null;
-        } else {
+        }
+        else
+        {
             colorString = (firstColor) ? QString::null : QString("</font>");
 
             // reset colors on \017 to default value
             if(colorRegExp.cap(1) == "\017")
                 colorString += "<font color=\"#"+defaultColor+"\">";
-            else {
+            else
+            {
                 int foregroundColor = colorRegExp.cap(2).toInt();
                 colorString += "<font color=\"" + colorCodes[foregroundColor] + "\">";
             }
@@ -363,10 +410,11 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     replaceDecoration(filteredLine,'\x09','i');
     replaceDecoration(filteredLine,'\x13','s');
     replaceDecoration(filteredLine,'\x15','u');
-    replaceDecoration(filteredLine,'\x16','b'); // should be inverse
+    replaceDecoration(filteredLine,'\x16','b');   // should be inverse
     replaceDecoration(filteredLine,'\x1f','u');
 
-    if(parseURL) {
+    if(parseURL)
+    {
         filteredLine = Konversation::tagURLs(filteredLine, whoSent);
     }
 
@@ -375,53 +423,71 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     // Highlight
     QString ownNick;
 
-    if(m_server) {
+    if(m_server)
+    {
         ownNick = m_server->getNickname();
     }
 
-    if(doHighlight && m_server && (whoSent != ownNick) && !self) {
+    if(doHighlight && m_server && (whoSent != ownNick) && !self)
+    {
         QString highlightColor;
 
         // FIXME: We got to get rid of m_server dependance here
         if(KonversationApplication::preferences.getHighlightNick() &&
-                filteredLine.lower().find(QRegExp("(^|[^\\d\\w])" +
-                                                  QRegExp::escape(ownNick.lower()) +
-                                                  "([^\\d\\w]|$)")) != -1) {
+            filteredLine.lower().find(QRegExp("(^|[^\\d\\w])" +
+            QRegExp::escape(ownNick.lower()) +
+            "([^\\d\\w]|$)")) != -1)
+        {
             // highlight current nickname
             highlightColor = KonversationApplication::preferences.getHighlightNickColor().name();
             m_tabNotification = Konversation::tnfNick;
-        } else {
+        }
+        else
+        {
             QPtrList<Highlight> highlightList = KonversationApplication::preferences.getHighlightList();
             QPtrListIterator<Highlight> it(highlightList);
             Highlight* highlight = it.current();
             bool patternFound = false;
             int index = 0;
 
-            while(highlight) {
-                if(highlight->getRegExp()) {
+            while(highlight)
+            {
+                if(highlight->getRegExp())
+                {
                     QRegExp needle(highlight->getPattern().lower());
-                    patternFound = ((filteredLine.lower().find(needle) != -1) ||   // highlight regexp in text
-                                    (whoSent.lower().find(needle) != -1));            // highlight regexp in nickname
-                } else {
+                                                  // highlight regexp in text
+                    patternFound = ((filteredLine.lower().find(needle) != -1) ||
+                                                  // highlight regexp in nickname
+                        (whoSent.lower().find(needle) != -1));
+                }
+                else
+                {
                     QString needle(highlight->getPattern().lower());
-                    patternFound = ((filteredLine.lower().find(needle) != -1) ||   // highlight patterns in text
-                                    (whoSent.lower().find(needle) != -1));            // highlight patterns in nickname
+                                                  // highlight patterns in text
+                    patternFound = ((filteredLine.lower().find(needle) != -1) ||
+                                                  // highlight patterns in nickname
+                        (whoSent.lower().find(needle) != -1));
                 }
 
-                if(!patternFound) {
+                if(!patternFound)
+                {
                     ++it;
                     highlight = it.current();
                     ++index;
-                } else {
+                }
+                else
+                {
                     break;
                 }
             }
 
-            if(patternFound) {
+            if(patternFound)
+            {
                 highlightColor = highlight->getColor().name();
                 m_tabNotification = Konversation::tnfHighlight;
 
-                if(KonversationApplication::preferences.getHighlightSoundEnabled()) {
+                if(KonversationApplication::preferences.getHighlightSoundEnabled())
+                {
                     konvApp->sound()->play(highlight->getSoundURL());
                 }
 
@@ -431,31 +497,37 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
         }
 
         // apply found highlight color to line
-        if(!highlightColor.isEmpty()) {
+        if(!highlightColor.isEmpty())
+        {
             filteredLine = "<font color=\"" + highlightColor + "\">" + filteredLine + "</font>";
         }
-    } else if(doHighlight && (whoSent == ownNick) && KonversationApplication::preferences.getHighlightOwnLines()) {
+    }
+    else if(doHighlight && (whoSent == ownNick) && KonversationApplication::preferences.getHighlightOwnLines())
+    {
         // highlight own lines
         filteredLine = "<font color=\"" + KonversationApplication::preferences.getHighlightOwnLinesColor().name() +
-                       "\">" + filteredLine + "</font>";
+            "\">" + filteredLine + "</font>";
     }
 
     // Replace multiple Spaces with "<space>&nbsp;"
-    while((pos = filteredLine.find("  ")) != -1) {
+    while((pos = filteredLine.find("  ")) != -1)
+    {
         filteredLine.replace(pos + (pos == 0 ? 0 : 1), 1, "&nbsp;");
     }
 
     return filteredLine;
 }
 
-void IRCView::append(const QString& nick,const QString& message) {
+void IRCView::append(const QString& nick,const QString& message)
+{
     QString channelColor = KonversationApplication::preferences.getColor("ChannelMessage");
     QString line;
     QString nickLine = "%2";
     QString color;
     m_tabNotification = Konversation::tnfNormal;
 
-    if(nick != m_server->getNickname()) {
+    if(nick != m_server->getNickname())
+    {
         bool linkNicks = KonversationApplication::preferences.getUseClickableNicks();
         if(linkNicks)
             nickLine = "<a href=\"#" + nick + "\">%2</a>";
@@ -465,7 +537,8 @@ void IRCView::append(const QString& nick,const QString& message) {
     if(KonversationApplication::preferences.getUseBoldNicks())
         nickLine = "<b>"+nickLine+"</b>";
 
-    if(KonversationApplication::preferences.getUseColoredNicks()) {
+    if(KonversationApplication::preferences.getUseColoredNicks())
+    {
 
         if(nick != m_server->getNickname())
             color = m_server->obtainNickInfo(nick)->getNickColor();
@@ -474,21 +547,27 @@ void IRCView::append(const QString& nick,const QString& message) {
 
         nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
 
-        if(color == "#000000") {
-            color = "#000001"; // HACK Working around QTextBrowser's auto link coloring
+        if(color == "#000000")
+        {
+            color = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
         }
     }
-    else {
-        if(channelColor  == "000000") {
-            channelColor = "000001"; // HACK Working around QTextBrowser's auto link coloring
+    else
+    {
+        if(channelColor  == "000000")
+        {
+            channelColor = "000001";              // HACK Working around QTextBrowser's auto link coloring
         }
     }
 
-    if(basicDirection(message) == QChar::DirR) {
+    if(basicDirection(message) == QChar::DirR)
+    {
         line = RLO;
         line += LRE;
         line += "<p><font color=\"#" + channelColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
-    } else {
+    }
+    else
+    {
         line = "<p><font color=\"#" + channelColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
     }
 
@@ -499,28 +578,34 @@ void IRCView::append(const QString& nick,const QString& message) {
     doAppend(line);
 }
 
-void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool self) {
+void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool self)
+{
     QString channelColor=KonversationApplication::preferences.getColor("ChannelMessage");
     QString line;
     m_tabNotification = Konversation::tnfNone;
 
-    if(suppressTimestamps) {
+    if(suppressTimestamps)
+    {
         line = QString("<p><font color=\"#" + channelColor + "\">" + message + "</font></p>\n");
-    } else {
+    }
+    else
+    {
         line = QString("<p>" + timeStamp() + " <font color=\"#" + channelColor + "\">" + message + "</font></p>\n");
     }
 
     doAppend(line, true, self);
 }
 
-void IRCView::appendQuery(const QString& nick,const QString& message) {
+void IRCView::appendQuery(const QString& nick,const QString& message)
+{
     QString queryColor=KonversationApplication::preferences.getColor("QueryMessage");
     QString line;
     QString nickLine = "%2";
     QString color;
     m_tabNotification = Konversation::tnfNormal;
 
-    if(nick != m_server->getNickname()) {
+    if(nick != m_server->getNickname())
+    {
         bool linkNicks = KonversationApplication::preferences.getUseClickableNicks();
         if(linkNicks)
             nickLine = "<a href=\"#" + nick + "\">%2</a>";
@@ -530,7 +615,8 @@ void IRCView::appendQuery(const QString& nick,const QString& message) {
     if(KonversationApplication::preferences.getUseBoldNicks())
         nickLine = "<b>"+nickLine+"</b>";
 
-    if(KonversationApplication::preferences.getUseColoredNicks()) {
+    if(KonversationApplication::preferences.getUseColoredNicks())
+    {
 
         if(nick != m_server->getNickname())
             color = m_server->obtainNickInfo(nick)->getNickColor();
@@ -539,22 +625,27 @@ void IRCView::appendQuery(const QString& nick,const QString& message) {
 
         nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
 
-        if(color == "#000000") {
-            color = "#000001"; // HACK Working around QTextBrowser's auto link coloring
+        if(color == "#000000")
+        {
+            color = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
         }
     }
-    else {
-        if(queryColor  == "000000") {
-            queryColor = "000001"; // HACK Working around QTextBrowser's auto link coloring
+    else
+    {
+        if(queryColor  == "000000")
+        {
+            queryColor = "000001";                // HACK Working around QTextBrowser's auto link coloring
         }
     }
 
-
-    if(basicDirection(message) == QChar::DirR) {
+    if(basicDirection(message) == QChar::DirR)
+    {
         line = RLO;
         line += LRE;
         line += "<p><font color=\"#" + queryColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
-    } else {
+    }
+    else
+    {
         line = "<p><font color=\"#" + queryColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
     }
 
@@ -565,14 +656,16 @@ void IRCView::appendQuery(const QString& nick,const QString& message) {
     doAppend(line);
 }
 
-void IRCView::appendAction(const QString& nick,const QString& message) {
+void IRCView::appendAction(const QString& nick,const QString& message)
+{
     QString actionColor=KonversationApplication::preferences.getColor("ActionMessage");
     QString line;
     QString nickLine = "%2";
     QString color;
     m_tabNotification = Konversation::tnfNormal;
 
-    if(nick != m_server->getNickname()) {
+    if(nick != m_server->getNickname())
+    {
         bool linkNicks = KonversationApplication::preferences.getUseClickableNicks();
         if(linkNicks)
             nickLine = "<a href=\"#" + nick + "\">%2</a>";
@@ -582,30 +675,37 @@ void IRCView::appendAction(const QString& nick,const QString& message) {
     if(KonversationApplication::preferences.getUseBoldNicks())
         nickLine = "<b>"+nickLine+"</b>";
 
-    if(KonversationApplication::preferences.getUseColoredNicks()) {
+    if(KonversationApplication::preferences.getUseColoredNicks())
+    {
 
         if(nick != m_server->getNickname())
             color = m_server->obtainNickInfo(nick)->getNickColor();
         else
             color = KonversationApplication::preferences.getNickColorList()[8];
 
-        if(color == "#000000") {
-            color = "#000001"; // HACK Working around QTextBrowser's auto link coloring
+        if(color == "#000000")
+        {
+            color = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
         }
 
         nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
     }
-    else {
-        if(actionColor  == "000000") {
-            actionColor = "000001"; // HACK Working around QTextBrowser's auto link coloring
+    else
+    {
+        if(actionColor  == "000000")
+        {
+            actionColor = "000001";               // HACK Working around QTextBrowser's auto link coloring
         }
     }
 
-    if(basicDirection(message) == QChar::DirR) {
+    if(basicDirection(message) == QChar::DirR)
+    {
         line = RLO;
         line += LRE;
         line += "<p><font color=\"#" + actionColor + "\">" + nickLine + " * %1" + PDF + " %3</font></p>\n";
-    } else {
+    }
+    else
+    {
         line = "<p><font color=\"#" + actionColor + "\">%1 * " + nickLine + " %3</font></p>\n";
     }
 
@@ -616,24 +716,29 @@ void IRCView::appendAction(const QString& nick,const QString& message) {
     doAppend(line);
 }
 
-void IRCView::appendServerMessage(const QString& type, const QString& message) {
+void IRCView::appendServerMessage(const QString& type, const QString& message)
+{
     QString m_serverColor = KonversationApplication::preferences.getColor("ServerMessage");
     m_tabNotification = Konversation::tnfControl;
 
     // Fixed width font option for MOTD
     QString fixed;
-    if(KonversationApplication::preferences.getFixedMOTD()) {
+    if(KonversationApplication::preferences.getFixedMOTD())
+    {
         if(type == "MOTD")
             fixed=" face=\"" + KGlobalSettings::fixedFont().family() + "\"";
     }
 
     QString line;
 
-    if(basicDirection(message) == QChar::DirR) {
+    if(basicDirection(message) == QChar::DirR)
+    {
         line = RLO;
         line += LRE;
         line += "<p><font color=\"#" + m_serverColor + "\"" + fixed + "><b>[</b>%2<b>]</b> %1" + PDF + " %3</font></p>\n";
-    } else {
+    }
+    else
+    {
         line = "<p><font color=\"#" + m_serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font></p>\n";
     }
 
@@ -647,26 +752,33 @@ void IRCView::appendServerMessage(const QString& type, const QString& message) {
     doAppend(line);
 }
 
-void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important, bool parseURL, bool self) {
+void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important, bool parseURL, bool self)
+{
     QString commandColor = KonversationApplication::preferences.getColor("CommandMessage");
     QString line;
     QString prefix="***";
     m_tabNotification = Konversation::tnfControl;
 
-    if(type == i18n("Join")) {
+    if(type == i18n("Join"))
+    {
         prefix="-->";
         parseURL=false;
-    } else if(type == i18n("Part") || type == i18n("Quit")) {
+    }
+    else if(type == i18n("Part") || type == i18n("Quit"))
+    {
         prefix="<--";
     }
 
     prefix=QStyleSheet::escape(prefix);
 
-    if(basicDirection(message) == QChar::DirR) {
+    if(basicDirection(message) == QChar::DirR)
+    {
         line = RLO;
         line += LRE;
         line += "<p><font color=\"#" + commandColor + "\">%2 %1" + PDF + " %3</font></p>\n";
-    } else {
+    }
+    else
+    {
         line = "<p><font color=\"#" + commandColor + "\">%1 %2 %3</font></p>\n";
     }
 
@@ -677,7 +789,8 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
     doAppend(line, important, self);
 }
 
-void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& rawMessage) {
+void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& rawMessage)
+{
     QString time;
     QString message = rawMessage;
     QString nick = firstColumn;
@@ -687,7 +800,8 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     time = nick.section(' ', 0, 4);
     nick = nick.section(' ', 5);
 
-    if(!nick.isEmpty() && !nick.startsWith("<") && !nick.startsWith("*")) {
+    if(!nick.isEmpty() && !nick.startsWith("<") && !nick.startsWith("*"))
+    {
         nick = "|" + nick + "|";
     }
 
@@ -697,9 +811,12 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
 
     QString line;
 
-    if(basicDirection(message) == QChar::DirR) {
+    if(basicDirection(message) == QChar::DirR)
+    {
         line = "<p><font color=\"#" + backlogColor + "\">%2 %1 %3</font></p>\n";
-    } else {
+    }
+    else
+    {
         line = "<p><font color=\"#" + backlogColor + "\">%1 %2 %3</font></p>\n";
     }
 
@@ -709,10 +826,12 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
 }
 
 //without any display update stuff that freaks out the scrollview
-void IRCView::removeSelectedText( int selNum ) {
+void IRCView::removeSelectedText( int selNum )
+{
     QTextDocument* doc=document();
 
-    for ( int i = 0; i < (int)doc->numSelections(); ++i ) {
+    for ( int i = 0; i < (int)doc->numSelections(); ++i )
+    {
         if ( i == selNum )
             continue;
         doc->removeSelection( i );
@@ -724,24 +843,28 @@ void IRCView::removeSelectedText( int selNum ) {
     // ...snip...
 }
 
-void IRCView::scrollToBottom() {
+void IRCView::scrollToBottom()
+{
     // QTextEdit::scrollToBottom does sync() too, but we don't want it because its slow
     setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
 }
 
-void IRCView::doAppend(const QString& newLine, bool important, bool self) {
+void IRCView::doAppend(const QString& newLine, bool important, bool self)
+{
     // Add line to buffer
     QString line(newLine);
 
-    if(important || !KonversationApplication::preferences.getHideUnimportantEvents()) {
-        if(!self) {
+    if(important || !KonversationApplication::preferences.getHideUnimportantEvents())
+    {
+        if(!self)
+        {
             emit updateTabNotification(m_tabNotification);
         }
 
         // scroll view only if the scroll bar is already at the bottom
         bool doScroll = ( KTextBrowser::verticalScrollBar()->value() == KTextBrowser::verticalScrollBar()->maxValue());
 
-        line.remove('\n');// TODO why have newlines? we get <p>, so the \n are unnecessary...
+        line.remove('\n');                        // TODO why have newlines? we get <p>, so the \n are unnecessary...
 
         bool up = KTextBrowser::viewport()->isUpdatesEnabled();
 
@@ -754,9 +877,11 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self) {
         //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
         // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
         // TODO: make this eat multiple lines at once when the preference is changed so it doesn't take so long
-        if (doScroll) {
+        if (doScroll)
+        {
             int sbm = KonversationApplication::preferences.getScrollbackMax();
-            if (sbm) {
+            if (sbm)
+            {
                 //loop for two reasons: 1) preference changed 2) lines added while scrolled up
                 for(sbm = paragraphs() - sbm; sbm > 0; --sbm)
                     removeParagraph(0);
@@ -766,16 +891,18 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self) {
 
         KTextBrowser::viewport()->setUpdatesEnabled(up);
 
-        if(doScroll) {
+        if(doScroll)
+        {
             setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
             repaintContents(false);
         }
     }
 
-    if(!m_autoTextToSend.isEmpty()) {
+    if(!m_autoTextToSend.isEmpty())
+    {
         // replace placeholders in autoText
         QString sendText = m_server->parseWildcards(m_autoTextToSend,m_server->getNickname(),
-                           QString::null, QString::null, QString::null, QString::null);
+            QString::null, QString::null, QString::null, QString::null);
         // avoid recursion due to signalling
         m_autoTextToSend = QString::null;
         // send signal only now
@@ -785,31 +912,40 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self) {
 
 // remember if scrollbar was positioned at the end of the text or not
 void IRCView::hideEvent(QHideEvent* /* event */) {
-    m_resetScrollbar = ((contentsHeight()-visibleHeight()) == contentsY());
+m_resetScrollbar = ((contentsHeight()-visibleHeight()) == contentsY());
 }
 
 // Workaround to scroll to the end of the TextView when it's shown
 void IRCView::showEvent(QShowEvent* /* event */) {
-    // did the user scroll the view to the end of the text before hiding?
-    if(m_resetScrollbar) {
-        moveCursor(MoveEnd,false);
-        ensureVisible(0,contentsHeight());
-    }
+// did the user scroll the view to the end of the text before hiding?
+if(m_resetScrollbar)
+{
+    moveCursor(MoveEnd,false);
+    ensureVisible(0,contentsHeight());
 }
 
-void IRCView::contentsMouseReleaseEvent(QMouseEvent *ev) {
-    if (ev->button() == Qt::MidButton) {
-        if(m_copyUrlMenu) {
+}
+
+void IRCView::contentsMouseReleaseEvent(QMouseEvent *ev)
+{
+    if (ev->button() == Qt::MidButton)
+    {
+        if(m_copyUrlMenu)
+        {
             urlClickSlot(m_urlToCopy,true);
             return;
-        } else {
+        }
+        else
+        {
             emit textPasted(true);
             return;
         }
     }
 
-    if (ev->button() == QMouseEvent::LeftButton) {
-        if (m_mousePressed) {
+    if (ev->button() == QMouseEvent::LeftButton)
+    {
+        if (m_mousePressed)
+        {
             urlClickSlot(m_urlToDrag);
             m_mousePressed = false;
             return;
@@ -823,10 +959,12 @@ void IRCView::contentsMouseReleaseEvent(QMouseEvent *ev) {
 
 void IRCView::contentsMousePressEvent(QMouseEvent* ev)
 {
-    if (ev->button() == QMouseEvent::LeftButton) {
+    if (ev->button() == QMouseEvent::LeftButton)
+    {
         m_urlToDrag = anchorAt(viewportToContents(ev->pos()));
 
-        if (!m_urlToDrag.isNull()) {
+        if (!m_urlToDrag.isNull())
+        {
             m_mousePressed = true;
             m_pressPosition = ev->pos();
             return;
@@ -838,12 +976,14 @@ void IRCView::contentsMousePressEvent(QMouseEvent* ev)
 
 void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
 {
-    if (m_mousePressed && (m_pressPosition - ev->pos()).manhattanLength() > QApplication::startDragDistance()) {
+    if (m_mousePressed && (m_pressPosition - ev->pos()).manhattanLength() > QApplication::startDragDistance())
+    {
         m_mousePressed = false;
         removeSelection();
         KURL ux(m_urlToDrag);
 
-        if (m_urlToDrag.startsWith("##")) {
+        if (m_urlToDrag.startsWith("##"))
+        {
             ux = QString("irc://%1:%2/%3").arg(m_server->getServerName()).arg(m_server->getPort()).arg(m_urlToDrag.mid(2));
         }
 
@@ -859,57 +999,66 @@ void IRCView::contentsContextMenuEvent(QContextMenuEvent* ev)
 {
     bool block = contextMenu(ev);
 
-    if(!block) {
+    if(!block)
+    {
         KTextBrowser::contentsContextMenuEvent(ev);
     }
 }
 
-bool IRCView::contextMenu(QContextMenuEvent* ce) {
-    if(m_isOnNick) {
+bool IRCView::contextMenu(QContextMenuEvent* ce)
+{
+    if(m_isOnNick)
+    {
         m_nickPopup->exec(ce->globalPos());
-    } else {
+    }
+    else
+    {
         m_popup->setItemEnabled(Copy,(hasSelectedText()));
 
         int r = m_popup->exec(ce->globalPos());
 
-        switch(r) {
-                case -1:
+        switch(r)
+        {
+            case -1:
                 // dummy. -1 means, no entry selected. we don't want -1to go in default, so
                 // we catch it here
                 break;
-                case Copy:
+            case Copy:
                 copy();
                 break;
-                case CopyUrl: {
-                    QClipboard *cb = KApplication::kApplication()->clipboard();
-                    cb->setText(m_urlToCopy,QClipboard::Selection);
-                    cb->setText(m_urlToCopy,QClipboard::Clipboard);
-                    break;
-                }
-                case SelectAll:
+            case CopyUrl:
+            {
+                QClipboard *cb = KApplication::kApplication()->clipboard();
+                cb->setText(m_urlToCopy,QClipboard::Selection);
+                cb->setText(m_urlToCopy,QClipboard::Clipboard);
+                break;
+            }
+            case SelectAll:
                 selectAll();
                 break;
-                case Search:
+            case Search:
                 search();
                 break;
-                case SendFile:
+            case SendFile:
                 emit sendFile();
                 break;
-                case Bookmark: {
-                    KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
-                    KBookmarkGroup bg = bm->addBookmarkDialog(m_urlToCopy, QString::null);
-                    bm->save();
-                    bm->emitChanged(bg);
-                    break;
-                }
-                default:
+            case Bookmark:
+            {
+                KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
+                KBookmarkGroup bg = bm->addBookmarkDialog(m_urlToCopy, QString::null);
+                bm->save();
+                bm->emitChanged(bg);
+                break;
+            }
+            default:
                 emit extendedPopup(r);
         }
     }
     return true;
 }
 
-void IRCView::setupNickPopupMenu() {
+void IRCView::setupNickPopupMenu()
+{
     m_nickPopup = new KPopupMenu(this,"nicklist_context_menu");
     m_modes = new KPopupMenu(this,"nicklist_modes_context_submenu");
     m_kickban = new KPopupMenu(this,"nicklist_kick_ban_context_submenu");
@@ -925,8 +1074,9 @@ void IRCView::setupNickPopupMenu() {
     m_nickPopup->insertItem(i18n("&Ping"),Konversation::Ping);
     m_nickPopup->insertSeparator();
     m_nickPopup->insertItem(i18n("Open Query"),Konversation::OpenQuery);
-    if (kapp->authorize("allow_downloading")) {
-      m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
+    if (kapp->authorize("allow_downloading"))
+    {
+        m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
     }
     m_nickPopup->insertSeparator();
     m_kickban->insertItem(i18n("Kick"),Konversation::Kick);
@@ -950,22 +1100,23 @@ void IRCView::setupNickPopupMenu() {
     connect(m_kickban, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
 }
 
-void IRCView::search() {
-/*    m_caseSensitive = false;
-    m_wholeWords = false;
-    m_forward = false;
-    m_fromCursor = false;
+void IRCView::search()
+{
+    /*    m_caseSensitive = false;
+        m_wholeWords = false;
+        m_forward = false;
+        m_fromCursor = false;
 
-    m_pattern = SearchDialog::search(this, &m_caseSensitive, &m_wholeWords, &m_forward, &m_fromCursor);
+        m_pattern = SearchDialog::search(this, &m_caseSensitive, &m_wholeWords, &m_forward, &m_fromCursor);
 
-    if(!m_fromCursor) {
-        if(m_forward) {
-            m_findParagraph = 1;
-            m_findIndex = 1;
-        } else {
-            m_findParagraph = paragraphs();
-            m_findIndex = paragraphLength(paragraphs());
-        }
+        if(!m_fromCursor) {
+            if(m_forward) {
+                m_findParagraph = 1;
+                m_findIndex = 1;
+    } else {
+    m_findParagraph = paragraphs();
+    m_findIndex = paragraphLength(paragraphs());
+    }
     }
 
     searchAgain(); */
@@ -973,27 +1124,37 @@ void IRCView::search() {
     emit doSearch();
 }
 
-void IRCView::searchAgain() {
+void IRCView::searchAgain()
+{
 
-    if(!m_pattern.isEmpty()) {
+    if(!m_pattern.isEmpty())
+    {
         // next search must begin one index before / after the last search
         // depending on the search direction.
-        if(m_forward) {
+        if(m_forward)
+        {
             ++m_findIndex;
-            if(m_findIndex == paragraphLength(m_findParagraph)) {
+            if(m_findIndex == paragraphLength(m_findParagraph))
+            {
                 m_findIndex = 0;
                 ++m_findParagraph;
             }
-        } else {
-            if(m_findIndex) {
+        }
+        else
+        {
+            if(m_findIndex)
+            {
                 --m_findIndex;
-            } else {
+            }
+            else
+            {
                 --m_findParagraph;
                 m_findIndex = paragraphLength(m_findParagraph);
             }
         }
 
-        if(!find(m_pattern, m_caseSensitive, m_wholeWords, m_forward, &m_findParagraph, &m_findIndex)) {
+        if(!find(m_pattern, m_caseSensitive, m_wholeWords, m_forward, &m_findParagraph, &m_findIndex))
+        {
             KMessageBox::information(this,i18n("No matches found for \"%1\".").arg(m_pattern),i18n("Information"));
         }
 
@@ -1001,7 +1162,7 @@ void IRCView::searchAgain() {
 }
 
 bool IRCView::search(const QString& pattern, bool caseSensitive,
-                     bool wholeWords, bool forward, bool fromCursor)
+bool wholeWords, bool forward, bool fromCursor)
 {
     m_pattern       = pattern;
     m_caseSensitive = caseSensitive;
@@ -1018,7 +1179,9 @@ bool IRCView::search(const QString& pattern, bool caseSensitive,
         {
             m_findParagraph = 1;
             m_findIndex = 1;
-        } else {
+        }
+        else
+        {
             m_findParagraph = paragraphs();
             m_findIndex = paragraphLength(paragraphs());
         }
@@ -1057,12 +1220,12 @@ bool IRCView::searchNext()
     }
 
     return find(m_pattern, m_caseSensitive, m_wholeWords, m_forward,
-                &m_findParagraph, &m_findIndex);
+        &m_findParagraph, &m_findIndex);
 }
 
-
 // other windows can link own menu entries here
-QPopupMenu* IRCView::getPopup() const {
+QPopupMenu* IRCView::getPopup() const
+{
     return m_popup;
 }
 
@@ -1074,54 +1237,64 @@ QChar IRCView::RLO = (ushort)0x202e;
 QChar IRCView::LRO = (ushort)0x202d;
 QChar IRCView::PDF = (ushort)0x202c;
 
-QChar::Direction IRCView::basicDirection(const QString &string) {
+QChar::Direction IRCView::basicDirection(const QString &string)
+{
     // find base direction
     unsigned int pos = 0;
     while ((pos < string.length()) &&
-            (string.at(pos) != RLE) &&
-            (string.at(pos) != LRE) &&
-            (string.at(pos) != RLO) &&
-            (string.at(pos) != LRO) &&
-            (string.at(pos).direction() > 1) &&
-            (string.at(pos).direction() != QChar::DirAL)) // not R and not L
+        (string.at(pos) != RLE) &&
+        (string.at(pos) != LRE) &&
+        (string.at(pos) != RLO) &&
+        (string.at(pos) != LRO) &&
+        (string.at(pos).direction() > 1) &&
+                                                  // not R and not L
+        (string.at(pos).direction() != QChar::DirAL))
     {
         ++pos;
     }
 
     if((string.at(pos).direction() == QChar::DirR) ||
-            (string.at(pos).direction() == QChar::DirAL) ||
-            (string.at(pos) == RLE) ||
-            (string.at(pos) == RLO)) {
+        (string.at(pos).direction() == QChar::DirAL) ||
+        (string.at(pos) == RLE) ||
+        (string.at(pos) == RLO))
+    {
         return QChar::DirR;
     }
 
     return QChar::DirL;
 }
 
-void IRCView::contentsDragMoveEvent(QDragMoveEvent *e) {
+void IRCView::contentsDragMoveEvent(QDragMoveEvent *e)
+{
     if(acceptDrops() && QUriDrag::canDecode(e))
         e->accept();
 }
 
-void IRCView::contentsDropEvent(QDropEvent *e) {
+void IRCView::contentsDropEvent(QDropEvent *e)
+{
     QStrList s;
     if(QUriDrag::decode(e,s))
         emit filesDropped(s);
 }
 
-QString IRCView::timeStamp() {
-    if(KonversationApplication::preferences.getTimestamping()) {
+QString IRCView::timeStamp()
+{
+    if(KonversationApplication::preferences.getTimestamping())
+    {
         QTime time = QTime::currentTime();
         QString timeColor = KonversationApplication::preferences.getColor("Time");
         QString timeFormat = KonversationApplication::preferences.getTimestampFormat();
         QString timeString;
 
-        if(!KonversationApplication::preferences.getShowDate()) {
+        if(!KonversationApplication::preferences.getShowDate())
+        {
             timeString = QString("<font color=\"#" + timeColor + "\">[%1]</font> ").arg(time.toString(timeFormat));
-        } else {
+        }
+        else
+        {
             QDate date = QDate::currentDate();
             timeString = QString("<font color=\"#" +
-                                 timeColor + "\">[%1 %2]</font> ").arg(date.toString(Qt::ISODate), time.toString(timeFormat));
+                timeColor + "\">[%1 %2]</font> ").arg(date.toString(Qt::ISODate), time.toString(timeFormat));
         }
 
         return timeString;
@@ -1130,13 +1303,15 @@ QString IRCView::timeStamp() {
     return QString::null;
 }
 
-void IRCView::setChatWin(ChatWindow* chatWin) {
+void IRCView::setChatWin(ChatWindow* chatWin)
+{
     m_chatWin = chatWin;
 }
 
 void IRCView::keyPressEvent(QKeyEvent* e)
 {
-    if((e->key() == Qt::Key_V) && (e->state() == Qt::ControlButton)) {
+    if((e->key() == Qt::Key_V) && (e->state() == Qt::ControlButton))
+    {
         emit textPasted(false);
         return;
     }
@@ -1161,4 +1336,3 @@ void IRCView::updateScrollBarPos()
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:
-

@@ -24,44 +24,45 @@
 
 class NickListView;
 
-namespace Konversation {
-KonversationNickListViewToolTip::KonversationNickListViewToolTip(QWidget *parent, NickListView *lv) : QToolTip(parent)
+namespace Konversation
 {
-	m_listView = lv;
-}
+    KonversationNickListViewToolTip::KonversationNickListViewToolTip(QWidget *parent, NickListView *lv) : QToolTip(parent)
+    {
+        m_listView = lv;
+    }
 
-KonversationNickListViewToolTip::~KonversationNickListViewToolTip() {
-}
+    KonversationNickListViewToolTip::~KonversationNickListViewToolTip()
+    {
+    }
 
-void KonversationNickListViewToolTip::maybeTip( const QPoint &pos )
-{
-    if( !parentWidget() || !m_listView )
-        return;
+    void KonversationNickListViewToolTip::maybeTip( const QPoint &pos )
+    {
+        if( !parentWidget() || !m_listView )
+            return;
 
-    QListViewItem *item = m_listView->itemAt( pos );
-    if( !item )
-        return;
-    NickListViewItem *ledItem = dynamic_cast<NickListViewItem *>( item );
-    Nick *nick = NULL;
-    if(ledItem)
-        nick = ledItem->getNick();
-    
-    QString toolTip;
-    QRect itemRect = m_listView->itemRect( item );
+        QListViewItem *item = m_listView->itemAt( pos );
+        if( !item )
+            return;
+        NickListViewItem *ledItem = dynamic_cast<NickListViewItem *>( item );
+        Nick *nick = NULL;
+        if(ledItem)
+            nick = ledItem->getNick();
 
-    if(! nick )
-	return;
+        QString toolTip;
+        QRect itemRect = m_listView->itemRect( item );
 
-    uint leftMargin = m_listView->treeStepSize() *
-        ( item->depth() + ( m_listView->rootIsDecorated() ? 1 : 0 ) ) +
-        m_listView->itemMargin();
-    uint xAdjust = itemRect.left() + leftMargin;
-    uint yAdjust = itemRect.top();
-    QPoint relativePos( pos.x() - xAdjust, pos.y() - yAdjust );
-    toolTip = Konversation::removeIrcMarkup(nick->getChannelNick()->tooltip());
-    if(!toolTip.isEmpty()) 
-        tip(itemRect, toolTip);
-}
+        if(! nick )
+            return;
 
-} // namespace Konversation
+        uint leftMargin = m_listView->treeStepSize() *
+            ( item->depth() + ( m_listView->rootIsDecorated() ? 1 : 0 ) ) +
+            m_listView->itemMargin();
+        uint xAdjust = itemRect.left() + leftMargin;
+        uint yAdjust = itemRect.top();
+        QPoint relativePos( pos.x() - xAdjust, pos.y() - yAdjust );
+        toolTip = Konversation::removeIrcMarkup(nick->getChannelNick()->tooltip());
+        if(!toolTip.isEmpty())
+            tip(itemRect, toolTip);
+    }
 
+}                                                 // namespace Konversation

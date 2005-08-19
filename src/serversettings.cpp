@@ -11,39 +11,43 @@
 */
 #include "serversettings.h"
 
-namespace Konversation {
-
-ServerSettings::ServerSettings()
+namespace Konversation
 {
-  setPort(6667);
-  setSSLEnabled(false);
-}
 
-ServerSettings::ServerSettings(const ServerSettings& settings)
-{
-  setServer(settings.server());
-  setPort(settings.port());
-  setPassword(settings.password());
-  setSSLEnabled(settings.SSLEnabled());
-}
+    ServerSettings::ServerSettings()
+    {
+        setPort(6667);
+        setSSLEnabled(false);
+    }
 
-ServerSettings::ServerSettings(const QString& server)
-{
-  setServer(server);
-  setSSLEnabled(false);
-}
+    ServerSettings::ServerSettings(const ServerSettings& settings)
+    {
+        setServer(settings.server());
+        setPort(settings.port());
+        setPassword(settings.password());
+        setSSLEnabled(settings.SSLEnabled());
+    }
 
-ServerSettings::~ServerSettings()
-{
-}
+    ServerSettings::ServerSettings(const QString& server)
+    {
+        setServer(server);
+        setSSLEnabled(false);
+    }
 
-bool ServerSettings::operator== (const ServerSettings& settings) const
-{
-  if (m_server==settings.server() && m_port==settings.port() && m_password==settings.password() && m_SSLEnabled==settings.SSLEnabled()) {
-    return true;
-  } else {
-    return false;
-  }
-}
+    ServerSettings::~ServerSettings()
+    {
+    }
+
+    bool ServerSettings::operator== (const ServerSettings& settings) const
+    {
+        if (m_server==settings.server() && m_port==settings.port() && m_password==settings.password() && m_SSLEnabled==settings.SSLEnabled())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
 }

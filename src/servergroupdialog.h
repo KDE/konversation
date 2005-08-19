@@ -22,62 +22,62 @@ class QListBox;
 class QCheckBox;
 class QToolButton;
 
-namespace Konversation {
-
-class ServerGroupDialog : public KDialogBase
+namespace Konversation
 {
-  Q_OBJECT
-  public:
-    ServerGroupDialog(const QString& title, QWidget* parent = 0, const char* name = 0);
-    ~ServerGroupDialog();
 
-    void setServerGroupSettings(ServerGroupSettingsPtr settings);
-    ServerGroupSettingsPtr serverGroupSettings();
+    class ServerGroupDialog : public KDialogBase
+    {
+        Q_OBJECT
+            public:
+            ServerGroupDialog(const QString& title, QWidget* parent = 0, const char* name = 0);
+            ~ServerGroupDialog();
 
-    void setAvailableGroups(const QStringList& groups);
-    
-    bool identitiesNeedsUpdate() const { return m_identitiesNeedsUpdate; }
-  
-  protected slots:
-    virtual void slotOk();
-    
-    void addServer();
-    void editServer();
-    void deleteServer();
-    void updateServerArrows();
-    void moveServerUp();
-    void moveServerDown();
+            void setServerGroupSettings(ServerGroupSettingsPtr settings);
+            ServerGroupSettingsPtr serverGroupSettings();
 
-    void addChannel();
-    void editChannel();
-    void deleteChannel();
-    void updateChannelArrows();
-    void moveChannelUp();
-    void moveChannelDown();
+            void setAvailableGroups(const QStringList& groups);
 
-    void editIdentity();
+            bool identitiesNeedsUpdate() const { return m_identitiesNeedsUpdate; }
 
-  private:
-    QLineEdit* m_nameEdit;
-    QComboBox* m_groupCBox;
-    QComboBox* m_identityCBox;
-    QLineEdit* m_commandEdit;
-    QListBox* m_serverLBox;
-    QListBox* m_channelLBox;
-    QCheckBox* m_autoConnectCBox;
-    ServerList m_serverList;
-    ChannelList m_channelList;
-    ChannelList m_channelHistory;
-    QToolButton* m_upServerBtn;
-    QToolButton* m_downServerBtn;
-    QToolButton* m_upChannelBtn;
-    QToolButton* m_downChannelBtn;
+        protected slots:
+            virtual void slotOk();
 
-    int m_id;
-    
-    bool m_identitiesNeedsUpdate;
-};
+            void addServer();
+            void editServer();
+            void deleteServer();
+            void updateServerArrows();
+            void moveServerUp();
+            void moveServerDown();
+
+            void addChannel();
+            void editChannel();
+            void deleteChannel();
+            void updateChannelArrows();
+            void moveChannelUp();
+            void moveChannelDown();
+
+            void editIdentity();
+
+        private:
+            QLineEdit* m_nameEdit;
+            QComboBox* m_groupCBox;
+            QComboBox* m_identityCBox;
+            QLineEdit* m_commandEdit;
+            QListBox* m_serverLBox;
+            QListBox* m_channelLBox;
+            QCheckBox* m_autoConnectCBox;
+            ServerList m_serverList;
+            ChannelList m_channelList;
+            ChannelList m_channelHistory;
+            QToolButton* m_upServerBtn;
+            QToolButton* m_downServerBtn;
+            QToolButton* m_upChannelBtn;
+            QToolButton* m_downChannelBtn;
+
+            int m_id;
+
+            bool m_identitiesNeedsUpdate;
+    };
 
 }
-
 #endif

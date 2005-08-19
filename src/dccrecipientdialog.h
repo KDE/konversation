@@ -25,26 +25,26 @@ class KLineEdit;
 
 class DccRecipientDialog : public KDialogBase
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public: 
-    DccRecipientDialog(QWidget* parent, const QStringList &list, const QSize &size);
-    ~DccRecipientDialog();
+        public:
+        DccRecipientDialog(QWidget* parent, const QStringList &list, const QSize &size);
+        ~DccRecipientDialog();
 
-    static QString getNickname(QWidget* parent,QStringList list);
+        static QString getNickname(QWidget* parent,QStringList list);
 
-  protected slots:
-    void newNicknameSelected(QListBoxItem* item);
-    void newNicknameSelectedQuit(QListBoxItem* item);  // KDE double click
+    protected slots:
+        void newNicknameSelected(QListBoxItem* item);
+                                                  // KDE double click
+        void newNicknameSelectedQuit(QListBoxItem* item);
 
-    void slotOk();
-    void slotCancel();
+        void slotOk();
+        void slotCancel();
 
-  protected:  
-    QString getSelectedNickname();
-    static QString selectedNickname;
+    protected:
+        QString getSelectedNickname();
+        static QString selectedNickname;
 
-    KLineEdit* nicknameInput;
+        KLineEdit* nicknameInput;
 };
-
 #endif

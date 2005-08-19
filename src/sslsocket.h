@@ -11,12 +11,12 @@
 
     *************************************************************************
     *                                                                       *
-    * This program is free software; you can redistribute it and/or modify  *
-    * it under the terms of the GNU General Public License as published by  *
-    * the Free Software Foundation; either version 2 of the License, or     *
-    * (at your option) any later version.                                   *
-    *                                                                       *
-    *************************************************************************
+* This program is free software; you can redistribute it and/or modify  *
+* it under the terms of the GNU General Public License as published by  *
+* the Free Software Foundation; either version 2 of the License, or     *
+* (at your option) any later version.                                   *
+*                                                                       *
+*************************************************************************
 */
 
 #include <kstreamsocket.h>
@@ -26,36 +26,35 @@ struct SSLSocketPrivate;
 
 class SSLSocket : public KStreamSocket
 {
-  Q_OBJECT
+    Q_OBJECT
 
- public:
-  SSLSocket(QWidget* serverParent, QObject* parent = 0L, const char* name = 0L);
-  ~SSLSocket();
+        public:
+        SSLSocket(QWidget* serverParent, QObject* parent = 0L, const char* name = 0L);
+        ~SSLSocket();
 
-  void showInfoDialog();
-  const QString details();
-  
-  Q_LONG writeBlock (const char *data, Q_ULONG len);
-  Q_LONG readBlock  (char *data, Q_ULONG maxlen);
- 
- protected:
-  void stateChanging (KClientSocketBase::SocketState newState);
-  
- signals:
-  /** Emitted when there is a problem with SSL
-   *  @param reason An error string that has already been through i18n
-   */
-  void sslFailure(QString reason);
-  void sslInitDone();
+        void showInfoDialog();
+        const QString details();
 
- private:
-  void connected();
-  int verifyCertificate();
-  void showSSLInfoDialog();
+        Q_LONG writeBlock (const char *data, Q_ULONG len);
+        Q_LONG readBlock  (char *data, Q_ULONG maxlen);
 
-  QWidget* m_serverParent;
+    protected:
+        void stateChanging (KClientSocketBase::SocketState newState);
 
-  SSLSocketPrivate* d;
+        signals:
+        /** Emitted when there is a problem with SSL
+         *  @param reason An error string that has already been through i18n
+         */
+        void sslFailure(QString reason);
+        void sslInitDone();
+
+    private:
+        void connected();
+        int verifyCertificate();
+        void showSSLInfoDialog();
+
+        QWidget* m_serverParent;
+
+        SSLSocketPrivate* d;
 };
-
 #endif

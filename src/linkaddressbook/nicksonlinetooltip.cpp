@@ -25,41 +25,41 @@
 
 class NickListView;
 
-namespace Konversation {
-KonversationNicksOnlineToolTip::KonversationNicksOnlineToolTip(QWidget *parent, NicksOnline *nicksOnline) : QToolTip(parent)
+namespace Konversation
 {
-	m_nicksOnline = nicksOnline;
-}
+    KonversationNicksOnlineToolTip::KonversationNicksOnlineToolTip(QWidget *parent, NicksOnline *nicksOnline) : QToolTip(parent)
+    {
+        m_nicksOnline = nicksOnline;
+    }
 
-KonversationNicksOnlineToolTip::~KonversationNicksOnlineToolTip() {
-}
+    KonversationNicksOnlineToolTip::~KonversationNicksOnlineToolTip()
+    {
+    }
 
-void KonversationNicksOnlineToolTip::maybeTip( const QPoint &pos )
-{
-    if( !parentWidget() || !m_nicksOnline || !m_nicksOnline->getNickListView() )
-        return;
-    KListView *m_listView = m_nicksOnline->getNickListView();
-    QListViewItem *item = m_listView->itemAt( pos );
-    if( !item )
-        return;
-    NickInfoPtr nickInfo = m_nicksOnline->getNickInfo(item);
-   
-    if(!nickInfo )
-	return;
-    QString toolTip;
-    QRect itemRect = m_listView->itemRect( item );
+    void KonversationNicksOnlineToolTip::maybeTip( const QPoint &pos )
+    {
+        if( !parentWidget() || !m_nicksOnline || !m_nicksOnline->getNickListView() )
+            return;
+        KListView *m_listView = m_nicksOnline->getNickListView();
+        QListViewItem *item = m_listView->itemAt( pos );
+        if( !item )
+            return;
+        NickInfoPtr nickInfo = m_nicksOnline->getNickInfo(item);
 
+        if(!nickInfo )
+            return;
+        QString toolTip;
+        QRect itemRect = m_listView->itemRect( item );
 
-    uint leftMargin = m_listView->treeStepSize() *
-        ( item->depth() + ( m_listView->rootIsDecorated() ? 1 : 0 ) ) +
-        m_listView->itemMargin();
-    uint xAdjust = itemRect.left() + leftMargin;
-    uint yAdjust = itemRect.top();
-    QPoint relativePos( pos.x() - xAdjust, pos.y() - yAdjust );
-    toolTip = nickInfo->tooltip();
-    if(!toolTip.isEmpty()) 
-        tip(itemRect, toolTip);
-}
+        uint leftMargin = m_listView->treeStepSize() *
+            ( item->depth() + ( m_listView->rootIsDecorated() ? 1 : 0 ) ) +
+            m_listView->itemMargin();
+        uint xAdjust = itemRect.left() + leftMargin;
+        uint yAdjust = itemRect.top();
+        QPoint relativePos( pos.x() - xAdjust, pos.y() - yAdjust );
+        toolTip = nickInfo->tooltip();
+        if(!toolTip.isEmpty())
+            tip(itemRect, toolTip);
+    }
 
-} // namespace Konversation
-
+}                                                 // namespace Konversation

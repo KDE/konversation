@@ -18,22 +18,22 @@
 
 class KURL;
 
-namespace Konversation {
+namespace Konversation
+{
 
-  /**
-  Class that handles sounds
-  */
-  class Sound : public QObject
-  {
-    Q_OBJECT
-    public:
-    Sound(QObject *parent = 0, const char *name = 0);
-    ~Sound();
-    
-    public slots:
-      void play(const KURL& url);
+    /**
+    Class that handles sounds
+    */
+    class Sound : public QObject
+    {
+        Q_OBJECT
+            public:
+            Sound(QObject *parent = 0, const char *name = 0);
+            ~Sound();
 
-  };
+        public slots:
+            void play(const KURL& url);
+
+    };
 }
-
 #endif

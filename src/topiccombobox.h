@@ -11,7 +11,6 @@
   email:     eisfuchs@tigress.com
 */
 
-
 #ifndef TOPICCOMBOBOX_H
 #define TOPICCOMBOBOX_H
 
@@ -23,22 +22,21 @@
 
 class TopicComboBox : public KComboBox
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    TopicComboBox(QWidget* parent);
-    ~TopicComboBox();
-    void insertStringList(const QStringList& list);
+        public:
+        TopicComboBox(QWidget* parent);
+        ~TopicComboBox();
+        void insertStringList(const QStringList& list);
 
-  protected:
-    void wheelEvent(QWheelEvent *ev);
+    protected:
+        void wheelEvent(QWheelEvent *ev);
 
-  signals:
-    void topicChanged(const QString& newTopic);
+        signals:
+        void topicChanged(const QString& newTopic);
 
-  protected slots:
-    void topicActivated(const QString& newTopic);
-    void topicActivated(int index);
+    protected slots:
+        void topicActivated(const QString& newTopic);
+        void topicActivated(int index);
 };
-
 #endif

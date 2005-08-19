@@ -24,20 +24,19 @@
 
 class NicksOnline;
 
-namespace Konversation {
-	
-class KonversationNicksOnlineToolTip : public QToolTip
+namespace Konversation
 {
-  public:
-	KonversationNicksOnlineToolTip(QWidget *parent, NicksOnline *nicksOnline);
-        virtual ~KonversationNicksOnlineToolTip();
-    
-        void maybeTip( const QPoint &pos );
-        
-  private:
-        NicksOnline *m_nicksOnline;
-};
+
+    class KonversationNicksOnlineToolTip : public QToolTip
+    {
+        public:
+            KonversationNicksOnlineToolTip(QWidget *parent, NicksOnline *nicksOnline);
+            virtual ~KonversationNicksOnlineToolTip();
+
+            void maybeTip( const QPoint &pos );
+
+        private:
+            NicksOnline *m_nicksOnline;
+    };
 }
-
 #endif
-

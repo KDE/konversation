@@ -22,29 +22,28 @@
 
 class Ignore
 {
-  public:
-    enum Type
-    {
-      Channel=1,
-      Query=2,
-      Notice=4,
-      CTCP=8,
-      DCC=16,
-      Exception=32,
-      All=31
-    };
+    public:
+        enum Type
+        {
+            Channel=1,
+            Query=2,
+            Notice=4,
+            CTCP=8,
+            DCC=16,
+            Exception=32,
+            All=31
+        };
 
-    Ignore(const QString &name,int flags);
-    ~Ignore();
+        Ignore(const QString &name,int flags);
+        ~Ignore();
 
-    void setName(const QString &newName);
-    void setFlags(int newFlags);
-    QString getName();
-    int getFlags();
+        void setName(const QString &newName);
+        void setFlags(int newFlags);
+        QString getName();
+        int getFlags();
 
-  protected:
-    QString name;
-    int flags;
+    protected:
+        QString name;
+        int flags;
 };
-
 #endif

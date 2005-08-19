@@ -20,26 +20,26 @@
 #include "ledtab.h"
 
 LedTab::LedTab(QWidget* newWidget,const QString& label,int newColor,bool on) :
-          QTab(label)
+QTab(label)
 {
-  // First of all set up the icons
-  Images* images=KonversationApplication::instance()->images();
-  iconOn=images->getLed(newColor,true);
-  iconOff=images->getLed(newColor,false);
+    // First of all set up the icons
+    Images* images=KonversationApplication::instance()->images();
+    iconOn=images->getLed(newColor,true);
+    iconOff=images->getLed(newColor,false);
 
-  installEventFilter(this);
+    installEventFilter(this);
 
-  color=newColor;
-  blinkOn=true;
-  widget=newWidget;
-  labelColor=QString::null;
+    color=newColor;
+    blinkOn=true;
+    widget=newWidget;
+    labelColor=QString::null;
 
-  setOn(on);
-  setOnline(true);
+    setOn(on);
+    setOnline(true);
 
-  connect(&blinkTimer,SIGNAL(timeout()),this,SLOT(blinkTimeout()));
+    connect(&blinkTimer,SIGNAL(timeout()),this,SLOT(blinkTimeout()));
 
-  blinkTimer.start(500);
+    blinkTimer.start(500);
 
 }
 
@@ -49,84 +49,90 @@ LedTab::~LedTab()
 
 void LedTab::blinkTimeout()
 {
-  if(state!=Off)
-  {
-    // if the user wants us to blink, toggle LED blink status
-    if(KonversationApplication::preferences.getBlinkingTabs())
+    if(state!=Off)
     {
-      blinkOn=!blinkOn;
-      // draw the new LED
-      setIconSet((blinkOn) ? iconOn : iconOff);
+        // if the user wants us to blink, toggle LED blink status
+        if(KonversationApplication::preferences.getBlinkingTabs())
+        {
+            blinkOn=!blinkOn;
+            // draw the new LED
+            setIconSet((blinkOn) ? iconOn : iconOff);
+        }
+        // else LED should be always on
+        else
+        {
+            // only change state when LED was off until now
+            if(!blinkOn)
+            {
+                // switch LED on
+                blinkOn=true;
+                setIconSet((blinkOn) ? iconOn : iconOff);
+            }
+        }
     }
-    // else LED should be always on
-    else
-    {
-      // only change state when LED was off until now
-      if(!blinkOn)
-      {
-        // switch LED on
-        blinkOn=true;
-        setIconSet((blinkOn) ? iconOn : iconOff);
-      }
-    }
-  }
 }
 
 void LedTab::setOn(bool on,bool important)
 {
-  if (on) {
-    if (important) {
-      blinkTimer.changeInterval(500);
-    } else if (state!=Fast) {
-      blinkTimer.changeInterval(1000);
+    if (on)
+    {
+        if (important)
+        {
+            blinkTimer.changeInterval(500);
+        }
+        else if (state!=Fast)
+        {
+            blinkTimer.changeInterval(1000);
+        }
+
+        state = important ? Fast : Slow;
+    }
+    else
+    {
+        state = Off;
+        labelColor = QString::null;
     }
 
-    state = important ? Fast : Slow;
-  } else {
-    state = Off;
-    labelColor = QString::null;
-  }
-
-  setIconSet((state!=Off) ? iconOn : iconOff);
+    setIconSet((state!=Off) ? iconOn : iconOff);
 }
 
 void LedTab::setLabelColor(const QString& newLabelColor)
 {
-  labelColor = newLabelColor;
-  emit repaintTab(this);
+    labelColor = newLabelColor;
+    emit repaintTab(this);
 }
 
 const QString& LedTab::getLabelColor()
 {
-  return (blinkOn) ? labelColor : QString::null;
+    return (blinkOn) ? labelColor : QString::null;
 }
 
 void LedTab::setIconSet(const QIconSet& icon)
 {
-  delete iconSet();
-  QTab::setIconSet(icon);
-  emit repaintTab(this);
+    delete iconSet();
+    QTab::setIconSet(icon);
+    emit repaintTab(this);
 }
 
 QWidget* LedTab::getWidget()
 {
-  return widget;
+    return widget;
 }
 
 int LedTab::getColor()
 {
-  return color;
+    return color;
 }
 
 void LedTab::setOnline(bool state)
 {
-  online=state;
-  emit repaintTab(this);
+    online=state;
+    emit repaintTab(this);
 }
 
 bool LedTab::getOnline()
 {
-  return online;
+    return online;
 }
 
 #include "ledtab.moc"

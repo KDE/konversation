@@ -13,8 +13,8 @@
   *                                                                       *
   *************************************************************************
 
-  Based on the code by:
-  Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
+Based on the code by:
+Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 */
 
@@ -37,29 +37,27 @@ class KonviBookmarkMenu : public KBookmarkMenu
 {
     Q_OBJECT
 
-public:
-    KonviBookmarkMenu( KBookmarkManager* mgr,
-		       KonviBookmarkHandler * _owner, KPopupMenu * _parentMenu,
-		       KActionCollection *collec, bool _isRoot,
-		       bool _add = true, const QString & parentAddress = "");
+        public:
+        KonviBookmarkMenu( KBookmarkManager* mgr,
+            KonviBookmarkHandler * _owner, KPopupMenu * _parentMenu,
+            KActionCollection *collec, bool _isRoot,
+            bool _add = true, const QString & parentAddress = "");
 
-    void fillBookmarkMenu();
+        void fillBookmarkMenu();
 
-public slots:
+    public slots:
 
-private:
-    
+    private:
 
-protected slots:
-    void slotAboutToShow2();
-    void slotBookmarkSelected();
+    protected slots:
+        void slotAboutToShow2();
+        void slotBookmarkSelected();
 
-protected:
-    void refill();
+    protected:
+        void refill();
 
-private:
-    KonviBookmarkHandler * m_kOwner;
-    KonviBookmarkMenuPrivate *d;
+    private:
+        KonviBookmarkHandler * m_kOwner;
+        KonviBookmarkMenuPrivate *d;
 };
-
-#endif // KONVIBOOKMARKMENU_H
+#endif                                            // KONVIBOOKMARKMENU_H

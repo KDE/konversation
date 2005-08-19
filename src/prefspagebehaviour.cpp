@@ -21,33 +21,33 @@
 #include "preferences.h"
 
 PrefsPageBehaviour::PrefsPageBehaviour(QWidget* newParent, Preferences* newPreferences)
-  : GeneralBehavior_Config(newParent)
+: GeneralBehavior_Config(newParent)
 {
-  preferences = newPreferences;
+    preferences = newPreferences;
 
-  systrayGBox->setChecked(preferences->getShowTrayIcon());
-  trayNotifyCheck->setChecked(preferences->getTrayNotify());
-  trayNotifyOwnNickOnlyCheck->setChecked(preferences->trayNotifyOnlyOwnNick());
-  trayOnlyCheck->setChecked(preferences->getSystrayOnly());
+    systrayGBox->setChecked(preferences->getShowTrayIcon());
+    trayNotifyCheck->setChecked(preferences->getTrayNotify());
+    trayNotifyOwnNickOnlyCheck->setChecked(preferences->trayNotifyOnlyOwnNick());
+    trayOnlyCheck->setChecked(preferences->getSystrayOnly());
 
-  showServerList->setChecked(preferences->getShowServerList());
+    showServerList->setChecked(preferences->getShowServerList());
 
-  m_disableNotifyWhileAwayCheck->setChecked(preferences->disableNotifyWhileAway());
+    m_disableNotifyWhileAwayCheck->setChecked(preferences->disableNotifyWhileAway());
 
-  useCustomBrowserCheck->setChecked(!preferences->getWebBrowserUseKdeDefault());
-  browserCmdInput->setText(preferences->getWebBrowserCmd());
+    useCustomBrowserCheck->setChecked(!preferences->getWebBrowserUseKdeDefault());
+    browserCmdInput->setText(preferences->getWebBrowserCmd());
 
-  commandCharInput->setText(preferences->getCommandChar());
+    commandCharInput->setText(preferences->getCommandChar());
 
-  useCustomVersionReplyCheck->setChecked(preferences->getCustomVersionReplyEnabled());
-  ctcpVersionInput->setText(preferences->getCustomVersionReply());
+    useCustomVersionReplyCheck->setChecked(preferences->getCustomVersionReplyEnabled());
+    ctcpVersionInput->setText(preferences->getCustomVersionReply());
 
-  autojoinOnInviteCheck->setChecked(preferences->getAutojoinOnInvite());
+    autojoinOnInviteCheck->setChecked(preferences->getAutojoinOnInvite());
 
-  completionModeCBox->setCurrentItem(preferences->getNickCompletionMode());
-  suffixStartInput->setText(preferences->getNickCompleteSuffixStart());
-  suffixMiddleInput->setText(preferences->getNickCompleteSuffixMiddle());
-  m_nickCompletionCaseChBox->setChecked(preferences->nickCompletionCaseSensitive());
+    completionModeCBox->setCurrentItem(preferences->getNickCompletionMode());
+    suffixStartInput->setText(preferences->getNickCompleteSuffixStart());
+    suffixMiddleInput->setText(preferences->getNickCompleteSuffixMiddle());
+    m_nickCompletionCaseChBox->setChecked(preferences->nickCompletionCaseSensitive());
 }
 
 PrefsPageBehaviour::~PrefsPageBehaviour()
@@ -56,30 +56,33 @@ PrefsPageBehaviour::~PrefsPageBehaviour()
 
 void PrefsPageBehaviour::applyPreferences()
 {
-  preferences->setShowTrayIcon(systrayGBox->isChecked());
-  preferences->setSystrayOnly(trayOnlyCheck->isChecked());
-  preferences->setTrayNotify(trayNotifyCheck->isChecked());
-  preferences->setTrayNotifyOnlyOwnNick(trayNotifyOwnNickOnlyCheck->isChecked());
+    preferences->setShowTrayIcon(systrayGBox->isChecked());
+    preferences->setSystrayOnly(trayOnlyCheck->isChecked());
+    preferences->setTrayNotify(trayNotifyCheck->isChecked());
+    preferences->setTrayNotifyOnlyOwnNick(trayNotifyOwnNickOnlyCheck->isChecked());
 
-  preferences->setShowServerList(showServerList->isChecked());
-  preferences->setDisableNotifyWhileAway(m_disableNotifyWhileAwayCheck->isChecked());
-  preferences->setWebBrowserUseKdeDefault(!useCustomBrowserCheck->isChecked());
-  preferences->setWebBrowserCmd(browserCmdInput->text());
+    preferences->setShowServerList(showServerList->isChecked());
+    preferences->setDisableNotifyWhileAway(m_disableNotifyWhileAwayCheck->isChecked());
+    preferences->setWebBrowserUseKdeDefault(!useCustomBrowserCheck->isChecked());
+    preferences->setWebBrowserCmd(browserCmdInput->text());
 
-  if(!commandCharInput->text().isEmpty()) {
-    preferences->setCommandChar(commandCharInput->text());
-  } else {
-    preferences->setCommandChar("/");
-  }
+    if(!commandCharInput->text().isEmpty())
+    {
+        preferences->setCommandChar(commandCharInput->text());
+    }
+    else
+    {
+        preferences->setCommandChar("/");
+    }
 
-  preferences->setCustomVersionReplyEnabled(useCustomVersionReplyCheck->isChecked());
-  preferences->setCustomVersionReply(ctcpVersionInput->text());
-  preferences->setAutojoinOnInvite(autojoinOnInviteCheck->isChecked());
+    preferences->setCustomVersionReplyEnabled(useCustomVersionReplyCheck->isChecked());
+    preferences->setCustomVersionReply(ctcpVersionInput->text());
+    preferences->setAutojoinOnInvite(autojoinOnInviteCheck->isChecked());
 
-  preferences->setNickCompletionMode(completionModeCBox->currentItem());
-  preferences->setNickCompleteSuffixStart(suffixStartInput->text());
-  preferences->setNickCompleteSuffixMiddle(suffixMiddleInput->text());
-  preferences->setNickCompletionCaseSensitive(m_nickCompletionCaseChBox->isChecked());
+    preferences->setNickCompletionMode(completionModeCBox->currentItem());
+    preferences->setNickCompleteSuffixStart(suffixStartInput->text());
+    preferences->setNickCompleteSuffixMiddle(suffixMiddleInput->text());
+    preferences->setNickCompletionCaseSensitive(m_nickCompletionCaseChBox->isChecked());
 }
 
 #include "prefspagebehaviour.moc"

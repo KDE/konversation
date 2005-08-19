@@ -24,7 +24,7 @@ class KonvIface : virtual public DCOPObject
 {
     K_DCOP
 
-  k_dcop:
+        k_dcop:
     virtual void setAway(const QString &awaymessage) = 0;
     virtual void setAutoAway() = 0;
     virtual void setBack() = 0;
@@ -41,7 +41,7 @@ class KonvIface : virtual public DCOPObject
     virtual int registerEventHook (const QString &type, const QString &criteria, const QString &app, const QString &object, const QString &signal) = 0;
     virtual void unregisterEventHook (int id) = 0;
     virtual QString getNickname (const QString &serverid) = 0;
-    virtual QString getAnyNickname () = 0; 
+    virtual QString getAnyNickname () = 0;
     virtual QStringList listServers() = 0;
     virtual QStringList listConnectedServers() = 0;
     virtual QString getChannelEncoding(const QString& server, const QString& channel) = 0;
@@ -50,7 +50,7 @@ class KonvIface : virtual public DCOPObject
 class KonvIdentityIface : virtual public DCOPObject
 {
     K_DCOP
-  k_dcop:
+        k_dcop:
 
     virtual void setrealName(const QString &identity, const QString& name) = 0;
     virtual QString getrealName(const QString &identity) = 0;
@@ -83,6 +83,4 @@ class KonvIdentityIface : virtual public DCOPObject
 
     virtual QStringList listIdentities() = 0;
 };
-
-
 #endif

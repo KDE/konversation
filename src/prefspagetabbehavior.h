@@ -24,21 +24,20 @@ class Preferences;
 
 class PrefsPageTabBehavior : public TabBar_Config
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    PrefsPageTabBehavior(QWidget* newParent,Preferences* newPreferences);
+        public:
+        PrefsPageTabBehavior(QWidget* newParent,Preferences* newPreferences);
 
-  public slots:
-    void applyPreferences();
+    public slots:
+        void applyPreferences();
 
-  protected slots:
-    void closeButtonsChanged(int state);
-    void bringToFrontCheckChanged(int state);
+    protected slots:
+        void closeButtonsChanged(int state);
+        void bringToFrontCheckChanged(int state);
 
-	protected:
-		Preferences* preferences;
-		
+    protected:
+        Preferences* preferences;
+
 };
-
 #endif

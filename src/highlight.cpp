@@ -15,22 +15,22 @@
 
 #include "highlight.h"
 
-unsigned int Highlight::s_id = 0;  // static
+unsigned int Highlight::s_id = 0;                 // static
 
 Highlight::Highlight(const QString& itemPattern,
-                     bool regExp,
-                     const QColor& itemColor,
-                     const KURL& soundURL,
-                     const QString& autoText)
+bool regExp,
+const QColor& itemColor,
+const KURL& soundURL,
+const QString& autoText)
 {
-  m_itemPattern = itemPattern;
-  m_autoText = autoText;
-  m_itemColor = itemColor;
-  m_soundURL = soundURL;
-  m_regExp = regExp;
-  
-  // unique ID for every Highlight
-  m_itemID = s_id++;
+    m_itemPattern = itemPattern;
+    m_autoText = autoText;
+    m_itemColor = itemColor;
+    m_soundURL = soundURL;
+    m_regExp = regExp;
+
+    // unique ID for every Highlight
+    m_itemID = s_id++;
 }
 
 int Highlight::getID() { return m_itemID; }

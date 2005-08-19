@@ -8,7 +8,7 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -37,51 +37,49 @@ class SearchBar : public QHBox
 {
     Q_OBJECT
 
-public:
+        public:
 
-    SearchBar(QWidget* parent);
-    ~SearchBar();
+        SearchBar(QWidget* parent);
+        ~SearchBar();
 
-    void setHasMatch(bool value);
-    void setStatus(const QPixmap& pix, const QString& text);
+        void setHasMatch(bool value);
+        void setStatus(const QPixmap& pix, const QString& text);
 
-    QString pattern() const;
+        QString pattern() const;
 
-    bool searchForward() const;
-    bool caseSensitive() const;
+        bool searchForward() const;
+        bool caseSensitive() const;
 
-protected:
+    protected:
 
-    void focusInEvent(QFocusEvent* e);
-    
-public slots:
+        void focusInEvent(QFocusEvent* e);
 
-    virtual void hide();
+    public slots:
 
-private slots:
+        virtual void hide();
 
-    void slotTextChanged();
-    void slotFind();
-    void slotFindNext();
+    private slots:
 
-signals:
+        void slotTextChanged();
+        void slotFind();
+        void slotFindNext();
 
-    void signalSearchChanged(const QString& pattern);
-    void signalSearchNext();
-    void signalPropertiesChanged();
-    
-private:
+        signals:
 
-    QLineEdit*    m_lineEdit;
-    QToolButton*  m_nextBtn;
-    QToolButton*  m_fwdBtn;
-    QToolButton*  m_caseSenBtn;
-    QToolButton*  m_hideBtn;
-    QLabel*       m_statusPixLabel;
-    QLabel*       m_statusTextLabel;
+        void signalSearchChanged(const QString& pattern);
+        void signalSearchNext();
+        void signalPropertiesChanged();
 
-    QTimer*       m_timer;
+    private:
+
+        QLineEdit*    m_lineEdit;
+        QToolButton*  m_nextBtn;
+        QToolButton*  m_fwdBtn;
+        QToolButton*  m_caseSenBtn;
+        QToolButton*  m_hideBtn;
+        QLabel*       m_statusPixLabel;
+        QLabel*       m_statusTextLabel;
+
+        QTimer*       m_timer;
 };
-
-
-#endif /* SEARCHBAR_H */
+#endif                                            /* SEARCHBAR_H */

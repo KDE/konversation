@@ -21,48 +21,48 @@
 
 class ChannelNick :  public QObject, public KShared
 {
-  Q_OBJECT
-	  
-  public:
-    ChannelNick(const NickInfoPtr& nickInfo, const bool& isop, const bool& isadmin,
-		const bool& isowner, const bool& ishalfop, const bool& hasvoice);
-    ~ChannelNick();
-    bool isOp() const;
-    bool isAdmin() const;
-    bool isOwner() const;
-    bool isHalfOp() const;
+    Q_OBJECT
 
-    /** Return true if the may have any privillages at all
-     * @return true if isOp() || isAdmin() || isOwner() || isHalfOp()
-     */
-    bool isAnyTypeOfOp() const;
-    bool hasVoice() const;
+        public:
+        ChannelNick(const NickInfoPtr& nickInfo, const bool& isop, const bool& isadmin,
+            const bool& isowner, const bool& ishalfop, const bool& hasvoice);
+        ~ChannelNick();
+        bool isOp() const;
+        bool isAdmin() const;
+        bool isOwner() const;
+        bool isHalfOp() const;
 
-    bool setVoice(bool state);
-    bool setOp(bool state);
-    bool setHalfOp(bool state);
-    bool setAdmin(bool state);
-    bool setOwner(bool state);
-    bool setMode(char mode, bool plus);
-    bool setMode(int mode);
-    bool setMode(bool admin,bool owner,bool op,bool halfop,bool voice);
+        /** Return true if the may have any privillages at all
+         * @return true if isOp() || isAdmin() || isOwner() || isHalfOp()
+         */
+        bool isAnyTypeOfOp() const;
+        bool hasVoice() const;
 
-    NickInfoPtr getNickInfo() const;
-    //Purely provided for convience because they are used so often.
-    //Just calls nickInfo->getNickname() etc
-    QString getNickname() const;
-    QString loweredNickname() const;
-    QString getHostmask() const;
-    QString tooltip();
-  private: 
-    NickInfoPtr nickInfo;
-    bool isop;
-    bool isadmin;
-    bool isowner;
-    bool ishalfop;
-    bool hasvoice;
-  signals:
-    void channelNickChanged();
+        bool setVoice(bool state);
+        bool setOp(bool state);
+        bool setHalfOp(bool state);
+        bool setAdmin(bool state);
+        bool setOwner(bool state);
+        bool setMode(char mode, bool plus);
+        bool setMode(int mode);
+        bool setMode(bool admin,bool owner,bool op,bool halfop,bool voice);
+
+        NickInfoPtr getNickInfo() const;
+        //Purely provided for convience because they are used so often.
+        //Just calls nickInfo->getNickname() etc
+        QString getNickname() const;
+        QString loweredNickname() const;
+        QString getHostmask() const;
+        QString tooltip();
+    private:
+        NickInfoPtr nickInfo;
+        bool isop;
+        bool isadmin;
+        bool isowner;
+        bool ishalfop;
+        bool hasvoice;
+        signals:
+        void channelNickChanged();
 };
 
 /** A ChannelNickPtr is a pointer to a ChannelNick.  Since it is a KSharedPtr,
@@ -71,18 +71,14 @@ class ChannelNick :  public QObject, public KShared
 typedef KSharedPtr<ChannelNick> ChannelNickPtr;
 
 /** A ChannelNickMap is a list of ChannelNick pointers, indexed and sorted by
- *  lowercase nickname. 
+ *  lowercase nickname.
  */
 typedef QMap<QString,ChannelNickPtr> ChannelNickMap;
 
 typedef QValueList<ChannelNickPtr> ChannelNickList;
 
-
-/** A ChannelMembershipMap is a list of ChannelNickMap pointers, indexed and 
+/** A ChannelMembershipMap is a list of ChannelNickMap pointers, indexed and
  *  sorted by lowercase channel name.
  */
 typedef QMap<QString,ChannelNickMap *> ChannelMembershipMap;
-
-
-#endif /* CHANNEL_NICK_H */
-
+#endif                                            /* CHANNEL_NICK_H */
