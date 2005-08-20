@@ -1429,7 +1429,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_CAPAB: // Special freenode reply afaik
             {
-                server->enableIndentifyMsg(true);
+                if(trailing.contains("IDENTIFY-MSG"))
+                {
+                    server->enableIndentifyMsg(true);
+                }
                 break;
             }
             // FALLTHROUGH to default to let the error display otherwise
