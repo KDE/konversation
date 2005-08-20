@@ -55,6 +55,7 @@
 #define RPL_TRACELOG           261
 #define RPL_LOCALUSERS         265
 #define RPL_GLOBALUSERS        266
+#define RPL_CAPAB              290
 
 #define RPL_NONE               300
 #define RPL_AWAY               301

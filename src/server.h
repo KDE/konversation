@@ -52,7 +52,7 @@ class Server : public QObject
 {
     Q_OBJECT
 
-        public:
+    public:
         typedef enum
         {
             SSDisconnected,
@@ -341,7 +341,9 @@ class Server : public QObject
         QCString getKeyForRecepient(const QString& recepient) const;
         void setKeyForRecepient(const QString& recepient, const QCString& key);
 
-        signals:
+        bool identifyMsg() const { return m_identifyMsg; }
+
+    signals:
         void nicknameChanged(const QString&);
         void serverLag(Server* server,int msec);  /// will be connected to KonversationMainWindow::updateLag()
         void tooLongLag(Server* server, int msec);/// will be connected to KonversationMainWindow::updateLag()
@@ -426,6 +428,8 @@ class Server : public QObject
         void showSSLDialog();
         void sendToAllChannels(const QString& text);
         void notifyTimeout();
+
+        void enableIndentifyMsg(bool enabled);
 
     protected slots:
 
@@ -656,5 +660,7 @@ class Server : public QObject
 
         // Blowfish key map
         QMap<QString,QCString> keyMap;
+
+        bool m_identifyMsg;
 };
 #endif

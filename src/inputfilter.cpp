@@ -141,6 +141,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 if(!isIgnore(prefix,Ignore::Channel))
                 {
                     Channel* channel = server->getChannelByName( parameterList[0] );
+
+                    if(server->identifyMsg()) {
+                        ctcpArgument = ctcpArgument.mid(1);
+                    }
+
                     channel->appendAction(sourceNick,ctcpArgument);
 
                     if(channel && sourceNick != server->getNickname())
@@ -169,6 +174,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                     // create new query (server will check for dupes)
                     query = server->addQuery(nickinfo, false /* we didn't initiate this*/ );
+
+                    if(server->identifyMsg()) {
+                        ctcpArgument = ctcpArgument.mid(1);
+                    }
+
                     // send action to query
                     query->appendAction(sourceNick,ctcpArgument, true /*use notifications if enabled - e.g. OSD */);
 
@@ -323,18 +333,25 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     Channel* channel = server->getChannelByName(parameterList[0]);
                     if(channel)
                     {
-                        channel->append(sourceNick, trailing);
-                    }
+                        QString text = trailing;
 
-                    if(channel && sourceNick != server->getNickname())
-                    {
-                        if(trailing.lower().find(QRegExp("(^|[^\\d\\w])" + QRegExp::escape(server->loweredNickname()) +"([^\\d\\w]|$)")) !=-1 )
-                        {
-                            konv_app->notificationHandler()->nick(channel, sourceNick, trailing);
+                        if(server->identifyMsg()) {
+                            text = text.mid(1);
                         }
-                        else
+
+                        channel->append(sourceNick, text);
+
+                        if(sourceNick != server->getNickname())
                         {
-                            konv_app->notificationHandler()->message(channel, sourceNick, trailing);
+                            if(text.lower().find(QRegExp("(^|[^\\d\\w])" +
+                               QRegExp::escape(server->loweredNickname()) + "([^\\d\\w]|$)")) !=-1 )
+                            {
+                                konv_app->notificationHandler()->nick(channel, sourceNick, text);
+                            }
+                            else
+                            {
+                                konv_app->notificationHandler()->message(channel, sourceNick, text);
+                            }
                         }
                     }
                 }
@@ -348,12 +365,18 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                     // Create a new query (server will check for dupes)
                     query = server->addQuery(nickinfo, false /*we didn't initiate this*/ );
+                    QString text = trailing;
+
+                    if(server->identifyMsg()) {
+                        text = text.mid(1);
+                    }
+
                     // send action to query
-                    query->appendQuery(sourceNick,trailing, true /*use notifications if enabled - e.g. OSD */ );
+                    query->appendQuery(sourceNick, text, true /*use notifications if enabled - e.g. OSD */ );
 
                     if(sourceNick != server->getNickname() && query)
                     {
-                        konv_app->notificationHandler()->nick(query, sourceNick, trailing);
+                        konv_app->notificationHandler()->nick(query, sourceNick, text);
                     }
                 }
             }
@@ -655,6 +678,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     else if (property=="CHANTYPES")
                     {
                         server->setChannelTypes(value);
+                    }
+                    else if (property == "CAPAB")
+                    {
+                        server->queue("CAPAB IDENTIFY-MSG");
                     }
                     else
                     {
@@ -1398,6 +1425,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_LUSERME:
             {
                 server->appendStatusMessage(i18n("Users"), parameterList.join(" ").section(' ',1) + " "+trailing);
+                break;
+            }
+            case RPL_CAPAB: // Special freenode reply afaik
+            {
+                server->enableIndentifyMsg(true);
                 break;
             }
             // FALLTHROUGH to default to let the error display otherwise

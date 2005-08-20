@@ -168,6 +168,7 @@ Server::~Server()
 
 void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const QString& channel)
 {
+    m_identifyMsg = false;
     m_currentServerIndex = 0;
     m_tryReconnect = true;
     autoJoin = false;
@@ -610,6 +611,7 @@ void Server::lookupFinished()
 void Server::ircServerConnectionSuccess()
 {
     reconnectCounter = 0;
+    Konversation::ServerSettings serverSettings = m_serverGroup->serverByIndex(m_currentServerIndex);
 
     connect(this, SIGNAL(nicknameChanged(const QString&)), statusView, SLOT(setNickname(const QString&)));
     statusView->appendServerMessage(i18n("Info"),i18n("Connected; logging in..."));
@@ -619,8 +621,8 @@ void Server::ircServerConnectionSuccess()
         " 8 * :" +                                // 8 = +i; 4 = +w
         getIdentity()->getRealName();
 
-    if(!m_serverGroup->serverByIndex(m_currentServerIndex).password().isEmpty())
-        queueAt(0, "PASS " + m_serverGroup->serverByIndex(m_currentServerIndex).password());
+    if(!serverSettings.password().isEmpty())
+        queueAt(0, "PASS " + serverSettings.password());
 
     queueAt(1,"NICK "+getNickname());
     queueAt(2,connectString);
@@ -1007,7 +1009,7 @@ void Server::processIncomingData()
         QString front(inputBuffer.front());
         inputBuffer.pop_front();
         inputFilter.parseLine(front);
-        if(rawLog) rawLog->appendRaw(front.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
+        if(rawLog) rawLog->appendRaw("&gt;&gt; " + front.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
     }
 
     if(inputBuffer.isEmpty())
@@ -1166,7 +1168,7 @@ void Server::incoming()
 
     // refresh lock timer if it was still locked
     if( !sendUnlocked )
-        lockSending();
+        unlockSending();
 
     if( !incomingTimer.isActive() )
         incomingTimer.start(0);
@@ -1280,7 +1282,7 @@ void Server::send()
         }
 
         serverStream << outputLine;
-        if(rawLog) rawLog->appendRaw(outputLine.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
+        if(rawLog) rawLog->appendRaw("&lt;&lt; " + outputLine.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
 
         // detach server stream
         serverStream.unsetDevice();
@@ -3247,6 +3249,11 @@ KABC::Addressee Server::getOfflineNickAddressee(QString& nickname)
         return m_serverISON->getOfflineNickAddressee(nickname);
     else
         return KABC::Addressee();
+}
+
+void Server::enableIndentifyMsg(bool enabled)
+{
+    m_identifyMsg = enabled;
 }
 
 #include "server.moc"
