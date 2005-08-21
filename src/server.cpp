@@ -81,7 +81,8 @@ const QString& channel,const QString& _nick, QString password,const bool& useSSL
     if (serverGroupOfServer = KonversationApplication::preferences.serverGroupByServer(hostName))
     {
         m_serverGroup = serverGroupOfServer;
-        m_serverGroup->setQuickServerList(m_quickServer);
+        m_serverGroup->clearQuickServerList();
+	m_serverGroup->setQuickServerList(m_quickServer);
     }
     else
     {
