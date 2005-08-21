@@ -509,4 +509,9 @@ void ChannelListPanel::emitUpdateInfo()
     emit updateInfo(info);
 }
 
+void ChannelListPanel::setFilter(const QString& filter)
+{
+    filterInput->setText(filter);
+}
+
 #include "channellistpanel.moc"

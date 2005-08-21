@@ -33,14 +33,14 @@ class ChannelListPanel : public ChatWindow
 {
     Q_OBJECT
 
-        public:
+    public:
         ChannelListPanel(QWidget* parent);
         ~ChannelListPanel();
 
         virtual bool closeYourself();
         virtual void emitUpdateInfo();
 
-        signals:
+    signals:
         void refreshChannelList();
         void joinChannel(const QString& channelName);
         void adjustMinValue(int num);
@@ -52,9 +52,11 @@ class ChannelListPanel : public ChatWindow
         void addToChannelList(const QString& channel,int users,const QString& topic);
 
         virtual void appendInputText(const QString&);
+        void setFilter(const QString& filter);
+
+        void applyFilterClicked();
 
     protected slots:
-        void applyFilterClicked();
         void refreshList();
         void updateDisplay();                     // will be called by a timer to update regularly
         void saveList();

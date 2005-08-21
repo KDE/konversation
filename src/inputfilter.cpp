@@ -372,6 +372,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     {
         if(!isIgnore(prefix,Ignore::Notice))
         {
+            if(server->identifyMsg())
+            {
+                trailing = trailing.mid(1);
+            }
+
             // Channel notice?
             if(isAChannel(parameterList[0]))
             {

@@ -343,6 +343,8 @@ class Server : public QObject
 
         bool identifyMsg() const { return m_identifyMsg; }
 
+        ChannelListPanel* addChannelListPanel();
+
     signals:
         void nicknameChanged(const QString&);
         void serverLag(Server* server,int msec);  /// will be connected to KonversationMainWindow::updateLag()
@@ -416,7 +418,6 @@ class Server : public QObject
         void requestUserhost(const QString& nicks);
         void addRawLog(bool show);
         void closeRawLog();
-        void addChannelListPanel();
         void addToChannelList(const QString& channel, int users, const QString& topic);
         void closeChannelListPanel();
         void updateChannelQuickButtons();

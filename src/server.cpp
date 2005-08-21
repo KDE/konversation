@@ -3035,7 +3035,7 @@ void Server::closeRawLog()
     }
 }
 
-void Server::addChannelListPanel()
+ChannelListPanel* Server::addChannelListPanel()
 {
     if(!channelListPanel)
     {
@@ -3045,6 +3045,8 @@ void Server::addChannelListPanel()
         connect(channelListPanel, SIGNAL(joinChannel(const QString&)), this, SLOT(sendJoinCommand(const QString&)));
         connect(this, SIGNAL(serverOnline(bool)), channelListPanel, SLOT(serverOnline(bool)));
     }
+
+    return channelListPanel;
 }
 
 void Server::addToChannelList(const QString& channel, int users, const QString& topic)

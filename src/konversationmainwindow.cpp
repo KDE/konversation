@@ -657,27 +657,42 @@ void KonversationMainWindow::closeKonsolePanel(ChatWindow* konsolePanel)
     konsolePanel->deleteLater();
 }
 
-void KonversationMainWindow::openChannelList()
+void KonversationMainWindow::openChannelList(const QString& filter, bool getList)
 {
     if(frontServer)
     {
-        ChannelListPanel* panel=frontServer->getChannelListPanel();
+        ChannelListPanel* panel = frontServer->getChannelListPanel();
+
         if(panel)
         {
             getViewContainer()->showPage(panel);
         }
         else
         {
-            int ret = KMessageBox::warningContinueCancel(this,i18n("Using this function may result in a lot "
-                "of network traffic. If your connection is not fast "
-                "enough, it is possible that your client will be "
-                "disconnected by the server."), i18n("Channel List Warning"),
-                KStdGuiItem::cont(), "ChannelListWarning");
+            int ret = KMessageBox::Continue;
 
-            if(ret == KMessageBox::Continue)
+            if(filter.isEmpty())
             {
-                frontServer->addChannelListPanel();
+                ret = KMessageBox::warningContinueCancel(this,i18n("Using this function may result in a lot "
+                      "of network traffic. If your connection is not fast "
+                      "enough, it is possible that your client will be "
+                      "disconnected by the server."), i18n("Channel List Warning"),
+                      KStdGuiItem::cont(), "ChannelListWarning");
             }
+
+            if(ret != KMessageBox::Continue)
+            {
+                return;
+            }
+
+            panel = frontServer->addChannelListPanel();
+        }
+
+        panel->setFilter(filter);
+
+        if(getList)
+        {
+            panel->applyFilterClicked();
         }
     }
     else

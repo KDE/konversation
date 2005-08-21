@@ -1,3 +1,5 @@
+// -*- mode: c++; c-file-style: "bsd"; c-basic-offset: 4; tabs-width: 4; indent-tabs-mode: nil -*-
+
 /*
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -177,6 +179,7 @@ namespace Konversation
             else if(command == "ignore")  result = parseIgnore(parameter);
             else if(command == "quote")   result = parseQuote(parameter);
             else if(command == "say")     result = parseSay(parameter);
+            else if(command == "list")    result = parseList(parameter);
 
             else if(command == "names")   result = parseNames(parameter);
             else if(command == "raw")     result = parseRaw(parameter);
@@ -1455,6 +1458,17 @@ namespace Konversation
         return result;
     }
 
+    OutputFilterResult OutputFilter::parseList(const QString& parameter)
+    {
+        OutputFilterResult result;
+
+        m_server->getMainWindow()->openChannelList(parameter, true);
+
+        return result;
+    }
 }
 
 #include "outputfilter.moc"
+
+// kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
+// vim: set et sw=4 ts=4 cino=l1,cs,U1:

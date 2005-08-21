@@ -115,6 +115,7 @@ class KonversationMainWindow : public KMainWindow
         void addUrlCatcher();
         void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
         void insertRememberLine();
+        void openChannelList(const QString& filter = QString::null, bool getList = false);
 
         void resetLag();
         void updateLag(Server* lagServer,int msec);
@@ -140,7 +141,6 @@ class KonversationMainWindow : public KMainWindow
         void openPreferences();
         void openKeyBindings();
         void openQuickConnectDialog();
-        void openChannelList();
         void openNotify();
         void openLogfile();
         void openNicksOnlinePanel();
