@@ -111,7 +111,7 @@ void InputFilter::parseLine(const QString& a_newLine)
     }
 }
 
-void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing)
+void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &_trailing)
 {
     KonversationApplication* konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
     Q_ASSERT(konv_app);
@@ -122,15 +122,20 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     QString sourceHostmask = prefix.mid(pos + 1);
     // remember hostmask for this nick, it could have changed
     server->addHostmaskToNick(sourceNick,sourceHostmask);
+    QString trailing = _trailing;
 
     if(command=="privmsg")
     {
         bool isChan = isAChannel(parameterList[0]);
         // CTCP message?
+        if(server->identifyMsg() && (trailing.at(1) != QChar(0x01) || trailing.lower().contains(0x01 + "action"))) {
+            trailing = trailing.mid(1);
+        }
+
         if(trailing.at(0)==QChar(0x01))
         {
             // cut out the CTCP command
-            QString ctcp=trailing.mid(1,trailing.find(1,1)-1);
+            QString ctcp = trailing.mid(1,trailing.find(1,1)-1);
 
             QString ctcpCommand=ctcp.left(ctcp.find(" ")).lower();
             QString ctcpArgument=ctcp.mid(ctcp.find(" ")+1);
@@ -141,10 +146,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 if(!isIgnore(prefix,Ignore::Channel))
                 {
                     Channel* channel = server->getChannelByName( parameterList[0] );
-
-                    if(server->identifyMsg()) {
-                        ctcpArgument = ctcpArgument.mid(1);
-                    }
 
                     channel->appendAction(sourceNick,ctcpArgument);
 
@@ -174,10 +175,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                     // create new query (server will check for dupes)
                     query = server->addQuery(nickinfo, false /* we didn't initiate this*/ );
-
-                    if(server->identifyMsg()) {
-                        ctcpArgument = ctcpArgument.mid(1);
-                    }
 
                     // send action to query
                     query->appendAction(sourceNick,ctcpArgument, true /*use notifications if enabled - e.g. OSD */);
@@ -333,24 +330,18 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     Channel* channel = server->getChannelByName(parameterList[0]);
                     if(channel)
                     {
-                        QString text = trailing;
-
-                        if(server->identifyMsg()) {
-                            text = text.mid(1);
-                        }
-
-                        channel->append(sourceNick, text);
+                        channel->append(sourceNick, trailing);
 
                         if(sourceNick != server->getNickname())
                         {
-                            if(text.lower().find(QRegExp("(^|[^\\d\\w])" +
+                            if(trailing.lower().find(QRegExp("(^|[^\\d\\w])" +
                                QRegExp::escape(server->loweredNickname()) + "([^\\d\\w]|$)")) !=-1 )
                             {
-                                konv_app->notificationHandler()->nick(channel, sourceNick, text);
+                                konv_app->notificationHandler()->nick(channel, sourceNick, trailing);
                             }
                             else
                             {
-                                konv_app->notificationHandler()->message(channel, sourceNick, text);
+                                konv_app->notificationHandler()->message(channel, sourceNick, trailing);
                             }
                         }
                     }
@@ -365,18 +356,13 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                     // Create a new query (server will check for dupes)
                     query = server->addQuery(nickinfo, false /*we didn't initiate this*/ );
-                    QString text = trailing;
-
-                    if(server->identifyMsg()) {
-                        text = text.mid(1);
-                    }
 
                     // send action to query
-                    query->appendQuery(sourceNick, text, true /*use notifications if enabled - e.g. OSD */ );
+                    query->appendQuery(sourceNick, trailing, true /*use notifications if enabled - e.g. OSD */ );
 
                     if(sourceNick != server->getNickname() && query)
                     {
-                        konv_app->notificationHandler()->nick(query, sourceNick, text);
+                        konv_app->notificationHandler()->nick(query, sourceNick, trailing);
                     }
                 }
             }
