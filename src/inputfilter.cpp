@@ -27,7 +27,7 @@
 
 #include "inputfilter.h"
 #include "server.h"
-#include "errorcodes.h"
+#include "replycodes.h"
 #include "konversationapplication.h"
 #include "commit.h"
 #include "version.h"

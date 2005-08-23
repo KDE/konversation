@@ -76,6 +76,8 @@ namespace Konversation
             QCString tmp = cipher.mid(index+1);
             char* tmp2;
 
+            kdDebug() << "Got " << tmp.data() << endl;
+
             if(tmp.mid(0,4) == "+OK ")            // FiSH style topic
                 cipher = tmp.mid(4);
             else if(tmp.left(5) == "«m«")
@@ -89,6 +91,8 @@ namespace Konversation
             qstrncpy(result.data(), cipher.data(), cipher.length());
             tmp2 = decrypt_string(ckey.data(),result.data());
             cipher = tmp2;
+            if(cipher.mid(0,2) == "@@")
+                cipher = cipher.mid(2);
 
             cipher = backup+"(e) "+cipher;
             free(tmp2);

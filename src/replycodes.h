@@ -6,13 +6,13 @@
 */
 
 /*
-  begin:     Fri Jan 25 "200"2
-  copyright: (C) "200"2 by Dario Abatianni
+  begin:     Fri Jan 25 2002
+  copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
 
-#ifndef ERRORCODES_H
-#define ERRORCODES_H
+#ifndef REPLYCODES_H
+#define REPLYCODES_H
 
 #define RPL_WELCOME            001
 #define RPL_YOURHOST           002
@@ -150,4 +150,6 @@
 #define ERR_NOOPERHOST         491
 #define ERR_UMODEUNKNOWNFLAG   501
 #define ERR_USERSDONTMATCH     502
-#endif
+
+#endif // REPLYCODES_H
+
