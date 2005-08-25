@@ -39,7 +39,7 @@ OSD_Config( newParent )
     preferences = newPreferences;
 
     // set up the preview OSD widget
-    m_pOSDPreview = new OSDPreviewWidget("Konversation", newParent);
+    m_pOSDPreview = new OSDPreviewWidget("Konversation");
     connect(m_pOSDPreview, SIGNAL(positionChanged()), this, SLOT(slotPositionChanged()));
 
     // General
@@ -92,6 +92,7 @@ OSD_Config( newParent )
 
 PrefsPageOSD::~PrefsPageOSD()
 {
+    delete m_pOSDPreview;
 }
 
 void PrefsPageOSD::aboutToShow()
