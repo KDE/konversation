@@ -63,8 +63,11 @@ IRCView* IRCViewBox::ircView() const
 void IRCViewBox::slotSearch()
 {
     if (m_searchBar->isVisible())
-        return;
-
+      {
+	m_searchBar->hide();
+	return;
+      }
+    
     m_searchBar->show();
     m_searchBar->setFocus();
 }
