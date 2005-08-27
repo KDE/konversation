@@ -57,7 +57,7 @@ namespace Konversation
         }
 
         QToolButton* newBtn = new QToolButton(mainWidget);
-        newBtn->setIconSet(SmallIconSet("new"));
+        newBtn->setIconSet(SmallIconSet("add"));
         newBtn->setTextLabel(i18n("Add"));
         connect(newBtn, SIGNAL(clicked()), this, SLOT(newIdentity()));
 
