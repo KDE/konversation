@@ -28,7 +28,8 @@
  */
 
 class QLineEdit;
-class QToolButton;
+class QCheckBox;
+class QPushButton;
 class QTimer;
 class QLabel;
 class QPixmap;
@@ -73,10 +74,10 @@ class SearchBar : public QHBox
     private:
 
         QLineEdit*    m_lineEdit;
-        QToolButton*  m_nextBtn;
-        QToolButton*  m_fwdBtn;
-        QToolButton*  m_caseSenBtn;
-        QToolButton*  m_hideBtn;
+        QPushButton*  m_nextBtn;
+        QCheckBox*  m_fwdBox;
+        QCheckBox*  m_caseSenBox;
+        QPushButton*  m_hideBtn;
         QLabel*       m_statusPixLabel;
         QLabel*       m_statusTextLabel;
 

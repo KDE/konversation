@@ -19,7 +19,8 @@
  * ============================================================ */
 
 #include <qlineedit.h>
-#include <qtoolbutton.h>
+#include <qcheckbox.h>
+#include <qpushbutton.h>
 #include <qtimer.h>
 #include <qpalette.h>
 #include <qaccel.h>
@@ -35,20 +36,21 @@ SearchBar::SearchBar(QWidget* parent)
 : QHBox(parent)
 {
     setMargin(4);
+    setSpacing(4);
 
-    m_hideBtn    = new QToolButton(this);
+    m_hideBtn    = new QPushButton(this);
     m_lineEdit   = new QLineEdit(this);
-    m_nextBtn    = new QToolButton(this);
-    m_fwdBtn     = new QToolButton(this);
-    m_caseSenBtn = new QToolButton(this);
+    m_nextBtn    = new QPushButton(this);
+    m_fwdBox    = new QCheckBox(this);
+    m_caseSenBox = new QCheckBox(this);
     m_statusPixLabel  = new QLabel(this);
     m_statusTextLabel = new QLabel(this);
 
     setStretchFactor(m_hideBtn,  1);
     setStretchFactor(m_lineEdit, 4);
     setStretchFactor(m_nextBtn, 1);
-    setStretchFactor(m_fwdBtn, 1);
-    setStretchFactor(m_caseSenBtn, 1);
+    setStretchFactor(m_fwdBox, 1);
+    setStretchFactor(m_caseSenBox, 1);
     setStretchFactor(m_statusPixLabel, 0);
     setStretchFactor(m_statusTextLabel, 3);
 
@@ -56,28 +58,10 @@ SearchBar::SearchBar(QWidget* parent)
     m_hideBtn->setIconSet(iconLoader->loadIconSet("stop", KIcon::Toolbar, 16));
     m_nextBtn->setIconSet(iconLoader->loadIconSet("next", KIcon::Toolbar, 16));
 
-    m_hideBtn->setTextLabel("&Close");
-    m_nextBtn->setTextLabel("Find &Next");
-    m_fwdBtn->setTextLabel("Search &Forward");
-    m_caseSenBtn->setTextLabel("&Match Case");
-
-    m_hideBtn->setUsesTextLabel(true);
-    m_nextBtn->setUsesTextLabel(true);
-    m_fwdBtn->setUsesTextLabel(true);
-    m_caseSenBtn->setUsesTextLabel(true);
-
-    m_hideBtn->setTextPosition(QToolButton::BesideIcon);
-    m_nextBtn->setTextPosition(QToolButton::BesideIcon);
-    m_fwdBtn->setTextPosition(QToolButton::BesideIcon);
-    m_caseSenBtn->setTextPosition(QToolButton::BesideIcon);
-
-    m_hideBtn->setAutoRaise(true);
-    m_nextBtn->setAutoRaise(true);
-    m_fwdBtn->setAutoRaise(true);
-    m_caseSenBtn->setAutoRaise(true);
-
-    m_fwdBtn->setToggleButton(true);
-    m_caseSenBtn->setToggleButton(true);
+    m_hideBtn->setText("Close");
+    m_nextBtn->setText("Find Next");
+    m_fwdBox->setText("Search Forward");
+    m_caseSenBox->setText("Match Case");
 
     m_nextBtn->setEnabled(false);
 
@@ -97,9 +81,9 @@ SearchBar::SearchBar(QWidget* parent)
         SLOT(slotFindNext()));
     connect(m_hideBtn, SIGNAL(clicked()),
         SLOT(hide()));
-    connect(m_fwdBtn, SIGNAL(clicked()),
+    connect(m_fwdBox, SIGNAL(clicked()),
         SLOT(slotTextChanged()));
-    connect(m_caseSenBtn, SIGNAL(clicked()),
+    connect(m_caseSenBox, SIGNAL(clicked()),
         SLOT(slotTextChanged()));
 }
 
@@ -173,12 +157,12 @@ QString SearchBar::pattern() const
 
 bool SearchBar::searchForward() const
 {
-    return m_fwdBtn->isOn();
+    return m_fwdBox->isOn();
 }
 
 bool SearchBar::caseSensitive() const
 {
-    return m_caseSenBtn->isOn();
+    return m_caseSenBox->isOn();
 }
 
 #include "searchbar.moc"
