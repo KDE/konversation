@@ -128,7 +128,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     {
         bool isChan = isAChannel(parameterList[0]);
         // CTCP message?
-        if(server->identifyMsg() && (trailing.at(1) != QChar(0x01) || trailing.lower().contains(0x01 + "action"))) {
+        if(server->identifyMsg() && (trailing.at(0) == '+' || trailing.at(0) == '-')) {
             trailing = trailing.mid(1);
         }
 
