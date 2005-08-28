@@ -22,9 +22,12 @@ def check_running(application):
         return 0
 
 def pretty_print(title, artist, album):
-    title = title.decode('utf-8')
-    artist = artist.decode('utf-8')
-    album = album.decode('utf-8')
+    if title.decode('utf-8'):
+        title = title.decode('utf-8')
+    if artist.decode('utf-8'):
+        artist = artist.decode('utf-8')
+    if album.decode('utf-8'):
+        album = album.decode('utf-8')
 
     lang = os.environ.get("LANG")
     lcall = os.environ.get("LC_ALL")
