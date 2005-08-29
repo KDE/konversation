@@ -1,62 +1,58 @@
-#!/usr/bin/env perl
-# Copyright (C) 2004 by İsmail Dönmez
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Copyright (C) 2005 by İsmail Dönmez <ismail@uludag.org.tr>
 # Licensed under GPL v2 or later at your option
 
-$PORT = shift;
-$SERVER = shift;
-$TARGET = shift;
-$OPTION = shift;
+import os
+import sys
+import re
+from subprocess import *
 
-@stations = `dcop KWeatherService WeatherService listStations`;
+if __name__ == "__main__":
 
-if( ! @stations ) {
-  exec 'dcop', $PORT, 'Konversation', 'error', 'KWeather is not installed or not running!';
-} 
+    port = sys.argv[1]
+    server = sys.argv[2]
+    target = sys.argv[3]
+    
+    try:
+        option = int(sys.argv[4])
+    except IndexError:
+        pass
 
-if( $OPTION && $stations[$OPTION-1] ) {
-  @stations = $stations[$OPTION-1];
-}
+    stations = os.popen('dcop KWeatherService WeatherService listStations').readlines()
 
-foreach $station (@stations) {
+    if not stations:
+        os.popen('dcop %s Konversation error KWeather is not installed or not running!'%(port))
 
-  $city = `dcop KWeatherService WeatherService stationName $station`;
-  $temperature = `dcop KWeatherService WeatherService temperature $station`;
-  $pressure = `dcop KWeatherService WeatherService pressure $station`; 
-  $wind = `dcop KWeatherService WeatherService wind $station`;
-  $detail = `dcop KWeatherService WeatherService weather $station`;
-  $detail2 = `dcop KWeatherService WeatherService cover $station`;
+    try:
+        if option and stations[option-1]:
+            stations = stations[option-1]
+    except NameError:
+        pass
 
-  chomp $detail;
-  $details = join ", ", split(/\n/,$detail);
-  
-  chomp $detail2;
-  $details2 = join ", ", split(/\n/,$detail2);
+    for station in stations:
 
-  
+        city = os.popen('dcop KWeatherService WeatherService stationName %s'%(station)).readline().rstrip('\n')
+        temperature = os.popen('dcop KWeatherService WeatherService temperature %s'%(station)).readline().rstrip('\n')
+        pressure = os.popen('dcop KWeatherService WeatherService pressure %s'%(station)).readline() .rstrip('\n')
+        wind = os.popen('dcop KWeatherService WeatherService wind %s'%(station)).readline().rstrip('\n')
+        detail = os.popen('dcop KWeatherService WeatherService weather %s'%(station)).readline().rstrip('\n')
+        detail2 = os.popen('dcop KWeatherService WeatherService cover %s'%(station)).readline().rstrip('\n')
 
-  chomp $city;
-  chomp $temperature;
-  chomp $pressure;
-  chomp $wind;
+        detail = ', '.join(re.split('\n',detail))
+        detail2 = ', '.join(re.split('\n',detail2))
 
-  if ( $details2 =~ /(\S)+/ ) {
-      if( $details =~ /(\S)+/ ) {
-	  $details = $details.", ".$details2;
-      }
-      else {
-	  $details = $details2;
-      }
-  }
+        if detail2:
+            if detail:
+                detail = detail+', '+detail2
+            else:
+                detail = detail2
+        else:
+            pass
       
+        if detail:
+            message = 'Current weather for %s : %s, Temperature: %s, Pressure: %s, Wind: %s'%(city,detail,temperature,pressure,wind)
+        else:
+            message = 'Current weather for %s : Temperature: %s, Pressure: %s, Wind: %s'%(city,temperature,pressure,wind)
 
-
-  if( $details =~ /(\S)+/ ) {
-  $MESSAGE = "Current Weather for %B$city%B : %B$details%B, Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
-  }
-  else {
-  $MESSAGE = "Current Weather for %B$city%B : Temperature: %B$temperature%B, Pressure: %B$pressure%B, Wind: %B$wind%B";
-  }
-  
-  system 'dcop', $PORT, 'Konversation', 'say', $SERVER, $TARGET, $MESSAGE;
-  
-}
+        Popen(['dcop', port, 'Konversation', 'say', server, target, message]).communicate()
