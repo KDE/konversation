@@ -68,28 +68,19 @@ SearchBar::SearchBar(QWidget* parent)
     m_timer = new QTimer(this);
 
     QAccel* accel = new QAccel(this);
-    accel->connectItem( accel->insertItem(Qt::Key_Escape),
-        this, SLOT(hide()));
+    accel->connectItem( accel->insertItem(Qt::Key_Escape), this, SLOT(hide()));
 
-    connect(m_timer, SIGNAL(timeout()),
-        SLOT(slotFind()));
-    connect(m_lineEdit, SIGNAL(textChanged(const QString&)),
-        SLOT(slotTextChanged()));
-    connect(m_lineEdit, SIGNAL(returnPressed()),
-        SLOT(slotFindNext()));
-    connect(m_nextBtn, SIGNAL(clicked()),
-        SLOT(slotFindNext()));
-    connect(m_hideBtn, SIGNAL(clicked()),
-        SLOT(hide()));
-    connect(m_fwdBox, SIGNAL(clicked()),
-        SLOT(slotTextChanged()));
-    connect(m_caseSenBox, SIGNAL(clicked()),
-        SLOT(slotTextChanged()));
+    connect(m_timer, SIGNAL(timeout()), SLOT(slotFind()));
+    connect(m_lineEdit, SIGNAL(textChanged(const QString&)), SLOT(slotTextChanged()));
+    connect(m_lineEdit, SIGNAL(returnPressed()), SLOT(slotFindNext()));
+    connect(m_nextBtn, SIGNAL(clicked()), SLOT(slotFindNext()));
+    connect(m_hideBtn, SIGNAL(clicked()), SLOT(hide()));
+    connect(m_fwdBox, SIGNAL(clicked()), SLOT(slotTextChanged()));
+    connect(m_caseSenBox, SIGNAL(clicked()), SLOT(slotTextChanged()));
 }
 
 SearchBar::~SearchBar()
 {
-
 }
 
 void SearchBar::focusInEvent(QFocusEvent* e)
@@ -138,10 +129,9 @@ void SearchBar::slotFindNext()
 
 void SearchBar::setHasMatch(bool value)
 {
-    QPalette pal = palette();
-    pal.setColor(QPalette::Active, QColorGroup::Base,
-        value ? Qt::green : Qt::red);
-    setPalette(pal);
+    QPalette pal = m_lineEdit->palette();
+    pal.setColor(QPalette::Active, QColorGroup::Base, value ? Qt::green : Qt::red);
+    m_lineEdit->setPalette(pal);
 }
 
 void SearchBar::setStatus(const QPixmap& pix, const QString& text)
