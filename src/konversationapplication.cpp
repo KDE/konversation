@@ -26,6 +26,27 @@
 #include <kconfigdialog.h>
 
 #include "chatwindowappearance_preferences.h"
+#include "alias_preferences.h"
+#include "connectionbehavior_preferences.h"
+#include "highlight_preferences.h"
+#include "preferences.h"
+#include "warnings_preferences.h"
+#include "chatwindowappearance_preferences.h"
+#include "dcc_preferences.h"
+#include "log_preferences.h"
+#include "quickbuttons_preferences.h"
+#include "watchednicknames_preferences.h"
+#include "chatwindowbehaviour_preferences.h"
+#include "fontappearance_preferences.h"
+#include "nicklistbehavior_preferences.h"
+#include "tabbar_preferences.h"
+#include "colorsappearance_preferences.h"
+#include "generalbehavior_preferences.h"
+#include "osd_preferences.h"
+#include "theme_preferences.h"
+
+
+
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
 #include "konversation_settings.h"
@@ -1527,11 +1548,55 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     //KConfigDialog didn't find an instance of this dialog, so lets create it : 
     KConfigDialog* dialog = new KConfigDialog( mainWindow, "settings", 
                                                Konversation::Settings::self() ); 
-    ChatWindowAppearance_Config* confWdg =  
-            new ChatWindowAppearance_Config( 0, "Example" ); 
-     
-    dialog->addPage( confWdg, i18n("Example"), "example" ); 
-     
+
+    Alias_Config* confAliasWdg = new Alias_Config( 0, "Alias" );
+    dialog->addPage ( confAliasWdg, i18n("Alias"), "alias" );
+
+    ChatWindowAppearance_Config* confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
+    dialog->addPage ( confChatWindowAppearanceWdg, i18n("ChatWindowAppearance"), "chatwindowappearance" );
+
+    ChatwindowBehaviour_Config* confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( 0, "ChatwindowBehaviour" );
+    dialog->addPage ( confChatwindowBehaviourWdg, i18n("ChatwindowBehaviour"), "chatwindowbehaviour" );
+
+    ColorsAppearance_Config* confColorsAppearanceWdg = new ColorsAppearance_Config( 0, "ColorsAppearance" );
+    dialog->addPage ( confColorsAppearanceWdg, i18n("ColorsAppearance"), "colorsappearance" );
+
+    ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( 0, "ConnectionBehavior" );
+    dialog->addPage ( confConnectionBehaviorWdg, i18n("ConnectionBehavior"), "connectionbehavior" );
+
+    FontAppearance_Config* confFontAppearanceWdg = new FontAppearance_Config( 0, "FontAppearance" );
+    dialog->addPage ( confFontAppearanceWdg, i18n("FontAppearance"), "fontappearance" );
+
+    GeneralBehavior_Config* confGeneralBehaviorWdg = new GeneralBehavior_Config( 0, "GeneralBehavior" );
+    dialog->addPage ( confGeneralBehaviorWdg, i18n("GeneralBehavior"), "generalbehavior" );
+
+    Highlight_Config* confHighlightWdg = new Highlight_Config( 0, "Highlight" );
+    dialog->addPage ( confHighlightWdg, i18n("Highlight"), "highlight" );
+
+    Log_Config* confLogWdg = new Log_Config( 0, "Log" );
+    dialog->addPage ( confLogWdg, i18n("Log"), "log" );
+
+    NicklistBehavior_Config* confNicklistBehaviorWdg = new NicklistBehavior_Config( 0, "NicklistBehavior" );
+    dialog->addPage ( confNicklistBehaviorWdg, i18n("NicklistBehavior"), "nicklistbehavior" );
+
+    OSD_Config* confOSDWdg = new OSD_Config( 0, "OSD" );
+    dialog->addPage ( confOSDWdg, i18n("OSD"), "osd" );
+
+    QuickButtons_Config* confQuickButtonsWdg = new QuickButtons_Config( 0, "QuickButtons" );
+    dialog->addPage ( confQuickButtonsWdg, i18n("QuickButtons"), "quickbuttons" );
+
+    TabBar_Config* confTabBarWdg = new TabBar_Config( 0, "TabBar" );
+    dialog->addPage ( confTabBarWdg, i18n("TabBar"), "tabbar" );
+
+    Theme_Config* confThemeWdg = new Theme_Config( 0, "Theme" );
+    dialog->addPage ( confThemeWdg, i18n("Theme"), "theme" );
+
+    Warnings_Config* confWarningsWdg = new Warnings_Config( 0, "Warnings" );
+    dialog->addPage ( confWarningsWdg, i18n("Warnings"), "warnings" );
+
+    WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( 0, "WatchedNicknames" );
+    dialog->addPage ( confWatchedNicknamesWdg, i18n("WatchedNicknames"), "watchednicknames" );
+
     //User edited the configuration - update your local copies of the 
     //configuration data 
 //    connect( dialog, SIGNAL(settingsChanged()), 
