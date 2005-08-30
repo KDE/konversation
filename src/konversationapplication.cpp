@@ -23,9 +23,12 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kconfigdialog.h>
 
+#include "chatwindowappearance_preferences.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
+#include "konversation_settings.h"
 #include "prefsdialog.h"
 #include "highlight.h"
 #include "server.h"
@@ -1515,6 +1518,29 @@ void KonversationApplication::clearUrlList()
 
 void KonversationApplication::openPrefsDialog()   // TODO Move this function into KonversationMainWindow
 {
+    //An instance of your dialog could be already created and could be cached, 
+    //in which case you want to display the cached dialog instead of creating 
+    //another one 
+    if ( KConfigDialog::showDialog( "settings" ) ) 
+        return; 
+ 
+    //KConfigDialog didn't find an instance of this dialog, so lets create it : 
+    KConfigDialog* dialog = new KConfigDialog( mainWindow, "settings", 
+                                               Konversation::Settings::self() ); 
+    ChatWindowAppearance_Config* confWdg =  
+            new ChatWindowAppearance_Config( 0, "Example" ); 
+     
+    dialog->addPage( confWdg, i18n("Example"), "example" ); 
+     
+    //User edited the configuration - update your local copies of the 
+    //configuration data 
+//    connect( dialog, SIGNAL(settingsChanged()), 
+//             this, SLOT(updateConfiguration()) ); 
+     
+    dialog->show();
+    
+/*
+	
     if(prefsDialog==0)
     {
         prefsDialog = new PrefsDialog(mainWindow, &preferences);
@@ -1529,7 +1555,7 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
         prefsDialog->show();
         prefsDialog->raise();
         prefsDialog->setActiveWindow();
-    }
+    }*/
 }
 
 void KonversationApplication::openPrefsDialog(Preferences::Pages page)
@@ -1706,3 +1732,5 @@ NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const Q
 }
 
 #include "konversationapplication.moc"
+
+// vim: set et sw=4 ts=4 cino=l1,cs,U1:
