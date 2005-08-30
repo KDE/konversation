@@ -51,8 +51,8 @@ if __name__ == "__main__":
             pass
       
         if detail:
-            message = 'Current weather for %s : %s, Temperature: %s, Pressure: %s, Wind: %s'%(city,detail,temperature,pressure,wind)
+            message = 'Current weather for %%B%s%%B : %%B%s%%B, Temperature: %%B%s%%B, Pressure: %%B%s%%B, Wind: %%B%s%%B'%(city,detail,temperature,pressure,wind)
         else:
-            message = 'Current weather for %s : Temperature: %s, Pressure: %s, Wind: %s'%(city,temperature,pressure,wind)
+            message = 'Current weather for %s : Temperature: %%B%s%%B, Pressure: %%B%s%%B, Wind: %%B%s%%B'%(city,temperature,pressure,wind)
 
         Popen(['dcop', port, 'Konversation', 'say', server, target, message]).communicate()
