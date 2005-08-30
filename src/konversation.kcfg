@@ -1121,6 +1121,9 @@
       <!-- konversationapplication.cpp:1230 -->
       <!--   config->writeEntry("LogFollowsNick",preferences.getLogFollowsNick()); -->
     </entry>
+    <entry key="AddHostnameToLog" type="Bool">
+      <default>false</default>
+    </entry>
     <entry key="TabPlacement" type="Int">
       <default></default>
       <label></label>

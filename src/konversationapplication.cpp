@@ -1547,22 +1547,22 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     dialog->addPage ( confAliasWdg, i18n("Alias"), "alias" );
 
     ChatWindowAppearance_Config* confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
-    dialog->addPage ( confChatWindowAppearanceWdg, i18n("ChatWindowAppearance"), "chatwindowappearance" );
+    dialog->addPage ( confChatWindowAppearanceWdg, i18n("Chat Window Appearance"), "chatwindowappearance" );
 
     ChatwindowBehaviour_Config* confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( 0, "ChatwindowBehaviour" );
-    dialog->addPage ( confChatwindowBehaviourWdg, i18n("ChatwindowBehaviour"), "chatwindowbehaviour" );
+    dialog->addPage ( confChatwindowBehaviourWdg, i18n("Chatwindow Behaviour"), "chatwindowbehaviour" );
 
     ColorsAppearance_Config* confColorsAppearanceWdg = new ColorsAppearance_Config( 0, "ColorsAppearance" );
-    dialog->addPage ( confColorsAppearanceWdg, i18n("ColorsAppearance"), "colorsappearance" );
+    dialog->addPage ( confColorsAppearanceWdg, i18n("Colors Appearance"), "colorsappearance" );
 
-/*    ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( 0, "ConnectionBehavior" );
-    dialog->addPage ( confConnectionBehaviorWdg, i18n("ConnectionBehavior"), "connectionbehavior" );
+    ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( 0, "ConnectionBehavior" );
+    dialog->addPage ( confConnectionBehaviorWdg, i18n("Connection Behavior"), "connectionbehavior" );
 
     FontAppearance_Config* confFontAppearanceWdg = new FontAppearance_Config( 0, "FontAppearance" );
-    dialog->addPage ( confFontAppearanceWdg, i18n("FontAppearance"), "fontappearance" );
+    dialog->addPage ( confFontAppearanceWdg, i18n("Font Appearance"), "fontappearance" );
 
     GeneralBehavior_Config* confGeneralBehaviorWdg = new GeneralBehavior_Config( 0, "GeneralBehavior" );
-    dialog->addPage ( confGeneralBehaviorWdg, i18n("GeneralBehavior"), "generalbehavior" );
+    dialog->addPage ( confGeneralBehaviorWdg, i18n("General Behavior"), "generalbehavior" );
 
     Highlight_Config* confHighlightWdg = new Highlight_Config( 0, "Highlight" );
     dialog->addPage ( confHighlightWdg, i18n("Highlight"), "highlight" );
@@ -1571,16 +1571,16 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     dialog->addPage ( confLogWdg, i18n("Log"), "log" );
 
     NicklistBehavior_Config* confNicklistBehaviorWdg = new NicklistBehavior_Config( 0, "NicklistBehavior" );
-    dialog->addPage ( confNicklistBehaviorWdg, i18n("NicklistBehavior"), "nicklistbehavior" );
+    dialog->addPage ( confNicklistBehaviorWdg, i18n("Nicklist Behavior"), "nicklistbehavior" );
 
     OSD_Config* confOSDWdg = new OSD_Config( 0, "OSD" );
     dialog->addPage ( confOSDWdg, i18n("OSD"), "osd" );
 
     QuickButtons_Config* confQuickButtonsWdg = new QuickButtons_Config( 0, "QuickButtons" );
-    dialog->addPage ( confQuickButtonsWdg, i18n("QuickButtons"), "quickbuttons" );
+    dialog->addPage ( confQuickButtonsWdg, i18n("Quick Buttons"), "quickbuttons" );
 
     TabBar_Config* confTabBarWdg = new TabBar_Config( 0, "TabBar" );
-    dialog->addPage ( confTabBarWdg, i18n("TabBar"), "tabbar" );
+    dialog->addPage ( confTabBarWdg, i18n("Tab Bar"), "tabbar" );
 
     Theme_Config* confThemeWdg = new Theme_Config( 0, "Theme" );
     dialog->addPage ( confThemeWdg, i18n("Theme"), "theme" );
@@ -1589,8 +1589,8 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     dialog->addPage ( confWarningsWdg, i18n("Warnings"), "warnings" );
 
     WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( 0, "WatchedNicknames" );
-    dialog->addPage ( confWatchedNicknamesWdg, i18n("WatchedNicknames"), "watchednicknames" );
-*/
+    dialog->addPage ( confWatchedNicknamesWdg, i18n("Watched Nicknames"), "watchednicknames" );
+    
     //User edited the configuration - update your local copies of the 
     //configuration data 
 //    connect( dialog, SIGNAL(settingsChanged()), 
@@ -1619,6 +1619,7 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
 void KonversationApplication::openPrefsDialog(Preferences::Pages page)
 {
     openPrefsDialog();
+    //FIXME - open the right page
 }
 
 void KonversationApplication::openQuickConnectDialog()

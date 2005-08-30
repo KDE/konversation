@@ -301,7 +301,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>&amp;Background:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_BackgroundColor</cstring>
+                        <cstring>kcfg_TextViewBackgroundColor</cstring>
                     </property>
                 </widget>
                 <widget class="QLabel" row="3" column="0">
@@ -389,7 +389,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>&amp;Timestamp:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_TimestampColor</cstring>
+                        <cstring>kcfg_TimeColor</cstring>
                     </property>
                 </widget>
                 <widget class="QLabel" row="4" column="3">
