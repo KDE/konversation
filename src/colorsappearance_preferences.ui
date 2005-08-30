@@ -37,7 +37,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </property>
                 <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="5">
                     <property name="name">
-                        <cstring>kcfg_ColorInputFields</cstring>
+                        <cstring>kcfg_InputFieldsBackgroundColor</cstring>
                     </property>
                     <property name="text">
                         <string>Input fields and nick list uses custom colors</string>
@@ -45,7 +45,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="3" column="4">
                     <property name="name">
-                        <cstring>kcfg_TimestampColor</cstring>
+                        <cstring>kcfg_TimeColor</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -77,7 +77,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="0" column="4">
                     <property name="name">
-                        <cstring>kcfg_BacklogColor</cstring>
+                        <cstring>kcfg_BacklogMessageColor</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -85,7 +85,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="4" column="1">
                     <property name="name">
-                        <cstring>kcfg_BackgroundColor</cstring>
+                        <cstring>kcfg_TextViewBackgroundColor</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -117,7 +117,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="0" column="1">
                     <property name="name">
-                        <cstring>kcfg_ActionColor</cstring>
+                        <cstring>kcfg_ActionMessageColor</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -345,7 +345,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>Actio&amp;n:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_ActionColor</cstring>
+                        <cstring>kcfg_ActionMessageColor</cstring>
                     </property>
                 </widget>
                 <widget class="QLabel" row="0" column="3">
@@ -356,7 +356,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>Bac&amp;klog:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_BacklogColor</cstring>
+                        <cstring>kcfg_BacklogMessageColor</cstring>
                     </property>
                 </widget>
                 <widget class="QLabel" row="1" column="3">

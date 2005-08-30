@@ -22,8 +22,8 @@ konversation_SOURCES = konviface.skel\
 	 prefspagealiases.cpp channellistviewitem.cpp osd.cpp prefspageosd.cpp ircevent.cpp \
          trayicon.cpp prefspagetabbehavior.cpp dccchat.cpp logfilereader.cpp \
 	 multilineedit.cpp nickinfo.cpp dccresumedialog.cpp konversationsound.cpp \
-	 quickconnectdialog.cpp prefspagebehaviour.cpp prefspagechatwinbehavior.cpp \
-	 prefspagechatwinappearance.cpp prefspagecolorsappearance.cpp serverlistdialog.cpp \
+	 quickconnectdialog.cpp prefspagebehaviour.cpp \
+	 prefspagechatwinappearance.cpp serverlistdialog.cpp \
 	 dcctransfersend.cpp dcctransferrecv.cpp channelnick.cpp dccdetaildialog.cpp \
 	 insertchardialog.cpp irccharsets.cpp editnotifydialog.cpp common.cpp serverison.cpp \
 	 sslsocket.cpp servergroupsettings.cpp serversettings.cpp servergroupdialog.cpp \
@@ -64,8 +64,8 @@ messages: rc.cpp
 		$(XGETTEXT) $$LIST -o $(podir)/konversation.pot; \
 	fi
 
-noinst_HEADERS = prefspagebehaviour.h prefspagechatwinbehavior.h 	 		 \
-		prefspagechatwinappearance.h prefspagecolorsappearance.h serverlistdialog.h dcctransfersend.h 		 \
+noinst_HEADERS = prefspagebehaviour.h \
+		prefspagechatwinappearance.h serverlistdialog.h dcctransfersend.h 		 \
 		dcctransferrecv.h dccdetaildialog.h insertchardialog.h editnotifydialog.h serverison.h 		 \
 		servergroupsettings.h serversettings.h	servergroupdialog.h serverdialog.h channeldialog.h 		 \
 		identitydialog.h topiclabel.h channeloptionsdialog.h joinchanneldialog.h \

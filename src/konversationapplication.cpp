@@ -1561,7 +1561,7 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     ColorsAppearance_Config* confColorsAppearanceWdg = new ColorsAppearance_Config( 0, "ColorsAppearance" );
     dialog->addPage ( confColorsAppearanceWdg, i18n("ColorsAppearance"), "colorsappearance" );
 
-    ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( 0, "ConnectionBehavior" );
+/*    ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( 0, "ConnectionBehavior" );
     dialog->addPage ( confConnectionBehaviorWdg, i18n("ConnectionBehavior"), "connectionbehavior" );
 
     FontAppearance_Config* confFontAppearanceWdg = new FontAppearance_Config( 0, "FontAppearance" );
@@ -1596,7 +1596,7 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
 
     WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( 0, "WatchedNicknames" );
     dialog->addPage ( confWatchedNicknamesWdg, i18n("WatchedNicknames"), "watchednicknames" );
-
+*/
     //User edited the configuration - update your local copies of the 
     //configuration data 
 //    connect( dialog, SIGNAL(settingsChanged()), 

@@ -174,14 +174,54 @@
       <!-- konversationapplication.cpp:959 -->
       <!--   config->writeEntry("BackgroundImage",preferences.getBackgroundImageName()); -->
     </entry>
-    <entry key="IRCColors" type="StringList">
-      <default>#ffffff,#000000,#000080,#008000,#ff0000,#a52a2a,#800080,#ff8000,#808000,#00ff00,#008080,#00ffff,#0000ff,#ffc0cb,#a0a0a0,#c0c0c0</default>
-      <label></label>
-      <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:460 -->
-      <!--   preferences.setIRCColorList(config->readListEntry("IRCColors")); -->
-      <!-- konversationapplication.cpp:960 -->
-      <!--   config->writeEntry("IRCColors", preferences.getIRCColorList()); -->
+
+    <entry key="IrcColorCode1" type="String">
+      <default>#ffffff</default>
+    </entry>
+    <entry key="IrcColorCode2" type="String">
+      <default>#000000</default>
+    </entry>
+    <entry key="IrcColorCode3" type="String">
+      <default>#000080</default>
+    </entry>
+    <entry key="IrcColorCode4" type="String">
+      <default>#008000</default>
+    </entry>
+    <entry key="IrcColorCode5" type="String">
+      <default>#ff0000</default>
+    </entry>
+    <entry key="IrcColorCode6" type="String">
+      <default>#a52a2a</default>
+    </entry>
+    <entry key="IrcColorCode7" type="String">
+      <default>#800080</default>
+    </entry>
+    <entry key="IrcColorCode8" type="String">
+      <default>#ff8000</default>
+    </entry>
+    <entry key="IrcColorCode9" type="String">
+      <default>#808000</default>
+    </entry>
+    <entry key="IrcColorCode10" type="String">
+      <default>#00ff00</default>
+    </entry>
+    <entry key="IrcColorCode11" type="String">
+      <default>#008080</default>
+    </entry>
+    <entry key="IrcColorCode12" type="String">
+      <default>#00ffff</default>
+    </entry>
+    <entry key="IrcColorCode13" type="String">
+      <default>#0000ff</default>
+    </entry>
+    <entry key="IrcColorCode14" type="String">
+      <default>#ffc0cb</default>
+    </entry>
+    <entry key="IrcColorCode15" type="String">
+      <default>#a0a0a0</default>
+    </entry>
+    <entry key="IrcColorCode16" type="String">
+      <default>#c0c0c0</default>
     </entry>
     <entry key="FilterColorCodes" type="Bool">
       <default>false</default>
@@ -192,16 +232,33 @@
       <!-- konversationapplication.cpp:969 -->
       <!--   config->writeEntry("FilterColorCodes", preferences.getFilterColors()); -->
     </entry>
-    <entry key="NickColors" type="StringList">
-      <default>#E90E7F,#8E55E9,#B30E0E,#18B33C,#58ADB3,#9E54B3,#0FB39A,#3176B3</default>
-      <label></label>
-      <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:469 -->
-      <!--   preferences.setNickColorList(config->readListEntry("NickColors")); -->
-      <!-- konversationapplication.cpp:961 -->
-      <!--   config->writeEntry("NickColors", preferences.getNickColorList()); -->
+    <entry key="NickColor1" type="String">
+      <default>#8E55E9</default>
     </entry>
-    <entry key="UseColoredNicks" type="Bool">
+    <entry key="NickColor2" type="String">
+      <default>#B30E0E</default>
+    </entry>
+    <entry key="NickColor3" type="String">
+      <default>#18B33C</default>
+    </entry>
+    <entry key="NickColor4" type="String">
+      <default>#58ADB3</default>
+    </entry>
+    <entry key="NickColor5" type="String">
+      <default>#9E54B3</default>
+    </entry>
+    <entry key="NickColor6" type="String">
+      <default>#0FB39A</default>
+    </entry>
+    <entry key="NickColor7" type="String">
+      <default>#3176B3</default>
+    </entry>
+    <entry key="NickColor8" type="String">
+    </entry>
+    <entry key="NickColor9" type="String">
+    </entry>
+
+   <entry key="UseColoredNicks" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
@@ -417,6 +474,13 @@
       <!--   preferences.setAutoWhoContinuousInterval(config->readUnsignedNumEntry("AutoWhoContinuousInterval",preferences.getAutoWhoContinuousInterval())); -->
       <!-- konversationapplication.cpp:907 -->
       <!--   config->writeEntry("AutoWhoContinuousInterval",preferences.getAutoWhoContinuousInterval()); -->
+    </entry>
+    <!-- preferencesentry = getShowRealNames -->
+    <!-- type = bool  -->
+    <entry key="ShowRealNames" type="Bool">
+      <default>false</default>
+      <label>&amp;Show real names next to nicknames</label>
+      <whatsthis></whatsthis>
     </entry>
     <entry key="ChannelDoubleClickAction" type="String">
       <default>/QUERY %u%n</default>
@@ -1235,5 +1299,18 @@
       <!-- serverlistdialog.cpp:213 -->
       <!--     config->writeEntry("Size", size()); -->
     </entry>
+  </group>
+  <group name="Message Text Colors">
+    <entry key="ActionMessageColor" type="String"/>
+    <entry key="BacklogMessageColor" type="String"/>
+    <entry key="ChannelMessageColor" type="String"/>
+    <entry key="CommandMessageColor" type="String"/>
+    <entry key="QueryMessageColor" type="String"/>
+    <entry key="ServerMessageColor" type="String"/>
+    <entry key="TimeColor" type="String"/>
+    <entry key="ActionColor" type="String"/>
+    <entry key="TextViewBackgroundColor" type="String"/>
+    <entry key="AlternateBackgroundColor" type="String"/>
+    <entry key="HyperlinkColor" type="String"/>
   </group>
 </kcfg>

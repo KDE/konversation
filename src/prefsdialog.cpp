@@ -26,9 +26,7 @@
 
 #include "konversationapplication.h"
 #include "prefspagebehaviour.h"
-#include "prefspagechatwinbehavior.h"
 #include "prefspagechatwinappearance.h"
-#include "prefspagecolorsappearance.h"
 #include "prefspageconnectionbehavior.h"
 #include "prefspagefontsappearance.h"
 #include "prefspagenicklistbehavior.h"
@@ -46,8 +44,6 @@ KDialogBase::Ok, parent, "edit_prefs", false, true)
     setFolderIcon(QStringList::split(',', i18n("Appearance")), SmallIcon("looknfeel"));
     chatWinAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("view_text"));
     QWidget* fontsAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Fonts")), QString::null, SmallIcon("fonts"));
-    QWidget* colorsAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Colors")),
-        QString::null, SmallIcon("colorize"));
     QWidget* themesPane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Themes")),
         QString::null, SmallIcon("iconthemes"));
 
@@ -56,7 +52,6 @@ KDialogBase::Ok, parent, "edit_prefs", false, true)
         QString::null,SmallIcon("exec"));
     QWidget* connectionBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Connection")),
         QString::null,SmallIcon("connect_creating"));
-    QWidget* chatWinBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Chat Window")),QString::null, SmallIcon("view_text"));
     QWidget* nicklistBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Nickname List")),QString::null, SmallIcon("player_playlist"));
     QWidget* tabBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Tab Bar")),
         QString::null, SmallIcon("tab_new"));
@@ -86,11 +81,9 @@ KDialogBase::Ok, parent, "edit_prefs", false, true)
     // Add pages to preferences dialog
     PrefsPageChatWinAppearance* chatWinAppearancePage = new PrefsPageChatWinAppearance(chatWinAppearancePane, preferences);
     PrefsPageFontsAppearance* fontsAppearancePage = new PrefsPageFontsAppearance(fontsAppearancePane, preferences);
-    PrefsPageColorsAppearance* colorsAppearancePage = new PrefsPageColorsAppearance(colorsAppearancePane, preferences);
 
     PrefsPageBehaviour* generalBehaviorPage = new PrefsPageBehaviour(generalBehaviorPane, preferences);
     PrefsPageConnectionBehavior* connectionBehaviorPage = new PrefsPageConnectionBehavior(connectionBehaviorPane, preferences);
-    PrefsPageChatWinBehavior* chatWinBehaviorPage = new PrefsPageChatWinBehavior(chatWinBehaviorPane, preferences);
     PrefsPageNicklistBehavior* nicklistBehaviorPage = new PrefsPageNicklistBehavior(nicklistBehaviorPane, preferences);
     tabBehaviorPage = new PrefsPageTabBehavior(tabBehaviorPane, preferences);
     ignorePage = new PrefsPageIgnore(ignorePane, preferences);
@@ -117,12 +110,10 @@ KDialogBase::Ok, parent, "edit_prefs", false, true)
     // connect standard signals and slots
     connect(this, SIGNAL(applyPreferences()), chatWinAppearancePage, SLOT(applyPreferences()));
     connect(this, SIGNAL(applyPreferences()), fontsAppearancePage, SLOT(applyPreferences()));
-    connect(this, SIGNAL(applyPreferences()), colorsAppearancePage, SLOT(applyPreferences()));
     connect(this, SIGNAL(applyPreferences()), themesPage, SLOT(applyPreferences()));
 
     connect(this, SIGNAL(applyPreferences()), generalBehaviorPage, SLOT(applyPreferences()));
     connect(this, SIGNAL(applyPreferences()), connectionBehaviorPage, SLOT(applyPreferences()));
-    connect(this, SIGNAL(applyPreferences()), chatWinBehaviorPage, SLOT(applyPreferences()));
     connect(this, SIGNAL(applyPreferences()), nicklistBehaviorPage, SLOT(applyPreferences()));
     connect(this, SIGNAL(applyPreferences()), tabBehaviorPage, SLOT(applyPreferences()));
     connect(this, SIGNAL(applyPreferences()), buttonsPage, SLOT(applyPreferences()));

@@ -43,7 +43,7 @@
                 </widget>
                 <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="3">
                     <property name="name">
-                        <cstring>kcfg_BeepOnAsciiBel</cstring>
+                        <cstring>kcfg_Beep</cstring>
                     </property>
                     <property name="text">
                         <string>Enable s&amp;ystem bell on incoming ASCII BEL</string>
@@ -54,7 +54,7 @@
                 </widget>
                 <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="3">
                     <property name="name">
-                        <cstring>kcfg_RedirectStatusMessages</cstring>
+                        <cstring>kcfg_RedirectServerAndAppMsgToStatusPane</cstring>
                     </property>
                     <property name="text">
                         <string>&amp;Redirect all status messages to the server status window</string>
@@ -62,7 +62,7 @@
                 </widget>
                 <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="3">
                     <property name="name">
-                        <cstring>kcfg_HideJoinPart</cstring>
+                        <cstring>kcfg_HideUnimportantEvents</cstring>
                     </property>
                     <property name="text">
                         <string>Hide &amp;Join/Part/Nick events</string>
@@ -70,7 +70,7 @@
                 </widget>
                 <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="3">
                     <property name="name">
-                        <cstring>kcfg_ShowRememberLine</cstring>
+                        <cstring>kcfg_ShowRememberLineInAllWindows</cstring>
                     </property>
                     <property name="text">
                         <string>Show remember line in all channels and &amp;queries</string>
@@ -101,7 +101,7 @@
                         <string>Scroll&amp;back limit:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_ScrollBackLimit</cstring>
+                        <cstring>kcfg_ScrollbackMax</cstring>
                     </property>
                     <property name="whatsThis" stdset="0">
                         <string>How many lines to keep in buffers, 0 = unlimitied</string>
@@ -109,7 +109,7 @@
                 </widget>
                 <widget class="QSpinBox" row="6" column="1">
                     <property name="name">
-                        <cstring>kcfg_ScrollBackLimit</cstring>
+                        <cstring>kcfg_ScrollbackMax</cstring>
                     </property>
                     <property name="suffix">
                         <string> lines</string>
