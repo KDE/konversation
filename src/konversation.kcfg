@@ -247,7 +247,7 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="ShowRememberLine" type="Bool">
+    <entry key="ShowRememberLineInAllWindows" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
@@ -382,7 +382,7 @@
       <!-- konversationapplication.cpp:902 -->
       <!--   config->writeEntry("LogfileBufferSize",preferences.getLogfileBufferSize()); -->
     </entry>
-    <entry key="ScrollBackLimit" type="Int">
+    <entry key="ScrollbackMax" type="Int">
       <default>1000</default>
       <label></label>
       <whatsthis></whatsthis>
@@ -436,7 +436,7 @@
       <!-- konversationapplication.cpp:920 -->
       <!--   config->writeEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction()); -->
     </entry>
-    <entry key="BeepOnAsciiBel" type="Bool">
+    <entry key="Beep" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
@@ -472,7 +472,7 @@
       <!-- konversationapplication.cpp:927 -->
       <!--   config->writeEntry("MaximumLag",preferences.getMaximumLagTime()); -->
     </entry>
-    <entry key="RedirectStatusMessages" type="Bool">
+    <entry key="RedirectServerAndAppMsgToStatusPane" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
@@ -498,11 +498,6 @@
       <!--   preferences.setDisableNotifyWhileAway(config->readBoolEntry("DisableNotifyWhileAway", -->
       <!-- konversationapplication.cpp:934 -->
       <!--   config->writeEntry("DisableNotifyWhileAway", preferences.disableNotifyWhileAway()); -->
-    </entry>
-    <entry key="ShowRealNames" type="Bool">
-      <default>false</default>
-      <label></label>
-      <whatsthis></whatsthis>
     </entry>
   </group>
   <group name="Sort Nicknames">
@@ -1089,7 +1084,7 @@
       <!-- konversationapplication.cpp:1234 -->
       <!--   config->writeEntry("BringToFront",preferences.getBringToFront()); -->
     </entry>
-    <entry key="HideJoinPart" type="Bool">
+    <entry key="HideUnimportantEvents" type="Bool">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
@@ -1165,11 +1160,10 @@
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-    </entry>
-    <entry key="ColorInputFields" type="Bool">
-      <default></default>
-      <label></label>
-      <whatsthis></whatsthis>
+      <!-- konversationapplication.cpp:868 -->
+      <!--   preferences.setColorInputFields(config->readBoolEntry("InputFieldsBackgroundColor",preferences.getColorInputFields())); -->
+      <!-- konversationapplication.cpp:1246 -->
+      <!--   config->writeEntry("InputFieldsBackgroundColor",preferences.getColorInputFields()); -->
     </entry>
   </group>
   <group name="Web Browser Settings">
