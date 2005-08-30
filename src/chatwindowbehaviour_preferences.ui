@@ -32,7 +32,7 @@
                 </property>
                 <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="3">
                     <property name="name">
-                        <cstring>kcfg_DisableExpansions</cstring>
+                        <cstring>kcfg_DisableExpansion</cstring>
                     </property>
                     <property name="text">
                         <string>Disable variable (e.g. %C, %B, %G...) e&amp;xpansion</string>
@@ -153,7 +153,7 @@
         </spacer>
         <widget class="QGroupBox" row="1" column="0">
             <property name="name">
-                <cstring>kcfg_autoWhoContinuous</cstring>
+                <cstring>kcfg_AutoWhoContinuousEnabled</cstring>
             </property>
             <property name="title">
                 <string>Enable Automatic User Information Look Up (/WHO)</string>
@@ -278,7 +278,7 @@
 </widget>
 <connections>
     <connection>
-        <sender>kcfg_autoWhoContinuous</sender>
+        <sender>kcfg_AutoWhoContinuousEnabled</sender>
         <signal>toggled(bool)</signal>
         <receiver>kcfg_WhoInterval</receiver>
         <slot>setEnabled(bool)</slot>

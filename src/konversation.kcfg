@@ -247,7 +247,7 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="ShowRememberLineInAllWindows" type="Bool">
+    <entry key="ShowRememberLine" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
@@ -382,7 +382,7 @@
       <!-- konversationapplication.cpp:902 -->
       <!--   config->writeEntry("LogfileBufferSize",preferences.getLogfileBufferSize()); -->
     </entry>
-    <entry key="ScrollbackMax" type="Int">
+    <entry key="ScrollBackLimit" type="Int">
       <default>1000</default>
       <label></label>
       <whatsthis></whatsthis>
@@ -436,7 +436,7 @@
       <!-- konversationapplication.cpp:920 -->
       <!--   config->writeEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction()); -->
     </entry>
-    <entry key="Beep" type="Bool">
+    <entry key="BeepOnAsciiBel" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
@@ -472,7 +472,7 @@
       <!-- konversationapplication.cpp:927 -->
       <!--   config->writeEntry("MaximumLag",preferences.getMaximumLagTime()); -->
     </entry>
-    <entry key="RedirectServerAndAppMsgToStatusPane" type="Bool">
+    <entry key="RedirectStatusMessages" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
@@ -1084,7 +1084,7 @@
       <!-- konversationapplication.cpp:1234 -->
       <!--   config->writeEntry("BringToFront",preferences.getBringToFront()); -->
     </entry>
-    <entry key="HideUnimportantEvents" type="Bool">
+    <entry key="HideJoinPart" type="Bool">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
