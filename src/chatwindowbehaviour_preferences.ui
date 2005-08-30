@@ -176,12 +176,12 @@
                         <string>Update interval:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_WhoInterval</cstring>
+                        <cstring>kcfg_AutoWhoContinuousInterval</cstring>
                     </property>
                 </widget>
                 <widget class="QSpinBox" row="2" column="1">
                     <property name="name">
-                        <cstring>kcfg_WhoInterval</cstring>
+                        <cstring>kcfg_AutoWhoContinuousInterval</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
@@ -218,7 +218,7 @@
                 </spacer>
                 <widget class="QSpinBox" row="1" column="1">
                     <property name="name">
-                        <cstring>kcfg_AutoWhoLimit</cstring>
+                        <cstring>kcfg_AutoWhoNicksLimit</cstring>
                     </property>
                     <property name="suffix">
                         <string> nicks</string>
@@ -258,7 +258,7 @@
                         <string>Max. number of users in a channel:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_AutoWhoLimit</cstring>
+                        <cstring>kcfg_AutoWhoNicksLimit</cstring>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
@@ -280,7 +280,7 @@
     <connection>
         <sender>kcfg_AutoWhoContinuousEnabled</sender>
         <signal>toggled(bool)</signal>
-        <receiver>kcfg_WhoInterval</receiver>
+        <receiver>kcfg_AutoWhoContinuousInterval</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>

@@ -37,7 +37,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </property>
                 <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="5">
                     <property name="name">
-                        <cstring>kcfg_UseCustomColors</cstring>
+                        <cstring>kcfg_ColorInputFields</cstring>
                     </property>
                     <property name="text">
                         <string>Input fields and nick list uses custom colors</string>

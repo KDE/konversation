@@ -472,7 +472,7 @@ void KonversationApplication::readOptions()
     preferences.setSystrayOnly(config->readBoolEntry("SystrayOnly",preferences.getSystrayOnly()));
     preferences.setTrayNotify(config->readBoolEntry("TrayNotify",preferences.getTrayNotify()));
     preferences.setTrayNotifyOnlyOwnNick(config->readBoolEntry("TrayNotifyOnlyOwnNick",
-        preferences.trayNotifyOnlyOwnNick()));
+							       preferences.trayNotifyOnlyOwnNick()));
     preferences.setShowBackgroundImage(config->readBoolEntry("ShowBackgroundImage",preferences.getShowBackgroundImage()));
 
     // Window geometries

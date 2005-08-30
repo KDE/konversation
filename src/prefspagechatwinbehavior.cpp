@@ -33,10 +33,10 @@ PrefsPageChatWinBehavior::PrefsPageChatWinBehavior(QWidget* newParent, Preferenc
     kcfg_UseLiteralModes->setChecked(preferences->getUseLiteralModes());
 
     kcfg_ScrollBackLimit->setValue(preferences->getScrollbackMax());
-    kcfg_AutoWhoLimit->setValue(preferences->getAutoWhoNicksLimit());
+    kcfg_AutoWhoNicksLimit->setValue(preferences->getAutoWhoNicksLimit());
 
     kcfg_AutoWhoContinuousEnabled->setChecked(preferences->getAutoWhoContinuousEnabled());
-    kcfg_WhoInterval->setValue(preferences->getAutoWhoContinuousInterval());
+    kcfg_AutoWhoContinuousInterval->setValue(preferences->getAutoWhoContinuousInterval());
 
     kcfg_ShowRealNames->setChecked(preferences->getShowRealNames());
 }
@@ -54,9 +54,9 @@ void PrefsPageChatWinBehavior::applyPreferences()
     preferences->setRedirectToStatusPane(kcfg_RedirectStatusMessages->isChecked());
     preferences->setUseLiteralModes(kcfg_UseLiteralModes->isChecked());
     preferences->setScrollbackMax(kcfg_ScrollBackLimit->value());
-    preferences->setAutoWhoNicksLimit(kcfg_AutoWhoLimit->value());
+    preferences->setAutoWhoNicksLimit(kcfg_AutoWhoNicksLimit->value());
     preferences->setAutoWhoContinuousEnabled(kcfg_AutoWhoContinuousEnabled->isChecked());
-    preferences->setAutoWhoContinuousInterval(kcfg_WhoInterval->value());
+    preferences->setAutoWhoContinuousInterval(kcfg_AutoWhoContinuousInterval->value());
     preferences->setShowRealNames(kcfg_ShowRealNames->isChecked());
 }
 

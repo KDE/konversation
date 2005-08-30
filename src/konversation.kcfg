@@ -499,6 +499,11 @@
       <!-- konversationapplication.cpp:934 -->
       <!--   config->writeEntry("DisableNotifyWhileAway", preferences.disableNotifyWhileAway()); -->
     </entry>
+    <entry key="ShowRealNames" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
   </group>
   <group name="Sort Nicknames">
     <entry key="AdminValue" type="Int">
@@ -1160,10 +1165,11 @@
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:868 -->
-      <!--   preferences.setColorInputFields(config->readBoolEntry("InputFieldsBackgroundColor",preferences.getColorInputFields())); -->
-      <!-- konversationapplication.cpp:1246 -->
-      <!--   config->writeEntry("InputFieldsBackgroundColor",preferences.getColorInputFields()); -->
+    </entry>
+    <entry key="ColorInputFields" type="Bool">
+      <default></default>
+      <label></label>
+      <whatsthis></whatsthis>
     </entry>
   </group>
   <group name="Web Browser Settings">

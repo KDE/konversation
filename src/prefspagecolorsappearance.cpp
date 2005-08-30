@@ -28,7 +28,7 @@ PrefsPageColorsAppearance::PrefsPageColorsAppearance(QWidget* newParent,Preferen
     preferences = newPreferences;
 
     // Checkboxes
-    kcfg_UseCustomColors->setChecked(preferences->getColorInputFields());
+    kcfg_ColorInputFields->setChecked(preferences->getColorInputFields());
     coloredNicksGBox->setChecked(preferences->getUseColoredNicks());
     ircColorsGBox->setChecked(!preferences->getFilterColors());
 
@@ -133,7 +133,7 @@ void PrefsPageColorsAppearance::applyPreferences()
     preferences->setIRCColorList(ircColorList);
 
     // Checkboxes
-    preferences->setColorInputFields(kcfg_UseCustomColors->isChecked());
+    preferences->setColorInputFields(kcfg_ColorInputFields->isChecked());
     preferences->setUseColoredNicks(coloredNicksGBox->isChecked());
     preferences->setFilterColors(!ircColorsGBox->isChecked());
 }
