@@ -50,7 +50,6 @@
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
 #include "konversation_settings.h"
-#include "prefsdialog.h"
 #include "highlight.h"
 #include "server.h"
 #include "konversationsound.h"
@@ -71,7 +70,6 @@ KonversationApplication::KonversationApplication()
 : KUniqueApplication(true, true, true)
 {
     mainWindow = 0;
-    prefsDialog = 0;
     quickConnectDialog = 0;
     colorOffSet = 0;
     m_demoteInProgress = false;
@@ -111,7 +109,6 @@ int KonversationApplication::newInstance()
     if(!mainWindow)
     {
         // make sure all vars are initialized properly
-        prefsDialog = 0;
         quickConnectDialog = 0;
         colorOffSet = 0;
 
@@ -450,9 +447,6 @@ void KonversationApplication::removeServer(Server* server)
 
 void KonversationApplication::quitKonversation()
 {
-    delete prefsDialog;
-    prefsDialog=0;
-
     qApp->quit();
 }
 
@@ -1610,7 +1604,6 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     {
         prefsDialog = new PrefsDialog(mainWindow, &preferences);
 
-        connect(prefsDialog,SIGNAL (cancelClicked()),this,SLOT (closePrefsDialog()) );
         connect(prefsDialog,SIGNAL (prefsChanged()),this,SLOT (saveOptions()) );
 
         prefsDialog->show();
@@ -1626,7 +1619,6 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
 void KonversationApplication::openPrefsDialog(Preferences::Pages page)
 {
     openPrefsDialog();
-    prefsDialog->openPage(page);
 }
 
 void KonversationApplication::openQuickConnectDialog()
@@ -1639,12 +1631,6 @@ void KonversationApplication::openQuickConnectDialog()
 void KonversationApplication::syncPrefs()
 {
     kapp->config()->sync();
-}
-
-void KonversationApplication::closePrefsDialog()
-{
-    delete prefsDialog;
-    prefsDialog=0;
 }
 
 bool KonversationApplication::emitDCOPSig(const QString &appId, const QString &objId, const QString &signal, QByteArray &data)

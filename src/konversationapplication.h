@@ -29,7 +29,6 @@ class QCString;
 class KonversationMainWindow;
 class KonvDCOP;
 class Server;
-class PrefsDialog;
 class QuickConnectDialog;
 class Images;
 
@@ -155,8 +154,6 @@ class KonversationApplication : public KUniqueApplication
         void saveOptions(bool updateGUI=true);
         void quitKonversation();
 
-        void closePrefsDialog();
-
         void deleteUrl(const QString& who,const QString& url);
         void clearUrlList();
         /** Send a message to all servers that you are away. */
@@ -185,7 +182,6 @@ class KonversationApplication : public KUniqueApplication
     private:
         QPtrList<Server> serverList;
         QStringList urlList;
-        PrefsDialog* prefsDialog;
         KonvDCOP* dcopObject;
         KonvIdentDCOP* identDCOP;
         KonversationMainWindow* mainWindow;
