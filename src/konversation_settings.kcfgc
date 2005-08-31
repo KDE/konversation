@@ -1,4 +1,4 @@
-ClassName=Settings
+ClassName=PreferencesBase
 File=konversation.kcfg
 GlobalEnums=true
 ItemAccessors=true
