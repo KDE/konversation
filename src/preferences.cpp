@@ -259,7 +259,7 @@ Preferences::~Preferences()
 {
     clearIdentityList();
 }
-
+#if 0
 const Konversation::ServerGroupList Preferences::serverGroupList()
 {
     return m_serverGroupList;
@@ -539,9 +539,6 @@ const bool Preferences::getAutoRejoin() { return autoRejoin; }
 
 void Preferences::setAutojoinOnInvite(bool state) { autojoinOnInvite=state; }
 const bool Preferences::getAutojoinOnInvite()           { return autojoinOnInvite; }
-
-void Preferences::setBeep(bool state) { beep=state; }
-const bool Preferences::getBeep() { return beep; }
 
 void Preferences::setRawLog(bool state) { rawLog=state; }
 const bool Preferences::getRawLog() { return rawLog; }
@@ -1081,5 +1078,6 @@ void Preferences::setWikiUrl(const QString& url) { wikiUrl=url; }
 
 bool Preferences::getExpandWikiUrl() const { return expandWikiUrl;}
 void Preferences::setExpandWikiUrl(bool expandUrl) { expandWikiUrl=expandUrl; }
+#endif
 
 #include "preferences.moc"

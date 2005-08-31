@@ -28,6 +28,7 @@
 
 #include "servergroupsettings.h"
 #include "identity.h"
+#include "preferences_base.h"
 
 /*
   @author Dario Abatianni
@@ -45,11 +46,15 @@ NoRightsColor (int)
 class Ignore;
 class Highlight;
 
-class Preferences : public QObject
+class Preferences : public QObject, public PreferencesBase 
 {
     Q_OBJECT
 
-        public:
+    protected:
+        Preferences();
+	    
+    public:
+        ~Preferences();
         enum TabPlacement
         {
             Top=0,
@@ -63,442 +68,437 @@ class Preferences : public QObject
             NotifyPage,
             ChatWinAppearancePage
         };
+/*
+        static const Konversation::ServerGroupList serverGroupList();
+        static void setServerGroupList(const Konversation::ServerGroupList& list);
+        static void addServerGroup(Konversation::ServerGroupSettingsPtr serverGroup);
+        static const Konversation::ServerGroupSettingsPtr serverGroupById(int id);
+        static const Konversation::ServerGroupSettingsPtr serverGroupByServer(const QString& server);
+        static int serverGroupIdByName(const QString& serverGroup);
+        static bool isServerGroup(const QString& server);
+        static void removeServerGroup(int id);
 
-        Preferences();
-        ~Preferences();
+        static const bool autoReconnect();
+        static void setAutoReconnect(bool state);
+        static const unsigned int reconnectCount();
+        static void setReconnectCount(unsigned int count);
+        static const bool autoRejoin();
+        static void setAutoRejoin(bool state);
+        static const bool autojoinOnInvite();
+        static void setAutojoinOnInvite(bool state);
 
-        const Konversation::ServerGroupList serverGroupList();
-        void setServerGroupList(const Konversation::ServerGroupList& list);
-        void addServerGroup(Konversation::ServerGroupSettingsPtr serverGroup);
-        const Konversation::ServerGroupSettingsPtr serverGroupById(int id);
-        const Konversation::ServerGroupSettingsPtr serverGroupByServer(const QString& server);
-        int serverGroupIdByName(const QString& serverGroup);
-        bool isServerGroup(const QString& server);
-        void removeServerGroup(int id);
+        static const bool rawLog();
+        static void setRawLog(bool state);
 
-        const bool getAutoReconnect();
-        void setAutoReconnect(bool state);
-        const unsigned int getReconnectCount();
-        void setReconnectCount(unsigned int count);
-        const bool getAutoRejoin();
-        void setAutoRejoin(bool state);
-        const bool getAutojoinOnInvite();
-        void setAutojoinOnInvite(bool state);
+        static const bool customVersionReplyEnabled();
+        static void setCustomVersionReplyEnabled(bool state);
+        static QString customVersionReply();
+        static void setCustomVersionReply(const QString &reply);
 
-        const bool getBeep();
-        void setBeep(bool state);
-        const bool getRawLog();
-        void setRawLog(bool state);
+        static void setLog(bool state);
+        static const bool log();
+        static void setLowerLog(bool state);
+        static const bool lowerLog();
+        static void setAddHostnameToLog(bool state);
+        static const bool addHostnameToLog();
+        static void setLogFollowsNick(bool state);
+        static const bool logFollowsNick();
+        static void setLogPath(const QString &path);
+        static const QString logPath();
+        static void setScrollbackMax(int max);
+        static const int scrollbackMax();
 
-        const bool getCustomVersionReplyEnabled();
-        void setCustomVersionReplyEnabled(bool state);
-        QString getCustomVersionReply();
-        void setCustomVersionReply(const QString &reply);
+        static void setAutoWhoNicksLimit(int limit);
+        static const int autoWhoNicksLimit();
+        static void setAutoWhoContinuousEnabled(bool state);
+        static const bool autoWhoContinuousEnabled();
+        static void setAutoWhoContinuousInterval(int interval);
+        static const int autoWhoContinuousInterval();
 
-        void setLog(bool state);
-        const bool getLog();
-        void setLowerLog(bool state);
-        const bool getLowerLog();
-        void setAddHostnameToLog(bool state);
-        const bool getAddHostnameToLog();
-        void setLogFollowsNick(bool state);
-        const bool getLogFollowsNick();
-        void setLogPath(const QString &path);
-        const QString getLogPath();
-        void setScrollbackMax(int max);
-        const int getScrollbackMax();
+        static void setShowRealNames(bool show);
+        static const bool showRealNames();
 
-        void setAutoWhoNicksLimit(int limit);
-        const int getAutoWhoNicksLimit();
-        void setAutoWhoContinuousEnabled(bool state);
-        const bool getAutoWhoContinuousEnabled();
-        void setAutoWhoContinuousInterval(int interval);
-        const int getAutoWhoContinuousInterval();
+        static void setDccAddPartner(bool state);
+        static const bool dccAddPartner();
+        static void setDccCreateFolder(bool state);
+        static const bool dccCreateFolder();
+        static void setDccAutoGet(bool state);
+        static const bool dccAutoGet();
+        static void setDccAutoResume(bool state);
+        static const bool dccAutoResume();
+        static void setDccBufferSize(unsigned long size);
+        static const unsigned long dccBufferSize();
+        static void setDccPath(const QString &path);
+        static const QString dccPath();
+        static void setDccMethodToGetOwnIp(int methodId);
+        static const int dccMethodToGetOwnIp();
+        static void setDccSpecificOwnIp(const QString& ip);
+        static const QString dccSpecificOwnIp();
+        static void setDccSpecificSendPorts(bool state);
+        static const bool dccSpecificSendPorts();
+        static void setDccSendPortsFirst(unsigned long port);
+        static const unsigned int dccSendPortsFirst();
+        static void setDccSendPortsLast(unsigned long port);
+        static const unsigned int dccSendPortsLast();
+        static void setDccSpecificChatPorts(bool state);
+        static const bool dccSpecificChatPorts();
+        static void setDccChatPortsFirst(unsigned long port);
+        static const unsigned int dccChatPortsFirst();
+        static void setDccChatPortsLast(unsigned long port);
+        static const unsigned int dccChatPortsLast();
+        static void setDccFastSend(bool state);
+        static const bool dccFastSend();
+        static void setDccSendTimeout(int sec);
+        static const int dccSendTimeout();
+        static bool iPv4Fallback();
+        static void setIPv4Fallback(bool fallback);
+        static const QString& iPv4FallbackIface();
+        static void setIPv4FallbackIface(const QString& interface);
 
-        void setShowRealNames(bool show);
-        const bool getShowRealNames();
-
-        void setDccAddPartner(bool state);
-        const bool getDccAddPartner();
-        void setDccCreateFolder(bool state);
-        const bool getDccCreateFolder();
-        void setDccAutoGet(bool state);
-        const bool getDccAutoGet();
-        void setDccAutoResume(bool state);
-        const bool getDccAutoResume();
-        void setDccBufferSize(unsigned long size);
-        const unsigned long getDccBufferSize();
-        void setDccPath(const QString &path);
-        const QString getDccPath();
-        void setDccMethodToGetOwnIp(int methodId);
-        const int getDccMethodToGetOwnIp();
-        void setDccSpecificOwnIp(const QString& ip);
-        const QString getDccSpecificOwnIp();
-        void setDccSpecificSendPorts(bool state);
-        const bool getDccSpecificSendPorts();
-        void setDccSendPortsFirst(unsigned long port);
-        const unsigned int getDccSendPortsFirst();
-        void setDccSendPortsLast(unsigned long port);
-        const unsigned int getDccSendPortsLast();
-        void setDccSpecificChatPorts(bool state);
-        const bool getDccSpecificChatPorts();
-        void setDccChatPortsFirst(unsigned long port);
-        const unsigned int getDccChatPortsFirst();
-        void setDccChatPortsLast(unsigned long port);
-        const unsigned int getDccChatPortsLast();
-        void setDccFastSend(bool state);
-        const bool getDccFastSend();
-        void setDccSendTimeout(int sec);
-        const int getDccSendTimeout();
-        bool getIPv4Fallback();
-        void setIPv4Fallback(bool fallback);
-        const QString& getIPv4FallbackIface();
-        void setIPv4FallbackIface(const QString& interface);
-
-        const TabPlacement getTabPlacement();
-        void setTabPlacement(TabPlacement where);
-        void setBlinkingTabs(bool blink);
-        const bool getBlinkingTabs();
-        void setBringToFront(bool state);
-        const bool getBringToFront();
-        void setCloseButtonsOnTabs(bool state);
-        const bool getCloseButtonsOnTabs();
-        void setCloseButtonsAlignRight(bool state);
-        const bool getCloseButtonsAlignRight();
+        static const TabPlacement tabPlacement();
+        static void setTabPlacement(TabPlacement where);
+        static void setBlinkingTabs(bool blink);
+        static const bool blinkingTabs();
+        static void setBringToFront(bool state);
+        static const bool bringToFront();
+        static void setCloseButtonsOnTabs(bool state);
+        static const bool closeButtonsOnTabs();
+        static void setCloseButtonsAlignRight(bool state);
+        static const bool closeButtonsAlignRight();
 
         // sorting stuff
-        const bool getSortByStatus();
-        void setSortByStatus(bool state);
-        const bool getSortCaseInsensitive();
-        void setSortCaseInsensitive(bool state);
+        static const bool sortByStatus();
+        static void setSortByStatus(bool state);
+        static const bool sortCaseInsensitive();
+        static void setSortCaseInsensitive(bool state);
         // more sorting stuff
-        const int getAdminValue();
-        void setAdminValue(int value);
-        const int getOwnerValue();
-        void setOwnerValue(int value);
-        const int getOpValue();
-        void setOpValue(int value);
-        const int getHalfopValue();
-        void setHalfopValue(int value);
-        const int getVoiceValue();
-        void setVoiceValue(int value);
-        const int getNoRightsValue();
-        void setNoRightsValue(int value);
+        static const int adminValue();
+        static void setAdminValue(int value);
+        static const int ownerValue();
+        static void setOwnerValue(int value);
+        static const int opValue();
+        static void setOpValue(int value);
+        static const int halfopValue();
+        static void setHalfopValue(int value);
+        static const int voiceValue();
+        static void setVoiceValue(int value);
+        static const int noRightsValue();
+        static void setNoRightsValue(int value);
 
         // Geometry functions
-        const QSize getNicksOnlineSize();
-        const QSize getNicknameSize();
-        const QSize getLogfileReaderSize();
-        const QSize getMultilineEditSize();
+        static const QSize nicksOnlineSize();
+        static const QSize nicknameSize();
+        static const QSize logfileReaderSize();
+        static const QSize multilineEditSize();
 
-        void setNicksOnlineSize(const QSize &newSize);
-        void setNicknameSize(const QSize &newSize);
-        void setLogfileReaderSize(const QSize &newSize);
-        void setMultilineEditSize(const QSize &newSize);
+        static void setNicksOnlineSize(const QSize &newSize);
+        static void setNicknameSize(const QSize &newSize);
+        static void setLogfileReaderSize(const QSize &newSize);
+        static void setMultilineEditSize(const QSize &newSize);
 
-        const int getLogfileBufferSize();
-        void setLogfileBufferSize(int newSize);
+        static const int logfileBufferSize();
+        static void setLogfileBufferSize(int newSize);
 
-        const int getNotifyDelay();
-        void setNotifyDelay(int delay);
-        const bool getUseNotify();
-        void setUseNotify(bool use);
-        const QMap<QString, QStringList> getNotifyList();
-        const QStringList getNotifyListByGroup(const QString& groupName);
-        const QString getNotifyStringByGroup(const QString& groupName);
-        void setNotifyList(const QMap<QString, QStringList>& newList);
-        const bool addNotify(const QString& groupName, const QString& newPattern);
-        const bool removeNotify(const QString& groupName, const QString& pattern);
+        static const int notifyDelay();
+        static void setNotifyDelay(int delay);
+        static const bool useNotify();
+        static void setUseNotify(bool use);
+        static const QMap<QString, QStringList> notifyList();
+        static const QStringList notifyListByGroup(const QString& groupName);
+        static const QString notifyStringByGroup(const QString& groupName);
+        static void setNotifyList(const QMap<QString, QStringList>& newList);
+        static const bool addNotify(const QString& groupName, const QString& newPattern);
+        static const bool removeNotify(const QString& groupName, const QString& pattern);
 
-        const QPtrList<Highlight> getHighlightList();
-        void setHighlightList(QPtrList<Highlight> newList);
-        void addHighlight(const QString& newHighlight,bool regExp, const QColor &color,const QString& sound,const QString& autoText);
-        void setHighlightSoundEnabled(bool enabled);
-        const bool getHighlightSoundEnabled();
+        static const QPtrList<Highlight> highlightList();
+        static void setHighlightList(QPtrList<Highlight> newList);
+        static void addHighlight(const QString& newHighlight,bool regExp, const QColor &color,const QString& sound,const QString& autoText);
+        static void setHighlightSoundEnabled(bool enabled);
+        static const bool highlightSoundEnabled();
 
-        void setHighlightNick(bool state);        // shall we highlight the current nick?
-        const bool getHighlightNick();
+        static void setHighlightNick(bool state);        // shall we highlight the current nick?
+        static const bool highlightNick();
 
-        void setUseClickableNicks(bool state);
-        const bool getUseClickableNicks();
+        static void setUseClickableNicks(bool state);
+        static const bool useClickableNicks();
 
-        void setHighlightNickColor(const QString &color);
-        const QColor getHighlightNickColor();
+        static void setHighlightNickColor(const QString &color);
+        static const QColor highlightNickColor();
 
-        void setHighlightOwnLines(bool state);    // shall we highlight all our own lines?
-        const bool getHighlightOwnLines();
+        static void setHighlightOwnLines(bool state);    // shall we highlight all our own lines?
+        static const bool highlightOwnLines();
 
-        void setHighlightOwnLinesColor(const QString &color);
-        const QColor getHighlightOwnLinesColor();
+        static void setHighlightOwnLinesColor(const QString &color);
+        static const QColor highlightOwnLinesColor();
 
         // On Screen Display
-        void setOSDUsage(bool state);
-        const bool getOSDUsage();
+        static void setOSDUsage(bool state);
+        static const bool oSDUsage();
 
-        void setOSDShowOwnNick(bool state);
-        const bool getOSDShowOwnNick();
+        static void setOSDShowOwnNick(bool state);
+        static const bool oSDShowOwnNick();
 
-        void setOSDShowChannel(bool state);
-        const bool getOSDShowChannel();
+        static void setOSDShowChannel(bool state);
+        static const bool oSDShowChannel();
 
-        void setOSDShowQuery(bool state);
-        const bool getOSDShowQuery();
+        static void setOSDShowQuery(bool state);
+        static const bool oSDShowQuery();
 
-        void setOSDShowChannelEvent(bool state);
-        const bool getOSDShowChannelEvent();
+        static void setOSDShowChannelEvent(bool state);
+        static const bool oSDShowChannelEvent();
 
-        const QFont getOSDFont();
-        void setOSDFont(const QFont &newFont);
-        void setOSDFontRaw(const QString &rawFont);
+        static const QFont oSDFont();
+        static void setOSDFont(const QFont &newFont);
+        static void setOSDFontRaw(const QString &rawFont);
 
-        void setOSDUseCustomColors(bool state);
-        const bool getOSDUseCustomColors();
+        static void setOSDUseCustomColors(bool state);
+        static const bool oSDUseCustomColors();
 
-        void setOSDTextColor(const QString &color);
-        const QColor getOSDTextColor();
+        static void setOSDTextColor(const QString &color);
+        static const QColor oSDTextColor();
 
-        void setOSDBackgroundColor(const QString& color);
-        const QColor getOSDBackgroundColor();
+        static void setOSDBackgroundColor(const QString& color);
+        static const QColor oSDBackgroundColor();
 
-        void setOSDDuration(int ms);
-        const int getOSDDuration();
+        static void setOSDDuration(int ms);
+        static const int oSDDuration();
 
-        void setOSDScreen(uint screen);
-        const uint getOSDScreen();
+        static void setOSDScreen(uint screen);
+        static const uint oSDScreen();
 
-        void setOSDDrawShadow(bool state);
-        const bool getOSDDrawShadow();
+        static void setOSDDrawShadow(bool state);
+        static const bool oSDDrawShadow();
 
-        void setOSDOffsetX(int offset);
-        const int getOSDOffsetX();
+        static void setOSDOffsetX(int offset);
+        static const int oSDOffsetX();
 
-        void setOSDOffsetY(int offset);
-        const int getOSDOffsetY();
+        static void setOSDOffsetY(int offset);
+        static const int oSDOffsetY();
 
-        void setOSDAlignment(int alignment);
-        const int getOSDAlignment();
+        static void setOSDAlignment(int alignment);
+        static const int oSDAlignment();
 
-        const QStringList getButtonList();
-        void setButtonList(QStringList newList);
+        static const QStringList buttonList();
+        static void setButtonList(QStringList newList);
 
-        void addIgnore(const QString &newIgnore);
-        void clearIgnoreList();
-        const QPtrList<Ignore> getIgnoreList();
-        void setIgnoreList(QPtrList<Ignore> newList);
+        static void addIgnore(const QString &newIgnore);
+        static void clearIgnoreList();
+        static const QPtrList<Ignore> ignoreList();
+        static void setIgnoreList(QPtrList<Ignore> newList);
 
-        void addIdentity(IdentityPtr identity);
-        void removeIdentity(IdentityPtr identity);
-        void clearIdentityList();
-        const QValueList<IdentityPtr> getIdentityList();
-        void setIdentityList(const QValueList<IdentityPtr>& list);
-        const IdentityPtr getIdentityByName(const QString& name);
-        const IdentityPtr getIdentityById(int id);
-        IdentityPtr identity;
+        static void addIdentity(IdentityPtr identity);
+        static void removeIdentity(IdentityPtr identity);
+        static void clearIdentityList();
+        static const QValueList<IdentityPtr> identityList();
+        static void setIdentityList(const QValueList<IdentityPtr>& list);
+        static const IdentityPtr identityByName(const QString& name);
+        static const IdentityPtr identityById(int id);
+//        static IdentityPtr identity;
 
-        const QString getIdent();
-        void setIdent(const QString &ident);
+        static const QString ident();
+        static void setIdent(const QString &ident);
 
-        const QString getRealName();
-        void setRealName(const QString &name);
+        static const QString realName();
+        static void setRealName(const QString &name);
 
-        const QString getPartReason();
-        void setPartReason(const QString &newReason);
+        static const QString partReason();
+        static void setPartReason(const QString &newReason);
 
-        const QString getKickReason();
-        void setKickReason(const QString &newReason);
+        static const QString kickReason();
+        static void setKickReason(const QString &newReason);
 
-        void setShowAwayMessage(bool state);
-        const bool getShowAwayMessage();
-        const QString getAwayMessage();
-        void setAwayMessage(const QString &newMessage);
-        const QString getUnAwayMessage();
-        void setUnAwayMessage(const QString &newMessage);
-
-        const QString getNickname(int index);
-        const QStringList getNicknameList();
-        void setNickname(int index,const QString &newName);
-        void setNicknameList(const QStringList &newList);
-
-        const QString getColor(const QString& name);
-        void setColor(const QString& name,const QString& color);
+        static void setShowAwayMessage(bool state);
+        static const bool showAwayMessage();
+        static const QString awayMessage();
+        static void setAwayMessage(const QString &newMessage);
+        static const QString unAwayMessage();
+        static void setUnAwayMessage(const QString &newMessage);
+*/
+        static const QString nickname(int index);
+        static const QStringList nicknameList();
+        static void setNickname(int index,const QString &newName);
+        static void setNicknameList(const QStringList &newList);
+/*
+        static const QString color(const QString& name);
+        static void setColor(const QString& name,const QString& color);
 
         // Colored nicknames
-        const bool getUseColoredNicks();
-        void setUseColoredNicks(bool usecolor);
+        static const bool useColoredNicks();
+        static void setUseColoredNicks(bool usecolor);
 
-        const QStringList getNickColorList();
-        void setNickColorList(const QStringList &cl);
+        static const QStringList nickColorList();
+        static void setNickColorList(const QStringList &cl);
 
-        const bool getUseBoldNicks();
-        void setUseBoldNicks(bool boldNicks);
+        static const bool useBoldNicks();
+        static void setUseBoldNicks(bool boldNicks);
 
-        const bool getUseLiteralModes();
-        void setUseLiteralModes(bool literalModes);
+        static const bool useLiteralModes();
+        static void setUseLiteralModes(bool literalModes);
 
-        const bool getFilterColors();
-        void setFilterColors(bool filter);
+        static const bool filterColors();
+        static void setFilterColors(bool filter);
 
-        const bool getColorInputFields();
-        void setColorInputFields(bool state);
+        static const bool colorInputFields();
+        static void setColorInputFields(bool state);
 
-        const QString& getBackgroundImageName();
-        void setBackgroundImageName(const QString& name);
+        static const QString& backgroundImageName();
+        static void setBackgroundImageName(const QString& name);
 
-        void setNickCompleteSuffixStart(const QString &suffix);
-        void setNickCompleteSuffixMiddle(const QString &suffix);
-        const QString getNickCompleteSuffixStart();
-        const QString getNickCompleteSuffixMiddle();
+        static void setNickCompleteSuffixStart(const QString &suffix);
+        static void setNickCompleteSuffixMiddle(const QString &suffix);
+        static const QString nickCompleteSuffixStart();
+        static const QString nickCompleteSuffixMiddle();
 
-        const bool getFixedMOTD();
-        void setFixedMOTD(bool fixed);
+        static const bool fixedMOTD();
+        static void setFixedMOTD(bool fixed);
 
-        void setCommandChar(const QString &newCommandChar);
-        const QString getCommandChar();
+        static void setCommandChar(const QString &newCommandChar);
+        static const QString commandChar();
 
-        const QFont getTextFont();
-        const QFont getListFont();
-        void setTextFont(const QFont &newFont);
-        void setListFont(const QFont &newFont);
-        void setTextFontRaw(const QString &rawFont);
-        void setListFontRaw(const QString &newFont);
+        static const QFont textFont();
+        static const QFont listFont();
+        static void setTextFont(const QFont &newFont);
+        static void setListFont(const QFont &newFont);
+        static void setTextFontRaw(const QString &rawFont);
+        static void setListFontRaw(const QString &newFont);
 
-        void setTimestamping(bool state);
-        const bool getTimestamping();
-        void setShowDate(bool state);
-        const bool getShowDate();
-        void setTimestampFormat(const QString& newFormat);
-        const QString getTimestampFormat();
+        static void setTimestamping(bool state);
+        static const bool timestamping();
+        static void setShowDate(bool state);
+        static const bool showDate();
+        static void setTimestampFormat(const QString& newFormat);
+        static const QString timestampFormat();
 
-        void setShowQuickButtons(bool state);
-        const bool getShowQuickButtons();
+        static void setShowQuickButtons(bool state);
+        static const bool showQuickButtons();
 
-        void setShowModeButtons(bool state);
-        const bool getShowModeButtons();
+        static void setShowModeButtons(bool state);
+        static const bool showModeButtons();
 
-        void setShowServerList(bool state);
-        const bool getShowServerList();
+        static void setShowServerList(bool state);
+        static const bool showServerList();
 
-        void setShowTrayIcon(bool state);
-        const bool getShowTrayIcon();
+        static void setShowTrayIcon(bool state);
+        static const bool showTrayIcon();
 
-        void setSystrayOnly(bool state);
-        const bool getSystrayOnly();
+        static void setSystrayOnly(bool state);
+        static const bool systrayOnly();
 
-        void setShowBackgroundImage(bool state);
-        const bool getShowBackgroundImage();
+        static void setShowBackgroundImage(bool state);
+        static const bool showBackgroundImage();
 
-        void setTrayNotify(bool state);
-        const bool getTrayNotify() const;
-        void setTrayNotifyOnlyOwnNick(bool onlyOwnNick);
-        bool trayNotifyOnlyOwnNick() const;
+        static void setTrayNotify(bool state);
+        static const bool trayNotify();
+        static void setTrayNotifyOnlyOwnNick(bool onlyOwnNick);
+        static bool trayNotifyOnlyOwnNick();
 
-        void setChannelSplitterSizes(QValueList<int> sizes);
-        const QValueList<int> channelSplitterSizes();
+        static void setChannelSplitterSizes(QValueList<int> sizes);
+        static const QValueList<int> channelSplitterSizes();
 
-        void setTopicSplitterSizes(QValueList<int> sizes);
-        const QValueList<int> topicSplitterSizes();
+        static void setTopicSplitterSizes(QValueList<int> sizes);
+        static const QValueList<int> topicSplitterSizes();
 
-        void setChannelDoubleClickAction(const QString &action);
-        const QString getChannelDoubleClickAction();
+        static void setChannelDoubleClickAction(const QString &action);
+        static const QString channelDoubleClickAction();
 
-        void setNotifyDoubleClickAction(const QString &action);
-        const QString getNotifyDoubleClickAction();
+        static void setNotifyDoubleClickAction(const QString &action);
+        static const QString notifyDoubleClickAction();
 
-        void setUseSpacing(bool state);
-        const bool getUseSpacing();
-        void setSpacing(int newSpacing);
-        const int getSpacing();
-        void setMargin(int newMargin);
-        const int getMargin();
+        static void setUseSpacing(bool state);
+        static const bool useSpacing();
+        static void setSpacing(int newSpacing);
+        static const int spacing();
+        static void setMargin(int newMargin);
+        static const int margin();
 
-        void setUseParagraphSpacing(bool state);
-        const bool getUseParagraphSpacing();
-        void setParagraphSpacing(int newSpacing);
-        const int getParagraphSpacing();
+        static void setUseParagraphSpacing(bool state);
+        static const bool useParagraphSpacing();
+        static void setParagraphSpacing(int newSpacing);
+        static const int paragraphSpacing();
 
-        void setAutoUserhost(bool state);
-        const bool getAutoUserhost();
+        static void setAutoUserhost(bool state);
+        static const bool autoUserhost();
 
-        const bool getDialogFlag(const QString& flagName);
-        void setDialogFlag(const QString& flagName,bool state);
+        static const bool dialogFlag(const QString& flagName);
+        static void setDialogFlag(const QString& flagName,bool state);
 
-        const int getMaximumLagTime();
-        void setMaximumLagTime(int maxLag);
+        static const int maximumLagTime();
+        static void setMaximumLagTime(int maxLag);
 
         // IRC colors
-        const QStringList getIRCColorList();
-        void setIRCColorList(const QStringList &cl);
+        static const QStringList IRCColorList();
+        static void setIRCColorList(const QStringList &cl);
 
         // aliases
-        const QStringList getAliasList();
-        void setAliasList(const QStringList &aliasList);
+        static const QStringList aliasList();
+        static void setAliasList(const QStringList &aliasList);
 
         // Nick completion
-        const int getNickCompletionMode();
-        void setNickCompletionMode(int mode);
-        const QString getPrefixCharacter();
-        void  setPrefixCharacter(const QString &prefix);
-        const bool nickCompletionCaseSensitive() const;
-        void setNickCompletionCaseSensitive(bool caseSensitive);
+        static const int nickCompletionMode();
+        static void setNickCompletionMode(int mode);
+        static const QString prefixCharacter();
+        static void  setPrefixCharacter(const QString &prefix);
+        static const bool nickCompletionCaseSensitive();
+        static void setNickCompletionCaseSensitive(bool caseSensitive);
 
         //User interface
-        const bool getShowMenuBar();
-        void setShowMenuBar(bool s);
-        const bool getShowTabBarCloseButton();
-        void setShowTabBarCloseButton(bool s);
+        static const bool showMenuBar();
+        static void setShowMenuBar(bool s);
+        static const bool showTabBarCloseButton();
+        static void setShowTabBarCloseButton(bool s);
 
-        const bool getShowTopic();
-        void setShowTopic(bool s);
+        static const bool showTopic();
+        static void setShowTopic(bool s);
 
-        const bool getShowRememberLineInAllWindows();
-        void setShowRememberLineInAllWindows(bool s);
+        static const bool showRememberLineInAllWindows();
+        static void setShowRememberLineInAllWindows(bool s);
 
-        const bool getFocusNewQueries();
-        void setFocusNewQueries(bool s);
+        static const bool focusNewQueries();
+        static void setFocusNewQueries(bool s);
 
-        const bool getHideUnimportantEvents();
-        void setHideUnimportantEvents(bool state);
+        static const bool hideUnimportantEvents();
+        static void setHideUnimportantEvents(bool state);
 
-        const bool getDisableExpansion();
-        void setDisableExpansion(bool state);
+        static const bool disableExpansion();
+        static void setDisableExpansion(bool state);
 
         // Web Browser
-        const bool getWebBrowserUseKdeDefault();
-        void setWebBrowserUseKdeDefault(bool state);
-        const QString getWebBrowserCmd();
-        void setWebBrowserCmd(const QString &cmd);
+        static const bool webBrowserUseKdeDefault();
+        static void setWebBrowserUseKdeDefault(bool state);
+        static const QString webBrowserCmd();
+        static void setWebBrowserCmd(const QString &cmd);
 
-        const bool getRedirectToStatusPane();
-        void setRedirectToStatusPane(bool redirect);
+        static const bool redirectToStatusPane();
+        static void setRedirectToStatusPane(bool redirect);
 
-        const bool getOpenWatchedNicksAtStartup();
-        void setOpenWatchedNicksAtStartup(bool open);
+        static const bool openWatchedNicksAtStartup();
+        static void setOpenWatchedNicksAtStartup(bool open);
 
-        const QString getChannelEncoding(const QString& server,const QString& channel);
-        void setChannelEncoding(const QString& server,const QString& channel,const QString& encoding);
-        const QStringList getChannelEncodingsServerList();
-        const QStringList getChannelEncodingsChannelList(const QString& server);
+        static const QString channelEncoding(const QString& server,const QString& channel);
+        static void setChannelEncoding(const QString& server,const QString& channel,const QString& encoding);
+        static const QStringList channelEncodingsServerList();
+        static const QStringList channelEncodingsChannelList(const QString& server);
 
         // Themes
-        void setIconTheme(const QString& name);
-        const QString getIconTheme();
+        static void setIconTheme(const QString& name);
+        static const QString iconTheme();
 
-        void setEmotIconsEnabled(bool enabled) { m_emotIconsEnabled = enabled; }
-        bool emotIconsEnabled() const { return m_emotIconsEnabled; }
-        void setEmotIconsTheme(const QString& theme) { m_emotIconsTheme = theme; }
-        QString emotIconsTheme() const { return m_emotIconsTheme; }
+        static void setEmotIconsEnabled(bool enabled) { mEmotIconsEnabled = enabled; }
+        static bool emotIconsEnabled() { return mEmotIconsEnabled; }
+        static void setEmotIconsTheme(const QString& theme) { mEmotIconsTheme = theme; }
+        static QString emotIconsTheme() { return mEmotIconsTheme; }
 
-        bool showNicknameBox() const;
-        void setShowNicknameBox(bool show);
+        static bool showNicknameBox();
+        static void setShowNicknameBox(bool show);
 
-        bool disableNotifyWhileAway() const { return m_disableNotifyWhileAway; }
-        void setDisableNotifyWhileAway(bool disable) { m_disableNotifyWhileAway = disable; }
+        static bool disableNotifyWhileAway() { return mDisableNotifyWhileAway; }
+        static void setDisableNotifyWhileAway(bool disable) { mDisableNotifyWhileAway = disable; }
 
-        QString getWikiUrl() const;
-        void setWikiUrl(const QString& url);
+        static QString wikiUrl();
+        static void setWikiUrl(const QString& url);
 
-        bool getExpandWikiUrl() const;
-        void setExpandWikiUrl(bool expandUrl);
+        static bool expandWikiUrl();
+        static void setExpandWikiUrl(bool expandUrl);
 
         signals:
         void requestServerConnection(int number);
@@ -508,205 +508,204 @@ class Preferences : public QObject
         void updateTrayIcon();
 
     protected:
-        const QString getDefaultColor(const QString& name);
+        const QString defaultColor(const QString& name);
 
-        bool log;
-        bool lowerLog;
-        bool addHostnameToLog;
-        bool logFollowsNick;
-        QString logPath;
-        int scrollbackMax;
+        bool mLog;
+        bool mLowerLog;
+        bool mAddHostnameToLog;
+        bool mLogFollowsNick;
+        QString mLogPath;
+        int mScrollbackMax;
 
-        int autoWhoNicksLimit;
-        bool autoWhoContinuousEnabled;
-        int autoWhoContinuousInterval;
+        int mAutoWhoNicksLimit;
+        bool mAutoWhoContinuousEnabled;
+        int mAutoWhoContinuousInterval;
 
-        bool showRealNames;
+        bool mShowRealNames;
 
-        TabPlacement tabPlacement;                // where do the tabs go?
-        bool blinkingTabs;                        // Do we want the LEDs on the tabs to blink?
-        bool closeButtonsOnTabs;                  // Do we want close widgets on the tabs?
-        bool closeButtonsAlignRight;              // Display close widgets on the right side?
-        bool bringToFront;                        // Do we want to see newly created tabs immediately?
+        TabPlacement mTabPlacement;                // where do the tabs go?
+        bool mBlinkingTabs;                        // Do we want the LEDs on the tabs to blink?
+        bool mCloseButtonsOnTabs;                  // Do we want close widgets on the tabs?
+        bool mCloseButtonsAlignRight;              // Display close widgets on the right side?
+        bool mBringToFront;                        // Do we want to see newly created tabs immediately?
 
-        bool fixedMOTD;
-        bool beep;
-        bool rawLog;
+        bool mFixedMOTD;
+        bool mRawLog;
 
-        bool customVersionReplyEnabled;
-        QString customVersionReply;
+        bool mCustomVersionReplyEnabled;
+        QString mCustomVersionReply;
 
-        bool dccAddPartner;
-        bool dccCreateFolder;                     // create folders for each DCC partner?
-        int dccMethodToGetOwnIp;
-        QString dccSpecificOwnIp;
-        bool dccSpecificSendPorts;
-        unsigned long dccSendPortsFirst;
-        unsigned long dccSendPortsLast;
-        bool dccSpecificChatPorts;
-        unsigned long dccChatPortsFirst;
-        unsigned long dccChatPortsLast;
-        bool dccAutoGet;
-        bool dccAutoResume;
-        unsigned long dccBufferSize;
-        QString dccPath;
-        bool dccFastSend;
-        int dccSendTimeout;
+        bool mDccAddPartner;
+        bool mDccCreateFolder;                     // create folders for each DCC partner?
+        int mDccMethodToGetOwnIp;
+        QString mDccSpecificOwnIp;
+        bool mDccSpecificSendPorts;
+        unsigned long mDccSendPortsFirst;
+        unsigned long mDccSendPortsLast;
+        bool mDccSpecificChatPorts;
+        unsigned long mDccChatPortsFirst;
+        unsigned long mDccChatPortsLast;
+        bool mDccAutoGet;
+        bool mDccAutoResume;
+        unsigned long mDccBufferSize;
+        QString mDccPath;
+        bool mDccFastSend;
+        int mDccSendTimeout;
         bool ipv4Fallback;
         QString ipv4Interface;
 
-        bool autoReconnect;
-        unsigned int reconnectCounter;
-        bool autoRejoin;
-        bool autojoinOnInvite;
+        bool mAutoReconnect;
+        unsigned int mReconnectCounter;
+        bool mAutoRejoin;
+        bool mAutojoinOnInvite;
 
-        int maximumLag;                           // ask for reconnect
+        int mMaximumLag;                           // ask for reconnect
 
-        int notifyDelay;
-        bool useNotify;
+        int mNotifyDelay;
+        bool mUseNotify;
 
-        bool timestamping;
-        bool showDate;
-        QString timestampFormat;
+        bool mTimestamping;
+        bool mShowDate;
+        QString mTimestampFormat;
 
-        bool showQuickButtons;
-        bool showModeButtons;
-        bool showServerList;
-        bool showTrayIcon;
-        bool systrayOnly;
-        bool showBackgroundImage;
-        bool trayNotify;
-        bool m_trayNotifyOnlyOwnNick;
+        bool mShowQuickButtons;
+        bool mShowModeButtons;
+        bool mShowServerList;
+        bool mShowTrayIcon;
+        bool mSystrayOnly;
+        bool mShowBackgroundImage;
+        bool mTrayNotify;
+        bool mTrayNotifyOnlyOwnNick;
 
-        QValueList<int> channelSplitter;
-        QValueList<int> m_topicSplitterSizes;
+        QValueList<int> mChannelSplitter;
+        QValueList<int> mTopicSplitterSizes;
 
-        QMap<QString, QStringList> notifyList;
-        QString commandChar;
-        QString preShellCommandStr;
+        QMap<QString, QStringList> mNotifyList;
+        QString mCommandChar;
+        QString mPreShellCommandStr;
 
-        QString nickCompleteSuffixStart;
-        QString nickCompleteSuffixMiddle;
+        QString mNickCompleteSuffixStart;
+        QString mNickCompleteSuffixMiddle;
 
-        QString channelDoubleClickAction;
-        QString notifyDoubleClickAction;
+        QString mChannelDoubleClickAction;
+        QString mNotifyDoubleClickAction;
 
         // Geometries
-        QSize mainWindowSize;
-        QSize nicksOnlineSize;
-        QSize nicknameSize;
-        QSize logfileReaderSize;
-        QSize colorConfigurationSize;
-        QSize multilineEditSize;
+        QSize mMainWindowSize;
+        QSize mNicksOnlineSize;
+        QSize mNicknameSize;
+        QSize mLogfileReaderSize;
+        QSize mColorConfigurationSize;
+        QSize mMultilineEditSize;
 
-        int logfileBufferSize;
+        int mLogfileBufferSize;
 
-        bool useSpacing;
-        int spacing;
-        int margin;
+        bool mUseSpacing;
+        int mSpacing;
+        int mMargin;
 
         // sorting stuff
-        bool sortByStatus;
-        bool sortCaseInsensitive;
+        bool mSortByStatus;
+        bool mSortCaseInsensitive;
 
         // more sorting stuff
-        int adminValue;
-        int ownerValue;
-        int opValue;
-        int halfopValue;
-        int voiceValue;
-        int awayValue;
-        int noRightsValue;
+        int mAdminValue;
+        int mOwnerValue;
+        int mOpValue;
+        int mHalfopValue;
+        int mVoiceValue;
+        int mAwayValue;
+        int mNoRightsValue;
 
         // flag for hostmasks next to nicknames
-        bool autoUserhost;
+        bool mAutoUserhost;
 
-        bool useParagraphSpacing;
-        int paragraphSpacing;
+        bool mUseParagraphSpacing;
+        int mParagraphSpacing;
 
-        QFont textFont;
-        QFont listFont;
+        QFont mTextFont;
+        QFont mListFont;
 
-        bool highlightNick;
-        bool highlightOwnLines;
-        QColor highlightNickColor;
-        QColor highlightOwnLinesColor;
-        bool highlightSoundEnabled;
+        bool mHighlightNick;
+        bool mHighlightOwnLines;
+        QColor mHighlightNickColor;
+        QColor mHighlightOwnLinesColor;
+        bool mHighlightSoundEnabled;
 
-        bool clickableNicks;
+        bool mClickableNicks;
 
         // On Screen Display
-        bool OSDUsage;                            // Use OSD?
-        bool OSDShowOwnNick;                      // Message, if own nick appears
-        bool OSDShowChannel;                      // Message on any channel acticity
-        bool OSDShowQuery;                        // Message on query acticity
-        bool OSDShowChannelEvent;                 // Message on channel join/part events
-        QFont osdFont;                            // Which font to use
-        bool useOSDCustomColors;
-        bool OSDDrawShadow;
-        int OSDDuration;
-        uint OSDScreen;
-        QColor osdTextColor;
-        QColor osdBackgroundColor;
-        int OSDOffsetX;
-        int OSDOffsetY;
-        int OSDAlignment;                         // 0: Left, 1: Middle, 2: Center, 3: Right
+        bool mOSDUsage;                            // Use OSD?
+        bool mOSDShowOwnNick;                      // Message, if own nick appears
+        bool mOSDShowChannel;                      // Message on any channel acticity
+        bool mOSDShowQuery;                        // Message on query acticity
+        bool mOSDShowChannelEvent;                 // Message on channel join/part events
+        QFont mOsdFont;                            // Which font to use
+        bool mUseOSDCustomColors;
+        bool mOSDDrawShadow;
+        int mOSDDuration;
+        uint mOSDScreen;
+        QColor mOsdTextColor;
+        QColor mOsdBackgroundColor;
+        int mOSDOffsetX;
+        int mOSDOffsetY;
+        int mOSDAlignment;                         // 0: Left, 1: Middle, 2: Center, 3: Right
 
-        bool colorInputFields;
+        bool mColorInputFields;
 
-        QString backgroundImage;
+        QString mBackgroundImage;
 
-        QStringList buttonList;
+        QStringList mButtonList;
 
-        Konversation::ServerGroupList m_serverGroupList;
-        QPtrList<Ignore> ignoreList;
-        QValueList<IdentityPtr> identityList;
-        QPtrList<Highlight> highlightList;
-        QMap< QString,QMap<QString,QString> > channelEncodingsMap;
+        Konversation::ServerGroupList mServerGroupList;
+        QPtrList<Ignore> mIgnoreList;
+        QValueList<IdentityPtr> mIdentityList;
+        QPtrList<Highlight> mHighlightList;
+        QMap< QString,QMap<QString,QString> > mChannelEncodingsMap;
 
-        bool m_disableNotifyWhileAway;
+        bool mDisableNotifyWhileAway;
 
         // IRC colors
-        QStringList ircColorList;
-        QStringList nickColorList;
-        bool filterColors;
-        bool useColoredNicks;
-        bool useBoldNicks;
-        bool useLiteralModes;
+        QStringList mIrcColorList;
+        QStringList mNickColorList;
+        bool mFilterColors;
+        bool mUseColoredNicks;
+        bool mUseBoldNicks;
+        bool mUseLiteralModes;
 
         // aliases
-        QStringList aliasList;
+        QStringList mAliasList;
 
         //Nick completion
-        int nickCompletionMode;
-        QString prefixCharacter;
-        bool m_nickCompletionCaseSensitive;
+        int mNickCompletionMode;
+        QString mPrefixCharacter;
+        bool mNickCompletionCaseSensitive;
 
         //User interface
-        bool showMenuBar;
-        bool showTabBarCloseButton;
-        bool m_showNicknameBox;
+        bool mShowMenuBar;
+        bool mShowTabBarCloseButton;
+        bool mShowNicknameBox;
 
-        bool showTopic;
-        bool showRememberLineInAllWindows;
-        bool focusNewQueries;
-        bool hideUnimportantEvents;
-        bool disableExpansion;
+        bool mShowTopic;
+        bool mShowRememberLineInAllWindows;
+        bool mFocusNewQueries;
+        bool mHideUnimportantEvents;
+        bool mDisableExpansion;
 
         // Web Browser
-        bool webBrowserUseKdeDefault;
-        QString webBrowserCmd;
+        bool mWebBrowserUseKdeDefault;
+        QString mWebBrowserCmd;
 
-        bool redirectToStatusPane;
+        bool mRedirectToStatusPane;
 
-        bool m_openWatchedNicksAtStartup;
+        bool mOpenWatchedNicksAtStartup;
 
         // Themes
-        QString iconTheme;
-        bool m_emotIconsEnabled;
-        QString m_emotIconsTheme;
+        QString mIconTheme;
+        bool mEmotIconsEnabled;
+        QString mEmotIconsTheme;
 
-        QString wikiUrl;
-        bool expandWikiUrl;
+        QString mWikiUrl;
+        bool mExpandWikiUrl;*/
 };
 #endif

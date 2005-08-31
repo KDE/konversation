@@ -4,6 +4,5 @@ GlobalEnums=true
 ItemAccessors=true
 MemberVariables=private
 Mutators=true
-NameSpace=Konversation
 SetUserTexts=true
 Singleton=true

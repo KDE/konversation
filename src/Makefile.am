@@ -29,7 +29,7 @@ konversation_SOURCES = konviface.skel\
 	 sslsocket.cpp servergroupsettings.cpp serversettings.cpp servergroupdialog.cpp \
 	 ssllabel.cpp serverdialog.cpp channeldialog.cpp identitydialog.cpp topiclabel.cpp \
 	 channeloptionsui.ui channeloptionsdialog.cpp notificationhandler.cpp \
-	 joinchannelui.ui joinchanneldialog.cpp konversation_settings.kcfgc emoticon.cpp \
+	 joinchannelui.ui joinchanneldialog.cpp preferences_base.kcfgc emoticon.cpp \
          chatwindowbehaviour_preferences.ui alias_preferences.ui osd_preferences.ui theme_preferences.ui \
 	 highlight_preferences.ui warnings_preferences.ui quickbuttons_preferences.ui \
 	 watchednicknames_preferences.ui generalbehavior_preferences.ui connectionbehavior_preferences.ui \

@@ -56,8 +56,6 @@ class KonversationApplication : public KUniqueApplication
     Q_OBJECT
 
         public:
-        static Preferences preferences;
-
         /** This function in general shouldn't be called, because in the future there
          *  may be multiple windows.
          *  However, in some situations we have messageboxes that aren't targeted for
@@ -131,7 +129,7 @@ class KonversationApplication : public KUniqueApplication
         void delayedConnectToServer(const QString& hostName,
             const QString& port = "6667",
             const QString& channel="",
-            const QString& nick = KonversationApplication::preferences.getNickname(0),
+            const QString& nick = Preferences::nickname(0),
             const QString& password="",
             const bool& useSSL=FALSE
             );
@@ -146,7 +144,7 @@ class KonversationApplication : public KUniqueApplication
         void quickConnectToServer(const QString& hostName,
             const QString& port = "6667",
             const QString& channel="",
-            const QString& nick = KonversationApplication::preferences.getNickname(0),
+            const QString& nick = Preferences::nickname(0),
             const QString& password="",
             const bool& useSSL=FALSE
             );

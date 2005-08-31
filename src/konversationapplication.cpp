@@ -25,31 +25,30 @@
 #include <kmessagebox.h>
 #include <kconfigdialog.h>
 
-#include "chatwindowappearance_preferences.h"
-#include "alias_preferences.h"
-#include "connectionbehavior_preferences.h"
-#include "highlight_preferences.h"
-#include "preferences.h"
-#include "warnings_preferences.h"
-#include "chatwindowappearance_preferences.h"
-#include "dcc_preferences.h"
-#include "log_preferences.h"
-#include "quickbuttons_preferences.h"
-#include "watchednicknames_preferences.h"
-#include "chatwindowbehaviour_preferences.h"
-#include "fontappearance_preferences.h"
-#include "nicklistbehavior_preferences.h"
-#include "tabbar_preferences.h"
-#include "colorsappearance_preferences.h"
-#include "generalbehavior_preferences.h"
-#include "osd_preferences.h"
-#include "theme_preferences.h"
+#include "chatwindowappearance_Preferences::h"
+#include "alias_Preferences::h"
+#include "connectionbehavior_Preferences::h"
+#include "highlight_Preferences::h"
+#include "Preferences::h"
+#include "warnings_Preferences::h"
+#include "chatwindowappearance_Preferences::h"
+#include "dcc_Preferences::h"
+#include "log_Preferences::h"
+#include "quickbuttons_Preferences::h"
+#include "watchednicknames_Preferences::h"
+#include "chatwindowbehaviour_Preferences::h"
+#include "fontappearance_Preferences::h"
+#include "nicklistbehavior_Preferences::h"
+#include "tabbar_Preferences::h"
+#include "colorsappearance_Preferences::h"
+#include "generalbehavior_Preferences::h"
+#include "osd_Preferences::h"
+#include "theme_Preferences::h"
 
 
 
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
-#include "konversation_settings.h"
 #include "highlight.h"
 #include "server.h"
 #include "konversationsound.h"
@@ -62,9 +61,6 @@
 #include "notificationhandler.h"
 #include "commit.h"
 #include "version.h"
-
-// include static variables
-Preferences KonversationApplication::preferences;
 
 KonversationApplication::KonversationApplication()
 : KUniqueApplication(true, true, true)
@@ -115,15 +111,15 @@ int KonversationApplication::newInstance()
         // Sound object used to play sound...
         m_sound = new Konversation::Sound(this);
 
-        // initialize OSD display here, so we can read the preferences properly
+        // initialize OSD display here, so we can read the Preferences::properly
         osd = new OSDWidget( "Konversation" );
 
-        preferences.setOSDFont(font());
-        preferences.setTextFont(font());
-        preferences.setListFont(font());
+        Preferences::setOSDFont(font());
+        Preferences::setTextFont(font());
+        Preferences::setListFont(font());
 
         readOptions();
-        colorList = KonversationApplication::preferences.getNickColorList();
+        colorList = KonversationApplication::Preferences::nickColorList();
 
         // Images object providing LEDs, NickIcons
         m_images = new Images();
@@ -131,7 +127,7 @@ int KonversationApplication::newInstance()
         // Auto-alias scripts
         QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
         QFileInfo* fileInfo = new QFileInfo();
-        QStringList aliasList(KonversationApplication::preferences.getAliasList());
+        QStringList aliasList(KonversationApplication::Preferences::aliasList());
         QString newAlias;
 
         for ( QStringList::ConstIterator it = scripts.begin(); it != scripts.end(); ++it )
@@ -146,7 +142,7 @@ int KonversationApplication::newInstance()
             }
         }
 
-        KonversationApplication::preferences.setAliasList(aliasList);
+        KonversationApplication::Preferences::setAliasList(aliasList);
 
         // Setup system codec
         // TODO: check if this works now as intended
@@ -157,22 +153,22 @@ int KonversationApplication::newInstance()
         setMainWidget(mainWindow);
 
         connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
-        connect(mainWindow,SIGNAL (openPrefsDialog(Preferences::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
+        connect(mainWindow,SIGNAL (openPrefsDialog(Preferences:::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
         connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
-        connect(&preferences,SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
+        connect(&Preferences::SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
         connect(this, SIGNAL (prefsChanged()), mainWindow, SLOT (slotPrefsChanged()) );
 
         // apply GUI settings
         appearanceChanged();
         mainWindow->show();
 
-        if(preferences.getShowServerList())
+        if(Preferences::showServerList())
         {
             mainWindow->openServerList();
         }
 
         // handle autoconnect on startup
-        Konversation::ServerGroupList serverGroups = preferences.serverGroupList();
+        Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
 
         if(!m_connectDelayed)
         {
@@ -337,14 +333,14 @@ void KonversationApplication::insertRememberLine()
 
 Server* KonversationApplication::connectToServerGroup(const QString& serverGroup)
 {
-    int serverGroupId = preferences.serverGroupIdByName(serverGroup);
+    int serverGroupId = Preferences::serverGroupIdByName(serverGroup);
 
     return connectToServer(serverGroupId);
 }
 
 Server* KonversationApplication::connectToServer(int id)
 {
-    Konversation::ServerGroupSettingsPtr serverGroup = preferences.serverGroupById(id);
+    Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(id);
     IdentityPtr identity = serverGroup->identity();
 
     if(!identity)
@@ -459,7 +455,7 @@ void KonversationApplication::readOptions()
     QStringList identityList=config->groupList().grep(QRegExp("Identity [0-9]+"));
     if(identityList.count())
     {
-        preferences.clearIdentityList();
+        Preferences::clearIdentityList();
 
         for(unsigned int index=0;index<identityList.count();index++)
         {
@@ -493,24 +489,24 @@ void KonversationApplication::readOptions()
 
             newIdentity->setAwayNick(config->readEntry("AwayNick"));
 
-            preferences.addIdentity(newIdentity);
+            Preferences::addIdentity(newIdentity);
 
         }                                         // endfor
 
     }
     else
     {
-        // Default user identity for pre 0.10 preferences files
+        // Default user identity for pre 0.10 Preferences::files
         config->setGroup("User Identity");
-        preferences.setIdent(config->readEntry("Ident",preferences.getIdent()));
-        preferences.setRealName(config->readEntry("Realname",preferences.getRealName()));
+        Preferences::setIdent(config->readEntry("Ident",preferences.getIdent()));
+        Preferences::setRealName(config->readEntry("Realname",preferences.getRealName()));
 
-        QString nickList=config->readEntry("Nicknames",preferences.getNicknameList().join(","));
-        preferences.setNicknameList(QStringList::split(",",nickList));
+        QString nickList=config->readEntry("Nicknames",Preferences::nicknameList().join(","));
+        Preferences::setNicknameList(QStringList::split(",",nickList));
 
-        preferences.setShowAwayMessage(config->readBoolEntry("ShowAwayMessage",preferences.getShowAwayMessage()));
-        preferences.setAwayMessage(config->readEntry("AwayMessage",preferences.getAwayMessage()));
-        preferences.setUnAwayMessage(config->readEntry("UnAwayMessage",preferences.getUnAwayMessage()));
+        Preferences::setShowAwayMessage(config->readBoolEntry("ShowAwayMessage",preferences.getShowAwayMessage()));
+        Preferences::setAwayMessage(config->readEntry("AwayMessage",preferences.getAwayMessage()));
+        Preferences::setUnAwayMessage(config->readEntry("UnAwayMessage",preferences.getUnAwayMessage()));
 
         config->deleteGroup("User Identity");
     }
@@ -521,31 +517,31 @@ void KonversationApplication::readOptions()
  *
  *     if(osd)
     {
-        osd->setEnabled(preferences.getOSDUsage());
-        osd->setFont(preferences.getOSDFont());
-        osd->setDuration(preferences.getOSDDuration());
-        osd->setScreen(preferences.getOSDScreen());
-        osd->setShadow(preferences.getOSDDrawShadow());
-        osd->setOffset(preferences.getOSDOffsetX(),preferences.getOSDOffsetY());
-        osd->setAlignment((OSDWidget::Alignment)preferences.getOSDAlignment());
+        osd->setEnabled(Preferences::oSDUsage());
+        osd->setFont(Preferences::oSDFont());
+        osd->setDuration(Preferences::oSDDuration());
+        osd->setScreen(Preferences::oSDScreen());
+        osd->setShadow(Preferences::oSDDrawShadow());
+        osd->setOffset(Preferences::oSDOffsetX(),preferences.getOSDOffsetY());
+        osd->setAlignment((OSDWidget::Alignment)Preferences::oSDAlignment());
 
-        if(preferences.getOSDUseCustomColors())
+        if(Preferences::oSDUseCustomColors())
         {
             QString osdTextColor = config->readEntry("OSDTextColor");
             if(osdTextColor.isEmpty())
-                preferences.setOSDTextColor(preferences.getOSDTextColor().name());
+                Preferences::setOSDTextColor(preferences.getOSDTextColor().name());
             else
-                preferences.setOSDTextColor("#" + osdTextColor);
+                Preferences::setOSDTextColor("#" + osdTextColor);
 
-            osd->setTextColor(preferences.getOSDTextColor());
+            osd->setTextColor(Preferences::oSDTextColor());
 
             QString osdBackgroundColor = config->readEntry("OSDBackgroundColor");
             if(osdBackgroundColor.isEmpty())
-                preferences.setOSDBackgroundColor(preferences.getOSDBackgroundColor().name());
+                Preferences::setOSDBackgroundColor(preferences.getOSDBackgroundColor().name());
             else
-                preferences.setOSDBackgroundColor("#" + osdBackgroundColor);
+                Preferences::setOSDBackgroundColor("#" + osdBackgroundColor);
 
-            osd->setBackgroundColor(preferences.getOSDBackgroundColor());
+            osd->setBackgroundColor(Preferences::oSDBackgroundColor());
         }
     }
 */
@@ -571,7 +567,7 @@ void KonversationApplication::readOptions()
             server.setPort(tmp[2].toInt());
             server.setPassword(tmp[3]);
             serverGroup->addServer(server);
-            serverGroup->setIdentityId(preferences.getIdentityByName(tmp[7])->id());
+            serverGroup->setIdentityId(Preferences::identityByName(tmp[7])->id());
             serverGroup->setAutoConnectEnabled(tmp[6].toInt());
             serverGroup->setConnectCommands(tmp[8]);
 
@@ -596,7 +592,7 @@ void KonversationApplication::readOptions()
             serverGroups.append(serverGroup);
         }
 
-        preferences.setServerGroupList(serverGroups);
+        Preferences::setServerGroupList(serverGroups);
     }
     else
     {
@@ -619,7 +615,7 @@ void KonversationApplication::readOptions()
                 Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
                 serverGroup->setName(config->readEntry("Name"));
                 serverGroup->setGroup(config->readEntry("Group"));
-                serverGroup->setIdentityId(preferences.getIdentityByName(config->readEntry("Identity"))->id());
+                serverGroup->setIdentityId(Preferences::identityByName(config->readEntry("Identity"))->id());
                 serverGroup->setConnectCommands(config->readEntry("ConnectCommands"));
                 serverGroup->setAutoConnectEnabled(config->readBoolEntry("AutoConnect"));
                 serverGroup->setNotificationsEnabled(config->readBoolEntry("EnableNotifications", true));
@@ -672,7 +668,7 @@ void KonversationApplication::readOptions()
                 serverGroups.append(serverGroup);
             }
 
-            preferences.setServerGroupList(serverGroups);
+            Preferences::setServerGroupList(serverGroups);
         }
     }
 /*  FIXME - this needs to be ported to new kconfigxt
@@ -680,11 +676,11 @@ void KonversationApplication::readOptions()
  *  
     // Notify Settings and lists.  Must follow Server List.
     config->setGroup("Notify List");
-    preferences.setNotifyDelay(config->readNumEntry("NotifyDelay",20));
-    preferences.setUseNotify(config->readBoolEntry("UseNotify",true));
+    Preferences::setNotifyDelay(config->readNumEntry("NotifyDelay",20));
+    Preferences::setUseNotify(config->readBoolEntry("UseNotify",true));
     //  QString notifyList=config->readEntry("NotifyList",QString::null);
-    //  preferences.setNotifyList(QStringList::split(' ',notifyList));
-    preferences.setOpenWatchedNicksAtStartup(config->readBoolEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup()));
+    //  Preferences::setNotifyList(QStringList::split(' ',notifyList));
+    Preferences::setOpenWatchedNicksAtStartup(config->readBoolEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup()));
     int index = 0;
     QMap<QString, QStringList> notifyList;
     QMap<QString, QString> notifyGroups = config->entryMap("Notify Group Lists");
@@ -704,7 +700,7 @@ void KonversationApplication::readOptions()
         {
             QStringList oldNotifyNicknameList = QStringList::split(" ", oldNotifyNicknames, false);
             // Build a list of unique server group names.
-            Konversation::ServerGroupList serverGroups = preferences.serverGroupList();
+            Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
             QStringList groupNames;
 
             for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it)
@@ -721,19 +717,19 @@ void KonversationApplication::readOptions()
                 notifyList[*groupIt] = oldNotifyNicknameList;
         }
     }
-    preferences.setNotifyList(notifyList);
+    Preferences::setNotifyList(notifyList);
 */
     // Quick Buttons List
     config->setGroup("Button List");
     // Read all buttons and overwrite default entries
-    QStringList buttonList(preferences.getButtonList());
+    QStringList buttonList(Preferences::buttonList());
     for(int index=0;index<8;index++)
     {
         QString buttonKey(QString("Button%1").arg(index));
         if(config->hasKey(buttonKey)) buttonList[index]=config->readEntry(buttonKey);
     }
     // Put back the changed button list
-    preferences.setButtonList(buttonList);
+    Preferences::setButtonList(buttonList);
 
     // Highlight List
     if(config->hasKey("Highlight"))               // Stay compatible with versions < 0.14
@@ -744,7 +740,7 @@ void KonversationApplication::readOptions()
         unsigned int hiIndex;
         for(hiIndex=0;hiIndex<hiList.count();hiIndex+=2)
         {
-            preferences.addHighlight(hiList[hiIndex],false,"#"+hiList[hiIndex+1],QString::null,QString::null);
+            Preferences::addHighlight(hiList[hiIndex],false,"#"+hiList[hiIndex+1],QString::null,QString::null);
         }
 
         config->deleteEntry("Highlight");
@@ -756,7 +752,7 @@ void KonversationApplication::readOptions()
         while(config->hasGroup(QString("Highlight%1").arg(i)))
         {
             config->setGroup(QString("Highlight%1").arg(i));
-            preferences.addHighlight(config->readEntry("Pattern"),
+            Preferences::addHighlight(config->readEntry("Pattern"),
                 config->readBoolEntry("RegExp"),
                 config->readColorEntry("Color"),
                 config->readPathEntry("Sound"),
@@ -767,24 +763,24 @@ void KonversationApplication::readOptions()
 
     // Ignore List
     config->setGroup("Ignore List");
-    // Remove all default entries if there is at least one Ignore in the preferences file
-    if(config->hasKey("Ignore0")) preferences.clearIgnoreList();
+    // Remove all default entries if there is at least one Ignore in the Preferences::file
+    if(config->hasKey("Ignore0")) Preferences::clearIgnoreList();
     // Read all ignores
     int index=0;
     while(config->hasKey(QString("Ignore%1").arg(index)))
     {
-        preferences.addIgnore(config->readEntry(QString("Ignore%1").arg(index++)));
+        Preferences::addIgnore(config->readEntry(QString("Ignore%1").arg(index++)));
     }
 
     // Aliases
     config->setGroup("Aliases");
     QStringList newList=config->readListEntry("AliasList");
-    if(!newList.isEmpty()) preferences.setAliasList(newList);
+    if(!newList.isEmpty()) Preferences::setAliasList(newList);
 
     // Web Browser
     config->setGroup("Web Browser Settings");
-    preferences.setWebBrowserUseKdeDefault(config->readBoolEntry("UseKdeDefault",preferences.getWebBrowserUseKdeDefault()));
-    preferences.setWebBrowserCmd(config->readEntry("WebBrowserCmd",preferences.getWebBrowserCmd()));
+    Preferences::setWebBrowserUseKdeDefault(config->readBoolEntry("UseKdeDefault",preferences.getWebBrowserUseKdeDefault()));
+    Preferences::setWebBrowserCmd(config->readEntry("WebBrowserCmd",preferences.getWebBrowserCmd()));
 
     // Channel Encodings
     QMap<QString,QString> channelEncodingsEntry=config->entryMap("Channel Encodings");
@@ -792,7 +788,7 @@ void KonversationApplication::readOptions()
     QStringList channelEncodingsEntryKeys=channelEncodingsEntry.keys();
     for(unsigned int i=0; i<channelEncodingsEntry.count(); ++i)
         if(re.search(channelEncodingsEntryKeys[i]) > -1)
-            preferences.setChannelEncoding(re.cap(1),re.cap(2),channelEncodingsEntry[channelEncodingsEntryKeys[i]]);
+            Preferences::setChannelEncoding(re.cap(1),re.cap(2),channelEncodingsEntry[channelEncodingsEntryKeys[i]]);
 
 }
 
@@ -806,12 +802,12 @@ void KonversationApplication::saveOptions(bool updateGUI)
     QStringList identities=config->groupList().grep(QRegExp("Identity [0-9]+"));
     if(identities.count())
     {
-        // remove old identity list from preferences file to keep numbering under control
+        // remove old identity list from Preferences::file to keep numbering under control
         for(unsigned int index=0;index<identities.count();index++)
             config->deleteGroup(identities[index]);
     }
 
-    QValueList<IdentityPtr> identityList = preferences.getIdentityList();
+    QValueList<IdentityPtr> identityList = Preferences::identityList();
     int index = 0;
 
     for(QValueList<IdentityPtr>::iterator it = identityList.begin(); it != identityList.end(); ++it)
@@ -841,7 +837,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
     config->deleteGroup("Notify Group Lists");
     config->setGroup("Notify Group Lists");
-    QMap<QString, QStringList> notifyList = preferences.getNotifyList();
+    QMap<QString, QStringList> notifyList = Preferences::notifyList();
     QMapConstIterator<QString, QStringList> groupItEnd = notifyList.constEnd();
 
     for (QMapConstIterator<QString, QStringList> groupIt = notifyList.constBegin();
@@ -884,7 +880,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     }
 
     // Add the new servergroups to the config
-    Konversation::ServerGroupList serverGroupList = preferences.serverGroupList();
+    Konversation::ServerGroupList serverGroupList = Preferences::serverGroupList();
     Konversation::ServerGroupList::iterator it;
     index = 0;
     int index2 = 0;
@@ -961,12 +957,12 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
     for(index=0;index<8;index++)
     {
-        QStringList buttonList(preferences.getButtonList());
+        QStringList buttonList(Preferences::buttonList());
         config->writeEntry(QString("Button%1").arg(index),buttonList[index]);
     }
 
     // Write all highlight entries
-    QPtrList<Highlight> hiList=preferences.getHighlightList();
+    QPtrList<Highlight> hiList=Preferences::highlightList();
     int i = 0;
 
     for(Highlight* hl = hiList.first(); hl; hl = hiList.next())
@@ -990,7 +986,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     // Ignore List
     config->deleteGroup("Ignore List");
     config->setGroup("Ignore List");
-    QPtrList<Ignore> ignoreList=preferences.getIgnoreList();
+    QPtrList<Ignore> ignoreList=Preferences::ignoreList();
     Ignore* item=ignoreList.first();
     index=0;
     while(item)
@@ -1002,15 +998,15 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
     // Channel Encodings
     config->setGroup("Channel Encodings");
-    QStringList channelEncodingsServerList=preferences.getChannelEncodingsServerList();
+    QStringList channelEncodingsServerList=Preferences::channelEncodingsServerList();
     channelEncodingsServerList.sort();
     for(unsigned int i=0; i<channelEncodingsServerList.count(); ++i)
     {
-        QStringList channelEncodingsChannelList=preferences.getChannelEncodingsChannelList(channelEncodingsServerList[i]);
+        QStringList channelEncodingsChannelList=Preferences::channelEncodingsChannelList(channelEncodingsServerList[i]);
         channelEncodingsChannelList.sort();
         for(unsigned int j=0; j<channelEncodingsChannelList.count(); ++j)
-            if(!preferences.getChannelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]).isEmpty())
-                config->writeEntry(channelEncodingsServerList[i]+" "+channelEncodingsChannelList[j],preferences.getChannelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]));
+            if(!Preferences::channelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]).isEmpty())
+                config->writeEntry(channelEncodingsServerList[i]+" "+channelEncodingsChannelList[j],Preferences::channelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]));
     }
 
     config->sync();
@@ -1029,16 +1025,16 @@ void KonversationApplication::appearanceChanged()
         lookServer->updateFonts();
         lookServer->updateChannelQuickButtons();
 
-        lookServer->setShowQuickButtons(preferences.getShowQuickButtons());
-        lookServer->setShowModeButtons(preferences.getShowModeButtons());
-        lookServer->setShowTopic(preferences.getShowTopic());
-        lookServer->setShowNicknameBox(preferences.showNicknameBox());
+        lookServer->setShowQuickButtons(Preferences::showQuickButtons());
+        lookServer->setShowModeButtons(Preferences::showModeButtons());
+        lookServer->setShowTopic(Preferences::showTopic());
+        lookServer->setShowNicknameBox(Preferences::showNicknameBox());
 
         lookServer=serverList.next();
     }
 
     mainWindow->updateTabPlacement();
-    mainWindow->setShowTabBarCloseButton(preferences.getShowTabBarCloseButton());
+    mainWindow->setShowTabBarCloseButton(Preferences::showTabBarCloseButton());
 }
 
 void KonversationApplication::updateNickIcons()
@@ -1099,7 +1095,7 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
  
     //KConfigDialog didn't find an instance of this dialog, so lets create it : 
     KConfigDialog* dialog = new KConfigDialog( mainWindow, "settings", 
-                                               Konversation::Settings::self() ); 
+                                               Preferences:::self() ); 
 
     Alias_Config* confAliasWdg = new Alias_Config( 0, "Alias" );
     dialog->addPage ( confAliasWdg, i18n("Alias"), "alias" );
@@ -1158,7 +1154,7 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     
 }
 
-void KonversationApplication::openPrefsDialog(Preferences::Pages page)
+void KonversationApplication::openPrefsDialog(Preferences:::Pages page)
 {
     openPrefsDialog();
     //FIXME - open the right page

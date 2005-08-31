@@ -52,8 +52,8 @@
 
 #include "channel.h"
 #include "konversationapplication.h"
-#include "konversation_settings.h"
 #include "konversationmainwindow.h"
+#include "preferences.h"
 #include "ircview.h"
 #include "highlight.h"
 #include "server.h"
@@ -361,7 +361,7 @@ bool doHighlight, bool parseURL, bool self)
 
     if(filteredLine.find("\x07") != -1)
     {
-        if(Konversation::Settings::beep())
+        if(Preferences::beep())
         {
             kapp->beep();
         }
