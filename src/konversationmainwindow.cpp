@@ -289,7 +289,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     resize(700, 500);                             // Give the app a sane default size
     setAutoSaveSettings();
-    showMenuBarAction->setChecked(Preferences::serverWindowMenuBarStatus());
+    showMenuBarAction->setChecked(Preferences::showMenuBar());
     showMenubar(true);
 
     // set up KABC with a nice gui error dialog
@@ -302,7 +302,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     //  QListView* dockList=new QListView(this);
     //  addToolWindow(dockList,KDockWidget::DockLeft,getMainDockWidget());
 
-    if(Preferences::onStartup())
+    if(Preferences::openWatchedNicksAtStartup())
     {
         openNicksOnlinePanel();
     }
@@ -358,7 +358,7 @@ void KonversationMainWindow::showMenubar(bool dontShowWarning)
         menuBar()->hide();
     }
 
-    Preferences::setOnStartup(showMenuBarAction->isChecked());
+    Preferences::setOpenWatchedNicksAtStartup(showMenuBarAction->isChecked());
 }
 
 void KonversationMainWindow::showStatusbar()

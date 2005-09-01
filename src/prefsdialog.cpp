@@ -31,12 +31,11 @@
 #include "prefspagefontsappearance.h"
 #include "prefspagenicklistbehavior.h"
 
-PrefsDialog::PrefsDialog(QWidget* parent, Preferences* preferences) :
+PrefsDialog::PrefsDialog(QWidget* parent) :
 KDialogBase (KDialogBase::TreeList,i18n("Edit Preferences"),
 KDialogBase::Ok | KDialogBase::Apply | KDialogBase::Cancel,
 KDialogBase::Ok, parent, "edit_prefs", false, true)
 {
-    setPreferences(preferences);
     setShowIconsInTreeList(true);
 
     lastPane = 0;
@@ -79,29 +78,29 @@ KDialogBase::Ok, parent, "edit_prefs", false, true)
     // QWidget* scriptsPane        =addPage(i18n("Scripting"));
 
     // Add pages to preferences dialog
-    PrefsPageChatWinAppearance* chatWinAppearancePage = new PrefsPageChatWinAppearance(chatWinAppearancePane, preferences);
-    PrefsPageFontsAppearance* fontsAppearancePage = new PrefsPageFontsAppearance(fontsAppearancePane, preferences);
+    PrefsPageChatWinAppearance* chatWinAppearancePage = new PrefsPageChatWinAppearance(chatWinAppearancePane);
+    PrefsPageFontsAppearance* fontsAppearancePage = new PrefsPageFontsAppearance(fontsAppearancePane);
 
-    PrefsPageBehaviour* generalBehaviorPage = new PrefsPageBehaviour(generalBehaviorPane, preferences);
-    PrefsPageConnectionBehavior* connectionBehaviorPage = new PrefsPageConnectionBehavior(connectionBehaviorPane, preferences);
-    PrefsPageNicklistBehavior* nicklistBehaviorPage = new PrefsPageNicklistBehavior(nicklistBehaviorPane, preferences);
-    tabBehaviorPage = new PrefsPageTabBehavior(tabBehaviorPane, preferences);
-    ignorePage = new PrefsPageIgnore(ignorePane, preferences);
-    aliasesPage = new PrefsPageAliases(aliasesPane, preferences);
-    buttonsPage = new PrefsPageButtons(buttonsPane, preferences);
-    logSettingsPage = new PrefsPageLog(logSettingsPane, preferences);
-    dccSettingsPage = new PrefsPageDccSettings(dccSettingsPane, preferences);
+    PrefsPageBehaviour* generalBehaviorPage = new PrefsPageBehaviour(generalBehaviorPane);
+    PrefsPageConnectionBehavior* connectionBehaviorPage = new PrefsPageConnectionBehavior(connectionBehaviorPane);
+    PrefsPageNicklistBehavior* nicklistBehaviorPage = new PrefsPageNicklistBehavior(nicklistBehaviorPane);
+    tabBehaviorPage = new PrefsPageTabBehavior(tabBehaviorPane);
+    ignorePage = new PrefsPageIgnore(ignorePane);
+    aliasesPage = new PrefsPageAliases(aliasesPane);
+    buttonsPage = new PrefsPageButtons(buttonsPane);
+    logSettingsPage = new PrefsPageLog(logSettingsPane);
+    dccSettingsPage = new PrefsPageDccSettings(dccSettingsPane);
 
-    notifyPage = new PrefsPageNotify(notifyPane,preferences);
-    highlightPage = new PrefsPageHighlight(highlightPane,preferences);
-    OSDPage = new PrefsPageOSD(OSDPane,preferences);
+    notifyPage = new PrefsPageNotify(notifyPane);
+    highlightPage = new PrefsPageHighlight(highlightPane);
+    OSDPage = new PrefsPageOSD(OSDPane);
 
-    dialogsPage = new PrefsPageDialogs(dialogsPane,preferences);
+    dialogsPage = new PrefsPageDialogs(dialogsPane);
 
-    themesPage = new PrefsPageThemes(themesPane,preferences);
+    themesPage = new PrefsPageThemes(themesPane);
 
     // TODO: Uncomment this again when it's ready to go
-    // PrefsPageScripts* scriptsPage=new PrefsPageScripts(scriptsPane, preferences);
+    // PrefsPageScripts* scriptsPage=new PrefsPageScripts(scriptsPane);
 
     setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Keep changes made to configuration and close the window")));
     setButtonApply(KGuiItem(i18n("&Apply"),"apply",i18n("Keep changes made to configuration")));
@@ -177,11 +176,6 @@ void PrefsDialog::slotApply()
 void PrefsDialog::slotCancel()
 {
     emit cancelClicked();
-}
-
-void PrefsDialog::setPreferences(Preferences* newPrefs)
-{
-    preferences = newPrefs;
 }
 
 void PrefsDialog::openPage(Preferences::Pages page)

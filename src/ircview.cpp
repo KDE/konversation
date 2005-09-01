@@ -93,7 +93,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
 
     setServer(newServer);
     setFont(Preferences::textFont());
-    setViewBackground(Preferences::color("TextViewBackground"),QString::null);
+    setViewBackground(Preferences::color(Preferences::TextViewBackground),QString::null);
 
     m_popup = new QPopupMenu(this,"ircview_context_menu");
     m_popup->insertItem(SmallIconSet("editcopy"),i18n("&Copy"),Copy);
@@ -147,9 +147,8 @@ void IRCView::updateStyleSheet()
     style->setSelfNesting(false);
 }
 
-void IRCView::setViewBackground(const QString& color, const QString& pixmapName)
+void IRCView::setViewBackground(const QColor& backgroundColor, const QString& pixmapName)
 {
-    QColor backgroundColor("#"+color);
     QPixmap backgroundPixmap;
     backgroundPixmap.load(pixmapName);
 

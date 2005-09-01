@@ -44,12 +44,12 @@ void RawLog::updateFonts()
 
     if(Preferences::showBackgroundImage())
     {
-        getTextView()->setViewBackground(Preferences::color("TextViewBackground"),
+        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
             Preferences::backgroundImage());
     }
     else
     {
-        getTextView()->setViewBackground(Preferences::color("TextViewBackground"),
+        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
             QString::null);
     }
 }

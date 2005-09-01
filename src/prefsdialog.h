@@ -59,8 +59,6 @@ class PrefsDialog : public KDialogBase
         void slotAboutToShowPage(QWidget* page);
 
     protected:
-        Preferences* preferences;
-
         PrefsPageTabBehavior*     tabBehaviorPage;
         PrefsPageButtons*         buttonsPage;
         PrefsPageNotify*          notifyPage;
@@ -81,7 +79,5 @@ class PrefsDialog : public KDialogBase
         QWidget* OSDPane;
 
         QWidget* lastPane;
-
-        void setPreferences(Preferences* newPrefs);
 };
 #endif

@@ -276,9 +276,6 @@ class Preferences : public QObject, public PreferencesBase
         static void setNicknameList(const QStringList &newList);
 
 	
-        static const QString color(const QString& name);
-        static void setColor(const QString& name,const QString& color);
-
 /*
         // Colored nicknames
         static const bool useLiteralModes();
@@ -446,22 +443,6 @@ class Preferences : public QObject, public PreferencesBase
         // flag for hostmasks next to nicknames
         bool mClickableNicks;
 
-        // On Screen Display
-        bool mOSDUsage;                            // Use OSD?
-        bool mOSDShowOwnNick;                      // Message, if own nick appears
-        bool mOSDShowChannel;                      // Message on any channel acticity
-        bool mOSDShowQuery;                        // Message on query acticity
-        bool mOSDShowChannelEvent;                 // Message on channel join/part events
-        QFont mOsdFont;                            // Which font to use
-        QColor mOsdTextColor;
-        QColor mOsdBackgroundColor;
-        int mOSDOffsetX;
-        int mOSDOffsetY;
-        int mOSDAlignment;                         // 0: Left, 1: Middle, 2: Center, 3: Right
-
-        bool mColorInputFields;
-
-        QStringList mButtonList;
 */
         IdentityPtr mIdentity;
         Konversation::ServerGroupList mServerGroupList;

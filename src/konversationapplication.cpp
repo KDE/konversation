@@ -678,7 +678,6 @@ void KonversationApplication::readOptions()
     Preferences::setUseNotify(config->readBoolEntry("UseNotify",true));
     //  QString notifyList=config->readEntry("NotifyList",QString::null);
     //  Preferences::setNotifyList(QStringList::split(' ',notifyList));
-    Preferences::setOpenWatchedNicksAtStartup(config->readBoolEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup()));
     int index = 0;
     QMap<QString, QStringList> notifyList;
     QMap<QString, QString> notifyGroups = config->entryMap("Notify Group Lists");

@@ -165,7 +165,6 @@ namespace Konversation
     ServerListDialog::ServerListDialog(QWidget *parent, const char *name)
         : KDialogBase(Plain, i18n("Server List"), Ok|Close, Ok, parent, name, false)
     {
-        m_preferences = &Preferences::
         setButtonOK(KGuiItem(i18n("C&onnect"), "connect_creating", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
 
         QFrame* mainWidget = plainPage();
@@ -278,7 +277,6 @@ namespace Konversation
               item = static_cast<ServerListItem*>(branch->firstChild());
 
               while(item) {
-                m_preferences->changeServerProperty(item->serverId(), 6, item->autoConnect() ? "1" : "0");
                 item = static_cast<ServerListItem*>(item->nextSibling());
               }
 
@@ -309,7 +307,7 @@ namespace Konversation
 
         if(item)
         {
-            Konversation::ServerGroupSettingsPtr serverGroup = m_preferences->serverGroupById(item->serverId());
+            Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->serverId());
 
             if(serverGroup)
             {
@@ -356,7 +354,7 @@ namespace Konversation
             // find branch this item belongs to
             QListViewItem* branch = server->parent();
             // remove server from preferences
-            m_preferences->removeServerGroup(server->serverId());
+	    Preferences::removeServerGroup(server->serverId());
             // remove item from view
             delete server;
             // if the branch has no other items, remove it
@@ -383,7 +381,7 @@ namespace Konversation
 
     void ServerListDialog::addServerGroup(ServerGroupSettingsPtr serverGroup)
     {
-        m_preferences->addServerGroup(serverGroup);
+        Preferences::addServerGroup(serverGroup);
         QListViewItem* item = addListItem(serverGroup);
         m_serverList->clearSelection();
         m_serverList->setSelected(item, true);
@@ -411,7 +409,7 @@ namespace Konversation
     void ServerListDialog::updateServerGroupList()
     {
         m_serverList->clear();
-        Konversation::ServerGroupList serverGroups = m_preferences->serverGroupList();
+        Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
         Konversation::ServerGroupList::iterator it;
 
         for(it = serverGroups.begin(); it != serverGroups.end(); ++it)
