@@ -132,7 +132,7 @@ void ChatWindow::insertRememberLine()
 {
     Q_ASSERT(textView);  if(!textView) return;
     kdDebug() << "Inserting remember line" << endl;
-    textView->appendRaw("<br><hr color=\"#"+KonversationApplication::preferences.getColor("CommandMessage")+"\" noshade>", true, true);
+    textView->appendRaw("<br><hr color=\"#"+Preferences::color("CommandMessage")+"\" noshade>", true, true);
 }
 
 void ChatWindow::appendRaw(const QString& message, bool suppressTimestamps)
@@ -182,14 +182,14 @@ void ChatWindow::cdIntoLogPath()
 {
     QDir logPath=QDir::home();
     // Try to "cd" into the logfile path
-    if(!logPath.cd(KonversationApplication::preferences.getLogPath(),true))
+    if(!logPath.cd(Preferences::logPath(),true))
     {
         // Only create log path if logging is enabled
         if(log)
         {
             // Try to create the logfile path and "cd" into it again
-            logPath.mkdir(KonversationApplication::preferences.getLogPath(),true);
-            logPath.cd(KonversationApplication::preferences.getLogPath(),true);
+            logPath.mkdir(Preferences::logPath(),true);
+            logPath.cd(Preferences::logPath(),true);
         }
     }
 
@@ -311,16 +311,16 @@ bool ChatWindow::isChannelEncodingSupported() const
 
 int ChatWindow::spacing()
 {
-    if(KonversationApplication::preferences.getUseSpacing())
-        return KonversationApplication::preferences.getSpacing();
+    if(Preferences::useSpacing())
+        return Preferences::spacing();
     else
         return KDialog::spacingHint();
 }
 
 int ChatWindow::margin()
 {
-    if(KonversationApplication::preferences.getUseSpacing())
-        return KonversationApplication::preferences.getMargin();
+    if(Preferences::useSpacing())
+        return Preferences::margin();
     else
         return 0;
 }
@@ -428,7 +428,7 @@ void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
     switch(type)
     {
         case Konversation::tnfNick:
-            colorString = KonversationApplication::preferences.getHighlightNickColor().name();
+            colorString = Preferences::highlightNickColor().name();
             break;
 
         case Konversation::tnfHighlight:

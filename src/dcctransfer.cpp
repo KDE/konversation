@@ -54,7 +54,7 @@ DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partn
     m_ownPort = QString::null;
     m_timeOffer = QDateTime::currentDateTime();
 
-    m_bufferSize = KonversationApplication::preferences.getDccBufferSize();
+    m_bufferSize = Preferences::dccBufferSize();
     m_buffer = new char[ m_bufferSize ];
 
     m_autoUpdateViewTimer = 0;

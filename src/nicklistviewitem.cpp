@@ -131,7 +131,7 @@ QString NickListViewItem::calculateLabel1()
     {
         return nick->getNickInfo()->getNickname() + " (" + addressee.realName() + ")";
     }
-    else if(KonversationApplication::preferences.getShowRealNames() && !nick->getNickInfo()->getRealName().isEmpty())
+    else if(Preferences::showRealNames() && !nick->getNickInfo()->getRealName().isEmpty())
     {
         return nick->getNickInfo()->getNickname() + " (" + nick->getNickInfo()->getRealName() + ")";
     }
@@ -148,7 +148,7 @@ int NickListViewItem::compare(QListViewItem* item,int col,bool ascending) const
 {
     NickListViewItem* otherItem = static_cast<NickListViewItem*>(item);
 
-    if(KonversationApplication::preferences.getSortByStatus())
+    if(Preferences::sortByStatus())
     {
         int thisFlags = getFlags();
         int otherFlags = otherItem->getFlags();
@@ -168,7 +168,7 @@ int NickListViewItem::compare(QListViewItem* item,int col,bool ascending) const
 
     if(col > 1)
     {
-        if(KonversationApplication::preferences.getSortCaseInsensitive())
+        if(Preferences::sortCaseInsensitive())
         {
             thisKey = thisKey.lower();
             otherKey = otherKey.lower();
@@ -181,7 +181,7 @@ int NickListViewItem::compare(QListViewItem* item,int col,bool ascending) const
     }
     else if(col == 1)
     {
-        if(KonversationApplication::preferences.getSortCaseInsensitive())
+        if(Preferences::sortCaseInsensitive())
         {
             thisKey = nick->loweredNickname();
             otherKey = otherItem->getNick()->loweredNickname();
@@ -215,27 +215,27 @@ int NickListViewItem::getFlags() const
 
     if(nick->isAdmin())
     {
-        flags = KonversationApplication::preferences.getAdminValue();
+        flags = Preferences::adminValue();
     }
     else if(nick->isOwner())
     {
-        flags = KonversationApplication::preferences.getOwnerValue();
+        flags = Preferences::ownerValue();
     }
     else if(nick->isOp())
     {
-        flags = KonversationApplication::preferences.getOpValue();
+        flags = Preferences::opValue();
     }
     else if(nick->isHalfop())
     {
-        flags = KonversationApplication::preferences.getHalfopValue();
+        flags = Preferences::halfopValue();
     }
     else if(nick->hasVoice())
     {
-        flags = KonversationApplication::preferences.getVoiceValue();
+        flags = Preferences::voiceValue();
     }
     else
     {
-        flags = KonversationApplication::preferences.getNoRightsValue();
+        flags = Preferences::noRightsValue();
     }
 
     return flags;

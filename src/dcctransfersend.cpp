@@ -52,14 +52,14 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
     m_fileURL = fileURL;
     m_ownIp = ownIp;
 
-    if(KonversationApplication::preferences.getIPv4Fallback())
+    if(Preferences::iPv4Fallback())
     {
         KIpAddress ip(m_ownIp);
         if(ip.isIPv6Addr())
         {
             /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
             struct ifreq ifr;
-            const char* address = KonversationApplication::preferences.getIPv4FallbackIface().ascii();
+            const char* address = Preferences::iPv4FallbackIface().ascii();
             int sock = socket(AF_INET, SOCK_DGRAM, 0);
             strncpy( ifr.ifr_name, address, IF_NAMESIZE );
             ifr.ifr_addr.sa_family = AF_INET;
@@ -76,7 +76,7 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
 
     m_serverSocket = 0;
     m_sendSocket = 0;
-    m_fastSend = KonversationApplication::preferences.getDccFastSend();
+    m_fastSend = Preferences::dccFastSend();
     kdDebug() << "DccTransferSend::DccTransferSend(): Fast DCC send: " << m_fastSend << endl;
 
     m_connectionTimer = new QTimer( this );
@@ -192,12 +192,12 @@ void DccTransferSend::start()                     // public slot
     m_serverSocket->setFamily( KNetwork::KResolver::InetFamily );
 
                                                   // user is specifing ports
-    if ( KonversationApplication::preferences.getDccSpecificSendPorts() )
+    if ( Preferences::dccSpecificSendPorts() )
     {
         // set port
         bool found = false;                       // whether succeeded to set port
-        unsigned long port = KonversationApplication::preferences.getDccSendPortsFirst();
-        for ( ; port <= KonversationApplication::preferences.getDccSendPortsLast() ; ++port )
+        unsigned long port = Preferences::dccSendPortsFirst();
+        for ( ; port <= Preferences::dccSendPortsLast() ; ++port )
         {
             kdDebug() << "DccTransferSend::start(): trying port " << port << endl;
             m_serverSocket->setAddress( QString::number( port ) );
@@ -239,7 +239,7 @@ void DccTransferSend::start()                     // public slot
     setStatus( WaitingRemote, i18n( "Waiting remote user's acceptance" ) );
     updateView();
 
-    startConnectionTimer( KonversationApplication::preferences.getDccSendTimeout() );
+    startConnectionTimer( Preferences::dccSendTimeout() );
 
     emit sendReady( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_ownPort, m_fileSize );
 }

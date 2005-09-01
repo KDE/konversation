@@ -75,7 +75,9 @@ class Preferences : public QObject, public PreferencesBase
         static const Konversation::ServerGroupSettingsPtr serverGroupById(int id);
         static const Konversation::ServerGroupSettingsPtr serverGroupByServer(const QString& server);
         static int serverGroupIdByName(const QString& serverGroup);
+	*/
         static bool isServerGroup(const QString& server);
+	/*
         static void removeServerGroup(int id);
 
         static const bool autoReconnect();
@@ -318,10 +320,10 @@ class Preferences : public QObject, public PreferencesBase
         static const QStringList nicknameList();
         static void setNickname(int index,const QString &newName);
         static void setNicknameList(const QStringList &newList);
-/*
         static const QString color(const QString& name);
         static void setColor(const QString& name,const QString& color);
 
+/*
         // Colored nicknames
         static const bool useColoredNicks();
         static void setUseColoredNicks(bool usecolor);
@@ -468,8 +470,6 @@ class Preferences : public QObject, public PreferencesBase
         static const QString webBrowserCmd();
         static void setWebBrowserCmd(const QString &cmd);
 
-        static const bool redirectToStatusPane();
-        static void setRedirectToStatusPane(bool redirect);
 
         static const bool openWatchedNicksAtStartup();
         static void setOpenWatchedNicksAtStartup(bool open);
@@ -695,8 +695,6 @@ class Preferences : public QObject, public PreferencesBase
         // Web Browser
         bool mWebBrowserUseKdeDefault;
         QString mWebBrowserCmd;
-
-        bool mRedirectToStatusPane;
 
         bool mOpenWatchedNicksAtStartup;
 

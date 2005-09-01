@@ -165,7 +165,7 @@ namespace Konversation
     ServerListDialog::ServerListDialog(QWidget *parent, const char *name)
         : KDialogBase(Plain, i18n("Server List"), Ok|Close, Ok, parent, name, false)
     {
-        m_preferences = &KonversationApplication::preferences;
+        m_preferences = &Preferences::
         setButtonOK(KGuiItem(i18n("C&onnect"), "connect_creating", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
 
         QFrame* mainWidget = plainPage();

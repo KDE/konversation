@@ -50,7 +50,7 @@ namespace Konversation
         // timer.start();
 
         QString filteredLine = text;
-        QString linkColor = KonversationApplication::preferences.getColor("LinkMessage");
+        QString linkColor = Preferences::color("LinkMessage");
         QString link;
 
         if(useCustomColor)
@@ -114,8 +114,8 @@ namespace Konversation
         }
 
         // Make [[foo]] a link to $wikiurl
-        QString wikiUrl = KonversationApplication::preferences.getWikiUrl();
-        bool expandWikiUrl = KonversationApplication::preferences.getExpandWikiUrl();
+        QString wikiUrl = Preferences::wikiUrl();
+        bool expandWikiUrl = Preferences::expandWikiUrl();
 
         QRegExp wikipedia("\\[\\[([^\\]]+)\\]\\]");
         wikipedia.setMinimal(true);

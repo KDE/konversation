@@ -289,7 +289,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     resize(700, 500);                             // Give the app a sane default size
     setAutoSaveSettings();
-    showMenuBarAction->setChecked(Preferences::showMenuBar());
+    showMenuBarAction->setChecked(Preferences::serverWindowMenuBarStatus());
     showMenubar(true);
 
     // set up KABC with a nice gui error dialog
@@ -302,7 +302,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     //  QListView* dockList=new QListView(this);
     //  addToolWindow(dockList,KDockWidget::DockLeft,getMainDockWidget());
 
-    if(Preferences::openWatchedNicksAtStartup())
+    if(Preferences::onStartup())
     {
         openNicksOnlinePanel();
     }
@@ -358,7 +358,7 @@ void KonversationMainWindow::showMenubar(bool dontShowWarning)
         menuBar()->hide();
     }
 
-    Preferences::setShowMenuBar(showMenuBarAction->isChecked());
+    Preferences::setOnStartup(showMenuBarAction->isChecked());
 }
 
 void KonversationMainWindow::showStatusbar()
@@ -374,7 +374,7 @@ void KonversationMainWindow::appendToFrontmostIfDifferent(const QString& type,co
     updateFrontView();
     if(m_frontView && (ChatWindow *)m_frontView != serverView &&
         m_frontView->getServer()==serverView->getServer() &&
-        !Preferences::redirectToStatusPane()
+        !Preferences::redirectServerAndAppMsgToStatusPane()
         )
         m_frontView->appendServerMessage(type,message);
 }
@@ -392,7 +392,7 @@ void KonversationMainWindow::appendToFrontmost(const QString& type,const QString
                                                   // if it does not belong to this server or...
         serverView->getServer()!=m_frontView->getServer() ||
                                                   // if the user decided to force it.
-        Preferences::redirectToStatusPane())
+        Preferences::redirectServerAndAppMsgToStatusPane())
     {
         // if not, take server specified fallback view instead
         serverView->appendServerMessage(type,message);

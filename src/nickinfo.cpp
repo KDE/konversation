@@ -86,7 +86,7 @@ QString NickInfo::getNickColor() const
         if(offset >= 8)
             offset=0;
 
-        QString backgroundColor=KonversationApplication::preferences.getColor("TextViewBackground");
+        QString backgroundColor=Preferences::color("TextViewBackground");
 
         if(backgroundColor==colorList[offset])
             offset = (offset+1)%8;

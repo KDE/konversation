@@ -102,7 +102,7 @@ QString SearchDialog::getSearchText()
 
 QString SearchDialog::search(QWidget* parent,bool* cs,bool* wo,bool* fw,bool* fc)
 {
-    QSize size;                                   // TODO: get it from KonversationApplication::preferences
+    QSize size;                                   // TODO: get it from Preferences
     SearchDialog dlg(parent,size);
 
     if(!dlg.getSearchText().isEmpty())
