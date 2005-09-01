@@ -677,53 +677,53 @@ const bool Preferences::useClickableNicks() { return clickableNicks;}
 
 // On Screen Display
 void Preferences::setOSDUsage(bool state) { OSDUsage=state; }
-const bool Preferences::oSDUsage() { return OSDUsage; }
+const bool Preferences::OSDUsage() { return OSDUsage; }
 
 void Preferences::setOSDShowOwnNick(bool state) { OSDShowOwnNick=state; }
-const bool Preferences::oSDShowOwnNick() { return OSDShowOwnNick; }
+const bool Preferences::OSDShowOwnNick() { return OSDShowOwnNick; }
 
 void Preferences::setOSDShowChannel(bool state) { OSDShowChannel=state; }
-const bool Preferences::oSDShowChannel() { return OSDShowChannel; }
+const bool Preferences::OSDShowChannel() { return OSDShowChannel; }
 
 void Preferences::setOSDShowQuery(bool state) { OSDShowQuery=state; }
-const bool Preferences::oSDShowQuery() { return OSDShowQuery; }
+const bool Preferences::OSDShowQuery() { return OSDShowQuery; }
 
 void Preferences::setOSDShowChannelEvent(bool state) { OSDShowChannelEvent=state; }
-const bool Preferences::oSDShowChannelEvent() { return OSDShowChannelEvent; }
+const bool Preferences::OSDShowChannelEvent() { return OSDShowChannelEvent; }
 
-const QFont Preferences::oSDFont() { return osdFont; }
+const QFont Preferences::OSDFont() { return osdFont; }
 void Preferences::setOSDFont(const QFont &newFont) { osdFont=newFont; }
 void Preferences::setOSDFontRaw(const QString &rawFont) { osdFont.fromString(rawFont); }
 
 /*void Preferences::setOSDColor(const QString &newColor) { osdColor.setNamedColor(newColor); }
-QColor Preferences::oSDColor() { return osdColor; }*/
+QColor Preferences::OSDColor() { return osdColor; }*/
 
 void Preferences::setOSDUseCustomColors(bool state) { useOSDCustomColors = state; }
-const bool Preferences::oSDUseCustomColors() { return useOSDCustomColors; }
+const bool Preferences::OSDUseCustomColors() { return useOSDCustomColors; }
 
 void Preferences::setOSDTextColor(const QString& newColor) { osdTextColor.setNamedColor(newColor); }
-const QColor Preferences::oSDTextColor() { return osdTextColor; }
+const QColor Preferences::OSDTextColor() { return osdTextColor; }
 
 void Preferences::setOSDBackgroundColor(const QString& newColor) { osdBackgroundColor.setNamedColor(newColor); }
-const QColor Preferences::oSDBackgroundColor() { return osdBackgroundColor; }
+const QColor Preferences::OSDBackgroundColor() { return osdBackgroundColor; }
 
 void Preferences::setOSDDuration(int ms) { OSDDuration = ms; }
-const int Preferences::oSDDuration() { return OSDDuration; }
+const int Preferences::OSDDuration() { return OSDDuration; }
 
 void Preferences::setOSDScreen(uint screen) { OSDScreen = screen; }
-const uint Preferences::oSDScreen() { return OSDScreen; }
+const uint Preferences::OSDScreen() { return OSDScreen; }
 
 void Preferences::setOSDDrawShadow(bool state) { OSDDrawShadow = state; }
-const bool Preferences::oSDDrawShadow() { return OSDDrawShadow; }
+const bool Preferences::OSDDrawShadow() { return OSDDrawShadow; }
 
 void Preferences::setOSDOffsetX(int offset) { OSDOffsetX = offset; }
-const int Preferences::oSDOffsetX() { return OSDOffsetX; }
+const int Preferences::OSDOffsetX() { return OSDOffsetX; }
 
 void Preferences::setOSDOffsetY(int offset) { OSDOffsetY = offset; }
-const int Preferences::oSDOffsetY() { return OSDOffsetY; }
+const int Preferences::OSDOffsetY() { return OSDOffsetY; }
 
 void Preferences::setOSDAlignment(int alignment) { OSDAlignment = alignment; }
-const int Preferences::oSDAlignment() { return OSDAlignment; }
+const int Preferences::OSDAlignment() { return OSDAlignment; }
 
 const QFont Preferences::textFont() { return textFont; }
 const QFont Preferences::listFont() { return listFont; }

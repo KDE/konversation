@@ -473,12 +473,12 @@ class Preferences : public QObject, public PreferencesBase
 
         static const bool openWatchedNicksAtStartup();
         static void setOpenWatchedNicksAtStartup(bool open);
-
+*/
         static const QString channelEncoding(const QString& server,const QString& channel);
         static void setChannelEncoding(const QString& server,const QString& channel,const QString& encoding);
         static const QStringList channelEncodingsServerList();
         static const QStringList channelEncodingsChannelList(const QString& server);
-
+/*
         // Themes
         static void setIconTheme(const QString& name);
         static const QString iconTheme();

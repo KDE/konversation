@@ -517,15 +517,15 @@ void KonversationApplication::readOptions()
  *
  *     if(osd)
     {
-        osd->setEnabled(Preferences::oSDUsage());
-        osd->setFont(Preferences::oSDFont());
-        osd->setDuration(Preferences::oSDDuration());
-        osd->setScreen(Preferences::oSDScreen());
-        osd->setShadow(Preferences::oSDDrawShadow());
-        osd->setOffset(Preferences::oSDOffsetX(),preferences.getOSDOffsetY());
-        osd->setAlignment((OSDWidget::Alignment)Preferences::oSDAlignment());
+        osd->setEnabled(Preferences::OSDUsage());
+        osd->setFont(Preferences::OSDFont());
+        osd->setDuration(Preferences::OSDDuration());
+        osd->setScreen(Preferences::OSDScreen());
+        osd->setShadow(Preferences::OSDDrawShadow());
+        osd->setOffset(Preferences::OSDOffsetX(),preferences.getOSDOffsetY());
+        osd->setAlignment((OSDWidget::Alignment)Preferences::OSDAlignment());
 
-        if(Preferences::oSDUseCustomColors())
+        if(Preferences::OSDUseCustomColors())
         {
             QString osdTextColor = config->readEntry("OSDTextColor");
             if(osdTextColor.isEmpty())
@@ -533,7 +533,7 @@ void KonversationApplication::readOptions()
             else
                 Preferences::setOSDTextColor("#" + osdTextColor);
 
-            osd->setTextColor(Preferences::oSDTextColor());
+            osd->setTextColor(Preferences::OSDTextColor());
 
             QString osdBackgroundColor = config->readEntry("OSDBackgroundColor");
             if(osdBackgroundColor.isEmpty())
@@ -541,7 +541,7 @@ void KonversationApplication::readOptions()
             else
                 Preferences::setOSDBackgroundColor("#" + osdBackgroundColor);
 
-            osd->setBackgroundColor(Preferences::oSDBackgroundColor());
+            osd->setBackgroundColor(Preferences::OSDBackgroundColor());
         }
     }
 */
