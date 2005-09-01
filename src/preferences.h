@@ -553,11 +553,12 @@ class Preferences : public QObject, public PreferencesBase
         bool mShowBackgroundImage;
         bool mTrayNotify;
         bool mTrayNotifyOnlyOwnNick;
-
+*/
         QValueList<int> mChannelSplitter;
         QValueList<int> mTopicSplitterSizes;
 
         QMap<QString, QStringList> mNotifyList;
+	/*
         QString mCommandChar;
         QString mPreShellCommandStr;
 
@@ -633,13 +634,13 @@ class Preferences : public QObject, public PreferencesBase
         QString mBackgroundImage;
 
         QStringList mButtonList;
-
+*/
         Konversation::ServerGroupList mServerGroupList;
         QPtrList<Ignore> mIgnoreList;
         QValueList<IdentityPtr> mIdentityList;
         QPtrList<Highlight> mHighlightList;
         QMap< QString,QMap<QString,QString> > mChannelEncodingsMap;
-
+/*
         bool mDisableNotifyWhileAway;
 
         // IRC colors
