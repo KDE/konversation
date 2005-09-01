@@ -1839,7 +1839,7 @@ void Channel::updateFonts()
     if(Preferences::showBackgroundImage())
     {
         getTextView()->setViewBackground(Preferences::color("TextViewBackground"),
-            Preferences::backgroundImageName());
+            Preferences::backgroundImage());
     }
     else
     {

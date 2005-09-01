@@ -21,7 +21,7 @@ class PrefsPageChatWinAppearance : public ChatWindowAppearance_Config
 {
     Q_OBJECT
         public:
-        PrefsPageChatWinAppearance(QWidget* newParent,Preferences* newPreferences);
+        PrefsPageChatWinAppearance(QWidget* newParent);
 
     public slots:
         void applyPreferences();
@@ -29,8 +29,5 @@ class PrefsPageChatWinAppearance : public ChatWindowAppearance_Config
     protected slots:
         void setBackgroundImageConfig(bool state);
         void saveBackgroundImage(const QString&);
-
-    protected:
-        Preferences* preferences;
 };
 #endif

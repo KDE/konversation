@@ -282,7 +282,7 @@ class Preferences : public QObject, public PreferencesBase
 
         static const QStringList buttonList();
         static void setButtonList(QStringList newList);
-
+*/
         static void addIgnore(const QString &newIgnore);
         static void clearIgnoreList();
         static const QPtrList<Ignore> ignoreList();
@@ -296,7 +296,7 @@ class Preferences : public QObject, public PreferencesBase
         static const IdentityPtr identityByName(const QString& name);
         static const IdentityPtr identityById(int id);
 //        static IdentityPtr identity;
-
+/*
         static const QString ident();
         static void setIdent(const QString &ident);
 
