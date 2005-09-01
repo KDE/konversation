@@ -32,6 +32,7 @@
 #include "dccpanel.h"
 #include "dcctransfer.h"
 #include "konversationapplication.h"
+#include "preferences.h"
 
 #define TIME_REMAINING_NOT_AVAILABLE -1
 #define TIME_REMAINING_INFINITE      -2
@@ -54,7 +55,7 @@ DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partn
     m_ownPort = QString::null;
     m_timeOffer = QDateTime::currentDateTime();
 
-    m_bufferSize = Preferences::bufferSize();
+    m_bufferSize = Preferences::dccBufferSize();
     m_buffer = new char[ m_bufferSize ];
 
     m_autoUpdateViewTimer = 0;

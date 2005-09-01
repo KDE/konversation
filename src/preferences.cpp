@@ -1,5 +1,5 @@
 /*
-  This program is free software; you can redistribute it and/or modify
+  This program is free software; you can redistribute it and/or self()->modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
@@ -94,30 +94,30 @@ Preferences::~Preferences()
 }
 const Konversation::ServerGroupList Preferences::serverGroupList()
 {
-    return mServerGroupList;
+    return self()->mServerGroupList;
 }
 
 void Preferences::setServerGroupList(const Konversation::ServerGroupList& list)
 {
-    mServerGroupList.clear();
-    mServerGroupList = list;
+    self()->mServerGroupList.clear();
+    self()->mServerGroupList = list;
 }
 
 void Preferences::addServerGroup(Konversation::ServerGroupSettingsPtr serverGroup)
 {
-    mServerGroupList.append(serverGroup);
+    self()->mServerGroupList.append(serverGroup);
 }
 
 const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
 {
-    if(!m_serverGroupList.count())
+    if(!self()->mServerGroupList.count())
     {
         return 0;
     }
 
     Konversation::ServerGroupList::iterator it;
 
-    for(it = mServerGroupList.begin(); it != mServerGroupList.end(); ++it)
+    for(it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
     {
         if((*it)->id() == id)
         {
@@ -130,14 +130,14 @@ const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
 
 const Konversation::ServerGroupSettingsPtr Preferences::serverGroupByServer(const QString& server)
 {
-    if(!m_serverGroupList.count())
+    if(!self()->mServerGroupList.count())
     {
         return 0;
     }
 
     Konversation::ServerGroupList::iterator it;
 
-    for(it = mServerGroupList.begin(); it != mServerGroupList.end(); ++it)
+    for(it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
     {
         for (uint i = 0; i != (*it)->serverList().count(); i++)
         {
@@ -155,7 +155,7 @@ int Preferences::serverGroupIdByName(const QString& serverGroup)
 {
     Konversation::ServerGroupList::iterator it;
 
-    for(it = mServerGroupList.begin(); it != mServerGroupList.end(); ++it)
+    for(it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
     {
         if((*it)->name().lower() == serverGroup.lower())
         {
@@ -170,31 +170,31 @@ bool Preferences::isServerGroup(const QString& server)
 {
     Konversation::ServerGroupList::iterator it;
 
-    for(it = mServerGroupList.begin(); it != mServerGroupList.end(); ++it)
+    for(it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
     {
         if((*it)->name().lower() == server.lower())
         {
-            return mTrue;
+            return true;
         }
     }
 
-    return mFalse;
+    return false;
 }
 
 void Preferences::removeServerGroup(int id)
 {
-    if(!m_serverGroupList.count())
+    if(!self()->mServerGroupList.count())
     {
         return;
     }
 
     Konversation::ServerGroupList::iterator it;
 
-    for(it = mServerGroupList.begin(); it != mServerGroupList.end(); ++it)
+    for(it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
     {
         if((*it)->id() == id)
         {
-            mServerGroupList.remove(it);
+            self()->mServerGroupList.remove(it);
             return;
         }
     }
@@ -202,12 +202,14 @@ void Preferences::removeServerGroup(int id)
 
 const QPtrList<Highlight> Preferences::highlightList()
 {
+    return self()->mHighlightList;
+	
 }
 
 void Preferences::setHighlightList(QPtrList<Highlight> newList)
 {
-    highlightList.clear();
-    highlightList=newList;
+    self()->mHighlightList.clear();
+    self()->mHighlightList=newList;
 }
 
 void Preferences::addHighlight(const QString& newHighlight,
@@ -216,24 +218,25 @@ const QColor &newColor,
 const QString& sound,
 const QString& autoText)
 {
-    highlightList.append(new Highlight(newHighlight,regExp,newColor,KURL(sound),autoText));
+    self()->mHighlightList.append(new Highlight(newHighlight,regExp,newColor,KURL(sound),autoText));
 }
 
 void Preferences::setIgnoreList(QPtrList<Ignore> newList)
 {
-    ignoreList.clear();
-    ignoreList=newList;
+    self()->mIgnoreList.clear();
+    self()->mIgnoreList=newList;
 }
 
 void Preferences::addIgnore(const QString &newIgnore)
 {
     QStringList ignore=QStringList::split(',',newIgnore);
-    ignoreList.append(new Ignore(ignore[0],ignore[1].toInt()));
+    self()->mIgnoreList.append(new Ignore(ignore[0],ignore[1].toInt()));
 }
-
-}
-
 void Preferences::setNotifyList(const QMap<QString, QStringList> &newList)
+{ mNotifyList=newList; }
+
+const QMap<QString, QStringList> Preferences::notifyList() { return mNotifyList; }
+
 const QStringList Preferences::notifyListByGroup(const QString& groupName)
 {
     if (notifyList.find(groupName) != notifyList.end())
@@ -250,15 +253,15 @@ const QString Preferences::notifyStringByGroup(const QString& groupName)
 const bool Preferences::addNotify(const QString& groupName, const QString& newPattern)
 {
     // don't add duplicates
-    if (groupName.isEmpty() || newPattern.isEmpty()) return mFalse;
+    if (groupName.isEmpty() || newPattern.isEmpty()) return false;
     if (!notifyList[groupName].contains(newPattern))
     {
         QStringList nicknameList = notifyList[groupName];
         nicknameList.append(newPattern);
         notifyList[groupName] = nicknameList;
-        return mTrue;
+        return true;
     }
-    return mFalse;
+    return false;
 }
 
 const bool Preferences::removeNotify(const QString& groupName, const QString& pattern)
@@ -271,26 +274,26 @@ const bool Preferences::removeNotify(const QString& groupName, const QString& pa
             notifyList.remove(groupName);
         else
             notifyList[groupName] = nicknameList;
-        return mTrue;
+        return true;
     } else
-    return mFalse;
+    return false;
 }
 
 // Default identity functions
-void Preferences::addIdentity(IdentityPtr identity) { identityList.append(identity); }
-void Preferences::removeIdentity(IdentityPtr identity) { identityList.remove(identity); }
+void Preferences::addIdentity(IdentityPtr identity) { self()->mIdentityList.append(identity); }
+void Preferences::removeIdentity(IdentityPtr identity) { self()->mIdentityList.remove(identity); }
 
 void Preferences::clearIdentityList()
 {
-    identityList.clear();
+    self()->mIdentityList.clear();
 }
 
-const QValueList<IdentityPtr> Preferences::identityList() { return mIdentityList; }
+const QValueList<IdentityPtr> Preferences::identityList() { return self()->mIdentityList; }
 
 void Preferences::setIdentityList(const QValueList<IdentityPtr>& list)
 {
-    identityList.clear();
-    identityList = list;
+    self()->mIdentityList.clear();
+    self()->mIdentityList = list;
 }
 
 const IdentityPtr Preferences::identityByName(const QString& name)
@@ -308,14 +311,14 @@ const IdentityPtr Preferences::identityByName(const QString& name)
         ++it;
     }
 
-    // no matching identity found, return default identity
+    // no self()->matching identity found, return default identity
     return identities.first();
 }
 
 const IdentityPtr Preferences::identityById(int id)
 {
-    QValueList<IdentityPtr> identityList = getIdentityList();
-    for(QValueList<IdentityPtr>::iterator it = identityList.begin(); it != identityList.end(); ++it)
+    QValueList<IdentityPtr> self()->mIdentityList = getIdentityList();
+    for(QValueList<IdentityPtr>::iterator it = self()->mIdentityList.begin(); it != self()->mIdentityList.end(); ++it)
     {
         if((*it)->id() == id)
         {
@@ -323,36 +326,36 @@ const IdentityPtr Preferences::identityById(int id)
         }
     }
 
-    return identityList.first();
+    return self()->mIdentityList.first();
 }
 
-const QString Preferences::realName() { return identityList[0]->getRealName(); }
-void Preferences::setRealName(const QString &name) { identityList[0]->setRealName(name); }
+const QString Preferences::realName() { return self()->mIdentityList[0]->getRealName(); }
+void Preferences::setRealName(const QString &name) { self()->mIdentityList[0]->setRealName(name); }
 
-const QString Preferences::ident() { return identityList[0]->getIdent(); }
-void Preferences::setIdent(const QString &ident) { identityList[0]->setIdent(ident); }
+const QString Preferences::ident() { return self()->mIdentityList[0]->getIdent(); }
+void Preferences::setIdent(const QString &ident) { self()->mIdentityList[0]->setIdent(ident); }
 
-const QString Preferences::partReason() { return identityList[0]->getPartReason(); }
-void Preferences::setPartReason(const QString &newReason) { identityList[0]->setPartReason(newReason); }
+const QString Preferences::partReason() { return self()->mIdentityList[0]->getPartReason(); }
+void Preferences::setPartReason(const QString &newReason) { self()->mIdentityList[0]->setPartReason(newReason); }
 
-const QString Preferences::kickReason() { return identityList[0]->getKickReason(); }
-void Preferences::setKickReason(const QString &newReason) { identityList[0]->setKickReason(newReason); }
+const QString Preferences::kickReason() { return self()->mIdentityList[0]->getKickReason(); }
+void Preferences::setKickReason(const QString &newReason) { self()->mIdentityList[0]->setKickReason(newReason); }
 
-const bool Preferences::showAwayMessage() { return identityList[0]->getShowAwayMessage(); }
-void Preferences::setShowAwayMessage(bool state) { identityList[0]->setShowAwayMessage(state); }
+const bool Preferences::showAwayMessage() { return self()->mIdentityList[0]->getShowAwayMessage(); }
+void Preferences::setShowAwayMessage(bool state) { self()->mIdentityList[0]->setShowAwayMessage(state); }
 
-const QString Preferences::awayMessage() { return identityList[0]->getAwayMessage(); }
-void Preferences::setAwayMessage(const QString &newMessage) { identityList[0]->setAwayMessage(newMessage); }
-const QString Preferences::unAwayMessage() { return identityList[0]->getReturnMessage(); }
-void Preferences::setUnAwayMessage(const QString &newMessage) { identityList[0]->setReturnMessage(newMessage); }
+const QString Preferences::awayMessage() { return self()->mIdentityList[0]->getAwayMessage(); }
+void Preferences::setAwayMessage(const QString &newMessage) { self()->mIdentityList[0]->setAwayMessage(newMessage); }
+const QString Preferences::unAwayMessage() { return self()->mIdentityList[0]->getReturnMessage(); }
+void Preferences::setUnAwayMessage(const QString &newMessage) { self()->mIdentityList[0]->setReturnMessage(newMessage); }
 
-void Preferences::clearIgnoreList() { ignoreList.clear(); }
-const QPtrList<Ignore> Preferences::ignoreList() { return mIgnoreList; }
+void Preferences::clearIgnoreList() { self()->mIgnoreList.clear(); }
+const QPtrList<Ignore> Preferences::ignoreList() { return self()->mIgnoreList; }
 
-const QString Preferences::nickname(int index) { return identityList[0]->getNickname(index); }
-const QStringList Preferences::nicknameList() { return identityList[0]->getNicknameList(); }
-void Preferences::setNickname(int index,const QString &newName) { identityList[0]->setNickname(index,newName); }
-void Preferences::setNicknameList(const QStringList &newList) { identityList[0]->setNicknameList(newList); }
+const QString Preferences::nickname(int index) { return self()->mIdentityList[0]->getNickname(index); }
+const QStringList Preferences::nicknameList() { return self()->mIdentityList[0]->getNicknameList(); }
+void Preferences::setNickname(int index,const QString &newName) { self()->mIdentityList[0]->setNickname(index,newName); }
+void Preferences::setNicknameList(const QStringList &newList) { self()->mIdentityList[0]->setNicknameList(newList); }
 
 void Preferences::setShowTrayIcon(bool state)
 {
@@ -381,19 +384,19 @@ const bool Preferences::dialogFlag(const QString& flagName)
 {
     KConfig* config=KApplication::kApplication()->config();
 
-    config->setGroup("Notification Messages");
+    config->setGroup("Notification self()->Messages");
 
     if( !config->readEntry(flagName).isEmpty() )
-        return mFalse;
+        return false;
     else
-        return mTrue;
+        return true;
 }
 
 void Preferences::setDialogFlag(const QString& flagName,bool state)
 {
     KConfig* config=KApplication::kApplication()->config();
 
-    config->setGroup("Notification Messages");
+    config->setGroup("Notification self()->Messages");
 
     if(state)
         config->deleteEntry(flagName);
@@ -410,32 +413,32 @@ void Preferences::setDialogFlag(const QString& flagName,bool state)
 // Channel Encodings
 const QString Preferences::channelEncoding(const QString& server,const QString& channel)
 {
-    if(channelEncodingsMap.contains(server))
-        if(channelEncodingsMap[server].contains(channel.lower()))
-            return channelEncodingsMap[server][channel.lower()];
+    if(self()->mChannelEncodingsMap.contains(server))
+        if(self()->mChannelEncodingsMap[server].contains(channel.lower()))
+            return self()->mChannelEncodingsMap[server][channel.lower()];
     return QString::null;
 }
 
 void Preferences::setChannelEncoding(const QString& server,const QString& channel,const QString& encoding)
 {
     if(!encoding.isEmpty())
-        channelEncodingsMap[server][channel.lower()]=encoding;
+        self()->mChannelEncodingsMap[server][channel.lower()]=encoding;
     else
     {
-        channelEncodingsMap[server].remove(channel.lower());
-        if(channelEncodingsMap[server].count()==0)
-            channelEncodingsMap.remove(server);
+        self()->mChannelEncodingsMap[server].remove(channel.lower());
+        if(self()->mChannelEncodingsMap[server].count()==0)
+            self()->mChannelEncodingsMap.remove(server);
     }
 }
 
 const QStringList Preferences::channelEncodingsServerList()
 {
-    return channelEncodingsMap.keys();
+    return self()->mChannelEncodingsMap.keys();
 }
 
 const QStringList Preferences::channelEncodingsChannelList(const QString& server)
 {
-    return channelEncodingsMap[server].keys();
+    return self()->mChannelEncodingsMap[server].keys();
 }
 
 #include "preferences.moc"

@@ -774,10 +774,11 @@
       <!-- konversationapplication.cpp:1021 -->
       <!--   config->writeEntry("UseNotify",preferences.getUseNotify()); -->
     </entry>
-    <entry key="NotifyList" type="String" name="NotifyString">
+<!--      I've taken the below out until it can be fixed... right??
+<entry key="NotifyList" type="String" name="NotifyString">
       <default></default>
       <label></label>
-      <whatsthis></whatsthis>
+      <whatsthis></whatsthis> -->
       <!-- konversationapplication.cpp:704 -->
       <!-- //  QString notifyList=config->readEntry("NotifyList",QString::null); -->
       <!-- konversationapplication.cpp:721 -->

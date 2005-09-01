@@ -156,6 +156,7 @@ class Preferences : public QObject, public PreferencesBase
         Konversation::ServerGroupList mServerGroupList;
         QPtrList<Ignore> mIgnoreList;
         QValueList<IdentityPtr> mIdentityList;
+        QPtrList<Highlight> mHighlightList;
         QMap< QString,QMap<QString,QString> > mChannelEncodingsMap;
 /*
         // IRC colors
