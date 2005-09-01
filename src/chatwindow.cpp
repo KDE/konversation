@@ -132,7 +132,7 @@ void ChatWindow::insertRememberLine()
 {
     Q_ASSERT(textView);  if(!textView) return;
     kdDebug() << "Inserting remember line" << endl;
-    textView->appendRaw("<br><hr color=\"#"+Preferences::color("CommandMessage")+"\" noshade>", true, true);
+    textView->appendRaw("<br><hr color=\"#"+Preferences::color(Preferences::CommandMessage)+"\" noshade>", true, true);
 }
 
 void ChatWindow::appendRaw(const QString& message, bool suppressTimestamps)

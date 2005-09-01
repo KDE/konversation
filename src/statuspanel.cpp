@@ -154,8 +154,8 @@ void StatusPanel::updateFonts()
 
     if(Preferences::inputFieldsBackgroundColor())
     {
-        fgString="#"+Preferences::color("ChannelMessage");
-        bgString="#"+Preferences::color("TextViewBackground");
+        fgString="#"+Preferences::color(Preferences::ChannelMessage);
+        bgString="#"+Preferences::color(Preferences::TextViewBackground);
     }
     else
     {
@@ -174,12 +174,12 @@ void StatusPanel::updateFonts()
 
     if(Preferences::showBackgroundImage())
     {
-        getTextView()->setViewBackground(Preferences::color("TextViewBackground"),
+        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
             Preferences::backgroundImage());
     }
     else
     {
-        getTextView()->setViewBackground(Preferences::color("TextViewBackground"),
+        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
             QString::null);
     }
 

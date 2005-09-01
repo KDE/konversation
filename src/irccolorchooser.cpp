@@ -63,7 +63,7 @@ void IRCColorChooser::updatePreview()
     }
     else
     {
-        bgc = QColor("#" + Preferences::color("TextViewBackground"));
+        bgc = QColor("#" + Preferences::color(Preferences::TextViewBackground));
     }
 
     m_view->m_previewLbl->setBackgroundColor(bgc);

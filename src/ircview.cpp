@@ -333,8 +333,8 @@ bool doHighlight, bool parseURL, bool self)
 
     bool inverted = false;                        // TODO this flag should be stored somewhere
     {
-        QColor fg("#"+Preferences::color("ChannelMessage"));
-        QColor  bg("#"+Preferences::color("TextViewBackground"));
+        QColor fg("#"+Preferences::color(Preferences::ChannelMessage));
+        QColor  bg("#"+Preferences::color(Preferences::TextViewBackground));
 
         int h = 0, s = 0,fv = 0,bv = 0;
         fg.getHsv(&h,&s,&fv);
@@ -520,7 +520,7 @@ bool doHighlight, bool parseURL, bool self)
 
 void IRCView::append(const QString& nick,const QString& message)
 {
-    QString channelColor = Preferences::color("ChannelMessage");
+    QString channelColor = Preferences::color(Preferences::ChannelMessage);
     QString line;
     QString nickLine = "%2";
     QString color;
@@ -581,7 +581,7 @@ void IRCView::append(const QString& nick,const QString& message)
 
 void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool self)
 {
-    QString channelColor=Preferences::color("ChannelMessage");
+    QString channelColor=Preferences::color(Preferences::ChannelMessage);
     QString line;
     m_tabNotification = Konversation::tnfNone;
 
@@ -599,7 +599,7 @@ void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool se
 
 void IRCView::appendQuery(const QString& nick,const QString& message)
 {
-    QString queryColor=Preferences::color("QueryMessage");
+    QString queryColor=Preferences::color(Preferences::QueryMessage);
     QString line;
     QString nickLine = "%2";
     QString color;
@@ -659,7 +659,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 
 void IRCView::appendAction(const QString& nick,const QString& message)
 {
-    QString actionColor=Preferences::color("ActionMessage");
+    QString actionColor=Preferences::color(Preferences::ActionMessage);
     QString line;
     QString nickLine = "%2";
     QString color;
@@ -719,7 +719,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
 
 void IRCView::appendServerMessage(const QString& type, const QString& message)
 {
-    QString m_serverColor = Preferences::color("ServerMessage");
+    QString m_serverColor = Preferences::color(Preferences::ServerMessage);
     m_tabNotification = Konversation::tnfControl;
 
     // Fixed width font option for MOTD
@@ -755,7 +755,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message)
 
 void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important, bool parseURL, bool self)
 {
-    QString commandColor = Preferences::color("CommandMessage");
+    QString commandColor = Preferences::color(Preferences::CommandMessage);
     QString line;
     QString prefix="***";
     m_tabNotification = Konversation::tnfControl;
@@ -795,7 +795,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     QString time;
     QString message = rawMessage;
     QString nick = firstColumn;
-    QString backlogColor = Preferences::color("BacklogMessage");
+    QString backlogColor = Preferences::color(Preferences::BacklogMessage);
     m_tabNotification = Konversation::tnfNone;
 
     time = nick.section(' ', 0, 4);
@@ -1283,7 +1283,7 @@ QString IRCView::timeStamp()
     if(Preferences::timestamping())
     {
         QTime time = QTime::currentTime();
-        QString timeColor = Preferences::color("Time");
+        QString timeColor = Preferences::color(Preferences::Time);
         QString timeFormat = Preferences::timestampFormat();
         QString timeString;
 

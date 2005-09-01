@@ -1806,9 +1806,9 @@ void Channel::updateFonts()
 
     if(Preferences::inputFieldsBackgroundColor())
     {
-        fgString="#"+Preferences::color("ChannelMessage");
-        bgString="#"+Preferences::color("TextViewBackground");
-        abgString="#"+Preferences::color("AlternateBackground");
+        fgString="#"+Preferences::color(Preferences::ChannelMessage);
+        bgString="#"+Preferences::color(Preferences::TextViewBackground);
+        abgString="#"+Preferences::color(Preferences::AlternateBackground);
     }
     else
     {
@@ -1838,12 +1838,12 @@ void Channel::updateFonts()
 
     if(Preferences::showBackgroundImage())
     {
-        getTextView()->setViewBackground(Preferences::color("TextViewBackground"),
+        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
             Preferences::backgroundImage());
     }
     else
     {
-        getTextView()->setViewBackground(Preferences::color("TextViewBackground"),
+        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
             QString::null);
     }
 

@@ -50,7 +50,7 @@ namespace Konversation
         // timer.start();
 
         QString filteredLine = text;
-        QString linkColor = Preferences::color("LinkMessage");
+        QString linkColor = Preferences::color(Preferences::LinkMessage);
         QString link;
 
         if(useCustomColor)
