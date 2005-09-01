@@ -37,7 +37,7 @@ Preferences::Preferences()
     // create default identity
     mIdentity=new Identity();
     mIdentity->setName(i18n("Default Identity"));
-    addIdentity(identity);
+    addIdentity(mIdentity);
 
     KUser user(KUser::UseRealUserID);
     setIdent(user.loginName());
@@ -248,7 +248,6 @@ Preferences::~Preferences()
 {
     clearIdentityList();
 }
-
 const Konversation::ServerGroupList Preferences::serverGroupList()
 {
     return mServerGroupList;
@@ -955,6 +954,5 @@ void Preferences::setWikiUrl(const QString& url) { mWikiUrl=url; }
 
 bool Preferences::expandWikiUrl() const { return mExpandWikiUrl;}
 void Preferences::setExpandWikiUrl(bool expandUrl) { mExpandWikiUrl=expandUrl; }
-#endif
 
 #include "preferences.moc"

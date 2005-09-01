@@ -695,8 +695,8 @@
       <!-- konversationapplication.cpp:1163 -->
       <!--   config->writeEntry("ShowChannelEvent",preferences.getOSDShowChannelEvent()); -->
     </entry>
-    <entry key="OSDFont" type="String">
-      <default></default>
+    <entry key="OSDFont" type="Font">
+      <default code="true">QFont()</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:567 -->

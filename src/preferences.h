@@ -217,50 +217,50 @@ class Preferences : public QObject, public PreferencesBase
 
         // On Screen Display
         static void setOSDUsage(bool state);
-        static const bool oSDUsage();
+        static const bool OSDUsage();
 
         static void setOSDShowOwnNick(bool state);
-        static const bool oSDShowOwnNick();
+        static const bool OSDShowOwnNick();
 
         static void setOSDShowChannel(bool state);
-        static const bool oSDShowChannel();
+        static const bool OSDShowChannel();
 
         static void setOSDShowQuery(bool state);
-        static const bool oSDShowQuery();
+        static const bool OSDShowQuery();
 
         static void setOSDShowChannelEvent(bool state);
-        static const bool oSDShowChannelEvent();
+        static const bool OSDShowChannelEvent();
 
-        static const QFont oSDFont();
+        static const QFont OSDFont();
         static void setOSDFont(const QFont &newFont);
         static void setOSDFontRaw(const QString &rawFont);
 
         static void setOSDUseCustomColors(bool state);
-        static const bool oSDUseCustomColors();
+        static const bool OSDUseCustomColors();
 
         static void setOSDTextColor(const QString &color);
-        static const QColor oSDTextColor();
+        static const QColor OSDTextColor();
 
         static void setOSDBackgroundColor(const QString& color);
-        static const QColor oSDBackgroundColor();
+        static const QColor OSDBackgroundColor();
 
         static void setOSDDuration(int ms);
-        static const int oSDDuration();
+        static const int OSDDuration();
 
         static void setOSDScreen(uint screen);
-        static const uint oSDScreen();
+        static const uint OSDScreen();
 
         static void setOSDDrawShadow(bool state);
-        static const bool oSDDrawShadow();
+        static const bool OSDDrawShadow();
 
         static void setOSDOffsetX(int offset);
-        static const int oSDOffsetX();
+        static const int OSDOffsetX();
 
         static void setOSDOffsetY(int offset);
-        static const int oSDOffsetY();
+        static const int OSDOffsetY();
 
         static void setOSDAlignment(int alignment);
-        static const int oSDAlignment();
+        static const int OSDAlignment();
 
         static const QStringList buttonList();
         static void setButtonList(QStringList newList);
@@ -277,11 +277,10 @@ class Preferences : public QObject, public PreferencesBase
         static void setIdentityList(const QValueList<IdentityPtr>& list);
         static const IdentityPtr identityByName(const QString& name);
         static const IdentityPtr identityById(int id);
-//        static IdentityPtr identity;
-/*
+
         static const QString ident();
         static void setIdent(const QString &ident);
-
+/*
         static const QString realName();
         static void setRealName(const QString &name);
 
@@ -635,6 +634,7 @@ class Preferences : public QObject, public PreferencesBase
 
         QStringList mButtonList;
 */
+        IdentityPtr mIdentity;
         Konversation::ServerGroupList mServerGroupList;
         QPtrList<Ignore> mIgnoreList;
         QValueList<IdentityPtr> mIdentityList;
