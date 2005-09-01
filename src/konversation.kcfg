@@ -75,6 +75,9 @@
       <!-- konversationapplication.cpp:943 -->
       <!--   config->writeEntry("ShowQuickButtons",preferences.getShowQuickButtons()); -->
     </entry>
+    <entry key="QuickButtons" type="StringList">
+      <default>"Op,/OP %u%n","DeOp,/DEOP %u%n","WhoIs,/WHOIS %s,%%u%n","Version,/CTCP %s,%%u VERSION%n","Kick,/KICK %u%n","Kick,/KICK %u%n","Ban,/BAN %u%n","Part,/PART %c Leaving...%n","Quit,/QUIT Leaving...%n"</default>
+    </entry>
     <entry key="ShowModeButtons" type="Bool">
       <default>false</default>
       <label></label>
@@ -174,54 +177,30 @@
       <!-- konversationapplication.cpp:959 -->
       <!--   config->writeEntry("BackgroundImage",preferences.getBackgroundImageName()); -->
     </entry>
-
-    <entry key="IrcColorCode1" type="String">
-      <default>#ffffff</default>
+    <entry key="WikiURL" type="String">
+      <default>"http://en.wikipedia.org/wiki/"</default>
     </entry>
-    <entry key="IrcColorCode2" type="String">
-      <default>#000000</default>
+    <entry key="ExpandWikiUrl" type="Bool">
+      <default>false</default>
     </entry>
-    <entry key="IrcColorCode3" type="String">
-      <default>#000080</default>
-    </entry>
-    <entry key="IrcColorCode4" type="String">
-      <default>#008000</default>
-    </entry>
-    <entry key="IrcColorCode5" type="String">
-      <default>#ff0000</default>
-    </entry>
-    <entry key="IrcColorCode6" type="String">
-      <default>#a52a2a</default>
-    </entry>
-    <entry key="IrcColorCode7" type="String">
-      <default>#800080</default>
-    </entry>
-    <entry key="IrcColorCode8" type="String">
-      <default>#ff8000</default>
-    </entry>
-    <entry key="IrcColorCode9" type="String">
-      <default>#808000</default>
-    </entry>
-    <entry key="IrcColorCode10" type="String">
-      <default>#00ff00</default>
-    </entry>
-    <entry key="IrcColorCode11" type="String">
-      <default>#008080</default>
-    </entry>
-    <entry key="IrcColorCode12" type="String">
-      <default>#00ffff</default>
-    </entry>
-    <entry key="IrcColorCode13" type="String">
-      <default>#0000ff</default>
-    </entry>
-    <entry key="IrcColorCode14" type="String">
-      <default>#ffc0cb</default>
-    </entry>
-    <entry key="IrcColorCode15" type="String">
-      <default>#a0a0a0</default>
-    </entry>
-    <entry key="IrcColorCode16" type="String">
-      <default>#c0c0c0</default>
+    <entry key="IrcColorCode$(colorNumber)" type="Color">
+      <parameter name="colorNumber" type="UInt" max="15"/>
+      <default param="0">#ffffff</default>
+      <default param="1">#000000</default>
+      <default param="2">#000080</default>
+      <default param="3">#008000</default>
+      <default param="4">#ff0000</default>
+      <default param="5">#a52a2a</default>
+      <default param="6">#800080</default>
+      <default param="7">#ff8000</default>
+      <default param="8">#808000</default>
+      <default param="9">#00ff00</default>
+      <default param="10">#008080</default>
+      <default param="11">#00ffff</default>
+      <default param="12">#0000ff</default>
+      <default param="13">#ffc0cb</default>
+      <default param="14">#a0a0a0</default>
+      <default param="15">#c0c0c0</default>
     </entry>
     <entry key="FilterColorCodes" type="Bool" name="FilterColors">
       <default>false</default>
@@ -232,9 +211,16 @@
       <!-- konversationapplication.cpp:969 -->
       <!--   config->writeEntry("FilterColorCodes", preferences.getFilterColors()); -->
     </entry>
-    <entry key="NickColor$(nickNumber)" type="String">
+    <entry key="NickColor$(nickNumber)" type="Color">
       <parameter name="nickNumber" type="UInt" max="7"/>
-      <default>#8E55E9,#B30E0E,#18B33C,#58ADB3,#9E54B3,#0FB39A,#3176B3</default>
+      <default param="0">#8E55E9</default>
+      <default param="1">#B30E0E</default>
+      <default param="2">#18B33C</default>
+      <default param="3">#58ADB3</default>
+      <default param="4">#9E54B3</default>
+      <default param="5">#0FB39A</default>
+      <default param="6">#3176B3</default>
+      <default param="7">#000001</default>
     </entry>
 
    <entry key="UseColoredNicks" type="Bool">
@@ -545,7 +531,7 @@
   </group>
   <group name="Sort Nicknames">
     <entry key="AdminValue" type="Int">
-      <default></default>
+      <default>1</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:486 -->
@@ -556,7 +542,7 @@
       <!--   config->writeEntry("AdminValue",preferences.getAdminValue()); -->
     </entry>
     <entry key="OwnerValue" type="Int">
-      <default></default>
+      <default>2</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:492 -->
@@ -564,8 +550,8 @@
       <!-- konversationapplication.cpp:976 -->
       <!--   config->writeEntry("OwnerValue",preferences.getOwnerValue()); -->
     </entry>
-    <entry key="OperatorValue" type="Int">
-      <default></default>
+    <entry key="OperatorValue" type="Int" name="OpValue">
+      <default>4</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:493 -->
@@ -574,7 +560,7 @@
       <!--   config->writeEntry("OperatorValue",preferences.getOpValue()); -->
     </entry>
     <entry key="HalfopValue" type="Int">
-      <default></default>
+      <default>8</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:494 -->
@@ -583,7 +569,7 @@
       <!--   config->writeEntry("HalfopValue",preferences.getHalfopValue()); -->
     </entry>
     <entry key="VoiceValue" type="Int">
-      <default></default>
+      <default>16</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:495 -->
@@ -592,7 +578,7 @@
       <!--   config->writeEntry("VoiceValue",preferences.getVoiceValue()); -->
     </entry>
     <entry key="AwayValue" type="Int">
-      <default></default>
+      <default>32</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:496 -->
@@ -601,7 +587,7 @@
       <!--   config->writeEntry("AwayValue",preferences.getAwayValue()); -->
     </entry>
     <entry key="NoRightsValue" type="Int">
-      <default></default>
+      <default>32</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:497 -->
@@ -1128,6 +1114,9 @@
       <!-- konversationapplication.cpp:1233 -->
       <!--   config->writeEntry("BlinkingTabs",preferences.getBlinkingTabs()); -->
     </entry>
+    <entry key="UseClickableNicks" type="Bool">
+      <default>true</default>
+    </entry>
     <entry key="BringToFront" type="Bool">
       <default>false</default>
       <label></label>
@@ -1290,16 +1279,33 @@
     </entry>
   </group>
   <group name="Message Text Colors">
-    <entry key="ActionMessageColor" type="String"/>
-    <entry key="BacklogMessageColor" type="String"/>
-    <entry key="ChannelMessageColor" type="String"/>
-    <entry key="CommandMessageColor" type="String"/>
-    <entry key="QueryMessageColor" type="String"/>
-    <entry key="ServerMessageColor" type="String"/>
-    <entry key="TimeColor" type="String"/>
-    <entry key="ActionColor" type="String"/>
-    <entry key="TextViewBackgroundColor" type="String"/>
-    <entry key="AlternateBackgroundColor" type="String"/>
-    <entry key="HyperlinkColor" type="String"/>
+    <entry name="Color$(colorName)" type="Color" key="$(colorName)">
+      <parameter name="colorName" type="Enum">
+        <values>
+          <value>ActionMessage</value>
+          <value>BacklogMessage</value>
+          <value>ChannelMessage</value>
+          <value>CommandMessage</value>
+          <value>QueryMessage</value>
+          <value>ServerMessage</value>
+          <value>Time</value>
+          <value>Action</value>
+          <value>TextViewBackground</value>
+          <value>AlternateBackground</value>
+          <value>Hyperlink</value>
+        </values>
+      </parameter>
+      <default param="ActionMessage">#0000ff</default>
+      <default param="BacklogMessage">#aaaaaa</default>
+      <default param="ChannelMessage">000000</default>
+      <default param="CommandMessage">960096</default>
+      <default param="QueryMessage">0000ff</default>
+      <default param="ServerMessage">91640a</default>
+      <default param="Time">709070</default>
+      <default param="Action">0000ff</default>
+      <default param="TextViewBackground">ffffff</default>
+      <default param="AlternateBackground">ffffff</default>
+      <default param="Hyperlink">ffffff</default>
+    </entry>
   </group>
 </kcfg>

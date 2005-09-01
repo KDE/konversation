@@ -71,10 +71,7 @@ Preferences::Preferences()
     setShowAwayMessage(false);
     setAwayMessage("/me is away: %s");
     setUnAwayMessage("/me is back.");
-
-    setNickCompleteSuffixStart(": ");
-    setNickCompleteSuffixMiddle(" ");
-
+ck,/KICK %u%n"
     Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
     serverGroup->setName("Freenode");
     Konversation::ServerSettings server;
@@ -86,145 +83,6 @@ Preferences::Preferences()
     serverGroup->addChannel(channel);
     mServerGroupList.append(serverGroup);
 
-    buttonList.append("Op,/OP %u%n");
-    buttonList.append("DeOp,/DEOP %u%n");
-    buttonList.append("WhoIs,/WHOIS %s,%%u%n");
-    buttonList.append("Version,/CTCP %s,%%u VERSION%n");
-    buttonList.append("Kick,/KICK %u%n");
-    buttonList.append("Ban,/BAN %u%n");
-    buttonList.append("Part,/PART %c Leaving...%n");
-    buttonList.append("Quit,/QUIT Leaving...%n");
-
-    setShowQuickButtons(false);
-    setShowModeButtons(false);
-    setShowServerList(true);
-    setShowTrayIcon(false);
-    setShowBackgroundImage(false);
-    setTrayNotify(false);
-    setSystrayOnly(false);
-    setTrayNotifyOnlyOwnNick(false);
-
-    setUseSpacing(false);
-    setSpacing(2);
-    setMargin(3);
-
-    setUseParagraphSpacing(false);
-    setParagraphSpacing(2);
-
-    setAutoReconnect(true);
-    setReconnectCount(10);
-    setAutoRejoin(true);
-    setAutojoinOnInvite(false);
-
-    setMaximumLagTime(180);
-
-    setFixedMOTD(true);
-    setBeep(false);
-    setRawLog(false);
-
-    setDccPath(user.homeDir()+"/dccrecv");
-    setDccAddPartner(false);
-    setDccCreateFolder(false);
-    setDccMethodToGetOwnIp(1);
-    setDccSpecificOwnIp("0.0.0.0");
-    setDccSpecificSendPorts(false);
-    setDccSendPortsFirst(0);
-    setDccSendPortsLast(0);
-    setDccSpecificChatPorts(false);
-    setDccChatPortsFirst(0);
-    setDccChatPortsLast(0);
-    setDccAutoGet(false);
-    setDccFastSend(true);
-    setDccSendTimeout(180);
-    setIPv4Fallback(false);
-    setIPv4FallbackIface("eth0");
-
-    KStandardDirs kstddir;
-    setScrollbackMax(1000);
-
-    setAutoWhoNicksLimit(200);
-    setAutoWhoContinuousEnabled(true);
-    setAutoWhoContinuousInterval(90);
-
-    setShowRealNames(false);
-
-    setLog(true);
-    setLowerLog(true);
-    setAddHostnameToLog(false);
-    setLogFollowsNick(true);
-
-    setLogfileBufferSize(100);
-    setLogfileReaderSize(QSize(400,200));
-
-    setTabPlacement(Bottom);
-    setBlinkingTabs(false);
-    setCloseButtonsOnTabs(false);
-    setCloseButtonsAlignRight(false);
-    setBringToFront(false);
-    setFocusNewQueries(false);
-
-    setNotifyDelay(20);
-    setUseNotify(true);
-
-    setHighlightNick(true);
-    setHighlightOwnLines(false);
-    setHighlightNickColor("#ff0000");
-    setHighlightOwnLinesColor("#ff0000");
-    setHighlightSoundEnabled(true);
-
-    setUseClickableNicks(true);
-
-    // On Screen Display
-    setOSDUsage(false);
-    setOSDShowOwnNick(false);
-    setOSDShowQuery(false);
-    setOSDShowChannelEvent(false);
-    setOSDTextColor("#ffffff");
-    setOSDDuration(3000);
-    setOSDOffsetX(30);
-    setOSDOffsetY(50);
-    setOSDAlignment(0);                           // Left
-
-    setColorInputFields(true);
-    setBackgroundImageName(QString::null);
-
-    setTimestamping(true);
-    setShowDate(false);
-    setTimestampFormat("hh:mm");
-
-    setCommandChar("/");
-    setChannelDoubleClickAction("/QUERY %u%n");
-    setNotifyDoubleClickAction("/WHOIS %u%n");
-
-    setSortCaseInsensitive(true);
-    setSortByStatus(false);
-
-    setAutoUserhost(false);
-
-    setFilterColors(false);
-
-    setShowMenuBar(true);
-    setShowTabBarCloseButton(true);
-
-    setHideUnimportantEvents(false);
-    setShowTopic(true);
-    setShowNicknameBox(true);
-
-    setShowRememberLineInAllWindows(false);
-
-    // Web Browser
-    setWebBrowserUseKdeDefault(true);
-    setWebBrowserCmd("mozilla \'%u\'");
-
-    setOpenWatchedNicksAtStartup(false);
-
-    // Themes
-    setIconTheme("default");
-
-    setDisableNotifyWhileAway(false);
-
-    setWikiUrl("http://en.wikipedia.org/wiki/");
-    setExpandWikiUrl(false);
 }
 
 Preferences::~Preferences()
@@ -361,12 +219,6 @@ const QString& autoText)
     highlightList.append(new Highlight(newHighlight,regExp,newColor,KURL(sound),autoText));
 }
 
-void Preferences::setButtonList(QStringList newList)
-{
-    buttonList.clear();
-    buttonList=newList;
-}
-
 void Preferences::setIgnoreList(QPtrList<Ignore> newList)
 {
     ignoreList.clear();
@@ -379,39 +231,7 @@ void Preferences::addIgnore(const QString &newIgnore)
     ignoreList.append(new Ignore(ignore[0],ignore[1].toInt()));
 }
 
-void Preferences::setDccSendPortsFirst(unsigned long port)
-{
-    dccSendPortsFirst=port;
-    if(getDccSendPortsLast() < port)
-        setDccSendPortsLast(port);
 }
-
-void Preferences::setDccSendPortsLast(unsigned long port)
-{
-    dccSendPortsLast=port;
-    if(port < getDccSendPortsFirst())
-        setDccSendPortsFirst(port);
-}
-
-void Preferences::setDccChatPortsFirst(unsigned long port)
-{
-    dccChatPortsFirst=port;
-    if(getDccChatPortsLast() < port)
-        setDccChatPortsLast(port);
-}
-
-void Preferences::setDccChatPortsLast(unsigned long port)
-{
-    dccChatPortsLast=port;
-    if(port < getDccChatPortsFirst())
-        setDccChatPortsFirst(port);
-}
-
-void Preferences::setIPv4Fallback(bool fallback) { ipv4Fallback=fallback;}
-bool Preferences::iPv4Fallback() { return ipv4Fallback; }
-
-void Preferences::setIPv4FallbackIface(const QString& interface) { ipv4Interface=interface; }
-const QString& Preferences::iPv4FallbackIface() { return ipv4Interface; }
 
 void Preferences::setNotifyList(const QMap<QString, QStringList> &newList)
 const QStringList Preferences::notifyListByGroup(const QString& groupName)
@@ -455,8 +275,6 @@ const bool Preferences::removeNotify(const QString& groupName, const QString& pa
     } else
     return mFalse;
 }
-
-const QStringList Preferences::buttonList() { return mButtonList; }
 
 // Default identity functions
 void Preferences::addIdentity(IdentityPtr identity) { identityList.append(identity); }
@@ -536,53 +354,6 @@ const QStringList Preferences::nicknameList() { return identityList[0]->getNickn
 void Preferences::setNickname(int index,const QString &newName) { identityList[0]->setNickname(index,newName); }
 void Preferences::setNicknameList(const QStringList &newList) { identityList[0]->setNicknameList(newList); }
 
-
-
-// TODO: Make this a little simpler (use an array and enum)
-//       get/set message font colors
-
-const QString Preferences::color(const QString& name)
-{
-    KConfig* config=KApplication::kApplication()->config();
-
-    config->setGroup("Message Text Colors");
-    QString color=config->readEntry(name,getDefaultColor(name));
-
-    if(color.isEmpty()) color="000000";
-
-    return mColor;
-}
-
-void Preferences::setColor(const QString& name,const QString& color)
-{
-    // if we get called from the KonversationApplication constructor kApplication is NULL
-    KApplication* app=KApplication::kApplication();
-    if(app)
-    {
-        KConfig* config=app->config();
-
-        config->setGroup("Message Text Colors");
-        config->writeEntry(name,color);
-        config->sync();
-    }
-}
-
-const QString Preferences::defaultColor(const QString& name)
-{
-    if(name=="ChannelMessage")      return "000000";
-    if(name=="QueryMessage")        return "0000ff";
-    if(name=="ServerMessage")       return "91640a";
-    if(name=="ActionMessage")       return "0000ff";
-    if(name=="BacklogMessage")      return "aaaaaa";
-    if(name=="LinkMessage")         return "0000ff";
-    if(name=="CommandMessage")      return "960096";
-    if(name=="Time")                return "709070";
-    if(name=="TextViewBackground")  return "ffffff";
-    if(name=="AlternateBackground") return "ffffff";
-
-    return QString::null;
-}
-
 // Geometry functions
 const QSize Preferences::nicksOnlineSize()        { return mNicksOnlineSize; }
 const QSize Preferences::nicknameSize()           { return mNicknameSize; }
@@ -630,27 +401,8 @@ const QColor Preferences::OSDTextColor() { return mOsdTextColor; }
 void Preferences::setOSDBackgroundColor(const QString& newColor) { osdBackgroundColor.setNamedColor(newColor); }
 const QColor Preferences::OSDBackgroundColor() { return mOsdBackgroundColor; }
 
-void Preferences::setOSDDuration(int ms) { OSDDuration = ms; }
-
-void Preferences::setOSDScreen(uint screen) { OSDScreen = screen; }
-
-void Preferences::setOSDDrawShadow(bool state) { OSDDrawShadow = state; }
-
-void Preferences::setOSDOffsetX(int offset) { OSDOffsetX = offset; }
-const int Preferences::OSDOffsetX() { return mOSDOffsetX; }
-
-void Preferences::setOSDOffsetY(int offset) { OSDOffsetY = offset; }
-const int Preferences::OSDOffsetY() { return mOSDOffsetY; }
-
-void Preferences::setOSDAlignment(int alignment) { OSDAlignment = alignment; }
-const int Preferences::OSDAlignment() { return mOSDAlignment; }
-
 void Preferences::setTextFontRaw(const QString &rawFont) { textFont.fromString(rawFont); }
 void Preferences::setListFontRaw(const QString &rawFont) { listFont.fromString(rawFont); }
-
-
-
-
 
 
 void Preferences::setShowTrayIcon(bool state)
@@ -681,19 +433,6 @@ void Preferences::setTrayNotifyOnlyOwnNick(bool onlyOwnNick)
 bool Preferences::trayNotifyOnlyOwnNick() const
 {
 }
-
-
-
-
-
-
-
-// sorting stuff
-void Preferences::setOpValue(int value)              { mOpValue=value; }
-
-const int Preferences::opValue()                        { return mOpValue; }
-
-
 
 void Preferences::setAutoUserhost(bool state)
 {
