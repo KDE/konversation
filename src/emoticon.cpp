@@ -42,9 +42,9 @@ namespace Konversation
     {
         s_self = this;
 
-        if(Preferences::emotIconsEnabled())
+        if(Preferences::enableEmotIcons())
         {
-            changeTheme(Preferences::emotIconsTheme());
+            changeTheme(Preferences::emotIconTheme());
         }
     }
 

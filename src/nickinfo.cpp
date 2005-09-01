@@ -79,7 +79,6 @@ QString NickInfo::getNickColor() const
 {
     uint& offset = KonversationApplication::instance()->getColorOffset();
     QMap<QString,QString>& colorMap = KonversationApplication::instance()->getColorMap();
-    QStringList& colorList = KonversationApplication::instance()->getColorList();
 
     if(!colorMap.contains(m_nickname))
     {
@@ -87,11 +86,13 @@ QString NickInfo::getNickColor() const
             offset=0;
 
         QString backgroundColor=Preferences::color("TextViewBackground");
-
-        if(backgroundColor==colorList[offset])
+        QString color = Preferences::getColor[offset];
+        if(backgroundColor==color) {
             offset = (offset+1)%8;
+	    color = Preferences::getColor[offset];
+	}
 
-        colorMap[m_nickname]=colorList[offset];
+        colorMap[m_nickname]=color;
         ++offset;
     }
     return colorMap[m_nickname];

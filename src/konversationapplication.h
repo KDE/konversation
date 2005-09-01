@@ -116,7 +116,6 @@ class KonversationApplication : public KUniqueApplication
 
         // Nick color stuff
         uint& getColorOffset();
-        QStringList& getColorList();
         QMap<QString,QString>& getColorMap();
 
         // Intelligent nick completion stuff aka A.W.E.S.O.M.E-O 4000 --cartman

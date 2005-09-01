@@ -629,7 +629,7 @@ void Channel::completeNick()
     // If the cursor is at beginning of line, insert last completion
     if(pos == 0 && !channelInput->lastCompletion().isEmpty())
     {
-        QString addStart(Preferences::nickCompleteSuffixStart());
+        QString addStart(Preferences::suffixStart());
         newLine = channelInput->lastCompletion() + addStart;
         // New cursor position is behind nickname
         pos = newLine.length();
@@ -723,7 +723,7 @@ void Channel::completeNick()
                 if(pos && complete)
                 {
                     channelInput->setLastCompletion(foundNick);
-                    QString addMiddle(Preferences::nickCompleteSuffixMiddle());
+                    QString addMiddle(Preferences::suffixMiddle());
                     newLine.insert(pos,foundNick+addMiddle);
                     pos=pos+foundNick.length()+addMiddle.length();
                 }
@@ -731,7 +731,7 @@ void Channel::completeNick()
                 else if(complete)
                 {
                     channelInput->setLastCompletion(foundNick);
-                    QString addStart(Preferences::nickCompleteSuffixStart());
+                    QString addStart(Preferences::suffixStart());
                     newLine.insert(pos,foundNick+addStart);
                     pos=pos+foundNick.length()+addStart.length();
                 }

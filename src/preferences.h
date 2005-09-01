@@ -52,8 +52,11 @@ class Preferences : public QObject, public PreferencesBase
 
     protected:
         Preferences();
+        static Preferences *mSelf;
 	    
     public:
+
+        static Preferences *self();
         ~Preferences();
         enum TabPlacement
         {
@@ -117,42 +120,17 @@ class Preferences : public QObject, public PreferencesBase
 
         static void setShowRealNames(bool show);
         static const bool showRealNames();
+*/
 
-        static void setDccAddPartner(bool state);
-        static const bool dccAddPartner();
-        static void setDccCreateFolder(bool state);
-        static const bool dccCreateFolder();
-        static void setDccAutoGet(bool state);
-        static const bool dccAutoGet();
-        static void setDccAutoResume(bool state);
-        static const bool dccAutoResume();
-        static void setDccPath(const QString &path);
-        static const QString dccPath();
-        static void setDccMethodToGetOwnIp(int methodId);
-        static const int dccMethodToGetOwnIp();
-        static void setDccSpecificOwnIp(const QString& ip);
-        static const QString dccSpecificOwnIp();
-        static void setDccSpecificSendPorts(bool state);
-        static const bool dccSpecificSendPorts();
-        static void setDccSendPortsFirst(unsigned long port);
-        static const unsigned int dccSendPortsFirst();
-        static void setDccSendPortsLast(unsigned long port);
-        static const unsigned int dccSendPortsLast();
-        static void setDccSpecificChatPorts(bool state);
-        static const bool dccSpecificChatPorts();
-        static void setDccChatPortsFirst(unsigned long port);
-        static const unsigned int dccChatPortsFirst();
-        static void setDccChatPortsLast(unsigned long port);
-        static const unsigned int dccChatPortsLast();
-        static void setDccFastSend(bool state);
-        static const bool dccFastSend();
-        static void setDccSendTimeout(int sec);
-        static const int dccSendTimeout();
+	/* Map the nicer names to the crappy abbreviated kconfigxt names.
+	 * To fix this properly, rename the kconfigxt to the nicer names,
+	 * remove these mappings, then make a kconf_update script to convert
+	 */
         static bool iPv4Fallback();
         static void setIPv4Fallback(bool fallback);
         static const QString& iPv4FallbackIface();
         static void setIPv4FallbackIface(const QString& interface);
-
+/*
         static const TabPlacement tabPlacement();
         static void setTabPlacement(TabPlacement where);
         static void setBlinkingTabs(bool blink);
@@ -265,11 +243,12 @@ class Preferences : public QObject, public PreferencesBase
         static const QStringList buttonList();
         static void setButtonList(QStringList newList);
 */
-        static void addIgnore(const QString &newIgnore);
+        
+	/* All of the below work on the first (default) identity in your identity list*/
+	static void addIgnore(const QString &newIgnore);
         static void clearIgnoreList();
         static const QPtrList<Ignore> ignoreList();
         static void setIgnoreList(QPtrList<Ignore> newList);
-
         static void addIdentity(IdentityPtr identity);
         static void removeIdentity(IdentityPtr identity);
         static void clearIdentityList();
@@ -277,44 +256,31 @@ class Preferences : public QObject, public PreferencesBase
         static void setIdentityList(const QValueList<IdentityPtr>& list);
         static const IdentityPtr identityByName(const QString& name);
         static const IdentityPtr identityById(int id);
-
         static const QString ident();
         static void setIdent(const QString &ident);
-/*
         static const QString realName();
         static void setRealName(const QString &name);
-
         static const QString partReason();
         static void setPartReason(const QString &newReason);
-
         static const QString kickReason();
         static void setKickReason(const QString &newReason);
-
         static void setShowAwayMessage(bool state);
         static const bool showAwayMessage();
         static const QString awayMessage();
         static void setAwayMessage(const QString &newMessage);
         static const QString unAwayMessage();
         static void setUnAwayMessage(const QString &newMessage);
-*/
         static const QString nickname(int index);
         static const QStringList nicknameList();
         static void setNickname(int index,const QString &newName);
         static void setNicknameList(const QStringList &newList);
+
+	
         static const QString color(const QString& name);
         static void setColor(const QString& name,const QString& color);
 
 /*
         // Colored nicknames
-        static const bool useColoredNicks();
-        static void setUseColoredNicks(bool usecolor);
-
-        static const QStringList nickColorList();
-        static void setNickColorList(const QStringList &cl);
-
-        static const bool useBoldNicks();
-        static void setUseBoldNicks(bool boldNicks);
-
         static const bool useLiteralModes();
         static void setUseLiteralModes(bool literalModes);
 
@@ -323,11 +289,6 @@ class Preferences : public QObject, public PreferencesBase
 
         static const QString& backgroundImageName();
         static void setBackgroundImageName(const QString& name);
-
-        static void setNickCompleteSuffixStart(const QString &suffix);
-        static void setNickCompleteSuffixMiddle(const QString &suffix);
-        static const QString nickCompleteSuffixStart();
-        static const QString nickCompleteSuffixMiddle();
 
         static const bool fixedMOTD();
         static void setFixedMOTD(bool fixed);
@@ -413,14 +374,6 @@ class Preferences : public QObject, public PreferencesBase
         static const QStringList aliasList();
         static void setAliasList(const QStringList &aliasList);
 
-        // Nick completion
-        static const int nickCompletionMode();
-        static void setNickCompletionMode(int mode);
-        static const QString prefixCharacter();
-        static void  setPrefixCharacter(const QString &prefix);
-        static const bool nickCompletionCaseSensitive();
-        static void setNickCompletionCaseSensitive(bool caseSensitive);
-
         //User interface
         static const bool showMenuBar();
         static void setShowMenuBar(bool s);
@@ -456,21 +409,6 @@ class Preferences : public QObject, public PreferencesBase
         static void setChannelEncoding(const QString& server,const QString& channel,const QString& encoding);
         static const QStringList channelEncodingsServerList();
         static const QStringList channelEncodingsChannelList(const QString& server);
-/*
-        // Themes
-        static void setIconTheme(const QString& name);
-        static const QString iconTheme();
-
-        static void setEmotIconsEnabled(bool enabled) { mEmotIconsEnabled = enabled; }
-        static bool emotIconsEnabled() { return mEmotIconsEnabled; }
-        static void setEmotIconsTheme(const QString& theme) { mEmotIconsTheme = theme; }
-        static QString emotIconsTheme() { return mEmotIconsTheme; }
-
-        static bool showNicknameBox();
-        static void setShowNicknameBox(bool show);
-
-        static bool disableNotifyWhileAway() { return mDisableNotifyWhileAway; }
-        static void setDisableNotifyWhileAway(bool disable) { mDisableNotifyWhileAway = disable; }
 
         static QString wikiUrl();
         static void setWikiUrl(const QString& url);
@@ -488,127 +426,24 @@ class Preferences : public QObject, public PreferencesBase
     protected:
         const QString defaultColor(const QString& name);
 
-        bool mLog;
-        bool mLowerLog;
-        bool mAddHostnameToLog;
-        bool mLogFollowsNick;
-        int mScrollbackMax;
-
-        int mAutoWhoNicksLimit;
-        bool mAutoWhoContinuousEnabled;
-        int mAutoWhoContinuousInterval;
-
-        bool mShowRealNames;
-
-        TabPlacement mTabPlacement;                // where do the tabs go?
-        bool mBlinkingTabs;                        // Do we want the LEDs on the tabs to blink?
-        bool mCloseButtonsOnTabs;                  // Do we want close widgets on the tabs?
-        bool mCloseButtonsAlignRight;              // Display close widgets on the right side?
-        bool mBringToFront;                        // Do we want to see newly created tabs immediately?
-
-        bool mFixedMOTD;
-        bool mRawLog;
-
         bool mCustomVersionReplyEnabled;
         QString mCustomVersionReply;
-
-        bool mDccAddPartner;
-        bool mDccCreateFolder;                     // create folders for each DCC partner?
-        int mDccMethodToGetOwnIp;
-        QString mDccSpecificOwnIp;
-        bool mDccSpecificSendPorts;
-        unsigned long mDccSendPortsFirst;
-        unsigned long mDccSendPortsLast;
-        bool mDccSpecificChatPorts;
-        unsigned long mDccChatPortsFirst;
-        unsigned long mDccChatPortsLast;
-        bool mDccAutoGet;
-        bool mDccAutoResume;
-        QString mDccPath;
-        bool mDccFastSend;
-        int mDccSendTimeout;
-        bool ipv4Fallback;
-        QString ipv4Interface;
-
-        bool mAutoReconnect;
-        unsigned int mReconnectCounter;
-        bool mAutoRejoin;
-        bool mAutojoinOnInvite;
-
-        int mMaximumLag;                           // ask for reconnect
-
-        int mNotifyDelay;
-        bool mUseNotify;
-
-        bool mTimestamping;
-        bool mShowDate;
-        QString mTimestampFormat;
-
-        bool mShowQuickButtons;
-        bool mShowModeButtons;
-        bool mShowServerList;
-        bool mShowTrayIcon;
-        bool mSystrayOnly;
-        bool mShowBackgroundImage;
-        bool mTrayNotify;
-        bool mTrayNotifyOnlyOwnNick;
-*/
-        QValueList<int> mChannelSplitter;
-        QValueList<int> mTopicSplitterSizes;
-
-        QMap<QString, QStringList> mNotifyList;
-	/*
-        QString mCommandChar;
-        QString mPreShellCommandStr;
-
-        QString mNickCompleteSuffixStart;
-        QString mNickCompleteSuffixMiddle;
-
-        QString mChannelDoubleClickAction;
-        QString mNotifyDoubleClickAction;
-
+/*
         // Geometries
         QSize mMainWindowSize;
         QSize mNicksOnlineSize;
         QSize mNicknameSize;
-        QSize mLogfileReaderSize;
         QSize mColorConfigurationSize;
         QSize mMultilineEditSize;
 
-        int mLogfileBufferSize;
 
-        bool mUseSpacing;
-        int mSpacing;
-        int mMargin;
 
         // sorting stuff
-        bool mSortByStatus;
-        bool mSortCaseInsensitive;
 
         // more sorting stuff
-        int mAdminValue;
-        int mOwnerValue;
         int mOpValue;
-        int mHalfopValue;
-        int mVoiceValue;
-        int mAwayValue;
-        int mNoRightsValue;
 
         // flag for hostmasks next to nicknames
-        bool mAutoUserhost;
-
-        bool mUseParagraphSpacing;
-        int mParagraphSpacing;
-
-        QFont mTextFont;
-        QFont mListFont;
-
-        bool mHighlightNick;
-        bool mHighlightOwnLines;
-        QColor mHighlightNickColor;
-        QColor mHighlightOwnLinesColor;
-        bool mHighlightSoundEnabled;
-
         bool mClickableNicks;
 
         // On Screen Display
@@ -618,10 +453,6 @@ class Preferences : public QObject, public PreferencesBase
         bool mOSDShowQuery;                        // Message on query acticity
         bool mOSDShowChannelEvent;                 // Message on channel join/part events
         QFont mOsdFont;                            // Which font to use
-        bool mUseOSDCustomColors;
-        bool mOSDDrawShadow;
-        int mOSDDuration;
-        uint mOSDScreen;
         QColor mOsdTextColor;
         QColor mOsdBackgroundColor;
         int mOSDOffsetX;
@@ -630,54 +461,33 @@ class Preferences : public QObject, public PreferencesBase
 
         bool mColorInputFields;
 
-        QString mBackgroundImage;
-
         QStringList mButtonList;
 */
         IdentityPtr mIdentity;
         Konversation::ServerGroupList mServerGroupList;
         QPtrList<Ignore> mIgnoreList;
         QValueList<IdentityPtr> mIdentityList;
-        QPtrList<Highlight> mHighlightList;
         QMap< QString,QMap<QString,QString> > mChannelEncodingsMap;
 /*
-        bool mDisableNotifyWhileAway;
-
         // IRC colors
         QStringList mIrcColorList;
-        QStringList mNickColorList;
         bool mFilterColors;
-        bool mUseColoredNicks;
-        bool mUseBoldNicks;
-        bool mUseLiteralModes;
 
         // aliases
-        QStringList mAliasList;
 
         //Nick completion
         int mNickCompletionMode;
-        QString mPrefixCharacter;
         bool mNickCompletionCaseSensitive;
 
         //User interface
         bool mShowMenuBar;
-        bool mShowTabBarCloseButton;
-        bool mShowNicknameBox;
-
-        bool mShowTopic;
-        bool mShowRememberLineInAllWindows;
-        bool mFocusNewQueries;
-        bool mHideUnimportantEvents;
-        bool mDisableExpansion;
 
         // Web Browser
         bool mWebBrowserUseKdeDefault;
-        QString mWebBrowserCmd;
 
         bool mOpenWatchedNicksAtStartup;
 
         // Themes
-        QString mIconTheme;
         bool mEmotIconsEnabled;
         QString mEmotIconsTheme;
 

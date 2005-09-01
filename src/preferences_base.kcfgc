@@ -5,4 +5,5 @@ ItemAccessors=true
 MemberVariables=private
 Mutators=true
 SetUserTexts=true
-Singleton=true
+Singleton=false
+

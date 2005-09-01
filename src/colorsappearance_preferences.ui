@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>ColorsAppearance_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,6 +16,9 @@ the Free Software Foundation; either version 2 of the License, or
             <width>676</width>
             <height>593</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>ColorsAppearance_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -440,7 +443,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="0" column="7">
                     <property name="name">
-                        <cstring>kcfg_NickColor5</cstring>
+                        <cstring>kcfg_NickColor4</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -464,7 +467,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="1" column="7">
                     <property name="name">
-                        <cstring>kcfg_NickColor6</cstring>
+                        <cstring>kcfg_NickColor5</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -488,7 +491,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="0" column="4">
                     <property name="name">
-                        <cstring>kcfg_NickColor3</cstring>
+                        <cstring>kcfg_NickColor2</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -496,7 +499,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="1" column="4">
                     <property name="name">
-                        <cstring>kcfg_NickColor4</cstring>
+                        <cstring>kcfg_NickColor3</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -588,7 +591,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </spacer>
                 <widget class="KColorButton" row="0" column="1">
                     <property name="name">
-                        <cstring>kcfg_NickColor1</cstring>
+                        <cstring>kcfg_NickColor0</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -612,7 +615,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="1" column="1">
                     <property name="name">
-                        <cstring>kcfg_NickColor2</cstring>
+                        <cstring>kcfg_NickColor1</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -670,7 +673,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </spacer>
                 <widget class="KColorButton" row="1" column="10">
                     <property name="name">
-                        <cstring>kcfg_NickColor8</cstring>
+                        <cstring>kcfg_NickColor7</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -678,7 +681,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="0" column="10">
                     <property name="name">
-                        <cstring>kcfg_NickColor7</cstring>
+                        <cstring>kcfg_NickColor6</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -868,7 +871,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="3" column="1">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode4</cstring>
+                        <cstring>kcfg_IrcColorCode3</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -876,7 +879,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="2" column="1">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode3</cstring>
+                        <cstring>kcfg_IrcColorCode2</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -884,7 +887,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="0" column="1">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode1</cstring>
+                        <cstring>kcfg_IrcColorCode0</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -892,7 +895,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="1" column="1">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode2</cstring>
+                        <cstring>kcfg_IrcColorCode1</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -948,7 +951,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="1" column="4">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode6</cstring>
+                        <cstring>kcfg_IrcColorCode5</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -956,7 +959,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="0" column="4">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode5</cstring>
+                        <cstring>kcfg_IrcColorCode4</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -964,7 +967,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="3" column="4">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode8</cstring>
+                        <cstring>kcfg_IrcColorCode7</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -972,7 +975,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="2" column="4">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode7</cstring>
+                        <cstring>kcfg_IrcColorCode6</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -1116,7 +1119,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </spacer>
                 <widget class="KColorButton" row="3" column="7">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode12</cstring>
+                        <cstring>kcfg_IrcColorCode11</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -1132,7 +1135,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="1" column="7">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode10</cstring>
+                        <cstring>kcfg_IrcColorCode9</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -1140,7 +1143,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="2" column="7">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode11</cstring>
+                        <cstring>kcfg_IrcColorCode10</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -1148,7 +1151,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="0" column="7">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode9</cstring>
+                        <cstring>kcfg_IrcColorCode8</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -1248,7 +1251,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </spacer>
                 <widget class="KColorButton" row="3" column="10">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode16</cstring>
+                        <cstring>kcfg_IrcColorCode15</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -1264,7 +1267,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="1" column="10">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode14</cstring>
+                        <cstring>kcfg_IrcColorCode13</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -1280,7 +1283,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="0" column="10">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode13</cstring>
+                        <cstring>kcfg_IrcColorCode12</cstring>
                     </property>
                     <property name="text">
                         <string></string>
@@ -1288,7 +1291,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="KColorButton" row="2" column="10">
                     <property name="name">
-                        <cstring>kcfg_IrcColorCode15</cstring>
+                        <cstring>kcfg_IrcColorCode14</cstring>
                     </property>
                     <property name="text">
                         <string></string>

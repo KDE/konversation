@@ -119,15 +119,13 @@ int KonversationApplication::newInstance()
         Preferences::setListFont(font());
 
         readOptions();
-        colorList = KonversationApplication::Preferences::nickColorList();
-
         // Images object providing LEDs, NickIcons
         m_images = new Images();
 
         // Auto-alias scripts
         QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
         QFileInfo* fileInfo = new QFileInfo();
-        QStringList aliasList(KonversationApplication::Preferences::aliasList());
+        QStringList aliasList(Preferences::aliasList());
         QString newAlias;
 
         for ( QStringList::ConstIterator it = scripts.begin(); it != scripts.end(); ++it )
@@ -142,7 +140,7 @@ int KonversationApplication::newInstance()
             }
         }
 
-        KonversationApplication::Preferences::setAliasList(aliasList);
+        Preferences::setAliasList(aliasList);
 
         // Setup system codec
         // TODO: check if this works now as intended
@@ -155,7 +153,7 @@ int KonversationApplication::newInstance()
         connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
         connect(mainWindow,SIGNAL (openPrefsDialog(Preferences:::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
         connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
-        connect(&Preferences::SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
+        connect(Preferences::self(), SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
         connect(this, SIGNAL (prefsChanged()), mainWindow, SLOT (slotPrefsChanged()) );
 
         // apply GUI settings
@@ -1251,11 +1249,6 @@ const QPtrList<Server> KonversationApplication::getServerList() { return serverL
 uint& KonversationApplication::getColorOffset()
 {
     return colorOffSet;
-}
-
-QStringList& KonversationApplication::getColorList()
-{
-    return colorList;
 }
 
 QMap<QString,QString>& KonversationApplication::getColorMap()

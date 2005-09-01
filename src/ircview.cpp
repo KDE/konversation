@@ -544,14 +544,15 @@ void IRCView::append(const QString& nick,const QString& message)
         if(nick != m_server->getNickname())
             color = m_server->obtainNickInfo(nick)->getNickColor();
         else
-            color = Preferences::nickColorList()[8];
-
-        nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
+            color =  "#000001";
 
         if(color == "#000000")
         {
             color = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
         }
+
+        nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
+
     }
     else
     {
@@ -622,14 +623,14 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
         if(nick != m_server->getNickname())
             color = m_server->obtainNickInfo(nick)->getNickColor();
         else
-            color = Preferences::nickColorList()[8];
-
-        nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
+            color = "#000001";
 
         if(color == "#000000")
         {
             color = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
         }
+
+        nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
     }
     else
     {
@@ -682,7 +683,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
         if(nick != m_server->getNickname())
             color = m_server->obtainNickInfo(nick)->getNickColor();
         else
-            color = Preferences::nickColorList()[8];
+            color = "#000001";
 
         if(color == "#000000")
         {
