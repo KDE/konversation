@@ -190,7 +190,7 @@ void Query::updateFonts()
     QString fgString;
     QString bgString;
 
-    if(Preferences::colorInputFields())
+    if(Preferences::inputFieldsBackgroundColor())
     {
         fgString="#"+Preferences::color("ChannelMessage");
         bgString="#"+Preferences::color("TextViewBackground");
@@ -217,7 +217,7 @@ void Query::updateFonts()
     if(Preferences::showBackgroundImage())
     {
         getTextView()->setViewBackground(Preferences::color("TextViewBackground"),
-            Preferences::backgroundImageName());
+            Preferences::backgroundImage());
     }
     else
     {

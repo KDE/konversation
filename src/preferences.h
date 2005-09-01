@@ -105,8 +105,6 @@ class Preferences : public QObject, public PreferencesBase
         static const bool addHostnameToLog();
         static void setLogFollowsNick(bool state);
         static const bool logFollowsNick();
-        static void setLogPath(const QString &path);
-        static const QString logPath();
         static void setScrollbackMax(int max);
         static const int scrollbackMax();
 
@@ -128,8 +126,6 @@ class Preferences : public QObject, public PreferencesBase
         static const bool dccAutoGet();
         static void setDccAutoResume(bool state);
         static const bool dccAutoResume();
-        static void setDccBufferSize(unsigned long size);
-        static const unsigned long dccBufferSize();
         static void setDccPath(const QString &path);
         static const QString dccPath();
         static void setDccMethodToGetOwnIp(int methodId);
@@ -173,20 +169,7 @@ class Preferences : public QObject, public PreferencesBase
         static void setSortByStatus(bool state);
         static const bool sortCaseInsensitive();
         static void setSortCaseInsensitive(bool state);
-        // more sorting stuff
-        static const int adminValue();
-        static void setAdminValue(int value);
-        static const int ownerValue();
-        static void setOwnerValue(int value);
-        static const int opValue();
-        static void setOpValue(int value);
-        static const int halfopValue();
-        static void setHalfopValue(int value);
-        static const int voiceValue();
-        static void setVoiceValue(int value);
-        static const int noRightsValue();
-        static void setNoRightsValue(int value);
-
+        
         // Geometry functions
         static const QSize nicksOnlineSize();
         static const QSize nicknameSize();
@@ -204,7 +187,7 @@ class Preferences : public QObject, public PreferencesBase
         static const int notifyDelay();
         static void setNotifyDelay(int delay);
         static const bool useNotify();
-        static void setUseNotify(bool use);
+        static void setUseNotify(bool use);*/
         static const QMap<QString, QStringList> notifyList();
         static const QStringList notifyListByGroup(const QString& groupName);
         static const QString notifyStringByGroup(const QString& groupName);
@@ -215,7 +198,7 @@ class Preferences : public QObject, public PreferencesBase
         static const QPtrList<Highlight> highlightList();
         static void setHighlightList(QPtrList<Highlight> newList);
         static void addHighlight(const QString& newHighlight,bool regExp, const QColor &color,const QString& sound,const QString& autoText);
-        static void setHighlightSoundEnabled(bool enabled);
+/*        static void setHighlightSoundEnabled(bool enabled);
         static const bool highlightSoundEnabled();
 
         static void setHighlightNick(bool state);        // shall we highlight the current nick?
@@ -225,7 +208,6 @@ class Preferences : public QObject, public PreferencesBase
         static const bool useClickableNicks();
 
         static void setHighlightNickColor(const QString &color);
-        static const QColor highlightNickColor();
 
         static void setHighlightOwnLines(bool state);    // shall we highlight all our own lines?
         static const bool highlightOwnLines();
@@ -339,9 +321,6 @@ class Preferences : public QObject, public PreferencesBase
 
         static const bool filterColors();
         static void setFilterColors(bool filter);
-
-        static const bool colorInputFields();
-        static void setColorInputFields(bool state);
 
         static const QString& backgroundImageName();
         static void setBackgroundImageName(const QString& name);
@@ -514,7 +493,6 @@ class Preferences : public QObject, public PreferencesBase
         bool mLowerLog;
         bool mAddHostnameToLog;
         bool mLogFollowsNick;
-        QString mLogPath;
         int mScrollbackMax;
 
         int mAutoWhoNicksLimit;
@@ -547,7 +525,6 @@ class Preferences : public QObject, public PreferencesBase
         unsigned long mDccChatPortsLast;
         bool mDccAutoGet;
         bool mDccAutoResume;
-        unsigned long mDccBufferSize;
         QString mDccPath;
         bool mDccFastSend;
         int mDccSendTimeout;

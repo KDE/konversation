@@ -182,14 +182,14 @@ void ChatWindow::cdIntoLogPath()
 {
     QDir logPath=QDir::home();
     // Try to "cd" into the logfile path
-    if(!logPath.cd(Preferences::logPath(),true))
+    if(!logPath.cd(Preferences::logfilePath(),true))
     {
         // Only create log path if logging is enabled
         if(log)
         {
             // Try to create the logfile path and "cd" into it again
-            logPath.mkdir(Preferences::logPath(),true);
-            logPath.cd(Preferences::logPath(),true);
+            logPath.mkdir(Preferences::logfilePath(),true);
+            logPath.cd(Preferences::logfilePath(),true);
         }
     }
 
@@ -428,7 +428,7 @@ void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
     switch(type)
     {
         case Konversation::tnfNick:
-            colorString = Preferences::highlightNickColor().name();
+            colorString = Preferences::highlightNickColor();
             break;
 
         case Konversation::tnfHighlight:

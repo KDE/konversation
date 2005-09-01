@@ -440,7 +440,7 @@ bool doHighlight, bool parseURL, bool self)
             "([^\\d\\w]|$)")) != -1)
         {
             // highlight current nickname
-            highlightColor = Preferences::highlightNickColor().name();
+            highlightColor = Preferences::highlightNickColor();
             m_tabNotification = Konversation::tnfNick;
         }
         else

@@ -223,7 +223,7 @@ int NickListViewItem::getFlags() const
     }
     else if(nick->isOp())
     {
-        flags = Preferences::opValue();
+        flags = Preferences::operatorValue();
     }
     else if(nick->isHalfop())
     {

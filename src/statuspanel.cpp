@@ -152,7 +152,7 @@ void StatusPanel::updateFonts()
     QString fgString;
     QString bgString;
 
-    if(Preferences::colorInputFields())
+    if(Preferences::inputFieldsBackgroundColor())
     {
         fgString="#"+Preferences::color("ChannelMessage");
         bgString="#"+Preferences::color("TextViewBackground");

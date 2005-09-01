@@ -119,14 +119,12 @@ Preferences::Preferences()
     setDccChatPortsFirst(0);
     setDccChatPortsLast(0);
     setDccAutoGet(false);
-    setDccBufferSize(8192);
     setDccFastSend(true);
     setDccSendTimeout(180);
     setIPv4Fallback(false);
     setIPv4FallbackIface("eth0");
 
     KStandardDirs kstddir;
-    setLogPath(kstddir.saveLocation("data","konversation/logs"));
     setScrollbackMax(1000);
 
     setAutoWhoNicksLimit(200);
@@ -182,13 +180,6 @@ Preferences::Preferences()
     setCommandChar("/");
     setChannelDoubleClickAction("/QUERY %u%n");
     setNotifyDoubleClickAction("/WHOIS %u%n");
-
-    setAdminValue(1);
-    setOwnerValue(2);
-    setOpValue(4);
-    setHalfopValue(8);
-    setVoiceValue(16);
-    setNoRightsValue(32);
 
     setSortCaseInsensitive(true);
     setSortByStatus(false);
@@ -257,6 +248,7 @@ Preferences::~Preferences()
 {
     clearIdentityList();
 }
+
 const Konversation::ServerGroupList Preferences::serverGroupList()
 {
     return m_serverGroupList;
@@ -637,9 +629,6 @@ const QString Preferences::defaultColor(const QString& name)
     return QString::null;
 }
 
-void Preferences::setColorInputFields(bool state) { colorInputFields=state; }
-const bool Preferences::colorInputFields()           { return colorInputFields; }
-
 const QString Preferences::nickCompleteSuffixStart() {return nickCompleteSuffixStart; }
 const QString Preferences::nickCompleteSuffixMiddle() {return nickCompleteSuffixMiddle; }
 
@@ -662,9 +651,6 @@ void Preferences::setMultilineEditSize(const QSize &newSize)   { multilineEditSi
 
 void Preferences::setHighlightNick(bool state) { highlightNick=state; }
 const bool Preferences::highlightNick() { return highlightNick; }
-
-void Preferences::setHighlightNickColor(const QString &newColor) { highlightNickColor.setNamedColor(newColor); }
-const QColor Preferences::highlightNickColor() { return highlightNickColor; }
 
 void Preferences::setHighlightOwnLines(bool state) { highlightOwnLines=state; }
 const bool Preferences::highlightOwnLines() { return highlightOwnLines; }
