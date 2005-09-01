@@ -35,8 +35,8 @@
 Preferences::Preferences()
 {
     // create default identity
-    identity=new Identity();
-    identity->setName(i18n("Default Identity"));
+    mIdentity=new Identity();
+    mIdentity->setName(i18n("Default Identity"));
     addIdentity(identity);
 
     KUser user(KUser::UseRealUserID);
@@ -48,7 +48,7 @@ Preferences::Preferences()
     nickList.append("_" + user.loginName());
     nickList.append(user.loginName() + "_");
     nickList.append("_" + user.loginName() + "_");
-    identity->setNicknameList(nickList);
+    mIdentity->setNicknameList(nickList);
 
     setPartReason("Konversation terminated!");
     setKickReason("User terminated!");
@@ -69,7 +69,7 @@ Preferences::Preferences()
     Konversation::ChannelSettings channel;
     channel.setName("#kde");
     serverGroup->addChannel(channel);
-    m_serverGroupList.append(serverGroup);
+    mServerGroupList.append(serverGroup);
 
     buttonList.append("Op,/OP %u%n");
     buttonList.append("DeOp,/DEOP %u%n");
@@ -251,18 +251,18 @@ Preferences::~Preferences()
 
 const Konversation::ServerGroupList Preferences::serverGroupList()
 {
-    return m_serverGroupList;
+    return mServerGroupList;
 }
 
 void Preferences::setServerGroupList(const Konversation::ServerGroupList& list)
 {
-    m_serverGroupList.clear();
-    m_serverGroupList = list;
+    mServerGroupList.clear();
+    mServerGroupList = list;
 }
 
 void Preferences::addServerGroup(Konversation::ServerGroupSettingsPtr serverGroup)
 {
-    m_serverGroupList.append(serverGroup);
+    mServerGroupList.append(serverGroup);
 }
 
 const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
@@ -274,7 +274,7 @@ const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
 
     Konversation::ServerGroupList::iterator it;
 
-    for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it)
+    for(it = mServerGroupList.begin(); it != mServerGroupList.end(); ++it)
     {
         if((*it)->id() == id)
         {
@@ -294,7 +294,7 @@ const Konversation::ServerGroupSettingsPtr Preferences::serverGroupByServer(cons
 
     Konversation::ServerGroupList::iterator it;
 
-    for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it)
+    for(it = mServerGroupList.begin(); it != mServerGroupList.end(); ++it)
     {
         for (uint i = 0; i != (*it)->serverList().count(); i++)
         {
@@ -312,7 +312,7 @@ int Preferences::serverGroupIdByName(const QString& serverGroup)
 {
     Konversation::ServerGroupList::iterator it;
 
-    for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it)
+    for(it = mServerGroupList.begin(); it != mServerGroupList.end(); ++it)
     {
         if((*it)->name().lower() == serverGroup.lower())
         {
@@ -327,15 +327,15 @@ bool Preferences::isServerGroup(const QString& server)
 {
     Konversation::ServerGroupList::iterator it;
 
-    for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it)
+    for(it = mServerGroupList.begin(); it != mServerGroupList.end(); ++it)
     {
         if((*it)->name().lower() == server.lower())
         {
-            return true;
+            return mTrue;
         }
     }
 
-    return false;
+    return mFalse;
 }
 
 void Preferences::removeServerGroup(int id)
@@ -347,11 +347,11 @@ void Preferences::removeServerGroup(int id)
 
     Konversation::ServerGroupList::iterator it;
 
-    for(it = m_serverGroupList.begin(); it != m_serverGroupList.end(); ++it)
+    for(it = mServerGroupList.begin(); it != mServerGroupList.end(); ++it)
     {
         if((*it)->id() == id)
         {
-            m_serverGroupList.remove(it);
+            mServerGroupList.remove(it);
             return;
         }
     }
@@ -359,7 +359,7 @@ void Preferences::removeServerGroup(int id)
 
 const QPtrList<Highlight> Preferences::highlightList()
 {
-    return highlightList;
+    return mHighlightList;
 }
 
 void Preferences::setHighlightList(QPtrList<Highlight> newList)
@@ -402,7 +402,7 @@ void Preferences::setDccSendPortsFirst(unsigned long port)
         setDccSendPortsLast(port);
 }
 
-const unsigned int Preferences::dccSendPortsFirst() { return dccSendPortsFirst; }
+const unsigned int Preferences::dccSendPortsFirst() { return mDccSendPortsFirst; }
 
 void Preferences::setDccSendPortsLast(unsigned long port)
 {
@@ -411,10 +411,10 @@ void Preferences::setDccSendPortsLast(unsigned long port)
         setDccSendPortsFirst(port);
 }
 
-const unsigned int Preferences::dccSendPortsLast() { return dccSendPortsLast; }
+const unsigned int Preferences::dccSendPortsLast() { return mDccSendPortsLast; }
 
-void Preferences::setDccSpecificChatPorts(bool state) { dccSpecificChatPorts=state; }
-const bool Preferences::dccSpecificChatPorts() { return dccSpecificChatPorts; }
+void Preferences::setDccSpecificChatPorts(bool state) { mDccSpecificChatPorts=state; }
+const bool Preferences::dccSpecificChatPorts() { return mDccSpecificChatPorts; }
 
 void Preferences::setDccChatPortsFirst(unsigned long port)
 {
@@ -423,7 +423,7 @@ void Preferences::setDccChatPortsFirst(unsigned long port)
         setDccChatPortsLast(port);
 }
 
-const unsigned int Preferences::dccChatPortsFirst() { return dccChatPortsFirst; }
+const unsigned int Preferences::dccChatPortsFirst() { return mDccChatPortsFirst; }
 
 void Preferences::setDccChatPortsLast(unsigned long port)
 {
@@ -432,22 +432,22 @@ void Preferences::setDccChatPortsLast(unsigned long port)
         setDccChatPortsFirst(port);
 }
 
-const unsigned int Preferences::dccChatPortsLast() { return dccChatPortsLast; }
+const unsigned int Preferences::dccChatPortsLast() { return mDccChatPortsLast; }
 
-void Preferences::setDccAutoGet(bool state) { dccAutoGet=state; }
-const bool Preferences::dccAutoGet() { return dccAutoGet; }
+void Preferences::setDccAutoGet(bool state) { mDccAutoGet=state; }
+const bool Preferences::dccAutoGet() { return mDccAutoGet; }
 
-void Preferences::setDccAutoResume(bool state) { dccAutoResume=state; }
-const bool Preferences::dccAutoResume() { return dccAutoResume; }
+void Preferences::setDccAutoResume(bool state) { mDccAutoResume=state; }
+const bool Preferences::dccAutoResume() { return mDccAutoResume; }
 
-void Preferences::setDccPath(const QString &path) { dccPath=path; }
-const QString Preferences::dccPath() { return dccPath; }
+void Preferences::setDccPath(const QString &path) { mDccPath=path; }
+const QString Preferences::dccPath() { return mDccPath; }
 
-void Preferences::setDccFastSend(bool state) { dccFastSend=state; }
-const bool Preferences::dccFastSend() { return dccFastSend; }
+void Preferences::setDccFastSend(bool state) { mDccFastSend=state; }
+const bool Preferences::dccFastSend() { return mDccFastSend; }
 
-void Preferences::setDccSendTimeout(int sec) { dccSendTimeout=sec; }
-const int Preferences::dccSendTimeout() { return dccSendTimeout; }
+void Preferences::setDccSendTimeout(int sec) { mDccSendTimeout=sec; }
+const int Preferences::dccSendTimeout() { return mDccSendTimeout; }
 
 void Preferences::setIPv4Fallback(bool fallback) { ipv4Fallback=fallback;}
 bool Preferences::iPv4Fallback() { return ipv4Fallback; }
@@ -456,8 +456,8 @@ void Preferences::setIPv4FallbackIface(const QString& interface) { ipv4Interface
 const QString& Preferences::iPv4FallbackIface() { return ipv4Interface; }
 
 void Preferences::setNotifyList(const QMap<QString, QStringList> &newList)
-{ notifyList=newList; }
-const QMap<QString, QStringList> Preferences::notifyList() { return notifyList; }
+{ mNotifyList=newList; }
+const QMap<QString, QStringList> Preferences::notifyList() { return mNotifyList; }
 const QStringList Preferences::notifyListByGroup(const QString& groupName)
 {
     if (notifyList.find(groupName) != notifyList.end())
@@ -474,15 +474,15 @@ const QString Preferences::notifyStringByGroup(const QString& groupName)
 const bool Preferences::addNotify(const QString& groupName, const QString& newPattern)
 {
     // don't add duplicates
-    if (groupName.isEmpty() || newPattern.isEmpty()) return false;
+    if (groupName.isEmpty() || newPattern.isEmpty()) return mFalse;
     if (!notifyList[groupName].contains(newPattern))
     {
         QStringList nicknameList = notifyList[groupName];
         nicknameList.append(newPattern);
         notifyList[groupName] = nicknameList;
-        return true;
+        return mTrue;
     }
-    return false;
+    return mFalse;
 }
 
 const bool Preferences::removeNotify(const QString& groupName, const QString& pattern)
@@ -495,12 +495,12 @@ const bool Preferences::removeNotify(const QString& groupName, const QString& pa
             notifyList.remove(groupName);
         else
             notifyList[groupName] = nicknameList;
-        return true;
+        return mTrue;
     } else
-    return false;
+    return mFalse;
 }
 
-const QStringList Preferences::buttonList() { return buttonList; }
+const QStringList Preferences::buttonList() { return mButtonList; }
 
 // Default identity functions
 void Preferences::addIdentity(IdentityPtr identity) { identityList.append(identity); }
@@ -511,7 +511,7 @@ void Preferences::clearIdentityList()
     identityList.clear();
 }
 
-const QValueList<IdentityPtr> Preferences::identityList() { return identityList; }
+const QValueList<IdentityPtr> Preferences::identityList() { return mIdentityList; }
 
 void Preferences::setIdentityList(const QValueList<IdentityPtr>& list)
 {
@@ -573,15 +573,15 @@ const QString Preferences::unAwayMessage() { return identityList[0]->getReturnMe
 void Preferences::setUnAwayMessage(const QString &newMessage) { identityList[0]->setReturnMessage(newMessage); }
 
 void Preferences::clearIgnoreList() { ignoreList.clear(); }
-const QPtrList<Ignore> Preferences::ignoreList() { return ignoreList; }
+const QPtrList<Ignore> Preferences::ignoreList() { return mIgnoreList; }
 
 const QString Preferences::nickname(int index) { return identityList[0]->getNickname(index); }
 const QStringList Preferences::nicknameList() { return identityList[0]->getNicknameList(); }
 void Preferences::setNickname(int index,const QString &newName) { identityList[0]->setNickname(index,newName); }
 void Preferences::setNicknameList(const QStringList &newList) { identityList[0]->setNicknameList(newList); }
 
-void Preferences::setTabPlacement(TabPlacement where) { tabPlacement=where; }
-const Preferences::TabPlacement Preferences::tabPlacement() { return tabPlacement; }
+void Preferences::setTabPlacement(TabPlacement where) { mTabPlacement=where; }
+const Preferences::TabPlacement Preferences::tabPlacement() { return mTabPlacement; }
 
 
 // TODO: Make this a little simpler (use an array and enum)
@@ -596,7 +596,7 @@ const QString Preferences::color(const QString& name)
 
     if(color.isEmpty()) color="000000";
 
-    return color;
+    return mColor;
 }
 
 void Preferences::setColor(const QString& name,const QString& color)
@@ -629,113 +629,113 @@ const QString Preferences::defaultColor(const QString& name)
     return QString::null;
 }
 
-const QString Preferences::nickCompleteSuffixStart() {return nickCompleteSuffixStart; }
-const QString Preferences::nickCompleteSuffixMiddle() {return nickCompleteSuffixMiddle; }
+const QString Preferences::nickCompleteSuffixStart() {return mNickCompleteSuffixStart; }
+const QString Preferences::nickCompleteSuffixMiddle() {return mNickCompleteSuffixMiddle; }
 
-void Preferences::setNickCompleteSuffixStart(const QString &suffix) { nickCompleteSuffixStart=suffix; }
-void Preferences::setNickCompleteSuffixMiddle(const QString &suffix) { nickCompleteSuffixMiddle=suffix; }
+void Preferences::setNickCompleteSuffixStart(const QString &suffix) { mNickCompleteSuffixStart=suffix; }
+void Preferences::setNickCompleteSuffixMiddle(const QString &suffix) { mNickCompleteSuffixMiddle=suffix; }
 
-const int Preferences::logfileBufferSize()             { return logfileBufferSize; }
-void Preferences::setLogfileBufferSize(int newSize) { logfileBufferSize=newSize; }
+const int Preferences::logfileBufferSize()             { return mLogfileBufferSize; }
+void Preferences::setLogfileBufferSize(int newSize) { mLogfileBufferSize=newSize; }
 
 // Geometry functions
-const QSize Preferences::nicksOnlineSize()        { return nicksOnlineSize; }
-const QSize Preferences::nicknameSize()           { return nicknameSize; }
-const QSize Preferences::logfileReaderSize()      { return logfileReaderSize; }
-const QSize Preferences::multilineEditSize()      { return multilineEditSize; }
+const QSize Preferences::nicksOnlineSize()        { return mNicksOnlineSize; }
+const QSize Preferences::nicknameSize()           { return mNicknameSize; }
+const QSize Preferences::logfileReaderSize()      { return mLogfileReaderSize; }
+const QSize Preferences::multilineEditSize()      { return mMultilineEditSize; }
 
-void Preferences::setNicksOnlineSize(const QSize &newSize)     { nicksOnlineSize=newSize; }
-void Preferences::setNicknameSize(const QSize &newSize)        { nicknameSize=newSize; }
-void Preferences::setLogfileReaderSize(const QSize &newSize)   { logfileReaderSize=newSize; }
-void Preferences::setMultilineEditSize(const QSize &newSize)   { multilineEditSize=newSize; }
+void Preferences::setNicksOnlineSize(const QSize &newSize)     { mNicksOnlineSize=newSize; }
+void Preferences::setNicknameSize(const QSize &newSize)        { mNicknameSize=newSize; }
+void Preferences::setLogfileReaderSize(const QSize &newSize)   { mLogfileReaderSize=newSize; }
+void Preferences::setMultilineEditSize(const QSize &newSize)   { mMultilineEditSize=newSize; }
 
-void Preferences::setHighlightNick(bool state) { highlightNick=state; }
-const bool Preferences::highlightNick() { return highlightNick; }
+void Preferences::setHighlightNick(bool state) { mHighlightNick=state; }
+const bool Preferences::highlightNick() { return mHighlightNick; }
 
-void Preferences::setHighlightOwnLines(bool state) { highlightOwnLines=state; }
-const bool Preferences::highlightOwnLines() { return highlightOwnLines; }
+void Preferences::setHighlightOwnLines(bool state) { mHighlightOwnLines=state; }
+const bool Preferences::highlightOwnLines() { return mHighlightOwnLines; }
 
 void Preferences::setHighlightOwnLinesColor(const QString &newColor) { highlightOwnLinesColor.setNamedColor(newColor); }
-const QColor Preferences::highlightOwnLinesColor() { return highlightOwnLinesColor; }
+const QColor Preferences::highlightOwnLinesColor() { return mHighlightOwnLinesColor; }
 
-void Preferences::setUseClickableNicks(bool state) { clickableNicks=state; }
-const bool Preferences::useClickableNicks() { return clickableNicks;}
+void Preferences::setUseClickableNicks(bool state) { mClickableNicks=state; }
+const bool Preferences::useClickableNicks() { return mClickableNicks;}
 
 // On Screen Display
-void Preferences::setOSDUsage(bool state) { OSDUsage=state; }
-const bool Preferences::OSDUsage() { return OSDUsage; }
+void Preferences::setOSDUsage(bool state) { mOSDUsage=state; }
+const bool Preferences::OSDUsage() { return mOSDUsage; }
 
-void Preferences::setOSDShowOwnNick(bool state) { OSDShowOwnNick=state; }
-const bool Preferences::OSDShowOwnNick() { return OSDShowOwnNick; }
+void Preferences::setOSDShowOwnNick(bool state) { mOSDShowOwnNick=state; }
+const bool Preferences::OSDShowOwnNick() { return mOSDShowOwnNick; }
 
-void Preferences::setOSDShowChannel(bool state) { OSDShowChannel=state; }
-const bool Preferences::OSDShowChannel() { return OSDShowChannel; }
+void Preferences::setOSDShowChannel(bool state) { mOSDShowChannel=state; }
+const bool Preferences::OSDShowChannel() { return mOSDShowChannel; }
 
-void Preferences::setOSDShowQuery(bool state) { OSDShowQuery=state; }
-const bool Preferences::OSDShowQuery() { return OSDShowQuery; }
+void Preferences::setOSDShowQuery(bool state) { mOSDShowQuery=state; }
+const bool Preferences::OSDShowQuery() { return mOSDShowQuery; }
 
-void Preferences::setOSDShowChannelEvent(bool state) { OSDShowChannelEvent=state; }
-const bool Preferences::OSDShowChannelEvent() { return OSDShowChannelEvent; }
+void Preferences::setOSDShowChannelEvent(bool state) { mOSDShowChannelEvent=state; }
+const bool Preferences::OSDShowChannelEvent() { return mOSDShowChannelEvent; }
 
-const QFont Preferences::OSDFont() { return osdFont; }
-void Preferences::setOSDFont(const QFont &newFont) { osdFont=newFont; }
+const QFont Preferences::OSDFont() { return mOsdFont; }
+void Preferences::setOSDFont(const QFont &newFont) { mOsdFont=newFont; }
 void Preferences::setOSDFontRaw(const QString &rawFont) { osdFont.fromString(rawFont); }
 
 /*void Preferences::setOSDColor(const QString &newColor) { osdColor.setNamedColor(newColor); }
-QColor Preferences::OSDColor() { return osdColor; }*/
+QColor Preferences::OSDColor() { return mOsdColor; }*/
 
 void Preferences::setOSDUseCustomColors(bool state) { useOSDCustomColors = state; }
-const bool Preferences::OSDUseCustomColors() { return useOSDCustomColors; }
+const bool Preferences::OSDUseCustomColors() { return mUseOSDCustomColors; }
 
 void Preferences::setOSDTextColor(const QString& newColor) { osdTextColor.setNamedColor(newColor); }
-const QColor Preferences::OSDTextColor() { return osdTextColor; }
+const QColor Preferences::OSDTextColor() { return mOsdTextColor; }
 
 void Preferences::setOSDBackgroundColor(const QString& newColor) { osdBackgroundColor.setNamedColor(newColor); }
-const QColor Preferences::OSDBackgroundColor() { return osdBackgroundColor; }
+const QColor Preferences::OSDBackgroundColor() { return mOsdBackgroundColor; }
 
 void Preferences::setOSDDuration(int ms) { OSDDuration = ms; }
-const int Preferences::OSDDuration() { return OSDDuration; }
+const int Preferences::OSDDuration() { return mOSDDuration; }
 
 void Preferences::setOSDScreen(uint screen) { OSDScreen = screen; }
-const uint Preferences::OSDScreen() { return OSDScreen; }
+const uint Preferences::OSDScreen() { return mOSDScreen; }
 
 void Preferences::setOSDDrawShadow(bool state) { OSDDrawShadow = state; }
-const bool Preferences::OSDDrawShadow() { return OSDDrawShadow; }
+const bool Preferences::OSDDrawShadow() { return mOSDDrawShadow; }
 
 void Preferences::setOSDOffsetX(int offset) { OSDOffsetX = offset; }
-const int Preferences::OSDOffsetX() { return OSDOffsetX; }
+const int Preferences::OSDOffsetX() { return mOSDOffsetX; }
 
 void Preferences::setOSDOffsetY(int offset) { OSDOffsetY = offset; }
-const int Preferences::OSDOffsetY() { return OSDOffsetY; }
+const int Preferences::OSDOffsetY() { return mOSDOffsetY; }
 
 void Preferences::setOSDAlignment(int alignment) { OSDAlignment = alignment; }
-const int Preferences::OSDAlignment() { return OSDAlignment; }
+const int Preferences::OSDAlignment() { return mOSDAlignment; }
 
-const QFont Preferences::textFont() { return textFont; }
-const QFont Preferences::listFont() { return listFont; }
-void Preferences::setTextFont(const QFont &newFont) { textFont=newFont; }
-void Preferences::setListFont(const QFont &newFont) { listFont=newFont; }
+const QFont Preferences::textFont() { return mTextFont; }
+const QFont Preferences::listFont() { return mListFont; }
+void Preferences::setTextFont(const QFont &newFont) { mTextFont=newFont; }
+void Preferences::setListFont(const QFont &newFont) { mListFont=newFont; }
 void Preferences::setTextFontRaw(const QString &rawFont) { textFont.fromString(rawFont); }
 void Preferences::setListFontRaw(const QString &rawFont) { listFont.fromString(rawFont); }
 
-void Preferences::setTimestamping(bool state) { timestamping=state; }
-const bool Preferences::timestamping() { return timestamping; }
-void Preferences::setShowDate(bool state) { showDate=state; }
-const bool Preferences::showDate() { return showDate; }
-void Preferences::setTimestampFormat(const QString& newFormat) { timestampFormat=newFormat; }
-const QString Preferences::timestampFormat() { return timestampFormat; }
+void Preferences::setTimestamping(bool state) { mTimestamping=state; }
+const bool Preferences::timestamping() { return mTimestamping; }
+void Preferences::setShowDate(bool state) { mShowDate=state; }
+const bool Preferences::showDate() { return mShowDate; }
+void Preferences::setTimestampFormat(const QString& newFormat) { mTimestampFormat=newFormat; }
+const QString Preferences::timestampFormat() { return mTimestampFormat; }
 
-void Preferences::setShowQuickButtons(bool state) { showQuickButtons=state; }
-const bool Preferences::showQuickButtons() { return showQuickButtons; }
+void Preferences::setShowQuickButtons(bool state) { mShowQuickButtons=state; }
+const bool Preferences::showQuickButtons() { return mShowQuickButtons; }
 
-void Preferences::setShowModeButtons(bool state) { showModeButtons=state; }
-const bool Preferences::showModeButtons() { return showModeButtons; }
+void Preferences::setShowModeButtons(bool state) { mShowModeButtons=state; }
+const bool Preferences::showModeButtons() { return mShowModeButtons; }
 
-void Preferences::setShowServerList(bool state) { showServerList=state; }
-const bool Preferences::showServerList() { return showServerList; }
+void Preferences::setShowServerList(bool state) { mShowServerList=state; }
+const bool Preferences::showServerList() { return mShowServerList; }
 
-void Preferences::setShowBackgroundImage(bool state) { showBackgroundImage=state; }
-const bool Preferences::showBackgroundImage() { return showBackgroundImage; }
+void Preferences::setShowBackgroundImage(bool state) { mShowBackgroundImage=state; }
+const bool Preferences::showBackgroundImage() { return mShowBackgroundImage; }
 
 void Preferences::setShowTrayIcon(bool state)
 {
@@ -743,7 +743,7 @@ void Preferences::setShowTrayIcon(bool state)
     emit updateTrayIcon();
 }
 
-const bool Preferences::showTrayIcon() { return showTrayIcon; }
+const bool Preferences::showTrayIcon() { return mShowTrayIcon; }
 
 void Preferences::setSystrayOnly(bool state)
 {
@@ -751,7 +751,7 @@ void Preferences::setSystrayOnly(bool state)
     emit updateTrayIcon();
 }
 
-const bool Preferences::systrayOnly() { return systrayOnly; }
+const bool Preferences::systrayOnly() { return mSystrayOnly; }
 
 void Preferences::setTrayNotify(bool state)
 {
@@ -759,64 +759,64 @@ void Preferences::setTrayNotify(bool state)
     emit updateTrayIcon();
 }
 
-const bool Preferences::trayNotify() const { return trayNotify; }
+const bool Preferences::trayNotify() const { return mTrayNotify; }
 
 void Preferences::setTrayNotifyOnlyOwnNick(bool onlyOwnNick)
 {
-    m_trayNotifyOnlyOwnNick = onlyOwnNick;
+    mTrayNotifyOnlyOwnNick = onlyOwnNick;
 }
 
 bool Preferences::trayNotifyOnlyOwnNick() const
 {
-    return m_trayNotifyOnlyOwnNick;
+    return mTrayNotifyOnlyOwnNick;
 }
 
-void Preferences::setChannelSplitterSizes(QValueList<int> sizes) { channelSplitter=sizes; }
-const QValueList<int> Preferences::channelSplitterSizes() { return channelSplitter; }
+void Preferences::setChannelSplitterSizes(QValueList<int> sizes) { mChannelSplitter=sizes; }
+const QValueList<int> Preferences::channelSplitterSizes() { return mChannelSplitter; }
 
-void Preferences::setTopicSplitterSizes(QValueList<int> sizes) { m_topicSplitterSizes=sizes; }
-const QValueList<int> Preferences::topicSplitterSizes() { return m_topicSplitterSizes; }
+void Preferences::setTopicSplitterSizes(QValueList<int> sizes) { mTopicSplitterSizes=sizes; }
+const QValueList<int> Preferences::topicSplitterSizes() { return mTopicSplitterSizes; }
 
-void Preferences::setChannelDoubleClickAction(const QString &action) { channelDoubleClickAction=action; }
-const QString Preferences::channelDoubleClickAction() { return channelDoubleClickAction; }
+void Preferences::setChannelDoubleClickAction(const QString &action) { mChannelDoubleClickAction=action; }
+const QString Preferences::channelDoubleClickAction() { return mChannelDoubleClickAction; }
 
-void Preferences::setNotifyDoubleClickAction(const QString &action) { notifyDoubleClickAction=action; }
-const QString Preferences::notifyDoubleClickAction() { return notifyDoubleClickAction; }
+void Preferences::setNotifyDoubleClickAction(const QString &action) { mNotifyDoubleClickAction=action; }
+const QString Preferences::notifyDoubleClickAction() { return mNotifyDoubleClickAction; }
 
-void Preferences::setUseSpacing(bool state) { useSpacing=state; }
-const bool Preferences::useSpacing() { return useSpacing; }
-void Preferences::setSpacing(int newSpacing) { spacing=newSpacing; }
-const int Preferences::spacing() { return spacing; }
-void Preferences::setMargin(int newMargin) { margin=newMargin; }
-const int Preferences::margin() { return margin; }
+void Preferences::setUseSpacing(bool state) { mUseSpacing=state; }
+const bool Preferences::useSpacing() { return mUseSpacing; }
+void Preferences::setSpacing(int newSpacing) { mSpacing=newSpacing; }
+const int Preferences::spacing() { return mSpacing; }
+void Preferences::setMargin(int newMargin) { mMargin=newMargin; }
+const int Preferences::margin() { return mMargin; }
 
-void Preferences::setUseParagraphSpacing(bool state) { useParagraphSpacing=state; }
-const bool Preferences::useParagraphSpacing() { return useParagraphSpacing; }
-void Preferences::setParagraphSpacing(int newSpacing) { paragraphSpacing=newSpacing; }
-const int Preferences::paragraphSpacing() { return paragraphSpacing; }
+void Preferences::setUseParagraphSpacing(bool state) { mUseParagraphSpacing=state; }
+const bool Preferences::useParagraphSpacing() { return mUseParagraphSpacing; }
+void Preferences::setParagraphSpacing(int newSpacing) { mParagraphSpacing=newSpacing; }
+const int Preferences::paragraphSpacing() { return mParagraphSpacing; }
 
 // sorting stuff
-void Preferences::setAdminValue(int value)           { adminValue=value; }
-void Preferences::setOwnerValue(int value)           { ownerValue=value; }
-void Preferences::setOpValue(int value)              { opValue=value; }
-void Preferences::setHalfopValue(int value)          { halfopValue=value; }
-void Preferences::setVoiceValue(int value)           { voiceValue=value; }
-void Preferences::setNoRightsValue(int value)        { noRightsValue=value; }
+void Preferences::setAdminValue(int value)           { mAdminValue=value; }
+void Preferences::setOwnerValue(int value)           { mOwnerValue=value; }
+void Preferences::setOpValue(int value)              { mOpValue=value; }
+void Preferences::setHalfopValue(int value)          { mHalfopValue=value; }
+void Preferences::setVoiceValue(int value)           { mVoiceValue=value; }
+void Preferences::setNoRightsValue(int value)        { mNoRightsValue=value; }
 
-const int Preferences::adminValue()                     { return adminValue; }
-const int Preferences::ownerValue()                     { return ownerValue; }
-const int Preferences::opValue()                        { return opValue; }
-const int Preferences::halfopValue()                    { return halfopValue; }
-const int Preferences::voiceValue()                     { return voiceValue; }
-const int Preferences::noRightsValue()                  { return noRightsValue; }
+const int Preferences::adminValue()                     { return mAdminValue; }
+const int Preferences::ownerValue()                     { return mOwnerValue; }
+const int Preferences::opValue()                        { return mOpValue; }
+const int Preferences::halfopValue()                    { return mHalfopValue; }
+const int Preferences::voiceValue()                     { return mVoiceValue; }
+const int Preferences::noRightsValue()                  { return mNoRightsValue; }
 
-void Preferences::setSortCaseInsensitive(bool state) { sortCaseInsensitive=state; }
-void Preferences::setSortByStatus(bool state)        { sortByStatus=state; }
+void Preferences::setSortCaseInsensitive(bool state) { mSortCaseInsensitive=state; }
+void Preferences::setSortByStatus(bool state)        { mSortByStatus=state; }
 
-const bool Preferences::sortCaseInsensitive()           { return sortCaseInsensitive; }
-const bool Preferences::sortByStatus()                  { return sortByStatus; }
+const bool Preferences::sortCaseInsensitive()           { return mSortCaseInsensitive; }
+const bool Preferences::sortByStatus()                  { return mSortByStatus; }
 
-const bool Preferences::autoUserhost()                  { return autoUserhost; }
+const bool Preferences::autoUserhost()                  { return mAutoUserhost; }
 void Preferences::setAutoUserhost(bool state)
 {
     autoUserhost=state;
@@ -830,9 +830,9 @@ const bool Preferences::dialogFlag(const QString& flagName)
     config->setGroup("Notification Messages");
 
     if( !config->readEntry(flagName).isEmpty() )
-        return false;
+        return mFalse;
     else
-        return true;
+        return mTrue;
 }
 
 void Preferences::setDialogFlag(const QString& flagName,bool state)
@@ -852,66 +852,66 @@ void Preferences::setDialogFlag(const QString& flagName,bool state)
     config->sync();
 }
 
-void Preferences::setMaximumLagTime(int lag) { maximumLag=lag; }
-const int Preferences::maximumLagTime()         { return maximumLag; }
+void Preferences::setMaximumLagTime(int lag) { mMaximumLag=lag; }
+const int Preferences::maximumLagTime()         { return mMaximumLag; }
 
-void Preferences::setIRCColorList(const QStringList &cl) { ircColorList=cl; }
-const QStringList Preferences::iRCColorList()        { return ircColorList; }
+void Preferences::setIRCColorList(const QStringList &cl) { mIrcColorList=cl; }
+const QStringList Preferences::iRCColorList()        { return mIrcColorList; }
 
-void Preferences::setAliasList(const QStringList &newList) { aliasList=newList; }
-const QStringList Preferences::aliasList()             { return aliasList; }
+void Preferences::setAliasList(const QStringList &newList) { mAliasList=newList; }
+const QStringList Preferences::aliasList()             { return mAliasList; }
 
-const int Preferences::nickCompletionMode() { return nickCompletionMode; }
+const int Preferences::nickCompletionMode() { return mNickCompletionMode; }
 void Preferences::setNickCompletionMode(int mode) { nickCompletionMode = mode; }
-const QString Preferences::prefixCharacter() { return prefixCharacter; }
+const QString Preferences::prefixCharacter() { return mPrefixCharacter; }
 void  Preferences::setPrefixCharacter(const QString &prefix) { prefixCharacter = prefix; }
-const bool Preferences::nickCompletionCaseSensitive() const { return m_nickCompletionCaseSensitive; }
-void Preferences::setNickCompletionCaseSensitive(bool caseSensitive) { m_nickCompletionCaseSensitive = caseSensitive; }
+const bool Preferences::nickCompletionCaseSensitive() const { return mNickCompletionCaseSensitive; }
+void Preferences::setNickCompletionCaseSensitive(bool caseSensitive) { mNickCompletionCaseSensitive = caseSensitive; }
 
-const bool Preferences::showMenuBar() { return showMenuBar; }
+const bool Preferences::showMenuBar() { return mShowMenuBar; }
 void Preferences::setShowMenuBar(bool s) { showMenuBar = s; }
 
-const bool Preferences::showTabBarCloseButton() { return showTabBarCloseButton; }
+const bool Preferences::showTabBarCloseButton() { return mShowTabBarCloseButton; }
 void Preferences::setShowTabBarCloseButton(bool s) { showTabBarCloseButton = s; }
 
-const bool Preferences::showTopic() { return showTopic; }
+const bool Preferences::showTopic() { return mShowTopic; }
 void Preferences::setShowTopic(bool s) { showTopic = s; }
 
-const bool Preferences::showRememberLineInAllWindows() { return showRememberLineInAllWindows; }
+const bool Preferences::showRememberLineInAllWindows() { return mShowRememberLineInAllWindows; }
 void Preferences::setShowRememberLineInAllWindows(bool s) { showRememberLineInAllWindows = s; }
 
-const bool Preferences::focusNewQueries() { return focusNewQueries; }
+const bool Preferences::focusNewQueries() { return mFocusNewQueries; }
 void Preferences::setFocusNewQueries(bool s) { focusNewQueries = s; }
 
-const bool Preferences::hideUnimportantEvents()           { return hideUnimportantEvents; }
-void Preferences::setHideUnimportantEvents(bool state) { hideUnimportantEvents=state; }
+const bool Preferences::hideUnimportantEvents()           { return mHideUnimportantEvents; }
+void Preferences::setHideUnimportantEvents(bool state) { mHideUnimportantEvents=state; }
 
-const bool Preferences::disableExpansion() { return disableExpansion; }
+const bool Preferences::disableExpansion() { return mDisableExpansion; }
 void Preferences::setDisableExpansion(bool state) { disableExpansion = state; }
 
 // Web Browser
-const bool Preferences::webBrowserUseKdeDefault() { return webBrowserUseKdeDefault; }
+const bool Preferences::webBrowserUseKdeDefault() { return mWebBrowserUseKdeDefault; }
 void Preferences::setWebBrowserUseKdeDefault(bool state) { webBrowserUseKdeDefault = state; }
-const QString Preferences::webBrowserCmd() { return webBrowserCmd; }
-void Preferences::setWebBrowserCmd(const QString &cmd) { webBrowserCmd=cmd; }
+const QString Preferences::webBrowserCmd() { return mWebBrowserCmd; }
+void Preferences::setWebBrowserCmd(const QString &cmd) { mWebBrowserCmd=cmd; }
 
-const bool Preferences::filterColors() { return filterColors; }
+const bool Preferences::filterColors() { return mFilterColors; }
 void Preferences::setFilterColors(bool filter) { filterColors = filter; }
 
-const bool Preferences::useColoredNicks() { return useColoredNicks; }
-void Preferences::setUseColoredNicks(bool useColor) { useColoredNicks=useColor; }
+const bool Preferences::useColoredNicks() { return mUseColoredNicks; }
+void Preferences::setUseColoredNicks(bool useColor) { mUseColoredNicks=useColor; }
 
 void Preferences::setNickColorList(const QStringList &cl) { nickColorList = cl; }
-const QStringList Preferences::nickColorList() { return nickColorList; }
+const QStringList Preferences::nickColorList() { return mNickColorList; }
 
-void Preferences::setUseBoldNicks(bool boldNicks) { useBoldNicks=boldNicks; }
-const bool Preferences::useBoldNicks() { return useBoldNicks; }
+void Preferences::setUseBoldNicks(bool boldNicks) { mUseBoldNicks=boldNicks; }
+const bool Preferences::useBoldNicks() { return mUseBoldNicks; }
 
-void Preferences::setUseLiteralModes(bool literalModes) { useLiteralModes=literalModes; }
-const bool Preferences::useLiteralModes() { return useLiteralModes; }
+void Preferences::setUseLiteralModes(bool literalModes) { mUseLiteralModes=literalModes; }
+const bool Preferences::useLiteralModes() { return mUseLiteralModes; }
 
-const bool Preferences::openWatchedNicksAtStartup() { return m_openWatchedNicksAtStartup; }
-void Preferences::setOpenWatchedNicksAtStartup(bool open) { m_openWatchedNicksAtStartup = open; }
+const bool Preferences::openWatchedNicksAtStartup() { return mOpenWatchedNicksAtStartup; }
+void Preferences::setOpenWatchedNicksAtStartup(bool open) { mOpenWatchedNicksAtStartup = open; }
 
 // Channel Encodings
 const QString Preferences::channelEncoding(const QString& server,const QString& channel)
@@ -944,17 +944,17 @@ const QStringList Preferences::channelEncodingsChannelList(const QString& server
     return channelEncodingsMap[server].keys();
 }
 
-void Preferences::setIconTheme(const QString& name) { iconTheme=name; }
-const QString Preferences::iconTheme() { return iconTheme; }
+void Preferences::setIconTheme(const QString& name) { mIconTheme=name; }
+const QString Preferences::iconTheme() { return mIconTheme; }
 
-bool Preferences::showNicknameBox() const { return m_showNicknameBox; }
-void Preferences::setShowNicknameBox(bool show) { m_showNicknameBox = show; }
+bool Preferences::showNicknameBox() const { return mShowNicknameBox; }
+void Preferences::setShowNicknameBox(bool show) { mShowNicknameBox = show; }
 
-QString Preferences::wikiUrl() const { return wikiUrl; }
-void Preferences::setWikiUrl(const QString& url) { wikiUrl=url; }
+QString Preferences::wikiUrl() const { return mWikiUrl; }
+void Preferences::setWikiUrl(const QString& url) { mWikiUrl=url; }
 
-bool Preferences::expandWikiUrl() const { return expandWikiUrl;}
-void Preferences::setExpandWikiUrl(bool expandUrl) { expandWikiUrl=expandUrl; }
+bool Preferences::expandWikiUrl() const { return mExpandWikiUrl;}
+void Preferences::setExpandWikiUrl(bool expandUrl) { mExpandWikiUrl=expandUrl; }
 #endif
 
 #include "preferences.moc"
