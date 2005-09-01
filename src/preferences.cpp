@@ -14,6 +14,7 @@
 
 #include <ktoolbar.h>
 #include <kstandarddirs.h>
+#include <kstaticdeleter.h>
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -71,13 +72,12 @@ Preferences::Preferences()
     setShowAwayMessage(false);
     setAwayMessage("/me is away: %s");
     setUnAwayMessage("/me is back.");
-ck,/KICK %u%n"
     Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
     serverGroup->setName("Freenode");
     Konversation::ServerSettings server;
     server.setServer("irc.freenode.org");
     serverGroup->addServer(server);
-    serverGroup->setIdentityId(identity->id());
+    serverGroup->setIdentityId(mIdentity->id());
     Konversation::ChannelSettings channel;
     channel.setName("#kde");
     serverGroup->addChannel(channel);
@@ -354,89 +354,26 @@ const QStringList Preferences::nicknameList() { return identityList[0]->getNickn
 void Preferences::setNickname(int index,const QString &newName) { identityList[0]->setNickname(index,newName); }
 void Preferences::setNicknameList(const QStringList &newList) { identityList[0]->setNicknameList(newList); }
 
-// Geometry functions
-const QSize Preferences::nicksOnlineSize()        { return mNicksOnlineSize; }
-const QSize Preferences::nicknameSize()           { return mNicknameSize; }
-const QSize Preferences::multilineEditSize()      { return mMultilineEditSize; }
-
-void Preferences::setNicksOnlineSize(const QSize &newSize)     { mNicksOnlineSize=newSize; }
-void Preferences::setNicknameSize(const QSize &newSize)        { mNicknameSize=newSize; }
-void Preferences::setMultilineEditSize(const QSize &newSize)   { mMultilineEditSize=newSize; }
-
-
-
-void Preferences::setHighlightOwnLinesColor(const QString &newColor) { highlightOwnLinesColor.setNamedColor(newColor); }
-
-void Preferences::setUseClickableNicks(bool state) { mClickableNicks=state; }
-const bool Preferences::useClickableNicks() { return mClickableNicks;}
-
-// On Screen Display
-void Preferences::setOSDUsage(bool state) { mOSDUsage=state; }
-const bool Preferences::OSDUsage() { return mOSDUsage; }
-
-void Preferences::setOSDShowOwnNick(bool state) { mOSDShowOwnNick=state; }
-const bool Preferences::OSDShowOwnNick() { return mOSDShowOwnNick; }
-
-void Preferences::setOSDShowChannel(bool state) { mOSDShowChannel=state; }
-const bool Preferences::OSDShowChannel() { return mOSDShowChannel; }
-
-void Preferences::setOSDShowQuery(bool state) { mOSDShowQuery=state; }
-const bool Preferences::OSDShowQuery() { return mOSDShowQuery; }
-
-void Preferences::setOSDShowChannelEvent(bool state) { mOSDShowChannelEvent=state; }
-const bool Preferences::OSDShowChannelEvent() { return mOSDShowChannelEvent; }
-
-const QFont Preferences::OSDFont() { return mOsdFont; }
-void Preferences::setOSDFont(const QFont &newFont) { mOsdFont=newFont; }
-void Preferences::setOSDFontRaw(const QString &rawFont) { osdFont.fromString(rawFont); }
-
-/*void Preferences::setOSDColor(const QString &newColor) { osdColor.setNamedColor(newColor); }
-QColor Preferences::OSDColor() { return mOsdColor; }*/
-
-void Preferences::setOSDUseCustomColors(bool state) { useOSDCustomColors = state; }
-
-void Preferences::setOSDTextColor(const QString& newColor) { osdTextColor.setNamedColor(newColor); }
-const QColor Preferences::OSDTextColor() { return mOsdTextColor; }
-
-void Preferences::setOSDBackgroundColor(const QString& newColor) { osdBackgroundColor.setNamedColor(newColor); }
-const QColor Preferences::OSDBackgroundColor() { return mOsdBackgroundColor; }
-
-void Preferences::setTextFontRaw(const QString &rawFont) { textFont.fromString(rawFont); }
-void Preferences::setListFontRaw(const QString &rawFont) { listFont.fromString(rawFont); }
-
-
 void Preferences::setShowTrayIcon(bool state)
 {
-    showTrayIcon=state;
     emit updateTrayIcon();
 }
 
 
 void Preferences::setSystrayOnly(bool state)
 {
-    systrayOnly=state;
     emit updateTrayIcon();
 }
 
 
 void Preferences::setTrayNotify(bool state)
 {
-    trayNotify = state;
     emit updateTrayIcon();
 }
 
 
-void Preferences::setTrayNotifyOnlyOwnNick(bool onlyOwnNick)
-{
-}
-
-bool Preferences::trayNotifyOnlyOwnNick() const
-{
-}
-
 void Preferences::setAutoUserhost(bool state)
 {
-    autoUserhost=state;
     emit autoUserhostChanged(state);
 }
 
@@ -470,40 +407,6 @@ void Preferences::setDialogFlag(const QString& flagName,bool state)
 }
 
 
-void Preferences::setIRCColorList(const QStringList &cl) { mIrcColorList=cl; }
-const QStringList Preferences::IRCColorList()        { return mIrcColorList; }
-
-
-const int Preferences::nickCompletionMode() { return mode(); }
-void Preferences::setNickCompletionMode(int mode) { setMode(mode); }
-const bool Preferences::nickCompletionCaseSensitive() const { return caseSensitive(); }
-void Preferences::setNickCompletionCaseSensitive(bool caseSensitive) { setCaseSensitive(caseSensitive); }
-
-const bool Preferences::showMenuBar() { return mShowMenuBar; }
-void Preferences::setShowMenuBar(bool s) { showMenuBar = s; }
-
-void Preferences::setShowTabBarCloseButton(bool s) { showTabBarCloseButton = s; }
-
-void Preferences::setShowTopic(bool s) { showTopic = s; }
-
-void Preferences::setShowRememberLineInAllWindows(bool s) { showRememberLineInAllWindows = s; }
-
-void Preferences::setFocusNewQueries(bool s) { focusNewQueries = s; }
-
-
-void Preferences::setDisableExpansion(bool state) { disableExpansion = state; }
-
-// Web Browser
-const bool Preferences::webBrowserUseKdeDefault() { return mWebBrowserUseKdeDefault; }
-void Preferences::setWebBrowserUseKdeDefault(bool state) { webBrowserUseKdeDefault = state; }
-
-const bool Preferences::filterColors() { return mFilterColors; }
-void Preferences::setFilterColors(bool filter) { filterColors = filter; }
-
-
-const bool Preferences::openWatchedNicksAtStartup() { return mOpenWatchedNicksAtStartup; }
-void Preferences::setOpenWatchedNicksAtStartup(bool open) { mOpenWatchedNicksAtStartup = open; }
-
 // Channel Encodings
 const QString Preferences::channelEncoding(const QString& server,const QString& channel)
 {
@@ -534,13 +437,5 @@ const QStringList Preferences::channelEncodingsChannelList(const QString& server
 {
     return channelEncodingsMap[server].keys();
 }
-
-
-
-QString Preferences::wikiUrl() const { return mWikiUrl; }
-void Preferences::setWikiUrl(const QString& url) { mWikiUrl=url; }
-
-bool Preferences::expandWikiUrl() const { return mExpandWikiUrl;}
-void Preferences::setExpandWikiUrl(bool expandUrl) { mExpandWikiUrl=expandUrl; }
 
 #include "preferences.moc"

@@ -149,22 +149,19 @@ void StatusPanel::textPasted(const QString& text)
 
 void StatusPanel::updateFonts()
 {
-    QString fgString;
-    QString bgString;
-
+    QColor fg;
+    QColor bg;
     if(Preferences::inputFieldsBackgroundColor())
     {
-        fgString="#"+Preferences::color(Preferences::ChannelMessage);
-        bgString="#"+Preferences::color(Preferences::TextViewBackground);
+        fg=Preferences::color(Preferences::ChannelMessage);
+        bg=Preferences::color(Preferences::TextViewBackground);
     }
     else
     {
-        fgString=colorGroup().foreground().name();
-        bgString=colorGroup().base().name();
+        fg=colorGroup().foreground();
+        bg=colorGroup().base();
     }
 
-    const QColor fg(fgString);
-    const QColor bg(bgString);
 
     statusInput->setPaletteForegroundColor(fg);
     statusInput->setPaletteBackgroundColor(bg);
