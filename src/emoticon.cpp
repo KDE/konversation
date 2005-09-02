@@ -148,7 +148,7 @@ namespace Konversation
 
     QString EmotIcon::filter(const QString& txt, const QFontMetrics& fm)
     {
-        if(!Preferences::emotIconsEnabled())
+        if(!Preferences::enableEmotIcons())
         {
             return txt;
         }

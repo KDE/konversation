@@ -333,8 +333,8 @@ bool doHighlight, bool parseURL, bool self)
 
     bool inverted = false;                        // TODO this flag should be stored somewhere
     {
-        QColor fg("#"+Preferences::color(Preferences::ChannelMessage));
-        QColor  bg("#"+Preferences::color(Preferences::TextViewBackground));
+        QColor fg(Preferences::color(Preferences::ChannelMessage));
+        QColor  bg(Preferences::color(Preferences::TextViewBackground));
 
         int h = 0, s = 0,fv = 0,bv = 0;
         fg.getHsv(&h,&s,&fv);
@@ -374,7 +374,6 @@ bool doHighlight, bool parseURL, bool self)
     bool filterColors = Preferences::filterColors();
     bool firstColor = true;
     QString colorString;
-    QStringList colorCodes = Preferences::iRCColorList();
 
     while((pos=colorRegExp.search(filteredLine))!=-1)
     {
@@ -388,11 +387,11 @@ bool doHighlight, bool parseURL, bool self)
 
             // reset colors on \017 to default value
             if(colorRegExp.cap(1) == "\017")
-                colorString += "<font color=\"#"+defaultColor+"\">";
+                colorString += "<font color=\""+defaultColor+"\">";
             else
             {
                 int foregroundColor = colorRegExp.cap(2).toInt();
-                colorString += "<font color=\"" + colorCodes[foregroundColor] + "\">";
+                colorString += "<font color=\"" + Preferences::color(foregroundColor).name() + "\">";
             }
 
             firstColor = false;
@@ -520,10 +519,10 @@ bool doHighlight, bool parseURL, bool self)
 
 void IRCView::append(const QString& nick,const QString& message)
 {
-    QString channelColor = Preferences::color(Preferences::ChannelMessage);
+    QString channelColor = Preferences::color(Preferences::ChannelMessage).name();
     QString line;
     QString nickLine = "%2";
-    QString color;
+    QString scolor;
     m_tabNotification = Konversation::tnfNormal;
 
     if(nick != m_server->getNickname())
@@ -541,23 +540,22 @@ void IRCView::append(const QString& nick,const QString& message)
     {
 
         if(nick != m_server->getNickname())
-            color = m_server->obtainNickInfo(nick)->getNickColor();
+            scolor = m_server->obtainNickInfo(nick)->getNickColor();
         else
-            color =  "#000001";
+            scolor =  "#000001";
 
-        if(color == "#000000")
+        if(scolor == "#000000")
         {
-            color = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
+            scolor = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
         }
 
-        nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
-
+        nickLine = "<font color=\"" + scolor + "\">"+nickLine+"</font>";
     }
     else
     {
-        if(channelColor  == "000000")
+        if(channelColor  == "#000000")
         {
-            channelColor = "000001";              // HACK Working around QTextBrowser's auto link coloring
+            channelColor = "#000001";              // HACK Working around QTextBrowser's auto link coloring
         }
     }
 
@@ -565,11 +563,11 @@ void IRCView::append(const QString& nick,const QString& message)
     {
         line = RLO;
         line += LRE;
-        line += "<p><font color=\"#" + channelColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"" + channelColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"#" + channelColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
+        line = "<p><font color=\"" + channelColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
     }
 
     line = line.arg(timeStamp(), nick, filter(message, channelColor, nick, true));
@@ -581,17 +579,17 @@ void IRCView::append(const QString& nick,const QString& message)
 
 void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool self)
 {
-    QString channelColor=Preferences::color(Preferences::ChannelMessage);
+    QColor channelColor=Preferences::color(Preferences::ChannelMessage);
     QString line;
     m_tabNotification = Konversation::tnfNone;
 
     if(suppressTimestamps)
     {
-        line = QString("<p><font color=\"#" + channelColor + "\">" + message + "</font></p>\n");
+        line = QString("<p><font color=\"" + channelColor.name() + "\">" + message + "</font></p>\n");
     }
     else
     {
-        line = QString("<p>" + timeStamp() + " <font color=\"#" + channelColor + "\">" + message + "</font></p>\n");
+        line = QString("<p>" + timeStamp() + " <font color=\"" + channelColor.name() + "\">" + message + "</font></p>\n");
     }
 
     doAppend(line, true, self);
@@ -599,7 +597,7 @@ void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool se
 
 void IRCView::appendQuery(const QString& nick,const QString& message)
 {
-    QString queryColor=Preferences::color(Preferences::QueryMessage);
+    QString queryColor=Preferences::color(Preferences::QueryMessage).name();
     QString line;
     QString nickLine = "%2";
     QString color;
@@ -633,9 +631,9 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
     }
     else
     {
-        if(queryColor  == "000000")
+        if(queryColor  == "#000000")
         {
-            queryColor = "000001";                // HACK Working around QTextBrowser's auto link coloring
+            queryColor = "#000001";                // HACK Working around QTextBrowser's auto link coloring
         }
     }
 
@@ -643,11 +641,11 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
     {
         line = RLO;
         line += LRE;
-        line += "<p><font color=\"#" + queryColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"" + queryColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"#" + queryColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
+        line = "<p><font color=\"" + queryColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
     }
 
     line = line.arg(timeStamp(), nick, filter(message, queryColor, nick, true));
@@ -659,7 +657,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 
 void IRCView::appendAction(const QString& nick,const QString& message)
 {
-    QString actionColor=Preferences::color(Preferences::ActionMessage);
+    QString actionColor=Preferences::color(Preferences::ActionMessage).name();
     QString line;
     QString nickLine = "%2";
     QString color;
@@ -693,9 +691,9 @@ void IRCView::appendAction(const QString& nick,const QString& message)
     }
     else
     {
-        if(actionColor  == "000000")
+        if(actionColor  == "#000000")
         {
-            actionColor = "000001";               // HACK Working around QTextBrowser's auto link coloring
+            actionColor = "#000001";               // HACK Working around QTextBrowser's auto link coloring
         }
     }
 
@@ -703,11 +701,11 @@ void IRCView::appendAction(const QString& nick,const QString& message)
     {
         line = RLO;
         line += LRE;
-        line += "<p><font color=\"#" + actionColor + "\">" + nickLine + " * %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"" + actionColor + "\">" + nickLine + " * %1" + PDF + " %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"#" + actionColor + "\">%1 * " + nickLine + " %3</font></p>\n";
+        line = "<p><font color=\"" + actionColor + "\">%1 * " + nickLine + " %3</font></p>\n";
     }
 
     line = line.arg(timeStamp(), nick, filter(message, actionColor, nick, true));
@@ -719,7 +717,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
 
 void IRCView::appendServerMessage(const QString& type, const QString& message)
 {
-    QString m_serverColor = Preferences::color(Preferences::ServerMessage);
+    QString serverColor = Preferences::color(Preferences::ServerMessage).name();
     m_tabNotification = Konversation::tnfControl;
 
     // Fixed width font option for MOTD
@@ -736,17 +734,17 @@ void IRCView::appendServerMessage(const QString& type, const QString& message)
     {
         line = RLO;
         line += LRE;
-        line += "<p><font color=\"#" + m_serverColor + "\"" + fixed + "><b>[</b>%2<b>]</b> %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"" + serverColor + "\"" + fixed + "><b>[</b>%2<b>]</b> %1" + PDF + " %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"#" + m_serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font></p>\n";
+        line = "<p><font color=\"" + serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font></p>\n";
     }
 
     if(type != "Notify")
-        line = line.arg(timeStamp(), type, filter(message,m_serverColor));
+        line = line.arg(timeStamp(), type, filter(message,serverColor));
     else
-        line = "<font color=\"#" + m_serverColor + "\">"+line.arg(timeStamp(), type, message)+"</font>";
+        line = "<font color=\"" + serverColor + "\">"+line.arg(timeStamp(), type, message)+"</font>";
 
     emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
@@ -755,7 +753,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message)
 
 void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important, bool parseURL, bool self)
 {
-    QString commandColor = Preferences::color(Preferences::CommandMessage);
+    QString commandColor = Preferences::color(Preferences::CommandMessage).name();
     QString line;
     QString prefix="***";
     m_tabNotification = Konversation::tnfControl;
@@ -776,11 +774,11 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
     {
         line = RLO;
         line += LRE;
-        line += "<p><font color=\"#" + commandColor + "\">%2 %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"" + commandColor + "\">%2 %1" + PDF + " %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"#" + commandColor + "\">%1 %2 %3</font></p>\n";
+        line = "<p><font color=\"" + commandColor + "\">%1 %2 %3</font></p>\n";
     }
 
     line = line.arg(timeStamp(), prefix, filter(message, commandColor, 0, true, parseURL, self));
@@ -795,7 +793,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     QString time;
     QString message = rawMessage;
     QString nick = firstColumn;
-    QString backlogColor = Preferences::color(Preferences::BacklogMessage);
+    QString backlogColor = Preferences::color(Preferences::BacklogMessage).name();
     m_tabNotification = Konversation::tnfNone;
 
     time = nick.section(' ', 0, 4);
@@ -814,11 +812,11 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
 
     if(basicDirection(message) == QChar::DirR)
     {
-        line = "<p><font color=\"#" + backlogColor + "\">%2 %1 %3</font></p>\n";
+        line = "<p><font color=\"" + backlogColor + "\">%2 %1 %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"#" + backlogColor + "\">%1 %2 %3</font></p>\n";
+        line = "<p><font color=\"" + backlogColor + "\">%1 %2 %3</font></p>\n";
     }
 
     line = line.arg(time, nick, filter(message, backlogColor, NULL, false));
@@ -1283,18 +1281,18 @@ QString IRCView::timeStamp()
     if(Preferences::timestamping())
     {
         QTime time = QTime::currentTime();
-        QString timeColor = Preferences::color(Preferences::Time);
+        QString timeColor = Preferences::color(Preferences::Time).name();
         QString timeFormat = Preferences::timestampFormat();
         QString timeString;
 
         if(!Preferences::showDate())
         {
-            timeString = QString("<font color=\"#" + timeColor + "\">[%1]</font> ").arg(time.toString(timeFormat));
+            timeString = QString("<font color=\"" + timeColor + "\">[%1]</font> ").arg(time.toString(timeFormat));
         }
         else
         {
             QDate date = QDate::currentDate();
-            timeString = QString("<font color=\"#" +
+            timeString = QString("<font color=\"" +
                 timeColor + "\">[%1 %2]</font> ").arg(date.toString(Qt::ISODate), time.toString(timeFormat));
         }
 

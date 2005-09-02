@@ -115,7 +115,7 @@
         </widget>
         <widget class="QGroupBox" row="3" column="0">
             <property name="name">
-                <cstring>osdCustomColor</cstring>
+                <cstring>kcfg_OSDUseCustomColors</cstring>
             </property>
             <property name="enabled">
                 <bool>false</bool>
@@ -200,7 +200,7 @@
                 </property>
                 <widget class="QCheckBox" row="0" column="0">
                     <property name="name">
-                        <cstring>kcfg_ShowOwnNick</cstring>
+                        <cstring>kcfg_OSDShowOwnNick</cstring>
                     </property>
                     <property name="text">
                         <string>&amp;If own nick appears in channel message</string>
@@ -208,7 +208,7 @@
                 </widget>
                 <widget class="QCheckBox" row="1" column="0">
                     <property name="name">
-                        <cstring>kcfg_ShowChannel</cstring>
+                        <cstring>kcfg_OSDShowChannel</cstring>
                     </property>
                     <property name="text">
                         <string>On an&amp;y channel message</string>
@@ -216,7 +216,7 @@
                 </widget>
                 <widget class="QCheckBox" row="2" column="0">
                     <property name="name">
-                        <cstring>kcfg_ShowQuery</cstring>
+                        <cstring>kcfg_OSDShowQuery</cstring>
                     </property>
                     <property name="text">
                         <string>On &amp;query activity</string>
@@ -224,7 +224,7 @@
                 </widget>
                 <widget class="QCheckBox" row="3" column="0">
                     <property name="name">
-                        <cstring>kcfg_ShowChannelEvent</cstring>
+                        <cstring>kcfg_OSDShowChannelEvent</cstring>
                     </property>
                     <property name="text">
                         <string>On &amp;Join/Part events</string>
@@ -307,7 +307,7 @@
     <connection>
         <sender>kcfg_UseOSD</sender>
         <signal>toggled(bool)</signal>
-        <receiver>osdCustomColor</receiver>
+        <receiver>kcfg_OSDUseCustomColors</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>

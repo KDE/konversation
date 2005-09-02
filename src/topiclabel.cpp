@@ -108,7 +108,7 @@ namespace Konversation
                 m_server->sendJoinCommand(channel);
             }
             // Always use KDE default mailer.
-            else if (Preferences::useKdeDefault() || link.lower().startsWith("mailto:"))
+            else if (Preferences::webBrowserUseKdeDefault() || link.lower().startsWith("mailto:"))
             {
                 new KRun(KURL(link));
             }

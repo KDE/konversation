@@ -54,33 +54,29 @@ QString IRCColorChooser::color()
 
 void IRCColorChooser::updatePreview()
 {
-    QStringList colors = Preferences::IRCColorList();
     QColor bgc;
 
     if(m_view->m_bgColorCBox->currentItem() > 0)
     {
-        bgc = QColor(colors[m_view->m_bgColorCBox->currentItem() - 1]);
+        bgc = Preferences::color(m_view->m_bgColorCBox->currentItem() - 1);
     }
     else
     {
-        bgc = QColor("#" + Preferences::color(Preferences::TextViewBackground));
+        bgc = Preferences::color(Preferences::TextViewBackground);
     }
 
     m_view->m_previewLbl->setBackgroundColor(bgc);
-    m_view->m_previewLbl->setPaletteForegroundColor(QColor(colors[m_view->m_fgColorCBox->currentItem()]));
+    m_view->m_previewLbl->setPaletteForegroundColor(Preferences::color(m_view->m_fgColorCBox->currentItem()));
 }
 
 void IRCColorChooser::initColors(KComboBox* combo)
 {
     QPixmap pix(width(), combo->fontMetrics().height() + 4);
-    int i = 0;
-    QStringList colors = Preferences::IRCColorList();
 
-    for (QStringList::iterator it = colors.begin(); it != colors.end(); ++it )
+    for (int i =0; i < 11; i++)
     {
-        QString c = *it;
-        pix.fill(QColor(c));
-        combo->insertItem(pix, i++);
+        pix.fill(Preferences::color(i));
+        combo->insertItem(pix, i);
     }
 }
 

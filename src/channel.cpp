@@ -284,7 +284,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
     getTextView()->setSizePolicy(greedy);
     nicknameListView->setSizePolicy(hmodest);
     // remember alternate background color
-    abgCache=nicknameListView->alternateBackground().name();
+    abgCache=nicknameListView->alternateBackground();
 
     connect(channelInput,SIGNAL (submit()),this,SLOT (channelTextEntered()) );
     connect(channelInput,SIGNAL (envelopeCommand()),this,SLOT (channelPassthroughCommand()) );
@@ -314,7 +314,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
     setLog(Preferences::log());
 
     connect(&userhostTimer,SIGNAL (timeout()),this,SLOT (autoUserhost()));
-    connect(&Preferences::SIGNAL (autoUserhostChanged(bool)),this,SLOT (autoUserhostChanged(bool)));
+    connect(Preferences::self(), SIGNAL (autoUserhostChanged(bool)),this,SLOT (autoUserhostChanged(bool)));
 
     // every few seconds try to get more userhosts
     autoUserhostChanged(Preferences::autoUserhost());
@@ -323,7 +323,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
     m_firstAutoWhoDone = false;
     connect(&m_whoTimer,SIGNAL (timeout()),this,SLOT (autoWho()));
     // re-schedule when the settings were changed
-    connect(&Preferences::SIGNAL (autoContinuousWhoChanged()),this,SLOT (scheduleAutoWho()));
+    connect(Preferences::self(), SIGNAL (autoContinuousWhoChanged()),this,SLOT (scheduleAutoWho()));
 
     m_allowNotifications = true;
 
@@ -629,7 +629,7 @@ void Channel::completeNick()
     // If the cursor is at beginning of line, insert last completion
     if(pos == 0 && !channelInput->lastCompletion().isEmpty())
     {
-        QString addStart(Preferences::suffixStart());
+        QString addStart(Preferences::nickCompleteSuffixStart());
         newLine = channelInput->lastCompletion() + addStart;
         // New cursor position is behind nickname
         pos = newLine.length();
@@ -723,7 +723,7 @@ void Channel::completeNick()
                 if(pos && complete)
                 {
                     channelInput->setLastCompletion(foundNick);
-                    QString addMiddle(Preferences::suffixMiddle());
+                    QString addMiddle(Preferences::nickCompleteSuffixMiddle());
                     newLine.insert(pos,foundNick+addMiddle);
                     pos=pos+foundNick.length()+addMiddle.length();
                 }
@@ -731,7 +731,7 @@ void Channel::completeNick()
                 else if(complete)
                 {
                     channelInput->setLastCompletion(foundNick);
-                    QString addStart(Preferences::suffixStart());
+                    QString addStart(Preferences::nickCompleteSuffixStart());
                     newLine.insert(pos,foundNick+addStart);
                     pos=pos+foundNick.length()+addStart.length();
                 }
@@ -1800,27 +1800,23 @@ void Channel::updateFonts()
 {
     nicknameCombobox->setFont(Preferences::textFont());
 
-    QString fgString;
-    QString bgString;
-    QString abgString;
+    QColor fg;
+    QColor bg;
+    QColor abg;
 
     if(Preferences::inputFieldsBackgroundColor())
     {
-        fgString="#"+Preferences::color(Preferences::ChannelMessage);
-        bgString="#"+Preferences::color(Preferences::TextViewBackground);
-        abgString="#"+Preferences::color(Preferences::AlternateBackground);
+        fg=Preferences::color(Preferences::ChannelMessage);
+        bg=Preferences::color(Preferences::TextViewBackground);
+        abg=Preferences::color(Preferences::AlternateBackground);
     }
     else
     {
-        fgString=colorGroup().foreground().name();
-        bgString=colorGroup().base().name();
+        fg=colorGroup().foreground();
+        bg=colorGroup().base();
         // get alternate background color from cache
-        abgString=abgCache;
+        abg=abgCache;
     }
-
-    const QColor fg(fgString);
-    const QColor bg(bgString);
-    const QColor abg(abgString);
 
     channelInput->setPaletteForegroundColor(fg);
     channelInput->setPaletteBackgroundColor(bg);

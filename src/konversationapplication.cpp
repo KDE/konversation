@@ -24,6 +24,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kconfigdialog.h>
+#include <kiconloader.h>
 
 #include "chatwindowappearance_preferences.h"
 #include "alias_preferences.h"
@@ -114,6 +115,7 @@ int KonversationApplication::newInstance()
         // initialize OSD display here, so we can read the Preferences::properly
         osd = new OSDWidget( "Konversation" );
 
+        Preferences::self();
         Preferences::setOSDFont(font());
         Preferences::setTextFont(font());
         Preferences::setListFont(font());
@@ -151,7 +153,7 @@ int KonversationApplication::newInstance()
         setMainWidget(mainWindow);
 
         connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
-        connect(mainWindow,SIGNAL (openPrefsDialog(Preferences:::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
+        connect(mainWindow,SIGNAL (openPrefsDialog(Preferences::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
         connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
         connect(Preferences::self(), SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
         connect(this, SIGNAL (prefsChanged()), mainWindow, SLOT (slotPrefsChanged()) );
@@ -496,15 +498,15 @@ void KonversationApplication::readOptions()
     {
         // Default user identity for pre 0.10 Preferences::files
         config->setGroup("User Identity");
-        Preferences::setIdent(config->readEntry("Ident",preferences.getIdent()));
-        Preferences::setRealName(config->readEntry("Realname",preferences.getRealName()));
+        Preferences::setIdent(config->readEntry("Ident",Preferences::ident()));
+        Preferences::setRealName(config->readEntry("Realname",Preferences::realName()));
 
         QString nickList=config->readEntry("Nicknames",Preferences::nicknameList().join(","));
         Preferences::setNicknameList(QStringList::split(",",nickList));
 
-        Preferences::setShowAwayMessage(config->readBoolEntry("ShowAwayMessage",preferences.getShowAwayMessage()));
-        Preferences::setAwayMessage(config->readEntry("AwayMessage",preferences.getAwayMessage()));
-        Preferences::setUnAwayMessage(config->readEntry("UnAwayMessage",preferences.getUnAwayMessage()));
+        Preferences::setShowAwayMessage(config->readBoolEntry("ShowAwayMessage",Preferences::showAwayMessage()));
+        Preferences::setAwayMessage(config->readEntry("AwayMessage",Preferences::awayMessage()));
+        Preferences::setUnAwayMessage(config->readEntry("UnAwayMessage",Preferences::unAwayMessage()));
 
         config->deleteGroup("User Identity");
     }
@@ -520,14 +522,14 @@ void KonversationApplication::readOptions()
         osd->setDuration(Preferences::OSDDuration());
         osd->setScreen(Preferences::OSDScreen());
         osd->setShadow(Preferences::OSDDrawShadow());
-        osd->setOffset(Preferences::OSDOffsetX(),preferences.getOSDOffsetY());
+        osd->setOffset(Preferences::OSDOffsetX(),Preferences::OSDOffsetY());
         osd->setAlignment((OSDWidget::Alignment)Preferences::OSDAlignment());
 
         if(Preferences::OSDUseCustomColors())
         {
             QString osdTextColor = config->readEntry("OSDTextColor");
             if(osdTextColor.isEmpty())
-                Preferences::setOSDTextColor(preferences.getOSDTextColor().name());
+                Preferences::setOSDTextColor(Preferences::OSDTextColor().name());
             else
                 Preferences::setOSDTextColor("#" + osdTextColor);
 
@@ -535,7 +537,7 @@ void KonversationApplication::readOptions()
 
             QString osdBackgroundColor = config->readEntry("OSDBackgroundColor");
             if(osdBackgroundColor.isEmpty())
-                Preferences::setOSDBackgroundColor(preferences.getOSDBackgroundColor().name());
+                Preferences::setOSDBackgroundColor(Preferences::OSDBackgroundColor().name());
             else
                 Preferences::setOSDBackgroundColor("#" + osdBackgroundColor);
 
@@ -776,8 +778,8 @@ void KonversationApplication::readOptions()
 
     // Web Browser
     config->setGroup("Web Browser Settings");
-    Preferences::setWebBrowserUseKdeDefault(config->readBoolEntry("UseKdeDefault",preferences.getWebBrowserUseKdeDefault()));
-    Preferences::setWebBrowserCmd(config->readEntry("WebBrowserCmd",preferences.getWebBrowserCmd()));
+    Preferences::setWebBrowserUseKdeDefault(config->readBoolEntry("UseKdeDefault",Preferences::webBrowserUseKdeDefault()));
+    Preferences::setWebBrowserCmd(config->readEntry("WebBrowserCmd",Preferences::webBrowserCmd()));
 
     // Channel Encodings
     QMap<QString,QString> channelEncodingsEntry=config->entryMap("Channel Encodings");
@@ -1091,57 +1093,64 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
         return; 
  
     //KConfigDialog didn't find an instance of this dialog, so lets create it : 
-    KConfigDialog* dialog = new KConfigDialog( mainWindow, "settings", 
-                                               Preferences:::self() ); 
-
-    Alias_Config* confAliasWdg = new Alias_Config( 0, "Alias" );
-    dialog->addPage ( confAliasWdg, i18n("Alias"), "alias" );
-
+    KConfigDialog* dialog = new KConfigDialog( mainWindow, "settings", Preferences::self(), KDialogBase::TreeList ); 
+    dialog->setShowIconsInTreeList(true);
+    dialog->unfoldTreeList(true);
+    dialog->setFolderIcon(i18n("Appearance"),SmallIcon("looknfeel"));
+    //Appearance/Chat Window
     ChatWindowAppearance_Config* confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
-    dialog->addPage ( confChatWindowAppearanceWdg, i18n("Chat Window Appearance"), "chatwindowappearance" );
+    dialog->addPage ( confChatWindowAppearanceWdg, i18n("Appearance - Chat Window"), "view_text", i18n("Appearance") );
+    //Appearance/Fonts
+    FontAppearance_Config* confFontAppearanceWdg = new FontAppearance_Config( 0, "FontAppearance" );
+    dialog->addPage ( confFontAppearanceWdg, i18n("Appearance - Fonts"), "fonts", i18n("Appearance") );
+    //Appearance/Themes
+    Theme_Config* confThemeWdg = new Theme_Config( 0, "Theme" );
+    dialog->addPage ( confThemeWdg, i18n("Appearance - Themes"), "iconthemes", i18n("Appearance") );
+    
+    dialog->setFolderIcon(QStringList::split(',', i18n("Behavior")), SmallIcon("configure"));
+    //Behavior/General
+    GeneralBehavior_Config* confGeneralBehaviorWdg = new GeneralBehavior_Config( 0, "GeneralBehavior" );
+    dialog->addPage ( confGeneralBehaviorWdg, i18n("Behavior - General"), "exec", i18n("Behavior") );
+    //Behavior/Connection
+    ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( 0, "ConnectionBehavior" );
+    dialog->addPage ( confConnectionBehaviorWdg, i18n("Behavior - Connection"), "connect_creating", i18n("Behavior") );
+    //Behaviour/Nickname List
+    NicklistBehavior_Config* confNicklistBehaviorWdg = new NicklistBehavior_Config( 0, "NicklistBehavior" );
+    dialog->addPage ( confNicklistBehaviorWdg, i18n("Behavior - Nickname List"), "player_playlist" );
+    //Behaviour/Tab Bar
+    TabBar_Config* confTabBarWdg = new TabBar_Config( 0, "TabBar" );
+    dialog->addPage ( confTabBarWdg, i18n("Behaviour - Tab Bar"), "tab_new" );
+    //Behaviour/Command Aliases
+    Alias_Config* confAliasWdg = new Alias_Config( 0, "Alias" );
+    dialog->addPage ( confAliasWdg, i18n("Behaviour - Command Aliases"), "editcopy" );
+     //Behaviour/Quick Buttons
+    QuickButtons_Config* confQuickButtonsWdg = new QuickButtons_Config( 0, "QuickButtons" );
+    dialog->addPage ( confQuickButtonsWdg, i18n("Behaviour - Quick Buttons"), "keyboard" );
+    //Behaviour/Logging
+    Log_Config* confLogWdg = new Log_Config( 0, "Log" );
+    dialog->addPage ( confLogWdg, i18n("Behavior - Logging"), "log" );
 
+    //Notification/Watched Nicknames
+    WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( 0, "WatchedNicknames" );
+    dialog->addPage ( confWatchedNicknamesWdg, i18n("Notification - Watched Nicknames"), "kfind" );
+    //Notification/Highlighting
+    Highlight_Config* confHighlightWdg = new Highlight_Config( 0, "Highlight" );
+    dialog->addPage ( confHighlightWdg, i18n("Notification - Highlighting"), "paintbrush" );
+    //Notification/On Screen Display
+    OSD_Config* confOSDWdg = new OSD_Config( 0, "OSD" );
+    dialog->addPage ( confOSDWdg, i18n("Notification - On Screen Display"), "tv" );
+
+    //Warning Dialogs
+    Warnings_Config* confWarningsWdg = new Warnings_Config( 0, "Warnings" );
+    dialog->addPage ( confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning" );
+
+    //Behaviour/Chat Window
     ChatwindowBehaviour_Config* confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( 0, "ChatwindowBehaviour" );
-    dialog->addPage ( confChatwindowBehaviourWdg, i18n("Chatwindow Behaviour"), "chatwindowbehaviour" );
-
+    dialog->addPage ( confChatwindowBehaviourWdg, i18n("Chatwindow Behaviour"), "" );
+   
     ColorsAppearance_Config* confColorsAppearanceWdg = new ColorsAppearance_Config( 0, "ColorsAppearance" );
     dialog->addPage ( confColorsAppearanceWdg, i18n("Colors Appearance"), "colorsappearance" );
-
-    ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( 0, "ConnectionBehavior" );
-    dialog->addPage ( confConnectionBehaviorWdg, i18n("Connection Behavior"), "connectionbehavior" );
-
-    FontAppearance_Config* confFontAppearanceWdg = new FontAppearance_Config( 0, "FontAppearance" );
-    dialog->addPage ( confFontAppearanceWdg, i18n("Font Appearance"), "fontappearance" );
-
-    GeneralBehavior_Config* confGeneralBehaviorWdg = new GeneralBehavior_Config( 0, "GeneralBehavior" );
-    dialog->addPage ( confGeneralBehaviorWdg, i18n("General Behavior"), "generalbehavior" );
-
-    Highlight_Config* confHighlightWdg = new Highlight_Config( 0, "Highlight" );
-    dialog->addPage ( confHighlightWdg, i18n("Highlight"), "highlight" );
-
-    Log_Config* confLogWdg = new Log_Config( 0, "Log" );
-    dialog->addPage ( confLogWdg, i18n("Log"), "log" );
-
-    NicklistBehavior_Config* confNicklistBehaviorWdg = new NicklistBehavior_Config( 0, "NicklistBehavior" );
-    dialog->addPage ( confNicklistBehaviorWdg, i18n("Nicklist Behavior"), "nicklistbehavior" );
-
-    OSD_Config* confOSDWdg = new OSD_Config( 0, "OSD" );
-    dialog->addPage ( confOSDWdg, i18n("OSD"), "osd" );
-
-    QuickButtons_Config* confQuickButtonsWdg = new QuickButtons_Config( 0, "QuickButtons" );
-    dialog->addPage ( confQuickButtonsWdg, i18n("Quick Buttons"), "quickbuttons" );
-
-    TabBar_Config* confTabBarWdg = new TabBar_Config( 0, "TabBar" );
-    dialog->addPage ( confTabBarWdg, i18n("Tab Bar"), "tabbar" );
-
-    Theme_Config* confThemeWdg = new Theme_Config( 0, "Theme" );
-    dialog->addPage ( confThemeWdg, i18n("Theme"), "theme" );
-
-    Warnings_Config* confWarningsWdg = new Warnings_Config( 0, "Warnings" );
-    dialog->addPage ( confWarningsWdg, i18n("Warnings"), "warnings" );
-
-    WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( 0, "WatchedNicknames" );
-    dialog->addPage ( confWatchedNicknamesWdg, i18n("Watched Nicknames"), "watchednicknames" );
-    
+   
     //User edited the configuration - update your local copies of the 
     //configuration data 
 //    connect( dialog, SIGNAL(settingsChanged()), 
@@ -1151,7 +1160,7 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     
 }
 
-void KonversationApplication::openPrefsDialog(Preferences:::Pages page)
+void KonversationApplication::openPrefsDialog(Preferences::Pages page)
 {
     openPrefsDialog();
     //FIXME - open the right page

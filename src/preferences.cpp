@@ -233,32 +233,32 @@ void Preferences::addIgnore(const QString &newIgnore)
     self()->mIgnoreList.append(new Ignore(ignore[0],ignore[1].toInt()));
 }
 void Preferences::setNotifyList(const QMap<QString, QStringList> &newList)
-{ mNotifyList=newList; }
+{ self()->mNotifyList=newList; }
 
-const QMap<QString, QStringList> Preferences::notifyList() { return mNotifyList; }
+const QMap<QString, QStringList> Preferences::notifyList() { return self()->mNotifyList; }
 
 const QStringList Preferences::notifyListByGroup(const QString& groupName)
 {
-    if (notifyList.find(groupName) != notifyList.end())
-        return notifyList[groupName];
+    if (self()->mNotifyList.find(groupName) != self()->mNotifyList.end())
+        return self()->mNotifyList[groupName];
     else
         return QStringList();
 }
 
 const QString Preferences::notifyStringByGroup(const QString& groupName)
 {
-    return getNotifyListByGroup(groupName).join(" ");
+    return notifyListByGroup(groupName).join(" ");
 }
 
 const bool Preferences::addNotify(const QString& groupName, const QString& newPattern)
 {
     // don't add duplicates
     if (groupName.isEmpty() || newPattern.isEmpty()) return false;
-    if (!notifyList[groupName].contains(newPattern))
+    if (!self()->mNotifyList[groupName].contains(newPattern))
     {
-        QStringList nicknameList = notifyList[groupName];
+        QStringList nicknameList = self()->mNotifyList[groupName];
         nicknameList.append(newPattern);
-        notifyList[groupName] = nicknameList;
+        self()->mNotifyList[groupName] = nicknameList;
         return true;
     }
     return false;
@@ -266,16 +266,16 @@ const bool Preferences::addNotify(const QString& groupName, const QString& newPa
 
 const bool Preferences::removeNotify(const QString& groupName, const QString& pattern)
 {
-    if (notifyList.find(groupName) != notifyList.end())
+    if (self()->mNotifyList.find(groupName) != self()->mNotifyList.end())
     {
-        QStringList nicknameList = notifyList[groupName];
+        QStringList nicknameList = self()->mNotifyList[groupName];
         nicknameList.remove(pattern);
         if (nicknameList.isEmpty())
-            notifyList.remove(groupName);
+            self()->mNotifyList.remove(groupName);
         else
-            notifyList[groupName] = nicknameList;
+            self()->mNotifyList[groupName] = nicknameList;
         return true;
-    } else
+    }
     return false;
 }
 
@@ -298,7 +298,7 @@ void Preferences::setIdentityList(const QValueList<IdentityPtr>& list)
 
 const IdentityPtr Preferences::identityByName(const QString& name)
 {
-    QValueList<IdentityPtr> identities = getIdentityList();
+    QValueList<IdentityPtr> identities = identityList();
     QValueList<IdentityPtr>::iterator it = identities.begin();
 
     while(it != identities.end())
@@ -317,8 +317,8 @@ const IdentityPtr Preferences::identityByName(const QString& name)
 
 const IdentityPtr Preferences::identityById(int id)
 {
-    QValueList<IdentityPtr> self()->mIdentityList = getIdentityList();
-    for(QValueList<IdentityPtr>::iterator it = self()->mIdentityList.begin(); it != self()->mIdentityList.end(); ++it)
+    QValueList<IdentityPtr> identList = identityList();
+    for(QValueList<IdentityPtr>::iterator it = identList.begin(); it != identList.end(); ++it)
     {
         if((*it)->id() == id)
         {
@@ -326,7 +326,7 @@ const IdentityPtr Preferences::identityById(int id)
         }
     }
 
-    return self()->mIdentityList.first();
+    return identList.first();
 }
 
 const QString Preferences::realName() { return self()->mIdentityList[0]->getRealName(); }
@@ -359,25 +359,29 @@ void Preferences::setNicknameList(const QStringList &newList) { self()->mIdentit
 
 void Preferences::setShowTrayIcon(bool state)
 {
-    emit updateTrayIcon();
+    PreferencesBase::setShowTrayIcon(state);
+    emit self()->updateTrayIcon();
 }
 
 
 void Preferences::setSystrayOnly(bool state)
 {
-    emit updateTrayIcon();
+    PreferencesBase::setSystrayOnly(state);
+    emit self()->updateTrayIcon();
 }
 
 
 void Preferences::setTrayNotify(bool state)
 {
-    emit updateTrayIcon();
+    PreferencesBase::setTrayNotify(state);
+    emit self()->updateTrayIcon();
 }
 
 
 void Preferences::setAutoUserhost(bool state)
 {
-    emit autoUserhostChanged(state);
+    PreferencesBase::setAutoUserhost(state);
+    emit self()->autoUserhostChanged(state);
 }
 
 const bool Preferences::dialogFlag(const QString& flagName)

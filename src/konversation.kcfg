@@ -6,6 +6,7 @@
   <include>qfont.h</include>
   <include>qsize.h</include>
   <include>kdialog.h</include>
+  <include>kuser.h</include>
   <kcfgfile name="konversationrc" />
 
   <group name="Appearance">
@@ -75,7 +76,7 @@
       <!--   config->writeEntry("ShowQuickButtons",preferences.getShowQuickButtons()); -->
     </entry>
     <entry key="QuickButtons" type="StringList" name="ButtonList">
-      <default>"Op,/OP %u%n","DeOp,/DEOP %u%n","WhoIs,/WHOIS %s,%%u%n","Version,/CTCP %s,%%u VERSION%n","Kick,/KICK %u%n","Kick,/KICK %u%n","Ban,/BAN %u%n","Part,/PART %c Leaving...%n","Quit,/QUIT Leaving...%n"</default>
+      <default code="true">(QStringList() &lt;&lt; "Op,/OP %u%n"&lt;&lt;"DeOp,/DEOP %u%n"&lt;&lt;"WhoIs,/WHOIS %s,%%u%n"&lt;&lt;"Version,/CTCP %s,%%u VERSION%n"&lt;&lt;"Kick,/KICK %u%n"&lt;&lt;"Kick,/KICK %u%n"&lt;&lt;"Ban,/BAN %u%n"&lt;&lt;"Part,/PART %c Leaving...%n"&lt;&lt;"Quit,/QUIT Leaving...%n")</default>
     </entry>
     <entry key="ShowModeButtons" type="Bool">
       <default>false</default>
@@ -211,7 +212,7 @@
       <!--   config->writeEntry("FilterColorCodes", preferences.getFilterColors()); -->
     </entry>
     <entry key="NickColor$(nickNumber)" type="Color">
-      <parameter name="nickNumber" type="UInt" max="7"/>
+      <parameter name="nickNumber" type="UInt" max="9"/>
       <default param="0">#8E55E9</default>
       <default param="1">#B30E0E</default>
       <default param="2">#18B33C</default>
@@ -619,7 +620,7 @@
     </entry>
   </group>
   <group name="OSD">
-    <entry key="UseOSD" type="Bool" name="OSDUsage">
+    <entry key="UseOSD" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
@@ -785,7 +786,7 @@
       <!--     QString oldNotifyNicknames = config->readEntry("NotifyList", QString::null); -->
       <!-- konversationapplication.cpp:1022 -->
       <!-- //  config->writeEntry("NotifyList",preferences.getNotifyString()); -->
-    </entry>
+    <!-- </entry> -->
     <entry key="OnStartup" type="Bool" name="OpenWatchedNicksAtStartup">
       <default>false</default>
       <label></label>
@@ -833,7 +834,7 @@
       <!-- konversationapplication.cpp:1133 -->
       <!--   config->writeEntry("HighlightOwnLines",preferences.getHighlightOwnLines()); -->
     </entry>
-    <entry key="HighlightOwnLinesColor" type="String">
+    <entry key="HighlightOwnLinesColor" type="Color">
       <default>#ff0000</default>
       <label></label>
       <whatsthis></whatsthis>
@@ -1061,7 +1062,7 @@
       <!--   config->writePathEntry("LogfilePath",preferences.getLogPath()); -->
     </entry>
     <entry key="DccPath" type="Path">
-      <default code="true">KUser(KUser::UseRealUserID)+"/dccrevc"</default>
+      <default code="true">KUser(KUser::UseRealUserID).homeDir()+"/dccrecv"</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:845 -->
@@ -1288,7 +1289,7 @@
     </entry>
   </group>
   <group name="Message Text Colors">
-    <entry name="Color$(colorName)" type="Color" key="$(colorName)">
+    <entry name="$(colorName)Color" type="Color" key="$(colorName)">
       <parameter name="colorName" type="Enum">
         <values>
           <value>ActionMessage</value>

@@ -40,45 +40,45 @@ KDialogBase::Ok, parent, "edit_prefs", false, true)
 
     lastPane = 0;
 
-    setFolderIcon(QStringList::split(',', i18n("Appearance")), SmallIcon("looknfeel"));
-    chatWinAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("view_text"));
-    QWidget* fontsAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Fonts")), QString::null, SmallIcon("fonts"));
-    QWidget* themesPane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Themes")),
-        QString::null, SmallIcon("iconthemes"));
+//    setFolderIcon(QStringList::split(',', i18n("Appearance")), SmallIcon("looknfeel"));
+//    chatWinAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("view_text"));
+//    QWidget* fontsAppearancePane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Fonts")), QString::null, SmallIcon("fonts"));
+//    QWidget* themesPane = addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Themes")),
+//       QString::null, SmallIcon("iconthemes"));
 
-    setFolderIcon(QStringList::split(',', i18n("Behavior")), SmallIcon("configure"));
-    QWidget* generalBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("General")),
-        QString::null,SmallIcon("exec"));
-    QWidget* connectionBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Connection")),
-        QString::null,SmallIcon("connect_creating"));
-    QWidget* nicklistBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Nickname List")),QString::null, SmallIcon("player_playlist"));
-    QWidget* tabBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Tab Bar")),
-        QString::null, SmallIcon("tab_new"));
+//    setFolderIcon(QStringList::split(',', i18n("Behavior")), SmallIcon("configure"));
+//    QWidget* generalBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("General")),
+//        QString::null,SmallIcon("exec"));
+//    QWidget* connectionBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Connection")),
+//        QString::null,SmallIcon("connect_creating"));
+//  QWidget* nicklistBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Nickname List")),QString::null, SmallIcon("player_playlist"));
+//    QWidget* tabBehaviorPane = addVBoxPage(QStringList::split(',', i18n("Behavior") + "," + i18n("Tab Bar")),
+//        QString::null, SmallIcon("tab_new"));
     QWidget* ignorePane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Ignored Nicknames")),
         QString::null, SmallIcon("editdelete"));
-    QWidget* aliasesPane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Command Aliases")),
-        QString::null,SmallIcon("editcopy"));
-    QWidget* buttonsPane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Quick Buttons")),
-        QString::null, SmallIcon("keyboard"));
-    QWidget* logSettingsPane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Logging")),
-        QString::null,SmallIcon("log"));
+//    QWidget* aliasesPane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Command Aliases")),
+//        QString::null,SmallIcon("editcopy"));
+//    QWidget* buttonsPane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Quick Buttons")),
+//        QString::null, SmallIcon("keyboard"));
+//  QWidget* logSettingsPane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("Logging")),
+//      QString::null,SmallIcon("log"));
     QWidget* dccSettingsPane = addVBoxPage(QStringList::split(',', i18n("Behavior")+ "," + i18n("DCC")),
         QString::null,SmallIcon("2rightarrow" ));
 
-    setFolderIcon(QStringList::split(',', i18n("Notification")), SmallIcon("knotify"));
-    notifyPane = addVBoxPage(QStringList::split(',', i18n("Notification") + "," + i18n("Watched Nicknames")),
-        QString::null,SmallIcon("kfind"));
-    QWidget* highlightPane = addVBoxPage(QStringList::split(',', i18n("Notification") + "," + i18n("Highlighting"))   ,QString::null,SmallIcon("paintbrush"));
-    OSDPane = addVBoxPage(QStringList::split(',', i18n("Notification") + "," + i18n("On Screen Display")),
-        QString::null, SmallIcon("tv"));
+//    setFolderIcon(QStringList::split(',', i18n("Notification")), SmallIcon("knotify"));
+//    notifyPane = addVBoxPage(QStringList::split(',', i18n("Notification") + "," + i18n("Watched Nicknames")),
+//        QString::null,SmallIcon("kfind"));
+//    QWidget* highlightPane = addVBoxPage(QStringList::split(',', i18n("Notification") + "," + i18n("Highlighting"))   ,QString::null,SmallIcon("paintbrush"));
+//    OSDPane = addVBoxPage(QStringList::split(',', i18n("Notification") + "," + i18n("On Screen Display")),
+//        QString::null, SmallIcon("tv"));
 
-    QWidget* dialogsPane = addVBoxPage(i18n("Warning Dialogs"), QString::null, SmallIcon("messagebox_warning"));
+//    QWidget* dialogsPane = addVBoxPage(i18n("Warning Dialogs"), QString::null, SmallIcon("messagebox_warning"));
 
     // TODO: Uncomment this again when it's ready to go
     // QWidget* scriptsPane        =addPage(i18n("Scripting"));
 
     // Add pages to preferences dialog
-    PrefsPageChatWinAppearance* chatWinAppearancePage = new PrefsPageChatWinAppearance(chatWinAppearancePane);
+/*    PrefsPageChatWinAppearance* chatWinAppearancePage = new PrefsPageChatWinAppearance(chatWinAppearancePane);
     PrefsPageFontsAppearance* fontsAppearancePage = new PrefsPageFontsAppearance(fontsAppearancePane);
 
     PrefsPageBehaviour* generalBehaviorPage = new PrefsPageBehaviour(generalBehaviorPane);
@@ -144,7 +144,7 @@ KDialogBase::Ok, parent, "edit_prefs", false, true)
     showPage(lastActiveModule);
     if(lastActiveModule == pageIndex(OSDPane))
         OSDPage->aboutToShow();
-    unfoldTreeList(true);
+    unfoldTreeList(true);*/
 }
 
 PrefsDialog::~PrefsDialog()

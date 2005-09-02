@@ -123,6 +123,12 @@ class Preferences : public QObject, public PreferencesBase
         static const QStringList channelEncodingsServerList();
         static const QStringList channelEncodingsChannelList(const QString& server);
 
+	static void setShowTrayIcon(bool state);
+	static void setSystrayOnly(bool state);
+	static void setTrayNotify(bool state);
+	static void setAutoUserhost(bool state);
+
+
     signals:
         void requestServerConnection(int number);
         void requestSaveOptions();
@@ -157,6 +163,7 @@ class Preferences : public QObject, public PreferencesBase
         QPtrList<Ignore> mIgnoreList;
         QValueList<IdentityPtr> mIdentityList;
         QPtrList<Highlight> mHighlightList;
+	QMap<QString, QStringList> mNotifyList;
         QMap< QString,QMap<QString,QString> > mChannelEncodingsMap;
 /*
         // IRC colors
