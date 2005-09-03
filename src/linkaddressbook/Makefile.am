@@ -9,4 +9,7 @@ liblinkaddressbookui_la_SOURCES = linkaddressbookui_base.ui linkaddressbookui.cp
 kimiface_DIR = $(kde_includes)
 liblinkaddressbookui_la_LDFLAGS = $(all_libraries) -no-undefined
 liblinkaddressbookui_la_LIBADD = $(COMPAT_LIBS) $(LIB_KDEUI) $(LIB_KABC)
+
+INCLUDES= -I.. $(all_includes)
+
 # vim: set noet:
