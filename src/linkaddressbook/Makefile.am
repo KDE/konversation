@@ -10,6 +10,6 @@ kimiface_DIR = $(kde_includes)
 liblinkaddressbookui_la_LDFLAGS = $(all_libraries) -no-undefined
 liblinkaddressbookui_la_LIBADD = $(COMPAT_LIBS) $(LIB_KDEUI) $(LIB_KABC)
 
-INCLUDES= -I.. $(all_includes)
+INCLUDES=-I..
 
 # vim: set noet:
