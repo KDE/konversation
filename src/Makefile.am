@@ -1,4 +1,4 @@
-SUBDIRS = . blowfish linkaddressbook
+SUBDIRS = linkaddressbook blowfish .
 
 METASOURCES = AUTO
 
