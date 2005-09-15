@@ -73,7 +73,7 @@ namespace Konversation
 
         if(newTopic != m_channel->getTopicHistory().first().section(' ', 1))
         {
-            m_channel->sendChannelText(Preferences::commandChar() + "TOPIC " + m_channel->getName() + " " + newTopic);
+            m_channel->sendChannelText(KonversationApplication::preferences.getCommandChar() + "TOPIC " + m_channel->getName() + " " + newTopic);
         }
 
         QStringList newModeList = modes();

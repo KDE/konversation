@@ -40,16 +40,16 @@ void RawLog::childAdjustFocus()
 
 void RawLog::updateFonts()
 {
-    getTextView()->setFont(Preferences::textFont());
+    getTextView()->setFont(KonversationApplication::preferences.getTextFont());
 
-    if(Preferences::showBackgroundImage())
+    if(KonversationApplication::preferences.getShowBackgroundImage())
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
-            Preferences::backgroundImage());
+        getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
+            KonversationApplication::preferences.getBackgroundImageName());
     }
     else
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
+        getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
             QString::null);
     }
 }

@@ -83,6 +83,7 @@ namespace Konversation
             QPushButton* m_addButton;
             QPushButton* m_editButton;
             QPushButton* m_delButton;
+            Preferences* m_preferences;
     };
 }
 #endif

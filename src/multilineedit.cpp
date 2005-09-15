@@ -39,13 +39,13 @@ KGuiItem(i18n("Add &Quotation Indicators")))
 
     dialogLayout->addWidget(textEditor);
 
-    setInitialSize(Preferences::multilineEditSize());
+    setInitialSize(KonversationApplication::preferences.getMultilineEditSize());
     show();
 }
 
 MultilineEdit::~MultilineEdit()
 {
-    Preferences::setMultilineEditSize(size());
+    KonversationApplication::preferences.setMultilineEditSize(size());
 }
 
 void MultilineEdit::slotCancel()

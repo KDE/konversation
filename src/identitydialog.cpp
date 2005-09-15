@@ -48,7 +48,7 @@ namespace Konversation
         m_identityCBox->setEditable(false);
         identityLabel->setBuddy(m_identityCBox);
 
-        QValueList<IdentityPtr> tmpList = Preferences::identityList();
+        QValueList<IdentityPtr> tmpList = KonversationApplication::preferences.getIdentityList();
 
         for(QValueList<IdentityPtr>::iterator it = tmpList.begin(); it != tmpList.end(); ++it)
         {
@@ -428,7 +428,7 @@ namespace Konversation
         }
 
         refreshCurrentIdentity();
-        Preferences::setIdentityList(m_identityList);
+        KonversationApplication::preferences.setIdentityList(m_identityList);
         static_cast<KonversationApplication*>(kapp)->saveOptions(true);
         accept();
     }
@@ -484,7 +484,7 @@ namespace Konversation
             return;
         }
 
-        ServerGroupList serverGroups = Preferences::serverGroupList();
+        ServerGroupList serverGroups = KonversationApplication::preferences.serverGroupList();
         ServerGroupList::iterator it = serverGroups.begin();
         bool found = false;
 

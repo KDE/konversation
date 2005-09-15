@@ -1,4 +1,4 @@
-SUBDIRS = linkaddressbook blowfish .
+SUBDIRS = blowfish linkaddressbook
 
 METASOURCES = AUTO
 
@@ -6,35 +6,35 @@ bin_PROGRAMS = konversation
 bin_SCRIPTS = konversationircprotocolhandler
 
 konversation_SOURCES = konviface.skel\
-	 konversationmainwindow.cpp valuelistviewitem.cpp urlcatcher.cpp searchdialog.cpp \
-	 scriptlauncher.cpp rawlog.cpp \
-	 konvdcop.cpp channellistpanel.cpp konsolepanel.cpp \
-	 dcctransferhandler.cpp identity.cpp \
-	 statuspanel.cpp dccrecipientdialog.cpp topiccombobox.cpp \
-	 nicksonline.cpp dccpanel.cpp dcctransfer.cpp nicklistviewitem.cpp \
+	 konversationmainwindow.cpp valuelistviewitem.cpp urlcatcher.cpp searchdialog.cpp prefspagehighlight.cpp \
+	 scriptlauncher.cpp rawlog.cpp prefspagenotify.cpp prefspagedialogs.cpp \
+	 prefspagebuttons.cpp konvdcop.cpp channellistpanel.cpp konsolepanel.cpp \
+	 dcctransferhandler.cpp prefspageignore.cpp identity.cpp \
+	 statuspanel.cpp dccrecipientdialog.cpp topiccombobox.cpp prefspagelog.cpp prefspagedccsettings.cpp \
+	 nicksonline.cpp prefspage.cpp dccpanel.cpp dcctransfer.cpp nicklistviewitem.cpp \
 	 highlight.cpp highlightviewitem.cpp modebutton.cpp ignorelistviewitem.cpp \
 	 ignorecheckbox.cpp ignore.cpp nicklistview.cpp ircinput.cpp \
-	 images.cpp quickbutton.cpp preferences.cpp \
+	 images.cpp prefsdialog.cpp quickbutton.cpp preferences.cpp \
 	 chatwindow.cpp outputfilter.cpp query.cpp konversationapplication.cpp nick.cpp \
          inputfilter.cpp channel.cpp ircview.cpp server.cpp main.cpp dcc_preferences.ui \
 	 log_preferences.ui tabbar_preferences.ui chatwindowappearance_preferences.ui \
          irccolorchooserui.ui colorsappearance_preferences.ui irccolorchooser.cpp \
-	 channellistviewitem.cpp osd.cpp ircevent.cpp \
-         trayicon.cpp dccchat.cpp logfilereader.cpp \
+	 prefspagealiases.cpp channellistviewitem.cpp osd.cpp prefspageosd.cpp ircevent.cpp \
+         trayicon.cpp prefspagetabbehavior.cpp dccchat.cpp logfilereader.cpp \
 	 multilineedit.cpp nickinfo.cpp dccresumedialog.cpp konversationsound.cpp \
-	 quickconnectdialog.cpp \
-	 serverlistdialog.cpp \
+	 quickconnectdialog.cpp prefspagebehaviour.cpp prefspagechatwinbehavior.cpp \
+	 prefspagechatwinappearance.cpp prefspagecolorsappearance.cpp serverlistdialog.cpp \
 	 dcctransfersend.cpp dcctransferrecv.cpp channelnick.cpp dccdetaildialog.cpp \
 	 insertchardialog.cpp irccharsets.cpp editnotifydialog.cpp common.cpp serverison.cpp \
 	 sslsocket.cpp servergroupsettings.cpp serversettings.cpp servergroupdialog.cpp \
 	 ssllabel.cpp serverdialog.cpp channeldialog.cpp identitydialog.cpp topiclabel.cpp \
-	 channeloptionsui.ui channeloptionsdialog.cpp notificationhandler.cpp \
-	 joinchannelui.ui joinchanneldialog.cpp preferences_base.kcfgc emoticon.cpp \
+	 channeloptionsui.ui channeloptionsdialog.cpp prefspagethemes.cpp notificationhandler.cpp \
+	 joinchannelui.ui joinchanneldialog.cpp konversation_settings.kcfgc emoticon.cpp \
          chatwindowbehaviour_preferences.ui alias_preferences.ui osd_preferences.ui theme_preferences.ui \
 	 highlight_preferences.ui warnings_preferences.ui quickbuttons_preferences.ui \
 	 watchednicknames_preferences.ui generalbehavior_preferences.ui connectionbehavior_preferences.ui \
-	 fontappearance_preferences.ui \
-	 nicklistbehavior_preferences.ui \
+	 prefspageconnectionbehavior.cpp fontappearance_preferences.ui prefspagefontsappearance.cpp \
+	 nicklistbehavior_preferences.ui prefspagenicklistbehavior.cpp \
 	 konvibookmarkhandler.cpp konvibookmarkmenu.cpp popup.cpp ircviewbox.cpp searchbar.cpp
 
 konversation_LDADD = $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la blowfish/libblowfish.la
@@ -64,9 +64,10 @@ messages: rc.cpp
 		$(XGETTEXT) $$LIST -o $(podir)/konversation.pot; \
 	fi
 
-noinst_HEADERS =serverlistdialog.h dcctransfersend.h 		 \
+noinst_HEADERS = prefspagebehaviour.h prefspagechatwinbehavior.h 	 		 \
+		prefspagechatwinappearance.h prefspagecolorsappearance.h serverlistdialog.h dcctransfersend.h 		 \
 		dcctransferrecv.h dccdetaildialog.h insertchardialog.h editnotifydialog.h serverison.h 		 \
 		servergroupsettings.h serversettings.h	servergroupdialog.h serverdialog.h channeldialog.h 		 \
 		identitydialog.h topiclabel.h channeloptionsdialog.h joinchanneldialog.h \
-		popup.h
+		prefspageconnectionbehavior.h prefspagefontsappearance.h prefspagenicklistbehavior.h popup.h
 

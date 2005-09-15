@@ -51,7 +51,7 @@ PrefsPageThemes::PrefsPageThemes(QWidget* newParent,Preferences* newPreferences)
     updateList();
     updateButtons();
 
-    m_oldTheme = Preferences::iconTheme();
+    m_oldTheme = KonversationApplication::preferences.getIconTheme();
 
     connect(themeList,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
     connect(themeList,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
@@ -196,7 +196,7 @@ void PrefsPageThemes::updatePreview(int id)
 void PrefsPageThemes::updateList()
 {
     QString themeName,themeComment;
-    QString currentTheme = Preferences::iconTheme();
+    QString currentTheme = KonversationApplication::preferences.getIconTheme();
     int index = 0;
     bool found = false;
 
@@ -204,7 +204,7 @@ void PrefsPageThemes::updateList()
     {
         m_oldTheme=currentTheme;
         currentTheme = "default";
-        Preferences::setIconTheme("default");
+        KonversationApplication::preferences.setIconTheme("default");
     }
 
     m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/index.desktop");

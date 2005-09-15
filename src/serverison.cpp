@@ -88,7 +88,7 @@ KABC::Addressee ServerISON::getOfflineNickAddressee(QString& nickname)
 void ServerISON::recalculateAddressees()
 {
     // If not watching nicks, no need to build notify list.
-    if (Preferences::useNotify())
+    if (KonversationApplication::preferences.getUseNotify())
     {
         // Get all nicks known to be online.
         const NickInfoMap* allNicks = m_server->getAllNicks();
@@ -170,7 +170,7 @@ void ServerISON::recalculateAddressees()
         // TODO: Don't add nick on user watch list if nick is known to be online
         // under a different nickname?
         QStringList prefsWatchList =
-            Preferences::notifyListByGroup(m_server->getServerGroup());
+            KonversationApplication::preferences.getNotifyListByGroup(m_server->getServerGroup());
         QStringList::iterator itEnd = prefsWatchList.end();
 
         for(QStringList::iterator it = prefsWatchList.begin(); it != itEnd; ++it)

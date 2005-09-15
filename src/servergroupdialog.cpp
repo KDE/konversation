@@ -65,7 +65,7 @@ namespace Konversation
         QPushButton* editIdentityBtn = new QPushButton(i18n("Edit..."), mainWidget);
         connect(editIdentityBtn, SIGNAL(clicked()), this, SLOT(editIdentity()));
 
-        QValueList<IdentityPtr> identities = Preferences::identityList();
+        QValueList<IdentityPtr> identities = KonversationApplication::preferences.getIdentityList();
 
         for(QValueList<IdentityPtr>::iterator it = identities.begin(); it != identities.end(); ++it)
         {
@@ -208,7 +208,7 @@ namespace Konversation
         ServerGroupSettingsPtr settings = new ServerGroupSettings(m_id);
         settings->setName(m_nameEdit->text());
         settings->setGroup(m_groupCBox->currentText());
-        QValueList<IdentityPtr> identities = Preferences::identityList();
+        QValueList<IdentityPtr> identities = KonversationApplication::preferences.getIdentityList();
         settings->setIdentityId(identities[m_identityCBox->currentItem()]->id());
         settings->setConnectCommands(m_commandEdit->text());
         settings->setAutoConnectEnabled(m_autoConnectCBox->isChecked());
@@ -402,12 +402,12 @@ namespace Konversation
     {
         IdentityDialog dlg(this);
         dlg.setCurrentIdentity(m_identityCBox->currentItem());
-        QValueList<IdentityPtr> identities = Preferences::identityList();
+        QValueList<IdentityPtr> identities = KonversationApplication::preferences.getIdentityList();
         int identityId = identities[m_identityCBox->currentItem()]->id();
 
         if(dlg.exec() == KDialog::Accepted)
         {
-            identities = Preferences::identityList();
+            identities = KonversationApplication::preferences.getIdentityList();
             m_identityCBox->clear();
 
             for(QValueList<IdentityPtr>::iterator it = identities.begin(); it != identities.end(); ++it)
@@ -415,7 +415,7 @@ namespace Konversation
                 m_identityCBox->insertItem((*it)->getName());
             }
 
-            m_identityCBox->setCurrentText(Preferences::identityById(identityId)->getName());
+            m_identityCBox->setCurrentText(KonversationApplication::preferences.getIdentityById(identityId)->getName());
             m_identitiesNeedsUpdate = true;
         }
     }

@@ -29,6 +29,7 @@ class QCString;
 class KonversationMainWindow;
 class KonvDCOP;
 class Server;
+class PrefsDialog;
 class QuickConnectDialog;
 class Images;
 
@@ -56,6 +57,8 @@ class KonversationApplication : public KUniqueApplication
     Q_OBJECT
 
         public:
+        static Preferences preferences;
+
         /** This function in general shouldn't be called, because in the future there
          *  may be multiple windows.
          *  However, in some situations we have messageboxes that aren't targeted for
@@ -116,6 +119,7 @@ class KonversationApplication : public KUniqueApplication
 
         // Nick color stuff
         uint& getColorOffset();
+        QStringList& getColorList();
         QMap<QString,QString>& getColorMap();
 
         // Intelligent nick completion stuff aka A.W.E.S.O.M.E-O 4000 --cartman
@@ -128,7 +132,7 @@ class KonversationApplication : public KUniqueApplication
         void delayedConnectToServer(const QString& hostName,
             const QString& port = "6667",
             const QString& channel="",
-            const QString& nick = Preferences::nickname(0),
+            const QString& nick = KonversationApplication::preferences.getNickname(0),
             const QString& password="",
             const bool& useSSL=FALSE
             );
@@ -143,13 +147,15 @@ class KonversationApplication : public KUniqueApplication
         void quickConnectToServer(const QString& hostName,
             const QString& port = "6667",
             const QString& channel="",
-            const QString& nick = Preferences::nickname(0),
+            const QString& nick = KonversationApplication::preferences.getNickname(0),
             const QString& password="",
             const bool& useSSL=FALSE
             );
         void readOptions();
         void saveOptions(bool updateGUI=true);
         void quitKonversation();
+
+        void closePrefsDialog();
 
         void deleteUrl(const QString& who,const QString& url);
         void clearUrlList();
@@ -179,6 +185,7 @@ class KonversationApplication : public KUniqueApplication
     private:
         QPtrList<Server> serverList;
         QStringList urlList;
+        PrefsDialog* prefsDialog;
         KonvDCOP* dcopObject;
         KonvIdentDCOP* identDCOP;
         KonversationMainWindow* mainWindow;

@@ -20,7 +20,7 @@ class PrefsPageNicklistBehavior : public NicklistBehavior_Config
 {
     Q_OBJECT
         public:
-        PrefsPageNicklistBehavior(QWidget* newParent);
+        PrefsPageNicklistBehavior(QWidget* newParent, Preferences* newPreferences);
 
     public slots:
         void applyPreferences();
@@ -30,5 +30,7 @@ class PrefsPageNicklistBehavior : public NicklistBehavior_Config
         void moveUp();
         void moveDown();
 
+    private:
+        Preferences* preferences;
 };
 #endif

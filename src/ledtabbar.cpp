@@ -194,7 +194,7 @@ void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
     }
 
     // do we want close widgets on the tabs?
-    if(Preferences::closeButtonsOnTabs())
+    if(KonversationApplication::preferences.getCloseButtonsOnTabs())
     {
         QStyle::SFlags flags = QStyle::Style_Default;
 
@@ -238,9 +238,9 @@ void LedTabBar::paint( QPainter * p, QTab * t, bool selected ) const
         int y=r.top()+r.height()/2;
         int x2=r.right()-4-iw;
 
-        if(Preferences::closeButtonsOnTabs())
+        if(KonversationApplication::preferences.getCloseButtonsOnTabs())
         {
-            if(Preferences::closeButtonsAlignRight())
+            if(KonversationApplication::preferences.getCloseButtonsAlignRight())
             {
                 x-=(LABEL_OFFSET/2+2);
                 x2+=(LABEL_OFFSET/2-2);
@@ -281,9 +281,9 @@ void LedTabBar::paintLabel( QPainter* p, const QRect& br, QTab* tab, bool has_fo
         r.setRight( r.right() + 2);
 
         // do we want close widgets on the tabs?
-        if(Preferences::closeButtonsOnTabs())
+        if(KonversationApplication::preferences.getCloseButtonsOnTabs())
         {
-            if(!Preferences::closeButtonsAlignRight())
+            if(!KonversationApplication::preferences.getCloseButtonsAlignRight())
             {
                 // Shift the text to the right
                 r.setLeft( r.left() + LABEL_OFFSET);
@@ -354,7 +354,7 @@ void LedTabBar::layoutTabs()
     QTabBar::layoutTabs();
 
     // do we want close widgets on the tabs?
-    if(Preferences::closeButtonsOnTabs())
+    if(KonversationApplication::preferences.getCloseButtonsOnTabs())
     {
         // make necessary modifications
         int offset=0;
@@ -380,7 +380,7 @@ void LedTabBar::layoutTabs()
 void LedTabBar::mouseReleaseEvent(QMouseEvent* e)
 {
     // do we have close widgets on the tabs?
-    if(Preferences::closeButtonsOnTabs())
+    if(KonversationApplication::preferences.getCloseButtonsOnTabs())
     {
         if(e->button()==LeftButton)
         {
@@ -390,7 +390,7 @@ void LedTabBar::mouseReleaseEvent(QMouseEvent* e)
             QRect target(t->rect());
 
             // move target area to aprop. place
-            if(Preferences::closeButtonsAlignRight())
+            if(KonversationApplication::preferences.getCloseButtonsAlignRight())
                 target.moveBy(target.width() - 20,4);
             else
                 target.moveBy(8,4);

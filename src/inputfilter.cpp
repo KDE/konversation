@@ -230,9 +230,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     }
 
                     QString reply;
-                    if(Preferences::customVersionReplyEnabled())
+                    if(KonversationApplication::preferences.getCustomVersionReplyEnabled())
                     {
-                        reply = Preferences::customVersionReply().stripWhiteSpace();
+                        reply = KonversationApplication::preferences.getCustomVersionReply().stripWhiteSpace();
                     }
                     else
                     {
@@ -735,7 +735,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                 }                                 // endfor
                 if(!modesAre.isEmpty())
-                    if (Preferences::useLiteralModes())
+                    if (KonversationApplication::preferences.getUseLiteralModes())
                 {
                     server->appendCommandMessageToChannel(parameterList[1],i18n("Mode"),message);
                 }
@@ -1485,7 +1485,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
         }
     }                                             // endfor
 
-    if (Preferences::useLiteralModes())
+    if (KonversationApplication::preferences.getUseLiteralModes())
     {
         server->appendCommandMessageToChannel(parameterList[0],i18n("Mode"),message);
     }
@@ -1505,7 +1505,7 @@ bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)
 {
     bool doIgnore=false;
 
-    QPtrList<Ignore> list=Preferences::ignoreList();
+    QPtrList<Ignore> list=KonversationApplication::preferences.getIgnoreList();
 
     for(unsigned int index=0;index<list.count();index++)
     {

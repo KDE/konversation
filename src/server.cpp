@@ -57,7 +57,7 @@
 
 Server::Server(KonversationMainWindow* mainWindow, int id)
 {
-    m_serverGroup = Preferences::serverGroupById(id);
+    m_serverGroup = KonversationApplication::preferences.serverGroupById(id);
     m_serverGroup->clearQuickServerList();        // In case we already did a quick connect to this network
     bot = getIdentity()->getBot();
     botPassword = getIdentity()->getPassword();
@@ -78,7 +78,7 @@ const QString& channel,const QString& _nick, QString password,const bool& useSSL
     Konversation::ServerGroupSettingsPtr serverGroupOfServer;
 
     // If server is in an existing group, use that group (first group if server is in multiple groups)
-    if (serverGroupOfServer = Preferences::serverGroupByServer(hostName))
+    if (serverGroupOfServer = KonversationApplication::preferences.serverGroupByServer(hostName))
     {
         m_serverGroup = serverGroupOfServer;
         m_serverGroup->clearQuickServerList();
@@ -87,7 +87,7 @@ const QString& channel,const QString& _nick, QString password,const bool& useSSL
     else
     {
         m_serverGroup = new Konversation::ServerGroupSettings;
-        m_serverGroup->setIdentityId(Preferences::identityByName("Default")->id());
+        m_serverGroup->setIdentityId(KonversationApplication::preferences.getIdentityByName("Default")->id());
         m_serverGroup->setName(hostName);
         m_serverGroup->addServer(m_quickServer);
     }
@@ -194,8 +194,8 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
     channelPrefixes = "#&";
 
     timerInterval = 1;                            // flood protection
-    autoRejoin = Preferences::autoRejoin();
-    autoReconnect = Preferences::autoReconnect();
+    autoRejoin = KonversationApplication::preferences.getAutoRejoin();
+    autoReconnect = KonversationApplication::preferences.getAutoReconnect();
 
     setName(QString("server_" + m_serverGroup->name()).ascii());
     setMainWindow(mainWindow);
@@ -204,7 +204,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
     setNickname(nick);
     obtainNickInfo(getNickname());
 
-    if(Preferences::rawLog())
+    if(KonversationApplication::preferences.getRawLog())
         addRawLog(false);
 
     inputFilter.setServer(this);
@@ -672,7 +672,7 @@ void Server::broken(int state)
     {
         ++reconnectCounter;
 
-        if (autoReconnect && reconnectCounter <= Preferences::reconnectCount())
+        if (autoReconnect && reconnectCounter <= KonversationApplication::preferences.getReconnectCount())
         {
             QString error = i18n("Connection to Server %1 lost: %2. Trying to reconnect.")
                 .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
@@ -684,7 +684,7 @@ void Server::broken(int state)
             QTimer::singleShot(5000,this,SLOT(connectToIRCServer()));
             rejoinChannels = true;
         }
-        else if ((!autoReconnect || reconnectCounter >= Preferences::reconnectCount()))
+        else if ((!autoReconnect || reconnectCounter >= KonversationApplication::preferences.getReconnectCount()))
         {
             QString error = i18n("Connection to Server %1 failed: %2.")
                 .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
@@ -824,7 +824,7 @@ void Server::gotOwnResolvedHostByWelcome(KResolverResults res)
 
 void Server::quitServer()
 {
-    QString command(Preferences::commandChar()+"QUIT");
+    QString command(KonversationApplication::preferences.getCommandChar()+"QUIT");
     Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command, QString::null);
     kdDebug() << "in quitServer()" << endl;
     queue(result.toServer);
@@ -833,7 +833,7 @@ void Server::quitServer()
 void Server::notifyAction(const QString& nick)
 {
     // parse wildcards (toParse,nickname,channelName,nickList,parameter)
-    QString out = parseWildcards(Preferences::notifyDoubleClickAction(),
+    QString out = parseWildcards(KonversationApplication::preferences.getNotifyDoubleClickAction(),
         getNickname(),
         QString::null,
         QString::null,
@@ -919,7 +919,7 @@ void Server::startNotifyTimer(int msec)
 
     if(msec == 0)
                                                   // msec!
-        msec = Preferences::notifyDelay()*1000;
+        msec = KonversationApplication::preferences.getNotifyDelay()*1000;
 
     // start the timer in one shot mode
     notifyTimer.start(msec,true);
@@ -939,7 +939,7 @@ void Server::notifyTimeout()
     bool sent = false;
 
     // Notify delay time is over, send ISON request if desired
-    if(Preferences::useNotify())
+    if(KonversationApplication::preferences.getUseNotify())
     {
         // But only if there actually are nicks in the notify list
         QString list = getISONListString();
@@ -969,8 +969,8 @@ void Server::notifyCheckTimeout()
     {
         currentLag = checkTime;
         emit tooLongLag(this,checkTime);
-        if(Preferences::autoReconnect() &&
-            (checkTime/1000) == Preferences::maximumLagTime())
+        if(KonversationApplication::preferences.getAutoReconnect() &&
+            (checkTime/1000) == KonversationApplication::preferences.getMaximumLagTime())
         {
             m_socket->close();
         }
@@ -1150,7 +1150,7 @@ void Server::incoming()
             QString channelEncoding;
             if( !channelKey.isEmpty() )
             {
-                channelEncoding = Preferences::channelEncoding(getServerGroup(), channelKey);
+                channelEncoding = KonversationApplication::preferences.getChannelEncoding(getServerGroup(), channelKey);
             }
             // END set channel encoding if specified
 
@@ -1259,7 +1259,7 @@ void Server::send()
             outputLineSplit[0]=="KICK" ||
             outputLineSplit[0]=="PART" ||
             outputLineSplit[0]=="TOPIC")
-                channelCodecName=Preferences::channelEncoding(getServerGroup(),outputLineSplit[1]);
+                channelCodecName=KonversationApplication::preferences.getChannelEncoding(getServerGroup(),outputLineSplit[1]);
 
         // init stream props
         serverStream.setEncoding(QTextStream::Locale);
@@ -1309,9 +1309,9 @@ void Server::closed()
 
 void Server::dcopRaw(const QString& command)
 {
-    if(command.startsWith(Preferences::commandChar()))
+    if(command.startsWith(KonversationApplication::preferences.getCommandChar()))
     {
-        queue(command.section(Preferences::commandChar(), 1));
+        queue(command.section(KonversationApplication::preferences.getCommandChar(), 1));
     }
     else
         queue(command);
@@ -1532,7 +1532,7 @@ QString Server::getIp(bool followDccSetting)
 
     if(followDccSetting)
     {
-        int methodId = Preferences::dccMethodToGetOwnIp();
+        int methodId = KonversationApplication::preferences.getDccMethodToGetOwnIp();
 
         if(methodId == 1)                         // Reply from IRC server
         {
@@ -1548,9 +1548,9 @@ QString Server::getIp(bool followDccSetting)
             }
         }
                                                   // user specifies
-        else if(methodId == 2 && !Preferences::dccSpecificOwnIp().isEmpty())
+        else if(methodId == 2 && !KonversationApplication::preferences.getDccSpecificOwnIp().isEmpty())
         {
-            KNetwork::KResolverResults res = KNetwork::KResolver::resolve(Preferences::dccSpecificOwnIp(), "");
+            KNetwork::KResolverResults res = KNetwork::KResolver::resolve(KonversationApplication::preferences.getDccSpecificOwnIp(), "");
             if(res.error() == KResolver::NoError && res.size() > 0)
             {
                 kdDebug() << "Server::getIp(): using IP specified by user" << endl;
@@ -1623,7 +1623,7 @@ void Server::closeChannel(const QString& name)
     if(channelToClose)
     {
         Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),
-            Preferences::commandChar() + "PART", name);
+            KonversationApplication::preferences.getCommandChar() + "PART", name);
         queue(result.toServer);
     }
 }
@@ -1795,7 +1795,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 
     DccTransferRecv* newDcc=new DccTransferRecv( getMainWindow()->getDccPanel(),
         sourceNick,
-        KURL(Preferences::dccPath()),
+        KURL(KonversationApplication::preferences.getDccPath()),
         dccArguments[0],                          // name
                                                   // size
         dccArguments[3].isEmpty() ? 0 : dccArguments[3].toULong(),
@@ -1819,7 +1819,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
     connect(newDcc,SIGNAL (statusChanged(const DccTransfer* )), this,
         SLOT(dccStatusChanged(const DccTransfer*)) );
 
-    if(Preferences::dccAutoGet()) newDcc->start();
+    if(KonversationApplication::preferences.getDccAutoGet()) newDcc->start();
 }
 
 void Server::requestKonsolePanel()
@@ -1956,7 +1956,7 @@ void Server::removeQuery(class Query* query)
 void Server::sendJoinCommand(const QString& name, const QString& password)
 {
     Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),
-        Preferences::commandChar() + "JOIN " + name + " " + password, QString::null);
+        KonversationApplication::preferences.getCommandChar() + "JOIN " + name + " " + password, QString::null);
     queue(result.toServer);
 }
 
@@ -2057,7 +2057,7 @@ void Server::updateChannelQuickButtons()
     Channel* channel=channelList.first();
     while(channel)
     {
-        channel->updateQuickButtons(Preferences::buttonList());
+        channel->updateQuickButtons(KonversationApplication::preferences.getButtonList());
         channel=channelList.next();
     }
 }
@@ -2921,7 +2921,7 @@ void Server::sendToAllChannels(const QString &text)
 
 void Server::invitation(const QString& nick,const QString& channel)
 {
-    if(Preferences::autojoinOnInvite() &&
+    if(KonversationApplication::preferences.getAutojoinOnInvite() &&
         KMessageBox::questionYesNo(mainWindow,
         i18n("You were invited by %1 to join channel %2. "
         "Do you accept the invitation?").arg(nick).arg(channel),
@@ -3127,7 +3127,7 @@ void Server::executeMultiServerCommand(const QString& command, const QString& pa
 {
     if(command == "away" || command == "back")    //back is the same as away, since paramater is ""
     {
-        QString str = Preferences::commandChar() + command;
+        QString str = KonversationApplication::preferences.getCommandChar() + command;
 
                                                   //you cant have a message with 'back'
         if(!parameter.isEmpty() && command == "away")
@@ -3142,7 +3142,7 @@ void Server::executeMultiServerCommand(const QString& command, const QString& pa
     }
     else
     {
-        sendToAllChannelsAndQueries(Preferences::commandChar() + command + " " + parameter);
+        sendToAllChannelsAndQueries(KonversationApplication::preferences.getCommandChar() + command + " " + parameter);
     }
 }
 

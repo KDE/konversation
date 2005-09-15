@@ -39,8 +39,8 @@ namespace Konversation
         m_blinkTimer = new QTimer(this);
         connect(m_blinkTimer, SIGNAL(timeout()), SLOT(blinkTimeout()));
 
-        if(Preferences::showTrayIcon() &&
-            Preferences::systrayOnly())
+        if(KonversationApplication::preferences.getShowTrayIcon() &&
+            KonversationApplication::preferences.getSystrayOnly())
             KWin::setState(parent->winId(), NET::SkipTaskbar);
 
         QToolTip::add(this,i18n("Konversation - IRC Client"));
@@ -90,8 +90,8 @@ namespace Konversation
 
     void TrayIcon::mousePressEvent(QMouseEvent *e)
     {
-        if(Preferences::showTrayIcon() &&
-            Preferences::systrayOnly())
+        if(KonversationApplication::preferences.getShowTrayIcon() &&
+            KonversationApplication::preferences.getSystrayOnly())
         {
             KWin::setState(static_cast<QWidget*>(parent())->winId(), NET::SkipTaskbar);
         }

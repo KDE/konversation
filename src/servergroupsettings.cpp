@@ -123,7 +123,7 @@ namespace Konversation
 
     IdentityPtr ServerGroupSettings::identity() const
     {
-        return Preferences::identityById(m_identityId);
+        return KonversationApplication::preferences.getIdentityById(m_identityId);
     }
 
     void ServerGroupSettings::appendChannelHistory(const ChannelSettings& channel)

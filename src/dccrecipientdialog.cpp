@@ -89,7 +89,7 @@ void DccRecipientDialog::slotOk()
 
 QString DccRecipientDialog::getNickname(QWidget* parent,QStringList list)
 {
-    QSize size;                                   // TODO: get it from Preferences
+    QSize size;                                   // TODO: get it from KonversationApplication::preferences
     DccRecipientDialog dlg(parent,list,size);
     dlg.exec();
 

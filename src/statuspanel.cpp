@@ -50,10 +50,10 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 
     nicknameCombobox=new QComboBox(commandLineBox);
     nicknameCombobox->setEditable(true);
-    nicknameCombobox->insertStringList(Preferences::nicknameList());
+    nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
     oldNick=nicknameCombobox->currentText();
 
-    setShowNicknameBox(Preferences::showNicknameBox());
+    setShowNicknameBox(KonversationApplication::preferences.showNicknameBox());
 
     awayLabel=new QLabel(i18n("(away)"),commandLineBox);
     awayLabel->hide();
@@ -62,7 +62,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     getTextView()->installEventFilter(statusInput);
     statusInput->installEventFilter(this);
 
-    setLog(Preferences::log());
+    setLog(KonversationApplication::preferences.getLog());
     setLogfileName("konversation");
 
     connect(getTextView(),SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
@@ -139,7 +139,7 @@ void StatusPanel::textPasted(const QString& text)
         for(unsigned int index=0;index<multiline.count();index++)
         {
             QString line=multiline[index];
-            QString cChar(Preferences::commandChar());
+            QString cChar(KonversationApplication::preferences.getCommandChar());
             // make sure that lines starting with command char get escaped
             if(line.startsWith(cChar)) line=cChar+line;
             sendStatusText(line);
@@ -149,38 +149,41 @@ void StatusPanel::textPasted(const QString& text)
 
 void StatusPanel::updateFonts()
 {
-    QColor fg;
-    QColor bg;
-    if(Preferences::inputFieldsBackgroundColor())
+    QString fgString;
+    QString bgString;
+
+    if(KonversationApplication::preferences.getColorInputFields())
     {
-        fg=Preferences::color(Preferences::ChannelMessage);
-        bg=Preferences::color(Preferences::TextViewBackground);
+        fgString="#"+KonversationApplication::preferences.getColor("ChannelMessage");
+        bgString="#"+KonversationApplication::preferences.getColor("TextViewBackground");
     }
     else
     {
-        fg=colorGroup().foreground();
-        bg=colorGroup().base();
+        fgString=colorGroup().foreground().name();
+        bgString=colorGroup().base().name();
     }
 
+    const QColor fg(fgString);
+    const QColor bg(bgString);
 
     statusInput->setPaletteForegroundColor(fg);
     statusInput->setPaletteBackgroundColor(bg);
-    statusInput->setFont(Preferences::textFont());
+    statusInput->setFont(KonversationApplication::preferences.getTextFont());
 
-    getTextView()->setFont(Preferences::textFont());
+    getTextView()->setFont(KonversationApplication::preferences.getTextFont());
 
-    if(Preferences::showBackgroundImage())
+    if(KonversationApplication::preferences.getShowBackgroundImage())
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
-            Preferences::backgroundImage());
+        getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
+            KonversationApplication::preferences.getBackgroundImageName());
     }
     else
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
+        getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
             QString::null);
     }
 
-    nicknameCombobox->setFont(Preferences::textFont());
+    nicknameCombobox->setFont(KonversationApplication::preferences.getTextFont());
 }
 
 void StatusPanel::sendFileMenu()
@@ -272,12 +275,12 @@ void StatusPanel::appendInputText(const QString& text)
                                                   // virtual
 void StatusPanel::setChannelEncoding(const QString& encoding)
 {
-    Preferences::setChannelEncoding(m_server->getServerGroup(), ":server", encoding);
+    KonversationApplication::preferences.setChannelEncoding(m_server->getServerGroup(), ":server", encoding);
 }
 
 QString StatusPanel::getChannelEncoding()         // virtual
 {
-    return Preferences::channelEncoding(m_server->getServerGroup(), ":server");
+    return KonversationApplication::preferences.getChannelEncoding(m_server->getServerGroup(), ":server");
 }
 
                                                   // virtual

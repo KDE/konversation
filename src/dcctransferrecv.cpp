@@ -84,7 +84,7 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
     // add a slash if there is none
     m_fileURL.adjustPath( 1 );
     // Append folder with partner's name if wanted
-    if ( Preferences::dccCreateFolder() )
+    if ( KonversationApplication::preferences.getDccCreateFolder() )
         m_fileURL.addPath( m_partnerNick.lower() + "/" );
 
     if (!kapp->authorize("allow_downloading"))
@@ -106,7 +106,7 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
         fileNameTmp = "unnamed";
 
     // Append partner's name to file name if wanted
-    if ( Preferences::dccAddPartner() )
+    if ( KonversationApplication::preferences.getDccAddPartner() )
         m_fileURL.addPath( m_partnerNick.lower() + "." + fileNameTmp );
     else
         m_fileURL.addPath( fileNameTmp );
@@ -125,7 +125,7 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
         return;
     }
 
-    if ( Preferences::dccAutoGet() )
+    if ( KonversationApplication::preferences.getDccAutoGet() )
     {
         kdDebug() << "DccTransferRecv::DccTransferRecv(): starting automatically..." << endl;
         start();
@@ -295,7 +295,7 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
         disconnect( transferJob, 0, 0, 0 );
         transferJob->kill();
 
-        if ( Preferences::dccAutoResume() )
+        if ( KonversationApplication::preferences.getDccAutoResume() )
             prepareLocalKio( false, true, size );
         else
             askAndPrepareLocalKio( i18n( "<b>A partial file is existing.</b><br>"

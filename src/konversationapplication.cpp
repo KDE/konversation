@@ -23,33 +23,10 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kconfigdialog.h>
-#include <kiconloader.h>
-
-#include "chatwindowappearance_preferences.h"
-#include "alias_preferences.h"
-#include "connectionbehavior_preferences.h"
-#include "highlight_preferences.h"
-#include "preferences.h"
-#include "warnings_preferences.h"
-#include "chatwindowappearance_preferences.h"
-#include "dcc_preferences.h"
-#include "log_preferences.h"
-#include "quickbuttons_preferences.h"
-#include "watchednicknames_preferences.h"
-#include "chatwindowbehaviour_preferences.h"
-#include "fontappearance_preferences.h"
-#include "nicklistbehavior_preferences.h"
-#include "tabbar_preferences.h"
-#include "colorsappearance_preferences.h"
-#include "generalbehavior_preferences.h"
-#include "osd_preferences.h"
-#include "theme_preferences.h"
-
-
 
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
+#include "prefsdialog.h"
 #include "highlight.h"
 #include "server.h"
 #include "konversationsound.h"
@@ -63,10 +40,14 @@
 #include "commit.h"
 #include "version.h"
 
+// include static variables
+Preferences KonversationApplication::preferences;
+
 KonversationApplication::KonversationApplication()
 : KUniqueApplication(true, true, true)
 {
     mainWindow = 0;
+    prefsDialog = 0;
     quickConnectDialog = 0;
     colorOffSet = 0;
     m_demoteInProgress = false;
@@ -106,28 +87,30 @@ int KonversationApplication::newInstance()
     if(!mainWindow)
     {
         // make sure all vars are initialized properly
+        prefsDialog = 0;
         quickConnectDialog = 0;
         colorOffSet = 0;
 
         // Sound object used to play sound...
         m_sound = new Konversation::Sound(this);
 
-        // initialize OSD display here, so we can read the Preferences::properly
+        // initialize OSD display here, so we can read the preferences properly
         osd = new OSDWidget( "Konversation" );
 
-        Preferences::self();
-        Preferences::setOSDFont(font());
-        Preferences::setTextFont(font());
-        Preferences::setListFont(font());
+        preferences.setOSDFont(font());
+        preferences.setTextFont(font());
+        preferences.setListFont(font());
 
         readOptions();
+        colorList = KonversationApplication::preferences.getNickColorList();
+
         // Images object providing LEDs, NickIcons
         m_images = new Images();
 
         // Auto-alias scripts
         QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
         QFileInfo* fileInfo = new QFileInfo();
-        QStringList aliasList(Preferences::aliasList());
+        QStringList aliasList(KonversationApplication::preferences.getAliasList());
         QString newAlias;
 
         for ( QStringList::ConstIterator it = scripts.begin(); it != scripts.end(); ++it )
@@ -142,7 +125,7 @@ int KonversationApplication::newInstance()
             }
         }
 
-        Preferences::setAliasList(aliasList);
+        KonversationApplication::preferences.setAliasList(aliasList);
 
         // Setup system codec
         // TODO: check if this works now as intended
@@ -155,20 +138,20 @@ int KonversationApplication::newInstance()
         connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
         connect(mainWindow,SIGNAL (openPrefsDialog(Preferences::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
         connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
-        connect(Preferences::self(), SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
+        connect(&preferences,SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
         connect(this, SIGNAL (prefsChanged()), mainWindow, SLOT (slotPrefsChanged()) );
 
         // apply GUI settings
         appearanceChanged();
         mainWindow->show();
 
-        if(Preferences::showServerList())
+        if(preferences.getShowServerList())
         {
             mainWindow->openServerList();
         }
 
         // handle autoconnect on startup
-        Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
+        Konversation::ServerGroupList serverGroups = preferences.serverGroupList();
 
         if(!m_connectDelayed)
         {
@@ -333,14 +316,14 @@ void KonversationApplication::insertRememberLine()
 
 Server* KonversationApplication::connectToServerGroup(const QString& serverGroup)
 {
-    int serverGroupId = Preferences::serverGroupIdByName(serverGroup);
+    int serverGroupId = preferences.serverGroupIdByName(serverGroup);
 
     return connectToServer(serverGroupId);
 }
 
 Server* KonversationApplication::connectToServer(int id)
 {
-    Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(id);
+    Konversation::ServerGroupSettingsPtr serverGroup = preferences.serverGroupById(id);
     IdentityPtr identity = serverGroup->identity();
 
     if(!identity)
@@ -443,6 +426,9 @@ void KonversationApplication::removeServer(Server* server)
 
 void KonversationApplication::quitKonversation()
 {
+    delete prefsDialog;
+    prefsDialog=0;
+
     qApp->quit();
 }
 
@@ -451,11 +437,155 @@ void KonversationApplication::readOptions()
     // get standard config file
     KConfig* config=kapp->config();
 
+    // Read configuration and provide the default values
+    config->setGroup("General Options");
+
+    // Command char setting
+    preferences.setCommandChar(config->readEntry("CommandChar",preferences.getCommandChar()));
+
+    // Tray icon settings
+    preferences.setShowTrayIcon(config->readBoolEntry("ShowTrayIcon",preferences.getShowTrayIcon()));
+    preferences.setSystrayOnly(config->readBoolEntry("SystrayOnly",preferences.getSystrayOnly()));
+    preferences.setTrayNotify(config->readBoolEntry("TrayNotify",preferences.getTrayNotify()));
+    preferences.setTrayNotifyOnlyOwnNick(config->readBoolEntry("TrayNotifyOnlyOwnNick",
+        preferences.trayNotifyOnlyOwnNick()));
+    preferences.setShowBackgroundImage(config->readBoolEntry("ShowBackgroundImage",preferences.getShowBackgroundImage()));
+
+    // Window geometries
+    QSize* logfileReaderSize=new QSize(500,300);
+    preferences.setNicksOnlineSize(config->readSizeEntry("NicksOnlineGeometry"));
+    preferences.setNicknameSize(config->readSizeEntry("NicknameGeometry"));
+    preferences.setLogfileReaderSize(config->readSizeEntry("LogfileReaderGeometry",logfileReaderSize));
+    preferences.setMultilineEditSize(config->readSizeEntry("MultilineEditGeometry"));
+    delete logfileReaderSize;
+
+    preferences.setLogfileBufferSize(config->readNumEntry("LogfileBufferSize",preferences.getLogfileBufferSize()));
+    preferences.setScrollbackMax(config->readUnsignedNumEntry("ScrollbackMax",preferences.getScrollbackMax()));
+
+    preferences.setAutoWhoNicksLimit(config->readUnsignedNumEntry("AutoWhoNicksLimit",preferences.getAutoWhoNicksLimit()));
+    preferences.setAutoWhoContinuousEnabled(config->readBoolEntry("AutoWhoContinuousEnabled",preferences.getAutoWhoContinuousEnabled()));
+    preferences.setAutoWhoContinuousInterval(config->readUnsignedNumEntry("AutoWhoContinuousInterval",preferences.getAutoWhoContinuousInterval()));
+    preferences.setShowRealNames(config->readBoolEntry("ShowRealNames",preferences.getShowRealNames()));
+
+    // Double click actions & clickable nicks
+    preferences.setUseClickableNicks(config->readBoolEntry("ClickableNicks",preferences.getUseClickableNicks()));
+    preferences.setChannelDoubleClickAction(config->readEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction()));
+    preferences.setNotifyDoubleClickAction(config->readEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction()));
+
+    // Beep
+    preferences.setBeep(config->readBoolEntry("Beep",preferences.getBeep()));
+
+    // Raw log window
+    preferences.setRawLog(config->readBoolEntry("RawLog",preferences.getRawLog()));
+
+    // Custom CTCP Version Reply
+    preferences.setCustomVersionReplyEnabled(config->readBoolEntry("CustomVersionReplyEnabled",preferences.getCustomVersionReplyEnabled()));
+    preferences.setCustomVersionReply(config->readEntry("CustomVersionReply",preferences.getCustomVersionReply()));
+
+    // Reconnection timeout
+    preferences.setMaximumLagTime(config->readNumEntry("MaximumLag",preferences.getMaximumLagTime()));
+
+    preferences.setRedirectToStatusPane(config->readBoolEntry("RedirectServerAndAppMsgToStatusPane",
+        preferences.getRedirectToStatusPane()));
+
+    //User interface
+    preferences.setShowMenuBar(config->readBoolEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar()));
+
+    preferences.setDisableNotifyWhileAway(config->readBoolEntry("DisableNotifyWhileAway",
+        preferences.disableNotifyWhileAway()));
+
+    // Wiki
+    preferences.setWikiUrl(config->readEntry("WikiUrl", "http://en.wikipedia.org/wiki/"));
+    preferences.setExpandWikiUrl(config->readBoolEntry("WikiUrlExpand", false));
+
+    // Appearance
+    config->setGroup("Appearance");
+    // Fonts
+    preferences.setTextFontRaw(config->readEntry("TextFont",preferences.getTextFont().rawName()));
+    preferences.setListFontRaw(config->readEntry("ListFont",preferences.getListFont().rawName()));
+    preferences.setTimestamping(config->readBoolEntry("Timestamping",preferences.getTimestamping()));
+    preferences.setShowDate(config->readBoolEntry("ShowDate",preferences.getShowDate()));
+    preferences.setTimestampFormat(config->readEntry("TimestampFormat",preferences.getTimestampFormat()));
+    preferences.setShowQuickButtons(config->readBoolEntry("ShowQuickButtons",preferences.getShowQuickButtons()));
+    preferences.setShowModeButtons(config->readBoolEntry("ShowModeButtons",preferences.getShowModeButtons()));
+    preferences.setCloseButtonsOnTabs(config->readBoolEntry("CloseButtonsOnTabs",preferences.getCloseButtonsOnTabs()));
+    preferences.setCloseButtonsAlignRight(config->readBoolEntry("CloseButtonsAlignRight",preferences.getCloseButtonsAlignRight()));
+
+    preferences.setAutoUserhost(config->readBoolEntry("AutoUserhost",preferences.getAutoUserhost()));
+
+    preferences.setUseSpacing(config->readBoolEntry("UseSpacing",preferences.getUseSpacing()));
+    preferences.setSpacing(config->readNumEntry("Spacing",preferences.getSpacing()));
+    preferences.setMargin(config->readNumEntry("Margin",preferences.getMargin()));
+
+    preferences.setUseParagraphSpacing(config->readBoolEntry("UseParagraphSpacing",preferences.getUseParagraphSpacing()));
+    preferences.setParagraphSpacing(config->readNumEntry("ParagraphSpacing",preferences.getParagraphSpacing()));
+
+    preferences.setChannelSplitterSizes(config->readIntListEntry("ChannelSplitterSizes"));
+    preferences.setTopicSplitterSizes(config->readIntListEntry("TopicSplitterSizes"));
+
+    preferences.setBackgroundImageName(config->readEntry("BackgroundImage",preferences.getBackgroundImageName()));
+    QStringList ircColorList = preferences.getIRCColorList();
+    preferences.setIRCColorList(config->readListEntry("IRCColors"));
+
+    if(preferences.getIRCColorList().empty())
+    {
+        preferences.setIRCColorList(ircColorList);
+    }
+
+                                                  //FIXME
+    preferences.setFilterColors(config->readBoolEntry("FilterColorCodes",preferences.getFilterColors()));
+
+    QStringList nickColorList = config->readListEntry("NickColors");
+
+    if(nickColorList.empty())
+    {
+        nickColorList = preferences.getNickColorList();
+    }
+
+    if(nickColorList.count() < 9)
+    {
+        nickColorList.append("#" + preferences.getColor("ChannelMessage"));
+    }
+
+    preferences.setNickColorList(nickColorList);
+
+    preferences.setUseColoredNicks(config->readBoolEntry("UseColoredNicks",preferences.getUseColoredNicks()));
+
+    preferences.setUseBoldNicks(config->readBoolEntry("UseBoldNicks",preferences.getUseBoldNicks()));
+
+    preferences.setUseLiteralModes(config->readBoolEntry("UseLiteralModes",preferences.getUseLiteralModes()));
+
+    preferences.setShowTabBarCloseButton(config->readBoolEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton()));
+
+    preferences.setShowTopic(config->readBoolEntry("ShowTopic", preferences.getShowTopic()));
+    preferences.setShowNicknameBox(config->readBoolEntry("ShowNicknameBox", preferences.showNicknameBox()));
+
+    preferences.setShowRememberLineInAllWindows(config->readBoolEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows()));
+    preferences.setFocusNewQueries(config->readBoolEntry("FocusNewQueries", preferences.getFocusNewQueries()));
+
+    // Sorting
+    config->setGroup("Sort Nicknames");
+    if(config->readNumEntry("AdminValue",-1)!=-1)
+    {
+        // if there is an AdminValue, read the rest, otherwise keep the defaults. This way we
+        // will actually kill peoples' sorting options once while upgrading but they will get
+        // the new extended modes in return
+        preferences.setAdminValue(config->readNumEntry("AdminValue",preferences.getAdminValue()));
+        preferences.setOwnerValue(config->readNumEntry("OwnerValue",preferences.getOwnerValue()));
+        preferences.setOpValue(config->readNumEntry("OperatorValue",preferences.getOpValue()));
+        preferences.setHalfopValue(config->readNumEntry("HalfopValue",preferences.getHalfopValue()));
+        preferences.setVoiceValue(config->readNumEntry("VoiceValue",preferences.getVoiceValue()));
+        preferences.setNoRightsValue(config->readNumEntry("NoRightsValue",preferences.getNoRightsValue()));
+    }
+
+    preferences.setSortByStatus(config->readBoolEntry("SortByStatus",preferences.getSortByStatus()));
+    preferences.setSortCaseInsensitive(config->readBoolEntry("SortCaseInsensitive",preferences.getSortCaseInsensitive()));
+
     // Identity list
     QStringList identityList=config->groupList().grep(QRegExp("Identity [0-9]+"));
     if(identityList.count())
     {
-        Preferences::clearIdentityList();
+        preferences.clearIdentityList();
 
         for(unsigned int index=0;index<identityList.count();index++)
         {
@@ -489,62 +619,73 @@ void KonversationApplication::readOptions()
 
             newIdentity->setAwayNick(config->readEntry("AwayNick"));
 
-            Preferences::addIdentity(newIdentity);
+            preferences.addIdentity(newIdentity);
 
         }                                         // endfor
 
     }
     else
     {
-        // Default user identity for pre 0.10 Preferences::files
+        // Default user identity for pre 0.10 preferences files
         config->setGroup("User Identity");
-        Preferences::setIdent(config->readEntry("Ident",Preferences::ident()));
-        Preferences::setRealName(config->readEntry("Realname",Preferences::realName()));
+        preferences.setIdent(config->readEntry("Ident",preferences.getIdent()));
+        preferences.setRealName(config->readEntry("Realname",preferences.getRealName()));
 
-        QString nickList=config->readEntry("Nicknames",Preferences::nicknameList().join(","));
-        Preferences::setNicknameList(QStringList::split(",",nickList));
+        QString nickList=config->readEntry("Nicknames",preferences.getNicknameList().join(","));
+        preferences.setNicknameList(QStringList::split(",",nickList));
 
-        Preferences::setShowAwayMessage(config->readBoolEntry("ShowAwayMessage",Preferences::showAwayMessage()));
-        Preferences::setAwayMessage(config->readEntry("AwayMessage",Preferences::awayMessage()));
-        Preferences::setUnAwayMessage(config->readEntry("UnAwayMessage",Preferences::unAwayMessage()));
+        preferences.setShowAwayMessage(config->readBoolEntry("ShowAwayMessage",preferences.getShowAwayMessage()));
+        preferences.setAwayMessage(config->readEntry("AwayMessage",preferences.getAwayMessage()));
+        preferences.setUnAwayMessage(config->readEntry("UnAwayMessage",preferences.getUnAwayMessage()));
 
         config->deleteGroup("User Identity");
     }
     // OnScreen Display
     config->setGroup("OSD");
+    preferences.setOSDUsage(config->readBoolEntry("UseOSD",preferences.getOSDUsage()));
+    preferences.setOSDShowOwnNick(config->readBoolEntry("ShowOwnNick",preferences.getOSDShowOwnNick()));
+    preferences.setOSDShowChannel(config->readBoolEntry("ShowChannel",preferences.getOSDShowChannel()));
+    preferences.setOSDShowQuery(config->readBoolEntry("ShowQuery",preferences.getOSDShowQuery()));
+    preferences.setOSDShowChannelEvent(config->readBoolEntry("ShowChannelEvent",preferences.getOSDShowChannelEvent()));
+    preferences.setOSDFontRaw(config->readEntry("OSDFont",preferences.getOSDFont().rawName()));
+    preferences.setOSDUseCustomColors(config->readBoolEntry("OSDUseCustomColors", preferences.getOSDUseCustomColors()));
+    preferences.setOSDDuration(config->readNumEntry("OSDDuration",preferences.getOSDDuration()));
+    preferences.setOSDScreen(config->readNumEntry("OSDScreen",preferences.getOSDScreen()));
+    preferences.setOSDDrawShadow(config->readBoolEntry("OSDDrawShadow",preferences.getOSDDrawShadow()));
+    preferences.setOSDOffsetX(config->readNumEntry("OffsetX",preferences.getOSDOffsetX()));
+    preferences.setOSDOffsetY(config->readNumEntry("OffsetY",preferences.getOSDOffsetY()));
+    preferences.setOSDAlignment(config->readNumEntry("Alignment",preferences.getOSDAlignment()));
     // if osd object exists
-/* FIXME - This code was from pre-kconfigxt times.  This needs to be ported to however kconfigxt does this.
- *
- *     if(osd)
+    if(osd)
     {
-        osd->setEnabled(Preferences::OSDUsage());
-        osd->setFont(Preferences::OSDFont());
-        osd->setDuration(Preferences::OSDDuration());
-        osd->setScreen(Preferences::OSDScreen());
-        osd->setShadow(Preferences::OSDDrawShadow());
-        osd->setOffset(Preferences::OSDOffsetX(),Preferences::OSDOffsetY());
-        osd->setAlignment((OSDWidget::Alignment)Preferences::OSDAlignment());
+        osd->setEnabled(preferences.getOSDUsage());
+        osd->setFont(preferences.getOSDFont());
+        osd->setDuration(preferences.getOSDDuration());
+        osd->setScreen(preferences.getOSDScreen());
+        osd->setShadow(preferences.getOSDDrawShadow());
+        osd->setOffset(preferences.getOSDOffsetX(),preferences.getOSDOffsetY());
+        osd->setAlignment((OSDWidget::Alignment)preferences.getOSDAlignment());
 
-        if(Preferences::OSDUseCustomColors())
+        if(preferences.getOSDUseCustomColors())
         {
             QString osdTextColor = config->readEntry("OSDTextColor");
             if(osdTextColor.isEmpty())
-                Preferences::setOSDTextColor(Preferences::OSDTextColor().name());
+                preferences.setOSDTextColor(preferences.getOSDTextColor().name());
             else
-                Preferences::setOSDTextColor("#" + osdTextColor);
+                preferences.setOSDTextColor("#" + osdTextColor);
 
-            osd->setTextColor(Preferences::OSDTextColor());
+            osd->setTextColor(preferences.getOSDTextColor());
 
             QString osdBackgroundColor = config->readEntry("OSDBackgroundColor");
             if(osdBackgroundColor.isEmpty())
-                Preferences::setOSDBackgroundColor(Preferences::OSDBackgroundColor().name());
+                preferences.setOSDBackgroundColor(preferences.getOSDBackgroundColor().name());
             else
-                Preferences::setOSDBackgroundColor("#" + osdBackgroundColor);
+                preferences.setOSDBackgroundColor("#" + osdBackgroundColor);
 
-            osd->setBackgroundColor(Preferences::OSDBackgroundColor());
+            osd->setBackgroundColor(preferences.getOSDBackgroundColor());
         }
     }
-*/
+
     // Check if there is old server list config
     config->setGroup("Server List");
 
@@ -567,7 +708,7 @@ void KonversationApplication::readOptions()
             server.setPort(tmp[2].toInt());
             server.setPassword(tmp[3]);
             serverGroup->addServer(server);
-            serverGroup->setIdentityId(Preferences::identityByName(tmp[7])->id());
+            serverGroup->setIdentityId(preferences.getIdentityByName(tmp[7])->id());
             serverGroup->setAutoConnectEnabled(tmp[6].toInt());
             serverGroup->setConnectCommands(tmp[8]);
 
@@ -592,7 +733,7 @@ void KonversationApplication::readOptions()
             serverGroups.append(serverGroup);
         }
 
-        Preferences::setServerGroupList(serverGroups);
+        preferences.setServerGroupList(serverGroups);
     }
     else
     {
@@ -615,7 +756,7 @@ void KonversationApplication::readOptions()
                 Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
                 serverGroup->setName(config->readEntry("Name"));
                 serverGroup->setGroup(config->readEntry("Group"));
-                serverGroup->setIdentityId(Preferences::identityByName(config->readEntry("Identity"))->id());
+                serverGroup->setIdentityId(preferences.getIdentityByName(config->readEntry("Identity"))->id());
                 serverGroup->setConnectCommands(config->readEntry("ConnectCommands"));
                 serverGroup->setAutoConnectEnabled(config->readBoolEntry("AutoConnect"));
                 serverGroup->setNotificationsEnabled(config->readBoolEntry("EnableNotifications", true));
@@ -668,18 +809,17 @@ void KonversationApplication::readOptions()
                 serverGroups.append(serverGroup);
             }
 
-            Preferences::setServerGroupList(serverGroups);
+            preferences.setServerGroupList(serverGroups);
         }
     }
-/*  FIXME - this needs to be ported to new kconfigxt
- *
- *  
+
     // Notify Settings and lists.  Must follow Server List.
     config->setGroup("Notify List");
-    Preferences::setNotifyDelay(config->readNumEntry("NotifyDelay",20));
-    Preferences::setUseNotify(config->readBoolEntry("UseNotify",true));
+    preferences.setNotifyDelay(config->readNumEntry("NotifyDelay",20));
+    preferences.setUseNotify(config->readBoolEntry("UseNotify",true));
     //  QString notifyList=config->readEntry("NotifyList",QString::null);
-    //  Preferences::setNotifyList(QStringList::split(' ',notifyList));
+    //  preferences.setNotifyList(QStringList::split(' ',notifyList));
+    preferences.setOpenWatchedNicksAtStartup(config->readBoolEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup()));
     int index = 0;
     QMap<QString, QStringList> notifyList;
     QMap<QString, QString> notifyGroups = config->entryMap("Notify Group Lists");
@@ -699,7 +839,7 @@ void KonversationApplication::readOptions()
         {
             QStringList oldNotifyNicknameList = QStringList::split(" ", oldNotifyNicknames, false);
             // Build a list of unique server group names.
-            Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
+            Konversation::ServerGroupList serverGroups = preferences.serverGroupList();
             QStringList groupNames;
 
             for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it)
@@ -716,30 +856,47 @@ void KonversationApplication::readOptions()
                 notifyList[*groupIt] = oldNotifyNicknameList;
         }
     }
-    Preferences::setNotifyList(notifyList);
-*/
+    preferences.setNotifyList(notifyList);
+
     // Quick Buttons List
     config->setGroup("Button List");
     // Read all buttons and overwrite default entries
-    QStringList buttonList(Preferences::buttonList());
-    for(int index=0;index<8;index++)
+    QStringList buttonList(preferences.getButtonList());
+    for(index=0;index<8;index++)
     {
         QString buttonKey(QString("Button%1").arg(index));
         if(config->hasKey(buttonKey)) buttonList[index]=config->readEntry(buttonKey);
     }
     // Put back the changed button list
-    Preferences::setButtonList(buttonList);
+    preferences.setButtonList(buttonList);
 
     // Highlight List
+    config->setGroup("Highlight List");
+    preferences.setHighlightSoundEnabled(config->readBoolEntry("HighlightSoundsEnabled",
+        preferences.getHighlightSoundEnabled()));
+    preferences.setHighlightNick(config->readBoolEntry("HighlightNick",preferences.getHighlightNick()));
+    QString highlight=config->readEntry("HighlightNickColor");
+    if(highlight.isEmpty())
+        preferences.setHighlightNickColor(preferences.getHighlightNickColor().name());
+    else
+        preferences.setHighlightNickColor("#"+highlight);
+
+    preferences.setHighlightOwnLines(config->readBoolEntry("HighlightOwnLines",preferences.getHighlightOwnLines()));
+    highlight=config->readEntry("HighlightOwnLinesColor");
+    if(highlight.isEmpty())
+        preferences.setHighlightOwnLinesColor(preferences.getHighlightOwnLinesColor().name());
+    else
+        preferences.setHighlightOwnLinesColor("#"+highlight);
+
     if(config->hasKey("Highlight"))               // Stay compatible with versions < 0.14
     {
-        QString highlight=config->readEntry("Highlight");
+        highlight=config->readEntry("Highlight");
         QStringList hiList=QStringList::split(' ',highlight);
 
         unsigned int hiIndex;
         for(hiIndex=0;hiIndex<hiList.count();hiIndex+=2)
         {
-            Preferences::addHighlight(hiList[hiIndex],false,"#"+hiList[hiIndex+1],QString::null,QString::null);
+            preferences.addHighlight(hiList[hiIndex],false,"#"+hiList[hiIndex+1],QString::null,QString::null);
         }
 
         config->deleteEntry("Highlight");
@@ -751,7 +908,7 @@ void KonversationApplication::readOptions()
         while(config->hasGroup(QString("Highlight%1").arg(i)))
         {
             config->setGroup(QString("Highlight%1").arg(i));
-            Preferences::addHighlight(config->readEntry("Pattern"),
+            preferences.addHighlight(config->readEntry("Pattern"),
                 config->readBoolEntry("RegExp"),
                 config->readColorEntry("Color"),
                 config->readPathEntry("Sound"),
@@ -762,24 +919,84 @@ void KonversationApplication::readOptions()
 
     // Ignore List
     config->setGroup("Ignore List");
-    // Remove all default entries if there is at least one Ignore in the Preferences::file
-    if(config->hasKey("Ignore0")) Preferences::clearIgnoreList();
+    // Remove all default entries if there is at least one Ignore in the preferences file
+    if(config->hasKey("Ignore0")) preferences.clearIgnoreList();
     // Read all ignores
-    int index=0;
+    index=0;
     while(config->hasKey(QString("Ignore%1").arg(index)))
     {
-        Preferences::addIgnore(config->readEntry(QString("Ignore%1").arg(index++)));
+        preferences.addIgnore(config->readEntry(QString("Ignore%1").arg(index++)));
     }
 
     // Aliases
     config->setGroup("Aliases");
     QStringList newList=config->readListEntry("AliasList");
-    if(!newList.isEmpty()) Preferences::setAliasList(newList);
+    if(!newList.isEmpty()) preferences.setAliasList(newList);
+
+    // Nick Completion
+    config->setGroup("Nick Completion");
+    preferences.setNickCompletionMode(config->readNumEntry("Mode", preferences.getNickCompletionMode()));
+    preferences.setNickCompleteSuffixStart(config->readEntry("SuffixStart",preferences.getNickCompleteSuffixStart()));
+    preferences.setNickCompleteSuffixMiddle(config->readEntry("SuffixMiddle",preferences.getNickCompleteSuffixMiddle()));
+    preferences.setPrefixCharacter(config->readEntry("PrefixCharacter",preferences.getPrefixCharacter()));
+    preferences.setNickCompletionCaseSensitive(config->readBoolEntry("CaseSensitive",
+        preferences.nickCompletionCaseSensitive()));
+
+    // DCC Settings
+    config->setGroup("DCC Settings");
+    preferences.setDccBufferSize(config->readNumEntry("BufferSize",preferences.getDccBufferSize()));
+    preferences.setDccMethodToGetOwnIp(config->readNumEntry("MethodToGetOwnIp",preferences.getDccMethodToGetOwnIp()));
+    preferences.setDccSpecificOwnIp(config->readEntry("SpecificOwnIp",preferences.getDccSpecificOwnIp()));
+    preferences.setDccSpecificSendPorts(config->readBoolEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts()));
+    preferences.setDccSendPortsFirst(config->readNumEntry("SendPortsFirst",preferences.getDccSendPortsFirst()));
+    preferences.setDccSendPortsLast(config->readNumEntry("SendPortsLast",preferences.getDccSendPortsLast()));
+    preferences.setDccSpecificChatPorts(config->readBoolEntry("SpecificChatPorts",preferences.getDccSpecificChatPorts()));
+    preferences.setDccChatPortsFirst(config->readNumEntry("ChatPortsFirst",preferences.getDccChatPortsFirst()));
+    preferences.setDccChatPortsLast(config->readNumEntry("ChatPortsLast",preferences.getDccChatPortsLast()));
+    preferences.setDccAddPartner(config->readBoolEntry("AddPartner",preferences.getDccAddPartner()));
+    preferences.setDccCreateFolder(config->readBoolEntry("CreateFolder",preferences.getDccCreateFolder()));
+    preferences.setDccAutoGet(config->readBoolEntry("AutoGet",preferences.getDccAutoGet()));
+    preferences.setDccAutoResume(config->readBoolEntry("AutoResume",preferences.getDccAutoResume()));
+    preferences.setDccFastSend(config->readBoolEntry("FastSend",preferences.getDccFastSend()));
+    preferences.setDccSendTimeout(config->readNumEntry("SendTimeout",preferences.getDccSendTimeout()));
+    preferences.setIPv4Fallback(config->readBoolEntry("IPv4Fallback",preferences.getIPv4Fallback()));
+    preferences.setIPv4FallbackIface(config->readEntry("IPv4FallbackInterface",preferences.getIPv4FallbackIface()));
+
+    // Path settings
+    config->setGroup("Path Settings");
+    preferences.setLogPath(config->readPathEntry("LogfilePath",preferences.getLogPath()));
+    preferences.setDccPath(config->readPathEntry("DccPath",preferences.getDccPath()));
+
+    // Miscellaneous Flags
+    config->setGroup("Flags");
+
+    preferences.setLog(config->readBoolEntry("Log",preferences.getLog()));
+    preferences.setLowerLog(config->readBoolEntry("LowerLog",preferences.getLowerLog()));
+    preferences.setAddHostnameToLog(config->readBoolEntry("AddHostnameToLog",preferences.getAddHostnameToLog()));
+    preferences.setLogFollowsNick(config->readBoolEntry("LogFollowsNick",preferences.getLogFollowsNick()));
+
+    preferences.setTabPlacement(static_cast<Preferences::TabPlacement>(config->readNumEntry("TabPlacement",static_cast<int>(preferences.getTabPlacement()))));
+    preferences.setBlinkingTabs(config->readBoolEntry("BlinkingTabs",preferences.getBlinkingTabs()));
+    preferences.setBringToFront(config->readBoolEntry("BringToFront",preferences.getBringToFront()));
+
+    preferences.setHideUnimportantEvents(config->readBoolEntry("HideUnimportantEvents",preferences.getHideUnimportantEvents()));
+    preferences.setDisableExpansion(config->readBoolEntry("DisableExpansion", preferences.getDisableExpansion()));
+
+    preferences.setAutoReconnect(config->readBoolEntry("AutoReconnect",preferences.getAutoReconnect()));
+    preferences.setReconnectCount(config->readNumEntry("ReconnectCount",preferences.getReconnectCount()));
+    preferences.setAutoRejoin(config->readBoolEntry("AutoRejoin",preferences.getAutoRejoin()));
+    preferences.setAutojoinOnInvite(config->readBoolEntry("AutojoinOnInvite",preferences.getAutojoinOnInvite()));
+
+                                                  // Default is false
+    preferences.setFixedMOTD(config->readBoolEntry("FixedMOTD"));
+    preferences.setShowServerList(config->readBoolEntry("ShowServerList",preferences.getShowServerList()));
+
+    preferences.setColorInputFields(config->readBoolEntry("InputFieldsBackgroundColor",preferences.getColorInputFields()));
 
     // Web Browser
     config->setGroup("Web Browser Settings");
-    Preferences::setWebBrowserUseKdeDefault(config->readBoolEntry("UseKdeDefault",Preferences::webBrowserUseKdeDefault()));
-    Preferences::setWebBrowserCmd(config->readEntry("WebBrowserCmd",Preferences::webBrowserCmd()));
+    preferences.setWebBrowserUseKdeDefault(config->readBoolEntry("UseKdeDefault",preferences.getWebBrowserUseKdeDefault()));
+    preferences.setWebBrowserCmd(config->readEntry("WebBrowserCmd",preferences.getWebBrowserCmd()));
 
     // Channel Encodings
     QMap<QString,QString> channelEncodingsEntry=config->entryMap("Channel Encodings");
@@ -787,7 +1004,13 @@ void KonversationApplication::readOptions()
     QStringList channelEncodingsEntryKeys=channelEncodingsEntry.keys();
     for(unsigned int i=0; i<channelEncodingsEntry.count(); ++i)
         if(re.search(channelEncodingsEntryKeys[i]) > -1)
-            Preferences::setChannelEncoding(re.cap(1),re.cap(2),channelEncodingsEntry[channelEncodingsEntryKeys[i]]);
+            preferences.setChannelEncoding(re.cap(1),re.cap(2),channelEncodingsEntry[channelEncodingsEntryKeys[i]]);
+
+    // Themes
+    config->setGroup("Themes");
+    preferences.setIconTheme(config->readEntry("IconTheme",preferences.getIconTheme()));
+    preferences.setEmotIconsEnabled(config->readBoolEntry("EnableEmotIcons", false));
+    preferences.setEmotIconsTheme(config->readEntry("EmotIconTheme", "Default"));
 
 }
 
@@ -795,18 +1018,116 @@ void KonversationApplication::saveOptions(bool updateGUI)
 {
     KConfig* config=kapp->config();
 
+    config->setGroup("General Options");
+
+    config->writeEntry("CommandChar",preferences.getCommandChar());
+
+    config->writeEntry("NicksOnlineGeometry",preferences.getNicksOnlineSize());
+    config->writeEntry("NicknameGeometry",preferences.getNicknameSize());
+    config->writeEntry("LogfileReaderGeometry",preferences.getLogfileReaderSize());
+    config->writeEntry("MultilineEditGeometry",preferences.getMultilineEditSize());
+
+    config->writeEntry("LogfileBufferSize",preferences.getLogfileBufferSize());
+    config->writeEntry("ScrollbackMax",preferences.getScrollbackMax());
+
+    config->writeEntry("AutoWhoNicksLimit",preferences.getAutoWhoNicksLimit());
+    config->writeEntry("AutoWhoContinuousEnabled",preferences.getAutoWhoContinuousEnabled());
+    config->writeEntry("AutoWhoContinuousInterval",preferences.getAutoWhoContinuousInterval());
+    config->writeEntry("ShowRealNames",preferences.getShowRealNames());
+
+    config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon());
+    config->writeEntry("SystrayOnly",preferences.getSystrayOnly());
+    config->writeEntry("TrayNotify",preferences.getTrayNotify());
+    config->writeEntry("TrayNotifyOnlyOwnNick", preferences.trayNotifyOnlyOwnNick());
+
+    config->writeEntry("ShowBackgroundImage",preferences.getShowBackgroundImage());
+
+    config->writeEntry("ClickableNicks",preferences.getUseClickableNicks());
+
+    if ( preferences.getChannelDoubleClickAction() == "/QUERY %u%n" )
+        config->deleteEntry("ChannelDoubleClickAction");
+    else
+        config->writeEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction());
+    config->writeEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction());
+
+    config->writeEntry("Beep",preferences.getBeep());
+    config->writeEntry("RawLog",preferences.getRawLog());
+
+    config->writeEntry("CustomVersionReplyEnabled",preferences.getCustomVersionReplyEnabled());
+    config->writeEntry("CustomVersionReply",preferences.getCustomVersionReply());
+
+    config->writeEntry("MaximumLag",preferences.getMaximumLagTime());
+
+    config->writeEntry("RedirectServerAndAppMsgToStatusPane", preferences.getRedirectToStatusPane());
+
+    //User interface
+    config->writeEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar());
+
+    config->writeEntry("DisableNotifyWhileAway", preferences.disableNotifyWhileAway());
+
+    config->writeEntry("WikiUrl", preferences.getWikiUrl());
+    config->writeEntry("WikiUrlExpand", preferences.getExpandWikiUrl());
+
+    config->setGroup("Appearance");
+
+    config->writeEntry("TextFont",preferences.getTextFont().toString());
+    config->writeEntry("ListFont",preferences.getListFont().toString());
+    config->writeEntry("Timestamping",preferences.getTimestamping());
+    config->writeEntry("ShowDate", preferences.getShowDate());
+    config->writeEntry("TimestampFormat",preferences.getTimestampFormat());
+    config->writeEntry("ShowQuickButtons",preferences.getShowQuickButtons());
+    config->writeEntry("ShowModeButtons",preferences.getShowModeButtons());
+    config->writeEntry("CloseButtonsOnTabs",preferences.getCloseButtonsOnTabs());
+    config->writeEntry("CloseButtonsAlignRight",preferences.getCloseButtonsAlignRight());
+
+    config->writeEntry("AutoUserhost",preferences.getAutoUserhost());
+
+    config->writeEntry("UseSpacing",preferences.getUseSpacing());
+    config->writeEntry("Spacing",preferences.getSpacing());
+    config->writeEntry("Margin",preferences.getMargin());
+
+    config->writeEntry("UseParagraphSpacing",preferences.getUseParagraphSpacing());
+    config->writeEntry("ParagraphSpacing",preferences.getParagraphSpacing());
+
+    config->writeEntry("ChannelSplitterSizes",preferences.channelSplitterSizes());
+    config->writeEntry("TopicSplitterSizes", preferences.topicSplitterSizes());
+    config->writeEntry("BackgroundImage",preferences.getBackgroundImageName());
+    config->writeEntry("IRCColors", preferences.getIRCColorList());
+    config->writeEntry("NickColors", preferences.getNickColorList());
+    config->writeEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton());
+
+    config->writeEntry("ShowTopic", preferences.getShowTopic());
+    config->writeEntry("ShowNicknameBox", preferences.showNicknameBox());
+
+    config->writeEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows());
+    config->writeEntry("FocusNewQueries", preferences.getFocusNewQueries());
+    config->writeEntry("FilterColorCodes", preferences.getFilterColors());
+    config->writeEntry("UseColoredNicks", preferences.getUseColoredNicks());
+    config->writeEntry("UseBoldNicks", preferences.getUseBoldNicks());
+    config->writeEntry("UseLiteralModes", preferences.getUseLiteralModes());
+
+    // Colors are now handled in preferences
+
     config->setGroup("Sort Nicknames");
+    config->writeEntry("AdminValue",preferences.getAdminValue());
+    config->writeEntry("OwnerValue",preferences.getOwnerValue());
+    config->writeEntry("OperatorValue",preferences.getOpValue());
+    config->writeEntry("HalfopValue",preferences.getHalfopValue());
+    config->writeEntry("VoiceValue",preferences.getVoiceValue());
+    config->writeEntry("NoRightsValue",preferences.getNoRightsValue());
+    config->writeEntry("SortByStatus",preferences.getSortByStatus());
+    config->writeEntry("SortCaseInsensitive",preferences.getSortCaseInsensitive());
 
     // Clean up identity list
     QStringList identities=config->groupList().grep(QRegExp("Identity [0-9]+"));
     if(identities.count())
     {
-        // remove old identity list from Preferences::file to keep numbering under control
+        // remove old identity list from preferences file to keep numbering under control
         for(unsigned int index=0;index<identities.count();index++)
             config->deleteGroup(identities[index]);
     }
 
-    QValueList<IdentityPtr> identityList = Preferences::identityList();
+    QValueList<IdentityPtr> identityList = preferences.getIdentityList();
     int index = 0;
 
     for(QValueList<IdentityPtr>::iterator it = identityList.begin(); it != identityList.end(); ++it)
@@ -834,9 +1155,14 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
     config->setGroup("Notify List");
 
+    config->writeEntry("NotifyDelay",preferences.getNotifyDelay());
+    config->writeEntry("UseNotify",preferences.getUseNotify());
+    //  config->writeEntry("NotifyList",preferences.getNotifyString());
+    config->writeEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup());
+
     config->deleteGroup("Notify Group Lists");
     config->setGroup("Notify Group Lists");
-    QMap<QString, QStringList> notifyList = Preferences::notifyList();
+    QMap<QString, QStringList> notifyList = preferences.getNotifyList();
     QMapConstIterator<QString, QStringList> groupItEnd = notifyList.constEnd();
 
     for (QMapConstIterator<QString, QStringList> groupIt = notifyList.constBegin();
@@ -879,7 +1205,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     }
 
     // Add the new servergroups to the config
-    Konversation::ServerGroupList serverGroupList = Preferences::serverGroupList();
+    Konversation::ServerGroupList serverGroupList = preferences.serverGroupList();
     Konversation::ServerGroupList::iterator it;
     index = 0;
     int index2 = 0;
@@ -956,12 +1282,20 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
     for(index=0;index<8;index++)
     {
-        QStringList buttonList(Preferences::buttonList());
+        QStringList buttonList(preferences.getButtonList());
         config->writeEntry(QString("Button%1").arg(index),buttonList[index]);
     }
 
     // Write all highlight entries
-    QPtrList<Highlight> hiList=Preferences::highlightList();
+    config->setGroup("Highlight List");
+
+    config->writeEntry("HighlightNick",preferences.getHighlightNick());
+    config->writeEntry("HighlightNickColor",preferences.getHighlightNickColor().name().mid(1));
+    config->writeEntry("HighlightOwnLines",preferences.getHighlightOwnLines());
+    config->writeEntry("HighlightOwnLinesColor",preferences.getHighlightOwnLinesColor().name().mid(1));
+    config->writeEntry("HighlightSoundsEnabled", preferences.getHighlightSoundEnabled());
+
+    QPtrList<Highlight> hiList=preferences.getHighlightList();
     int i = 0;
 
     for(Highlight* hl = hiList.first(); hl; hl = hiList.next())
@@ -982,10 +1316,28 @@ void KonversationApplication::saveOptions(bool updateGUI)
         i++;
     }
 
+    // OnScreen Display
+    config->setGroup("OSD");
+    config->writeEntry("UseOSD",preferences.getOSDUsage());
+    config->writeEntry("OSDUseCustomColors",preferences.getOSDUseCustomColors());
+    config->writeEntry("ShowOwnNick",preferences.getOSDShowOwnNick());
+    config->writeEntry("ShowChannel",preferences.getOSDShowChannel());
+    config->writeEntry("ShowQuery",preferences.getOSDShowQuery());
+    config->writeEntry("ShowChannelEvent",preferences.getOSDShowChannelEvent());
+    config->writeEntry("OSDFont",preferences.getOSDFont().toString());
+    config->writeEntry("OSDTextColor",preferences.getOSDTextColor().name().mid(1));
+    config->writeEntry("OSDBackgroundColor",preferences.getOSDBackgroundColor().name().mid(1));
+    config->writeEntry("OSDDuration",preferences.getOSDDuration());
+    config->writeEntry("OSDScreen",preferences.getOSDScreen());
+    config->writeEntry("OSDDrawShadow",preferences.getOSDDrawShadow());
+    config->writeEntry("OffsetX",preferences.getOSDOffsetX());
+    config->writeEntry("OffsetY",preferences.getOSDOffsetY());
+    config->writeEntry("Alignment",preferences.getOSDAlignment());
+
     // Ignore List
     config->deleteGroup("Ignore List");
     config->setGroup("Ignore List");
-    QPtrList<Ignore> ignoreList=Preferences::ignoreList();
+    QPtrList<Ignore> ignoreList=preferences.getIgnoreList();
     Ignore* item=ignoreList.first();
     index=0;
     while(item)
@@ -995,20 +1347,97 @@ void KonversationApplication::saveOptions(bool updateGUI)
         index++;
     }
 
+    // Aliases
+    config->setGroup("Aliases");
+    config->writeEntry("AliasList",preferences.getAliasList());
+
+    // Nick Completion
+    config->setGroup("Nick Completion");
+    config->writeEntry("Mode", preferences.getNickCompletionMode());
+    config->writeEntry("SuffixStart",preferences.getNickCompleteSuffixStart());
+    config->writeEntry("SuffixMiddle",preferences.getNickCompleteSuffixMiddle());
+    config->writeEntry("CaseSensitive", preferences.nickCompletionCaseSensitive());
+
+    // DCC Settings
+    config->setGroup("DCC Settings");
+    config->writeEntry("AddPartner",preferences.getDccAddPartner());
+    config->writeEntry("CreateFolder",preferences.getDccCreateFolder());
+    config->writeEntry("AutoGet",preferences.getDccAutoGet());
+    config->writeEntry("AutoResume",preferences.getDccAutoResume());
+
+    config->writeEntry("SendTimeout",preferences.getDccSendTimeout());
+
+    config->writeEntry("MethodToGetOwnIp",preferences.getDccMethodToGetOwnIp());
+    config->writeEntry("SpecificOwnIp",preferences.getDccSpecificOwnIp());
+
+    config->writeEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts());
+    config->writeEntry("SendPortsFirst",preferences.getDccSendPortsFirst());
+    config->writeEntry("SendPortsLast",preferences.getDccSendPortsLast());
+    config->writeEntry("SpecificChatPorts",preferences.getDccSpecificChatPorts());
+    config->writeEntry("ChatPortsFirst",preferences.getDccChatPortsFirst());
+    config->writeEntry("ChatPortsLast",preferences.getDccChatPortsLast());
+
+    config->writeEntry("BufferSize",preferences.getDccBufferSize());
+    config->writeEntry("FastSend",preferences.getDccFastSend());
+
+    config->writeEntry("IPv4Fallback",preferences.getIPv4Fallback());
+    config->writeEntry("IPv4FallbackInterface",preferences.getIPv4FallbackIface());
+
+    // Path Settings
+    config->setGroup("Path Settings");
+    config->writePathEntry("DccPath",preferences.getDccPath());
+    config->writePathEntry("LogfilePath",preferences.getLogPath());
+
+    // Flags
+    config->setGroup("Flags");
+
+    config->writeEntry("Log",preferences.getLog());
+    config->writeEntry("LowerLog",preferences.getLowerLog());
+    config->writeEntry("LogFollowsNick",preferences.getLogFollowsNick());
+
+    config->writeEntry("TabPlacement",static_cast<int>(preferences.getTabPlacement()));
+    config->writeEntry("BlinkingTabs",preferences.getBlinkingTabs());
+    config->writeEntry("BringToFront",preferences.getBringToFront());
+
+    config->writeEntry("HideUnimportantEvents",preferences.getHideUnimportantEvents());
+    config->writeEntry("DisableExpansion",preferences.getDisableExpansion());
+
+    config->writeEntry("AutoReconnect",preferences.getAutoReconnect());
+    config->writeEntry("ReconnectCount",preferences.getReconnectCount());
+    config->writeEntry("AutoRejoin",preferences.getAutoRejoin());
+    config->writeEntry("AutojoinOnInvite",preferences.getAutojoinOnInvite());
+
+    config->writeEntry("FixedMOTD",preferences.getFixedMOTD());
+    config->writeEntry("ShowServerList",preferences.getShowServerList());
+
+    config->writeEntry("InputFieldsBackgroundColor",preferences.getColorInputFields());
+
+    // Web Browser settings
+    config->setGroup("Web Browser Settings");
+    config->writeEntry("UseKdeDefault", preferences.getWebBrowserUseKdeDefault());
+    config->writeEntry("WebBrowserCmd", preferences.getWebBrowserCmd());
+
     // Channel Encodings
     config->setGroup("Channel Encodings");
-    QStringList channelEncodingsServerList=Preferences::channelEncodingsServerList();
+    QStringList channelEncodingsServerList=preferences.getChannelEncodingsServerList();
     channelEncodingsServerList.sort();
     for(unsigned int i=0; i<channelEncodingsServerList.count(); ++i)
     {
-        QStringList channelEncodingsChannelList=Preferences::channelEncodingsChannelList(channelEncodingsServerList[i]);
+        QStringList channelEncodingsChannelList=preferences.getChannelEncodingsChannelList(channelEncodingsServerList[i]);
         channelEncodingsChannelList.sort();
         for(unsigned int j=0; j<channelEncodingsChannelList.count(); ++j)
-            if(!Preferences::channelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]).isEmpty())
-                config->writeEntry(channelEncodingsServerList[i]+" "+channelEncodingsChannelList[j],Preferences::channelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]));
+            if(!preferences.getChannelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]).isEmpty())
+                config->writeEntry(channelEncodingsServerList[i]+" "+channelEncodingsChannelList[j],preferences.getChannelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]));
     }
 
+    // Themes
+    config->setGroup("Themes");
+    config->writeEntry("IconTheme", preferences.getIconTheme());
+    config->writeEntry("EnableEmotIcons", preferences.emotIconsEnabled());
+    config->writeEntry("EmotIconTheme", preferences.emotIconsTheme());
+
     config->sync();
+
     emit prefsChanged();
 
     if(updateGUI) appearanceChanged();
@@ -1024,16 +1453,16 @@ void KonversationApplication::appearanceChanged()
         lookServer->updateFonts();
         lookServer->updateChannelQuickButtons();
 
-        lookServer->setShowQuickButtons(Preferences::showQuickButtons());
-        lookServer->setShowModeButtons(Preferences::showModeButtons());
-        lookServer->setShowTopic(Preferences::showTopic());
-        lookServer->setShowNicknameBox(Preferences::showNicknameBox());
+        lookServer->setShowQuickButtons(preferences.getShowQuickButtons());
+        lookServer->setShowModeButtons(preferences.getShowModeButtons());
+        lookServer->setShowTopic(preferences.getShowTopic());
+        lookServer->setShowNicknameBox(preferences.showNicknameBox());
 
         lookServer=serverList.next();
     }
 
     mainWindow->updateTabPlacement();
-    mainWindow->setShowTabBarCloseButton(Preferences::showTabBarCloseButton());
+    mainWindow->setShowTabBarCloseButton(preferences.getShowTabBarCloseButton());
 }
 
 void KonversationApplication::updateNickIcons()
@@ -1086,84 +1515,27 @@ void KonversationApplication::clearUrlList()
 
 void KonversationApplication::openPrefsDialog()   // TODO Move this function into KonversationMainWindow
 {
-    //An instance of your dialog could be already created and could be cached, 
-    //in which case you want to display the cached dialog instead of creating 
-    //another one 
-    if ( KConfigDialog::showDialog( "settings" ) ) 
-        return; 
- 
-    //KConfigDialog didn't find an instance of this dialog, so lets create it : 
-    KConfigDialog* dialog = new KConfigDialog( mainWindow, "settings", Preferences::self(), KDialogBase::TreeList ); 
-    dialog->setShowIconsInTreeList(true);
-    dialog->unfoldTreeList(true);
-    dialog->setFolderIcon(i18n("Appearance"),SmallIcon("looknfeel"));
-    //Appearance/Chat Window
-    ChatWindowAppearance_Config* confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
-    dialog->addPage ( confChatWindowAppearanceWdg, i18n("Appearance - Chat Window"), "view_text", i18n("Appearance") );
-    //Appearance/Fonts
-    FontAppearance_Config* confFontAppearanceWdg = new FontAppearance_Config( 0, "FontAppearance" );
-    dialog->addPage ( confFontAppearanceWdg, i18n("Appearance - Fonts"), "fonts", i18n("Appearance") );
-    //Appearance/Themes
-    Theme_Config* confThemeWdg = new Theme_Config( 0, "Theme" );
-    dialog->addPage ( confThemeWdg, i18n("Appearance - Themes"), "iconthemes", i18n("Appearance") );
-    
-    dialog->setFolderIcon(QStringList::split(',', i18n("Behavior")), SmallIcon("configure"));
-    //Behavior/General
-    GeneralBehavior_Config* confGeneralBehaviorWdg = new GeneralBehavior_Config( 0, "GeneralBehavior" );
-    dialog->addPage ( confGeneralBehaviorWdg, i18n("Behavior - General"), "exec", i18n("Behavior") );
-    //Behavior/Connection
-    ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( 0, "ConnectionBehavior" );
-    dialog->addPage ( confConnectionBehaviorWdg, i18n("Behavior - Connection"), "connect_creating", i18n("Behavior") );
-    //Behaviour/Nickname List
-    NicklistBehavior_Config* confNicklistBehaviorWdg = new NicklistBehavior_Config( 0, "NicklistBehavior" );
-    dialog->addPage ( confNicklistBehaviorWdg, i18n("Behavior - Nickname List"), "player_playlist" );
-    //Behaviour/Tab Bar
-    TabBar_Config* confTabBarWdg = new TabBar_Config( 0, "TabBar" );
-    dialog->addPage ( confTabBarWdg, i18n("Behaviour - Tab Bar"), "tab_new" );
-    //Behaviour/Command Aliases
-    Alias_Config* confAliasWdg = new Alias_Config( 0, "Alias" );
-    dialog->addPage ( confAliasWdg, i18n("Behaviour - Command Aliases"), "editcopy" );
-     //Behaviour/Quick Buttons
-    QuickButtons_Config* confQuickButtonsWdg = new QuickButtons_Config( 0, "QuickButtons" );
-    dialog->addPage ( confQuickButtonsWdg, i18n("Behaviour - Quick Buttons"), "keyboard" );
-    //Behaviour/Logging
-    Log_Config* confLogWdg = new Log_Config( 0, "Log" );
-    dialog->addPage ( confLogWdg, i18n("Behavior - Logging"), "log" );
+    if(prefsDialog==0)
+    {
+        prefsDialog = new PrefsDialog(mainWindow, &preferences);
 
-    //Notification/Watched Nicknames
-    WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( 0, "WatchedNicknames" );
-    dialog->addPage ( confWatchedNicknamesWdg, i18n("Notification - Watched Nicknames"), "kfind" );
-    //Notification/Highlighting
-    Highlight_Config* confHighlightWdg = new Highlight_Config( 0, "Highlight" );
-    dialog->addPage ( confHighlightWdg, i18n("Notification - Highlighting"), "paintbrush" );
-    //Notification/On Screen Display
-    OSD_Config* confOSDWdg = new OSD_Config( 0, "OSD" );
-    dialog->addPage ( confOSDWdg, i18n("Notification - On Screen Display"), "tv" );
+        connect(prefsDialog,SIGNAL (cancelClicked()),this,SLOT (closePrefsDialog()) );
+        connect(prefsDialog,SIGNAL (prefsChanged()),this,SLOT (saveOptions()) );
 
-    //Warning Dialogs
-    Warnings_Config* confWarningsWdg = new Warnings_Config( 0, "Warnings" );
-    dialog->addPage ( confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning" );
-
-    //Behaviour/Chat Window
-    ChatwindowBehaviour_Config* confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( 0, "ChatwindowBehaviour" );
-    dialog->addPage ( confChatwindowBehaviourWdg, i18n("Chatwindow Behaviour"), "" );
-   
-    ColorsAppearance_Config* confColorsAppearanceWdg = new ColorsAppearance_Config( 0, "ColorsAppearance" );
-    dialog->addPage ( confColorsAppearanceWdg, i18n("Colors Appearance"), "colorsappearance" );
-   
-    //User edited the configuration - update your local copies of the 
-    //configuration data 
-//    connect( dialog, SIGNAL(settingsChanged()), 
-//             this, SLOT(updateConfiguration()) ); 
-     
-    dialog->show();
-    
+        prefsDialog->show();
+    }
+    else
+    {
+        prefsDialog->show();
+        prefsDialog->raise();
+        prefsDialog->setActiveWindow();
+    }
 }
 
 void KonversationApplication::openPrefsDialog(Preferences::Pages page)
 {
     openPrefsDialog();
-    //FIXME - open the right page
+    prefsDialog->openPage(page);
 }
 
 void KonversationApplication::openQuickConnectDialog()
@@ -1176,6 +1548,12 @@ void KonversationApplication::openQuickConnectDialog()
 void KonversationApplication::syncPrefs()
 {
     kapp->config()->sync();
+}
+
+void KonversationApplication::closePrefsDialog()
+{
+    delete prefsDialog;
+    prefsDialog=0;
 }
 
 bool KonversationApplication::emitDCOPSig(const QString &appId, const QString &objId, const QString &signal, QByteArray &data)
@@ -1259,6 +1637,11 @@ uint& KonversationApplication::getColorOffset()
     return colorOffSet;
 }
 
+QStringList& KonversationApplication::getColorList()
+{
+    return colorList;
+}
+
 QMap<QString,QString>& KonversationApplication::getColorMap()
 {
     return colorMap;
@@ -1323,5 +1706,3 @@ NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const Q
 }
 
 #include "konversationapplication.moc"
-
-// vim: set et sw=4 ts=4 cino=l1,cs,U1:

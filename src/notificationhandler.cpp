@@ -43,7 +43,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway())
         {
             return;
         }
@@ -55,12 +55,12 @@ namespace Konversation
         //   Popup *pop = new Popup(m_mainWindow,chatWin,
         //     QString("<qt>&lt;%2&gt; %3</qt>").arg(chatWin->getName()).arg(fromNick).arg(cutup));
 
-        if(!Preferences::trayNotifyOnlyOwnNick())
+        if(!KonversationApplication::preferences.trayNotifyOnlyOwnNick())
         {
             startTrayNotification(chatWin);
         }
 
-        if(Preferences::oSDShowChannel() &&
+        if(KonversationApplication::preferences.getOSDShowChannel() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
@@ -75,7 +75,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway())
         {
             return;
         }
@@ -93,8 +93,8 @@ namespace Konversation
 
         if(chatWin->getType() == ChatWindow::Channel)
         {
-            if((Preferences::oSDShowChannel() ||
-                Preferences::oSDShowOwnNick()) &&
+            if((KonversationApplication::preferences.getOSDShowChannel() ||
+                KonversationApplication::preferences.getOSDShowOwnNick()) &&
                 (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
             {
                 konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(cleanedMessage));
@@ -102,7 +102,7 @@ namespace Konversation
         }
         else if(chatWin->getType() == ChatWindow::Query)
         {
-            if(Preferences::oSDShowQuery() &&
+            if(KonversationApplication::preferences.getOSDShowQuery() &&
                 (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
             {
                 konvApp->osd->showOSD(i18n("(Query) <%1> %2").arg(fromNick).arg(cleanedMessage));
@@ -117,7 +117,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway())
         {
             return;
         }
@@ -135,7 +135,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway())
         {
             return;
         }
@@ -143,7 +143,7 @@ namespace Konversation
         KNotifyClient::event(winId(), "join", i18n("%1 joined %2").arg(nick, chatWin->getName()));
 
         // OnScreen Message
-        if(Preferences::oSDShowChannelEvent() &&
+        if(KonversationApplication::preferences.getOSDShowChannelEvent() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
@@ -158,7 +158,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway())
         {
             return;
         }
@@ -166,7 +166,7 @@ namespace Konversation
         KNotifyClient::event(winId(), "part", i18n("%1 parted %2").arg(nick, chatWin->getName()));
 
         // OnScreen Message
-        if(Preferences::oSDShowChannelEvent() &&
+        if(KonversationApplication::preferences.getOSDShowChannelEvent() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
@@ -191,7 +191,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway())
         {
             return;
         }
@@ -206,7 +206,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway())
         {
             return;
         }
@@ -221,7 +221,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway())
         {
             return;
         }
@@ -236,7 +236,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway())
         {
             return;
         }
@@ -251,7 +251,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway())
         {
             return;
         }
@@ -267,7 +267,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway())
         {
             return;
         }
@@ -283,7 +283,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        if(KonversationApplication::preferences.disableNotifyWhileAway() && chatWin->getServer()->isAway())
         {
             return;
         }
@@ -321,7 +321,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::oSDShowOwnNick() &&
+        if(KonversationApplication::preferences.getOSDShowOwnNick() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);

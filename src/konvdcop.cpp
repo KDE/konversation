@@ -194,7 +194,7 @@ QString KonvDCOP::getAnyNickname ()
 
 QString KonvDCOP::getChannelEncoding(const QString& server, const QString& channel)
 {
-    return Preferences::channelEncoding(server,channel);
+    return KonversationApplication::preferences.getChannelEncoding(server,channel);
 }
 
 // Identity stuff
@@ -207,7 +207,7 @@ QObject(0, "KonvDCOPIdentity")
 QStringList KonvIdentDCOP::listIdentities()
 {
     QStringList identities;
-    QValueList<IdentityPtr> ids = Preferences::identityList();
+    QValueList<IdentityPtr> ids = KonversationApplication::preferences.getIdentityList();
     for(QValueList<IdentityPtr>::iterator it = ids.begin(); it != ids.end(); ++it)
     {
         identities.append((*it)->getName());
@@ -217,7 +217,7 @@ QStringList KonvIdentDCOP::listIdentities()
 
 void KonvIdentDCOP::setrealName(const QString &id_name, const QString& name)
 {
-    QValueList<IdentityPtr> ids = Preferences::identityList();
+    QValueList<IdentityPtr> ids = KonversationApplication::preferences.getIdentityList();
 
     for(QValueList<IdentityPtr>::iterator it = ids.begin(); it != ids.end(); ++it)
     {
@@ -232,7 +232,7 @@ void KonvIdentDCOP::setrealName(const QString &id_name, const QString& name)
 
 QString KonvIdentDCOP::getrealName(const QString &id_name)
 {
-    QValueList<IdentityPtr> ids = Preferences::identityList();
+    QValueList<IdentityPtr> ids = KonversationApplication::preferences.getIdentityList();
 
     for(QValueList<IdentityPtr>::iterator it = ids.begin(); it != ids.end(); ++it)
     {
@@ -247,121 +247,121 @@ QString KonvIdentDCOP::getrealName(const QString &id_name)
 
 void KonvIdentDCOP::setIdent(const QString &/*identity*/, const QString& /*ident*/)
 {
-    //Preferences::identityByName(identity)->.setIdent(;
+    //KonversationApplication::preferences.getIdentityByName(identity)->.setIdent(;
 }
 
 QString KonvIdentDCOP::getIdent(const QString &identity)
 {
-    return Preferences::identityByName(identity)->getIdent();
+    return KonversationApplication::preferences.getIdentityByName(identity)->getIdent();
 }
 
 void KonvIdentDCOP::setNickname(const QString &identity, int index,const QString& nick)
 {
-    const Identity *i = Preferences::identityByName(identity);
+    const Identity *i = KonversationApplication::preferences.getIdentityByName(identity);
     const_cast<Identity *>(i)->setNickname(index, nick);
     static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
 QString KonvIdentDCOP::getNickname(const QString &identity, int index)
 {
-    return Preferences::identityByName(identity)->getNickname(index);
+    return KonversationApplication::preferences.getIdentityByName(identity)->getNickname(index);
 }
 
 void KonvIdentDCOP::setBot(const QString &identity, const QString& bot)
 {
-    const Identity *i = Preferences::identityByName(identity);
+    const Identity *i = KonversationApplication::preferences.getIdentityByName(identity);
     const_cast<Identity *>(i)->setBot(bot);
     static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
 QString KonvIdentDCOP::getBot(const QString &identity)
 {
-    return Preferences::identityByName(identity)->getBot();
+    return KonversationApplication::preferences.getIdentityByName(identity)->getBot();
 }
 
 void KonvIdentDCOP::setPassword(const QString &identity, const QString& password)
 {
-    const Identity *i = Preferences::identityByName(identity);
+    const Identity *i = KonversationApplication::preferences.getIdentityByName(identity);
     const_cast<Identity *>(i)->setPassword(password);
     static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
 QString KonvIdentDCOP::getPassword(const QString &identity)
 {
-    return Preferences::identityByName(identity)->getPassword();
+    return KonversationApplication::preferences.getIdentityByName(identity)->getPassword();
 }
 
 void KonvIdentDCOP::setNicknameList(const QString &identity, const QStringList& newList)
 {
-    const Identity *i = Preferences::identityByName(identity);
+    const Identity *i = KonversationApplication::preferences.getIdentityByName(identity);
     const_cast<Identity *>(i)->setNicknameList(newList);
     static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
 QStringList KonvIdentDCOP::getNicknameList(const QString &identity)
 {
-    return Preferences::identityByName(identity)->getNicknameList();
+    return KonversationApplication::preferences.getIdentityByName(identity)->getNicknameList();
 }
 
 void KonvIdentDCOP::setPartReason(const QString &identity, const QString& reason)
 {
-    const Identity *i = Preferences::identityByName(identity);
+    const Identity *i = KonversationApplication::preferences.getIdentityByName(identity);
     const_cast<Identity *>(i)->setPartReason(reason);
     static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
 QString KonvIdentDCOP::getPartReason(const QString &identity)
 {
-    return Preferences::identityByName(identity)->getPartReason();
+    return KonversationApplication::preferences.getIdentityByName(identity)->getPartReason();
 }
 
 void KonvIdentDCOP::setKickReason(const QString &identity, const QString& reason)
 {
-    const Identity *i = Preferences::identityByName(identity);
+    const Identity *i = KonversationApplication::preferences.getIdentityByName(identity);
     const_cast<Identity *>(i)->setKickReason(reason);
     static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
 QString KonvIdentDCOP::getKickReason(const QString &identity)
 {
-    return Preferences::identityByName(identity)->getKickReason();
+    return KonversationApplication::preferences.getIdentityByName(identity)->getKickReason();
 }
 
 void KonvIdentDCOP::setShowAwayMessage(const QString &identity, bool state)
 {
-    const Identity *i = Preferences::identityByName(identity);
+    const Identity *i = KonversationApplication::preferences.getIdentityByName(identity);
     const_cast<Identity *>(i)->setShowAwayMessage(state);
     static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
 bool KonvIdentDCOP::getShowAwayMessage(const QString &identity)
 {
-    return Preferences::identityByName(identity)->getShowAwayMessage();
+    return KonversationApplication::preferences.getIdentityByName(identity)->getShowAwayMessage();
 }
 
 void KonvIdentDCOP::setAwayMessage(const QString &identity, const QString& message)
 {
-    const Identity *i = Preferences::identityByName(identity);
+    const Identity *i = KonversationApplication::preferences.getIdentityByName(identity);
     const_cast<Identity *>(i)->setAwayMessage(message);
     static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
 QString KonvIdentDCOP::getAwayMessage(const QString &identity)
 {
-    const QString f = Preferences::identityByName(identity)->getAwayMessage();
+    const QString f = KonversationApplication::preferences.getIdentityByName(identity)->getAwayMessage();
     return f;
 }
 
 void KonvIdentDCOP::setReturnMessage(const QString &identity, const QString& message)
 {
-    const Identity *i = Preferences::identityByName(identity);
+    const Identity *i = KonversationApplication::preferences.getIdentityByName(identity);
     const_cast<Identity *>(i)->setReturnMessage(message);
     static_cast<KonversationApplication *>(kapp)->saveOptions(true);
 }
 
 QString KonvIdentDCOP::getReturnMessage(const QString &identity)
 {
-    return Preferences::identityByName(identity)->getReturnMessage();
+    return KonversationApplication::preferences.getIdentityByName(identity)->getReturnMessage();
 }
 
 #include "konvdcop.moc"

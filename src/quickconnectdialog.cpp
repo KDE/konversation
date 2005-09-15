@@ -51,7 +51,7 @@ KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Ok, true)
     QLabel* nickLabel = new QLabel(i18n("&Nick:"), page);
     QString nickWT = i18n("The nick you want to use.");
     QWhatsThis::add(nickLabel, nickWT);
-    nickInput = new KLineEdit(Preferences::nickname(0), page);
+    nickInput = new KLineEdit(KonversationApplication::preferences.getNickname(0), page);
     QWhatsThis::add(nickInput, nickWT);
     nickLabel->setBuddy(nickInput);
 

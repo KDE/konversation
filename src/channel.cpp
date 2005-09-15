@@ -174,8 +174,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
     topicLayout->setRowStretch(1, 10);
     topicLayout->setColStretch(1, 10);
 
-    showTopic(Preferences::showTopic());
-    showModeButtons(Preferences::showModeButtons());
+    showTopic(KonversationApplication::preferences.getShowTopic());
+    showModeButtons(KonversationApplication::preferences.getShowModeButtons());
 
     // (this) The main Box, holding the channel view/topic and the input line
     m_horizSplitter = new QSplitter(m_vertSplitter);
@@ -203,7 +203,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
     nicknameListView->addColumn(QString::null);
     nicknameListView->setColumnWidthMode(1,KListView::Maximum);
 
-    if (Preferences::autoUserhost())
+    if (KonversationApplication::preferences.getAutoUserhost())
     {
         nicknameListView->addColumn(QString::null);
         nicknameListView->setColumnWidthMode(2,KListView::Maximum);
@@ -223,7 +223,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
     // the grid that holds the quick action buttons
     buttonsGrid = new QGrid(2, nickListButtons);
     // set hide() or show() on grid
-    showQuickButtons(Preferences::showQuickButtons());
+    showQuickButtons(KonversationApplication::preferences.getShowQuickButtons());
 
     for(int index = 0; index < 8; index++)
     {
@@ -234,7 +234,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
         connect(newQuickButton, SIGNAL(clicked(const QString &)), this, SLOT(quickButtonClicked(const QString &)));
     }
 
-    updateQuickButtons(Preferences::buttonList());
+    updateQuickButtons(KonversationApplication::preferences.getButtonList());
 
     // The box holding the Nickname button and Channel input
     commandLineBox = new QHBox(this);
@@ -242,11 +242,11 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
 
     nicknameCombobox = new QComboBox(commandLineBox);
     nicknameCombobox->setEditable(true);
-    nicknameCombobox->insertStringList(Preferences::nicknameList());
+    nicknameCombobox->insertStringList(KonversationApplication::preferences.getNicknameList());
     QWhatsThis::add(nicknameCombobox, i18n("<qt>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.<p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</qt>"));
     oldNick = nicknameCombobox->currentText();
 
-    setShowNicknameBox(Preferences::showNicknameBox());
+    setShowNicknameBox(KonversationApplication::preferences.showNicknameBox());
 
     awayLabel = new QLabel(i18n("(away)"), commandLineBox);
     awayLabel->hide();
@@ -284,7 +284,7 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
     getTextView()->setSizePolicy(greedy);
     nicknameListView->setSizePolicy(hmodest);
     // remember alternate background color
-    abgCache=nicknameListView->alternateBackground();
+    abgCache=nicknameListView->alternateBackground().name();
 
     connect(channelInput,SIGNAL (submit()),this,SLOT (channelTextEntered()) );
     connect(channelInput,SIGNAL (envelopeCommand()),this,SLOT (channelPassthroughCommand()) );
@@ -311,19 +311,19 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
     nicknameList.setAutoDelete(true);             // delete items when they are removed
 
     updateFonts();
-    setLog(Preferences::log());
+    setLog(KonversationApplication::preferences.getLog());
 
     connect(&userhostTimer,SIGNAL (timeout()),this,SLOT (autoUserhost()));
-    connect(Preferences::self(), SIGNAL (autoUserhostChanged(bool)),this,SLOT (autoUserhostChanged(bool)));
+    connect(&KonversationApplication::preferences,SIGNAL (autoUserhostChanged(bool)),this,SLOT (autoUserhostChanged(bool)));
 
     // every few seconds try to get more userhosts
-    autoUserhostChanged(Preferences::autoUserhost());
+    autoUserhostChanged(KonversationApplication::preferences.getAutoUserhost());
     userhostTimer.start(10000);
 
     m_firstAutoWhoDone = false;
     connect(&m_whoTimer,SIGNAL (timeout()),this,SLOT (autoWho()));
     // re-schedule when the settings were changed
-    connect(Preferences::self(), SIGNAL (autoContinuousWhoChanged()),this,SLOT (scheduleAutoWho()));
+    connect(&KonversationApplication::preferences,SIGNAL (autoContinuousWhoChanged()),this,SLOT (scheduleAutoWho()));
 
     m_allowNotifications = true;
 
@@ -394,7 +394,7 @@ void Channel::textPasted(const QString& text)
         for(unsigned int index=0;index<multiline.count();index++)
         {
             QString line=multiline[index];
-            QString cChar(Preferences::commandChar());
+            QString cChar(KonversationApplication::preferences.getCommandChar());
             // make sure that lines starting with command char get escaped
             if(line.startsWith(cChar)) line=cChar+line;
             sendChannelText(line);
@@ -415,7 +415,7 @@ void Channel::popupChannelCommand(int id)
 void Channel::popupCommand(int id)
 {
     QString pattern;
-    QString cc=Preferences::commandChar();
+    QString cc=KonversationApplication::preferences.getCommandChar();
     bool raw=false;
 
     QString args;
@@ -507,7 +507,7 @@ void Channel::popupCommand(int id)
         case Konversation::Ping:
         {
             unsigned int time_t = QDateTime::currentDateTime().toTime_t();
-            pattern=QString(Preferences::commandChar()+"CTCP %u PING %1").arg(time_t);
+            pattern=QString(KonversationApplication::preferences.getCommandChar()+"CTCP %u PING %1").arg(time_t);
         }
         break;
         case Konversation::Kick:
@@ -601,7 +601,7 @@ void Channel::doubleClickCommand(QListViewItem* item)
     if(item)
     {
         // TODO: put the quick button code in another function to make reusal more legitimate
-        quickButtonClicked(Preferences::channelDoubleClickAction());
+        quickButtonClicked(KonversationApplication::preferences.getChannelDoubleClickAction());
     }
 }
 
@@ -629,7 +629,7 @@ void Channel::completeNick()
     // If the cursor is at beginning of line, insert last completion
     if(pos == 0 && !channelInput->lastCompletion().isEmpty())
     {
-        QString addStart(Preferences::nickCompleteSuffixStart());
+        QString addStart(KonversationApplication::preferences.getNickCompleteSuffixStart());
         newLine = channelInput->lastCompletion() + addStart;
         // New cursor position is behind nickname
         pos = newLine.length();
@@ -659,18 +659,18 @@ void Channel::completeNick()
             QString foundNick;
 
             // try to find matching nickname in list of names
-            if(Preferences::nickCompletionMode() == 1 ||
-                Preferences::nickCompletionMode() == 2)
+            if(KonversationApplication::preferences.getNickCompletionMode() == 1 ||
+                KonversationApplication::preferences.getNickCompletionMode() == 2)
             {                                     // Shell like completion
                 QStringList found;
                 foundNick = nicknameList.completeNick(pattern, complete, found,
-                    (Preferences::nickCompletionMode() == 2),
-                    Preferences::nickCompletionCaseSensitive(),
+                    (KonversationApplication::preferences.getNickCompletionMode() == 2),
+                    KonversationApplication::preferences.nickCompletionCaseSensitive(),
                     getOwnChannelNick()->getNickname());
 
                 if(!complete && !found.isEmpty())
                 {
-                    if(Preferences::nickCompletionMode() == 1)
+                    if(KonversationApplication::preferences.getNickCompletionMode() == 1)
                     {
                         QString nicksFound = found.join(" ");
                         appendServerMessage(i18n("Completion"),i18n("Possible completions: %1.").arg(nicksFound));
@@ -681,10 +681,10 @@ void Channel::completeNick()
                     }
                 }
             }                                     // Cycle completion
-            else if(Preferences::nickCompletionMode() == 0)
+            else if(KonversationApplication::preferences.getNickCompletionMode() == 0)
             {
                 complete = true;
-                QString prefixCharacter = Preferences::prefixCharacter();
+                QString prefixCharacter = KonversationApplication::preferences.getPrefixCharacter();
                 do
                 {
                     QString lookNick=nicknameList.at(completionPosition)->getNickname();
@@ -694,7 +694,7 @@ void Channel::completeNick()
                         lookNick = lookNick.section( prefixCharacter,1 );
                     }
 
-                    if(lookNick.startsWith(pattern, Preferences::nickCompletionCaseSensitive()))
+                    if(lookNick.startsWith(pattern, KonversationApplication::preferences.nickCompletionCaseSensitive()))
                     {
                         foundNick=lookNick;
                     }
@@ -723,7 +723,7 @@ void Channel::completeNick()
                 if(pos && complete)
                 {
                     channelInput->setLastCompletion(foundNick);
-                    QString addMiddle(Preferences::nickCompleteSuffixMiddle());
+                    QString addMiddle(KonversationApplication::preferences.getNickCompleteSuffixMiddle());
                     newLine.insert(pos,foundNick+addMiddle);
                     pos=pos+foundNick.length()+addMiddle.length();
                 }
@@ -731,7 +731,7 @@ void Channel::completeNick()
                 else if(complete)
                 {
                     channelInput->setLastCompletion(foundNick);
-                    QString addStart(Preferences::nickCompleteSuffixStart());
+                    QString addStart(KonversationApplication::preferences.getNickCompleteSuffixStart());
                     newLine.insert(pos,foundNick+addStart);
                     pos=pos+foundNick.length()+addStart.length();
                 }
@@ -802,7 +802,7 @@ void Channel::channelTextEntered()
 
 void Channel::channelPassthroughCommand()
 {
-    QString commandChar = Preferences::commandChar();
+    QString commandChar = KonversationApplication::preferences.getCommandChar();
     QString line = channelInput->text();
 
     channelInput->clear();
@@ -1611,7 +1611,7 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
             break;
     }
 
-    if(!message.isEmpty() && !Preferences::useLiteralModes())
+    if(!message.isEmpty() && !KonversationApplication::preferences.getUseLiteralModes())
     {
         appendCommandMessage(i18n("Mode"),message);
     }
@@ -1777,14 +1777,14 @@ void Channel::initializeSplitters()
 
     QValueList<int> horizSizes, vertSizes;
 
-    horizSizes = Preferences::channelSplitterSizes();
-    vertSizes = Preferences::topicSplitterSizes();
+    horizSizes = KonversationApplication::preferences.channelSplitterSizes();
+    vertSizes = KonversationApplication::preferences.topicSplitterSizes();
 
     if (horizSizes.isEmpty())
     {
         int listWidth = nicknameListView->columnWidth(0) + nicknameListView->columnWidth(1);
         horizSizes << (width() - listWidth) << listWidth;
-        Preferences::setChannelSplitterSizes(horizSizes);
+        KonversationApplication::preferences.setChannelSplitterSizes(horizSizes);
     }
 
     if (vertSizes.isEmpty())
@@ -1798,48 +1798,52 @@ void Channel::initializeSplitters()
 
 void Channel::updateFonts()
 {
-    nicknameCombobox->setFont(Preferences::textFont());
+    nicknameCombobox->setFont(KonversationApplication::preferences.getTextFont());
 
-    QColor fg;
-    QColor bg;
-    QColor abg;
+    QString fgString;
+    QString bgString;
+    QString abgString;
 
-    if(Preferences::inputFieldsBackgroundColor())
+    if(KonversationApplication::preferences.getColorInputFields())
     {
-        fg=Preferences::color(Preferences::ChannelMessage);
-        bg=Preferences::color(Preferences::TextViewBackground);
-        abg=Preferences::color(Preferences::AlternateBackground);
+        fgString="#"+KonversationApplication::preferences.getColor("ChannelMessage");
+        bgString="#"+KonversationApplication::preferences.getColor("TextViewBackground");
+        abgString="#"+KonversationApplication::preferences.getColor("AlternateBackground");
     }
     else
     {
-        fg=colorGroup().foreground();
-        bg=colorGroup().base();
+        fgString=colorGroup().foreground().name();
+        bgString=colorGroup().base().name();
         // get alternate background color from cache
-        abg=abgCache;
+        abgString=abgCache;
     }
+
+    const QColor fg(fgString);
+    const QColor bg(bgString);
+    const QColor abg(abgString);
 
     channelInput->setPaletteForegroundColor(fg);
     channelInput->setPaletteBackgroundColor(bg);
-    channelInput->setFont(Preferences::textFont());
+    channelInput->setFont(KonversationApplication::preferences.getTextFont());
 
     limit->setPaletteForegroundColor(fg);
     limit->setPaletteBackgroundColor(bg);
-    limit->setFont(Preferences::textFont());
+    limit->setFont(KonversationApplication::preferences.getTextFont());
 
     //topicLine->lineEdit()->setPaletteForegroundColor(fg);
     //topicLine->lineEdit()->setPaletteBackgroundColor(bg);
-    topicLine->setFont(Preferences::textFont());
+    topicLine->setFont(KonversationApplication::preferences.getTextFont());
 
-    getTextView()->setFont(Preferences::textFont());
+    getTextView()->setFont(KonversationApplication::preferences.getTextFont());
 
-    if(Preferences::showBackgroundImage())
+    if(KonversationApplication::preferences.getShowBackgroundImage())
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
-            Preferences::backgroundImage());
+        getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
+            KonversationApplication::preferences.getBackgroundImageName());
     }
     else
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
+        getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
             QString::null);
     }
 
@@ -1848,7 +1852,7 @@ void Channel::updateFonts()
     nicknameListView->setPaletteForegroundColor(fg);
     nicknameListView->setPaletteBackgroundColor(bg);
     nicknameListView->setAlternateBackground(abg);
-    nicknameListView->setFont(Preferences::listFont());
+    nicknameListView->setFont(KonversationApplication::preferences.getListFont());
 }
 
 void Channel::updateStyleSheet()
@@ -1959,7 +1963,7 @@ void Channel::cycleChannel()
 
 void Channel::autoUserhost()
 {
-    if(Preferences::autoUserhost())
+    if(KonversationApplication::preferences.getAutoUserhost())
     {
         int limit = 5;
 
@@ -2028,14 +2032,14 @@ void Channel::scheduleAutoWho()                   // slot
         return;
     if(m_whoTimer.isActive())
         m_whoTimer.stop();
-    if(Preferences::autoWhoContinuousEnabled())
-        m_whoTimer.start(Preferences::autoWhoContinuousInterval()*1000, true);
+    if(KonversationApplication::preferences.getAutoWhoContinuousEnabled())
+        m_whoTimer.start(KonversationApplication::preferences.getAutoWhoContinuousInterval()*1000, true);
 }
 
 void Channel::autoWho()
 {
     // don't use auto /WHO when the number of nicks is too large, or get banned.
-    if(nicks > Preferences::autoWhoNicksLimit())
+    if(nicks > KonversationApplication::preferences.getAutoWhoNicksLimit())
     {
         scheduleAutoWho();
         return;
@@ -2140,7 +2144,7 @@ void Channel::processPendingNicks()
         nicknameListView->triggerUpdate();
         if(!m_firstAutoWhoDone)
         {
-            if(Preferences::autoWhoContinuousEnabled())
+            if(KonversationApplication::preferences.getAutoWhoContinuousEnabled())
             {
                 autoWho();
             }
@@ -2152,12 +2156,12 @@ void Channel::processPendingNicks()
                                                   // virtual
 void Channel::setChannelEncoding(const QString& encoding)
 {
-    Preferences::setChannelEncoding(m_server->getServerGroup(), getName(), encoding);
+    KonversationApplication::preferences.setChannelEncoding(m_server->getServerGroup(), getName(), encoding);
 }
 
 QString Channel::getChannelEncoding()             // virtual
 {
-    return Preferences::channelEncoding(m_server->getServerGroup(), getName());
+    return KonversationApplication::preferences.getChannelEncoding(m_server->getServerGroup(), getName());
 }
 
 QString Channel::getChannelEncodingDefaultDesc()  // virtual
@@ -2230,7 +2234,7 @@ bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick)
     found.clear();
     QString prefix = "^";
     QString newNick;
-    QString prefixCharacter = Preferences::prefixCharacter();
+    QString prefixCharacter = KonversationApplication::preferences.getPrefixCharacter();
 
     if((pattern.find(QRegExp("^(\\d|\\w)")) != -1) && skipNonAlfaNum)
     {
@@ -2306,8 +2310,8 @@ bool Channel::eventFilter(QObject* watched, QEvent* e)
 {
     if((watched == nicknameListView) && (e->type() == QEvent::Resize) && !splitterChanged && isShown())
     {
-        Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
-        Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
+        KonversationApplication::preferences.setChannelSplitterSizes(m_horizSplitter->sizes());
+        KonversationApplication::preferences.setTopicSplitterSizes(m_vertSplitter->sizes());
 
         emit splitterMoved(this);
     }
@@ -2322,8 +2326,8 @@ void Channel::updateSplitters(Channel* channel)
         return;
     }
 
-    m_horizSplitter->setSizes(Preferences::channelSplitterSizes());
-    m_vertSplitter->setSizes(Preferences::topicSplitterSizes());
+    m_horizSplitter->setSizes(KonversationApplication::preferences.channelSplitterSizes());
+    m_vertSplitter->setSizes(KonversationApplication::preferences.topicSplitterSizes());
 }
 
 #include "channel.moc"

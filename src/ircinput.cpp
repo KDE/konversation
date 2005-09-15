@@ -382,7 +382,7 @@ void IRCInput::insertCompletion(const QString& nick)
     // did we find the nick in the middle of the line?
     if(pos)
     {
-        QString addMiddle(Preferences::nickCompleteSuffixMiddle());
+        QString addMiddle(KonversationApplication::preferences.getNickCompleteSuffixMiddle());
         line.insert(pos, nick + addMiddle);
         pos += nick.length() + addMiddle.length();
     }
@@ -390,7 +390,7 @@ void IRCInput::insertCompletion(const QString& nick)
     else
     {
         setLastCompletion(nick);
-        QString addStart(Preferences::nickCompleteSuffixStart());
+        QString addStart(KonversationApplication::preferences.getNickCompleteSuffixStart());
         line.insert(pos, nick + addStart);
         pos += nick.length() + addStart.length();
     }

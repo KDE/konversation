@@ -33,7 +33,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>&amp;Command to be executed on double click:</string>
             </property>
             <property name="buddy" stdset="0">
-                <cstring>kcfg_ChannelDoubleClickAction</cstring>
+                <cstring>kcfg_DoubleClickCommand</cstring>
             </property>
         </widget>
         <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
@@ -46,12 +46,12 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
         <widget class="KLineEdit" row="0" column="2" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>kcfg_ChannelDoubleClickAction</cstring>
+                <cstring>kcfg_DoubleClickCommand</cstring>
             </property>
         </widget>
         <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>kcfg_SortByStatus</cstring>
+                <cstring>kcfg_SortUserStatus</cstring>
             </property>
             <property name="text">
                 <string>Sort b&amp;y user status</string>
@@ -59,7 +59,7 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
         <widget class="QToolButton" row="4" column="3">
             <property name="name">
-                <cstring>downButton</cstring>
+                <cstring>kcfg_DownButton</cstring>
             </property>
             <property name="enabled">
                 <bool>false</bool>
@@ -78,7 +78,7 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
         <widget class="QToolButton" row="3" column="3">
             <property name="name">
-                <cstring>upButton</cstring>
+                <cstring>kcfg_UpButton</cstring>
             </property>
             <property name="enabled">
                 <bool>false</bool>
@@ -128,7 +128,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </property>
             </column>
             <property name="name">
-                <cstring>sortOrder</cstring>
+                <cstring>kcfg_SortOrder</cstring>
             </property>
             <property name="enabled">
                 <bool>false</bool>
@@ -164,21 +164,21 @@ the Free Software Foundation; either version 2 of the License, or
 </widget>
 <connections>
     <connection>
-        <sender>kcfg_SortByStatus</sender>
+        <sender>kcfg_SortUserStatus</sender>
         <signal>toggled(bool)</signal>
-        <receiver>sortOrder</receiver>
+        <receiver>kcfg_SortOrder</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>kcfg_SortByStatus</sender>
+        <sender>kcfg_SortUserStatus</sender>
         <signal>toggled(bool)</signal>
-        <receiver>upButton</receiver>
+        <receiver>kcfg_UpButton</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>kcfg_SortByStatus</sender>
+        <sender>kcfg_SortUserStatus</sender>
         <signal>toggled(bool)</signal>
-        <receiver>downButton</receiver>
+        <receiver>kcfg_DownButton</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>

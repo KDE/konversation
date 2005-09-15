@@ -105,7 +105,7 @@ void Images::initializeKimifaceIcons()
 void Images::initializeNickIcons()
 {
 
-    QString iconTheme = Preferences::iconTheme();
+    QString iconTheme = KonversationApplication::preferences.getIconTheme();
     QStringList icons = KGlobal::dirs()->findAllResources("data","konversation/themes/"+iconTheme+"/*.png");
 
     if( icons.count() < 7 )                       // Sanity

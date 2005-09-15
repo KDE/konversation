@@ -100,7 +100,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
     updateFonts();
 
-    setLog(Preferences::log());
+    setLog(KonversationApplication::preferences.getLog());
 }
 
 Query::~Query()
@@ -116,11 +116,11 @@ void Query::setName(const QString& newName)
     // This will prevent Nick-Changers to create more than one log file,
     // unless we want this by turning the option Log Follows Nick off.
 
-    if((logName.isEmpty()) || !(Preferences::logFollowsNick()))
+    if((logName.isEmpty()) || !(KonversationApplication::preferences.getLogFollowsNick()))
     {
-        QString logName =  (Preferences::lowerLog()) ? getName().lower() : getName() ;
+        QString logName =  (KonversationApplication::preferences.getLowerLog()) ? getName().lower() : getName() ;
 
-        if(Preferences::addHostnameToLog())
+        if(KonversationApplication::preferences.getAddHostnameToLog())
         {
             if(m_nickInfo)
                 logName += m_nickInfo->getHostmask();
@@ -144,7 +144,7 @@ void Query::queryTextEntered()
 
 void Query::queryPassthroughCommand()
 {
-    QString commandChar = Preferences::commandChar();
+    QString commandChar = KonversationApplication::preferences.getCommandChar();
     QString line = queryInput->text();
 
     queryInput->clear();
@@ -187,38 +187,41 @@ void Query::sendQueryText(const QString& sendLine)
 
 void Query::updateFonts()
 {
-    QColor fg;
-    QColor bg;
+    QString fgString;
+    QString bgString;
 
-    if(Preferences::inputFieldsBackgroundColor())
+    if(KonversationApplication::preferences.getColorInputFields())
     {
-        fg=Preferences::color(Preferences::ChannelMessage);
-        bg=Preferences::color(Preferences::TextViewBackground);
+        fgString="#"+KonversationApplication::preferences.getColor("ChannelMessage");
+        bgString="#"+KonversationApplication::preferences.getColor("TextViewBackground");
     }
     else
     {
-        fg=colorGroup().foreground();
-        bg=colorGroup().base();
+        fgString=colorGroup().foreground().name();
+        bgString=colorGroup().base().name();
     }
+
+    const QColor fg(fgString);
+    const QColor bg(bgString);
 
     queryInput->setPaletteForegroundColor(fg);
     queryInput->setPaletteBackgroundColor(bg);
-    queryInput->setFont(Preferences::textFont());
+    queryInput->setFont(KonversationApplication::preferences.getTextFont());
 
     //  queryHostmask->setPaletteForegroundColor(fg);
     //  queryHostmask->setPaletteBackgroundColor(bg);
-    //  queryHostmask->setFont(Preferences::textFont());
+    //  queryHostmask->setFont(KonversationApplication::preferences.getTextFont());
 
-    getTextView()->setFont(Preferences::textFont());
+    getTextView()->setFont(KonversationApplication::preferences.getTextFont());
 
-    if(Preferences::showBackgroundImage())
+    if(KonversationApplication::preferences.getShowBackgroundImage())
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
-            Preferences::backgroundImage());
+        getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
+            KonversationApplication::preferences.getBackgroundImageName());
     }
     else
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
+        getTextView()->setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),
             QString::null);
     }
 }
@@ -231,7 +234,7 @@ void Query::textPasted(const QString& text)
         for(unsigned int index=0;index<multiline.count();index++)
         {
             QString line=multiline[index];
-            QString cChar(Preferences::commandChar());
+            QString cChar(KonversationApplication::preferences.getCommandChar());
             // make sure that lines starting with command char get escaped
             if(line.startsWith(cChar)) line=cChar+line;
             sendQueryText(line);
@@ -270,10 +273,10 @@ void Query::showEvent(QShowEvent*)
 void Query::popup(int id)
 {
     if(id==POPUP_WHOIS)
-        sendQueryText(Preferences::commandChar()+"WHOIS "+getName());
+        sendQueryText(KonversationApplication::preferences.getCommandChar()+"WHOIS "+getName());
     else if(id==POPUP_IGNORE)
     {
-        sendQueryText(Preferences::commandChar()+"IGNORE -ALL "+getName()+"!*");
+        sendQueryText(KonversationApplication::preferences.getCommandChar()+"IGNORE -ALL "+getName()+"!*");
         int rc=KMessageBox::questionYesNo(this,
             i18n("Do you want to close this query after ignoring this nickname?"),
             i18n("Close This Query"),
@@ -400,12 +403,12 @@ void Query::appendInputText(const QString& s)
                                                   // virtual
 void Query::setChannelEncoding(const QString& encoding)
 {
-    Preferences::setChannelEncoding(m_server->getServerGroup(), getName(), encoding);
+    KonversationApplication::preferences.setChannelEncoding(m_server->getServerGroup(), getName(), encoding);
 }
 
 QString Query::getChannelEncoding()               // virtual
 {
-    return Preferences::channelEncoding(m_server->getServerGroup(), getName());
+    return KonversationApplication::preferences.getChannelEncoding(m_server->getServerGroup(), getName());
 }
 
 QString Query::getChannelEncodingDefaultDesc()    // virtual

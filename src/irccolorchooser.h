@@ -25,7 +25,7 @@ class IRCColorChooser : public KDialogBase
 {
     Q_OBJECT
         public:
-        IRCColorChooser(QWidget* parent, const char* name = 0);
+        IRCColorChooser(QWidget* parent, Preferences* p, const char* name = 0);
         QString color();
 
     protected slots:
@@ -36,5 +36,6 @@ class IRCColorChooser : public KDialogBase
 
     protected:
         IRCColorChooserUI* m_view;
+        Preferences* m_preferences;
 };
 #endif

@@ -27,7 +27,7 @@ the Free Software Foundation; either version 2 of the License, or
         </property>
         <widget class="QGroupBox" row="0" column="0">
             <property name="name">
-                <cstring>kcfg_ShowTrayIcon</cstring>
+                <cstring>systrayGBox</cstring>
             </property>
             <property name="title">
                 <string>Enable System Tray</string>
@@ -44,7 +44,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </property>
                 <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>kcfg_TrayNotify</cstring>
+                        <cstring>trayNotifyCheck</cstring>
                     </property>
                     <property name="text">
                         <string>Use sys&amp;tem tray for new message notification</string>
@@ -69,7 +69,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </spacer>
                 <widget class="QCheckBox" row="1" column="1">
                     <property name="name">
-                        <cstring>kcfg_TrayNotifyOnlyOwnNick</cstring>
+                        <cstring>trayNotifyOwnNickOnlyCheck</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
@@ -314,9 +314,9 @@ the Free Software Foundation; either version 2 of the License, or
 </widget>
 <connections>
     <connection>
-        <sender>kcfg_TrayNotify</sender>
+        <sender>trayNotifyCheck</sender>
         <signal>toggled(bool)</signal>
-        <receiver>kcfg_TrayNotifyOnlyOwnNick</receiver>
+        <receiver>trayNotifyOwnNickOnlyCheck</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>

@@ -54,8 +54,8 @@ namespace Konversation
     // replace all aliases in the string and return true if anything got replaced at all
     bool OutputFilter::replaceAliases(QString& line)
     {
-        QStringList aliasList=Preferences::aliasList();
-        QString cc(Preferences::commandChar());
+        QStringList aliasList=KonversationApplication::preferences.getAliasList();
+        QString cc(KonversationApplication::preferences.getCommandChar());
         // check if the line starts with a defined alias
         for(unsigned int index=0;index<aliasList.count();index++)
         {
@@ -105,7 +105,7 @@ namespace Konversation
         if(inputLine.isEmpty() || inputLine == "\n")
             return result;
 
-        if(!Preferences::disableExpansion())
+        if(!KonversationApplication::preferences.getDisableExpansion())
         {
             // replace placeholders
             inputLine.replace("%%","%\x01");      // make sure to protect double %%
@@ -867,10 +867,10 @@ namespace Konversation
             for(unsigned int index = 0; index < list.count(); index++)
             {
                 // Try to remove current pattern
-                if(!Preferences::removeNotify(groupName, list[index]))
+                if(!KonversationApplication::preferences.removeNotify(groupName, list[index]))
                 {
                     // If remove failed, try to add it instead
-                    if(!Preferences::addNotify(groupName, list[index]))
+                    if(!KonversationApplication::preferences.addNotify(groupName, list[index]))
                     {
                         kdDebug() << "OutputFilter::parseNotify(): Adding failed!" << endl;
                     }
@@ -879,7 +879,7 @@ namespace Konversation
         }
 
         // show (new) notify list to user
-        QString list = Preferences::notifyStringByGroup(groupName) + " " + Konversation::Addressbook::self()->allContactsNicksForServer(m_server->getServerName(), m_server->getServerGroup()).join(" ");
+        QString list = KonversationApplication::preferences.getNotifyStringByGroup(groupName) + " " + Konversation::Addressbook::self()->allContactsNicksForServer(m_server->getServerName(), m_server->getServerGroup()).join(" ");
 
         result.typeString = i18n("Notify");
 
@@ -1081,7 +1081,7 @@ namespace Konversation
                         parameterList[index] += "!*";
                     }
 
-                    Preferences::addIgnore(parameterList[index] + "," + QString::number(value));
+                    KonversationApplication::preferences.addIgnore(parameterList[index] + "," + QString::number(value));
                 }
 
                 result.output = i18n("Added %1 to your ignore list.").arg(parameterList.join(", "));
@@ -1141,7 +1141,7 @@ namespace Konversation
 
     // Accessors
 
-    void OutputFilter::setCommandChar() { commandChar=Preferences::commandChar(); }
+    void OutputFilter::setCommandChar() { commandChar=KonversationApplication::preferences.getCommandChar(); }
 
     // # & + and ! are *often*, but not necessarily, channel identifiers. + and ! are non-RFC, so if a server doesn't offer 005 and
     // supports + and ! channels, I think thats broken behaviour on their part - not ours.
@@ -1270,7 +1270,7 @@ namespace Konversation
 
             kdDebug() << "Server : " << address << " Port : " << port << " Password : " << password << endl;
 
-            if (Preferences::isServerGroup(address))
+            if (KonversationApplication::preferences.isServerGroup(address))
             {
                 emit connectToServerGroup(address);
             }

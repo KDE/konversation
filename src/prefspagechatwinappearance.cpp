@@ -23,12 +23,13 @@
 
 #include "preferences.h"
 
-PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QWidget* newParent)
+PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QWidget* newParent,Preferences* newPreferences)
 : ChatWindowAppearance_Config(newParent)
 {
+    preferences = newPreferences;
 
-    kcfg_Timestamping->setChecked(Preferences::timestamping());
-    kcfg_ShowDate->setChecked(Preferences::showDate());
+    kcfg_Timestamping->setChecked(preferences->getTimestamping());
+    kcfg_ShowDate->setChecked(preferences->getShowDate());
 
     kcfg_TimestampFormat->insertItem("hh");
     kcfg_TimestampFormat->insertItem("hh:mm");
@@ -40,22 +41,22 @@ PrefsPageChatWinAppearance::PrefsPageChatWinAppearance(QWidget* newParent)
     // find actual timestamp format
     for(int index=0; index < kcfg_TimestampFormat->count(); index++)
     {
-        if(kcfg_TimestampFormat->text(index) == Preferences::timestampFormat())
+        if(kcfg_TimestampFormat->text(index) == preferences->getTimestampFormat())
         {
             kcfg_TimestampFormat->setCurrentItem(index);
         }
     }
 
-    kcfg_ShowTopic->setChecked(Preferences::showTopic());
-    kcfg_ShowModeButtons->setChecked(Preferences::showModeButtons());
-    kcfg_ShowQuickButtons->setChecked(Preferences::showQuickButtons());
-    kcfg_AutoUserhost->setChecked(Preferences::autoUserhost());
+    kcfg_ShowTopic->setChecked(preferences->getShowTopic());
+    kcfg_ShowModeButtons->setChecked(preferences->getShowModeButtons());
+    kcfg_ShowQuickButtons->setChecked(preferences->getShowQuickButtons());
+    kcfg_AutoUserhost->setChecked(preferences->getAutoUserhost());
     kcfg_ShowNicknameBox->setChecked(preferences->showNicknameBox());
 
-    kcfg_ShowBackgroundImage->setChecked(Preferences::showBackgroundImage());
+    kcfg_ShowBackgroundImage->setChecked(preferences->getShowBackgroundImage());
 
     kcfg_BackgroundImage->setCaption(i18n("Select Background Image"));
-    kcfg_BackgroundImage->setURL(Preferences::backgroundImage());
+    kcfg_BackgroundImage->setURL(preferences->getBackgroundImageName());
 
     connect(kcfg_ShowBackgroundImage,SIGNAL(toggled(bool)),this, SLOT(setBackgroundImageConfig(bool)));
     connect(kcfg_BackgroundImage,SIGNAL(textChanged(const QString&)),this,SLOT(saveBackgroundImage(const QString&)));

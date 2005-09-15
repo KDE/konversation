@@ -42,9 +42,9 @@ namespace Konversation
     {
         s_self = this;
 
-        if(Preferences::enableEmotIcons())
+        if(KonversationApplication::preferences.emotIconsEnabled())
         {
-            changeTheme(Preferences::emotIconTheme());
+            changeTheme(KonversationApplication::preferences.emotIconsTheme());
         }
     }
 
@@ -148,7 +148,7 @@ namespace Konversation
 
     QString EmotIcon::filter(const QString& txt, const QFontMetrics& fm)
     {
-        if(!Preferences::enableEmotIcons())
+        if(!KonversationApplication::preferences.emotIconsEnabled())
         {
             return txt;
         }

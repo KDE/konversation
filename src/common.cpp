@@ -50,12 +50,12 @@ namespace Konversation
         // timer.start();
 
         QString filteredLine = text;
-        QString linkColor = Preferences::color(Preferences::Hyperlink).name();
+        QString linkColor = KonversationApplication::preferences.getColor("LinkMessage");
         QString link;
 
         if(useCustomColor)
         {
-            link = "\\1<font color=\""+linkColor+"\"><a href=\"#\\2\">\\2</a></font>";
+            link = "\\1<font color=\"#"+linkColor+"\"><a href=\"#\\2\">\\2</a></font>";
         }
         else
         {
@@ -78,7 +78,7 @@ namespace Konversation
 
         if(useCustomColor)
         {
-            link = "<font color=\"" + linkColor + "\"><u><a href=\"%1%2\">%3</a></u></font>";
+            link = "<font color=\"#" + linkColor + "\"><u><a href=\"%1%2\">%3</a></u></font>";
         }
         else
         {
@@ -114,16 +114,16 @@ namespace Konversation
         }
 
         // Make [[foo]] a link to $wikiurl
-        QString wikiUrl = Preferences::wikiURL();
-        bool expandWikiUrl = Preferences::expandWikiUrl();
+        QString wikiUrl = KonversationApplication::preferences.getWikiUrl();
+        bool expandWikiUrl = KonversationApplication::preferences.getExpandWikiUrl();
 
         QRegExp wikipedia("\\[\\[([^\\]]+)\\]\\]");
         wikipedia.setMinimal(true);
 
         if(expandWikiUrl)
-            filteredLine.replace(wikipedia,"<font color=\"" + linkColor + "\"><a href=\""+wikiUrl+"\\1\"><u>"+wikiUrl+"\\1</u></a></font>");
+            filteredLine.replace(wikipedia,"<font color=\"#" + linkColor + "\"><a href=\""+wikiUrl+"\\1\"><u>"+wikiUrl+"\\1</u></a></font>");
         else
-            filteredLine.replace(wikipedia,"<font color=\"" + linkColor + "\"><a href=\""+wikiUrl+"\\1\">[[<u>\\1</u>]]</a></font>");
+            filteredLine.replace(wikipedia,"<font color=\"#" + linkColor + "\"><a href=\""+wikiUrl+"\\1\">[[<u>\\1</u>]]</a></font>");
 
         // kdDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine << endl;
         return filteredLine;
