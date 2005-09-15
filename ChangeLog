@@ -7,7 +7,7 @@ Changes from 0.18 to 0.19
 - Fixed handling of multiple URLs in one message
 - Added support for iso-2022-jp encoding
 - Nickname watcher was not working in some setups
-- Let keyboard search work in nicklist ( Qt 3.3.4 seems to broken with this < Qt 3.3.4 works fine )
+- Let keyboard search work in nicklist (Qt 3.3.4 is broken with respect to this, use a latter or previous version)
 - Implemented sending commands as messages on Ctrl+Enter
 - Fixes related to iterating over a network's servers on connect
 - Display network in tabs where possible
