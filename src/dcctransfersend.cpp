@@ -14,6 +14,10 @@
   (at your option) any later version.
 */
 
+#ifdef USE_SOLARIS
+#include <unistd.h>
+#include <sys/sockio.h>
+#endif
 #include <stdlib.h>
 #include <sys/types.h>
 #include <netinet/in.h>
