@@ -108,13 +108,13 @@ namespace Konversation
                 m_server->sendJoinCommand(channel);
             }
             // Always use KDE default mailer.
-            else if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || link.lower().startsWith("mailto:"))
+            else if (Preferences::webBrowserUseKdeDefault() || link.lower().startsWith("mailto:"))
             {
                 new KRun(KURL(link));
             }
             else
             {
-                QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
+                QString cmd = Preferences::webBrowserCmd();
                 cmd.replace("%u",link);
                 KProcess *proc = new KProcess;
                 QStringList cmdAndArgs = KShell::splitArgs(cmd);

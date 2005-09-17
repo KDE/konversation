@@ -58,7 +58,7 @@
                         <string>&amp;Duration:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_OsdDuration</cstring>
+                        <cstring>kcfg_OSDDuration</cstring>
                     </property>
                 </widget>
                 <widget class="QLabel" row="1" column="0">
@@ -69,12 +69,12 @@
                         <string>S&amp;creen:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_OsdScreen</cstring>
+                        <cstring>kcfg_OSDScreen</cstring>
                     </property>
                 </widget>
                 <widget class="QSpinBox" row="0" column="1">
                     <property name="name">
-                        <cstring>kcfg_OsdDuration</cstring>
+                        <cstring>kcfg_OSDDuration</cstring>
                     </property>
                     <property name="suffix">
                         <string> ms</string>
@@ -91,7 +91,7 @@
                 </widget>
                 <widget class="KComboBox" row="1" column="1">
                     <property name="name">
-                        <cstring>kcfg_OsdScreen</cstring>
+                        <cstring>kcfg_OSDScreen</cstring>
                     </property>
                 </widget>
                 <spacer row="0" column="2" rowspan="2" colspan="1">
@@ -115,7 +115,7 @@
         </widget>
         <widget class="QGroupBox" row="3" column="0">
             <property name="name">
-                <cstring>kcfg_OsdCustomColor</cstring>
+                <cstring>kcfg_OSDUseCustomColors</cstring>
             </property>
             <property name="enabled">
                 <bool>false</bool>
@@ -141,7 +141,7 @@
                         <string>Te&amp;xt color:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_OsdTextColor</cstring>
+                        <cstring>kcfg_OSDTextColor</cstring>
                     </property>
                 </widget>
                 <widget class="QLabel" row="2" column="0">
@@ -152,17 +152,17 @@
                         <string>&amp;Background color:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_OsdBackgroundColor</cstring>
+                        <cstring>kcfg_OSDBackgroundColor</cstring>
                     </property>
                 </widget>
                 <widget class="KColorCombo" row="2" column="1">
                     <property name="name">
-                        <cstring>kcfg_OsdBackgroundColor</cstring>
+                        <cstring>kcfg_OSDBackgroundColor</cstring>
                     </property>
                 </widget>
                 <widget class="KColorCombo" row="1" column="1">
                     <property name="name">
-                        <cstring>kcfg_OsdTextColor</cstring>
+                        <cstring>kcfg_OSDTextColor</cstring>
                     </property>
                 </widget>
                 <spacer row="1" column="2" rowspan="2" colspan="1">
@@ -200,7 +200,7 @@
                 </property>
                 <widget class="QCheckBox" row="0" column="0">
                     <property name="name">
-                        <cstring>kcfg_OsdNickAppear</cstring>
+                        <cstring>kcfg_OSDShowOwnNick</cstring>
                     </property>
                     <property name="text">
                         <string>&amp;If own nick appears in channel message</string>
@@ -208,7 +208,7 @@
                 </widget>
                 <widget class="QCheckBox" row="1" column="0">
                     <property name="name">
-                        <cstring>kcfg_OsdChannelMessage</cstring>
+                        <cstring>kcfg_OSDShowChannel</cstring>
                     </property>
                     <property name="text">
                         <string>On an&amp;y channel message</string>
@@ -216,7 +216,7 @@
                 </widget>
                 <widget class="QCheckBox" row="2" column="0">
                     <property name="name">
-                        <cstring>kcfg_OsdQueryActivity</cstring>
+                        <cstring>kcfg_OSDShowQuery</cstring>
                     </property>
                     <property name="text">
                         <string>On &amp;query activity</string>
@@ -224,7 +224,7 @@
                 </widget>
                 <widget class="QCheckBox" row="3" column="0">
                     <property name="name">
-                        <cstring>kcfg_OsdJoinPart</cstring>
+                        <cstring>kcfg_OSDShowChannelEvent</cstring>
                     </property>
                     <property name="text">
                         <string>On &amp;Join/Part events</string>
@@ -245,7 +245,7 @@
                 </property>
                 <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>kcfg_OsdDrawShadow</cstring>
+                        <cstring>kcfg_OSDDrawShadow</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
@@ -273,7 +273,7 @@
                 </widget>
                 <widget class="KFontRequester" row="2" column="1">
                     <property name="name">
-                        <cstring>kcfg_OsdFont</cstring>
+                        <cstring>kcfg_OSDFont</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
@@ -283,7 +283,7 @@
         </widget>
         <widget class="QCheckBox" row="0" column="0">
             <property name="name">
-                <cstring>kcfg_UseOsdDisplay</cstring>
+                <cstring>kcfg_UseOSD</cstring>
             </property>
             <property name="text">
                 <string>&amp;Enable On Screen Display</string>
@@ -293,39 +293,39 @@
 </widget>
 <connections>
     <connection>
-        <sender>kcfg_UseOsdDisplay</sender>
+        <sender>kcfg_UseOSD</sender>
         <signal>toggled(bool)</signal>
-        <receiver>kcfg_OsdDrawShadow</receiver>
+        <receiver>kcfg_OSDDrawShadow</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>kcfg_UseOsdDisplay</sender>
+        <sender>kcfg_UseOSD</sender>
         <signal>toggled(bool)</signal>
         <receiver>groupBox3</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>kcfg_UseOsdDisplay</sender>
+        <sender>kcfg_UseOSD</sender>
         <signal>toggled(bool)</signal>
-        <receiver>kcfg_OsdCustomColor</receiver>
+        <receiver>kcfg_OSDUseCustomColors</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>kcfg_UseOsdDisplay</sender>
+        <sender>kcfg_UseOSD</sender>
         <signal>toggled(bool)</signal>
         <receiver>groupBox4</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>kcfg_UseOsdDisplay</sender>
+        <sender>kcfg_UseOSD</sender>
         <signal>toggled(bool)</signal>
         <receiver>textLabel1</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>kcfg_UseOsdDisplay</sender>
+        <sender>kcfg_UseOSD</sender>
         <signal>toggled(bool)</signal>
-        <receiver>kcfg_OsdFont</receiver>
+        <receiver>kcfg_OSDFont</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>

@@ -83,7 +83,7 @@ Highlight_Config(newParent)
     }
     // End copy
 
-    enableSoundCheck->setChecked(preferences->getHighlightSoundEnabled());
+    enableSoundCheck->setChecked(preferences->getHighlightSoundsEnabled());
 
     currentNickCheck->setChecked(preferences->getHighlightNick());
     currentNickColor->setColor(preferences->getHighlightNickColor());

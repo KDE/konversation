@@ -111,12 +111,12 @@ void DccChat::listenForPartner()
     m_listenSocket->setFamily(KNetwork::KResolver::InetFamily);
 
                                                   // user specifies ports
-    if(KonversationApplication::preferences.getDccSpecificChatPorts())
+    if(Preferences::dccSpecificChatPorts())
     {
         // set port
         bool found = false;                       // wheter succeeded to set port
-        unsigned long port = KonversationApplication::preferences.getDccChatPortsFirst();
-        for( ; port <= KonversationApplication::preferences.getDccChatPortsLast() ; ++port )
+        unsigned long port = Preferences::dccChatPortsFirst();
+        for( ; port <= Preferences::dccChatPortsLast() ; ++port )
         {
             kdDebug() << "DccChat::listenForPartner(): trying port " << port << endl;
             m_listenSocket->setAddress(QString::number(port));
@@ -263,7 +263,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
     kdDebug() << k_funcinfo << " BEGIN" << endl;
     // create a work copy
     QString output(sendLine);
-    QString cc=KonversationApplication::preferences.getCommandChar();
+    QString cc=Preferences::commandChar();
 
     if(!output.isEmpty())
     {

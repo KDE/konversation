@@ -61,7 +61,7 @@ KDialogBase::Ok,true)
     // Build a list of unique server network names.
     // TODO: The "ServerGroupList type is a misnomer (it is actually networks), which
     // should be fixed at some point.
-    Konversation::ServerGroupList serverNetworks = KonversationApplication::preferences.serverGroupList();
+    Konversation::ServerGroupList serverNetworks = Preferences::serverGroupList();
     QStringList networkNames;
 
     for(Konversation::ServerGroupList::iterator it = serverNetworks.begin(); it != serverNetworks.end(); ++it)

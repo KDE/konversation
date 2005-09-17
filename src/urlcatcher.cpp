@@ -140,13 +140,13 @@ void UrlCatcher::addUrl(const QString& who,const QString& url)
 void UrlCatcher::openUrl(QListViewItem* item)
 {
     QString url = item->text(1);
-    if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.lower().startsWith("mailto:") )
+    if (Preferences::webBrowserUseKdeDefault() || url.lower().startsWith("mailto:") )
     {
         new KRun(KURL(url));
     }
     else
     {
-        QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
+        QString cmd = Preferences::webBrowserCmd();
         cmd.replace("%u", url);
         KProcess *proc = new KProcess;
         QStringList cmdAndArgs = KShell::splitArgs(cmd);

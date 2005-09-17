@@ -42,7 +42,7 @@ class IRCView : public KTextBrowser
         ~IRCView();
 
         void clear();
-        void setViewBackground(const QString& color, const QString& pixmapName);
+        void setViewBackground(const QColor& backgroundColor, const QString& pixmapName);
         void setServer(Server* server);
 
         // Returns the current nick under context menu.

@@ -53,6 +53,7 @@
 #include "channel.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
+#include "preferences.h"
 #include "ircview.h"
 #include "highlight.h"
 #include "server.h"
@@ -91,8 +92,8 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     setStyleSheet(sheet);
 
     setServer(newServer);
-    setFont(KonversationApplication::preferences.getTextFont());
-    setViewBackground(KonversationApplication::preferences.getColor("TextViewBackground"),QString::null);
+    setFont(Preferences::textFont());
+    setViewBackground(Preferences::color(Preferences::TextViewBackground),QString::null);
 
     m_popup = new QPopupMenu(this,"ircview_context_menu");
     m_popup->insertItem(SmallIconSet("editcopy"),i18n("&Copy"),Copy);
@@ -128,8 +129,8 @@ void IRCView::updateStyleSheet()
 
     int paragraphSpacing;
 
-    if(KonversationApplication::preferences.getUseParagraphSpacing())
-        paragraphSpacing=KonversationApplication::preferences.getParagraphSpacing();
+    if(Preferences::useParagraphSpacing())
+        paragraphSpacing=Preferences::paragraphSpacing();
     else
         paragraphSpacing = 0;
 
@@ -146,9 +147,8 @@ void IRCView::updateStyleSheet()
     style->setSelfNesting(false);
 }
 
-void IRCView::setViewBackground(const QString& color, const QString& pixmapName)
+void IRCView::setViewBackground(const QColor& backgroundColor, const QString& pixmapName)
 {
-    QColor backgroundColor("#"+color);
     QPixmap backgroundPixmap;
     backgroundPixmap.load(pixmapName);
 
@@ -224,7 +224,7 @@ void IRCView::urlClickSlot(const QString &url, bool newTab)
     if (!url.isEmpty() && !url.startsWith("#"))
     {
         // Always use KDE default mailer.
-        if (KonversationApplication::preferences.getWebBrowserUseKdeDefault() || url.startsWith("mailto:"))
+        if (Preferences::webBrowserUseKdeDefault() || url.startsWith("mailto:"))
         {
             if(newTab && !url.startsWith("mailto:"))
             {
@@ -242,7 +242,7 @@ void IRCView::urlClickSlot(const QString &url, bool newTab)
         }
         else
         {
-            QString cmd = KonversationApplication::preferences.getWebBrowserCmd();
+            QString cmd = Preferences::webBrowserCmd();
             cmd.replace("%u", url);
             KProcess *proc = new KProcess;
             QStringList cmdAndArgs = KShell::splitArgs(cmd);
@@ -294,7 +294,7 @@ bool doHighlight, bool parseURL, bool self)
     filteredLine.replace(">","&gt;");
 
     #if 0
-    if(!KonversationApplication::preferences.getDisableExpansion())
+    if(!Preferences::disableExpansion())
     {
         QRegExp boldRe("\\*\\*([a-zA-Z0-9]+)\\*\\*");
         QRegExp underRe("\\_\\_([a-zA-Z0-9]+)\\_\\_");
@@ -333,8 +333,8 @@ bool doHighlight, bool parseURL, bool self)
 
     bool inverted = false;                        // TODO this flag should be stored somewhere
     {
-        QColor fg("#"+KonversationApplication::preferences.getColor("ChannelMessage"));
-        QColor  bg("#"+KonversationApplication::preferences.getColor("TextViewBackground"));
+        QColor fg(Preferences::color(Preferences::ChannelMessage));
+        QColor  bg(Preferences::color(Preferences::TextViewBackground));
 
         int h = 0, s = 0,fv = 0,bv = 0;
         fg.getHsv(&h,&s,&fv);
@@ -360,7 +360,7 @@ bool doHighlight, bool parseURL, bool self)
 
     if(filteredLine.find("\x07") != -1)
     {
-        if(KonversationApplication::preferences.getBeep())
+        if(Preferences::beep())
         {
             kapp->beep();
         }
@@ -371,10 +371,9 @@ bool doHighlight, bool parseURL, bool self)
     QRegExp colorRegExp("(\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)");
 
     int pos;
-    bool filterColors = KonversationApplication::preferences.getFilterColors();
+    bool filterColors = Preferences::filterColors();
     bool firstColor = true;
     QString colorString;
-    QStringList colorCodes = KonversationApplication::preferences.getIRCColorList();
 
     while((pos=colorRegExp.search(filteredLine))!=-1)
     {
@@ -388,11 +387,11 @@ bool doHighlight, bool parseURL, bool self)
 
             // reset colors on \017 to default value
             if(colorRegExp.cap(1) == "\017")
-                colorString += "<font color=\"#"+defaultColor+"\">";
+                colorString += "<font color=\""+defaultColor+"\">";
             else
             {
                 int foregroundColor = colorRegExp.cap(2).toInt();
-                colorString += "<font color=\"" + colorCodes[foregroundColor] + "\">";
+                colorString += "<font color=\"" + Preferences::color(foregroundColor).name() + "\">";
             }
 
             firstColor = false;
@@ -433,18 +432,18 @@ bool doHighlight, bool parseURL, bool self)
         QString highlightColor;
 
         // FIXME: We got to get rid of m_server dependance here
-        if(KonversationApplication::preferences.getHighlightNick() &&
+        if(Preferences::highlightNick() &&
             filteredLine.lower().find(QRegExp("(^|[^\\d\\w])" +
             QRegExp::escape(ownNick.lower()) +
             "([^\\d\\w]|$)")) != -1)
         {
             // highlight current nickname
-            highlightColor = KonversationApplication::preferences.getHighlightNickColor().name();
+            highlightColor = Preferences::highlightNickColor();
             m_tabNotification = Konversation::tnfNick;
         }
         else
         {
-            QPtrList<Highlight> highlightList = KonversationApplication::preferences.getHighlightList();
+            QPtrList<Highlight> highlightList = Preferences::highlightList();
             QPtrListIterator<Highlight> it(highlightList);
             Highlight* highlight = it.current();
             bool patternFound = false;
@@ -486,7 +485,7 @@ bool doHighlight, bool parseURL, bool self)
                 highlightColor = highlight->getColor().name();
                 m_tabNotification = Konversation::tnfHighlight;
 
-                if(KonversationApplication::preferences.getHighlightSoundEnabled())
+                if(Preferences::highlightSoundsEnabled())
                 {
                     konvApp->sound()->play(highlight->getSoundURL());
                 }
@@ -502,10 +501,10 @@ bool doHighlight, bool parseURL, bool self)
             filteredLine = "<font color=\"" + highlightColor + "\">" + filteredLine + "</font>";
         }
     }
-    else if(doHighlight && (whoSent == ownNick) && KonversationApplication::preferences.getHighlightOwnLines())
+    else if(doHighlight && (whoSent == ownNick) && Preferences::highlightOwnLines())
     {
         // highlight own lines
-        filteredLine = "<font color=\"" + KonversationApplication::preferences.getHighlightOwnLinesColor().name() +
+        filteredLine = "<font color=\"" + Preferences::highlightOwnLinesColor().name() +
             "\">" + filteredLine + "</font>";
     }
 
@@ -520,43 +519,43 @@ bool doHighlight, bool parseURL, bool self)
 
 void IRCView::append(const QString& nick,const QString& message)
 {
-    QString channelColor = KonversationApplication::preferences.getColor("ChannelMessage");
+    QString channelColor = Preferences::color(Preferences::ChannelMessage).name();
     QString line;
     QString nickLine = "%2";
-    QString color;
+    QString scolor;
     m_tabNotification = Konversation::tnfNormal;
 
     if(nick != m_server->getNickname())
     {
-        bool linkNicks = KonversationApplication::preferences.getUseClickableNicks();
+        bool linkNicks = Preferences::useClickableNicks();
         if(linkNicks)
             nickLine = "<a href=\"#" + nick + "\">%2</a>";
         KonversationApplication::instance()->increaseKarma(nick,1);
     }
 
-    if(KonversationApplication::preferences.getUseBoldNicks())
+    if(Preferences::useBoldNicks())
         nickLine = "<b>"+nickLine+"</b>";
 
-    if(KonversationApplication::preferences.getUseColoredNicks())
+    if(Preferences::useColoredNicks())
     {
 
         if(nick != m_server->getNickname())
-            color = m_server->obtainNickInfo(nick)->getNickColor();
+            scolor = m_server->obtainNickInfo(nick)->getNickColor();
         else
-            color = KonversationApplication::preferences.getNickColorList()[8];
+            scolor =  "#000001";
 
-        nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
-
-        if(color == "#000000")
+        if(scolor == "#000000")
         {
-            color = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
+            scolor = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
         }
+
+        nickLine = "<font color=\"" + scolor + "\">"+nickLine+"</font>";
     }
     else
     {
-        if(channelColor  == "000000")
+        if(channelColor  == "#000000")
         {
-            channelColor = "000001";              // HACK Working around QTextBrowser's auto link coloring
+            channelColor = "#000001";              // HACK Working around QTextBrowser's auto link coloring
         }
     }
 
@@ -564,11 +563,11 @@ void IRCView::append(const QString& nick,const QString& message)
     {
         line = RLO;
         line += LRE;
-        line += "<p><font color=\"#" + channelColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"" + channelColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"#" + channelColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
+        line = "<p><font color=\"" + channelColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
     }
 
     line = line.arg(timeStamp(), nick, filter(message, channelColor, nick, true));
@@ -580,17 +579,17 @@ void IRCView::append(const QString& nick,const QString& message)
 
 void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool self)
 {
-    QString channelColor=KonversationApplication::preferences.getColor("ChannelMessage");
+    QColor channelColor=Preferences::color(Preferences::ChannelMessage);
     QString line;
     m_tabNotification = Konversation::tnfNone;
 
     if(suppressTimestamps)
     {
-        line = QString("<p><font color=\"#" + channelColor + "\">" + message + "</font></p>\n");
+        line = QString("<p><font color=\"" + channelColor.name() + "\">" + message + "</font></p>\n");
     }
     else
     {
-        line = QString("<p>" + timeStamp() + " <font color=\"#" + channelColor + "\">" + message + "</font></p>\n");
+        line = QString("<p>" + timeStamp() + " <font color=\"" + channelColor.name() + "\">" + message + "</font></p>\n");
     }
 
     doAppend(line, true, self);
@@ -598,7 +597,7 @@ void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool se
 
 void IRCView::appendQuery(const QString& nick,const QString& message)
 {
-    QString queryColor=KonversationApplication::preferences.getColor("QueryMessage");
+    QString queryColor=Preferences::color(Preferences::QueryMessage).name();
     QString line;
     QString nickLine = "%2";
     QString color;
@@ -606,35 +605,35 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 
     if(nick != m_server->getNickname())
     {
-        bool linkNicks = KonversationApplication::preferences.getUseClickableNicks();
+        bool linkNicks = Preferences::useClickableNicks();
         if(linkNicks)
             nickLine = "<a href=\"#" + nick + "\">%2</a>";
         KonversationApplication::instance()->increaseKarma(nick,2);
     }
 
-    if(KonversationApplication::preferences.getUseBoldNicks())
+    if(Preferences::useBoldNicks())
         nickLine = "<b>"+nickLine+"</b>";
 
-    if(KonversationApplication::preferences.getUseColoredNicks())
+    if(Preferences::useColoredNicks())
     {
 
         if(nick != m_server->getNickname())
             color = m_server->obtainNickInfo(nick)->getNickColor();
         else
-            color = KonversationApplication::preferences.getNickColorList()[8];
-
-        nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
+            color = "#000001";
 
         if(color == "#000000")
         {
             color = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
         }
+
+        nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
     }
     else
     {
-        if(queryColor  == "000000")
+        if(queryColor  == "#000000")
         {
-            queryColor = "000001";                // HACK Working around QTextBrowser's auto link coloring
+            queryColor = "#000001";                // HACK Working around QTextBrowser's auto link coloring
         }
     }
 
@@ -642,11 +641,11 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
     {
         line = RLO;
         line += LRE;
-        line += "<p><font color=\"#" + queryColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"" + queryColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"#" + queryColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
+        line = "<p><font color=\"" + queryColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
     }
 
     line = line.arg(timeStamp(), nick, filter(message, queryColor, nick, true));
@@ -658,7 +657,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 
 void IRCView::appendAction(const QString& nick,const QString& message)
 {
-    QString actionColor=KonversationApplication::preferences.getColor("ActionMessage");
+    QString actionColor=Preferences::color(Preferences::ActionMessage).name();
     QString line;
     QString nickLine = "%2";
     QString color;
@@ -666,22 +665,22 @@ void IRCView::appendAction(const QString& nick,const QString& message)
 
     if(nick != m_server->getNickname())
     {
-        bool linkNicks = KonversationApplication::preferences.getUseClickableNicks();
+        bool linkNicks = Preferences::useClickableNicks();
         if(linkNicks)
             nickLine = "<a href=\"#" + nick + "\">%2</a>";
         KonversationApplication::instance()->increaseKarma(nick,1);
     }
 
-    if(KonversationApplication::preferences.getUseBoldNicks())
+    if(Preferences::useBoldNicks())
         nickLine = "<b>"+nickLine+"</b>";
 
-    if(KonversationApplication::preferences.getUseColoredNicks())
+    if(Preferences::useColoredNicks())
     {
 
         if(nick != m_server->getNickname())
             color = m_server->obtainNickInfo(nick)->getNickColor();
         else
-            color = KonversationApplication::preferences.getNickColorList()[8];
+            color = "#000001";
 
         if(color == "#000000")
         {
@@ -692,9 +691,9 @@ void IRCView::appendAction(const QString& nick,const QString& message)
     }
     else
     {
-        if(actionColor  == "000000")
+        if(actionColor  == "#000000")
         {
-            actionColor = "000001";               // HACK Working around QTextBrowser's auto link coloring
+            actionColor = "#000001";               // HACK Working around QTextBrowser's auto link coloring
         }
     }
 
@@ -702,11 +701,11 @@ void IRCView::appendAction(const QString& nick,const QString& message)
     {
         line = RLO;
         line += LRE;
-        line += "<p><font color=\"#" + actionColor + "\">" + nickLine + " * %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"" + actionColor + "\">" + nickLine + " * %1" + PDF + " %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"#" + actionColor + "\">%1 * " + nickLine + " %3</font></p>\n";
+        line = "<p><font color=\"" + actionColor + "\">%1 * " + nickLine + " %3</font></p>\n";
     }
 
     line = line.arg(timeStamp(), nick, filter(message, actionColor, nick, true));
@@ -718,12 +717,12 @@ void IRCView::appendAction(const QString& nick,const QString& message)
 
 void IRCView::appendServerMessage(const QString& type, const QString& message)
 {
-    QString m_serverColor = KonversationApplication::preferences.getColor("ServerMessage");
+    QString serverColor = Preferences::color(Preferences::ServerMessage).name();
     m_tabNotification = Konversation::tnfControl;
 
     // Fixed width font option for MOTD
     QString fixed;
-    if(KonversationApplication::preferences.getFixedMOTD())
+    if(Preferences::fixedMOTD())
     {
         if(type == "MOTD")
             fixed=" face=\"" + KGlobalSettings::fixedFont().family() + "\"";
@@ -735,17 +734,17 @@ void IRCView::appendServerMessage(const QString& type, const QString& message)
     {
         line = RLO;
         line += LRE;
-        line += "<p><font color=\"#" + m_serverColor + "\"" + fixed + "><b>[</b>%2<b>]</b> %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"" + serverColor + "\"" + fixed + "><b>[</b>%2<b>]</b> %1" + PDF + " %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"#" + m_serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font></p>\n";
+        line = "<p><font color=\"" + serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font></p>\n";
     }
 
     if(type != "Notify")
-        line = line.arg(timeStamp(), type, filter(message,m_serverColor));
+        line = line.arg(timeStamp(), type, filter(message,serverColor));
     else
-        line = "<font color=\"#" + m_serverColor + "\">"+line.arg(timeStamp(), type, message)+"</font>";
+        line = "<font color=\"" + serverColor + "\">"+line.arg(timeStamp(), type, message)+"</font>";
 
     emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
@@ -754,7 +753,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message)
 
 void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important, bool parseURL, bool self)
 {
-    QString commandColor = KonversationApplication::preferences.getColor("CommandMessage");
+    QString commandColor = Preferences::color(Preferences::CommandMessage).name();
     QString line;
     QString prefix="***";
     m_tabNotification = Konversation::tnfControl;
@@ -775,11 +774,11 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
     {
         line = RLO;
         line += LRE;
-        line += "<p><font color=\"#" + commandColor + "\">%2 %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"" + commandColor + "\">%2 %1" + PDF + " %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"#" + commandColor + "\">%1 %2 %3</font></p>\n";
+        line = "<p><font color=\"" + commandColor + "\">%1 %2 %3</font></p>\n";
     }
 
     line = line.arg(timeStamp(), prefix, filter(message, commandColor, 0, true, parseURL, self));
@@ -794,7 +793,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     QString time;
     QString message = rawMessage;
     QString nick = firstColumn;
-    QString backlogColor = KonversationApplication::preferences.getColor("BacklogMessage");
+    QString backlogColor = Preferences::color(Preferences::BacklogMessage).name();
     m_tabNotification = Konversation::tnfNone;
 
     time = nick.section(' ', 0, 4);
@@ -813,11 +812,11 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
 
     if(basicDirection(message) == QChar::DirR)
     {
-        line = "<p><font color=\"#" + backlogColor + "\">%2 %1 %3</font></p>\n";
+        line = "<p><font color=\"" + backlogColor + "\">%2 %1 %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"#" + backlogColor + "\">%1 %2 %3</font></p>\n";
+        line = "<p><font color=\"" + backlogColor + "\">%1 %2 %3</font></p>\n";
     }
 
     line = line.arg(time, nick, filter(message, backlogColor, NULL, false));
@@ -854,7 +853,7 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
     // Add line to buffer
     QString line(newLine);
 
-    if(important || !KonversationApplication::preferences.getHideUnimportantEvents())
+    if(important || !Preferences::hideUnimportantEvents())
     {
         if(!self)
         {
@@ -879,7 +878,7 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
         // TODO: make this eat multiple lines at once when the preference is changed so it doesn't take so long
         if (doScroll)
         {
-            int sbm = KonversationApplication::preferences.getScrollbackMax();
+            int sbm = Preferences::scrollbackMax();
             if (sbm)
             {
                 //loop for two reasons: 1) preference changed 2) lines added while scrolled up
@@ -1279,21 +1278,21 @@ void IRCView::contentsDropEvent(QDropEvent *e)
 
 QString IRCView::timeStamp()
 {
-    if(KonversationApplication::preferences.getTimestamping())
+    if(Preferences::timestamping())
     {
         QTime time = QTime::currentTime();
-        QString timeColor = KonversationApplication::preferences.getColor("Time");
-        QString timeFormat = KonversationApplication::preferences.getTimestampFormat();
+        QString timeColor = Preferences::color(Preferences::Time).name();
+        QString timeFormat = Preferences::timestampFormat();
         QString timeString;
 
-        if(!KonversationApplication::preferences.getShowDate())
+        if(!Preferences::showDate())
         {
-            timeString = QString("<font color=\"#" + timeColor + "\">[%1]</font> ").arg(time.toString(timeFormat));
+            timeString = QString("<font color=\"" + timeColor + "\">[%1]</font> ").arg(time.toString(timeFormat));
         }
         else
         {
             QDate date = QDate::currentDate();
-            timeString = QString("<font color=\"#" +
+            timeString = QString("<font color=\"" +
                 timeColor + "\">[%1 %2]</font> ").arg(date.toString(Qt::ISODate), time.toString(timeFormat));
         }
 

@@ -272,7 +272,7 @@ class Channel : public ChatWindow
         KLineEdit* limit;
 
         NickListView* nicknameListView;
-        QString abgCache;                         // caches the alternate background color
+        QColor abgCache;                         // caches the alternate background color
         QHBox* commandLineBox;
         QVBox* nickListButtons;
         QComboBox* nicknameCombobox;

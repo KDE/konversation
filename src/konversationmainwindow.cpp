@@ -105,7 +105,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     //  viewContainer->setHoverCloseButtonDelayed(false);
     setCentralWidget(viewContainer);
     updateTabPlacement();
-    viewContainer->setHoverCloseButton(KonversationApplication::preferences.getCloseButtonsOnTabs());
+    viewContainer->setHoverCloseButton(Preferences::closeButtonsOnTabs());
     viewContainer->hide();
     KPushButton* closeBtn = new KPushButton(viewContainer);
     closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));
@@ -289,7 +289,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     resize(700, 500);                             // Give the app a sane default size
     setAutoSaveSettings();
-    showMenuBarAction->setChecked(KonversationApplication::preferences.getShowMenuBar());
+    showMenuBarAction->setChecked(Preferences::showMenuBar());
     showMenubar(true);
 
     // set up KABC with a nice gui error dialog
@@ -302,7 +302,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     //  QListView* dockList=new QListView(this);
     //  addToolWindow(dockList,KDockWidget::DockLeft,getMainDockWidget());
 
-    if(KonversationApplication::preferences.getOpenWatchedNicksAtStartup())
+    if(Preferences::openWatchedNicksAtStartup())
     {
         openNicksOnlinePanel();
     }
@@ -316,9 +316,9 @@ KonversationMainWindow::~KonversationMainWindow()
 
 void KonversationMainWindow::updateTabPlacement()
 {
-    viewContainer->setTabPosition((KonversationApplication::preferences.getTabPlacement()==Preferences::Top) ?
+    viewContainer->setTabPosition((Preferences::tabPlacement()==Preferences::Top) ?
         QTabWidget::Top : QTabWidget::Bottom);
-    //  getViewContainer()->setHoverCloseButton(KonversationApplication::preferences.getCloseButtonsOnTabs());
+    //  getViewContainer()->setHoverCloseButton(Preferences::closeButtonsOnTabs());
 }
 
 void KonversationMainWindow::openPreferences()
@@ -358,7 +358,7 @@ void KonversationMainWindow::showMenubar(bool dontShowWarning)
         menuBar()->hide();
     }
 
-    KonversationApplication::preferences.setShowMenuBar(showMenuBarAction->isChecked());
+    Preferences::setOpenWatchedNicksAtStartup(showMenuBarAction->isChecked());
 }
 
 void KonversationMainWindow::showStatusbar()
@@ -374,7 +374,7 @@ void KonversationMainWindow::appendToFrontmostIfDifferent(const QString& type,co
     updateFrontView();
     if(m_frontView && (ChatWindow *)m_frontView != serverView &&
         m_frontView->getServer()==serverView->getServer() &&
-        !KonversationApplication::preferences.getRedirectToStatusPane()
+        !Preferences::redirectServerAndAppMsgToStatusPane()
         )
         m_frontView->appendServerMessage(type,message);
 }
@@ -392,7 +392,7 @@ void KonversationMainWindow::appendToFrontmost(const QString& type,const QString
                                                   // if it does not belong to this server or...
         serverView->getServer()!=m_frontView->getServer() ||
                                                   // if the user decided to force it.
-        KonversationApplication::preferences.getRedirectToStatusPane())
+        Preferences::redirectServerAndAppMsgToStatusPane())
     {
         // if not, take server specified fallback view instead
         serverView->appendServerMessage(type,message);
@@ -418,7 +418,7 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
     switch (view->getType())
     {
         case ChatWindow::Channel:
-            if(KonversationApplication::preferences.getCloseButtonsOnTabs())
+            if(Preferences::closeButtonsOnTabs())
             {
                 iconSet = UserIconSet("led_green_on");
             }
@@ -448,7 +448,7 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
             break;
 
         case ChatWindow::RawLog:
-            if(KonversationApplication::preferences.getCloseButtonsOnTabs())
+            if(Preferences::closeButtonsOnTabs())
             {
                 iconSet = UserIconSet("led_blue_on");
             }
@@ -467,7 +467,7 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
             break;
 
         case ChatWindow::Query:
-            if(KonversationApplication::preferences.getCloseButtonsOnTabs())
+            if(Preferences::closeButtonsOnTabs())
             {
                 iconSet = UserIconSet("led_red_on");
             }
@@ -497,7 +497,7 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
             break;
 
         case ChatWindow::DccChat:
-            if(KonversationApplication::preferences.getCloseButtonsOnTabs())
+            if(Preferences::closeButtonsOnTabs())
             {
                 iconSet = UserIconSet("led_blue_on");
             }
@@ -526,7 +526,7 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
             }
 
         default:
-            if(KonversationApplication::preferences.getCloseButtonsOnTabs())
+            if(Preferences::closeButtonsOnTabs())
             {
                 iconSet = UserIconSet("led_blue_on");
             }
@@ -546,11 +546,11 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
         if(!m_frontView->getTextInLine().isEmpty()) doBringToFront=false;
     }
 
-    if(!KonversationApplication::preferences.getFocusNewQueries() && view->getType()==ChatWindow::Query && !weinitiated)
+    if(!Preferences::focusNewQueries() && view->getType()==ChatWindow::Query && !weinitiated)
         doBringToFront = false;
 
     // bring view to front unless it's a raw log window or the user was typing
-    if(KonversationApplication::preferences.getBringToFront() && doBringToFront &&
+    if(Preferences::bringToFront() && doBringToFront &&
         view->getType()!=ChatWindow::RawLog)
     {
         showView(view);
@@ -1150,7 +1150,7 @@ bool KonversationMainWindow::queryClose()
         m_closeApp = true;
     }
 
-    if(KonversationApplication::preferences.getShowTrayIcon() && !m_closeApp)
+    if(Preferences::showTrayIcon() && !m_closeApp)
     {
 
         // Compute size and position of the pixmap to be grabbed:
@@ -1286,7 +1286,7 @@ void KonversationMainWindow::slotPrefsChanged()
         ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
         QIconSet iconSet;
 
-        if(KonversationApplication::preferences.getCloseButtonsOnTabs())
+        if(Preferences::closeButtonsOnTabs())
         {
             switch (view->getType())
             {
@@ -1307,7 +1307,7 @@ void KonversationMainWindow::slotPrefsChanged()
         viewContainer->setTabIconSet(view, iconSet);
     }
 
-    viewContainer->setHoverCloseButton(KonversationApplication::preferences.getCloseButtonsOnTabs());
+    viewContainer->setHoverCloseButton(Preferences::closeButtonsOnTabs());
 
     emit prefsChanged();
 }
@@ -1504,17 +1504,17 @@ void KonversationMainWindow::openNotifications()
 
 void KonversationMainWindow::updateTrayIcon()
 {
-    if(KonversationApplication::preferences.getShowTrayIcon())
+    if(Preferences::showTrayIcon())
     {
         tray->show();
     }
     else
         tray->hide();
 
-    tray->setNotificationEnabled(KonversationApplication::preferences.getTrayNotify());
+    tray->setNotificationEnabled(Preferences::trayNotify());
 
-    if(KonversationApplication::preferences.getShowTrayIcon() &&
-        KonversationApplication::preferences.getSystrayOnly())
+    if(Preferences::showTrayIcon() &&
+        Preferences::systrayOnly())
     {
         KWin::setState(winId(), NET::SkipTaskbar);
     }
@@ -1526,7 +1526,7 @@ void KonversationMainWindow::updateTrayIcon()
 
 void KonversationMainWindow::addIRCColor()
 {
-    IRCColorChooser dlg(this, &(KonversationApplication::preferences));
+    IRCColorChooser dlg(this);
 
     if(dlg.exec() == QDialog::Accepted)
     {
@@ -1537,7 +1537,7 @@ void KonversationMainWindow::addIRCColor()
 void KonversationMainWindow::insertRememberLine()
 {
     kdDebug() << "insertRememberLine in konversationMainWindow" << endl;
-    if(KonversationApplication::preferences.getShowRememberLineInAllWindows())
+    if(Preferences::showRememberLineInAllWindows())
     {
         int total = getViewContainer()->count()-1;
         ChatWindow* nextPage;
@@ -1753,7 +1753,7 @@ void KonversationMainWindow::openURL(const QString&url, const QString&/* title*/
         port = "6667";
     }
 
-    if (KonversationApplication::preferences.isServerGroup(server))
+    if (Preferences::isServerGroup(server))
     {
         Server* newServer = KonversationApplication::instance()->connectToServerGroup(server);
         newServer->setAutoJoin(true);

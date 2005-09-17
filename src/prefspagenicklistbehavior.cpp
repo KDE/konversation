@@ -22,26 +22,25 @@
 #include "preferences.h"
 #include "valuelistviewitem.h"
 
-PrefsPageNicklistBehavior::PrefsPageNicklistBehavior(QWidget* newParent, Preferences* newPreferences)
+PrefsPageNicklistBehavior::PrefsPageNicklistBehavior(QWidget* newParent)
 : NicklistBehavior_Config(newParent)
 {
-    preferences = newPreferences;
 
-    kcfg_DoubleClickCommand->setText(preferences->getChannelDoubleClickAction());
-    kcfg_SortUserStatus->setChecked(preferences->getSortByStatus());
-    kcfg_SortCaseInsensitive->setChecked(preferences->getSortCaseInsensitive());
+    kcfg_DoubleClickCommand->setText(Preferences::channelDoubleClickAction());
+    kcfg_SortUserStatus->setChecked(Preferences::sortByStatus());
+    kcfg_SortCaseInsensitive->setChecked(Preferences::sortCaseInsensitive());
 
     kcfg_SortOrder->header()->hide();
     kcfg_SortOrder->setSorting(-1);
 
     for(int index = 32; index != 0; index >>= 1)
     {
-        if(preferences->getNoRightsValue() == index) new ValueListViewItem(0, kcfg_SortOrder, i18n("Normal Users"));
-        if(preferences->getVoiceValue() == index)    new ValueListViewItem(1, kcfg_SortOrder, i18n("Voice (+v)"));
-        if(preferences->getHalfopValue() == index)   new ValueListViewItem(2, kcfg_SortOrder, i18n("Halfops (+h)"));
-        if(preferences->getOpValue() == index)       new ValueListViewItem(3, kcfg_SortOrder, i18n("Operators (+o)"));
-        if(preferences->getOwnerValue() == index)    new ValueListViewItem(4, kcfg_SortOrder, i18n("Channel Owners"));
-        if(preferences->getAdminValue() == index)    new ValueListViewItem(5, kcfg_SortOrder, i18n("Channel Admins"));
+        if(Preferences::noRightsValue() == index) new ValueListViewItem(0, kcfg_SortOrder, i18n("Normal Users"));
+        if(Preferences::voiceValue() == index)    new ValueListViewItem(1, kcfg_SortOrder, i18n("Voice (+v)"));
+        if(Preferences::halfopValue() == index)   new ValueListViewItem(2, kcfg_SortOrder, i18n("Halfops (+h)"));
+        if(Preferences::opValue() == index)       new ValueListViewItem(3, kcfg_SortOrder, i18n("Operators (+o)"));
+        if(Preferences::ownerValue() == index)    new ValueListViewItem(4, kcfg_SortOrder, i18n("Channel Owners"));
+        if(Preferences::adminValue() == index)    new ValueListViewItem(5, kcfg_SortOrder, i18n("Channel Admins"));
     }
 
     kcfg_UpButton->setIconSet(SmallIconSet("up"));
@@ -54,9 +53,9 @@ PrefsPageNicklistBehavior::PrefsPageNicklistBehavior(QWidget* newParent, Prefere
 
 void PrefsPageNicklistBehavior::applyPreferences()
 {
-    preferences->setChannelDoubleClickAction(kcfg_DoubleClickCommand->text());
-    preferences->setSortByStatus(kcfg_SortUserStatus->isChecked());
-    preferences->setSortCaseInsensitive(kcfg_SortCaseInsensitive->isChecked());
+    Preferences::setChannelDoubleClickAction(kcfg_DoubleClickCommand->text());
+    Preferences::setSortByStatus(kcfg_SortUserStatus->isChecked());
+    Preferences::setSortCaseInsensitive(kcfg_SortCaseInsensitive->isChecked());
 
     int flag = 1;
     ValueListViewItem* item = static_cast<ValueListViewItem*>(kcfg_SortOrder->firstChild());
@@ -65,12 +64,12 @@ void PrefsPageNicklistBehavior::applyPreferences()
     {
         int value = item->getValue();
 
-        if(value == 0) preferences->setNoRightsValue(flag);
-        else if(value == 1) preferences->setVoiceValue(flag);
-        else if(value == 2) preferences->setHalfopValue(flag);
-        else if(value == 3) preferences->setOpValue(flag);
-        else if(value == 4) preferences->setOwnerValue(flag);
-        else if(value == 5) preferences->setAdminValue(flag);
+        if(value == 0) Preferences::setNoRightsValue(flag);
+        else if(value == 1) Preferences::setVoiceValue(flag);
+        else if(value == 2) Preferences::setHalfopValue(flag);
+        else if(value == 3) Preferences::setOpValue(flag);
+        else if(value == 4) Preferences::setOwnerValue(flag);
+        else if(value == 5) Preferences::setAdminValue(flag);
 
         flag <<= 1;
         item = static_cast<ValueListViewItem*>(item->nextSibling());

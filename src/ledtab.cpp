@@ -52,7 +52,7 @@ void LedTab::blinkTimeout()
     if(state!=Off)
     {
         // if the user wants us to blink, toggle LED blink status
-        if(KonversationApplication::preferences.getBlinkingTabs())
+        if(Preferences::blinkingTabs())
         {
             blinkOn=!blinkOn;
             // draw the new LED
