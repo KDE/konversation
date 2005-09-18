@@ -358,7 +358,7 @@ void KonversationMainWindow::showMenubar(bool dontShowWarning)
         menuBar()->hide();
     }
 
-    Preferences::setOpenWatchedNicksAtStartup(showMenuBarAction->isChecked());
+    Preferences::setShowMenuBar(showMenuBarAction->isChecked());
 }
 
 void KonversationMainWindow::showStatusbar()
