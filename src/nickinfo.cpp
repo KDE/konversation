@@ -86,13 +86,14 @@ QString NickInfo::getNickColor() const
             offset=0;
 
         QString backgroundColor=Preferences::color(Preferences::TextViewBackground).name();
-        QString color = Preferences::color(offset).name();
-        if(backgroundColor==color) {
-            offset = (offset+1)%8;
-	    color = Preferences::color(offset).name();
-	}
+        QString color = Preferences::nickColor(offset).name();
 
-        colorMap[m_nickname]=color;
+        if(backgroundColor == color) {
+            offset = (offset+1)%8;
+            color = Preferences::nickColor(offset).name();
+        }
+
+        colorMap[m_nickname] = color;
         ++offset;
     }
     return colorMap[m_nickname];
