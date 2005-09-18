@@ -816,7 +816,7 @@
       <!-- konversationapplication.cpp:1131 -->
       <!--   config->writeEntry("HighlightNick",preferences.getHighlightNick()); -->
     </entry>
-    <entry key="HighlightNickColor" type="String">
+    <entry key="HighlightNickColor" type="Color">
       <default>#ff0000</default>
       <label></label>
       <whatsthis></whatsthis>

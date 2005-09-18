@@ -19,17 +19,17 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="3">
+        <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="4">
             <property name="name">
-                <cstring>enableSoundCheck</cstring>
+                <cstring>HighlightSoundsEnabled</cstring>
             </property>
             <property name="text">
-                <string>&amp;Enable sound for highlighted list items</string>
+                <string>Ena&amp;ble sound for highlighted list items</string>
             </property>
         </widget>
         <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>currentNickCheck</cstring>
+                <cstring>kcfg_HighlightNick</cstring>
             </property>
             <property name="text">
                 <string>Alwa&amp;ys highlight own current nick:</string>
@@ -37,7 +37,7 @@
         </widget>
         <widget class="QCheckBox" row="3" column="0">
             <property name="name">
-                <cstring>ownLinesCheck</cstring>
+                <cstring>kcfg_HighlightOwnLines</cstring>
             </property>
             <property name="text">
                 <string>Always highlight own &amp;lines:</string>
@@ -287,33 +287,6 @@
                 </widget>
             </grid>
         </widget>
-        <widget class="KColorCombo" row="2" column="3">
-            <property name="name">
-                <cstring>currentNickColor</cstring>
-            </property>
-        </widget>
-        <widget class="KColorCombo" row="3" column="3">
-            <property name="name">
-                <cstring>ownLinesColor</cstring>
-            </property>
-        </widget>
-        <spacer row="3" column="1" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>spacer2</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Horizontal</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>170</width>
-                    <height>21</height>
-                </size>
-            </property>
-        </spacer>
         <spacer row="2" column="2">
             <property name="name">
                 <cstring>spacer1</cstring>
@@ -326,15 +299,46 @@
             </property>
             <property name="sizeHint">
                 <size>
-                    <width>150</width>
+                    <width>110</width>
                     <height>20</height>
                 </size>
             </property>
         </spacer>
+        <spacer row="3" column="1" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>160</width>
+                    <height>21</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="KColorButton" row="2" column="3">
+            <property name="name">
+                <cstring>kcfg_HighlightNickColor</cstring>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+        </widget>
+        <widget class="KColorButton" row="3" column="3">
+            <property name="name">
+                <cstring>kcfg_HighlightOwnLinesColor</cstring>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+        </widget>
     </grid>
 </widget>
-<customwidgets>
-</customwidgets>
 <tabstops>
     <tabstop>highlightListView</tabstop>
     <tabstop>newButton</tabstop>
@@ -345,11 +349,9 @@
     <tabstop>soundPlayBtn</tabstop>
     <tabstop>soundURL</tabstop>
     <tabstop>autoTextInput</tabstop>
-    <tabstop>enableSoundCheck</tabstop>
-    <tabstop>currentNickCheck</tabstop>
-    <tabstop>currentNickColor</tabstop>
-    <tabstop>ownLinesCheck</tabstop>
-    <tabstop>ownLinesColor</tabstop>
+    <tabstop>HighlightSoundsEnabled</tabstop>
+    <tabstop>kcfg_HighlightNick</tabstop>
+    <tabstop>kcfg_HighlightOwnLines</tabstop>
 </tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
@@ -363,7 +365,7 @@
     <includehint>kpushbutton.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
-    <includehint>kcolorcombo.h</includehint>
-    <includehint>kcolorcombo.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
 </includehints>
 </UI>
