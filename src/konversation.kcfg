@@ -224,7 +224,7 @@
     </entry>
 
    <entry key="UseColoredNicks" type="Bool">
-      <default>false</default>
+      <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:474 -->
@@ -799,7 +799,7 @@
   </group>
   <group name="Highlight List">
     <entry key="HighlightSoundsEnabled" type="Bool">
-      <default></default>
+      <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:758 -->
@@ -864,7 +864,7 @@
   </group>
   <group name="Nick Completion">
     <entry key="Mode" type="Int" name="NickCompletionMode">
-      <default></default>
+      <default>2</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:817 -->
@@ -1017,7 +1017,7 @@
       <!--   config->writeEntry("AutoGet",preferences.getDccAutoGet()); -->
     </entry>
     <entry key="AutoResume" type="Bool" name="DccAutoResume">
-      <default></default>
+      <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:838 -->
@@ -1146,7 +1146,7 @@
       <!--   config->writeEntry("HideUnimportantEvents",preferences.getHideUnimportantEvents()); -->
     </entry>
     <entry key="DisableExpansion" type="Bool">
-      <default></default>
+      <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:859 -->
