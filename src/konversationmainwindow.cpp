@@ -302,7 +302,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     //  QListView* dockList=new QListView(this);
     //  addToolWindow(dockList,KDockWidget::DockLeft,getMainDockWidget());
 
-    if(Preferences::openWatchedNicksAtStartup())
+    if(Preferences::useNotify() && Preferences::openWatchedNicksAtStartup())
     {
         openNicksOnlinePanel();
     }

@@ -789,7 +789,7 @@
     <!-- </entry> -->
     <entry key="OnStartup" type="Bool" name="OpenWatchedNicksAtStartup">
       <default>false</default>
-      <label></label>
+      <label>Open Watched Nicks tab at application startup</label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:706 -->
       <!--   preferences.setOpenWatchedNicksAtStartup(config->readBoolEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup())); -->
