@@ -1091,7 +1091,7 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     //another one 
     if ( KConfigDialog::showDialog( "settings" ) ) 
         return; 
- 
+
     //KConfigDialog didn't find an instance of this dialog, so lets create it : 
     KConfigDialog* dialog = new KConfigDialog( mainWindow, "settings", Preferences::self(), KDialogBase::TreeList ); 
     dialog->setShowIconsInTreeList(true);
@@ -1099,14 +1099,17 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     dialog->setFolderIcon(i18n("Appearance"),SmallIcon("looknfeel"));
     //Appearance/Chat Window
     ChatWindowAppearance_Config* confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
-    dialog->addPage ( confChatWindowAppearanceWdg, i18n("Appearance - Chat Window"), "view_text", i18n("Appearance") );
+    dialog->addPage ( confChatWindowAppearanceWdg, i18n("Appearance-Chat Window"), "view_text", i18n("Appearance") );
     //Appearance/Fonts
     FontAppearance_Config* confFontAppearanceWdg = new FontAppearance_Config( 0, "FontAppearance" );
     dialog->addPage ( confFontAppearanceWdg, i18n("Appearance - Fonts"), "fonts", i18n("Appearance") );
     //Appearance/Themes
     Theme_Config* confThemeWdg = new Theme_Config( 0, "Theme" );
     dialog->addPage ( confThemeWdg, i18n("Appearance - Themes"), "iconthemes", i18n("Appearance") );
-    
+    //Appearance/Colors
+    ColorsAppearance_Config* confColorsAppearanceWdg = new ColorsAppearance_Config( 0, "ColorsAppearance" );
+    dialog->addPage ( confColorsAppearanceWdg, i18n("Appearance - Colors"), "colorize", i18n("Appearance") );
+
     dialog->setFolderIcon(QStringList::split(',', i18n("Behavior")), SmallIcon("configure"));
     //Behavior/General
     GeneralBehavior_Config* confGeneralBehaviorWdg = new GeneralBehavior_Config( 0, "GeneralBehavior" );
@@ -1114,18 +1117,21 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     //Behavior/Connection
     ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( 0, "ConnectionBehavior" );
     dialog->addPage ( confConnectionBehaviorWdg, i18n("Behavior - Connection"), "connect_creating", i18n("Behavior") );
+    //Behaviour/Chat Window
+    ChatwindowBehaviour_Config* confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( 0, "ChatwindowBehaviour" );
+    dialog->addPage ( confChatwindowBehaviourWdg, i18n("Behavior - Chatwindow"), "view_text", i18n("Behavior") );
     //Behaviour/Nickname List
     NicklistBehavior_Config* confNicklistBehaviorWdg = new NicklistBehavior_Config( 0, "NicklistBehavior" );
     dialog->addPage ( confNicklistBehaviorWdg, i18n("Behavior - Nickname List"), "player_playlist" );
     //Behaviour/Tab Bar
     TabBar_Config* confTabBarWdg = new TabBar_Config( 0, "TabBar" );
-    dialog->addPage ( confTabBarWdg, i18n("Behaviour - Tab Bar"), "tab_new" );
+    dialog->addPage ( confTabBarWdg, i18n("Behavior - Tab Bar"), "tab_new" );
     //Behaviour/Command Aliases
     Alias_Config* confAliasWdg = new Alias_Config( 0, "Alias" );
-    dialog->addPage ( confAliasWdg, i18n("Behaviour - Command Aliases"), "editcopy" );
+    dialog->addPage ( confAliasWdg, i18n("Behavior - Command Aliases"), "editcopy" );
      //Behaviour/Quick Buttons
     QuickButtons_Config* confQuickButtonsWdg = new QuickButtons_Config( 0, "QuickButtons" );
-    dialog->addPage ( confQuickButtonsWdg, i18n("Behaviour - Quick Buttons"), "keyboard" );
+    dialog->addPage ( confQuickButtonsWdg, i18n("Behavior - Quick Buttons"), "keyboard" );
     //Behaviour/Logging
     Log_Config* confLogWdg = new Log_Config( 0, "Log" );
     dialog->addPage ( confLogWdg, i18n("Behavior - Logging"), "log" );
@@ -1144,13 +1150,6 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     Warnings_Config* confWarningsWdg = new Warnings_Config( 0, "Warnings" );
     dialog->addPage ( confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning" );
 
-    //Behaviour/Chat Window
-    ChatwindowBehaviour_Config* confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( 0, "ChatwindowBehaviour" );
-    dialog->addPage ( confChatwindowBehaviourWdg, i18n("Chatwindow Behaviour"), "" );
-   
-    ColorsAppearance_Config* confColorsAppearanceWdg = new ColorsAppearance_Config( 0, "ColorsAppearance" );
-    dialog->addPage ( confColorsAppearanceWdg, i18n("Colors Appearance"), "colorsappearance" );
-   
     //User edited the configuration - update your local copies of the 
     //configuration data 
 //    connect( dialog, SIGNAL(settingsChanged()), 
