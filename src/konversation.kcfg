@@ -1307,15 +1307,15 @@
       </parameter>
       <default param="ActionMessage">#0000ff</default>
       <default param="BacklogMessage">#aaaaaa</default>
-      <default param="ChannelMessage">000000</default>
-      <default param="CommandMessage">960096</default>
-      <default param="QueryMessage">0000ff</default>
-      <default param="ServerMessage">91640a</default>
-      <default param="Time">709070</default>
-      <default param="Action">0000ff</default>
-      <default param="TextViewBackground">ffffff</default>
-      <default param="AlternateBackground">ffffff</default>
-      <default param="Hyperlink">ffffff</default>
+      <default param="ChannelMessage">#000000</default>
+      <default param="CommandMessage">#960096</default>
+      <default param="QueryMessage">#0000ff</default>
+      <default param="ServerMessage">#91640a</default>
+      <default param="Time">#709070</default>
+      <default param="Action">#0000ff</default>
+      <default param="TextViewBackground">#ffffff</default>
+      <default param="AlternateBackground">#ffffff</default>
+      <default param="Hyperlink">#0000ff</default>
     </entry>
   </group>
 </kcfg>
