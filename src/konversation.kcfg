@@ -898,7 +898,7 @@
       <!--   preferences.setPrefixCharacter(config->readEntry("PrefixCharacter",preferences.getPrefixCharacter())); -->
     </entry>
     <entry key="CaseSensitive" type="Bool" name="NickCompletionCaseSensitive">
-      <default></default>
+      <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:821 -->
