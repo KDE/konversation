@@ -213,14 +213,15 @@
     </entry>
     <entry key="NickColor$(nickNumber)" type="Color">
       <parameter name="nickNumber" type="UInt" max="9"/>
-      <default param="0">#8E55E9</default>
-      <default param="1">#B30E0E</default>
-      <default param="2">#18B33C</default>
-      <default param="3">#58ADB3</default>
-      <default param="4">#9E54B3</default>
-      <default param="5">#0FB39A</default>
-      <default param="6">#3176B3</default>
-      <default param="7">#000001</default>
+      <default param="0">#E90E7F</default>
+      <default param="1">#8E55E9</default>
+      <default param="2">#B30E0E</default>
+      <default param="3">#18B33C</default>
+      <default param="4">#58ADB3</default>
+      <default param="5">#9E54B3</default>
+      <default param="6">#0FB39A</default>
+      <default param="7">#3176B3</default>
+      <default param="8">#000001</default>
     </entry>
 
    <entry key="UseColoredNicks" type="Bool">

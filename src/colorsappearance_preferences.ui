@@ -40,7 +40,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_InputFieldsBackgroundColor</cstring>
                     </property>
                     <property name="text">
-                        <string>Input fields and nick list uses custom colors</string>
+                        <string>Input fields and nick list &amp;uses custom colors</string>
                     </property>
                 </widget>
                 <widget class="KColorButton" row="3" column="4">
@@ -766,12 +766,12 @@ the Free Software Foundation; either version 2 of the License, or
                                 <string>&amp;Own nick color:</string>
                             </property>
                             <property name="buddy" stdset="0">
-                                <cstring>kcfg_NickColor9</cstring>
+                                <cstring>kcfg_NickColor8</cstring>
                             </property>
                         </widget>
                         <widget class="KColorButton">
                             <property name="name">
-                                <cstring>kcfg_NickColor9</cstring>
+                                <cstring>kcfg_NickColor8</cstring>
                             </property>
                             <property name="text">
                                 <string></string>

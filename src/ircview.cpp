@@ -542,7 +542,7 @@ void IRCView::append(const QString& nick,const QString& message)
         if(nick != m_server->getNickname())
             scolor = m_server->obtainNickInfo(nick)->getNickColor();
         else
-            scolor =  "#000001";
+            scolor =  Preferences::nickColor(8).name();
 
         if(scolor == "#000000")
         {
