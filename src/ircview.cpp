@@ -620,7 +620,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
         if(nick != m_server->getNickname())
             color = m_server->obtainNickInfo(nick)->getNickColor();
         else
-            color = "#000001";
+            color = Preferences::nickColor(8).name();
 
         if(color == "#000000")
         {
@@ -680,7 +680,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
         if(nick != m_server->getNickname())
             color = m_server->obtainNickInfo(nick)->getNickColor();
         else
-            color = "#000001";
+            color = Preferences::nickColor(8).name();
 
         if(color == "#000000")
         {
