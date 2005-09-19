@@ -279,6 +279,52 @@
                         <bool>false</bool>
                     </property>
                 </widget>
+
+                <widget class="QSpinBox" row="5" column="0">
+                    <property name="name">
+                        <cstring>kcfg_OSDOffsetX</cstring>
+                    </property>
+		    <property name="maxValue">
+		      <number>2048</number>
+		    </property>
+		    <property name="minValue">
+                      <number>-2048</number>
+                    </property>
+                </widget>
+               <widget class="QSpinBox" row="6" column="0">
+                    <property name="name">
+                        <cstring>kcfg_OSDOffsetY</cstring>
+                    </property>
+		    <property name="maxValue">
+		      <number>2048</number>
+		    </property>
+		    <property name="minValue">
+                      <number>-2048</number>
+                    </property>
+                </widget>
+               <widget class="QComboBox" row="7" column="0">
+                 <property name="name">
+                   <cstring>kcfg_OSDAlignment</cstring>
+                 </property>
+
+                 <item>
+                   <property name="text">
+                     <string>Left</string>
+                   </property>
+                 </item>
+                 <item>
+                   <property name="text">
+                     <string>Centre</string>
+                   </property>
+                 </item>
+                 <item>
+                   <property name="text">
+                     <string>Right</string>
+                   </property>
+                 </item>
+
+                </widget>
+                
             </grid>
         </widget>
         <widget class="QCheckBox" row="0" column="0">
@@ -289,6 +335,7 @@
                 <string>&amp;Enable On Screen Display</string>
             </property>
         </widget>
+
     </grid>
 </widget>
 <connections>

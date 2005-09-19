@@ -46,7 +46,7 @@
 #include "osd_preferences.h"
 #include "theme_preferences.h"
 
-
+#include "ex_osd_preferences.h"
 
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
@@ -673,7 +673,7 @@ void KonversationApplication::readOptions()
     }
 /*  FIXME - this needs to be ported to new kconfigxt
  *
- *  
+ *
     // Notify Settings and lists.  Must follow Server List.
     config->setGroup("Notify List");
     Preferences::setNotifyDelay(config->readNumEntry("NotifyDelay",20));
@@ -1086,14 +1086,14 @@ void KonversationApplication::clearUrlList()
 
 void KonversationApplication::openPrefsDialog()   // TODO Move this function into KonversationMainWindow
 {
-    //An instance of your dialog could be already created and could be cached, 
-    //in which case you want to display the cached dialog instead of creating 
-    //another one 
-    if ( KConfigDialog::showDialog( "settings" ) ) 
-        return; 
+    //An instance of your dialog could be already created and could be cached,
+    //in which case you want to display the cached dialog instead of creating
+    //another one
+    if ( KConfigDialog::showDialog( "settings" ) )
+        return;
 
-    //KConfigDialog didn't find an instance of this dialog, so lets create it : 
-    KConfigDialog* dialog = new KConfigDialog( mainWindow, "settings", Preferences::self(), KDialogBase::TreeList ); 
+    //KConfigDialog didn't find an instance of this dialog, so lets create it :
+    KConfigDialog* dialog = new KConfigDialog( mainWindow, "settings", Preferences::self(), KDialogBase::TreeList );
     dialog->setShowIconsInTreeList(true);
     dialog->unfoldTreeList(true);
     dialog->setFolderIcon(i18n("Appearance"),SmallIcon("looknfeel"));
@@ -1143,20 +1143,20 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     Highlight_Config* confHighlightWdg = new Highlight_Config( 0, "Highlight" );
     dialog->addPage ( confHighlightWdg, i18n("Notification - Highlighting"), "paintbrush" );
     //Notification/On Screen Display
-    OSD_Config* confOSDWdg = new OSD_Config( 0, "OSD" );
+    OSD_Config_Ext* confOSDWdg = new OSD_Config_Ext( 0, "OSD" );
     dialog->addPage ( confOSDWdg, i18n("Notification - On Screen Display"), "tv" );
 
     //Warning Dialogs
     Warnings_Config* confWarningsWdg = new Warnings_Config( 0, "Warnings" );
     dialog->addPage ( confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning" );
 
-    //User edited the configuration - update your local copies of the 
-    //configuration data 
-//    connect( dialog, SIGNAL(settingsChanged()), 
-//             this, SLOT(updateConfiguration()) ); 
-     
+    //User edited the configuration - update your local copies of the
+    //configuration data
+//    connect( dialog, SIGNAL(settingsChanged()),
+//             this, SLOT(updateConfiguration()) );
+
     dialog->show();
-    
+
 }
 
 void KonversationApplication::openPrefsDialog(Preferences::Pages page)
