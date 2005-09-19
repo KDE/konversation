@@ -302,27 +302,10 @@
                       <number>-2048</number>
                     </property>
                 </widget>
-               <widget class="QComboBox" row="7" column="0">
+               <widget class="QSpinBox" row="7" column="0">
                  <property name="name">
                    <cstring>kcfg_OSDAlignment</cstring>
                  </property>
-
-                 <item>
-                   <property name="text">
-                     <string>Left</string>
-                   </property>
-                 </item>
-                 <item>
-                   <property name="text">
-                     <string>Centre</string>
-                   </property>
-                 </item>
-                 <item>
-                   <property name="text">
-                     <string>Right</string>
-                   </property>
-                 </item>
-
                 </widget>
                 
             </grid>

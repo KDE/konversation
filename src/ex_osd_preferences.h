@@ -19,6 +19,7 @@ protected slots:
     void slotDrawShadowChanged(bool on);
     void osdFontClicked();
     void slotPositionChanged();
+    void slotApply();
 
 protected:
     void showEvent(QShowEvent* event);

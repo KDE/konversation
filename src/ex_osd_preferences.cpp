@@ -2,26 +2,27 @@
 #include "ex_osd_preferences.h"
 #include "preferences.h"
 #include "osd.h"
+#include "konversationapplication.h"
 
-#include <qvariant.h>
-#include <qpushbutton.h>
 #include <qgroupbox.h>
-#include <qlabel.h>
 #include <qspinbox.h>
 #include <kcombobox.h>
 #include <kcolorcombo.h>
 #include <qcheckbox.h>
 #include <kfontrequester.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
 
+#include <kconfigdialog.h>
 
 OSD_Config_Ext::OSD_Config_Ext( QWidget* parent, const char* name, WFlags fl )
     : OSD_Config( parent, name, fl )
 {
     m_pOSDPreview = new OSDPreviewWidget("Konversation");
     connect(m_pOSDPreview, SIGNAL(positionChanged()), this, SLOT(slotPositionChanged()));
+
+    //Is there a better way to know if the settings are applied?
+    KConfigDialog *conf = static_cast<KConfigDialog *>( parent );
+    connect( conf, SIGNAL( applyClicked() ), this, SLOT( slotApply() ) );
+    connect( conf, SIGNAL( okClicked() ), this, SLOT( slotApply() ) );
 
     slotOSDEnabledChanged(kcfg_UseOSD->isChecked());
     slotCustomColorsChanged(kcfg_OSDUseCustomColors->isChecked());
@@ -47,10 +48,18 @@ OSD_Config_Ext::~OSD_Config_Ext()
     delete m_pOSDPreview;
 }
 
+void OSD_Config_Ext::slotApply()
+{
+    //Update the current OSD.
+    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+    konvApp->osd->setAlignment((OSDWidget::Alignment)( kcfg_OSDAlignment->value() ) );
+    konvApp->osd->setOffset(kcfg_OSDOffsetX->value(),kcfg_OSDOffsetY->value());
+}
+
 void OSD_Config_Ext::showEvent(QShowEvent*)
 {
     //Update the preview
-    m_pOSDPreview->setAlignment((OSDWidget::Alignment)( kcfg_OSDAlignment->currentItem()+1 ) );
+    m_pOSDPreview->setAlignment((OSDWidget::Alignment)( kcfg_OSDAlignment->value() ) );
     m_pOSDPreview->setOffset(kcfg_OSDOffsetX->value(),kcfg_OSDOffsetY->value());
 
     m_pOSDPreview->setShown(true);
@@ -72,7 +81,7 @@ void OSD_Config_Ext::slotPositionChanged()
 {
     kcfg_OSDScreen->setCurrentItem(m_pOSDPreview->screen());
 
-    kcfg_OSDAlignment->setCurrentItem( m_pOSDPreview->alignment()-1 );
+    kcfg_OSDAlignment->setValue( m_pOSDPreview->alignment() );
     kcfg_OSDOffsetX->setValue( m_pOSDPreview->x());
     kcfg_OSDOffsetY->setValue( m_pOSDPreview->y());
 }
