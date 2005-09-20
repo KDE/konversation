@@ -513,38 +513,46 @@ void KonversationApplication::readOptions()
     // OnScreen Display
     config->setGroup("OSD");
     // if osd object exists
+
 /* FIXME - This code was from pre-kconfigxt times.  This needs to be ported to however kconfigxt does this.
  *
- *     if(osd)
+ */
+    if(osd)
     {
-        osd->setEnabled(Preferences::OSDUsage());
-        osd->setFont(Preferences::OSDFont());
-        osd->setDuration(Preferences::OSDDuration());
-        osd->setScreen(Preferences::OSDScreen());
-        osd->setShadow(Preferences::OSDDrawShadow());
-        osd->setOffset(Preferences::OSDOffsetX(),Preferences::OSDOffsetY());
-        osd->setAlignment((OSDWidget::Alignment)Preferences::OSDAlignment());
+        osd->setEnabled(config->readBoolEntry("UseOSD"));
 
-        if(Preferences::OSDUseCustomColors())
+        //How to load the font from the text?
+        //osd->setFont(Preferences::OSDFont());
+
+        osd->setDuration(config->readNumEntry("OSDDuration"));
+        osd->setScreen(config->readNumEntry("OSDScreen"));
+        osd->setShadow(config->readBoolEntry("OSDDrawShadow"));
+        osd->setOffset(config->readNumEntry("OffsetX"),config->readNumEntry("OffsetY"));
+        osd->setAlignment((OSDWidget::Alignment)config->readNumEntry("Alignment"));
+
+        if(config->readBoolEntry("OSDUseCustomColors"))
         {
+            /* FIXME: whats this for?
             QString osdTextColor = config->readEntry("OSDTextColor");
+
             if(osdTextColor.isEmpty())
                 Preferences::setOSDTextColor(Preferences::OSDTextColor().name());
             else
-                Preferences::setOSDTextColor("#" + osdTextColor);
+            Preferences::setOSDTextColor("#" + osdTextColor);*/
 
-            osd->setTextColor(Preferences::OSDTextColor());
+            osd->setTextColor(config->readEntry("OSDTextColor"));
 
+            /*
             QString osdBackgroundColor = config->readEntry("OSDBackgroundColor");
             if(osdBackgroundColor.isEmpty())
                 Preferences::setOSDBackgroundColor(Preferences::OSDBackgroundColor().name());
             else
-                Preferences::setOSDBackgroundColor("#" + osdBackgroundColor);
+            Preferences::setOSDBackgroundColor("#" + osdBackgroundColor);*/
 
-            osd->setBackgroundColor(Preferences::OSDBackgroundColor());
+            osd->setBackgroundColor(config->readEntry("OSDBackgroundColor"));
         }
     }
-*/
+
     // Check if there is old server list config
     config->setGroup("Server List");
 
