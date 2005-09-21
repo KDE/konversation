@@ -25,6 +25,7 @@
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
+#include <kiconloader.h>
 
 #include "channel.h"
 #include "query.h"
@@ -35,8 +36,10 @@
 #include "ircviewbox.h"
 #include "common.h"
 
+const int POPUP_SEND=0xfd;
 const int POPUP_WHOIS =0xfe;
 const int POPUP_IGNORE=0xff;
+
 
 Query::Query(QWidget* parent) : ChatWindow(parent)
 {
@@ -73,6 +76,11 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
     QPopupMenu* popup=textView->getPopup();
     popup->insertItem(i18n("Whois"),POPUP_WHOIS); // TODO: let the ircview give the id back rather than specifying it ourselves?
     popup->insertItem(i18n("Ignore"),POPUP_IGNORE);
+    if (kapp->authorize("allow_downloading"))
+    {
+        popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),POPUP_SEND);
+    }
+
 
     // This box holds the input line
     QHBox* inputBox=new QHBox(this, "input_log_box");
@@ -282,6 +290,10 @@ void Query::popup(int id)
             "CloseQueryAfterIgnore");
 
         if(rc==KMessageBox::Yes) closeYourself();
+    }
+    else if (id=POPUP_SEND)
+    {
+         sendQueryText(Preferences::commandChar()+"DCC SEND "+getName());
     }
     else
         kdDebug() << "Query::popup(): Popup id " << id << " does not belong to me!" << endl;
