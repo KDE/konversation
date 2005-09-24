@@ -1400,7 +1400,7 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
             }
             break;
 
-        case 'O': break;
+	//case 'O': break;
 
         case 'v':
             if(plus)
@@ -1537,7 +1537,7 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
             if(plus) modeP->setDown(false);
             break;
 
-        case 'r': break;
+	//case 'r': break;
 
         case 't':
             if(plus)
@@ -1553,7 +1553,7 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
             modeT->setDown(plus);
             break;
 
-        case 'k': break;
+        //case 'k': break;
 
         case 'l':
             if(plus)
@@ -1609,6 +1609,17 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
                 else message=i18n("%1 removes the invitation mask %2.").arg(sourceNick).arg(parameter);
             }
             break;
+        default:
+	    if(plus)
+	    {
+	        if(fromMe) message=i18n("You set channel mode +%1").arg(mode);
+		else message=i18n("%1 sets channel mode +%2").arg(sourceNick).arg(mode);
+	    }
+	    else
+	    {
+	        if (fromMe) message=i18n("You set channel mode -%1").arg(mode);
+		else message= i18n("%1 sets channel mode -%2").arg(sourceNick).arg(mode);
+	    }
     }
 
     if(!message.isEmpty() && !Preferences::useLiteralModes())
