@@ -142,11 +142,17 @@ void Query::queryTextEntered()
 {
     QString line=queryInput->text();
     queryInput->clear();
-    if(line.lower()=="/clear") textView->clear();
-    if(line.lower()=="/part") m_server->closeQuery(getName());
-    else
+    if(line.lower()=="/clear")
     {
-        if(line.length()) sendQueryText(line);
+        textView->clear();
+    }
+    else if(line.lower()=="/part")
+    {
+        m_server->closeQuery(getName());
+    }
+    else if(line.length())
+    {
+         sendQueryText(line);
     }
 }
 
