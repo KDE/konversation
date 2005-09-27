@@ -80,8 +80,15 @@ QString Identity::getRealName() const                   { return realName; }
 void Identity::setIdent(const QString& newIdent)        { ident=newIdent; }
 QString Identity::getIdent() const                      { return ident; }
 
-void Identity::setNickname(int index,const QString& newName) { nicknameList[index]=newName; }
-QString Identity::getNickname(int index) const          { return nicknameList[index]; }
+void Identity::setNickname(uint index,const QString& newName) { nicknameList[index]=newName; }
+
+QString Identity::getNickname(uint index) const 
+{
+  if(index < nicknameList.count())
+    return nicknameList[index];
+  else
+    return QString::null;
+}
 
 void Identity::setBot(const QString& newBot)            { bot=newBot; }
 QString Identity::getBot() const                        { return bot; }

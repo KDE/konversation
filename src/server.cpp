@@ -990,16 +990,11 @@ QString Server::getAutoJoinCommand() const
 
 QString Server::getNextNickname()
 {
-    QString newNick = getNickname();
+    QString newNick = getIdentity()->getNickname(++tryNickNumber);
 
-    if(tryNickNumber != 4)
-    {
-        tryNickNumber++;
-        if (tryNickNumber == 4)
-            newNick = getNickname()+"_";
-        else
-            newNick = getIdentity()->getNickname(tryNickNumber);
-    }
+    if(newNick.isEmpty())
+       newNick = getNickname()+"_";
+
     return newNick;
 }
 
