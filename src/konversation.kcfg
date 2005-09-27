@@ -954,7 +954,7 @@
       <!-- konversationapplication.cpp:1211 -->
       <!--   config->writeEntry("SendPortsFirst",preferences.getDccSendPortsFirst()); -->
     </entry>
-    <entry key="SendPortsLast" type="Int" name="DccSendPortsLast">
+    <entry key="SendPortsLast" type="UInt" name="DccSendPortsLast">
       <default>0</default>
       <label></label>
       <whatsthis></whatsthis>
@@ -981,7 +981,7 @@
       <!-- konversationapplication.cpp:1214 -->
       <!--   config->writeEntry("ChatPortsFirst",preferences.getDccChatPortsFirst()); -->
     </entry>
-    <entry key="ChatPortsLast" type="Int" name="DccChatPortsLast">
+    <entry key="ChatPortsLast" type="UInt" name="DccChatPortsLast">
       <default>0</default>
       <label></label>
       <whatsthis></whatsthis>
