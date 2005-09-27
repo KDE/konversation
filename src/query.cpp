@@ -283,9 +283,9 @@ void Query::showEvent(QShowEvent*)
 
 void Query::popup(int id)
 {
-    if(id==POPUP_WHOIS)
+    if(id == POPUP_WHOIS)
         sendQueryText(Preferences::commandChar()+"WHOIS "+getName());
-    else if(id==POPUP_IGNORE)
+    else if(id == POPUP_IGNORE)
     {
         sendQueryText(Preferences::commandChar()+"IGNORE -ALL "+getName()+"!*");
         int rc=KMessageBox::questionYesNo(this,
@@ -297,7 +297,7 @@ void Query::popup(int id)
 
         if(rc==KMessageBox::Yes) closeYourself();
     }
-    else if (id=POPUP_SEND)
+    else if(id == POPUP_SEND)
     {
          sendQueryText(Preferences::commandChar()+"DCC SEND "+getName());
     }
