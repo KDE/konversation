@@ -37,7 +37,7 @@ static const char* shortDescription=I18N_NOOP("A user friendly IRC client");
 static const KCmdLineOptions options[] =
 {
     { "server <server>", I18N_NOOP("Server to connect"), 0 },
-    { "port <port>", I18N_NOOP("Port to use, default is 6667"), "6667"},
+    { "port <port>", I18N_NOOP("Port to use"), "6667"},
     { "channel <channel>", I18N_NOOP("Channel to join after connection"), ""},
     { "nick <nickname>", I18N_NOOP("Nickname to use"),""},
     { "password <password>", I18N_NOOP("Password for connection"),""},
