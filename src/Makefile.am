@@ -35,8 +35,9 @@ konversation_SOURCES = konviface.skel\
 	 watchednicknames_preferences.ui generalbehavior_preferences.ui connectionbehavior_preferences.ui \
 	 fontappearance_preferences.ui \
 	 nicklistbehavior_preferences.ui \
-	 konvibookmarkhandler.cpp konvibookmarkmenu.cpp popup.cpp ircviewbox.cpp searchbar.cpp 
-	 
+	 konvibookmarkhandler.cpp konvibookmarkmenu.cpp popup.cpp ircviewbox.cpp searchbar.cpp \
+	 ex_osd_preferences.cpp
+	
 konversation_LDADD = $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la blowfish/libblowfish.la
 
 xdg_apps_DATA = konversation.desktop

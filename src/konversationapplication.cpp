@@ -26,6 +26,7 @@
 #include <kconfigdialog.h>
 #include <kiconloader.h>
 
+#include "ex_osd_preferences.h"
 #include "chatwindowappearance_preferences.h"
 #include "alias_preferences.h"
 #include "connectionbehavior_preferences.h"
@@ -1146,7 +1147,7 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     Highlight_Config* confHighlightWdg = new Highlight_Config( 0, "Highlight" );
     dialog->addPage ( confHighlightWdg, i18n("Notification - Highlighting"), "paintbrush" );
     //Notification/On Screen Display
-    OSD_Config* confOSDWdg = new OSD_Config( dialog, "OSD" );
+    OSD_Config_Ext* confOSDWdg = new OSD_Config_Ext( dialog, "OSD" );
     dialog->addPage ( confOSDWdg, i18n("Notification - On Screen Display"), "tv" );
 
     //Warning Dialogs
