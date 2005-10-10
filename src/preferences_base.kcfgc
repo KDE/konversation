@@ -4,3 +4,5 @@ GlobalEnums=true
 Mutators=true
 SetUserTexts=true
 Singleton=true
+MemberVariables=private
+ItemAccessors=true

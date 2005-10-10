@@ -520,8 +520,8 @@ void KonversationApplication::readOptions()
         osd->setScreen(Preferences::oSDScreen());
         osd->setShadow(Preferences::oSDDrawShadow());
 
-        //osd->setOffset(Preferences::OffsetX, Preferences::OffsetY);
-        //osd->setAlignment((OSDWidget::Alignment)Preferences::Alignment);
+        osd->setOffset(Preferences::oSDOffsetX(), Preferences::oSDOffsetY());
+        osd->setAlignment((OSDWidget::Alignment)Preferences::oSDAlignment());
 
 	/*
         if(config->readBoolEntry("OSDUseCustomColors"))
