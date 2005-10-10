@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>OSD_Config</class>
 <widget class="QWidget">
     <property name="name">
@@ -11,6 +11,9 @@
             <width>624</width>
             <height>571</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>OSD_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -279,35 +282,6 @@
                         <bool>false</bool>
                     </property>
                 </widget>
-
-                <widget class="QSpinBox" row="5" column="0">
-                    <property name="name">
-                        <cstring>kcfg_OSDOffsetX</cstring>
-                    </property>
-		    <property name="maxValue">
-		      <number>2048</number>
-		    </property>
-		    <property name="minValue">
-                      <number>-2048</number>
-                    </property>
-                </widget>
-               <widget class="QSpinBox" row="6" column="0">
-                    <property name="name">
-                        <cstring>kcfg_OSDOffsetY</cstring>
-                    </property>
-		    <property name="maxValue">
-		      <number>2048</number>
-		    </property>
-		    <property name="minValue">
-                      <number>-2048</number>
-                    </property>
-                </widget>
-               <widget class="QSpinBox" row="7" column="0">
-                 <property name="name">
-                   <cstring>kcfg_OSDAlignment</cstring>
-                 </property>
-                </widget>
-                
             </grid>
         </widget>
         <widget class="QCheckBox" row="0" column="0">
@@ -318,7 +292,6 @@
                 <string>&amp;Enable On Screen Display</string>
             </property>
         </widget>
-
     </grid>
 </widget>
 <connections>

@@ -1,9 +1,6 @@
 ClassName=PreferencesBase
 File=konversation.kcfg
 GlobalEnums=true
-ItemAccessors=true
-MemberVariables=private
 Mutators=true
 SetUserTexts=true
 Singleton=true
-

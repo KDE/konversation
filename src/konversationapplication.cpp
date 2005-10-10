@@ -46,8 +46,6 @@
 #include "osd_preferences.h"
 #include "theme_preferences.h"
 
-#include "ex_osd_preferences.h"
-
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
 #include "highlight.h"
@@ -510,26 +508,22 @@ void KonversationApplication::readOptions()
 
         config->deleteGroup("User Identity");
     }
-    // OnScreen Display
-    config->setGroup("OSD");
-    // if osd object exists
 
-/* FIXME - This code was from pre-kconfigxt times.  This needs to be ported to however kconfigxt does this.
- *
- */
     if(osd)
     {
-        osd->setEnabled(config->readBoolEntry("UseOSD"));
+        osd->setEnabled(Preferences::useOSD());
 
         //How to load the font from the text?
-        //osd->setFont(Preferences::OSDFont());
+        osd->setFont(Preferences::oSDFont());
 
-        osd->setDuration(config->readNumEntry("OSDDuration"));
-        osd->setScreen(config->readNumEntry("OSDScreen"));
-        osd->setShadow(config->readBoolEntry("OSDDrawShadow"));
-        osd->setOffset(config->readNumEntry("OffsetX"),config->readNumEntry("OffsetY"));
-        osd->setAlignment((OSDWidget::Alignment)config->readNumEntry("Alignment"));
+	osd->setDuration(Preferences::oSDDuration());
+        osd->setScreen(Preferences::oSDScreen());
+        osd->setShadow(Preferences::oSDDrawShadow());
 
+        //osd->setOffset(Preferences::OffsetX, Preferences::OffsetY);
+        //osd->setAlignment((OSDWidget::Alignment)Preferences::Alignment);
+
+	/*
         if(config->readBoolEntry("OSDUseCustomColors"))
         {
             /* FIXME: whats this for?
@@ -539,7 +533,7 @@ void KonversationApplication::readOptions()
                 Preferences::setOSDTextColor(Preferences::OSDTextColor().name());
             else
             Preferences::setOSDTextColor("#" + osdTextColor);*/
-
+	/*
             osd->setTextColor(config->readEntry("OSDTextColor"));
 
             /*
@@ -548,9 +542,10 @@ void KonversationApplication::readOptions()
                 Preferences::setOSDBackgroundColor(Preferences::OSDBackgroundColor().name());
             else
             Preferences::setOSDBackgroundColor("#" + osdBackgroundColor);*/
-
+	/*
             osd->setBackgroundColor(config->readEntry("OSDBackgroundColor"));
         }
+	*/
     }
 
     // Check if there is old server list config
@@ -1151,7 +1146,7 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     Highlight_Config* confHighlightWdg = new Highlight_Config( 0, "Highlight" );
     dialog->addPage ( confHighlightWdg, i18n("Notification - Highlighting"), "paintbrush" );
     //Notification/On Screen Display
-    OSD_Config_Ext* confOSDWdg = new OSD_Config_Ext( dialog, "OSD" );
+    OSD_Config* confOSDWdg = new OSD_Config( dialog, "OSD" );
     dialog->addPage ( confOSDWdg, i18n("Notification - On Screen Display"), "tv" );
 
     //Warning Dialogs
