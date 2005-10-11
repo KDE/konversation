@@ -1,6 +1,6 @@
 METASOURCES = AUTO
 
-AM_CPPFLAGS = $(all_includes)
+AM_CPPFLAGS = $(all_includes) -I$(top_builddir)/konversation/src
 
 noinst_LTLIBRARIES = liblinkaddressbookui.la
 noinst_HEADERS = linkaddressbookui.h kimiface.h
