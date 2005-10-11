@@ -1156,8 +1156,8 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
 
     //User edited the configuration - update your local copies of the
     //configuration data
-//    connect( dialog, SIGNAL(settingsChanged()),
-//             this, SLOT(updateConfiguration()) );
+    connect( dialog, SIGNAL(settingsChanged()),
+            this, SLOT(appearanceChanged()) );
 
     dialog->show();
 
