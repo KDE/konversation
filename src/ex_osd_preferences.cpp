@@ -67,6 +67,13 @@ void OSD_Config_Ext::slotApply()
             konvApp->osd->unsetColors();
         }
 
+        konvApp->osd->setDuration(kcfg_OSDDuration->value());
+        konvApp->osd->setScreen(kcfg_OSDScreen->currentItem());
+        konvApp->osd->setShadow(kcfg_OSDDrawShadow->isChecked());
+
+        //x is ignored anyway, but leave incase we use in future
+        konvApp->osd->setOffset(m_pOSDPreview->x(),m_pOSDPreview->y());
+        konvApp->osd->setAlignment((OSDWidget::Alignment)m_pOSDPreview->alignment());
     }
 
 }
