@@ -1172,11 +1172,6 @@ void KonversationApplication::openQuickConnectDialog()
     quickConnectDialog->show();
 }
 
-void KonversationApplication::syncPrefs()
-{
-    kapp->config()->sync();
-}
-
 bool KonversationApplication::emitDCOPSig(const QString &appId, const QString &objId, const QString &signal, QByteArray &data)
 {
     kdDebug() << "emitDCOPSig (" << signal << ")" << endl;

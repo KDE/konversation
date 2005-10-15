@@ -77,7 +77,6 @@ class KonversationApplication : public KUniqueApplication
 
         static KonversationApplication* instance();
 
-        void syncPrefs();
         Server* getServerByName(const QString& name);
 
         /** For dcop and addressbook, a user can be specified as user@irc.server.net

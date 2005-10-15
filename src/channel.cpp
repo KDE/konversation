@@ -2319,6 +2319,7 @@ bool Channel::eventFilter(QObject* watched, QEvent* e)
     {
         Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
         Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
+        Preferences::self()->writeConfig();
 
         emit splitterMoved(this);
     }
