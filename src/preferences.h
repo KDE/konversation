@@ -46,7 +46,7 @@ NoRightsColor (int)
 class Ignore;
 class Highlight;
 
-class Preferences : public QObject, public PreferencesBase 
+class Preferences : public QObject, public PreferencesBase
 {
     Q_OBJECT
 
