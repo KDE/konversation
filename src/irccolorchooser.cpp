@@ -21,7 +21,7 @@
 #include <kcombobox.h>
 
 #include "irccolorchooserui.h"
-#include "preferences.h"
+#include "config/preferences.h"
 
 IRCColorChooser::IRCColorChooser(QWidget* parent, const char* name)
 : KDialogBase(parent, name, true, i18n("IRC Color Chooser"), Ok|Cancel, Ok)

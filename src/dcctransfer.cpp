@@ -32,7 +32,7 @@
 #include "dccpanel.h"
 #include "dcctransfer.h"
 #include "konversationapplication.h"
-#include "preferences.h"
+#include "config/preferences.h"
 
 #define TIME_REMAINING_NOT_AVAILABLE -1
 #define TIME_REMAINING_INFINITE      -2

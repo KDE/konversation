@@ -1,6 +1,6 @@
 
 #include "ex_osd_preferences.h"
-#include "preferences.h"
+#include "config/preferences.h"
 #include "osd.h"
 #include "konversationapplication.h"
 

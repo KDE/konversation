@@ -25,7 +25,7 @@
 #include <qpalette.h>
 #include <qregexp.h>
 
-#include "preferences.h"
+#include "config/preferences.h"
 #include "identity.h"
 #include "ignore.h"
 #include "highlight.h"

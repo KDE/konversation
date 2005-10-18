@@ -20,7 +20,7 @@
 #include <qpainter.h>
 
 #include "konversationapplication.h"
-#include "preferences.h"
+#include "config/preferences.h"
 
 namespace Konversation
 {
