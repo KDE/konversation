@@ -651,13 +651,12 @@ void KonversationApplication::readOptions()
             Preferences::setServerGroupList(serverGroups);
         }
     }
-/*  FIXME - this needs to be ported to new kconfigxt
- *
- *
+
     // Notify Settings and lists.  Must follow Server List.
-    config->setGroup("Notify List");
-    Preferences::setNotifyDelay(config->readNumEntry("NotifyDelay",20));
-    Preferences::setUseNotify(config->readBoolEntry("UseNotify",true));
+    Preferences::setNotifyDelay(Preferences::notifyDelay());
+    Preferences::setUseNotify(Preferences::useNotify());
+    
+    /*
     //  QString notifyList=config->readEntry("NotifyList",QString::null);
     //  Preferences::setNotifyList(QStringList::split(' ',notifyList));
     int index = 0;
