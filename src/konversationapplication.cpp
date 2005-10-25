@@ -656,9 +656,9 @@ void KonversationApplication::readOptions()
     Preferences::setNotifyDelay(Preferences::notifyDelay());
     Preferences::setUseNotify(Preferences::useNotify());
     
+    QString notifyList = Preferences::notifyList();
+    Preferences::setNotifyList(QStringList::split(' ',notifyList));
     /*
-    //  QString notifyList=config->readEntry("NotifyList",QString::null);
-    //  Preferences::setNotifyList(QStringList::split(' ',notifyList));
     int index = 0;
     QMap<QString, QStringList> notifyList;
     QMap<QString, QString> notifyGroups = config->entryMap("Notify Group Lists");
