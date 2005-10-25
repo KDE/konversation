@@ -115,8 +115,8 @@ int KonversationApplication::newInstance()
         osd = new OSDWidget( "Konversation" );
 
         Preferences::self();
-
         readOptions();
+
         // Images object providing LEDs, NickIcons
         m_images = new Images();
 
@@ -507,44 +507,23 @@ void KonversationApplication::readOptions()
         config->deleteGroup("User Identity");
     }
 
-    if(osd)
-    {
-        osd->setEnabled(Preferences::useOSD());
+    osd->setEnabled(Preferences::useOSD());
+    
+    //How to load the font from the text?
+    osd->setFont(Preferences::oSDFont());
 
-        //How to load the font from the text?
-        osd->setFont(Preferences::oSDFont());
+    osd->setDuration(Preferences::oSDDuration());
+    osd->setScreen(Preferences::oSDScreen());
+    osd->setShadow(Preferences::oSDDrawShadow());
+    
+    osd->setOffset(Preferences::oSDOffsetX(), Preferences::oSDOffsetY());
+    osd->setAlignment((OSDWidget::Alignment)Preferences::oSDAlignment());
 
-	osd->setDuration(Preferences::oSDDuration());
-        osd->setScreen(Preferences::oSDScreen());
-        osd->setShadow(Preferences::oSDDrawShadow());
-
-        osd->setOffset(Preferences::oSDOffsetX(), Preferences::oSDOffsetY());
-        osd->setAlignment((OSDWidget::Alignment)Preferences::oSDAlignment());
-
-	/*
-        if(config->readBoolEntry("OSDUseCustomColors"))
-        {
-            /* FIXME: whats this for?
-            QString osdTextColor = config->readEntry("OSDTextColor");
-
-            if(osdTextColor.isEmpty())
-                Preferences::setOSDTextColor(Preferences::OSDTextColor().name());
-            else
-            Preferences::setOSDTextColor("#" + osdTextColor);*/
-	/*
-            osd->setTextColor(config->readEntry("OSDTextColor"));
-
-            /*
-            QString osdBackgroundColor = config->readEntry("OSDBackgroundColor");
-            if(osdBackgroundColor.isEmpty())
-                Preferences::setOSDBackgroundColor(Preferences::OSDBackgroundColor().name());
-            else
-            Preferences::setOSDBackgroundColor("#" + osdBackgroundColor);*/
-	/*
-            osd->setBackgroundColor(config->readEntry("OSDBackgroundColor"));
-        }
-	*/
-    }
+    if(Preferences::oSDUseCustomColors())
+      {
+	osd->setTextColor(Preferences::oSDTextColor());
+	osd->setBackgroundColor(Preferences::oSDBackgroundColor());
+      }
 
     // Check if there is old server list config
     config->setGroup("Server List");
