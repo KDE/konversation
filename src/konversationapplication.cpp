@@ -655,48 +655,8 @@ void KonversationApplication::readOptions()
     // Notify Settings and lists.  Must follow Server List.
     Preferences::setNotifyDelay(Preferences::notifyDelay());
     Preferences::setUseNotify(Preferences::useNotify());
-    
-    QString notifyList = Preferences::notifyList();
-    Preferences::setNotifyList(QStringList::split(' ',notifyList));
-    /*
-    int index = 0;
-    QMap<QString, QStringList> notifyList;
-    QMap<QString, QString> notifyGroups = config->entryMap("Notify Group Lists");
-    if (!notifyGroups.empty())
-    {
-        QMapConstIterator<QString, QString> groupItEnd = notifyGroups.constEnd();
-        for (QMapConstIterator<QString, QString> groupIt = notifyGroups.constBegin();
-            groupIt != groupItEnd; ++groupIt)
-        notifyList[groupIt.key()] = QStringList::split(" ", groupIt.data(), false);
-    }
-    else
-    {
-        // Retrieve old Notify List.
-        config->setGroup("Notify List");
-        QString oldNotifyNicknames = config->readEntry("NotifyList", QString::null);
-        if (!oldNotifyNicknames.isEmpty())
-        {
-            QStringList oldNotifyNicknameList = QStringList::split(" ", oldNotifyNicknames, false);
-            // Build a list of unique server group names.
-            Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
-            QStringList groupNames;
+    Preferences::setNotifyList(Preferences::notifyList());
 
-            for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it)
-            {
-                QString name = (*it)->name();
-
-                if (!groupNames.contains(name))
-                {
-                    groupNames.append(name);
-                }
-            }
-            // Apply the old Notify List to all groups.
-            for (QStringList::ConstIterator groupIt = groupNames.begin(); groupIt != groupNames.end(); ++groupIt)
-                notifyList[*groupIt] = oldNotifyNicknameList;
-        }
-    }
-    Preferences::setNotifyList(notifyList);
-*/
     // Quick Buttons List
     config->setGroup("Button List");
     // Read all buttons and overwrite default entries
