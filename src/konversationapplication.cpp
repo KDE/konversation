@@ -1035,15 +1035,19 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     dialog->setShowIconsInTreeList(true);
     dialog->unfoldTreeList(true);
     dialog->setFolderIcon(i18n("Appearance"),SmallIcon("looknfeel"));
+
     //Appearance/Chat Window
     ChatWindowAppearance_Config* confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
     dialog->addPage ( confChatWindowAppearanceWdg, i18n("Appearance-Chat Window"), "view_text", i18n("Appearance") );
+
     //Appearance/Fonts
     FontAppearance_Config* confFontAppearanceWdg = new FontAppearance_Config( dialog, "FontAppearance" );
     dialog->addPage ( confFontAppearanceWdg, i18n("Appearance - Fonts"), "fonts", i18n("Appearance") );
+
     //Appearance/Themes
     Theme_Config_Ext* confThemeWdg = new Theme_Config_Ext( dialog, "Theme" );
     dialog->addPage ( confThemeWdg, i18n("Appearance - Themes"), "iconthemes", i18n("Appearance") );
+
     //Appearance/Colors
     ColorsAppearance_Config* confColorsAppearanceWdg = new ColorsAppearance_Config( dialog, "ColorsAppearance" );
     dialog->addPage ( confColorsAppearanceWdg, i18n("Appearance - Colors"), "colorize", i18n("Appearance") );
@@ -1052,24 +1056,31 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     //Behavior/General
     GeneralBehavior_Config* confGeneralBehaviorWdg = new GeneralBehavior_Config( dialog, "GeneralBehavior" );
     dialog->addPage ( confGeneralBehaviorWdg, i18n("Behavior - General"), "exec", i18n("Behavior") );
+
     //Behavior/Connection
     ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( dialog, "ConnectionBehavior" );
     dialog->addPage ( confConnectionBehaviorWdg, i18n("Behavior - Connection"), "connect_creating", i18n("Behavior") );
+
     //Behaviour/Chat Window
     ChatwindowBehaviour_Config* confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( dialog, "ChatwindowBehaviour" );
     dialog->addPage ( confChatwindowBehaviourWdg, i18n("Behavior - Chatwindow"), "view_text", i18n("Behavior") );
+
     //Behaviour/Nickname List
     NicklistBehavior_Config* confNicklistBehaviorWdg = new NicklistBehavior_Config( dialog, "NicklistBehavior" );
     dialog->addPage ( confNicklistBehaviorWdg, i18n("Behavior - Nickname List"), "player_playlist" );
+
     //Behaviour/Tab Bar
     TabBar_Config* confTabBarWdg = new TabBar_Config( dialog, "TabBar" );
     dialog->addPage ( confTabBarWdg, i18n("Behavior - Tab Bar"), "tab_new" );
+
     //Behaviour/Command Aliases
     Alias_Config* confAliasWdg = new Alias_Config( dialog, "Alias" );
     dialog->addPage ( confAliasWdg, i18n("Behavior - Command Aliases"), "editcopy" );
+
      //Behaviour/Quick Buttons
     QuickButtons_Config* confQuickButtonsWdg = new QuickButtons_Config( dialog, "QuickButtons" );
     dialog->addPage ( confQuickButtonsWdg, i18n("Behavior - Quick Buttons"), "keyboard" );
+
     //Behaviour/Logging
     Log_Config* confLogWdg = new Log_Config( dialog, "Log" );
     dialog->addPage ( confLogWdg, i18n("Behavior - Logging"), "log" );
@@ -1077,9 +1088,11 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     //Notification/Watched Nicknames
     WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( dialog, "WatchedNicknames" );
     dialog->addPage ( confWatchedNicknamesWdg, i18n("Notification - Watched Nicknames"), "kfind" );
+
     //Notification/Highlighting
     Highlight_Config* confHighlightWdg = new Highlight_Config( dialog, "Highlight" );
     dialog->addPage ( confHighlightWdg, i18n("Notification - Highlighting"), "paintbrush" );
+
     //Notification/On Screen Display
     OSD_Config_Ext* confOSDWdg = new OSD_Config_Ext( dialog, "OSD" );
     dialog->addPage ( confOSDWdg, i18n("Notification - On Screen Display"), "tv" );
