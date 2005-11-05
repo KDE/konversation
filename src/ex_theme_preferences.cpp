@@ -198,17 +198,9 @@ void Theme_Config_Ext::updatePreview(int id)
 
 void Theme_Config_Ext::updateList()
 {
-    QString themeName,themeComment;
+    QString themeName, themeComment;
     QString currentTheme = Preferences::iconTheme();
-    int index = 0;
-    bool found = false;
-
-    if(!KGlobal::dirs()->findAllResources("data","konversation/themes/"+currentTheme+"/index.desktop").count())
-    {
-        m_oldTheme=currentTheme;
-        currentTheme = "default";
-        Preferences::setIconTheme("default");
-    }
+    int index = Preferences::iconTheme().toInt();
 
     m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/index.desktop");
 
@@ -219,14 +211,6 @@ void Theme_Config_Ext::updateList()
 
         for(QStringList::ConstIterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
         {
-            if(!found)
-            {
-                if((*it).section('/',-2,-2) == currentTheme)
-                    found = true;
-                else
-                    ++index;
-            }
-
             KDesktopFile themeRC(*it);
             themeName = themeRC.readName();
             themeComment = themeRC.readComment();
