@@ -31,49 +31,52 @@
 #include <kfiledialog.h>
 #include <ktar.h>
 #include <kdesktopfile.h>
+#include <kconfigdialog.h>
 
-#include <unistd.h>                               // unlink()
+#include <unistd.h> // unlink()
 
-#include "prefspagethemes.h"
-#include "preferences.h"
+#include "ex_theme_preferences.h"
+#include "preferences_base.h"
 #include "images.h"
 #include "common.h"
 #include "konversationapplication.h"
 
 using namespace Konversation;
 
-PrefsPageThemes::PrefsPageThemes(QWidget* newParent,Preferences* newPreferences)
-: Theme_Config( newParent )
+Theme_Config_Ext::Theme_Config_Ext(QWidget* parent, const char* name)
+  : Theme_Config( parent, name)
 {
-
-    preferences = newPreferences;
 
     updateList();
     updateButtons();
 
     m_oldTheme = Preferences::iconTheme();
 
-    connect(themeList,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
-    connect(themeList,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
+    connect(kcfg_IconTheme,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
+    connect(kcfg_IconTheme,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
     connect(installButton,SIGNAL(clicked()),this,SLOT(installTheme()));
     connect(removeButton,SIGNAL(clicked()),this,SLOT(removeTheme()));
+
+    KConfigDialog *conf = static_cast<KConfigDialog *>(parent);
+    connect( conf, SIGNAL(applyClicked()), this, SLOT(applyPreferences()));
+    connect( conf, SIGNAL(okClicked()), this, SLOT(applyPreferences()));
 }
 
-PrefsPageThemes::~PrefsPageThemes()
+Theme_Config_Ext::~Theme_Config_Ext()
 {
 }
 
-void PrefsPageThemes::applyPreferences()
+void Theme_Config_Ext::applyPreferences()
 {
-    if(themeList->count())
+    if(kcfg_IconTheme->count())
     {
         QString theme;
-        theme = m_dirs[themeList->currentItem()];
+        theme = m_dirs[kcfg_IconTheme->currentItem()];
         theme = theme.section('/',-2,-2);
         if(m_oldTheme != theme)
         {
             kdDebug() << "New Theme :" << theme << endl;
-            preferences->setIconTheme(theme);
+	    Preferences::setIconTheme(theme);
             KonversationApplication::instance()->images()->initializeNickIcons();
             KonversationApplication::instance()->updateNickIcons();
             m_oldTheme = theme;
@@ -81,7 +84,7 @@ void PrefsPageThemes::applyPreferences()
     }
 }
 
-void PrefsPageThemes::installTheme()
+void Theme_Config_Ext::installTheme()
 {
     KURL themeURL = KFileDialog::getOpenURL(QString::null,
         i18n("*.tar.gz *.tar.bz2 *.tar *.zip|Konversation Themes"),
@@ -107,7 +110,7 @@ void PrefsPageThemes::installTheme()
 
     QDir themeInstallDir(tmpThemeFile);
 
-    if(themeInstallDir.exists())                  // We got a directory not a file
+    if(themeInstallDir.exists()) // We got a directory not a file
     {
         if(themeInstallDir.exists("index.desktop"))
             KIO::NetAccess::dircopy(KURL(tmpThemeFile),KURL(themesDir),0L);
@@ -120,7 +123,7 @@ void PrefsPageThemes::installTheme()
                 );
         }
     }
-    else                                          // we got a file
+    else // we got a file
     {
 
         KTar themeArchive(tmpThemeFile);
@@ -154,12 +157,12 @@ void PrefsPageThemes::installTheme()
 
 }
 
-void PrefsPageThemes::removeTheme()
+void Theme_Config_Ext::removeTheme()
 {
     QString dir;
-    QString themeName = themeList->currentText();
+    QString themeName = kcfg_IconTheme->currentText();
 
-    dir = m_dirs[themeList->currentItem()];
+    dir = m_dirs[kcfg_IconTheme->currentItem()];
 
     int remove = KMessageBox::warningContinueCancel(0L,
         i18n("Do you want to remove %1 ?").arg(themeName),
@@ -177,7 +180,7 @@ void PrefsPageThemes::removeTheme()
     }
 }
 
-void PrefsPageThemes::updatePreview(int id)
+void Theme_Config_Ext::updatePreview(int id)
 {
     QString dir;
     dir = m_dirs[id];
@@ -193,7 +196,7 @@ void PrefsPageThemes::updatePreview(int id)
     previewLabel7->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_admin.png")));
 }
 
-void PrefsPageThemes::updateList()
+void Theme_Config_Ext::updateList()
 {
     QString themeName,themeComment;
     QString currentTheme = Preferences::iconTheme();
@@ -212,7 +215,7 @@ void PrefsPageThemes::updateList()
     if(m_dirs.count() > 0)
     {
 
-        themeList->clear();
+        kcfg_IconTheme->clear();
 
         for(QStringList::ConstIterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
         {
@@ -231,23 +234,23 @@ void PrefsPageThemes::updateList()
             if(!themeComment.isEmpty())
                 themeName = themeName+" ( "+themeComment+" )";
 
-            themeList->insertItem(themeName);
+            kcfg_IconTheme->insertItem(themeName);
         }
 
-        themeList->setSelected(index, true);
+        kcfg_IconTheme->setSelected(index, true);
         updatePreview(index);
     }
 }
 
-void PrefsPageThemes::updateButtons()
+void Theme_Config_Ext::updateButtons()
 {
-    if(themeList->count() < 2)
+    if(kcfg_IconTheme->count() < 2)
     {
         removeButton->setEnabled(false);
         return;
     }
 
-    QString dir = m_dirs[themeList->currentItem()];
+    QString dir = m_dirs[kcfg_IconTheme->currentItem()];
     QFile themeRC(dir);
 
     if(!themeRC.open(IO_ReadOnly | IO_WriteOnly))
@@ -258,4 +261,4 @@ void PrefsPageThemes::updateButtons()
     themeRC.close();
 }
 
-#include "prefspagethemes.moc"
+#include "ex_theme_preferences.moc"

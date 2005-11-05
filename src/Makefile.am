@@ -22,8 +22,7 @@ konversation_SOURCES = konviface.skel\
 	 channellistviewitem.cpp osd.cpp ircevent.cpp \
          trayicon.cpp dccchat.cpp logfilereader.cpp \
 	 multilineedit.cpp nickinfo.cpp dccresumedialog.cpp konversationsound.cpp \
-	 quickconnectdialog.cpp \
-	 serverlistdialog.cpp \
+	 quickconnectdialog.cpp serverlistdialog.cpp \
 	 dcctransfersend.cpp dcctransferrecv.cpp channelnick.cpp dccdetaildialog.cpp \
 	 insertchardialog.cpp irccharsets.cpp editnotifydialog.cpp common.cpp serverison.cpp \
 	 sslsocket.cpp servergroupsettings.cpp serversettings.cpp servergroupdialog.cpp \
@@ -36,7 +35,7 @@ konversation_SOURCES = konviface.skel\
 	 fontappearance_preferences.ui \
 	 nicklistbehavior_preferences.ui \
 	 konvibookmarkhandler.cpp konvibookmarkmenu.cpp popup.cpp ircviewbox.cpp searchbar.cpp \
-	 ex_osd_preferences.cpp
+	 ex_osd_preferences.cpp ex_theme_preferences.cpp
 
 konversation_LDADD = $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la blowfish/libblowfish.la config/libkonversationconfig.la
 

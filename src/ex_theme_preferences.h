@@ -8,25 +8,23 @@
 /*
   (C) 2004 by İsmail Dönmez
 */
+
 #ifndef PREFSPAGETHEMES_H
 #define PREFSPAGETHEMES_H
 
 #include "theme_preferences.h"
 
-class Preferences;
 class QStringList;
 
-class PrefsPageThemes : public Theme_Config
+class Theme_Config_Ext : public Theme_Config
 {
-    Q_OBJECT
-        public:
-        PrefsPageThemes(QWidget* newParent,Preferences* newPreferences);
-        ~PrefsPageThemes();
-
-    public slots:
-        void applyPreferences();
+  Q_OBJECT;
+    public:
+  Theme_Config_Ext(QWidget* parent, const char* name);
+	~Theme_Config_Ext();
 
     protected slots:
+	void applyPreferences();
         void updatePreview(int id);
         void updateButtons();
         void installTheme();
@@ -35,9 +33,7 @@ class PrefsPageThemes : public Theme_Config
     private:
         QStringList m_dirs;
         QString m_oldTheme;
-        Preferences* preferences;
 
         void updateList();
-
 };
 #endif
