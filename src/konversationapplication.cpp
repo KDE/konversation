@@ -1036,6 +1036,20 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     dialog->unfoldTreeList(true);
     dialog->setFolderIcon(i18n("Appearance"),SmallIcon("looknfeel"));
 
+    dialog->setFolderIcon(QStringList::split(',', i18n("Appearance")), SmallIcon("looknfeel"));
+    QWidget* chatWinAppearancePane = dialog->addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Chat Window")), QString::null, SmallIcon("view_text"));
+    QWidget* fontsAppearancePane = dialog->addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Fonts")), QString::null, SmallIcon("fonts"));
+    QWidget* colorsAppearancePane = dialog->addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Colors")),
+						QString::null, SmallIcon("colorize"));
+    QWidget* themesPane = dialog->addVBoxPage(QStringList::split(',', i18n("Appearance") + "," + i18n("Themes")),
+				      QString::null, SmallIcon("iconthemes"));
+
+    (void)new ChatWindowAppearance_Config(chatWinAppearancePane);
+    (void)new FontAppearance_Config(fontsAppearancePane);
+    (void)new ColorsAppearance_Config(colorsAppearancePane);
+    (void)new Theme_Config_Ext(themesPane);
+    
+    /*
     //Appearance/Chat Window
     ChatWindowAppearance_Config* confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
     dialog->addPage ( confChatWindowAppearanceWdg, i18n("Appearance-Chat Window"), "view_text", i18n("Appearance") );
@@ -1100,7 +1114,7 @@ void KonversationApplication::openPrefsDialog()   // TODO Move this function int
     //Warning Dialogs
     Warnings_Config* confWarningsWdg = new Warnings_Config( dialog, "Warnings" );
     dialog->addPage ( confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning" );
-
+    */
     //User edited the configuration - update your local copies of the
     //configuration data
     connect(dialog, SIGNAL(settingsChanged()), this, SLOT(appearanceChanged()));
