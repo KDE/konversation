@@ -24,7 +24,7 @@
         </property>
         <widget class="KListBox" row="0" column="0" rowspan="1" colspan="3">
             <property name="name">
-                <cstring>kcfg_IconTheme</cstring>
+                <cstring>kcfg_IconThemeIndex</cstring>
             </property>
         </widget>
         <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="3">

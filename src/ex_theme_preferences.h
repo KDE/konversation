@@ -6,7 +6,7 @@
 */
 
 /*
-  (C) 2004 by İsmail Dönmez
+  (C) 2004,2005 by İsmail Dönmez
 */
 
 #ifndef PREFSPAGETHEMES_H

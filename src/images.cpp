@@ -105,10 +105,10 @@ void Images::initializeKimifaceIcons()
 void Images::initializeNickIcons()
 {
 
-    QString iconTheme = Preferences::iconTheme();
+    QString iconTheme = Preferences::iconThemeName();
     QStringList icons = KGlobal::dirs()->findAllResources("data","konversation/themes/"+iconTheme+"/*.png");
 
-    if( icons.count() < 7 )                       // Sanity
+    if( icons.count() < 7 ) // Sanity
         icons = KGlobal::dirs()->findAllResources("data","konversation/themes/default/*.png");
 
     icons.sort();

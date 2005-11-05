@@ -1240,14 +1240,15 @@
     </entry>
   </group>
   <group name="Themes">
-    <entry key="IconTheme" type="String">
+    <entry key="IconThemeIndex" type="Int">
+      <default>3</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="IconThemeName" type="String">
       <default>default</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:885 -->
-      <!--   preferences.setIconTheme(config->readEntry("IconTheme",preferences.getIconTheme())); -->
-      <!-- konversationapplication.cpp:1268 -->
-      <!--   config->writeEntry("IconTheme", preferences.getIconTheme()); -->
     </entry>
     <entry key="EnableEmotIcons" type="Bool">
       <default>false</default>

@@ -6,7 +6,7 @@
 */
 
 /*
-  (C) 2004 by İsmail Dönmez ( Resistence is Futile. Turn god damn unicode on! )
+  (C) 2004,2005 by İsmail Dönmez ( Resistence is Futile. Turn god damn unicode on! )
 */
 
 #include <qlabel.h>
@@ -50,10 +50,10 @@ Theme_Config_Ext::Theme_Config_Ext(QWidget* parent, const char* name)
     updateList();
     updateButtons();
 
-    m_oldTheme = Preferences::iconTheme();
+    m_oldTheme = Preferences::iconThemeName();
 
-    connect(kcfg_IconTheme,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
-    connect(kcfg_IconTheme,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
+    connect(kcfg_IconThemeIndex,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
+    connect(kcfg_IconThemeIndex,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
     connect(installButton,SIGNAL(clicked()),this,SLOT(installTheme()));
     connect(removeButton,SIGNAL(clicked()),this,SLOT(removeTheme()));
 
@@ -68,15 +68,18 @@ Theme_Config_Ext::~Theme_Config_Ext()
 
 void Theme_Config_Ext::applyPreferences()
 {
-    if(kcfg_IconTheme->count())
+    if(kcfg_IconThemeIndex->count())
     {
         QString theme;
-        theme = m_dirs[kcfg_IconTheme->currentItem()];
+        theme = m_dirs[kcfg_IconThemeIndex->currentItem()];
         theme = theme.section('/',-2,-2);
         if(m_oldTheme != theme)
         {
             kdDebug() << "New Theme :" << theme << endl;
-	    Preferences::setIconTheme(theme);
+	    KConfig* config = kapp->config();
+	    config->setGroup("Themes");
+	    config->writeEntry("IconThemeName",theme);
+	    Preferences::setIconThemeName(theme);
             KonversationApplication::instance()->images()->initializeNickIcons();
             KonversationApplication::instance()->updateNickIcons();
             m_oldTheme = theme;
@@ -160,9 +163,9 @@ void Theme_Config_Ext::installTheme()
 void Theme_Config_Ext::removeTheme()
 {
     QString dir;
-    QString themeName = kcfg_IconTheme->currentText();
+    QString themeName = kcfg_IconThemeIndex->currentText();
 
-    dir = m_dirs[kcfg_IconTheme->currentItem()];
+    dir = m_dirs[kcfg_IconThemeIndex->currentItem()];
 
     int remove = KMessageBox::warningContinueCancel(0L,
         i18n("Do you want to remove %1 ?").arg(themeName),
@@ -199,15 +202,14 @@ void Theme_Config_Ext::updatePreview(int id)
 void Theme_Config_Ext::updateList()
 {
     QString themeName, themeComment;
-    QString currentTheme = Preferences::iconTheme();
-    int index = Preferences::iconTheme().toInt();
+    QString currentTheme = Preferences::iconThemeName();
+    int index = Preferences::iconThemeIndex();
 
     m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/index.desktop");
 
     if(m_dirs.count() > 0)
     {
-
-        kcfg_IconTheme->clear();
+        kcfg_IconThemeIndex->clear();
 
         for(QStringList::ConstIterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
         {
@@ -218,23 +220,23 @@ void Theme_Config_Ext::updateList()
             if(!themeComment.isEmpty())
                 themeName = themeName+" ( "+themeComment+" )";
 
-            kcfg_IconTheme->insertItem(themeName);
+            kcfg_IconThemeIndex->insertItem(themeName);
         }
 
-        kcfg_IconTheme->setSelected(index, true);
+        kcfg_IconThemeIndex->setSelected(index, true);
         updatePreview(index);
     }
 }
 
 void Theme_Config_Ext::updateButtons()
 {
-    if(kcfg_IconTheme->count() < 2)
+    if(kcfg_IconThemeIndex->count() < 2)
     {
         removeButton->setEnabled(false);
         return;
     }
 
-    QString dir = m_dirs[kcfg_IconTheme->currentItem()];
+    QString dir = m_dirs[kcfg_IconThemeIndex->currentItem()];
     QFile themeRC(dir);
 
     if(!themeRC.open(IO_ReadOnly | IO_WriteOnly))
