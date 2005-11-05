@@ -178,7 +178,7 @@
       <!--   config->writeEntry("BackgroundImage",preferences.getBackgroundImageName()); -->
     </entry>
     <entry key="WikiURL" type="String">
-      <default>"http://en.wikipedia.org/wiki/"</default>
+      <default>http://en.wikipedia.org/wiki/</default>
     </entry>
     <entry key="ExpandWikiUrl" type="Bool">
       <default>false</default>
