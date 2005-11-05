@@ -1054,7 +1054,7 @@
   </group>
   <group name="Path Settings">
     <entry key="LogfilePath" type="Path">
-      <default></default>
+      <default code="true">KUser(KUser::UseRealUserID).homeDir()+"/logs"</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- konversationapplication.cpp:844 -->
