@@ -80,7 +80,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>trayOnlyCheck</cstring>
+                        <cstring>kcfg_SystrayOnly</cstring>
                     </property>
                     <property name="text">
                         <string>Skip creating taskbar entry</string>
