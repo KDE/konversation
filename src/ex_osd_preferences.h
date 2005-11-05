@@ -17,7 +17,7 @@ protected slots:
     void slotBackgroundColorChanged(const QColor& color);
     void slotScreenChanged(int index);
     void slotDrawShadowChanged(bool on);
-    void osdFontClicked();
+    void slotUpdateFont(const QFont& font);
     void slotPositionChanged();
     void slotApply();
 
@@ -26,7 +26,5 @@ protected:
     void hideEvent(QHideEvent* event);
 
 private:
-    void updateFonts();
-    QFont osdFont;
     OSDPreviewWidget* m_pOSDPreview;
 };

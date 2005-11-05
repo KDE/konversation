@@ -23,12 +23,13 @@ OSD_Config_Ext::OSD_Config_Ext( QWidget* parent, const char* name, WFlags fl )
     KConfigDialog *conf = static_cast<KConfigDialog *>( parent );
     connect( conf, SIGNAL( applyClicked() ), this, SLOT( slotApply() ) );
     connect( conf, SIGNAL( okClicked() ), this, SLOT( slotApply() ) );
+    connect( kcfg_OSDFont, SIGNAL(fontSelected(const QFont&)), this, SLOT(slotUpdateFont(const QFont&))); 
 
     slotOSDEnabledChanged(kcfg_UseOSD->isChecked());
     slotCustomColorsChanged(kcfg_OSDUseCustomColors->isChecked());
     slotScreenChanged(kcfg_OSDScreen->currentItem());
     slotDrawShadowChanged( kcfg_OSDDrawShadow->isChecked());
-    updateFonts();
+    slotUpdateFont(Preferences::oSDFont());
 
     kcfg_OSDOffsetX->hide();
     kcfg_OSDOffsetY->hide();
@@ -56,8 +57,8 @@ void OSD_Config_Ext::slotApply()
     konvApp->osd->setEnabled(kcfg_UseOSD->isChecked());
     if (kcfg_UseOSD->isChecked())
     {
-        konvApp->osd->setFont(osdFont);
-        if(kcfg_OSDUseCustomColors->isChecked())
+        konvApp->osd->setFont(Preferences::oSDFont());
+	if(kcfg_OSDUseCustomColors->isChecked())
         {
             konvApp->osd->setTextColor(kcfg_OSDTextColor->color());
             konvApp->osd->setBackgroundColor(kcfg_OSDBackgroundColor->color());
@@ -141,13 +142,7 @@ void OSD_Config_Ext::slotDrawShadowChanged(bool on)
     m_pOSDPreview->setShadow(on);
 }
 
-void OSD_Config_Ext::osdFontClicked()
+void OSD_Config_Ext::slotUpdateFont(const QFont& font)
 {
-    osdFont = kcfg_OSDFont->font();
-    updateFonts();
-}
-
-void OSD_Config_Ext::updateFonts()
-{
-    m_pOSDPreview->setFont(osdFont);
+    m_pOSDPreview->setFont(font);
 }
