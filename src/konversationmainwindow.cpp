@@ -120,17 +120,18 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     setStandardToolBarMenuEnabled(true);
     createStandardStatusBarAction();
-                                                  // options_show_menubar
+    
+    // options_show_menubar
     showMenuBarAction=KStdAction::showMenubar(this,SLOT(showMenubar()),actionCollection());
     KStdAction::configureToolbars(this, SLOT(openToolbars()), actionCollection());
-    #ifdef USE_KNOTIFY
-                                                  // options_configure_notifications
+    
+#ifdef USE_KNOTIFY // options_configure_notifications
     KAction *configureNotificationsAction = KStdAction::configureNotifications(this,SLOT(openNotifications()), actionCollection());
-    #endif
+#endif
 
-                                                  // options_configure_key_binding
+    // options_configure_key_binding
     KStdAction::keyBindings(this,SLOT(openKeyBindings()),actionCollection());
-                                                  // options_configure
+    // options_configure
     KAction *preferencesAction = KStdAction::preferences(this,SLOT(openPreferences()),actionCollection());
 
     KAction* action;
