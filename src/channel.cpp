@@ -67,9 +67,8 @@
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
 
-#define OPAQUE_CONF
-
-Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
+Channel::Channel(QWidget* parent) 
+  : ChatWindow(parent), key(" ")
 {
     // init variables
     m_processingTimer = 0;
@@ -112,12 +111,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
     QSizePolicy greedy = QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
     m_vertSplitter = new QSplitter(Qt::Vertical, this);
-
-    #ifdef OPAQUE_CONF
     m_vertSplitter->setOpaqueResize(KGlobalSettings::opaqueResize());
-    #else
-    m_vertSplitter->setOpaqueResize(true);
-    #endif
+
 
     QWidget* topicWidget = new QWidget(m_vertSplitter);
     m_vertSplitter->setResizeMode(topicWidget,QSplitter::KeepSize);
@@ -179,17 +174,13 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
 
     // (this) The main Box, holding the channel view/topic and the input line
     m_horizSplitter = new QSplitter(m_vertSplitter);
-
-    #ifdef OPAQUE_CONF
     m_horizSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
-    #else
-    m_horizSplitter->setOpaqueResize(true);
-    #endif
-
-                                                  // Server will be set later in setServer()
+    
+    // Server will be set later in setServer()
     IRCViewBox* ircViewBox = new IRCViewBox(m_horizSplitter, NULL);
     setTextView(ircViewBox->ircView());
     connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
+    
     // The box that holds the Nick List and the quick action buttons
     nickListButtons = new QVBox(m_horizSplitter);
     m_horizSplitter->setResizeMode(nickListButtons,QSplitter::KeepSize);
@@ -304,11 +295,10 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
     connect(nicknameListView,SIGNAL (dropped(QDropEvent*,QListViewItem*)),this,SLOT (filesDropped(QDropEvent*)) );
     connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
 
-    Q_ASSERT(nicknameCombobox->lineEdit());       //it should be editedable.  if we design it so it isn't, remove these lines.
     if(nicknameCombobox->lineEdit())
         connect(nicknameCombobox->lineEdit(), SIGNAL (lostFocus()),this,SLOT(nicknameComboboxChanged()));
 
-    nicknameList.setAutoDelete(true);             // delete items when they are removed
+    nicknameList.setAutoDelete(true);
 
     updateFonts();
     setLog(Preferences::log());
@@ -405,7 +395,7 @@ void Channel::textPasted(const QString& text)
 // Will be connected to IRCView::popupCommand(int)
 void Channel::popupChannelCommand(int id)
 {
-    channelCommand = true;                        // Context menu executed from ircview
+    channelCommand = true; // Context menu executed from ircview
     popupCommand(id);
     textView->clearContextNick();
     channelCommand = false;
@@ -459,7 +449,7 @@ void Channel::popupCommand(int id)
                         addressbook->associateNickAndUnassociateFromEveryoneElse(addr, (*it)->getNickname(), m_server->getServerName(), m_server->getServerGroup());
                     }
                 }
-                addressbook->saveTicket();        //This will refresh the nicks automatically for us. At least, if it doesn't, it's a bug :)
+                addressbook->saveTicket(); // This will refresh the nicks automatically for us. At least, if it doesn't, it's a bug :)
             }
             break;
         }
@@ -568,7 +558,7 @@ void Channel::popupCommand(int id)
                 KMessageBox::Yes)
                 pattern=cc+"IGNORE -ALL %u!*";
             break;
-    }                                             // switch
+    } // switch
 
     if(!pattern.isEmpty())
     {
@@ -607,8 +597,7 @@ void Channel::doubleClickCommand(QListViewItem* item)
 
 void Channel::completeNick()
 {
-    int pos;                                      // = cursorPosition();
-    int oldPos;                                   // = cursorPosition();
+    int pos, oldPos;
 
     channelInput->getCursorPosition(&oldPos,&pos);// oldPos is a dummy here, taking the paragraph parameter
     oldPos=channelInput->getOldCursorPosition();
@@ -661,7 +650,7 @@ void Channel::completeNick()
             // try to find matching nickname in list of names
             if(Preferences::nickCompletionMode() == 1 ||
                 Preferences::nickCompletionMode() == 2)
-            {                                     // Shell like completion
+            { // Shell like completion
                 QStringList found;
                 foundNick = nicknameList.completeNick(pattern, complete, found,
                     (Preferences::nickCompletionMode() == 2),
@@ -680,7 +669,7 @@ void Channel::completeNick()
                         channelInput->showCompletionList(found);
                     }
                 }
-            }                                     // Cycle completion
+            } // Cycle completion
             else if(Preferences::nickCompletionMode() == 0)
             {
                 complete = true;
@@ -996,7 +985,7 @@ void Channel::addNickname(ChannelNickPtr channelnick)
     }
     else
     {
-        Q_ASSERT(false);                          //We shouldn't be adding someone that is already in the channel.
+        Q_ASSERT(false); // We shouldn't be adding someone that is already in the channel.
     }
 }
 
@@ -1016,7 +1005,7 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo)
     /* Did we change our nick name? */
     QString newNick = nickInfo.getNickname();
 
-    if(newNick == m_server->getNickname())        /* Check newNick because  m_server->getNickname() is already updated to new nick */
+    if(newNick == m_server->getNickname()) /* Check newNick because  m_server->getNickname() is already updated to new nick */
     {
         setNickname(newNick);
         appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.").arg(newNick), false, true, true);
@@ -1044,7 +1033,9 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
     }
     else
     {
-        appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel. (%2)").arg(channelNick->getNickname()).arg(channelNick->getHostmask()),false, false);
+        QString nick = channelNick->getNickname();
+        QString hostname = channelNick->getHostmask();
+        appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel. (%2)").arg(nick).arg(hostname),false, false);
         addNickname(channelNick);
     }
 }
@@ -1121,8 +1112,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, co
         else
             appendCommandMessage(i18n("Kick"),i18n("%1 has been kicked from the channel by %2. (%3)").arg(channelNick->getNickname()).arg(kicker.getNickname()).arg(reason));
 
-        //TODO - Is this right??  Why not || isHalfop etc etc
-        if(channelNick->isOp() || channelNick->isOwner() || channelNick->isAdmin() || channelNick->isHalfOp()) adjustOps(-1);
+	if(channelNick->isOp() || channelNick->isOwner() || channelNick->isAdmin() || channelNick->isHalfOp()) adjustOps(-1);
         adjustNicks(-1);
 
         Nick* nick=getNickByName(channelNick->getNickname());
@@ -1693,7 +1683,7 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
 
 void Channel::showQuickButtons(bool show)
 {
-    // QT does not redraw the buttons properly when they are not on screen
+    // Qt does not redraw the buttons properly when they are not on screen
     // while getting hidden, so we remember the "soon to be" state here.
     if(isHidden())
     {
@@ -1711,7 +1701,7 @@ void Channel::showQuickButtons(bool show)
 
 void Channel::showModeButtons(bool show)
 {
-    // QT does not redraw the buttons properly when they are not on screen
+    // Qt does not redraw the buttons properly when they are not on screen
     // while getting hidden, so we remember the "soon to be" state here.
     if(isHidden())
     {
@@ -1739,7 +1729,7 @@ void Channel::showModeButtons(bool show)
 
 void Channel::indicateAway(bool show)
 {
-    // QT does not redraw the label properly when they are not on screen
+    // Qt does not redraw the label properly when they are not on screen
     // while getting hidden, so we remember the "soon to be" state here.
     if(isHidden())
     {
@@ -1811,9 +1801,7 @@ void Channel::updateFonts()
 {
     nicknameCombobox->setFont(Preferences::textFont());
 
-    QColor fg;
-    QColor bg;
-    QColor abg;
+    QColor fg,bg,abg;
 
     if(Preferences::inputFieldsBackgroundColor())
     {
@@ -1923,7 +1911,7 @@ QPtrList<Nick> Channel::getNickList()
 void Channel::childAdjustFocus()
 {
     channelInput->setFocus();
-    refreshModeButtons();                         //not really needed i think
+    refreshModeButtons(); //not really needed i think
 }
 
 void Channel::refreshModeButtons()
@@ -1932,7 +1920,7 @@ void Channel::refreshModeButtons()
     if(getOwnChannelNick())
     {
         enable=getOwnChannelNick()->isAnyTypeOfOp();
-    }                                             //if not channel nick, then enable is true - fall back to assuming they are op
+    } // if not channel nick, then enable is true - fall back to assuming they are op
 
     //don't disable the mode buttons since you can't then tell if they are enabled or not.
     //needs to be fixed somehow
@@ -2020,7 +2008,7 @@ void Channel::autoUserhostChanged(bool state)
                 Nick* lookNick=getNickByName(item->text(1));
                 if(lookNick) item->setText(2,lookNick->getHostmask());
                 item=item->itemBelow();
-            }                                     // while
+            } // while
         }
     }
     else
@@ -2033,9 +2021,9 @@ void Channel::autoUserhostChanged(bool state)
     }
 }
 
-void Channel::scheduleAutoWho()                   // slot
+void Channel::scheduleAutoWho() // slot
 {
-    if(!m_firstAutoWhoDone)                       // abort if initialization hasn't done yet
+    if(!m_firstAutoWhoDone) // abort if initialization hasn't done yet
         return;
     if(m_whoTimer.isActive())
         m_whoTimer.stop();
@@ -2056,10 +2044,20 @@ void Channel::autoWho()
     m_server->requestWho(getName());
 }
 
-QString Channel::getTextInLine() { return channelInput->text(); }
+QString Channel::getTextInLine() 
+{ 
+  return channelInput->text(); 
+}
 
-bool Channel::canBeFrontView()        { return true; }
-bool Channel::searchView()       { return true; }
+bool Channel::canBeFrontView()        
+{
+  return true; 
+}
+
+bool Channel::searchView()       
+{ 
+  return true; 
+}
 
 void Channel::appendInputText(const QString& s)
 {
@@ -2160,13 +2158,12 @@ void Channel::processPendingNicks()
     }
 }
 
-                                                  // virtual
-void Channel::setChannelEncoding(const QString& encoding)
+void Channel::setChannelEncoding(const QString& encoding) // virtual
 {
     Preferences::setChannelEncoding(m_server->getServerGroup(), getName(), encoding);
 }
 
-QString Channel::getChannelEncoding()             // virtual
+QString Channel::getChannelEncoding() // virtual
 {
     return Preferences::channelEncoding(m_server->getServerGroup(), getName());
 }
@@ -2236,7 +2233,7 @@ int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item
 }
 
 QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found,
-bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick)
+			       bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick)
 {
     found.clear();
     QString prefix = "^";
