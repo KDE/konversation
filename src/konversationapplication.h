@@ -173,7 +173,7 @@ class KonversationApplication : public KUniqueApplication
         void appearanceChanged();
         void sendMultiServerCommand(const QString& command, const QString& parameter);
 
-        void autoDemoteAllNicks();                // Auto decrease karmas for all nicks, this is a QTimer based operation
+        void autoDemoteAllNicks(); // Auto decrease karmas for all nicks, this is a QTimer based operation
 
     private:
         QPtrList<Server> serverList;
