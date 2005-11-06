@@ -43,7 +43,7 @@ xdg_apps_DATA = konversation.desktop
 
 # set the include path for X, qt and KDE
 INCLUDES= -Ilinkaddressbook -I$(srcdir)/linkaddressbook -Iblowfish -I$(srcdir)/blowfish\
-	-Iconfig -I$(srcdir)/config $(all_includes)
+          -Iconfig -I$(srcdir)/config $(all_includes)
 # the library search path.
 konversation_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 
@@ -69,3 +69,4 @@ noinst_HEADERS =serverlistdialog.h dcctransfersend.h 		 \
 		identitydialog.h topiclabel.h channeloptionsdialog.h joinchanneldialog.h \
 		popup.h
 
+CLEANFILES = preferences_base.h preferences_base.cpp
