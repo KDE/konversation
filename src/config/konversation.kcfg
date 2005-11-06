@@ -14,66 +14,36 @@
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- channel.cpp:336 -->
-      <!--   config->writeEntry("TopicSplitterSizes", m_vertSplitter->sizes()); -->
-      <!-- konversationapplication.cpp:456 -->
-      <!--   preferences.setTopicSplitterSizes(config->readIntListEntry("TopicSplitterSizes")); -->
-      <!-- konversationapplication.cpp:958 -->
-      <!--   config->writeEntry("TopicSplitterSizes", preferences.topicSplitterSizes()); -->
     </entry>
     <entry key="TextFont" type="Font">
       <default code="true">QFont()</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:436 -->
-      <!--   preferences.setTextFontRaw(config->readEntry("TextFont",preferences.getTextFont().rawName())); -->
-      <!-- konversationapplication.cpp:938 -->
-      <!--   config->writeEntry("TextFont",preferences.getTextFont().toString()); -->
     </entry>
     <entry key="ListFont" type="Font">
       <default code="true">QFont()</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:437 -->
-      <!--   preferences.setListFontRaw(config->readEntry("ListFont",preferences.getListFont().rawName())); -->
-      <!-- konversationapplication.cpp:939 -->
-      <!--   config->writeEntry("ListFont",preferences.getListFont().toString()); -->
     </entry>
     <entry key="Timestamping" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:438 -->
-      <!--   preferences.setTimestamping(config->readBoolEntry("Timestamping",preferences.getTimestamping())); -->
-      <!-- konversationapplication.cpp:940 -->
-      <!--   config->writeEntry("Timestamping",preferences.getTimestamping()); -->
     </entry>
     <entry key="ShowDate" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:439 -->
-      <!--   preferences.setShowDate(config->readBoolEntry("ShowDate",preferences.getShowDate())); -->
-      <!-- konversationapplication.cpp:941 -->
-      <!--   config->writeEntry("ShowDate", preferences.getShowDate()); -->
     </entry>
     <entry key="TimestampFormat" type="String">
       <default>hh:mm</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:440 -->
-      <!--   preferences.setTimestampFormat(config->readEntry("TimestampFormat",preferences.getTimestampFormat())); -->
-      <!-- konversationapplication.cpp:942 -->
-      <!--   config->writeEntry("TimestampFormat",preferences.getTimestampFormat()); -->
     </entry>
     <entry key="ShowQuickButtons" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:441 -->
-      <!--   preferences.setShowQuickButtons(config->readBoolEntry("ShowQuickButtons",preferences.getShowQuickButtons())); -->
-      <!-- konversationapplication.cpp:943 -->
-      <!--   config->writeEntry("ShowQuickButtons",preferences.getShowQuickButtons()); -->
     </entry>
     <entry key="QuickButtons" type="StringList" name="ButtonList">
       <default code="true">(QStringList() &lt;&lt; "Op,/OP %u%n"&lt;&lt;"DeOp,/DEOP %u%n"&lt;&lt;"WhoIs,/WHOIS %s,%%u%n"&lt;&lt;"Version,/CTCP %s,%%u VERSION%n"&lt;&lt;"Kick,/KICK %u%n"&lt;&lt;"Kick,/KICK %u%n"&lt;&lt;"Ban,/BAN %u%n"&lt;&lt;"Part,/PART %c Leaving...%n"&lt;&lt;"Quit,/QUIT Leaving...%n")</default>
@@ -82,100 +52,56 @@
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:442 -->
-      <!--   preferences.setShowModeButtons(config->readBoolEntry("ShowModeButtons",preferences.getShowModeButtons())); -->
-      <!-- konversationapplication.cpp:944 -->
-      <!--   config->writeEntry("ShowModeButtons",preferences.getShowModeButtons()); -->
     </entry>
     <entry key="CloseButtonsOnTabs" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:443 -->
-      <!--   preferences.setCloseButtonsOnTabs(config->readBoolEntry("CloseButtonsOnTabs",preferences.getCloseButtonsOnTabs())); -->
-      <!-- konversationapplication.cpp:945 -->
-      <!--   config->writeEntry("CloseButtonsOnTabs",preferences.getCloseButtonsOnTabs()); -->
     </entry>
     <entry key="CloseButtonsAlignRight" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:444 -->
-      <!--   preferences.setCloseButtonsAlignRight(config->readBoolEntry("CloseButtonsAlignRight",preferences.getCloseButtonsAlignRight())); -->
-      <!-- konversationapplication.cpp:946 -->
-      <!--   config->writeEntry("CloseButtonsAlignRight",preferences.getCloseButtonsAlignRight()); -->
     </entry>
     <entry key="AutoUserhost" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:446 -->
-      <!--   preferences.setAutoUserhost(config->readBoolEntry("AutoUserhost",preferences.getAutoUserhost())); -->
-      <!-- konversationapplication.cpp:948 -->
-      <!--   config->writeEntry("AutoUserhost",preferences.getAutoUserhost()); -->
     </entry>
     <entry key="UseSpacing" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:448 -->
-      <!--   preferences.setUseSpacing(config->readBoolEntry("UseSpacing",preferences.getUseSpacing())); -->
-      <!-- konversationapplication.cpp:950 -->
-      <!--   config->writeEntry("UseSpacing",preferences.getUseSpacing()); -->
     </entry>
     <entry key="Spacing" type="Int">
       <default>KDialog::spacingHint()</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:449 -->
-      <!--   preferences.setSpacing(config->readNumEntry("Spacing",preferences.getSpacing())); -->
-      <!-- konversationapplication.cpp:951 -->
-      <!--   config->writeEntry("Spacing",preferences.getSpacing()); -->
     </entry>
     <entry key="Margin" type="Int">
       <default>KDialog::marginHint()</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:450 -->
-      <!--   preferences.setMargin(config->readNumEntry("Margin",preferences.getMargin())); -->
-      <!-- konversationapplication.cpp:952 -->
-      <!--   config->writeEntry("Margin",preferences.getMargin()); -->
     </entry>
     <entry key="UseParagraphSpacing" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:452 -->
-      <!--   preferences.setUseParagraphSpacing(config->readBoolEntry("UseParagraphSpacing",preferences.getUseParagraphSpacing())); -->
-      <!-- konversationapplication.cpp:954 -->
-      <!--   config->writeEntry("UseParagraphSpacing",preferences.getUseParagraphSpacing()); -->
     </entry>
     <entry key="ParagraphSpacing" type="Int">
       <default>2</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:453 -->
-      <!--   preferences.setParagraphSpacing(config->readNumEntry("ParagraphSpacing",preferences.getParagraphSpacing())); -->
-      <!-- konversationapplication.cpp:955 -->
-      <!--   config->writeEntry("ParagraphSpacing",preferences.getParagraphSpacing()); -->
     </entry>
     <entry key="ChannelSplitter" type="IntList" name="channelSplitterSizes">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:455 -->
-      <!--   preferences.setChannelSplitterSizes(config->readIntListEntry("ChannelSplitterSizes")); -->
-      <!-- konversationapplication.cpp:957 -->
-      <!--   config->writeEntry("ChannelSplitter",preferences.channelSplitterSizes()); -->
     </entry>
     <entry key="BackgroundImage" type="String">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:458 -->
-      <!--   preferences.setBackgroundImageName(config->readEntry("BackgroundImage",preferences.getBackgroundImageName())); -->
-      <!-- konversationapplication.cpp:959 -->
-      <!--   config->writeEntry("BackgroundImage",preferences.getBackgroundImageName()); -->
     </entry>
     <entry key="WikiURL" type="String">
       <default>http://en.wikipedia.org/wiki/</default>
@@ -206,10 +132,6 @@
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:466 -->
-      <!--   preferences.setFilterColors(config->readBoolEntry("FilterColorCodes",preferences.getFilterColors()));  //FIXME -->
-      <!-- konversationapplication.cpp:969 -->
-      <!--   config->writeEntry("FilterColorCodes", preferences.getFilterColors()); -->
     </entry>
     <entry key="NickColor$(nickNumber)" type="Color">
       <parameter name="nickNumber" type="UInt" max="9"/>
@@ -223,42 +145,25 @@
       <default param="7">#3176B3</default>
       <default param="8">#000001</default>
     </entry>
-
    <entry key="UseColoredNicks" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:474 -->
-      <!--   preferences.setUseColoredNicks(config->readBoolEntry("UseColoredNicks",preferences.getUseColoredNicks())); -->
-      <!-- konversationapplication.cpp:970 -->
-      <!--   config->writeEntry("UseColoredNicks", preferences.getUseColoredNicks()); -->
     </entry>
     <entry key="ShowTabBarCloseButton" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:476 -->
-      <!--   preferences.setShowTabBarCloseButton(config->readBoolEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton())); -->
-      <!-- konversationapplication.cpp:962 -->
-      <!--   config->writeEntry("ShowTabBarCloseButton", preferences.getShowTabBarCloseButton()); -->
     </entry>
     <entry key="ShowTopic" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:478 -->
-      <!--   preferences.setShowTopic(config->readBoolEntry("ShowTopic", preferences.getShowTopic())); -->
-      <!-- konversationapplication.cpp:964 -->
-      <!--   config->writeEntry("ShowTopic", preferences.getShowTopic()); -->
     </entry>
     <entry key="ShowNicknameBox" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:479 -->
-      <!--   preferences.setShowNicknameBox(config->readBoolEntry("ShowNicknameBox", preferences.showNicknameBox())); -->
-      <!-- konversationapplication.cpp:965 -->
-      <!--   config->writeEntry("ShowNicknameBox", preferences.showNicknameBox()); -->
     </entry>
     <entry key="UseBoldNicks" type="Bool">
       <default>false</default>
@@ -274,19 +179,11 @@
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:481 -->
-      <!--   preferences.setShowRememberLineInAllWindows(config->readBoolEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows())); -->
-      <!-- konversationapplication.cpp:967 -->
-      <!--   config->writeEntry("ShowRememberLineInAllWindows", preferences.getShowRememberLineInAllWindows()); -->
     </entry>
     <entry key="FocusNewQueries" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:482 -->
-      <!--   preferences.setFocusNewQueries(config->readBoolEntry("FocusNewQueries", preferences.getFocusNewQueries())); -->
-      <!-- konversationapplication.cpp:968 -->
-      <!--   config->writeEntry("FocusNewQueries", preferences.getFocusNewQueries()); -->
     </entry>
   </group>
   <group name="AutoAway">
@@ -294,8 +191,6 @@
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konvdcop.cpp:38 -->
-      <!--   if (config->readBoolEntry("UseAutoAway", true)) -->
     </entry>
   </group>
   <group name="General Options">
@@ -308,146 +203,82 @@
       <default>/</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:375 -->
-      <!--   preferences.setCommandChar(config->readEntry("CommandChar",preferences.getCommandChar())); -->
-      <!-- konversationapplication.cpp:895 -->
-      <!--   config->writeEntry("CommandChar",preferences.getCommandChar()); -->
     </entry>
     <entry key="PreShellCommand" type="String">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:378 -->
-      <!--   preferences.setPreShellCommand(config->readEntry("PreShellCommand",preferences.getPreShellCommand())); -->
     </entry>
     <entry key="ShowTrayIcon" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:381 -->
-      <!--   preferences.setShowTrayIcon(config->readBoolEntry("ShowTrayIcon",preferences.getShowTrayIcon())); -->
-      <!-- konversationapplication.cpp:909 -->
-      <!--   config->writeEntry("ShowTrayIcon",preferences.getShowTrayIcon()); -->
     </entry>
     <entry key="SystrayOnly" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:382 -->
-      <!--   preferences.setSystrayOnly(config->readBoolEntry("SystrayOnly",preferences.getSystrayOnly())); -->
-      <!-- konversationapplication.cpp:910 -->
-      <!--   config->writeEntry("SystrayOnly",preferences.getSystrayOnly()); -->
     </entry>
     <entry key="TrayNotify" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:383 -->
-      <!--   preferences.setTrayNotify(config->readBoolEntry("TrayNotify",preferences.getTrayNotify())); -->
-      <!-- konversationapplication.cpp:911 -->
-      <!--   config->writeEntry("TrayNotify",preferences.getTrayNotify()); -->
     </entry>
     <entry key="TrayNotifyOnlyOwnNick" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:384 -->
-      <!--   preferences.setTrayNotifyOnlyOwnNick(config->readBoolEntry("TrayNotifyOnlyOwnNick", -->
-      <!-- konversationapplication.cpp:912 -->
-      <!--   config->writeEntry("TrayNotifyOnlyOwnNick", preferences.trayNotifyOnlyOwnNick()); -->
     </entry>
     <entry key="ShowBackgroundImage" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:386 -->
-      <!--   preferences.setShowBackgroundImage(config->readBoolEntry("ShowBackgroundImage",preferences.getShowBackgroundImage())); -->
-      <!-- konversationapplication.cpp:914 -->
-      <!--   config->writeEntry("ShowBackgroundImage",preferences.getShowBackgroundImage()); -->
     </entry>
     <entry key="NicksOnlineGeometry" type="Size" name="NicksOnlineSize">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:390 -->
-      <!--   preferences.setNicksOnlineSize(config->readSizeEntry("NicksOnlineGeometry")); -->
-      <!-- konversationapplication.cpp:897 -->
-      <!--   config->writeEntry("NicksOnlineGeometry",preferences.getNicksOnlineSize()); -->
     </entry>
     <entry key="NicknameGeometry" type="Size" name="NicknameSize">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:391 -->
-      <!--   preferences.setNicknameSize(config->readSizeEntry("NicknameGeometry")); -->
-      <!-- konversationapplication.cpp:898 -->
-      <!--   config->writeEntry("NicknameGeometry",preferences.getNicknameSize()); -->
     </entry>
     <entry key="LogfileReaderGeometry" type="Size" name="LogfileReaderSize">
       <default code="true">QSize(400, 200)</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:392 -->
-      <!--   preferences.setLogfileReaderSize(config->readSizeEntry("LogfileReaderGeometry",logfileReaderSize)); -->
-      <!-- konversationapplication.cpp:899 -->
-      <!--   config->writeEntry("LogfileReaderGeometry",preferences.getLogfileReaderSize()); -->
     </entry>
     <entry key="MultilineEditGeometry" type="Size" name="MultilineEditSize">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:393 -->
-      <!--   preferences.setMultilineEditSize(config->readSizeEntry("MultilineEditGeometry")); -->
-      <!-- konversationapplication.cpp:900 -->
-      <!--   config->writeEntry("MultilineEditGeometry",preferences.getMultilineEditSize()); -->
     </entry>
     <entry key="LogfileBufferSize" type="Int">
       <default>100</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:396 -->
-      <!--   preferences.setLogfileBufferSize(config->readNumEntry("LogfileBufferSize",preferences.getLogfileBufferSize())); -->
-      <!-- konversationapplication.cpp:902 -->
-      <!--   config->writeEntry("LogfileBufferSize",preferences.getLogfileBufferSize()); -->
     </entry>
     <entry key="ScrollbackMax" type="Int">
       <default>1000</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:397 -->
-      <!--   preferences.setScrollbackMax(config->readUnsignedNumEntry("ScrollbackMax",preferences.getScrollbackMax())); -->
-      <!-- konversationapplication.cpp:903 -->
-      <!--   config->writeEntry("ScrollbackMax",preferences.getScrollbackMax()); -->
     </entry>
     <entry key="AutoWhoNicksLimit" type="Int">
       <default>200</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:399 -->
-      <!--   preferences.setAutoWhoNicksLimit(config->readUnsignedNumEntry("AutoWhoNicksLimit",preferences.getAutoWhoNicksLimit())); -->
-      <!-- konversationapplication.cpp:905 -->
-      <!--   config->writeEntry("AutoWhoNicksLimit",preferences.getAutoWhoNicksLimit()); -->
     </entry>
     <entry key="AutoWhoContinuousEnabled" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:400 -->
-      <!--   preferences.setAutoWhoContinuousEnabled(config->readBoolEntry("AutoWhoContinuousEnabled",preferences.getAutoWhoContinuousEnabled())); -->
-      <!-- konversationapplication.cpp:906 -->
-      <!--   config->writeEntry("AutoWhoContinuousEnabled",preferences.getAutoWhoContinuousEnabled()); -->
     </entry>
     <entry key="AutoWhoContinuousInterval" type="Int">
       <default>90</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:401 -->
-      <!--   preferences.setAutoWhoContinuousInterval(config->readUnsignedNumEntry("AutoWhoContinuousInterval",preferences.getAutoWhoContinuousInterval())); -->
-      <!-- konversationapplication.cpp:907 -->
-      <!--   config->writeEntry("AutoWhoContinuousInterval",preferences.getAutoWhoContinuousInterval()); -->
     </entry>
-    <!-- preferencesentry = getShowRealNames -->
-    <!-- type = bool  -->
     <entry key="ShowRealNames" type="Bool">
       <default>false</default>
       <label>&amp;Show real names next to nicknames</label>
@@ -457,82 +288,46 @@
       <default>/QUERY %u%n</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:404 -->
-      <!--   preferences.setChannelDoubleClickAction(config->readEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction())); -->
-      <!-- konversationapplication.cpp:919 -->
-      <!--       config->writeEntry("ChannelDoubleClickAction",preferences.getChannelDoubleClickAction()); -->
     </entry>
     <entry key="NotifyDoubleClickAction" type="String">
       <default>/WHOIS %u%n</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:405 -->
-      <!--   preferences.setNotifyDoubleClickAction(config->readEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction())); -->
-      <!-- konversationapplication.cpp:920 -->
-      <!--   config->writeEntry("NotifyDoubleClickAction",preferences.getNotifyDoubleClickAction()); -->
     </entry>
     <entry key="Beep" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:408 -->
-      <!--   preferences.setBeep(config->readBoolEntry("Beep",preferences.getBeep())); -->
-      <!-- konversationapplication.cpp:922 -->
-      <!--   config->writeEntry("Beep",preferences.getBeep()); -->
     </entry>
     <entry key="RawLog" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:411 -->
-      <!--   preferences.setRawLog(config->readBoolEntry("RawLog",preferences.getRawLog())); -->
-      <!-- konversationapplication.cpp:923 -->
-      <!--   config->writeEntry("RawLog",preferences.getRawLog()); -->
     </entry>
     <entry key="VersionReply" type="String">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:414 -->
-      <!--   QString mv=config->readEntry("VersionReply"); -->
-      <!-- konversationapplication.cpp:925 -->
-      <!--   config->writeEntry("VersionReply",preferences.getVersionReply(TRUE)); -->
     </entry>
     <entry key="MaximumLag" type="Int" name="MaximumLagTime">
       <default>180</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:422 -->
-      <!--   preferences.setMaximumLagTime(config->readNumEntry("MaximumLag",preferences.getMaximumLagTime())); -->
-      <!-- konversationapplication.cpp:927 -->
-      <!--   config->writeEntry("MaximumLag",preferences.getMaximumLagTime()); -->
     </entry>
     <entry key="RedirectServerAndAppMsgToStatusPane" type="Bool">
-      <default>true</default>
+      <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:424 -->
-      <!--   preferences.setRedirectToStatusPane(config->readBoolEntry("RedirectServerAndAppMsgToStatusPane", -->
-      <!-- konversationapplication.cpp:929 -->
-      <!--   config->writeEntry("RedirectServerAndAppMsgToStatusPane", preferences.getRedirectToStatusPane()); -->
     </entry>
     <entry key="ServerWindowMenuBarStatus" type="Bool" name="ShowMenuBar">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:428 -->
-      <!--   preferences.setShowMenuBar(config->readBoolEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar())); -->
-      <!-- konversationapplication.cpp:932 -->
-      <!--   config->writeEntry("ServerWindowMenuBarStatus", preferences.getShowMenuBar()); -->
     </entry>
     <entry key="DisableNotifyWhileAway" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:430 -->
-      <!--   preferences.setDisableNotifyWhileAway(config->readBoolEntry("DisableNotifyWhileAway", -->
-      <!-- konversationapplication.cpp:934 -->
-      <!--   config->writeEntry("DisableNotifyWhileAway", preferences.disableNotifyWhileAway()); -->
     </entry>
   </group>
   <group name="Sort Nicknames">
@@ -540,84 +335,46 @@
       <default>1</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:486 -->
-      <!--   if(config->readNumEntry("AdminValue",-1)!=-1) -->
-      <!-- konversationapplication.cpp:491 -->
-      <!--     preferences.setAdminValue(config->readNumEntry("AdminValue",preferences.getAdminValue())); -->
-      <!-- konversationapplication.cpp:975 -->
-      <!--   config->writeEntry("AdminValue",preferences.getAdminValue()); -->
     </entry>
     <entry key="OwnerValue" type="Int">
       <default>2</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:492 -->
-      <!--     preferences.setOwnerValue(config->readNumEntry("OwnerValue",preferences.getOwnerValue())); -->
-      <!-- konversationapplication.cpp:976 -->
-      <!--   config->writeEntry("OwnerValue",preferences.getOwnerValue()); -->
     </entry>
     <entry key="OperatorValue" type="Int" name="OpValue">
       <default>4</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:493 -->
-      <!--     preferences.setOpValue(config->readNumEntry("OperatorValue",preferences.getOpValue())); -->
-      <!-- konversationapplication.cpp:977 -->
-      <!--   config->writeEntry("OperatorValue",preferences.getOpValue()); -->
     </entry>
     <entry key="HalfopValue" type="Int">
       <default>8</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:494 -->
-      <!--     preferences.setHalfopValue(config->readNumEntry("HalfopValue",preferences.getHalfopValue())); -->
-      <!-- konversationapplication.cpp:978 -->
-      <!--   config->writeEntry("HalfopValue",preferences.getHalfopValue()); -->
     </entry>
     <entry key="VoiceValue" type="Int">
       <default>16</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:495 -->
-      <!--     preferences.setVoiceValue(config->readNumEntry("VoiceValue",preferences.getVoiceValue())); -->
-      <!-- konversationapplication.cpp:979 -->
-      <!--   config->writeEntry("VoiceValue",preferences.getVoiceValue()); -->
     </entry>
     <entry key="AwayValue" type="Int">
       <default>32</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:496 -->
-      <!--     preferences.setAwayValue(config->readNumEntry("AwayValue",preferences.getAwayValue())); -->
-      <!-- konversationapplication.cpp:980 -->
-      <!--   config->writeEntry("AwayValue",preferences.getAwayValue()); -->
     </entry>
     <entry key="NoRightsValue" type="Int">
       <default>32</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:497 -->
-      <!--     preferences.setNoRightsValue(config->readNumEntry("NoRightsValue",preferences.getNoRightsValue())); -->
-      <!-- konversationapplication.cpp:981 -->
-      <!--   config->writeEntry("NoRightsValue",preferences.getNoRightsValue()); -->
     </entry>
     <entry key="SortByStatus" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:500 -->
-      <!--   preferences.setSortByStatus(config->readBoolEntry("SortByStatus",preferences.getSortByStatus())); -->
-      <!-- konversationapplication.cpp:982 -->
-      <!--   config->writeEntry("SortByStatus",preferences.getSortByStatus()); -->
     </entry>
     <entry key="SortCaseInsensitive" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:501 -->
-      <!--   preferences.setSortCaseInsensitive(config->readBoolEntry("SortCaseInsensitive",preferences.getSortCaseInsensitive())); -->
-      <!-- konversationapplication.cpp:983 -->
-      <!--   config->writeEntry("SortCaseInsensitive",preferences.getSortCaseInsensitive()); -->
     </entry>
   </group>
   <group name="OSD">
@@ -625,136 +382,76 @@
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:562 -->
-      <!--   preferences.setOSDUsage(config->readBoolEntry("UseOSD",preferences.getOSDUsage())); -->
-      <!-- konversationapplication.cpp:1158 -->
-      <!--   config->writeEntry("UseOSD",preferences.getOSDUsage()); -->
     </entry>
     <entry key="ShowOwnNick" type="Bool" name="OSDShowOwnNick">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:563 -->
-      <!--   preferences.setOSDShowOwnNick(config->readBoolEntry("ShowOwnNick",preferences.getOSDShowOwnNick())); -->
-      <!-- konversationapplication.cpp:1160 -->
-      <!--   config->writeEntry("ShowOwnNick",preferences.getOSDShowOwnNick()); -->
     </entry>
     <entry key="ShowChannel" type="Bool" name="OSDShowChannel">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:564 -->
-      <!--   preferences.setOSDShowChannel(config->readBoolEntry("ShowChannel",preferences.getOSDShowChannel())); -->
-      <!-- konversationapplication.cpp:1161 -->
-      <!--   config->writeEntry("ShowChannel",preferences.getOSDShowChannel()); -->
     </entry>
     <entry key="ShowQuery" type="Bool" name="OSDShowQuery">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:565 -->
-      <!--   preferences.setOSDShowQuery(config->readBoolEntry("ShowQuery",preferences.getOSDShowQuery())); -->
-      <!-- konversationapplication.cpp:1162 -->
-      <!--   config->writeEntry("ShowQuery",preferences.getOSDShowQuery()); -->
     </entry>
     <entry key="ShowChannelEvent" type="Bool" name="OSDShowChannelEvent">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:566 -->
-      <!--   preferences.setOSDShowChannelEvent(config->readBoolEntry("ShowChannelEvent",preferences.getOSDShowChannelEvent())); -->
-      <!-- konversationapplication.cpp:1163 -->
-      <!--   config->writeEntry("ShowChannelEvent",preferences.getOSDShowChannelEvent()); -->
     </entry>
     <entry key="OSDFont" type="Font">
       <default code="true">QFont()</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:567 -->
-      <!--   preferences.setOSDFontRaw(config->readEntry("OSDFont",preferences.getOSDFont().rawName())); -->
-      <!-- konversationapplication.cpp:1164 -->
-      <!--   config->writeEntry("OSDFont",preferences.getOSDFont().toString()); -->
     </entry>
     <entry key="OSDUseCustomColors" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:568 -->
-      <!--   preferences.setOSDUseCustomColors(config->readBoolEntry("OSDUseCustomColors", preferences.getOSDUseCustomColors())); -->
-      <!-- konversationapplication.cpp:1159 -->
-      <!--   config->writeEntry("OSDUseCustomColors",preferences.getOSDUseCustomColors()); -->
     </entry>
     <entry key="OSDDuration" type="Int">
       <default>3000</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:569 -->
-      <!--   preferences.setOSDDuration(config->readNumEntry("OSDDuration",preferences.getOSDDuration())); -->
-      <!-- konversationapplication.cpp:1167 -->
-      <!--   config->writeEntry("OSDDuration",preferences.getOSDDuration()); -->
     </entry>
     <entry key="OSDScreen" type="Int">
       <default>0</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:570 -->
-      <!--   preferences.setOSDScreen(config->readNumEntry("OSDScreen",preferences.getOSDScreen())); -->
-      <!-- konversationapplication.cpp:1168 -->
-      <!--   config->writeEntry("OSDScreen",preferences.getOSDScreen()); -->
     </entry>
     <entry key="OSDDrawShadow" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:571 -->
-      <!--   preferences.setOSDDrawShadow(config->readBoolEntry("OSDDrawShadow",preferences.getOSDDrawShadow())); -->
-      <!-- konversationapplication.cpp:1169 -->
-      <!--   config->writeEntry("OSDDrawShadow",preferences.getOSDDrawShadow()); -->
     </entry>
     <entry key="OffsetX" type="Int" name="OSDOffsetX">
       <default>30</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:572 -->
-      <!--   preferences.setOSDOffsetX(config->readNumEntry("OffsetX",preferences.getOSDOffsetX())); -->
-      <!-- konversationapplication.cpp:1170 -->
-      <!--   config->writeEntry("OffsetX",preferences.getOSDOffsetX()); -->
     </entry>
     <entry key="OffsetY" type="Int" name="OSDOffsetY">
       <default>50</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:573 -->
-      <!--   preferences.setOSDOffsetY(config->readNumEntry("OffsetY",preferences.getOSDOffsetY())); -->
-      <!-- konversationapplication.cpp:1171 -->
-      <!--   config->writeEntry("OffsetY",preferences.getOSDOffsetY()); -->
     </entry>
     <entry key="Alignment" type="Int" name="OSDAlignment">
       <default>0</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:574 -->
-      <!--   preferences.setOSDAlignment(config->readNumEntry("Alignment",preferences.getOSDAlignment())); -->
-      <!-- konversationapplication.cpp:1172 -->
-      <!--   config->writeEntry("Alignment",preferences.getOSDAlignment()); -->
     </entry>
     <entry key="OSDTextColor" type="String">
       <default>#ffffff</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:588 -->
-      <!--       QString osdTextColor = config->readEntry("OSDTextColor"); -->
-      <!-- konversationapplication.cpp:1165 -->
-      <!--   config->writeEntry("OSDTextColor",preferences.getOSDTextColor().name().mid(1)); -->
     </entry>
     <entry key="OSDBackgroundColor" type="String">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:596 -->
-      <!--       QString osdBackgroundColor = config->readEntry("OSDBackgroundColor"); -->
-      <!-- konversationapplication.cpp:1166 -->
-      <!--   config->writeEntry("OSDBackgroundColor",preferences.getOSDBackgroundColor().name().mid(1)); -->
     </entry>
   </group>
   <group name="Notify List">
@@ -762,40 +459,22 @@
       <default>20</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:702 -->
-      <!--   preferences.setNotifyDelay(config->readNumEntry("NotifyDelay",20)); -->
-      <!-- konversationapplication.cpp:1020 -->
-      <!--   config->writeEntry("NotifyDelay",preferences.getNotifyDelay()); -->
     </entry>
     <entry key="UseNotify" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:703 -->
-      <!--   preferences.setUseNotify(config->readBoolEntry("UseNotify",true)); -->
-      <!-- konversationapplication.cpp:1021 -->
-      <!--   config->writeEntry("UseNotify",preferences.getUseNotify()); -->
     </entry>
 <!--      I've taken the below out until it can be fixed... right??
 <entry key="NotifyList" type="String" name="NotifyString">
       <default></default>
       <label></label>
       <whatsthis></whatsthis> -->
-      <!-- konversationapplication.cpp:704 -->
-      <!-- //  QString notifyList=config->readEntry("NotifyList",QString::null); -->
-      <!-- konversationapplication.cpp:721 -->
-      <!--     QString oldNotifyNicknames = config->readEntry("NotifyList", QString::null); -->
-      <!-- konversationapplication.cpp:1022 -->
-      <!-- //  config->writeEntry("NotifyList",preferences.getNotifyString()); -->
     <!-- </entry> -->
     <entry key="OnStartup" type="Bool" name="OpenWatchedNicksAtStartup">
       <default>false</default>
       <label>Open Watched Nicks tab at application startup</label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:706 -->
-      <!--   preferences.setOpenWatchedNicksAtStartup(config->readBoolEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup())); -->
-      <!-- konversationapplication.cpp:1023 -->
-      <!--   config->writeEntry("OnStartup", preferences.getOpenWatchedNicksAtStartup()); -->
     </entry>
   </group>
   <group name="Highlight List">
@@ -803,53 +482,31 @@
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:758 -->
-      <!--   preferences.setHighlightSoundEnabled(config->readBoolEntry("HighlightSoundsEnabled", -->
-      <!-- konversationapplication.cpp:1135 -->
-      <!--   config->writeEntry("HighlightSoundsEnabled", preferences.getHighlightSoundEnabled()); -->
     </entry>
     <entry key="HighlightNick" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:760 -->
-      <!--   preferences.setHighlightNick(config->readBoolEntry("HighlightNick",preferences.getHighlightNick())); -->
-      <!-- konversationapplication.cpp:1131 -->
-      <!--   config->writeEntry("HighlightNick",preferences.getHighlightNick()); -->
     </entry>
     <entry key="HighlightNickColor" type="Color">
       <default>#ff0000</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:761 -->
-      <!--   QString highlight=config->readEntry("HighlightNickColor"); -->
-      <!-- konversationapplication.cpp:1132 -->
-      <!--   config->writeEntry("HighlightNickColor",preferences.getHighlightNickColor().name().mid(1)); -->
     </entry>
     <entry key="HighlightOwnLines" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:767 -->
-      <!--   preferences.setHighlightOwnLines(config->readBoolEntry("HighlightOwnLines",preferences.getHighlightOwnLines())); -->
-      <!-- konversationapplication.cpp:1133 -->
-      <!--   config->writeEntry("HighlightOwnLines",preferences.getHighlightOwnLines()); -->
     </entry>
     <entry key="HighlightOwnLinesColor" type="Color">
       <default>#ff0000</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:768 -->
-      <!--   highlight=config->readEntry("HighlightOwnLinesColor"); -->
-      <!-- konversationapplication.cpp:1134 -->
-      <!--   config->writeEntry("HighlightOwnLinesColor",preferences.getHighlightOwnLinesColor().name().mid(1)); -->
     </entry>
     <entry key="Highlight" type="String">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:775 -->
-      <!--     highlight=config->readEntry("Highlight"); -->
     </entry>
   </group>
   <group name="Aliases">
@@ -857,10 +514,6 @@
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:812 -->
-      <!--   QStringList newList=config->readListEntry("AliasList"); -->
-      <!-- konversationapplication.cpp:1189 -->
-      <!--   config->writeEntry("AliasList",preferences.getAliasList()); -->
     </entry>
   </group>
   <group name="Nick Completion">
@@ -868,44 +521,26 @@
       <default>2</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:817 -->
-      <!--   preferences.setNickCompletionMode(config->readNumEntry("Mode", preferences.getNickCompletionMode())); -->
-      <!-- konversationapplication.cpp:1193 -->
-      <!--   config->writeEntry("Mode", preferences.getNickCompletionMode()); -->
     </entry>
     <entry key="SuffixStart" type="String" name="NickCompleteSuffixStart">
       <default>: </default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:818 -->
-      <!--   preferences.setNickCompleteSuffixStart(config->readEntry("SuffixStart",preferences.getNickCompleteSuffixStart())); -->
-      <!-- konversationapplication.cpp:1194 -->
-      <!--   config->writeEntry("SuffixStart",preferences.getNickCompleteSuffixStart()); -->
     </entry>
     <entry key="SuffixMiddle" type="String" name="NickCompleteSuffixMiddle">
       <default> </default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:819 -->
-      <!--   preferences.setNickCompleteSuffixMiddle(config->readEntry("SuffixMiddle",preferences.getNickCompleteSuffixMiddle())); -->
-      <!-- konversationapplication.cpp:1195 -->
-      <!--   config->writeEntry("SuffixMiddle",preferences.getNickCompleteSuffixMiddle()); -->
     </entry>
     <entry key="PrefixCharacter" type="String">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:820 -->
-      <!--   preferences.setPrefixCharacter(config->readEntry("PrefixCharacter",preferences.getPrefixCharacter())); -->
     </entry>
     <entry key="CaseSensitive" type="Bool" name="NickCompletionCaseSensitive">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:821 -->
-      <!--   preferences.setNickCompletionCaseSensitive(config->readBoolEntry("CaseSensitive", -->
-      <!-- konversationapplication.cpp:1196 -->
-      <!--   config->writeEntry("CaseSensitive", preferences.nickCompletionCaseSensitive()); -->
     </entry>
   </group>
   <group name="DCC Settings">
@@ -913,136 +548,76 @@
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:826 -->
-      <!--   preferences.setDccBufferSize(config->readNumEntry("BufferSize",preferences.getDccBufferSize())); -->
-      <!-- konversationapplication.cpp:1217 -->
-      <!-- 	config->writeEntry("BufferSize",preferences.getDccBufferSize()); -->
     </entry>
     <entry key="MethodToGetOwnIp" type="Int" name="DccMethodToGetOwnIp">
       <default>1</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:827 -->
-      <!--   preferences.setDccMethodToGetOwnIp(config->readNumEntry("MethodToGetOwnIp",preferences.getDccMethodToGetOwnIp())); -->
-      <!-- konversationapplication.cpp:1207 -->
-      <!-- 	config->writeEntry("MethodToGetOwnIp",preferences.getDccMethodToGetOwnIp()); -->
     </entry>
     <entry key="SpecificOwnIp" type="String" name="DccSpecificOwnIp">
       <default>0.0.0.0</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:828 -->
-      <!--   preferences.setDccSpecificOwnIp(config->readEntry("SpecificOwnIp",preferences.getDccSpecificOwnIp())); -->
-      <!-- konversationapplication.cpp:1208 -->
-      <!--   config->writeEntry("SpecificOwnIp",preferences.getDccSpecificOwnIp()); -->
     </entry>
     <entry key="SpecificSendPorts" type="Bool" name="DccSpecificSendPorts">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:829 -->
-      <!--   preferences.setDccSpecificSendPorts(config->readBoolEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts())); -->
-      <!-- konversationapplication.cpp:1210 -->
-      <!-- 	config->writeEntry("SpecificSendPorts",preferences.getDccSpecificSendPorts()); -->
     </entry>
     <entry key="SendPortsFirst" type="Int"  name="DccSendPortsFirst">
-      <default>0</default>
+      <default>1025</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:830 -->
-      <!--   preferences.setDccSendPortsFirst(config->readNumEntry("SendPortsFirst",preferences.getDccSendPortsFirst())); -->
-      <!-- konversationapplication.cpp:1211 -->
-      <!--   config->writeEntry("SendPortsFirst",preferences.getDccSendPortsFirst()); -->
     </entry>
     <entry key="SendPortsLast" type="UInt" name="DccSendPortsLast">
-      <default>0</default>
+      <default>6000</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:831 -->
-      <!--   preferences.setDccSendPortsLast(config->readNumEntry("SendPortsLast",preferences.getDccSendPortsLast())); -->
-      <!-- konversationapplication.cpp:1212 -->
-      <!--   config->writeEntry("SendPortsLast",preferences.getDccSendPortsLast()); -->
     </entry>
     <entry key="SpecificChatPorts" type="Bool" name="DccSpecificChatPorts">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:832 -->
-      <!--   preferences.setDccSpecificChatPorts(config->readBoolEntry("SpecificChatPorts",preferences.getDccSpecificChatPorts())); -->
-      <!-- konversationapplication.cpp:1213 -->
-      <!--   config->writeEntry("SpecificChatPorts",preferences.getDccSpecificChatPorts()); -->
     </entry>
     <entry key="ChatPortsFirst" type="Int" name="DccChatPortsFirst">
-      <default>0</default>
+      <default>1025</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:833 -->
-      <!--   preferences.setDccChatPortsFirst(config->readNumEntry("ChatPortsFirst",preferences.getDccChatPortsFirst())); -->
-      <!-- konversationapplication.cpp:1214 -->
-      <!--   config->writeEntry("ChatPortsFirst",preferences.getDccChatPortsFirst()); -->
     </entry>
     <entry key="ChatPortsLast" type="UInt" name="DccChatPortsLast">
-      <default>0</default>
+      <default>6000</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:834 -->
-      <!--   preferences.setDccChatPortsLast(config->readNumEntry("ChatPortsLast",preferences.getDccChatPortsLast())); -->
-      <!-- konversationapplication.cpp:1215 -->
-      <!--   config->writeEntry("ChatPortsLast",preferences.getDccChatPortsLast()); -->
     </entry>
     <entry key="AddPartner" type="Bool" name="DccAddPartner">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:835 -->
-      <!--   preferences.setDccAddPartner(config->readBoolEntry("AddPartner",preferences.getDccAddPartner())); -->
-      <!-- konversationapplication.cpp:1200 -->
-      <!--   config->writeEntry("AddPartner",preferences.getDccAddPartner()); -->
     </entry>
     <entry key="CreateFolder" type="Bool" name="DccCreateFolder">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:836 -->
-      <!--   preferences.setDccCreateFolder(config->readBoolEntry("CreateFolder",preferences.getDccCreateFolder())); -->
-      <!-- konversationapplication.cpp:1201 -->
-      <!--   config->writeEntry("CreateFolder",preferences.getDccCreateFolder()); -->
     </entry>
     <entry key="AutoGet" type="Bool" name="DccAutoGet">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:837 -->
-      <!--   preferences.setDccAutoGet(config->readBoolEntry("AutoGet",preferences.getDccAutoGet())); -->
-      <!-- konversationapplication.cpp:1202 -->
-      <!--   config->writeEntry("AutoGet",preferences.getDccAutoGet()); -->
     </entry>
     <entry key="AutoResume" type="Bool" name="DccAutoResume">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:838 -->
-      <!--   preferences.setDccAutoResume(config->readBoolEntry("AutoResume",preferences.getDccAutoResume())); -->
-      <!-- konversationapplication.cpp:1203 -->
-      <!--   config->writeEntry("AutoResume",preferences.getDccAutoResume()); -->
     </entry>
     <entry key="FastSend" type="Bool" name="DccFastSend">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:839 -->
-      <!--   preferences.setDccFastSend(config->readBoolEntry("FastSend",preferences.getDccFastSend())); -->
-      <!-- konversationapplication.cpp:1218 -->
-      <!--   config->writeEntry("FastSend",preferences.getDccFastSend()); -->
     </entry>
     <entry key="SendTimeout" type="Int" name="DccSendTimeout">
       <default>180</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:840 -->
-      <!--   preferences.setDccSendTimeout(config->readNumEntry("SendTimeout",preferences.getDccSendTimeout())); -->
-      <!-- konversationapplication.cpp:1205 -->
-      <!--   config->writeEntry("SendTimeout",preferences.getDccSendTimeout()); -->
     </entry>
     <entry key="IPv4Fallback" type="Bool">
       <default>false</default>
@@ -1050,26 +625,17 @@
     <entry key="IPv4FallbackIface" type="String">
       <default>eth0</default>
     </entry>
-
   </group>
   <group name="Path Settings">
     <entry key="LogfilePath" type="Path">
       <default code="true">KUser(KUser::UseRealUserID).homeDir()+"/logs"</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:844 -->
-      <!--   preferences.setLogPath(config->readPathEntry("LogfilePath",preferences.getLogPath())); -->
-      <!-- konversationapplication.cpp:1223 -->
-      <!--   config->writePathEntry("LogfilePath",preferences.getLogPath()); -->
     </entry>
     <entry key="DccPath" type="Path">
       <default code="true">KUser(KUser::UseRealUserID).homeDir()+"/dccrecv"</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:845 -->
-      <!--   preferences.setDccPath(config->readPathEntry("DccPath",preferences.getDccPath())); -->
-      <!-- konversationapplication.cpp:1222 -->
-      <!--   config->writePathEntry("DccPath",preferences.getDccPath()); -->
     </entry>
   </group>
   <group name="Flags">
@@ -1077,28 +643,16 @@
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:850 -->
-      <!--   preferences.setLog(config->readBoolEntry("Log",preferences.getLog())); -->
-      <!-- konversationapplication.cpp:1228 -->
-      <!--   config->writeEntry("Log",preferences.getLog()); -->
     </entry>
     <entry key="LowerLog" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:851 -->
-      <!--   preferences.setLowerLog(config->readBoolEntry("LowerLog",preferences.getLowerLog())); -->
-      <!-- konversationapplication.cpp:1229 -->
-      <!--   config->writeEntry("LowerLog",preferences.getLowerLog()); -->
     </entry>
     <entry key="LogFollowsNick" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:852 -->
-      <!--   preferences.setLogFollowsNick(config->readBoolEntry("LogFollowsNick",preferences.getLogFollowsNick())); -->
-      <!-- konversationapplication.cpp:1230 -->
-      <!--   config->writeEntry("LogFollowsNick",preferences.getLogFollowsNick()); -->
     </entry>
     <entry key="AddHostnameToLog" type="Bool">
       <default>false</default>
@@ -1111,19 +665,11 @@
         <choice name="Top"/>
       </choices>
       <default>Bottom</default>
-      <!-- konversationapplication.cpp:854 -->
-      <!--   preferences.setTabPlacement(static_cast<Preferences::TabPlacement>(config->readNumEntry("TabPlacement",static_cast<int>(preferences.getTabPlacement())))); -->
-      <!-- konversationapplication.cpp:1232 -->
-      <!--   config->writeEntry("TabPlacement",static_cast<int>(preferences.getTabPlacement())); -->
     </entry>
     <entry key="BlinkingTabs" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:855 -->
-      <!--   preferences.setBlinkingTabs(config->readBoolEntry("BlinkingTabs",preferences.getBlinkingTabs())); -->
-      <!-- konversationapplication.cpp:1233 -->
-      <!--   config->writeEntry("BlinkingTabs",preferences.getBlinkingTabs()); -->
     </entry>
     <entry key="UseClickableNicks" type="Bool">
       <default>true</default>
@@ -1132,91 +678,51 @@
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:856 -->
-      <!--   preferences.setBringToFront(config->readBoolEntry("BringToFront",preferences.getBringToFront())); -->
-      <!-- konversationapplication.cpp:1234 -->
-      <!--   config->writeEntry("BringToFront",preferences.getBringToFront()); -->
     </entry>
     <entry key="HideUnimportantEvents" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:858 -->
-      <!--   preferences.setHideUnimportantEvents(config->readBoolEntry("HideUnimportantEvents",preferences.getHideUnimportantEvents())); -->
-      <!-- konversationapplication.cpp:1236 -->
-      <!--   config->writeEntry("HideUnimportantEvents",preferences.getHideUnimportantEvents()); -->
     </entry>
     <entry key="DisableExpansion" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:859 -->
-      <!--   preferences.setDisableExpansion(config->readBoolEntry("DisableExpansion", preferences.getDisableExpansion())); -->
-      <!-- konversationapplication.cpp:1237 -->
-      <!--   config->writeEntry("DisableExpansion",preferences.getDisableExpansion()); -->
     </entry>
     <entry key="AutoReconnect" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:861 -->
-      <!--   preferences.setAutoReconnect(config->readBoolEntry("AutoReconnect",preferences.getAutoReconnect())); -->
-      <!-- konversationapplication.cpp:1239 -->
-      <!--   config->writeEntry("AutoReconnect",preferences.getAutoReconnect()); -->
     </entry>
     <entry key="ReconnectCount" type="UInt">
       <default>10</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:916 -->
-      <!--   preferences.setReconnectCount(config->readNumEntry("ReconnectCount",preferences.getReconnectCount())); -->
-      <!-- konversationapplication.cpp:1319 -->
-      <!--   config->writeEntry("ReconnectCount",preferences.getReconnectCount()); -->
     </entry>
     <entry key="AutoRejoin" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:862 -->
-      <!--   preferences.setAutoRejoin(config->readBoolEntry("AutoRejoin",preferences.getAutoRejoin())); -->
-      <!-- konversationapplication.cpp:1240 -->
-      <!--   config->writeEntry("AutoRejoin",preferences.getAutoRejoin()); -->
     </entry>
     <entry key="AutojoinOnInvite" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:863 -->
-      <!--   preferences.setAutojoinOnInvite(config->readBoolEntry("AutojoinOnInvite",preferences.getAutojoinOnInvite())); -->
-      <!-- konversationapplication.cpp:1241 -->
-      <!--   config->writeEntry("AutojoinOnInvite",preferences.getAutojoinOnInvite()); -->
     </entry>
     <entry key="FixedMOTD" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:865 -->
-      <!--   preferences.setFixedMOTD(config->readBoolEntry("FixedMOTD")); // Default is false -->
-      <!-- konversationapplication.cpp:1243 -->
-      <!--   config->writeEntry("FixedMOTD",preferences.getFixedMOTD()); -->
     </entry>
     <entry key="ShowServerList" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:866 -->
-      <!--   preferences.setShowServerList(config->readBoolEntry("ShowServerList",preferences.getShowServerList())); -->
-      <!-- konversationapplication.cpp:1244 -->
-      <!--   config->writeEntry("ShowServerList",preferences.getShowServerList()); -->
     </entry>
     <entry key="InputFieldsBackgroundColor" type="Bool" >
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:868 -->
-      <!--   preferences.setColorInputFields(config->readBoolEntry("InputFieldsBackgroundColor",preferences.getColorInputFields())); -->
-      <!-- konversationapplication.cpp:1246 -->
-      <!--   config->writeEntry("InputFieldsBackgroundColor",preferences.getColorInputFields()); -->
     </entry>
   </group>
   <group name="Web Browser Settings">
@@ -1224,19 +730,11 @@
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:872 -->
-      <!--   preferences.setWebBrowserUseKdeDefault(config->readBoolEntry("UseKdeDefault",preferences.getWebBrowserUseKdeDefault())); -->
-      <!-- konversationapplication.cpp:1250 -->
-      <!--   config->writeEntry("UseKdeDefault", preferences.getWebBrowserUseKdeDefault()); -->
     </entry>
     <entry key="WebBrowserCmd" type="String">
-      <default>mozilla \'%u\'</default>
+      <default>firefox \'%u\'</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- konversationapplication.cpp:873 -->
-      <!--   preferences.setWebBrowserCmd(config->readEntry("WebBrowserCmd",preferences.getWebBrowserCmd())); -->
-      <!-- konversationapplication.cpp:1251 -->
-      <!--   config->writeEntry("WebBrowserCmd", preferences.getWebBrowserCmd()); -->
     </entry>
   </group>
   <group name="Themes">
@@ -1264,19 +762,11 @@
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- prefsdialog.cpp:137 -->
-      <!--   newSize = config->readSizeEntry("Size", &newSize); -->
-      <!-- prefsdialog.cpp:151 -->
-      <!--   config->writeEntry("Size", size()); -->
     </entry>
     <entry key="LastActiveModule" type="Int">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- prefsdialog.cpp:140 -->
-      <!--   int lastActiveModule = config->readNumEntry("LastActiveModule",0); -->
-      <!-- prefsdialog.cpp:152 -->
-      <!--   config->writeEntry("LastActiveModule",activePageIndex()); -->
     </entry>
   </group>
   <group name="ServerListDialog">
@@ -1284,10 +774,6 @@
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- serverlistdialog.cpp:205 -->
-      <!--     newSize = config->readSizeEntry("Size", &newSize); -->
-      <!-- serverlistdialog.cpp:213 -->
-      <!--     config->writeEntry("Size", size()); -->
     </entry>
   </group>
   <group name="Message Text Colors">
