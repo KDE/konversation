@@ -23,27 +23,7 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kconfigdialog.h>
 #include <kiconloader.h>
-
-#include "chatwindowappearance_preferences.h"
-#include "alias_preferences.h"
-#include "connectionbehavior_preferences.h"
-#include "highlight_preferences.h"
-#include "warnings_preferences.h"
-#include "chatwindowappearance_preferences.h"
-#include "dcc_preferences.h"
-#include "log_preferences.h"
-#include "quickbuttons_preferences.h"
-#include "watchednicknames_preferences.h"
-#include "chatwindowbehaviour_preferences.h"
-#include "fontappearance_preferences.h"
-#include "nicklistbehavior_preferences.h"
-#include "tabbar_preferences.h"
-#include "colorsappearance_preferences.h"
-#include "generalbehavior_preferences.h"
-#include "ex_osd_preferences.h"
-#include "ex_theme_preferences.h"
 
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
@@ -146,14 +126,12 @@ int KonversationApplication::newInstance()
         mainWindow = new KonversationMainWindow();
         setMainWidget(mainWindow);
 
-        connect(mainWindow,SIGNAL (openPrefsDialog()),this,SLOT (openPrefsDialog()) );
-        connect(mainWindow,SIGNAL (openPrefsDialog(Preferences::Pages)),this,SLOT (openPrefsDialog(Preferences::Pages)) );
-        connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
+	connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
         connect(Preferences::self(), SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
         connect(this, SIGNAL (prefsChanged()), mainWindow, SLOT (slotPrefsChanged()) );
 
         // apply GUI settings
-        appearanceChanged();
+        mainWindow->appearanceChanged();
         mainWindow->show();
 
         if(Preferences::showServerList())
@@ -201,7 +179,7 @@ int KonversationApplication::newInstance()
         }
 
         // take care of user style changes, setting back colors and stuff
-        connect(KApplication::kApplication(),SIGNAL (appearanceChanged()),this,SLOT (appearanceChanged()) );
+        connect(KApplication::kApplication(),SIGNAL (appearanceChanged()),mainWindow,SLOT (appearanceChanged()) );
 
         m_notificationHandler = new Konversation::NotificationHandler(this);
     }
@@ -948,29 +926,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->sync();
     emit prefsChanged();
 
-    if(updateGUI) appearanceChanged();
-}
-
-void KonversationApplication::appearanceChanged()
-{
-    Server* lookServer=serverList.first();
-    while(lookServer)
-    {
-        // TODO: updateFonts() also updates the background color and more stuff! We must finally
-        // find a way to do all this with signals / slots!
-        lookServer->updateFonts();
-        lookServer->updateChannelQuickButtons();
-
-        lookServer->setShowQuickButtons(Preferences::showQuickButtons());
-        lookServer->setShowModeButtons(Preferences::showModeButtons());
-        lookServer->setShowTopic(Preferences::showTopic());
-        lookServer->setShowNicknameBox(Preferences::showNicknameBox());
-
-        lookServer=serverList.next();
-    }
-
-    mainWindow->updateTabPlacement();
-    mainWindow->setShowTabBarCloseButton(Preferences::showTabBarCloseButton());
+    if(updateGUI) 
+      mainWindow->appearanceChanged();
 }
 
 void KonversationApplication::updateNickIcons()
@@ -1019,99 +976,6 @@ void KonversationApplication::deleteUrl(const QString& who,const QString& url)
 void KonversationApplication::clearUrlList()
 {
     urlList.clear();
-}
-
-void KonversationApplication::openPrefsDialog()   // TODO Move this function into KonversationMainWindow
-{
-    //An instance of your dialog could be already created and could be cached,
-    //in which case you want to display the cached dialog instead of creating
-    //another one
-    if ( KConfigDialog::showDialog( "settings" ) )
-        return;
-
-    //KConfigDialog didn't find an instance of this dialog, so lets create it :
-    KConfigDialog* dialog = new KConfigDialog( mainWindow, "settings", Preferences::self(), KDialogBase::TreeList );
-    dialog->setShowIconsInTreeList(true);
-    dialog->unfoldTreeList(true);
-    dialog->setFolderIcon(i18n("Appearance"),SmallIcon("looknfeel"));
-
-    //Appearance/Chat Window
-    ChatWindowAppearance_Config* confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
-    dialog->addPage ( confChatWindowAppearanceWdg, i18n("Appearance-Chat Window"), "view_text", i18n("Appearance") );
-
-    //Appearance/Fonts
-    FontAppearance_Config* confFontAppearanceWdg = new FontAppearance_Config( dialog, "FontAppearance" );
-    dialog->addPage ( confFontAppearanceWdg, i18n("Appearance - Fonts"), "fonts", i18n("Appearance") );
-
-    //Appearance/Themes
-    Theme_Config_Ext* confThemeWdg = new Theme_Config_Ext( dialog, "Theme" );
-    dialog->addPage ( confThemeWdg, i18n("Appearance - Themes"), "iconthemes", i18n("Appearance") );
-
-    //Appearance/Colors
-    ColorsAppearance_Config* confColorsAppearanceWdg = new ColorsAppearance_Config( dialog, "ColorsAppearance" );
-    dialog->addPage ( confColorsAppearanceWdg, i18n("Appearance - Colors"), "colorize", i18n("Appearance") );
-
-    dialog->setFolderIcon(QStringList::split(',', i18n("Behavior")), SmallIcon("configure"));
-    //Behavior/General
-    GeneralBehavior_Config* confGeneralBehaviorWdg = new GeneralBehavior_Config( dialog, "GeneralBehavior" );
-    dialog->addPage ( confGeneralBehaviorWdg, i18n("Behavior - General"), "exec", i18n("Behavior") );
-
-    //Behavior/Connection
-    ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( dialog, "ConnectionBehavior" );
-    dialog->addPage ( confConnectionBehaviorWdg, i18n("Behavior - Connection"), "connect_creating", i18n("Behavior") );
-
-    //Behaviour/Chat Window
-    ChatwindowBehaviour_Config* confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( dialog, "ChatwindowBehaviour" );
-    dialog->addPage ( confChatwindowBehaviourWdg, i18n("Behavior - Chatwindow"), "view_text", i18n("Behavior") );
-
-    //Behaviour/Nickname List
-    NicklistBehavior_Config* confNicklistBehaviorWdg = new NicklistBehavior_Config( dialog, "NicklistBehavior" );
-    dialog->addPage ( confNicklistBehaviorWdg, i18n("Behavior - Nickname List"), "player_playlist" );
-
-    //Behaviour/Tab Bar
-    TabBar_Config* confTabBarWdg = new TabBar_Config( dialog, "TabBar" );
-    dialog->addPage ( confTabBarWdg, i18n("Behavior - Tab Bar"), "tab_new" );
-
-    //Behaviour/Command Aliases
-    Alias_Config* confAliasWdg = new Alias_Config( dialog, "Alias" );
-    dialog->addPage ( confAliasWdg, i18n("Behavior - Command Aliases"), "editcopy" );
-
-     //Behaviour/Quick Buttons
-    QuickButtons_Config* confQuickButtonsWdg = new QuickButtons_Config( dialog, "QuickButtons" );
-    dialog->addPage ( confQuickButtonsWdg, i18n("Behavior - Quick Buttons"), "keyboard" );
-
-    //Behaviour/Logging
-    Log_Config* confLogWdg = new Log_Config( dialog, "Log" );
-    dialog->addPage ( confLogWdg, i18n("Behavior - Logging"), "log" );
-
-    //Notification/Watched Nicknames
-    WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( dialog, "WatchedNicknames" );
-    dialog->addPage ( confWatchedNicknamesWdg, i18n("Notification - Watched Nicknames"), "kfind" );
-
-    //Notification/Highlighting
-    Highlight_Config* confHighlightWdg = new Highlight_Config( dialog, "Highlight" );
-    dialog->addPage ( confHighlightWdg, i18n("Notification - Highlighting"), "paintbrush" );
-
-    //Notification/On Screen Display
-    OSD_Config_Ext* confOSDWdg = new OSD_Config_Ext( dialog, "OSD" );
-    dialog->addPage ( confOSDWdg, i18n("Notification - On Screen Display"), "tv" );
-
-    //Warning Dialogs
-    Warnings_Config* confWarningsWdg = new Warnings_Config( dialog, "Warnings" );
-    dialog->addPage ( confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning" );
-
-    //User edited the configuration - update your local copies of the
-    //configuration data
-    connect(dialog, SIGNAL(settingsChanged()), this, SLOT(appearanceChanged()));
-
-    dialog->show();
-
-}
-
-void KonversationApplication::openPrefsDialog(Preferences::Pages page)
-{
-    openPrefsDialog();
-    //FIXME - open the right page
 }
 
 void KonversationApplication::openQuickConnectDialog()

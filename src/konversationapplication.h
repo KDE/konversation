@@ -159,9 +159,7 @@ class KonversationApplication : public KUniqueApplication
         void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
 
     protected slots:
-        void openPrefsDialog();
-        void openPrefsDialog(Preferences::Pages page);
-        void openQuickConnectDialog();
+	void openQuickConnectDialog();
         void removeServer(Server* server);
 
         void dcopMultiServerRaw(const QString &command);
@@ -170,8 +168,7 @@ class KonversationApplication : public KUniqueApplication
         void dcopInfo(const QString& string);
         void setAutoAway();
         void insertRememberLine();
-        void appearanceChanged();
-        void sendMultiServerCommand(const QString& command, const QString& parameter);
+	void sendMultiServerCommand(const QString& command, const QString& parameter);
 
         void autoDemoteAllNicks(); // Auto decrease karmas for all nicks, this is a QTimer based operation
 

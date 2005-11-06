@@ -99,8 +99,6 @@ class KonversationMainWindow : public KMainWindow
         signals:
         void prefsChanged();
         void startNotifyTimer(int msec);
-        void openPrefsDialog();
-        void openPrefsDialog(Preferences::Pages page);
         void showQuickConnectDialog();
         void quitServer();
         void nicksNowOnline(Server*);
@@ -110,8 +108,9 @@ class KonversationMainWindow : public KMainWindow
         void channelSplittersMoved(Channel*);
 
     public slots:
-        void addDccPanel();                       // connected in server class
-        void addKonsolePanel();                   // connected in server class
+	void appearanceChanged();
+        void addDccPanel(); // connected in server class
+        void addKonsolePanel(); // connected in server class
         void addUrlCatcher();
         void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
         void insertRememberLine();
@@ -138,7 +137,8 @@ class KonversationMainWindow : public KMainWindow
         void serverStateChanged(Server* server, Server::State state);
 
     protected slots:
-        void openPreferences();
+	void openPrefsDialog();
+        void openPrefsDialog(Preferences::Pages page);
         void openKeyBindings();
         void openQuickConnectDialog();
         void openNotify();
