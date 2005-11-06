@@ -109,11 +109,11 @@ namespace Konversation
         m_widget->otherModesList->setShown(ison);
         if(ison)
         {
-            m_widget->toggleAdvancedModes->setText("&Hide Advanced Modes <<");
+            m_widget->toggleAdvancedModes->setText(i18n("&Hide Advanced Modes <<"));
         }
         else
         {
-            m_widget->toggleAdvancedModes->setText("&Show Advanced Modes >>");
+            m_widget->toggleAdvancedModes->setText(i18n("&Show Advanced Modes >>"));
         }
     }
 
