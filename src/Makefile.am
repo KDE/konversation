@@ -69,4 +69,5 @@ noinst_HEADERS =serverlistdialog.h dcctransfersend.h 		 \
 		identitydialog.h topiclabel.h channeloptionsdialog.h joinchanneldialog.h \
 		popup.h
 
+# User might still have these in src/ instead of src/config, so remove these in that case
 CLEANFILES = preferences_base.h preferences_base.cpp
