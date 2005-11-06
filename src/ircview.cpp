@@ -53,7 +53,6 @@
 #include "channel.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
-#include "preferences.h"
 #include "ircview.h"
 #include "highlight.h"
 #include "server.h"

@@ -30,7 +30,6 @@
 #include "alias_preferences.h"
 #include "connectionbehavior_preferences.h"
 #include "highlight_preferences.h"
-#include "preferences.h"
 #include "warnings_preferences.h"
 #include "chatwindowappearance_preferences.h"
 #include "dcc_preferences.h"
