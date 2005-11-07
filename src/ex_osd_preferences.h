@@ -1,5 +1,5 @@
-#ifndef PREFSPAGEOSD_H
-#define PREFSPAGEOSD_H
+#ifndef EXOSDPREFERENCES_H
+#define EXOSDPREFERENCES_H
 
 #include "osd_preferences.h"
 
@@ -32,4 +32,4 @@ private:
     OSDPreviewWidget* m_pOSDPreview;
 };
 
-#endif // PREFSPAGEOSD_H
+#endif // EXOSDPREFERENCES_H
