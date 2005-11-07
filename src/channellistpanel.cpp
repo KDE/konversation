@@ -305,26 +305,75 @@ void ChannelListPanel::filterTextChanged(const QString& newText)
     filterText=newText;
 }
 
-int ChannelListPanel::getNumChannels()     { return numChannels; }
-int ChannelListPanel::getNumUsers()        { return numUsers; }
+int ChannelListPanel::getNumChannels()     
+{ 
+  return numChannels; 
+}
 
-void ChannelListPanel::setNumChannels(int num) { numChannels=num; }
-void ChannelListPanel::setNumUsers(int num)    { numUsers=num; }
+int ChannelListPanel::getNumUsers()
+{ 
+  return numUsers; 
+}
 
-int ChannelListPanel::getVisibleChannels() { return visibleChannels; }
-int ChannelListPanel::getVisibleUsers()    { return visibleUsers; }
+void ChannelListPanel::setNumChannels(int num) 
+{ 
+  numChannels=num; 
+}
 
-void ChannelListPanel::setVisibleChannels(int num) { visibleChannels=num; }
-void ChannelListPanel::setVisibleUsers(int num)    { visibleUsers=num; }
+void ChannelListPanel::setNumUsers(int num)    
+{ 
+  numUsers=num; 
+}
 
-int ChannelListPanel::getMinUsers()    { return minUsers; }
-int ChannelListPanel::getMaxUsers()    { return maxUsers; }
+int ChannelListPanel::getVisibleChannels() 
+{ 
+  return visibleChannels; 
+}
 
-bool ChannelListPanel::getChannelTarget() { return channelTarget; }
-bool ChannelListPanel::getTopicTarget()   { return topicTarget; }
-bool ChannelListPanel::getRegExp()        { return regExp; }
+int ChannelListPanel::getVisibleUsers()    
+{ 
+  return visibleUsers; 
+}
 
-const QString& ChannelListPanel::getFilterText() { return filterText; }
+void ChannelListPanel::setVisibleChannels(int num) 
+{ 
+  visibleChannels=num; 
+}
+
+void ChannelListPanel::setVisibleUsers(int num)    
+{ 
+  visibleUsers=num; 
+}
+
+int ChannelListPanel::getMinUsers()    
+{ 
+  return minUsers; 
+}
+
+int ChannelListPanel::getMaxUsers()    
+{ 
+  return maxUsers; 
+}
+
+bool ChannelListPanel::getChannelTarget() 
+{ 
+  return channelTarget; 
+}
+
+bool ChannelListPanel::getTopicTarget()   
+{ 
+  return topicTarget; 
+}
+
+bool ChannelListPanel::getRegExp()        
+{ 
+  return regExp; 
+}
+
+const QString& ChannelListPanel::getFilterText() 
+{ 
+  return filterText; 
+}
 
 void ChannelListPanel::setMinUsers(int num)
 {
@@ -336,14 +385,35 @@ void ChannelListPanel::setMaxUsers(int num)
     maxUsers=num;
 }
 
-void ChannelListPanel::setChannelTarget(bool state)  { channelTarget=state; }
-void ChannelListPanel::setTopicTarget(bool state)    { topicTarget=state; }
+void ChannelListPanel::setChannelTarget(bool state)  
+{ 
+  channelTarget=state; 
+}
 
-void ChannelListPanel::setRegExp(bool state)         { regExp=state; }
+void ChannelListPanel::setTopicTarget(bool state)    
+{ 
+  topicTarget=state; 
+}
 
-void ChannelListPanel::channelTargetClicked()        { setChannelTarget(channelFilter->state()==2); }
-void ChannelListPanel::topicTargetClicked()          { setTopicTarget(topicFilter->state()==2); }
-void ChannelListPanel::regExpClicked()               { setRegExp(regexpCheck->state()==2); }
+void ChannelListPanel::setRegExp(bool state)         
+{ 
+  regExp=state; 
+}
+
+void ChannelListPanel::channelTargetClicked()        
+{ 
+  setChannelTarget(channelFilter->state()==2); 
+}
+
+void ChannelListPanel::topicTargetClicked()          
+{ 
+  setTopicTarget(topicFilter->state()==2); 
+}
+
+void ChannelListPanel::regExpClicked()               
+{ 
+  setRegExp(regexpCheck->state()==2); 
+}
 
 void ChannelListPanel::applyFilterToItem(QListViewItem* item)
 {
@@ -416,7 +486,6 @@ bool ChannelListPanel::closeYourself()
 
 void ChannelListPanel::childAdjustFocus()
 {
-
 }
 
 void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const QPoint& p)
