@@ -25,8 +25,7 @@
 #include "dcctransferrecv.h"
 
 DccDetailDialog::DccDetailDialog( DccTransfer* item )
-: KDialog( 0 )
-, m_item( item )
+: KDialog( 0 ), m_item( item )
 {
     QVBoxLayout* baseLayout = new QVBoxLayout( this );
     baseLayout->setMargin( marginHint() );
@@ -201,7 +200,7 @@ DccDetailDialog::~DccDetailDialog()
 {
 }
 
-void DccDetailDialog::updateView()                // public
+void DccDetailDialog::updateView() // public
 {
     // caption
 
@@ -305,7 +304,7 @@ void DccDetailDialog::slotAbort()
 
 void DccDetailDialog::slotClose()
 {
-    accept();                                     // *not* mean accepting DCC, but closing this dialog
+    accept(); // *not* mean accepting DCC, but closing this dialog
 }
 
 #include "dccdetaildialog.moc"
