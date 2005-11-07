@@ -1042,7 +1042,7 @@ void Server::incoming()
     if( len <=0 && m_serverGroup->serverByIndex(m_currentServerIndex).SSLEnabled() )
         return;
 
-    if( len <= 0 )                                // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
+    if( len <= 0 ) // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
     {
         statusView->appendServerMessage(i18n("Error"),
             i18n("There was an error reading the data from the server: %1").
