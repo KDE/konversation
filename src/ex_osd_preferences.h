@@ -1,3 +1,6 @@
+#ifndef PREFSPAGEOSD_H
+#define PREFSPAGEOSD_H
+
 #include "osd_preferences.h"
 
 class OSDPreviewWidget;
@@ -28,3 +31,5 @@ protected:
 private:
     OSDPreviewWidget* m_pOSDPreview;
 };
+
+#endif // PREFSPAGEOSD_H
