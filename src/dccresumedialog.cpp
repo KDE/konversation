@@ -21,10 +21,8 @@
 #include <kurlrequester.h>
 
 #include "dcctransferrecv.h"
-
 #include "dccresumedialog.h"
 
-                                                  // public static
 DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction)
 {
     int enabledButtonCodes = 0;
@@ -55,7 +53,8 @@ DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item, const
     return ra;
 }
 
-DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, int enabledButtonCodes, KDialogBase::ButtonCode defaultButtonCode)
+DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, int enabledButtonCodes, 
+				 KDialogBase::ButtonCode defaultButtonCode)
 : KDialogBase(0, "dcc_resume_dialog", true, caption, enabledButtonCodes, defaultButtonCode, true)
 , m_item(item)
 , m_enabledActions(enabledActions)
@@ -96,7 +95,7 @@ DccResumeDialog::~DccResumeDialog()
 {
 }
 
-void DccResumeDialog::slotOk()                    // slot
+void DccResumeDialog::slotOk()
 {
     if(m_item->getFileURL() == m_urlreqFileURL->url())
         m_selectedAction = RA_Overwrite;
@@ -105,19 +104,19 @@ void DccResumeDialog::slotOk()                    // slot
     KDialogBase::slotOk();
 }
 
-void DccResumeDialog::slotUser1()                 // slot
+void DccResumeDialog::slotUser1()
 {
     m_selectedAction = RA_Resume;
     done(KDialogBase::User1);
 }
 
-void DccResumeDialog::slotCancel()                // slot
+void DccResumeDialog::slotCancel()
 {
     m_selectedAction = RA_Cancel;
     KDialogBase::slotCancel();
 }
 
-void DccResumeDialog::updateDialogButtons()       // slot
+void DccResumeDialog::updateDialogButtons() // slot
 {
     if(m_item->getFileURL() == m_urlreqFileURL->url())
     {
@@ -135,7 +134,7 @@ void DccResumeDialog::updateDialogButtons()       // slot
 
 // FIXME: kio-fy me!
 // taken and adapted from kio::renamedlg.cpp
-void DccResumeDialog::suggestNewName()            // slot
+void DccResumeDialog::suggestNewName() // slot
 {
     QString dotSuffix, suggestedName;
     QString basename = m_urlreqFileURL->url().section("/", -1);
@@ -154,7 +153,7 @@ void DccResumeDialog::suggestNewName()            // slot
         QString tmp = basename.mid( pos+1 );
         bool ok;
         int number = tmp.toInt( &ok );
-        if ( !ok )                                // ok there is no number
+        if ( !ok ) // ok there is no number
         {
             suggestedName = basename + "1" + dotSuffix;
         }
@@ -165,7 +164,7 @@ void DccResumeDialog::suggestNewName()            // slot
             suggestedName = basename + dotSuffix;
         }
     }
-    else                                          // no underscore yet
+    else // no underscore yet
         suggestedName = basename + "_1" + dotSuffix ;
 
     // Check if suggested name already exists
@@ -177,11 +176,11 @@ void DccResumeDialog::suggestNewName()            // slot
 
     m_urlreqFileURL->setURL( baseURL.path(+1) + suggestedName );
 
-    if ( exists )                                 // already exists -> recurse
+    if ( exists ) // already exists -> recurse
         suggestNewName();
 }
 
-void DccResumeDialog::setDefaultName()            // slot
+void DccResumeDialog::setDefaultName() // slot
 {
     m_urlreqFileURL->setURL(m_item->getFileURL().prettyURL());
 }
