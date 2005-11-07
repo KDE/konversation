@@ -9,7 +9,6 @@
   copyright: (C) 2004 by Peter Simonsson
   email:     psn@linux.se
 */
-#include "channeloptionsdialog.h"
 
 #include <qcheckbox.h>
 
@@ -21,6 +20,7 @@
 #include <qpushbutton.h>
 #include <qregexp.h>
 
+#include "channeloptionsdialog.h"
 #include "konversationapplication.h"
 #include "channeloptionsui.h"
 #include "channel.h"

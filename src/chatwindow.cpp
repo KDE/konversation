@@ -75,16 +75,18 @@ ChatWindow::WindowType ChatWindow::getType()
 
 void ChatWindow::setServer(Server* newServer)
 {
-    if(newServer==0) kdDebug("ChatWindow::setServer(0)!") << endl;
+    if(!newServer)
+      { 
+	kdDebug("ChatWindow::setServer(0)!") << endl;
+      }
     else
     {
-
         m_server=newServer;
         setMainWindow(m_server->getMainWindow());
         connect(m_server,SIGNAL (serverOnline(bool)),this,SLOT (serverOnline(bool)) );
 
         // check if we need to set up the signals
-        if(getType()!=ChannelList)
+        if(getType() != ChannelList)
         {
             if(textView) textView->setServer(newServer);
             else kdDebug() << "ChatWindow::setServer(): textView==0!" << endl;
@@ -111,7 +113,7 @@ void ChatWindow::serverOnline(bool state)
 
 void ChatWindow::setIdentity(const Identity *newIdentity)
 {
-    Q_ASSERT(newIdentity);  if(!newIdentity) return;
+    if(!newIdentity) return;
     identity=*newIdentity;
 }
 
@@ -130,51 +132,50 @@ void ChatWindow::setTextView(IRCView* newView)
 
 void ChatWindow::insertRememberLine()
 {
-    Q_ASSERT(textView);  if(!textView) return;
+    if(!textView) return;
     kdDebug() << "Inserting remember line" << endl;
     textView->appendRaw("<br><hr color=\""+Preferences::color(Preferences::CommandMessage).name()+"\" noshade>", true, true);
 }
 
 void ChatWindow::appendRaw(const QString& message, bool suppressTimestamps)
 {
-    Q_ASSERT(textView);  if(!textView) return;
+    if(!textView) return;
     textView->appendRaw(message, suppressTimestamps);
 }
 
 void ChatWindow::append(const QString& nickname,const QString& message)
 {
-    Q_ASSERT(textView);  if(!textView) return ;
+    if(!textView) return ;
     textView->append(nickname,message);
 }
 
 void ChatWindow::appendQuery(const QString& nickname,const QString& message, bool)
 {
-    Q_ASSERT(textView);  if(!textView) return ;
+    if(!textView) return ;
     textView->appendQuery(nickname,message);
 }
 
 void ChatWindow::appendAction(const QString& nickname,const QString& message, bool)
 {
-    Q_ASSERT(textView);  if(!textView) return ;
+    if(!textView) return ;
     textView->appendAction(nickname,message);
 }
 
 void ChatWindow::appendServerMessage(const QString& type,const QString& message)
 {
-    Q_ASSERT(this); if(!this) return;             //I think there are still cases where chatwindow is being called even after it's deleted.
-    Q_ASSERT(textView);  if(!textView) return ;
+    if(!textView) return ;
     textView->appendServerMessage(type,message);
 }
 
 void ChatWindow::appendCommandMessage(const QString& command,const QString& message, bool important, bool parseURL, bool self)
 {
-    Q_ASSERT(textView);  if(!textView) return ;
+    if(!textView) return ;
     textView->appendCommandMessage(command,message,important, parseURL, self);
 }
 
 void ChatWindow::appendBacklogMessage(const QString& firstColumn,const QString& message)
 {
-    Q_ASSERT(textView);  if(!textView) return ;
+    if(!textView) return ;
     textView->appendBacklogMessage(firstColumn,message);
 }
 
@@ -254,7 +255,7 @@ void ChatWindow::setLogfileName(const QString& name)
                     // append backlog with time and first column to text view
                     appendBacklogMessage(backlogFirst, backlogLine);
                 }
-            }                                     // while
+            } // while
 
             backlog.unsetDevice();
             logfile.close();
@@ -326,14 +327,31 @@ int ChatWindow::margin()
 }
 
 // Accessors
-IRCView* ChatWindow::getTextView() const { return textView; }
-void ChatWindow::setLog(bool activate) { log=activate; }
+IRCView* ChatWindow::getTextView() const 
+{ 
+  return textView; 
+}
+
+void ChatWindow::setLog(bool activate) 
+{ 
+  log=activate; 
+}
 
 // reimplement this in all panels that have user input
-QString ChatWindow::getTextInLine()    { return QString::null; }
+QString ChatWindow::getTextInLine()    
+{ 
+  return QString::null; 
+}
 
-bool ChatWindow::canBeFrontView()           { return false; }
-bool ChatWindow::searchView()          { return false; }
+bool ChatWindow::canBeFrontView()           
+{ 
+  return false; 
+}
+
+bool ChatWindow::searchView()          
+{ 
+  return false; 
+}
 
 // reimplement this in all panels that have user input
 void ChatWindow::indicateAway(bool)
