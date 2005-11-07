@@ -33,8 +33,6 @@
 #include "dcctransfer.h"
 #include "dcctransfersend.h"
 
-#define USE_INFOLIST
-
 DccPanel::DccPanel(QWidget* parent)
 : ChatWindow(parent)
 {
@@ -155,14 +153,14 @@ void DccPanel::dccStatusChanged(const DccTransfer* /* item */)
 void DccPanel::updateButton()
 {
     bool accept             = true,
-        abort              = false,
-        clear              = false,
-        detail             = true,
-        info               = true,
-        open               = true,
-        remove             = true,
-        selectAll          = false,
-        selectAllCompleted = false;
+         abort              = false,
+         clear              = false,
+         detail             = true,
+         info               = true,
+         open               = true,
+         remove             = true,
+         selectAll          = false,
+         selectAllCompleted = false;
 
     int selectedItems = 0;
     QListViewItemIterator it( m_listView );
@@ -209,6 +207,7 @@ void DccPanel::updateButton()
         open = false;
         remove = false;
     }
+
     if (!kapp->authorize("allow_downloading"))
     {
         accept = false;
@@ -398,9 +397,9 @@ void DccPanel::popupRequested(QListViewItem* /* item */, const QPoint& pos, int 
     m_popup->popup(pos);
 }
 
-void DccPanel::popupActivated( int id )           // slot
+void DccPanel::popupActivated( int id ) // slot
 {
-    if ( id == Popup::Abort )               abortDcc();
+    if ( id == Popup::Abort )                    abortDcc();
     else if ( id == Popup::Accept )              acceptDcc();
     else if ( id == Popup::Clear )               clearDcc();
     else if ( id == Popup::Detail )              openDetail();
@@ -464,6 +463,9 @@ void DccPanel::childAdjustFocus()
 {
 }
 
-KListView* DccPanel::getListView() { return m_listView; }
+KListView* DccPanel::getListView() 
+{ 
+  return m_listView; 
+}
 
 #include "dccpanel.moc"
