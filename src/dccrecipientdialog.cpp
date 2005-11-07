@@ -23,8 +23,8 @@
 QString DccRecipientDialog::selectedNickname;     // static
 
 DccRecipientDialog::DccRecipientDialog(QWidget* parent, const QStringList &list,const QSize &size) :
-KDialogBase(parent,"dcc_recipient_dialog",true,i18n("Select Recipient"),
-KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
+  KDialogBase(parent,"dcc_recipient_dialog",true,i18n("Select Recipient"),
+	      KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
 {
     // Create the top level widget
     QWidget* page=new QWidget(this);
