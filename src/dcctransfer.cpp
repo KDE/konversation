@@ -438,7 +438,8 @@ QPixmap DccTransfer::getStatusIcon() const
         case Removed:
             icon = "trashcan_full";
             break;
-        default: // sugar
+        default:
+	    break;
     }
     return KGlobal::iconLoader()->loadIcon( icon, KIcon::Small );
 }
