@@ -11,10 +11,11 @@
   email:     eisfuchs@tigress.com
 */
 
+#include <klocale.h>
+
 #include "channel.h"
 #include "channelnick.h"
 #include "server.h"
-#include <klocale.h>
 
 /** An instance of ChannelNick is made for each nick in each channel.
     So for a person in multiple channels, they will have one NickInfo, and multiple ChannelNicks.
@@ -22,7 +23,7 @@
 */
 
 ChannelNick::ChannelNick(const NickInfoPtr& nickInfo, const bool& isop, const bool& isadmin,
-const bool& isowner, const bool& ishalfop, const bool& hasvoice)
+			 const bool& isowner, const bool& ishalfop, const bool& hasvoice)
 : KShared()
 {
     this->nickInfo = nickInfo;
@@ -37,14 +38,40 @@ ChannelNick::~ChannelNick()
 {
 }
 
-bool ChannelNick::isOp() const { return isop; }
-bool ChannelNick::isAdmin() const {return isadmin; }
-bool ChannelNick::isOwner() const {return isowner; }
-bool ChannelNick::isHalfOp() const {return ishalfop; }
-bool ChannelNick::hasVoice() const {return hasvoice; }
+bool ChannelNick::isOp() const 
+{ 
+  return isop; 
+}
 
-bool ChannelNick::isAnyTypeOfOp() const { return isop || isadmin || isowner || ishalfop; }
-NickInfoPtr ChannelNick::getNickInfo() const { return nickInfo; }
+bool ChannelNick::isAdmin() const 
+{
+  return isadmin; 
+}
+
+bool ChannelNick::isOwner() const 
+{
+  return isowner; 
+}
+
+bool ChannelNick::isHalfOp() const 
+{
+  return ishalfop; 
+}
+
+bool ChannelNick::hasVoice() const 
+{
+  return hasvoice; 
+}
+
+bool ChannelNick::isAnyTypeOfOp() const 
+{ 
+  return isop || isadmin || isowner || ishalfop; 
+}
+
+NickInfoPtr ChannelNick::getNickInfo() const 
+{ 
+  return nickInfo; 
+}
 
 /** @param mode 'v' to set voice, 'a' to set admin, 'h' to set halfop, 'o' to set op.
  *  @param state what to set the mode to.
