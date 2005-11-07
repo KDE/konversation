@@ -21,7 +21,6 @@
 #include <qtextcodec.h>
 
 #include <klineedit.h>
-#include "konversationapplication.h"
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
@@ -29,6 +28,7 @@
 #include <ksocketaddress.h>
 #include <kstreamsocket.h>
 
+#include "konversationapplication.h"
 #include "irccharsets.h"
 #include "ircview.h"
 #include "ircviewbox.h"
@@ -45,11 +45,11 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
     m_listenSocket=0;
     port=0;
 
-    setType(ChatWindow::DccChat);
-    setChannelEncodingSupported(true);
-
     myNick=myNickname;
     nick=nickname;
+
+    setType(ChatWindow::DccChat);
+    setChannelEncodingSupported(true);
 
     if(!listen)
     {
@@ -340,12 +340,25 @@ void DccChat::childAdjustFocus()
     dccChatInput->setFocus();
 }
 
-bool DccChat::canBeFrontView()        { return true; }
-bool DccChat::searchView()       { return true; }
+bool DccChat::canBeFrontView()        
+{ 
+  return true; 
+}
 
-int DccChat::getPort()           { return port; }
+bool DccChat::searchView()       
+{ 
+  return true; 
+}
 
-QString DccChat::getTextInLine() { return dccChatInput->text(); }
+int DccChat::getPort()           
+{ 
+  return port; 
+}
+
+QString DccChat::getTextInLine() 
+{ 
+  return dccChatInput->text(); 
+}
 
 void DccChat::appendInputText(const QString& s)
 {
@@ -358,13 +371,12 @@ bool DccChat::closeYourself()
     return true;
 }
 
-                                                  // virtual
-void DccChat::setChannelEncoding(const QString& encoding)
+void DccChat::setChannelEncoding(const QString& encoding) // virtual
 {
     m_encoding = encoding;
 }
 
-QString DccChat::getChannelEncoding()             // virtual
+QString DccChat::getChannelEncoding() // virtual
 {
     return m_encoding;
 }
