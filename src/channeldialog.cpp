@@ -3,13 +3,10 @@
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
-*/
 
-/*
   copyright: (C) 2004 by Peter Simonsson
   email:     psn@linux.se
 */
-#include "channeldialog.h"
 
 #include <qlayout.h>
 #include <qframe.h>
@@ -18,6 +15,7 @@
 
 #include <klocale.h>
 
+#include "channeldialog.h"
 #include "servergroupsettings.h"
 
 namespace Konversation
