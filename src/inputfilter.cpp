@@ -837,17 +837,20 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_MOTDSTART:
             {
-                server->appendStatusMessage(i18n("MOTD"),i18n("Message of the day:"));
+                if(!Preferences::skipMOTD())
+                  server->appendStatusMessage(i18n("MOTD"),i18n("Message of the day:"));
                 break;
             }
             case RPL_MOTD:
             {
-                server->appendStatusMessage(i18n("MOTD"),trailing);
+                if(!Preferences::skipMOTD())
+                  server->appendStatusMessage(i18n("MOTD"),trailing);
                 break;
             }
             case RPL_ENDOFMOTD:
             {
-                server->appendStatusMessage(i18n("MOTD"),i18n("End of message of the day"));
+                if(!Preferences::skipMOTD())
+                  server->appendStatusMessage(i18n("MOTD"),i18n("End of message of the day"));
                 // Autojoin (for now this must be enough)
                 if(server->getAutoJoin())
                 {
