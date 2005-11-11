@@ -18,7 +18,7 @@ class QStringList;
 
 class Theme_Config_Ext : public Theme_Config
 {
-  Q_OBJECT;
+  Q_OBJECT
     public:
   Theme_Config_Ext(QWidget* parent, const char* name=NULL);
 	~Theme_Config_Ext();
