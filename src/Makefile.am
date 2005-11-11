@@ -37,7 +37,7 @@ konversation_SOURCES = konviface.skel\
 	 konvibookmarkhandler.cpp konvibookmarkmenu.cpp popup.cpp ircviewbox.cpp searchbar.cpp \
 	 ex_osd_preferences.cpp ex_theme_preferences.cpp
 
-konversation_COMIPLE_FIRST = config/preferences_base.h
+konversation_COMPILE_FIRST = config/preferences_base.h
 konversation_LDADD = $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la blowfish/libblowfish.la config/libkonversationconfig.la
 
 xdg_apps_DATA = konversation.desktop
