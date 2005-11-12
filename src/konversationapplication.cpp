@@ -312,6 +312,17 @@ Server* KonversationApplication::connectToServerGroup(const QString& serverGroup
 
 Server* KonversationApplication::connectToServer(int id)
 {
+    // Check if a server window with same name and port is already open
+    Server* lookServer = serverList.first();
+
+    while(lookServer)
+    {
+      if(lookServer->serverGroupSettings()->id() == id)
+        return lookServer;
+
+      lookServer = serverList.next();
+    }
+
     Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(id);
     IdentityPtr identity = serverGroup->identity();
 
@@ -352,7 +363,6 @@ Server* KonversationApplication::connectToServer(int id)
 
     mainWindow->show();
 
-    // Check if a server window with same name and port is already open
     Server* newServer = new Server(mainWindow, id);
 
     connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );

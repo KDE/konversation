@@ -1886,9 +1886,14 @@ void KonversationMainWindow::openURL(const QString&url, const QString&/* title*/
     if (Preferences::isServerGroup(server))
     {
         Server* newServer = KonversationApplication::instance()->connectToServerGroup(server);
-        newServer->setAutoJoin(true);
-        newServer->setAutoJoinChannel(channel);
-        newServer->setAutoJoinChannelKey(password);
+
+        if(!newServer->isConnected()) {
+            newServer->setAutoJoin(true);
+            newServer->setAutoJoinChannel(channel);
+            newServer->setAutoJoinChannelKey(password);
+        } else if(!channel.isEmpty()) {
+            newServer->queue("JOIN " + channel + " " + password);
+        }
     }
     else
     {
