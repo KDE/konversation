@@ -1195,8 +1195,7 @@ void Channel::setTopic(const QString &newTopic)
     }
 }
 
-                                                  // Overloaded
-void Channel::setTopic(const QString &nickname, const QString &newTopic)
+void Channel::setTopic(const QString &nickname, const QString &newTopic) // Overloaded
 {
     if(nickname == m_server->getNickname())
     {
