@@ -504,7 +504,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     {
         server->setChannelTopic(sourceNick,parameterList[0],trailing);
     }
-    else if(command=="mode")                      // mode #channel -/+ mmm params
+    else if(command=="mode") // mode #channel -/+ mmm params
     {
         parseModes(sourceNick,parameterList);
         Channel* channel = server->getChannelByName(parameterList[0]);
