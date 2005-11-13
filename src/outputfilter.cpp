@@ -148,7 +148,9 @@ namespace Konversation
         {
             QString command = inputLine.section(' ', 0, 0).mid(1).lower();
             QString parameter = inputLine.section(' ', 1);
-            parameter = parameter.stripWhiteSpace();
+
+            if (command !="topic")
+                parameter = parameter.stripWhiteSpace();
 
             if     (command == "join")    result = parseJoin(parameter);
             else if(command == "part")    result = parsePart(parameter);
@@ -395,7 +397,13 @@ namespace Konversation
                 // otherwise set topic there
                 else
                 {
-                    result.toServer = "TOPIC " + channel + " :" + topic;
+                    //If we get passed a \n as a topic its a sign we should use a single space
+                    //to clear the topic.
+                    if (topic=="\n")
+                        result.toServer = "TOPIC " + channel + " : ";
+                    else
+                        result.toServer = "TOPIC " + channel + " :" + topic;
+
                 }
             }
             // set this channel's topic

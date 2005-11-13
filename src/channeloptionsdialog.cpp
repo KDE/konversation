@@ -73,7 +73,11 @@ namespace Konversation
 
         if(newTopic != m_channel->getTopicHistory().first().section(' ', 1))
         {
-            m_channel->sendChannelText(Preferences::commandChar() + "TOPIC " + m_channel->getName() + " " + newTopic);
+            // Pass a \n to avoid whitespace stripping so we can determine if we want to clear the channel topic.
+            if (newTopic.isEmpty())
+                m_channel->sendChannelText(Preferences::commandChar() + "TOPIC " + m_channel->getName() + " \n");
+            else
+                m_channel->sendChannelText(Preferences::commandChar() + "TOPIC " + m_channel->getName() + " " + newTopic);
         }
 
         QStringList newModeList = modes();
