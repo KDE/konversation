@@ -93,7 +93,7 @@ namespace Konversation
             OutputFilterResult parseSMsg(const QString& parameter);
             OutputFilterResult parseDescribe(const QString& parameter);
             OutputFilterResult parseNotice(const QString& parameter);
-            OutputFilterResult parseJoin(const QString& parameter);
+            OutputFilterResult parseJoin(QString parameter);
             OutputFilterResult parsePart(const QString& parameter);
             OutputFilterResult parseQuit(const QString& parameter);
             OutputFilterResult parseKick(const QString& parameter);

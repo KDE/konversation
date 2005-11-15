@@ -257,10 +257,14 @@ namespace Konversation
         return changeMode(parameter,'v','-');
     }
 
-    OutputFilterResult OutputFilter::parseJoin(const QString &channelName)
+    OutputFilterResult OutputFilter::parseJoin(QString channelName)
     {
         OutputFilterResult result;
 
+        if(channelName.contains(",")) // Protect against #foo,0 tricks
+            channelName = channelName.remove(",0");
+        //else if(channelName == "0") // FIXME IRC RFC 2812 section 3.2.1
+                        
         if(channelName.isEmpty())
         {
             result = usage(i18n("Usage: %1JOIN <channel> [password]").arg(commandChar));
