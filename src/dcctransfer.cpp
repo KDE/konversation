@@ -469,26 +469,16 @@ QString DccTransfer::getPositionPrettyText( bool detailed ) const
 
 QString DccTransfer::getTimeRemainingPrettyText() const
 {
+    QString text;
+
     if ( m_timeRemaining == TIME_REMAINING_NOT_AVAILABLE )
-        return QString::null;
+        ;
     else if ( m_timeRemaining == TIME_REMAINING_INFINITE )
-        return QString( "?" );
+        text = "?";
     else
-    {
-        int remTime = m_timeRemaining;
-        int remHour = remTime / 3600; remTime -= remHour * 3600;
-        int remMin = remTime / 60; remTime -= remMin * 60;
-        QString text;
-        if ( remHour )
-            text += QString::number( remHour ) + ":";
-        if ( remMin )
-            text += QString::number( remMin ) + ":";
-        if ( text.isEmpty() )
-            text = i18n("%1 sec").arg( QString::number( remTime ) );
-        else
-            text += QString::number( remTime );
-        return text;
-    }
+        text = QTime().addSecs( m_timeRemaining ).toString( "hh:mm:ss" );
+
+    return text;
 }
 
 QString DccTransfer::getCPSPrettyText() const
