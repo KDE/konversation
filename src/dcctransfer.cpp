@@ -476,7 +476,17 @@ QString DccTransfer::getTimeRemainingPrettyText() const
     else if ( m_timeRemaining == TIME_REMAINING_INFINITE )
         text = "?";
     else
-        text = QTime().addSecs( m_timeRemaining ).toString( "hh:mm:ss" );
+    {
+        int remSec = m_timeRemaining; 
+        int remHour = remSec / 3600; remSec -= remHour * 3600; 
+        int remMin = remSec / 60; remSec -= remMin * 60; 
+
+        // remHour can be more than 25, so we can't use QTime here.
+        text = QString( "%1:%2:%3" )
+	  .arg( QString::number( remHour ).rightJustify( 2, '0', false ) )
+	  .arg( QString::number( remMin ).rightJustify( 2, '0' ) )
+	  .arg( QString::number( remSec ).rightJustify( 2, '0' ) );
+    }
 
     return text;
 }
