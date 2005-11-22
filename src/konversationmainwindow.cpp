@@ -403,6 +403,10 @@ void KonversationMainWindow::openPrefsDialog()
   Log_Config* confLogWdg = new Log_Config( dialog, "Log" );
   dialog->addPage ( confLogWdg, i18n("Behavior - Logging"), "log" );
 
+  //Behaviour/Logging
+  DCC_Settings* confDCCWdg = new DCC_Settings( dialog, "DCC" );
+  dialog->addPage ( confDCCWdg, i18n("Behavior - DCC"), "dcc" );
+
   //Notification/Watched Nicknames
   WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( dialog, "WatchedNicknames" );
   dialog->addPage ( confWatchedNicknamesWdg, i18n("Notification - Watched Nicknames"), "kfind" );
