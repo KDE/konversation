@@ -405,7 +405,7 @@ void KonversationMainWindow::openPrefsDialog()
 
   //Behaviour/Logging
   DCC_Settings* confDCCWdg = new DCC_Settings( dialog, "DCC" );
-  dialog->addPage ( confDCCWdg, i18n("Behavior - DCC"), "dcc" );
+  dialog->addPage ( confDCCWdg, i18n("Behavior - DCC"), "2rightarrow" );
 
   //Notification/Watched Nicknames
   WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( dialog, "WatchedNicknames" );
