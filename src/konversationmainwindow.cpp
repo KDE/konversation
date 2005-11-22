@@ -18,7 +18,7 @@
 #include <qsignalmapper.h>
 #include <qpoint.h>
 
-#include <kconfigdialog.h>
+#include <konviconfigdialog.h>
 #include <kaccel.h>
 #include <kstdaction.h>
 #include <kaction.h>
@@ -345,87 +345,141 @@ void KonversationMainWindow::openPrefsDialog()
   //An instance of your dialog could be already created and could be cached,
   //in which case you want to display the cached dialog instead of creating
   //another one
-  if ( KConfigDialog::showDialog( "settings" ) )
+  if ( KonviConfigDialog::showDialog( "settings" ) )
     return;
 
   //KConfigDialog didn't find an instance of this dialog, so lets create it :
-  KConfigDialog* dialog = new KConfigDialog( this, "settings", Preferences::self(), KDialogBase::TreeList );
-  dialog->setShowIconsInTreeList(true);
-  dialog->unfoldTreeList(true);
-  dialog->setFolderIcon(i18n("Appearance"),SmallIcon("looknfeel"));
+  KonviConfigDialog* dialog = new KonviConfigDialog( this, "settings", Preferences::self(), KDialogBase::TreeList );
+  dialog->setShowIconsInTreeList(true); 
+
+  QStringList iconPath;
+
+  iconPath << i18n("Appearance");
+  dialog->setFolderIcon( iconPath, SmallIcon("looknfeel") );
+
+  iconPath.clear();
+  iconPath << i18n("Behavior");
+  dialog->setFolderIcon( iconPath, SmallIcon("configure") );
+
+  iconPath.clear();
+  iconPath<< i18n("Behavior");
+  dialog->setFolderIcon( iconPath, SmallIcon("configure") );
+
+  iconPath.clear();
+  iconPath<< i18n("Notifications");
+  dialog->setFolderIcon( iconPath, SmallIcon("playsound") );
+
+  QStringList pagePath;
 
   //Appearance/Chat Window
   ChatWindowAppearance_Config* confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
-  dialog->addPage ( confChatWindowAppearanceWdg, i18n("Appearance-Chat Window"), "view_text", i18n("Appearance") );
+  pagePath.clear();
+  pagePath << i18n("Appearance") << i18n("Chat Window");
+  dialog->addPage ( confChatWindowAppearanceWdg, pagePath, "view_text", i18n("Appearance") );
 
   //Appearance/Fonts
   FontAppearance_Config* confFontAppearanceWdg = new FontAppearance_Config( dialog, "FontAppearance" );
-  dialog->addPage ( confFontAppearanceWdg, i18n("Appearance - Fonts"), "fonts", i18n("Appearance") );
+  pagePath.clear();
+  pagePath << i18n("Appearance") << i18n("Fonts");
+  dialog->addPage ( confFontAppearanceWdg, pagePath, "fonts", i18n("Appearance") );
 
   //Appearance/Themes
   Theme_Config_Ext* confThemeWdg = new Theme_Config_Ext( dialog, "Theme" );
-  dialog->addPage ( confThemeWdg, i18n("Appearance - Themes"), "iconthemes", i18n("Appearance") );
+  pagePath.clear();
+  pagePath << i18n("Appearance") << i18n("Themes");
+  dialog->addPage ( confThemeWdg, pagePath, "iconthemes", i18n("Appearance") );
 
   //Appearance/Colors
   ColorsAppearance_Config* confColorsAppearanceWdg = new ColorsAppearance_Config( dialog, "ColorsAppearance" );
-  dialog->addPage ( confColorsAppearanceWdg, i18n("Appearance - Colors"), "colorize", i18n("Appearance") );
+  pagePath.clear();
+  pagePath << i18n("Appearance") << i18n("Colors");
+  dialog->addPage ( confColorsAppearanceWdg, pagePath, "colorize", i18n("Appearance") );
 
-  dialog->setFolderIcon(QStringList::split(',', i18n("Behavior")), SmallIcon("configure"));
   //Behavior/General
   GeneralBehavior_Config* confGeneralBehaviorWdg = new GeneralBehavior_Config( dialog, "GeneralBehavior" );
-  dialog->addPage ( confGeneralBehaviorWdg, i18n("Behavior - General"), "exec", i18n("Behavior") );
+  pagePath.clear();
+  pagePath << i18n("Behavior") << i18n("General");
+  dialog->addPage ( confGeneralBehaviorWdg, pagePath, "exec", i18n("Behavior") );
 
   //Behavior/Connection
   ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( dialog, "ConnectionBehavior" );
-  dialog->addPage ( confConnectionBehaviorWdg, i18n("Behavior - Connection"), "connect_creating", i18n("Behavior") );
+  pagePath.clear();
+  pagePath << i18n("Behavior") << i18n("Connection");
+  dialog->addPage ( confConnectionBehaviorWdg, pagePath, "connect_creating", i18n("Behavior") );
 
   //Behaviour/Chat Window
   ChatwindowBehaviour_Config* confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( dialog, "ChatwindowBehaviour" );
-  dialog->addPage ( confChatwindowBehaviourWdg, i18n("Behavior - Chatwindow"), "view_text", i18n("Behavior") );
+  pagePath.clear();
+  pagePath << i18n("Behavior") << i18n("Chat Window");
+  dialog->addPage ( confChatwindowBehaviourWdg, pagePath, "view_text", i18n("Behavior") );
 
   //Behaviour/Nickname List
   NicklistBehavior_Config* confNicklistBehaviorWdg = new NicklistBehavior_Config( dialog, "NicklistBehavior" );
-  dialog->addPage ( confNicklistBehaviorWdg, i18n("Behavior - Nickname List"), "player_playlist" );
+  pagePath.clear();
+  pagePath << i18n("Behavior") << i18n("Nickname List");
+  dialog->addPage ( confNicklistBehaviorWdg, pagePath, "player_playlist" );
 
   //Behaviour/Tab Bar
   TabBar_Config* confTabBarWdg = new TabBar_Config( dialog, "TabBar" );
-  dialog->addPage ( confTabBarWdg, i18n("Behavior - Tab Bar"), "tab_new" );
+  pagePath.clear();
+  pagePath << i18n("Behavior") << i18n("Tab Bar");
+  dialog->addPage ( confTabBarWdg, pagePath, "tab_new" );
 
   //Behaviour/Command Aliases
   Alias_Config* confAliasWdg = new Alias_Config( dialog, "Alias" );
-  dialog->addPage ( confAliasWdg, i18n("Behavior - Command Aliases"), "editcopy" );
+  pagePath.clear();
+  pagePath << i18n("Behavior") << i18n("Command Aliases");
+  dialog->addPage ( confAliasWdg, pagePath, "editcopy" );
 
   //Behaviour/Quick Buttons
   QuickButtons_Config* confQuickButtonsWdg = new QuickButtons_Config( dialog, "QuickButtons" );
-  dialog->addPage ( confQuickButtonsWdg, i18n("Behavior - Quick Buttons"), "keyboard" );
+  pagePath.clear();
+  pagePath << i18n("Behavior") << i18n("Quick Buttons");
+  dialog->addPage ( confQuickButtonsWdg, pagePath, "keyboard" );
 
   //Behaviour/Logging
   Log_Config* confLogWdg = new Log_Config( dialog, "Log" );
-  dialog->addPage ( confLogWdg, i18n("Behavior - Logging"), "log" );
+  pagePath.clear();
+  pagePath << i18n("Behavior") << i18n("Logging");
+  dialog->addPage ( confLogWdg, pagePath, "log" );
 
-  //Behaviour/Logging
+/* Broken
+  //Behaviour/DCC
   DCC_Settings* confDCCWdg = new DCC_Settings( dialog, "DCC" );
-  dialog->addPage ( confDCCWdg, i18n("Behavior - DCC"), "2rightarrow" );
+  pagePath.clear();
+  pagePath << i18n("Behavior") << i18n("DCC");
+  dialog->addPage ( confDCCWdg, pagePath, "2rightarrow" );
+*/
 
   //Notification/Watched Nicknames
   WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( dialog, "WatchedNicknames" );
-  dialog->addPage ( confWatchedNicknamesWdg, i18n("Notification - Watched Nicknames"), "kfind" );
+  pagePath.clear();
+  pagePath << i18n("Notifications") << i18n("Watched Nicknames");
+  dialog->addPage ( confWatchedNicknamesWdg, pagePath, "kfind" );
 
   //Notification/Highlighting
   Highlight_Config* confHighlightWdg = new Highlight_Config( dialog, "Highlight" );
-  dialog->addPage ( confHighlightWdg, i18n("Notification - Highlighting"), "paintbrush" );
+  pagePath.clear();
+  pagePath << i18n("Notifications") << i18n("Highlight");
+  dialog->addPage ( confHighlightWdg, pagePath, "paintbrush" );
 
   //Notification/On Screen Display
   OSD_Config_Ext* confOSDWdg = new OSD_Config_Ext( dialog, "OSD" );
-  dialog->addPage ( confOSDWdg, i18n("Notification - On Screen Display"), "tv" );
+  pagePath.clear();
+  pagePath << i18n("Notifications") << i18n("On Screen Display");
+  dialog->addPage ( confOSDWdg, pagePath, "tv" );
 
   //Warning Dialogs
   Warnings_Config* confWarningsWdg = new Warnings_Config( dialog, "Warnings" );
+  pagePath.clear();
+  pagePath << i18n("Warning Dialogs");
   dialog->addPage ( confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning" );
 
   //User edited the configuration - update your local copies of the
   //configuration data
   connect(dialog, SIGNAL(settingsChanged()), this, SLOT(appearanceChanged()));
+
+  dialog->unfoldTreeList();
 
   dialog->show();
 }
