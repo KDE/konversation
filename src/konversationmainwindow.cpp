@@ -375,105 +375,105 @@ void KonversationMainWindow::openPrefsDialog()
   ChatWindowAppearance_Config* confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Chat Window");
-  dialog->addPage ( confChatWindowAppearanceWdg, pagePath, "view_text", i18n("Appearance") );
+  dialog->addPage ( confChatWindowAppearanceWdg, pagePath, "view_text", i18n("Chat Window") );
 
   //Appearance/Fonts
   FontAppearance_Config* confFontAppearanceWdg = new FontAppearance_Config( dialog, "FontAppearance" );
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Fonts");
-  dialog->addPage ( confFontAppearanceWdg, pagePath, "fonts", i18n("Appearance") );
+  dialog->addPage ( confFontAppearanceWdg, pagePath, "fonts", i18n("Fonts") );
 
   //Appearance/Themes
   Theme_Config_Ext* confThemeWdg = new Theme_Config_Ext( dialog, "Theme" );
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Themes");
-  dialog->addPage ( confThemeWdg, pagePath, "iconthemes", i18n("Appearance") );
+  dialog->addPage ( confThemeWdg, pagePath, "iconthemes", i18n("Themes") );
 
   //Appearance/Colors
   ColorsAppearance_Config* confColorsAppearanceWdg = new ColorsAppearance_Config( dialog, "ColorsAppearance" );
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Colors");
-  dialog->addPage ( confColorsAppearanceWdg, pagePath, "colorize", i18n("Appearance") );
+  dialog->addPage ( confColorsAppearanceWdg, pagePath, "colorize", i18n("Colors") );
 
   //Behavior/General
   GeneralBehavior_Config* confGeneralBehaviorWdg = new GeneralBehavior_Config( dialog, "GeneralBehavior" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("General");
-  dialog->addPage ( confGeneralBehaviorWdg, pagePath, "exec", i18n("Behavior") );
+  dialog->addPage ( confGeneralBehaviorWdg, pagePath, "exec", i18n("General") );
 
   //Behavior/Connection
   ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( dialog, "ConnectionBehavior" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Connection");
-  dialog->addPage ( confConnectionBehaviorWdg, pagePath, "connect_creating", i18n("Behavior") );
+  dialog->addPage ( confConnectionBehaviorWdg, pagePath, "connect_creating", i18n("Connection") );
 
   //Behaviour/Chat Window
   ChatwindowBehaviour_Config* confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( dialog, "ChatwindowBehaviour" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Chat Window");
-  dialog->addPage ( confChatwindowBehaviourWdg, pagePath, "view_text", i18n("Behavior") );
+  dialog->addPage ( confChatwindowBehaviourWdg, pagePath, "view_text", i18n("Chat Window") );
 
   //Behaviour/Nickname List
   NicklistBehavior_Config* confNicklistBehaviorWdg = new NicklistBehavior_Config( dialog, "NicklistBehavior" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Nickname List");
-  dialog->addPage ( confNicklistBehaviorWdg, pagePath, "player_playlist" );
+  dialog->addPage ( confNicklistBehaviorWdg, pagePath, "player_playlist", i18n("Nickname List") );
 
   //Behaviour/Tab Bar
   TabBar_Config* confTabBarWdg = new TabBar_Config( dialog, "TabBar" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Tab Bar");
-  dialog->addPage ( confTabBarWdg, pagePath, "tab_new" );
+  dialog->addPage ( confTabBarWdg, pagePath, "tab_new", i18n("Tab Bar") );
 
   //Behaviour/Command Aliases
   Alias_Config* confAliasWdg = new Alias_Config( dialog, "Alias" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Command Aliases");
-  dialog->addPage ( confAliasWdg, pagePath, "editcopy" );
+  dialog->addPage ( confAliasWdg, pagePath, "editcopy", i18n(" Command Aliases") );
 
   //Behaviour/Quick Buttons
   QuickButtons_Config* confQuickButtonsWdg = new QuickButtons_Config( dialog, "QuickButtons" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Quick Buttons");
-  dialog->addPage ( confQuickButtonsWdg, pagePath, "keyboard" );
+  dialog->addPage ( confQuickButtonsWdg, pagePath, "keyboard", i18n("Quick Buttons") );
 
   //Behaviour/Logging
   Log_Config* confLogWdg = new Log_Config( dialog, "Log" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Logging");
-  dialog->addPage ( confLogWdg, pagePath, "log" );
+  dialog->addPage ( confLogWdg, pagePath, "log", i18n("Logging") );
 
 /* Broken
   //Behaviour/DCC
   DCC_Settings* confDCCWdg = new DCC_Settings( dialog, "DCC" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("DCC");
-  dialog->addPage ( confDCCWdg, pagePath, "2rightarrow" );
+  dialog->addPage ( confDCCWdg, pagePath, "2rightarrow", i18n("DCC") );
 */
 
   //Notification/Watched Nicknames
   WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( dialog, "WatchedNicknames" );
   pagePath.clear();
   pagePath << i18n("Notifications") << i18n("Watched Nicknames");
-  dialog->addPage ( confWatchedNicknamesWdg, pagePath, "kfind" );
+  dialog->addPage ( confWatchedNicknamesWdg, pagePath, "kfind", i18n("Watched Nicknames") );
 
   //Notification/Highlighting
   Highlight_Config* confHighlightWdg = new Highlight_Config( dialog, "Highlight" );
   pagePath.clear();
   pagePath << i18n("Notifications") << i18n("Highlight");
-  dialog->addPage ( confHighlightWdg, pagePath, "paintbrush" );
+  dialog->addPage ( confHighlightWdg, pagePath, "paintbrush", i18n("Highlight") );
 
   //Notification/On Screen Display
   OSD_Config_Ext* confOSDWdg = new OSD_Config_Ext( dialog, "OSD" );
   pagePath.clear();
   pagePath << i18n("Notifications") << i18n("On Screen Display");
-  dialog->addPage ( confOSDWdg, pagePath, "tv" );
+  dialog->addPage ( confOSDWdg, pagePath, "tv", i18n("On Screen Display") );
 
   //Warning Dialogs
   Warnings_Config* confWarningsWdg = new Warnings_Config( dialog, "Warnings" );
   pagePath.clear();
   pagePath << i18n("Warning Dialogs");
-  dialog->addPage ( confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning" );
+  dialog->addPage ( confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning", i18n("Warning Dialogs") );
 
   //User edited the configuration - update your local copies of the
   //configuration data
