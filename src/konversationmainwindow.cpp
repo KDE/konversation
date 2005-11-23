@@ -54,7 +54,6 @@
 #include "highlight_preferences.h"
 #include "warnings_preferences.h"
 #include "chatwindowappearance_preferences.h"
-#include "dcc_preferences.h"
 #include "log_preferences.h"
 #include "quickbuttons_preferences.h"
 #include "watchednicknames_preferences.h"
@@ -64,6 +63,7 @@
 #include "tabbar_preferences.h"
 #include "colorsappearance_preferences.h"
 #include "generalbehavior_preferences.h"
+#include "ex_dcc_preferences.h"
 #include "ex_osd_preferences.h"
 #include "ex_theme_preferences.h"
 
@@ -443,7 +443,7 @@ void KonversationMainWindow::openPrefsDialog()
   pagePath << i18n("Behavior") << i18n("Logging");
   dialog->addPage ( confLogWdg, pagePath, "log", i18n("Logging") );
 
-  DCC_Settings* confDCCWdg = new DCC_Settings( dialog, "DCC" );
+  DCC_Config_Ext* confDCCWdg = new DCC_Config_Ext( dialog, "DCC" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("DCC");
   dialog->addPage ( confDCCWdg, pagePath, "2rightarrow", i18n("DCC") );
