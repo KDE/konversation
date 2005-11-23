@@ -560,7 +560,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="SpecificSendPorts" type="Bool" name="DccSpecificSendPorts">
-      <default>false</default>
+      <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -575,7 +575,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="SpecificChatPorts" type="Bool" name="DccSpecificChatPorts">
-      <default>false</default>
+      <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -619,10 +619,10 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="IPv4Fallback" type="Bool">
+    <entry key="IPv4Fallback" type="Bool" name="DccIPv4Fallback">
       <default>false</default>
     </entry>
-    <entry key="IPv4FallbackIface" type="String">
+    <entry key="IPv4FallbackIface" type="String" name="DccIPv4FallbackIface">
       <default>eth0</default>
     </entry>
   </group>

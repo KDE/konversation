@@ -443,13 +443,10 @@ void KonversationMainWindow::openPrefsDialog()
   pagePath << i18n("Behavior") << i18n("Logging");
   dialog->addPage ( confLogWdg, pagePath, "log", i18n("Logging") );
 
-/* Broken
-  //Behaviour/DCC
   DCC_Settings* confDCCWdg = new DCC_Settings( dialog, "DCC" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("DCC");
   dialog->addPage ( confDCCWdg, pagePath, "2rightarrow", i18n("DCC") );
-*/
 
   //Notification/Watched Nicknames
   WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( dialog, "WatchedNicknames" );

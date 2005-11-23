@@ -52,14 +52,14 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
     m_fileURL = fileURL;
     m_ownIp = ownIp;
 
-    if(Preferences::iPv4Fallback())
+    if(Preferences::dccIPv4Fallback())
     {
         KIpAddress ip(m_ownIp);
         if(ip.isIPv6Addr())
         {
             /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
             struct ifreq ifr;
-            const char* address = Preferences::iPv4FallbackIface().ascii();
+            const char* address = Preferences::dccIPv4FallbackIface().ascii();
             int sock = socket(AF_INET, SOCK_DGRAM, 0);
             strncpy( ifr.ifr_name, address, IF_NAMESIZE );
             ifr.ifr_addr.sa_family = AF_INET;

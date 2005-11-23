@@ -25,7 +25,7 @@ the Free Software Foundation; either version 2 of the License, or
         </property>
         <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="6">
             <property name="name">
-                <cstring>kcfg_AddPartner</cstring>
+                <cstring>kcfg_DccAddPartner</cstring>
             </property>
             <property name="text">
                 <string>&amp;Add sender to file name</string>
@@ -33,7 +33,7 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
         <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="6">
             <property name="name">
-                <cstring>kcfg_AutoGet</cstring>
+                <cstring>kcfg_DccAutoGet</cstring>
             </property>
             <property name="text">
                 <string>Automaticall&amp;y accept download request</string>
@@ -41,7 +41,7 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
         <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="6">
             <property name="name">
-                <cstring>kcfg_FastSend</cstring>
+                <cstring>kcfg_DccFastSend</cstring>
             </property>
             <property name="text">
                 <string>Enable fast DCC send (Might &amp;not work with all clients)</string>
@@ -49,7 +49,7 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
         <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="6">
             <property name="name">
-                <cstring>kcfg_CreateFolder</cstring>
+                <cstring>kcfg_DccCreateFolder</cstring>
             </property>
             <property name="text">
                 <string>Cr&amp;eate folder for sender</string>
@@ -57,7 +57,7 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
         <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="6">
             <property name="name">
-                <cstring>kcfg_AutoResume</cstring>
+                <cstring>kcfg_DccAutoResume</cstring>
             </property>
             <property name="text">
                 <string>Au&amp;tomatically resume download</string>
@@ -76,7 +76,7 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
         <widget class="QCheckBox" row="6" column="0" rowspan="1" colspan="3">
             <property name="name">
-                <cstring>kcfg_IPv4Fallback</cstring>
+                <cstring>kcfg_DccIPv4Fallback</cstring>
             </property>
             <property name="text">
                 <string>Fallback to an IPv&amp;4 interface for dcc send:</string>
@@ -118,7 +118,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </property>
                 <widget class="QLineEdit" row="1" column="1">
                     <property name="name">
-                        <cstring>kcfg_SpecificOwnIp</cstring>
+                        <cstring>kcfg_DccSpecificOwnIp</cstring>
                     </property>
                 </widget>
                 <widget class="QLabel" row="0" column="0">
@@ -129,7 +129,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>&amp;Method to get own IP:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_MethodToGetOwnIp</cstring>
+                        <cstring>kcfg_DccMethodToGetOwnIp</cstring>
                     </property>
                 </widget>
                 <widget class="QLabel" row="1" column="0">
@@ -140,12 +140,12 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>O&amp;wn IP:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_SpecificOwnIp</cstring>
+                        <cstring>kcfg_DccSpecificOwnIp</cstring>
                     </property>
                 </widget>
                 <widget class="QComboBox" row="0" column="1">
                     <property name="name">
-                        <cstring>kcfg_MethodToGetOwnIp</cstring>
+                        <cstring>kcfg_DccMethodToGetOwnIp</cstring>
                     </property>
                 </widget>
             </grid>
@@ -158,7 +158,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>Buffer si&amp;ze:</string>
             </property>
             <property name="buddy" stdset="0">
-                <cstring>kcfg_BufferSize</cstring>
+                <cstring>kcfg_DccBufferSize</cstring>
             </property>
         </widget>
         <widget class="QLabel" row="7" column="0" rowspan="1" colspan="2">
@@ -169,12 +169,12 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>DCC send t&amp;imout:</string>
             </property>
             <property name="buddy" stdset="0">
-                <cstring>kcfg_SendTimeout</cstring>
+                <cstring>kcfg_DccSendTimeout</cstring>
             </property>
         </widget>
         <widget class="KLineEdit" row="6" column="3" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>kcfg_IPv4FallbackInterface</cstring>
+                <cstring>kcfg_DccIPv4FallbackIface</cstring>
             </property>
             <property name="enabled">
                 <bool>false</bool>
@@ -210,7 +210,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </property>
                 <widget class="QCheckBox" row="1" column="0">
                     <property name="name">
-                        <cstring>kcfg_SpecificChatPorts</cstring>
+                        <cstring>kcfg_DccSpecificChatPorts</cstring>
                     </property>
                     <property name="text">
                         <string>Enable specific p&amp;orts for DCC chat:</string>
@@ -235,7 +235,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </spacer>
                 <widget class="QSpinBox" row="1" column="2">
                     <property name="name">
-                        <cstring>kcfg_ChatPortsFirst</cstring>
+                        <cstring>kcfg_DccChatPortsFirst</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
@@ -260,7 +260,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="QSpinBox" row="1" column="4">
                     <property name="name">
-                        <cstring>kcfg_ChatPortsLast</cstring>
+                        <cstring>kcfg_DccChatPortsLast</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
@@ -271,7 +271,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="QCheckBox" row="0" column="0">
                     <property name="name">
-                        <cstring>kcfg_SpecificSendPorts</cstring>
+                        <cstring>kcfg_DccSpecificSendPorts</cstring>
                     </property>
                     <property name="text">
                         <string>Enable specific &amp;ports for DCC send:</string>
@@ -296,7 +296,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </spacer>
                 <widget class="QSpinBox" row="0" column="2">
                     <property name="name">
-                        <cstring>kcfg_SendPortsFirst</cstring>
+                        <cstring>kcfg_DccSendPortsFirst</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
@@ -321,7 +321,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
                 <widget class="QSpinBox" row="0" column="4">
                     <property name="name">
-                        <cstring>kcfg_SendPortsLast</cstring>
+                        <cstring>kcfg_DccSendPortsLast</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
@@ -334,7 +334,7 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
         <widget class="QSpinBox" row="7" column="3">
             <property name="name">
-                <cstring>kcfg_SendTimeout</cstring>
+                <cstring>kcfg_DccSendTimeout</cstring>
             </property>
             <property name="suffix">
                 <string> sec</string>
@@ -348,7 +348,7 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
         <widget class="QSpinBox" row="8" column="3">
             <property name="name">
-                <cstring>kcfg_BufferSize</cstring>
+                <cstring>kcfg_DccBufferSize</cstring>
             </property>
             <property name="suffix">
                 <string> bytes</string>
@@ -407,68 +407,66 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
     </grid>
 </widget>
-<customwidgets>
-</customwidgets>
 <connections>
     <connection>
-        <sender>kcfg_SpecificSendPorts</sender>
+        <sender>kcfg_DccSpecificSendPorts</sender>
         <signal>toggled(bool)</signal>
-        <receiver>kcfg_SendPortsFirst</receiver>
+        <receiver>kcfg_DccSendPortsFirst</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>kcfg_SpecificSendPorts</sender>
+        <sender>kcfg_DccSpecificSendPorts</sender>
         <signal>toggled(bool)</signal>
         <receiver>textLabel1_2</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>kcfg_SpecificSendPorts</sender>
+        <sender>kcfg_DccSpecificSendPorts</sender>
         <signal>toggled(bool)</signal>
-        <receiver>kcfg_SendPortsLast</receiver>
+        <receiver>kcfg_DccSendPortsLast</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>kcfg_SpecificChatPorts</sender>
+        <sender>kcfg_DccSpecificChatPorts</sender>
         <signal>toggled(bool)</signal>
-        <receiver>kcfg_ChatPortsFirst</receiver>
+        <receiver>kcfg_DccChatPortsFirst</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>kcfg_SpecificChatPorts</sender>
+        <sender>kcfg_DccSpecificChatPorts</sender>
         <signal>toggled(bool)</signal>
         <receiver>textLabel2_2</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>kcfg_SpecificChatPorts</sender>
+        <sender>kcfg_DccSpecificChatPorts</sender>
         <signal>toggled(bool)</signal>
-        <receiver>kcfg_ChatPortsLast</receiver>
+        <receiver>kcfg_DccChatPortsLast</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>kcfg_IPv4Fallback</sender>
+        <sender>kcfg_DccIPv4Fallback</sender>
         <signal>toggled(bool)</signal>
-        <receiver>kcfg_IPv4FallbackInterface</receiver>
+        <receiver>kcfg_DccIPv4FallbackIface</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>
 <tabstops>
-    <tabstop>kcfg_AddPartner</tabstop>
-    <tabstop>kcfg_CreateFolder</tabstop>
-    <tabstop>kcfg_AutoGet</tabstop>
-    <tabstop>kcfg_AutoResume</tabstop>
-    <tabstop>kcfg_SendTimeout</tabstop>
-    <tabstop>kcfg_MethodToGetOwnIp</tabstop>
-    <tabstop>kcfg_SpecificOwnIp</tabstop>
-    <tabstop>kcfg_SpecificSendPorts</tabstop>
-    <tabstop>kcfg_SendPortsFirst</tabstop>
-    <tabstop>kcfg_SendPortsLast</tabstop>
-    <tabstop>kcfg_SpecificChatPorts</tabstop>
-    <tabstop>kcfg_ChatPortsFirst</tabstop>
-    <tabstop>kcfg_ChatPortsLast</tabstop>
-    <tabstop>kcfg_BufferSize</tabstop>
-    <tabstop>kcfg_FastSend</tabstop>
+    <tabstop>kcfg_DccAddPartner</tabstop>
+    <tabstop>kcfg_DccCreateFolder</tabstop>
+    <tabstop>kcfg_DccAutoGet</tabstop>
+    <tabstop>kcfg_DccAutoResume</tabstop>
+    <tabstop>kcfg_DccSendTimeout</tabstop>
+    <tabstop>kcfg_DccMethodToGetOwnIp</tabstop>
+    <tabstop>kcfg_DccSpecificOwnIp</tabstop>
+    <tabstop>kcfg_DccSpecificSendPorts</tabstop>
+    <tabstop>kcfg_DccSendPortsFirst</tabstop>
+    <tabstop>kcfg_DccSendPortsLast</tabstop>
+    <tabstop>kcfg_DccSpecificChatPorts</tabstop>
+    <tabstop>kcfg_DccChatPortsFirst</tabstop>
+    <tabstop>kcfg_DccChatPortsLast</tabstop>
+    <tabstop>kcfg_DccBufferSize</tabstop>
+    <tabstop>kcfg_DccFastSend</tabstop>
 </tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
